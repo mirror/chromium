@@ -22,6 +22,30 @@
       "revId": "0e9c67fedfd4edb843df4866c2782b5125563f30",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "39ee784e_b56438d8",
+        "filename": "chrome/browser/chromeos/power/peripheral_battery_notifier.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-08-25T21:24:38Z",
+      "side": 1,
+      "message": "editing this and the -1 below breaks a lot of the tests, which is fine but mind if this is done in a seperate cl?",
+      "parentUuid": "c176993c_2f1df1ca",
+      "range": {
+        "startLine": 179,
+        "startChar": 6,
+        "endLine": 179,
+        "endChar": 16
+      },
+      "revId": "0e9c67fedfd4edb843df4866c2782b5125563f30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

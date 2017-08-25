@@ -42,6 +42,30 @@
     },
     {
       "key": {
+        "uuid": "6296a77b_48023342",
+        "filename": "chrome/browser/chromeos/power/peripheral_battery_notifier.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-08-25T21:24:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "abe96294_8a906143",
+      "range": {
+        "startLine": 93,
+        "startChar": 3,
+        "endLine": 93,
+        "endChar": 12
+      },
+      "revId": "f794564021a2e62f174a0c7d0963900ad624fd7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "11273835_004fb7d8",
         "filename": "chrome/browser/chromeos/power/peripheral_battery_notifier.h",
         "patchSetId": 7
@@ -62,6 +86,30 @@
       "revId": "f794564021a2e62f174a0c7d0963900ad624fd7d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9bb7c887_2f186140",
+        "filename": "chrome/browser/chromeos/power/peripheral_battery_notifier.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-08-25T21:24:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "11273835_004fb7d8",
+      "range": {
+        "startLine": 62,
+        "startChar": 20,
+        "endLine": 62,
+        "endChar": 29
+      },
+      "revId": "f794564021a2e62f174a0c7d0963900ad624fd7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -88,6 +136,30 @@
     },
     {
       "key": {
+        "uuid": "46db6acb_44a22a49",
+        "filename": "chrome/browser/chromeos/power/peripheral_battery_notifier.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-08-25T21:24:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fae2ecba_ea62b0b2",
+      "range": {
+        "startLine": 69,
+        "startChar": 17,
+        "endLine": 69,
+        "endChar": 26
+      },
+      "revId": "f794564021a2e62f174a0c7d0963900ad624fd7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fb4f0f0b_47b63a61",
         "filename": "chrome/browser/chromeos/power/peripheral_battery_notifier_unittest.cc",
         "patchSetId": 7
@@ -102,6 +174,24 @@
       "revId": "f794564021a2e62f174a0c7d0963900ad624fd7d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07209957_be3213cb",
+        "filename": "chrome/browser/chromeos/power/peripheral_battery_notifier_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-08-25T21:24:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fb4f0f0b_47b63a61",
+      "revId": "f794564021a2e62f174a0c7d0963900ad624fd7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
