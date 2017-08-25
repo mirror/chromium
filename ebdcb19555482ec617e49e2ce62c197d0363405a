@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "43f044b9_600579e0",
+        "filename": "components/content_settings/core/browser/website_settings_registry.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-08-25T14:51:39Z",
+      "side": 1,
+      "message": "Can you remove build_config.h and media_switches.h? Also, the BUILD.gn file should be updated to no longer have a deps on //media",
+      "revId": "ebdcb19555482ec617e49e2ce62c197d0363405a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
