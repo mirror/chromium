@@ -34,6 +34,24 @@
       "revId": "0e81350f5bd49d7ef465040667b5626f26258bf7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6c2f20c8_f1702b40",
+        "filename": "ui/ozone/platform/drm/common/drm_util_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1000246
+      },
+      "writtenOn": "2017-08-25T15:44:34Z",
+      "side": 0,
+      "message": "Seems like an opportunity for more code deletion in ozone then. File a bug at your convenience and assign to me.",
+      "parentUuid": "2441fa42_4608b090",
+      "revId": "0e81350f5bd49d7ef465040667b5626f26258bf7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

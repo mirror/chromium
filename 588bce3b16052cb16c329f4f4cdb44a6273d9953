@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "d6888771_0ee763a4",
+        "filename": "ui/display/mojo/display_snapshot.typemap",
+        "patchSetId": 5
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1000246
+      },
+      "writtenOn": "2017-08-25T15:44:34Z",
+      "side": 1,
+      "message": "Ack.",
+      "parentUuid": "0dc9b5c0_47dec3b8",
+      "revId": "588bce3b16052cb16c329f4f4cdb44a6273d9953",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b7ccfe84_8fb58b76",
         "filename": "ui/ozone/platform/drm/gpu/drm_thread_message_proxy.cc",
         "patchSetId": 5
