@@ -135,6 +135,7 @@ public class SelectableListToolbar<E> extends Toolbar implements SelectionObserv
     private UiConfig mUiConfig;
     private int mWideDisplayStartOffsetPx;
     private int mModernSearchViewStartOffsetPx;
+    private int mModernNavButtonStartOffsetPx;
 
     private boolean mIsDestroyed;
 
@@ -180,6 +181,9 @@ public class SelectableListToolbar<E> extends Toolbar implements SelectionObserv
 
         mSelectionDelegate = delegate;
         mSelectionDelegate.addObserver(this);
+
+        mModernSearchViewStartOffsetPx = getResources().getDimensionPixelSize(
+                R.dimen.toolbar_modern_search_view_start_offset);
 
         if (mDrawerLayout != null) initActionBarDrawerToggle();
 
@@ -257,7 +261,7 @@ public class SelectableListToolbar<E> extends Toolbar implements SelectionObserv
             mClearTextButton.setPadding(ApiCompatibilityUtils.getPaddingStart(mClearTextButton),
                     mClearTextButton.getPaddingTop(),
                     getResources().getDimensionPixelSize(
-                            R.dimen.selectable_list_layout_row_padding),
+                            R.dimen.selectable_list_layout_row_end_padding),
                     mClearTextButton.getPaddingBottom());
         }
     }
@@ -465,8 +469,8 @@ public class SelectableListToolbar<E> extends Toolbar implements SelectionObserv
     public void configureWideDisplayStyle(UiConfig uiConfig) {
         mWideDisplayStartOffsetPx =
                 getResources().getDimensionPixelSize(R.dimen.toolbar_wide_display_start_offset);
-        mModernSearchViewStartOffsetPx = getResources().getDimensionPixelSize(
-                R.dimen.toolbar_modern_search_view_start_offset);
+        mModernNavButtonStartOffsetPx = getResources().getDimensionPixelSize(
+                R.dimen.selectable_list_toolbar_nav_button_start_offset);
 
         mUiConfig = uiConfig;
         mUiConfig.addObserver(this);
@@ -503,8 +507,15 @@ public class SelectableListToolbar<E> extends Toolbar implements SelectionObserv
         // Navigation button should have more padding start in the modern search view.
         if (isModernSearchViewEnabled) paddingStartOffset += mModernSearchViewStartOffsetPx;
 
-        ApiCompatibilityUtils.setPaddingRelative(this, padding + paddingStartOffset,
-                this.getPaddingTop(), padding, this.getPaddingBottom());
+        int navigationButtonStartOffsetPx = 0;
+
+        if (mNavigationButton != NAVIGATION_BUTTON_NONE) {
+            navigationButtonStartOffsetPx = mModernNavButtonStartOffsetPx;
+        }
+
+        ApiCompatibilityUtils.setPaddingRelative(this,
+                padding + paddingStartOffset + navigationButtonStartOffsetPx, this.getPaddingTop(),
+                padding, this.getPaddingBottom());
     }
 
     /**
