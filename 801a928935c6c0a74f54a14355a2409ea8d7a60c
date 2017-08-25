@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1a932c4d_59ff6d38",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-08-25T22:44:00Z",
+      "side": 1,
+      "message": "Can you still do this? I think both \"minor bug fix\" is not clear and \"previous patch\" is not clear.  Maybe \"Fix raster scale factor by removing recording scale factor\"?\n\nCould you also link to the patch in the description somewhere so it\u0027s clear where this was accidentally removed?",
+      "parentUuid": "ad96b5b9_a5522a21",
+      "revId": "801a928935c6c0a74f54a14355a2409ea8d7a60c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "df08809f_833ef3e4",
         "filename": "/COMMIT_MSG",
         "patchSetId": 2
