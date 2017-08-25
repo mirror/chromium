@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "3879f210_fd997ab6",
+        "filename": "chrome/installer/zucchini/address_translator.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-08-25T17:18:05Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "4e0a5d75_3808bbd9",
+      "range": {
+        "startLine": 54,
+        "startChar": 0,
+        "endLine": 54,
+        "endChar": 30
+      },
+      "revId": "830f3b769b55ce8ff77d854861d06f21224b10e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4f7e85ab_fa3e5703",
         "filename": "chrome/installer/zucchini/address_translator.cc",
         "patchSetId": 4
@@ -187,6 +211,30 @@
       "revId": "830f3b769b55ce8ff77d854861d06f21224b10e6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "933038fe_fffd5fe6",
+        "filename": "chrome/installer/zucchini/address_translator.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-08-25T17:18:05Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "bf4d14f9_dcd58106",
+      "range": {
+        "startLine": 121,
+        "startChar": 37,
+        "endLine": 121,
+        "endChar": 41
+      },
+      "revId": "830f3b769b55ce8ff77d854861d06f21224b10e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -378,6 +426,30 @@
     },
     {
       "key": {
+        "uuid": "acb5ef3e_dded6fc7",
+        "filename": "chrome/installer/zucchini/address_translator.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-08-25T17:18:05Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "250927bc_33a5e0aa",
+      "range": {
+        "startLine": 204,
+        "startChar": 9,
+        "endLine": 204,
+        "endChar": 14
+      },
+      "revId": "830f3b769b55ce8ff77d854861d06f21224b10e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ddcf5907_3ca55f60",
         "filename": "chrome/installer/zucchini/address_translator.h",
         "patchSetId": 4
@@ -425,6 +497,30 @@
     },
     {
       "key": {
+        "uuid": "9c811933_9eb96aec",
+        "filename": "chrome/installer/zucchini/address_translator.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-08-25T17:18:05Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "97a7a364_89405dff",
+      "range": {
+        "startLine": 36,
+        "startChar": 62,
+        "endLine": 37,
+        "endChar": 30
+      },
+      "revId": "830f3b769b55ce8ff77d854861d06f21224b10e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7be1f5ff_5c97611c",
         "filename": "chrome/installer/zucchini/address_translator.h",
         "patchSetId": 4
@@ -469,6 +565,30 @@
       "revId": "830f3b769b55ce8ff77d854861d06f21224b10e6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3fb0f3da_b25bb56e",
+        "filename": "chrome/installer/zucchini/address_translator.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-08-25T17:18:05Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "89c57466_cad8e20a",
+      "range": {
+        "startLine": 71,
+        "startChar": 12,
+        "endLine": 71,
+        "endChar": 74
+      },
+      "revId": "830f3b769b55ce8ff77d854861d06f21224b10e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -610,6 +730,30 @@
       "revId": "830f3b769b55ce8ff77d854861d06f21224b10e6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "565731d4_4f32ecea",
+        "filename": "chrome/installer/zucchini/address_translator.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-08-25T17:18:05Z",
+      "side": 1,
+      "message": "I had 8 in mind too but wasn\u0027t sure because it doesn\u0027t provide early exit. If you think it\u0027s not so important, then it sounds good to me!",
+      "parentUuid": "18659649_d16b72df",
+      "range": {
+        "startLine": 183,
+        "startChar": 9,
+        "endLine": 183,
+        "endChar": 14
+      },
+      "revId": "830f3b769b55ce8ff77d854861d06f21224b10e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
