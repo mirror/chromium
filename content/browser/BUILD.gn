@@ -1165,8 +1165,6 @@ source_set("browser") {
     "renderer_host/font_utils_linux.h",
     "renderer_host/frame_connector_delegate.cc",
     "renderer_host/frame_connector_delegate.h",
-    "renderer_host/frame_metadata_util.cc",
-    "renderer_host/frame_metadata_util.h",
     "renderer_host/frame_sink_provider_impl.cc",
     "renderer_host/frame_sink_provider_impl.h",
     "renderer_host/input/fling_controller.cc",
