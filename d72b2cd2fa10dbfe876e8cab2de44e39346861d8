@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "cf8f715c_67f4ec41",
+        "filename": "net/test/spawned_test_server/spawner_communicator.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-08-25T19:01:36Z",
+      "side": 1,
+      "message": "This piece code does 2 things:\n 1. Starts a thread and asserts that it was started successfully,\n 2. Sets is_running_ to true.\n\nThese two actions should not depend on each other, but they were mixed together.\n\nAnyway I don\u0027t think we actually need is_running_ flag. Removed it.",
+      "parentUuid": "dd61bff0_4896e1d5",
+      "range": {
+        "startLine": 120,
+        "startChar": 21,
+        "endLine": 120,
+        "endChar": 0
+      },
+      "revId": "d72b2cd2fa10dbfe876e8cab2de44e39346861d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bf2eb98f_4f28d6e5",
         "filename": "net/test/spawned_test_server/spawner_communicator.cc",
         "patchSetId": 4
@@ -45,6 +69,30 @@
       "revId": "d72b2cd2fa10dbfe876e8cab2de44e39346861d8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c4ce8426_29e548a3",
+        "filename": "net/test/spawned_test_server/spawner_communicator.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-08-25T19:01:36Z",
+      "side": 1,
+      "message": "Fixed. Thanks for catching it!",
+      "parentUuid": "bf2eb98f_4f28d6e5",
+      "range": {
+        "startLine": 191,
+        "startChar": 49,
+        "endLine": 191,
+        "endChar": 0
+      },
+      "revId": "d72b2cd2fa10dbfe876e8cab2de44e39346861d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "c920aea5_945c73e4",
+        "filename": "net/test/spawned_test_server/spawner_communicator.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-08-25T19:01:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ffc2a0b1_c0df7b9d",
+      "range": {
+        "startLine": 193,
+        "startChar": 50,
+        "endLine": 193,
+        "endChar": 63
+      },
+      "revId": "d72b2cd2fa10dbfe876e8cab2de44e39346861d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d8cb99e7_77f24250",
         "filename": "net/test/spawned_test_server/spawner_communicator.cc",
         "patchSetId": 4
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "a72f1370_0fbad7b5",
+        "filename": "net/test/spawned_test_server/spawner_communicator.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-08-25T19:01:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d8cb99e7_77f24250",
+      "range": {
+        "startLine": 194,
+        "startChar": 23,
+        "endLine": 194,
+        "endChar": 28
+      },
+      "revId": "d72b2cd2fa10dbfe876e8cab2de44e39346861d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b1a86f6e_a8d22766",
         "filename": "net/test/spawned_test_server/spawner_communicator.cc",
         "patchSetId": 4
@@ -105,6 +201,30 @@
       "writtenOn": "2017-08-25T16:29:04Z",
       "side": 1,
       "message": "This should really be handled when we read the headers, not after we\u0027ve read the body (Which we don\u0027t care about, on error)",
+      "range": {
+        "startLine": 228,
+        "startChar": 22,
+        "endLine": 228,
+        "endChar": 37
+      },
+      "revId": "d72b2cd2fa10dbfe876e8cab2de44e39346861d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95180595_e7491ad6",
+        "filename": "net/test/spawned_test_server/spawner_communicator.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-08-25T19:01:36Z",
+      "side": 1,
+      "message": "We do care about the body on error. It may contain an error message from the server. Currently it\u0027s hard to debug a problem when the server rejects the request. Handling the error case here allows to log full server response, not just the status line.",
+      "parentUuid": "b1a86f6e_a8d22766",
       "range": {
         "startLine": 228,
         "startChar": 22,
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "962edf20_372fab82",
+        "filename": "net/test/spawned_test_server/spawner_communicator.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-08-25T19:01:36Z",
+      "side": 1,
+      "message": "Timers are expected to be created and destroyed on the same thread. This timer is used on IO thread, so it has to be allocated on heap.",
+      "parentUuid": "411e1eb0_d0805f2d",
+      "range": {
+        "startLine": 246,
+        "startChar": 23,
+        "endLine": 246,
+        "endChar": 24
+      },
+      "revId": "d72b2cd2fa10dbfe876e8cab2de44e39346861d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "af1934f9_6835db62",
         "filename": "net/test/spawned_test_server/spawner_communicator.cc",
         "patchSetId": 4
@@ -160,6 +304,30 @@
       "revId": "d72b2cd2fa10dbfe876e8cab2de44e39346861d8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91ab268b_30e3128f",
+        "filename": "net/test/spawned_test_server/spawner_communicator.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-08-25T19:01:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "af1934f9_6835db62",
+      "range": {
+        "startLine": 248,
+        "startChar": 16,
+        "endLine": 248,
+        "endChar": 34
+      },
+      "revId": "d72b2cd2fa10dbfe876e8cab2de44e39346861d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
