@@ -46,6 +46,30 @@
       "revId": "fcedf673250060284db832490b6b100772ac849b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ecc76b2_54088ffc",
+        "filename": "ios/chrome/browser/web/sad_tab_tab_helper_unittest.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-08-25T20:31:54Z",
+      "side": 0,
+      "message": "But both these tests were testing repeated failure, which is still important to test. Not through UI, but through |repeatedFailure| flag.",
+      "parentUuid": "592a786a_5962cab3",
+      "range": {
+        "startLine": 98,
+        "startChar": 28,
+        "endLine": 98,
+        "endChar": 57
+      },
+      "revId": "fcedf673250060284db832490b6b100772ac849b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
