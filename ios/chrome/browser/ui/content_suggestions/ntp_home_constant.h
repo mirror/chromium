@@ -9,6 +9,14 @@
 
 namespace ntp_home {
 
+enum PanelIdentifier {
+  kNone,
+  kHomePanel,
+  kBookmarksPanel,
+  kOpenTabsPanel,
+  kIncognitoPanel,
+};
+
 // Type of content displayed when a NTP is opened, for UMA report. It should be
 // treated as append-only.
 // These match tools/metrics/histograms/enums.xml.

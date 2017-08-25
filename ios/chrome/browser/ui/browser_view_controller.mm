@@ -120,6 +120,7 @@
 #import "ios/chrome/browser/ui/commands/reading_list_add_command.h"
 #import "ios/chrome/browser/ui/commands/show_mail_composer_command.h"
 #import "ios/chrome/browser/ui/commands/start_voice_search_command.h"
+#import "ios/chrome/browser/ui/content_suggestions/ntp_home_constant.h"
 #import "ios/chrome/browser/ui/context_menu/context_menu_coordinator.h"
 #import "ios/chrome/browser/ui/dialogs/dialog_presenter.h"
 #import "ios/chrome/browser/ui/dialogs/java_script_dialog_presenter_impl.h"
@@ -661,7 +662,7 @@ bool IsURLAllowedInIncognito(const GURL& url) {
 // Show the bookmarks page.
 - (void)showAllBookmarks;
 // Shows a panel within the New Tab Page.
-- (void)showNTPPanel:(NewTabPage::PanelIdentifier)panel;
+- (void)showNTPPanel:(ntp_home::PanelIdentifier)panel;
 // Dismisses the "rate this app" dialog.
 - (void)dismissRateThisAppDialog;
 // Whether the given tab's URL is an application specific URL.
@@ -3271,7 +3272,7 @@ bubblePresenterForFeature:(const base::Feature&)feature
     pageController.swipeRecognizerProvider = self.sideSwipeController;
 
     // Panel is always NTP for iPhone.
-    NewTabPage::PanelIdentifier panelType = NewTabPage::kHomePanel;
+    ntp_home::PanelIdentifier panelType = ntp_home::kHomePanel;
 
     if (IsIPadIdiom()) {
       // New Tab Page can have multiple panels. Each panel is addressable
@@ -3285,7 +3286,7 @@ bubblePresenterForFeature:(const base::Feature&)feature
       // If the URL is chrome://newtab/, pre-select the panel based on the
       // #fragment.
       panelType = url_host == kChromeUIBookmarksHost
-                      ? NewTabPage::kBookmarksPanel
+                      ? ntp_home::kBookmarksPanel
                       : NewTabPage::IdentifierFromFragment(url.ref());
     }
     [pageController selectPanel:panelType];
@@ -4401,7 +4402,7 @@ bubblePresenterForFeature:(const base::Feature&)feature
     }
     case IDC_SHOW_OTHER_DEVICES: {
       if (IsIPadIdiom()) {
-        [self showNTPPanel:NewTabPage::kOpenTabsPanel];
+        [self showNTPPanel:ntp_home::kOpenTabsPanel];
       } else {
         UIViewController* controller = [RecentTabsPanelViewController
             controllerToPresentForBrowserState:_browserState
@@ -4631,7 +4632,7 @@ bubblePresenterForFeature:(const base::Feature&)feature
   [tab navigationManager]->LoadURLWithParams(params);
 }
 
-- (void)showNTPPanel:(NewTabPage::PanelIdentifier)panel {
+- (void)showNTPPanel:(ntp_home::PanelIdentifier)panel {
   DCHECK(self.visible || self.dismissingModal);
   GURL url(kChromeUINewTabURL);
   std::string fragment(NewTabPage::FragmentFromIdentifier(panel));
