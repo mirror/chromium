@@ -197,6 +197,24 @@
     },
     {
       "key": {
+        "uuid": "ae5283d1_43e194cf",
+        "filename": "ui/gfx/render_text_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 3725,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-08-25T14:35:19Z",
+      "side": 1,
+      "message": "Cool, thanks for the explanation and filing the Blink bug.",
+      "parentUuid": "26a2979a_0b4296a6",
+      "revId": "36ef7a12161d525d8294a93315fc2f1bb8e33600",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f78a1207_6cd2fcfe",
         "filename": "ui/gfx/render_text_unittest.cc",
         "patchSetId": 3
