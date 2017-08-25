@@ -1426,13 +1426,24 @@ public class PaymentRequestImpl implements PaymentRequest, PaymentRequestUI.Clie
     @Override
     public void abort() {
         if (mClient == null) return;
-        mClient.onAbort(!mPaymentAppRunning);
+
         if (mPaymentAppRunning) {
-            if (sObserverForTest != null) sObserverForTest.onPaymentRequestServiceUnableToAbort();
-        } else {
+            ((PaymentInstrument) mPaymentMethodsSection.getSelectedItem())
+                    .abortInvokePaymentApp(this);
+            return;
+        }
+        onInstrumentDetailsAborted(true);
+    }
+
+    @Override
+    public void onInstrumentDetailsAborted(boolean result) {
+        mClient.onAbort(result);
+        if (result) {
             closeClient();
             closeUI(true);
             mJourneyLogger.setAborted(AbortReason.ABORTED_BY_MERCHANT);
+        } else {
+            if (sObserverForTest != null) sObserverForTest.onPaymentRequestServiceUnableToAbort();
         }
     }
 
