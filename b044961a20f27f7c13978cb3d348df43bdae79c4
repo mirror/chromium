@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "58dc6a6c_da8dbfa8",
+        "filename": "ash/shell_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 563,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-08-25T07:39:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0576bc05_9226e613",
+      "revId": "b044961a20f27f7c13978cb3d348df43bdae79c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "77857e00_fa81bbbe",
         "filename": "ash/test/ash_test_helper.cc",
         "patchSetId": 5
@@ -54,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "f18c27e2_80c46628",
+        "filename": "ash/test/ash_test_helper.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-08-25T07:39:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9fbfbb35_d454ad7b",
+      "revId": "b044961a20f27f7c13978cb3d348df43bdae79c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4524e3be_aec8e84f",
         "filename": "ash/wallpaper/wallpaper_controller.cc",
         "patchSetId": 5
@@ -86,6 +122,24 @@
       "revId": "b044961a20f27f7c13978cb3d348df43bdae79c4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12a8c57b_c25cfe24",
+        "filename": "ash/wallpaper/wallpaper_controller.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-08-25T07:39:45Z",
+      "side": 1,
+      "message": "It turns out I forgot to add local state to the manifest overlay to make it work with classic ash so local state would never successfully connect.\n\nIt should work now. When the local state prefs become available, it calls CalculateWallpaperColors() so the window where the cached colours are unavailable should be small.",
+      "parentUuid": "2648e0bf_3c2a4119",
+      "revId": "b044961a20f27f7c13978cb3d348df43bdae79c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
