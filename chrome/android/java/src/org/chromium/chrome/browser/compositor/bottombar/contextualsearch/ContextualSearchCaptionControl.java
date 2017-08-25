@@ -13,19 +13,18 @@ import android.widget.TextView;
 
 import org.chromium.base.VisibleForTesting;
 import org.chromium.chrome.R;
+import org.chromium.chrome.browser.compositor.animation.AnimatedFloat;
+import org.chromium.chrome.browser.compositor.animation.CompositorAnimator;
 import org.chromium.chrome.browser.compositor.bottombar.OverlayPanel;
 import org.chromium.chrome.browser.compositor.bottombar.OverlayPanelAnimation;
 import org.chromium.chrome.browser.compositor.bottombar.OverlayPanelTextViewInflater;
-import org.chromium.chrome.browser.compositor.layouts.ChromeAnimation;
-import org.chromium.chrome.browser.compositor.layouts.ChromeAnimation.Animatable;
 import org.chromium.ui.resources.dynamics.DynamicResourceLoader;
 
 /**
  * Controls the Caption View that is shown at the bottom of the control and used
  * as a dynamic resource.
  */
-public class ContextualSearchCaptionControl extends OverlayPanelTextViewInflater
-        implements ChromeAnimation.Animatable<ContextualSearchCaptionControl.AnimationType> {
+public class ContextualSearchCaptionControl extends OverlayPanelTextViewInflater {
     private static final float ANIMATION_PERCENTAGE_ZERO = 0.f;
     private static final float ANIMATION_PERCENTAGE_COMPLETE = 1.f;
     private static final float EXPANDED_CAPTION_THRESHOLD = 0.5f;
@@ -36,13 +35,6 @@ public class ContextualSearchCaptionControl extends OverlayPanelTextViewInflater
      */
     @VisibleForTesting
     public static final int EXPANED_CAPTION_ID = R.string.contextmenu_open_in_new_tab;
-
-    /**
-     * Animation properties.
-     */
-    protected enum AnimationType {
-        APPEARANCE
-    }
 
     /**
      * The caption View.
@@ -79,7 +71,10 @@ public class ContextualSearchCaptionControl extends OverlayPanelTextViewInflater
      * ANIMATION_PERCENTAGE_COMPLETE when the Contextual Search bar is peeking and
      * ANIMATION_PERCENTAGE_ZERO when it is expanded.
      */
-    private float mAnimationPercentage = ANIMATION_PERCENTAGE_ZERO;
+    private final AnimatedFloat mAnimationPercentage = new AnimatedFloat();
+
+    /** The animator responsible for translating the caption. */
+    private CompositorAnimator mTranslateAnimator;
 
     /**
      * Whether a new snapshot has been captured by the system yet - this is false when we have
@@ -100,6 +95,7 @@ public class ContextualSearchCaptionControl extends OverlayPanelTextViewInflater
         super(panel, R.layout.contextual_search_caption_view, R.id.contextual_search_caption_view,
                 context, container, resourceLoader);
         mShouldShowExpandedCaption = shouldShowExpandedCaption;
+        mAnimationPercentage.set(ANIMATION_PERCENTAGE_ZERO);
     }
 
     /**
@@ -133,8 +129,8 @@ public class ContextualSearchCaptionControl extends OverlayPanelTextViewInflater
     public void onUpdateFromPeekToExpand(float percentage) {
         if (!mShouldShowExpandedCaption) {
             if (mHasPeekingCaption) {
-                mOverlayPanel.cancelAnimation(this, AnimationType.APPEARANCE);
-                mAnimationPercentage = 1.f - percentage;
+                if (mTranslateAnimator != null) mTranslateAnimator.cancel();
+                mAnimationPercentage.set(1.f - percentage);
             }
             return;
         }
@@ -154,7 +150,7 @@ public class ContextualSearchCaptionControl extends OverlayPanelTextViewInflater
 
             // If the peeking caption gets set while the bar is expanding, mAnimationPercentage
             // will stop getting updated. Set mAnimationPercentage to its complete value.
-            mAnimationPercentage = ANIMATION_PERCENTAGE_COMPLETE;
+            mAnimationPercentage.set(ANIMATION_PERCENTAGE_COMPLETE);
         } else {
             // If the expanded caption is not showing, set the caption text to the expanded
             // caption.
@@ -170,8 +166,10 @@ public class ContextualSearchCaptionControl extends OverlayPanelTextViewInflater
                 show();
             }
 
-            mAnimationPercentage = percentage;
-            if (mAnimationPercentage == ANIMATION_PERCENTAGE_ZERO) mShowingExpandedCaption = false;
+            mAnimationPercentage.set(percentage);
+            if (mAnimationPercentage.get() == ANIMATION_PERCENTAGE_ZERO) {
+                mShowingExpandedCaption = false;
+            }
         }
     }
 
@@ -181,7 +179,7 @@ public class ContextualSearchCaptionControl extends OverlayPanelTextViewInflater
     public void hide() {
         if (!mShowingExpandedCaption) {
             mIsVisible = false;
-            mAnimationPercentage = ANIMATION_PERCENTAGE_ZERO;
+            mAnimationPercentage.set(ANIMATION_PERCENTAGE_ZERO);
         }
         mHasPeekingCaption = false;
     }
@@ -213,7 +211,7 @@ public class ContextualSearchCaptionControl extends OverlayPanelTextViewInflater
         // If we don't yet have a snapshot captured, stay at zero.  See crbug.com/608914.
         if (!mDidCapture) return ANIMATION_PERCENTAGE_ZERO;
 
-        return mAnimationPercentage;
+        return mAnimationPercentage.get();
     }
 
     /**
@@ -259,18 +257,10 @@ public class ContextualSearchCaptionControl extends OverlayPanelTextViewInflater
     // ============================================================================================
 
     private void animateTransitionIn() {
-        mOverlayPanel.addToAnimation(this, AnimationType.APPEARANCE, ANIMATION_PERCENTAGE_ZERO,
-                ANIMATION_PERCENTAGE_COMPLETE, OverlayPanelAnimation.BASE_ANIMATION_DURATION_MS,
-                0, false, ANIMATION_INTERPOLATOR);
+        mTranslateAnimator = CompositorAnimator.ofAnimatedFloat(getContext(), mAnimationPercentage,
+                ANIMATION_PERCENTAGE_ZERO, ANIMATION_PERCENTAGE_COMPLETE,
+                OverlayPanelAnimation.BASE_ANIMATION_DURATION_MS);
+        mTranslateAnimator.setInterpolator(ANIMATION_INTERPOLATOR);
+        mTranslateAnimator.start();
     }
-
-    @Override
-    public void setProperty(AnimationType type, float value) {
-        if (type == AnimationType.APPEARANCE) {
-            mAnimationPercentage = value;
-        }
-    }
-
-    @Override
-    public void onPropertyAnimationFinished(AnimationType prop) {}
 }
