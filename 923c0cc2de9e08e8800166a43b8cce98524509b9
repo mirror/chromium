@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "92381162_03ceb827",
+        "filename": "gpu/command_buffer/service/feature_info.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1647,
+      "author": {
+        "id": 1115926
+      },
+      "writtenOn": "2017-08-25T17:08:05Z",
+      "side": 1,
+      "message": "I would prefer to have one enum histogram with four values:\nHAVE_R16, HAVE_L16, HAVE_R16_AND_L16, HAVE_NONE\n\n(or something similar)\nThis would tell us the overlap between R16 and L16 and would specifically call out how many users have one but not the other.",
+      "range": {
+        "startLine": 1647,
+        "startChar": 2,
+        "endLine": 1647,
+        "endChar": 23
+      },
+      "revId": "923c0cc2de9e08e8800166a43b8cce98524509b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
