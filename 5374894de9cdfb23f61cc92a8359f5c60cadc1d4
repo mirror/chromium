@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1c3079d7_2bd7a9af",
+        "filename": "third_party/WebKit/Source/devtools/front_end/bindings/ChangeableNetworkProject.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1230559
+      },
+      "writtenOn": "2017-08-25T05:47:56Z",
+      "side": 1,
+      "message": "Can we rename _uiSourceCodeCommitted/Changed \u003e _workingCopyCommitted/Changed?\n\nAlso, do we need to @override dispose and remove these listeners?",
+      "range": {
+        "startLine": 13,
+        "startChar": 85,
+        "endLine": 13,
+        "endChar": 107
+      },
+      "revId": "5374894de9cdfb23f61cc92a8359f5c60cadc1d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5618856_7ce4a69c",
+        "filename": "third_party/WebKit/Source/devtools/front_end/bindings/ChangeableNetworkProject.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1230559
+      },
+      "writtenOn": "2017-08-25T05:47:56Z",
+      "side": 1,
+      "message": "I think we don\u0027t really need to expose parsedURL().  How about just url.asParsedURL() here and remove the parsedURL() method from UISourceCode.js?",
+      "range": {
+        "startLine": 75,
+        "startChar": 33,
+        "endLine": 75,
+        "endChar": 42
+      },
+      "revId": "5374894de9cdfb23f61cc92a8359f5c60cadc1d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc73555f_4a335bbb",
+        "filename": "third_party/WebKit/Source/devtools/front_end/changes/ChangesSidebar.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1230559
+      },
+      "writtenOn": "2017-08-25T05:47:56Z",
+      "side": 1,
+      "message": "ChangeableNetworkProject only adds uiSCodes that are in the Network project, do we need this extra project.type \u003d\u003d\u003d Network check?",
+      "range": {
+        "startLine": 42,
+        "startChar": 65,
+        "endLine": 42,
+        "endChar": 72
+      },
+      "revId": "5374894de9cdfb23f61cc92a8359f5c60cadc1d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "175e0e30_1210a7c0",
+        "filename": "third_party/WebKit/Source/devtools/front_end/changes/ChangesSidebar.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1230559
+      },
+      "writtenOn": "2017-08-25T05:47:56Z",
+      "side": 1,
+      "message": "nit: true /* enabled */",
+      "range": {
+        "startLine": 100,
+        "startChar": 64,
+        "endLine": 100,
+        "endChar": 68
+      },
+      "revId": "5374894de9cdfb23f61cc92a8359f5c60cadc1d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5c8a4b0_bad8fa5c",
+        "filename": "third_party/WebKit/Source/devtools/front_end/changes/ChangesSidebar.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1230559
+      },
+      "writtenOn": "2017-08-25T05:47:56Z",
+      "side": 1,
+      "message": "If there is only one ChangesSidebar Interceptor that\u0027s always enabled, should we just pass enabled: true?",
+      "range": {
+        "startLine": 142,
+        "startChar": 10,
+        "endLine": 142,
+        "endChar": 17
+      },
+      "revId": "5374894de9cdfb23f61cc92a8359f5c60cadc1d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1295ceb_9f70e6e4",
+        "filename": "third_party/WebKit/Source/devtools/front_end/changes/ChangesSidebar.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1230559
+      },
+      "writtenOn": "2017-08-25T05:47:56Z",
+      "side": 1,
+      "message": "Does this setURL() need to set this._currentURL \u003d url?",
+      "range": {
+        "startLine": 151,
+        "startChar": 3,
+        "endLine": 151,
+        "endChar": 0
+      },
+      "revId": "5374894de9cdfb23f61cc92a8359f5c60cadc1d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
