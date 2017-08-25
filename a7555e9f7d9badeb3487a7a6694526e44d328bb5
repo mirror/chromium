@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3b5b649a_8570ff26",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/metrics/PageLoadMetrics.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-08-25T18:52:50Z",
+      "side": 1,
+      "message": "Should the first letter be lower case similar to other strings above?\nSame comment for \"TransportRtt\" below.",
+      "range": {
+        "startLine": 30,
+        "startChar": 43,
+        "endLine": 30,
+        "endChar": 50
+      },
+      "revId": "a7555e9f7d9badeb3487a7a6694526e44d328bb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6a12cf3_03a49a3c",
+        "filename": "chrome/browser/page_load_metrics/observers/android_page_load_metrics_observer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-08-25T18:52:50Z",
+      "side": 1,
+      "message": "did you mean milliseconds?\nIn PageLoadMetrics.java, the comment implies that the units are milliseconds?\n\nSame comment below for transport rtt.",
+      "range": {
+        "startLine": 47,
+        "startChar": 53,
+        "endLine": 47,
+        "endChar": 66
+      },
+      "revId": "a7555e9f7d9badeb3487a7a6694526e44d328bb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
