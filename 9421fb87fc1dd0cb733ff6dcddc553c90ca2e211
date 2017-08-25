@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "060070fe_8aeb1be7",
+        "filename": "components/download/internal/navigation_monitor_impl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1197289
+      },
+      "writtenOn": "2017-08-25T21:34:09Z",
+      "side": 1,
+      "message": "nit: Maybe we can pass the delay in Start function.",
+      "range": {
+        "startLine": 25,
+        "startChar": 7,
+        "endLine": 25,
+        "endChar": 16
+      },
+      "revId": "9421fb87fc1dd0cb733ff6dcddc553c90ca2e211",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "caf3060a_14a28b17",
+        "filename": "components/download/internal/navigation_monitor_impl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1197289
+      },
+      "writtenOn": "2017-08-25T21:34:09Z",
+      "side": 1,
+      "message": "I think this function is ok to live in the interface, so in controller_impl.cc, we don\u0027t need to down cast, which is not flexible for testing.",
+      "range": {
+        "startLine": 30,
+        "startChar": 7,
+        "endLine": 30,
+        "endChar": 29
+      },
+      "revId": "9421fb87fc1dd0cb733ff6dcddc553c90ca2e211",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe67b257_07388af5",
+        "filename": "components/download/internal/navigation_monitor_impl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1197289
+      },
+      "writtenOn": "2017-08-25T21:34:09Z",
+      "side": 1,
+      "message": "I can make NavigationMonitor outlive Download service in my CL, we don\u0027t have to use WeakPtr and associated callbacks here.",
+      "range": {
+        "startLine": 43,
+        "startChar": 46,
+        "endLine": 43,
+        "endChar": 63
+      },
+      "revId": "9421fb87fc1dd0cb733ff6dcddc553c90ca2e211",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
