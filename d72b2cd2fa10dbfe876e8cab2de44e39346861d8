@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dd61bff0_4896e1d5",
+        "filename": "net/test/spawned_test_server/spawner_communicator.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-08-25T16:29:04Z",
+      "side": 1,
+      "message": "This seems worse to me (More branching -\u003e harder to read)",
+      "range": {
+        "startLine": 120,
+        "startChar": 21,
+        "endLine": 120,
+        "endChar": 0
+      },
+      "revId": "d72b2cd2fa10dbfe876e8cab2de44e39346861d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf2eb98f_4f28d6e5",
+        "filename": "net/test/spawned_test_server/spawner_communicator.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-08-25T16:29:04Z",
+      "side": 1,
+      "message": "Bug:  I think you need to start the timer.",
+      "range": {
+        "startLine": 191,
+        "startChar": 49,
+        "endLine": 191,
+        "endChar": 0
+      },
+      "revId": "d72b2cd2fa10dbfe876e8cab2de44e39346861d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ffc2a0b1_c0df7b9d",
+        "filename": "net/test/spawned_test_server/spawner_communicator.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-08-25T16:29:04Z",
+      "side": 1,
+      "message": "I don\u0027t think we need a timer and a weak pointer?  We can just get rid of weak_factory_, if this is all it\u0027s used for.",
+      "range": {
+        "startLine": 193,
+        "startChar": 50,
+        "endLine": 193,
+        "endChar": 63
+      },
+      "revId": "d72b2cd2fa10dbfe876e8cab2de44e39346861d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8cb99e7_77f24250",
+        "filename": "net/test/spawned_test_server/spawner_communicator.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-08-25T16:29:04Z",
+      "side": 1,
+      "message": "Just use a OneshotTimer?",
+      "range": {
+        "startLine": 194,
+        "startChar": 23,
+        "endLine": 194,
+        "endChar": 28
+      },
+      "revId": "d72b2cd2fa10dbfe876e8cab2de44e39346861d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1a86f6e_a8d22766",
+        "filename": "net/test/spawned_test_server/spawner_communicator.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-08-25T16:29:04Z",
+      "side": 1,
+      "message": "This should really be handled when we read the headers, not after we\u0027ve read the body (Which we don\u0027t care about, on error)",
+      "range": {
+        "startLine": 228,
+        "startChar": 22,
+        "endLine": 228,
+        "endChar": 37
+      },
+      "revId": "d72b2cd2fa10dbfe876e8cab2de44e39346861d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "411e1eb0_d0805f2d",
+        "filename": "net/test/spawned_test_server/spawner_communicator.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-08-25T16:29:04Z",
+      "side": 1,
+      "message": "Rather than destroying and re-creating a timer, just create on on cretion?  Don\u0027t think using a unique_ptr really gets us anything here.",
+      "range": {
+        "startLine": 246,
+        "startChar": 23,
+        "endLine": 246,
+        "endChar": 24
+      },
+      "revId": "d72b2cd2fa10dbfe876e8cab2de44e39346861d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af1934f9_6835db62",
+        "filename": "net/test/spawned_test_server/spawner_communicator.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-08-25T16:29:04Z",
+      "side": 1,
+      "message": "No longer needed.",
+      "range": {
+        "startLine": 248,
+        "startChar": 16,
+        "endLine": 248,
+        "endChar": 34
+      },
+      "revId": "d72b2cd2fa10dbfe876e8cab2de44e39346861d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
