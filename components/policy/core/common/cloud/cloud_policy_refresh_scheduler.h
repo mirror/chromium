@@ -124,8 +124,7 @@ class POLICY_EXPORT CloudPolicyRefreshScheduler
   // |RefreshNow|).
   bool is_scheduled_for_soon_ = false;
 
-  // The last time a refresh callback completed. Is null in case the client is
-  // not registered.
+  // The last time a policy fetch was attempted or completed.
   base::Time last_refresh_;
 
   // The same |last_refresh_|, but based on TimeTicks. This allows to schedule
