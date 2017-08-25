@@ -4,6 +4,7 @@
 
 #include "chrome/browser/feature_engagement/feature_tracker.h"
 
+#include "base/metrics/field_trial_params.h"
 #include "base/time/time.h"
 #include "chrome/browser/feature_engagement/tracker_factory.h"
 #include "components/feature_engagement/public/event_constants.h"
@@ -34,6 +35,10 @@ bool FeatureTracker::IsObserving() {
   return session_duration_observer_.IsObserving(session_duration_updater_);
 }
 
+bool FeatureTracker::ShouldShowPromo(const base::Feature& feature) {
+  return GetTracker()->ShouldTriggerHelpUI(feature);
+}
+
 Tracker* FeatureTracker::GetTracker() const {
   return TrackerFactory::GetForBrowserContext(profile_);
 }
@@ -45,10 +50,24 @@ void FeatureTracker::OnSessionEnded(base::TimeDelta total_session_time) {
   }
 }
 
+base::TimeDelta FeatureTracker::GetSessionTimeRequiredToShowForFeature(
+    const base::Feature& feature,
+    int defaultRequiredTime) {
+  if (!field_trial_minutes_value_) {
+    field_trial_minutes_value_ = base::Optional<std::string>(
+        base::GetFieldTrialParamValueByFeature(feature, "x_minutes"));
+  }
+
+  return field_trial_minutes_value_.value().empty()
+             ? base::TimeDelta::FromMinutes(defaultRequiredTime)
+             : base::TimeDelta::FromMinutes(
+                   std::stoi(field_trial_minutes_value_.value(), nullptr));
+}
+
 bool FeatureTracker::HasEnoughSessionTimeElapsed(
     base::TimeDelta total_session_time) {
   return total_session_time.InMinutes() >=
-         GetSessionTimeRequiredToShowInMinutes();
+         GetSessionTimeRequiredToShow().InMinutes();
 }
 
 }  // namespace feature_engagement

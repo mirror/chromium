@@ -4,7 +4,6 @@
 
 #include "chrome/browser/feature_engagement/new_tab/new_tab_tracker.h"
 
-#include "base/feature_list.h"
 #include "base/time/time.h"
 #include "chrome/browser/feature_engagement/tracker_factory.h"
 #include "chrome/browser/metrics/desktop_session_duration/desktop_session_duration_tracker.h"
@@ -41,7 +40,7 @@ void NewTabTracker::OnOmniboxNavigation() {
 }
 
 void NewTabTracker::OnOmniboxFocused() {
-  if (ShouldShowPromo())
+  if (ShouldShowPromo(kIPHNewTabFeature))
     ShowPromo();
 }
 
@@ -49,16 +48,13 @@ void NewTabTracker::OnPromoClosed() {
   GetTracker()->Dismissed(kIPHNewTabFeature);
 }
 
-bool NewTabTracker::ShouldShowPromo() {
-  return GetTracker()->ShouldTriggerHelpUI(kIPHNewTabFeature);
-}
-
 void NewTabTracker::OnSessionTimeMet() {
   GetTracker()->NotifyEvent(events::kNewTabSessionTimeMet);
 }
 
-int NewTabTracker::GetSessionTimeRequiredToShowInMinutes() {
-  return kTwoHoursInMinutes;
+base::TimeDelta NewTabTracker::GetSessionTimeRequiredToShowInMinutes() {
+  return GetSessionTimeRequiredToShowForFeature(kIPHNewTabFeature,
+                                                kTwoHoursInMinutes);
 }
 
 void NewTabTracker::ShowPromo() {
