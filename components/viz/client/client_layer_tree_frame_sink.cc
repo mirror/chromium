@@ -5,6 +5,7 @@
 #include "components/viz/client/client_layer_tree_frame_sink.h"
 
 #include "base/bind.h"
+#include "base/command_line.h"
 #include "base/memory/ptr_util.h"
 #include "base/trace_event/trace_event.h"
 #include "cc/output/compositor_frame.h"
@@ -13,6 +14,7 @@
 #include "components/viz/client/local_surface_id_provider.h"
 #include "components/viz/common/frame_sinks/begin_frame_args.h"
 #include "components/viz/common/resources/shared_bitmap_manager.h"
+#include "services/ui/common/switches.h"
 
 namespace viz {
 
@@ -31,7 +33,6 @@ ClientLayerTreeFrameSink::ClientLayerTreeFrameSink(
                              std::move(worker_context_provider),
                              gpu_memory_buffer_manager,
                              shared_bitmap_manager),
-      hit_test_data_provider_(std::move(hit_test_data_provider)),
       local_surface_id_provider_(std::move(local_surface_id_provider)),
       synthetic_begin_frame_source_(std::move(synthetic_begin_frame_source)),
       compositor_frame_sink_info_(std::move(compositor_frame_sink_info)),
@@ -39,6 +40,10 @@ ClientLayerTreeFrameSink::ClientLayerTreeFrameSink(
       client_binding_(this),
       enable_surface_synchronization_(enable_surface_synchronization),
       weak_factory_(this) {
+  if (base::CommandLine::ForCurrentProcess()->HasSwitch(
+          ui::switches::kUseVizHitTest))
+    hit_test_data_provider_ = std::move(hit_test_data_provider);
+
   DETACH_FROM_THREAD(thread_checker_);
 }
 
@@ -59,6 +64,10 @@ ClientLayerTreeFrameSink::ClientLayerTreeFrameSink(
       client_binding_(this),
       enable_surface_synchronization_(enable_surface_synchronization),
       weak_factory_(this) {
+  if (base::CommandLine::ForCurrentProcess()->HasSwitch(
+          ui::switches::kUseVizHitTest))
+    hit_test_data_provider_ = std::move(hit_test_data_provider);
+
   DETACH_FROM_THREAD(thread_checker_);
 }
 
@@ -129,8 +138,10 @@ void ClientLayerTreeFrameSink::SubmitCompositorFrame(
   TRACE_EVENT_CATEGORY_GROUP_ENABLED(TRACE_DISABLED_BY_DEFAULT("cc.debug.ipc"),
                                      &tracing_enabled);
 
-  // TODO(gklassen): Use hit_test_data_provider_->GetHitTestData() to obtain
-  // hit-test data and send to |compositor_frame_sink_|.
+  mojom::HitTestRegionListPtr hit_test_region_list;
+  if (hit_test_data_provider_)
+    hit_test_region_list = hit_test_data_provider_->GetHitTestData();
+
   compositor_frame_sink_->SubmitCompositorFrame(
       local_surface_id_, std::move(frame), nullptr,
       tracing_enabled ? base::TimeTicks::Now().since_origin().InMicroseconds()
