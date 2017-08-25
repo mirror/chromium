@@ -22,6 +22,7 @@ struct CompositorFrameMetadata {
   bool root_overflow_x_hidden;
   bool root_overflow_y_hidden;
   bool may_contain_video;
+  bool is_mobile_optimized;
   bool is_resourceless_software_draw_with_scroll_or_animation;
   float top_controls_height;
   float top_controls_shown_ratio;

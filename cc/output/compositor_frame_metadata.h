@@ -48,6 +48,7 @@ class CC_EXPORT CompositorFrameMetadata {
   bool root_overflow_x_hidden = false;
   bool root_overflow_y_hidden = false;
   bool may_contain_video = false;
+  bool is_mobile_optimized = false;
 
   // WebView makes quality decisions for rastering resourceless software frames
   // based on information that a scroll or animation is active.

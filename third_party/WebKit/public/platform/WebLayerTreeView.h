@@ -102,6 +102,11 @@ class WebLayerTreeView {
                                            float minimum,
                                            float maximum) {}
 
+  // Sets whether or not the current page is considered to be optimized for
+  // mobile devices. This is used to disable features specific to legacy
+  // desktop-style pages.
+  virtual void SetIsMobileOptimized(bool) {}
+
   // Starts an animation of the page scale to a target scale factor and scroll
   // offset.
   // If useAnchor is true, destination is a point on the screen that will remain

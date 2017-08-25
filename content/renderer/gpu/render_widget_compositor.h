@@ -136,6 +136,7 @@ class CONTENT_EXPORT RenderWidgetCompositor
   void SetPageScaleFactorAndLimits(float page_scale_factor,
                                    float minimum,
                                    float maximum) override;
+  void SetIsMobileOptimized(bool) override;
   void StartPageScaleAnimation(const blink::WebPoint& destination,
                                bool use_anchor,
                                float new_page_scale,

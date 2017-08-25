@@ -4002,6 +4002,9 @@ void WebViewImpl::UpdateLayerTreeViewport() {
   if (!GetPage() || !layer_tree_view_)
     return;
 
+  layer_tree_view_->SetIsMobileOptimized(
+      GetPage()->GetVisualViewport().ShouldDisableDesktopWorkarounds());
+
   layer_tree_view_->SetPageScaleFactorAndLimits(
       PageScaleFactor(), MinimumPageScaleFactor(), MaximumPageScaleFactor());
 }

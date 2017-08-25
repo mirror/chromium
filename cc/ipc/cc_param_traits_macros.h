@@ -192,6 +192,7 @@ IPC_STRUCT_TRAITS_BEGIN(cc::CompositorFrameMetadata)
   IPC_STRUCT_TRAITS_MEMBER(root_overflow_y_hidden)
   IPC_STRUCT_TRAITS_MEMBER(root_overflow_y_hidden)
   IPC_STRUCT_TRAITS_MEMBER(may_contain_video)
+  IPC_STRUCT_TRAITS_MEMBER(is_mobile_optimized)
   IPC_STRUCT_TRAITS_MEMBER(
       is_resourceless_software_draw_with_scroll_or_animation)
   IPC_STRUCT_TRAITS_MEMBER(top_controls_height)

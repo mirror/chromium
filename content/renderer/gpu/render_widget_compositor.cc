@@ -826,6 +826,10 @@ void RenderWidgetCompositor::SetPageScaleFactorAndLimits(
                                                 maximum);
 }
 
+void RenderWidgetCompositor::SetIsMobileOptimized(bool is_mobile_optimized) {
+  layer_tree_host_->SetIsMobileOptimized(is_mobile_optimized);
+}
+
 void RenderWidgetCompositor::StartPageScaleAnimation(
     const blink::WebPoint& destination,
     bool use_anchor,

@@ -280,6 +280,79 @@ IN_PROC_BROWSER_TEST_F(RenderWidgetHostViewBrowserTestBase,
   FrameWatcher(web_contents).WaitFrames(5);
 }
 
+IN_PROC_BROWSER_TEST_F(RenderWidgetHostViewBrowserTestBase,
+                       MobileOptimizedPage) {
+  ASSERT_TRUE(embedded_test_server()->Start());
+  auto* web_contents = shell()->web_contents();
+  bool is_mobile_optimized;
+
+  // Load a non-overflowing page with a mobile layout.
+  {
+    NavigateToURL(shell(), embedded_test_server()->GetURL(
+                               "/mobile_optimized.html?type=meta"));
+
+    FrameWatcher(web_contents).WaitFrames(1);
+
+    is_mobile_optimized =
+        FrameWatcher(web_contents).LastMetadata().is_mobile_optimized;
+
+// Only Chrome on Android reads the viewport meta tag so desktops should
+// report all pages as non-mobile optimized.
+#if defined(OS_ANDROID)
+    EXPECT_TRUE(is_mobile_optimized);
+#else
+    EXPECT_FALSE(is_mobile_optimized);
+#endif
+  }
+
+  // Load a plain page with no meta tag.
+  {
+    NavigateToURL(shell(), embedded_test_server()->GetURL(
+                               "/mobile_optimized.html?type=nometa"));
+
+    FrameWatcher(web_contents).WaitFrames(1);
+
+    is_mobile_optimized =
+        FrameWatcher(web_contents).LastMetadata().is_mobile_optimized;
+
+    EXPECT_FALSE(is_mobile_optimized);
+  }
+
+  // Load a wide, overflowing page with a mobile layout.
+  {
+    NavigateToURL(shell(), embedded_test_server()->GetURL(
+                               "/mobile_optimized.html?type=metawide"));
+
+    FrameWatcher(web_contents).WaitFrames(1);
+
+    is_mobile_optimized =
+        FrameWatcher(web_contents).LastMetadata().is_mobile_optimized;
+
+#if defined(OS_ANDROID)
+    EXPECT_TRUE(is_mobile_optimized);
+#else
+    EXPECT_FALSE(is_mobile_optimized);
+#endif
+  }
+
+  // Load a page that has zoom disabled.
+  {
+    NavigateToURL(shell(), embedded_test_server()->GetURL(
+                               "/mobile_optimized.html?type=fixedzoom"));
+
+    FrameWatcher(web_contents).WaitFrames(1);
+
+    is_mobile_optimized =
+        FrameWatcher(web_contents).LastMetadata().is_mobile_optimized;
+
+#if defined(OS_ANDROID)
+    EXPECT_TRUE(is_mobile_optimized);
+#else
+    EXPECT_FALSE(is_mobile_optimized);
+#endif
+  }
+}
+
 enum CompositingMode {
   GL_COMPOSITING,
   SOFTWARE_COMPOSITING,
