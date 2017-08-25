@@ -40,7 +40,7 @@ class AXPlatformNodeAuraLinux : public AXPlatformNodeBase {
 
   // AXPlatformNode overrides.
   gfx::NativeViewAccessible GetNativeViewAccessible() override;
-  void NotifyAccessibilityEvent(ui::AXEvent event_type) override;
+  void NotifyAccessibilityEvent(AXEvent event_type) override;
 
   // AXPlatformNodeBase overrides.
   void Init(AXPlatformNodeDelegate* delegate) override;
