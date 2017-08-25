@@ -1975,7 +1975,6 @@ void RenderFrameHostImpl::OnVisualStateResponse(uint64_t id) {
 void RenderFrameHostImpl::OnRunJavaScriptDialog(
     const base::string16& message,
     const base::string16& default_prompt,
-    const GURL& frame_url,
     JavaScriptDialogType dialog_type,
     IPC::Message* reply_msg) {
   if (IsWaitingForUnloadACK()) {
@@ -1993,8 +1992,8 @@ void RenderFrameHostImpl::OnRunJavaScriptDialog(
   // While a JS message dialog is showing, tabs in the same process shouldn't
   // process input events.
   GetProcess()->SetIgnoreInputEvents(true);
-  delegate_->RunJavaScriptDialog(this, message, default_prompt, frame_url,
-                                 dialog_type, reply_msg);
+  delegate_->RunJavaScriptDialog(this, message, default_prompt,
+                                 GetLastCommittedURL(), dialog_type, reply_msg);
 }
 
 void RenderFrameHostImpl::OnRunBeforeUnloadConfirm(
