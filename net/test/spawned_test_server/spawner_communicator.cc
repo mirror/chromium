@@ -33,12 +33,6 @@ namespace net {
 
 namespace {
 
-GURL GenerateSpawnerCommandURL(const std::string& command, uint16_t port) {
-  // Always performs HTTP request for sending command to the spawner server.
-  return GURL(base::StringPrintf("%s:%u/%s", "http://127.0.0.1", port,
-                                 command.c_str()));
-}
-
 int kBufferSize = 2048;
 
 // A class to hold all data needed to send a command to spawner server.
@@ -107,11 +101,11 @@ class SpawnerRequestData : public base::SupportsUserData::Data {
 
 }  // namespace
 
-SpawnerCommunicator::SpawnerCommunicator(uint16_t port)
-    : io_thread_("spawner_communicator"),
+SpawnerCommunicator::SpawnerCommunicator(const SpawnedTestServerConfig& config)
+    : config_(config),
+      io_thread_("spawner_communicator"),
       event_(base::WaitableEvent::ResetPolicy::AUTOMATIC,
              base::WaitableEvent::InitialState::NOT_SIGNALED),
-      port_(port),
       next_id_(0),
       is_running_(false),
       weak_factory_(this) {}
@@ -131,7 +125,6 @@ void SpawnerCommunicator::StartIOThread() {
   if (is_running_)
     return;
 
-  allowed_port_.reset(new ScopedPortException(port_));
   base::Thread::Options options;
   options.message_loop_type = base::MessageLoop::TYPE_IO;
   is_running_ = io_thread_.StartWithOptions(options);
@@ -184,8 +177,10 @@ void SpawnerCommunicator::SendCommandAndWaitForResultOnIOThread(
   // Prepare the URLRequest for sending the command.
   DCHECK(!cur_request_.get());
   context_.reset(new TestURLRequestContext);
-  cur_request_ = context_->CreateRequest(
-      GenerateSpawnerCommandURL(command, port_), DEFAULT_PRIORITY, this);
+  GURL url = config_.GetSpawnerUrl(command);
+  allowed_port_ = std::make_unique<ScopedPortException>(url.EffectiveIntPort());
+  cur_request_ = context_->CreateRequest(url, DEFAULT_PRIORITY, this);
+
   DCHECK(cur_request_);
   int current_request_id = ++next_id_;
   cur_request_->SetUserData(

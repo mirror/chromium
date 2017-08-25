@@ -18,6 +18,7 @@
 #include "base/memory/ref_counted.h"
 #include "net/base/host_port_pair.h"
 #include "net/ssl/ssl_client_cert_type.h"
+#include "net/test/spawned_test_server/spawned_test_server_config.h"
 
 class GURL;
 
@@ -385,8 +386,10 @@ class BaseTestServer {
   virtual bool GenerateAdditionalArguments(
       base::DictionaryValue* arguments) const WARN_UNUSED_RESULT;
 
+  const SpawnedTestServerConfig& config() const { return config_; }
+
  private:
-  void Init(const std::string& host);
+  void Init();
 
   // Document root of the test server.
   base::FilePath document_root_;
@@ -405,6 +408,8 @@ class BaseTestServer {
   SSLOptions ssl_options_;
 
   Type type_;
+
+  SpawnedTestServerConfig config_;
 
   // Has the server been started?
   bool started_ = false;
