@@ -190,6 +190,30 @@
       "revId": "4e5a42c44befc4ec8fca84180e780df5e0557ba5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26d5829d_70f4c9d4",
+        "filename": "build/config/c++/c++.gni",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1176174
+      },
+      "writtenOn": "2017-08-25T20:10:05Z",
+      "side": 1,
+      "message": "oh, derp, this doesn\u0027t actually do what I need it to, since it won\u0027t set use_custom_libcxx \u003d false if use_custom_libcxx_on_host is true and current_cpu \u003d\u003d target_cpu, since it will still evaluate true from the is_linux \u0026\u0026 is_clang clause.",
+      "parentUuid": "de2830a3_f8ef2d05",
+      "range": {
+        "startLine": 11,
+        "startChar": 4,
+        "endLine": 11,
+        "endChar": 68
+      },
+      "revId": "4e5a42c44befc4ec8fca84180e780df5e0557ba5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
