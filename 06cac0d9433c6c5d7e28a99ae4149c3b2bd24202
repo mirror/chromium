@@ -22,6 +22,30 @@
       "revId": "06cac0d9433c6c5d7e28a99ae4149c3b2bd24202",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d068de31_68971e0c",
+        "filename": "components/crash/content/app/crash_export_thunks.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1177549
+      },
+      "writtenOn": "2017-08-25T17:37:40Z",
+      "side": 1,
+      "message": "I hear what you\u0027re saying, and IMHO all of these functions should be renamed to something more unique and descriptive. I\u0027d like to limit this CL to just moving things around and getting/keeping things working. After all the things are link-time bound, it\u0027d be easier to do that sort of renaming, IMHO.\n\nRenaming the SyzyASAN-required exports will also require changes in Syzygy-land, ideally ahead of time, as Syzygy acquires these by module/export name :(.",
+      "parentUuid": "12b2378b_e94e95f0",
+      "range": {
+        "startLine": 34,
+        "startChar": 9,
+        "endLine": 34,
+        "endChar": 42
+      },
+      "revId": "06cac0d9433c6c5d7e28a99ae4149c3b2bd24202",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

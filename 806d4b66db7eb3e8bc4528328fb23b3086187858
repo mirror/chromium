@@ -45,6 +45,30 @@
       "revId": "806d4b66db7eb3e8bc4528328fb23b3086187858",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ce98563_4e0624b4",
+        "filename": "chrome/browser/metrics/chrome_metrics_services_manager_client.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 1177549
+      },
+      "writtenOn": "2017-08-25T17:37:40Z",
+      "side": 0,
+      "message": "Oops, done, thanks. Also; Oops, done, thanks :).",
+      "parentUuid": "535cb310_33911f00",
+      "range": {
+        "startLine": 283,
+        "startChar": 4,
+        "endLine": 285,
+        "endChar": 66
+      },
+      "revId": "806d4b66db7eb3e8bc4528328fb23b3086187858",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
