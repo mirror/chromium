@@ -46,6 +46,30 @@
       "revId": "41c72aee515590542e3c7cfba4538a35c8d5f76a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f9fb0850_91fefe5b",
+        "filename": "chrome/browser/feature_engagement/feature_tracker.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-08-25T17:01:52Z",
+      "side": 1,
+      "message": "Holding on to a string is heavier weight than holding on to two numbers.\n\nThis can be\nbase::TimeDelta session_time_required_to_show_;\nbool has_retrieved_field_trial_minutes_;\n\nsession_time_required_to_show_ \u003d default or the field trial resolved TimeDelta.\n\nIf we pass the feature down at construction time, can this be initialized at construction time, especially if all subclasses will need this?\nThat would also get rid of the bool.",
+      "parentUuid": "bb4f52cc_7c4542af",
+      "range": {
+        "startLine": 86,
+        "startChar": 2,
+        "endLine": 90,
+        "endChar": 49
+      },
+      "revId": "41c72aee515590542e3c7cfba4538a35c8d5f76a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
