@@ -46,6 +46,30 @@
       "revId": "b99a2ec0821bdaa7670e45d223c93ede29eec616",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e157d897_35e4645e",
+        "filename": "services/ui/ws/window_tree.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1469,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-25T14:34:46Z",
+      "side": 1,
+      "message": "Connections established through an embed see the window they are embedded at. This window was created by the connection doing the embed. in the case of browser-renderer, the renderer sees the window it is embedded in (which is the window created by RenderWidgetHostViewAura). But I think this means I\u0027m wrong, we have to do what as you are saying. If there is no high-word use id_.",
+      "parentUuid": "f04e9af6_517fbd6a",
+      "range": {
+        "startLine": 1469,
+        "startChar": 6,
+        "endLine": 1469,
+        "endChar": 35
+      },
+      "revId": "b99a2ec0821bdaa7670e45d223c93ede29eec616",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

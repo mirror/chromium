@@ -213,6 +213,30 @@
       "revId": "0e2cc9a6cd3def87cb99e4d9b3954b8e65e2e275",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4a48866_10f364b4",
+        "filename": "services/ui/ws/window_tree.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 431,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-25T14:34:46Z",
+      "side": 1,
+      "message": "Think of if you were writing this code from scratch. What would you do?\n\nI think having the separate function is confusing and easy to get wrong, resulting in bad test coverage.",
+      "parentUuid": "5351e64e_cdb7c6f3",
+      "range": {
+        "startLine": 431,
+        "startChar": 2,
+        "endLine": 431,
+        "endChar": 41
+      },
+      "revId": "0e2cc9a6cd3def87cb99e4d9b3954b8e65e2e275",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
