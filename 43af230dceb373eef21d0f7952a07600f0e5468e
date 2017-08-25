@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "5fcb37e6_0f2a58de",
+        "filename": "chromeos/dbus/cryptohome_client.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 925,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-08-25T03:49:05Z",
+      "side": 1,
+      "message": "People often forget to finish clean up tasks after their feature started working.\nCould you at least add a TODO with your name to make the C++ method name same to the D-Bus method name?",
+      "parentUuid": "d207e70f_1deedd53",
+      "revId": "43af230dceb373eef21d0f7952a07600f0e5468e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3af8dc90_512d70b7",
         "filename": "chromeos/dbus/cryptohome_client.cc",
         "patchSetId": 10
@@ -66,6 +84,24 @@
       "side": 1,
       "message": "Good point - this has to be done in cros_system_api which is pulled from the Chrome OS side.\nI\u0027ll add this in \nhttps://chromium-review.googlesource.com/c/chromiumos/platform/system_api/+/632476\nand switch to using that constant when it lands.",
       "parentUuid": "3af8dc90_512d70b7",
+      "revId": "43af230dceb373eef21d0f7952a07600f0e5468e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad05c4a0_f2bdf1b7",
+        "filename": "chromeos/dbus/cryptohome_client.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 929,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-08-25T03:49:05Z",
+      "side": 1,
+      "message": "That\u0027s what I meant.\nPlease do that before landing this change.",
+      "parentUuid": "8cb7c4ab_613362a6",
       "revId": "43af230dceb373eef21d0f7952a07600f0e5468e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
