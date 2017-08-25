@@ -4,13 +4,16 @@
 
 #include "base/synchronization/waitable_event.h"
 
+#include <dispatch/dispatch.h>
 #include <mach/mach.h>
 #include <sys/event.h>
 
 #include "base/debug/activity_tracker.h"
 #include "base/files/scoped_file.h"
+#include "base/mac/dispatch_source_mach.h"
 #include "base/mac/mac_util.h"
 #include "base/mac/mach_logging.h"
+#include "base/mac/scoped_dispatch_object.h"
 #include "base/posix/eintr_wrapper.h"
 #include "base/threading/thread_restrictions.h"
 #include "build/build_config.h"
@@ -169,14 +172,15 @@ size_t WaitableEvent::WaitMany(WaitableEvent** raw_waitables, size_t count) {
 
   // On macOS 10.11+, using Mach port sets may cause system instability, per
   // https://crbug.com/756102. On macOS 10.12+, a kqueue can be used
-  // instead to work around that. But on macOS 10.9-10.11, kqueue only works
-  // for port sets. On those platforms, port sets are just used directly. This
-  // does leave 10.11 susceptible to instability, though.
-  // TODO(rsesek): See if a libdispatch solution works on 10.11.
+  // instead to work around that. On macOS 10.9 and 10.10, kqueue only works
+  // for port sets, so port sets are just used directly. On macOS 10.11,
+  // libdispatch sources are used.
 #if defined(OS_IOS)
   const bool use_kqueue = false;
+  const bool use_dispatch = false;
 #else
   const bool use_kqueue = mac::IsAtLeastOS10_12();
+  const bool use_dispatch = mac::IsOS10_11();
 #endif
   if (use_kqueue) {
     std::vector<kevent64_s> events(count);
@@ -208,6 +212,50 @@ size_t WaitableEvent::WaitMany(WaitableEvent** raw_waitables, size_t count) {
     }
 
     return triggered;
+  } else if (use_dispatch) {
+    // Each item |raw_waitables| will be watched using a dispatch souce
+    // scheduled on the serial |queue|. The first one to be invoked will
+    // signal the |semaphore| that this method will wait on.
+    ScopedDispatchObject<dispatch_queue_t> queue(dispatch_queue_create(
+        "org.chromium.base.WaitableEvent.WaitMany", DISPATCH_QUEUE_SERIAL));
+    ScopedDispatchObject<dispatch_semaphore_t> semaphore(
+        dispatch_semaphore_create(0));
+
+    // Block capture references. |signaled| will identify the index in
+    // |raw_waitables| whose source was invoked.
+    dispatch_semaphore_t semaphore_ref = semaphore.get();
+    const size_t kUnsignaled = -1;
+    __block size_t signaled = kUnsignaled;
+
+    // Create a MACH_RECV dispatch source for each event. These must be
+    // destroyed before the |queue| and |semaphore|.
+    std::vector<std::unique_ptr<DispatchSourceMach>> sources;
+    for (size_t i = 0; i < count; ++i) {
+      const bool auto_reset =
+          raw_waitables[i]->policy_ == WaitableEvent::ResetPolicy::AUTOMATIC;
+      // The block will copy a reference to |right|.
+      scoped_refptr<WaitableEvent::ReceiveRight> right =
+          raw_waitables[i]->receive_right_;
+      auto source =
+          std::make_unique<DispatchSourceMach>(queue, right->Name(), ^{
+            // After the semaphore is signaled, another event be signaled and
+            // the source may have its block put on the |queue|. WaitMany
+            // should only report (and auto-reset) one event, so the first
+            // event to signal is reported.
+            if (signaled == kUnsignaled) {
+              signaled = i;
+              if (auto_reset) {
+                PeekPort(right->Name(), true);
+              }
+              dispatch_semaphore_signal(semaphore_ref);
+            }
+          });
+      source->Resume();
+      sources.push_back(std::move(source));
+    }
+
+    dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER);
+    return signaled;
   } else {
     kern_return_t kr;
 
