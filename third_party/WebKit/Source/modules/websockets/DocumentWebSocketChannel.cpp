@@ -156,8 +156,18 @@ DocumentWebSocketChannel* DocumentWebSocketChannel::CreateForTesting(
     WebSocketHandle* handle,
     std::unique_ptr<WebSocketHandshakeThrottle> handshake_throttle) {
   return new DocumentWebSocketChannel(
-      ThreadableLoadingContext::Create(*document), client, std::move(location),
+      ThreadableLoadingContext::Create(document), client, std::move(location),
       WTF::WrapUnique(handle), std::move(handshake_throttle));
+}
+
+// static
+DocumentWebSocketChannel* DocumentWebSocketChannel::Create(
+    Document* document,
+    WebSocketChannelClient* client,
+    std::unique_ptr<SourceLocation> location) {
+  DCHECK(document);
+  return Create(ThreadableLoadingContext::Create(document), client,
+                std::move(location));
 }
 
 // static

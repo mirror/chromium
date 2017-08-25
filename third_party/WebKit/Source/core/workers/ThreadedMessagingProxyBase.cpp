@@ -170,7 +170,7 @@ void ThreadedMessagingProxyBase::PostMessageToPageInspector(
 ThreadableLoadingContext*
 ThreadedMessagingProxyBase::CreateThreadableLoadingContext() const {
   DCHECK(IsParentContextThread());
-  return ThreadableLoadingContext::Create(*ToDocument(execution_context_));
+  return ThreadableLoadingContext::Create(execution_context_);
 }
 
 ExecutionContext* ThreadedMessagingProxyBase::GetExecutionContext() const {

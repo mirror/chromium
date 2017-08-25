@@ -152,7 +152,7 @@ void DocumentThreadableLoader::LoadResourceSynchronously(
     ThreadableLoaderClient& client,
     const ThreadableLoaderOptions& options,
     const ResourceLoaderOptions& resource_loader_options) {
-  (new DocumentThreadableLoader(*ThreadableLoadingContext::Create(document),
+  (new DocumentThreadableLoader(*ThreadableLoadingContext::Create(&document),
                                 &client, kLoadSynchronously, options,
                                 resource_loader_options))
       ->Start(request);

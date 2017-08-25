@@ -326,8 +326,8 @@ class WebAssociatedURLLoaderImpl::Observer final
   USING_GARBAGE_COLLECTED_MIXIN(Observer);
 
  public:
-  Observer(WebAssociatedURLLoaderImpl* parent, Document* document)
-      : ContextLifecycleObserver(document), parent_(parent) {}
+  Observer(WebAssociatedURLLoaderImpl* parent, ExecutionContext* context)
+      : ContextLifecycleObserver(context), parent_(parent) {}
 
   void Dispose() {
     parent_ = nullptr;
@@ -336,7 +336,7 @@ class WebAssociatedURLLoaderImpl::Observer final
 
   void ContextDestroyed(ExecutionContext*) override {
     if (parent_)
-      parent_->DocumentDestroyed();
+      parent_->ContextDestroyed();
   }
 
   DEFINE_INLINE_VIRTUAL_TRACE() { ContextLifecycleObserver::Trace(visitor); }
@@ -345,11 +345,11 @@ class WebAssociatedURLLoaderImpl::Observer final
 };
 
 WebAssociatedURLLoaderImpl::WebAssociatedURLLoaderImpl(
-    Document* document,
+    ExecutionContext* context,
     const WebAssociatedURLLoaderOptions& options)
     : client_(nullptr),
       options_(options),
-      observer_(new Observer(this, document)) {}
+      observer_(new Observer(this, context)) {}
 
 WebAssociatedURLLoaderImpl::~WebAssociatedURLLoaderImpl() {
   Cancel();
@@ -412,7 +412,7 @@ void WebAssociatedURLLoaderImpl::LoadAsynchronously(
     Document* document = ToDocument(observer_->LifecycleContext());
     DCHECK(document);
     loader_ = DocumentThreadableLoader::Create(
-        *ThreadableLoadingContext::Create(*document), client_adapter_.get(),
+        *ThreadableLoadingContext::Create(document), client_adapter_.get(),
         options, resource_loader_options);
     loader_->Start(webcore_request);
   }
@@ -458,7 +458,7 @@ void WebAssociatedURLLoaderImpl::SetLoadingTaskRunner(blink::WebTaskRunner*) {
   // TODO(alexclarke): Maybe support this one day if it proves worthwhile.
 }
 
-void WebAssociatedURLLoaderImpl::DocumentDestroyed() {
+void WebAssociatedURLLoaderImpl::ContextDestroyed() {
   DisposeObserver();
   CancelLoader();
 
