@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3b3d4632_ffa9974a",
+        "filename": "third_party/WebKit/Source/core/paint/InlineTextBoxPainter.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 645,
+      "author": {
+        "id": 1229332
+      },
+      "writtenOn": "2017-08-25T23:23:21Z",
+      "side": 0,
+      "message": "I dropped this null check. Try bots on a CL stacked on top of this one are failing on FindRequestManagerTests/FindRequestManagerTest.RapidFire because my code\u0027s trying to fetch DocumentMarkers for a null node.",
+      "revId": "ddd335bf17b019cf09a3af74bcc0ba73b90de57a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
