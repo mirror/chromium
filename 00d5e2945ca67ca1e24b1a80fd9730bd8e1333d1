@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e15481be_36db3079",
+        "filename": "ui/android/view_android.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-08-25T17:36:15Z",
+      "side": 1,
+      "message": "hmm... if we are already attached, should we tell observer that here? I guess the old code didn\u0027t, so client code was already had to handle this already. but maybe make that clear on the observer api doc?",
+      "revId": "00d5e2945ca67ca1e24b1a80fd9730bd8e1333d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8991565_9631897b",
+        "filename": "ui/android/view_android.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-08-25T17:36:15Z",
+      "side": 1,
+      "message": "maybe good to point out that observers are not owned by ViewAndroid",
+      "revId": "00d5e2945ca67ca1e24b1a80fd9730bd8e1333d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
