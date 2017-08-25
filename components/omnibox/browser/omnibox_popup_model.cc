@@ -270,3 +270,8 @@ void OmniboxPopupModel::SetAnswerBitmap(const SkBitmap& bitmap) {
   answer_bitmap_ = bitmap;
   view_->UpdatePopupAppearance();
 }
+
+void OmniboxPopupModel::SetMatchIcon(size_t match_index,
+                                     const gfx::Image& icon) {
+  view_->SetMatchIcon(match_index, icon);
+}
