@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "3a6c6790_bfbb37f5",
+        "filename": "ios/chrome/browser/web/sad_tab_tab_helper.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-08-25T16:08:05Z",
+      "side": 1,
+      "message": "nit: No need for a line-break",
+      "revId": "e867cc6a3366523e290df8a0a5263f8d5657141e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "479b26f2_92b99da1",
         "filename": "ios/chrome/browser/web/sad_tab_tab_helper.mm",
         "patchSetId": 3
@@ -18,6 +35,76 @@
         "startChar": 13,
         "endLine": 115,
         "endChar": 48
+      },
+      "revId": "e867cc6a3366523e290df8a0a5263f8d5657141e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81b4cd43_6797f0b3",
+        "filename": "ios/chrome/browser/web/sad_tab_tab_helper.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-08-25T16:08:05Z",
+      "side": 1,
+      "message": "You should pass the caller instead (SadTabTabHelper). One object can act as a delegate for multiple objects and should be able to distinguish them in callbacks.",
+      "parentUuid": "479b26f2_92b99da1",
+      "range": {
+        "startLine": 115,
+        "startChar": 13,
+        "endLine": 115,
+        "endChar": 48
+      },
+      "revId": "e867cc6a3366523e290df8a0a5263f8d5657141e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d16d483_58ad110f",
+        "filename": "ios/chrome/browser/web/sad_tab_tab_helper_delegate.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-08-25T16:08:05Z",
+      "side": 1,
+      "message": "- (void)sadTabTabHelper:(SadTabTabHelper*)tabHelper\n    SadTabTabHelperForRepeatedFailure:(BOOL)repeatedFailure;",
+      "range": {
+        "startLine": 20,
+        "startChar": 8,
+        "endLine": 20,
+        "endChar": 33
+      },
+      "revId": "e867cc6a3366523e290df8a0a5263f8d5657141e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40972c09_0b318ffa",
+        "filename": "ios/chrome/browser/web/sad_tab_tab_helper_unittest.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-08-25T16:08:05Z",
+      "side": 1,
+      "message": "No need for creating a view in tests. I can simply set a boolean flag in callback and check that flag was set in the test.",
+      "range": {
+        "startLine": 26,
+        "startChar": 14,
+        "endLine": 26,
+        "endChar": 24
       },
       "revId": "e867cc6a3366523e290df8a0a5263f8d5657141e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
