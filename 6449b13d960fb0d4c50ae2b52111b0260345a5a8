@@ -248,6 +248,30 @@
     },
     {
       "key": {
+        "uuid": "bd826acf_e6bd890e",
+        "filename": "content/renderer/media/webrtc/webrtc_media_stream_adapter.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-08-25T08:56:50Z",
+      "side": 1,
+      "message": "There are similar DCHECKs for sequences. But I guess that should be part of a discussion for a future CL.",
+      "parentUuid": "52f4ec6c_408be14a",
+      "range": {
+        "startLine": 74,
+        "startChar": 22,
+        "endLine": 74,
+        "endChar": 44
+      },
+      "revId": "6449b13d960fb0d4c50ae2b52111b0260345a5a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ddef06b3_be60b2b5",
         "filename": "content/renderer/media/webrtc/webrtc_media_stream_adapter.h",
         "patchSetId": 3
