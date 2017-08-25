@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2ddefef6_625ab767",
+        "filename": "chrome/browser/chromeos/login/existing_user_controller.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-08-25T13:01:43Z",
+      "side": 1,
+      "message": "nit: Better provide explicit values for each enum value. It\u0027ll be another hint that they do matter.",
+      "range": {
+        "startLine": 137,
+        "startChar": 2,
+        "endLine": 137,
+        "endChar": 17
+      },
+      "revId": "f3b9a73361c6f45e774efa34d70be2fb9f6e7468",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8d9623e_85783e82",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 12
+      },
+      "lineNbr": 9739,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-08-25T13:01:43Z",
+      "side": 1,
+      "message": "nit: You need to add the value \"4\" here too?\n\nIt\u0027s sad that there\u0027s no test that would be able to catch such problems with the policy definition. Wouldn\u0027t it be possible to add one, even a simple unit test that doesn\u0027t deal with FS operations?\n\nBut I won\u0027t block this CL, as it\u0027s only an extension of the existing definition.",
+      "range": {
+        "startLine": 9739,
+        "startChar": 28,
+        "endLine": 9739,
+        "endChar": 29
+      },
+      "revId": "f3b9a73361c6f45e774efa34d70be2fb9f6e7468",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1ff51cb_3422cfab",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 12
+      },
+      "lineNbr": 9765,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-08-25T13:01:43Z",
+      "side": 1,
+      "message": "nit: s/Wipe/Wipe (value 2)/\nBecause our Web page with policies documentation doesn\u0027t display enum names for some reason (which is probably an overlook, but let\u0027s not worsen it here).\n\nnit: s/sign-in/sign in/ (I believe so)",
+      "range": {
+        "startLine": 9765,
+        "startChar": 105,
+        "endLine": 9765,
+        "endChar": 112
+      },
+      "revId": "f3b9a73361c6f45e774efa34d70be2fb9f6e7468",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
