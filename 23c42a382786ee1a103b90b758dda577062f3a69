@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "a60d998b_ff466df6",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1116070
+      },
+      "writtenOn": "2017-08-25T01:55:05Z",
+      "side": 1,
+      "message": "If this is conversion from js to cpp, please remove basic_iteration.js in this patch.",
+      "revId": "23c42a382786ee1a103b90b758dda577062f3a69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d57917af_21b550ca",
         "filename": "third_party/WebKit/Source/core/editing/iterators/TextIteratorTest.cpp",
         "patchSetId": 5
