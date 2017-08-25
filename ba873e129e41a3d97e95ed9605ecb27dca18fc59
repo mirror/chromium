@@ -70,6 +70,52 @@
       "revId": "ba873e129e41a3d97e95ed9605ecb27dca18fc59",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "291a1780_ededb11d",
+        "filename": "build/config/c++/c++.gni",
+        "patchSetId": 4
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-08-25T21:08:51Z",
+      "side": 1,
+      "message": ", even if use_custom_libcxx is false",
+      "range": {
+        "startLine": 18,
+        "startChar": 69,
+        "endLine": 18,
+        "endChar": 70
+      },
+      "revId": "ba873e129e41a3d97e95ed9605ecb27dca18fc59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01b6f921_374bb9c9",
+        "filename": "build/config/c++/c++.gni",
+        "patchSetId": 4
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-08-25T21:08:51Z",
+      "side": 1,
+      "message": "nit: i\u0027d call this just use_custom_libcxx_for_host",
+      "range": {
+        "startLine": 24,
+        "startChar": 28,
+        "endLine": 24,
+        "endChar": 32
+      },
+      "revId": "ba873e129e41a3d97e95ed9605ecb27dca18fc59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
