@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "b8c15af6_423197a1",
+        "filename": "third_party/WebKit/Source/devtools/front_end/bindings/ChangeableNetworkProject.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1230559
+      },
+      "writtenOn": "2017-08-25T18:22:12Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "040dcb25_29c61317",
+      "range": {
+        "startLine": 13,
+        "startChar": 85,
+        "endLine": 13,
+        "endChar": 107
+      },
+      "revId": "5374894de9cdfb23f61cc92a8359f5c60cadc1d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b5618856_7ce4a69c",
         "filename": "third_party/WebKit/Source/devtools/front_end/bindings/ChangeableNetworkProject.js",
         "patchSetId": 2
@@ -96,6 +120,30 @@
     },
     {
       "key": {
+        "uuid": "5dbe0c48_e03564c7",
+        "filename": "third_party/WebKit/Source/devtools/front_end/bindings/ChangeableNetworkProject.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1230559
+      },
+      "writtenOn": "2017-08-25T18:22:12Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "fefc9743_79f5c180",
+      "range": {
+        "startLine": 75,
+        "startChar": 33,
+        "endLine": 75,
+        "endChar": 42
+      },
+      "revId": "5374894de9cdfb23f61cc92a8359f5c60cadc1d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dc73555f_4a335bbb",
         "filename": "third_party/WebKit/Source/devtools/front_end/changes/ChangesSidebar.js",
         "patchSetId": 2
@@ -131,6 +179,30 @@
       "side": 1,
       "message": "NetworkProjects can have data urls and other types. ChangeableNetworkProject may or may not exist for only NetworkProject UISourceCodes. Here we are trying to figure out if a UISourceCode already exists for the Network project and prefer the changeable version over the base version.",
       "parentUuid": "dc73555f_4a335bbb",
+      "range": {
+        "startLine": 42,
+        "startChar": 65,
+        "endLine": 42,
+        "endChar": 72
+      },
+      "revId": "5374894de9cdfb23f61cc92a8359f5c60cadc1d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9bfc88ec_de0b6757",
+        "filename": "third_party/WebKit/Source/devtools/front_end/changes/ChangesSidebar.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1230559
+      },
+      "writtenOn": "2017-08-25T18:22:12Z",
+      "side": 1,
+      "message": "Ahh, I previously thought this was intended to just check whether a UISCode hasExistingChangeableUISC, but now it makes sense if it\u0027s really checking shouldThisGeneralUISCBeReplacedByAnExistingChangeableUISC.\n\nMaybe it makes sense to move this logical check into a new method on ChangeableNetworkProject?",
+      "parentUuid": "e711ae01_69e0fb56",
       "range": {
         "startLine": 42,
         "startChar": 65,
@@ -225,6 +297,30 @@
       "side": 1,
       "message": "I only did it this way because this is an interim step and we will need a way to eventually turn URL interception off. When we resolve this, we\u0027ll be instantiating an _Interceptor without enabling it (if the setting is off).",
       "parentUuid": "e5c8a4b0_bad8fa5c",
+      "range": {
+        "startLine": 142,
+        "startChar": 10,
+        "endLine": 142,
+        "endChar": 17
+      },
+      "revId": "5374894de9cdfb23f61cc92a8359f5c60cadc1d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cad09592_612ed9d0",
+        "filename": "third_party/WebKit/Source/devtools/front_end/changes/ChangesSidebar.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1230559
+      },
+      "writtenOn": "2017-08-25T18:22:12Z",
+      "side": 1,
+      "message": "I\u0027d prefer we leave it out for now and add in a later CL when it is used, but ok to leave for convenience.",
+      "parentUuid": "0cd946cf_89f43c10",
       "range": {
         "startLine": 142,
         "startChar": 10,
