@@ -24,6 +24,8 @@ std::string GetChannelString() {
 #if defined(SYZYASAN)
   if (base::debug::IsBinaryInstrumented())
     channel += L" SyzyASan";
+  if (logging::LOG_DCHECK == logging::LOG_FATAL)
+    channel += L" DCHECK";
 #endif
   return base::UTF16ToASCII(channel);
 #else
