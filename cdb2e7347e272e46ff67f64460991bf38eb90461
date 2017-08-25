@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cbbd5ae6_a2c32979",
+        "filename": "components/subresource_filter/content/browser/async_document_subresource_filter.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1185379
+      },
+      "writtenOn": "2017-08-25T15:20:29Z",
+      "side": 0,
+      "message": "The values were about zero because scoped timers leave the scope right after (before matcher creation).",
+      "revId": "cdb2e7347e272e46ff67f64460991bf38eb90461",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
