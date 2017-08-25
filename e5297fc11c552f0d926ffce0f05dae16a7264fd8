@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bcc336a2_e4b77bc0",
+        "filename": "content/test/mock_render_process_host_impl.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-25T05:07:58Z",
+      "side": 1,
+      "message": "Sorry for blocking you. I feel slightly uncomfortable with the fact that this overrides this method and defines its own renderer_interface_.\n\nThinking about this a bit further... what do you think about something like below?\n\n- Add OverrideRendererInterfaceForTesting() method to MockRenderProcessHost\n- This could take std::unique_ptr\u003cmojo::AssociatedInterfacePtr\u003cmojom::Renderer\u003e\u003e and can internally just override its renderer_interface_\n- The callsite (i.e. EmbeddedWorkerTestHelper) can use that to install its own Renderer",
+      "revId": "e5297fc11c552f0d926ffce0f05dae16a7264fd8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
