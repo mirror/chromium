@@ -1,0 +1,127 @@
+/*
+ * Copyright 2017 The Chromium Authors. All rights reserved.
+ * Use of this source code is governed by a BSD-style license that can be
+ * found in the LICENSE file.
+ */
+
+.widget {
+    justify-content: center;
+}
+
+.discovery-list {
+    align-self: center;
+    max-width: 600px;
+    max-height: 500px;
+    border: 1px solid black;
+    overflow: auto;
+}
+
+.discovery-item {
+    height: 70px;
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    overflow: hidden;
+}
+
+.discovery-info {
+    display: flex;
+    flex-direction: column;
+    padding: 5px 0;
+    flex: 1 1 auto;
+}
+
+.discovery-item:hover {
+    background: #eee;
+}
+
+.discovery-title {
+    flex: 0 0 24px;
+    font-size: 14px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 0 10px;
+}
+
+.discovery-title > span {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    flex: 1 1 auto;
+}
+
+.discovery-type {
+    height: 20px;
+    padding: 0 4px;
+    border-radius: 2px;
+    flex: none;
+    margin-right: 6px;
+    display: flex;
+    align-items: center;
+}
+
+.discovery-type-page {
+    background: #ff00006b;
+}
+
+.discovery-type-iframe {
+    background: #ffc84b;
+}
+
+.discovery-type-app {
+    background: #0000ff54;
+}
+
+.discovery-type-extension {
+    background: #0000ff54;
+}
+
+.discovery-type-node {
+    background: #0080008c;
+}
+
+.discovery-type-other {
+    background: #00000059;
+}
+
+.discovery-type-service-worker {
+    background: #58b3f3;
+}
+
+.discovery-url {
+    flex: 0 0 20px;
+    display: flex;
+    justify-content: flex-start;
+    padding: 0 20px 0 60px;
+    align-items: center;
+}
+
+.discovery-url > span {
+    flex: 0 1 auto;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    font-size: 12px;
+    color: #777;
+    white-space: nowrap;
+}
+
+.discovery-actions {
+    flex: 0 0 87px;
+    justify-content: space-between;
+    display: flex;
+    flex-direction: column;
+}
+
+.discovery-button {
+    margin: 5px 20px 5px 0;
+    width: 83px;
+}
+
+.discovery-button-hover {
+    visibility: hidden;
+}
+
+.discovery-item:hover .discovery-button-hover {
+    visibility: visible;
+}

@@ -99,8 +99,9 @@ class DevToolsWindow : public DevToolsUIBindings::Delegate,
       Browser* browser,
       const DevToolsToggleAction& action);
 
-  // Node frontend is always undocked.
+  // Node and discovery frontends are always undocked.
   static void OpenNodeFrontendWindow(Profile* profile);
+  static void OpenDiscoveryFrontendWindow(Profile* profile);
 
   // Worker frontend is always undocked.
   static void OpenDevToolsWindowForWorker(
@@ -241,7 +242,8 @@ class DevToolsWindow : public DevToolsUIBindings::Delegate,
     kFrontendRemote,
     kFrontendWorker,
     kFrontendV8,
-    kFrontendNode
+    kFrontendNode,
+    kFrontendDiscovery
   };
 
   DevToolsWindow(FrontendType frontend_type,

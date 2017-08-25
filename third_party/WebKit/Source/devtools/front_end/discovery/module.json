@@ -1,0 +1,35 @@
+{
+    "extensions": [
+        {
+            "type": "@Common.AppProvider",
+            "className": "Discovery.DiscoveryApp.Provider",
+            "order": -1
+        },
+        {
+            "type": "@UI.ToolbarItem.Provider",
+            "actionId": "discovery.show-discovery-view",
+            "location": "main-toolbar-left",
+            "order": 1
+        },
+        {
+            "type": "@UI.ActionDelegate",
+            "category": "Discovery",
+            "actionId": "discovery.show-discovery-view",
+            "className": "Discovery.DiscoveryApp.ActionDelegate",
+            "title": "Show discovery view",
+            "iconClass": "largeicon-menu"
+        }
+    ],
+    "dependencies": [
+        "sdk",
+        "platform",
+        "ui"
+    ],
+    "scripts": [
+        "DiscoveryApp.js",
+        "DiscoveryView.js"
+    ],
+    "resources": [
+        "discoveryView.css"
+    ]
+}

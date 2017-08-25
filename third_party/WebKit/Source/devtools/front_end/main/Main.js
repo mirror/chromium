@@ -289,7 +289,14 @@ Main.Main = class {
 
   _initializeTarget() {
     Main.Main.time('Main._initializeTarget');
-    SDK.targetManager.connectToMainTarget(webSocketConnectionLost);
+    var mainTargetDiscoveryTitle = null;
+    if (!!Runtime.queryParam('nodeFrontend')) {
+      mainTargetDiscoveryTitle = Common.UIString('Node.js');
+      new Main.Main.NodeFrontend();
+    } else if (!!Runtime.queryParam('discovery')) {
+      mainTargetDiscoveryTitle = Common.UIString('Inspect');
+    }
+    SDK.targetManager.connectToMainTarget(mainTargetDiscoveryTitle, webSocketConnectionLost);
 
     InspectorFrontendHost.readyForTest();
     // Asynchronously run the extensions.
@@ -681,21 +688,49 @@ Main.Main.MainMenuItem = class {
  */
 Main.Main.NodeIndicator = class {
   constructor() {
+    // TODO(dgozman): support node indicator.
+    // this._targetAgent.setRemoteLocations([{host: 'localhost', port: 9229}]);
     var element = createElement('div');
     var shadowRoot = UI.createShadowRootWithCoreStyles(element, 'main/nodeIcon.css');
     this._element = shadowRoot.createChild('div', 'node-icon');
     element.addEventListener('click', () => InspectorFrontendHost.openNodeFrontend(), false);
     this._button = new UI.ToolbarItem(element);
     this._button.setTitle(Common.UIString('Open dedicated DevTools for Node.js'));
-    SDK.targetManager.addEventListener(SDK.TargetManager.Events.AvailableNodeTargetsChanged, this._update, this);
+    // SDK.targetManager.addEventListener(SDK.TargetManager.Events.AvailableNodeTargetsChanged, this._update, this);
     this._button.setVisible(false);
-    this._update();
+    // this._update();
+
+    // AvailableTargetAdded:
+    // if (targetInfo.type !== 'node')
+    //   return;
+    // if (!targetInfo.attached) {
+    //   this._targetManager._nodeTargetIds.add(targetInfo.targetId);
+    //   this._targetManager.dispatchEventToListeners(SDK.TargetManager.Events.AvailableNodeTargetsChanged);
+    // }
+
+    // AvailableTargetChanged:
+    // if (targetInfo.type !== 'node')
+    //   return;
+    // var availableIds = this._targetManager._nodeTargetIds;
+    // if (!availableIds.has(targetInfo.targetId) && !targetInfo.attached) {
+    //   availableIds.add(targetInfo.targetId);
+    //   this._targetManager.dispatchEventToListeners(SDK.TargetManager.Events.AvailableNodeTargetsChanged);
+    // } else if (availableIds.has(targetInfo.targetId) && targetInfo.attached) {
+    //   availableIds.delete(targetInfo.targetId);
+    //   this._targetManager.dispatchEventToListeners(SDK.TargetManager.Events.AvailableNodeTargetsChanged);
+    // }
+
+    // AvailableTargetRemoved:
+    // if (targetInfo.type !== 'node')
+    //   return;
+    // this._targetManager._nodeTargetIds.delete(targetId);
+    // this._targetManager.dispatchEventToListeners(SDK.TargetManager.Events.AvailableNodeTargetsChanged);
   }
 
   _update() {
-    this._element.classList.toggle('inactive', !SDK.targetManager.availableNodeTargetsCount());
-    if (SDK.targetManager.availableNodeTargetsCount())
-      this._button.setVisible(true);
+    // this._element.classList.toggle('inactive', !SDK.targetManager.availableNodeTargetsCount());
+    // if (SDK.targetManager.availableNodeTargetsCount())
+    //   this._button.setVisible(true);
   }
 
   /**
@@ -704,6 +739,59 @@ Main.Main.NodeIndicator = class {
    */
   item() {
     return this._button;
+  }
+};
+
+/**
+ * @implements {SDK.TargetManager.Observer}
+ */
+Main.Main.NodeFrontend = class {
+  constructor() {
+    Host.userMetrics.actionTaken(Host.UserMetrics.Action.ConnectToNodeJSFromFrontend);
+    InspectorFrontendHost.setDevicesUpdatesEnabled(true);
+    InspectorFrontendHost.events.addEventListener(
+        InspectorFrontendHostAPI.Events.DevicesDiscoveryConfigChanged, this._devicesDiscoveryConfigChanged, this);
+    SDK.targetManager.observeTargets(this);
+    SDK.targetManager.addEventListener(SDK.TargetManager.Events.AvailableTargetAdded, this._availableTargetAdded, this);
+  }
+
+  /**
+   * @param {!Common.Event} event
+   */
+  _devicesDiscoveryConfigChanged(event) {
+    var config = /** @type {!Adb.Config} */ (event.data);
+    var locations = [];
+    for (var address of config.networkDiscoveryConfig) {
+      var parts = address.split(':');
+      var port = parseInt(parts[1], 10);
+      if (parts[0] && port)
+        locations.push({host: parts[0], port: port});
+    }
+    SDK.targetManager.setDiscoveryRemoteLocations(locations);
+  }
+
+  /**
+   * @override
+   * @param {!SDK.Target} target
+   */
+  targetAdded(target) {
+    InspectorFrontendHost.bringToFront();
+  }
+
+  /**
+   * @override
+   * @param {!SDK.Target} target
+   */
+  targetRemoved(target) {
+  }
+
+  /**
+   * @param {!Common.Event} event
+   */
+  _availableTargetAdded(event) {
+    var targetInfo = /** @type {!Protocol.Target.TargetInfo} */ (event.data);
+    if (targetInfo.type === 'node' && !targetInfo.attached)
+      SDK.targetManager.attachToAvailableTarget(targetInfo);
   }
 };
 

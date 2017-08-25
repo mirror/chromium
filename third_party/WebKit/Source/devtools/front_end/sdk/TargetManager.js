@@ -20,12 +20,16 @@ SDK.TargetManager = class extends Common.Object {
     this._lastAnonymousTargetId = 0;
     /** @type {!Map<!SDK.Target, !SDK.ChildTargetManager>} */
     this._childTargetManagers = new Map();
-    /** @type {!Set<string>} */
-    this._nodeTargetIds = new Set();
+    /** @type {!Map<string, !Protocol.Target.TargetInfo>} */
+    this._availableTargets = new Map();
     /** @type {!Protocol.InspectorBackend.Connection} */
     this._mainConnection;
     /** @type {function()} */
     this._webSocketConnectionLostCallback;
+    /** @type {?string} */
+    this._mainTargetDiscoveryTitle = null;
+    /** @type {?SDK.ChildTargetManager} */
+    this._discoveryChildTargetManger = null;
   }
 
   /**
@@ -223,7 +227,7 @@ SDK.TargetManager = class extends Common.Object {
     var target = new SDK.Target(this, id, name, capabilitiesMask, connectionFactory, parentTarget);
     target.createModels(new Set(this._modelObservers.keys()));
     if (target.hasTargetCapability())
-      this._childTargetManagers.set(target, new SDK.ChildTargetManager(this, target));
+      this._childTargetManagers.set(target, new SDK.ChildTargetManager(this, target, false));
     this._targets.push(target);
 
     var copy = this._observersForTarget(target);
@@ -318,21 +322,56 @@ SDK.TargetManager = class extends Common.Object {
   }
 
   /**
+   * @param {?string} mainTargetDiscoveryTitle
    * @param {function()} webSocketConnectionLostCallback
    */
-  connectToMainTarget(webSocketConnectionLostCallback) {
+  connectToMainTarget(mainTargetDiscoveryTitle, webSocketConnectionLostCallback) {
     this._webSocketConnectionLostCallback = webSocketConnectionLostCallback;
+    this._mainTargetDiscoveryTitle = mainTargetDiscoveryTitle;
     this._connectAndCreateMainTarget();
   }
 
+  /**
+   * @param {!Array<{host: string, port: number}>} locations
+   */
+  setDiscoveryRemoteLocations(locations) {
+    this._discoveryChildTargetManger._targetAgent.setRemoteLocations(locations);
+  }
+
+  /**
+   * @param {!Protocol.Target.TargetInfo} targetInfo
+   */
+  attachToAvailableTarget(targetInfo) {
+    this._discoveryChildTargetManger._targetAgent.attachToTarget(targetInfo.targetId);
+  }
+
+  /**
+   * @param {!Protocol.Target.TargetInfo} targetInfo
+   */
+  inspectAvailableTarget(targetInfo) {
+    // TODO(dgozman): implement this.
+  }
+
+  /**
+   * @param {!SDK.Target} target
+   */
+  detachFromTarget(target) {
+    for (var connection of this._discoveryChildTargetManger._childConnections.values()) {
+      if (connection._target !== target)
+        continue;
+      this._discoveryChildTargetManger._targetAgent.detachFromTarget(connection._sessionId);
+      return;
+    }
+  }
+
   _connectAndCreateMainTarget() {
-    if (Runtime.queryParam('nodeFrontend')) {
+    if (this._mainTargetDiscoveryTitle) {
       var target = new SDK.Target(
-          this, 'main', Common.UIString('Node.js'), SDK.Target.Capability.Target, this._createMainConnection.bind(this),
-          null);
-      target.setInspectedURL('Node.js');
-      this._childTargetManagers.set(target, new SDK.ChildTargetManager(this, target));
-      Host.userMetrics.actionTaken(Host.UserMetrics.Action.ConnectToNodeJSFromFrontend);
+          this, 'main', this._mainTargetDiscoveryTitle, SDK.Target.Capability.Target,
+          this._createMainConnection.bind(this), null);
+      target.setInspectedURL(this._mainTargetDiscoveryTitle);
+      this._discoveryChildTargetManger = new SDK.ChildTargetManager(this, target, true);
+      this._childTargetManagers.set(target, this._discoveryChildTargetManger);
       return;
     }
 
@@ -373,10 +412,10 @@ SDK.TargetManager = class extends Common.Object {
   }
 
   /**
-   * @return {number}
+   * @return {!Array<!Protocol.Target.TargetInfo>}
    */
-  availableNodeTargetsCount() {
-    return this._nodeTargetIds.size;
+  availableTargets() {
+    return this._availableTargets.valuesArray();
   }
 
   /**
@@ -396,10 +435,12 @@ SDK.ChildTargetManager = class {
   /**
    * @param {!SDK.TargetManager} targetManager
    * @param {!SDK.Target} parentTarget
+   * @param {boolean} enableDiscovery
    */
-  constructor(targetManager, parentTarget) {
+  constructor(targetManager, parentTarget, enableDiscovery) {
     this._targetManager = targetManager;
     this._parentTarget = parentTarget;
+    this._enableDiscovery = enableDiscovery;
     this._targetAgent = parentTarget.targetAgent();
 
     /** @type {!Map<string, !SDK.ChildConnection>} */
@@ -410,31 +451,8 @@ SDK.ChildTargetManager = class {
     if (Runtime.experiments.isEnabled('autoAttachToCrossProcessSubframes'))
       this._targetAgent.setAttachToFrames(true);
 
-    if (!parentTarget.parentTarget()) {
+    if (this._enableDiscovery)
       this._targetAgent.setDiscoverTargets(true);
-      if (Runtime.queryParam('nodeFrontend')) {
-        InspectorFrontendHost.setDevicesUpdatesEnabled(true);
-        InspectorFrontendHost.events.addEventListener(
-            InspectorFrontendHostAPI.Events.DevicesDiscoveryConfigChanged, this._devicesDiscoveryConfigChanged, this);
-      } else {
-        this._targetAgent.setRemoteLocations([{host: 'localhost', port: 9229}]);
-      }
-    }
-  }
-
-  /**
-   * @param {!Common.Event} event
-   */
-  _devicesDiscoveryConfigChanged(event) {
-    var config = /** @type {!Adb.Config} */ (event.data);
-    var locations = [];
-    for (var address of config.networkDiscoveryConfig) {
-      var parts = address.split(':');
-      var port = parseInt(parts[1], 10);
-      if (parts[0] && port)
-        locations.push({host: parts[0], port: port});
-    }
-    this._targetAgent.setRemoteLocations(locations);
   }
 
   /**
@@ -452,11 +470,6 @@ SDK.ChildTargetManager = class {
   }
 
   dispose() {
-    if (Runtime.queryParam('nodeFrontend') && !this._parentTarget.parentTarget()) {
-      InspectorFrontendHost.events.removeEventListener(
-          InspectorFrontendHostAPI.Events.DevicesDiscoveryConfigChanged, this._devicesDiscoveryConfigChanged, this);
-    }
-
     for (var sessionId of this._childConnections.keys())
       this.detachedFromTarget(sessionId, undefined);
   }
@@ -477,6 +490,13 @@ SDK.ChildTargetManager = class {
     }
     if (type === 'node')
       return SDK.Target.Capability.JS;
+    if (type === 'page') {
+      return SDK.Target.Capability.Browser | SDK.Target.Capability.DOM | SDK.Target.Capability.JS |
+          SDK.Target.Capability.Log | SDK.Target.Capability.Network | SDK.Target.Capability.Target |
+          SDK.Target.Capability.ScreenCapture | SDK.Target.Capability.Tracing | SDK.Target.Capability.Emulation |
+          SDK.Target.Capability.Security | SDK.Target.Capability.Input | SDK.Target.Capability.Inspector |
+          SDK.Target.Capability.DeviceEmulation;
+    }
     return 0;
   }
 
@@ -485,17 +505,8 @@ SDK.ChildTargetManager = class {
    * @param {!Protocol.Target.TargetInfo} targetInfo
    */
   targetCreated(targetInfo) {
-    if (targetInfo.type !== 'node')
-      return;
-    if (Runtime.queryParam('nodeFrontend')) {
-      if (!targetInfo.attached)
-        this._targetAgent.attachToTarget(targetInfo.targetId);
-      return;
-    }
-    if (targetInfo.attached)
-      return;
-    this._targetManager._nodeTargetIds.add(targetInfo.targetId);
-    this._targetManager.dispatchEventToListeners(SDK.TargetManager.Events.AvailableNodeTargetsChanged);
+    this._targetManager._availableTargets.set(targetInfo.targetId, targetInfo);
+    this._targetManager.dispatchEventToListeners(SDK.TargetManager.Events.AvailableTargetAdded, targetInfo);
   }
 
   /**
@@ -503,16 +514,8 @@ SDK.ChildTargetManager = class {
    * @param {!Protocol.Target.TargetInfo} targetInfo
    */
   targetInfoChanged(targetInfo) {
-    if (targetInfo.type !== 'node' || Runtime.queryParam('nodeFrontend'))
-      return;
-    var availableIds = this._targetManager._nodeTargetIds;
-    if (!availableIds.has(targetInfo.targetId) && !targetInfo.attached) {
-      availableIds.add(targetInfo.targetId);
-      this._targetManager.dispatchEventToListeners(SDK.TargetManager.Events.AvailableNodeTargetsChanged);
-    } else if (availableIds.has(targetInfo.targetId) && targetInfo.attached) {
-      availableIds.delete(targetInfo.targetId);
-      this._targetManager.dispatchEventToListeners(SDK.TargetManager.Events.AvailableNodeTargetsChanged);
-    }
+    this._targetManager._availableTargets.set(targetInfo.targetId, targetInfo);
+    this._targetManager.dispatchEventToListeners(SDK.TargetManager.Events.AvailableTargetChanged, targetInfo);
   }
 
   /**
@@ -520,10 +523,9 @@ SDK.ChildTargetManager = class {
    * @param {string} targetId
    */
   targetDestroyed(targetId) {
-    if (Runtime.queryParam('nodeFrontend') || !this._targetManager._nodeTargetIds.has(targetId))
-      return;
-    this._targetManager._nodeTargetIds.delete(targetId);
-    this._targetManager.dispatchEventToListeners(SDK.TargetManager.Events.AvailableNodeTargetsChanged);
+    var targetInfo = this._targetManager._availableTargets.get(targetId);
+    this._targetManager._availableTargets.delete(targetId);
+    this._targetManager.dispatchEventToListeners(SDK.TargetManager.Events.AvailableTargetRemoved, targetInfo);
   }
 
   /**
@@ -544,6 +546,7 @@ SDK.ChildTargetManager = class {
     var target = this._targetManager.createTarget(
         targetInfo.targetId, targetName, this._capabilitiesForType(targetInfo.type),
         this._createChildConnection.bind(this, this._targetAgent, sessionId), this._parentTarget);
+    this._childConnections.get(sessionId)._target = target;
 
     // Only pause the new worker if debugging SW - we are going through the pause on start checkbox.
     if (!this._parentTarget.parentTarget() && Runtime.queryParam('isSharedWorker') && waitingForDebugger) {
@@ -552,9 +555,6 @@ SDK.ChildTargetManager = class {
         debuggerModel.pause();
     }
     target.runtimeAgent().runIfWaitingForDebugger();
-
-    if (Runtime.queryParam('nodeFrontend'))
-      InspectorFrontendHost.bringToFront();
   }
 
   /**
@@ -606,6 +606,7 @@ SDK.ChildConnection = class {
     this._sessionId = sessionId;
     this._onMessage = params.onMessage;
     this._onDisconnect = params.onDisconnect;
+    this._target = null;
   }
 
   /**
@@ -630,7 +631,9 @@ SDK.TargetManager.Events = {
   InspectedURLChanged: Symbol('InspectedURLChanged'),
   NameChanged: Symbol('NameChanged'),
   SuspendStateChanged: Symbol('SuspendStateChanged'),
-  AvailableNodeTargetsChanged: Symbol('AvailableNodeTargetsChanged')
+  AvailableTargetAdded: Symbol('AvailableTargetAdded'),
+  AvailableTargetChanged: Symbol('AvailableTargetChanged'),
+  AvailableTargetRemoved: Symbol('AvailableTargetRemoved'),
 };
 
 /**

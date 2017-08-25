@@ -597,6 +597,24 @@ void DevToolsWindow::OpenNodeFrontendWindow(Profile* profile) {
 }
 
 // static
+void DevToolsWindow::OpenDiscoveryFrontendWindow(Profile* profile) {
+  for (DevToolsWindow* window : g_instances.Get()) {
+    if (window->frontend_type_ == kFrontendDiscovery) {
+      window->ActivateWindow();
+      return;
+    }
+  }
+
+  DevToolsWindow* window =
+      Create(profile, nullptr, kFrontendDiscovery, std::string(), false,
+             std::string(), std::string(), false);
+  if (!window)
+    return;
+  window->bindings_->AttachTo(DevToolsAgentHost::CreateForDiscovery());
+  window->ScheduleShow(DevToolsToggleAction::Show());
+}
+
+// static
 void DevToolsWindow::ToggleDevToolsWindow(
     content::WebContents* inspected_web_contents,
     bool force_open,
@@ -932,6 +950,9 @@ GURL DevToolsWindow::GetDevToolsURL(Profile* profile,
       break;
     case kFrontendWorker:
       url_string += "&isSharedWorker=true";
+      break;
+    case kFrontendDiscovery:
+      url_string += "&discovery=true";
       break;
     case kFrontendNode:
       url_string += "&nodeFrontend=true";

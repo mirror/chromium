@@ -152,6 +152,10 @@ function showIncognitoWarning() {
   $('devices-incognito').hidden = false;
 }
 
+function showDiscoveryFrontendLink() {
+  $('discovery-frontend').hidden = false;
+}
+
 function alreadyDisplayed(element, data) {
   var json = JSON.stringify(data);
   if (element.cachedJSON == json)
@@ -650,6 +654,9 @@ function initSettings() {
   });
   $('node-frontend')
       .addEventListener('click', sendCommand.bind(null, 'open-node-frontend'));
+  $('discovery-frontend')
+      .addEventListener(
+          'click', sendCommand.bind(null, 'open-discovery-frontend'));
 }
 
 function checkboxHandler(command, event) {

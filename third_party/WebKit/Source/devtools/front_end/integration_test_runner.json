@@ -54,6 +54,7 @@
     { "name": "audits", "condition": "!v8only" },
     { "name": "audits2", "condition": "!v8only" },
     { "name": "devices" },
+    { "name": "discovery", "condition": "discovery" },
     { "name": "security", "condition": "!v8only" },
     { "name": "console" },
     { "name": "source_frame" },

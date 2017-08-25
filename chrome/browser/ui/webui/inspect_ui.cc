@@ -4,6 +4,7 @@
 
 #include "chrome/browser/ui/webui/inspect_ui.h"
 
+#include "base/command_line.h"
 #include "base/macros.h"
 #include "base/memory/ptr_util.h"
 #include "base/metrics/user_metrics.h"
@@ -14,6 +15,7 @@
 #include "chrome/browser/ui/browser_navigator_params.h"
 #include "chrome/browser/ui/singleton_tabs.h"
 #include "chrome/browser/ui/webui/theme_source.h"
+#include "chrome/common/chrome_switches.h"
 #include "chrome/common/pref_names.h"
 #include "chrome/common/url_constants.h"
 #include "chrome/grit/browser_resources.h"
@@ -58,6 +60,7 @@ const char kDiscoverTCPTargetsEnabledCommand[] =
     "set-discover-tcp-targets-enabled";
 const char kTCPDiscoveryConfigCommand[] = "set-tcp-discovery-config";
 const char kOpenNodeFrontendCommand[] = "open-node-frontend";
+const char kOpenDiscoveryFrontendCommand[] = "open-discovery-frontend";
 
 const char kPortForwardingDefaultPort[] = "8080";
 const char kPortForwardingDefaultLocation[] = "localhost:8080";
@@ -102,6 +105,7 @@ class InspectMessageHandler : public WebUIMessageHandler {
   void HandlePortForwardingConfigCommand(const base::ListValue* args);
   void HandleTCPDiscoveryConfigCommand(const base::ListValue* args);
   void HandleOpenNodeFrontendCommand(const base::ListValue* args);
+  void HandleOpenDiscoveryFrontendCommand(const base::ListValue* args);
 
   InspectUI* inspect_ui_;
 
@@ -145,6 +149,10 @@ void InspectMessageHandler::RegisterMessages() {
                  base::Unretained(this)));
   web_ui()->RegisterMessageCallback(kOpenNodeFrontendCommand,
       base::Bind(&InspectMessageHandler::HandleOpenNodeFrontendCommand,
+                 base::Unretained(this)));
+  web_ui()->RegisterMessageCallback(
+      kOpenDiscoveryFrontendCommand,
+      base::Bind(&InspectMessageHandler::HandleOpenDiscoveryFrontendCommand,
                  base::Unretained(this)));
   web_ui()->RegisterMessageCallback(kReloadCommand,
       base::Bind(&InspectMessageHandler::HandleReloadCommand,
@@ -271,6 +279,14 @@ void InspectMessageHandler::HandleOpenNodeFrontendCommand(
   if (!profile)
     return;
   DevToolsWindow::OpenNodeFrontendWindow(profile);
+}
+
+void InspectMessageHandler::HandleOpenDiscoveryFrontendCommand(
+    const base::ListValue* args) {
+  Profile* profile = Profile::FromWebUI(web_ui());
+  if (!profile)
+    return;
+  DevToolsWindow::OpenDiscoveryFrontendWindow(profile);
 }
 
 // DevToolsUIBindingsEnabler ----------------------------------------
@@ -469,6 +485,10 @@ void InspectUI::StartListeningNotifications() {
     AddTargetUIHandler(
         DevToolsTargetsUIHandler::CreateForAdb(callback, profile));
   }
+
+  base::CommandLine* command_line = base::CommandLine::ForCurrentProcess();
+  if (command_line->HasSwitch(switches::kEnableDevToolsExperiments))
+    web_ui()->CallJavascriptFunctionUnsafe("showDiscoveryFrontendLink");
 
   port_status_serializer_.reset(
       new PortForwardingStatusSerializer(
