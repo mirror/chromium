@@ -232,6 +232,7 @@ std::unique_ptr<Volume> Volume::CreateForProvidedFileSystem(
     const chromeos::file_system_provider::ProvidedFileSystemInfo&
         file_system_info,
     MountContext mount_context) {
+  // TODO(zentaro): Here.
   std::unique_ptr<Volume> volume(new Volume());
   volume->file_system_id_ = file_system_info.file_system_id();
   volume->extension_id_ = file_system_info.extension_id();
@@ -244,6 +245,9 @@ std::unique_ptr<Volume> Volume::CreateForProvidedFileSystem(
       break;
     case extensions::SOURCE_NETWORK:
       volume->source_ = SOURCE_NETWORK;
+      break;
+    case extensions::SOURCE_SMB:
+      volume->source_ = SOURCE_SMB;
       break;
   }
   volume->volume_label_ = file_system_info.display_name();
