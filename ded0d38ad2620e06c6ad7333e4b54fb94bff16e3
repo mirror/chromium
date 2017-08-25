@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "1a0eaa53_5afc7412",
+        "filename": "ios/chrome/browser/web/BUILD.gn",
+        "patchSetId": 5
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1125535
+      },
+      "writtenOn": "2017-08-25T20:57:57Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "7e7294b3_b8c24da8",
+      "range": {
+        "startLine": 28,
+        "startChar": 5,
+        "endLine": 28,
+        "endChar": 33
+      },
+      "revId": "ded0d38ad2620e06c6ad7333e4b54fb94bff16e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9231dfe8_95c5a0ca",
         "filename": "ios/chrome/browser/web/nullable_mailto_url_rewriter.h",
         "patchSetId": 5
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "3c9ddb7b_0dc536db",
+        "filename": "ios/chrome/browser/web/nullable_mailto_url_rewriter.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1125535
+      },
+      "writtenOn": "2017-08-25T20:57:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9231dfe8_95c5a0ca",
+      "range": {
+        "startLine": 10,
+        "startChar": 11,
+        "endLine": 10,
+        "endChar": 36
+      },
+      "revId": "ded0d38ad2620e06c6ad7333e4b54fb94bff16e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8c8944cc_633a6565",
         "filename": "ios/chrome/browser/web/nullable_mailto_url_rewriter.mm",
         "patchSetId": 5
@@ -59,6 +107,30 @@
       "writtenOn": "2017-08-25T17:06:18Z",
       "side": 1,
       "message": "Avoid calling instance methods inside init. Subclasses can override addMailtoApps: and then uninitialized object will receive this call.",
+      "range": {
+        "startLine": 52,
+        "startChar": 10,
+        "endLine": 52,
+        "endChar": 23
+      },
+      "revId": "ded0d38ad2620e06c6ad7333e4b54fb94bff16e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7934b146_4f11939d",
+        "filename": "ios/chrome/browser/web/nullable_mailto_url_rewriter.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1125535
+      },
+      "writtenOn": "2017-08-25T20:57:57Z",
+      "side": 1,
+      "message": "As discussed, -initWithStandardHandlers is no longer an initializer but a helper method.",
+      "parentUuid": "8c8944cc_633a6565",
       "range": {
         "startLine": 52,
         "startChar": 10,
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "43db33f2_192a811e",
+        "filename": "ios/chrome/browser/web/nullable_mailto_url_rewriter.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1125535
+      },
+      "writtenOn": "2017-08-25T20:57:57Z",
+      "side": 1,
+      "message": "As discussed in person, this code duplication is intentional as the other implementation LegacyMailtoURLRewriter will be removed in the near future.",
+      "parentUuid": "13a1de16_abf03567",
+      "range": {
+        "startLine": 59,
+        "startChar": 28,
+        "endLine": 59,
+        "endChar": 43
+      },
+      "revId": "ded0d38ad2620e06c6ad7333e4b54fb94bff16e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9b645167_2deaa2f5",
         "filename": "ios/chrome/browser/web/nullable_mailto_url_rewriter_unittest.mm",
         "patchSetId": 5
@@ -105,6 +201,30 @@
       "writtenOn": "2017-08-25T17:06:18Z",
       "side": 1,
       "message": "Is this class temporary? If no, then we should not be building backdoors for tests.",
+      "range": {
+        "startLine": 17,
+        "startChar": 11,
+        "endLine": 17,
+        "endChar": 36
+      },
+      "revId": "ded0d38ad2620e06c6ad7333e4b54fb94bff16e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "783c8fc1_33f1bf51",
+        "filename": "ios/chrome/browser/web/nullable_mailto_url_rewriter_unittest.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1125535
+      },
+      "writtenOn": "2017-08-25T20:57:57Z",
+      "side": 1,
+      "message": "Replaced addMailtoApps. Made defaultHandlers a property.\nRemoved resetDefaultHandlerIDForTesting.",
+      "parentUuid": "9b645167_2deaa2f5",
       "range": {
         "startLine": 17,
         "startChar": 11,
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "8d27f35f_298c935f",
+        "filename": "ios/chrome/browser/web/nullable_mailto_url_rewriter_unittest.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1125535
+      },
+      "writtenOn": "2017-08-25T20:57:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fd7998bd_c3b6879d",
+      "range": {
+        "startLine": 24,
+        "startChar": 7,
+        "endLine": 24,
+        "endChar": 12
+      },
+      "revId": "ded0d38ad2620e06c6ad7333e4b54fb94bff16e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b841ab7d_05f41bfe",
         "filename": "ios/chrome/browser/web/nullable_mailto_url_rewriter_unittest.mm",
         "patchSetId": 5
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "8fa4b6b6_fc105625",
+        "filename": "ios/chrome/browser/web/nullable_mailto_url_rewriter_unittest.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1125535
+      },
+      "writtenOn": "2017-08-25T20:57:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b841ab7d_05f41bfe",
+      "range": {
+        "startLine": 29,
+        "startChar": 7,
+        "endLine": 29,
+        "endChar": 36
+      },
+      "revId": "ded0d38ad2620e06c6ad7333e4b54fb94bff16e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "08a64a04_ed54973f",
         "filename": "ios/chrome/browser/web/nullable_mailto_url_rewriter_unittest.mm",
         "patchSetId": 5
@@ -174,6 +342,30 @@
       "writtenOn": "2017-08-25T17:06:18Z",
       "side": 1,
       "message": "nit: Do you need to enumerate cases? Comments like these can be hard to support.",
+      "range": {
+        "startLine": 46,
+        "startChar": 7,
+        "endLine": 46,
+        "endChar": 8
+      },
+      "revId": "ded0d38ad2620e06c6ad7333e4b54fb94bff16e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37fe9259_1149694b",
+        "filename": "ios/chrome/browser/web/nullable_mailto_url_rewriter_unittest.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1125535
+      },
+      "writtenOn": "2017-08-25T20:57:57Z",
+      "side": 1,
+      "message": "Removed \"Case N:\" from comments.",
+      "parentUuid": "08a64a04_ed54973f",
       "range": {
         "startLine": 46,
         "startChar": 7,
