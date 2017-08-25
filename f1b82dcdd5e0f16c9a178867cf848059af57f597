@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c039687a_e62ddd7f",
+        "filename": "ios/clean/chrome/browser/ui/dialogs/java_script_dialogs/dialog_blocking/java_script_dialog_blocking_confirmation_coordinator.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-08-25T23:07:09Z",
+      "side": 1,
+      "message": "The compiler used to throw a warning if you tried to do a single parentheses, but it looks like it works fine now.  Removing here and elsewhere.",
+      "parentUuid": "703eef1b_ccd32fb1",
+      "range": {
+        "startLine": 39,
+        "startChar": 5,
+        "endLine": 39,
+        "endChar": 7
+      },
+      "revId": "f1b82dcdd5e0f16c9a178867cf848059af57f597",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9fb27f3b_7cf9f079",
         "filename": "ios/clean/chrome/browser/ui/dialogs/java_script_dialogs/dialog_blocking/java_script_dialog_blocking_confirmation_coordinator.mm",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2017-08-24T17:20:56Z",
       "side": 1,
       "message": "Could this be a property accessor?",
+      "range": {
+        "startLine": 57,
+        "startChar": 2,
+        "endLine": 57,
+        "endChar": 11
+      },
+      "revId": "f1b82dcdd5e0f16c9a178867cf848059af57f597",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ebdcf51_5c25d14b",
+        "filename": "ios/clean/chrome/browser/ui/dialogs/java_script_dialogs/dialog_blocking/java_script_dialog_blocking_confirmation_coordinator.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-08-25T23:07:09Z",
+      "side": 1,
+      "message": "The accessor for this is declared in the DialogCoordinator (Subclassing) category.  Since you can\u0027t synthesize properties declared in categories, this seems the best way to do it.  Another way would be to redeclare the property as readwrite internally and synthesize it, but that\u0027s essentially doing the same thing (while allowing malicious classes from potentially resetting the mediator to an unexpected value).",
+      "parentUuid": "9fb27f3b_7cf9f079",
       "range": {
         "startLine": 57,
         "startChar": 2,
@@ -65,6 +113,24 @@
     },
     {
       "key": {
+        "uuid": "0b0b57ad_6c22accd",
+        "filename": "ios/clean/chrome/browser/ui/dialogs/java_script_dialogs/dialog_blocking/java_script_dialog_blocking_confirmation_coordinator.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-08-25T23:07:09Z",
+      "side": 1,
+      "message": "It already is a readonly property (see dialog_coordinator+subclassing.h).",
+      "parentUuid": "09627c87_04a65c0b",
+      "revId": "f1b82dcdd5e0f16c9a178867cf848059af57f597",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "040961dc_f717e9e4",
         "filename": "ios/clean/chrome/browser/ui/dialogs/java_script_dialogs/dialog_blocking/java_script_dialog_blocking_confirmation_mediator.mm",
         "patchSetId": 2
@@ -88,6 +154,30 @@
     },
     {
       "key": {
+        "uuid": "166903fb_2748fd23",
+        "filename": "ios/clean/chrome/browser/ui/dialogs/java_script_dialogs/dialog_blocking/java_script_dialog_blocking_confirmation_mediator.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-08-25T23:07:09Z",
+      "side": 1,
+      "message": "Changed to weak.",
+      "parentUuid": "040961dc_f717e9e4",
+      "range": {
+        "startLine": 27,
+        "startChar": 31,
+        "endLine": 27,
+        "endChar": 37
+      },
+      "revId": "f1b82dcdd5e0f16c9a178867cf848059af57f597",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c3e0dba8_b5ed0335",
         "filename": "ios/clean/chrome/browser/ui/dialogs/java_script_dialogs/dialog_blocking/java_script_dialog_blocking_confirmation_mediator.mm",
         "patchSetId": 2
@@ -99,6 +189,30 @@
       "writtenOn": "2017-08-24T17:20:56Z",
       "side": 1,
       "message": "Where is this used?",
+      "range": {
+        "startLine": 61,
+        "startChar": 26,
+        "endLine": 61,
+        "endChar": 41
+      },
+      "revId": "f1b82dcdd5e0f16c9a178867cf848059af57f597",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72ce0eb9_bea77fe5",
+        "filename": "ios/clean/chrome/browser/ui/dialogs/java_script_dialogs/dialog_blocking/java_script_dialog_blocking_confirmation_mediator.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-08-25T23:07:09Z",
+      "side": 1,
+      "message": "There are no text fields for this particular dialog.  It\u0027s used in HTTP authentication and JS prompt dialogs though, and all these dialogs share the same dismissal command.  Each individual dialog implementation has its own mediator that intercepts the generalized DialogCoordinator dismissal info, performs logic from the response, then forwards the subclass-specific dismissal command.",
+      "parentUuid": "c3e0dba8_b5ed0335",
       "range": {
         "startLine": 61,
         "startChar": 26,
