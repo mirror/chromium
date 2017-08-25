@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fac8d12f_94ca1266",
+        "filename": "tools/chrome_proxy/webdriver/cross_origin_push.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1162726
+      },
+      "writtenOn": "2017-08-25T18:40:47Z",
+      "side": 1,
+      "message": "Instead of using _StopDriver, you can just unindent the rest of the test from the with block",
+      "revId": "e0d6f4824685ed1be460e0e0cfb7e18556952db4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
