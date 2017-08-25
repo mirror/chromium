@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "db633564_6061e64f",
+        "filename": "services/ui/ws/window_manager_client_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 391,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-25T22:16:13Z",
+      "side": 1,
+      "message": "I\u0027m marking this optional. I leave the decision to you as to whether you want to change it or not. I\u0027m going to LGTM the patch assuming you address my other concerns. If you do change this, let me look it over one more time before landing.",
+      "parentUuid": "89495c97_27f0e42a",
+      "range": {
+        "startLine": 391,
+        "startChar": 2,
+        "endLine": 391,
+        "endChar": 68
+      },
+      "revId": "09c02ba21336d814dad40dbbfade1b0dd64ca09c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "71dbd556_fee82919",
         "filename": "services/ui/ws/window_tree.cc",
         "patchSetId": 4
