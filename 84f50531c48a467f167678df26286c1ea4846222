@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "58892846_a66367c0",
+        "filename": "chrome/browser/resources/settings/controls/settings_toggle_button.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-08-25T00:59:09Z",
+      "side": 1,
+      "message": "The flex-basis was copied from the iron-flex-layout.\nIt seems to affect how the flex behaves when the cell becomes very narrow (prevents text from wrapping). Since it had *some* noticeable effect, I kept it.",
+      "revId": "84f50531c48a467f167678df26286c1ea4846222",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
