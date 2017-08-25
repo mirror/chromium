@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "f5975e41_3eb466fc",
+        "filename": "third_party/zlib/contrib/arm/chunkcopy.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1189229
+      },
+      "writtenOn": "2017-08-25T08:00:49Z",
+      "side": 1,
+      "message": "Oh geeze. Of course. I was so fixed on this being a memmove for some reason. This makes a LOT more sense now. :)",
+      "parentUuid": "a65a2246_fcbfaa95",
+      "revId": "d5647488215d0ffabb9fd5a7a4fb1c0a8bb4d585",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5e5240ef_1a68af7c",
         "filename": "third_party/zlib/contrib/arm/chunkcopy.h",
         "patchSetId": 5
@@ -155,6 +173,24 @@
       "side": 1,
       "message": "This version implements cases where the source and the destination buffers overlap.  The deflate algorithm uses this condition to write repeating patterns; chunkcopy_lapped_relaxed() would fumble this because it assumes it can read and write chunks of 16 bytes at a time, which doesn\u0027t work (easily) for shorter periods.",
       "parentUuid": "0b33fa37_083729be",
+      "revId": "d5647488215d0ffabb9fd5a7a4fb1c0a8bb4d585",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3b8c27d_8838ba5b",
+        "filename": "third_party/zlib/contrib/arm/chunkcopy.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1189229
+      },
+      "writtenOn": "2017-08-25T08:00:49Z",
+      "side": 1,
+      "message": "Got ya. Thank you. :)",
+      "parentUuid": "2099d361_d7b1052f",
       "revId": "d5647488215d0ffabb9fd5a7a4fb1c0a8bb4d585",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
