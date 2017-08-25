@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7fd6efbe_13b6ebe9",
+        "filename": "base/fuchsia/default_job.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-08-25T18:02:26Z",
+      "side": 1,
+      "message": "nit: I think you can reasonably remove the {} here, if you want.",
+      "revId": "e01f6f22974a29370a536f6a6dbf11a786ae1c32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6928b248_e34b3f29",
+        "filename": "base/fuchsia/default_job.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-08-25T18:02:26Z",
+      "side": 1,
+      "message": "If it\u0027s invalid to set the default job more than once then we should express that in the API comment.",
+      "revId": "e01f6f22974a29370a536f6a6dbf11a786ae1c32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
