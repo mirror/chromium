@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e0ee5a9c_066c8181",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1150437
+      },
+      "writtenOn": "2017-08-25T18:22:26Z",
+      "side": 1,
+      "message": "Is this value ever used?  It looks like we only have 3 attempts @ 15 seconds each so we would never be over 1 minute for max delay during retries.  How did we come to 10 minutes?",
+      "revId": "83e8b49a4df2166aa466a699679d210ee335d7d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
