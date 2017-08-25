@@ -63,6 +63,16 @@ DEFINE_TRACE(History) {
   DOMWindowClient::Trace(visitor);
 }
 
+unsigned History::index(ExceptionState& exception_state) const {
+  if (!GetFrame() || !GetFrame()->Client()) {
+    exception_state.ThrowSecurityError(
+        "May not use a History object associated with a Document that is not "
+        "fully active");
+    return 0;
+  }
+  return GetFrame()->Client()->BackForwardIndex();
+}
+
 unsigned History::length(ExceptionState& exception_state) const {
   if (!GetFrame() || !GetFrame()->Client()) {
     exception_state.ThrowSecurityError(
