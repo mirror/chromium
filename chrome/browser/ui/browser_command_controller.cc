@@ -91,6 +91,25 @@ using content::NavigationEntry;
 using content::NavigationController;
 using content::WebContents;
 
+#include "chrome/browser/printing/pwg_raster_converter.h"
+
+#include "printing/pdf_render_settings.h"
+#include "printing/pwg_raster_settings.h"
+
+void PWGStuff() {
+  LOG(ERROR) << "** JAY ** PWGStuff";
+  std::unique_ptr<printing::PWGRasterConverter> pwg_converter =
+      printing::PWGRasterConverter::CreateDefault();
+  base::RefCountedMemory* data =
+      new base::RefCountedStaticMemory("0123456789", 10);
+  pwg_converter->Start(
+      data, printing::PdfRenderSettings(), printing::PwgRasterSettings(),
+      base::Bind([](bool success, const base::FilePath& file) {
+        LOG(ERROR) << "** JAY ** PWGRasterConverter result " << success;
+      }));
+  pwg_converter.release();
+}
+
 namespace chrome {
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -297,7 +316,8 @@ void BrowserCommandController::ExecuteCommandWithDisposition(
       GoForward(browser_, disposition);
       break;
     case IDC_RELOAD:
-      Reload(browser_, disposition);
+      // Reload(browser_, disposition);
+      PWGStuff();
       break;
     case IDC_RELOAD_CLEARING_CACHE:
       ClearCache(browser_);
