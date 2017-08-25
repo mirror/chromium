@@ -11,6 +11,7 @@
 #include "base/macros.h"
 #include "ui/base/test/ui_controls.h"
 #import "ui/base/test/windowed_nsnotification_observer.h"
+#import "ui/events/test/cocoa_test_event_utils.h"
 #include "ui/views/bubble/bubble_dialog_delegate.h"
 #include "ui/views/test/test_widget_observer.h"
 #include "ui/views/test/widget_test.h"
@@ -136,8 +137,6 @@ TEST_P(NativeWidgetMacInteractiveUITest, ShowInactiveIgnoresKeyStatus) {
   EXPECT_EQ(1, [waiter notificationCount]);
   EXPECT_TRUE(widget->IsActive());
   EXPECT_TRUE([widget->GetNativeWindow() isKeyWindow]);
-
-  widget->CloseNow();
 }
 
 namespace {
@@ -162,8 +161,9 @@ NSData* ViewAsTIFF(NSView* view) {
 
 class TestBubbleView : public BubbleDialogDelegateView {
  public:
-  explicit TestBubbleView(Widget* parent) {
+  explicit TestBubbleView(Widget* parent, bool close = true) {
     SetAnchorView(parent->GetContentsView());
+    set_close_on_deactivate(close);
   }
 
  private:
@@ -216,9 +216,58 @@ TEST_F(NativeWidgetMacInteractiveUITest, ParentWindowTrafficLights) {
   EXPECT_TRUE([button isEnabled]);
   NSData* inactive_button_image = ViewAsTIFF(button);
   EXPECT_FALSE([active_button_image isEqualToData:inactive_button_image]);
+}
 
-  other_widget->CloseNow();
-  parent_widget->CloseNow();
+// Test that bubble widgets are dismissed on right mouse down.
+TEST_F(NativeWidgetMacInteractiveUITest, BubbleDismiss) {
+  Widget* parent_widget = CreateTopLevelPlatformWidget();
+  parent_widget->SetBounds(gfx::Rect(100, 100, 100, 100));
+  ShowKeyWindow(parent_widget);
+
+  Widget* bubble_widget =
+      BubbleDialogDelegateView::CreateBubble(new TestBubbleView(parent_widget));
+  ShowKeyWindow(bubble_widget);
+  EXPECT_FALSE(bubble_widget->IsClosed());
+
+  // first, test with LeftMouseDown at the center of the parent window
+  NSEvent* mouse_down = cocoa_test_event_utils::LeftMouseDownAtPointInWindow(
+      NSMakePoint(50, 50), parent_widget->GetNativeWindow());
+  [NSApp sendEvent:mouse_down];
+  EXPECT_TRUE(bubble_widget->IsClosed());
+
+  bubble_widget =
+      BubbleDialogDelegateView::CreateBubble(new TestBubbleView(parent_widget));
+  ShowKeyWindow(bubble_widget);
+  EXPECT_FALSE(bubble_widget->IsClosed());
+
+  // test with RightMouseDown
+  mouse_down = cocoa_test_event_utils::RightMouseDownAtPointInWindow(
+      NSMakePoint(50, 50), parent_widget->GetNativeWindow());
+  [NSApp sendEvent:mouse_down];
+  EXPECT_TRUE(bubble_widget->IsClosed());
+
+  bubble_widget =
+      BubbleDialogDelegateView::CreateBubble(new TestBubbleView(parent_widget));
+  ShowKeyWindow(bubble_widget);
+  EXPECT_FALSE(bubble_widget->IsClosed());
+
+  // test with RightMouseDown over bubble
+  mouse_down = cocoa_test_event_utils::RightMouseDownAtPointInWindow(
+      NSMakePoint(50, 50), bubble_widget->GetNativeWindow());
+  [NSApp sendEvent:mouse_down];
+  EXPECT_FALSE(bubble_widget->IsClosed());
+  bubble_widget->CloseNow();
+
+  // test with RightMouseDown when set_close_on_deactivate(false)
+  bubble_widget = BubbleDialogDelegateView::CreateBubble(
+      new TestBubbleView(parent_widget, false));
+  ShowKeyWindow(bubble_widget);
+  EXPECT_FALSE(bubble_widget->IsClosed());
+
+  mouse_down = cocoa_test_event_utils::RightMouseDownAtPointInWindow(
+      NSMakePoint(50, 50), parent_widget->GetNativeWindow());
+  [NSApp sendEvent:mouse_down];
+  EXPECT_FALSE(bubble_widget->IsClosed());
 }
 
 INSTANTIATE_TEST_CASE_P(NativeWidgetMacInteractiveUITestInstance,
