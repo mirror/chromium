@@ -275,8 +275,8 @@ Bindings.ContentProviderBasedProject = class extends Workspace.ProjectStore {
    * @param {string} path
    */
   removeFile(path) {
-    delete this._contentProviders[path];
     this.removeUISourceCode(path);
+    delete this._contentProviders[path];
   }
 
   reset() {
