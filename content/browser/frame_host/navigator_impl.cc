@@ -217,8 +217,10 @@ void NavigatorImpl::DidStartProvisionalLoad(
   bool is_renderer_initiated = true;
   int pending_nav_entry_id = 0;
   bool started_from_context_menu = false;
+  WindowOpenDisposition disposition = WindowOpenDisposition::UNKNOWN;
   NavigationEntryImpl* pending_entry = controller_->GetPendingEntry();
   if (pending_entry) {
+    disposition = pending_entry->GetDisposition();
     is_renderer_initiated = pending_entry->is_renderer_initiated();
     pending_nav_entry_id = pending_entry->GetUniqueID();
     started_from_context_menu = pending_entry->has_started_from_context_menu();
@@ -229,7 +231,7 @@ void NavigatorImpl::DidStartProvisionalLoad(
     render_process_host->FilterURL(false, &validated_redirect_chain[i]);
   render_frame_host->SetNavigationHandle(NavigationHandleImpl::Create(
       validated_url, validated_redirect_chain,
-      render_frame_host->frame_tree_node(), is_renderer_initiated,
+      render_frame_host->frame_tree_node(), disposition, is_renderer_initiated,
       false,  // is_same_document
       navigation_start, pending_nav_entry_id, started_from_context_menu,
       CSPDisposition::CHECK,  // should_check_main_world_csp
@@ -895,8 +897,9 @@ void NavigatorImpl::RequestTransferURL(
       entry = NavigationEntryImpl::FromNavigationEntry(
           controller_->CreateNavigationEntry(
               GURL(url::kAboutBlankURL), referrer_to_use, page_transition,
-              is_renderer_initiated, extra_headers,
-              controller_->GetBrowserContext()));
+              // TODO: pass disposition
+              WindowOpenDisposition::UNKNOWN, is_renderer_initiated,
+              extra_headers, controller_->GetBrowserContext()));
     }
     entry->AddOrUpdateFrameEntry(
         node, -1, -1, nullptr,
@@ -907,7 +910,9 @@ void NavigatorImpl::RequestTransferURL(
     // Main frame case.
     entry = NavigationEntryImpl::FromNavigationEntry(
         controller_->CreateNavigationEntry(
-            dest_url, referrer_to_use, page_transition, is_renderer_initiated,
+            dest_url, referrer_to_use, page_transition,
+            // TODO: pass disposition
+            WindowOpenDisposition::UNKNOWN, is_renderer_initiated,
             extra_headers, controller_->GetBrowserContext()));
     entry->root_node()->frame_entry->set_source_site_instance(
         static_cast<SiteInstanceImpl*>(source_site_instance));
@@ -1286,6 +1291,7 @@ void NavigatorImpl::DidStartMainFrameNavigation(
         NavigationEntryImpl::FromNavigationEntry(
             controller_->CreateNavigationEntry(
                 url, content::Referrer(), ui::PAGE_TRANSITION_LINK,
+                WindowOpenDisposition::CURRENT_TAB,
                 true /* is_renderer_initiated */, std::string(),
                 controller_->GetBrowserContext()));
     entry->set_site_instance(site_instance);
@@ -1297,6 +1303,7 @@ void NavigatorImpl::DidStartMainFrameNavigation(
           pending_entry->transferred_global_request_id());
       entry->set_should_replace_entry(pending_entry->should_replace_entry());
       entry->SetRedirectChain(pending_entry->GetRedirectChain());
+      entry->SetDisposition(pending_entry->GetDisposition());
     }
 
     // If there's a current NavigationHandle, update its pending NavEntry ID.

@@ -21,6 +21,7 @@
 #include "ui/base/page_transition_types.h"
 
 class GURL;
+enum class WindowOpenDisposition;
 
 namespace content {
 
@@ -121,6 +122,9 @@ class NavigationEntry {
   // the previous page.
   virtual void SetTransitionType(ui::PageTransition transition_type) = 0;
   virtual ui::PageTransition GetTransitionType() const = 0;
+
+  virtual void SetDisposition(WindowOpenDisposition disposition) = 0;
+  virtual WindowOpenDisposition GetDisposition() const = 0;
 
   // The user typed URL was the URL that the user initiated the navigation
   // with, regardless of any redirects. This is used to generate keywords, for
