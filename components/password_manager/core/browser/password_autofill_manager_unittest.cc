@@ -4,6 +4,7 @@
 
 #include "components/password_manager/core/browser/password_autofill_manager.h"
 
+#include "base/android/build_info.h"
 #include "base/command_line.h"
 #include "base/compiler_specific.h"
 #include "base/memory/ptr_util.h"
@@ -81,6 +82,15 @@ class MockAutofillClient : public autofill::TestAutofillClient {
   MOCK_METHOD1(ExecuteCommand, void(int));
 };
 
+bool IsPreLollipopAndroid() {
+#if defined(ANDROID)
+  return (base::android::BuildInfo::GetInstance()->sdk_int() >=
+          base::android::SDK_VERSION_LOLLIPOP);
+#else
+  return false;
+#endif
+}
+
 }  // namespace
 
 class PasswordAutofillManagerTest : public testing::Test {
@@ -133,7 +143,8 @@ class PasswordAutofillManagerTest : public testing::Test {
 
   static bool IsManualFallbackForFillingEnabled() {
     return base::FeatureList::IsEnabled(
-        password_manager::features::kEnableManualFallbacksFilling);
+               password_manager::features::kEnableManualFallbacksFilling) &&
+           !IsPreLollipopAndroid();
   }
 
   std::unique_ptr<PasswordAutofillManager> password_autofill_manager_;
