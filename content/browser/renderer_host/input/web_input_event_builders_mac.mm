@@ -312,9 +312,12 @@ blink::WebMouseEvent WebMouseEventBuilder::Build(
     default:
       NOTIMPLEMENTED();
   }
+  // Disable support for multi-pen on mac by setting id to 0.
+  // NSMouseExited and NSMouseEntered event doesn't have deviceID
+  // that make pointer_id for pen incorrect.
 
   blink::WebMouseEvent result(event_type, ModifiersFromEvent(event),
-                              [event timestamp]);
+                              [event timestamp], 0);
   result.click_count = click_count;
   result.button = button;
   SetWebEventLocationFromEventInView(&result, event, view);
@@ -329,7 +332,6 @@ blink::WebMouseEvent WebMouseEventBuilder::Build(
   // Set stylus properties for events with a subtype of
   // NSTabletPointEventSubtype.
   NSEventSubtype subtype = [event subtype];
-  result.id = [event deviceID];
   if (subtype == NSTabletPointEventSubtype) {
     result.force = [event pressure];
     NSPoint tilt = [event tilt];
