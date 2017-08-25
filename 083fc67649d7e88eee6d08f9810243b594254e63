@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ce5f959c_6dabf0df",
+        "filename": "ios/build/bots/chromium.mac/ios-simulator-xcode-clang.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1116294
+      },
+      "writtenOn": "2017-08-25T16:09:07Z",
+      "side": 1,
+      "message": "same here, since we use hermetic.",
+      "revId": "083fc67649d7e88eee6d08f9810243b594254e63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d061cba5_87989390",
+        "filename": "ios/build/bots/chromium.mac/ios-simulator-xcode-clang.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1116294
+      },
+      "writtenOn": "2017-08-25T16:09:07Z",
+      "side": 1,
+      "message": "it\u0027s unclear if this value is even honored?",
+      "revId": "083fc67649d7e88eee6d08f9810243b594254e63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
