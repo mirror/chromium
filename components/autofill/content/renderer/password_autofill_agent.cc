@@ -1054,7 +1054,8 @@ bool PasswordAutofillAgent::ShowSuggestions(
                                                                 frame_url);
       }
 #endif
-      if (ShouldShowStandaloneManuallFallback(element, frame_url) &&
+      if (!blacklisted_form_found_ &&
+          ShouldShowStandaloneManuallFallback(element, frame_url) &&
           ShowManualFallbackSuggestion(element)) {
         return true;
       }
@@ -1708,6 +1709,10 @@ void PasswordAutofillAgent::FindFocusedPasswordForm(
   password_form->submission_event =
       PasswordForm::SubmissionIndicatorEvent::MANUAL_SAVE;
   std::move(callback).Run(*password_form);
+}
+
+void PasswordAutofillAgent::SetMatchingBlacklistedFormState() {
+  blacklisted_form_found_ = true;
 }
 
 ////////////////////////////////////////////////////////////////////////////////

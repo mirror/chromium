@@ -82,6 +82,8 @@ class FakePasswordAutofillAgent
   MOCK_METHOD2(FillPasswordForm,
                void(int, const autofill::PasswordFormFillData&));
 
+  MOCK_METHOD0(SetMatchingBlacklistedFormState, void());
+
  private:
   void SetLoggingState(bool active) override {
     called_set_logging_state_ = true;
