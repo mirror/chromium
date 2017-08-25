@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f4d571ee_19d2083f",
+        "filename": "chrome/android/java/res/layout/bookmark_row_content.xml",
+        "patchSetId": 9
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1227244
+      },
+      "writtenOn": "2017-08-25T21:34:33Z",
+      "side": 1,
+      "message": "i changed row_padding to row_start_padding \u0026 added a row_end_padding with value 8 dp.",
+      "parentUuid": "5d4f24bc_9eeda255",
+      "range": {
+        "startLine": 24,
+        "startChar": 32,
+        "endLine": 24,
+        "endChar": 35
+      },
+      "revId": "2119fdd4aa08fd13b016fae042872e6c8ff8eeb7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "53abc1a0_7281d656",
         "filename": "chrome/android/java/res/values/dimens.xml",
         "patchSetId": 9
@@ -45,6 +69,30 @@
       "revId": "2119fdd4aa08fd13b016fae042872e6c8ff8eeb7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b37e1ffb_92313a3a",
+        "filename": "chrome/android/java/res/values/dimens.xml",
+        "patchSetId": 9
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1227244
+      },
+      "writtenOn": "2017-08-25T21:34:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "53abc1a0_7281d656",
+      "range": {
+        "startLine": 248,
+        "startChar": 17,
+        "endLine": 248,
+        "endChar": 49
+      },
+      "revId": "2119fdd4aa08fd13b016fae042872e6c8ff8eeb7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "af6d467c_6113880f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/SuggestionView.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1227244
+      },
+      "writtenOn": "2017-08-25T21:34:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8a1fedc7_8845eeae",
+      "range": {
+        "startLine": 213,
+        "startChar": 12,
+        "endLine": 213,
+        "endChar": 25
+      },
+      "revId": "2119fdd4aa08fd13b016fae042872e6c8ff8eeb7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "16cf96f8_a129a789",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/SuggestionView.java",
         "patchSetId": 9
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "a2c3d8fb_ebcd9bbd",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/SuggestionView.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1227244
+      },
+      "writtenOn": "2017-08-25T21:34:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "16cf96f8_a129a789",
+      "range": {
+        "startLine": 213,
+        "startChar": 28,
+        "endLine": 214,
+        "endChar": 60
+      },
+      "revId": "2119fdd4aa08fd13b016fae042872e6c8ff8eeb7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "eb415f2c_a61816b0",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/SuggestionView.java",
         "patchSetId": 9
@@ -105,6 +201,30 @@
       "writtenOn": "2017-08-25T00:52:12Z",
       "side": 1,
       "message": "Since this is only used in modern, let\u0027s work modern into the dimension name somewhere.\n\nAs an aside, what is the \"refine view\"? Is it the arrow at the end of each suggestion?",
+      "range": {
+        "startLine": 216,
+        "startChar": 34,
+        "endLine": 216,
+        "endChar": 71
+      },
+      "revId": "2119fdd4aa08fd13b016fae042872e6c8ff8eeb7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42979ab1_654e2be0",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/SuggestionView.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1227244
+      },
+      "writtenOn": "2017-08-25T21:34:33Z",
+      "side": 1,
+      "message": "changed to omnibox_suggestion_refine_view_modern_end_padding\n\nrefine view refers to the arrow at the end of each suggestion.",
+      "parentUuid": "eb415f2c_a61816b0",
       "range": {
         "startLine": 216,
         "startChar": 34,
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "654ef7fd_2b36d46c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/SuggestionView.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 735,
+      "author": {
+        "id": 1227244
+      },
+      "writtenOn": "2017-08-25T21:34:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "84754632_69816039",
+      "range": {
+        "startLine": 735,
+        "startChar": 15,
+        "endLine": 735,
+        "endChar": 37
+      },
+      "revId": "2119fdd4aa08fd13b016fae042872e6c8ff8eeb7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3199ea06_da49ddea",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/SuggestionView.java",
         "patchSetId": 9
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "dfcce2c2_28c17edc",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/SuggestionView.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 736,
+      "author": {
+        "id": 1227244
+      },
+      "writtenOn": "2017-08-25T21:34:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3199ea06_da49ddea",
+      "range": {
+        "startLine": 736,
+        "startChar": 49,
+        "endLine": 736,
+        "endChar": 89
+      },
+      "revId": "2119fdd4aa08fd13b016fae042872e6c8ff8eeb7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "98f7230b_26cad4e8",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/SuggestionView.java",
         "patchSetId": 9
@@ -174,6 +342,30 @@
       "writtenOn": "2017-08-25T00:52:12Z",
       "side": 1,
       "message": "We may need to do something with the answers view as well. If you type something like \"weather in mountain view\" we show an image of the current weather + the temperature, etc. We should test what that looks like with this patch.\n\nWhat happens if you add start padding (and possibly end padding instead of adjusting the \"refine view\") to the entire SuggestionView (I\u0027d try adding it in the constructor) rather than to each element individually?",
+      "range": {
+        "startLine": 743,
+        "startChar": 12,
+        "endLine": 748,
+        "endChar": 34
+      },
+      "revId": "2119fdd4aa08fd13b016fae042872e6c8ff8eeb7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b86e8408_7aa2f3c8",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/SuggestionView.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 748,
+      "author": {
+        "id": 1227244
+      },
+      "writtenOn": "2017-08-25T21:34:33Z",
+      "side": 1,
+      "message": "i added it individually.\ni tried adding it into the constructor, but the alignment is off.",
+      "parentUuid": "98f7230b_26cad4e8",
       "range": {
         "startLine": 743,
         "startChar": 12,
@@ -209,6 +401,30 @@
     },
     {
       "key": {
+        "uuid": "caca213e_924ab597",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/selection/SelectableListToolbar.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 506,
+      "author": {
+        "id": 1227244
+      },
+      "writtenOn": "2017-08-25T21:34:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2cf2bad0_1afd73ea",
+      "range": {
+        "startLine": 506,
+        "startChar": 12,
+        "endLine": 506,
+        "endChar": 34
+      },
+      "revId": "2119fdd4aa08fd13b016fae042872e6c8ff8eeb7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d69a3895_6ae4ae70",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/selection/SelectableListToolbar.java",
         "patchSetId": 9
@@ -229,6 +445,30 @@
       "revId": "2119fdd4aa08fd13b016fae042872e6c8ff8eeb7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "474a4cfd_9733e637",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/selection/SelectableListToolbar.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 509,
+      "author": {
+        "id": 1227244
+      },
+      "writtenOn": "2017-08-25T21:34:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d69a3895_6ae4ae70",
+      "range": {
+        "startLine": 508,
+        "startChar": 16,
+        "endLine": 509,
+        "endChar": 76
+      },
+      "revId": "2119fdd4aa08fd13b016fae042872e6c8ff8eeb7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
