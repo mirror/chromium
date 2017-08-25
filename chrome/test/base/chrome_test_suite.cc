@@ -37,6 +37,9 @@
 
 namespace {
 
+const char* const kNonWildcardDomainNonPortSchemes[] = {
+    extensions::kExtensionScheme, chrome::kChromeSearchScheme};
+
 bool IsCrosPythonProcess() {
 #if defined(OS_CHROMEOS)
   char buf[80];
@@ -81,8 +84,9 @@ void ChromeTestSuite::Initialize() {
   // values for DIR_EXE and DIR_MODULE.
   content::ContentTestSuiteBase::Initialize();
 
-  ContentSettingsPattern::SetNonWildcardDomainNonPortScheme(
-      extensions::kExtensionScheme);
+  ContentSettingsPattern::SetNonWildcardDomainNonPortSchemes(
+      kNonWildcardDomainNonPortSchemes,
+      arraysize(kNonWildcardDomainNonPortSchemes));
 
 #if defined(OS_MACOSX)
   // Look in the framework bundle for resources.
