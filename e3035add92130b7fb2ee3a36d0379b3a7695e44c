@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "7b606acc_31609cfa",
+        "filename": "ios/chrome/browser/web/sad_tab_tab_helper.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1165759
+      },
+      "writtenOn": "2017-08-25T20:25:55Z",
+      "side": 1,
+      "message": "Aggh, we don\u0027t. Removing.",
+      "parentUuid": "f1126ed0_56d32ac8",
+      "range": {
+        "startLine": 12,
+        "startChar": 28,
+        "endLine": 12,
+        "endChar": 30
+      },
+      "revId": "e3035add92130b7fb2ee3a36d0379b3a7695e44c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "202ea992_84bdf9e0",
         "filename": "ios/chrome/browser/web/sad_tab_tab_helper.mm",
         "patchSetId": 4
@@ -36,6 +60,30 @@
       "writtenOn": "2017-08-25T19:18:03Z",
       "side": 1,
       "message": "ditto",
+      "range": {
+        "startLine": 14,
+        "startChar": 24,
+        "endLine": 14,
+        "endChar": 42
+      },
+      "revId": "e3035add92130b7fb2ee3a36d0379b3a7695e44c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "757a43a6_fa6390de",
+        "filename": "ios/chrome/browser/web/sad_tab_tab_helper.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1165759
+      },
+      "writtenOn": "2017-08-25T20:25:55Z",
+      "side": 1,
+      "message": "This is being used after Rebase",
+      "parentUuid": "202ea992_84bdf9e0",
       "range": {
         "startLine": 14,
         "startChar": 24,
@@ -68,6 +116,30 @@
       "revId": "e3035add92130b7fb2ee3a36d0379b3a7695e44c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1ca2841_3ddeafd8",
+        "filename": "ios/chrome/browser/web/sad_tab_tab_helper.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1165759
+      },
+      "writtenOn": "2017-08-25T20:25:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "82689cfc_9cc55275",
+      "range": {
+        "startLine": 16,
+        "startChar": 37,
+        "endLine": 16,
+        "endChar": 61
+      },
+      "revId": "e3035add92130b7fb2ee3a36d0379b3a7695e44c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
