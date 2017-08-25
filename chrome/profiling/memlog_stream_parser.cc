@@ -16,7 +16,7 @@ namespace profiling {
 
 namespace {
 
-using AddressVector = base::StackVector<Address, 128>;
+using AddressVector = base::StackVector<Address, kMaxStackEntries>;
 
 }  // namespace
 

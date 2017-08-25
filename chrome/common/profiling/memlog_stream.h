@@ -16,6 +16,7 @@ constexpr uint32_t kStreamSignature = 0xF6103B71;
 constexpr uint32_t kStartMojoControlPacketType = 0x77777777;
 constexpr uint32_t kAllocPacketType = 0xA1A1A1A1;
 constexpr uint32_t kFreePacketType = 0xFEFEFEFE;
+constexpr uint32_t kMaxStackEntries = 256;
 
 #pragma pack(push, 1)
 struct StreamHeader {
