@@ -46,17 +46,13 @@ enum class KeyboardControllerState {
   // Waiting for an extension to be loaded. Will move to HIDDEN if this is
   // loading pre-emptively, otherwise will move to SHOWING.
   LOADING_EXTENSION = 2,
-  // Keyboard is being shown via animation.
-  SHOWING = 3,
   // Keyboard is shown.
-  SHOWN = 4,
+  SHOWN = 3,
   // Keyboard is still shown, but will move to HIDING in a short period, or if
   // an input element gets focused again, will move to SHOWN.
-  WILL_HIDE = 5,
-  // Keyboard is being hidden via animation.
-  HIDING = 6,
+  WILL_HIDE = 4,
   // Keyboard is hidden, but has shown at least once.
-  HIDDEN = 7,
+  HIDDEN = 5,
   COUNT,
 };
 
