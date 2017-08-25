@@ -621,6 +621,9 @@ class GLES2DecoderImpl : public GLES2Decoder, public ErrorStateClient {
   // Sets DEPTH_TEST, STENCIL_TEST and color mask for the current framebuffer.
   void ApplyDirtyState();
 
+  void ApplyDirtyAttribEnableState();
+  void SetDriverAttribEnabledMask(GLuint index, bool enable);
+
   // These check the state of the currently bound framebuffer or the
   // backbuffer if no framebuffer is bound.
   // Check with all attached and enabled color attachments.
@@ -3304,7 +3307,7 @@ bool GLES2DecoderImpl::Initialize(
     // We have to enable vertex array 0 on GL with compatibility profile or it
     // won't render. Note that ES or GL with core profile does not have this
     // issue.
-    glEnableVertexAttribArray(0);
+    state_.SetVertexAttribEnabledAndApply(0, true);
   }
   glGenBuffersARB(1, &attrib_0_buffer_id_);
   glBindBuffer(GL_ARRAY_BUFFER, attrib_0_buffer_id_);
@@ -5688,8 +5691,9 @@ void GLES2DecoderImpl::ClearAllAttributes() const {
     glBindVertexArrayOES(0);
 
   for (uint32_t i = 0; i < group_->max_vertex_attribs(); ++i) {
-    if (i != 0)  // Never disable attribute 0
-      glDisableVertexAttribArray(i);
+    if (i != 0) {  // Never disable attribute 0
+      state_.SetVertexAttribEnabledAndApply(i, false);
+    }
     if (features().angle_instanced_arrays)
       glVertexAttribDivisorANGLE(i, 0);
   }
@@ -6040,7 +6044,7 @@ void GLES2DecoderImpl::DoResumeTransformFeedback() {
 void GLES2DecoderImpl::DoDisableVertexAttribArray(GLuint index) {
   if (state_.vertex_attrib_manager->Enable(index, false)) {
     if (index != 0 || gl_version_info().BehavesLikeGLES()) {
-      glDisableVertexAttribArray(index);
+      state_.SetVertexAttribEnabledAndApply(index, false);
     }
   } else {
     LOCAL_SET_GL_ERROR(
@@ -6249,7 +6253,7 @@ void GLES2DecoderImpl::DoInvalidateSubFramebuffer(
 
 void GLES2DecoderImpl::DoEnableVertexAttribArray(GLuint index) {
   if (state_.vertex_attrib_manager->Enable(index, true)) {
-    glEnableVertexAttribArray(index);
+    state_.SetVertexAttribEnabledAndApply(index, true);
   } else {
     LOCAL_SET_GL_ERROR(
         GL_INVALID_VALUE, "glEnableVertexAttribArray", "index out of range");
@@ -10047,11 +10051,7 @@ void GLES2DecoderImpl::RestoreStateForAttrib(
   // when running on desktop GL with compatibility profile because it will
   // never be re-enabled.
   if (attrib_index != 0 || gl_version_info().BehavesLikeGLES()) {
-    if (attrib->enabled()) {
-      glEnableVertexAttribArray(attrib_index);
-    } else {
-      glDisableVertexAttribArray(attrib_index);
-    }
+    state_.SetVertexAttribEnabledAndApply(attrib_index, attrib->enabled());
   }
 }
 
@@ -10308,6 +10308,7 @@ error::Error GLES2DecoderImpl::DoDrawArrays(
       if (!ValidateAndAdjustDrawBuffers(function_name)) {
         return error::kNoError;
       }
+      state_.ApplyMinimalAttribEnableStateForCurrentProgram();
       if (!instanced) {
         glDrawArrays(mode, first, count);
       } else {
@@ -10468,6 +10469,7 @@ error::Error GLES2DecoderImpl::DoDrawElements(const char* function_name,
         glEnable(GL_PRIMITIVE_RESTART);
         buffer_manager()->SetPrimitiveRestartFixedIndexIfNecessary(type);
       }
+      state_.ApplyMinimalAttribEnableStateForCurrentProgram();
       if (!instanced) {
         glDrawElements(mode, count, type, indices);
       } else {

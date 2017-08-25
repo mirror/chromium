@@ -12,6 +12,7 @@
 
 #include "base/logging.h"
 #include "gpu/command_buffer/service/gl_utils.h"
+#include "gpu/command_buffer/service/program_manager.h"
 #include "gpu/command_buffer/service/sampler_manager.h"
 #include "gpu/command_buffer/service/shader_manager.h"
 #include "gpu/command_buffer/service/texture_manager.h"
@@ -288,9 +289,12 @@ struct GPU_EXPORT ContextState {
     uint32_t packed_size = max_vertex_attribs / 16;
     packed_size += (max_vertex_attribs % 16 == 0) ? 0 : 1;
     generic_attrib_base_type_mask_.resize(packed_size);
+    attrib_enabled_in_driver_mask_.resize(packed_size);
+
     for (uint32_t i = 0; i < packed_size; ++i) {
       // All generic attribs are float type by default.
       generic_attrib_base_type_mask_[i] = 0x55555555u * SHADER_VARIABLE_FLOAT;
+      attrib_enabled_in_driver_mask_[i] = 0u;
     }
   }
 
@@ -299,6 +303,53 @@ struct GPU_EXPORT ContextState {
     int shift_bits = (index % 16) * 2;
     generic_attrib_base_type_mask_[index / 16] &= ~(0x3 << shift_bits);
     generic_attrib_base_type_mask_[index / 16] |= (base_type << shift_bits);
+  }
+
+  void SetVertexAttribEnabledAndApply(GLuint index, bool enable) const {
+    DCHECK_LT(index, attrib_values.size());
+    uint32_t bits_for_index = 0x3 << ((index % 16) * 2);
+    uint32_t& enabled_mask_element = attrib_enabled_in_driver_mask_[index / 16];
+    if (enable) {
+      enabled_mask_element |= bits_for_index;
+      glEnableVertexAttribArray(index);
+    } else {
+      enabled_mask_element &= ~bits_for_index;
+      glDisableVertexAttribArray(index);
+    }
+  }
+
+  void ApplyMinimalAttribEnableStateForCurrentProgram() const {
+    const auto& attrib_active_in_shader_mask =
+        current_program->vertex_input_active_mask();
+    const auto& attrib_enabled_mask =
+        vertex_attrib_manager->attrib_enabled_mask();
+
+    size_t attribCount = attrib_active_in_shader_mask.size();
+    DCHECK_EQ(attribCount, attrib_enabled_mask.size());
+    DCHECK_EQ(attribCount, attrib_enabled_in_driver_mask_.size());
+
+    for (size_t ii = 0; ii < attribCount; ++ii) {
+      uint32_t want_enabled_mask =
+          attrib_active_in_shader_mask[ii] & attrib_enabled_mask[ii];
+      uint32_t needs_update_mask =
+          want_enabled_mask ^ attrib_enabled_in_driver_mask_[ii];
+      if (UNLIKELY(needs_update_mask)) {
+        uint32_t attrib = ii;
+        while (needs_update_mask) {
+          bool needs_update = needs_update_mask & 0x1;
+          bool want_enabled = want_enabled_mask & 0x1;
+          if (needs_update) {
+            // Modifies attrib_enabled_in_driver_mask_ in place. But it always
+            // modifies for the current vector index [ii], so it shouldn't
+            // interfere with the outer loop here.
+            SetVertexAttribEnabledAndApply(attrib, want_enabled);
+          }
+          want_enabled >>= 2;
+          needs_update >>= 2;
+          attrib++;
+        }
+      }
+    }
   }
 
   const std::vector<uint32_t>& generic_attrib_base_type_mask() const {
@@ -390,6 +441,9 @@ struct GPU_EXPORT ContextState {
   // Each base type is encoded into 2 bits, the lowest 2 bits for location 0,
   // the highest 2 bits for location (max_vertex_attribs - 1).
   std::vector<uint32_t> generic_attrib_base_type_mask_;
+  // Same layout as above, 2 bits per location, 0x03 if an attrib is enabled in
+  // the driver, 0x00 otherwise. All 0x00 by default.
+  mutable std::vector<uint32_t> attrib_enabled_in_driver_mask_;
 
   GLfloat line_width_min_ = 0.0f;
   GLfloat line_width_max_ = 1.0f;
