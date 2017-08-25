@@ -623,40 +623,33 @@ void TabAndroid::SetActiveNavigationEntryTitleForUrl(
     entry->SetTitle(title);
 }
 
-bool TabAndroid::Print(JNIEnv* env,
-                       const JavaParamRef<jobject>& obj,
-                       jint render_process_id,
-                       jint render_frame_id) {
+bool TabAndroid::Print(JNIEnv* env, const JavaParamRef<jobject>& obj) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
 
   if (!web_contents())
     return false;
 
-  content::RenderFrameHost* rfh =
-      content::RenderFrameHost::FromID(render_process_id, render_frame_id);
+  // content::RenderFrameHost* rfh =
+  //     content::RenderFrameHost::FromID(render_process_id, render_frame_id);
 
-  if (!rfh)
-    rfh = printing::GetFrameToPrint(web_contents());
+  // if (!rfh)
+  //   rfh = printing::GetFrameToPrint(web_contents());
 
-  content::WebContents* contents =
-      content::WebContents::FromRenderFrameHost(rfh);
+  // content::WebContents* contents =
+  //     content::WebContents::FromRenderFrameHost(rfh);
+  content::WebContents* contents = web_contents();
 
   printing::PrintViewManagerBasic::CreateForWebContents(contents);
   printing::PrintViewManagerBasic* print_view_manager =
       printing::PrintViewManagerBasic::FromWebContents(contents);
+  LOG(WARNING) << "print_view_manager = " << print_view_manager;
   if (!print_view_manager)
     return false;
 
-  if (!print_view_manager->PrintNow(rfh))
+  if (!print_view_manager->PrintNow(printing::GetFrameToPrint(contents)))
     return false;
 
   return true;
-}
-
-void TabAndroid::SetPendingPrint(int render_process_id, int render_frame_id) {
-  JNIEnv* env = base::android::AttachCurrentThread();
-  Java_Tab_setPendingPrint(env, weak_java_tab_.get(env), render_process_id,
-                           render_frame_id);
 }
 
 ScopedJavaLocalRef<jobject> TabAndroid::GetFavicon(

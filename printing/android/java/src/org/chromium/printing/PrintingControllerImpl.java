@@ -193,7 +193,7 @@ public class PrintingControllerImpl implements PrintingController, PdfGenerator 
             Log.d(TAG, "Pending print can't be started. PrintingController is busy.");
         } else if (mPrintManager == null) {
             Log.d(TAG, "Pending print can't be started. No PrintManager provided.");
-        } else if (!mPrintable.canPrint()) {
+        } else if (mPrintable == null || !mPrintable.canPrint()) {
             Log.d(TAG, "Pending print can't be started. Printable can't perform printing.");
         } else {
             canStartPrint = true;

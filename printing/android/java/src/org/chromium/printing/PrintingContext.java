@@ -4,7 +4,10 @@
 
 package org.chromium.printing;
 
+import android.app.Activity;
+import android.content.Context;
 import android.print.PrintDocumentAdapter;
+import android.print.PrintManager;
 import android.util.SparseArray;
 
 import org.chromium.base.Log;
@@ -17,9 +20,14 @@ import org.chromium.base.annotations.JNINamespace;
  * the generation of PDF.  On the Java side, it works with a {@link PrintingController}
  * to talk to the framework.
  */
+/**
+ * This class is responsible for dispatching printing commands from different resources (UI and
+ * window.print()), gathering resources for PrintingController and native side counterpart to do
+ * printing job.
+ */
 @JNINamespace("printing")
 public class PrintingContext implements PrintingContextInterface {
-    private static final String TAG = "cr.printing";
+    private static final String TAG = "printing";
     /**
      * Mapping from a file descriptor (as originally provided from
      * {@link PrintDocumentAdapter#onWrite}) to a PrintingContext.
@@ -35,6 +43,9 @@ public class PrintingContext implements PrintingContextInterface {
 
     /** The pointer to the native PrintingContextAndroid object. */
     private final long mNativeObject;
+
+    /** PrintManager */
+    private static PrintManager sPrintManager;
 
     private PrintingContext(long ptr) {
         mController = PrintingControllerImpl.getInstance();
@@ -65,6 +76,22 @@ public class PrintingContext implements PrintingContextInterface {
     @Override
     public void askUserForSettingsReply(boolean success) {
         nativeAskUserForSettingsReply(mNativeObject, success);
+    }
+
+    public static void setActivity(Activity activity) {
+        if (sPrintManager == null) {
+            sPrintManager = (PrintManager) activity.getSystemService(Context.PRINT_SERVICE);
+        }
+    }
+
+    public void setPendingPrint(int renderProcessId, int renderFrameId) {
+        if (sPrintManager == null) return;
+
+        PrintingController printingController = PrintingControllerImpl.getInstance();
+        if (printingController == null) return;
+
+        printingController.setPendingPrint(
+                null, new PrintManagerDelegateImpl(sPrintManager), renderProcessId, renderFrameId);
     }
 
     @CalledByNative
