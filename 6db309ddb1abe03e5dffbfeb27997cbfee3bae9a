@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "3ad87b31_0b6ac8f6",
+        "filename": "components/ntp_snippets/breaking_news/breaking_news_gcm_app_handler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-25T08:41:43Z",
+      "side": 1,
+      "message": "That comment wasn\u0027t necessarily about which histograms we record, but more about the \"API\" that\u0027s exposed for metrics. If I had to implement this, I\u0027d be confused about when I\u0027m supposed to call OnTokenValidation and/or OnSuccessfulTokenValidation. So my suggestion was to merge the two into one method that takes all of the arguments, and then within that method decide which histograms to record.",
+      "parentUuid": "8321a2a2_14d5808f",
+      "revId": "6db309ddb1abe03e5dffbfeb27997cbfee3bae9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "77bc2d17_fff09694",
         "filename": "components/ntp_snippets/breaking_news/breaking_news_metrics.cc",
         "patchSetId": 1
