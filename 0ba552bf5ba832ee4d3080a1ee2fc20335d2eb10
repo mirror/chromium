@@ -383,6 +383,24 @@
     },
     {
       "key": {
+        "uuid": "a879e47c_9107557b",
+        "filename": "ui/events/win/events_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-25T19:27:29Z",
+      "side": 1,
+      "message": "\u003e I used ninja\u0026goma with symbol_level \u003d 2 is_clang\u003dfalse, it doesn\u0027t change anything.\n\u003e I tried returning (-1,-1), and it stepped into CursorRendererAura::OnMouseEvent() like those events with correct coordinates.\n\u003e And I also tried triggering a mouseleave on chrome toolbar, it\u0027s similar to the (0,0) event, it didn\u0027t step into any OnMouseEvent override function.\n\u003e I tried returning (1, 1) it\u0027s also similar to (0,0).\n\u003e So, I think those events with coordinates (0,0) or (1,1) were dispatched to toolbar instead of page because their coordinates are in top left corner of the browser window.\n\u003e Function ConvertLocationToTarget() in event.h, it calculates an offset for conversion from chrome window coordinates to widget coordinates. But for events not in widget (e.g. events with coordinates (0, 0), (1, 1), and  mouseleave events from toolbar), the offset is 0 and their coordinates don\u0027t change.\n\nWhat is the sequence to reproduce this? Better yet, can you write a test so it\u0027s easy to see what is going wrong?\nI believe https://cs.chromium.org/chromium/src/ui/aura/window_event_dispatcher.cc?rcl\u003d705ad6e87a7fe0c27173b5b685e5864c5a179fd4\u0026l\u003d283 is the place that should be called to handle sending an exit to the window that got a move.",
+      "parentUuid": "16485094_87443eac",
+      "revId": "0ba552bf5ba832ee4d3080a1ee2fc20335d2eb10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3ba8ae6c_981dc13b",
         "filename": "ui/events/win/events_win.cc",
         "patchSetId": 1
