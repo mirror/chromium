@@ -13,14 +13,20 @@ const mkdirp = require('mkdirp');
 const migrateUtils = require('./migrate_utils');
 const utils = require('../utils');
 
-const MIGRATE_TEST_PATH = path.resolve(__dirname, 'migrate_test.js');
-const TESTS_PATH = path.resolve(__dirname, 'tests.txt');
 const LAYOUT_TESTS_PATH = path.resolve(__dirname, '..', '..', '..', '..', 'LayoutTests');
 const TEST_EXPECTATIONS_PATH = path.resolve(LAYOUT_TESTS_PATH, 'TestExpectations');
 const FLAG_EXPECTATIONS_PATH = path.resolve(LAYOUT_TESTS_PATH, 'FlagExpectations');
 
 function main() {
-  const originalTests = fs.readFileSync(TESTS_PATH, 'utf-8').split('\n').map(line => line.split(' ')[0]);
+  const originalTests = scanForTests([
+    '../../../../LayoutTests/inspector/sources/debugger',
+    '../../../../LayoutTests/inspector/sources/debugger-async',
+    '../../../../LayoutTests/inspector/sources/debugger-breakpoints',
+    '../../../../LayoutTests/inspector/sources/debugger-console',
+    '../../../../LayoutTests/inspector/sources/debugger-frameworks',
+  ]);
+
+  console.log(originalTests);
   const oldToNewResourcesPath = new Map();
   const oldToNewTestPath = new Map(originalTests.map(t => [t, '']));
 
@@ -33,20 +39,14 @@ function main() {
     const outPath = migrateUtils.getOutPath(inputPath);
     const outResourcesPath = path.resolve(path.dirname(outPath), 'resources');
 
-    try {
-      childProcess.execSync(`DRY_RUN=1 node ${MIGRATE_TEST_PATH} ${inputPath}`);
-    } catch (err) {
-      console.log('Skipping test', inputPath);
-      console.log(err.stdout.toString());
-      continue;
-    }
-
     if (utils.isDir(inputResourcesPath))
       oldToNewResourcesPath.set(inputResourcesPath, outResourcesPath);
     mkdirp.sync(path.dirname(outPath));
 
     // Move .html -> .js
-    fs.writeFileSync(outPath, fs.readFileSync(inputPath, 'utf-8'));
+    const original = fs.readFileSync(inputPath, 'utf-8');
+    const updatedReferences = original.split('http/tests/inspector').join('inspector');
+    fs.writeFileSync(outPath, updatedReferences);
     fs.unlinkSync(inputPath);
 
     const outRelativePath = outPath.substring(outPath.indexOf('http/'));
@@ -54,12 +54,10 @@ function main() {
 
     // Move expectation file
     const inputExpectationsPath = inputPath.replace('.html', '-expected.txt');
-    const outExpectationsPath = outPath.replace('.js', '-expected.txt');
+    const outExpectationsPath = outPath.replace('.html', '-expected.txt');
     fs.writeFileSync(outExpectationsPath, fs.readFileSync(inputExpectationsPath, 'utf-8'));
     fs.unlinkSync(inputExpectationsPath);
   }
-
-  fs.writeFileSync(TESTS_PATH, Array.from(oldToNewTestPath.entries()).map(a => a.join(' ')).join('\n'));
 
   const newTestPaths = Array.from(oldToNewTestPath.values()).filter(x => x);
 
@@ -77,6 +75,10 @@ function main() {
       if (line.indexOf(oldTestPath) !== -1) {
         if (TestExpectationFailureTypes.some(x => line.indexOf(x) !== -1)) {
           testsAlreadyExempted.add(newTestPath);
+          const newLine = line.replace(oldTestPath, newTestPath);
+          return newLine + '\n' +
+              newLine.replace(newTestPath, `virtual/mojo-loading/${newTestPath}`)
+                  .replace(/crbug.com\/\d+/, 'crbug.com/667560');
         }
         return line.replace(oldTestPath, newTestPath);
       }
@@ -84,39 +86,6 @@ function main() {
     return line;
   });
 
-  updatedTestExpecations = updatedTestExpecations.map(line => {
-    for (const [oldTestPath, newTestPath] of oldToNewTestPath) {
-      if (!newTestPath)
-        continue;
-      if (line === '# See crbug.com/667560 for details') {
-        const newLines = Array.from(newTestPaths)
-                             .filter(t => !testsAlreadyExempted.has(t))
-                             .map(x => `crbug.com/667560 ${x} [ Skip ]`)
-                             .join('\n');
-        if (newLines.length)
-          return line + '\n' + newLines;
-      }
-      if (line === '### virtual/mojo-loading/http/tests/devtools') {
-        const newLines = Array.from(newTestPaths)
-                             .filter(t => !testsAlreadyExempted.has(t))
-                             .map(x => `crbug.com/667560 virtual/mojo-loading/${x} [ Skip ]`)
-                             .join('\n');
-        if (newLines.length)
-          return line + '\n' + newLines;
-      }
-
-      // Put mojo tests here so we don't re-enable the test after migrating
-      if (line === '### Manually fix after migration') {
-        const newLines = Array.from(newTestPaths)
-                             .filter(t => testsAlreadyExempted.has(t))
-                             .map(x => `crbug.com/667560 virtual/mojo-loading/${x} [ Skip ]`)
-                             .join('\n');
-        if (newLines.length)
-          return line + '\n' + newLines;
-      }
-    }
-    return line;
-  });
   fs.writeFileSync(TEST_EXPECTATIONS_PATH, updatedTestExpecations.join('\n'));
 
   // Update additional test expectations
@@ -153,3 +122,23 @@ function main() {
 }
 
 main();
+
+function scanForTests(dirPaths) {
+  const absolutePaths = dirPaths.map(dirPath => path.resolve(__dirname, dirPath));
+  let globbedPaths = [];
+  for (const absolutePath of absolutePaths)
+    glob(absolutePath);
+  return globbedPaths.map(p => p.slice(p.indexOf('LayoutTests') + 'LayoutTests'.length + 1));
+
+  function glob(globPath) {
+    for (const filename of fs.readdirSync(globPath)) {
+      const p = path.resolve(globPath, filename);
+      if (utils.isDir(p) && filename !== 'resources') {
+        glob(p);
+      }
+      if (utils.isFile(p) && p.endsWith('.html')) {
+        globbedPaths.push(p);
+      }
+    }
+  }
+}
