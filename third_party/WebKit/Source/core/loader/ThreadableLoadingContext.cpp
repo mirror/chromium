@@ -13,8 +13,8 @@ namespace blink {
 
 class DocumentThreadableLoadingContext final : public ThreadableLoadingContext {
  public:
-  explicit DocumentThreadableLoadingContext(Document& document)
-      : document_(&document) {}
+  explicit DocumentThreadableLoadingContext(Document* document)
+      : document_(document) {}
 
   ~DocumentThreadableLoadingContext() override = default;
 
@@ -42,8 +42,8 @@ class DocumentThreadableLoadingContext final : public ThreadableLoadingContext {
 class WorkerThreadableLoadingContext : public ThreadableLoadingContext {
  public:
   explicit WorkerThreadableLoadingContext(
-      WorkerGlobalScope& worker_global_scope)
-      : worker_global_scope_(&worker_global_scope) {}
+      WorkerGlobalScope* worker_global_scope)
+      : worker_global_scope_(worker_global_scope) {}
 
   ~WorkerThreadableLoadingContext() override = default;
 
@@ -71,13 +71,18 @@ class WorkerThreadableLoadingContext : public ThreadableLoadingContext {
   Member<WorkerGlobalScope> worker_global_scope_;
 };
 
-ThreadableLoadingContext* ThreadableLoadingContext::Create(Document& document) {
-  return new DocumentThreadableLoadingContext(document);
-}
-
 ThreadableLoadingContext* ThreadableLoadingContext::Create(
-    WorkerGlobalScope& worker_global_scope) {
-  return new WorkerThreadableLoadingContext(worker_global_scope);
+    ExecutionContext* execution_context) {
+  ThreadableLoadingContext* loading_context = nullptr;
+  if (execution_context->IsWorkerGlobalScope()) {
+    loading_context = new WorkerThreadableLoadingContext(
+        ToWorkerGlobalScope(execution_context));
+  } else {
+    DCHECK(execution_context->IsDocument());
+    loading_context =
+        new DocumentThreadableLoadingContext(ToDocument(execution_context));
+  }
+  return loading_context;
 }
 
 BaseFetchContext* ThreadableLoadingContext::GetFetchContext() {

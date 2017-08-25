@@ -53,7 +53,7 @@ ThreadableLoader* ThreadableLoader::Create(
       // TODO(horo): Rename DocumentThreadableLoader. We will use it on the
       // worker thread when off-main-thread-fetch is enabled.
       return DocumentThreadableLoader::Create(
-          *ThreadableLoadingContext::Create(*ToWorkerGlobalScope(&context)),
+          *ThreadableLoadingContext::Create(ToWorkerGlobalScope(&context)),
           client, options, resource_loader_options);
     }
     return WorkerThreadableLoader::Create(ToWorkerGlobalScope(context), client,
@@ -61,7 +61,7 @@ ThreadableLoader* ThreadableLoader::Create(
   }
 
   return DocumentThreadableLoader::Create(
-      *ThreadableLoadingContext::Create(*ToDocument(&context)), client, options,
+      *ThreadableLoadingContext::Create(ToDocument(&context)), client, options,
       resource_loader_options);
 }
 
