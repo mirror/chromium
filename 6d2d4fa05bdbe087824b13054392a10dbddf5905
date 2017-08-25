@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "4708628c_7ceece50",
+        "filename": "chrome/installer/zucchini/address_translator.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-25T19:44:48Z",
+      "side": 1,
+      "message": "Ack (sent email to support that std::move() would have been the intent).",
+      "parentUuid": "9d293830_7cb39bb5",
+      "range": {
+        "startLine": 66,
+        "startChar": 26,
+        "endLine": 66,
+        "endChar": 35
+      },
+      "revId": "6d2d4fa05bdbe087824b13054392a10dbddf5905",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7fc5f615_7fcb1d6a",
         "filename": "chrome/installer/zucchini/rel32_utils.h",
         "patchSetId": 7
