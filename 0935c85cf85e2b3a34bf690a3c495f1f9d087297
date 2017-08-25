@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "ed108391_ed271164",
+        "filename": "content/browser/service_worker/service_worker_dispatcher_host.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-08-25T03:03:53Z",
+      "side": 1,
+      "message": "How about a comment like the following?\n\"\nThis is used only by SWProviderHost to impl Register() now. Once all other related IPCs (GetRegistration, GetRegistrations, GetRegistrationReady etc.) handlers moved into SWProviderHost, this function will be also moved into SWProviderHost at last.\n\"",
+      "revId": "0935c85cf85e2b3a34bf690a3c495f1f9d087297",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b3089c00_e437af3d",
         "filename": "content/browser/service_worker/service_worker_dispatcher_host_unittest.cc",
         "patchSetId": 4
@@ -13,6 +30,52 @@
       "writtenOn": "2017-08-24T14:23:44Z",
       "side": 1,
       "message": "As SWProviderHost handles Register IPC now, I think we need to move Register related tests into unit test file of SWProviderHost. But I\u0027d like to keep them here for now and reconstruct all tests for all methods of SWProviderHost mojo interface later in unit test file of SWProviderHost.",
+      "revId": "0935c85cf85e2b3a34bf690a3c495f1f9d087297",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b49c679d_fd4b6f09",
+        "filename": "content/child/service_worker/service_worker_provider_context.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-08-25T03:03:53Z",
+      "side": 1,
+      "message": "Improve the comment like following?\n\"\nCalled only by document(renderer frame) client of SW for now. Please see comments of |provider_host_|. May be nullptr if above OnNetworkProviderDestroyed() has already been called.\n\"",
+      "range": {
+        "startLine": 112,
+        "startChar": 2,
+        "endLine": 114,
+        "endChar": 67
+      },
+      "revId": "0935c85cf85e2b3a34bf690a3c495f1f9d087297",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0e9d9d7_1253f8f1",
+        "filename": "content/child/service_worker/service_worker_provider_context.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-08-25T03:03:53Z",
+      "side": 1,
+      "message": "Add a comment like following?\n\"\nOnly document(renderer frame) client of SW uses this to send requests to browser-side ServiceWorkerProviderHost. Both non-document(shared worker) client context and SW context itself do not need to request ServiceWorkerProviderHost to do anything, because non-document context does not expose ServiceWorkerContainer javascript object and SW context\u0027s WorkerNavigator.serviceWorker is not really wired up yet (https://crbug.com/371690), for such cases keeping |provider_host_| here is just for keeping alive the corresponding ServiceWorkerProviderHost instance in browser-side.\nNote: Currently this is always bound on main thread.\n\"",
+      "range": {
+        "startLine": 136,
+        "startChar": 48,
+        "endLine": 136,
+        "endChar": 62
+      },
       "revId": "0935c85cf85e2b3a34bf690a3c495f1f9d087297",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
