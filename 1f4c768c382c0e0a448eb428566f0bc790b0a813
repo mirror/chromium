@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "e8f91ce0_4ec38af8",
+        "filename": "ash/fast_ink/fast_ink_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 348,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-08-25T10:46:30Z",
+      "side": 1,
+      "message": "nit: s/screen_to_buffer_transform/target_to_buffer_transform/",
+      "range": {
+        "startLine": 348,
+        "startChar": 17,
+        "endLine": 348,
+        "endChar": 43
+      },
+      "revId": "1f4c768c382c0e0a448eb428566f0bc790b0a813",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "44ad954c_478a0547",
         "filename": "ash/fast_ink/fast_ink_view.cc",
         "patchSetId": 1
@@ -31,6 +54,47 @@
       "side": 1,
       "message": "It seems like drawing on the canvas in UpdateBuffer is expected to be in DIP...so I can\u0027t simply change screen_to_buffer_transform_ everywhere or else I\u0027ll be doing conversions in UpdateBuffers which just shifts the complexity elsewhere. WDYT? I think this is reasonable as is given that?",
       "parentUuid": "44ad954c_478a0547",
+      "revId": "1f4c768c382c0e0a448eb428566f0bc790b0a813",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dbad6951_6bc8fb96",
+        "filename": "ash/fast_ink/fast_ink_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 349,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-08-25T10:46:30Z",
+      "side": 1,
+      "message": "Ah, I see. This is no longer screen-to-buffer transform after this change. Looks good after taking care of the renaming nits above and below.",
+      "parentUuid": "d2aa8ed2_f0afa3ea",
+      "revId": "1f4c768c382c0e0a448eb428566f0bc790b0a813",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f88898b_c50050c4",
+        "filename": "ash/fast_ink/fast_ink_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 352,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-08-25T10:46:30Z",
+      "side": 1,
+      "message": "s/buffer_to_screen_transform/buffer_to_target_transform/",
+      "range": {
+        "startLine": 352,
+        "startChar": 17,
+        "endLine": 352,
+        "endChar": 43
+      },
       "revId": "1f4c768c382c0e0a448eb428566f0bc790b0a813",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
