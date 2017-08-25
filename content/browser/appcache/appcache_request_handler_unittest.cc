@@ -282,8 +282,8 @@ class AppCacheRequestHandlerTest
     test_finished_event_->Signal();
   }
 
-  void PushNextTask(const base::Closure& task) {
-    task_stack_.push(task);
+  void PushNextTask(base::OnceClosure task) {
+    task_stack_.push(std::move(task));
   }
 
   void ScheduleNextTask() {
@@ -292,7 +292,8 @@ class AppCacheRequestHandlerTest
       TestFinished();
       return;
     }
-    base::ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE, task_stack_.top());
+    base::ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE,
+                                                  std::move(task_stack_.top()));
     task_stack_.pop();
   }
 
@@ -1034,7 +1035,7 @@ class AppCacheRequestHandlerTest
   // Data members --------------------------------------------------
 
   std::unique_ptr<base::WaitableEvent> test_finished_event_;
-  std::stack<base::Closure> task_stack_;
+  std::stack<base::OnceClosure> task_stack_;
   std::unique_ptr<MockAppCacheService> mock_service_;
   std::unique_ptr<AppCacheBackendImpl> backend_impl_;
   std::unique_ptr<MockFrontend> mock_frontend_;
