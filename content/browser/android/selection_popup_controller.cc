@@ -91,20 +91,24 @@ bool SelectionPopupController::ShowSelectionMenu(
       !!(params.edit_flags & WebContextMenuData::kCanSelectAll);
   const bool can_edit_richly =
       !!(params.edit_flags & blink::WebContextMenuData::kCanEditRichly);
+  const bool is_smart_selection_reset =
+      !!(params.edit_flags & blink::WebContextMenuData::kSmartSelectionReset);
   const bool is_password_type =
       params.input_field_type ==
       blink::WebContextMenuData::kInputFieldTypePassword;
   const ScopedJavaLocalRef<jstring> jselected_text =
       ConvertUTF16ToJavaString(env, params.selection_text);
-  const bool should_suggest = params.source_type == ui::MENU_SOURCE_TOUCH ||
-                              params.source_type == ui::MENU_SOURCE_LONG_PRESS;
+  const bool should_suggest =
+      !is_smart_selection_reset &&
+      (params.source_type == ui::MENU_SOURCE_TOUCH ||
+       params.source_type == ui::MENU_SOURCE_LONG_PRESS);
 
   Java_SelectionPopupController_showSelectionMenu(
       env, obj, params.selection_rect.x(), params.selection_rect.y(),
       params.selection_rect.right(),
       params.selection_rect.bottom() + handle_height, params.is_editable,
       is_password_type, jselected_text, can_select_all, can_edit_richly,
-      should_suggest);
+      should_suggest, is_smart_selection_reset);
   return true;
 }
 

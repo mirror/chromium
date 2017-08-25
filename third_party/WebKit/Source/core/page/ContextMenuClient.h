@@ -51,7 +51,7 @@ class CORE_EXPORT ContextMenuClient {
 
  private:
   void PopulateCustomMenuItems(const ContextMenu*, WebContextMenuData*);
-  static int ComputeEditFlags(Document&, Editor&);
+  static int ComputeEditFlags(Document&, Editor&, unsigned);
   bool ShouldShowContextMenuFromTouch(const blink::WebContextMenuData&);
   WebViewImpl* web_view_;
 };

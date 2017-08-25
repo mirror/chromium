@@ -107,7 +107,8 @@ static WebURL UrlFromFrame(LocalFrame* frame) {
 
 // static
 int ContextMenuClient::ComputeEditFlags(Document& selected_document,
-                                        Editor& editor) {
+                                        Editor& editor,
+                                        unsigned context_data) {
   int edit_flags = WebContextMenuData::kCanDoNone;
   if (!selected_document.IsHTMLDocument() &&
       !selected_document.IsXHTMLDocument())
@@ -130,6 +131,8 @@ int ContextMenuClient::ComputeEditFlags(Document& selected_document,
     edit_flags |= WebContextMenuData::kCanEditRichly;
   if (selected_document.queryCommandEnabled("selectAll", ASSERT_NO_EXCEPTION))
     edit_flags |= WebContextMenuData::kCanSelectAll;
+  if (context_data & WebContextMenuData::kSmartSelectionReset)
+    edit_flags |= WebContextMenuData::kSmartSelectionReset;
   return edit_flags;
 }
 
@@ -223,7 +226,7 @@ bool ContextMenuClient::ShowContextMenu(const ContextMenu* default_menu,
 
   data.edit_flags = ComputeEditFlags(
       *selected_frame->GetDocument(),
-      ToLocalFrame(web_view_->FocusedCoreFrame())->GetEditor());
+      ToLocalFrame(web_view_->FocusedCoreFrame())->GetEditor(), context_data);
 
   // Links, Images, Media tags, and Image/Media-Links take preference over
   // all else.

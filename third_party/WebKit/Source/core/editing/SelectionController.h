@@ -31,6 +31,7 @@
 #include "core/dom/SynchronousMutationObserver.h"
 #include "core/editing/FrameSelection.h"
 #include "core/editing/TextGranularity.h"
+#include "core/editing/VisibleSelection.h"
 #include "core/page/EventWithHitTestResults.h"
 #include "platform/heap/Handle.h"
 
@@ -128,6 +129,9 @@ class CORE_EXPORT SelectionController final
   bool HandleSingleClick(const MouseEventWithHitTestResults&);
   bool HandleDoubleClick(const MouseEventWithHitTestResults&);
   bool HandleTripleClick(const MouseEventWithHitTestResults&);
+
+  bool HandleTapInsideSelection(const MouseEventWithHitTestResults&,
+                                const VisibleSelectionInFlatTree&);
 
   Member<LocalFrame> const frame_;
   // Used to store base before the adjustment at bidi boundary

@@ -13,6 +13,7 @@ namespace blink {
 
 enum class CursorAlignOnScroll { kIfNeeded, kAlways };
 enum class SetSelectionBy { kSystem = 0, kUser = 1 };
+enum class ClickInsideBehavior { kClearSelection = 0, kSelectClosestWord = 1 };
 
 // This class represents parameters of |FrameSelection::SetSelection()|.
 class CORE_EXPORT SetSelectionOptions final {
@@ -31,6 +32,7 @@ class CORE_EXPORT SetSelectionOptions final {
   SetSelectionBy GetSetSelectionBy() const { return set_selection_by_; }
   bool DoNotSetFocus() const { return do_not_set_focus_; }
   bool DoNotClearStrategy() const { return do_not_clear_strategy_; }
+  bool ShouldTapSelectWord() const { return should_tap_select_word_; }
   bool ShouldCloseTyping() const { return should_close_typing_; }
   bool ShouldClearTypingStyle() const { return should_clear_typing_style_; }
   bool ShouldShowHandle() const { return should_show_handle_; }
@@ -41,6 +43,7 @@ class CORE_EXPORT SetSelectionOptions final {
   bool do_not_clear_strategy_ = false;
   TextGranularity granularity_ = TextGranularity::kCharacter;
   SetSelectionBy set_selection_by_ = SetSelectionBy::kSystem;
+  bool should_tap_select_word_ = false;
   bool should_close_typing_ = false;
   bool should_clear_typing_style_ = false;
   bool should_show_handle_ = false;
@@ -61,6 +64,7 @@ class CORE_EXPORT SetSelectionOptions::Builder final {
   Builder& SetDoNotClearStrategy(bool);
   Builder& SetGranularity(TextGranularity);
   Builder& SetSetSelectionBy(SetSelectionBy);
+  Builder& SetShouldTapSelectWord(bool);
   Builder& SetShouldCloseTyping(bool);
   Builder& SetShouldClearTypingStyle(bool);
   Builder& SetShouldShowHandle(bool);

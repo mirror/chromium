@@ -68,4 +68,10 @@ SetSelectionOptions::Builder& SetSelectionOptions::Builder::SetSetSelectionBy(
   return *this;
 }
 
+SetSelectionOptions::Builder&
+SetSelectionOptions::Builder::SetShouldTapSelectWord(bool new_value) {
+  data_.should_tap_select_word_ = new_value;
+  return *this;
+}
+
 }  // namespace blink

@@ -54,6 +54,7 @@
 #include "platform/wtf/Assertions.h"
 #include "platform/wtf/AutoReset.h"
 #include "public/platform/WebMenuSourceType.h"
+#include "public/web/WebContextMenuData.h"
 #include "public/web/WebSelection.h"
 
 namespace blink {
@@ -96,14 +97,15 @@ DispatchEventResult DispatchSelectStart(Node* node) {
 
 SelectionInFlatTree ExpandSelectionToRespectUserSelectAll(
     Node* target_node,
-    const SelectionInFlatTree& selection) {
-  if (selection.IsNone())
+    const SelectionInFlatTree& selection_in_flat_tree) {
+  if (selection_in_flat_tree.IsNone())
     return SelectionInFlatTree();
   Node* const root_user_select_all =
       EditingInFlatTreeStrategy::RootUserSelectAllForNode(target_node);
   if (!root_user_select_all)
-    return selection;
-  return SelectionInFlatTree::Builder(selection)
+    return selection_in_flat_tree;
+
+  return SelectionInFlatTree::Builder(selection_in_flat_tree)
       .Collapse(MostBackwardCaretPosition(
           PositionInFlatTree::BeforeNode(*root_user_select_all),
           kCanCrossEditingBoundary))
@@ -314,17 +316,8 @@ bool SelectionController::HandleSingleClick(
       if (!event.Event().FromTouch())
         return false;
 
-      if (!this->Selection().IsHandleVisible()) {
-        const bool did_select =
-            UpdateSelectionForMouseDownDispatchingSelectStart(
-                inner_node, selection.AsSelection(),
-                TextGranularity::kCharacter, HandleVisibility::kVisible);
-        if (did_select) {
-          frame_->GetEventHandler().ShowNonLocatedContextMenu(nullptr,
-                                                              kMenuSourceTouch);
-        }
+      if (HandleTapInsideSelection(event, selection))
         return false;
-      }
     }
   }
 
@@ -390,6 +383,35 @@ bool SelectionController::HandleSingleClick(
   if (has_editable_style && event.Event().FromTouch()) {
     frame_->GetTextSuggestionController().HandlePotentialMisspelledWordTap(
         visible_pos.DeepEquivalent());
+  }
+
+  return false;
+}
+
+// Returns true if the tap is processed.
+bool SelectionController::HandleTapInsideSelection(
+    const MouseEventWithHitTestResults& event,
+    const VisibleSelectionInFlatTree& selection) {
+  if (this->Selection().ShouldTapSelectWord()) {
+    const bool did_select = SelectClosestWordFromHitTestResult(
+        event.GetHitTestResult(), AppendTrailingWhitespace::kDontAppend,
+        SelectInputEventType::kTouch);
+    if (did_select) {
+      frame_->GetEventHandler().ShowNonLocatedContextMenu(
+          nullptr, kMenuSourceTouch, WebContextMenuData::kSmartSelectionReset);
+    }
+    return true;
+  }
+
+  if (!this->Selection().IsHandleVisible()) {
+    const bool did_select = UpdateSelectionForMouseDownDispatchingSelectStart(
+        event.InnerNode(), selection.AsSelection(), TextGranularity::kCharacter,
+        HandleVisibility::kVisible);
+    if (did_select) {
+      frame_->GetEventHandler().ShowNonLocatedContextMenu(nullptr,
+                                                          kMenuSourceTouch);
+    }
+    return true;
   }
 
   return false;
