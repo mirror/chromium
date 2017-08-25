@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4802770e_cfb26b09",
+        "filename": "chrome/browser/extensions/api/management/management_api_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 326,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-25T01:56:41Z",
+      "side": 1,
+      "message": "nit: extra parens unnecessary?",
+      "revId": "51931634d88f08cbbf8cf828390bf962a66d72b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
