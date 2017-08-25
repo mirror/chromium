@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "05a6e9bc_14cd9995",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_block_node.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1148182
+      },
+      "writtenOn": "2017-08-25T15:37:08Z",
+      "side": 1,
+      "message": "This looks good, but might be worth a comment saying how we are using LogicalHeight, IntrinsicContentLogicalHeight as accumulators across method calls.\n\nThis is a lot cleverer than what I had in mind ^-^.",
+      "revId": "b98710424c348681149a07a7c41dce2012238e5c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
