@@ -46,6 +46,30 @@
       "revId": "f17d554bc69283526b659d7c8337bec577710d0a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ea6031b_0a5d44fa",
+        "filename": "ios/chrome/browser/web/sad_tab_tab_helper_unittest.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1165759
+      },
+      "writtenOn": "2017-08-25T21:42:46Z",
+      "side": 1,
+      "message": "Yes, I agree! I\u0027ve now change it so it only uses the repeatedfailue concepts and I\u0027ve updated the comments accordingly.",
+      "parentUuid": "e7407b60_eb3bd2ba",
+      "range": {
+        "startLine": 26,
+        "startChar": 34,
+        "endLine": 26,
+        "endChar": 53
+      },
+      "revId": "f17d554bc69283526b659d7c8337bec577710d0a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
