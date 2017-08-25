@@ -70,7 +70,7 @@ void InsertLineBreakCommand::DoApply(EditingState* editing_state) {
   GetDocument().UpdateStyleAndLayoutIgnorePendingStylesheets();
 
   VisibleSelection selection = EndingVisibleSelection();
-  if (!selection.IsNonOrphanedCaretOrRange())
+  if (selection.IsNone() && !selection.IsValidFor(GetDocument()))
     return;
 
   // TODO(editing-dev): Stop storing VisiblePositions through mutations.
