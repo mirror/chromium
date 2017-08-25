@@ -30,7 +30,7 @@ public class AutocompleteEditText
         extends VerticallyFixedEditText implements AutocompleteEditTextModelBase.Delegate {
     private static final String TAG = "cr_AutocompleteEdit";
 
-    private static final boolean DEBUG = false;
+    private static final boolean DEBUG = true;
 
     private final AccessibilityManager mAccessibilityManager;
 
