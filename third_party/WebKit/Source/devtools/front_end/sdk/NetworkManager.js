@@ -129,10 +129,10 @@ SDK.NetworkManager = class extends SDK.SDKModel {
 
   /**
    * @param {string} url
-   * @return {!SDK.NetworkRequest}
+   * @return {?SDK.NetworkRequest}
    */
   inflightRequestForURL(url) {
-    return this._dispatcher._inflightRequestsByURL[url];
+    return this._dispatcher._inflightRequestsByURL[url] || null;
   }
 
   /**
