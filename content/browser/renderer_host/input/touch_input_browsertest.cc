@@ -46,6 +46,7 @@ const char kTouchEventDataURL[] =
 #endif
     "<body onload='setup();'>"
     "<div id='first'></div><div id='second'></div><div id='third'></div>"
+    "<div id='fourth'></div><div id='fifth'></div>"
     "<style>"
     "  #first {"
     "    position: absolute;"
@@ -63,6 +64,7 @@ const char kTouchEventDataURL[] =
     "    top: 0px;"
     "    left: 110px;"
     "    background-color: blue;"
+    "    touch-action: none;"
     "    -webkit-transform: translate3d(0, 0, 0);"
     "  }"
     "  #third {"
@@ -72,6 +74,25 @@ const char kTouchEventDataURL[] =
     "    top: 110px;"
     "    left: 0px;"
     "    background-color: yellow;"
+    "    touch-action: none;"
+    "    -webkit-transform: translate3d(0, 0, 0);"
+    "  }"
+    "  #fourth {"
+    "    position: absolute;"
+    "    width: 40px;"
+    "    height: 40px;"
+    "    top: 110px;"
+    "    left: 110px;"
+    "    background-color: red;"
+    "    -webkit-transform: translate3d(0, 0, 0);"
+    "  }"
+    "  #fifth {"
+    "    position: absolute;"
+    "    width: 40px;"
+    "    height: 40px;"
+    "    top: 160px;"
+    "    left: 160px;"
+    "    background-color: cyan;"
     "    -webkit-transform: translate3d(0, 0, 0);"
     "  }"
     "</style>"
@@ -79,6 +100,10 @@ const char kTouchEventDataURL[] =
     "  function setup() {"
     "    second.ontouchstart = function() {};"
     "    third.ontouchstart = function(e) {"
+    "      e.preventDefault();"
+    "    };"
+    "    fourth.ontouchstart = function() {};"
+    "    fifth.ontouchstart = function(e) {"
     "      e.preventDefault();"
     "    };"
     "  }"
@@ -189,6 +214,55 @@ IN_PROC_BROWSER_TEST_F(TouchInputBrowserTest, MAYBE_TouchHandlerConsume) {
   scoped_refptr<InputMsgWatcher> filter = AddFilter(WebInputEvent::kTouchStart);
   SendTouchEvent(&touch);
   EXPECT_EQ(INPUT_EVENT_ACK_STATE_CONSUMED, filter->WaitForAck());
+
+  touch.ReleasePoint(0);
+  filter = AddFilter(WebInputEvent::kTouchEnd);
+  SendTouchEvent(&touch);
+  filter->WaitForAck();
+}
+
+#if defined(OS_CHROMEOS)
+// crbug.com/514456
+#define MAYBE_TouchHandlerNonBlocking DISABLED_TouchHandlerNonBlocking
+#else
+#define MAYBE_TouchHandlerNonBlocking TouchHandlerNonBlocking
+#endif
+IN_PROC_BROWSER_TEST_F(TouchInputBrowserTest, MAYBE_TouchHandlerNonBlocking) {
+  LoadURL();
+  SyntheticWebTouchEvent touch;
+
+  // Press on |fourth| should be acked with NON_BLOCKING since there is a
+  // touch-handler on |fourth|.
+  touch.PressPoint(130, 130);
+  scoped_refptr<InputMsgWatcher> filter = AddFilter(WebInputEvent::kTouchStart);
+  SendTouchEvent(&touch);
+  EXPECT_EQ(INPUT_EVENT_ACK_STATE_SET_NON_BLOCKING, filter->WaitForAck());
+
+  filter = AddFilter(WebInputEvent::kTouchEnd);
+  touch.ReleasePoint(0);
+  SendTouchEvent(&touch);
+  filter->WaitForAck();
+}
+
+#if defined(OS_CHROMEOS)
+// crbug.com/514456
+#define MAYBE_TouchHandlerPreventDefaultNonBlocking \
+  DISABLED_TouchHandlerPreventDefaultNonBlocking
+#else
+#define MAYBE_TouchHandlerPreventDefaultNonBlocking \
+  TouchHandlerPreventDefaultNonBlocking
+#endif
+IN_PROC_BROWSER_TEST_F(TouchInputBrowserTest,
+                       MAYBE_TouchHandlerPreventDefaultNonBlocking) {
+  LoadURL();
+  SyntheticWebTouchEvent touch;
+
+  // Press on |fifth| should be acked with NON_BLOCKING since the touch-handler
+  // on |fifth|.
+  touch.PressPoint(160, 160);
+  scoped_refptr<InputMsgWatcher> filter = AddFilter(WebInputEvent::kTouchStart);
+  SendTouchEvent(&touch);
+  EXPECT_EQ(INPUT_EVENT_ACK_STATE_SET_NON_BLOCKING, filter->WaitForAck());
 
   touch.ReleasePoint(0);
   filter = AddFilter(WebInputEvent::kTouchEnd);
