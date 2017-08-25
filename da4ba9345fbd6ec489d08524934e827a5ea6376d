@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8e1f28f7_4707895a",
+        "filename": "chrome/browser/extensions/extension_service_sync_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2749,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-25T23:57:43Z",
+      "side": 1,
+      "message": "Hmm... this is pretty gnarly.  The idea here that we can have an extension which has no disable reasons but is also not enabled seems like it\u0027s asking for danger, especially when other clients apply this sync data (since they will then disable the extension locally and assume it was due to user action [1]).\n\nCould we enforce that this never happens?\n\n[1] https://chromium.googlesource.com/chromium/src/+/7e87146b8a236a8484b480a4087d6eaac25eb8e5/chrome/browser/extensions/extension_sync_service.cc#420",
+      "revId": "da4ba9345fbd6ec489d08524934e827a5ea6376d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
