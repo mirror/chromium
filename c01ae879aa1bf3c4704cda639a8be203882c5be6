@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1f140e7a_7677bc59",
+        "filename": "components/translate/core/browser/translate_prefs.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1234767
+      },
+      "writtenOn": "2017-08-25T05:33:02Z",
+      "side": 1,
+      "message": "For consistency with other changes, use \"LanguageSettings\" instead of \"LanguageSetting\".",
+      "revId": "c01ae879aa1bf3c4704cda639a8be203882c5be6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e5edd26_abe9a7fa",
+        "filename": "components/translate/core/browser/translate_prefs.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 500,
+      "author": {
+        "id": 1234767
+      },
+      "writtenOn": "2017-08-25T05:33:02Z",
+      "side": 1,
+      "message": "Here we should split the code into 2 CLs:\n1) Adds an histogram that triggers each time UpdateLanguageList() is called.\n2) Adds another histogram and a pref that is set to true when the user changes Language Settings for the first time. In this case the histogram tracks the boolean pref, so it\u0027s inside the if statement.",
+      "revId": "c01ae879aa1bf3c4704cda639a8be203882c5be6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
