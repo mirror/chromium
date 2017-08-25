@@ -34,6 +34,24 @@
       "revId": "8debd8d17c1afef28c385e53e714ff7afef25c22",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d9409370_10891c51",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/ScriptCustomElementDefinition.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2017-08-25T03:48:32Z",
+      "side": 0,
+      "message": "Merging thread to Aleksey\u0027s, looks like the same topic.",
+      "parentUuid": "9f5be9dd_3484160a",
+      "revId": "8debd8d17c1afef28c385e53e714ff7afef25c22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

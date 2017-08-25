@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "4dbeb277_a3d01518",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/ScriptCustomElementDefinition.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2017-08-25T03:48:32Z",
+      "side": 1,
+      "message": "Ah, interesting, so we regressed already at some point. That was very unfortunate. I tried to look for related tests in LayoutTest and wpt, but some of them don\u0027t run any longer, run differently, etc., and somehow we failed to track those changes. I\u0027m no longer working on custom elements for over a year and that my info might be outdated, apologies.\n\nIf we have regressed but nobody claims about it, new behavior might be good.\n\nCould you mind to test one more thing? Custom elements have two creation modes; one when it\u0027s defined before parsing, and another after parsing.\n\nWhen parse-then-define, we don\u0027t know if it\u0027s a custom element at parse time, and that we add an HTMLElement to the DOM tree. Then when `customElements.define()` runs, the elements in DOM are \"upgraded\":\nhttps://html.spec.whatwg.org/multipage/custom-elements.html#concept-upgrade-an-element\n\nWhen define-then-parse, we know it\u0027s a custom elements while we parse, and that parser runs the constructor to create the element. In this case, you don\u0027t have any scripts on the stack.\n\ndocument.createElement() has the similar distinctions, but we do have scripts on stack in either case, so define-then-parse might be the only tricky case.\n\nI looked your test on crbug.com/639739#c21 doing \"upgrades\", which has a caller, but if you move \u003cscript\u003e block before \u003cx-crash\u003e, what do you see with this patch?",
+      "parentUuid": "17534a80_fe36c139",
+      "revId": "ed91cd814ecfa8cbbf4a6ff5c8153981cec8c082",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ee4502d0_d7a23548",
         "filename": "third_party/WebKit/Source/bindings/core/v8/V8ScriptRunner.h",
         "patchSetId": 6
