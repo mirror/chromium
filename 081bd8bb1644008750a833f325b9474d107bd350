@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8a1887a8_9fadda42",
+        "filename": "ios/chrome/browser/web/sad_tab_tab_helper.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-08-25T12:13:55Z",
+      "side": 1,
+      "message": "nit: make repeat_failure_internal_ a NSTimeInterval or kDefaultRepeatFailureInterval a double",
+      "range": {
+        "startLine": 79,
+        "startChar": 2,
+        "endLine": 79,
+        "endChar": 8
+      },
+      "revId": "081bd8bb1644008750a833f325b9474d107bd350",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
