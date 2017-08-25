@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "513a218f_fa3cfc49",
+        "filename": "ios/build/bots/chromium.mac/ios-simulator-xcode-clang.json",
+        "patchSetId": 4
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1205294
+      },
+      "writtenOn": "2017-08-25T22:08:26Z",
+      "side": 1,
+      "message": "nit: 11.0",
+      "range": {
+        "startLine": 3,
+        "startChar": 26,
+        "endLine": 3,
+        "endChar": 31
+      },
+      "revId": "66a1307f5a6f6e731b66f73a606b3f30ccf59325",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f7dbb4e_c1e5a17e",
+        "filename": "ios/build/bots/chromium.mac/ios-simulator-xcode-clang.json",
+        "patchSetId": 4
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1205294
+      },
+      "writtenOn": "2017-08-25T22:08:26Z",
+      "side": 1,
+      "message": "nit: maybe remove this line?",
+      "range": {
+        "startLine": 4,
+        "startChar": 4,
+        "endLine": 4,
+        "endChar": 58
+      },
+      "revId": "66a1307f5a6f6e731b66f73a606b3f30ccf59325",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
