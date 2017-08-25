@@ -29822,6 +29822,8 @@ from previous Chrome versions.
   <int value="1" label="Loaded an embedded PDF with PDFium"/>
   <int value="2" label="Showed disabled plugin placeholder for embedded PDF"/>
   <int value="3" label="Triggered a drive-by download without user gesture"/>
+  <int value="4" label="Loaded iframe PDF with no PDF viewer available"/>
+  <int value="5" label="View PDF button clicked in the PDF plugin placeholder"/>
 </enum>
 
 <enum name="PeerConnectionCounters">
