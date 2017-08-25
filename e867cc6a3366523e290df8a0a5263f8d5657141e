@@ -89,6 +89,30 @@
     },
     {
       "key": {
+        "uuid": "24258edf_1218af34",
+        "filename": "ios/chrome/browser/web/sad_tab_tab_helper_delegate.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-08-25T17:56:07Z",
+      "side": 1,
+      "message": "Sorry I meant\n- (void)sadTabTabHelper:(SadTabTabHelper*)tabHelper\n    presentSadTabForRepeatedFailure:(BOOL)repeatedFailure;",
+      "parentUuid": "8d16d483_58ad110f",
+      "range": {
+        "startLine": 20,
+        "startChar": 8,
+        "endLine": 20,
+        "endChar": 33
+      },
+      "revId": "e867cc6a3366523e290df8a0a5263f8d5657141e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "40972c09_0b318ffa",
         "filename": "ios/chrome/browser/web/sad_tab_tab_helper_unittest.mm",
         "patchSetId": 3
