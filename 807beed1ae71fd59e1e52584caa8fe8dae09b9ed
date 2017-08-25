@@ -248,6 +248,30 @@
     },
     {
       "key": {
+        "uuid": "5862e2dd_f4909c22",
+        "filename": "chrome/common/conflicts/module_watcher_win.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-08-25T09:09:58Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "ecccd197_359a8f45",
+      "range": {
+        "startLine": 57,
+        "startChar": 11,
+        "endLine": 57,
+        "endChar": 28
+      },
+      "revId": "807beed1ae71fd59e1e52584caa8fe8dae09b9ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6a4d889b_4439ffc6",
         "filename": "chrome/common/conflicts/module_watcher_win.h",
         "patchSetId": 6
