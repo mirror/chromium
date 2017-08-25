@@ -34,6 +34,24 @@
       "revId": "3be660686877500a4edf7b63b2d3dc56a23c6d67",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8f503de_e4c9e843",
+        "filename": "media/formats/mp4/box_definitions.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 737,
+      "author": {
+        "id": 1002455
+      },
+      "writtenOn": "2017-08-25T18:53:37Z",
+      "side": 1,
+      "message": "In PS4, I changed approach to be \"log error in mp4 parser, let actual failure occur later as it should already be happening in release builds previous to this change\".\n\nPlease take another look. Thanks!",
+      "parentUuid": "9d42c870_38c161d6",
+      "revId": "3be660686877500a4edf7b63b2d3dc56a23c6d67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
