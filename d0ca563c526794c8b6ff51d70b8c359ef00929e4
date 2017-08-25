@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "84df2596_145b7591",
+        "filename": "third_party/WebKit/LayoutTests/fast/loader/detach-iframe-while-loading-javascript-url.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1115930
+      },
+      "writtenOn": "2017-08-25T18:18:57Z",
+      "side": 1,
+      "message": "I\u0027m a little vague on the mechanics of javascript: urls, but I think what\u0027s happening is that this script is getting injected into the iframe via the DocumentParser::Append() call in DocumentLoader::ReplaceDocumentWhileExecutingJavaScriptURL(). The script then runs and detaches the iframe (note that it\u0027s affecting the parent\u0027s document.body).\n\nThis case doesn\u0027t actually crash because of the nullptr parser, it crashes because GetFrame() is nullptr after the Append() completes. Stashing parser_ on DocumentLoader fixes this by making that null check safe, but we could alternately fix this specific case by null-checking GetFrame().\n\nThis fix also covers the more complex, reduction-resistant case.",
+      "parentUuid": "d68b5462_b16af559",
+      "range": {
+        "startLine": 7,
+        "startChar": 42,
+        "endLine": 7,
+        "endChar": 50
+      },
+      "revId": "d0ca563c526794c8b6ff51d70b8c359ef00929e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "794d44e8_a2e20020",
         "filename": "third_party/WebKit/Source/core/loader/DocumentLoader.h",
         "patchSetId": 5
@@ -39,6 +63,24 @@
       "revId": "d0ca563c526794c8b6ff51d70b8c359ef00929e4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ac606f1_32c37b8d",
+        "filename": "third_party/WebKit/Source/core/loader/DocumentLoader.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 302,
+      "author": {
+        "id": 1115930
+      },
+      "writtenOn": "2017-08-25T18:18:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "794d44e8_a2e20020",
+      "revId": "d0ca563c526794c8b6ff51d70b8c359ef00929e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
