@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "9a53ef97_5ac4a336",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/layout_tests/port/base.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-08-25T20:51:09Z",
+      "side": 1,
+      "message": "Could add a docstring explaining that the \"primary\" driver flag is the one used when considering flag-specific expectations and baselines.",
+      "revId": "d761c5b5034b810dbf8230215dbfc17c687b909f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6ffbd09e_5f114c47",
         "filename": "third_party/WebKit/Tools/Scripts/webkitpy/layout_tests/port/base.py",
         "patchSetId": 1
@@ -34,6 +51,24 @@
       "revId": "d761c5b5034b810dbf8230215dbfc17c687b909f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bca04902_c16da9ab",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/layout_tests/port/base.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-08-25T20:51:09Z",
+      "side": 1,
+      "message": "Alright",
+      "parentUuid": "400e89eb_2b3b583f",
+      "revId": "d761c5b5034b810dbf8230215dbfc17c687b909f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
