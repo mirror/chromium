@@ -845,7 +845,10 @@ if (!is_android) {
         # Use only the _chromeos version on Ash / Chrome OS.
         "base/view_event_test_platform_part_default.cc",
       ]
-      deps += [ "//ash:interactive_ui_test_support" ]
+      deps += [
+        ":test_support_applist_ash",
+        "//ash:interactive_ui_test_support",
+      ]
     }
 
     if (is_android) {
