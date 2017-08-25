@@ -38,17 +38,25 @@ Changes.ChangesSidebar = class extends UI.Widget {
    * @param {!Common.Event} event
    */
   _uiSourceCodeMofiedStatusChanged(event) {
+    var uiSourceCode = /** @type {!Workspace.UISourceCode} */ (event.data.uiSourceCode);
+    if (uiSourceCode.project().type() === Workspace.projectTypes.Network &&
+        Bindings.changeableNetworkProject.uiSourceCodeForURL(uiSourceCode.url())) {
+      this._removeUISourceCodeIfNeeded(uiSourceCode);
+      return;
+    }
     if (event.data.isModified)
-      this._addUISourceCode(event.data.uiSourceCode);
+      this._addUISourceCode(uiSourceCode);
     else
-      this._removeUISourceCode(event.data.uiSourceCode);
+      this._removeUISourceCodeIfNeeded(uiSourceCode);
   }
 
   /**
    * @param {!Workspace.UISourceCode} uiSourceCode
    */
-  _removeUISourceCode(uiSourceCode) {
+  _removeUISourceCodeIfNeeded(uiSourceCode) {
     var treeElement = this._treeElements.get(uiSourceCode);
+    if (!treeElement)
+      return;
     this._treeElements.delete(uiSourceCode);
     if (this._treeoutline.selectedTreeElement === treeElement) {
       var nextElementToSelect = treeElement.previousSibling || treeElement.nextSibling;
@@ -89,6 +97,7 @@ Changes.ChangesSidebar.UISourceCodeTreeElement = class extends UI.TreeElement {
   constructor(uiSourceCode) {
     super();
     this.uiSourceCode = uiSourceCode;
+    this._interceptor = new Changes.ChangesSidebar._Interceptor(true /* enabled */, uiSourceCode);
     this.listItemElement.classList.add('navigator-' + uiSourceCode.contentType().name() + '-tree-item');
 
     var iconType = 'largeicon-navigator-file';
@@ -116,9 +125,42 @@ Changes.ChangesSidebar.UISourceCodeTreeElement = class extends UI.TreeElement {
     if (this.uiSourceCode.contentType().isFromSourceMap())
       tooltip = Common.UIString('%s (from source map)', this.uiSourceCode.displayName());
     this.tooltip = tooltip;
+    this._interceptor.setURL(this.uiSourceCode.url());
   }
 
   dispose() {
     Common.EventTarget.removeEventListeners(this._eventListeners);
+  }
+};
+
+Changes.ChangesSidebar._Interceptor = class extends SDK.RequestInterceptor {
+  /**
+   * @param {boolean} enabled
+   * @param {!Workspace.UISourceCode} uiSourceCode
+   */
+  constructor(enabled, uiSourceCode) {
+    super(enabled, new Set([uiSourceCode.url()]));
+    this._currentURL = uiSourceCode.url();
+    this._uiSourceCode = uiSourceCode;
+  }
+
+  /**
+   * @param {string} url
+   */
+  setURL(url) {
+    if (this._currentURL === url)
+      return;
+    this._currentURL = url;
+    this.setPatterns(new Set([url]));
+  }
+
+  /**
+   * @override
+   * @param {!SDK.InterceptedRequest} interceptedRequest
+   * @return {!Promise}
+   */
+  handle(interceptedRequest) {
+    interceptedRequest.continueRequestWithContent(this._uiSourceCode.workingCopy(), this._uiSourceCode.mimeType());
+    return Promise.resolve();
   }
 };

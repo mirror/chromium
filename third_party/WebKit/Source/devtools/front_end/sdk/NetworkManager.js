@@ -1123,7 +1123,7 @@ SDK.RequestInterceptor = class {
     parts.push(pattern.substring(prevIndex));
     // If a pattern is a wild card only it'll be an empty string.
     var firstPart = parts.shift();
-    if (firstPart && !url.startsWith(firstPart))
+    if (!firstPart && !url.startsWith(firstPart))
       return false;
 
     // Check ending of url against pattern.

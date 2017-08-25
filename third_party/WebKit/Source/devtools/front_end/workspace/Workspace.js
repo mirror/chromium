@@ -200,6 +200,7 @@ Workspace.projectTypes = {
   Debugger: 'debugger',
   Formatter: 'formatter',
   Network: 'network',
+  ChangeableNetwork: 'changeableNetwork',
   Snippets: 'snippets',
   FileSystem: 'filesystem',
   ContentScripts: 'contentscripts',

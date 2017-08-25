@@ -41,14 +41,14 @@ Workspace.UISourceCode = class extends Common.Object {
     super();
     this._project = project;
     this._url = url;
+    this._parsedURL = url.asParsedURL();
 
-    var parsedURL = url.asParsedURL();
-    if (parsedURL) {
-      this._origin = parsedURL.securityOrigin();
-      this._parentURL = this._origin + parsedURL.folderPathComponents;
-      this._name = parsedURL.lastPathComponent;
-      if (parsedURL.queryParams)
-        this._name += '?' + parsedURL.queryParams;
+    if (this._parsedURL) {
+      this._origin = this._parsedURL.securityOrigin();
+      this._parentURL = this._origin + this._parsedURL.folderPathComponents;
+      this._name = this._parsedURL.lastPathComponent;
+      if (this._parsedURL.queryParams)
+        this._name += '?' + this._parsedURL.queryParams;
     } else {
       this._origin = '';
       this._parentURL = '';
@@ -103,6 +103,13 @@ Workspace.UISourceCode = class extends Common.Object {
    */
   url() {
     return this._url;
+  }
+
+  /**
+   * @return {?Common.ParsedURL}
+   */
+  parsedURL() {
+    return this._parsedURL;
   }
 
   /**
@@ -192,6 +199,7 @@ Workspace.UISourceCode = class extends Common.Object {
       this._url = url;
     if (contentType)
       this._contentType = contentType;
+    this._parsedURL = this._url.asParsedURL();
     this.dispatchEventToListeners(Workspace.UISourceCode.Events.TitleChanged, this);
     this.project().workspace().dispatchEventToListeners(
         Workspace.Workspace.Events.UISourceCodeRenamed, {oldURL: oldURL, uiSourceCode: this});

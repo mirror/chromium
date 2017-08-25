@@ -257,12 +257,17 @@ SourceFrame.UISourceCodeFrame = class extends SourceFrame.SourceFrame {
   _updateDiffUISourceCode() {
     if (!this._diff)
       return;
-    if (this._persistenceBinding)
+    if (this._persistenceBinding) {
       this._diff.setUISourceCode(this._persistenceBinding.network);
-    else if (this._uiSourceCode.project().type() === Workspace.projectTypes.Network)
-      this._diff.setUISourceCode(this._uiSourceCode);
-    else
+    } else if (this._uiSourceCode.project().type() === Workspace.projectTypes.Network) {
+      var uiSourceCode = this._uiSourceCode;
+      var changeableNetworkUISourceCode = Bindings.changeableNetworkProject.uiSourceCodeForURL(uiSourceCode.url());
+      if (changeableNetworkUISourceCode)
+        uiSourceCode = changeableNetworkUISourceCode;
+      this._diff.setUISourceCode(uiSourceCode);
+    } else {
       this._diff.setUISourceCode(null);
+    }
   }
 
   _updateStyle() {
@@ -470,6 +475,7 @@ SourceFrame.UISourceCodeFrame = class extends SourceFrame.SourceFrame {
       if (this._uiSourceCode.decorationsForType(type))
         this._decorateTypeThrottled(type);
     }
+    this._diff.forceUpdate();
   }
 };
 
