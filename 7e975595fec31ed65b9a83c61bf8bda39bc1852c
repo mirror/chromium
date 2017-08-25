@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b5b7176e_642b659e",
+        "filename": "components/viz/service/hit_test/hit_test_aggregator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1002647
+      },
+      "writtenOn": "2017-08-25T17:53:22Z",
+      "side": 1,
+      "message": "nit: {}",
+      "range": {
+        "startLine": 23,
+        "startChar": 58,
+        "endLine": 23,
+        "endChar": 0
+      },
+      "revId": "7e975595fec31ed65b9a83c61bf8bda39bc1852c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d86d9c8_355c4820",
+        "filename": "components/viz/service/hit_test/hit_test_aggregator_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1002647
+      },
+      "writtenOn": "2017-08-25T17:53:22Z",
+      "side": 1,
+      "message": "Here and below: would this also work?\nhit_test_region-\u003eid-\u003esurface_id \u003d MakeSurfaceId(kDisplayFrameSink, id);",
+      "range": {
+        "startLine": 243,
+        "startChar": 8,
+        "endLine": 243,
+        "endChar": 21
+      },
+      "revId": "7e975595fec31ed65b9a83c61bf8bda39bc1852c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4bba3ab_57658dd6",
+        "filename": "services/viz/public/interfaces/hit_test/hit_test_region_list.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1002647
+      },
+      "writtenOn": "2017-08-25T17:53:22Z",
+      "side": 1,
+      "message": "nit: add doc above.",
+      "range": {
+        "startLine": 33,
+        "startChar": 25,
+        "endLine": 33,
+        "endChar": 38
+      },
+      "revId": "7e975595fec31ed65b9a83c61bf8bda39bc1852c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d00ac45a_da69ad00",
+        "filename": "services/viz/public/interfaces/hit_test/hit_test_region_list.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1002647
+      },
+      "writtenOn": "2017-08-25T17:53:22Z",
+      "side": 1,
+      "message": "nit: maybe s/\u003d/include",
+      "range": {
+        "startLine": 35,
+        "startChar": 40,
+        "endLine": 35,
+        "endChar": 41
+      },
+      "revId": "7e975595fec31ed65b9a83c61bf8bda39bc1852c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "935e6c5e_15c0b98e",
+        "filename": "ui/aura/mus/hit_test_data_provider_aura.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1002647
+      },
+      "writtenOn": "2017-08-25T17:53:22Z",
+      "side": 1,
+      "message": "Could this be written as:\nif (layer-\u003eGetPrimarySurfaceInfo())\n  hit_test_region-\u003eid-\u003esurface_id \u003d layer-\u003eGetPrimarySurfaceInfo()-\u003eid();\nelse\n  hit_test_region-\u003eid-\u003eframe_sink_id \u003d window_port-\u003eframe_sink_id();\n\n\nIf not - then please add {} with a non-single-line conditional body.",
+      "range": {
+        "startLine": 26,
+        "startChar": 8,
+        "endLine": 26,
+        "endChar": 13
+      },
+      "revId": "7e975595fec31ed65b9a83c61bf8bda39bc1852c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bdfd6979_c9089107",
+        "filename": "ui/aura/mus/hit_test_data_provider_aura_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 1002647
+      },
+      "writtenOn": "2017-08-25T17:53:22Z",
+      "side": 1,
+      "message": "Here and above, maybe this should be extracted as a utility function in anonymous namespace with a signature like this or similar GetFrameSinkId(const HitTestRegion\u0026 region). Then you could just use it directly in EXPECT.",
+      "range": {
+        "startLine": 249,
+        "startChar": 8,
+        "endLine": 249,
+        "endChar": 14
+      },
+      "revId": "7e975595fec31ed65b9a83c61bf8bda39bc1852c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
