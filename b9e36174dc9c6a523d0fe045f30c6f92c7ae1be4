@@ -178,6 +178,24 @@
     },
     {
       "key": {
+        "uuid": "0bd11f02_51577040",
+        "filename": "third_party/WebKit/Source/core/css/properties/CSSPropertyAPITextEmphasisPosition.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1196635
+      },
+      "writtenOn": "2017-08-25T01:56:25Z",
+      "side": 1,
+      "message": "Yes, \u0027right over\u0027 should be valid,and the text-emphasis-position: over is invalid in the specification.",
+      "parentUuid": "bbc036e6_90ceb6f9",
+      "revId": "b9e36174dc9c6a523d0fe045f30c6f92c7ae1be4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "23ddf6be_b66eea43",
         "filename": "third_party/WebKit/Source/core/css/properties/CSSPropertyAPITextEmphasisPosition.cpp",
         "patchSetId": 3
