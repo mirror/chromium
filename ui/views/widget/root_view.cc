@@ -241,12 +241,13 @@ View* RootView::GetFocusTraversableParentView() {
 ////////////////////////////////////////////////////////////////////////////////
 // RootView, ui::EventProcessor overrides:
 
-ui::EventTarget* RootView::GetRootForEvent(ui::Event* event) {
-  return this;
+ui::EventTarget* RootView::GetInitialEventTarget(ui::Event* event) {
+  // Views has no special initial target; return null.
+  return nullptr;
 }
 
-ui::EventTargeter* RootView::GetDefaultEventTargeter() {
-  return this->GetEventTargeter();
+ui::EventTarget* RootView::GetRootTarget() {
+  return this;
 }
 
 void RootView::OnEventProcessingStarted(ui::Event* event) {
