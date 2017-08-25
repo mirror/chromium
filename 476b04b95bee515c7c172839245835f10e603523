@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "8b7c792c_f853bbe0",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/customtabs/CustomTabsConnection.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 264,
+      "author": {
+        "id": 1154589
+      },
+      "writtenOn": "2017-08-25T14:42:05Z",
+      "side": 1,
+      "message": "Since it took me so long to get back to this CL, I\u0027ve thrown in a JSONObject implementation for free ;)",
+      "parentUuid": "1b3892ca_fd064a0c",
+      "revId": "476b04b95bee515c7c172839245835f10e603523",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2a38b0d2_d5d749b8",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/customtabs/CustomTabsConnection.java",
         "patchSetId": 1
@@ -48,6 +66,30 @@
       "writtenOn": "2017-08-09T16:14:27Z",
       "side": 1,
       "message": "We tend to use -1 for missing values, as 0 can sometimes have a meaning for these metrics. For instance, connection time can be 0 if the response came from the cache.",
+      "range": {
+        "startLine": 983,
+        "startChar": 8,
+        "endLine": 983,
+        "endChar": 13
+      },
+      "revId": "476b04b95bee515c7c172839245835f10e603523",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3747809_9731ddd6",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/customtabs/CustomTabsConnection.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 983,
+      "author": {
+        "id": 1154589
+      },
+      "writtenOn": "2017-08-25T14:42:05Z",
+      "side": 1,
+      "message": "I\u0027m just passing through the existing implementation in Chrome. I don\u0027t know if we want to prioritize API stability w/rt custom tabs, which means adding a translation layer and having maintenance problems if the NQE details change and no-one updates the translation layer, versus just passing the NQE through directly, having it always up-to-date, and possibly causing problems for AGSA if there are unexpected changes.\n\nLet me know which way you think we should lean.",
+      "parentUuid": "2a38b0d2_d5d749b8",
       "range": {
         "startLine": 983,
         "startChar": 8,
@@ -83,6 +125,30 @@
     },
     {
       "key": {
+        "uuid": "8407d66d_19536ee3",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/customtabs/CustomTabsConnection.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 987,
+      "author": {
+        "id": 1154589
+      },
+      "writtenOn": "2017-08-25T14:42:05Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "9a866636_0dd76d9b",
+      "range": {
+        "startLine": 987,
+        "startChar": 12,
+        "endLine": 987,
+        "endChar": 32
+      },
+      "revId": "476b04b95bee515c7c172839245835f10e603523",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "80589455_0929d42e",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/customtabs/CustomTabsConnection.java",
         "patchSetId": 1
@@ -94,6 +160,30 @@
       "writtenOn": "2017-08-09T16:14:27Z",
       "side": 1,
       "message": "Is it OK to forward a number with a potentially unstable meaning over time?",
+      "range": {
+        "startLine": 992,
+        "startChar": 47,
+        "endLine": 992,
+        "endChar": 70
+      },
+      "revId": "476b04b95bee515c7c172839245835f10e603523",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e3020c6_3f9e5cf0",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/customtabs/CustomTabsConnection.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 992,
+      "author": {
+        "id": 1154589
+      },
+      "writtenOn": "2017-08-25T14:42:05Z",
+      "side": 1,
+      "message": "I think this has the same answer as the -1 vs 0 question above---I\u0027ll change this according to your response there.",
+      "parentUuid": "80589455_0929d42e",
       "range": {
         "startLine": 992,
         "startChar": 47,
@@ -176,6 +266,24 @@
     },
     {
       "key": {
+        "uuid": "621fe5d2_c225fdbd",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/metrics/PageLoadMetrics.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1154589
+      },
+      "writtenOn": "2017-08-25T14:42:05Z",
+      "side": 1,
+      "message": "Comment updated.\n\nThe NQE does appear to contain meaningful values for all page loads as I\u0027ve confirmed in tests. See also this following conversation which seems to confirm that: https://groups.google.com/a/google.com/d/msgid/chrome-loading/dc80f4c0-d404-4f33-8be5-66360ec8a097%40google.com?utm_medium\u003demail\u0026utm_source\u003dfooter",
+      "parentUuid": "726e6306_a0216094",
+      "revId": "476b04b95bee515c7c172839245835f10e603523",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "70e3bc22_c90fda96",
         "filename": "chrome/browser/page_load_metrics/observers/android_page_load_metrics_observer.cc",
         "patchSetId": 1
@@ -193,6 +301,24 @@
     },
     {
       "key": {
+        "uuid": "f9411457_dcf251fd",
+        "filename": "chrome/browser/page_load_metrics/observers/android_page_load_metrics_observer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1154589
+      },
+      "writtenOn": "2017-08-25T14:42:05Z",
+      "side": 1,
+      "message": "That seems to be what is done with the UKM observer, no?\n\nhttps://cs.chromium.org/chromium/src/chrome/browser/page_load_metrics/observers/ukm_page_load_metrics_observer.cc?rcl\u003d31c65adb6d2c13f87c143a8c5d00cbf920ed4074\u0026l\u003d58",
+      "parentUuid": "70e3bc22_c90fda96",
+      "revId": "476b04b95bee515c7c172839245835f10e603523",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b9870448_10be1b20",
         "filename": "chrome/browser/page_load_metrics/observers/android_page_load_metrics_observer.cc",
         "patchSetId": 1
@@ -204,6 +330,24 @@
       "writtenOn": "2017-08-07T15:36:58Z",
       "side": 1,
       "message": "OnLoadedResource is called for every resource loaded by the page. i\u0027d prefer that we only report timing data for the main resource at this time. could we exclude non-main-resources and report only timing info for the main resource?",
+      "revId": "476b04b95bee515c7c172839245835f10e603523",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc7a6851_13c86116",
+        "filename": "chrome/browser/page_load_metrics/observers/android_page_load_metrics_observer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1154589
+      },
+      "writtenOn": "2017-08-25T14:42:05Z",
+      "side": 1,
+      "message": "Done. I\u0027ve changed the method named called to make it clear that the observer API has been changed.",
+      "parentUuid": "b9870448_10be1b20",
       "revId": "476b04b95bee515c7c172839245835f10e603523",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
