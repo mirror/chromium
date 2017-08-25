@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ec01c14a_22db493e",
+        "filename": "third_party/WebKit/Source/platform/image-decoders/gif/GIFImageDecoder.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-08-25T15:53:43Z",
+      "side": 1,
+      "message": "Nit: No {}",
+      "revId": "13e1fc5c0ea498c183f0d86a5250f004b676fa47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4717f5cb_57c17aae",
+        "filename": "third_party/WebKit/Source/platform/image-decoders/gif/GIFImageDecoderTest.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 447,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-08-25T15:53:43Z",
+      "side": 1,
+      "message": "Do we know what can trigger this in the wild?  Maybe the skip-forward code?  If we know, it\u0027d be nice to test that more directly here (as modifying data after it\u0027s received doesn\u0027t seem like it should happen), or at least comment about what that scenario is and why testing this way is better.",
+      "revId": "13e1fc5c0ea498c183f0d86a5250f004b676fa47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
