@@ -148,7 +148,8 @@ void IOSChromeMainParts::PreMainMessageLoopRun() {
   // ContentSettingsPattern need to be initialized before creating the
   // ChromeBrowserState.
   const char* const schemes[] = {};
-  ContentSettingsPattern::SetNonWildcardDomainNonPortSchemes(schemes, 0);
+  ContentSettingsPattern::SetNonWildcardDomainNonPortSchemes(
+      schemes, arraysize(schemes));
 
   // Ensure ClipboadRecentContentIOS is created.
   ClipboardRecentContent::SetInstance(CreateClipboardRecentContentIOS());

@@ -24,8 +24,8 @@ const char* const* g_non_domain_wildcard_non_port_schemes = nullptr;
 size_t g_non_domain_wildcard_non_port_schemes_count = 0;
 
 // Keep it consistent with enum SchemeType in content_settings_pattern.h.
-// TODO(msramek): Layering violation: assemble this array from hardcoded
-// schemes and those injected via |SetNonWildcardDomainNonPortSchemes()|.
+// TODO(msramek): Layering violation: assemble from hardcoded schemes
+// that are injected here.
 const char* const kSchemeNames[] = {"wildcard",       "other",
                                     url::kHttpScheme, url::kHttpsScheme,
                                     url::kFileScheme, "chrome-extension",
