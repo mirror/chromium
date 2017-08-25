@@ -150,10 +150,9 @@ BeginResourceDownload(
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
 
   return std::unique_ptr<ResourceDownloader, BrowserThread::DeleteOnIOThread>(
-      ResourceDownloader::BeginDownload(download_manager, std::move(params),
-                                        std::move(request),
-                                        url_loader_factory_getter, download_id,
-                                        false)
+      ResourceDownloader::BeginDownload(
+          download_manager, std::move(params), std::move(request),
+          url_loader_factory_getter, download_id, false)
           .release());
 }
 
@@ -670,17 +669,16 @@ void DownloadManagerImpl::DownloadUrl(
   // network service is enabled, or once we disable the tests that are currently
   // passing with the URLRequest code path.
   if (base::FeatureList::IsEnabled(features::kNetworkService) && false) {
-    std::unique_ptr<ResourceRequest> request = CreateResourceRequest(
-        params.get());
+    std::unique_ptr<ResourceRequest> request =
+        CreateResourceRequest(params.get());
     BrowserThread::PostTaskAndReplyWithResult(
         BrowserThread::IO, FROM_HERE,
-        base::BindOnce(&BeginResourceDownload, std::move(params),
-                       std::move(request),
-                       GetURLLoaderFactoryGetter(
-                           browser_context_, params->render_process_host_id(),
-                           params->render_frame_host_routing_id()),
-                       content::DownloadItem::kInvalidId,
-                       weak_factory_.GetWeakPtr()),
+        base::BindOnce(
+            &BeginResourceDownload, std::move(params), std::move(request),
+            GetURLLoaderFactoryGetter(browser_context_,
+                                      params->render_process_host_id(),
+                                      params->render_frame_host_routing_id()),
+            content::DownloadItem::kInvalidId, weak_factory_.GetWeakPtr()),
         base::BindOnce(&DownloadManagerImpl::AddUrlDownloadHandler,
                        weak_factory_.GetWeakPtr()));
   } else {
