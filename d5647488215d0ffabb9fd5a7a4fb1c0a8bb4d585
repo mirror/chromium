@@ -73,6 +73,24 @@
     },
     {
       "key": {
+        "uuid": "ebd704d2_e1743b1b",
+        "filename": "third_party/zlib/contrib/arm/chunkcopy.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1145695
+      },
+      "writtenOn": "2017-08-25T22:06:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f5975e41_3eb466fc",
+      "revId": "d5647488215d0ffabb9fd5a7a4fb1c0a8bb4d585",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5e5240ef_1a68af7c",
         "filename": "third_party/zlib/contrib/arm/chunkcopy.h",
         "patchSetId": 5
@@ -123,6 +141,24 @@
       "revId": "d5647488215d0ffabb9fd5a7a4fb1c0a8bb4d585",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf659b98_4e767c8f",
+        "filename": "third_party/zlib/contrib/arm/chunkcopy.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1145695
+      },
+      "writtenOn": "2017-08-25T22:06:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "edaddb92_28139924",
+      "revId": "d5647488215d0ffabb9fd5a7a4fb1c0a8bb4d585",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -194,6 +230,24 @@
       "revId": "d5647488215d0ffabb9fd5a7a4fb1c0a8bb4d585",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab8e54c4_6d7f02a1",
+        "filename": "third_party/zlib/contrib/arm/chunkcopy.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1145695
+      },
+      "writtenOn": "2017-08-25T22:06:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a3b8c27d_8838ba5b",
+      "revId": "d5647488215d0ffabb9fd5a7a4fb1c0a8bb4d585",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -286,6 +340,24 @@
     },
     {
       "key": {
+        "uuid": "e86d8978_7ffb1570",
+        "filename": "third_party/zlib/contrib/arm/inffast.c",
+        "patchSetId": 5
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1145695
+      },
+      "writtenOn": "2017-08-25T22:06:26Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "2e5b530d_1d5b1dd5",
+      "revId": "d5647488215d0ffabb9fd5a7a4fb1c0a8bb4d585",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2a788724_acbea8a5",
         "filename": "third_party/zlib/contrib/arm/inflate.c",
         "patchSetId": 5
@@ -318,6 +390,24 @@
       "revId": "d5647488215d0ffabb9fd5a7a4fb1c0a8bb4d585",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31866bea_cc910368",
+        "filename": "third_party/zlib/contrib/arm/inflate.c",
+        "patchSetId": 5
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1145695
+      },
+      "writtenOn": "2017-08-25T22:06:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e46ba553_2afb8a8b",
+      "revId": "d5647488215d0ffabb9fd5a7a4fb1c0a8bb4d585",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
