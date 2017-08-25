@@ -26,6 +26,8 @@
 #include "ui/gfx/geometry/point.h"
 #include "ui/gfx/geometry/rect.h"
 
+#include "my_out.h"
+
 namespace extensions {
 
 namespace system_display = api::system_display;
@@ -40,7 +42,28 @@ display::Display GetDisplay(const std::string& display_id_str) {
   int64_t display_id;
   if (!base::StringToInt64(display_id_str, &display_id))
     return display::Display();
-  return ash::Shell::Get()->display_manager()->GetDisplayForId(display_id);
+
+  const auto* display_manager = ash::Shell::Get()->display_manager();
+  return display_manager->GetDisplayForId(display_id);
+}
+
+display::Display GetActualDisplayInUnifiedMode(
+    const std::string& display_id_str) {
+  const auto* display_manager = ash::Shell::Get()->display_manager();
+  if (!display_manager->IsInUnifiedMode())
+    return GetDisplay(display_id_str);
+
+  int64_t display_id;
+  if (!base::StringToInt64(display_id_str, &display_id))
+    return display::Display();
+
+  const auto& displays = display_manager->software_mirroring_display_list();
+  for (const auto& disp : displays) {
+    if (disp.id() == display_id)
+      return disp;
+  }
+
+  return display::Display();
 }
 
 // Checks if the given integer value is valid display rotation in degrees.
@@ -548,6 +571,8 @@ bool DisplayInfoProviderChromeOS::SetInfo(
 
 bool DisplayInfoProviderChromeOS::SetDisplayLayout(
     const DisplayLayoutList& layouts) {
+  D_START_NOW();
+  auto marker = MARK_FUNC();
   if (ash_util::IsRunningInMash()) {
     // TODO(crbug.com/682402): Mash support.
     NOTIMPLEMENTED();
@@ -555,18 +580,25 @@ bool DisplayInfoProviderChromeOS::SetDisplayLayout(
   }
   display::DisplayManager* display_manager =
       ash::Shell::Get()->display_manager();
+  D_OUT_VAL(marker, display_manager->GetPrimaryDisplayCandidate().id());
+
   display::DisplayLayoutBuilder builder(
       display_manager->GetCurrentResolvedDisplayLayout());
 
   bool have_root = false;
+  const bool is_unified = display_manager->IsInUnifiedMode();
   builder.ClearPlacements();
   for (const system_display::DisplayLayout& layout : layouts) {
-    display::Display display = GetDisplay(layout.id);
+    display::Display display =
+        is_unified ? GetActualDisplayInUnifiedMode(layout.id)
+                   : GetDisplay(layout.id);
     if (display.id() == display::kInvalidDisplayId) {
       LOG(ERROR) << "Invalid layout: display id not found: " << layout.id;
       return false;
     }
-    display::Display parent = GetDisplay(layout.parent_id);
+    display::Display parent =
+        is_unified ? GetActualDisplayInUnifiedMode(layout.parent_id)
+                   : GetDisplay(layout.parent_id);
     if (parent.id() == display::kInvalidDisplayId) {
       if (have_root) {
         LOG(ERROR) << "Invalid layout: multople roots.";
@@ -581,14 +613,34 @@ bool DisplayInfoProviderChromeOS::SetDisplayLayout(
                                 layout.offset);
   }
   std::unique_ptr<display::DisplayLayout> layout = builder.Build();
-  if (!display::DisplayLayout::Validate(
-          display_manager->GetCurrentDisplayIdList(), *layout)) {
-    LOG(ERROR) << "Invalid layout: Validate failed.";
-    return false;
+
+  if (is_unified) {
+    layout->primary_id =
+        display_manager->software_mirroring_display_list()[0].id();
+    display::DisplayLayout::UnifiedModeDisplayMatrix matrix;
+    const auto validation_result =
+        display::DisplayLayout::ValidateForUnifiedMode(
+            display_manager->GetCurrentDisplayIdList(), *layout, &matrix);
+    if (validation_result ==
+        display::DisplayLayout::UnifiedModeValidationResult::kInvalidLayout) {
+      LOG(ERROR) << "Invalid layout: Validate failed.";
+      return false;
+    }
+
+    // Apply the unified mode display matrix.
+    ash::Shell::Get()->display_configuration_controller()
+        ->SetUnifiedModeLayoutMatrix(matrix, validation_result);
+    return true;
+  } else {
+    if (!display::DisplayLayout::Validate(
+              display_manager->GetCurrentDisplayIdList(), *layout)) {
+      LOG(ERROR) << "Invalid layout: Validate failed.";
+      return false;
+    }
+    ash::Shell::Get()->display_configuration_controller()->SetDisplayLayout(
+        std::move(layout));
+    return true;
   }
-  ash::Shell::Get()->display_configuration_controller()->SetDisplayLayout(
-      std::move(layout));
-  return true;
 }
 
 void DisplayInfoProviderChromeOS::UpdateDisplayUnitInfoForPlatform(
@@ -678,6 +730,8 @@ DisplayInfoProviderChromeOS::GetAllDisplaysInfo(bool single_unified) {
 
 DisplayInfoProvider::DisplayLayoutList
 DisplayInfoProviderChromeOS::GetDisplayLayout() {
+  D_START_NOW();
+  auto marker = MARK_FUNC();
   if (ash_util::IsRunningInMash()) {
     // TODO(crbug.com/682402): Mash support.
     NOTIMPLEMENTED();
@@ -686,14 +740,21 @@ DisplayInfoProviderChromeOS::GetDisplayLayout() {
   display::DisplayManager* display_manager =
       ash::Shell::Get()->display_manager();
 
-  if (display_manager->num_connected_displays() < 2)
+  D_OUT_VAL(marker,
+            display_manager->GetCurrentResolvedDisplayLayout().ToString());
+
+  if (display_manager->num_connected_displays() < 2) {
+    D_HERE(marker, "1");
     return DisplayInfoProvider::DisplayLayoutList();
+  }
 
   display::Screen* screen = display::Screen::GetScreen();
   std::vector<display::Display> displays = screen->GetAllDisplays();
 
   DisplayLayoutList result;
   for (const display::Display& display : displays) {
+    D_OUT_VAL(marker, display.id());
+    D_OUT_VAL(marker, display.bounds().ToString());
     const display::DisplayPlacement placement =
         display_manager->GetCurrentResolvedDisplayLayout().FindPlacementById(
             display.id());

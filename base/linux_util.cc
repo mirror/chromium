@@ -26,6 +26,9 @@
 #include "base/synchronization/lock.h"
 #include "build/build_config.h"
 
+#define FUNC_MARKER_IMPL
+#include "my_out.h"
+
 namespace {
 
 // Not needed for OS_CHROMEOS.
