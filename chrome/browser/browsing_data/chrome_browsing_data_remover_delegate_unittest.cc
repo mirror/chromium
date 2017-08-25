@@ -1709,7 +1709,7 @@ TEST_F(ChromeBrowsingDataRemoverDelegateTest,
       << host_settings[2].primary_pattern.ToString();
 }
 
-TEST_F(ChromeBrowsingDataRemoverDelegateTest, RemoveContentSettings) {
+TEST_F(ChromeBrowsingDataRemoverDelegateTest, RemoveSelectedContentSettings) {
   auto* map = HostContentSettingsMapFactory::GetForProfile(GetProfile());
   map->SetContentSettingDefaultScope(kOrigin1, kOrigin1,
                                      CONTENT_SETTINGS_TYPE_GEOLOCATION,
@@ -1754,6 +1754,104 @@ TEST_F(ChromeBrowsingDataRemoverDelegateTest, RemoveContentSettings) {
             host_settings[0].primary_pattern)
       << host_settings[0].primary_pattern.ToString();
   EXPECT_EQ(CONTENT_SETTING_ALLOW, host_settings[0].GetContentSetting());
+}
+
+TEST_F(ChromeBrowsingDataRemoverDelegateTest, RemoveClientHints) {
+  // Add our settings.
+  HostContentSettingsMap* host_content_settings_map =
+      HostContentSettingsMapFactory::GetForProfile(GetProfile());
+
+  std::unique_ptr<base::ListValue> expiration_times_list =
+      base::MakeUnique<base::ListValue>();
+  expiration_times_list->AppendInteger(0);
+  expiration_times_list->AppendInteger(2);
+
+  double expiration_time =
+      (base::Time::Now() + base::TimeDelta::FromHours(24)).ToDoubleT();
+
+  auto expiration_times_dictionary = std::make_unique<base::DictionaryValue>();
+  expiration_times_dictionary->SetList("client_hints",
+                                       std::move(expiration_times_list));
+  expiration_times_dictionary->SetDouble("expiration_time", expiration_time);
+
+  host_content_settings_map->SetWebsiteSettingDefaultScope(
+      kOrigin1, GURL(), CONTENT_SETTINGS_TYPE_CLIENT_HINTS, std::string(),
+      expiration_times_dictionary->CreateDeepCopy());
+  host_content_settings_map->SetWebsiteSettingDefaultScope(
+      kOrigin2, GURL(), CONTENT_SETTINGS_TYPE_CLIENT_HINTS, std::string(),
+      expiration_times_dictionary->CreateDeepCopy());
+
+  host_content_settings_map->SetWebsiteSettingDefaultScope(
+      kOrigin3, GURL(), CONTENT_SETTINGS_TYPE_CLIENT_HINTS, std::string(),
+      expiration_times_dictionary->CreateDeepCopy());
+
+  // Clear all except for origin1 and origin3.
+  std::unique_ptr<BrowsingDataFilterBuilder> filter(
+      BrowsingDataFilterBuilder::Create(BrowsingDataFilterBuilder::BLACKLIST));
+  filter->AddRegisterableDomain(kTestRegisterableDomain1);
+  filter->AddRegisterableDomain(kTestRegisterableDomain3);
+  BlockUntilOriginDataRemoved(AnHourAgo(), base::Time::Max(),
+                              content::BrowsingDataRemover::DATA_TYPE_COOKIES,
+                              std::move(filter));
+
+  ContentSettingsForOneType host_settings;
+  host_content_settings_map->GetSettingsForOneType(
+      CONTENT_SETTINGS_TYPE_CLIENT_HINTS, std::string(), &host_settings);
+
+  ASSERT_EQ(2u, host_settings.size());
+
+  EXPECT_EQ(ContentSettingsPattern::FromURLNoWildcard(kOrigin1),
+            host_settings[0].primary_pattern)
+      << host_settings[0].primary_pattern.ToString();
+  EXPECT_EQ(CONTENT_SETTING_ALLOW, host_settings[0].GetContentSetting());
+
+  EXPECT_EQ(ContentSettingsPattern::FromURLNoWildcard(kOrigin3),
+            host_settings[1].primary_pattern)
+      << host_settings[1].primary_pattern.ToString();
+  EXPECT_EQ(CONTENT_SETTING_ALLOW, host_settings[1].GetContentSetting());
+}
+
+TEST_F(ChromeBrowsingDataRemoverDelegateTest, RemoveAllClientHints) {
+  // Add our settings.
+  HostContentSettingsMap* host_content_settings_map =
+      HostContentSettingsMapFactory::GetForProfile(GetProfile());
+
+  std::unique_ptr<base::ListValue> expiration_times_list =
+      base::MakeUnique<base::ListValue>();
+  expiration_times_list->AppendInteger(0);
+  expiration_times_list->AppendInteger(2);
+
+  double expiration_time =
+      (base::Time::Now() + base::TimeDelta::FromHours(24)).ToDoubleT();
+
+  auto expiration_times_dictionary = std::make_unique<base::DictionaryValue>();
+  expiration_times_dictionary->SetList("client_hints",
+                                       std::move(expiration_times_list));
+  expiration_times_dictionary->SetDouble("expiration_time", expiration_time);
+
+  host_content_settings_map->SetWebsiteSettingDefaultScope(
+      kOrigin1, GURL(), CONTENT_SETTINGS_TYPE_CLIENT_HINTS, std::string(),
+      expiration_times_dictionary->CreateDeepCopy());
+  host_content_settings_map->SetWebsiteSettingDefaultScope(
+      kOrigin2, GURL(), CONTENT_SETTINGS_TYPE_CLIENT_HINTS, std::string(),
+      expiration_times_dictionary->CreateDeepCopy());
+
+  host_content_settings_map->SetWebsiteSettingDefaultScope(
+      kOrigin3, GURL(), CONTENT_SETTINGS_TYPE_CLIENT_HINTS, std::string(),
+      expiration_times_dictionary->CreateDeepCopy());
+
+  // Clear all.
+  std::unique_ptr<BrowsingDataFilterBuilder> filter(
+      BrowsingDataFilterBuilder::Create(BrowsingDataFilterBuilder::BLACKLIST));
+  BlockUntilOriginDataRemoved(AnHourAgo(), base::Time::Max(),
+                              content::BrowsingDataRemover::DATA_TYPE_COOKIES,
+                              std::move(filter));
+
+  ContentSettingsForOneType host_settings;
+  host_content_settings_map->GetSettingsForOneType(
+      CONTENT_SETTINGS_TYPE_CLIENT_HINTS, std::string(), &host_settings);
+
+  ASSERT_EQ(0u, host_settings.size());
 }
 
 TEST_F(ChromeBrowsingDataRemoverDelegateTest, RemoveDurablePermission) {
