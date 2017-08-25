@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "15aaaf51_132f21e3",
+        "filename": "content/common/input/input_handler.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-25T06:36:43Z",
+      "side": 1,
+      "message": "Nit: 80 chars please",
+      "revId": "184021616d30e182dc4c77c0c5b7599464578b55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "412298b3_abb7fc76",
+        "filename": "content/renderer/input/render_widget_input_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-25T06:36:43Z",
+      "side": 1,
+      "message": "As someone who\u0027s not familiar with this code, it would be useful to have some comment somewhere that describes how handling_touch_action_ is affected by various parts of input handling (i.e. why it\u0027s set to nullopt here, and how a value set by ProcessTouchAction() eventually propagates somewhere).\n\nAlso, is it possible that this will be problematic if handling the input event tears down an OOPIF subframe (and consequently destroys the RenderWidget and the RenderWidgetInputHandler)?",
+      "revId": "184021616d30e182dc4c77c0c5b7599464578b55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a474bc68_1d8e9d4b",
+        "filename": "content/renderer/input/widget_input_handler_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-25T06:36:43Z",
+      "side": 1,
+      "message": "Can we just typemap this as well? It\u0027s kind of unfortunate to typemap such a simple struct, but it\u0027s mostly about providing a good precedent for other code that does more complex conversions.",
+      "revId": "184021616d30e182dc4c77c0c5b7599464578b55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
