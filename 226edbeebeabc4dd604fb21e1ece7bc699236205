@@ -1,0 +1,118 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7d9a5d2e_9f4de6f5",
+        "filename": "content/browser/frame_host/navigator_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 650,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-08-25T21:53:56Z",
+      "side": 1,
+      "message": "document ID",
+      "range": {
+        "startLine": 650,
+        "startChar": 55,
+        "endLine": 650,
+        "endChar": 67
+      },
+      "revId": "226edbeebeabc4dd604fb21e1ece7bc699236205",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04a1701a_2c37c54d",
+        "filename": "content/browser/frame_host/navigator_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 652,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-08-25T21:53:56Z",
+      "side": 1,
+      "message": "GetDocumentId",
+      "range": {
+        "startLine": 652,
+        "startChar": 33,
+        "endLine": 652,
+        "endChar": 61
+      },
+      "revId": "226edbeebeabc4dd604fb21e1ece7bc699236205",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee41f681_6649fd0f",
+        "filename": "content/browser/frame_host/render_frame_host_impl.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 287,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-08-25T21:53:56Z",
+      "side": 1,
+      "message": "nit: Assigns a new unique ID to track which Document is in the frame, after an event that changes the Document.  See comment on RenderFrameHost::GetDocumentId.",
+      "revId": "226edbeebeabc4dd604fb21e1ece7bc699236205",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9f0e142_00a38d9a",
+        "filename": "content/browser/frame_host/render_frame_host_impl.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-08-25T21:53:56Z",
+      "side": 1,
+      "message": "nit: IncrementDocumentId",
+      "revId": "226edbeebeabc4dd604fb21e1ece7bc699236205",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4bfd7d0_b6e237ae",
+        "filename": "content/browser/frame_host/render_frame_host_impl.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 1058,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-08-25T21:53:56Z",
+      "side": 1,
+      "message": "nit: A globally unique ID representing the current Document in the frame.",
+      "revId": "226edbeebeabc4dd604fb21e1ece7bc699236205",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92911228_dd2fcd6d",
+        "filename": "content/public/browser/render_frame_host.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-08-25T21:53:56Z",
+      "side": 1,
+      "message": "We should be much more explicit here, like:\n\nReturns a globally unique ID representing the current Document in this frame. This changes on every cross-document navigation. This does not change on document.open or document.write operations, because these do not generate new Documents in Blink.\nTODO(###): This should update on javascript: URLs that replace the current document.",
+      "revId": "226edbeebeabc4dd604fb21e1ece7bc699236205",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
