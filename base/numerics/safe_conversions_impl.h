@@ -117,6 +117,8 @@ struct CheckOnFailure {
   static T HandleFailure() {
 #if defined(__GNUC__) || defined(__clang__)
     __builtin_trap();
+#elif defined(_MSC_VER)
+    __debugbreak();
 #else
     ((void)(*(volatile char*)0 = 0));
 #endif
