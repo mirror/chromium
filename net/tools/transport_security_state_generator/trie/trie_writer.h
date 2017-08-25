@@ -63,6 +63,12 @@ class TrieWriter {
   bool WriteEntry(const TransportSecurityStateEntry* entry,
                   TrieBitBuffer* writer);
 
+  // An entry is simple when it uses HSTS with includeSubdomains but nothing
+  // else. The majority of preloaded entries are such simple entries and by
+  // treating them separately it is possible to represent them using fewer bits
+  // which reduces binary size.
+  bool IsSimpleEntry(const TransportSecurityStateEntry* entry);
+
   // Removes the first |length| characters from all entries between |start| and
   // |end|.
   void RemovePrefix(size_t length,

@@ -533,37 +533,53 @@ bool DecodeHSTSPreloadRaw(const std::string& search_hostname,
 
       if (c == kEndOfString) {
         PreloadResult tmp;
-        if (!reader.Next(&tmp.sts_include_subdomains) ||
-            !reader.Next(&tmp.force_https) || !reader.Next(&tmp.has_pins)) {
+        bool is_simple_entry;
+        if (!reader.Next(&is_simple_entry)) {
           return false;
         }
 
-        tmp.pkp_include_subdomains = tmp.sts_include_subdomains;
+        if (is_simple_entry) {
+          tmp.force_https = true;
+          tmp.sts_include_subdomains = true;
 
-        if (tmp.has_pins) {
-          if (!reader.Read(4, &tmp.pinset_id) ||
-              (!tmp.sts_include_subdomains &&
-               !reader.Next(&tmp.pkp_include_subdomains))) {
+          tmp.has_pins = false;
+          tmp.pkp_include_subdomains = false;
+          tmp.expect_ct = false;
+          tmp.expect_staple = false;
+          tmp.expect_staple_include_subdomains = false;
+        } else {
+          if (!reader.Next(&tmp.sts_include_subdomains) ||
+              !reader.Next(&tmp.force_https) || !reader.Next(&tmp.has_pins)) {
             return false;
           }
-        }
 
-        if (!reader.Next(&tmp.expect_ct))
-          return false;
+          tmp.pkp_include_subdomains = tmp.sts_include_subdomains;
 
-        if (tmp.expect_ct) {
-          if (!reader.Read(4, &tmp.expect_ct_report_uri_id))
-            return false;
-        }
+          if (tmp.has_pins) {
+            if (!reader.Read(4, &tmp.pinset_id) ||
+                (!tmp.sts_include_subdomains &&
+                 !reader.Next(&tmp.pkp_include_subdomains))) {
+              return false;
+            }
+          }
 
-        if (!reader.Next(&tmp.expect_staple))
-          return false;
-        tmp.expect_staple_include_subdomains = false;
-        if (tmp.expect_staple) {
-          if (!reader.Next(&tmp.expect_staple_include_subdomains))
+          if (!reader.Next(&tmp.expect_ct))
             return false;
-          if (!reader.Read(4, &tmp.expect_staple_report_uri_id))
+
+          if (tmp.expect_ct) {
+            if (!reader.Read(4, &tmp.expect_ct_report_uri_id))
+              return false;
+          }
+
+          if (!reader.Next(&tmp.expect_staple))
             return false;
+          tmp.expect_staple_include_subdomains = false;
+          if (tmp.expect_staple) {
+            if (!reader.Next(&tmp.expect_staple_include_subdomains))
+              return false;
+            if (!reader.Read(4, &tmp.expect_staple_report_uri_id))
+              return false;
+          }
         }
 
         tmp.hostname_offset = hostname_offset;

@@ -124,6 +124,13 @@ bool TrieWriter::WriteDispatchTables(ReversedEntries::iterator start,
 
 bool TrieWriter::WriteEntry(const TransportSecurityStateEntry* entry,
                             TrieBitBuffer* writer) {
+  if (IsSimpleEntry(entry)) {
+    writer->WriteBit(1);
+    return true;
+  } else {
+    writer->WriteBit(0);
+  }
+
   uint8_t include_subdomains = 0;
   if (entry->include_subdomains) {
     include_subdomains = 1;
@@ -207,6 +214,11 @@ bool TrieWriter::WriteEntry(const TransportSecurityStateEntry* entry,
   }
 
   return true;
+}
+
+bool TrieWriter::IsSimpleEntry(const TransportSecurityStateEntry* entry) {
+  return entry->force_https && entry->include_subdomains &&
+         entry->pinset.empty() && !entry->expect_ct && !entry->expect_staple;
 }
 
 void TrieWriter::RemovePrefix(size_t length,
