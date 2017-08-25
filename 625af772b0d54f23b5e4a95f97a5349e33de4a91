@@ -88,6 +88,24 @@
     },
     {
       "key": {
+        "uuid": "b0b8c567_e8b63c28",
+        "filename": "ash/shelf/app_list_button.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-25T21:49:04Z",
+      "side": 1,
+      "message": "Given that this comment is the only place in ash that explains to non-domain-experts what \"value prop\" means, do you have a suggestion for how to get people to discover the meaning? This CL adds 18 copies of the substring \"ValueProp\". Not all maintainers of ash code know about the details of the voice feature.",
+      "parentUuid": "3360da90_a7e3ac72",
+      "revId": "625af772b0d54f23b5e4a95f97a5349e33de4a91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "901f1a59_8942ac7d",
         "filename": "ash/shelf/app_list_button_unittest.cc",
         "patchSetId": 2
