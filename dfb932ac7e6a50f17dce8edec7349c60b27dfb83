@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4bbac57f_2ca52465",
+        "filename": "chrome/browser/ui/cocoa/nsview_additions_unittest.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-08-25T17:06:59Z",
+      "side": 1,
+      "message": "You can avoid the vector and pair for clearer names:\n\nconst struct {\n  NSAutoresizingMaskOptions ltr;\n  NSAutoresizingMaskOptions rtl;\n} kCases[] \u003d {\n  {…, …},\n  …\n};",
+      "revId": "dfb932ac7e6a50f17dce8edec7349c60b27dfb83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
