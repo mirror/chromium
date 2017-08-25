@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "76557b00_950a8636",
+        "filename": "services/device/generic_sensor/platform_sensor_and_provider_unittest_linux.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 597,
+      "author": {
+        "id": 1115688
+      },
+      "writtenOn": "2017-08-25T13:22:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "984c9440_4d08eff8",
+      "revId": "00ff320ee0e05ee28828f1c5fe75d32254f3ad9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "973b1d74_c816243e",
         "filename": "services/device/generic_sensor/platform_sensor_fusion.cc",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "00ff320ee0e05ee28828f1c5fe75d32254f3ad9c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35c2beb3_a188731d",
+        "filename": "services/device/generic_sensor/platform_sensor_fusion.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1115688
+      },
+      "writtenOn": "2017-08-25T13:22:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "973b1d74_c816243e",
+      "revId": "00ff320ee0e05ee28828f1c5fe75d32254f3ad9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "f2570910_9e7d4edb",
+        "filename": "services/device/generic_sensor/platform_sensor_provider_linux.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 1115688
+      },
+      "writtenOn": "2017-08-25T13:22:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "566f9049_a8af2956",
+      "range": {
+        "startLine": 279,
+        "startChar": 49,
+        "endLine": 279,
+        "endChar": 60
+      },
+      "revId": "00ff320ee0e05ee28828f1c5fe75d32254f3ad9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c76c5aab_77cfdbbd",
         "filename": "services/device/generic_sensor/platform_sensor_provider_linux.cc",
         "patchSetId": 2
@@ -82,6 +142,30 @@
     },
     {
       "key": {
+        "uuid": "216c8326_9ad6fe36",
+        "filename": "services/device/generic_sensor/platform_sensor_provider_linux.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 289,
+      "author": {
+        "id": 1115688
+      },
+      "writtenOn": "2017-08-25T13:22:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c76c5aab_77cfdbbd",
+      "range": {
+        "startLine": 281,
+        "startChar": 0,
+        "endLine": 289,
+        "endChar": 12
+      },
+      "revId": "00ff320ee0e05ee28828f1c5fe75d32254f3ad9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a22c7494_7bf2dab4",
         "filename": "services/device/generic_sensor/platform_sensor_provider_mac.cc",
         "patchSetId": 2
@@ -102,6 +186,30 @@
       "revId": "00ff320ee0e05ee28828f1c5fe75d32254f3ad9c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cfdc78f8_173cf537",
+        "filename": "services/device/generic_sensor/platform_sensor_provider_mac.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1115688
+      },
+      "writtenOn": "2017-08-25T13:22:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a22c7494_7bf2dab4",
+      "range": {
+        "startLine": 54,
+        "startChar": 14,
+        "endLine": 54,
+        "endChar": 84
+      },
+      "revId": "00ff320ee0e05ee28828f1c5fe75d32254f3ad9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
