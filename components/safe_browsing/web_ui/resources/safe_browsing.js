@@ -20,6 +20,8 @@ cr.define('safe_browsing', function() {
         addDatabaseManagerInfo(databaseState);
         addFullHashCacheInfo(fullHashCacheState);
   });
+    chrome.send('getThreatDetails', []);
+     $('refresh').onclick = refreshThreatDetails;
 }
   function addExperiments(result) {
     var resLength = result.length;
@@ -58,7 +60,20 @@ cr.define('safe_browsing', function() {
       $('full-hash-cache-info').innerHTML = result;
   }
 
+  function addThreatDetailsInfo(result) {
+      var logDiv = $('threat-details-list');
+      if (!logDiv)
+        return;
+      var textDiv = document.createElement('div');
+      textDiv.innerText = result;
+      logDiv.appendChild(textDiv);
+  }
+
+  function refreshThreatDetails(result){
+    chrome.send('getThreatDetails', []);
+  }
   return {
+    addThreatDetailsInfo: addThreatDetailsInfo,
     initialize: initialize,
   };
 });
