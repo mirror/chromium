@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3eee7de3_98931b84",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceFetcher.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 1115930
+      },
+      "writtenOn": "2017-08-25T23:15:05Z",
+      "side": 1,
+      "message": "I\u0027m not thrilled having validated_urls_, cached_resources_map_ and document_resources_ all here. That\u0027s 3 sets tracking similar-but-subtly-different state. Can we find some way to accomplish this while having at most 2 sets?",
+      "revId": "2b9fbcfea0ae8c0a4e3d68f547936aaeaa226619",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
