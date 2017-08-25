@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "91e400f9_2b8a2e87",
+        "filename": "third_party/WebKit/Source/platform/audio/AudioArray.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-08-25T15:37:12Z",
+      "side": 1,
+      "message": "Yup, this means that the AudioArray object itself is going to be allocated via fast-malloc (which under the hoods becomes partition-alloc) whenever you do \"new AudioArray\" but the _allocation itself is going to happen via base::AlignedAlloc (which under the hoods goes to malloc).\nEssentially USING_FAST_MALLOC overrides operator new/delete for this class (But doesn\u0027t have recursive effect on the fields AFAIK)\n\nThis is not necessarily a bad thing, I mean, the same would happen if you use a STL template here (vector or anything else).\nThe only thing to keep in mind is that might cause a shift in the benchmarks because memory here will move from partition-alloc to malloc. But again, as long as you leave a note in the commit description there is nothing bad about that.",
+      "parentUuid": "21885daf_bdffbdae",
+      "range": {
+        "startLine": 42,
+        "startChar": 2,
+        "endLine": 42,
+        "endChar": 32
+      },
+      "revId": "8dc3d5873423cc20cac69b3f77af1d90db2d3a7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0fc9a58c_51072c6c",
         "filename": "third_party/WebKit/Source/platform/audio/AudioArray.h",
         "patchSetId": 4
