@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5e94929c_ceef82ca",
+        "filename": "ios/clean/chrome/browser/ui/bookmarks/bookmarks_coordinator.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-08-25T09:38:21Z",
+      "side": 1,
+      "message": "I don\u0027t know if it is this coordinator which is supposed to dismiss it, or should it sends the command to the parent coordinator through the dispatcher.",
+      "range": {
+        "startLine": 117,
+        "startChar": 6,
+        "endLine": 117,
+        "endChar": 44
+      },
+      "revId": "984e34192f998f06f93ccee5740c688608bd632f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
