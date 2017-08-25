@@ -33,6 +33,7 @@
       animations:^{
         fromViewController.view.frame = outsideFrame;
         toViewController.view.frame = insideFrame;
+        [transitionContext.containerView layoutIfNeeded];
       }
       completion:^(BOOL finished) {
         [transitionContext

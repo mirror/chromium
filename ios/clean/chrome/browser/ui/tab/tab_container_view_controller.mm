@@ -10,6 +10,7 @@
 #import "ios/clean/chrome/browser/ui/transitions/animators/swap_from_above_animator.h"
 #import "ios/clean/chrome/browser/ui/transitions/containment_transition_context.h"
 #import "ios/clean/chrome/browser/ui/transitions/containment_transitioning_delegate.h"
+#import "ios/clean/chrome/browser/ui/transitions/helper_view_controllers/status_bar_hiding_view_controller.h"
 #import "ios/clean/chrome/browser/ui/ui_types.h"
 
 #if !defined(__has_feature) || !__has_feature(objc_arc)
@@ -131,6 +132,12 @@ CGFloat kTabStripHeight = 120.0f;
     return;
   if ([self isViewLoaded]) {
     self.findBarView.hidden = NO;
+
+    if (findBarViewController) {
+      findBarViewController = [[StatusBarHidingViewController alloc]
+          initWithChildViewController:findBarViewController
+                       statusBarColor:[UIColor whiteColor]];
+    }
     findBarViewController.view.translatesAutoresizingMaskIntoConstraints = YES;
     findBarViewController.view.autoresizingMask =
         UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
@@ -295,7 +302,7 @@ animationControllerForAddingChildController:(UIViewController*)addedChild
         constraintEqualToAnchor:self.bottomLayoutGuide.topAnchor],
 
     [self.findBarView.topAnchor
-        constraintEqualToAnchor:self.toolbarView.topAnchor],
+        constraintEqualToAnchor:self.statusBarBackgroundView.topAnchor],
     [self.findBarView.bottomAnchor
         constraintEqualToAnchor:self.toolbarView.bottomAnchor],
     [self.findBarView.leadingAnchor
