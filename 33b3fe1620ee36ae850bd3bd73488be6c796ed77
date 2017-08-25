@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d48dbba2_902a84be",
+        "filename": "third_party/WebKit/Source/core/paint/InlineTextBoxPainter.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 642,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-08-25T00:18:44Z",
+      "side": 1,
+      "message": "In order not to introduce performance regression, we should add a short cut that simply dumps all markers when there is no suggestion markers.",
+      "revId": "33b3fe1620ee36ae850bd3bd73488be6c796ed77",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
