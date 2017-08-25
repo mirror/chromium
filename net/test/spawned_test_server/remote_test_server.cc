@@ -29,31 +29,6 @@ namespace net {
 
 namespace {
 
-// Based on how the Android runner sets things up, it is only valid for one
-// RemoteTestServer to be active on the device at a time.
-class RemoteTestServerTracker {
- public:
-  void StartingServer() {
-    base::AutoLock lock(lock_);
-    CHECK_EQ(count_, 0);
-    count_++;
-  }
-
-  void StoppingServer() {
-    base::AutoLock lock(lock_);
-    CHECK_EQ(count_, 1);
-    count_--;
-  }
-
- private:
-  // |lock_| protects access to |count_|.
-  base::Lock lock_;
-  int count_ = 0;
-};
-
-base::LazyInstance<RemoteTestServerTracker>::Leaky tracker =
-    LAZY_INSTANCE_INITIALIZER;
-
 // To reduce the running time of tests, tests may be sharded across several
 // devices. This means that it may be necessary to support multiple instances
 // of the test server spawner and the Python test server simultaneously on the
@@ -118,8 +93,6 @@ bool RemoteTestServer::Start() {
   if (spawner_communicator_.get())
     return true;
 
-  tracker.Get().StartingServer();
-
   spawner_communicator_.reset(new SpawnerCommunicator(spawner_server_port_));
 
   base::DictionaryValue arguments_dict;
@@ -174,19 +147,18 @@ bool RemoteTestServer::BlockUntilStarted() {
 }
 
 bool RemoteTestServer::Stop() {
-  if (!spawner_communicator_.get())
+  if (!spawner_communicator_)
     return true;
 
-  tracker.Get().StoppingServer();
-
+  uint16_t port = GetPort();
   CleanUpWhenStoppingServer();
-  bool stopped = spawner_communicator_->StopServer();
+  bool stopped = spawner_communicator_->StopServer(port);
 
   if (!stopped)
     LOG(ERROR) << "Failed stopping RemoteTestServer";
 
   // Explicitly reset |spawner_communicator_| to avoid reusing the stopped one.
-  spawner_communicator_.reset(NULL);
+  spawner_communicator_.reset();
   return stopped;
 }
 
