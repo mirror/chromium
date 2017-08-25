@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "7b0785f4_1e886c49",
+        "filename": "third_party/WebKit/LayoutTests/paint/markers/suggestion-marker-basic.html",
+        "patchSetId": 12
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1229332
+      },
+      "writtenOn": "2017-08-25T00:01:42Z",
+      "side": 1,
+      "message": "Sure. We have some other marker layout tests we would have to update if we make this change though.",
+      "parentUuid": "ac215959_ceb85584",
+      "range": {
+        "startLine": 7,
+        "startChar": 5,
+        "endLine": 7,
+        "endChar": 8
+      },
+      "revId": "3e12993f60769eca6b8df2b667929474037976f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d7f30b8b_01be838d",
         "filename": "third_party/WebKit/LayoutTests/paint/markers/suggestion-marker-basic.html",
         "patchSetId": 12
