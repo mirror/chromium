@@ -454,6 +454,9 @@ void LayoutSelection::Commit() {
     return;
   has_pending_selection_ = false;
 
+  DCHECK(!frame_selection_->GetDocument().NeedsLayoutTreeUpdate());
+  if (frame_selection_->GetDocument().NeedsLayoutTreeUpdate())
+    return;
   const SelectionMarkingRange& new_range =
       CalcSelectionRangeAndSetSelectionState(*frame_selection_);
   if (new_range.IsNull()) {
