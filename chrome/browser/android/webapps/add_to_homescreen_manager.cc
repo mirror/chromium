@@ -35,7 +35,7 @@ namespace {
 
 // The length of time to allow the add to homescreen data fetcher to run before
 // timing out and generating an icon.
-const int kDataTimeoutInMilliseconds = 4000;
+const int kDataTimeoutInMilliseconds = 8000;
 
 }  // namespace
 
