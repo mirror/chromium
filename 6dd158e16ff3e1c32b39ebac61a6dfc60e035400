@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "13f606f5_d665fccb",
+        "filename": "content/browser/service_worker/service_worker_url_loader_job_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 353,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-25T02:04:22Z",
+      "side": 1,
+      "message": "slightly better: \"Test when a stream response body is aborted.\"",
+      "revId": "6dd158e16ff3e1c32b39ebac61a6dfc60e035400",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
