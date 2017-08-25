@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "044d8d32_76183040",
+        "filename": "extensions/renderer/scripts_run_info.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-25T15:45:56Z",
+      "side": 1,
+      "message": "Maybe add a comment explaining the reasoning for this?",
+      "revId": "9f8da2b67043ba60aff3faab6e52cb2515cd1025",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9de58939_ec2c9af5",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 21877,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-25T15:45:56Z",
+      "side": 1,
+      "message": "what does base\u003d\"true\" do?",
+      "revId": "9f8da2b67043ba60aff3faab6e52cb2515cd1025",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86d0dc5f_bfea68a2",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 21884,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-25T15:45:56Z",
+      "side": 1,
+      "message": "So, the idea here is that this is a single metric to look at for the YieldBetweenContentScripts experiment so that we can easily track difference.  But by itself, this isn\u0027t terribly useful, because we don\u0027t know what percentage of content scripts are greater than 50ms - in the extreme case, if only 0.000...1% of content scripts exceed that threshold, and the experiment makes a 1000x difference, that still doesn\u0027t really matter, because it affects such a low percentage of the population.\n\nNow, we actually *have* the data that would indicate the percentage of scripts that do exceed that threshold, so we can determine the actual impact here.  But it\u0027s at least worth noting the caveat here and referencing the other histograms, as well as what differentiates this from them.",
+      "revId": "9f8da2b67043ba60aff3faab6e52cb2515cd1025",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
