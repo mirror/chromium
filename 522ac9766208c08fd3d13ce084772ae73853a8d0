@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b8a78cca_20441e4d",
+        "filename": "extensions/browser/api/hid/hid_device_manager.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 292,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-08-25T08:48:36Z",
+      "side": 0,
+      "message": "It is not necessary to ask HidService for deviceInfo again here, especially it will be an IPC after mojofication. The deviceInfo can be saved in the map of HidDeviceManager.",
+      "range": {
+        "startLine": 292,
+        "startChar": 7,
+        "endLine": 292,
+        "endChar": 48
+      },
+      "revId": "522ac9766208c08fd3d13ce084772ae73853a8d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

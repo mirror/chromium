@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "314a5fd1_b09135ed",
+        "filename": "chrome/browser/BUILD.gn",
+        "patchSetId": 11
+      },
+      "lineNbr": 1690,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-08-25T08:48:36Z",
+      "side": 1,
+      "message": "Because the \"#include device/hid/public/interfaces/hid.mojom.h\" is added in hid_service.h, here it has to depend on \"//device/hid/public/interfaces\". I didn\u0027t move the shared libarary files into public/cpp so far, so I have to add the \"//device/hid\" here.\n\nIn next CL I\u0027ll create the public/cpp folder, so the deps here will be \"device/hid/public/interfaces\".",
+      "range": {
+        "startLine": 1690,
+        "startChar": 4,
+        "endLine": 1690,
+        "endChar": 19
+      },
+      "revId": "ab4a491e30ef40df86383777f37b6862dd9f1fda",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e5ae30b_e4e4a81f",
+        "filename": "device/hid/hid_service.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-08-25T08:48:36Z",
+      "side": 1,
+      "message": "We do the Clone() in here and in OnDeviceAdded/Removed. It is a preparation for the mojofication, because we will always do Clone() when passing those return-values to mojo interface after mojofication.",
+      "range": {
+        "startLine": 122,
+        "startChar": 2,
+        "endLine": 122,
+        "endChar": 76
+      },
+      "revId": "ab4a491e30ef40df86383777f37b6862dd9f1fda",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "310b64fa_84b5df5f",
+        "filename": "device/u2f/u2f_request.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-08-25T08:48:36Z",
+      "side": 1,
+      "message": "I\u0027m not sure the parameter of generated mojo-interface is \"const std::vector\u003c\u003e\" or \"std::vector\u003c\u003e\". If no const, I\u0027ll change the Clone() to std::move(). If there is const, I\u0027ll change the OnDeviceAdded() below from std::move() to Clone(). Anyway, both cases are okay in this CL. It is the same situation in HidDeviceManager and DevicePermissionsPrompt.\n\nI\u0027ll pay attention to change them when doing the mojofication in next CL.",
+      "range": {
+        "startLine": 60,
+        "startChar": 4,
+        "endLine": 60,
+        "endChar": 64
+      },
+      "revId": "ab4a491e30ef40df86383777f37b6862dd9f1fda",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
