@@ -59,6 +59,9 @@ struct AutocompleteMatchType {
 
   // Converts |type| to a string representation. Used in logging.
   static std::string ToString(AutocompleteMatchType::Type type);
+
+  // Returns true if this match type is associated with a specific URL.
+  static bool IsUrlType(AutocompleteMatchType::Type type);
 };
 
 #endif  // COMPONENTS_OMNIBOX_BROWSER_AUTOCOMPLETE_MATCH_TYPE_H_
