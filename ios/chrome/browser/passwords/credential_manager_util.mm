@@ -4,8 +4,16 @@
 
 #include "ios/chrome/browser/passwords/credential_manager_util.h"
 
+#include "components/security_state/core/security_state.h"
+#include "ios/chrome/browser/ssl/ios_security_state_tab_helper.h"
+#include "ios/chrome/browser/web/origin_security_checker.h"
 #import "ios/web/public/origin_util.h"
+#import "ios/web/public/web_state/web_state.h"
 #include "url/origin.h"
+
+#if !defined(__has_feature) || !__has_feature(objc_arc)
+#error "This file requires ARC support."
+#endif
 
 using password_manager::CredentialManagerError;
 using password_manager::CredentialInfo;
@@ -152,6 +160,47 @@ bool ParseCredentialDictionary(const base::DictionaryValue& json,
     credential->federation = url::Origin(GURL(federation));
   }
   return true;
+}
+
+security_state::SecurityLevel GetSecurityLevelForWebState(
+    web::WebState* web_state) {
+  if (!web_state) {
+    return security_state::NONE;
+  }
+  auto* client = IOSSecurityStateTabHelper::FromWebState(web_state);
+  security_state::SecurityInfo result;
+  client->GetSecurityInfo(&result);
+  return result.security_level;
+}
+
+bool WebStateContentIsSecureHTML(web::WebState* web_state) {
+  if (!web_state) {
+    return false;
+  }
+
+  if (!web_state->ContentIsHTML()) {
+    return false;
+  }
+
+  const GURL last_committed_url = web_state->GetLastCommittedURL();
+  security_state::SecurityLevel security_level =
+      GetSecurityLevelForWebState(web_state);
+
+  if (!web::IsContextSecure(last_committed_url)) {
+    return false;
+  }
+
+  // Files and localhost are considered secure, otherwise scheme must be
+  // cryptographic.
+  if (!security_state::IsSchemeCryptographic(last_committed_url) &&
+      !security_state::IsOriginLocalhostOrFile(last_committed_url)) {
+    return false;
+  }
+
+  // If scheme is not cryptographic, the origin is a file or a localhost.
+  // If scheme is cryptographic, it's needed to check SSL certificate.
+  return !security_state::IsSchemeCryptographic(last_committed_url) ||
+         security_state::IsSSLCertificateValid(security_level);
 }
 
 }  // namespace credential_manager
