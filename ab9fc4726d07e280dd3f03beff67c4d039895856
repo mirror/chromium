@@ -71,6 +71,30 @@
     },
     {
       "key": {
+        "uuid": "79762fcb_32868ea3",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/SignInPromo.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-08-25T12:33:17Z",
+      "side": 1,
+      "message": "Good catch! Yes, that\u0027s true. I think we could replace the |mWasDismissed| flag with a check for `isVisible()` if we wanted to, but I don\u0027t feel strongly about it.",
+      "parentUuid": "f7263b19_df082170",
+      "range": {
+        "startLine": 137,
+        "startChar": 0,
+        "endLine": 137,
+        "endChar": 78
+      },
+      "revId": "ab9fc4726d07e280dd3f03beff67c4d039895856",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "04ef86ae_936af5ac",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/SignInPromo.java",
         "patchSetId": 9
