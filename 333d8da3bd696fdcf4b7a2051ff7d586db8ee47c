@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7dffb2b5_a1fcd19b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/UriUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2017-08-25T21:39:27Z",
+      "side": 0,
+      "message": "nit: keep this comment?",
+      "range": {
+        "startLine": 80,
+        "startChar": 21,
+        "endLine": 80,
+        "endChar": 29
+      },
+      "revId": "333d8da3bd696fdcf4b7a2051ff7d586db8ee47c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

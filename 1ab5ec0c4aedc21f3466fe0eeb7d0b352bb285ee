@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "70c6f9ed_1855cee2",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/UriUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2017-08-25T21:39:27Z",
+      "side": 1,
+      "message": "move this to PaymentManifestVerifier.java?",
+      "range": {
+        "startLine": 17,
+        "startChar": 31,
+        "endLine": 17,
+        "endChar": 49
+      },
+      "revId": "1ab5ec0c4aedc21f3466fe0eeb7d0b352bb285ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af3df354_c9203be5",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/UriUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2017-08-25T21:39:27Z",
+      "side": 1,
+      "message": "not used anymore?",
+      "range": {
+        "startLine": 20,
+        "startChar": 32,
+        "endLine": 20,
+        "endChar": 61
+      },
+      "revId": "1ab5ec0c4aedc21f3466fe0eeb7d0b352bb285ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
