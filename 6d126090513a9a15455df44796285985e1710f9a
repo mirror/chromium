@@ -46,6 +46,30 @@
       "revId": "6d126090513a9a15455df44796285985e1710f9a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "130a47f8_e1d293b2",
+        "filename": "remoting/client/audio/audio_frame_supplier.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1152109
+      },
+      "writtenOn": "2017-08-25T19:25:31Z",
+      "side": 1,
+      "message": "That\u0027s not what const function means in C++. Const function means calling the function doesn\u0027t alter the state of the class. It has nothing to do with whether the value itself is changing.\n\nThe point of marking function const is to allow the caller mark its function const, i.e. mark the function as not altering its state.",
+      "parentUuid": "b1b7b0ff_bd9f49bb",
+      "range": {
+        "startLine": 26,
+        "startChar": 36,
+        "endLine": 26,
+        "endChar": 58
+      },
+      "revId": "6d126090513a9a15455df44796285985e1710f9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
