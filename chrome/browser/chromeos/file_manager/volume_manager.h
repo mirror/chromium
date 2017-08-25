@@ -69,7 +69,13 @@ enum MountContext {
 };
 
 // Source of a volume's data.
-enum Source { SOURCE_FILE, SOURCE_DEVICE, SOURCE_NETWORK, SOURCE_SYSTEM };
+enum Source {
+  SOURCE_FILE,
+  SOURCE_DEVICE,
+  SOURCE_NETWORK,
+  SOURCE_SMB,
+  SOURCE_SYSTEM
+};
 
 // Represents a volume (mount point) in the volume manager. Validity of the data
 // is guaranteed by the weak pointer. Simply saying, the weak pointer should be

@@ -147,6 +147,7 @@ ProvidedFileSystem::ProvidedFileSystem(
                                           notification_manager_.get())),
       watcher_queue_(1),
       weak_ptr_factory_(this) {
+  LOG(ERROR) << "*** ProvidedFileSystem::ProvidedFileSystem";
 }
 
 ProvidedFileSystem::~ProvidedFileSystem() {
@@ -170,6 +171,7 @@ void ProvidedFileSystem::SetNotificationManagerForTesting(
 
 AbortCallback ProvidedFileSystem::RequestUnmount(
     const storage::AsyncFileUtil::StatusCallback& callback) {
+  LOG(ERROR) << "*** ProvidedFileSystem::RequestUnmount";
   const int request_id = request_manager_->CreateRequest(
       REQUEST_UNMOUNT,
       std::unique_ptr<RequestManager::HandlerInterface>(
@@ -240,6 +242,7 @@ AbortCallback ProvidedFileSystem::ExecuteAction(
 AbortCallback ProvidedFileSystem::ReadDirectory(
     const base::FilePath& directory_path,
     const storage::AsyncFileUtil::ReadDirectoryCallback& callback) {
+  LOG(ERROR) << "*** ProvidedFileSystem::ReadDirectory";
   const int request_id = request_manager_->CreateRequest(
       READ_DIRECTORY,
       std::unique_ptr<RequestManager::HandlerInterface>(
