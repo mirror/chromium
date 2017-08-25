@@ -45,6 +45,7 @@ static_library("core") {
   ]
 
   deps = [
+    ":utils",
     "//base",
     "//components/autofill/core/browser",
     "//components/data_use_measurement/core",
@@ -87,6 +88,19 @@ static_library("test_support") {
   ]
 }
 
+static_library("utils") {
+  sources = [
+    "payments_validators.cc",
+    "payments_validators.h",
+  ]
+
+  deps = [
+    "//base",
+    "//third_party/re2",
+    "//url",
+  ]
+}
+
 source_set("unit_tests") {
   testonly = true
   sources = [
@@ -101,6 +115,7 @@ source_set("unit_tests") {
     "payment_method_data_unittest.cc",
     "payment_request_data_util_unittest.cc",
     "payments_profile_comparator_unittest.cc",
+    "payments_validators_unittest.cc",
     "strings_util_unittest.cc",
     "subkey_requester_unittest.cc",
   ]
@@ -113,6 +128,7 @@ source_set("unit_tests") {
     "//components/autofill/core/browser",
     "//components/autofill/core/browser:test_support",
     "//components/metrics/proto",
+    "//components/payments/core:utils",
     "//components/strings:components_strings_grit",
     "//components/ukm",
     "//components/ukm:test_support",
