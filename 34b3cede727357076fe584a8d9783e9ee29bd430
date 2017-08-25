@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "508b0b11_7b14ce04",
+        "filename": "components/arc/common/video_decode_accelerator.mojom",
+        "patchSetId": 22
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1002450
+      },
+      "writtenOn": "2017-08-25T05:18:57Z",
+      "side": 1,
+      "message": "nit: since this is another picture. I would suggest revised as:\n\nWhen the picture is ready to be displayed, the callback will be called with the id of source bitstream buffer|bitstream_id| and the Picture crop window |crop_rect|.",
+      "revId": "34b3cede727357076fe584a8d9783e9ee29bd430",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2f77ea8_7fff6497",
+        "filename": "components/arc/common/video_decode_accelerator.mojom",
+        "patchSetId": 22
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1002450
+      },
+      "writtenOn": "2017-08-25T05:18:57Z",
+      "side": 1,
+      "message": "same here.",
+      "revId": "34b3cede727357076fe584a8d9783e9ee29bd430",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
