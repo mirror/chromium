@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a1e8b87a_eb1a445d",
+        "filename": "content/browser/service_worker/service_worker_installed_scripts_sender.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-08-25T08:34:43Z",
+      "side": 1,
+      "message": "This is followed by what SWReadFromCacheJob is doing.",
+      "revId": "092d3672eeb9f3e502033db796971bb24d37cdcd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
