@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7ff6a2df_9973b573",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sdk/NetworkManager.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-08-25T22:05:49Z",
+      "side": 1,
+      "message": "I actually don\u0027t see this being used. Let\u0027s remove it?",
+      "revId": "dc81970aab549a7688a1374fc5c20f96517f06eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
