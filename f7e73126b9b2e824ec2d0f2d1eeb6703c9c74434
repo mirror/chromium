@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ae99c5c6_e052204d",
+        "filename": "content/renderer/render_widget.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 2024,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-08-25T19:04:19Z",
+      "side": 1,
+      "message": "probably should use weak_ptr_factory_.GetWeakPtr().\n\nthe difference is that this pending task won\u0027t prevent widget from shutting down. and if widget is shut down first, then the task will just be dropped.",
+      "range": {
+        "startLine": 2024,
+        "startChar": 49,
+        "endLine": 2024,
+        "endChar": 53
+      },
+      "revId": "f7e73126b9b2e824ec2d0f2d1eeb6703c9c74434",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
