@@ -117,6 +117,30 @@
     },
     {
       "key": {
+        "uuid": "a18c927b_eb18e294",
+        "filename": "ui/aura/mus/hit_test_data_provider_aura.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-08-25T22:52:33Z",
+      "side": 1,
+      "message": "+1 to creating the HitTestRegionId once, and setting the values. If that doesn\u0027t work, then the following would be better:\n  if (layer-\u003eGetPrimarySurfaceInfo()) {\n    hit_test_region-\u003eid \u003d viz::mojom::...::NewSurfaceId(...);\n  } else {\n    hit_test_region-\u003eid \u003d viz::mojom::...::NewFrameSinkId(...);\n  }",
+      "parentUuid": "935e6c5e_15c0b98e",
+      "range": {
+        "startLine": 26,
+        "startChar": 8,
+        "endLine": 26,
+        "endChar": 13
+      },
+      "revId": "7e975595fec31ed65b9a83c61bf8bda39bc1852c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bdfd6979_c9089107",
         "filename": "ui/aura/mus/hit_test_data_provider_aura_unittest.cc",
         "patchSetId": 1
