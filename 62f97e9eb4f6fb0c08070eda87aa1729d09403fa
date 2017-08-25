@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "fd539f95_d97e337e",
+        "filename": "ui/gl/gl_context.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1002358
+      },
+      "writtenOn": "2017-08-25T18:10:14Z",
+      "side": 1,
+      "message": "While I agree in principle, we don\u0027t know the output color space when we do this copy.\n\nIn particular, we could be doing this because we\u0027re going to draw to a canvas (which would require the dst be sRGB) or because we\u0027re drawing to the compositor (which would require the dst be the monitor space).\n\nWhen we execute this code, we don\u0027t know which of these paths we\u0027re on, so we can\u0027t make a choice.\n\nIt /may/ be possible to clean up all of the callers, to have them inform, via GL, which color space they want the texture converted to, but that\u0027s a large project that I\u0027m not going to take on.",
+      "parentUuid": "16785cf2_4d006025",
+      "range": {
+        "startLine": 191,
+        "startChar": 34,
+        "endLine": 191,
+        "endChar": 37
+      },
+      "revId": "62f97e9eb4f6fb0c08070eda87aa1729d09403fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7432dec1_ece699dc",
         "filename": "ui/gl/gl_image_io_surface.h",
         "patchSetId": 5
@@ -36,6 +60,30 @@
       "writtenOn": "2017-08-25T17:53:23Z",
       "side": 1,
       "message": "but it\u0027s not what we actually do in the rest of the video code.\nWe are trying to move everything to default to bt709, since that\u0027s far more common these days.",
+      "range": {
+        "startLine": 105,
+        "startChar": 47,
+        "endLine": 105,
+        "endChar": 57
+      },
+      "revId": "62f97e9eb4f6fb0c08070eda87aa1729d09403fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4cd09d7c_8755347a",
+        "filename": "ui/gl/gl_image_io_surface.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1002358
+      },
+      "writtenOn": "2017-08-25T18:10:14Z",
+      "side": 1,
+      "message": "I\u0027d prefer not the change the default behavior just now, in case it breaks things. I\u0027m happy to make this change as a follow-up.",
+      "parentUuid": "7432dec1_ece699dc",
       "range": {
         "startLine": 105,
         "startChar": 47,
