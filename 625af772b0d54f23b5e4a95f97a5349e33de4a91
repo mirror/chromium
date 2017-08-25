@@ -1,0 +1,140 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cfe94120_ef221c4a",
+        "filename": "ash/shelf/app_list_button.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 553,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-25T15:33:48Z",
+      "side": 1,
+      "message": "nit: ash:: not needed, extra parens not needed",
+      "revId": "625af772b0d54f23b5e4a95f97a5349e33de4a91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e39eb73_d8ff966c",
+        "filename": "ash/shelf/app_list_button.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 600,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-25T15:33:48Z",
+      "side": 1,
+      "message": "This comment just repeats what the conditional is doing. Remove it.",
+      "revId": "625af772b0d54f23b5e4a95f97a5349e33de4a91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae2afa6c_07f5df67",
+        "filename": "ash/shelf/app_list_button.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 604,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-25T15:33:48Z",
+      "side": 1,
+      "message": "If \"value prop accepted\" means \"setup started\" why do we return \"active\" before the user has finished setup? Does \"active\" really mean that there\u0027s some kind of dialog open?\n\nIf this code is correct then the function needs a better name (and a better comment).",
+      "revId": "625af772b0d54f23b5e4a95f97a5349e33de4a91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8df424a5_981b4d0f",
+        "filename": "ash/shelf/app_list_button.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-25T15:33:48Z",
+      "side": 1,
+      "message": "Since this means \"setup started\" how about you call the variable and the methods \"voice_interaction_setup_started_\" or \"_setup_initiated_\"?",
+      "revId": "625af772b0d54f23b5e4a95f97a5349e33de4a91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "901f1a59_8942ac7d",
+        "filename": "ash/shelf/app_list_button_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-25T15:33:48Z",
+      "side": 1,
+      "message": "super-nit: \"Enable\"\n\n(Also below)",
+      "revId": "625af772b0d54f23b5e4a95f97a5349e33de4a91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03c9b452_7fbd7a03",
+        "filename": "ash/shelf/app_list_button_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-25T15:33:48Z",
+      "side": 1,
+      "message": "How does the user get into this state? Is it something like this?\n\n\"Simulate a user who has already done setup, but then disabled voice interaction in settings.\"",
+      "revId": "625af772b0d54f23b5e4a95f97a5349e33de4a91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8267de46_f7d67c7f",
+        "filename": "ash/shelf/app_list_button_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-25T15:33:48Z",
+      "side": 1,
+      "message": "This isn\u0027t helpful. The assert below says the count should be 0. But why? Is it because being disabled is more important than \"value prop\"?",
+      "revId": "625af772b0d54f23b5e4a95f97a5349e33de4a91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "571d9095_dafe347d",
+        "filename": "ash/shelf/app_list_button_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-25T15:33:48Z",
+      "side": 1,
+      "message": "nit: \"being accepted\"",
+      "revId": "625af772b0d54f23b5e4a95f97a5349e33de4a91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
