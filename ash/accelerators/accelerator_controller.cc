@@ -603,6 +603,18 @@ void HandleToggleVoiceInteraction(const ui::Accelerator& accelerator) {
         base::UserMetricsAction("VoiceInteraction.Started.Assistant"));
   }
 
+  // Show a toast if the active user is not primary.
+  if (Shell::Get()->session_controller()->GetPrimaryUserSession() !=
+      Shell::Get()->session_controller()->GetUserSession(0)) {
+    ash::ToastData toast(
+        "voice_interaction_secondary_user",
+        l10n_util::GetStringUTF16(
+            IDS_ASH_VOICE_INTERACTION_SECONDARY_USER_TOAST_MESSAGE),
+        2500, base::Optional<base::string16>());
+    ash::Shell::Get()->toast_manager()->Show(toast);
+    return;
+  }
+
   // Show a toast if voice interaction is disabled due to unsupported locales.
   if (!chromeos::switches::IsVoiceInteractionLocalesSupported()) {
     ash::ToastData toast(
@@ -613,6 +625,7 @@ void HandleToggleVoiceInteraction(const ui::Accelerator& accelerator) {
     ash::Shell::Get()->toast_manager()->Show(toast);
     return;
   }
+
   Shell::Get()->app_list()->ToggleVoiceInteractionSession();
 }
 
