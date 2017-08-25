@@ -1,0 +1,169 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e6d45373_2037f939",
+        "filename": "content/child/child_url_loader_factory_getter.h",
+        "patchSetId": 25
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-25T06:16:43Z",
+      "side": 1,
+      "message": "I would personally suggest just making this class movable rather than using unique_ptr, but I don\u0027t feel strongly about it\n\n(then Bind can also null out the fields, and there (hopefully) won\u0027t be confusion about whether or not this has been bound)",
+      "revId": "5fb487b46fd890b2a990b6dab509c3167aad6ec8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9e50948_70736088",
+        "filename": "content/child/service_worker/service_worker_provider_context.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-25T06:16:43Z",
+      "side": 1,
+      "message": "FWIW, the advice in https://chromium.googlesource.com/chromium/src/+/0ae1a5d38aa08895e579f1b87263fb2a13c19612/base/containers/README.md would probably discourage the use of std::unordered_map here. We might even be able to just use an unsorted vector, depending on how big the container usually is.",
+      "revId": "5fb487b46fd890b2a990b6dab509c3167aad6ec8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb281430_087bbc2d",
+        "filename": "content/child/service_worker/service_worker_provider_context.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-25T06:16:43Z",
+      "side": 1,
+      "message": "1) Please omit types when using std::make_pair\n2) However, I think this can just use emplace() and avoid using std::make_pair at all",
+      "range": {
+        "startLine": 200,
+        "startChar": 36,
+        "endLine": 202,
+        "endChar": 57
+      },
+      "revId": "5fb487b46fd890b2a990b6dab509c3167aad6ec8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31af1426_77b585aa",
+        "filename": "content/child/service_worker/service_worker_provider_context.h",
+        "patchSetId": 25
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-25T06:16:43Z",
+      "side": 1,
+      "message": "This isn\u0027t used in the header? Let\u0027s move to the .cc file.",
+      "revId": "5fb487b46fd890b2a990b6dab509c3167aad6ec8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f35ed26_ef0950fb",
+        "filename": "content/renderer/service_worker/service_worker_fetch_context_impl.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-25T06:16:43Z",
+      "side": 1,
+      "message": "Note that this doesn\u0027t actually null out the unique_ptr: we\u0027d have to move it into a stack variable and then call Bind().\n\nPerhaps just make this class movable and don\u0027t use unique_ptr; Bind() can assert that it\u0027s only called once instead.",
+      "revId": "5fb487b46fd890b2a990b6dab509c3167aad6ec8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94de8141_095f6a0a",
+        "filename": "content/renderer/service_worker/service_worker_fetch_context_impl.h",
+        "patchSetId": 25
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-25T06:16:43Z",
+      "side": 1,
+      "message": "It might be worth mentioning that this is consumed on the worker thread.",
+      "revId": "5fb487b46fd890b2a990b6dab509c3167aad6ec8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "707ddfbf_f4549516",
+        "filename": "content/renderer/service_worker/worker_fetch_context_impl.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-25T06:16:43Z",
+      "side": 1,
+      "message": "Is it necessary to use unique_ptr here? I think thread-affinity isn\u0027t locked in until we call Bind()?",
+      "revId": "5fb487b46fd890b2a990b6dab509c3167aad6ec8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83a61cc8_58dc05a8",
+        "filename": "content/renderer/service_worker/worker_fetch_context_impl.h",
+        "patchSetId": 25
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-25T06:16:43Z",
+      "side": 1,
+      "message": "Similar comment about documenting that this is to pass things from main to worker thread, and not using unique_ptr",
+      "revId": "5fb487b46fd890b2a990b6dab509c3167aad6ec8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80dda510_a05c0bef",
+        "filename": "content/renderer/shared_worker/embedded_shared_worker_stub.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-25T06:16:43Z",
+      "side": 1,
+      "message": "Nit: this isn\u0027t new but consider writing auto here",
+      "range": {
+        "startLine": 283,
+        "startChar": 2,
+        "endLine": 283,
+        "endChar": 41
+      },
+      "revId": "5fb487b46fd890b2a990b6dab509c3167aad6ec8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
