@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "42868fef_09d8e04a",
+        "filename": "ui/file_manager/file_manager/foreground/js/selection_menu_controller.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1166720
+      },
+      "writtenOn": "2017-08-25T09:55:19Z",
+      "side": 1,
+      "message": "Do we need to describe this more in detail?\n(I am now examining the exact mechanism of \"flashing\".)",
+      "revId": "5cef0329dcf33cc48b4899124df72799c66ddbdc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
