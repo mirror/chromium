@@ -22,6 +22,30 @@
       "revId": "08b3db8db3ad23ec77cb39f86faf68ff0c6326ff",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b0adb3b_e90c2a37",
+        "filename": "chrome/browser/ui/views/content_setting_bubble_contents.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 581,
+      "author": {
+        "id": 1161819
+      },
+      "writtenOn": "2017-08-25T15:44:50Z",
+      "side": 1,
+      "message": "Yes. That was addressed in my message explaining the changes:\n\n\"According to the UX team, there should never be a case where both the \"Manage\" button and \"Help\" icon are present. If that ever occurs, the CreateExtraView() function will need to change.\"",
+      "parentUuid": "84d94023_a3258a8c",
+      "range": {
+        "startLine": 581,
+        "startChar": 6,
+        "endLine": 581,
+        "endChar": 70
+      },
+      "revId": "08b3db8db3ad23ec77cb39f86faf68ff0c6326ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
