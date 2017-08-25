@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "6026063c_8c93164c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 11
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1115863
+      },
+      "writtenOn": "2017-08-25T02:40:40Z",
+      "side": 1,
+      "message": "I\u0027m neutral on this. It may be helpful to mention a bug explicitly.",
+      "parentUuid": "e83bcab6_bb9b1922",
+      "revId": "57e8b2312cea7abc4ab1d1b4805169388d020873",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "047f54e1_124360d7",
         "filename": "/COMMIT_MSG",
         "patchSetId": 11
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-25T02:28:48Z",
       "side": 1,
       "message": "only the tests?\nI think making the stringifier descriptive is mainly for readability for developers/users.",
+      "revId": "57e8b2312cea7abc4ab1d1b4805169388d020873",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "656b7dc4_be938be7",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 11
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1115863
+      },
+      "writtenOn": "2017-08-25T02:40:40Z",
+      "side": 1,
+      "message": "What\u0027s your recommendation? I don\u0027t think developers (even us) dumping ASTs frequently other than tests.",
+      "parentUuid": "047f54e1_124360d7",
       "revId": "57e8b2312cea7abc4ab1d1b4805169388d020873",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
