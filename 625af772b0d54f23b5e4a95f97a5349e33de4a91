@@ -107,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "0ba78620_365f16e7",
+        "filename": "ash/shelf/app_list_button.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 604,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-25T23:57:33Z",
+      "side": 1,
+      "message": "Maybe the method should be something like UseVoiceInteractionStyle()? Right now it sounds like the user is currently doing something with voice. If you can\u0027t rename it for some reason the comment needs to be better.",
+      "parentUuid": "6f066744_918c5a46",
+      "revId": "625af772b0d54f23b5e4a95f97a5349e33de4a91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8df424a5_981b4d0f",
         "filename": "ash/shelf/app_list_button.h",
         "patchSetId": 2
