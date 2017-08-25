@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8845e55a_1892cc93",
+        "filename": "chrome/android/third_party/widget_bottomsheet_base/java/src/org/chromium/chrome/browser/widget/bottomsheet/base/BottomNavigationItemView.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1115960
+      },
+      "writtenOn": "2017-08-25T21:25:33Z",
+      "side": 1,
+      "message": "forked*",
+      "range": {
+        "startLine": 41,
+        "startChar": 3,
+        "endLine": 41,
+        "endChar": 9
+      },
+      "revId": "32945961f0efdbe354768acb756d9fdd727e7f64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "abb90791_5cab2750",
+        "filename": "chrome/android/third_party/widget_bottomsheet_base/java/src/org/chromium/chrome/browser/widget/bottomsheet/base/BottomNavigationMenuView.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1115960
+      },
+      "writtenOn": "2017-08-25T21:25:33Z",
+      "side": 1,
+      "message": "switch to the forked version",
+      "range": {
+        "startLine": 28,
+        "startChar": 30,
+        "endLine": 28,
+        "endChar": 38
+      },
+      "revId": "32945961f0efdbe354768acb756d9fdd727e7f64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
