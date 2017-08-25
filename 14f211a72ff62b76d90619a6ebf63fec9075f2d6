@@ -46,6 +46,30 @@
       "revId": "14f211a72ff62b76d90619a6ebf63fec9075f2d6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29915a73_4ba95424",
+        "filename": "third_party/WebKit/Source/modules/canvas2d/CanvasRenderingContext2DTest.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1339,
+      "author": {
+        "id": 1203794
+      },
+      "writtenOn": "2017-08-25T14:55:19Z",
+      "side": 1,
+      "message": "On another thought, it also might be the effect of applying a filter on the image (as Skia has issues with the right and bottom pixels when SkHighQualityFilter is used), even though as long as I know the code path for this test does not have a resize operation. Anyway, having some error is a premul/unpremul turnaround is allowed by the spec.",
+      "parentUuid": "6240b097_fcffbb5f",
+      "range": {
+        "startLine": 1339,
+        "startChar": 40,
+        "endLine": 1339,
+        "endChar": 42
+      },
+      "revId": "14f211a72ff62b76d90619a6ebf63fec9075f2d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
