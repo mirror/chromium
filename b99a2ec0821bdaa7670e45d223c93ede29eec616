@@ -22,6 +22,30 @@
       "revId": "b99a2ec0821bdaa7670e45d223c93ede29eec616",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f04e9af6_517fbd6a",
+        "filename": "services/ui/ws/window_tree.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1469,
+      "author": {
+        "id": 1211635
+      },
+      "writtenOn": "2017-08-25T00:17:09Z",
+      "side": 1,
+      "message": "Do you mean only WM is allowed to see windows from other clients? I thought that was the case but found that when we do WindowTree::Embed, e.g. when we embed a renderer to the browser, that renderer is seeing browser\u0027s window (seems like only one of them tho) when we initialize the WindowTree for that new renderer and WindowTree::GetUnknownWindowsFrom (https://cs.chromium.org/chromium/src/services/ui/ws/window_tree.cc?type\u003dcs\u0026q\u003dwindow_tree.cc\u0026l\u003d1219) is being called. I\u0027m not sure if this is the intended behavior for embedding or a bug?",
+      "parentUuid": "e0fd099d_8e3a18bf",
+      "range": {
+        "startLine": 1469,
+        "startChar": 6,
+        "endLine": 1469,
+        "endChar": 35
+      },
+      "revId": "b99a2ec0821bdaa7670e45d223c93ede29eec616",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

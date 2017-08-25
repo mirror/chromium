@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "6cddc57c_cddfe229",
+        "filename": "services/ui/ws/window_manager_client_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 392,
+      "author": {
+        "id": 1211635
+      },
+      "writtenOn": "2017-08-25T00:17:09Z",
+      "side": 1,
+      "message": "Right now window manager is being treated the same as other clients. For windows that all clients created themselves, high bits are only valid after we set them to WT::id_ in WT (1 for WM). Could you explain why we need to special case WM here?",
+      "parentUuid": "24b523ce_7f81b34f",
+      "range": {
+        "startLine": 392,
+        "startChar": 31,
+        "endLine": 392,
+        "endChar": 40
+      },
+      "revId": "0e2cc9a6cd3def87cb99e4d9b3954b8e65e2e275",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6d825b86_25f634fb",
         "filename": "services/ui/ws/window_tree.h",
         "patchSetId": 2
@@ -132,6 +156,30 @@
       "side": 1,
       "message": "Keeping both is confusing and error prone. It\u0027s probably ok for tests to use WindowIdToTransportId, but I would rather we didn\u0027t have it.",
       "parentUuid": "35347fad_6c947650",
+      "range": {
+        "startLine": 431,
+        "startChar": 2,
+        "endLine": 431,
+        "endChar": 41
+      },
+      "revId": "0e2cc9a6cd3def87cb99e4d9b3954b8e65e2e275",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5351e64e_cdb7c6f3",
+        "filename": "services/ui/ws/window_tree.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 431,
+      "author": {
+        "id": 1211635
+      },
+      "writtenOn": "2017-08-25T00:17:09Z",
+      "side": 1,
+      "message": "How about moving WindowIdToTransportId to be only in tests (maybe test_utils?) as a general method for them to convert WindowId to Id? And this ClientWindowIdToTransportId will only be used in WindowTree. So that we don\u0027t have to also pass WindowTree::id_ to ClientWindowIdToTransportId in tests, and they are not using WindowIdToTransportId before sending msgs back to clients like the way WindowTree is using it.",
+      "parentUuid": "4bf719ea_f0ae797a",
       "range": {
         "startLine": 431,
         "startChar": 2,
