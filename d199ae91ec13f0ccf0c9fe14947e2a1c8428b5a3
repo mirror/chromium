@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ed834cb2_8076230d",
+        "filename": "chrome/common/media_router/media_source_helper.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-08-25T02:29:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1ffe4a8b_4fc0b044",
+      "revId": "d199ae91ec13f0ccf0c9fe14947e2a1c8428b5a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c89a3587_b27cae7b",
         "filename": "chrome/common/media_router/media_source_helper.cc",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "d199ae91ec13f0ccf0c9fe14947e2a1c8428b5a3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1330ff7b_63172ac4",
+        "filename": "chrome/common/media_router/media_source_helper.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-08-25T02:29:11Z",
+      "side": 1,
+      "message": "Done. Seems safe enough for MediaSource::url() to return a const ref since MediaSource is supposed to be immutable. Not changing it in this patch though.",
+      "parentUuid": "c89a3587_b27cae7b",
+      "revId": "d199ae91ec13f0ccf0c9fe14947e2a1c8428b5a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
