@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c956ede9_9d855e82",
+        "filename": "PRESUBMIT.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 1549,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-25T18:25:14Z",
+      "side": 1,
+      "message": "Let\u0027s make the list of invalid json files tracked in a common place? There\u0027s already stuff at https://cs.chromium.org/chromium/src/PRESUBMIT.py?rcl\u003d8aef79bb2833de9688a79fe1060393457eab4483\u0026l\u003d1397 for this.",
+      "revId": "8bef2654d51b5c0f725fdd714ae79a4cad233a9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
