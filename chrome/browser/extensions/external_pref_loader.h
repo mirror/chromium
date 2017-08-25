@@ -13,9 +13,9 @@
 #include "base/scoped_observer.h"
 #include "base/values.h"
 #include "chrome/browser/extensions/external_loader.h"
-#include "components/browser_sync/profile_sync_service.h"
-#include "components/sync/driver/sync_service_observer.h"
-#include "components/sync_preferences/pref_service_syncable_observer.h"
+//#include "components/browser_sync/profile_sync_service.h"
+//#include "components/sync/driver/sync_service_observer.h"
+//#include "components/sync_preferences/pref_service_syncable_observer.h"
 
 class Profile;
 
@@ -29,9 +29,10 @@ namespace extensions {
 // look up which external extensions are registered.
 // Instances of this class are expected to be created and destroyed on the UI
 // thread and they are expecting public method calls from the UI thread.
-class ExternalPrefLoader : public ExternalLoader,
-                           public sync_preferences::PrefServiceSyncableObserver,
-                           public syncer::SyncServiceObserver {
+class ExternalPrefLoader : public ExternalLoader//,
+//                           public sync_preferences::PrefServiceSyncableObserver,
+//                           public syncer::SyncServiceObserver
+{
  public:
   enum Options {
     NONE = 0,
@@ -72,6 +73,8 @@ class ExternalPrefLoader : public ExternalLoader,
   friend class base::RefCountedThreadSafe<ExternalLoader>;
   friend class ExternalTestingLoader;
 
+  class PrioritySyncReadyWaiter;
+
   // Extracts extension information from a json file serialized by |serializer|.
   // |path| is only used for informational purposes (outputted when an error
   // occurs). An empty dictionary is returned in case of failure (e.g. invalid
@@ -79,12 +82,6 @@ class ExternalPrefLoader : public ExternalLoader,
   static std::unique_ptr<base::DictionaryValue> ExtractExtensionPrefs(
       base::ValueDeserializer* deserializer,
       const base::FilePath& path);
-
-  // sync_preferences::PrefServiceSyncableObserver:
-  void OnIsSyncingChanged() override;
-
-  // syncer::SyncServiceObserver
-  void OnStateChanged(syncer::SyncService* sync) override;
 
   // If priority sync ready posts LoadOnFileThread and return true.
   bool PostLoadIfPrioritySyncReady();
@@ -110,6 +107,8 @@ class ExternalPrefLoader : public ExternalLoader,
   // Must be called from the File thread.
   void ReadStandaloneExtensionPrefFiles(base::DictionaryValue* prefs);
 
+  void PrioritySyncReadyWaitComplete(PrioritySyncReadyWaiter* waiter);
+
   // The path (coresponding to |base_path_id_| containing the json files
   // describing which extensions to load.
   base::FilePath base_path_;
@@ -118,10 +117,7 @@ class ExternalPrefLoader : public ExternalLoader,
   // Needed for waiting for waiting priority sync.
   Profile* profile_;
 
-  // Used for registering observer for sync_preferences::PrefServiceSyncable.
-  ScopedObserver<sync_preferences::PrefServiceSyncable,
-                 sync_preferences::PrefServiceSyncableObserver>
-      syncable_pref_observer_;
+  std::vector<std::unique_ptr<PrioritySyncReadyWaiter>> pending_waiter_list_;
 
   DISALLOW_COPY_AND_ASSIGN(ExternalPrefLoader);
 };

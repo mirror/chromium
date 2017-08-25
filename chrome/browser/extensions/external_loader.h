@@ -57,7 +57,7 @@ class ExternalLoader : public base::RefCountedThreadSafe<ExternalLoader> {
   virtual ~ExternalLoader();
 
   // Notifies the provider that the list of extensions has been loaded.
-  virtual void LoadFinished();
+  virtual void LoadFinished(std::unique_ptr<base::DictionaryValue> prefs);
 
   // Notifies the provider that the list of extensions has been updated.
   virtual void OnUpdated(std::unique_ptr<base::DictionaryValue> updated_prefs);
@@ -71,7 +71,7 @@ class ExternalLoader : public base::RefCountedThreadSafe<ExternalLoader> {
   // barriers.
   // TODO(lazyboy): To avoid |prefs_| getting unexpectedly overwritten before it
   // is consumed, consider passing the prefs directly in LoadFinished().
-  std::unique_ptr<base::DictionaryValue> prefs_;
+//  std::unique_ptr<base::DictionaryValue> prefs_;
 
  private:
   friend class base::RefCountedThreadSafe<ExternalLoader>;

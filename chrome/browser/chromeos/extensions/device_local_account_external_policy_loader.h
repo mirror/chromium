@@ -26,6 +26,7 @@ namespace chromeos {
 // this class caches them, allowing for offline installation.
 class DeviceLocalAccountExternalPolicyLoader
     : public extensions::ExternalLoader,
+      //public base::RefCountedThreadSafe<DeviceLocalAccountExternalPolicyLoader>,
       public policy::CloudPolicyStore::Observer,
       public ExternalCache::Delegate {
  public:
@@ -71,6 +72,8 @@ class DeviceLocalAccountExternalPolicyLoader
   policy::CloudPolicyStore* store_;
   const base::FilePath cache_dir_;
   std::unique_ptr<ExternalCache> external_cache_;
+
+  std::unique_ptr<base::DictionaryValue> prefs_;
 
   DISALLOW_COPY_AND_ASSIGN(DeviceLocalAccountExternalPolicyLoader);
 };
