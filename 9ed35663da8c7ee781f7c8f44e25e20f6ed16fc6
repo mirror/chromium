@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f2b9082a_4e312391",
+        "filename": "content/browser/renderer_host/media/audio_input_device_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1201454
+      },
+      "writtenOn": "2017-08-25T08:57:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "96450d79_7ef4ed82",
+      "range": {
+        "startLine": 142,
+        "startChar": 15,
+        "endLine": 142,
+        "endChar": 16
+      },
+      "revId": "9ed35663da8c7ee781f7c8f44e25e20f6ed16fc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "15a8aab3_abf91119",
         "filename": "content/browser/renderer_host/media/audio_input_device_manager.h",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "9ed35663da8c7ee781f7c8f44e25e20f6ed16fc6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df42ac1a_ff303d58",
+        "filename": "content/browser/renderer_host/media/audio_input_device_manager.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1201454
+      },
+      "writtenOn": "2017-08-25T08:57:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "15a8aab3_abf91119",
+      "range": {
+        "startLine": 76,
+        "startChar": 9,
+        "endLine": 76,
+        "endChar": 35
+      },
+      "revId": "9ed35663da8c7ee781f7c8f44e25e20f6ed16fc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
