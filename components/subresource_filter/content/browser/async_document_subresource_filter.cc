@@ -24,34 +24,41 @@ ActivationState ComputeActivationState(
     const ActivationState& parent_activation_state,
     const MemoryMappedRuleset* ruleset) {
   DCHECK(ruleset);
+
+  auto compute_activaton_state = [&]() {
+    IndexedRulesetMatcher matcher(ruleset->data(), ruleset->length());
+    ActivationState activation_state = parent_activation_state;
+    if (activation_state.filtering_disabled_for_document)
+      return activation_state;
+
+    // TODO(pkalinnikov): Match several activation types in a batch.
+    if (matcher.ShouldDisableFilteringForDocument(
+            document_url, parent_document_origin,
+            url_pattern_index::proto::ACTIVATION_TYPE_DOCUMENT)) {
+      activation_state.filtering_disabled_for_document = true;
+    } else if (!activation_state.generic_blocking_rules_disabled &&
+               matcher.ShouldDisableFilteringForDocument(
+                   document_url, parent_document_origin,
+                   url_pattern_index::proto::ACTIVATION_TYPE_GENERICBLOCK)) {
+      activation_state.generic_blocking_rules_disabled = true;
+    }
+    return activation_state;
+  };
+
   SCOPED_UMA_HISTOGRAM_MICRO_TIMER(
       "SubresourceFilter.DocumentLoad.Activation.WallDuration");
   SCOPED_UMA_HISTOGRAM_MICRO_THREAD_TIMER(
       "SubresourceFilter.DocumentLoad.Activation.CPUDuration");
+
   if (parent_document_origin.unique()) {
     SCOPED_UMA_HISTOGRAM_MICRO_TIMER(
         "SubresourceFilter.PageLoad.Activation.WallDuration");
     SCOPED_UMA_HISTOGRAM_MICRO_THREAD_TIMER(
         "SubresourceFilter.PageLoad.Activation.CPUDuration");
+    return compute_activaton_state();
+  } else {
+    return compute_activaton_state();
   }
-
-  IndexedRulesetMatcher matcher(ruleset->data(), ruleset->length());
-  ActivationState activation_state = parent_activation_state;
-  if (activation_state.filtering_disabled_for_document)
-    return activation_state;
-
-  // TODO(pkalinnikov): Match several activation types in a batch.
-  if (matcher.ShouldDisableFilteringForDocument(
-          document_url, parent_document_origin,
-          url_pattern_index::proto::ACTIVATION_TYPE_DOCUMENT)) {
-    activation_state.filtering_disabled_for_document = true;
-  } else if (!activation_state.generic_blocking_rules_disabled &&
-             matcher.ShouldDisableFilteringForDocument(
-                 document_url, parent_document_origin,
-                 url_pattern_index::proto::ACTIVATION_TYPE_GENERICBLOCK)) {
-    activation_state.generic_blocking_rules_disabled = true;
-  }
-  return activation_state;
 }
 
 // AsyncDocumentSubresourceFilter::InitializationParams ------------------------
