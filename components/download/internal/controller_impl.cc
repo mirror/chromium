@@ -79,7 +79,7 @@ ControllerImpl::ControllerImpl(
     std::unique_ptr<DownloadDriver> driver,
     std::unique_ptr<Model> model,
     std::unique_ptr<DeviceStatusListener> device_status_listener,
-    NavigationMonitor* navigation_monitor,
+    NavigationMonitorImpl* navigation_monitor,
     std::unique_ptr<Scheduler> scheduler,
     std::unique_ptr<TaskScheduler> task_scheduler,
     std::unique_ptr<FileMonitor> file_monitor,
@@ -90,6 +90,7 @@ ControllerImpl::ControllerImpl(
       driver_(std::move(driver)),
       model_(std::move(model)),
       device_status_listener_(std::move(device_status_listener)),
+      navigation_monitor_(navigation_monitor),
       scheduler_(std::move(scheduler)),
       task_scheduler_(std::move(task_scheduler)),
       file_monitor_(std::move(file_monitor)),
@@ -108,6 +109,8 @@ void ControllerImpl::Initialize(const base::Closure& callback) {
   model_->Initialize(this);
   file_monitor_->Initialize(base::Bind(&ControllerImpl::OnFileMonitorReady,
                                        weak_ptr_factory_.GetWeakPtr()));
+  navigation_monitor_->Configure(config_->navigation_completion_delay);
+  navigation_monitor_->Start(this);
 }
 
 Controller::State ControllerImpl::GetState() {
@@ -757,7 +760,8 @@ void ControllerImpl::UpdateDriverState(Entry* entry) {
       entry->scheduling_params.priority != SchedulingParams::Priority::UI;
   bool entry_paused = entry->state == Entry::State::PAUSED;
 
-  bool pause_driver = entry_paused || force_pause || !meets_device_criteria;
+  bool pause_driver = entry_paused || force_pause || !meets_device_criteria ||
+                      ShouldBlockDownloadOnNavigation(entry);
 
   if (pause_driver) {
     if (driver_entry.has_value())
@@ -978,6 +982,28 @@ void ControllerImpl::ActivateMoreDownloads() {
   }
 
   scheduler_->Reschedule(scheduling_candidates);
+}
+
+void ControllerImpl::OnNavigationEvent(NavigationEvent event) {
+  if (controller_state_ != State::READY)
+    return;
+
+  UpdateDriverStates();
+}
+
+bool ControllerImpl::ShouldBlockDownloadOnNavigation(Entry* entry) {
+  if (!navigation_monitor_->IsNavigationInProgress())
+    return false;
+
+  bool pause_download =
+      entry->scheduling_params.priority <= SchedulingParams::Priority::NORMAL;
+
+  base::Optional<DriverEntry> driver_entry = driver_->Find(entry->guid);
+  if (driver_entry.has_value() && !driver_entry->accept_range) {
+    pause_download = false;
+  }
+
+  return pause_download;
 }
 
 void ControllerImpl::HandleExternalDownload(const std::string& guid,

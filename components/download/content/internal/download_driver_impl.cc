@@ -83,6 +83,10 @@ DriverEntry DownloadDriverImpl::CreateDriverEntry(
           : item->GetFullPath();
   entry.completion_time = item->GetEndTime();
   entry.response_headers = item->GetResponseHeaders();
+  entry.accept_range =
+      entry.response_headers.get() &&
+      entry.response_headers->HasHeaderValue("Accept-Ranges", "bytes");
+
   entry.url_chain = item->GetUrlChain();
   return entry;
 }

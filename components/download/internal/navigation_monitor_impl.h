@@ -5,7 +5,9 @@
 #ifndef COMPONENTS_DOWNLOAD_INTERNAL_NAVIGATION_MONITOR_IMPL_H_
 #define COMPONENTS_DOWNLOAD_INTERNAL_NAVIGATION_MONITOR_IMPL_H_
 
+#include "base/cancelable_callback.h"
 #include "base/macros.h"
+#include "base/memory/weak_ptr.h"
 #include "components/download/public/navigation_monitor.h"
 
 namespace download {
@@ -19,8 +21,26 @@ class NavigationMonitorImpl : public NavigationMonitor {
   void Start(NavigationMonitor::Observer* observer) override;
   void OnNavigationEvent(NavigationEvent event) override;
 
+  // Sets the delay from the config.
+  void Configure(base::TimeDelta navigation_completion_delay);
+
+  // Called to determine whether the system is idle or busy with navigations.
+  // Until a significant delay has elapsed after the last finish navigation
+  // signal, this function will return true.
+  bool IsNavigationInProgress();
+
  private:
-  NavigationMonitor::Observer* observer_ = nullptr;
+  void ResetNavigationFlag();
+
+  NavigationMonitor::Observer* observer_;
+
+  bool navigation_in_progress_;
+
+  base::CancelableClosure reset_navigation_callback_;
+
+  base::TimeDelta navigation_completion_delay_;
+
+  base::WeakPtrFactory<NavigationMonitorImpl> weak_ptr_factory_;
 
   DISALLOW_COPY_AND_ASSIGN(NavigationMonitorImpl);
 };
