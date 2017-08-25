@@ -388,6 +388,30 @@
       "revId": "f8e00b49d7eacd0e596737db1498fb7c13dfaa58",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d68d8ad_05954a8f",
+        "filename": "components/arc/common/video_encode_accelerator.mojom",
+        "patchSetId": 19
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1002450
+      },
+      "writtenOn": "2017-08-25T05:59:49Z",
+      "side": 1,
+      "message": "Unfortunately, IIUC, this is the case for the current VDA implementation. There is not much we can do for errors but destroy the VDA. \n\nChanging the VDA interface will be a huge task. But I think VDA2.0 is currently being designed. Pawel should know more about it.",
+      "parentUuid": "b635b97c_349e518f",
+      "range": {
+        "startLine": 144,
+        "startChar": 0,
+        "endLine": 148,
+        "endChar": 52
+      },
+      "revId": "f8e00b49d7eacd0e596737db1498fb7c13dfaa58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
