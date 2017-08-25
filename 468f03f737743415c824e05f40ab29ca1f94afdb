@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "cf6a7efc_907071a2",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/omaha/UpdateMenuItemHelper.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 427,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-08-25T19:18:08Z",
+      "side": 1,
+      "message": "Ok, 50 buckets with linear spacing SGTM.  If you want to keep the other histogram around for now, I would hold off on marking it as \u003cobsolete\u003e.  Instead, I\u0027d add a note in the summary that the histogram should be deprecated in M6X, for an appropriate value of X :)",
+      "parentUuid": "18a6fb3a_75113ce2",
+      "range": {
+        "startLine": 427,
+        "startChar": 77,
+        "endLine": 427,
+        "endChar": 80
+      },
+      "revId": "468f03f737743415c824e05f40ab29ca1f94afdb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cb74edc6_bde7ee5b",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 5
@@ -78,6 +102,24 @@
       "side": 1,
       "message": "hmm, we are talking about internal storage only, not sdcard.\n\nMay be this:\n(Android-only) The amount of internal memory storage that is free on the file system and available to the applications when the InfoBar or update menu item is shown.",
       "parentUuid": "cb74edc6_bde7ee5b",
+      "revId": "468f03f737743415c824e05f40ab29ca1f94afdb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06b69f15_497751de",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 24362,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-08-25T19:18:08Z",
+      "side": 1,
+      "message": "SG, thanks.",
+      "parentUuid": "02247134_b0809ef5",
       "revId": "468f03f737743415c824e05f40ab29ca1f94afdb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
