@@ -5244,14 +5244,14 @@ void WebContentsImpl::SetAsFocusedWebContentsIfNecessary() {
 
 void WebContentsImpl::SetFocusedFrame(FrameTreeNode* node,
                                       SiteInstance* source) {
-  SetAsFocusedWebContentsIfNecessary();
-
   frame_tree_.SetFocusedFrame(node, source);
 
-  WebContentsImpl* inner_contents = node_.GetInnerWebContentsInFrame(node);
-
-  WebContentsImpl* contents_to_focus = inner_contents ? inner_contents : this;
-  contents_to_focus->SetAsFocusedWebContentsIfNecessary();
+  if (auto* inner_contents = node_.GetInnerWebContentsInFrame(node)) {
+    if (GetFocusedWebContents() == this)
+      inner_contents->SetAsFocusedWebContentsIfNecessary();
+  } else if (!GetOuterWebContents()) {
+    SetAsFocusedWebContentsIfNecessary();
+  }
 }
 
 RenderFrameHost* WebContentsImpl::GetFocusedFrameIncludingInnerWebContents() {
@@ -5275,6 +5275,14 @@ RenderFrameHost* WebContentsImpl::GetFocusedFrameIncludingInnerWebContents() {
     focused_node = contents->frame_tree_.GetFocusedFrame();
     if (!focused_node)
       return contents->GetMainFrame();
+  }
+}
+
+void WebContentsImpl::OnAdvanceFocus(RenderFrameHostImpl* source_rfh) {
+  if (GetOuterWebContents() &&
+      GetOuterWebContents() == source_rfh->delegate()->GetAsWebContents() &&
+      GetFocusedWebContents() == GetOuterWebContents()) {
+    SetAsFocusedWebContentsIfNecessary();
   }
 }
 
