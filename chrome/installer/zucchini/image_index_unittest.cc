@@ -78,7 +78,7 @@ TEST_F(ImageIndexTest, InvalidInsertReferences2) {
                                              TestReferenceReader({{11, 0}})));
 }
 
-TEST_F(ImageIndexTest, GetType) {
+TEST_F(ImageIndexTest, GetTypeAt) {
   InsertAllReferences();
 
   std::vector<int> expected = {
@@ -134,80 +134,6 @@ TEST_F(ImageIndexTest, IsReference) {
   for (offset_t i = 0; i < image_index_.size(); ++i) {
     EXPECT_EQ(expected[i], image_index_.IsReference(i));
   }
-}
-
-TEST_F(ImageIndexTest, FindReference) {
-  InsertAllReferences();
-
-  EXPECT_DCHECK_DEATH(image_index_.FindReference(TypeTag(0), 0));
-  EXPECT_EQ(Reference({1, 0}), image_index_.FindReference(TypeTag(0), 1));
-  EXPECT_EQ(Reference({1, 0}), image_index_.FindReference(TypeTag(0), 2));
-  EXPECT_DCHECK_DEATH(image_index_.FindReference(TypeTag(0), 3));
-  EXPECT_DCHECK_DEATH(image_index_.FindReference(TypeTag(1), 1));
-  EXPECT_DCHECK_DEATH(image_index_.FindReference(TypeTag(1), 2));
-  EXPECT_EQ(Reference({10, 2}), image_index_.FindReference(TypeTag(0), 10));
-  EXPECT_EQ(Reference({10, 2}), image_index_.FindReference(TypeTag(0), 11));
-  EXPECT_DCHECK_DEATH(image_index_.FindReference(TypeTag(0), 12));
-}
-
-TEST_F(ImageIndexTest, LabelTargets) {
-  InsertAllReferences();
-
-  OrderedLabelManager label_manager0;
-  label_manager0.InsertOffsets({0, 2, 3, 4});
-  image_index_.LabelTargets(PoolTag(0), label_manager0);
-  EXPECT_EQ(4U, image_index_.LabelBound(PoolTag(0)));
-  EXPECT_EQ(0U, image_index_.LabelBound(PoolTag(1)));
-
-  EXPECT_EQ(
-      std::vector<Reference>({{1, MarkIndex(0)}, {8, 1}, {10, MarkIndex(1)}}),
-      image_index_.GetReferences(TypeTag(0)));
-  EXPECT_EQ(std::vector<Reference>({{3, MarkIndex(2)}}),
-            image_index_.GetReferences(TypeTag(1)));
-  EXPECT_EQ(std::vector<Reference>({{12, 4}, {17, 5}}),
-            image_index_.GetReferences(TypeTag(2)));
-
-  OrderedLabelManager label_manager1;
-  label_manager1.InsertOffsets({5});
-  image_index_.LabelTargets(PoolTag(1), label_manager1);
-  EXPECT_EQ(4U, image_index_.LabelBound(PoolTag(0)));
-  EXPECT_EQ(1U, image_index_.LabelBound(PoolTag(1)));
-
-  EXPECT_EQ(std::vector<Reference>({{12, 4}, {17, MarkIndex(0)}}),
-            image_index_.GetReferences(TypeTag(2)));
-
-  image_index_.UnlabelTargets(PoolTag(0), label_manager0);
-  EXPECT_EQ(0U, image_index_.LabelBound(PoolTag(0)));
-  EXPECT_EQ(1U, image_index_.LabelBound(PoolTag(1)));
-
-  EXPECT_EQ(std::vector<Reference>({{1, 0}, {8, 1}, {10, 2}}),
-            image_index_.GetReferences(TypeTag(0)));
-  EXPECT_EQ(std::vector<Reference>({{3, 3}}),
-            image_index_.GetReferences(TypeTag(1)));
-  EXPECT_EQ(std::vector<Reference>({{12, 4}, {17, MarkIndex(0)}}),
-            image_index_.GetReferences(TypeTag(2)));
-}
-
-TEST_F(ImageIndexTest, LabelAssociatedTargets) {
-  InsertAllReferences();
-
-  OrderedLabelManager label_manager;
-  label_manager.InsertOffsets({0, 1, 2, 3, 4});
-
-  UnorderedLabelManager reference_label_manager;
-  reference_label_manager.Init({0, kUnusedIndex, 2});
-
-  image_index_.LabelAssociatedTargets(PoolTag(0), label_manager,
-                                      reference_label_manager);
-  EXPECT_EQ(5U, image_index_.LabelBound(PoolTag(0)));
-  EXPECT_EQ(0U, image_index_.LabelBound(PoolTag(1)));
-  EXPECT_EQ(
-      std::vector<Reference>({{1, MarkIndex(0)}, {8, 1}, {10, MarkIndex(2)}}),
-      image_index_.GetReferences(TypeTag(0)));
-  EXPECT_EQ(std::vector<Reference>({{3, 3}}),
-            image_index_.GetReferences(TypeTag(1)));
-  EXPECT_EQ(std::vector<Reference>({{12, 4}, {17, 5}}),
-            image_index_.GetReferences(TypeTag(2)));
 }
 
 }  // namespace zucchini
