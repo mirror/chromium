@@ -164,6 +164,24 @@
     },
     {
       "key": {
+        "uuid": "fd54e5d7_9a7feb4c",
+        "filename": "components/url_formatter/elide_url_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 553,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-08-25T14:06:30Z",
+      "side": 1,
+      "message": "I think your suggestion is compatible.  Either way, the test has to ratchet through all the pixel widths making strings, so we might as well keep them.  The verification step may then either match all strings, or a subset - it\u0027s a fairly minor difference.",
+      "parentUuid": "2adaa304_02559156",
+      "revId": "ec6857bcb91613071db7dbf66906ae862dd348b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0d51a6eb_19d548a5",
         "filename": "components/url_formatter/elide_url_unittest.cc",
         "patchSetId": 2
@@ -198,6 +216,30 @@
       "writtenOn": "2017-08-24T04:17:40Z",
       "side": 1,
       "message": "Could these all be progressive elision tests? There are only 5 different URLs tested here; it would be a bit longer but much better to move away from the weird elision-length-is-the-length-of-the-output style tests (and we can migrate the other tests in this file to progressive tests later).",
+      "range": {
+        "startLine": 612,
+        "startChar": 2,
+        "endLine": 612,
+        "endChar": 10
+      },
+      "revId": "ec6857bcb91613071db7dbf66906ae862dd348b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e1d5f17_3bb30004",
+        "filename": "components/url_formatter/elide_url_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 612,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-08-25T14:06:30Z",
+      "side": 1,
+      "message": "We could.  I don\u0027t think execution time is a big deal.  I\u0027ll come back to this when the actual elision code has progressed.",
+      "parentUuid": "eb52692c_a067f10e",
       "range": {
         "startLine": 612,
         "startChar": 2,
