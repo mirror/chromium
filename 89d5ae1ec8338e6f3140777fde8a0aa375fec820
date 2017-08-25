@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e421946c_49912aec",
+        "filename": "third_party/WebKit/Source/build/scripts/make_computed_style_base.py",
+        "patchSetId": 12
+      },
+      "lineNbr": 551,
+      "author": {
+        "id": 1228084
+      },
+      "writtenOn": "2017-08-25T03:40:22Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "90d61508_38968fad",
+      "revId": "89d5ae1ec8338e6f3140777fde8a0aa375fec820",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "64eb3bc3_c7b6fc2c",
         "filename": "third_party/WebKit/Source/build/scripts/update_css_ranking.py",
         "patchSetId": 12
@@ -33,6 +51,24 @@
       "revId": "89d5ae1ec8338e6f3140777fde8a0aa375fec820",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90d2b3b5_fcae77e9",
+        "filename": "third_party/WebKit/Source/build/scripts/update_css_ranking.py",
+        "patchSetId": 12
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1228084
+      },
+      "writtenOn": "2017-08-25T03:40:22Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "64eb3bc3_c7b6fc2c",
+      "revId": "89d5ae1ec8338e6f3140777fde8a0aa375fec820",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
