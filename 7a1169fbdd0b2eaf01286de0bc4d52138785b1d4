@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d074c9ab_204b8799",
+        "filename": "chrome/browser/chrome_content_renderer_manifest_overlay.json",
+        "patchSetId": 8
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-08-25T15:32:24Z",
+      "side": 1,
+      "message": "nit: this as well",
+      "revId": "7a1169fbdd0b2eaf01286de0bc4d52138785b1d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
