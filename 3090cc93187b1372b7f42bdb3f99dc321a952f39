@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "b23a42b8_27355e47",
+        "filename": "ui/keyboard/keyboard_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 601,
+      "author": {
+        "id": 1163499
+      },
+      "writtenOn": "2017-08-25T08:18:11Z",
+      "side": 1,
+      "message": "Please keep the meaning of the metric for now.",
+      "range": {
+        "startLine": 601,
+        "startChar": 6,
+        "endLine": 601,
+        "endChar": 42
+      },
+      "revId": "3090cc93187b1372b7f42bdb3f99dc321a952f39",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3907c20b_45032441",
         "filename": "ui/keyboard/keyboard_controller.cc",
         "patchSetId": 2
@@ -13,6 +36,52 @@
       "writtenOn": "2017-08-25T06:35:35Z",
       "side": 1,
       "message": "nit: DCHECK_EQ",
+      "revId": "3090cc93187b1372b7f42bdb3f99dc321a952f39",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "efd836ca_b8e9f294",
+        "filename": "ui/keyboard/keyboard_controller.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1163499
+      },
+      "writtenOn": "2017-08-25T08:18:11Z",
+      "side": 1,
+      "message": "SHOWN?",
+      "range": {
+        "startLine": 47,
+        "startChar": 51,
+        "endLine": 47,
+        "endChar": 58
+      },
+      "revId": "3090cc93187b1372b7f42bdb3f99dc321a952f39",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06d1bae9_159d781a",
+        "filename": "ui/keyboard/keyboard_controller.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1163499
+      },
+      "writtenOn": "2017-08-25T08:18:11Z",
+      "side": 1,
+      "message": "Please don\u0027t change the numeric representation for the enum values. These integers are used for UMA, VirtualKeyboard.ControllerStateTransition.",
+      "range": {
+        "startLine": 50,
+        "startChar": 10,
+        "endLine": 50,
+        "endChar": 11
+      },
       "revId": "3090cc93187b1372b7f42bdb3f99dc321a952f39",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
