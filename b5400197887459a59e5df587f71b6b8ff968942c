@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f7561513_6f245f61",
+        "filename": "ui/app_list/views/search_box_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-08-25T18:15:20Z",
+      "side": 1,
+      "message": "nit: not necessary since FocusBehavior::NEVER is the default.",
+      "revId": "b5400197887459a59e5df587f71b6b8ff968942c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
