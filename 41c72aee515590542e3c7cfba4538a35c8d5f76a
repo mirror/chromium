@@ -70,6 +70,30 @@
       "revId": "41c72aee515590542e3c7cfba4538a35c8d5f76a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33c13ff8_994e1075",
+        "filename": "chrome/browser/feature_engagement/feature_tracker.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1223632
+      },
+      "writtenOn": "2017-08-25T17:52:00Z",
+      "side": 1,
+      "message": "I\u0027ve tried passing in the feature into the constructor of this class previously, however, maybe I don\u0027t understand C++ enough but I couldn\u0027t set feature_ (the class private variable) \u003d feature (the variable passed into the constructor) because base::Feature does not have a default constructor that allows you to do something like this, which is why I have this other function that passes in the Feature into the function itself. If I\u0027m mistaken about this, please advise.\n\nAlso, the string that comes from the field trial promo can be empty or a number in a string (i.e. \"0\", \"1\") If the field trial promo returns empty, we want to use the constant defined in the class. However, if we\u0027re storing a TimeDelta, I can\u0027t make it into new TimeDelta() as this is TimeDelta(0).\n\nhttps://cs.chromium.org/chromium/src/base/time/time.h?type\u003dcs\u0026q\u003dtimedelta\u0026l\u003d107",
+      "parentUuid": "f9fb0850_91fefe5b",
+      "range": {
+        "startLine": 86,
+        "startChar": 2,
+        "endLine": 90,
+        "endChar": 49
+      },
+      "revId": "41c72aee515590542e3c7cfba4538a35c8d5f76a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
