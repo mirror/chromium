@@ -10,7 +10,7 @@
 
 class GURL;
 
-namespace payments {
+namespace web {
 
 class OriginSecurityChecker {
  public:
@@ -40,6 +40,6 @@ class OriginSecurityChecker {
   DISALLOW_IMPLICIT_CONSTRUCTORS(OriginSecurityChecker);
 };
 
-}  // namespace payments
+}  // namespace web
 
 #endif  // IOS_CHROME_BROWSER_PAYMENTS_ORIGIN_SECURITY_CHECKER_H_

@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "ios/chrome/browser/payments/origin_security_checker.h"
+#include "ios/chrome/browser/web/origin_security_checker.h"
 
 #include <string>
 #include <vector>
@@ -13,7 +13,7 @@
 #include "url/gurl.h"
 #include "url/url_constants.h"
 
-namespace payments {
+namespace web {
 
 // static
 bool OriginSecurityChecker::IsContextSecure(const GURL& url) {
