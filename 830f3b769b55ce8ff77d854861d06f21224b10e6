@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "e3411b15_c0e7e3ff",
+        "filename": "chrome/installer/zucchini/address_translator.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-25T02:31:13Z",
+      "side": 1,
+      "message": "This function got removed.",
+      "parentUuid": "6a1ef9f4_7f0d494b",
+      "range": {
+        "startLine": 49,
+        "startChar": 28,
+        "endLine": 49,
+        "endChar": 50
+      },
+      "revId": "830f3b769b55ce8ff77d854861d06f21224b10e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "30f012d8_077659ea",
         "filename": "chrome/installer/zucchini/address_translator.cc",
         "patchSetId": 4
@@ -36,6 +60,30 @@
       "writtenOn": "2017-08-24T17:43:01Z",
       "side": 1,
       "message": "I think it would make more sense to return iterator (here and below). Then instead of nullptr, we can return end().",
+      "range": {
+        "startLine": 54,
+        "startChar": 0,
+        "endLine": 54,
+        "endChar": 30
+      },
+      "revId": "830f3b769b55ce8ff77d854861d06f21224b10e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e0a5d75_3808bbd9",
+        "filename": "chrome/installer/zucchini/address_translator.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-25T02:31:13Z",
+      "side": 1,
+      "message": "I disagree: this would add burden to the caller to compare against units_sorted_by_offset_.end().",
+      "parentUuid": "30f012d8_077659ea",
       "range": {
         "startLine": 54,
         "startChar": 0,
@@ -94,6 +142,54 @@
     },
     {
       "key": {
+        "uuid": "9d0142b7_f649cae5",
+        "filename": "chrome/installer/zucchini/address_translator.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-25T02:31:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4f7e85ab_fa3e5703",
+      "range": {
+        "startLine": 121,
+        "startChar": 49,
+        "endLine": 121,
+        "endChar": 56
+      },
+      "revId": "830f3b769b55ce8ff77d854861d06f21224b10e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bf4d14f9_dcd58106",
+        "filename": "chrome/installer/zucchini/address_translator.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-25T02:31:13Z",
+      "side": 1,
+      "message": "It\u0027s not current and next. |slow| can lag behind over many Units; for example, if there are many merges.",
+      "parentUuid": "2ef70b5d_b898a0cc",
+      "range": {
+        "startLine": 121,
+        "startChar": 37,
+        "endLine": 121,
+        "endChar": 41
+      },
+      "revId": "830f3b769b55ce8ff77d854861d06f21224b10e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "398a6f88_4006d5da",
         "filename": "chrome/installer/zucchini/address_translator.cc",
         "patchSetId": 4
@@ -114,6 +210,30 @@
       "revId": "830f3b769b55ce8ff77d854861d06f21224b10e6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "981dd9f9_688f2978",
+        "filename": "chrome/installer/zucchini/address_translator.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-25T02:31:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "398a6f88_4006d5da",
+      "range": {
+        "startLine": 126,
+        "startChar": 9,
+        "endLine": 126,
+        "endChar": 14
+      },
+      "revId": "830f3b769b55ce8ff77d854861d06f21224b10e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "f2217327_8c602177",
+        "filename": "chrome/installer/zucchini/address_translator.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-25T02:31:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "36c684d1_a847adfa",
+      "range": {
+        "startLine": 160,
+        "startChar": 11,
+        "endLine": 160,
+        "endChar": 16
+      },
+      "revId": "830f3b769b55ce8ff77d854861d06f21224b10e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cd0c07d8_fbc37d5b",
         "filename": "chrome/installer/zucchini/address_translator.cc",
         "patchSetId": 4
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "284a8d78_561b0dcc",
+        "filename": "chrome/installer/zucchini/address_translator.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-25T02:31:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cd0c07d8_fbc37d5b",
+      "range": {
+        "startLine": 178,
+        "startChar": 29,
+        "endLine": 178,
+        "endChar": 36
+      },
+      "revId": "830f3b769b55ce8ff77d854861d06f21224b10e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e91b3374_f6c2d2c1",
         "filename": "chrome/installer/zucchini/address_translator.cc",
         "patchSetId": 4
@@ -174,6 +342,30 @@
       "writtenOn": "2017-08-24T17:43:01Z",
       "side": 1,
       "message": "While |slow| and |fast| above makes sense because |slow| might iterates slower than |fast|, in this case they both iterate in parallel. I think |current| and |next| makes more sense.",
+      "range": {
+        "startLine": 204,
+        "startChar": 9,
+        "endLine": 204,
+        "endChar": 14
+      },
+      "revId": "830f3b769b55ce8ff77d854861d06f21224b10e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "250927bc_33a5e0aa",
+        "filename": "chrome/installer/zucchini/address_translator.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-25T02:31:13Z",
+      "side": 1,
+      "message": "My main reason for choosing the words is that they both are 4 letters long and starts from a different letter, so code lines up better to spot differences (but arguably, maybe different length is better for making differences stand out?). Anyway, changed this to use |previous| and |current|.",
+      "parentUuid": "e91b3374_f6c2d2c1",
       "range": {
         "startLine": 204,
         "startChar": 9,
@@ -209,6 +401,30 @@
     },
     {
       "key": {
+        "uuid": "97a7a364_89405dff",
+        "filename": "chrome/installer/zucchini/address_translator.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-25T02:31:13Z",
+      "side": 1,
+      "message": "Updated comments and added TODO.",
+      "parentUuid": "ddcf5907_3ca55f60",
+      "range": {
+        "startLine": 36,
+        "startChar": 62,
+        "endLine": 37,
+        "endChar": 30
+      },
+      "revId": "830f3b769b55ce8ff77d854861d06f21224b10e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7be1f5ff_5c97611c",
         "filename": "chrome/installer/zucchini/address_translator.h",
         "patchSetId": 4
@@ -220,6 +436,30 @@
       "writtenOn": "2017-08-24T17:43:01Z",
       "side": 1,
       "message": "I feel like this is a common pattern that could be put in a generic function (algorithm.h). Something like RangeCovers(begin, size, value).",
+      "range": {
+        "startLine": 71,
+        "startChar": 12,
+        "endLine": 71,
+        "endChar": 74
+      },
+      "revId": "830f3b769b55ce8ff77d854861d06f21224b10e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89c57466_cad8e20a",
+        "filename": "chrome/installer/zucchini/address_translator.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-25T02:31:13Z",
+      "side": 1,
+      "message": "Added RangeCovers() in algorithm.h, along with tests.\n\nWe can replace use it more often in the future. But wholesale replacement in this CL seems risky and out of scope.",
+      "parentUuid": "7be1f5ff_5c97611c",
       "range": {
         "startLine": 71,
         "startChar": 12,
@@ -255,6 +495,30 @@
     },
     {
       "key": {
+        "uuid": "71275f72_02e475e2",
+        "filename": "chrome/installer/zucchini/address_translator.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-25T02:31:13Z",
+      "side": 1,
+      "message": "Done:\nAddressTranslatorBuilder gets removed (see below).\nCachedOffsetToRvaTranslator -\u003e AddressTranslator::CachedForOffsetToRva\nCachedRvaToOffsetTranslator -\u003e AddressTranslator::CachedForRvaToOffset",
+      "parentUuid": "ba4b86c4_bbfb304c",
+      "range": {
+        "startLine": 130,
+        "startChar": 9,
+        "endLine": 130,
+        "endChar": 33
+      },
+      "revId": "830f3b769b55ce8ff77d854861d06f21224b10e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e656cbbe_748a90fd",
         "filename": "chrome/installer/zucchini/address_translator.h",
         "patchSetId": 4
@@ -278,6 +542,30 @@
     },
     {
       "key": {
+        "uuid": "166cffa3_2ca4a109",
+        "filename": "chrome/installer/zucchini/address_translator.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-25T02:31:13Z",
+      "side": 1,
+      "message": "Done: Moved everything to AddressTranslator::Initialize().",
+      "parentUuid": "e656cbbe_748a90fd",
+      "range": {
+        "startLine": 176,
+        "startChar": 2,
+        "endLine": 176,
+        "endChar": 9
+      },
+      "revId": "830f3b769b55ce8ff77d854861d06f21224b10e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d898107b_2e7d6356",
         "filename": "chrome/installer/zucchini/address_translator.h",
         "patchSetId": 4
@@ -289,6 +577,30 @@
       "writtenOn": "2017-08-24T17:43:01Z",
       "side": 1,
       "message": "I find more convenient to flip things around and have:\nStatus AddressTranslator::Initialize(AddressTranslatorBuilder\u0026\u0026 builder);\nbecause:\n-Move semantic makes it clear that builder is consumed\n- Implementation is in AddressTranslator. This improves encapsulation because the class ensures it\u0027s own assumptions.\n-AddressTranslator is not \u0027borrowed\u0027 by pointer\n-It\u0027s closer to functional programming style (but I\u0027m biased) \n\nThis has some implications:\n- AddressTranslatorBuilder now depends on AddressTranslator instead of the other way around, so AddressTranslatorBuilder would be declared first\n- AddressTranslator needs privileged access into AddressTranslatorBuilder instead of the other way around\n- AddressTranslatorBuilder becomes a misnomer, it\u0027s wouldn\u0027t be quite a builder anymore; more like an initializer.\n- AddressTranslatorBuilder::Status within AddressTranslator is kindof weird, so maybe we should have a different type for this. This relates to the comment above.",
+      "range": {
+        "startLine": 183,
+        "startChar": 9,
+        "endLine": 183,
+        "endChar": 14
+      },
+      "revId": "830f3b769b55ce8ff77d854861d06f21224b10e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18659649_d16b72df",
+        "filename": "chrome/installer/zucchini/address_translator.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-25T02:31:13Z",
+      "side": 1,
+      "message": "Responses:\n- Move semantics is a good idea.\n- I don\u0027t like having complex logic in constructors, and haivng the \"Builder\" as an inner class weakens the encapsulation argument.\n- The \"borrowed\" part is kinda yucky yeah.\n- No comment on functional programming.\n- Order is automatically flipped due to inner class.\n- Privileged access is also not an issue due to inner class.\n- Initializer sounds like just synonym of Builder? Note that std::initializer_list\u003c\u003e has \"list\".\n- I\u0027m indifferent with where Status lives, though shorter prefix would be nice.\n\nBrainstorming options (sticking with \"builder\" here for convenience):\n1. Old behavior:\n  AddressTranslator translator;\n  builder.build(\u0026translator);\n\n2. Initializer:\n  AddressTranslator translator;\n  translator.Initialize(builder);\n\n3. Construction param:\n  AddressTranslator translator(builder);\n\n4. Maker:\n  std::unique_ptr\u003cAddressTranslator\u003e translator \u003d builder.Make();\n\n5. Return R-value for assignment.\n  AddressTranslator translator \u003d builder.Build();\n\n6. 2-phase object:\n  AddressTranslator translator;  // \"Build\" phase.\n  translator.AddUilt(...);  // Check errors.\n  ...\n  translator.AddUilt(...);  // Check errors.\n  translator.Finalize(...);  // Check errors.\n  // \"Use\" phase.\n\n7. Instantiate from std::vector (const\u0026 or \u0026\u0026):\n  std::vector\u003cAddressTranslator::Unit\u003e units;\n  ...  // Populate |units| without check.\n  AddressTranslator translator(units);\n  // Handle units.Status().\n\n8. Initialize from std::vector (const\u0026 or \u0026\u0026):\n  std::vector\u003cAddressTranslator::Unit\u003e units;\n  ...  // Populate |units| without check.\n  translator.Initialize(units);  // Check errors.\n\nI like 8 with \u0026\u0026 the most because:\n- Simple: don\u0027t need extra class.\n- |translator| can be a member variable of DisassemblerWin32 directly.\n- No excessive work in constructor.\n- Error can be processed.\n- Easy to initialize parameters for tests.\n\nA drawback is that we won\u0027t be able to quickly detect out-of-bound Units immediately and early exit -- but we didn\u0027t have that before and don\u0027t really need it anyway.",
+      "parentUuid": "d898107b_2e7d6356",
       "range": {
         "startLine": 183,
         "startChar": 9,
