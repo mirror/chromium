@@ -134,7 +134,9 @@ void DialogOverlayImpl::UnregisterForTokensIfNeeded() {
   // We clear overlay mode here rather than in Destroy(), because we may have
   // been called via a WebContentsDestroyed() event, and this might be the last
   // opportunity we have to access web_contents().
-  web_contents()->GetDelegate()->SetOverlayMode(false);
+  WebContentsDelegate* deletage = web_contents()->GetDelegate();
+  if (deletage)
+    deletage->SetOverlayMode(false);
 
   cvc_->RemoveObserver(this);
   cvc_ = nullptr;
