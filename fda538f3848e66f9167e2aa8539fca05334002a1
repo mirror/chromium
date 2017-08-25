@@ -1,0 +1,159 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e925a5fe_487d24cb",
+        "filename": "ios/build/bots/chromium.fyi/ios-simulator-cronet.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1147750
+      },
+      "writtenOn": "2017-08-25T17:19:47Z",
+      "side": 1,
+      "message": "9.0 ?",
+      "range": {
+        "startLine": 29,
+        "startChar": 24,
+        "endLine": 29,
+        "endChar": 27
+      },
+      "revId": "fda538f3848e66f9167e2aa8539fca05334002a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "831702b5_07c97722",
+        "filename": "ios/build/bots/chromium.fyi/ios-simulator.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1147750
+      },
+      "writtenOn": "2017-08-25T17:19:47Z",
+      "side": 1,
+      "message": "iOS 11, 10...",
+      "range": {
+        "startLine": 3,
+        "startChar": 60,
+        "endLine": 3,
+        "endChar": 63
+      },
+      "revId": "fda538f3848e66f9167e2aa8539fca05334002a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3096ce9e_55ce89b6",
+        "filename": "ios/build/bots/chromium.fyi/ios-simulator.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1147750
+      },
+      "writtenOn": "2017-08-25T17:19:47Z",
+      "side": 1,
+      "message": "Should this be 9.0? Here and everywhere below that isn\u0027t iPad Retina?",
+      "range": {
+        "startLine": 22,
+        "startChar": 24,
+        "endLine": 22,
+        "endChar": 27
+      },
+      "revId": "fda538f3848e66f9167e2aa8539fca05334002a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ebe85a46_79bc487c",
+        "filename": "ios/build/bots/chromium.mac/ios-simulator-cronet.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1147750
+      },
+      "writtenOn": "2017-08-25T17:19:47Z",
+      "side": 1,
+      "message": "64-bit iOS 11.0",
+      "range": {
+        "startLine": 3,
+        "startChar": 22,
+        "endLine": 3,
+        "endChar": 45
+      },
+      "revId": "fda538f3848e66f9167e2aa8539fca05334002a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93d603a4_844d27c0",
+        "filename": "ios/build/bots/chromium.mac/ios-simulator-cronet.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1147750
+      },
+      "writtenOn": "2017-08-25T17:19:47Z",
+      "side": 1,
+      "message": "I think this line could be deleted. The first line of the comment explains the high level, and they can look at the configs below for the detail.",
+      "revId": "fda538f3848e66f9167e2aa8539fca05334002a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ded442d_406f791e",
+        "filename": "ios/build/bots/chromium.mac/ios-simulator-eg.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1147750
+      },
+      "writtenOn": "2017-08-25T17:19:47Z",
+      "side": 1,
+      "message": "11",
+      "range": {
+        "startLine": 3,
+        "startChar": 36,
+        "endLine": 3,
+        "endChar": 37
+      },
+      "revId": "fda538f3848e66f9167e2aa8539fca05334002a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4cf8ecbd_d6d78224",
+        "filename": "ios/build/bots/chromium.mac/ios-simulator.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1147750
+      },
+      "writtenOn": "2017-08-25T17:19:47Z",
+      "side": 1,
+      "message": "Is this removing 32-bit and iOS 10 coverage? Is this for capacity reasons?\n\nUnrelated to this, I\u0027m putting together a doc to review our coverage and talk about what configurations to run, but this is separate from simply getting iOS 11 support.",
+      "range": {
+        "startLine": 3,
+        "startChar": 36,
+        "endLine": 3,
+        "endChar": 50
+      },
+      "revId": "fda538f3848e66f9167e2aa8539fca05334002a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
