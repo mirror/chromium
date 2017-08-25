@@ -1606,27 +1606,20 @@ static void staticLongAttributeAttributeSetter(v8::Local<v8::Value> v8Value, con
 }
 
 static void eventHandlerAttributeAttributeGetter(const v8::FunctionCallbackInfo<v8::Value>& info) {
-  v8::Local<v8::Object> holder = info.Holder();
-
-  TestObject* impl = V8TestObject::toImpl(holder);
-
-  EventListener* cppValue(WTF::GetPtr(impl->eventHandlerAttribute()));
-
-  V8SetReturnValue(info, cppValue ? V8AbstractEventListener::Cast(cppValue)->GetListenerOrNull(info.GetIsolate(), impl->GetExecutionContext()) : v8::Null(info.GetIsolate()).As<v8::Value>());
+  // TODO(jbroman): Finish this if it's worthwhile.
+  V8EventHandlerGetter(info, [](ScriptWrappable* wrappable) -> std::pair<EventListener*, ExecutionContext*> {
+    if (auto* impl = wrappable->ToImpl<TestObject>())
+      return { WTF::GetPtr(impl->eventHandlerAttribute()), impl->GetExecutionContext() };
+    return { nullptr, nullptr };
+  });
 }
 
 static void eventHandlerAttributeAttributeSetter(v8::Local<v8::Value> v8Value, const v8::FunctionCallbackInfo<v8::Value>& info) {
-  v8::Isolate* isolate = info.GetIsolate();
-  ALLOW_UNUSED_LOCAL(isolate);
-
-  v8::Local<v8::Object> holder = info.Holder();
-  ALLOW_UNUSED_LOCAL(holder);
-
-  TestObject* impl = V8TestObject::toImpl(holder);
-
-  // Prepare the value to be set.
-
-  impl->setEventHandlerAttribute(V8EventListenerHelper::GetEventListener(ScriptState::ForRelevantRealm(info), v8Value, true, kListenerFindOrCreate));
+  // TODO(jbroman): This is currently a hack. Un-hackify it.
+  V8EventHandlerSetter(v8Value, info, [](ScriptWrappable* wrappable, V8EventListener* listener) {
+    auto* impl = wrappable->ToImpl<TestObject>();
+    impl->setEventHandlerAttribute(listener);
+  });
 }
 
 static void doubleOrStringAttributeAttributeGetter(const v8::FunctionCallbackInfo<v8::Value>& info) {
