@@ -1,0 +1,174 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8d3f8021_c9d6f11a",
+        "filename": "chrome/browser/media/android/router/media_router_dialog_controller_android.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-08-25T18:19:55Z",
+      "side": 1,
+      "message": "auto is not allowed to deduce pointers, but maybe unique_ptr is okay?  Check the relevant discussion threads to be sure.\n\nhttp://chromium-cpp.appspot.com/#core-whitelist",
+      "revId": "20a10ffec92a8dc72f65025c71545096f0b60478",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "934bd0a5_1d79d6cc",
+        "filename": "chrome/browser/media/android/router/media_router_dialog_controller_android.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-08-25T18:19:55Z",
+      "side": 1,
+      "message": "std::move()?",
+      "revId": "20a10ffec92a8dc72f65025c71545096f0b60478",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab4863aa_cc0f8774",
+        "filename": "chrome/browser/media/router/media_router_dialog_controller.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-08-25T18:19:55Z",
+      "side": 1,
+      "message": "You could check that error_cb and success_cb are non-null in the ctor, before taking ownership.\nNot a big deal.",
+      "revId": "20a10ffec92a8dc72f65025c71545096f0b60478",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3396faec_9426999d",
+        "filename": "chrome/browser/media/router/media_router_dialog_controller.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-08-25T18:19:55Z",
+      "side": 1,
+      "message": "Perhaps: \"Unable to create dialog: dialog already shown\"\n\nNote: If this happens from a call to start(), this should get propagated through the API as an OperationError based on the fact there is an unresolved Promise from the same tab.\n\nhttps://w3c.github.io/presentation-api/#selecting-a-presentation-display\n\nIt looks like this happens in PresentationService::StartPresentation, but not clear that is checking all frames from the same tab.  So here we should return content::PRESENTATION_ERROR_PREVIOUS_START_IN_PROGRESS.  (As this is a behavior change fine to punt to a separate issue/patch).",
+      "revId": "20a10ffec92a8dc72f65025c71545096f0b60478",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95db5a30_ef419b5a",
+        "filename": "chrome/browser/media/router/media_router_dialog_controller.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-08-25T18:19:55Z",
+      "side": 1,
+      "message": "It\u0027s true this is a helper for MRDC, but it\u0027s also passed to MediaRouterUI and part of the public API.  Consider moving this to the top level (media_router::) to save some typing.",
+      "revId": "20a10ffec92a8dc72f65025c71545096f0b60478",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "105c8181_e0f4acfd",
+        "filename": "chrome/browser/media/router/media_router_dialog_controller.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-08-25T18:19:55Z",
+      "side": 1,
+      "message": "Nit: both of the callbacks are implemented by base::OnceCallback, so this is true by definition.",
+      "revId": "20a10ffec92a8dc72f65025c71545096f0b60478",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "774a42b0_68cbedd6",
+        "filename": "chrome/browser/media/router/media_router_dialog_controller.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-08-25T18:19:55Z",
+      "side": 1,
+      "message": "Are these the same as the success/error callback types defined defined in content:: ?",
+      "revId": "20a10ffec92a8dc72f65025c71545096f0b60478",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "edd3268c_a6c873c0",
+        "filename": "chrome/browser/media/router/media_router_dialog_controller.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-08-25T18:19:55Z",
+      "side": 1,
+      "message": "Is this necessary or can callers just use std::move()?",
+      "revId": "20a10ffec92a8dc72f65025c71545096f0b60478",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3bfda27d_d91dc9b6",
+        "filename": "chrome/browser/media/router/media_router_dialog_controller.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-08-25T18:19:55Z",
+      "side": 1,
+      "message": "Since this class holds the storage for StartPresentationContext, it seems possible to make |start_presentation_context_| protected and allow subclasses to access it directly.  Maybe this method helps with testability?",
+      "revId": "20a10ffec92a8dc72f65025c71545096f0b60478",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a477f21a_a424711f",
+        "filename": "chrome/browser/ui/webui/media_router/media_router_dialog_controller_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 330,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-08-25T18:19:55Z",
+      "side": 1,
+      "message": "std::move",
+      "revId": "20a10ffec92a8dc72f65025c71545096f0b60478",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
