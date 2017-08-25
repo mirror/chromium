@@ -189,7 +189,7 @@ Console.ConsoleView = class extends UI.VBox {
     this._messagesElement.addEventListener('wheel', this._updateStickToBottomOnWheel.bind(this), false);
 
     this._sidebar.addEventListener(Console.ConsoleSidebar.Events.ContextSelected, event => {
-      this._filter.setContext(/** @type {string|symbol} */ (event.data));
+      this._filter.onSidebarItemChanged(/** @type {?Console.ConsoleSidebar.GroupItem} */ (event.data));
     });
 
     ConsoleModel.consoleModel.addEventListener(
@@ -1003,7 +1003,8 @@ Console.ConsoleViewFilter = class {
    */
   constructor(filterChangedCallback) {
     this._filterChanged = filterChangedCallback;
-    this._context = Console.ConsoleSidebar.AllContextsFilter;
+    /** @type {?Console.ConsoleSidebar.GroupItem} */
+    this._sidebarItem = null;
 
     this._messageURLFiltersSetting = Common.settings.createSetting('messageURLFilters', {});
     this._messageLevelFiltersSetting = Console.ConsoleViewFilter.levelFilterSetting();
@@ -1066,11 +1067,11 @@ Console.ConsoleViewFilter = class {
   }
 
   /**
-   * @param {string|symbol} context
+   * @param {?Console.ConsoleSidebar.GroupItem} item
    */
-  setContext(context) {
-    if (this._context !== context) {
-      this._context = context;
+  onSidebarItemChanged(item) {
+    if (item !== this._sidebarItem) {
+      this._sidebarItem = item;
       this._filterChanged();
     }
   }
@@ -1209,14 +1210,24 @@ Console.ConsoleViewFilter = class {
         message.source !== ConsoleModel.ConsoleMessage.MessageSource.ConsoleAPI)
       return false;
 
-    if (this._context !== Console.ConsoleSidebar.AllContextsFilter && message.context !== this._context)
-      return false;
+    if (this._sidebarItem) {
+      switch (this._sidebarItem.type) {
+        case Console.ConsoleSidebar.GroupType.Context:
+          if (message.context !== this._sidebarItem.value)
+            return false;
+          break;
+        case Console.ConsoleSidebar.GroupType.Violation:
+          if (message.source !== ConsoleModel.ConsoleMessage.MessageSource.Violation)
+            return false;
+          break;
+      }
+    }
 
     return true;
   }
 
   reset() {
-    this._context = Console.ConsoleSidebar.AllContextsFilter;
+    this._sidebarItem = null;
     this._messageURLFiltersSetting.set({});
     this._messageLevelFiltersSetting.set(Console.ConsoleViewFilter.defaultLevelsFilterValue());
     this._filterByExecutionContextSetting.set(false);
