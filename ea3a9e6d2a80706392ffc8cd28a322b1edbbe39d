@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d4b13297_373d89f9",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/metrics/WebappUma.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-08-25T16:55:15Z",
+      "side": 1,
+      "message": "If it\u0027s unlikely that this will ever be more than two states, could you use recordBooleanHistogram instead?",
+      "range": {
+        "startLine": 62,
+        "startChar": 24,
+        "endLine": 62,
+        "endChar": 49
+      },
+      "revId": "ea3a9e6d2a80706392ffc8cd28a322b1edbbe39d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
