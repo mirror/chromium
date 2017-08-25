@@ -57,11 +57,14 @@ const int kRouteId2 = 67;
 const int kBackgroundChildId = 35;
 const int kBackgroundRouteId = 43;
 
+// Sync below with cc file.
 const char kPrioritySupportedRequestsDelayable[] =
     "PrioritySupportedRequestsDelayable";
-
+const char kHeadPrioritySupportedRequestsDelayable[] =
+    "HeadPriorityRequestsDelayable";
 const char kNetworkSchedulerYielding[] = "NetworkSchedulerYielding";
-const int kMaxRequestsBeforeYielding = 5;  // sync with .cc.
+const int kMaxRequestsBeforeYielding = 5;
+const size_t kMaxNumDelayableRequestsPerHostPerClient = 6;
 
 class TestRequest : public ResourceThrottle::Delegate {
  public:
@@ -682,6 +685,157 @@ TEST_F(ResourceSchedulerTest,
   high.reset();
   base::RunLoop().RunUntilIdle();
   EXPECT_TRUE(low2->started());
+  EXPECT_TRUE(low_spdy->started());
+}
+
+TEST_F(ResourceSchedulerTest, MaxRequestsPerHostForSpdyWhenDelayable) {
+  base::test::ScopedFeatureList scoped_feature_list;
+  scoped_feature_list.InitFromCommandLine(
+      kPrioritySupportedRequestsDelayable,
+      kHeadPrioritySupportedRequestsDelayable);
+
+  InitializeScheduler();
+  http_server_properties_.SetSupportsSpdy(
+      url::SchemeHostPort("https", "spdyhost", 443), true);
+
+  // Add enough requests that they would hit the max-per-host-allowed limit if
+  // they all ran in parallel and throttling was enabled. Requests alternate
+  // between high and low priority.
+  std::vector<std::unique_ptr<TestRequest>> requests;
+  for (size_t i = 0; i < kMaxNumDelayableRequestsPerHostPerClient; ++i)
+    requests.push_back(NewRequest("https://spdyhost/high", net::HIGHEST));
+
+  // Only kMaxNumDelayableRequestsPerHostPerClient at a time in head.
+  for (size_t i = 0; i < requests.size(); ++i) {
+    if (i <= kMaxNumDelayableRequestsPerHostPerClient)
+      EXPECT_TRUE(requests[i]->started());
+    else
+      EXPECT_FALSE(requests[i]->started());
+  }
+
+  // Now parse body, we should still delay.
+  scheduler()->OnWillInsertBody(kChildId, kRouteId);
+  base::RunLoop().RunUntilIdle();
+
+  // Only kMaxNumDelayableRequestsPerHostPerClient in body.
+  for (size_t i = 0; i < requests.size(); ++i) {
+    if (i <= kMaxNumDelayableRequestsPerHostPerClient)
+      EXPECT_TRUE(requests[i]->started());
+    else
+      EXPECT_FALSE(requests[i]->started());
+  }
+}
+
+TEST_F(ResourceSchedulerTest, MaxRequestsPerHostForSpdyWhenHeadDelayable) {
+  base::test::ScopedFeatureList scoped_feature_list;
+  scoped_feature_list.InitFromCommandLine(
+      kHeadPrioritySupportedRequestsDelayable,
+      kPrioritySupportedRequestsDelayable);
+
+  InitializeScheduler();
+  http_server_properties_.SetSupportsSpdy(
+      url::SchemeHostPort("https", "spdyhost", 443), true);
+
+  // Add enough requests that they would hit the max-per-host-allowed limit if
+  // they all ran in parallel and throttling was enabled. Requests alternate
+  // between high and low priority.
+  std::vector<std::unique_ptr<TestRequest>> requests;
+  for (size_t i = 0; i < kMaxNumDelayableRequestsPerHostPerClient; ++i)
+    requests.push_back(NewRequest("https://spdyhost/high", net::HIGHEST));
+
+  // Only kMaxNumDelayableRequestsPerHostPerClient at a time in head.
+  for (size_t i = 0; i < requests.size(); ++i) {
+    if (i <= kMaxNumDelayableRequestsPerHostPerClient)
+      EXPECT_TRUE(requests[i]->started());
+    else
+      EXPECT_FALSE(requests[i]->started());
+  }
+
+  // Now parse body, which means there shouldn't be any more throttling.
+  scheduler()->OnWillInsertBody(kChildId, kRouteId);
+  base::RunLoop().RunUntilIdle();
+
+  // More than kMaxNumDelayableRequestsPerHostPerClient requests allowed in
+  // body.
+  for (const auto& request : requests)
+    EXPECT_TRUE(request->started());
+}
+
+TEST_F(ResourceSchedulerTest, MaxRequestsPerHostForSpdyProxyWhenDelayable) {
+  base::test::ScopedFeatureList scoped_feature_list;
+  scoped_feature_list.InitFromCommandLine(
+      kPrioritySupportedRequestsDelayable,
+      kHeadPrioritySupportedRequestsDelayable);
+
+  InitializeScheduler();
+
+  // Add enough HTTP/1.1 requests that they would hit the max-per-host-allowed
+  // limit if they all ran in parallel and throttling was enabled. Requests
+  // alternate between high and low priority.
+  std::vector<std::unique_ptr<TestRequest>> requests;
+  for (size_t i = 0; i < kMaxNumDelayableRequestsPerHostPerClient; ++i)
+    requests.push_back(NewRequest("https://host/high", net::HIGHEST));
+
+  // Now the scheduler realizes these requests are for a spdy proxy.
+  scheduler()->OnReceivedSpdyProxiedHttpResponse(kChildId, kRouteId);
+  base::RunLoop().RunUntilIdle();
+
+  // Only kMaxNumDelayableRequestsPerHostPerClient at a time in head.
+  for (size_t i = 0; i < requests.size(); ++i) {
+    if (i <= kMaxNumDelayableRequestsPerHostPerClient)
+      EXPECT_TRUE(requests[i]->started());
+    else
+      EXPECT_FALSE(requests[i]->started());
+  }
+
+  // Now parse body, we should still delay.
+  scheduler()->OnWillInsertBody(kChildId, kRouteId);
+  base::RunLoop().RunUntilIdle();
+
+  // Only kMaxNumDelayableRequestsPerHostPerClient in body.
+  for (size_t i = 0; i < requests.size(); ++i) {
+    if (i <= kMaxNumDelayableRequestsPerHostPerClient)
+      EXPECT_TRUE(requests[i]->started());
+    else
+      EXPECT_FALSE(requests[i]->started());
+  }
+}
+
+TEST_F(ResourceSchedulerTest, MaxRequestsPerHostForSpdyProxyWhenHeadDelayable) {
+  base::test::ScopedFeatureList scoped_feature_list;
+  scoped_feature_list.InitFromCommandLine(
+      kHeadPrioritySupportedRequestsDelayable,
+      kPrioritySupportedRequestsDelayable);
+
+  InitializeScheduler();
+
+  // Add enough HTTP/1.1 requests that they would hit the max-per-host-allowed
+  // limit if they all ran in parallel and throttling was enabled. Requests
+  // alternate between high and low priority.
+  std::vector<std::unique_ptr<TestRequest>> requests;
+  for (size_t i = 0; i < kMaxNumDelayableRequestsPerHostPerClient; ++i)
+    requests.push_back(NewRequest("https://host/high", net::HIGHEST));
+
+  // Now the scheduler realizes these requests are for a spdy proxy.
+  scheduler()->OnReceivedSpdyProxiedHttpResponse(kChildId, kRouteId);
+  base::RunLoop().RunUntilIdle();
+
+  // Only kMaxNumDelayableRequestsPerHostPerClient at a time in head.
+  for (size_t i = 0; i < requests.size(); ++i) {
+    if (i <= kMaxNumDelayableRequestsPerHostPerClient)
+      EXPECT_TRUE(requests[i]->started());
+    else
+      EXPECT_FALSE(requests[i]->started());
+  }
+
+  // Now parse body, which means there shouldn't be any more throttling.
+  scheduler()->OnWillInsertBody(kChildId, kRouteId);
+  base::RunLoop().RunUntilIdle();
+
+  // More than kMaxNumDelayableRequestsPerHostPerClient requests allowed in
+  // body.
+  for (const auto& request : requests)
+    EXPECT_TRUE(request->started());
 }
 
 TEST_F(ResourceSchedulerTest, SpdyLowBlocksOtherLowUntilBodyInserted) {
