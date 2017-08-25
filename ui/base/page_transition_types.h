@@ -25,6 +25,8 @@ namespace ui {
 // A Java counterpart will be generated for this enum.
 // GENERATED_JAVA_ENUM_PACKAGE: org.chromium.ui.base
 enum PageTransition {
+  PAGE_TRANSITION_FIRST = 0,
+
   // User got to this page by clicking a link on another page.
   PAGE_TRANSITION_LINK = 0,
 
