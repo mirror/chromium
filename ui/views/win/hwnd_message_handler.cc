@@ -1141,6 +1141,7 @@ void HWNDMessageHandler::PostProcessActivateMessage(
     GetMonitorInfo(MonitorFromWindow(hwnd(), MONITOR_DEFAULTTOPRIMARY),
                    &monitor_info);
     SetBoundsInternal(gfx::Rect(monitor_info.rcMonitor), false);
+    fullscreen_handler()->MarkFullscreen(true);
     background_fullscreen_hack_ = false;
   } else {
     // If the window becoming active has a fullscreen window on the same
@@ -3005,6 +3006,7 @@ void HWNDMessageHandler::OnBackgroundFullscreen() {
   shrunk_rect.set_height(shrunk_rect.height() - 1);
   background_fullscreen_hack_ = true;
   SetBoundsInternal(shrunk_rect, false);
+  fullscreen_handler()->MarkFullscreen(false);
 }
 
 void HWNDMessageHandler::DestroyAXSystemCaret() {
