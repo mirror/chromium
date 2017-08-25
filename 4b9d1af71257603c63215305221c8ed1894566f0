@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9631d9a3_271ad7d6",
+        "filename": "cc/trees/layer_tree_host_impl_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 3107,
+      "author": {
+        "id": 1108704
+      },
+      "writtenOn": "2017-08-25T20:53:53Z",
+      "side": 1,
+      "message": "Could you add short comment saying what you are testing for w/ and w/o latching?",
+      "revId": "4b9d1af71257603c63215305221c8ed1894566f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0856c235_723d880c",
+        "filename": "cc/trees/layer_tree_host_impl_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 3155,
+      "author": {
+        "id": 1108704
+      },
+      "writtenOn": "2017-08-25T20:53:53Z",
+      "side": 1,
+      "message": "Same comment as mentioned above.",
+      "revId": "4b9d1af71257603c63215305221c8ed1894566f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
