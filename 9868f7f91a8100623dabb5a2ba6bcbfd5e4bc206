@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "72f27131_ec9d3b08",
+        "filename": "chrome/browser/plugins/pdf_plugin_placeholder_observer.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-08-25T21:18:42Z",
+      "side": 1,
+      "message": "nit: Move this to the top, after the #includes.",
+      "revId": "9868f7f91a8100623dabb5a2ba6bcbfd5e4bc206",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "064e400f_56a90e03",
+        "filename": "chrome/browser/plugins/pdf_plugin_placeholder_observer.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-08-25T21:18:42Z",
+      "side": 1,
+      "message": "base::MakeUnique",
+      "revId": "9868f7f91a8100623dabb5a2ba6bcbfd5e4bc206",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aad6f074_7be162f0",
+        "filename": "chrome/browser/plugins/pdf_plugin_placeholder_observer.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-08-25T21:18:42Z",
+      "side": 1,
+      "message": "De-duplicate the referrer code with the #else block?",
+      "revId": "9868f7f91a8100623dabb5a2ba6bcbfd5e4bc206",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
