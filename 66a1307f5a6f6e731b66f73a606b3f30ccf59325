@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "d67ac46e_513124ca",
+        "filename": "ios/build/bots/chromium.fyi/ios-simulator-cronet.json",
+        "patchSetId": 4
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1164104
+      },
+      "writtenOn": "2017-08-25T23:37:55Z",
+      "side": 1,
+      "message": "I don\u0027t quite understand the intentions of these tests, but why 9.3 on FYI? We already have ios-simulator-cornet.json in chromium.mac, do we want to delete this file?",
+      "range": {
+        "startLine": 28,
+        "startChar": 18,
+        "endLine": 28,
+        "endChar": 0
+      },
+      "revId": "66a1307f5a6f6e731b66f73a606b3f30ccf59325",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "513a218f_fa3cfc49",
         "filename": "ios/build/bots/chromium.mac/ios-simulator-xcode-clang.json",
         "patchSetId": 4
