@@ -234,7 +234,8 @@ ValueStore::Status LazyLevelDb::EnsureDbIsOpen() {
       leveldb_env::OpenDB(open_options_, db_path_.AsUTF8Unsafe(), &db_);
   open_histogram_->Add(leveldb_env::GetLevelDBStatusUMAValue(ldb_status));
   ValueStore::Status status = ToValueStoreError(ldb_status);
-  if (ldb_status.IsCorruption()) {
+  if (ldb_status.IsCorruption() ||
+      (open_options_.create_if_missing && ldb_status.IsNotFound())) {
     status.restore_status = FixCorruption(nullptr);
     if (status.restore_status != ValueStore::DB_RESTORE_DELETE_FAILURE) {
       status.code = ValueStore::OK;
@@ -249,8 +250,6 @@ ValueStore::Status LazyLevelDb::ToValueStoreError(
     const leveldb::Status& status) {
   if (status.ok())
     return ValueStore::Status();
-
-  CHECK(!status.IsNotFound());  // not an error
 
   std::string message = status.ToString();
   // The message may contain |db_path_|, which may be considered sensitive
