@@ -8,6 +8,7 @@
 
 #include <utility>
 
+#include "base/memory/ptr_util.h"
 #include "base/strings/string_util.h"
 #include "base/strings/stringprintf.h"
 #include "build/build_config.h"
@@ -229,7 +230,7 @@ class TestSyncedTabDelegate : public SyncedTabDelegate {
           navs) {
     for (auto& entry : navs) {
       blocked_navigations_.push_back(
-          std::make_unique<sessions::SerializedNavigationEntry>(*entry));
+          base::MakeUnique<sessions::SerializedNavigationEntry>(*entry));
     }
   }
 
@@ -515,16 +516,16 @@ class SessionsSyncManagerTest : public testing::Test {
   SessionsSyncManagerTest() {}
 
   void SetUp() override {
-    local_device_ = std::make_unique<LocalDeviceInfoProviderMock>(
+    local_device_ = base::MakeUnique<LocalDeviceInfoProviderMock>(
         "cache_guid", "Wayne Gretzky's Hacking Box", "Chromium 10k",
         "Chrome 10k", sync_pb::SyncEnums_DeviceType_TYPE_LINUX, "device_id");
-    sync_client_ = std::make_unique<syncer::FakeSyncClient>();
+    sync_client_ = base::MakeUnique<syncer::FakeSyncClient>();
     sessions_client_shim_ =
-        std::make_unique<SyncSessionsClientShim>(&window_getter_);
+        base::MakeUnique<SyncSessionsClientShim>(&window_getter_);
     sync_prefs_ =
-        std::make_unique<syncer::SyncPrefs>(sync_client_->GetPrefService());
-    router_ = std::make_unique<DummyRouter>();
-    manager_ = std::make_unique<SessionsSyncManager>(
+        base::MakeUnique<syncer::SyncPrefs>(sync_client_->GetPrefService());
+    router_ = base::MakeUnique<DummyRouter>();
+    manager_ = base::MakeUnique<SessionsSyncManager>(
         sessions_client_shim(), sync_prefs_.get(), local_device_.get(),
         router_.get(),
         base::Bind(&SessionNotificationObserver::NotifyOfUpdate,
@@ -688,7 +689,7 @@ class SessionsSyncManagerTest : public testing::Test {
   TestSyncedTabDelegate* AddTab(SessionID::id_type window_id,
                                 const std::string& url,
                                 base::Time time) {
-    tabs_.push_back(std::make_unique<TestSyncedTabDelegate>());
+    tabs_.push_back(base::MakeUnique<TestSyncedTabDelegate>());
     for (auto& window : windows_) {
       if (window->GetSessionId() == window_id) {
         int tab_index = window->GetTabCount();
@@ -720,7 +721,7 @@ class SessionsSyncManagerTest : public testing::Test {
     tab_navigation.set_unique_id(time.ToInternalValue());
     tab_navigation.set_http_status_code(200);
 
-    auto entry = std::make_unique<sessions::SerializedNavigationEntry>(
+    auto entry = base::MakeUnique<sessions::SerializedNavigationEntry>(
         sessions::SerializedNavigationEntry::FromSyncData(0, tab_navigation));
     SerializedNavigationEntryTestHelper::SetTimestamp(time, entry.get());
     SerializedNavigationEntryTestHelper::SetTransitionType(transition,
@@ -750,7 +751,7 @@ class SessionsSyncManagerTest : public testing::Test {
                                              &old_entry);
 
     auto new_entry =
-        std::make_unique<sessions::SerializedNavigationEntry>(old_entry);
+        base::MakeUnique<sessions::SerializedNavigationEntry>(old_entry);
     SerializedNavigationEntryTestHelper::SetTimestamp(time, new_entry.get());
 
     delegate->reset();
@@ -764,7 +765,7 @@ class SessionsSyncManagerTest : public testing::Test {
   }
 
   TestSyncedWindowDelegate* AddWindow() {
-    windows_.push_back(std::make_unique<TestSyncedWindowDelegate>());
+    windows_.push_back(base::MakeUnique<TestSyncedWindowDelegate>());
     window_getter_.AddSyncedWindowDelegate(windows_.back().get());
     return windows_.back().get();
   }
@@ -906,12 +907,12 @@ TEST_F(SessionsSyncManagerTest, BlockedNavigations) {
   TestSyncedTabDelegate* tab =
       AddTab(AddWindow()->GetSessionId(), kFoo1, kTime1);
 
-  auto entry2 = std::make_unique<sessions::SerializedNavigationEntry>();
+  auto entry2 = base::MakeUnique<sessions::SerializedNavigationEntry>();
   GURL url2("http://blocked.com/foo");
   SerializedNavigationEntryTestHelper::SetVirtualURL(GURL(url2), entry2.get());
   SerializedNavigationEntryTestHelper::SetTimestamp(kTime2, entry2.get());
 
-  auto entry3 = std::make_unique<sessions::SerializedNavigationEntry>();
+  auto entry3 = base::MakeUnique<sessions::SerializedNavigationEntry>();
   GURL url3("http://evil.com");
   SerializedNavigationEntryTestHelper::SetVirtualURL(GURL(url3), entry3.get());
   SerializedNavigationEntryTestHelper::SetTimestamp(kTime3, entry3.get());
@@ -1053,7 +1054,7 @@ TEST_F(SessionsSyncManagerTest, PreserveTabbedDataCustomTab) {
   SessionID new_window_id;
   window->OverrideWindowId(new_window_id.id());
   std::unique_ptr<TestSyncedTabDelegate> custom_tab =
-      std::make_unique<TestSyncedTabDelegate>();
+      base::MakeUnique<TestSyncedTabDelegate>();
   NavigateTab(custom_tab.get(), kBar1);
   window->OverrideTabAt(0, custom_tab.get());
   InitWithSyncDataTakeOutput(ConvertToRemote(in), &out);

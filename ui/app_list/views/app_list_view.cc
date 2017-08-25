@@ -539,6 +539,7 @@ void AppListView::InitializeFullscreen(gfx::NativeView parent,
 
   overlay_view_ = new AppListOverlayView(0 /* no corners */);
 
+  work_area_bottom_ = fullscreen_widget_->GetWorkAreaBoundsInScreen().bottom();
   widget_observer_ = std::unique_ptr<FullscreenWidgetObserver>(
       new FullscreenWidgetObserver(this));
 }
@@ -1260,10 +1261,6 @@ void AppListView::SetIsInDrag(bool is_in_drag) {
       ->UpdateControlVisibility(app_list_state_, is_in_drag_);
 }
 
-int AppListView::GetWorkAreaBottom() {
-  return fullscreen_widget_->GetWorkAreaBoundsInScreen().bottom();
-}
-
 void AppListView::OnSpeechRecognitionStateChanged(
     SpeechRecognitionState new_state) {
   if (!speech_view_)
@@ -1348,10 +1345,8 @@ void AppListView::OnDisplayMetricsChanged(const display::Display& display,
 }
 
 void AppListView::DraggingLayout() {
-  float shield_opacity =
-      is_background_blur_enabled_ ? kAppListOpacityWithBlur : kAppListOpacity;
   app_list_background_shield_->layer()->SetOpacity(
-      is_in_drag_ ? background_opacity_ : shield_opacity);
+      is_in_drag_ ? background_opacity_ : kAppListOpacity);
 
   // Updates the opacity of the items in the app list.
   search_box_view_->UpdateOpacity();
@@ -1362,12 +1357,10 @@ void AppListView::DraggingLayout() {
 
 float AppListView::GetAppListBackgroundOpacityDuringDragging() {
   float top_of_applist = fullscreen_widget_->GetWindowBoundsInScreen().y();
-  float dragging_height = std::max((GetWorkAreaBottom() - top_of_applist), 0.f);
+  float dragging_height = std::max((work_area_bottom_ - top_of_applist), 0.f);
   float coefficient =
       std::min(dragging_height / (kNumOfShelfSize * kShelfSize), 1.0f);
-  float shield_opacity =
-      is_background_blur_enabled_ ? kAppListOpacityWithBlur : kAppListOpacity;
-  return coefficient * shield_opacity;
+  return coefficient * kAppListOpacity;
 }
 
 void AppListView::GetWallpaperProminentColors(std::vector<SkColor>* colors) {

@@ -818,15 +818,17 @@ TEST_P(GLES2DecoderWithShaderTest, DrawArraysValidAttributesSucceeds) {
 // Same as DrawArraysValidAttributesSucceeds, but with workaround
 // |init_vertex_attributes|.
 TEST_P(GLES2DecoderManualInitTest, InitVertexAttributes) {
-  gpu::GpuDriverBugWorkarounds workarounds;
-  workarounds.init_vertex_attributes = true;
+  base::CommandLine command_line(0, NULL);
+  command_line.AppendSwitchASCII(
+      switches::kGpuDriverBugWorkarounds,
+      base::IntToString(gpu::INIT_VERTEX_ATTRIBUTES));
   InitState init;
   init.has_alpha = true;
   init.has_depth = true;
   init.request_alpha = true;
   init.request_depth = true;
   init.bind_generates_resource = true;
-  InitDecoderWithWorkarounds(init, workarounds);
+  InitDecoderWithCommandLine(init, &command_line);
   SetupDefaultProgram();
   SetupTexture();
   SetupVertexBuffer();

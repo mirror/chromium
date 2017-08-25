@@ -6,7 +6,6 @@
 
 #import <CoreGraphics/CoreGraphics.h>
 #import <Foundation/Foundation.h>
-#import <UIKit/UIKit.h>
 
 #include "base/macros.h"
 #include "base/strings/stringprintf.h"
@@ -158,10 +157,6 @@ TEST_F(ContextMenuJsTest, TextAreaStopsProximity) {
 
 // Tests the javascript of the url of the an image present in the DOM.
 TEST_F(ContextMenuJsTest, LinkOfImage) {
-  if (UIDevice.currentDevice.userInterfaceIdiom == UIUserInterfaceIdiomPad) {
-    // TODO(crbug.com/758735): enable this test on iPad.
-    return;
-  }
   // A page with a large image surrounded by a link.
   static const char image[] =
       "<a href='%s'><img width=400 height=400 src='foo'></img></a>";
@@ -246,12 +241,8 @@ TEST_F(ContextMenuJsTest, UnsupportedReferrerPolicy) {
 
 // Tests that a callout information about a link is displayed when
 // -webkit-touch-callout property is not specified. Please see:
-// https://developer.mozilla.org/en-US/docs/Web/CSS/-webkit-touch-callout
+// https://developer.mozilla.org/en-US/docs/Web/CSS/-webkit-touch-callout.
 TEST_F(ContextMenuJsTest, LinkOfTextWithoutCalloutProperty) {
-  if (UIDevice.currentDevice.userInterfaceIdiom == UIUserInterfaceIdiomPad) {
-    // TODO(crbug.com/758735): enable this test on iPad.
-    return;
-  }
   const char kLink_html[] = "<a href='%s'>link</a>";
 
   LoadHtml(base::StringPrintf(kLink_html, "http://destination"));
@@ -266,12 +257,8 @@ TEST_F(ContextMenuJsTest, LinkOfTextWithoutCalloutProperty) {
 
 // Tests that a callout information about a link is displayed when
 // -webkit-touch-callout property is set to default. Please see:
-// https://developer.mozilla.org/en-US/docs/Web/CSS/-webkit-touch-callout
+// https://developer.mozilla.org/en-US/docs/Web/CSS/-webkit-touch-callout.
 TEST_F(ContextMenuJsTest, LinkOfTextWithCalloutDefault) {
-  if (UIDevice.currentDevice.userInterfaceIdiom == UIUserInterfaceIdiomPad) {
-    // TODO(crbug.com/758735): enable this test on iPad.
-    return;
-  }
   const char kLink_html[] =
       "<a href='%s' style='-webkit-touch-callout:default;'>link</a>";
 
@@ -287,12 +274,8 @@ TEST_F(ContextMenuJsTest, LinkOfTextWithCalloutDefault) {
 
 // Tests that no callout information about a link is displayed when
 // -webkit-touch-callout property is set to none. Please see:
-// https://developer.mozilla.org/en-US/docs/Web/CSS/-webkit-touch-callout
+// https://developer.mozilla.org/en-US/docs/Web/CSS/-webkit-touch-callout.
 TEST_F(ContextMenuJsTest, LinkOfTextWithCalloutNone) {
-  if (UIDevice.currentDevice.userInterfaceIdiom == UIUserInterfaceIdiomPad) {
-    // TODO(crbug.com/758735): enable this test on iPad.
-    return;
-  }
   const char kLink_html[] =
       "<a href='%s' style='-webkit-touch-callout:none;'>link</a>";
 
@@ -303,12 +286,8 @@ TEST_F(ContextMenuJsTest, LinkOfTextWithCalloutNone) {
 
 // Tests that -webkit-touch-callout property can be inherited from ancester if
 // it's not specified. Please see:
-// https://developer.mozilla.org/en-US/docs/Web/CSS/-webkit-touch-callout
+// https://developer.mozilla.org/en-US/docs/Web/CSS/-webkit-touch-callout.
 TEST_F(ContextMenuJsTest, LinkOfTextWithCalloutFromAncester) {
-  if (UIDevice.currentDevice.userInterfaceIdiom == UIUserInterfaceIdiomPad) {
-    // TODO(crbug.com/758735): enable this test on iPad.
-    return;
-  }
   const char kLink_html[] =
       "<body style='-webkit-touch-callout: none'>"
       " <a href='%s'>link</a>"
@@ -321,12 +300,8 @@ TEST_F(ContextMenuJsTest, LinkOfTextWithCalloutFromAncester) {
 
 // Tests that setting -webkit-touch-callout property can override the value
 // inherited from ancester. Please see:
-// https://developer.mozilla.org/en-US/docs/Web/CSS/-webkit-touch-callout
+// https://developer.mozilla.org/en-US/docs/Web/CSS/-webkit-touch-callout.
 TEST_F(ContextMenuJsTest, LinkOfTextWithCalloutOverride) {
-  if (UIDevice.currentDevice.userInterfaceIdiom == UIUserInterfaceIdiomPad) {
-    // TODO(crbug.com/758735): enable this test on iPad.
-    return;
-  }
   const char kLink_html[] =
       "<body style='-webkit-touch-callout: none'>"
       " <a href='%s' style='-webkit-touch-callout: default'>link</a>"

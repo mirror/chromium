@@ -55,7 +55,11 @@ EmbeddedTestServer::EmbeddedTestServer(Type type)
 
   if (!is_using_ssl_)
     return;
-  RegisterTestCerts();
+  base::ThreadRestrictions::ScopedAllowIO allow_io_for_importing_test_cert;
+  TestRootCerts* root_certs = TestRootCerts::GetInstance();
+  bool added_root_certs = root_certs->AddFromFile(GetRootCertPemPath());
+  DCHECK(added_root_certs)
+      << "Failed to install root cert from EmbeddedTestServer";
 }
 
 EmbeddedTestServer::~EmbeddedTestServer() {
@@ -71,14 +75,6 @@ EmbeddedTestServer::~EmbeddedTestServer() {
 
     io_thread_.reset();
   }
-}
-
-void EmbeddedTestServer::RegisterTestCerts() {
-  base::ThreadRestrictions::ScopedAllowIO allow_io_for_importing_test_cert;
-  TestRootCerts* root_certs = TestRootCerts::GetInstance();
-  bool added_root_certs = root_certs->AddFromFile(GetRootCertPemPath());
-  DCHECK(added_root_certs)
-      << "Failed to install root cert from EmbeddedTestServer";
 }
 
 void EmbeddedTestServer::SetConnectionListener(
@@ -282,6 +278,10 @@ std::string EmbeddedTestServer::GetCertificateName() const {
       return "localhost_cert.pem";
     case CERT_EXPIRED:
       return "expired_cert.pem";
+    case CERT_CHAIN_WRONG_ROOT:
+      return "redundant-server-chain.pem";
+    case CERT_BAD_VALIDITY:
+      return "bad_validity.pem";
   }
 
   return "ok_cert.pem";

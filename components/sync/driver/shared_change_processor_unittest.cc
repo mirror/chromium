@@ -9,6 +9,7 @@
 #include "base/bind.h"
 #include "base/bind_helpers.h"
 #include "base/compiler_specific.h"
+#include "base/memory/ptr_util.h"
 #include "base/message_loop/message_loop.h"
 #include "base/synchronization/waitable_event.h"
 #include "base/threading/thread.h"
@@ -161,7 +162,7 @@ class SyncSharedChangeProcessorTest : public testing::Test,
   void SetUpDBSyncableService() {
     DCHECK(model_thread_.task_runner()->BelongsToCurrentThread());
     DCHECK(!db_syncable_service_.get());
-    db_syncable_service_ = std::make_unique<FakeSyncableService>();
+    db_syncable_service_ = base::MakeUnique<FakeSyncableService>();
   }
 
   // Used by TearDown().
@@ -186,7 +187,7 @@ class SyncSharedChangeProcessorTest : public testing::Test,
     DCHECK(model_thread_.task_runner()->BelongsToCurrentThread());
     EXPECT_TRUE(shared_change_processor->Connect(
         this, &processor_factory_, test_user_share_.user_share(),
-        std::make_unique<DataTypeErrorHandlerMock>(),
+        base::MakeUnique<DataTypeErrorHandlerMock>(),
         base::WeakPtr<SyncMergeResult>()));
     did_connect_ = true;
   }

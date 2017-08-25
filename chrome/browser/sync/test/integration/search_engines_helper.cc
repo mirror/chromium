@@ -8,6 +8,7 @@
 
 #include <vector>
 
+#include "base/memory/ptr_util.h"
 #include "base/strings/string_util.h"
 #include "base/strings/stringprintf.h"
 #include "base/strings/utf_string_conversions.h"
@@ -208,7 +209,7 @@ std::unique_ptr<TemplateURL> CreateTestTemplateURL(
   data.last_modified = base::Time::FromTimeT(100);
   data.prepopulate_id = 999999;
   data.sync_guid = sync_guid;
-  return std::make_unique<TemplateURL>(data);
+  return base::MakeUnique<TemplateURL>(data);
 }
 
 void AddSearchEngine(int profile_index, int seed) {

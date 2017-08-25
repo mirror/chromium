@@ -209,8 +209,7 @@ gfx::Rect AppsContainerView::GetPageBoundsDuringDragging(
     AppListModel::State state) const {
   float app_list_y_position_in_screen =
       contents_view()->app_list_view()->app_list_y_position_in_screen();
-  float work_area_bottom =
-      contents_view()->app_list_view()->GetWorkAreaBottom();
+  float work_area_bottom = contents_view()->app_list_view()->work_area_bottom();
   float drag_amount =
       std::max(0.f, work_area_bottom - app_list_y_position_in_screen);
 
@@ -248,12 +247,6 @@ gfx::Rect AppsContainerView::GetPageBoundsDuringDragging(
     onscreen_bounds.set_y(y);
 
   return onscreen_bounds;
-}
-
-views::View* AppsContainerView::GetSelectedView() const {
-  return IsInFolderView()
-             ? app_list_folder_view_->items_grid_view()->GetSelectedView()
-             : apps_grid_view_->GetSelectedView();
 }
 
 void AppsContainerView::OnTopIconAnimationsComplete() {
@@ -375,7 +368,7 @@ int AppsContainerView::GetSearchBoxTopPaddingDuringDragging() const {
   float peeking_to_fullscreen_height =
       contents_view()->GetDisplayHeight() - kPeekingAppListHeight;
   float drag_amount = std::max(
-      0, contents_view()->app_list_view()->GetWorkAreaBottom() -
+      0, contents_view()->app_list_view()->work_area_bottom() -
              contents_view()->app_list_view()->app_list_y_position_in_screen());
 
   if (drag_amount <= (kPeekingAppListHeight - kShelfSize)) {

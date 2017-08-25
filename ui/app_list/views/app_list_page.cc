@@ -49,10 +49,6 @@ int AppListPage::GetSearchBoxZHeight() const {
   return kDefaultSearchBoxZHeight;
 }
 
-views::View* AppListPage::GetSelectedView() const {
-  return nullptr;
-}
-
 gfx::Rect AppListPage::GetAboveContentsOffscreenBounds(
     const gfx::Size& size) const {
   gfx::Rect rect(size);

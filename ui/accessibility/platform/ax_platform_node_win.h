@@ -224,7 +224,7 @@ class AXPlatformNodeRelationWin : public CComObjectRootEx<CComMultiThreadModel>,
   AXPlatformNodeRelationWin();
   virtual ~AXPlatformNodeRelationWin();
 
-  void Initialize(AXPlatformNodeWin* owner, const base::string16& type);
+  void Initialize(ui::AXPlatformNodeWin* owner, const base::string16& type);
   void AddTarget(int target_id);
   void RemoveTarget(int target_id);
 
@@ -243,7 +243,7 @@ class AXPlatformNodeRelationWin : public CComObjectRootEx<CComMultiThreadModel>,
 
  private:
   base::string16 type_;
-  base::win::ScopedComPtr<AXPlatformNodeWin> owner_;
+  base::win::ScopedComPtr<ui::AXPlatformNodeWin> owner_;
   std::vector<int> target_ids_;
 };
 
@@ -281,7 +281,7 @@ class AX_EXPORT __declspec(uuid("26f5641a-246d-457b-a96d-07f3fae6acf2"))
 
   // AXPlatformNode overrides.
   gfx::NativeViewAccessible GetNativeViewAccessible() override;
-  void NotifyAccessibilityEvent(AXEvent event_type) override;
+  void NotifyAccessibilityEvent(ui::AXEvent event_type) override;
 
   // AXPlatformNodeBase overrides.
   void Destroy() override;
@@ -653,13 +653,14 @@ class AX_EXPORT __declspec(uuid("26f5641a-246d-457b-a96d-07f3fae6acf2"))
  private:
   int32_t unique_id_;
 
-  int MSAAEvent(AXEvent event);
+  int MSAAEvent(ui::AXEvent event);
   bool IsWebAreaForPresentationalIframe();
   bool ShouldNodeHaveReadonlyStateByDefault(const AXNodeData& data) const;
   bool ShouldNodeHaveFocusableState(const AXNodeData& data) const;
 
-  HRESULT GetStringAttributeAsBstr(AXStringAttribute attribute,
-                                   BSTR* value_bstr) const;
+  HRESULT GetStringAttributeAsBstr(
+      ui::AXStringAttribute attribute,
+      BSTR* value_bstr) const;
 
   // Escapes characters in string attributes as required by the IA2 Spec.
   // It's okay for input to be the same as output.
@@ -672,19 +673,19 @@ class AX_EXPORT __declspec(uuid("26f5641a-246d-457b-a96d-07f3fae6acf2"))
   // If the string attribute |attribute| is present, add its value as an
   // IAccessible2 attribute with the name |ia2_attr|.
   void StringAttributeToIA2(std::vector<base::string16>& attributes,
-                            AXStringAttribute attribute,
+                            ui::AXStringAttribute attribute,
                             const char* ia2_attr);
 
   // If the bool attribute |attribute| is present, add its value as an
   // IAccessible2 attribute with the name |ia2_attr|.
   void BoolAttributeToIA2(std::vector<base::string16>& attributes,
-                          AXBoolAttribute attribute,
+                          ui::AXBoolAttribute attribute,
                           const char* ia2_attr);
 
   // If the int attribute |attribute| is present, add its value as an
   // IAccessible2 attribute with the name |ia2_attr|.
   void IntAttributeToIA2(std::vector<base::string16>& attributes,
-                         AXIntAttribute attribute,
+                         ui::AXIntAttribute attribute,
                          const char* ia2_attr);
 
   void AddAlertTarget();
@@ -697,8 +698,8 @@ class AX_EXPORT __declspec(uuid("26f5641a-246d-457b-a96d-07f3fae6acf2"))
   // value of offset and returns, otherwise offset remains unchanged.
   void HandleSpecialTextOffset(LONG* offset);
 
-  // Convert from a IA2TextBoundaryType to a TextBoundaryType.
-  TextBoundaryType IA2TextBoundaryToTextBoundary(IA2TextBoundaryType type);
+  // Convert from a IA2TextBoundaryType to a ui::TextBoundaryType.
+  ui::TextBoundaryType IA2TextBoundaryToTextBoundary(IA2TextBoundaryType type);
 
   // Search forwards (direction == 1) or backwards (direction == -1)
   // from the given offset until the given boundary is found, and
@@ -706,7 +707,7 @@ class AX_EXPORT __declspec(uuid("26f5641a-246d-457b-a96d-07f3fae6acf2"))
   LONG FindBoundary(const base::string16& text,
                     IA2TextBoundaryType ia2_boundary,
                     LONG start_offset,
-                    TextBoundaryDirection direction);
+                    ui::TextBoundaryDirection direction);
 
   // Many MSAA methods take a var_id parameter indicating that the operation
   // should be performed on a particular child ID, rather than this object.
@@ -724,7 +725,7 @@ class AX_EXPORT __declspec(uuid("26f5641a-246d-457b-a96d-07f3fae6acf2"))
   void AddRelation(const base::string16& relation_type, int target_id);
   void AddBidirectionalRelations(const base::string16& relation_type,
                                  const base::string16& reverse_relation_type,
-                                 AXIntListAttribute attribute);
+                                 ui::AXIntListAttribute attribute);
   void AddBidirectionalRelations(const base::string16& relation_type,
                                  const base::string16& reverse_relation_type,
                                  const std::vector<int32_t>& target_ids);
@@ -746,7 +747,7 @@ class AX_EXPORT __declspec(uuid("26f5641a-246d-457b-a96d-07f3fae6acf2"))
                                      LONG* n_selected);
 
   // Relationships between this node and other nodes.
-  std::vector<AXPlatformNodeRelationWin*> relations_;
+  std::vector<ui::AXPlatformNodeRelationWin*> relations_;
 };
 
 }  // namespace ui

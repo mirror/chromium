@@ -293,7 +293,7 @@ void OneClickSigninSyncStarter::OnRegisteredForPolicy(
   TabDialogs::FromWebContents(web_contents)
       ->ShowProfileSigninConfirmation(browser_, profile_,
                                       signin->GetUsernameForAuthInProgress(),
-                                      std::make_unique<SigninDialogDelegate>(
+                                      base::MakeUnique<SigninDialogDelegate>(
                                           weak_pointer_factory_.GetWeakPtr()));
   // If force signin enabled, lock the profile when dialog is being displayed to
   // avoid new browser window opened.

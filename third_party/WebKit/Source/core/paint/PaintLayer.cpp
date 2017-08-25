@@ -2822,7 +2822,16 @@ bool PaintLayer::SupportsSubsequenceCaching() const {
     return true;
 
   // Create subsequence for only stacking contexts whose painting are atomic.
-  return StackingNode()->IsStackingContext();
+  if (!StackingNode()->IsStackingContext())
+    return false;
+
+  // The layer doesn't have children. Subsequence caching is not worth it,
+  // because normally the actual painting will be cheap.
+  // SVG is also painted atomically.
+  if (!PaintLayerStackingNodeIterator(*StackingNode(), kAllChildren).Next())
+    return false;
+
+  return true;
 }
 
 ScrollingCoordinator* PaintLayer::GetScrollingCoordinator() {

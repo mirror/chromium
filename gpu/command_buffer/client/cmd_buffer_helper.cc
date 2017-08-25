@@ -60,9 +60,8 @@ bool CommandBufferHelper::IsContextLost() {
 void CommandBufferHelper::CalcImmediateEntries(int waiting_count) {
   DCHECK_GE(waiting_count, 0);
 
-  // If not allocated, no entries are available. If not usable, it will not be
-  // allocated.
-  if (!HaveRingBuffer()) {
+  // Check if usable & allocated.
+  if (!usable() || !HaveRingBuffer()) {
     immediate_entry_count_ = 0;
     return;
   }
@@ -112,27 +111,17 @@ bool CommandBufferHelper::AllocateRingBuffer() {
   scoped_refptr<Buffer> buffer =
       command_buffer_->CreateTransferBuffer(ring_buffer_size_, &id);
   if (id < 0) {
-    usable_ = false;
-    context_lost_ = true;
-    CalcImmediateEntries(0);
+    ClearUsable();
+    DCHECK(context_lost_);
     return false;
   }
 
-  SetGetBuffer(id, std::move(buffer));
-  return true;
-}
-
-void CommandBufferHelper::SetGetBuffer(int32_t id,
-                                       scoped_refptr<Buffer> buffer) {
-  command_buffer_->SetGetBuffer(id);
-  ring_buffer_ = std::move(buffer);
+  ring_buffer_ = buffer;
   ring_buffer_id_ = id;
+  command_buffer_->SetGetBuffer(id);
   ++set_get_buffer_count_;
-  entries_ = ring_buffer_
-                 ? static_cast<CommandBufferEntry*>(ring_buffer_->memory())
-                 : 0;
-  total_entry_count_ =
-      ring_buffer_ ? ring_buffer_size_ / sizeof(CommandBufferEntry) : 0;
+  entries_ = static_cast<CommandBufferEntry*>(ring_buffer_->memory());
+  total_entry_count_ = ring_buffer_size_ / sizeof(CommandBufferEntry);
   // Call to SetGetBuffer(id) above resets get and put offsets to 0.
   // No need to query it through IPC.
   put_ = 0;
@@ -140,14 +129,23 @@ void CommandBufferHelper::SetGetBuffer(int32_t id,
   cached_get_offset_ = 0;
   service_on_old_buffer_ = true;
   CalcImmediateEntries(0);
+  return true;
+}
+
+void CommandBufferHelper::FreeResources() {
+  if (HaveRingBuffer()) {
+    command_buffer_->DestroyTransferBuffer(ring_buffer_id_);
+    ring_buffer_id_ = -1;
+    CalcImmediateEntries(0);
+    entries_ = nullptr;
+    ring_buffer_ = nullptr;
+  }
 }
 
 void CommandBufferHelper::FreeRingBuffer() {
-  if (HaveRingBuffer()) {
-    FlushLazy();
-    command_buffer_->DestroyTransferBuffer(ring_buffer_id_);
-    SetGetBuffer(-1, nullptr);
-  }
+  CHECK((put_ == cached_get_offset_) ||
+        error::IsError(command_buffer_->GetLastState().error));
+  FreeResources();
 }
 
 bool CommandBufferHelper::Initialize(int32_t ring_buffer_size) {
@@ -156,7 +154,7 @@ bool CommandBufferHelper::Initialize(int32_t ring_buffer_size) {
 }
 
 CommandBufferHelper::~CommandBufferHelper() {
-  FreeRingBuffer();
+  FreeResources();
 }
 
 void CommandBufferHelper::UpdateCachedState(const CommandBuffer::State& state) {
@@ -173,6 +171,9 @@ void CommandBufferHelper::UpdateCachedState(const CommandBuffer::State& state) {
 bool CommandBufferHelper::WaitForGetOffsetInRange(int32_t start, int32_t end) {
   DCHECK(start >= 0 && start <= total_entry_count_);
   DCHECK(end >= 0 && end <= total_entry_count_);
+  if (!usable()) {
+    return false;
+  }
   CommandBuffer::State last_state = command_buffer_->WaitForGetOffsetInRange(
       set_get_buffer_count_, start, end);
   UpdateCachedState(last_state);
@@ -184,7 +185,7 @@ void CommandBufferHelper::Flush() {
   if (put_ == total_entry_count_)
     put_ = 0;
 
-  if (HaveRingBuffer()) {
+  if (usable()) {
     last_flush_time_ = base::TimeTicks::Now();
     last_put_sent_ = put_;
     command_buffer_->Flush(put_);
@@ -193,18 +194,12 @@ void CommandBufferHelper::Flush() {
   }
 }
 
-void CommandBufferHelper::FlushLazy() {
-  if (put_ == last_put_sent_)
-    return;
-  Flush();
-}
-
 void CommandBufferHelper::OrderingBarrier() {
   // Wrap put_ before setting the barrier.
   if (put_ == total_entry_count_)
     put_ = 0;
 
-  if (HaveRingBuffer()) {
+  if (usable()) {
     command_buffer_->OrderingBarrier(put_);
     ++flush_generation_;
     CalcImmediateEntries(0);
@@ -225,11 +220,17 @@ void CommandBufferHelper::PeriodicFlushCheck() {
 // error is set.
 bool CommandBufferHelper::Finish() {
   TRACE_EVENT0("gpu", "CommandBufferHelper::Finish");
+  if (!usable()) {
+    return false;
+  }
   // If there is no work just exit.
   if (put_ == cached_get_offset_ && !service_on_old_buffer_) {
-    return !context_lost_;
+    return true;
   }
-  FlushLazy();
+  DCHECK(HaveRingBuffer() ||
+         error::IsError(command_buffer_->GetLastState().error));
+  if (last_put_sent_ != put_)
+    Flush();
   if (!WaitForGetOffsetInRange(put_, put_))
     return false;
   DCHECK_EQ(cached_get_offset_, put_);
@@ -242,14 +243,18 @@ bool CommandBufferHelper::Finish() {
 // Inserts a new token into the command stream. It uses an increasing value
 // scheme so that we don't lose tokens (a token has passed if the current token
 // value is higher than that token). Calls Finish() if the token value wraps,
-// which will be rare. If we can't allocate a command buffer, token doesn't
-// increase, ensuring WaitForToken eventually returns.
+// which will be rare.
 int32_t CommandBufferHelper::InsertToken() {
+  AllocateRingBuffer();
+  if (!usable()) {
+    return token_;
+  }
+  DCHECK(HaveRingBuffer());
   // Increment token as 31-bit integer. Negative values are used to signal an
   // error.
+  token_ = (token_ + 1) & 0x7FFFFFFF;
   cmd::SetToken* cmd = GetCmdSpace<cmd::SetToken>();
   if (cmd) {
-    token_ = (token_ + 1) & 0x7FFFFFFF;
     cmd->Init(token_);
     if (token_ == 0) {
       TRACE_EVENT0("gpu", "CommandBufferHelper::InsertToken(wrapped)");
@@ -275,10 +280,20 @@ bool CommandBufferHelper::HasTokenPassed(int32_t token) {
 // Waits until the current token value is greater or equal to the value passed
 // in argument.
 void CommandBufferHelper::WaitForToken(int32_t token) {
-  DCHECK_GE(token, 0);
-  if (HasTokenPassed(token))
+  if (!usable() || !HaveRingBuffer()) {
     return;
-  FlushLazy();
+  }
+  // Return immediately if corresponding InsertToken failed.
+  if (token < 0)
+    return;
+  if (token > token_)
+    return;  // we wrapped
+  if (cached_last_token_read_ >= token)
+    return;
+  UpdateCachedState(command_buffer_->GetLastState());
+  if (cached_last_token_read_ >= token)
+    return;
+  Flush();
   CommandBuffer::State last_state =
       command_buffer_->WaitForTokenInRange(token, token_);
   UpdateCachedState(last_state);
@@ -290,8 +305,10 @@ void CommandBufferHelper::WaitForToken(int32_t token) {
 // function will return early if an error occurs, in which case the available
 // space may not be available.
 void CommandBufferHelper::WaitForAvailableEntries(int32_t count) {
-  if (!AllocateRingBuffer())
+  AllocateRingBuffer();
+  if (!usable()) {
     return;
+  }
   DCHECK(HaveRingBuffer());
   DCHECK(count < total_entry_count_);
   if (put_ + count > total_entry_count_) {
@@ -303,7 +320,7 @@ void CommandBufferHelper::WaitForAvailableEntries(int32_t count) {
     int32_t curr_get = cached_get_offset_;
     if (curr_get > put_ || curr_get == 0) {
       TRACE_EVENT0("gpu", "CommandBufferHelper::WaitForAvailableEntries");
-      FlushLazy();
+      Flush();
       if (!WaitForGetOffsetInRange(1, put_))
         return;
       curr_get = cached_get_offset_;
@@ -325,7 +342,7 @@ void CommandBufferHelper::WaitForAvailableEntries(int32_t count) {
   CalcImmediateEntries(count);
   if (immediate_entry_count_ < count) {
     // Try again with a shallow Flush().
-    FlushLazy();
+    Flush();
     CalcImmediateEntries(count);
     if (immediate_entry_count_ < count) {
       // Buffer is full.  Need to wait for entries.

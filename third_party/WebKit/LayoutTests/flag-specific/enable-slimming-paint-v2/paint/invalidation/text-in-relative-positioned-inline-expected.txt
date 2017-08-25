@@ -7,7 +7,7 @@
       "drawsContent": true,
       "paintInvalidations": [
         {
-          "object": "InlineTextBox 'ab'",
+          "object": "LayoutBlockFlow HTML",
           "rect": [8, 8, 200, 100],
           "reason": "disappeared"
         }

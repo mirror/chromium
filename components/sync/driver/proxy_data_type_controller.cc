@@ -4,6 +4,7 @@
 
 #include "components/sync/driver/proxy_data_type_controller.h"
 
+#include "base/memory/ptr_util.h"
 #include "base/values.h"
 #include "components/sync/engine/model_safe_worker.h"
 #include "components/sync/engine/model_type_configurer.h"
@@ -70,7 +71,7 @@ void ProxyDataTypeController::DeactivateDataType(
 }
 
 void ProxyDataTypeController::GetAllNodes(const AllNodesCallback& callback) {
-  callback.Run(type(), std::make_unique<base::ListValue>());
+  callback.Run(type(), base::MakeUnique<base::ListValue>());
 }
 
 void ProxyDataTypeController::GetStatusCounters(

@@ -81,7 +81,6 @@ function emitExpectedResult(path, expected)
         break;
     case "navigator.appCodeName":
     case "navigator.appName":
-    case "navigator.deviceMemory":
     case "navigator.hardwareConcurrency":
     case "navigator.language":
     case "navigator.onLine":

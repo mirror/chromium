@@ -16,7 +16,6 @@
 
 namespace blink {
 
-class Hyphenation;
 class NGInlineBreakToken;
 class NGInlineItem;
 class NGFragmentBuilder;
@@ -107,7 +106,6 @@ class CORE_EXPORT NGLineBreaker {
   void BreakText(NGInlineItemResult*,
                  const NGInlineItem&,
                  LayoutUnit available_width);
-  static void AppendHyphen(const ComputedStyle&, ShapeResult*);
 
   LineBreakState HandleControlItem(const NGInlineItem&, NGInlineItemResult*);
   LineBreakState HandleAtomicInline(const NGInlineItem&,
@@ -142,7 +140,6 @@ class CORE_EXPORT NGLineBreaker {
   LazyLineBreakIterator break_iterator_;
   HarfBuzzShaper shaper_;
   ShapeResultSpacing<String> spacing_;
-  const Hyphenation* hyphenation_ = nullptr;
 
   // Keep track of handled float items. See HandleFloat().
   unsigned handled_floats_end_item_index_ = 0;

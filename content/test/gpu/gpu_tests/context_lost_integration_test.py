@@ -24,6 +24,8 @@ harness_script = r"""
   domAutomationController._succeeded = false;
   domAutomationController._finished = false;
 
+  domAutomationController.setAutomationId = function(id) {}
+
   domAutomationController.send = function(msg) {
     msg = msg.toLowerCase()
     if (msg == "loaded") {

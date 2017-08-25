@@ -703,10 +703,6 @@
       name: "NavigatorContentUtils",
     },
     {
-      name: "NavigatorDeviceMemory",
-      status: "experimental",
-    },
-    {
       name: "NetInfoDownlink",
       status: "stable",
     },

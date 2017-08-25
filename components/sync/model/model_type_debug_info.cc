@@ -8,6 +8,7 @@
 #include <utility>
 
 #include "base/bind.h"
+#include "base/memory/ptr_util.h"
 #include "components/sync/base/data_type_histogram.h"
 #include "components/sync/model_impl/processor_entity_tracker.h"
 #include "components/sync/protocol/proto_value_conversions.h"
@@ -76,7 +77,7 @@ void ModelTypeDebugInfo::MergeDataWithMetadata(
     const base::Callback<void(const ModelType, std::unique_ptr<ListValue>)>&
         callback,
     std::unique_ptr<DataBatch> batch) {
-  std::unique_ptr<ListValue> all_nodes = std::make_unique<ListValue>();
+  std::unique_ptr<ListValue> all_nodes = base::MakeUnique<ListValue>();
   std::string type_string = ModelTypeToString(processor->type_);
 
   while (batch->HasNext()) {
@@ -96,7 +97,7 @@ void ModelTypeDebugInfo::MergeDataWithMetadata(
   // create root folders, and USS won't migrate root folders from directory, we
   // create root folders for each data type here.
   std::unique_ptr<DictionaryValue> rootnode =
-      std::make_unique<DictionaryValue>();
+      base::MakeUnique<DictionaryValue>();
   // Function isTypeRootNode in sync_node_browser.js use PARENT_ID and
   // UNIQUE_SERVER_TAG to check if the node is root node. isChildOf in
   // sync_node_browser.js uses modelType to check if root node is parent of real

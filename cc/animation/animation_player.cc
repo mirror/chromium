@@ -834,6 +834,20 @@ void AnimationPlayer::ActivateAnimations() {
   UpdateTickingState(UpdateTickingType::NORMAL);
 }
 
+bool AnimationPlayer::HasFilterAnimationThatInflatesBounds() const {
+  for (size_t i = 0; i < animations_.size(); ++i) {
+    if (!animations_[i]->is_finished() &&
+        animations_[i]->target_property_id() == TargetProperty::FILTER &&
+        animations_[i]
+            ->curve()
+            ->ToFilterAnimationCurve()
+            ->HasFilterThatMovesPixels())
+      return true;
+  }
+
+  return false;
+}
+
 bool AnimationPlayer::HasTransformAnimationThatInflatesBounds() const {
   return IsCurrentlyAnimatingProperty(TargetProperty::TRANSFORM,
                                       ElementListType::ACTIVE) ||

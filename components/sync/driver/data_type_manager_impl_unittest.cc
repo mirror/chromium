@@ -7,6 +7,7 @@
 #include <memory>
 #include <utility>
 
+#include "base/memory/ptr_util.h"
 #include "base/message_loop/message_loop.h"
 #include "base/run_loop.h"
 #include "components/sync/base/model_type.h"
@@ -251,7 +252,7 @@ class SyncDataTypeManagerImplTest : public testing::Test {
 
  protected:
   void SetUp() override {
-    dtm_ = std::make_unique<TestDataTypeManager>(
+    dtm_ = base::MakeUnique<TestDataTypeManager>(
         &sync_client_, ModelTypeSet(), WeakHandle<DataTypeDebugInfoListener>(),
         &controllers_, &encryption_handler_, &configurer_, &observer_);
   }
@@ -286,7 +287,7 @@ class SyncDataTypeManagerImplTest : public testing::Test {
   // Should be called only before setting up the DTM.
   void AddController(ModelType model_type) {
     controllers_[model_type] =
-        std::make_unique<FakeDataTypeController>(model_type);
+        base::MakeUnique<FakeDataTypeController>(model_type);
   }
 
   // Convenience method to create a controller and set some parameters.

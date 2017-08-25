@@ -6,6 +6,7 @@
 
 #include <utility>
 
+#include "base/memory/ptr_util.h"
 #include "components/sync/model/metadata_batch.h"
 #include "components/sync/model/metadata_change_list.h"
 
@@ -48,7 +49,7 @@ void ModelTypeSyncBridge::DisableSync() {
   // processor that there is no metadata. DisableSync() should never be called
   // while the models are loading, aka before the service has finished loading
   // the initial metadata.
-  change_processor_->ModelReadyToSync(std::make_unique<MetadataBatch>());
+  change_processor_->ModelReadyToSync(base::MakeUnique<MetadataBatch>());
 }
 
 ModelTypeChangeProcessor* ModelTypeSyncBridge::change_processor() const {

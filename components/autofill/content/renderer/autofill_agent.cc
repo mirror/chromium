@@ -704,11 +704,9 @@ void AutofillAgent::QueryAutofillSuggestions(
                                      &field);
   }
 
-  // Check the form action attribute only if it is not empty, see
-  // crbug.com/757895.
   if (is_secure_context_required_ &&
       !(element.GetDocument().IsSecureContext() &&
-        (form.action.is_empty() || content::IsOriginSecure(form.action)))) {
+        content::IsOriginSecure(form.action))) {
     LOG(WARNING) << "Autofill suggestions are disabled because the document "
                     "isn't a secure context or the form's action attribute "
                     "isn't secure.";

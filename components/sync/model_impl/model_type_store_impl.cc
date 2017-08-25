@@ -11,6 +11,7 @@
 #include "base/lazy_instance.h"
 #include "base/location.h"
 #include "base/logging.h"
+#include "base/memory/ptr_util.h"
 #include "base/optional.h"
 #include "base/task_runner_util.h"
 #include "base/task_scheduler/post_task.h"
@@ -267,7 +268,7 @@ void ModelTypeStoreImpl::ReadMetadataRecordsDone(
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
   if (result != Result::SUCCESS) {
     callback.Run(ModelError(FROM_HERE, "Reading metadata failed."),
-                 std::make_unique<MetadataBatch>());
+                 base::MakeUnique<MetadataBatch>());
     return;
   }
 
@@ -298,7 +299,7 @@ void ModelTypeStoreImpl::ReadAllMetadataDone(
 
   if (result != Result::SUCCESS) {
     callback.Run(ModelError(FROM_HERE, "Reading metadata failed."),
-                 std::make_unique<MetadataBatch>());
+                 base::MakeUnique<MetadataBatch>());
     return;
   }
 
@@ -321,13 +322,13 @@ void ModelTypeStoreImpl::DeserializeMetadata(
     const ReadMetadataCallback& callback,
     const std::string& global_metadata,
     std::unique_ptr<RecordList> metadata_records) {
-  auto metadata_batch = std::make_unique<MetadataBatch>();
+  auto metadata_batch = base::MakeUnique<MetadataBatch>();
 
   sync_pb::ModelTypeState state;
   if (!state.ParseFromString(global_metadata)) {
     callback.Run(
         ModelError(FROM_HERE, "Failed to deserialize model type state."),
-        std::make_unique<MetadataBatch>());
+        base::MakeUnique<MetadataBatch>());
     return;
   }
   metadata_batch->SetModelTypeState(state);
@@ -337,7 +338,7 @@ void ModelTypeStoreImpl::DeserializeMetadata(
     if (!entity_metadata.ParseFromString(r.value)) {
       callback.Run(
           ModelError(FROM_HERE, "Failed to deserialize entity metadata."),
-          std::make_unique<MetadataBatch>());
+          base::MakeUnique<MetadataBatch>());
       return;
     }
     metadata_batch->AddMetadata(r.id, entity_metadata);
@@ -349,7 +350,7 @@ void ModelTypeStoreImpl::DeserializeMetadata(
 std::unique_ptr<ModelTypeStore::WriteBatch>
 ModelTypeStoreImpl::CreateWriteBatch() {
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
-  return std::make_unique<WriteBatchImpl>(this);
+  return base::MakeUnique<WriteBatchImpl>(this);
 }
 
 void ModelTypeStoreImpl::CommitWriteBatch(
@@ -414,7 +415,7 @@ void ModelTypeStoreImpl::DeleteGlobalMetadata(WriteBatch* write_batch) {
 
 ModelTypeStoreImpl::WriteBatchImpl::WriteBatchImpl(ModelTypeStore* store)
     : WriteBatch(store) {
-  leveldb_write_batch_ = std::make_unique<leveldb::WriteBatch>();
+  leveldb_write_batch_ = base::MakeUnique<leveldb::WriteBatch>();
 }
 
 ModelTypeStoreImpl::WriteBatchImpl::~WriteBatchImpl() {}

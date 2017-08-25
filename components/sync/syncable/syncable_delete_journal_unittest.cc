@@ -6,6 +6,7 @@
 
 #include <utility>
 
+#include "base/memory/ptr_util.h"
 #include "components/sync/syncable/entry_kernel.h"
 #include "components/sync/syncable/syncable_id.h"
 #include "testing/gtest/include/gtest/gtest.h"
@@ -21,12 +22,12 @@ TEST(SyncableDeleteJournal, AddEntryToJournalIndex_KeyMatchesValue) {
 
   // Add two entries with the same id. Verify that only one entry is stored in
   // JournalIndex and that entry's key matches the value object.
-  entry = std::make_unique<EntryKernel>();
+  entry = base::MakeUnique<EntryKernel>();
   entry->put(ID, Id::CreateFromServerId("id1"));
   DeleteJournal::AddEntryToJournalIndex(&journal_index, std::move(entry));
   EXPECT_EQ(1U, journal_index.size());
 
-  entry = std::make_unique<EntryKernel>();
+  entry = base::MakeUnique<EntryKernel>();
   entry->put(ID, Id::CreateFromServerId("id1"));
   DeleteJournal::AddEntryToJournalIndex(&journal_index, std::move(entry));
   EXPECT_EQ(1U, journal_index.size());

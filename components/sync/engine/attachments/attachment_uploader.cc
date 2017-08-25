@@ -4,6 +4,7 @@
 
 #include "components/sync/engine/attachments/attachment_uploader.h"
 
+#include "base/memory/ptr_util.h"
 #include "components/sync/engine_impl/attachments/attachment_uploader_impl.h"
 
 namespace syncer {
@@ -20,7 +21,7 @@ std::unique_ptr<AttachmentUploader> AttachmentUploader::Create(
         token_service_provider,
     const std::string& store_birthday,
     ModelType model_type) {
-  return std::make_unique<AttachmentUploaderImpl>(
+  return base::MakeUnique<AttachmentUploaderImpl>(
       sync_service_url, url_request_context_getter, account_id, scopes,
       token_service_provider, store_birthday, model_type);
 }

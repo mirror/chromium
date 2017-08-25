@@ -56,11 +56,13 @@ using namespace cmds;
 void GLES2DecoderRGBBackbufferTest::SetUp() {
   // Test codepath with workaround clear_alpha_in_readpixels because
   // ReadPixelsEmulator emulates the incorrect driver behavior.
-  gpu::GpuDriverBugWorkarounds workarounds;
-  workarounds.clear_alpha_in_readpixels = true;
+  base::CommandLine command_line(0, NULL);
+  command_line.AppendSwitchASCII(
+      switches::kGpuDriverBugWorkarounds,
+      base::IntToString(gpu::CLEAR_ALPHA_IN_READPIXELS));
   InitState init;
   init.bind_generates_resource = true;
-  InitDecoderWithWorkarounds(init, workarounds);
+  InitDecoderWithCommandLine(init, &command_line);
   SetupDefaultProgram();
 }
 
@@ -1659,13 +1661,15 @@ void GLES3DecoderWithShaderTest::SetUp() {
 }
 
 void GLES3DecoderRGBBackbufferTest::SetUp() {
-  gpu::GpuDriverBugWorkarounds workarounds;
-  workarounds.clear_alpha_in_readpixels = true;
+  base::CommandLine command_line(0, nullptr);
+  command_line.AppendSwitchASCII(
+      switches::kGpuDriverBugWorkarounds,
+      base::IntToString(gpu::CLEAR_ALPHA_IN_READPIXELS));
   InitState init;
   init.gl_version = "OpenGL ES 3.0";
   init.bind_generates_resource = true;
   init.context_type = CONTEXT_TYPE_OPENGLES3;
-  InitDecoderWithWorkarounds(init, workarounds);
+  InitDecoderWithCommandLine(init, &command_line);
   SetupDefaultProgram();
 }
 

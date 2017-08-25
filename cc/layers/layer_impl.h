@@ -176,6 +176,8 @@ class CC_EXPORT LayerImpl {
   // non-opaque color.  Tries to return background_color(), if possible.
   SkColor SafeOpaqueBackgroundColor() const;
 
+  bool HasPotentiallyRunningFilterAnimation() const;
+
   void SetMasksToBounds(bool masks_to_bounds);
   bool masks_to_bounds() const { return masks_to_bounds_; }
 
@@ -325,6 +327,16 @@ class CC_EXPORT LayerImpl {
     return touch_action_region_;
   }
 
+  bool HasPotentiallyRunningTransformAnimation() const;
+
+  bool HasFilterAnimationThatInflatesBounds() const;
+  bool HasAnimationThatInflatesBounds() const;
+
+  bool FilterAnimationBoundsForBox(const gfx::BoxF& box,
+                                   gfx::BoxF* bounds) const;
+  bool TransformAnimationBoundsForBox(const gfx::BoxF& box,
+                                      gfx::BoxF* bounds) const;
+
   // Note this rect is in layer space (not content space).
   void SetUpdateRect(const gfx::Rect& update_rect);
   const gfx::Rect& update_rect() const { return update_rect_; }
@@ -408,7 +420,7 @@ class CC_EXPORT LayerImpl {
 
   bool has_copy_requests_in_target_subtree();
 
-  void UpdatePropertyTreeForAnimationIfNeeded(ElementId element_id);
+  void UpdatePropertyTreeForAnimationIfNeeded();
 
   float GetIdealContentsScale() const;
 
@@ -457,6 +469,10 @@ class CC_EXPORT LayerImpl {
   gfx::Rect GetScaledEnclosingRectInTargetSpace(float scale) const;
 
  private:
+  // This includes all animations, even those that are finished but haven't yet
+  // been deleted.
+  bool HasAnyAnimationTargetingProperty(TargetProperty::Type property) const;
+
   void ValidateQuadResourcesInternal(DrawQuad* quad) const;
 
   virtual const char* LayerTypeAsString() const;

@@ -10,6 +10,7 @@
 #include "base/bind_helpers.h"
 #include "base/files/file_path.h"
 #include "base/location.h"
+#include "base/memory/ptr_util.h"
 #include "base/run_loop.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "components/browser_sync/test_http_bridge_factory.h"
@@ -33,7 +34,7 @@ namespace {
 
 std::unique_ptr<syncer::HttpPostProviderFactory> GetHttpPostProviderFactory(
     syncer::CancelationSignal* signal) {
-  return std::make_unique<TestHttpBridgeFactory>();
+  return base::MakeUnique<TestHttpBridgeFactory>();
 }
 
 class SyncEngineForProfileSyncTest : public SyncBackendHostImpl {
@@ -78,7 +79,7 @@ SyncEngineForProfileSyncTest::~SyncEngineForProfileSyncTest() {}
 void SyncEngineForProfileSyncTest::Initialize(InitParams params) {
   params.http_factory_getter = base::Bind(&GetHttpPostProviderFactory);
   params.sync_manager_factory =
-      std::make_unique<syncer::SyncManagerFactoryForProfileSyncTest>(callback_);
+      base::MakeUnique<syncer::SyncManagerFactoryForProfileSyncTest>(callback_);
   params.credentials.email = "testuser@gmail.com";
   params.credentials.sync_token = "token";
   params.credentials.scope_set.insert(GaiaConstants::kChromeSyncOAuth2Scope);
@@ -90,7 +91,7 @@ void SyncEngineForProfileSyncTest::Initialize(InitParams params) {
   syncer::EngineComponentsFactory::Switches factory_switches =
       params.engine_components_factory->GetSwitches();
   params.engine_components_factory =
-      std::make_unique<syncer::TestEngineComponentsFactory>(
+      base::MakeUnique<syncer::TestEngineComponentsFactory>(
           factory_switches, syncer::EngineComponentsFactory::STORAGE_IN_MEMORY,
           nullptr);
 
@@ -166,7 +167,7 @@ void AbstractProfileSyncServiceTest::CreateSyncService(
       profile_sync_service_bundle_.CreateBasicInitParams(
           ProfileSyncService::AUTO_START, std::move(sync_client));
   sync_service_ =
-      std::make_unique<TestProfileSyncService>(std::move(init_params));
+      base::MakeUnique<TestProfileSyncService>(std::move(init_params));
 
   syncer::SyncApiComponentFactoryMock* components =
       profile_sync_service_bundle_.component_factory();

@@ -6,7 +6,6 @@ package org.chromium.chrome.browser.payments;
 
 import org.chromium.payments.mojom.PaymentMethodData;
 
-import java.net.URI;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -76,15 +75,6 @@ public interface PaymentApp {
      */
     @Nullable
     Set<String> getPreferredRelatedApplicationIds();
-
-    /**
-     * Gets the app Id this application can dedupe. The return, for example, could be
-     * "https://bobpay.com";
-     */
-    @Nullable
-    default URI getCanDedupedApplicationId() {
-        return null;
-    }
 
     /**
      * Returns the identifier for this payment app to be saved in user preferences. For

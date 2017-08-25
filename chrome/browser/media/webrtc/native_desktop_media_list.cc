@@ -23,9 +23,9 @@
 #include "ui/views/widget/desktop_aura/desktop_window_tree_host_win.h"
 #endif  // defined(OS_WIN)
 
-#if defined(USE_X11)
+#if defined(USE_X11) && !defined(OS_CHROMEOS)
 #include "ui/views/widget/desktop_aura/desktop_window_tree_host_x11.h"
-#endif  // defined(USE_X11)
+#endif  // defined(USE_X11) && !defined(OS_CHROMEOS)
 
 #if defined(USE_AURA)
 #include "ui/snapshot/snapshot_aura.h"
@@ -254,10 +254,10 @@ void NativeDesktopMediaList::RefreshForAuraWindows(
 #if defined(OS_WIN)
     aura_window = views::DesktopWindowTreeHostWin::GetContentWindowForHWND(
         reinterpret_cast<HWND>(source.id.id));
-#elif defined(USE_X11)
+#elif defined(USE_X11) && !defined(OS_CHROMEOS)
     aura_window =
         views::DesktopWindowTreeHostX11::GetContentWindowForXID(source.id.id);
-#endif  // defined(USE_X11)
+#endif  // defined(USE_X11) && !defined(OS_CHROMEOS)
     if (aura_window) {
       DesktopMediaID aura_id = DesktopMediaID::RegisterAuraWindow(
           DesktopMediaID::TYPE_WINDOW, aura_window);

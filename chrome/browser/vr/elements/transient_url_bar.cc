@@ -2,10 +2,10 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "chrome/browser/vr/elements/webvr_url_toast.h"
+#include "chrome/browser/vr/elements/transient_url_bar.h"
 
 #include "base/memory/ptr_util.h"
-#include "chrome/browser/vr/elements/webvr_url_toast_texture.h"
+#include "chrome/browser/vr/elements/url_bar_texture.h"
 #include "chrome/browser/vr/target_property.h"
 
 namespace vr {
@@ -13,21 +13,21 @@ namespace vr {
 using TargetProperty::OPACITY;
 using TargetProperty::VISIBILITY;
 
-WebVrUrlToast::WebVrUrlToast(
+TransientUrlBar::TransientUrlBar(
     int preferred_width,
     const base::TimeDelta& timeout,
     const base::Callback<void(UiUnsupportedMode)>& failure_callback)
     : TexturedElement(preferred_width),
-      texture_(base::MakeUnique<WebVrUrlToastTexture>(failure_callback)),
+      texture_(base::MakeUnique<UrlBarTexture>(true, failure_callback)),
       transience_(this, 1.0f, timeout) {}
 
-WebVrUrlToast::~WebVrUrlToast() = default;
+TransientUrlBar::~TransientUrlBar() = default;
 
-UiTexture* WebVrUrlToast::GetTexture() const {
+UiTexture* TransientUrlBar::GetTexture() const {
   return texture_.get();
 }
 
-void WebVrUrlToast::SetEnabled(bool enabled) {
+void TransientUrlBar::SetEnabled(bool enabled) {
   transience_.SetEnabled(enabled);
   if (enabled)
     animation_player().SetTransitionedProperties({OPACITY, VISIBILITY});
@@ -35,7 +35,7 @@ void WebVrUrlToast::SetEnabled(bool enabled) {
     animation_player().SetTransitionedProperties({});
 }
 
-void WebVrUrlToast::SetToolbarState(const ToolbarState& state) {
+void TransientUrlBar::SetToolbarState(const ToolbarState& state) {
   texture_->SetToolbarState(state);
 }
 

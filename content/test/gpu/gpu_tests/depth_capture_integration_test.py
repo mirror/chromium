@@ -21,6 +21,8 @@ harness_script = r"""
   domAutomationController._finished = false;
   domAutomationController._error_msg = "";
 
+  domAutomationController.setAutomationId = function(id) {}
+
   domAutomationController.send = function(msg) {
     if (msg == "OK") {
       if (!domAutomationController._finished) {

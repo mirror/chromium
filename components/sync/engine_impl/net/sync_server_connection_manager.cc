@@ -117,7 +117,7 @@ SyncServerConnectionManager::~SyncServerConnectionManager() = default;
 
 std::unique_ptr<ServerConnectionManager::Connection>
 SyncServerConnectionManager::MakeConnection() {
-  return std::make_unique<SyncBridgedConnection>(
+  return base::MakeUnique<SyncBridgedConnection>(
       this, post_provider_factory_.get(), cancelation_signal_);
 }
 

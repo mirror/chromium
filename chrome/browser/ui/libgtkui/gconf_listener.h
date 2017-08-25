@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CHROME_BROWSER_UI_LIBGTKUI_NAV_BUTTON_LAYOUT_MANAGER_GCONF_H_
-#define CHROME_BROWSER_UI_LIBGTKUI_NAV_BUTTON_LAYOUT_MANAGER_GCONF_H_
+#ifndef CHROME_BROWSER_UI_LIBGTKUI_GCONF_LISTENER_H_
+#define CHROME_BROWSER_UI_LIBGTKUI_GCONF_LISTENER_H_
 
 #include <gconf/gconf-client.h>
 #include <gtk/gtk.h>
@@ -14,7 +14,6 @@
 #include "base/callback_forward.h"
 #include "base/macros.h"
 #include "chrome/browser/ui/libgtkui/gtk_signal.h"
-#include "chrome/browser/ui/libgtkui/nav_button_layout_manager.h"
 
 namespace libgtkui {
 class GtkUi;
@@ -22,20 +21,16 @@ class GtkUi;
 // On GNOME desktops, subscribes to the gconf key which controlls button order.
 // Everywhere else, SetTiltebarButtons() just calls back into BrowserTitlebar
 // with the default ordering.
-class NavButtonLayoutManagerGconf : public NavButtonLayoutManager {
+class GConfListener {
  public:
   // Sends data to the GtkUi when available.
-  explicit NavButtonLayoutManagerGconf(GtkUi* delegate);
-  ~NavButtonLayoutManagerGconf() override;
+  explicit GConfListener(GtkUi* delegate);
+  ~GConfListener();
 
  private:
   // Called whenever the metacity key changes.
-  CHROMEG_CALLBACK_2(NavButtonLayoutManagerGconf,
-                     void,
-                     OnChangeNotification,
-                     GConfClient*,
-                     guint,
-                     GConfEntry*);
+  CHROMEG_CALLBACK_2(GConfListener, void, OnChangeNotification,
+                     GConfClient*, guint, GConfEntry*);
 
   void GetAndRegister(const char* key_to_subscribe,
                       const base::Callback<void(GConfValue*)>& initial_setter);
@@ -55,9 +50,9 @@ class NavButtonLayoutManagerGconf : public NavButtonLayoutManager {
   // gconf.
   GConfClient* client_;
 
-  DISALLOW_COPY_AND_ASSIGN(NavButtonLayoutManagerGconf);
+  DISALLOW_COPY_AND_ASSIGN(GConfListener);
 };
 
 }  // namespace libgtkui
 
-#endif  // CHROME_BROWSER_UI_LIBGTKUI_NAV_BUTTON_LAYOUT_MANAGER_GCONF_H_
+#endif  // CHROME_BROWSER_UI_LIBGTKUI_GCONF_LISTENER_H_

@@ -4,6 +4,7 @@
 
 #include "components/sync/device_info/local_device_info_provider_mock.h"
 
+#include "base/memory/ptr_util.h"
 
 namespace syncer {
 
@@ -18,7 +19,7 @@ LocalDeviceInfoProviderMock::LocalDeviceInfoProviderMock(
     const sync_pb::SyncEnums::DeviceType device_type,
     const std::string& signin_scoped_device_id)
     : is_initialized_(true) {
-  local_device_info_ = std::make_unique<DeviceInfo>(
+  local_device_info_ = base::MakeUnique<DeviceInfo>(
       guid, client_name, chrome_version, sync_user_agent, device_type,
       signin_scoped_device_id);
 }
@@ -40,7 +41,7 @@ std::string LocalDeviceInfoProviderMock::GetLocalSyncCacheGUID() const {
 void LocalDeviceInfoProviderMock::Initialize(
     const std::string& cache_guid,
     const std::string& signin_scoped_device_id) {
-  local_device_info_ = std::make_unique<DeviceInfo>(
+  local_device_info_ = base::MakeUnique<DeviceInfo>(
       cache_guid, "client_name", "chrome_version", GetSyncUserAgent(),
       sync_pb::SyncEnums_DeviceType_TYPE_LINUX, signin_scoped_device_id);
   SetInitialized(true);
