@@ -67,6 +67,8 @@ void OmniboxController::OnResultChanged(bool default_match_changed) {
   // passed in to eliminate the potential for crashes on shutdown.
   client_->OnResultChanged(result(), default_match_changed,
                            base::Bind(&OmniboxController::SetAnswerBitmap,
+                                      weak_ptr_factory_.GetWeakPtr()),
+                           base::Bind(&OmniboxController::SetMatchIcon,
                                       weak_ptr_factory_.GetWeakPtr()));
 }
 
@@ -82,4 +84,9 @@ void OmniboxController::ClearPopupKeywordMode() const {
 
 void OmniboxController::SetAnswerBitmap(const SkBitmap& bitmap) {
   popup_->SetAnswerBitmap(bitmap);
+}
+
+void OmniboxController::SetMatchIcon(size_t match_index,
+                                     const gfx::Image& icon) {
+  // TODO(tommycli): Implement UI code to accept this icon.
 }
