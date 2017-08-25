@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ad70c4f1_98e8c40e",
+        "filename": "components/omnibox/browser/zero_suggest_provider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 372,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2017-08-25T14:24:13Z",
+      "side": 1,
+      "message": "I don\u0027t often think to try to trigger zero suggest cases when developing or testing our changes, though I probably should more often. Have you tried triggering zero suggest with the elision flags on?",
+      "revId": "1a462c777f594de5713249855ada6702a22d3827",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
