@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7040118f_c3325e04",
+        "filename": "chrome/app/bookmarks_strings.grdp",
+        "patchSetId": 1
+      },
+      "lineNbr": 459,
+      "author": {
+        "id": 1130680
+      },
+      "writtenOn": "2017-08-25T12:33:26Z",
+      "side": 1,
+      "message": "This string feels a bit weird to me. I left a comment on the slides to ask for clarification.",
+      "revId": "42ca0eea295e3c6ab4df9a811d73e26a8d71486a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
