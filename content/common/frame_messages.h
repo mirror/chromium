@@ -1485,10 +1485,9 @@ IPC_MESSAGE_ROUTED2(FrameHostMsg_JavaScriptExecuteResponse,
                     base::ListValue  /* result */)
 
 // A request to run a JavaScript dialog.
-IPC_SYNC_MESSAGE_ROUTED4_2(FrameHostMsg_RunJavaScriptDialog,
+IPC_SYNC_MESSAGE_ROUTED3_2(FrameHostMsg_RunJavaScriptDialog,
                            base::string16 /* in - alert message */,
                            base::string16 /* in - default prompt */,
-                           GURL /* in - originating page URL */,
                            content::JavaScriptDialogType /* in - type */,
                            bool /* out - success */,
                            base::string16 /* out - user_input field */)
