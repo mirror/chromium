@@ -241,6 +241,24 @@
     },
     {
       "key": {
+        "uuid": "ad176961_8263ca0f",
+        "filename": "tools/idl_parser/idl_node.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1115863
+      },
+      "writtenOn": "2017-08-25T02:36:50Z",
+      "side": 1,
+      "message": "I prefer 1). I prefer not being too-smart :)",
+      "parentUuid": "a165c912_343f6dcc",
+      "revId": "66bf1200a3a96fb514e9988f4cbd8b1193d1aca7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "db618e74_95cbddbe",
         "filename": "tools/idl_parser/idl_node.py",
         "patchSetId": 5

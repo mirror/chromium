@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8d15ee99_fdef0e23",
+        "filename": "tools/idl_parser/idl_node.py",
+        "patchSetId": 12
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1115863
+      },
+      "writtenOn": "2017-08-25T02:36:50Z",
+      "side": 1,
+      "message": "nit: Remove this. self.GetProperty(\u0027VALUE\u0027) is equivalent to self.GetProperty(\u0027VALUE\u0027, None). Since we don\u0027t use |name| in else clause None should be enough.",
+      "range": {
+        "startLine": 99,
+        "startChar": 36,
+        "endLine": 99,
+        "endChar": 40
+      },
+      "revId": "fa7745938098c49d3f134a7c100f2bcaa537b808",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
