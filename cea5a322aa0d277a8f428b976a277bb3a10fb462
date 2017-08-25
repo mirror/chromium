@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "b3ae7c9e_c1b7e7d9",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/FullscreenActivity.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1116074
+      },
+      "writtenOn": "2017-08-25T00:22:30Z",
+      "side": 1,
+      "message": "I have a few questions around the change here: (I think I understand the general idea, please let me know if my comments indicate that I dont :) ).\n\n- So do we think the reason for that glimpse of a second tab is because we are detaching the old tab early? Since we are still launching the new activity, doesn\u0027t that mean visually we should be seeing the new FA at the same time? Or is it that we lose the visuals for the tab on CTA because we are detaching? I would have expected it to not be so since we are never calling hide on the tab.\n\nMaybe sharing a video of the current situation might help to talk over it since there might actually be more visual glitches in this specific transition?\n\nAnd for sever(), can we make use of Tab.detach() in any way. It would be fine to change it slightly, but would be nice if we have a single call for \"detach but don\u0027t do any intent stuff\"\n\nI wonder we even need everything in sever/detach. We do need the removeTab. We need updateWindowAndroid mostly because of the way I built the logic (set to null and set to non-null separately.) We may not need the null setting for TabContentManager actually.",
+      "range": {
+        "startLine": 49,
+        "startChar": 12,
+        "endLine": 49,
+        "endChar": 17
+      },
+      "revId": "cea5a322aa0d277a8f428b976a277bb3a10fb462",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "839739b2_ae908f99",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/FullscreenActivity.java",
         "patchSetId": 1
@@ -41,6 +64,29 @@
         "startChar": 16,
         "endLine": 1417,
         "endChar": 21
+      },
+      "revId": "cea5a322aa0d277a8f428b976a277bb3a10fb462",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "afef16ae_63a96d99",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/tab/Tab.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1420,
+      "author": {
+        "id": 1116074
+      },
+      "writtenOn": "2017-08-25T00:22:30Z",
+      "side": 1,
+      "message": "onDestroy for the old activity will destroy the tab and any related things.",
+      "range": {
+        "startLine": 1420,
+        "startChar": 57,
+        "endLine": 1420,
+        "endChar": 61
       },
       "revId": "cea5a322aa0d277a8f428b976a277bb3a10fb462",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
