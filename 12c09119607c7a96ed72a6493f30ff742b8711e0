@@ -1,0 +1,498 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0d787b7e_483c6a56",
+        "filename": "ios/web/navigation/crw_placeholder_navigation_info.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-08-25T22:05:11Z",
+      "side": 1,
+      "message": "Do we need this class? Would it be better to store the block in NavigationContextImpl?\nOr if you still want a separate class, would it be better to make this class look similar to CRWNavigationItemHolder?",
+      "range": {
+        "startLine": 24,
+        "startChar": 11,
+        "endLine": 24,
+        "endChar": 39
+      },
+      "revId": "12c09119607c7a96ed72a6493f30ff742b8711e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2de79640_15811380",
+        "filename": "ios/web/navigation/crw_placeholder_navigation_info.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-08-25T22:05:11Z",
+      "side": 1,
+      "message": "This needs ARC ifdefs",
+      "revId": "12c09119607c7a96ed72a6493f30ff742b8711e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2987f4a_9d38fdec",
+        "filename": "ios/web/navigation/crw_placeholder_navigation_info.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-08-25T22:05:11Z",
+      "side": 1,
+      "message": "[handler copy]",
+      "range": {
+        "startLine": 46,
+        "startChar": 25,
+        "endLine": 46,
+        "endChar": 32
+      },
+      "revId": "12c09119607c7a96ed72a6493f30ff742b8711e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e24d145_0591ebbf",
+        "filename": "ios/web/web_state/ui/crw_web_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-08-25T22:05:11Z",
+      "side": 1,
+      "message": "Could you please explain in the comments what placeholder navigation is.",
+      "range": {
+        "startLine": 219,
+        "startChar": 20,
+        "endLine": 219,
+        "endChar": 31
+      },
+      "revId": "12c09119607c7a96ed72a6493f30ff742b8711e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91431fa8_24daf743",
+        "filename": "ios/web/web_state/ui/crw_web_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-08-25T22:05:11Z",
+      "side": 1,
+      "message": "Should this name contain WebUI word?",
+      "revId": "12c09119607c7a96ed72a6493f30ff742b8711e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44a6122c_1962e267",
+        "filename": "ios/web/web_state/ui/crw_web_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-08-25T22:05:11Z",
+      "side": 1,
+      "message": "s/URL/url\n\nThis code should follow C++ Style Guide. Same for other C-functions inside a namespace.",
+      "range": {
+        "startLine": 223,
+        "startChar": 34,
+        "endLine": 223,
+        "endChar": 37
+      },
+      "revId": "12c09119607c7a96ed72a6493f30ff742b8711e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "333f535f_c467101b",
+        "filename": "ios/web/web_state/ui/crw_web_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-08-25T22:05:11Z",
+      "side": 1,
+      "message": "Is it possible to have this code in a separate file, so it can be tested?",
+      "range": {
+        "startLine": 230,
+        "startChar": 5,
+        "endLine": 230,
+        "endChar": 31
+      },
+      "revId": "12c09119607c7a96ed72a6493f30ff742b8711e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4deb8dcf_639f9a2b",
+        "filename": "ios/web/web_state/ui/crw_web_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-08-25T22:05:11Z",
+      "side": 1,
+      "message": "Could you please use GURL::Replacements instead of string concatenation.",
+      "range": {
+        "startLine": 232,
+        "startChar": 6,
+        "endLine": 232,
+        "endChar": 27
+      },
+      "revId": "12c09119607c7a96ed72a6493f30ff742b8711e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de254543_c086a5aa",
+        "filename": "ios/web/web_state/ui/crw_web_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-08-25T22:05:11Z",
+      "side": 1,
+      "message": "Would net::GetValueForKeyInQuery work here?",
+      "range": {
+        "startLine": 244,
+        "startChar": 31,
+        "endLine": 244,
+        "endChar": 51
+      },
+      "revId": "12c09119607c7a96ed72a6493f30ff742b8711e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6dba107_7a0a6587",
+        "filename": "ios/web/web_state/ui/crw_web_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 1235,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-08-25T22:05:11Z",
+      "side": 1,
+      "message": "Should we just return GetLastCommittedURL here if SlimNavigationManagerEnabled?",
+      "range": {
+        "startLine": 1235,
+        "startChar": 21,
+        "endLine": 1235,
+        "endChar": 22
+      },
+      "revId": "12c09119607c7a96ed72a6493f30ff742b8711e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0fe7a1e8_f3d90399",
+        "filename": "ios/web/web_state/ui/crw_web_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 1818,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-08-25T22:05:11Z",
+      "side": 1,
+      "message": "Please explain in the comments when completionHandler is called",
+      "range": {
+        "startLine": 1818,
+        "startChar": 39,
+        "endLine": 1818,
+        "endChar": 50
+      },
+      "revId": "12c09119607c7a96ed72a6493f30ff742b8711e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8b0cacd_8895ae0f",
+        "filename": "ios/web/web_state/ui/crw_web_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 1819,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-08-25T22:05:11Z",
+      "side": 1,
+      "message": "Please add predeclaration fur this method and move comments there.",
+      "range": {
+        "startLine": 1819,
+        "startChar": 8,
+        "endLine": 1819,
+        "endChar": 38
+      },
+      "revId": "12c09119607c7a96ed72a6493f30ff742b8711e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6545617b_267f86b9",
+        "filename": "ios/web/web_state/ui/crw_web_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 1822,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-08-25T22:05:11Z",
+      "side": 1,
+      "message": "Should this be a DCHECK instead?",
+      "range": {
+        "startLine": 1822,
+        "startChar": 18,
+        "endLine": 1822,
+        "endChar": 48
+      },
+      "revId": "12c09119607c7a96ed72a6493f30ff742b8711e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d38c7c3_0e829df8",
+        "filename": "ios/web/web_state/ui/crw_web_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 1832,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-08-25T22:05:11Z",
+      "side": 1,
+      "message": "Every WKNavigation should be associated with web::NavigationContextImpl (see setContext:forNavigation: calls to _navigationStates). NavigationContextImpl is normally created by |registerLoadRequestForURL:|.",
+      "range": {
+        "startLine": 1832,
+        "startChar": 30,
+        "endLine": 1832,
+        "endChar": 38
+      },
+      "revId": "12c09119607c7a96ed72a6493f30ff742b8711e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d935e9eb_c56cb162",
+        "filename": "ios/web/web_state/ui/crw_web_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 4059,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-08-25T22:05:11Z",
+      "side": 1,
+      "message": "nit: Do you need this block here? How about just inlining the code?",
+      "range": {
+        "startLine": 4059,
+        "startChar": 18,
+        "endLine": 4059,
+        "endChar": 49
+      },
+      "revId": "12c09119607c7a96ed72a6493f30ff742b8711e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b507cb8c_ac7f7cba",
+        "filename": "ios/web/web_state/ui/crw_web_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 4207,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-08-25T22:05:11Z",
+      "side": 1,
+      "message": "This is probably the place where renderer-initiated navigations to WebUI URLs should be rejected.\n\nAlso web::WebStatePolicyDecider should still have a chance to reject the navigation.",
+      "range": {
+        "startLine": 4207,
+        "startChar": 20,
+        "endLine": 4207,
+        "endChar": 49
+      },
+      "revId": "12c09119607c7a96ed72a6493f30ff742b8711e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f2ab784_92505bb0",
+        "filename": "ios/web/web_state/ui/crw_web_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 4213,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-08-25T22:05:11Z",
+      "side": 1,
+      "message": "I think this case should be handled before placeholder URLs",
+      "range": {
+        "startLine": 4213,
+        "startChar": 20,
+        "endLine": 4213,
+        "endChar": 50
+      },
+      "revId": "12c09119607c7a96ed72a6493f30ff742b8711e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c90ce8b_8e4ed73f",
+        "filename": "ios/web/web_state/ui/crw_web_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 4264,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-08-25T22:05:11Z",
+      "side": 1,
+      "message": "web::WebStatePolicyDecider should still have a chance to reject the navigation.",
+      "range": {
+        "startLine": 4264,
+        "startChar": 12,
+        "endLine": 4264,
+        "endChar": 43
+      },
+      "revId": "12c09119607c7a96ed72a6493f30ff742b8711e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7419974_52da0c7c",
+        "filename": "ios/web/web_state/ui/crw_web_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 4320,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-08-25T22:05:11Z",
+      "side": 1,
+      "message": "This method is now longer and more complex. Is there a way to refactor it?",
+      "range": {
+        "startLine": 4320,
+        "startChar": 25,
+        "endLine": 4320,
+        "endChar": 38
+      },
+      "revId": "12c09119607c7a96ed72a6493f30ff742b8711e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f50eb297_04e7ef1e",
+        "filename": "ios/web/web_state/ui/crw_web_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 4394,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-08-25T22:05:11Z",
+      "side": 1,
+      "message": "which",
+      "range": {
+        "startLine": 4394,
+        "startChar": 75,
+        "endLine": 4394,
+        "endChar": 79
+      },
+      "revId": "12c09119607c7a96ed72a6493f30ff742b8711e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de07733a_63cd2630",
+        "filename": "ios/web/web_state/ui/crw_web_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 4418,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-08-25T22:05:11Z",
+      "side": 1,
+      "message": "nit: DCHECK(!(IsPlaceholderURL(webViewURL) \u0026\u0026 web::GetWebClient()-\u003eIsSlimNavigationManagerEnabled()));\n\nSame comment for other DCHECK",
+      "range": {
+        "startLine": 4418,
+        "startChar": 11,
+        "endLine": 4418,
+        "endChar": 23
+      },
+      "revId": "12c09119607c7a96ed72a6493f30ff742b8711e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "724f71bb_9969c300",
+        "filename": "ios/web/web_state/ui/crw_web_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 4496,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-08-25T22:05:11Z",
+      "side": 1,
+      "message": "If we return it means that WebStateObserver::DidFinishNavigation will not be called. Is it ok?",
+      "range": {
+        "startLine": 4496,
+        "startChar": 11,
+        "endLine": 4496,
+        "endChar": 0
+      },
+      "revId": "12c09119607c7a96ed72a6493f30ff742b8711e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
