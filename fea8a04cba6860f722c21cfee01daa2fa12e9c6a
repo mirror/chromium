@@ -46,6 +46,30 @@
       "revId": "fea8a04cba6860f722c21cfee01daa2fa12e9c6a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34022e49_c66c3f5b",
+        "filename": "services/catalog/entry.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1160859
+      },
+      "writtenOn": "2017-08-25T22:29:23Z",
+      "side": 1,
+      "message": "I suppose I\u0027m talking about the other ones, like display_name, path, children - whatever a \"service package\" is? does it have docs that need updating?",
+      "parentUuid": "6c16a20e_aeb75e98",
+      "range": {
+        "startLine": 47,
+        "startChar": 21,
+        "endLine": 47,
+        "endChar": 33
+      },
+      "revId": "fea8a04cba6860f722c21cfee01daa2fa12e9c6a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
