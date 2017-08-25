@@ -137,6 +137,11 @@ constexpr float kExpandArrowShowEndFraction = 1.0f;
 constexpr float kAllAppsOpacityStartPx = 8.0f;
 constexpr float kAllAppsOpacityEndPx = 144.0f;
 
+// The length of time we ignore scroll events on the AppsGridView after the
+// AppListView transitions to FULLSCREEN_ALL_APPS.
+constexpr base::TimeDelta kIgnoreScrollDelayMs =
+    base::TimeDelta::FromMilliseconds(500);
+
 // Returns the size of a tile view excluding its padding.
 gfx::Size GetTileViewSize() {
   if (features::IsFullscreenAppListEnabled())
@@ -985,6 +990,8 @@ bool AppsGridView::OnKeyReleased(const ui::KeyEvent& event) {
 }
 
 bool AppsGridView::OnMouseWheel(const ui::MouseWheelEvent& event) {
+  if (is_app_list_view_animating_)
+    return true;
   // Bail on STATE_START or no apps page to make PaginationModel happy.
   if (contents_view_->GetActiveState() == AppListModel::STATE_START ||
       pagination_model_.total_pages() <= 0) {
@@ -1015,17 +1022,22 @@ void AppsGridView::ViewHierarchyChanged(
 }
 
 void AppsGridView::OnGestureEvent(ui::GestureEvent* event) {
+  // If the AppListView is animating, ignore gesture events on the AppsGridView.
+  if (is_app_list_view_animating_)
+    return;
+
   // Bail on STATE_START or no apps page to make PaginationModel happy.
   if (contents_view_->GetActiveState() == AppListModel::STATE_START ||
       pagination_model_.total_pages() <= 0) {
     return;
   }
-
   if (pagination_controller_->OnGestureEvent(*event, GetContentsBounds()))
     event->SetHandled();
 }
 
 void AppsGridView::OnScrollEvent(ui::ScrollEvent* event) {
+  if (is_app_list_view_animating_)
+    return;
   // Bail on STATE_START or no apps page to make PaginationModel happy.
   if (contents_view_->GetActiveState() == AppListModel::STATE_START ||
       pagination_model_.total_pages() <= 0) {
@@ -1898,6 +1910,12 @@ void AppsGridView::UpdateOpacity() {
   }
 }
 
+void AppsGridView::StartTimerForAnimationToFullscreen() {
+  is_app_list_view_animating_ = true;
+  scroll_ignore_timer_.Start(FROM_HERE, kIgnoreScrollDelayMs, this,
+                             &AppsGridView::StopIgnoringScrollEvents);
+}
+
 void AppsGridView::StartDragAndDropHostDrag(const gfx::Point& grid_location) {
   // When a drag and drop host is given, the item can be dragged out of the app
   // list window. In that case a proxy widget needs to be used.
@@ -2391,6 +2409,10 @@ void AppsGridView::SetViewHidden(AppListItemView* view,
 void AppsGridView::OnImplicitAnimationsCompleted() {
   if (layer()->opacity() == 0.0f)
     SetVisible(false);
+}
+
+void AppsGridView::StopIgnoringScrollEvents() {
+  is_app_list_view_animating_ = false;
 }
 
 bool AppsGridView::EnableFolderDragDropUI() {

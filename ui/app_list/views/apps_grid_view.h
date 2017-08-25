@@ -58,7 +58,8 @@ class APP_LIST_EXPORT AppsGridView : public views::View,
                                      public AppListItemListObserver,
                                      public PaginationModelObserver,
                                      public AppListModelObserver,
-                                     public ui::ImplicitAnimationObserver {
+                                     public ui::ImplicitAnimationObserver /*,
+                                     public ui::LayerAnimationObserver*/ {
  public:
   enum Pointer {
     NONE,
@@ -205,6 +206,9 @@ class APP_LIST_EXPORT AppsGridView : public views::View,
 
   // Updates the opacity of all the items in the grid during dragging.
   void UpdateOpacity();
+
+  // Starts a timer during which we ignore scroll events.
+  void StartTimerForAnimationToFullscreen();
 
   // Return the view model for test purposes.
   const views::ViewModelT<AppListItemView>* view_model_for_test() const {
@@ -430,6 +434,9 @@ class APP_LIST_EXPORT AppsGridView : public views::View,
   // ui::ImplicitAnimationObserver overrides:
   void OnImplicitAnimationsCompleted() override;
 
+  // The callback function for |scroll_ignore_timer_|.
+  void StopIgnoringScrollEvents();
+
   // Hide a given view temporarily without losing (mouse) events and / or
   // changing the size of it. If |immediate| is set the change will be
   // immediately applied - otherwise it will change gradually.
@@ -581,6 +588,9 @@ class APP_LIST_EXPORT AppsGridView : public views::View,
   // Timer to auto flip page when dragging an item near the left/right edges.
   base::OneShotTimer page_flip_timer_;
 
+  // Timer to ignore scroll events after the app list switches states.
+  base::OneShotTimer scroll_ignore_timer_;
+
   // Target page to switch to when |page_flip_timer_| fires.
   int page_flip_target_ = -1;
 
@@ -595,6 +605,9 @@ class APP_LIST_EXPORT AppsGridView : public views::View,
 
   // True if the drag_view_ item is a folder item being dragged for reparenting.
   bool dragging_for_reparent_item_ = false;
+
+  // Whether the AppListView is animating.
+  bool is_app_list_view_animating_ = false;
 
   std::unique_ptr<FadeoutLayerDelegate> fadeout_layer_delegate_;
 
