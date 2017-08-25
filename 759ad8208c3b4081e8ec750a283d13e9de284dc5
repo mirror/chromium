@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5dc4ea60_5bd6a5e4",
+        "filename": "chrome/browser/resources/policy.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1142256
+      },
+      "writtenOn": "2017-08-25T19:35:58Z",
+      "side": 1,
+      "message": "How about moving the \"learn_more\" link to the end of policy name?\nThat\u0027s my personal preference, WDYT?",
+      "revId": "759ad8208c3b4081e8ec750a283d13e9de284dc5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b20c8409_41b9b43f",
+        "filename": "chrome/browser/resources/policy_common.css",
+        "patchSetId": 2
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1142256
+      },
+      "writtenOn": "2017-08-25T19:35:58Z",
+      "side": 1,
+      "message": "\"float: left\" will move the policy name to a second line when \nthe policy name is long enough.\n\nCould you try something different i.e. display: inline?",
+      "revId": "759ad8208c3b4081e8ec750a283d13e9de284dc5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
