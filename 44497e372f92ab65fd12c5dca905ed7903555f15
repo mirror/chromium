@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "23cf5d33_45683d79",
+        "filename": "third_party/WebKit/Source/core/loader/modulescript/ModuleScriptLoader.cpp",
+        "patchSetId": 16
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2017-08-25T06:18:09Z",
+      "side": 1,
+      "message": "Nit: I would split the !modulator_-\u003eHasValidContext() { Adv(Finished) } cond from this block.\nWe would never hit if (error_message) if !hasValidContext()",
+      "range": {
+        "startLine": 167,
+        "startChar": 19,
+        "endLine": 167,
+        "endChar": 34
+      },
+      "revId": "44497e372f92ab65fd12c5dca905ed7903555f15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
