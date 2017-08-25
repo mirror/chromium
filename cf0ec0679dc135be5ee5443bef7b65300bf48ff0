@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cb7da154_459397d0",
+        "filename": "components/password_manager/core/browser/password_autofill_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2017-08-25T12:44:51Z",
+      "side": 1,
+      "message": "OS_ANDROID?",
+      "range": {
+        "startLine": 35,
+        "startChar": 12,
+        "endLine": 35,
+        "endChar": 19
+      },
+      "revId": "cf0ec0679dc135be5ee5443bef7b65300bf48ff0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eaac4603_7515b1fd",
+        "filename": "components/password_manager/core/browser/password_autofill_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2017-08-25T12:44:51Z",
+      "side": 1,
+      "message": "As far as I understand build_info.h is requred for OS_ANDROID define. So it\u0027s better to add include without conditional compilation.",
+      "range": {
+        "startLine": 36,
+        "startChar": 9,
+        "endLine": 36,
+        "endChar": 35
+      },
+      "revId": "cf0ec0679dc135be5ee5443bef7b65300bf48ff0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
