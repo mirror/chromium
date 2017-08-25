@@ -16,6 +16,24 @@
       "revId": "ffe29c3d66629a3a8d1285763e3b3b7cfca218ed",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0cd8f0d_139d7fe2",
+        "filename": "headless/DEPS",
+        "patchSetId": 12
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1002198
+      },
+      "writtenOn": "2017-08-25T16:46:43Z",
+      "side": 1,
+      "message": "Done, thanks, fixed two unnecessary deps in build file too.",
+      "parentUuid": "a0f95a39_ccb6c28e",
+      "revId": "ffe29c3d66629a3a8d1285763e3b3b7cfca218ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
