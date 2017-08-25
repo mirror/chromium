@@ -279,6 +279,7 @@ Vector<String> TextEncodingAliasesForTesting() {
     }
     CopyKeysToVector(*g_text_encoding_name_map, results);
   }
+  std::sort(results.begin(), results.end(), WTF::CodePointCompareLessThan);
   return results;
 }
 
