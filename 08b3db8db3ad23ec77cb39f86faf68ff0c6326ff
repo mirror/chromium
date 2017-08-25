@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "84d94023_a3258a8c",
+        "filename": "chrome/browser/ui/views/content_setting_bubble_contents.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 581,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-25T15:08:14Z",
+      "side": 1,
+      "message": "I\u0027m assuming you never want to show learn more and mange.",
+      "range": {
+        "startLine": 581,
+        "startChar": 6,
+        "endLine": 581,
+        "endChar": 70
+      },
+      "revId": "08b3db8db3ad23ec77cb39f86faf68ff0c6326ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
