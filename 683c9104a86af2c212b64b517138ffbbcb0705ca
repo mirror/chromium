@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "21fe6c6c_8138e383",
+        "filename": "chrome/browser/ui/extensions/extension_installed_notification.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1195459
+      },
+      "writtenOn": "2017-08-25T11:53:24Z",
+      "side": 1,
+      "message": "FYI: it is intended to set both |small_image| and |vector_small_image|, and we don\u0027t have utility function right now for simplicity. Description: https://crrev.com/c/593513",
+      "revId": "683c9104a86af2c212b64b517138ffbbcb0705ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
