@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "223ec4a7_13826a95",
+        "filename": "extensions/browser/api/networking_private/networking_private_chromeos.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-25T16:05:56Z",
+      "side": 1,
+      "message": "std::make_unique\n(also on line 157, 160)",
+      "revId": "fcfe57591b9ed851e8a1e84c6cdd93cc86abb038",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f859ed8_e34fd0cb",
+        "filename": "extensions/common/api/networking_onc.idl",
+        "patchSetId": 4
+      },
+      "lineNbr": 821,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-25T16:05:56Z",
+      "side": 1,
+      "message": "Do we know what\u0027s using this, and when we can deprecate it?",
+      "revId": "fcfe57591b9ed851e8a1e84c6cdd93cc86abb038",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
