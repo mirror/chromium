@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2220862a_c277de34",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/SignInPromo.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-08-25T14:41:46Z",
+      "side": 1,
+      "message": "updateVisibility checks mCanSignIn and mCanShowPersonalizedSuggestions which haven\u0027t been initialized yet. Could you please move their initialization before this if (or just call setVisibilityInternal(false) here)?",
+      "range": {
+        "startLine": 103,
+        "startChar": 0,
+        "endLine": 103,
+        "endChar": 31
+      },
+      "revId": "de73290f0d5479c3dbed3a0d3b2528ac5953a0ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4d6a7ef_74507fe0",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/SignInPromo.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-08-25T14:41:46Z",
+      "side": 1,
+      "message": "Nit: AFAIU, there\u0027s no way for mSigninObserver to be null if mWasDismissed is false. Can you just check mWasDismissed?",
+      "range": {
+        "startLine": 221,
+        "startChar": 15,
+        "endLine": 221,
+        "endChar": 42
+      },
+      "revId": "de73290f0d5479c3dbed3a0d3b2528ac5953a0ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
