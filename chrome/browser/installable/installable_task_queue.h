@@ -9,7 +9,6 @@
 #include "chrome/browser/installable/installable_params.h"
 
 #include "base/callback.h"
-#include "base/gtest_prod_util.h"
 
 using InstallableTask = std::pair<InstallableParams, InstallableCallback>;
 
@@ -47,13 +46,6 @@ class InstallableTaskQueue {
 
   // Tasks which are waiting indefinitely for a service worker to be detected.
   std::vector<InstallableTask> paused_tasks_;
-
-  friend class InstallableManagerBrowserTest;
-  FRIEND_TEST_ALL_PREFIXES(InstallableManagerBrowserTest,
-                           CheckLazyServiceWorkerPassesWhenWaiting);
-
-  FRIEND_TEST_ALL_PREFIXES(InstallableManagerBrowserTest,
-                           CheckLazyServiceWorkerNoFetchHandlerFails);
 };
 
 #endif  // CHROME_BROWSER_INSTALLABLE_INSTALLABLE_TASK_QUEUE_H_
