@@ -36,6 +36,7 @@ import org.chromium.chrome.R;
 import org.chromium.chrome.browser.omnibox.OmniboxResultsAdapter.OmniboxResultItem;
 import org.chromium.chrome.browser.omnibox.OmniboxResultsAdapter.OmniboxSuggestionDelegate;
 import org.chromium.chrome.browser.omnibox.OmniboxSuggestion.MatchClassification;
+import org.chromium.chrome.browser.util.FeatureUtilities;
 import org.chromium.chrome.browser.util.ViewUtils;
 import org.chromium.chrome.browser.widget.TintedDrawable;
 import org.chromium.ui.base.DeviceFormFactor;
@@ -101,6 +102,11 @@ class SuggestionView extends ViewGroup {
     // Pre-computed offsets in px.
     private final int mPhoneUrlBarLeftOffsetPx;
     private final int mPhoneUrlBarLeftOffsetRtlPx;
+
+    private final int mRightOffsetPx = FeatureUtilities.isChromeHomeModernEnabled()
+            ? getResources().getDimensionPixelSize(
+                      R.dimen.omnibox_suggestion_refine_view_modern_end_padding)
+            : 0;
 
     /**
      * Constructs a new omnibox suggestion view.
@@ -204,12 +210,11 @@ class SuggestionView extends ViewGroup {
         boolean refineVisible = mRefineView.getVisibility() == VISIBLE;
         boolean isRtl = ApiCompatibilityUtils.isLayoutRtl(this);
         int contentsViewOffsetX = isRtl && refineVisible ? mRefineWidth : 0;
-        mContentsView.layout(
-                contentsViewOffsetX,
-                0,
+        mContentsView.layout(contentsViewOffsetX, 0,
                 contentsViewOffsetX + mContentsView.getMeasuredWidth(),
                 mContentsView.getMeasuredHeight());
-        int refineViewOffsetX = isRtl ? 0 : getMeasuredWidth() - mRefineWidth;
+
+        int refineViewOffsetX = isRtl ? 0 : getMeasuredWidth() - mRefineWidth - mRightOffsetPx;
         mRefineView.layout(
                 refineViewOffsetX,
                 0,
@@ -731,6 +736,21 @@ class SuggestionView extends ViewGroup {
             mAnswerImage.setLayoutParams(new LayoutParams(0, 0));
             mAnswerImageMaxSize = 0;
             addView(mAnswerImage);
+
+            if (FeatureUtilities.isChromeHomeModernEnabled()) {
+                mTextLine1.setPaddingRelative(
+                        getResources().getDimensionPixelSize(
+                                R.dimen.omnibox_suggestion_list_text_modern_offset),
+                        0, 0, 0);
+                mTextLine2.setPaddingRelative(
+                        getResources().getDimensionPixelSize(
+                                R.dimen.omnibox_suggestion_list_text_modern_offset),
+                        0, 0, 0);
+                mAnswerImage.setPaddingRelative(
+                        getResources().getDimensionPixelSize(
+                                R.dimen.omnibox_suggestion_list_text_modern_offset),
+                        0, 0, 0);
+            }
         }
 
         private void resetTextWidths() {
