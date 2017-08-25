@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e98fb73d_a4612cef",
+        "filename": "media/midi/task_service.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-08-25T18:52:47Z",
+      "side": 1,
+      "message": "If we detach from sequence here, we don\u0027t guarantee that the race described in https://chromium-review.googlesource.com/c/chromium/src/+/634423/1/media/midi/task_service.cc#63 doesn\u0027t occur. \n\n-\u003e The detach from sequence is required because BindInstance() isn\u0027t called on the same sequence as the constructor? In this case, you can DETACH_FROM_SEQUENCE in the constructor.\n-\u003e The detach from sequence is required because there are calls to BindInstance() on different sequences? In this case, you can DETACH_FROM_SEQUENCE at the end of UnbindInstance(), to guarantee that there isn\u0027t a call to BindInstance in parallel with a call to UnbindInstance().",
+      "revId": "bb8b6f7016b7cc3d479a107e892958b5b51ff1c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
