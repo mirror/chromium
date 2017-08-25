@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d6a2198f_4670d958",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 10
+      },
+      "lineNbr": 9443,
+      "author": {
+        "id": 1239542
+      },
+      "writtenOn": "2017-08-25T21:46:21Z",
+      "side": 1,
+      "message": "Why do you need \u0027device_only\u0027: False? I thought it is the default value. This applies to this one and next two policies.",
+      "range": {
+        "startLine": 9443,
+        "startChar": 20,
+        "endLine": 9443,
+        "endChar": 21
+      },
+      "revId": "72437ed2666f44fb200456a54e9363838895dfd2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
