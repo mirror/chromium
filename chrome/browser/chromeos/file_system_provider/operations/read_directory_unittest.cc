@@ -41,9 +41,11 @@ class CallbackLogger {
   class Event {
    public:
     Event(base::File::Error result,
-          const storage::AsyncFileUtil::EntryList& entry_list,
+          storage::AsyncFileUtil::EntryList entry_list,
           bool has_more)
-        : result_(result), entry_list_(entry_list), has_more_(has_more) {}
+        : result_(result),
+          entry_list_(std::move(entry_list)),
+          has_more_(has_more) {}
     virtual ~Event() {}
 
     base::File::Error result() { return result_; }
@@ -64,9 +66,10 @@ class CallbackLogger {
   virtual ~CallbackLogger() {}
 
   void OnReadDirectory(base::File::Error result,
-                       const storage::AsyncFileUtil::EntryList& entry_list,
+                       storage::AsyncFileUtil::EntryList entry_list,
                        bool has_more) {
-    events_.push_back(base::MakeUnique<Event>(result, entry_list, has_more));
+    events_.push_back(
+        base::MakeUnique<Event>(result, std::move(entry_list), has_more));
   }
 
   std::vector<std::unique_ptr<Event>>& events() { return events_; }
@@ -205,7 +208,7 @@ TEST_F(FileSystemProviderOperationsReadDirectoryTest, OnSuccess) {
   EXPECT_EQ(base::File::FILE_OK, event->result());
 
   ASSERT_EQ(1u, event->entry_list().size());
-  const storage::DirectoryEntry entry = event->entry_list()[0];
+  const storage::DirectoryEntry& entry = event->entry_list()[0];
   EXPECT_FALSE(entry.is_directory);
   EXPECT_EQ("blueberries.txt", entry.name);
 }

@@ -1225,7 +1225,7 @@ void MTPDeviceDelegateImplLinux::OnDidReadDirectoryToCreateDirectory(
     const bool exclusive,
     const CreateDirectorySuccessCallback& success_callback,
     const ErrorCallback& error_callback,
-    const storage::AsyncFileUtil::EntryList& /* entries */,
+    storage::AsyncFileUtil::EntryList /* entries */,
     const bool has_more) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::IO);
 
@@ -1595,7 +1595,7 @@ void MTPDeviceDelegateImplLinux::OnDidReadDirectory(
     storage::DirectoryEntry entry;
     entry.name = mtp_entry.name;
     entry.is_directory = mtp_entry.file_info.is_directory;
-    file_list.push_back(entry);
+    file_list.push_back(std::move(entry));
 
     // Refresh the in memory tree.
     dir_node->EnsureChildExists(entry.name, mtp_entry.file_id);
@@ -1605,7 +1605,7 @@ void MTPDeviceDelegateImplLinux::OnDidReadDirectory(
     file_info_cache_[dir_path.Append(entry.name)] = mtp_entry;
   }
 
-  success_callback.Run(file_list, has_more);
+  success_callback.Run(std::move(file_list), has_more);
   if (has_more)
     return;  // Wait to be called again.
 
@@ -1647,7 +1647,7 @@ void MTPDeviceDelegateImplLinux::OnDidReadBytes(
 
 void MTPDeviceDelegateImplLinux::OnDidFillFileCache(
     const base::FilePath& path,
-    const storage::AsyncFileUtil::EntryList& /* entries */,
+    storage::AsyncFileUtil::EntryList /* entries */,
     bool has_more) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::IO);
   DCHECK(path.IsParent(pending_tasks_.front().path));

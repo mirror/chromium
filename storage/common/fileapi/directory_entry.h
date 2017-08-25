@@ -23,6 +23,12 @@ struct STORAGE_COMMON_EXPORT DirectoryEntry {
   DirectoryEntry();
   DirectoryEntry(const std::string& name, DirectoryEntryType type);
 
+  DirectoryEntry(const DirectoryEntry&) = delete;
+  DirectoryEntry& operator=(const DirectoryEntry&) = delete;
+
+  DirectoryEntry(DirectoryEntry&&) = default;
+  DirectoryEntry& operator=(DirectoryEntry&&) = default;
+
   base::FilePath::StringType name;
   bool is_directory;
 };

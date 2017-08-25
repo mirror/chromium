@@ -104,8 +104,9 @@ void ReadDirectoryHelper(FileSystemFileUtil* file_util,
 
   std::vector<DirectoryEntry> entries;
   if (error != base::File::FILE_OK) {
-    origin_runner->PostTask(
-        FROM_HERE, base::Bind(callback, error, entries, false /* has_more */));
+    origin_runner->PostTask(FROM_HERE,
+                            base::BindOnce(callback, error, std::move(entries),
+                                           false /* has_more */));
     return;
   }
 
@@ -122,18 +123,18 @@ void ReadDirectoryHelper(FileSystemFileUtil* file_util,
     DirectoryEntry entry;
     entry.is_directory = file_enum->IsDirectory();
     entry.name = VirtualPath::BaseName(current).value();
-    entries.push_back(entry);
+    entries.push_back(std::move(entry));
 
     if (entries.size() == kResultChunkSize) {
       origin_runner->PostTask(
-          FROM_HERE, base::Bind(callback, base::File::FILE_OK, entries,
-                                true /* has_more */));
+          FROM_HERE, base::BindOnce(callback, base::File::FILE_OK,
+                                    std::move(entries), true /* has_more */));
       entries.clear();
     }
   }
   origin_runner->PostTask(
-      FROM_HERE, base::Bind(callback, base::File::FILE_OK, entries,
-                            false /* has_more */));
+      FROM_HERE, base::BindOnce(callback, base::File::FILE_OK,
+                                std::move(entries), false /* has_more */));
 }
 
 void RunCreateOrOpenCallback(

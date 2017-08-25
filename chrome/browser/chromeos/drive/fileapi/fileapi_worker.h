@@ -50,10 +50,11 @@ typedef base::Callback<
 typedef base::Callback<
     void(base::File::Error result,
          const base::File::Info& file_info)> GetFileInfoCallback;
-typedef base::Callback<
-    void(base::File::Error result,
-         const std::vector<storage::DirectoryEntry>& file_list,
-         bool has_more)> ReadDirectoryCallback;
+typedef base::RepeatingCallback<void(
+    base::File::Error result,
+    std::vector<storage::DirectoryEntry> file_list,
+    bool has_more)>
+    ReadDirectoryCallback;
 typedef base::Callback<void(base::File::Error result,
                             const base::File::Info& file_info,
                             const base::FilePath& snapshot_file_path,
@@ -82,8 +83,8 @@ FileSystemInterface* GetFileSystemFromUrl(const storage::FileSystemURL& url);
 // case).
 void RunFileSystemCallback(
     const FileSystemGetter& file_system_getter,
-    const base::Callback<void(FileSystemInterface*)>& callback,
-    const base::Closure& error_callback);
+    base::OnceCallback<void(FileSystemInterface*)> callback,
+    base::OnceClosure error_callback);
 
 // Returns the metadata info of the file at |file_path|.
 // Called from FileSystemProxy::GetFileInfo().

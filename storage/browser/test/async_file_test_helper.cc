@@ -65,10 +65,12 @@ void ReadDirectoryCallback(base::RunLoop* run_loop,
                            base::File::Error* result_out,
                            FileEntryList* entries_out,
                            base::File::Error result,
-                           const FileEntryList& entries,
+                           FileEntryList entries,
                            bool has_more) {
   *result_out = result;
-  entries_out->insert(entries_out->end(), entries.begin(), entries.end());
+  entries_out->insert(entries_out->end(),
+                      std::make_move_iterator(entries.begin()),
+                      std::make_move_iterator(entries.end()));
   if (result != base::File::FILE_OK || !has_more)
     run_loop->Quit();
 }
@@ -147,7 +149,8 @@ base::File::Error AsyncFileTestHelper::ReadDirectory(
   entries->clear();
   base::RunLoop run_loop;
   context->operation_runner()->ReadDirectory(
-      url, base::Bind(&ReadDirectoryCallback, &run_loop, &result, entries));
+      url,
+      base::BindRepeating(&ReadDirectoryCallback, &run_loop, &result, entries));
   run_loop.Run();
   return result;
 }
