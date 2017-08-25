@@ -34,6 +34,24 @@
       "revId": "cc430302ef1a463ff992c8c7c967a129f3b223cf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45906544_d9310fd5",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-08-25T21:38:52Z",
+      "side": 1,
+      "message": "OK... let\u0027s fix it, though. :)",
+      "parentUuid": "45310448_940b9db4",
+      "revId": "cc430302ef1a463ff992c8c7c967a129f3b223cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
