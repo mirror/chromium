@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b0d6a3b4_779aecb9",
+        "filename": "third_party/WebKit/Source/devtools/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 565,
+      "author": {
+        "id": 1115861
+      },
+      "writtenOn": "2017-08-25T02:08:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ccf5aa51_142acb83",
+      "revId": "bfc3eae1b8cb7c1a67fc021aa2544697fb1ef9e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "77aad4ce_0aa9bcee",
         "filename": "third_party/WebKit/Source/devtools/front_end/timeline/PerformanceMonitor.js",
         "patchSetId": 2
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "f16f3ffa_6457bed8",
+        "filename": "third_party/WebKit/Source/devtools/front_end/timeline/PerformanceMonitor.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1115861
+      },
+      "writtenOn": "2017-08-25T02:08:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "77aad4ce_0aa9bcee",
+      "revId": "bfc3eae1b8cb7c1a67fc021aa2544697fb1ef9e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "325fedc1_840b1196",
         "filename": "third_party/WebKit/Source/devtools/front_end/timeline/PerformanceMonitor.js",
         "patchSetId": 2
@@ -47,6 +83,24 @@
       "writtenOn": "2017-08-25T00:26:38Z",
       "side": 1,
       "message": "TimePercent?",
+      "revId": "bfc3eae1b8cb7c1a67fc021aa2544697fb1ef9e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec6309ce_dc1ce3cc",
+        "filename": "third_party/WebKit/Source/devtools/front_end/timeline/PerformanceMonitor.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1115861
+      },
+      "writtenOn": "2017-08-25T02:08:06Z",
+      "side": 1,
+      "message": "It\u0027s cumulative in the raw data.",
+      "parentUuid": "325fedc1_840b1196",
       "revId": "bfc3eae1b8cb7c1a67fc021aa2544697fb1ef9e6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "89560c41_a661539d",
+        "filename": "third_party/WebKit/Source/devtools/front_end/timeline/PerformanceMonitor.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1115861
+      },
+      "writtenOn": "2017-08-25T02:08:06Z",
+      "side": 1,
+      "message": "We get new sample every 500ms, but scroll smoothly.",
+      "parentUuid": "a8d84a04_dd3f41a2",
+      "revId": "bfc3eae1b8cb7c1a67fc021aa2544697fb1ef9e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2031a651_157cc135",
         "filename": "third_party/WebKit/Source/devtools/front_end/timeline/PerformanceMonitor.js",
         "patchSetId": 2
@@ -81,6 +153,24 @@
       "writtenOn": "2017-08-25T00:26:38Z",
       "side": 1,
       "message": "Do you need both \"* 2\" here and above?",
+      "revId": "bfc3eae1b8cb7c1a67fc021aa2544697fb1ef9e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8328dd8b_7142a93b",
+        "filename": "third_party/WebKit/Source/devtools/front_end/timeline/PerformanceMonitor.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1115861
+      },
+      "writtenOn": "2017-08-25T02:08:06Z",
+      "side": 1,
+      "message": "First *2 is to have some extra samples for the case the user resizes the window.\nSecond *2 to have a hysteresis. Otherwise I\u0027ll be splicing on every sample.",
+      "parentUuid": "2031a651_157cc135",
       "revId": "bfc3eae1b8cb7c1a67fc021aa2544697fb1ef9e6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "7ee148a0_e0270532",
+        "filename": "third_party/WebKit/Source/devtools/front_end/timeline/PerformanceMonitor.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1115861
+      },
+      "writtenOn": "2017-08-25T02:08:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d2315af5_f2b74f25",
+      "revId": "bfc3eae1b8cb7c1a67fc021aa2544697fb1ef9e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "90b75a2e_0d7f11b6",
         "filename": "third_party/WebKit/Source/devtools/front_end/timeline/PerformanceMonitor.js",
         "patchSetId": 2
@@ -118,6 +226,24 @@
       "revId": "bfc3eae1b8cb7c1a67fc021aa2544697fb1ef9e6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "accc5c28_5ded17a4",
+        "filename": "third_party/WebKit/Source/devtools/front_end/timeline/PerformanceMonitor.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1115861
+      },
+      "writtenOn": "2017-08-25T02:08:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "90b75a2e_0d7f11b6",
+      "revId": "bfc3eae1b8cb7c1a67fc021aa2544697fb1ef9e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -138,6 +264,24 @@
     },
     {
       "key": {
+        "uuid": "310bccc7_3a8990d5",
+        "filename": "third_party/WebKit/Source/devtools/front_end/timeline/PerformanceMonitor.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1115861
+      },
+      "writtenOn": "2017-08-25T02:08:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d4ff0df4_189fce36",
+      "revId": "bfc3eae1b8cb7c1a67fc021aa2544697fb1ef9e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "52e96e23_2ea90bb3",
         "filename": "third_party/WebKit/Source/devtools/front_end/timeline/PerformanceMonitor.js",
         "patchSetId": 2
@@ -152,6 +296,24 @@
       "revId": "bfc3eae1b8cb7c1a67fc021aa2544697fb1ef9e6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a123a85a_6295dcb1",
+        "filename": "third_party/WebKit/Source/devtools/front_end/timeline/PerformanceMonitor.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1115861
+      },
+      "writtenOn": "2017-08-25T02:08:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "52e96e23_2ea90bb3",
+      "revId": "bfc3eae1b8cb7c1a67fc021aa2544697fb1ef9e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -172,6 +334,24 @@
     },
     {
       "key": {
+        "uuid": "7ef85b7e_5193e2a0",
+        "filename": "third_party/WebKit/Source/devtools/front_end/timeline/PerformanceMonitor.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1115861
+      },
+      "writtenOn": "2017-08-25T02:08:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "99d64f3f_4ac1a1e9",
+      "revId": "bfc3eae1b8cb7c1a67fc021aa2544697fb1ef9e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "20734213_bf5b3819",
         "filename": "third_party/WebKit/Source/devtools/front_end/timeline/PerformanceMonitor.js",
         "patchSetId": 2
@@ -183,6 +363,24 @@
       "writtenOn": "2017-08-25T00:26:38Z",
       "side": 1,
       "message": "So what happens to these if you switch the panel off and on? It looks like they won\u0027t be relevant to current data set.",
+      "revId": "bfc3eae1b8cb7c1a67fc021aa2544697fb1ef9e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "582319e8_f90ed034",
+        "filename": "third_party/WebKit/Source/devtools/front_end/timeline/PerformanceMonitor.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1115861
+      },
+      "writtenOn": "2017-08-25T02:08:06Z",
+      "side": 1,
+      "message": "These will quickly adjust to the new values. Even before the first point scrolls into the viewport.",
+      "parentUuid": "20734213_bf5b3819",
       "revId": "bfc3eae1b8cb7c1a67fc021aa2544697fb1ef9e6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -206,6 +404,24 @@
     },
     {
       "key": {
+        "uuid": "94f21f13_a6928254",
+        "filename": "third_party/WebKit/Source/devtools/front_end/timeline/PerformanceMonitor.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1115861
+      },
+      "writtenOn": "2017-08-25T02:08:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b6495f8b_59d0eefa",
+      "revId": "bfc3eae1b8cb7c1a67fc021aa2544697fb1ef9e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "859c49b3_d1a68962",
         "filename": "third_party/WebKit/Source/devtools/front_end/timeline/PerformanceMonitor.js",
         "patchSetId": 2
@@ -220,6 +436,24 @@
       "revId": "bfc3eae1b8cb7c1a67fc021aa2544697fb1ef9e6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3504c858_0b51e65b",
+        "filename": "third_party/WebKit/Source/devtools/front_end/timeline/PerformanceMonitor.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1115861
+      },
+      "writtenOn": "2017-08-25T02:08:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "859c49b3_d1a68962",
+      "revId": "bfc3eae1b8cb7c1a67fc021aa2544697fb1ef9e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
