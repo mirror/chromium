@@ -121,6 +121,30 @@
     },
     {
       "key": {
+        "uuid": "46c2d3a8_dcc3bf76",
+        "filename": "services/ui/ws/window_manager_client_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 392,
+      "author": {
+        "id": 1211635
+      },
+      "writtenOn": "2017-08-25T19:36:47Z",
+      "side": 1,
+      "message": "Clients don\u0027t wait for the id_. Windows created by clients will always have high 16 bits set to 0 in client-side (so that WindowTreeClient::WasCreatedByThisClient knows whether a given window is created by this client by checking its high 16 bits). When WT talk to its WTC, if it\u0027s a window created by that WTC, ClientWindowIdToTransportId will reset high 16 bits to 0. In this case, when we do Embed and a new WT is created; in the new WTC\u0027s OnEmbed, we see |window| with the correct id (high 16 bits is 1) because we are not sending it to the WM, therefore |embed_root| have id (1,1).",
+      "parentUuid": "ab24a589_12e62ae7",
+      "range": {
+        "startLine": 392,
+        "startChar": 31,
+        "endLine": 392,
+        "endChar": 40
+      },
+      "revId": "0e2cc9a6cd3def87cb99e4d9b3954b8e65e2e275",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6d825b86_25f634fb",
         "filename": "services/ui/ws/window_tree.h",
         "patchSetId": 2
@@ -228,6 +252,30 @@
       "side": 1,
       "message": "Think of if you were writing this code from scratch. What would you do?\n\nI think having the separate function is confusing and easy to get wrong, resulting in bad test coverage.",
       "parentUuid": "5351e64e_cdb7c6f3",
+      "range": {
+        "startLine": 431,
+        "startChar": 2,
+        "endLine": 431,
+        "endChar": 41
+      },
+      "revId": "0e2cc9a6cd3def87cb99e4d9b3954b8e65e2e275",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cef0c40a_a47043fb",
+        "filename": "services/ui/ws/window_tree.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 431,
+      "author": {
+        "id": 1211635
+      },
+      "writtenOn": "2017-08-25T19:36:47Z",
+      "side": 1,
+      "message": "Yea true, makes sense. I deleted WindowIdToTransportId in ids.h. Also I found that we are using it in tests like this (create WindowId) -\u003e (translate it to transport id) -\u003e (create ClientWindowId from that) so I just added a ctor to ClientWindowId that takes in (client_id, window_id). WDYT?",
+      "parentUuid": "f4a48866_10f364b4",
       "range": {
         "startLine": 431,
         "startChar": 2,

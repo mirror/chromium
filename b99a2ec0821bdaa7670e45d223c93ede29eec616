@@ -70,6 +70,30 @@
       "revId": "b99a2ec0821bdaa7670e45d223c93ede29eec616",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d58baee_73966965",
+        "filename": "services/ui/ws/window_tree.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1469,
+      "author": {
+        "id": 1211635
+      },
+      "writtenOn": "2017-08-25T19:36:47Z",
+      "side": 1,
+      "message": "Ah I see, thanks for the explanation! Keeping it as it is.",
+      "parentUuid": "e157d897_35e4645e",
+      "range": {
+        "startLine": 1469,
+        "startChar": 6,
+        "endLine": 1469,
+        "endChar": 35
+      },
+      "revId": "b99a2ec0821bdaa7670e45d223c93ede29eec616",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
