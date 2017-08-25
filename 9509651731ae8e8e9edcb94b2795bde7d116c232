@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "6f773d41_e931a153",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/offlinepages/OfflinePageBridge.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1212384
+      },
+      "writtenOn": "2017-08-25T21:27:33Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "0b80a41e_3054bedf",
+      "revId": "9509651731ae8e8e9edcb94b2795bde7d116c232",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "582cb67d_27086e80",
         "filename": "chrome/browser/offline_pages/android/offline_page_bridge.cc",
         "patchSetId": 6
@@ -33,6 +51,24 @@
       "revId": "9509651731ae8e8e9edcb94b2795bde7d116c232",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2139bf34_c17e406b",
+        "filename": "chrome/browser/offline_pages/android/offline_page_bridge.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 295,
+      "author": {
+        "id": 1212384
+      },
+      "writtenOn": "2017-08-25T21:27:33Z",
+      "side": 1,
+      "message": "per offline discussion, this will live in offline page bridge to consolidate our jni calls as much as possible",
+      "parentUuid": "582cb67d_27086e80",
+      "revId": "9509651731ae8e8e9edcb94b2795bde7d116c232",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "6991df7b_8e753fd9",
+        "filename": "chrome/browser/offline_pages/offline_page_origin_utils.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1212384
+      },
+      "writtenOn": "2017-08-25T21:27:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b9a44f66_7e4038f1",
+      "revId": "9509651731ae8e8e9edcb94b2795bde7d116c232",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "35dd88ea_c91b98d5",
         "filename": "chrome/browser/offline_pages/offline_page_origin_utils.h",
         "patchSetId": 6
@@ -67,6 +121,24 @@
       "revId": "9509651731ae8e8e9edcb94b2795bde7d116c232",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3013f86a_8c31c548",
+        "filename": "chrome/browser/offline_pages/offline_page_origin_utils.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1212384
+      },
+      "writtenOn": "2017-08-25T21:27:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "35dd88ea_c91b98d5",
+      "revId": "9509651731ae8e8e9edcb94b2795bde7d116c232",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
