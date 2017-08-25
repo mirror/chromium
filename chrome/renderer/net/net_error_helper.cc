@@ -26,6 +26,7 @@
 #include "content/public/common/associated_interface_provider.h"
 #include "content/public/common/associated_interface_registry.h"
 #include "content/public/common/content_client.h"
+#include "content/public/common/resource_request.h"
 #include "content/public/common/url_constants.h"
 #include "content/public/renderer/content_renderer_client.h"
 #include "content/public/renderer/document_state.h"
@@ -35,6 +36,7 @@
 #include "content/public/renderer/resource_fetcher.h"
 #include "ipc/ipc_message.h"
 #include "ipc/ipc_message_macros.h"
+#include "net/http/http_request_headers.h"
 #include "third_party/WebKit/public/platform/WebCachePolicy.h"
 #include "third_party/WebKit/public/platform/WebSecurityOrigin.h"
 #include "third_party/WebKit/public/platform/WebURL.h"
@@ -262,18 +264,21 @@ void NetErrorHelper::FetchNavigationCorrections(
     const std::string& navigation_correction_request_body) {
   DCHECK(!correction_fetcher_.get());
 
-  correction_fetcher_.reset(
-      content::ResourceFetcher::Create(navigation_correction_url));
-  correction_fetcher_->SetMethod("POST");
-  correction_fetcher_->SetBody(navigation_correction_request_body);
-  correction_fetcher_->SetHeader("Content-Type", "application/json");
+  content::ResourceRequest request;
+  request.url = navigation_correction_url;
+  request.method = "POST";
+  request.resource_type = content::RESOURCE_TYPE_SUB_RESOURCE;
+  request.request_body = content::ResourceRequestBody::CreateFromBytes(
+      navigation_correction_request_body.data(),
+      navigation_correction_request_body.size());
+  net::HttpRequestHeaders headers;
+  headers.SetHeader("Content-Type", "application/json");
+  request.headers = headers.ToString();
 
-  correction_fetcher_->Start(
-      render_frame()->GetWebFrame(),
-      blink::WebURLRequest::kRequestContextInternal,
+  correction_fetcher_ = content::ResourceFetcher::CreateAndStart(
+      request, render_frame()->GetWebFrame()->LoadingTaskRunner(),
       base::Bind(&NetErrorHelper::OnNavigationCorrectionsFetched,
                  base::Unretained(this)));
-
   correction_fetcher_->SetTimeout(
       base::TimeDelta::FromSeconds(kNavigationCorrectionFetchTimeoutSec));
 }
@@ -286,14 +291,18 @@ void NetErrorHelper::SendTrackingRequest(
     const GURL& tracking_url,
     const std::string& tracking_request_body) {
   // If there's already a pending tracking request, this will cancel it.
-  tracking_fetcher_.reset(content::ResourceFetcher::Create(tracking_url));
-  tracking_fetcher_->SetMethod("POST");
-  tracking_fetcher_->SetBody(tracking_request_body);
-  tracking_fetcher_->SetHeader("Content-Type", "application/json");
+  content::ResourceRequest request;
+  request.url = tracking_url;
+  request.method = "POST";
+  request.resource_type = content::RESOURCE_TYPE_SUB_RESOURCE;
+  request.request_body = content::ResourceRequestBody::CreateFromBytes(
+      tracking_request_body.data(), tracking_request_body.size());
+  net::HttpRequestHeaders headers;
+  headers.SetHeader("Content-Type", "application/json");
+  request.headers = headers.ToString();
 
-  tracking_fetcher_->Start(
-      render_frame()->GetWebFrame(),
-      blink::WebURLRequest::kRequestContextInternal,
+  tracking_fetcher_ = content::ResourceFetcher::CreateAndStart(
+      request, render_frame()->GetWebFrame()->LoadingTaskRunner(),
       base::Bind(&NetErrorHelper::OnTrackingRequestComplete,
                  base::Unretained(this)));
 }
@@ -351,21 +360,22 @@ void NetErrorHelper::SetNavigationCorrectionInfo(
                                        country_code, api_key, search_url);
 }
 
-void NetErrorHelper::OnNavigationCorrectionsFetched(
-    const blink::WebURLResponse& response,
-    const std::string& data) {
+void NetErrorHelper::OnNavigationCorrectionsFetched(bool success,
+                                                    int http_status_code,
+                                                    const GURL& final_url,
+                                                    const std::string& data) {
   // The fetcher may only be deleted after |data| is passed to |core_|.  Move
   // it to a temporary to prevent any potential re-entrancy issues.
   std::unique_ptr<content::ResourceFetcher> fetcher(
       correction_fetcher_.release());
-  bool success = (!response.IsNull() && response.HttpStatusCode() == 200);
-  core_->OnNavigationCorrectionsFetched(success ? data : "",
-                                        base::i18n::IsRTL());
+  core_->OnNavigationCorrectionsFetched(
+      (success && http_status_code == 200) ? data : "", base::i18n::IsRTL());
 }
 
-void NetErrorHelper::OnTrackingRequestComplete(
-    const blink::WebURLResponse& response,
-    const std::string& data) {
+void NetErrorHelper::OnTrackingRequestComplete(bool success,
+                                               int http_status_code,
+                                               const GURL& final_url,
+                                               const std::string& data) {
   tracking_fetcher_.reset();
 }
 
