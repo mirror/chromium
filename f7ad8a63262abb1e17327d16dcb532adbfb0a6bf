@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5386c712_f80c1f5f",
+        "filename": "docs/speed/perf_bot_sheriffing.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 406,
+      "author": {
+        "id": 1128909
+      },
+      "writtenOn": "2017-08-25T18:09:50Z",
+      "side": 1,
+      "message": "This is a little awkwardly worded. Maybe:\n\nIn the case that a benchmark is failing in its entirety on a platform that it should normally run on, you can temporarily disable it by using DisableBenchmark():",
+      "revId": "f7ad8a63262abb1e17327d16dcb532adbfb0a6bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
