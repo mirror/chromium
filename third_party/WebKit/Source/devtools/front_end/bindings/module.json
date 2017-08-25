@@ -17,6 +17,7 @@
         "DebuggerWorkspaceBinding.js",
         "BreakpointManager.js",
         "ContentProviderBasedProject.js",
+        "ChangeableNetworkProject.js",
         "DefaultScriptMapping.js",
         "FileUtils.js",
         "BlackboxManager.js",

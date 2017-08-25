@@ -166,6 +166,10 @@ SourceFrame.SourceCodeDiff = class {
     }
   }
 
+  forceUpdate() {
+    this._update();
+  }
+
   _update() {
     if (this._uiSourceCode)
       this._workspaceDiff.requestDiff(this._uiSourceCode).then(this._innerUpdate.bind(this));
