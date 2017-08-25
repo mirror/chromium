@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c451c848_93067df1",
+        "filename": "chrome/browser/media/router/media_router_dialog_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-08-25T04:18:47Z",
+      "side": 1,
+      "message": "Since this is propagated back to the page, I think it\u0027s ok to provide a slightly obscured reason.",
+      "parentUuid": "8703d73c_c9143f07",
+      "revId": "525c767682e6613bcf91e95f15e5aa5663042fb3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "72adc3e9_45e6fd0e",
         "filename": "chrome/browser/media/router/media_router_dialog_controller.cc",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "525c767682e6613bcf91e95f15e5aa5663042fb3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "abd8dbbe_151c977d",
+        "filename": "chrome/browser/media/router/media_router_dialog_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-08-25T04:18:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "72adc3e9_45e6fd0e",
+      "revId": "525c767682e6613bcf91e95f15e5aa5663042fb3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "ff7a653f_10fc60b1",
+        "filename": "chrome/browser/media/router/presentation_service_delegate_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 477,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-08-25T04:18:47Z",
+      "side": 1,
+      "message": "I will remove the log from MRDC.",
+      "parentUuid": "cb436a49_a8988fb5",
+      "revId": "525c767682e6613bcf91e95f15e5aa5663042fb3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cfb798e4_ff3ad1b3",
         "filename": "chrome/browser/ui/webui/media_router/media_router_ui_unittest.cc",
         "patchSetId": 2
@@ -67,6 +121,24 @@
       "revId": "525c767682e6613bcf91e95f15e5aa5663042fb3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11c520f1_852319b0",
+        "filename": "chrome/browser/ui/webui/media_router/media_router_ui_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 565,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-08-25T04:18:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cfb798e4_ff3ad1b3",
+      "revId": "525c767682e6613bcf91e95f15e5aa5663042fb3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
