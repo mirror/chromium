@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d5c85c29_b6ea6028",
+        "filename": "services/ui/ws/window_coordinate_conversions.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-08-25T18:40:35Z",
+      "side": 1,
+      "message": "I guess the reason is that for UI scale factor changes (I suppose for rotation too?), the transform is applied on the wm-root?",
+      "revId": "86b841df614c41bf9d6f5a049efdb73a8c38fab5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9dd367d9_a82e667f",
+        "filename": "ui/aura/mus/window_tree_host_mus.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-08-25T18:40:35Z",
+      "side": 1,
+      "message": "Remove (or complete) comment?",
+      "revId": "86b841df614c41bf9d6f5a049efdb73a8c38fab5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
