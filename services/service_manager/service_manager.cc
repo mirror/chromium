@@ -213,6 +213,9 @@ class ServiceManager::Instance
 
   ~Instance() override {
     Stop();
+    bool debug = base::CommandLine::ForCurrentProcess()->HasSwitch("run-in-mash");
+    if (debug)
+      LOG(ERROR)<<"JR closing "<<identity_.name();
   }
 
   bool CallOnBindInterface(std::unique_ptr<ConnectParams>* in_params) {
@@ -757,6 +760,7 @@ ServiceManager::ServiceManager(std::unique_ptr<ServiceProcessLauncherFactory>
 }
 
 ServiceManager::~ServiceManager() {
+LOG(ERROR)<<"JR SM "<<base::CommandLine::ForCurrentProcess()->GetArgumentsString();
   // Ensure we tear down the ServiceManager instance last. This is to avoid
   // hitting bindings DCHECKs, since the ServiceManager or Catalog may at any
   // given time own in-flight responders for Instances' Connector requests.
@@ -774,7 +778,13 @@ ServiceManager::~ServiceManager() {
     instance.first->Stop();
   service_manager_instance->Stop();
 
+  bool debug = base::CommandLine::ForCurrentProcess()->HasSwitch("run-in-mash");
+
+  if (debug)
+    LOG(ERROR)<<"JR SM before clear instances";
   instances_.clear();
+  if (debug)
+    LOG(ERROR)<<"JR SM after clear instances";
 }
 
 void ServiceManager::SetInstanceQuitCallback(
