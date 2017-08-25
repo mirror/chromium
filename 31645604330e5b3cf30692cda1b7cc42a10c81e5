@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4328781f_61efa450",
+        "filename": "components/offline_pages/core/prefetch/download_archives_task.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-08-25T20:25:30Z",
+      "side": 1,
+      "message": "Using typedef here because using doesn\u0027t accept references to types that are members of a class.",
+      "range": {
+        "startLine": 26,
+        "startChar": 0,
+        "endLine": 27,
+        "endChar": 62
+      },
+      "revId": "31645604330e5b3cf30692cda1b7cc42a10c81e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "628840ee_d612093b",
+        "filename": "components/offline_pages/core/prefetch/download_archives_task.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-08-25T20:25:30Z",
+      "side": 1,
+      "message": "As this DownloadItem and the private ItemReadyForDownload were very similar, I consolidated both. This serves the purpose of passing |archive_body_length| to the UI callback for UMA reporting.",
+      "range": {
+        "startLine": 28,
+        "startChar": 9,
+        "endLine": 28,
+        "endChar": 21
+      },
+      "revId": "31645604330e5b3cf30692cda1b7cc42a10c81e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b55ec3eb_0555876f",
+        "filename": "components/offline_pages/core/prefetch/download_completed_task.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-08-25T20:25:30Z",
+      "side": 1,
+      "message": "This and the next method now return the information the callback needed to know: if a row was updated or not. The previous form would only catch the DB error case.",
+      "range": {
+        "startLine": 38,
+        "startChar": 7,
+        "endLine": 38,
+        "endChar": 22
+      },
+      "revId": "31645604330e5b3cf30692cda1b7cc42a10c81e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0bfe71f_3c64174f",
+        "filename": "components/offline_pages/core/prefetch/prefetch_downloader_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-08-25T20:25:30Z",
+      "side": 1,
+      "message": "I\u0027m unsure if this comment should be here or if this should be a note in a document somewhere else.",
+      "range": {
+        "startLine": 136,
+        "startChar": 0,
+        "endLine": 139,
+        "endChar": 34
+      },
+      "revId": "31645604330e5b3cf30692cda1b7cc42a10c81e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
