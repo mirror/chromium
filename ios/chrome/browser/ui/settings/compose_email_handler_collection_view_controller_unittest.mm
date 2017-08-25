@@ -19,10 +19,6 @@
 
 #pragma mark - MailtoURLRewriter private interface for testing.
 
-@interface MailtoURLRewriter ()
-- (void)addMailtoApps:(NSArray<MailtoHandler*>*)handlerApps;
-@end
-
 #pragma mark - ComposeEmailHandlerCollectionViewControllerTest
 
 class ComposeEmailHandlerCollectionViewControllerTest
@@ -33,8 +29,7 @@ class ComposeEmailHandlerCollectionViewControllerTest
   // the LegacyMailtoURLRewriter which in turn used for the construction of the
   // CollectionViewController.
   CollectionViewController* InstantiateController() override {
-    rewriter_ = [[LegacyMailtoURLRewriter alloc] init];
-    [rewriter_ addMailtoApps:handlers_];
+    rewriter_ = [LegacyMailtoURLRewriter mailtoURLRewriterWithStandardHandlers];
     if (defaultHandlerID_)
       [rewriter_ setDefaultHandlerID:defaultHandlerID_];
     return [[ComposeEmailHandlerCollectionViewController alloc]
