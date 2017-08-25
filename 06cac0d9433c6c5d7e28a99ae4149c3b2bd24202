@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "12b2378b_e94e95f0",
+        "filename": "components/crash/content/app/crash_export_thunks.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-08-25T16:25:34Z",
+      "side": 1,
+      "message": "I know this has been around forever, but since you\u0027re making things all nice -- maybe it\u0027d make sense to have a set of functions that are SyzyASAN-specific, something like CrashForException_SyzyASAN(), etc. that forward to whatever Chrome happens to have. i.e. making the same clear contract between SyzyASAN and Chrome similarly to what you\u0027re doing here for an API between elf and Chrome.",
+      "range": {
+        "startLine": 34,
+        "startChar": 9,
+        "endLine": 34,
+        "endChar": 42
+      },
+      "revId": "06cac0d9433c6c5d7e28a99ae4149c3b2bd24202",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
