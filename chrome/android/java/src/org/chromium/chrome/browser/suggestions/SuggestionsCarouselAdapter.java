@@ -58,6 +58,8 @@ public class SuggestionsCarouselAdapter
         mSuggestions.clear();
         mSuggestions.addAll(suggestions);
 
+        if (!mSuggestions.isEmpty()) SuggestionsMetrics.recordContextualSuggestionsCarouselShown();
+
         notifyDataSetChanged();
     }
 }

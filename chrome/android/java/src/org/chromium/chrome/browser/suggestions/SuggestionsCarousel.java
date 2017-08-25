@@ -102,6 +102,14 @@ public class SuggestionsCarousel extends OptionalLeaf {
             super(new RecyclerView(parentView.getContext()));
 
             RecyclerView recyclerView = (RecyclerView) itemView;
+            recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+                @Override
+                public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                    super.onScrolled(recyclerView, dx, dy);
+
+                    SuggestionsMetrics.recordContextualSuggestionsCarouselScrolled();
+                }
+            });
 
             ViewGroup.LayoutParams params =
                     new RecyclerView.LayoutParams(MATCH_PARENT, WRAP_CONTENT);
