@@ -134,6 +134,8 @@ class OmniboxPopupModel {
   void SetAnswerBitmap(const SkBitmap& bitmap);
   const SkBitmap& answer_bitmap() const { return answer_bitmap_; }
 
+  void SetMatchIcon(size_t match_index, const gfx::Image& icon);
+
   // The token value for selected_line_ and functions dealing with a "line
   // number" that indicates "no line".
   static const size_t kNoMatch;

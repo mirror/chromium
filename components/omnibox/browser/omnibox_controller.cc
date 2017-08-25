@@ -88,5 +88,5 @@ void OmniboxController::SetAnswerBitmap(const SkBitmap& bitmap) {
 
 void OmniboxController::SetMatchIcon(size_t match_index,
                                      const gfx::Image& icon) {
-  // TODO(tommycli): Implement UI code to accept this icon.
+  popup_->SetMatchIcon(match_index, icon);
 }
