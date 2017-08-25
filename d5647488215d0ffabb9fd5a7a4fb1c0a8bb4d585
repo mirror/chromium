@@ -232,6 +232,24 @@
     },
     {
       "key": {
+        "uuid": "2e5b530d_1d5b1dd5",
+        "filename": "third_party/zlib/contrib/arm/inffast.c",
+        "patchSetId": 5
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1240200
+      },
+      "writtenOn": "2017-08-25T06:36:09Z",
+      "side": 1,
+      "message": "BTW, to express a legal unaligned load in C you can\u0027t necessarily just cast the pointer, but you can write bytes loads and rely on the compiler to fuse them provided it\u0027s a clear machine word load (eg., src[0]+src[1]*256u+...).  All the big endian targets I tried with that produce special endian-reversing and alignment-fixing loads and these are probably still faster than the original code despite the extra work.\n\nThis breaks down a little in some compilers if you scale it down to 16-bit, but works in principle on 32-bit targets (and provides a performance gain on \u003e\u003d armv7).  You just have to watch the compiler closely to make sure it doesn\u0027t screw up.",
+      "parentUuid": "c8afc215_3c0bfad0",
+      "revId": "d5647488215d0ffabb9fd5a7a4fb1c0a8bb4d585",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2a788724_acbea8a5",
         "filename": "third_party/zlib/contrib/arm/inflate.c",
         "patchSetId": 5
