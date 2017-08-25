@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "36285f11_61f09d67",
+        "filename": "media/gpu/android_video_surface_chooser_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-08-25T21:24:05Z",
+      "side": 1,
+      "message": "actually, i don\u0027t think that we need any of this.",
+      "parentUuid": "f3922381_1d581ead",
+      "range": {
+        "startLine": 248,
+        "startChar": 5,
+        "endLine": 250,
+        "endChar": 31
+      },
+      "revId": "b1397bbbfb39e01f3fa68f0e53d669e16aeadb46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cb39e8aa_7bec4722",
         "filename": "media/gpu/android_video_surface_chooser_impl.cc",
         "patchSetId": 3
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "30ac3718_47d91dea",
+        "filename": "media/gpu/android_video_surface_chooser_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-08-25T21:24:05Z",
+      "side": 1,
+      "message": "no, since the client dropped the overlay itself.  it must have switched to ST, since it has no overlay.  i\u0027ll add a comment.",
+      "parentUuid": "cb39e8aa_7bec4722",
+      "range": {
+        "startLine": 252,
+        "startChar": 2,
+        "endLine": 252,
+        "endChar": 47
+      },
+      "revId": "b1397bbbfb39e01f3fa68f0e53d669e16aeadb46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8f674dec_d8549c35",
         "filename": "media/gpu/android_video_surface_chooser_impl_unittest.cc",
         "patchSetId": 3
@@ -68,6 +116,30 @@
       "revId": "b1397bbbfb39e01f3fa68f0e53d669e16aeadb46",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "347fe693_83b02dd2",
+        "filename": "media/gpu/android_video_surface_chooser_impl_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 323,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-08-25T21:24:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8f674dec_d8549c35",
+      "range": {
+        "startLine": 323,
+        "startChar": 57,
+        "endLine": 323,
+        "endChar": 65
+      },
+      "revId": "b1397bbbfb39e01f3fa68f0e53d669e16aeadb46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
