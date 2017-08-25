@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "416da4d3_3de7512a",
+        "filename": "base/synchronization/waitable_event_mac.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1174099
+      },
+      "writtenOn": "2017-08-25T17:17:44Z",
+      "side": 1,
+      "message": "Seems like you really want a single variable and a 3-way enum.",
+      "revId": "7c2d95b8e744262df6dc692076a112a646acdc66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5acca7bb_b5c30568",
+        "filename": "base/synchronization/waitable_event_mac.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1174099
+      },
+      "writtenOn": "2017-08-25T17:17:44Z",
+      "side": 1,
+      "message": "Missing “in”",
+      "range": {
+        "startLine": 216,
+        "startChar": 12,
+        "endLine": 216,
+        "endChar": 32
+      },
+      "revId": "7c2d95b8e744262df6dc692076a112a646acdc66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe74cbcf_d8b51af5",
+        "filename": "base/synchronization/waitable_event_mac.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 1174099
+      },
+      "writtenOn": "2017-08-25T17:17:44Z",
+      "side": 1,
+      "message": "Assume that two events are signaled simultaneously, and you no-op the second one here as discussed and return the index of the first one. What happens when the caller does another WaitMany()? Will it immediately return, corresponding to the second event to signal, ’cuz the second event was never reset? (Or, a twist, will it return a single signaled event on the second call if it was manual-reset and the caller didn’t reset it?)\n\nI think the answer is yes, but this is getting deep enough now that I just want to double-check.",
+      "revId": "7c2d95b8e744262df6dc692076a112a646acdc66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a61a3b11_bdffc800",
+        "filename": "base/synchronization/waitable_event_mac.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 258,
+      "author": {
+        "id": 1174099
+      },
+      "writtenOn": "2017-08-25T17:17:44Z",
+      "side": 1,
+      "message": "DCHECK_NE(signaled, kUnsignaled)",
+      "revId": "7c2d95b8e744262df6dc692076a112a646acdc66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
