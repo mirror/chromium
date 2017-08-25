@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c906ea73_9fcf24b1",
+        "filename": "components/content_settings/core/browser/website_settings_registry.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-08-25T15:10:13Z",
+      "side": 0,
+      "message": "Why do you remove this? The feature could still be disabled (e.g. via Finch), so wouldn\u0027t you also want to disable the content setting?",
+      "range": {
+        "startLine": 182,
+        "startChar": 2,
+        "endLine": 182,
+        "endChar": 72
+      },
+      "revId": "1784105c3abe2d763c93f26177d42e95878170e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
