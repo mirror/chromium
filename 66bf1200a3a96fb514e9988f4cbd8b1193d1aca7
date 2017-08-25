@@ -154,6 +154,24 @@
     },
     {
       "key": {
+        "uuid": "dd56b28e_5ab0100f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-08-25T02:28:48Z",
+      "side": 1,
+      "message": "+1.",
+      "parentUuid": "22b895b8_591ad085",
+      "revId": "66bf1200a3a96fb514e9988f4cbd8b1193d1aca7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ac9836cc_bf689bf0",
         "filename": "tools/idl_parser/idl_node.py",
         "patchSetId": 5
@@ -186,6 +204,40 @@
       "revId": "66bf1200a3a96fb514e9988f4cbd8b1193d1aca7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "396cb8a7_b0e91f12",
+        "filename": "tools/idl_parser/idl_node.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-08-25T02:28:48Z",
+      "side": 1,
+      "message": "Can a \u0027VALUE\u0027 property have an empty string \u0027\u0027? If yes, your code doesn\u0027t handle it.\nHow about doing\nvalue \u003d self.GetProperty(\u0027VALUE\u0027)\n?",
+      "revId": "66bf1200a3a96fb514e9988f4cbd8b1193d1aca7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a165c912_343f6dcc",
+        "filename": "tools/idl_parser/idl_node.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-08-25T02:28:48Z",
+      "side": 1,
+      "message": "I recommend not to use\nif cond:\n  return A\nelse:\n  return B\nhttps://chromium.googlesource.com/chromium/src/+/master/styleguide/c++/c++.md#code-formatting\n\nInstead, you can do either of (1), (2), or (3).\n1)\nif not value:\n  return \u0027%s(%s)\u0027 % (...)\nreturn \u0027%s(%s) \u003d %s\u0027 % (...)\n2)\ns \u003d \u0027%s(%s)\u0027 % (...)\nif not value:\n  s +\u003d \u0027 \u003d \u0027 + value\n3)\nreturn \u0027%s(%s)\u0027 % (...) + ((\u0027 \u003d \u0027 + value) if value else \u0027\u0027)",
+      "revId": "66bf1200a3a96fb514e9988f4cbd8b1193d1aca7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     },
     {
       "key": {
@@ -233,6 +285,29 @@
       "revId": "66bf1200a3a96fb514e9988f4cbd8b1193d1aca7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "56389f3d_b0736d11",
+        "filename": "tools/idl_parser/idl_node.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-08-25T02:28:48Z",
+      "side": 1,
+      "message": "put a space before \u0027\u003d\u0027, then its output will look like our coding style in C++/Python.",
+      "range": {
+        "startLine": 103,
+        "startChar": 20,
+        "endLine": 103,
+        "endChar": 21
+      },
+      "revId": "66bf1200a3a96fb514e9988f4cbd8b1193d1aca7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

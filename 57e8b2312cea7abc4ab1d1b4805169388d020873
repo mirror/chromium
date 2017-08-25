@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e83bcab6_bb9b1922",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 11
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-08-25T02:28:48Z",
+      "side": 1,
+      "message": "Lines #9-11 is confusing for this CL. Please remove this part.\nThe issue ID is already on #29.",
+      "revId": "57e8b2312cea7abc4ab1d1b4805169388d020873",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "047f54e1_124360d7",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 11
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-08-25T02:28:48Z",
+      "side": 1,
+      "message": "only the tests?\nI think making the stringifier descriptive is mainly for readability for developers/users.",
+      "revId": "57e8b2312cea7abc4ab1d1b4805169388d020873",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
