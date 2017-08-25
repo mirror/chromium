@@ -2,6 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+#include "ash/accessibility/accessibility_controller.h"
 #include "ash/accessibility_types.h"
 #include "ash/login_status.h"
 #include "ash/magnifier/magnification_controller.h"
@@ -72,8 +73,12 @@ void CreateAndStartUserSession(const AccountId& account_id) {
       ProfileHelper::GetUserIdHashByUserIdForTesting(account_id.GetUserEmail());
 
   SessionManager::Get()->CreateSession(account_id, user_id_hash);
-  ProfileHelper::GetProfileByUserIdHashForTest(user_id_hash);
+  Profile* profile = ProfileHelper::GetProfileByUserIdHashForTest(user_id_hash);
+  ash::Shell::Get()->accessibility_controller()->SetPrefServiceForTest(
+      profile->GetPrefs());
   SessionManager::Get()->SessionStarted();
+  // Flush to ensure the session state reaches ash and updates login status.
+  SessionControllerClient::FlushForTesting();
 }
 
 class TrayAccessibilityTest
@@ -102,6 +107,8 @@ class TrayAccessibilityTest
   void SetUpOnMainThread() override {
     AccessibilityManager::Get()->SetProfileForTest(GetProfile());
     MagnificationManager::Get()->SetProfileForTest(GetProfile());
+    ash::Shell::Get()->accessibility_controller()->SetPrefServiceForTest(
+        GetProfile()->GetPrefs());
     // Need to mark oobe completed to show detailed views.
     StartupUtils::MarkOobeCompleted();
   }
@@ -365,8 +372,6 @@ IN_PROC_BROWSER_TEST_P(TrayAccessibilityTest, LoginStatus) {
   EXPECT_EQ(ash::LoginStatus::NOT_LOGGED_IN, GetLoginStatus());
 
   CreateAndStartUserSession(AccountId::FromUserEmail("owner@invalid.domain"));
-  // Flush to ensure the session state reaches ash and updates login status.
-  SessionControllerClient::FlushForTesting();
 
   EXPECT_EQ(ash::LoginStatus::USER, GetLoginStatus());
 }
@@ -517,8 +522,6 @@ IN_PROC_BROWSER_TEST_P(TrayAccessibilityTest, ShowTrayIcon) {
 IN_PROC_BROWSER_TEST_P(TrayAccessibilityTest, ShowMenu) {
   // Login
   CreateAndStartUserSession(AccountId::FromUserEmail("owner@invalid.domain"));
-  // Flush to ensure the session state reaches ash and updates login status.
-  SessionControllerClient::FlushForTesting();
 
   SetShowAccessibilityOptionsInSystemTrayMenu(false);
 
@@ -655,8 +658,6 @@ IN_PROC_BROWSER_TEST_P(TrayAccessibilityTest, ShowMenu) {
 IN_PROC_BROWSER_TEST_P(TrayAccessibilityTest, ShowMenuWithShowMenuOption) {
   // Login
   CreateAndStartUserSession(AccountId::FromUserEmail("owner@invalid.domain"));
-  // Flush to ensure the session state reaches ash and updates login status.
-  SessionControllerClient::FlushForTesting();
 
   SetShowAccessibilityOptionsInSystemTrayMenu(true);
 
@@ -1644,8 +1645,6 @@ IN_PROC_BROWSER_TEST_P(TrayAccessibilityTest, CheckMenuVisibilityOnDetailMenu) {
 
   // Simulate login.
   CreateAndStartUserSession(AccountId::FromUserEmail("owner@invalid.domain"));
-  // Flush to ensure the session state reaches ash and updates login status.
-  SessionControllerClient::FlushForTesting();
   EXPECT_TRUE(CreateDetailedMenu());
   EXPECT_TRUE(IsSpokenFeedbackMenuShownOnDetailMenu());
   EXPECT_TRUE(IsHighContrastMenuShownOnDetailMenu());

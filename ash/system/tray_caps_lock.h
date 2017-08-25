@@ -26,7 +26,8 @@ class TrayCapsLock : public TrayImageItem,
   explicit TrayCapsLock(SystemTray* system_tray);
   ~TrayCapsLock() override;
 
-  static void RegisterForeignPrefs(PrefRegistrySimple* registry);
+  // See Shell::RegisterProfilePrefs().
+  static void RegisterProfilePrefs(PrefRegistrySimple* registry, bool for_test);
 
   // Overridden from chromeos::input_method::ImeKeyboard::Observer:
   void OnCapsLockChanged(bool enabled) override;
