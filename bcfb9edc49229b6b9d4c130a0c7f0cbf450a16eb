@@ -22,6 +22,30 @@
       "revId": "bcfb9edc49229b6b9d4c130a0c7f0cbf450a16eb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e555788f_45814609",
+        "filename": "chrome/browser/conflicts/module_event_sink_impl_win.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1137015
+      },
+      "writtenOn": "2017-08-25T17:44:37Z",
+      "side": 1,
+      "message": "Got rid of OnModuleLoad completely since all module events are load events now.",
+      "parentUuid": "c91460e6_7911030c",
+      "range": {
+        "startLine": 131,
+        "startChar": 8,
+        "endLine": 131,
+        "endChar": 9
+      },
+      "revId": "bcfb9edc49229b6b9d4c130a0c7f0cbf450a16eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
