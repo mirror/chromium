@@ -61,6 +61,7 @@ enum ResizerHitTestType { kResizerForPointer, kResizerForTouch };
 class ComputedStyle;
 class HitTestResult;
 class LayoutBox;
+class LayoutBoxModelObject;
 class LayoutScrollbarPart;
 class PaintLayer;
 class ScrollingCoordinator;
@@ -484,6 +485,7 @@ class CORE_EXPORT PaintLayerScrollableArea final
     return EnsureRareData().sticky_constraints_map_;
   }
 
+  void RegisterStickyElement(LayoutBoxModelObject*);
   void InvalidateAllStickyConstraints();
   void InvalidateStickyConstraintsFor(PaintLayer*,
                                       bool needs_compositing_update = true);

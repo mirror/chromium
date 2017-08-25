@@ -458,6 +458,17 @@
       default_value: "false",
       field_group: "rare-inherited",
     },
+    // TODO(smcgruer): Justify this inclusion.
+    {
+      name: "AncestorOverflowNode",
+      inherited: true,
+      field_template: "pointer",
+      type_name: "Node",
+      include_paths: ["core/dom/Node.h"],
+      default_value: "nullptr",
+      wrapper_pointer_name: "Persistent",
+      field_group: "rare-inherited",
+    },
     {
       name: "HyphenationLimitBefore",
       inherited: true,

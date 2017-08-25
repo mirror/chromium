@@ -389,6 +389,9 @@ void LayoutBoxModelObject::StyleDidChange(StyleDifference diff,
   }
 
   if (LocalFrameView* frame_view = View()->GetFrameView()) {
+    // position:fixed objects are always viewport constrained. position:sticky
+    // objects are viewport constrained only if their ancestor overflow is the
+    // document scroller.
     bool new_style_is_viewport_constained =
         Style()->GetPosition() == EPosition::kFixed;
     bool old_style_is_viewport_constrained =
@@ -397,32 +400,33 @@ void LayoutBoxModelObject::StyleDidChange(StyleDifference diff,
     bool old_style_is_sticky =
         old_style && old_style->HasStickyConstrainedPosition();
 
+    // TODO(smcgruer): I think this misses the case where you have:
+    // <html>
+    //   <div class='outer'>
+    //     <div class='sticky'>
+    //
+    // And outer goes from non-overflow to overflow. The sticky style won't
+    // change but we need to stop being viewport constrained.
     if (new_style_is_sticky != old_style_is_sticky) {
       if (new_style_is_sticky) {
-        // During compositing inputs update we'll have the scroll ancestor
-        // without having to walk up the tree and can compute the sticky
-        // position constraints then.
-        if (Layer())
-          Layer()->SetNeedsCompositingInputsUpdate();
+        Persistent<Node> ancestor_overflow_node =
+            StyleRef().AncestorOverflowNode();
+        // If we overflow, we need to grab our parent overflow.
+        if (ancestor_overflow_node == GetNode()) {
+          ancestor_overflow_node = GetNode()
+                                       ->parentNode()
+                                       ->GetLayoutObject()
+                                       ->StyleRef()
+                                       .AncestorOverflowNode();
+        }
 
-        // TODO(pdr): When slimming paint v2 is enabled, we will need to
-        // invalidate the scroll paint property subtree for this so main thread
-        // scroll reasons are recomputed.
+        new_style_is_viewport_constained =
+            ancestor_overflow_node == GetNode()->GetDocument();
       } else {
         // This may get re-added to viewport constrained objects if the object
         // went from sticky to fixed.
         frame_view->RemoveViewportConstrainedObject(*this);
 
-        // Remove sticky constraints for this layer.
-        if (Layer()) {
-          DisableCompositingQueryAsserts disabler;
-          if (const PaintLayer* ancestor_overflow_layer =
-                  Layer()->AncestorOverflowLayer()) {
-            if (PaintLayerScrollableArea* scrollable_area =
-                    ancestor_overflow_layer->GetScrollableArea())
-              scrollable_area->InvalidateStickyConstraintsFor(Layer());
-          }
-        }
 
         // TODO(pdr): When slimming paint v2 is enabled, we will need to
         // invalidate the scroll paint property subtree for this so main thread
@@ -1396,6 +1400,27 @@ bool LayoutBoxModelObject::BackgroundStolenForBeingBody(
     return false;
 
   return true;
+}
+
+void LayoutBoxModelObject::UpdateAfterLayout() {
+  // Register ourselves if we're sticky.
+  if (IsStickyPositioned()) {
+    Persistent<Node> ancestor_overflow_node = StyleRef().AncestorOverflowNode();
+    // If we overflow, we need to grab our parent overflow.
+    // TODO(smcgruer): Can Parent() be null here?
+    // TODO(smcgruer): Is Parent() correct here?
+    if (ancestor_overflow_node == GetNode())
+      ancestor_overflow_node = Parent()->StyleRef().AncestorOverflowNode();
+
+    LayoutBoxModelObject* ancestor_overflow_object =
+        ancestor_overflow_node->GetLayoutBoxModelObject();
+    DCHECK(ancestor_overflow_object->Layer());
+    // HACK(smcgruer): We can do this at style time.
+    Layer()->UpdateAncestorOverflowLayer(ancestor_overflow_object->Layer());
+    ancestor_overflow_object->Layer()
+        ->GetScrollableArea()
+        ->RegisterStickyElement(this);
+  }
 }
 
 }  // namespace blink
