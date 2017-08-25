@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f79c52f2_576bb4b3",
+        "filename": "components/cryptauth/ble/bluetooth_low_energy_weave_client_connection.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 588,
+      "author": {
+        "id": 1002806
+      },
+      "writtenOn": "2017-08-25T00:03:00Z",
+      "side": 1,
+      "message": "I would actually change this to a CHECK, because this should never happen, and we probably would want to crash if it did.",
+      "range": {
+        "startLine": 582,
+        "startChar": 4,
+        "endLine": 588,
+        "endChar": 5
+      },
+      "revId": "3f63d0bb775b4a2bc299609273b1400ac54748a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
