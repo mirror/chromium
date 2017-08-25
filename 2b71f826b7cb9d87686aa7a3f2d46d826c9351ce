@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6d446d4f_a55a4d84",
+        "filename": "ios/web/public/payments/payment_request.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-08-25T19:56:23Z",
+      "side": 1,
+      "message": "Can we keep this code in web? web layer is not suppose to depend on components, and existing dependencies are bugs.",
+      "range": {
+        "startLine": 15,
+        "startChar": 53,
+        "endLine": 15,
+        "endChar": 0
+      },
+      "revId": "2b71f826b7cb9d87686aa7a3f2d46d826c9351ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
