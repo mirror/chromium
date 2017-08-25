@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c0b82162_8d4e5560",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-08-25T02:46:30Z",
+      "side": 1,
+      "message": "I\u0027m not sure what you mean by \"enabled by default\".  The testing config applies to, well, testing configurations of Chromium -- not to end users of Chrome.  Is your goal to enable this feature by default for all Chrome users?",
+      "range": {
+        "startLine": 7,
+        "startChar": 69,
+        "endLine": 7,
+        "endChar": 0
+      },
+      "revId": "a8875beb5d475043bcf9af2045d5cdfca0f0e31e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9250a945_46512e5f",
+        "filename": "testing/variations/fieldtrial_testing_config.json",
+        "patchSetId": 5
+      },
+      "lineNbr": 3548,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-08-25T02:46:30Z",
+      "side": 1,
+      "message": "nit: Typically this group would be named \"Enabled\"",
+      "range": {
+        "startLine": 3548,
+        "startChar": 41,
+        "endLine": 3548,
+        "endChar": 0
+      },
+      "revId": "a8875beb5d475043bcf9af2045d5cdfca0f0e31e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
