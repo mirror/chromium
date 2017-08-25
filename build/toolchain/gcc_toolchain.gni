@@ -423,6 +423,10 @@ template("gcc_toolchain") {
       }
       if (sofile != unstripped_sofile) {
         outputs += [ unstripped_sofile ]
+        if (defined(invoker.use_unstripped_as_runtime_outputs) &&
+            invoker.use_unstripped_as_runtime_outputs) {
+          runtime_outputs = [ unstripped_sofile ]
+        }
       }
       if (defined(map_file)) {
         outputs += [ map_file ]
@@ -474,6 +478,10 @@ template("gcc_toolchain") {
       ]
       if (sofile != unstripped_sofile) {
         outputs += [ unstripped_sofile ]
+        if (defined(invoker.use_unstripped_as_runtime_outputs) &&
+            invoker.use_unstripped_as_runtime_outputs) {
+          runtime_outputs = [ unstripped_sofile ]
+        }
       }
     }
 
@@ -529,6 +537,10 @@ template("gcc_toolchain") {
       ]
       if (outfile != unstripped_outfile) {
         outputs += [ unstripped_outfile ]
+        if (defined(invoker.use_unstripped_as_runtime_outputs) &&
+            invoker.use_unstripped_as_runtime_outputs) {
+          runtime_outputs = [ unstripped_outfile ]
+        }
       }
       if (defined(invoker.link_outputs)) {
         outputs += invoker.link_outputs
