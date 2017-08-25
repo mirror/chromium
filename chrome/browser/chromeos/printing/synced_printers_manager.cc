@@ -29,6 +29,33 @@ namespace chromeos {
 
 namespace {
 
+// Enumeration values for NativePrintersBulkAccessMode.
+constexpr int kBlacklistAccess = 0;
+// TODO(skau): Parse the access policy.
+// constexpr int kWhitelistAccess = 1;
+// constexpr int kAllAccess = 2;
+
+// Adds |printer| with |id| to prefs.  Returns true if the printer is new,
+// false for an update.
+bool UpdatePrinterPref(PrintersSyncBridge* sync_bridge,
+                       const std::string& id,
+                       const Printer& printer) {
+  base::Optional<sync_pb::PrinterSpecifics> specifics =
+      sync_bridge->GetPrinter(id);
+  if (!specifics.has_value()) {
+    sync_bridge->AddPrinter(PrinterToSpecifics(printer));
+    return true;
+  }
+
+  // Preserve fields in the proto which we don't understand.
+  std::unique_ptr<sync_pb::PrinterSpecifics> updated_printer =
+      base::MakeUnique<sync_pb::PrinterSpecifics>(*specifics);
+  MergePrinterToSpecifics(printer, updated_printer.get());
+  sync_bridge->AddPrinter(std::move(updated_printer));
+
+  return false;
+}
+
 class SyncedPrintersManagerImpl : public SyncedPrintersManager {
  public:
   SyncedPrintersManagerImpl(Profile* profile,
@@ -242,6 +269,11 @@ void SyncedPrintersManager::RegisterProfilePrefs(
   registry->RegisterListPref(prefs::kPrintingDevices,
                              user_prefs::PrefRegistrySyncable::SYNCABLE_PREF);
   registry->RegisterListPref(prefs::kRecommendedNativePrinters);
+  // Default value is blacklist.
+  registry->RegisterIntegerPref(prefs::kRecommendedNativePrintersAccessMode,
+                                kBlacklistAccess);
+  registry->RegisterListPref(prefs::kRecommendedNativePrintersBlacklist);
+  registry->RegisterListPref(prefs::kRecommendedNativePrintersWhitelist);
 }
 
 // static
