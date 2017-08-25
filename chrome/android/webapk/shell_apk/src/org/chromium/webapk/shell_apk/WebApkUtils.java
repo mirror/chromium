@@ -4,6 +4,8 @@
 
 package org.chromium.webapk.shell_apk;
 
+import static org.chromium.chrome.browser.util.ViewUtils.dpToPx;
+
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -15,7 +17,6 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.TypedValue;
 import android.view.View;
 
 import org.chromium.webapk.lib.common.WebApkConstants;
@@ -26,7 +27,6 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-
 /**
  * Contains utility methods for interacting with WebAPKs.
  */
@@ -278,12 +278,6 @@ public class WebApkUtils {
         SharedPreferences.Editor editor = sharedPref.edit();
         editor.putString(SHARED_PREF_RUNTIME_HOST, hostPackage);
         editor.apply();
-    }
-
-    /** Converts a dp value to a px value. */
-    public static int dpToPx(Context context, int value) {
-        return Math.round(TypedValue.applyDimension(
-                TypedValue.COMPLEX_UNIT_DIP, value, context.getResources().getDisplayMetrics()));
     }
 
     /**
