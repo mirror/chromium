@@ -33,6 +33,24 @@
       "revId": "13e1fc5c0ea498c183f0d86a5250f004b676fa47",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11610c88_80ec225a",
+        "filename": "third_party/WebKit/Source/platform/image-decoders/gif/GIFImageDecoderTest.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 447,
+      "author": {
+        "id": 1189229
+      },
+      "writtenOn": "2017-08-25T17:00:29Z",
+      "side": 1,
+      "message": "Correct, it would be the skip-forward.\n\nIf we decode every animation one frame at a time (purging in between) then the required previous frame would be available. My mistake is when attempting to decode a required previous frame which isn\u0027t available. If that decode fails it wasn\u0027t being handled.\n\nFor the test to be more direct, it could just have an error in the file on frame 2 (which it never attempts to decode). Then we could ask it to decode frame 3 (which depends on 2). However, I think all of the current test files are error-free.",
+      "parentUuid": "4717f5cb_57c17aae",
+      "revId": "13e1fc5c0ea498c183f0d86a5250f004b676fa47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
