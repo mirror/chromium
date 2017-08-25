@@ -163,5 +163,7 @@ content_suggestions::StatusCode ConvertStatusCode(ntp_snippets::Status status) {
     case ntp_snippets::StatusCode::PERMANENT_ERROR:
       return content_suggestions::StatusCodePermanentError;
       break;
+    case ntp_snippets::StatusCode::STATUS_CODE_COUNT:
+      NOTREACHED();
   }
 }
