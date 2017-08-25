@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f9edb61d_cc007d50",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-08-25T08:57:09Z",
+      "side": 1,
+      "message": "I think \"Add stopWorkersForOrigin to devtools protocol\" is better than just saying ServiceWorkerHandler.",
+      "range": {
+        "startLine": 7,
+        "startChar": 28,
+        "endLine": 7,
+        "endChar": 48
+      },
+      "revId": "d72ad32ae2b03c64a152be0a2e25c9679e92ee2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2dc95f1_2bfeff72",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-08-25T08:57:09Z",
+      "side": 1,
+      "message": "It might be difficult to understand what this design document is for. How about like the following?\n\u003d\u003d\n\nThis CL adds ServiceWorker.stopWorkersForOrigin() to devtools protocol for stopping all service workers before running perf benchmark for PWA.\n\nDesign doc of perf benchmark for PWA:\nURL",
+      "revId": "d72ad32ae2b03c64a152be0a2e25c9679e92ee2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8b3411b_fc5a37d4",
+        "filename": "content/browser/devtools/protocol/service_worker_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-08-25T08:57:09Z",
+      "side": 1,
+      "message": "Looking other methods for devtools, they don\u0027t return the \"result\" param which is to check if devtools feature is enabled or not.\nDo we need to have |out_result|?",
+      "range": {
+        "startLine": 257,
+        "startChar": 40,
+        "endLine": 257,
+        "endChar": 50
+      },
+      "revId": "d72ad32ae2b03c64a152be0a2e25c9679e92ee2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
