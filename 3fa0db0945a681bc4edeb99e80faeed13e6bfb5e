@@ -22,6 +22,30 @@
       "revId": "3fa0db0945a681bc4edeb99e80faeed13e6bfb5e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00bd1914_46372038",
+        "filename": "chrome/browser/ui/extensions/extension_installed_notification.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1195459
+      },
+      "writtenOn": "2017-08-25T15:58:09Z",
+      "side": 0,
+      "message": "When new style notification is disabled (i.e. IsNewStyleNotificationEnabled returns false), the notification appearance would not be changed by this CL.\nIn such case, |accent_color| has no effect, so previously we were not checking IsNewStyleNotificationEnabled, but |small_image| does have effect on old style notification.",
+      "parentUuid": "642195b3_2139edff",
+      "range": {
+        "startLine": 58,
+        "startChar": 22,
+        "endLine": 58,
+        "endChar": 52
+      },
+      "revId": "3fa0db0945a681bc4edeb99e80faeed13e6bfb5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
