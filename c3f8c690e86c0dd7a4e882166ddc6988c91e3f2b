@@ -42,6 +42,24 @@
     },
     {
       "key": {
+        "uuid": "a6aa134c_6e82c72b",
+        "filename": "chrome/android/java/res/values-v17/styles.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 637,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-08-25T16:44:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ad56f561_95035578",
+      "revId": "c3f8c690e86c0dd7a4e882166ddc6988c91e3f2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ea4c6b1d_507ebacc",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/SpaceDisplay.java",
         "patchSetId": 1
@@ -53,6 +71,30 @@
       "writtenOn": "2017-08-25T01:04:37Z",
       "side": 1,
       "message": "Why did this change?",
+      "range": {
+        "startLine": 217,
+        "startChar": 39,
+        "endLine": 217,
+        "endChar": 81
+      },
+      "revId": "c3f8c690e86c0dd7a4e882166ddc6988c91e3f2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f730ab74_12fd6034",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/SpaceDisplay.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-08-25T16:44:27Z",
+      "side": 1,
+      "message": "Before the order of progress bar was other apps -\u003e downloaded -\u003e available, we need to change it to downloaded -\u003e other apps -\u003e available. This line basically makes the middle one downloaded instead of other apps.\n\nSee \n(old) https://drive.google.com/file/d/0B6bvMlKvygFcbVMwMndJLVVQZ3M/view \n(new) https://drive.google.com/file/d/0B6bvMlKvygFcVVZuVnVQRzFpUHM/view",
+      "parentUuid": "ea4c6b1d_507ebacc",
       "range": {
         "startLine": 217,
         "startChar": 39,
@@ -88,6 +130,30 @@
     },
     {
       "key": {
+        "uuid": "c765bc35_e152ddaa",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/history/HistoryAdapter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 389,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-08-25T16:44:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fc323d69_60d86ba6",
+      "range": {
+        "startLine": 389,
+        "startChar": 12,
+        "endLine": 389,
+        "endChar": 32
+      },
+      "revId": "c3f8c690e86c0dd7a4e882166ddc6988c91e3f2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "02ee8063_d0bec6f1",
         "filename": "chrome/android/java/strings/android_chrome_strings.grd",
         "patchSetId": 1
@@ -108,6 +174,30 @@
       "revId": "c3f8c690e86c0dd7a4e882166ddc6988c91e3f2b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cfeb4fe5_e51ac971",
+        "filename": "chrome/android/java/strings/android_chrome_strings.grd",
+        "patchSetId": 1
+      },
+      "lineNbr": 2099,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-08-25T16:44:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "02ee8063_d0bec6f1",
+      "range": {
+        "startLine": 2099,
+        "startChar": 108,
+        "endLine": 2099,
+        "endChar": 173
+      },
+      "revId": "c3f8c690e86c0dd7a4e882166ddc6988c91e3f2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
