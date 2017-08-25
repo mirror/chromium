@@ -194,8 +194,7 @@ const char kNoShippingPage[] =
       performAction:grey_replaceText(@"111")];
 
   // Tap the Confirm button.
-  [[EarlGrey
-      selectElementWithMatcher:ButtonWithAccessibilityLabelId(IDS_ACCNAME_OK)]
+  [[EarlGrey selectElementWithMatcher:ButtonWithAccessibilityLabel(@"Confirm")]
       performAction:grey_tap()];
 
   // Confirm that the Payment Request UI is not showing.
@@ -221,8 +220,7 @@ const char kNoShippingPage[] =
       assertWithMatcher:grey_notNil()];
 
   // Confirm the error.
-  [[EarlGrey
-      selectElementWithMatcher:ButtonWithAccessibilityLabelId(IDS_ACCNAME_OK)]
+  [[EarlGrey selectElementWithMatcher:ButtonWithAccessibilityLabel(@"Confirm")]
       performAction:grey_tap()];
 
   // Confirm that the Payment Request UI is not showing.

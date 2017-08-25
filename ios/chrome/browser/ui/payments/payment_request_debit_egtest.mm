@@ -190,8 +190,7 @@ std::unique_ptr<autofill::AutofillProfile> _profile;
       performAction:grey_replaceText(@"123")];
 
   // Tap the Confirm button.
-  [[EarlGrey
-      selectElementWithMatcher:ButtonWithAccessibilityLabelId(IDS_ACCNAME_OK)]
+  [[EarlGrey selectElementWithMatcher:ButtonWithAccessibilityLabel(@"Confirm")]
       performAction:grey_tap()];
 
   // Verify that the CVC number is sent to the page.
