@@ -34,6 +34,7 @@ TaskService::~TaskService() {
 }
 
 bool TaskService::BindInstance() {
+  DETACH_FROM_SEQUENCE(instance_binding_sequence_checker_);
   base::AutoLock lock(lock_);
   if (bound_instance_id_ != kInvalidInstanceId)
     return false;
@@ -45,6 +46,7 @@ bool TaskService::BindInstance() {
 }
 
 bool TaskService::UnbindInstance() {
+  DCHECK_CALLED_ON_VALID_SEQUENCE(instance_binding_sequence_checker_);
   {
     base::AutoLock lock(lock_);
     if (bound_instance_id_ == kInvalidInstanceId)
