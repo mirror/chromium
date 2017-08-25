@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "330cc5ce_3c7d5652",
+        "filename": "ppapi/api/private/ppb_platform_verification_private.idl",
+        "patchSetId": 6
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-25T19:58:18Z",
+      "side": 0,
+      "message": "Was this just wrong?",
+      "range": {
+        "startLine": 90,
+        "startChar": 11,
+        "endLine": 90,
+        "endChar": 28
+      },
+      "revId": "15008bbf203584a23ce4a6ad3c8962b7094334aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
