@@ -5218,10 +5218,10 @@ void WebContentsImpl::SetAsFocusedWebContentsIfNecessary() {
   if (old_contents == this)
     return;
 
-  GetOutermostWebContents()->node_.SetFocusedWebContents(this);
-
   if (!GuestMode::IsCrossProcessFrameGuest(this) && browser_plugin_guest_)
     return;
+
+  GetOutermostWebContents()->node_.SetFocusedWebContents(this);
 
   // Send a page level blur to the old contents so that it displays inactive UI
   // and focus this contents to activate it.
