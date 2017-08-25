@@ -170,8 +170,8 @@ void WindowTree::Init(std::unique_ptr<WindowTreeBinding> binding,
 
   const bool drawn = root->parent() && root->parent()->IsDrawn();
   client()->OnEmbed(id_, WindowToWindowData(to_send.front()), std::move(tree),
-                    display_id, focused_window_id.id, drawn,
-                    root->current_local_surface_id());
+                    display_id, ClientWindowIdToTransportId(focused_window_id),
+                    drawn, root->current_local_surface_id());
 }
 
 void WindowTree::ConfigureWindowManager(
@@ -251,7 +251,7 @@ void WindowTree::AddRootForWindowManager(const ServerWindow* root) {
 
   DCHECK(automatically_create_display_roots_);
   DCHECK(window_manager_internal_);
-  const ClientWindowId client_window_id(WindowIdToTransportId(root->id()));
+  const ClientWindowId client_window_id = MakeClientWindowId(root->id());
   DCHECK_EQ(0u, client_id_to_window_id_map_.count(client_window_id));
   client_id_to_window_id_map_[client_window_id] = root->id();
   window_id_to_client_id_map_[root->id()] = client_window_id;
@@ -409,13 +409,13 @@ bool WindowTree::ProcessSetBlockingContainers(
   for (auto& transport_container : transport_all_blocking_containers) {
     BlockingContainers blocking_containers;
     blocking_containers.system_modal_container = GetWindowByClientId(
-        ClientWindowId(transport_container->system_modal_container_id));
+        MakeClientWindowId(transport_container->system_modal_container_id));
     if (!blocking_containers.system_modal_container) {
       DVLOG(1) << "SetBlockingContainers called with unknown modal container";
       return false;
     }
     blocking_containers.min_container = GetWindowByClientId(
-        ClientWindowId(transport_container->min_container_id));
+        MakeClientWindowId(transport_container->min_container_id));
     all_containers.push_back(blocking_containers);
   }
   window_manager_state_->event_dispatcher()
@@ -484,10 +484,9 @@ bool WindowTree::AddWindow(const ClientWindowId& parent_id,
   ServerWindow* child = GetWindowByClientId(child_id);
   DVLOG(3) << "add window client=" << id_
            << " client parent window_id=" << parent_id.id
-           << " global window_id="
-           << (parent ? WindowIdToTransportId(parent->id()) : 0)
-           << " client child window_id= " << child_id.id << " global window_id="
-           << (child ? WindowIdToTransportId(child->id()) : 0);
+           << " global window_id=" << (parent ? parent->id().ToString() : "0,0")
+           << " client child window_id= " << child_id.id
+           << " global window_id=" << (child ? child->id().ToString() : "0,0");
   if (!parent) {
     DVLOG(1) << "AddWindow failed (no parent)";
     return false;
@@ -529,7 +528,7 @@ bool WindowTree::DeleteWindow(const ClientWindowId& window_id) {
   ServerWindow* window = GetWindowByClientId(window_id);
   DVLOG(3) << "removing window from parent client=" << id_
            << " client window_id= " << window_id.id << " global window_id="
-           << (window ? WindowIdToTransportId(window->id()) : 0);
+           << (window ? window->id().ToString() : "0,0");
   if (!window)
     return false;
 
@@ -619,7 +618,7 @@ bool WindowTree::SetWindowVisibility(const ClientWindowId& window_id,
   ServerWindow* window = GetWindowByClientId(window_id);
   DVLOG(3) << "SetWindowVisibility client=" << id_
            << " client window_id= " << window_id.id << " global window_id="
-           << (window ? WindowIdToTransportId(window->id()) : 0);
+           << (window ? window->id().ToString() : "0,0");
   if (!window) {
     DVLOG(1) << "SetWindowVisibility failed (no window)";
     return false;
@@ -789,7 +788,8 @@ void WindowTree::OnEventOccurredOutsideOfModalWindow(
   const bool is_known = IsWindowKnown(modal_window, &client_window_id);
   // The window manager knows all windows.
   DCHECK(is_known);
-  window_manager_internal_->OnEventBlockedByModalWindow(client_window_id.id);
+  window_manager_internal_->OnEventBlockedByModalWindow(
+      ClientWindowIdToTransportId(client_window_id));
 }
 
 void WindowTree::OnCursorTouchVisibleChanged(bool enabled) {
@@ -823,8 +823,8 @@ void WindowTree::ProcessWindowBoundsChanged(
   ClientWindowId client_window_id;
   if (originated_change || !IsWindowKnown(window, &client_window_id))
     return;
-  client()->OnWindowBoundsChanged(client_window_id.id, old_bounds, new_bounds,
-                                  local_surface_id);
+  client()->OnWindowBoundsChanged(ClientWindowIdToTransportId(client_window_id),
+                                  old_bounds, new_bounds, local_surface_id);
 }
 
 void WindowTree::ProcessWindowTransformChanged(
@@ -835,8 +835,9 @@ void WindowTree::ProcessWindowTransformChanged(
   ClientWindowId client_window_id;
   if (originated_change || !IsWindowKnown(window, &client_window_id))
     return;
-  client()->OnWindowTransformChanged(client_window_id.id, old_transform,
-                                     new_transform);
+  client()->OnWindowTransformChanged(
+      ClientWindowIdToTransportId(client_window_id), old_transform,
+      new_transform);
 }
 
 void WindowTree::ProcessClientAreaChanged(
@@ -848,7 +849,7 @@ void WindowTree::ProcessClientAreaChanged(
   if (originated_change || !IsWindowKnown(window, &client_window_id))
     return;
   client()->OnClientAreaChanged(
-      client_window_id.id, new_client_area,
+      ClientWindowIdToTransportId(client_window_id), new_client_area,
       std::vector<gfx::Rect>(new_additional_client_areas));
 }
 
@@ -885,7 +886,8 @@ void WindowTree::ProcessWindowPropertyChanged(
   if (new_data)
     data.emplace(*new_data);
 
-  client()->OnWindowSharedPropertyChanged(client_window_id.id, name, data);
+  client()->OnWindowSharedPropertyChanged(
+      ClientWindowIdToTransportId(client_window_id), name, data);
 }
 
 void WindowTree::ProcessWindowHierarchyChanged(const ServerWindow* window,
@@ -942,8 +944,9 @@ void WindowTree::ProcessWindowReorder(const ServerWindow* window,
   if (HasRoot(window) || HasRoot(relative_window))
     return;
 
-  client()->OnWindowReordered(client_window_id.id, relative_client_window_id.id,
-                              direction);
+  client()->OnWindowReordered(
+      ClientWindowIdToTransportId(client_window_id),
+      ClientWindowIdToTransportId(relative_client_window_id), direction);
   window_server_->OnTreeMessagedClient(id_);
 }
 
@@ -964,7 +967,7 @@ void WindowTree::ProcessWindowDeleted(ServerWindow* window,
   if (originated_change)
     return;
 
-  client()->OnWindowDeleted(client_window_id.id);
+  client()->OnWindowDeleted(ClientWindowIdToTransportId(client_window_id));
   window_server_->OnTreeMessagedClient(id_);
 }
 
@@ -975,8 +978,8 @@ void WindowTree::ProcessWillChangeWindowVisibility(const ServerWindow* window,
 
   ClientWindowId client_window_id;
   if (IsWindowKnown(window, &client_window_id)) {
-    client()->OnWindowVisibilityChanged(client_window_id.id,
-                                        !window->visible());
+    client()->OnWindowVisibilityChanged(
+        ClientWindowIdToTransportId(client_window_id), !window->visible());
     return;
   }
 
@@ -1001,8 +1004,9 @@ void WindowTree::ProcessWindowOpacityChanged(const ServerWindow* window,
 
   ClientWindowId client_window_id;
   if (IsWindowKnown(window, &client_window_id)) {
-    client()->OnWindowOpacityChanged(client_window_id.id, old_opacity,
-                                     new_opacity);
+    client()->OnWindowOpacityChanged(
+        ClientWindowIdToTransportId(client_window_id), old_opacity,
+        new_opacity);
   }
 }
 
@@ -1015,7 +1019,8 @@ void WindowTree::ProcessCursorChanged(const ServerWindow* window,
   if (!IsWindowKnown(window, &client_window_id))
     return;
 
-  client()->OnWindowCursorChanged(client_window_id.id, cursor);
+  client()->OnWindowCursorChanged(ClientWindowIdToTransportId(client_window_id),
+                                  cursor);
 }
 
 void WindowTree::ProcessFocusChanged(const ServerWindow* old_focused_window,
@@ -1031,7 +1036,7 @@ void WindowTree::ProcessFocusChanged(const ServerWindow* old_focused_window,
   ClientWindowId client_window_id;
   // If the window isn't known we'll supply null, which is ok.
   IsWindowKnown(window, &client_window_id);
-  client()->OnWindowFocused(client_window_id.id);
+  client()->OnWindowFocused(ClientWindowIdToTransportId(client_window_id));
 }
 
 void WindowTree::ProcessTransientWindowAdded(
@@ -1046,8 +1051,9 @@ void WindowTree::ProcessTransientWindowAdded(
       !IsWindowKnown(transient_window, &transient_client_window_id)) {
     return;
   }
-  client()->OnTransientWindowAdded(client_window_id.id,
-                                   transient_client_window_id.id);
+  client()->OnTransientWindowAdded(
+      ClientWindowIdToTransportId(client_window_id),
+      ClientWindowIdToTransportId(transient_client_window_id));
 }
 
 void WindowTree::ProcessTransientWindowRemoved(
@@ -1061,8 +1067,9 @@ void WindowTree::ProcessTransientWindowRemoved(
       !IsWindowKnown(transient_window, &transient_client_window_id)) {
     return;
   }
-  client()->OnTransientWindowRemoved(client_window_id.id,
-                                     transient_client_window_id.id);
+  client()->OnTransientWindowRemoved(
+      ClientWindowIdToTransportId(client_window_id),
+      ClientWindowIdToTransportId(transient_client_window_id));
 }
 
 void WindowTree::ProcessWindowSurfaceChanged(
@@ -1071,7 +1078,8 @@ void WindowTree::ProcessWindowSurfaceChanged(
   ClientWindowId client_window_id;
   if (!IsWindowKnown(window, &client_window_id))
     return;
-  client()->OnWindowSurfaceChanged(client_window_id.id, surface_info);
+  client()->OnWindowSurfaceChanged(
+      ClientWindowIdToTransportId(client_window_id), surface_info);
 }
 
 void WindowTree::SendToPointerWatcher(const ui::Event& event,
@@ -1084,8 +1092,9 @@ void WindowTree::SendToPointerWatcher(const ui::Event& event,
   // Ignore the return value from IsWindowKnown() as in the case of the client
   // not knowing the window we'll send 0, which corresponds to no window.
   IsWindowKnown(target_window, &client_window_id);
-  client()->OnPointerEventObserved(ui::Event::Clone(event), client_window_id.id,
-                                   display_id);
+  client()->OnPointerEventObserved(
+      ui::Event::Clone(event), ClientWindowIdToTransportId(client_window_id),
+      display_id);
 }
 
 bool WindowTree::ShouldRouteToWindowManager(const ServerWindow* window) const {
@@ -1132,7 +1141,7 @@ ClientWindowId WindowTree::ClientWindowIdForWindow(
     const ServerWindow* window) const {
   auto iter = window_id_to_client_id_map_.find(window->id());
   DCHECK(iter != window_id_to_client_id_map_.end());
-  return iter->second;
+  return ClientWindowId(ClientWindowIdToTransportId(iter->second));
 }
 
 bool WindowTree::IsValidIdForNewWindow(const ClientWindowId& id) const {
@@ -1216,7 +1225,7 @@ void WindowTree::GetUnknownWindowsFrom(
   //   only encountered for the WM or embed roots. We assume such clients want
   //   to see the real id of the window and are only created ClientWindowIds
   //   with the client_id.
-  const ClientWindowId client_window_id(WindowIdToTransportId(window->id()));
+  const ClientWindowId client_window_id = MakeClientWindowId(window->id());
   DCHECK_EQ(0u, client_id_to_window_id_map_.count(client_window_id));
   client_id_to_window_id_map_[client_window_id] = window->id();
   window_id_to_client_id_map_[window->id()] = client_window_id;
@@ -1455,6 +1464,24 @@ bool WindowTree::EventMatchesPointerWatcher(const ui::Event& event) const {
          event.type() == ui::ET_POINTER_WHEEL_CHANGED;
 }
 
+ClientWindowId WindowTree::MakeClientWindowId(Id transport_window_id) const {
+  if (!HiWord(transport_window_id))
+    transport_window_id = ((id_ << 16) | LoWord(transport_window_id));
+  return ClientWindowId(transport_window_id);
+}
+
+ClientWindowId WindowTree::MakeClientWindowId(const WindowId& id) const {
+  return MakeClientWindowId((id.client_id << 16) | id.window_id);
+}
+
+Id WindowTree::ClientWindowIdToTransportId(
+    const ClientWindowId& client_window_id) const {
+  Id id = client_window_id.id;
+  if (HiWord(id) == id_)
+    id = LoWord(id);
+  return id;
+}
+
 void WindowTree::NewWindow(
     uint32_t change_id,
     Id transport_window_id,
@@ -1465,7 +1492,8 @@ void WindowTree::NewWindow(
     properties = mojo::UnorderedMapToMap(transport_properties.value());
 
   client()->OnChangeCompleted(
-      change_id, NewWindow(ClientWindowId(transport_window_id), properties));
+      change_id,
+      NewWindow(MakeClientWindowId(transport_window_id), properties));
 }
 
 void WindowTree::NewTopLevelWindow(
@@ -1476,7 +1504,8 @@ void WindowTree::NewTopLevelWindow(
   // TODO(sky): rather than DCHECK, have this kill connection.
   DCHECK(!window_manager_internal_);  // Not valid for the windowmanager.
   DCHECK(!waiting_for_top_level_window_info_);
-  const ClientWindowId client_window_id(transport_window_id);
+  const ClientWindowId client_window_id =
+      MakeClientWindowId(transport_window_id);
   // TODO(sky): need a way for client to provide context to figure out display.
   Display* display = display_manager()->displays().empty()
                          ? nullptr
@@ -1513,20 +1542,21 @@ void WindowTree::NewTopLevelWindow(
 
 void WindowTree::DeleteWindow(uint32_t change_id, Id transport_window_id) {
   client()->OnChangeCompleted(
-      change_id, DeleteWindow(ClientWindowId(transport_window_id)));
+      change_id, DeleteWindow(MakeClientWindowId(transport_window_id)));
 }
 
 void WindowTree::AddWindow(uint32_t change_id, Id parent_id, Id child_id) {
-  client()->OnChangeCompleted(change_id, AddWindow(ClientWindowId(parent_id),
-                                                   ClientWindowId(child_id)));
+  client()->OnChangeCompleted(
+      change_id,
+      AddWindow(MakeClientWindowId(parent_id), MakeClientWindowId(child_id)));
 }
 
 void WindowTree::RemoveWindowFromParent(uint32_t change_id, Id window_id) {
   bool success = false;
-  ServerWindow* window = GetWindowByClientId(ClientWindowId(window_id));
+  ServerWindow* window = GetWindowByClientId(MakeClientWindowId(window_id));
   DVLOG(3) << "removing window from parent client=" << id_
            << " client window_id= " << window_id << " global window_id="
-           << (window ? WindowIdToTransportId(window->id()) : 0);
+           << (window ? window->id().ToString() : "0,0");
   if (!window) {
     DVLOG(1) << "RemoveWindowFromParent failed (invalid window id=" << change_id
              << ")";
@@ -1549,15 +1579,15 @@ void WindowTree::AddTransientWindow(uint32_t change_id,
                                     Id window,
                                     Id transient_window) {
   client()->OnChangeCompleted(
-      change_id, AddTransientWindow(ClientWindowId(window),
-                                    ClientWindowId(transient_window)));
+      change_id, AddTransientWindow(MakeClientWindowId(window),
+                                    MakeClientWindowId(transient_window)));
 }
 
 void WindowTree::RemoveTransientWindowFromParent(uint32_t change_id,
                                                  Id transient_window_id) {
   bool success = false;
   ServerWindow* transient_window =
-      GetWindowByClientId(ClientWindowId(transient_window_id));
+      GetWindowByClientId(MakeClientWindowId(transient_window_id));
   if (transient_window && transient_window->transient_parent() &&
       access_policy_->CanRemoveTransientWindowFromParent(transient_window)) {
     success = true;
@@ -1573,15 +1603,15 @@ void WindowTree::SetModalType(uint32_t change_id,
                               Id window_id,
                               ModalType modal_type) {
   client()->OnChangeCompleted(
-      change_id, SetModalType(ClientWindowId(window_id), modal_type));
+      change_id, SetModalType(MakeClientWindowId(window_id), modal_type));
 }
 
 void WindowTree::SetChildModalParent(uint32_t change_id,
                                      Id window_id,
                                      Id parent_window_id) {
   client()->OnChangeCompleted(
-      change_id, SetChildModalParent(ClientWindowId(window_id),
-                                     ClientWindowId(parent_window_id)));
+      change_id, SetChildModalParent(MakeClientWindowId(window_id),
+                                     MakeClientWindowId(parent_window_id)));
 }
 
 void WindowTree::ReorderWindow(uint32_t change_id,
@@ -1592,16 +1622,14 @@ void WindowTree::ReorderWindow(uint32_t change_id,
   // children of a parent window which the two implementations can't see. There
   // should be a security check to prevent this.
   bool success = false;
-  ServerWindow* window = GetWindowByClientId(ClientWindowId(window_id));
+  ServerWindow* window = GetWindowByClientId(MakeClientWindowId(window_id));
   ServerWindow* relative_window =
-      GetWindowByClientId(ClientWindowId(relative_window_id));
+      GetWindowByClientId(MakeClientWindowId(relative_window_id));
   DVLOG(3) << "reorder client=" << id_ << " client window_id=" << window_id
-           << " global window_id="
-           << (window ? WindowIdToTransportId(window->id()) : 0)
+           << " global window_id=" << (window ? window->id().ToString() : "0,0")
            << " relative client window_id=" << relative_window_id
            << " relative global window_id="
-           << (relative_window ? WindowIdToTransportId(relative_window->id())
-                               : 0);
+           << (relative_window ? relative_window->id().ToString() : "0,0");
   if (CanReorderWindow(window, relative_window, direction)) {
     success = true;
     Operation op(this, window_server_, OperationType::REORDER_WINDOW);
@@ -1615,17 +1643,18 @@ void WindowTree::GetWindowTree(
     Id window_id,
     const base::Callback<void(std::vector<mojom::WindowDataPtr>)>& callback) {
   std::vector<const ServerWindow*> windows(
-      GetWindowTree(ClientWindowId(window_id)));
+      GetWindowTree(MakeClientWindowId(window_id)));
   callback.Run(WindowsToWindowDatas(windows));
 }
 
 void WindowTree::SetCapture(uint32_t change_id, Id window_id) {
-  client()->OnChangeCompleted(change_id, SetCapture(ClientWindowId(window_id)));
+  client()->OnChangeCompleted(change_id,
+                              SetCapture(MakeClientWindowId(window_id)));
 }
 
 void WindowTree::ReleaseCapture(uint32_t change_id, Id window_id) {
   client()->OnChangeCompleted(change_id,
-                              ReleaseCapture(ClientWindowId(window_id)));
+                              ReleaseCapture(MakeClientWindowId(window_id)));
 }
 
 void WindowTree::StartPointerWatcher(bool want_moves) {
@@ -1643,10 +1672,10 @@ void WindowTree::SetWindowBounds(
     Id window_id,
     const gfx::Rect& bounds,
     const base::Optional<viz::LocalSurfaceId>& local_surface_id) {
-  ServerWindow* window = GetWindowByClientId(ClientWindowId(window_id));
+  ServerWindow* window = GetWindowByClientId(MakeClientWindowId(window_id));
   if (window && ShouldRouteToWindowManager(window)) {
     DVLOG(3) << "Redirecting request to change bounds for "
-             << (window ? WindowIdToTransportId(window->id()) : 0)
+             << (window ? window->id().ToString() : "0,0")
              << " to window manager...";
     const uint32_t wm_change_id =
         window_server_->GenerateWindowManagerChangeId(this, change_id);
@@ -1689,10 +1718,9 @@ void WindowTree::SetWindowTransform(uint32_t change_id,
   // Clients shouldn't have a need to set the transform of the embed root, so
   // we don't bother routing it to the window-manager.
 
-  ServerWindow* window = GetWindowByClientId(ClientWindowId(window_id));
+  ServerWindow* window = GetWindowByClientId(MakeClientWindowId(window_id));
   DVLOG(3) << "SetWindowTransform client window_id=" << window_id
-           << " global window_id="
-           << (window ? WindowIdToTransportId(window->id()) : 0)
+           << " global window_id=" << (window ? window->id().ToString() : "0,0")
            << " transform=" << transform.ToString();
 
   if (!window) {
@@ -1717,7 +1745,7 @@ void WindowTree::SetWindowVisibility(uint32_t change_id,
                                      bool visible) {
   client()->OnChangeCompleted(
       change_id,
-      SetWindowVisibility(ClientWindowId(transport_window_id), visible));
+      SetWindowVisibility(MakeClientWindowId(transport_window_id), visible));
 }
 
 void WindowTree::SetWindowProperty(
@@ -1726,7 +1754,7 @@ void WindowTree::SetWindowProperty(
     const std::string& name,
     const base::Optional<std::vector<uint8_t>>& value) {
   ServerWindow* window =
-      GetWindowByClientId(ClientWindowId(transport_window_id));
+      GetWindowByClientId(MakeClientWindowId(transport_window_id));
   if (window && ShouldRouteToWindowManager(window)) {
     const uint32_t wm_change_id =
         window_server_->GenerateWindowManagerChangeId(this, change_id);
@@ -1753,7 +1781,7 @@ void WindowTree::SetWindowOpacity(uint32_t change_id,
                                   Id window_id,
                                   float opacity) {
   client()->OnChangeCompleted(
-      change_id, SetWindowOpacity(ClientWindowId(window_id), opacity));
+      change_id, SetWindowOpacity(MakeClientWindowId(window_id), opacity));
 }
 
 void WindowTree::AttachCompositorFrameSink(
@@ -1761,7 +1789,7 @@ void WindowTree::AttachCompositorFrameSink(
     viz::mojom::CompositorFrameSinkRequest compositor_frame_sink,
     viz::mojom::CompositorFrameSinkClientPtr client) {
   ServerWindow* window =
-      GetWindowByClientId(ClientWindowId(transport_window_id));
+      GetWindowByClientId(MakeClientWindowId(transport_window_id));
   if (!window) {
     DVLOG(1) << "AttachCompositorFrameSink failed (invalid window id)";
     return;
@@ -1779,7 +1807,7 @@ void WindowTree::AttachCompositorFrameSink(
 void WindowTree::SetWindowTextInputState(Id transport_window_id,
                                          mojo::TextInputStatePtr state) {
   ServerWindow* window =
-      GetWindowByClientId(ClientWindowId(transport_window_id));
+      GetWindowByClientId(MakeClientWindowId(transport_window_id));
   bool success = window && access_policy_->CanSetWindowTextInputState(window);
   if (success)
     window->SetTextInputState(state.To<ui::TextInputState>());
@@ -1789,7 +1817,7 @@ void WindowTree::SetImeVisibility(Id transport_window_id,
                                   bool visible,
                                   mojo::TextInputStatePtr state) {
   ServerWindow* window =
-      GetWindowByClientId(ClientWindowId(transport_window_id));
+      GetWindowByClientId(MakeClientWindowId(transport_window_id));
   bool success = window && access_policy_->CanSetWindowTextInputState(window);
   if (success) {
     if (!state.is_null())
@@ -1844,10 +1872,9 @@ void WindowTree::SetClientArea(Id transport_window_id,
                                const base::Optional<std::vector<gfx::Rect>>&
                                    transport_additional_client_areas) {
   ServerWindow* window =
-      GetWindowByClientId(ClientWindowId(transport_window_id));
+      GetWindowByClientId(MakeClientWindowId(transport_window_id));
   DVLOG(3) << "SetClientArea client window_id=" << transport_window_id
-           << " global window_id="
-           << (window ? WindowIdToTransportId(window->id()) : 0)
+           << " global window_id=" << (window ? window->id().ToString() : "0,0")
            << " insets=" << insets.top() << " " << insets.left() << " "
            << insets.bottom() << " " << insets.right();
   if (!window) {
@@ -1867,7 +1894,7 @@ void WindowTree::SetClientArea(Id transport_window_id,
 void WindowTree::SetHitTestMask(Id transport_window_id,
                                 const base::Optional<gfx::Rect>& mask) {
   ServerWindow* window =
-      GetWindowByClientId(ClientWindowId(transport_window_id));
+      GetWindowByClientId(MakeClientWindowId(transport_window_id));
   if (!window) {
     DVLOG(1) << "SetHitTestMask failed (invalid window id)";
     return;
@@ -1885,7 +1912,7 @@ void WindowTree::SetHitTestMask(Id transport_window_id,
 }
 
 void WindowTree::SetCanAcceptDrops(Id window_id, bool accepts_drops) {
-  ServerWindow* window = GetWindowByClientId(ClientWindowId(window_id));
+  ServerWindow* window = GetWindowByClientId(MakeClientWindowId(window_id));
   if (!window) {
     DVLOG(1) << "SetCanAcceptDrops failed (invalid window id)";
     return;
@@ -1904,17 +1931,17 @@ void WindowTree::Embed(Id transport_window_id,
                        uint32_t flags,
                        const EmbedCallback& callback) {
   callback.Run(
-      Embed(ClientWindowId(transport_window_id), std::move(client), flags));
+      Embed(MakeClientWindowId(transport_window_id), std::move(client), flags));
 }
 
 void WindowTree::SetFocus(uint32_t change_id, Id transport_window_id) {
-  client()->OnChangeCompleted(change_id,
-                              SetFocus(ClientWindowId(transport_window_id)));
+  client()->OnChangeCompleted(
+      change_id, SetFocus(MakeClientWindowId(transport_window_id)));
 }
 
 void WindowTree::SetCanFocus(Id transport_window_id, bool can_focus) {
   ServerWindow* window =
-      GetWindowByClientId(ClientWindowId(transport_window_id));
+      GetWindowByClientId(MakeClientWindowId(transport_window_id));
   if (!window) {
     DVLOG(1) << "SetCanFocus failed (invalid window id)";
     return;
@@ -1936,7 +1963,7 @@ void WindowTree::SetCanFocus(Id transport_window_id, bool can_focus) {
 void WindowTree::SetEventTargetingPolicy(Id transport_window_id,
                                          mojom::EventTargetingPolicy policy) {
   ServerWindow* window =
-      GetWindowByClientId(ClientWindowId(transport_window_id));
+      GetWindowByClientId(MakeClientWindowId(transport_window_id));
   // TODO(riajiang): check |event_queue_| is empty for |window|.
   if (window && access_policy_->CanSetEventTargetingPolicy(window))
     window->set_event_targeting_policy(policy);
@@ -1946,7 +1973,7 @@ void WindowTree::SetCursor(uint32_t change_id,
                            Id transport_window_id,
                            ui::CursorData cursor) {
   ServerWindow* window =
-      GetWindowByClientId(ClientWindowId(transport_window_id));
+      GetWindowByClientId(MakeClientWindowId(transport_window_id));
   if (!window) {
     DVLOG(1) << "SetCursor failed (invalid id)";
     client()->OnChangeCompleted(change_id, false);
@@ -1985,8 +2012,7 @@ void WindowTree::SetCursor(uint32_t change_id,
 }
 
 void WindowTree::DeactivateWindow(Id window_id) {
-  ServerWindow* window =
-      GetWindowByClientId(ClientWindowId(window_id));
+  ServerWindow* window = GetWindowByClientId(MakeClientWindowId(window_id));
   if (!window) {
     DVLOG(1) << "DeactivateWindow failed (invalid id)";
     return;
@@ -2005,14 +2031,14 @@ void WindowTree::DeactivateWindow(Id window_id) {
 }
 
 void WindowTree::StackAbove(uint32_t change_id, Id above_id, Id below_id) {
-  ServerWindow* above = GetWindowByClientId(ClientWindowId(above_id));
+  ServerWindow* above = GetWindowByClientId(MakeClientWindowId(above_id));
   if (!above) {
     DVLOG(1) << "StackAbove failed (invalid above id)";
     client()->OnChangeCompleted(change_id, false);
     return;
   }
 
-  ServerWindow* below = GetWindowByClientId(ClientWindowId(below_id));
+  ServerWindow* below = GetWindowByClientId(MakeClientWindowId(below_id));
   if (!below) {
     DVLOG(1) << "StackAbove failed (invalid below id)";
     client()->OnChangeCompleted(change_id, false);
@@ -2063,7 +2089,7 @@ void WindowTree::StackAbove(uint32_t change_id, Id above_id, Id below_id) {
 }
 
 void WindowTree::StackAtTop(uint32_t change_id, Id window_id) {
-  ServerWindow* window = GetWindowByClientId(ClientWindowId(window_id));
+  ServerWindow* window = GetWindowByClientId(MakeClientWindowId(window_id));
   if (!window) {
     DVLOG(1) << "StackAtTop failed (invalid id)";
     client()->OnChangeCompleted(change_id, false);
@@ -2138,7 +2164,8 @@ void WindowTree::PerformDragDrop(
   // TODO(erg): SkBitmap is the wrong data type for the drag image; we should
   // be passing ImageSkias once http://crbug.com/655874 is implemented.
 
-  ServerWindow* window = GetWindowByClientId(ClientWindowId(source_window_id));
+  ServerWindow* window =
+      GetWindowByClientId(MakeClientWindowId(source_window_id));
   bool success = window && access_policy_->CanInitiateDragLoop(window);
   if (!success || !ShouldRouteToWindowManager(window)) {
     // We need to fail this move loop change, otherwise the client will just be
@@ -2181,7 +2208,7 @@ void WindowTree::PerformDragDrop(
 }
 
 void WindowTree::CancelDragDrop(Id window_id) {
-  ServerWindow* window = GetWindowByClientId(ClientWindowId(window_id));
+  ServerWindow* window = GetWindowByClientId(MakeClientWindowId(window_id));
   if (!window) {
     DVLOG(1) << "CancelDragDrop failed (no window)";
     return;
@@ -2211,7 +2238,7 @@ void WindowTree::PerformWindowMove(uint32_t change_id,
                                    Id window_id,
                                    ui::mojom::MoveLoopSource source,
                                    const gfx::Point& cursor) {
-  ServerWindow* window = GetWindowByClientId(ClientWindowId(window_id));
+  ServerWindow* window = GetWindowByClientId(MakeClientWindowId(window_id));
   bool success = window && access_policy_->CanInitiateMoveLoop(window);
   if (!success || !ShouldRouteToWindowManager(window)) {
     // We need to fail this move loop change, otherwise the client will just be
@@ -2254,7 +2281,7 @@ void WindowTree::PerformWindowMove(uint32_t change_id,
 }
 
 void WindowTree::CancelWindowMove(Id window_id) {
-  ServerWindow* window = GetWindowByClientId(ClientWindowId(window_id));
+  ServerWindow* window = GetWindowByClientId(MakeClientWindowId(window_id));
   if (!window) {
     DVLOG(1) << "CancelWindowMove failed (invalid window id)";
     return;
@@ -2306,12 +2333,12 @@ void WindowTree::RemoveAccelerator(uint32_t id) {
 }
 
 void WindowTree::AddActivationParent(Id transport_window_id) {
-  AddActivationParent(ClientWindowId(transport_window_id));
+  AddActivationParent(MakeClientWindowId(transport_window_id));
 }
 
 void WindowTree::RemoveActivationParent(Id transport_window_id) {
   ServerWindow* window =
-      GetWindowByClientId(ClientWindowId(transport_window_id));
+      GetWindowByClientId(MakeClientWindowId(transport_window_id));
   if (!window) {
     DVLOG(1) << "RemoveActivationParent failed (invalid window id)";
     return;
@@ -2347,7 +2374,7 @@ void WindowTree::SetExtendedHitRegionForChildren(
     Id window_id,
     const gfx::Insets& mouse_insets,
     const gfx::Insets& touch_insets) {
-  ServerWindow* window = GetWindowByClientId(ClientWindowId(window_id));
+  ServerWindow* window = GetWindowByClientId(MakeClientWindowId(window_id));
   // Extended hit test region should only be set by the owner of the window.
   if (!window) {
     DVLOG(1) << "SetExtendedHitRegionForChildren failed (invalid window id)";
@@ -2381,7 +2408,7 @@ void WindowTree::SetDisplayRoot(const display::Display& display,
                                 const SetDisplayRootCallback& callback) {
   ServerWindow* display_root = ProcessSetDisplayRoot(
       display, TransportMetricsToDisplayMetrics(*viewport_metrics),
-      is_primary_display, ClientWindowId(window_id));
+      is_primary_display, MakeClientWindowId(window_id));
   if (!display_root) {
     callback.Run(base::nullopt);
     return;
@@ -2457,7 +2484,7 @@ void WindowTree::WmSetBoundsResponse(uint32_t change_id) {
 
 void WindowTree::WmRequestClose(Id transport_window_id) {
   ServerWindow* window =
-      GetWindowByClientId(ClientWindowId(transport_window_id));
+      GetWindowByClientId(MakeClientWindowId(transport_window_id));
   WindowTree* tree = window_server_->GetTreeWithRoot(window);
   if (tree && tree != this) {
     tree->client()->RequestClose(tree->ClientWindowIdForWindow(window).id);
@@ -2474,7 +2501,7 @@ void WindowTree::WmSetFrameDecorationValues(
 void WindowTree::WmSetNonClientCursor(uint32_t window_id,
                                       ui::CursorData cursor) {
   DCHECK(window_manager_state_);
-  ServerWindow* window = GetWindowByClientId(ClientWindowId(window_id));
+  ServerWindow* window = GetWindowByClientId(MakeClientWindowId(window_id));
   if (!window) {
     DVLOG(1) << "WmSetNonClientCursor failed (invalid window id)";
     return;
@@ -2541,7 +2568,7 @@ void WindowTree::WmSetCursorTouchVisible(bool enabled) {
 void WindowTree::OnWmCreatedTopLevelWindow(uint32_t change_id,
                                            Id transport_window_id) {
   ServerWindow* window =
-      GetWindowByClientId(ClientWindowId(transport_window_id));
+      GetWindowByClientId(MakeClientWindowId(transport_window_id));
   if (window && window->id().client_id != id_) {
     DVLOG(1) << "OnWmCreatedTopLevelWindow failed (invalid window id)";
     window_server_->WindowManagerSentBogusMessage();
@@ -2670,8 +2697,8 @@ void WindowTree::PerformOnDragEnter(
     callback.Run(0);
     return;
   }
-  client()->OnDragEnter(client_window_id.id, event_flags, cursor_offset,
-                        effect_bitmask, callback);
+  client()->OnDragEnter(ClientWindowIdToTransportId(client_window_id),
+                        event_flags, cursor_offset, effect_bitmask, callback);
 }
 
 void WindowTree::PerformOnDragOver(
@@ -2686,8 +2713,8 @@ void WindowTree::PerformOnDragOver(
     callback.Run(0);
     return;
   }
-  client()->OnDragOver(client_window_id.id, event_flags, cursor_offset,
-                       effect_bitmask, callback);
+  client()->OnDragOver(ClientWindowIdToTransportId(client_window_id),
+                       event_flags, cursor_offset, effect_bitmask, callback);
 }
 
 void WindowTree::PerformOnDragLeave(const ServerWindow* window) {
@@ -2696,7 +2723,7 @@ void WindowTree::PerformOnDragLeave(const ServerWindow* window) {
     NOTREACHED();
     return;
   }
-  client()->OnDragLeave(client_window_id.id);
+  client()->OnDragLeave(ClientWindowIdToTransportId(client_window_id));
 }
 
 void WindowTree::PerformOnCompleteDrop(
@@ -2711,8 +2738,9 @@ void WindowTree::PerformOnCompleteDrop(
     callback.Run(0);
     return;
   }
-  client()->OnCompleteDrop(client_window_id.id, event_flags, cursor_offset,
-                           effect_bitmask, callback);
+  client()->OnCompleteDrop(ClientWindowIdToTransportId(client_window_id),
+                           event_flags, cursor_offset, effect_bitmask,
+                           callback);
 }
 
 void WindowTree::PerformOnDragDropDone() {
