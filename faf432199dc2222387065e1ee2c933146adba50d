@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e2b4f19b_eeeaa08d",
+        "filename": "chrome/browser/prefs/browser_prefs.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 297,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-08-25T21:35:03Z",
+      "side": 0,
+      "message": "Would you mind splitting this cleanup off to a separate CL?",
+      "range": {
+        "startLine": 288,
+        "startChar": 0,
+        "endLine": 297,
+        "endChar": 56
+      },
+      "revId": "faf432199dc2222387065e1ee2c933146adba50d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
