@@ -63,6 +63,7 @@ class AutocompleteProviderClient {
   virtual const TemplateURLService* GetTemplateURLService() const = 0;
   virtual ContextualSuggestionsService* GetContextualSuggestionsService()
       const = 0;
+  virtual void StopContextualSuggestionsService() = 0;
   virtual const SearchTermsData& GetSearchTermsData() const = 0;
   virtual scoped_refptr<ShortcutsBackend> GetShortcutsBackend() = 0;
   virtual scoped_refptr<ShortcutsBackend> GetShortcutsBackendIfExists() = 0;

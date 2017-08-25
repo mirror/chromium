@@ -30,6 +30,7 @@
 #include "components/browser_sync/profile_sync_service.h"
 #include "components/history/core/browser/history_service.h"
 #include "components/omnibox/browser/autocomplete_classifier.h"
+#include "components/omnibox/browser/contextual_suggestions_service.h"
 #include "components/prefs/pref_service.h"
 #include "components/sync/driver/sync_service_utils.h"
 #include "content/public/browser/notification_service.h"
@@ -137,6 +138,14 @@ ChromeAutocompleteProviderClient::GetTemplateURLService() const {
 ContextualSuggestionsService*
 ChromeAutocompleteProviderClient::GetContextualSuggestionsService() const {
   return ContextualSuggestionsServiceFactory::GetForProfile(profile_);
+}
+
+void ChromeAutocompleteProviderClient::StopContextualSuggestionsService() {
+  ContextualSuggestionsService* service =
+      ContextualSuggestionsServiceFactory::GetForProfileIfExists(profile_);
+  if (service != nullptr) {
+    service->StopCreatingContextualSuggestionsRequest();
+  }
 }
 
 const

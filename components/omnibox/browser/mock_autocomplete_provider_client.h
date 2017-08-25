@@ -48,6 +48,11 @@ class MockAutocompleteProviderClient : public AutocompleteProviderClient {
       const override {
     return contextual_suggestions_service_.get();
   }
+  void StopContextualSuggestionsService() override {
+    if (contextual_suggestions_service_ != nullptr)
+      contextual_suggestions_service_
+          ->StopCreatingContextualSuggestionsRequest();
+  }
 
   std::unique_ptr<KeywordExtensionsDelegate> GetKeywordExtensionsDelegate(
       KeywordProvider* keyword_provider) override {

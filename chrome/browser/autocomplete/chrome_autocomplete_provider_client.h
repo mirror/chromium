@@ -35,6 +35,7 @@ class ChromeAutocompleteProviderClient : public AutocompleteProviderClient {
   const TemplateURLService* GetTemplateURLService() const override;
   ContextualSuggestionsService* GetContextualSuggestionsService()
       const override;
+  void StopContextualSuggestionsService() override;
   const SearchTermsData& GetSearchTermsData() const override;
   scoped_refptr<ShortcutsBackend> GetShortcutsBackend() override;
   scoped_refptr<ShortcutsBackend> GetShortcutsBackendIfExists() override;

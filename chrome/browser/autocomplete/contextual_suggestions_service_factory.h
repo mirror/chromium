@@ -16,6 +16,7 @@ class ContextualSuggestionsServiceFactory
     : public BrowserContextKeyedServiceFactory {
  public:
   static ContextualSuggestionsService* GetForProfile(Profile* profile);
+  static ContextualSuggestionsService* GetForProfileIfExists(Profile* profile);
   static ContextualSuggestionsServiceFactory* GetInstance();
 
  private:

@@ -17,7 +17,14 @@
 ContextualSuggestionsService*
 ContextualSuggestionsServiceFactory::GetForProfile(Profile* profile) {
   return static_cast<ContextualSuggestionsService*>(
-      GetInstance()->GetServiceForBrowserContext(profile, true));
+      GetInstance()->GetServiceForBrowserContext(profile, /*create=*/true));
+}
+
+// static
+ContextualSuggestionsService*
+ContextualSuggestionsServiceFactory::GetForProfileIfExists(Profile* profile) {
+  return static_cast<ContextualSuggestionsService*>(
+      GetInstance()->GetServiceForBrowserContext(profile, /*create=*/false));
 }
 
 // static
