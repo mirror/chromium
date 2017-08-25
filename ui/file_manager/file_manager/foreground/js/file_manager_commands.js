@@ -1669,7 +1669,8 @@ CommandHandler.COMMANDS_['refresh'] = /** @type {Command} */ ({
     var currentDirEntry = fileManager.directoryModel.getCurrentDirEntry();
     var volumeInfo = currentDirEntry &&
         fileManager.volumeManager.getVolumeInfo(currentDirEntry);
-    event.canExecute = volumeInfo && !volumeInfo.watchable;
+    event.canExecute = (volumeInfo && !volumeInfo.watchable) ||
+        (currentDirEntry && util.isRecentRoot(currentDirEntry));
     event.command.setHidden(!event.canExecute ||
         fileManager.directoryModel.getFileListSelection().getCheckSelectMode());
   }
