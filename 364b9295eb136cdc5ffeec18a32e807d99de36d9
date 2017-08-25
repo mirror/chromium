@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "31601b32_a9024831",
+        "filename": "cc/output/renderer_pixeltest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 314,
+      "author": {
+        "id": 1115926
+      },
+      "writtenOn": "2017-08-25T17:20:52Z",
+      "side": 1,
+      "message": "This needs to change the same way as the code in resource_provider.cc",
+      "range": {
+        "startLine": 314,
+        "startChar": 16,
+        "endLine": 314,
+        "endChar": 17
+      },
+      "revId": "364b9295eb136cdc5ffeec18a32e807d99de36d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "239e16bb_5be2b22a",
+        "filename": "cc/resources/video_resource_updater.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 480,
+      "author": {
+        "id": 1115926
+      },
+      "writtenOn": "2017-08-25T17:20:52Z",
+      "side": 1,
+      "message": "I would prefer to list all the values of the enum here, and put a NOTREACHED() after the ones that shouldn\u0027t happen.",
+      "range": {
+        "startLine": 480,
+        "startChar": 6,
+        "endLine": 480,
+        "endChar": 11
+      },
+      "revId": "364b9295eb136cdc5ffeec18a32e807d99de36d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5d7bd7c_c8c96d83",
+        "filename": "cc/resources/video_resource_updater_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 337,
+      "author": {
+        "id": 1115926
+      },
+      "writtenOn": "2017-08-25T17:20:52Z",
+      "side": 1,
+      "message": "I think you should change this to:\n\n// Max 10-bit values as read by a sampler\ndouble max_10bit_value \u003d ((1 \u003c\u003c 10) - 1)) / 65535.0;\nEXPECT_NEAR(resources.multiplier * max_10bit_value, 1.0, 0.0001);\n\nIt\u0027s the same thing, but illustrates what we want the multiplier to do better.\nIt\u0027s also less prone to cut-n-paste errors.",
+      "range": {
+        "startLine": 337,
+        "startChar": 42,
+        "endLine": 337,
+        "endChar": 43
+      },
+      "revId": "364b9295eb136cdc5ffeec18a32e807d99de36d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
