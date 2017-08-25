@@ -62,8 +62,10 @@ public class DownloadNotificationService {
             "Chrome.NotificationBundleIconIdExtra";
     /** Notification Id starting value, to avoid conflicts from IDs used in prior versions. */
     private static final int STARTING_NOTIFICATION_ID = 1000000;
-
     private static final String KEY_NEXT_DOWNLOAD_NOTIFICATION_ID = "NextDownloadNotificationId";
+
+    private static final int MAX_RESUMPTION_ATTEMPT_LEFT = 5;
+    private static final String KEY_AUTO_RESUMPTION_ATTEMPT_LEFT = "ResumptionAttemptLeft";
 
     @VisibleForTesting
     final List<ContentId> mDownloadsInProgress = new ArrayList<ContentId>();
@@ -491,6 +493,17 @@ public class DownloadNotificationService {
      * already in progress, do nothing.
      */
     void resumeAllPendingDownloads() {
+        // Limit the number of auto resumption attempts in case Chrome falls into a vicious cycle.
+        DownloadResumptionScheduler
+                .getDownloadResumptionScheduler(ContextUtils.getApplicationContext())
+                .cancelTask();
+        int numAutoResumptionAtemptLeft = getResumptionAttemptLeft();
+        if (numAutoResumptionAtemptLeft > 0) {
+            numAutoResumptionAtemptLeft--;
+            updateResumptionAttemptLeft(numAutoResumptionAtemptLeft);
+        }
+
+        // Go through and check which downloads to resume.
         Context context = ContextUtils.getApplicationContext();
         List<DownloadSharedPreferenceEntry> entries = mDownloadSharedPreferenceHelper.getEntries();
         for (int i = 0; i < entries.size(); ++i) {
@@ -529,5 +542,33 @@ public class DownloadNotificationService {
         editor.putInt(KEY_NEXT_DOWNLOAD_NOTIFICATION_ID, mNextNotificationId);
         editor.apply();
         return notificationId;
+    }
+
+    /**
+     * Helper method to update the remaining number of background resumption attempts left.
+     */
+    static void updateResumptionAttemptLeft(int numAutoResumptionAttemptLeft) {
+        SharedPreferences sharedPrefs = ContextUtils.getAppSharedPreferences();
+        SharedPreferences.Editor editor = sharedPrefs.edit();
+        editor.putInt(KEY_AUTO_RESUMPTION_ATTEMPT_LEFT, numAutoResumptionAttemptLeft);
+        editor.apply();
+    }
+
+    /**
+     * Helper method to get the remaining number of background resumption attempts left.
+     */
+    static int getResumptionAttemptLeft() {
+        SharedPreferences sharedPrefs = ContextUtils.getAppSharedPreferences();
+        return sharedPrefs.getInt(KEY_AUTO_RESUMPTION_ATTEMPT_LEFT, MAX_RESUMPTION_ATTEMPT_LEFT);
+    }
+
+    /**
+     * Helper method to clear the remaining number of background resumption attempts left.
+     */
+    static void clearResumptionAttemptLeft() {
+        SharedPreferences sharedPrefs = ContextUtils.getAppSharedPreferences();
+        SharedPreferences.Editor editor = sharedPrefs.edit();
+        editor.remove(KEY_AUTO_RESUMPTION_ATTEMPT_LEFT);
+        editor.apply();
     }
 }

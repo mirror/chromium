@@ -13,6 +13,7 @@ import static org.chromium.chrome.browser.download.DownloadNotificationService.A
 import static org.chromium.chrome.browser.download.DownloadNotificationService.EXTRA_DOWNLOAD_CONTENTID_ID;
 import static org.chromium.chrome.browser.download.DownloadNotificationService.EXTRA_DOWNLOAD_CONTENTID_NAMESPACE;
 import static org.chromium.chrome.browser.download.DownloadNotificationService.EXTRA_IS_OFF_THE_RECORD;
+import static org.chromium.chrome.browser.download.DownloadNotificationService.clearResumptionAttemptLeft;
 
 import android.app.DownloadManager;
 import android.app.Service;
@@ -94,11 +95,22 @@ public class DownloadBroadcastManager extends Service {
         // Remove delayed stop of service until after native library is loaded.
         mHandler.removeCallbacks(mStopSelfRunnable);
 
+        // Handle resumption logic.
+        handleResumptionLogic();
+
         // Update notification appearance immediately in case it takes a while for native to load.
         updateNotification(intent);
 
         // Handle the intent and propagate it through the native library.
         loadNativeAndPropagateInteraction(intent);
+    }
+
+    void handleResumptionLogic() {
+        DownloadResumptionScheduler
+                .getDownloadResumptionScheduler(ContextUtils.getApplicationContext())
+                .cancelTask();
+        // Reset number of attempts left if the action is triggered by user.
+        clearResumptionAttemptLeft();
     }
 
     /**
