@@ -1,0 +1,251 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8abacfed_916db606",
+        "filename": "chrome/browser/DEPS",
+        "patchSetId": 6
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1215199
+      },
+      "writtenOn": "2017-08-25T03:03:24Z",
+      "side": 1,
+      "message": "It worries me that a testing-only change is adding Chrome browser-level dependencies: why do we need this line?",
+      "range": {
+        "startLine": 86,
+        "startChar": 63,
+        "endLine": 86,
+        "endChar": 0
+      },
+      "revId": "24cc92647ef547173b20d1c4e9160699e6832ec8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99ec5136_1ce3a121",
+        "filename": "chrome/browser/language/chrome_language_detection_client.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1215199
+      },
+      "writtenOn": "2017-08-25T03:03:24Z",
+      "side": 1,
+      "message": "Do you need a getter here, given you can just pull out the instance variable (because you\u0027re a friend)? If you do want it, consider just language_histogram() (since it is just an accessor).",
+      "range": {
+        "startLine": 47,
+        "startChar": 61,
+        "endLine": 47,
+        "endChar": 0
+      },
+      "revId": "24cc92647ef547173b20d1c4e9160699e6832ec8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8c2fa3c_81fc7595",
+        "filename": "chrome/browser/translate/translate_language_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1215199
+      },
+      "writtenOn": "2017-08-25T03:03:24Z",
+      "side": 1,
+      "message": "Do you need all these headers? Some (e.g. translate_script.h) seem unnecessary.",
+      "range": {
+        "startLine": 8,
+        "startChar": 30,
+        "endLine": 8,
+        "endChar": 0
+      },
+      "revId": "24cc92647ef547173b20d1c4e9160699e6832ec8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07daf716_ecba3e96",
+        "filename": "chrome/browser/translate/translate_language_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1215199
+      },
+      "writtenOn": "2017-08-25T03:03:24Z",
+      "side": 1,
+      "message": "Do you need two test classes here? It looks like you could combine them into one.",
+      "range": {
+        "startLine": 49,
+        "startChar": 70,
+        "endLine": 49,
+        "endChar": 0
+      },
+      "revId": "24cc92647ef547173b20d1c4e9160699e6832ec8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5bdc6a3_1c351284",
+        "filename": "chrome/browser/translate/translate_language_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1215199
+      },
+      "writtenOn": "2017-08-25T03:03:24Z",
+      "side": 1,
+      "message": "A general comment:\n\nI find the logic in this class a bit too \"stateful\" to follow easily. I would suggest making this function accept a Browser* arg (which will either be browser() or CreateIncognitoBrowser(), depending on the individual test), and return a TranslateBubbleModel* (which will be checked for nullness or non-nullness depending on the individual test).\n\nThat way, we don\u0027t have to try and track what functions might have been called in the past etc. when reading the methods.\n\nAs an added benefit, this will let you move more EXPECTs/ASSERTs into actual tests, which improves error reporting (you\u0027ll get to see the exact line that failed, if it\u0027s like Google\u0027s internal setup).",
+      "revId": "24cc92647ef547173b20d1c4e9160699e6832ec8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3693b71_8eb9a0d7",
+        "filename": "chrome/browser/translate/translate_language_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1215199
+      },
+      "writtenOn": "2017-08-25T03:03:24Z",
+      "side": 1,
+      "message": "Could you please try to const as much of this stuff as possible?\n\nSame comment for GetUrlLanguageHistogram.",
+      "range": {
+        "startLine": 82,
+        "startChar": 48,
+        "endLine": 82,
+        "endChar": 0
+      },
+      "revId": "24cc92647ef547173b20d1c4e9160699e6832ec8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28cd6459_89758925",
+        "filename": "chrome/browser/translate/translate_language_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1215199
+      },
+      "writtenOn": "2017-08-25T03:03:24Z",
+      "side": 1,
+      "message": "I think you should pull the language histogram out of the current browser context (i.e. call UrlLanguageHistogramFactory::GetInstance()-\u003eGetForBrowserContext(...)) instead. Here are some benefits:\n  - You don\u0027t have to add any code to ChromeLanguageDetectionClient just for testing\n  - You don\u0027t have to bother with the scoped feature stuff here\n  - The test becomes more general: it will keep working if we e.g. roll back the decoupling experiment, or if the language detection client stops holding a histogram pointer",
+      "range": {
+        "startLine": 110,
+        "startChar": 50,
+        "endLine": 110,
+        "endChar": 0
+      },
+      "revId": "24cc92647ef547173b20d1c4e9160699e6832ec8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "060ad490_150cf951",
+        "filename": "chrome/browser/translate/translate_language_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1215199
+      },
+      "writtenOn": "2017-08-25T03:03:24Z",
+      "side": 1,
+      "message": "For this method and the one below: you currently check they don\u0027t cause a crash (which is good), but is there anything we could use to check if they succeed? e.g. translate_manager.GetLanguageState().current_language() and ...HasLanguageChanged()",
+      "range": {
+        "startLine": 113,
+        "startChar": 20,
+        "endLine": 113,
+        "endChar": 0
+      },
+      "revId": "24cc92647ef547173b20d1c4e9160699e6832ec8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fcbd1da7_b315432d",
+        "filename": "chrome/browser/translate/translate_language_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1215199
+      },
+      "writtenOn": "2017-08-25T03:03:24Z",
+      "side": 1,
+      "message": "consts",
+      "range": {
+        "startLine": 137,
+        "startChar": 73,
+        "endLine": 137,
+        "endChar": 0
+      },
+      "revId": "24cc92647ef547173b20d1c4e9160699e6832ec8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10b2034a_7f2012db",
+        "filename": "chrome/browser/translate/translate_language_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1215199
+      },
+      "writtenOn": "2017-08-25T03:03:24Z",
+      "side": 1,
+      "message": "Do we have an expected value for \"en\" too?",
+      "range": {
+        "startLine": 143,
+        "startChar": 51,
+        "endLine": 143,
+        "endChar": 0
+      },
+      "revId": "24cc92647ef547173b20d1c4e9160699e6832ec8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d0e0f28_6609fa17",
+        "filename": "chrome/browser/translate/translate_language_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1215199
+      },
+      "writtenOn": "2017-08-25T03:03:24Z",
+      "side": 1,
+      "message": "consts",
+      "range": {
+        "startLine": 159,
+        "startChar": 73,
+        "endLine": 159,
+        "endChar": 0
+      },
+      "revId": "24cc92647ef547173b20d1c4e9160699e6832ec8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
