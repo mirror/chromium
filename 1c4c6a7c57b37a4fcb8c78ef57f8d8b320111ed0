@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ba2bccdb_917c969e",
+        "filename": "ui/views/controls/button/checkbox.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1161819
+      },
+      "writtenOn": "2017-08-25T18:03:08Z",
+      "side": 1,
+      "message": "Ironically, this wasn\u0027t actually true before. Now it is.",
+      "range": {
+        "startLine": 218,
+        "startChar": 8,
+        "endLine": 218,
+        "endChar": 74
+      },
+      "revId": "1c4c6a7c57b37a4fcb8c78ef57f8d8b320111ed0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
