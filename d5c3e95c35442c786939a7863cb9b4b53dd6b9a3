@@ -106,6 +106,24 @@
       "revId": "d5c3e95c35442c786939a7863cb9b4b53dd6b9a3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54a8ad74_279ff093",
+        "filename": "chrome/browser/chromeos/power/peripheral_battery_notifier.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-08-25T01:38:45Z",
+      "side": 1,
+      "message": "sorry, i didn\u0027t understand \"consolidating the two different path related logs (does not match prefix suffix \u0026 empty in between)\"; can you rephrase it? are you talking about the error messages that we log? i suspect that those don\u0027t really matter and it\u0027s fine to combine them.\n\nre find, nah, i think it\u0027s probably better to just extract the bluetooth address from the BatteryInfo struct and compare it against the received address. maybe it\u0027d even be best to just extract the address once when we first create the BatteryInfo struct:\n\n  struct BatteryInfo {\n    ...\n    // Peripheral\u0027s Bluetooth address. Empty for non-Bluetooth devices.\n    std::string bluetooth_address;\n    ...\n  };\n\ni\u0027d continue to index the BatteryInfo structs by their notification ids (i.e. paths), though, since those are guaranteed to be unique.\n\ndoes that sound okay?",
+      "parentUuid": "307d0142_ac6045ab",
+      "revId": "d5c3e95c35442c786939a7863cb9b4b53dd6b9a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
