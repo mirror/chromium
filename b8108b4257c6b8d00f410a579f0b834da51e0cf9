@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7095c3b3_952dc6df",
+        "filename": "cc/blink/web_layer_impl.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-08-25T16:40:10Z",
+      "side": 1,
+      "message": "Document what this does, including that it sends the scroll to blink.",
+      "revId": "b8108b4257c6b8d00f410a579f0b834da51e0cf9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77b51791_43e1f750",
+        "filename": "third_party/WebKit/Source/core/paint/PaintInvalidationCapableScrollableArea.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 278,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-08-25T16:40:10Z",
+      "side": 1,
+      "message": "Why this change? Just cleaner code?",
+      "revId": "b8108b4257c6b8d00f410a579f0b834da51e0cf9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0b6814d_3c14913c",
+        "filename": "third_party/WebKit/Source/platform/graphics/paint/ScrollPaintPropertyNode.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-08-25T16:40:10Z",
+      "side": 1,
+      "message": "This should be an easy follow-on patch.",
+      "revId": "b8108b4257c6b8d00f410a579f0b834da51e0cf9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4bb461e3_c7ffffcf",
+        "filename": "ui/views/controls/scroll_view.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 766,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-08-25T16:40:10Z",
+      "side": 1,
+      "message": "Every ui layer has element_id() set on it. You can get it off the layer.",
+      "revId": "b8108b4257c6b8d00f410a579f0b834da51e0cf9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
