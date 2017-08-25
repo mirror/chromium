@@ -1920,7 +1920,7 @@ class ServerRunner(testserver_base.TestServerRunner):
 
           (pem_cert_and_key, intermediate_cert_der) = \
               minica.GenerateCertKeyAndIntermediate(
-                  subject = "127.0.0.1",
+                  subject = self.options.hostname,
                   ca_issuers_url = ("http://%s:%d/ca_issuers" %
                                     (host, self.__ocsp_server.server_port)),
                   serial = self.options.cert_serial)
@@ -1992,9 +1992,9 @@ class ServerRunner(testserver_base.TestServerRunner):
                 self.options.ocsp_produced)
 
           (pem_cert_and_key, ocsp_der) = minica.GenerateCertKeyAndOCSP(
-              subject = "127.0.0.1",
+              subject = self.options.hostname,
               ocsp_url = ("http://%s:%d/ocsp" %
-                  (host, self.__ocsp_server.server_port)),
+                  (self.options.hostname, self.__ocsp_server.server_port)),
               ocsp_states = ocsp_states,
               ocsp_dates = ocsp_dates,
               ocsp_produced = ocsp_produced,

@@ -32,7 +32,8 @@ namespace net {
 
 namespace {
 
-std::string GetHostname(BaseTestServer::Type type,
+std::string GetHostname(SpawnedTestServerConfig& config,
+                        BaseTestServer::Type type,
                         const BaseTestServer::SSLOptions& options) {
   if (BaseTestServer::UsingSSL(type)) {
     if (options.server_certificate ==
@@ -42,12 +43,12 @@ std::string GetHostname(BaseTestServer::Type type,
       // For |CERT_MISMATCHED_NAME|, return a different hostname string
       // that resolves to the same hostname. For
       // |CERT_COMMON_NAME_IS_DOMAIN|, the certificate is issued for
-      // "localhost" instead of "127.0.0.1".
-      return "localhost";
+      // domain name instead of the address.
+      return config.name();
     }
   }
 
-  return "127.0.0.1";
+  return config.address().ToString();
 }
 
 std::string GetClientCertType(SSLClientCertType type) {
@@ -249,13 +250,13 @@ std::string BaseTestServer::SSLOptions::GetOCSPProducedArgument() const {
 }
 
 BaseTestServer::BaseTestServer(Type type) : type_(type) {
-  Init(GetHostname(type, ssl_options_));
+  Init();
 }
 
 BaseTestServer::BaseTestServer(Type type, const SSLOptions& ssl_options)
     : ssl_options_(ssl_options), type_(type) {
   DCHECK(UsingSSL(type));
-  Init(GetHostname(type, ssl_options));
+  Init();
 }
 
 BaseTestServer::~BaseTestServer() {}
@@ -420,8 +421,9 @@ scoped_refptr<X509Certificate> BaseTestServer::GetCertificate() const {
   return certs_in_file[0];
 }
 
-void BaseTestServer::Init(const std::string& host) {
-  host_port_pair_ = HostPortPair(host, 0);
+void BaseTestServer::Init() {
+  config_ = SpawnedTestServerConfig::Load();
+  host_port_pair_ = HostPortPair(GetHostname(config_, type_, ssl_options_), 0);
 
   // TODO(battre) Remove this after figuring out why the TestServer is flaky.
   // http://crbug.com/96594
@@ -489,7 +491,7 @@ void BaseTestServer::CleanUpWhenStoppingServer() {
 bool BaseTestServer::GenerateArguments(base::DictionaryValue* arguments) const {
   DCHECK(arguments);
 
-  arguments->SetString("host", host_port_pair_.host());
+  arguments->SetString("hostname", host_port_pair_.host());
   arguments->SetInteger("port", host_port_pair_.port());
   arguments->SetString("data-dir", document_root_.value());
 
