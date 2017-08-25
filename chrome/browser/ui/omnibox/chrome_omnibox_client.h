@@ -7,6 +7,7 @@
 
 #include "base/compiler_specific.h"
 #include "base/macros.h"
+#include "base/task/cancelable_task_tracker.h"
 #include "chrome/browser/autocomplete/chrome_autocomplete_scheme_classifier.h"
 #include "chrome/browser/bitmap_fetcher/bitmap_fetcher_service.h"
 #include "chrome/common/search/instant_types.h"
@@ -53,10 +54,11 @@ class ChromeOmniboxClient : public OmniboxClient {
   void OnInputStateChanged() override;
   void OnFocusChanged(OmniboxFocusState state,
                       OmniboxFocusChangeReason reason) override;
-  void OnResultChanged(const AutocompleteResult& result,
-                       bool default_match_changed,
-                       const base::Callback<void(const SkBitmap& bitmap)>&
-                           on_bitmap_fetched) override;
+  void OnResultChanged(
+      const AutocompleteResult& result,
+      bool default_match_changed,
+      const BitmapFetchedCallback& on_bitmap_fetched,
+      const MatchIconFetchedCallback& match_icon_fetched) override;
   void OnCurrentMatchChanged(const AutocompleteMatch& match) override;
   void OnTextChanged(const AutocompleteMatch& current_match,
                      bool user_input_in_progress,
@@ -86,7 +88,8 @@ class ChromeOmniboxClient : public OmniboxClient {
   ChromeOmniboxEditController* controller_;
   Profile* profile_;
   ChromeAutocompleteSchemeClassifier scheme_classifier_;
-  BitmapFetcherService::RequestId request_id_;
+  BitmapFetcherService::RequestId answer_image_request_id_;
+  base::CancelableTaskTracker favicon_task_tracker_;
 
   DISALLOW_COPY_AND_ASSIGN(ChromeOmniboxClient);
 };
