@@ -52,6 +52,10 @@ enum {
 };
 typedef NSUInteger NSSpringLoadingHighlight;
 
+extern "C" {
+extern const NSInteger CBErrorMaxConnection;
+}
+
 #endif  // MAC_OS_X_VERSION_10_11
 
 #if !defined(MAC_OS_X_VERSION_10_12) || \

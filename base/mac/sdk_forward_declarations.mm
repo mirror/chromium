@@ -4,6 +4,11 @@
 
 #include "base/mac/sdk_forward_declarations.h"
 
+#if !defined(MAC_OS_X_VERSION_10_11) || \
+    MAC_OS_X_VERSION_MAX_ALLOWED < MAC_OS_X_VERSION_10_11
+const NSInteger CBErrorMaxConnection = 10;
+#endif  // MAC_OS_X_VERSION_10_11
+
 #if !defined(MAC_OS_X_VERSION_10_10) || \
     MAC_OS_X_VERSION_MIN_REQUIRED < MAC_OS_X_VERSION_10_10
 NSString* const CIDetectorTypeQRCode = @"CIDetectorTypeQRCode";
