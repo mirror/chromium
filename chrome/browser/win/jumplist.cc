@@ -339,15 +339,17 @@ void JumpList::InitializeTimerForUpdate() {
 void JumpList::ProcessNotifications() {
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
 
-  if (updates_to_skip_ > 0) {
-    --updates_to_skip_;
-    return;
-  }
-
   // Retrieve the recently closed URLs synchronously.
   if (tab_restore_has_pending_notification_) {
-    tab_restore_has_pending_notification_ = false;
+    // Skip the updates triggered by TabRestore service as a penalty for
+    // previous slow updates.
+    if (updates_to_skip_ > 0) {
+      --updates_to_skip_;
+      return;
+    }
+
     ProcessTabRestoreServiceNotification();
+    tab_restore_has_pending_notification_ = false;
 
     // Force a TopSite history sync when closing a first tab in one session.
     if (!has_tab_closed_) {
@@ -441,6 +443,15 @@ void JumpList::OnMostVisitedURLsAvailable(
   // display have not changed.
   if (MostVisitedItemsUnchanged(most_visited_pages_, urls, kMostVisitedItems))
     return;
+
+  // Skip the updates triggered by TopSites service as a penalty for previous
+  // slow updates. We put the skip here as many TopSites notifications actually
+  // cannot pass the filters to get here. Skipping these notifications makes the
+  // penalty fake.
+  if (updates_to_skip_ > 0) {
+    --updates_to_skip_;
+    return;
+  }
 
   most_visited_pages_.clear();
 
