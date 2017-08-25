@@ -98,7 +98,7 @@ class AURA_EXPORT WindowDelegate : public ui::EventHandler {
   // above returns true.
   virtual void GetHitTestMask(gfx::Path* mask) const = 0;
 
-  virtual void OnWindowSurfaceChanged(const viz::SurfaceInfo& surface_info) {}
+  virtual void OnFirstSurfaceActivation(const viz::SurfaceInfo& surface_info) {}
 
  protected:
   ~WindowDelegate() override {}
