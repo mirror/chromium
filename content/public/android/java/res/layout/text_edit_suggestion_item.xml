@@ -6,7 +6,7 @@
 <TextView xmlns:android="http://schemas.android.com/apk/res/android"
     android:textSize="14sp"
     android:fontFamily="sans-serif"
-    android:textColor="?android:attr/textColorPrimary"
+    android:textColor="?android:attr/textColorSecondary"
     android:drawablePadding="8dp"
     android:gravity="start|center_vertical"
     android:layout_gravity="start|center_vertical"
