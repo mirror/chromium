@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5b443572_4c452e37",
+        "filename": "ash/wm/splitview/split_view_controller.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-08-25T00:06:25Z",
+      "side": 1,
+      "message": "I\u0027m not aware of this requirement. I\u0027ll ask Omri to see if we want to support it.",
+      "parentUuid": "0ea5e4a3_43c07cd7",
+      "revId": "934a3afbbd469961aa21c85ef6366f9e4b2f8f4b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ca9b44de_55d15010",
         "filename": "ash/wm/splitview/split_view_divider.cc",
         "patchSetId": 4
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-24T17:51:04Z",
       "side": 1,
       "message": "You can look into as a separate issue, but I believe we should \"block rotation\" while dragging the divider to avoid interfering user action.",
+      "revId": "934a3afbbd469961aa21c85ef6366f9e4b2f8f4b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27e66c8a_30228427",
+        "filename": "ash/wm/splitview/split_view_divider.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-08-25T00:06:25Z",
+      "side": 1,
+      "message": "Thanks! I\u0027ll keep this in mind when I start to implement the rotation support.",
+      "parentUuid": "ca9b44de_55d15010",
       "revId": "934a3afbbd469961aa21c85ef6366f9e4b2f8f4b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -50,6 +86,24 @@
       "revId": "934a3afbbd469961aa21c85ef6366f9e4b2f8f4b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03d45337_d438ba11",
+        "filename": "ash/wm/splitview/split_view_divider.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-08-25T00:06:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fb8fd6b2_e9f4074e",
+      "revId": "934a3afbbd469961aa21c85ef6366f9e4b2f8f4b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
