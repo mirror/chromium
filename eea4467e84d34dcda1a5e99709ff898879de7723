@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "1a896244_febde9fc",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 11
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-08-25T18:39:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e2fbd235_9be393ee",
+      "range": {
+        "startLine": 11,
+        "startChar": 33,
+        "endLine": 11,
+        "endChar": 47
+      },
+      "revId": "eea4467e84d34dcda1a5e99709ff898879de7723",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4c836a40_ff124dba",
         "filename": "net/BUILD.gn",
         "patchSetId": 11
@@ -36,6 +60,30 @@
       "writtenOn": "2017-08-25T15:58:18Z",
       "side": 1,
       "message": "What does this do?",
+      "range": {
+        "startLine": 5367,
+        "startChar": 4,
+        "endLine": 5367,
+        "endChar": 19
+      },
+      "revId": "eea4467e84d34dcda1a5e99709ff898879de7723",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd094cb1_05341315",
+        "filename": "net/BUILD.gn",
+        "patchSetId": 11
+      },
+      "lineNbr": 5367,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-08-25T18:39:31Z",
+      "side": 1,
+      "message": "It adds a flag for Fuchsia test runner, which tells it to start test server spawner, see https://codesearch.chromium.org/chromium/src/build/config/fuchsia/rules.gni?type\u003dcs\u0026q\u003duse_test_server\u0026sq\u003dpackage:chromium\u0026l\u003d80",
+      "parentUuid": "4c836a40_ff124dba",
       "range": {
         "startLine": 5367,
         "startChar": 4,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "af81ede5_ccd90950",
+        "filename": "net/test/net_test_suite.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-08-25T18:39:31Z",
+      "side": 1,
+      "message": "Good idea. Done.",
+      "parentUuid": "9b316b09_733d45c4",
+      "range": {
+        "startLine": 73,
+        "startChar": 29,
+        "endLine": 73,
+        "endChar": 32
+      },
+      "revId": "eea4467e84d34dcda1a5e99709ff898879de7723",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f3edab59_5efb05ec",
         "filename": "net/test/spawned_test_server/test_server_config.cc",
         "patchSetId": 11
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "235df0d1_811edf55",
+        "filename": "net/test/spawned_test_server/test_server_config.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-08-25T18:39:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f3edab59_5efb05ec",
+      "range": {
+        "startLine": 36,
+        "startChar": 30,
+        "endLine": 36,
+        "endChar": 0
+      },
+      "revId": "eea4467e84d34dcda1a5e99709ff898879de7723",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "60978ee8_fcbf4e93",
         "filename": "net/test/spawned_test_server/test_server_config.cc",
         "patchSetId": 11
@@ -105,6 +201,30 @@
       "writtenOn": "2017-08-25T15:58:18Z",
       "side": 1,
       "message": "Any reason not to make this a CHECK instead?  Code is a little simpler.",
+      "range": {
+        "startLine": 84,
+        "startChar": 20,
+        "endLine": 84,
+        "endChar": 31
+      },
+      "revId": "eea4467e84d34dcda1a5e99709ff898879de7723",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f6a6caa_0e519bd2",
+        "filename": "net/test/spawned_test_server/test_server_config.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-08-25T18:39:31Z",
+      "side": 1,
+      "message": "IMO it\u0027s best to avoid expressions with side effect in CHECK(): \n  1. They make code less readable,\n  2. If someone changes it to DCHECK() then it will stop working in Debug builds.",
+      "parentUuid": "60978ee8_fcbf4e93",
       "range": {
         "startLine": 84,
         "startChar": 20,
@@ -134,6 +254,24 @@
     },
     {
       "key": {
+        "uuid": "c8613c1d_622897d6",
+        "filename": "net/test/spawned_test_server/test_server_config.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-08-25T18:39:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "81d05417_cbb18833",
+      "revId": "eea4467e84d34dcda1a5e99709ff898879de7723",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4d36475f_33c4eabe",
         "filename": "net/test/spawned_test_server/test_server_config.h",
         "patchSetId": 11
@@ -145,6 +283,30 @@
       "writtenOn": "2017-08-25T15:58:18Z",
       "side": 1,
       "message": "Should make it clear this is only for the RemoteTestServer.",
+      "range": {
+        "startLine": 18,
+        "startChar": 25,
+        "endLine": 18,
+        "endChar": 33
+      },
+      "revId": "eea4467e84d34dcda1a5e99709ff898879de7723",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "826a995d_d53232ef",
+        "filename": "net/test/spawned_test_server/test_server_config.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-08-25T18:39:31Z",
+      "side": 1,
+      "message": "It\u0027s not specific to RemoteTestServer. Potentially it can be useful for local test server as well. Currently Local/Remote implementation is selected in compile time. We could make this selection in runtime, based on the config. This may be useful on Fuchsia once we have python working WDYT?",
+      "parentUuid": "4d36475f_33c4eabe",
       "range": {
         "startLine": 18,
         "startChar": 25,
@@ -177,6 +339,30 @@
       "revId": "eea4467e84d34dcda1a5e99709ff898879de7723",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3dda8db_87533625",
+        "filename": "net/test/spawned_test_server/test_server_config.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-08-25T18:39:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cdc1c2a6_dafb5123",
+      "range": {
+        "startLine": 39,
+        "startChar": 22,
+        "endLine": 39,
+        "endChar": 23
+      },
+      "revId": "eea4467e84d34dcda1a5e99709ff898879de7723",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
