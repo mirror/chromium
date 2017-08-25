@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "10e90796_587f4786",
+        "filename": "third_party/WebKit/Source/platform/graphics/Canvas2DLayerBridge.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 406,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-08-25T14:32:00Z",
+      "side": 1,
+      "message": "junov@: the Canvas2DLayerBridgeTest::DeleteGpuMemoryxxx() fails because it has texture_id\u003d0, on Asan bots only, why would that happen?",
+      "range": {
+        "startLine": 405,
+        "startChar": 2,
+        "endLine": 406,
+        "endChar": 19
+      },
+      "revId": "c989abf541d4fb32b7232d564fe9a944adafe645",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
