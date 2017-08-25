@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "822e6108_12fdeca4",
+        "filename": "third_party/WebKit/Source/core/input/MouseEventManager.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 796,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-08-25T12:44:29Z",
+      "side": 1,
+      "message": "Can we just add a new bool and adjust it?  I find ifdef\u0027s around method calls hard to reason about.\n\nbool should_drag \u003d true;\n#if defined(OS_WIN)\n  should_drag \u003d !is_pen;\n#endif\n\nif (should_drag \u0026\u0026 HandleDrag(....) {\n}",
+      "revId": "7cb7419df531383d610a3cf2659e03cad7eb80e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
