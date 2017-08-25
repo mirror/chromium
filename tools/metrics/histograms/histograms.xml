@@ -81165,6 +81165,40 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="TabManager.BackgroundTabOpening.TabCount" units="tabs">
+  <owner>zhenw@chromium.org</owner>
+  <summary>
+    The max number of background tabs pending or loading in a background tab
+    opening session.
+  </summary>
+</histogram>
+
+<histogram name="TabManager.BackgroundTabOpening.TabLoadAutoStartedCount"
+    units="tabs">
+  <owner>zhenw@chromium.org</owner>
+  <summary>
+    The number of background tabs whose loading was triggered by TabManager
+    automatically in a background tab opening session.
+  </summary>
+</histogram>
+
+<histogram name="TabManager.BackgroundTabOpening.TabLoadUserInitiatedCount"
+    units="tabs">
+  <owner>zhenw@chromium.org</owner>
+  <summary>
+    The number of background tabs whose loading was triggered by user selection
+    in a background tab opening session.
+  </summary>
+</histogram>
+
+<histogram name="TabManager.BackgroundTabOpening.TabPausedCount" units="tabs">
+  <owner>zhenw@chromium.org</owner>
+  <summary>
+    The max number of background tabs paused to load in a background tab opening
+    session due to memory pressure.
+  </summary>
+</histogram>
+
 <histogram name="TabManager.Discarding.DiscardCount" units="Discards">
   <owner>georgesak@chromium.org</owner>
   <summary>
@@ -81303,6 +81337,20 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <summary>
     Elapsed time between the start of the loading and the first paint of
     foreground tabs when the browser loads tabs in session restore.
+  </summary>
+</histogram>
+
+<histogram
+    name="TabManager.Experimental.SessionRestore.OverlapWithBackgroundTabOpening"
+    units="count">
+  <owner>zhenw@chromium.org</owner>
+  <summary>
+    The number of overlapped sessions between SessionRestore and
+    BackgroundTabOpening. This is recorded at the end of each SessionRestore.
+    Since SessionRestore usually happens only once at the beginning of the
+    browser restart, there should usually be 0 overlap, sometimes 1 overlap, and
+    rarely more than 1 overlap. One example of more than 1 overlap happens when
+    more than 1 BackgroundTabOpening sessions occur in a SessionRestore.
   </summary>
 </histogram>
 

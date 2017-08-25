@@ -334,6 +334,45 @@ TEST_P(TabManagerStatsCollectorTest, HistogramsExpectedTaskQueueingDuration) {
                                                                            : 0);
 }
 
+TEST_P(TabManagerStatsCollectorTest, HistogramsTabCount) {
+  auto* stats_collector = tab_manager_stats_collector();
+
+  if (should_test_session_restore_)
+    StartSessionRestore();
+  if (should_test_background_tab_opening_)
+    StartBackgroundTabOpeningSession();
+
+  stats_collector->TrackNewBackgroundTab(1, 3);
+  stats_collector->TrackBackgroundTabLoadAutoStarted();
+  stats_collector->TrackBackgroundTabLoadAutoStarted();
+  stats_collector->TrackBackgroundTabLoadUserInitiated();
+  stats_collector->TrackPausedBackgroundTabs(1);
+
+  if (should_test_session_restore_)
+    FinishSessionRestore();
+  if (should_test_background_tab_opening_)
+    FinishBackgroundTabOpeningSession();
+
+  histogram_tester_.ExpectTotalCount(
+      TabManagerStatsCollector::kHistogramBackgroundTabOpeningTabCount,
+      should_test_background_tab_opening_ && !IsTestingOverlappedSession() ? 1
+                                                                           : 0);
+  histogram_tester_.ExpectTotalCount(
+      TabManagerStatsCollector::kHistogramBackgroundTabOpeningTabPausedCount,
+      should_test_background_tab_opening_ && !IsTestingOverlappedSession() ? 1
+                                                                           : 0);
+  histogram_tester_.ExpectTotalCount(
+      TabManagerStatsCollector::
+          kHistogramBackgroundTabOpeningTabLoadAutoStartedCount,
+      should_test_background_tab_opening_ && !IsTestingOverlappedSession() ? 1
+                                                                           : 0);
+  histogram_tester_.ExpectTotalCount(
+      TabManagerStatsCollector::
+          kHistogramBackgroundTabOpeningTabLoadUserInitiatedCount,
+      should_test_background_tab_opening_ && !IsTestingOverlappedSession() ? 1
+                                                                           : 0);
+}
+
 INSTANTIATE_TEST_CASE_P(
     ,
     TabManagerStatsCollectorTabSwitchTest,
