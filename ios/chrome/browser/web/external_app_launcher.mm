@@ -175,8 +175,8 @@ NSString* PromptActionString(NSString* scheme) {
   // rewritten URL if it is of mailto: scheme.
   if (base::FeatureList::IsEnabled(kMailtoUrlRewriting) &&
       gURL.SchemeIs(url::kMailToScheme)) {
-    MailtoURLRewriter* rewriter =
-        [[LegacyMailtoURLRewriter alloc] initWithStandardHandlers];
+    MailtoURLRewriter* rewriter = [[LegacyMailtoURLRewriter alloc] init];
+    [rewriter initWithStandardHandlers];
     NSString* launchURL = [rewriter rewriteMailtoURL:gURL];
     if (launchURL)
       URL = [NSURL URLWithString:launchURL];
