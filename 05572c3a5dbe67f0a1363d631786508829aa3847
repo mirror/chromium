@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bb5d5187_b85546d1",
+        "filename": "chrome/android/java/res/values/dimens.xml",
+        "patchSetId": 12
+      },
+      "lineNbr": 472,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-08-25T22:05:18Z",
+      "side": 1,
+      "message": "If there isn\u0027t already a section for history dimensions then this should go in\n\u003c!--  Miscellaneous dimensions --\u003e\n\n\nI suspect that the history trash icon doesn\u0027t line up with the clear text button in the history search view now. Ideally history, downloads, and bookmarks all have the same end padding. Hannah\u0027s spec is showing the bookmark three dot menu icon as a 24x24dp icon 16dp from the edge. Same for the \u0027x\u0027 button on in-progress downloads and the trash can icon on history.\n\nThe bookmarks padding change was to get the three-dot menu buttons to line up with the header, right? Perhaps it\u0027s the header that needs to change.",
+      "range": {
+        "startLine": 472,
+        "startChar": 5,
+        "endLine": 472,
+        "endChar": 60
+      },
+      "revId": "05572c3a5dbe67f0a1363d631786508829aa3847",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed2e2272_b2b5b19f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/SuggestionView.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-08-25T22:05:18Z",
+      "side": 1,
+      "message": "Initialize this in the constructor rather than in-line here.",
+      "range": {
+        "startLine": 106,
+        "startChar": 39,
+        "endLine": 109,
+        "endChar": 16
+      },
+      "revId": "05572c3a5dbe67f0a1363d631786508829aa3847",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "928f25dc_5d854369",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/selection/SelectableListToolbar.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 473,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-08-25T22:05:18Z",
+      "side": 1,
+      "message": "Put this in #initialize() by mModernSearchViewStartOffsetPx",
+      "range": {
+        "startLine": 472,
+        "startChar": 8,
+        "endLine": 473,
+        "endChar": 73
+      },
+      "revId": "05572c3a5dbe67f0a1363d631786508829aa3847",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7edb3ef0_01c5e4c8",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/selection/SelectableListToolbar.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 514,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-08-25T22:05:18Z",
+      "side": 1,
+      "message": "nit: This could be written as\n\nint navigationButtonStartOffsetPx \u003d mNavigationButton \u003d\u003d NAVIGATION_BUTTON_NONE  ? 0\n        : mModernNavButtonStartOffsetPx;",
+      "range": {
+        "startLine": 510,
+        "startChar": 8,
+        "endLine": 514,
+        "endChar": 9
+      },
+      "revId": "05572c3a5dbe67f0a1363d631786508829aa3847",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

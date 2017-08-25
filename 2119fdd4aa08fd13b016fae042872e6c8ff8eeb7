@@ -237,6 +237,30 @@
     },
     {
       "key": {
+        "uuid": "af7937c9_b5057803",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/SuggestionView.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-08-25T22:05:18Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "42979ab1_654e2be0",
+      "range": {
+        "startLine": 216,
+        "startChar": 34,
+        "endLine": 216,
+        "endChar": 71
+      },
+      "revId": "2119fdd4aa08fd13b016fae042872e6c8ff8eeb7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "84754632_69816039",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/SuggestionView.java",
         "patchSetId": 9
@@ -366,6 +390,30 @@
       "side": 1,
       "message": "i added it individually.\ni tried adding it into the constructor, but the alignment is off.",
       "parentUuid": "98f7230b_26cad4e8",
+      "range": {
+        "startLine": 743,
+        "startChar": 12,
+        "endLine": 748,
+        "endChar": 34
+      },
+      "revId": "2119fdd4aa08fd13b016fae042872e6c8ff8eeb7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38d9e854_88365ce9",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/SuggestionView.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 748,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-08-25T22:05:18Z",
+      "side": 1,
+      "message": "Maybe in onLayout() then similar to how we add padding for tablets? We shouldn\u0027t have to programatically add padding to every child view.",
+      "parentUuid": "b86e8408_7aa2f3c8",
       "range": {
         "startLine": 743,
         "startChar": 12,
