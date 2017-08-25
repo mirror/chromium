@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3685f86c_8535e3f2",
+        "filename": "content/browser/service_worker/embedded_worker_test_helper.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 392,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-25T08:39:41Z",
+      "side": 1,
+      "message": "Could we add a short comment about what the code snippet below is doing? (E.g. installing our own mojom::Renderer interface to the mock render process host)",
+      "revId": "41e4a9025f07a493c8f50e9558c1740ededf266a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed0d1cbd_00f4cf4b",
+        "filename": "content/browser/service_worker/embedded_worker_test_helper.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 400,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-25T08:39:41Z",
+      "side": 1,
+      "message": "nit: can you insert empty line here?",
+      "revId": "41e4a9025f07a493c8f50e9558c1740ededf266a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
