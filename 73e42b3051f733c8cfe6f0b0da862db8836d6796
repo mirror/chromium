@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "978bc35b_ac3d41a4",
+        "filename": "components/history/core/browser/browsing_history_service_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-08-25T12:47:52Z",
+      "side": 1,
+      "message": "In general I would recommending avoiding #define if possible. I see the following alternatives:\n1. use \"using\",\n2. use constants.\n\nSo for 1., you would have:\n\n  using BrowsingHistoryService::HistoryEntry::LOCAL_ENTRY;\n  ...\n\nand for 2., you would have:\n\n  const BrowsingHistoryService::HistoryEntry kLocalEntry \u003d\n      BrowsingHistoryService::HistoryEntry::LOCAL_ENTRY;\n  ...",
+      "revId": "73e42b3051f733c8cfe6f0b0da862db8836d6796",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ce8a11a_1ffee75d",
+        "filename": "components/history/core/browser/browsing_history_service_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-08-25T12:47:52Z",
+      "side": 1,
+      "message": "I think we can now use std::make_unique\u003c\u003e instead of base::MakeUnique (same API, but std::make_unique comes from c++14 that we only recently started supporting).\n\nSee https://cs.chromium.org/chromium/src/base/memory/ptr_util.h",
+      "range": {
+        "startLine": 174,
+        "startChar": 32,
+        "endLine": 174,
+        "endChar": 48
+      },
+      "revId": "73e42b3051f733c8cfe6f0b0da862db8836d6796",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
