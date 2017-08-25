@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0b80a41e_3054bedf",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/offlinepages/OfflinePageBridge.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-08-25T19:37:06Z",
+      "side": 1,
+      "message": "I think this would better live over in OfflinePageOrigin (unless there is some other constraint preventing that)",
+      "revId": "9509651731ae8e8e9edcb94b2795bde7d116c232",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "582cb67d_27086e80",
+        "filename": "chrome/browser/offline_pages/android/offline_page_bridge.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 295,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-08-25T19:37:06Z",
+      "side": 1,
+      "message": "If this lived in OfflinePageOrigin.java, then this could all be implemented in origin_utils_android.cc",
+      "revId": "9509651731ae8e8e9edcb94b2795bde7d116c232",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b9a44f66_7e4038f1",
+        "filename": "chrome/browser/offline_pages/offline_page_origin_utils.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-08-25T19:37:06Z",
+      "side": 1,
+      "message": "Needs class comment.  Please include the fact that implementations are platform-specific.",
+      "revId": "9509651731ae8e8e9edcb94b2795bde7d116c232",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35dd88ea_c91b98d5",
+        "filename": "chrome/browser/offline_pages/offline_page_origin_utils.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-08-25T19:37:06Z",
+      "side": 1,
+      "message": "Needs documentation",
+      "revId": "9509651731ae8e8e9edcb94b2795bde7d116c232",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
