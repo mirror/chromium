@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "eb68748c_1619b5a9",
+        "filename": "device/bluetooth/test/fake_peripheral.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1107759
+      },
+      "writtenOn": "2017-08-25T22:55:10Z",
+      "side": 1,
+      "message": "Fold issue number into the todo:\n  // TODO(crbug.com/728870): Only set get_connected_ to false once system connected\n  // peripherals are supported and Web Bluetooth uses them. See issue for more\n  // details.\n\nFYI the other references to issue aren\u0027t above. ;)",
+      "range": {
+        "startLine": 54,
+        "startChar": 0,
+        "endLine": 55,
+        "endChar": 40
+      },
+      "revId": "adddaa52da09889fca26286cd92cae516c7b0230",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b7679ef_08833683",
+        "filename": "third_party/WebKit/LayoutTests/bluetooth/device/gattserverdisconnected-event/reconnect-during-disconnected-event.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1107759
+      },
+      "writtenOn": "2017-08-25T22:55:10Z",
+      "side": 1,
+      "message": "I think these steps 1, 2, can be written in chronological order. After calling simulateGATTDisconnection() it should still be valid to register the EventListener before the event could possibly be dispatched back to us (the JS turn hasn\u0027t exited yet).\n\nShould be easier to read in order 1, 2, 3.\n\nOptionally, using indentation of steps so that the whole test is linear.\n\n// change promose_test to async_test\n\n    .then(() \u003d\u003e {\n      // 1. Disconnect.\n      fake_peripheral.simulateGATTDisconnection();\n\n      // 2. Disconnected event listener reconnects.\n      device.addEventListener(\u0027gattserverdisconnected\u0027, function reconnect() {\n        device.removeEventListener(\u0027gattserverdisconnected\u0027, reconnect);\n        fake_peripheral.setNextGATTConnectionResponse({ code: HCI_SUCCESS })\n\n          // 3. Reconnect\n          .then(() \u003d\u003e device.gatt.connect())\n          .then(() \u003d\u003e {\n            // 4. Disconnect after reconnecting.\n            fake_peripheral.simulateGATTDisconnection();\n\n            // 5. Verify 2nd disconnection event\n            device.addEventListener(\u0027gattserverdisconnected\u0027, () \u003d\u003e test.done());\n          });\n      };\n    }))",
+      "range": {
+        "startLine": 14,
+        "startChar": 0,
+        "endLine": 25,
+        "endChar": 50
+      },
+      "revId": "adddaa52da09889fca26286cd92cae516c7b0230",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61ee0f90_9787c7b9",
+        "filename": "third_party/WebKit/LayoutTests/resources/bluetooth/web-bluetooth-test.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1107759
+      },
+      "writtenOn": "2017-08-25T22:55:10Z",
+      "side": 1,
+      "message": "could this be\n  let success \u003d\n?",
+      "range": {
+        "startLine": 241,
+        "startChar": 6,
+        "endLine": 241,
+        "endChar": 19
+      },
+      "revId": "adddaa52da09889fca26286cd92cae516c7b0230",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
