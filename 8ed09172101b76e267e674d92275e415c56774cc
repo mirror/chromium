@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "6f5c50a7_54ec667b",
+        "filename": "build/android/pylib/symbols/deobfuscator.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-08-25T19:58:47Z",
+      "side": 1,
+      "message": "Looks like cmd_helper didn\u0027t expose stdin\u003d parameter :/",
+      "parentUuid": "d0b93596_f3360cff",
+      "revId": "8ed09172101b76e267e674d92275e415c56774cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6dec8f66_de553fdf",
         "filename": "build/android/pylib/symbols/deobfuscator.py",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-25T19:26:24Z",
       "side": 1,
       "message": "I\u0027m wondering if we should time this out at some point.",
+      "revId": "8ed09172101b76e267e674d92275e415c56774cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9dd163d7_2b0637eb",
+        "filename": "build/android/pylib/symbols/deobfuscator.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-08-25T19:58:47Z",
+      "side": 1,
+      "message": "I can\u0027t find an easy way to accomplish this without polling. I\u0027m also a bit wary about this though... \n\nAdded in a kill() right before to ensure timely termination :)",
+      "parentUuid": "6dec8f66_de553fdf",
       "revId": "8ed09172101b76e267e674d92275e415c56774cc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -50,6 +86,24 @@
       "revId": "8ed09172101b76e267e674d92275e415c56774cc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98dd45d3_07474588",
+        "filename": "chrome/android/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 1103,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-08-25T19:58:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5a0a91c3_4eb05b2e",
+      "revId": "8ed09172101b76e267e674d92275e415c56774cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
