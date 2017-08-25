@@ -393,6 +393,30 @@
     },
     {
       "key": {
+        "uuid": "7b3f506d_fc7b9bca",
+        "filename": "third_party/WebKit/Source/core/editing/suggestion/TextSuggestionController.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 314,
+      "author": {
+        "id": 1229332
+      },
+      "writtenOn": "2017-08-25T02:30:15Z",
+      "side": 1,
+      "message": "I don\u0027t think 2) makes sense to split out. I can split out the other two.",
+      "parentUuid": "e3605187_ce45e2d5",
+      "range": {
+        "startLine": 314,
+        "startChar": 31,
+        "endLine": 314,
+        "endChar": 49
+      },
+      "revId": "7f19d618ffdf2a94687d088347424f5c32952230",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "12679f15_998e4a36",
         "filename": "third_party/WebKit/Source/core/editing/suggestion/TextSuggestionController.cpp",
         "patchSetId": 2
@@ -474,6 +498,30 @@
       "writtenOn": "2017-08-23T19:45:42Z",
       "side": 1,
       "message": "nit: Now the timer is named after \"SpellCheck\" in TextSuggestionHost, but its callback is named after \"SuggestionMenu\" in TextSuggestionBackend. Please consider some unification to reduce confusion.",
+      "range": {
+        "startLine": 20,
+        "startChar": 2,
+        "endLine": 20,
+        "endChar": 26
+      },
+      "revId": "7f19d618ffdf2a94687d088347424f5c32952230",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6230c88_61086cd1",
+        "filename": "third_party/WebKit/public/platform/input_host.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1229332
+      },
+      "writtenOn": "2017-08-25T02:30:15Z",
+      "side": 1,
+      "message": "Anything that applies to both menus should be called SuggestionMenu, not SpellCheckMenu",
+      "parentUuid": "f241f374_101d8a1d",
       "range": {
         "startLine": 20,
         "startChar": 2,
