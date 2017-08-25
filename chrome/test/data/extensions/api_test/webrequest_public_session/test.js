@@ -27,6 +27,8 @@ runTests([
   function cancelIsNotBlocked() {
     var targetUrl = getResURL('res/a.html');
     var expectUrl = getStrippedURL('res/a.html');
+    // Requests are initiated by the extension from a served webpage.
+    var initiator = getServerDomain(initiator.BROWSER_BASED);
     expect(
       [  // events
         { label: 'onBeforeRequest',
@@ -34,7 +36,8 @@ runTests([
           details: {
             type: 'main_frame',
             url: expectUrl,
-            frameUrl: expectUrl
+            frameUrl: expectUrl,
+            initiator: initiator
           },
           retval: {cancel: true}
         },
@@ -44,7 +47,8 @@ runTests([
           details: {
             url: expectUrl,
             fromCache: false,
-            error: 'net::ERR_BLOCKED_BY_CLIENT'
+            error: 'net::ERR_BLOCKED_BY_CLIENT',
+            initiator: initiator
           }
         },
       ],
@@ -62,6 +66,8 @@ runTests([
     var targetUrl = getURL('res/a.html');
     var redirectUrl = getURL('res/b.html');
     var expectUrl = getURL('');
+    // Requests are initiated by the extension.
+    var initiator = getDomain(initiator.BROWSER_BASED);
     expect(
       [
         { label: 'onBeforeRequest',
@@ -69,7 +75,8 @@ runTests([
           details: {
             type: 'main_frame',
             url: expectUrl,
-            frameUrl: expectUrl
+            frameUrl: expectUrl,
+            initiator: getDomain()
           },
           retval: {redirectUrl: redirectUrl}
         },
@@ -84,7 +91,8 @@ runTests([
             statusLine: 'HTTP/1.1 200 OK',
             tabId: 0,
             type: 'main_frame',
-            url: expectUrl
+            url: expectUrl,
+            initiator: getDomain()
           }
         },
         { label: 'onCompleted',
@@ -98,7 +106,8 @@ runTests([
             statusLine: 'HTTP/1.1 200 OK',
             tabId: 0,
             type: 'main_frame',
-            url: expectUrl
+            url: expectUrl,
+            initiator: getDomain()
           }
         },
       ],

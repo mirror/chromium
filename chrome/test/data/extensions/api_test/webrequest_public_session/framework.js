@@ -55,12 +55,23 @@ function runTests(tests) {
 
 // Returns an URL from the test server, fixing up the port. Must be called
 // from within a test case passed to runTests.
-function getServerURL(path, opt_host, opt_scheme) {
+function getServerURL(opt_path, opt_host, opt_scheme) {
   if (!testServerPort)
     throw new Error("Called getServerURL outside of runTests.");
   var host = opt_host || testServer;
   var scheme = opt_scheme || defaultScheme;
+  var path = opt_path || '';
   return scheme + "://" + host + ":" + testServerPort + "/" + path;
+}
+
+// Similar to getURL without the path.
+function getDomain() {
+  return getURL('').slice(0, -1);
+}
+
+// Similar to getServerURL without the path.
+function getServerDomain(opt_host, opt_scheme) {
+  return getServerURL(undefined, opt_host, opt_scheme).slice(0, -1);
 }
 
 // Helper to advance to the next test only when the tab has finished loading.
