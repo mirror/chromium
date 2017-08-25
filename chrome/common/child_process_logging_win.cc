@@ -19,13 +19,14 @@ namespace child_process_logging {
 
 namespace {
 
-// exported in components/crash/content/app/crashpad.cc:
-//    void __declspec(dllexport) __cdecl SetCrashKeyValueImplEx.
-typedef void(__cdecl* SetCrashKeyValue)(const char*, const char*);
+// These two functions are exported from
+// components/crash/content/app/crashpad.cc using chrome_elf.def:
+//    void __cdecl SetCrashKeyValueImplEx.
+typedef void(__cdecl* SetCrashKeyValue)(const base::StringPiece&,
+                                        const base::StringPiece&);
 
-// exported in components/crash/content/app/crashpad.cc:
-//    void __declspec(dllexport) __cdecl ClearCrashKeyValueImplEx.
-typedef void(__cdecl* ClearCrashKeyValue)(const char*);
+//    void __cdecl ClearCrashKeyValueImplEx.
+typedef void(__cdecl* ClearCrashKeyValue)(const base::StringPiece&);
 
 void SetCrashKeyValueTrampoline(const base::StringPiece& key,
                                 const base::StringPiece& value) {
@@ -36,7 +37,7 @@ void SetCrashKeyValueTrampoline(const base::StringPiece& key,
                    : nullptr);
   }();
   if (set_crash_key) {
-    (set_crash_key)(key.data(), value.data());
+    (set_crash_key)(key, value);
   }
 }
 
@@ -48,7 +49,7 @@ void ClearCrashKeyValueTrampoline(const base::StringPiece& key) {
                    : nullptr);
   }();
   if (clear_crash_key)
-    (clear_crash_key)(key.data());
+    (clear_crash_key)(key);
 }
 
 }  // namespace
