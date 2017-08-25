@@ -285,17 +285,6 @@
 
 namespace {
 
-// Deprecated 8/2016.
-constexpr char kRecentlySelectedEncoding[] =
-    "profile.recently_selected_encodings";
-constexpr char kStaticEncodings[] = "intl.static_encodings";
-
-// Deprecated 9/2016.
-constexpr char kWebKitUsesUniversalDetector[] =
-    "webkit.webprefs.uses_universal_detector";
-constexpr char kWebKitAllowDisplayingInsecureContent[] =
-    "webkit.webprefs.allow_displaying_insecure_content";
-
 #if BUILDFLAG(ENABLE_EXTENSIONS)
 // Deprecated 2/2017.
 constexpr char kToolbarMigratedComponentActionStatus[] =
@@ -312,6 +301,18 @@ constexpr char kDistroRlzPingDelay[] = "ping_delay";
 // stripped in first_run.cc prior to applying this mapping. Cleanup for existing
 // Preferences files added here 2/2017.
 constexpr char kDistroDict[] = "distribution";
+
+#if defined(OS_ANDROID)
+// Deprecated 8/2017.
+const char kStabilityForegroundActivityType[] =
+    "user_experience_metrics.stability.current_foreground_activity_type";
+const char kStabilityLaunchedActivityFlags[] =
+    "user_experience_metrics.stability.launched_activity_flags";
+const char kStabilityLaunchedActivityCounts[] =
+    "user_experience_metrics.stability.launched_activity_counts";
+const char kStabilityCrashedActivityCounts[] =
+    "user_experience_metrics.stability.crashed_activity_counts";
+#endif  // defined(OS_ANDROID)
 
 }  // namespace
 
@@ -361,6 +362,12 @@ void RegisterLocalState(PrefRegistrySimple* registry) {
 
 #if defined(OS_ANDROID)
   ::android::RegisterPrefs(registry);
+
+  // Obsolete activity prefs. See MigrateObsoleteBrowserPrefs().
+  registry->RegisterIntegerPref(kStabilityForegroundActivityType, 0);
+  registry->RegisterIntegerPref(kStabilityLaunchedActivityFlags, 0);
+  registry->RegisterListPref(kStabilityLaunchedActivityCounts);
+  registry->RegisterListPref(kStabilityCrashedActivityCounts);
 #endif
 
 #if !defined(OS_ANDROID)
@@ -648,12 +655,6 @@ void RegisterProfilePrefs(user_prefs::PrefRegistrySyncable* registry) {
   // Preferences registered only for migration (clearing or moving to a new key)
   // go here.
 
-  registry->RegisterStringPref(kStaticEncodings, std::string());
-  registry->RegisterStringPref(kRecentlySelectedEncoding, std::string());
-  registry->RegisterBooleanPref(kWebKitUsesUniversalDetector, true);
-
-  registry->RegisterBooleanPref(kWebKitAllowDisplayingInsecureContent, true);
-
 #if BUILDFLAG(ENABLE_EXTENSIONS)
   registry->RegisterDictionaryPref(kToolbarMigratedComponentActionStatus);
 #endif
@@ -697,19 +698,19 @@ void MigrateObsoleteBrowserPrefs(Profile* profile, PrefService* local_state) {
   local_state->ClearPref(prefs::kTouchscreenEnabled);
   local_state->ClearPref(prefs::kTouchpadEnabled);
 #endif  // defined(OS_CHROMEOS)
+
+#if defined(OS_ANDROID)
+  // Added 8/2017.
+  local_state->ClearPref(kStabilityForegroundActivityType);
+  local_state->ClearPref(kStabilityLaunchedActivityFlags);
+  local_state->ClearPref(kStabilityLaunchedActivityCounts);
+  local_state->ClearPref(kStabilityCrashedActivityCounts);
+#endif  // defined(OS_ANDROID)
 }
 
 // This method should be periodically pruned of year+ old migrations.
 void MigrateObsoleteProfilePrefs(Profile* profile) {
   PrefService* profile_prefs = profile->GetPrefs();
-
-  // Added 8/2016.
-  profile_prefs->ClearPref(kStaticEncodings);
-  profile_prefs->ClearPref(kRecentlySelectedEncoding);
-
-  // Added 9/2016.
-  profile_prefs->ClearPref(kWebKitUsesUniversalDetector);
-  profile_prefs->ClearPref(kWebKitAllowDisplayingInsecureContent);
 
 #if BUILDFLAG(ENABLE_EXTENSIONS)
   // Added 2/2017.
