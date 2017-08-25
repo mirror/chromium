@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "12d30568_4fd59bef",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletMessagingProxy.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-08-25T17:07:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "00f557e3_fa2b98d0",
+      "revId": "e9ea0551047a79c9d4857a616e7cf405591b4fb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a4792631_ef980edd",
         "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletProcessorDefinition.h",
         "patchSetId": 4
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "2b6b762a_9d5ebe87",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletProcessorDefinition.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-08-25T17:07:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a4792631_ef980edd",
+      "revId": "e9ea0551047a79c9d4857a616e7cf405591b4fb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b4bb3b1e_260b9924",
         "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletProcessorInfo.h",
         "patchSetId": 4
@@ -47,6 +83,24 @@
       "writtenOn": "2017-08-25T07:46:02Z",
       "side": 1,
       "message": "This comment would be misleading. Oilpan objects can be passed to another thread as CrossThreadPersistent. For example:\nhttps://chromium.googlesource.com/chromium/src/+/9c853051fc2ae9c83d2f6b4ce5afd7ed192f5bec/third_party/WebKit/Source/core/workers/WorkletModuleTreeClient.cpp#33\n\nDo you mean we cannot access WTF::String object from another thread because it\u0027s not thread-safe?",
+      "revId": "e9ea0551047a79c9d4857a616e7cf405591b4fb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65f23813_e5323ef5",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletProcessorInfo.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-08-25T17:07:06Z",
+      "side": 1,
+      "message": "I fixed the comment.\n\nCrossThreadPersistent\u003c\u003e means a class will own this object as a member, but I wanted to do pass this data just for the one-time use only when it\u0027s requested. This is always confusing to me.",
+      "parentUuid": "b4bb3b1e_260b9924",
       "revId": "e9ea0551047a79c9d4857a616e7cf405591b4fb6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "0b3ffd8b_45cf6427",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletProcessorInfo.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-08-25T17:07:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9b77c2bd_88e8638c",
+      "revId": "e9ea0551047a79c9d4857a616e7cf405591b4fb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "884b98ba_14d76f81",
         "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletProcessorInfo.h",
         "patchSetId": 4
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "8667b985_9905ff0d",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletProcessorInfo.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-08-25T17:07:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "884b98ba_14d76f81",
+      "revId": "e9ea0551047a79c9d4857a616e7cf405591b4fb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fe5be968_14eb5726",
         "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletProcessorInfo.h",
         "patchSetId": 4
@@ -98,6 +188,24 @@
       "writtenOn": "2017-08-25T07:46:02Z",
       "side": 1,
       "message": "WTF::String objects shares an internal representation, and it\u0027s not thread-safe. If this will be accessed from another thread, we should copy it via String::IsolatedCopy:\nhttps://chromium.googlesource.com/chromium/src/+/9c853051fc2ae9c83d2f6b4ce5afd7ed192f5bec/third_party/WebKit/Source/platform/wtf/text/WTFString.h#441",
+      "revId": "e9ea0551047a79c9d4857a616e7cf405591b4fb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd3284a1_6edbef6d",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletProcessorInfo.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-08-25T17:07:06Z",
+      "side": 1,
+      "message": "Yes, I wasn\u0027t sure when to do call IsolatedCopy(). This class is created in the worklet thread, but it will be accessed by the main thread later. So do we have to make the copy in the worklet thread? or the main thread?\n\nOr can I do the copy in the worklet thread and then pass it to the main thread? I guess that\u0027s what happens if we add IsolatedCopy() in the constructor here. That does not sound good for the thread-safey.",
+      "parentUuid": "fe5be968_14eb5726",
       "revId": "e9ea0551047a79c9d4857a616e7cf405591b4fb6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -127,6 +235,30 @@
     },
     {
       "key": {
+        "uuid": "7af8a2ce_e9257217",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletProcessorInfo.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-08-25T17:07:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cc3b8898_ace0475a",
+      "range": {
+        "startLine": 28,
+        "startChar": 0,
+        "endLine": 30,
+        "endChar": 41
+      },
+      "revId": "e9ea0551047a79c9d4857a616e7cf405591b4fb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7a0df1ff_86c0bef3",
         "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletProcessorInfo.h",
         "patchSetId": 4
@@ -141,6 +273,24 @@
       "revId": "e9ea0551047a79c9d4857a616e7cf405591b4fb6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7eafa9d_24f4a770",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletProcessorInfo.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-08-25T17:07:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7a0df1ff_86c0bef3",
+      "revId": "e9ea0551047a79c9d4857a616e7cf405591b4fb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -161,6 +311,24 @@
     },
     {
       "key": {
+        "uuid": "20295178_d38216a9",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletProcessorInfo.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-08-25T17:07:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "09811015_5c9cac54",
+      "revId": "e9ea0551047a79c9d4857a616e7cf405591b4fb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "afa7bac9_60965d71",
         "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletProcessorInfo.h",
         "patchSetId": 4
@@ -175,6 +343,24 @@
       "revId": "e9ea0551047a79c9d4857a616e7cf405591b4fb6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a0bed06_53669016",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletProcessorInfo.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-08-25T17:07:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "afa7bac9_60965d71",
+      "revId": "e9ea0551047a79c9d4857a616e7cf405591b4fb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
