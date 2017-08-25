@@ -8,6 +8,7 @@
 #include "base/callback.h"
 #include "base/files/file_path.h"
 #include "base/logging.h"
+#include "base/metrics/histogram_macros.h"
 #include "components/offline_pages/core/prefetch/prefetch_dispatcher.h"
 #include "components/offline_pages/core/prefetch/prefetch_types.h"
 #include "components/offline_pages/core/prefetch/store/prefetch_store.h"
@@ -34,7 +35,18 @@ bool UpdatePrefetchItemOnDownloadSuccessSync(const std::string& guid,
   statement.BindString(3, guid);
   statement.BindInt(4, static_cast<int>(PrefetchItemState::DOWNLOADING));
 
-  return statement.Run();
+  if (!statement.Run())
+    return false;
+
+  if (db->GetLastChangeCount() > 0) {
+    // Reports downloaded file size in KB (accepting values up to 100 MB).
+    UMA_HISTOGRAM_COUNTS_100000(
+        "OfflinePages.Prefetching.DownloadFinishedActualFileSize",
+        file_size / 1024);
+    return true;
+  }
+
+  return false;
 }
 
 bool UpdatePrefetchItemOnDownloadErrorSync(const std::string& guid,
@@ -50,7 +62,10 @@ bool UpdatePrefetchItemOnDownloadErrorSync(const std::string& guid,
   statement.BindString(2, guid);
   statement.BindInt(3, static_cast<int>(PrefetchItemState::DOWNLOADING));
 
-  return statement.Run();
+  if (!statement.Run())
+    return false;
+
+  return db->GetLastChangeCount() > 0;
 }
 
 }  // namespace

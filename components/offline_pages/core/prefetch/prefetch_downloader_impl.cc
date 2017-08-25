@@ -133,6 +133,10 @@ void PrefetchDownloaderImpl::OnDownloadFailed(const std::string& download_id) {
 void PrefetchDownloaderImpl::OnStartDownload(
     const std::string& download_id,
     download::DownloadParams::StartResult result) {
+  // Note: some prefetch design choices assume cases of non-accepted download
+  // requests will be minimal. There's already an UMA histogram to track that,
+  // Download.Service.Request.StartResult.OfflinePage, so there's no need to add
+  // another one here.
   if (result != download::DownloadParams::StartResult::ACCEPTED)
     OnDownloadFailed(download_id);
 }
