@@ -522,6 +522,18 @@ SDK.ServiceWorkerRegistration = class {
     this._fingerprint = Symbol('fingerprint');
     this.errors = [];
   }
+
+  /**
+   * @return {?number}
+   */
+  lastTimestamp() {
+    var responseTime = null;
+    for (var version of this.versions.values()) {
+      if (responseTime === null || version.scriptResponseTime > responseTime)
+        responseTime = version.scriptResponseTime;
+    }
+    return responseTime;
+  }
 };
 
 /**
