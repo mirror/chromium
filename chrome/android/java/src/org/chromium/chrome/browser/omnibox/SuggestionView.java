@@ -33,9 +33,11 @@ import android.widget.TextView.BufferType;
 import org.chromium.base.ApiCompatibilityUtils;
 import org.chromium.base.metrics.RecordUserAction;
 import org.chromium.chrome.R;
+import org.chromium.chrome.browser.ChromeFeatureList;
 import org.chromium.chrome.browser.omnibox.OmniboxResultsAdapter.OmniboxResultItem;
 import org.chromium.chrome.browser.omnibox.OmniboxResultsAdapter.OmniboxSuggestionDelegate;
 import org.chromium.chrome.browser.omnibox.OmniboxSuggestion.MatchClassification;
+import org.chromium.chrome.browser.util.FeatureUtilities;
 import org.chromium.chrome.browser.util.ViewUtils;
 import org.chromium.chrome.browser.widget.TintedDrawable;
 import org.chromium.ui.base.DeviceFormFactor;
@@ -204,12 +206,16 @@ class SuggestionView extends ViewGroup {
         boolean refineVisible = mRefineView.getVisibility() == VISIBLE;
         boolean isRtl = ApiCompatibilityUtils.isLayoutRtl(this);
         int contentsViewOffsetX = isRtl && refineVisible ? mRefineWidth : 0;
-        mContentsView.layout(
-                contentsViewOffsetX,
-                0,
+        mContentsView.layout(contentsViewOffsetX, 0,
                 contentsViewOffsetX + mContentsView.getMeasuredWidth(),
                 mContentsView.getMeasuredHeight());
-        int refineViewOffsetX = isRtl ? 0 : getMeasuredWidth() - mRefineWidth;
+
+        int rightOffsetPx = ChromeFeatureList.isEnabled(ChromeFeatureList.CHROME_HOME_MODERN_LAYOUT)
+                        && ChromeFeatureList.isInitialized()
+                ? getResources().getDimensionPixelSize(
+                          R.dimen.omnibox_suggestion_refine_view_offset)
+                : 0;
+        int refineViewOffsetX = isRtl ? 0 : getMeasuredWidth() - mRefineWidth - rightOffsetPx;
         mRefineView.layout(
                 refineViewOffsetX,
                 0,
@@ -724,6 +730,15 @@ class SuggestionView extends ViewGroup {
             mTextLine2.setVisibility(INVISIBLE);
             ApiCompatibilityUtils.setTextAlignment(mTextLine2, TEXT_ALIGNMENT_VIEW_START);
             addView(mTextLine2);
+
+            if (FeatureUtilities.isChromeHomeModernEnabled()) {
+                mTextLine1.setPadding(getResources().getDimensionPixelSize(
+                                              R.dimen.omnibox_suggestion_list_text_offset),
+                        0, 0, 0);
+                mTextLine2.setPadding(getResources().getDimensionPixelSize(
+                                              R.dimen.omnibox_suggestion_list_text_offset),
+                        0, 0, 0);
+            }
 
             mAnswerImage = new ImageView(context);
             mAnswerImage.setVisibility(GONE);

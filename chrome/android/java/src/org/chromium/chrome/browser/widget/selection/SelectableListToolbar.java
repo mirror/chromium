@@ -503,8 +503,18 @@ public class SelectableListToolbar<E> extends Toolbar implements SelectionObserv
         // Navigation button should have more padding start in the modern search view.
         if (isModernSearchViewEnabled) paddingStartOffset += mModernSearchViewStartOffsetPx;
 
-        ApiCompatibilityUtils.setPaddingRelative(this, padding + paddingStartOffset,
-                this.getPaddingTop(), padding, this.getPaddingBottom());
+        int paddingForChromeHomePx = 0;
+        if (FeatureUtilities.isChromeHomeModernEnabled()) {
+            if (mNavigationButton == NAVIGATION_BUTTON_BACK
+                    || mNavigationButton == NAVIGATION_BUTTON_SELECTION_BACK) {
+                paddingForChromeHomePx = getResources().getDimensionPixelSize(
+                        R.dimen.toolbar_navigation_button_offset);
+            }
+        }
+
+        ApiCompatibilityUtils.setPaddingRelative(this,
+                padding + paddingStartOffset + paddingForChromeHomePx, this.getPaddingTop(),
+                padding, this.getPaddingBottom());
     }
 
     /**
