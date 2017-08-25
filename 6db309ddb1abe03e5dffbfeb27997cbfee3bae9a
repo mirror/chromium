@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f6e3ee04_05cf0e19",
+        "filename": "components/ntp_snippets/breaking_news/breaking_news_gcm_app_handler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-08-25T06:45:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "394f032b_b34248dc",
+      "revId": "6db309ddb1abe03e5dffbfeb27997cbfee3bae9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4e141556_856e8aef",
         "filename": "components/ntp_snippets/breaking_news/breaking_news_gcm_app_handler.cc",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-24T15:40:15Z",
       "side": 1,
       "message": "Similarly, OnTokenValidated?\n\nAlso, the separate OnSuccessful method seems weird to me. It sounds like validation should imply success.\nMaybe have a single metrics::OnTokenValidated method that takes both the time and the result?",
+      "revId": "6db309ddb1abe03e5dffbfeb27997cbfee3bae9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8321a2a2_14d5808f",
+        "filename": "components/ntp_snippets/breaking_news/breaking_news_gcm_app_handler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-08-25T06:45:40Z",
+      "side": 1,
+      "message": "First, done.\n\nSecond, I feel like recording time between validations should not be affected by whether the token is received. Do you disagree with this? Obviously, I do not have much experience and it is difficult for me to decide which set of metrics is viable.\n\nHowever, for recording token validness, it is necessary to received a token.",
+      "parentUuid": "4e141556_856e8aef",
       "revId": "6db309ddb1abe03e5dffbfeb27997cbfee3bae9a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -50,6 +86,24 @@
       "revId": "6db309ddb1abe03e5dffbfeb27997cbfee3bae9a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5233ac81_3f94970c",
+        "filename": "components/ntp_snippets/breaking_news/breaking_news_metrics.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-08-25T06:45:40Z",
+      "side": 1,
+      "message": "Done.\n\nI stopped recording characters altogether.\nWe could probably do this on the server.",
+      "parentUuid": "77bc2d17_fff09694",
+      "revId": "6db309ddb1abe03e5dffbfeb27997cbfee3bae9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -76,6 +130,30 @@
     },
     {
       "key": {
+        "uuid": "7c847fa2_05e52ec7",
+        "filename": "components/ntp_snippets/breaking_news/breaking_news_metrics.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-08-25T06:45:40Z",
+      "side": 1,
+      "message": "I stopped recording characters.\n\nIn M62 we just care about quantity, so I record whether there was our payload at all.\n\n\"Our\" because a message is just a dictionary and I am checking for our key, it may have other keys.",
+      "parentUuid": "d36e7222_4595aeff",
+      "range": {
+        "startLine": 18,
+        "startChar": 57,
+        "endLine": 18,
+        "endChar": 0
+      },
+      "revId": "6db309ddb1abe03e5dffbfeb27997cbfee3bae9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "30942b0c_f178aae2",
         "filename": "components/ntp_snippets/status.h",
         "patchSetId": 1
@@ -90,6 +168,24 @@
       "revId": "6db309ddb1abe03e5dffbfeb27997cbfee3bae9a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33a894e4_fe164167",
+        "filename": "components/ntp_snippets/status.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-08-25T06:45:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "30942b0c_f178aae2",
+      "revId": "6db309ddb1abe03e5dffbfeb27997cbfee3bae9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -110,6 +206,24 @@
     },
     {
       "key": {
+        "uuid": "293284eb_ed4073f4",
+        "filename": "components/ntp_snippets/status.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-08-25T06:45:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b3a936c8_b9d7d2f6",
+      "revId": "6db309ddb1abe03e5dffbfeb27997cbfee3bae9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "eea0fe3f_16bf0997",
         "filename": "tools/metrics/histograms/enums.xml",
         "patchSetId": 1
@@ -124,6 +238,24 @@
       "revId": "6db309ddb1abe03e5dffbfeb27997cbfee3bae9a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a36c1952_9ae58d20",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 5927,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-08-25T06:45:40Z",
+      "side": 1,
+      "message": "Done.\n\n\"Token was and still is valid\"",
+      "parentUuid": "eea0fe3f_16bf0997",
+      "revId": "6db309ddb1abe03e5dffbfeb27997cbfee3bae9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -144,6 +276,24 @@
     },
     {
       "key": {
+        "uuid": "0e3251c9_93931d70",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 46693,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-08-25T06:45:40Z",
+      "side": 1,
+      "message": "Done.\n\nSame for unsubscription.",
+      "parentUuid": "cc1cb46b_a98cf7ce",
+      "revId": "6db309ddb1abe03e5dffbfeb27997cbfee3bae9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "451229bf_02100ded",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 1
@@ -158,6 +308,24 @@
       "revId": "6db309ddb1abe03e5dffbfeb27997cbfee3bae9a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62601983_0a491cc1",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 46706,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-08-25T06:45:40Z",
+      "side": 1,
+      "message": "During the validation we ask InstanceID for a token asynchronously.\nIt may either give us a token or an error.\n\nAlso we ask InstanceID for a token when we have no token at all (e.g. on the first run). I refer to this as \"retrieving a token outside of a validation\".",
+      "parentUuid": "451229bf_02100ded",
+      "revId": "6db309ddb1abe03e5dffbfeb27997cbfee3bae9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -178,6 +346,24 @@
     },
     {
       "key": {
+        "uuid": "d4e6247d_7720802c",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 46716,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-08-25T06:45:40Z",
+      "side": 1,
+      "message": "See explanation above, I tried to rephrase the text.",
+      "parentUuid": "120ca71b_a38d2139",
+      "revId": "6db309ddb1abe03e5dffbfeb27997cbfee3bae9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "515a7e13_847ef11f",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 1
@@ -192,6 +378,24 @@
       "revId": "6db309ddb1abe03e5dffbfeb27997cbfee3bae9a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45290d84_e8b106f5",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 46737,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-08-25T06:45:40Z",
+      "side": 1,
+      "message": "When an error happens.\n\nI changed the sentence to say \n\"\nThis recorded\n    only for validations where no error occured and the token was actually retrieved.\n\"",
+      "parentUuid": "515a7e13_847ef11f",
+      "revId": "6db309ddb1abe03e5dffbfeb27997cbfee3bae9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
