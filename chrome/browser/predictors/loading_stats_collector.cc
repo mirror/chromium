@@ -9,6 +9,7 @@
 
 #include "base/metrics/histogram_macros.h"
 #include "chrome/browser/predictors/loading_data_collector.h"
+#include "chrome/browser/predictors/preconnect_manager.h"
 #include "chrome/browser/predictors/resource_prefetch_predictor.h"
 
 namespace predictors {
@@ -119,6 +120,50 @@ void ReportPrefetchAccuracy(const ResourcePrefetcher::PrefetcherStats& stats,
       misses_bytes / 1024);
 }
 
+void ReportPreconnectAccuracy(
+    const PreconnectStats& stats,
+    const std::map<GURL, OriginRequestSummary>& requests) {
+  if (stats.requests_stats.empty())
+    return;
+
+  int preresolve_cached_misses_count = 0;
+  int preresolve_cached_hits_count = 0;
+  int preresolve_not_cached_misses_count = 0;
+  int preresolve_not_cached_hits_count = 0;
+  int preconnect_hits_count = 0;
+  int preconnect_misses_count = 0;
+
+  for (const auto& request_stats : stats.requests_stats) {
+    bool hit = requests.find(request_stats.origin) != requests.end();
+    bool preconnect = request_stats.was_preconnected;
+    bool cached = request_stats.was_preresolve_cached;
+
+    preresolve_cached_misses_count += cached && !hit;
+    preresolve_cached_hits_count += cached && hit;
+    preresolve_not_cached_misses_count += !cached && !hit;
+    preresolve_not_cached_hits_count += !cached && hit;
+    preconnect_hits_count += preconnect && hit;
+    preconnect_misses_count += preconnect && !hit;
+  }
+
+  UMA_HISTOGRAM_COUNTS_100(
+      internal::kPreconnectManagerPreresolveMissesCountCached,
+      preresolve_cached_misses_count);
+  UMA_HISTOGRAM_COUNTS_100(
+      internal::kPreconnectManagerPreresolveMissesCountNotCached,
+      preresolve_not_cached_misses_count);
+  UMA_HISTOGRAM_COUNTS_100(
+      internal::kPreconnectManagerPreresolveHitsCountCached,
+      preresolve_cached_hits_count);
+  UMA_HISTOGRAM_COUNTS_100(
+      internal::kPreconnectManagerPreresolveHitsCountNotCached,
+      preresolve_not_cached_hits_count);
+  UMA_HISTOGRAM_COUNTS_100(internal::kPreconnectManagerPreconnectHitsCount,
+                           preconnect_hits_count);
+  UMA_HISTOGRAM_COUNTS_100(internal::kPreconnectManagerPreconnectMissesCount,
+                           preconnect_misses_count);
+}
+
 }  // namespace
 
 LoadingStatsCollector::LoadingStatsCollector(
@@ -132,7 +177,7 @@ LoadingStatsCollector::~LoadingStatsCollector() = default;
 
 void LoadingStatsCollector::RecordPrefetcherStats(
     std::unique_ptr<ResourcePrefetcher::PrefetcherStats> stats) {
-  const GURL main_frame_url = stats->url;
+  const GURL& main_frame_url = stats->url;
   auto it = prefetcher_stats_.find(main_frame_url);
   if (it != prefetcher_stats_.end()) {
     // No requests -> everything is a miss.
@@ -141,6 +186,19 @@ void LoadingStatsCollector::RecordPrefetcherStats(
   }
 
   prefetcher_stats_.emplace(main_frame_url, std::move(stats));
+}
+
+void LoadingStatsCollector::RecordPreconnectStats(
+    std::unique_ptr<PreconnectStats> stats) {
+  const GURL main_frame_url = stats->url;
+  auto it = preconnect_stats_.find(main_frame_url);
+  if (it != preconnect_stats_.end()) {
+    ReportPreconnectAccuracy(*it->second,
+                             std::map<GURL, OriginRequestSummary>());
+    preconnect_stats_.erase(it);
+  }
+
+  preconnect_stats_.emplace(main_frame_url, std::move(stats));
 }
 
 void LoadingStatsCollector::RecordPageRequestSummary(
@@ -156,6 +214,12 @@ void LoadingStatsCollector::RecordPageRequestSummary(
     ReportPrefetchAccuracy(*it->second, summary.subresource_requests);
     prefetcher_stats_.erase(it);
   }
+
+  auto it2 = preconnect_stats_.find(initial_url);
+  if (it2 != preconnect_stats_.end()) {
+    ReportPreconnectAccuracy(*it2->second, summary.origins);
+    preconnect_stats_.erase(it2);
+  }
 }
 
 void LoadingStatsCollector::CleanupAbandonedStats() {
@@ -165,6 +229,15 @@ void LoadingStatsCollector::CleanupAbandonedStats() {
       // No requests -> everything is a miss.
       ReportPrefetchAccuracy(*it->second, std::vector<URLRequestSummary>());
       it = prefetcher_stats_.erase(it);
+    } else {
+      ++it;
+    }
+  }
+  for (auto it = preconnect_stats_.begin(); it != preconnect_stats_.end();) {
+    if (time_now - it->second->start_time > max_stats_age_) {
+      ReportPreconnectAccuracy(*it->second,
+                               std::map<GURL, OriginRequestSummary>());
+      it = preconnect_stats_.erase(it);
     } else {
       ++it;
     }

@@ -60111,6 +60111,55 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="PreconnectManager.PreconnectHitsCount" units="count">
+  <owner>alexilin@chromium.org</owner>
+  <summary>
+    Number of origins that were preconnected to and requested by a page load.
+    Logged after the preconnect manager completes.
+  </summary>
+</histogram>
+
+<histogram name="PreconnectManager.PreconnectMissesCount" units="count">
+  <owner>alexilin@chromium.org</owner>
+  <summary>
+    Number of origins that were preconnected to but not requested by a page
+    load. Logged after the preconnect manager completes.
+  </summary>
+</histogram>
+
+<histogram name="PreconnectManager.PreresolveHitsCount.Cached" units="count">
+  <owner>alexilin@chromium.org</owner>
+  <summary>
+    Number of hosts that were preresolved and requested by a page load, for
+    cached hostnames. Logged after the preconnect manager completes.
+  </summary>
+</histogram>
+
+<histogram name="PreconnectManager.PreresolveHitsCount.NotCached" units="count">
+  <owner>alexilin@chromium.org</owner>
+  <summary>
+    Number of hosts that were preresolved and requested by a page load, for not
+    cached hostnames. Logged after the preconnect manager completes.
+  </summary>
+</histogram>
+
+<histogram name="PreconnectManager.PreresolveMissesCount.Cached" units="count">
+  <owner>alexilin@chromium.org</owner>
+  <summary>
+    Number of hosts that were preresolved but not requested by a page load, for
+    cached hostnames. Logged after the preconnect manager completes.
+  </summary>
+</histogram>
+
+<histogram name="PreconnectManager.PreresolveMissesCount.NotCached"
+    units="count">
+  <owner>alexilin@chromium.org</owner>
+  <summary>
+    Number of hosts that were preresolved but not requested by a page load, for
+    not cached hostnames. Logged after the preconnect manager completes.
+  </summary>
+</histogram>
+
 <histogram name="PrefService.CreateProfilePrefsTime" units="ms">
   <owner>rkaplow@chromium.org</owner>
   <summary>The amount of time that elapsed during CreateProfilePrefs.</summary>
