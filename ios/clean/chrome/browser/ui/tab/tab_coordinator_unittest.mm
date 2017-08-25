@@ -4,16 +4,13 @@
 
 #import "ios/clean/chrome/browser/ui/tab/tab_coordinator.h"
 
-#include "base/memory/ptr_util.h"
-#include "base/message_loop/message_loop.h"
-#include "base/run_loop.h"
+#import "base/mac/foundation_util.h"
 #import "ios/chrome/browser/ui/browser_list/browser.h"
 #import "ios/chrome/browser/ui/coordinators/browser_coordinator+internal.h"
 #import "ios/chrome/browser/ui/coordinators/browser_coordinator_test.h"
 #import "ios/chrome/browser/ui/toolbar/test/toolbar_test_web_state.h"
-#import "ios/clean/chrome/browser/ui/tab/tab_container_view_controller.h"
+#import "ios/clean/chrome/browser/ui/tab/basic_tab_container_view_controller.h"
 #import "ios/web/public/test/fakes/test_navigation_manager.h"
-#include "ios/web/public/test/test_web_thread.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 #if !defined(__has_feature) || !__has_feature(objc_arc)
@@ -24,13 +21,7 @@ namespace {
 
 class TabCoordinatorTest : public BrowserCoordinatorTest {
  protected:
-  TabCoordinatorTest()
-      : loop_(base::MessageLoop::TYPE_IO),
-        ui_thread_(web::WebThread::UI, &loop_) {
-    // Store the initial setting.
-    initial_setting_ = [[NSUserDefaults standardUserDefaults]
-        objectForKey:@"EnableBottomToolbar"];
-
+  TabCoordinatorTest() {
     // Initialize the web state.
     auto navigation_manager = base::MakeUnique<web::TestNavigationManager>();
     web_state_.SetNavigationManager(std::move(navigation_manager));
@@ -41,53 +32,22 @@ class TabCoordinatorTest : public BrowserCoordinatorTest {
     coordinator_.webState = &web_state_;
   }
   ~TabCoordinatorTest() override {
-    // Restore the initial setting.
-    [[NSUserDefaults standardUserDefaults] setObject:initial_setting_
-                                              forKey:@"EnableBottomToolbar"];
-
     // Explicitly disconnect the mediator so there won't be any WebStateList
     // observers when web_state_list_ gets dealloc.
     [coordinator_ disconnect];
-  }
-  void TearDown() override {
-    if (coordinator_.started) {
-      [coordinator_ stop];
-    }
+    [coordinator_ stop];
     coordinator_ = nil;
   }
 
  protected:
   TabCoordinator* coordinator_;
-
- private:
-  id initial_setting_;
-  base::MessageLoop loop_;
-  web::TestWebThread ui_thread_;
   ToolbarTestWebState web_state_;
 };
 
 }  // namespace
 
-TEST_F(TabCoordinatorTest, DefaultToolbar) {
-  [[NSUserDefaults standardUserDefaults] setObject:@""
-                                            forKey:@"EnableBottomToolbar"];
+TEST_F(TabCoordinatorTest, DefaultContainer) {
   [coordinator_ start];
-  EXPECT_EQ([TopToolbarTabViewController class],
-            [coordinator_.viewController class]);
-}
-
-TEST_F(TabCoordinatorTest, TopToolbar) {
-  [[NSUserDefaults standardUserDefaults] setObject:@"Disabled"
-                                            forKey:@"EnableBottomToolbar"];
-  [coordinator_ start];
-  EXPECT_EQ([TopToolbarTabViewController class],
-            [coordinator_.viewController class]);
-}
-
-TEST_F(TabCoordinatorTest, BottomToolbar) {
-  [[NSUserDefaults standardUserDefaults] setObject:@"Enabled"
-                                            forKey:@"EnableBottomToolbar"];
-  [coordinator_ start];
-  EXPECT_EQ([BottomToolbarTabViewController class],
+  EXPECT_EQ([BasicTabContainerViewController class],
             [coordinator_.viewController class]);
 }
