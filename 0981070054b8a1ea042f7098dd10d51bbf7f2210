@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "47f07b7d_a040f221",
+        "filename": "build/android/apk_operations.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 484,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-08-25T19:06:37Z",
+      "side": 1,
+      "message": "nit: indentation is a bit weird for several of these",
+      "revId": "0981070054b8a1ea042f7098dd10d51bbf7f2210",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ddc784a1_711255c0",
+        "filename": "build/android/apk_operations.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 506,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-08-25T19:06:37Z",
+      "side": 1,
+      "message": "super nit: double quote strings containing a single quote rather than escaping",
+      "revId": "0981070054b8a1ea042f7098dd10d51bbf7f2210",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "efbc1bd5_a5fc4067",
+        "filename": "build/android/apk_operations.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 528,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-08-25T19:06:37Z",
+      "side": 1,
+      "message": "Are accepts_args and accepts_command_line_flags mutually exclusive? Could we wind up trying to add --args twice?",
+      "revId": "0981070054b8a1ea042f7098dd10d51bbf7f2210",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
