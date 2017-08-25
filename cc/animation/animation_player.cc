@@ -450,6 +450,14 @@ bool AnimationPlayer::HasTickingAnimation() const {
   return false;
 }
 
+size_t AnimationPlayer::GetNumberOfTickingAnimations() const {
+  size_t num_ticking_animations = 0;
+  for (size_t i = 0; i < animations_.size(); ++i)
+    if (!animations_[i]->is_finished())
+      num_ticking_animations++;
+  return num_ticking_animations;
+}
+
 bool AnimationPlayer::HasNonDeletedAnimation() const {
   for (size_t i = 0; i < animations_.size(); ++i) {
     if (animations_[i]->run_state() != Animation::WAITING_FOR_DELETION)
