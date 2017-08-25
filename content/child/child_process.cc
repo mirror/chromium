@@ -38,21 +38,7 @@ ChildProcess::ChildProcess(
 
   base::StatisticsRecorder::Initialize();
 
-  // Initialize TaskScheduler if not already done. A TaskScheduler may already
-  // exist when ChildProcess is instantiated in the browser process or in a
-  // test process.
-  if (!base::TaskScheduler::GetInstance()) {
-    if (task_scheduler_init_params) {
-      base::TaskScheduler::Create(task_scheduler_name);
-      base::TaskScheduler::GetInstance()->Start(
-          *task_scheduler_init_params.get());
-    } else {
-      base::TaskScheduler::CreateAndStartWithDefaultParams(task_scheduler_name);
-    }
-
-    DCHECK(base::TaskScheduler::GetInstance());
-    initialized_task_scheduler_ = true;
-  }
+  DCHECK(base::TaskScheduler::GetInstance());
 
   // We can't recover from failing to start the IO thread.
   base::Thread::Options thread_options(base::MessageLoop::TYPE_IO, 0);
@@ -87,11 +73,6 @@ ChildProcess::~ChildProcess() {
 
   g_lazy_tls.Pointer()->Set(NULL);
   io_thread_.Stop();
-
-  if (initialized_task_scheduler_) {
-    DCHECK(base::TaskScheduler::GetInstance());
-    base::TaskScheduler::GetInstance()->Shutdown();
-  }
 }
 
 ChildThreadImpl* ChildProcess::main_thread() {
