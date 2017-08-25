@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "aab281de_3ca09cd1",
+        "filename": "content/browser/bad_message.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-25T05:01:50Z",
+      "side": 1,
+      "message": "Can these be marked obsolete?",
+      "revId": "0935c85cf85e2b3a34bf690a3c495f1f9d087297",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ed108391_ed271164",
         "filename": "content/browser/service_worker/service_worker_dispatcher_host.h",
         "patchSetId": 4
