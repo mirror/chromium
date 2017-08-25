@@ -4313,7 +4313,11 @@ void RenderFrameImpl::ShowContextMenu(const blink::WebContextMenuData& data) {
   blink::WebRect selection_in_window(data.selection_rect);
   GetRenderWidget()->ConvertViewportToWindow(&selection_in_window);
   params.selection_rect = selection_in_window;
+#if defined(OS_ANDROID)
+  GetRenderWidget()->ShowDeferredContextMenu(params, routing_id_);
+#else
   Send(new FrameHostMsg_ContextMenu(routing_id_, params));
+#endif
 }
 
 void RenderFrameImpl::SaveImageFromDataURL(const blink::WebString& data_url) {
