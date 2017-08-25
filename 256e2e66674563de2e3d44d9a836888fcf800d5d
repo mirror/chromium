@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "71f61793_0f15d2fd",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/SignInPromo.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-08-25T10:15:47Z",
+      "side": 1,
+      "message": "\u003e I added a member which marks the parts where dead code would be. Is this the way you wished for?\n\nYes, that\u0027s great.\n\n\u003e If so, would you like for me to follow a similar approach in other parts as well (such as Recent Tabs for example)?\n\nYeah, I think that would be good. Thank you!",
+      "parentUuid": "d0c852c9_a026116f",
+      "range": {
+        "startLine": 135,
+        "startChar": 8,
+        "endLine": 135,
+        "endChar": 77
+      },
+      "revId": "256e2e66674563de2e3d44d9a836888fcf800d5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "815732d1_934e37ed",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/SignInPromo.java",
         "patchSetId": 8
