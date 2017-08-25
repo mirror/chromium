@@ -22,6 +22,30 @@
       "revId": "ba873e129e41a3d97e95ed9605ecb27dca18fc59",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b87c9ba9_7d4e6883",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1176174
+      },
+      "writtenOn": "2017-08-25T20:56:28Z",
+      "side": 1,
+      "message": "we want to use /our/ libcxx from out toolchain on device builds. Having use_custom_libcxx\u003dtrue is more like use_custom_libcxx_from_//buildtools/third_party/libc++ (see the libcxx_prefix vars at the bottom of //build/config/c++/c++.gni).\n\nOur custom toolchain sets up all the include paths and such that we need in order to use our toolchain\u0027s libcxx.",
+      "parentUuid": "14046c40_58f6a446",
+      "range": {
+        "startLine": 7,
+        "startChar": 13,
+        "endLine": 7,
+        "endChar": 53
+      },
+      "revId": "ba873e129e41a3d97e95ed9605ecb27dca18fc59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
