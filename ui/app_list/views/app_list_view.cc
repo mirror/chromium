@@ -1105,6 +1105,9 @@ void AppListView::SetState(AppListState new_state) {
     case HALF:
       break;
     case FULLSCREEN_ALL_APPS: {
+      // Set timer to ignore further scroll events for this transition.
+      GetAppsGridView()->StartTimerForAnimationToFullscreen();
+
       AppsContainerView* apps_container_view =
           app_list_main_view_->contents_view()->apps_container_view();
 
@@ -1178,6 +1181,9 @@ void AppListView::StartAnimationForState(AppListState target_state) {
   animator->set_preemption_strategy(
       ui::LayerAnimator::IMMEDIATELY_ANIMATE_TO_NEW_TARGET);
   animator->StopAnimating();
+  // Add the AppsGridView as an observer for this animation so that scroll
+  // events are blocked during the animation.
+  animator->AddObserver(GetAppsGridView());
   animator->ScheduleAnimation(
       new ui::LayerAnimationSequence(std::move(bounds_animation_element)));
 }
