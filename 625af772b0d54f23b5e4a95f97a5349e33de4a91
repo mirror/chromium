@@ -70,6 +70,24 @@
     },
     {
       "key": {
+        "uuid": "3360da90_a7e3ac72",
+        "filename": "ash/shelf/app_list_button.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1123899
+      },
+      "writtenOn": "2017-08-25T20:29:25Z",
+      "side": 1,
+      "message": "I understand the name maybe foreign at first, but value prop is actually the domain language used within the team and also external teams, people know exactly what screen it means.  Changing it may actually confuse more.",
+      "parentUuid": "8df424a5_981b4d0f",
+      "revId": "625af772b0d54f23b5e4a95f97a5349e33de4a91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "901f1a59_8942ac7d",
         "filename": "ash/shelf/app_list_button_unittest.cc",
         "patchSetId": 2
