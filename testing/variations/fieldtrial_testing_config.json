@@ -623,7 +623,7 @@
             ]
         }
     ],
-    "DataReductionProxyPreviewsBlacklistTransition": [
+    "DataReductionProxyPreviewsBlackListTransition": [
         {
             "platforms": [
                 "android"
