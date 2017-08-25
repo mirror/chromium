@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "6fd59309_ee1b702f",
+        "filename": "chrome/browser/chromeos/file_manager/volume_manager.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 707,
+      "author": {
+        "id": 1232408
+      },
+      "writtenOn": "2017-08-25T08:56:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5d8281ec_75535652",
+      "revId": "195b178a4a6a63003f74bb678190bec4eecadf10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a58733d9_9bf52a6e",
         "filename": "chrome/browser/chromeos/file_manager/volume_manager.cc",
         "patchSetId": 11
@@ -33,6 +51,24 @@
       "revId": "195b178a4a6a63003f74bb678190bec4eecadf10",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "820ead13_2ddb5e07",
+        "filename": "chrome/browser/chromeos/file_manager/volume_manager.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 733,
+      "author": {
+        "id": 1232408
+      },
+      "writtenOn": "2017-08-25T08:56:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a58733d9_9bf52a6e",
+      "revId": "195b178a4a6a63003f74bb678190bec4eecadf10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "d460674c_541e19a8",
+        "filename": "chromeos/disks/disk_mount_manager.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 614,
+      "author": {
+        "id": 1232408
+      },
+      "writtenOn": "2017-08-25T08:56:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "03397587_32783aa4",
+      "revId": "195b178a4a6a63003f74bb678190bec4eecadf10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "773c9c5f_2c30b358",
         "filename": "chromeos/disks/disk_mount_manager.cc",
         "patchSetId": 11
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "09e973d7_c08c5f4f",
+        "filename": "chromeos/disks/disk_mount_manager.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 616,
+      "author": {
+        "id": 1232408
+      },
+      "writtenOn": "2017-08-25T08:56:22Z",
+      "side": 1,
+      "message": "I will just add a condition to update disk if error_code \u003d\u003d RENAME_ERROR_NONE.\nWe cannot just pass new information into the event because it is related to a signal signature.",
+      "parentUuid": "773c9c5f_2c30b358",
+      "revId": "195b178a4a6a63003f74bb678190bec4eecadf10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c6935810_54efd4d9",
         "filename": "chromeos/disks/disk_mount_manager.cc",
         "patchSetId": 11
@@ -84,6 +156,24 @@
       "revId": "195b178a4a6a63003f74bb678190bec4eecadf10",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87fa46b8_dbb6b3e9",
+        "filename": "chromeos/disks/disk_mount_manager.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 902,
+      "author": {
+        "id": 1232408
+      },
+      "writtenOn": "2017-08-25T08:56:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c6935810_54efd4d9",
+      "revId": "195b178a4a6a63003f74bb678190bec4eecadf10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
