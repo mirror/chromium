@@ -1068,6 +1068,11 @@ void PersistentTabRestoreService::Delegate::LoadStateChanged() {
   // And add them.
   for (auto& staging_entry : staging_entries_) {
     staging_entry->from_last_session = true;
+    if (staging_entry->type == sessions::TabRestoreService::WINDOW) {
+      auto& window = static_cast<Window&>(*staging_entry);
+      for (size_t i = 0; i < window.tabs.size(); ++i)
+        window.tabs[i]->from_last_session = true;
+    }
     tab_restore_service_helper_->AddEntry(std::move(staging_entry), false,
                                           false);
   }
