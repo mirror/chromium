@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "61a779c5_75dde905",
+        "filename": "services/viz/public/cpp/compositing/filter_operation_struct_traits.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-08-25T13:41:26Z",
+      "side": 1,
+      "message": "sgtm.",
+      "parentUuid": "4e4a7c55_649a0cd5",
+      "revId": "b6db66a3d2e2f58a17c67b1236d4ba21f1932b85",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d3fc52b5_4c931eb6",
         "filename": "services/viz/public/cpp/compositing/filter_operations_struct_traits.h",
         "patchSetId": 2
@@ -101,6 +119,24 @@
       "side": 1,
       "message": "There doesn\u0027t seem to be a simple way to do this - ReadOperations will read into a vector\u003cFilterOperation\u003e but not directly into a cc::FilterOperations without further changes.",
       "parentUuid": "d3fc52b5_4c931eb6",
+      "revId": "b6db66a3d2e2f58a17c67b1236d4ba21f1932b85",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e34badab_425bb2d9",
+        "filename": "services/viz/public/cpp/compositing/filter_operations_struct_traits.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-08-25T13:41:26Z",
+      "side": 1,
+      "message": "Ah right. You would need to make the DataView a friends class so you could directly access |out-\u003eoperations_|.",
+      "parentUuid": "df8c081a_7586b06c",
       "revId": "b6db66a3d2e2f58a17c67b1236d4ba21f1932b85",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
