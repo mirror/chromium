@@ -46,6 +46,30 @@
       "revId": "06cac0d9433c6c5d7e28a99ae4149c3b2bd24202",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "57739db5_6d4934fc",
+        "filename": "components/crash/content/app/crash_export_thunks.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-08-25T17:38:41Z",
+      "side": 1,
+      "message": "Yup, that was just a someday-idea, not for this CL.",
+      "parentUuid": "d068de31_68971e0c",
+      "range": {
+        "startLine": 34,
+        "startChar": 9,
+        "endLine": 34,
+        "endChar": 42
+      },
+      "revId": "06cac0d9433c6c5d7e28a99ae4149c3b2bd24202",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
