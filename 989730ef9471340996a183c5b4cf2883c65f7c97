@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "037081df_a8bd2909",
+        "filename": "base/message_loop/message_loop.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1116032
+      },
+      "writtenOn": "2017-08-25T15:26:51Z",
+      "side": 1,
+      "message": "This is starting to read like a puzzle :P I tried to come up with more descriptive helper variables for this condition but couldn\u0027t think of anything substantially simpler. Maybe you have better ideas?",
+      "range": {
+        "startLine": 101,
+        "startChar": 10,
+        "endLine": 101,
+        "endChar": 15
+      },
+      "revId": "989730ef9471340996a183c5b4cf2883c65f7c97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
