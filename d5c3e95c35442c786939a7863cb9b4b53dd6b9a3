@@ -124,6 +124,24 @@
       "revId": "d5c3e95c35442c786939a7863cb9b4b53dd6b9a3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3360ee9_91ad6978",
+        "filename": "chrome/browser/chromeos/power/peripheral_battery_notifier.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-08-25T17:34:02Z",
+      "side": 1,
+      "message": "Yeah, this does. Originally i wanted to minimize changes (keep logs, address, flow the same) but this sounds much better. Thanks for the help :-P.",
+      "parentUuid": "54a8ad74_279ff093",
+      "revId": "d5c3e95c35442c786939a7863cb9b4b53dd6b9a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
