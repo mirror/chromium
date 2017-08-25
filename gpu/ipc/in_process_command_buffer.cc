@@ -89,7 +89,8 @@ class GpuInProcessThreadHolder : public base::Thread {
   const scoped_refptr<InProcessCommandBuffer::Service>& GetGpuThreadService() {
     if (!gpu_thread_service_) {
       gpu_thread_service_ = new GpuInProcessThreadService(
-          task_runner(), sync_point_manager_.get(), nullptr, nullptr);
+          task_runner(), sync_point_manager_.get(), nullptr, nullptr,
+          gpu_feature_info_);
     }
     return gpu_thread_service_;
   }
@@ -97,6 +98,7 @@ class GpuInProcessThreadHolder : public base::Thread {
  private:
   std::unique_ptr<SyncPointManager> sync_point_manager_;
   scoped_refptr<InProcessCommandBuffer::Service> gpu_thread_service_;
+  const GpuFeatureInfo gpu_feature_info_;
 };
 
 base::LazyInstance<GpuInProcessThreadHolder>::DestructorAtExit
@@ -128,20 +130,27 @@ scoped_refptr<InProcessCommandBuffer::Service> GetInitialService(
 
 }  // anonyous namespace
 
-InProcessCommandBuffer::Service::Service(const GpuPreferences& gpu_preferences)
-    : Service(gpu_preferences, nullptr, nullptr) {}
+// static
+GpuFeatureInfo InProcessCommandBuffer::g_default_gpu_feature_info;
 
 InProcessCommandBuffer::Service::Service(
     gpu::gles2::MailboxManager* mailbox_manager,
-    scoped_refptr<gl::GLShareGroup> share_group)
-    : Service(GpuPreferences(), mailbox_manager, share_group) {}
+    scoped_refptr<gl::GLShareGroup> share_group,
+    const GpuFeatureInfo& gpu_feature_info)
+    : Service(GpuPreferences(),
+              mailbox_manager,
+              share_group,
+              gpu_feature_info) {}
 
 InProcessCommandBuffer::Service::Service(
     const GpuPreferences& gpu_preferences,
     gpu::gles2::MailboxManager* mailbox_manager,
-    scoped_refptr<gl::GLShareGroup> share_group)
+    scoped_refptr<gl::GLShareGroup> share_group,
+    const GpuFeatureInfo& gpu_feature_info)
     : gpu_preferences_(gpu_preferences),
-      gpu_driver_bug_workarounds_(base::CommandLine::ForCurrentProcess()),
+      gpu_feature_info_(gpu_feature_info),
+      gpu_driver_bug_workarounds_(
+          gpu_feature_info.enabled_gpu_driver_bug_workarounds),
       mailbox_manager_(mailbox_manager),
       share_group_(share_group),
       shader_translator_cache_(gpu_preferences_) {
@@ -357,7 +366,11 @@ bool InProcessCommandBuffer::InitializeOnGpuThread(
           gl_share_group_.get(), surface_.get(),
           GenerateGLContextAttribs(
               params.attribs, decoder_->GetContextGroup()->gpu_preferences()));
+      if (context_.get()) {
+        service_->gpu_feature_info().ApplyToGLContext(context_.get());
+      }
       gl_share_group_->SetSharedContext(surface_.get(), context_.get());
+      apply_gpu_feature_info = true;
     }
 
     context_ = new GLContextVirtual(gl_share_group_.get(), context_.get(),
@@ -376,6 +389,9 @@ bool InProcessCommandBuffer::InitializeOnGpuThread(
         gl_share_group_.get(), surface_.get(),
         GenerateGLContextAttribs(
             params.attribs, decoder_->GetContextGroup()->gpu_preferences()));
+    if (context_.get()) {
+      service_->gpu_feature_info().ApplyToGLContext(context_.get());
+    }
   }
 
   if (!context_.get()) {

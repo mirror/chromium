@@ -122,7 +122,7 @@ class CommandBufferSetup {
     command_line->AppendSwitchASCII(switches::kUseANGLE,
                                     gl::kANGLEImplementationNullName);
     CHECK(gl::init::InitializeGLOneOffImplementation(
-        gl::kGLImplementationEGLGLES2, false, false, false));
+        gl::kGLImplementationEGLGLES2, false, false, false, true));
 #elif defined(GPU_FUZZER_USE_SWIFTSHADER)
     command_line->AppendSwitchASCII(switches::kUseGL,
                                     gl::kGLImplementationSwiftShaderName);

@@ -31,6 +31,7 @@
 #include "gpu/command_buffer/service/image_manager.h"
 #include "gpu/command_buffer/service/service_discardable_manager.h"
 #include "gpu/config/gpu_driver_bug_workarounds.h"
+#include "gpu/config/gpu_feature_info.h"
 #include "gpu/gpu_export.h"
 #include "gpu/ipc/service/image_transport_surface_delegate.h"
 #include "ui/gfx/gpu_memory_buffer.h"
@@ -189,9 +190,9 @@ class GPU_EXPORT InProcessCommandBuffer : public CommandBuffer,
   // The serializer interface to the GPU service (i.e. thread).
   class Service {
    public:
-    explicit Service(const gpu::GpuPreferences& gpu_preferences);
     Service(gles2::MailboxManager* mailbox_manager,
-            scoped_refptr<gl::GLShareGroup> share_group);
+            scoped_refptr<gl::GLShareGroup> share_group,
+            const GpuFeatureInfo& gpu_feature_info);
 
     virtual ~Service();
 
@@ -210,6 +211,7 @@ class GPU_EXPORT InProcessCommandBuffer : public CommandBuffer,
     virtual bool BlockThreadOnWaitSyncToken() const = 0;
 
     const GpuPreferences& gpu_preferences();
+    const GpuFeatureInfo& gpu_feature_info() { return gpu_feature_info_; }
     const GpuDriverBugWorkarounds& gpu_driver_bug_workarounds();
     scoped_refptr<gl::GLShareGroup> share_group();
     gles2::MailboxManager* mailbox_manager() { return mailbox_manager_; }
@@ -228,9 +230,11 @@ class GPU_EXPORT InProcessCommandBuffer : public CommandBuffer,
    protected:
     Service(const gpu::GpuPreferences& gpu_preferences,
             gles2::MailboxManager* mailbox_manager,
-            scoped_refptr<gl::GLShareGroup> share_group);
+            scoped_refptr<gl::GLShareGroup> share_group,
+            const GpuFeatureInfo& gpu_feature_info);
 
     const GpuPreferences gpu_preferences_;
+    const GpuFeatureInfo gpu_feature_info_;
     const GpuDriverBugWorkarounds gpu_driver_bug_workarounds_;
     std::unique_ptr<gles2::MailboxManager> owned_mailbox_manager_;
     gles2::MailboxManager* mailbox_manager_ = nullptr;
@@ -243,6 +247,8 @@ class GPU_EXPORT InProcessCommandBuffer : public CommandBuffer,
     gles2::ShaderTranslatorCache shader_translator_cache_;
     gles2::FramebufferCompletenessCache framebuffer_completeness_cache_;
   };
+
+  static GpuFeatureInfo g_default_gpu_feature_info;
 
  private:
   struct InitializeOnGpuThreadParams {
