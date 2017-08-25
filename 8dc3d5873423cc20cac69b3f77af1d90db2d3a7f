@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "2573b8b9_95e0e537",
+        "filename": "third_party/WebKit/Source/platform/audio/AudioArray.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-08-25T14:52:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0fc9a58c_51072c6c",
+      "revId": "8dc3d5873423cc20cac69b3f77af1d90db2d3a7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3562b6ce_58b277c6",
         "filename": "third_party/WebKit/Source/platform/audio/AudioArray.h",
         "patchSetId": 4
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-24T23:06:29Z",
       "side": 1,
       "message": "Cast necessary?",
+      "revId": "8dc3d5873423cc20cac69b3f77af1d90db2d3a7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "730db83c_fb3f7221",
+        "filename": "third_party/WebKit/Source/platform/audio/AudioArray.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-08-25T14:52:59Z",
+      "side": 1,
+      "message": "Yes. Compiler complains that you can\u0027t assign a void* to a float*.",
+      "parentUuid": "3562b6ce_58b277c6",
       "revId": "8dc3d5873423cc20cac69b3f77af1d90db2d3a7f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -50,6 +86,24 @@
       "revId": "8dc3d5873423cc20cac69b3f77af1d90db2d3a7f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53b93e23_590ba1da",
+        "filename": "third_party/WebKit/Source/platform/audio/AudioArray.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-08-25T14:52:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2881399a_7ce962f4",
+      "revId": "8dc3d5873423cc20cac69b3f77af1d90db2d3a7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
