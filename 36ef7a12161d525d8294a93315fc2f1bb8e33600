@@ -179,6 +179,24 @@
     },
     {
       "key": {
+        "uuid": "26a2979a_0b4296a6",
+        "filename": "ui/gfx/render_text_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 3725,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-08-25T01:24:36Z",
+      "side": 1,
+      "message": "Ah that makes sense (I didn\u0027t know what obscured meant).\n\nMinor correction: your \"é\" example is actually considered 2 characters (2 asterisks) in a password field in Chrome. This code doesn\u0027t collapse combining character sequences (multiple code points), only surrogate pairs (single code point).\n\nA code point is a combination of one or more code units (e.g., U+1F601 is comprised of D83D,DE01 in UTF-16), while a combining character sequence is a combination of one or more code points (e.g., é is comprised of U+0065,U+0301). So if you enter \"😁\" into a password field (I\u0027m testing with HTTP basic authentication --- the only password field I can find that uses RenderText as opposed to Blink), it shows as a single \"*\". But if you enter \"é\", it shows as \"**\". Not sure if this is intended, but I think it\u0027s reasonable behaviour. The actual display of asterisks, and this run breaking logic, are internally consistent.\n\nCuriously, I just noticed that when using a *web* password field (i.e., rendered by Blink, not RenderText), it does actually show a bullet for each *UTF-16 code unit* (not code point) --- it doesn\u0027t correctly count characters. I filed a bug: https://crbug.com/758794.",
+      "parentUuid": "4b63aeaa_40a6be7f",
+      "revId": "36ef7a12161d525d8294a93315fc2f1bb8e33600",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f78a1207_6cd2fcfe",
         "filename": "ui/gfx/render_text_unittest.cc",
         "patchSetId": 3
