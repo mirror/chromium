@@ -6,9 +6,9 @@
 
 #include <memory>
 
-#import "ios/chrome/browser/ui/sad_tab/sad_tab_view.h"
 #import "ios/chrome/browser/web/page_placeholder_tab_helper.h"
 #import "ios/chrome/browser/web/page_placeholder_tab_helper_delegate.h"
+#import "ios/chrome/browser/web/sad_tab_tab_helper_delegate.h"
 #include "ios/web/public/test/fakes/test_browser_state.h"
 #import "ios/web/public/test/fakes/test_navigation_manager.h"
 #import "ios/web/public/test/fakes/test_web_state.h"
@@ -21,25 +21,30 @@
 #error "This file requires ARC support."
 #endif
 
-// Verifies that provided |content_view| exists, contains the expected
-// view and matches the desired |mode|.
-void VerifyContentViewMatchesMode(CRWContentView* content_view,
-                                  SadTabViewMode mode) {
-  ASSERT_TRUE([content_view isKindOfClass:[CRWGenericContentView class]]);
-  UIView* content_view_view = [(CRWGenericContentView*)content_view view];
-  ASSERT_TRUE([content_view_view isKindOfClass:[SadTabView class]]);
-  EXPECT_EQ([(SadTabView*)content_view_view mode], mode);
+// Delegate for testing.
+@interface SadTabTabHelperTestDelegate : NSObject<SadTabTabHelperDelegate>
+@property(nonatomic, assign) BOOL sadTabShown;
+@end
+
+@implementation SadTabTabHelperTestDelegate
+@synthesize sadTabShown = _sadTabShown;
+
+- (void)sadTabHelper:(SadTabTabHelper*)tabHelper
+    presentSadTabForRepeatedFailure:(BOOL)repeatedFailure {
+  self.sadTabShown = YES;
 }
+
+@end
 
 class SadTabTabHelperTest : public PlatformTest {
  protected:
   SadTabTabHelperTest()
       : application_(OCMClassMock([UIApplication class])),
+        sadTabdelegate_([[SadTabTabHelperTestDelegate alloc] init]),
         delegate_([OCMockObject
             mockForProtocol:@protocol(PagePlaceholderTabHelperDelegate)]) {
-    SadTabTabHelper::CreateForWebState(&web_state_);
+    SadTabTabHelper::CreateForWebState(&web_state_, sadTabdelegate_);
     PagePlaceholderTabHelper::CreateForWebState(&web_state_, delegate_);
-
     OCMStub([application_ sharedApplication]).andReturn(application_);
 
     // Setup navigation manager.
@@ -55,6 +60,7 @@ class SadTabTabHelperTest : public PlatformTest {
   web::TestWebState web_state_;
   web::TestNavigationManager* navigation_manager_;
   id application_;
+  SadTabTabHelperTestDelegate* sadTabdelegate_;
   id delegate_;
 };
 
@@ -64,13 +70,13 @@ TEST_F(SadTabTabHelperTest, ReloadedWhenWebStateWasShown) {
   OCMStub([application_ applicationState]).andReturn(UIApplicationStateActive);
   web_state_.WasHidden();
 
-  // WebState should not have presented a transient content view.
-  EXPECT_FALSE(web_state_.GetTransientContentView());
+  // Delegate should not present a SadTab.
+  EXPECT_FALSE(sadTabdelegate_.sadTabShown);
 
   // Helper should get notified of render process failure,
   // but Sad Tab should not be presented, because web state was not shown.
   web_state_.OnRenderProcessGone();
-  EXPECT_FALSE(web_state_.GetTransientContentView());
+  EXPECT_FALSE(sadTabdelegate_.sadTabShown);
 
   // Navigation item must be reloaded once web state is shown.
   EXPECT_FALSE(navigation_manager_->LoadIfNecessaryWasCalled());
@@ -87,13 +93,13 @@ TEST_F(SadTabTabHelperTest, AppInBackground) {
       .andReturn(UIApplicationStateBackground);
   web_state_.WasShown();
 
-  // WebState should not have presented a transient content view.
-  EXPECT_FALSE(web_state_.GetTransientContentView());
+  // Delegate should not present a SadTab.
+  EXPECT_FALSE(sadTabdelegate_.sadTabShown);
 
   // Helper should get notified of render process failure,
   // but Sad Tab should not be presented, because application is backgrounded.
   web_state_.OnRenderProcessGone();
-  EXPECT_FALSE(web_state_.GetTransientContentView());
+  EXPECT_FALSE(sadTabdelegate_.sadTabShown);
 
   // Navigation item must be reloaded once the app became active.
   EXPECT_FALSE(navigation_manager_->LoadIfNecessaryWasCalled());
@@ -112,13 +118,13 @@ TEST_F(SadTabTabHelperTest, AppIsInactive) {
       .andReturn(UIApplicationStateInactive);
   web_state_.WasShown();
 
-  // WebState should not have presented a transient content view.
-  EXPECT_FALSE(web_state_.GetTransientContentView());
+  // Delegate should not present a SadTab.
+  EXPECT_FALSE(sadTabdelegate_.sadTabShown);
 
   // Helper should get notified of render process failure,
   // but Sad Tab should not be presented, because application is inactive.
   web_state_.OnRenderProcessGone();
-  EXPECT_FALSE(web_state_.GetTransientContentView());
+  EXPECT_FALSE(sadTabdelegate_.sadTabShown);
 
   // Navigation item must be reloaded once the app became active.
   EXPECT_FALSE(navigation_manager_->LoadIfNecessaryWasCalled());
@@ -136,60 +142,11 @@ TEST_F(SadTabTabHelperTest, Presented) {
 
   web_state_.WasShown();
 
-  // WebState should not have presented a transient content view.
-  EXPECT_FALSE(web_state_.GetTransientContentView());
+  // Delegate should not present a SadTab.
+  EXPECT_FALSE(sadTabdelegate_.sadTabShown);
 
-  // Helper should get notified of render process failure.
+  // Helper should get notified of render process failure. And the delegate
+  // should present a SadTab.
   web_state_.OnRenderProcessGone();
-  EXPECT_TRUE(web_state_.GetTransientContentView());
-}
-
-// Tests that repeated failures generate the correct UI.
-TEST_F(SadTabTabHelperTest, RepeatedFailuresShowCorrectUI) {
-  OCMStub([application_ applicationState]).andReturn(UIApplicationStateActive);
-  web_state_.WasShown();
-
-  // Helper should get notified of render process failure.
-  web_state_.OnRenderProcessGone();
-
-  // The content view should initially be of the RELOAD type.
-  VerifyContentViewMatchesMode(web_state_.GetTransientContentView(),
-                               SadTabViewMode::RELOAD);
-
-  // On a second render process crash, the content view should be of a
-  // FEEDBACK type.
-  web_state_.OnRenderProcessGone();
-  VerifyContentViewMatchesMode(web_state_.GetTransientContentView(),
-                               SadTabViewMode::FEEDBACK);
-
-  // All subsequent crashes should be of a FEEDBACK type.
-  web_state_.OnRenderProcessGone();
-  VerifyContentViewMatchesMode(web_state_.GetTransientContentView(),
-                               SadTabViewMode::FEEDBACK);
-}
-
-// Tests that repeated failures can time out, and return to the RELOAD UI.
-TEST_F(SadTabTabHelperTest, FailureInterval) {
-  OCMStub([application_ applicationState]).andReturn(UIApplicationStateActive);
-
-  // N.B. The test fixture web_state_ is not used for this test as a custom
-  // |repeat_failure_interval| is required.
-  web::TestWebState web_state;
-  SadTabTabHelper::CreateForWebState(&web_state, 0.0f);
-  PagePlaceholderTabHelper::CreateForWebState(&web_state, delegate_);
-  web_state.WasShown();
-
-  // Helper should get notified of render process failure.
-  // SadTab should be shown.
-  web_state.OnRenderProcessGone();
-
-  // The content view should initially be of the RELOAD type.
-  VerifyContentViewMatchesMode(web_state.GetTransientContentView(),
-                               SadTabViewMode::RELOAD);
-
-  // On a second render process crash, the content view should still be of a
-  // RELOAD type due to the 0.0f interval timeout.
-  web_state.OnRenderProcessGone();
-  VerifyContentViewMatchesMode(web_state.GetTransientContentView(),
-                               SadTabViewMode::RELOAD);
+  EXPECT_TRUE(sadTabdelegate_.sadTabShown);
 }
