@@ -301,6 +301,24 @@
     },
     {
       "key": {
+        "uuid": "3414b64b_5f236283",
+        "filename": "ash/system/bluetooth/bluetooth_power_controller.cc",
+        "patchSetId": 37
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1181214
+      },
+      "writtenOn": "2017-08-25T17:36:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a630e46c_7597834d",
+      "revId": "ba9a808d568cbf293fda4225d9f3851cd464bbdf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "275b3ded_d65c4d44",
         "filename": "chrome/browser/chromeos/arc/bluetooth/arc_bluetooth_bridge.h",
         "patchSetId": 37
