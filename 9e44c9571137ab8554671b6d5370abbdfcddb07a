@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "dbde83f6_878bb3cd",
+        "filename": "chrome/app/chrome_main_delegate.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 605,
+      "author": {
+        "id": 1229240
+      },
+      "writtenOn": "2017-08-25T13:20:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f95a5e7e_db77e6b9",
+      "range": {
+        "startLine": 605,
+        "startChar": 43,
+        "endLine": 605,
+        "endChar": 0
+      },
+      "revId": "9e44c9571137ab8554671b6d5370abbdfcddb07a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8d63a30b_5473a440",
         "filename": "components/content_settings/core/common/content_settings_pattern.cc",
         "patchSetId": 22
@@ -45,6 +69,30 @@
       "revId": "9e44c9571137ab8554671b6d5370abbdfcddb07a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a93232e_36a1f3f7",
+        "filename": "components/content_settings/core/common/content_settings_pattern.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 264,
+      "author": {
+        "id": 1229240
+      },
+      "writtenOn": "2017-08-25T13:20:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8d63a30b_5473a440",
+      "range": {
+        "startLine": 264,
+        "startChar": 29,
+        "endLine": 264,
+        "endChar": 39
+      },
+      "revId": "9e44c9571137ab8554671b6d5370abbdfcddb07a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "51c90e56_aa206947",
+        "filename": "components/content_settings/core/common/content_settings_pattern.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 459,
+      "author": {
+        "id": 1229240
+      },
+      "writtenOn": "2017-08-25T13:20:23Z",
+      "side": 1,
+      "message": "Done, added a note to the comment.",
+      "parentUuid": "951de660_cf1524c4",
+      "range": {
+        "startLine": 459,
+        "startChar": 4,
+        "endLine": 459,
+        "endChar": 10
+      },
+      "revId": "9e44c9571137ab8554671b6d5370abbdfcddb07a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0a05d306_7a26e463",
         "filename": "components/content_settings/core/common/content_settings_pattern.h",
         "patchSetId": 22
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "a1281314_6050eca3",
+        "filename": "components/content_settings/core/common/content_settings_pattern.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1229240
+      },
+      "writtenOn": "2017-08-25T13:20:23Z",
+      "side": 1,
+      "message": "Oh wow, didn\u0027t know that. Reverting.",
+      "parentUuid": "0a05d306_7a26e463",
+      "range": {
+        "startLine": 62,
+        "startChar": 31,
+        "endLine": 62,
+        "endChar": 33
+      },
+      "revId": "9e44c9571137ab8554671b6d5370abbdfcddb07a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5ffb2be9_6b5552dc",
         "filename": "components/content_settings/core/common/content_settings_pattern_parser_unittest.cc",
         "patchSetId": 22
@@ -114,6 +210,30 @@
       "revId": "9e44c9571137ab8554671b6d5370abbdfcddb07a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "52f12977_cd7f48e6",
+        "filename": "components/content_settings/core/common/content_settings_pattern_parser_unittest.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1229240
+      },
+      "writtenOn": "2017-08-25T13:20:23Z",
+      "side": 1,
+      "message": "Done, see CL: https://chromium-review.googlesource.com/c/chromium/src/+/635564",
+      "parentUuid": "5ffb2be9_6b5552dc",
+      "range": {
+        "startLine": 239,
+        "startChar": 0,
+        "endLine": 239,
+        "endChar": 1
+      },
+      "revId": "9e44c9571137ab8554671b6d5370abbdfcddb07a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

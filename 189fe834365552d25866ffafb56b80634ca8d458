@@ -249,6 +249,24 @@
     },
     {
       "key": {
+        "uuid": "d5285cf2_bf549e8c",
+        "filename": "components/content_settings/core/common/content_settings_pattern.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 457,
+      "author": {
+        "id": 1229240
+      },
+      "writtenOn": "2017-08-25T13:20:23Z",
+      "side": 1,
+      "message": "Resolving this after owner LGTM.",
+      "parentUuid": "31e60b58_535e87fc",
+      "revId": "189fe834365552d25866ffafb56b80634ca8d458",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c48f4847_200d001d",
         "filename": "components/content_settings/core/common/content_settings_pattern.cc",
         "patchSetId": 15
