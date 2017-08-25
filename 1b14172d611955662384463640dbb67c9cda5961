@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7e473160_57f00bcb",
+        "filename": "ui/webui/resources/cr_elements/cr_toolbar/cr_toolbar.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1130680
+      },
+      "writtenOn": "2017-08-25T08:53:07Z",
+      "side": 1,
+      "message": "The text-overflow and white-space properties can also be removed, since we don\u0027t ellipsise the title anymore.",
+      "revId": "1b14172d611955662384463640dbb67c9cda5961",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
