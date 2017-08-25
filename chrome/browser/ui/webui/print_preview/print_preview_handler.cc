@@ -1011,6 +1011,7 @@ void PrintPreviewHandler::HandleHidePreview(const base::ListValue* /*args*/) {
         new PrintMsg_PrintForPrintPreview(rfh->GetRoutingID(), *settings_));
     settings_.reset();
 
+    NotifyClosePreviewDialog();
     // Clear the initiator so that it can open a new print preview dialog, while
     // the current print preview dialog is still handling its print job.
     WebContents* initiator = GetInitiator();
@@ -1148,7 +1149,7 @@ void PrintPreviewHandler::HandleShowSystemDialog(
 
   auto* print_view_manager = PrintViewManager::FromWebContents(initiator);
   print_view_manager->PrintForSystemDialogNow(
-      base::Bind(&PrintPreviewHandler::ClosePreviewDialog,
+      base::Bind(&PrintPreviewHandler::ClosePreviewDialogBySwitchToSystemDialog,
                  weak_factory_.GetWeakPtr()));
 
   // Cancel the pending preview request if exists.
@@ -1172,6 +1173,7 @@ void PrintPreviewHandler::HandleManagePrinters(
 
 void PrintPreviewHandler::HandleClosePreviewDialog(
     const base::ListValue* /*args*/) {
+  NotifyClosePreviewDialog();
   ReportStats();
   ReportUserActionHistogram(CANCEL);
 
@@ -1273,7 +1275,21 @@ void PrintPreviewHandler::SendInitialSettings(
   ResolveJavascriptCallback(base::Value(callback_id), initial_settings);
 }
 
+void PrintPreviewHandler::NotifyClosePreviewDialog() {
+  WebContents* initiator = GetInitiator();
+  if (!initiator)
+    return;
+  auto* rfh = PrintViewManager::FromWebContents(initiator)->print_preview_rfh();
+  if (rfh)
+    rfh->Send(new PrintMsg_ClosePrintPreviewDialog(rfh->GetRoutingID()));
+}
+
 void PrintPreviewHandler::ClosePreviewDialog() {
+  NotifyClosePreviewDialog();
+  print_preview_ui()->OnClosePrintPreviewDialog();
+}
+
+void PrintPreviewHandler::ClosePreviewDialogBySwitchToSystemDialog() {
   print_preview_ui()->OnClosePrintPreviewDialog();
 }
 
