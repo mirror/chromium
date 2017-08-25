@@ -16,6 +16,24 @@
       "revId": "420301259c23663757fbb2526e3eb4333d97d848",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3511d8d1_0d3916fc",
+        "filename": "third_party/WebKit/Source/build/scripts/core/css/properties/templates/CSSPropertyAPISubclass.h.tmpl",
+        "patchSetId": 13
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1116008
+      },
+      "writtenOn": "2017-08-25T06:03:04Z",
+      "side": 1,
+      "message": "I tried this and it doesn\u0027t work. Possibly I\u0027m doing it wrong, but I tried a few different ways of formulating it and doesn\u0027t seem possible.",
+      "parentUuid": "a4fbe559_ca54708c",
+      "revId": "420301259c23663757fbb2526e3eb4333d97d848",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
