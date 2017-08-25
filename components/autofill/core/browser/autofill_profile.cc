@@ -715,18 +715,21 @@ void AutofillProfile::SetValidityState(ServerFieldType type,
 }
 
 bool AutofillProfile::IsValidationSupportedForType(ServerFieldType type) {
-  switch (type) {
-    case ADDRESS_HOME_STATE:
-    case ADDRESS_HOME_ZIP:
-    case ADDRESS_HOME_COUNTRY:
-    case ADDRESS_HOME_CITY:
-    case ADDRESS_HOME_DEPENDENT_LOCALITY:
-    case EMAIL_ADDRESS:
-    case PHONE_HOME_WHOLE_NUMBER:
-      return true;
-    default:
-      return false;
+  return std::find(supported_type_for_validation_.begin(),
+                   supported_type_for_validation_.end(),
+                   type) != supported_type_for_validation_.end();
+}
+
+int AutofillProfile::GetValidityBitfieldValue() {
+  int validity_value = 0;
+  size_t field_type_shift = 0;
+  for (ServerFieldType supported_type : supported_type_for_validation_) {
+    DCHECK(GetValidityState(supported_type) != UNSUPPORTED);
+    validity_value |= GetValidityState(supported_type) << field_type_shift;
+    field_type_shift += kValidityBitsPerType;
   }
+
+  return validity_value;
 }
 
 base::string16 AutofillProfile::GetInfoImpl(

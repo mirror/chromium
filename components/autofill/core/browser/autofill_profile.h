@@ -42,20 +42,22 @@ class AutofillProfile : public AutofillDataModel {
 
   enum ValidityState {
     // The field has not been validated.
-    UNVALIDATED,
+    UNVALIDATED = 0,
 
     // The field is empty.
-    EMPTY,
+    EMPTY = 1,
 
     // The field is valid.
-    VALID,
+    VALID = 2,
 
     // The field is invalid.
-    INVALID,
+    INVALID = 3,
 
     // The validation for the field is unsupported.
-    UNSUPPORTED,
+    UNSUPPORTED = 4,
   };
+
+  const size_t kValidityBitsPerType = 2;
 
   AutofillProfile(const std::string& guid, const std::string& origin);
 
@@ -211,6 +213,9 @@ class AutofillProfile : public AutofillDataModel {
   // Returns whether autofill does the validation of the specified |type|.
   bool IsValidationSupportedForType(ServerFieldType type);
 
+  // Returns the bitfield value representing the validity state of this profile.
+  int GetValidityBitfieldValue();
+
  private:
   typedef std::vector<const FormGroup*> FormGroupList;
 
@@ -242,6 +247,16 @@ class AutofillProfile : public AutofillDataModel {
 
   // Same as operator==, but ignores differences in GUID.
   bool EqualsSansGuid(const AutofillProfile& profile) const;
+
+  // The order is important to ensure a consistent bitfield value.
+  const std::vector<ServerFieldType> supported_type_for_validation_ = {
+      ADDRESS_HOME_COUNTRY,
+      ADDRESS_HOME_STATE,
+      ADDRESS_HOME_ZIP,
+      ADDRESS_HOME_CITY,
+      ADDRESS_HOME_DEPENDENT_LOCALITY,
+      EMAIL_ADDRESS,
+      PHONE_HOME_WHOLE_NUMBER};
 
   // Personal information for this profile.
   NameInfo name_;
