@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d8f926c0_2fe3a6ae",
+        "filename": "components/download/internal/navigation_monitor_impl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1145120
+      },
+      "writtenOn": "2017-08-25T21:44:27Z",
+      "side": 1,
+      "message": "We might need more params such as :\nnavigation_completion_delay\nmax_navigation_completion_delay",
+      "parentUuid": "060070fe_8aeb1be7",
+      "range": {
+        "startLine": 25,
+        "startChar": 7,
+        "endLine": 25,
+        "endChar": 16
+      },
+      "revId": "9421fb87fc1dd0cb733ff6dcddc553c90ca2e211",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "caf3060a_14a28b17",
         "filename": "components/download/internal/navigation_monitor_impl.h",
         "patchSetId": 1
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "b34fb932_a09eb875",
+        "filename": "components/download/internal/navigation_monitor_impl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1145120
+      },
+      "writtenOn": "2017-08-25T21:44:27Z",
+      "side": 1,
+      "message": "Ack.",
+      "parentUuid": "caf3060a_14a28b17",
+      "range": {
+        "startLine": 30,
+        "startChar": 7,
+        "endLine": 30,
+        "endChar": 29
+      },
+      "revId": "9421fb87fc1dd0cb733ff6dcddc553c90ca2e211",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fe67b257_07388af5",
         "filename": "components/download/internal/navigation_monitor_impl.h",
         "patchSetId": 1
@@ -59,6 +107,30 @@
       "writtenOn": "2017-08-25T21:34:09Z",
       "side": 1,
       "message": "I can make NavigationMonitor outlive Download service in my CL, we don\u0027t have to use WeakPtr and associated callbacks here.",
+      "range": {
+        "startLine": 43,
+        "startChar": 46,
+        "endLine": 43,
+        "endChar": 63
+      },
+      "revId": "9421fb87fc1dd0cb733ff6dcddc553c90ca2e211",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "184cbf15_17650be9",
+        "filename": "components/download/internal/navigation_monitor_impl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1145120
+      },
+      "writtenOn": "2017-08-25T21:44:27Z",
+      "side": 1,
+      "message": "I need the weakptr for a different purpose, i.e. we need that to post the callback after a delay.",
+      "parentUuid": "fe67b257_07388af5",
       "range": {
         "startLine": 43,
         "startChar": 46,
