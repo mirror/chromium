@@ -1175,7 +1175,9 @@ if (enable_java_templates) {
         defined(invoker.supports_android) && invoker.supports_android &&
         (is_java_debug || dcheck_always_on)
 
-    _desugar = defined(invoker.supports_android) && invoker.supports_android
+    _desugar =
+        defined(invoker.supports_android) && invoker.supports_android &&
+        !disable_java7_compatibility
 
     _jar_excluded_patterns = []
     if (defined(invoker.jar_excluded_patterns)) {
