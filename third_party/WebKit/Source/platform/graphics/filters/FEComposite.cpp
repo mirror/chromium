@@ -27,6 +27,7 @@
 #include "SkArithmeticImageFilter.h"
 #include "SkXfermodeImageFilter.h"
 
+#include "platform/geometry/LayoutRect.h"
 #include "platform/graphics/filters/SkiaImageFilterBuilder.h"
 #include "platform/graphics/skia/SkiaUtils.h"
 #include "platform/text/TextStream.h"
@@ -113,42 +114,54 @@ bool FEComposite::AffectsTransparentPixels() const {
 }
 
 FloatRect FEComposite::MapInputs(const FloatRect& rect) const {
-  FloatRect input1_rect = InputEffect(1)->MapRect(rect);
+  FloatRect a = InputEffect(0)->MapRect(rect);
+  FloatRect b = InputEffect(1)->MapRect(rect);
   switch (type_) {
     case FECOMPOSITE_OPERATOR_IN:
       // 'in' has output only in the intersection of both inputs.
-      return Intersection(input1_rect, InputEffect(0)->MapRect(input1_rect));
+      return Intersection(a, b);
     case FECOMPOSITE_OPERATOR_ATOP:
       // 'atop' has output only in the extents of the second input.
-      return input1_rect;
+      return b;
     case FECOMPOSITE_OPERATOR_ARITHMETIC:
-      // result(i1,i2) = k1*i1*i2 + k2*i1 + k3*i2 + k4
+      // result(a,b) = k1*a*b + k2*a + k3*b + k4
       //
       // (The below is not a complete breakdown of cases.)
       //
-      // Arithmetic with non-zero k4 may influence the complete filter primitive
+      // Arithmetic with positive k4 may influence the complete filter primitive
       // region. [k4 > 0 => result(0,0) = k4 => result(a,b) >= k4]
-      if (K4() > 0)
-        return rect;
-      // Additionally, if k2 = 0, input 0 can only appear where input 1 also
-      // appears. [k2 = k4 = 0 => result(a,b) = k1*a*b + k3*b = (k1*a + k3)*b]
-      // Hence for k2 > 0, both inputs can still appear. (Except if k3 = 0.)
-      if (K2() <= 0) {
-        // If k3 > 0, output can be produced wherever input 1 is
-        // non-transparent.
-        if (K3() > 0)
-          return input1_rect;
-        // If just k1 is positive, output will only be produce where both
-        // inputs are non-transparent. Use intersection.
-        // [k1 >= 0 and k2 = k3 = k4 = 0 => result(a,b) = k1 * a * b]
-        return Intersection(input1_rect, InputEffect(0)->MapRect(input1_rect));
+      if (K4() > 0) {
+        // FilterEffect::ApplyBounds() will clip the result to the primitive
+        // region.
+        if (ClipsToBounds())
+          return FloatRect(LayoutRect::InfiniteIntRect());
+        // The filter is not clipped. Fall through to use union.
+        break;
       }
-    // else fall through to use union
+      // If both K2 or K3 are positive, both a and b appear. Fall through to use
+      // union.
+      if (K2() > 0 && K3() > 0)
+        break;
+      // If k2 > 0, output can be produced whenever a is non-transparent.
+      // [k3 = k4 = 0 => result(a,b) = k1*a*b + k2*a = (k1*b + k2)*a]
+      if (K2() > 0)
+        return a;
+      // If k3 > 0, output can be produced whenever b is non-transparent.
+      // [k2 = k4 = 0 => result(a,b) = k1*a*b + k3*b = (k1*a + k3)*b]
+      if (K3() > 0)
+        return b;
+      // If just k1 is positive, output will only be produce where both
+      // inputs are non-transparent. Use intersection.
+      // [k1 >= 0 and k2 = k3 = k4 = 0 => result(a,b) = k1 * a * b]
+      if (K1() > 0)
+        return Intersection(a, b);
+      // [k1 = k2 = k3 = k4 = 0 => result(a,b) = 0]
+      return FloatRect();
     default:
       break;
   }
   // Take the union of both input effects.
-  return UnionRect(input1_rect, InputEffect(0)->MapRect(rect));
+  return UnionRect(a, b);
 }
 
 SkBlendMode ToBlendMode(CompositeOperationType mode) {
