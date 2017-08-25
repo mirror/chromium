@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5a8120db_9cd744a7",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 12
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1232408
+      },
+      "writtenOn": "2017-08-25T09:59:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "104cf69b_c1cec164",
+      "revId": "1ff33fd88866535664593e317c6bab85b1544fb0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e0b20cd5_a76f2113",
         "filename": "chromeos/disks/disk_mount_manager.cc",
         "patchSetId": 12
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "1f30e9a5_fa124757",
+        "filename": "chromeos/disks/disk_mount_manager.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1232408
+      },
+      "writtenOn": "2017-08-25T09:59:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e0b20cd5_a76f2113",
+      "revId": "1ff33fd88866535664593e317c6bab85b1544fb0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f397c100_af3f59fc",
         "filename": "chromeos/disks/disk_mount_manager.cc",
         "patchSetId": 12
@@ -50,6 +86,24 @@
       "revId": "1ff33fd88866535664593e317c6bab85b1544fb0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b96d78f4_4d57d987",
+        "filename": "chromeos/disks/disk_mount_manager.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 622,
+      "author": {
+        "id": 1232408
+      },
+      "writtenOn": "2017-08-25T09:59:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f397c100_af3f59fc",
+      "revId": "1ff33fd88866535664593e317c6bab85b1544fb0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
