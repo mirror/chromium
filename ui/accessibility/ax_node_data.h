@@ -115,12 +115,12 @@ struct AX_EXPORT AXNodeData {
   void SetValue(const base::string16& value);
 
   // Returns true if the given enum bit is 1.
-  bool HasState(ui::AXState state_enum) const;
-  bool HasAction(ui::AXAction state_enum) const;
+  bool HasState(AXState state_enum) const;
+  bool HasAction(AXAction state_enum) const;
 
   // Set bits in the given enum's corresponding bitfield.
-  void AddState(ui::AXState state_enum);
-  void AddAction(ui::AXAction action_enum);
+  void AddState(AXState state_enum);
+  void AddAction(AXAction action_enum);
 
   // Return a string representation of this data, for debugging.
   virtual std::string ToString() const;

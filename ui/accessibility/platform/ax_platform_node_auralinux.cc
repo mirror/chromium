@@ -39,7 +39,7 @@ typedef struct _AXPlatformNodeAuraLinuxClass AXPlatformNodeAuraLinuxClass;
 
 struct _AXPlatformNodeAuraLinuxObject {
   AtkObject parent;
-  ui::AXPlatformNodeAuraLinux* m_object;
+  AXPlatformNodeAuraLinux* m_object;
 };
 
 struct _AXPlatformNodeAuraLinuxClass {
@@ -50,7 +50,7 @@ GType ax_platform_node_auralinux_get_type();
 
 static gpointer ax_platform_node_auralinux_parent_class = nullptr;
 
-static ui::AXPlatformNodeAuraLinux* ToAXPlatformNodeAuraLinux(
+static AXPlatformNodeAuraLinux* ToAXPlatformNodeAuraLinux(
     AXPlatformNodeAuraLinuxObject* atk_object) {
   if (!atk_object)
     return nullptr;
@@ -58,7 +58,7 @@ static ui::AXPlatformNodeAuraLinux* ToAXPlatformNodeAuraLinux(
   return atk_object->m_object;
 }
 
-static ui::AXPlatformNodeAuraLinux* AtkObjectToAXPlatformNodeAuraLinux(
+static AXPlatformNodeAuraLinux* AtkObjectToAXPlatformNodeAuraLinux(
     AtkObject* atk_object) {
   if (!atk_object)
     return nullptr;
@@ -70,29 +70,25 @@ static ui::AXPlatformNodeAuraLinux* AtkObjectToAXPlatformNodeAuraLinux(
 }
 
 static const gchar* ax_platform_node_auralinux_get_name(AtkObject* atk_object) {
-  ui::AXPlatformNodeAuraLinux* obj =
-      AtkObjectToAXPlatformNodeAuraLinux(atk_object);
+  AXPlatformNodeAuraLinux* obj = AtkObjectToAXPlatformNodeAuraLinux(atk_object);
   if (!obj)
     return nullptr;
 
-  return obj->GetStringAttribute(ui::AX_ATTR_NAME).c_str();
+  return obj->GetStringAttribute(AX_ATTR_NAME).c_str();
 }
 
 static const gchar* ax_platform_node_auralinux_get_description(
     AtkObject* atk_object) {
-  ui::AXPlatformNodeAuraLinux* obj =
-      AtkObjectToAXPlatformNodeAuraLinux(atk_object);
+  AXPlatformNodeAuraLinux* obj = AtkObjectToAXPlatformNodeAuraLinux(atk_object);
   if (!obj)
     return nullptr;
 
-  return obj->GetStringAttribute(
-      ui::AX_ATTR_DESCRIPTION).c_str();
+  return obj->GetStringAttribute(AX_ATTR_DESCRIPTION).c_str();
 }
 
 static gint ax_platform_node_auralinux_get_index_in_parent(
     AtkObject* atk_object) {
-  ui::AXPlatformNodeAuraLinux* obj =
-    AtkObjectToAXPlatformNodeAuraLinux(atk_object);
+  AXPlatformNodeAuraLinux* obj = AtkObjectToAXPlatformNodeAuraLinux(atk_object);
 
   if (!obj || !obj->GetParent())
     return -1;
@@ -112,8 +108,7 @@ static gint ax_platform_node_auralinux_get_index_in_parent(
 }
 
 static AtkObject* ax_platform_node_auralinux_get_parent(AtkObject* atk_object) {
-  ui::AXPlatformNodeAuraLinux* obj =
-      AtkObjectToAXPlatformNodeAuraLinux(atk_object);
+  AXPlatformNodeAuraLinux* obj = AtkObjectToAXPlatformNodeAuraLinux(atk_object);
   if (!obj)
     return nullptr;
 
@@ -121,8 +116,7 @@ static AtkObject* ax_platform_node_auralinux_get_parent(AtkObject* atk_object) {
 }
 
 static gint ax_platform_node_auralinux_get_n_children(AtkObject* atk_object) {
-  ui::AXPlatformNodeAuraLinux* obj =
-      AtkObjectToAXPlatformNodeAuraLinux(atk_object);
+  AXPlatformNodeAuraLinux* obj = AtkObjectToAXPlatformNodeAuraLinux(atk_object);
   if (!obj)
     return 0;
 
@@ -131,8 +125,7 @@ static gint ax_platform_node_auralinux_get_n_children(AtkObject* atk_object) {
 
 static AtkObject* ax_platform_node_auralinux_ref_child(
     AtkObject* atk_object, gint index) {
-  ui::AXPlatformNodeAuraLinux* obj =
-      AtkObjectToAXPlatformNodeAuraLinux(atk_object);
+  AXPlatformNodeAuraLinux* obj = AtkObjectToAXPlatformNodeAuraLinux(atk_object);
   if (!obj)
     return nullptr;
 
@@ -144,8 +137,7 @@ static AtkObject* ax_platform_node_auralinux_ref_child(
 
 static AtkRelationSet* ax_platform_node_auralinux_ref_relation_set(
     AtkObject* atk_object) {
-  ui::AXPlatformNodeAuraLinux* obj =
-      AtkObjectToAXPlatformNodeAuraLinux(atk_object);
+  AXPlatformNodeAuraLinux* obj = AtkObjectToAXPlatformNodeAuraLinux(atk_object);
   AtkRelationSet* atk_relation_set =
       ATK_OBJECT_CLASS(ax_platform_node_auralinux_parent_class)->
       ref_relation_set(atk_object);
@@ -163,8 +155,7 @@ static AtkAttributeSet* ax_platform_node_auralinux_get_attributes(
 }
 
 static AtkRole ax_platform_node_auralinux_get_role(AtkObject* atk_object) {
-  ui::AXPlatformNodeAuraLinux* obj =
-      AtkObjectToAXPlatformNodeAuraLinux(atk_object);
+  AXPlatformNodeAuraLinux* obj = AtkObjectToAXPlatformNodeAuraLinux(atk_object);
   if (!obj)
     return ATK_ROLE_INVALID;
   return obj->GetAtkRole();
@@ -172,8 +163,7 @@ static AtkRole ax_platform_node_auralinux_get_role(AtkObject* atk_object) {
 
 static AtkStateSet* ax_platform_node_auralinux_ref_state_set(
     AtkObject* atk_object) {
-  ui::AXPlatformNodeAuraLinux* obj =
-      AtkObjectToAXPlatformNodeAuraLinux(atk_object);
+  AXPlatformNodeAuraLinux* obj = AtkObjectToAXPlatformNodeAuraLinux(atk_object);
   if (!obj)
     return NULL;
 
@@ -221,8 +211,7 @@ static void ax_platform_node_auralinux_get_extents(AtkComponent* atk_component,
     *height = 0;
 
   AtkObject* atk_object = ATK_OBJECT(atk_component);
-  ui::AXPlatformNodeAuraLinux* obj =
-      AtkObjectToAXPlatformNodeAuraLinux(atk_object);
+  AXPlatformNodeAuraLinux* obj = AtkObjectToAXPlatformNodeAuraLinux(atk_object);
   if (!obj)
     return;
 
@@ -240,8 +229,7 @@ static void ax_platform_node_auralinux_get_position(AtkComponent* atk_component,
     *y = 0;
 
   AtkObject* atk_object = ATK_OBJECT(atk_component);
-  ui::AXPlatformNodeAuraLinux* obj =
-      AtkObjectToAXPlatformNodeAuraLinux(atk_object);
+  AXPlatformNodeAuraLinux* obj = AtkObjectToAXPlatformNodeAuraLinux(atk_object);
   if (!obj)
     return;
 
@@ -258,8 +246,7 @@ static void ax_platform_node_auralinux_get_size(AtkComponent* atk_component,
     *height = 0;
 
   AtkObject* atk_object = ATK_OBJECT(atk_component);
-  ui::AXPlatformNodeAuraLinux* obj =
-      AtkObjectToAXPlatformNodeAuraLinux(atk_object);
+  AXPlatformNodeAuraLinux* obj = AtkObjectToAXPlatformNodeAuraLinux(atk_object);
   if (!obj)
     return;
 
@@ -289,7 +276,7 @@ static void ax_platform_node_auralinux_init(AtkObject* atk_object,
   }
 
   AX_PLATFORM_NODE_AURALINUX(atk_object)->m_object =
-      reinterpret_cast<ui::AXPlatformNodeAuraLinux*>(data);
+      reinterpret_cast<AXPlatformNodeAuraLinux*>(data);
 }
 
 static void ax_platform_node_auralinux_finalize(GObject* atk_object) {
@@ -341,8 +328,8 @@ GType ax_platform_node_auralinux_get_type() {
 }
 
 AXPlatformNodeAuraLinuxObject* ax_platform_node_auralinux_new(
-    ui::AXPlatformNodeAuraLinux* obj) {
-  #if !GLIB_CHECK_VERSION(2, 36, 0)
+    AXPlatformNodeAuraLinux* obj) {
+#if !GLIB_CHECK_VERSION(2, 36, 0)
   static bool first_time = true;
   if (first_time) {
     g_type_init();
@@ -397,11 +384,11 @@ void AXPlatformNodeAuraLinux::StaticInitialize() {
 
 AtkRole AXPlatformNodeAuraLinux::GetAtkRole() {
   switch (GetData().role) {
-    case ui::AX_ROLE_ALERT:
+    case AX_ROLE_ALERT:
       return ATK_ROLE_ALERT;
-    case ui::AX_ROLE_APPLICATION:
+    case AX_ROLE_APPLICATION:
       return ATK_ROLE_APPLICATION;
-    case ui::AX_ROLE_AUDIO:
+    case AX_ROLE_AUDIO:
 #if defined(ATK_CHECK_VERSION)
 #if ATK_CHECK_VERSION(2, 12, 0)
       return ATK_ROLE_AUDIO;
@@ -411,41 +398,41 @@ AtkRole AXPlatformNodeAuraLinux::GetAtkRole() {
 #else
       return ATK_ROLE_SECTION;
 #endif
-    case ui::AX_ROLE_BUTTON:
+    case AX_ROLE_BUTTON:
       return ATK_ROLE_PUSH_BUTTON;
-    case ui::AX_ROLE_CHECK_BOX:
+    case AX_ROLE_CHECK_BOX:
       return ATK_ROLE_CHECK_BOX;
-    case ui::AX_ROLE_COMBO_BOX:
+    case AX_ROLE_COMBO_BOX:
       return ATK_ROLE_COMBO_BOX;
-    case ui::AX_ROLE_DIALOG:
+    case AX_ROLE_DIALOG:
       return ATK_ROLE_DIALOG;
-    case ui::AX_ROLE_GENERIC_CONTAINER:
+    case AX_ROLE_GENERIC_CONTAINER:
       return ATK_ROLE_PANEL;
-    case ui::AX_ROLE_GROUP:
+    case AX_ROLE_GROUP:
       return ATK_ROLE_PANEL;
-    case ui::AX_ROLE_IGNORED:
+    case AX_ROLE_IGNORED:
       return ATK_ROLE_REDUNDANT_OBJECT;
-    case ui::AX_ROLE_IMAGE:
+    case AX_ROLE_IMAGE:
       return ATK_ROLE_IMAGE;
-    case ui::AX_ROLE_MENU_ITEM:
+    case AX_ROLE_MENU_ITEM:
       return ATK_ROLE_MENU_ITEM;
-    case ui::AX_ROLE_SCROLL_BAR:
+    case AX_ROLE_SCROLL_BAR:
       return ATK_ROLE_SCROLL_BAR;
-    case ui::AX_ROLE_SLIDER:
+    case AX_ROLE_SLIDER:
       return ATK_ROLE_SLIDER;
-    case ui::AX_ROLE_SPLITTER:
+    case AX_ROLE_SPLITTER:
       return ATK_ROLE_SEPARATOR;
-    case ui::AX_ROLE_STATIC_TEXT:
+    case AX_ROLE_STATIC_TEXT:
       return ATK_ROLE_TEXT;
-    case ui::AX_ROLE_TAB:
+    case AX_ROLE_TAB:
       return ATK_ROLE_PAGE_TAB;
-    case ui::AX_ROLE_TAB_LIST:
+    case AX_ROLE_TAB_LIST:
       return ATK_ROLE_PAGE_TAB_LIST;
-    case ui::AX_ROLE_TEXT_FIELD:
+    case AX_ROLE_TEXT_FIELD:
       return ATK_ROLE_ENTRY;
-    case ui::AX_ROLE_TOOLBAR:
+    case AX_ROLE_TOOLBAR:
       return ATK_ROLE_TOOL_BAR;
-    case ui::AX_ROLE_VIDEO:
+    case AX_ROLE_VIDEO:
 #if defined(ATK_CHECK_VERSION)
 #if ATK_CHECK_VERSION(2, 12, 0)
       return ATK_ROLE_VIDEO;
@@ -455,7 +442,7 @@ AtkRole AXPlatformNodeAuraLinux::GetAtkRole() {
 #else
       return ATK_ROLE_SECTION;
 #endif
-    case ui::AX_ROLE_WINDOW:
+    case AX_ROLE_WINDOW:
       return ATK_ROLE_WINDOW;
     default:
       return ATK_ROLE_UNKNOWN;
@@ -464,47 +451,46 @@ AtkRole AXPlatformNodeAuraLinux::GetAtkRole() {
 
 void AXPlatformNodeAuraLinux::GetAtkState(AtkStateSet* atk_state_set) {
   AXNodeData data = GetData();
-  if (data.HasState(ui::AX_STATE_DEFAULT))
+  if (data.HasState(AX_STATE_DEFAULT))
     atk_state_set_add_state(atk_state_set, ATK_STATE_DEFAULT);
-  if (data.HasState(ui::AX_STATE_EDITABLE))
+  if (data.HasState(AX_STATE_EDITABLE))
     atk_state_set_add_state(atk_state_set, ATK_STATE_EDITABLE);
-  if (data.HasState(ui::AX_STATE_EXPANDED))
+  if (data.HasState(AX_STATE_EXPANDED))
     atk_state_set_add_state(atk_state_set, ATK_STATE_EXPANDED);
-  if (data.HasState(ui::AX_STATE_FOCUSABLE))
+  if (data.HasState(AX_STATE_FOCUSABLE))
     atk_state_set_add_state(atk_state_set, ATK_STATE_FOCUSABLE);
 #if defined(ATK_CHECK_VERSION)
 #if ATK_CHECK_VERSION(2, 11, 2)
-  if (data.HasState(ui::AX_STATE_HASPOPUP))
+  if (data.HasState(AX_STATE_HASPOPUP))
     atk_state_set_add_state(atk_state_set, ATK_STATE_HAS_POPUP);
 #endif
 #endif
-  if (data.HasState(ui::AX_STATE_SELECTED))
+  if (data.HasState(AX_STATE_SELECTED))
     atk_state_set_add_state(atk_state_set, ATK_STATE_SELECTED);
-  if (data.HasState(ui::AX_STATE_SELECTABLE))
+  if (data.HasState(AX_STATE_SELECTABLE))
     atk_state_set_add_state(atk_state_set, ATK_STATE_SELECTABLE);
 
   // Checked state
-  const auto checked_state = static_cast<ui::AXCheckedState>(
-      GetIntAttribute(ui::AX_ATTR_CHECKED_STATE));
+  const auto checked_state =
+      static_cast<AXCheckedState>(GetIntAttribute(AX_ATTR_CHECKED_STATE));
   switch (checked_state) {
-    case ui::AX_CHECKED_STATE_MIXED:
+    case AX_CHECKED_STATE_MIXED:
       atk_state_set_add_state(atk_state_set, ATK_STATE_INDETERMINATE);
       break;
-    case ui::AX_CHECKED_STATE_TRUE:
-      atk_state_set_add_state(atk_state_set,
-                              data.role == ui::AX_ROLE_TOGGLE_BUTTON
-                                  ? ATK_STATE_PRESSED
-                                  : ATK_STATE_CHECKED);
+    case AX_CHECKED_STATE_TRUE:
+      atk_state_set_add_state(atk_state_set, data.role == AX_ROLE_TOGGLE_BUTTON
+                                                 ? ATK_STATE_PRESSED
+                                                 : ATK_STATE_CHECKED);
       break;
     default:
       break;
   }
 
-  switch (GetIntAttribute(ui::AX_ATTR_RESTRICTION)) {
-    case ui::AX_RESTRICTION_NONE:
+  switch (GetIntAttribute(AX_ATTR_RESTRICTION)) {
+    case AX_RESTRICTION_NONE:
       atk_state_set_add_state(atk_state_set, ATK_STATE_ENABLED);
       break;
-    case ui::AX_RESTRICTION_READ_ONLY:
+    case AX_RESTRICTION_READ_ONLY:
       // The following would require ATK 2.16 or later, which many
       // systems do not have. Since we aren't officially supporting ATK
       // it's best to leave this out rather than break people's builds:
@@ -538,8 +524,7 @@ gfx::NativeViewAccessible AXPlatformNodeAuraLinux::GetNativeViewAccessible() {
   return atk_object_;
 }
 
-void AXPlatformNodeAuraLinux::NotifyAccessibilityEvent(ui::AXEvent event_type) {
-}
+void AXPlatformNodeAuraLinux::NotifyAccessibilityEvent(AXEvent event_type) {}
 
 int AXPlatformNodeAuraLinux::GetIndexInParent() {
   return 0;

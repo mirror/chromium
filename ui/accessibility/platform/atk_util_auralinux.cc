@@ -134,7 +134,7 @@ static void atk_util_auralinux_init(AtkUtilAuraLinux *ax_util) {
 }
 
 static AtkObject* atk_util_auralinux_get_root() {
-  ui::AXPlatformNode* application = ui::AXPlatformNodeAuraLinux::application();
+  AXPlatformNode* application = AXPlatformNodeAuraLinux::application();
   if (application) {
     return application->GetNativeViewAccessible();
   }
