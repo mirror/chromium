@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f3922381_1d581ead",
+        "filename": "media/gpu/android_video_surface_chooser_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 1150472
+      },
+      "writtenOn": "2017-08-25T21:15:22Z",
+      "side": 1,
+      "message": "Can you clarify this statement?",
+      "range": {
+        "startLine": 248,
+        "startChar": 5,
+        "endLine": 250,
+        "endChar": 31
+      },
+      "revId": "b1397bbbfb39e01f3fa68f0e53d669e16aeadb46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb39e8aa_7bec4722",
+        "filename": "media/gpu/android_video_surface_chooser_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 1150472
+      },
+      "writtenOn": "2017-08-25T21:15:22Z",
+      "side": 1,
+      "message": "Is there a need to call SwitchToSurfaceTexture()?",
+      "range": {
+        "startLine": 252,
+        "startChar": 2,
+        "endLine": 252,
+        "endChar": 47
+      },
+      "revId": "b1397bbbfb39e01f3fa68f0e53d669e16aeadb46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f674dec_d8549c35",
+        "filename": "media/gpu/android_video_surface_chooser_impl_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 323,
+      "author": {
+        "id": 1150472
+      },
+      "writtenOn": "2017-08-25T21:15:22Z",
+      "side": 1,
+      "message": "s/swtiched/switched/",
+      "range": {
+        "startLine": 323,
+        "startChar": 57,
+        "endLine": 323,
+        "endChar": 65
+      },
+      "revId": "b1397bbbfb39e01f3fa68f0e53d669e16aeadb46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
