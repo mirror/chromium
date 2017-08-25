@@ -25,6 +25,7 @@ namespace {
 const base::Time kSomeDate = base::Time::FromDoubleT(1484505871);
 const base::Time kSomeLaterDate = base::Time::FromDoubleT(1497552271);
 
+using chrome_test_util::ButtonWithAccessibilityLabel;
 using chrome_test_util::ButtonWithAccessibilityLabelId;
 
 // URLs of the test pages.
@@ -76,8 +77,7 @@ const char kContactDetailsFreeShippingPage[] =
       performAction:grey_replaceText(@"123")];
 
   // Tap the confirm button.
-  [[EarlGrey
-      selectElementWithMatcher:ButtonWithAccessibilityLabelId(IDS_ACCNAME_OK)]
+  [[EarlGrey selectElementWithMatcher:ButtonWithAccessibilityLabel(@"Confirm")]
       performAction:grey_tap()];
 }
 

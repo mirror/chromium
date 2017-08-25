@@ -25,6 +25,7 @@
 #endif
 
 namespace {
+using chrome_test_util::ButtonWithAccessibilityLabel;
 using chrome_test_util::ButtonWithAccessibilityLabelId;
 using chrome_test_util::GetCurrentWebState;
 
@@ -79,8 +80,7 @@ const char kRequestEmailPage[] =
       performAction:grey_replaceText(@"123")];
 
   // Tap the confirm button.
-  [[EarlGrey
-      selectElementWithMatcher:ButtonWithAccessibilityLabelId(IDS_ACCNAME_OK)]
+  [[EarlGrey selectElementWithMatcher:ButtonWithAccessibilityLabel(@"Confirm")]
       performAction:grey_tap()];
 
   // Test that the card details were sent to the merchant.
@@ -146,8 +146,7 @@ const char kRequestEmailPage[] =
       performAction:grey_replaceText(@"123")];
 
   // Tap the confirm button.
-  [[EarlGrey
-      selectElementWithMatcher:ButtonWithAccessibilityLabelId(IDS_ACCNAME_OK)]
+  [[EarlGrey selectElementWithMatcher:ButtonWithAccessibilityLabel(@"Confirm")]
       performAction:grey_tap()];
 
   // Test that the billing address was sent to the merchant.
@@ -199,8 +198,7 @@ const char kRequestEmailPage[] =
       performAction:grey_replaceText(@"123")];
 
   // Tap the confirm button.
-  [[EarlGrey
-      selectElementWithMatcher:ButtonWithAccessibilityLabelId(IDS_ACCNAME_OK)]
+  [[EarlGrey selectElementWithMatcher:ButtonWithAccessibilityLabel(@"Confirm")]
       performAction:grey_tap()];
 
   // Test that the contact details were sent to the merchant.
@@ -233,8 +231,7 @@ const char kRequestEmailPage[] =
       performAction:grey_replaceText(@"123")];
 
   // Tap the confirm button.
-  [[EarlGrey
-      selectElementWithMatcher:ButtonWithAccessibilityLabelId(IDS_ACCNAME_OK)]
+  [[EarlGrey selectElementWithMatcher:ButtonWithAccessibilityLabel(@"Confirm")]
       performAction:grey_tap()];
 
   // Test that the contact details were sent to the merchant.
