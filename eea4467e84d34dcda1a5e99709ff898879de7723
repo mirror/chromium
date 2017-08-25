@@ -1,0 +1,182 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e2fbd235_9be393ee",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 11
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-08-25T15:58:18Z",
+      "side": 1,
+      "message": "configuration",
+      "range": {
+        "startLine": 11,
+        "startChar": 33,
+        "endLine": 11,
+        "endChar": 47
+      },
+      "revId": "eea4467e84d34dcda1a5e99709ff898879de7723",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c836a40_ff124dba",
+        "filename": "net/BUILD.gn",
+        "patchSetId": 11
+      },
+      "lineNbr": 5367,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-08-25T15:58:18Z",
+      "side": 1,
+      "message": "What does this do?",
+      "range": {
+        "startLine": 5367,
+        "startChar": 4,
+        "endLine": 5367,
+        "endChar": 19
+      },
+      "revId": "eea4467e84d34dcda1a5e99709ff898879de7723",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b316b09_733d45c4",
+        "filename": "net/test/net_test_suite.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-08-25T15:58:18Z",
+      "side": 1,
+      "message": "I think it\u0027s cleaner to make TestServerConfig::Get() return nullptr when we can\u0027t get a config, and do nothing here in that case, rather than relying on defaults, particularly as that will always be the case on desktop.\n\nOr better, maybe just use this on Fuchia?  Given that we only care about this on one platform, and so few tests actually use the SpawnedTestServer, I\u0027m not sure we want to add extra file IO to every network test.\n\nOr better still, only 3 net unittest files even use SpawnedTestServer.  Just add the rule to them, to their own MockHostResolvers?  I\u0027m not a huge fan of adding magic here, due to lack of discoverability, unless it\u0027s needed for a larger number of tests.",
+      "range": {
+        "startLine": 73,
+        "startChar": 29,
+        "endLine": 73,
+        "endChar": 32
+      },
+      "revId": "eea4467e84d34dcda1a5e99709ff898879de7723",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3edab59_5efb05ec",
+        "filename": "net/test/spawned_test_server/test_server_config.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-08-25T15:58:18Z",
+      "side": 1,
+      "message": "Per above, I think so few tests use that that we get basically nothing from making this a singleton.\n\nI think it would be cleaner to have something like:\n\nstd::unique_ptr\u003cTestServerConfig\u003e TestServerConfig::Load()",
+      "range": {
+        "startLine": 36,
+        "startChar": 30,
+        "endLine": 36,
+        "endChar": 0
+      },
+      "revId": "eea4467e84d34dcda1a5e99709ff898879de7723",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60978ee8_fcbf4e93",
+        "filename": "net/test/spawned_test_server/test_server_config.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-08-25T15:58:18Z",
+      "side": 1,
+      "message": "Any reason not to make this a CHECK instead?  Code is a little simpler.",
+      "range": {
+        "startLine": 84,
+        "startChar": 20,
+        "endLine": 84,
+        "endChar": 31
+      },
+      "revId": "eea4467e84d34dcda1a5e99709ff898879de7723",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81d05417_cbb18833",
+        "filename": "net/test/spawned_test_server/test_server_config.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-08-25T15:58:18Z",
+      "side": 1,
+      "message": "CHECK(name_ !\u003d \"localhost\" || address_ \u003d\u003d IPAddress::IPv4Localhost());\n\nMaking localhost map to anything else is just asking for trouble.",
+      "revId": "eea4467e84d34dcda1a5e99709ff898879de7723",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d36475f_33c4eabe",
+        "filename": "net/test/spawned_test_server/test_server_config.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-08-25T15:58:18Z",
+      "side": 1,
+      "message": "Should make it clear this is only for the RemoteTestServer.",
+      "range": {
+        "startLine": 18,
+        "startChar": 25,
+        "endLine": 18,
+        "endChar": 33
+      },
+      "revId": "eea4467e84d34dcda1a5e99709ff898879de7723",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cdc1c2a6_dafb5123",
+        "filename": "net/test/spawned_test_server/test_server_config.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-08-25T15:58:18Z",
+      "side": 1,
+      "message": "SpawnedTestServerConfig or RemoteTestServerConfig.",
+      "range": {
+        "startLine": 39,
+        "startChar": 22,
+        "endLine": 39,
+        "endChar": 23
+      },
+      "revId": "eea4467e84d34dcda1a5e99709ff898879de7723",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
