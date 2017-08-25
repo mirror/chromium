@@ -22,6 +22,30 @@
       "revId": "fca309bf8269d73b2b53267f400a5ec6009f0701",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95cebf48_50232498",
+        "filename": "components/exo/surface.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 722,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-08-25T14:15:55Z",
+      "side": 1,
+      "message": "Good call. It can be empty if current_resource_.id is 0. Let\u0027s land a quick fix that protects makes this preScale call with a conditional.",
+      "parentUuid": "43102d7c_df95510f",
+      "range": {
+        "startLine": 721,
+        "startChar": 0,
+        "endLine": 722,
+        "endChar": 61
+      },
+      "revId": "fca309bf8269d73b2b53267f400a5ec6009f0701",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
