@@ -479,6 +479,11 @@ void TabStrip::RemoveTabAt(content::WebContents* contents, int model_index) {
   }
 }
 
+const TabRendererData& TabStrip::GetTabData(int model_index) const {
+  Tab* tab = tab_at(model_index);
+  return tab->data();
+}
+
 void TabStrip::SetTabData(int model_index, const TabRendererData& data) {
   Tab* tab = tab_at(model_index);
   bool pinned_state_changed = tab->data().pinned != data.pinned;

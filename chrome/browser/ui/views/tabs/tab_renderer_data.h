@@ -46,6 +46,10 @@ struct CHROME_VIEWS_EXPORT TabRendererData {
   bool blocked;
   bool app;
   TabAlertState alert_state;
+  // Indicates whether or not the tab has ever been the active tab.
+  bool was_active;
+  // Indicates whether or not the tab was created as part of a session restore.
+  bool created_by_session_restore;
 };
 
 #endif  // CHROME_BROWSER_UI_VIEWS_TABS_TAB_RENDERER_DATA_H_

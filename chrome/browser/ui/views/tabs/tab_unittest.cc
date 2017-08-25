@@ -462,6 +462,36 @@ TEST_F(TabTest, LayeredThrobber) {
   tab.SetData(data);
   EXPECT_FALSE(throbber->visible());
 
+  // Simulate a session restore tab load that never gets selected. It should
+  // never paint.
+  data.created_by_session_restore = true;
+  tab.SetData(data);
+  EXPECT_FALSE(throbber->visible());
+  data.network_state = TabRendererData::NETWORK_STATE_WAITING;
+  tab.SetData(data);
+  EXPECT_FALSE(throbber->visible());
+  data.network_state = TabRendererData::NETWORK_STATE_LOADING;
+  tab.SetData(data);
+  EXPECT_FALSE(throbber->visible());
+  data.network_state = TabRendererData::NETWORK_STATE_NONE;
+  tab.SetData(data);
+  EXPECT_FALSE(throbber->visible());
+
+  // Simulate a session restore tab that has been or is active. It should paint.
+  data.was_active = true;
+  data.network_state = TabRendererData::NETWORK_STATE_WAITING;
+  tab.SetData(data);
+  EXPECT_TRUE(tab_controller.CanPaintThrobberToLayer());
+  EXPECT_TRUE(throbber->visible());
+  EXPECT_TRUE(throbber->layer());
+  data.network_state = TabRendererData::NETWORK_STATE_LOADING;
+  tab.SetData(data);
+  EXPECT_TRUE(throbber->visible());
+  EXPECT_TRUE(throbber->layer());
+  data.network_state = TabRendererData::NETWORK_STATE_NONE;
+  tab.SetData(data);
+  EXPECT_FALSE(throbber->visible());
+
   // After loading is done, simulate another resource starting to load.
   data.network_state = TabRendererData::NETWORK_STATE_WAITING;
   tab.SetData(data);
