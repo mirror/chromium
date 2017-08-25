@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1eb58ee1_17580388",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_length_utils.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 531,
+      "author": {
+        "id": 1111894
+      },
+      "writtenOn": "2017-08-25T19:56:10Z",
+      "side": 1,
+      "message": "Moved this out of the header, since min() and max() require \u003calgorithm\u003e",
+      "revId": "3824678d8d448aa95d79e5fce3c3ec27b84801f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
