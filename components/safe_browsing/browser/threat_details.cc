@@ -8,9 +8,9 @@
 
 #include <stddef.h>
 #include <stdint.h>
+#include <list>
 #include <unordered_set>
 #include <vector>
-
 #include "base/bind.h"
 #include "base/lazy_instance.h"
 #include "base/metrics/histogram_macros.h"
@@ -748,6 +748,17 @@ void ThreatDetails::OnCacheCollectionReady() {
     DLOG(ERROR) << "Unable to serialize the threat report.";
     return;
   }
+  // Register the data for the WebUI
+  client_report_request_.set_type(report_->type());
+  client_report_request_.set_page_url(report_->page_url());
+  client_report_request_.set_client_country(report_->client_country());
+  client_report_request_.set_repeat_visit(report_->repeat_visit());
+  client_report_request_.set_did_proceed(report_->did_proceed());
+
+  BrowserThread::PostTask(
+      content::BrowserThread::UI, FROM_HERE,
+      base::BindOnce(&SafeBrowsingUIHandler::AddSerializedThreatDetail,
+                     client_report_request_));
   ui_manager_->SendSerializedThreatDetails(serialized);
 }
 

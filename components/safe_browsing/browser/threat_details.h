@@ -11,9 +11,11 @@
 // An instance of this class is generated when a safe browsing warning page
 // is shown (SafeBrowsingBlockingPage).
 
+#include <list>
 #include <memory>
 #include <string>
 #include <unordered_set>
+#include <utility>
 #include <vector>
 
 #include "base/containers/hash_tables.h"
@@ -22,6 +24,7 @@
 #include "base/memory/ref_counted.h"
 #include "components/safe_browsing/common/safebrowsing_types.h"
 #include "components/safe_browsing/proto/csd.pb.h"
+#include "components/safe_browsing/web_ui/safe_browsing_ui.h"
 #include "components/security_interstitials/content/unsafe_resource.h"
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/web_contents_observer.h"
@@ -100,6 +103,8 @@ class ThreatDetails : public base::RefCountedThreadSafe<
   // content::WebContentsObserver implementation.
   bool OnMessageReceived(const IPC::Message& message,
                          content::RenderFrameHost* render_frame_host) override;
+
+  ClientSafeBrowsingReportRequest client_report_request_;
 
  protected:
   friend class ThreatDetailsFactoryImpl;
