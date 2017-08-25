@@ -88,6 +88,7 @@ void IOSChromeUnitTestSuite::Initialize() {
   ios::RegisterPathProvider();
   ui::RegisterPathProvider();
   url::AddStandardScheme(kChromeUIScheme, url::SCHEME_WITHOUT_PORT);
-  ContentSettingsPattern::SetNonWildcardDomainNonPortScheme(
-      kDummyExtensionScheme);
+  const char* const schemes[] = {};
+  ContentSettingsPattern::SetNonWildcardDomainNonPortSchemes(
+      schemes, arraysize(schemes));
 }
