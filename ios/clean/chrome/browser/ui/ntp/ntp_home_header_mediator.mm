@@ -156,6 +156,16 @@
       self.headerProvider.logoVendor.showingLogo, self.promoCanShow, NO);
 }
 
+#pragma mark - ChromeBroadcastObserver
+
+- (void)broadcastSelectedNTPPanel:(ntp_home::PanelIdentifier)panelIdentifier {
+  self.isShowing = panelIdentifier == ntp_home::kHomePanel;
+}
+
+- (void)broadcastTest:(BOOL)visible {
+  self.isShowing = visible;
+}
+
 #pragma mark - Private
 
 - (void)shiftCollectionDown {

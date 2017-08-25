@@ -112,11 +112,17 @@
 - (void)locationBarHasBecomeFirstResponder {
   // TODO(crbug.com/708341): Implement this method or edit this comment with an
   // explanation of what this method needs to do.
+  [[NSNotificationCenter defaultCenter]
+      postNotificationName:@"kLocationBarBecomesFirstResponderNotification"
+                    object:nil];
 }
 
 - (void)locationBarHasResignedFirstResponder {
   // TODO(crbug.com/708341): Implement this method or edit this comment with an
   // explanation of what this method needs to do.
+  [[NSNotificationCenter defaultCenter]
+      postNotificationName:@"kLocationBarResignsFirstResponderNotification"
+                    object:nil];
 }
 
 - (void)locationBarBeganEdit {

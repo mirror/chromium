@@ -4,8 +4,10 @@
 
 #import "ios/clean/chrome/browser/ui/ntp/ntp_home_header_coordinator.h"
 
+#import "ios/chrome/browser/ui/browser_list/browser.h"
 #import "ios/clean/chrome/browser/ui/ntp/ntp_home_header_mediator.h"
 #import "ios/clean/chrome/browser/ui/ntp/ntp_home_header_view_controller.h"
+#import "ios/shared/chrome/browser/ui/broadcaster/chrome_broadcaster.h"
 
 #if !defined(__has_feature) || !__has_feature(objc_arc)
 #error "This file requires ARC support."
@@ -57,11 +59,22 @@
   self.mediator.headerConsumer = self.viewController;
   self.mediator.alerter = self;
 
+  [self.browser->broadcaster()
+      addObserver:self.mediator
+      forSelector:@selector(broadcastSelectedNTPPanel:)];
+  [self.browser->broadcaster() addObserver:self.mediator
+                               forSelector:@selector(broadcastTest:)];
+
   [super start];
 }
 
 - (void)stop {
   [super stop];
+  [self.browser->broadcaster()
+      removeObserver:self.mediator
+         forSelector:@selector(broadcastSelectedNTPPanel:)];
+  [self.browser->broadcaster() removeObserver:self.mediator
+                                  forSelector:@selector(broadcastTest:)];
   self.mediator = nil;
   self.viewController = nil;
 }
