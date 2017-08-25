@@ -16,6 +16,24 @@
       "revId": "bb8b6f7016b7cc3d479a107e892958b5b51ff1c5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eaa71dbb_9451accc",
+        "filename": "media/midi/task_service.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-08-25T19:59:36Z",
+      "side": 1,
+      "message": "toyoshim: Is the lifetime of this object (creation and destruction) also guaranteed to be on the same sequence as BindInstance() and UnbindInstance()? If so, we can strengthen this check to apply to the destructor, BindInstance() and UnbindInstance().",
+      "parentUuid": "e98fb73d_a4612cef",
+      "revId": "bb8b6f7016b7cc3d479a107e892958b5b51ff1c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
