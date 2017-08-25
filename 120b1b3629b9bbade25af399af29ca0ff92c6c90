@@ -39,6 +39,30 @@
       "revId": "120b1b3629b9bbade25af399af29ca0ff92c6c90",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e75744f0_9b85b63d",
+        "filename": "build/fuchsia/runner_common.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 305,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-08-25T17:10:30Z",
+      "side": 1,
+      "message": "I was not aware of your machine getting slammed.\n\nI can (fairly easily) make this considerably more efficient in the common case, so I think I\u0027ll spend the time to do that, rather than work around it with an increased timeout - watch this space!",
+      "parentUuid": "8bb58a81_4f16afa2",
+      "range": {
+        "startLine": 305,
+        "startChar": 27,
+        "endLine": 305,
+        "endChar": 54
+      },
+      "revId": "120b1b3629b9bbade25af399af29ca0ff92c6c90",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
