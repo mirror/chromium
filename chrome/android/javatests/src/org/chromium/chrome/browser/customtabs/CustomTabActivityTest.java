@@ -46,6 +46,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import org.hamcrest.Matchers;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -1116,6 +1117,7 @@ public class CustomTabActivityTest {
         final AtomicReference<Long> firstContentfulPaintMs = new AtomicReference<>(-1L);
         final AtomicReference<Long> activityStartTimeMs = new AtomicReference<>(-1L);
         final AtomicReference<Long> loadEventStartMs = new AtomicReference<>(-1L);
+        final AtomicReference<Long> effectiveConnectionType = new AtomicReference<>(-1L);
 
         CustomTabsCallback cb = new CustomTabsCallback() {
             @Override
@@ -1124,8 +1126,13 @@ public class CustomTabActivityTest {
 
                 long navigationStart = args.getLong(PageLoadMetrics.NAVIGATION_START, -1);
                 long current = SystemClock.uptimeMillis();
-                Assert.assertTrue(navigationStart <= current);
-                Assert.assertTrue(navigationStart >= activityStartTimeMs.get());
+                if (navigationStart > 0) {
+                    Assert.assertTrue(navigationStart <= current);
+                    Assert.assertTrue(navigationStart >= activityStartTimeMs.get());
+                } else {
+                    Assert.assertThat(
+                            args.getLong(PageLoadMetrics.RESPONSE_START), Matchers.greaterThan(0L));
+                }
 
                 long firstContentfulPaint =
                         args.getLong(PageLoadMetrics.FIRST_CONTENTFUL_PAINT, -1);
@@ -1138,6 +1145,12 @@ public class CustomTabActivityTest {
                 if (loadEventStart > 0) {
                     Assert.assertTrue(loadEventStart <= (current - navigationStart));
                     loadEventStartMs.set(loadEventStart);
+                }
+
+                long connectionType = args.getLong(PageLoadMetrics.EFFECTIVE_CONNECTION_TYPE, -1);
+                if (connectionType > 0) {
+                    // The effective connection type should not be unknown.
+                    effectiveConnectionType.set(connectionType);
                 }
             }
         };
@@ -1163,6 +1176,12 @@ public class CustomTabActivityTest {
                 @Override
                 public boolean isSatisfied() {
                     return loadEventStartMs.get() > 0;
+                }
+            });
+            CriteriaHelper.pollInstrumentationThread(new Criteria() {
+                @Override
+                public boolean isSatisfied() {
+                    return effectiveConnectionType.get() > 0;
                 }
             });
         } catch (InterruptedException e) {
