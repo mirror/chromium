@@ -373,6 +373,24 @@
     },
     {
       "key": {
+        "uuid": "24fa4e85_0204338b",
+        "filename": "tools/battor_agent/battor_connection_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 360,
+      "author": {
+        "id": 1128909
+      },
+      "writtenOn": "2017-08-25T16:06:11Z",
+      "side": 1,
+      "message": "Yep, exactly.",
+      "parentUuid": "b3d44e9e_c08772b2",
+      "revId": "79308754b183d64b12b13d1fc5acc07eae88cae5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "df605e2e_7943d0a1",
         "filename": "tools/battor_agent/battor_connection_impl_unittest.cc",
         "patchSetId": 4
