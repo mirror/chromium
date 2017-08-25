@@ -329,9 +329,6 @@ class Surface : public ui::PropertyHandler {
   // The buffer that is currently set as content of surface.
   BufferAttachment current_buffer_;
 
-  // The last resource that was sent to a surface.
-  viz::TransferableResource current_resource_;
-
   // Whether the last resource that was sent to a surface has an alpha channel.
   bool current_resource_has_alpha_ = false;
 

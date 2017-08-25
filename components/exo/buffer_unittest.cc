@@ -43,22 +43,34 @@ TEST_F(BufferTest, ReleaseCallback) {
       base::Bind(&Release, base::Unretained(&release_call_count)));
 
   buffer->OnAttach();
-  viz::TransferableResource resource;
   // Produce a transferable resource for the contents of the buffer.
-  bool rv = buffer->ProduceTransferableResource(frame_sink_holder, false, true,
-                                                &resource);
+  bool rv = buffer->ProduceTransferableResource(frame_sink_holder, false, true);
   ASSERT_TRUE(rv);
+  ASSERT_NE(buffer->resource().id, 0u);
+  ASSERT_TRUE(buffer->is_resource_registered());
 
   // Release buffer.
   viz::ReturnedResource returned_resource;
-  returned_resource.id = resource.id;
-  returned_resource.sync_token = resource.mailbox_holder.sync_token;
+  returned_resource.id = buffer->resource().id;
+  returned_resource.sync_token = buffer->resource().mailbox_holder.sync_token;
   returned_resource.lost = false;
   std::vector<viz::ReturnedResource> resources = {returned_resource};
   frame_sink_holder->ReclaimResources(resources);
 
   RunAllPendingInMessageLoop();
   ASSERT_EQ(release_call_count, 0);
+  ASSERT_NE(buffer->resource().id, 0u);
+  ASSERT_FALSE(buffer->is_resource_registered());
+
+  // Register the transferable resource again.
+  buffer->RegisterTransferableResource(frame_sink_holder);
+  ASSERT_TRUE(buffer->is_resource_registered());
+
+  frame_sink_holder->ReclaimResources(resources);
+  RunAllPendingInMessageLoop();
+  ASSERT_EQ(release_call_count, 0);
+  ASSERT_NE(buffer->resource().id, 0u);
+  ASSERT_FALSE(buffer->is_resource_registered());
 
   buffer->OnDetach();
 
@@ -77,10 +89,9 @@ TEST_F(BufferTest, IsLost) {
 
   buffer->OnAttach();
   // Acquire a texture transferable resource for the contents of the buffer.
-  viz::TransferableResource resource;
-  bool rv = buffer->ProduceTransferableResource(frame_sink_holder, false, true,
-                                                &resource);
+  bool rv = buffer->ProduceTransferableResource(frame_sink_holder, false, true);
   ASSERT_TRUE(rv);
+  ASSERT_NE(buffer->resource().id, 0u);
 
   scoped_refptr<viz::ContextProvider> context_provider =
       aura::Env::GetInstance()
@@ -95,7 +106,7 @@ TEST_F(BufferTest, IsLost) {
   // Release buffer.
   bool is_lost = true;
   viz::ReturnedResource returned_resource;
-  returned_resource.id = resource.id;
+  returned_resource.id = buffer->resource().id;
   returned_resource.sync_token = gpu::SyncToken();
   returned_resource.lost = is_lost;
   std::vector<viz::ReturnedResource> resources = {returned_resource};
@@ -104,14 +115,13 @@ TEST_F(BufferTest, IsLost) {
 
   // Producing a new texture transferable resource for the contents of the
   // buffer.
-  viz::TransferableResource new_resource;
-  rv = buffer->ProduceTransferableResource(frame_sink_holder, false, false,
-                                           &new_resource);
+  rv = buffer->ProduceTransferableResource(frame_sink_holder, false, false);
   ASSERT_TRUE(rv);
+  ASSERT_NE(buffer->resource().id, 0u);
   buffer->OnDetach();
 
   viz::ReturnedResource returned_resource2;
-  returned_resource2.id = new_resource.id;
+  returned_resource2.id = buffer->resource().id;
   returned_resource2.sync_token = gpu::SyncToken();
   returned_resource2.lost = false;
   std::vector<viz::ReturnedResource> resources2 = {returned_resource2};
@@ -133,10 +143,9 @@ TEST_F(BufferTest, OnLostResources) {
 
   buffer->OnAttach();
   // Acquire a texture transferable resource for the contents of the buffer.
-  viz::TransferableResource resource;
-  bool rv = buffer->ProduceTransferableResource(frame_sink_holder, false, true,
-                                                &resource);
+  bool rv = buffer->ProduceTransferableResource(frame_sink_holder, false, true);
   ASSERT_TRUE(rv);
+  ASSERT_NE(buffer->resource().id, 0u);
 
   static_cast<ui::InProcessContextFactory*>(
       aura::Env::GetInstance()->context_factory())
