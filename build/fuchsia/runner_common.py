@@ -16,13 +16,12 @@ import shutil
 import signal
 import subprocess
 import sys
-import tempfile
 
 
 DIR_SOURCE_ROOT = os.path.abspath(
     os.path.join(os.path.dirname(__file__), os.pardir, os.pardir))
 SDK_ROOT = os.path.join(DIR_SOURCE_ROOT, 'third_party', 'fuchsia-sdk')
-SYMBOLIZATION_TIMEOUT_SECS = 10
+SYMBOLIZATION_TIMEOUT_SECS = 20
 
 # The guest will get 192.168.3.9 from DHCP, while the host will be
 # accessible as 192.168.3.2 .
@@ -123,7 +122,7 @@ def _ExpandDirectories(file_mapping, mapper):
 def _StripBinary(dry_run, bin_path):
   """Creates a stripped copy of the executable at |bin_path| and returns the
   path to the stripped copy."""
-  strip_path = tempfile.mktemp()
+  strip_path = bin_path + '.bootfs_stripped'
   _RunAndCheck(dry_run, ['/usr/bin/strip', bin_path, '-o', strip_path])
   if not dry_run and not os.path.exists(strip_path):
     raise Exception('strip did not create output file')
@@ -133,13 +132,14 @@ def _StripBinary(dry_run, bin_path):
 def _StripBinaries(dry_run, file_mapping):
   """Strips all executables in |file_mapping|, and returns a new mapping
   dictionary, suitable to pass to _WriteManifest()"""
-  new_mapping = file_mapping.copy()
+  symbols_mapping = {}
   for target, source in file_mapping.iteritems():
     with open(source, 'rb') as f:
       file_tag = f.read(4)
     if file_tag == '\x7fELF':
-      new_mapping[target] = _StripBinary(dry_run, source)
-  return new_mapping
+      symbols_mapping[target] = source
+      file_mapping[target] = _StripBinary(dry_run, source)
+  return symbols_mapping
 
 
 def _WriteManifest(manifest_file, file_mapping):
@@ -165,7 +165,7 @@ def BuildBootfs(output_directory, runtime_deps, bin_name, child_args,
   file_mapping = dict(runtime_deps)
 
   # Generate a script that runs the binaries and shuts down QEMU (if used).
-  autorun_file = tempfile.NamedTemporaryFile()
+  autorun_file = open(bin_name + '.bootfs_autorun', 'w')
   autorun_file.write('#!/bin/sh\n')
   if _IsRunningOnBot():
     # We drop to -smp 1 to avoid counterintuitive observations on the realtime
@@ -211,11 +211,11 @@ def BuildBootfs(output_directory, runtime_deps, bin_name, child_args,
       lambda x: _MakeTargetImageName(DIR_SOURCE_ROOT, output_directory, x))
 
   # Strip any binaries in the file list, and generate a manifest mapping.
-  manifest_mapping = _StripBinaries(dry_run, file_mapping)
+  symbols_mapping = _StripBinaries(dry_run, file_mapping)
 
   # Write the target, source mappings to a file suitable for bootfs.
-  manifest_file = tempfile.NamedTemporaryFile()
-  _WriteManifest(manifest_file.file, manifest_mapping)
+  manifest_file = open(bin_name + '.bootfs_manifest', 'w')
+  _WriteManifest(manifest_file, file_mapping)
   manifest_file.flush()
   _DumpFile(dry_run, manifest_file.name, 'manifest')
 
@@ -230,7 +230,7 @@ def BuildBootfs(output_directory, runtime_deps, bin_name, child_args,
     return None
 
   # Return both the name of the bootfs file, and the filename mapping.
-  return (bootfs_name, file_mapping)
+  return (bootfs_name, symbols_mapping)
 
 
 def _SymbolizeEntry(entry):
