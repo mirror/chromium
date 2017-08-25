@@ -116,6 +116,36 @@ def ReadHistogramValues(filename, start_marker, end_marker, strip_k_prefix):
   return result
 
 
+def ReadHistogramValuesFromXML(filename, value_attribute, label_attribute):
+  """Creates a dictionary of enum values, read from an XML file.
+
+  Args:
+      filename: The unix-style path (relative to src/) of the file to open.
+      value_attribute: The attribute name in source XML that would be mapped to
+          |value| attributes in enums.xml.
+      label_attribute: The attribute name in source XML that would be mapped to
+          |label| attributes in enums.xml.
+
+  Returns:
+      A boolean indicating wheather the histograms.xml file would be changed.
+
+  Raises:
+      DuplicatedValue: An error when two enum labels share the same value.
+  """
+  # Read the file as a list of lines
+  source_xml = minidom.parse(path_util.GetInputFile(filename))
+  result = {}
+  for row in source_xml.documentElement.childNodes:
+    if row.nodeType == minidom.Node.ELEMENT_NODE:
+      enum_value = int(row.getAttribute(value_attribute))
+      label = row.getAttribute(label_attribute)
+      # If two enum labels have the same value
+      if enum_value in result:
+        raise DuplicatedValue(result[enum_value], label)
+      result[enum_value] = label
+  return result
+
+
 def CreateEnumItemNode(document, value, label):
   """Creates an int element to append to an enum."""
   item_node = document.createElement('int')
@@ -276,6 +306,28 @@ def UpdateHistogramEnum(histogram_enum_name, source_enum_path,
   Log('Reading histogram enum definition from "{0}".'.format(source_enum_path))
   source_enum_values = ReadHistogramValues(source_enum_path,
       start_marker, end_marker, strip_k_prefix)
+
+  UpdateHistogramFromDict(histogram_enum_name, source_enum_values,
+      source_enum_path)
+
+
+def UpdateHistogramEnumFromXML(histogram_enum_name, source_enum_path,
+                               value_attribute, label_attribute):
+  """Reads a .xml file and updates histograms.xml to match.
+
+  Args:
+      histogram_enum_name: The name of the XML <enum> attribute to update.
+      source_enum_path: A unix-style path, relative to src/, giving
+          the XML file from which to read the enum.
+      value_attribute: The attribute name in source XML that would be mapped to
+          |value| attributes in enums.xml.
+      label_attribute: The attribute name in source XML that would be mapped to
+          |label| attributes in enums.xml.
+  """
+
+  Log('Reading histogram enum definition from "{0}".'.format(source_enum_path))
+  source_enum_values = ReadHistogramValuesFromXML(
+      source_enum_path, value_attribute, label_attribute)
 
   UpdateHistogramFromDict(histogram_enum_name, source_enum_values,
       source_enum_path)
