@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "082f70bd_8221f368",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/resources/access-control-auth-basic.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-08-25T00:59:38Z",
+      "side": 1,
+      "message": "Why WebKit?",
+      "revId": "74a227ed79fb3cf999fa63f27ebc20d235b37973",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
