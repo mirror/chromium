@@ -43,9 +43,19 @@ void NotificationRemover::OnCacheBecameEmpty() {
   notification_presenter_->RemovePotentialHotspotNotification();
 }
 
-void NotificationRemover::DefaultNetworkChanged(const NetworkState* network) {
-  if (network)
+void NotificationRemover::NetworkConnectionStateChanged(
+    const NetworkState* network) {
+  // Note: If a network is active (i.e., connecting or connected), it will be
+  // returned at the front of the list, so using FirstNetworkByType() guarantees
+  // that we will find an active network if there is one.
+  const chromeos::NetworkState* possibly_active_network =
+      network_state_handler_->FirstNetworkByType(
+          chromeos::NetworkTypePattern::Default());
+  if (possibly_active_network &&
+      (possibly_active_network->IsConnectingState() ||
+       possibly_active_network->IsConnectedState())) {
     notification_presenter_->RemovePotentialHotspotNotification();
+  }
 }
 
 void NotificationRemover::OnActiveHostChanged(

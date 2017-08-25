@@ -49,6 +49,7 @@ class TetherNotificationPresenter
       const cryptauth::RemoteDevice& remote_device,
       int signal_strength) override;
   void NotifyMultiplePotentialHotspotsNearby() override;
+  bool IsPotentialHotspotsNearbyNotificationShowing() override;
   void RemovePotentialHotspotNotification() override;
   void NotifySetupRequired(const std::string& device_name) override;
   void RemoveSetupRequiredNotification() override;

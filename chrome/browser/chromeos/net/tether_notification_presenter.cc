@@ -187,6 +187,12 @@ void TetherNotificationPresenter::NotifyMultiplePotentialHotspotsNearby() {
           IDS_TETHER_NOTIFICATION_WIFI_AVAILABLE_MULTIPLE_DEVICES_MESSAGE)));
 }
 
+bool TetherNotificationPresenter::
+    IsPotentialHotspotsNearbyNotificationShowing() {
+  return message_center_->FindVisibleNotificationById(
+      kPotentialHotspotNotificationId);
+}
+
 void TetherNotificationPresenter::RemovePotentialHotspotNotification() {
   RemoveNotificationIfVisible(kPotentialHotspotNotificationId);
 }

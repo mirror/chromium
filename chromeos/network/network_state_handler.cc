@@ -395,24 +395,46 @@ const NetworkState* NetworkStateHandler::FirstNetworkByType(
   if (!network_list_sorted_)
     SortNetworkList();  // Sort to ensure visible networks are listed first.
 
-  // If |type| matches Tether networks and at least one Tether network is
-  // present, return the first network (since it has been sorted already).
+  const NetworkState* network = nullptr;
+  for (auto iter = network_list_.begin(); iter != network_list_.end(); ++iter) {
+    const NetworkState* curr_network = (*iter)->AsNetworkState();
+    DCHECK(curr_network);
+    if (!curr_network->update_received())
+      continue;
+    if (!curr_network->visible())
+      break;
+    if (curr_network->Matches(type)) {
+      network = curr_network;
+      break;
+    }
+  }
+
+  // Active Ethernet networks are the highest priority.
+  if (network && network->type() == shill::kTypeEthernet &&
+      (network->IsConnectingState() || network->IsConnectedState())) {
+    return network;
+  }
+
+  // Active Tether networks are next.
+  if (type.MatchesPattern(NetworkTypePattern::Tether()) &&
+      !tether_network_list_.empty() &&
+      (tether_network_list_[0]->AsNetworkState()->IsConnectingState() ||
+       tether_network_list_[0]->AsNetworkState()->IsConnectedState())) {
+    return tether_network_list_[0]->AsNetworkState();
+  }
+
+  // Other active networks are next.
+  if (network && (network->IsConnectingState() || network->IsConnectedState()))
+    return network;
+
+  // Non-active Tether networks are next.
   if (type.MatchesPattern(NetworkTypePattern::Tether()) &&
       !tether_network_list_.empty()) {
     return tether_network_list_[0]->AsNetworkState();
   }
 
-  for (auto iter = network_list_.begin(); iter != network_list_.end(); ++iter) {
-    const NetworkState* network = (*iter)->AsNetworkState();
-    DCHECK(network);
-    if (!network->update_received())
-      continue;
-    if (!network->visible())
-      break;
-    if (network->Matches(type))
-      return network;
-  }
-  return nullptr;
+  // Other networks are last.
+  return network;
 }
 
 std::string NetworkStateHandler::FormattedHardwareAddressForType(
