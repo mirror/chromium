@@ -69,6 +69,24 @@
       "revId": "ada7aaf677e4ee9ce5ff384f755565a990898c95",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c95b805_f3e60213",
+        "filename": "chrome/browser/resources/settings/controls/settings_checkbox.js",
+        "patchSetId": 11
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-08-25T19:33:25Z",
+      "side": 1,
+      "message": "That\u0027s a good point. I\u0027m not sure.\n\nI\u0027m sure that if we had HTML with \u003ca\u003eA\u003c/a\u003e and called subLabelHtmlChanged_; then added \u003ca\u003eB\u003c/a\u003e and called subLabelHtmlChanged_ again (without removing A), then there would be three callbacks (two for A and one for B), but you make a good point that the actual change may be the other way around. i.e. we call subLabelHtmlChanged_ with a string (which creates elements) and then call subLabelHtmlChanged_ again with a new string (which creates either one or two elements). That would take some digging to find out what happens in that case.\n\nI\u0027m still in favor, in general of passing a known (rather than anonymous) callback to to addEventListener since it\u0027s clearer on what is happening and isn\u0027t subject to the other implementation changing.",
+      "parentUuid": "a462b4e6_34eb32dc",
+      "revId": "ada7aaf677e4ee9ce5ff384f755565a990898c95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
