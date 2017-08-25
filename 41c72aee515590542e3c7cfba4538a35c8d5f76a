@@ -94,6 +94,30 @@
       "revId": "41c72aee515590542e3c7cfba4538a35c8d5f76a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc1796b0_03d4783b",
+        "filename": "chrome/browser/feature_engagement/feature_tracker.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-08-25T17:59:45Z",
+      "side": 1,
+      "message": "You\u0027ll need to use the C++ constructor initializer list to initialize feature. Assignment won\u0027t work in the constructor as that requires default construction first and then the assignment.\n\nWith regards to the field trial behavior, TimeDelta should be initialized with the default amount first (and is probably necessary to pipe this down through the constructor). \n\nIf the field trial read succeeds (e.g. we have a proper string number), the TimeDelta is updated. If not, the TimeDelta remains the same. In both success and failure cases, the bool is updated to reflect that we tried to query the field trial once.",
+      "parentUuid": "33c13ff8_994e1075",
+      "range": {
+        "startLine": 86,
+        "startChar": 2,
+        "endLine": 90,
+        "endChar": 49
+      },
+      "revId": "41c72aee515590542e3c7cfba4538a35c8d5f76a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
