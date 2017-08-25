@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d6ba7d03_bd549e2f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/metrics/WebApkUma.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-08-25T19:03:07Z",
+      "side": 1,
+      "message": "nit: I\u0027d phrase this as \"round up to the nearest multiple of 10MB\"",
+      "range": {
+        "startLine": 184,
+        "startChar": 56,
+        "endLine": 184,
+        "endChar": 73
+      },
+      "revId": "94a25381ffd840cac87901e435c1c4006b6f6e21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23b75f41_9f3d3b0f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/metrics/WebApkUma.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-08-25T19:03:07Z",
+      "side": 1,
+      "message": "I\u0027m not quite following this calculation -- why do you add 1 at the end?  Seems like you\u0027ll get values like 1, 11, etc.  If your goal is to round up, I think you can implement that as (availableSpaceMb + 9) / 10 * 10... though there\u0027s probably a helper function somewhere that will do this for you.",
+      "range": {
+        "startLine": 188,
+        "startChar": 35,
+        "endLine": 188,
+        "endChar": 65
+      },
+      "revId": "94a25381ffd840cac87901e435c1c4006b6f6e21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "700bff13_829e7e7f",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 10
+      },
+      "lineNbr": 86674,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-08-25T19:03:07Z",
+      "side": 1,
+      "message": "Sorry, I\u0027m not understanding what this sentence means.  I think it might mean something like \"Negative values mean that there is less free space available than the system\u0027s minimum, by the given amount\".  If that\u0027s correct, feel free to use that text.  Otherwise, please work with your other reviewers to come up with a clearer phrasing.",
+      "range": {
+        "startLine": 86674,
+        "startChar": 8,
+        "endLine": 86674,
+        "endChar": 79
+      },
+      "revId": "94a25381ffd840cac87901e435c1c4006b6f6e21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
