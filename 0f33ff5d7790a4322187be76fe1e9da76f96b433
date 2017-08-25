@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a5a5e3c6_c1786bca",
+        "filename": "chrome/browser/ui/views/frame/browser_non_client_frame_view_ash.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 340,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-25T14:22:38Z",
+      "side": 1,
+      "message": "by-\u003ebut",
+      "range": {
+        "startLine": 340,
+        "startChar": 5,
+        "endLine": 340,
+        "endChar": 7
+      },
+      "revId": "0f33ff5d7790a4322187be76fe1e9da76f96b433",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6915f733_7b8a8b1d",
+        "filename": "chrome/browser/ui/views/frame/immersive_mode_controller.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-25T14:22:38Z",
+      "side": 1,
+      "message": "we -\u003e case we",
+      "range": {
+        "startLine": 114,
+        "startChar": 14,
+        "endLine": 114,
+        "endChar": 16
+      },
+      "revId": "0f33ff5d7790a4322187be76fe1e9da76f96b433",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
