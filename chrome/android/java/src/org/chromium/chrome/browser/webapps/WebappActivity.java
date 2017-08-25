@@ -163,7 +163,7 @@ public class WebappActivity extends SingleTabActivity {
     public void preInflationStartup() {
         Intent intent = getIntent();
         String id = WebappInfo.idFromIntent(intent);
-        WebappInfo info = popWebappInfo(id);
+        WebappInfo mWebappInfo = popWebappInfo(id);
         // When WebappActivity is killed by the Android OS, and an entry stays in "Android Recents"
         // (The user does not swipe it away), when WebappActivity is relaunched it is relaunched
         // with the intent stored in WebappActivity#getIntent() at the time that the WebappActivity
@@ -176,14 +176,17 @@ public class WebappActivity extends SingleTabActivity {
         // (B) The user selecting the WebappActivity in recents. In case (A) we want to use the
         // intent sent to WebappLauncherActivity and ignore WebappActivity#getSavedInstanceState().
         // In case (B) we want to restore to saved tab state.
-        if (info == null) {
-            info = createWebappInfo(intent);
-        } else if (info.shouldForceNavigation()) {
+        if (mWebappInfo == null) {
+            mWebappInfo = createWebappInfo(intent);
+            if (mWebappInfo == null) {
+                // If mWebappInfo is null, there isn't much we can do, abort.
+                ApiCompatibilityUtils.finishAndRemoveTask(this);
+                return;
+            }
+        } else if (mWebappInfo.shouldForceNavigation()) {
             // Don't restore to previous page, navigate using WebappInfo retrieved from cache.
             resetSavedInstanceState();
         }
-
-        mWebappInfo = info;
 
         // Initialize the WebappRegistry and warm up the shared preferences for this web app. No-ops
         // if the registry and this web app are already initialized. Must override Strict Mode to
