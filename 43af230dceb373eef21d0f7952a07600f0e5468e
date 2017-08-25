@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "cbc87385_e47a315b",
+        "filename": "chromeos/dbus/cryptohome_client.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 925,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-08-25T10:34:50Z",
+      "side": 1,
+      "message": "Added TODO and opened a Task-bug to not forget this.",
+      "parentUuid": "5fcb37e6_0f2a58de",
+      "revId": "43af230dceb373eef21d0f7952a07600f0e5468e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3af8dc90_512d70b7",
         "filename": "chromeos/dbus/cryptohome_client.cc",
         "patchSetId": 10
@@ -102,6 +120,24 @@
       "side": 1,
       "message": "That\u0027s what I meant.\nPlease do that before landing this change.",
       "parentUuid": "8cb7c4ab_613362a6",
+      "revId": "43af230dceb373eef21d0f7952a07600f0e5468e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "abc42ded_639c4099",
+        "filename": "chromeos/dbus/cryptohome_client.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 929,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-08-25T10:34:50Z",
+      "side": 1,
+      "message": "Will do, leaving this thread open until that happens.",
+      "parentUuid": "ad05c4a0_f2bdf1b7",
       "revId": "43af230dceb373eef21d0f7952a07600f0e5468e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
