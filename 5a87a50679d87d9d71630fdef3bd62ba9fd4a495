@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a146c7a6_b5d1c22e",
+        "filename": "ios/chrome/browser/web/legacy_mailto_url_rewriter.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-08-25T21:12:10Z",
+      "side": 1,
+      "message": "It is very strong convention to return result from init. My suggestion was the following:\n\nheader:\n- (instancetype)init NS_UNAVAILABLE;\n\nimplementation:\n\n- (instancetype)initPrivate {\n  self \u003d [super init];\n  if (self) {\n    _handlers \u003d [NSMutableDictionary dictionary];\n  }\n  return self;\n}\n\n+ (instancetype)mailtoURLRewriterWithStandardHandlers {\n  id result \u003d [[self class] alloc] initPrivate];\n  [self setDefaultHandlers:@[\n    [[MailtoHandlerSystemMail alloc] init], [[MailtoHandlerGmail alloc] init]\n  ]];\n}\n\nConvenience method is a typical way to avoid instance method calls inside init.",
+      "revId": "5a87a50679d87d9d71630fdef3bd62ba9fd4a495",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48d56e07_44364a10",
+        "filename": "ios/chrome/browser/web/legacy_mailto_url_rewriter.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-08-25T21:12:10Z",
+      "side": 1,
+      "message": "Do you plan to move this code outside of this class? If so, could you please add a todo. Otherwise this method is a hidden backdoor for testing.",
+      "range": {
+        "startLine": 59,
+        "startChar": 8,
+        "endLine": 59,
+        "endChar": 26
+      },
+      "revId": "5a87a50679d87d9d71630fdef3bd62ba9fd4a495",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
