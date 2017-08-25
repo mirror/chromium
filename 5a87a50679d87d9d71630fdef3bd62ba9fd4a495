@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f4ca8604_61104998",
+        "filename": "ios/chrome/browser/web/legacy_mailto_url_rewriter.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1125535
+      },
+      "writtenOn": "2017-08-25T22:36:41Z",
+      "side": 1,
+      "message": "I\u0027d prefer simply implement -init (not using -initPrivate) you suggested. There\u0027s nothing seriously wrong about having an empty object without any MailtoHandler*. But these are very useful/convenient for unit testing.",
+      "parentUuid": "a146c7a6_b5d1c22e",
+      "revId": "5a87a50679d87d9d71630fdef3bd62ba9fd4a495",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "48d56e07_44364a10",
         "filename": "ios/chrome/browser/web/legacy_mailto_url_rewriter.mm",
         "patchSetId": 6
@@ -30,6 +48,30 @@
       "writtenOn": "2017-08-25T21:12:10Z",
       "side": 1,
       "message": "Do you plan to move this code outside of this class? If so, could you please add a todo. Otherwise this method is a hidden backdoor for testing.",
+      "range": {
+        "startLine": 59,
+        "startChar": 8,
+        "endLine": 59,
+        "endChar": 26
+      },
+      "revId": "5a87a50679d87d9d71630fdef3bd62ba9fd4a495",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42e0b7c3_29861e09",
+        "filename": "ios/chrome/browser/web/legacy_mailto_url_rewriter.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1125535
+      },
+      "writtenOn": "2017-08-25T22:36:41Z",
+      "side": 1,
+      "message": "defaultHandlers is a @property. The setter can be used for testing. There aren\u0027t any non-testing uses for the setter. So, you can call that a backdoor, but it isn\u0027t hidden.\n\nI will likely leave it this way because the interface is clean. However, I\u0027m also open to creating a +Testing.h header file for a test-only setter. I\u0027d prefer to do the clean up after removing the old/new implementations.",
+      "parentUuid": "48d56e07_44364a10",
       "range": {
         "startLine": 59,
         "startChar": 8,
