@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "839ae8c4_975f82d3",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 11
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2017-08-25T05:37:30Z",
+      "side": 1,
+      "message": "I think physical size change can do what it was doing plus what needs to be done for view size change. This will make the callsites simpler - AwContents and Chrome\u0027s OverlayPanel are now doing these calls always together. Let me know if this is what you meant.",
+      "parentUuid": "d0562093_d318fae6",
+      "revId": "6bf063f34f470dc36d5381dda99e6dc6db41ed22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4ffb37d0_a7cc93f4",
         "filename": "/COMMIT_MSG",
         "patchSetId": 11
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-22T17:42:42Z",
       "side": 1,
       "message": "viewport width/height is fine\n\nI wonder if we can remove the concept of browser control out of content/ui layer altogether. only chrome code needs to keep track of it. I don\u0027t think there\u0027s actually anything that cares about the viewport without browser controls affect?",
+      "revId": "6bf063f34f470dc36d5381dda99e6dc6db41ed22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6aef146_1f067df3",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 11
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2017-08-25T05:37:30Z",
+      "side": 1,
+      "message": "I found that browser controls info is being referenced in RenderWidgetHostImpl::GetResizeParams(). Besides that, this CL moved all the browser control stuff out of content/ (except those for testing only) to ui/. I think it can be looked into in a separate patch, together with how content can be done without it.",
+      "parentUuid": "4ffb37d0_a7cc93f4",
       "revId": "6bf063f34f470dc36d5381dda99e6dc6db41ed22",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "6520cbc0_137ad98f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 11
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2017-08-25T05:37:30Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "6b894e04_6622eaf1",
+      "revId": "6bf063f34f470dc36d5381dda99e6dc6db41ed22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e901f22b_b5990f40",
         "filename": "/COMMIT_MSG",
         "patchSetId": 11
@@ -64,6 +118,24 @@
       "writtenOn": "2017-08-22T17:42:42Z",
       "side": 1,
       "message": "or DCHECK it\u0027s not patch parent? shouldn\u0027t be explicitly setting size on match parent views I guess?",
+      "revId": "6bf063f34f470dc36d5381dda99e6dc6db41ed22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5bdb2393_6c78e83d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 11
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2017-08-25T05:37:30Z",
+      "side": 1,
+      "message": "I\u0027m planning to turn WebContentsView\u0027s ViewAndroid to non-match-parent so it can track of target view for drag events. And all its children VA of match-parent attr will ignore the size changed event as they will follow their parent view size.",
+      "parentUuid": "e901f22b_b5990f40",
       "revId": "6bf063f34f470dc36d5381dda99e6dc6db41ed22",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
