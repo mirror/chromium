@@ -206,8 +206,7 @@ void PaintWorkletGlobalScope::registerPaint(const String& name,
 
   // TODO(xidachen): the following steps should be done with a postTask when
   // we move PaintWorklet off main thread.
-  PaintWorklet* paint_worklet =
-      PaintWorklet::From(*GetFrame()->GetDocument()->domWindow());
+  PaintWorklet* paint_worklet = PaintWorklet::From(*GetFrame()->DomWindow());
   PaintWorklet::DocumentDefinitionMap& document_definition_map =
       paint_worklet->GetDocumentDefinitionMap();
   if (document_definition_map.Contains(name)) {
