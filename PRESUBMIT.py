@@ -1545,7 +1545,8 @@ def _CheckIpcOwners(input_api, output_api):
   for f in input_api.AffectedFiles(include_deletes=False):
     # Manifest files don't have a strong naming convention. Instead, scan
     # affected files for .json files and see if they look like a manifest.
-    if f.LocalPath().endswith('.json'):
+    if (f.LocalPath().endswith('.json') and
+        not f.LocalPath().endswith('policy_templates.json')):
       json_comment_eater = _ImportJSONCommentEater(input_api)
       mostly_json_lines = '\n'.join(f.NewContents())
       # Comments aren't allowed in strict JSON, so filter them out.
