@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a92615b7_cee78908",
+        "filename": "content/browser/renderer_host/media/audio_input_device_manager.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-08-25T08:59:24Z",
+      "side": 1,
+      "message": "nit: remove \"when\"",
+      "range": {
+        "startLine": 77,
+        "startChar": 48,
+        "endLine": 77,
+        "endChar": 49
+      },
+      "revId": "a252bfe1777000dc5c9c6ec2b72191e7f457c6c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
