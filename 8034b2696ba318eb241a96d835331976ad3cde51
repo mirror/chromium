@@ -39,6 +39,24 @@
       "revId": "8034b2696ba318eb241a96d835331976ad3cde51",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73047739_409803e7",
+        "filename": "chromeos/network/onc/onc_certificate_importer_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 322,
+      "author": {
+        "id": 1002844
+      },
+      "writtenOn": "2017-08-25T22:27:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7d574a4c_d842b9df",
+      "revId": "8034b2696ba318eb241a96d835331976ad3cde51",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
