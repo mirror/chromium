@@ -278,6 +278,9 @@ void WindowTreeHost::CreateCompositor(const viz::FrameSinkId& frame_sink_id,
     window()->Init(ui::LAYER_NOT_DRAWN);
     window()->set_host(this);
     window()->SetName("RootWindow");
+    std::unique_ptr<WindowTargeter> targeter =
+        base::MakeUnique<WindowTargeter>();
+    window()->SetEventTargeter(std::move(targeter));
     dispatcher_.reset(new WindowEventDispatcher(this));
   }
 }

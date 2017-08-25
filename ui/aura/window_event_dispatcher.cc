@@ -62,18 +62,6 @@ bool IsEventCandidateForHold(const ui::Event& event) {
   return false;
 }
 
-void ConvertEventLocationToTarget(ui::EventTarget* event_target,
-                                  ui::EventTarget* target,
-                                  ui::Event* event) {
-  if (target == event_target || !event->IsLocatedEvent())
-    return;
-
-  gfx::Point location = event->AsLocatedEvent()->location();
-  Window::ConvertPointToTarget(static_cast<Window*>(event_target),
-                               static_cast<Window*>(target), &location);
-  event->AsLocatedEvent()->set_location(location);
-}
-
 }  // namespace
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -103,10 +91,6 @@ WindowEventDispatcher::~WindowEventDispatcher() {
   TRACE_EVENT0("shutdown", "WindowEventDispatcher::Destructor");
   Env::GetInstance()->RemoveObserver(this);
   ui::GestureRecognizer::Get()->RemoveGestureEventHelper(this);
-}
-
-ui::EventTargeter* WindowEventDispatcher::GetDefaultEventTargeter() {
-  return event_targeter_.get();
 }
 
 void WindowEventDispatcher::RepostEvent(const ui::LocatedEvent* event) {
@@ -441,33 +425,32 @@ void WindowEventDispatcher::ReleaseNativeCapture() {
 
 ////////////////////////////////////////////////////////////////////////////////
 // WindowEventDispatcher, ui::EventProcessor implementation:
-ui::EventTarget* WindowEventDispatcher::GetRootForEvent(ui::Event* event) {
+
+ui::EventTarget* WindowEventDispatcher::GetInitialEventTarget(
+    ui::Event* event) {
   if (Env::GetInstance()->mode() == Env::Mode::LOCAL)
-    return window();
+    return nullptr;
 
   if (!event->target())
-    return window();
+    return nullptr;
 
-  ui::EventTarget* event_target = event->target();
+  if (!event->IsLocatedEvent() || !event_targeter_->GetForcedTargetInRootWindow(
+                                      window(), *event->AsLocatedEvent())) {
+    return event->target();
+  }
+
+  // The event has a target but we need to dispatch it using the normal path.
+  // Reset the target and location so the normal flow is used.
+  ui::Event::DispatcherApi(event).set_target(nullptr);
   if (event->IsLocatedEvent()) {
-    ui::EventTarget* target = event_targeter_->FindTargetInRootWindow(
-        window(), *event->AsLocatedEvent());
-    if (target) {
-      ConvertEventLocationToTarget(event_target, target, event);
-      return target;
-    }
+    event->AsLocatedEvent()->set_location_f(
+        event->AsLocatedEvent()->root_location_f());
   }
+  return nullptr;
+}
 
-  ui::EventTarget* ancestor_with_targeter = event_target;
-  for (ui::EventTarget* ancestor = event_target; ancestor;
-       ancestor = ancestor->GetParentTarget()) {
-    if (ancestor->GetEventTargeter())
-      ancestor_with_targeter = ancestor;
-    if (ancestor == window())
-      break;
-  }
-  ConvertEventLocationToTarget(event_target, ancestor_with_targeter, event);
-  return ancestor_with_targeter;
+ui::EventTarget* WindowEventDispatcher::GetRootTarget() {
+  return window();
 }
 
 void WindowEventDispatcher::OnEventProcessingStarted(ui::Event* event) {
