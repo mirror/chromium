@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fae97006_623e6db8",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-08-25T00:17:26Z",
+      "side": 1,
+      "message": "I think you mean \"all child processes\"?",
+      "revId": "7143a74c29c91d90f5ab6c7e6eea4d84c7a8c688",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ce8c5c1_5d964909",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-08-25T00:17:26Z",
+      "side": 1,
+      "message": "nit: I don\u0027t think the InitDefaultJob bit is relevant; the description should really focus on the impact of the change, and any important details.\n\ne.g. in this case that the Browser creates its own job so that it can \"see\" child processes for renderers, utility processes, etc, and it does so before any processes, or threads, are spawned.",
+      "revId": "7143a74c29c91d90f5ab6c7e6eea4d84c7a8c688",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "71cbf3eb_f7ec2d2b",
+        "filename": "content/browser/browser_main_loop.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 466,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-08-25T00:17:26Z",
+      "side": 1,
+      "message": "!defined",
+      "revId": "7143a74c29c91d90f5ab6c7e6eea4d84c7a8c688",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92cf1dc8_9204b329",
+        "filename": "content/browser/browser_main_loop.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 469,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-08-25T00:17:26Z",
+      "side": 1,
+      "message": "nit: Do we need the preceding \u0026 trailing blank lines?",
+      "revId": "7143a74c29c91d90f5ab6c7e6eea4d84c7a8c688",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
