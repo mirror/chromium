@@ -4,6 +4,7 @@
 
 #include "chrome/common/extensions/api/notifications/notification_style.h"
 
+#include "ui/message_center/message_center.h"
 #include "ui/message_center/message_center_style.h"
 
 NotificationBitmapSizes::NotificationBitmapSizes() {
@@ -24,7 +25,12 @@ NotificationBitmapSizes GetNotificationBitmapSizes() {
       gfx::Size(message_center::kNotificationButtonIconSize,
                 message_center::kNotificationButtonIconSize);
 
-  sizes.app_icon_mask_size = gfx::Size(message_center::kSmallImageSize,
-                                       message_center::kSmallImageSize);
+  if (message_center::MessageCenter::IsNewStyleNotificationEnabled()) {
+    sizes.app_icon_mask_size = gfx::Size(message_center::kSmallImageSizeMD,
+                                         message_center::kSmallImageSizeMD);
+  } else {
+    sizes.app_icon_mask_size = gfx::Size(message_center::kSmallImageSize,
+                                         message_center::kSmallImageSize);
+  }
   return sizes;
 }
