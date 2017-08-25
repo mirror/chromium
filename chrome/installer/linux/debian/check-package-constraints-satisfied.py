@@ -139,10 +139,10 @@ sysroot = os.path.abspath(sys.argv[2])
 arch = sys.argv[3]
 
 cmd = ['dpkg-shlibdeps']
-if arch == 'amd64':
+if arch == 'x64':
   cmd.extend(['-l%s/usr/lib/x86_64-linux-gnu' % sysroot,
               '-l%s/lib/x86_64-linux-gnu' % sysroot])
-elif arch == 'i386':
+elif arch == 'x86':
   cmd.extend(['-l%s/usr/lib/i386-linux-gnu' % sysroot,
               '-l%s/lib/i386-linux-gnu' % sysroot])
 else:
@@ -214,6 +214,8 @@ def get_package_and_version_requirement(dep):
 deps = stdout.replace('shlibs:Depends=', '').replace('\n', '').split(', ')
 package_requirements = {}
 for dep in deps:
+  if dep == '':
+    continue
   (package, requirement) = get_package_and_version_requirement(dep)
   package_requirements[package] = requirement
 
