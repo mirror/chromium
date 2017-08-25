@@ -107,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "2ee40de6_251f8157",
+        "filename": "chrome/browser/vr/databinding/one_way_binding.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-08-25T13:49:50Z",
+      "side": 1,
+      "message": "I like your suggestion of renaming OneWayBinding to Binding.  It\u0027ll be by far the most common case, and maybe the only case.  Binding -\u003e BaseBinding, VrBinding, AbstractBinding; up to you.",
+      "parentUuid": "e7d3d036_9e547ec1",
+      "revId": "b7be48e21ec03f8f39fdf1283da6c6728fda03a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4cfcdf67_f1c73d8d",
         "filename": "chrome/browser/vr/databinding/one_way_binding.h",
         "patchSetId": 1
@@ -139,6 +157,24 @@
       "revId": "b7be48e21ec03f8f39fdf1283da6c6728fda03a2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27879c6b_1b4201b8",
+        "filename": "chrome/browser/vr/databinding/one_way_binding.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-08-25T13:49:50Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "8fcf2f4b_7e3a68e9",
+      "revId": "b7be48e21ec03f8f39fdf1283da6c6728fda03a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -393,6 +429,24 @@
       "side": 1,
       "message": "In that case, I\u0027d need another callback on the binding to pull the current value from the view. Since I\u0027d expected the types to be simple (like SkColors), I thought this would be simplest. I have a mild preference for this approach, but if you\u0027d prefer it the other way, I\u0027d can certainly change it.",
       "parentUuid": "dc1943bb_3832549f",
+      "revId": "b7be48e21ec03f8f39fdf1283da6c6728fda03a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1a86be3_0f231cbf",
+        "filename": "chrome/browser/vr/databinding/one_way_binding_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-08-25T13:49:50Z",
+      "side": 1,
+      "message": "No need to change, just wanted to be sure.",
+      "parentUuid": "7f004df7_48718c57",
       "revId": "b7be48e21ec03f8f39fdf1283da6c6728fda03a2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

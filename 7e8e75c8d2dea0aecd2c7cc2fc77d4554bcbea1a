@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0d43ca97_d5ea7438",
+        "filename": "chrome/browser/vr/databinding/binding.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-08-25T13:49:50Z",
+      "side": 1,
+      "message": "Can we comment here that model objects must outlive any bindings to them?",
+      "revId": "7e8e75c8d2dea0aecd2c7cc2fc77d4554bcbea1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "410a9d3b_fa756153",
+        "filename": "chrome/browser/vr/databinding/one_way_binding.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-08-25T13:49:50Z",
+      "side": 1,
+      "message": "s/solve all problems/handle all cases/.  Positivity!  :)",
+      "revId": "7e8e75c8d2dea0aecd2c7cc2fc77d4554bcbea1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4dc4170f_a319f5e4",
+        "filename": "chrome/browser/vr/databinding/one_way_binding.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-08-25T13:49:50Z",
+      "side": 1,
+      "message": "s/use/use the/",
+      "revId": "7e8e75c8d2dea0aecd2c7cc2fc77d4554bcbea1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
