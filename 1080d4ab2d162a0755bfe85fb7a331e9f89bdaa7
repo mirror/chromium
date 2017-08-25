@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d7a5b204_a581c376",
+        "filename": "content/browser/service_worker/service_worker_url_loader_job_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 356,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-25T07:48:37Z",
+      "side": 1,
+      "message": "Maybe add:\n\n// Tell the helper to respond with a non-existent Blob.",
+      "revId": "1080d4ab2d162a0755bfe85fb7a331e9f89bdaa7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8964fe2b_902e32b6",
+        "filename": "content/browser/service_worker/service_worker_url_loader_job_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 364,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-25T07:48:37Z",
+      "side": 1,
+      "message": "can remove \"in such cases\"",
+      "range": {
+        "startLine": 363,
+        "startChar": 74,
+        "endLine": 364,
+        "endChar": 15
+      },
+      "revId": "1080d4ab2d162a0755bfe85fb7a331e9f89bdaa7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba0c29b6_e3c039b6",
+        "filename": "content/browser/service_worker/service_worker_url_loader_job_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 365,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-25T07:48:37Z",
+      "side": 1,
+      "message": "occurred",
+      "range": {
+        "startLine": 365,
+        "startChar": 9,
+        "endLine": 365,
+        "endChar": 16
+      },
+      "revId": "1080d4ab2d162a0755bfe85fb7a331e9f89bdaa7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
