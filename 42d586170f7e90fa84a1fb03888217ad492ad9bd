@@ -1,0 +1,250 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8ba4b7ae_0ce29089",
+        "filename": "chrome/browser/chromeos/arc/video/gpu_arc_video_service_host.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1002450
+      },
+      "writtenOn": "2017-08-25T03:37:10Z",
+      "side": 1,
+      "message": "Please change the other two usages, i.e., for DecodeAcceleratorDeprecated and EncodeAccelerator as well.",
+      "revId": "42d586170f7e90fa84a1fb03888217ad492ad9bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66e73333_0258ec90",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1002450
+      },
+      "writtenOn": "2017-08-25T03:37:10Z",
+      "side": 1,
+      "message": "since it is just used once. Why not just use it directly:\nit-\u003esecond.Run(....);",
+      "range": {
+        "startLine": 148,
+        "startChar": 44,
+        "endLine": 148,
+        "endChar": 0
+      },
+      "revId": "42d586170f7e90fa84a1fb03888217ad492ad9bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "add86f82_6bdbc54e",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1002450
+      },
+      "writtenOn": "2017-08-25T03:37:10Z",
+      "side": 1,
+      "message": "same here.",
+      "range": {
+        "startLine": 160,
+        "startChar": 28,
+        "endLine": 160,
+        "endChar": 29
+      },
+      "revId": "42d586170f7e90fa84a1fb03888217ad492ad9bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ff71958_a4ca4d08",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1002450
+      },
+      "writtenOn": "2017-08-25T03:37:10Z",
+      "side": 1,
+      "message": "Reset flush_callback_.\n\nbase::ResetAndReturn(\u0026flush_callback_).Run();",
+      "revId": "42d586170f7e90fa84a1fb03888217ad492ad9bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb810563_160ddbae",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1002450
+      },
+      "writtenOn": "2017-08-25T03:37:10Z",
+      "side": 1,
+      "message": "ResetAndReturn(\u0026reset_callback_).Run();\n// Flush is cancelled by Reset().\nflush_callback_.Reset();",
+      "range": {
+        "startLine": 175,
+        "startChar": 2,
+        "endLine": 175,
+        "endChar": 17
+      },
+      "revId": "42d586170f7e90fa84a1fb03888217ad492ad9bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5db995c_be4c9d82",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 362,
+      "author": {
+        "id": 1002450
+      },
+      "writtenOn": "2017-08-25T03:37:10Z",
+      "side": 1,
+      "message": "This dmabuf_fd is leaked if the code returns in l.373.\nI would suggest we check the callback before we release the FD.",
+      "range": {
+        "startLine": 362,
+        "startChar": 37,
+        "endLine": 362,
+        "endChar": 44
+      },
+      "revId": "42d586170f7e90fa84a1fb03888217ad492ad9bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "616d2082_847241a0",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 368,
+      "author": {
+        "id": 1002450
+      },
+      "writtenOn": "2017-08-25T03:37:10Z",
+      "side": 1,
+      "message": "You can use emplace or insert:\n\nif (!import_buffer_callbacks_.emplace(picture_buffer_id, callback).second) {\n  // NotifyError ...\n}",
+      "range": {
+        "startLine": 368,
+        "startChar": 31,
+        "endLine": 368,
+        "endChar": 35
+      },
+      "revId": "42d586170f7e90fa84a1fb03888217ad492ad9bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4236fd64_917347ba",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 399,
+      "author": {
+        "id": 1002450
+      },
+      "writtenOn": "2017-08-25T03:37:10Z",
+      "side": 1,
+      "message": "Is the case required? I thought they are of the same type.",
+      "revId": "42d586170f7e90fa84a1fb03888217ad492ad9bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3dcefc2_b981d7ea",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1002450
+      },
+      "writtenOn": "2017-08-25T03:37:10Z",
+      "side": 1,
+      "message": "typo: no space in \"VD As\".",
+      "range": {
+        "startLine": 66,
+        "startChar": 12,
+        "endLine": 66,
+        "endChar": 13
+      },
+      "revId": "42d586170f7e90fa84a1fb03888217ad492ad9bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9cf46703_de6ec8e1",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1002450
+      },
+      "writtenOn": "2017-08-25T03:37:10Z",
+      "side": 1,
+      "message": "It make more sense to use ReusePictureBufferCallback.",
+      "revId": "42d586170f7e90fa84a1fb03888217ad492ad9bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb21dfac_f1f18485",
+        "filename": "components/arc/common/video_decode_accelerator.mojom",
+        "patchSetId": 21
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1002450
+      },
+      "writtenOn": "2017-08-25T03:37:10Z",
+      "side": 1,
+      "message": "Please explain the return params.",
+      "range": {
+        "startLine": 70,
+        "startChar": 50,
+        "endLine": 70,
+        "endChar": 0
+      },
+      "revId": "42d586170f7e90fa84a1fb03888217ad492ad9bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f004547_6d3fa219",
+        "filename": "components/arc/common/video_decode_accelerator.mojom",
+        "patchSetId": 21
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1002450
+      },
+      "writtenOn": "2017-08-25T03:37:10Z",
+      "side": 1,
+      "message": "Explain the return params.",
+      "revId": "42d586170f7e90fa84a1fb03888217ad492ad9bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

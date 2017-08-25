@@ -340,6 +340,30 @@
       "revId": "f8e00b49d7eacd0e596737db1498fb7c13dfaa58",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f5c9b8d_120d8522",
+        "filename": "components/arc/common/video_encode_accelerator.mojom",
+        "patchSetId": 19
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1002450
+      },
+      "writtenOn": "2017-08-25T03:37:10Z",
+      "side": 1,
+      "message": "I don\u0027t think we can move the error to the callback of each method unless we also change the media::VDA interface. An implementation of this interface will route the encoding/decoding to a real media::VDA instance. But the current media::VDA interface reports error asynchronously. We cannot know which call cause the reported error. In addition, I believe there are some cases that the error has no \"owners\".\n\nLet\u0027s keep the interface same as media::VDA for NotifyError.",
+      "parentUuid": "11c6c30f_2cb6dcdc",
+      "range": {
+        "startLine": 144,
+        "startChar": 0,
+        "endLine": 148,
+        "endChar": 52
+      },
+      "revId": "f8e00b49d7eacd0e596737db1498fb7c13dfaa58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
