@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bd874461_aa22aca2",
+        "filename": "net/http/transport_security_state_static_unittest3.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-08-25T20:04:01Z",
+      "side": 1,
+      "message": "Nit: s/simle/simple/",
+      "revId": "3a841ee56dc431cf913a1fd3f98e5acb97c98add",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
