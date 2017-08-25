@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "f31ef662_8d219d8e",
+        "filename": "ui/aura/mus/window_tree_client.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 430,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-08-25T17:47:05Z",
+      "side": 1,
+      "message": "You mean this is only for the \u0027observers\u0027, right? Because for events that we dispatch, if mus sets a target, then we need to set that target. Would it be possible to clarify/enforce that here somehow? Maybe a DCHECK() when this function is called that event-\u003etarget() is not set?",
+      "parentUuid": "cde33fbe_60c5b981",
+      "revId": "c6f61f93be6aa678c17ab416eb1ee92142a282ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5ac9e1e0_1bc03a84",
         "filename": "ui/aura/mus/window_tree_client.h",
         "patchSetId": 2
