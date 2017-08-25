@@ -41,7 +41,8 @@ struct AuditorException {
 class TrafficAnnotationAuditor {
  public:
   TrafficAnnotationAuditor(const base::FilePath& source_path,
-                           const base::FilePath& build_path);
+                           const base::FilePath& build_path,
+                           const base::FilePath& clang_tool_path);
   ~TrafficAnnotationAuditor();
 
   // Runs traffic_annotation_extractor clang tool and puts its output in
@@ -135,9 +136,13 @@ class TrafficAnnotationAuditor {
     gn_file_for_test_ = file_path;
   }
 
+  // Returns the path to clang internal libraries.
+  base::FilePath GetClangLibraryPath();
+
  private:
   const base::FilePath source_path_;
   const base::FilePath build_path_;
+  const base::FilePath clang_tool_path_;
 
   std::string clang_tool_raw_output_;
   std::vector<AnnotationInstance> extracted_annotations_;

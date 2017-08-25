@@ -3,6 +3,7 @@
 // found in the LICENSE file.
 
 #include "tools/traffic_annotation/auditor/traffic_annotation_auditor.h"
+
 #include "base/files/file_path.h"
 #include "base/files/file_util.h"
 #include "base/memory/ptr_util.h"
@@ -11,6 +12,7 @@
 #include "base/strings/string_split.h"
 #include "base/strings/string_util.h"
 #include "base/strings/stringprintf.h"
+#include "build/build_config.h"
 #include "net/traffic_annotation/network_traffic_annotation.h"
 #include "net/traffic_annotation/network_traffic_annotation_test_helper.h"
 #include "testing/gtest/include/gtest/gtest.h"
@@ -31,7 +33,14 @@ const char* kIrrelevantFiles[] = {
 const char* kRelevantFiles[] = {
     "tools/traffic_annotation/auditor/tests/relevant_file_name_and_content.cc",
     "tools/traffic_annotation/auditor/tests/relevant_file_name_and_content.mm"};
-}
+
+const base::FilePath kTestsFolder(
+    FILE_PATH_LITERAL("tools/traffic_annotation/auditor/tests"));
+
+const base::FilePath kClangToolPath(
+    FILE_PATH_LITERAL("tools/traffic_annotation/bin"));
+
+}  // namespace
 
 using namespace testing;
 
@@ -43,12 +52,23 @@ class TrafficAnnotationAuditorTest : public ::testing::Test {
       return;
     }
 
-    tests_folder_ = source_path_.Append(FILE_PATH_LITERAL("tools"))
-                        .Append(FILE_PATH_LITERAL("traffic_annotation"))
-                        .Append(FILE_PATH_LITERAL("auditor"))
-                        .Append(FILE_PATH_LITERAL("tests"));
-    auditor_ =
-        base::MakeUnique<TrafficAnnotationAuditor>(source_path(), build_path());
+    tests_folder_ = source_path_.Append(kTestsFolder);
+
+#if defined(OS_WIN)
+    base::FilePath platform_name(FILE_PATH_LITERAL("win32"));
+#elif defined(OS_LINUX)
+    base::FilePath platform_name(FILE_PATH_LITERAL("linux64"));
+#elif defined(OS_MACOSX)
+    base::FilePath platform_name(FILE_PATH_LITERAL("mac"));
+#else
+    NOTREACHED() << "Unexpected platform.";
+#endif
+
+    base::FilePath clang_tool_path =
+        source_path_.Append(kClangToolPath).Append(platform_name);
+
+    auditor_ = base::MakeUnique<TrafficAnnotationAuditor>(
+        source_path_, build_path_, clang_tool_path);
   }
 
   const base::FilePath source_path() const { return source_path_; }
@@ -818,4 +838,10 @@ TEST_F(TrafficAnnotationAuditorTest, CreateCompleteAnnotation) {
           NetworkTrafficAnnotation_TrafficSemantics_Destination_LOCAL);
   EXPECT_NE(instance.CreateCompleteAnnotation(other, &combination).type(),
             AuditorResult::Type::RESULT_OK);
+}
+
+// Tests if AnnotationInstance::GetClangLibraryPath finds a path.
+TEST_F(TrafficAnnotationAuditorTest, GetClangLibraryPath) {
+  base::FilePath clang_library = auditor().GetClangLibraryPath();
+  EXPECT_FALSE(clang_library.empty());
 }

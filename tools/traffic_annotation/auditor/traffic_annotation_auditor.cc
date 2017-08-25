@@ -4,6 +4,9 @@
 
 #include "tools/traffic_annotation/auditor/traffic_annotation_auditor.h"
 
+#include <stdio.h>
+
+#include "base/files/dir_reader_posix.h"
 #include "base/files/file_util.h"
 #include "base/logging.h"
 #include "base/process/launch.h"
@@ -11,6 +14,7 @@
 #include "base/strings/string_split.h"
 #include "base/strings/string_util.h"
 #include "base/strings/stringprintf.h"
+#include "build/build_config.h"
 #include "net/traffic_annotation/network_traffic_annotation.h"
 #include "net/traffic_annotation/network_traffic_annotation_test_helper.h"
 #include "tools/traffic_annotation/auditor/traffic_annotation_file_filter.h"
@@ -51,13 +55,22 @@ const std::string kBlockTypes[] = {"ASSIGNMENT", "ANNOTATION", "CALL"};
 
 const base::FilePath kSafeListPath(
     FILE_PATH_LITERAL("tools/traffic_annotation/auditor/safe_list.txt"));
+
+// The folder that includes the latest Clang built-in library. Inside this
+// folder, there should be another folder with version number, like
+// '.../lib/clang/6.0.0', which would be passed to the clang tool.
+const base::FilePath kClangLibraryPath(
+    FILE_PATH_LITERAL("third_party/llvm-build/Release+Asserts/lib/clang"));
+
 }  // namespace
 
 TrafficAnnotationAuditor::TrafficAnnotationAuditor(
     const base::FilePath& source_path,
-    const base::FilePath& build_path)
+    const base::FilePath& build_path,
+    const base::FilePath& clang_tool_path)
     : source_path_(source_path),
       build_path_(build_path),
+      clang_tool_path_(clang_tool_path),
       safe_list_loaded_(false) {}
 
 TrafficAnnotationAuditor::~TrafficAnnotationAuditor() {}
@@ -69,11 +82,30 @@ int TrafficAnnotationAuditor::ComputeHashValue(const std::string& unique_id) {
                             : -1;
 }
 
+base::FilePath TrafficAnnotationAuditor::GetClangLibraryPath() {
+  base::FilePath base_path = source_path_.Append(kClangLibraryPath);
+  std::string library_folder;
+  base::DirReaderPosix dir_reader(base_path.MaybeAsASCII().c_str());
+
+  while (dir_reader.Next()) {
+    // Pass '.' and '..' folders.
+    if (strlen(dir_reader.name()) > 2) {
+      library_folder = dir_reader.name();
+      break;
+    }
+  }
+
+  return library_folder.empty() ? base::FilePath()
+                                : base_path.Append(library_folder);
+}
+
 bool TrafficAnnotationAuditor::RunClangTool(
     const std::vector<std::string>& path_filters,
     const bool full_run) {
   if (!safe_list_loaded_ && !LoadSafeList())
     return false;
+
+  // Create a file to pass options to clang scripts.
   base::FilePath options_filepath;
   if (!base::CreateTemporaryFile(&options_filepath)) {
     LOG(ERROR) << "Could not create temporary options file.";
@@ -84,9 +116,17 @@ bool TrafficAnnotationAuditor::RunClangTool(
     LOG(ERROR) << "Could not create temporary options file.";
     return false;
   }
-  fprintf(options_file,
-          "--generate-compdb --tool=traffic_annotation_extractor -p=%s ",
-          build_path_.MaybeAsASCII().c_str());
+
+  // As the checked out clang tool maybe in a directory different from the
+  // default one (third_party/llvm-buid/Release+Asserts/bin), its path should be
+  // added to OS search path, and its library folder should be passed to the
+  // tool.
+  fprintf(
+      options_file,
+      "--generate-compdb --tool=traffic_annotation_extractor -p=%s "
+      "--tool-args=--extra-arg=-resource-dir=%s ",
+      build_path_.MaybeAsASCII().c_str(),
+      base::MakeAbsoluteFilePath(GetClangLibraryPath()).MaybeAsASCII().c_str());
 
   // |safe_list_[ALL]| is not passed when |full_run| is happening as there is
   // no way to pass it to run_tools.py except enumerating all alternatives.
@@ -122,10 +162,8 @@ bool TrafficAnnotationAuditor::RunClangTool(
   }
   base::CloseFile(options_file);
 
-  base::CommandLine cmdline(source_path_.Append(FILE_PATH_LITERAL("tools"))
-                                .Append(FILE_PATH_LITERAL("clang"))
-                                .Append(FILE_PATH_LITERAL("scripts"))
-                                .Append(FILE_PATH_LITERAL("run_tool.py")));
+  base::CommandLine cmdline(source_path_.Append(
+      FILE_PATH_LITERAL("tools/clang/scripts/run_tool.py")));
 
 #if defined(OS_WIN)
   cmdline.PrependWrapper(L"python");
@@ -134,8 +172,22 @@ bool TrafficAnnotationAuditor::RunClangTool(
   cmdline.AppendArg(base::StringPrintf(
       "--options-file=%s", options_filepath.MaybeAsASCII().c_str()));
 
+  // Add clang tool's path to the search path.
+  const char* old_path = getenv("PATH");
+  std::string new_path = base::StringPrintf(
+      "%s%s%s", old_path,
+#if defined(OS_WIN)
+      ";",
+#else
+      ":",
+#endif
+      base::MakeAbsoluteFilePath(clang_tool_path_).MaybeAsASCII().c_str());
+  setenv("PATH", new_path.c_str(), 1);
+
+  // Run, and clean after.
   bool result = base::GetAppOutput(cmdline, &clang_tool_raw_output_);
 
+  setenv("PATH", old_path, 1);
   base::DeleteFile(options_filepath, false);
 
   return result;
