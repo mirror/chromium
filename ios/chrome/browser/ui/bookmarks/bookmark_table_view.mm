@@ -15,9 +15,11 @@
 #include "ios/chrome/browser/bookmarks/bookmarks_utils.h"
 #include "ios/chrome/browser/favicon/ios_chrome_large_icon_service_factory.h"
 #include "ios/chrome/browser/ui/bookmarks/bookmark_collection_view_background.h"
+#import "ios/chrome/browser/ui/bookmarks/bookmark_home_waiting_view.h"
 #include "ios/chrome/browser/ui/bookmarks/bookmark_model_bridge_observer.h"
 #import "ios/chrome/browser/ui/bookmarks/bookmark_utils_ios.h"
 #import "ios/chrome/browser/ui/bookmarks/cells/bookmark_table_cell.h"
+#import "ios/chrome/browser/ui/sync/synced_sessions_bridge.h"
 #include "ios/chrome/grit/ios_strings.h"
 #include "skia/ext/skia_utils_ios.h"
 #include "ui/base/l10n/l10n_util_mac.h"
@@ -40,14 +42,24 @@ using bookmarks::BookmarkNode;
 // collections.
 using IntegerPair = std::pair<NSInteger, NSInteger>;
 
-@interface BookmarkTableView ()<UITableViewDataSource,
-                                UITableViewDelegate,
-                                BookmarkModelBridgeObserver> {
+@interface BookmarkTableView ()<BookmarkModelBridgeObserver,
+                                SyncedSessionsObserver,
+                                UITableViewDataSource,
+                                UITableViewDelegate> {
   // A vector of bookmark nodes to display in the table view.
   std::vector<const BookmarkNode*> _bookmarkItems;
   const BookmarkNode* _currentRootNode;
+
+  // The loading spinner background which appears when syncing.
+  BookmarkHomeWaitingView* _spinnerView;
+
   // Bridge to register for bookmark changes.
   std::unique_ptr<bookmarks::BookmarkModelBridge> _modelBridge;
+
+  // Observer to keep track of the signin and syncing status.
+  std::unique_ptr<synced_sessions::SyncedSessionsObserverBridge>
+      _syncedSessionsObserver;
+
   // Map of favicon load tasks for each index path. Used to keep track of
   // pending favicon load operations so that they can be cancelled upon cell
   // reuse. Keys are (section, item) pairs of cell index paths.
@@ -99,6 +111,8 @@ using IntegerPair = std::pair<NSInteger, NSInteger>;
     // Set up observers.
     _modelBridge.reset(
         new bookmarks::BookmarkModelBridge(self, _bookmarkModel));
+    _syncedSessionsObserver.reset(
+        new synced_sessions::SyncedSessionsObserverBridge(self, _browserState));
 
     [self computeBookmarkTableViewData];
 
@@ -120,8 +134,8 @@ using IntegerPair = std::pair<NSInteger, NSInteger>;
         UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
     self.emptyTableBackgroundView.text =
         l10n_util::GetNSString(IDS_IOS_BOOKMARK_NO_BOOKMARKS_LABEL);
-    [self updateEmptyBackground];
-    [self addSubview:self.emptyTableBackgroundView];
+    self.emptyTableBackgroundView.frame = self.tableView.bounds;
+    [self showEmptyOrLoadingSpinnerBackgroundIfNeeded];
   }
   return self;
 }
@@ -280,7 +294,7 @@ using IntegerPair = std::pair<NSInteger, NSInteger>;
 
 - (void)refreshContents {
   [self computeBookmarkTableViewData];
-  [self updateEmptyBackground];
+  [self showEmptyOrLoadingSpinnerBackgroundIfNeeded];
   [self cancelAllFaviconLoads];
   [self.tableView reloadData];
 }
@@ -301,6 +315,15 @@ using IntegerPair = std::pair<NSInteger, NSInteger>;
 
   // Regenerate the list of all bookmarks.
   _bookmarkItems.clear();
+  if (_currentRootNode == self.bookmarkModel->root_node()) {
+    [self generateTableViewDataForRootNode];
+    return;
+  }
+  [self generateTableViewData];
+}
+
+- (void)generateTableViewData {
+  // Generate the list of all bookmarks for the current root node.
   int childCount = _currentRootNode->child_count();
   for (int i = 0; i < childCount; ++i) {
     const BookmarkNode* node = _currentRootNode->GetChild(i);
@@ -308,9 +331,66 @@ using IntegerPair = std::pair<NSInteger, NSInteger>;
   }
 }
 
-- (void)updateEmptyBackground {
-  self.emptyTableBackgroundView.alpha =
-      _currentRootNode != NULL && _currentRootNode->child_count() > 0 ? 0 : 1;
+- (void)generateTableViewDataForRootNode {
+  // Add "Mobile Bookmarks" to the table.
+  _bookmarkItems.push_back(self.bookmarkModel->mobile_node());
+
+  // Add "Bookmarks Bar" and "Other Bookmarks" only when they are not empty.
+  const BookmarkNode* bookmarkBar = self.bookmarkModel->bookmark_bar_node();
+  if (!bookmarkBar->empty()) {
+    _bookmarkItems.push_back(bookmarkBar);
+  }
+  const BookmarkNode* otherBookmarks = self.bookmarkModel->other_node();
+  if (!otherBookmarks->empty()) {
+    _bookmarkItems.push_back(otherBookmarks);
+  }
+}
+
+// Show empty background when the table view is empty.  Otherwise, check if we
+// need to show the loading spinner background.
+- (void)showEmptyOrLoadingSpinnerBackgroundIfNeeded {
+  if (_currentRootNode == NULL || _currentRootNode->empty()) {
+    [self showEmptyBackground];
+    return;
+  }
+  [self hideEmptyBackground];
+
+  if (self.bookmarkModel->HasNoUserCreatedBookmarksOrFolders() &&
+      _syncedSessionsObserver->IsSyncing())
+    [self showLoadingSpinnerBackground];
+  else
+    [self hideLoadingSpinner];
+}
+
+// Shows loading spinner background view.
+- (void)showLoadingSpinnerBackground {
+  if (!_spinnerView) {
+    _spinnerView =
+        [[BookmarkHomeWaitingView alloc] initWithFrame:self.tableView.bounds
+                                       backgroundColor:[UIColor clearColor]];
+    [_spinnerView startWaiting];
+    self.tableView.backgroundView = _spinnerView;
+  }
+}
+
+// Fade out loading spinner if it is showing.
+- (void)hideLoadingSpinner {
+  if (_spinnerView && _spinnerView.alpha == 1) {
+    [UIView beginAnimations:@"alpha" context:NULL];
+    _spinnerView.alpha = 0;
+    [UIView commitAnimations];
+  }
+}
+
+// Shows empty bookmarks background view.
+- (void)showEmptyBackground {
+  self.emptyTableBackgroundView.alpha = 1;
+  self.tableView.backgroundView = self.emptyTableBackgroundView;
+}
+
+// Hides empty bookmarks background view.
+- (void)hideEmptyBackground {
+  self.emptyTableBackgroundView.alpha = 0;
 }
 
 - (NSIndexPath*)indexPathForNode:(const bookmarks::BookmarkNode*)bookmarkNode {
@@ -410,6 +490,21 @@ using IntegerPair = std::pair<NSInteger, NSInteger>;
                                         base::BindBlockArc(faviconBlock),
                                         &_faviconTaskTracker);
   _faviconLoadTasks[IntegerPair(indexPath.section, indexPath.item)] = taskId;
+}
+
+#pragma mark - Exposed to the SyncedSessionsObserver
+
+- (void)reloadSessions {
+}
+
+- (void)onSyncStateChanged {
+  // Permanent nodes ("Bookmarks Bar", "Other Bookmarks") at the root node might
+  // be added after syncing.  So we need to refresh here.
+  if (_currentRootNode == self.bookmarkModel->root_node()) {
+    [self refreshContents];
+    return;
+  }
+  [self showEmptyOrLoadingSpinnerBackgroundIfNeeded];
 }
 
 @end
