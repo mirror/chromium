@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5d031221_d0767c71",
+        "filename": "third_party/WebKit/public/web/WebFrame.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-08-25T17:02:09Z",
+      "side": 0,
+      "message": "I think that moving AssignedName to WebLocalFrame results in simpler, cleaner code than the alternative of actually making WebRemoteFrameImpl::AssignedName return the current name.  YAGNI principle?",
+      "range": {
+        "startLine": 103,
+        "startChar": 20,
+        "endLine": 103,
+        "endChar": 34
+      },
+      "revId": "da770a76268822e7de088adcf311ad91fcfcdfc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
