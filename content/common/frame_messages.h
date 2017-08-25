@@ -1440,7 +1440,9 @@ IPC_MESSAGE_ROUTED0(FrameHostMsg_SwapOut_ACK)
 
 // Tells the parent that a child's frame rect has changed (or the rect/scroll
 // position of a child's ancestor has changed).
-IPC_MESSAGE_ROUTED1(FrameHostMsg_FrameRectChanged, gfx::Rect /* frame_rect */)
+IPC_MESSAGE_ROUTED2(FrameHostMsg_FrameRectChanged,
+                    gfx::Rect /* frame_rect */,
+                    viz::LocalSurfaceId /* local_surface_id */)
 
 // Sent by a parent frame to update its child's viewport intersection rect for
 // use by the IntersectionObserver API.

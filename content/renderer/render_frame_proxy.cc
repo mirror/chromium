@@ -503,11 +503,16 @@ void RenderFrameProxy::Navigate(const blink::WebURLRequest& request,
 
 void RenderFrameProxy::FrameRectsChanged(const blink::WebRect& frame_rect) {
   gfx::Rect rect = frame_rect;
+  if (frame_rect_ == rect)
+    return;
+
+  frame_rect_ = rect;
+  local_surface_id_ = local_surface_id_allocator_.GenerateId();
   if (IsUseZoomForDSFEnabled()) {
     rect = gfx::ScaleToEnclosingRect(
         rect, 1.f / render_widget_->GetOriginalDeviceScaleFactor());
   }
-  Send(new FrameHostMsg_FrameRectChanged(routing_id_, rect));
+  Send(new FrameHostMsg_FrameRectChanged(routing_id_, rect, local_surface_id_));
 }
 
 void RenderFrameProxy::UpdateRemoteViewportIntersection(

@@ -598,6 +598,12 @@ viz::FrameSinkId RenderWidgetHostViewChildFrame::GetFrameSinkId() {
   return frame_sink_id_;
 }
 
+viz::LocalSurfaceId RenderWidgetHostViewChildFrame::GetLocalSurfaceId() const {
+  if (frame_connector_)
+    return frame_connector_->local_surface_id();
+  return viz::LocalSurfaceId();
+}
+
 void RenderWidgetHostViewChildFrame::ProcessKeyboardEvent(
     const NativeWebKeyboardEvent& event,
     const ui::LatencyInfo& latency) {
