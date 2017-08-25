@@ -33,6 +33,9 @@ class BookmarkNode;
 // Returns the preferred image size for favicons.
 + (CGFloat)preferredImageSize;
 
+// Identifier for -[UITableView registerClass:forCellWithReuseIdentifier:].
++ (NSString*)reuseIdentifier;
+
 // Sets the favicon image.
 - (void)setImage:(UIImage*)image;
 

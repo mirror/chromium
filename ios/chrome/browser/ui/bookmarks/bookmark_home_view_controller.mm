@@ -317,7 +317,11 @@ const CGFloat kMenuWidth = 264;
 #pragma mark - BookmarkPromoControllerDelegate
 
 - (void)promoStateChanged:(BOOL)promoEnabled {
-  [self.folderView promoStateChangedAnimated:YES];
+  if (experimental_flags::IsBookmarkReorderingEnabled()) {
+    [self.bookmarksTableView promoStateChangedAnimated:YES];
+  } else {
+    [self.folderView promoStateChangedAnimated:YES];
+  }
 }
 
 #pragma mark Action sheet callbacks
@@ -449,6 +453,18 @@ const CGFloat kMenuWidth = 264;
     selectedNodesForDeletion:
         (const std::set<const bookmarks::BookmarkNode*>&)nodes {
   [self deleteNodes:nodes];
+}
+
+- (BOOL)bookmarkTableViewShouldShowPromoCell:(BookmarkTableView*)tableView {
+  return self.bookmarkPromoController.promoState;
+}
+
+- (void)bookmarkTableViewShowSignIn:(BookmarkTableView*)view {
+  [self.bookmarkPromoController showSignIn];
+}
+
+- (void)bookmarkTableViewDismissPromo:(BookmarkTableView*)view {
+  [self.bookmarkPromoController hidePromoCell];
 }
 
 #pragma mark - BookmarkFolderViewControllerDelegate
