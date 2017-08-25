@@ -8,6 +8,8 @@
 #include <stddef.h>
 #include <stdint.h>
 
+#include <limits>
+
 #include "base/numerics/safe_conversions.h"
 #include "base/optional.h"
 #include "chrome/installer/zucchini/buffer_view.h"
@@ -131,6 +133,8 @@ struct EquivalenceCandidate {
   Equivalence eq;
   double similarity;
 };
+
+constexpr double kMismatchFatal = -std::numeric_limits<double>::infinity();
 
 // Enumerations for supported executables.
 enum ExecutableType : uint32_t {
