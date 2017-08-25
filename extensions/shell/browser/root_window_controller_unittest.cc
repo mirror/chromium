@@ -193,6 +193,9 @@ TEST_F(RootWindowControllerTest, AppWindows) {
   // Close all remaining windows.
   root_window_controller->CloseAppWindows();
   ExpectNumAppWindows(0u);
+
+  // The RootWindowController will stay alive until closed.
+  EXPECT_EQ(1u, desktop_delegate()->root_window_controller_count());
 }
 
 // Tests that a second RootWindowController can be used independently of the
@@ -212,6 +215,7 @@ TEST_F(RootWindowControllerTest, Multiple) {
     AppWindow* app_window = CreateAppWindow(shorter_lived);
     ExpectNumAppWindows(2u);
     app_window->GetBaseWindow()->Close();  // Deletes the AppWindow.
+    shorter_lived->OnHostCloseRequested(shorter_lived->host());
   }
   ExpectNumAppWindows(1u);
 

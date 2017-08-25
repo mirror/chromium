@@ -141,11 +141,8 @@ void RootWindowController::OnAppWindowRemoved(AppWindow* window) {
   // close it again later.
   app_windows_.remove(window);
 
-  // Close when all AppWindows are closed.
-  if (app_windows_.empty()) {
+  if (app_windows_.empty())
     AppWindowRegistry::Get(browser_context_)->RemoveObserver(this);
-    desktop_delegate_->CloseRootWindowController(this);
-  }
 }
 
 void RootWindowController::DestroyWindowTreeHost() {
