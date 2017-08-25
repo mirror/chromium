@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0d55f581_3962dd76",
+        "filename": "chrome/browser/chromeos/fileapi/recent_arc_media_source.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-08-25T04:56:18Z",
+      "side": 1,
+      "message": "clarification: this is PREFIX, so the line below should be already covered?",
+      "revId": "e491007b10aacb301c5f8aea6781cac73db799cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
