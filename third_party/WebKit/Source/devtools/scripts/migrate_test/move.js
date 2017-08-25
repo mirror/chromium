@@ -18,7 +18,7 @@ const TEST_EXPECTATIONS_PATH = path.resolve(LAYOUT_TESTS_PATH, 'TestExpectations
 const FLAG_EXPECTATIONS_PATH = path.resolve(LAYOUT_TESTS_PATH, 'FlagExpectations');
 
 function main() {
-  const originalTests = scanForTests('../../../../LayoutTests/inspector/console');
+  const originalTests = scanForTests('../../../../LayoutTests/inspector/sources');
   console.log(originalTests);
   const oldToNewResourcesPath = new Map();
   const oldToNewTestPath = new Map(originalTests.map(t => [t, '']));
@@ -68,6 +68,10 @@ function main() {
       if (line.indexOf(oldTestPath) !== -1) {
         if (TestExpectationFailureTypes.some(x => line.indexOf(x) !== -1)) {
           testsAlreadyExempted.add(newTestPath);
+          const newLine = line.replace(oldTestPath, newTestPath);
+          return newLine + '\n' +
+              newLine.replace(newTestPath, `virtual/mojo-loading/${newTestPath}`)
+                  .replace(/crbug.com\/\d+/, 'crbug.com/667560');
         }
         return line.replace(oldTestPath, newTestPath);
       }
@@ -75,23 +79,6 @@ function main() {
     return line;
   });
 
-  updatedTestExpecations = updatedTestExpecations.map(line => {
-    for (const [oldTestPath, newTestPath] of oldToNewTestPath) {
-      if (!newTestPath)
-        continue;
-
-      // Put mojo tests here so we don't re-enable the test after migrating
-      if (line === '### Manually fix after migration') {
-        const newLines = Array.from(newTestPaths)
-                             .filter(t => testsAlreadyExempted.has(t))
-                             .map(x => `crbug.com/667560 virtual/mojo-loading/${x} [ Skip ]`)
-                             .join('\n');
-        if (newLines.length)
-          return line + '\n' + newLines;
-      }
-    }
-    return line;
-  });
   fs.writeFileSync(TEST_EXPECTATIONS_PATH, updatedTestExpecations.join('\n'));
 
   // Update additional test expectations
