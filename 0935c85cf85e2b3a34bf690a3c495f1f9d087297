@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ab333418_d56b229c",
+        "filename": "content/browser/service_worker/service_worker_dispatcher_host.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-25T04:53:38Z",
+      "side": 1,
+      "message": "Hmm, since all this function does is call ChromeContentBrowserClient::AllowServiceWorker(), maybe dispatcher host should just have a resource_context() getter and then provider host can call that directly?",
+      "parentUuid": "ed108391_ed271164",
+      "revId": "0935c85cf85e2b3a34bf690a3c495f1f9d087297",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b3089c00_e437af3d",
         "filename": "content/browser/service_worker/service_worker_dispatcher_host_unittest.cc",
         "patchSetId": 4
@@ -30,6 +48,165 @@
       "writtenOn": "2017-08-24T14:23:44Z",
       "side": 1,
       "message": "As SWProviderHost handles Register IPC now, I think we need to move Register related tests into unit test file of SWProviderHost. But I\u0027d like to keep them here for now and reconstruct all tests for all methods of SWProviderHost mojo interface later in unit test file of SWProviderHost.",
+      "revId": "0935c85cf85e2b3a34bf690a3c495f1f9d087297",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b9f45fbd_452181f1",
+        "filename": "content/browser/service_worker/service_worker_provider_host.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 946,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-25T04:53:38Z",
+      "side": 1,
+      "message": "Why needed? Does Mojo crash if we don\u0027t call the callbacK?",
+      "revId": "0935c85cf85e2b3a34bf690a3c495f1f9d087297",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72f9d186_5e946b45",
+        "filename": "content/browser/service_worker/service_worker_provider_host.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 949,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-25T04:53:38Z",
+      "side": 1,
+      "message": "I think we should avoid \"Unknown\" whenever possible since it makes debugging more difficult. Maybe add a \"kBadMessage\" ?",
+      "range": {
+        "startLine": 949,
+        "startChar": 46,
+        "endLine": 949,
+        "endChar": 54
+      },
+      "revId": "0935c85cf85e2b3a34bf690a3c495f1f9d087297",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c0ae479_fbf9690f",
+        "filename": "content/browser/service_worker/service_worker_provider_host.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 976,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-25T04:53:38Z",
+      "side": 1,
+      "message": "lines 943-976 is quite long just to kill a renderer on a bad message, which we expect to be an exceptional case. could we just combine all the checks into one bad message?\n\nSomething like this:\n\nif (!IsValidRegisterMessage(script_url, options)) {\n  bad_message::ReceivedBadMessage(dispatcher_host_,\n                                  bad_message::SWPH_REGISTER);\n  std::move(callback).Run(...)\n  return;\n}",
+      "revId": "0935c85cf85e2b3a34bf690a3c495f1f9d087297",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74f56632_e4e62d61",
+        "filename": "content/browser/service_worker/service_worker_provider_host.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 977,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-25T04:53:38Z",
+      "side": 1,
+      "message": "Could we also verify that this provider host is allowed to register a service worker, i.e., it\u0027s a provider for a Document?",
+      "revId": "0935c85cf85e2b3a34bf690a3c495f1f9d087297",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "684d41fe_ae15dd11",
+        "filename": "content/browser/service_worker/service_worker_provider_host.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 989,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-25T04:53:38Z",
+      "side": 1,
+      "message": "Register",
+      "revId": "0935c85cf85e2b3a34bf690a3c495f1f9d087297",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9083c295_a2250bca",
+        "filename": "content/browser/service_worker/service_worker_provider_host.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 993,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-25T04:53:38Z",
+      "side": 1,
+      "message": "Can this use BindOnce and std::move(callback)\n\nWhat happens if the callback is never called? Does Mojo crash? We might never run the callback if this ProviderHost is destructed.",
+      "revId": "0935c85cf85e2b3a34bf690a3c495f1f9d087297",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03cff207_57596798",
+        "filename": "content/browser/service_worker/service_worker_provider_host.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1021,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-25T04:53:38Z",
+      "side": 1,
+      "message": "// ServiceWorkerRegisterJob calls its completion callback, which results in this function being called, while the registration is live.",
+      "revId": "0935c85cf85e2b3a34bf690a3c495f1f9d087297",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ce42191_dccb2ac1",
+        "filename": "content/browser/service_worker/service_worker_provider_host.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1027,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-25T04:53:38Z",
+      "side": 1,
+      "message": "Hm, this reminds me of a cleanup I planned to do, I think this function can move to ProviderHost but let\u0027s keep it this way in this patch. I\u0027ll investigate in parallel and it should be a separate CL anyway.",
+      "revId": "0935c85cf85e2b3a34bf690a3c495f1f9d087297",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4019a64_7cc5a3ce",
+        "filename": "content/child/service_worker/service_worker_provider_context.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-25T04:53:38Z",
+      "side": 1,
+      "message": "We should DCHECK here that this is a Document",
       "revId": "0935c85cf85e2b3a34bf690a3c495f1f9d087297",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -59,6 +236,30 @@
     },
     {
       "key": {
+        "uuid": "e92d70f4_2a032fde",
+        "filename": "content/child/service_worker/service_worker_provider_context.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-25T04:53:38Z",
+      "side": 1,
+      "message": "I\u0027d just add on to the first sentence to say it can only be called \"for clients that are Documents, see comments of |provider_host_|.\"",
+      "parentUuid": "b49c679d_fd4b6f09",
+      "range": {
+        "startLine": 112,
+        "startChar": 2,
+        "endLine": 114,
+        "endChar": 67
+      },
+      "revId": "0935c85cf85e2b3a34bf690a3c495f1f9d087297",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e0e9d9d7_1253f8f1",
         "filename": "content/child/service_worker/service_worker_provider_context.h",
         "patchSetId": 4
@@ -75,6 +276,144 @@
         "startChar": 48,
         "endLine": 136,
         "endChar": 62
+      },
+      "revId": "0935c85cf85e2b3a34bf690a3c495f1f9d087297",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70f2667f_e1956ec4",
+        "filename": "content/child/service_worker/service_worker_provider_context.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-25T04:53:38Z",
+      "side": 1,
+      "message": "I\u0027d tighten this up though:\n\n// The |provider_host_| interface (which implements functions for navigator.serviceWorker), can only be used if |this| is a provider for a Document, since currently navigator.serviceWorker is only implemented for Document (https://crbug.com/371690). For other providers, |provider_host_| is just for keeping alive the corresponding browser-side ServiceWorkerProviderHost instance.",
+      "parentUuid": "e0e9d9d7_1253f8f1",
+      "range": {
+        "startLine": 136,
+        "startChar": 48,
+        "endLine": 136,
+        "endChar": 62
+      },
+      "revId": "0935c85cf85e2b3a34bf690a3c495f1f9d087297",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2eb45b22_79506f66",
+        "filename": "content/child/service_worker/web_service_worker_provider_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-25T04:53:38Z",
+      "side": 1,
+      "message": "can this be GURL scope(pattern);",
+      "revId": "0935c85cf85e2b3a34bf690a3c495f1f9d087297",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7adb942f_1056b550",
+        "filename": "content/child/service_worker/web_service_worker_provider_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-25T04:53:38Z",
+      "side": 1,
+      "message": "I\u0027d prefer something like\n\nGURL script_url(web_script_url)",
+      "revId": "0935c85cf85e2b3a34bf690a3c495f1f9d087297",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "56b50629_c3f80cc6",
+        "filename": "content/child/service_worker/web_service_worker_provider_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-25T04:53:38Z",
+      "side": 1,
+      "message": "I think mojom enums have a special way to convert to a string, which would be nicer than the int value.",
+      "range": {
+        "startLine": 160,
+        "startChar": 20,
+        "endLine": 160,
+        "endChar": 48
+      },
+      "revId": "0935c85cf85e2b3a34bf690a3c495f1f9d087297",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a8e2aaf_30a354e4",
+        "filename": "content/common/service_worker/service_worker_provider_interfaces.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-25T04:53:38Z",
+      "side": 1,
+      "message": "Also add Corresponds to navigator.serviceWorker.register().",
+      "revId": "0935c85cf85e2b3a34bf690a3c495f1f9d087297",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b9eceee8_762645eb",
+        "filename": "content/common/service_worker/service_worker_provider_interfaces.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-25T04:53:38Z",
+      "side": 1,
+      "message": "we could just use string not string16. the legacy code used an old webkit convention",
+      "revId": "0935c85cf85e2b3a34bf690a3c495f1f9d087297",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e233a0a_2485340d",
+        "filename": "content/common/service_worker/service_worker_types.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-25T04:53:38Z",
+      "side": 1,
+      "message": "let\u0027s avoid using \"Container\" these days",
+      "range": {
+        "startLine": 33,
+        "startChar": 3,
+        "endLine": 33,
+        "endChar": 12
       },
       "revId": "0935c85cf85e2b3a34bf690a3c495f1f9d087297",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
