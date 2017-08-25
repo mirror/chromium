@@ -1,0 +1,197 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "719593a9_199dae04",
+        "filename": "content/browser/webauth/cbor/cbor_writer.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-08-25T16:47:30Z",
+      "side": 1,
+      "message": "Do we have to decrement this by 1 for nested maps?",
+      "revId": "1fa442e8256f535940647168fd75d7ecaccdcf4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ce1a9ea_0bb097a2",
+        "filename": "content/browser/webauth/cbor/cbor_writer.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-08-25T16:47:30Z",
+      "side": 1,
+      "message": "Can we use a helper function and/or loop here to avoid repeatitions?",
+      "revId": "1fa442e8256f535940647168fd75d7ecaccdcf4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41972ae8_9be291fc",
+        "filename": "content/browser/webauth/cbor/cbor_writer.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-08-25T16:47:30Z",
+      "side": 1,
+      "message": "nit: The format of this has changed, please look at https://chromium.googlesource.com/chromium/src/+/master/styleguide/c++/c++.md#file-headers.",
+      "revId": "1fa442e8256f535940647168fd75d7ecaccdcf4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f11ad0de_ab5e006c",
+        "filename": "content/browser/webauth/cbor/cbor_writer.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-08-25T16:47:30Z",
+      "side": 1,
+      "message": "readability nit: Let\u0027s resolve the CBOR abbreviation at first use. \nformatting nit: Blank line above.\nstyle nit: Use // comment style even for comment blocks.",
+      "revId": "1fa442e8256f535940647168fd75d7ecaccdcf4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1dfe9dc_d29ebfc2",
+        "filename": "content/browser/webauth/cbor/cbor_writer.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-08-25T16:47:30Z",
+      "side": 1,
+      "message": "nit: 2, 3: Byte strings and UTF-8 strings, respectively.",
+      "revId": "1fa442e8256f535940647168fd75d7ecaccdcf4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1b8c524_47bc9e7e",
+        "filename": "content/browser/webauth/cbor/cbor_writer.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-08-25T16:47:30Z",
+      "side": 1,
+      "message": "readability nit: Please be consistent with ending lines either with `.` or not.",
+      "revId": "1fa442e8256f535940647168fd75d7ecaccdcf4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b61e9fcd_45e4f137",
+        "filename": "content/browser/webauth/cbor/cbor_writer.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-08-25T16:47:30Z",
+      "side": 1,
+      "message": "readability nit: Is this piece of information useful to the user of this class?",
+      "range": {
+        "startLine": 54,
+        "startChar": 32,
+        "endLine": 54,
+        "endChar": 47
+      },
+      "revId": "1fa442e8256f535940647168fd75d7ecaccdcf4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "39bc2941_90c41220",
+        "filename": "content/browser/webauth/cbor/cbor_writer.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-08-25T16:47:30Z",
+      "side": 1,
+      "message": "nit: -|len|",
+      "revId": "1fa442e8256f535940647168fd75d7ecaccdcf4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a875f3a2_7021ad18",
+        "filename": "content/browser/webauth/cbor/cbor_writer.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-08-25T16:47:30Z",
+      "side": 1,
+      "message": "Let\u0027s use base::StringPiece for flexibility and performance. (Passed by value.)",
+      "revId": "1fa442e8256f535940647168fd75d7ecaccdcf4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "428b0b4f_0973642c",
+        "filename": "content/browser/webauth/cbor/cbor_writer.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-08-25T16:47:30Z",
+      "side": 1,
+      "message": "Couple of questions:\n-- Can the key be of any type?\n-- Can there be nested maps?\n-- I would at least add a FinishMap() that the client needs to call when it believes to be done with the map, for sanity checking.\n-- Even better, have you considered following the pattern used by JSONWriter, i.e.: make the API take a base::Value and make it stateless?",
+      "revId": "1fa442e8256f535940647168fd75d7ecaccdcf4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1fe696b9_0a4d3d14",
+        "filename": "content/browser/webauth/cbor/cbor_writer.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-08-25T16:47:30Z",
+      "side": 1,
+      "message": "Let\u0027s elaborate in the comment on:\n -- Can this be called multiple times?\n -- Can you call Write() after calling this?",
+      "revId": "1fa442e8256f535940647168fd75d7ecaccdcf4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
