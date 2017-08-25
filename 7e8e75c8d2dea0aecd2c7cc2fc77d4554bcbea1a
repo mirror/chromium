@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "62e688eb_c5faa90e",
+        "filename": "chrome/browser/vr/databinding/binding.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-08-25T14:16:35Z",
+      "side": 1,
+      "message": "Very good point. I\u0027ve added a comment to the concrete subclass (now named Binding), since the rules would be slightly different for a collection binding.",
+      "parentUuid": "0d43ca97_d5ea7438",
+      "revId": "7e8e75c8d2dea0aecd2c7cc2fc77d4554bcbea1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "410a9d3b_fa756153",
         "filename": "chrome/browser/vr/databinding/one_way_binding.h",
         "patchSetId": 2
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "fc0f49c1_a7e66098",
+        "filename": "chrome/browser/vr/databinding/one_way_binding.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-08-25T14:16:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "410a9d3b_fa756153",
+      "revId": "7e8e75c8d2dea0aecd2c7cc2fc77d4554bcbea1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4dc4170f_a319f5e4",
         "filename": "chrome/browser/vr/databinding/one_way_binding.h",
         "patchSetId": 2
@@ -50,6 +86,24 @@
       "revId": "7e8e75c8d2dea0aecd2c7cc2fc77d4554bcbea1a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea6908e4_e86ea04c",
+        "filename": "chrome/browser/vr/databinding/one_way_binding.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-08-25T14:16:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4dc4170f_a319f5e4",
+      "revId": "7e8e75c8d2dea0aecd2c7cc2fc77d4554bcbea1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

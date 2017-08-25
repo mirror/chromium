@@ -125,6 +125,24 @@
     },
     {
       "key": {
+        "uuid": "d054b0f8_0fc540ff",
+        "filename": "chrome/browser/vr/databinding/one_way_binding.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-08-25T14:16:35Z",
+      "side": 1,
+      "message": "Done. Looks like FooBase is a common naming scheme, so I\u0027ve gone with that.",
+      "parentUuid": "2ee40de6_251f8157",
+      "revId": "b7be48e21ec03f8f39fdf1283da6c6728fda03a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4cfcdf67_f1c73d8d",
         "filename": "chrome/browser/vr/databinding/one_way_binding.h",
         "patchSetId": 1
