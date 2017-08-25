@@ -22,6 +22,30 @@
       "revId": "11cacf09a7a59a024e2f999331422e85ef4016b8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf84a99e_78f73061",
+        "filename": "ios/build/bots/tests/screen_size_dependent_tests.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-08-25T22:09:36Z",
+      "side": 1,
+      "message": "Hard to say, but I would still be more comfortable running these tests on iPad. Are you ok to keep this suite here?",
+      "parentUuid": "d4b5f4da_e31ca212",
+      "range": {
+        "startLine": 25,
+        "startChar": 14,
+        "endLine": 25,
+        "endChar": 36
+      },
+      "revId": "11cacf09a7a59a024e2f999331422e85ef4016b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
