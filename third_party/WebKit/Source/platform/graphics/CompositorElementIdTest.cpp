@@ -21,11 +21,8 @@ TEST_F(CompositorElementIdTest, EncodeDecode) {
   EXPECT_EQ(CompositorElementIdNamespace::kPrimary,
             NamespaceFromCompositorElementId(element_id));
 
-  element_id = CompositorElementIdFromDOMNodeId(
-      1, CompositorElementIdNamespace::kLinkHighlight);
+  element_id = CompositorElementIdFromUniqueObjectId(1);
   EXPECT_EQ(1u, IdFromCompositorElementId(element_id));
-  EXPECT_EQ(CompositorElementIdNamespace::kLinkHighlight,
-            NamespaceFromCompositorElementId(element_id));
 
   element_id = CompositorElementIdFromScrollbarId(
       23, CompositorElementIdNamespace::kScrollbar);

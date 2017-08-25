@@ -8,6 +8,11 @@
 
 namespace blink {
 
+UniqueObjectId NewUniqueObjectId() {
+  static UniqueObjectId counter = 0;
+  return ++counter;
+}
+
 static CompositorElementId CreateCompositorElementId(
     uint64_t blink_id,
     CompositorElementIdNamespace namespace_id) {
@@ -36,11 +41,14 @@ CompositorElementId PLATFORM_EXPORT CompositorElementIdFromLayoutObjectId(
 CompositorElementId PLATFORM_EXPORT
 CompositorElementIdFromDOMNodeId(DOMNodeId id,
                                  CompositorElementIdNamespace namespace_id) {
-  DCHECK(namespace_id == CompositorElementIdNamespace::kViewport ||
-         namespace_id == CompositorElementIdNamespace::kLinkHighlight ||
-         namespace_id == CompositorElementIdNamespace::kRootScroll ||
-         namespace_id == CompositorElementIdNamespace::kScrollState);
+  DCHECK(namespace_id == CompositorElementIdNamespace::kScrollState);
   return CreateCompositorElementId(id, namespace_id);
+}
+
+CompositorElementId PLATFORM_EXPORT
+CompositorElementIdFromUniqueObjectId(UniqueObjectId id) {
+  return CreateCompositorElementId(
+      id, CompositorElementIdNamespace::kUniqueObjectId);
 }
 
 CompositorElementId PLATFORM_EXPORT
