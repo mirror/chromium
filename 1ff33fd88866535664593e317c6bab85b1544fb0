@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "104cf69b_c1cec164",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 12
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-08-25T09:44:36Z",
+      "side": 1,
+      "message": "nit: trailing \u0027.\u0027 is missing.",
+      "revId": "1ff33fd88866535664593e317c6bab85b1544fb0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0b20cd5_a76f2113",
+        "filename": "chromeos/disks/disk_mount_manager.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-08-25T09:44:36Z",
+      "side": 1,
+      "message": "nit: s/disk/iter/ as iterator itself is not a disk.",
+      "revId": "1ff33fd88866535664593e317c6bab85b1544fb0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f397c100_af3f59fc",
+        "filename": "chromeos/disks/disk_mount_manager.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 622,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-08-25T09:44:36Z",
+      "side": 1,
+      "message": "This needs to be called regardless of whether Disk is found or not?",
+      "revId": "1ff33fd88866535664593e317c6bab85b1544fb0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
