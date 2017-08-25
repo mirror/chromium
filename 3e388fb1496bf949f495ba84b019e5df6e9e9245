@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d8f7d7c2_9322b4a8",
+        "filename": "build/util/lib/common/chrome_test_server_spawner.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 351,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-08-25T19:35:14Z",
+      "side": 1,
+      "message": "nit: leftover debugging?",
+      "revId": "3e388fb1496bf949f495ba84b019e5df6e9e9245",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16fa5bfe_a7d0bcd8",
+        "filename": "build/util/lib/common/chrome_test_server_spawner.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 361,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-08-25T19:35:14Z",
+      "side": 1,
+      "message": "super nit: double quote strings containing single quotes",
+      "revId": "3e388fb1496bf949f495ba84b019e5df6e9e9245",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
