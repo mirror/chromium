@@ -26,6 +26,7 @@
 #include "content/public/browser/restore_type.h"
 #include "content/public/browser/web_contents.h"
 #include "jni/TabState_jni.h"
+#include "ui/base/window_open_disposition.h"
 
 using base::android::ConvertUTF16ToJavaString;
 using base::android::ConvertUTF8ToJavaString;
@@ -469,7 +470,7 @@ ScopedJavaLocalRef<jobject>
   std::unique_ptr<content::NavigationEntry> entry(
       content::NavigationController::CreateNavigationEntry(
           GURL(base::android::ConvertJavaStringToUTF8(env, url)), referrer,
-          ui::PAGE_TRANSITION_LINK,
+          ui::PAGE_TRANSITION_LINK, WindowOpenDisposition::CURRENT_TAB,
           true,  // is_renderer_initiated
           "",    // extra_headers
           ProfileManager::GetActiveUserProfile()));

@@ -61,7 +61,7 @@ TEST_F(ChromeOmniboxNavigationObserverTest, LoadStateAfterPendingNavigation) {
   std::unique_ptr<content::NavigationEntry> entry(
       content::NavigationController::CreateNavigationEntry(
           GURL(), content::Referrer(), ui::PAGE_TRANSITION_FROM_ADDRESS_BAR,
-          false, std::string(), profile()));
+          WindowOpenDisposition::CURRENT_TAB, false, std::string(), profile()));
 
   content::NotificationService::current()->Notify(
       content::NOTIFICATION_NAV_ENTRY_PENDING,
