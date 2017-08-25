@@ -5,6 +5,7 @@
 #include "chrome/common/channel_info.h"
 
 #include "base/debug/profiler.h"
+#include "base/logging.h"
 #include "base/profiler/scoped_tracker.h"
 #include "base/strings/string_util.h"
 #include "base/strings/utf_string_conversions.h"
@@ -24,6 +25,8 @@ std::string GetChannelString() {
 #if defined(SYZYASAN)
   if (base::debug::IsBinaryInstrumented())
     channel += L" SyzyASan";
+  if (logging::LOG_DCHECK == logging::LOG_FATAL)
+    channel += L" DCHECK";
 #endif
   return base::UTF16ToASCII(channel);
 #else
