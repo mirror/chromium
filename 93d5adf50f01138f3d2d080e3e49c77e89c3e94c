@@ -1,0 +1,157 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d8fb16ae_392ba2a8",
+        "filename": "chrome/browser/chromeos/net/tether_notification_presenter.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-08-25T23:28:49Z",
+      "side": 1,
+      "message": "nit: IsPotentialHotspotsNotificationShowing ? (It\u0027s already long enough...)",
+      "revId": "93d5adf50f01138f3d2d080e3e49c77e89c3e94c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9108f6fe_7f21c567",
+        "filename": "chromeos/components/tether/host_scanner.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-08-25T23:28:49Z",
+      "side": 1,
+      "message": "nit: first_network",
+      "revId": "93d5adf50f01138f3d2d080e3e49c77e89c3e94c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "233917ab_faf1572a",
+        "filename": "chromeos/components/tether/host_scanner.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-08-25T23:28:49Z",
+      "side": 1,
+      "message": "nit: Second sentence is largely redundant.",
+      "revId": "93d5adf50f01138f3d2d080e3e49c77e89c3e94c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b92e0c4_d5def70c",
+        "filename": "chromeos/components/tether/notification_remover.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-08-25T23:28:49Z",
+      "side": 1,
+      "message": "nit: first_network",
+      "revId": "93d5adf50f01138f3d2d080e3e49c77e89c3e94c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e6ea244_7d96dbef",
+        "filename": "chromeos/network/network_state_handler.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 398,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-08-25T23:28:49Z",
+      "side": 1,
+      "message": "nit: first_network",
+      "revId": "93d5adf50f01138f3d2d080e3e49c77e89c3e94c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f93a95b_1c803b47",
+        "filename": "chromeos/network/network_state_handler.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 400,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-08-25T23:28:49Z",
+      "side": 1,
+      "message": "nit: network",
+      "revId": "93d5adf50f01138f3d2d080e3e49c77e89c3e94c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2bea0d3_3d0a3bb3",
+        "filename": "chromeos/network/network_state_handler.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 414,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-08-25T23:28:49Z",
+      "side": 1,
+      "message": "Ethernet will always be connecting or connected by definition so we don\u0027t need those checks here.",
+      "revId": "93d5adf50f01138f3d2d080e3e49c77e89c3e94c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "234e0bf2_618ca979",
+        "filename": "chromeos/network/network_state_handler.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 422,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-08-25T23:28:49Z",
+      "side": 1,
+      "message": "nit: For tether we are doing a lot of IsConnectedOrConnecting() tests, it might be worth adding that to NetworkState.",
+      "revId": "93d5adf50f01138f3d2d080e3e49c77e89c3e94c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49447595_f5f09c5a",
+        "filename": "chromeos/network/network_state_handler.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 432,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-08-25T23:28:49Z",
+      "side": 1,
+      "message": "nit: cache the first tether network above, i.e. first_tether_network and use that here, i.e. if (first_tether_network) return first_tether_network;",
+      "revId": "93d5adf50f01138f3d2d080e3e49c77e89c3e94c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
