@@ -16,6 +16,41 @@
       "revId": "51931634d88f08cbbf8cf828390bf962a66d72b7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc339301_68a5832a",
+        "filename": "chrome/browser/extensions/api/management/management_api_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 326,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-08-25T03:08:53Z",
+      "side": 1,
+      "message": "I prefer it this way (no need to think about the associativity precedence between * and -\u003e).",
+      "parentUuid": "4802770e_cfb26b09",
+      "revId": "51931634d88f08cbbf8cf828390bf962a66d72b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "01b8bce0_d682f007",
+        "filename": "extensions/browser/api/management/management_api.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-08-25T03:08:53Z",
+      "side": 1,
+      "message": "Also: I found it weird that this does not check MustRemainEnabled. The comment for this says: \"Whether this extension can be disabled or uninstalled by the user.\" So probably because of the uninstall clause, we don\u0027t check MustRemainEnabled, in which case the field name is a misnomer.",
+      "revId": "51931634d88f08cbbf8cf828390bf962a66d72b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
