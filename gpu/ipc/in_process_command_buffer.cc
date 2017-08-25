@@ -135,10 +135,14 @@ scoped_refptr<InProcessCommandBuffer::Service> GetInitialService(
 
 }  // anonyous namespace
 
-// This constructor is used only by DeferredGpuCommandService for Android
-// WebView. We will need to wire up the computed GpuFeatureInfo to here.
+// TODO(zmo): This constructor is used only by DeferredGpuCommandService for
+// Android WebView. We will need to wire up the computed GpuFeatureInfo to
+// here instead of computing from commandline switch..
 InProcessCommandBuffer::Service::Service(const GpuPreferences& gpu_preferences)
-    : Service(gpu_preferences, nullptr, nullptr, GpuFeatureInfo()) {}
+    : Service(gpu_preferences,
+              nullptr,
+              nullptr,
+              GpuFeatureInfo(base::CommandLine::ForCurrentProcess())) {}
 
 InProcessCommandBuffer::Service::Service(
     gpu::gles2::MailboxManager* mailbox_manager,
