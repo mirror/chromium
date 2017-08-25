@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b5a1a697_07813e84",
+        "filename": "gpu/command_buffer/service/context_state.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 308,
+      "author": {
+        "id": 1172235
+      },
+      "writtenOn": "2017-08-25T20:09:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6e4a1567_fcd72223",
+      "revId": "18cac4a9893b12f40dbf2aed879854c102136b22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4038bb6f_f9668cb6",
         "filename": "gpu/command_buffer/service/context_state.h",
         "patchSetId": 4
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-25T16:16:45Z",
       "side": 1,
       "message": "What\u0027s needs_update here? Did you mean needs_update_mask?",
+      "revId": "18cac4a9893b12f40dbf2aed879854c102136b22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f70d3ab_7e335d97",
+        "filename": "gpu/command_buffer/service/context_state.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 336,
+      "author": {
+        "id": 1172235
+      },
+      "writtenOn": "2017-08-25T20:09:26Z",
+      "side": 1,
+      "message": "whoops, yes. I was in the middle of a renaming here when I noticed the ValidateBindings code so decided to upload right before leaving for the day.",
+      "parentUuid": "4038bb6f_f9668cb6",
       "revId": "18cac4a9893b12f40dbf2aed879854c102136b22",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "72c8d74a_fa8b5728",
+        "filename": "gpu/command_buffer/service/context_state.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 338,
+      "author": {
+        "id": 1172235
+      },
+      "writtenOn": "2017-08-25T20:09:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b5275646_cb4384ac",
+      "revId": "18cac4a9893b12f40dbf2aed879854c102136b22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "88543d8e_e3994523",
         "filename": "gpu/command_buffer/service/gles2_cmd_decoder.cc",
         "patchSetId": 4
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "8704090f_0829940a",
+        "filename": "gpu/command_buffer/service/gles2_cmd_decoder.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 6047,
+      "author": {
+        "id": 1172235
+      },
+      "writtenOn": "2017-08-25T20:09:26Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "88543d8e_e3994523",
+      "revId": "18cac4a9893b12f40dbf2aed879854c102136b22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6287564c_d98ae07a",
         "filename": "gpu/command_buffer/service/gles2_cmd_decoder.cc",
         "patchSetId": 4
@@ -84,6 +156,24 @@
       "revId": "18cac4a9893b12f40dbf2aed879854c102136b22",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c678103_9613f5d1",
+        "filename": "gpu/command_buffer/service/gles2_cmd_decoder.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 6256,
+      "author": {
+        "id": 1172235
+      },
+      "writtenOn": "2017-08-25T20:09:26Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "6287564c_d98ae07a",
+      "revId": "18cac4a9893b12f40dbf2aed879854c102136b22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
