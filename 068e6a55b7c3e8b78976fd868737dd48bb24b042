@@ -52,6 +52,24 @@
       "revId": "068e6a55b7c3e8b78976fd868737dd48bb24b042",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89759bbe_3a3d42f9",
+        "filename": "ui/views/cocoa/views_nswindow_delegate.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1234814
+      },
+      "writtenOn": "2017-08-25T06:41:11Z",
+      "side": 1,
+      "message": "Thanks. I added a test to native_widget_mac_uniteractive_uitest.mm.",
+      "parentUuid": "480a1dd4_327ea56e",
+      "revId": "068e6a55b7c3e8b78976fd868737dd48bb24b042",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
