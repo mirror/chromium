@@ -35,6 +35,13 @@ import java.io.IOException;
 public class AwVariationsSeedHandler extends Handler {
     private static final String TAG = "AwVariatnsWVHdlr";
 
+    // Cache variations seed meta-data so a series of jni calls won't all read the data from
+    // storage.
+    private static Boolean sHasCachedPrefData = false;
+    private static String sVariationsSeedDate = "";
+    private static String sVariationsSeedSignature = "";
+    private static String sVariationsSeedCountry = "";
+
     private ServiceConnection mConnection;
 
     AwVariationsSeedHandler(ServiceConnection connection) {

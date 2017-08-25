@@ -4,7 +4,13 @@
 
 #include "android_webview/browser/aw_field_trial_creator.h"
 
+#include <jni.h>
+
 #include "android_webview/browser/aw_metrics_service_client.h"
+#include "base/android/jni_android.h"
+#include "base/android/jni_array.h"
+#include "base/android/jni_string.h"
+#include "base/android/jni_weak_ref.h"
 #include "base/base_switches.h"
 #include "base/feature_list.h"
 #include "base/path_service.h"
@@ -17,6 +23,11 @@
 #include "components/variations/entropy_provider.h"
 #include "components/variations/pref_names.h"
 #include "content/public/common/content_switches.h"
+#include "jni/AwVariationsDataHandler_jni.h"
+
+using base::android::AttachCurrentThread;
+using base::android::ConvertJavaStringToUTF8;
+using base::android::ScopedJavaLocalRef;
 
 namespace android_webview {
 namespace {
@@ -39,9 +50,35 @@ CreateLowEntropyProvider() {
 // enough to have minimal impact on startup time, and is behind the
 // webview-enable-finch flag.
 bool ReadVariationsSeedDataFromFile(PrefService* local_state) {
-  // TODO(kmilka): The data read is being moved to java and the data will be
-  // passed in via JNI.
-  return false;
+  JNIEnv* env = AttachCurrentThread();
+  ScopedJavaLocalRef<jobject> j_variations_seed_data =
+      Java_AwVariationsDataHandler_readVariationsSeedData(env);
+
+  std::string data_str = ConvertJavaStringToUTF8(
+      Java_VariationsSeedData_getData(env, j_variations_seed_data));
+
+  // If the data string is empty an error was caught and logged in Java.
+  if (data_str.empty()) {
+    return false;
+  }
+
+  std::string signature_str = ConvertJavaStringToUTF8(
+      Java_VariationsSeedData_getSignature(env, j_variations_seed_data));
+  std::string country_str = ConvertJavaStringToUTF8(
+      Java_VariationsSeedData_getCountry(env, j_variations_seed_data));
+  int64_t fetch_time =
+      Java_VariationsSeedData_getFetchTime(env, j_variations_seed_data);
+
+  local_state->SetString(variations::prefs::kVariationsCompressedSeed,
+                         data_str);
+  local_state->SetString(variations::prefs::kVariationsSeedSignature,
+                         signature_str);
+  local_state->SetString(variations::prefs::kVariationsCountry, country_str);
+  local_state->SetInt64(variations::prefs::kVariationsSeedDate, fetch_time);
+  local_state->SetInt64(variations::prefs::kVariationsLastFetchTime,
+                        fetch_time);
+
+  return true;
 }
 
 }  // anonymous namespace
