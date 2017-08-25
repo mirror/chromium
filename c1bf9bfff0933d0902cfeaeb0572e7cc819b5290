@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "bf28bc92_91e56830",
+        "filename": "components/viz/client/client_layer_tree_frame_sink.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-08-25T19:05:31Z",
+      "side": 1,
+      "message": "+1 The caller should check the flag and decide whether to create the provider or not. Here, we should just use whatever the user sent.",
+      "parentUuid": "66a5d237_869798d6",
+      "revId": "c1bf9bfff0933d0902cfeaeb0572e7cc819b5290",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "95f7eaca_4ed9fefb",
         "filename": "components/viz/client/client_layer_tree_frame_sink.cc",
         "patchSetId": 1
@@ -65,6 +83,30 @@
       "writtenOn": "2017-08-25T16:11:07Z",
       "side": 1,
       "message": "Wait on this bit until we actually send hit-test data to Viz?",
+      "range": {
+        "startLine": 143,
+        "startChar": 4,
+        "endLine": 143,
+        "endChar": 24
+      },
+      "revId": "c1bf9bfff0933d0902cfeaeb0572e7cc819b5290",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "594dbbc4_05e0ea26",
+        "filename": "components/viz/client/client_layer_tree_frame_sink.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-08-25T19:05:31Z",
+      "side": 1,
+      "message": "Not totally sure what this means. This is where we are sending the data to viz.",
+      "parentUuid": "a5de849e_1fbc6a82",
       "range": {
         "startLine": 143,
         "startChar": 4,
