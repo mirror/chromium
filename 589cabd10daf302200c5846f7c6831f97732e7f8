@@ -22,6 +22,30 @@
       "revId": "589cabd10daf302200c5846f7c6831f97732e7f8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f988662_b90b71a3",
+        "filename": "chrome/browser/net/net_error_tab_helper.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 1212384
+      },
+      "writtenOn": "2017-08-25T18:24:35Z",
+      "side": 1,
+      "message": "Updated this part so net error tab helper is no longer needing to know about origin. I think this CL won\u0027t touch net error at all now.",
+      "parentUuid": "14eda8c9_360438d4",
+      "range": {
+        "startLine": 234,
+        "startChar": 39,
+        "endLine": 234,
+        "endChar": 42
+      },
+      "revId": "589cabd10daf302200c5846f7c6831f97732e7f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
