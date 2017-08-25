@@ -4,6 +4,8 @@
 
 package org.chromium.chrome.browser.download;
 
+import static org.chromium.chrome.browser.download.DownloadNotificationService.getResumptionAttemptLeft;
+
 import android.app.Notification;
 import android.app.Service;
 import android.content.Context;
@@ -12,13 +14,18 @@ import android.os.Binder;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
 
+import org.chromium.base.ContextUtils;
 import org.chromium.chrome.browser.AppHooks;
+
+import java.util.List;
 
 /**
  * Keep-alive foreground service for downloads.
  */
 public class DownloadForegroundService extends Service {
     private final IBinder mBinder = new LocalBinder();
+    private final DownloadSharedPreferenceHelper mDownloadSharedPreferenceHelper =
+            DownloadSharedPreferenceHelper.getInstance();
 
     /**
      * Start the foreground service with this given context.
@@ -50,8 +57,42 @@ public class DownloadForegroundService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        // This should restart service after Chrome gets killed (except for Android 4.4.2).
-        return START_STICKY;
+        // Rely on job scheduler to deal with resumption logic.
+        return START_NOT_STICKY;
+    }
+
+    @Override
+    public void onDestroy() {
+        rescheduleDownloads();
+        super.onDestroy();
+    }
+
+    // TODO(jming): Putting this here makes this class less generalized, consider another way.
+    private void rescheduleDownloads() {
+        Context context = ContextUtils.getApplicationContext();
+
+        // Cancel any existing task.  If we have any downloads to resume we'll reschedule another.
+        DownloadResumptionScheduler.getDownloadResumptionScheduler(context).cancelTask();
+        List<DownloadSharedPreferenceEntry> entries = mDownloadSharedPreferenceHelper.getEntries();
+        if (entries.isEmpty()) return;
+
+        boolean scheduleAutoResumption = false;
+        boolean allowMeteredConnection = false;
+        for (int i = 0; i < entries.size(); ++i) {
+            DownloadSharedPreferenceEntry entry = entries.get(i);
+            if (entry.isAutoResumable) {
+                scheduleAutoResumption = true;
+                if (entry.canDownloadWhileMetered) {
+                    allowMeteredConnection = true;
+                    break;
+                }
+            }
+        }
+
+        if (scheduleAutoResumption && getResumptionAttemptLeft() > 0) {
+            DownloadResumptionScheduler.getDownloadResumptionScheduler(context).schedule(
+                    allowMeteredConnection);
+        }
     }
 
     @Nullable
