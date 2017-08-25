@@ -1300,7 +1300,7 @@ bool PrintRenderFrameHelper::CreatePreviewDocument() {
   const PrintMsg_Print_Params& print_params = print_pages_params_->params;
   const std::vector<int>& pages = print_pages_params_->pages;
 
-  if (!print_preview_context_.CreatePreviewDocument(prep_frame_view_.release(),
+  if (!print_preview_context_.CreatePreviewDocument(std::move(prep_frame_view_),
                                                     pages)) {
     return false;
   }
@@ -2195,13 +2195,13 @@ void PrintRenderFrameHelper::PrintPreviewContext::OnPrintPreview() {
 }
 
 bool PrintRenderFrameHelper::PrintPreviewContext::CreatePreviewDocument(
-    PrepareFrameAndViewForPrint* prepared_frame,
+    std::unique_ptr<PrepareFrameAndViewForPrint> prepared_frame,
     const std::vector<int>& pages) {
   DCHECK_EQ(INITIALIZED, state_);
   state_ = RENDERING;
 
   // Need to make sure old object gets destroyed first.
-  prep_frame_view_.reset(prepared_frame);
+  prep_frame_view_ = std::move(prepared_frame);
   prep_frame_view_->StartPrinting();
 
   total_page_count_ = prep_frame_view_->GetExpectedPageCount();
