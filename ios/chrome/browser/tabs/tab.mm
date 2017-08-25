@@ -98,6 +98,7 @@
 #import "ios/chrome/browser/ui/prerender_delegate.h"
 #import "ios/chrome/browser/ui/reader_mode/reader_mode_checker.h"
 #import "ios/chrome/browser/ui/reader_mode/reader_mode_controller.h"
+#import "ios/chrome/browser/ui/sad_tab/sad_tab_view.h"
 #include "ios/chrome/browser/ui/ui_util.h"
 #import "ios/chrome/browser/web/auto_reload_bridge.h"
 #import "ios/chrome/browser/web/external_app_launcher.h"
@@ -1862,6 +1863,20 @@ void TabInfoBarObserver::OnInfoBarReplaced(infobars::InfoBar* old_infobar,
       completion:^(BOOL finished) {
         [weakPagePlaceholder removeFromSuperview];
       }];
+}
+
+#pragma mark - SadTabTabHelperDelegate
+
+- (void)sadTabHelper:(SadTabTabHelper*)tabHelper
+    presentSadTabForRepeatedFailure:(BOOL)repeatedFailure {
+  // Create a SadTabView so |webstate| presents it.
+  SadTabView* sadTabview = [[SadTabView alloc]
+           initWithMode:repeatedFailure ? SadTabViewMode::FEEDBACK
+                                        : SadTabViewMode::RELOAD
+      navigationManager:tabHelper->web_state()->GetNavigationManager()];
+  CRWContentView* contentView =
+      [[CRWGenericContentView alloc] initWithView:sadTabview];
+  tabHelper->web_state()->ShowTransientContentView(contentView);
 }
 
 @end
