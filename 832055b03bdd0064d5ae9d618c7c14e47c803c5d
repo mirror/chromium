@@ -2,6 +2,144 @@
   "comments": [
     {
       "key": {
+        "uuid": "b4060f24_7bb8dc3e",
+        "filename": "remoting/client/audio/async_audio_frame_supplier.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1133074
+      },
+      "writtenOn": "2017-08-25T16:59:45Z",
+      "side": 1,
+      "message": "Is this needed?",
+      "range": {
+        "startLine": 8,
+        "startChar": 0,
+        "endLine": 8,
+        "endChar": 19
+      },
+      "revId": "832055b03bdd0064d5ae9d618c7c14e47c803c5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98d5101e_964ee921",
+        "filename": "remoting/client/audio/async_audio_frame_supplier.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1133074
+      },
+      "writtenOn": "2017-08-25T16:59:45Z",
+      "side": 1,
+      "message": "nit: I prefer \u003ccstdint\u003e since that is the C++ style header, old school c header will still work though.",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 19
+      },
+      "revId": "832055b03bdd0064d5ae9d618c7c14e47c803c5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a43517cf_832f46c3",
+        "filename": "remoting/client/audio/async_audio_frame_supplier.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1133074
+      },
+      "writtenOn": "2017-08-25T16:59:45Z",
+      "side": 1,
+      "message": "I don\u0027t think these are used here and can be removed.",
+      "range": {
+        "startLine": 11,
+        "startChar": 0,
+        "endLine": 12,
+        "endChar": 17
+      },
+      "revId": "832055b03bdd0064d5ae9d618c7c14e47c803c5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8be8ba9_db1e7fc9",
+        "filename": "remoting/client/audio/async_audio_frame_supplier.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1133074
+      },
+      "writtenOn": "2017-08-25T16:59:45Z",
+      "side": 1,
+      "message": "Not needed for this header?",
+      "range": {
+        "startLine": 15,
+        "startChar": 0,
+        "endLine": 15,
+        "endChar": 24
+      },
+      "revId": "832055b03bdd0064d5ae9d618c7c14e47c803c5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67979ab2_d54ba811",
+        "filename": "remoting/client/audio/async_audio_frame_supplier.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1133074
+      },
+      "writtenOn": "2017-08-25T16:59:45Z",
+      "side": 1,
+      "message": "Not needed for this header?",
+      "range": {
+        "startLine": 17,
+        "startChar": 0,
+        "endLine": 17,
+        "endChar": 36
+      },
+      "revId": "832055b03bdd0064d5ae9d618c7c14e47c803c5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1ecfa11_a8e07636",
+        "filename": "remoting/client/audio/async_audio_frame_supplier.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1133074
+      },
+      "writtenOn": "2017-08-25T16:59:45Z",
+      "side": 1,
+      "message": "It sounds like |samples| is an output param, if so then it should be listed as the last param:https://google.github.io/styleguide/cppguide.html#Function_Parameter_Ordering",
+      "range": {
+        "startLine": 33,
+        "startChar": 6,
+        "endLine": 33,
+        "endChar": 19
+      },
+      "revId": "832055b03bdd0064d5ae9d618c7c14e47c803c5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cd37e704_8a9b100c",
         "filename": "remoting/client/audio/async_audio_frame_supplier.h",
         "patchSetId": 6
@@ -46,6 +184,236 @@
       "revId": "832055b03bdd0064d5ae9d618c7c14e47c803c5d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0b5ca2df_8041dc12",
+        "filename": "remoting/client/audio/audio_frame_supplier.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1133074
+      },
+      "writtenOn": "2017-08-25T16:59:45Z",
+      "side": 1,
+      "message": "Same comments from AsyncAudioFrameSupplier apply here (regarding cstdint and extraneous header includes).",
+      "range": {
+        "startLine": 8,
+        "startChar": 0,
+        "endLine": 12,
+        "endChar": 17
+      },
+      "revId": "832055b03bdd0064d5ae9d618c7c14e47c803c5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4a308e7_20218de1",
+        "filename": "remoting/client/audio/audio_frame_supplier.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1133074
+      },
+      "writtenOn": "2017-08-25T16:59:45Z",
+      "side": 1,
+      "message": "Remove for this header?",
+      "range": {
+        "startLine": 14,
+        "startChar": 0,
+        "endLine": 14,
+        "endChar": 26
+      },
+      "revId": "832055b03bdd0064d5ae9d618c7c14e47c803c5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a581d45_d4073dc6",
+        "filename": "remoting/client/audio/audio_frame_supplier.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1133074
+      },
+      "writtenOn": "2017-08-25T16:59:45Z",
+      "side": 1,
+      "message": "Can you use \u0027\u003d default\u0027 for c\u0027tor and d\u0027tor since they are trivial",
+      "range": {
+        "startLine": 26,
+        "startChar": 23,
+        "endLine": 26,
+        "endChar": 25
+      },
+      "revId": "832055b03bdd0064d5ae9d618c7c14e47c803c5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3e630de_24c4a21e",
+        "filename": "remoting/client/audio/audio_frame_supplier.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1133074
+      },
+      "writtenOn": "2017-08-25T16:59:45Z",
+      "side": 1,
+      "message": "If you think these are going to be cheap to access, you could use the lowercase getter syntax (i.e. buffered_sampling_rate()).  If they are going to be non-trivial then using a \u0027GetBlah...\u0027 is fine.",
+      "range": {
+        "startLine": 31,
+        "startChar": 36,
+        "endLine": 31,
+        "endChar": 59
+      },
+      "revId": "832055b03bdd0064d5ae9d618c7c14e47c803c5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85da7789_b165d48f",
+        "filename": "remoting/client/audio/audio_stream_consumer.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1133074
+      },
+      "writtenOn": "2017-08-25T16:59:45Z",
+      "side": 1,
+      "message": "Same header comments as the other files, try to trim it down to the minimal set needed for the header.  Forward declare when possible.",
+      "range": {
+        "startLine": 8,
+        "startChar": 0,
+        "endLine": 13,
+        "endChar": 0
+      },
+      "revId": "832055b03bdd0064d5ae9d618c7c14e47c803c5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c6193b1_55cf94a7",
+        "filename": "remoting/client/audio/audio_stream_consumer.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1133074
+      },
+      "writtenOn": "2017-08-25T16:59:45Z",
+      "side": 1,
+      "message": "constant?",
+      "range": {
+        "startLine": 23,
+        "startChar": 46,
+        "endLine": 23,
+        "endChar": 56
+      },
+      "revId": "832055b03bdd0064d5ae9d618c7c14e47c803c5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bab4c0d9_b9e5124b",
+        "filename": "remoting/client/audio/audio_stream_consumer.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1133074
+      },
+      "writtenOn": "2017-08-25T16:59:45Z",
+      "side": 1,
+      "message": "AudioFrameSupplier?  Maybe use specific class names here?",
+      "range": {
+        "startLine": 24,
+        "startChar": 52,
+        "endLine": 24,
+        "endChar": 72
+      },
+      "revId": "832055b03bdd0064d5ae9d618c7c14e47c803c5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d99193b_a687c876",
+        "filename": "remoting/client/audio/audio_stream_consumer.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1133074
+      },
+      "writtenOn": "2017-08-25T16:59:45Z",
+      "side": 1,
+      "message": "Break up the d\u0027tor and interface methods and add some documentation / contract to each method for the impls to adhere to.",
+      "range": {
+        "startLine": 31,
+        "startChar": 2,
+        "endLine": 31,
+        "endChar": 10
+      },
+      "revId": "832055b03bdd0064d5ae9d618c7c14e47c803c5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30d0f95b_fdb0132c",
+        "filename": "remoting/client/audio/audio_stream_consumer.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1133074
+      },
+      "writtenOn": "2017-08-25T16:59:45Z",
+      "side": 1,
+      "message": "This is probably fine but it\u0027s tough to say for sure until the is an impl to review.",
+      "range": {
+        "startLine": 33,
+        "startChar": 45,
+        "endLine": 33,
+        "endChar": 67
+      },
+      "revId": "832055b03bdd0064d5ae9d618c7c14e47c803c5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d91a2f57_e7a68b0b",
+        "filename": "remoting/client/audio/audio_stream_consumer.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1133074
+      },
+      "writtenOn": "2017-08-25T16:59:45Z",
+      "side": 1,
+      "message": "I think this is a TODO:\nTODO(nicholss): Remove AudioStub impl after migrating all clients to new architecture.",
+      "range": {
+        "startLine": 35,
+        "startChar": 31,
+        "endLine": 35,
+        "endChar": 41
+      },
+      "revId": "832055b03bdd0064d5ae9d618c7c14e47c803c5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
