@@ -1,5 +1,5 @@
-This is a testharness.js-based test.
-FAIL Revoke blob URL after open(), will fetch assert_equals: expected "test" but got ""
-FAIL Revoke blob URL before open(), network error (after send()) assert_unreached: Got unexpected load event Reached unreachable code
-Harness: the test ran to completion.
-
+layer at (0,0) size 980x735
+  LayoutView at (0,0) size 980x735
+layer at (0,0) size 980x735
+  LayoutBlockFlow {HTML} at (0,0) size 980x735
+    LayoutBlockFlow {BODY} at (8,8) size 964x719

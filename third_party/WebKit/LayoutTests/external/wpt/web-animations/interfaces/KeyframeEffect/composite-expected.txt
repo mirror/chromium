@@ -1,7 +1,5 @@
-This is a testharness.js-based test.
-FAIL Default value assert_equals: The default value should be replace expected (string) "replace" but got (undefined) undefined
-PASS Change composite value 
-FAIL Unspecified keyframe composite value when setting effect composite anim.effect.getKeyframes is not a function
-FAIL Specified keyframe composite value when setting effect composite anim.effect.getKeyframes is not a function
-Harness: the test ran to completion.
-
+layer at (0,0) size 980x735
+  LayoutView at (0,0) size 980x735
+layer at (0,0) size 980x735
+  LayoutBlockFlow {HTML} at (0,0) size 980x735
+    LayoutBlockFlow {BODY} at (8,8) size 964x719

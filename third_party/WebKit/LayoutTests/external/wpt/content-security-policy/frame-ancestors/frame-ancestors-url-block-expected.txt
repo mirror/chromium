@@ -1,4 +1,5 @@
-This is a testharness.js-based test.
-FAIL A 'frame-ancestors' CSP directive with a URL which doesn't match this origin should be blocked. assert_unreached: The IFrame should have been blocked (or cross-origin). It wasn't. Reached unreachable code
-Harness: the test ran to completion.
-
+layer at (0,0) size 980x735
+  LayoutView at (0,0) size 980x735
+layer at (0,0) size 980x735
+  LayoutBlockFlow {HTML} at (0,0) size 980x735
+    LayoutBlockFlow {BODY} at (8,8) size 964x719
