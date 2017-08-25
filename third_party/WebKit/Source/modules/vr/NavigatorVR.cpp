@@ -18,6 +18,7 @@
 #include "modules/vr/VRDisplay.h"
 #include "modules/vr/VRGetDevicesCallback.h"
 #include "modules/vr/VRPose.h"
+#include "platform/feature_policy/FeaturePolicy.h"
 #include "platform/wtf/PtrUtil.h"
 #include "public/platform/Platform.h"
 
@@ -70,6 +71,22 @@ ScriptPromise NavigatorVR::getVRDisplays(ScriptState* script_state) {
   if (!GetDocument()) {
     RejectNavigatorDetached(resolver);
     return promise;
+  } else {
+    LocalFrame* frame = GetDocument()->GetFrame();
+    // TODO(bshe): Add diffrent error string for cases when promise is rejected.
+    if (!frame) {
+      RejectNavigatorDetached(resolver);
+      return promise;
+    }
+    if (IsSupportedInFeaturePolicy(WebFeaturePolicyFeature::kWebVr)) {
+      if (!frame->IsFeatureEnabled(WebFeaturePolicyFeature::kWebVr)) {
+        RejectNavigatorDetached(resolver);
+        return promise;
+      }
+    } else if (!frame->IsMainFrame()) {
+      RejectNavigatorDetached(resolver);
+      return promise;
+    }
   }
 
   UseCounter::Count(*GetDocument(), WebFeature::kVRGetDisplays);

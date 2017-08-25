@@ -94,6 +94,8 @@ bool IsSupportedInFeaturePolicy(WebFeaturePolicyFeature feature) {
       return true;
     case WebFeaturePolicyFeature::kVibrate:
       return RuntimeEnabledFeatures::FeaturePolicyExperimentalFeaturesEnabled();
+    case WebFeaturePolicyFeature::kWebVr:
+      return true;
     default:
       return false;
   }
@@ -115,6 +117,7 @@ const FeatureNameMap& GetDefaultFeatureNameMap() {
     default_feature_name_map.Set("geolocation",
                                  WebFeaturePolicyFeature::kGeolocation);
     default_feature_name_map.Set("midi", WebFeaturePolicyFeature::kMidiFeature);
+    default_feature_name_map.Set("vr", WebFeaturePolicyFeature::kWebVr);
     if (RuntimeEnabledFeatures::FeaturePolicyExperimentalFeaturesEnabled()) {
       default_feature_name_map.Set("vibrate",
                                    WebFeaturePolicyFeature::kVibrate);
