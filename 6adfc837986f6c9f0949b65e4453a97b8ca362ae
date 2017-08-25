@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d205292a_dd1f9098",
+        "filename": "components/safe_browsing/features.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-08-25T14:26:58Z",
+      "side": 1,
+      "message": "nit: it is a param, not really a feature.",
+      "range": {
+        "startLine": 45,
+        "startChar": 54,
+        "endLine": 45,
+        "endChar": 61
+      },
+      "revId": "6adfc837986f6c9f0949b65e4453a97b8ca362ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
