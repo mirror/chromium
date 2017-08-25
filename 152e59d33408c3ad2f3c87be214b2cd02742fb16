@@ -22,6 +22,30 @@
       "revId": "152e59d33408c3ad2f3c87be214b2cd02742fb16",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb49cf2c_fa82ce27",
+        "filename": "chromeos/components/tether/ble_scanner.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-25T19:01:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8bb98b32_ad020b8a",
+      "range": {
+        "startLine": 177,
+        "startChar": 2,
+        "endLine": 177,
+        "endChar": 10
+      },
+      "revId": "152e59d33408c3ad2f3c87be214b2cd02742fb16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
