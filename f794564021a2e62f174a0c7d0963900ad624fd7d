@@ -1,0 +1,107 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "69625eb7_6d6acffb",
+        "filename": "chrome/browser/chromeos/power/peripheral_battery_notifier.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-08-25T20:08:04Z",
+      "side": 1,
+      "message": "i think we usually use //third_party/re2 for regular expressions within chromium. i only see one existing use of \u003cregex\u003e. also note that https://chromium-cpp.appspot.com/ says it\u0027s banned. :-)",
+      "revId": "f794564021a2e62f174a0c7d0963900ad624fd7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "abe96294_8a906143",
+        "filename": "chrome/browser/chromeos/power/peripheral_battery_notifier.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-08-25T20:08:04Z",
+      "side": 1,
+      "message": "nit: Bluetooth",
+      "range": {
+        "startLine": 93,
+        "startChar": 3,
+        "endLine": 93,
+        "endChar": 12
+      },
+      "revId": "f794564021a2e62f174a0c7d0963900ad624fd7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11273835_004fb7d8",
+        "filename": "chrome/browser/chromeos/power/peripheral_battery_notifier.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-08-25T20:08:04Z",
+      "side": 1,
+      "message": "nit: Bluetooth",
+      "range": {
+        "startLine": 62,
+        "startChar": 20,
+        "endLine": 62,
+        "endChar": 29
+      },
+      "revId": "f794564021a2e62f174a0c7d0963900ad624fd7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fae2ecba_ea62b0b2",
+        "filename": "chrome/browser/chromeos/power/peripheral_battery_notifier.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-08-25T20:08:04Z",
+      "side": 1,
+      "message": "nit: capitalize \"Bluetooth\" in this comment too",
+      "range": {
+        "startLine": 69,
+        "startChar": 17,
+        "endLine": 69,
+        "endChar": 26
+      },
+      "revId": "f794564021a2e62f174a0c7d0963900ad624fd7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb4f0f0b_47b63a61",
+        "filename": "chrome/browser/chromeos/power/peripheral_battery_notifier_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-08-25T20:08:04Z",
+      "side": 1,
+      "message": "i think that you need to update this lookup and others to use paths instead of addresses now.",
+      "revId": "f794564021a2e62f174a0c7d0963900ad624fd7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
