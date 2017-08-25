@@ -1,0 +1,13 @@
+layer at (0,0) size 800x600
+  LayoutView at (0,0) size 800x600
+layer at (0,0) size 800x135
+  LayoutBlockFlow {HTML} at (0,0) size 800x134.53
+    LayoutBlockFlow {BODY} at (8,21.27) size 784x105.27
+      LayoutBlockFlow {H4} at (0,0) size 784x18
+        LayoutText {#text} at (0,0) size 396x18
+          text run at (0,0) width 396: "There should not be any red in fullscreen or print preview"
+      LayoutFlexibleBox {DIV} at (0,39.27) size 322x66 [border: (1px solid #FFFFFF)]
+        LayoutBlockFlow {P} at (1,1) size 160x32 [bgcolor=#FFFF00]
+        LayoutBlockFlow {P} at (161,1) size 160x32 [bgcolor=#FFFF00]
+        LayoutBlockFlow {P} at (1,33) size 160x32 [bgcolor=#FFFF00]
+        LayoutBlockFlow {P} at (161,33) size 160x32 [bgcolor=#FFFF00]

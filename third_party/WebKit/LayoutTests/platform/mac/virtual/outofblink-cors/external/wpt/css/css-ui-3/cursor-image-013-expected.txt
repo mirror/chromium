@@ -1,0 +1,13 @@
+layer at (0,0) size 800x600
+  LayoutView at (0,0) size 800x600
+layer at (0,0) size 800x224
+  LayoutBlockFlow {HTML} at (0,0) size 800x224
+    LayoutBlockFlow {BODY} at (8,16) size 784x200
+      LayoutBlockFlow {P} at (0,0) size 784x18
+        LayoutText {#text} at (0,0) size 678x18
+          text run at (0,0) width 523: "The test passes if, when moved inside the colored rectangle, the cursor looks like "
+          text run at (522,0) width 156: "a blue to green gradient."
+      LayoutBlockFlow {P} at (0,34) size 784x18
+        LayoutText {#text} at (0,0) size 577x18
+          text run at (0,0) width 577: "If inside the rectangle the cursor does not change, or looks like a help cursor, the test fails."
+      LayoutBlockFlow {DIV} at (0,68) size 132x132 [bgcolor=#D2B48C] [border: (2px solid #555555)]

@@ -1,0 +1,41 @@
+layer at (0,0) size 800x600
+  LayoutView at (0,0) size 800x600
+layer at (0,0) size 800x213
+  LayoutBlockFlow {HTML} at (0,0) size 800x213.38
+    LayoutBlockFlow {BODY} at (8,16) size 784x181.38
+      LayoutBlockFlow {P} at (0,0) size 784x18
+        LayoutText {#text} at (0,0) size 304x18
+          text run at (0,0) width 304: "Anything that is checked below should be blue."
+      LayoutBlockFlow {P} at (0,34) size 784x19
+        LayoutBlockFlow {INPUT} at (2.89,4) size 12x12 [color=#0000FF] [bgcolor=#000080]
+        LayoutText {#text} at (17,0) size 5x18
+          text run at (17,0) width 5: " "
+        LayoutInline {SPAN} at (0,0) size 19x24 [color=#0000FF] [bgcolor=#000080] [border: (3px solid #0000FF)]
+          LayoutText {#text} at (24,0) size 13x18
+            text run at (24,0) width 13: "X"
+      LayoutBlockFlow {P} at (0,69) size 784x19
+        LayoutBlockFlow {INPUT} at (2.89,3) size 12x13
+        LayoutText {#text} at (17,0) size 5x18
+          text run at (17,0) width 5: " "
+        LayoutInline {SPAN} at (0,0) size 13x18
+          LayoutText {#text} at (21,0) size 13x18
+            text run at (21,0) width 13: "X"
+        LayoutText {#text} at (33,0) size 5x18
+          text run at (33,0) width 5: " "
+        LayoutBlockFlow {INPUT} at (40.22,3) size 12x13 [color=#0000FF] [bgcolor=#000080]
+        LayoutText {#text} at (55,0) size 5x18
+          text run at (55,0) width 5: " "
+        LayoutInline {SPAN} at (0,0) size 18x24 [color=#0000FF] [bgcolor=#000080] [border: (3px solid #0000FF)]
+          LayoutText {#text} at (62,0) size 12x18
+            text run at (62,0) width 12: "X"
+      LayoutBlockFlow {P} at (0,104) size 784x19
+        LayoutMenuList {SELECT} at (0,1) size 39x18 [bgcolor=#F8F8F8]
+          LayoutBlockFlow (anonymous) at (0,0) size 39x18
+            LayoutText (anonymous) at (8,2) size 8x13
+              text run at (8,2) width 8: "X"
+      LayoutBlockFlow {P} at (0,139) size 784x42.38
+layer at (8,155) size 30x42 clip at (9,156) size 17x40
+  LayoutListBox {SELECT} at (0,0) size 30.47x42.38 [bgcolor=#FFFFFF] [border: (1px solid #999999)]
+    LayoutBlockFlow {OPTION} at (1,1) size 17.47x20.19 [bgcolor=#D4D4D4] [border: (3px solid #0000FF)]
+      LayoutText {#text} at (5,3) size 8x13
+        text run at (5,3) width 8: "X"

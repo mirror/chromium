@@ -1,0 +1,13 @@
+layer at (0,0) size 800x600 clip at (0,0) size 785x600 scrollHeight 6060
+  LayoutView at (0,0) size 800x600
+layer at (0,0) size 785x6060 backgroundClip at (0,0) size 785x600 clip at (0,0) size 785x600
+  LayoutBlockFlow {html} at (0,0) size 785x6060
+    LayoutBlockFlow {body} at (8,16) size 769x6034
+      LayoutBlockFlow {p} at (0,0) size 769x18
+        LayoutText {#text} at (0,0) size 447x18
+          text run at (0,0) width 447: "Test passes if the blue stripe does not move when the page is scrolled."
+      LayoutBlockFlow {div} at (10,34) size 749x6000
+layer at (8,48) size 67x24
+  LayoutBlockFlow (positioned) {div} at (8,48) size 66.88x24 [bgcolor=#0000FF]
+    LayoutText {#text} at (0,0) size 67x18
+      text run at (0,0) width 67: "Filler Text"

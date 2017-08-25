@@ -1,0 +1,14 @@
+layer at (0,0) size 800x600
+  LayoutView at (0,0) size 800x600
+layer at (0,0) size 800x248
+  LayoutBlockFlow {HTML} at (0,0) size 800x248
+    LayoutBlockFlow {BODY} at (8,16) size 784x224
+      LayoutBlockFlow {P} at (0,0) size 784x40
+        LayoutText {#text} at (0,0) size 762x39
+          text run at (0,0) width 584: "The test passes if, when moved inside the colored rectangle, a help cursor is displayed AND "
+          text run at (584,0) width 178: "there is no help cursor when"
+          text run at (0,20) width 49: "outside."
+      LayoutBlockFlow {P} at (0,56) size 784x20
+        LayoutText {#text} at (0,0) size 393x19
+          text run at (0,0) width 393: "If inside the rectangle the cursor does not change, the test fails."
+      LayoutBlockFlow {DIV} at (0,92) size 132x132 [bgcolor=#D2B48C] [border: (2px solid #555555)]

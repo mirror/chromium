@@ -1,0 +1,27 @@
+layer at (0,0) size 800x600
+  LayoutView at (0,0) size 800x600
+layer at (0,0) size 800x149
+  LayoutBlockFlow {HTML} at (0,0) size 800x149
+    LayoutBlockFlow {BODY} at (8,16) size 784x125
+      LayoutBlockFlow {P} at (0,0) size 784x18
+        LayoutText {#text} at (0,0) size 552x18
+          text run at (0,0) width 552: "First, use directional navigation to navigate the focus to the \"START\" text field below."
+      LayoutBlockFlow {P} at (0,34) size 784x18
+        LayoutText {#text} at (0,0) size 676x18
+          text run at (0,0) width 676: "Test passes if navigating up moves the focus to the \"FINISH\" text field and not the disabled \"ignore\" one."
+      LayoutBlockFlow {DIV} at (0,68) size 784x57
+        LayoutTextControl {INPUT} at (0,0) size 131x19 [bgcolor=#FFFFFF] [border: (2px inset #EEEEEE)]
+        LayoutTextControl {INPUT} at (0,19) size 131x19 [color=#545454] [bgcolor=#FFFFFF] [border: (2px inset #EEEEEE)]
+        LayoutTextControl {INPUT} at (0,38) size 131x19 [bgcolor=#FFFFFF] [border: (2px inset #EEEEEE)]
+layer at (11,87) size 125x13
+  LayoutBlockFlow {DIV} at (3,3) size 125x13
+    LayoutText {#text} at (0,0) size 36x13
+      text run at (0,0) width 36: "FINISH"
+layer at (11,106) size 125x13
+  LayoutBlockFlow {DIV} at (3,3) size 125x13
+    LayoutText {#text} at (0,0) size 33x13
+      text run at (0,0) width 33: "ignore"
+layer at (11,125) size 125x13
+  LayoutBlockFlow {DIV} at (3,3) size 125x13
+    LayoutText {#text} at (0,0) size 36x13
+      text run at (0,0) width 36: "START"

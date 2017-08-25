@@ -1,0 +1,28 @@
+layer at (0,0) size 800x600
+  LayoutView at (0,0) size 800x600
+layer at (0,0) size 800x130
+  LayoutBlockFlow {HTML} at (0,0) size 800x130
+    LayoutBlockFlow {BODY} at (8,16) size 784x106
+      LayoutBlockFlow {P} at (0,0) size 784x36
+        LayoutText {#text} at (0,0) size 122x18
+          text run at (0,0) width 122: "Test passes if both "
+        LayoutInline {STRONG} at (0,0) size 40x18
+          LayoutText {#text} at (121,0) size 40x18
+            text run at (121,0) width 40: "width"
+        LayoutText {#text} at (160,0) size 32x18
+          text run at (160,0) width 32: " and "
+        LayoutInline {STRONG} at (0,0) size 44x18
+          LayoutText {#text} at (191,0) size 44x18
+            text run at (191,0) width 44: "height"
+        LayoutText {#text} at (234,0) size 735x36
+          text run at (234,0) width 501: " of the video below can be adjusted (for instance by dragging the bottom-right"
+          text run at (0,18) width 51: "corner)."
+      LayoutBlockFlow (anonymous) at (0,52) size 784x54
+        LayoutText {#text} at (0,0) size 0x0
+layer at (8,68) size 100x50
+  LayoutVideo {VIDEO} at (0,0) size 100x50
+layer at (8,68) size 100x50
+  LayoutFlexibleBox (relative positioned) {DIV} at (0,0) size 100x50
+    LayoutBlockFlow {DIV} at (0,18) size 100x32
+layer at (8,68) size 100x8
+  LayoutFlexibleBox (relative positioned) {DIV} at (0,0) size 100x8

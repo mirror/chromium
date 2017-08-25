@@ -1,0 +1,42 @@
+layer at (0,0) size 800x600
+  LayoutView at (0,0) size 800x600
+layer at (0,0) size 800x350
+  LayoutBlockFlow {HTML} at (0,0) size 800x350
+    LayoutBlockFlow {BODY} at (8,8) size 784x198
+      LayoutFlexibleBox {DIV} at (0,0) size 192x128
+        LayoutBlockFlow {SPAN} at (0,0) size 48x128 [bgcolor=#FFFF00]
+          LayoutText {#text} at (0,0) size 8x18
+            text run at (0,0) width 8: "x"
+        LayoutBlockFlow {SPAN} at (48,0) size 48x128 [bgcolor=#3366CC]
+        LayoutBlockFlow {SPAN} at (96,0) size 48x128 [bgcolor=#FFFF00]
+          LayoutText {#text} at (0,0) size 8x18
+            text run at (0,0) width 8: "x"
+        LayoutBlockFlow {SPAN} at (144,0) size 48x128 [bgcolor=#FFFF00]
+          LayoutText {#text} at (0,0) size 8x18
+            text run at (0,0) width 8: "x"
+      LayoutBlockFlow {P} at (0,144) size 784x54
+        LayoutText {#text} at (0,0) size 765x54
+          text run at (0,0) width 765: "Verify that the box above looks exactly like the first of the boxes below. Then hover the box above and leave the mouse"
+          text run at (0,18) width 743: "there for 4 seconds. After the specified time, the blue color should disappear, and the box above should look like the"
+          text run at (0,36) width 173: "second of the boxes below."
+      LayoutBlockFlow (floating) {DIV} at (0,214) size 192x128
+        LayoutBlockFlow (floating) {SPAN} at (0,0) size 48x128 [bgcolor=#FFFF00]
+          LayoutText {#text} at (0,0) size 8x18
+            text run at (0,0) width 8: "x"
+        LayoutBlockFlow (floating) {SPAN} at (48,0) size 48x128 [bgcolor=#3366CC]
+        LayoutBlockFlow (floating) {SPAN} at (96,0) size 48x128 [bgcolor=#FFFF00]
+          LayoutText {#text} at (0,0) size 8x18
+            text run at (0,0) width 8: "x"
+        LayoutBlockFlow (floating) {SPAN} at (144,0) size 48x128 [bgcolor=#FFFF00]
+          LayoutText {#text} at (0,0) size 8x18
+            text run at (0,0) width 8: "x"
+      LayoutBlockFlow (floating) {DIV} at (208,214) size 192x128
+        LayoutBlockFlow (floating) {SPAN} at (0,0) size 64x128 [bgcolor=#FFFF00]
+          LayoutText {#text} at (0,0) size 8x18
+            text run at (0,0) width 8: "x"
+        LayoutBlockFlow (floating) {SPAN} at (64,0) size 64x128 [bgcolor=#FFFF00]
+          LayoutText {#text} at (0,0) size 8x18
+            text run at (0,0) width 8: "x"
+        LayoutBlockFlow (floating) {SPAN} at (128,0) size 64x128 [bgcolor=#FFFF00]
+          LayoutText {#text} at (0,0) size 8x18
+            text run at (0,0) width 8: "x"

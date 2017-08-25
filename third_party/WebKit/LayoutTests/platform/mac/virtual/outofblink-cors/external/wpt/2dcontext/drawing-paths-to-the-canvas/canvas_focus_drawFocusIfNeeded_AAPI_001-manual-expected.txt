@@ -1,0 +1,40 @@
+layer at (0,0) size 800x600
+  LayoutView at (0,0) size 800x600
+layer at (0,0) size 800x600
+  LayoutBlockFlow {HTML} at (0,0) size 800x600
+    LayoutBlockFlow {BODY} at (8,8) size 784x576
+      LayoutBlockFlow {H1} at (0,0) size 784x37
+        LayoutText {#text} at (0,0) size 159x37
+          text run at (0,0) width 159: "Description"
+      LayoutBlockFlow {P} at (0,58.44) size 784x90
+        LayoutText {#text} at (0,0) size 769x36
+          text run at (0,0) width 769: "This manual test can be used to verify that drawFocusIfNeeded actually updates the accessible location information (i.e."
+          text run at (0,18) width 454: "UIAutomation's CurrentBoundingRectangle) in the Accessibility API. "
+          text run at (453,18) width 244: "To perform this test, you will need an "
+        LayoutInline {A} at (0,0) size 776x36 [color=#0000EE]
+          LayoutText {#text} at (696,18) size 776x36
+            text run at (696,18) width 80: "accessibility"
+            text run at (0,36) width 89: "API inspector"
+        LayoutText {#text} at (88,36) size 191x18
+          text run at (88,36) width 9: ". "
+          text run at (96,36) width 183: "To perform this test, use the "
+        LayoutInline {CODE} at (0,0) size 25x15
+          LayoutText {#text} at (278,38) size 25x15
+            text run at (278,38) width 25: "tab"
+        LayoutText {#text} at (302,36) size 783x54
+          text run at (302,36) width 453: " key to move from the first focusable element to through to the fourth. "
+          text run at (754,36) width 29: "This"
+          text run at (0,54) width 773: "test passes if the first parameter of the bounding rectangle increases by 100 when focus is moved from the gray square to"
+          text run at (0,72) width 117: "the orange square."
+      LayoutBlockFlow {P} at (0,164.44) size 784x18
+        LayoutInline {A} at (0,0) size 150x18 [color=#0000EE]
+          LayoutText {#text} at (0,0) size 150x18
+            text run at (0,0) width 150: "First focusable element"
+      LayoutBlockFlow (anonymous) at (0,198.44) size 784x100
+        LayoutText {#text} at (0,0) size 0x0
+      LayoutBlockFlow {P} at (0,314.44) size 784x18
+        LayoutInline {A} at (0,0) size 163x18 [color=#0000EE]
+          LayoutText {#text} at (0,0) size 163x18
+            text run at (0,0) width 163: "Fourth focusable element"
+layer at (8,206) size 200x100
+  LayoutHTMLCanvas {CANVAS} at (0,0) size 200x100

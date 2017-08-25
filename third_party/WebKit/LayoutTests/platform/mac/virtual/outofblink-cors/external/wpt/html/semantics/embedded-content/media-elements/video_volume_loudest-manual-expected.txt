@@ -1,0 +1,29 @@
+layer at (0,0) size 800x600
+  LayoutView at (0,0) size 800x600
+layer at (0,0) size 800x230
+  LayoutBlockFlow {HTML} at (0,0) size 800x230
+    LayoutBlockFlow {BODY} at (8,16) size 784x206
+      LayoutBlockFlow {P} at (0,0) size 784x36
+        LayoutText {#text} at (0,0) size 772x36
+          text run at (0,0) width 772: "Test passes if the video is playing with sound heard and the text 'The user agent doesn't support media element.' does not"
+          text run at (0,18) width 191: "appear anywhere on this page"
+      LayoutBlockFlow (anonymous) at (0,52) size 784x154
+        LayoutText {#text} at (0,0) size 0x0
+layer at (8,68) size 300x150
+  LayoutVideo {VIDEO} at (0,0) size 300x150
+layer at (8,68) size 300x150
+  LayoutFlexibleBox (relative positioned) {DIV} at (0,0) size 300x150
+    LayoutBlockFlow {DIV} at (0,118) size 300x32
+layer at (8,68) size 300x108
+  LayoutFlexibleBox (relative positioned) {DIV} at (0,0) size 300x108
+layer at (8,186) size 300x32 scrollHeight 40
+  LayoutFlexibleBox (relative positioned) {DIV} at (0,0) size 300x32 [bgcolor=#FAFAFA]
+    LayoutButton {INPUT} at (0,0) size 32x32
+    LayoutFlexibleBox {DIV} at (32,0) size 23.36x32 [color=#5A5A5A]
+      LayoutBlockFlow (anonymous) at (0,0) size 23.36x32
+        LayoutText {#text} at (0,9) size 24x14
+          text run at (0,9) width 24: "0:00"
+    LayoutSlider {INPUT} at (73.36,15) size 208.64x2
+      LayoutFlexibleBox {DIV} at (0,0) size 208.64x2
+        LayoutBlockFlow {DIV} at (-18,-23) size 244.64x48
+          LayoutBlockFlow {DIV} at (0,0) size 36x48

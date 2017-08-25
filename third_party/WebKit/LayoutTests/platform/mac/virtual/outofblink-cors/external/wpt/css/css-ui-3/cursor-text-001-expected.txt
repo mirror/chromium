@@ -1,0 +1,19 @@
+layer at (0,0) size 800x600
+  LayoutView at (0,0) size 800x600
+layer at (0,0) size 800x214
+  LayoutBlockFlow {HTML} at (0,0) size 800x213.77
+    LayoutBlockFlow {BODY} at (8,16) size 784x189.77
+      LayoutBlockFlow {P} at (0,0) size 784x54
+        LayoutText {#text} at (0,0) size 747x54
+          text run at (0,0) width 724: "The test passes if, when moved over the blue vertical text, the cursor indicates vertical-text that may be selected, "
+          text run at (723,0) width 24: "and"
+          text run at (0,18) width 540: "looks different from the cursor used to indicate that horizontal text may be selected, "
+          text run at (539,18) width 192: "such as when placed over this"
+          text run at (0,36) width 64: "sentence. "
+          text run at (63,36) width 248: "Often rendered as a horizontal I-beam."
+      LayoutBlockFlow {P} at (0,70) size 784x18
+        LayoutText {#text} at (0,0) size 285x18
+          text run at (0,0) width 285: "Disregard this test if there is no vertical text."
+      LayoutBlockFlow {DIV} at (0,104) size 18x85.77 [color=#0000FF]
+        LayoutText {#text} at (0,0) size 18x86
+          text run at (0,0) width 86: "Lorem ipsum"

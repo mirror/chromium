@@ -1,0 +1,17 @@
+layer at (0,0) size 800x600
+  LayoutView at (0,0) size 800x600
+layer at (0,0) size 800x262
+  LayoutBlockFlow {HTML} at (0,0) size 800x262
+    LayoutBlockFlow {BODY} at (8,16) size 784x238
+      LayoutBlockFlow {P} at (0,0) size 784x36
+        LayoutText {#text} at (0,0) size 767x36
+          text run at (0,0) width 767: "This test is only relevant on platforms where it is possible to switch applications in mid-drag (eg. alt+tab, dragging over"
+          text run at (0,18) width 347: "taskbar buttons, dragging between restored windows)."
+      LayoutBlockFlow {P} at (0,52) size 784x36
+        LayoutText {#text} at (0,0) size 722x36
+          text run at (0,0) width 722: "This testcase requires an external application that accepts dropping of text from other applications - eg. Wordpad"
+          text run at (0,18) width 443: "(write.exe) on Windows. Ensure that the external application is open."
+      LayoutBlockFlow {P} at (0,104) size 784x18
+        LayoutText {#text} at (0,0) size 757x18
+          text run at (0,0) width 757: "Drag the orange block to the other application and release it. Pass if the word \"PASS\" appears in the other application."
+      LayoutBlockFlow {DIV} at (0,138) size 100x100 [bgcolor=#FFA500]

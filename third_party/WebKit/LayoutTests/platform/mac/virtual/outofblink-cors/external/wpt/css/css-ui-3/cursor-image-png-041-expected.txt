@@ -1,0 +1,12 @@
+layer at (0,0) size 800x600
+  LayoutView at (0,0) size 800x600
+layer at (0,0) size 800x168
+  LayoutBlockFlow {HTML} at (0,0) size 800x168
+    LayoutBlockFlow {BODY} at (8,16) size 784x136
+      LayoutBlockFlow {P} at (0,0) size 784x18
+        LayoutText {#text} at (0,0) size 525x18
+          text run at (0,0) width 525: "The test passes if, when moved inside the peach rectangle, a help cursor is shown."
+      LayoutBlockFlow {P} at (0,34) size 132x68 [bgcolor=#FFE5B4] [border: (2px solid #555555)]
+      LayoutBlockFlow {P} at (0,118) size 784x18
+        LayoutText {#text} at (0,0) size 433x18
+          text run at (0,0) width 433: "Invalid PNG image, signature bytes incorrect. Help cursor fallback."

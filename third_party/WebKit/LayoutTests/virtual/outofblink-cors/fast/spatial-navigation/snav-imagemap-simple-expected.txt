@@ -1,0 +1,17 @@
+ 
+
+
+PASS successfullyParsed is true
+
+TEST COMPLETE
+FAIL gFocusedDocument.activeElement.getAttribute("id") should be 1. Was start.
+FAIL gFocusedDocument.activeElement.getAttribute("id") should be 3. Was 1.
+FAIL gFocusedDocument.activeElement.getAttribute("id") should be 5. Was 3.
+FAIL gFocusedDocument.activeElement.getAttribute("id") should be 3. Was 1.
+FAIL gFocusedDocument.activeElement.getAttribute("id") should be 4. Was 2.
+PASS gFocusedDocument.activeElement.getAttribute("id") is "6"
+PASS gFocusedDocument.activeElement.getAttribute("id") is "4"
+PASS gFocusedDocument.activeElement.getAttribute("id") is "2"
+PASS gFocusedDocument.activeElement.getAttribute("id") is "1"
+PASS gFocusedDocument.activeElement.getAttribute("id") is "start"
+This test tests that areas of an imagemap can be reached with spatial navigation.

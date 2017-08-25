@@ -1,0 +1,39 @@
+layer at (0,0) size 800x600 clip at (0,0) size 785x600 scrollHeight 3000
+  LayoutView at (0,0) size 800x600
+layer at (0,0) size 785x600
+  LayoutBlockFlow {html} at (0,0) size 785x600
+    LayoutBlockFlow {body} at (0,0) size 785x600
+layer at (0,0) size 785x600
+  LayoutBlockFlow (relative positioned) {div} at (0,0) size 785x600
+    LayoutBlockFlow {p} at (0,0) size 785x52
+      LayoutText {#text} at (16,16) size 672x19
+        text run at (16,16) width 405: "Test passes if each of its five pages has the page number printed "
+        text run at (420,16) width 268: "in the middle of the page, with no overlap."
+layer at (0,287) size 785x29
+  LayoutBlockFlow (positioned) {h1} at (0,287) size 785x29
+    LayoutText {#text} at (328,0) size 129x29
+      text run at (328,0) width 129: "Page one"
+layer at (0,600) size 785x600 backgroundClip at (0,0) size 785x600 clip at (0,0) size 785x600
+  LayoutBlockFlow (relative positioned) {div} at (0,600) size 785x600
+layer at (0,887) size 785x29 backgroundClip at (0,0) size 785x600 clip at (0,0) size 785x600
+  LayoutBlockFlow (positioned) {h1} at (0,287) size 785x29
+    LayoutText {#text} at (328,0) size 129x29
+      text run at (328,0) width 129: "Page two"
+layer at (0,1200) size 785x600 backgroundClip at (0,0) size 785x600 clip at (0,0) size 785x600
+  LayoutBlockFlow (relative positioned) {div} at (0,1200) size 785x600
+layer at (0,1487) size 785x29 backgroundClip at (0,0) size 785x600 clip at (0,0) size 785x600
+  LayoutBlockFlow (positioned) {h1} at (0,287) size 785x29
+    LayoutText {#text} at (312,0) size 161x29
+      text run at (312,0) width 161: "Page three"
+layer at (0,1800) size 785x600 backgroundClip at (0,0) size 785x600 clip at (0,0) size 785x600
+  LayoutBlockFlow (relative positioned) {div} at (0,1800) size 785x600
+layer at (0,2087) size 785x29 backgroundClip at (0,0) size 785x600 clip at (0,0) size 785x600
+  LayoutBlockFlow (positioned) {h1} at (0,287) size 785x29
+    LayoutText {#text} at (320,0) size 145x29
+      text run at (320,0) width 145: "Page four"
+layer at (0,2400) size 785x600 backgroundClip at (0,0) size 785x600 clip at (0,0) size 785x600
+  LayoutBlockFlow (relative positioned) {div} at (0,2400) size 785x600
+layer at (0,2687) size 785x29 backgroundClip at (0,0) size 785x600 clip at (0,0) size 785x600
+  LayoutBlockFlow (positioned) {h1} at (0,287) size 785x29
+    LayoutText {#text} at (320,0) size 145x29
+      text run at (320,0) width 145: "Page five"

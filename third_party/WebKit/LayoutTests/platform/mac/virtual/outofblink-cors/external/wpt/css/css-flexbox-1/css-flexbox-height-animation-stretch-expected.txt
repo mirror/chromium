@@ -1,0 +1,18 @@
+layer at (0,0) size 800x600
+  LayoutView at (0,0) size 800x600
+layer at (0,0) size 800x158
+  LayoutBlockFlow {HTML} at (0,0) size 800x158
+    LayoutBlockFlow {BODY} at (8,16) size 784x134
+      LayoutBlockFlow {P} at (0,0) size 784x18
+        LayoutText {#text} at (0,0) size 406x18
+          text run at (0,0) width 406: "The test passes if you keep seeing a green rectangle and no red."
+      LayoutBlockFlow {DIV} at (0,34) size 784x100
+        LayoutFlexibleBox {DIV} at (0,0) size 200x100 [bgcolor=#FF0000]
+          LayoutBlockFlow {DIV} at (0,0) size 50x100 [bgcolor=#008000]
+            LayoutBlockFlow {DIV} at (0,0) size 50x100
+          LayoutBlockFlow {DIV} at (50,0) size 50x100 [bgcolor=#008000]
+            LayoutBlockFlow {DIV} at (0,0) size 50x50
+          LayoutBlockFlow {DIV} at (100,0) size 50x100 [bgcolor=#008000]
+            LayoutBlockFlow {DIV} at (0,0) size 50x50
+          LayoutBlockFlow {DIV} at (150,0) size 50x100 [bgcolor=#008000]
+            LayoutBlockFlow {DIV} at (0,0) size 50x50

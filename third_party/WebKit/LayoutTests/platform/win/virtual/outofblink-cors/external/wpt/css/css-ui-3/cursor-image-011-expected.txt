@@ -1,0 +1,17 @@
+layer at (0,0) size 800x600
+  LayoutView at (0,0) size 800x600
+layer at (0,0) size 800x284
+  LayoutBlockFlow {HTML} at (0,0) size 800x284
+    LayoutBlockFlow {BODY} at (8,16) size 784x260
+      LayoutBlockFlow {P} at (0,0) size 784x40
+        LayoutText {#text} at (0,0) size 779x39
+          text run at (0,0) width 512: "The test passes if, when moved inside the colored rectangle, the cursor looks like "
+          text run at (512,0) width 267: "a gray cube AND is not a gray cube when"
+          text run at (0,20) width 49: "outside."
+      LayoutBlockFlow {P} at (0,56) size 784x20
+        LayoutText {#text} at (0,0) size 564x19
+          text run at (0,0) width 564: "If inside the rectangle the cursor does not change, or looks like a help cursor, the test fails."
+      LayoutBlockFlow {P} at (0,92) size 784x20
+        LayoutText {#text} at (0,0) size 358x19
+          text run at (0,0) width 358: "White haloing around the cursor is acceptable in this test."
+      LayoutBlockFlow {DIV} at (0,128) size 132x132 [bgcolor=#D2B48C] [border: (2px solid #555555)]

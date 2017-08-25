@@ -1,0 +1,47 @@
+layer at (0,0) size 800x600
+  LayoutView at (0,0) size 800x600
+layer at (0,0) size 800x222
+  LayoutBlockFlow {html} at (0,0) size 800x222
+    LayoutBlockFlow {body} at (8,16) size 784x198
+      LayoutBlockFlow {p} at (0,0) size 784x54
+        LayoutText {#text} at (0,0) size 779x54
+          text run at (0,0) width 459: "Slowly resize the window, causing the text below to wrap into multiple "
+          text run at (458,0) width 321: "lines at different points in the text. At all points in"
+          text run at (0,18) width 107: "time, each word "
+          text run at (106,18) width 489: "should be enclosed in an hollow blue rectangle and there should be no stray "
+          text run at (594,18) width 152: "pieces of blue rectangle"
+          text run at (0,36) width 173: "anywhere else on the page."
+      LayoutBlockFlow {div} at (0,70) size 784x128
+        LayoutInline {span} at (0,0) size 172x47 [border: (5px solid #0000FF)]
+          LayoutText {#text} at (37,13) size 98x37
+            text run at (37,13) width 98: "Resize"
+        LayoutText {#text} at (171,13) size 10x37
+          text run at (171,13) width 10: " "
+        LayoutInline {span} at (0,0) size 120x47 [border: (5px solid #0000FF)]
+          LayoutText {#text} at (217,13) size 46x37
+            text run at (217,13) width 46: "the"
+        LayoutText {#text} at (299,13) size 10x37
+          text run at (299,13) width 10: " "
+        LayoutInline {span} at (0,0) size 181x47 [border: (5px solid #0000FF)]
+          LayoutText {#text} at (345,13) size 107x37
+            text run at (345,13) width 107: "window"
+        LayoutText {#text} at (488,13) size 10x37
+          text run at (488,13) width 10: " "
+        LayoutInline {span} at (0,0) size 109x47 [border: (5px solid #0000FF)]
+          LayoutText {#text} at (534,13) size 35x37
+            text run at (534,13) width 35: "so"
+        LayoutText {#text} at (605,13) size 10x37
+          text run at (605,13) width 10: " "
+        LayoutInline {span} at (0,0) size 128x47 [border: (5px solid #0000FF)]
+          LayoutText {#text} at (651,13) size 54x37
+            text run at (651,13) width 54: "that"
+        LayoutText {#text} at (0,0) size 0x0
+        LayoutInline {span} at (0,0) size 124x47 [border: (5px solid #0000FF)]
+          LayoutText {#text} at (37,77) size 50x37
+            text run at (37,77) width 50: "this"
+        LayoutText {#text} at (123,77) size 10x37
+          text run at (123,77) width 10: " "
+        LayoutInline {span} at (0,0) size 161x47 [border: (5px solid #0000FF)]
+          LayoutText {#text} at (169,77) size 87x37
+            text run at (169,77) width 87: "wraps"
+        LayoutText {#text} at (0,0) size 0x0

@@ -1,0 +1,24 @@
+layer at (0,0) size 800x600
+  LayoutView at (0,0) size 800x600
+layer at (0,0) size 800x164
+  LayoutBlockFlow {HTML} at (0,0) size 800x164
+    LayoutBlockFlow {BODY} at (8,16) size 784x132
+      LayoutBlockFlow {FORM} at (0,0) size 784x60
+        LayoutBlockFlow {P} at (0,0) size 784x22
+          LayoutInline {LABEL} at (0,0) size 224x19
+            LayoutText {#text} at (0,1) size 70x19
+              text run at (0,1) width 70: "Comment: "
+            LayoutTextControl {INPUT} at (70,0) size 154x22 [bgcolor=#FFFFFF] [border: (2px inset #EEEEEE)]
+        LayoutBlockFlow {P} at (0,38) size 784x22
+          LayoutButton {BUTTON} at (0,0) size 103x22 [bgcolor=#C0C0C0] [border: (2px outset #C0C0C0)]
+            LayoutBlockFlow (anonymous) at (8,3) size 87x16
+              LayoutText {#text} at (0,0) size 87x16
+                text run at (0,0) width 87: "Post Comment"
+      LayoutBlockFlow {P} at (0,76) size 784x20
+        LayoutText {#text} at (0,0) size 540x19
+          text run at (0,0) width 540: "Switch to a right-to-left writing direction, enter a text in the input and submit the form."
+      LayoutBlockFlow {P} at (0,112) size 784x20
+        LayoutText {#text} at (0,0) size 294x19
+          text run at (0,0) width 294: "Test passes if the word \"PASS\" appears below"
+layer at (80,19) size 150x16
+  LayoutBlockFlow {DIV} at (2,3) size 150x16

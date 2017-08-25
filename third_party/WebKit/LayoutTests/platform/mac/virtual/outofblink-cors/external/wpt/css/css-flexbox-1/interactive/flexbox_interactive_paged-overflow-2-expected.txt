@@ -1,0 +1,13 @@
+layer at (0,0) size 800x600
+  LayoutView at (0,0) size 800x600
+layer at (0,0) size 800x18
+  LayoutBlockFlow {HTML} at (0,0) size 800x18
+    LayoutBlockFlow {BODY} at (0,0) size 800x18
+      LayoutFlexibleBox {DIV} at (0,0) size 800x18 [bgcolor=#FF0000]
+        LayoutBlockFlow (anonymous) at (0,0) size 34.38x18
+          LayoutText {#text} at (0,0) size 35x18
+            text run at (0,0) width 35: "FAIL"
+layer at (0,0) size 230x18
+  LayoutBlockFlow (positioned) {H4} at (0,0) size 229.98x18
+    LayoutText {#text} at (0,0) size 230x18
+      text run at (0,0) width 230: "There should be NO RED onload."

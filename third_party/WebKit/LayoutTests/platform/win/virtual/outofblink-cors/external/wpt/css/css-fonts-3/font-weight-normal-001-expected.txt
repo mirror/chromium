@@ -1,0 +1,374 @@
+layer at (0,0) size 800x600 clip at (0,0) size 785x600 scrollHeight 613
+  LayoutView at (0,0) size 800x600
+layer at (0,0) size 785x613 backgroundClip at (0,0) size 785x600 clip at (0,0) size 785x600
+  LayoutBlockFlow {html} at (0,0) size 785x613
+    LayoutBlockFlow {body} at (50,50) size 685x513
+      LayoutBlockFlow {div} at (0,0) size 685x20
+        LayoutInline {a} at (0,0) size 61x19 [color=#0000EE]
+          LayoutText {#text} at (0,0) size 61x19
+            text run at (0,0) width 61: "Test fonts"
+        LayoutText {#text} at (60,0) size 191x19
+          text run at (60,0) width 191: " must be installed for this test: "
+        LayoutInline {span} at (0,0) size 36x19
+          LayoutText {#text} at (250,0) size 36x19
+            text run at (250,0) width 36: "FAIL"
+      LayoutTable {table} at (0,36) size 685x235
+        LayoutTableSection {thead} at (0,0) size 685x37
+          LayoutTableRow (anonymous) at (0,0) size 685x37
+            LayoutTableCell {th} at (0,10) size 41x17 [r=0 c=0 rs=1 cs=1]
+            LayoutTableCell {th} at (41,0) size 79x37 [r=0 c=1 rs=1 cs=1]
+              LayoutText {#text} at (19,1) size 26x19
+                text run at (19,1) width 26: "Full"
+            LayoutTableCell {th} at (120,0) size 81x37 [r=0 c=2 rs=1 cs=1]
+              LayoutText {#text} at (9,1) size 48x19
+                text run at (9,1) width 48: "W1479"
+            LayoutTableCell {th} at (201,0) size 80x37 [r=0 c=3 rs=1 cs=1]
+              LayoutText {#text} at (17,1) size 31x19
+                text run at (17,1) width 31: "W15"
+            LayoutTableCell {th} at (281,0) size 80x37 [r=0 c=4 rs=1 cs=1]
+              LayoutText {#text} at (17,1) size 31x19
+                text run at (17,1) width 31: "W24"
+            LayoutTableCell {th} at (361,0) size 81x37 [r=0 c=5 rs=1 cs=1]
+              LayoutText {#text} at (9,1) size 48x19
+                text run at (9,1) width 48: "W2569"
+            LayoutTableCell {th} at (442,0) size 81x37 [r=0 c=6 rs=1 cs=1]
+              LayoutText {#text} at (13,1) size 40x19
+                text run at (13,1) width 40: "W258"
+            LayoutTableCell {th} at (523,0) size 81x37 [r=0 c=7 rs=1 cs=1]
+              LayoutText {#text} at (9,1) size 48x19
+                text run at (9,1) width 48: "W3589"
+            LayoutTableCell {th} at (604,0) size 81x37 [r=0 c=8 rs=1 cs=1]
+              LayoutText {#text} at (17,1) size 32x19
+                text run at (17,1) width 32: "W47"
+        LayoutTableSection (anonymous) at (0,37) size 685x198
+          LayoutTableRow {tr} at (0,0) size 685x22
+            LayoutTableCell {th} at (0,0) size 41x22 [r=0 c=0 rs=1 cs=1]
+              LayoutText {#text} at (1,1) size 24x19
+                text run at (1,1) width 24: "100"
+            LayoutTableCell {td} at (41,0) size 79x22 [r=0 c=1 rs=1 cs=1]
+              LayoutInline {span} at (0,0) size 13x19
+                LayoutText {#text} at (33,1) size 13x19
+                  text run at (33,1) width 13: "A"
+            LayoutTableCell {td} at (120,0) size 81x22 [r=0 c=2 rs=1 cs=1]
+              LayoutInline {span} at (0,0) size 13x19
+                LayoutText {#text} at (34,1) size 13x19
+                  text run at (34,1) width 13: "A"
+            LayoutTableCell {td} at (201,0) size 80x22 [r=0 c=3 rs=1 cs=1]
+              LayoutInline {span} at (0,0) size 12x19
+                LayoutText {#text} at (34,1) size 12x19
+                  text run at (34,1) width 12: "A"
+            LayoutTableCell {td} at (281,0) size 80x22 [r=0 c=4 rs=1 cs=1]
+              LayoutInline {span} at (0,0) size 12x19
+                LayoutText {#text} at (34,1) size 12x19
+                  text run at (34,1) width 12: "A"
+            LayoutTableCell {td} at (361,0) size 81x22 [r=0 c=5 rs=1 cs=1]
+              LayoutInline {span} at (0,0) size 13x19
+                LayoutText {#text} at (34,1) size 13x19
+                  text run at (34,1) width 13: "A"
+            LayoutTableCell {td} at (442,0) size 81x22 [r=0 c=6 rs=1 cs=1]
+              LayoutInline {span} at (0,0) size 13x19
+                LayoutText {#text} at (34,1) size 13x19
+                  text run at (34,1) width 13: "A"
+            LayoutTableCell {td} at (523,0) size 81x22 [r=0 c=7 rs=1 cs=1]
+              LayoutInline {span} at (0,0) size 13x19
+                LayoutText {#text} at (34,1) size 13x19
+                  text run at (34,1) width 13: "A"
+            LayoutTableCell {td} at (604,0) size 81x22 [r=0 c=8 rs=1 cs=1]
+              LayoutInline {span} at (0,0) size 13x19
+                LayoutText {#text} at (34,1) size 13x19
+                  text run at (34,1) width 13: "A"
+          LayoutTableRow {tr} at (0,22) size 685x22
+            LayoutTableCell {th} at (0,22) size 41x22 [r=1 c=0 rs=1 cs=1]
+              LayoutText {#text} at (1,1) size 24x19
+                text run at (1,1) width 24: "200"
+            LayoutTableCell {td} at (41,22) size 79x22 [r=1 c=1 rs=1 cs=1]
+              LayoutInline {span} at (0,0) size 13x19
+                LayoutText {#text} at (33,1) size 13x19
+                  text run at (33,1) width 13: "A"
+            LayoutTableCell {td} at (120,22) size 81x22 [r=1 c=2 rs=1 cs=1]
+              LayoutInline {span} at (0,0) size 13x19
+                LayoutText {#text} at (34,1) size 13x19
+                  text run at (34,1) width 13: "A"
+            LayoutTableCell {td} at (201,22) size 80x22 [r=1 c=3 rs=1 cs=1]
+              LayoutInline {span} at (0,0) size 12x19
+                LayoutText {#text} at (34,1) size 12x19
+                  text run at (34,1) width 12: "A"
+            LayoutTableCell {td} at (281,22) size 80x22 [r=1 c=4 rs=1 cs=1]
+              LayoutInline {span} at (0,0) size 12x19
+                LayoutText {#text} at (34,1) size 12x19
+                  text run at (34,1) width 12: "A"
+            LayoutTableCell {td} at (361,22) size 81x22 [r=1 c=5 rs=1 cs=1]
+              LayoutInline {span} at (0,0) size 13x19
+                LayoutText {#text} at (34,1) size 13x19
+                  text run at (34,1) width 13: "A"
+            LayoutTableCell {td} at (442,22) size 81x22 [r=1 c=6 rs=1 cs=1]
+              LayoutInline {span} at (0,0) size 13x19
+                LayoutText {#text} at (34,1) size 13x19
+                  text run at (34,1) width 13: "A"
+            LayoutTableCell {td} at (523,22) size 81x22 [r=1 c=7 rs=1 cs=1]
+              LayoutInline {span} at (0,0) size 13x19
+                LayoutText {#text} at (34,1) size 13x19
+                  text run at (34,1) width 13: "A"
+            LayoutTableCell {td} at (604,22) size 81x22 [r=1 c=8 rs=1 cs=1]
+              LayoutInline {span} at (0,0) size 13x19
+                LayoutText {#text} at (34,1) size 13x19
+                  text run at (34,1) width 13: "A"
+          LayoutTableRow {tr} at (0,44) size 685x22
+            LayoutTableCell {th} at (0,44) size 41x22 [r=2 c=0 rs=1 cs=1]
+              LayoutText {#text} at (1,1) size 24x19
+                text run at (1,1) width 24: "300"
+            LayoutTableCell {td} at (41,44) size 79x22 [r=2 c=1 rs=1 cs=1]
+              LayoutInline {span} at (0,0) size 13x19
+                LayoutText {#text} at (33,1) size 13x19
+                  text run at (33,1) width 13: "A"
+            LayoutTableCell {td} at (120,44) size 81x22 [r=2 c=2 rs=1 cs=1]
+              LayoutInline {span} at (0,0) size 13x19
+                LayoutText {#text} at (34,1) size 13x19
+                  text run at (34,1) width 13: "A"
+            LayoutTableCell {td} at (201,44) size 80x22 [r=2 c=3 rs=1 cs=1]
+              LayoutInline {span} at (0,0) size 12x19
+                LayoutText {#text} at (34,1) size 12x19
+                  text run at (34,1) width 12: "A"
+            LayoutTableCell {td} at (281,44) size 80x22 [r=2 c=4 rs=1 cs=1]
+              LayoutInline {span} at (0,0) size 12x19
+                LayoutText {#text} at (34,1) size 12x19
+                  text run at (34,1) width 12: "A"
+            LayoutTableCell {td} at (361,44) size 81x22 [r=2 c=5 rs=1 cs=1]
+              LayoutInline {span} at (0,0) size 13x19
+                LayoutText {#text} at (34,1) size 13x19
+                  text run at (34,1) width 13: "A"
+            LayoutTableCell {td} at (442,44) size 81x22 [r=2 c=6 rs=1 cs=1]
+              LayoutInline {span} at (0,0) size 13x19
+                LayoutText {#text} at (34,1) size 13x19
+                  text run at (34,1) width 13: "A"
+            LayoutTableCell {td} at (523,44) size 81x22 [r=2 c=7 rs=1 cs=1]
+              LayoutInline {span} at (0,0) size 13x19
+                LayoutText {#text} at (34,1) size 13x19
+                  text run at (34,1) width 13: "A"
+            LayoutTableCell {td} at (604,44) size 81x22 [r=2 c=8 rs=1 cs=1]
+              LayoutInline {span} at (0,0) size 13x19
+                LayoutText {#text} at (34,1) size 13x19
+                  text run at (34,1) width 13: "A"
+          LayoutTableRow {tr} at (0,66) size 685x22
+            LayoutTableCell {th} at (0,66) size 41x22 [r=3 c=0 rs=1 cs=1]
+              LayoutText {#text} at (1,1) size 24x19
+                text run at (1,1) width 24: "400"
+            LayoutTableCell {td} at (41,66) size 79x22 [r=3 c=1 rs=1 cs=1]
+              LayoutInline {span} at (0,0) size 13x19
+                LayoutText {#text} at (33,1) size 13x19
+                  text run at (33,1) width 13: "A"
+            LayoutTableCell {td} at (120,66) size 81x22 [r=3 c=2 rs=1 cs=1]
+              LayoutInline {span} at (0,0) size 13x19
+                LayoutText {#text} at (34,1) size 13x19
+                  text run at (34,1) width 13: "A"
+            LayoutTableCell {td} at (201,66) size 80x22 [r=3 c=3 rs=1 cs=1]
+              LayoutInline {span} at (0,0) size 12x19
+                LayoutText {#text} at (34,1) size 12x19
+                  text run at (34,1) width 12: "A"
+            LayoutTableCell {td} at (281,66) size 80x22 [r=3 c=4 rs=1 cs=1]
+              LayoutInline {span} at (0,0) size 12x19
+                LayoutText {#text} at (34,1) size 12x19
+                  text run at (34,1) width 12: "A"
+            LayoutTableCell {td} at (361,66) size 81x22 [r=3 c=5 rs=1 cs=1]
+              LayoutInline {span} at (0,0) size 13x19
+                LayoutText {#text} at (34,1) size 13x19
+                  text run at (34,1) width 13: "A"
+            LayoutTableCell {td} at (442,66) size 81x22 [r=3 c=6 rs=1 cs=1]
+              LayoutInline {span} at (0,0) size 13x19
+                LayoutText {#text} at (34,1) size 13x19
+                  text run at (34,1) width 13: "A"
+            LayoutTableCell {td} at (523,66) size 81x22 [r=3 c=7 rs=1 cs=1]
+              LayoutInline {span} at (0,0) size 13x19
+                LayoutText {#text} at (34,1) size 13x19
+                  text run at (34,1) width 13: "A"
+            LayoutTableCell {td} at (604,66) size 81x22 [r=3 c=8 rs=1 cs=1]
+              LayoutInline {span} at (0,0) size 13x19
+                LayoutText {#text} at (34,1) size 13x19
+                  text run at (34,1) width 13: "A"
+          LayoutTableRow {tr} at (0,88) size 685x22
+            LayoutTableCell {th} at (0,88) size 41x22 [r=4 c=0 rs=1 cs=1]
+              LayoutText {#text} at (1,1) size 24x19
+                text run at (1,1) width 24: "500"
+            LayoutTableCell {td} at (41,88) size 79x22 [r=4 c=1 rs=1 cs=1]
+              LayoutInline {span} at (0,0) size 13x19
+                LayoutText {#text} at (33,1) size 13x19
+                  text run at (33,1) width 13: "A"
+            LayoutTableCell {td} at (120,88) size 81x22 [r=4 c=2 rs=1 cs=1]
+              LayoutInline {span} at (0,0) size 13x19
+                LayoutText {#text} at (34,1) size 13x19
+                  text run at (34,1) width 13: "A"
+            LayoutTableCell {td} at (201,88) size 80x22 [r=4 c=3 rs=1 cs=1]
+              LayoutInline {span} at (0,0) size 12x19
+                LayoutText {#text} at (34,1) size 12x19
+                  text run at (34,1) width 12: "A"
+            LayoutTableCell {td} at (281,88) size 80x22 [r=4 c=4 rs=1 cs=1]
+              LayoutInline {span} at (0,0) size 12x19
+                LayoutText {#text} at (34,1) size 12x19
+                  text run at (34,1) width 12: "A"
+            LayoutTableCell {td} at (361,88) size 81x22 [r=4 c=5 rs=1 cs=1]
+              LayoutInline {span} at (0,0) size 13x19
+                LayoutText {#text} at (34,1) size 13x19
+                  text run at (34,1) width 13: "A"
+            LayoutTableCell {td} at (442,88) size 81x22 [r=4 c=6 rs=1 cs=1]
+              LayoutInline {span} at (0,0) size 13x19
+                LayoutText {#text} at (34,1) size 13x19
+                  text run at (34,1) width 13: "A"
+            LayoutTableCell {td} at (523,88) size 81x22 [r=4 c=7 rs=1 cs=1]
+              LayoutInline {span} at (0,0) size 13x19
+                LayoutText {#text} at (34,1) size 13x19
+                  text run at (34,1) width 13: "A"
+            LayoutTableCell {td} at (604,88) size 81x22 [r=4 c=8 rs=1 cs=1]
+              LayoutInline {span} at (0,0) size 13x19
+                LayoutText {#text} at (34,1) size 13x19
+                  text run at (34,1) width 13: "A"
+          LayoutTableRow {tr} at (0,110) size 685x22
+            LayoutTableCell {th} at (0,110) size 41x22 [r=5 c=0 rs=1 cs=1]
+              LayoutText {#text} at (1,1) size 24x19
+                text run at (1,1) width 24: "600"
+            LayoutTableCell {td} at (41,110) size 79x22 [r=5 c=1 rs=1 cs=1]
+              LayoutInline {span} at (0,0) size 13x19
+                LayoutText {#text} at (33,1) size 13x19
+                  text run at (33,1) width 13: "A"
+            LayoutTableCell {td} at (120,110) size 81x22 [r=5 c=2 rs=1 cs=1]
+              LayoutInline {span} at (0,0) size 13x19
+                LayoutText {#text} at (34,1) size 13x19
+                  text run at (34,1) width 13: "A"
+            LayoutTableCell {td} at (201,110) size 80x22 [r=5 c=3 rs=1 cs=1]
+              LayoutInline {span} at (0,0) size 12x19
+                LayoutText {#text} at (34,1) size 12x19
+                  text run at (34,1) width 12: "A"
+            LayoutTableCell {td} at (281,110) size 80x22 [r=5 c=4 rs=1 cs=1]
+              LayoutInline {span} at (0,0) size 12x19
+                LayoutText {#text} at (34,1) size 12x19
+                  text run at (34,1) width 12: "A"
+            LayoutTableCell {td} at (361,110) size 81x22 [r=5 c=5 rs=1 cs=1]
+              LayoutInline {span} at (0,0) size 13x19
+                LayoutText {#text} at (34,1) size 13x19
+                  text run at (34,1) width 13: "A"
+            LayoutTableCell {td} at (442,110) size 81x22 [r=5 c=6 rs=1 cs=1]
+              LayoutInline {span} at (0,0) size 13x19
+                LayoutText {#text} at (34,1) size 13x19
+                  text run at (34,1) width 13: "A"
+            LayoutTableCell {td} at (523,110) size 81x22 [r=5 c=7 rs=1 cs=1]
+              LayoutInline {span} at (0,0) size 13x19
+                LayoutText {#text} at (34,1) size 13x19
+                  text run at (34,1) width 13: "A"
+            LayoutTableCell {td} at (604,110) size 81x22 [r=5 c=8 rs=1 cs=1]
+              LayoutInline {span} at (0,0) size 13x19
+                LayoutText {#text} at (34,1) size 13x19
+                  text run at (34,1) width 13: "A"
+          LayoutTableRow {tr} at (0,132) size 685x22
+            LayoutTableCell {th} at (0,132) size 41x22 [r=6 c=0 rs=1 cs=1]
+              LayoutText {#text} at (1,1) size 24x19
+                text run at (1,1) width 24: "700"
+            LayoutTableCell {td} at (41,132) size 79x22 [r=6 c=1 rs=1 cs=1]
+              LayoutInline {span} at (0,0) size 13x19
+                LayoutText {#text} at (33,1) size 13x19
+                  text run at (33,1) width 13: "A"
+            LayoutTableCell {td} at (120,132) size 81x22 [r=6 c=2 rs=1 cs=1]
+              LayoutInline {span} at (0,0) size 13x19
+                LayoutText {#text} at (34,1) size 13x19
+                  text run at (34,1) width 13: "A"
+            LayoutTableCell {td} at (201,132) size 80x22 [r=6 c=3 rs=1 cs=1]
+              LayoutInline {span} at (0,0) size 12x19
+                LayoutText {#text} at (34,1) size 12x19
+                  text run at (34,1) width 12: "A"
+            LayoutTableCell {td} at (281,132) size 80x22 [r=6 c=4 rs=1 cs=1]
+              LayoutInline {span} at (0,0) size 12x19
+                LayoutText {#text} at (34,1) size 12x19
+                  text run at (34,1) width 12: "A"
+            LayoutTableCell {td} at (361,132) size 81x22 [r=6 c=5 rs=1 cs=1]
+              LayoutInline {span} at (0,0) size 13x19
+                LayoutText {#text} at (34,1) size 13x19
+                  text run at (34,1) width 13: "A"
+            LayoutTableCell {td} at (442,132) size 81x22 [r=6 c=6 rs=1 cs=1]
+              LayoutInline {span} at (0,0) size 13x19
+                LayoutText {#text} at (34,1) size 13x19
+                  text run at (34,1) width 13: "A"
+            LayoutTableCell {td} at (523,132) size 81x22 [r=6 c=7 rs=1 cs=1]
+              LayoutInline {span} at (0,0) size 13x19
+                LayoutText {#text} at (34,1) size 13x19
+                  text run at (34,1) width 13: "A"
+            LayoutTableCell {td} at (604,132) size 81x22 [r=6 c=8 rs=1 cs=1]
+              LayoutInline {span} at (0,0) size 13x19
+                LayoutText {#text} at (34,1) size 13x19
+                  text run at (34,1) width 13: "A"
+          LayoutTableRow {tr} at (0,154) size 685x22
+            LayoutTableCell {th} at (0,154) size 41x22 [r=7 c=0 rs=1 cs=1]
+              LayoutText {#text} at (1,1) size 24x19
+                text run at (1,1) width 24: "800"
+            LayoutTableCell {td} at (41,154) size 79x22 [r=7 c=1 rs=1 cs=1]
+              LayoutInline {span} at (0,0) size 13x19
+                LayoutText {#text} at (33,1) size 13x19
+                  text run at (33,1) width 13: "A"
+            LayoutTableCell {td} at (120,154) size 81x22 [r=7 c=2 rs=1 cs=1]
+              LayoutInline {span} at (0,0) size 13x19
+                LayoutText {#text} at (34,1) size 13x19
+                  text run at (34,1) width 13: "A"
+            LayoutTableCell {td} at (201,154) size 80x22 [r=7 c=3 rs=1 cs=1]
+              LayoutInline {span} at (0,0) size 12x19
+                LayoutText {#text} at (34,1) size 12x19
+                  text run at (34,1) width 12: "A"
+            LayoutTableCell {td} at (281,154) size 80x22 [r=7 c=4 rs=1 cs=1]
+              LayoutInline {span} at (0,0) size 12x19
+                LayoutText {#text} at (34,1) size 12x19
+                  text run at (34,1) width 12: "A"
+            LayoutTableCell {td} at (361,154) size 81x22 [r=7 c=5 rs=1 cs=1]
+              LayoutInline {span} at (0,0) size 13x19
+                LayoutText {#text} at (34,1) size 13x19
+                  text run at (34,1) width 13: "A"
+            LayoutTableCell {td} at (442,154) size 81x22 [r=7 c=6 rs=1 cs=1]
+              LayoutInline {span} at (0,0) size 13x19
+                LayoutText {#text} at (34,1) size 13x19
+                  text run at (34,1) width 13: "A"
+            LayoutTableCell {td} at (523,154) size 81x22 [r=7 c=7 rs=1 cs=1]
+              LayoutInline {span} at (0,0) size 13x19
+                LayoutText {#text} at (34,1) size 13x19
+                  text run at (34,1) width 13: "A"
+            LayoutTableCell {td} at (604,154) size 81x22 [r=7 c=8 rs=1 cs=1]
+              LayoutInline {span} at (0,0) size 13x19
+                LayoutText {#text} at (34,1) size 13x19
+                  text run at (34,1) width 13: "A"
+          LayoutTableRow {tr} at (0,176) size 685x22
+            LayoutTableCell {th} at (0,176) size 41x22 [r=8 c=0 rs=1 cs=1]
+              LayoutText {#text} at (1,1) size 24x19
+                text run at (1,1) width 24: "900"
+            LayoutTableCell {td} at (41,176) size 79x22 [r=8 c=1 rs=1 cs=1]
+              LayoutInline {span} at (0,0) size 13x19
+                LayoutText {#text} at (33,1) size 13x19
+                  text run at (33,1) width 13: "A"
+            LayoutTableCell {td} at (120,176) size 81x22 [r=8 c=2 rs=1 cs=1]
+              LayoutInline {span} at (0,0) size 13x19
+                LayoutText {#text} at (34,1) size 13x19
+                  text run at (34,1) width 13: "A"
+            LayoutTableCell {td} at (201,176) size 80x22 [r=8 c=3 rs=1 cs=1]
+              LayoutInline {span} at (0,0) size 12x19
+                LayoutText {#text} at (34,1) size 12x19
+                  text run at (34,1) width 12: "A"
+            LayoutTableCell {td} at (281,176) size 80x22 [r=8 c=4 rs=1 cs=1]
+              LayoutInline {span} at (0,0) size 12x19
+                LayoutText {#text} at (34,1) size 12x19
+                  text run at (34,1) width 12: "A"
+            LayoutTableCell {td} at (361,176) size 81x22 [r=8 c=5 rs=1 cs=1]
+              LayoutInline {span} at (0,0) size 13x19
+                LayoutText {#text} at (34,1) size 13x19
+                  text run at (34,1) width 13: "A"
+            LayoutTableCell {td} at (442,176) size 81x22 [r=8 c=6 rs=1 cs=1]
+              LayoutInline {span} at (0,0) size 13x19
+                LayoutText {#text} at (34,1) size 13x19
+                  text run at (34,1) width 13: "A"
+            LayoutTableCell {td} at (523,176) size 81x22 [r=8 c=7 rs=1 cs=1]
+              LayoutInline {span} at (0,0) size 13x19
+                LayoutText {#text} at (34,1) size 13x19
+                  text run at (34,1) width 13: "A"
+            LayoutTableCell {td} at (604,176) size 81x22 [r=8 c=8 rs=1 cs=1]
+              LayoutInline {span} at (0,0) size 13x19
+                LayoutText {#text} at (34,1) size 13x19
+                  text run at (34,1) width 13: "A"
+      LayoutBlockFlow {p} at (0,287) size 685x20
+        LayoutText {#text} at (0,0) size 665x19
+          text run at (0,0) width 304: "The table above should match the image below. "
+          text run at (303,0) width 362: "The numbers and bolding (if present) must match to pass."
+      LayoutBlockFlow (anonymous) at (0,323) size 685x190
+        LayoutImage {img} at (0,0) size 671x185
+        LayoutText {#text} at (0,0) size 0x0

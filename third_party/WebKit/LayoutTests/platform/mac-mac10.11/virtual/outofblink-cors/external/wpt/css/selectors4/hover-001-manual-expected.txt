@@ -1,0 +1,68 @@
+layer at (0,0) size 800x600 clip at (0,0) size 785x600 scrollHeight 2330
+  LayoutView at (0,0) size 800x600
+layer at (0,0) size 785x2330 backgroundClip at (0,0) size 785x600 clip at (0,0) size 785x600
+  LayoutBlockFlow {HTML} at (0,0) size 785x2330
+    LayoutBlockFlow {BODY} at (8,16) size 769x2306
+      LayoutBlockFlow {OL} at (0,0) size 769x253
+        LayoutListItem {LI} at (40,0) size 729x36
+          LayoutListMarker (anonymous) at (-16,0) size 16x18: "1"
+          LayoutText {#text} at (0,0) size 298x18
+            text run at (0,0) width 298: "If the user-agent does not claim to support the "
+          LayoutInline {CODE} at (0,0) size 48x15
+            LayoutText {#text} at (297,2) size 48x15
+              text run at (297,2) width 48: ":hover"
+          LayoutText {#text} at (344,0) size 679x36
+            text run at (344,0) width 335: " pseudo-class (e.g. the pointing device cannot detect"
+            text run at (0,18) width 194: "hovering), then SKIP this test."
+        LayoutListItem {LI} at (40,36) size 729x36
+          LayoutListMarker (anonymous) at (-16,0) size 16x18: "2"
+          LayoutText {#text} at (0,0) size 717x36
+            text run at (0,0) width 717: "If the user-agent does not allow scrolling the document while leaving the pointer in the same position relative to"
+            text run at (0,18) width 212: "the viewport, then SKIP this test."
+        LayoutListItem {LI} at (40,72) size 729x18
+          LayoutListMarker (anonymous) at (-16,0) size 16x18: "3"
+          LayoutText {#text} at (0,0) size 379x18
+            text run at (0,0) width 379: "Ensure that this document is scrolled all the way to the top."
+        LayoutListItem {LI} at (40,90) size 729x18
+          LayoutListMarker (anonymous) at (-16,0) size 16x18: "4"
+          LayoutText {#text} at (0,0) size 306x18
+            text run at (0,0) width 306: "Hover the pointer device over the button below."
+        LayoutListItem {LI} at (40,108) size 729x18
+          LayoutListMarker (anonymous) at (-16,0) size 16x18: "5"
+          LayoutText {#text} at (0,0) size 364x18
+            text run at (0,0) width 364: "If the button is not blue, then the test result is FAILURE."
+        LayoutListItem {LI} at (40,126) size 729x109
+          LayoutBlockFlow (anonymous) at (0,0) size 729x36
+            LayoutListMarker (anonymous) at (-16,0) size 16x18: "6"
+            LayoutText {#text} at (0,0) size 724x36
+              text run at (0,0) width 724: "Scroll this document down while not moving the pointer at all, until the pointer no longer touches the button. For"
+              text run at (0,18) width 721: "example, on a traditional desktop or laptop computer, keep the mouse perfectly still and do one of the following:"
+          LayoutBlockFlow {UL} at (0,36) size 729x73
+            LayoutListItem {LI} at (40,0) size 689x18
+              LayoutListMarker (anonymous) at (-17,0) size 7x18: white bullet
+              LayoutText {#text} at (0,0) size 287x18
+                text run at (0,0) width 287: "Press the \"Page Down\" key on the keyboard."
+            LayoutListItem {LI} at (40,18) size 689x19
+              LayoutListMarker (anonymous) at (-17,0) size 7x18: white bullet
+              LayoutText {#text} at (0,0) size 223x18
+                text run at (0,0) width 223: "Press the \"\x{2193}\" key on the keyboard."
+            LayoutListItem {LI} at (40,37) size 689x18
+              LayoutListMarker (anonymous) at (-17,0) size 7x18: white bullet
+              LayoutText {#text} at (0,0) size 188x18
+                text run at (0,0) width 188: "Roll the mouse's scrollwheel."
+            LayoutListItem {LI} at (40,55) size 689x18
+              LayoutListMarker (anonymous) at (-17,0) size 7x18: white bullet
+              LayoutText {#text} at (0,0) size 309x18
+                text run at (0,0) width 309: "Perform a \"scroll down\" gesture on the trackpad"
+        LayoutListItem {LI} at (40,235) size 729x18
+          LayoutListMarker (anonymous) at (-16,0) size 16x18: "7"
+          LayoutText {#text} at (0,0) size 694x18
+            text run at (0,0) width 694: "If the button is blue, then the test result is FAILURE. If the button is white, then the test result is SUCCESS."
+      LayoutBlockFlow (anonymous) at (0,269) size 769x37
+        LayoutBR {BR} at (0,0) size 0x18
+        LayoutButton {BUTTON} at (0,19) size 94.52x18 [bgcolor=#FFFFFF] [border: (1px solid #D8D8D8) (1px solid #D1D1D1) (1px solid #BABABA) (1px solid #D1D1D1)]
+          LayoutBlockFlow (anonymous) at (8,2) size 78.52x13
+            LayoutText {#text} at (0,0) size 79x13
+              text run at (0,0) width 79: "Hover over me."
+        LayoutText {#text} at (0,0) size 0x0
+      LayoutBlockFlow {DIV} at (0,306) size 100x2000

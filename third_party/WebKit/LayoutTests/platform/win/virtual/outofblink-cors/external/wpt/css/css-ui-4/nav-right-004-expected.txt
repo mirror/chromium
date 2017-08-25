@@ -1,0 +1,67 @@
+layer at (0,0) size 800x600
+  LayoutView at (0,0) size 800x600
+layer at (0,0) size 800x140
+  LayoutBlockFlow {HTML} at (0,0) size 800x140
+    LayoutBlockFlow {BODY} at (8,16) size 784x116
+      LayoutBlockFlow {P} at (0,0) size 784x20
+        LayoutText {#text} at (0,0) size 543x19
+          text run at (0,0) width 543: "First, use directional navigation to navigate the focus to the \"START\" text field below."
+      LayoutBlockFlow {P} at (0,36) size 784x20
+        LayoutText {#text} at (0,0) size 502x19
+          text run at (0,0) width 502: "Test passes if navigating right twice moves the focus to the \"FINISH\" text field."
+      LayoutBlockFlow {DIV} at (0,72) size 784x22
+        LayoutTextControl {INPUT} at (0,0) size 154x22 [bgcolor=#FFFFFF] [border: (2px inset #EEEEEE)]
+        LayoutText {#text} at (154,1) size 4x19
+          text run at (154,1) width 4: " "
+        LayoutTextControl {INPUT} at (158,0) size 154x22 [bgcolor=#FFFFFF] [border: (2px inset #EEEEEE)]
+        LayoutText {#text} at (312,1) size 4x19
+          text run at (312,1) width 4: " "
+        LayoutTextControl {INPUT} at (316,0) size 154x22 [bgcolor=#FFFFFF] [border: (2px inset #EEEEEE)]
+        LayoutText {#text} at (470,1) size 4x19
+          text run at (470,1) width 4: " "
+        LayoutTextControl {INPUT} at (474,0) size 154x22 [bgcolor=#FFFFFF] [border: (2px inset #EEEEEE)]
+        LayoutText {#text} at (0,0) size 0x0
+      LayoutBlockFlow {DIV} at (0,94) size 784x22
+        LayoutTextControl {INPUT} at (0,0) size 154x22 [bgcolor=#FFFFFF] [border: (2px inset #EEEEEE)]
+        LayoutText {#text} at (154,1) size 4x19
+          text run at (154,1) width 4: " "
+        LayoutTextControl {INPUT} at (158,0) size 154x22 [bgcolor=#FFFFFF] [border: (2px inset #EEEEEE)]
+        LayoutText {#text} at (312,1) size 4x19
+          text run at (312,1) width 4: " "
+        LayoutTextControl {INPUT} at (316,0) size 154x22 [bgcolor=#FFFFFF] [border: (2px inset #EEEEEE)]
+        LayoutText {#text} at (470,1) size 4x19
+          text run at (470,1) width 4: " "
+        LayoutTextControl {INPUT} at (474,0) size 154x22 [bgcolor=#FFFFFF] [border: (2px inset #EEEEEE)]
+        LayoutText {#text} at (0,0) size 0x0
+layer at (10,91) size 150x16
+  LayoutBlockFlow {DIV} at (2,3) size 150x16
+    LayoutText {#text} at (0,0) size 35x16
+      text run at (0,0) width 35: "ignore"
+layer at (168,91) size 150x16
+  LayoutBlockFlow {DIV} at (2,3) size 150x16
+    LayoutText {#text} at (0,0) size 42x16
+      text run at (0,0) width 42: "START"
+layer at (326,91) size 150x16
+  LayoutBlockFlow {DIV} at (2,3) size 150x16
+    LayoutText {#text} at (0,0) size 35x16
+      text run at (0,0) width 35: "ignore"
+layer at (484,91) size 150x16
+  LayoutBlockFlow {DIV} at (2,3) size 150x16
+    LayoutText {#text} at (0,0) size 35x16
+      text run at (0,0) width 35: "ignore"
+layer at (10,113) size 150x16
+  LayoutBlockFlow {DIV} at (2,3) size 150x16
+    LayoutText {#text} at (0,0) size 35x16
+      text run at (0,0) width 35: "ignore"
+layer at (168,113) size 150x16
+  LayoutBlockFlow {DIV} at (2,3) size 150x16
+    LayoutText {#text} at (0,0) size 43x16
+      text run at (0,0) width 43: "FINISH"
+layer at (326,113) size 150x16
+  LayoutBlockFlow {DIV} at (2,3) size 150x16
+    LayoutText {#text} at (0,0) size 35x16
+      text run at (0,0) width 35: "ignore"
+layer at (484,113) size 150x16
+  LayoutBlockFlow {DIV} at (2,3) size 150x16
+    LayoutText {#text} at (0,0) size 35x16
+      text run at (0,0) width 35: "ignore"

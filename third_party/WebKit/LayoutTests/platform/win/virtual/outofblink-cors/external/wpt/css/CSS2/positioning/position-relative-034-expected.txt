@@ -1,0 +1,15 @@
+layer at (0,0) size 800x600
+  LayoutView at (0,0) size 800x600
+layer at (0,0) size 800x101
+  LayoutBlockFlow {html} at (0,0) size 800x101
+    LayoutBlockFlow {body} at (8,16) size 784x77
+      LayoutBlockFlow {p} at (0,0) size 784x20
+        LayoutText {#text} at (0,0) size 401x19
+          text run at (0,0) width 401: "Test passes if the box can be scrolled to the words \"Filler Text\"."
+layer at (8,52) size 206x41 clip at (11,55) size 200x20 scrollWidth 265
+  LayoutBlockFlow {div} at (0,36) size 206x41 [border: (3px solid #000000)]
+    LayoutText {#text} at (0,0) size 0x0
+layer at (208,52) size 65x19 backgroundClip at (11,55) size 200x20 clip at (11,55) size 200x20
+  LayoutInline (relative positioned) {span} at (0,0) size 65x19
+    LayoutText {#text} at (3,3) size 65x19
+      text run at (3,3) width 65: "Filler Text"

@@ -1,0 +1,69 @@
+layer at (0,0) size 800x600
+  LayoutView at (0,0) size 800x600
+layer at (0,0) size 800x332
+  LayoutBlockFlow {html} at (0,0) size 800x332
+    LayoutBlockFlow {body} at (8,16) size 784x308
+      LayoutBlockFlow {p} at (0,0) size 784x60
+        LayoutInline {strong} at (0,0) size 293x19
+          LayoutText {#text} at (0,0) size 293x19
+            text run at (0,0) width 293: "All blue boxes must always be the same size"
+        LayoutText {#text} at (293,0) size 778x59
+          text run at (293,0) width 81: ". Make your "
+          text run at (374,0) width 404: "window an inch or two bigger than than the width of one box to"
+          text run at (0,20) width 72: "check. Try "
+          text run at (71,20) width 462: "resizing the window so that the boxes wrap in two or more columns. Try "
+          text run at (532,20) width 225: "resizing the window to be narrower"
+          text run at (0,40) width 231: "than the boxes so that the text inside "
+          text run at (231,40) width 219: "them wraps into two or more lines."
+      LayoutTable {div} at (0,76) size 784x232
+        LayoutTableSection (anonymous) at (0,0) size 784x232
+          LayoutTableRow (anonymous) at (0,0) size 784x232
+            LayoutTableCell (anonymous) at (0,0) size 784x232 [r=0 c=0 rs=1 cs=1]
+              LayoutTable (floating) {div} at (8,8) size 267x42 [color=#C0C0C0] [border: (3px solid #0000FF)]
+                LayoutTableSection (anonymous) at (11,11) size 245x20
+                  LayoutTableRow (anonymous) at (0,0) size 245x20
+                    LayoutTableCell (anonymous) at (0,0) size 245x20 [r=0 c=0 rs=1 cs=1]
+                      LayoutText {#text} at (0,0) size 245x19
+                        text run at (0,0) width 245: "this is a float this is a float this is a float"
+              LayoutTable (floating) {div} at (291,8) size 267x42 [color=#C0C0C0] [border: (3px solid #0000FF)]
+                LayoutTableSection (anonymous) at (11,11) size 245x20
+                  LayoutTableRow (anonymous) at (0,0) size 245x20
+                    LayoutTableCell (anonymous) at (0,0) size 245x20 [r=0 c=0 rs=1 cs=1]
+                      LayoutText {#text} at (0,0) size 245x19
+                        text run at (0,0) width 245: "this is a float this is a float this is a float"
+              LayoutTable (floating) {div} at (8,66) size 267x42 [color=#C0C0C0] [border: (3px solid #0000FF)]
+                LayoutTableSection (anonymous) at (11,11) size 245x20
+                  LayoutTableRow (anonymous) at (0,0) size 245x20
+                    LayoutTableCell (anonymous) at (0,0) size 245x20 [r=0 c=0 rs=1 cs=1]
+                      LayoutText {#text} at (0,0) size 245x19
+                        text run at (0,0) width 245: "this is a float this is a float this is a float"
+              LayoutTable (floating) {div} at (291,66) size 267x42 [color=#C0C0C0] [border: (3px solid #0000FF)]
+                LayoutTableSection (anonymous) at (11,11) size 245x20
+                  LayoutTableRow (anonymous) at (0,0) size 245x20
+                    LayoutTableCell (anonymous) at (0,0) size 245x20 [r=0 c=0 rs=1 cs=1]
+                      LayoutText {#text} at (0,0) size 245x19
+                        text run at (0,0) width 245: "this is a float this is a float this is a float"
+              LayoutTable (floating) {div} at (8,124) size 267x42 [color=#C0C0C0] [border: (3px solid #0000FF)]
+                LayoutTableSection (anonymous) at (11,11) size 245x20
+                  LayoutTableRow (anonymous) at (0,0) size 245x20
+                    LayoutTableCell (anonymous) at (0,0) size 245x20 [r=0 c=0 rs=1 cs=1]
+                      LayoutText {#text} at (0,0) size 245x19
+                        text run at (0,0) width 245: "this is a float this is a float this is a float"
+              LayoutTable (floating) {div} at (291,124) size 267x42 [color=#C0C0C0] [border: (3px solid #0000FF)]
+                LayoutTableSection (anonymous) at (11,11) size 245x20
+                  LayoutTableRow (anonymous) at (0,0) size 245x20
+                    LayoutTableCell (anonymous) at (0,0) size 245x20 [r=0 c=0 rs=1 cs=1]
+                      LayoutText {#text} at (0,0) size 245x19
+                        text run at (0,0) width 245: "this is a float this is a float this is a float"
+              LayoutTable (floating) {div} at (8,182) size 267x42 [color=#C0C0C0] [border: (3px solid #0000FF)]
+                LayoutTableSection (anonymous) at (11,11) size 245x20
+                  LayoutTableRow (anonymous) at (0,0) size 245x20
+                    LayoutTableCell (anonymous) at (0,0) size 245x20 [r=0 c=0 rs=1 cs=1]
+                      LayoutText {#text} at (0,0) size 245x19
+                        text run at (0,0) width 245: "this is a float this is a float this is a float"
+              LayoutTable (floating) {div} at (291,182) size 267x42 [color=#C0C0C0] [border: (3px solid #0000FF)]
+                LayoutTableSection (anonymous) at (11,11) size 245x20
+                  LayoutTableRow (anonymous) at (0,0) size 245x20
+                    LayoutTableCell (anonymous) at (0,0) size 245x20 [r=0 c=0 rs=1 cs=1]
+                      LayoutText {#text} at (0,0) size 245x19
+                        text run at (0,0) width 245: "this is a float this is a float this is a float"

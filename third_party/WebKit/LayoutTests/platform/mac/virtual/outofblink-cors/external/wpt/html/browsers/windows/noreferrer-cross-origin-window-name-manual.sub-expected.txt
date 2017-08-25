@@ -1,0 +1,13 @@
+layer at (0,0) size 800x600
+  LayoutView at (0,0) size 800x600
+layer at (0,0) size 800x600
+  LayoutBlockFlow {HTML} at (0,0) size 800x600
+    LayoutBlockFlow {BODY} at (8,8) size 784x576
+      LayoutBlockFlow {P} at (0,0) size 784x18
+        LayoutText {#text} at (0,0) size 555x18
+          text run at (0,0) width 555: "Follow this link to open a new browsing context and then confirm it says \"idonteven\": "
+        LayoutInline {A} at (0,0) size 26x18 [color=#0000EE]
+          LayoutText {#text} at (554,0) size 26x18
+            text run at (554,0) width 26: "link"
+        LayoutText {#text} at (579,0) size 5x18
+          text run at (579,0) width 5: "."

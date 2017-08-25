@@ -1,0 +1,42 @@
+layer at (0,0) size 800x600
+  LayoutView at (0,0) size 800x600
+layer at (0,0) size 800x138
+  LayoutBlockFlow {HTML} at (0,0) size 800x138
+    LayoutBlockFlow {BODY} at (8,16) size 784x104
+      LayoutBlockFlow {P} at (0,0) size 784x18
+        LayoutText {#text} at (0,0) size 520x18
+          text run at (0,0) width 520: "First, use directional navigation to navigate the focus to the \"START\" link below."
+      LayoutBlockFlow {P} at (0,34) size 784x18
+        LayoutText {#text} at (0,0) size 474x18
+          text run at (0,0) width 474: "Test passes if navigating left once moves the focus to the \"FINISH\" input."
+      LayoutBlockFlow {DIV} at (0,68) size 784x36
+        LayoutBlockFlow {DIV} at (0,0) size 784x0
+          LayoutBlockFlow (floating) {A} at (0,0) size 40.88x18 [color=#551A8B]
+            LayoutText {#text} at (0,0) size 41x18
+              text run at (0,0) width 41: "ignore"
+          LayoutBlockFlow (floating) {A} at (48.05,0) size 48.45x18 [color=#551A8B]
+            LayoutText {#text} at (0,0) size 49x18
+              text run at (0,0) width 49: "START"
+          LayoutBlockFlow (floating) {A} at (103.67,0) size 40.88x18 [color=#551A8B]
+            LayoutText {#text} at (0,0) size 41x18
+              text run at (0,0) width 41: "ignore"
+        LayoutBlockFlow {DIV} at (0,18) size 784x0
+          LayoutBlockFlow (floating) {A} at (0,0) size 40.88x18 [color=#551A8B]
+            LayoutText {#text} at (0,0) size 41x18
+              text run at (0,0) width 41: "ignore"
+          LayoutBlockFlow (floating) {A} at (48.05,0) size 40.88x18 [color=#551A8B]
+            LayoutText {#text} at (0,0) size 41x18
+              text run at (0,0) width 41: "ignore"
+          LayoutBlockFlow (floating) {A} at (96.09,0) size 40.88x18 [color=#551A8B]
+            LayoutText {#text} at (0,0) size 41x18
+              text run at (0,0) width 41: "ignore"
+        LayoutBlockFlow {DIV} at (0,36) size 784x0
+          LayoutBlockFlow (floating) {A} at (0,0) size 40.88x18 [color=#551A8B]
+            LayoutText {#text} at (0,0) size 41x18
+              text run at (0,0) width 41: "ignore"
+          LayoutBlockFlow (floating) {A} at (48.05,0) size 51.56x18 [color=#551A8B]
+            LayoutText {#text} at (0,0) size 52x18
+              text run at (0,0) width 52: "FINISH"
+          LayoutBlockFlow (floating) {A} at (106.78,0) size 40.88x18 [color=#551A8B]
+            LayoutText {#text} at (0,0) size 41x18
+              text run at (0,0) width 41: "ignore"

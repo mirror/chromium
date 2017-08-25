@@ -1,0 +1,11 @@
+layer at (0,0) size 800x600 clip at (0,0) size 800x585 scrollWidth 13245
+  LayoutView at (0,0) size 800x600
+layer at (0,0) size 800x76
+  LayoutBlockFlow {HTML} at (0,0) size 800x76
+    LayoutBlockFlow {BODY} at (8,16) size 784x52
+      LayoutBlockFlow {P} at (0,0) size 784x18
+        LayoutText {#text} at (0,0) size 486x18
+          text run at (0,0) width 486: "Load the following URL in a new tab (copy & paste it into the address bar):"
+      LayoutBlockFlow (anonymous) at (0,34) size 784x18
+        LayoutText {#text} at (0,0) size 13237x18
+          text run at (0,0) width 13237: "data:text/html,%3C%21doctype%20html%3E%3Chtml%3E%09%3Chead%3E%09%09%3Ctitle%3EData%20URI%20does%20not%20match%20its%20own%20URL%3C/title%3E%09%09%3Cstyle%20type%3D%22text/css%22%3Ehtml%2C%20body%20%7B%20margin%3A%200%3B%20padding%3A%200%3B%20%7Ddiv%20%7B%20height%3A%20100px%3B%20width%3A%20100px%3B%20background%3A%20orange%3B%20%7Diframe%20%7B%20border%3A%20none%3B%20height%3A%20150px%3B%20width%3A%20150px%3B%20%7D%09%09%3C/style%3E%09%3C/head%3E%09%3Cbody%3E%09%09%3Cscript%20type%3D%22text/javascript%22%3Eif%28%20self%20%3D%3D%20top%20%29%20%7B%09document.body.ondragenter%20%3D%20document.body.ondragleave%20%3D%20document.body.ondragover%20%3D%20document.body.ondrop%20%3D%20function%20%28e%29%20%7B%09%09e.preventDefault%28%29%3B%09%09document.body.innerHTML%20%3D%20%22FAIL%22%3B%09%7D%3B%09document.write%28%22%3Cp%3EDrag%20the%20orange%20square%20below%20over%20this%20text%2C%20and%20release%20it.%20Pass%20if%20this%20text%20does%20not%20change.%3C%5C/p%3E%22%29%3B%09document.write%28%22%3Cp%3E%3Ciframe%20src%3D%5C%22%22+location.href+%22%5C%22%3E%3C%5C/iframe%3E%3C%5C/p%3E%22%29%3B%7D%20else%20%7B%09document.write%28%22%3Cdiv%20draggable%3D%5C%22true%5C%22%3E%3C%5C/div%3E%22%29%3B%09document.getElementsByTagName%28%22div%22%29%5B0%5D.ondragstart%20%3D%20function%20%28e%29%20%7B%09%09e.dataTransfer.effectAllowed%20%3D%20%22copy%22%3B%09%09e.dataTransfer.setData%28%22text%22%2C%22dummy%20text%22%29%3B%09%09e.dataTransfer.allowTargetOrigin%28location.href%29%3B%09%7D%3B%7D%09%09%3C/script%3E%09%3C/body%3E%3C/html%3E"

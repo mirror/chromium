@@ -1,0 +1,16 @@
+This script should not execute even though there are parse errors in the policy.
+
+
+
+--------
+Frame: '<!--framePath //<!--frame0-->-->'
+--------
+Internal Server Error
+
+The server encountered an internal error or misconfiguration and was unable to complete your request.
+
+Please contact the server administrator at [no address given] to inform them of the time this error occurred, and the actions you performed just before this error.
+
+More information about this error may be available in the server error log.
+
+Apache Server at 127.0.0.1 Port 80

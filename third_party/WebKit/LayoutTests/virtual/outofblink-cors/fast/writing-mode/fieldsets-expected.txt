@@ -1,0 +1,77 @@
+layer at (0,0) size 800x600 clip at (0,0) size 785x600 scrollHeight 1252
+  LayoutView at (0,0) size 800x600
+layer at (0,0) size 785x1252 backgroundClip at (0,0) size 785x600 clip at (0,0) size 785x600
+  LayoutBlockFlow {HTML} at (0,0) size 785x1252.38
+    LayoutBlockFlow {BODY} at (8,8) size 769x1236.38
+      LayoutText {#text} at (0,0) size 281x19
+        text run at (0,0) width 281: "LTR fieldset with left/center/right text-align: "
+      LayoutBR {BR} at (280,15) size 1x0
+      LayoutFieldset {FIELDSET} at (16,36) size 228x119.59 [border: (2px groove #C0C0C0)]
+        LayoutBlockFlow {LEGEND} at (34,0) size 104x25
+          LayoutBlockFlow {DIV} at (2,0) size 100x25 [bgcolor=#FFA500]
+      LayoutText {#text} at (260,156) size 4x20
+        text run at (260,156) width 4: " "
+      LayoutFieldset {FIELDSET} at (280,36) size 228x119.59 [border: (2px groove #C0C0C0)]
+        LayoutBlockFlow {LEGEND} at (110,0) size 104x25
+          LayoutBlockFlow {DIV} at (2,0) size 100x25 [bgcolor=#FFA500]
+      LayoutText {#text} at (0,0) size 0x0
+      LayoutFieldset {FIELDSET} at (16,192.59) size 228x119.59 [border: (2px groove #C0C0C0)]
+        LayoutBlockFlow {LEGEND} at (62,0) size 104x25
+          LayoutBlockFlow {DIV} at (2,0) size 100x25 [bgcolor=#FFA500]
+      LayoutText {#text} at (260,313) size 4x20
+        text run at (260,313) width 4: " "
+      LayoutBR {BR} at (0,0) size 0x0
+      LayoutText {#text} at (0,333) size 282x20
+        text run at (0,333) width 282: "RTL fieldset with left/center/right text-align: "
+      LayoutBR {BR} at (281,348) size 1x1
+      LayoutFieldset {FIELDSET} at (16,369.19) size 228x119.59 [border: (2px groove #C0C0C0)]
+        LayoutBlockFlow {LEGEND} at (14,0) size 104x25
+          LayoutBlockFlow {DIV} at (2,0) size 100x25 [bgcolor=#FFA500]
+      LayoutText {#text} at (260,489) size 4x20
+        text run at (260,489) width 4: " "
+      LayoutFieldset {FIELDSET} at (280,369.19) size 228x119.59 [border: (2px groove #C0C0C0)]
+        LayoutBlockFlow {LEGEND} at (90,0) size 104x25
+          LayoutBlockFlow {DIV} at (2,0) size 100x25 [bgcolor=#FFA500]
+      LayoutText {#text} at (0,0) size 0x0
+      LayoutFieldset {FIELDSET} at (16,525.78) size 228x119.59 [border: (2px groove #C0C0C0)]
+        LayoutBlockFlow {LEGEND} at (62,0) size 104x25
+          LayoutBlockFlow {DIV} at (2,0) size 100x25 [bgcolor=#FFA500]
+      LayoutText {#text} at (260,646) size 4x20
+        text run at (260,646) width 4: " "
+      LayoutBR {BR} at (0,0) size 0x0
+      LayoutText {#text} at (0,666) size 333x20
+        text run at (0,666) width 333: "Vertical LTR fieldset with left/center/right text-align: "
+      LayoutBR {BR} at (332,681) size 1x1
+      LayoutFieldset {FIELDSET} at (16,702.38) size 119.59x228 [border: (2px groove #C0C0C0)]
+        LayoutBlockFlow {LEGEND} at (0,34) size 25x104
+          LayoutBlockFlow {DIV} at (0,2) size 25x100 [bgcolor=#FFA500]
+      LayoutText {#text} at (151,931) size 5x20
+        text run at (151,931) width 5: " "
+      LayoutFieldset {FIELDSET} at (171.59,702.38) size 119.59x228 [border: (2px groove #C0C0C0)]
+        LayoutBlockFlow {LEGEND} at (0,110) size 25x104
+          LayoutBlockFlow {DIV} at (0,2) size 25x100 [bgcolor=#FFA500]
+      LayoutText {#text} at (307,931) size 5x20
+        text run at (307,931) width 5: " "
+      LayoutFieldset {FIELDSET} at (327.19,702.38) size 119.59x228 [border: (2px groove #C0C0C0)]
+        LayoutBlockFlow {LEGEND} at (0,62) size 25x104
+          LayoutBlockFlow {DIV} at (0,2) size 25x100 [bgcolor=#FFA500]
+      LayoutText {#text} at (462,931) size 5x20
+        text run at (462,931) width 5: " "
+      LayoutBR {BR} at (0,0) size 0x0
+      LayoutText {#text} at (0,951) size 334x20
+        text run at (0,951) width 334: "Vertical RTL fieldset with left/center/right text-align: "
+      LayoutBR {BR} at (333,966) size 1x1
+      LayoutFieldset {FIELDSET} at (16,987.38) size 119.59x228 [border: (2px groove #C0C0C0)]
+        LayoutBlockFlow {LEGEND} at (0,14) size 25x104
+          LayoutBlockFlow {DIV} at (0,2) size 25x100 [bgcolor=#FFA500]
+      LayoutText {#text} at (151,1216) size 5x20
+        text run at (151,1216) width 5: " "
+      LayoutFieldset {FIELDSET} at (171.59,987.38) size 119.59x228 [border: (2px groove #C0C0C0)]
+        LayoutBlockFlow {LEGEND} at (0,90) size 25x104
+          LayoutBlockFlow {DIV} at (0,2) size 25x100 [bgcolor=#FFA500]
+      LayoutText {#text} at (307,1216) size 5x20
+        text run at (307,1216) width 5: " "
+      LayoutFieldset {FIELDSET} at (327.19,987.38) size 119.59x228 [border: (2px groove #C0C0C0)]
+        LayoutBlockFlow {LEGEND} at (0,62) size 25x104
+          LayoutBlockFlow {DIV} at (0,2) size 25x100 [bgcolor=#FFA500]
+      LayoutText {#text} at (0,0) size 0x0

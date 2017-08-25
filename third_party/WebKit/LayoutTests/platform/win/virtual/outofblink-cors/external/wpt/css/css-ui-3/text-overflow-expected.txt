@@ -1,0 +1,22 @@
+layer at (0,0) size 800x600
+  LayoutView at (0,0) size 800x600
+layer at (0,0) size 800x126
+  LayoutBlockFlow {HTML} at (0,0) size 800x126
+    LayoutBlockFlow {BODY} at (8,16) size 784x102
+      LayoutBlockFlow {P} at (0,0) size 784x20
+        LayoutText {#text} at (0,0) size 495x19
+          text run at (0,0) width 495: "PREREQUISITE: The font used must have a glyph for the U+2026 character."
+      LayoutBlockFlow {P} at (0,36) size 784x20
+        LayoutText {#text} at (0,0) size 136x19
+          text run at (0,0) width 136: "Test passes if there is "
+        LayoutInline {STRONG} at (0,0) size 45x19
+          LayoutText {#text} at (135,0) size 45x19
+            text run at (135,0) width 45: "ellipsis"
+        LayoutText {#text} at (179,0) size 131x19
+          text run at (179,0) width 131: " after a black square."
+layer at (8,88) size 50x30 scrollWidth 120
+  LayoutBlockFlow {DIV} at (0,72) size 50x30
+    LayoutInline {SPAN} at (0,0) size 120x30
+      LayoutText {#text} at (0,0) size 120x30
+        text run at (0,0) width 120: "AAAA"
+    LayoutText {#text} at (0,0) size 0x0

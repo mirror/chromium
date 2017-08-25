@@ -1,0 +1,18 @@
+layer at (0,0) size 800x600
+  LayoutView at (0,0) size 800x600
+layer at (0,0) size 800x112
+  LayoutBlockFlow {HTML} at (0,0) size 800x112
+    LayoutBlockFlow {BODY} at (8,16) size 784x88
+      LayoutBlockFlow {P} at (0,0) size 784x36
+        LayoutText {#text} at (0,0) size 768x36
+          text run at (0,0) width 768: "Test passes if a controller user interface appears below and the text 'The user agent doesn't support media element.' does"
+          text run at (0,18) width 215: "not appear anywhere on this page"
+      LayoutBlockFlow (anonymous) at (0,52) size 784x36
+        LayoutText {#text} at (0,0) size 0x0
+layer at (8,68) size 300x32
+  LayoutMedia {AUDIO} at (0,0) size 300x32
+layer at (8,68) size 300x32
+  LayoutFlexibleBox (relative positioned) {DIV} at (0,0) size 300x32
+    LayoutBlockFlow {DIV} at (0,0) size 300x32
+layer at (8,68) size 300x32
+  LayoutFlexibleBox (relative positioned) {DIV} at (0,0) size 300x32 [bgcolor=#FAFAFA]

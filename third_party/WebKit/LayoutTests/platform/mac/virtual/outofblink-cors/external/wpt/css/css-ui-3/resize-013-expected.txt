@@ -1,0 +1,23 @@
+layer at (0,0) size 800x600
+  LayoutView at (0,0) size 800x600
+layer at (0,0) size 800x180
+  LayoutBlockFlow {HTML} at (0,0) size 800x180
+    LayoutBlockFlow {BODY} at (8,16) size 784x156
+      LayoutBlockFlow {P} at (0,0) size 784x36
+        LayoutText {#text} at (0,0) size 122x18
+          text run at (0,0) width 122: "Test passes if both "
+        LayoutInline {STRONG} at (0,0) size 40x18
+          LayoutText {#text} at (121,0) size 40x18
+            text run at (121,0) width 40: "width"
+        LayoutText {#text} at (160,0) size 32x18
+          text run at (160,0) width 32: " and "
+        LayoutInline {STRONG} at (0,0) size 44x18
+          LayoutText {#text} at (191,0) size 44x18
+            text run at (191,0) width 44: "height"
+        LayoutText {#text} at (234,0) size 771x36
+          text run at (234,0) width 537: " of the orange box below can be adjusted (for instance by dragging the bottom-right"
+          text run at (0,18) width 51: "corner)."
+      LayoutBlockFlow (anonymous) at (0,52) size 784x104
+        LayoutText {#text} at (0,0) size 0x0
+layer at (8,68) size 100x100
+  LayoutHTMLCanvas {CANVAS} at (0,0) size 100x100

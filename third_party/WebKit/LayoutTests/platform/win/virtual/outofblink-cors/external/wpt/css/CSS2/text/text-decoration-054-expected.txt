@@ -1,0 +1,12 @@
+layer at (0,0) size 800x600
+  LayoutView at (0,0) size 800x600
+layer at (0,0) size 800x100
+  LayoutBlockFlow {html} at (0,0) size 800x100
+    LayoutBlockFlow {body} at (8,16) size 784x76
+      LayoutBlockFlow {p} at (0,0) size 784x40
+        LayoutText {#text} at (0,0) size 764x39
+          text run at (0,0) width 764: "Test passes if the \"Filler Text\" below has a line over it, a line under it and a line through it. User agents may also blink the"
+          text run at (0,20) width 163: "text on and off the screen."
+      LayoutBlockFlow {div} at (0,56) size 784x20
+        LayoutText {#text} at (0,0) size 65x19
+          text run at (0,0) width 65: "Filler Text"

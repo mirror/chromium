@@ -1,0 +1,23 @@
+layer at (0,0) size 800x600
+  LayoutView at (0,0) size 800x600
+layer at (0,0) size 800x144
+  LayoutBlockFlow {html} at (0,0) size 800x144
+    LayoutBlockFlow {body} at (55,16) size 737x104 [bgcolor=#FFFFFF]
+      LayoutBlockFlow {p} at (8,0) size 721x60
+        LayoutText {#text} at (0,1) size 336x18
+          text run at (0,1) width 336: "Check or uncheck as many checkboxes as you want."
+        LayoutBR {br} at (335,1) size 1x18
+        LayoutText {#text} at (0,21) size 309x18
+          text run at (0,21) width 309: "Test passes if the orange rectangle is always just"
+        LayoutBR {br} at (309,21) size 0x18
+        LayoutText {#text} at (0,41) size 323x18
+          text run at (0,41) width 323: "tall enough to contain the tallest black square in it."
+      LayoutBlockFlow {div} at (0,84) size 737x0 [bgcolor=#FFA500]
+      LayoutBlockFlow {p} at (8,84) size 721x20
+        LayoutBlockFlow {input} at (2.89,5) size 12x12
+        LayoutBlockFlow {input} at (20.67,5) size 12x12
+        LayoutBlockFlow {input} at (38.45,5) size 12x12
+        LayoutBlockFlow {input} at (56.23,5) size 12x12
+        LayoutBlockFlow {input} at (74.02,5) size 12x12
+        LayoutBlockFlow {input} at (91.80,5) size 12x12
+        LayoutBlockFlow {input} at (109.58,5) size 12x12
