@@ -569,24 +569,7 @@ bool AXLayoutObject::ComputeAccessibilityIsIgnored(
     return false;
 
   if (layout_object_->IsText()) {
-    LayoutText* layout_text = ToLayoutText(layout_object_);
-    if (!layout_text->HasTextBoxes()) {
-      if (ignored_reasons)
-        ignored_reasons->push_back(IgnoredReason(kAXEmptyText));
-      return true;
-    }
-
-    // Don't ignore static text in editable text controls.
-    for (AXObject* parent = ParentObject(); parent;
-         parent = parent->ParentObject()) {
-      if (parent->RoleValue() == kTextFieldRole)
-        return false;
-    }
-
-    // Text elements that are just empty whitespace should not be returned.
-    // FIXME(dmazzoni): we probably shouldn't ignore this if the style is 'pre',
-    // or similar...
-    if (layout_text->GetText().Impl()->ContainsOnlyWhitespace()) {
+    if (CanIgnoreTextAsEmpty()) {
       if (ignored_reasons)
         ignored_reasons->push_back(IgnoredReason(kAXEmptyText));
       return true;
@@ -747,6 +730,80 @@ bool AXLayoutObject::ComputeAccessibilityIsIgnored(
   if (ignored_reasons)
     ignored_reasons->push_back(IgnoredReason(kAXUninteresting));
   return true;
+}
+
+// Return true for nodes that might cause the text of adjacent objects to be
+// read by AT as single jammed together text string with no whitespace between.
+bool AXLayoutObject::IsWhitespaceNeededToSeparate(Node* node) const {
+  if (!node)
+    return false;
+  if (!node->IsElementNode())
+    return true;
+  Element* elem = ToElement(node);
+  // Use layout whitespace to separate elements if they are not form controls
+  // and do not have an ARIA role.
+  return !elem->IsFormControlElement() && !elem->FastHasAttribute(roleAttr) &&
+         !elem->HasTagName(aTag) && !elem->HasTagName(iframeTag) &&
+         !elem->HasTagName(imgTag) && !elem->HasTagName(labelTag);
+}
+
+// Return a previous node of the closest node in ancestor chain that has one
+Node* AXLayoutObject::AnyPreviousNode(Node* node) const {
+  Node* prev;
+  while (node) {
+    prev = node->previousSibling();
+    if (prev)
+      return prev;
+    node = node->parentNode();
+  }
+  return nullptr;
+}
+
+// Return a next node of the closest node in ancestor chain that has one
+Node* AXLayoutObject::AnyNextNode(Node* node) const {
+  Node* next;
+  while (node) {
+    next = node->nextSibling();
+    if (next)
+      return next;
+    node = node->parentNode();
+  }
+  return nullptr;
+}
+
+bool AXLayoutObject::CanIgnoreTextAsEmpty() const {
+  LayoutText* layout_text = ToLayoutText(layout_object_);
+  if (!layout_text->HasTextBoxes()) {
+    return true;
+  }
+
+  // Ignore empty text
+  if (layout_text->HasEmptyText()) {
+    return true;
+  }
+
+  // Don't ignore node-less text (e.g. list bullets)
+  Node* node = GetNode();
+  if (!node)
+    return false;
+
+  // Don't ignore static text in editable text controls.
+  if (HasEditableStyle(*node))
+    return false;
+
+  // Ignore whitespace-only text if both sibling roles require it in order to
+  // avoid undesirable jammed together text, such as <span>1<span>
+  // <span>2</span>
+  if (layout_text->GetText().Impl()->ContainsOnlyWhitespace() &&
+      (!IsWhitespaceNeededToSeparate(AnyNextNode(node)) ||
+       !IsWhitespaceNeededToSeparate(AnyPreviousNode(node))))
+    return true;
+
+  // Text elements with empty whitespace are returned, because of cases
+  // such as <span>Hello</span><span> </span><span>World</span>. Keeping
+  // the whitespace-only node means we now correctly expose "Hello World".
+  // See crbug.com/435765.
+  return false;
 }
 
 //
