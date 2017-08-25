@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "36cf5771_6927cb48",
+        "filename": "ios/clean/chrome/browser/ui/commands/dialog_commands.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-08-25T12:41:37Z",
+      "side": 1,
+      "message": "nit: the new way to declare typedef in C++11 is the following (allowed in headers)\n\n  using DialogTextFieldValues \u003d\n      NSDictionary\u003cDialogConfigurationIdentifier*, NSString*\u003e;",
+      "revId": "927896a8a381fd2d3d3765eae64bf62085a4fcb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e4cb502_803be73c",
+        "filename": "ios/clean/chrome/browser/ui/dialogs/dialog_button_configuration.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-08-25T12:41:37Z",
+      "side": 1,
+      "message": "nit: maybe use \"[DialogButtonConfiguration alloc]\" here. Using \"[self alloc]\" would only make sense if the class were sub-classable but you explicitly said that you did put the -initWithText:style: method in the header to prevent sub-classing.",
+      "range": {
+        "startLine": 41,
+        "startChar": 10,
+        "endLine": 41,
+        "endChar": 22
+      },
+      "revId": "927896a8a381fd2d3d3765eae64bf62085a4fcb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9eb3d4c_e00f40c2",
+        "filename": "ios/clean/chrome/browser/ui/dialogs/dialog_configuration_identifier.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-08-25T12:41:37Z",
+      "side": 1,
+      "message": "Use base::mac::ObjCCastStrict\u003c\u003e here or use base::mac::ObjCCast\u003c\u003e and remove the call to -isKindOfClass (since ObjCCast does the check already):\n\n  - (BOOL)isEqual:(id)object {\n    DialogConfigurationIdentifier* other \u003d\n        base::mac::ObjCCast\u003cDialogConfigurationIdentifier*\u003e(object);\n    return other \u0026\u0026 other-\u003e_uniqueID \u003d\u003d _uniqueID;\n  }",
+      "range": {
+        "startLine": 46,
+        "startChar": 6,
+        "endLine": 46,
+        "endChar": 49
+      },
+      "revId": "927896a8a381fd2d3d3765eae64bf62085a4fcb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
