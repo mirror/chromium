@@ -22,6 +22,30 @@
       "revId": "a4901d786da43ae56b71ee7c3936836567ee739b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57376f9a_e2a27d2f",
+        "filename": "third_party/WebKit/LayoutTests/fast/dom/navigator-deviceMemory.https.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1115914
+      },
+      "writtenOn": "2017-08-25T16:42:57Z",
+      "side": 1,
+      "message": "I will do it in a follow up CL.",
+      "parentUuid": "1f82556b_72371044",
+      "range": {
+        "startLine": 6,
+        "startChar": 19,
+        "endLine": 6,
+        "endChar": 29
+      },
+      "revId": "a4901d786da43ae56b71ee7c3936836567ee739b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
