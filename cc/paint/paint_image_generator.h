@@ -9,6 +9,7 @@
 #include "cc/paint/paint_export.h"
 #include "third_party/skia/include/core/SkData.h"
 #include "third_party/skia/include/core/SkImageInfo.h"
+#include "third_party/skia/include/core/SkSize.h"
 #include "third_party/skia/include/core/SkYUVSizeInfo.h"
 
 namespace cc {
@@ -50,9 +51,18 @@ class CC_PAINT_EXPORT PaintImageGenerator : public SkRefCnt {
                              void* planes[3],
                              uint32_t lazy_pixel_ref) = 0;
 
+  // Returns the smallest size that is at least as big as the requested size,
+  // such taht we can decode to exactly that scale.
+  virtual SkISize GetSupportedDecodeSize(const SkISize& requested_size) const;
+
   const SkImageInfo& GetSkImageInfo() const { return info_; }
 
  protected:
+  // |info| is the info for this paint image generator.
+  // |supported_sizes| is a set of sizes that this generator can natively
+  // decode. If empty or unspecified, then it is assumed that the only size that
+  // can be decoded is |info|.dimensions().
+  // Note that |supported_sizes| must be in an increasing order of sizes
   explicit PaintImageGenerator(const SkImageInfo& info) : info_(info) {}
 
  private:

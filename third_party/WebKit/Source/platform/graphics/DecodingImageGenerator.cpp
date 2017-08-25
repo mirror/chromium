@@ -70,6 +70,7 @@ bool DecodingImageGenerator::GetPixels(const SkImageInfo& dst_info,
 
   // Implementation doesn't support scaling yet, so make sure we're not given a
   // different size.
+  // TODO(vmpstr): Implement support for supported sizes.
   if (dst_info.dimensions() != GetSkImageInfo().dimensions()) {
     return false;
   }
@@ -171,15 +172,20 @@ std::unique_ptr<SkImageGenerator> DecodingImageGenerator::Create(SkData* data) {
       SkImageInfo::MakeN32(size.Width(), size.Height(), kPremul_SkAlphaType,
                            decoder->ColorSpaceForSkImages());
 
-  RefPtr<ImageFrameGenerator> frame =
-      ImageFrameGenerator::Create(SkISize::Make(size.Width(), size.Height()),
-                                  false, decoder->GetColorBehavior());
+  RefPtr<ImageFrameGenerator> frame = ImageFrameGenerator::Create(
+      SkISize::Make(size.Width(), size.Height()), false,
+      decoder->GetColorBehavior(), decoder->GetSupportedDecodeSizes());
   if (!frame)
     return nullptr;
 
   sk_sp<DecodingImageGenerator> generator = sk_make_sp<DecodingImageGenerator>(
-      frame, info, std::move(segment_reader), true, 0);
+      std::move(frame), std::move(info), std::move(segment_reader), true, 0);
   return WTF::WrapUnique(new SkiaPaintImageGenerator(std::move(generator)));
+}
+
+SkISize DecodingImageGenerator::GetSupportedDecodeSize(
+    const SkISize& requested_size) const {
+  return frame_generator_->GetSupportedDecodeSize(requested_size);
 }
 
 }  // namespace blink
