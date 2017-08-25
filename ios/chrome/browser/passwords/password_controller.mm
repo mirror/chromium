@@ -274,17 +274,20 @@ bool GetPageURLAndCheckTrustLevel(web::WebState* web_state, GURL* page_url) {
 @synthesize isWebStateDestroyed = isWebStateDestroyed_;
 
 - (instancetype)initWithWebState:(web::WebState*)webState
-             passwordsUiDelegate:(id<PasswordsUiDelegate>)delegate {
+             passwordsUiDelegate:(id<PasswordsUiDelegate>)UIDelegate
+                      dispatcher:(id<ApplicationCommands>)dispatcher {
   self = [self initWithWebState:webState
-            passwordsUiDelegate:delegate
-                         client:nullptr];
+            passwordsUiDelegate:UIDelegate
+                         client:nullptr
+                     dispatcher:dispatcher];
   return self;
 }
 
 - (instancetype)initWithWebState:(web::WebState*)webState
-             passwordsUiDelegate:(id<PasswordsUiDelegate>)delegate
+             passwordsUiDelegate:(id<PasswordsUiDelegate>)UIDelegate
                           client:(std::unique_ptr<PasswordManagerClient>)
-                                     passwordManagerClient {
+                                     passwordManagerClient
+                      dispatcher:(id<ApplicationCommands>)dispatcher {
   DCHECK(webState);
   self = [super init];
   if (self) {
@@ -303,7 +306,8 @@ bool GetPageURLAndCheckTrustLevel(web::WebState* web_state, GURL* page_url) {
                initWithWebState:webState
                 passwordManager:passwordManager_.get()
           passwordManagerDriver:passwordManagerDriver_.get()
-            passwordsUiDelegate:delegate];
+            passwordsUiDelegate:UIDelegate
+                     dispatcher:dispatcher];
     }
 
     passwordJsManager_ = base::mac::ObjCCastStrict<JsPasswordManager>(
@@ -366,14 +370,6 @@ bool GetPageURLAndCheckTrustLevel(web::WebState* web_state, GURL* page_url) {
            completionHandler:completionHandler];
     }
   }];
-}
-
-- (id<ApplicationCommands>)dispatcher {
-  return passwordGenerationAgent_.dispatcher;
-}
-
-- (void)setDispatcher:(id<ApplicationCommands>)dispatcher {
-  passwordGenerationAgent_.dispatcher = dispatcher;
 }
 
 #pragma mark -

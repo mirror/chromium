@@ -5,6 +5,7 @@
 #include "components/browser_sync/profile_sync_service.h"
 
 #include "base/files/file_util.h"
+#include "base/memory/ptr_util.h"
 #include "base/strings/utf_string_conversions.h"
 #include "base/test/scoped_task_environment.h"
 #include "base/threading/thread_task_runner_handle.h"
@@ -91,9 +92,9 @@ class ProfileSyncServiceStartupTest : public testing::Test {
                                                            builder.Build());
 
     sync_service_ =
-        std::make_unique<ProfileSyncService>(std::move(init_params));
+        base::MakeUnique<ProfileSyncService>(std::move(init_params));
     sync_service_->RegisterDataTypeController(
-        std::make_unique<syncer::FakeDataTypeController>(syncer::BOOKMARKS));
+        base::MakeUnique<syncer::FakeDataTypeController>(syncer::BOOKMARKS));
     sync_service_->AddObserver(&observer_);
   }
 

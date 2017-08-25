@@ -7,6 +7,7 @@
 #include <stddef.h>
 
 #include "base/format_macros.h"
+#include "base/memory/ptr_util.h"
 #include "base/scoped_observer.h"
 #include "base/strings/string_number_conversions.h"
 #include "base/strings/stringprintf.h"
@@ -154,7 +155,7 @@ QuiesceStatusChangeChecker::QuiesceStatusChangeChecker(
   DCHECK_LE(1U, services_.size());
   for (size_t i = 0; i < services_.size(); ++i) {
     observers_.push_back(
-        std::make_unique<ProgressMarkerWatcher>(services[i], this));
+        base::MakeUnique<ProgressMarkerWatcher>(services[i], this));
   }
 }
 

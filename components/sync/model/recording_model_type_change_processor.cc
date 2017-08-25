@@ -20,7 +20,7 @@ std::unique_ptr<ModelTypeChangeProcessor> CreateAndAssignProcessor(
     bool expect_error,
     ModelType type,
     ModelTypeSyncBridge* bridge) {
-  auto processor = std::make_unique<RecordingModelTypeChangeProcessor>();
+  auto processor = base::MakeUnique<RecordingModelTypeChangeProcessor>();
   *processor_address = processor.get();
   if (expect_error)
     processor->ExpectError();

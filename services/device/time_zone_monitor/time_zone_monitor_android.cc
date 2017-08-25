@@ -22,6 +22,11 @@ TimeZoneMonitorAndroid::~TimeZoneMonitorAndroid() {
   Java_TimeZoneMonitor_stop(base::android::AttachCurrentThread(), impl_);
 }
 
+// static
+bool TimeZoneMonitorAndroid::Register(JNIEnv* env) {
+  return RegisterNativesImpl(env);
+}
+
 void TimeZoneMonitorAndroid::TimeZoneChangedFromJava(
     JNIEnv* env,
     const JavaParamRef<jobject>& caller) {

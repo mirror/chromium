@@ -242,15 +242,6 @@ Polymer({
   },
 
   /**
-   * @param {number} volume
-   * @return {string} The volume as a percentage.
-   * @private
-   */
-  getVolumeSliderValueText_: function(volume) {
-    return String(Math.round(volume * 100)) + '%';
-  },
-
-  /**
    * Checks whether the media is still playing, and if so, sends a media status
    * update incrementing the current time and schedules another call for a
    * second later.
@@ -368,8 +359,8 @@ Polymer({
    * @private
    */
   onVolumeChangeComplete_: function(e) {
-    this.displayedVolume_ = e.target.value;
-    media_router.browserApi.setCurrentMediaVolume(this.displayedVolume_);
+    this.volumeSliderValue_ = e.target.value;
+    media_router.browserApi.setCurrentMediaVolume(this.volumeSliderValue_);
     this.isVolumeChanging_ = false;
     this.lastVolumeChangeByUser_ = Date.now();
   },
@@ -389,8 +380,8 @@ Polymer({
     this.lastVolumeChangeByUser_ = currentTime;
     this.isVolumeChanging_ = true;
     var target = /** @type {{immediateValue: number}} */ (e.target);
-    this.displayedVolume_ = target.immediateValue;
-    media_router.browserApi.setCurrentMediaVolume(this.displayedVolume_);
+    this.volumeSliderValue_ = target.immediateValue;
+    media_router.browserApi.setCurrentMediaVolume(this.volumeSliderValue_);
   },
 
   /**

@@ -558,6 +558,21 @@ bool BookmarksSearchFunction::RunOnReady() {
   return true;
 }
 
+// static
+bool BookmarksRemoveFunction::ExtractIds(const base::ListValue* args,
+                                         std::list<int64_t>* ids,
+                                         bool* invalid_id) {
+  std::string id_string;
+  if (!args->GetString(0, &id_string))
+    return false;
+  int64_t id;
+  if (base::StringToInt64(id_string, &id))
+    ids->push_back(id);
+  else
+    *invalid_id = true;
+  return true;
+}
+
 bool BookmarksRemoveFunction::RunOnReady() {
   if (!EditBookmarksEnabled())
     return false;
@@ -601,6 +616,14 @@ bool BookmarksCreateFunction::RunOnReady() {
   results_ = bookmarks::Create::Results::Create(ret);
 
   return true;
+}
+
+// static
+bool BookmarksMoveFunction::ExtractIds(const base::ListValue* args,
+                                       std::list<int64_t>* ids,
+                                       bool* invalid_id) {
+  // For now, Move accepts ID parameters in the same way as an Update.
+  return BookmarksUpdateFunction::ExtractIds(args, ids, invalid_id);
 }
 
 bool BookmarksMoveFunction::RunOnReady() {
@@ -654,6 +677,14 @@ bool BookmarksMoveFunction::RunOnReady() {
   results_ = bookmarks::Move::Results::Create(tree_node);
 
   return true;
+}
+
+// static
+bool BookmarksUpdateFunction::ExtractIds(const base::ListValue* args,
+                                         std::list<int64_t>* ids,
+                                         bool* invalid_id) {
+  // For now, Update accepts ID parameters in the same way as an Remove.
+  return BookmarksRemoveFunction::ExtractIds(args, ids, invalid_id);
 }
 
 bool BookmarksUpdateFunction::RunOnReady() {

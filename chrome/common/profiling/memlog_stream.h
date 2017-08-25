@@ -13,16 +13,22 @@ namespace profiling {
 
 constexpr uint32_t kStreamSignature = 0xF6103B71;
 
+constexpr uint32_t kStartMojoControlPacketType = 0x77777777;
 constexpr uint32_t kAllocPacketType = 0xA1A1A1A1;
 constexpr uint32_t kFreePacketType = 0xFEFEFEFE;
 
 #pragma pack(push, 1)
 struct StreamHeader {
-  uint32_t signature = kStreamSignature;
+  // TODO(brettw) consider using C++11 default initialization for the types.
+  uint32_t signature;  // kStreamSignature
+};
+
+struct StartMojoControlPacket {
+  uint32_t op;  // = kStartMojoControlPacketType
 };
 
 struct AllocPacket {
-  uint32_t op = kAllocPacketType;
+  uint32_t op;  // = kAllocPacketType
 
   uint64_t time;
   uint64_t address;
@@ -33,7 +39,7 @@ struct AllocPacket {
 };
 
 struct FreePacket {
-  uint32_t op = kFreePacketType;
+  uint32_t op;  // = kFreePacketType
 
   uint64_t time;
   uint64_t address;

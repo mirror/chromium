@@ -476,16 +476,6 @@ bool AppsGridView::IsSelectedView(const AppListItemView* view) const {
   return selected_view_ == view;
 }
 
-views::View* AppsGridView::GetSelectedView() const {
-  if (selected_view_)
-    return selected_view_;
-  if (expand_arrow_view_ && expand_arrow_view_->selected())
-    return expand_arrow_view_;
-  if (suggestions_container_)
-    return suggestions_container_->GetSelectedView();
-  return nullptr;
-}
-
 void AppsGridView::InitiateDrag(AppListItemView* view,
                                 Pointer pointer,
                                 const gfx::Point& location,
@@ -1804,7 +1794,7 @@ void AppsGridView::OnFolderItemRemoved() {
 void AppsGridView::UpdateOpacity() {
   int app_list_y_position_in_screen =
       contents_view_->app_list_view()->app_list_y_position_in_screen();
-  int work_area_bottom = contents_view_->app_list_view()->GetWorkAreaBottom();
+  int work_area_bottom = contents_view_->app_list_view()->work_area_bottom();
   bool is_in_drag = contents_view_->app_list_view()->is_in_drag();
 
   // The opacity of suggested apps is a function of the fractional displacement

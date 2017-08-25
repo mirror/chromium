@@ -473,11 +473,21 @@ void TabInfoBarObserver::OnInfoBarReplaced(infobars::InfoBar* old_infobar,
   if (experimental_flags::IsAutoReloadEnabled())
     _autoReloadBridge = [[AutoReloadBridge alloc] initWithTab:self];
 
+  [self setShouldObserveFaviconChanges:YES];
+}
+
+// Attach any tab helpers which are dependent on the dispatcher having been
+// set on the tab.
+- (void)attachDispatcherDependentTabHelpers {
+  _printObserver =
+      base::MakeUnique<PrintObserver>(self.webState, self.dispatcher);
+
   id<PasswordsUiDelegate> passwordsUIDelegate =
       [[PasswordsUiDelegateImpl alloc] init];
   passwordController_ =
       [[PasswordController alloc] initWithWebState:self.webState
-                               passwordsUiDelegate:passwordsUIDelegate];
+                               passwordsUiDelegate:passwordsUIDelegate
+                                        dispatcher:self.dispatcher];
   password_manager::PasswordGenerationManager* passwordGenerationManager =
       [passwordController_ passwordGenerationManager];
   _autofillController =
@@ -490,15 +500,6 @@ void TabInfoBarObserver::OnInfoBarReplaced(infobars::InfoBar* old_infobar,
   _inputAccessoryViewController = [[FormInputAccessoryViewController alloc]
       initWithWebState:self.webState
              providers:[self accessoryViewProviders]];
-
-  [self setShouldObserveFaviconChanges:YES];
-}
-
-// Attach any tab helpers which are dependent on the dispatcher having been
-// set on the tab.
-- (void)attachDispatcherDependentTabHelpers {
-  _printObserver =
-      base::MakeUnique<PrintObserver>(self.webState, self.dispatcher);
 }
 
 - (NSArray*)accessoryViewProviders {
@@ -755,7 +756,6 @@ void TabInfoBarObserver::OnInfoBarReplaced(infobars::InfoBar* old_infobar,
   // should be nil, or the new value should be nil.
   DCHECK(!_dispatcher || !dispatcher);
   _dispatcher = dispatcher;
-  self.passwordController.dispatcher = dispatcher;
   // If the new dispatcher is nonnull, add tab helpers.
   if (self.dispatcher)
     [self attachDispatcherDependentTabHelpers];

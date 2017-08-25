@@ -7,6 +7,7 @@
 #include <memory>
 #include <utility>
 
+#include "base/memory/ptr_util.h"
 #include "base/memory/singleton.h"
 #include "components/browser_sync/profile_sync_service.h"
 #include "components/keyed_service/ios/browser_state_dependency_manager.h"
@@ -48,7 +49,7 @@ IOSUserEventServiceFactory::BuildServiceInstanceFor(
           ios::ChromeBrowserState::FromBrowserState(browser_state));
   if (!syncer::UserEventServiceImpl::MightRecordEvents(
           browser_state->IsOffTheRecord(), sync_service)) {
-    return std::make_unique<syncer::NoOpUserEventService>();
+    return base::MakeUnique<syncer::NoOpUserEventService>();
   }
 
   syncer::ModelTypeStoreFactory store_factory =
@@ -58,10 +59,10 @@ IOSUserEventServiceFactory::BuildServiceInstanceFor(
       base::BindRepeating(&syncer::ModelTypeChangeProcessor::Create,
                           base::BindRepeating(&syncer::ReportUnrecoverableError,
                                               ::GetChannel()));
-  auto bridge = std::make_unique<syncer::UserEventSyncBridge>(
+  auto bridge = base::MakeUnique<syncer::UserEventSyncBridge>(
       std::move(store_factory), std::move(processor_factory),
       sync_service->GetGlobalIdMapper());
-  return std::make_unique<syncer::UserEventServiceImpl>(sync_service,
+  return base::MakeUnique<syncer::UserEventServiceImpl>(sync_service,
                                                         std::move(bridge));
 }
 

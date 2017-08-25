@@ -14,6 +14,7 @@
 #include "base/base64.h"
 #include "base/location.h"
 #include "base/logging.h"
+#include "base/memory/ptr_util.h"
 #include "base/metrics/histogram_macros.h"
 #include "base/rand_util.h"
 #include "base/single_thread_task_runner.h"
@@ -1847,7 +1848,7 @@ bool DirectoryBackingStore::needs_column_refresh() const {
 }
 
 void DirectoryBackingStore::ResetAndCreateConnection() {
-  db_ = std::make_unique<sql::Connection>();
+  db_ = base::MakeUnique<sql::Connection>();
   db_->set_histogram_tag("SyncDirectory");
   db_->set_cache_size(32);
   db_->set_page_size(database_page_size_);

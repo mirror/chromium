@@ -59,7 +59,6 @@ class APP_LIST_EXPORT SearchResultListView : public gfx::AnimationDelegate,
                            bool directional_movement) override;
   void NotifyFirstResultYIndex(int y_index) override;
   int GetYSize() override;
-  views::View* GetSelectedView() const override;
 
  private:
   friend class test::SearchResultListViewTest;
@@ -73,7 +72,7 @@ class APP_LIST_EXPORT SearchResultListView : public gfx::AnimationDelegate,
   void CancelAutoLaunchTimeout();
 
   // Helper function to get SearchResultView at given |index|.
-  SearchResultView* GetResultViewAt(int index) const;
+  SearchResultView* GetResultViewAt(int index);
 
   // Forcibly auto-launch for test if it is in auto-launching state.
   void ForceAutoLaunchForTest();

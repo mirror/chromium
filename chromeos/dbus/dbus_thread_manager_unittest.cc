@@ -20,7 +20,6 @@ TEST(DBusThreadManagerTest, Initialize) {
   EXPECT_TRUE(manager->IsUsingFakes());
 
   // Clients were created.
-  EXPECT_TRUE(manager->GetArcMidisClient());
   EXPECT_TRUE(manager->GetArcObbMounterClient());
   EXPECT_TRUE(manager->GetArcOemCryptoClient());
   EXPECT_TRUE(manager->GetCrasAudioClient());
@@ -74,7 +73,6 @@ TEST(DBusThreadManagerTest, InitializeForBrowser) {
   EXPECT_TRUE(manager->GetUpdateEngineClient());
 
   // Clients for the browser were created.
-  EXPECT_TRUE(manager->GetArcMidisClient());
   EXPECT_TRUE(manager->GetArcObbMounterClient());
   EXPECT_TRUE(manager->GetArcOemCryptoClient());
   EXPECT_TRUE(manager->GetCrosDisksClient());
@@ -111,7 +109,6 @@ TEST(DBusThreadManagerTest, InitializeForAsh) {
   EXPECT_TRUE(manager->GetUpdateEngineClient());
 
   // Clients for other processes were not created.
-  EXPECT_FALSE(manager->GetArcMidisClient());
   EXPECT_FALSE(manager->GetArcObbMounterClient());
   EXPECT_FALSE(manager->GetArcOemCryptoClient());
   EXPECT_FALSE(manager->GetCrosDisksClient());

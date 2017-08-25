@@ -11,10 +11,6 @@
 #include "gpu/config/gpu_feature_type.h"
 #include "gpu/gpu_export.h"
 
-namespace gl {
-class GLContext;
-}  // namespace gl
-
 namespace gpu {
 
 // Flags indicating the status of a GPU feature (see gpu_feature_type.h).
@@ -31,11 +27,6 @@ struct GPU_EXPORT GpuFeatureInfo {
   GpuFeatureInfo(const GpuFeatureInfo&);
   GpuFeatureInfo(GpuFeatureInfo&&);
   ~GpuFeatureInfo();
-
-  // Set the GL workarounds and disabled GL extensions to the context.
-  void ApplyToGLContext(gl::GLContext* context) const;
-
-  bool IsWorkaroundEnabled(int32_t workaround) const;
 
   GpuFeatureInfo& operator=(const GpuFeatureInfo&);
   GpuFeatureInfo& operator=(GpuFeatureInfo&&);

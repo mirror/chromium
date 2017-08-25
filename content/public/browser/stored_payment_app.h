@@ -11,7 +11,7 @@
 
 #include "content/common/content_export.h"
 #include "third_party/skia/include/core/SkBitmap.h"
-#include "url/gurl.h"
+#include "url/origin.h"
 
 namespace content {
 
@@ -32,8 +32,8 @@ struct CONTENT_EXPORT StoredPaymentApp {
   // Id of the service worker registration this app is associated with.
   int64_t registration_id = 0;
 
-  // Scope of the service worker that implements this payment app.
-  GURL scope;
+  // Origin of the payment app provider that provides this payment app.
+  url::Origin origin;
 
   // Label for this payment app.
   std::string name;

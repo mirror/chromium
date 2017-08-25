@@ -69,7 +69,6 @@ import org.chromium.payments.mojom.PaymentResponse;
 import org.chromium.payments.mojom.PaymentShippingOption;
 import org.chromium.payments.mojom.PaymentShippingType;
 
-import java.net.URI;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -751,18 +750,15 @@ public class PaymentRequestImpl implements PaymentRequest, PaymentRequestUI.Clie
         }
     }
 
-    // Dedupe payment apps according to preferred related applications and can deduped application.
+    // Dedupe payment apps if the preferred related applications exist.
     // Note that this is only work for deduping service worker based payment app from native Android
-    // payment app for now. The identifier of a native Android payment app is its package name. The
-    // identifier of a service worker based payment app is its registration scope which equals to
-    // corresponding native android payment app's default method name.
+    // payment app for now and the identifier of a native Android payment app is its package name.
     private void dedupePaymentApps() {
-        // Dedupe ServiceWorkerPaymentApp according to preferred related applications from
-        // ServiceWorkerPaymentApps.
         Set<String> appIdentifiers = new HashSet<>();
         for (int i = 0; i < mApps.size(); i++) {
             appIdentifiers.add(mApps.get(i).getAppIdentifier());
         }
+
         List<PaymentApp> appsToDedupe = new ArrayList<>();
         for (int i = 0; i < mApps.size(); i++) {
             Set<String> applicationIds = mApps.get(i).getPreferredRelatedApplicationIds();
@@ -774,26 +770,8 @@ public class PaymentRequestImpl implements PaymentRequest, PaymentRequestUI.Clie
                 }
             }
         }
-        if (!appsToDedupe.isEmpty()) mApps.removeAll(appsToDedupe);
 
-        // Dedupe ServiceWorkerPaymentApp according to can deduped applications from native android
-        // payment apps.
-        Set<String> canDedupedApplicationIds = new HashSet<>();
-        for (int i = 0; i < mApps.size(); i++) {
-            URI canDedupedApplicationIdUri = mApps.get(i).getCanDedupedApplicationId();
-            if (canDedupedApplicationIdUri == null) continue;
-            String canDedupedApplicationId = canDedupedApplicationIdUri.toString();
-            if (TextUtils.isEmpty(canDedupedApplicationId)) continue;
-            canDedupedApplicationIds.add(canDedupedApplicationId);
-        }
-        for (String appId : canDedupedApplicationIds) {
-            for (int i = 0; i < mApps.size(); i++) {
-                if (appId.equals(mApps.get(i).getAppIdentifier())) {
-                    mApps.remove(i);
-                    break;
-                }
-            }
-        }
+        if (!appsToDedupe.isEmpty()) mApps.removeAll(appsToDedupe);
     }
 
     /** Filter out merchant method data that's not relevant to a payment app. Can return null. */

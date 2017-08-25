@@ -7,6 +7,7 @@
 #include <map>
 #include <utility>
 
+#include "base/memory/ptr_util.h"
 #include "components/sync/engine_impl/backoff_delay_provider.h"
 #include "components/sync/engine_impl/cycle/sync_cycle_context.h"
 #include "components/sync/engine_impl/sync_scheduler_impl.h"
@@ -40,7 +41,7 @@ std::unique_ptr<SyncScheduler> EngineComponentsFactoryImpl::BuildScheduler(
   }
 
   std::unique_ptr<SyncSchedulerImpl> scheduler =
-      std::make_unique<SyncSchedulerImpl>(name, delay.release(), context,
+      base::MakeUnique<SyncSchedulerImpl>(name, delay.release(), context,
                                           new Syncer(cancelation_signal),
                                           ignore_auth_credentials);
   if (switches_.nudge_delay == NudgeDelay::SHORT_NUDGE_DELAY) {

@@ -7,6 +7,7 @@
 #include <stddef.h>
 
 #include "base/macros.h"
+#include "base/memory/ptr_util.h"
 #include "base/strings/string_split.h"
 #include "base/values.h"
 #include "components/sync/protocol/app_notification_specifics.pb.h"
@@ -485,14 +486,14 @@ int ModelTypeToHistogramInt(ModelType model_type) {
 
 std::unique_ptr<base::Value> ModelTypeToValue(ModelType model_type) {
   if (model_type >= FIRST_REAL_MODEL_TYPE) {
-    return std::make_unique<base::Value>(ModelTypeToString(model_type));
+    return base::MakeUnique<base::Value>(ModelTypeToString(model_type));
   } else if (model_type == TOP_LEVEL_FOLDER) {
-    return std::make_unique<base::Value>("Top-level folder");
+    return base::MakeUnique<base::Value>("Top-level folder");
   } else if (model_type == UNSPECIFIED) {
-    return std::make_unique<base::Value>("Unspecified");
+    return base::MakeUnique<base::Value>("Unspecified");
   }
   NOTREACHED();
-  return std::make_unique<base::Value>(std::string());
+  return base::MakeUnique<base::Value>(std::string());
 }
 
 ModelType ModelTypeFromValue(const base::Value& value) {

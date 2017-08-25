@@ -122,6 +122,7 @@ class CC_ANIMATION_EXPORT AnimationPlayer
   // are deleted.
   void ActivateAnimations();
 
+  bool HasFilterAnimationThatInflatesBounds() const;
   bool HasTransformAnimationThatInflatesBounds() const;
 
   bool TransformAnimationBoundsForBox(const gfx::BoxF& box,

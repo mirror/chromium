@@ -2178,11 +2178,6 @@ static bool TransformIsAnimating(LayerImpl* layer) {
       layer->element_id(), layer->GetElementTypeForAnimation());
 }
 
-static bool HasPotentiallyRunningTransformAnimation(LayerImpl* layer) {
-  return layer->GetMutatorHost()->HasPotentiallyRunningTransformAnimation(
-      layer->element_id(), layer->GetElementTypeForAnimation());
-}
-
 TEST_F(LayerTreeHostCommonTest,
        ScreenSpaceTransformIsAnimatingWithDelayedAnimation) {
   LayerImpl* root = root_layer_for_testing();
@@ -2216,7 +2211,7 @@ TEST_F(LayerTreeHostCommonTest,
   EXPECT_FALSE(child->screen_space_transform_is_animating());
 
   EXPECT_FALSE(TransformIsAnimating(grand_child));
-  EXPECT_TRUE(HasPotentiallyRunningTransformAnimation(grand_child));
+  EXPECT_TRUE(grand_child->HasPotentiallyRunningTransformAnimation());
   EXPECT_TRUE(grand_child->screen_space_transform_is_animating());
   EXPECT_TRUE(great_grand_child->screen_space_transform_is_animating());
 }
@@ -8358,11 +8353,6 @@ TEST_F(LayerTreeHostCommonTest, AnimatedFilterCreatesRenderSurface) {
   EXPECT_FALSE(FilterIsAnimating(grandchild));
 }
 
-bool HasPotentiallyRunningFilterAnimation(const LayerImpl& layer) {
-  return layer.GetMutatorHost()->HasPotentiallyRunningFilterAnimation(
-      layer.element_id(), layer.GetElementTypeForAnimation());
-}
-
 // Verify that having a filter animation with a delayed start time creates a
 // render surface.
 TEST_F(LayerTreeHostCommonTest, DelayedFilterAnimationCreatesRenderSurface) {
@@ -8403,11 +8393,11 @@ TEST_F(LayerTreeHostCommonTest, DelayedFilterAnimationCreatesRenderSurface) {
   EXPECT_TRUE(GetRenderSurface(child)->Filters().IsEmpty());
 
   EXPECT_FALSE(FilterIsAnimating(root));
-  EXPECT_FALSE(HasPotentiallyRunningFilterAnimation(*root));
+  EXPECT_FALSE(root->HasPotentiallyRunningFilterAnimation());
   EXPECT_FALSE(FilterIsAnimating(child));
-  EXPECT_TRUE(HasPotentiallyRunningFilterAnimation(*child));
+  EXPECT_TRUE(child->HasPotentiallyRunningFilterAnimation());
   EXPECT_FALSE(FilterIsAnimating(grandchild));
-  EXPECT_FALSE(HasPotentiallyRunningFilterAnimation(*grandchild));
+  EXPECT_FALSE(grandchild->HasPotentiallyRunningFilterAnimation());
 }
 
 // Ensures that the property tree code accounts for offsets between fixed

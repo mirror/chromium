@@ -8,6 +8,7 @@
 #include <utility>
 
 #include "base/bind.h"
+#include "base/memory/ptr_util.h"
 #include "base/stl_util.h"
 #include "components/sync/base/hash_util.h"
 #include "components/sync/model/mutable_data_batch.h"
@@ -79,7 +80,7 @@ EntitySpecifics FakeModelTypeSyncBridge::GenerateSpecifics(
 std::unique_ptr<EntityData> FakeModelTypeSyncBridge::GenerateEntityData(
     const std::string& key,
     const std::string& value) {
-  std::unique_ptr<EntityData> entity_data = std::make_unique<EntityData>();
+  std::unique_ptr<EntityData> entity_data = base::MakeUnique<EntityData>();
   entity_data->client_tag_hash = TagHashFromKey(key);
   entity_data->specifics = GenerateSpecifics(key, value);
   entity_data->non_unique_name = key;
@@ -156,7 +157,7 @@ void FakeModelTypeSyncBridge::Store::Reset() {
 FakeModelTypeSyncBridge::FakeModelTypeSyncBridge(
     const ChangeProcessorFactory& change_processor_factory)
     : ModelTypeSyncBridge(change_processor_factory, PREFERENCES),
-      db_(std::make_unique<Store>()) {}
+      db_(base::MakeUnique<Store>()) {}
 
 FakeModelTypeSyncBridge::~FakeModelTypeSyncBridge() {
   EXPECT_FALSE(error_next_);
@@ -193,7 +194,7 @@ void FakeModelTypeSyncBridge::DeleteItem(const std::string& key) {
 
 std::unique_ptr<MetadataChangeList>
 FakeModelTypeSyncBridge::CreateMetadataChangeList() {
-  return std::make_unique<TestMetadataChangeList>();
+  return base::MakeUnique<TestMetadataChangeList>();
 }
 
 base::Optional<ModelError> FakeModelTypeSyncBridge::MergeSyncData(
@@ -309,7 +310,7 @@ void FakeModelTypeSyncBridge::GetData(StorageKeyList keys,
     return;
   }
 
-  auto batch = std::make_unique<MutableDataBatch>();
+  auto batch = base::MakeUnique<MutableDataBatch>();
   for (const std::string& key : keys) {
     DCHECK(db_->HasData(key)) << "No data for " << key;
     batch->Put(key, CopyEntityData(db_->GetData(key)));
@@ -324,7 +325,7 @@ void FakeModelTypeSyncBridge::GetAllData(DataCallback callback) {
     return;
   }
 
-  auto batch = std::make_unique<MutableDataBatch>();
+  auto batch = base::MakeUnique<MutableDataBatch>();
   for (const auto& kv : db_->all_data()) {
     batch->Put(kv.first, CopyEntityData(*kv.second));
   }
@@ -366,7 +367,7 @@ ConflictResolution FakeModelTypeSyncBridge::ResolveConflict(
 void FakeModelTypeSyncBridge::SetConflictResolution(
     ConflictResolution resolution) {
   conflict_resolution_ =
-      std::make_unique<ConflictResolution>(std::move(resolution));
+      base::MakeUnique<ConflictResolution>(std::move(resolution));
 }
 
 void FakeModelTypeSyncBridge::ErrorOnNextCall() {

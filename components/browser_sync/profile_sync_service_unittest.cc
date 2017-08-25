@@ -9,6 +9,7 @@
 #include "base/callback.h"
 #include "base/command_line.h"
 #include "base/feature_list.h"
+#include "base/memory/ptr_util.h"
 #include "base/run_loop.h"
 #include "base/single_thread_task_runner.h"
 #include "base/strings/string_number_conversions.h"
@@ -205,9 +206,9 @@ class ProfileSyncServiceTest : public ::testing::Test {
         profile_sync_service_bundle_.CreateBasicInitParams(behavior,
                                                            builder.Build());
 
-    service_ = std::make_unique<ProfileSyncService>(std::move(init_params));
+    service_ = base::MakeUnique<ProfileSyncService>(std::move(init_params));
     service_->RegisterDataTypeController(
-        std::make_unique<syncer::FakeDataTypeController>(syncer::BOOKMARKS));
+        base::MakeUnique<syncer::FakeDataTypeController>(syncer::BOOKMARKS));
   }
 
   void CreateServiceWithLocalSyncBackend() {
@@ -223,9 +224,9 @@ class ProfileSyncServiceTest : public ::testing::Test {
     init_params.gaia_cookie_manager_service = nullptr;
     init_params.signin_wrapper.reset();
 
-    service_ = std::make_unique<ProfileSyncService>(std::move(init_params));
+    service_ = base::MakeUnique<ProfileSyncService>(std::move(init_params));
     service_->RegisterDataTypeController(
-        std::make_unique<syncer::FakeDataTypeController>(syncer::BOOKMARKS));
+        base::MakeUnique<syncer::FakeDataTypeController>(syncer::BOOKMARKS));
   }
 
   void ShutdownAndDeleteService() {
@@ -372,7 +373,7 @@ TEST_F(ProfileSyncServiceTest, InitialState) {
 // Verify a successful initialization.
 TEST_F(ProfileSyncServiceTest, SuccessfulInitialization) {
   prefs()->SetManagedPref(syncer::prefs::kSyncManaged,
-                          std::make_unique<base::Value>(false));
+                          base::MakeUnique<base::Value>(false));
   IssueTestTokens();
   CreateService(ProfileSyncService::AUTO_START);
   ExpectDataTypeManagerCreation(1, GetDefaultConfigureCalledCallback());
@@ -385,7 +386,7 @@ TEST_F(ProfileSyncServiceTest, SuccessfulInitialization) {
 // Verify a successful initialization.
 TEST_F(ProfileSyncServiceTest, SuccessfulLocalBackendInitialization) {
   prefs()->SetManagedPref(syncer::prefs::kSyncManaged,
-                          std::make_unique<base::Value>(false));
+                          base::MakeUnique<base::Value>(false));
   CreateServiceWithLocalSyncBackend();
   ExpectDataTypeManagerCreation(1, GetDefaultConfigureCalledCallback());
   ExpectSyncEngineCreation(1);
@@ -399,7 +400,7 @@ TEST_F(ProfileSyncServiceTest, SuccessfulLocalBackendInitialization) {
 // start up the backend.
 TEST_F(ProfileSyncServiceTest, NeedsConfirmation) {
   prefs()->SetManagedPref(syncer::prefs::kSyncManaged,
-                          std::make_unique<base::Value>(false));
+                          base::MakeUnique<base::Value>(false));
   IssueTestTokens();
   CreateService(ProfileSyncService::MANUAL_START);
 
@@ -437,7 +438,7 @@ TEST_F(ProfileSyncServiceTest, SetupInProgress) {
 // Verify that disable by enterprise policy works.
 TEST_F(ProfileSyncServiceTest, DisabledByPolicyBeforeInit) {
   prefs()->SetManagedPref(syncer::prefs::kSyncManaged,
-                          std::make_unique<base::Value>(true));
+                          base::MakeUnique<base::Value>(true));
   IssueTestTokens();
   CreateService(ProfileSyncService::AUTO_START);
   InitializeForNthSync();
@@ -458,7 +459,7 @@ TEST_F(ProfileSyncServiceTest, DisabledByPolicyAfterInit) {
   EXPECT_TRUE(service()->IsSyncActive());
 
   prefs()->SetManagedPref(syncer::prefs::kSyncManaged,
-                          std::make_unique<base::Value>(true));
+                          base::MakeUnique<base::Value>(true));
 
   EXPECT_TRUE(service()->IsManaged());
   EXPECT_FALSE(service()->IsSyncActive());
@@ -948,7 +949,7 @@ TEST_F(ProfileSyncServiceTest, DisableSyncOnClient) {
 // Verify a that local sync mode resumes after the policy is lifted.
 TEST_F(ProfileSyncServiceTest, LocalBackendDisabledByPolicy) {
   prefs()->SetManagedPref(syncer::prefs::kSyncManaged,
-                          std::make_unique<base::Value>(false));
+                          base::MakeUnique<base::Value>(false));
   CreateServiceWithLocalSyncBackend();
   ExpectDataTypeManagerCreation(1, GetDefaultConfigureCalledCallback());
   ExpectSyncEngineCreation(1);
@@ -957,13 +958,13 @@ TEST_F(ProfileSyncServiceTest, LocalBackendDisabledByPolicy) {
   EXPECT_TRUE(service()->IsSyncActive());
 
   prefs()->SetManagedPref(syncer::prefs::kSyncManaged,
-                          std::make_unique<base::Value>(true));
+                          base::MakeUnique<base::Value>(true));
 
   EXPECT_TRUE(service()->IsManaged());
   EXPECT_FALSE(service()->IsSyncActive());
 
   prefs()->SetManagedPref(syncer::prefs::kSyncManaged,
-                          std::make_unique<base::Value>(false));
+                          base::MakeUnique<base::Value>(false));
 
   ExpectDataTypeManagerCreation(1, GetDefaultConfigureCalledCallback());
   ExpectSyncEngineCreation(1);
@@ -990,7 +991,7 @@ TEST_F(ProfileSyncServiceTest, GetOpenTabsUIDelegate) {
   EXPECT_EQ(nullptr, service()->GetOpenTabsUIDelegate());
 
   auto controller =
-      std::make_unique<syncer::FakeDataTypeController>(syncer::PROXY_TABS);
+      base::MakeUnique<syncer::FakeDataTypeController>(syncer::PROXY_TABS);
   // Progress the controller to RUNNING first, which is how the service
   // determines whether a type is enabled.
   controller->StartAssociating(base::Bind(&DoNothing));

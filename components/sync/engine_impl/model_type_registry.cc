@@ -9,6 +9,7 @@
 #include <utility>
 
 #include "base/bind.h"
+#include "base/memory/ptr_util.h"
 #include "base/metrics/histogram_macros.h"
 #include "base/observer_list.h"
 #include "base/threading/thread_task_runner_handle.h"
@@ -98,18 +99,18 @@ void ModelTypeRegistry::ConnectNonBlockingType(
 
   std::unique_ptr<Cryptographer> cryptographer_copy;
   if (encrypted_types_.Has(type))
-    cryptographer_copy = std::make_unique<Cryptographer>(*cryptographer_);
+    cryptographer_copy = base::MakeUnique<Cryptographer>(*cryptographer_);
 
   DataTypeDebugInfoEmitter* emitter = GetEmitter(type);
   if (emitter == nullptr) {
-    auto new_emitter = std::make_unique<NonBlockingTypeDebugInfoEmitter>(
+    auto new_emitter = base::MakeUnique<NonBlockingTypeDebugInfoEmitter>(
         type, &type_debug_info_observers_);
     emitter = new_emitter.get();
     data_type_debug_info_emitter_map_.insert(
         std::make_pair(type, std::move(new_emitter)));
   }
 
-  auto worker = std::make_unique<ModelTypeWorker>(
+  auto worker = base::MakeUnique<ModelTypeWorker>(
       type, activation_context->model_type_state, trigger_initial_sync,
       std::move(cryptographer_copy), nudge_handler_,
       std::move(activation_context->type_processor), emitter,
@@ -122,7 +123,7 @@ void ModelTypeRegistry::ConnectNonBlockingType(
   commit_contributor_map_.insert(std::make_pair(type, worker_ptr));
 
   // Initialize Processor -> Worker communication channel.
-  type_processor->ConnectSync(std::make_unique<CommitQueueProxy>(
+  type_processor->ConnectSync(base::MakeUnique<CommitQueueProxy>(
       worker_ptr->AsWeakPtr(), base::ThreadTaskRunnerHandle::Get()));
 
   // Attempt migration if necessary.
@@ -190,14 +191,14 @@ void ModelTypeRegistry::RegisterDirectoryType(ModelType type,
 
   auto worker = workers_map_.find(group)->second;
   DCHECK(GetEmitter(type) == nullptr);
-  auto owned_emitter = std::make_unique<DirectoryTypeDebugInfoEmitter>(
+  auto owned_emitter = base::MakeUnique<DirectoryTypeDebugInfoEmitter>(
       directory(), type, &type_debug_info_observers_);
   DataTypeDebugInfoEmitter* emitter_ptr = owned_emitter.get();
   data_type_debug_info_emitter_map_[type] = std::move(owned_emitter);
 
-  auto updater = std::make_unique<DirectoryUpdateHandler>(directory(), type,
+  auto updater = base::MakeUnique<DirectoryUpdateHandler>(directory(), type,
                                                           worker, emitter_ptr);
-  auto committer = std::make_unique<DirectoryCommitContributor>(
+  auto committer = base::MakeUnique<DirectoryCommitContributor>(
       directory(), type, emitter_ptr);
 
   update_handler_map_[type] = updater.get();
@@ -326,7 +327,7 @@ void ModelTypeRegistry::OnEncryptionComplete() {}
 
 void ModelTypeRegistry::OnCryptographerStateChanged(
     Cryptographer* cryptographer) {
-  cryptographer_ = std::make_unique<Cryptographer>(*cryptographer);
+  cryptographer_ = base::MakeUnique<Cryptographer>(*cryptographer);
   OnEncryptionStateChanged();
 }
 
@@ -340,7 +341,7 @@ void ModelTypeRegistry::OnEncryptionStateChanged() {
   for (const auto& worker : model_type_workers_) {
     if (encrypted_types_.Has(worker->GetModelType())) {
       worker->UpdateCryptographer(
-          std::make_unique<Cryptographer>(*cryptographer_));
+          base::MakeUnique<Cryptographer>(*cryptographer_));
     }
   }
 }

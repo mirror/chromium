@@ -467,9 +467,6 @@ class ChromeDriver(object):
   def MaximizeWindow(self):
     self.ExecuteCommand(Command.MAXIMIZE_WINDOW, {'windowHandle': 'current'})
 
-  def FullScreenWindow(self):
-    self.ExecuteCommand(Command.FULLSCREEN_WINDOW)
-
   def Quit(self):
     """Quits the browser and ends the session."""
     self.ExecuteCommand(Command.QUIT)

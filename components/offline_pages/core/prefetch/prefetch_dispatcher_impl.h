@@ -27,7 +27,6 @@ class PrefetchDispatcherImpl : public PrefetchDispatcher,
 
   // PrefetchDispatcher implementation:
   void SetService(PrefetchService* service) override;
-  void EnsureTaskScheduled() override;
   void SchedulePipelineProcessing() override;
   void AddCandidatePrefetchURLs(
       const std::string& name_space,

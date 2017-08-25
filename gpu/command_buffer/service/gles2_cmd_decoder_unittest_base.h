@@ -34,11 +34,14 @@
 #include "gpu/command_buffer/service/texture_manager.h"
 #include "gpu/command_buffer/service/transform_feedback_manager.h"
 #include "gpu/command_buffer/service/vertex_array_manager.h"
-#include "gpu/config/gpu_driver_bug_workarounds.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "ui/gl/gl_mock.h"
 #include "ui/gl/gl_surface_stub.h"
 #include "ui/gl/gl_version_info.h"
+
+namespace base {
+class CommandLine;
+}
 
 namespace gpu {
 namespace gles2 {
@@ -223,8 +226,8 @@ class GLES2DecoderTestBase : public ::testing::TestWithParam<bool>,
   };
 
   void InitDecoder(const InitState& init);
-  void InitDecoderWithWorkarounds(const InitState& init,
-                                  const GpuDriverBugWorkarounds& workarounds);
+  void InitDecoderWithCommandLine(const InitState& init,
+                                  const base::CommandLine* command_line);
 
   void ResetDecoder();
 

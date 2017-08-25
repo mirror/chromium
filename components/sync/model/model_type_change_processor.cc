@@ -4,6 +4,7 @@
 
 #include "components/sync/model/model_type_change_processor.h"
 
+#include "base/memory/ptr_util.h"
 #include "components/sync/model_impl/shared_model_type_processor.h"
 
 namespace syncer {
@@ -13,7 +14,7 @@ std::unique_ptr<ModelTypeChangeProcessor> ModelTypeChangeProcessor::Create(
     const base::RepeatingClosure& dump_stack,
     ModelType type,
     ModelTypeSyncBridge* bridge) {
-  return std::make_unique<SharedModelTypeProcessor>(
+  return base::MakeUnique<SharedModelTypeProcessor>(
       type, bridge, dump_stack, CommitOnlyTypes().Has(type));
 }
 

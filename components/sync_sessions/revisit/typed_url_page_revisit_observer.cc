@@ -4,8 +4,7 @@
 
 #include "components/sync_sessions/revisit/typed_url_page_revisit_observer.h"
 
-#include <memory>
-
+#include "base/memory/ptr_util.h"
 #include "components/history/core/browser/history_service.h"
 #include "components/sync_sessions/revisit/typed_url_page_revisit_task.h"
 #include "url/gurl.h"
@@ -23,7 +22,7 @@ void TypedUrlPageRevisitObserver::OnPageVisit(
     const PageVisitObserver::TransitionType transition) {
   if (history_) {
     history_->ScheduleDBTask(
-        std::make_unique<TypedUrlPageRevisitTask>(url, transition),
+        base::MakeUnique<TypedUrlPageRevisitTask>(url, transition),
         &task_tracker_);
   }
 }

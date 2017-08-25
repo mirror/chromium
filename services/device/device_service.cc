@@ -29,6 +29,7 @@
 #if defined(OS_ANDROID)
 #include "base/android/jni_android.h"
 #include "jni/InterfaceRegistrar_jni.h"
+#include "services/device/android/register_jni.h"
 #include "services/device/screen_orientation/screen_orientation_listener_android.h"
 #else
 #include "services/device/battery/battery_monitor_impl.h"
@@ -44,6 +45,11 @@ std::unique_ptr<service_manager::Service> CreateDeviceService(
     scoped_refptr<base::SingleThreadTaskRunner> io_task_runner,
     const WakeLockContextCallback& wake_lock_context_callback,
     const base::android::JavaRef<jobject>& java_nfc_delegate) {
+  if (!EnsureJniRegistered()) {
+    DLOG(ERROR) << "Failed to register JNI for Device Service";
+    return nullptr;
+  }
+
   return base::MakeUnique<DeviceService>(
       std::move(file_task_runner), std::move(io_task_runner),
       wake_lock_context_callback, java_nfc_delegate);

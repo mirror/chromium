@@ -4,6 +4,7 @@
 
 #include "components/sync/driver/fake_sync_service.h"
 
+#include "base/memory/ptr_util.h"
 #include "base/values.h"
 #include "components/sync/driver/data_type_controller.h"
 #include "components/sync/syncable/base_transaction.h"
@@ -13,7 +14,7 @@ namespace syncer {
 
 FakeSyncService::FakeSyncService()
     : error_(GoogleServiceAuthError::NONE),
-      user_share_(std::make_unique<UserShare>()) {}
+      user_share_(base::MakeUnique<UserShare>()) {}
 
 FakeSyncService::~FakeSyncService() {}
 
@@ -170,7 +171,7 @@ SyncCycleSnapshot FakeSyncService::GetLastCycleSnapshot() const {
 }
 
 std::unique_ptr<base::Value> FakeSyncService::GetTypeStatusMap() {
-  return std::make_unique<base::ListValue>();
+  return base::MakeUnique<base::ListValue>();
 }
 
 const GURL& FakeSyncService::sync_service_url() const {

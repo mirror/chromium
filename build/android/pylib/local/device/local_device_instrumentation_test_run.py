@@ -467,8 +467,7 @@ class LocalDeviceInstrumentationTestRun(
     result_code, result_bundle, statuses = (
         self._test_instance.ParseAmInstrumentRawOutput(output))
     results = self._test_instance.GenerateTestResults(
-        result_code, result_bundle, statuses, start_ms, duration_ms,
-        device.product_cpu_abi, self._test_instance.symbolizer)
+        result_code, result_bundle, statuses, start_ms, duration_ms)
 
     def restore_flags():
       if flags_to_add:
