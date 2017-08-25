@@ -18,6 +18,7 @@ namespace password_manager {
 // URL Keyed Metrics.
 const char kUkmUserModifiedPasswordField[] = "UserModifiedPasswordField";
 const char kUkmProvisionalSaveFailure[] = "ProvisionalSaveFailure";
+const char kUkmPasswordManagerUserAction[] = "PasswordManagerUserAction";
 
 PasswordManagerMetricsRecorder::PasswordManagerMetricsRecorder(
     ukm::UkmRecorder* ukm_recorder,
@@ -94,6 +95,11 @@ void PasswordManagerMetricsRecorder::RecordProvisionalSaveFailure(
     }
     logger->LogMessage(Logger::STRING_DECISION_DROP);
   }
+}
+
+void PasswordManagerMetricsRecorder::RecordPasswordManagerUserAction(
+    PasswordManagerMetricsRecorder::PasswordManagerUserAction action) {
+  RecordUkmMetric(kUkmPasswordManagerUserAction, static_cast<int64_t>(action));
 }
 
 void PasswordManagerMetricsRecorder::RecordUkmMetric(const char* metric_name,
