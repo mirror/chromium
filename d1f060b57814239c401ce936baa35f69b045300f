@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c047bac7_4dccf5f9",
+        "filename": "third_party/WebKit/Source/core/editing/iterators/TextIteratorTest.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 965,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-08-25T05:05:09Z",
+      "side": 1,
+      "message": "I asked to keep them. Please refer to my comments to an earlier PS.",
+      "parentUuid": "1f8743f5_72c37673",
+      "revId": "d1f060b57814239c401ce936baa35f69b045300f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "93fed1fd_b5775df3",
         "filename": "third_party/WebKit/Source/core/editing/iterators/TextIteratorTest.cpp",
         "patchSetId": 7
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-25T04:27:43Z",
       "side": 1,
       "message": "This case contains much redundant empty characters.\nCould you shrink this case as minimal as possible?",
+      "revId": "d1f060b57814239c401ce936baa35f69b045300f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "050c8df8_9dedf792",
+        "filename": "third_party/WebKit/Source/core/editing/iterators/TextIteratorTest.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 979,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-08-25T05:05:09Z",
+      "side": 1,
+      "message": "I requested keeping these white spaces in the same way as in the original test, because a lot of TextIterator bugs hide in the handling of white space characters.\n\nDoes it look better if there\u0027s a comment explaining these characters?",
+      "parentUuid": "93fed1fd_b5775df3",
       "revId": "d1f060b57814239c401ce936baa35f69b045300f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
