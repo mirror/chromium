@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e14332d5_6cb58b9e",
+        "filename": "services/viz/public/cpp/compositing/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1231224
+      },
+      "writtenOn": "2017-08-25T13:18:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "be9239c9_c528bb2c",
+      "revId": "b6db66a3d2e2f58a17c67b1236d4ba21f1932b85",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "832fdcb3_b40216fa",
         "filename": "services/viz/public/cpp/compositing/filter_operation_struct_traits.h",
         "patchSetId": 2
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "4e4a7c55_649a0cd5",
+        "filename": "services/viz/public/cpp/compositing/filter_operation_struct_traits.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1231224
+      },
+      "writtenOn": "2017-08-25T13:18:22Z",
+      "side": 1,
+      "message": "Acknowledged - but I wonder if we should make improvements like this as part of a separate CL?  Would it be ok to move as is and then improve separately?",
+      "parentUuid": "832fdcb3_b40216fa",
+      "revId": "b6db66a3d2e2f58a17c67b1236d4ba21f1932b85",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d3fc52b5_4c931eb6",
         "filename": "services/viz/public/cpp/compositing/filter_operations_struct_traits.h",
         "patchSetId": 2
@@ -47,6 +83,24 @@
       "writtenOn": "2017-08-23T12:18:20Z",
       "side": 1,
       "message": "You can deserialize directly into |out| here and not use a temporary.",
+      "revId": "b6db66a3d2e2f58a17c67b1236d4ba21f1932b85",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df8c081a_7586b06c",
+        "filename": "services/viz/public/cpp/compositing/filter_operations_struct_traits.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1231224
+      },
+      "writtenOn": "2017-08-25T13:18:22Z",
+      "side": 1,
+      "message": "There doesn\u0027t seem to be a simple way to do this - ReadOperations will read into a vector\u003cFilterOperation\u003e but not directly into a cc::FilterOperations without further changes.",
+      "parentUuid": "d3fc52b5_4c931eb6",
       "revId": "b6db66a3d2e2f58a17c67b1236d4ba21f1932b85",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
