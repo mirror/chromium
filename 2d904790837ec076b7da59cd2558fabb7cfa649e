@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "33223571_5e299302",
+        "filename": "tools/traffic_annotation/auditor/traffic_annotation_auditor.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-08-25T14:26:27Z",
+      "side": 1,
+      "message": "Shouldn\u0027t we do strcmp? This looks like something that will bite us 4 years later :)",
+      "range": {
+        "startLine": 92,
+        "startChar": 4,
+        "endLine": 92,
+        "endChar": 38
+      },
+      "revId": "2d904790837ec076b7da59cd2558fabb7cfa649e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84ac8c5d_40f9e491",
+        "filename": "tools/traffic_annotation/auditor/traffic_annotation_auditor.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-08-25T14:26:27Z",
+      "side": 1,
+      "message": "Just checking: The intention here is that if clang_tool_path_ is empty, we only add a separator to PATH, thus not changing its functionality?\n\nWould it maybe be clearer to never touch PATH if clang_tool_path_ is empty?",
+      "range": {
+        "startLine": 184,
+        "startChar": 6,
+        "endLine": 184,
+        "endChar": 75
+      },
+      "revId": "2d904790837ec076b7da59cd2558fabb7cfa649e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "977f906a_2f4fa9e7",
+        "filename": "tools/traffic_annotation/auditor/traffic_annotation_auditor.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-08-25T14:26:27Z",
+      "side": 1,
+      "message": "There\u0027s a lot of different paths now. Please add a documentation what each of them means.",
+      "range": {
+        "startLine": 43,
+        "startChar": 1,
+        "endLine": 43,
+        "endChar": 27
+      },
+      "revId": "2d904790837ec076b7da59cd2558fabb7cfa649e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d1fb2ff_a87dd164",
+        "filename": "tools/traffic_annotation/auditor/traffic_annotation_auditor_ui.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-08-25T14:26:27Z",
+      "side": 1,
+      "message": "Is it really the same path or is it the current working directory? (\"pwd\" on Linux)",
+      "range": {
+        "startLine": 36,
+        "startChar": 66,
+        "endLine": 37,
+        "endChar": 37
+      },
+      "revId": "2d904790837ec076b7da59cd2558fabb7cfa649e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72e013b9_3e25bffd",
+        "filename": "tools/traffic_annotation/auditor/traffic_annotation_auditor_ui.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-08-25T14:26:27Z",
+      "side": 1,
+      "message": "Please document this addition in the CL description.",
+      "range": {
+        "startLine": 270,
+        "startChar": 2,
+        "endLine": 270,
+        "endChar": 55
+      },
+      "revId": "2d904790837ec076b7da59cd2558fabb7cfa649e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
