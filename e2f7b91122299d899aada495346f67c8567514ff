@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "16075d02_5e551012",
+        "filename": "third_party/WebKit/Source/core/inspector/InspectorMemoryAgent.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-08-25T06:26:56Z",
+      "side": 1,
+      "message": "This will leak memory as well... No one will destruct BlinkLeakDetector.\n\nCan we make BlinkLeakDetector GarbageCollected?\n\nAlso why do we need to save the instantiated BlinkLeakDetector to detector_? It looks unused later.",
+      "revId": "e2f7b91122299d899aada495346f67c8567514ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7c1883c_c6644ddd",
+        "filename": "third_party/WebKit/Source/core/inspector/InspectorMemoryAgent.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-08-25T06:26:56Z",
+      "side": 1,
+      "message": "Regarding this line, I\u0027ll let the decision to Pavel.\n\nAs Yuzu and Keishi mentioned, BlinkLeakDetector\u0027s CollectGarbage does more work than inspector\u0027s CollectGarbage API. If we stop calling BlinkLeakDetector\u0027s CollectGarbage and use inspector\u0027s CollectGarbage API, we need to change the implementation of inspector\u0027s CollectGarbage API. I\u0027m not sure if you want to do this.",
+      "revId": "e2f7b91122299d899aada495346f67c8567514ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "923fa4f6_3aeeb574",
+        "filename": "third_party/WebKit/Source/core/leak_detector/BlinkLeakDetector.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-08-25T06:26:56Z",
+      "side": 1,
+      "message": "Add explicit.",
+      "revId": "e2f7b91122299d899aada495346f67c8567514ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
