@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "73b50f9c_bc4ace34",
+        "filename": "base/profiler/native_stack_sampler_mac.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1002120
+      },
+      "writtenOn": "2017-08-25T21:45:07Z",
+      "side": 1,
+      "message": "Can you extend this comment with an explanation of the scenario that this check protects against?",
+      "range": {
+        "startLine": 247,
+        "startChar": 0,
+        "endLine": 247,
+        "endChar": 32
+      },
+      "revId": "08988de923670eed12fbdcff1fe00ce682389b47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
