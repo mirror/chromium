@@ -140,6 +140,24 @@
       "revId": "b044961a20f27f7c13978cb3d348df43bdae79c4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7bd38196_839ecbab",
+        "filename": "ash/wallpaper/wallpaper_controller.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-08-25T07:56:26Z",
+      "side": 1,
+      "message": "OK. Does the \u0027short window\u0027 have any visible effect? We have to avoid any visible delay of wallpaper dimming at start up.",
+      "parentUuid": "12a8c57b_c25cfe24",
+      "revId": "b044961a20f27f7c13978cb3d348df43bdae79c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
