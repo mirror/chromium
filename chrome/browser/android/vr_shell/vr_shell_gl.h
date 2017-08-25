@@ -158,8 +158,12 @@ class VrShellGl : public device::mojom::VRPresentationProvider,
       const gfx::Vector3dF& controller_direction);
   void SendGestureToContent(std::unique_ptr<blink::WebInputEvent> event);
   void CreateUiSurface();
+
   void OnContentFrameAvailable();
   void OnWebVRFrameAvailable();
+  void ScheduleWebVrFrameTimeout();
+  void OnWebVrFrameTimedOut();
+
   int64_t GetPredictedFrameTimeNanos();
 
   void OnVSync(base::TimeTicks frame_time);
@@ -274,6 +278,8 @@ class VrShellGl : public device::mojom::VRPresentationProvider,
   vr::RenderInfo render_info_webvr_browser_ui_;
 
   AndroidVSyncHelper vsync_helper_;
+
+  base::CancelableCallback<void()> webvr_frame_timeout_;
 
   base::WeakPtrFactory<VrShellGl> weak_ptr_factory_;
 

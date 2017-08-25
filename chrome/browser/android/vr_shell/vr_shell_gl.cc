@@ -87,6 +87,8 @@ static constexpr float kMinAppButtonGestureAngleRad = 0.25;
 static constexpr base::TimeDelta kWebVRFenceCheckTimeout =
     base::TimeDelta::FromMicroseconds(2000);
 
+static constexpr int kWebVrFrameTimeoutSeconds = 10;
+
 // Provides the direction the head is looking towards as a 3x1 unit vector.
 gfx::Vector3dF GetForwardVector(const gfx::Transform& head_pose) {
   // Same as multiplying the inverse of the rotation component of the matrix by
@@ -192,6 +194,7 @@ VrShellGl::VrShellGl(GlBrowserInterface* browser,
 }
 
 VrShellGl::~VrShellGl() {
+  webvr_frame_timeout_.Cancel();
   closePresentationBindings();
 }
 
@@ -368,6 +371,7 @@ void VrShellGl::ConnectPresentingService(
   closePresentationBindings();
   submit_client_.Bind(std::move(submit_client_info));
   binding_.Bind(std::move(request));
+  ScheduleWebVrFrameTimeout();
 }
 
 void VrShellGl::OnContentFrameAvailable() {
@@ -393,6 +397,23 @@ void VrShellGl::OnWebVRFrameAvailable() {
   browser_->OnWebVrFrameAvailable();
 
   DrawFrame(frame_index);
+  if (web_vr_mode_) {
+    ScheduleWebVrFrameTimeout();
+  } else {
+    webvr_frame_timeout_.Cancel();
+  }
+}
+
+void VrShellGl::ScheduleWebVrFrameTimeout() {
+  webvr_frame_timeout_.Reset(
+      base::Bind(&VrShellGl::OnWebVrFrameTimedOut, base::Unretained(this)));
+  task_runner_->PostDelayedTask(
+      FROM_HERE, webvr_frame_timeout_.callback(),
+      base::TimeDelta::FromSeconds(kWebVrFrameTimeoutSeconds));
+}
+
+void VrShellGl::OnWebVrFrameTimedOut() {
+  browser_->OnWebVrTimedOut();
 }
 
 void VrShellGl::GvrInit(gvr_context* gvr_api) {
@@ -1050,26 +1071,35 @@ void VrShellGl::OnPause() {
   vsync_helper_.CancelVSyncRequest();
   controller_->OnPause();
   gvr_api_->PauseTracking();
+  webvr_frame_timeout_.Cancel();
 }
 
 void VrShellGl::OnResume() {
   gvr_api_->RefreshViewerProfile();
   gvr_api_->ResumeTracking();
   controller_->OnResume();
-  if (ready_to_draw_) {
-    vsync_helper_.CancelVSyncRequest();
-    OnVSync(base::TimeTicks::Now());
-  }
+  if (!ready_to_draw_)
+    return;
+  vsync_helper_.CancelVSyncRequest();
+  OnVSync(base::TimeTicks::Now());
+  if (web_vr_mode_ && submit_client_)
+    ScheduleWebVrFrameTimeout();
 }
 
 void VrShellGl::SetWebVrMode(bool enabled) {
   web_vr_mode_ = enabled;
 
+  if (web_vr_mode_ && submit_client_) {
+    ScheduleWebVrFrameTimeout();
+  } else {
+    webvr_frame_timeout_.Cancel();
+  }
+
   if (cardboard_) {
     browser_->ToggleCardboardGamepad(enabled);
   }
 
-  if (!enabled) {
+  if (!web_vr_mode_) {
     closePresentationBindings();
   }
 }
@@ -1235,6 +1265,7 @@ void VrShellGl::CreateVRDisplayInfo(
 }
 
 void VrShellGl::closePresentationBindings() {
+  webvr_frame_timeout_.Cancel();
   submit_client_.reset();
   if (!callback_.is_null()) {
     // When this Presentation provider is going away we have to respond to
