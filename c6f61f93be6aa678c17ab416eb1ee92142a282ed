@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "26fab32c_850f059c",
+        "filename": "ui/aura/mus/window_tree_client.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 430,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-25T17:56:21Z",
+      "side": 1,
+      "message": "That\u0027s right. Added DCHECK.",
+      "parentUuid": "f31ef662_8d219d8e",
+      "revId": "c6f61f93be6aa678c17ab416eb1ee92142a282ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5ac9e1e0_1bc03a84",
         "filename": "ui/aura/mus/window_tree_client.h",
         "patchSetId": 2
