@@ -89,6 +89,7 @@ import javax.annotation.Nullable;
  */
 public class PaymentRequestImpl implements PaymentRequest, PaymentRequestUI.Client,
                                            PaymentApp.InstrumentsCallback,
+                                           PaymentInstrument.AbortInvokePaymentAppCallback,
                                            PaymentInstrument.InstrumentDetailsCallback,
                                            PaymentAppFactory.PaymentAppCreatedCallback,
                                            PaymentResponseHelper.PaymentResponseRequesterDelegate,
@@ -1426,13 +1427,24 @@ public class PaymentRequestImpl implements PaymentRequest, PaymentRequestUI.Clie
     @Override
     public void abort() {
         if (mClient == null) return;
-        mClient.onAbort(!mPaymentAppRunning);
+
         if (mPaymentAppRunning) {
-            if (sObserverForTest != null) sObserverForTest.onPaymentRequestServiceUnableToAbort();
-        } else {
+            ((PaymentInstrument) mPaymentMethodsSection.getSelectedItem())
+                    .abortInvokePaymentApp(this);
+            return;
+        }
+        onAbortInvokePaymentAppResult(true);
+    }
+
+    @Override
+    public void onAbortInvokePaymentAppResult(boolean result) {
+        mClient.onAbort(result);
+        if (result) {
             closeClient();
             closeUI(true);
             mJourneyLogger.setAborted(AbortReason.ABORTED_BY_MERCHANT);
+        } else {
+            if (sObserverForTest != null) sObserverForTest.onPaymentRequestServiceUnableToAbort();
         }
     }
 

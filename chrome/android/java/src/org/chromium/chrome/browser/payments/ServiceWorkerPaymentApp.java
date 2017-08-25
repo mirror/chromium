@@ -131,6 +131,12 @@ public class ServiceWorkerPaymentApp extends PaymentInstrument implements Paymen
     }
 
     @Override
+    public void abortInvokePaymentApp(AbortInvokePaymentAppCallback callback) {
+        ServiceWorkerPaymentAppBridge.abortInvokePaymentApp(
+                mWebContents, mRegistrationId, callback);
+    }
+
+    @Override
     public void dismissInstrument() {}
 
     @Override

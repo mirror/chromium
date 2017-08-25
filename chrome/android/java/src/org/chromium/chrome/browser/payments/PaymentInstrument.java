@@ -6,6 +6,7 @@ package org.chromium.chrome.browser.payments;
 
 import android.graphics.drawable.Drawable;
 
+import org.chromium.base.ThreadUtils;
 import org.chromium.chrome.browser.payments.ui.PaymentOption;
 import org.chromium.payments.mojom.PaymentDetailsModifier;
 import org.chromium.payments.mojom.PaymentItem;
@@ -44,6 +45,16 @@ public abstract class PaymentInstrument extends PaymentOption {
          * Called if unable to retrieve instrument details.
          */
         void onInstrumentDetailsError();
+    }
+
+    /** The interface for abort requesting payment instrument details.*/
+    public interface AbortInvokePaymentAppCallback {
+        /**
+         * Called after abort retrieving instrument detais complete.
+         *
+         * @param result Flag indicates wheter abort is succeed.
+         */
+        void onAbortInvokePaymentAppResult(boolean result);
     }
 
     protected PaymentInstrument(String id, String label, String sublabel, Drawable icon) {
@@ -142,6 +153,20 @@ public abstract class PaymentInstrument extends PaymentOption {
             Map<String, PaymentMethodData> methodDataMap, PaymentItem total,
             List<PaymentItem> displayItems, Map<String, PaymentDetailsModifier> modifiers,
             InstrumentDetailsCallback callback);
+
+    /**
+     * Abort the invoke of the payment app to retrieve the instrument details.
+     *
+     * @param callback The callback to return result.
+     */
+    public void abortInvokePaymentApp(AbortInvokePaymentAppCallback callback) {
+        ThreadUtils.postOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                callback.onAbortInvokePaymentAppResult(false);
+            }
+        });
+    }
 
     /**
      * Cleans up any resources held by the payment instrument. For example, closes server
