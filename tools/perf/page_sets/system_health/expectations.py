@@ -133,10 +133,6 @@ class V8BrowsingDesktopExpecations(expectations.StoryExpectations):
     self.DisableStory('browse:news:hackernews',
                       [expectations.ALL_WIN, expectations.ALL_MAC],
                       'crbug.com/676336')
-    self.DisableStory('browse:tools:maps', [expectations.ALL],
-                      'crbug.com/712694')
-    self.DisableStory('browse:tools:earth', [expectations.ALL],
-                      'crbug.com/708590')
     self.DisableStory('browse:news:cnn',
                       [expectations.ALL_MAC], 'crbug.com/728576')
 
