@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a9d6a65a_0619eac8",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/metrics/WebApkUma.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1117450
+      },
+      "writtenOn": "2017-08-25T16:40:28Z",
+      "side": 1,
+      "message": "Documented the deprecated API. It\u0027s quite common to use the deprecated API to be compatible with old Android version.",
+      "parentUuid": "f29aaf2f_48a817b8",
+      "range": {
+        "startLine": 157,
+        "startChar": 36,
+        "endLine": 157,
+        "endChar": 0
+      },
+      "revId": "3883c873324da3a6e1797615b69c927cf67922a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c206a85a_5619e7b1",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/metrics/WebApkUma.java",
         "patchSetId": 8
@@ -45,6 +69,30 @@
       "revId": "3883c873324da3a6e1797615b69c927cf67922a4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5906864_c18adf74",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/metrics/WebApkUma.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1117450
+      },
+      "writtenOn": "2017-08-25T16:40:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c206a85a_5619e7b1",
+      "range": {
+        "startLine": 183,
+        "startChar": 85,
+        "endLine": 183,
+        "endChar": 0
+      },
+      "revId": "3883c873324da3a6e1797615b69c927cf67922a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "9fdd5d72_cb24ad37",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/metrics/WebApkUma.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1117450
+      },
+      "writtenOn": "2017-08-25T16:40:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "87e61161_0a8cb712",
+      "range": {
+        "startLine": 188,
+        "startChar": 0,
+        "endLine": 189,
+        "endChar": 89
+      },
+      "revId": "3883c873324da3a6e1797615b69c927cf67922a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f0f6c63d_b56efabd",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 8
@@ -91,6 +163,30 @@
       "revId": "3883c873324da3a6e1797615b69c927cf67922a4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57327390_bcd3f3a9",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 8
+      },
+      "lineNbr": 86180,
+      "author": {
+        "id": 1117450
+      },
+      "writtenOn": "2017-08-25T16:40:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f0f6c63d_b56efabd",
+      "range": {
+        "startLine": 86180,
+        "startChar": 7,
+        "endLine": 86180,
+        "endChar": 0
+      },
+      "revId": "3883c873324da3a6e1797615b69c927cf67922a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
