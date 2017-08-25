@@ -324,6 +324,11 @@ void ArcAccessibilityHelperBridge::OnActionResult(const ui::AXActionData& data,
     }
   }
 
+  ui::AXTreeData fallback_data;
+  fallback_tree_->GetTreeData(&fallback_data);
+  if (fallback_data.tree_id == data.target_tree_id)
+    tree_source = fallback_tree_.get();
+
   if (!tree_source)
     return;
 
