@@ -68,6 +68,29 @@
       "revId": "6375d17cf4fb9fbf31959033af7eb84b26fc8995",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d757d5c4_4a3961ac",
+        "filename": "ui/gfx/sequential_id_generator.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-08-25T13:57:05Z",
+      "side": 1,
+      "message": "So there is only one other caller to ReleaseNumber in the touch_factory_x11.cc file. Would it make sense just to roll the Maybe functionality into the Release function? Being that the value inside the touch_factory_x11 is actually just pulled off from the X11 server.. so fundamentally if I do the correct XSendEvent to a Chrome process I could get it to crash in this code no?",
+      "range": {
+        "startLine": 36,
+        "startChar": 7,
+        "endLine": 36,
+        "endChar": 25
+      },
+      "revId": "6375d17cf4fb9fbf31959033af7eb84b26fc8995",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
