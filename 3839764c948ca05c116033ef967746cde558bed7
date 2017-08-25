@@ -143,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "a0e68150_0f09a498",
+        "filename": "third_party/WebKit/Source/platform/graphics/filters/FEComposite.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-08-25T19:33:50Z",
+      "side": 1,
+      "message": "\u003e Thanks for explanation. Removed new lines 136-137 and added comments here:\n\u003e \n\u003e   // Fall through to use union. If this effect clips to bounds,\n\u003e   // ApplyBounds() will return AbsoluteBounds() regardless of the return\n\u003e   // value of this function because AffectsTransparentPixels() is true.\n\u003e \n\u003e About !ClipsToBounds(), isn\u0027t it interesting here: https://cs.chromium.org/chromium/src/third_party/WebKit/Source/core/paint/FilterEffectBuilder.cpp?sq\u003dpackage:chromium\u0026l\u003d295?\n\nClipsToBounds() will never be false on FEComposites. The reason for this is that FEComposite only ever as a part of a \"reference\" filter - and those primitive always set the flag to true.",
+      "parentUuid": "48150b4c_f89bfdcc",
+      "range": {
+        "startLine": 136,
+        "startChar": 8,
+        "endLine": 137,
+        "endChar": 58
+      },
+      "revId": "3839764c948ca05c116033ef967746cde558bed7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "27e4eda8_d49556e7",
         "filename": "third_party/WebKit/Source/platform/graphics/filters/FECompositeTest.cpp",
         "patchSetId": 2
@@ -187,6 +211,30 @@
       "revId": "3839764c948ca05c116033ef967746cde558bed7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1d301a0_1dd116ab",
+        "filename": "third_party/WebKit/Source/platform/graphics/filters/FECompositeTest.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-08-25T19:33:50Z",
+      "side": 1,
+      "message": "That is fair, I mainly wanted to avoid having LayoutRect in the mix here \u003d).",
+      "parentUuid": "4f7ed635_67a7ae51",
+      "range": {
+        "startLine": 29,
+        "startChar": 46,
+        "endLine": 29,
+        "endChar": 75
+      },
+      "revId": "3839764c948ca05c116033ef967746cde558bed7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
