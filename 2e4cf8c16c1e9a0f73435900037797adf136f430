@@ -16,6 +16,24 @@
       "revId": "2e4cf8c16c1e9a0f73435900037797adf136f430",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c5ac480_55cfd98f",
+        "filename": "third_party/WebKit/Source/core/frame/PerformanceMonitor.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-08-25T23:31:25Z",
+      "side": 1,
+      "message": "You capture sub-task information for the task that started with WillProcessTask, so it gets attributed to the right task. Depth is not relevant in this case.",
+      "parentUuid": "22c19b74_36f1688c",
+      "revId": "2e4cf8c16c1e9a0f73435900037797adf136f430",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
