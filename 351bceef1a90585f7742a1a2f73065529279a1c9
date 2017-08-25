@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6db958da_e5501755",
+        "filename": "chrome/common/BUILD.gn",
+        "patchSetId": 8
+      },
+      "lineNbr": 444,
+      "author": {
+        "id": 1177549
+      },
+      "writtenOn": "2017-08-25T14:31:01Z",
+      "side": 1,
+      "message": "Brett - this is why I broke out a separate target for the include.",
+      "range": {
+        "startLine": 444,
+        "startChar": 9,
+        "endLine": 444,
+        "endChar": 19
+      },
+      "revId": "351bceef1a90585f7742a1a2f73065529279a1c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a8fd227_9b503a22",
+        "filename": "components/crash/content/app/BUILD.gn",
+        "patchSetId": 8
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1177549
+      },
+      "writtenOn": "2017-08-25T14:31:01Z",
+      "side": 1,
+      "message": "Brett - I wonder if this is overkill - can I for example just add this file to the :app target?",
+      "range": {
+        "startLine": 94,
+        "startChar": 2,
+        "endLine": 94,
+        "endChar": 12
+      },
+      "revId": "351bceef1a90585f7742a1a2f73065529279a1c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b8aa119_6d85bfa8",
+        "filename": "components/crash/content/app/BUILD.gn",
+        "patchSetId": 8
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1177549
+      },
+      "writtenOn": "2017-08-25T14:31:01Z",
+      "side": 1,
+      "message": "Brett - likewise re overkill. I could just fold this into the test_support target, I suppose?",
+      "range": {
+        "startLine": 124,
+        "startChar": 4,
+        "endLine": 124,
+        "endChar": 12
+      },
+      "revId": "351bceef1a90585f7742a1a2f73065529279a1c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
