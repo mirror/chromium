@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "de1f9f2e_bc9284a5",
+        "filename": "chrome/browser/chromeos/login/users/wallpaper/wallpaper_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 642,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-08-25T21:11:20Z",
+      "side": 1,
+      "message": "Revert this piece of codes back. Added test coverage. The test will fail without this change.",
+      "parentUuid": "1132e717_3d116abc",
+      "revId": "3407289b028214fb16e4ec4ff9da9e57abc2efe8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "94789f1c_c646c0bb",
         "filename": "components/wallpaper/wallpaper_manager_base.cc",
         "patchSetId": 1
@@ -120,6 +138,24 @@
       "side": 1,
       "message": "hmm. I am surprised to see email address is logged. If it is already done, I wont block you from doing this.\nIt probably still makes sense to check with someone else to see if this is indeed acceptable.",
       "parentUuid": "7359aa26_78a394b2",
+      "revId": "3407289b028214fb16e4ec4ff9da9e57abc2efe8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "916a2536_d0705a86",
+        "filename": "components/wallpaper/wallpaper_manager_base.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 570,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-08-25T21:11:20Z",
+      "side": 1,
+      "message": "+alemate@ who introduced AccountId at the first place to see if it\u0027s acceptable.\nalemate@, could you help take a look at this piece of code to see if it\u0027s fine for me to put user account information in the log? Thanks!",
+      "parentUuid": "2dcc8fbb_f18fa65c",
       "revId": "3407289b028214fb16e4ec4ff9da9e57abc2efe8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
