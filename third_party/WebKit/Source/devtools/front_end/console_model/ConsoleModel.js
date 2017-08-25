@@ -385,6 +385,7 @@ ConsoleModel.ConsoleModel = class extends Common.Object {
     return this._errors;
   }
 
+
   /**
    * @return {number}
    */
