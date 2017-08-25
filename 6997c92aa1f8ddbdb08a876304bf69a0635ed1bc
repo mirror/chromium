@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "549a4553_d6a9d606",
+        "filename": "chrome/app/chrome_main_delegate.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-25T15:11:41Z",
+      "side": 1,
+      "message": "How about making this public so you don\u0027t need to duplicate it in the test.",
+      "range": {
+        "startLine": 197,
+        "startChar": 0,
+        "endLine": 197,
+        "endChar": 52
+      },
+      "revId": "6997c92aa1f8ddbdb08a876304bf69a0635ed1bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
