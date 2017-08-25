@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7979e336_78640f5f",
+        "filename": "components/payments/core/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-08-25T14:15:17Z",
+      "side": 1,
+      "message": "Merge this into \"core\" target, because every platform (including //ios/chrome/browser/payments) already depends on //components/payments/core.",
+      "range": {
+        "startLine": 90,
+        "startChar": 0,
+        "endLine": 103,
+        "endChar": 0
+      },
+      "revId": "fc6b0d6c66036117ef6c9b29473c715109d4ca69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
