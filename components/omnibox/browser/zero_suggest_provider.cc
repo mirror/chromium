@@ -179,15 +179,17 @@ void ZeroSuggestProvider::Start(const AutocompleteInput& input,
   }
 
   // Create a request for suggestions with |this| as the fetcher delegate.
-  client()
-      ->GetContextualSuggestionsService()
-      ->CreateContextualSuggestionsRequest(
-          can_attach_current_url ? current_query_ : std::string(),
-          client()->GetTemplateURLService(),
-          /*fetcher_delegate=*/this,
-          base::BindOnce(
-              &ZeroSuggestProvider::OnContextualSuggestionsFetcherAvailable,
-              weak_ptr_factory_.GetWeakPtr()));
+  auto* contextual_suggestion_request =
+      client()->GetContextualSuggestionsService();
+  if (contextual_suggestion_request != nullptr) {
+    contextual_suggestion_request->CreateContextualSuggestionsRequest(
+        can_attach_current_url ? current_query_ : std::string(),
+        client()->GetTemplateURLService(),
+        /*fetcher_delegate=*/this,
+        base::BindOnce(
+            &ZeroSuggestProvider::OnContextualSuggestionsFetcherAvailable,
+            weak_ptr_factory_.GetWeakPtr()));
+  }
 }
 
 void ZeroSuggestProvider::Stop(bool clear_cached_results,
@@ -196,6 +198,11 @@ void ZeroSuggestProvider::Stop(bool clear_cached_results,
     LogOmniboxZeroSuggestRequest(ZERO_SUGGEST_REQUEST_INVALIDATED);
   fetcher_.reset();
   waiting_for_most_visited_urls_request_ = false;
+  auto* contextual_suggestion_request =
+      client()->GetContextualSuggestionsService();
+  if (contextual_suggestion_request != nullptr) {
+    contextual_suggestion_request->StopCreatingContextualSuggestionRequest();
+  }
   done_ = true;
 
   if (clear_cached_results) {
@@ -386,7 +393,6 @@ AutocompleteMatch ZeroSuggestProvider::NavigationToMatch(
 
 void ZeroSuggestProvider::OnMostVisitedUrlsAvailable(
     const history::MostVisitedURLList& urls) {
-  if (!waiting_for_most_visited_urls_request_) return;
   most_visited_urls_ = urls;
   waiting_for_most_visited_urls_request_ = false;
   done_ = true;
