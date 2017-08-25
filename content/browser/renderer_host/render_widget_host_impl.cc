@@ -2688,7 +2688,7 @@ void RenderWidgetHostImpl::SubmitCompositorFrame(
 
   latency_tracker_.OnSwapCompositorFrame(&frame.metadata.latency_info);
 
-  bool is_mobile_optimized = IsMobileOptimizedFrame(frame.metadata);
+  bool is_mobile_optimized = frame.metadata.is_mobile_optimized;
   input_router_->NotifySiteIsMobileOptimized(is_mobile_optimized);
   if (touch_emulator_)
     touch_emulator_->SetDoubleTapSupportForPageEnabled(!is_mobile_optimized);

@@ -504,6 +504,10 @@ class CC_EXPORT LayerTreeHost : public viz::SurfaceReferenceOwner,
 
   float recording_scale_factor() const { return recording_scale_factor_; }
 
+  void SetIsMobileOptimized(bool is_mobile_optimized) {
+    is_mobile_optimized_ = is_mobile_optimized;
+  }
+
  protected:
   LayerTreeHost(InitParams* params, CompositorMode mode);
 
@@ -657,6 +661,8 @@ class CC_EXPORT LayerTreeHost : public viz::SurfaceReferenceOwner,
 
   bool in_paint_layer_contents_ = false;
   bool in_update_property_trees_ = false;
+
+  bool is_mobile_optimized_ = false;
 
   // This is true if atleast one layer in the layer tree has a copy request. We
   // use this bool to decide whether we need to compute subtree has copy request
