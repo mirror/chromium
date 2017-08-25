@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3148fd22_e48f2d61",
+        "filename": "third_party/WebKit/Source/core/css/properties/CSSPropertyAPITextEmphasisPosition.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1115751
+      },
+      "writtenOn": "2017-08-25T09:26:43Z",
+      "side": 1,
+      "message": "Drop braces.",
+      "revId": "5f6bd62d95ac1d5565c1c14e37fdd6b5044eacfb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08567525_fed33106",
+        "filename": "third_party/WebKit/Source/core/css/properties/CSSPropertyAPITextEmphasisPosition.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1115751
+      },
+      "writtenOn": "2017-08-25T09:26:43Z",
+      "side": 1,
+      "message": "What if the only value is CSSValueRight, then it\u0027s invalid and we should return nullptr, right?",
+      "revId": "5f6bd62d95ac1d5565c1c14e37fdd6b5044eacfb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a50f7a1f_371a0984",
+        "filename": "third_party/WebKit/Source/core/css/properties/CSSPropertyAPITextEmphasisPosition.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1115751
+      },
+      "writtenOn": "2017-08-25T09:26:43Z",
+      "side": 1,
+      "message": "I think you can make this a little more compact with something like this:\n\nCSSIdentifierValue* values[2] \u003d { ConsumeIdent\u003c\u003e(), nullptr };\nif (!values[0])\n  return nullptr;\nvalues[1] \u003d ConsumeIdent\u003c\u003e();\n\nCSSIdentifierValue* over_under \u003d nullptr;\nCSSIdentifierValue* left_right \u003d nullptr;\n\nfor (value : values) {\n  if (!value)\n    break;\n  switch (value-\u003eGetValueId()) {\n    case CSSValueOver:\n    case CSSValueUnder:\n      if (over_under)\n        return nullptr;\n      over_under \u003d value;\n      break;\n    case CSSValueLeft:\n    case CSSValueRight;\n      if (left_right)\n        return nullptr;\n      left_right \u003d value;\n      break;\n    default:\n      NOTREACHED();\n      break;\n  }\n}\n\nif (!over_under)\n  return nullptr;\nif (!left_right)\n  left_right \u003d CSSIdentifierValue::Create(CSSValueRight);\n\nCSSValueList* list \u003d CSSValueList::CreateSpaceSeparated();\nlist-\u003eAppend(over_under);\nlist-\u003eAppend(left_right);",
+      "revId": "5f6bd62d95ac1d5565c1c14e37fdd6b5044eacfb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
