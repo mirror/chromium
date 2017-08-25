@@ -2,6 +2,52 @@
   "comments": [
     {
       "key": {
+        "uuid": "8e920090_f420ae72",
+        "filename": "chrome/browser/media_galleries/fileapi/iapps_data_provider.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-08-25T06:09:13Z",
+      "side": 1,
+      "message": "Nice simplification :)",
+      "range": {
+        "startLine": 33,
+        "startChar": 2,
+        "endLine": 35,
+        "endChar": 65
+      },
+      "revId": "a29d96a5de67b8ee74fd4675dbd6b476b9c26b66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13af6776_af7554a0",
+        "filename": "chrome/browser/media_galleries/fileapi/itunes_file_util_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-08-25T06:09:13Z",
+      "side": 1,
+      "message": "Can probably be replaced with this line:\ncontent::RunAllBlockingPoolTasksUntilIdle();",
+      "range": {
+        "startLine": 170,
+        "startChar": 4,
+        "endLine": 175,
+        "endChar": 17
+      },
+      "revId": "a29d96a5de67b8ee74fd4675dbd6b476b9c26b66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1d534f8a_52d9cd14",
         "filename": "chrome/browser/media_galleries/fileapi/itunes_file_util_unittest.cc",
         "patchSetId": 9
@@ -13,6 +59,24 @@
       "writtenOn": "2017-08-24T09:29:53Z",
       "side": 1,
       "message": "Why does this need to be protected but not private? (wasn\u0027t able to find where it\u0027s referenced in tests)",
+      "revId": "a29d96a5de67b8ee74fd4675dbd6b476b9c26b66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba8eed73_f02fbbcb",
+        "filename": "chrome/browser/media_galleries/fileapi/itunes_file_util_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-08-25T06:09:13Z",
+      "side": 1,
+      "message": "This complies with the recommendation at https://cs.chromium.org/chromium/src/content/public/test/test_browser_thread_bundle.h?l\u003d74",
+      "parentUuid": "1d534f8a_52d9cd14",
       "revId": "a29d96a5de67b8ee74fd4675dbd6b476b9c26b66",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
