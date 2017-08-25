@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "426346e9_125bce9b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 11
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1239026
+      },
+      "writtenOn": "2017-08-25T09:56:34Z",
+      "side": 1,
+      "message": "I agree with the last comment, so removed that part.",
+      "parentUuid": "bf430fd5_8982ff8b",
+      "revId": "57e8b2312cea7abc4ab1d1b4805169388d020873",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "047f54e1_124360d7",
         "filename": "/COMMIT_MSG",
         "patchSetId": 11
@@ -102,6 +120,24 @@
       "side": 1,
       "message": "\u0027descriptive\u0027 is for human.\nAs I commented above, making value visible makes tests strict.",
       "parentUuid": "656b7dc4_be938be7",
+      "revId": "57e8b2312cea7abc4ab1d1b4805169388d020873",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "56f6fb97_1eced5b3",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 11
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1239026
+      },
+      "writtenOn": "2017-08-25T09:56:34Z",
+      "side": 1,
+      "message": "My intention is to make pattern match tests more strict.\nIn order to clarify it, I rewrote the description.",
+      "parentUuid": "340be388_25b8366a",
       "revId": "57e8b2312cea7abc4ab1d1b4805169388d020873",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

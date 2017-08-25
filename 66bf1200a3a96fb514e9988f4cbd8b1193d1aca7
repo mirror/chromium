@@ -172,6 +172,24 @@
     },
     {
       "key": {
+        "uuid": "cf38e30e_ef9c3fd2",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1239026
+      },
+      "writtenOn": "2017-08-25T09:56:34Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "dd56b28e_5ab0100f",
+      "revId": "66bf1200a3a96fb514e9988f4cbd8b1193d1aca7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ac9836cc_bf689bf0",
         "filename": "tools/idl_parser/idl_node.py",
         "patchSetId": 5
@@ -224,6 +242,24 @@
     },
     {
       "key": {
+        "uuid": "438016ac_716f34a3",
+        "filename": "tools/idl_parser/idl_node.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1239026
+      },
+      "writtenOn": "2017-08-25T09:56:34Z",
+      "side": 1,
+      "message": "In this CL we decided to treat an empty string as a kind of string, not NULL.\nI rewrote the code.",
+      "parentUuid": "396cb8a7_b0e91f12",
+      "revId": "66bf1200a3a96fb514e9988f4cbd8b1193d1aca7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a165c912_343f6dcc",
         "filename": "tools/idl_parser/idl_node.py",
         "patchSetId": 5
@@ -256,6 +292,24 @@
       "revId": "66bf1200a3a96fb514e9988f4cbd8b1193d1aca7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e61f1e9a_3edb2290",
+        "filename": "tools/idl_parser/idl_node.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1239026
+      },
+      "writtenOn": "2017-08-25T09:56:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ad176961_8263ca0f",
+      "revId": "66bf1200a3a96fb514e9988f4cbd8b1193d1aca7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -326,6 +380,30 @@
       "revId": "66bf1200a3a96fb514e9988f4cbd8b1193d1aca7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "102e75d0_66e8076e",
+        "filename": "tools/idl_parser/idl_node.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1239026
+      },
+      "writtenOn": "2017-08-25T09:56:34Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "56389f3d_b0736d11",
+      "range": {
+        "startLine": 103,
+        "startChar": 20,
+        "endLine": 103,
+        "endChar": 21
+      },
+      "revId": "66bf1200a3a96fb514e9988f4cbd8b1193d1aca7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
