@@ -81165,6 +81165,40 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="TabManager.BackgroundTabOpening.TabCount" units="tabs">
+  <owner>zhenw@chromium.org</owner>
+  <summary>
+    The max number of background tabs pending or loading in a background tab
+    opening session.
+  </summary>
+</histogram>
+
+<histogram name="TabManager.BackgroundTabOpening.TabLoadAutoStartedCount"
+    units="tabs">
+  <owner>zhenw@chromium.org</owner>
+  <summary>
+    The number of background tabs whose loading was triggered by TabManager
+    automatically in a background tab opening session.
+  </summary>
+</histogram>
+
+<histogram name="TabManager.BackgroundTabOpening.TabLoadUserInitiatedCount"
+    units="tabs">
+  <owner>zhenw@chromium.org</owner>
+  <summary>
+    The number of background tabs whose loading was triggered by user selection
+    in a background tab opening session.
+  </summary>
+</histogram>
+
+<histogram name="TabManager.BackgroundTabOpening.TabPausedCount" units="tabs">
+  <owner>zhenw@chromium.org</owner>
+  <summary>
+    The max number of background tabs paused to load in a background tab opening
+    session due to memory pressure.
+  </summary>
+</histogram>
+
 <histogram name="TabManager.Discarding.DiscardCount" units="Discards">
   <owner>georgesak@chromium.org</owner>
   <summary>
@@ -81379,6 +81413,13 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
     title is updated. The first-time set of title will be ignored; this metric
     will only be recorded after 5 minutes from main frame navigation committed
     and when the tab is in the background.
+  </summary>
+</histogram>
+
+<histogram name="TabManager.SessionOverlap" units="SessionOverlap">
+  <owner>zhenw@chromium.org</owner>
+  <summary>
+    The session overlap events for sesssion restore and background tab opening.
   </summary>
 </histogram>
 
