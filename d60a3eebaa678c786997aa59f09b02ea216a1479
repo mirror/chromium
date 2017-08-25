@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5784da12_d58dd632",
+        "filename": "components/password_manager/core/browser/password_autofill_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 395,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-08-25T10:22:11Z",
+      "side": 1,
+      "message": "nit: s/Actions/UserAction/g, I think it should not cause any more line wraps and is more accurate.",
+      "revId": "d60a3eebaa678c786997aa59f09b02ea216a1479",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34275ca1_f034267e",
+        "filename": "components/password_manager/core/browser/password_autofill_manager_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1043,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-08-25T10:22:11Z",
+      "side": 1,
+      "message": "nit: ..., which happens at destruction time.",
+      "revId": "d60a3eebaa678c786997aa59f09b02ea216a1479",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db4d6c2c_233b7fbb",
+        "filename": "components/password_manager/core/browser/password_manager_metrics_recorder.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-08-25T10:22:11Z",
+      "side": 1,
+      "message": "nit: How about RecordNonFormSpecificUserAction or RecordPageLevelUserAction instead of PasswordManager, which carries very little information in this context?",
+      "revId": "d60a3eebaa678c786997aa59f09b02ea216a1479",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c791433_c7593815",
+        "filename": "components/password_manager/core/browser/password_manager_metrics_util.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 253,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-08-25T10:22:11Z",
+      "side": 1,
+      "message": "Just wanted to double check: you intend to consider a non-autofilled \"Use password for: foo.com\" suggestion an available password?",
+      "range": {
+        "startLine": 253,
+        "startChar": 5,
+        "endLine": 253,
+        "endChar": 14
+      },
+      "revId": "d60a3eebaa678c786997aa59f09b02ea216a1479",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
