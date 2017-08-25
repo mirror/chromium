@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "e45c2bd6_c5e9425c",
+        "filename": "third_party/WebKit/Source/core/frame/PerformanceMonitor.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1175814
+      },
+      "writtenOn": "2017-08-25T17:06:05Z",
+      "side": 1,
+      "message": "Good point, we don\u0027t need to handle this edge case for performance observer.\nThough adding a test case to document this would be nice.",
+      "parentUuid": "0039069d_4476df7c",
+      "revId": "a3293015600a9aaa2c86d0936cc5f1fa32233a71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f82e0bcd_b4f8312c",
         "filename": "third_party/WebKit/Source/core/frame/PerformanceMonitor.cpp",
         "patchSetId": 5
