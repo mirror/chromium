@@ -62,6 +62,52 @@
       "revId": "d72ad32ae2b03c64a152be0a2e25c9679e92ee2a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf0d5a36_15b2e7a2",
+        "filename": "content/browser/devtools/protocol/service_worker_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 258,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-25T09:18:22Z",
+      "side": 1,
+      "message": "need spaces before and after the parentheses",
+      "range": {
+        "startLine": 258,
+        "startChar": 3,
+        "endLine": 258,
+        "endChar": 16
+      },
+      "revId": "d72ad32ae2b03c64a152be0a2e25c9679e92ee2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa25235c_6e4bb46a",
+        "filename": "content/browser/devtools/protocol/service_worker_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 264,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-25T09:18:22Z",
+      "side": 1,
+      "message": "I think this function is not synchronous: it may take time for the service workers to stop. If the perf tests rely on the service worker being stopped, we\u0027ll need some mechanism for waiting for the SWs to stop.",
+      "range": {
+        "startLine": 264,
+        "startChar": 12,
+        "endLine": 264,
+        "endChar": 42
+      },
+      "revId": "d72ad32ae2b03c64a152be0a2e25c9679e92ee2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
