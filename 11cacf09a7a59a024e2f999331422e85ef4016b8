@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d4b5f4da_e31ca212",
+        "filename": "ios/build/bots/tests/screen_size_dependent_tests.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1147750
+      },
+      "writtenOn": "2017-08-25T21:59:51Z",
+      "side": 1,
+      "message": "I just want to confirm that these are dependent upon the screen size. We\u0027d like to push everything we can to common_tests.json, to avoid redundant test runs.",
+      "range": {
+        "startLine": 25,
+        "startChar": 14,
+        "endLine": 25,
+        "endChar": 36
+      },
+      "revId": "11cacf09a7a59a024e2f999331422e85ef4016b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
