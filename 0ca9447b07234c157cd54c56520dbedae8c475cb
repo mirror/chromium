@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8a4b459a_477a68ee",
+        "filename": "services/ui/ws/event_dispatcher_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1004,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-08-25T21:32:38Z",
+      "side": 1,
+      "message": "Remove |child2|, optionally rename |child1|",
+      "revId": "0ca9447b07234c157cd54c56520dbedae8c475cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
