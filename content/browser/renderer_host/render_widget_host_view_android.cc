@@ -1326,7 +1326,7 @@ void RenderWidgetHostViewAndroid::SynchronousFrameMetadata(
   if (!content_view_core_)
     return;
 
-  bool is_mobile_optimized = IsMobileOptimizedFrame(frame_metadata);
+  bool is_mobile_optimized = frame_metadata.is_mobile_optimized;
 
   if (host_ && host_->input_router()) {
     host_->input_router()->NotifySiteIsMobileOptimized(
@@ -1483,7 +1483,7 @@ RenderWidgetHostViewAndroid::GetWebContentsAccessibilityAndroid() const {
 void RenderWidgetHostViewAndroid::OnFrameMetadataUpdated(
     const cc::CompositorFrameMetadata& frame_metadata,
     bool is_transparent) {
-  bool is_mobile_optimized = IsMobileOptimizedFrame(frame_metadata);
+  bool is_mobile_optimized = frame_metadata.is_mobile_optimized;
   gesture_provider_.SetDoubleTapSupportForPageEnabled(!is_mobile_optimized);
 
   float dip_scale = view_.GetDipScale();
