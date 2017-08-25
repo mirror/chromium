@@ -16,6 +16,24 @@
       "revId": "e7a7cb3e44950012876afd32b012faad4af7d3a6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f08be9f_1ae8f5a0",
+        "filename": "third_party/WebKit/Source/devtools/front_end/object_ui/RemoteObjectPreviewFormatter.js",
+        "patchSetId": 12
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1230559
+      },
+      "writtenOn": "2017-08-25T02:34:46Z",
+      "side": 1,
+      "message": "Done...  I\u0027ve hidden the other properties 0:\"f\",1:\"o\",2:\"o\" by doing a dirty check against the PrimitiveValue.  This isn\u0027t great, I\u0027ve discovered that the [[PrimitiveValue]] might not be sent if there are too many other natural properties, and the PrimitiveValue gets truncated when it\u0027s too long.\n\nSo I\u0027ve made a CL on the backend to just avoid sending the 0:\"f\",1:\"o\",2:\"o\" properties.  And a TODO to remove the hacky, partial solution when the V8 change lands.\nhttps://chromium-review.googlesource.com/c/v8/v8/+/634584",
+      "parentUuid": "a7d2b239_7d4d334d",
+      "revId": "e7a7cb3e44950012876afd32b012faad4af7d3a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

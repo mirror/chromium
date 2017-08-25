@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4a2120fe_d5894164",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/console/console-format.html",
+        "patchSetId": 13
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1230559
+      },
+      "writtenOn": "2017-08-25T02:34:46Z",
+      "side": 1,
+      "message": "I didn\u0027t include expected.txt for this test, which is behind TestExpectations as NeedsManualRebaseline\nBut here\u0027s what it looks like\nhttp://imgur.com/a/35TPf",
+      "range": {
+        "startLine": 98,
+        "startChar": 8,
+        "endLine": 98,
+        "endChar": 19
+      },
+      "revId": "4675001d6e6cdb1cc15ce47d3e1ddb45436a8ece",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6cb375f5_3975b0bc",
+        "filename": "third_party/WebKit/Source/devtools/front_end/object_ui/RemoteObjectPreviewFormatter.js",
+        "patchSetId": 13
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1230559
+      },
+      "writtenOn": "2017-08-25T02:34:46Z",
+      "side": 1,
+      "message": "This doesn\u0027t work when the primitive \u0027value\u0027 is truncated.  But after the V8 CL lands, we can get rid of this.",
+      "range": {
+        "startLine": 117,
+        "startChar": 77,
+        "endLine": 117,
+        "endChar": 102
+      },
+      "revId": "4675001d6e6cdb1cc15ce47d3e1ddb45436a8ece",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
