@@ -31,6 +31,7 @@
 #include "content/public/test/browser_test_utils.h"
 #include "content/public/test/test_navigation_observer.h"
 #include "content/public/test/test_utils.h"
+#include "media/base/test_data_util.cc"
 #include "net/base/filename_util.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
@@ -120,6 +121,8 @@ const char kCheckDialogLoadedScript[] =
     "*/"
     "window.domAutomationController.send(!!container && "
     "    !!container.deviceMissingUrl);";
+const char kIsFullscreen[] =
+    "window.domAutomationController.send(document.webkitIsFullScreen);";
 
 std::string GetStartedConnectionId(WebContents* web_contents) {
   std::string session_id;
@@ -242,9 +245,15 @@ MediaRouterIntegrationBrowserTest::StartSessionWithTestPageAndChooseSink() {
   return web_contents;
 }
 
-void MediaRouterIntegrationBrowserTest::OpenDialogAndCastFile() {
-  SetTestData(FILE_PATH_LITERAL("local_media_sink.json"));
-  GURL file_url = GURL("file:///path/to/a/file.mp3");
+void MediaRouterIntegrationBrowserTest::OpenDialogAndCastFile(
+    bool route_success = true) {
+  if (route_success) {
+    SetTestData(FILE_PATH_LITERAL("local_media_sink.json"));
+  } else {
+    SetTestData(FILE_PATH_LITERAL("local_media_sink_route_fail.json"));
+  }
+  GURL file_url = net::FilePathToFileURL(
+      media::GetTestDataFilePath("butterfly-853x480.webm"));
   // Open the dialog, waits for it to load
   WebContents* dialog_contents = OpenMRDialog(GetActiveWebContents());
   // Get the media router UI
@@ -267,7 +276,8 @@ void MediaRouterIntegrationBrowserTest::OpenDialogAndCastFile() {
 
 void MediaRouterIntegrationBrowserTest::OpenDialogAndCastFileFails() {
   SetTestData(FILE_PATH_LITERAL("local_media_sink.json"));
-  GURL file_url = GURL("file:///path/to/a/file.mp3");
+  GURL file_url = net::FilePathToFileURL(
+      media::GetTestDataFilePath("butterfly-853x480.webm"));
   // Open the dialog, waits for it to load
   WebContents* dialog_contents = OpenMRDialog(GetActiveWebContents());
   // Get the media router UI
@@ -735,6 +745,42 @@ IN_PROC_BROWSER_TEST_F(MediaRouterIntegrationBrowserTest,
 IN_PROC_BROWSER_TEST_F(MediaRouterIntegrationBrowserTest,
                        MANUAL_SendAndOnMessage) {
   RunSendMessageTest("foo");
+}
+
+// Tests that creating a route with a local file opens the file in a new tab.
+IN_PROC_BROWSER_TEST_F(MediaRouterIntegrationBrowserTest,
+                       MANUAL_OpenLocalMediaFileFullscreens) {
+  // Start at a new tab because that's the case in which it opens in a new tab.
+  ui_test_utils::NavigateToURL(browser(), GURL(chrome::kChromeUINewTabURL));
+  // Make sure there is 1 tab.
+  ASSERT_EQ(1, browser()->tab_strip_model()->count());
+
+  OpenDialogAndCastFile();
+
+  // Give page three seconds to load.
+  Wait(base::TimeDelta::FromSeconds(3));
+
+  // Expect that no new tab has been opened.
+  ASSERT_TRUE(
+      ExecuteScriptAndExtractBool(GetActiveWebContents(), kIsFullscreen));
+}
+
+// Tests that creating a route with a local file opens the file in a new tab.
+IN_PROC_BROWSER_TEST_F(MediaRouterIntegrationBrowserTest,
+                       MANUAL_OpenLocalMediaFileCastFailNoFullscreen) {
+  // Start at a new tab because that's the case in which it opens in a new tab.
+  ui_test_utils::NavigateToURL(browser(), GURL(chrome::kChromeUINewTabURL));
+  // Make sure there is 1 tab.
+  ASSERT_EQ(1, browser()->tab_strip_model()->count());
+
+  OpenDialogAndCastFile(false);
+
+  // Give page three seconds to load.
+  Wait(base::TimeDelta::FromSeconds(3));
+
+  // Expect that no new tab has been opened.
+  ASSERT_FALSE(
+      ExecuteScriptAndExtractBool(GetActiveWebContents(), kIsFullscreen));
 }
 
 IN_PROC_BROWSER_TEST_F(MediaRouterIntegrationBrowserTest, MANUAL_CloseOnError) {
