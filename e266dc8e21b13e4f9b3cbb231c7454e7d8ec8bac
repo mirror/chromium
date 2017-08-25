@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d12e935a_25b86b97",
+        "filename": "third_party/WebKit/Source/core/paint/compositing/CompositedLayerMapping.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 1311,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-08-25T15:01:16Z",
+      "side": 1,
+      "message": "The first argument to ConvertToLayerCoords must be an ancestor of the object. Why is\nthis guaranteed here?",
+      "revId": "e266dc8e21b13e4f9b3cbb231c7454e7d8ec8bac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf78b3c0_19286585",
+        "filename": "third_party/WebKit/Source/core/paint/compositing/CompositedLayerMapping.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 2509,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-08-25T15:01:16Z",
+      "side": 1,
+      "message": "Why is it guaranteed to be composited?",
+      "revId": "e266dc8e21b13e4f9b3cbb231c7454e7d8ec8bac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7e22f8f_61242ef0",
+        "filename": "third_party/WebKit/Source/core/paint/compositing/CompositingInputsUpdater.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-08-25T15:01:16Z",
+      "side": 1,
+      "message": "Rename parent_layer_on_clipping_container_chain to\nparent_layer_on_containing_block_chain?",
+      "revId": "e266dc8e21b13e4f9b3cbb231c7454e7d8ec8bac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
