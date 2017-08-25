@@ -27,8 +27,8 @@ class SessionRestoreObserver {
   // multiple concurrent session restores (on all profiles) occur.
   virtual void OnSessionRestoreFinishedLoadingTabs() {}
 
-  // OnWillRestoreTab() is called right after a tab is created by session
-  // restore.
+  // OnWillRestoreTab() is called right after a contents is created by session
+  // restore, but before it is added to a tab strip model.
   virtual void OnWillRestoreTab(content::WebContents* web_contents) {}
 };
 

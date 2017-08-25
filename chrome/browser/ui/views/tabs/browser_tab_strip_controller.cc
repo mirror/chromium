@@ -17,6 +17,7 @@
 #include "chrome/browser/favicon/favicon_utils.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/search/search.h"
+#include "chrome/browser/sessions/session_restore.h"
 #include "chrome/browser/ui/browser.h"
 #include "chrome/browser/ui/browser_navigator_params.h"
 #include "chrome/browser/ui/browser_tabstrip.h"
@@ -197,6 +198,7 @@ BrowserTabStripController::BrowserTabStripController(TabStripModel* model,
       browser_view_(browser_view),
       hover_tab_selector_(model),
       weak_ptr_factory_(this) {
+  SessionRestore::AddObserver(this);
   model_->AddObserver(this);
 
   local_pref_registrar_.Init(g_browser_process->local_state());
@@ -214,6 +216,7 @@ BrowserTabStripController::~BrowserTabStripController() {
     context_menu_contents_->Cancel();
 
   model_->RemoveObserver(this);
+  SessionRestore::RemoveObserver(this);
 }
 
 void BrowserTabStripController::InitFromModel(TabStrip* tabstrip) {
@@ -456,6 +459,32 @@ void BrowserTabStripController::TabDetachedAt(WebContents* contents,
   tabstrip_->RemoveTabAt(contents, model_index);
 }
 
+void BrowserTabStripController::ActiveTabChanged(
+    content::WebContents* old_contents,
+    content::WebContents* new_contents,
+    int index,
+    int reason) {
+  // Replacing the active tab doesn't change the index of the active tab.
+  if (reason == TabStripModelObserver::CHANGE_REASON_REPLACED)
+    return;
+
+  // If there's a previous contents then update the associated tab. If this
+  // message is due to a first tab being added to a tab strip there will be no
+  // |old_contents|.
+  if (old_contents) {
+    // Look up the contents. This can return kNoTab if the active tab was
+    // changed due to a tab being removed from the tab strip.
+    int old_index = model_->GetIndexOfWebContents(old_contents);
+    if (old_index != TabStripModel::kNoTab)
+      SetTabDataAt(old_contents, old_index);
+  }
+
+  // It's possible for |new_contents| to be null when the final tab in a tab
+  // strip is closed.
+  if (new_contents && index != TabStripModel::kNoTab)
+    SetTabDataAt(new_contents, index);
+}
+
 void BrowserTabStripController::TabSelectionChanged(
     TabStripModel* tab_strip_model,
     const ui::ListSelectionModel& old_model) {
@@ -469,8 +498,10 @@ void BrowserTabStripController::TabMoved(WebContents* contents,
   hover_tab_selector_.CancelTabTransition();
 
   // Pass in the TabRendererData as the pinned state may have changed.
+  const TabRendererData& old_data = tabstrip_->GetTabData(from_model_index);
   TabRendererData data;
-  SetTabRendererDataFromModel(contents, to_model_index, &data, EXISTING_TAB);
+  SetTabRendererDataFromModel(contents, to_model_index, &old_data, &data,
+                              EXISTING_TAB);
   tabstrip_->MoveTab(from_model_index, to_model_index, data);
 }
 
@@ -509,9 +540,15 @@ void BrowserTabStripController::TabNeedsAttentionAt(int index) {
   tabstrip_->SetTabNeedsAttention(index);
 }
 
+void BrowserTabStripController::OnWillRestoreTab(
+    content::WebContents* web_contents) {
+  pending_session_restore_tab_ = web_contents;
+}
+
 void BrowserTabStripController::SetTabRendererDataFromModel(
     WebContents* contents,
     int model_index,
+    const TabRendererData* old_data,
     TabRendererData* data,
     TabStatus tab_status) {
   data->favicon = favicon::TabFaviconFromWebContents(contents).AsImageSkia();
@@ -525,12 +562,21 @@ void BrowserTabStripController::SetTabRendererDataFromModel(
   data->blocked = model_->IsTabBlocked(model_index);
   data->app = extensions::TabHelper::FromWebContents(contents)->is_app();
   data->alert_state = chrome::GetTabAlertStateForContents(contents);
+  // These are persistent properties that need to be propagated across data
+  // changes as they are not state that can be queried from the underlying
+  // tab strip model.
+  data->was_active = (model_->active_index() == model_index) ||
+                     (old_data ? old_data->was_active : false);
+  data->created_by_session_restore =
+      old_data ? old_data->created_by_session_restore : false;
 }
 
 void BrowserTabStripController::SetTabDataAt(content::WebContents* web_contents,
                                              int model_index) {
+  const TabRendererData& old_data = tabstrip_->GetTabData(model_index);
   TabRendererData data;
-  SetTabRendererDataFromModel(web_contents, model_index, &data, EXISTING_TAB);
+  SetTabRendererDataFromModel(web_contents, model_index, &old_data, &data,
+                              EXISTING_TAB);
   tabstrip_->SetTabData(model_index, data);
 }
 
@@ -568,7 +614,12 @@ void BrowserTabStripController::AddTab(WebContents* contents,
   hover_tab_selector_.CancelTabTransition();
 
   TabRendererData data;
-  SetTabRendererDataFromModel(contents, index, &data, NEW_TAB);
+  SetTabRendererDataFromModel(contents, index, nullptr, &data, NEW_TAB);
+  data.was_active = is_active;
+  if (contents == pending_session_restore_tab_) {
+    data.created_by_session_restore = true;
+    pending_session_restore_tab_ = nullptr;
+  }
   tabstrip_->AddTabAt(index, data, is_active);
 }
 

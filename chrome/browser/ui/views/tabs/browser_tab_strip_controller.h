@@ -9,6 +9,7 @@
 
 #include "base/compiler_specific.h"
 #include "base/macros.h"
+#include "chrome/browser/sessions/session_restore_observer.h"
 #include "chrome/browser/ui/tabs/hover_tab_selector.h"
 #include "chrome/browser/ui/tabs/tab_strip_model.h"
 #include "chrome/browser/ui/views/frame/browser_view.h"
@@ -31,7 +32,8 @@ class ListSelectionModel;
 
 // An implementation of TabStripController that sources data from the
 // WebContentses in a TabStripModel.
-class BrowserTabStripController : public TabStripController,
+class BrowserTabStripController : public SessionRestoreObserver,
+                                  public TabStripController,
                                   public TabStripModelObserver {
  public:
   BrowserTabStripController(TabStripModel* model, BrowserView* browser_view);
@@ -86,6 +88,10 @@ class BrowserTabStripController : public TabStripController,
                      int model_index,
                      bool is_active) override;
   void TabDetachedAt(content::WebContents* contents, int model_index) override;
+  void ActiveTabChanged(content::WebContents* old_contents,
+                        content::WebContents* new_contents,
+                        int index,
+                        int reason) override;
   void TabSelectionChanged(TabStripModel* tab_strip_model,
                            const ui::ListSelectionModel& old_model) override;
   void TabMoved(content::WebContents* contents,
@@ -105,6 +111,11 @@ class BrowserTabStripController : public TabStripController,
                               int model_index) override;
   void TabNeedsAttentionAt(int index) override;
 
+  // SessionRestoreObserver implementation:
+  void OnSessionRestoreStartedLoadingTabs() override {}
+  void OnSessionRestoreFinishedLoadingTabs() override {}
+  void OnWillRestoreTab(content::WebContents* web_contents) override;
+
   const Browser* browser() const { return browser_view_->browser(); }
 
  protected:
@@ -117,6 +128,7 @@ class BrowserTabStripController : public TabStripController,
   // Sets the TabRendererData from the TabStripModel.
   virtual void SetTabRendererDataFromModel(content::WebContents* contents,
                                            int model_index,
+                                           const TabRendererData* old_data,
                                            TabRendererData* data,
                                            TabStatus tab_status);
 
@@ -151,6 +163,12 @@ class BrowserTabStripController : public TabStripController,
   TabStrip* tabstrip_;
 
   BrowserView* browser_view_;
+
+  // If non-null it means that there's a WebContents about to be added to our
+  // tab strip that has been created by a session restore. This is set via
+  // SessionRestoreObserver::OnWillRestoreTab immediately before a matching
+  // TabStripModelObserver::TabInsertedAt notificaiton.
+  content::WebContents* pending_session_restore_tab_;
 
   // If non-NULL it means we're showing a menu for the tab.
   std::unique_ptr<TabContextMenuContents> context_menu_contents_;

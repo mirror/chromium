@@ -46,6 +46,12 @@ struct CHROME_VIEWS_EXPORT TabRendererData {
   bool blocked;
   bool app;
   TabAlertState alert_state;
+  // Indicates whether or not the tab has ever been the active tab.
+  bool was_active;
+  // Indicates whether or not the tab was created as part of a session restore
+  // when opening the browser. This is perceived as an "automatic" thing, and
+  // displaying spinners isn't very useful to users in this case.
+  bool created_by_session_restore;
 };
 
 #endif  // CHROME_BROWSER_UI_VIEWS_TABS_TAB_RENDERER_DATA_H_
