@@ -124,6 +124,9 @@ if (window.PerfTestRunner) {
         PerfTestRunner.addRunTestStartMarker();
         startTime = PerfTestRunner.now();
 
+        if (test.params)  // passing as iframe url throws error, not sure of a better way to do this
+          iframe.contentDocument.write('<script>var params = ' + test.params + ';</script>');
+
         iframe.contentDocument.write(file);
         PerfTestRunner.forceLayout(iframe.contentDocument);
 

@@ -1,0 +1,42 @@
+<!doctype html>
+<title>Blob Build and Read Immediately Runner</title>
+<script src="resources/blob-shared.js"></script>
+<script src="resources/shared.js"></script>
+<body></body>
+<script>
+  function showManualInput() {
+    document.body.innerHTML =
+    `
+    <h4><b>Manual Input:</b></h4>
+    <form>
+      Blob size: <input type="text" id="blob_size"/><br/>
+      Number of blobs: <input type="text" id="num_blobs"/><br/>
+      <input type="button" value="Start Benchmark" onclick="getParams();" />
+    </form>
+    <h4><b>Benchmark Output:</b></h4>
+    `;
+  }
+
+  async function start() {
+    let size = params.size;
+    let numBlobs = params.numBlobs;
+    logToDocumentBody('Starting benchmark: ' + numBlobs + ' blobs of size ' + size);
+    await blobCreateAndImmediatelyRead(numBlobs, size);
+    reportDone();
+  }
+
+  async function getParams() {
+    let size = Number(document.getElementById('blob_size').value);
+    let numBlobs = Number(document.getElementById('num_blobs').value);
+    logToDocumentBody('Starting benchmark: ' + numBlobs + ' blobs of size ' + size);
+    let start = new Date().getTime();
+    await blobCreateAndImmediatelyRead(numBlobs, size);
+    let end = new Date().getTime();
+    logToDocumentBody('Time: ' + (end - start));
+  }
+
+  if (typeof params !== 'undefined')
+    start();
+  else
+    showManualInput();
+</script>
