@@ -253,6 +253,19 @@ Response ServiceWorkerHandler::StopWorker(const std::string& version_id) {
   return Response::OK();
 }
 
+Response ServiceWorkerHandler::StopWorkersForOrigin(
+    const std::string& scope_url, bool* out_result) {
+  if(!enabled_){
+    *out_result = false;
+    return Response::OK();
+  }
+  if (!context_)
+    return CreateContextErrorResponse();
+  context_->StopAllServiceWorkersForOrigin(GURL(scope_url).GetOrigin());
+  *out_result = true;
+  return Response::OK();
+}
+
 Response ServiceWorkerHandler::UpdateRegistration(
     const std::string& scope_url) {
   if (!enabled_)
