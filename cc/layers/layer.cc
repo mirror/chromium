@@ -481,6 +481,9 @@ void Layer::SetBackgroundFilters(const FilterOperations& filters) {
   if (inputs_.background_filters == filters)
     return;
   inputs_.background_filters = filters;
+  if (inputs_.mask_layer)
+    inputs_.mask_layer->SetLayerMaskType(
+        Layer::LayerMaskType::SINGLE_TEXTURE_MASK);
   SetSubtreePropertyChanged();
   SetPropertyTreesNeedRebuild();
   SetNeedsCommit();
