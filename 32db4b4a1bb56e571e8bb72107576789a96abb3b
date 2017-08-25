@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e2534d41_a072dcb1",
+        "filename": "ui/webui/resources/cr_elements/cr_link_row/cr_link_row.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-08-25T23:22:22Z",
+      "side": 1,
+      "message": "I changed it from @apply(--cr-secondary-text); only to separate the CLs. I just need a +1 on the other CL :)\nSo yeah, it\u0027s just a CL ordering thing.\n\nhttps://chromium-review.googlesource.com/c/chromium/src/+/634465",
+      "parentUuid": "11428eb3_55b50b07",
+      "revId": "32db4b4a1bb56e571e8bb72107576789a96abb3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fbc46d44_a353ba4e",
         "filename": "ui/webui/resources/cr_elements/cr_link_row/cr_link_row.html",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "32db4b4a1bb56e571e8bb72107576789a96abb3b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5a5e3a6_a7806ab9",
+        "filename": "ui/webui/resources/cr_elements/cr_link_row/cr_link_row.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-08-25T23:22:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fbc46d44_a353ba4e",
+      "revId": "32db4b4a1bb56e571e8bb72107576789a96abb3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
