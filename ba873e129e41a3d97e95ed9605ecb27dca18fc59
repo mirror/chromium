@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "6a3916b0_81e16b79",
+        "filename": "build/config/c++/c++.gni",
+        "patchSetId": 4
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1176174
+      },
+      "writtenOn": "2017-08-25T23:36:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "291a1780_ededb11d",
+      "range": {
+        "startLine": 18,
+        "startChar": 69,
+        "endLine": 18,
+        "endChar": 70
+      },
+      "revId": "ba873e129e41a3d97e95ed9605ecb27dca18fc59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "01b6f921_374bb9c9",
         "filename": "build/config/c++/c++.gni",
         "patchSetId": 4
@@ -116,6 +140,30 @@
       "revId": "ba873e129e41a3d97e95ed9605ecb27dca18fc59",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99e37e38_9f74787f",
+        "filename": "build/config/c++/c++.gni",
+        "patchSetId": 4
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1176174
+      },
+      "writtenOn": "2017-08-25T23:36:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "01b6f921_374bb9c9",
+      "range": {
+        "startLine": 24,
+        "startChar": 28,
+        "endLine": 24,
+        "endChar": 32
+      },
+      "revId": "ba873e129e41a3d97e95ed9605ecb27dca18fc59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
