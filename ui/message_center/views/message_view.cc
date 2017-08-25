@@ -61,11 +61,12 @@ base::string16 CreateAccessibleName(
 namespace message_center {
 
 MessageView::MessageView(MessageCenterController* controller,
-                         const Notification& notification)
+                         const Notification& notification, bool top_level)
     : controller_(controller),
       notification_id_(notification.id()),
       notifier_id_(notification.notifier_id()),
-      slide_out_controller_(this, this) {
+      slide_out_controller_(this, this),
+      is_nested_(!top_level) {
   SetFocusBehavior(FocusBehavior::ALWAYS);
 
   // Paint to a dedicated layer to make the layer non-opaque.
@@ -77,6 +78,18 @@ MessageView::MessageView(MessageCenterController* controller,
   background_view_->SetBackground(
       views::CreateSolidBackground(kNotificationBackgroundColor));
   AddChildView(background_view_);
+
+  if (!top_level) {
+    // Creates a shadow around the notification and changes slide-out behavior.
+    const auto& shadow =
+        gfx::ShadowDetails::Get(kShadowElevation, kShadowCornerRadius);
+    gfx::Insets ninebox_insets = gfx::ShadowValue::GetBlurRegion(shadow.values) +
+                                 gfx::Insets(kShadowCornerRadius);
+    SetBorder(views::CreateBorderPainter(
+        std::unique_ptr<views::Painter>(views::Painter::CreateImagePainter(
+            shadow.ninebox_image, ninebox_insets)),
+        -gfx::ShadowValue::GetMargin(shadow.values)));
+  }
 
   focus_painter_ = views::Painter::CreateSolidFocusPainter(
       kFocusBorderColor, gfx::Insets(0, 1, 3, 2));
@@ -98,19 +111,6 @@ void MessageView::UpdateWithNotification(const Notification& notification) {
 gfx::Insets MessageView::GetShadowInsets() {
   return -gfx::ShadowValue::GetMargin(
       gfx::ShadowDetails::Get(kShadowElevation, kShadowCornerRadius).values);
-}
-
-void MessageView::SetIsNested() {
-  is_nested_ = true;
-
-  const auto& shadow =
-      gfx::ShadowDetails::Get(kShadowElevation, kShadowCornerRadius);
-  gfx::Insets ninebox_insets = gfx::ShadowValue::GetBlurRegion(shadow.values) +
-                               gfx::Insets(kShadowCornerRadius);
-  SetBorder(views::CreateBorderPainter(
-      std::unique_ptr<views::Painter>(views::Painter::CreateImagePainter(
-          shadow.ninebox_image, ninebox_insets)),
-      -gfx::ShadowValue::GetMargin(shadow.values)));
 }
 
 void MessageView::GetAccessibleNodeData(ui::AXNodeData* node_data) {

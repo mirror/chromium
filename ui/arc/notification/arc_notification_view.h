@@ -27,7 +27,8 @@ class ArcNotificationView : public message_center::MessageView {
       std::unique_ptr<views::View> content_view,
       std::unique_ptr<ArcNotificationContentViewDelegate> delegate,
       message_center::MessageCenterController* controller,
-      const message_center::Notification& notification);
+      const message_center::Notification& notification,
+      bool top_level);
   ~ArcNotificationView() override;
 
   // These method are called by the content view when focus handling is defered

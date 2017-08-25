@@ -182,8 +182,9 @@ void NotificationView::CreateOrUpdateViews(const Notification& notification) {
 }
 
 NotificationView::NotificationView(MessageCenterController* controller,
-                                   const Notification& notification)
-    : MessageView(controller, notification),
+                                   const Notification& notification,
+                                   bool top_level)
+    : MessageView(controller, notification, top_level),
       clickable_(notification.clickable()) {
   // Create the top_view_, which collects into a vertical box all content
   // at the top of the notification (to the right of the icon) except for the

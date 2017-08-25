@@ -64,7 +64,7 @@ class MESSAGE_CENTER_EXPORT NotificationViewMD
       public views::ViewTargeterDelegate {
  public:
   NotificationViewMD(MessageCenterController* controller,
-                     const Notification& notification);
+                     const Notification& notification, bool top_level);
   ~NotificationViewMD() override;
 
   // Overridden from views::View:

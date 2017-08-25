@@ -24,7 +24,8 @@ ArcNotificationDelegate::~ArcNotificationDelegate() = default;
 std::unique_ptr<message_center::MessageView>
 ArcNotificationDelegate::CreateCustomMessageView(
     message_center::MessageCenterController* controller,
-    const message_center::Notification& notification) {
+    const message_center::Notification& notification,
+    bool top_level) {
   DCHECK(item_);
   DCHECK_EQ(item_->GetNotificationId(), notification.id());
 
@@ -32,7 +33,7 @@ ArcNotificationDelegate::CreateCustomMessageView(
   auto content_view_delegate = view->CreateContentViewDelegate();
   return base::MakeUnique<ArcNotificationView>(std::move(view),
                                                std::move(content_view_delegate),
-                                               controller, notification);
+                                               controller, notification, top_level);
 }
 
 void ArcNotificationDelegate::Close(bool by_user) {

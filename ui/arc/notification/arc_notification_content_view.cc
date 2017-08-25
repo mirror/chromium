@@ -338,6 +338,7 @@ void ArcNotificationContentView::MaybeCreateFloatingControlButtons() {
 }
 
 void ArcNotificationContentView::SetSurface(ArcNotificationSurface* surface) {
+  return;
   if (surface_ == surface)
     return;
 
@@ -393,6 +394,7 @@ void ArcNotificationContentView::UpdatePreferredSize() {
                         preferred_size.width();
     preferred_size.SetSize(message_center::kNotificationWidth,
                            preferred_size.height() * scale);
+    LOG(ERROR) << (preferred_size.height() * scale);
   }
 
   SetPreferredSize(preferred_size);
@@ -498,7 +500,9 @@ void ArcNotificationContentView::Layout() {
   // Scale notification surface if necessary.
   gfx::Transform transform;
   const gfx::Size surface_size = surface_->GetSize();
+  LOG(ERROR) << surface_->GetSize().ToString() << " " << width() << "x" << height();
   const gfx::Size contents_size = contents_bounds.size();
+  LOG(ERROR) << GetContentsBounds().ToString() << " " << surface_->GetWindow()->bounds().ToString();
   if (!surface_size.IsEmpty() && !contents_size.IsEmpty()) {
     transform.Scale(
         static_cast<float>(contents_size.width()) / surface_size.width(),

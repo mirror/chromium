@@ -439,13 +439,26 @@ Notification PlatformNotificationServiceImpl::CreateNotificationFromData(
   DCHECK_EQ(notification_data.actions.size(),
             notification_resources.action_icons.size());
 
+  auto* registry = extensions::ExtensionRegistry::Get(profile);
+  const extensions::Extension* extension =
+      registry->enabled_extensions().GetExtensionOrAppByURL(origin);
+  std::string display_name;
+  base::Optional<NotifierId> notifier_id;
+  if (extension) {
+    display_name = extension->name();
+    notifier_id = NotifierId(NotifierId::APPLICATION, extension->id());
+  } else {
+    display_name = origin.host();
+    notifier_id = NotifierId(origin);
+  }
+
   // TODO(peter): Handle different screen densities instead of always using the
   // 1x bitmap - crbug.com/585815.
   Notification notification(
       message_center::NOTIFICATION_TYPE_SIMPLE, notification_data.title,
       notification_data.body,
       gfx::Image::CreateFrom1xBitmap(notification_resources.notification_icon),
-      NotifierId(origin), base::UTF8ToUTF16(origin.host()), origin,
+      notifier_id.value(), base::UTF8ToUTF16(display_name), origin,
       notification_data.tag, message_center::RichNotificationData(), delegate);
 
   notification.set_service_worker_scope(service_worker_scope);

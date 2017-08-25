@@ -20,6 +20,12 @@ namespace message_center {
 MessageView* MessageViewFactory::Create(MessageCenterController* controller,
                                         const Notification& notification,
                                         bool top_level) {
+#if defined(OS_WIN)
+  // Don't create shadows for notifications on Windows under classic theme.
+  if (!ui::win::IsAeroGlassEnabled())
+    top_level = true;
+#endif  // OS_WIN
+
   MessageView* notification_view = nullptr;
   switch (notification.type()) {
     case NOTIFICATION_TYPE_BASE_FORMAT:
@@ -29,15 +35,15 @@ MessageView* MessageViewFactory::Create(MessageCenterController* controller,
     case NOTIFICATION_TYPE_PROGRESS:
       // All above roads lead to the generic NotificationView.
       if (MessageCenter::IsNewStyleNotificationEnabled())
-        notification_view = new NotificationViewMD(controller, notification);
+        notification_view = new NotificationViewMD(controller, notification, top_level);
       else
-        notification_view = new NotificationView(controller, notification);
+        notification_view = new NotificationView(controller, notification, top_level);
       break;
 #if defined(TOOLKIT_VIEWS) && !defined(OS_MACOSX)
     case NOTIFICATION_TYPE_CUSTOM:
       notification_view =
           notification.delegate()
-              ->CreateCustomMessageView(controller, notification)
+              ->CreateCustomMessageView(controller, notification, top_level)
               .release();
       break;
 #endif
@@ -50,23 +56,9 @@ MessageView* MessageViewFactory::Create(MessageCenterController* controller,
       LOG(WARNING) << "Unable to fulfill request for unrecognized or"
                    << "unsupported notification type " << notification.type()
                    << ". Falling back to simple notification type.";
-      notification_view = new NotificationView(controller, notification);
+      notification_view = new NotificationView(controller, notification, top_level);
   }
 
-#if defined(OS_LINUX)
-  // Don't create shadows for notification toasts on Linux or CrOS.
-  if (top_level)
-    return notification_view;
-#endif
-
-#if defined(OS_WIN)
-  // Don't create shadows for notifications on Windows under classic theme.
-  if (top_level && !ui::win::IsAeroGlassEnabled()) {
-    return notification_view;
-  }
-#endif  // OS_WIN
-
-  notification_view->SetIsNested();
   return notification_view;
 }
 

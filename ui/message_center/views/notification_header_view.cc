@@ -20,6 +20,7 @@
 #include "ui/views/animation/flood_fill_ink_drop_ripple.h"
 #include "ui/views/animation/ink_drop_highlight.h"
 #include "ui/views/animation/ink_drop_impl.h"
+#include "ui/views/background.h"
 #include "ui/views/border.h"
 #include "ui/views/controls/button/image_button.h"
 #include "ui/views/controls/image_view.h"
@@ -33,12 +34,12 @@ namespace {
 
 constexpr int kHeaderHeight = 32;
 constexpr int kExpandIconSize = 12;
-constexpr gfx::Insets kHeaderPadding(0, 16, 0, 2);
 constexpr int kHeaderHorizontalSpacing = 2;
-constexpr gfx::Insets kAppNameViewPadding(0, 4, 0, 0);
+constexpr gfx::Insets kAppNameViewPadding(11, 0, 6, 0);
 constexpr int kAppInfoContainerTopPadding = 10;
 constexpr int kAppInfoContainerBottomPadding = 4;
-constexpr int kExpandIconTopPadding = 5;
+constexpr gfx::Insets kHeaderPadding(0, 16, 0, 2);
+constexpr gfx::Insets kExpandIconViewPadding(13, 0, 7, 0);
 // Bullet character. The divider symbol between different parts of the header.
 constexpr wchar_t kNotificationHeaderDivider[] = L" \u2022 ";
 
@@ -135,7 +136,8 @@ base::string16 FormatToRelativeTime(base::Time past) {
 NotificationHeaderView::NotificationHeaderView(
     NotificationControlButtonsView* control_buttons_view,
     views::ButtonListener* listener)
-    : views::Button(listener) {
+    : views::Button(listener),
+      app_info_container_(new views::View()) {
   SetInkDropMode(InkDropMode::ON);
   set_has_ink_drop_action_on_click(true);
   set_animate_on_state_change(true);
@@ -143,91 +145,97 @@ NotificationHeaderView::NotificationHeaderView(
   set_ink_drop_base_color(kInkDropBaseColor);
   set_ink_drop_visible_opacity(kInkDropRippleVisibleOpacity);
 
-  views::BoxLayout* layout = new views::BoxLayout(
-      views::BoxLayout::kHorizontal, kHeaderPadding, kHeaderHorizontalSpacing);
-  layout->set_cross_axis_alignment(
-      views::BoxLayout::CROSS_AXIS_ALIGNMENT_CENTER);
-  SetLayoutManager(layout);
-
   ink_drop_container_ = new views::InkDropContainerView();
   ink_drop_container_->SetPaintToLayer();
   ink_drop_container_->layer()->SetFillsBoundsOpaquely(false);
   ink_drop_container_->SetVisible(false);
   AddChildView(ink_drop_container_);
 
-  views::View* app_info_container = new views::View();
   views::BoxLayout* app_info_layout =
       new views::BoxLayout(views::BoxLayout::kHorizontal,
-                           gfx::Insets(kAppInfoContainerTopPadding, 0,
-                                       kAppInfoContainerBottomPadding, 0),
+                           kHeaderPadding,
                            kHeaderHorizontalSpacing);
   app_info_layout->set_cross_axis_alignment(
-      views::BoxLayout::CROSS_AXIS_ALIGNMENT_CENTER);
-  app_info_container->SetLayoutManager(app_info_layout);
-  AddChildView(app_info_container);
+      views::BoxLayout::CROSS_AXIS_ALIGNMENT_END);
+  app_info_layout->set_minimum_cross_axis_size(kHeaderHeight);
+  app_info_container_->SetLayoutManager(app_info_layout);
+  AddChildView(app_info_container_);
 
   // App icon view
   app_icon_view_ = new views::ImageView();
-  app_icon_view_->SetImageSize(gfx::Size(kSmallImageSize, kSmallImageSize));
-  app_info_container->AddChildView(app_icon_view_);
+  app_icon_view_->SetImageSize(gfx::Size(kSmallImageSizeMD, kSmallImageSizeMD));
+  app_icon_view_->SetBorder(
+            views::CreateEmptyBorder(10, 0, 4, 4));
+  app_icon_view_->SetVerticalAlignment(views::ImageView::LEADING);
+  app_icon_view_->SetHorizontalAlignment(views::ImageView::LEADING);
+  app_info_container_->AddChildView(app_icon_view_);
 
   // App name view
   const gfx::FontList& font_list =
       views::style::GetFont(views::style::CONTEXT_LABEL,
                             views::style::STYLE_PRIMARY)
           .Derive(0, gfx::Font::NORMAL, gfx::Font::Weight::NORMAL);
+  CHECK_EQ(12, font_list.GetFontSize());
+  CHECK_EQ(12, font_list.GetBaseline());
+  LOG(ERROR) << font_list.GetBaseline();
+  LOG(ERROR) << font_list.GetFontSize();
   app_name_view_ = new views::Label(base::string16());
   app_name_view_->SetFontList(font_list);
   app_name_view_->SetHorizontalAlignment(gfx::ALIGN_LEFT);
   app_name_view_->SetEnabledColor(accent_color_);
   app_name_view_->SetBorder(views::CreateEmptyBorder(kAppNameViewPadding));
-  app_info_container->AddChildView(app_name_view_);
+  app_info_container_->AddChildView(app_name_view_);
 
   // Summary text divider
   summary_text_divider_ =
       new views::Label(base::WideToUTF16(kNotificationHeaderDivider));
   summary_text_divider_->SetFontList(font_list);
   summary_text_divider_->SetHorizontalAlignment(gfx::ALIGN_LEFT);
+  summary_text_divider_->SetBorder(views::CreateEmptyBorder(kAppNameViewPadding));
   summary_text_divider_->SetVisible(false);
-  app_info_container->AddChildView(summary_text_divider_);
+  app_info_container_->AddChildView(summary_text_divider_);
 
   // Summary text view
   summary_text_view_ = new views::Label(base::string16());
   summary_text_view_->SetFontList(font_list);
   summary_text_view_->SetHorizontalAlignment(gfx::ALIGN_LEFT);
+  summary_text_view_->SetBorder(views::CreateEmptyBorder(kAppNameViewPadding));
   summary_text_view_->SetVisible(false);
-  app_info_container->AddChildView(summary_text_view_);
+  app_info_container_->AddChildView(summary_text_view_);
 
   // Timestamp divider
   timestamp_divider_ =
       new views::Label(base::WideToUTF16(kNotificationHeaderDivider));
   timestamp_divider_->SetFontList(font_list);
   timestamp_divider_->SetHorizontalAlignment(gfx::ALIGN_LEFT);
+  timestamp_divider_->SetBorder(views::CreateEmptyBorder(kAppNameViewPadding));
   timestamp_divider_->SetVisible(false);
-  app_info_container->AddChildView(timestamp_divider_);
+  app_info_container_->AddChildView(timestamp_divider_);
 
   // Timestamp view
   timestamp_view_ = new views::Label(base::string16());
   timestamp_view_->SetFontList(font_list);
   timestamp_view_->SetHorizontalAlignment(gfx::ALIGN_LEFT);
+  timestamp_view_->SetBorder(views::CreateEmptyBorder(kAppNameViewPadding));
   timestamp_view_->SetVisible(false);
-  app_info_container->AddChildView(timestamp_view_);
+  app_info_container_->AddChildView(timestamp_view_);
 
   // Expand button view
   expand_button_ = new ExpandButton();
   SetExpanded(is_expanded_);
   expand_button_->SetBorder(
-      views::CreateEmptyBorder(kExpandIconTopPadding, 0, 0, 0));
-  app_info_container->AddChildView(expand_button_);
+      views::CreateEmptyBorder(kExpandIconViewPadding));
+  app_info_container_->AddChildView(expand_button_);
 
   // Spacer between left-aligned views and right-aligned views
   views::View* spacer = new views::View;
   spacer->SetPreferredSize(gfx::Size(1, kHeaderHeight));
   AddChildView(spacer);
-  layout->SetFlexForView(spacer, 1);
 
   // Settings and close buttons view
   AddChildView(control_buttons_view);
+
+  SetPreferredSize(gfx::Size(kNotificationWidth, kHeaderHeight));
 }
 
 void NotificationHeaderView::SetAppIcon(const gfx::ImageSkia& img) {
@@ -235,7 +243,7 @@ void NotificationHeaderView::SetAppIcon(const gfx::ImageSkia& img) {
 }
 
 void NotificationHeaderView::ClearAppIcon() {
-  app_icon_view_->SetImage(gfx::CreateVectorIcon(kProductIcon, accent_color_));
+  app_icon_view_->SetImage(gfx::CreateVectorIcon(kProductIcon, kSmallImageSizeMD, accent_color_));
 }
 
 void NotificationHeaderView::SetAppName(const base::string16& name) {
@@ -342,6 +350,16 @@ void NotificationHeaderView::AddInkDropLayer(ui::Layer* ink_drop_layer) {
 void NotificationHeaderView::RemoveInkDropLayer(ui::Layer* ink_drop_layer) {
   ResetInkDropMask();
   ink_drop_container_->RemoveInkDropLayer(ink_drop_layer);
+}
+
+void NotificationHeaderView::Layout() {
+  CHECK_EQ(32, app_info_container_->GetPreferredSize().height());
+  if (GetContentsBounds().IsEmpty())
+    return;
+  app_info_container_->SetBoundsRect(GetContentsBounds());
+  LOG(ERROR) << app_info_container_->bounds().ToString();
+  CHECK_EQ(32, app_info_container_->height());
+  LOG(ERROR) << app_name_view_->bounds().ToString();
 }
 
 void NotificationHeaderView::UpdateSummaryTextVisibility() {

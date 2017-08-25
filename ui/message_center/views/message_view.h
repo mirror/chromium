@@ -38,7 +38,7 @@ class MESSAGE_CENTER_EXPORT MessageView
       public views::SlideOutController::Delegate {
  public:
   MessageView(MessageCenterController* controller,
-              const Notification& notification);
+              const Notification& notification, bool top_level);
   ~MessageView() override;
 
   // Updates this view with the new data contained in the notification.
@@ -46,9 +46,6 @@ class MESSAGE_CENTER_EXPORT MessageView
 
   // Returns the insets for the shadow it will have for rich notification.
   static gfx::Insets GetShadowInsets();
-
-  // Creates a shadow around the notification and changes slide-out behavior.
-  void SetIsNested();
 
   virtual NotificationControlButtonsView* GetControlButtonsView() const = 0;
   virtual bool IsCloseButtonFocused() const = 0;
@@ -126,7 +123,7 @@ class MESSAGE_CENTER_EXPORT MessageView
 
   // True if |this| is embedded in another view. Equivalent to |!top_level| in
   // MessageViewFactory parlance.
-  bool is_nested_ = false;
+  const bool is_nested_;
 
   DISALLOW_COPY_AND_ASSIGN(MessageView);
 };

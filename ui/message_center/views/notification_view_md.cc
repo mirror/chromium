@@ -42,6 +42,8 @@
 #include "ui/views/view_targeter.h"
 #include "ui/views/widget/widget.h"
 
+#include "base/debug/stack_trace.h"
+
 namespace message_center {
 
 namespace {
@@ -50,7 +52,7 @@ namespace {
 constexpr gfx::Insets kContentRowPadding(2, 12, 12, 12);
 constexpr gfx::Insets kActionsRowPadding(8, 8, 8, 8);
 constexpr int kActionsRowHorizontalSpacing = 8;
-constexpr gfx::Insets kActionButtonPadding(0, 12, 0, 12);
+constexpr gfx::Insets kActionButtonPadding(0, 16, 0, 12);
 constexpr gfx::Insets kStatusTextPadding(4, 0, 0, 0);
 constexpr gfx::Size kActionButtonMinSize(88, 32);
 // TODO(tetsui): Move |kIconViewSize| to message_center_style.h and merge with
@@ -420,11 +422,16 @@ void NotificationViewMD::CreateOrUpdateViews(const Notification& notification) {
 }
 
 NotificationViewMD::NotificationViewMD(MessageCenterController* controller,
-                                       const Notification& notification)
-    : MessageView(controller, notification),
+                                       const Notification& notification,
+                                       bool top_level)
+    : MessageView(controller, notification, top_level),
       clickable_(notification.clickable()) {
-  SetLayoutManager(
-      new views::BoxLayout(views::BoxLayout::kVertical, gfx::Insets(), 0));
+        LOG(ERROR) << GetInsets().ToString();
+  views::BoxLayout* main_layout =
+      new views::BoxLayout(views::BoxLayout::kVertical, gfx::Insets(), 0);
+  //main_layout->set_cross_axis_alignment(
+  //    views::BoxLayout::CROSS_AXIS_ALIGNMENT_START);
+  SetLayoutManager(main_layout);
 
   control_buttons_view_ =
       base::MakeUnique<NotificationControlButtonsView>(this);
@@ -446,8 +453,12 @@ NotificationViewMD::NotificationViewMD(MessageCenterController* controller,
 
   // |left_content_| contains most contents like title, message, etc...
   left_content_ = new views::View();
-  left_content_->SetLayoutManager(new views::BoxLayout(
-      views::BoxLayout::kVertical, kLeftContentPadding, 0));
+  views::BoxLayout* left_layout = new views::BoxLayout(
+      views::BoxLayout::kVertical, gfx::Insets(), 0);
+  left_layout->set_cross_axis_alignment(
+      views::BoxLayout::CROSS_AXIS_ALIGNMENT_START);
+  left_content_->SetLayoutManager(left_layout);
+  left_content_->SetBorder(views::CreateEmptyBorder(kLeftContentPadding));
   content_row_->AddChildView(left_content_);
   content_row_layout->SetFlexForView(left_content_, 1);
 
@@ -483,6 +494,8 @@ void NotificationViewMD::Layout() {
   // we should show expand button or not depends on the current view layout.
   // (e.g. Show expand button when |message_view_| exceeds one line.)
   header_row_->SetExpandButtonEnabled(IsExpandable());
+
+  LOG(ERROR) << header_row_->bounds().ToString();
 }
 
 void NotificationViewMD::OnFocus() {

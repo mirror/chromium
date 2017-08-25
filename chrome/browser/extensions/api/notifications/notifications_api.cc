@@ -347,6 +347,7 @@ bool NotificationsApiFunction::CreateNotification(
                                  extension_->id()),
       base::UTF8ToUTF16(extension_->name()), extension_->url(),
       api_delegate->id(), optional_fields, api_delegate);
+  LOG(ERROR) << extension_->name();
 
   // Apply the "requireInteraction" flag. The value defaults to false.
   notification.set_never_timeout(options->require_interaction &&

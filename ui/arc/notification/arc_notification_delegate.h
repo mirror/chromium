@@ -29,7 +29,8 @@ class ArcNotificationDelegate : public message_center::NotificationDelegate {
   // message_center::NotificationDelegate overrides:
   std::unique_ptr<message_center::MessageView> CreateCustomMessageView(
       message_center::MessageCenterController* controller,
-      const message_center::Notification& notification) override;
+      const message_center::Notification& notification,
+      bool top_level) override;
   void Close(bool by_user) override;
   void Click() override;
   bool SettingsClick() override;

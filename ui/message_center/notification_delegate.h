@@ -60,7 +60,8 @@ class MESSAGE_CENTER_EXPORT NotificationDelegate
   // NOTIFICATION_TYPE_CUSTOM.
   virtual std::unique_ptr<MessageView> CreateCustomMessageView(
       MessageCenterController* controller,
-      const Notification& notification);
+      const Notification& notification,
+      bool top_level);
 #endif
 
   // Indicates whether this notification should be displayed when there is

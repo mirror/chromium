@@ -41,13 +41,14 @@ class NotificationHeaderView : public views::Button {
   void ClearTimestamp();
   bool IsExpandButtonEnabled();
 
-  // Button override:
+  // views::Button override:
   std::unique_ptr<views::InkDrop> CreateInkDrop() override;
   std::unique_ptr<views::InkDropRipple> CreateInkDropRipple() const override;
   std::unique_ptr<views::InkDropHighlight> CreateInkDropHighlight()
       const override;
   void AddInkDropLayer(ui::Layer* ink_drop_layer) override;
   void RemoveInkDropLayer(ui::Layer* ink_drop_layer) override;
+  void Layout() override;
 
   views::ImageView* expand_button() { return expand_button_; }
 
@@ -57,9 +58,10 @@ class NotificationHeaderView : public views::Button {
   // Update visibility for both |summary_text_view_| and |timestamp_view_|.
   void UpdateSummaryTextVisibility();
 
-  SkColor accent_color_ = message_center::kNotificationDefaultAccentColor;
+  SkColor accent_color_ = message_center::kDimTextColor;
 
   views::InkDropContainerView* ink_drop_container_ = nullptr;
+  views::View* const app_info_container_;
   views::Label* app_name_view_ = nullptr;
   views::Label* summary_text_divider_ = nullptr;
   views::Label* summary_text_view_ = nullptr;

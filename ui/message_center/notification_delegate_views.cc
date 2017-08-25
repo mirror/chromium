@@ -10,7 +10,8 @@ namespace message_center {
 
 std::unique_ptr<MessageView> NotificationDelegate::CreateCustomMessageView(
     MessageCenterController* controller,
-    const Notification& notification) {
+    const Notification& notification,
+    bool top_level) {
   return nullptr;
 }
 

@@ -29,8 +29,9 @@ ArcNotificationView::ArcNotificationView(
     std::unique_ptr<views::View> contents_view,
     std::unique_ptr<ArcNotificationContentViewDelegate> contents_view_delegate,
     message_center::MessageCenterController* controller,
-    const message_center::Notification& notification)
-    : message_center::MessageView(controller, notification),
+    const message_center::Notification& notification,
+    bool top_level)
+    : message_center::MessageView(controller, notification, top_level),
       contents_view_(contents_view.get()),
       contents_view_delegate_(std::move(contents_view_delegate)) {
   DCHECK_EQ(message_center::NOTIFICATION_TYPE_CUSTOM, notification.type());
@@ -116,6 +117,8 @@ gfx::Size ArcNotificationView::CalculatePreferredSize() const {
   const int contents_width =
       message_center::kNotificationWidth - insets.width();
   const int contents_height = contents_view_->GetHeightForWidth(contents_width);
+  LOG(ERROR) << (insets.ToString());
+  LOG(ERROR) << (contents_height + insets.height());
   return gfx::Size(message_center::kNotificationWidth,
                    contents_height + insets.height());
 }
