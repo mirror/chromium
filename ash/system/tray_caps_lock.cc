@@ -215,7 +215,14 @@ TrayCapsLock::~TrayCapsLock() {
 }
 
 // static
-void TrayCapsLock::RegisterForeignPrefs(PrefRegistrySimple* registry) {
+void TrayCapsLock::RegisterProfilePrefs(PrefRegistrySimple* registry,
+                                        bool for_test) {
+  if (for_test) {
+    // There is no remote pref service, so pretend that ash owns the pref.
+    registry->RegisterIntegerPref(prefs::kLanguageRemapSearchKeyTo,
+                                  chromeos::input_method::kSearchKey);
+    return;
+  }
   // Pref is owned by chrome and flagged as PUBLIC.
   registry->RegisterForeignPref(prefs::kLanguageRemapSearchKeyTo);
 }
