@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9254bc4d_a5ed7460",
+        "filename": "chrome/browser/vr/ui_scene_manager_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-08-25T13:57:58Z",
+      "side": 1,
+      "message": "?",
+      "revId": "239e472da05610bbcf4cd043f0494e3bfaf3081a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
