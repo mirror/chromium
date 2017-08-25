@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a3ccbbc4_2471adea",
+        "filename": "net/spdy/chromium/spdy_session.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1584,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-08-25T01:51:25Z",
+      "side": 1,
+      "message": "Obsolete.",
+      "parentUuid": "de366bda_094bdbde",
+      "revId": "9f3104a463af3b51d775c120f8666a942802dfc9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3f1ba7b2_5ac7f7f4",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 4
@@ -33,6 +51,24 @@
       "revId": "9f3104a463af3b51d775c120f8666a942802dfc9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29112790_3070760b",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 43712,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-08-25T01:51:25Z",
+      "side": 1,
+      "message": "Obsolete.",
+      "parentUuid": "3f1ba7b2_5ac7f7f4",
+      "revId": "9f3104a463af3b51d775c120f8666a942802dfc9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
