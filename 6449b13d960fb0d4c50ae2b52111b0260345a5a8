@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "8f6dcda6_d693a96e",
+        "filename": "content/renderer/media/webrtc/webrtc_media_stream_adapter.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-08-25T08:02:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "16ed9cd6_eb7eaaa6",
+      "revId": "6449b13d960fb0d4c50ae2b52111b0260345a5a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6c5ac314_506e2748",
         "filename": "content/renderer/media/webrtc/webrtc_media_stream_adapter.cc",
         "patchSetId": 3
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "b5f5c07c_1c6e0a5f",
+        "filename": "content/renderer/media/webrtc/webrtc_media_stream_adapter.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-08-25T08:02:41Z",
+      "side": 1,
+      "message": "donno",
+      "parentUuid": "6c5ac314_506e2748",
+      "revId": "6449b13d960fb0d4c50ae2b52111b0260345a5a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d57cb672_e0dc2daf",
         "filename": "content/renderer/media/webrtc/webrtc_media_stream_adapter.cc",
         "patchSetId": 3
@@ -50,6 +86,24 @@
       "revId": "6449b13d960fb0d4c50ae2b52111b0260345a5a8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c35554ca_d34627e0",
+        "filename": "content/renderer/media/webrtc/webrtc_media_stream_adapter.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-08-25T08:02:41Z",
+      "side": 1,
+      "message": "It should be with the bug we discussed (this CL does not affect that bug except its in LocalWebRtcMediaStreamAdapter instead of WebRtcMediaStreamAdapter now). That should be addressed separately.",
+      "parentUuid": "d57cb672_e0dc2daf",
+      "revId": "6449b13d960fb0d4c50ae2b52111b0260345a5a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -76,6 +130,30 @@
     },
     {
       "key": {
+        "uuid": "239eea4f_25d8cef9",
+        "filename": "content/renderer/media/webrtc/webrtc_media_stream_adapter.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-08-25T08:02:41Z",
+      "side": 1,
+      "message": "Aye.",
+      "parentUuid": "413a9dab_b1cfc9fe",
+      "range": {
+        "startLine": 116,
+        "startChar": 2,
+        "endLine": 116,
+        "endChar": 15
+      },
+      "revId": "6449b13d960fb0d4c50ae2b52111b0260345a5a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4c8d5151_1f3fc5c0",
         "filename": "content/renderer/media/webrtc/webrtc_media_stream_adapter.h",
         "patchSetId": 3
@@ -96,6 +174,30 @@
       "revId": "6449b13d960fb0d4c50ae2b52111b0260345a5a8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20bae31d_0eb13905",
+        "filename": "content/renderer/media/webrtc/webrtc_media_stream_adapter.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-08-25T08:02:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4c8d5151_1f3fc5c0",
+      "range": {
+        "startLine": 38,
+        "startChar": 8,
+        "endLine": 38,
+        "endChar": 21
+      },
+      "revId": "6449b13d960fb0d4c50ae2b52111b0260345a5a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -122,6 +224,30 @@
     },
     {
       "key": {
+        "uuid": "52f4ec6c_408be14a",
+        "filename": "content/renderer/media/webrtc/webrtc_media_stream_adapter.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-08-25T08:02:41Z",
+      "side": 1,
+      "message": "No because we use it for DCHECK BelongsToCurrentThread().",
+      "parentUuid": "8df810f3_d7b0a1a2",
+      "range": {
+        "startLine": 74,
+        "startChar": 22,
+        "endLine": 74,
+        "endChar": 44
+      },
+      "revId": "6449b13d960fb0d4c50ae2b52111b0260345a5a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ddef06b3_be60b2b5",
         "filename": "content/renderer/media/webrtc/webrtc_media_stream_adapter.h",
         "patchSetId": 3
@@ -142,6 +268,30 @@
       "revId": "6449b13d960fb0d4c50ae2b52111b0260345a5a8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e5842e7_71fdb400",
+        "filename": "content/renderer/media/webrtc/webrtc_media_stream_adapter.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-08-25T08:02:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ddef06b3_be60b2b5",
+      "range": {
+        "startLine": 81,
+        "startChar": 39,
+        "endLine": 81,
+        "endChar": 44
+      },
+      "revId": "6449b13d960fb0d4c50ae2b52111b0260345a5a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -168,6 +318,30 @@
     },
     {
       "key": {
+        "uuid": "1d01cbbd_1a17d163",
+        "filename": "content/renderer/media/webrtc/webrtc_media_stream_adapter_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-08-25T08:02:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "42d45424_ffd31dad",
+      "range": {
+        "startLine": 216,
+        "startChar": 13,
+        "endLine": 216,
+        "endChar": 15
+      },
+      "revId": "6449b13d960fb0d4c50ae2b52111b0260345a5a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "92f0ca66_85ba0a44",
         "filename": "content/renderer/media/webrtc/webrtc_media_stream_adapter_unittest.cc",
         "patchSetId": 3
@@ -191,6 +365,30 @@
     },
     {
       "key": {
+        "uuid": "7d993d60_06e64edd",
+        "filename": "content/renderer/media/webrtc/webrtc_media_stream_adapter_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-08-25T08:02:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "92f0ca66_85ba0a44",
+      "range": {
+        "startLine": 217,
+        "startChar": 17,
+        "endLine": 217,
+        "endChar": 24
+      },
+      "revId": "6449b13d960fb0d4c50ae2b52111b0260345a5a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "02aa092d_282e90d0",
         "filename": "content/renderer/media/webrtc/webrtc_media_stream_adapter_unittest.cc",
         "patchSetId": 3
@@ -205,6 +403,24 @@
       "revId": "6449b13d960fb0d4c50ae2b52111b0260345a5a8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "391e48ad_668ff970",
+        "filename": "content/renderer/media/webrtc/webrtc_media_stream_adapter_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-08-25T08:02:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "02aa092d_282e90d0",
+      "revId": "6449b13d960fb0d4c50ae2b52111b0260345a5a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
