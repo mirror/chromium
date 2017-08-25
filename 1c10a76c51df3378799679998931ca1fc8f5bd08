@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4d71f10c_22ffa1bc",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 4316,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-08-25T21:56:48Z",
+      "side": 1,
+      "message": "comment explaining why android differs from rest of the platform",
+      "revId": "1c10a76c51df3378799679998931ca1fc8f5bd08",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66ac72fd_5b56f613",
+        "filename": "content/renderer/render_view_browsertest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-08-25T21:56:48Z",
+      "side": 1,
+      "message": "you can use MessageLoopRunner::QuitClosure instead of this",
+      "revId": "1c10a76c51df3378799679998931ca1fc8f5bd08",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ae86c4e_f0c0d84a",
+        "filename": "content/renderer/render_view_browsertest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1476,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-08-25T21:56:48Z",
+      "side": 1,
+      "message": "this only passes on android now, right?",
+      "revId": "1c10a76c51df3378799679998931ca1fc8f5bd08",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd6c2f45_74f469bd",
+        "filename": "content/renderer/render_widget.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 2017,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-08-25T21:56:48Z",
+      "side": 1,
+      "message": "didn\u0027t notice this earlier.. this is a FrameHostMsg, it should be sent from RenderFrameImpl\n\nWhy does the posting have to happen in Widget instead? RFI has a weak pointer factory too",
+      "revId": "1c10a76c51df3378799679998931ca1fc8f5bd08",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
