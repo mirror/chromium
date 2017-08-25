@@ -480,7 +480,17 @@
   },
   {
     "prefix": "outofblink-cors",
-    "base": "external/wpt/fetch",
+    "base": "external/wpt",
+    "args": ["--enable-features=OutOfBlinkCORS,LoadingWithMojo"]
+  },
+  {
+    "prefix": "outofblink-cors",
+    "base": "fast",
+    "args": ["--enable-features=OutOfBlinkCORS,LoadingWithMojo"]
+  },
+  {
+    "prefix": "outofblink-cors",
+    "base": "http/tests",
     "args": ["--enable-features=OutOfBlinkCORS,LoadingWithMojo"]
   },
   {
