@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "888041bd_596ba8a9",
+        "filename": "third_party/WebKit/Source/core/editing/LayoutSelection.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 452,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2017-08-25T16:42:10Z",
+      "side": 1,
+      "message": "Isn\u0027t this |kEnd|?",
+      "revId": "22cab1f74dcc1dd4b2938fdef1225740683e666c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
