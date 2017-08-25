@@ -1051,7 +1051,8 @@ bool PasswordAutofillAgent::ShowSuggestions(
                                                                 frame_url);
       }
 #endif
-      if (ShouldShowStandaloneManuallFallback(element) &&
+      if (!generation_popup_showing &&
+          ShouldShowStandaloneManuallFallback(element) &&
           ShowManualFallbackSuggestion(element)) {
         return true;
       }
