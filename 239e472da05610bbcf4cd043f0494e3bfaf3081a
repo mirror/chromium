@@ -16,6 +16,24 @@
       "revId": "239e472da05610bbcf4cd043f0494e3bfaf3081a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1542c994_dd55cd64",
+        "filename": "chrome/browser/vr/ui_scene_manager_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-08-25T14:06:37Z",
+      "side": 1,
+      "message": "This is to match the format with the next unit test. VerifyElementsVisible feels belong to previous code block.",
+      "parentUuid": "9254bc4d_a5ed7460",
+      "revId": "239e472da05610bbcf4cd043f0494e3bfaf3081a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
