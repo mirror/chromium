@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "8769612b_d15de004",
+        "filename": "build/android/apk_operations.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 484,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-08-25T19:35:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "47f07b7d_a040f221",
+      "revId": "0981070054b8a1ea042f7098dd10d51bbf7f2210",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ddc784a1_711255c0",
         "filename": "build/android/apk_operations.py",
         "patchSetId": 3
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "706a001b_744f8a83",
+        "filename": "build/android/apk_operations.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 506,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-08-25T19:35:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ddc784a1_711255c0",
+      "revId": "0981070054b8a1ea042f7098dd10d51bbf7f2210",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "efbc1bd5_a5fc4067",
         "filename": "build/android/apk_operations.py",
         "patchSetId": 3
@@ -47,6 +83,24 @@
       "writtenOn": "2017-08-25T19:06:37Z",
       "side": 1,
       "message": "Are accepts_args and accepts_command_line_flags mutually exclusive? Could we wind up trying to add --args twice?",
+      "revId": "0981070054b8a1ea042f7098dd10d51bbf7f2210",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "766114f2_f3246fa4",
+        "filename": "build/android/apk_operations.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 528,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-08-25T19:35:27Z",
+      "side": 1,
+      "message": "They are. argparse raises an exception if you try to add them both. (added a comment)",
+      "parentUuid": "efbc1bd5_a5fc4067",
       "revId": "0981070054b8a1ea042f7098dd10d51bbf7f2210",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
