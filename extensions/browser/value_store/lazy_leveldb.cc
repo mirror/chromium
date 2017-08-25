@@ -250,8 +250,6 @@ ValueStore::Status LazyLevelDb::ToValueStoreError(
   if (status.ok())
     return ValueStore::Status();
 
-  CHECK(!status.IsNotFound());  // not an error
-
   std::string message = status.ToString();
   // The message may contain |db_path_|, which may be considered sensitive
   // data, and those strings are passed to the extension, so strip it out.
