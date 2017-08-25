@@ -7,6 +7,7 @@ package org.chromium.chrome.browser.offlinepages.prefetch;
 import android.content.Context;
 
 import org.chromium.base.ContextUtils;
+import org.chromium.base.Log;
 import org.chromium.base.VisibleForTesting;
 import org.chromium.base.annotations.CalledByNative;
 import org.chromium.base.annotations.JNINamespace;
@@ -31,7 +32,7 @@ import java.util.concurrent.TimeUnit;
  */
 @JNINamespace("offline_pages::prefetch")
 public class PrefetchBackgroundTask extends NativeBackgroundTask {
-    public static final long DEFAULT_START_DELAY_SECONDS = 15 * 60;
+    public static final long DEFAULT_START_DELAY_SECONDS = 1 * 60;
     private static final int MINIMUM_BATTERY_PERCENTAGE_FOR_PREFETCHING = 50;
 
     private static final String TAG = "OPPrefetchBGTask";
@@ -100,6 +101,7 @@ public class PrefetchBackgroundTask extends NativeBackgroundTask {
         // * Unmetered WiFi connection
         // * >50% battery
         // TODO(dewittj): * Preferences enabled.
+        Log.d(TAG, "@@@@@@ onStartTaskBeforeNativeLoaded");
 
         mTaskFinishedCallback = callback;
 
@@ -110,8 +112,11 @@ public class PrefetchBackgroundTask extends NativeBackgroundTask {
 
         if (!areBatteryConditionsMet(deviceConditions)
                 || !areNetworkConditionsMet(context, deviceConditions)) {
+            Log.d(TAG, "@@@@@@ conditions not met, rescheduling");
             return NativeBackgroundTask.RESCHEDULE;
         }
+
+        Log.d(TAG, "@@@@@@ Loading Native chrome");
 
         return NativeBackgroundTask.LOAD_NATIVE;
     }

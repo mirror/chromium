@@ -8,6 +8,7 @@
 
 #include "base/bind.h"
 #include "base/guid.h"
+#include "base/logging.h"
 #include "base/memory/ptr_util.h"
 #include "base/task_runner.h"
 #include "base/task_scheduler/post_task.h"
@@ -94,6 +95,7 @@ void PrefetchDispatcherImpl::RemovePrefetchURLsByClientId(
 
 void PrefetchDispatcherImpl::BeginBackgroundTask(
     std::unique_ptr<ScopedBackgroundTask> background_task) {
+  DVLOG(0) << "@@@@@@ " << __func__;
   if (!service_->GetPrefetchConfiguration()->IsPrefetchingEnabled())
     return;
   service_->GetLogger()->RecordActivity("Beginning Background Task.");
@@ -105,6 +107,7 @@ void PrefetchDispatcherImpl::BeginBackgroundTask(
 }
 
 void PrefetchDispatcherImpl::QueueReconcileTasks() {
+  DVLOG(0) << "@@@@@@ " << __func__;
   // Note: For optimal results StaleEntryFinalizerTask should be executed before
   // other reconciler tasks that deal with external systems so that entries
   // finalized by it will promptly effect any external processing they relate
@@ -129,6 +132,7 @@ void PrefetchDispatcherImpl::QueueReconcileTasks() {
 }
 
 void PrefetchDispatcherImpl::QueueActionTasks() {
+  DVLOG(0) << "@@@@@@ " << __func__;
   std::unique_ptr<Task> download_archives_task =
       base::MakeUnique<DownloadArchivesTask>(service_->GetPrefetchStore(),
                                              service_->GetPrefetchDownloader());

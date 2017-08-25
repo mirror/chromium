@@ -141,6 +141,8 @@ enum class PrefetchItemErrorCode {
   GENERATE_PAGE_BUNDLE_REQUEST_MAX_ATTEMPTS_REACHED = 1300,
   // Exceeded maximum retries for download.
   DOWNLOAD_MAX_ATTEMPTS_REACHED = 1400,
+  // User set the clock back too far in time.
+  MAXIMUM_CLOCK_SKEW_EXCEEDED = 1500,
 };
 
 // Callback invoked upon completion of a prefetch request.
