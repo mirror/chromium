@@ -8,7 +8,6 @@
 #include <memory>
 #include <vector>
 
-#include "base/logging.h"
 #include "base/memory/ptr_util.h"
 #include "base/run_loop.h"
 #include "base/test/histogram_tester.h"
@@ -245,7 +244,7 @@ class HostScannerTest : public NetworkStateTest {
       FakeHostScannerOperation& fake_operation,
       size_t test_device_index,
       bool is_final_scan_result,
-      bool is_connected_to_internet) {
+      bool can_show_notification) {
     bool already_in_list = false;
     for (auto& scanned_device_info : scanned_device_infos_from_current_scan_) {
       if (scanned_device_info.remote_device.GetDeviceId() ==
@@ -267,7 +266,7 @@ class HostScannerTest : public NetworkStateTest {
     EXPECT_EQ(previous_scan_finished_count + (is_final_scan_result ? 1 : 0),
               test_observer_->scan_finished_count());
 
-    if (is_connected_to_internet) {
+    if (!can_show_notification) {
       EXPECT_EQ(FakeNotificationPresenter::PotentialHotspotNotificationState::
                     NO_HOTSPOT_NOTIFICATION_SHOWN,
                 fake_notification_presenter_->potential_hotspot_state());
@@ -285,7 +284,7 @@ class HostScannerTest : public NetworkStateTest {
       HostScanner::HostScanResultEventType expected_event_type =
           HostScanner::HostScanResultEventType::NO_HOSTS_FOUND;
       if (!scanned_device_infos_from_current_scan_.empty() &&
-          is_connected_to_internet) {
+          !can_show_notification) {
         expected_event_type = HostScanner::HostScanResultEventType::
             HOSTS_FOUND_BUT_NO_NOTIFICATION_SHOWN;
       } else if (scanned_device_infos_from_current_scan_.size() == 1) {
@@ -366,12 +365,12 @@ class HostScannerTest : public NetworkStateTest {
     scanned_device_infos_from_current_scan_.clear();
   }
 
-  void ConnectToWifiNetwork() {
+  void StartConnectingToWifiNetwork() {
     std::stringstream ss;
     ss << "{"
        << "  \"GUID\": \"wifiNetworkGuid\","
        << "  \"Type\": \"" << shill::kTypeWifi << "\","
-       << "  \"State\": \"" << shill::kStateOnline << "\""
+       << "  \"State\": \"" << shill::kStateConfiguration << "\""
        << "}";
 
     ConfigureService(ss.str());
@@ -413,8 +412,8 @@ class HostScannerTest : public NetworkStateTest {
   DISALLOW_COPY_AND_ASSIGN(HostScannerTest);
 };
 
-TEST_F(HostScannerTest, TestScan_ConnectedToExistingNetwork) {
-  ConnectToWifiNetwork();
+TEST_F(HostScannerTest, TestScan_ConnectingToExistingNetwork) {
+  StartConnectingToWifiNetwork();
   EXPECT_TRUE(network_state_handler()->DefaultNetwork());
 
   EXPECT_FALSE(host_scanner_->IsScanActive());
@@ -429,22 +428,57 @@ TEST_F(HostScannerTest, TestScan_ConnectedToExistingNetwork) {
   ReceiveScanResultAndVerifySuccess(
       *fake_host_scanner_operation_factory_->created_operations()[0],
       0u /* test_device_index */, false /* is_final_scan_result */,
-      true /* is_connected_to_internet */);
+      false /* can_show_notification */);
   EXPECT_TRUE(host_scanner_->IsScanActive());
   ReceiveScanResultAndVerifySuccess(
       *fake_host_scanner_operation_factory_->created_operations()[0],
       1u /* test_device_index */, false /* is_final_scan_result */,
-      true /* is_connected_to_internet */);
+      false /* can_show_notification */);
   EXPECT_TRUE(host_scanner_->IsScanActive());
   ReceiveScanResultAndVerifySuccess(
       *fake_host_scanner_operation_factory_->created_operations()[0],
       2u /* test_device_index */, false /* is_final_scan_result */,
-      true /* is_connected_to_internet */);
+      false /* can_show_notification */);
   EXPECT_TRUE(host_scanner_->IsScanActive());
   ReceiveScanResultAndVerifySuccess(
       *fake_host_scanner_operation_factory_->created_operations()[0],
       3u /* test_device_index */, true /* is_final_scan_result */,
-      true /* is_connected_to_internet */);
+      false /* can_show_notification */);
+  EXPECT_FALSE(host_scanner_->IsScanActive());
+}
+
+TEST_F(HostScannerTest, TestNotificationNotDisplayedMultipleTimes) {
+  StartConnectingToWifiNetwork();
+  EXPECT_TRUE(network_state_handler()->DefaultNetwork());
+
+  EXPECT_FALSE(host_scanner_->IsScanActive());
+  host_scanner_->StartScan();
+  EXPECT_TRUE(host_scanner_->IsScanActive());
+
+  fake_tether_host_fetcher_->InvokePendingCallbacks();
+  ASSERT_EQ(1u,
+            fake_host_scanner_operation_factory_->created_operations().size());
+  EXPECT_TRUE(host_scanner_->IsScanActive());
+
+  ReceiveScanResultAndVerifySuccess(
+      *fake_host_scanner_operation_factory_->created_operations()[0],
+      0u /* test_device_index */, false /* is_final_scan_result */,
+      false /* can_show_notification */);
+  EXPECT_TRUE(host_scanner_->IsScanActive());
+  ReceiveScanResultAndVerifySuccess(
+      *fake_host_scanner_operation_factory_->created_operations()[0],
+      1u /* test_device_index */, false /* is_final_scan_result */,
+      false /* can_show_notification */);
+  EXPECT_TRUE(host_scanner_->IsScanActive());
+  ReceiveScanResultAndVerifySuccess(
+      *fake_host_scanner_operation_factory_->created_operations()[0],
+      2u /* test_device_index */, false /* is_final_scan_result */,
+      false /* can_show_notification */);
+  EXPECT_TRUE(host_scanner_->IsScanActive());
+  ReceiveScanResultAndVerifySuccess(
+      *fake_host_scanner_operation_factory_->created_operations()[0],
+      3u /* test_device_index */, true /* is_final_scan_result */,
+      false /* can_show_notification */);
   EXPECT_FALSE(host_scanner_->IsScanActive());
 }
 
@@ -461,22 +495,22 @@ TEST_F(HostScannerTest, TestScan_ResultsFromAllDevices) {
   ReceiveScanResultAndVerifySuccess(
       *fake_host_scanner_operation_factory_->created_operations()[0],
       0u /* test_device_index */, false /* is_final_scan_result */,
-      false /* is_connected_to_internet */);
+      true /* can_show_notification */);
   EXPECT_TRUE(host_scanner_->IsScanActive());
   ReceiveScanResultAndVerifySuccess(
       *fake_host_scanner_operation_factory_->created_operations()[0],
       1u /* test_device_index */, false /* is_final_scan_result */,
-      false /* is_connected_to_internet */);
+      true /* can_show_notification */);
   EXPECT_TRUE(host_scanner_->IsScanActive());
   ReceiveScanResultAndVerifySuccess(
       *fake_host_scanner_operation_factory_->created_operations()[0],
       2u /* test_device_index */, false /* is_final_scan_result */,
-      false /* is_connected_to_internet */);
+      true /* can_show_notification */);
   EXPECT_TRUE(host_scanner_->IsScanActive());
   ReceiveScanResultAndVerifySuccess(
       *fake_host_scanner_operation_factory_->created_operations()[0],
       3u /* test_device_index */, true /* is_final_scan_result */,
-      false /* is_connected_to_internet */);
+      true /* can_show_notification */);
   EXPECT_FALSE(host_scanner_->IsScanActive());
 }
 
@@ -516,12 +550,12 @@ TEST_F(HostScannerTest, TestScan_ResultsFromSomeDevices) {
   ReceiveScanResultAndVerifySuccess(
       *fake_host_scanner_operation_factory_->created_operations()[0],
       0u /* test_device_index */, false /* is_final_scan_result */,
-      false /* is_connected_to_internet */);
+      true /* can_show_notification */);
   EXPECT_TRUE(host_scanner_->IsScanActive());
   ReceiveScanResultAndVerifySuccess(
       *fake_host_scanner_operation_factory_->created_operations()[0],
       1u /* test_device_index */, false /* is_final_scan_result */,
-      false /* is_connected_to_internet */);
+      true /* can_show_notification */);
   EXPECT_TRUE(host_scanner_->IsScanActive());
 
   fake_host_scanner_operation_factory_->created_operations()[0]
@@ -562,7 +596,7 @@ TEST_F(HostScannerTest, TestScan_MultipleScanCallsDuringOperation) {
   ReceiveScanResultAndVerifySuccess(
       *fake_host_scanner_operation_factory_->created_operations()[0],
       0u /* test_device_index */, false /* is_final_scan_result */,
-      false /* is_connected_to_internet */);
+      true /* can_show_notification */);
   EXPECT_TRUE(host_scanner_->IsScanActive());
 
   // Call StartScan again after a scan result has been received but before
@@ -599,17 +633,17 @@ TEST_F(HostScannerTest, TestScan_MultipleCompleteScanSessions) {
   ReceiveScanResultAndVerifySuccess(
       *fake_host_scanner_operation_factory_->created_operations()[0],
       0u /* test_device_index */, false /* is_final_scan_result */,
-      false /* is_connected_to_internet */);
+      true /* can_show_notification */);
   EXPECT_TRUE(host_scanner_->IsScanActive());
   ReceiveScanResultAndVerifySuccess(
       *fake_host_scanner_operation_factory_->created_operations()[0],
       1u /* test_device_index */, false /* is_final_scan_result */,
-      false /* is_connected_to_internet */);
+      true /* can_show_notification */);
   EXPECT_TRUE(host_scanner_->IsScanActive());
   ReceiveScanResultAndVerifySuccess(
       *fake_host_scanner_operation_factory_->created_operations()[0],
       2u /* test_device_index */, false /* is_final_scan_result */,
-      false /* is_connected_to_internet */);
+      true /* can_show_notification */);
   EXPECT_TRUE(host_scanner_->IsScanActive());
 
   // Finish the first scan.
@@ -620,7 +654,13 @@ TEST_F(HostScannerTest, TestScan_MultipleCompleteScanSessions) {
             fake_host_scan_cache_->size());
   EXPECT_FALSE(host_scanner_->IsScanActive());
 
-  // Now, start the second scan session.
+  // The notification should still be visible.
+  EXPECT_TRUE(fake_notification_presenter_
+                  ->IsPotentialHotspotsNearbyNotificationShowing());
+
+  // Now, start the second scan session. Since the notification was still
+  // visible from the first scan session, it should still be able to be shown
+  // for the second scan session.
   ClearCurrentScanResults();
   EXPECT_FALSE(host_scanner_->IsScanActive());
   host_scanner_->StartScan();
@@ -640,22 +680,69 @@ TEST_F(HostScannerTest, TestScan_MultipleCompleteScanSessions) {
   ReceiveScanResultAndVerifySuccess(
       *fake_host_scanner_operation_factory_->created_operations()[1],
       0u /* test_device_index */, false /* is_final_scan_result */,
-      false /* is_connected_to_internet */);
+      true /* can_show_notification */);
   EXPECT_TRUE(host_scanner_->IsScanActive());
   ReceiveScanResultAndVerifySuccess(
       *fake_host_scanner_operation_factory_->created_operations()[1],
       2u /* test_device_index */, false /* is_final_scan_result */,
-      false /* is_connected_to_internet */);
+      true /* can_show_notification */);
   ReceiveScanResultAndVerifySuccess(
       *fake_host_scanner_operation_factory_->created_operations()[1],
       3u /* test_device_index */, false /* is_final_scan_result */,
-      false /* is_connected_to_internet */);
+      true /* can_show_notification */);
   EXPECT_TRUE(host_scanner_->IsScanActive());
   VerifyScanResultsMatchCache();
 
   // Finish the second scan. Since results were not received from device 1,
-  // previous results from evice 1 should now be removed from the cache.
+  // previous results from device 1 should now be removed from the cache.
   fake_host_scanner_operation_factory_->created_operations()[1]
+      ->SendScannedDeviceListUpdate(scanned_device_infos_from_current_scan_,
+                                    true /* is_final_scan_result */);
+  EXPECT_FALSE(host_scanner_->IsScanActive());
+
+  // The notification should still be visible; remove it before starting the
+  // third scan session.
+  EXPECT_TRUE(fake_notification_presenter_
+                  ->IsPotentialHotspotsNearbyNotificationShowing());
+  fake_notification_presenter_->RemovePotentialHotspotNotification();
+
+  // Now, start the third scan session. Since the notification was hidden before
+  // the session started, it should not be shown for this session.
+  ClearCurrentScanResults();
+  EXPECT_FALSE(host_scanner_->IsScanActive());
+  host_scanner_->StartScan();
+  EXPECT_TRUE(host_scanner_->IsScanActive());
+
+  fake_tether_host_fetcher_->InvokePendingCallbacks();
+  ASSERT_EQ(3u,
+            fake_host_scanner_operation_factory_->created_operations().size());
+  EXPECT_TRUE(host_scanner_->IsScanActive());
+
+  // The cache should be unaffected by the start of a new scan.
+  VerifyScanResultsMatchCache();
+
+  // Receive results from devices 0, 2 and 3. Results from device 1 should still
+  // be present in the cache even though no results have been received from that
+  // device during this scan session.
+  ReceiveScanResultAndVerifySuccess(
+      *fake_host_scanner_operation_factory_->created_operations()[2],
+      0u /* test_device_index */, false /* is_final_scan_result */,
+      false /* can_show_notification */);
+  EXPECT_TRUE(host_scanner_->IsScanActive());
+  ReceiveScanResultAndVerifySuccess(
+      *fake_host_scanner_operation_factory_->created_operations()[2],
+      2u /* test_device_index */, false /* is_final_scan_result */,
+      false /* can_show_notification */);
+  ReceiveScanResultAndVerifySuccess(
+      *fake_host_scanner_operation_factory_->created_operations()[2],
+      3u /* test_device_index */, false /* is_final_scan_result */,
+      false /* can_show_notification */);
+  EXPECT_TRUE(host_scanner_->IsScanActive());
+  VerifyScanResultsMatchCache();
+
+  // Finish the second scan. Since results were not received from device 1,
+  // previous results from device 1 should now be removed from the cache.
+  fake_host_scanner_operation_factory_->created_operations()[2]
       ->SendScannedDeviceListUpdate(scanned_device_infos_from_current_scan_,
                                     true /* is_final_scan_result */);
   EXPECT_FALSE(host_scanner_->IsScanActive());

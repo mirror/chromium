@@ -60,12 +60,12 @@ class NotificationRemoverTest : public NetworkStateTest {
     EXPECT_TRUE(host_scan_cache_->empty());
   }
 
-  void ConnectToWifiNetwork() {
+  void StartConnectingToWifiNetwork() {
     std::stringstream ss;
     ss << "{"
        << "  \"GUID\": \"wifiNetworkGuid\","
        << "  \"Type\": \"" << shill::kTypeWifi << "\","
-       << "  \"State\": \"" << shill::kStateOnline << "\""
+       << "  \"State\": \"" << shill::kStateConfiguration << "\""
        << "}";
 
     ConfigureService(ss.str());
@@ -98,10 +98,10 @@ TEST_F(NotificationRemoverTest, TestCacheBecameEmpty) {
             notification_presenter_->potential_hotspot_state());
 }
 
-TEST_F(NotificationRemoverTest, TestConnectToWifiNetwork) {
+TEST_F(NotificationRemoverTest, TestStartConnectingToWifiNetwork) {
   NotifyPotentialHotspotNearby();
 
-  ConnectToWifiNetwork();
+  StartConnectingToWifiNetwork();
   EXPECT_EQ(FakeNotificationPresenter::PotentialHotspotNotificationState::
                 NO_HOTSPOT_NOTIFICATION_SHOWN,
             notification_presenter_->potential_hotspot_state());

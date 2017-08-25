@@ -29,6 +29,10 @@ class NotificationPresenter {
   // tether hotspots.
   virtual void NotifyMultiplePotentialHotspotsNearby() = 0;
 
+  // Returns whether either the single or multiple hotspots nearby notification
+  // is currently shown.
+  virtual bool IsPotentialHotspotsNearbyNotificationShowing() = 0;
+
   // Removes the notification created by either NotifyPotentialHotspotNearby()
   // or NotifyMultiplePotentialHotspotsNearby(), or does nothing if that
   // notification is not currently displayed.
