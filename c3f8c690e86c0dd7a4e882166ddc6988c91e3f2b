@@ -22,6 +22,92 @@
       "revId": "c3f8c690e86c0dd7a4e882166ddc6988c91e3f2b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad56f561_95035578",
+        "filename": "chrome/android/java/res/values-v17/styles.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 637,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-08-25T01:04:37Z",
+      "side": 1,
+      "message": "Now that this is only being used by one TextView, let\u0027s move the styles in-line in history_privacy_disclaimer_header.xml",
+      "revId": "c3f8c690e86c0dd7a4e882166ddc6988c91e3f2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea4c6b1d_507ebacc",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/SpaceDisplay.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-08-25T01:04:37Z",
+      "side": 1,
+      "message": "Why did this change?",
+      "range": {
+        "startLine": 217,
+        "startChar": 39,
+        "endLine": 217,
+        "endChar": 81
+      },
+      "revId": "c3f8c690e86c0dd7a4e882166ddc6988c91e3f2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc323d69_60d86ba6",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/history/HistoryAdapter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 389,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-08-25T01:04:37Z",
+      "side": 1,
+      "message": "Let\u0027s add a note that if mHasOtherFormsOfBrowsingData is true, one of the other conditions must have already been met so a space is needed to separate the sentences.",
+      "range": {
+        "startLine": 389,
+        "startChar": 12,
+        "endLine": 389,
+        "endChar": 32
+      },
+      "revId": "c3f8c690e86c0dd7a4e882166ddc6988c91e3f2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02ee8063_d0bec6f1",
+        "filename": "chrome/android/java/strings/android_chrome_strings.grd",
+        "patchSetId": 1
+      },
+      "lineNbr": 2099,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-08-25T01:04:37Z",
+      "side": 1,
+      "message": "nit: ... \"Formatted string indicating how much storage is available to use on this device and how much storage space on this device has been used by other apps.\"",
+      "range": {
+        "startLine": 2099,
+        "startChar": 108,
+        "endLine": 2099,
+        "endChar": 173
+      },
+      "revId": "c3f8c690e86c0dd7a4e882166ddc6988c91e3f2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
