@@ -46,6 +46,30 @@
       "revId": "c99f5a772365e7bd17d7d60fe9eae3efe3c9d611",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e203db6d_dbdf00cd",
+        "filename": "ui/views/win/hwnd_message_handler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1144,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-25T21:26:45Z",
+      "side": 1,
+      "message": "It\u0027s confusing to have both MarkFullscreen and SetFullscreen. It isn\u0027t clear when you want one vs the other. Much better to only have one. Seems to me the body of this conditional should call SetFullscreen(true).",
+      "parentUuid": "6ebc48c7_4e7f585c",
+      "range": {
+        "startLine": 1144,
+        "startChar": 4,
+        "endLine": 1144,
+        "endChar": 47
+      },
+      "revId": "c99f5a772365e7bd17d7d60fe9eae3efe3c9d611",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
