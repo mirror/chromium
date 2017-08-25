@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "0c7fb20a_04820cd8",
+        "filename": "chrome/browser/chromeos/arc/voice_interaction/arc_voice_interaction_arc_home_service.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 316,
+      "author": {
+        "id": 1232844
+      },
+      "writtenOn": "2017-08-25T20:05:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d362f14f_1b8dcb1f",
+      "range": {
+        "startLine": 315,
+        "startChar": 0,
+        "endLine": 316,
+        "endChar": 73
+      },
+      "revId": "1e223c96939924c5482833115a892df624420f53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7db9f1b5_dcbb0975",
         "filename": "chrome/browser/chromeos/arc/voice_interaction/arc_voice_interaction_framework_service.cc",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2017-08-24T22:04:58Z",
       "side": 1,
       "message": "Now you do sync it.",
+      "range": {
+        "startLine": 300,
+        "startChar": 30,
+        "endLine": 301,
+        "endChar": 58
+      },
+      "revId": "1e223c96939924c5482833115a892df624420f53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f91aff99_e1295827",
+        "filename": "chrome/browser/chromeos/arc/voice_interaction/arc_voice_interaction_framework_service.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 301,
+      "author": {
+        "id": 1232844
+      },
+      "writtenOn": "2017-08-25T20:05:47Z",
+      "side": 1,
+      "message": "it only sets flags on cros side.. not sending it over mojo",
+      "parentUuid": "7db9f1b5_dcbb0975",
       "range": {
         "startLine": 300,
         "startChar": 30,
@@ -68,6 +116,30 @@
       "revId": "1e223c96939924c5482833115a892df624420f53",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a370c29_45c229e0",
+        "filename": "chrome/browser/chromeos/arc/voice_interaction/arc_voice_interaction_framework_service.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 308,
+      "author": {
+        "id": 1232844
+      },
+      "writtenOn": "2017-08-25T20:05:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "386f6c52_92fe1e4f",
+      "range": {
+        "startLine": 308,
+        "startChar": 7,
+        "endLine": 308,
+        "endChar": 37
+      },
+      "revId": "1e223c96939924c5482833115a892df624420f53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
