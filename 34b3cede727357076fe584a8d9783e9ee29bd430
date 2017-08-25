@@ -2,6 +2,57 @@
   "comments": [
     {
       "key": {
+        "uuid": "8d179877_6ddd3e79",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-08-25T05:24:16Z",
+      "side": 1,
+      "message": "In this case, the caller in the container will not be able to know whether flush is cancelled.\nPractically, in ARC, we notify the caller a cancel error. Can this code follow the same manner?\n(BTW, this could be a leak in the caller? Repeating \"Flush() -\u003e Reset() -\u003e Reset callback\" will accumulate Flush()\u0027s callback related info in mojo layer, which will never be released?)",
+      "revId": "34b3cede727357076fe584a8d9783e9ee29bd430",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3362e13_f8fd9ca2",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 404,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-08-25T05:24:16Z",
+      "side": 1,
+      "message": "If Flush() is called, while there is another inflight Flush() call, then the former callback will be disappeared, and the latter callback will be called when the former Flush() is called.\n\nIs it a valid operation, or not?\n\nIf so, this is a bug, so it needs to be fixed.\nIf not, I\u0027d recommend to explicitly document it, and check/log whether no inflight operations.\n\nAlso, I\u0027d recommend to use callback for vda_::Flush(), too. (Maybe in another CL?).",
+      "revId": "34b3cede727357076fe584a8d9783e9ee29bd430",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dde72e84_0744245b",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 415,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-08-25T05:24:16Z",
+      "side": 1,
+      "message": "ditto.",
+      "revId": "34b3cede727357076fe584a8d9783e9ee29bd430",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "508b0b11_7b14ce04",
         "filename": "components/arc/common/video_decode_accelerator.mojom",
         "patchSetId": 22
@@ -30,6 +81,57 @@
       "writtenOn": "2017-08-25T05:18:57Z",
       "side": 1,
       "message": "same here.",
+      "revId": "34b3cede727357076fe584a8d9783e9ee29bd430",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94a2fd9c_3ac468b7",
+        "filename": "components/arc/common/video_decode_accelerator.mojom",
+        "patchSetId": 22
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-08-25T05:24:16Z",
+      "side": 1,
+      "message": "Will this be always success?\nIf so, please explicitly document it.\nIf not, the callback must have error status.",
+      "revId": "34b3cede727357076fe584a8d9783e9ee29bd430",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0ce35d8_4e811c4a",
+        "filename": "components/arc/common/video_decode_accelerator.mojom",
+        "patchSetId": 22
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-08-25T05:24:16Z",
+      "side": 1,
+      "message": "Ditto.",
+      "revId": "34b3cede727357076fe584a8d9783e9ee29bd430",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2521e19_90f11ac9",
+        "filename": "components/arc/common/video_decode_accelerator.mojom",
+        "patchSetId": 22
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-08-25T05:24:16Z",
+      "side": 1,
+      "message": "Nice to add an example what \"an asynchronous error\" looks like?",
       "revId": "34b3cede727357076fe584a8d9783e9ee29bd430",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

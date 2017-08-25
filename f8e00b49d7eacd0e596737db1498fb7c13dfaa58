@@ -364,6 +364,30 @@
       "revId": "f8e00b49d7eacd0e596737db1498fb7c13dfaa58",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b635b97c_349e518f",
+        "filename": "components/arc/common/video_encode_accelerator.mojom",
+        "patchSetId": 19
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-08-25T05:24:16Z",
+      "side": 1,
+      "message": "(Maybe off-topic as this CL does not touch encoder much) Async call does not related to whether each method should return the error status or not,\njust because the callback is async by default.\n\nThe problem here, IIUC, sounds it is unknown the error notified from VDA is corresponding to which call, right?\nIf so, it sounds more generic problem, because it makes much difficult for caller to handle errors? Can media::VDA be fixed? WDYT?",
+      "parentUuid": "6f5c9b8d_120d8522",
+      "range": {
+        "startLine": 144,
+        "startChar": 0,
+        "endLine": 148,
+        "endChar": 52
+      },
+      "revId": "f8e00b49d7eacd0e596737db1498fb7c13dfaa58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
