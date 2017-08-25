@@ -165,6 +165,30 @@
       "revId": "eb07226a1216d2efb0fab2e6fc5483587c67ed59",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e256870c_8c872a54",
+        "filename": "ios/chrome/browser/web/resources/credential_manager.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1229234
+      },
+      "writtenOn": "2017-08-25T17:35:40Z",
+      "side": 1,
+      "message": "Actually please hold on with reviewing that part. According to http://caniuse.com/#search\u003dconst, const should work but not have block scope on iOS9, but it is discouraged to use it here: https://chromium.googlesource.com/chromium/src/+/master/docs/es6_chromium.md#const-Block_Scoped-Constants. I will run the tests under iOS9 on Monday",
+      "parentUuid": "fc3e5d52_3b6c547b",
+      "range": {
+        "startLine": 132,
+        "startChar": 6,
+        "endLine": 132,
+        "endChar": 16
+      },
+      "revId": "eb07226a1216d2efb0fab2e6fc5483587c67ed59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
