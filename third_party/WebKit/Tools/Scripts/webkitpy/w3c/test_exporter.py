@@ -7,6 +7,7 @@
 import argparse
 import logging
 
+from webkitpy.common.system.log_utils import configure_logging
 from webkitpy.w3c.local_wpt import LocalWPT
 from webkitpy.w3c.chromium_exportable_commits import exportable_commits_over_last_n_commits
 from webkitpy.w3c.common import (
@@ -28,6 +29,7 @@ class TestExporter(object):
         self.host = host
         self.wpt_github = None
         self.gerrit = None
+        self.verbose = False
         self.dry_run = False
         self.local_wpt = None
 
@@ -39,8 +41,12 @@ class TestExporter(object):
         """
         args = self.parse_args(argv)
         self.dry_run = args.dry_run
-        credentials = read_credentials(self.host, args.credentials_json)
 
+        self.verbose = args.verbose
+        log_level = logging.DEBUG if self.verbose else logging.INFO
+        configure_logging(logging_level=log_level, include_time=True)
+
+        credentials = read_credentials(self.host, args.credentials_json)
         if not (credentials['GH_USER'] and credentials['GH_TOKEN']):
             _log.error('Must provide both user and token for GitHub.')
             return False
@@ -49,8 +55,6 @@ class TestExporter(object):
         self.gerrit = self.gerrit or GerritAPI(self.host, credentials['GERRIT_USER'], credentials['GERRIT_TOKEN'])
         self.local_wpt = self.local_wpt or LocalWPT(self.host, credentials['GH_TOKEN'])
         self.local_wpt.fetch()
-
-        logging.basicConfig(level=logging.INFO, format='%(message)s')
 
         open_gerrit_cls = self.gerrit.query_exportable_open_cls()
         self.process_gerrit_cls(open_gerrit_cls)
@@ -64,6 +68,9 @@ class TestExporter(object):
 
     def parse_args(self, argv):
         parser = argparse.ArgumentParser(description=__doc__)
+        parser.add_argument(
+            '-v', '--verbose', action='store_true',
+            help='log extra details that may be helpful when debugging')
         parser.add_argument(
             '--dry-run', action='store_true',
             help='See what would be done without actually creating or merging '
