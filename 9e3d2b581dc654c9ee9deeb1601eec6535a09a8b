@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fe38c9e7_c1342bdd",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue_manager_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 2921,
+      "author": {
+        "id": 1116032
+      },
+      "writtenOn": "2017-08-25T18:12:09Z",
+      "side": 1,
+      "message": "nit: start_counter and completed_counter (I would probably also just make these ints)",
+      "range": {
+        "startLine": 2921,
+        "startChar": 10,
+        "endLine": 2921,
+        "endChar": 24
+      },
+      "revId": "9e3d2b581dc654c9ee9deeb1601eec6535a09a8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03f7e5e7_876d0935",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue_manager_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 2931,
+      "author": {
+        "id": 1116032
+      },
+      "writtenOn": "2017-08-25T18:12:09Z",
+      "side": 1,
+      "message": "Instead of adding this setting, could we write a test helper that clears or sets the task started/completed handlers? Otherwise it seems we\u0027re just testing a setting that\u0027s only used by the test.",
+      "range": {
+        "startLine": 2931,
+        "startChar": 35,
+        "endLine": 2931,
+        "endChar": 64
+      },
+      "revId": "9e3d2b581dc654c9ee9deeb1601eec6535a09a8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8faa944b_c4d1777b",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue_manager_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 2953,
+      "author": {
+        "id": 1116032
+      },
+      "writtenOn": "2017-08-25T18:12:09Z",
+      "side": 1,
+      "message": "Ditto.",
+      "range": {
+        "startLine": 2953,
+        "startChar": 10,
+        "endLine": 2953,
+        "endChar": 24
+      },
+      "revId": "9e3d2b581dc654c9ee9deeb1601eec6535a09a8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
