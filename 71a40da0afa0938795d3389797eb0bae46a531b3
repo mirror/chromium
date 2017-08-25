@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f81e46c3_af6ca0ba",
+        "filename": "chrome/browser/android/vr_shell/vr_shell.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-08-25T15:12:42Z",
+      "side": 1,
+      "message": "This looks like a Reset instead of Restore. Any reason not naming the function ResetLayers?\nAlso, should Layers be a singular noun?",
+      "range": {
+        "startLine": 162,
+        "startChar": 24,
+        "endLine": 162,
+        "endChar": 31
+      },
+      "revId": "71a40da0afa0938795d3389797eb0bae46a531b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
