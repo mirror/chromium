@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "223c6cbf_5f5a5a6f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-08-25T18:59:36Z",
+      "side": 1,
+      "message": "*is",
+      "revId": "89f59d48924bb6651055790cd9ded3617b270101",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e42e43df_4679047b",
+        "filename": "components/viz/service/frame_sinks/root_compositor_frame_sink_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-08-25T18:59:36Z",
+      "side": 1,
+      "message": "Add a TODO to send |hit_test_region_list| to |support_|?",
+      "revId": "89f59d48924bb6651055790cd9ded3617b270101",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "373379b2_b2a416b2",
         "filename": "services/ui/ws/frame_generator.cc",
         "patchSetId": 3
@@ -30,6 +64,30 @@
       "writtenOn": "2017-08-25T16:05:37Z",
       "side": 1,
       "message": "I thought those were mutually exclusive and indicating whether to use surface_if or frame_sink_id. At least that is what I assumed in HitTestDataProviderAura::GetHitTestData().\nAlso do you need kHitTestMouse or kHitTestTouch?",
+      "range": {
+        "startLine": 118,
+        "startChar": 6,
+        "endLine": 118,
+        "endChar": 65
+      },
+      "revId": "89f59d48924bb6651055790cd9ded3617b270101",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b4f8298_d64290bb",
+        "filename": "services/ui/ws/frame_generator.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-08-25T18:59:36Z",
+      "side": 1,
+      "message": "I think in this case, we need just ChildSurface flag. (Mouse/Touch flag would be useful if window-server actually did anything with the events, but it doesn\u0027t/isn\u0027t expected to)",
+      "parentUuid": "a9030592_5839984f",
       "range": {
         "startLine": 118,
         "startChar": 6,
