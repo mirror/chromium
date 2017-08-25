@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "82453b0a_e69af192",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellDelegate.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1303,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-08-25T18:17:57Z",
+      "side": 1,
+      "message": "Oh, right good point. I should really get around to refactoring VrShellDelegate sometime to have one instance per activity... would make everything simpler.",
+      "parentUuid": "9cabcee9_898763e0",
+      "range": {
+        "startLine": 1303,
+        "startChar": 13,
+        "endLine": 1303,
+        "endChar": 30
+      },
+      "revId": "da5dc5cd9c4d66f22d53b110842ccb2597ae1787",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "461c3c8c_a90f3931",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellDelegate.java",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "da5dc5cd9c4d66f22d53b110842ccb2597ae1787",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7352142d_d577fd5a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellDelegate.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1304,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-08-25T18:17:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "461c3c8c_a90f3931",
+      "range": {
+        "startLine": 1304,
+        "startChar": 35,
+        "endLine": 1304,
+        "endChar": 38
+      },
+      "revId": "da5dc5cd9c4d66f22d53b110842ccb2597ae1787",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
