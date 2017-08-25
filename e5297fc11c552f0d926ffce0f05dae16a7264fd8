@@ -16,6 +16,24 @@
       "revId": "e5297fc11c552f0d926ffce0f05dae16a7264fd8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe5192c0_d45a1b17",
+        "filename": "content/test/mock_render_process_host_impl.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-08-25T08:33:36Z",
+      "side": 1,
+      "message": "Yes, I also think it\u0027s a bit strange to have own |renderer_interface_|, and also I felt it\u0027s odd to have mojom::Renderer related thing in content/public.\nHowever, as we talked offline, I agree that making a new mock class only for overriding mojom::Renderer is not straightforward and we can add OverrideRendererInterfaceForTesting() because we already have the member of std::unique_ptr\u003cmojo::AssociatedInterfacePtr\u003cmojom::Renderer\u003e\u003e and it\u0027s testing class.\n\nUpdated like that.",
+      "parentUuid": "bcc336a2_e4b77bc0",
+      "revId": "e5297fc11c552f0d926ffce0f05dae16a7264fd8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
