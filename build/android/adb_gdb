@@ -10,7 +10,6 @@
 # wrapper scripts like adb_gdb_content_shell
 #
 # Use --help to print full usage instructions.
-#
 
 PROGNAME=$(basename "$0")
 PROGDIR=$(dirname "$0")
@@ -539,7 +538,7 @@ get_ndk_host_arch () {
   local HOST_ARCH HOST_OS
   if [ -z "$NDK_HOST_ARCH" ]; then
     HOST_OS=$(get_ndk_host_system)
-    HOST_ARCH=$(uname -p)
+    HOST_ARCH=x86_64
     case $HOST_ARCH in
       i?86) NDK_HOST_ARCH=x86;;
       x86_64|amd64) NDK_HOST_ARCH=x86_64;;

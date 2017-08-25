@@ -39,7 +39,7 @@ std::unique_ptr<MediaCodecBridge> FakeCodecAllocator::CreateMediaCodecSync(
     most_recent_codec_ = codec.get();
     most_recent_codec_destruction_observer_ =
         codec->CreateDestructionObserver();
-    most_recent_codec_destruction_observer_->DoNotAllowDestruction();
+    most_recent_codec_destruction_observer_->ExpectNoDestruction();
   } else {
     most_recent_codec_ = nullptr;
     most_recent_codec_destruction_observer_ = nullptr;
