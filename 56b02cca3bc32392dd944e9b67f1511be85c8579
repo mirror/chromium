@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7cffa9c4_ab12a5c6",
+        "filename": "chrome/browser/extensions/display_info_provider_chromeos.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 659,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-25T20:46:59Z",
+      "side": 1,
+      "message": "std::make_unique\n\nWhy is has_accelerometer_support equivalent to is_maximize_mode?",
+      "revId": "56b02cca3bc32392dd944e9b67f1511be85c8579",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f32ce054_47f65577",
+        "filename": "chrome/browser/extensions/display_info_provider_chromeos.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 660,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-25T20:46:59Z",
+      "side": 1,
+      "message": "Can only one display have accelerometer support?",
+      "revId": "56b02cca3bc32392dd944e9b67f1511be85c8579",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07c1e769_d06c871b",
+        "filename": "extensions/common/api/system_display.idl",
+        "patchSetId": 7
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-25T20:46:59Z",
+      "side": 1,
+      "message": "What is maximize mode?",
+      "revId": "56b02cca3bc32392dd944e9b67f1511be85c8579",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
