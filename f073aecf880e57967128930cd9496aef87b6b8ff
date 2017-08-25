@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "64876e5a_5e7cd524",
+        "filename": "components/url_formatter/top_domains/alexa_domains.list",
+        "patchSetId": 2
+      },
+      "lineNbr": 9173,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-08-25T21:58:46Z",
+      "side": 1,
+      "message": "Odd, I wonder why this wasn\u0027t in the list when it was in the script that generates the list.",
+      "revId": "f073aecf880e57967128930cd9496aef87b6b8ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
