@@ -141,7 +141,8 @@ WorkspaceDiff.WorkspaceDiff = class extends Common.Object {
   async _updateModifiedState(uiSourceCode) {
     this._loadingUISourceCodes.delete(uiSourceCode);
 
-    if (uiSourceCode.project().type() !== Workspace.projectTypes.Network) {
+    var type = uiSourceCode.project().type();
+    if (type !== Workspace.projectTypes.Network && type !== Workspace.projectTypes.ChangeableNetwork) {
       this._markAsUnmodified(uiSourceCode);
       return;
     }
