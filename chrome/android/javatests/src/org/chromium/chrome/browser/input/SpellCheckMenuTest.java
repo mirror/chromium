@@ -7,8 +7,6 @@ package org.chromium.chrome.browser.input;
 import android.support.test.filters.LargeTest;
 import android.view.View;
 
-import org.junit.Assert;
-
 import org.chromium.base.test.util.RetryOnFailure;
 import org.chromium.chrome.browser.ChromeActivity;
 import org.chromium.chrome.test.ChromeActivityTestCaseBase;
@@ -27,11 +25,11 @@ import java.util.concurrent.TimeoutException;
 /**
  * Integration tests for the text suggestion menu.
  */
-public class TextSuggestionMenuTest extends ChromeActivityTestCaseBase<ChromeActivity> {
+public class SpellCheckMenuTest extends ChromeActivityTestCaseBase<ChromeActivity> {
     private static final String URL =
             "data:text/html, <div contenteditable id=\"div\">iuvwneaoanls</div>";
 
-    public TextSuggestionMenuTest() {
+    public SpellCheckMenuTest() {
         super(ChromeActivity.class);
     }
 
@@ -76,7 +74,17 @@ public class TextSuggestionMenuTest extends ChromeActivityTestCaseBase<ChromeAct
         });
 
         TouchCommon.singleClickView(getDeleteButton(cvc));
-        Assert.assertEquals("", DOMUtils.getNodeContents(cvc.getWebContents(), "div"));
+
+        CriteriaHelper.pollInstrumentationThread(new Criteria() {
+            @Override
+            public boolean isSatisfied() {
+                try {
+                    return DOMUtils.getNodeContents(cvc.getWebContents(), "div").equals("");
+                } catch (InterruptedException | TimeoutException e) {
+                    return false;
+                }
+            }
+        });
     }
 
     private View getDeleteButton(ContentViewCore cvc) {
