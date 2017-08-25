@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6f7960ee_28c2c310",
+        "filename": "base/base_paths_fuchsia.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-25T03:55:02Z",
+      "side": 1,
+      "message": "On fuschia, does this include space for the terminating null or not?\n\n(Meh, I guess this copied from other code)",
+      "revId": "96131f004814440ac861c1262fa6c072cdb78119",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f9e43ef_12c1bee1",
+        "filename": "base/path_service_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-25T03:55:02Z",
+      "side": 1,
+      "message": "I don\u0027t understand this change and how it\u0027s logically related to the rest of the CL.",
+      "revId": "96131f004814440ac861c1262fa6c072cdb78119",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
