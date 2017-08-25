@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "433e7db2_93e5a780",
+        "filename": "chrome/test/data/extensions/api_test/webrequest_permissions/initiator/content_script.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1146654
+      },
+      "writtenOn": "2017-08-25T21:12:30Z",
+      "side": 1,
+      "message": "Rewrote the tests in C++",
+      "parentUuid": "f62f5e7d_716d3a1a",
+      "revId": "aa6f3742e22bd3f6b020dac13c585584fa47a7b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "915be246_5f286f78",
         "filename": "chrome/test/data/extensions/api_test/webrequest_public_session/framework.js",
         "patchSetId": 7
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "760fc54a_e9db83eb",
+        "filename": "chrome/test/data/extensions/api_test/webrequest_public_session/framework.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1146654
+      },
+      "writtenOn": "2017-08-25T21:12:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "915be246_5f286f78",
+      "revId": "aa6f3742e22bd3f6b020dac13c585584fa47a7b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a26ee730_01d7e377",
         "filename": "chrome/test/data/extensions/api_test/webrequest_public_session/framework.js",
         "patchSetId": 7
@@ -50,6 +86,24 @@
       "revId": "aa6f3742e22bd3f6b020dac13c585584fa47a7b8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac9b53fc_e77b031a",
+        "filename": "chrome/test/data/extensions/api_test/webrequest_public_session/framework.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1146654
+      },
+      "writtenOn": "2017-08-25T21:12:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a26ee730_01d7e377",
+      "revId": "aa6f3742e22bd3f6b020dac13c585584fa47a7b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

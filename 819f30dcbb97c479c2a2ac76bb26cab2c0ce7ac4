@@ -90,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "a1782134_581ccb90",
+        "filename": "chrome/test/data/extensions/api_test/webrequest/framework.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1146654
+      },
+      "writtenOn": "2017-08-25T21:12:30Z",
+      "side": 1,
+      "message": "Reworked this using an ENUM and added comments to clarify.\n\nThere are four main situations:\n1. Extension causes navigation, and we\u0027re not running in browser side navigation mode. The initiator is something like chrome-extension://aohghmighlieiainnegkcijnfilokake\n2. Extension causes navigtion, and we ARE running in browser side navigation mode. The initiator is not included.\n3. Webpage causes navigation (e.g. XHR) regardless of whether we\u0027re running in browser side navigation mode. The initiator is the origin of the webpage. It looks something like http://www.a.com:52485\n4. Webpage causes navigation, from a website where we have no host permission to a website where we do have a host permission. In this case, the initiator is not shown.",
+      "parentUuid": "e7c7e401_1af09f31",
+      "revId": "819f30dcbb97c479c2a2ac76bb26cab2c0ce7ac4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d9d1429e_79f84231",
         "filename": "chrome/test/data/extensions/api_test/webrequest_permissions/initiator/test_initiator.js",
         "patchSetId": 5
