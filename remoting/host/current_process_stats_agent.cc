@@ -18,7 +18,7 @@ CurrentProcessStatsAgent::~CurrentProcessStatsAgent() = default;
 protocol::ProcessResourceUsage CurrentProcessStatsAgent::GetResourceUsage() {
   protocol::ProcessResourceUsage current;
   current.set_process_name(process_name_);
-  current.set_processor_usage(metrics_->GetPlatformIndependentCPUUsage());
+  current.set_processor_usage(metrics_->GetCPUUsage());
   current.set_working_set_size(metrics_->GetWorkingSetSize());
   current.set_pagefile_size(metrics_->GetPagefileUsage());
   return current;

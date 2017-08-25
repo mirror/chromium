@@ -19,7 +19,6 @@
 #include "base/memory/ptr_util.h"
 #include "base/numerics/safe_conversions.h"
 #include "base/numerics/safe_math.h"
-#include "base/sys_info.h"
 
 namespace base {
 
@@ -407,7 +406,6 @@ ProcessMetrics::ProcessMetrics(ProcessHandle process,
       last_system_time_(0),
       last_absolute_idle_wakeups_(0),
       port_provider_(port_provider) {
-  processor_count_ = SysInfo::NumberOfProcessors();
 }
 
 mach_port_t ProcessMetrics::TaskForPid(ProcessHandle process) const {

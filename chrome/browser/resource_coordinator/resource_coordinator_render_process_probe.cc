@@ -149,7 +149,7 @@ void ResourceCoordinatorRenderProcessProbe::
     // not current then it is assumed dead and should not be measured anymore.
     if (render_process_info.last_gather_cycle_active == current_gather_cycle_) {
       render_process_info.cpu_usage =
-          render_process_info.metrics->GetPlatformIndependentCPUUsage();
+          render_process_info.metrics->GetLogicalCpuUsagePercent();
       ++iter;
     } else {
       render_process_info_map_.erase(iter++);

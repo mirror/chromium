@@ -79,7 +79,7 @@ void ProcessMetricsHistory::Initialize(
 }
 
 void ProcessMetricsHistory::SampleMetrics() {
-  cpu_usage_ = process_metrics_->GetPlatformIndependentCPUUsage();
+  cpu_usage_ = process_metrics_->GetLogicalCpuUsagePercent();
 }
 
 void ProcessMetricsHistory::RunPerformanceTriggers() {

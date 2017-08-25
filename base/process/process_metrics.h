@@ -191,22 +191,26 @@ class BASE_EXPORT ProcessMetrics {
                       size_t* locked_bytes) const;
 #endif
 
-  // Returns the CPU usage in percent since the last time this method or
-  // GetPlatformIndependentCPUUsage() was called. The first time this method
-  // is called it returns 0 and will return the actual CPU info on subsequent
-  // calls. On Windows, the CPU usage value is for all CPUs. So if you have
-  // 2 CPUs and your process is using all the cycles of 1 CPU and not the other
-  // CPU, this method returns 50.
-  double GetCPUUsage();
+  // Returns the amount of logical CPU core time consumed by the process since
+  // the last time this method was called, returning a value between zero and
+  // SysInfo::NumberOfProcessors(). For example, this will return:
+  // - 0.5 if the process consumes a single core for 50% of the interval.
+  // - 3.0 if the process consumes three cores for 100% of the interval.
+  // - 3.0 if the process consumes six cores for 50% of the interval.
+  //
+  // Since this API measures usage over an interval, it will return zero on the
+  // first call, and an actual value only on the second and subsequent calls.
+  //
+  // Note that the time-consumed does not relate linearly with work-done, due
+  // to processor features like frequency-scaling and hyper-threading.
+  double GetLogicalCpuUsage();
+
+  // Returns the logical CPU usage, scaled to a percentage.
+  double GetLogicalCpuUsagePercent();
 
   // Returns the number of average idle cpu wakeups per second since the last
   // call.
   int GetIdleWakeupsPerSecond();
-
-  // Same as GetCPUUsage(), but will return consistent values on all platforms
-  // (cancelling the Windows exception mentioned above) by returning a value in
-  // the range of 0 to (100 * numCPUCores) everywhere.
-  double GetPlatformIndependentCPUUsage();
 
   // Retrieves accounting information for all I/O operations performed by the
   // process.
@@ -257,8 +261,6 @@ class BASE_EXPORT ProcessMetrics {
 #else
   ProcessHandle process_;
 #endif
-
-  int processor_count_;
 
   // Used to store the previous times and CPU usage counts so we can
   // compute the CPU usage between calls.
