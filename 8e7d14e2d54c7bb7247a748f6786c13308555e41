@@ -22,6 +22,30 @@
       "revId": "8e7d14e2d54c7bb7247a748f6786c13308555e41",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5da93ca_9a68ea3d",
+        "filename": "ash/public/interfaces/pref_connector.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-25T23:29:17Z",
+      "side": 1,
+      "message": "There isn\u0027t any invalidation. The signin profile exists for the lifetime of the browser. When the user logs out Chrome exits and restarts. There\u0027s accessibility code (and maybe other code) in the browser process that relies on this -- it can iterate through all known profiles and detect prefs from the signin profile at arbitrary times.",
+      "parentUuid": "569f696b_4c9b76da",
+      "range": {
+        "startLine": 17,
+        "startChar": 1,
+        "endLine": 18,
+        "endChar": 47
+      },
+      "revId": "8e7d14e2d54c7bb7247a748f6786c13308555e41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
