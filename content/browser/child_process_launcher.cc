@@ -60,18 +60,25 @@ ChildProcessLauncher::~ChildProcessLauncher() {
   }
 }
 
-void ChildProcessLauncher::SetProcessPriority(
-    bool background,
-    bool boost_for_pending_views,
-    ChildProcessImportance importance) {
+void ChildProcessLauncher::SetProcessPriority(bool background,
+                                              bool boost_for_pending_views
+#if defined(OS_ANDROID)
+                                              ,
+                                              ChildProcessImportance importance
+#endif
+                                              ) {
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
   base::Process to_pass = process_.process.Duplicate();
   BrowserThread::PostTask(
       BrowserThread::PROCESS_LAUNCHER, FROM_HERE,
       base::BindOnce(
           &ChildProcessLauncherHelper::SetProcessPriorityOnLauncherThread,
-          helper_, base::Passed(&to_pass), background, boost_for_pending_views,
-          importance));
+          helper_, base::Passed(&to_pass), background, boost_for_pending_views
+#if defined(OS_ANDROID)
+          ,
+          importance
+#endif
+          ));
 }
 
 void ChildProcessLauncher::Notify(

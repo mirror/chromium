@@ -174,8 +174,7 @@ void ChildProcessLauncherHelper::ForceNormalProcessTerminationSync(
 void ChildProcessLauncherHelper::SetProcessPriorityOnLauncherThread(
     base::Process process,
     bool background,
-    bool boost_for_pending_views,
-    ChildProcessImportance importance) {
+    bool boost_for_pending_views) {
   if (process.CanBackgroundProcesses())
     process.SetProcessBackgrounded(MachBroker::GetInstance(), background);
 }

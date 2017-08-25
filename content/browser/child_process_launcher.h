@@ -15,13 +15,16 @@
 #include "base/process/process.h"
 #include "base/sequence_checker.h"
 #include "build/build_config.h"
-#include "content/browser/child_process_importance.h"
 #include "content/browser/child_process_launcher_helper.h"
 #include "content/common/content_export.h"
 #include "content/public/browser/browser_thread.h"
 #include "content/public/common/result_codes.h"
 #include "mojo/edk/embedder/outgoing_broker_client_invitation.h"
 #include "mojo/edk/embedder/scoped_platform_handle.h"
+
+#if defined(OS_ANDROID)
+#include "content/public/browser/android/child_process_importance.h"
+#endif
 
 namespace base {
 class CommandLine;
@@ -110,8 +113,12 @@ class CONTENT_EXPORT ChildProcessLauncher {
   // Changes whether the process runs in the background or not.  Only call
   // this after the process has started.
   void SetProcessPriority(bool background,
-                          bool boost_for_pending_views,
-                          ChildProcessImportance importance);
+                          bool boost_for_pending_views
+#if defined(OS_ANDROID)
+                          ,
+                          ChildProcessImportance importance
+#endif
+                          );
 
   // Terminates the process associated with this ChildProcessLauncher.
   // Returns true if the process was stopped, false if the process had not been

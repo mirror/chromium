@@ -10,8 +10,7 @@ namespace internal {
 void ChildProcessLauncherHelper::SetProcessPriorityOnLauncherThread(
     base::Process process,
     bool background,
-    bool boost_for_pending_views,
-    ChildProcessImportance importance) {
+    bool boost_for_pending_views) {
   // TODO(fuchsia): Implement this. (crbug.com/707031)
   NOTIMPLEMENTED();
 }

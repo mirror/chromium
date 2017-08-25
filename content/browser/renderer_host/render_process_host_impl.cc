@@ -2274,6 +2274,7 @@ int RenderProcessHostImpl::VisibleWidgetCount() const {
   return visible_widgets_;
 }
 
+#if defined(OS_ANDROID)
 void RenderProcessHostImpl::UpdateWidgetImportance(
     ChildProcessImportance old_value,
     ChildProcessImportance new_value) {
@@ -2299,6 +2300,7 @@ ChildProcessImportance RenderProcessHostImpl::ComputeEffectiveImportance() {
   }
   return importance;
 }
+#endif
 
 RendererAudioOutputStreamFactoryContext*
 RenderProcessHostImpl::GetRendererAudioOutputStreamFactoryContext() {
@@ -3127,8 +3129,10 @@ void RenderProcessHostImpl::AddWidget(RenderWidgetHost* widget) {
   RenderWidgetHostImpl* widget_impl =
       static_cast<RenderWidgetHostImpl*>(widget);
   widgets_.insert(widget_impl);
+#if defined(OS_ANDROID)
   widget_importance_counts_[static_cast<size_t>(widget_impl->importance())]++;
   UpdateProcessPriority();
+#endif
 }
 
 void RenderProcessHostImpl::RemoveWidget(RenderWidgetHost* widget) {
@@ -3136,10 +3140,12 @@ void RenderProcessHostImpl::RemoveWidget(RenderWidgetHost* widget) {
       static_cast<RenderWidgetHostImpl*>(widget);
   widgets_.erase(widget_impl);
 
+#if defined(OS_ANDROID)
   ChildProcessImportance importance = widget_impl->importance();
   DCHECK(widget_importance_counts_[static_cast<size_t>(importance)]);
   widget_importance_counts_[static_cast<size_t>(importance)]--;
   UpdateProcessPriority();
+#endif
 }
 
 void RenderProcessHostImpl::SetSuddenTerminationAllowed(bool enabled) {
@@ -3818,11 +3824,16 @@ void RenderProcessHostImpl::UpdateProcessPriority() {
   const bool should_background_changed =
       is_process_backgrounded_ != should_background;
   const bool has_pending_views = !!pending_views_;
+#if defined(OS_ANDROID)
   const ChildProcessImportance importance = ComputeEffectiveImportance();
+#endif
 
   if (!should_background_changed &&
-      boost_priority_for_pending_views_ == has_pending_views &&
-      effective_importance_ == importance) {
+      boost_priority_for_pending_views_ == has_pending_views
+#if defined(OS_ANDROID)
+      && effective_importance_ == importance
+#endif
+      ) {
     return;
   }
 
@@ -3831,7 +3842,9 @@ void RenderProcessHostImpl::UpdateProcessPriority() {
                has_pending_views);
   is_process_backgrounded_ = should_background;
   boost_priority_for_pending_views_ = has_pending_views;
+#if defined(OS_ANDROID)
   effective_importance_ = importance;
+#endif
 
 #if defined(OS_WIN)
   // The cbstext.dll loads as a global GetMessage hook in the browser process
@@ -3850,7 +3863,12 @@ void RenderProcessHostImpl::UpdateProcessPriority() {
   // swiftly scheduled by the OS per the low process priority
   // (http://crbug.com/398103).
   child_process_launcher_->SetProcessPriority(should_background,
-                                              has_pending_views, importance);
+                                              has_pending_views
+#if defined(OS_ANDROID)
+                                              ,
+                                              importance
+#endif
+                                              );
 
   // Notify the child process of background state. Note
   // |boost_priority_for_pending_views_| state is not sent to renderer simply
