@@ -160,6 +160,24 @@
     },
     {
       "key": {
+        "uuid": "97ea9829_a922bbee",
+        "filename": "ash/shelf/app_list_button.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1123899
+      },
+      "writtenOn": "2017-08-25T22:37:33Z",
+      "side": 1,
+      "message": "I don\u0027t have a good suggestion. Let\u0027s change the name to voice_interaction_setup_complete_ then. It means the flow is completed.",
+      "parentUuid": "b0b8c567_e8b63c28",
+      "revId": "625af772b0d54f23b5e4a95f97a5349e33de4a91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "901f1a59_8942ac7d",
         "filename": "ash/shelf/app_list_button_unittest.cc",
         "patchSetId": 2
