@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "569f696b_4c9b76da",
+        "filename": "ash/public/interfaces/pref_connector.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2017-08-25T20:43:28Z",
+      "side": 1,
+      "message": "How does invalidation get signalled (if the user signs out, etc)?",
+      "range": {
+        "startLine": 17,
+        "startChar": 1,
+        "endLine": 18,
+        "endChar": 47
+      },
+      "revId": "8e7d14e2d54c7bb7247a748f6786c13308555e41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
