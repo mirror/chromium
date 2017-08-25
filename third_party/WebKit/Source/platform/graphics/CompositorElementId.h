@@ -13,16 +13,13 @@
 
 namespace blink {
 
-const int kCompositorNamespaceBitCount = 4;
+const int kCompositorNamespaceBitCount = 3;
 
 enum class CompositorElementIdNamespace {
   kPrimary,
-  kRootScroll,
+  kUniqueObjectId,
   kScroll,
   kScrollbar,
-  kScrollState,
-  kViewport,
-  kLinkHighlight,
   // The following are SPv2-only.
   kEffectFilter,
   kEffectMask,
@@ -34,23 +31,22 @@ enum class CompositorElementIdNamespace {
 };
 
 using CompositorElementId = cc::ElementId;
-using LayoutObjectId = uint64_t;
 using ScrollbarId = uint64_t;
+using UniqueObjectId = uint64_t;
 using DOMNodeId = uint64_t;
 using SyntheticEffectId = uint64_t;
 
 CompositorElementId PLATFORM_EXPORT
-    CompositorElementIdFromLayoutObjectId(LayoutObjectId,
+    CompositorElementIdFromUniqueObjectId(UniqueObjectId,
                                           CompositorElementIdNamespace);
 
-// This method should only be used for "special" layers that are not allocated
-// during the normal lifecycle. Examples include VisualViewport,
-// root scrolling (when rootLayerScrollingEnabled is off), and LinkHighlight.
-// Otherwise, CompositorElementIdFromLayoutObjectId is preferred for performance
-// reasons (since computing a DOMNodeId requires a hash map lookup),
-// and future compatibility with multicol/pagination.
+// Call this to get a globally unique object id for a newly allocated object.
+UniqueObjectId PLATFORM_EXPORT NewUniqueObjectId();
+
+CompositorElementId PLATFORM_EXPORT CompositorElementIdFromDOMNodeId(DOMNodeId);
+
 CompositorElementId PLATFORM_EXPORT
-    CompositorElementIdFromDOMNodeId(DOMNodeId, CompositorElementIdNamespace);
+    CompositorElementIdFromUniqueObjectId(UniqueObjectId);
 
 CompositorElementId PLATFORM_EXPORT
     CompositorElementIdFromScrollbarId(ScrollbarId,

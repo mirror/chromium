@@ -160,7 +160,7 @@ class PaintArtifactCompositorTestWithPropertyTrees
   }
 
   CompositorElementId ScrollElementId(unsigned id) {
-    return CompositorElementIdFromLayoutObjectId(
+    return CompositorElementIdFromUniqueObjectId(
         id, CompositorElementIdNamespace::kScroll);
   }
 
