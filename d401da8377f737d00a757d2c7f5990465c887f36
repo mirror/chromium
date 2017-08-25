@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "569f02da_485b73a8",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeTabbedActivity.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1059,
+      "author": {
+        "id": 1116074
+      },
+      "writtenOn": "2017-08-25T00:33:29Z",
+      "side": 1,
+      "message": "Before moving to the initial CL for this, a general comment about your approach here.\n\nIt would be best to not have the logic inside of while here. That is essentially a variant of Tab#attachAndFinalizeReparenting if you look at the things you are doing and it does miss a few important things to attach to. (native side for example). I think we should change attachAndFinalizeReparenting and make it work in your case as well and keep all attach logic in one shared place to avoid diverging codepaths in the future.",
+      "range": {
+        "startLine": 1059,
+        "startChar": 17,
+        "endLine": 1059,
+        "endChar": 44
+      },
+      "revId": "d401da8377f737d00a757d2c7f5990465c887f36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
