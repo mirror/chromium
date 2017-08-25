@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "76984a9c_d4ce1d2b",
+        "filename": "third_party/WebKit/Source/platform/feature_policy/FeaturePolicy.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2017-08-25T03:08:22Z",
+      "side": 1,
+      "message": "Nit: \u0027container\u0027",
+      "range": {
+        "startLine": 37,
+        "startChar": 14,
+        "endLine": 37,
+        "endChar": 23
+      },
+      "revId": "bb808c2707d184ad5646b2b9830ce5d225ffe31a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55dcbf12_40af6fca",
+        "filename": "third_party/WebKit/Source/platform/feature_policy/FeaturePolicy.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2017-08-25T03:08:22Z",
+      "side": 1,
+      "message": "Can you add a todo to deprecate these methods?\n\nI\u0027d suggest moving them to an anonymous namespace in the cpp file instead, but they should probably stay out here so that we can add unit tests for them as well.",
+      "revId": "bb808c2707d184ad5646b2b9830ce5d225ffe31a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9eb859e_b59a0b07",
+        "filename": "third_party/WebKit/Source/platform/feature_policy/FeaturePolicy.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2017-08-25T03:08:22Z",
+      "side": 1,
+      "message": "Nit - one blank line before closing out the namespace",
+      "revId": "bb808c2707d184ad5646b2b9830ce5d225ffe31a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

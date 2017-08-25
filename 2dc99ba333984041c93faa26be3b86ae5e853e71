@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "804aed3e_d2386abe",
+        "filename": "third_party/WebKit/Source/core/html/HTMLFrameOwnerElement.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2017-08-25T03:08:22Z",
+      "side": 1,
+      "message": "I see, because UpdateContainerPolicy isn\u0027t virtual, but ConstructContainerPolicy is.\n\nIn that case, the best thing to do might be to drop the no-arg ConstructContainerPolicy(), and just make it take the messages vector everywhere that it\u0027s called. (You can add a nullptr default everywhere if it makes it easier)",
+      "parentUuid": "65d6171b_1a7e51f7",
+      "range": {
+        "startLine": 137,
+        "startChar": 0,
+        "endLine": 137,
+        "endChar": 48
+      },
+      "revId": "2dc99ba333984041c93faa26be3b86ae5e853e71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "03b8d9f9_9d19a5bb",
         "filename": "third_party/WebKit/Source/core/html/HTMLIFrameElement.cpp",
         "patchSetId": 9

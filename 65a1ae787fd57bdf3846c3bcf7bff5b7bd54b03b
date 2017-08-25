@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "04ccc68f_c48a109f",
+        "filename": "third_party/WebKit/Source/core/html/HTMLIFrameElement.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2017-08-25T03:08:22Z",
+      "side": 0,
+      "message": "It wasn\u0027t necessary to revert, I was just curious, and wanted to make sure I wasn\u0027t missing anything important.",
+      "parentUuid": "096a0ee6_17824ed1",
+      "revId": "65a1ae787fd57bdf3846c3bcf7bff5b7bd54b03b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "80564144_097e2879",
         "filename": "third_party/WebKit/Source/core/html/HTMLIFrameElementTest.cpp",
         "patchSetId": 7
