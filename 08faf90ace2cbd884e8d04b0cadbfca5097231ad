@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "22c73997_c0bc196b",
+        "filename": "chrome/browser/resources/local_ntp/voice.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-25T09:17:09Z",
+      "side": 1,
+      "message": "We only need googleBaseUrl and translatedStrings, right? Maybe pass those in explicitly, to make the separation a bit clearer?",
+      "revId": "08faf90ace2cbd884e8d04b0cadbfca5097231ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1862ef16_4e962544",
+        "filename": "chrome/browser/resources/local_ntp/voice.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-25T09:17:09Z",
+      "side": 1,
+      "message": "Maybe call this microphoneElem or fakeboxMicrophoneElem? IMO \"fakeboxSpeech\" isn\u0027t very recognizable in this context.\n\nAlso, \"!\"? I think this one mustn\u0027t be null either.",
+      "revId": "08faf90ace2cbd884e8d04b0cadbfca5097231ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a022fedc_6fd77db9",
+        "filename": "chrome/browser/resources/local_ntp/voice.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 266,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-25T09:17:09Z",
+      "side": 1,
+      "message": "\"Used for testing.\" (Right?) Then the \"By default\" part can be removed since it\u0027ll be obvious.",
+      "revId": "08faf90ace2cbd884e8d04b0cadbfca5097231ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6bdfd688_add63dab",
+        "filename": "chrome/browser/resources/local_ntp/voice.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 268,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-25T09:17:09Z",
+      "side": 1,
+      "message": "Hm, should this be called \"init\"? (Listen to what?)\n\nAlso, the distinction between what happens in \"listen\" and what happens in \"init\" isn\u0027t clear to me. Can/should they be merged?",
+      "revId": "08faf90ace2cbd884e8d04b0cadbfca5097231ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1af290c3_f3ddf47f",
+        "filename": "chrome/browser/resources/local_ntp/voice.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 298,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-25T09:17:09Z",
+      "side": 1,
+      "message": "This doesn\u0027t seem to be called?",
+      "revId": "08faf90ace2cbd884e8d04b0cadbfca5097231ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c96986dc_f767c278",
+        "filename": "chrome/browser/resources/local_ntp/voice.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 440,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-25T09:17:09Z",
+      "side": 1,
+      "message": "nit: Please don\u0027t leave commented-out code around. If it\u0027s not needed, just remove it. If it\u0027s not clear yet, leave it in for now.",
+      "revId": "08faf90ace2cbd884e8d04b0cadbfca5097231ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
