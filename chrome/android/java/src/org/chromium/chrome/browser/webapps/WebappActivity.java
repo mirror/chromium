@@ -183,7 +183,13 @@ public class WebappActivity extends SingleTabActivity {
             resetSavedInstanceState();
         }
 
-        mWebappInfo = info;
+        if (info == null) {
+            // If mWebappInfo is null, there isn't much we can do, abort.
+            ApiCompatibilityUtils.finishAndRemoveTask(this);
+            return;
+        } else {
+            mWebappInfo = info;
+        }
 
         // Initialize the WebappRegistry and warm up the shared preferences for this web app. No-ops
         // if the registry and this web app are already initialized. Must override Strict Mode to
