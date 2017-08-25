@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "43102d7c_df95510f",
+        "filename": "components/exo/surface.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 722,
+      "author": {
+        "id": 1000050
+      },
+      "writtenOn": "2017-08-25T13:41:17Z",
+      "side": 1,
+      "message": "Is it possible current_resource_.size is (0,0)? In that case, transformed_buffer_size will be (0,0) too. And then this code will crash, right?",
+      "range": {
+        "startLine": 721,
+        "startChar": 0,
+        "endLine": 722,
+        "endChar": 61
+      },
+      "revId": "fca309bf8269d73b2b53267f400a5ec6009f0701",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
