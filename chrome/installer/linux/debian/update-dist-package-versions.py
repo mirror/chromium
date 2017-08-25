@@ -32,23 +32,35 @@ DEB_SOURCES = {
     ],
     'Ubuntu 14.04 (Trusty)': [
         "http://us.archive.ubuntu.com/ubuntu/dists/trusty/main/binary-amd64/Packages.gz",
+        "http://us.archive.ubuntu.com/ubuntu/dists/trusty/universe/binary-amd64/Packages.gz",
         "http://us.archive.ubuntu.com/ubuntu/dists/trusty-updates/main/binary-amd64/Packages.gz",
+        "http://us.archive.ubuntu.com/ubuntu/dists/trusty-updates/universe/binary-amd64/Packages.gz",
         "http://security.ubuntu.com/ubuntu/dists/trusty-security/main/binary-amd64/Packages.gz",
+        "http://security.ubuntu.com/ubuntu/dists/trusty-security/universe/binary-amd64/Packages.gz",
     ],
     'Ubuntu 16.04 (Xenial)': [
         "http://us.archive.ubuntu.com/ubuntu/dists/xenial/main/binary-amd64/Packages.gz",
+        "http://us.archive.ubuntu.com/ubuntu/dists/xenial/universe/binary-amd64/Packages.gz",
         "http://us.archive.ubuntu.com/ubuntu/dists/xenial-updates/main/binary-amd64/Packages.gz",
+        "http://us.archive.ubuntu.com/ubuntu/dists/xenial-updates/universe/binary-amd64/Packages.gz",
         "http://security.ubuntu.com/ubuntu/dists/xenial-security/main/binary-amd64/Packages.gz",
+        "http://security.ubuntu.com/ubuntu/dists/xenial-security/universe/binary-amd64/Packages.gz",
     ],
     'Ubuntu 17.04 (Zesty)': [
         "http://us.archive.ubuntu.com/ubuntu/dists/zesty/main/binary-amd64/Packages.gz",
+        "http://us.archive.ubuntu.com/ubuntu/dists/zesty/universe/binary-amd64/Packages.gz",
         "http://us.archive.ubuntu.com/ubuntu/dists/zesty-updates/main/binary-amd64/Packages.gz",
+        "http://us.archive.ubuntu.com/ubuntu/dists/zesty-updates/universe/binary-amd64/Packages.gz",
         "http://security.ubuntu.com/ubuntu/dists/zesty-security/main/binary-amd64/Packages.gz",
+        "http://security.ubuntu.com/ubuntu/dists/zesty-security/universe/binary-amd64/Packages.gz",
     ],
     'Ubuntu 17.10 (Artful)': [
         "http://us.archive.ubuntu.com/ubuntu/dists/artful/main/binary-amd64/Packages.gz",
+        "http://us.archive.ubuntu.com/ubuntu/dists/artful/universe/binary-amd64/Packages.gz",
         "http://us.archive.ubuntu.com/ubuntu/dists/artful-updates/main/binary-amd64/Packages.gz",
+        "http://us.archive.ubuntu.com/ubuntu/dists/artful-updates/universe/binary-amd64/Packages.gz",
         "http://security.ubuntu.com/ubuntu/dists/artful-security/main/binary-amd64/Packages.gz",
+        "http://security.ubuntu.com/ubuntu/dists/artful-security/universe/binary-amd64/Packages.gz",
     ],
 }
 
