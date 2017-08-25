@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "57c60454_fb78e6de",
+        "filename": "components/offline_pages/core/prefetch/prefetch_types.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-08-25T21:41:03Z",
+      "side": 1,
+      "message": "I wouldn\u0027t assume the user did it.",
+      "revId": "e243d05b20bb80db21ae93fd44ce1e72560e321f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5f32bc3_3becbc49",
+        "filename": "components/offline_pages/core/prefetch/stale_entry_finalizer_task.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-08-25T21:41:03Z",
+      "side": 1,
+      "message": "These two statements could be consolidated like this:\nUPDATE prefetch_items\nSET state \u003d ?,\n    error_code \u003d CASE WHEN freshness_time \u003e ? THEN ?\n                      WHEN freshness_time \u003c ? THEN ?\n                      ELSE ? END\n    WHERE state \u003d ? AND freshness_time NOT BETWEEN ? AND ?\n\nThis would decrease our table scans by 1. WDYT? (+carlosk for opinion)",
+      "revId": "e243d05b20bb80db21ae93fd44ce1e72560e321f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2223dc5_5f50f6f4",
+        "filename": "components/offline_pages/core/prefetch/stale_entry_finalizer_task.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-08-25T21:41:03Z",
+      "side": 1,
+      "message": "How did you decide to use this?",
+      "revId": "e243d05b20bb80db21ae93fd44ce1e72560e321f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f75b80c3_0b68ffb8",
+        "filename": "components/offline_pages/core/prefetch/stale_entry_finalizer_task.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-08-25T21:41:03Z",
+      "side": 1,
+      "message": "To me, \u0027clock skew\u0027 means tracking error more than arbitrary clock changes.  So perhaps a code like CLOCK_ADJUSTMENT_DETECTED ?",
+      "revId": "e243d05b20bb80db21ae93fd44ce1e72560e321f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d08e27bf_80cc6e86",
+        "filename": "components/offline_pages/core/prefetch/stale_entry_finalizer_task_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-08-25T21:41:03Z",
+      "side": 1,
+      "message": "I\u0027d prefer to change the previous method to accept a TimeDelta instead of int.  Then you can provide whatever delta you prefer.",
+      "revId": "e243d05b20bb80db21ae93fd44ce1e72560e321f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
