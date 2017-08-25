@@ -215,6 +215,9 @@ class WebLayer {
   // deleting the scroll client.
   virtual void SetScrollClient(WebLayerScrollClient*) = 0;
 
+  virtual void SetScrollOffsetFromImplSideForTesting(
+      const gfx::ScrollOffset&) = 0;
+
   // The scroll-boundary-behavior allows developers to specify whether the
   // scroll should be propagated to its ancestors at the beginning of the
   // scroll, and whether the overscroll should cause UI affordance such as
