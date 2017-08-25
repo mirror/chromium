@@ -1,0 +1,75 @@
+# Copyright 2017 The Chromium Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+import("//testing/test.gni")
+
+static_library("pollux") {
+  sources = [
+    "assertion_session.cc",
+    "assertion_session.h",
+    "ble_scanner.cc",
+    "ble_scanner.h",
+    "credential_utils.cc",
+    "credential_utils.h",
+  ]
+
+  deps = [
+    "//base",
+    "//components/cryptauth",
+    "//components/cryptauth/ble",
+    "//components/proximity_auth/logging",
+    "//device/bluetooth",
+  ]
+}
+#static_library("test_support") {
+#  testonly = true
+#
+#  sources = [
+#  ]
+#
+#  public_deps = [
+#    ":pollux",
+#  ]
+#
+#  deps = [
+#    "//base",
+#    "//components/cryptauth:test_support",
+#    "//components/proximity_auth/logging",
+#    "//testing/gmock",
+#  ]
+#}
+#source_set("unit_tests") {
+#  testonly = true
+#  sources = [
+#  ]
+#
+#  deps = [
+#    ":pollux",
+#    ":test_support",
+#    "//base",
+#    "//base/test:test_support",
+#    "//components/cryptauth:test_support",
+#    "//components/cryptauth:unit_tests",
+#    "//components/cryptauth/ble",
+#    "//components/proximity_auth/logging",
+#    "//components/proximity_auth/logging:unit_tests",
+#    "//device/bluetooth:mocks",
+#    "//testing/gmock",
+#    "//testing/gtest",
+#  ]
+#}
+# Note: This is a convenience target for ease of rapid iteration during
+# development. It is not executed on any try or build bots.
+#if (!is_chromeos) {
+#  test("proximity_auth_unittests") {
+#    sources = [
+#      "run_all_unittests.cc",
+#    ]
+#    deps = [
+#      ":unit_tests",
+#      "//base",
+#      "//base/test:test_support",
+#    ]
+#  }
+#}
