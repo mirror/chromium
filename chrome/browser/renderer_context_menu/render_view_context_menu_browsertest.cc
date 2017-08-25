@@ -33,8 +33,8 @@
 #include "chrome/browser/search_engines/template_url_service_factory.h"
 #include "chrome/browser/ui/browser.h"
 #include "chrome/browser/ui/tabs/tab_strip_model.h"
+#include "chrome/common/chrome_render_frame.mojom.h"
 #include "chrome/common/render_messages.h"
-#include "chrome/common/thumbnail_capturer.mojom.h"
 #include "chrome/test/base/in_process_browser_test.h"
 #include "chrome/test/base/search_test_utils.h"
 #include "chrome/test/base/ui_test_utils.h"
@@ -749,13 +749,13 @@ IN_PROC_BROWSER_TEST_F(SearchByImageBrowserTest, ImageSearchWithCorruptImage) {
   RightClickImage();
   waiter.WaitForMenuOpenAndClose();
 
-  chrome::mojom::ThumbnailCapturerPtr thumbnail_capturer;
+  chrome::mojom::ChromeRenderFramePtr chrome_render_frame;
   browser()
       ->tab_strip_model()
       ->GetActiveWebContents()
       ->GetMainFrame()
       ->GetRemoteInterfaces()
-      ->GetInterface(&thumbnail_capturer);
+      ->GetInterface(&chrome_render_frame);
 
   auto callback = [](bool* response_received, const base::Closure& quit,
                      const std::vector<uint8_t>& thumbnail_data,
@@ -766,7 +766,7 @@ IN_PROC_BROWSER_TEST_F(SearchByImageBrowserTest, ImageSearchWithCorruptImage) {
 
   base::RunLoop run_loop;
   bool response_received = false;
-  thumbnail_capturer->RequestThumbnailForContextNode(
+  chrome_render_frame->RequestThumbnailForContextNode(
       0, gfx::Size(2048, 2048), chrome::mojom::ImageFormat::JPEG,
       base::Bind(callback, &response_received, run_loop.QuitClosure()));
   run_loop.Run();
