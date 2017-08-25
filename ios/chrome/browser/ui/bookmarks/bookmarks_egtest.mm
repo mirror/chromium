@@ -21,7 +21,6 @@
 #import "ios/chrome/browser/ui/authentication/signin_promo_view.h"
 #import "ios/chrome/browser/ui/commands/generic_chrome_command.h"
 #include "ios/chrome/browser/ui/commands/ios_command_ids.h"
-#import "ios/chrome/browser/ui/toolbar/toolbar_controller.h"
 #include "ios/chrome/browser/ui/tools_menu/tools_menu_constants.h"
 #import "ios/chrome/browser/ui/uikit_ui_util.h"
 #include "ios/chrome/grit/ios_strings.h"
@@ -81,7 +80,7 @@ id<GREYMatcher> EditBookmarkButton() {
 id<GREYMatcher> CloseToolsMenuButton() {
   NSString* closeMenuButtonText =
       l10n_util::GetNSString(IDS_IOS_TOOLBAR_CLOSE_MENU);
-  return grey_allOf(grey_accessibilityID(kToolbarToolsMenuButtonIdentifier),
+  return grey_allOf(chrome_test_util::ToolsMenuButton(),
                     grey_accessibilityLabel(closeMenuButtonText), nil);
 }
 
