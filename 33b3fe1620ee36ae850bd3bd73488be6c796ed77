@@ -16,6 +16,24 @@
       "revId": "33b3fe1620ee36ae850bd3bd73488be6c796ed77",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5cee2ed3_d0b5f3ff",
+        "filename": "third_party/WebKit/Source/core/paint/InlineTextBoxPainter.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 642,
+      "author": {
+        "id": 1229332
+      },
+      "writtenOn": "2017-08-25T00:50:00Z",
+      "side": 1,
+      "message": "Ok, updated",
+      "parentUuid": "d48dbba2_902a84be",
+      "revId": "33b3fe1620ee36ae850bd3bd73488be6c796ed77",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
