@@ -210,16 +210,33 @@ bool IsMITMSoftwareInterstitialEnabled() {
   return base::FeatureList::IsEnabled(kMITMSoftwareInterstitial);
 }
 
-std::unique_ptr<std::vector<std::pair<std::unique_ptr<re2::RE2>, std::string>>>
-LoadMITMSoftwareList(const chrome_browser_ssl::SSLErrorAssistantConfig& proto) {
-  auto list = base::MakeUnique<
-      std::vector<std::pair<std::unique_ptr<re2::RE2>, std::string>>>();
-  for (const chrome_browser_ssl::MITMSoftware& entry : proto.mitm_software()) {
-    std::unique_ptr<re2::RE2> compiled_regex(new re2::RE2(entry.regex()));
-    list.get()->push_back(
-        std::make_pair(std::move(compiled_regex), entry.name()));
+// Struct which stores data about a known MITM software pulled from the
+// SSLErrorAssistant proto.
+struct MITMSoftwareType {
+  MITMSoftwareType(const std::string& name,
+                   const std::string& issuer_common_name,
+                   const std::string& issuer_org)
+      : name(name),
+        issuer_common_name(issuer_common_name),
+        issuer_org(issuer_org) {}
+
+  const std::string name;
+  const std::string issuer_common_name;
+  const std::string issuer_org;
+};
+
+std::unique_ptr<std::vector<MITMSoftwareType>> LoadMITMSoftwareList(
+    const chrome_browser_ssl::SSLErrorAssistantConfig& proto) {
+  auto mitm_software_list = base::MakeUnique<std::vector<MITMSoftwareType>>();
+
+  for (const chrome_browser_ssl::MITMSoftware& proto_entry :
+       proto.mitm_software()) {
+    MITMSoftwareType mitm_software(proto_entry.name(),
+                                   proto_entry.issuer_common_name(),
+                                   proto_entry.issuer_org());
+    mitm_software_list.get()->push_back(mitm_software);
   }
-  return list;
+  return mitm_software_list;
 }
 #endif
 
@@ -298,9 +315,7 @@ class ConfigSingleton {
   std::unique_ptr<chrome_browser_ssl::SSLErrorAssistantConfig>
       error_assistant_proto_;
 
-  std::unique_ptr<
-      std::vector<std::pair<std::unique_ptr<re2::RE2>, std::string>>>
-      mitm_software_list_;
+  std::unique_ptr<std::vector<MITMSoftwareType>> mitm_software_list_;
 
   enum EnterpriseManaged {
     ENTERPRISE_MANAGED_STATUS_NOT_SET,
@@ -466,11 +481,23 @@ bool ConfigSingleton::IsKnownCaptivePortalCert(const net::SSLInfo& ssl_info) {
 #endif
 
 #if !defined(OS_IOS)
+
+bool VectorRegexMatch(const std::vector<std::string>& vec,
+                      const std::string& pattern) {
+  for (std::size_t i = 0; i < vec.size(); i++) {
+    if (re2::RE2::FullMatch(vec[i], re2::RE2(pattern))) {
+      return true;
+    }
+  }
+  return false;
+}
+
 const std::string ConfigSingleton::MatchKnownMITMSoftware(
     const scoped_refptr<net::X509Certificate> cert) {
-  // If the certificate doesn't have an issuer common name return an empty
-  // string as a sentinel.
-  if (cert->issuer().common_name.empty()) {
+  // If the certificate doesn't have an issuer common name or any organization
+  // names return false.
+  if (cert->issuer().common_name.empty() &&
+      cert->issuer().organization_names.size() == 0) {
     return std::string();
   }
 
@@ -481,12 +508,23 @@ const std::string ConfigSingleton::MatchKnownMITMSoftware(
     mitm_software_list_ = LoadMITMSoftwareList(*error_assistant_proto_);
   }
 
-  // Compares the common name of the issuer of the certificate to our
-  // MITM software regexes.
-  for (const std::pair<std::unique_ptr<re2::RE2>, std::string>& pair :
-       *mitm_software_list_) {
-    if (re2::RE2::FullMatch(cert->issuer().common_name, *pair.first)) {
-      return pair.second;
+  for (const MITMSoftwareType mitm_software : *mitm_software_list_) {
+    if (mitm_software.issuer_common_name.empty() &&
+        mitm_software.issuer_org.empty()) {
+      continue;
+    }
+
+    // Wait until after checking if the field is empty before casting it to a
+    // regex so as to not end up with an empty regex.
+    if ((!mitm_software.issuer_common_name.empty() &&
+         !re2::RE2::FullMatch(cert->issuer().common_name,
+                              re2::RE2(mitm_software.issuer_common_name))) ||
+        (!mitm_software.issuer_org.empty() &&
+         !VectorRegexMatch(cert->issuer().organization_names,
+                           mitm_software.issuer_org))) {
+      continue;
+    } else {
+      return mitm_software.name;
     }
   }
   return std::string();
