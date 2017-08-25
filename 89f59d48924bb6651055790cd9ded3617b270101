@@ -19,6 +19,29 @@
     },
     {
       "key": {
+        "uuid": "a9030592_5839984f",
+        "filename": "services/ui/ws/frame_generator.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1002647
+      },
+      "writtenOn": "2017-08-25T16:05:37Z",
+      "side": 1,
+      "message": "I thought those were mutually exclusive and indicating whether to use surface_if or frame_sink_id. At least that is what I assumed in HitTestDataProviderAura::GetHitTestData().\nAlso do you need kHitTestMouse or kHitTestTouch?",
+      "range": {
+        "startLine": 118,
+        "startChar": 6,
+        "endLine": 118,
+        "endChar": 65
+      },
+      "revId": "89f59d48924bb6651055790cd9ded3617b270101",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bad8888d_05b5e499",
         "filename": "services/ui/ws/frame_generator.cc",
         "patchSetId": 3
@@ -30,6 +53,24 @@
       "writtenOn": "2017-08-25T15:21:18Z",
       "side": 1,
       "message": "rect.SetRect(pixel_size_) or rect.SetRect(gfx::Rect(pixel_size_)); ought to be sufficient.",
+      "revId": "89f59d48924bb6651055790cd9ded3617b270101",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ecccfdc8_d05973e7",
+        "filename": "services/ui/ws/frame_generator.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1002647
+      },
+      "writtenOn": "2017-08-25T16:05:37Z",
+      "side": 1,
+      "message": "or just hit_test_region-\u003erect \u003d gfx::Rect(pixel_size_);",
+      "parentUuid": "bad8888d_05b5e499",
       "revId": "89f59d48924bb6651055790cd9ded3617b270101",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
