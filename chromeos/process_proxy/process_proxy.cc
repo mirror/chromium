@@ -201,6 +201,18 @@ bool ProcessProxy::CreatePseudoTerminalPair(int *pt_pair) {
     return false;
   }
 
+  // Set IUTF8 bit on the tty as we should be UTF-8 clean everywhere.
+  struct termios termios;
+  if (tcgetattr(pt_pair_[PT_SLAVE_FD], &termios) != 0) {
+    CloseFdPair(pt_pair);
+    return false;
+  }
+  termios.c_iflag |= IUTF8;
+  if (tcsetattr(pt_pair_[PT_SLAVE_FD], TCSANOW, &termios) != 0) {
+    CloseFdPair(pt_pair);
+    return false;
+  }
+
   return true;
 }
 
