@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d0789e53_5fc4892f",
+        "filename": "chrome/browser/resources/policy.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1233031
+      },
+      "writtenOn": "2017-08-25T20:39:52Z",
+      "side": 1,
+      "message": "I don\u0027t think it\u0027s a good idea, mostly because of the case when the policy name is longer than the column width. In this case it\u0027s elided, so the part that doesn\u0027t fit in the column is hidden and  replaced by ellipsis. What would happen to the icon in this case? Should it be hidden as well?",
+      "parentUuid": "5dc4ea60_5bd6a5e4",
+      "revId": "759ad8208c3b4081e8ec750a283d13e9de284dc5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b20c8409_41b9b43f",
         "filename": "chrome/browser/resources/policy_common.css",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "759ad8208c3b4081e8ec750a283d13e9de284dc5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "261c0f45_69c088fd",
+        "filename": "chrome/browser/resources/policy_common.css",
+        "patchSetId": 2
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1233031
+      },
+      "writtenOn": "2017-08-25T20:39:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b20c8409_41b9b43f",
+      "revId": "759ad8208c3b4081e8ec750a283d13e9de284dc5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
