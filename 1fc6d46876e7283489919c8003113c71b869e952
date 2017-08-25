@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "9b2ee1ca_32f31f6a",
+        "filename": "ios/chrome/browser/ui/content_suggestions/ntp_home_constant.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-08-25T15:51:29Z",
+      "side": 1,
+      "message": "BTW, this is confirmed here: https://chromium-cpp.appspot.com/ (search for SHOUTY).",
+      "parentUuid": "aa58c4ea_e931bfec",
+      "revId": "1fc6d46876e7283489919c8003113c71b869e952",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ccd4ce4f_8233e4e3",
         "filename": "ios/chrome/browser/ui/ntp/new_tab_page_egtest.mm",
         "patchSetId": 1
