@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e902ac90_01cb8905",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SiteExploreViewPager.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-08-25T09:28:07Z",
+      "side": 1,
+      "message": "you only mention height there, but you will have to do something about width too later. It can stay like this and you would update the comment later, or you can also say something like \"support wrap_content-like behaviour that is not handled by the base implementation\"",
+      "range": {
+        "startLine": 23,
+        "startChar": 8,
+        "endLine": 26,
+        "endChar": 56
+      },
+      "revId": "8494ff6dcd7cad7f70ea8eee4451281951f84d41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9892b61e_f88ed07d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SiteExploreViewPager.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-08-25T09:28:07Z",
+      "side": 1,
+      "message": "not needed anymore, since you don\u0027t explicitly refer to children",
+      "range": {
+        "startLine": 27,
+        "startChar": 8,
+        "endLine": 28,
+        "endChar": 69
+      },
+      "revId": "8494ff6dcd7cad7f70ea8eee4451281951f84d41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b9ea6c7_a7b1d5bf",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SiteExploreViewPager.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-08-25T09:28:07Z",
+      "side": 1,
+      "message": "nit: fits on one line",
+      "range": {
+        "startLine": 51,
+        "startChar": 48,
+        "endLine": 51,
+        "endChar": 49
+      },
+      "revId": "8494ff6dcd7cad7f70ea8eee4451281951f84d41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
