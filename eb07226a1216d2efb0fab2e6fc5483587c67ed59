@@ -189,6 +189,30 @@
       "revId": "eb07226a1216d2efb0fab2e6fc5483587c67ed59",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6a1f7518_6b9dc2f7",
+        "filename": "ios/chrome/browser/web/resources/credential_manager.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-08-25T18:34:26Z",
+      "side": 1,
+      "message": "I think you will end up with var anyway, because there is no other choice. I will defer the placement to you, but just so you know old version of the Style Guide recommended to have all vars in the top of the function.",
+      "parentUuid": "e256870c_8c872a54",
+      "range": {
+        "startLine": 132,
+        "startChar": 6,
+        "endLine": 132,
+        "endChar": 16
+      },
+      "revId": "eb07226a1216d2efb0fab2e6fc5483587c67ed59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
