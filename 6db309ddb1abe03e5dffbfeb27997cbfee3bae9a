@@ -90,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "a5d56dc7_4d35de70",
+        "filename": "components/ntp_snippets/breaking_news/breaking_news_gcm_app_handler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-08-25T15:56:22Z",
+      "side": 1,
+      "message": "Done\n\nvoid OnTokenValidated(const base::TimeDelta\u0026 time_since_last_validation,\n                      base::Optional\u003cbool\u003e was_token_valid_before_validation)",
+      "parentUuid": "3ad87b31_0b6ac8f6",
+      "revId": "6db309ddb1abe03e5dffbfeb27997cbfee3bae9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "77bc2d17_fff09694",
         "filename": "components/ntp_snippets/breaking_news/breaking_news_metrics.cc",
         "patchSetId": 1

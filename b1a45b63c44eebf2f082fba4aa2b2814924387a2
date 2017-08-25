@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d3e60dc3_2fda0d37",
+        "filename": "components/ntp_snippets/breaking_news/breaking_news_metrics.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-08-25T15:56:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "96f46364_892d3045",
+      "revId": "b1a45b63c44eebf2f082fba4aa2b2814924387a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "78105944_f04d77de",
         "filename": "components/ntp_snippets/breaking_news/breaking_news_metrics.h",
         "patchSetId": 2
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "8d3e2ae4_872eeefb",
+        "filename": "components/ntp_snippets/breaking_news/breaking_news_metrics.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-08-25T15:56:22Z",
+      "side": 1,
+      "message": "As per our offline discussion, reporting |bool| seems to be the minimal option and, thus, reporting empty messages felt natural.",
+      "parentUuid": "78105944_f04d77de",
+      "range": {
+        "startLine": 18,
+        "startChar": 50,
+        "endLine": 18,
+        "endChar": 0
+      },
+      "revId": "b1a45b63c44eebf2f082fba4aa2b2814924387a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6118c23e_191f419b",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 2
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "6b2818e5_7bd21a3c",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 46705,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-08-25T15:56:22Z",
+      "side": 1,
+      "message": "Done.\n\nI do not record this if the pref with last validation time is not set.",
+      "parentUuid": "6118c23e_191f419b",
+      "revId": "b1a45b63c44eebf2f082fba4aa2b2814924387a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d2d7c5a8_160dfebf",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 2
@@ -73,6 +133,24 @@
       "revId": "b1a45b63c44eebf2f082fba4aa2b2814924387a2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "173eeded_9b3708bc",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 46738,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-08-25T15:56:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d2d7c5a8_160dfebf",
+      "revId": "b1a45b63c44eebf2f082fba4aa2b2814924387a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
