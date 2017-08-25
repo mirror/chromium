@@ -43,11 +43,27 @@ void CBORWriter::WriteString(const std::string& string) {
     expected_items_count_--;
 }
 
+void CBORWriter::WriteArray(size_t len) {
+  StartItem(CborMajorType::kArray, len);
+  if (expected_items_count_.ValueOrDie() > 0) {
+    // Indicates an array or map has been formerly declared, so the first
+    // array element takes the place of one that has already been accounted for.
+    expected_items_count_--;
+  }
+  // Maintain count of the elements expected to follow.
+  expected_items_count_ += len;
+}
+
 void CBORWriter::WriteMap(size_t len) {
   // To avoid overflow in multiplicatin.
   DCHECK_LT(len, std::numeric_limits<size_t>::max() / 2);
 
   StartItem(CborMajorType::kMap, len);
+  if (expected_items_count_.ValueOrDie() > 0) {
+    // Indicates an array or map has been formerly declared, so the first
+    // map element takes the place of one that has already been accounted for.
+    expected_items_count_--;
+  }
   // Maintain count of the key,value pairs expected to follow.
   expected_items_count_ += len * 2;
 }
