@@ -54,6 +54,8 @@ class TestNetErrorTabHelper : public NetErrorTabHelper {
   int times_download_page_later_invoked() const {
     return times_download_page_later_invoked_;
   }
+
+  const std::string& origin() const { return origin_; }
 #endif  // BUILDFLAG(ENABLE_OFFLINE_PAGES)
 
   const std::string& network_diagnostics_url() const {
@@ -92,9 +94,11 @@ class TestNetErrorTabHelper : public NetErrorTabHelper {
   }
 
 #if BUILDFLAG(ENABLE_OFFLINE_PAGES)
-  void DownloadPageLaterHelper(const GURL& url) override {
+  void DownloadPageLaterHelper(const GURL& url,
+                               const std::string& origin) override {
     download_page_later_url_ = url;
     times_download_page_later_invoked_++;
+    origin_ = origin;
   }
 #endif  // BUILDFLAG(ENABLE_OFFLINE_PAGES)
 
@@ -104,6 +108,7 @@ class TestNetErrorTabHelper : public NetErrorTabHelper {
 #if BUILDFLAG(ENABLE_OFFLINE_PAGES)
   GURL download_page_later_url_;
   int times_download_page_later_invoked_;
+  std::string origin_;
 #endif  // BUILDFLAG(ENABLE_OFFLINE_PAGES)
   std::string network_diagnostics_url_;
   int times_diagnostics_dialog_invoked_;
@@ -374,6 +379,7 @@ TEST_F(NetErrorTabHelperTest, DownloadPageLater) {
   tab_helper()->OnDownloadPageLater();
   EXPECT_EQ(url, tab_helper()->download_page_later_url());
   EXPECT_EQ(1, tab_helper()->times_download_page_later_invoked());
+  EXPECT_EQ("", tab_helper()->origin());
 }
 
 TEST_F(NetErrorTabHelperTest, NoDownloadPageLaterOnNonErrorPage) {
@@ -381,6 +387,7 @@ TEST_F(NetErrorTabHelperTest, NoDownloadPageLaterOnNonErrorPage) {
   LoadURL(url, true /*succeeded*/);
   tab_helper()->OnDownloadPageLater();
   EXPECT_EQ(0, tab_helper()->times_download_page_later_invoked());
+  EXPECT_EQ("", tab_helper()->origin());
 }
 
 // Makes sure that "Download page later" isn't run on URLs with non-HTTP/HTTPS
