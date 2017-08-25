@@ -9,6 +9,7 @@
 #include "components/policy/core/browser/configuration_policy_handler.h"
 #include "components/policy/core/browser/configuration_policy_handler_parameters.h"
 #include "components/policy/core/browser/policy_error_map.h"
+#include "components/policy/policy_constants.h"
 #include "components/prefs/pref_value_map.h"
 #include "components/strings/grit/components_strings.h"
 
@@ -44,6 +45,14 @@ void ConfigurationPolicyHandlerList::ApplyPolicySettings(
   // applying the policies.
   // TODO(aberent): split into two functions.
   std::unique_ptr<PolicyMap> filtered_policies = policies.DeepCopy();
+  if (filtered_policies->GetValue(key::kCastReceiverName))
+    LOG(ERROR) << "*** DRC *** Value for policy " << key::kCastReceiverName << " is: " << *filtered_policies->GetValue(key::kCastReceiverName);
+  else
+    LOG(ERROR) << "*** DRC *** Value for policy " << key::kCastReceiverName << " is unset";
+  if (filtered_policies->GetValue(key::kCastReceiverEnabled))
+    LOG(ERROR) << "*** DRC *** Value for policy " << key::kCastReceiverEnabled << " is: " << *filtered_policies->GetValue(key::kCastReceiverEnabled);
+  else
+    LOG(ERROR) << "*** DRC *** Value for policy " << key::kCastReceiverEnabled << " is unset";
   filtered_policies->EraseMatching(
       base::Bind(&ConfigurationPolicyHandlerList::IsPlatformDevicePolicy,
                  base::Unretained(this)));

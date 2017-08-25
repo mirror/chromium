@@ -16,8 +16,8 @@
 #include "base/time/time.h"
 #include "base/values.h"
 #include "chrome/browser/browser_process.h"
-#include "chrome/browser/chromeos/policy/device_local_account.h"
 #include "chrome/browser/chromeos/policy/proto/chrome_device_policy.pb.h"
+#include "chrome/browser/chromeos/policy/device_local_account.h"
 #include "chromeos/dbus/dbus_thread_manager.h"
 #include "chromeos/dbus/update_engine_client.h"
 #include "chromeos/settings/cros_settings_names.h"
@@ -950,11 +950,14 @@ void DecodeGenericPolicies(const em::ChromeDeviceSettingsProto& policy,
   }
 
   if (policy.has_cast_receiver_name()) {
+    LOG(ERROR) << "**** DRC *** Received Cast Receiver name policy.";
     const em::CastReceiverNameProto& container(policy.cast_receiver_name());
     if (container.has_name())
+    { LOG(ERROR) << "**** DRC *** Setting policy " << key::kCastReceiverName << " to \"" << container.name() << "\"";
       policies->Set(key::kCastReceiverName, POLICY_LEVEL_MANDATORY,
                     POLICY_SCOPE_MACHINE, POLICY_SOURCE_CLOUD,
                     base::MakeUnique<base::Value>(container.name()), nullptr);
+    }
   }
 }
 }  // namespace
