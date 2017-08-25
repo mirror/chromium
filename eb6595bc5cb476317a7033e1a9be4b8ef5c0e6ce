@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8b3a1ce7_c9b0f67f",
+        "filename": "chrome/browser/metrics/tab_stats_tracker.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2017-08-25T18:42:16Z",
+      "side": 1,
+      "message": "\"A raw pointer\" is redundant, as it\u0027s clear from the variable declaration.\n\nMaybe just:\n\nThe delegate used to report the metrics.",
+      "range": {
+        "startLine": 129,
+        "startChar": 7,
+        "endLine": 129,
+        "endChar": 23
+      },
+      "revId": "eb6595bc5cb476317a7033e1a9be4b8ef5c0e6ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1777a1b_a0a64aaa",
+        "filename": "chrome/browser/metrics/tab_stats_tracker.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2017-08-25T18:42:16Z",
+      "side": 1,
+      "message": "Ditto.",
+      "range": {
+        "startLine": 132,
+        "startChar": 13,
+        "endLine": 132,
+        "endChar": 21
+      },
+      "revId": "eb6595bc5cb476317a7033e1a9be4b8ef5c0e6ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
