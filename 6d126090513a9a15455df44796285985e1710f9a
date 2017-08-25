@@ -70,6 +70,30 @@
       "revId": "6d126090513a9a15455df44796285985e1710f9a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca93827a_158309d3",
+        "filename": "remoting/client/audio/audio_frame_supplier.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1133074
+      },
+      "writtenOn": "2017-08-25T19:26:03Z",
+      "side": 1,
+      "message": "const just means the method does not modify the internal state of the instance not that the value retrieved can\u0027t change.  Marking const is reasonable here IMO.",
+      "parentUuid": "b1b7b0ff_bd9f49bb",
+      "range": {
+        "startLine": 26,
+        "startChar": 36,
+        "endLine": 26,
+        "endChar": 58
+      },
+      "revId": "6d126090513a9a15455df44796285985e1710f9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
