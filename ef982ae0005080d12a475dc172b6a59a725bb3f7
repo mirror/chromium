@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "bb08d05a_4e8390a7",
+        "filename": "third_party/WebKit/Source/core/frame/BrowserControlsTest.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1227574
+      },
+      "writtenOn": "2017-08-25T13:19:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c9f79897_7566720c",
+      "range": {
+        "startLine": 69,
+        "startChar": 4,
+        "endLine": 69,
+        "endChar": 32
+      },
+      "revId": "ef982ae0005080d12a475dc172b6a59a725bb3f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "03b78896_767c0157",
         "filename": "third_party/WebKit/Source/platform/testing/ScopedMockedURL.cpp",
         "patchSetId": 4
@@ -36,6 +60,30 @@
       "writtenOn": "2017-08-23T10:47:44Z",
       "side": 1,
       "message": "If we provide GetURLLoaderMockFactory though the TestingPlatformSupport, it would be natural to unregister all URLs when the testing platform instance is scoped out.\n\nThen, this ScopedMockedURL won\u0027t be useful any more?\n\nIf you want to keep this for a while, probably you just want to have the platform_ as a member, and use it for register and unregister, though using it for register needs URLTEstHelper\u0027s modification too. It\u0027s also fine to do it in a separate CL.",
+      "range": {
+        "startLine": 14,
+        "startChar": 17,
+        "endLine": 14,
+        "endChar": 32
+      },
+      "revId": "ef982ae0005080d12a475dc172b6a59a725bb3f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8e1401d_2e6b4cd6",
+        "filename": "third_party/WebKit/Source/platform/testing/ScopedMockedURL.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1227574
+      },
+      "writtenOn": "2017-08-25T13:19:19Z",
+      "side": 1,
+      "message": "I will upload new CL for ScopedMockedURL and URLTestHelper.",
+      "parentUuid": "03b78896_767c0157",
       "range": {
         "startLine": 14,
         "startChar": 17,
@@ -82,6 +130,30 @@
       "writtenOn": "2017-08-23T10:47:44Z",
       "side": 1,
       "message": "As I commented, you will need to take the platform reference as an argument here.\n\nOtherwise, platform_ will be destroyed here. So once the actual MockFactory implementation moves to TestingPlatformSupport, this won\u0027t work. Registered mock will just disappear immediately.",
+      "range": {
+        "startLine": 91,
+        "startChar": 0,
+        "endLine": 91,
+        "endChar": 1
+      },
+      "revId": "ef982ae0005080d12a475dc172b6a59a725bb3f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30df756f_72d74f7c",
+        "filename": "third_party/WebKit/Source/platform/testing/URLTestHelpers.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1227574
+      },
+      "writtenOn": "2017-08-25T13:19:19Z",
+      "side": 1,
+      "message": "I will upload new CL for URLTestHelper.",
+      "parentUuid": "48cbe6d3_a1bf6aad",
       "range": {
         "startLine": 91,
         "startChar": 0,
