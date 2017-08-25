@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "15d6ad3d_7e6d7088",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsCarousel.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-08-25T14:47:22Z",
+      "side": 1,
+      "message": "records AAAAAAALL the scrolls. Don\u0027t you want to record only whether the user scrolled at all? So only the first one? Maybe Look at how we use SuggestionsMetrics.ScrollEventReporter instead?Or just removing the observer after the first recorded scroll might work, depending on the lifetime of the viewholder.",
+      "range": {
+        "startLine": 110,
+        "startChar": 39,
+        "endLine": 110,
+        "endChar": 82
+      },
+      "revId": "14b5b1ab91ef65c13da53027afe1bbe7f6ffe4a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "823dc59c_e332c359",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsCarouselAdapter.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-08-25T14:47:22Z",
+      "side": 1,
+      "message": "consider this:\n\n- User pulls up the bottom sheet. At this point we don\u0027t have contextual suggestions so we don\u0027t log anything\n- User scroll down quite a lot, the carousel is now hidden\n- Suggestions arrive, but the user does not see them since it\u0027s off-screen. We still record that as an impression\n- The user taps a content suggestion which closes the bottom sheet without scrolling back to the top.\n\nThe above sequence would incorrectly record an impression. How about using ImpressionTracker instead? or something similar that verifies that the carousel is actually visible before logging. This also does not log that a particular suggestion is visible, so you can get CTR for the carousel with the current implementation, but not for suggestions per position. But maybe we don\u0027t need that second one.",
+      "revId": "14b5b1ab91ef65c13da53027afe1bbe7f6ffe4a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "908cfe24_ca53726f",
+        "filename": "tools/metrics/actions/actions.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 17053,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-08-25T14:47:22Z",
+      "side": 1,
+      "message": "Patrick refers to the feature as \"explore on content\" (vs \"explore on sites\" for the tiles). I think it would be nice to get a definitive name and use that in here.",
+      "range": {
+        "startLine": 17053,
+        "startChar": 14,
+        "endLine": 17053,
+        "endChar": 46
+      },
+      "revId": "14b5b1ab91ef65c13da53027afe1bbe7f6ffe4a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
