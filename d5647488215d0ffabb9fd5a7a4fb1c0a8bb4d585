@@ -124,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "395d2238_c42306f4",
+        "filename": "third_party/zlib/contrib/arm/inffast.c",
+        "patchSetId": 5
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1237531
+      },
+      "writtenOn": "2017-08-25T02:47:08Z",
+      "side": 1,
+      "message": "\u003e it is an open question how common are data segments of that tiny size.\n\nI\u0027m not sure why the data segment size matters. The technique in 601694 doesn\u0027t apply only to tiny source buffers.\n\nOn x86_64, I measured a 1.2x throughput gain from reading into the bit accumulator 8 bytes at a time. Independent of that, read/writing 8 bytes at a time for length-distance copies gave an additional 1.3x. The first technique requires a little endian CPU. The second technique does not.\n\n\n\u003e About 601694: it assumes that unaligned 64bits loads are cheap and readily available, no?\n\nYes, it does, which is why it is gated on e.g. #if defined(__aarch64__). 601694 should have no code changes on 32 bit ARM.",
+      "parentUuid": "44968647_302b5bb8",
+      "revId": "d5647488215d0ffabb9fd5a7a4fb1c0a8bb4d585",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2a788724_acbea8a5",
         "filename": "third_party/zlib/contrib/arm/inflate.c",
         "patchSetId": 5
