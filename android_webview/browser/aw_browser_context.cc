@@ -315,6 +315,11 @@ content::PermissionManager* AwBrowserContext::GetPermissionManager() {
   return permission_manager_.get();
 }
 
+content::BackgroundFetchDelegate*
+AwBrowserContext::GetBackgroundFetchDelegate() {
+  return nullptr;
+}
+
 content::BackgroundSyncController*
 AwBrowserContext::GetBackgroundSyncController() {
   return nullptr;

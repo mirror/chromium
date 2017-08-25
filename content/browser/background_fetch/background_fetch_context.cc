@@ -14,7 +14,6 @@
 #include "content/browser/service_worker/service_worker_context_wrapper.h"
 #include "content/public/browser/blob_handle.h"
 #include "content/public/browser/browser_context.h"
-#include "net/url_request/url_request_context_getter.h"
 #include "url/origin.h"
 
 namespace content {
@@ -52,13 +51,11 @@ BackgroundFetchContext::~BackgroundFetchContext() {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
 }
 
-void BackgroundFetchContext::InitializeOnIOThread(
-    scoped_refptr<net::URLRequestContextGetter> request_context_getter) {
+void BackgroundFetchContext::InitializeOnIOThread() {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
 
-  request_context_getter_ = request_context_getter;
-  delegate_proxy_ = base::MakeUnique<BackgroundFetchDelegateProxy>(
-      browser_context_, request_context_getter);
+  delegate_proxy_ =
+      base::MakeUnique<BackgroundFetchDelegateProxy>(browser_context_);
 }
 
 void BackgroundFetchContext::StartFetch(
@@ -153,13 +150,9 @@ void BackgroundFetchContext::CreateController(
           base::BindOnce(&BackgroundFetchContext::DidCompleteJob,
                          weak_factory_.GetWeakPtr()));
 
-  // TODO(peter): We should actually be able to use Background Fetch in layout
-  // tests. That requires a download manager and a request context.
-  if (request_context_getter_) {
-    // Start fetching the first few requests immediately. At some point in the
-    // future we may want a more elaborate scheduling mechanism here.
-    controller->Start();
-  }
+  // Start fetching the first few requests immediately. At some point in the
+  // future we may want a more elaborate scheduling mechanism here.
+  controller->Start();
 
   active_fetches_.insert(
       std::make_pair(registration_id, std::move(controller)));

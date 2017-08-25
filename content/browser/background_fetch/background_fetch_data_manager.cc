@@ -6,6 +6,7 @@
 
 #include <algorithm>
 #include <queue>
+#include <utility>
 
 #include "base/memory/ptr_util.h"
 #include "content/browser/background_fetch/background_fetch_constants.h"
@@ -248,7 +249,6 @@ void BackgroundFetchDataManager::GetSettledFetchesForRegistration(
       settled_fetch.response.headers.insert(
           request->GetResponseHeaders().begin(),
           request->GetResponseHeaders().end());
-
       if (request->GetFileSize() > 0) {
         DCHECK(!request->GetFilePath().empty());
         // CreateFileBackedBlob DCHECKs that it is called on the IO thread. This
@@ -272,9 +272,8 @@ void BackgroundFetchDataManager::GetSettledFetchesForRegistration(
       background_fetch_succeeded = false;
     }
 
-    // TODO: settled_fetch.response.error
-    settled_fetch.response.response_time = request->GetResponseTime();
-    // TODO: settled_fetch.response.cors_exposed_header_names
+    // TODO(delphick): settled_fetch.response.error
+    // TODO(delphick): settled_fetch.response.cors_exposed_header_names
 
     background_fetch_succeeded = background_fetch_succeeded && IsOK(*request);
 

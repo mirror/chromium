@@ -101,6 +101,8 @@ class Controller {
   // See DownloadService::OnStopScheduledTask.
   virtual bool OnStopScheduledTask(DownloadTaskType task_type) = 0;
 
+  virtual url::Origin GetOrigin(const std::string& guid) = 0;
+
  private:
   DISALLOW_COPY_AND_ASSIGN(Controller);
 };

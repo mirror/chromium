@@ -5,6 +5,7 @@
 #ifndef CONTENT_BROWSER_BACKGROUND_FETCH_BACKGROUND_FETCH_TEST_BASE_H_
 #define CONTENT_BROWSER_BACKGROUND_FETCH_BACKGROUND_FETCH_TEST_BASE_H_
 
+#include <memory>
 #include <string>
 #include <vector>
 
@@ -12,15 +13,12 @@
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
 #include "content/browser/background_fetch/background_fetch_embedded_worker_test_helper.h"
+#include "content/browser/background_fetch/background_fetch_test_browser_context.h"
 #include "content/common/service_worker/service_worker_types.h"
 #include "content/public/test/test_browser_context.h"
 #include "content/public/test/test_browser_thread_bundle.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "url/origin.h"
-
-namespace net {
-class HttpResponseHeaders;
-}
 
 namespace content {
 
@@ -38,36 +36,6 @@ class BackgroundFetchTestBase : public ::testing::Test {
   // ::testing::Test overrides.
   void SetUp() override;
   void TearDown() override;
-
-  // Structure encapsulating the data for a injected response. Should only be
-  // created by the builder, which also defines the ownership semantics.
-  struct TestResponse {
-    TestResponse();
-    ~TestResponse();
-
-    scoped_refptr<net::HttpResponseHeaders> headers;
-    std::string data;
-  };
-
-  // Builder for creating a TestResponse object with the given data. The faked
-  // download manager will respond to the corresponding request based on this.
-  class TestResponseBuilder {
-   public:
-    explicit TestResponseBuilder(int response_code);
-    ~TestResponseBuilder();
-
-    TestResponseBuilder& AddResponseHeader(const std::string& name,
-                                           const std::string& value);
-    TestResponseBuilder& SetResponseData(std::string data);
-
-    // Finalizes the builder and invalidates the underlying response.
-    std::unique_ptr<TestResponse> Build();
-
-   private:
-    std::unique_ptr<TestResponse> response_;
-
-    DISALLOW_COPY_AND_ASSIGN(TestResponseBuilder);
-  };
 
   // Creates a Background Fetch registration backed by a Service Worker
   // registration for the testing origin. The resulting registration will be
@@ -106,7 +74,9 @@ class BackgroundFetchTestBase : public ::testing::Test {
  private:
   class RespondingDownloadManager;
 
-  TestBrowserContext browser_context_;
+  BackgroundFetchTestBrowserContext browser_context_;
+
+  MockBackgroundFetchDelegate* delegate_;
 
   RespondingDownloadManager* download_manager_;  // owned by |browser_context_|
 

@@ -149,4 +149,8 @@ void DownloadServiceImpl::OnControllerInitialized() {
   startup_completed_ = true;
 }
 
+url::Origin DownloadServiceImpl::GetOrigin(const std::string& guid) {
+  return controller_->GetOrigin(guid);
+}
+
 }  // namespace download
