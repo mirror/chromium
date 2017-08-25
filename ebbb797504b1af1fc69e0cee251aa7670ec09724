@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d8ba1c4e_93d1dfa9",
+        "filename": "ui/display/manager/display_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1126,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-08-25T18:21:43Z",
+      "side": 1,
+      "message": "I wonder if calling ReconfigureDisplays() here could cause it to lose the Unified mode state?\n\nWhile I was experimenting with unified mode, I found that I need to call SetDefaultMultiDisplayModeForCurrentDisplays(UNIFIED); rather than ReconfigureDisplays();",
+      "range": {
+        "startLine": 1126,
+        "startChar": 6,
+        "endLine": 1126,
+        "endChar": 25
+      },
+      "revId": "ebbb797504b1af1fc69e0cee251aa7670ec09724",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
