@@ -22,6 +22,30 @@
       "revId": "619774c7925df3d4d92a2cd352700e4a8809c4e3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33b4976b_475bea54",
+        "filename": "gpu/command_buffer/client/fenced_allocator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-08-25T04:06:18Z",
+      "side": 0,
+      "message": "GetBlockStatus can be called with any offset inside the block - e.g. if contiguous freed blocks were merged, the offset to a previous block might be in the middle of the merged one. So I moved this DCHECK to Free/FreePendingToken (where it is still true), but not in GetBlockStatus.",
+      "parentUuid": "45e5f9bb_c7e9ac08",
+      "range": {
+        "startLine": 245,
+        "startChar": 35,
+        "endLine": 245,
+        "endChar": 36
+      },
+      "revId": "619774c7925df3d4d92a2cd352700e4a8809c4e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

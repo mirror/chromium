@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "7a167608_1c4720be",
+        "filename": "gpu/command_buffer/client/fenced_allocator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-08-25T04:06:18Z",
+      "side": 1,
+      "message": "Fair enough, I can do that.",
+      "parentUuid": "9eab4464_33227954",
+      "range": {
+        "startLine": 180,
+        "startChar": 3,
+        "endLine": 180,
+        "endChar": 19
+      },
+      "revId": "46ef4d7fc7f1e37e35c8971917d3f69dc2c1b274",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f5f8ae47_32e9c83c",
         "filename": "gpu/command_buffer/client/fenced_allocator.h",
         "patchSetId": 2
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "92b91889_5d075835",
+        "filename": "gpu/command_buffer/client/fenced_allocator.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-08-25T04:06:18Z",
+      "side": 1,
+      "message": "Ok sounds good, will do. Just wanted to keep identifiers short, but it\u0027s a false economy.",
+      "parentUuid": "f5f8ae47_32e9c83c",
+      "range": {
+        "startLine": 261,
+        "startChar": 25,
+        "endLine": 261,
+        "endChar": 41
+      },
+      "revId": "46ef4d7fc7f1e37e35c8971917d3f69dc2c1b274",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "85fb969a_de74f0d8",
         "filename": "gpu/command_buffer/client/mapped_memory.cc",
         "patchSetId": 2
@@ -59,6 +107,30 @@
       "writtenOn": "2017-08-25T03:21:50Z",
       "side": 1,
       "message": "Should this be a NOTREACHED() case?",
+      "range": {
+        "startLine": 216,
+        "startChar": 9,
+        "endLine": 216,
+        "endChar": 24
+      },
+      "revId": "46ef4d7fc7f1e37e35c8971917d3f69dc2c1b274",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15360239_03477a41",
+        "filename": "gpu/command_buffer/client/mapped_memory.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-08-25T04:06:18Z",
+      "side": 1,
+      "message": "If the whole chunk was freed and deleted (after FreeUnused) we\u0027d still want to return FREE. There\u0027s no good way to differentiate between the pointer never having existed and already freed (without tracking freed chunks forever), and since this is only for tests, I think it\u0027s good enough?",
+      "parentUuid": "85fb969a_de74f0d8",
       "range": {
         "startLine": 216,
         "startChar": 9,
