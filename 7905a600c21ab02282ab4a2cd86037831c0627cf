@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "48aeed3d_4618f235",
+        "filename": "content/browser/renderer_host/frame_connector_delegate.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1001433
+      },
+      "writtenOn": "2017-08-25T19:08:46Z",
+      "side": 1,
+      "message": "Having this here looks right to me because it means LocalSurfaceId survives cross-process navigations by the child. It appears that the new OOPIF in the new process will get the old LocalSurfaceId when it gets its initial resize, and so the LocalSurfaceId will just get reused. I\u0027m just noting this because it is something to watch out for, that code elsewhere doesn\u0027t assume that a LocalSurfaceId will only ever be associated with a single RenderWidget(Host).",
+      "revId": "7905a600c21ab02282ab4a2cd86037831c0627cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a453727_2a8e944d",
+        "filename": "content/renderer/render_frame_proxy.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 506,
+      "author": {
+        "id": 1001433
+      },
+      "writtenOn": "2017-08-25T19:08:46Z",
+      "side": 1,
+      "message": "Should this only generate a new SurfaceId when the size changes? We propagate the whole rect but if it is just changing position within the parent then it shouldn\u0027t need a new surface, correct?",
+      "revId": "7905a600c21ab02282ab4a2cd86037831c0627cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
