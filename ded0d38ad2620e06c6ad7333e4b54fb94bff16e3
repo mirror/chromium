@@ -1,0 +1,188 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7e7294b3_b8c24da8",
+        "filename": "ios/chrome/browser/web/BUILD.gn",
+        "patchSetId": 5
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-08-25T17:06:18Z",
+      "side": 1,
+      "message": "Would it be better to use something else than \"nullable\" in the name? Maybe \"prompting\" ?",
+      "range": {
+        "startLine": 28,
+        "startChar": 5,
+        "endLine": 28,
+        "endChar": 33
+      },
+      "revId": "ded0d38ad2620e06c6ad7333e4b54fb94bff16e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9231dfe8_95c5a0ca",
+        "filename": "ios/chrome/browser/web/nullable_mailto_url_rewriter.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-08-25T17:06:18Z",
+      "side": 1,
+      "message": "Please add comments per Style Guide",
+      "range": {
+        "startLine": 10,
+        "startChar": 11,
+        "endLine": 10,
+        "endChar": 36
+      },
+      "revId": "ded0d38ad2620e06c6ad7333e4b54fb94bff16e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c8944cc_633a6565",
+        "filename": "ios/chrome/browser/web/nullable_mailto_url_rewriter.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-08-25T17:06:18Z",
+      "side": 1,
+      "message": "Avoid calling instance methods inside init. Subclasses can override addMailtoApps: and then uninitialized object will receive this call.",
+      "range": {
+        "startLine": 52,
+        "startChar": 10,
+        "endLine": 52,
+        "endChar": 23
+      },
+      "revId": "ded0d38ad2620e06c6ad7333e4b54fb94bff16e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13a1de16_abf03567",
+        "filename": "ios/chrome/browser/web/nullable_mailto_url_rewriter.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-08-25T17:06:18Z",
+      "side": 1,
+      "message": "This code has too many things in common with MailtoURLRewriter. Can we avoid code duplication?",
+      "range": {
+        "startLine": 59,
+        "startChar": 28,
+        "endLine": 59,
+        "endChar": 43
+      },
+      "revId": "ded0d38ad2620e06c6ad7333e4b54fb94bff16e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b645167_2deaa2f5",
+        "filename": "ios/chrome/browser/web/nullable_mailto_url_rewriter_unittest.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-08-25T17:06:18Z",
+      "side": 1,
+      "message": "Is this class temporary? If no, then we should not be building backdoors for tests.",
+      "range": {
+        "startLine": 17,
+        "startChar": 11,
+        "endLine": 17,
+        "endChar": 36
+      },
+      "revId": "ded0d38ad2620e06c6ad7333e4b54fb94bff16e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd7998bd_c3b6879d",
+        "filename": "ios/chrome/browser/web/nullable_mailto_url_rewriter_unittest.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-08-25T17:06:18Z",
+      "side": 1,
+      "message": "Prefer constructor to SetUp (which should be used only when calling virtual methods). The problem of SetUp is that it is very easy to miss PlatformTest::SetUp() call ;)",
+      "range": {
+        "startLine": 24,
+        "startChar": 7,
+        "endLine": 24,
+        "endChar": 12
+      },
+      "revId": "ded0d38ad2620e06c6ad7333e4b54fb94bff16e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b841ab7d_05f41bfe",
+        "filename": "ios/chrome/browser/web/nullable_mailto_url_rewriter_unittest.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-08-25T17:06:18Z",
+      "side": 1,
+      "message": "Please add comments",
+      "range": {
+        "startLine": 29,
+        "startChar": 7,
+        "endLine": 29,
+        "endChar": 36
+      },
+      "revId": "ded0d38ad2620e06c6ad7333e4b54fb94bff16e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08a64a04_ed54973f",
+        "filename": "ios/chrome/browser/web/nullable_mailto_url_rewriter_unittest.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-08-25T17:06:18Z",
+      "side": 1,
+      "message": "nit: Do you need to enumerate cases? Comments like these can be hard to support.",
+      "range": {
+        "startLine": 46,
+        "startChar": 7,
+        "endLine": 46,
+        "endChar": 8
+      },
+      "revId": "ded0d38ad2620e06c6ad7333e4b54fb94bff16e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
