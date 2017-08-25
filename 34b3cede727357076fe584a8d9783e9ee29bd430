@@ -194,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "06a7ff72_fe29a98e",
+        "filename": "components/arc/common/video_decode_accelerator.mojom",
+        "patchSetId": 22
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-08-25T09:16:23Z",
+      "side": 1,
+      "message": "Will Using NotifyError work?\nWhen Reset() is called, async callback to be called on completion is passed to mojo library.\nIt will be kept in the mojo library in the container until it is called, and in error case, will never be called.\nSo, Reset() -\u003e error -\u003e Reset() -\u003e error ... will just grow the number of callback info stored in mojo lib?\n\nIf so, two options, I think;\n1) Use async callback for all fail-able methods, regardless whether they are succeeded or failed. Error status should be returned as its param. (e.g., you can find filesystem.mojom as reference). Only if there is no corresponding method call, NotifyError can be called. Or,\n2) Stepping back, use client with Notify* methods, iff it is technically difficult to move forward with 1).\n# Or something other?\n\n*In general*, I\u0027d recommend to use 1) by default.\nIt is the Mojo\u0027s standard mechanism to return asynchronous operation result, and this is the case.\nAlso, practically, 1) has benefit from the caller, which is that\nthe relationship of which callback is corresponding to which method call is explicit.\nIf, for some reason, 1) is difficult for this CL, 2) may be a way to go, I think, but I\u0027d really appreciated if you document it here, in order to encourage to use 1) by default for other ARC\u0027s Mojo services, and note that this is a special case.\n\nOr, if in future, it is possible to 1) style, maybe TODO? but as Luis commented, adding callback (not a callback argument) will break an API. So, probably better to do in the CL.",
+      "parentUuid": "ee2e80fa_30be9d48",
+      "revId": "34b3cede727357076fe584a8d9783e9ee29bd430",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f0ce35d8_4e811c4a",
         "filename": "components/arc/common/video_decode_accelerator.mojom",
         "patchSetId": 22
