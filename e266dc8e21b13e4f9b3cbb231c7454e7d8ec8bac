@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1b89ea0b_eba2e623",
+        "filename": "third_party/WebKit/Source/core/paint/compositing/CompositedLayerMapping.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 601,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2017-08-25T21:56:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a24e0e8f_b5c986f8",
+      "revId": "e266dc8e21b13e4f9b3cbb231c7454e7d8ec8bac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d12e935a_25b86b97",
         "filename": "third_party/WebKit/Source/core/paint/compositing/CompositedLayerMapping.cpp",
         "patchSetId": 11
@@ -48,6 +66,24 @@
       "side": 1,
       "message": "Per offline discussion, ScrollParent is always equal to or a descendant\nof the CompositingContainer (CIU.cpp:249).",
       "parentUuid": "d12e935a_25b86b97",
+      "revId": "e266dc8e21b13e4f9b3cbb231c7454e7d8ec8bac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "041026b7_7cd2d718",
+        "filename": "third_party/WebKit/Source/core/paint/compositing/CompositedLayerMapping.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 1311,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2017-08-25T21:56:59Z",
+      "side": 1,
+      "message": "Comments added.",
+      "parentUuid": "f710ffc0_2943dbaa",
       "revId": "e266dc8e21b13e4f9b3cbb231c7454e7d8ec8bac",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -89,6 +125,24 @@
     },
     {
       "key": {
+        "uuid": "82303178_c82ff6e7",
+        "filename": "third_party/WebKit/Source/core/paint/compositing/CompositedLayerMapping.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 2509,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2017-08-25T21:56:59Z",
+      "side": 1,
+      "message": "Now renamed to reduced confusion. (y)",
+      "parentUuid": "240dcf69_0d9e580c",
+      "revId": "e266dc8e21b13e4f9b3cbb231c7454e7d8ec8bac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a7e22f8f_61242ef0",
         "filename": "third_party/WebKit/Source/core/paint/compositing/CompositingInputsUpdater.cpp",
         "patchSetId": 11
@@ -121,6 +175,24 @@
       "revId": "e266dc8e21b13e4f9b3cbb231c7454e7d8ec8bac",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34b148d3_83e5ad67",
+        "filename": "third_party/WebKit/Source/core/paint/compositing/CompositingInputsUpdater.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2017-08-25T21:56:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "13b7ad5c_025bdeda",
+      "revId": "e266dc8e21b13e4f9b3cbb231c7454e7d8ec8bac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
