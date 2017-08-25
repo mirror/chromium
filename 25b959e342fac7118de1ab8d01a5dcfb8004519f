@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9f48cb8b_a0b9b282",
+        "filename": "chrome/browser/chromeos/arc/fileapi/arc_file_system_operation_runner.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1118346
+      },
+      "writtenOn": "2017-08-25T01:51:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "120e42ca_1779e456",
+      "range": {
+        "startLine": 152,
+        "startChar": 27,
+        "endLine": 152,
+        "endChar": 31
+      },
+      "revId": "25b959e342fac7118de1ab8d01a5dcfb8004519f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1c7c1d4f_f3d22c44",
         "filename": "chrome/browser/chromeos/fileapi/recent_arc_media_source.cc",
         "patchSetId": 3
@@ -39,6 +63,24 @@
       "revId": "25b959e342fac7118de1ab8d01a5dcfb8004519f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0da05acf_b89ec042",
+        "filename": "chrome/browser/chromeos/fileapi/recent_arc_media_source.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 367,
+      "author": {
+        "id": 1118346
+      },
+      "writtenOn": "2017-08-25T01:51:39Z",
+      "side": 1,
+      "message": "Yes if ARC is not allowed for the user. I added a comment.",
+      "parentUuid": "1c7c1d4f_f3d22c44",
+      "revId": "25b959e342fac7118de1ab8d01a5dcfb8004519f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -62,6 +104,30 @@
       "revId": "25b959e342fac7118de1ab8d01a5dcfb8004519f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40db2d03_2f33454e",
+        "filename": "chrome/browser/chromeos/fileapi/recent_arc_media_source.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 370,
+      "author": {
+        "id": 1118346
+      },
+      "writtenOn": "2017-08-25T01:51:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a53b48c5_79f0abdf",
+      "range": {
+        "startLine": 370,
+        "startChar": 18,
+        "endLine": 370,
+        "endChar": 30
+      },
+      "revId": "25b959e342fac7118de1ab8d01a5dcfb8004519f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
