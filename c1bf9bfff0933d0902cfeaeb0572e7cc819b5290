@@ -116,6 +116,30 @@
       "revId": "c1bf9bfff0933d0902cfeaeb0572e7cc819b5290",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59e3854e_225a258b",
+        "filename": "components/viz/client/client_layer_tree_frame_sink.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1002647
+      },
+      "writtenOn": "2017-08-25T21:29:48Z",
+      "side": 1,
+      "message": "Talked to gklassen@ and it seems like the code that actually makes use of |hit_test_region_list| is going to be added here soon in this CL.",
+      "parentUuid": "594dbbc4_05e0ea26",
+      "range": {
+        "startLine": 143,
+        "startChar": 4,
+        "endLine": 143,
+        "endChar": 24
+      },
+      "revId": "c1bf9bfff0933d0902cfeaeb0572e7cc819b5290",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
