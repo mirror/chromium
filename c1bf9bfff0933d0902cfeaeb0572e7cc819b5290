@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "66a5d237_869798d6",
+        "filename": "components/viz/client/client_layer_tree_frame_sink.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1002647
+      },
+      "writtenOn": "2017-08-25T16:11:07Z",
+      "side": 1,
+      "message": "+1 (or nit: add {} because the condition is multiline)",
+      "parentUuid": "1618ad97_a6d1debe",
+      "revId": "c1bf9bfff0933d0902cfeaeb0572e7cc819b5290",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "95f7eaca_4ed9fefb",
         "filename": "components/viz/client/client_layer_tree_frame_sink.cc",
         "patchSetId": 1
@@ -30,6 +48,29 @@
       "writtenOn": "2017-08-25T15:05:06Z",
       "side": 1,
       "message": "add this to the initializer list and remove the flag?",
+      "revId": "c1bf9bfff0933d0902cfeaeb0572e7cc819b5290",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5de849e_1fbc6a82",
+        "filename": "components/viz/client/client_layer_tree_frame_sink.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1002647
+      },
+      "writtenOn": "2017-08-25T16:11:07Z",
+      "side": 1,
+      "message": "Wait on this bit until we actually send hit-test data to Viz?",
+      "range": {
+        "startLine": 143,
+        "startChar": 4,
+        "endLine": 143,
+        "endChar": 24
+      },
       "revId": "c1bf9bfff0933d0902cfeaeb0572e7cc819b5290",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
