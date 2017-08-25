@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "fcc9d4a6_92b7afa1",
+        "filename": "third_party/WebKit/Source/core/inspector/InspectorMemoryAgent.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1151889
+      },
+      "writtenOn": "2017-08-25T04:58:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a3efa58d_c6ce27d6",
+      "revId": "419dd7b547822ae56b8d3912c2107bd11d880be3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8a976a5b_41764c5c",
         "filename": "third_party/WebKit/Source/core/inspector/InspectorMemoryAgent.cpp",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-22T23:31:39Z",
       "side": 1,
       "message": "I\u0027m curios if this method performs just prepare phase (not leak detection itself), should it be made sync and don\u0027t wait for OnLeakDetectionComplete?\n\nAlso, how about giving it a more generic name, e.g. clearInternalCaches or so?",
+      "revId": "419dd7b547822ae56b8d3912c2107bd11d880be3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2055097_5eaa972a",
+        "filename": "third_party/WebKit/Source/core/inspector/InspectorMemoryAgent.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1151889
+      },
+      "writtenOn": "2017-08-25T04:58:46Z",
+      "side": 1,
+      "message": "Yes, this method only performs the preparation phase of leak detection, and after this getDOMcounters or some other method should be called to see if there are any changes in #s of DOM. So this method needs to be async so that the next actual dom-counting method can be called after the preparation.\nAnd regarding the name, IMO I think prepareForLeakDetection is clearer since this is the first step of leak detection.\n\nThanks for the comment! :)",
+      "parentUuid": "8a976a5b_41764c5c",
       "revId": "419dd7b547822ae56b8d3912c2107bd11d880be3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "0606e1fa_054cf15b",
+        "filename": "third_party/WebKit/Source/core/inspector/InspectorMemoryAgent.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1151889
+      },
+      "writtenOn": "2017-08-25T04:58:46Z",
+      "side": 1,
+      "message": "I kept this line because BlinkLeakDetector::collectGarbage cannot be replaced with the existing devtools protocol gc.",
+      "parentUuid": "4f915c53_73584543",
+      "revId": "419dd7b547822ae56b8d3912c2107bd11d880be3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8d98dadf_5fea4688",
         "filename": "third_party/WebKit/Source/core/inspector/InspectorMemoryAgent.cpp",
         "patchSetId": 3
@@ -67,6 +121,24 @@
       "revId": "419dd7b547822ae56b8d3912c2107bd11d880be3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3023fc5_ceb04342",
+        "filename": "third_party/WebKit/Source/core/inspector/InspectorMemoryAgent.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1151889
+      },
+      "writtenOn": "2017-08-25T04:58:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8d98dadf_5fea4688",
+      "revId": "419dd7b547822ae56b8d3912c2107bd11d880be3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "c7b84fe9_bf905b44",
+        "filename": "third_party/WebKit/Source/core/inspector/InspectorMemoryAgent.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1151889
+      },
+      "writtenOn": "2017-08-25T04:58:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f25daeed_8aff2982",
+      "revId": "419dd7b547822ae56b8d3912c2107bd11d880be3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fbf29e37_6a7bb49b",
         "filename": "third_party/WebKit/Source/core/inspector/browser_protocol-1.2.json",
         "patchSetId": 3
@@ -98,6 +188,24 @@
       "writtenOn": "2017-08-22T22:29:32Z",
       "side": 1,
       "message": "We do not change version 1.2. It is frozen.",
+      "revId": "419dd7b547822ae56b8d3912c2107bd11d880be3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "39a2a0a7_651022e6",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol-1.2.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1151889
+      },
+      "writtenOn": "2017-08-25T04:58:46Z",
+      "side": 1,
+      "message": "Thanks for pointing it out. Done.",
+      "parentUuid": "fbf29e37_6a7bb49b",
       "revId": "419dd7b547822ae56b8d3912c2107bd11d880be3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "58309c5d_7577cf71",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1151889
+      },
+      "writtenOn": "2017-08-25T04:58:46Z",
+      "side": 1,
+      "message": "I changed the name to \"prepareForLeakDetection\", but it still calls gc inside, because BlinkLeakDetector::collectGarbage() is much more aggressive than the existing devtools protocol method as keishi@ mentioned in the comment. Also BlinkLeakDetector::collectGarbage() requires \"--expose-gc\" flag on.",
+      "parentUuid": "41d3fe9c_0272b287",
+      "revId": "419dd7b547822ae56b8d3912c2107bd11d880be3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "794c11f6_47204556",
         "filename": "third_party/WebKit/Source/core/leak_detector/BlinkLeakDetector.h",
         "patchSetId": 3
@@ -132,6 +258,24 @@
       "writtenOn": "2017-08-22T08:30:25Z",
       "side": 1,
       "message": "This will cause a memory leak!! :D\n\nThere is a reference cycle:\n\n  WebLeakDetectorImpl -(Persistent)-\u003e BlinkLeakDetector -(std::unique_ptr)-\u003e WebLeakDetectorImpl\n\nSo you need to keep using a raw pointer. A better solution would be to move BlinkLeakDetectorClient to Oilpan and use Member\u003cBlinkLeakDetectorClient\u003e here.",
+      "revId": "419dd7b547822ae56b8d3912c2107bd11d880be3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1184e2eb_948ce1ea",
+        "filename": "third_party/WebKit/Source/core/leak_detector/BlinkLeakDetector.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1151889
+      },
+      "writtenOn": "2017-08-25T04:58:46Z",
+      "side": 1,
+      "message": "Right! Thanks for pointing this out.\nI changed BlinkLeakDetector back to non-GC actually.\nBoth InspectorMemoryAgent(gc class) \u0026 WebLeakDetectorImpl(non-gc class) inherits BlinkLeakDetectorClient, so I did not want to make BlinkLeakDetectorClient gc-managed.",
+      "parentUuid": "794c11f6_47204556",
       "revId": "419dd7b547822ae56b8d3912c2107bd11d880be3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
