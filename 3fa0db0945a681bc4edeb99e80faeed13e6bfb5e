@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "642195b3_2139edff",
+        "filename": "chrome/browser/ui/extensions/extension_installed_notification.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2017-08-25T15:13:44Z",
+      "side": 0,
+      "message": "What if IsNewStyleNotificationEnabled returns false?",
+      "range": {
+        "startLine": 58,
+        "startChar": 22,
+        "endLine": 58,
+        "endChar": 52
+      },
+      "revId": "3fa0db0945a681bc4edeb99e80faeed13e6bfb5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
