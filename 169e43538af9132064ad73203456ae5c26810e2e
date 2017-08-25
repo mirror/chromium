@@ -297,6 +297,30 @@
     },
     {
       "key": {
+        "uuid": "a918b95b_4758280f",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 27257,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-08-25T07:08:55Z",
+      "side": 1,
+      "message": "The CL to delete the internal histogram is already lgtmed. I will land both today.",
+      "parentUuid": "ec706075_edd7d424",
+      "range": {
+        "startLine": 27257,
+        "startChar": 24,
+        "endLine": 27257,
+        "endChar": 50
+      },
+      "revId": "169e43538af9132064ad73203456ae5c26810e2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7bf4091f_9c9cc460",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 3
