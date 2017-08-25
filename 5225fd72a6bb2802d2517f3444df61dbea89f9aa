@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c68679ff_034a1bbe",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 38342,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-08-25T21:16:05Z",
+      "side": 1,
+      "message": "I think keeping the path of the script that generates this is still useful here.\n\nMaybe include both tools/metrics/histograms/update_traffic_annotation_histograms.py and the XML file name in the comment?",
+      "range": {
+        "startLine": 38342,
+        "startChar": 72,
+        "endLine": 38342,
+        "endChar": 0
+      },
+      "revId": "5225fd72a6bb2802d2517f3444df61dbea89f9aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9159e17f_682f4462",
+        "filename": "tools/metrics/histograms/update_histogram_enum.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-08-25T21:16:05Z",
+      "side": 1,
+      "message": "Could this look for specific elements of a given type only? Otherwise, it\u0027s pretty inflexible since it will try to look at every element - so if a new type of element is added, the script will fail. You can pass the type as a param like you do for the attributes.",
+      "range": {
+        "startLine": 139,
+        "startChar": 49,
+        "endLine": 139,
+        "endChar": 0
+      },
+      "revId": "5225fd72a6bb2802d2517f3444df61dbea89f9aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
