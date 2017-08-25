@@ -24,7 +24,12 @@ NotificationBitmapSizes GetNotificationBitmapSizes() {
       gfx::Size(message_center::kNotificationButtonIconSize,
                 message_center::kNotificationButtonIconSize);
 
-  sizes.app_icon_mask_size = gfx::Size(message_center::kSmallImageSize,
-                                       message_center::kSmallImageSize);
+  if (message_center::MessageCenter::IsNewStyleNotificationEnabled()) {
+    sizes.app_icon_mask_size = gfx::Size(message_center::kSmallImageSizeMD,
+                                         message_center::kSmallImageSizeMD);
+  } else {
+    sizes.app_icon_mask_size = gfx::Size(message_center::kSmallImageSize,
+                                         message_center::kSmallImageSize);
+  }
   return sizes;
 }
