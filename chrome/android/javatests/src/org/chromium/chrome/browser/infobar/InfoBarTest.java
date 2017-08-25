@@ -205,9 +205,12 @@ public class InfoBarTest {
 
     /**
      * Verify Geolocation creates an InfoBar.
+     *
+     * TODO(timloh): Remove this once we only use modals for permission prompts.
      */
     @Test
     @MediumTest
+    @CommandLineFlags.Add("disable-features=ModalPermissionPrompts")
     @Feature({"Browser", "Main"})
     @RetryOnFailure
     public void testInfoBarForGeolocation() throws InterruptedException, TimeoutException {
@@ -226,12 +229,14 @@ public class InfoBarTest {
         Assert.assertTrue("Wrong infobar count", mActivityTestRule.getInfoBars().isEmpty());
     }
 
-
     /**
      * Verify Geolocation creates an InfoBar and that it's destroyed when navigating back.
+     *
+     * TODO(timloh): Use a different InfoBar type once we only use modals for permission prompts.
      */
     @Test
     @MediumTest
+    @CommandLineFlags.Add("disable-features=ModalPermissionPrompts")
     @Feature({"Browser"})
     @RetryOnFailure
     public void testInfoBarForGeolocationDisappearsOnBack()
@@ -553,9 +558,12 @@ public class InfoBarTest {
 
     /**
      * Verify InfoBarContainers swap the WebContents they are monitoring properly.
+     *
+     * TODO(timloh): Use a different InfoBar type once we only use modals for permission prompts.
      */
     @Test
     @MediumTest
+    @CommandLineFlags.Add("disable-features=ModalPermissionPrompts")
     @Feature({"Browser", "Main"})
     @RetryOnFailure
     public void testInfoBarContainerSwapsWebContents()
