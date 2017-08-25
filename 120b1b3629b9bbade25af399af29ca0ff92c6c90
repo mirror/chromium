@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "38bb3711_3ea90d68",
+        "filename": "build/fuchsia/runner_common.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-08-25T17:03:45Z",
+      "side": 1,
+      "message": "Update this comment since you\u0027re mutating file_mapping now.",
+      "revId": "120b1b3629b9bbade25af399af29ca0ff92c6c90",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8bb58a81_4f16afa2",
+        "filename": "build/fuchsia/runner_common.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 305,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-08-25T17:03:45Z",
+      "side": 1,
+      "message": "Instead of raising the timeout, perhaps this should be reduced. It seems to really slam my machine when a bunch of tests crash with long stacks.",
+      "range": {
+        "startLine": 305,
+        "startChar": 27,
+        "endLine": 305,
+        "endChar": 54
+      },
+      "revId": "120b1b3629b9bbade25af399af29ca0ff92c6c90",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
