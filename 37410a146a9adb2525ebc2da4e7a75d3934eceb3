@@ -16,6 +16,24 @@
       "revId": "37410a146a9adb2525ebc2da4e7a75d3934eceb3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b37b372_78cb1be7",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/password/PasswordEntryEditor.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1128432
+      },
+      "writtenOn": "2017-08-25T13:55:28Z",
+      "side": 1,
+      "message": "Yeah, only link should be highlighted",
+      "parentUuid": "c62fdfd4_dd6919f0",
+      "revId": "37410a146a9adb2525ebc2da4e7a75d3934eceb3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
