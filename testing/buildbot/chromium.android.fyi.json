@@ -187,6 +187,19 @@
         },
         "test": "net_unittests"
       }
+    ],
+    "scripts": [
+      {
+        "args": [
+          "--platform",
+          "android-cronet",
+          "--perf-id",
+          "android_cronet_armv6_builder",
+          "cronet-armv6/sizes"
+        ],
+        "name": "sizes",
+        "script": "sizes.py"
+      }
     ]
   },
   "Android Cronet Builder (dbg)": {
@@ -606,6 +619,19 @@
           "shards": 4
         },
         "test": "net_unittests"
+      }
+    ],
+    "scripts": [
+      {
+        "args": [
+          "--platform",
+          "android-cronet",
+          "--perf-id",
+          "android_cronet_builder",
+          "cronet-arm/sizes"
+        ],
+        "name": "sizes",
+        "script": "sizes.py"
       }
     ]
   },
