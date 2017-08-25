@@ -1,0 +1,180 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "00f557e3_fa2b98d0",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletMessagingProxy.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-08-25T07:46:02Z",
+      "side": 1,
+      "message": "This should be initialized on the ctor.\n\nWhy don\u0027t you make this HashMap instead of std::unique_ptr\u003cHashMap\u003e?",
+      "revId": "e9ea0551047a79c9d4857a616e7cf405591b4fb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4792631_ef980edd",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletProcessorDefinition.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-08-25T07:46:02Z",
+      "side": 1,
+      "message": "const",
+      "revId": "e9ea0551047a79c9d4857a616e7cf405591b4fb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4bb3b1e_260b9924",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletProcessorInfo.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-08-25T07:46:02Z",
+      "side": 1,
+      "message": "This comment would be misleading. Oilpan objects can be passed to another thread as CrossThreadPersistent. For example:\nhttps://chromium.googlesource.com/chromium/src/+/9c853051fc2ae9c83d2f6b4ce5afd7ed192f5bec/third_party/WebKit/Source/core/workers/WorkletModuleTreeClient.cpp#33\n\nDo you mean we cannot access WTF::String object from another thread because it\u0027s not thread-safe?",
+      "revId": "e9ea0551047a79c9d4857a616e7cf405591b4fb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b77c2bd_88e8638c",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletProcessorInfo.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-08-25T07:46:02Z",
+      "side": 1,
+      "message": "(FYI, optional) Worker and Loading code tend to use the \"CrossThread\" prefix for structs to be passed among threads:\nhttps://chromium.googlesource.com/chromium/src/+/d733d5c4e68fa1d268daa4a0cef6a82de847190f/third_party/WebKit/Source/platform/loader/fetch/ResourceRequest.h#393",
+      "revId": "e9ea0551047a79c9d4857a616e7cf405591b4fb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "884b98ba_14d76f81",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletProcessorInfo.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-08-25T07:46:02Z",
+      "side": 1,
+      "message": "explicit",
+      "revId": "e9ea0551047a79c9d4857a616e7cf405591b4fb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe5be968_14eb5726",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletProcessorInfo.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-08-25T07:46:02Z",
+      "side": 1,
+      "message": "WTF::String objects shares an internal representation, and it\u0027s not thread-safe. If this will be accessed from another thread, we should copy it via String::IsolatedCopy:\nhttps://chromium.googlesource.com/chromium/src/+/9c853051fc2ae9c83d2f6b4ce5afd7ed192f5bec/third_party/WebKit/Source/platform/wtf/text/WTFString.h#441",
+      "revId": "e9ea0551047a79c9d4857a616e7cf405591b4fb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc3b8898_ace0475a",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletProcessorInfo.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-08-25T07:46:02Z",
+      "side": 1,
+      "message": "const",
+      "range": {
+        "startLine": 28,
+        "startChar": 0,
+        "endLine": 30,
+        "endChar": 41
+      },
+      "revId": "e9ea0551047a79c9d4857a616e7cf405591b4fb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a0df1ff_86c0bef3",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletProcessorInfo.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-08-25T07:46:02Z",
+      "side": 1,
+      "message": "explicit",
+      "revId": "e9ea0551047a79c9d4857a616e7cf405591b4fb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09811015_5c9cac54",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletProcessorInfo.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-08-25T07:46:02Z",
+      "side": 1,
+      "message": "Ditto: We may need to call String::IsolatedCopy().",
+      "revId": "e9ea0551047a79c9d4857a616e7cf405591b4fb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "afa7bac9_60965d71",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletProcessorInfo.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-08-25T07:46:02Z",
+      "side": 1,
+      "message": "const",
+      "revId": "e9ea0551047a79c9d4857a616e7cf405591b4fb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
