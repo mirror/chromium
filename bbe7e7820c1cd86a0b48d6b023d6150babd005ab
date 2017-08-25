@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f7eb32af_91c3429a",
+        "filename": "components/safe_browsing/features.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-08-25T14:38:50Z",
+      "side": 1,
+      "message": "Keeping the feature string the same so that I don\u0027t need to change the experiment configs.",
+      "range": {
+        "startLine": 26,
+        "startChar": 5,
+        "endLine": 26,
+        "endChar": 27
+      },
+      "revId": "bbe7e7820c1cd86a0b48d6b023d6150babd005ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
