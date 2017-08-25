@@ -872,6 +872,7 @@ void InspectorNetworkAgent::DidReceiveCORSRedirectResponse(
 }
 
 void InspectorNetworkAgent::DidFailLoading(unsigned long identifier,
+                                           DocumentLoader*,
                                            const ResourceError& error) {
   String request_id = IdentifiersFactory::RequestId(identifier);
   bool canceled = error.IsCancellation();
