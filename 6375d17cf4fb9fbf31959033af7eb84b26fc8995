@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "85ad3c7d_a7edfc89",
+        "filename": "chrome/browser/ui/views/touch_events_interactive_uitest_win.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1240560
+      },
+      "writtenOn": "2017-08-25T14:12:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "047d7533_9bc04e03",
+      "range": {
+        "startLine": 26,
+        "startChar": 7,
+        "endLine": 26,
+        "endChar": 37
+      },
+      "revId": "6375d17cf4fb9fbf31959033af7eb84b26fc8995",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ddbbc8d8_6dc218bb",
         "filename": "chrome/browser/ui/views/touch_events_interactive_uitest_win.cc",
         "patchSetId": 6
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "1d4b24cc_7479877e",
+        "filename": "chrome/browser/ui/views/touch_events_interactive_uitest_win.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1240560
+      },
+      "writtenOn": "2017-08-25T14:12:30Z",
+      "side": 1,
+      "message": "Good catch - I\u0027ve rolled this into ForceRecursionInEventHandler and documented it there.",
+      "parentUuid": "ddbbc8d8_6dc218bb",
+      "range": {
+        "startLine": 48,
+        "startChar": 7,
+        "endLine": 48,
+        "endChar": 22
+      },
+      "revId": "6375d17cf4fb9fbf31959033af7eb84b26fc8995",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4047b9b2_273aaa55",
         "filename": "chrome/browser/ui/views/touch_events_interactive_uitest_win.cc",
         "patchSetId": 6
@@ -68,6 +116,30 @@
       "revId": "6375d17cf4fb9fbf31959033af7eb84b26fc8995",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4bc6df67_cf84c367",
+        "filename": "chrome/browser/ui/views/touch_events_interactive_uitest_win.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1240560
+      },
+      "writtenOn": "2017-08-25T14:12:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4047b9b2_273aaa55",
+      "range": {
+        "startLine": 53,
+        "startChar": 4,
+        "endLine": 53,
+        "endChar": 30
+      },
+      "revId": "6375d17cf4fb9fbf31959033af7eb84b26fc8995",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
