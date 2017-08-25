@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "266cec34_c8725d43",
+        "filename": "base/android/sys_utils.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1129011
+      },
+      "writtenOn": "2017-08-25T16:04:12Z",
+      "side": 1,
+      "message": "What\u0027s the intended use case for these events? Maybe we better off with TRACE_COUNTER2, or TRACE_EVENT_INSTANT2(SCOPE_PROCESS)?",
+      "range": {
+        "startLine": 44,
+        "startChar": 2,
+        "endLine": 44,
+        "endChar": 18
+      },
+      "revId": "8b85df83fa1721f3038f93a63387b01728a12f20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "240b689b_bbda73d5",
+        "filename": "base/process/process_metrics.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 1129011
+      },
+      "writtenOn": "2017-08-25T16:04:12Z",
+      "side": 1,
+      "message": "It seems that the pattern in this file is to define a struct (e.g. PageFaultCounters), and have a method that fills it / returns bool, for example \"bool GetIOCounters(IoCounters* io_counters)\". Can we do the same?\n\nThere are two things I don\u0027t like about pair\u003c\u003e approach - (1) fields are not named (i.e. everyone will have to go here to understand what page_faults.second means), and (2) returning {-1, -1} on error (what if the result is {-1, \u003csomething\u003e}).",
+      "range": {
+        "startLine": 234,
+        "startChar": 30,
+        "endLine": 234,
+        "endChar": 47
+      },
+      "revId": "8b85df83fa1721f3038f93a63387b01728a12f20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c85d0882_d6e7c7b4",
+        "filename": "base/process/process_metrics_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 632,
+      "author": {
+        "id": 1129011
+      },
+      "writtenOn": "2017-08-25T16:04:12Z",
+      "side": 1,
+      "message": "ASSERT_TRUE(dummy_vector.data() !\u003d nullptr) also works. Also, how about using vector\u003cchar\u003e? Right now there is mental math required to multiply size to sizeof(size_t) - i.e. the comment of 8MB of RAM is not true on 32-bit systems.",
+      "range": {
+        "startLine": 632,
+        "startChar": 2,
+        "endLine": 632,
+        "endChar": 10
+      },
+      "revId": "8b85df83fa1721f3038f93a63387b01728a12f20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01fcf142_1e453b7f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/init/AsyncInitTaskRunner.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1129011
+      },
+      "writtenOn": "2017-08-25T16:04:12Z",
+      "side": 1,
+      "message": "Are we going to report this somewhere else too? (Like in the place where we report Startup.FirstCommitNavigationTime?)",
+      "range": {
+        "startLine": 48,
+        "startChar": 16,
+        "endLine": 48,
+        "endChar": 24
+      },
+      "revId": "8b85df83fa1721f3038f93a63387b01728a12f20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
