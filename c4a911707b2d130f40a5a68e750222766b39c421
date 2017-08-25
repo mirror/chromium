@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "5c24efdb_641c1741",
+        "filename": "third_party/WebKit/Source/core/editing/InputMethodController.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 483,
+      "author": {
+        "id": 1229332
+      },
+      "writtenOn": "2017-08-25T23:02:43Z",
+      "side": 1,
+      "message": "SetComposition(), SetCompositionFromExistingText(), and CommitText() can all be used to add suggestion markers.\n\nSetComposition() and SetCompositionFromExistingText() call AddImeTextSpans() directly.\n\nCommitText() calls either ReplaceCompositionAndMoveCaret() or InsertTextAndMoveCaret(), both of which call AddImeTextSpans().",
+      "parentUuid": "25876528_574e2e8b",
+      "range": {
+        "startLine": 483,
+        "startChar": 28,
+        "endLine": 483,
+        "endChar": 43
+      },
+      "revId": "c4a911707b2d130f40a5a68e750222766b39c421",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2fcc54d9_c66d51f2",
         "filename": "third_party/WebKit/Source/core/editing/suggestion/TextSuggestionController.cpp",
         "patchSetId": 3
@@ -82,6 +106,24 @@
       "writtenOn": "2017-08-25T17:43:24Z",
       "side": 1,
       "message": "Can we use the mojo type directly, or define typemap for TextSuggestionInfo, so that we can get rid of the type conversion in CallMojoShowTextSuggestionMenu()?",
+      "revId": "c4a911707b2d130f40a5a68e750222766b39c421",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be2e718e_ab3593d3",
+        "filename": "third_party/WebKit/Source/core/editing/suggestion/TextSuggestionController.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 390,
+      "author": {
+        "id": 1229332
+      },
+      "writtenOn": "2017-08-25T23:02:43Z",
+      "side": 1,
+      "message": "We could, but these structs aren\u0027t quite the same: blink::TextSuggestionInfo has two fields span_start and span_end that are used to compute the prefix and suffix strings, but aren\u0027t needed by browser code.",
+      "parentUuid": "dd6291c8_1af5e1c8",
       "revId": "c4a911707b2d130f40a5a68e750222766b39c421",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
