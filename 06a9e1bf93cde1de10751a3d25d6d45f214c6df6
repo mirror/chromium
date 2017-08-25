@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "123bc8df_e29d2088",
+        "filename": "ios/chrome/browser/ui/authentication/signin_interaction_controller_egtest.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 503,
+      "author": {
+        "id": 1115986
+      },
+      "writtenOn": "2017-08-25T09:11:05Z",
+      "side": 1,
+      "message": "This is too late, do this in Setup.",
+      "range": {
+        "startLine": 503,
+        "startChar": 0,
+        "endLine": 503,
+        "endChar": 65
+      },
+      "revId": "06a9e1bf93cde1de10751a3d25d6d45f214c6df6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9dce796c_04230992",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmarks_egtest.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 1288,
+      "author": {
+        "id": 1115986
+      },
+      "writtenOn": "2017-08-25T09:11:05Z",
+      "side": 1,
+      "message": "Move this to a new TestCase. Aka, separate the tests in separate files.",
+      "range": {
+        "startLine": 1288,
+        "startChar": 0,
+        "endLine": 1288,
+        "endChar": 52
+      },
+      "revId": "06a9e1bf93cde1de10751a3d25d6d45f214c6df6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "090fa1bc_36e231a6",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmarks_egtest.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 1729,
+      "author": {
+        "id": 1115986
+      },
+      "writtenOn": "2017-08-25T09:11:05Z",
+      "side": 1,
+      "message": "Do this in setup, and have the variable as a member of the test case.",
+      "range": {
+        "startLine": 1729,
+        "startChar": 0,
+        "endLine": 1729,
+        "endChar": 65
+      },
+      "revId": "06a9e1bf93cde1de10751a3d25d6d45f214c6df6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
