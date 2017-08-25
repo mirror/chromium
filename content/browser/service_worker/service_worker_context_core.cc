@@ -801,6 +801,8 @@ void ServiceWorkerContextCore::OnRunningStateChanged(
 
 void ServiceWorkerContextCore::OnVersionStateChanged(
     ServiceWorkerVersion* version) {
+  LOG(ERROR) << "ServiceWorkerContextCore::OnVersionStateChanged vid: "
+             << version->version_id() << " status: " << version->status();
   if (!observer_list_)
     return;
   observer_list_->Notify(

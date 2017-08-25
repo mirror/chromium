@@ -105,6 +105,7 @@ WebEmbeddedWorkerImpl::WebEmbeddedWorkerImpl(
 }
 
 WebEmbeddedWorkerImpl::~WebEmbeddedWorkerImpl() {
+  LOG(ERROR) << "WebEmbeddedWorkerImpl::~WebEmbeddedWorkerImpl";
   // TerminateWorkerContext() must be called before the destructor.
   DCHECK(asked_to_terminate_);
 }

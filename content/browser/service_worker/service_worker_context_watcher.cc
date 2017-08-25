@@ -167,6 +167,10 @@ void ServiceWorkerContextWatcher::SendRegistrationInfo(
 
 void ServiceWorkerContextWatcher::SendVersionInfo(
     const ServiceWorkerVersionInfo& version_info) {
+  LOG(ERROR) << "ServiceWorkerContextWatcher::SendVersionInfo version_id: "
+             << static_cast<int>(version_info.version_id) << " running_status: "
+             << static_cast<int>(version_info.running_status)
+             << " status: " << static_cast<int>(version_info.status);
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
   std::unique_ptr<std::vector<ServiceWorkerVersionInfo>> versions =
       base::MakeUnique<std::vector<ServiceWorkerVersionInfo>>();
@@ -188,6 +192,7 @@ void ServiceWorkerContextWatcher::RunWorkerRegistrationUpdatedCallback(
 
 void ServiceWorkerContextWatcher::RunWorkerVersionUpdatedCallback(
     std::unique_ptr<std::vector<ServiceWorkerVersionInfo>> versions) {
+  LOG(ERROR) << "ServiceWorkerContextWatcher::RunWorkerVersionUpdatedCallback";
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
   if (stop_called_)
     return;
@@ -248,6 +253,9 @@ void ServiceWorkerContextWatcher::OnRunningStateChanged(
 void ServiceWorkerContextWatcher::OnVersionStateChanged(
     int64_t version_id,
     content::ServiceWorkerVersion::Status status) {
+  LOG(ERROR)
+      << "ServiceWorkerContextWatcher::OnVersionStateChanged version_id: "
+      << version_id;
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
   auto it = version_info_map_.find(version_id);
   if (it == version_info_map_.end())

@@ -156,6 +156,7 @@ WebDocumentLoaderImpl::~WebDocumentLoaderImpl() {
 }
 
 void WebDocumentLoaderImpl::DetachFromFrame() {
+  LOG(ERROR) << "WebDocumentLoaderImpl::DetachFromFrame";
   DocumentLoader::DetachFromFrame();
   extra_data_.reset();
 }
