@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "aa58c4ea_e931bfec",
+        "filename": "ios/chrome/browser/ui/content_suggestions/ntp_home_constant.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-08-25T15:50:20Z",
+      "side": 1,
+      "message": "The Chromium style says that enumerator values still need to SHOUTY_NAME style. Can you fix this and add documentation for the enum since you are moving it?",
+      "revId": "1fc6d46876e7283489919c8003113c71b869e952",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ccd4ce4f_8233e4e3",
+        "filename": "ios/chrome/browser/ui/ntp/new_tab_page_egtest.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-08-25T15:50:20Z",
+      "side": 1,
+      "message": "This should be \"ntp_home::kBookmarksPanel\" since \"PanelIdentifier\" is not a \"enum class\". Or you can change the \"enum\" to an \"enum\" class and use \"ntp_home::PanelIdentifier::kBookmarksPanel\" form everywhere.\n\nPlease choose one of the alternative and make the whole CL consistent. Thank you.",
+      "range": {
+        "startLine": 70,
+        "startChar": 22,
+        "endLine": 70,
+        "endChar": 64
+      },
+      "revId": "1fc6d46876e7283489919c8003113c71b869e952",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
