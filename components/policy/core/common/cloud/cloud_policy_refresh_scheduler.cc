@@ -190,7 +190,7 @@ void CloudPolicyRefreshScheduler::OnIPAddressChanged() {
   // according to delay based on system time. If we have no information about
   // the last refresh based on system time, there's nothing we can do in
   // applying the above logic.
-  if (last_refresh_.is_null())
+  if (last_refresh_.is_null() || !client_->is_registered())
     return;
 
   const base::TimeDelta refresh_delay =

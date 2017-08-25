@@ -428,6 +428,15 @@ TEST_F(CloudPolicyRefreshSchedulerSteadyStateTest, OnIPAddressChanged) {
   EXPECT_EQ(GetLastDelay(), base::TimeDelta());
 }
 
+TEST_F(CloudPolicyRefreshSchedulerSteadyStateTest,
+       OnIPAddressChangedUnregistered) {
+  client_.SetDMToken("");
+  const int delay_ms = 1000;
+  refresh_scheduler_->SetDesiredRefreshDelay(delay_ms);
+  NotifyIPAddressChanged();
+  CheckTiming(kPolicyRefreshRate);
+}
+
 struct ClientErrorTestParam {
   DeviceManagementStatus client_error;
   int64_t expected_delay_ms;
