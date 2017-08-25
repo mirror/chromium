@@ -105,6 +105,19 @@ th {
   font-weight: normal;
 }
 
+.learn-more {
+  float: left;
+  padding-right: 2px;
+}
+
+.no-help-link .learn-more {
+  display: none;
+}
+
+div.name {
+  float: left;
+}
+
 div.elide,
 span.value {
   overflow: hidden;
