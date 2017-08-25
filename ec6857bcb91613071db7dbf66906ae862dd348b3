@@ -146,6 +146,24 @@
     },
     {
       "key": {
+        "uuid": "2adaa304_02559156",
+        "filename": "components/url_formatter/elide_url_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 553,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-08-25T01:47:15Z",
+      "side": 1,
+      "message": "EDIT: Damn, I wrote this yesterday but forgot to mail it out. It\u0027s a little redundant based on what you wrote in the interim. Leaving for posterity...\n\n\u003d\u003d Yesterday\u0027s message \u003d\u003d\nAnother approach which might make things simpler and produce better error messages is two separate steps: 1. Without looking at the expected strings, iterate over all widths and produce a list of elided strings from biggest to smallest (only insert a new one when it changes, so you cut out duplicates). 2. Simply EXPECT_EQ the generated list with the expected list.\n\nI believe EXPECT_EQ has a special case on a list of strings where it shows which strings didn\u0027t match in a very readable way. I could be wrong though.\n\u003d\u003d End yesterday\u0027s \u003d\u003d\n\nSo I think my suggestion here is incompatible with yours (that we do not require covering every case). I think I like that better, since there is no need to test all letters in a long word, I agree. Let\u0027s go with that.",
+      "parentUuid": "b086fe15_19632653",
+      "revId": "ec6857bcb91613071db7dbf66906ae862dd348b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0d51a6eb_19d548a5",
         "filename": "components/url_formatter/elide_url_unittest.cc",
         "patchSetId": 2
