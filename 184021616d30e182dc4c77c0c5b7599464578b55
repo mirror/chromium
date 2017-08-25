@@ -104,6 +104,24 @@
       "revId": "184021616d30e182dc4c77c0c5b7599464578b55",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da4ed733_7ef73d19",
+        "filename": "content/renderer/input/widget_input_handler_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-08-25T18:26:13Z",
+      "side": 1,
+      "message": "This works only if I typedef this as a \"struct TouchAction\" even though it is an enum. As enums are non-nullable. Is this safe to do? Or does it avoid the param traits checks?",
+      "parentUuid": "ea4220b3_62cc458d",
+      "revId": "184021616d30e182dc4c77c0c5b7599464578b55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
