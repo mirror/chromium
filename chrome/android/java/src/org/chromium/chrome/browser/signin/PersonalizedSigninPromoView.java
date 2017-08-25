@@ -16,16 +16,16 @@ import org.chromium.chrome.R;
 import org.chromium.ui.widget.ButtonCompat;
 
 /**
- * Container view for signin promos.
+ * Container view for the personalized signin promos.
  */
-public class SigninPromoView extends LinearLayout {
+public class PersonalizedSigninPromoView extends LinearLayout {
     private ImageView mImage;
     private ImageButton mDismissButton;
     private TextView mDescription;
     private ButtonCompat mSigninButton;
     private Button mChooseAccountButton;
 
-    public SigninPromoView(Context context, AttributeSet attrs) {
+    public PersonalizedSigninPromoView(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
 

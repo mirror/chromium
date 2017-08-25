@@ -208,6 +208,8 @@ public class SignInPromo extends OptionalLeaf
             updateVisibility();
         }
 
+        // SuggestionsSource.Observer implementation.
+
         @Override
         public void onCategoryStatusChanged(
                 @CategoryInt int category, @CategoryStatus int newStatus) {
