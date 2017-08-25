@@ -167,6 +167,15 @@ div.name {
   width: 15%;
 }
 
+.learn-more {
+  display: inline;
+  padding-right: 2px;
+}
+
+.no-help-link .learn-more {
+  display: none;
+}
+
 div.elide,
 span.value {
   overflow: hidden;
