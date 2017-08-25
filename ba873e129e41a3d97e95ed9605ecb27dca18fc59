@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "14046c40_58f6a446",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1133009
+      },
+      "writtenOn": "2017-08-25T20:50:02Z",
+      "side": 1,
+      "message": "Huh? We want the opposite, no? We *want* to use_custom_libcxx on device builds, because we use our toolchain cxx, which is a custom libcxx. What am I missing here",
+      "range": {
+        "startLine": 7,
+        "startChar": 13,
+        "endLine": 7,
+        "endChar": 53
+      },
+      "revId": "ba873e129e41a3d97e95ed9605ecb27dca18fc59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
