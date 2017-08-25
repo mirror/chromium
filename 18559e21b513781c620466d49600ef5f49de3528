@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d82f6319_6d11d7ba",
+        "filename": "content/browser/android/dialog_overlay_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1150472
+      },
+      "writtenOn": "2017-08-25T23:51:44Z",
+      "side": 1,
+      "message": "@ liberato: Is the the right behavior here?",
+      "range": {
+        "startLine": 79,
+        "startChar": 4,
+        "endLine": 79,
+        "endChar": 11
+      },
+      "revId": "18559e21b513781c620466d49600ef5f49de3528",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
