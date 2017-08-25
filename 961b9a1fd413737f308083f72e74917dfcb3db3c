@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "481bd7c6_9ef191be",
+        "filename": "components/offline_pages/core/prefetch/metrics_finalization_task.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-08-25T18:52:02Z",
+      "side": 1,
+      "message": "Done. Also added one for the \"same size\" (0) and \"do not report\" (-1) cases.",
+      "parentUuid": "6472016e_bf1a8432",
+      "range": {
+        "startLine": 28,
+        "startChar": 10,
+        "endLine": 28,
+        "endChar": 37
+      },
+      "revId": "961b9a1fd413737f308083f72e74917dfcb3db3c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0a3a67d8_541ca81a",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 7
@@ -45,6 +69,30 @@
       "revId": "961b9a1fd413737f308083f72e74917dfcb3db3c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ba7ab4f_d3a8c90f",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 7
+      },
+      "lineNbr": 50155,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-08-25T18:52:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0a3a67d8_541ca81a",
+      "range": {
+        "startLine": 50155,
+        "startChar": 63,
+        "endLine": 50155,
+        "endChar": 64
+      },
+      "revId": "961b9a1fd413737f308083f72e74917dfcb3db3c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
