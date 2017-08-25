@@ -22,6 +22,30 @@
       "revId": "d35fe815b281a72bed16cf5549c4fd749665c010",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e956ed6_5eedabd2",
+        "filename": "components/content_settings/core/common/content_settings_pattern_parser_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1229240
+      },
+      "writtenOn": "2017-08-25T14:07:53Z",
+      "side": 1,
+      "message": "Is it ok like this?",
+      "parentUuid": "1beda5a3_bcfff3d0",
+      "range": {
+        "startLine": 214,
+        "startChar": 5,
+        "endLine": 214,
+        "endChar": 35
+      },
+      "revId": "d35fe815b281a72bed16cf5549c4fd749665c010",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
