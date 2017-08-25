@@ -71,6 +71,23 @@
     },
     {
       "key": {
+        "uuid": "bcdc6d9c_aa0eb2fa",
+        "filename": "components/offline_pages/core/prefetch/download_completed_task.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2017-08-25T20:51:31Z",
+      "side": 1,
+      "message": "Better to use KB and MB since KiB and MiB are not the one people get used to.",
+      "revId": "31645604330e5b3cf30692cda1b7cc42a10c81e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e0bfe71f_3c64174f",
         "filename": "components/offline_pages/core/prefetch/prefetch_downloader_impl.cc",
         "patchSetId": 2
@@ -88,6 +105,108 @@
         "endLine": 139,
         "endChar": 34
       },
+      "revId": "31645604330e5b3cf30692cda1b7cc42a10c81e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25581363_6411d8f0",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 50150,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2017-08-25T20:51:31Z",
+      "side": 1,
+      "message": "Name is a bit too long. Perhaps ActualFileSize or ActualDownloadFileSize is good enough.",
+      "revId": "31645604330e5b3cf30692cda1b7cc42a10c81e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6d6f525_c5d68b54",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 50151,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2017-08-25T20:51:31Z",
+      "side": 1,
+      "message": "KB",
+      "revId": "31645604330e5b3cf30692cda1b7cc42a10c81e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f027cb2f_640304dc",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 50154,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2017-08-25T20:51:31Z",
+      "side": 1,
+      "message": "Each report is for a single file. So don\u0027t use plural term.\n  Actual size of archive file downloaded by offline page prefetching.",
+      "revId": "31645604330e5b3cf30692cda1b7cc42a10c81e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dfc77230_8b037d48",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 50158,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2017-08-25T20:51:31Z",
+      "side": 1,
+      "message": "ExpectedFileSize or ExpectedDownloadFileSize",
+      "revId": "31645604330e5b3cf30692cda1b7cc42a10c81e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3163ce9a_2c4b169b",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 50159,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2017-08-25T20:51:31Z",
+      "side": 1,
+      "message": "KB",
+      "revId": "31645604330e5b3cf30692cda1b7cc42a10c81e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf872d5c_500ec9c1",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 50162,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2017-08-25T20:51:31Z",
+      "side": 1,
+      "message": "Expected size of archive file to be downloaded by offline page prefetching.",
       "revId": "31645604330e5b3cf30692cda1b7cc42a10c81e5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
