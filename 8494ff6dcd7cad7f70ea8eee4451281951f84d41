@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "2e9cdec4_3b931dab",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SiteExploreViewPager.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1195464
+      },
+      "writtenOn": "2017-08-25T10:17:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e902ac90_01cb8905",
+      "range": {
+        "startLine": 23,
+        "startChar": 8,
+        "endLine": 26,
+        "endChar": 56
+      },
+      "revId": "8494ff6dcd7cad7f70ea8eee4451281951f84d41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9892b61e_f88ed07d",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SiteExploreViewPager.java",
         "patchSetId": 8
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "c628fd2a_b6e944e0",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SiteExploreViewPager.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1195464
+      },
+      "writtenOn": "2017-08-25T10:17:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9892b61e_f88ed07d",
+      "range": {
+        "startLine": 27,
+        "startChar": 8,
+        "endLine": 28,
+        "endChar": 69
+      },
+      "revId": "8494ff6dcd7cad7f70ea8eee4451281951f84d41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4b9ea6c7_a7b1d5bf",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SiteExploreViewPager.java",
         "patchSetId": 8
@@ -68,6 +116,30 @@
       "revId": "8494ff6dcd7cad7f70ea8eee4451281951f84d41",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8d20c0e_4772f0c0",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SiteExploreViewPager.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1195464
+      },
+      "writtenOn": "2017-08-25T10:17:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4b9ea6c7_a7b1d5bf",
+      "range": {
+        "startLine": 51,
+        "startChar": 48,
+        "endLine": 51,
+        "endChar": 49
+      },
+      "revId": "8494ff6dcd7cad7f70ea8eee4451281951f84d41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
