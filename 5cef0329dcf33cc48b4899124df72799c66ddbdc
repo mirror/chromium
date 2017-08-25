@@ -16,6 +16,24 @@
       "revId": "5cef0329dcf33cc48b4899124df72799c66ddbdc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "742038b8_e894bf36",
+        "filename": "ui/file_manager/file_manager/foreground/js/selection_menu_controller.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1166720
+      },
+      "writtenOn": "2017-08-25T10:04:38Z",
+      "side": 1,
+      "message": "I thought this could fix the flashing, but it seems not fixing it for all the cases. (e.g. \"copy\" command).\nI will investigate it further.",
+      "parentUuid": "42868fef_09d8e04a",
+      "revId": "5cef0329dcf33cc48b4899124df72799c66ddbdc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
