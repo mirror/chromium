@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4f9a40c5_aa835ef6",
+        "filename": "chrome/profiling/memlog_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-25T17:44:52Z",
+      "side": 1,
+      "message": "base::Passed(\u0026file), base::Passed(\u0026callback) here then as well to be consistent",
+      "range": {
+        "startLine": 54,
+        "startChar": 10,
+        "endLine": 54,
+        "endChar": 76
+      },
+      "revId": "cd556d2d1366e9b4dd0399c3ad172b920ed5d22a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7fcd0ed9_98d86038",
+        "filename": "chrome/profiling/memlog_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-25T17:44:52Z",
+      "side": 1,
+      "message": "And here.",
+      "range": {
+        "startLine": 65,
+        "startChar": 43,
+        "endLine": 65,
+        "endChar": 75
+      },
+      "revId": "cd556d2d1366e9b4dd0399c3ad172b920ed5d22a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
