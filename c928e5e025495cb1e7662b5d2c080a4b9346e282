@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "78cfa93d_57dce151",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-08-25T21:21:47Z",
+      "side": 1,
+      "message": "Could you mention more details in the summary, e.g. \"Expand MITM software cert error logic to look at issuer organization names.\"?",
+      "revId": "c928e5e025495cb1e7662b5d2c080a4b9346e282",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a933dcd9_e475426c",
+        "filename": "chrome/browser/ssl/ssl_error_handler.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 485,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-08-25T21:21:47Z",
+      "side": 1,
+      "message": "Nit: RegexMatchesAny(regex, vec)?\n\n(Otherwise, it\u0027s unclear if this might e.g. try to match all.)",
+      "revId": "c928e5e025495cb1e7662b5d2c080a4b9346e282",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
