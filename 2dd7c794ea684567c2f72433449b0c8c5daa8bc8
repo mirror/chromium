@@ -2,6 +2,52 @@
   "comments": [
     {
       "key": {
+        "uuid": "e148ae15_954c6475",
+        "filename": "chrome/browser/resource_coordinator/tab_manager_stats_collector.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2017-08-25T19:09:16Z",
+      "side": 1,
+      "message": "Maybe we want an enum metric like:\n\nnon_overlapping_session_restore_sessions\nnon_overlapping_background_tab_opening_sessions\noverlapping_session_restore_session\noverlapping_background_tab_opening_sessions\n\nSo we can see how often SR and BTO occur on their own, vs how often they interfere with each other. This metric as is is reporting a number of interfering BTO sessions per SR session, which is not terribly informative in isolation.",
+      "range": {
+        "startLine": 181,
+        "startChar": 6,
+        "endLine": 181,
+        "endChar": 30
+      },
+      "revId": "2dd7c794ea684567c2f72433449b0c8c5daa8bc8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e15ffa4_47582752",
+        "filename": "chrome/browser/resource_coordinator/tab_manager_stats_collector.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2017-08-25T19:09:16Z",
+      "side": 1,
+      "message": "background*",
+      "range": {
+        "startLine": 76,
+        "startChar": 21,
+        "endLine": 76,
+        "endChar": 31
+      },
+      "revId": "2dd7c794ea684567c2f72433449b0c8c5daa8bc8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "367945b3_c9f9bb0f",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 9
