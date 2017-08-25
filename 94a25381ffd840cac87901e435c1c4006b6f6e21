@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "57830394_d79078fb",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/metrics/WebApkUma.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1117450
+      },
+      "writtenOn": "2017-08-25T19:16:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d6ba7d03_bd549e2f",
+      "range": {
+        "startLine": 184,
+        "startChar": 56,
+        "endLine": 184,
+        "endChar": 73
+      },
+      "revId": "94a25381ffd840cac87901e435c1c4006b6f6e21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "23b75f41_9f3d3b0f",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/metrics/WebApkUma.java",
         "patchSetId": 10
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "745ce95a_0e0c90a1",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/metrics/WebApkUma.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1117450
+      },
+      "writtenOn": "2017-08-25T19:16:06Z",
+      "side": 1,
+      "message": "Thanks for the correction. I was thinking to use this amount to determine how much space we need to free in order for it to work, so it should round up.\n\nI think we can just log as this for the UMA, and worry about free space when needed.",
+      "parentUuid": "23b75f41_9f3d3b0f",
+      "range": {
+        "startLine": 188,
+        "startChar": 35,
+        "endLine": 188,
+        "endChar": 65
+      },
+      "revId": "94a25381ffd840cac87901e435c1c4006b6f6e21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "700bff13_829e7e7f",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 10
@@ -68,6 +116,30 @@
       "revId": "94a25381ffd840cac87901e435c1c4006b6f6e21",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a498582c_17b6cad5",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 10
+      },
+      "lineNbr": 86674,
+      "author": {
+        "id": 1117450
+      },
+      "writtenOn": "2017-08-25T19:16:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "700bff13_829e7e7f",
+      "range": {
+        "startLine": 86674,
+        "startChar": 8,
+        "endLine": 86674,
+        "endChar": 79
+      },
+      "revId": "94a25381ffd840cac87901e435c1c4006b6f6e21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
