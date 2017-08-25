@@ -16,6 +16,24 @@
       "revId": "84f50531c48a467f167678df26286c1ea4846222",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b90ba87_6943e371",
+        "filename": "chrome/browser/resources/settings/controls/settings_toggle_button.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-08-25T18:04:33Z",
+      "side": 1,
+      "message": "Given that we are including all of settings-shared... is this worth it? \nAlso, not sure this belongs in this CL.\n\nAlso :) this is only used by #labelWrapper, we could just apply this to that. (Otherwise if one of the many styles that settings-shared imports were to import iron-flex or apply properties to .flex it could be confusing or incorrect).",
+      "parentUuid": "58892846_a66367c0",
+      "revId": "84f50531c48a467f167678df26286c1ea4846222",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
