@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a9c8f911_ccc5eef6",
+        "filename": "net/spdy/chromium/spdy_session.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2666,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-08-25T13:24:00Z",
+      "side": 1,
+      "message": "One minor nit:\n- If we stringify the error code, can we get rid of the descriptive error msg?\n\n- LogStreamError() appears to only do NetLog logging. One performance optimization netlog does is to invoke param callback only when logging is enabled. If we do ErrorCodeToString() and SpdyStringPrintf() here, we will construct strings even if logging is disabled. How about constructing a NetLog param value callback that stringifies |error_code| and pass the callback to LogStreamError() instead of the string itself?\n\nOn the other hand, assuming the errors don\u0027t happen often, I am fine if you\u0027d like to leave it as it is or add a NetLog::IsCapturing() check.",
+      "revId": "6f145c64aa5275f73f02671627b0a1ad75128936",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
