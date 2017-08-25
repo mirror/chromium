@@ -16,6 +16,24 @@
       "revId": "1f4c768c382c0e0a448eb428566f0bc790b0a813",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2aa8ed2_f0afa3ea",
+        "filename": "ash/fast_ink/fast_ink_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 349,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-08-25T00:05:24Z",
+      "side": 1,
+      "message": "It seems like drawing on the canvas in UpdateBuffer is expected to be in DIP...so I can\u0027t simply change screen_to_buffer_transform_ everywhere or else I\u0027ll be doing conversions in UpdateBuffers which just shifts the complexity elsewhere. WDYT? I think this is reasonable as is given that?",
+      "parentUuid": "44ad954c_478a0547",
+      "revId": "1f4c768c382c0e0a448eb428566f0bc790b0a813",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
