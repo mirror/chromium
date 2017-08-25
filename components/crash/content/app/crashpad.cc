@@ -48,15 +48,6 @@ namespace {
 crashpad::SimpleStringDictionary* g_simple_string_dictionary;
 crashpad::CrashReportDatabase* g_database;
 
-void SetCrashKeyValue(const base::StringPiece& key,
-                      const base::StringPiece& value) {
-  g_simple_string_dictionary->SetKeyValue(key.data(), value.data());
-}
-
-void ClearCrashKey(const base::StringPiece& key) {
-  g_simple_string_dictionary->RemoveKey(key.data());
-}
-
 bool LogMessageHandler(int severity,
                        const char* file,
                        int line,
