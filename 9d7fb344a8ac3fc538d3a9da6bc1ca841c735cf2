@@ -1,0 +1,333 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6a74a8b0_229963fc",
+        "filename": "chrome/browser/about_flags.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 2952,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-08-25T15:01:37Z",
+      "side": 1,
+      "message": "Do \"RTL urls\" exist and would they be treated differently than bidi? (I presume this feature would have no effect on urls that solely contain LTR characters and punctuation). Maybe this could just be called \u0027left-to-right-urls\u0027?",
+      "revId": "9d7fb344a8ac3fc538d3a9da6bc1ca841c735cf2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ed9c537_478fee6a",
+        "filename": "chrome/browser/flag_descriptions.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-08-25T15:01:37Z",
+      "side": 1,
+      "message": "maybe: \"Render bidirectional URLs from left to right.\"",
+      "revId": "9d7fb344a8ac3fc538d3a9da6bc1ca841c735cf2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "56563067_a77bbe8a",
+        "filename": "chrome/browser/flag_descriptions.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-08-25T15:01:37Z",
+      "side": 1,
+      "message": "maybe: \"where the contents of each URL component follow the normal Bidi algorithm, but the URL components themselves are always shown with strict left to right ordering.\" or similar?",
+      "revId": "9d7fb344a8ac3fc538d3a9da6bc1ca841c735cf2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ead80a0a_365e5568",
+        "filename": "chrome/browser/ui/views/omnibox/omnibox_result_view.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 480,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-08-25T15:01:37Z",
+      "side": 1,
+      "message": "I\u0027d say this whole comment is unnecessary now.",
+      "revId": "9d7fb344a8ac3fc538d3a9da6bc1ca841c735cf2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3df0e11c_a68b6ab7",
+        "filename": "chrome/browser/ui/views/omnibox/omnibox_view_views.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 605,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-08-25T15:01:37Z",
+      "side": 1,
+      "message": "I\u0027d say this comment is unnecessary, given the new one on line 608",
+      "revId": "9d7fb344a8ac3fc538d3a9da6bc1ca841c735cf2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "353a3712_201fb862",
+        "filename": "chrome/browser/ui/views/omnibox/omnibox_view_views.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 607,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-08-25T15:01:37Z",
+      "side": 1,
+      "message": "q: I hope we\u0027ll gather lots of feedback, I\u0027ll be curious about the reactions of users to their text layout changing when this bit flips mid-typing/erasing.",
+      "revId": "9d7fb344a8ac3fc538d3a9da6bc1ca841c735cf2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e624955_bd35f1fd",
+        "filename": "ui/gfx/gfx_features.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-08-25T15:01:37Z",
+      "side": 1,
+      "message": "nit: keep in sync with any changes to the other explanation.",
+      "revId": "9d7fb344a8ac3fc538d3a9da6bc1ca841c735cf2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf1e51fb_9ed9261b",
+        "filename": "ui/gfx/gfx_features.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-08-25T15:01:37Z",
+      "side": 1,
+      "message": "Hmm, I don\u0027t like giving this its own namespace, but I guess that\u0027s the pattern elsewhere. I also think adding a new file for this is a bit silly, maybe consolidate color_space_switches.h into this file, and/or merge this into ui/base/ui_base_switches.h or similar?",
+      "revId": "9d7fb344a8ac3fc538d3a9da6bc1ca841c735cf2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "273f47dc_5fd0b361",
+        "filename": "ui/gfx/gfx_features.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-08-25T15:01:37Z",
+      "side": 1,
+      "message": "nit: \u0027sorted alphabetically\u0027? (ditto in app_list file?)",
+      "range": {
+        "startLine": 14,
+        "startChar": 21,
+        "endLine": 14,
+        "endChar": 29
+      },
+      "revId": "9d7fb344a8ac3fc538d3a9da6bc1ca841c735cf2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dabd2493_ffd41243",
+        "filename": "ui/gfx/render_text.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 389,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-08-25T15:01:37Z",
+      "side": 1,
+      "message": "This isn\u0027t done on AppendText, I wonder if it belongs in EnsureLayout, OnTextAttributeChanged, or OnLayoutTextAttributeChanged? (I don\u0027t know offhand the implications of moving this to each of those functions)",
+      "revId": "9d7fb344a8ac3fc538d3a9da6bc1ca841c735cf2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0b9a5e9_52d57e17",
+        "filename": "ui/gfx/render_text.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 1119,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-08-25T15:01:37Z",
+      "side": 1,
+      "message": "Are these delimiters allowed as non-delimiting characters in other portions of the URL? (eg. can the path contain period characters that shouldn\u0027t alter the layout of the path component? in other words, should logical \u0027foo.com/AB.CD/bar.jpg\u0027 appear as \u0027foo.com/BA.DC/bar.jpg\u0027 or \u0027foo.com/DC.BA/bar.jpg\u0027, etc.?) Sorry, I\u0027m not very saavy about URL/URI/etc. flexibility here.",
+      "revId": "9d7fb344a8ac3fc538d3a9da6bc1ca841c735cf2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9f0a6e0_7c6f8fe8",
+        "filename": "ui/gfx/render_text.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 1134,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-08-25T15:01:37Z",
+      "side": 1,
+      "message": "nit: s/a tonne of/excessive/",
+      "revId": "9d7fb344a8ac3fc538d3a9da6bc1ca841c735cf2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "656305af_2c4310d9",
+        "filename": "ui/gfx/render_text.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 1321,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-08-25T15:01:37Z",
+      "side": 1,
+      "message": "This comment should mention the new feature flag.",
+      "revId": "9d7fb344a8ac3fc538d3a9da6bc1ca841c735cf2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4bb0bf09_ed809b77",
+        "filename": "ui/gfx/render_text.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 639,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-08-25T15:01:37Z",
+      "side": 1,
+      "message": "Please don\u0027t add this, use directionality_mode() instead.",
+      "revId": "9d7fb344a8ac3fc538d3a9da6bc1ca841c735cf2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3bf5281_da9ba521",
+        "filename": "ui/gfx/render_text.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 759,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-08-25T15:01:37Z",
+      "side": 1,
+      "message": "nit: forced \"left to right\", used for URL display.",
+      "revId": "9d7fb344a8ac3fc538d3a9da6bc1ca841c735cf2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2696133f_63feee77",
+        "filename": "ui/gfx/render_text.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 760,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-08-25T15:01:37Z",
+      "side": 1,
+      "message": "nit: \u0027surrounding the substrings\u0027 and maybe spell out the acronyms \"LRO (left-to-right override, U+202D) and PDF (pop directional formatting U+202C)\"?",
+      "revId": "9d7fb344a8ac3fc538d3a9da6bc1ca841c735cf2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1d8502d_0c943938",
+        "filename": "ui/gfx/render_text_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 3723,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-08-25T15:01:37Z",
+      "side": 1,
+      "message": "nit: Add a comment explaining the URL content and hopefully showing how it renders in each case (inline \u0027א\u0027 etc., maybe with spaces to force ordering?)",
+      "revId": "9d7fb344a8ac3fc538d3a9da6bc1ca841c735cf2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1bc3f7b_8469094f",
+        "filename": "ui/gfx/render_text_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 3764,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-08-25T15:01:37Z",
+      "side": 1,
+      "message": "We need numerous more test cases:\n1) Ensure purely LTR urls don\u0027t get run breaks for punctuation/delimiters\n2) Test urls with various combinations of components\n3) Test omitting www. and doing something like ABC.com/DEF\n4) Test arabic or some other RTL language in addition to hebrew (maybe?)\n5) Test leading user/pass components with LTR and RTL.\nIt might make sense to add a helper function that checks if all run ranges are in ascending order (even if internally reversed), that would yield false for bidi urls with the new feature turned off, and yield true for the same bidi urls with the feature turned on.",
+      "revId": "9d7fb344a8ac3fc538d3a9da6bc1ca841c735cf2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40b6b1ac_b21d8e73",
+        "filename": "ui/gfx/text_constants.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-08-25T15:01:37Z",
+      "side": 1,
+      "message": "nit: keep feature name updated with any changes.",
+      "revId": "9d7fb344a8ac3fc538d3a9da6bc1ca841c735cf2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
