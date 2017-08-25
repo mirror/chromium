@@ -22,6 +22,30 @@
       "revId": "ad5edc9e00750d77003753e2eaac9317865e31fd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30a441f0_4c0879a5",
+        "filename": "chrome/installer/zucchini/address_translator.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-25T14:37:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ab08dc2d_625c3785",
+      "range": {
+        "startLine": 107,
+        "startChar": 8,
+        "endLine": 107,
+        "endChar": 14
+      },
+      "revId": "ad5edc9e00750d77003753e2eaac9317865e31fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
