@@ -42,6 +42,11 @@ class ChromeLanguageDetectionClient
  private:
   explicit ChromeLanguageDetectionClient(content::WebContents* web_contents);
   friend class content::WebContentsUserData<ChromeLanguageDetectionClient>;
+  friend class TranslateLanguageBrowserTest;
+
+  language::UrlLanguageHistogram* language_histogram() const {
+    return language_histogram_;
+  }
 
   // Histogram to be notified about detected language of every page visited. Not
   // owned here.
