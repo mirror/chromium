@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "4e6db6ea_0cf89aa9",
+        "filename": "gpu/command_buffer/client/fenced_allocator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-08-25T17:44:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7a167608_1c4720be",
+      "range": {
+        "startLine": 180,
+        "startChar": 3,
+        "endLine": 180,
+        "endChar": 19
+      },
+      "revId": "46ef4d7fc7f1e37e35c8971917d3f69dc2c1b274",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f5f8ae47_32e9c83c",
         "filename": "gpu/command_buffer/client/fenced_allocator.h",
         "patchSetId": 2
@@ -93,6 +117,30 @@
       "revId": "46ef4d7fc7f1e37e35c8971917d3f69dc2c1b274",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85df49f3_fbe5b8b3",
+        "filename": "gpu/command_buffer/client/fenced_allocator.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-08-25T17:44:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "92b91889_5d075835",
+      "range": {
+        "startLine": 261,
+        "startChar": 25,
+        "endLine": 261,
+        "endChar": 41
+      },
+      "revId": "46ef4d7fc7f1e37e35c8971917d3f69dc2c1b274",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -163,6 +211,30 @@
       "revId": "46ef4d7fc7f1e37e35c8971917d3f69dc2c1b274",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08b58c76_37ca10ac",
+        "filename": "gpu/command_buffer/client/mapped_memory.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-08-25T17:44:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "53c12a89_d1ec8936",
+      "range": {
+        "startLine": 116,
+        "startChar": 25,
+        "endLine": 116,
+        "endChar": 41
+      },
+      "revId": "46ef4d7fc7f1e37e35c8971917d3f69dc2c1b274",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
