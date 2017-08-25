@@ -34,6 +34,24 @@
       "revId": "84f50531c48a467f167678df26286c1ea4846222",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "598b8df8_0d86c2f1",
+        "filename": "chrome/browser/resources/settings/controls/settings_toggle_button.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-08-25T18:44:30Z",
+      "side": 1,
+      "message": "I\u0027ll start by separating this to a different CL.",
+      "parentUuid": "8b90ba87_6943e371",
+      "revId": "84f50531c48a467f167678df26286c1ea4846222",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
