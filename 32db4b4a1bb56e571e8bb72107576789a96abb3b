@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "11428eb3_55b50b07",
+        "filename": "ui/webui/resources/cr_elements/cr_link_row/cr_link_row.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-08-25T23:10:50Z",
+      "side": 1,
+      "message": "Can we do that now? (Or chain this on that CL?)",
+      "revId": "32db4b4a1bb56e571e8bb72107576789a96abb3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fbc46d44_a353ba4e",
+        "filename": "ui/webui/resources/cr_elements/cr_link_row/cr_link_row.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-08-25T23:10:50Z",
+      "side": 1,
+      "message": "nit: Order these either in the order they appear (my preference) or alphabetically (#subLabel above is mis-ordered)",
+      "revId": "32db4b4a1bb56e571e8bb72107576789a96abb3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c6eeec5_80ec0e51",
+        "filename": "ui/webui/resources/cr_elements/cr_link_row/cr_link_row.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-08-25T23:10:50Z",
+      "side": 1,
+      "message": "This needs documentation describing when / how to use it.\n\nIt is unclear to me what \"link\" refers to?",
+      "revId": "32db4b4a1bb56e571e8bb72107576789a96abb3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
