@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "373379b2_b2a416b2",
+        "filename": "services/ui/ws/frame_generator.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-08-25T15:21:18Z",
+      "side": 1,
+      "message": "All this manual building of hit test regions is making me sad, as are all the heap allocations... :-( OK fo rnow.",
+      "revId": "89f59d48924bb6651055790cd9ded3617b270101",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bad8888d_05b5e499",
+        "filename": "services/ui/ws/frame_generator.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-08-25T15:21:18Z",
+      "side": 1,
+      "message": "rect.SetRect(pixel_size_) or rect.SetRect(gfx::Rect(pixel_size_)); ought to be sufficient.",
+      "revId": "89f59d48924bb6651055790cd9ded3617b270101",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
