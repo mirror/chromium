@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2752c24e_a2d85575",
+        "filename": "chrome/installer/linux/debian/update-dist-package-versions.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-08-25T21:47:12Z",
+      "side": 1,
+      "message": "nit: ASCII sort?",
+      "revId": "5e1685744bd879cb8236dcd4baea261833646cc5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82afb525_60a84dd3",
+        "filename": "chrome/installer/linux/debian/update-dist-package-versions.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-08-25T21:47:12Z",
+      "side": 1,
+      "message": "How do you feel about generating these URLs instead of listing them out explicitly?",
+      "revId": "5e1685744bd879cb8236dcd4baea261833646cc5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1678d571_585f9b5f",
+        "filename": "chrome/installer/linux/debian/update-dist-package-versions.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-08-25T21:47:12Z",
+      "side": 1,
+      "message": "How do we keep this list up to date? Do we want to cross-reference another file?",
+      "revId": "5e1685744bd879cb8236dcd4baea261833646cc5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d02eb0f_faf1b7e9",
+        "filename": "chrome/installer/linux/debian/update-dist-package-versions.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-08-25T21:47:12Z",
+      "side": 1,
+      "message": "re.compile first?",
+      "revId": "5e1685744bd879cb8236dcd4baea261833646cc5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7aad399f_d1dea526",
+        "filename": "chrome/installer/linux/debian/update-dist-package-versions.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-08-25T21:47:12Z",
+      "side": 1,
+      "message": "If you don\u0027t pass in sort_keys\u003dTrue, then will the output have the Debian versions listed as (8, 9, 10) instead of (10, 8, 9) ?",
+      "revId": "5e1685744bd879cb8236dcd4baea261833646cc5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
