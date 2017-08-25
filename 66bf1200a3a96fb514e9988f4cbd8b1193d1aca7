@@ -1,0 +1,118 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f0537aa4_a60635b0",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1115863
+      },
+      "writtenOn": "2017-08-25T01:58:40Z",
+      "side": 1,
+      "message": "You can use shorter URL like crbug.com/374178.",
+      "revId": "66bf1200a3a96fb514e9988f4cbd8b1193d1aca7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ce977e5_f61bd802",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1115863
+      },
+      "writtenOn": "2017-08-25T01:58:40Z",
+      "side": 1,
+      "message": "I\u0027m not good at English but maybe:\n\"We want to have the same form of nodes for default values\"\n\n?",
+      "range": {
+        "startLine": 10,
+        "startChar": 10,
+        "endLine": 10,
+        "endChar": 21
+      },
+      "revId": "66bf1200a3a96fb514e9988f4cbd8b1193d1aca7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17e09384_6014e6f6",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1115863
+      },
+      "writtenOn": "2017-08-25T01:58:40Z",
+      "side": 1,
+      "message": "s/I decided to/We are going to/",
+      "revId": "66bf1200a3a96fb514e9988f4cbd8b1193d1aca7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "22b895b8_591ad085",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1115863
+      },
+      "writtenOn": "2017-08-25T01:58:40Z",
+      "side": 1,
+      "message": "How about changing this line like below:\n\n\"Currently we only display IDLNodes\u0027 class and name when we dump ASTs. To keep pattern match based tests descriptive, we should display \u0027VALUE\u0027 property as well.\"",
+      "revId": "66bf1200a3a96fb514e9988f4cbd8b1193d1aca7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac9836cc_bf689bf0",
+        "filename": "tools/idl_parser/idl_node.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1115863
+      },
+      "writtenOn": "2017-08-25T01:58:40Z",
+      "side": 1,
+      "message": "It\u0027s straightforward to use None in this case:\n\nvalue \u003d self.GetProperty(\u0027VALUE\u0027)\nif value:\n  return \u0027%s(%s) \u003d %s\u0027 % (self._cls, name, value)\nelse\n  return \u0027%s(%s)\u0027 % (self._cls, name)",
+      "revId": "66bf1200a3a96fb514e9988f4cbd8b1193d1aca7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db618e74_95cbddbe",
+        "filename": "tools/idl_parser/idl_node.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1115863
+      },
+      "writtenOn": "2017-08-25T01:58:40Z",
+      "side": 1,
+      "message": "nit: I\u0027d prefer either:\n- Add a space before \u003d\n- Remove the space after \u003d",
+      "range": {
+        "startLine": 103,
+        "startChar": 20,
+        "endLine": 103,
+        "endChar": 21
+      },
+      "revId": "66bf1200a3a96fb514e9988f4cbd8b1193d1aca7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
