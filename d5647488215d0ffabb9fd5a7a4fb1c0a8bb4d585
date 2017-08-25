@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "fe2f7c6d_71382225",
+        "filename": "third_party/zlib/contrib/arm/chunkcopy.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1237531
+      },
+      "writtenOn": "2017-08-25T03:31:06Z",
+      "side": 1,
+      "message": "Well, that\u0027s how DEFLATE works: more like memcpy than memmove.\n\nA string of 20 consecutive \u0027A\u0027 bytes can be encoded as a literal \u0027A\u0027 followed by a \u003clength\u003d19, distance\u003d1\u003e code. A string of 7 consecutive \"ABC\"s can be encoded as the three literals \u0027A\u0027, \u0027B\u0027, \u0027C\u0027 followed by a \u003clength\u003d18, distance\u003d3\u003e code. When decoding, after the first three literals our buffer is \"ABC_etc\", where the underscore denotes the out pointer. Iterations of this loop expand that to \"ABCABC_etc\" (and now len\u003d15, dist\u003d6), \"ABCABCABCABC_etc\" (and now len\u003d9, dist\u003d12, so the loop ends).\n\nThere\u0027s a comment \"The main part of this loop is a simple copy of eight bytes...\" about a similar technique in the Go Snappy port at https://github.com/golang/snappy/blob/master/decode_amd64.s#L367\n\nThat comment was originally in the C++ Snappy implementation but the C++ Snappy code appears to have refactored itself since then.",
+      "parentUuid": "37712bef_3fa75c31",
+      "revId": "d5647488215d0ffabb9fd5a7a4fb1c0a8bb4d585",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5e5240ef_1a68af7c",
         "filename": "third_party/zlib/contrib/arm/chunkcopy.h",
         "patchSetId": 5
