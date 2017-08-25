@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "6ccac42c_3599c34c",
+        "filename": "components/offline_pages/core/prefetch/metrics_finalization_task.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-08-25T17:38:04Z",
+      "side": 1,
+      "message": "It\u0027s done by the macro.",
+      "parentUuid": "3a5e65a5_bea15bfe",
+      "revId": "9bcb980eb36040133aefca38adaffce68b7e994b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3b376f5a_1f277b13",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 5
@@ -39,6 +57,30 @@
       "revId": "9bcb980eb36040133aefca38adaffce68b7e994b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9166eeda_b42c0ed2",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 50143,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-08-25T17:38:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3b376f5a_1f277b13",
+      "range": {
+        "startLine": 50142,
+        "startChar": 67,
+        "endLine": 50143,
+        "endChar": 70
+      },
+      "revId": "9bcb980eb36040133aefca38adaffce68b7e994b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
