@@ -16,6 +16,24 @@
       "revId": "1a462c777f594de5713249855ada6702a22d3827",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac16a759_b7c0329f",
+        "filename": "components/omnibox/browser/zero_suggest_provider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 372,
+      "author": {
+        "id": 1111029
+      },
+      "writtenOn": "2017-08-25T17:19:18Z",
+      "side": 1,
+      "message": "Done. Just tested with Zero Suggest and indeed it fixes the issue.",
+      "parentUuid": "ad70c4f1_98e8c40e",
+      "revId": "1a462c777f594de5713249855ada6702a22d3827",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
