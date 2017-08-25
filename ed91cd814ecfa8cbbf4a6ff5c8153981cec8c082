@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "9bd9d2ba_5a58b4b1",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/ScriptCustomElementDefinition.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1115851
+      },
+      "writtenOn": "2017-08-25T17:45:19Z",
+      "side": 1,
+      "message": "For the non-upgrade case, the new behavior seems _slightly_ worse: instead of pointing to position 0 in the script file (which the existing code does), the new code points at the HTML file where the element occurred.\n\nPersonally I don\u0027t think this is bad enough to mean this change isn\u0027t worthwhile: the existing thing would not be very useful in, say, an application with a large JS bundle, but I\u0027ll wait to hear what you think before landing.\n\nI also tested the createElement case, and indeed it looks fine to me: it points at the createElement call.",
+      "parentUuid": "4dbeb277_a3d01518",
+      "revId": "ed91cd814ecfa8cbbf4a6ff5c8153981cec8c082",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ee4502d0_d7a23548",
         "filename": "third_party/WebKit/Source/bindings/core/v8/V8ScriptRunner.h",
         "patchSetId": 6
