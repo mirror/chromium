@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "508645b6_a889cf2b",
+        "filename": "build/android/apk_operations.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 359,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-08-25T02:25:38Z",
+      "side": 1,
+      "message": "I think it would be better to wait rather than error out in this case. E.g. might want to start logcat before launching app to catch start-up messages.",
+      "revId": "641957a972710f192a9b7c5324355679039f81d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b9146522_f5913f53",
+        "filename": "build/android/apk_operations.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 362,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-08-25T02:25:38Z",
+      "side": 1,
+      "message": "This won\u0027t work on older Androids. Although, if we\u0027re filtering by PID, maybe it\u0027s not so important to only log \"now on\" (except I\u0027m not sure how slow it would be to filter all the logs on start-up).\n\nAlso - use \u0027-v\u0027, \u0027threadtime\u0027 to get timestamps on older devices",
+      "revId": "641957a972710f192a9b7c5324355679039f81d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "945790d7_e99d4638",
+        "filename": "build/android/apk_operations.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 366,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-08-25T02:25:38Z",
+      "side": 1,
+      "message": "I doubt it\u0027s necessary to close this since Ctrl-C is the only way to exit this loop :P",
+      "revId": "641957a972710f192a9b7c5324355679039f81d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26da00f8_22e31a64",
+        "filename": "build/android/apk_operations.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 367,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-08-25T02:25:38Z",
+      "side": 1,
+      "message": "Clever :). But might be better to just do \"while True\", since this implies logcat might eventually output a blank line (which I don\u0027t think is true)",
+      "revId": "641957a972710f192a9b7c5324355679039f81d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "944a410c_07152361",
+        "filename": "build/android/apk_operations.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 377,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-08-25T02:25:38Z",
+      "side": 1,
+      "message": "Probably there\u0027s a race here if a process logs right before terminating. Instead, store an append-only list of pids.",
+      "revId": "641957a972710f192a9b7c5324355679039f81d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
