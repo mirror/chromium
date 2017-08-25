@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "33c38142_877702f9",
+        "filename": "content/browser/accessibility/accessibility_tree_formatter_android.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-08-25T17:50:01Z",
+      "side": 1,
+      "message": "role_description is handled explicitly below to place it first.\n\nI\u0027ll look into refactoring this in a follow-up, I like your idea of\nfunction pointers.",
+      "parentUuid": "28ee8f03_da1cbd5b",
+      "revId": "7dcc224c305389a52a3dfae14123a51cdd313e02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "510fc9c6_7deddc21",
         "filename": "content/browser/accessibility/browser_accessibility_android.cc",
         "patchSetId": 5
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "f6b8329b_0306b122",
+        "filename": "content/browser/accessibility/browser_accessibility_android.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 385,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-08-25T17:50:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "510fc9c6_7deddc21",
+      "revId": "7dcc224c305389a52a3dfae14123a51cdd313e02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1fe9407a_96f3c9db",
         "filename": "content/browser/accessibility/browser_accessibility_android.cc",
         "patchSetId": 5
@@ -47,6 +83,24 @@
       "writtenOn": "2017-08-24T21:27:11Z",
       "side": 1,
       "message": "Line above should be \n  return GetString16Attribute(ui::AX_ATTR_DESCRIPTION);\n\nAlthough, since both code paths get it, it probably makes sense to set the description variable above the if block.",
+      "revId": "7dcc224c305389a52a3dfae14123a51cdd313e02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01ea7eb6_85a20024",
+        "filename": "content/browser/accessibility/browser_accessibility_android.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 436,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-08-25T17:50:01Z",
+      "side": 1,
+      "message": "Good catch",
+      "parentUuid": "1fe9407a_96f3c9db",
       "revId": "7dcc224c305389a52a3dfae14123a51cdd313e02",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "4e52882d_8e47ede3",
+        "filename": "content/browser/accessibility/browser_accessibility_android.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 438,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-08-25T17:50:01Z",
+      "side": 1,
+      "message": "I added a new example that has name, description, and value.",
+      "parentUuid": "c631ada4_1e2e5bd3",
+      "revId": "7dcc224c305389a52a3dfae14123a51cdd313e02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "be762562_0061f419",
         "filename": "content/public/android/java/src/org/chromium/content/browser/accessibility/KitKatWebContentsAccessibility.java",
         "patchSetId": 5
@@ -81,6 +153,24 @@
       "writtenOn": "2017-08-24T22:58:50Z",
       "side": 1,
       "message": "What\u0027s the use of doing this on K?",
+      "revId": "7dcc224c305389a52a3dfae14123a51cdd313e02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73550d2b_401e3901",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/accessibility/KitKatWebContentsAccessibility.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-08-25T17:50:01Z",
+      "side": 1,
+      "message": "AccessibilityNodeInfo.getExtras is only available on K and higher.\n\nWhen new features get added to AccessibilityNodeInfo, we occasionally\nadd the same attribute to the extras so that TalkBack can still\naccess that attribute on earlier Android versions.\n(TalkBack has already added support for the hint extra).\n\nIt\u0027s most important in cases like this where if we didn\u0027t do this,\nthe experience would not degrade gracefully. Since we\u0027re taking info\nthat used to be in the text and moving it to the hint, we don\u0027t\nwant to degrade the experience for everyone on K through N.\n(We\u0027re okay with degrading J based on market share.)",
+      "parentUuid": "be762562_0061f419",
       "revId": "7dcc224c305389a52a3dfae14123a51cdd313e02",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
