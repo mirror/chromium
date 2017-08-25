@@ -36,3 +36,13 @@ std::string AutocompleteMatchType::ToString(AutocompleteMatchType::Type type) {
                 "strings array must have NUM_TYPES elements");
   return strings[type];
 }
+
+// static
+bool AutocompleteMatchType::IsUrlType(AutocompleteMatchType::Type type) {
+  return type == URL_WHAT_YOU_TYPED || type == HISTORY_URL ||
+         type == HISTORY_TITLE || type == HISTORY_BODY ||
+         type == HISTORY_KEYWORD || type == NAVSUGGEST ||
+         type == BOOKMARK_TITLE || type == NAVSUGGEST_PERSONALIZED ||
+         type == CLIPBOARD || type == PHYSICAL_WEB ||
+         type == PHYSICAL_WEB_OVERFLOW;
+}

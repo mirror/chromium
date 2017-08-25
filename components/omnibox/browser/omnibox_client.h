@@ -27,6 +27,8 @@ class Image;
 }
 
 typedef base::Callback<void(const SkBitmap& bitmap)> BitmapFetchedCallback;
+typedef base::Callback<void(size_t match_index, const gfx::Image& icon)>
+    MatchIconFetchedCallback;
 
 // Interface that allows the omnibox component to interact with its embedder
 // (e.g., getting information about the current page, retrieving objects
@@ -112,10 +114,15 @@ class OmniboxClient {
   // Called when the autocomplete result has changed. If the embedder supports
   // fetching of bitmaps for URLs (not all embedders do), |on_bitmap_fetched|
   // will be called when the bitmap has been fetched.
-  virtual void OnResultChanged(const AutocompleteResult& result,
-                               bool default_match_changed,
-                               const BitmapFetchedCallback& on_bitmap_fetched) {
-  }
+  //
+  // |match_icon_fetched| will never be called if custom icons are disabled.
+  // Otherwise, it will be called exactly once per match, and returns an empty
+  // gfx::Image if the match should not have a custom icon.
+  virtual void OnResultChanged(
+      const AutocompleteResult& result,
+      bool default_match_changed,
+      const BitmapFetchedCallback& on_bitmap_fetched,
+      const MatchIconFetchedCallback& match_icon_fetched) {}
 
   // Called when the current autocomplete match has changed.
   virtual void OnCurrentMatchChanged(const AutocompleteMatch& match) {}
