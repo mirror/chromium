@@ -158,6 +158,9 @@ TEST_F(ShellDesktopControllerAuraTest, CloseAppWindows) {
 
   controller_->CloseAppWindows();
   EXPECT_EQ(0u, app_window_registry->app_windows().size());
+  // The root window should still exist; the application remains alive until
+  // the host itself is closed.
+  EXPECT_EQ(1u, controller_->GetAllRootWindows().size());
 }
 
 // Tests that the AppWindows are removed when the desktop controller goes away.
@@ -180,7 +183,7 @@ TEST_F(ShellDesktopControllerAuraTest, MultipleDisplays) {
       AppWindowRegistry::Get(browser_context());
   scoped_refptr<Extension> extension = ExtensionBuilder("Test").Build();
 
-  // Create two app window on the primary display. Both should be hosted in the
+  // Create two app windows on the primary display. Both should be hosted in the
   // same RootWindowController.
   CreateAppWindow(extension.get());
   CreateAppWindow(extension.get());
