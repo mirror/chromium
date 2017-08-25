@@ -8,6 +8,7 @@
 #include <stdint.h>
 
 #include "cc/output/compositor_frame.h"
+#include "components/viz/common/surfaces/local_surface_id.h"
 #include "content/browser/renderer_host/frame_connector_delegate.h"
 #include "content/common/content_export.h"
 
@@ -112,7 +113,8 @@ class CONTENT_EXPORT CrossProcessFrameConnector
   friend class MockCrossProcessFrameConnector;
 
   // Handlers for messages received from the parent frame.
-  void OnFrameRectChanged(const gfx::Rect& frame_rect);
+  void OnFrameRectChanged(const gfx::Rect& frame_rect,
+                          const viz::LocalSurfaceId& local_surface_id);
   void OnUpdateViewportIntersection(const gfx::Rect& viewport_intersection);
   void OnVisibilityChanged(bool visible);
   void OnSetIsInert(bool);
