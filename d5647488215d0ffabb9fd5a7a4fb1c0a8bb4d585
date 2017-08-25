@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "a65a2246_fcbfaa95",
+        "filename": "third_party/zlib/contrib/arm/chunkcopy.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1240200
+      },
+      "writtenOn": "2017-08-25T04:02:43Z",
+      "side": 1,
+      "message": "At that call site (and at line 196 below) all the preconditions are met to allow a very sloppy implementation.  It reads a chunk, and writes a chunk at the output, and then doubles the period that it\u0027s working with until that period is at least as large as a chunk.  This means that it can splatter something like twice the chunksize of output, but it can do it in log_2(16/dist) iterations.\n\nOnce that\u0027s done, a regular chunk copy can run, because as far as it\u0027s concerned the source and the destination do not overlap by a hazardous distance.",
+      "parentUuid": "fe2f7c6d_71382225",
+      "revId": "d5647488215d0ffabb9fd5a7a4fb1c0a8bb4d585",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5e5240ef_1a68af7c",
         "filename": "third_party/zlib/contrib/arm/chunkcopy.h",
         "patchSetId": 5
@@ -72,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "edaddb92_28139924",
+        "filename": "third_party/zlib/contrib/arm/chunkcopy.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1240200
+      },
+      "writtenOn": "2017-08-25T04:02:43Z",
+      "side": 1,
+      "message": "It\u0027s a memset(), not a memmove().  When the source and destination overlap, memmove() explicitly reproduces the entire source buffer at the new destination, which is precisely the opposite of what is required by deflate.  The memset() behaviour referenced here is to fill the destination with a repeating pattern of length `period` (rather than length 1, the only option in libc memset()).  It\u0027s simply a quirk of the way that inflate works that the fill pattern lies immediately before the address to be written.",
+      "parentUuid": "198875ba_bf46339e",
+      "revId": "d5647488215d0ffabb9fd5a7a4fb1c0a8bb4d585",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f9baac76_f46126e6",
         "filename": "third_party/zlib/contrib/arm/chunkcopy.h",
         "patchSetId": 5
@@ -101,6 +137,24 @@
       "side": 1,
       "message": "IIRC, the compressed segments can have quite a few different cases.\n\nEach chunk_function() were carefully optimized for those.",
       "parentUuid": "f9baac76_f46126e6",
+      "revId": "d5647488215d0ffabb9fd5a7a4fb1c0a8bb4d585",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2099d361_d7b1052f",
+        "filename": "third_party/zlib/contrib/arm/chunkcopy.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1240200
+      },
+      "writtenOn": "2017-08-25T04:02:43Z",
+      "side": 1,
+      "message": "This version implements cases where the source and the destination buffers overlap.  The deflate algorithm uses this condition to write repeating patterns; chunkcopy_lapped_relaxed() would fumble this because it assumes it can read and write chunks of 16 bytes at a time, which doesn\u0027t work (easily) for shorter periods.",
+      "parentUuid": "0b33fa37_083729be",
       "revId": "d5647488215d0ffabb9fd5a7a4fb1c0a8bb4d585",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -154,6 +208,24 @@
       "side": 1,
       "message": "\u003e it is an open question how common are data segments of that tiny size.\n\nI\u0027m not sure why the data segment size matters. The technique in 601694 doesn\u0027t apply only to tiny source buffers.\n\nOn x86_64, I measured a 1.2x throughput gain from reading into the bit accumulator 8 bytes at a time. Independent of that, read/writing 8 bytes at a time for length-distance copies gave an additional 1.3x. The first technique requires a little endian CPU. The second technique does not.\n\n\n\u003e About 601694: it assumes that unaligned 64bits loads are cheap and readily available, no?\n\nYes, it does, which is why it is gated on e.g. #if defined(__aarch64__). 601694 should have no code changes on 32 bit ARM.",
       "parentUuid": "44968647_302b5bb8",
+      "revId": "d5647488215d0ffabb9fd5a7a4fb1c0a8bb4d585",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8afc215_3c0bfad0",
+        "filename": "third_party/zlib/contrib/arm/inffast.c",
+        "patchSetId": 5
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1240200
+      },
+      "writtenOn": "2017-08-25T04:02:43Z",
+      "side": 1,
+      "message": "Separate optimisations in separate patches.  This is usually the first thing anyone does when they approach an VLC coder, but I separated it out into another patch and then began a more substantial refactor of the code handling (fewer switches for fewer branch mispredicts), but then backed off because it was conflicting with pre-existing and on-going work in zlib-ng.",
+      "parentUuid": "395d2238_c42306f4",
       "revId": "d5647488215d0ffabb9fd5a7a4fb1c0a8bb4d585",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
