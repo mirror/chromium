@@ -174,6 +174,24 @@
       "revId": "7dcc224c305389a52a3dfae14123a51cdd313e02",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd660d4b_fb446468",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/accessibility/KitKatWebContentsAccessibility.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1147299
+      },
+      "writtenOn": "2017-08-25T21:15:18Z",
+      "side": 1,
+      "message": "Got it.\n\nThe O version calls super, so in O+ the hint will be in both the extras and in the O hint field. Is that what we want?",
+      "parentUuid": "73550d2b_401e3901",
+      "revId": "7dcc224c305389a52a3dfae14123a51cdd313e02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
