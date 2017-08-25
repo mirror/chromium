@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1d336872_d5f8d591",
+        "filename": "ipc/ipc_message_pipe_reader.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2017-08-25T18:41:47Z",
+      "side": 1,
+      "message": "nit: maybe base::make_span(static_cast\u003cconst uint8_t*\u003e ....\n  to save writing const uint8_t twice.",
+      "range": {
+        "startLine": 67,
+        "startChar": 6,
+        "endLine": 67,
+        "endChar": 32
+      },
+      "revId": "193f7606664de3bfb2187f260cb7c1dc12b88cee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
