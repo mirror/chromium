@@ -93,6 +93,23 @@
       "revId": "146a6fe718e9dfdf75a945d25e9360373e126cc3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "afacaeb4_7fefa5fb",
+        "filename": "extensions/common/api/system_display.idl",
+        "patchSetId": 6
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-08-25T19:37:03Z",
+      "side": 1,
+      "message": "can you use isTabletMode?\n(we just renamed all TouchView/MaximizedMode to TabletMode)",
+      "revId": "146a6fe718e9dfdf75a945d25e9360373e126cc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
