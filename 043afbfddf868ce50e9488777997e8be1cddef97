@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "96dab9b3_877b7484",
+        "filename": "gpu/ipc/in_process_command_buffer.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-08-25T16:28:48Z",
+      "side": 1,
+      "message": "Non-POD globals are disallowed in production code.\nOne way to deal with this could be to introduce a static function void InProcessCommandBuffer::InitializeDefaultServiceForTest(const GpuFeatureInfo\u0026), that would create the g_default_service and pass it the GpuFeatureInfo, so that it can give it to the GpuInProcessThreadService when it gets created - or actually create the GpuInProcessThreadService at that point to avoid storing a copy, since I don\u0027t think there\u0027s a point in delaying its creation in that case.",
+      "revId": "043afbfddf868ce50e9488777997e8be1cddef97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
