@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "5dddbb04_778a6ea0",
+        "filename": "extensions/renderer/extension_bindings_system.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-08-25T00:23:28Z",
+      "side": 1,
+      "message": "Do you really need 100 buckets, or would 50 suffice?  Using more buckets uses more memory -- which is especially important when you\u0027re adding histograms split by several suffixes.",
+      "range": {
+        "startLine": 43,
+        "startChar": 66,
+        "endLine": 43,
+        "endChar": 69
+      },
+      "revId": "96e9d4b1a42479009dbd80821a0942372bfb7a76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a8325f57_9ff3a39f",
         "filename": "extensions/renderer/native_extension_bindings_system.cc",
         "patchSetId": 3
@@ -52,6 +75,75 @@
       "revId": "96e9d4b1a42479009dbd80821a0942372bfb7a76",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6d829160_d3587782",
+        "filename": "extensions/renderer/native_extension_bindings_system.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 670,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-08-25T00:23:28Z",
+      "side": 1,
+      "message": "nit: DItto",
+      "range": {
+        "startLine": 670,
+        "startChar": 30,
+        "endLine": 670,
+        "endChar": 33
+      },
+      "revId": "96e9d4b1a42479009dbd80821a0942372bfb7a76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24850ba8_afc0452d",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 93240,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-08-25T00:23:28Z",
+      "side": 1,
+      "message": "Is this only for non-blessed pages, or all pages?  Please clarify in the label.",
+      "range": {
+        "startLine": 93240,
+        "startChar": 58,
+        "endLine": 93240,
+        "endChar": 0
+      },
+      "revId": "96e9d4b1a42479009dbd80821a0942372bfb7a76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9424cdf_07f3dad2",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 93246,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-08-25T00:23:28Z",
+      "side": 1,
+      "message": "nit: Mebbe group this with BlessedExtensionContext; or just alphabetize the full list?",
+      "range": {
+        "startLine": 93246,
+        "startChar": 80,
+        "endLine": 93246,
+        "endChar": 0
+      },
+      "revId": "96e9d4b1a42479009dbd80821a0942372bfb7a76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
