@@ -199,7 +199,8 @@ interface WidgetInputHandler {
   // you don't require notification.
   DispatchEvent(Event event)
       => (InputEventAckSource source, ui.mojom.LatencyInfo updated_latency,
-         InputEventAckState state, DidOverscrollParams? overscroll);
+         InputEventAckState state, DidOverscrollParams? overscroll,
+         TouchAction? touch_action);
 
   // Sends a non-blocking input event to the render widget. The behaviour
   // of this API is the same as DispatchEvent just that there is no callback
