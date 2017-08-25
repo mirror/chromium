@@ -5,6 +5,7 @@
 #include "base/trace_event/memory_allocator_dump.h"
 
 #include "base/format_macros.h"
+#include "base/memory/ptr_util.h"
 #include "base/strings/stringprintf.h"
 #include "base/trace_event/memory_dump_manager.h"
 #include "base/trace_event/memory_dump_provider.h"
@@ -34,7 +35,6 @@ MemoryAllocatorDump::MemoryAllocatorDump(const std::string& absolute_name,
                                          const MemoryAllocatorDumpGuid& guid)
     : absolute_name_(absolute_name),
       process_memory_dump_(process_memory_dump),
-      attributes_(new TracedValue),
       guid_(guid),
       flags_(Flags::DEFAULT),
       size_(0) {
@@ -55,7 +55,6 @@ MemoryAllocatorDump::MemoryAllocatorDump(const std::string& absolute_name,
     : MemoryAllocatorDump(absolute_name,
                           process_memory_dump,
                           GetDumpIdFromName(absolute_name)) {
-  string_conversion_buffer_.reserve(16);
 }
 
 MemoryAllocatorDump::~MemoryAllocatorDump() {
@@ -66,22 +65,13 @@ void MemoryAllocatorDump::AddScalar(const char* name,
                                     uint64_t value) {
   if (strcmp(kNameSize, name) == 0)
     size_ = value;
-  SStringPrintf(&string_conversion_buffer_, "%" PRIx64, value);
-  attributes_->BeginDictionary(name);
-  attributes_->SetString("type", kTypeScalar);
-  attributes_->SetString("units", units);
-  attributes_->SetString("value", string_conversion_buffer_);
-  attributes_->EndDictionary();
+  entries_.push_back(Entry(name, units, value));
 }
 
 void MemoryAllocatorDump::AddScalarF(const char* name,
                                      const char* units,
                                      double value) {
-  attributes_->BeginDictionary(name);
-  attributes_->SetString("type", kTypeScalar);
-  attributes_->SetString("units", units);
-  attributes_->SetDouble("value", value);
-  attributes_->EndDictionary();
+  entries_.push_back(Entry(name, units, value));
 }
 
 void MemoryAllocatorDump::AddString(const char* name,
@@ -93,21 +83,82 @@ void MemoryAllocatorDump::AddString(const char* name,
     NOTREACHED();
     return;
   }
+  entries_.push_back(Entry(name, units, value));
+}
 
-  attributes_->BeginDictionary(name);
-  attributes_->SetString("type", kTypeString);
-  attributes_->SetString("units", units);
-  attributes_->SetString("value", value);
-  attributes_->EndDictionary();
+void MemoryAllocatorDump::DumpAttributes(TracedValue* value) const {
+  // A local buffer for Sprintf conversion;
+  std::string string_conversion_buffer;
+  string_conversion_buffer.reserve(16);
+
+  for (const Entry& entry : entries_) {
+    value->BeginDictionary(entry.name.c_str());
+    switch (entry.entry_type) {
+      case Entry::Integer:
+        SStringPrintf(&string_conversion_buffer, "%" PRIx64, entry.value_uint);
+        value->SetString("type", kTypeScalar);
+        value->SetString("units", entry.units);
+        value->SetString("value", string_conversion_buffer);
+        break;
+      case Entry::Double:
+        value->SetString("type", kTypeScalar);
+        value->SetString("units", entry.units);
+        value->SetDouble("value", entry.value_double);
+        break;
+      case Entry::String:
+        value->SetString("type", kTypeString);
+        value->SetString("units", entry.units);
+        value->SetString("value", entry.value_string);
+        break;
+    }
+    value->EndDictionary();
+  }
 }
 
 void MemoryAllocatorDump::AsValueInto(TracedValue* value) const {
   value->BeginDictionaryWithCopiedName(absolute_name_);
   value->SetString("guid", guid_.ToString());
-  value->SetValue("attrs", *attributes_);
+  value->BeginDictionary("attrs");
+  DumpAttributes(value);
+  value->EndDictionary();  // "attrs": { ... }
   if (flags_)
     value->SetInteger("flags", flags_);
   value->EndDictionary();  // "allocator_name/heap_subheap": { ... }
+}
+
+std::unique_ptr<TracedValue> MemoryAllocatorDump::attributes_for_testing()
+    const {
+  std::unique_ptr<TracedValue> attributes = base::MakeUnique<TracedValue>();
+  DumpAttributes(attributes.get());
+  return attributes;
+}
+
+MemoryAllocatorDump::Entry::Entry(std::string name,
+                                  std::string units,
+                                  uint64_t value)
+    : name(name), units(units), entry_type(Integer), value_uint(value) {}
+MemoryAllocatorDump::Entry::Entry(std::string name,
+                                  std::string units,
+                                  double value)
+    : name(name), units(units), entry_type(Double), value_double(value) {}
+MemoryAllocatorDump::Entry::Entry(std::string name,
+                                  std::string units,
+                                  std::string value)
+    : name(name), units(units), entry_type(String), value_string(value) {}
+MemoryAllocatorDump::Entry::Entry(Entry&& other) = default;
+MemoryAllocatorDump::Entry::Entry(const Entry& other) = default;
+
+bool MemoryAllocatorDump::Entry::operator==(const Entry& rhs) const {
+  if (!(name == rhs.name && units == rhs.units && entry_type == rhs.entry_type))
+    return false;
+  switch (entry_type) {
+    case EntryType::Integer:
+      return value_uint == rhs.value_uint;
+    case EntryType::Double:
+      return value_double == rhs.value_double;
+    case EntryType::String:
+      return value_string == rhs.value_string;
+  }
 }
 
 }  // namespace trace_event
