@@ -22,6 +22,23 @@
       "revId": "fa7745938098c49d3f134a7c100f2bcaa537b808",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7cac4261_8e5b8609",
+        "filename": "tools/idl_parser/test_parser/interface_web.idl",
+        "patchSetId": 12
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-08-25T02:51:44Z",
+      "side": 1,
+      "message": "Could you kindly fix this mistake in a separate CL?\n\nThis must be someone\u0027s mistake.",
+      "revId": "fa7745938098c49d3f134a7c100f2bcaa537b808",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
