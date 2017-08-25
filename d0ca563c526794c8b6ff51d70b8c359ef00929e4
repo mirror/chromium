@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d68b5462_b16af559",
+        "filename": "third_party/WebKit/LayoutTests/fast/loader/detach-iframe-while-loading-javascript-url.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2017-08-25T04:26:56Z",
+      "side": 1,
+      "message": "I\u0027m a bit surprised this triggers the crash.\nI thought innerHTML operates on document fragment parser (HTMLDocumentParser::ParseDocumentFragment) which doesn\u0027t replace document_-\u003eparser_?",
+      "range": {
+        "startLine": 7,
+        "startChar": 42,
+        "endLine": 7,
+        "endChar": 50
+      },
+      "revId": "d0ca563c526794c8b6ff51d70b8c359ef00929e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "794d44e8_a2e20020",
+        "filename": "third_party/WebKit/Source/core/loader/DocumentLoader.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 302,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2017-08-25T04:26:56Z",
+      "side": 1,
+      "message": "Can we note (+ possibly rename to reflect the fact) that the parser_ is the top-most parser created for main resource document load and document.open may replace document_-\u003eparser_ but not this one?",
+      "revId": "d0ca563c526794c8b6ff51d70b8c359ef00929e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
