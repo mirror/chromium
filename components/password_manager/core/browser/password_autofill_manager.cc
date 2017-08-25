@@ -26,6 +26,7 @@
 #include "components/autofill/core/common/autofill_data_validation.h"
 #include "components/autofill/core/common/autofill_util.h"
 #include "components/password_manager/core/browser/android_affiliation/affiliation_utils.h"
+#include "components/password_manager/core/browser/password_manager_client.h"
 #include "components/password_manager/core/browser/password_manager_driver.h"
 #include "components/password_manager/core/common/password_manager_features.h"
 #include "components/security_state/core/security_state.h"
@@ -136,9 +137,12 @@ void GetSuggestions(const autofill::PasswordFormFillData& fill_data,
 
 PasswordAutofillManager::PasswordAutofillManager(
     PasswordManagerDriver* password_manager_driver,
-    autofill::AutofillClient* autofill_client)
-    : password_manager_driver_(password_manager_driver),
+    autofill::AutofillClient* autofill_client,
+    PasswordManagerClient* password_client)
+    : form_data_key_(-1),
+      password_manager_driver_(password_manager_driver),
       autofill_client_(autofill_client),
+      password_client_(password_client),
       weak_ptr_factory_(this) {}
 
 PasswordAutofillManager::~PasswordAutofillManager() {
@@ -261,7 +265,8 @@ void PasswordAutofillManager::OnShowPasswordSuggestions(
 
   if (base::FeatureList::IsEnabled(
           password_manager::features::kEnableManualFallbacksFilling) &&
-      (options & autofill::IS_PASSWORD_FIELD)) {
+      (options & autofill::IS_PASSWORD_FIELD) && password_client_ &&
+      password_client_->IsFillingFallbackEnabledForCurrentPage()) {
 #if !defined(OS_ANDROID)
     suggestions.push_back(autofill::Suggestion());
     suggestions.back().frontend_id = autofill::POPUP_ITEM_ID_SEPARATOR;
@@ -315,6 +320,9 @@ void PasswordAutofillManager::OnShowManualFallbackSuggestion(
   // case because it doesn't instantiate many helper classes. |autofill_client_|
   // is NULL too.
   if (!autofill_client_)
+    return;
+  if (!password_client_ ||
+      !password_client_->IsFillingFallbackEnabledForCurrentPage())
     return;
   std::vector<autofill::Suggestion> suggestions;
   autofill::Suggestion all_saved_passwords(
