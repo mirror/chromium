@@ -111,7 +111,7 @@ void WebVrUrlToastTexture::RenderUrl(const gfx::Size& texture_size,
   url_formatter::FormatUrlTypes format_types =
       url_formatter::kFormatUrlOmitDefaults;
   format_types |= url_formatter::kFormatUrlOmitHTTPS;
-  format_types |= url_formatter::kFormatUrlExperimentalElideAfterHost;
+  format_types |= url_formatter::kFormatUrlElideAfterHost;
   const base::string16 formatted_url = url_formatter::FormatUrl(
       state_.gurl, format_types, net::UnescapeRule::NORMAL, &parsed, nullptr,
       nullptr);

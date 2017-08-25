@@ -509,7 +509,7 @@ url_formatter::FormatUrlTypes AutocompleteMatch::GetFormatTypes(
   if (!preserve_after_host &&
       base::FeatureList::IsEnabled(
           omnibox::kUIExperimentElideSuggestionUrlAfterHost)) {
-    format_types |= url_formatter::kFormatUrlExperimentalElideAfterHost;
+    format_types |= url_formatter::kFormatUrlElideAfterHost;
   }
 
   return format_types;

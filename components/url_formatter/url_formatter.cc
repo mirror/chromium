@@ -406,7 +406,7 @@ const FormatUrlType kFormatUrlOmitUsernamePassword = 1 << 0;
 const FormatUrlType kFormatUrlOmitHTTP = 1 << 1;
 const FormatUrlType kFormatUrlOmitTrailingSlashOnBareHostname = 1 << 2;
 const FormatUrlType kFormatUrlOmitHTTPS = 1 << 3;
-const FormatUrlType kFormatUrlExperimentalElideAfterHost = 1 << 4;
+const FormatUrlType kFormatUrlElideAfterHost = 1 << 4;
 const FormatUrlType kFormatUrlExperimentalOmitTrivialSubdomains = 1 << 5;
 
 const FormatUrlType kFormatUrlOmitDefaults =
@@ -550,9 +550,8 @@ base::string16 FormatUrlWithAdjustments(
       adjustments->push_back(base::OffsetAdjuster::Adjustment(
           parsed.path.begin, parsed.path.len, 0));
     }
-  } else if ((format_types & kFormatUrlExperimentalElideAfterHost) &&
-             url.IsStandard() && !url.SchemeIsFile() &&
-             !url.SchemeIsFileSystem()) {
+  } else if ((format_types & kFormatUrlElideAfterHost) && url.IsStandard() &&
+             !url.SchemeIsFile() && !url.SchemeIsFileSystem()) {
     // Replace everything after the host with a forward slash and ellipsis.
     url_string.push_back('/');
     constexpr base::char16 kEllipsisUTF16[] = {0x2026, 0};

@@ -56,7 +56,7 @@ extern const FormatUrlType kFormatUrlOmitHTTPS;
 
 // Replaces the path, query, and ref with an ellipsis. Experimental and not in
 // kFormatUrlOmitDefaults.
-extern const FormatUrlType kFormatUrlExperimentalElideAfterHost;
+extern const FormatUrlType kFormatUrlElideAfterHost;
 
 // Omits some trivially informative subdomains such as "www" or "m". Not in
 // kFormatUrlOmitDefaults.
