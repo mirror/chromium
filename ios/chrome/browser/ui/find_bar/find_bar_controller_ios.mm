@@ -14,7 +14,7 @@
 #import "ios/chrome/browser/find_in_page/find_in_page_controller.h"
 #import "ios/chrome/browser/find_in_page/find_in_page_model.h"
 #import "ios/chrome/browser/ui/UIView+SizeClassSupport.h"
-#import "ios/chrome/browser/ui/commands/UIKit+ChromeExecuteCommand.h"
+#import "ios/chrome/browser/ui/commands/browser_commands.h"
 #import "ios/chrome/browser/ui/find_bar/find_bar_view.h"
 #include "ios/chrome/browser/ui/ui_util.h"
 #include "ui/base/l10n/l10n_util_mac.h"
@@ -97,6 +97,7 @@ const NSTimeInterval kSearchShortDelay = 0.100;
 @synthesize findBarView = _findBarView;
 @synthesize delayTimer = _delayTimer;
 @synthesize isIncognito = _isIncognito;
+@synthesize dispatcher = _dispatcher;
 
 #pragma mark - Lifecycle
 
@@ -128,6 +129,7 @@ const NSTimeInterval kSearchShortDelay = 0.100;
 
   self.findBarView = [[FindBarView alloc]
       initWithDarkAppearance:self.isIncognito && !IsIPadIdiom()];
+  self.findBarView.dispatcher = self.dispatcher;
   [findBarBackground addSubview:self.findBarView];
   self.findBarView.translatesAutoresizingMaskIntoConstraints = NO;
   NSMutableArray* constraints = [[NSMutableArray alloc] init];
@@ -423,15 +425,11 @@ const NSTimeInterval kSearchShortDelay = 0.100;
       }];
 }
 
-- (void)textChanged {
-  [self.view chromeExecuteCommand:self.findBarView.inputField];
-}
-
 - (void)editingChanged:(id)sender {
   [self.delayTimer invalidate];
   NSUInteger length = [[self searchTerm] length];
   if (length == 0)
-    return [self textChanged];
+    return [self.dispatcher searchFindInPage];
 
   // Delay delivery of text change event.  Use a longer delay when the input
   // length is short.
@@ -439,8 +437,8 @@ const NSTimeInterval kSearchShortDelay = 0.100;
       (length > kSearchDelayChars) ? kSearchShortDelay : kSearchLongDelay;
   self.delayTimer =
       [NSTimer scheduledTimerWithTimeInterval:delay
-                                       target:self
-                                     selector:@selector(textChanged)
+                                       target:self.dispatcher
+                                     selector:@selector(searchFindInPage)
                                      userInfo:nil
                                       repeats:NO];
 }
