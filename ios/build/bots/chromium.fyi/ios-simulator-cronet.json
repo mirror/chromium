@@ -19,9 +19,6 @@
     "target_os=\"ios\"",
     "use_platform_icu_alternatives=true"
   ],
-  "env": {
-    "MAC_TOOLCHAIN_REVISION": "9M202q-1"
-  },
   "configuration": "Debug",
   "sdk": "iphonesimulator11.0",
   "tests": [
