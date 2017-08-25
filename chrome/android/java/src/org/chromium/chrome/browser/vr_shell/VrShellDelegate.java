@@ -151,6 +151,7 @@ public class VrShellDelegate
     private boolean mExitedDueToUnsupportedMode;
     private boolean mExitingCct;
     private boolean mPaused;
+    private boolean mStopped;
     private int mRestoreSystemUiVisibilityFlag = -1;
     private Integer mRestoreOrientation = null;
     private long mNativeVrShellDelegate;
@@ -508,6 +509,7 @@ public class VrShellDelegate
         mVrClassesWrapper = wrapper;
         // If an activity isn't resumed at the point, it must have been paused.
         mPaused = ApplicationStatus.getStateForActivity(activity) != ActivityState.RESUMED;
+        mStopped = ApplicationStatus.getStateForActivity(activity) == ActivityState.STOPPED;
         updateVrSupportLevel(null);
         mNativeVrShellDelegate = nativeInit();
         createNonPresentingNativeContext();
@@ -940,20 +942,19 @@ public class VrShellDelegate
     @CalledByNative
     private boolean exitWebVRPresent() {
         if (!mInVr) return false;
+        if (mAutopresentWebVr) {
+            // For autopresent from Daydream home, we do NOT want to show ChromeVR. So if we
+            // ever exit WebVR for whatever reason (navigation, call exitPresent etc), go back to
+            // Daydream home.
+            mVrDaydreamApi.launchVrHomescreen();
+            return true;
+        }
         if (!isVrShellEnabled(mVrSupportLevel) || !isDaydreamCurrentViewer()
                 || !activitySupportsVrBrowsing(mActivity)) {
             if (isDaydreamCurrentViewer() && showDoff(false /* optional */)) return false;
             shutdownVr(true /* disableVrMode */, true /* stayingInChrome */);
         } else {
-            if (mAutopresentWebVr) {
-                // For autopresent from Daydream home, we do NOT want to show ChromeVR. So if we
-                // ever exit WebVR for whatever reason(navigation, call exitPresent etc), go back to
-                // Daydream home.
-                mVrDaydreamApi.launchVrHomescreen();
-                return true;
-            }
             mVrBrowserUsed = true;
-            mAutopresentWebVr = false;
             mVrShell.setWebVrModeEnabled(false, false);
         }
         return true;
@@ -1063,6 +1064,7 @@ public class VrShellDelegate
     }
 
     private void onStart() {
+        mStopped = false;
         if (mDonSucceeded) {
             // We're about to enter VR, so set the VR Mode as early as possible to avoid screen
             // brightness flickering while in the headset.
@@ -1072,6 +1074,7 @@ public class VrShellDelegate
     }
 
     private void onStop() {
+        mStopped = true;
         cancelPendingVrEntry();
         assert !mCancellingEntryAnimation;
         // We defer pausing of VrShell until the app is stopped to keep head tracking working for
@@ -1202,16 +1205,17 @@ public class VrShellDelegate
     @VisibleForTesting(otherwise = VisibleForTesting.PACKAGE_PRIVATE)
     public void shutdownVr(boolean disableVrMode, boolean stayingInChrome) {
         cancelPendingVrEntry();
-        if (mAutopresentWebVr && handleFinishAutopresentation()) return;
+        // Ensure shutdownVr runs if we're stopping.
+        if (handleFinishAutopresentation() && !mStopped) return;
+        mAutopresentWebVr = false;
+
         if (!mInVr) return;
+        mInVr = false;
 
         if (mShowingDaydreamDoff) {
             onExitVrResult(true);
             return;
         }
-
-        mInVr = false;
-        mAutopresentWebVr = false;
 
         // The user has exited VR.
         RecordUserAction.record("VR.DOFF");
@@ -1258,14 +1262,13 @@ public class VrShellDelegate
     /* package */ void exitCct() {
         if (mShowingDaydreamDoff) return;
         assert mActivity instanceof CustomTabActivity;
-
-        if (mInVrAtChromeLaunch != null) {
-            if (!mInVrAtChromeLaunch && showDoff(true /* optional */)) {
-                mExitingCct = true;
-                return;
-            }
-            // Started chrome in VR mode.
-            shutdownVr(false /* disableVrMode */, false /* stayingInChrome */);
+        if (mAutopresentWebVr || (mInVrAtChromeLaunch != null && mInVrAtChromeLaunch)) {
+            ((CustomTabActivity) mActivity).finishAndClose(false);
+            return;
+        }
+        if (showDoff(true /* optional */)) {
+            mExitingCct = true;
+        } else {
             ((CustomTabActivity) mActivity).finishAndClose(false);
         }
     }
@@ -1301,13 +1304,11 @@ public class VrShellDelegate
      * Returns true if finishing auto-presentation was handled.
      */
     private boolean handleFinishAutopresentation() {
-        assert mAutopresentWebVr;
-        mAutopresentWebVr = false;
-        if (mActivity instanceof CustomTabActivity) {
-            exitCct();
-            return true;
-        }
-        return false;
+        if (!mAutopresentWebVr) return false;
+        // Should only autopresent CustomTabActivity for now.
+        assert mActivity instanceof CustomTabActivity;
+        exitCct();
+        return true;
     }
 
     private static void startFeedback(Tab tab) {
