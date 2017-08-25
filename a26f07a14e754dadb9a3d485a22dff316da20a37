@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b714860f_a563eef2",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/input/SuggestionsPopupWindow.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1229332
+      },
+      "writtenOn": "2017-08-25T21:03:46Z",
+      "side": 1,
+      "message": "Note: if pulling the length out of the Settings app\u0027s resources like this is too sketchy, we can probably just hard code it as 48. *In theory* I suppose an OEM could change this value.",
+      "revId": "a26f07a14e754dadb9a3d485a22dff316da20a37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
