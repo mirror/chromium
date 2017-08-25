@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "5d6a4bb6_e6eeff3d",
+        "filename": "ios/build/bots/chromium.fyi/ios-simulator-cronet.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1116294
+      },
+      "writtenOn": "2017-08-25T19:05:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e925a5fe_487d24cb",
+      "range": {
+        "startLine": 29,
+        "startChar": 24,
+        "endLine": 29,
+        "endChar": 27
+      },
+      "revId": "fda538f3848e66f9167e2aa8539fca05334002a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "831702b5_07c97722",
         "filename": "ios/build/bots/chromium.fyi/ios-simulator.json",
         "patchSetId": 2
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "030c6584_f43fe57a",
+        "filename": "ios/build/bots/chromium.fyi/ios-simulator.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1116294
+      },
+      "writtenOn": "2017-08-25T19:05:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "831702b5_07c97722",
+      "range": {
+        "startLine": 3,
+        "startChar": 60,
+        "endLine": 3,
+        "endChar": 63
+      },
+      "revId": "fda538f3848e66f9167e2aa8539fca05334002a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3096ce9e_55ce89b6",
         "filename": "ios/build/bots/chromium.fyi/ios-simulator.json",
         "patchSetId": 2
@@ -59,6 +107,30 @@
       "writtenOn": "2017-08-25T17:19:47Z",
       "side": 1,
       "message": "Should this be 9.0? Here and everywhere below that isn\u0027t iPad Retina?",
+      "range": {
+        "startLine": 22,
+        "startChar": 24,
+        "endLine": 22,
+        "endChar": 27
+      },
+      "revId": "fda538f3848e66f9167e2aa8539fca05334002a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9a680e8_c3b269a6",
+        "filename": "ios/build/bots/chromium.fyi/ios-simulator.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1116294
+      },
+      "writtenOn": "2017-08-25T19:05:40Z",
+      "side": 1,
+      "message": "Kept it for iPhone 5 too.",
+      "parentUuid": "3096ce9e_55ce89b6",
       "range": {
         "startLine": 22,
         "startChar": 24,
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "9f5f7e5d_ca62ee53",
+        "filename": "ios/build/bots/chromium.mac/ios-simulator-cronet.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1116294
+      },
+      "writtenOn": "2017-08-25T19:05:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ebe85a46_79bc487c",
+      "range": {
+        "startLine": 3,
+        "startChar": 22,
+        "endLine": 3,
+        "endChar": 45
+      },
+      "revId": "fda538f3848e66f9167e2aa8539fca05334002a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "93d603a4_844d27c0",
         "filename": "ios/build/bots/chromium.mac/ios-simulator-cronet.json",
         "patchSetId": 2
@@ -108,6 +204,24 @@
       "revId": "fda538f3848e66f9167e2aa8539fca05334002a1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85a599fc_b0c70d92",
+        "filename": "ios/build/bots/chromium.mac/ios-simulator-cronet.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1116294
+      },
+      "writtenOn": "2017-08-25T19:05:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "93d603a4_844d27c0",
+      "revId": "fda538f3848e66f9167e2aa8539fca05334002a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -134,6 +248,30 @@
     },
     {
       "key": {
+        "uuid": "5b802a97_2f9f1b07",
+        "filename": "ios/build/bots/chromium.mac/ios-simulator-eg.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1116294
+      },
+      "writtenOn": "2017-08-25T19:05:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9ded442d_406f791e",
+      "range": {
+        "startLine": 3,
+        "startChar": 36,
+        "endLine": 3,
+        "endChar": 37
+      },
+      "revId": "fda538f3848e66f9167e2aa8539fca05334002a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4cf8ecbd_d6d78224",
         "filename": "ios/build/bots/chromium.mac/ios-simulator.json",
         "patchSetId": 2
@@ -145,6 +283,30 @@
       "writtenOn": "2017-08-25T17:19:47Z",
       "side": 1,
       "message": "Is this removing 32-bit and iOS 10 coverage? Is this for capacity reasons?\n\nUnrelated to this, I\u0027m putting together a doc to review our coverage and talk about what configurations to run, but this is separate from simply getting iOS 11 support.",
+      "range": {
+        "startLine": 3,
+        "startChar": 36,
+        "endLine": 3,
+        "endChar": 50
+      },
+      "revId": "fda538f3848e66f9167e2aa8539fca05334002a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4b36532_b0ba9050",
+        "filename": "ios/build/bots/chromium.mac/ios-simulator.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1116294
+      },
+      "writtenOn": "2017-08-25T19:05:40Z",
+      "side": 1,
+      "message": "Yes, I did.  I figure we will get it downstream.",
+      "parentUuid": "4cf8ecbd_d6d78224",
       "range": {
         "startLine": 3,
         "startChar": 36,
