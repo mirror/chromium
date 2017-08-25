@@ -341,14 +341,14 @@ static std::unique_ptr<WebScrollbarLayer> CreateScrollbarLayer(
     scrollbar_layer =
         Platform::Current()->CompositorSupport()->CreateOverlayScrollbarLayer(
             WebScrollbarImpl::Create(&scrollbar), painter, std::move(geometry));
-    scrollbar_layer->SetElementId(CompositorElementIdFromScrollbarId(
-        NextScrollbarId(), CompositorElementIdNamespace::kScrollbar));
+    scrollbar_layer->SetElementId(
+        CompositorElementIdFromUniqueObjectId(NewUniqueObjectId()));
   } else {
     scrollbar_layer =
         Platform::Current()->CompositorSupport()->CreateScrollbarLayer(
             WebScrollbarImpl::Create(&scrollbar), painter, std::move(geometry));
-    scrollbar_layer->SetElementId(CompositorElementIdFromScrollbarId(
-        NextScrollbarId(), CompositorElementIdNamespace::kScrollbar));
+    scrollbar_layer->SetElementId(
+        CompositorElementIdFromUniqueObjectId(NewUniqueObjectId()));
   }
   GraphicsLayer::RegisterContentsLayer(scrollbar_layer->Layer());
   return scrollbar_layer;
