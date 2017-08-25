@@ -7,6 +7,7 @@ package org.chromium.chrome.browser.compositor.animation;
 import android.animation.Animator;
 import android.animation.TimeInterpolator;
 import android.content.Context;
+import android.view.animation.DecelerateInterpolator;
 
 import org.chromium.base.VisibleForTesting;
 
@@ -73,6 +74,45 @@ public class CompositorAnimator extends Animator {
      * listeners need to be updated one more time.
      */
     private boolean mDidUpdateToCompletion;
+
+    /** Keep a reference to the decelerate interpolator to avoid allocations. */
+    private static DecelerateInterpolator sDecelerateInterpolator;
+
+    /**
+     * @return The default deceleration interpolator. No allocation.
+     */
+    public static DecelerateInterpolator getDecelerateInterpolator() {
+        if (sDecelerateInterpolator == null) {
+            sDecelerateInterpolator = new DecelerateInterpolator();
+        }
+        return sDecelerateInterpolator;
+    }
+
+    /**
+     * Create an animator for an {@link AnimatedFloat}. The returned animator will use a decelerate
+     * time interpolator instead of a linear one.
+     * @param context An Android {@link Context} to key the animation on.
+     * @param prop The target's property to animate.
+     * @param startValue The starting animation value.
+     * @param endValue The end animation value.
+     * @param duration The duration of the animation in ms.
+     * @return A {@link CompositorAnimator} for the property.
+     */
+    public static CompositorAnimator ofAnimatedFloat(Context context, final AnimatedFloat prop,
+            final float startValue, final float endValue, long duration) {
+        CompositorAnimator animator = new CompositorAnimator(context);
+        final float range = endValue - startValue;
+        animator.addUpdateListener(new AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(CompositorAnimator animator) {
+                float newValue = startValue + (range * animator.getAnimatedFraction());
+                prop.set(newValue);
+            }
+        });
+        animator.setInterpolator(getDecelerateInterpolator());
+        animator.setDuration(duration);
+        return animator;
+    }
 
     /** An interface for listening for frames of an animation. */
     public interface AnimatorUpdateListener {
