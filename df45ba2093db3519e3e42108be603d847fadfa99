@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "81b2cf10_de0664d7",
+        "filename": "chrome/browser/metrics/tab_stats_tracker.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1161299
+      },
+      "writtenOn": "2017-08-25T17:14:07Z",
+      "side": 1,
+      "message": "Done, my concern was that we won\u0027t get data for people that don\u0027t keep their browser open for so long, but I\u0027ll call the CheckInterval function directly instead.",
+      "parentUuid": "bb7f174a_bda8cd94",
+      "revId": "df45ba2093db3519e3e42108be603d847fadfa99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "be125b29_75fe8d77",
         "filename": "chrome/browser/metrics/tab_stats_tracker.cc",
         "patchSetId": 18
@@ -72,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "2ca1b8b0_e41cc6ff",
+        "filename": "chrome/browser/metrics/tab_stats_tracker.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1161299
+      },
+      "writtenOn": "2017-08-25T17:14:07Z",
+      "side": 1,
+      "message": "Yeah, the Singleton class seems to expect a default constructor.",
+      "parentUuid": "64f73b8c_b3ef0fe2",
+      "revId": "df45ba2093db3519e3e42108be603d847fadfa99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4690ae3e_ff5b8db4",
         "filename": "chrome/browser/metrics/tab_stats_tracker.cc",
         "patchSetId": 18
@@ -89,6 +125,24 @@
     },
     {
       "key": {
+        "uuid": "f58d7df1_54591f81",
+        "filename": "chrome/browser/metrics/tab_stats_tracker.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1161299
+      },
+      "writtenOn": "2017-08-25T17:14:07Z",
+      "side": 1,
+      "message": "Probably but I still have like having |nullptr| somewhere on this line, this make it more obvious that |pref_service| is a raw ptr, \"DCHECK(pref_service !\u003d nullptr);\" ?",
+      "parentUuid": "4690ae3e_ff5b8db4",
+      "revId": "df45ba2093db3519e3e42108be603d847fadfa99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6e67852a_d64c1e31",
         "filename": "chrome/browser/metrics/tab_stats_tracker.cc",
         "patchSetId": 18
@@ -100,6 +154,30 @@
       "writtenOn": "2017-08-24T18:53:37Z",
       "side": 1,
       "message": "Maybe just a DCHECK that there are none? With a comment describing that this is to be created before any windows exist? No need to write code that we don\u0027t expect/want to run.",
+      "range": {
+        "startLine": 146,
+        "startChar": 41,
+        "endLine": 146,
+        "endChar": 47
+      },
+      "revId": "df45ba2093db3519e3e42108be603d847fadfa99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "22868ac8_eef9a2d7",
+        "filename": "chrome/browser/metrics/tab_stats_tracker.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1161299
+      },
+      "writtenOn": "2017-08-25T17:14:07Z",
+      "side": 1,
+      "message": "I lied, there\u0027s at least one window existing by the time we get there as this get instantiated in PostBrowserStart.",
+      "parentUuid": "6e67852a_d64c1e31",
       "range": {
         "startLine": 146,
         "startChar": 41,
@@ -135,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "83bf6f5c_17306469",
+        "filename": "chrome/browser/metrics/tab_stats_tracker.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1161299
+      },
+      "writtenOn": "2017-08-25T17:14:07Z",
+      "side": 1,
+      "message": "s/weak/raw/ , no need for a weak ptr here I think.",
+      "parentUuid": "b6bb6dda_8e7e5d18",
+      "range": {
+        "startLine": 76,
+        "startChar": 7,
+        "endLine": 76,
+        "endChar": 12
+      },
+      "revId": "df45ba2093db3519e3e42108be603d847fadfa99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d454433f_aa271f4b",
         "filename": "chrome/browser/metrics/tab_stats_tracker.h",
         "patchSetId": 18
@@ -155,6 +257,30 @@
       "revId": "df45ba2093db3519e3e42108be603d847fadfa99",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "074f52e9_ef248269",
+        "filename": "chrome/browser/metrics/tab_stats_tracker.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1161299
+      },
+      "writtenOn": "2017-08-25T17:14:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d454433f_aa271f4b",
+      "range": {
+        "startLine": 101,
+        "startChar": 11,
+        "endLine": 101,
+        "endChar": 26
+      },
+      "revId": "df45ba2093db3519e3e42108be603d847fadfa99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -181,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "f1da448b_d770a237",
+        "filename": "chrome/browser/metrics/tab_stats_tracker.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1161299
+      },
+      "writtenOn": "2017-08-25T17:14:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1e9801b2_0270711e",
+      "range": {
+        "startLine": 116,
+        "startChar": 26,
+        "endLine": 116,
+        "endChar": 44
+      },
+      "revId": "df45ba2093db3519e3e42108be603d847fadfa99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7cea28c2_b0b28391",
         "filename": "chrome/browser/metrics/tab_stats_tracker.h",
         "patchSetId": 18
@@ -201,6 +351,30 @@
       "revId": "df45ba2093db3519e3e42108be603d847fadfa99",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c801f74_e519de31",
+        "filename": "chrome/browser/metrics/tab_stats_tracker.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1161299
+      },
+      "writtenOn": "2017-08-25T17:14:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7cea28c2_b0b28391",
+      "range": {
+        "startLine": 124,
+        "startChar": 14,
+        "endLine": 124,
+        "endChar": 22
+      },
+      "revId": "df45ba2093db3519e3e42108be603d847fadfa99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -227,6 +401,30 @@
     },
     {
       "key": {
+        "uuid": "7d6a16c2_6cea07d6",
+        "filename": "chrome/browser/metrics/tab_stats_tracker.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1161299
+      },
+      "writtenOn": "2017-08-25T17:14:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "69a76058_6e4439a0",
+      "range": {
+        "startLine": 127,
+        "startChar": 9,
+        "endLine": 127,
+        "endChar": 14
+      },
+      "revId": "df45ba2093db3519e3e42108be603d847fadfa99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9aee5003_00874ced",
         "filename": "chrome/browser/metrics/tab_stats_tracker_unittests.cc",
         "patchSetId": 18
@@ -247,6 +445,30 @@
       "revId": "df45ba2093db3519e3e42108be603d847fadfa99",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f649318c_40060621",
+        "filename": "chrome/browser/metrics/tab_stats_tracker_unittests.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1161299
+      },
+      "writtenOn": "2017-08-25T17:14:07Z",
+      "side": 1,
+      "message": "Ha, I thought that the preference was to use *_NE for the nullptr checks.",
+      "parentUuid": "9aee5003_00874ced",
+      "range": {
+        "startLine": 33,
+        "startChar": 4,
+        "endLine": 33,
+        "endChar": 13
+      },
+      "revId": "df45ba2093db3519e3e42108be603d847fadfa99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -273,6 +495,30 @@
     },
     {
       "key": {
+        "uuid": "e23984d4_9dddbad6",
+        "filename": "chrome/browser/metrics/tab_stats_tracker_unittests.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1161299
+      },
+      "writtenOn": "2017-08-25T17:14:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ff370c74_4ab384ba",
+      "range": {
+        "startLine": 84,
+        "startChar": 22,
+        "endLine": 84,
+        "endChar": 27
+      },
+      "revId": "df45ba2093db3519e3e42108be603d847fadfa99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ab16dd4f_db28494b",
         "filename": "chrome/browser/metrics/tab_stats_tracker_unittests.cc",
         "patchSetId": 18
@@ -293,6 +539,30 @@
       "revId": "df45ba2093db3519e3e42108be603d847fadfa99",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b5d245d_97299ec8",
+        "filename": "chrome/browser/metrics/tab_stats_tracker_unittests.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1161299
+      },
+      "writtenOn": "2017-08-25T17:14:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ab16dd4f_db28494b",
+      "range": {
+        "startLine": 114,
+        "startChar": 71,
+        "endLine": 114,
+        "endChar": 75
+      },
+      "revId": "df45ba2093db3519e3e42108be603d847fadfa99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -319,6 +589,30 @@
     },
     {
       "key": {
+        "uuid": "16b90d46_bc7b9b8b",
+        "filename": "chrome/browser/metrics/tab_stats_tracker_unittests.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1161299
+      },
+      "writtenOn": "2017-08-25T17:14:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0ee46c49_b45838e5",
+      "range": {
+        "startLine": 129,
+        "startChar": 20,
+        "endLine": 129,
+        "endChar": 33
+      },
+      "revId": "df45ba2093db3519e3e42108be603d847fadfa99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dd273289_bf7a8a49",
         "filename": "chrome/browser/metrics/tab_stats_tracker_unittests.cc",
         "patchSetId": 18
@@ -342,6 +636,30 @@
     },
     {
       "key": {
+        "uuid": "daeef8ec_97cc9bd2",
+        "filename": "chrome/browser/metrics/tab_stats_tracker_unittests.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1161299
+      },
+      "writtenOn": "2017-08-25T17:14:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dd273289_bf7a8a49",
+      "range": {
+        "startLine": 160,
+        "startChar": 30,
+        "endLine": 160,
+        "endChar": 38
+      },
+      "revId": "df45ba2093db3519e3e42108be603d847fadfa99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4e050feb_63039a69",
         "filename": "chrome/browser/metrics/tab_stats_tracker_unittests.cc",
         "patchSetId": 18
@@ -362,6 +680,30 @@
       "revId": "df45ba2093db3519e3e42108be603d847fadfa99",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "120b8779_b4cd9ac9",
+        "filename": "chrome/browser/metrics/tab_stats_tracker_unittests.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1161299
+      },
+      "writtenOn": "2017-08-25T17:14:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4e050feb_63039a69",
+      "range": {
+        "startLine": 248,
+        "startChar": 23,
+        "endLine": 248,
+        "endChar": 36
+      },
+      "revId": "df45ba2093db3519e3e42108be603d847fadfa99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
