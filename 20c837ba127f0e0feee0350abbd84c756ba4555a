@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c6038898_d8a4576a",
+        "filename": "net/interfaces/http_request_headers.mojom",
+        "patchSetId": 5
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-08-25T14:34:11Z",
+      "side": 1,
+      "message": "While net/interfaces already exists, I think we should be moving in the other direction - getting Mojo code out of net/, not adding more.  This can live in network/service/, like all the other network service stuff.",
+      "range": {
+        "startLine": 5,
+        "startChar": 11,
+        "endLine": 5,
+        "endChar": 16
+      },
+      "revId": "20c837ba127f0e0feee0350abbd84c756ba4555a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ebf82801_52d9b411",
+        "filename": "net/interfaces/http_request_headers_struct_traits.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-08-25T14:34:11Z",
+      "side": 1,
+      "message": "To match AddHeaderFromString, this should be:\n\nif (!HttpUtil::IsValidHeaderName(item-\u003ekey))\n  return false;",
+      "range": {
+        "startLine": 15,
+        "startChar": 17,
+        "endLine": 15,
+        "endChar": 0
+      },
+      "revId": "20c837ba127f0e0feee0350abbd84c756ba4555a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "256a9279_8613ce2c",
+        "filename": "net/interfaces/http_request_headers_struct_traits.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-08-25T14:34:11Z",
+      "side": 1,
+      "message": "To match AddHeaderFromString:\n\nitem-\u003evalue \u003d HttpUtil::TrimLWS(item-\u003evalue);\nif (!HttpUtil::IsValidHeaderValue(item-\u003evalue))\n  return false;\n\n(These checks should fully address my concerns about invalid values - HttpRequestHeaders::AddHeadersFromString also splits up the header string, which could theoretically add further assurances, but it looks like the checks I suggested give pretty much the same guarantees)",
+      "range": {
+        "startLine": 17,
+        "startChar": 4,
+        "endLine": 17,
+        "endChar": 11
+      },
+      "revId": "20c837ba127f0e0feee0350abbd84c756ba4555a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4e65b54_063baeca",
+        "filename": "net/interfaces/http_request_headers_struct_traits.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-08-25T14:34:11Z",
+      "side": 1,
+      "message": "We should also have tests for the header validation logic.",
+      "range": {
+        "startLine": 18,
+        "startChar": 14,
+        "endLine": 18,
+        "endChar": 0
+      },
+      "revId": "20c837ba127f0e0feee0350abbd84c756ba4555a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "472c61f5_ce1abbb6",
+        "filename": "net/interfaces/http_request_headers_struct_traits.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-08-25T14:34:11Z",
+      "side": 1,
+      "message": "Just calling SetHeader would better match the old behavior.  If we want to behavior not to use SetHeader, that should be a separate CL, with tests for the modified behavior.",
+      "range": {
+        "startLine": 34,
+        "startChar": 9,
+        "endLine": 34,
+        "endChar": 10
+      },
+      "revId": "20c837ba127f0e0feee0350abbd84c756ba4555a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
