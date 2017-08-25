@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "bf430fd5_8982ff8b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 11
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-08-25T03:00:26Z",
+      "side": 1,
+      "message": "IMO, a description should tell\n- what the CL does\n- why this CL is needed\n- optional: its background\n\nand this CL is not mandatory for the issue 374178.\nThis CL makes value properties visible, and it makes tests more strict,\nthen converting a name property to a value property is independent.",
+      "parentUuid": "6026063c_8c93164c",
+      "revId": "57e8b2312cea7abc4ab1d1b4805169388d020873",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "047f54e1_124360d7",
         "filename": "/COMMIT_MSG",
         "patchSetId": 11
@@ -66,6 +84,24 @@
       "side": 1,
       "message": "What\u0027s your recommendation? I don\u0027t think developers (even us) dumping ASTs frequently other than tests.",
       "parentUuid": "047f54e1_124360d7",
+      "revId": "57e8b2312cea7abc4ab1d1b4805169388d020873",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "340be388_25b8366a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 11
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-08-25T03:00:26Z",
+      "side": 1,
+      "message": "\u0027descriptive\u0027 is for human.\nAs I commented above, making value visible makes tests strict.",
+      "parentUuid": "656b7dc4_be938be7",
       "revId": "57e8b2312cea7abc4ab1d1b4805169388d020873",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
