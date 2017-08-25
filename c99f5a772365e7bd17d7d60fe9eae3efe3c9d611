@@ -22,6 +22,30 @@
       "revId": "c99f5a772365e7bd17d7d60fe9eae3efe3c9d611",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ebc48c7_4e7f585c",
+        "filename": "ui/views/win/hwnd_message_handler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1144,
+      "author": {
+        "id": 1000982
+      },
+      "writtenOn": "2017-08-25T18:02:48Z",
+      "side": 1,
+      "message": "Technically it could. I am worried about all that code in SetFullscreen(). This I thought is the safest.",
+      "parentUuid": "6f7d19e7_5358a62f",
+      "range": {
+        "startLine": 1144,
+        "startChar": 4,
+        "endLine": 1144,
+        "endChar": 47
+      },
+      "revId": "c99f5a772365e7bd17d7d60fe9eae3efe3c9d611",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
