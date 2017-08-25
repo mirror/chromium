@@ -16,6 +16,24 @@
       "revId": "043afbfddf868ce50e9488777997e8be1cddef97",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de8134b6_45f7a4fa",
+        "filename": "gpu/ipc/in_process_command_buffer.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1003154
+      },
+      "writtenOn": "2017-08-25T16:49:03Z",
+      "side": 1,
+      "message": "If it\u0027s OK to initialize the GPU thread earlier, then I can wire this more elegantly.\nThanks for the advice.",
+      "parentUuid": "96dab9b3_877b7484",
+      "revId": "043afbfddf868ce50e9488777997e8be1cddef97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
