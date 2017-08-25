@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f29aaf2f_48a817b8",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/metrics/WebApkUma.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-08-25T02:54:10Z",
+      "side": 1,
+      "message": "What code is deprecated, and why are you suppressing the warning?  It\u0027s best to tighten the suppression as much as possible, and then document the motivation for it.",
+      "range": {
+        "startLine": 157,
+        "startChar": 36,
+        "endLine": 157,
+        "endChar": 0
+      },
+      "revId": "3883c873324da3a6e1797615b69c927cf67922a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c206a85a_5619e7b1",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/metrics/WebApkUma.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-08-25T02:54:10Z",
+      "side": 1,
+      "message": "Thanks for bounding the recorded value!  It\u0027s still a somewhat large space of distinct possible values.  Would it be alright to round to the nearest 10MB?",
+      "range": {
+        "startLine": 183,
+        "startChar": 85,
+        "endLine": 183,
+        "endChar": 0
+      },
+      "revId": "3883c873324da3a6e1797615b69c927cf67922a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87e61161_0a8cb712",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/metrics/WebApkUma.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-08-25T02:54:10Z",
+      "side": 1,
+      "message": "nit: This histogram name is currently quite hard to read. I\u0027d name it something like \"WebApk.Install.AvailableSpace.Success\", and move the rest of the text into the histogram description.  (And similarly adjust the name below.)",
+      "range": {
+        "startLine": 188,
+        "startChar": 0,
+        "endLine": 189,
+        "endChar": 89
+      },
+      "revId": "3883c873324da3a6e1797615b69c927cf67922a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0f6c63d_b56efabd",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 8
+      },
+      "lineNbr": 86180,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-08-25T02:54:10Z",
+      "side": 1,
+      "message": "It\u0027s probably helpful to document what negative values mean.",
+      "range": {
+        "startLine": 86180,
+        "startChar": 7,
+        "endLine": 86180,
+        "endChar": 0
+      },
+      "revId": "3883c873324da3a6e1797615b69c927cf67922a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
