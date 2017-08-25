@@ -1,0 +1,13 @@
+Name: ApkSignatureSchemeV2Verifier
+URL: https://chromium.googlesource.com/android_tools.git/+/b65c4776dac2cf1b80e969b3b2d4e081b9c84f29/sdk/sources/android-25/android/util/apk/ApkSignatureSchemeV2Verifier.java
+Version: b65c4776dac2cf1b80e969b3b2d4e081b9c84f29
+License: Apache 2.0
+License File: LICENSE
+Security Critical: yes
+
+Description:
+A modified copy of Android SDK 25 ApkSignatureSchemeV2Verifier.java.
+
+Local Modifications:
+- Rename package to org.chromium.third_party.android.util.apk.
+- Use FileChannel.map instead of OS.mmap.

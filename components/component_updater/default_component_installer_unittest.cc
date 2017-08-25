@@ -7,9 +7,14 @@
 #include <utility>
 #include <vector>
 
+#include "base/android/jni_android.h"
+#include "base/android/jni_string.h"
+#include "jni/ComponentUpdater_jni.h"
+
 #include "base/callback.h"
 #include "base/files/file_path.h"
 #include "base/files/file_util.h"
+#include "base/logging.h"
 #include "base/macros.h"
 #include "base/memory/ptr_util.h"
 #include "base/memory/ref_counted.h"
@@ -41,6 +46,10 @@ using UpdateClient = update_client::UpdateClient;
 using ::testing::_;
 using ::testing::Invoke;
 
+using base::android::GetClass;
+using base::android::ConvertUTF8ToJavaString;
+using base::android::ClearException;
+
 namespace component_updater {
 
 namespace {
@@ -62,6 +71,10 @@ base::FilePath test_file(const char* file) {
       .AppendASCII("data")
       .AppendASCII("update_client")
       .AppendASCII(file);
+}
+
+base::FilePath apk_test_file(const char* file) {
+  return test_file("apk").AppendASCII(file);
 }
 
 class MockUpdateClient : public UpdateClient {
@@ -212,6 +225,108 @@ void DefaultComponentInstallerTest::UnpackComplete(
 }
 
 }  // namespace
+
+TEST_F(DefaultComponentInstallerTest, LoadPublicKeyFromX509Cert) {
+  JNIEnv* env = base::android::AttachCurrentThread();
+
+  auto cert1_path =
+      ConvertUTF8ToJavaString(env, apk_test_file("1.crt").MaybeAsASCII());
+  auto cert2_path =
+      ConvertUTF8ToJavaString(env, apk_test_file("2.crt").MaybeAsASCII());
+
+  // Loading a public key from a valid certificate doesn't throw an exception.
+
+  Java_ComponentUpdater_loadPublicKey(env, cert1_path);
+  EXPECT_FALSE(ClearException(env));
+
+  Java_ComponentUpdater_loadPublicKey(env, cert2_path);
+  EXPECT_FALSE(ClearException(env));
+
+  // Trying to open a file that doesn't exist causes a FileNotFoundException to
+  // be thrown.
+  auto file_not_found_exception =
+      GetClass(env, "java/io/FileNotFoundException");
+  Java_ComponentUpdater_loadPublicKey(
+      env, ConvertUTF8ToJavaString(env, "nonexistent"));
+  auto* exception = env->ExceptionOccurred();
+  EXPECT_TRUE(ClearException(env));
+  EXPECT_TRUE(env->IsInstanceOf(exception, file_not_found_exception.obj()));
+}
+
+TEST_F(DefaultComponentInstallerTest, VerifyAPKSignature) {
+  JNIEnv* env = base::android::AttachCurrentThread();
+
+  auto cert1_path =
+      ConvertUTF8ToJavaString(env, apk_test_file("1.crt").MaybeAsASCII());
+  auto cert2_path =
+      ConvertUTF8ToJavaString(env, apk_test_file("2.crt").MaybeAsASCII());
+
+  // An APK signed with certificate #1.
+  auto signed1_apk = ConvertUTF8ToJavaString(
+      env, apk_test_file("signed-1.apk").MaybeAsASCII());
+  // Signed with #2.
+  auto signed2_apk = ConvertUTF8ToJavaString(
+      env, apk_test_file("signed-2.apk").MaybeAsASCII());
+  // Signed with both certificates.
+  auto signed_both_apk = ConvertUTF8ToJavaString(
+      env, apk_test_file("signed-1-2.apk").MaybeAsASCII());
+
+  auto unsigned_apk = ConvertUTF8ToJavaString(
+      env, apk_test_file("unsigned.apk").MaybeAsASCII());
+
+  auto pk1 = Java_ComponentUpdater_loadPublicKey(env, cert1_path);
+  auto pk2 = Java_ComponentUpdater_loadPublicKey(env, cert2_path);
+
+  // Signed APKs should verify with the corresponding public key.
+  Java_ComponentUpdater_verify(env, signed1_apk, pk1);
+  EXPECT_FALSE(ClearException(env));
+
+  Java_ComponentUpdater_verify(env, signed2_apk, pk2);
+  EXPECT_FALSE(ClearException(env));
+
+  // APKs signed with multiple certificates should verify with either
+  // corresponding public key.
+  Java_ComponentUpdater_verify(env, signed_both_apk, pk1);
+  EXPECT_FALSE(ClearException(env));
+
+  Java_ComponentUpdater_verify(env, signed_both_apk, pk2);
+  EXPECT_FALSE(ClearException(env));
+
+  // InvalidKeyException should be thrown when none of the signing certificates
+  // match the given public key.
+  auto invalid_key_exception =
+      GetClass(env, "java/security/InvalidKeyException");
+  // ApkSignatureSchemeV2Verifier.SignatureNotFoundException should be thrown
+  // when an APK isn't signed at all.
+  auto signature_not_found_exception =
+      GetClass(env,
+               "org/chromium/third_party/android/util/apk/"
+               "ApkSignatureSchemeV2Verifier$SignatureNotFoundException");
+
+  {
+    // Signed APKs shouldn't verify given the wrong public key.
+    Java_ComponentUpdater_verify(env, signed1_apk, pk2);
+    auto* exception = env->ExceptionOccurred();
+    EXPECT_TRUE(ClearException(env));
+    EXPECT_TRUE(env->IsInstanceOf(exception, invalid_key_exception.obj()));
+  }
+
+  {
+    Java_ComponentUpdater_verify(env, signed2_apk, pk1);
+    auto* exception = env->ExceptionOccurred();
+    EXPECT_TRUE(ClearException(env));
+    EXPECT_TRUE(env->IsInstanceOf(exception, invalid_key_exception.obj()));
+  }
+
+  {
+    // Unsigned APKs shouldn't verify.
+    Java_ComponentUpdater_verify(env, unsigned_apk, pk1);
+    auto* exception = env->ExceptionOccurred();
+    EXPECT_TRUE(ClearException(env));
+    EXPECT_TRUE(
+        env->IsInstanceOf(exception, signature_not_found_exception.obj()));
+  }
+}
 
 // Tests that the component metadata is propagated from the default
 // component installer and its component traits, through the instance of the
