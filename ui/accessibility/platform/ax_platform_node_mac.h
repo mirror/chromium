@@ -22,7 +22,7 @@ class AXPlatformNodeMac : public AXPlatformNodeBase {
 
   // AXPlatformNode.
   gfx::NativeViewAccessible GetNativeViewAccessible() override;
-  void NotifyAccessibilityEvent(ui::AXEvent event_type) override;
+  void NotifyAccessibilityEvent(AXEvent event_type) override;
 
   // AXPlatformNodeBase.
   void Destroy() override;
@@ -47,19 +47,19 @@ AX_EXPORT
 
 // Maps AX roles to native roles. Returns NSAccessibilityUnknownRole if not
 // found.
-+ (NSString*)nativeRoleFromAXRole:(ui::AXRole)role;
++ (NSString*)nativeRoleFromAXRole:(AXRole)role;
 
 // Maps AX roles to native subroles. Returns nil if not found.
-+ (NSString*)nativeSubroleFromAXRole:(ui::AXRole)role;
++ (NSString*)nativeSubroleFromAXRole:(AXRole)role;
 
 // Maps AX events to native notifications. Returns nil if not found.
-+ (NSString*)nativeNotificationFromAXEvent:(ui::AXEvent)event;
++ (NSString*)nativeNotificationFromAXEvent:(AXEvent)event;
 
-- (instancetype)initWithNode:(ui::AXPlatformNodeBase*)node;
+- (instancetype)initWithNode:(AXPlatformNodeBase*)node;
 - (void)detach;
 
 @property(nonatomic, readonly) NSRect boundsInScreen;
-@property(nonatomic, readonly) ui::AXPlatformNodeBase* node;
+@property(nonatomic, readonly) AXPlatformNodeBase* node;
 
 @end
 
