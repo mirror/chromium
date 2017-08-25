@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "4cf49400_f7de3e66",
+        "filename": "content/browser/renderer_host/frame_connector_delegate.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-08-25T22:05:11Z",
+      "side": 1,
+      "message": "The LocalSurfaceId must be allocated in the parent. I fixed this concern by resetting the frame rect and LocalSurfaceId until the parent allocates a new LocalSurfaceId. This will cause the child to defer commits until the parent resends frame rects. This works fine both today and with --enable-surface-synchronization.",
+      "parentUuid": "48aeed3d_4618f235",
+      "revId": "7905a600c21ab02282ab4a2cd86037831c0627cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1a453727_2a8e944d",
         "filename": "content/renderer/render_frame_proxy.cc",
         "patchSetId": 4
@@ -33,6 +51,24 @@
       "revId": "7905a600c21ab02282ab4a2cd86037831c0627cf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc3434ca_83ea71c6",
+        "filename": "content/renderer/render_frame_proxy.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 506,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-08-25T22:05:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1a453727_2a8e944d",
+      "revId": "7905a600c21ab02282ab4a2cd86037831c0627cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
