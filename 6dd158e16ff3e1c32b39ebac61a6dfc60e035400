@@ -39,6 +39,30 @@
       "revId": "6dd158e16ff3e1c32b39ebac61a6dfc60e035400",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "806a89ba_8558e497",
+        "filename": "content/browser/service_worker/service_worker_url_loader_job_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 356,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-25T02:30:33Z",
+      "side": 1,
+      "message": "Yea, we looked at the original tests and decided not to do the large body because SWUrlLoaderJob just passes the body handle to the client, so using a large body won\u0027t exercise any additional code paths in SWUrlLoaderJob itself. However, this will likely change with https://crbug.com/758455 \n\n(For similar reasons, I made the Blob test is a simple string, but I see URLLoaderJob is implementing URLLoaderClient for that and does some work, so probably it\u0027s useful for Blob too).",
+      "parentUuid": "f5208215_0fcb79f7",
+      "range": {
+        "startLine": 356,
+        "startChar": 13,
+        "endLine": 356,
+        "endChar": 68
+      },
+      "revId": "6dd158e16ff3e1c32b39ebac61a6dfc60e035400",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
