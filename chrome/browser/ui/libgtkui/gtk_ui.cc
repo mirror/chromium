@@ -473,6 +473,7 @@ void GtkUi::Initialize() {
 #endif
 
   // We must build this after GTK gets initialized.
+  nav_buttons_set_ = false;
   nav_button_layout_manager_ = CreateNavButtonLayoutManager(this);
 
   indicators_count = 0;
@@ -718,9 +719,8 @@ std::unique_ptr<views::Border> GtkUi::CreateNativeBorder(
 
 void GtkUi::AddWindowButtonOrderObserver(
     views::WindowButtonOrderObserver* observer) {
-  if (!leading_buttons_.empty() || !trailing_buttons_.empty()) {
+  if (nav_buttons_set_)
     observer->OnWindowButtonOrderingChange(leading_buttons_, trailing_buttons_);
-  }
 
   window_button_order_observer_list_.AddObserver(observer);
 }
@@ -735,6 +735,7 @@ void GtkUi::SetWindowButtonOrdering(
     const std::vector<views::FrameButton>& trailing_buttons) {
   leading_buttons_ = leading_buttons;
   trailing_buttons_ = trailing_buttons;
+  nav_buttons_set_ = true;
 
   for (views::WindowButtonOrderObserver& observer :
        window_button_order_observer_list_) {

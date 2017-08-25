@@ -173,8 +173,7 @@ class GtkUi : public views::LinuxUI {
 
   std::unique_ptr<NavButtonLayoutManager> nav_button_layout_manager_;
 
-  // If either of these vectors are non-empty, they represent the current
-  // window button configuration.
+  bool nav_buttons_set_;
   std::vector<views::FrameButton> leading_buttons_;
   std::vector<views::FrameButton> trailing_buttons_;
 
