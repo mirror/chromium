@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "42855132_1ec567d6",
+        "filename": "chrome/browser/about_flags.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 3407,
+      "author": {
+        "id": 1231235
+      },
+      "writtenOn": "2017-08-25T23:01:21Z",
+      "side": 1,
+      "message": "Discussed offline and leaving the name as-is",
+      "parentUuid": "c12b84e6_840e164c",
+      "range": {
+        "startLine": 3407,
+        "startChar": 6,
+        "endLine": 3407,
+        "endChar": 27
+      },
+      "revId": "2270aea765b5c63c870cbe3048c2472771594c0e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ebe7b30c_742599ee",
         "filename": "chrome/browser/flag_descriptions.cc",
         "patchSetId": 2
@@ -69,6 +93,30 @@
       "revId": "2270aea765b5c63c870cbe3048c2472771594c0e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8cafc33_9c25a3cc",
+        "filename": "chrome/browser/flag_descriptions.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1174,
+      "author": {
+        "id": 1231235
+      },
+      "writtenOn": "2017-08-25T23:01:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ebe7b30c_742599ee",
+      "range": {
+        "startLine": 1174,
+        "startChar": 5,
+        "endLine": 1174,
+        "endChar": 62
+      },
+      "revId": "2270aea765b5c63c870cbe3048c2472771594c0e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
