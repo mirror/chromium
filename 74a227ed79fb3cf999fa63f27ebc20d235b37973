@@ -16,6 +16,24 @@
       "revId": "74a227ed79fb3cf999fa63f27ebc20d235b37973",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7a1792e_de7c843f",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/resources/access-control-auth-basic.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1225177
+      },
+      "writtenOn": "2017-08-25T02:04:53Z",
+      "side": 1,
+      "message": "Good question! :/ I just copied that part over without thinking about it. Thanks for calling me out on that!",
+      "parentUuid": "082f70bd_8221f368",
+      "revId": "74a227ed79fb3cf999fa63f27ebc20d235b37973",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
