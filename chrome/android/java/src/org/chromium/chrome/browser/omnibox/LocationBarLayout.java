@@ -318,21 +318,6 @@ public class LocationBarLayout extends FrameLayout
                     mIgnoreOmniboxItemSelection = false;
                 }
                 return mSuggestionList.onKeyDown(keyCode, event);
-            } else if (KeyNavigationUtil.isGoRight(event)
-                    && mSuggestionList != null
-                    && mSuggestionList.isShown()
-                    && mSuggestionList.getSelectedItemPosition()
-                            != ListView.INVALID_POSITION) {
-                OmniboxResultItem selectedItem =
-                        (OmniboxResultItem) mSuggestionListAdapter.getItem(
-                                mSuggestionList.getSelectedItemPosition());
-                // Set the UrlBar text to empty, so that it will trigger a text change when we
-                // set the text to the suggestion again.
-                setUrlBarText("", null);
-                mUrlBar.setText(selectedItem.getSuggestion().getFillIntoEdit());
-                mSuggestionList.setSelection(0);
-                mUrlBar.setSelection(mUrlBar.getText().length());
-                return true;
             } else if (KeyNavigationUtil.isEnter(event)
                     && LocationBarLayout.this.getVisibility() == VISIBLE) {
                 UiUtils.hideKeyboard(mUrlBar);
