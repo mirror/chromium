@@ -317,6 +317,10 @@ struct PasswordForm {
   // out only for submitted forms.
   SubmissionIndicatorEvent submission_event;
 
+  // True iff heuristics declined this form for saving (e.g. only credit card
+  // fields were found). But this form can be saved only with the fallback.
+  bool only_for_fallback_saving;
+
   // Return true if we consider this form to be a change password form.
   // We use only client heuristics, so it could include signup forms.
   bool IsPossibleChangePasswordForm() const;
