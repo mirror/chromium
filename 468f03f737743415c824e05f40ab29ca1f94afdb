@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "18a6fb3a_75113ce2",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/omaha/UpdateMenuItemHelper.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 427,
+      "author": {
+        "id": 1145120
+      },
+      "writtenOn": "2017-08-25T19:08:23Z",
+      "side": 1,
+      "message": "Yea, 50 would be suffice. I am not sure about linear spaced though. From the available functions in  RecordHistogram, this one seems the best. Also I haven\u0027t deleted the other histogram \"InternalStorageSizeAvailable\" yet, since we might need it for a few releases before the new one has some data?",
+      "parentUuid": "4ded4bd2_3e291d5b",
+      "range": {
+        "startLine": 427,
+        "startChar": 77,
+        "endLine": 427,
+        "endChar": 80
+      },
+      "revId": "468f03f737743415c824e05f40ab29ca1f94afdb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cb74edc6_bde7ee5b",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 5
@@ -42,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "02247134_b0809ef5",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 24362,
+      "author": {
+        "id": 1145120
+      },
+      "writtenOn": "2017-08-25T19:08:23Z",
+      "side": 1,
+      "message": "hmm, we are talking about internal storage only, not sdcard.\n\nMay be this:\n(Android-only) The amount of internal memory storage that is free on the file system and available to the applications when the InfoBar or update menu item is shown.",
+      "parentUuid": "cb74edc6_bde7ee5b",
+      "revId": "468f03f737743415c824e05f40ab29ca1f94afdb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e81f21e4_c5a3e49f",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 5
@@ -53,6 +95,30 @@
       "writtenOn": "2017-08-24T23:32:04Z",
       "side": 1,
       "message": "Hmm, I still see this being recorded in the code.  Did you mean to remove it?",
+      "range": {
+        "startLine": 24369,
+        "startChar": 13,
+        "endLine": 24369,
+        "endChar": 0
+      },
+      "revId": "468f03f737743415c824e05f40ab29ca1f94afdb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8525074b_2be797cb",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 24369,
+      "author": {
+        "id": 1145120
+      },
+      "writtenOn": "2017-08-25T19:08:23Z",
+      "side": 1,
+      "message": "No, I meant to keep it alive for some time. Is that the current practice for histogram removals?",
+      "parentUuid": "e81f21e4_c5a3e49f",
       "range": {
         "startLine": 24369,
         "startChar": 13,
