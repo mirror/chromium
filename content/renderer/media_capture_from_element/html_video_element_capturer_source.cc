@@ -36,6 +36,8 @@ HtmlVideoElementCapturerSource::CreateFromWebMediaPlayerImpl(
   // The histogram counts the number of calls to the JS API.
   UpdateWebRTCMethodCount(WEBKIT_VIDEO_CAPTURE_STREAM);
 
+  LOG(ERROR) << __func__;
+
   return base::WrapUnique(new HtmlVideoElementCapturerSource(
       static_cast<media::WebMediaPlayerImpl*>(player)->AsWeakPtr(),
       io_task_runner));
