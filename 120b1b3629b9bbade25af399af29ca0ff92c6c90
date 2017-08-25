@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "7dc8489c_d17a08d6",
+        "filename": "build/fuchsia/runner_common.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-08-25T21:23:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "38bb3711_3ea90d68",
+      "revId": "120b1b3629b9bbade25af399af29ca0ff92c6c90",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8bb58a81_4f16afa2",
         "filename": "build/fuchsia/runner_common.py",
         "patchSetId": 1
