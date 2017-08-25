@@ -176,6 +176,24 @@
     },
     {
       "key": {
+        "uuid": "ee2e80fa_30be9d48",
+        "filename": "components/arc/common/video_decode_accelerator.mojom",
+        "patchSetId": 22
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1002450
+      },
+      "writtenOn": "2017-08-25T06:47:53Z",
+      "side": 1,
+      "message": "Just like all the other methods, the error is returned by VideoDecodeClient::NotifyError. \n\nI think we should document it clearly. (Maybe in NotifyError()?)",
+      "parentUuid": "94a2fd9c_3ac468b7",
+      "revId": "34b3cede727357076fe584a8d9783e9ee29bd430",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f0ce35d8_4e811c4a",
         "filename": "components/arc/common/video_decode_accelerator.mojom",
         "patchSetId": 22
@@ -204,6 +222,24 @@
       "writtenOn": "2017-08-25T05:24:16Z",
       "side": 1,
       "message": "Nice to add an example what \"an asynchronous error\" looks like?",
+      "revId": "34b3cede727357076fe584a8d9783e9ee29bd430",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e130f72_8cda866c",
+        "filename": "components/arc/common/video_decode_accelerator.mojom",
+        "patchSetId": 22
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1002450
+      },
+      "writtenOn": "2017-08-25T06:47:53Z",
+      "side": 1,
+      "message": "Actually, all the operation except Initialize() is asynchronous in VDA. Maybe we can revised it as:\n\nCalled when an error happens, however, the errors in Initialize() will ...",
+      "parentUuid": "e2521e19_90f11ac9",
       "revId": "34b3cede727357076fe584a8d9783e9ee29bd430",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
