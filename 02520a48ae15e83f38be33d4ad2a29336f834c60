@@ -2,6 +2,259 @@
   "comments": [
     {
       "key": {
+        "uuid": "e50a6b89_5a22c969",
+        "filename": "extensions/browser/api/declarative_net_request/constants.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-08-25T00:06:49Z",
+      "side": 1,
+      "message": "I don\u0027t see some of these being used, can you check and remove the ones that is not used in this CL and add them when you\u0027re using them.",
+      "range": {
+        "startLine": 72,
+        "startChar": 15,
+        "endLine": 72,
+        "endChar": 32
+      },
+      "revId": "02520a48ae15e83f38be33d4ad2a29336f834c60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60fc7f52_f055e7c5",
+        "filename": "extensions/browser/api/declarative_net_request/constants.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-08-25T00:06:49Z",
+      "side": 1,
+      "message": "We generally suffix our duration histograms with ...Time instead of Duration.",
+      "range": {
+        "startLine": 86,
+        "startChar": 0,
+        "endLine": 86,
+        "endChar": 68
+      },
+      "revId": "02520a48ae15e83f38be33d4ad2a29336f834c60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7dff24f_199d01ca",
+        "filename": "extensions/browser/api/declarative_net_request/parse_info.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-08-25T00:06:49Z",
+      "side": 1,
+      "message": "unused?",
+      "range": {
+        "startLine": 28,
+        "startChar": 0,
+        "endLine": 28,
+        "endChar": 67
+      },
+      "revId": "02520a48ae15e83f38be33d4ad2a29336f834c60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8825c8b7_7a3a90de",
+        "filename": "extensions/browser/api/declarative_net_request/parse_info.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-08-25T00:06:49Z",
+      "side": 1,
+      "message": "Describe when set, maybe rename to parse_error_rule_index_ or similar to indicate this is related to errors.",
+      "range": {
+        "startLine": 37,
+        "startChar": 17,
+        "endLine": 37,
+        "endChar": 23
+      },
+      "revId": "02520a48ae15e83f38be33d4ad2a29336f834c60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9567e07_d6c96064",
+        "filename": "extensions/browser/api/declarative_net_request/utils.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-08-25T00:06:49Z",
+      "side": 1,
+      "message": "Use ElapsedTimer?",
+      "range": {
+        "startLine": 72,
+        "startChar": 14,
+        "endLine": 72,
+        "endChar": 23
+      },
+      "revId": "02520a48ae15e83f38be33d4ad2a29336f834c60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18689ebb_7f85248e",
+        "filename": "extensions/browser/api/declarative_net_request/utils.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-08-25T00:06:49Z",
+      "side": 1,
+      "message": "Doesn\u0027t this mean there\u0027s a bug in our code?\nIf so then should it be DCHECK? If not, then OK.",
+      "range": {
+        "startLine": 90,
+        "startChar": 0,
+        "endLine": 90,
+        "endChar": 66
+      },
+      "revId": "02520a48ae15e83f38be33d4ad2a29336f834c60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3045c22_2a713d4c",
+        "filename": "extensions/browser/api/declarative_net_request/utils.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-08-25T00:06:49Z",
+      "side": 1,
+      "message": "insert should already let you know whether insertion was successful, so\nbool inserted \u003d id_set.insert(id).second;\nif (!inserted) { \n  // already existed\n}",
+      "range": {
+        "startLine": 91,
+        "startChar": 20,
+        "endLine": 91,
+        "endChar": 31
+      },
+      "revId": "02520a48ae15e83f38be33d4ad2a29336f834c60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3cb7b1e4_b2ce2081",
+        "filename": "extensions/browser/api/declarative_net_request/utils.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-08-25T00:06:49Z",
+      "side": 1,
+      "message": "nit: Maybe you wanted to put it in the next line before |data|?",
+      "range": {
+        "startLine": 104,
+        "startChar": 21,
+        "endLine": 104,
+        "endChar": 27
+      },
+      "revId": "02520a48ae15e83f38be33d4ad2a29336f834c60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1607548_71c70b45",
+        "filename": "extensions/browser/api/declarative_net_request/utils.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-08-25T00:06:49Z",
+      "side": 1,
+      "message": "Should we move this around line 102 to correlate it with the scope this UMA refers to?",
+      "range": {
+        "startLine": 116,
+        "startChar": 2,
+        "endLine": 116,
+        "endChar": 21
+      },
+      "revId": "02520a48ae15e83f38be33d4ad2a29336f834c60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13b7156e_6e2e177f",
+        "filename": "extensions/browser/api/declarative_net_request/utils.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-08-25T00:06:49Z",
+      "side": 1,
+      "message": "extension can\u0027t be nullptr to be something meaningful, so change all these Extension params to const Extension\u0026",
+      "range": {
+        "startLine": 129,
+        "startChar": 0,
+        "endLine": 129,
+        "endChar": 53
+      },
+      "revId": "02520a48ae15e83f38be33d4ad2a29336f834c60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c99d0f3_ad7b7d2e",
+        "filename": "extensions/browser/api/declarative_net_request/utils.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-08-25T00:06:49Z",
+      "side": 1,
+      "message": "Is there a reason |error| is not passed directly to IndexAndPersistRulesImpl and let it fill it in if necessary? Avoiding multi-stage API is beneficial where we can. In that case GetErrorDescription can go away or rather be a private method.",
+      "range": {
+        "startLine": 147,
+        "startChar": 0,
+        "endLine": 147,
+        "endChar": 73
+      },
+      "revId": "02520a48ae15e83f38be33d4ad2a29336f834c60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3d3f3f6c_bb66225b",
         "filename": "extensions/browser/api/declarative_net_request/utils.cc",
         "patchSetId": 5
@@ -18,6 +271,76 @@
         "startChar": 5,
         "endLine": 156,
         "endChar": 12
+      },
+      "revId": "02520a48ae15e83f38be33d4ad2a29336f834c60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0264ac1a_1be48494",
+        "filename": "extensions/browser/api/declarative_net_request/utils.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-08-25T00:06:49Z",
+      "side": 1,
+      "message": "I think we should put it inside _metadata/ as it is already used for dynamic files like this. What is the source of that warning? Can we remove it?",
+      "parentUuid": "3d3f3f6c_bb66225b",
+      "range": {
+        "startLine": 156,
+        "startChar": 5,
+        "endLine": 156,
+        "endChar": 12
+      },
+      "revId": "02520a48ae15e83f38be33d4ad2a29336f834c60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1077b905_fd4f3c1c",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 20586,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-08-25T00:06:49Z",
+      "side": 1,
+      "message": "nit: delete \"Measures the\", as this specifies the time.",
+      "range": {
+        "startLine": 20586,
+        "startChar": 13,
+        "endLine": 20586,
+        "endChar": 16
+      },
+      "revId": "02520a48ae15e83f38be33d4ad2a29336f834c60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4620f020_86a6e049",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 20610,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-08-25T00:06:49Z",
+      "side": 1,
+      "message": "nit: similarly remove \"Counts\"",
+      "range": {
+        "startLine": 20610,
+        "startChar": 0,
+        "endLine": 20610,
+        "endChar": 75
       },
       "revId": "02520a48ae15e83f38be33d4ad2a29336f834c60",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
