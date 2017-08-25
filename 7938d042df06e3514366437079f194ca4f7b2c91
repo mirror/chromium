@@ -16,6 +16,70 @@
       "revId": "7938d042df06e3514366437079f194ca4f7b2c91",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db2ed3b3_6af4cd12",
+        "filename": "ash/wm/overview/overview_window_drag_controller.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-08-25T00:58:46Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "a07db9f6_0cba7461",
+      "revId": "7938d042df06e3514366437079f194ca4f7b2c91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f0d3f5a5_e3e76fb0",
+        "filename": "ash/wm/overview/window_selector.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-08-25T00:58:46Z",
+      "side": 1,
+      "message": "drawg_window_controller_-\u003eResetWindowSelect();\n\nDCHECK(observed_windows_.empty());",
+      "range": {
+        "startLine": 257,
+        "startChar": 0,
+        "endLine": 257,
+        "endChar": 14
+      },
+      "revId": "7938d042df06e3514366437079f194ca4f7b2c91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0deed4f4_1c571da3",
+        "filename": "ash/wm/overview/window_selector.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 406,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-08-25T00:58:46Z",
+      "side": 1,
+      "message": "observed_windows_.clear();",
+      "range": {
+        "startLine": 406,
+        "startChar": 12,
+        "endLine": 406,
+        "endChar": 26
+      },
+      "revId": "7938d042df06e3514366437079f194ca4f7b2c91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
