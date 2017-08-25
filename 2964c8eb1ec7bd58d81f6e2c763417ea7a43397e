@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c82b4cf4_17ffb8ba",
+        "filename": "third_party/WebKit/Source/core/paint/compositing/CompositedLayerMapping.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 1274,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2017-08-25T01:12:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e2e41705_62664eea",
+      "revId": "2964c8eb1ec7bd58d81f6e2c763417ea7a43397e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7ad2518d_6a11ee50",
         "filename": "third_party/WebKit/Source/core/paint/compositing/CompositedLayerMapping.cpp",
         "patchSetId": 7
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "c7d07316_d8e1d3bb",
+        "filename": "third_party/WebKit/Source/core/paint/compositing/CompositedLayerMapping.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 1289,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2017-08-25T01:12:11Z",
+      "side": 1,
+      "message": "kPaintingClipRectsIgnoringOverflowClip implicitly enables SetIgnoreOverflowClip. (Yep this discrepancy caught my eyes too.) Comment added.",
+      "parentUuid": "7ad2518d_6a11ee50",
+      "revId": "2964c8eb1ec7bd58d81f6e2c763417ea7a43397e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "18c0d169_ee971a8b",
         "filename": "third_party/WebKit/Source/core/paint/compositing/CompositingInputsUpdater.cpp",
         "patchSetId": 7
@@ -47,6 +83,24 @@
       "writtenOn": "2017-08-24T22:56:04Z",
       "side": 1,
       "message": "Why would it ever not have a clip related property? Also,\nthis seems to undo the fix in my re-land patch to add ClipParent():\n\nhttps://chromium.googlesource.com/chromium/src/+/acb18647cf8156a88797504f483e3c8afb3f385e",
+      "revId": "2964c8eb1ec7bd58d81f6e2c763417ea7a43397e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0364f42b_9142cd32",
+        "filename": "third_party/WebKit/Source/core/paint/compositing/CompositingInputsUpdater.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2017-08-25T01:12:11Z",
+      "side": 1,
+      "message": "parent_layer_on_clipping_container_chain is a confusing name, it is in fact \"parent layer on containing block chain\". The difference between it and clipping_container is that clipping_container is \"the nearest layer in the containing block chain that has a clip\".\n\nThis is for optimizing out some ancestor clipping layer, but you\u0027re right, this will fail for the same reason as your original CL. cc has an implicit requirement that clip_parent layer to appear before the clipped layer. So this example will fail:\n\u003cdiv style\u003d\"overflow:hidden;\"\u003e\n  \u003cdiv style\u003d\"position:absolute; overflow:hidden;\"\u003e\n    \u003cdiv style\u003d\"position:relative; z-index:-1;\"\u003eOuch\u003c/div\u003e\n  \u003c/div\u003e\n\u003c/div\u003e\n\nI\u0027ll revert this block and add a test for this example. Will also add a DCHECK in cc if possible.",
+      "parentUuid": "18c0d169_ee971a8b",
       "revId": "2964c8eb1ec7bd58d81f6e2c763417ea7a43397e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
