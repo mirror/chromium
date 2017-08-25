@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "efe53677_017718c0",
+        "filename": "third_party/WebKit/Source/modules/csspaint/PaintWorkletGlobalScope.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-08-25T02:40:57Z",
+      "side": 1,
+      "message": "nit: Can you use GetFrame()-\u003eDomWindow()?",
+      "range": {
+        "startLine": 210,
+        "startChar": 38,
+        "endLine": 210,
+        "endChar": 64
+      },
+      "revId": "ff3957a21bc1bc8bf5df4e44f29832e424dfa49e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
