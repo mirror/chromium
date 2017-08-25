@@ -733,6 +733,13 @@ bool VideoSampleEntry::Parse(BoxReader* reader) {
       video_codec = kCodecH264;
       video_codec_profile = H264Parser::ProfileIDCToVideoCodecProfile(
           avcConfig->profile_indication);
+      if (video_codec_profile == VIDEO_CODEC_PROFILE_UNKNOWN) {
+        MEDIA_LOG(ERROR, reader->media_log())
+            << "Unrecognized AVCDecoderConfigurationRecord (avcC) profile "
+               "indication 0x"
+            << std::hex << avcConfig->profile_indication;
+      }
+
       frame_bitstream_converter =
           make_scoped_refptr(new AVCBitstreamConverter(std::move(avcConfig)));
 #if BUILDFLAG(ENABLE_DOLBY_VISION_DEMUXING)
