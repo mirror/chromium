@@ -52,6 +52,24 @@
       "revId": "3be660686877500a4edf7b63b2d3dc56a23c6d67",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a9f300b_73fbcfaa",
+        "filename": "media/formats/mp4/box_definitions.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 737,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-08-25T19:15:25Z",
+      "side": 1,
+      "message": "I meant throw a parse error. We\u0027re just going to fail later on an invalid decoder config somewhere, better earlier than later.",
+      "parentUuid": "a8f503de_e4c9e843",
+      "revId": "3be660686877500a4edf7b63b2d3dc56a23c6d67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
