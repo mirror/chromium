@@ -8,10 +8,18 @@ include_rules = [
 ]
 
 specific_include_rules = {
-  # TODO(elawrence): remove this when the Form-Not-Secure feature is fully
-  # launched. https://crbug.com/677295
+  "password_autofill_agent\.h" : [
+    "+content/renderer/devtools/devtools_agent.h"
+  ],
   "password_autofill_agent\.cc" : [
+    # TODO(elawrence): remove this when the Form-Not-Secure feature is fully
+    # launched. https://crbug.com/677295
     "+components/security_state/core",
     "+components/password_manager/core/common",
+    "+content/renderer/render_frame_impl.h"
+  ],
+  "devtools_page_passwords_analyser\.cc" : [
+    "+content/renderer/devtools/devtools_agent.h",
+    "+content/renderer/render_frame_impl.h"
   ],
 }

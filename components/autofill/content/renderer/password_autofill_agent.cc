@@ -55,6 +55,10 @@
 #include "ui/events/keycodes/keyboard_codes.h"
 #include "url/gurl.h"
 
+#if !defined(OS_ANDROID) && !defined(OS_IOS)
+#include "content/renderer/render_frame_impl.h"
+#endif
+
 namespace autofill {
 namespace {
 
@@ -1186,6 +1190,11 @@ void PasswordAutofillAgent::SendPasswordForms(bool only_visible) {
 
   blink::WebLocalFrame* frame = render_frame()->GetWebFrame();
 
+#if !defined(OS_ANDROID) && !defined(OS_IOS)
+  // Provide warnings about the accessibility of password forms on the page.
+  devtools_page_passwords_analyser_.MarkDOMForAnalysis(render_frame());
+#endif
+
   // Make sure that this security origin is allowed to use password manager.
   blink::WebSecurityOrigin origin = frame->GetDocument().GetSecurityOrigin();
   if (logger) {
@@ -1306,6 +1315,10 @@ void PasswordAutofillAgent::DidFinishDocumentLoad() {
   // The |frame| contents have been parsed, but not yet rendered.  Let the
   // PasswordManager know that forms are loaded, even though we can't yet tell
   // whether they're visible.
+#if !defined(OS_ANDROID) && !defined(OS_IOS)
+  if (GetDevToolsAgent())
+    GetDevToolsAgent()->AddObserver(this);
+#endif
   form_util::ScopedLayoutPreventer layout_preventer;
   SendPasswordForms(false);
 }
@@ -1418,6 +1431,20 @@ void PasswordAutofillAgent::WillSubmitForm(const blink::WebFormElement& form) {
     logger->LogMessage(Logger::STRING_FORM_IS_NOT_PASSWORD);
   }
 }
+
+#if !defined(OS_ANDROID) && !defined(OS_IOS)
+content::DevToolsAgent* PasswordAutofillAgent::GetDevToolsAgent() {
+  content::RenderFrameImpl* impl =
+      static_cast<content::RenderFrameImpl*>(render_frame());
+  return impl->devtools_agent();
+}
+
+void PasswordAutofillAgent::OnDevToolsAttachmentChanged() {
+  if (GetDevToolsAgent() && GetDevToolsAgent()->IsAttached())
+    devtools_page_passwords_analyser_.AnalyseDocumentDOMIfNeedBe(
+        render_frame());
+}
+#endif
 
 void PasswordAutofillAgent::OnDestruct() {
   binding_.Close();
@@ -1783,6 +1810,11 @@ void PasswordAutofillAgent::FrameClosing() {
   field_value_and_properties_map_.clear();
   sent_request_to_store_ = false;
   checked_safe_browsing_reputation_ = false;
+#if !defined(OS_ANDROID) && !defined(OS_IOS)
+  devtools_page_passwords_analyser_.Reset();
+  if (GetDevToolsAgent())
+    GetDevToolsAgent()->RemoveObserver(this);
+#endif
 }
 
 void PasswordAutofillAgent::ClearPreview(

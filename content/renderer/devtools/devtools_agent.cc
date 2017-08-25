@@ -19,6 +19,7 @@
 #include "content/common/devtools_messages.h"
 #include "content/common/frame_messages.h"
 #include "content/public/common/manifest.h"
+#include "content/renderer/devtools/devtools_agent_observer.h"
 #include "content/renderer/devtools/devtools_client.h"
 #include "content/renderer/devtools/devtools_cpu_throttler.h"
 #include "content/renderer/manifest/manifest_manager.h"
@@ -118,7 +119,6 @@ bool DevToolsAgent::OnMessageReceived(const IPC::Message& message) {
 
   if (message.type() == FrameMsg_Navigate::ID)
     ContinueProgram();  // Don't want to swallow the message.
-
   return handled;
 }
 
@@ -239,6 +239,8 @@ void DevToolsAgent::SendChunkedProtocolMessage(IPC::Sender* sender,
 void DevToolsAgent::OnAttach(const std::string& host_id, int session_id) {
   GetWebAgent()->Attach(WebString::FromUTF8(host_id), session_id);
   session_ids_.insert(session_id);
+  for (DevToolsAgentObserver* observer : observers_)
+    observer->OnDevToolsAttachmentChanged();
 }
 
 void DevToolsAgent::OnReattach(const std::string& host_id,
@@ -247,11 +249,15 @@ void DevToolsAgent::OnReattach(const std::string& host_id,
   GetWebAgent()->Reattach(WebString::FromUTF8(host_id), session_id,
                           WebString::FromUTF8(agent_state));
   session_ids_.insert(session_id);
+  for (DevToolsAgentObserver* observer : observers_)
+    observer->OnDevToolsAttachmentChanged();
 }
 
 void DevToolsAgent::OnDetach(int session_id) {
   GetWebAgent()->Detach(session_id);
   session_ids_.erase(session_id);
+  for (DevToolsAgentObserver* observer : observers_)
+    observer->OnDevToolsAttachmentChanged();
 }
 
 void DevToolsAgent::OnDispatchOnInspectorBackend(int session_id,
@@ -307,6 +313,17 @@ void DevToolsAgent::DetachAllSessions() {
   for (int session_id : session_ids_)
     GetWebAgent()->Detach(session_id);
   session_ids_.clear();
+  for (DevToolsAgentObserver* observer : observers_)
+    observer->OnDevToolsAttachmentChanged();
+}
+
+void DevToolsAgent::AddObserver(DevToolsAgentObserver* observer) {
+  observers_.push_back(observer);
+}
+
+void DevToolsAgent::RemoveObserver(DevToolsAgentObserver* observer) {
+  observers_.erase(std::remove(observers_.begin(), observers_.end(), observer),
+                   observers_.end());
 }
 
 void DevToolsAgent::GotManifest(int session_id,

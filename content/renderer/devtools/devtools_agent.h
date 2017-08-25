@@ -14,6 +14,7 @@
 #include "base/memory/weak_ptr.h"
 #include "content/common/content_export.h"
 #include "content/public/renderer/render_frame_observer.h"
+#include "content/renderer/devtools/devtools_agent_observer.h"
 #include "third_party/WebKit/public/web/WebDevToolsAgentClient.h"
 
 namespace blink {
@@ -54,6 +55,9 @@ class CONTENT_EXPORT DevToolsAgent : public RenderFrameObserver,
 
   bool IsAttached();
   void DetachAllSessions();
+
+  void AddObserver(DevToolsAgentObserver* observer);
+  void RemoveObserver(DevToolsAgentObserver* observer);
 
  private:
   friend class DevToolsAgentTest;
@@ -104,6 +108,7 @@ class CONTENT_EXPORT DevToolsAgent : public RenderFrameObserver,
   bool is_devtools_client_;
   bool paused_;
   RenderFrameImpl* frame_;
+  std::vector<DevToolsAgentObserver*> observers_;
   base::Callback<void(int, int, const std::string&, const std::string&)>
       send_protocol_message_callback_for_test_;
   std::unique_ptr<DevToolsCPUThrottler> cpu_throttler_;

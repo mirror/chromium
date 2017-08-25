@@ -10,6 +10,7 @@
 #include <vector>
 
 #include "base/macros.h"
+#include "build/build_config.h"
 #include "components/autofill/content/common/autofill_agent.mojom.h"
 #include "components/autofill/content/common/autofill_driver.mojom.h"
 #include "components/autofill/content/renderer/autofill_agent.h"
@@ -24,6 +25,11 @@
 #include "mojo/public/cpp/bindings/binding.h"
 #include "services/service_manager/public/cpp/binder_registry.h"
 #include "third_party/WebKit/public/web/WebInputElement.h"
+
+#if !defined(OS_ANDROID) && !defined(OS_IOS)
+#include "components/autofill/content/renderer/devtools_page_passwords_analyser.h"
+#include "content/renderer/devtools/devtools_agent.h"
+#endif
 
 namespace blink {
 class WebFormElementObserver;
@@ -41,6 +47,7 @@ class RendererSavePasswordProgressLogger;
 
 // This class is responsible for filling password forms.
 class PasswordAutofillAgent : public content::RenderFrameObserver,
+                              public content::DevToolsAgentObserver,
                               public mojom::PasswordAutofillAgent {
  public:
   PasswordAutofillAgent(content::RenderFrame* render_frame,
@@ -147,6 +154,13 @@ class PasswordAutofillAgent : public content::RenderFrameObserver,
   void FocusedNodeHasChanged(const blink::WebNode& node);
 
   bool logging_state_active() const { return logging_state_active_; }
+
+// DevToolsAgentObserver
+#if !defined(OS_ANDROID) && !defined(OS_IOS)
+  // Triggers when the DevTools window is attached to the same frame as the
+  // agent in order to update password form warnings.
+  void OnDevToolsAttachmentChanged() override;
+#endif
 
  protected:
   virtual bool OriginCanAccessPasswordManager(
@@ -272,6 +286,10 @@ class PasswordAutofillAgent : public content::RenderFrameObserver,
 
   const mojom::AutofillDriverPtr& GetAutofillDriver();
 
+#if !defined(OS_ANDROID) && !defined(OS_IOS)
+  content::DevToolsAgent* GetDevToolsAgent();
+#endif
+
   // The logins we have filled so far with their associated info.
   WebInputToPasswordInfoMap web_input_to_password_info_;
   // A (sort-of) reverse map to |web_input_to_password_info_|.
@@ -313,6 +331,10 @@ class PasswordAutofillAgent : public content::RenderFrameObserver,
   FormsPredictionsMap form_predictions_;
 
   AutofillAgent* autofill_agent_;  // Weak reference.
+
+#if !defined(OS_ANDROID) && !defined(OS_IOS)
+  DevToolsPagePasswordsAnalyser devtools_page_passwords_analyser_;
+#endif
 
   mojom::PasswordManagerDriverPtr password_manager_driver_;
 
