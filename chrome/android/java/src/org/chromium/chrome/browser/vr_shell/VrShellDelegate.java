@@ -940,20 +940,19 @@ public class VrShellDelegate
     @CalledByNative
     private boolean exitWebVRPresent() {
         if (!mInVr) return false;
+        if (mAutopresentWebVr) {
+            // For autopresent from Daydream home, we do NOT want to show ChromeVR. So if we
+            // ever exit WebVR for whatever reason (navigation, call exitPresent etc), go back to
+            // Daydream home.
+            mVrDaydreamApi.launchVrHomescreen();
+            return true;
+        }
         if (!isVrShellEnabled(mVrSupportLevel) || !isDaydreamCurrentViewer()
                 || !activitySupportsVrBrowsing(mActivity)) {
             if (isDaydreamCurrentViewer() && showDoff(false /* optional */)) return false;
             shutdownVr(true /* disableVrMode */, true /* stayingInChrome */);
         } else {
-            if (mAutopresentWebVr) {
-                // For autopresent from Daydream home, we do NOT want to show ChromeVR. So if we
-                // ever exit WebVR for whatever reason(navigation, call exitPresent etc), go back to
-                // Daydream home.
-                mVrDaydreamApi.launchVrHomescreen();
-                return true;
-            }
             mVrBrowserUsed = true;
-            mAutopresentWebVr = false;
             mVrShell.setWebVrModeEnabled(false, false);
         }
         return true;
@@ -1202,7 +1201,9 @@ public class VrShellDelegate
     @VisibleForTesting(otherwise = VisibleForTesting.PACKAGE_PRIVATE)
     public void shutdownVr(boolean disableVrMode, boolean stayingInChrome) {
         cancelPendingVrEntry();
-        if (mAutopresentWebVr && handleFinishAutopresentation()) return;
+        // If we're calling shutdownVr when autopresenting, the activity is about to exit, so
+        // there's no need to do VR shutdown.
+        if (handleFinishAutopresentation()) return;
         if (!mInVr) return;
 
         if (mShowingDaydreamDoff) {
@@ -1211,7 +1212,6 @@ public class VrShellDelegate
         }
 
         mInVr = false;
-        mAutopresentWebVr = false;
 
         // The user has exited VR.
         RecordUserAction.record("VR.DOFF");
@@ -1258,14 +1258,13 @@ public class VrShellDelegate
     /* package */ void exitCct() {
         if (mShowingDaydreamDoff) return;
         assert mActivity instanceof CustomTabActivity;
-
-        if (mInVrAtChromeLaunch != null) {
-            if (!mInVrAtChromeLaunch && showDoff(true /* optional */)) {
-                mExitingCct = true;
-                return;
-            }
-            // Started chrome in VR mode.
-            shutdownVr(false /* disableVrMode */, false /* stayingInChrome */);
+        if (mAutopresentWebVr || (mInVrAtChromeLaunch != null && mInVrAtChromeLaunch)) {
+            ((CustomTabActivity) mActivity).finishAndClose(false);
+            return;
+        }
+        if (showDoff(true /* optional */)) {
+            mExitingCct = true;
+        } else {
             ((CustomTabActivity) mActivity).finishAndClose(false);
         }
     }
@@ -1301,13 +1300,11 @@ public class VrShellDelegate
      * Returns true if finishing auto-presentation was handled.
      */
     private boolean handleFinishAutopresentation() {
-        assert mAutopresentWebVr;
-        mAutopresentWebVr = false;
-        if (mActivity instanceof CustomTabActivity) {
-            exitCct();
-            return true;
-        }
-        return false;
+        if (!mAutopresentWebVr) return false;
+        // Should only autopresent CTA for now.
+        assert mActivity instanceof CustomTabActivity;
+        exitCct();
+        return true;
     }
 
     private static void startFeedback(Tab tab) {
