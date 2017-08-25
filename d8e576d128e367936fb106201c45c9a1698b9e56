@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "54eec2d7_994f52e0",
+        "filename": "chrome/app/generated_resources.grd",
+        "patchSetId": 5
+      },
+      "lineNbr": 2105,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-08-25T17:48:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "169f93ea_3f89f138",
+      "revId": "d8e576d128e367936fb106201c45c9a1698b9e56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9ce10ed1_28e56def",
         "filename": "chrome/browser/ui/content_settings/content_setting_bubble_model_browsertest.cc",
         "patchSetId": 5
@@ -33,6 +51,24 @@
       "revId": "d8e576d128e367936fb106201c45c9a1698b9e56",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f1b763f_03a8ac98",
+        "filename": "chrome/browser/ui/content_settings/content_setting_bubble_model_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-08-25T17:48:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9ce10ed1_28e56def",
+      "revId": "d8e576d128e367936fb106201c45c9a1698b9e56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "3fe11e78_c5975630",
+        "filename": "chrome/browser/ui/views/content_setting_bubble_contents.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 554,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-08-25T17:48:19Z",
+      "side": 1,
+      "message": "Thanks for pointing this out. This should be fine since the DialogDelegate comments say:\n\n  // For Dialog boxes, if there is a \"Cancel\" button or no dialog button at all,\n  // this is called when the user presses the \"Cancel\" button.\n  // It can also be called on a close action if |Close| has not been\n  // overridden. This function should return true if the window can be closed\n  // after it returns, or false if it must remain open.\n  virtual bool Cancel();\n\nSince we\u0027ve overriden Close() here we should be fine. This behavior is tested by DialogTest.AcceptAndCancel.",
+      "parentUuid": "9d1ab342_bcfdac42",
+      "revId": "d8e576d128e367936fb106201c45c9a1698b9e56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "256af18b_a9f0d06f",
         "filename": "chrome/browser/ui/views/content_setting_bubble_contents.cc",
         "patchSetId": 5
@@ -67,6 +121,24 @@
       "revId": "d8e576d128e367936fb106201c45c9a1698b9e56",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4989fb89_975af8a3",
+        "filename": "chrome/browser/ui/views/content_setting_bubble_contents.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 590,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-08-25T17:48:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "256af18b_a9f0d06f",
+      "revId": "d8e576d128e367936fb106201c45c9a1698b9e56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
