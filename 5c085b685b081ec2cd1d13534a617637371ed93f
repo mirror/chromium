@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e33fb7a8_8c60987c",
+        "filename": "content/browser/loader/resource_scheduler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1012,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-08-25T19:18:20Z",
+      "side": 1,
+      "message": "I would prefer gracefully handling the case when the variation configs are wrong, rather than assuming they will never be.",
+      "revId": "5c085b685b081ec2cd1d13534a617637371ed93f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76c0d986_cd19600f",
+        "filename": "content/browser/loader/resource_scheduler_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 836,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-08-25T19:18:20Z",
+      "side": 1,
+      "message": "Can you include a test for kHeadPrioritySupportedRequestsDelayable which shows they are delayed before OnWillInsertBody?",
+      "revId": "5c085b685b081ec2cd1d13534a617637371ed93f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
