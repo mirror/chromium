@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fdafc1ab_b2bd8eb6",
+        "filename": "storage/browser/test/async_file_test_helper.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-08-25T04:58:06Z",
+      "side": 1,
+      "message": "Looks like this is always non-null.",
+      "revId": "56935f72b27c9f9061d328fa315e52417952992a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
