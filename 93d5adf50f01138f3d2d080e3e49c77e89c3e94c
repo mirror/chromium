@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b9382217_3be4efd5",
+        "filename": "chrome/browser/chromeos/net/tether_notification_presenter.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-26T00:11:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d8fb16ae_392ba2a8",
+      "revId": "93d5adf50f01138f3d2d080e3e49c77e89c3e94c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9108f6fe_7f21c567",
         "filename": "chromeos/components/tether/host_scanner.cc",
         "patchSetId": 5
@@ -33,6 +51,24 @@
       "revId": "93d5adf50f01138f3d2d080e3e49c77e89c3e94c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e81aa33_8e1dc45c",
+        "filename": "chromeos/components/tether/host_scanner.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-26T00:11:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9108f6fe_7f21c567",
+      "revId": "93d5adf50f01138f3d2d080e3e49c77e89c3e94c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "befce737_599775f0",
+        "filename": "chromeos/components/tether/host_scanner.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-26T00:11:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "233917ab_faf1572a",
+      "revId": "93d5adf50f01138f3d2d080e3e49c77e89c3e94c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4b92e0c4_d5def70c",
         "filename": "chromeos/components/tether/notification_remover.cc",
         "patchSetId": 5
@@ -67,6 +121,24 @@
       "revId": "93d5adf50f01138f3d2d080e3e49c77e89c3e94c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90d5b593_a0100f0e",
+        "filename": "chromeos/components/tether/notification_remover.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-26T00:11:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4b92e0c4_d5def70c",
+      "revId": "93d5adf50f01138f3d2d080e3e49c77e89c3e94c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "ac6e282b_b39305ea",
+        "filename": "chromeos/network/network_state_handler.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 398,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-26T00:11:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5e6ea244_7d96dbef",
+      "revId": "93d5adf50f01138f3d2d080e3e49c77e89c3e94c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4f93a95b_1c803b47",
         "filename": "chromeos/network/network_state_handler.cc",
         "patchSetId": 5
@@ -101,6 +191,24 @@
       "revId": "93d5adf50f01138f3d2d080e3e49c77e89c3e94c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87a98f47_03a0b528",
+        "filename": "chromeos/network/network_state_handler.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 400,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-26T00:11:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4f93a95b_1c803b47",
+      "revId": "93d5adf50f01138f3d2d080e3e49c77e89c3e94c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "25cbf456_051b2e6b",
+        "filename": "chromeos/network/network_state_handler.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 414,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-26T00:11:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b2bea0d3_3d0a3bb3",
+      "revId": "93d5adf50f01138f3d2d080e3e49c77e89c3e94c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "234e0bf2_618ca979",
         "filename": "chromeos/network/network_state_handler.cc",
         "patchSetId": 5
@@ -138,6 +264,24 @@
     },
     {
       "key": {
+        "uuid": "2dc29436_0cc8e9a7",
+        "filename": "chromeos/network/network_state_handler.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 422,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-26T00:11:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "234e0bf2_618ca979",
+      "revId": "93d5adf50f01138f3d2d080e3e49c77e89c3e94c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "49447595_f5f09c5a",
         "filename": "chromeos/network/network_state_handler.cc",
         "patchSetId": 5
@@ -152,6 +296,24 @@
       "revId": "93d5adf50f01138f3d2d080e3e49c77e89c3e94c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c01acc7a_7d7f6dca",
+        "filename": "chromeos/network/network_state_handler.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 432,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-26T00:11:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "49447595_f5f09c5a",
+      "revId": "93d5adf50f01138f3d2d080e3e49c77e89c3e94c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
