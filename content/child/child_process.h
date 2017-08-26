@@ -101,9 +101,6 @@ class CONTENT_EXPORT ChildProcess {
   // io_thread_.
   std::unique_ptr<ChildThreadImpl> main_thread_;
 
-  // Whether this ChildProcess initialized TaskScheduler.
-  bool initialized_task_scheduler_ = false;
-
   DISALLOW_COPY_AND_ASSIGN(ChildProcess);
 };
 
