@@ -90,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "dac66bb2_ad7cde2c",
+        "filename": "ash/shelf/shelf_context_menu_model_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 274,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-08-26T23:36:33Z",
+      "side": 1,
+      "message": "ok, oshima-san what do you think of this? If laptop mode is not an appropriate name, we can file a bug to do this cleanup.",
+      "parentUuid": "33da49d0_0f72c69d",
+      "revId": "08314728ccefe18865e20ae0fcfef76c3772b1c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8264daa7_7c1bb3de",
         "filename": "ash/shelf/shelf_controller.cc",
         "patchSetId": 2
