@@ -779,6 +779,12 @@ TEST_F(V4StoreTest, TestRemovalsWithRiceEncodingSucceeds) {
   // ApplyUpdate was successful, so we have valid data.
   ASSERT_TRUE(updated_store_);
   EXPECT_TRUE(updated_store_->HasValidData());
+
+  // This ensures that the status of the store is set correctly.
+  DatabaseManagerInfo::DatabaseInfo::StoreInfo* store_info;
+  const std::string base_metric = "BaseMetric";
+  updated_store_->CollectStoreInfo(store_info, base_metric);
+  EXPECT_EQ(0, store_info->update_status());
 }
 
 TEST_F(V4StoreTest, TestMergeUpdatesFailsChecksum) {
@@ -886,6 +892,26 @@ TEST_F(V4StoreTest, FullUpdateFailsChecksumSynchronously) {
   // Ensure that the file is still not created.
   EXPECT_FALSE(base::PathExists(store.store_path_));
   EXPECT_FALSE(updated_store_);
+}
+
+TEST_F(V4StoreTest, TestCollectStoreInfo) {
+  DatabaseManagerInfo::DatabaseInfo::StoreInfo* store_info;
+  const std::string base_metric = "BaseMetric";
+  V4Store::CollectStoreInfo(store_info, base_metric);
+
+  // Ensure that checks_attempted increments, everytime GetMatchingHashPrefix is
+  // called.
+  FullHash full_hash = "11112222333344445555666677778888";
+  int checks = store_info->checks_attempted();
+  store.GetMatchingHashPrefix(full_hash);
+  EXPECT_EQ(checks + 1, store_info->checks_attempted());
+
+  EXPECT_EQ("BaseMetricV4StoreTest.store", store_info->file_name());
+  EXPECT_EQ(store.file_size_, store_info->file_size_bytes());
+
+  // EXPECT_EQ(, store_info->update_status());
+  // EXPECT_EQ(, store_info->checks_attempted());
+  // EXPECT_EQ(, store_info->last_apply_update_time_millis());
 }
 
 }  // namespace safe_browsing
