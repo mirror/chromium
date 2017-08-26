@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6237cfff_438087f8",
+        "filename": "ipc/handle_attachment_fuchsia.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-08-26T00:32:17Z",
+      "side": 1,
+      "message": "/me facepalms.",
+      "revId": "3b56547835550b0b8db7217a68fafc85f4f6b52c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "538c6d33_df5e4113",
+        "filename": "ipc/ipc_channel_mojo.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-08-26T00:32:17Z",
+      "side": 1,
+      "message": "You need to leave this case in here - we have both file-descriptors *and* native platform handles under Fuchsia.",
+      "revId": "3b56547835550b0b8db7217a68fafc85f4f6b52c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d574529d_ac1a8828",
+        "filename": "ipc/ipc_channel_mojo.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-08-26T00:32:17Z",
+      "side": 1,
+      "message": "nit: While you\u0027re here, this is long enough to deserve a trailing // defined(...) comment",
+      "revId": "3b56547835550b0b8db7217a68fafc85f4f6b52c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6cff4d1_919a72f4",
+        "filename": "ipc/ipc_channel_mojo.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-08-26T00:32:17Z",
+      "side": 1,
+      "message": "This looks spot-on - we won\u0027t reach this in the case of a POSIX file-descriptor attachment.",
+      "revId": "3b56547835550b0b8db7217a68fafc85f4f6b52c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
