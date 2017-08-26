@@ -61,12 +61,6 @@ class ArcSession {
   // The completion is notified via OnSessionStopped() of the Observer.
   virtual void Stop() = 0;
 
-  // Called when Chrome is in shutdown state. This is called when the message
-  // loop is already stopped, and the instance will soon be deleted. Caller
-  // may expect that OnSessionStopped() is synchronously called back except
-  // when it has already been called before.
-  virtual void OnShutdown() = 0;
-
   void AddObserver(Observer* observer);
   void RemoveObserver(Observer* observer);
 

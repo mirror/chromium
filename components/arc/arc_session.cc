@@ -203,7 +203,6 @@ class ArcSessionImpl : public ArcSession,
   bool IsForLoginScreen() override;
   void Start() override;
   void Stop() override;
-  void OnShutdown() override;
 
  private:
   // DBus callback for StartArcInstance().
@@ -646,32 +645,6 @@ void ArcSessionImpl::OnStopped(ArcStopReason reason) {
   state_ = State::STOPPED;
   for (auto& observer : observer_list_)
     observer.OnSessionStopped(reason);
-}
-
-void ArcSessionImpl::OnShutdown() {
-  DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
-  stop_requested_ = true;
-  if (state_ == State::STOPPED)
-    return;
-
-  // Here, the message loop is already stopped, and the Chrome will be soon
-  // shutdown. Thus, it is not necessary to take care about restarting case.
-  // If ArcSession is waiting for mojo connection, cancels it.
-  accept_cancel_pipe_.reset();
-
-  // Stops the ARC instance to let it graceful shutdown.
-  // Note that this may fail if ARC container is not actually running, but
-  // ignore an error as described below.
-  if (state_ == State::STARTING_INSTANCE ||
-      state_ == State::RUNNING_FOR_LOGIN_SCREEN ||
-      state_ == State::CONNECTING_MOJO || state_ == State::RUNNING) {
-    StopArcInstance();
-  }
-
-  // Directly set to the STOPPED state by OnStopped(). Note that calling
-  // StopArcInstance() may not work well. At least, because the UI thread is
-  // already stopped here, ArcInstanceStopped() callback cannot be invoked.
-  OnStopped(ArcStopReason::SHUTDOWN);
 }
 
 }  // namespace

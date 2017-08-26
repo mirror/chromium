@@ -117,22 +117,6 @@ void ArcSessionRunner::RequestStop(bool always_stop_session) {
   }
 }
 
-void ArcSessionRunner::OnShutdown() {
-  DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
-
-  VLOG(1) << "OnShutdown";
-  run_requested_ = false;
-  restart_timer_.Stop();
-  if (arc_session_) {
-    DCHECK_NE(state_, State::STOPPED);
-    state_ = State::STOPPING;
-    arc_session_->OnShutdown();
-  }
-  // ArcSession::OnShutdown() invokes OnSessionStopped() synchronously.
-  // In the observer method, |arc_session_| should be destroyed.
-  DCHECK(!arc_session_);
-}
-
 bool ArcSessionRunner::IsRunning() const {
   DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
   return state_ == State::RUNNING;

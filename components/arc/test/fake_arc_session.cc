@@ -42,10 +42,6 @@ void FakeArcSession::Stop() {
   StopWithReason(ArcStopReason::SHUTDOWN);
 }
 
-void FakeArcSession::OnShutdown() {
-  StopWithReason(ArcStopReason::SHUTDOWN);
-}
-
 void FakeArcSession::StopWithReason(ArcStopReason reason) {
   for (auto& observer : observer_list_)
     observer.OnSessionStopped(reason);

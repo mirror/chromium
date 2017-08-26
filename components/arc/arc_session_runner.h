@@ -60,11 +60,6 @@ class ArcSessionRunner : public ArcSession::Observer,
   // TODO(yusukes): Remove the parameter.
   void RequestStop(bool always_stop_session);
 
-  // OnShutdown() should be called when the browser is shutting down. This can
-  // only be called on the thread that this class was created on. We assume that
-  // when this function is called, MessageLoop is no longer exists.
-  void OnShutdown();
-
   // Returns whether currently ARC instance is running or stopped respectively.
   // Note that, both can return false at same time when, e.g., starting
   // or stopping ARC instance.

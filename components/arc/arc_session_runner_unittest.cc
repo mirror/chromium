@@ -297,7 +297,7 @@ TEST_F(ArcSessionRunnerTest, Shutdown) {
   EXPECT_TRUE(arc_session_runner()->IsRunning());
 
   // Simulate shutdown.
-  arc_session_runner()->OnShutdown();
+  arc_session_runner()->RequestStop(false);
   EXPECT_EQ(ArcStopReason::SHUTDOWN, stop_reason());
   EXPECT_TRUE(arc_session_runner()->IsStopped());
 }

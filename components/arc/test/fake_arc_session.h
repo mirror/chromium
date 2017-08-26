@@ -24,7 +24,6 @@ class FakeArcSession : public ArcSession {
   bool IsForLoginScreen() override;
   void Start() override;
   void Stop() override;
-  void OnShutdown() override;
 
   // To emulate unexpected stop, such as crash.
   void StopWithReason(ArcStopReason reason);
