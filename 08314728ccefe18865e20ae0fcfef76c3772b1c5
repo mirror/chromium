@@ -2,6 +2,74 @@
   "comments": [
     {
       "key": {
+        "uuid": "f7f261a4_2c91eda5",
+        "filename": "ash/shelf/shelf_context_menu_model_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-08-26T00:18:54Z",
+      "side": 1,
+      "message": "nit: \u0027auto-hide\u0027 here and elsewhere",
+      "revId": "08314728ccefe18865e20ae0fcfef76c3772b1c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6a36017_d1d39146",
+        "filename": "ash/shelf/shelf_context_menu_model_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 274,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-08-26T00:18:54Z",
+      "side": 1,
+      "message": "Is the term \"laptop mode\" in common use? I would suggest \"Tests that exiting tablet mode reenables the auto-hide context menu item.\"",
+      "revId": "08314728ccefe18865e20ae0fcfef76c3772b1c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8264daa7_7c1bb3de",
+        "filename": "ash/shelf/shelf_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 299,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-08-26T00:18:54Z",
+      "side": 1,
+      "message": "nit: consider \"Force the shelf to be visible in tablet mode; the pref is restored on exit.\"",
+      "revId": "08314728ccefe18865e20ae0fcfef76c3772b1c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d88a59f_85db880e",
+        "filename": "ash/shelf/shelf_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 309,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-08-26T00:18:54Z",
+      "side": 1,
+      "message": "q: How does this work if tablet mode exits during fullscreen? (seems like this would apply the prefs value, but fullscreen still wants the shelf to be hidden...) Do the tests cover that scenario?",
+      "revId": "08314728ccefe18865e20ae0fcfef76c3772b1c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5da30755_b1bfdcd9",
         "filename": "ash/shell.cc",
         "patchSetId": 2
@@ -13,6 +81,194 @@
       "writtenOn": "2017-08-25T23:13:40Z",
       "side": 1,
       "message": "I moved this since shelf_controller_\u0027ctor needs the instance of tablet_mode_controller_.",
+      "revId": "08314728ccefe18865e20ae0fcfef76c3772b1c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3a07dcf_ad0c7e0f",
+        "filename": "ash/shell.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1014,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-08-26T00:18:54Z",
+      "side": 1,
+      "message": "Hopefully nothing above this requires the shelf controller.",
+      "parentUuid": "5da30755_b1bfdcd9",
+      "revId": "08314728ccefe18865e20ae0fcfef76c3772b1c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5eec11e8_09d659cd",
+        "filename": "ash/wm/tablet_mode/tablet_mode_window_manager_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-08-26T00:18:54Z",
+      "side": 1,
+      "message": "nit: \"A helper function to set the shelf auto-hide preference. This has the same effect as the user toggling the shelf context menu option.\"",
+      "revId": "08314728ccefe18865e20ae0fcfef76c3772b1c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "127fd9f9_a6c41ee7",
+        "filename": "ash/wm/tablet_mode/tablet_mode_window_manager_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 901,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-08-26T00:18:54Z",
+      "side": 1,
+      "message": "nit: \"set the pref\"",
+      "revId": "08314728ccefe18865e20ae0fcfef76c3772b1c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "962a948e_ba427048",
+        "filename": "ash/wm/tablet_mode/tablet_mode_window_manager_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 902,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-08-26T00:18:54Z",
+      "side": 1,
+      "message": "nit: this may not be necessary, setting the pref might trigger this change.",
+      "revId": "08314728ccefe18865e20ae0fcfef76c3772b1c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "930e4503_950eb657",
+        "filename": "ash/wm/tablet_mode/tablet_mode_window_manager_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 921,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-08-26T00:18:54Z",
+      "side": 1,
+      "message": "This comment could use some attention, consider:\n  // When exiting fullscreen, tablet mode should still be enabled, and the shelf should be forced to visible for tablet mode.",
+      "revId": "08314728ccefe18865e20ae0fcfef76c3772b1c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cce9e571_694ce9e9",
+        "filename": "ash/wm/tablet_mode/tablet_mode_window_manager_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 930,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-08-26T00:18:54Z",
+      "side": 1,
+      "message": "ditto about \"laptop mode\"; consider \"The shelf auto-hide preference should be restored when exiting tablet mode.\"",
+      "revId": "08314728ccefe18865e20ae0fcfef76c3772b1c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b3f6170_39d136e6",
+        "filename": "ash/wm/tablet_mode/tablet_mode_window_manager_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1107,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-08-26T00:18:54Z",
+      "side": 1,
+      "message": "nit: \u0027auto-hide\u0027 here and elsewhere",
+      "revId": "08314728ccefe18865e20ae0fcfef76c3772b1c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4786bf5a_0b13a4dd",
+        "filename": "ash/wm/tablet_mode/tablet_mode_window_manager_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1111,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-08-26T00:18:54Z",
+      "side": 1,
+      "message": "nit: this should not be necessary.",
+      "revId": "08314728ccefe18865e20ae0fcfef76c3772b1c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "202ec5c7_3316bd29",
+        "filename": "ash/wm/tablet_mode/tablet_mode_window_manager_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1131,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-08-26T00:18:54Z",
+      "side": 1,
+      "message": "nit: set the pref",
+      "revId": "08314728ccefe18865e20ae0fcfef76c3772b1c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9745ff7_2d58a403",
+        "filename": "ash/wm/tablet_mode/tablet_mode_window_manager_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1132,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-08-26T00:18:54Z",
+      "side": 1,
+      "message": "nit: this shouldn\u0027t be necessary if you set the pref",
+      "revId": "08314728ccefe18865e20ae0fcfef76c3772b1c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2285192a_1690d252",
+        "filename": "ash/wm/tablet_mode/tablet_mode_window_manager_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1142,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-08-26T00:18:54Z",
+      "side": 1,
+      "message": "nit: consider \"  // Fullscreen should stay off, but the shelf is made visible in tablet mode.\"",
       "revId": "08314728ccefe18865e20ae0fcfef76c3772b1c5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
