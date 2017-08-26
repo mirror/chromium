@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1ffce8d5_1f58caf6",
+        "filename": "components/crash/content/app/crash_export_thunks.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1128439
+      },
+      "writtenOn": "2017-08-26T23:11:38Z",
+      "side": 1,
+      "message": "This converts from const char* to StringPiece, which is unfortunate because the code which calls this function just did the reverse conversion. The conversion is cheap, but not free. We should use StringPiece here as well. See this pending change for an example:\n\nhttps://chromium-review.googlesource.com/c/chromium/src/+/634344/8/components/crash/content/app/crashpad.cc#395",
+      "revId": "efdfac62ec3191fb094698114c3e7333c21be6a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80def7db_1838567f",
+        "filename": "components/crash/content/app/crashpad.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1128439
+      },
+      "writtenOn": "2017-08-26T23:11:38Z",
+      "side": 1,
+      "message": "As was observed elsewhere, this is not safe, since StringPiece objects are not guaranteed to be NUL-terminated. In practice in this case they are always NUL-terminated but we should enforce that with DCHECKs. See here for examples:\n\nhttps://chromium-review.googlesource.com/c/chromium/src/+/634344/8/components/crash/content/app/crashpad.cc#53",
+      "revId": "efdfac62ec3191fb094698114c3e7333c21be6a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
