@@ -6,6 +6,7 @@
         "browser": [
           "chrome::mojom::DialDeviceDescriptionParser",
           "chrome::mojom::FilePatcher",
+          "chrome::mojom::PrintBackendHandler",
           "chrome::mojom::ProfileImport",
           "chrome::mojom::ResourceUsageReporter",
           "chrome::mojom::SafeArchiveAnalyzer",

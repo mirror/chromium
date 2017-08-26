@@ -1289,7 +1289,7 @@ void PrintPreviewHandler::SendPrinterCapabilities(
     const std::string& printer_name,
     std::unique_ptr<base::DictionaryValue> settings_info) {
   // Check that |settings_info| is valid.
-  if (settings_info && settings_info->Get("capabilities", nullptr)) {
+  if (!!settings_info && settings_info->Get("capabilities", nullptr)) {
     VLOG(1) << "Get printer capabilities finished";
     ResolveJavascriptCallback(base::Value(callback_id), *settings_info);
     return;

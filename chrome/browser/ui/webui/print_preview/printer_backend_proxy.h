@@ -21,7 +21,7 @@ namespace printing {
 using DefaultPrinterCallback =
     base::Callback<void(const std::string& printer_name)>;
 
-using EnumeratePrintersCallback = base::Callback<void(const PrinterList&)>;
+using GetPrintersCallback = base::Callback<void(const PrinterList&)>;
 
 using PrinterSetupCallback =
     base::Callback<void(std::unique_ptr<base::DictionaryValue> settings)>;
@@ -42,7 +42,7 @@ class PrinterBackendProxy {
 
   // Retrieves printers for display in the print dialog and calls |cb| with the
   // list.  This method expects to be called on the UI thread.
-  virtual void EnumeratePrinters(const EnumeratePrintersCallback& cb) = 0;
+  virtual void EnumeratePrinters(const GetPrintersCallback& cb) = 0;
 
   // Verifies printer setup if needed then retrieves printer capabilities for
   // |printer_name|.  |cb| is called with the capabilities dictionary or nullptr
