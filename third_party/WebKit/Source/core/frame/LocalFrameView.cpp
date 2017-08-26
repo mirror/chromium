@@ -3388,12 +3388,16 @@ void LocalFrameView::PushPaintArtifactToCompositor(
 
   DCHECK(RuntimeEnabledFeatures::SlimmingPaintV2Enabled());
 
+  if (!frame_->GetSettings()->GetAcceleratedCompositingEnabled())
+    return;
+
   Page* page = GetFrame().GetPage();
   if (!page)
     return;
 
   if (!paint_artifact_compositor_) {
-    paint_artifact_compositor_ = PaintArtifactCompositor::Create();
+    paint_artifact_compositor_ =
+        PaintArtifactCompositor::Create(*page->GetScrollingCoordinator());
     page->GetChromeClient().AttachRootLayer(
         paint_artifact_compositor_->GetWebLayer(), &GetFrame());
   }
