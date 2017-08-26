@@ -2979,11 +2979,24 @@ void SpdySession::OnAltSvc(
     QuicVersionVector advertised_versions;
     if (protocol == kProtoQUIC && !altsvc.version.empty()) {
       bool match_found = false;
-      for (const QuicVersion& supported : quic_supported_versions_) {
-        for (const uint16_t& advertised : altsvc.version) {
-          if (supported == advertised) {
-            match_found = true;
-            advertised_versions.push_back(supported);
+      if (altsvc.protocol_id.compare("h2q") == 0) {
+        // Using IETF format for advertising QUIC. In this case,
+        // |alternative_service_entry.version| will store QUIC version tags.
+        for (QuicVersion supported : quic_supported_versions_) {
+          for (uint16_t quic_version_tag : altsvc.version) {
+            if (QuicVersionToQuicTag(supported) == quic_version_tag) {
+              match_found = true;
+              advertised_versions.push_back(supported);
+            }
+          }
+        }
+      } else {
+        for (QuicVersion supported : quic_supported_versions_) {
+          for (uint16_t advertised : altsvc.version) {
+            if (supported == advertised) {
+              match_found = true;
+              advertised_versions.push_back(supported);
+            }
           }
         }
       }
