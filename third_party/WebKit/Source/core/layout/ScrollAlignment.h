@@ -87,6 +87,12 @@ struct CORE_EXPORT ScrollAlignment {
   static const ScrollAlignment kAlignLeftAlways;
   static const ScrollAlignment kAlignRightAlways;
 
+  static const ScrollAlignment kAlignCenterFocus;
+  static const ScrollAlignment kAlignTopFocus;
+  static const ScrollAlignment kAlignBottomFocus;
+  static const ScrollAlignment kAlignLeftFocus;
+  static const ScrollAlignment kAlignRightFocus;
+
   ScrollAlignmentBehavior rect_visible_;
   ScrollAlignmentBehavior rect_hidden_;
   ScrollAlignmentBehavior rect_partial_;

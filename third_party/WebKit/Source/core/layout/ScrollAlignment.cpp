@@ -64,6 +64,17 @@ const ScrollAlignment ScrollAlignment::kAlignLeftAlways = {
 const ScrollAlignment ScrollAlignment::kAlignRightAlways = {
     kScrollAlignmentRight, kScrollAlignmentRight, kScrollAlignmentRight};
 
+const ScrollAlignment ScrollAlignment::kAlignCenterFocus = {
+    kScrollAlignmentNoScroll, kScrollAlignmentCenter, kScrollAlignmentCenter};
+const ScrollAlignment ScrollAlignment::kAlignTopFocus = {
+    kScrollAlignmentNoScroll, kScrollAlignmentTop, kScrollAlignmentTop};
+const ScrollAlignment ScrollAlignment::kAlignBottomFocus = {
+    kScrollAlignmentNoScroll, kScrollAlignmentBottom, kScrollAlignmentBottom};
+const ScrollAlignment ScrollAlignment::kAlignLeftFocus = {
+    kScrollAlignmentNoScroll, kScrollAlignmentLeft, kScrollAlignmentLeft};
+const ScrollAlignment ScrollAlignment::kAlignRightFocus = {
+    kScrollAlignmentNoScroll, kScrollAlignmentRight, kScrollAlignmentRight};
+
 #define MIN_INTERSECT_FOR_REVEAL 32
 
 LayoutRect ScrollAlignment::GetRectToExpose(const LayoutRect& visible_rect,

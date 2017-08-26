@@ -290,7 +290,7 @@ void FrameSelection::DidSetSelectionDeprecated(
                       ? ScrollAlignment::kAlignTopAlways
                       : ScrollAlignment::kAlignToEdgeIfNeeded;
 
-    RevealSelection(alignment, kRevealExtent);
+    RevealSelection(alignment, alignment, FocusOptions(), kRevealExtent);
   }
 
   NotifyAccessibilityForSelectionChange();
@@ -942,7 +942,9 @@ IntRect FrameSelection::ComputeRectToScroll(
 }
 
 // TODO(editing-dev): This should be done in FlatTree world.
-void FrameSelection::RevealSelection(const ScrollAlignment& alignment,
+void FrameSelection::RevealSelection(const ScrollAlignment& align_x,
+                                     const ScrollAlignment& align_y,
+                                     const FocusOptions& options,
                                      RevealExtentOption reveal_extent_option) {
   DCHECK(IsAvailable());
 
@@ -965,10 +967,20 @@ void FrameSelection::RevealSelection(const ScrollAlignment& alignment,
   // This function is needed to make sure that ComputeRectToScroll below has the
   // sticky offset info available before the computation.
   GetDocument().EnsurePaintLocationDataValidForNode(start.AnchorNode());
-  if (!start.AnchorNode()->GetLayoutObject()->ScrollRectToVisible(
-          LayoutRect(ComputeRectToScroll(reveal_extent_option)), alignment,
-          alignment))
-    return;
+
+  if (!options.preventScroll()) {
+    ScrollBehavior behavior = kScrollBehaviorAuto;
+
+    if (RuntimeEnabledFeatures::FocusOptionsEnabled() &&
+        options.hasScrollOptions()) {
+      if (options.scrollOptions().behavior() == "smooth")
+        behavior = kScrollBehaviorSmooth;
+    }
+    if (!start.AnchorNode()->GetLayoutObject()->ScrollRectToVisible(
+            LayoutRect(ComputeRectToScroll(reveal_extent_option)), align_x,
+            align_y, kProgrammaticScroll, true, behavior))
+      return;
+  }
 
   UpdateAppearance();
 }

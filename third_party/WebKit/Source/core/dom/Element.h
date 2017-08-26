@@ -36,6 +36,8 @@
 #include "core/dom/ElementData.h"
 #include "core/dom/SpaceSplitString.h"
 #include "core/dom/WhitespaceAttacher.h"
+#include "core/html/FocusOptions.h"
+#include "core/layout/ScrollAlignment.h"
 #include "core/resize_observer/ResizeObserver.h"
 #include "platform/bindings/TraceWrapperMember.h"
 #include "platform/heap/Handle.h"
@@ -58,6 +60,7 @@ class DOMTokenList;
 class ElementRareData;
 class ElementShadow;
 class ExceptionState;
+class FocusOptions;
 class Image;
 class InputDeviceCapabilities;
 class Locale;
@@ -111,15 +114,18 @@ struct FocusParams {
   FocusParams() {}
   FocusParams(SelectionBehaviorOnFocus selection,
               WebFocusType focus_type,
-              InputDeviceCapabilities* capabilities)
+              InputDeviceCapabilities* capabilities,
+              FocusOptions focus_options = FocusOptions())
       : selection_behavior(selection),
         type(focus_type),
-        source_capabilities(capabilities) {}
+        source_capabilities(capabilities),
+        options(focus_options) {}
 
   SelectionBehaviorOnFocus selection_behavior =
       SelectionBehaviorOnFocus::kRestore;
   WebFocusType type = kWebFocusTypeNone;
   Member<InputDeviceCapabilities> source_capabilities = nullptr;
+  FocusOptions options = FocusOptions();
 };
 
 typedef HeapVector<TraceWrapperMember<Attr>> AttrNodeList;
@@ -549,7 +555,13 @@ class CORE_EXPORT Element : public ContainerNode {
   virtual Image* ImageContents() { return nullptr; }
 
   virtual void focus(const FocusParams& = FocusParams());
-  virtual void UpdateFocusAppearance(SelectionBehaviorOnFocus);
+  void focus(FocusOptions);
+
+  ScrollAlignment ToFocusPhysicalAlignment(const FocusOptions&,
+                                           ScrollOrientation);
+  void ScrollFocusedElementIntoView(const FocusOptions&);
+  virtual void UpdateFocusAppearance(SelectionBehaviorOnFocus,
+                                     const FocusOptions& = FocusOptions());
   virtual void blur();
 
   void setDistributeScroll(ScrollStateCallback*, String native_scroll_behavior);
@@ -565,8 +577,9 @@ class CORE_EXPORT Element : public ContainerNode {
 
   // Whether this element can receive focus at all. Most elements are not
   // focusable but some elements, such as form controls and links, are. Unlike
-  // layoutObjectIsFocusable(), this method may be called when layout is not up
-  // to date, so it must not use the layoutObject to determine focusability.
+  // layoutObjectIsFocusable(), this method may be called when layout is not
+  // up to date, so it must not use the layoutObject to determine
+  // focusability.
   virtual bool SupportsFocus() const;
   // isFocusable(), isKeyboardFocusable(), and isMouseFocusable() check
   // whether the element can actually be focused. Callers should ensure
@@ -643,9 +656,10 @@ class CORE_EXPORT Element : public ContainerNode {
   // Called by the parser when this element's close tag is reached, signaling
   // that all child tags have been parsed and added.  This is needed for
   // <applet> and <object> elements, which can't lay themselves out until they
-  // know all of their nested <param>s. [Radar 3603191, 4040848].  Also used for
-  // script elements and some SVG elements for similar purposes, but making
-  // parsing a special case in this respect should be avoided if possible.
+  // know all of their nested <param>s. [Radar 3603191, 4040848].  Also used
+  // for script elements and some SVG elements for similar purposes, but
+  // making parsing a special case in this respect should be avoided if
+  // possible.
   virtual void FinishParsingChildren();
 
   void BeginParsingChildren() { SetIsFinishedParsingChildren(false); }
@@ -698,9 +712,9 @@ class CORE_EXPORT Element : public ContainerNode {
 
   bool CanContainRangeEndPoint() const override { return true; }
 
-  // Used for disabled form elements; if true, prevents mouse events from being
-  // dispatched to event listeners, and prevents DOMActivate events from being
-  // sent at all.
+  // Used for disabled form elements; if true, prevents mouse events from
+  // being dispatched to event listeners, and prevents DOMActivate events from
+  // being sent at all.
   virtual bool IsDisabledFormControl() const { return false; }
 
   bool HasPendingResources() const {

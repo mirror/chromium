@@ -206,6 +206,8 @@ class CORE_EXPORT FrameSelection final
   // a case of RangeSelection. crbug.com/443061
   void RevealSelection(
       const ScrollAlignment& = ScrollAlignment::kAlignCenterIfNeeded,
+      const ScrollAlignment& = ScrollAlignment::kAlignCenterIfNeeded,
+      const FocusOptions& = FocusOptions(),
       RevealExtentOption = kDoNotRevealExtent);
   void SetSelectionFromNone();
 

@@ -2779,6 +2779,11 @@ bool Element::hasAttributeNS(const AtomicString& namespace_uri,
   return GetElementData()->Attributes().Find(q_name);
 }
 
+void Element::focus(FocusOptions options) {
+  focus(FocusParams(SelectionBehaviorOnFocus::kRestore, kWebFocusTypeNone,
+                    nullptr, options));
+}
+
 void Element::focus(const FocusParams& params) {
   if (!isConnected())
     return;
@@ -2809,7 +2814,7 @@ void Element::focus(const FocusParams& params) {
                          .FindFocusableElementInShadowHost(*this);
     if (found && IsShadowIncludingInclusiveAncestorOf(found)) {
       found->focus(FocusParams(SelectionBehaviorOnFocus::kReset,
-                               kWebFocusTypeForward, nullptr));
+                               kWebFocusTypeForward, nullptr, params.options));
       return;
     }
   }
@@ -2831,8 +2836,70 @@ void Element::focus(const FocusParams& params) {
   }
 }
 
-void Element::UpdateFocusAppearance(
-    SelectionBehaviorOnFocus selection_behavior) {
+ScrollAlignment Element::ToFocusPhysicalAlignment(
+    const FocusOptions& focusOptions,
+    ScrollOrientation axis) {
+  if (!focusOptions.hasScrollOptions())
+    return ScrollAlignment::kAlignCenterIfNeeded;
+
+  ScrollIntoViewOptions options = focusOptions.scrollOptions();
+
+  bool is_horizontal_writing_mode =
+      GetComputedStyle()->IsHorizontalWritingMode();
+
+  String alignment =
+      ((axis == kHorizontalScroll && is_horizontal_writing_mode) ||
+       (axis == kVerticalScroll && !is_horizontal_writing_mode))
+          ? options.inlinePosition()
+          : options.block();
+
+  if (alignment == "center")
+    return ScrollAlignment::kAlignCenterFocus;
+  if (alignment == "nearest")
+    return ScrollAlignment::kAlignToEdgeIfNeeded;
+  if (alignment == "start") {
+    return (axis == kHorizontalScroll) ? ScrollAlignment::kAlignLeftFocus
+                                       : ScrollAlignment::kAlignTopFocus;
+  }
+  if (alignment == "end") {
+    return (axis == kHorizontalScroll) ? ScrollAlignment::kAlignRightFocus
+                                       : ScrollAlignment::kAlignBottomFocus;
+  }
+
+  // Default values
+  if (is_horizontal_writing_mode) {
+    return (axis == kHorizontalScroll) ? ScrollAlignment::kAlignToEdgeIfNeeded
+                                       : ScrollAlignment::kAlignTopFocus;
+  }
+  return (axis == kHorizontalScroll) ? ScrollAlignment::kAlignLeftFocus
+                                     : ScrollAlignment::kAlignToEdgeIfNeeded;
+}
+
+void Element::ScrollFocusedElementIntoView(const FocusOptions& options) {
+  if (options.preventScroll())
+    return;
+
+  if (!RuntimeEnabledFeatures::FocusOptionsEnabled() ||
+      !options.hasScrollOptions()) {
+    GetLayoutObject()->ScrollRectToVisible(BoundingBox());
+    return;
+  }
+
+  ScrollBehavior behavior = (options.scrollOptions().behavior() == "smooth")
+                                ? kScrollBehaviorSmooth
+                                : kScrollBehaviorAuto;
+  ScrollAlignment align_x =
+      ToFocusPhysicalAlignment(options, kHorizontalScroll);
+  ScrollAlignment align_y = ToFocusPhysicalAlignment(options, kVerticalScroll);
+
+  GetLayoutObject()->ScrollRectToVisible(BoundingBox(), align_x, align_y,
+                                         kProgrammaticScroll, true, behavior);
+
+  GetDocument().SetSequentialFocusNavigationStartingPoint(this);
+}
+
+void Element::UpdateFocusAppearance(SelectionBehaviorOnFocus selection_behavior,
+                                    const FocusOptions& options) {
   if (selection_behavior == SelectionBehaviorOnFocus::kNone)
     return;
   if (IsRootEditableElement(*this)) {
@@ -2860,10 +2927,13 @@ void Element::UpdateFocusAppearance(
             .SetShouldClearTypingStyle(true)
             .SetDoNotSetFocus(true)
             .Build());
-    frame->Selection().RevealSelection();
+
+    frame->Selection().RevealSelection(
+        ToFocusPhysicalAlignment(options, kHorizontalScroll),
+        ToFocusPhysicalAlignment(options, kVerticalScroll), options);
   } else if (GetLayoutObject() &&
              !GetLayoutObject()->IsLayoutEmbeddedContent()) {
-    GetLayoutObject()->ScrollRectToVisible(BoundingBox());
+    ScrollFocusedElementIntoView(options);
   }
 }
 
