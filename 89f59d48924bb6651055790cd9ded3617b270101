@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "22d62913_a1b44238",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1231224
+      },
+      "writtenOn": "2017-08-26T19:40:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "223c6cbf_5f5a5a6f",
+      "revId": "89f59d48924bb6651055790cd9ded3617b270101",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e42e43df_4679047b",
         "filename": "components/viz/service/frame_sinks/root_compositor_frame_sink_impl.cc",
         "patchSetId": 3
@@ -47,6 +65,24 @@
       "writtenOn": "2017-08-25T15:21:18Z",
       "side": 1,
       "message": "All this manual building of hit test regions is making me sad, as are all the heap allocations... :-( OK fo rnow.",
+      "revId": "89f59d48924bb6651055790cd9ded3617b270101",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02420ed9_63467ab0",
+        "filename": "services/ui/ws/frame_generator.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1231224
+      },
+      "writtenOn": "2017-08-26T19:40:04Z",
+      "side": 1,
+      "message": "I have some ideas that I hope will cheer you up, but it seems better to save this for another CL.",
+      "parentUuid": "373379b2_b2a416b2",
       "revId": "89f59d48924bb6651055790cd9ded3617b270101",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -100,6 +136,30 @@
     },
     {
       "key": {
+        "uuid": "00f1f693_0b5b0ec7",
+        "filename": "services/ui/ws/frame_generator.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1231224
+      },
+      "writtenOn": "2017-08-26T19:40:04Z",
+      "side": 1,
+      "message": "If we assume that if neither kHitTestMouse or kHitTestTouch are set then it applies to both then that will be consistent with what we have so far - and then we can revisit when we have it working for aura and content. \n\nDone",
+      "parentUuid": "1b4f8298_d64290bb",
+      "range": {
+        "startLine": 118,
+        "startChar": 6,
+        "endLine": 118,
+        "endChar": 65
+      },
+      "revId": "89f59d48924bb6651055790cd9ded3617b270101",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bad8888d_05b5e499",
         "filename": "services/ui/ws/frame_generator.cc",
         "patchSetId": 3
@@ -132,6 +192,24 @@
       "revId": "89f59d48924bb6651055790cd9ded3617b270101",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b795e1d2_7f7b1e5f",
+        "filename": "services/ui/ws/frame_generator.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1231224
+      },
+      "writtenOn": "2017-08-26T19:40:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ecccfdc8_d05973e7",
+      "revId": "89f59d48924bb6651055790cd9ded3617b270101",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
