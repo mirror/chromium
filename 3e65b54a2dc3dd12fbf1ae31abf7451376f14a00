@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c0e852f5_1bcfeccd",
+        "filename": "third_party/WebKit/Source/platform/graphics/compositing/PaintArtifactCompositor.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-08-26T01:03:46Z",
+      "side": 1,
+      "message": "Client can be a const \u0026 I think. Always non-null.",
+      "revId": "3e65b54a2dc3dd12fbf1ae31abf7451376f14a00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
