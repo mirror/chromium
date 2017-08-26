@@ -13,6 +13,7 @@
 namespace net {
 
 class SpawnerCommunicator;
+class RemoteTestServerProxy;
 
 // The RemoteTestServer runs an external Python-based test server in another
 // machine that is different from the machine in which RemoteTestServer runs.
@@ -54,6 +55,8 @@ class RemoteTestServer : public BaseTestServer {
   // Helper to start and stop instances of the Python test server that runs on
   // the host machine.
   std::unique_ptr<SpawnerCommunicator> spawner_communicator_;
+
+  std::unique_ptr<RemoteTestServerProxy> test_server_proxy_;
 
   DISALLOW_COPY_AND_ASSIGN(RemoteTestServer);
 };

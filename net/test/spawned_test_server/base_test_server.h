@@ -373,7 +373,8 @@ class BaseTestServer {
 
   // Parses the server data read from the test server.  Returns true
   // on success.
-  bool ParseServerData(const std::string& server_data) WARN_UNUSED_RESULT;
+  bool SetAndParseServerData(const std::string& server_data,
+                             int* port) WARN_UNUSED_RESULT;
 
   // Generates a DictionaryValue with the arguments for launching the external
   // Python test server.
