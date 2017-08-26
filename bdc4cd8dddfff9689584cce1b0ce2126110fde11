@@ -46,6 +46,30 @@
       "revId": "bdc4cd8dddfff9689584cce1b0ce2126110fde11",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a4473f01_10535bcc",
+        "filename": "third_party/WebKit/Source/core/svg/SVGLengthContext.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 290,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-08-26T08:36:47Z",
+      "side": 1,
+      "message": "\u003e ...in this file...\n\nSo the other hunk as well. (Should be testable by setting SVGLength.value.)",
+      "parentUuid": "224b2d24_39fe8ec3",
+      "range": {
+        "startLine": 288,
+        "startChar": 4,
+        "endLine": 290,
+        "endChar": 12
+      },
+      "revId": "bdc4cd8dddfff9689584cce1b0ce2126110fde11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
