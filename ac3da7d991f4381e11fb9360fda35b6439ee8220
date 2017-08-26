@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "654e3c3c_1224e088",
+        "filename": "chrome/browser/extensions/permissions_updater.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-26T00:04:26Z",
+      "side": 1,
+      "message": "nit: no extensions prefix (also below)",
+      "range": {
+        "startLine": 249,
+        "startChar": 4,
+        "endLine": 249,
+        "endChar": 16
+      },
+      "revId": "ac3da7d991f4381e11fb9360fda35b6439ee8220",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85a10f9f_56072120",
+        "filename": "chrome/browser/extensions/permissions_updater.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-26T00:04:26Z",
+      "side": 1,
+      "message": "nit: Doesn\u0027t look like we need the profile for this?",
+      "range": {
+        "startLine": 250,
+        "startChar": 69,
+        "endLine": 250,
+        "endChar": 76
+      },
+      "revId": "ac3da7d991f4381e11fb9360fda35b6439ee8220",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
