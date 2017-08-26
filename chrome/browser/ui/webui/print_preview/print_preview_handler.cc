@@ -861,6 +861,15 @@ void PrintPreviewHandler::HandlePrint(const base::ListValue* args) {
     is_cloud_printer = settings->HasKey(printing::kSettingCloudPrintId);
   }
 
+  LOG(ERROR)
+      << "** JAY **PrintPreviewHandler::HandlePrint print_with_extension="
+      << print_with_extension << " print_to_pdf=" << print_to_pdf;
+  if (!print_with_extension) {
+    LOG(ERROR)
+        << "** JAY **PrintPreviewHandler::HandlePrint NO EXTENSION, SKIPPING";
+    return;
+  }
+
   int page_count = 0;
   settings->GetInteger(printing::kSettingPreviewPageCount, &page_count);
 

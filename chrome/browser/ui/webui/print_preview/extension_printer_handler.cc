@@ -49,7 +49,7 @@ namespace {
 
 const char kContentTypePdf[] = "application/pdf";
 const char kContentTypePWGRaster[] = "image/pwg-raster";
-const char kContentTypeAll[] = "*/*";
+// const char kContentTypeAll[] = "*/*";
 
 const char kInvalidDataPrintError[] = "INVALID_DATA";
 const char kInvalidTicketPrintError[] = "INVALID_TICKET";
@@ -122,7 +122,9 @@ bool ParseProvisionalUsbPrinterId(const std::string& printer_id,
 }  // namespace
 
 ExtensionPrinterHandler::ExtensionPrinterHandler(Profile* profile)
-    : profile_(profile), weak_ptr_factory_(this) {}
+    : profile_(profile), weak_ptr_factory_(this) {
+  LOG(ERROR) << "** JAY ** ExtensionPrinterHandler";
+}
 
 ExtensionPrinterHandler::~ExtensionPrinterHandler() {
 }
@@ -136,6 +138,7 @@ void ExtensionPrinterHandler::Reset() {
 
 void ExtensionPrinterHandler::StartGetPrinters(
     const PrinterHandler::GetPrintersCallback& callback) {
+  LOG(ERROR) << "** JAY ** ExtensionPrinterHandler::StartGetPrinters";
   // Assume that there can only be one printer enumeration occuring at once.
   DCHECK_EQ(pending_enumeration_count_, 0);
   pending_enumeration_count_ = 1;
@@ -184,6 +187,8 @@ void ExtensionPrinterHandler::StartPrint(
     const gfx::Size& page_size,
     const scoped_refptr<base::RefCountedBytes>& print_data,
     const PrinterHandler::PrintCallback& callback) {
+  LOG(ERROR) << "** JAY ** ExtensionPrinterHandler::StartPrint";
+
   std::unique_ptr<extensions::PrinterProviderPrintJob> print_job(
       new extensions::PrinterProviderPrintJob());
   print_job->printer_id = destination_id;
@@ -196,8 +201,10 @@ void ExtensionPrinterHandler::StartPrint(
   cloud_devices::printer::ContentTypesCapability content_types;
   content_types.LoadFrom(printer_description);
 
-  const bool kUsePdf = content_types.Contains(kContentTypePdf) ||
-                       content_types.Contains(kContentTypeAll);
+  // const bool kUsePdf = content_types.Contains(kContentTypePdf) ||
+  //                      content_types.Contains(kContentTypeAll);
+
+  const bool kUsePdf = false;
 
   if (kUsePdf) {
     // TODO(tbarzic): Consider writing larger PDF to disk and provide the data
@@ -275,16 +282,16 @@ void ExtensionPrinterHandler::ConvertToPWGRaster(
 void ExtensionPrinterHandler::DispatchPrintJob(
     const PrinterHandler::PrintCallback& callback,
     std::unique_ptr<extensions::PrinterProviderPrintJob> print_job) {
-  if (print_job->document_path.empty() && !print_job->document_bytes) {
-    WrapPrintCallback(callback, false, kInvalidDataPrintError);
-    return;
-  }
+  //  if (print_job->document_path.empty() && !print_job->document_bytes) {
+  WrapPrintCallback(callback, false, kInvalidDataPrintError);
+  //    return;
+  //  }
 
-  extensions::PrinterProviderAPIFactory::GetInstance()
-      ->GetForBrowserContext(profile_)
-      ->DispatchPrintRequested(
-          *print_job, base::Bind(&ExtensionPrinterHandler::WrapPrintCallback,
-                                 weak_ptr_factory_.GetWeakPtr(), callback));
+  // extensions::PrinterProviderAPIFactory::GetInstance()
+  //     ->GetForBrowserContext(profile_)
+  //     ->DispatchPrintRequested(
+  //         *print_job, base::Bind(&ExtensionPrinterHandler::WrapPrintCallback,
+  //                                weak_ptr_factory_.GetWeakPtr(), callback));
 }
 
 void ExtensionPrinterHandler::WrapGetPrintersCallback(
