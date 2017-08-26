@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "ed63d4cd_54ab419c",
+        "filename": "services/ui/public/interfaces/window_tree.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 346,
+      "author": {
+        "id": 1211635
+      },
+      "writtenOn": "2017-08-26T00:23:49Z",
+      "side": 1,
+      "message": "True true, removed |connection_id| from OnEmbed.\nRemoved |client_id| from OnConnect (what Sadrul actually meant). Right now we still do other initialization there (https://cs.chromium.org/chromium/src/ui/aura/mus/window_tree_client.cc?gsn\u003dOnEmbedImpl\u0026l\u003d1680). Scott, WDYT of only removing the id in this CL and looking into getting rid of OnConnect completely in another CL?",
+      "parentUuid": "4081c3f1_32e1a1b5",
+      "revId": "09c02ba21336d814dad40dbbfade1b0dd64ca09c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ea65ea02_d631bca0",
         "filename": "services/ui/ws/ids.h",
         "patchSetId": 4
@@ -57,6 +75,30 @@
       "revId": "09c02ba21336d814dad40dbbfade1b0dd64ca09c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02bac79b_2f6083e5",
+        "filename": "services/ui/ws/ids.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1211635
+      },
+      "writtenOn": "2017-08-26T00:23:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ea65ea02_d631bca0",
+      "range": {
+        "startLine": 68,
+        "startChar": 7,
+        "endLine": 68,
+        "endChar": 44
+      },
+      "revId": "09c02ba21336d814dad40dbbfade1b0dd64ca09c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -107,6 +149,30 @@
     },
     {
       "key": {
+        "uuid": "34080ab3_e9e1fcec",
+        "filename": "services/ui/ws/window_manager_client_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 391,
+      "author": {
+        "id": 1211635
+      },
+      "writtenOn": "2017-08-26T00:23:49Z",
+      "side": 1,
+      "message": "I feel like checking if the high bits is 1 can test whether it\u0027s correctly embedded in *WM* and not other clients? But it is true that this won\u0027t work if we change WM id to any other value. I made the change here. In other tests tho (e.g. window-tree-client-unittests), I still need to manually put the client-id part to client-window-id because WindowTree expects that in functions like AddWindow etc., wdyt?",
+      "parentUuid": "db633564_6061e64f",
+      "range": {
+        "startLine": 391,
+        "startChar": 2,
+        "endLine": 391,
+        "endChar": 68
+      },
+      "revId": "09c02ba21336d814dad40dbbfade1b0dd64ca09c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "71dbd556_fee82919",
         "filename": "services/ui/ws/window_tree.cc",
         "patchSetId": 4
@@ -124,6 +190,24 @@
     },
     {
       "key": {
+        "uuid": "e78ff05f_a61c4818",
+        "filename": "services/ui/ws/window_tree.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 487,
+      "author": {
+        "id": 1211635
+      },
+      "writtenOn": "2017-08-26T00:23:49Z",
+      "side": 1,
+      "message": "oh cool, done!",
+      "parentUuid": "71dbd556_fee82919",
+      "revId": "09c02ba21336d814dad40dbbfade1b0dd64ca09c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0e8afc77_654e2d3c",
         "filename": "services/ui/ws/window_tree.cc",
         "patchSetId": 4
@@ -135,6 +219,30 @@
       "writtenOn": "2017-08-25T22:11:56Z",
       "side": 1,
       "message": "I don\u0027t think you need the LoWord(value) part here, just value (because you know nothing is set in the high-word because of the conditional).",
+      "range": {
+        "startLine": 1469,
+        "startChar": 41,
+        "endLine": 1469,
+        "endChar": 48
+      },
+      "revId": "09c02ba21336d814dad40dbbfade1b0dd64ca09c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8791fbad_14936f0c",
+        "filename": "services/ui/ws/window_tree.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1469,
+      "author": {
+        "id": 1211635
+      },
+      "writtenOn": "2017-08-26T00:23:49Z",
+      "side": 1,
+      "message": "right, done",
+      "parentUuid": "0e8afc77_654e2d3c",
       "range": {
         "startLine": 1469,
         "startChar": 41,
@@ -170,6 +278,30 @@
     },
     {
       "key": {
+        "uuid": "42002c9e_3fd49523",
+        "filename": "services/ui/ws/window_tree.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1481,
+      "author": {
+        "id": 1211635
+      },
+      "writtenOn": "2017-08-26T00:23:49Z",
+      "side": 1,
+      "message": "yes, done",
+      "parentUuid": "ae5b7b40_f831f01c",
+      "range": {
+        "startLine": 1481,
+        "startChar": 4,
+        "endLine": 1481,
+        "endChar": 20
+      },
+      "revId": "09c02ba21336d814dad40dbbfade1b0dd64ca09c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f6214144_ef1c3a5e",
         "filename": "services/ui/ws/window_tree.h",
         "patchSetId": 4
@@ -193,6 +325,30 @@
     },
     {
       "key": {
+        "uuid": "1cb35635_cb86255b",
+        "filename": "services/ui/ws/window_tree.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 424,
+      "author": {
+        "id": 1211635
+      },
+      "writtenOn": "2017-08-26T00:23:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f6214144_ef1c3a5e",
+      "range": {
+        "startLine": 423,
+        "startChar": 5,
+        "endLine": 424,
+        "endChar": 13
+      },
+      "revId": "09c02ba21336d814dad40dbbfade1b0dd64ca09c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7a798f76_15761c34",
         "filename": "ui/aura/mus/window_tree_client.cc",
         "patchSetId": 4
@@ -207,6 +363,24 @@
       "revId": "09c02ba21336d814dad40dbbfade1b0dd64ca09c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89c1acf7_c9b72206",
+        "filename": "ui/aura/mus/window_tree_client.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 972,
+      "author": {
+        "id": 1211635
+      },
+      "writtenOn": "2017-08-26T00:23:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7a798f76_15761c34",
+      "revId": "09c02ba21336d814dad40dbbfade1b0dd64ca09c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
