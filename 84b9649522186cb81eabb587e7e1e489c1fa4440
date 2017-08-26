@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "33d1c90a_b5c2f49d",
+        "filename": "components/security_interstitials_strings.grdp",
+        "patchSetId": 2
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-08-26T01:00:14Z",
+      "side": 1,
+      "message": "I think that splitting this up into two sentences like this is risky. It might look to a translator that \"Header of an error page.\" is a full description (and perhaps that this is the string used for every \"error page\").\n\nIn addition, the second sentence right now is general context that can apply to every interstitial string. I think it would be good to be a little more specific, e.g. by referring to AV or firewalls as an example.",
+      "revId": "84b9649522186cb81eabb587e7e1e489c1fa4440",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1cc5c280_8b2de29d",
+        "filename": "components/security_interstitials_strings.grdp",
+        "patchSetId": 2
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-08-26T01:00:14Z",
+      "side": 1,
+      "message": "ditto for the first sentence.\n\nI think it\u0027s not a good idea to reference exact related strings, as these can change.\n(A better approach is to provide example screenshots, but... that effort is stuck.)\n\nThe \"IT administrator\" explanation is good!\n\nThe placeholder description sounds redundant with the inline format, although I don\u0027t think it hurts.",
+      "revId": "84b9649522186cb81eabb587e7e1e489c1fa4440",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd393f3d_7b821c53",
+        "filename": "components/security_interstitials_strings.grdp",
+        "patchSetId": 2
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-08-26T01:00:14Z",
+      "side": 1,
+      "message": "Since the long part of this description is shared with the next string, could you separate that out and concatenate in C++?",
+      "revId": "84b9649522186cb81eabb587e7e1e489c1fa4440",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
