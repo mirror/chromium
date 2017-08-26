@@ -72,8 +72,6 @@ void VoiceInteractionValuePropScreen::OnSkipPressed() {
 
 void VoiceInteractionValuePropScreen::OnNextPressed() {
   GetVoiceInteractionHomeService()->OnAssistantAppRequested();
-  ProfileManager::GetActiveUserProfile()->GetPrefs()->SetBoolean(
-      prefs::kArcVoiceInteractionValuePropAccepted, true);
   Finish(ScreenExitCode::VOICE_INTERACTION_VALUE_PROP_ACCEPTED);
 }
 

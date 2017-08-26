@@ -300,9 +300,27 @@ void ArcVoiceInteractionFrameworkService::SetVoiceInteractionState(
   // Android side so we don't need to synchronize it here.
   if (state_ == ash::VoiceInteractionState::NOT_READY) {
     PrefService* prefs = Profile::FromBrowserContext(context_)->GetPrefs();
+    bool value_prop_accepted =
+        prefs->GetBoolean(prefs::kArcVoiceInteractionValuePropAccepted);
+
+    // TODO(muyuanli): Existing users before prefs::kVoiceInteractionEnabled and
+    // prefs::kVoiceInteractionContextEnabled are introduced will have default
+    // |false| value. To avoid breaking existing users, if they have already
+    // accepted value prop (prefs::kArcVoiceInteractionValuePropAccepted ==
+    // true), but prefs::kVoiceInteractionEnabled and
+    // prefs::kVoiceInteractionContextEnabled are not set, we set them to true.
+    // prefs::kArcVoiceInteractionValuePropAccepted == true, but
+    // prefs::kVoiceInteractionEnabled and
+    // prefs::kVoiceInteractionContextEnabled are not set, is an invalid state.
+    bool enable_voice_interaction =
+        value_prop_accepted &&
+        (!prefs->GetUserPrefValue(prefs::kVoiceInteractionEnabled) ||
+         prefs->GetBoolean(prefs::kVoiceInteractionEnabled));
+    SetVoiceInteractionEnabled(enable_voice_interaction);
     SetVoiceInteractionContextEnabled(
-        prefs->GetBoolean(prefs::kArcVoiceInteractionValuePropAccepted) &&
-        prefs->GetBoolean(prefs::kVoiceInteractionContextEnabled));
+        enable_voice_interaction &&
+        (prefs->GetBoolean(prefs::kVoiceInteractionContextEnabled) ||
+         !prefs->GetUserPrefValue(prefs::kVoiceInteractionContextEnabled)));
   }
   state_ = state;
   ash::Shell::Get()->NotifyVoiceInteractionStatusChanged(state);
@@ -334,6 +352,8 @@ void ArcVoiceInteractionFrameworkService::OnArcPlayStoreEnabledChanged(
     bool enabled) {
   if (enabled)
     return;
+  PrefService* prefs = Profile::FromBrowserContext(context_)->GetPrefs();
+  prefs->SetBoolean(prefs::kArcVoiceInteractionValuePropAccepted, false);
   mojom::VoiceInteractionStatusPtr status =
       mojom::VoiceInteractionStatus::New();
   status->configured = false;
@@ -399,6 +419,8 @@ void ArcVoiceInteractionFrameworkService::SetVoiceInteractionEnabled(
   // all possible entry points on CrOS side with this flag. In this case,
   // we only need to set CrOS side flag.
   prefs->SetBoolean(prefs::kVoiceInteractionEnabled, enable);
+  if (!enable)
+    prefs->SetBoolean(prefs::kVoiceInteractionContextEnabled, false);
 }
 
 void ArcVoiceInteractionFrameworkService::SetVoiceInteractionContextEnabled(
@@ -505,8 +527,8 @@ bool ArcVoiceInteractionFrameworkService::ValidateTimeSinceUserInteraction() {
 
 bool ArcVoiceInteractionFrameworkService::InitiateUserInteraction() {
   VLOG(1) << "Start voice interaction.";
-  if (!Profile::FromBrowserContext(context_)->GetPrefs()->GetBoolean(
-          prefs::kArcVoiceInteractionValuePropAccepted)) {
+  PrefService* prefs = Profile::FromBrowserContext(context_)->GetPrefs();
+  if (!prefs->GetBoolean(prefs::kArcVoiceInteractionValuePropAccepted)) {
     VLOG(1) << "Voice interaction feature not accepted.";
     // If voice interaction value prop already showing, return.
     if (chromeos::LoginDisplayHost::default_host())
@@ -520,6 +542,9 @@ bool ArcVoiceInteractionFrameworkService::InitiateUserInteraction() {
     display_host->StartVoiceInteractionOobe();
     return false;
   }
+
+  if (!prefs->GetBoolean(prefs::kVoiceInteractionEnabled))
+    return false;
 
   if (state_ == ash::VoiceInteractionState::NOT_READY) {
     // If the container side is not ready, we will be waiting for a while.
