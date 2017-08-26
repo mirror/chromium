@@ -16,6 +16,24 @@
       "revId": "3e65b54a2dc3dd12fbf1ae31abf7451376f14a00",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3b82c01_5221537c",
+        "filename": "third_party/WebKit/Source/platform/graphics/compositing/PaintArtifactCompositor.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-08-26T05:24:10Z",
+      "side": 1,
+      "message": "Our callback is a ScrollingCoordinator and it\u0027s only around when GetAcceleratedCompositingEnabled is true. Thinking about this... we shouldn\u0027t be doing most of PaintArtifactCompositor without accelerated compositing. I\u0027ve refactored WebScrollLayerClient to be a reference and added a return from PushPaintArtifactToCompositor if accelerated compositing is not enabled (this is similar to PaintLayerCompositor::UpdateWithoutAcceleratedCompositing). We still might need to run parts of PAC in the future even when accelerated compositing is disabled.\n\nI don\u0027t think it can be const because we need to call a non-const function on it (DidScroll).",
+      "parentUuid": "c0e852f5_1bcfeccd",
+      "revId": "3e65b54a2dc3dd12fbf1ae31abf7451376f14a00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
