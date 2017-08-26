@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b20dc44c_7006794a",
+        "filename": "ash/test/ash_test_helper.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-26T00:18:03Z",
+      "side": 1,
+      "message": "nit: no {}",
+      "revId": "21e4ca3548a066be9103ed01eb79e7cd5d9ada03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dcbac7de_42231e73",
+        "filename": "ash/test/ash_test_helper.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-26T00:18:03Z",
+      "side": 1,
+      "message": "optional: There aren\u0027t too many callers of this function. I\u0027d be OK with not providing a default parameter and updating the call sites. I\u0027m sure you could TBR sky for the 1-line change in chrome/test. Up to you.",
+      "revId": "21e4ca3548a066be9103ed01eb79e7cd5d9ada03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
