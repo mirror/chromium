@@ -8,6 +8,8 @@ syntax = "proto2";
 
 package safe_browsing;
 
+import "csd.proto";
+
 option optimize_for = LITE_RUNTIME;
 
 // Describes the state of the database manager.
