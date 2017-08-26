@@ -1,0 +1,174 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da97cf08_9b6c3ce7",
+        "filename": "media/blink/video_frame_compositor.cc",
+        "patchSetId": 33
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-08-26T01:54:46Z",
+      "side": 1,
+      "message": "It doesn\u0027t look like it is ever possible for |submitter_| to be null if |surface_layer_for_video_enabled_| is true - the equivalent check on |client_| is only required because that member is set separately, after construction.",
+      "revId": "f852897c8ada854b44acdcae8821a834f13737cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3eb9193f_5da5cf5d",
+        "filename": "media/blink/video_frame_compositor.cc",
+        "patchSetId": 33
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-08-26T01:54:46Z",
+      "side": 1,
+      "message": "It may be more readable to rearrange these and combine them with the preceding checks, e.g. something like:\n\nif (is_surface_layer_for_video_enabled()) {\n  if (rendering_) ...\n  else ...\n} else if (client_) {\n  // OnRendererStateUpdate may be called before SetVideoFrameProviderClient has initialized\n  // |client_|, in which case it will be started when we receive that call.\n  ....\n}",
+      "revId": "f852897c8ada854b44acdcae8821a834f13737cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34576433_8e72c2a6",
+        "filename": "media/blink/video_frame_compositor.cc",
+        "patchSetId": 33
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-08-26T01:54:46Z",
+      "side": 1,
+      "message": "No need for the |submitter_| check here.\n\nWith that removed, I think you can simplify this to:\n\nif (ProcessNewFrame(frame, repaint_duplicate_frame)) {\n  if (is_surface_layer_for_video_enabled())\n    submitter_-\u003eDidReceiveFrame();\n  else if (client_)\n    client_-\u003eDidReceiveFrame();\n}",
+      "revId": "f852897c8ada854b44acdcae8821a834f13737cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dce74815_fe79d464",
+        "filename": "media/blink/video_frame_compositor.cc",
+        "patchSetId": 33
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-08-26T01:54:46Z",
+      "side": 1,
+      "message": "No need for the submitter check here.\n\nI think this would read more clearly as a set of separate checks, and I\u0027m not sure that this new logic achieves the desired result in the |submitter_| case.\n\nIt looks like this function only does work when |client_| is not set (when the video is being played to something off-screen) - in the submitter case, though, we always have a |submitter_|, so there is nothing to do here.\n\nSo I think the test can become simply:\n\nif (is_surface_layer_for_video_enabled()) // Nothing do to if we\u0027re using Surface rendering.\n  return current_frame_;\nif (client_) // Nothing to do here if we have a VideoFrameProviderClient.\n  return current_frame_;\nif (!rendering_ || !is_background_rendering_) // Nothing to do if the video is not rendering.\n  return current_frame_;\n\n(I\u0027ve broken out the if..returns into three separate cases, rather than combining them with ||, because it makes the logic easier to grok into plain English, IMO)",
+      "revId": "f852897c8ada854b44acdcae8821a834f13737cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "946d4ecf_813a2a0d",
+        "filename": "media/blink/video_frame_compositor.cc",
+        "patchSetId": 33
+      },
+      "lineNbr": 264,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-08-26T01:54:46Z",
+      "side": 1,
+      "message": "As noted above, |submitter_| can\u0027t be null, so we should be able to simplify this.",
+      "revId": "f852897c8ada854b44acdcae8821a834f13737cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c738f7e_4ec32958",
+        "filename": "media/blink/video_frame_compositor.h",
+        "patchSetId": 33
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-08-26T01:54:46Z",
+      "side": 1,
+      "message": "Comment here to clarify what the effect of this is would be great.",
+      "revId": "f852897c8ada854b44acdcae8821a834f13737cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "902094da_a42bed47",
+        "filename": "media/blink/video_frame_compositor.h",
+        "patchSetId": 33
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-08-26T01:54:46Z",
+      "side": 1,
+      "message": "Can you have this be std::unique_ptr\u003c\u003e rather than a bare-pointer parameter, please?",
+      "revId": "f852897c8ada854b44acdcae8821a834f13737cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "71ea82f4_b42f0c78",
+        "filename": "media/blink/video_frame_compositor.h",
+        "patchSetId": 33
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-08-26T01:54:46Z",
+      "side": 1,
+      "message": "nit: \"work on\" is still a little ambiguous; it\u0027s not clear whether you mean it\u0027ll be called from other threads but do work internally on this one, or that it will literally only ever be accessed on |task_runner_|.\n\nSo I think you can make the stronger statement that the VideoFrameCompositor is called, run and destroyed on |task_runner_|?",
+      "revId": "f852897c8ada854b44acdcae8821a834f13737cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77a873f1_8050947b",
+        "filename": "media/blink/video_frame_compositor.h",
+        "patchSetId": 33
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-08-26T01:54:46Z",
+      "side": 1,
+      "message": "I think it would be cleaner to use |submitter_| to represent whether |surface_layer_for_video_enabled, and to wrap it in a private getter method for readability, i.e:\n\nbool is_surface_layer_for_video_enabled() const {\n  return submitter_ !\u003d nullptr;\n}\n\nThis assumes that |submitter_| can never be null if surface layer for video is enabled.\n\n(Also, is \"surface layer for video\" the right term? Should it be \"surface for video\"? I thought the idea here was that we were avoiding rendering into a layer, and going direct to a surface?)",
+      "revId": "f852897c8ada854b44acdcae8821a834f13737cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "756caf1a_e168656b",
+        "filename": "third_party/WebKit/Source/platform/graphics/VideoFrameSubmitter.cpp",
+        "patchSetId": 33
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-08-26T01:54:46Z",
+      "side": 1,
+      "message": ":D",
+      "revId": "f852897c8ada854b44acdcae8821a834f13737cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
