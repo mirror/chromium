@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "01a53c62_2e7176e0",
+        "filename": "chrome/browser/resources/chromeos/login/oobe_dialog_parameters.css",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-08-26T00:15:39Z",
+      "side": 1,
+      "message": "Since \u0027.subtitle\u0027 is used by lots of screens, and some screens do not have a line-height value to overwrite it (e.g. oobe_hid_detection.html?), so this will change the look of those screens at least slightly right? Can we make sure the change is OK?",
+      "revId": "e1af14158166767c2423f114c169607e7f516cc4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
