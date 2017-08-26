@@ -8,6 +8,7 @@
 #include <map>
 #include <set>
 #include <sstream>
+#include <stack>
 #include <unordered_map>
 
 #include "base/logging.h"
@@ -16,6 +17,8 @@
 #include "base/values.h"
 #include "ui/display/display.h"
 #include "ui/gfx/geometry/insets.h"
+
+#include "my_out.h"
 
 namespace display {
 namespace {
@@ -30,6 +33,141 @@ const char kUnknown[] = "unknown";
 // The maximum value for 'offset' in DisplayLayout in case of outliers.  Need
 // to change this value in case to support even larger displays.
 const int kMaxValidOffset = 10000;
+
+struct Cell {
+  int row;
+  int column;
+
+  Cell(int r, int c) : row(r), column(c) {}
+};
+
+DisplayLayout::UnifiedModeDisplayMatrix BuildDisplayMatrix(
+    const DisplayLayout& layout) {
+  auto marker = MARK_FUNC();
+  std::map<int64_t, Cell> displays_cells;
+  displays_cells.emplace(layout.primary_id, Cell(0, 0));
+  for (const auto& placement : layout.placement_list) {
+    int64_t current_display_id = placement.display_id;
+    std::stack<DisplayPlacement> unhandled_displays;
+    while (displays_cells.count(current_display_id) == 0) {
+      unhandled_displays.emplace(placement);
+      current_display_id = placement.parent_display_id;
+    }
+
+    // For each unhandled display, find its parent's cell, and use it to deduce
+    // its own cell.
+    while (!unhandled_displays.empty()) {
+      const DisplayPlacement top_placement = unhandled_displays.top();
+      unhandled_displays.pop();
+      const Cell parent_cell =
+          displays_cells.at(top_placement.parent_display_id);
+      switch (top_placement.position) {
+        case DisplayPlacement::TOP:
+          // Go up a row (row - 1).
+          displays_cells.emplace(top_placement.display_id,
+                                 Cell(parent_cell.row - 1, parent_cell.column));
+          break;
+
+        case DisplayPlacement::RIGHT:
+          // Go right a column (column + 1).
+          displays_cells.emplace(top_placement.display_id,
+                                 Cell(parent_cell.row, parent_cell.column + 1));
+          break;
+
+        case DisplayPlacement::BOTTOM:
+          // Go down a row (row + 1).
+          displays_cells.emplace(top_placement.display_id,
+                                 Cell(parent_cell.row + 1, parent_cell.column));
+          break;
+
+        case DisplayPlacement::LEFT:
+          // Go left a column (column -1).
+          displays_cells.emplace(top_placement.display_id,
+                                 Cell(parent_cell.row, parent_cell.column - 1));
+          break;
+      }
+    }
+  }
+
+  // Calculate the min/max row and column indices.
+  int max_row = std::numeric_limits<int>::min();
+  int max_column = std::numeric_limits<int>::min();
+  int min_row = std::numeric_limits<int>::max();
+  int min_column = std::numeric_limits<int>::max();
+
+  for (const auto& iter : displays_cells) {
+    const Cell& cell = iter.second;
+    max_row = std::max(max_row, cell.row);
+    max_column = std::max(max_column, cell.column);
+    min_row = std::min(min_row, cell.row);
+    min_column = std::min(min_column, cell.column);
+  }
+
+  D_OUT_VAL(marker, max_row);
+  D_OUT_VAL(marker, max_column);
+  D_OUT_VAL(marker, min_row);
+  D_OUT_VAL(marker, min_column);
+
+  // If we have any negative indices, we'll have to normalize all the indices by
+  // these values.
+  int row_normalize_factor = 0;
+  int column_normalize_factor = 0;
+  if (min_row < 0)
+    row_normalize_factor = -1 * min_row;
+  if (min_column < 0)
+    column_normalize_factor = -1 * min_column;
+
+  D_OUT_VAL(marker, row_normalize_factor);
+  D_OUT_VAL(marker, column_normalize_factor);
+
+  // Now build the matrix.
+  DisplayLayout::UnifiedModeDisplayMatrix matrix;
+  matrix.resize(max_row + row_normalize_factor + 1);
+  for (auto& matrix_row : matrix) {
+    matrix_row.resize(max_column + column_normalize_factor + 1,
+                      display::kInvalidDisplayId);
+  }
+
+  D_OUT_VAL(marker, matrix.size());
+
+  for (const auto& iter : displays_cells) {
+    D_OUT(marker, "***");
+    const Cell& cell = iter.second;
+    const int row_index = cell.row + row_normalize_factor;
+    const int column_index = cell.column + column_normalize_factor;
+    D_OUT_VAL(marker, row_index);
+    D_OUT_VAL(marker, column_index);
+    D_OUT_VAL(marker, iter.first);
+    matrix[row_index][column_index] = iter.first;
+  }
+
+  return matrix;
+}
+
+DisplayLayout::UnifiedModeValidationResult ValidateMatrix(
+    const DisplayLayout::UnifiedModeDisplayMatrix& matrix) {
+  if (matrix.empty())
+    return DisplayLayout::UnifiedModeValidationResult::kInvalidLayout;
+
+  // No holes are allowed.
+  for (const auto& row : matrix) {
+    for (const auto& id : row) {
+      if (id == display::kInvalidDisplayId)
+        return DisplayLayout::UnifiedModeValidationResult::kInvalidLayout;
+    }
+  }
+
+  // 1 x Y matrix is a horizontal layout.
+  if (matrix.size() == 1u)
+    return DisplayLayout::UnifiedModeValidationResult::kHorizontalLayout;
+
+  // Y x 1 matrix is a vertical layout.
+  // Note that all rows have the same number of columns.
+  if (matrix[0].size() == 1u)
+    return DisplayLayout::UnifiedModeValidationResult::kVerticalLayout;
+
+  return DisplayLayout::UnifiedModeValidationResult::kGridLayout;
+}
 
 bool IsIdInList(int64_t id, const DisplayIdList& list) {
   const auto iter =
@@ -572,6 +710,108 @@ bool DisplayLayout::Validate(const DisplayIdList& list,
   if (!has_primary_as_parent)
     LOG(ERROR) << "At least, one placement must have the primary as a parent.";
   return has_primary_as_parent;
+}
+
+// static
+DisplayLayout::UnifiedModeValidationResult
+DisplayLayout::ValidateForUnifiedMode(
+    const DisplayIdList& list, const DisplayLayout& layout,
+    UnifiedModeDisplayMatrix* out_display_layout_matrix) {
+  D_START_NOW();
+  auto marker = MARK_FUNC();
+
+  D_OUT_VAL(marker, layout.primary_id);
+
+  // Rules and restrictions for Unified Mode layouts.
+  // - All IDs in the layout and placement list must exist in the display list.
+  // - There is a placement for each display in |list| except the primary
+  //   display.
+  // - No placement offsets are allowed.
+  // - The primary display must be the root.
+  // - Placement list are not required to be sorted.
+  // - Any display can have no more than one display on either side.
+  // - The layout must specify a horizontal, a vertical, or a grid layout.
+  // - Grid layouts must be complete; i.e. no empty holes in the grid.
+
+  // The primary display should be in the list.
+  if (!IsIdInList(layout.primary_id, list)) {
+    LOG(ERROR) << "The primary id: " << layout.primary_id
+               << " is not in the id list.";
+    return UnifiedModeValidationResult::kInvalidLayout;
+  }
+
+  for (const auto& id : list) {
+    if (id == layout.primary_id)
+      continue;
+    const auto iter =
+        std::find_if(layout.placement_list.begin(), layout.placement_list.end(),
+                     [id](const DisplayPlacement& placement) {
+                       return placement.display_id == id;
+                     });
+    if (iter == layout.placement_list.end()) {
+      LOG(ERROR) << "Display with ID: " << id << " has no placement.";
+      return UnifiedModeValidationResult::kInvalidLayout;
+    }
+  }
+
+  if (layout.placement_list.empty()) {
+    LOG(ERROR) << "Placement list is empty.";
+    return UnifiedModeValidationResult::kInvalidLayout;
+  }
+
+  std::map<int64_t, Cell> displays_cells;
+  displays_cells.emplace(layout.primary_id, Cell(0, 0));
+
+  std::map<int64_t, std::set<DisplayPlacement::Position>> displays_filled_sides;
+
+  bool has_primary_as_parent = false;
+  for (const auto& placement : layout.placement_list) {
+    // Unified mode placements are not allowed to have offsets.
+    if (placement.offset != 0) {
+      LOG(ERROR) << "Unified mode placements are not allowed to have offsets.";
+      return UnifiedModeValidationResult::kInvalidLayout;
+    }
+
+    if (placement.display_id == kInvalidDisplayId) {
+      LOG(ERROR) << "display_id is not initialized";
+      return UnifiedModeValidationResult::kInvalidLayout;
+    }
+    if (placement.parent_display_id == kInvalidDisplayId) {
+      LOG(ERROR) << "display_parent_id is not initialized";
+      return UnifiedModeValidationResult::kInvalidLayout;
+    }
+    if (placement.display_id == placement.parent_display_id) {
+      LOG(ERROR) << "display_id must not be same as parent_display_id";
+      return UnifiedModeValidationResult::kInvalidLayout;
+    }
+    if (!IsIdInList(placement.display_id, list)) {
+      LOG(ERROR) << "display_id is not in the id list:" << placement.ToString();
+      return UnifiedModeValidationResult::kInvalidLayout;
+    }
+
+    if (!IsIdInList(placement.parent_display_id, list)) {
+      LOG(ERROR) << "parent_display_id is not in the id list:"
+                 << placement.ToString();
+      return UnifiedModeValidationResult::kInvalidLayout;
+    }
+
+    if (!displays_filled_sides[placement.parent_display_id].emplace(
+         placement.position).second) {
+      LOG(ERROR) << "Parent display with ID: " << placement.parent_display_id
+                 << " has more than one display on the same side: "
+                 << placement.position;
+      return UnifiedModeValidationResult::kInvalidLayout;
+    }
+
+    has_primary_as_parent |= layout.primary_id == placement.parent_display_id;
+  }
+  if (!has_primary_as_parent) {
+    LOG(ERROR) << "At least, one placement must have the primary as a parent.";
+    return UnifiedModeValidationResult::kInvalidLayout;
+  }
+
+  *out_display_layout_matrix = BuildDisplayMatrix(layout);
+  return ValidateMatrix(*out_display_layout_matrix);
 }
 
 std::unique_ptr<DisplayLayout> DisplayLayout::Copy() const {

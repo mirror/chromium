@@ -31,6 +31,8 @@
 #include "ui/gfx/canvas.h"
 #include "ui/gfx/native_widget_types.h"
 
+#include "my_out.h"
+
 namespace ash {
 namespace {
 
@@ -133,6 +135,9 @@ MirrorWindowController::~MirrorWindowController() {
 
 void MirrorWindowController::UpdateWindow(
     const std::vector<display::ManagedDisplayInfo>& display_info_list) {
+  auto marker = MARK_FUNC();
+  D_OUT(marker, "What's GOING ON HERE ?!!!");
+
   static int mirror_host_count = 0;
   display::DisplayManager* display_manager = Shell::Get()->display_manager();
   const display::Display& primary =

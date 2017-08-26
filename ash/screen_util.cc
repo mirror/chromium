@@ -15,6 +15,8 @@
 #include "ui/gfx/geometry/size_conversions.h"
 #include "ui/wm/core/coordinate_conversion.h"
 
+#include "my_out.h"
+
 namespace ash {
 
 // static
@@ -51,12 +53,20 @@ gfx::Rect ScreenUtil::GetDisplayWorkAreaBoundsInParentForLockScreen(
 // static
 gfx::Rect ScreenUtil::GetDisplayBoundsWithShelf(aura::Window* window) {
   if (Shell::Get()->display_manager()->IsInUnifiedMode()) {
+    auto marker = MARK_FUNC();
     // In unified desktop mode, there is only one shelf in the first display.
     const display::Display& first_display =
         Shell::Get()->display_manager()->software_mirroring_display_list()[0];
     gfx::SizeF size(first_display.size());
-    float scale = window->GetRootWindow()->bounds().height() / size.height();
+    D_OUT_VAL(marker, size.ToString());
+    D_OUT_VAL(marker, window->GetRootWindow()->bounds().height());
+    float scale =
+        window->GetRootWindow()->bounds().size().GetArea() /
+        (size.GetArea() * Shell::Get()->display_manager()->GetUnifiedModeDimensions().GetArea());
+    D_OUT_VAL(marker, scale);
     size.Scale(scale, scale);
+
+    D_OUT_VAL(marker, size.ToString());
     return gfx::Rect(gfx::ToCeiledSize(size));
   }
 

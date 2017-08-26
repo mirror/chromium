@@ -20,6 +20,8 @@
 #include "ui/gfx/geometry/size_conversions.h"
 #include "ui/gfx/transform.h"
 
+#include "my_out.h"
+
 namespace ash {
 namespace {
 
@@ -221,17 +223,30 @@ class PartialBoundsRootWindowTransformer : public RootWindowTransformer {
  public:
   PartialBoundsRootWindowTransformer(const gfx::Rect& screen_bounds,
                                      const display::Display& display) {
+    auto marker = MARK_FUNC();
+    D_OUT_VAL(marker, screen_bounds.ToString());
+    D_OUT_VAL(marker, display.bounds().ToString());
+
     display::Display unified_display =
         display::Screen::GetScreen()->GetPrimaryDisplay();
     display::ManagedDisplayInfo display_info =
         Shell::Get()->display_manager()->GetDisplayInfo(display.id());
     root_bounds_ = gfx::Rect(display_info.bounds_in_native().size());
-    float scale = root_bounds_.height() /
-                  static_cast<float>(screen_bounds.height()) /
-                  unified_display.device_scale_factor();
+    D_OUT_VAL(marker, root_bounds_.ToString());
+//    float scale = root_bounds_.height() /
+//                  static_cast<float>(screen_bounds.height()) /
+//                  unified_display.device_scale_factor();
+
+    float scale =
+        unified_display.device_scale_factor() * root_bounds_.size().GetArea() *
+        Shell::Get()->display_manager()->GetUnifiedModeDimensions().GetArea() /
+        gfx::SizeF(screen_bounds.size()).GetArea();
+    D_OUT_VAL(marker, scale);
+
     transform_.Scale(scale, scale);
     transform_.Translate(-SkIntToMScalar(display.bounds().x()),
                          -SkIntToMScalar(display.bounds().y()));
+    D_OUT_VAL(marker, transform_.ToString());
   }
 
   // RootWindowTransformer:

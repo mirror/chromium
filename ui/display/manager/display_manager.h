@@ -143,6 +143,8 @@ class DISPLAY_MANAGER_EXPORT DisplayManager
   // locaion of the displays relative to their parents.
   void SetLayoutForCurrentDisplays(std::unique_ptr<DisplayLayout> layout);
 
+  void SetUnifiedDisplayMatrix(DisplayLayout::UnifiedModeDisplayMatrix matrix);
+
   // Returns display for given |display_id|.
   const Display& GetDisplayForId(int64_t display_id) const;
 
@@ -288,6 +290,13 @@ class DISPLAY_MANAGER_EXPORT DisplayManager
   // Returns true if it's in unified desktop mode.
   bool IsInUnifiedMode() const;
 
+  gfx::Size GetUnifiedModeDimensions() const {
+    if (matrix_.empty() || matrix_[0].empty())
+      return gfx::Size();
+
+    return gfx::Size(matrix_.size(), matrix_[0].size());
+  }
+
   // Returns the display used for software mirrroring. Returns invalid display
   // if not found.
   const Display GetMirroringDisplayById(int64_t id) const;
@@ -396,6 +405,8 @@ class DISPLAY_MANAGER_EXPORT DisplayManager
   // mirror the content is removed from the |display_info_list|.
   void CreateSoftwareMirroringDisplayInfo(DisplayInfoList* display_info_list);
 
+  void CreateUnifiedModeDisplayInfo(DisplayInfoList* display_info_list);
+
   Display* FindDisplayForId(int64_t id);
 
   // Add the mirror display's display info if the software based mirroring is in
@@ -450,6 +461,8 @@ class DISPLAY_MANAGER_EXPORT DisplayManager
   std::unique_ptr<DisplayLayoutStore> layout_store_;
 
   std::unique_ptr<DisplayLayout> current_resolved_layout_;
+
+  DisplayLayout::UnifiedModeDisplayMatrix matrix_;
 
   int64_t first_display_id_ = kInvalidDisplayId;
 

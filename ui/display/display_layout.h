@@ -83,6 +83,13 @@ struct DISPLAY_EXPORT DisplayPlacement {
 
 class DISPLAY_EXPORT DisplayLayout final {
  public:
+  enum class UnifiedModeValidationResult {
+    kInvalidLayout,
+    kHorizontalLayout,
+    kVerticalLayout,
+    kGridLayout,
+  };
+
   DisplayLayout();
   ~DisplayLayout();
 
@@ -97,6 +104,11 @@ class DISPLAY_EXPORT DisplayLayout final {
 
   // Validates the layout object.
   static bool Validate(const DisplayIdList& list, const DisplayLayout& layout);
+
+  using UnifiedModeDisplayMatrix = std::vector<std::vector<int64_t>>;
+  static UnifiedModeValidationResult ValidateForUnifiedMode(
+      const DisplayIdList& list, const DisplayLayout& layout,
+      UnifiedModeDisplayMatrix* out_display_layout_matrix);
 
   std::vector<DisplayPlacement> placement_list;
 

@@ -23,6 +23,8 @@
 #include "ui/events/event_utils.h"
 #include "ui/wm/core/coordinate_conversion.h"
 
+#include "my_out.h"
+
 namespace ash {
 
 namespace {
@@ -58,6 +60,9 @@ UnifiedMouseWarpController::UnifiedMouseWarpController()
 UnifiedMouseWarpController::~UnifiedMouseWarpController() {}
 
 bool UnifiedMouseWarpController::WarpMouseCursor(ui::MouseEvent* event) {
+  auto marker = MARK_FUNC();
+  D_OUT(marker, "################################################");
+  D_OUT(marker, "################################################");
   // Mirroring windows are created asynchronously, so compute the edge
   // beounds when we received an event instead of in constructor.
   if (first_edge_bounds_in_native_.IsEmpty())
@@ -65,12 +70,20 @@ bool UnifiedMouseWarpController::WarpMouseCursor(ui::MouseEvent* event) {
 
   aura::Window* target = static_cast<aura::Window*>(event->target());
   gfx::Point point_in_unified_host = event->location();
+  D_OUT_VAL(marker, point_in_unified_host.ToString());
   ::wm::ConvertPointToScreen(target, &point_in_unified_host);
+  D_OUT(marker, "In screen ...");
+  D_OUT_VAL(marker, point_in_unified_host.ToString());
   // The display bounds of the mirroring windows isn't scaled, so
   // transform back to the host coordinates.
   target->GetHost()->GetRootTransform().TransformPoint(&point_in_unified_host);
 
+  D_OUT(marker, "In Host ...");
+  D_OUT_VAL(marker, point_in_unified_host.ToString());
+  D_OUT_VAL(marker, current_cursor_display_id_);
+
   if (current_cursor_display_id_ != display::kInvalidDisplayId) {
+    D_HERE(marker, "1");
     aura::client::CursorClient* cursor_client =
         aura::client::GetCursorClient(target->GetRootWindow());
     if (cursor_client) {
@@ -80,6 +93,7 @@ bool UnifiedMouseWarpController::WarpMouseCursor(ui::MouseEvent* event) {
                                                       point_in_unified_host);
       if (iter != mirroring_display_list.end() &&
           current_cursor_display_id_ != iter->id()) {
+        D_HERE(marker, "2");
         cursor_client->SetDisplay(*iter);
         current_cursor_display_id_ = display::kInvalidDisplayId;
       }
@@ -92,6 +106,7 @@ bool UnifiedMouseWarpController::WarpMouseCursor(ui::MouseEvent* event) {
 
   gfx::Point point_in_native =
       ui::EventSystemLocationFromNative(event->native_event());
+  D_OUT_VAL(marker, point_in_native.ToString());
 
   // TODO(dnicoara): crbug.com/415680 Move cursor warping into Ozone once Ozone
   // has access to the logical display layout.
@@ -103,6 +118,8 @@ bool UnifiedMouseWarpController::WarpMouseCursor(ui::MouseEvent* event) {
     return false;
   point_in_native.Offset(host->GetBoundsInPixels().x(),
                          host->GetBoundsInPixels().y());
+  D_OUT(marker, "After offset");
+  D_OUT_VAL(marker, point_in_native.ToString());
 
   return WarpMouseCursorInNativeCoords(point_in_native, point_in_unified_host,
                                        update_location_for_test_);
@@ -113,6 +130,9 @@ void UnifiedMouseWarpController::SetEnabled(bool enabled) {
 }
 
 void UnifiedMouseWarpController::ComputeBounds() {
+  auto marker = MARK_FUNC();
+  D_OUT(marker, "/////////////////////////////////////////////////");
+  D_OUT(marker, "/////////////////////////////////////////////////");
   display::Displays display_list =
       Shell::Get()->display_manager()->software_mirroring_display_list();
 
@@ -122,36 +142,102 @@ void UnifiedMouseWarpController::ComputeBounds() {
   }
   LOG_IF(ERROR, display_list.size() > 2) << "Only two displays are supported";
 
-  const display::Display& first = display_list[0];
-  const display::Display& second = display_list[1];
-  bool success =
-      display::ComputeBoundary(first, second, &first_edge_bounds_in_native_,
-                               &second_edge_bounds_in_native_);
-  DCHECK(success);
+//  const gfx::Size unified_mat_dimens =
+//      Shell::Get()->display_manager()->GetUnifiedModeDimensions();
+//  const int rows = unified_mat_dimens.width();
+//  const int columns = unified_mat_dimens.height();
+  // FIXME: This won't work.
+  for (size_t i = 0; i < display_list.size() - 1; ++i) {
+    const display::Display& first = display_list[i];
+    for (size_t j = i + 1; j < display_list.size(); ++j) {
+      const display::Display& second = display_list[j];
+      gfx::Rect first_edge;
+      gfx::Rect second_edge;
+      if (display::ComputeBoundary(first, second, &first_edge, &second_edge)) {
+        first_edge =
+            GetNativeEdgeBounds(GetMirroringAshWindowTreeHostForDisplayId(
+                first.id()), first_edge);
+        D_OUT_VAL(marker, first_edge.ToString());
 
-  first_edge_bounds_in_native_ =
-      GetNativeEdgeBounds(GetMirroringAshWindowTreeHostForDisplayId(first.id()),
-                          first_edge_bounds_in_native_);
+        second_edge = GetNativeEdgeBounds(
+            GetMirroringAshWindowTreeHostForDisplayId(second.id()),
+                                                      second_edge);
+        D_OUT_VAL(marker, second_edge.ToString());
+        displays_edge_bounds_in_native_[first.id()].emplace_back(first_edge);
+        displays_edge_bounds_in_native_[second.id()].emplace_back(second_edge);
+      }
+    }
+  }
 
-  second_edge_bounds_in_native_ = GetNativeEdgeBounds(
-      GetMirroringAshWindowTreeHostForDisplayId(second.id()),
-      second_edge_bounds_in_native_);
+
+
+
+
+
+
+
+
+
+
+//  const display::Display& first = display_list[0];
+//  const display::Display& second = display_list[1];
+//
+//  D_OUT_VAL(marker, first.bounds().ToString());
+//  D_OUT_VAL(marker, second.bounds().ToString());
+//
+//  bool success =
+//      display::ComputeBoundary(first, second, &first_edge_bounds_in_native_,
+//                               &second_edge_bounds_in_native_);
+//  D_OUT_VAL(marker, success);
+//  D_OUT_VAL(marker, first_edge_bounds_in_native_.ToString());
+//  D_OUT_VAL(marker, second_edge_bounds_in_native_.ToString());
+//
+//  DCHECK(success);
+//
+//  first_edge_bounds_in_native_ =
+//      GetNativeEdgeBounds(GetMirroringAshWindowTreeHostForDisplayId(first.id()),
+//                          first_edge_bounds_in_native_);
+//
+//  second_edge_bounds_in_native_ = GetNativeEdgeBounds(
+//      GetMirroringAshWindowTreeHostForDisplayId(second.id()),
+//      second_edge_bounds_in_native_);
+//
+//  D_OUT(marker, "After GetNativeEdgeBounds() ....");
+//  D_OUT_VAL(marker, first_edge_bounds_in_native_.ToString());
+//  D_OUT_VAL(marker, second_edge_bounds_in_native_.ToString());
 }
 
 bool UnifiedMouseWarpController::WarpMouseCursorInNativeCoords(
     const gfx::Point& point_in_native,
     const gfx::Point& point_in_unified_host,
     bool update_mouse_location_now) {
+  auto marker = MARK_FUNC();
+  D_OUT(marker, "\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\");
+  D_OUT(marker, "\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\");
+
+  D_OUT_VAL(marker, first_edge_bounds_in_native_.ToString());
+  D_OUT_VAL(marker, second_edge_bounds_in_native_.ToString());
+
   bool in_first_edge = first_edge_bounds_in_native_.Contains(point_in_native);
   bool in_second_edge = second_edge_bounds_in_native_.Contains(point_in_native);
-  if (!in_first_edge && !in_second_edge)
+
+  D_OUT_VAL(marker, in_first_edge);
+  D_OUT_VAL(marker, in_second_edge);
+
+  if (!in_first_edge && !in_second_edge) {
+    D_OUT(marker, "Returning ....");
     return false;
+  }
+
   display::Displays display_list =
       Shell::Get()->display_manager()->software_mirroring_display_list();
   // Wait updating the cursor until the cursor moves to the new display
   // to avoid showing the wrong sized cursor at the source display.
   current_cursor_display_id_ =
       in_first_edge ? display_list[0].id() : display_list[1].id();
+
+  D_OUT_VAL(marker, current_cursor_display_id_);
+
   AshWindowTreeHost* target_ash_host =
       GetMirroringAshWindowTreeHostForDisplayId(
           in_first_edge ? display_list[1].id() : display_list[0].id());

@@ -9,6 +9,9 @@
 
 #include <stdint.h>
 
+#include <map>
+#include <vector>
+
 #include "base/macros.h"
 #include "ui/gfx/geometry/rect.h"
 
@@ -48,6 +51,8 @@ class ASH_EXPORT UnifiedMouseWarpController : public MouseWarpController {
 
   gfx::Rect first_edge_bounds_in_native_;
   gfx::Rect second_edge_bounds_in_native_;
+
+  std::map<int64_t, std::vector<gfx::Rect>> displays_edge_bounds_in_native_;
 
   int64_t current_cursor_display_id_;
 

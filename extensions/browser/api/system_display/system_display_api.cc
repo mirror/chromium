@@ -227,6 +227,10 @@ ExtensionFunction::ResponseAction SystemDisplaySetDisplayLayoutFunction::Run() {
   return RespondNow(NoArguments());
 }
 
+bool SystemDisplaySetDisplayLayoutFunction::ShouldRestrictToKioskAndWebUI() {
+  return false;
+}
+
 ExtensionFunction::ResponseAction
 SystemDisplayEnableUnifiedDesktopFunction::Run() {
   std::unique_ptr<display::EnableUnifiedDesktop::Params> params(
