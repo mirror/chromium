@@ -169,6 +169,19 @@ gfx::OverlayTransform ComposeTransforms(gfx::OverlayTransform delta,
   }
 }
 
+gfx::Rect MapRoundedClippedRect(const gfx::Transform& transform,
+                                const gfx::Rect& rect) {
+  gfx::RectF mapped_rect =
+      MathUtil::MapClippedRect(transform, gfx::RectF(rect));
+
+  gfx::Rect result;
+  result.SetByBounds(gfx::ToRoundedInt(mapped_rect.x()),
+                     gfx::ToRoundedInt(mapped_rect.y()),
+                     gfx::ToRoundedInt(mapped_rect.right()),
+                     gfx::ToRoundedInt(mapped_rect.bottom()));
+  return result;
+}
+
 }  // namespace
 
 OverlayCandidate::OverlayCandidate()
@@ -277,7 +290,7 @@ bool OverlayCandidate::FromDrawQuadResource(
   candidate->display_rect = gfx::RectF(quad->rect);
   transform.TransformRect(&candidate->display_rect);
   candidate->quad_rect_in_target_space =
-      MathUtil::MapEnclosingClippedRect(transform, quad->rect);
+      MapRoundedClippedRect(transform, quad->rect);
 
   candidate->clip_rect = quad->shared_quad_state->clip_rect;
   candidate->is_clipped = quad->shared_quad_state->is_clipped;
