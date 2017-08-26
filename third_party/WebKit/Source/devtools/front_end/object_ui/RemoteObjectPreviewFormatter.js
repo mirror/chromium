@@ -11,6 +11,26 @@ ObjectUI.RemoteObjectPreviewFormatter = class {
    * @return {number}
    */
   static _objectPropertyComparator(a, b) {
+    var aIsPromiseStatus = a.name === ObjectUI.RemoteObjectPreviewFormatter._internalName.PromiseStatus;
+    var aIsPromiseValue = a.name === ObjectUI.RemoteObjectPreviewFormatter._internalName.PromiseValue;
+    var aIsOtherInternal = a.name === ObjectUI.RemoteObjectPreviewFormatter._internalName.GeneratorStatus ||
+        a.name === ObjectUI.RemoteObjectPreviewFormatter._internalName.PrimitiveValue;
+    var bIsPromiseStatus = b.name === ObjectUI.RemoteObjectPreviewFormatter._internalName.PromiseStatus;
+    var bIsPromiseValue = b.name === ObjectUI.RemoteObjectPreviewFormatter._internalName.PromiseValue;
+    var bIsOtherInternal = b.name === ObjectUI.RemoteObjectPreviewFormatter._internalName.GeneratorStatus ||
+        b.name === ObjectUI.RemoteObjectPreviewFormatter._internalName.PrimitiveValue;
+    if (aIsPromiseStatus && !bIsPromiseStatus)
+      return -1;
+    if (!aIsPromiseStatus && bIsPromiseStatus)
+      return 1;
+    if (aIsPromiseValue && !bIsPromiseValue)
+      return -1;
+    if (!aIsPromiseValue && bIsPromiseValue)
+      return 1;
+    if (aIsOtherInternal && !bIsOtherInternal)
+      return -1;
+    if (!aIsOtherInternal && bIsOtherInternal)
+      return 1;
     if (a.type !== 'function' && b.type === 'function')
       return -1;
     if (a.type === 'function' && b.type !== 'function')
@@ -79,16 +99,40 @@ ObjectUI.RemoteObjectPreviewFormatter = class {
    * @param {!Protocol.Runtime.ObjectPreview} preview
    */
   _appendObjectPropertiesPreview(parentElement, preview) {
+    var promiseStatusName = ObjectUI.RemoteObjectPreviewFormatter._internalName.PromiseStatus;
+    var promiseValueName = ObjectUI.RemoteObjectPreviewFormatter._internalName.PromiseValue;
+    var generatorStatusName = ObjectUI.RemoteObjectPreviewFormatter._internalName.GeneratorStatus;
+    var primitiveValueName = ObjectUI.RemoteObjectPreviewFormatter._internalName.PrimitiveValue;
+    var pendingPromiseState = 'pending';
     var properties = preview.properties.filter(p => p.type !== 'accessor')
                          .stableSort(ObjectUI.RemoteObjectPreviewFormatter._objectPropertyComparator);
+
     for (var i = 0; i < properties.length; ++i) {
       if (i > 0)
         parentElement.createTextChild(', ');
 
       var property = properties[i];
-      parentElement.appendChild(this._renderDisplayName(property.name));
-      parentElement.createTextChild(': ');
-      parentElement.appendChild(this._renderPropertyPreviewOrAccessor([property]));
+      var name = property.name;
+      // Internal properties are given special formatting, e.g. Promises `<rejected>: 123`.
+      if (preview.subtype === 'promise' && name === promiseStatusName) {
+        parentElement.createChild('span', 'name').textContent = '<' + property.value + '>';
+        var nextProperty = i + 1 < properties.length ? properties[i + 1] : null;
+        if (nextProperty && nextProperty.name === promiseValueName) {
+          if (property.value !== pendingPromiseState) {
+            parentElement.createTextChild(': ');
+            parentElement.appendChild(this._renderPropertyPreviewOrAccessor([nextProperty]));
+          }
+          i++;
+        }
+      } else if (preview.subtype === 'generator' && name === generatorStatusName) {
+        parentElement.createChild('span', 'name').textContent = '<' + property.value + '>';
+      } else if (name === primitiveValueName) {
+        parentElement.appendChild(this._renderPropertyPreviewOrAccessor([property]));
+      } else {
+        parentElement.appendChild(this._renderDisplayName(name));
+        parentElement.createTextChild(': ');
+        parentElement.appendChild(this._renderPropertyPreviewOrAccessor([property]));
+      }
     }
   }
 
@@ -254,4 +298,12 @@ ObjectUI.RemoteObjectPreviewFormatter = class {
     span.textContent = description;
     return span;
   }
+};
+
+/** @enum {string} */
+ObjectUI.RemoteObjectPreviewFormatter._internalName = {
+  GeneratorStatus: '[[GeneratorStatus]]',
+  PrimitiveValue: '[[PrimitiveValue]]',
+  PromiseStatus: '[[PromiseStatus]]',
+  PromiseValue: '[[PromiseValue]]'
 };
