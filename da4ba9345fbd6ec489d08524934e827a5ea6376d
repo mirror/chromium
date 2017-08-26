@@ -16,6 +16,24 @@
       "revId": "da4ba9345fbd6ec489d08524934e827a5ea6376d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c65a5b23_d2e53b71",
+        "filename": "chrome/browser/extensions/extension_service_sync_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2749,
+      "author": {
+        "id": 1223356
+      },
+      "writtenOn": "2017-08-26T00:24:47Z",
+      "side": 1,
+      "message": "\u003e The idea here that we can have an extension which has no disable reasons but is also not enabled seems like it\u0027s asking for danger, especially when other clients apply this sync data (since they will then disable the extension locally and assume it was due to user action [1]).\n\u003e Could we enforce that this never happens?\n\nIt sounds like you\u0027re suggesting that we set the disable reason of blacklisted extensions. However, blacklisted extensions do not have a disable reason. We do have Extension::DISABLE_GREYLIST for greylisted extension which is in kKnownSyncableDisableReasons, but I don\u0027t understand the implications of setting it for malware-blacklisted extensions.\n\nJust to be clear, the issue you\u0027re describing is existing behavior:\n\nThis test (SyncBlacklistedExtension) as well as SyncDisallowedGreylistedExtension are testing existing behavior and would pass without the extension_sync_service.cc changes.\nThe extension_sync_service.cc changes allow SyncAllowedGreylistedExtension to pass.",
+      "parentUuid": "8e1f28f7_4707895a",
+      "revId": "da4ba9345fbd6ec489d08524934e827a5ea6376d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
