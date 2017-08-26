@@ -846,8 +846,6 @@ void WizardController::OnTermsOfServiceAccepted() {
 
 void WizardController::OnArcTermsOfServiceSkipped() {
   if (is_in_session_oobe_) {
-    PrefService* prefs = ProfileManager::GetActiveUserProfile()->GetPrefs();
-    prefs->SetBoolean(prefs::kArcVoiceInteractionValuePropAccepted, false);
     OnOobeFlowFinished();
     return;
   }
