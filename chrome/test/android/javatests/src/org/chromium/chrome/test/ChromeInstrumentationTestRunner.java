@@ -20,11 +20,12 @@ import org.chromium.base.test.util.RestrictionSkipCheck;
 import org.chromium.chrome.browser.ChromeVersionInfo;
 import org.chromium.chrome.browser.vr_shell.VrClassesWrapper;
 import org.chromium.chrome.browser.vr_shell.VrDaydreamApi;
-import org.chromium.chrome.test.util.ChromeDisableIf;
 import org.chromium.chrome.test.util.ChromeRestriction;
 import org.chromium.content.browser.test.ChildProcessAllocatorSettingsHook;
 import org.chromium.policy.test.annotations.Policies;
 import org.chromium.ui.base.DeviceFormFactor;
+import org.chromium.ui.test.util.UiDisableIf;
+import org.chromium.ui.test.util.UiRestriction;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
@@ -118,11 +119,11 @@ public class ChromeInstrumentationTestRunner extends BaseChromiumInstrumentation
 
         @Override
         protected boolean restrictionApplies(String restriction) {
-            if (TextUtils.equals(restriction, ChromeRestriction.RESTRICTION_TYPE_PHONE)
+            if (TextUtils.equals(restriction, UiRestriction.RESTRICTION_TYPE_PHONE)
                     && DeviceFormFactor.isTablet()) {
                 return true;
             }
-            if (TextUtils.equals(restriction, ChromeRestriction.RESTRICTION_TYPE_TABLET)
+            if (TextUtils.equals(restriction, UiRestriction.RESTRICTION_TYPE_TABLET)
                     && !DeviceFormFactor.isTablet()) {
                 return true;
             }
@@ -182,13 +183,13 @@ public class ChromeInstrumentationTestRunner extends BaseChromiumInstrumentation
 
         @Override
         protected boolean deviceTypeApplies(String type) {
-            if (TextUtils.equals(type, ChromeDisableIf.PHONE) && !DeviceFormFactor.isTablet()) {
+            if (TextUtils.equals(type, UiDisableIf.PHONE) && !DeviceFormFactor.isTablet()) {
                 return true;
             }
-            if (TextUtils.equals(type, ChromeDisableIf.TABLET) && DeviceFormFactor.isTablet()) {
+            if (TextUtils.equals(type, UiDisableIf.TABLET) && DeviceFormFactor.isTablet()) {
                 return true;
             }
-            if (TextUtils.equals(type, ChromeDisableIf.LARGETABLET)
+            if (TextUtils.equals(type, UiDisableIf.LARGETABLET)
                     && DeviceFormFactor.isLargeTablet(mTargetContext)) {
                 return true;
             }
