@@ -151,7 +151,8 @@ bool ChromePasswordProtectionService::IsIncognito() {
 bool ChromePasswordProtectionService::IsPingingEnabled(
     const base::Feature& feature,
     RequestOutcome* reason) {
-  if (!IsSafeBrowsingEnabled())
+  return true;
+  /*if (!IsSafeBrowsingEnabled())
     return false;
 
   DCHECK(feature.name == kProtectedPasswordEntryPinging.name ||
@@ -175,7 +176,7 @@ bool ChromePasswordProtectionService::IsPingingEnabled(
     *reason = DISABLED_DUE_TO_USER_POPULATION;
     return false;
   }
-  return true;
+  return true;*/
 }
 
 bool ChromePasswordProtectionService::IsHistorySyncEnabled() {
