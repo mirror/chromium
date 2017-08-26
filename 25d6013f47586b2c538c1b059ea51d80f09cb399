@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c06e680b_d9761fa2",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 50164,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-08-26T00:45:10Z",
+      "side": 1,
+      "message": "How do you plan to use these metrics?  You\u0027ll get two distributions over file sizes, but they might be hard to compare, because users could theoretically upload one value to one distribution and a very different value to the other.  If your goal is primarily to compare these values, I\u0027d recommend recording a ratio more directly.",
+      "range": {
+        "startLine": 50150,
+        "startChar": 0,
+        "endLine": 50164,
+        "endChar": 12
+      },
+      "revId": "25d6013f47586b2c538c1b059ea51d80f09cb399",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
