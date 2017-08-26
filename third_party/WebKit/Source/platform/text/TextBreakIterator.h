@@ -92,7 +92,8 @@ class PLATFORM_EXPORT LazyLineBreakIterator final {
 
  public:
   LazyLineBreakIterator()
-      : iterator_(0),
+      : string_(g_empty_string),
+        iterator_(0),
         cached_prior_context_(0),
         cached_prior_context_length_(0),
         break_type_(LineBreakType::kNormal) {
@@ -102,7 +103,7 @@ class PLATFORM_EXPORT LazyLineBreakIterator final {
   LazyLineBreakIterator(String string,
                         const AtomicString& locale = AtomicString(),
                         LineBreakType break_type = LineBreakType::kNormal)
-      : string_(string),
+      : string_(string ? string : g_empty_string),
         locale_(locale),
         iterator_(0),
         cached_prior_context_(0),
@@ -194,7 +195,7 @@ class PLATFORM_EXPORT LazyLineBreakIterator final {
 
   void ResetStringAndReleaseIterator(String string,
                                      const AtomicString& locale) {
-    string_ = string;
+    string_ = string ? string : g_empty_string;
     locale_ = locale;
 
     ReleaseIterator();
