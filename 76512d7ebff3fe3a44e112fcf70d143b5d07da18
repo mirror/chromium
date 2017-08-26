@@ -120,6 +120,30 @@
     },
     {
       "key": {
+        "uuid": "d7eaeff5_9bff5fe8",
+        "filename": "ios/clean/chrome/browser/ui/history_popup/history_popup_coordinator.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1165759
+      },
+      "writtenOn": "2017-08-26T00:38:38Z",
+      "side": 1,
+      "message": "Sounds good, I actually think it had something to do with the fact that the own controller would dismiss itself before... So I think we\u0027ll be good :)\nAdded unittest for stop.",
+      "parentUuid": "19eb775a_595e1e03",
+      "range": {
+        "startLine": 73,
+        "startChar": 2,
+        "endLine": 80,
+        "endChar": 5
+      },
+      "revId": "76512d7ebff3fe3a44e112fcf70d143b5d07da18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9962ea74_c2940570",
         "filename": "ios/clean/chrome/browser/ui/toolbar/toolbar_button.h",
         "patchSetId": 2
@@ -420,6 +444,30 @@
       "side": 1,
       "message": "We should at least support the keyboard dismissal, no?",
       "parentUuid": "0a99f574_2cd02583",
+      "range": {
+        "startLine": 444,
+        "startChar": 15,
+        "endLine": 444,
+        "endChar": 37
+      },
+      "revId": "76512d7ebff3fe3a44e112fcf70d143b5d07da18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1a8ab36_8333747a",
+        "filename": "ios/clean/chrome/browser/ui/toolbar/toolbar_view_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 444,
+      "author": {
+        "id": 1165759
+      },
+      "writtenOn": "2017-08-26T00:38:38Z",
+      "side": 1,
+      "message": "I don\u0027t think the ToolbarVC or ToolbarCoordinator should be the one listening for keyboard dismissal actions, especially when these are performed via a web controller. I\u0027m not sure why, but this is how its handled in the old App [webController dismissKeyboard].\n\nI think Tab Coordinator or another object upper in the hierarchy should be the one in charge of this, and that would be outside the scope of this CL. \n\nOn the other hand I can add a [self.view endEditing:YES] call in the ToolbarVC, but I think it would be placeholder code until we have a \"central dismisser\". I\u0027m OK with either option, though I would slightly prefer not to add placeholder code in the Toolbar classes unless its completely needed.",
+      "parentUuid": "54037e33_19b7200c",
       "range": {
         "startLine": 444,
         "startChar": 15,
