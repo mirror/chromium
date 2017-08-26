@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b7c31f03_1e534c46",
+        "filename": "chrome/browser/extensions/api/tab_capture/offscreen_tab.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-08-26T23:12:01Z",
+      "side": 1,
+      "message": "IIRC, from prior discussions on chromium-dev@, this should be s/DestructorAtExit/Leaky/ since there\u0027s no requirement to perform any tasks at shutdown.",
+      "range": {
+        "startLine": 43,
+        "startChar": 47,
+        "endLine": 43,
+        "endChar": 63
+      },
+      "revId": "057fc09118008d634bca3910571eb9584544dcde",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d273e4a7_5316d25e",
+        "filename": "chrome/browser/extensions/api/tab_capture/offscreen_tab.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-08-26T23:12:01Z",
+      "side": 1,
+      "message": "std::remove() won\u0027t reduce the size of the vector by one. Also, let\u0027s have just one g_profiles.Get() call (the compiler probably won\u0027t optimize-out the second call because each Get() acquires a mutex). Putting it all together:\n\n  #include \"base/stl_util.h\"\n\n  ...then in dtor...\n\n  base::Erase(g_offscreen_profiles.Get(), profile_.get());",
+      "range": {
+        "startLine": 140,
+        "startChar": 0,
+        "endLine": 141,
+        "endChar": 64
+      },
+      "revId": "057fc09118008d634bca3910571eb9584544dcde",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "243a0c8c_149055c3",
+        "filename": "chrome/browser/extensions/api/tab_capture/tab_capture_apitest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-08-26T23:12:01Z",
+      "side": 1,
+      "message": "nit: extra whitespace at EOL?",
+      "range": {
+        "startLine": 224,
+        "startChar": 54,
+        "endLine": 224,
+        "endChar": 56
+      },
+      "revId": "057fc09118008d634bca3910571eb9584544dcde",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
