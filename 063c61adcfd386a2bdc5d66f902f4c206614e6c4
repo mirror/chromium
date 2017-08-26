@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "24f43172_fbd38893",
+        "filename": "content/browser/loader/navigation_resource_handler.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-08-26T03:24:26Z",
+      "side": 1,
+      "message": "One option would be to replace this with IsCertStatusError(ssl_info.cert_status). Alternatively, could add CERTIFICATE_REQUEST_RESULT_TYPE_CANCEL_WITH_CERT_ERROR (or something) that passes handler()-\u003ecert_error() to SSLErrorHandler::Delegate::CancelSSLRequest(), so that |net_error| actually reflects the certificate error here instead of ERR_INSECURE_RESPONSE.",
+      "range": {
+        "startLine": 171,
+        "startChar": 16,
+        "endLine": 171,
+        "endChar": 34
+      },
+      "revId": "063c61adcfd386a2bdc5d66f902f4c206614e6c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
