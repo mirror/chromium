@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d50e9f53_5cf1e195",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/webvr/webvr-disabled-by-feature-policy.https.sub.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2017-08-26T01:44:20Z",
+      "side": 1,
+      "message": "Should this match the header in the corresponding webvr-disabled-by-feature-policy.https.sub.html.headers file? That is,\n{\"vr\": []}\n?",
+      "range": {
+        "startLine": 12,
+        "startChar": 48,
+        "endLine": 12,
+        "endChar": 51
+      },
+      "revId": "9891a96914c02fd8dfa9c5910950c5d6643319ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de2907d9_49cb0b1d",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/webvr/webvr-enabled-on-self-origin-by-feature-policy.https.sub.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2017-08-26T01:44:20Z",
+      "side": 1,
+      "message": "Ditto: I think this should read \u0027Feature-Policy header {\"vr\": [\"self\"]}\u0027",
+      "range": {
+        "startLine": 12,
+        "startChar": 47,
+        "endLine": 12,
+        "endChar": 52
+      },
+      "revId": "9891a96914c02fd8dfa9c5910950c5d6643319ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
