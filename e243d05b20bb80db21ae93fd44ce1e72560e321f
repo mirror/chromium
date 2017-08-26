@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "21582311_d4453bc8",
+        "filename": "components/offline_pages/core/prefetch/stale_entry_finalizer_task.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-08-26T00:01:00Z",
+      "side": 1,
+      "message": "These queries\u0027 executions are indeed multiplied by the number of expirable states. But given the added complexity and that this task will run at most every 15 minutes I don\u0027t the cost/benefit is worth it.\n\nI talked with dewittj@ offline: let\u0027s keep them separate.",
+      "parentUuid": "b5f32bc3_3becbc49",
+      "revId": "e243d05b20bb80db21ae93fd44ce1e72560e321f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b2223dc5_5f50f6f4",
         "filename": "components/offline_pages/core/prefetch/stale_entry_finalizer_task.cc",
         "patchSetId": 2
@@ -47,6 +65,24 @@
       "writtenOn": "2017-08-25T21:41:03Z",
       "side": 1,
       "message": "How did you decide to use this?",
+      "revId": "e243d05b20bb80db21ae93fd44ce1e72560e321f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c625f3b_79ba0caf",
+        "filename": "components/offline_pages/core/prefetch/stale_entry_finalizer_task.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-08-26T00:01:00Z",
+      "side": 1,
+      "message": "My initial thought was that we\u0027d use a fixed period of a day more or less.",
+      "parentUuid": "b2223dc5_5f50f6f4",
       "revId": "e243d05b20bb80db21ae93fd44ce1e72560e321f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -70,6 +106,24 @@
     },
     {
       "key": {
+        "uuid": "a13498a0_e37cebb1",
+        "filename": "components/offline_pages/core/prefetch/stale_entry_finalizer_task.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-08-26T00:01:00Z",
+      "side": 1,
+      "message": "Any name is fine but I\u0027d suggest the name should somehow indicate the clock was _significantly_ adjusted _back_ in time.",
+      "parentUuid": "f75b80c3_0b68ffb8",
+      "revId": "e243d05b20bb80db21ae93fd44ce1e72560e321f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d08e27bf_80cc6e86",
         "filename": "components/offline_pages/core/prefetch/stale_entry_finalizer_task_unittest.cc",
         "patchSetId": 2
@@ -81,6 +135,24 @@
       "writtenOn": "2017-08-25T21:41:03Z",
       "side": 1,
       "message": "I\u0027d prefer to change the previous method to accept a TimeDelta instead of int.  Then you can provide whatever delta you prefer.",
+      "revId": "e243d05b20bb80db21ae93fd44ce1e72560e321f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "71deb96f_1fe28830",
+        "filename": "components/offline_pages/core/prefetch/stale_entry_finalizer_task_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-08-26T00:01:00Z",
+      "side": 1,
+      "message": "The previous method can reused as is because TimeDelta::From* calls do accept negative numbers. I\u0027d suggest renaming the parameter to |time_delta_in_hours| switching - to + and updating existing code as needed.\n\nAlso, having to create a new TimeDelta for every call adds a lot of cruft to this test file.",
+      "parentUuid": "d08e27bf_80cc6e86",
       "revId": "e243d05b20bb80db21ae93fd44ce1e72560e321f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
