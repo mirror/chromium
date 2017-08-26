@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "75d5a448_9a49e7e3",
+        "filename": "chrome/browser/ui/ash/app_list/app_list_presenter_delegate_mus.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-26T00:05:16Z",
+      "side": 1,
+      "message": "Yikes indeed!",
+      "revId": "305565303db56ab1fa65bf9302a4aa9849ef51c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
