@@ -53,9 +53,6 @@ TEST_F(ElementAnimationsTest, AttachToLayerInActiveTree) {
   client_.RegisterElement(element_id_, ElementListType::ACTIVE);
   client_impl_.RegisterElement(element_id_, ElementListType::PENDING);
 
-  EXPECT_TRUE(client_.IsElementInList(element_id_, ElementListType::ACTIVE));
-  EXPECT_FALSE(client_.IsElementInList(element_id_, ElementListType::PENDING));
-
   AttachTimelinePlayerLayer();
 
   EXPECT_TRUE(element_animations_->has_element_in_active_list());
@@ -72,11 +69,6 @@ TEST_F(ElementAnimationsTest, AttachToLayerInActiveTree) {
   client_impl_.RegisterElement(element_id_, ElementListType::ACTIVE);
   EXPECT_TRUE(element_animations_impl_->has_element_in_active_list());
   EXPECT_TRUE(element_animations_impl_->has_element_in_pending_list());
-
-  EXPECT_TRUE(
-      client_impl_.IsElementInList(element_id_, ElementListType::ACTIVE));
-  EXPECT_TRUE(
-      client_impl_.IsElementInList(element_id_, ElementListType::PENDING));
 
   // kill layer on main thread.
   client_.UnregisterElement(element_id_, ElementListType::ACTIVE);
