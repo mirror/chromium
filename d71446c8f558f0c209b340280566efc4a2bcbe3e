@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6fbf612f_3dee8c56",
+        "filename": "components/offline_pages/core/offline_page_metadata_store_sql.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 494,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-08-26T01:25:49Z",
+      "side": 1,
+      "message": "Isn\u0027t it usually (!db)?\nSame everywhere.",
+      "revId": "d71446c8f558f0c209b340280566efc4a2bcbe3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68361558_066515f4",
+        "filename": "components/offline_pages/core/offline_page_metadata_store_sql.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 555,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-08-26T01:25:49Z",
+      "side": 1,
+      "message": "I\u0027d add comment why we still need this if we have automatic initialization. Do we still need this?",
+      "revId": "d71446c8f558f0c209b340280566efc4a2bcbe3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
