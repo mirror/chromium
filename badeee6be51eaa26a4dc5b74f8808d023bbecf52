@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "46ab1898_9e437c3c",
+        "filename": "chrome/browser/chromeos/login/signin/oauth2_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 573,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-08-26T03:14:26Z",
+      "side": 1,
+      "message": "If what we want is to control the token service, it seems like we should be asking that or the TokenWebData object for the DB task runner, rather than asking the WebDataServiceWrapper.  (I don\u0027t think it\u0027s guaranteed that the various web data objects will all use the same sequence in the future.)\n\nNit: thread -\u003e sequence",
+      "revId": "badeee6be51eaa26a4dc5b74f8808d023bbecf52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
