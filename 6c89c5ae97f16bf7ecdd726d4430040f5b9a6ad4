@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "45310186_8640c696",
+        "filename": "ui/views/controls/button/checkbox.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-08-26T03:37:07Z",
+      "side": 1,
+      "message": "It seems like the 2 here and the 2 inset need to stay in sync.  Also the 2 in IconFocusRing::OnPaint(), and maybe in Checkbox() (not sure).\n\nPerhaps we should just have\n\nconstexpr int kFocusRingThicknessDip \u003d 2;\n\nAnd then do things like Rect::Inset(kFocusRingThicknessDip, kFocusRingThicknessDip) and use this variable everywhere else too?\n\nAlso nit: Looks like the args here don\u0027t match either DrawRoundRect() (Rect, float).  I\u0027d just use an int radius arg here; it will call the deprecated version but at least it\u0027ll be consistent about it.",
+      "revId": "6c89c5ae97f16bf7ecdd726d4430040f5b9a6ad4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
