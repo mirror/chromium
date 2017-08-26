@@ -5,53 +5,20 @@
 /**
  * @unrestricted
  */
-Timeline.PerformanceMonitor = class extends UI.VBox {
+Timeline.PerformanceMonitor = class extends UI.HBox {
   constructor() {
     super(true);
     this.registerRequiredCSS('timeline/performanceMonitor.css');
+    this.contentElement.classList.add('perfmon-pane');
     this._model = SDK.targetManager.mainTarget().model(SDK.PerformanceMetricsModel);
-    this._canvas = /** @type {!HTMLCanvasElement} */ (this.contentElement.createChild('canvas'));
     /** @type {!Array<!{timestamp: number, metrics: !Map<string, number>}>} */
     this._metricsBuffer = [];
     /** @const */
     this._pixelsPerMs = 20 / 1000;
     /** @const */
     this._pollIntervalMs = 500;
-    /** @type {!Array<string>} */
-    this._enabledMetrics = ['NodeCount', 'ScriptDuration', 'TaskDuration'];
-    /** @type {!Map<string, !Timeline.PerformanceMonitor.Info>} */
-    this._metricsInfo = new Map([
-      [
-        'TaskDuration', {
-          title: Common.UIString('CPU Utilization'),
-          color: 'red',
-          mode: Timeline.PerformanceMonitor.Mode.CumulativeTime,
-          min: 0,
-          max: 100,
-          format: formatPercent
-        }
-      ],
-      [
-        'ScriptDuration', {
-          title: Common.UIString('Script Execution'),
-          color: 'orange',
-          mode: Timeline.PerformanceMonitor.Mode.CumulativeTime,
-          min: 0,
-          max: 100,
-          format: formatPercent
-        }
-      ],
-      ['NodeCount', {title: Common.UIString('DOM Nodes'), color: 'green'}],
-      ['JSEventListenerCount', {title: Common.UIString('JS Event Listeners'), color: 'deeppink'}],
-    ]);
-
-    /**
-     * @param {number} value
-     * @return {string}
-     */
-    function formatPercent(value) {
-      return value.toFixed(0) + '%';
-    }
+    this._controlPane = new Timeline.PerformanceMonitor.ControlPane(this.contentElement);
+    this._canvas = /** @type {!HTMLCanvasElement} */ (this.contentElement.createChild('canvas'));
   }
 
   /**
@@ -94,7 +61,7 @@ Timeline.PerformanceMonitor = class extends UI.VBox {
     var metricsMap = new Map();
     var timestamp = Date.now();
     for (var metric of metrics) {
-      var info = this._metricInfo(metric.name);
+      var info = this._controlPane.metricInfo(metric.name);
       var value;
       if (info.mode === Timeline.PerformanceMonitor.Mode.CumulativeTime) {
         value = info.lastTimestamp ?
@@ -113,16 +80,7 @@ Timeline.PerformanceMonitor = class extends UI.VBox {
     var maxCount = Math.ceil(millisPerWidth / this._pollIntervalMs * 2);
     if (this._metricsBuffer.length > maxCount * 2)  // Multiply by 2 to have a hysteresis.
       this._metricsBuffer.splice(0, this._metricsBuffer.length - maxCount);
-  }
-
-  /**
-   * @param {string} name
-   * @return {!Timeline.PerformanceMonitor.Info}
-   */
-  _metricInfo(name) {
-    if (!this._metricsInfo.has(name))
-      this._metricsInfo.set(name, {title: name, color: 'grey'});
-    return this._metricsInfo.get(name);
+    this._controlPane.updateMetrics(metricsMap);
   }
 
   _draw() {
@@ -131,9 +89,8 @@ Timeline.PerformanceMonitor = class extends UI.VBox {
     ctx.scale(window.devicePixelRatio, window.devicePixelRatio);
     ctx.clearRect(0, 0, this._width, this._height);
     this._drawGrid(ctx);
-    for (var metricName of this._enabledMetrics)
+    for (var metricName of this._controlPane.metrics())
       this._drawMetric(ctx, metricName);
-    this._drawLegend(ctx);
     ctx.restore();
   }
 
@@ -166,7 +123,7 @@ Timeline.PerformanceMonitor = class extends UI.VBox {
     var width = this._width;
     var height = this._height;
     var startTime = Date.now() - this._pollIntervalMs * 2 - width / this._pixelsPerMs;
-    var info = this._metricInfo(metricName);
+    var info = this._controlPane.metricInfo(metricName);
     var min = Infinity;
     var max = -Infinity;
     var pixelsPerMs = this._pixelsPerMs;
@@ -216,7 +173,7 @@ Timeline.PerformanceMonitor = class extends UI.VBox {
     ctx.strokeStyle = info.color;
     ctx.lineWidth = 0.5;
     ctx.stroke();
-    ctx.globalAlpha = 0.05;
+    ctx.globalAlpha = 0.03;
     ctx.fillStyle = info.color;
     ctx.fill();
     ctx.restore();
@@ -231,53 +188,14 @@ Timeline.PerformanceMonitor = class extends UI.VBox {
   }
 
   /**
-   * @param {!CanvasRenderingContext2D} ctx
-   */
-  _drawLegend(ctx) {
-    ctx.save();
-    ctx.font = '12px ' + Host.fontFamily();
-    ctx.textBaseline = 'middle';
-    var topMargin = 20;
-    var leftMargin = 10;
-    var padding = 14;
-    var intervalPx = 18;
-    var textColor = '#333';
-    var swatchSize = 10;
-    var valueWidth = 40;  // Use a fixed number to avoid box resizing when values change.
-    var numberFormat = new Intl.NumberFormat('en-US');
-    var maxTitleWidth = this._enabledMetrics.reduce(
-        (acc, metric) => Math.max(acc, ctx.measureText(this._metricInfo(metric).title).width), 0);
-    var titleX = leftMargin + padding + swatchSize * 2;
-    ctx.fillStyle = 'hsla(0, 0%, 100%, 0.8)';
-    ctx.fillRect(
-        leftMargin, topMargin, titleX + maxTitleWidth + valueWidth + padding,
-        (this._enabledMetrics.length - 1) * intervalPx + 2 * padding);
-    for (var i = 0; i < this._enabledMetrics.length; ++i) {
-      var metricName = this._enabledMetrics[i];
-      var info = this._metricInfo(metricName);
-      var lineY = i * intervalPx + topMargin + padding;
-      ctx.fillStyle = textColor;
-      ctx.fillText(info.title || metricName, titleX, lineY);
-      ctx.fillStyle = info.color;
-      ctx.fillRect(leftMargin + padding, lineY - swatchSize / 2, swatchSize, swatchSize);
-      if (this._metricsBuffer.length) {
-        var format = info.format || (value => numberFormat.format(value));
-        var value = this._metricsBuffer.peekLast().metrics.get(metricName) || 0;
-        ctx.fillText(format(value), titleX + maxTitleWidth + padding, lineY);
-      }
-    }
-    ctx.restore();
-  }
-
-  /**
    * @override
    */
   onResize() {
     super.onResize();
     this._width = this._canvas.offsetWidth;
     this._height = this._canvas.offsetHeight;
-    this._canvas.width = this._width * window.devicePixelRatio;
-    this._canvas.height = this._height * window.devicePixelRatio;
+    this._canvas.width = Math.round(this._width * window.devicePixelRatio);
+    this._canvas.height = Math.round(this._height * window.devicePixelRatio);
     this._draw();
   }
 };
@@ -300,3 +218,109 @@ Timeline.PerformanceMonitor.Mode = {
  * }}
  */
 Timeline.PerformanceMonitor.Info;
+
+Timeline.PerformanceMonitor.ControlPane = class {
+  /**
+   * @param {!Element} parent
+   */
+  constructor(parent) {
+    this.element = parent.createChild('div', 'perfmon-control-pane');
+
+    /** @type {!Array<string>} */
+    this._enabledMetrics = ['NodeCount', 'ScriptDuration', 'TaskDuration'];
+    /** @type {!Map<string, !Timeline.PerformanceMonitor.Info>} */
+    this._metricsInfo = new Map([
+      [
+        'TaskDuration', {
+          title: Common.UIString('CPU Utilization'),
+          color: 'red',
+          mode: Timeline.PerformanceMonitor.Mode.CumulativeTime,
+          min: 0,
+          max: 100,
+          format: formatPercent
+        }
+      ],
+      [
+        'ScriptDuration', {
+          title: Common.UIString('Script Execution'),
+          color: 'orange',
+          mode: Timeline.PerformanceMonitor.Mode.CumulativeTime,
+          min: 0,
+          max: 100,
+          format: formatPercent
+        }
+      ],
+      ['NodeCount', {title: Common.UIString('DOM Nodes'), color: 'green'}],
+      ['JSEventListenerCount', {title: Common.UIString('JS Event Listeners'), color: 'deeppink'}],
+    ]);
+
+    /**
+     * @param {number} value
+     * @return {string}
+     */
+    function formatPercent(value) {
+      return value.toFixed() + '%';
+    }
+
+    this._indicators = new Map();
+    for (var metric of this.metrics()) {
+      var indicator = new Timeline.PerformanceMonitor.MetricIndicator(this.element, this.metricInfo(metric));
+      this._indicators.set(metric, indicator);
+    }
+
+    this._addButton = this.element.createChild('div', 'perfmon-indicator perfmon-add-button')
+                          .createChild('div', 'perfmon-indicator-title');
+    this._addButton.textContent = Common.UIString('+ Add indicator');
+  }
+
+  /**
+   * @return {!Array<string>}
+   */
+  metrics() {
+    return this._enabledMetrics;
+  }
+
+  /**
+   * @param {string} name
+   * @return {!Timeline.PerformanceMonitor.Info}
+   */
+  metricInfo(name) {
+    if (!this._metricsInfo.has(name))
+      this._metricsInfo.set(name, {title: name, color: 'grey'});
+    return this._metricsInfo.get(name);
+  }
+
+  /**
+   * @param {!Map<string, number>} metrics
+   */
+  updateMetrics(metrics) {
+    for (const [name, indicator] of this._indicators) {
+      if (metrics.has(name))
+        indicator.setValue(metrics.get(name));
+    }
+  }
+};
+
+Timeline.PerformanceMonitor.MetricIndicator = class {
+  /**
+   * @param {!Element} parent
+   * @param {!Timeline.PerformanceMonitor.Info} info
+   */
+  constructor(parent, info) {
+    this._info = info;
+    this.element = parent.createChild('div', 'perfmon-indicator');
+    this.element.createChild('div', 'perfmon-indicator-title').textContent = info.title;
+    this._valueElement = this.element.createChild('div', 'perfmon-indicator-value');
+    this._valueElement.style.color = info.color;
+    this._closeButton = this.element.createChild('div', 'perfmon-indicator-close', 'dt-close-button');
+    this._closeButton.gray = true;
+  }
+
+  /**
+   * @param {number} value
+   */
+  setValue(value) {
+    var format = this._info.format || (value => new Intl.NumberFormat('en-US').format(value));
+    this._valueElement.textContent = format(value);
+  }
+};
