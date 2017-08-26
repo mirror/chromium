@@ -139,6 +139,29 @@ void InputDispatcher::NotifyTask() {
 
 // Private functions ----------------------------------------------------------
 
+UINT InternalMapVirtualKey(UINT code, UINT map_type) {
+  auto ret_code = ::MapVirtualKey(code, map_type);
+  // Distinct NumPad and "normal" keys.
+  if (map_type == MAPVK_VK_TO_VSC) {
+    switch (code) {
+      case VK_INSERT:
+      case VK_DELETE:
+      case VK_HOME:
+      case VK_END:
+      case VK_NEXT:
+      case VK_PRIOR:
+      case VK_LEFT:
+      case VK_RIGHT:
+      case VK_UP:
+      case VK_DOWN:
+        ret_code |= KF_EXTENDED;
+      default:
+        break;
+    }
+  }
+  return ret_code;
+}
+
 // Whether scan code should be used for |key|.
 // When sending keyboard events by SendInput() function, Windows does not
 // "smartly" add scan code if virtual key-code is used. So these key events
@@ -149,8 +172,8 @@ void InputDispatcher::NotifyTask() {
 // default keyboard layout. So fall back to use virtual key code for these keys.
 bool ShouldSendThroughScanCode(ui::KeyboardCode key) {
   const DWORD native_code = ui::WindowsKeyCodeForKeyboardCode(key);
-  const DWORD scan_code = MapVirtualKey(native_code, MAPVK_VK_TO_VSC);
-  return native_code == MapVirtualKey(scan_code, MAPVK_VSC_TO_VK);
+  const DWORD scan_code = InternalMapVirtualKey(native_code, MAPVK_VK_TO_VSC);
+  return native_code == InternalMapVirtualKey(scan_code, MAPVK_VSC_TO_VK);
 }
 
 // Populate the INPUT structure with the appropriate keyboard event
@@ -160,7 +183,7 @@ bool FillKeyboardInput(ui::KeyboardCode key, INPUT* input, bool key_up) {
   input->type = INPUT_KEYBOARD;
   input->ki.wVk = ui::WindowsKeyCodeForKeyboardCode(key);
   if (ShouldSendThroughScanCode(key)) {
-    input->ki.wScan = MapVirtualKey(input->ki.wVk, MAPVK_VK_TO_VSC);
+    input->ki.wScan = InternalMapVirtualKey(input->ki.wVk, MAPVK_VK_TO_VSC);
     // When KEYEVENTF_SCANCODE is used, ki.wVk is ignored, so we do not need to
     // clear it.
     input->ki.dwFlags = KEYEVENTF_SCANCODE;
