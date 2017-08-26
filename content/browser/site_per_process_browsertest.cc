@@ -3442,7 +3442,8 @@ IN_PROC_BROWSER_TEST_F(SitePerProcessBrowserTest,
 }
 
 // Ensure that when navigating a frame cross-process RenderFrameProxyHosts are
-// created in the FrameTree skipping the subtree of the navigating frame.
+// created in the FrameTree skipping the subtree of the navigating frame (but
+// not the navigating frame itself).
 IN_PROC_BROWSER_TEST_F(SitePerProcessBrowserTest,
                        ProxyCreationSkipsSubtree) {
   GURL main_url(embedded_test_server()->GetURL(
@@ -3507,7 +3508,7 @@ IN_PROC_BROWSER_TEST_F(SitePerProcessBrowserTest,
     std::string tree = base::StringPrintf(
         " Site A ------------ proxies for B\n"
         "   |--Site A ------- proxies for B\n"
-        "   +--Site A (B %s)\n"
+        "   +--Site A (B %s) -- proxies for B\n"
         "        |--Site A\n"
         "        +--Site A\n"
         "             +--Site A\n"
@@ -3562,7 +3563,7 @@ IN_PROC_BROWSER_TEST_F(SitePerProcessBrowserTest,
     std::string tree = base::StringPrintf(
         " Site A ------------ proxies for B C\n"
         "   |--Site A ------- proxies for B C\n"
-        "   +--Site B (C %s) -- proxies for A\n"
+        "   +--Site B (C %s) -- proxies for A C\n"
         "Where A = http://a.com/\n"
         "      B = http://foo.com/\n"
         "      C = http://bar.com/",
@@ -5428,6 +5429,7 @@ IN_PROC_BROWSER_TEST_F(SitePerProcessBrowserTest,
   RenderFrameHostImpl* rfh = root->current_frame_host();
   RenderViewHostImpl* rvh = rfh->render_view_host();
   int rvh_routing_id = rvh->GetRoutingID();
+  int rvh_process_id = rvh->GetProcess()->GetID();
   SiteInstanceImpl* site_instance = rfh->GetSiteInstance();
   RenderFrameDeletedObserver deleted_observer(rfh);
 
@@ -5478,7 +5480,8 @@ IN_PROC_BROWSER_TEST_F(SitePerProcessBrowserTest,
           ? root->render_manager()->speculative_frame_host()->render_view_host()
           : root->render_manager()->pending_render_view_host();
   EXPECT_EQ(site_instance, pending_rvh->GetSiteInstance());
-  EXPECT_NE(rvh_routing_id, pending_rvh->GetRoutingID());
+  EXPECT_FALSE(rvh_routing_id == pending_rvh->GetRoutingID() &&
+               rvh_process_id == pending_rvh->GetProcess()->GetID());
 
   // Make sure the last navigation finishes without crashing.
   navigation_observer.Wait();
@@ -11195,6 +11198,133 @@ IN_PROC_BROWSER_TEST_F(SitePerProcessBrowserTest, TestChildProcessImportance) {
   EXPECT_EQ(ChildProcessImportance::MODERATE,
             interstitial_process->GetWidgetImportanceForTesting());
 }
+
+// See https://crbug.com/756790#c5.
+IN_PROC_BROWSER_TEST_F(SitePerProcessBrowserTest,
+                       TwoCrossSitePendingNavigationsAndMainFrameWins) {
+  // This test assumes PlzNavigate is enabled.
+  if (!IsBrowserSideNavigationEnabled())
+    return;
+
+  GURL main_url(embedded_test_server()->GetURL(
+      "a.com", "/cross_site_iframe_factory.html?a(a)"));
+  EXPECT_TRUE(NavigateToURL(shell(), main_url));
+  FrameTreeNode* root = web_contents()->GetFrameTree()->root();
+  FrameTreeNode* child = root->child_at(0);
+
+  GURL new_url_1(embedded_test_server()->GetURL("b.com", "/title1.html"));
+  GURL new_url_2(embedded_test_server()->GetURL("b.com", "/title2.html"));
+  TestNavigationManager manager1(web_contents(), new_url_1);
+  TestNavigationManager manager2(web_contents(), new_url_2);
+
+  // Navigate both frames cross-site to the same site simultaneously.
+  EXPECT_TRUE(ExecuteScript(
+      web_contents(),
+      "location = '" + new_url_1.spec() + "';"
+      "frames[0].location = '" + new_url_2.spec() + "';"));
+
+  // Wait for both responses, but don't commit either frame yet.
+  ASSERT_TRUE(manager1.WaitForResponse());
+  ASSERT_TRUE(manager2.WaitForResponse());
+
+  // At this point, we should have two speculative RenderFrameHosts.
+  RenderFrameHostImpl* rfh1 = root->render_manager()->speculative_frame_host();
+  EXPECT_TRUE(rfh1);
+  RenderFrameHostImpl* rfh2 = child->render_manager()->speculative_frame_host();
+  EXPECT_TRUE(rfh2);
+  scoped_refptr<SiteInstanceImpl> b_site_instance(rfh1->GetSiteInstance());
+
+  // There should be a b.com proxy for the root.
+  RenderFrameProxyHost* root_proxy =
+      root->render_manager()->GetRenderFrameProxyHost(b_site_instance.get());
+  EXPECT_TRUE(root_proxy);
+  EXPECT_TRUE(root_proxy->is_render_frame_proxy_live());
+
+  // Now let the main frame commit.
+  manager1.WaitForNavigationFinished();
+
+  // Make sure the process is live and at the new URL.
+  EXPECT_TRUE(b_site_instance->GetProcess()->HasConnection());
+  EXPECT_TRUE(root->current_frame_host()->IsRenderFrameLive());
+  EXPECT_EQ(rfh1, root->current_frame_host());
+  EXPECT_EQ(new_url_1, root->current_frame_host()->GetLastCommittedURL());
+
+  // The subframe should be gone, so the second navigation should have no
+  // effect.
+  manager2.WaitForNavigationFinished();
+
+  // The new commit should have detached the old child frame.
+  EXPECT_EQ(0U, root->child_count());
+  int length = -1;
+  EXPECT_TRUE(ExecuteScriptAndExtractInt(
+      web_contents(), "domAutomationController.send(frames.length);",
+      &length));
+  EXPECT_EQ(0, length);
+
+  // The root proxy should be gone.
+  EXPECT_FALSE(
+      root->render_manager()->GetRenderFrameProxyHost(b_site_instance.get()));
+}
+
+// See https://crbug.com/756790#c5.
+IN_PROC_BROWSER_TEST_F(SitePerProcessBrowserTest,
+                       TwoCrossSitePendingNavigationsAndSubframeWins) {
+  // This test assumes PlzNavigate is enabled.
+  if (!IsBrowserSideNavigationEnabled())
+    return;
+
+  GURL main_url(embedded_test_server()->GetURL(
+      "a.com", "/cross_site_iframe_factory.html?a(a)"));
+  EXPECT_TRUE(NavigateToURL(shell(), main_url));
+  FrameTreeNode* root = web_contents()->GetFrameTree()->root();
+  FrameTreeNode* child = root->child_at(0);
+
+  GURL new_url_1(embedded_test_server()->GetURL("b.com", "/title1.html"));
+  GURL new_url_2(embedded_test_server()->GetURL("b.com", "/title2.html"));
+  TestNavigationManager manager1(web_contents(), new_url_1);
+  TestNavigationManager manager2(web_contents(), new_url_2);
+
+  // Navigate both frames cross-site to the same site simultaneously.
+  EXPECT_TRUE(ExecuteScript(
+      web_contents(),
+      "location = '" + new_url_1.spec() + "';"
+      "frames[0].location = '" + new_url_2.spec() + "';"));
+
+  // Wait for both responses, but don't commit either frame yet.
+  ASSERT_TRUE(manager1.WaitForResponse());
+  ASSERT_TRUE(manager2.WaitForResponse());
+
+  // At this point, we should have two speculative RenderFrameHosts.
+  RenderFrameHostImpl* rfh1 = root->render_manager()->speculative_frame_host();
+  EXPECT_TRUE(rfh1);
+  RenderFrameHostImpl* rfh2 = child->render_manager()->speculative_frame_host();
+  EXPECT_TRUE(rfh2);
+  scoped_refptr<SiteInstanceImpl> b_site_instance(rfh1->GetSiteInstance());
+
+  // At this point, there should be a live root proxy in SiteInstance B.
+  RenderFrameProxyHost* root_proxy =
+      root->render_manager()->GetRenderFrameProxyHost(b_site_instance.get());
+  EXPECT_TRUE(root_proxy);
+  EXPECT_TRUE(root_proxy->is_render_frame_proxy_live());
+
+  // Now let the subframe commit.
+  manager2.WaitForNavigationFinished();
+
+  // Make sure the process is live and at the new URL.
+  EXPECT_TRUE(b_site_instance->GetProcess()->HasConnection());
+  ASSERT_EQ(1U, root->child_count());
+  EXPECT_TRUE(child->current_frame_host()->IsRenderFrameLive());
+  EXPECT_EQ(rfh2, child->current_frame_host());
+  EXPECT_EQ(new_url_2, child->current_frame_host()->GetLastCommittedURL());
+
+  // Recheck that the parent proxy is still live.
+  root_proxy =
+      root->render_manager()->GetRenderFrameProxyHost(b_site_instance.get());
+  EXPECT_TRUE(root_proxy);
+  EXPECT_TRUE(root_proxy->is_render_frame_proxy_live());
+}
+
+// TODO: neither wins, both canceled, state says same.
 
 #if defined(OS_ANDROID)
 // Tests for Android TouchSelectionEditing.

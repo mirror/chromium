@@ -1034,13 +1034,18 @@ void RenderFrameImpl::CreateFrame(
     const FrameOwnerProperties& frame_owner_properties) {
   blink::WebLocalFrame* web_frame;
   RenderFrameImpl* render_frame;
+  LOG(INFO) << "RenderFrameImpl::CreateFrame";
+  LOG(INFO) << "  proxy_routing_id=" << proxy_routing_id;
   if (proxy_routing_id == MSG_ROUTING_NONE) {
+    LOG(INFO) << "  parent path.  How did we get here?";
     RenderFrameProxy* parent_proxy =
         RenderFrameProxy::FromRoutingID(parent_routing_id);
     // If the browser is sending a valid parent routing id, it should already
     // be created and registered.
     CHECK(parent_proxy);
     blink::WebRemoteFrame* parent_web_frame = parent_proxy->web_frame();
+
+    CHECK(false) << "This path should not be used anymore.";
 
     blink::WebFrame* previous_sibling_web_frame = nullptr;
     RenderFrameProxy* previous_sibling_proxy =
@@ -1068,6 +1073,7 @@ void RenderFrameImpl::CreateFrame(
     // call to createLocalChild.
     render_frame->in_frame_tree_ = true;
   } else {
+    LOG(INFO) << "  proxy path.";
     RenderFrameProxy* proxy =
         RenderFrameProxy::FromRoutingID(proxy_routing_id);
     // The remote frame could've been detached while the remote-to-local
