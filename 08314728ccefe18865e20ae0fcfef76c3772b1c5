@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "10d5ed70_ad04a991",
+        "filename": "ash/shelf/shelf_context_menu_model_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-08-26T00:56:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f7f261a4_2c91eda5",
+      "revId": "08314728ccefe18865e20ae0fcfef76c3772b1c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b6a36017_d1d39146",
         "filename": "ash/shelf/shelf_context_menu_model_unittest.cc",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "08314728ccefe18865e20ae0fcfef76c3772b1c5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb73cd8d_bf57cab9",
+        "filename": "ash/shelf/shelf_context_menu_model_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 274,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-08-26T00:56:28Z",
+      "side": 1,
+      "message": "Not too much, there are some in code base. Like what I wrote before: https://cs.chromium.org/chromium/src/ash/system/power/tablet_power_button_controller_unittest.cc?type\u003dcs\u0026sq\u003dpackage:chromium\u0026l\u003d339 : /",
+      "parentUuid": "b6a36017_d1d39146",
+      "revId": "08314728ccefe18865e20ae0fcfef76c3772b1c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "9422934a_e280c97e",
+        "filename": "ash/shelf/shelf_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 299,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-08-26T00:56:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8264daa7_7c1bb3de",
+      "revId": "08314728ccefe18865e20ae0fcfef76c3772b1c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5d88a59f_85db880e",
         "filename": "ash/shelf/shelf_controller.cc",
         "patchSetId": 2
@@ -64,6 +118,24 @@
       "writtenOn": "2017-08-26T00:18:54Z",
       "side": 1,
       "message": "q: How does this work if tablet mode exits during fullscreen? (seems like this would apply the prefs value, but fullscreen still wants the shelf to be hidden...) Do the tests cover that scenario?",
+      "revId": "08314728ccefe18865e20ae0fcfef76c3772b1c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "734bac18_eb3663ee",
+        "filename": "ash/shelf/shelf_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 309,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-08-26T00:56:28Z",
+      "side": 1,
+      "message": "Yes, there is test coverage for this: https://cs.chromium.org/chromium/src/ash/wm/tablet_mode/tablet_mode_window_manager_unittest.cc?q\u003dtablet_mode_window_mana\u0026sq\u003dpackage:chromium\u0026l\u003d1122\n\nSeems ash::ShelfLayoutManager should take care of that.",
+      "parentUuid": "5d88a59f_85db880e",
       "revId": "08314728ccefe18865e20ae0fcfef76c3772b1c5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -105,6 +177,24 @@
     },
     {
       "key": {
+        "uuid": "fa70fa12_7c398e47",
+        "filename": "ash/shell.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1014,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-08-26T00:56:28Z",
+      "side": 1,
+      "message": "Hope so! If chrome starts without crash, that should probably be fine?",
+      "parentUuid": "a3a07dcf_ad0c7e0f",
+      "revId": "08314728ccefe18865e20ae0fcfef76c3772b1c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5eec11e8_09d659cd",
         "filename": "ash/wm/tablet_mode/tablet_mode_window_manager_unittest.cc",
         "patchSetId": 2
@@ -119,6 +209,24 @@
       "revId": "08314728ccefe18865e20ae0fcfef76c3772b1c5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f37a867a_4ad1cdf2",
+        "filename": "ash/wm/tablet_mode/tablet_mode_window_manager_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-08-26T00:56:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5eec11e8_09d659cd",
+      "revId": "08314728ccefe18865e20ae0fcfef76c3772b1c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -139,6 +247,24 @@
     },
     {
       "key": {
+        "uuid": "568ee54a_1dbe507a",
+        "filename": "ash/wm/tablet_mode/tablet_mode_window_manager_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 901,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-08-26T00:56:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "127fd9f9_a6c41ee7",
+      "revId": "08314728ccefe18865e20ae0fcfef76c3772b1c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "962a948e_ba427048",
         "filename": "ash/wm/tablet_mode/tablet_mode_window_manager_unittest.cc",
         "patchSetId": 2
@@ -153,6 +279,24 @@
       "revId": "08314728ccefe18865e20ae0fcfef76c3772b1c5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4eb0ca5_a0220e34",
+        "filename": "ash/wm/tablet_mode/tablet_mode_window_manager_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 902,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-08-26T00:56:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "962a948e_ba427048",
+      "revId": "08314728ccefe18865e20ae0fcfef76c3772b1c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -173,6 +317,24 @@
     },
     {
       "key": {
+        "uuid": "ca603e72_966c27d0",
+        "filename": "ash/wm/tablet_mode/tablet_mode_window_manager_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 921,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-08-26T00:56:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "930e4503_950eb657",
+      "revId": "08314728ccefe18865e20ae0fcfef76c3772b1c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cce9e571_694ce9e9",
         "filename": "ash/wm/tablet_mode/tablet_mode_window_manager_unittest.cc",
         "patchSetId": 2
@@ -187,6 +349,24 @@
       "revId": "08314728ccefe18865e20ae0fcfef76c3772b1c5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d114c2d4_7615e398",
+        "filename": "ash/wm/tablet_mode/tablet_mode_window_manager_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 930,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-08-26T00:56:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cce9e571_694ce9e9",
+      "revId": "08314728ccefe18865e20ae0fcfef76c3772b1c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -207,6 +387,24 @@
     },
     {
       "key": {
+        "uuid": "2c7b1015_8b99a286",
+        "filename": "ash/wm/tablet_mode/tablet_mode_window_manager_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1107,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-08-26T00:56:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6b3f6170_39d136e6",
+      "revId": "08314728ccefe18865e20ae0fcfef76c3772b1c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4786bf5a_0b13a4dd",
         "filename": "ash/wm/tablet_mode/tablet_mode_window_manager_unittest.cc",
         "patchSetId": 2
@@ -221,6 +419,24 @@
       "revId": "08314728ccefe18865e20ae0fcfef76c3772b1c5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a5a0108_c3e42784",
+        "filename": "ash/wm/tablet_mode/tablet_mode_window_manager_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1111,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-08-26T00:56:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4786bf5a_0b13a4dd",
+      "revId": "08314728ccefe18865e20ae0fcfef76c3772b1c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -241,6 +457,24 @@
     },
     {
       "key": {
+        "uuid": "ab5a37ab_fbdf73aa",
+        "filename": "ash/wm/tablet_mode/tablet_mode_window_manager_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1131,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-08-26T00:56:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "202ec5c7_3316bd29",
+      "revId": "08314728ccefe18865e20ae0fcfef76c3772b1c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d9745ff7_2d58a403",
         "filename": "ash/wm/tablet_mode/tablet_mode_window_manager_unittest.cc",
         "patchSetId": 2
@@ -258,6 +492,24 @@
     },
     {
       "key": {
+        "uuid": "8bc72ad0_4c249319",
+        "filename": "ash/wm/tablet_mode/tablet_mode_window_manager_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1132,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-08-26T00:56:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d9745ff7_2d58a403",
+      "revId": "08314728ccefe18865e20ae0fcfef76c3772b1c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2285192a_1690d252",
         "filename": "ash/wm/tablet_mode/tablet_mode_window_manager_unittest.cc",
         "patchSetId": 2
@@ -272,6 +524,24 @@
       "revId": "08314728ccefe18865e20ae0fcfef76c3772b1c5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "358dd925_2300f58d",
+        "filename": "ash/wm/tablet_mode/tablet_mode_window_manager_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1142,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-08-26T00:56:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2285192a_1690d252",
+      "revId": "08314728ccefe18865e20ae0fcfef76c3772b1c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
