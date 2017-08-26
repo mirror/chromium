@@ -42,6 +42,24 @@
     },
     {
       "key": {
+        "uuid": "716672bf_1fdac646",
+        "filename": "third_party/WebKit/Source/devtools/front_end/object_ui/RemoteObjectPreviewFormatter.js",
+        "patchSetId": 13
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1230559
+      },
+      "writtenOn": "2017-08-26T00:36:52Z",
+      "side": 1,
+      "message": "Sounds good: little risk, fewer lines of code, less memory (no .filter())!",
+      "parentUuid": "e4af5ffe_4ccc1c92",
+      "revId": "4675001d6e6cdb1cc15ce47d3e1ddb45436a8ece",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6cb375f5_3975b0bc",
         "filename": "third_party/WebKit/Source/devtools/front_end/object_ui/RemoteObjectPreviewFormatter.js",
         "patchSetId": 13
