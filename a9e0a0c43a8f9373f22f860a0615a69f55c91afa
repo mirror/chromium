@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e84bfcb8_97b1a85f",
+        "filename": "chrome/browser/chrome_content_browser_client.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 3227,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-08-26T00:16:08Z",
+      "side": 0,
+      "message": "Can this move and possibly the unit test changes be its own CL, apart from the UMA additions?",
+      "revId": "a9e0a0c43a8f9373f22f860a0615a69f55c91afa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

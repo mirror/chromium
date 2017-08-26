@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "beaf3a6c_53959f9c",
+        "filename": "chrome/browser/plugins/pdf_iframe_navigation_throttle.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-08-26T00:16:08Z",
+      "side": 1,
+      "message": "Move this into the if (response_headers) block. It can\u0027t ever be true otherwise.",
+      "revId": "f5a87f28142fa36d1be07a991bf596ca1f822329",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b9244ea3_e423e952",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 29821,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-08-26T00:16:08Z",
+      "side": 1,
+      "message": "Probably want to change these to say Chrome PDF Viewer. Same for the enum name. Sorry for not catching this the first time around.",
+      "range": {
+        "startLine": 29821,
+        "startChar": 52,
+        "endLine": 29821,
+        "endChar": 58
+      },
+      "revId": "f5a87f28142fa36d1be07a991bf596ca1f822329",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
