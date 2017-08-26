@@ -40,6 +40,10 @@
 #include "ipc/handle_attachment_win.h"
 #endif
 
+#if defined(OS_FUCHSIA)
+#include "ipc/handle_attachment_fuchsia.h"
+#endif
+
 namespace IPC {
 
 namespace {
@@ -146,7 +150,7 @@ MojoResult WrapAttachmentImpl(MessageAttachment* attachment,
                               mojom::SerializedHandle::Type::PLATFORM_FILE,
                               serialized);
   }
-#endif
+#endif  // defined(OS_POSIX)
 #if defined(OS_MACOSX)
   DCHECK_EQ(attachment->GetType(), MessageAttachment::Type::MACH_PORT);
   internal::MachPortAttachmentMac& mach_port_attachment =
@@ -154,6 +158,14 @@ MojoResult WrapAttachmentImpl(MessageAttachment* attachment,
   MojoResult result = WrapMachPort(mach_port_attachment.get_mach_port(),
                                    serialized);
   mach_port_attachment.reset_mach_port_ownership();
+  return result;
+#elif defined(OS_FUCHSIA)
+  DCHECK_EQ(attachment->GetType(), MessageAttachment::Type::FUCHSIA_HANDLE);
+  internal::HandleAttachmentFuchsia& handle_attachment =
+      static_cast<internal::HandleAttachmentFuchsia&>(*attachment);
+  MojoResult result = WrapPlatformHandle(
+      handle_attachment.Take(), mojom::SerializedHandle::Type::FUCHSIA_HANDLE,
+      serialized);
   return result;
 #elif defined(OS_WIN)
   DCHECK_EQ(attachment->GetType(), MessageAttachment::Type::WIN_HANDLE);
