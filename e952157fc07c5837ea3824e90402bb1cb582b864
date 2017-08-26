@@ -212,6 +212,24 @@
     },
     {
       "key": {
+        "uuid": "e706503a_8b089053",
+        "filename": "third_party/WebKit/Source/platform/graphics/VideoFrameSubmitter.cpp",
+        "patchSetId": 28
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-08-26T01:56:35Z",
+      "side": 1,
+      "message": "Good question; I think it depends if there are any other callers of this class than the VFC - e.g. does this class end up dealing with notifications from the compositor, in which case it would be good to verify that they arrive on the expected thread?\n\nOtherwise, SGTM.",
+      "parentUuid": "4dc02ac6_49931397",
+      "revId": "e952157fc07c5837ea3824e90402bb1cb582b864",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fe63ed91_4aaaf01e",
         "filename": "third_party/WebKit/Source/platform/graphics/VideoFrameSubmitter.h",
         "patchSetId": 28
