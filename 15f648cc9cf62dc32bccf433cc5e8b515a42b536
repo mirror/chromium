@@ -2,6 +2,144 @@
   "comments": [
     {
       "key": {
+        "uuid": "add0672c_c62bea23",
+        "filename": "content/browser/browser_main_loop.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-08-26T01:02:27Z",
+      "side": 1,
+      "message": "My first time bumping into browser_main_loop.cc - I think I get why we make it here, but not familiar enough to really say who should own the singleton. The db doesn\u0027t really have much to do with the main loop - but I don\u0027t have a better suggestion for where to put it.",
+      "range": {
+        "startLine": 112,
+        "startChar": 30,
+        "endLine": 112,
+        "endChar": 57
+      },
+      "revId": "15f648cc9cf62dc32bccf433cc5e8b515a42b536",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ae17cf8_2ecfe550",
+        "filename": "content/browser/browser_main_loop.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1619,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-08-26T01:02:27Z",
+      "side": 1,
+      "message": "should we do a lazy creation instead? I guess it will come down to how much DB work/precaching the instance does upon construction.",
+      "range": {
+        "startLine": 1619,
+        "startChar": 2,
+        "endLine": 1619,
+        "endChar": 30
+      },
+      "revId": "15f648cc9cf62dc32bccf433cc5e8b515a42b536",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "173bff80_c4e2819d",
+        "filename": "content/browser/browser_main_loop.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1619,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-08-26T01:02:27Z",
+      "side": 1,
+      "message": "Guard this instantiation to only occur when GetMediaCapabilitiesDatabasePath() is non-empty",
+      "range": {
+        "startLine": 1619,
+        "startChar": 2,
+        "endLine": 1619,
+        "endChar": 30
+      },
+      "revId": "15f648cc9cf62dc32bccf433cc5e8b515a42b536",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "56565c42_d0ace537",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 3005,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-08-26T01:02:27Z",
+      "side": 1,
+      "message": "Just curious - when do we expect this to not exist?",
+      "range": {
+        "startLine": 3005,
+        "startChar": 6,
+        "endLine": 3005,
+        "endChar": 21
+      },
+      "revId": "15f648cc9cf62dc32bccf433cc5e8b515a42b536",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9db8d212_21901391",
+        "filename": "media/mojo/services/media_capabilities.proto",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-08-26T01:02:27Z",
+      "side": 1,
+      "message": "Just curious - how did you choose this one?",
+      "range": {
+        "startLine": 7,
+        "startChar": 22,
+        "endLine": 7,
+        "endChar": 34
+      },
+      "revId": "15f648cc9cf62dc32bccf433cc5e8b515a42b536",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b665ae18_0a6b5e31",
+        "filename": "media/mojo/services/media_capabilities_database.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-08-26T01:02:27Z",
+      "side": 1,
+      "message": "I defer to levelDB / proto experts on whether this is the best practice for storing our data ;). It should definitely work for now.",
+      "range": {
+        "startLine": 24,
+        "startChar": 46,
+        "endLine": 24,
+        "endChar": 55
+      },
+      "revId": "15f648cc9cf62dc32bccf433cc5e8b515a42b536",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4e3a9eaa_a56275f9",
         "filename": "media/mojo/services/media_capabilities_database.cc",
         "patchSetId": 2
@@ -13,6 +151,144 @@
       "writtenOn": "2017-08-24T23:12:27Z",
       "side": 1,
       "message": "StringPrintf or string builder so you don\u0027t create so many temporaries.",
+      "revId": "15f648cc9cf62dc32bccf433cc5e8b515a42b536",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3de6474a_8ab88f09",
+        "filename": "media/mojo/services/media_capabilities_database.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-08-26T01:02:27Z",
+      "side": 1,
+      "message": "Any sense for the performance implications impact of this? Obviously it doesn\u0027t block, but does it load a bunch of stuff into memory? Goes back to my wondering if we should be lazy to create it",
+      "range": {
+        "startLine": 54,
+        "startChar": 7,
+        "endLine": 54,
+        "endChar": 11
+      },
+      "revId": "15f648cc9cf62dc32bccf433cc5e8b515a42b536",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02ea9027_decae2c1",
+        "filename": "media/mojo/services/media_capabilities_database.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-08-26T01:02:27Z",
+      "side": 1,
+      "message": "what thread/sequence does this get called on? We\u0027ll want to avoid resetting db_ when other sequences are potentially using it. \n\nCan you add a thread checker to this class and DCHECK all the methods?",
+      "range": {
+        "startLine": 95,
+        "startChar": 32,
+        "endLine": 95,
+        "endChar": 38
+      },
+      "revId": "15f648cc9cf62dc32bccf433cc5e8b515a42b536",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "097e2ffc_aba571ac",
+        "filename": "media/mojo/services/media_capabilities_database.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-08-26T01:02:27Z",
+      "side": 1,
+      "message": "What thread/sequence does this callback come on? We\u0027ll want it to be on the same sequence we\u0027re using to read/write to the cache elsewhere in this class.",
+      "range": {
+        "startLine": 120,
+        "startChar": 49,
+        "endLine": 120,
+        "endChar": 66
+      },
+      "revId": "15f648cc9cf62dc32bccf433cc5e8b515a42b536",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b2d19a4_d52271d1",
+        "filename": "media/mojo/services/media_capabilities_database.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-08-26T01:02:27Z",
+      "side": 1,
+      "message": "You might instead just record the failure in OnInit",
+      "range": {
+        "startLine": 158,
+        "startChar": 19,
+        "endLine": 158,
+        "endChar": 20
+      },
+      "revId": "15f648cc9cf62dc32bccf433cc5e8b515a42b536",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4227416_303d75c5",
+        "filename": "media/mojo/services/media_capabilities_database.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-08-26T01:02:27Z",
+      "side": 1,
+      "message": "ditto here and for the other TODOs",
+      "range": {
+        "startLine": 165,
+        "startChar": 13,
+        "endLine": 165,
+        "endChar": 19
+      },
+      "revId": "15f648cc9cf62dc32bccf433cc5e8b515a42b536",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3f0e852_e5a021c4",
+        "filename": "media/mojo/services/media_capabilities_database.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-08-26T01:02:27Z",
+      "side": 1,
+      "message": "ditto on question about thread/sequence",
+      "range": {
+        "startLine": 195,
+        "startChar": 49,
+        "endLine": 195,
+        "endChar": 70
+      },
       "revId": "15f648cc9cf62dc32bccf433cc5e8b515a42b536",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -36,6 +312,24 @@
     },
     {
       "key": {
+        "uuid": "7dfb2e15_c64501ab",
+        "filename": "media/mojo/services/media_capabilities_database.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-08-26T01:02:27Z",
+      "side": 1,
+      "message": "At this point the \"Entry\" is part of the public read/write API.",
+      "parentUuid": "91762fea_a24d398e",
+      "revId": "15f648cc9cf62dc32bccf433cc5e8b515a42b536",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f04ac70e_bacea7c4",
         "filename": "media/mojo/services/media_capabilities_database.h",
         "patchSetId": 2
@@ -47,6 +341,29 @@
       "writtenOn": "2017-08-24T23:12:27Z",
       "side": 1,
       "message": "const\u0026 on size.",
+      "revId": "15f648cc9cf62dc32bccf433cc5e8b515a42b536",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11b3fba6_a1b96631",
+        "filename": "media/mojo/services/media_capabilities_database.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-08-26T01:02:27Z",
+      "side": 1,
+      "message": "typo: saved",
+      "range": {
+        "startLine": 43,
+        "startChar": 17,
+        "endLine": 43,
+        "endChar": 22
+      },
       "revId": "15f648cc9cf62dc32bccf433cc5e8b515a42b536",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
