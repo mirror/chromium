@@ -9,6 +9,7 @@
 #include "base/strings/string_util.h"
 #include "components/download/public/download_params.h"
 #include "components/download/public/download_service.h"
+#include "components/offline_pages/core/offline_event_logger.h"
 #include "components/offline_pages/core/prefetch/prefetch_dispatcher.h"
 #include "components/offline_pages/core/prefetch/prefetch_server_urls.h"
 #include "components/offline_pages/core/prefetch/prefetch_service.h"
@@ -57,6 +58,10 @@ void PrefetchDownloaderImpl::StartDownload(
     return;
   }
 
+  prefetch_service_->GetLogger()->RecordActivity(
+      "Downloader: Start download of '" + download_location +
+      "', download_id=" + download_id);
+
   download::DownloadParams params;
   params.traffic_annotation =
       net::MutableNetworkTrafficAnnotationTag(NO_TRAFFIC_ANNOTATION_YET);
@@ -89,6 +94,7 @@ void PrefetchDownloaderImpl::CancelDownload(const std::string& download_id) {
 
 void PrefetchDownloaderImpl::OnDownloadServiceReady(
     const std::vector<std::string>& outstanding_download_ids) {
+  prefetch_service_->GetLogger()->RecordActivity("Downloader: Service ready.");
   DCHECK_EQ(download::DownloadService::ServiceStatus::READY,
             download_service_->GetStatus());
   service_started_ = true;
@@ -105,10 +111,14 @@ void PrefetchDownloaderImpl::OnDownloadServiceReady(
 }
 
 void PrefetchDownloaderImpl::OnDownloadServiceUnavailable() {
+  prefetch_service_->GetLogger()->RecordActivity(
+      "Downloader: Service unavailable.");
   // TODO(jianli): Report UMA.
 }
 
 void PrefetchDownloaderImpl::OnDownloadServiceShutdown() {
+  prefetch_service_->GetLogger()->RecordActivity(
+      "Downloader: Service shutdown.");
   service_started_ = false;
 }
 
@@ -116,6 +126,8 @@ void PrefetchDownloaderImpl::OnDownloadSucceeded(
     const std::string& download_id,
     const base::FilePath& file_path,
     uint64_t file_size) {
+  prefetch_service_->GetLogger()->RecordActivity(
+      "Downloader: Download succeeded, download_id=" + download_id);
   // The file is not likely to be that big. Treat it as error if so.
   if (file_size > static_cast<uint64_t>(std::numeric_limits<int64_t>::max())) {
     OnDownloadFailed(download_id);
@@ -130,12 +142,17 @@ void PrefetchDownloaderImpl::OnDownloadSucceeded(
 void PrefetchDownloaderImpl::OnDownloadFailed(const std::string& download_id) {
   PrefetchDownloadResult result;
   result.download_id = download_id;
+  prefetch_service_->GetLogger()->RecordActivity(
+      "Downloader: Download failed, download_id=" + download_id);
   NotifyDispatcher(prefetch_service_, result);
 }
 
 void PrefetchDownloaderImpl::OnStartDownload(
     const std::string& download_id,
     download::DownloadParams::StartResult result) {
+  prefetch_service_->GetLogger()->RecordActivity(
+      "Downloader: Download started, download_id=" + download_id +
+      ", result=" + std::to_string(static_cast<int>(result)));
   if (result != download::DownloadParams::StartResult::ACCEPTED)
     OnDownloadFailed(download_id);
 }
