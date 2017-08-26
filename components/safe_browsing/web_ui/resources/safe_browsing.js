@@ -16,9 +16,9 @@ cr.define('safe_browsing', function() {
     cr.sendWithPromise('getPrefs', []).then((prefs) => addPrefs(prefs));
     cr.sendWithPromise('getDatabaseManagerInfo', []).then(
       function(databaseState) {
-        var fullHashCacheState = databaseState.splice(-1,1);
-        addDatabaseManagerInfo(databaseState);
-        addFullHashCacheInfo(fullHashCacheState);
+        addFullHashCacheInfo(databaseState[0]);
+        addDatabaseManagerInfo(databaseState[1]);
+
   });
 }
   function addExperiments(result) {
@@ -44,18 +44,13 @@ cr.define('safe_browsing', function() {
   }
 
   function addDatabaseManagerInfo(result) {
-      var resLength = result.length;
-      var preferencesListFormatted = "";
-
-      for (var i = 0; i < resLength; i += 2) {
-        preferencesListFormatted += "<div><b>" + result[i] + "</b>: " +
-            result[i+1] + "</div>";
-      }
-      $('database-info-list').innerHTML = preferencesListFormatted;
+      var parsedResult = JSON.stringify(result, undefined, 3);
+      $('database-info-list').innerHTML = parsedResult.replace(/[\[\]{}'",]/g,"");
   }
 
   function addFullHashCacheInfo(result) {
-      $('full-hash-cache-info').innerHTML = result;
+      var parsedResult = JSON.stringify(result, undefined, 3);
+      $('full-hash-cache-info').innerHTML = parsedResult.replace(/[\[\]{}'",]/g,"");
   }
 
   return {

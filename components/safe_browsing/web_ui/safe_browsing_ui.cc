@@ -34,106 +34,116 @@ namespace safe_browsing {
 namespace {
 #if SAFE_BROWSING_DB_LOCAL
 
-base::Value UserReadableTimeFromMillisSinceEpoch(int64_t time_in_milliseconds) {
+std::string UserReadableTimeFromMillisSinceEpoch(int64_t time_in_milliseconds) {
   base::Time time = base::Time::UnixEpoch() +
                     base::TimeDelta::FromMilliseconds(time_in_milliseconds);
-  return base::Value(
-      base::UTF16ToASCII(base::TimeFormatShortDateAndTime(time)));
+  return base::UTF16ToASCII(base::TimeFormatShortDateAndTime(time));
 }
 
-void AddStoreInfo(const DatabaseManagerInfo::DatabaseInfo::StoreInfo store_info,
-                  base::ListValue* database_info_list) {
-  if (store_info.has_file_size_bytes() && store_info.has_file_name()) {
-    database_info_list->GetList().push_back(
-        base::Value(store_info.file_name()));
-    database_info_list->GetList().push_back(
-        base::Value(static_cast<double>(store_info.file_size_bytes())));
+base::ListValue ParseStoreInfo(
+    const DatabaseManagerInfo::DatabaseInfo::StoreInfo store_info) {
+  base::ListValue store_info_list;
+  base::DictionaryValue store_info_dict;
+  if (store_info.has_file_name()) {
+    store_info_list.GetList().push_back(
+        base::Value("Store: " + store_info.file_name()));
+  }
+  if (store_info.has_file_size_bytes()) {
+    store_info_dict.SetDouble(
+        "Store size", static_cast<double>(store_info.file_size_bytes()));
   }
   if (store_info.has_update_status()) {
-    database_info_list->GetList().push_back(base::Value("Store update status"));
-    database_info_list->GetList().push_back(
-        base::Value(store_info.update_status()));
+    store_info_dict.SetInteger("Store update status",
+                               store_info.update_status());
   }
   if (store_info.has_last_apply_update_time_millis()) {
-    database_info_list->GetList().push_back(base::Value("Last update time"));
-    database_info_list->GetList().push_back(
-        UserReadableTimeFromMillisSinceEpoch(
-            store_info.last_apply_update_time_millis()));
+    store_info_dict.SetString("Last update time",
+                              UserReadableTimeFromMillisSinceEpoch(
+                                  store_info.last_apply_update_time_millis()));
   }
   if (store_info.has_checks_attempted()) {
-    database_info_list->GetList().push_back(
-        base::Value("Number of database checks"));
-    database_info_list->GetList().push_back(
-        base::Value(static_cast<int>(store_info.checks_attempted())));
+    store_info_dict.SetInteger("Number of database checks",
+                               static_cast<int>(store_info.checks_attempted()));
   }
+  store_info_list.GetList().push_back(store_info_dict);
+  return store_info_list;
 }
 
-void AddDatabaseInfo(const DatabaseManagerInfo::DatabaseInfo database_info,
-                     base::ListValue* database_info_list) {
-  if (database_info.has_database_size_bytes()) {
-    database_info_list->GetList().push_back(
-        base::Value("Database size in bytes"));
-    database_info_list->GetList().push_back(
-        base::Value(static_cast<double>(database_info.database_size_bytes())));
-  }
+base::ListValue ParseDatabaseInfo(
+    const DatabaseManagerInfo::DatabaseInfo database_info) {
+  base::ListValue database_info_list;
+  base::DictionaryValue database_info_dict;
 
+  if (database_info.has_database_size_bytes()) {
+    database_info_dict.SetDouble(
+        "Database size in bytes",
+        static_cast<double>(database_info.database_size_bytes()));
+  }
+  database_info_list.GetList().push_back(database_info_dict);
+
+  base::ListValue database_info_per_store;
   // Add the information specific to each store.
   for (int i = 0; i < database_info.store_info_size(); i++) {
-    AddStoreInfo(database_info.store_info(i), database_info_list);
+    database_info_per_store.GetList().push_back(
+        ParseStoreInfo(database_info.store_info(i)));
   }
+  database_info_list.GetList().push_back(database_info_per_store);
+  return database_info_list;
 }
 
-void AddUpdateInfo(const DatabaseManagerInfo::UpdateInfo update_info,
-                   base::ListValue* database_info_list) {
+base::DictionaryValue ParseUpdateInfo(
+    const DatabaseManagerInfo::UpdateInfo update_info) {
+  base::DictionaryValue update_info_dict;
+
   if (update_info.has_network_status_code()) {
     // Network status of the last GetUpdate().
-    database_info_list->GetList().push_back(
-        base::Value("Last update network status code"));
-    database_info_list->GetList().push_back(
-        base::Value(update_info.network_status_code()));
+    update_info_dict.SetInteger("Last update network status code",
+                                update_info.network_status_code());
   }
   if (update_info.has_last_update_time_millis()) {
-    database_info_list->GetList().push_back(base::Value("Last update time"));
-    database_info_list->GetList().push_back(
-        UserReadableTimeFromMillisSinceEpoch(
-            update_info.last_update_time_millis()));
+    update_info_dict.SetString("Last update time",
+                               UserReadableTimeFromMillisSinceEpoch(
+                                   update_info.last_update_time_millis()));
   }
+  return update_info_dict;
 }
 
-void ParseFullHashInfo(
+base::DictionaryValue ParseFullHashInfo(
     const FullHashCacheInfo::FullHashCache::CachedHashPrefixInfo::FullHashInfo
-        full_hash_info,
-    base::DictionaryValue* full_hash_info_dict) {
+        full_hash_info) {
+  base::DictionaryValue full_hash_info_dict;
   if (full_hash_info.has_positive_expiry()) {
-    full_hash_info_dict->SetString(
+    full_hash_info_dict.SetString(
         "Positivie expiry",
-        UserReadableTimeFromMillisSinceEpoch(full_hash_info.positive_expiry())
-            .GetString());
+        UserReadableTimeFromMillisSinceEpoch(full_hash_info.positive_expiry()));
   }
   if (full_hash_info.has_full_hash()) {
     std::string full_hash;
     base::Base64UrlEncode(full_hash_info.full_hash(),
                           base::Base64UrlEncodePolicy::INCLUDE_PADDING,
                           &full_hash);
-    full_hash_info_dict->SetString("Full hash (base64)", full_hash);
+    full_hash_info_dict.SetString("Full hash (base64)", full_hash);
   }
   if (full_hash_info.list_identifier().has_platform_type()) {
-    full_hash_info_dict->SetInteger(
+    full_hash_info_dict.SetInteger(
         "platform_type", full_hash_info.list_identifier().platform_type());
   }
   if (full_hash_info.list_identifier().has_threat_entry_type()) {
-    full_hash_info_dict->SetInteger(
+    full_hash_info_dict.SetInteger(
         "threat_entry_type",
         full_hash_info.list_identifier().threat_entry_type());
   }
   if (full_hash_info.list_identifier().has_threat_type()) {
-    full_hash_info_dict->SetInteger(
+    full_hash_info_dict.SetInteger(
         "threat_type", full_hash_info.list_identifier().threat_type());
   }
+  return full_hash_info_dict;
 }
 
-void ParseFullHashCache(const FullHashCacheInfo::FullHashCache full_hash_cache,
-                        base::ListValue* full_hash_cache_list) {
+base::ListValue ParseFullHashCache(
+    const FullHashCacheInfo::FullHashCache full_hash_cache) {
+  base::ListValue full_hash_cache_per_prefix;
+  base::ListValue full_hash_cache_list;
   base::DictionaryValue full_hash_cache_parsed;
 
   if (full_hash_cache.has_hash_prefix()) {
@@ -147,51 +157,45 @@ void ParseFullHashCache(const FullHashCacheInfo::FullHashCache full_hash_cache,
     full_hash_cache_parsed.SetString(
         "Negative expiry",
         UserReadableTimeFromMillisSinceEpoch(
-            full_hash_cache.cached_hash_prefix_info().negative_expiry())
-            .GetString());
+            full_hash_cache.cached_hash_prefix_info().negative_expiry()));
   }
 
-  full_hash_cache_list->GetList().push_back(full_hash_cache_parsed);
+  full_hash_cache_per_prefix.GetList().push_back(full_hash_cache_parsed);
 
   for (auto full_hash_info_it :
        full_hash_cache.cached_hash_prefix_info().full_hash_info()) {
-    base::DictionaryValue full_hash_info_dict;
-    ParseFullHashInfo(full_hash_info_it, &full_hash_info_dict);
-    full_hash_cache_list->GetList().push_back(full_hash_info_dict);
+    full_hash_cache_list.GetList().push_back(
+        ParseFullHashInfo(full_hash_info_it));
   }
+  full_hash_cache_per_prefix.GetList().push_back(full_hash_cache_list);
+  return full_hash_cache_per_prefix;
 }
 
-void ParseFullHashCacheInfo(const FullHashCacheInfo full_hash_cache_info_proto,
-                            base::ListValue* full_hash_cache_info) {
+base::ListValue ParseFullHashInfo(
+    const FullHashCacheInfo full_hash_cache_info_proto) {
+  base::ListValue full_hash_cache_info;
   if (full_hash_cache_info_proto.has_number_of_hits()) {
     base::DictionaryValue number_of_hits;
     number_of_hits.SetInteger("Number of cache hits",
                               full_hash_cache_info_proto.number_of_hits());
-    full_hash_cache_info->GetList().push_back(number_of_hits);
+    full_hash_cache_info.GetList().push_back(number_of_hits);
   }
+
+  base::ListValue full_hash_cache_per_prefix;
 
   // Record FullHashCache list.
   for (auto full_hash_cache_it : full_hash_cache_info_proto.full_hash_cache()) {
-    base::ListValue full_hash_cache_list;
-    ParseFullHashCache(full_hash_cache_it, &full_hash_cache_list);
-    full_hash_cache_info->GetList().push_back(full_hash_cache_list);
+    full_hash_cache_per_prefix.GetList().push_back(
+        ParseFullHashCache(full_hash_cache_it));
   }
+  full_hash_cache_info.GetList().push_back(full_hash_cache_per_prefix);
+
+  return full_hash_cache_info;
 }
 
-std::string AddFullHashCacheInfo(
+base::ListValue ParseFullHashCacheInfo(
     const FullHashCacheInfo full_hash_cache_info_proto) {
-  std::string full_hash_cache_parsed;
-
-  base::ListValue full_hash_cache;
-  ParseFullHashCacheInfo(full_hash_cache_info_proto, &full_hash_cache);
-
-  base::Value* full_hash_cache_tree = &full_hash_cache;
-
-  JSONStringValueSerializer serializer(&full_hash_cache_parsed);
-  serializer.set_pretty_print(true);
-  serializer.Serialize(*full_hash_cache_tree);
-
-  return full_hash_cache_parsed;
+  return ParseFullHashInfo(full_hash_cache_info_proto);
 }
 
 #endif
@@ -250,12 +254,13 @@ void SafeBrowsingUIHandler::GetPrefs(const base::ListValue* args) {
 
 void SafeBrowsingUIHandler::GetDatabaseManagerInfo(
     const base::ListValue* args) {
-  base::ListValue database_manager_info;
+  base::ListValue database_manager;
 
 #if SAFE_BROWSING_DB_LOCAL
   const V4LocalDatabaseManager* local_database_manager_instance =
       V4LocalDatabaseManager::current_local_database_manager();
   if (local_database_manager_instance) {
+    base::ListValue database_manager_info;
     DatabaseManagerInfo database_manager_info_proto;
     FullHashCacheInfo full_hash_cache_info_proto;
 
@@ -263,16 +268,17 @@ void SafeBrowsingUIHandler::GetDatabaseManagerInfo(
         &database_manager_info_proto, &full_hash_cache_info_proto);
 
     if (database_manager_info_proto.has_update_info()) {
-      AddUpdateInfo(database_manager_info_proto.update_info(),
-                    &database_manager_info);
+      database_manager_info.GetList().push_back(
+          ParseUpdateInfo(database_manager_info_proto.update_info()));
     }
     if (database_manager_info_proto.has_database_info()) {
-      AddDatabaseInfo(database_manager_info_proto.database_info(),
-                      &database_manager_info);
+      database_manager_info.GetList().push_back(
+          ParseDatabaseInfo(database_manager_info_proto.database_info()));
     }
 
-    database_manager_info.GetList().push_back(
-        base::Value(AddFullHashCacheInfo(full_hash_cache_info_proto)));
+    database_manager.GetList().push_back(
+        ParseFullHashCacheInfo(full_hash_cache_info_proto));
+    database_manager.GetList().push_back(database_manager_info);
   }
 #endif
 
@@ -280,7 +286,7 @@ void SafeBrowsingUIHandler::GetDatabaseManagerInfo(
   std::string callback_id;
   args->GetString(0, &callback_id);
 
-  ResolveJavascriptCallback(base::Value(callback_id), database_manager_info);
+  ResolveJavascriptCallback(base::Value(callback_id), database_manager);
 }
 
 void SafeBrowsingUIHandler::RegisterMessages() {
