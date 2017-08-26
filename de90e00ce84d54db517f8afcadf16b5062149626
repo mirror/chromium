@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f7a2427b_aa42f76c",
+        "filename": "remoting/host/linux/linux_me2me_host.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1144161
+      },
+      "writtenOn": "2017-08-26T02:16:28Z",
+      "side": 1,
+      "message": "This makes sure we\u0027re not run using Python 3 if it\u0027s set as default.",
+      "revId": "de90e00ce84d54db517f8afcadf16b5062149626",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4e8843b1_af986c09",
+        "filename": "remoting/host/linux/linux_me2me_host.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 860,
+      "author": {
+        "id": 1144161
+      },
+      "writtenOn": "2017-08-26T02:16:28Z",
+      "side": 1,
+      "message": "We don\u0027t really care if the exact same interpreter is being used.",
+      "revId": "de90e00ce84d54db517f8afcadf16b5062149626",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fc255f3e_2047076e",
+        "filename": "remoting/host/linux/linux_me2me_host.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 861,
+      "author": {
+        "id": 1144161
+      },
+      "writtenOn": "2017-08-26T02:16:28Z",
+      "side": 1,
+      "message": "We also don\u0027t care whether the path to the script is the same and specified in the same way.",
+      "revId": "de90e00ce84d54db517f8afcadf16b5062149626",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ef6e33b8_5585732f",
+        "filename": "remoting/host/linux/linux_me2me_host.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 864,
+      "author": {
+        "id": 1144161
+      },
+      "writtenOn": "2017-08-26T02:16:28Z",
+      "side": 1,
+      "message": "This makes sure the user can stop the existing daemon if they attempt to do so between installing a new version with this change and triggering the script to relaunch itself.",
+      "revId": "de90e00ce84d54db517f8afcadf16b5062149626",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c46a4eae_ba9ad8a6",
+        "filename": "remoting/host/linux/linux_me2me_host.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 1367,
+      "author": {
+        "id": 1144161
+      },
+      "writtenOn": "2017-08-26T02:16:28Z",
+      "side": 1,
+      "message": "Since parse_config_arg uses argparse, might as well switch over from optparse here for consistency.",
+      "revId": "de90e00ce84d54db517f8afcadf16b5062149626",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "437d2de1_0af7efe2",
+        "filename": "remoting/host/linux/linux_me2me_host.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 1412,
+      "author": {
+        "id": 1144161
+      },
+      "writtenOn": "2017-08-26T02:16:28Z",
+      "side": 1,
+      "message": "In argparse convention, this would be args or arguments, but I left it as options to avoid the churn of renaming it.",
+      "revId": "de90e00ce84d54db517f8afcadf16b5062149626",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "079bf580_410c1556",
+        "filename": "remoting/host/linux/linux_me2me_host.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 1523,
+      "author": {
+        "id": 1144161
+      },
+      "writtenOn": "2017-08-26T02:16:28Z",
+      "side": 1,
+      "message": "I moved this from below. No point in doing extra work if we\u0027re just going to exit, anyway.",
+      "revId": "de90e00ce84d54db517f8afcadf16b5062149626",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
