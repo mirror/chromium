@@ -1,6 +1,6 @@
 {
   "name": "software rendering list",
-  "version": "13.12",
+  "version": "13.13",
   "entries": [
     {
       "id": 1,
@@ -988,19 +988,6 @@
       ]
     },
     {
-      "id": 111,
-      "description": "Apple Software Renderer used under VMWare experiences synchronization issues with GPU Raster",
-      "cr_bugs": [607829],
-      "os": {
-        "type": "macosx"
-      },
-      "vendor_id": "0x15ad",
-      "multi_gpu_category": "any",
-      "features": [
-        "gpu_rasterization"
-      ]
-    },
-    {
       "id": 112,
       "description": "Intel HD 3000 driver crashes frequently on Mac",
       "cr_bugs": [592130],
@@ -1531,6 +1518,19 @@
       "gl_renderer": ".*VideoCore V.*",
       "features": [
         "gpu_rasterization"
+      ]
+    },
+    {
+      "id": 149,
+      "description": "WebGL/GPU Rasterization are broken with Apple Software Renderer",
+      "cr_bugs": [732754, 754559],
+      "os": {
+        "type": "macosx"
+      },
+      "gl_renderer": "Apple Software Renderer",
+      "multi_gpu_category": "any",
+      "features": [
+        "all"
       ]
     }
   ],
