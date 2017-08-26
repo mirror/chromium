@@ -40,6 +40,10 @@
 #include "ipc/handle_attachment_win.h"
 #endif
 
+#if defined(OS_FUCHSIA)
+#include "ipc/handle_attachment_fuchsia.h"
+#endif
+
 namespace IPC {
 
 namespace {
@@ -130,7 +134,7 @@ MojoResult WrapAttachmentImpl(MessageAttachment* attachment,
         mojom::SerializedHandle::Type::MOJO_HANDLE);
     return MOJO_RESULT_OK;
   }
-#if defined(OS_POSIX)
+#if defined(OS_POSIX) && !defined(OS_FUCHSIA)
   if (attachment->GetType() == MessageAttachment::Type::PLATFORM_FILE) {
     // We dup() the handles in IPC::Message to transmit.
     // IPC::MessageAttachmentSet has intricate lifecycle semantics
@@ -162,6 +166,14 @@ MojoResult WrapAttachmentImpl(MessageAttachment* attachment,
   MojoResult result =
       WrapPlatformHandle(handle_attachment.Take(),
                          mojom::SerializedHandle::Type::WIN_HANDLE, serialized);
+  return result;
+#elif defined(OS_FUCHSIA)
+  DCHECK_EQ(attachment->GetType(), MessageAttachment::Type::FUCHSIA_HANDLE);
+  internal::HandleAttachmentFuchsia& handle_attachment =
+      static_cast<internal::HandleAttachmentFuchsia&>(*attachment);
+  MojoResult result = WrapPlatformHandle(
+      handle_attachment.Take(), mojom::SerializedHandle::Type::FUCHSIA_HANDLE,
+      serialized);
   return result;
 #else
   NOTREACHED();
