@@ -12,6 +12,7 @@
 #include "mojo/public/cpp/bindings/strong_binding.h"
 #include "services/shape_detection/barcode_detection_impl.h"
 #include "services/shape_detection/detection_utils_mac.h"
+#include "services/shape_detection/public/interfaces/constants.mojom.h"
 
 namespace shape_detection {
 
@@ -37,11 +38,14 @@ BarcodeDetectionImplMac::~BarcodeDetectionImplMac() {}
 void BarcodeDetectionImplMac::Detect(const SkBitmap& bitmap,
                                      DetectCallback callback) {
   DetectCallback scoped_callback = media::ScopedCallbackRunner(
-      std::move(callback), std::vector<mojom::BarcodeDetectionResultPtr>());
+      std::move(callback), std::vector<mojom::BarcodeDetectionResultPtr>(),
+      const std::string&);
 
   base::scoped_nsobject<CIImage> ci_image = CreateCIImageFromSkBitmap(bitmap);
-  if (!ci_image)
+  if (!ci_image) {
+    std::move(scoped_callback).Run(nil, kInvalidBitmap);
     return;
+  }
 
   NSArray* const features = [detector_ featuresInImage:ci_image];
 
@@ -69,7 +73,7 @@ void BarcodeDetectionImplMac::Detect(const SkBitmap& bitmap,
     result->raw_value = base::SysNSStringToUTF8(f.messageString);
     results.push_back(std::move(result));
   }
-  std::move(scoped_callback).Run(std::move(results));
+  std::move(scoped_callback).Run(std::move(results), kDetectorSuccess);
 }
 
 }  // namespace shape_detection

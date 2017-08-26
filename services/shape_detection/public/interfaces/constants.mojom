@@ -7,3 +7,11 @@
 module shape_detection.mojom;
 
 const string kServiceName = "shape_detection";
+
+const string kDetectorSuccess = "Detector success";
+
+const string kUnavailableGooglePlay = "Google Play Services not available";
+
+const string kInoperableDetector = "GMS Detector is not operational";
+
+const string kInvalidBitmap = "Invalid bitmap";

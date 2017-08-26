@@ -35,7 +35,8 @@ class MODULES_EXPORT FaceDetector final : public ShapeDetector,
                          skia::mojom::blink::BitmapPtr) override;
   void OnDetectFaces(
       ScriptPromiseResolver*,
-      Vector<shape_detection::mojom::blink::FaceDetectionResultPtr>);
+      Vector<shape_detection::mojom::blink::FaceDetectionResultPtr>,
+      const String& status);
   void OnFaceServiceConnectionError();
 
   shape_detection::mojom::blink::FaceDetectionPtr face_service_;
