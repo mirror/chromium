@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "78c39122_38f3d605",
+        "filename": "components/offline_pages/core/prefetch/prefetch_types.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1002546
+      },
+      "writtenOn": "2017-08-26T01:06:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "57c60454_fb78e6de",
+      "revId": "e243d05b20bb80db21ae93fd44ce1e72560e321f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b5f32bc3_3becbc49",
         "filename": "components/offline_pages/core/prefetch/stale_entry_finalizer_task.cc",
         "patchSetId": 2
@@ -89,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "91c8e2fc_87bf19a2",
+        "filename": "components/offline_pages/core/prefetch/stale_entry_finalizer_task.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1002546
+      },
+      "writtenOn": "2017-08-26T01:06:37Z",
+      "side": 1,
+      "message": "My initial thought was also to use a day, but when I saw this, it seemed better.  It would give something in the downloading state a bit more grace to compensate for the fact that we normally give downloads two days to complete.",
+      "parentUuid": "5c625f3b_79ba0caf",
+      "revId": "e243d05b20bb80db21ae93fd44ce1e72560e321f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f75b80c3_0b68ffb8",
         "filename": "components/offline_pages/core/prefetch/stale_entry_finalizer_task.cc",
         "patchSetId": 2
@@ -124,6 +160,24 @@
     },
     {
       "key": {
+        "uuid": "fc764e91_edf34db4",
+        "filename": "components/offline_pages/core/prefetch/stale_entry_finalizer_task.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1002546
+      },
+      "writtenOn": "2017-08-26T01:06:37Z",
+      "side": 1,
+      "message": "Accepted Carlos\u0027s suggestion of adding the word \"BACKWARDS\"",
+      "parentUuid": "a13498a0_e37cebb1",
+      "revId": "e243d05b20bb80db21ae93fd44ce1e72560e321f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d08e27bf_80cc6e86",
         "filename": "components/offline_pages/core/prefetch/stale_entry_finalizer_task_unittest.cc",
         "patchSetId": 2
@@ -153,6 +207,24 @@
       "side": 1,
       "message": "The previous method can reused as is because TimeDelta::From* calls do accept negative numbers. I\u0027d suggest renaming the parameter to |time_delta_in_hours| switching - to + and updating existing code as needed.\n\nAlso, having to create a new TimeDelta for every call adds a lot of cruft to this test file.",
       "parentUuid": "d08e27bf_80cc6e86",
+      "revId": "e243d05b20bb80db21ae93fd44ce1e72560e321f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe3116e4_cf38a583",
+        "filename": "components/offline_pages/core/prefetch/stale_entry_finalizer_task_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1002546
+      },
+      "writtenOn": "2017-08-26T01:06:37Z",
+      "side": 1,
+      "message": "Took Carlos\u0027s suggestion.",
+      "parentUuid": "71deb96f_1fe28830",
       "revId": "e243d05b20bb80db21ae93fd44ce1e72560e321f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
