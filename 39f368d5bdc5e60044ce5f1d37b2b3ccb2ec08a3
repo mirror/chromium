@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "85c36d35_8ac2d7fb",
+        "filename": "components/offline_pages/core/offline_pages_ukm_reporter.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1124674
+      },
+      "writtenOn": "2017-08-26T01:24:35Z",
+      "side": 1,
+      "message": "Can remove ukm_entry_builder.h",
+      "range": {
+        "startLine": 8,
+        "startChar": 0,
+        "endLine": 8,
+        "endChar": 58
+      },
+      "revId": "39f368d5bdc5e60044ce5f1d37b2b3ccb2ec08a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4bd5ff2_601c4d06",
+        "filename": "components/offline_pages/core/offline_pages_ukm_reporter.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1124674
+      },
+      "writtenOn": "2017-08-26T01:24:35Z",
+      "side": 1,
+      "message": "You can also get these names from ukm_builders.h in your test:\n\nukm::builders::OfflinePages_SavePageRequested::kEntryName\nukm::builders::OfflinePages_SavePageRequested::kRequestedFromForegroundName",
+      "range": {
+        "startLine": 14,
+        "startChar": 0,
+        "endLine": 18,
+        "endChar": 0
+      },
+      "revId": "39f368d5bdc5e60044ce5f1d37b2b3ccb2ec08a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
