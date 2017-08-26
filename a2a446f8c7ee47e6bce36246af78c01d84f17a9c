@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "fe4be3f6_1bec21e4",
+        "filename": "chrome/browser/offline_pages/offline_pages_ukm_reporter_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1002546
+      },
+      "writtenOn": "2017-08-26T00:44:53Z",
+      "side": 1,
+      "message": "Thanks, that will make this whole change much cleaner.  (I read the docs at go/ukm instead of go/ukmapi, so I did it the old way, it looks like.)",
+      "parentUuid": "d4b7ed69_ec281c4e",
+      "range": {
+        "startLine": 5,
+        "startChar": 10,
+        "endLine": 5,
+        "endChar": 24
+      },
+      "revId": "a2a446f8c7ee47e6bce36246af78c01d84f17a9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c5936037_474f4ef5",
         "filename": "chrome/browser/offline_pages/offline_pages_ukm_reporter_impl.cc",
         "patchSetId": 10
@@ -36,6 +60,30 @@
       "writtenOn": "2017-08-24T22:57:56Z",
       "side": 1,
       "message": "Use the API from ukm_builders.h, instead of ukm_entry_builder.h\n\nukm::builders::OfflinePages_SavePageRequsted(source_id)\n  .SetRequestedFromForeground(foreground ? 1 : 0)\n  .Record(ukm_recorder);\n\nThat API doesn\u0027t require friend on UkmRecorder.",
+      "range": {
+        "startLine": 26,
+        "startChar": 60,
+        "endLine": 34,
+        "endChar": 35
+      },
+      "revId": "a2a446f8c7ee47e6bce36246af78c01d84f17a9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b837926_34972c4d",
+        "filename": "chrome/browser/offline_pages/offline_pages_ukm_reporter_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1002546
+      },
+      "writtenOn": "2017-08-26T00:44:53Z",
+      "side": 1,
+      "message": "done",
+      "parentUuid": "c5936037_474f4ef5",
       "range": {
         "startLine": 26,
         "startChar": 60,
