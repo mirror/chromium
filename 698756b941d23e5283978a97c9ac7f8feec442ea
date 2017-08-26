@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f2e1a287_8ad3e680",
+        "filename": "ios/clean/chrome/browser/ui/tab/tab_coordinator_unittest.mm",
+        "patchSetId": 20
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1165759
+      },
+      "writtenOn": "2017-08-26T00:55:16Z",
+      "side": 0,
+      "message": "I think these tests were failing on trunk, right? Is that why you removed them?",
+      "revId": "698756b941d23e5283978a97c9ac7f8feec442ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
