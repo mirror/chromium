@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ad1d1891_7bc41204",
+        "filename": "ash/shelf/shelf_context_menu_model_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-08-26T05:50:50Z",
+      "side": 1,
+      "message": "optional nit: I\u0027d just cache the tablet mode controller pointer in the one test fixture that uses it, and call EnableTabletModeWindowManager there directly.",
+      "revId": "463c8896a28154b0597e8e674e015930efe98902",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

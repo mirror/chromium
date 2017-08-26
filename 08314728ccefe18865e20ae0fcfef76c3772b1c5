@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "33da49d0_0f72c69d",
+        "filename": "ash/shelf/shelf_context_menu_model_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 274,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-08-26T05:50:50Z",
+      "side": 1,
+      "message": "I\u0027m not necessarily a fan of \u0027laptop mode\u0027, it seems to disregard the desktop \u0027chromebox\u0027 device form factor, which isn\u0027t really a laptop. Maybe oshima@ has a name idea for the non-tablet mode.",
+      "parentUuid": "cb73cd8d_bf57cab9",
+      "revId": "08314728ccefe18865e20ae0fcfef76c3772b1c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8264daa7_7c1bb3de",
         "filename": "ash/shelf/shelf_controller.cc",
         "patchSetId": 2
