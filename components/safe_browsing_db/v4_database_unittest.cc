@@ -337,7 +337,6 @@ TEST_F(V4DatabaseTest, TestApplyUpdateWithInvalidUpdate) {
       CreateFakeServerResponse(expected_store_state_map_, false),
       callback_db_updated_);
   WaitForTasksOnTaskRunner();
-
   VerifyExpectedStoresState(false);
 }
 
