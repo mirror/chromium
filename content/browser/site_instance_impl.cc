@@ -522,9 +522,7 @@ void SiteInstanceImpl::LockToOriginIfNeeded() {
     auto lock_state = policy->CheckOriginLock(process_->GetID(), site_);
     switch (lock_state) {
       case ChildProcessSecurityPolicyImpl::CheckOriginLockResult::NO_LOCK: {
-        // TODO(alexmos): Turn this into a CHECK once https://crbug.com/738634
-        // is fixed.
-        DCHECK(was_unused);
+        CHECK(was_unused);
         policy->LockToOrigin(process_->GetID(), site_);
         break;
       }
