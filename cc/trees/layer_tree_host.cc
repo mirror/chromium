@@ -1337,11 +1337,6 @@ void LayerTreeHost::BuildPropertyTreesForTesting() {
       gfx::Rect(device_viewport_size()), identity_transform, property_trees());
 }
 
-bool LayerTreeHost::IsElementInList(ElementId element_id,
-                                    ElementListType list_type) const {
-  return list_type == ElementListType::ACTIVE && LayerByElementId(element_id);
-}
-
 void LayerTreeHost::SetMutatorsNeedCommit() {
   SetNeedsCommit();
 }
