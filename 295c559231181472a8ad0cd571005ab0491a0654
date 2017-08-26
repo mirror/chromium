@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5593f597_0e99f16f",
+        "filename": "chrome/common/extensions/docs/examples/tutorials/getstarted/popup.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-08-26T00:00:22Z",
+      "side": 1,
+      "message": "My CSS knowledge is pretty limited. Feel free to suggest a better way to make the layout look nice.",
+      "range": {
+        "startLine": 14,
+        "startChar": 6,
+        "endLine": 14,
+        "endChar": 12
+      },
+      "revId": "295c559231181472a8ad0cd571005ab0491a0654",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
