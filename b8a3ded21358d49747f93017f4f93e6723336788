@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4a5daded_59d2d835",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 30
+      },
+      "lineNbr": 81091,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-08-26T04:45:24Z",
+      "side": 1,
+      "message": "Have you seen my Chrome Data Tech Talk?\nhttp://go/chrome-data-tech-talk\n\nIn part of it, I explain why recording rates like this is hard to interpret.  Indeed, various Android histograms recorded session metrics like this (see many obsolete UserActionRate. histograms), which provided really difficult to draw conclusions from.\n\nPlease schedule a meeting with me to discuss possible alternatives.",
+      "revId": "b8a3ded21358d49747f93017f4f93e6723336788",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
