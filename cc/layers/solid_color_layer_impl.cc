@@ -8,6 +8,7 @@
 
 #include "cc/layers/append_quads_data.h"
 #include "cc/quads/solid_color_draw_quad.h"
+#include "cc/trees/layer_tree_impl.h"
 #include "cc/trees/occlusion.h"
 
 namespace cc {
@@ -33,6 +34,7 @@ void SolidColorLayerImpl::AppendSolidQuads(
     viz::SharedQuadState* shared_quad_state,
     const gfx::Rect& visible_layer_rect,
     SkColor color,
+    bool force_anti_aliasing_off,
     AppendQuadsData* append_quads_data) {
   float alpha =
       (SkColorGetA(color) * (1.0f / 255.0f)) * shared_quad_state->opacity;
@@ -61,8 +63,8 @@ void SolidColorLayerImpl::AppendSolidQuads(
 
       SolidColorDrawQuad* quad =
           render_pass->CreateAndAppendDrawQuad<SolidColorDrawQuad>();
-      quad->SetNew(
-          shared_quad_state, quad_rect, visible_quad_rect, color, false);
+      quad->SetNew(shared_quad_state, quad_rect, visible_quad_rect, color,
+                   force_anti_aliasing_off);
     }
   }
 }
@@ -81,6 +83,7 @@ void SolidColorLayerImpl::AppendQuads(
   // |bounds()| here.
   AppendSolidQuads(render_pass, draw_properties().occlusion_in_content_space,
                    shared_quad_state, gfx::Rect(bounds()), background_color(),
+                   layer_tree_impl()->settings().force_anti_aliasing_off,
                    append_quads_data);
 }
 

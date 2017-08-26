@@ -30,14 +30,16 @@ void RenderPassDrawQuad::SetNew(const viz::SharedQuadState* shared_quad_state,
                                 const gfx::Size& mask_texture_size,
                                 const gfx::Vector2dF& filters_scale,
                                 const gfx::PointF& filters_origin,
-                                const gfx::RectF& tex_coord_rect) {
+                                const gfx::RectF& tex_coord_rect,
+                                bool force_anti_aliasing_off) {
   DCHECK(render_pass_id);
 
   gfx::Rect opaque_rect;
   bool needs_blending = false;
   SetAll(shared_quad_state, rect, opaque_rect, visible_rect, needs_blending,
          render_pass_id, mask_resource_id, mask_uv_rect, mask_texture_size,
-         filters_scale, filters_origin, tex_coord_rect);
+         filters_scale, filters_origin, tex_coord_rect,
+         force_anti_aliasing_off);
 }
 
 void RenderPassDrawQuad::SetAll(const viz::SharedQuadState* shared_quad_state,
@@ -51,7 +53,8 @@ void RenderPassDrawQuad::SetAll(const viz::SharedQuadState* shared_quad_state,
                                 const gfx::Size& mask_texture_size,
                                 const gfx::Vector2dF& filters_scale,
                                 const gfx::PointF& filters_origin,
-                                const gfx::RectF& tex_coord_rect) {
+                                const gfx::RectF& tex_coord_rect,
+                                bool force_anti_aliasing_off) {
   DCHECK(render_pass_id);
 
   DrawQuad::SetAll(shared_quad_state, DrawQuad::RENDER_PASS, rect, opaque_rect,
@@ -64,6 +67,7 @@ void RenderPassDrawQuad::SetAll(const viz::SharedQuadState* shared_quad_state,
   this->filters_scale = filters_scale;
   this->filters_origin = filters_origin;
   this->tex_coord_rect = tex_coord_rect;
+  this->force_anti_aliasing_off = force_anti_aliasing_off;
 }
 
 const RenderPassDrawQuad* RenderPassDrawQuad::MaterialCast(
@@ -80,6 +84,7 @@ void RenderPassDrawQuad::ExtendValue(
   MathUtil::AddToTracedValue("mask_texture_size", mask_texture_size, value);
   MathUtil::AddToTracedValue("mask_uv_rect", mask_uv_rect, value);
   MathUtil::AddToTracedValue("tex_coord_rect", tex_coord_rect, value);
+  value->SetBoolean("force_anti_aliasing_off", force_anti_aliasing_off);
 }
 
 }  // namespace cc

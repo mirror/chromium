@@ -27,13 +27,15 @@ void ContentDrawQuadBase::SetNew(const viz::SharedQuadState* shared_quad_state,
                                  const gfx::RectF& tex_coord_rect,
                                  const gfx::Size& texture_size,
                                  bool swizzle_contents,
-                                 bool nearest_neighbor) {
+                                 bool nearest_neighbor,
+                                 bool force_anti_aliasing_off) {
   DrawQuad::SetAll(shared_quad_state, material, rect, opaque_rect,
                    visible_rect, needs_blending);
   this->tex_coord_rect = tex_coord_rect;
   this->texture_size = texture_size;
   this->swizzle_contents = swizzle_contents;
   this->nearest_neighbor = nearest_neighbor;
+  this->force_anti_aliasing_off = force_anti_aliasing_off;
 }
 
 void ContentDrawQuadBase::SetAll(const viz::SharedQuadState* shared_quad_state,
@@ -45,13 +47,15 @@ void ContentDrawQuadBase::SetAll(const viz::SharedQuadState* shared_quad_state,
                                  const gfx::RectF& tex_coord_rect,
                                  const gfx::Size& texture_size,
                                  bool swizzle_contents,
-                                 bool nearest_neighbor) {
+                                 bool nearest_neighbor,
+                                 bool force_anti_aliasing_off) {
   DrawQuad::SetAll(shared_quad_state, material, rect, opaque_rect,
                    visible_rect, needs_blending);
   this->tex_coord_rect = tex_coord_rect;
   this->texture_size = texture_size;
   this->swizzle_contents = swizzle_contents;
   this->nearest_neighbor = nearest_neighbor;
+  this->force_anti_aliasing_off = force_anti_aliasing_off;
 }
 
 void ContentDrawQuadBase::ExtendValue(
@@ -61,6 +65,7 @@ void ContentDrawQuadBase::ExtendValue(
 
   value->SetBoolean("swizzle_contents", swizzle_contents);
   value->SetBoolean("nearest_neighbor", nearest_neighbor);
+  value->SetBoolean("force_anti_aliasing_off", force_anti_aliasing_off);
 }
 
 }  // namespace cc

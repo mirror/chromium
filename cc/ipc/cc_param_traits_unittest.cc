@@ -154,6 +154,7 @@ class CCParamTraitsTest : public testing::Test {
     EXPECT_EQ(a->filters_scale, b->filters_scale);
     EXPECT_EQ(a->filters_origin, b->filters_origin);
     EXPECT_EQ(a->tex_coord_rect, b->tex_coord_rect);
+    EXPECT_EQ(a->force_anti_aliasing_off, b->force_anti_aliasing_off);
   }
 
   void Compare(const SolidColorDrawQuad* a, const SolidColorDrawQuad* b) {
@@ -193,6 +194,7 @@ class CCParamTraitsTest : public testing::Test {
     EXPECT_EQ(a->texture_size, b->texture_size);
     EXPECT_EQ(a->swizzle_contents, b->swizzle_contents);
     EXPECT_EQ(a->nearest_neighbor, b->nearest_neighbor);
+    EXPECT_EQ(a->force_anti_aliasing_off, b->force_anti_aliasing_off);
   }
 
   void Compare(const YUVVideoDrawQuad* a, const YUVVideoDrawQuad* b) {
@@ -350,11 +352,12 @@ TEST_F(CCParamTraitsTest, AllQuads) {
 
   RenderPassDrawQuad* renderpass_in =
       pass_in->CreateAndAppendDrawQuad<RenderPassDrawQuad>();
-  renderpass_in->SetAll(
-      shared_state2_in, arbitrary_rect1, arbitrary_rect2_inside_rect1,
-      arbitrary_rect1_inside_rect1, arbitrary_bool1, child_id,
-      arbitrary_resourceid2, arbitrary_rectf1, arbitrary_size1,
-      arbitrary_vector2df2, arbitrary_pointf2, arbitrary_rectf1);
+  renderpass_in->SetAll(shared_state2_in, arbitrary_rect1,
+                        arbitrary_rect2_inside_rect1,
+                        arbitrary_rect1_inside_rect1, arbitrary_bool1, child_id,
+                        arbitrary_resourceid2, arbitrary_rectf1,
+                        arbitrary_size1, arbitrary_vector2df2,
+                        arbitrary_pointf2, arbitrary_rectf1, arbitrary_bool2);
   pass_cmp->CopyFromAndAppendRenderPassDrawQuad(renderpass_in,
                                                 renderpass_in->render_pass_id);
 
@@ -407,7 +410,8 @@ TEST_F(CCParamTraitsTest, AllQuads) {
   tile_in->SetAll(shared_state3_in, arbitrary_rect2,
                   arbitrary_rect2_inside_rect2, arbitrary_rect1_inside_rect2,
                   arbitrary_bool1, arbitrary_resourceid3, arbitrary_rectf1,
-                  arbitrary_size1, arbitrary_bool2, arbitrary_bool3);
+                  arbitrary_size1, arbitrary_bool2, arbitrary_bool3,
+                  arbitrary_bool4);
   pass_cmp->CopyFromAndAppendDrawQuad(tile_in);
 
   YUVVideoDrawQuad* yuvvideo_in =

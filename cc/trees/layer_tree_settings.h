@@ -143,6 +143,9 @@ class CC_EXPORT LayerTreeSettings {
   // which LayerTreeHost synchronizes. If |true| LayerTreeHostImpl
   // produces the active tree as its 'sync tree'.
   bool commit_to_active_tree = true;
+
+  // Disables anti-aliasing for all layer types that supports it.
+  bool force_anti_aliasing_off = false;
 };
 
 }  // namespace cc
