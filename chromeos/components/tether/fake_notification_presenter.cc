@@ -41,6 +41,11 @@ void FakeNotificationPresenter::NotifyMultiplePotentialHotspotsNearby() {
       PotentialHotspotNotificationState::MULTIPLE_HOTSPOTS_NEARBY_SHOWN;
 }
 
+bool FakeNotificationPresenter::IsPotentialHotspotNotificationShowing() {
+  return potential_hotspot_state_ !=
+         PotentialHotspotNotificationState::NO_HOTSPOT_NOTIFICATION_SHOWN;
+}
+
 void FakeNotificationPresenter::RemovePotentialHotspotNotification() {
   potential_hotspot_state_ =
       PotentialHotspotNotificationState::NO_HOTSPOT_NOTIFICATION_SHOWN;

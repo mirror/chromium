@@ -382,6 +382,10 @@ bool NetworkState::IsConnectingState() const {
   return visible() && StateIsConnecting(connection_state_);
 }
 
+bool NetworkState::IsConnectingOrConnected() const {
+  return IsConnectingState() || IsConnectedState();
+}
+
 bool NetworkState::IsReconnecting() const {
   return visible() && StateIsConnecting(connection_state_) &&
          StateIsConnected(last_connection_state_);
