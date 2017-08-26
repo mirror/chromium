@@ -55,11 +55,27 @@ void HttpStreamFactory::ProcessAlternativeServices(
     QuicVersionVector advertised_versions;
     if (protocol == kProtoQUIC && !alternative_service_entry.version.empty()) {
       bool match_found = false;
-      for (QuicVersion supported : session->params().quic_supported_versions) {
-        for (uint16_t advertised : alternative_service_entry.version) {
-          if (supported == advertised) {
-            match_found = true;
-            advertised_versions.push_back(supported);
+      if (alternative_service_entry.protocol_id.compare("h2q") == 0) {
+        // Using IETF format for advertising QUIC. In this case,
+        // |alternative_service_entry.version| will store QUIC version tags.
+        for (QuicVersion supported :
+             session->params().quic_supported_versions) {
+          for (uint32_t quic_version : alternative_service_entry.version) {
+            QuicTag quic_tag = ReverseByteOrder(quic_version);
+            if (QuicVersionToQuicTag(supported) == quic_tag) {
+              match_found = true;
+              advertised_versions.push_back(supported);
+            }
+          }
+        }
+      } else {
+        for (QuicVersion supported :
+             session->params().quic_supported_versions) {
+          for (uint32_t advertised : alternative_service_entry.version) {
+            if (supported == advertised) {
+              match_found = true;
+              advertised_versions.push_back(supported);
+            }
           }
         }
       }

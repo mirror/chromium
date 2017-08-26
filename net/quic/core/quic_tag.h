@@ -29,6 +29,9 @@ typedef std::vector<QuicTag> QuicTagVector;
 //   MakeQuicTag('C', 'H', 'L', 'O');
 QUIC_EXPORT_PRIVATE QuicTag MakeQuicTag(char a, char b, char c, char d);
 
+// Reverses the byte order of a uint32_t.
+QUIC_EXPORT_PRIVATE uint32_t ReverseByteOrder(uint32_t x);
+
 // Returns true if |tag_vector| contains |tag|.
 QUIC_EXPORT_PRIVATE bool ContainsQuicTag(const QuicTagVector& tag_vector,
                                          QuicTag tag);
