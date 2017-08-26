@@ -319,6 +319,30 @@
     },
     {
       "key": {
+        "uuid": "eb9ebf90_607f3037",
+        "filename": "net/test/spawned_test_server/test_server_config.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-08-26T01:21:23Z",
+      "side": 1,
+      "message": "Actually I take this back. Will keep it specific to RemoteTestServer. Renamed it to RemoteTestServerConfig.",
+      "parentUuid": "826a995d_d53232ef",
+      "range": {
+        "startLine": 18,
+        "startChar": 25,
+        "endLine": 18,
+        "endChar": 33
+      },
+      "revId": "eea4467e84d34dcda1a5e99709ff898879de7723",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cdc1c2a6_dafb5123",
         "filename": "net/test/spawned_test_server/test_server_config.h",
         "patchSetId": 11
