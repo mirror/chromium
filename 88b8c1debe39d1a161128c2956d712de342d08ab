@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "caf10654_2eb1fb28",
+        "filename": "cc/paint/paint_image_generator.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-08-26T01:01:40Z",
+      "side": 1,
+      "message": "Nit: that",
+      "revId": "88b8c1debe39d1a161128c2956d712de342d08ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea79b300_fc5e502d",
+        "filename": "cc/paint/paint_image_generator.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-08-26T01:01:40Z",
+      "side": 1,
+      "message": "I don\u0027t see |supported_sizes|",
+      "revId": "88b8c1debe39d1a161128c2956d712de342d08ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b9738c17_8f71b2eb",
+        "filename": "third_party/WebKit/Source/platform/graphics/ImageFrameGenerator.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 424,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-08-26T01:01:40Z",
+      "side": 1,
+      "message": "Is it guaranteed to be sorted?",
+      "revId": "88b8c1debe39d1a161128c2956d712de342d08ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db5519f1_bc737062",
+        "filename": "third_party/WebKit/Source/platform/image-decoders/jpeg/JPEGImageDecoder.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 455,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-08-26T01:01:40Z",
+      "side": 1,
+      "message": "scaleDenominator does not conform to the style guide...",
+      "revId": "88b8c1debe39d1a161128c2956d712de342d08ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06f035a3_bc19a0c5",
+        "filename": "third_party/WebKit/Source/platform/image-decoders/jpeg/JPEGImageDecoder.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 459,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-08-26T01:01:40Z",
+      "side": 1,
+      "message": "It seems weird to set supported decode sizes in a method called Decode().\nIs it a good idea to refactor this method to separate concerns?",
+      "revId": "88b8c1debe39d1a161128c2956d712de342d08ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
