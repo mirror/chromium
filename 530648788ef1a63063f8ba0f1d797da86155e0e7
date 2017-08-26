@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "518a9e42_c4b2ebcf",
+        "filename": "components/safe_browsing/browser/threat_details.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 751,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-08-26T00:40:08Z",
+      "side": 1,
+      "message": "how about you pass directly pass report_ to safe_browsing_web_ui?\nreport_ is a unique pointer, you can pass its ownership by std::move(reports_). \n\nAlso in case in the future we decided to show more information in addition to the following 5 fields, we can handle it in SBWebUI class.",
+      "revId": "530648788ef1a63063f8ba0f1d797da86155e0e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95e0c801_02042bd9",
+        "filename": "components/safe_browsing/browser/threat_details.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 760,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-08-26T00:40:08Z",
+      "side": 1,
+      "message": "seems you\u0027re passing the proto directly, not the serialized version.",
+      "revId": "530648788ef1a63063f8ba0f1d797da86155e0e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a54eb865_79dbf858",
+        "filename": "components/safe_browsing/browser/threat_details.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-08-26T00:40:08Z",
+      "side": 1,
+      "message": "move to .cc",
+      "revId": "530648788ef1a63063f8ba0f1d797da86155e0e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0b0c9b0_c02c655d",
+        "filename": "components/safe_browsing/web_ui/safe_browsing_ui.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-08-26T00:40:08Z",
+      "side": 1,
+      "message": "AddThreatDetail instead of Add*Serialized*ThreatDetail(..)?",
+      "revId": "530648788ef1a63063f8ba0f1d797da86155e0e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
