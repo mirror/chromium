@@ -1,0 +1,35 @@
+// Copyright 2017 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
+#include <memory>
+#include <vector>
+
+#include "mojo/public/cpp/bindings/array_traits.h"
+#include "mojo/public/cpp/bindings/struct_traits.h"
+#include "printing/backend/mojo/print_backend_struct_traits.h"
+#include "printing/backend/mojo/printing.mojom-shared.h"
+#include "printing/backend/print_backend.h"
+
+namespace mojo {
+bool StructTraits<printing::mojom::PrinterBasicInfoDataView,
+                  printing::PrinterBasicInfo>::
+    Read(printing::mojom::PrinterBasicInfoDataView data,
+         printing::PrinterBasicInfo* out_info) {
+  // Sanity check
+  if (!data.ReadPrinterName(&(out_info->printer_name)) ||
+      out_info->printer_name.empty())
+    return false;
+
+  // Set fields
+  if (!data.ReadPrinterDescription(&out_info->printer_description))
+    return false;
+
+  out_info->printer_status = data.printer_status();
+  out_info->is_default = data.is_default();
+  if (!data.ReadOptions(&out_info->options))
+    return false;
+
+  return true;
+}
+}  // namespace mojo
