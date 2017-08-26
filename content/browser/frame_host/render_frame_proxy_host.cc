@@ -146,6 +146,8 @@ bool RenderFrameProxyHost::OnMessageReceived(const IPC::Message& msg) {
 
 bool RenderFrameProxyHost::InitRenderFrameProxy() {
   DCHECK(!render_frame_proxy_created_);
+  LOG(INFO) << "RFPH::InitRenderFrameProxy";
+  LOG(INFO) << "  site_instance_=" << site_instance_->GetSiteURL();
 
   // It is possible to reach this when the process is dead (in particular, when
   // creating proxies from CreateProxiesForChildFrame).  In that case, don't
@@ -154,11 +156,14 @@ bool RenderFrameProxyHost::InitRenderFrameProxy() {
   // RenderFrame.  When that happens, the process will be reinitialized, and
   // all necessary proxies, including any of the ones we skipped here, will be
   // created by CreateProxiesForSiteInstance. See https://crbug.com/476846
-  if (!GetProcess()->HasConnection())
+  if (!GetProcess()->HasConnection()) {
+    LOG(INFO) << "  EARLY RETURN false - process has no connection";
     return false;
+  }
 
   int parent_routing_id = MSG_ROUTING_NONE;
   if (frame_tree_node_->parent()) {
+    LOG(INFO) << "  this is a subframe";
     // It is safe to use GetRenderFrameProxyHost to get the parent proxy, since
     // new child frames always start out as local frames, so a new proxy should
     // never have a RenderFrameHost as a parent.
@@ -171,8 +176,10 @@ bool RenderFrameProxyHost::InitRenderFrameProxy() {
     // here, since there is no valid parent RenderFrameProxy on the renderer
     // side.  This can happen when adding a new child frame after an opener
     // process crashed and was reloaded.  See https://crbug.com/501152.
-    if (!parent_proxy->is_render_frame_proxy_live())
+    if (!parent_proxy->is_render_frame_proxy_live()) {
+      LOG(INFO) << "  parent_proxy is not live; returning false";
       return false;
+    }
 
     parent_routing_id = parent_proxy->GetRoutingID();
     CHECK_NE(parent_routing_id, MSG_ROUTING_NONE);
@@ -189,6 +196,7 @@ bool RenderFrameProxyHost::InitRenderFrameProxy() {
   GetProcess()->GetRendererInterface()->CreateFrameProxy(
       routing_id_, view_routing_id, opener_routing_id, parent_routing_id,
       frame_tree_node_->current_replication_state());
+  LOG(INFO) << "  RFP created; setting RFPH to be live";
 
   render_frame_proxy_created_ = true;
 

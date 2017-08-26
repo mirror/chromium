@@ -50,11 +50,11 @@ FrameTree::NodeIterator::NodeIterator(const NodeIterator& other) = default;
 FrameTree::NodeIterator::~NodeIterator() {}
 
 FrameTree::NodeIterator& FrameTree::NodeIterator::operator++() {
-  for (size_t i = 0; i < current_node_->child_count(); ++i) {
-    FrameTreeNode* child = current_node_->child_at(i);
-    if (child == node_to_skip_)
-      continue;
-    queue_.push(child);
+  if (current_node_ != node_to_skip_) {
+    for (size_t i = 0; i < current_node_->child_count(); ++i) {
+      FrameTreeNode* child = current_node_->child_at(i);
+      queue_.push(child);
+    }
   }
 
   if (!queue_.empty()) {
@@ -234,12 +234,18 @@ void FrameTree::RemoveFrame(FrameTreeNode* child) {
 void FrameTree::CreateProxiesForSiteInstance(
     FrameTreeNode* source,
     SiteInstance* site_instance) {
+  LOG(INFO) << "FrameTree::CreateProxiesForSiteInstance";
+  LOG(INFO) << "  site_instance=" << site_instance->GetSiteURL();
+  LOG(INFO) << "  source ftn=" << (source ? source->frame_tree_node_id() : -1);
+  LOG(INFO) << "  source ftn is root=" << (source ? source->IsMainFrame() : false);
   // Create the RenderFrameProxyHost for the new SiteInstance.
   if (!source || !source->IsMainFrame()) {
     RenderViewHostImpl* render_view_host = GetRenderViewHost(site_instance);
     if (!render_view_host) {
+      LOG(INFO) << "  entered subframe case.  There's no RVH.  Calling root->CreateRenderFrameProxy";
       root()->render_manager()->CreateRenderFrameProxy(site_instance);
     } else {
+      LOG(INFO) << "  entered subframe case.  There's a RVH.  Ensuring it's initialized.";
       root()->render_manager()->EnsureRenderViewInitialized(render_view_host,
                                                             site_instance);
     }

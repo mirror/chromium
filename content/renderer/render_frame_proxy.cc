@@ -90,6 +90,10 @@ RenderFrameProxy* RenderFrameProxy::CreateFrameProxy(
     blink::WebFrame* opener,
     int parent_routing_id,
     const FrameReplicationState& replicated_state) {
+  LOG(INFO) << "RenderFrameProxy::CreateFrameProxy";
+  LOG(INFO) << "  routing_id=" << routing_id;
+  LOG(INFO) << "  parent_routing_id=" << parent_routing_id;
+  LOG(INFO) << "  replicated origin=" << replicated_state.origin.Serialize();
   RenderFrameProxy* parent = nullptr;
   if (parent_routing_id != MSG_ROUTING_NONE) {
     parent = RenderFrameProxy::FromRoutingID(parent_routing_id);
@@ -117,8 +121,10 @@ RenderFrameProxy* RenderFrameProxy::CreateFrameProxy(
     // be updated, as the OnSwapOut flow which normally does this won't happen
     // in that case.  See https://crbug.com/653746 and
     // https://crbug.com/651980.
-    if (!render_view->is_swapped_out())
+    if (!render_view->is_swapped_out()) {
+      LOG(INFO) << "  setting view to swapped out";
       render_view->SetSwappedOut(true);
+    }
   } else {
     // Create a frame under an existing parent. The parent is always expected
     // to be a RenderFrameProxy, because navigations initiated by local frames

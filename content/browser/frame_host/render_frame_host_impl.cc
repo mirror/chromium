@@ -2293,6 +2293,8 @@ void RenderFrameHostImpl::OnDidBlockFramebust(const GURL& url) {
 void RenderFrameHostImpl::OnBeginNavigation(
     const CommonNavigationParams& common_params,
     const BeginNavigationParams& begin_params) {
+  LOG(ERROR) << "RenderFrameHostImpl::OnBeginNavigation for "
+      << common_params.url;
   CHECK(IsBrowserSideNavigationEnabled());
   if (!is_active())
     return;
