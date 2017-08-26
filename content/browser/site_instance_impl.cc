@@ -504,7 +504,7 @@ void SiteInstanceImpl::LockToOriginIfNeeded() {
   // We can get here either when we commit a URL into a SiteInstance that does
   // not yet have a site, or when we create a process for a SiteInstance with a
   // preassigned site.
-  bool was_unused = process_->IsUnused();
+  bool was_unused = process_->HostHasNotBeenUsed();
   process_->SetIsUsed();
 
   // TODO(nick): When all sites are isolated, this operation provides strong
@@ -522,9 +522,7 @@ void SiteInstanceImpl::LockToOriginIfNeeded() {
     auto lock_state = policy->CheckOriginLock(process_->GetID(), site_);
     switch (lock_state) {
       case ChildProcessSecurityPolicyImpl::CheckOriginLockResult::NO_LOCK: {
-        // TODO(alexmos): Turn this into a CHECK once https://crbug.com/738634
-        // is fixed.
-        DCHECK(was_unused);
+        CHECK(was_unused);
         policy->LockToOrigin(process_->GetID(), site_);
         break;
       }
