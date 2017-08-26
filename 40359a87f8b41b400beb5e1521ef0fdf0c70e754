@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a8e507cd_34769f23",
+        "filename": "components/omnibox/browser/zero_suggest_provider.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-08-26T04:59:06Z",
+      "side": 1,
+      "message": "You shouldn\u0027t have to guard this.  Please remove.\nIf you do need to guard it, please comment clearly why.\n\n(When you remove the guard, you can go back to making the function call directly--no need for a temporary variable.)",
+      "range": {
+        "startLine": 184,
+        "startChar": 50,
+        "endLine": 184,
+        "endChar": 0
+      },
+      "revId": "40359a87f8b41b400beb5e1521ef0fdf0c70e754",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cafdf159_2a4c9b89",
+        "filename": "components/omnibox/browser/zero_suggest_provider.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-08-26T04:59:06Z",
+      "side": 1,
+      "message": "Please comment: something can be null in incognito.",
+      "range": {
+        "startLine": 203,
+        "startChar": 50,
+        "endLine": 203,
+        "endChar": 0
+      },
+      "revId": "40359a87f8b41b400beb5e1521ef0fdf0c70e754",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
