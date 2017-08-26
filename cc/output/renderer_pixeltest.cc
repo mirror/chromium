@@ -103,12 +103,13 @@ void CreateTestRenderPassDrawQuad(const SharedQuadState* shared_state,
   RenderPassDrawQuad* quad =
       render_pass->CreateAndAppendDrawQuad<RenderPassDrawQuad>();
   quad->SetNew(shared_state, rect, rect, pass_id,
-               0,                  // mask_resource_id
-               gfx::RectF(),       // mask_uv_rect
-               gfx::Size(),        // mask_texture_size
-               gfx::Vector2dF(),   // filters scale
-               gfx::PointF(),      // filter origin
-               gfx::RectF(rect));  // tex_coord_rect
+               0,                 // mask_resource_id
+               gfx::RectF(),      // mask_uv_rect
+               gfx::Size(),       // mask_texture_size
+               gfx::Vector2dF(),  // filters scale
+               gfx::PointF(),     // filter origin
+               gfx::RectF(rect),  // tex_coord_rect
+               false);            // force_anti_aliasing_off
 }
 
 void CreateTestTwoColoredTextureDrawQuad(const gfx::Rect& rect,
@@ -1638,9 +1639,10 @@ TYPED_TEST(RendererPixelTest, FastPassColorFilterAlpha) {
 
   RenderPassDrawQuad* render_pass_quad =
       root_pass->CreateAndAppendDrawQuad<RenderPassDrawQuad>();
-  render_pass_quad->SetNew(
-      pass_shared_state, pass_rect, pass_rect, child_pass_id, 0, gfx::RectF(),
-      gfx::Size(), gfx::Vector2dF(), gfx::PointF(), gfx::RectF(pass_rect));
+  render_pass_quad->SetNew(pass_shared_state, pass_rect, pass_rect,
+                           child_pass_id, 0, gfx::RectF(), gfx::Size(),
+                           gfx::Vector2dF(), gfx::PointF(),
+                           gfx::RectF(pass_rect), false);
 
   RenderPassList pass_list;
   pass_list.push_back(std::move(child_pass));
@@ -1704,9 +1706,10 @@ TYPED_TEST(RendererPixelTest, FastPassSaturateFilter) {
 
   RenderPassDrawQuad* render_pass_quad =
       root_pass->CreateAndAppendDrawQuad<RenderPassDrawQuad>();
-  render_pass_quad->SetNew(
-      pass_shared_state, pass_rect, pass_rect, child_pass_id, 0, gfx::RectF(),
-      gfx::Size(), gfx::Vector2dF(), gfx::PointF(), gfx::RectF(pass_rect));
+  render_pass_quad->SetNew(pass_shared_state, pass_rect, pass_rect,
+                           child_pass_id, 0, gfx::RectF(), gfx::Size(),
+                           gfx::Vector2dF(), gfx::PointF(),
+                           gfx::RectF(pass_rect), false);
 
   RenderPassList pass_list;
   pass_list.push_back(std::move(child_pass));
@@ -1770,9 +1773,10 @@ TYPED_TEST(RendererPixelTest, FastPassFilterChain) {
 
   RenderPassDrawQuad* render_pass_quad =
       root_pass->CreateAndAppendDrawQuad<RenderPassDrawQuad>();
-  render_pass_quad->SetNew(
-      pass_shared_state, pass_rect, pass_rect, child_pass_id, 0, gfx::RectF(),
-      gfx::Size(), gfx::Vector2dF(), gfx::PointF(), gfx::RectF(pass_rect));
+  render_pass_quad->SetNew(pass_shared_state, pass_rect, pass_rect,
+                           child_pass_id, 0, gfx::RectF(), gfx::Size(),
+                           gfx::Vector2dF(), gfx::PointF(),
+                           gfx::RectF(pass_rect), false);
 
   RenderPassList pass_list;
   pass_list.push_back(std::move(child_pass));
@@ -1857,9 +1861,10 @@ TYPED_TEST(RendererPixelTest, FastPassColorFilterAlphaTranslation) {
 
   RenderPassDrawQuad* render_pass_quad =
       root_pass->CreateAndAppendDrawQuad<RenderPassDrawQuad>();
-  render_pass_quad->SetNew(
-      pass_shared_state, pass_rect, pass_rect, child_pass_id, 0, gfx::RectF(),
-      gfx::Size(), gfx::Vector2dF(), gfx::PointF(), gfx::RectF(pass_rect));
+  render_pass_quad->SetNew(pass_shared_state, pass_rect, pass_rect,
+                           child_pass_id, 0, gfx::RectF(), gfx::Size(),
+                           gfx::Vector2dF(), gfx::PointF(),
+                           gfx::RectF(pass_rect), false);
 
   RenderPassList pass_list;
 
@@ -2057,7 +2062,8 @@ TYPED_TEST(RendererPixelTest, RenderPassAndMaskWithPartialQuad) {
       gfx::Size(mask_rect.size()),               // mask_texture_size
       gfx::Vector2dF(),                          // filters scale
       gfx::PointF(),                             // filter origin
-      gfx::RectF(sub_rect));                     // tex_coord_rect
+      gfx::RectF(sub_rect),                      // tex_coord_rect
+      false);                                    // force_anti_aliasing_off
 
   // White background behind the masked render pass.
   SolidColorDrawQuad* white =
@@ -2150,7 +2156,8 @@ TYPED_TEST(RendererPixelTest, RenderPassAndMaskWithPartialQuad2) {
       gfx::Size(mask_rect.size()),               // mask_texture_size
       gfx::Vector2dF(),                          // filters scale
       gfx::PointF(),                             // filter origin
-      gfx::RectF(sub_rect));                     // tex_coord_rect
+      gfx::RectF(sub_rect),                      // tex_coord_rect
+      false);                                    // force_anti_aliasing_off
 
   // White background behind the masked render pass.
   SolidColorDrawQuad* white =
@@ -2211,7 +2218,8 @@ class RendererPixelTestWithBackgroundFilter
                                gfx::Size(),                 // mask_texture_size
                                gfx::Vector2dF(1.0f, 1.0f),  // filters_scale
                                gfx::PointF(),               // filters_origin
-                               gfx::RectF());               // tex_coord_rect
+                               gfx::RectF(),                // tex_coord_rect
+                               false);  // force_anti_aliasing_off
     }
 
     const int kColumnWidth = device_viewport_rect.width() / 3;
@@ -2853,6 +2861,7 @@ TYPED_TEST(RendererPixelTest, TileDrawQuadNearestNeighbor) {
   bool swizzle_contents = true;
   bool needs_blending = true;
   bool nearest_neighbor = true;
+  bool force_anti_aliasing_off = false;
 
   SkBitmap bitmap;
   bitmap.allocN32Pixels(2, 2);
@@ -2882,7 +2891,7 @@ TYPED_TEST(RendererPixelTest, TileDrawQuadNearestNeighbor) {
   TileDrawQuad* quad = pass->CreateAndAppendDrawQuad<TileDrawQuad>();
   quad->SetNew(shared_state, viewport, gfx::Rect(), viewport, needs_blending,
                resource, gfx::RectF(gfx::Rect(tile_size)), tile_size,
-               swizzle_contents, nearest_neighbor);
+               swizzle_contents, nearest_neighbor, force_anti_aliasing_off);
 
   RenderPassList pass_list;
   pass_list.push_back(std::move(pass));

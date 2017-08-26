@@ -34,8 +34,8 @@ void PictureDrawQuad::SetNew(const viz::SharedQuadState* shared_quad_state,
   ContentDrawQuadBase::SetNew(
       shared_quad_state, DrawQuad::PICTURE_CONTENT, rect, opaque_rect,
       visible_rect, needs_blending, tex_coord_rect, texture_size,
-      !viz::PlatformColor::SameComponentOrder(texture_format),
-      nearest_neighbor);
+      !viz::PlatformColor::SameComponentOrder(texture_format), nearest_neighbor,
+      false);
   this->content_rect = content_rect;
   this->contents_scale = contents_scale;
   this->raster_source = raster_source;
@@ -57,8 +57,8 @@ void PictureDrawQuad::SetAll(const viz::SharedQuadState* shared_quad_state,
   ContentDrawQuadBase::SetAll(
       shared_quad_state, DrawQuad::PICTURE_CONTENT, rect, opaque_rect,
       visible_rect, needs_blending, tex_coord_rect, texture_size,
-      !viz::PlatformColor::SameComponentOrder(texture_format),
-      nearest_neighbor);
+      !viz::PlatformColor::SameComponentOrder(texture_format), nearest_neighbor,
+      false);
   this->content_rect = content_rect;
   this->contents_scale = contents_scale;
   this->raster_source = raster_source;

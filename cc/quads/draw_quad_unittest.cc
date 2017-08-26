@@ -150,20 +150,20 @@ void CompareDrawQuad(DrawQuad* quad, DrawQuad* copy) {
   { QUAD_DATA quad_new->SetNew(shared_state, quad_rect, __VA_ARGS__); } \
   SETUP_AND_COPY_QUAD_NEW(Type, quad_new);
 
-#define CREATE_QUAD_ALL_RP(Type, a, b, c, d, e, f, g, copy_a)                 \
+#define CREATE_QUAD_ALL_RP(Type, a, b, c, d, e, f, g, h, copy_a)              \
   Type* quad_all = render_pass->CreateAndAppendDrawQuad<Type>();              \
   {                                                                           \
     QUAD_DATA quad_all->SetAll(shared_state, quad_rect, quad_opaque_rect,     \
                                quad_visible_rect, needs_blending, a, b, c, d, \
-                               e, f, g);                                      \
+                               e, f, g, h);                                   \
   }                                                                           \
   SETUP_AND_COPY_QUAD_ALL_RP(Type, quad_all, copy_a);
 
-#define CREATE_QUAD_NEW_RP(Type, a, b, c, d, e, f, g, h, copy_a)             \
+#define CREATE_QUAD_NEW_RP(Type, a, b, c, d, e, f, g, h, i, copy_a)          \
   Type* quad_new = render_pass->CreateAndAppendDrawQuad<Type>();             \
   {                                                                          \
     QUAD_DATA quad_new->SetNew(shared_state, quad_rect, a, b, c, d, e, f, g, \
-                               h);                                           \
+                               h, i);                                        \
   }                                                                          \
   SETUP_AND_COPY_QUAD_NEW_RP(Type, quad_new, copy_a);
 
@@ -194,6 +194,7 @@ TEST(DrawQuadTest, CopyRenderPassDrawQuad) {
   gfx::Vector2dF filters_scale;
   gfx::PointF filters_origin;
   gfx::RectF tex_coord_rect(1, 1, 255, 254);
+  bool force_anti_aliasing_off = false;
 
   RenderPassId copied_render_pass_id = 235;
   CREATE_SHARED_STATE();
@@ -201,7 +202,7 @@ TEST(DrawQuadTest, CopyRenderPassDrawQuad) {
   CREATE_QUAD_NEW_RP(RenderPassDrawQuad, visible_rect, render_pass_id,
                      mask_resource_id, mask_uv_rect, mask_texture_size,
                      filters_scale, filters_origin, tex_coord_rect,
-                     copied_render_pass_id);
+                     force_anti_aliasing_off, copied_render_pass_id);
   EXPECT_EQ(DrawQuad::RENDER_PASS, copy_quad->material);
   EXPECT_EQ(visible_rect, copy_quad->visible_rect);
   EXPECT_EQ(copied_render_pass_id, copy_quad->render_pass_id);
@@ -215,7 +216,8 @@ TEST(DrawQuadTest, CopyRenderPassDrawQuad) {
 
   CREATE_QUAD_ALL_RP(RenderPassDrawQuad, render_pass_id, mask_resource_id,
                      mask_uv_rect, mask_texture_size, filters_scale,
-                     filters_origin, tex_coord_rect, copied_render_pass_id);
+                     filters_origin, tex_coord_rect, force_anti_aliasing_off,
+                     copied_render_pass_id);
   EXPECT_EQ(DrawQuad::RENDER_PASS, copy_quad->material);
   EXPECT_EQ(copied_render_pass_id, copy_quad->render_pass_id);
   EXPECT_EQ(mask_resource_id, copy_quad->mask_resource_id());
@@ -350,11 +352,12 @@ TEST(DrawQuadTest, CopyTileDrawQuad) {
   gfx::Size texture_size(85, 32);
   bool swizzle_contents = true;
   bool nearest_neighbor = true;
+  bool force_anti_aliasing_off = false;
   CREATE_SHARED_STATE();
 
   CREATE_QUAD_NEW(TileDrawQuad, opaque_rect, visible_rect, needs_blending,
                   resource_id, tex_coord_rect, texture_size, swizzle_contents,
-                  nearest_neighbor);
+                  nearest_neighbor, force_anti_aliasing_off);
   EXPECT_EQ(DrawQuad::TILED_CONTENT, copy_quad->material);
   EXPECT_EQ(opaque_rect, copy_quad->opaque_rect);
   EXPECT_EQ(visible_rect, copy_quad->visible_rect);
@@ -366,7 +369,7 @@ TEST(DrawQuadTest, CopyTileDrawQuad) {
   EXPECT_EQ(nearest_neighbor, copy_quad->nearest_neighbor);
 
   CREATE_QUAD_ALL(TileDrawQuad, resource_id, tex_coord_rect, texture_size,
-                  swizzle_contents, nearest_neighbor);
+                  swizzle_contents, nearest_neighbor, force_anti_aliasing_off);
   EXPECT_EQ(DrawQuad::TILED_CONTENT, copy_quad->material);
   EXPECT_EQ(resource_id, copy_quad->resource_id());
   EXPECT_EQ(tex_coord_rect, copy_quad->tex_coord_rect);
@@ -516,6 +519,7 @@ TEST_F(DrawQuadIteratorTest, RenderPassDrawQuad) {
   gfx::Vector2dF filters_scale(2.f, 3.f);
   gfx::PointF filters_origin(0.f, 0.f);
   gfx::RectF tex_coord_rect(1.f, 1.f, 33.f, 19.f);
+  bool force_anti_aliasing_off = false;
 
   int copied_render_pass_id = 235;
 
@@ -523,7 +527,7 @@ TEST_F(DrawQuadIteratorTest, RenderPassDrawQuad) {
   CREATE_QUAD_NEW_RP(RenderPassDrawQuad, visible_rect, render_pass_id,
                      mask_resource_id, mask_uv_rect, mask_texture_size,
                      filters_scale, filters_origin, tex_coord_rect,
-                     copied_render_pass_id);
+                     force_anti_aliasing_off, copied_render_pass_id);
   EXPECT_EQ(mask_resource_id, quad_new->mask_resource_id());
   EXPECT_EQ(1, IterateAndCount(quad_new));
   EXPECT_EQ(mask_resource_id + 1, quad_new->mask_resource_id());
@@ -532,7 +536,8 @@ TEST_F(DrawQuadIteratorTest, RenderPassDrawQuad) {
   gfx::Rect quad_rect(30, 40, 50, 60);
   quad_new->SetNew(shared_state, quad_rect, visible_rect, render_pass_id,
                    new_mask_resource_id, mask_uv_rect, mask_texture_size,
-                   filters_scale, filters_origin, tex_coord_rect);
+                   filters_scale, filters_origin, tex_coord_rect,
+                   force_anti_aliasing_off);
   EXPECT_EQ(0, IterateAndCount(quad_new));
   EXPECT_EQ(0u, quad_new->mask_resource_id());
 }
@@ -606,11 +611,12 @@ TEST_F(DrawQuadIteratorTest, TileDrawQuad) {
   gfx::Size texture_size(85, 32);
   bool swizzle_contents = true;
   bool nearest_neighbor = true;
+  bool force_anti_aliasing_off = false;
 
   CREATE_SHARED_STATE();
   CREATE_QUAD_NEW(TileDrawQuad, opaque_rect, visible_rect, needs_blending,
                   resource_id, tex_coord_rect, texture_size, swizzle_contents,
-                  nearest_neighbor);
+                  nearest_neighbor, force_anti_aliasing_off);
   EXPECT_EQ(resource_id, quad_new->resource_id());
   EXPECT_EQ(1, IterateAndCount(quad_new));
   EXPECT_EQ(resource_id + 1, quad_new->resource_id());
