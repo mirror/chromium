@@ -213,6 +213,13 @@ void RenderFrameProxy::Init(blink::WebRemoteFrame* web_frame,
   CHECK(result.second) << "Inserted a duplicate item.";
 }
 
+void RenderFrameProxy::ResendFrameRects() {
+  // Reset |frame_rect_| in order to allocate a new viz::LocalSurfaceId.
+  gfx::Rect rect = frame_rect_;
+  frame_rect_ = gfx::Rect();
+  FrameRectsChanged(rect);
+}
+
 void RenderFrameProxy::WillBeginCompositorFrame() {
   if (compositing_helper_) {
     FrameHostMsg_HittestData_Params params;
@@ -283,6 +290,8 @@ bool RenderFrameProxy::OnMessageReceived(const IPC::Message& msg) {
     IPC_MESSAGE_HANDLER(FrameMsg_ChildFrameProcessGone, OnChildFrameProcessGone)
     IPC_MESSAGE_HANDLER(FrameMsg_SetChildFrameSurface, OnSetChildFrameSurface)
     IPC_MESSAGE_HANDLER(FrameMsg_UpdateOpener, OnUpdateOpener)
+    IPC_MESSAGE_HANDLER(FrameMsg_DidShowInterstitialPage,
+                        OnDidShowInterstitialPage)
     IPC_MESSAGE_HANDLER(FrameMsg_DidStartLoading, OnDidStartLoading)
     IPC_MESSAGE_HANDLER(FrameMsg_DidStopLoading, OnDidStopLoading)
     IPC_MESSAGE_HANDLER(FrameMsg_DidUpdateFramePolicy, OnDidUpdateFramePolicy)
@@ -322,6 +331,7 @@ void RenderFrameProxy::OnDeleteProxy() {
 void RenderFrameProxy::OnChildFrameProcessGone() {
   if (compositing_helper_.get())
     compositing_helper_->ChildFrameGone();
+  ResendFrameRects();
 }
 
 void RenderFrameProxy::OnSetChildFrameSurface(
@@ -348,6 +358,12 @@ void RenderFrameProxy::OnUpdateOpener(int opener_routing_id) {
 
 void RenderFrameProxy::OnDidStartLoading() {
   web_frame_->DidStartLoading();
+}
+
+void RenderFrameProxy::OnDidShowInterstitialPage() {
+  // Resend the FrameRects and allocate a new viz::LocalSurfaceId for the
+  // embedded interstitial page.
+  ResendFrameRects();
 }
 
 void RenderFrameProxy::OnDidStopLoading() {
@@ -398,6 +414,8 @@ void RenderFrameProxy::OnDidUpdateOrigin(
   web_frame_->SetReplicatedOrigin(origin);
   web_frame_->SetReplicatedPotentiallyTrustworthyUniqueOrigin(
       is_potentially_trustworthy_unique_origin);
+
+  ResendFrameRects();
 }
 
 void RenderFrameProxy::OnSetPageFocus(bool is_focused) {
@@ -503,11 +521,17 @@ void RenderFrameProxy::Navigate(const blink::WebURLRequest& request,
 
 void RenderFrameProxy::FrameRectsChanged(const blink::WebRect& frame_rect) {
   gfx::Rect rect = frame_rect;
+  if (frame_rect_.size() != rect.size() || !local_surface_id_.is_valid())
+    local_surface_id_ = local_surface_id_allocator_.GenerateId();
+
+  frame_rect_ = rect;
+
   if (IsUseZoomForDSFEnabled()) {
     rect = gfx::ScaleToEnclosingRect(
         rect, 1.f / render_widget_->GetOriginalDeviceScaleFactor());
   }
-  Send(new FrameHostMsg_FrameRectChanged(routing_id_, rect));
+
+  Send(new FrameHostMsg_FrameRectChanged(routing_id_, rect, local_surface_id_));
 }
 
 void RenderFrameProxy::UpdateRemoteViewportIntersection(
