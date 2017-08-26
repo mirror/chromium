@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a7a0cd24_f95b0257",
+        "filename": "chrome/browser/extensions/api/omnibox/omnibox_api.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-08-26T03:51:23Z",
+      "side": 1,
+      "message": "Nit: I\u0027d omit this comment.  The main body just describes what the code is doing; the bug link is the only real info, but it\u0027s not clear why a reader would find the code here unusual or want to know about the bug link. (2 places)",
+      "revId": "25faf427311105af9a5e030fb1c0b1bf618502c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb694026_2429f7ec",
+        "filename": "chrome/browser/ui/views/location_bar/location_bar_view.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-08-26T03:51:23Z",
+      "side": 1,
+      "message": "Nit: I\u0027d place this accessor below the next one to match the declaration order of the members.",
+      "revId": "25faf427311105af9a5e030fb1c0b1bf618502c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b5d96e0_ef5f546b",
+        "filename": "chrome/browser/ui/views/location_bar/selected_keyword_view.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-08-26T03:51:23Z",
+      "side": 1,
+      "message": "Nit: \"get\" is usually only on CamelCase function names, and \"label\" here refers to a Label object, so maybe label_text()?\n\nThat said, I\u0027d consider instead just making label() public in the parent class, dropping this function entirely, and having the test code call label()-\u003etext() itself.  If you didn\u0027t like that you could just do \"using IconLabelBubbleView::label;\" here to make the accessor public only in this class.",
+      "revId": "25faf427311105af9a5e030fb1c0b1bf618502c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca7f8421_7a703782",
+        "filename": "chrome/browser/ui/views/location_bar/selected_keyword_view_interactive_uitest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-08-26T03:51:23Z",
+      "side": 1,
+      "message": "Nit: {} since the conditional body is \u003e 1 line",
+      "revId": "25faf427311105af9a5e030fb1c0b1bf618502c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b72d7e6_5c610947",
+        "filename": "chrome/browser/ui/views/location_bar/selected_keyword_view_interactive_uitest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-08-26T03:51:23Z",
+      "side": 1,
+      "message": "Nit: Prefer \"using\" to \"typedef\"",
+      "revId": "25faf427311105af9a5e030fb1c0b1bf618502c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
