@@ -78,14 +78,20 @@ public class ServiceWorkerPaymentApp extends PaymentInstrument implements Paymen
     }
 
     @Override
-    public void getInstruments(Map<String, PaymentMethodData> unusedMethodDataMap,
-            String unusedOrigin, String unusedIFrameOrigin, byte[][] unusedCertificateChain,
-            final InstrumentsCallback callback) {
-        new Handler().post(() -> {
-            List<PaymentInstrument> instruments = new ArrayList();
-            instruments.add(ServiceWorkerPaymentApp.this);
-            callback.onInstrumentsReady(ServiceWorkerPaymentApp.this, instruments);
-        });
+    public void getInstruments(Map<String, PaymentMethodData> methodDataMap, String origin,
+            String iframeOrigin, byte[][] unusedCertificateChain,
+            Map<String, PaymentDetailsModifier> modifiers, final InstrumentsCallback callback) {
+        ServiceWorkerPaymentAppBridge.canMakePayment(mWebContents, mRegistrationId, origin,
+                iframeOrigin, new HashSet<>(methodDataMap.values()),
+                new HashSet<>(modifiers.values()), (boolean canMakePayment) -> {
+                    new Handler().post(() -> {
+                        List<PaymentInstrument> instruments = new ArrayList();
+                        if (canMakePayment) {
+                            instruments.add(ServiceWorkerPaymentApp.this);
+                        }
+                        callback.onInstrumentsReady(ServiceWorkerPaymentApp.this, instruments);
+                    });
+                });
     }
 
     @Override
