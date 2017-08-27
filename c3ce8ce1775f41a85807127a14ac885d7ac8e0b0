@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2b54a051_fc652cce",
+        "filename": "net/http/http_cache.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 440,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-08-27T17:24:12Z",
+      "side": 1,
+      "message": "nit: \"either\"s appropriate for two options; this should probably be \"one of\u0027.",
+      "range": {
+        "startLine": 440,
+        "startChar": 30,
+        "endLine": 440,
+        "endChar": 31
+      },
+      "revId": "c3ce8ce1775f41a85807127a14ac885d7ac8e0b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6bc6de0e_81b2a0c6",
+        "filename": "net/http/http_cache_transaction.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 1780,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-08-27T17:24:12Z",
+      "side": 1,
+      "message": "nit: I\u0027d suggest updating the above comment.  \"Closing the cached response\" matches well to the call to DoneWritingToEntry(), but there\u0027s no obvious referent for it in the below code.",
+      "range": {
+        "startLine": 1780,
+        "startChar": 22,
+        "endLine": 1780,
+        "endChar": 30
+      },
+      "revId": "c3ce8ce1775f41a85807127a14ac885d7ac8e0b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d1b8e53_13dc33ed",
+        "filename": "net/http/http_cache_transaction.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 2903,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-08-27T17:24:12Z",
+      "side": 1,
+      "message": "nit: \"Maybe\" is one word, so B should be lower case.",
+      "range": {
+        "startLine": 2903,
+        "startChar": 21,
+        "endLine": 2903,
+        "endChar": 44
+      },
+      "revId": "c3ce8ce1775f41a85807127a14ac885d7ac8e0b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

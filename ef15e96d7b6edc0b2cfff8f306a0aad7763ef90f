@@ -163,6 +163,99 @@
     },
     {
       "key": {
+        "uuid": "36f8fcce_722407c1",
+        "filename": "net/http/http_cache.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 937,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-08-27T17:24:12Z",
+      "side": 1,
+      "message": "+1.  It often seems like there are two separate code paths depending on whether a transaction is specified, and functions that you would expect to require non-null transactions (e.g. HC::W::RemoveTransaction) don\u0027t, which makes it hard to figure out what\u0027s going on as you read the code.",
+      "parentUuid": "8d8c26df_a6378872",
+      "range": {
+        "startLine": 937,
+        "startChar": 55,
+        "endLine": 937,
+        "endChar": 66
+      },
+      "revId": "ef15e96d7b6edc0b2cfff8f306a0aad7763ef90f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "754981bb_0c0ad77e",
+        "filename": "net/http/http_cache.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 940,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-08-27T17:24:12Z",
+      "side": 1,
+      "message": "Why is this done here rather than in the caller?  By the name this is always called from writers, and I\u0027d argue this responsibility (of coordinating between multiple transactions on writers) should be the responsibility of writers, not the AE.",
+      "range": {
+        "startLine": 940,
+        "startChar": 21,
+        "endLine": 940,
+        "endChar": 26
+      },
+      "revId": "ef15e96d7b6edc0b2cfff8f306a0aad7763ef90f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82c6ec61_0b32d1cf",
+        "filename": "net/http/http_cache.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 947,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-08-27T17:24:12Z",
+      "side": 1,
+      "message": "As above, I would expect this type of work to be done in the caller.",
+      "range": {
+        "startLine": 947,
+        "startChar": 20,
+        "endLine": 947,
+        "endChar": 37
+      },
+      "revId": "ef15e96d7b6edc0b2cfff8f306a0aad7763ef90f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70ab0878_bd9b6316",
+        "filename": "net/http/http_cache.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 950,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-08-27T17:24:12Z",
+      "side": 1,
+      "message": "(Treating RestartHeadersPhaseTransaction() as if it\u0027s part of this function, since this is the only caller.)\n\nUnder what circumstances will WritersDoneWritingToEntry() be called with transaction \u003d\u003d entry-\u003eheaders_transaction?  It would seem to me as if writers should always be calling in with a transaction that\u0027s *in* writers, i.e. after the headers phase.",
+      "range": {
+        "startLine": 950,
+        "startChar": 4,
+        "endLine": 950,
+        "endChar": 35
+      },
+      "revId": "ef15e96d7b6edc0b2cfff8f306a0aad7763ef90f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8fa662da_46080321",
         "filename": "net/http/http_cache.cc",
         "patchSetId": 11
@@ -202,6 +295,29 @@
         "startChar": 55,
         "endLine": 436,
         "endChar": 66
+      },
+      "revId": "ef15e96d7b6edc0b2cfff8f306a0aad7763ef90f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff612966_52a863e1",
+        "filename": "net/http/http_cache_transaction.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 363,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-08-27T17:24:12Z",
+      "side": 1,
+      "message": "This transformation (DoneWritingToEntry(arg), mode_ \u003d NONE \u003d\u003d\u003e RecordHistograms(), SetNetworkReadOnly(arg)) happens at a couple of places in this file, but I\"m having a hard time figuring out the common pattern and the reason for the transformation.  Is there a simple description as to how the existence of writers drives this change?",
+      "range": {
+        "startLine": 363,
+        "startChar": 4,
+        "endLine": 363,
+        "endChar": 22
       },
       "revId": "ef15e96d7b6edc0b2cfff8f306a0aad7763ef90f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
@@ -336,6 +452,30 @@
       "side": 1,
       "message": "reading_ set to true *and* being in this state: implies that the consumer has invoked Read() and as part of that Read() we went back to the headers state machine. Note this can only happen for partial requests. So after this the transition needs to be to a reading state.\nIn the current code this maps to the transition to a reading state that happens here https://cs.chromium.org/chromium/src/net/http/http_cache_transaction.cc?q\u003dhttp_cache_transaction.cc\u0026dr\u0026l\u003d1883 in DoPartialHeadersReceived.",
       "parentUuid": "e2a175ff_b3d11f07",
+      "range": {
+        "startLine": 2011,
+        "startChar": 6,
+        "endLine": 2011,
+        "endChar": 14
+      },
+      "revId": "ef15e96d7b6edc0b2cfff8f306a0aad7763ef90f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c468393f_cd9842dc",
+        "filename": "net/http/http_cache_transaction.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 2011,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-08-27T17:24:12Z",
+      "side": 1,
+      "message": "Ah.  Ok, not in this CL, but Long term would it make sense (for a simplified state machine) to return from Read() at partial read boundaries inside of HC::T to avoid this transition?",
+      "parentUuid": "20a6fdf9_ddd259ff",
       "range": {
         "startLine": 2011,
         "startChar": 6,
@@ -663,6 +803,52 @@
         "startChar": 1,
         "endLine": 58,
         "endChar": 6
+      },
+      "revId": "ef15e96d7b6edc0b2cfff8f306a0aad7763ef90f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef9953bb_40bfc531",
+        "filename": "net/http/http_cache_writers.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-08-27T17:24:12Z",
+      "side": 1,
+      "message": "nit, suggestion: Early return if size !\u003d 1 instead of conditionalizing the main work of the function.",
+      "range": {
+        "startLine": 66,
+        "startChar": 6,
+        "endLine": 66,
+        "endChar": 18
+      },
+      "revId": "ef15e96d7b6edc0b2cfff8f306a0aad7763ef90f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43c98984_65a2086e",
+        "filename": "net/http/http_cache_writers.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-08-27T17:24:12Z",
+      "side": 1,
+      "message": "nit, suggestion: Add comment to entry that after doom no other transactions can access the entry, so no need to set exclusive even though access now much be exclusive?  (Presuming I\u0027m correct in that analysis :-}.)",
+      "range": {
+        "startLine": 70,
+        "startChar": 21,
+        "endLine": 70,
+        "endChar": 27
       },
       "revId": "ef15e96d7b6edc0b2cfff8f306a0aad7763ef90f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",

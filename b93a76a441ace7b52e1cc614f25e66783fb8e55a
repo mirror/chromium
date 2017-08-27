@@ -237,6 +237,30 @@
     },
     {
       "key": {
+        "uuid": "d9cc113b_1313874d",
+        "filename": "net/http/http_cache_transaction.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 425,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-08-27T17:24:12Z",
+      "side": 1,
+      "message": "We could change the state name to \"READ_FROM_WRITERS{,_COMPLETE}\" or something like that.  (Thought, not request.)",
+      "parentUuid": "6297124f_3d07a9ce",
+      "range": {
+        "startLine": 425,
+        "startChar": 20,
+        "endLine": 425,
+        "endChar": 50
+      },
+      "revId": "b93a76a441ace7b52e1cc614f25e66783fb8e55a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d231cb70_2640ddba",
         "filename": "net/http/http_cache_writers.cc",
         "patchSetId": 6
