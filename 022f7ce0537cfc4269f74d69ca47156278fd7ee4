@@ -157,6 +157,24 @@
     },
     {
       "key": {
+        "uuid": "936ae50c_20bd6b65",
+        "filename": "chrome/browser/resource_coordinator/window_occlusion_tracker_chromeos.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-08-27T17:25:34Z",
+      "side": 1,
+      "message": "Yes they are. I could probably try using that.",
+      "parentUuid": "84d523d6_ff6bbd63",
+      "revId": "022f7ce0537cfc4269f74d69ca47156278fd7ee4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f85d5085_3df08177",
         "filename": "chrome/browser/resource_coordinator/window_occlusion_tracker_chromeos.cc",
         "patchSetId": 6
@@ -168,6 +186,24 @@
       "writtenOn": "2017-08-25T02:47:33Z",
       "side": 1,
       "message": "Why unique_ptr\u003c\u003e?",
+      "revId": "022f7ce0537cfc4269f74d69ca47156278fd7ee4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4687d8bd_0154f42f",
+        "filename": "chrome/browser/resource_coordinator/window_occlusion_tracker_chromeos.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-08-27T17:25:34Z",
+      "side": 1,
+      "message": "See comment on line 58.",
+      "parentUuid": "f85d5085_3df08177",
       "revId": "022f7ce0537cfc4269f74d69ca47156278fd7ee4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
