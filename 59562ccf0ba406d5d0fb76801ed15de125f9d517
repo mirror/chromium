@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8da3a634_748926ce",
+        "filename": "content/browser/storage_partition_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 692,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-27T06:42:16Z",
+      "side": 1,
+      "message": "I just noticed that BindingSet has a ReportBadMessage helper: does this avoid the current issues with mojo::ReportBadMessage?",
+      "revId": "59562ccf0ba406d5d0fb76801ed15de125f9d517",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
