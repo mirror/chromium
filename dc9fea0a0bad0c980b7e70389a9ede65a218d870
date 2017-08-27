@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f49f095c_0579276f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-08-27T04:25:03Z",
+      "side": 1,
+      "message": "How does this approximate it better? We\u0027re now rounding to ints when we were using the subpixel positions before.\nI\u0027d say rounding subpixel positions to ints will result in visible differences between compositing and HW overlays.\nBefore this patch we\u0027d just use GL compositing to avoid those differences.\nAre we sure we want that?",
+      "revId": "dc9fea0a0bad0c980b7e70389a9ede65a218d870",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48852412_43faf513",
+        "filename": "cc/output/overlay_candidate.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-08-27T04:25:03Z",
+      "side": 1,
+      "message": "Wouldn\u0027t it be more accurate to round the width, and then recompute the position?\nIf you have mapper_rect.x and mapped_rect.right respectively 0.4 and 100.6, you\u0027d end up using an hw overlay of 101 in width. With the other approach the width would be 100 and the HW overlays would be less stretched horizontally.",
+      "revId": "dc9fea0a0bad0c980b7e70389a9ede65a218d870",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
