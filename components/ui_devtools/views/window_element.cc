@@ -53,7 +53,18 @@ void WindowElement::OnWindowHierarchyChanged(
 
 void WindowElement::OnWindowStackingChanged(aura::Window* window) {
   DCHECK_EQ(window_, window);
-  parent()->ReorderChild(this, GetIndexOfChildInParent(window));
+  int child_index_in_element_parent = -1;
+  auto iter =
+      std::find(parent()->children().begin(), parent()->children().end(), this);
+  DCHECK(iter != parent()->children().end());
+  child_index_in_element_parent =
+      std::distance(parent()->children().begin(), iter);
+  int child_index_in_window_parent = GetIndexOfChildInParent(window);
+
+  // Only reorder this UI Element if its position is not the same as |window|
+  // position in |window|'s parent.
+  if (child_index_in_element_parent != child_index_in_window_parent)
+    parent()->ReorderChild(this, child_index_in_window_parent);
 }
 
 void WindowElement::OnWindowBoundsChanged(aura::Window* window,
