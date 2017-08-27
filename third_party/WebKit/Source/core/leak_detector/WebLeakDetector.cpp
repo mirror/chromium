@@ -45,15 +45,14 @@ class WebLeakDetectorImpl final : public WebLeakDetector,
   WTF_MAKE_NONCOPYABLE(WebLeakDetectorImpl);
 
  public:
-  explicit WebLeakDetectorImpl(WebLeakDetectorClient* client,
-                               WebFrame* webframe)
-      : client_(client), detector_(this, webframe) {
+  explicit WebLeakDetectorImpl(WebLeakDetectorClient* client)
+      : client_(client), detector_(new BlinkLeakDetector(this)) {
     DCHECK(client_);
   }
 
   ~WebLeakDetectorImpl() override {}
 
-  void PrepareForLeakDetection() override;
+  void PrepareForLeakDetection(WebFrame*) override;
   void CollectGarbageAndReport() override;
 
   // BlinkLeakDetectorClient:
@@ -61,15 +60,15 @@ class WebLeakDetectorImpl final : public WebLeakDetector,
 
  private:
   WebLeakDetectorClient* client_;
-  BlinkLeakDetector detector_;
+  Persistent<BlinkLeakDetector> detector_;
 };
 
-void WebLeakDetectorImpl::PrepareForLeakDetection() {
-  detector_.PrepareForLeakDetection();
+void WebLeakDetectorImpl::PrepareForLeakDetection(WebFrame* frame) {
+  detector_->PrepareForLeakDetection(frame);
 }
 
 void WebLeakDetectorImpl::CollectGarbageAndReport() {
-  detector_.CollectGarbage();
+  detector_->CollectGarbage();
 }
 
 void WebLeakDetectorImpl::OnLeakDetectionComplete() {
@@ -106,9 +105,8 @@ void WebLeakDetectorImpl::OnLeakDetectionComplete() {
 
 }  // namespace
 
-WebLeakDetector* WebLeakDetector::Create(WebLeakDetectorClient* client,
-                                         WebFrame* webframe) {
-  return new WebLeakDetectorImpl(client, webframe);
+WebLeakDetector* WebLeakDetector::Create(WebLeakDetectorClient* client) {
+  return new WebLeakDetectorImpl(client);
 }
 
 }  // namespace blink

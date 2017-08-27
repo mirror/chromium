@@ -11,18 +11,21 @@
 namespace blink {
 
 class BlinkLeakDetectorClient;
-class LocalFrame;
 class WebFrame;
 
 // This class is responsible for stabilizing the detection results which are
 // InstanceCounter values by 1) preparing for leak detection and 2) operating
 // garbage collections before leak detection.
-class CORE_EXPORT BlinkLeakDetector {
+class CORE_EXPORT BlinkLeakDetector
+    : public GarbageCollectedFinalized<BlinkLeakDetector> {
  public:
-  BlinkLeakDetector(BlinkLeakDetectorClient*, WebFrame*);
+  explicit BlinkLeakDetector(BlinkLeakDetectorClient*);
   ~BlinkLeakDetector();
 
-  void PrepareForLeakDetection();
+  EAGERLY_FINALIZE();
+  DEFINE_INLINE_TRACE() {}
+
+  void PrepareForLeakDetection(WebFrame*);
   void CollectGarbage();
 
  private:
@@ -31,7 +34,6 @@ class CORE_EXPORT BlinkLeakDetector {
   TaskRunnerTimer<BlinkLeakDetector> delayed_gc_timer_;
   int number_of_gc_needed_;
   BlinkLeakDetectorClient* client_;
-  Persistent<LocalFrame> frame_;
 };
 }  // namespace blink
 
