@@ -2358,7 +2358,7 @@ TEST_F(PasswordAutofillAgentTest, IgnoreNotPasswordFields) {
       ->WillSubmitForm(form_element);
 
   base::RunLoop().RunUntilIdle();
-  ASSERT_FALSE(fake_driver_.called_password_form_submitted());
+  ASSERT_TRUE(fake_driver_.called_password_form_submitted_only_for_fallback());
 }
 
 // Tests that only the password field is autocompleted when the browser sends
