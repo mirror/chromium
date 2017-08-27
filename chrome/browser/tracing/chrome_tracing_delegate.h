@@ -31,7 +31,7 @@ class ChromeTracingDelegate : public content::TracingDelegate,
       const content::BackgroundTracingConfig& config,
       bool requires_anonymized_data) override;
 
-  void GenerateMetadataDict(base::DictionaryValue* metadata_dict) override;
+  std::unique_ptr<base::DictionaryValue> GenerateMetadataDict() override;
 
   content::MetadataFilterPredicate GetMetadataFilterPredicate() override;
 
