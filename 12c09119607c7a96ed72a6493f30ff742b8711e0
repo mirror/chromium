@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "0ee24884_5bf578d9",
+        "filename": "ios/web/navigation/crw_placeholder_navigation_info.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1190590
+      },
+      "writtenOn": "2017-08-27T01:45:46Z",
+      "side": 1,
+      "message": "It seems to me that NavigationContextImpl has to be used together with CRWWKNavigationStates. But the latter is stateful so adding a new type of WKNavigation to it would affect things such as lastAddedNavigation, which is used in several other places. This causes placeholder navigation to be visible to regular navigation stack, which I think is more messy in the short term as we try to keep the new navigation stack separate from the existing one.\n\nIf the nav experiment is successful, I\u0027d like to look at some refactoring opportunities. For example, we will not need to track as many navigation states as we do now, so we may be able to delete lastAddedNavigation. If CRWWKNavigationStates become a pure utility class, then this class can be folded in.",
+      "parentUuid": "0d787b7e_483c6a56",
+      "range": {
+        "startLine": 24,
+        "startChar": 11,
+        "endLine": 24,
+        "endChar": 39
+      },
+      "revId": "12c09119607c7a96ed72a6493f30ff742b8711e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2de79640_15811380",
         "filename": "ios/web/navigation/crw_placeholder_navigation_info.mm",
         "patchSetId": 1
@@ -39,6 +63,24 @@
       "revId": "12c09119607c7a96ed72a6493f30ff742b8711e0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60f0c5ca_0610c554",
+        "filename": "ios/web/navigation/crw_placeholder_navigation_info.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1190590
+      },
+      "writtenOn": "2017-08-27T01:45:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2de79640_15811380",
+      "revId": "12c09119607c7a96ed72a6493f30ff742b8711e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "768a241b_3202a3f9",
+        "filename": "ios/web/navigation/crw_placeholder_navigation_info.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1190590
+      },
+      "writtenOn": "2017-08-27T01:45:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b2987f4a_9d38fdec",
+      "range": {
+        "startLine": 46,
+        "startChar": 25,
+        "endLine": 46,
+        "endChar": 32
+      },
+      "revId": "12c09119607c7a96ed72a6493f30ff742b8711e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5e24d145_0591ebbf",
         "filename": "ios/web/web_state/ui/crw_web_controller.mm",
         "patchSetId": 1
@@ -88,6 +154,30 @@
     },
     {
       "key": {
+        "uuid": "6f2da79c_820925ed",
+        "filename": "ios/web/web_state/ui/crw_web_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1190590
+      },
+      "writtenOn": "2017-08-27T01:45:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5e24d145_0591ebbf",
+      "range": {
+        "startLine": 219,
+        "startChar": 20,
+        "endLine": 219,
+        "endChar": 31
+      },
+      "revId": "12c09119607c7a96ed72a6493f30ff742b8711e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "91431fa8_24daf743",
         "filename": "ios/web/web_state/ui/crw_web_controller.mm",
         "patchSetId": 1
@@ -102,6 +192,24 @@
       "revId": "12c09119607c7a96ed72a6493f30ff742b8711e0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1c91f86_d60d8bdb",
+        "filename": "ios/web/web_state/ui/crw_web_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1190590
+      },
+      "writtenOn": "2017-08-27T01:45:46Z",
+      "side": 1,
+      "message": "I considered calling this AppSpecificPlaceholderURL because it is used for native controller as well. But the name is getting too long. With the clarifying comments and link to design doc, I hope it\u0027s sufficient details for the reader.",
+      "parentUuid": "91431fa8_24daf743",
+      "revId": "12c09119607c7a96ed72a6493f30ff742b8711e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -128,6 +236,30 @@
     },
     {
       "key": {
+        "uuid": "78680b19_37208201",
+        "filename": "ios/web/web_state/ui/crw_web_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1190590
+      },
+      "writtenOn": "2017-08-27T01:45:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "44a6122c_1962e267",
+      "range": {
+        "startLine": 223,
+        "startChar": 34,
+        "endLine": 223,
+        "endChar": 37
+      },
+      "revId": "12c09119607c7a96ed72a6493f30ff742b8711e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "333f535f_c467101b",
         "filename": "ios/web/web_state/ui/crw_web_controller.mm",
         "patchSetId": 1
@@ -148,6 +280,30 @@
       "revId": "12c09119607c7a96ed72a6493f30ff742b8711e0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d567329_9a827de0",
+        "filename": "ios/web/web_state/ui/crw_web_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1190590
+      },
+      "writtenOn": "2017-08-27T01:45:46Z",
+      "side": 1,
+      "message": "These functions do not have good standalone meanings outside of CRWWebController. I moved them into a crw_web_controller_test_visible namespace and added tests to crw_web_cotnroller_unittest.",
+      "parentUuid": "333f535f_c467101b",
+      "range": {
+        "startLine": 230,
+        "startChar": 5,
+        "endLine": 230,
+        "endChar": 31
+      },
+      "revId": "12c09119607c7a96ed72a6493f30ff742b8711e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -174,6 +330,30 @@
     },
     {
       "key": {
+        "uuid": "cf438c21_f57d6542",
+        "filename": "ios/web/web_state/ui/crw_web_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1190590
+      },
+      "writtenOn": "2017-08-27T01:45:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4deb8dcf_639f9a2b",
+      "range": {
+        "startLine": 232,
+        "startChar": 6,
+        "endLine": 232,
+        "endChar": 27
+      },
+      "revId": "12c09119607c7a96ed72a6493f30ff742b8711e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "de254543_c086a5aa",
         "filename": "ios/web/web_state/ui/crw_web_controller.mm",
         "patchSetId": 1
@@ -194,6 +374,30 @@
       "revId": "12c09119607c7a96ed72a6493f30ff742b8711e0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c1db996_93b53b91",
+        "filename": "ios/web/web_state/ui/crw_web_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 1190590
+      },
+      "writtenOn": "2017-08-27T01:45:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "de254543_c086a5aa",
+      "range": {
+        "startLine": 244,
+        "startChar": 31,
+        "endLine": 244,
+        "endChar": 51
+      },
+      "revId": "12c09119607c7a96ed72a6493f30ff742b8711e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -220,6 +424,30 @@
     },
     {
       "key": {
+        "uuid": "1628128c_9b0f9252",
+        "filename": "ios/web/web_state/ui/crw_web_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 1235,
+      "author": {
+        "id": 1190590
+      },
+      "writtenOn": "2017-08-27T01:45:46Z",
+      "side": 1,
+      "message": "No, because current URL may be the transient or pending item. I\u0027ll add a TODO to see if we can simplify this function when legacy usage is removed.",
+      "parentUuid": "c6dba107_7a0a6587",
+      "range": {
+        "startLine": 1235,
+        "startChar": 21,
+        "endLine": 1235,
+        "endChar": 22
+      },
+      "revId": "12c09119607c7a96ed72a6493f30ff742b8711e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0fe7a1e8_f3d90399",
         "filename": "ios/web/web_state/ui/crw_web_controller.mm",
         "patchSetId": 1
@@ -240,6 +468,30 @@
       "revId": "12c09119607c7a96ed72a6493f30ff742b8711e0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "297659b7_9db8ed5f",
+        "filename": "ios/web/web_state/ui/crw_web_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 1818,
+      "author": {
+        "id": 1190590
+      },
+      "writtenOn": "2017-08-27T01:45:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0fe7a1e8_f3d90399",
+      "range": {
+        "startLine": 1818,
+        "startChar": 39,
+        "endLine": 1818,
+        "endChar": 50
+      },
+      "revId": "12c09119607c7a96ed72a6493f30ff742b8711e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -266,6 +518,30 @@
     },
     {
       "key": {
+        "uuid": "702ff5f0_91058115",
+        "filename": "ios/web/web_state/ui/crw_web_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 1819,
+      "author": {
+        "id": 1190590
+      },
+      "writtenOn": "2017-08-27T01:45:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a8b0cacd_8895ae0f",
+      "range": {
+        "startLine": 1819,
+        "startChar": 8,
+        "endLine": 1819,
+        "endChar": 38
+      },
+      "revId": "12c09119607c7a96ed72a6493f30ff742b8711e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6545617b_267f86b9",
         "filename": "ios/web/web_state/ui/crw_web_controller.mm",
         "patchSetId": 1
@@ -286,6 +562,30 @@
       "revId": "12c09119607c7a96ed72a6493f30ff742b8711e0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2451ce7a_6eb8bf05",
+        "filename": "ios/web/web_state/ui/crw_web_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 1822,
+      "author": {
+        "id": 1190590
+      },
+      "writtenOn": "2017-08-27T01:45:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6545617b_267f86b9",
+      "range": {
+        "startLine": 1822,
+        "startChar": 18,
+        "endLine": 1822,
+        "endChar": 48
+      },
+      "revId": "12c09119607c7a96ed72a6493f30ff742b8711e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -312,6 +612,30 @@
     },
     {
       "key": {
+        "uuid": "ac828b22_03ab3f09",
+        "filename": "ios/web/web_state/ui/crw_web_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 1832,
+      "author": {
+        "id": 1190590
+      },
+      "writtenOn": "2017-08-27T01:45:46Z",
+      "side": 1,
+      "message": "|registerLoadRequestForURL:| and NavigationContextImpl assume that each WKNavigation is a page load that others (e.g. WebStateObservers) would care about. A placeholder navigation is an implementation detail of the navigation stack. It should be transparent to observers. Otherwise, for each app-specific URL load, observers will see two navigation events. In addition, CRWWebController keeps track of states such as _documentURL and _lastAddedNavigation that get messed up when placeholder navigation becomes visible to them.\n\nIf the navigation experiment is successful, I\u0027d like to see how much of the navigation states in CRWWebController we can delete. Then perhaps we can merge CRWPlaceholderNavigationInfo and NavigationContextImpl.",
+      "parentUuid": "5d38c7c3_0e829df8",
+      "range": {
+        "startLine": 1832,
+        "startChar": 30,
+        "endLine": 1832,
+        "endChar": 38
+      },
+      "revId": "12c09119607c7a96ed72a6493f30ff742b8711e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d935e9eb_c56cb162",
         "filename": "ios/web/web_state/ui/crw_web_controller.mm",
         "patchSetId": 1
@@ -323,6 +647,30 @@
       "writtenOn": "2017-08-25T22:05:11Z",
       "side": 1,
       "message": "nit: Do you need this block here? How about just inlining the code?",
+      "range": {
+        "startLine": 4059,
+        "startChar": 18,
+        "endLine": 4059,
+        "endChar": 49
+      },
+      "revId": "12c09119607c7a96ed72a6493f30ff742b8711e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4f13aed_9c9ba90e",
+        "filename": "ios/web/web_state/ui/crw_web_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 4059,
+      "author": {
+        "id": 1190590
+      },
+      "writtenOn": "2017-08-27T01:45:46Z",
+      "side": 1,
+      "message": "I used a block because it seemed cleaner to be used as a completion handler and it avoids code duplication with the non-slim-nav arm of the if. Perhaps there is another way to do that I\u0027m not aware of?",
+      "parentUuid": "d935e9eb_c56cb162",
       "range": {
         "startLine": 4059,
         "startChar": 18,
@@ -358,6 +706,30 @@
     },
     {
       "key": {
+        "uuid": "c21e2d2d_3dfd0537",
+        "filename": "ios/web/web_state/ui/crw_web_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 4207,
+      "author": {
+        "id": 1190590
+      },
+      "writtenOn": "2017-08-27T01:45:46Z",
+      "side": 1,
+      "message": "FWICT, renderer-initiated WebUI loads are stopped in |didStartProvisionalNavigation| on line 4391: if webView.URL is app-specific, but _documentURL is not, then we continue the load in WKWebView, which will reject the app-specific URL, so nothing is loaded, and no placeholder load will trigger.\n\nThe placeholder navigation is only triggered at the last minute, just before |loadHTML|. So any placeholder navigation that reaches this point is for a WebUI navigation that should be allowed.",
+      "parentUuid": "b507cb8c_ac7f7cba",
+      "range": {
+        "startLine": 4207,
+        "startChar": 20,
+        "endLine": 4207,
+        "endChar": 49
+      },
+      "revId": "12c09119607c7a96ed72a6493f30ff742b8711e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5f2ab784_92505bb0",
         "filename": "ios/web/web_state/ui/crw_web_controller.mm",
         "patchSetId": 1
@@ -381,6 +753,30 @@
     },
     {
       "key": {
+        "uuid": "574fd665_adb1570c",
+        "filename": "ios/web/web_state/ui/crw_web_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 4213,
+      "author": {
+        "id": 1190590
+      },
+      "writtenOn": "2017-08-27T01:45:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5f2ab784_92505bb0",
+      "range": {
+        "startLine": 4213,
+        "startChar": 20,
+        "endLine": 4213,
+        "endChar": 50
+      },
+      "revId": "12c09119607c7a96ed72a6493f30ff742b8711e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5c90ce8b_8e4ed73f",
         "filename": "ios/web/web_state/ui/crw_web_controller.mm",
         "patchSetId": 1
@@ -392,6 +788,30 @@
       "writtenOn": "2017-08-25T22:05:11Z",
       "side": 1,
       "message": "web::WebStatePolicyDecider should still have a chance to reject the navigation.",
+      "range": {
+        "startLine": 4264,
+        "startChar": 12,
+        "endLine": 4264,
+        "endChar": 43
+      },
+      "revId": "12c09119607c7a96ed72a6493f30ff742b8711e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4c6dbce_1935ea1c",
+        "filename": "ios/web/web_state/ui/crw_web_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 4264,
+      "author": {
+        "id": 1190590
+      },
+      "writtenOn": "2017-08-27T01:45:46Z",
+      "side": 1,
+      "message": "Why? Since we know that this is a placeholder navigation, which can only be initiated by CRWWebController, I think it makes sense to just let it pass through.",
+      "parentUuid": "5c90ce8b_8e4ed73f",
       "range": {
         "startLine": 4264,
         "startChar": 12,
@@ -427,6 +847,30 @@
     },
     {
       "key": {
+        "uuid": "bb02889f_bd3bd5d6",
+        "filename": "ios/web/web_state/ui/crw_web_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 4320,
+      "author": {
+        "id": 1190590
+      },
+      "writtenOn": "2017-08-27T01:45:46Z",
+      "side": 1,
+      "message": "Do you think longer term these callbacks belong in NavigationManager? Then I can move the implementation-specific branches into the nav manager subclass.",
+      "parentUuid": "b7419974_52da0c7c",
+      "range": {
+        "startLine": 4320,
+        "startChar": 25,
+        "endLine": 4320,
+        "endChar": 38
+      },
+      "revId": "12c09119607c7a96ed72a6493f30ff742b8711e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f50eb297_04e7ef1e",
         "filename": "ios/web/web_state/ui/crw_web_controller.mm",
         "patchSetId": 1
@@ -447,6 +891,30 @@
       "revId": "12c09119607c7a96ed72a6493f30ff742b8711e0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c22c087c_8cc511e4",
+        "filename": "ios/web/web_state/ui/crw_web_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 4394,
+      "author": {
+        "id": 1190590
+      },
+      "writtenOn": "2017-08-27T01:45:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f50eb297_04e7ef1e",
+      "range": {
+        "startLine": 4394,
+        "startChar": 75,
+        "endLine": 4394,
+        "endChar": 79
+      },
+      "revId": "12c09119607c7a96ed72a6493f30ff742b8711e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -473,6 +941,30 @@
     },
     {
       "key": {
+        "uuid": "58dbcb7c_e6472385",
+        "filename": "ios/web/web_state/ui/crw_web_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 4418,
+      "author": {
+        "id": 1190590
+      },
+      "writtenOn": "2017-08-27T01:45:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "de07733a_63cd2630",
+      "range": {
+        "startLine": 4418,
+        "startChar": 11,
+        "endLine": 4418,
+        "endChar": 23
+      },
+      "revId": "12c09119607c7a96ed72a6493f30ff742b8711e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "724f71bb_9969c300",
         "filename": "ios/web/web_state/ui/crw_web_controller.mm",
         "patchSetId": 1
@@ -493,6 +985,30 @@
       "revId": "12c09119607c7a96ed72a6493f30ff742b8711e0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7d0a801_4e7ff811",
+        "filename": "ios/web/web_state/ui/crw_web_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 4496,
+      "author": {
+        "id": 1190590
+      },
+      "writtenOn": "2017-08-27T01:45:46Z",
+      "side": 1,
+      "message": "Correct. But we don\u0027t want to call WebStateObserver::DidFinishNavigation on the about:blank?for\u003d... navigation.",
+      "parentUuid": "724f71bb_9969c300",
+      "range": {
+        "startLine": 4496,
+        "startChar": 11,
+        "endLine": 4496,
+        "endChar": 0
+      },
+      "revId": "12c09119607c7a96ed72a6493f30ff742b8711e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
