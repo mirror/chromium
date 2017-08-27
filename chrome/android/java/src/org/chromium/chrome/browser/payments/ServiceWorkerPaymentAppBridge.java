@@ -33,10 +33,35 @@ import javax.annotation.Nullable;
 public class ServiceWorkerPaymentAppBridge implements PaymentAppFactory.PaymentAppFactoryAddition {
     private static final String TAG = "SWPaymentApp";
 
+    static interface CanMakePaymentCallback { public void onResponse(boolean canMakePayment); }
+
     @Override
     public void create(WebContents webContents, Set<String> methodNames,
             PaymentAppFactory.PaymentAppCreatedCallback callback) {
         nativeGetAllPaymentApps(webContents, callback);
+    }
+
+    /**
+     * CanMake a payment app with a given option and matching method data.
+     *
+     * @param webContents      The web contents that canMaked PaymentRequest.
+     * @param registrationId   The service worker registration ID of the Payment App.
+     * @param origin           The origin of this merchant.
+     * @param iframeOrigin     The origin of the iframe that canMaked PaymentRequest. Same as origin
+     *                         if PaymentRequest was not canMaked from inside an iframe.
+     * @param paymentRequestId The unique identifier of the PaymentRequest.
+     * @param methodData       The PaymentMethodData objects that are relevant for this payment
+     *                         app.
+     * @param total            The PaymentItem that represents the total cost of the payment.
+     * @param modifiers        Payment method specific modifiers to the payment items and the total.
+     * @param callback         Called after the payment app is finished running.
+     */
+    public static void canMakePayment(WebContents webContents, long registrationId, String origin,
+            String iframeOrigin, Set<PaymentMethodData> methodData,
+            Set<PaymentDetailsModifier> modifiers, final CanMakePaymentCallback callback) {
+        nativeCanMakePayment(webContents, registrationId, origin, iframeOrigin,
+                methodData.toArray(new PaymentMethodData[0]),
+                modifiers.toArray(new PaymentDetailsModifier[0]), callback);
     }
 
     /**
@@ -140,6 +165,12 @@ public class ServiceWorkerPaymentAppBridge implements PaymentAppFactory.PaymentA
         }
     }
 
+    @CalledByNative
+    private static void onCanMakePayment(Object callback, boolean canMakePayment) {
+        assert callback instanceof CanMakePaymentCallback;
+        ((CanMakePaymentCallback) callback).onResponse(canMakePayment);
+    }
+
     /*
      * TODO(tommyt): crbug.com/505554. Change the |callback| parameter below to
      * be of type PaymentInstrument.InstrumentDetailsCallback, once this JNI bug
@@ -156,4 +187,13 @@ public class ServiceWorkerPaymentAppBridge implements PaymentAppFactory.PaymentA
             String topLevelOrigin, String paymentRequestOrigin, String paymentRequestId,
             PaymentMethodData[] methodData, PaymentItem total, PaymentDetailsModifier[] modifiers,
             Object callback);
+
+    /*
+     * TODO(tommyt): crbug.com/505554. Change the |callback| parameter below to
+     * be of type PaymentInstrument.InstrumentDetailsCallback, once this JNI bug
+     * has been resolved.
+     */
+    private static native void nativeCanMakePayment(WebContents webContents, long registrationId,
+            String topLevelOrigin, String paymentRequestOrigin, PaymentMethodData[] methodData,
+            PaymentDetailsModifier[] modifiers, Object callback);
 }
