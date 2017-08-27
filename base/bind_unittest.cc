@@ -1410,5 +1410,13 @@ TEST(BindDeathTest, NullCallback) {
   EXPECT_DCHECK_DEATH(base::Bind(null_cb, 42));
 }
 
+void TakesMoveOnly(std::unique_ptr<int> x) {}
+
+TEST(BindFailTest, BindIncompatible) {
+  auto x = std::make_unique<int>(8);
+  auto cb = base::Bind(&TakesMoveOnly, std::move(x));
+  auto cb2 = base::BindOnce(&TakesMoveOnly, x);
+}
+
 }  // namespace
 }  // namespace base
