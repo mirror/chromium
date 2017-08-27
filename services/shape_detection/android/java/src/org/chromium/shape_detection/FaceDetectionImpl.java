@@ -14,6 +14,7 @@ import android.os.AsyncTask;
 import org.chromium.base.Log;
 import org.chromium.gfx.mojom.RectF;
 import org.chromium.mojo.system.MojoException;
+import org.chromium.shape_detection.mojom.ConstantsConstants;
 import org.chromium.shape_detection.mojom.FaceDetection;
 import org.chromium.shape_detection.mojom.FaceDetectionResult;
 import org.chromium.shape_detection.mojom.FaceDetectorOptions;
@@ -39,7 +40,7 @@ public class FaceDetectionImpl implements FaceDetection {
         Bitmap bitmap = BitmapUtils.convertToBitmap(bitmapData);
         if (bitmap == null) {
             Log.e(TAG, "Error converting Mojom Bitmap to Android Bitmap");
-            callback.call(new FaceDetectionResult[0]);
+            callback.call(new FaceDetectionResult[0], ConstantsConstants.INVALID_BITMAP);
             return;
         }
 
@@ -98,7 +99,7 @@ public class FaceDetectionImpl implements FaceDetection {
                     faceArray[i].landmarks = new Landmark[0];
                 }
 
-                callback.call(faceArray);
+                callback.call(faceArray, ConstantsConstants.DETECTOR_SUCCESS);
             }
         });
     }
