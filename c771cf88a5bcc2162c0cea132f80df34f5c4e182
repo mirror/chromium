@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f5510ca0_ea456f7f",
+        "filename": "content/browser/webauth/authenticator_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-27T06:33:33Z",
+      "side": 1,
+      "message": "It is somewhat unusual to consume parameters as part of validation. I would recommend changing HasValidAlgorithm to take a constant reference.",
+      "revId": "c771cf88a5bcc2162c0cea132f80df34f5c4e182",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
