@@ -192,6 +192,24 @@
       "revId": "eedfef21b4b0ce71e8932a9f12435fdd64ca31f5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a6772c2_6cc4e464",
+        "filename": "components/component_updater/default_component_installer.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1001352
+      },
+      "writtenOn": "2017-08-27T22:35:57Z",
+      "side": 1,
+      "message": "I\u0027m not so sure about that. In all cases this patch will have to be approved by the current OWNERS for the component update / update client, so it\u0027s better to find something that fits the overall design.",
+      "parentUuid": "83017df9_7faa9bb7",
+      "revId": "eedfef21b4b0ce71e8932a9f12435fdd64ca31f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
