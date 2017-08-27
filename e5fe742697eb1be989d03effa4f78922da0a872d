@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d997e1ee_2244c876",
+        "filename": "base/bind.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-27T16:00:54Z",
+      "side": 1,
+      "message": "This parameter is kind of ugly: the idea is that for once callbacks, we should not decay: if the caller passed in a const T\u0026\u0026, we shouldn\u0027t suggest std::move(). However, for repeating callback, we do want to decay, since the forwarding type is always const T\u0026...",
+      "range": {
+        "startLine": 39,
+        "startChar": 37,
+        "endLine": 39,
+        "endChar": 52
+      },
+      "revId": "e5fe742697eb1be989d03effa4f78922da0a872d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "143783a0_46313c1f",
+        "filename": "base/bind.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-27T16:00:54Z",
+      "side": 1,
+      "message": "This is kind of ugly, but it seems to work well enough? I don\u0027t really want to plumb through another type list...",
+      "range": {
+        "startLine": 63,
+        "startChar": 0,
+        "endLine": 64,
+        "endChar": 18
+      },
+      "revId": "e5fe742697eb1be989d03effa4f78922da0a872d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fba73adb_624f9cff",
+        "filename": "base/bind.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-27T16:00:54Z",
+      "side": 1,
+      "message": "I tried to shorten this error message while still keeping it useful. The other thing I tried to do to make it easier to read is to make the order arguments are mentioned match the order they are declared in the template. WDYT?",
+      "revId": "e5fe742697eb1be989d03effa4f78922da0a872d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

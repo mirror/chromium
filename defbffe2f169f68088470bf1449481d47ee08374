@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2419c322_884c9f2d",
+        "filename": "base/bind_unittest.nc",
+        "patchSetId": 6
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-27T16:00:54Z",
+      "side": 0,
+      "message": "We forgot to escape these, so it turned out to be very easy for these nocompile tests to pass. Oops.",
+      "range": {
+        "startLine": 73,
+        "startChar": 86,
+        "endLine": 73,
+        "endChar": 87
+      },
+      "revId": "defbffe2f169f68088470bf1449481d47ee08374",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
