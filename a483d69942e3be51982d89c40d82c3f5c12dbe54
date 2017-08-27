@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "542ac539_6138d7ff",
+        "filename": "third_party/WebKit/public/platform/WebMediaStream.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2017-08-27T23:17:33Z",
+      "side": 1,
+      "message": "Please document\n - whether nullptr argument is acceptable\n - whether it\u0027s ok to pass a WebMediaStreamObserver pointer which was already registered.\n - whether it\u0027s ok to call this function in WebMediaStreamObserver::TrackAdded or TrackRemoved.",
+      "revId": "a483d69942e3be51982d89c40d82c3f5c12dbe54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2274fdf2_8b805c72",
+        "filename": "third_party/WebKit/public/platform/WebMediaStream.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2017-08-27T23:17:33Z",
+      "side": 1,
+      "message": "Please document\n - whether nullptr argument is acceptable\n - whether it\u0027s ok to pass a WebMediaStreamObserver pointer which is not registered.\n - whether it\u0027s ok to call this function in WebMediaStreamObserver::TrackAdded or TrackRemoved.",
+      "revId": "a483d69942e3be51982d89c40d82c3f5c12dbe54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
