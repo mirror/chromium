@@ -595,11 +595,11 @@ void ValidateAndConvertPaymentDetailsModifiers(
       return;
     }
 
+    String error_message;
     for (const String& method : supported_methods) {
-      if (method.length() > kMaxStringLength) {
-        exception_state.ThrowTypeError(
-            "Supported method name for identifier cannot be longer than 1024 "
-            "characters");
+      if (!PaymentsValidators::IsValidPaymentMethodIdentifier(method,
+                                                              &error_message)) {
+        exception_state.ThrowRangeError(error_message);
         return;
       }
     }
@@ -726,6 +726,7 @@ void ValidateAndConvertPaymentMethodData(
             WebFeature::kPaymentRequestSupportedMethodsArray);
       }
     }
+
     if (supported_methods.IsEmpty()) {
       exception_state.ThrowTypeError(
           "Each payment method needs to include at least one payment method "
@@ -739,11 +740,11 @@ void ValidateAndConvertPaymentMethodData(
       return;
     }
 
+    String error_message;
     for (const String identifier : supported_methods) {
-      if (identifier.length() > kMaxStringLength) {
-        exception_state.ThrowTypeError(
-            "A payment method identifier cannot be longer than 1024 "
-            "characters");
+      if (!PaymentsValidators::IsValidPaymentMethodIdentifier(identifier,
+                                                              &error_message)) {
+        exception_state.ThrowRangeError(error_message);
         return;
       }
     }

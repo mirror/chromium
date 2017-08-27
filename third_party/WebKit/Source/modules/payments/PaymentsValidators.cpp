@@ -145,4 +145,33 @@ bool PaymentsValidators::IsValidErrorMsgFormat(const String& error,
   return false;
 }
 
+bool PaymentsValidators::IsValidPaymentMethodIdentifier(
+    const String& method_id,
+    String* optional_error_message) {
+  if (method_id.length() > kMaxiumStringLength) {
+    if (optional_error_message) {
+      *optional_error_message =
+          "A payment method identifier cannot be longer than 1024 characters";
+    }
+    return false;
+  }
+
+  KURL url(NullURL(), method_id);
+  if (url.IsValid() && url.ProtocolIs("https") && url.User().IsEmpty() &&
+      url.Pass().IsEmpty())
+    return true;
+
+  if (ScriptRegexp("^[a-z0-9-]+$", kTextCaseSensitive).Match(method_id) == 0)
+    return true;
+
+  if (optional_error_message) {
+    *optional_error_message = "'" + method_id +
+                              "' is not a valid payment method identifier, "
+                              "should be a valid url or a standardized payment "
+                              "method identifier";
+  }
+
+  return false;
+}
+
 }  // namespace blink

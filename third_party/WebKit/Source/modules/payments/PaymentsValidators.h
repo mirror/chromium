@@ -57,6 +57,11 @@ class MODULES_EXPORT PaymentsValidators final {
   // Returns false if |error| is too long (greater than 2048).
   static bool IsValidErrorMsgFormat(const String& code,
                                     String* optional_error_message);
+
+  // Returns true if |method| is a valid url or a standardized payment method
+  // identifier.
+  static bool IsValidPaymentMethodIdentifier(const String& method_id,
+                                             String* optional_error_message);
 };
 
 }  // namespace blink
