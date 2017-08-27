@@ -16,6 +16,23 @@
       "revId": "7a1169fbdd0b2eaf01286de0bc4d52138785b1d4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f353913d_2b38d766",
+        "filename": "chrome/renderer/chrome_render_frame_observer.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-27T06:47:24Z",
+      "side": 1,
+      "message": "Nit: consider just naming this |bindings_| now.",
+      "revId": "7a1169fbdd0b2eaf01286de0bc4d52138785b1d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
