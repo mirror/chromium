@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "6207a94a_02bf58ac",
+        "filename": "tools/battor_agent/battor_agent.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 582,
+      "author": {
+        "id": 1128439
+      },
+      "writtenOn": "2017-08-27T23:51:00Z",
+      "side": 1,
+      "message": "\u003e having StopTracing return a vector of BattOrSamples\n\nThat doesn\u0027t seem to fit the current design. I could see calling Listener::OnStopTracingComplete with a vector of samples, which can then be converted to a detailed or summary string. Is that what you meant?",
+      "parentUuid": "ff1620ad_9f9e1f0b",
+      "revId": "495f5e59f6d3cb11a83f3ee39974f968f2cfa48a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e4b2101a_6d7d4454",
         "filename": "tools/battor_agent/battor_agent.cc",
         "patchSetId": 4
@@ -33,6 +51,24 @@
       "revId": "495f5e59f6d3cb11a83f3ee39974f968f2cfa48a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "889a2dc4_db444c1b",
+        "filename": "tools/battor_agent/battor_agent.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 588,
+      "author": {
+        "id": 1128439
+      },
+      "writtenOn": "2017-08-27T23:51:00Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "e4b2101a_6d7d4454",
+      "revId": "495f5e59f6d3cb11a83f3ee39974f968f2cfa48a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "17006d83_8212d53f",
+        "filename": "tools/battor_agent/battor_agent.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 613,
+      "author": {
+        "id": 1128439
+      },
+      "writtenOn": "2017-08-27T23:51:00Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "e3b7691d_4c557834",
+      "revId": "495f5e59f6d3cb11a83f3ee39974f968f2cfa48a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fedca82e_9bf9494e",
         "filename": "tools/battor_agent/battor_agent.cc",
         "patchSetId": 4
@@ -67,6 +121,24 @@
       "revId": "495f5e59f6d3cb11a83f3ee39974f968f2cfa48a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "643b5690_c8a2b37c",
+        "filename": "tools/battor_agent/battor_agent.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 620,
+      "author": {
+        "id": 1128439
+      },
+      "writtenOn": "2017-08-27T23:51:00Z",
+      "side": 1,
+      "message": "Ack - I think I was extrapolating from \u0027W\u0027 (which is capitalized) to \u0027Watts\u0027 which isn\u0027t.",
+      "parentUuid": "fedca82e_9bf9494e",
+      "revId": "495f5e59f6d3cb11a83f3ee39974f968f2cfa48a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
