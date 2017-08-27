@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d3063126_fbd90e81",
+        "filename": "third_party/WebKit/Source/core/inspector/InspectorMemoryAgent.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1151889
+      },
+      "writtenOn": "2017-08-27T23:56:12Z",
+      "side": 1,
+      "message": "You\u0027re right. I made BlinkLeakDetector GarbageCollected, and also made it EAGERLY_FINALIZED so that BlinkLeakDetector will be dead before BlinkLeakDetectorClient always.\n\ndetector_ needs to live until OnLeakDetectionComplete is called, so I cleared it in the function.",
+      "parentUuid": "16075d02_5e551012",
+      "revId": "e2f7b91122299d899aada495346f67c8567514ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d7c1883c_c6644ddd",
         "filename": "third_party/WebKit/Source/core/inspector/InspectorMemoryAgent.cpp",
         "patchSetId": 5
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-25T06:26:56Z",
       "side": 1,
       "message": "Regarding this line, I\u0027ll let the decision to Pavel.\n\nAs Yuzu and Keishi mentioned, BlinkLeakDetector\u0027s CollectGarbage does more work than inspector\u0027s CollectGarbage API. If we stop calling BlinkLeakDetector\u0027s CollectGarbage and use inspector\u0027s CollectGarbage API, we need to change the implementation of inspector\u0027s CollectGarbage API. I\u0027m not sure if you want to do this.",
+      "revId": "e2f7b91122299d899aada495346f67c8567514ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a1901dc_be3b4e9e",
+        "filename": "third_party/WebKit/Source/core/inspector/InspectorMemoryAgent.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1151889
+      },
+      "writtenOn": "2017-08-27T23:56:12Z",
+      "side": 1,
+      "message": "Thanks!",
+      "parentUuid": "d7c1883c_c6644ddd",
       "revId": "e2f7b91122299d899aada495346f67c8567514ff",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -50,6 +86,24 @@
       "revId": "e2f7b91122299d899aada495346f67c8567514ff",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f28fc92_0c821913",
+        "filename": "third_party/WebKit/Source/core/leak_detector/BlinkLeakDetector.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1151889
+      },
+      "writtenOn": "2017-08-27T23:56:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "923fa4f6_3aeeb574",
+      "revId": "e2f7b91122299d899aada495346f67c8567514ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
