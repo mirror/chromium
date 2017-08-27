@@ -35,16 +35,19 @@ FaceDetectionImplMac::~FaceDetectionImplMac() {}
 void FaceDetectionImplMac::Detect(const SkBitmap& bitmap,
                                   DetectCallback callback) {
   DetectCallback scoped_callback = media::ScopedCallbackRunner(
-      std::move(callback), std::vector<mojom::FaceDetectionResultPtr>());
+      std::move(callback), std::vector<mojom::FaceDetectionResultPtr>(),
+      std::string());
 
+  std::vector<mojom::FaceDetectionResultPtr> results;
   base::scoped_nsobject<CIImage> ci_image = CreateCIImageFromSkBitmap(bitmap);
-  if (!ci_image)
+  if (!ci_image) {
+    std::move(scoped_callback).Run(results, mojom::kInvalidBitmap);
     return;
+  }
 
   NSArray* const features = [detector_ featuresInImage:ci_image];
   const int height = bitmap.height();
 
-  std::vector<mojom::FaceDetectionResultPtr> results;
   for (CIFaceFeature* const f in features) {
     // In the default Core Graphics coordinate space, the origin is located
     // in the lower-left corner, and thus |ci_image| is flipped vertically.
@@ -80,7 +83,7 @@ void FaceDetectionImplMac::Detect(const SkBitmap& bitmap,
 
     results.push_back(std::move(face));
   }
-  std::move(scoped_callback).Run(std::move(results));
+  std::move(scoped_callback).Run(std::move(results), mojom::kDetectorSuccess);
 }
 
 }  // namespace shape_detection

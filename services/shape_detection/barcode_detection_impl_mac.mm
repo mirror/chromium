@@ -37,15 +37,18 @@ BarcodeDetectionImplMac::~BarcodeDetectionImplMac() {}
 void BarcodeDetectionImplMac::Detect(const SkBitmap& bitmap,
                                      DetectCallback callback) {
   DetectCallback scoped_callback = media::ScopedCallbackRunner(
-      std::move(callback), std::vector<mojom::BarcodeDetectionResultPtr>());
+      std::move(callback), std::vector<mojom::BarcodeDetectionResultPtr>(),
+      std::string());
 
+  std::vector<mojom::BarcodeDetectionResultPtr> results;
   base::scoped_nsobject<CIImage> ci_image = CreateCIImageFromSkBitmap(bitmap);
-  if (!ci_image)
+  if (!ci_image) {
+    std::move(scoped_callback).Run(results, mojom::kInvalidBitmap);
     return;
+  }
 
   NSArray* const features = [detector_ featuresInImage:ci_image];
 
-  std::vector<mojom::BarcodeDetectionResultPtr> results;
   const int height = bitmap.height();
   for (CIQRCodeFeature* const f in features) {
     shape_detection::mojom::BarcodeDetectionResultPtr result =
@@ -69,7 +72,7 @@ void BarcodeDetectionImplMac::Detect(const SkBitmap& bitmap,
     result->raw_value = base::SysNSStringToUTF8(f.messageString);
     results.push_back(std::move(result));
   }
-  std::move(scoped_callback).Run(std::move(results));
+  std::move(scoped_callback).Run(std::move(results), mojom::kDetectorSuccess);
 }
 
 }  // namespace shape_detection

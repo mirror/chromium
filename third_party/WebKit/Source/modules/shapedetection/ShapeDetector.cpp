@@ -22,6 +22,14 @@
 namespace blink {
 
 namespace {
+const struct DetectorError {
+  const char* const name;
+  const int code;
+} KDetectorErrors[] = {
+    {shape_detection::mojom::blink::kUnavailableGooglePlay, kNotFoundError},
+    {shape_detection::mojom::blink::kInoperableDetector, kOperationError},
+    {shape_detection::mojom::blink::kInvalidBitmap, kInvalidStateError},
+};
 
 skia::mojom::blink::BitmapPtr createBitmapFromData(int width,
                                                    int height,
@@ -42,6 +50,14 @@ skia::mojom::blink::BitmapPtr createBitmapFromData(int width,
 }
 
 }  // anonymous namespace
+
+int ShapeDetector::getErrorCode(const String& name) {
+  for (const DetectorError& entry : KDetectorErrors) {
+    if (entry.name == name)
+      return entry.code;
+  }
+  return 0;
+}
 
 ScriptPromise ShapeDetector::detect(
     ScriptState* script_state,
