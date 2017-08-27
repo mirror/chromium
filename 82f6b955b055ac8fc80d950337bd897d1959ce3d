@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7d8f0322_cb61e58e",
+        "filename": "services/ui/public/interfaces/window_tree.mojom",
+        "patchSetId": 5
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-27T06:52:11Z",
+      "side": 1,
+      "message": "Nit: are",
+      "range": {
+        "startLine": 28,
+        "startChar": 68,
+        "endLine": 28,
+        "endChar": 70
+      },
+      "revId": "82f6b955b055ac8fc80d950337bd897d1959ce3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28158c45_dc938caf",
+        "filename": "services/ui/public/interfaces/window_tree.mojom",
+        "patchSetId": 5
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-27T06:52:11Z",
+      "side": 1,
+      "message": "Ditto: are",
+      "range": {
+        "startLine": 29,
+        "startChar": 31,
+        "endLine": 29,
+        "endChar": 33
+      },
+      "revId": "82f6b955b055ac8fc80d950337bd897d1959ce3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
