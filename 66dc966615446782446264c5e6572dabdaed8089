@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "abb14113_7cb07ebc",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 561,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-08-27T01:06:39Z",
+      "side": 1,
+      "message": "Isn\u0027t it useful to have a DCHECK to document that it is unexpected if we have more than |kMaxNumberOfWorkers|?",
+      "parentUuid": "b499cc0f_41fd9f2b",
+      "range": {
+        "startLine": 559,
+        "startChar": 0,
+        "endLine": 561,
+        "endChar": 50
+      },
+      "revId": "66dc966615446782446264c5e6572dabdaed8089",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "65c0eea7_67129111",
         "filename": "base/task_scheduler/scheduler_worker_pool_impl_unittest.cc",
         "patchSetId": 4
