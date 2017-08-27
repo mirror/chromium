@@ -1022,5 +1022,66 @@ TEST_F(LoadIfNecessaryTest, DisableAndReenableWebUsage) {
   [web_state_->GetWebController() loadCurrentURLIfNecessary];
   EXPECT_TRUE(test::WaitForWebViewContainingText(web_state_.get(), "pony"));
 };
-
 }  // namespace web
+
+namespace crw_web_controller_test_visible {
+
+bool IsPlaceholderUrl(const GURL& url);
+GURL CreatePlaceholderUrlForUrl(const GURL& original_url);
+GURL ExtractAppSpecificUrlFromPlaceholderUrl(const GURL& url);
+
+typedef PlatformTest CRWWebControllerUtilTest;
+
+TEST_F(CRWWebControllerUtilTest, IsPlaceholderUrl) {
+  const std::string kPlaceholderUrls[] = {
+      "about:blank?for=", "about:blank?for=chrome%3A%2F%2Fnewtab%2F",
+  };
+  for (const std::string& url : kPlaceholderUrls)
+    EXPECT_TRUE(IsPlaceholderUrl(GURL(url)));
+
+  const std::string kNotPlaceholderUrls[] = {
+      "", "about:blank", "about:blank?chrome%3A%2F%2Fnewtab%2F",
+  };
+  for (const std::string& url : kNotPlaceholderUrls)
+    EXPECT_FALSE(IsPlaceholderUrl(GURL(url)));
+}
+
+// Tests that app-specific URLs can be encoded into and decoded from placeholder
+// URLs.
+TEST_F(CRWWebControllerUtilTest, EncodeDecodeAppSpecificUrls) {
+  struct TestCase {
+    const char* original_url;
+    const char* placeholder_url;
+  } cases[] = {
+      {"", "about:blank?for="},
+      {web::kTestAppSpecificURL, "about:blank?for=testwebui%3A%2F%2Ftest%2F"},
+  };
+
+  for (const auto& test : cases) {
+    EXPECT_EQ(GURL(test.placeholder_url),
+              CreatePlaceholderUrlForUrl(GURL(test.original_url)));
+    EXPECT_EQ(GURL(test.original_url), ExtractAppSpecificUrlFromPlaceholderUrl(
+                                           GURL(test.placeholder_url)));
+  }
+}
+
+// Tests that non-app-specific URLs will be rejected in decoding.
+TEST_F(CRWWebControllerUtilTest,
+       ExtractFromPlaceholderUrlIgnoresNonAppSpecificUrls) {
+  struct TestCases {
+    const char* original_url;
+    const char* placeholder_url;
+  } cases[] = {
+      {"about:blank", "about:blank?for=about%3Ablank"},
+      {"http://google.com", "about:blank?for=http%3A%2F%2Fgoogle.com%2F"},
+  };
+
+  for (const auto& test : cases) {
+    EXPECT_EQ(GURL(test.placeholder_url),
+              CreatePlaceholderUrlForUrl(GURL(test.original_url)));
+    EXPECT_EQ(GURL::EmptyGURL(), ExtractAppSpecificUrlFromPlaceholderUrl(
+                                     GURL(test.placeholder_url)));
+  }
+}
+
+}  // namespace crw_web_controller_test_visible
