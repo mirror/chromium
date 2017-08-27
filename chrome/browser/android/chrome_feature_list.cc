@@ -114,6 +114,7 @@ const base::Feature* kFeaturesExposedToJava[] = {
     &ntp_tiles::kSiteExplorationUiFeature,
     &offline_pages::kBackgroundLoaderForDownloadsFeature,
     &offline_pages::kOfflinePagesCTFeature,  // See crbug.com/620421.
+    &offline_pages::kOfflinePagesCTV2Feature,
     &offline_pages::kOfflinePagesSharingFeature,
     &password_manager::features::kViewPasswords,
     &subresource_filter::kSafeBrowsingSubresourceFilterExperimentalUI,
