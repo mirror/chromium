@@ -6867,9 +6867,6 @@ class LayerTreeHostTestUpdateCopyRequests : public LayerTreeHostTest {
     LayerTreeHostTest::SetupTree();
   }
 
-  static void CopyOutputCallback(
-      std::unique_ptr<viz::CopyOutputResult> result) {}
-
   void BeginTest() override { PostSetNeedsCommitToMainThread(); }
 
   void WillCommit() override {
@@ -6884,8 +6881,8 @@ class LayerTreeHostTestUpdateCopyRequests : public LayerTreeHostTest {
     gfx::Transform transform;
     switch (layer_tree_host()->SourceFrameNumber()) {
       case 1:
-        child->RequestCopyOfOutput(viz::CopyOutputRequest::CreateBitmapRequest(
-            base::BindOnce(CopyOutputCallback)));
+        child->RequestCopyOfOutput(
+            viz::CopyOutputRequest::CreateStubForTesting());
         transform.Scale(2.0, 2.0);
         child->SetTransform(transform);
         break;
