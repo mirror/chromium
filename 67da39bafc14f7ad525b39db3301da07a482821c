@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c30d8df1_a486ecd4",
+        "filename": "components/omnibox/browser/break_iterator_adapter.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-08-27T00:17:15Z",
+      "side": 1,
+      "message": "For all the size_t and bool variables in the class definition, please explicitly : initialize them here ( e.g., has_underscore_(false)).",
+      "range": {
+        "startLine": 13,
+        "startChar": 39,
+        "endLine": 13,
+        "endChar": 0
+      },
+      "revId": "67da39bafc14f7ad525b39db3301da07a482821c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4d68f28_a107ebd7",
+        "filename": "components/omnibox/browser/break_iterator_adapter.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-08-27T00:17:15Z",
+      "side": 1,
+      "message": "nit here and below: add \"override\" annotation to indicate that it overrides the base class\u0027s implementation.\n\nAlso, do you need to add the keyword virtual to those classes in the base/ implementation?",
+      "range": {
+        "startLine": 22,
+        "startChar": 17,
+        "endLine": 22,
+        "endChar": 0
+      },
+      "revId": "67da39bafc14f7ad525b39db3301da07a482821c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4432c00c_1011dfcc",
+        "filename": "components/omnibox/browser/break_iterator_adapter.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-08-27T00:17:15Z",
+      "side": 1,
+      "message": "nit: please comment this function, as well as UpdatePosition().  It\u0027s not obvious what they do.  ResetPosition() is pretty obvious, but maybe it should have a comment too.  (Otherwise it\u0027ll look out of place.)",
+      "range": {
+        "startLine": 28,
+        "startChar": 23,
+        "endLine": 28,
+        "endChar": 0
+      },
+      "revId": "67da39bafc14f7ad525b39db3301da07a482821c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3730dc9d_f2d1a6db",
+        "filename": "components/omnibox/browser/break_iterator_adapter.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-08-27T00:17:15Z",
+      "side": 1,
+      "message": "Why does this have to be a string16?  Please make it at a char16 if possible.\n\n(That might also make the find() operation in the .cc go faster because you\u0027re only searching for a character, not a string.)",
+      "range": {
+        "startLine": 32,
+        "startChar": 60,
+        "endLine": 32,
+        "endChar": 0
+      },
+      "revId": "67da39bafc14f7ad525b39db3301da07a482821c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1636934e_06e14daa",
+        "filename": "components/omnibox/browser/break_iterator_adapter.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-08-27T00:17:15Z",
+      "side": 1,
+      "message": "Comment this variable.  Especially note what it means if, for example, the string has two consecutive underscores.  (The string gets split at each one, right, so has_underscore is true for each consecutive word.  It\u0027s not like a single word can have multiple underscores, can it?)",
+      "range": {
+        "startLine": 38,
+        "startChar": 23,
+        "endLine": 38,
+        "endChar": 0
+      },
+      "revId": "67da39bafc14f7ad525b39db3301da07a482821c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "accb5418_70a7cb22",
+        "filename": "components/omnibox/browser/in_memory_url_index_types_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-08-27T00:17:15Z",
+      "side": 1,
+      "message": "nit: just call it string_d and rename string_d below to string_e\nand analogous suggestion with actual_starts_ and expected_starts_ variables.",
+      "range": {
+        "startLine": 78,
+        "startChar": 17,
+        "endLine": 78,
+        "endChar": 26
+      },
+      "revId": "67da39bafc14f7ad525b39db3301da07a482821c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
