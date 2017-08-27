@@ -8,6 +8,7 @@ import android.support.test.filters.SmallTest;
 import android.test.InstrumentationTestCase;
 
 import org.chromium.base.test.util.Feature;
+import org.chromium.shape_detection.mojom.ConstantsConstants;
 import org.chromium.shape_detection.mojom.TextDetection;
 import org.chromium.shape_detection.mojom.TextDetectionResult;
 
@@ -32,7 +33,8 @@ public class TextDetectionImplTest extends InstrumentationTestCase {
 
         final ArrayBlockingQueue<TextDetectionResult[]> queue = new ArrayBlockingQueue<>(1);
         detector.detect(mojoBitmap, new TextDetection.DetectResponse() {
-            public void call(TextDetectionResult[] results) {
+            public void call(TextDetectionResult[] results, String status) {
+                assertEquals(status, ConstantsConstants.DETECTOR_SUCCESS);
                 queue.add(results);
             }
         });

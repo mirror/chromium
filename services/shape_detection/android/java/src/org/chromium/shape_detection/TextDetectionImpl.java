@@ -18,6 +18,7 @@ import org.chromium.base.Log;
 import org.chromium.gfx.mojom.RectF;
 import org.chromium.mojo.system.MojoException;
 import org.chromium.services.service_manager.InterfaceFactory;
+import org.chromium.shape_detection.mojom.ConstantsConstants;
 import org.chromium.shape_detection.mojom.TextDetection;
 import org.chromium.shape_detection.mojom.TextDetectionResult;
 
@@ -40,7 +41,7 @@ public class TextDetectionImpl implements TextDetection {
                     ContextUtils.getApplicationContext())
                 != ConnectionResult.SUCCESS) {
             Log.e(TAG, "Google Play Services not available");
-            callback.call(new TextDetectionResult[0]);
+            callback.call(new TextDetectionResult[0], ConstantsConstants.UNAVAILABLE_GOOGLE_PLAY);
             return;
         }
         // The vision library will be downloaded the first time the API is used
@@ -49,14 +50,14 @@ public class TextDetectionImpl implements TextDetection {
         // v.9.2, see https://developers.google.com/android/guides/releases.
         if (!mTextRecognizer.isOperational()) {
             Log.e(TAG, "TextDetector is not operational");
-            callback.call(new TextDetectionResult[0]);
+            callback.call(new TextDetectionResult[0], ConstantsConstants.INOPERABLE_DETECTOR);
             return;
         }
 
         Frame frame = BitmapUtils.convertToFrame(bitmapData);
         if (frame == null) {
             Log.e(TAG, "Error converting Mojom Bitmap to Frame");
-            callback.call(new TextDetectionResult[0]);
+            callback.call(new TextDetectionResult[0], ConstantsConstants.INVALID_BITMAP);
             return;
         }
 
@@ -73,7 +74,7 @@ public class TextDetectionImpl implements TextDetection {
             detectedTextArray[i].boundingBox.width = rect.width();
             detectedTextArray[i].boundingBox.height = rect.height();
         }
-        callback.call(detectedTextArray);
+        callback.call(detectedTextArray, ConstantsConstants.DETECTOR_SUCCESS);
     }
 
     @Override
