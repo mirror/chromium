@@ -276,8 +276,6 @@ class CC_EXPORT LayerTreeHostImpl
   void SetNeedUpdateGpuRasterizationStatus();
 
   // MutatorHostClient implementation.
-  bool IsElementInList(ElementId element_id,
-                       ElementListType list_type) const override;
   void SetMutatorsNeedCommit() override;
   void SetMutatorsNeedRebuildPropertyTrees() override;
   void SetElementFilterMutated(ElementId element_id,

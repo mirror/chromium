@@ -51,15 +51,24 @@ void ElementAnimations::InitAffectedElementTypes() {
 
   UpdatePlayersTickingState(UpdateTickingType::FORCE);
 
-  DCHECK(animation_host_->mutator_host_client());
-  if (animation_host_->mutator_host_client()->IsElementInList(
-          element_id_, ElementListType::ACTIVE)) {
-    set_has_element_in_active_list(true);
+  set_has_element_in_active_list(HasActiveAnimations());
+  set_has_element_in_pending_list(HasPendingAnimations());
+}
+
+bool ElementAnimations::HasActiveAnimations() const {
+  for (auto& player : players_list_) {
+    if (player.HasActiveAnimations())
+      return true;
   }
-  if (animation_host_->mutator_host_client()->IsElementInList(
-          element_id_, ElementListType::PENDING)) {
-    set_has_element_in_pending_list(true);
+  return false;
+}
+
+bool ElementAnimations::HasPendingAnimations() const {
+  for (auto& player : players_list_) {
+    if (player.HasPendingAnimations())
+      return true;
   }
+  return false;
 }
 
 TargetProperties ElementAnimations::GetPropertiesMaskForAnimationState() {

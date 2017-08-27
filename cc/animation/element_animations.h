@@ -193,6 +193,10 @@ class CC_ANIMATION_EXPORT ElementAnimations
 
   mutable bool needs_update_impl_client_state_;
 
+ private:
+  bool HasActiveAnimations() const;
+  bool HasPendingAnimations() const;
+
   DISALLOW_COPY_AND_ASSIGN(ElementAnimations);
 };
 
