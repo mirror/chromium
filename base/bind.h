@@ -35,33 +35,74 @@ struct IsOnceCallback : std::false_type {};
 template <typename Signature>
 struct IsOnceCallback<OnceCallback<Signature>> : std::true_type {};
 
-// Asserts |Param| is constructible from |Unwrapped|. |Arg| is here just to
-// show it in the compile error message as a hint to fix the error.
+// Helper to try to detect cases where a move-only type is being passed by copy.
+template <typename From, typename To, bool decay_from>
+struct PassesMoveOnlyTypeByCopy {
+  using NormalizedFrom = std::conditional_t<decay_from,
+                                            std::decay_t<From>,
+                                            std::remove_reference_t<From>>;
+  static constexpr bool value =
+      !std::is_constructible<To, From>::value &&
+      !std::is_rvalue_reference<From>::value &&
+      std::is_constructible<To,
+                            std::add_rvalue_reference_t<NormalizedFrom>>::value;
+};
+
+// Helper to assert that parameter |i| of type |Arg| is bound correctly and can
+// be forwarded as |Unwrapped| to |Param|.
+template <RepeatMode repeat_mode,
+          size_t i,
+          typename Arg,
+          typename Unwrapped,
+          typename Param>
+struct AssertConstructible;
+
 template <size_t i, typename Arg, typename Unwrapped, typename Param>
-struct AssertConstructible {
-  static_assert(std::is_constructible<Param, Unwrapped>::value,
-                "|Param| needs to be constructible from |Unwrapped| type. "
-                "The failing argument is passed as the |i|th parameter, whose "
-                "type is |Arg|, and delivered as |Unwrapped| into |Param|.");
+struct AssertConstructible<RepeatMode::Once, i, Arg, Unwrapped, Param> {
+ private:
+  // TODO(dcheng): This isn't quite right, this should be testing the internal
+  // storage type.
+  static_assert(!PassesMoveOnlyTypeByCopy<Arg, Param, false>::value,
+                "Bound argument |i| is move-only, but is being passed by copy. "
+                "Did you forget std::move()?");
+  static_assert(
+      std::is_constructible<Param, Unwrapped>::value,
+      "Bound argument |i| of type |Arg| cannot be forwarded as "
+      "|Unwrapped| to the bound functor, which declares it as |Param|.");
+};
+
+template <size_t i, typename Arg, typename Unwrapped, typename Param>
+struct AssertConstructible<RepeatMode::Repeating, i, Arg, Unwrapped, Param> {
+ private:
+  static_assert(!PassesMoveOnlyTypeByCopy<Unwrapped, Param, true>::value,
+                "Bound argument |i| is move-only, but is being passed by copy. "
+                "Are you using std::move() instead of base::Passed()?");
+  static_assert(
+      std::is_constructible<Param, Unwrapped>::value,
+      "Bound argument |i| of type |Arg| cannot be forwarded as "
+      "|Unwrapped| to the bound functor, which declares it as |Param|.");
 };
 
 // Takes three same-length TypeLists, and applies AssertConstructible for each
 // triples.
-template <typename Index,
-          typename ArgsList,
+template <RepeatMode,
+          typename Index,
+          typename Args,
           typename UnwrappedTypeList,
           typename ParamsList>
 struct AssertBindArgsValidity;
 
-template <size_t... Ns,
+template <RepeatMode repeat_mode,
+          size_t... Ns,
           typename... Args,
           typename... Unwrapped,
           typename... Params>
-struct AssertBindArgsValidity<std::index_sequence<Ns...>,
+struct AssertBindArgsValidity<repeat_mode,
+                              std::index_sequence<Ns...>,
                               TypeList<Args...>,
                               TypeList<Unwrapped...>,
                               TypeList<Params...>>
-    : AssertConstructible<Ns, Args, Unwrapped, Params>... {
+    : AssertConstructible<repeat_mode, Ns, Args, Unwrapped, Params>... {
   static constexpr bool ok = true;
 };
 
@@ -143,6 +184,7 @@ BindOnce(Functor&& functor, Args&&... args) {
                                       FunctorTraits::is_method, Args&&...>;
   using BoundParamsList = typename Helper::BoundParamsList;
   static_assert(internal::AssertBindArgsValidity<
+                    internal::RepeatMode::Once,
                     std::make_index_sequence<Helper::num_bounds>, BoundArgsList,
                     UnwrappedArgsList, BoundParamsList>::ok,
                 "The bound args need to be convertible to the target params.");
@@ -184,6 +226,7 @@ BindRepeating(Functor&& functor, Args&&... args) {
                                       FunctorTraits::is_method, Args&&...>;
   using BoundParamsList = typename Helper::BoundParamsList;
   static_assert(internal::AssertBindArgsValidity<
+                    internal::RepeatMode::Repeating,
                     std::make_index_sequence<Helper::num_bounds>, BoundArgsList,
                     UnwrappedArgsList, BoundParamsList>::ok,
                 "The bound args need to be convertible to the target params.");
