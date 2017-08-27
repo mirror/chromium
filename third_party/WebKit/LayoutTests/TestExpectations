@@ -3591,3 +3591,7 @@ crbug.com/758109 [ Linux Debug ] fast/workers/worker-multi-startup.html [ Pass T
 
 # This test has a fixed number of time which can depend on performance.
 crbug.com/v8/6448 [ Debug ] external/wpt/hr-time/window-worker-time-origin.html [ Pass Failure ]
+
+crbug.com/669329 inspector/tracing/timeline-js/timeline-runtime-stats.html [ Pass Crash ]
+crbug.com/669329 virtual/threaded/inspector/tracing/timeline-js/timeline-runtime-stats.html [ Pass Crash ]
+
