@@ -47,7 +47,8 @@ ServiceWorkerProviderContext::ServiceWorkerProviderContext(
     mojom::ServiceWorkerProviderAssociatedRequest request,
     mojom::ServiceWorkerProviderHostAssociatedPtrInfo host_ptr_info,
     ServiceWorkerDispatcher* dispatcher)
-    : provider_id_(provider_id),
+    : provider_type_(provider_type),
+      provider_id_(provider_id),
       main_thread_task_runner_(base::ThreadTaskRunnerHandle::Get()),
       binding_(this, std::move(request)) {
   provider_host_.Bind(std::move(host_ptr_info));
@@ -127,6 +128,12 @@ mojom::ServiceWorkerEventDispatcher*
 ServiceWorkerProviderContext::event_dispatcher() {
   DCHECK(controllee_state_);
   return controllee_state_->event_dispatcher.get();
+}
+
+mojom::ServiceWorkerProviderHost* ServiceWorkerProviderContext::provider_host()
+    const {
+  DCHECK(provider_type_ == SERVICE_WORKER_PROVIDER_FOR_WINDOW);
+  return provider_host_.get();
 }
 
 void ServiceWorkerProviderContext::CountFeature(uint32_t feature) {
