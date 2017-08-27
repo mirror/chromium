@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "3b2b1f08_21fa86c0",
+        "filename": "content/browser/bad_message.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-08-27T14:07:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aab281de_3ca09cd1",
+      "revId": "0935c85cf85e2b3a34bf690a3c495f1f9d087297",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ed108391_ed271164",
         "filename": "content/browser/service_worker/service_worker_dispatcher_host.h",
         "patchSetId": 4
@@ -48,6 +66,24 @@
       "side": 1,
       "message": "Hmm, since all this function does is call ChromeContentBrowserClient::AllowServiceWorker(), maybe dispatcher host should just have a resource_context() getter and then provider host can call that directly?",
       "parentUuid": "ed108391_ed271164",
+      "revId": "0935c85cf85e2b3a34bf690a3c495f1f9d087297",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0d1daf1_aad8ff07",
+        "filename": "content/browser/service_worker/service_worker_dispatcher_host.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-08-27T14:07:15Z",
+      "side": 1,
+      "message": "In addition to resource_context_, implementation of this function also needs a utility function GetWebContents() defined locally in service_worker_dispatcher_host.cc file. So I want to avoid copying GetWebContents() codes into service_worker_provider_host.cc.",
+      "parentUuid": "ab333418_d56b229c",
       "revId": "0935c85cf85e2b3a34bf690a3c495f1f9d087297",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -88,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "53e8c4d0_feb79d5d",
+        "filename": "content/browser/service_worker/service_worker_provider_host.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 946,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-08-27T14:07:15Z",
+      "side": 1,
+      "message": "Yeah, right after the execution of this function, mojo will check whether the response callback has been run or scheduled for a later run, if no, will raise a crash like:\n[147560:147560:0824/173403.703703:8726266657920:FATAL:interface_endpoint_client.cc(32)] Check failed: !is_valid. The callback passed to ServiceWorkerProviderHost::Register() was never run.",
+      "parentUuid": "b9f45fbd_452181f1",
+      "revId": "0935c85cf85e2b3a34bf690a3c495f1f9d087297",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "72f9d186_5e946b45",
         "filename": "content/browser/service_worker/service_worker_provider_host.cc",
         "patchSetId": 4
@@ -99,6 +153,30 @@
       "writtenOn": "2017-08-25T04:53:38Z",
       "side": 1,
       "message": "I think we should avoid \"Unknown\" whenever possible since it makes debugging more difficult. Maybe add a \"kBadMessage\" ?",
+      "range": {
+        "startLine": 949,
+        "startChar": 46,
+        "endLine": 949,
+        "endChar": 54
+      },
+      "revId": "0935c85cf85e2b3a34bf690a3c495f1f9d087297",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ec9f926_7148948e",
+        "filename": "content/browser/service_worker/service_worker_provider_host.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 949,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-08-27T14:07:15Z",
+      "side": 1,
+      "message": "In product env the above ReceivedBadMessage() should have killed renderer process, so actually renderer process has no chance to get these response values.\nIn some tests env, ReceivedBadMessage() behavior can be overridden just as following:\nhttps://cs.chromium.org/chromium/src/content/browser/service_worker/service_worker_dispatcher_host_unittest.cc?rcl\u003d19a781d5c693db99f8c1dcc4e4cd7c3844796e58\u0026l\u003d113,\nso that test codes can check whether a bad message error has been raised or not, but test codes never care about the mojo response values. So I used kUnknown here.",
+      "parentUuid": "72f9d186_5e946b45",
       "range": {
         "startLine": 949,
         "startChar": 46,
@@ -128,6 +206,24 @@
     },
     {
       "key": {
+        "uuid": "9f308cab_90d21484",
+        "filename": "content/browser/service_worker/service_worker_provider_host.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 976,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-08-27T14:07:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1c0ae479_fbf9690f",
+      "revId": "0935c85cf85e2b3a34bf690a3c495f1f9d087297",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "74f56632_e4e62d61",
         "filename": "content/browser/service_worker/service_worker_provider_host.cc",
         "patchSetId": 4
@@ -142,6 +238,24 @@
       "revId": "0935c85cf85e2b3a34bf690a3c495f1f9d087297",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36b6c7cf_7fa70363",
+        "filename": "content/browser/service_worker/service_worker_provider_host.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 977,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-08-27T14:07:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "74f56632_e4e62d61",
+      "revId": "0935c85cf85e2b3a34bf690a3c495f1f9d087297",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -162,6 +276,24 @@
     },
     {
       "key": {
+        "uuid": "5ad79cfa_3e1bf17b",
+        "filename": "content/browser/service_worker/service_worker_provider_host.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 989,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-08-27T14:07:15Z",
+      "side": 1,
+      "message": "Done and Thanks!",
+      "parentUuid": "684d41fe_ae15dd11",
+      "revId": "0935c85cf85e2b3a34bf690a3c495f1f9d087297",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9083c295_a2250bca",
         "filename": "content/browser/service_worker/service_worker_provider_host.cc",
         "patchSetId": 4
@@ -173,6 +305,24 @@
       "writtenOn": "2017-08-25T04:53:38Z",
       "side": 1,
       "message": "Can this use BindOnce and std::move(callback)\n\nWhat happens if the callback is never called? Does Mojo crash? We might never run the callback if this ProviderHost is destructed.",
+      "revId": "0935c85cf85e2b3a34bf690a3c495f1f9d087297",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a7b0f42_272c82cd",
+        "filename": "content/browser/service_worker/service_worker_provider_host.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 993,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-08-27T14:07:15Z",
+      "side": 1,
+      "message": "Changed to BindOnce but must adapt it to a repeating callback because context_-\u003eRegisterServiceWorker() can\u0027t take a once callback.\n\nIf ProviderHost destroyed, its\u0027 member the mojo binding destruction will just destroy all pending callbacks without any DCHECK crash.",
+      "parentUuid": "9083c295_a2250bca",
       "revId": "0935c85cf85e2b3a34bf690a3c495f1f9d087297",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -196,6 +346,24 @@
     },
     {
       "key": {
+        "uuid": "061098c1_a958494f",
+        "filename": "content/browser/service_worker/service_worker_provider_host.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1021,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-08-27T14:07:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "03cff207_57596798",
+      "revId": "0935c85cf85e2b3a34bf690a3c495f1f9d087297",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1ce42191_dccb2ac1",
         "filename": "content/browser/service_worker/service_worker_provider_host.cc",
         "patchSetId": 4
@@ -213,6 +381,24 @@
     },
     {
       "key": {
+        "uuid": "ba6f29f0_d3113db2",
+        "filename": "content/browser/service_worker/service_worker_provider_host.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1027,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-08-27T14:07:15Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "1ce42191_dccb2ac1",
+      "revId": "0935c85cf85e2b3a34bf690a3c495f1f9d087297",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e4019a64_7cc5a3ce",
         "filename": "content/child/service_worker/service_worker_provider_context.cc",
         "patchSetId": 4
@@ -227,6 +413,24 @@
       "revId": "0935c85cf85e2b3a34bf690a3c495f1f9d087297",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d03014f_0ebf03ff",
+        "filename": "content/child/service_worker/service_worker_provider_context.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-08-27T14:07:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e4019a64_7cc5a3ce",
+      "revId": "0935c85cf85e2b3a34bf690a3c495f1f9d087297",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -277,6 +481,30 @@
     },
     {
       "key": {
+        "uuid": "6e574341_b58aa85b",
+        "filename": "content/child/service_worker/service_worker_provider_context.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-08-27T14:07:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e92d70f4_2a032fde",
+      "range": {
+        "startLine": 112,
+        "startChar": 2,
+        "endLine": 114,
+        "endChar": 67
+      },
+      "revId": "0935c85cf85e2b3a34bf690a3c495f1f9d087297",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e0e9d9d7_1253f8f1",
         "filename": "content/child/service_worker/service_worker_provider_context.h",
         "patchSetId": 4
@@ -324,6 +552,30 @@
     },
     {
       "key": {
+        "uuid": "3f6e3541_bff38afd",
+        "filename": "content/child/service_worker/service_worker_provider_context.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-08-27T14:07:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "70f2667f_e1956ec4",
+      "range": {
+        "startLine": 136,
+        "startChar": 48,
+        "endLine": 136,
+        "endChar": 62
+      },
+      "revId": "0935c85cf85e2b3a34bf690a3c495f1f9d087297",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2eb45b22_79506f66",
         "filename": "content/child/service_worker/web_service_worker_provider_impl.cc",
         "patchSetId": 4
@@ -341,6 +593,24 @@
     },
     {
       "key": {
+        "uuid": "2008c833_7e399488",
+        "filename": "content/child/service_worker/web_service_worker_provider_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-08-27T14:07:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2eb45b22_79506f66",
+      "revId": "0935c85cf85e2b3a34bf690a3c495f1f9d087297",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7adb942f_1056b550",
         "filename": "content/child/service_worker/web_service_worker_provider_impl.cc",
         "patchSetId": 4
@@ -355,6 +625,24 @@
       "revId": "0935c85cf85e2b3a34bf690a3c495f1f9d087297",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e08f1dd_2289e43e",
+        "filename": "content/child/service_worker/web_service_worker_provider_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-08-27T14:07:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7adb942f_1056b550",
+      "revId": "0935c85cf85e2b3a34bf690a3c495f1f9d087297",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -381,6 +669,30 @@
     },
     {
       "key": {
+        "uuid": "ef6cfab6_f8b58433",
+        "filename": "content/child/service_worker/web_service_worker_provider_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-08-27T14:07:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "56b50629_c3f80cc6",
+      "range": {
+        "startLine": 160,
+        "startChar": 20,
+        "endLine": 160,
+        "endChar": 48
+      },
+      "revId": "0935c85cf85e2b3a34bf690a3c495f1f9d087297",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1a8e2aaf_30a354e4",
         "filename": "content/common/service_worker/service_worker_provider_interfaces.mojom",
         "patchSetId": 4
@@ -398,6 +710,24 @@
     },
     {
       "key": {
+        "uuid": "395740a6_b58cd4fe",
+        "filename": "content/common/service_worker/service_worker_provider_interfaces.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-08-27T14:07:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1a8e2aaf_30a354e4",
+      "revId": "0935c85cf85e2b3a34bf690a3c495f1f9d087297",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b9eceee8_762645eb",
         "filename": "content/common/service_worker/service_worker_provider_interfaces.mojom",
         "patchSetId": 4
@@ -412,6 +742,24 @@
       "revId": "0935c85cf85e2b3a34bf690a3c495f1f9d087297",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c094f6a4_ade98ff9",
+        "filename": "content/common/service_worker/service_worker_provider_interfaces.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-08-27T14:07:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b9eceee8_762645eb",
+      "revId": "0935c85cf85e2b3a34bf690a3c495f1f9d087297",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -435,6 +783,30 @@
       "revId": "0935c85cf85e2b3a34bf690a3c495f1f9d087297",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9865964f_eb99cf32",
+        "filename": "content/common/service_worker/service_worker_types.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-08-27T14:07:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3e233a0a_2485340d",
+      "range": {
+        "startLine": 33,
+        "startChar": 3,
+        "endLine": 33,
+        "endChar": 12
+      },
+      "revId": "0935c85cf85e2b3a34bf690a3c495f1f9d087297",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
