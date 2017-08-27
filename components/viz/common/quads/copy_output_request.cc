@@ -13,19 +13,39 @@
 
 namespace viz {
 
-CopyOutputRequest::CopyOutputRequest() : force_bitmap_result_(false) {}
-
-CopyOutputRequest::CopyOutputRequest(bool force_bitmap_result,
+CopyOutputRequest::CopyOutputRequest(ResultFormat result_format,
                                      CopyOutputRequestCallback result_callback)
-    : force_bitmap_result_(force_bitmap_result),
-      result_callback_(std::move(result_callback)) {
+    : result_format_(result_format),
+      result_callback_(std::move(result_callback)),
+      scale_ratio_(1, 1) {
   DCHECK(!result_callback_.is_null());
   TRACE_EVENT_ASYNC_BEGIN0("viz", "CopyOutputRequest", this);
 }
 
 CopyOutputRequest::~CopyOutputRequest() {
-  if (!result_callback_.is_null())
-    SendResult(CopyOutputResult::CreateEmptyResult());
+  if (!result_callback_.is_null()) {
+    // Send an empty result to indicate the request was never satisfied.
+    SendResult(base::MakeUnique<CopyOutputResult>(result_format_, gfx::Rect()));
+  }
+}
+
+void CopyOutputRequest::SetScaleRatio(int numerator, int denominator) {
+  DCHECK_GT(numerator, 0);
+  DCHECK_GT(denominator, 0);
+
+  // Compute greatest common divisor of the two values. This is used to reduce
+  // the many different scaling ratios across CopyOutputRequests into a smaller
+  // canonical set, which benefits the copier implementations that need to cache
+  // their image scaling pipeline setups.
+  int divisor = numerator;
+  int remainder = denominator;
+  do {
+    int next_remainder = divisor % remainder;
+    divisor = remainder;
+    remainder = next_remainder;
+  } while (remainder != 0);
+
+  scale_ratio_ = {numerator / divisor, denominator / divisor};
 }
 
 void CopyOutputRequest::SendResult(std::unique_ptr<CopyOutputResult> result) {
@@ -41,28 +61,18 @@ void CopyOutputRequest::SendResult(std::unique_ptr<CopyOutputResult> result) {
   }
 }
 
-void CopyOutputRequest::SendEmptyResult() {
-  SendResult(CopyOutputResult::CreateEmptyResult());
-}
-
-void CopyOutputRequest::SendBitmapResult(std::unique_ptr<SkBitmap> bitmap) {
-  SendResult(CopyOutputResult::CreateBitmapResult(std::move(bitmap)));
-}
-
-void CopyOutputRequest::SendTextureResult(
-    const gfx::Size& size,
-    const TextureMailbox& texture_mailbox,
-    std::unique_ptr<SingleReleaseCallback> release_callback) {
-  DCHECK(texture_mailbox.IsTexture());
-  SendResult(CopyOutputResult::CreateTextureResult(
-      size, texture_mailbox, std::move(release_callback)));
-}
-
 void CopyOutputRequest::SetTextureMailbox(
     const TextureMailbox& texture_mailbox) {
-  DCHECK(!force_bitmap_result_);
+  DCHECK_EQ(result_format_, ResultFormat::RGBA_TEXTURE);
   DCHECK(texture_mailbox.IsTexture());
   texture_mailbox_ = texture_mailbox;
+}
+
+// static
+std::unique_ptr<CopyOutputRequest> CopyOutputRequest::CreateStubForTesting() {
+  return base::MakeUnique<CopyOutputRequest>(
+      ResultFormat::RGBA_BITMAP,
+      base::BindOnce([](std::unique_ptr<CopyOutputResult>) {}));
 }
 
 }  // namespace viz
