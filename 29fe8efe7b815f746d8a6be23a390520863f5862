@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7f7e6179_1d9b5a02",
+        "filename": "storage/browser/blob/blob_registry_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-27T06:44:08Z",
+      "side": 1,
+      "message": "Nit: maybe just use base::MakeUnique (and make the ctor public), since this is local to this file already anyway?",
+      "revId": "29fe8efe7b815f746d8a6be23a390520863f5862",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c13d0e17_df09449f",
+        "filename": "storage/browser/blob/blob_registry_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-27T06:44:08Z",
+      "side": 1,
+      "message": "Nit: std::move()",
+      "range": {
+        "startLine": 68,
+        "startChar": 17,
+        "endLine": 68,
+        "endChar": 24
+      },
+      "revId": "29fe8efe7b815f746d8a6be23a390520863f5862",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12369413_92a3d6fe",
+        "filename": "storage/browser/blob/blob_registry_impl_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 964,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-27T06:44:08Z",
+      "side": 1,
+      "message": "Nit: add const",
+      "revId": "29fe8efe7b815f746d8a6be23a390520863f5862",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e892316b_cb22cf29",
+        "filename": "storage/public/interfaces/blobs.mojom",
+        "patchSetId": 6
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-27T06:44:08Z",
+      "side": 1,
+      "message": "Do you mind updating the interface-level comment to mention that this is renderer -\u003e browser?\n\nAlso, this might be a silly question, but I assume |url| must be a blob: URL, right? Why do we let the renderer specify this instead of generating it in the browser?",
+      "revId": "29fe8efe7b815f746d8a6be23a390520863f5862",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
