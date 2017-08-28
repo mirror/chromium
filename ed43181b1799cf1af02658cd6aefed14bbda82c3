@@ -19,6 +19,29 @@
     },
     {
       "key": {
+        "uuid": "37eea38c_69118b7d",
+        "filename": "ash/shelf/shelf_layout_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1138,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-08-28T17:30:37Z",
+      "side": 1,
+      "message": "nit: update comment since the \"if\" is changed",
+      "range": {
+        "startLine": 1137,
+        "startChar": 74,
+        "endLine": 1138,
+        "endChar": 33
+      },
+      "revId": "ed43181b1799cf1af02658cd6aefed14bbda82c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6a650d17_96757460",
         "filename": "ash/shelf/shelf_layout_manager.h",
         "patchSetId": 2
@@ -353,6 +376,41 @@
       "writtenOn": "2017-08-28T16:33:11Z",
       "side": 1,
       "message": "This should take a state enum, not an int. Please either extract the enum to a mojom file, or to its own header and write a struct_traits or enum_traits for it.\n\nAlso, there are too many applist-specific methods on Shell. Shell is supposed to just be a bag of controllers. I would just expose an app_list() getter and not put this method here. I would also eliminate UpdateAppListYPositionAndOpacity, since you are touching it in this CL.",
+      "revId": "ed43181b1799cf1af02658cd6aefed14bbda82c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30b087e4_044285c6",
+        "filename": "ash/shell.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 543,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-08-28T17:30:37Z",
+      "side": 1,
+      "message": "+1",
+      "parentUuid": "9ef66e27_5fa8b2f4",
+      "revId": "ed43181b1799cf1af02658cd6aefed14bbda82c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40ead2f5_de4e2af4",
+        "filename": "ui/app_list/views/app_list_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1225,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-08-28T17:30:37Z",
+      "side": 1,
+      "message": "Fix indent.",
       "revId": "ed43181b1799cf1af02658cd6aefed14bbda82c3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
