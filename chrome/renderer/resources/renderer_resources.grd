@@ -37,8 +37,8 @@
         <include name="IDR_CAST_STREAMING_SESSION_CUSTOM_BINDINGS_JS" file="extensions\cast_streaming_session_custom_bindings.js" type="BINDATA" />
         <include name="IDR_CAST_STREAMING_UDP_TRANSPORT_CUSTOM_BINDINGS_JS" file="extensions\cast_streaming_udp_transport_custom_bindings.js" type="BINDATA" />
         <include name="IDR_CAST_STREAMING_RECEIVER_SESSION_CUSTOM_BINDINGS_JS" file="extensions\cast_streaming_receiver_session_custom_bindings.js" type="BINDATA" />
-        <include name="IDR_CHROME_DIRECT_SETTING_JS"
-        file="extensions\chrome_direct_setting.js" type="BINDATA" />
+        <include name="IDR_EASY_UNLOCK_PROXIMITY_REQUIRED_JS"
+        file="extensions\easy_unlock_proximity_required.js" type="BINDATA" />
         <include name="IDR_CHROME_SETTING_JS" file="extensions\chrome_setting.js" type="BINDATA" />
         <include name="IDR_CHROME_WEB_VIEW_INTERNAL_CUSTOM_BINDINGS_JS" file="extensions\web_view\chrome_web_view_internal_custom_bindings.js" type="BINDATA" />
         <include name="IDR_CHROME_WEB_VIEW_JS" file="extensions\web_view\chrome_web_view.js" type="BINDATA" />
