@@ -45,6 +45,29 @@
       "revId": "82f6b955b055ac8fc80d950337bd897d1959ce3d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0bfd4f5f_8b15f55c",
+        "filename": "services/ui/ws/window_manager_client_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 513,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-28T19:15:30Z",
+      "side": 1,
+      "message": "It would be nice if we could avoid the 2 here, but I get why you need it.",
+      "range": {
+        "startLine": 510,
+        "startChar": 2,
+        "endLine": 513,
+        "endChar": 60
+      },
+      "revId": "82f6b955b055ac8fc80d950337bd897d1959ce3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
