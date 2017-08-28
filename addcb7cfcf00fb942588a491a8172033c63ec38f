@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "570b0d7d_5319c801",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1146496
+      },
+      "writtenOn": "2017-08-28T19:46:03Z",
+      "side": 1,
+      "message": "Filed a new bug and updated the CL description.\n\nAlso filed another bug (issue 759210) to document the preload format and generator.",
+      "parentUuid": "a158f148_e2f1e4bd",
+      "revId": "addcb7cfcf00fb942588a491a8172033c63ec38f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f8081590_cf2f1f06",
         "filename": "/COMMIT_MSG",
         "patchSetId": 4
@@ -33,6 +51,24 @@
       "revId": "addcb7cfcf00fb942588a491a8172033c63ec38f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54d28cc4_37ef41f6",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1146496
+      },
+      "writtenOn": "2017-08-28T19:46:03Z",
+      "side": 1,
+      "message": "This is an old CL (from https://codereview.chromium.org/2906483003) that was written when I was looking at ways to reduce the list size for Cronet. But Cronet has since dropped support for the preload list and that bug has been closed.\n\nI filed a new bug and updated the CL description.",
+      "parentUuid": "f8081590_cf2f1f06",
+      "revId": "addcb7cfcf00fb942588a491a8172033c63ec38f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "26c20611_3da36ed9",
+        "filename": "net/http/transport_security_state.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 537,
+      "author": {
+        "id": 1146496
+      },
+      "writtenOn": "2017-08-28T19:46:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5b8a357a_6a57615e",
+      "revId": "addcb7cfcf00fb942588a491a8172033c63ec38f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f34f0740_cb13dc01",
         "filename": "net/tools/transport_security_state_generator/trie/trie_writer.h",
         "patchSetId": 4
@@ -67,6 +121,24 @@
       "revId": "addcb7cfcf00fb942588a491a8172033c63ec38f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1b7c459_054eff53",
+        "filename": "net/tools/transport_security_state_generator/trie/trie_writer.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1146496
+      },
+      "writtenOn": "2017-08-28T19:46:03Z",
+      "side": 1,
+      "message": "Moved this to the unnamed namespace and replaced the function comment with your suggestion.",
+      "parentUuid": "f34f0740_cb13dc01",
+      "revId": "addcb7cfcf00fb942588a491a8172033c63ec38f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
