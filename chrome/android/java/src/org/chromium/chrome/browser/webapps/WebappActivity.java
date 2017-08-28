@@ -39,6 +39,7 @@ import org.chromium.chrome.browser.customtabs.CustomTabAppMenuPropertiesDelegate
 import org.chromium.chrome.browser.customtabs.CustomTabLayoutManager;
 import org.chromium.chrome.browser.document.DocumentUtils;
 import org.chromium.chrome.browser.fullscreen.ChromeFullscreenManager;
+import org.chromium.chrome.browser.metrics.WebappUma;
 import org.chromium.chrome.browser.tab.EmptyTabObserver;
 import org.chromium.chrome.browser.tab.Tab;
 import org.chromium.chrome.browser.tab.TabDelegateFactory;
@@ -523,6 +524,7 @@ public class WebappActivity extends SingleTabActivity {
                 if (hasCommitted && isInMainFrame) {
                     // Updates the URL.
                     mNotificationManager.maybeShowNotification();
+                    WebappUma.recordCommittedNavigationStatus(!isErrorPage);
                 }
             }
 
