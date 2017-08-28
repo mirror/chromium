@@ -6,12 +6,12 @@
 #define COMPONENTS_SAFE_BROWSING_WEBUI_SAFE_BROWSING_UI_H_
 
 #include "base/macros.h"
+#include "components/safe_browsing/browser/threat_details.h"
 #include "components/safe_browsing/proto/webui.pb.h"
 #include "content/public/browser/web_contents.h"
 #include "content/public/browser/web_ui_controller.h"
 #include "content/public/browser/web_ui_data_source.h"
 #include "content/public/browser/web_ui_message_handler.h"
-
 namespace base {
 class ListValue;
 }
@@ -26,10 +26,27 @@ class SafeBrowsingUIHandler : public content::WebUIMessageHandler {
   void GetPrefs(const base::ListValue* args);
   void GetDatabaseManagerInfo(const base::ListValue* args);
 
+  void GetOldThreatDetails(const base::ListValue* args);
+  void GetThreatDetailsUpdate(ClientSafeBrowsingReportRequest threat_detail);
+
   void RegisterMessages() override;
+
+  enum ThreatDetailsMode {
+    ADD_UPDATE = 0,
+    ERASE_THREAT_DETAILS = 1,
+    OLD_THREAT_DETAILS = 2,
+  };
+  static int webui_counter_;
+  static void AddNewThreatDetails(
+      ClientSafeBrowsingReportRequest threat_detail);
+  static std::vector<ClientSafeBrowsingReportRequest> ProcessThreatDetails(
+      ClientSafeBrowsingReportRequest threat_detail,
+      ThreatDetailsMode mode);
+  static std::vector<SafeBrowsingUIHandler*> webui_list;
 
  private:
   content::BrowserContext* browser_context_;
+
   DISALLOW_COPY_AND_ASSIGN(SafeBrowsingUIHandler);
 };
 
