@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b5846d69_687bab65",
+        "filename": "components/security_interstitials_strings.grdp",
+        "patchSetId": 2
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1002611
+      },
+      "writtenOn": "2017-08-28T17:25:03Z",
+      "side": 1,
+      "message": "Agreed, I\u0027d definitely mention Antivirus or firewalls here. Note that translators won\u0027t have the same context as we do, so it doesn\u0027t hurt to give more context than necessary here.",
+      "parentUuid": "33d1c90a_b5c2f49d",
+      "revId": "84b9649522186cb81eabb587e7e1e489c1fa4440",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1cc5c280_8b2de29d",
         "filename": "components/security_interstitials_strings.grdp",
         "patchSetId": 2
