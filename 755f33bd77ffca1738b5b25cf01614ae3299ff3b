@@ -94,6 +94,30 @@
       "revId": "755f33bd77ffca1738b5b25cf01614ae3299ff3b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "20f70ae7_7c2c13d5",
+        "filename": "components/ntp_tiles/most_visited_sites.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2017-08-28T15:38:59Z",
+      "side": 1,
+      "message": "I still don\u0027t understand.\n\nJust to be clear, my specific question is about the difference between:\n\n  base::JoinString({x, y}, \"\")\n\nand:\n\n  x + y\n\nFor any two strings x and y, they are equivalent, yes?",
+      "parentUuid": "25ed3212_f36ffe6e",
+      "range": {
+        "startLine": 125,
+        "startChar": 28,
+        "endLine": 125,
+        "endChar": 74
+      },
+      "revId": "755f33bd77ffca1738b5b25cf01614ae3299ff3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
