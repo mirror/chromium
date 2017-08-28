@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c8ae5c8d_c041bac4",
+        "filename": "third_party/WebKit/Source/core/html/HTMLLinkElement.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1176519
+      },
+      "writtenOn": "2017-08-28T09:48:49Z",
+      "side": 1,
+      "message": "nit. this shouldn\u0027t be needed anymore",
+      "revId": "21d1a477643a134986fa1d906b33d7ebde46dc12",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
