@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "8dc57797_9df744e4",
+        "filename": "chrome/browser/apps/guest_view/web_view_interactive_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 901,
+      "author": {
+        "id": 1211699
+      },
+      "writtenOn": "2017-08-28T21:01:01Z",
+      "side": 1,
+      "message": "Asking the guest here is a way to ensure that the guest is connected to the same WebContentsTree as the embedder. It isn\u0027t really necessary, I can change if you think the other way is better.",
+      "parentUuid": "8a8ca2e7_596875f4",
+      "revId": "8602fba58697765bbcaea872447fabd6419abf74",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ab8aa535_56700865",
         "filename": "chrome/browser/apps/guest_view/web_view_interactive_browsertest.cc",
         "patchSetId": 5
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-28T20:50:43Z",
       "side": 1,
       "message": "What exactly do these waits mean? According to the header it seems that there are browser and renderer threads that get \"sync-ed\", but what exactly is that. I agree that we do need to wait until at least the guest has processed the javascript, sent some ipcs out that make work for the embedder and possibly receive some incoming ipc as a result from the renderer. I\u0027m not sure that this has the whole process guaranteed to be in sync.",
+      "revId": "8602fba58697765bbcaea872447fabd6419abf74",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24c130d3_ef3eb12a",
+        "filename": "chrome/browser/apps/guest_view/web_view_interactive_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 910,
+      "author": {
+        "id": 1211699
+      },
+      "writtenOn": "2017-08-28T21:01:01Z",
+      "side": 1,
+      "message": "ExecuteScript already guarantees that the script is executed, but doesn\u0027t guarantee that IPCs received by the browser process while the renderer was executing javascript are handled. MainThreadFrameObserver sends an IPC to the renderer process and waits for a reply. This guarantees that all IPCs in the queue before this new one are processed, which includes all the IPCs sent during ExecuteScript().",
+      "parentUuid": "ab8aa535_56700865",
       "revId": "8602fba58697765bbcaea872447fabd6419abf74",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "e3eef286_c63ffd84",
+        "filename": "content/browser/web_contents/web_contents_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1651,
+      "author": {
+        "id": 1211699
+      },
+      "writtenOn": "2017-08-28T21:01:01Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "fd89cf6b_d90929ca",
+      "revId": "8602fba58697765bbcaea872447fabd6419abf74",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e7a93567_71d45d2d",
         "filename": "content/browser/web_contents/web_contents_impl.cc",
         "patchSetId": 5
@@ -67,6 +121,24 @@
       "revId": "8602fba58697765bbcaea872447fabd6419abf74",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc4f8a3f_a78ef1d9",
+        "filename": "content/browser/web_contents/web_contents_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 5280,
+      "author": {
+        "id": 1211699
+      },
+      "writtenOn": "2017-08-28T21:01:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e7a93567_71d45d2d",
+      "revId": "8602fba58697765bbcaea872447fabd6419abf74",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
