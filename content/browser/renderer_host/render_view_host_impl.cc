@@ -278,6 +278,7 @@ bool RenderViewHostImpl::CreateRenderView(
   // ignored, so this is safe.
   if (!GetProcess()->Init())
     return false;
+
   DCHECK(GetProcess()->HasConnection());
   DCHECK(GetProcess()->GetBrowserContext());
   CHECK(main_frame_routing_id_ != MSG_ROUTING_NONE ||
