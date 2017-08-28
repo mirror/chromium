@@ -351,20 +351,15 @@ IN_PROC_BROWSER_TEST_F(PaymentRequestPaymentMethodIdentifierTest,
 // A url-based payment method identifier is only supported if it has an https
 // scheme.
 IN_PROC_BROWSER_TEST_F(PaymentRequestPaymentMethodIdentifierTest, Url_Valid) {
-  InvokePaymentRequestWithJs(
+  EXPECT_TRUE(content::ExecuteScript(
+      GetActiveWebContents(),
       "buyHelper([{"
       "  supportedMethods: ['https://bobpay.xyz', 'http://bobpay.xyz']"
       "}, {"
       "  supportedMethods: ['basic-card']"
-      "}]);");
+      "}]);"));
 
-  std::vector<PaymentRequest*> requests =
-      GetPaymentRequests(GetActiveWebContents());
-  EXPECT_EQ(1u, requests.size());
-  std::vector<GURL> url_payment_method_identifiers =
-      requests[0]->spec()->url_payment_method_identifiers();
-  EXPECT_EQ(1u, url_payment_method_identifiers.size());
-  EXPECT_EQ(GURL("https://bobpay.xyz"), url_payment_method_identifiers[0]);
+  ExpectBodyContains({"RangeError"});
 }
 
 // Specifiying multiple different types of payment method identifiers still
@@ -373,7 +368,7 @@ IN_PROC_BROWSER_TEST_F(PaymentRequestPaymentMethodIdentifierTest,
                        MultiplePaymentMethodIdentifiers) {
   InvokePaymentRequestWithJs(
       "buyHelper([{"
-      "  supportedMethods: ['https://bobpay.xyz', 'http://bobpay.xyz']"
+      "  supportedMethods: ['https://bobpay.xyz']"
       "}, {"
       "  supportedMethods: ['mastercard', 'visa', 'https://alicepay.com']"
       "}, {"
