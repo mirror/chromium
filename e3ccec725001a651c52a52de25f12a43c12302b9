@@ -139,6 +139,30 @@
       "revId": "e3ccec725001a651c52a52de25f12a43c12302b9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cde55b65_293dfb08",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/selection/SelectableItemView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-08-28T20:56:45Z",
+      "side": 1,
+      "message": "Both are easy. I\u0027ll double check with Hannah first.",
+      "parentUuid": "8d4bfeb6_5064f504",
+      "range": {
+        "startLine": 210,
+        "startChar": 12,
+        "endLine": 212,
+        "endChar": 36
+      },
+      "revId": "e3ccec725001a651c52a52de25f12a43c12302b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
