@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9606c205_ec4a3214",
+        "filename": "components/viz/service/hit_test/hit_test_aggregator.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-08-28T18:13:06Z",
+      "side": 1,
+      "message": "Do you need to check if local_surface_id is set at all first? (i.e. if a client mistakenly sends a hit-test region with Child flag turned on, but doesn\u0027t include a LocalSurfaceId, this code could crash?)",
+      "revId": "eea2ca1cc6f919095eafe0cf4324ad0e9a767caf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca3e64f4_56fd9113",
+        "filename": "services/viz/public/interfaces/hit_test/hit_test_region_list.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-08-28T18:13:06Z",
+      "side": 1,
+      "message": "This must always be valid, right?",
+      "revId": "eea2ca1cc6f919095eafe0cf4324ad0e9a767caf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aea33b3b_7e760e88",
+        "filename": "ui/aura/mus/hit_test_data_provider_aura.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-08-28T18:13:06Z",
+      "side": 1,
+      "message": "Can we have a DCHECK here that GetPrimarySurfaceInfo()-\u003eid().frame_sink_id() is the same as window_port-\u003eframe_sink_id()?",
+      "revId": "eea2ca1cc6f919095eafe0cf4324ad0e9a767caf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
