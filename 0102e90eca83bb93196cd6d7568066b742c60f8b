@@ -422,6 +422,24 @@
     },
     {
       "key": {
+        "uuid": "84489b1b_5e754016",
+        "filename": "ash/system/tray_caps_lock.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-28T23:02:35Z",
+      "side": 1,
+      "message": "Darn. Can the include be moved to the .cc file, then?\n\nAlso, can you do a follow-up CL to move that enum out of ime_keyboard.h into some kind of public constants file? Or file a bug to find a solution to this include? It looks like the enum is only used in chrome/browser and ash, so maybe it should live in ash/public.",
+      "parentUuid": "deac1dde_d83d736e",
+      "revId": "0102e90eca83bb93196cd6d7568066b742c60f8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8a742b64_dd38d9cb",
         "filename": "ash/system/tray_caps_lock.h",
         "patchSetId": 6
