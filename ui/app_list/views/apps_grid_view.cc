@@ -1039,6 +1039,9 @@ void AppsGridView::OnGestureEvent(ui::GestureEvent* event) {
       pagination_controller_->OnGestureEvent(*event, GetContentsBounds())) {
     event->SetHandled();
   } else {
+    event->ConvertLocationToTarget(
+        static_cast<View*>(this),
+        static_cast<View*>(contents_view_->app_list_view()));
     contents_view_->app_list_view()->OnGestureEvent(event);
   }
 }
