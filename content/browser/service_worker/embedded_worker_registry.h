@@ -62,14 +62,6 @@ class CONTENT_EXPORT EmbeddedWorkerRegistry
   // it.
   void OnDevToolsAttached(int embedded_worker_id);
 
-  // Removes information about the service workers running on the process and
-  // calls ServiceWorkerVersion::OnDetached() on each. Called when the process
-  // is terminated. Under normal operation, the workers should already have
-  // been stopped before the process is terminated, in which case this function
-  // does nothing. But in some cases the process can be terminated unexpectedly
-  // or the workers can fail to stop cleanly.
-  void RemoveProcess(int process_id);
-
   // Returns an embedded worker instance for given |embedded_worker_id|.
   EmbeddedWorkerInstance* GetWorker(int embedded_worker_id);
 
