@@ -41,6 +41,8 @@ char ChromeDevToolsManagerDelegate::kTypeBackgroundPage[] = "background_page";
 
 namespace {
 
+static content::WebContents* creating_web_contents_for_navigation_ = nullptr;
+
 char kLocationsParam[] = "locations";
 char kHostParam[] = "host";
 char kPortParam[] = "port";
@@ -334,6 +336,19 @@ class ChromeDevToolsManagerDelegate::HostData {
   RemoteLocations remote_locations_;
 };
 
+ChromeDevToolsManagerDelegate::WebContentsForNavigationScope ::
+    WebContentsForNavigationScope() {}
+
+ChromeDevToolsManagerDelegate::WebContentsForNavigationScope ::
+    ~WebContentsForNavigationScope() {
+  creating_web_contents_for_navigation_ = nullptr;
+}
+
+void ChromeDevToolsManagerDelegate::WebContentsForNavigationScope ::
+    SetWebContents(content::WebContents* web_contents) {
+  creating_web_contents_for_navigation_ = web_contents;
+}
+
 ChromeDevToolsManagerDelegate::ChromeDevToolsManagerDelegate()
     : network_protocol_handler_(new DevToolsNetworkProtocolHandler()) {
   content::DevToolsAgentHost::AddObserver(this);
@@ -380,6 +395,9 @@ base::DictionaryValue* ChromeDevToolsManagerDelegate::HandleCommand(
 
 std::string ChromeDevToolsManagerDelegate::GetTargetType(
     content::WebContents* web_contents) {
+  if (creating_web_contents_for_navigation_ == web_contents)
+    return DevToolsAgentHost::kTypePage;
+
   for (TabContentsIterator it; !it.done(); it.Next()) {
     if (*it == web_contents)
       return DevToolsAgentHost::kTypePage;

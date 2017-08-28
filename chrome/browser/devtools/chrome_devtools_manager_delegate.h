@@ -29,6 +29,16 @@ class ChromeDevToolsManagerDelegate :
   ChromeDevToolsManagerDelegate();
   ~ChromeDevToolsManagerDelegate() override;
 
+  class WebContentsForNavigationScope {
+   public:
+    WebContentsForNavigationScope();
+    ~WebContentsForNavigationScope();
+    void SetWebContents(content::WebContents* web_contents);
+
+   private:
+    DISALLOW_COPY_AND_ASSIGN(WebContentsForNavigationScope);
+  };
+
  private:
   class HostData;
   friend class DevToolsManagerDelegateTest;

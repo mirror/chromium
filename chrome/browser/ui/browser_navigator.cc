@@ -55,6 +55,10 @@
 #include "extensions/common/extension_set.h"
 #endif
 
+#if !defined(OS_ANDROID)
+#include "chrome/browser/devtools/chrome_devtools_manager_delegate.h"
+#endif
+
 using content::GlobalRequestID;
 using content::NavigationController;
 using content::WebContents;
@@ -413,6 +417,10 @@ bool SwapInPrerender(const GURL& url, chrome::NavigateParams* params) {
 namespace chrome {
 
 void Navigate(NavigateParams* params) {
+#if !defined(OS_ANDROID)
+  ChromeDevToolsManagerDelegate::WebContentsForNavigationScope devtools_scope;
+#endif
+
   Browser* source_browser = params->browser;
   if (source_browser)
     params->initiating_profile = source_browser->profile();
@@ -529,6 +537,9 @@ void Navigate(NavigateParams* params) {
     DCHECK(!params->url.is_empty());
     if (params->disposition != WindowOpenDisposition::CURRENT_TAB) {
       params->target_contents = CreateTargetContents(*params, params->url);
+#if !defined(OS_ANDROID)
+      devtools_scope.SetWebContents(params->target_contents);
+#endif
 
       // This function takes ownership of |params->target_contents| until it
       // is added to a TabStripModel.
