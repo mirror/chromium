@@ -22,6 +22,30 @@
       "revId": "fff80136e1f2e6700a991dbb9b3e37eb16bea42d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66785f2b_7b9a581f",
+        "filename": "chrome/browser/safe_browsing/download_protection/check_client_download_request.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 802,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-08-28T17:18:55Z",
+      "side": 1,
+      "message": "ACK. \nI thought of adding some tests  The problem is there is no easy way to access g_browser_process in unit test and I am not 100% sure if all the trybots are using (or will keep on using) the default locale, thus the expected value of this field is hard to set. I\u0027m concerned that adding unit test might break things unexpectedly. \nAnd this line is quite low risk.",
+      "parentUuid": "7778d823_0f1f9a95",
+      "range": {
+        "startLine": 802,
+        "startChar": 40,
+        "endLine": 802,
+        "endChar": 60
+      },
+      "revId": "fff80136e1f2e6700a991dbb9b3e37eb16bea42d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
