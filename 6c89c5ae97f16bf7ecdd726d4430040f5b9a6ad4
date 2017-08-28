@@ -16,6 +16,24 @@
       "revId": "6c89c5ae97f16bf7ecdd726d4430040f5b9a6ad4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e40142e_eb9f4de4",
+        "filename": "ui/views/controls/button/checkbox.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-08-28T18:29:23Z",
+      "side": 1,
+      "message": "\u003e It seems like the 2 here and the 2 inset need to stay in sync.\n\nYup - I think that makes sense. (they _can_ be different -- one is a radius -- but it shouldn\u0027t be a magic number either way, and making them the same is the effect we want.\n\n\u003e  Also the 2 in IconFocusRing::OnPaint(), and maybe in Checkbox() (not sure).\n\nThat\u0027s in the !UseMd() codepath, but also it\u0027s not really related to focus rings at all :/ -- it\u0027s adding padding to the right of the *text* of the checkbox, which is nowhere near the focus ring (which !UseMd() doesn\u0027t even have). I\u0027ve left that alone, since we will just delete that codepath Real Soon [tm].\n\n\u003e \n\u003e Perhaps we should just have\n\u003e \n\u003e constexpr int kFocusRingThicknessDip \u003d 2;\n\nDone.\n\n\n\u003e \n\u003e And then do things like Rect::Inset(kFocusRingThicknessDip, kFocusRingThicknessDip) and use this variable everywhere else too?\n\u003e \n\u003e Also nit: Looks like the args here don\u0027t match either DrawRoundRect() (Rect, float).  I\u0027d just use an int radius arg here; it will call the deprecated version but at least it\u0027ll be consistent about it.\n\nI reopened http://crbug.com/553726 but, to help closing that out, I\u0027ve used the non-deprecated version using RectF, i.e.\n\n  gfx::RectF bounds(view-\u003eGetLocalBounds());\n  bounds.Inset(kFocusRingThicknessDip, kFocusRingThicknessDip);\n  canvas-\u003eDrawRoundRect(bounds, kFocusRingThicknessDip, flags);\n\n(the radius, kFocusRingThicknessDip, is still an int -- previously it was being converted to an int so the old float literal was really misleading).",
+      "parentUuid": "45310186_8640c696",
+      "revId": "6c89c5ae97f16bf7ecdd726d4430040f5b9a6ad4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
