@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<style media="none">
+  body { color: green }
+</style>
+<body>
+<p> test content </p>
+ <script>
+  if (window.testRunner)
+        testRunner.waitUntilDone();
+
+   setTimeout(function()
+   {
+      var style = document.querySelector('style');
+      style.media = 'all';
+      if (window.testRunner)
+         testRunner.notifyDone();
+   }, 50);
+
+</script>
+</body>

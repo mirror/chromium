@@ -54,9 +54,15 @@ void HTMLStyleElement::ParseAttribute(
   if (params.name == titleAttr && sheet_ && IsInDocumentTree()) {
     sheet_->SetTitle(params.new_value);
   } else if (params.name == mediaAttr && isConnected() &&
-             GetDocument().IsActive() && sheet_) {
-    sheet_->SetMediaQueries(MediaQuerySet::Create(params.new_value));
-    GetDocument().GetStyleEngine().MediaQueriesChangedInScope(GetTreeScope());
+             GetDocument().IsActive()) {
+    if (sheet_) {
+      sheet_->SetMediaQueries(MediaQuerySet::Create(params.new_value));
+      GetDocument().GetStyleEngine().MediaQueriesChangedInScope(GetTreeScope());
+    } else if (StyleElement::ChildrenChanged(*this) ==
+               StyleElement::kProcessingFatalError) {
+      NotifyLoadedSheetAndAllCriticalSubresources(
+          kErrorOccurredLoadingSubresource);
+    }
   } else {
     HTMLElement::ParseAttribute(params);
   }
