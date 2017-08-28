@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "1ff4a711_810a92b3",
+        "filename": "components/safe_browsing/browser/mojo_safe_browsing_impl.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-08-28T17:37:30Z",
+      "side": 1,
+      "message": "nit: empty line between functions.",
+      "revId": "7e7247803eaa83f9c3d1c7038b08c20245d77345",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5ccc4f6f_5cbbd94c",
         "filename": "content/public/common/url_loader_throttle.h",
         "patchSetId": 2
