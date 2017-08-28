@@ -22,6 +22,30 @@
       "revId": "bda0f219f4aafbca1165b2c25bac517c2c282e7c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da521d87_11535943",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/vr_shell/util/VrTransitionUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-08-28T18:40:08Z",
+      "side": 1,
+      "message": "haha good catch.",
+      "parentUuid": "9b6dd256_3d04e267",
+      "range": {
+        "startLine": 147,
+        "startChar": 28,
+        "endLine": 147,
+        "endChar": 47
+      },
+      "revId": "bda0f219f4aafbca1165b2c25bac517c2c282e7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
