@@ -87,12 +87,12 @@ import javax.annotation.Nullable;
  * Android implementation of the PaymentRequest service defined in
  * components/payments/content/payment_request.mojom.
  */
-public class PaymentRequestImpl implements PaymentRequest, PaymentRequestUI.Client,
-                                           PaymentApp.InstrumentsCallback,
-                                           PaymentInstrument.InstrumentDetailsCallback,
-                                           PaymentAppFactory.PaymentAppCreatedCallback,
-                                           PaymentResponseHelper.PaymentResponseRequesterDelegate,
-                                           FocusChangedObserver, NormalizedAddressRequestDelegate {
+public class PaymentRequestImpl
+        implements PaymentRequest, PaymentRequestUI.Client, PaymentApp.InstrumentsCallback,
+                   PaymentInstrument.AbortCallback, PaymentInstrument.InstrumentDetailsCallback,
+                   PaymentAppFactory.PaymentAppCreatedCallback,
+                   PaymentResponseHelper.PaymentResponseRequesterDelegate, FocusChangedObserver,
+                   NormalizedAddressRequestDelegate {
     /**
      * A test-only observer for the PaymentRequest service implementation.
      */
@@ -1426,13 +1426,24 @@ public class PaymentRequestImpl implements PaymentRequest, PaymentRequestUI.Clie
     @Override
     public void abort() {
         if (mClient == null) return;
-        mClient.onAbort(!mPaymentAppRunning);
+
         if (mPaymentAppRunning) {
-            if (sObserverForTest != null) sObserverForTest.onPaymentRequestServiceUnableToAbort();
-        } else {
+            ((PaymentInstrument) mPaymentMethodsSection.getSelectedItem())
+                    .abortInvokePaymentApp(this);
+            return;
+        }
+        onInstrumentAbortResult(true);
+    }
+
+    @Override
+    public void onInstrumentAbortResult(boolean abortSucceeded) {
+        mClient.onAbort(abortSucceeded);
+        if (abortSucceeded) {
             closeClient();
             closeUI(true);
             mJourneyLogger.setAborted(AbortReason.ABORTED_BY_MERCHANT);
+        } else {
+            if (sObserverForTest != null) sObserverForTest.onPaymentRequestServiceUnableToAbort();
         }
     }
 
