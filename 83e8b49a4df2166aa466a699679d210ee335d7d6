@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "64dc839c_ff7de32d",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-08-28T22:53:11Z",
+      "side": 1,
+      "message": "Prefer constexpr for new constants (optional to convert existing ones).\n\nhttps://google.github.io/styleguide/cppguide.html#Use_of_constexpr",
+      "revId": "83e8b49a4df2166aa466a699679d210ee335d7d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1d817bd_5652272c",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-08-28T22:53:11Z",
+      "side": 1,
+      "message": "It might be helpful to set a fuzz percentage; if there are a large number of senders trying to connect when a receiver comes online, this will spread out the attempts IIUC.",
+      "revId": "83e8b49a4df2166aa466a699679d210ee335d7d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e0ee5a9c_066c8181",
         "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl.cc",
         "patchSetId": 2
@@ -13,6 +47,125 @@
       "writtenOn": "2017-08-25T18:22:26Z",
       "side": 1,
       "message": "Is this value ever used?  It looks like we only have 3 attempts @ 15 seconds each so we would never be over 1 minute for max delay during retries.  How did we come to 10 minutes?",
+      "revId": "83e8b49a4df2166aa466a699679d210ee335d7d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a80aedd8_304f522d",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 336,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-08-28T22:53:11Z",
+      "side": 1,
+      "message": "This might be better named OnChannelOpenFailed(ip_endpoint) to distinguish it from OnError()",
+      "revId": "83e8b49a4df2166aa466a699679d210ee335d7d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87b845b5_b0affb3d",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 339,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-08-28T22:53:11Z",
+      "side": 1,
+      "message": "Can this be combined with L293 (so we don\u0027t have to pass error_state)",
+      "revId": "83e8b49a4df2166aa466a699679d210ee335d7d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f02a0ef0_a0223e34",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-08-28T22:53:11Z",
+      "side": 1,
+      "message": "Slight preference for declaring this private (it\u0027s an implementation detail of this class).",
+      "revId": "83e8b49a4df2166aa466a699679d210ee335d7d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f59a16f8_9c814d96",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-08-28T22:53:11Z",
+      "side": 1,
+      "message": "Do you want to shorten the retry time to help the test run more quickly?\nOr is it possible to inject a mock clock here to simulate the passage of time?",
+      "revId": "83e8b49a4df2166aa466a699679d210ee335d7d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89ff94bd_bf7e4ea4",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-08-28T22:53:11Z",
+      "side": 1,
+      "message": "I feel like this test would be better written as three test cases:\n\nOpenChannelSucceedsNoRetry()\nOpenChannelSucceedsRetryOnce()\nOpenChannelFails()",
+      "revId": "83e8b49a4df2166aa466a699679d210ee335d7d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8cc0e6d_7dea1f14",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-08-28T22:53:11Z",
+      "side": 1,
+      "message": "Do you need to call SetBackoffPolicyForTest() before calling this?",
+      "revId": "83e8b49a4df2166aa466a699679d210ee335d7d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3b2dde2_cb463b36",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 374,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-08-28T22:53:11Z",
+      "side": 1,
+      "message": "Rather than resetting data structures within a test, I would rather this be written as three test cases:\n\nTestOnChannelErrorMayRetryForCastSink\nTestOnChannelErrorMayRetryForDialSink\nTestOnChannelErrorMayRetryForMissingSink",
       "revId": "83e8b49a4df2166aa466a699679d210ee335d7d6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
