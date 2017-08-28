@@ -493,6 +493,24 @@ TEST_P(GLES2DecoderTest, BufferDataGLError) {
   EXPECT_EQ(0, buffer->size());
 }
 
+TEST_P(GLES2DecoderTest, DisableVertexAttribArrayValidArgs) {
+  SetDriverVertexAttribEnabled(1, false);
+  SpecializedSetup<cmds::DisableVertexAttribArray, 0>(true);
+  cmds::DisableVertexAttribArray cmd;
+  cmd.Init(1);
+  EXPECT_EQ(error::kNoError, ExecuteCmd(cmd));
+  EXPECT_EQ(GL_NO_ERROR, GetGLError());
+}
+
+TEST_P(GLES2DecoderTest, EnableVertexAttribArrayValidArgs) {
+  SetDriverVertexAttribEnabled(1, true);
+  SpecializedSetup<cmds::EnableVertexAttribArray, 0>(true);
+  cmds::EnableVertexAttribArray cmd;
+  cmd.Init(1);
+  EXPECT_EQ(error::kNoError, ExecuteCmd(cmd));
+  EXPECT_EQ(GL_NO_ERROR, GetGLError());
+}
+
 // TODO(gman): BufferData
 
 // TODO(gman): BufferDataImmediate

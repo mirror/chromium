@@ -279,9 +279,7 @@ void GLES2DecoderTestBase::InitDecoderWithCommandLine(
   AddExpectationsForBindVertexArrayOES();
 
   if (!group_->feature_info()->gl_version_info().BehavesLikeGLES()) {
-    EXPECT_CALL(*gl_, EnableVertexAttribArray(0))
-        .Times(1)
-        .RetiresOnSaturation();
+    SetDriverVertexAttribEnabled(0, true);
   }
   static GLuint attrib_0_id[] = {
     kServiceAttrib0BufferId,
@@ -1975,10 +1973,27 @@ void GLES2DecoderTestBase::DoEnableDisable(GLenum cap, bool enable) {
   }
 }
 
+void GLES2DecoderTestBase::SetDriverVertexAttribEnabled(GLint index,
+                                                        bool enable) {
+  auto it = attribsEnabled.find(index);
+  bool alreadyEnabled = it != attribsEnabled.end();
+  if (alreadyEnabled != enable) {
+    if (enable) {
+      attribsEnabled.insert(index);
+      EXPECT_CALL(*gl_, EnableVertexAttribArray(index))
+          .Times(1)
+          .RetiresOnSaturation();
+    } else {
+      attribsEnabled.erase(index);
+      EXPECT_CALL(*gl_, DisableVertexAttribArray(index))
+          .Times(1)
+          .RetiresOnSaturation();
+    }
+  }
+}
+
 void GLES2DecoderTestBase::DoEnableVertexAttribArray(GLint index) {
-  EXPECT_CALL(*gl_, EnableVertexAttribArray(index))
-      .Times(1)
-      .RetiresOnSaturation();
+  SetDriverVertexAttribEnabled(index, true);
   cmds::EnableVertexAttribArray cmd;
   cmd.Init(index);
   EXPECT_EQ(error::kNoError, ExecuteCmd(cmd));
