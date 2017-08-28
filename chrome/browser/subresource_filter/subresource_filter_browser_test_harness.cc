@@ -70,6 +70,7 @@ void SubresourceFilterBrowserTest::SetUpCommandLine(
     base::CommandLine* command_line) {
   command_line->AppendSwitchASCII(switches::kEnableFeatures,
                                   base::JoinString(RequiredFeatures(), ","));
+  command_line->AppendSwitch(switches::kSitePerProcess);
 }
 
 std::vector<base::StringPiece> SubresourceFilterBrowserTest::RequiredFeatures()
