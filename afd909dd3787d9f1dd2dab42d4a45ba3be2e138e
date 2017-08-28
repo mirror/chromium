@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8aed92e0_4abc4b57",
+        "filename": "third_party/WebKit/Source/build/scripts/make_computed_style_base.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 543,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-08-28T23:14:17Z",
+      "side": 1,
+      "message": "hmm maybe:\n\n    rare-non-inherited-frequency-less-than\n\nor\n\n    rare-non-inherited-usage-less-than",
+      "revId": "afd909dd3787d9f1dd2dab42d4a45ba3be2e138e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
