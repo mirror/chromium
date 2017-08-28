@@ -1,0 +1,29 @@
+// Copyright 2017 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
+module chrome.mojom;
+
+// Plugin messages sent from host to renderer.
+interface PluginHost {
+};
+
+// Plugin messages sent from a renderer to the host.
+interface PluginRenderer {
+
+// Notifies a missing plugin placeholder that we have finished downloading
+// the plugin.
+  FinishedDownloading();
+
+  // Notifies a missing plugin placeholder that we have finished component-
+// updating the plug-in.
+  UpdateSuccess();
+
+  // Notifies a missing plugin placeholder that we have failed to component-update
+// the plug-in.
+  UpdateFailure();
+
+  // Notifies a missing plugin placeholder that we have started the component
+// download.
+  UpdateDownloading();
+};
