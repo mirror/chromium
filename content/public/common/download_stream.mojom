@@ -1,0 +1,15 @@
+// Copyright 2017 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
+module content.mojom;
+
+// Used to pass the interruption status to the consumer of the data pipe.
+interface DownloadStreamClient {
+  OnResponseCompleted(int32 error_code);
+};
+
+struct DownloadStreamHandle {
+  handle<data_pipe_consumer> stream;
+  DownloadStreamClient& client_request;
+};

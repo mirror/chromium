@@ -5,12 +5,19 @@
 #ifndef CONTENT_BROWSER_DOWNLOAD_RESPONSE_HANDLER_
 #define CONTENT_BROWSER_DOWNLOAD_RESPONSE_HANDLER_
 
+#include <vector>
+
 #include "content/browser/download/download_create_info.h"
+#include "content/public/common/download_stream.mojom.h"
+#include "content/public/common/referrer.h"
+#include "content/public/common/resource_response.h"
 #include "content/public/common/url_loader.mojom.h"
 
 namespace content {
 
 class DownloadUrlParameters;
+struct DownloadCreateInfo;
+struct DownloadSaveInfo;
 
 // This class is responsible for handling the server response for a download.
 // It passes the DataPipeConsumerHandle and completion status to the download
@@ -22,7 +29,7 @@ class DownloadResponseHandler : public mojom::URLLoaderClient {
    public:
     virtual void OnResponseStarted(
         std::unique_ptr<DownloadCreateInfo> download_create_info,
-        mojo::ScopedDataPipeConsumerHandle body) = 0;
+        mojom::DownloadStreamHandlePtr stream_handle) = 0;
   };
 
   DownloadResponseHandler(DownloadUrlParameters* params,
@@ -31,7 +38,7 @@ class DownloadResponseHandler : public mojom::URLLoaderClient {
   ~DownloadResponseHandler() override;
 
   // mojom::URLLoaderClient
-  void OnReceiveResponse(const content::ResourceResponseHead& head,
+  void OnReceiveResponse(const ResourceResponseHead& head,
                          const base::Optional<net::SSLInfo>& ssl_info,
                          mojom::DownloadedTempFilePtr downloaded_file) override;
   void OnReceiveRedirect(const net::RedirectInfo& redirect_info,
@@ -48,7 +55,26 @@ class DownloadResponseHandler : public mojom::URLLoaderClient {
                   completion_status) override;
 
  private:
+  std::unique_ptr<DownloadCreateInfo> CreateDownloadCreateInfo(
+      const ResourceResponseHead& head);
+
   Delegate* const delegate_;
+
+  std::unique_ptr<DownloadSaveInfo> save_info_;
+
+  std::unique_ptr<DownloadCreateInfo> create_info_;
+
+  std::vector<GURL> url_chain_;
+
+  std::string guid_;
+
+  std::string method_;
+
+  GURL referrer_;
+
+  bool is_transient_;
+
+  mojom::DownloadStreamClientPtr client_ptr_;
 
   DISALLOW_COPY_AND_ASSIGN(DownloadResponseHandler);
 };
