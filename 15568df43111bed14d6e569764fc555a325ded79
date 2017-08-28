@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "014ad243_a623b3f4",
+        "filename": "media/gpu/android/codec_wrapper_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 1119171
+      },
+      "writtenOn": "2017-08-28T04:37:45Z",
+      "side": 0,
+      "message": "Deleted because gtest warns that it\u0027s unsafe in threaded tests. Plus it\u0027s kind of silly in retrospect.",
+      "range": {
+        "startLine": 245,
+        "startChar": 4,
+        "endLine": 245,
+        "endChar": 16
+      },
+      "revId": "15568df43111bed14d6e569764fc555a325ded79",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

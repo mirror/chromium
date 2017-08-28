@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2c3a4960_4d386d97",
+        "filename": "media/gpu/android/media_codec_video_decoder.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1119171
+      },
+      "writtenOn": "2017-08-28T04:37:45Z",
+      "side": 1,
+      "message": "unrelated, this name was bad",
+      "range": {
+        "startLine": 113,
+        "startChar": 56,
+        "endLine": 113,
+        "endChar": 67
+      },
+      "revId": "200e013c2ce61e709a35c04fc9a3560a6b27e86d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7fedd30_3bd481a0",
+        "filename": "media/gpu/android/media_codec_video_decoder.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 389,
+      "author": {
+        "id": 1119171
+      },
+      "writtenOn": "2017-08-28T04:37:45Z",
+      "side": 1,
+      "message": "Moved from the callsite. I think it\u0027s clearer.",
+      "range": {
+        "startLine": 389,
+        "startChar": 29,
+        "endLine": 389,
+        "endChar": 30
+      },
+      "revId": "200e013c2ce61e709a35c04fc9a3560a6b27e86d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9e98cb2_7835c05d",
+        "filename": "media/gpu/android/media_codec_video_decoder.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 434,
+      "author": {
+        "id": 1119171
+      },
+      "writtenOn": "2017-08-28T04:37:45Z",
+      "side": 1,
+      "message": "AVDA didn\u0027t have this. Not sure if it ever occurs but it can\u0027t hurt.",
+      "range": {
+        "startLine": 434,
+        "startChar": 6,
+        "endLine": 434,
+        "endChar": 20
+      },
+      "revId": "200e013c2ce61e709a35c04fc9a3560a6b27e86d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4845cd31_6c3c55e9",
+        "filename": "media/gpu/android/media_codec_video_decoder.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 612,
+      "author": {
+        "id": 1119171
+      },
+      "writtenOn": "2017-08-28T04:37:45Z",
+      "side": 1,
+      "message": "Omitting this was a bug I noticed.",
+      "range": {
+        "startLine": 612,
+        "startChar": 18,
+        "endLine": 612,
+        "endChar": 0
+      },
+      "revId": "200e013c2ce61e709a35c04fc9a3560a6b27e86d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83710f74_d81b2845",
+        "filename": "media/gpu/android/media_codec_video_decoder_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1119171
+      },
+      "writtenOn": "2017-08-28T04:37:45Z",
+      "side": 1,
+      "message": "Decode has to have a non-null buffer now because of a DVLOG.",
+      "range": {
+        "startLine": 207,
+        "startChar": 16,
+        "endLine": 207,
+        "endChar": 36
+      },
+      "revId": "200e013c2ce61e709a35c04fc9a3560a6b27e86d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
