@@ -22,6 +22,30 @@
       "revId": "5ec3803cf0782abb5f219d803771c70090d66917",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "22128e25_0f89ed66",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/selection/SelectableItemView.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-08-28T22:01:23Z",
+      "side": 1,
+      "message": "setAlpha\u0027s parameter for Drawable is actually type int. https://developer.android.com/reference/android/graphics/drawable/Drawable.html#setAlpha(int)",
+      "parentUuid": "5e6ef42f_afd48d04",
+      "range": {
+        "startLine": 219,
+        "startChar": 60,
+        "endLine": 219,
+        "endChar": 64
+      },
+      "revId": "5ec3803cf0782abb5f219d803771c70090d66917",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
