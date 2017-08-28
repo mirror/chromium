@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "16e12dc4_41685645",
+        "filename": "content/browser/service_worker/service_worker_context_core.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 319,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-28T14:05:13Z",
+      "side": 1,
+      "message": "One problem with this is ProviderHost keeps a ptr to dispatcher_host_. We could make it a WeakPtr to DispatcherHost or clear the ptr but that could make things more complex than deleting the ProviderHost. ProviderHost can\u0027t just use context_-\u003eGetDispatcherHost(process_id)  because processes can be reused.",
+      "revId": "bbfd477ca7653749fadf769f8475d542456d3cce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

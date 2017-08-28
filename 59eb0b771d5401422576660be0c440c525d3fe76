@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "829bcf06_9d44a48a",
+        "filename": "content/browser/service_worker/embedded_worker_registry.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-28T14:05:13Z",
+      "side": 0,
+      "message": "reminder that I also need to update OnDetached() documentation",
+      "revId": "59eb0b771d5401422576660be0c440c525d3fe76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
