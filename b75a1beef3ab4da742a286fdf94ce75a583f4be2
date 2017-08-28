@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "fd0b7579_f304b8f1",
+        "filename": "net/test/spawned_test_server/remote_test_server.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-08-28T19:40:36Z",
+      "side": 1,
+      "message": "remote_test_server_config.h is included in remote_test_server.cc.\nAfter my other CL (https://chromium-review.googlesource.com/c/chromium/src/+/636864) RemoteTestServer will also use the config, so it\u0027s better to load the config here and pass it to SpawnerCommunicator, so it\u0027s not loaded twice.",
+      "parentUuid": "4f286e9c_142ce94c",
+      "range": {
+        "startLine": 106,
+        "startChar": 44,
+        "endLine": 106,
+        "endChar": 66
+      },
+      "revId": "b75a1beef3ab4da742a286fdf94ce75a583f4be2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e9e8d6fc_6b2126e4",
         "filename": "net/test/spawned_test_server/remote_test_server_config.cc",
         "patchSetId": 15
@@ -45,6 +69,30 @@
       "revId": "b75a1beef3ab4da742a286fdf94ce75a583f4be2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ee9659e_4c8cb7a4",
+        "filename": "net/test/spawned_test_server/remote_test_server_config.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-08-28T19:40:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e9e8d6fc_6b2126e4",
+      "range": {
+        "startLine": 59,
+        "startChar": 0,
+        "endLine": 59,
+        "endChar": 3
+      },
+      "revId": "b75a1beef3ab4da742a286fdf94ce75a583f4be2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "8d43e3f6_76e25ab3",
+        "filename": "net/test/spawned_test_server/remote_test_server_config.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-08-28T19:40:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a439ce76_b16a56d6",
+      "range": {
+        "startLine": 32,
+        "startChar": 22,
+        "endLine": 32,
+        "endChar": 32
+      },
+      "revId": "b75a1beef3ab4da742a286fdf94ce75a583f4be2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6ae28cb0_d0b92a3c",
         "filename": "net/test/spawned_test_server/remote_test_server_config.h",
         "patchSetId": 15
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "9a3bfc98_2445768b",
+        "filename": "net/test/spawned_test_server/remote_test_server_config.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-08-28T19:40:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6ae28cb0_d0b92a3c",
+      "range": {
+        "startLine": 37,
+        "startChar": 14,
+        "endLine": 37,
+        "endChar": 0
+      },
+      "revId": "b75a1beef3ab4da742a286fdf94ce75a583f4be2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f41d5a01_a19a14cc",
         "filename": "net/test/spawned_test_server/spawner_communicator.h",
         "patchSetId": 15
@@ -114,6 +210,30 @@
       "revId": "b75a1beef3ab4da742a286fdf94ce75a583f4be2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bfdb9f2c_cae24e6a",
+        "filename": "net/test/spawned_test_server/spawner_communicator.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-08-28T19:40:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f41d5a01_a19a14cc",
+      "range": {
+        "startLine": 118,
+        "startChar": 2,
+        "endLine": 118,
+        "endChar": 25
+      },
+      "revId": "b75a1beef3ab4da742a286fdf94ce75a583f4be2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
