@@ -188,6 +188,10 @@ void HTMLTrackElement::LoadTimerFired(TimerBase*) {
 
   url_ = url;
 
+  // Ensure that the 'src' attribute is not removed
+  if (!hasAttribute(srcAttr))
+    return;
+
   // 6. [X] Set the text track readiness state to loading.
   // Step 7 does not depend on step 6, so they were reordered to grant
   // setting kLoading state after the equality check
