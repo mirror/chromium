@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "89ecf159_838f8f40",
+        "filename": "chrome/test/data/local_ntp/voice_browsertest.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1229240
+      },
+      "writtenOn": "2017-08-28T15:01:01Z",
+      "side": 1,
+      "message": "Do we want to merge this file with local_ntp_browsertest.html?",
+      "revId": "071113c310bfb4029a9ff0a068af479c93942270",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
