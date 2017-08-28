@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "aa9f5dbb_9c1654b0",
+        "filename": "content/renderer/fetchers/resource_fetcher_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-08-28T09:26:47Z",
+      "side": 1,
+      "message": "Agreed, but I decided not to change the content API interface in this CL. I will expose this annotation to the content interface so that each caller can provide a right tag for each, in the next CL.\n\nTODO is explicitly added.",
+      "parentUuid": "1a1c25e2_b9e552f7",
+      "revId": "ec6919b1e6983ae05f37314e356966f38d11c058",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2b61d87c_d115750b",
         "filename": "content/renderer/fetchers/resource_fetcher_impl.cc",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "ec6919b1e6983ae05f37314e356966f38d11c058",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9f9aff1_34deadde",
+        "filename": "content/renderer/fetchers/resource_fetcher_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-08-28T09:26:47Z",
+      "side": 1,
+      "message": "Same reason. Will change it in the next change.",
+      "parentUuid": "2b61d87c_d115750b",
+      "revId": "ec6919b1e6983ae05f37314e356966f38d11c058",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "089a6f57_1dbdef16",
+        "filename": "content/renderer/fetchers/resource_fetcher_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-08-28T09:26:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2332b28e_efbeffe7",
+      "revId": "ec6919b1e6983ae05f37314e356966f38d11c058",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ae066fdd_85933de8",
         "filename": "content/renderer/fetchers/resource_fetcher_impl.cc",
         "patchSetId": 1
@@ -67,6 +121,24 @@
       "revId": "ec6919b1e6983ae05f37314e356966f38d11c058",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17cfb860_7fff4900",
+        "filename": "content/renderer/fetchers/resource_fetcher_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-08-28T09:26:47Z",
+      "side": 1,
+      "message": "I remove this and just add DCHECK_EQ(MOJO_RESULT_OK, result) since all errors including this is not an expected error.",
+      "parentUuid": "ae066fdd_85933de8",
+      "revId": "ec6919b1e6983ae05f37314e356966f38d11c058",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -105,6 +177,24 @@
     },
     {
       "key": {
+        "uuid": "080e187a_057c0b24",
+        "filename": "content/renderer/fetchers/resource_fetcher_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-08-28T09:26:47Z",
+      "side": 1,
+      "message": "Add a comment.",
+      "parentUuid": "242fa7da_6c9c0a85",
+      "revId": "ec6919b1e6983ae05f37314e356966f38d11c058",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "54093538_fd66a141",
         "filename": "content/renderer/fetchers/resource_fetcher_impl.cc",
         "patchSetId": 1
@@ -128,6 +218,30 @@
     },
     {
       "key": {
+        "uuid": "87e80953_95fc825d",
+        "filename": "content/renderer/fetchers/resource_fetcher_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-08-28T09:26:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "54093538_fd66a141",
+      "range": {
+        "startLine": 158,
+        "startChar": 0,
+        "endLine": 158,
+        "endChar": 16
+      },
+      "revId": "ec6919b1e6983ae05f37314e356966f38d11c058",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c62d1f16_e8457f32",
         "filename": "content/renderer/fetchers/resource_fetcher_impl.cc",
         "patchSetId": 1
@@ -145,6 +259,24 @@
     },
     {
       "key": {
+        "uuid": "53b5138e_09175fc9",
+        "filename": "content/renderer/fetchers/resource_fetcher_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-08-28T09:26:47Z",
+      "side": 1,
+      "message": "Good point. MOJO_RESULT_INVALID_ARGUMENT is the only error that can be captured here.\nSince it should be caused by program errors, this can be DCHECK.",
+      "parentUuid": "c62d1f16_e8457f32",
+      "revId": "ec6919b1e6983ae05f37314e356966f38d11c058",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3dddbce2_1ac24491",
         "filename": "content/renderer/fetchers/resource_fetcher_impl.cc",
         "patchSetId": 1
@@ -159,6 +291,24 @@
       "revId": "ec6919b1e6983ae05f37314e356966f38d11c058",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1280cfe5_32a746cc",
+        "filename": "content/renderer/fetchers/resource_fetcher_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-08-28T09:26:47Z",
+      "side": 1,
+      "message": "It was set in Start(), and I think three arguments here do not provide URL information that should replace the original URL.",
+      "parentUuid": "3dddbce2_1ac24491",
+      "revId": "ec6919b1e6983ae05f37314e356966f38d11c058",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
