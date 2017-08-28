@@ -5,6 +5,7 @@
 #include "components/ntp_snippets/breaking_news/subscription_manager_impl.h"
 
 #include "base/message_loop/message_loop.h"
+#include "base/test/histogram_tester.h"
 #include "build/build_config.h"
 #include "components/ntp_snippets/pref_names.h"
 #include "components/ntp_snippets/remote/test_utils.h"
@@ -15,7 +16,10 @@
 #include "google_apis/gaia/fake_oauth2_token_service_delegate.h"
 #include "net/url_request/test_url_fetcher_factory.h"
 #include "net/url_request/url_request_test_util.h"
+#include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
+
+using testing::ElementsAre;
 
 namespace ntp_snippets {
 
@@ -335,6 +339,50 @@ TEST_F(SubscriptionManagerImplTest,
   EXPECT_EQ(
       new_subscription_token,
       GetPrefService()->GetString(prefs::kBreakingNewsSubscriptionDataToken));
+}
+
+TEST_F(SubscriptionManagerImplTest, ShouldReportSubscriptionResult) {
+  base::HistogramTester histogram_tester;
+  // Create manager and subscribe.
+  const std::string subscription_token = "token";
+  SubscriptionManagerImpl manager(
+      GetRequestContext(), GetPrefService(),
+      /*variations_service=*/nullptr, GetSigninManager(),
+      GetOAuth2TokenService(),
+      /*locale=*/"", kAPIKey, GURL(kSubscriptionUrl), GURL(kUnsubscriptionUrl));
+  manager.Subscribe(subscription_token);
+  // TODO(vitaliii): Mock subscription request to avoid this low level errors.
+  // Reply with INVALID_RESPONSE error.
+  RespondToSubscriptionWithError(/*is_signed_in=*/false, /*error_code=*/-320);
+
+  EXPECT_THAT(
+      histogram_tester.GetAllSamples("NewTabPage.ContentSuggestions."
+                                     "BreakingNews.SubscriptionRequestStatus"),
+      ElementsAre(base::Bucket(
+          /*min=*/static_cast<int>(StatusCode::TEMPORARY_ERROR),
+          /*count=*/1)));
+}
+
+TEST_F(SubscriptionManagerImplTest, ShouldReportUnsubscriptionResult) {
+  base::HistogramTester histogram_tester;
+  // Create manager and subscribe.
+  const std::string subscription_token = "token";
+  SubscriptionManagerImpl manager(
+      GetRequestContext(), GetPrefService(),
+      /*variations_service=*/nullptr, GetSigninManager(),
+      GetOAuth2TokenService(),
+      /*locale=*/"", kAPIKey, GURL(kSubscriptionUrl), GURL(kUnsubscriptionUrl));
+  manager.Subscribe(subscription_token);
+  RespondToSubscriptionRequestSuccessfully(/*is_signed_in=*/false);
+  manager.Unsubscribe();
+  // Reply with INVALID_RESPONSE error.
+  RespondToUnsubscriptionWithError(/*is_signed_in=*/false, /*error_code=*/-320);
+  EXPECT_THAT(histogram_tester.GetAllSamples("NewTabPage.ContentSuggestions."
+                                             "BreakingNews."
+                                             "UnsubscriptionRequestStatus"),
+              ElementsAre(base::Bucket(
+                  /*min=*/static_cast<int>(StatusCode::TEMPORARY_ERROR),
+                  /*count=*/1)));
 }
 
 }  // namespace ntp_snippets
