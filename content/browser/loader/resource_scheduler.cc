@@ -41,7 +41,7 @@ namespace {
 // HTTP/1.1 resources are. Disabling this appears to have negative performance
 // impact, see https://crbug.com/655585.
 const base::Feature kPrioritySupportedRequestsDelayable{
-    "PrioritySupportedRequestsDelayable", base::FEATURE_ENABLED_BY_DEFAULT};
+    "PrioritySupportedRequestsDelayable", base::FEATURE_DISABLED_BY_DEFAULT};
 
 // When enabled, low-priority H2 and QUIC requests are throttled, but only
 // when the parser is in head.
