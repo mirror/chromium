@@ -60,6 +60,10 @@ uint32_t MakeQuicTag(char a, char b, char c, char d) {
          static_cast<uint32_t>(c) << 16 | static_cast<uint32_t>(d) << 24;
 }
 
+uint32_t ReverseByteOrder(uint32_t x) {
+  return (x << 24) | (x << 8 & 0xFF0000) | (x >> 8 & 0xFF00) | (x >> 24);
+}
+
 bool ContainsQuicTag(const QuicTagVector& tag_vector, QuicTag tag) {
   return base::ContainsValue(tag_vector, tag);
 }
