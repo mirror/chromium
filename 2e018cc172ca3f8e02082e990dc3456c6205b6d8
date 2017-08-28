@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c67dc365_fcb5ca50",
+        "filename": "third_party/WebKit/Source/core/html/HTMLStyleElement.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1115751
+      },
+      "writtenOn": "2017-08-28T07:37:15Z",
+      "side": 1,
+      "message": "I\u0027m worried about the interop here. I did check that Gecko creates a sheet for \u003cstyle\u003e element regardless of media type for issue 757450. Can you check what IE/Edge/Safari does?\n\nLooking at the code, it seems this will only trigger an error on CSP blocking. But still, it means we would dispatch an error event where other browsers wouldn\u0027t?",
+      "revId": "2e018cc172ca3f8e02082e990dc3456c6205b6d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
