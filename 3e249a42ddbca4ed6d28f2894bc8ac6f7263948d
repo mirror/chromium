@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d809d347_77f5dfaa",
+        "filename": "net/test/spawned_test_server/base_test_server.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 375,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-08-28T22:40:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "de6d93ba_3484a57e",
+      "range": {
+        "startLine": 375,
+        "startChar": 16,
+        "endLine": 375,
+        "endChar": 0
+      },
+      "revId": "3e249a42ddbca4ed6d28f2894bc8ac6f7263948d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5a622228_ad3301c4",
         "filename": "net/test/spawned_test_server/base_test_server.h",
         "patchSetId": 1
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "6ca30a8a_8195503e",
+        "filename": "net/test/spawned_test_server/base_test_server.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 398,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-08-28T22:40:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5a622228_ad3301c4",
+      "range": {
+        "startLine": 398,
+        "startChar": 29,
+        "endLine": 398,
+        "endChar": 37
+      },
+      "revId": "3e249a42ddbca4ed6d28f2894bc8ac6f7263948d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e81d797b_728e1a5d",
         "filename": "net/test/spawned_test_server/remote_test_server.cc",
         "patchSetId": 1
@@ -59,6 +107,30 @@
       "writtenOn": "2017-08-28T18:57:27Z",
       "side": 1,
       "message": "Do we allow socket IO on the main thread in browser_tests?  I thought we had some sort of check that the thread was of type IO when doing socket IO?",
+      "range": {
+        "startLine": 142,
+        "startChar": 25,
+        "endLine": 142,
+        "endChar": 28
+      },
+      "revId": "3e249a42ddbca4ed6d28f2894bc8ac6f7263948d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94185398_b422a93c",
+        "filename": "net/test/spawned_test_server/remote_test_server.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-08-28T22:40:17Z",
+      "side": 1,
+      "message": "That\u0027s a good point. So far I\u0027ve tried only net_unittests and they all run with MessageLoopForIO on the main thread. It won\u0027t work for browser_tests because they use MessageLoopForUI. Added a background thread now. It\u0027s in RemoteTestServer, so it can be shared with SpawenedCommunicator (will remove the thread from a SpawenerCommunicator in my next CL).",
+      "parentUuid": "e81d797b_728e1a5d",
       "range": {
         "startLine": 142,
         "startChar": 25,
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "8857f08d_31940760",
+        "filename": "net/test/spawned_test_server/remote_test_server_proxy.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-08-28T22:40:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "184c9fe5_752c4613",
+      "range": {
+        "startLine": 69,
+        "startChar": 12,
+        "endLine": 69,
+        "endChar": 0
+      },
+      "revId": "3e249a42ddbca4ed6d28f2894bc8ac6f7263948d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e222d496_e2fc85ca",
         "filename": "net/test/spawned_test_server/remote_test_server_proxy.cc",
         "patchSetId": 1
@@ -114,6 +210,30 @@
       "revId": "3e249a42ddbca4ed6d28f2894bc8ac6f7263948d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3cc4032_d5405892",
+        "filename": "net/test/spawned_test_server/remote_test_server_proxy.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-08-28T22:40:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e222d496_e2fc85ca",
+      "range": {
+        "startLine": 134,
+        "startChar": 17,
+        "endLine": 134,
+        "endChar": 0
+      },
+      "revId": "3e249a42ddbca4ed6d28f2894bc8ac6f7263948d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "d31f37c9_209fd637",
+        "filename": "net/test/spawned_test_server/remote_test_server_proxy.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-08-28T22:40:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8626f242_e11b40d1",
+      "range": {
+        "startLine": 138,
+        "startChar": 4,
+        "endLine": 138,
+        "endChar": 11
+      },
+      "revId": "3e249a42ddbca4ed6d28f2894bc8ac6f7263948d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "399ac1db_ab95edff",
         "filename": "net/test/spawned_test_server/remote_test_server_proxy.cc",
         "patchSetId": 1
@@ -160,6 +304,30 @@
       "revId": "3e249a42ddbca4ed6d28f2894bc8ac6f7263948d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8533dabf_351a266b",
+        "filename": "net/test/spawned_test_server/remote_test_server_proxy.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-08-28T22:40:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "399ac1db_ab95edff",
+      "range": {
+        "startLine": 164,
+        "startChar": 8,
+        "endLine": 164,
+        "endChar": 9
+      },
+      "revId": "3e249a42ddbca4ed6d28f2894bc8ac6f7263948d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -186,6 +354,30 @@
     },
     {
       "key": {
+        "uuid": "58e9fc5c_98206ce5",
+        "filename": "net/test/spawned_test_server/remote_test_server_proxy.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-08-28T22:40:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2eb0a3f6_8221c62c",
+      "range": {
+        "startLine": 178,
+        "startChar": 26,
+        "endLine": 178,
+        "endChar": 27
+      },
+      "revId": "3e249a42ddbca4ed6d28f2894bc8ac6f7263948d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d1f78cc7_d7aa5aca",
         "filename": "net/test/spawned_test_server/remote_test_server_proxy.cc",
         "patchSetId": 1
@@ -209,6 +401,30 @@
     },
     {
       "key": {
+        "uuid": "9d40b35e_093000b3",
+        "filename": "net/test/spawned_test_server/remote_test_server_proxy.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-08-28T22:40:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d1f78cc7_d7aa5aca",
+      "range": {
+        "startLine": 180,
+        "startChar": 6,
+        "endLine": 180,
+        "endChar": 0
+      },
+      "revId": "3e249a42ddbca4ed6d28f2894bc8ac6f7263948d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "26a2c693_f67acbe8",
         "filename": "net/test/spawned_test_server/remote_test_server_proxy.cc",
         "patchSetId": 1
@@ -220,6 +436,30 @@
       "writtenOn": "2017-08-28T18:57:27Z",
       "side": 1,
       "message": "Think we should reverse this - make connections_ own the pointers, and the callback have a raw pointer.  Then when this class is destroyed, we will tear all of them down.  I don\u0027t think we have protection against that, otherwise?\n\nThis class is also complicated enough that we may want a couple tests for it - we really don\u0027t want random tests to fail because of bugs in this class.",
+      "range": {
+        "startLine": 207,
+        "startChar": 2,
+        "endLine": 207,
+        "endChar": 14
+      },
+      "revId": "3e249a42ddbca4ed6d28f2894bc8ac6f7263948d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a171e872_3607b8b6",
+        "filename": "net/test/spawned_test_server/remote_test_server_proxy.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-08-28T22:40:17Z",
+      "side": 1,
+      "message": "connections_ is std::vector\u003cstd::unique_ptr\u003cConnectionProxy\u003e\u003e, so it does keep ownership of all connections and they all are torn down when RemoteTestServerProxy is destroyed.\n\nAdded unittests",
+      "parentUuid": "26a2c693_f67acbe8",
       "range": {
         "startLine": 207,
         "startChar": 2,
@@ -255,6 +495,30 @@
     },
     {
       "key": {
+        "uuid": "27b0ff8e_ac1018a4",
+        "filename": "net/test/spawned_test_server/remote_test_server_proxy.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-08-28T22:40:17Z",
+      "side": 1,
+      "message": "Socket may be ambiguous as well. I renamed this method to OnConnectionClosed(). WDYT?",
+      "parentUuid": "969243c3_02f630ba",
+      "range": {
+        "startLine": 217,
+        "startChar": 28,
+        "endLine": 217,
+        "endChar": 44
+      },
+      "revId": "3e249a42ddbca4ed6d28f2894bc8ac6f7263948d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9a0849de_2ce8e0b1",
         "filename": "net/test/spawned_test_server/remote_test_server_proxy.h",
         "patchSetId": 1
@@ -278,6 +542,30 @@
     },
     {
       "key": {
+        "uuid": "b28a9723_e859bad3",
+        "filename": "net/test/spawned_test_server/remote_test_server_proxy.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-08-28T22:40:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9a0849de_2ce8e0b1",
+      "range": {
+        "startLine": 8,
+        "startChar": 1,
+        "endLine": 8,
+        "endChar": 9
+      },
+      "revId": "3e249a42ddbca4ed6d28f2894bc8ac6f7263948d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9287905f_37d0ea38",
         "filename": "net/test/spawned_test_server/remote_test_server_proxy.h",
         "patchSetId": 1
@@ -298,6 +586,30 @@
       "revId": "3e249a42ddbca4ed6d28f2894bc8ac6f7263948d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49a0a9c6_d5422005",
+        "filename": "net/test/spawned_test_server/remote_test_server_proxy.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-08-28T22:40:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9287905f_37d0ea38",
+      "range": {
+        "startLine": 25,
+        "startChar": 11,
+        "endLine": 25,
+        "endChar": 21
+      },
+      "revId": "3e249a42ddbca4ed6d28f2894bc8ac6f7263948d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
