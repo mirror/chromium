@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "80547249_4aa5ba01",
+        "filename": "net/nqe/network_quality_observation_source.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-08-28T23:03:08Z",
+      "side": 1,
+      "message": "nit: casting to size_t might be better?",
+      "revId": "be670ded72e871c0463fdf413d1784712798c876",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5d513b9_bb7d3e32",
+        "filename": "net/nqe/network_quality_observation_source.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-08-28T23:03:08Z",
+      "side": 1,
+      "message": "nit maybe: s/source/static_cast\u003csize_t\u003e(source)/ might be better to cast the enum value to and index value, but I don\u0027t really know if either way is preferred.",
+      "revId": "be670ded72e871c0463fdf413d1784712798c876",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
