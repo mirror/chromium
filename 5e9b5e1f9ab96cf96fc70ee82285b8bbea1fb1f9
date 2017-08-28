@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "508ab2f0_8bf21e95",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-28T08:06:23Z",
+      "side": 1,
+      "message": "nit: don\u0027t -\u003e doesn\u0027t",
+      "revId": "5e9b5e1f9ab96cf96fc70ee82285b8bbea1fb1f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
