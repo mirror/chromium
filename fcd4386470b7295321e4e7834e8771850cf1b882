@@ -1,0 +1,107 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6c96bdfa_de397bec",
+        "filename": "chrome/browser/vr/elements/viewport_aware_root.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-08-28T15:42:29Z",
+      "side": 1,
+      "message": "This is called before we set world_space_transform on elements for this frame. So the DCHECK at line 25 always check again the transform of last frame. I am assuming you mean you want to do the dcheck for current frame here? Might worth clarify the comment a little bit.",
+      "range": {
+        "startLine": 23,
+        "startChar": 4,
+        "endLine": 24,
+        "endChar": 21
+      },
+      "revId": "fcd4386470b7295321e4e7834e8771850cf1b882",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "abe3976d_93643c12",
+        "filename": "chrome/browser/vr/ui_scene.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-08-28T15:42:29Z",
+      "side": 1,
+      "message": "Given that you have two DCHECKs above, you probably don\u0027t need to handle this case.",
+      "revId": "fcd4386470b7295321e4e7834e8771850cf1b882",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d414b34b_658ded23",
+        "filename": "chrome/browser/vr/ui_scene_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-08-28T15:42:29Z",
+      "side": 1,
+      "message": "it might make sense to group kWebVrPermanentHttpSecurityWarning and kWebVrTransientHttpSecurityWarning to a liner layout. For transientUrlBar and WebVrPresentationToast, I am not quite sure that we should. They are conceptually different UIs for different purpose. And they could independently show/hide and wont need to adjust their position in response of other element\u0027s state. So we might not want to group all of them to a linear layout.",
+      "range": {
+        "startLine": 198,
+        "startChar": 57,
+        "endLine": 198,
+        "endChar": 70
+      },
+      "revId": "fcd4386470b7295321e4e7834e8771850cf1b882",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ae93e3a_4e0b9cdc",
+        "filename": "chrome/browser/vr/ui_scene_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-08-28T15:42:29Z",
+      "side": 1,
+      "message": "That would be awesome!",
+      "range": {
+        "startLine": 205,
+        "startChar": 0,
+        "endLine": 206,
+        "endChar": 55
+      },
+      "revId": "fcd4386470b7295321e4e7834e8771850cf1b882",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8589f69b_a1f740ef",
+        "filename": "chrome/browser/vr/ui_scene_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-08-28T15:42:29Z",
+      "side": 1,
+      "message": "optional nit: k2dBrowseringBackground and k2dBrowsingForeground doesnt feel like root element to me. Perhaps move them out of this function?",
+      "revId": "fcd4386470b7295321e4e7834e8771850cf1b882",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
