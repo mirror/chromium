@@ -61,8 +61,13 @@ error::Error DeleteHelper(GLsizei n,
   std::vector<ServiceType> service_ids(n, 0);
   for (GLsizei ii = 0; ii < n; ++ii) {
     ClientType client_id = client_ids[ii];
-    service_ids[ii] = id_map->GetServiceIDOrInvalid(client_id);
-    id_map->RemoveClientID(client_id);
+
+    // Don't pass service IDs of objects with a client ID of 0.  They are
+    // emulated and should not be deleteable
+    if (client_id != 0) {
+      service_ids[ii] = id_map->GetServiceIDOrInvalid(client_id);
+      id_map->RemoveClientID(client_id);
+    }
   }
 
   delete_function(n, service_ids.data());
@@ -357,9 +362,34 @@ error::Error GLES2DecoderPassthroughImpl::DoBindBufferRange(GLenum target,
 error::Error GLES2DecoderPassthroughImpl::DoBindFramebuffer(
     GLenum target,
     GLuint framebuffer) {
+  FlushErrors();
   glBindFramebufferEXT(
       target, GetFramebufferServiceID(framebuffer, &framebuffer_id_map_,
                                       bind_generates_resource_));
+  if (FlushErrors()) {
+    return error::kNoError;
+  }
+
+  // Update tracking of the bound framebuffer
+  switch (target) {
+    case GL_FRAMEBUFFER_EXT:
+      bound_draw_framebuffer_ = framebuffer;
+      bound_read_framebuffer_ = framebuffer;
+      break;
+
+    case GL_DRAW_FRAMEBUFFER:
+      bound_draw_framebuffer_ = framebuffer;
+      break;
+
+    case GL_READ_FRAMEBUFFER:
+      bound_read_framebuffer_ = framebuffer;
+      break;
+
+    default:
+      NOTREACHED();
+      break;
+  }
+
   return error::kNoError;
 }
 
@@ -746,7 +776,31 @@ error::Error GLES2DecoderPassthroughImpl::DoDeleteFramebuffers(
     InsertError(GL_INVALID_VALUE, "n cannot be negative.");
     return error::kNoError;
   }
-  return DeleteHelper(n, framebuffers, &framebuffer_id_map_,
+
+  std::vector<GLuint> framebuffers_copy(framebuffers, framebuffers + n);
+
+  // If a bound framebuffer is deleted, it's binding is reset to 0.  In the case
+  // of an emulated default framebuffer, bind the emulated one.
+  for (GLuint framebuffer : framebuffers_copy) {
+    if (framebuffer == bound_draw_framebuffer_) {
+      bound_draw_framebuffer_ = 0;
+      if (emulated_default_framebuffer_) {
+        glBindFramebufferEXT(
+            GL_DRAW_FRAMEBUFFER,
+            emulated_default_framebuffer_->framebuffer_service_id);
+      }
+    }
+    if (framebuffer == bound_read_framebuffer_) {
+      bound_read_framebuffer_ = 0;
+      if (emulated_default_framebuffer_) {
+        glBindFramebufferEXT(
+            GL_READ_FRAMEBUFFER,
+            emulated_default_framebuffer_->framebuffer_service_id);
+      }
+    }
+  }
+
+  return DeleteHelper(n, framebuffers_copy.data(), &framebuffer_id_map_,
                       [](GLsizei n, GLuint* framebuffers) {
                         glDeleteFramebuffersEXT(n, framebuffers);
                       });
@@ -1290,10 +1344,52 @@ error::Error GLES2DecoderPassthroughImpl::DoGetFramebufferAttachmentParameteriv(
     GLsizei bufsize,
     GLsizei* length,
     GLint* params) {
+  GLenum updated_attachment = attachment;
+  if (IsEmulatedFramebufferBound(target)) {
+    // Update the attachment do the equivalent one in the emulated framebuffer
+    switch (attachment) {
+      case GL_BACK:
+        updated_attachment = GL_COLOR_ATTACHMENT0;
+        break;
+
+      case GL_DEPTH:
+        updated_attachment = GL_DEPTH_ATTACHMENT;
+        break;
+
+      case GL_STENCIL:
+        updated_attachment = GL_STENCIL_ATTACHMENT;
+        break;
+
+      default:
+        InsertError(GL_INVALID_OPERATION, "Invalid attachment.");
+        *length = 0;
+        return error::kNoError;
+    }
+
+    // Generate errors for parameter names that are only valid for non-default
+    // framebuffers
+    switch (pname) {
+      case GL_FRAMEBUFFER_ATTACHMENT_OBJECT_NAME:
+      case GL_FRAMEBUFFER_ATTACHMENT_TEXTURE_LEVEL:
+      case GL_FRAMEBUFFER_ATTACHMENT_TEXTURE_CUBE_MAP_FACE:
+      case GL_FRAMEBUFFER_ATTACHMENT_TEXTURE_LAYER:
+        InsertError(GL_INVALID_ENUM, "Invalid parameter name.");
+        *length = 0;
+        return error::kNoError;
+    }
+  }
+
+  FlushErrors();
+
   // Get a scratch buffer to hold the result of the query
   GLint* scratch_params = GetTypedScratchMemory<GLint>(bufsize);
   glGetFramebufferAttachmentParameterivRobustANGLE(
       target, attachment, pname, bufsize, length, scratch_params);
+
+  if (FlushErrors()) {
+    DCHECK(*length == 0);
+    return error::kNoError;
+  }
 
   // Update the results of the query, if needed
   error::Error error = PatchGetFramebufferAttachmentParameter(
@@ -3012,30 +3108,33 @@ error::Error GLES2DecoderPassthroughImpl::DoResizeCHROMIUM(GLuint width,
                                                            GLfloat scale_factor,
                                                            GLenum color_space,
                                                            GLboolean alpha) {
-  gl::GLSurface::ColorSpace surface_color_space =
-      gl::GLSurface::ColorSpace::UNSPECIFIED;
-  switch (color_space) {
-    case GL_COLOR_SPACE_UNSPECIFIED_CHROMIUM:
-      surface_color_space = gl::GLSurface::ColorSpace::UNSPECIFIED;
-      break;
-    case GL_COLOR_SPACE_SCRGB_LINEAR_CHROMIUM:
-      surface_color_space = gl::GLSurface::ColorSpace::SCRGB_LINEAR;
-      break;
-    case GL_COLOR_SPACE_SRGB_CHROMIUM:
-      surface_color_space = gl::GLSurface::ColorSpace::SRGB;
-      break;
-    case GL_COLOR_SPACE_DISPLAY_P3_CHROMIUM:
-      surface_color_space = gl::GLSurface::ColorSpace::DISPLAY_P3;
-      break;
-    default:
-      LOG(ERROR) << "GLES2DecoderPassthroughImpl: Context lost because "
-                    "specified color space was invalid.";
-      return error::kLostContext;
-  }
   if (offscreen_) {
-    // TODO: crbug.com/665521
-    NOTIMPLEMENTED();
+    if (!ResizeOffscreenFramebuffer(gfx::Size(width, height))) {
+      LOG(ERROR) << "GLES2DecoderPassthroughImpl: Context lost because "
+                 << "ResizeOffscreenFramebuffer failed.";
+      return error::kLostContext;
+    }
   } else {
+    gl::GLSurface::ColorSpace surface_color_space =
+        gl::GLSurface::ColorSpace::UNSPECIFIED;
+    switch (color_space) {
+      case GL_COLOR_SPACE_UNSPECIFIED_CHROMIUM:
+        surface_color_space = gl::GLSurface::ColorSpace::UNSPECIFIED;
+        break;
+      case GL_COLOR_SPACE_SCRGB_LINEAR_CHROMIUM:
+        surface_color_space = gl::GLSurface::ColorSpace::SCRGB_LINEAR;
+        break;
+      case GL_COLOR_SPACE_SRGB_CHROMIUM:
+        surface_color_space = gl::GLSurface::ColorSpace::SRGB;
+        break;
+      case GL_COLOR_SPACE_DISPLAY_P3_CHROMIUM:
+        surface_color_space = gl::GLSurface::ColorSpace::DISPLAY_P3;
+        break;
+      default:
+        LOG(ERROR) << "GLES2DecoderPassthroughImpl: Context lost because "
+                      "specified color space was invalid.";
+        return error::kLostContext;
+    }
     if (!surface_->Resize(gfx::Size(width, height), scale_factor,
                           surface_color_space, !!alpha)) {
       LOG(ERROR)
