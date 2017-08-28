@@ -39,14 +39,17 @@ void AnimationWorkletProxyClientImpl::Dispose() {
   global_scope_ = nullptr;
 }
 
-bool AnimationWorkletProxyClientImpl::Mutate(double monotonic_time_now) {
+void AnimationWorkletProxyClientImpl::Mutate(
+    double monotonic_time_now,
+    const CompositorAnimatorsInputState& state) {
   DCHECK(global_scope_->IsContextThread());
 
   if (global_scope_)
-    global_scope_->Mutate();
+    global_scope_->Mutate(state);
 
   // Always request another rAF for now.
-  return true;
+  // TODO(majidvp): Actually pass the output state
+  mutator_->SetMutationUpdate(true, nullptr);
 }
 
 // static
