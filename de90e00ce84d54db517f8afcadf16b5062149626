@@ -19,6 +19,47 @@
     },
     {
       "key": {
+        "uuid": "a2d92d73_2b477697",
+        "filename": "remoting/host/linux/linux_me2me_host.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000528
+      },
+      "writtenOn": "2017-08-28T18:10:11Z",
+      "side": 1,
+      "message": "Consider adding a comment explaining why that\u0027s important.",
+      "parentUuid": "f7a2427b_aa42f76c",
+      "revId": "de90e00ce84d54db517f8afcadf16b5062149626",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c3b7112d_5d18880d",
+        "filename": "remoting/host/linux/linux_me2me_host.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 826,
+      "author": {
+        "id": 1000528
+      },
+      "writtenOn": "2017-08-28T18:10:11Z",
+      "side": 1,
+      "message": "\"running against |config_file|\"?\n\nMaybe add a caveat that it also detects legacy implementations that didn\u0027t supply a config file explicitly.",
+      "range": {
+        "startLine": 826,
+        "startChar": 59,
+        "endLine": 826,
+        "endChar": 66
+      },
+      "revId": "de90e00ce84d54db517f8afcadf16b5062149626",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4e8843b1_af986c09",
         "filename": "remoting/host/linux/linux_me2me_host.py",
         "patchSetId": 1
@@ -70,6 +111,29 @@
     },
     {
       "key": {
+        "uuid": "80710328_3741fc20",
+        "filename": "remoting/host/linux/linux_me2me_host.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 866,
+      "author": {
+        "id": 1000528
+      },
+      "writtenOn": "2017-08-28T18:10:11Z",
+      "side": 1,
+      "message": "Would it make sense to have the fallback logic instead use the default config file path? It wouldn\u0027t match the current behaviour exactly, but I think the effect for end users would be the same, and it\u0027s something we\u0027d probably want to leave so that command-line users don\u0027t need to specify a config file explicitly. If you implemented it that way, then I think a better design would be to make parse_config_arg() return the default instead of None if there\u0027s no config file specified. It will also remove the need to re-exec ourselves with an explicit config file if none is specified.",
+      "range": {
+        "startLine": 866,
+        "startChar": 23,
+        "endLine": 866,
+        "endChar": 0
+      },
+      "revId": "de90e00ce84d54db517f8afcadf16b5062149626",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c46a4eae_ba9ad8a6",
         "filename": "remoting/host/linux/linux_me2me_host.py",
         "patchSetId": 1
@@ -115,6 +179,29 @@
       "writtenOn": "2017-08-26T02:16:28Z",
       "side": 1,
       "message": "I moved this from below. No point in doing extra work if we\u0027re just going to exit, anyway.",
+      "revId": "de90e00ce84d54db517f8afcadf16b5062149626",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "00f710f4_8c201a1c",
+        "filename": "remoting/host/setup/daemon_controller_delegate_linux.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1000528
+      },
+      "writtenOn": "2017-08-28T18:10:11Z",
+      "side": 1,
+      "message": "I don\u0027t think this is harmful, but since the script takes care of missing config arguments, it doesn\u0027t seem necessary either. Consider removing it so that there are few places where the default config path is made explicit (though I think it\u0027s already duplicated between Python and C++, so it\u0027s not a big deal).",
+      "range": {
+        "startLine": 224,
+        "startChar": 74,
+        "endLine": 224,
+        "endChar": 0
+      },
       "revId": "de90e00ce84d54db517f8afcadf16b5062149626",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
