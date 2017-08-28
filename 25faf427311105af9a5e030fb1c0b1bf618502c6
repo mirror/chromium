@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a8737ee7_c614669d",
+        "filename": "chrome/browser/extensions/api/omnibox/omnibox_api.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-08-28T16:31:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a7a0cd24_f95b0257",
+      "revId": "25faf427311105af9a5e030fb1c0b1bf618502c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "eb694026_2429f7ec",
         "filename": "chrome/browser/ui/views/location_bar/location_bar_view.h",
         "patchSetId": 1
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "9ba77aeb_00ea3575",
+        "filename": "chrome/browser/ui/views/location_bar/location_bar_view.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-08-28T16:31:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eb694026_2429f7ec",
+      "revId": "25faf427311105af9a5e030fb1c0b1bf618502c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2b5d96e0_ef5f546b",
         "filename": "chrome/browser/ui/views/location_bar/selected_keyword_view.h",
         "patchSetId": 1
@@ -47,6 +83,24 @@
       "writtenOn": "2017-08-26T03:51:23Z",
       "side": 1,
       "message": "Nit: \"get\" is usually only on CamelCase function names, and \"label\" here refers to a Label object, so maybe label_text()?\n\nThat said, I\u0027d consider instead just making label() public in the parent class, dropping this function entirely, and having the test code call label()-\u003etext() itself.  If you didn\u0027t like that you could just do \"using IconLabelBubbleView::label;\" here to make the accessor public only in this class.",
+      "revId": "25faf427311105af9a5e030fb1c0b1bf618502c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0467d30_4419eef7",
+        "filename": "chrome/browser/ui/views/location_bar/selected_keyword_view.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-08-28T16:31:13Z",
+      "side": 1,
+      "message": "Thanks for the options. I chose to add \"using IconLabelBubbleView::label;\" here. The parent class IconLabelBubbleView has two methods named label() -- one const and the other non-const. \nReference: https://chromium.googlesource.com/chromium/src/+/ef0902b9ad6a44078dd366aa783e87320fafe92d/chrome/browser/ui/views/location_bar/icon_label_bubble_view.h#57\n\nWhich one would IconLabelBubbleView::label resolve to?",
+      "parentUuid": "2b5d96e0_ef5f546b",
       "revId": "25faf427311105af9a5e030fb1c0b1bf618502c6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "71dc7ac9_c9f20a78",
+        "filename": "chrome/browser/ui/views/location_bar/selected_keyword_view_interactive_uitest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-08-28T16:31:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ca7f8421_7a703782",
+      "revId": "25faf427311105af9a5e030fb1c0b1bf618502c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8b72d7e6_5c610947",
         "filename": "chrome/browser/ui/views/location_bar/selected_keyword_view_interactive_uitest.cc",
         "patchSetId": 1
@@ -84,6 +156,24 @@
       "revId": "25faf427311105af9a5e030fb1c0b1bf618502c6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8625f6d_c46d8a5b",
+        "filename": "chrome/browser/ui/views/location_bar/selected_keyword_view_interactive_uitest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-08-28T16:31:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8b72d7e6_5c610947",
+      "revId": "25faf427311105af9a5e030fb1c0b1bf618502c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
