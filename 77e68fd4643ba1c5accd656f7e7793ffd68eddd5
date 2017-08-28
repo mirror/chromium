@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "75e2e7d0_890de766",
+        "filename": "content/browser/renderer_host/render_view_host_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 577,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-08-28T17:32:00Z",
+      "side": 1,
+      "message": "I\u0027m not super familiar with HostZoomMap. Can you document why this static_cast is valid, in particular relative to e.g. tests?",
+      "revId": "77e68fd4643ba1c5accd656f7e7793ffd68eddd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
