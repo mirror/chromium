@@ -1,0 +1,13 @@
+mojom = "//components/multidevice/service/public/interfaces/device_sync.mojom"
+public_headers = [ "//components/cryptauth/remote_device.h" ]
+traits_headers =
+    [ "//components/multidevice/service/remote_device_struct_traits.h" ]
+sources = [
+  "//components/multidevice/service/remote_device_struct_traits.cc",
+]
+public_deps = [
+  "//components/cryptauth:cryptauth",
+]
+
+#TODO(hsuregan): Hook RemoteDevice interface to native one correctly.
+type_mappings = []  #"device_sync.mojom.RemoteDevice=cryptauth::RemoteDevice"]
