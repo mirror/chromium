@@ -10,6 +10,7 @@
 #include "core/imagebitmap/ImageBitmapFactories.h"
 #include "modules/ModulesExport.h"
 #include "modules/canvas2d/CanvasRenderingContext2D.h"
+#include "services/shape_detection/public/interfaces/constants.mojom-blink.h"
 #include "skia/public/interfaces/bitmap.mojom-blink.h"
 
 namespace blink {
@@ -21,6 +22,8 @@ class MODULES_EXPORT ShapeDetector
 
   ScriptPromise detect(ScriptState*, const ImageBitmapSourceUnion&);
   DEFINE_INLINE_VIRTUAL_TRACE() {}
+
+  static int getErrorCode(const String&);
 
  private:
   ScriptPromise DetectShapesOnImageData(ScriptPromiseResolver*, ImageData*);

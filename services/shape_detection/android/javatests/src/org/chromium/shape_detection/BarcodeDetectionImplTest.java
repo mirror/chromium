@@ -10,6 +10,7 @@ import android.test.InstrumentationTestCase;
 import org.chromium.base.test.util.Feature;
 import org.chromium.shape_detection.mojom.BarcodeDetection;
 import org.chromium.shape_detection.mojom.BarcodeDetectionResult;
+import org.chromium.shape_detection.mojom.ConstantsConstants;
 
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.TimeUnit;
@@ -28,7 +29,8 @@ public class BarcodeDetectionImplTest extends InstrumentationTestCase {
 
         final ArrayBlockingQueue<BarcodeDetectionResult[]> queue = new ArrayBlockingQueue<>(1);
         detector.detect(mojoBitmap, new BarcodeDetection.DetectResponse() {
-            public void call(BarcodeDetectionResult[] results) {
+            public void call(BarcodeDetectionResult[] results, String status) {
+                assertEquals(status, ConstantsConstants.DETECTOR_SUCCESS);
                 queue.add(results);
             }
         });
