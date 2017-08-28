@@ -34,6 +34,24 @@
       "revId": "b4a5966bb51e6cb3f098133967f145321fdd6bd5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "460a4003_44a9d3b0",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 4318,
+      "author": {
+        "id": 1213235
+      },
+      "writtenOn": "2017-08-28T23:24:13Z",
+      "side": 1,
+      "message": "I\u0027ve made the comment more explicit. As Bo said this will always be racy because of the js bridge. Sending the context menu event after selectionchanged event wouldn\u0027t fix the race condition, but it would make the solution more complicated so I don\u0027t think it\u0027s worthwhile.",
+      "parentUuid": "92c27b1f_c71a6546",
+      "revId": "b4a5966bb51e6cb3f098133967f145321fdd6bd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
