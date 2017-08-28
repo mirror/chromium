@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "82a84fa2_e9864fd3",
+        "filename": "chromeos/network/network_state.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 386,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-08-28T17:38:22Z",
+      "side": 1,
+      "message": "minor optimization nit: visible() \u0026\u0026 (StateIsConnected(connection_state_) || StateIsConnecting(connection_state_));",
+      "revId": "c03ae8e2b2ec522b6b66a53bc5ff22a4688b218e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
