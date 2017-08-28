@@ -584,17 +584,35 @@ void DisplaySRTPromptForTesting(const base::FilePath& download_path) {
 
 namespace {
 
-void ScanAndPrompt(const SwReporterInvocation& reporter_invocation) {
-  if (g_testing_delegate_) {
-    g_testing_delegate_->TriggerPrompt();
-    return;
-  }
-
+// Scan and show the Chrome Cleaner UI if the user has not already been prompted
+// in the current prompt wave.
+void MaybeScanAndPrompt(const SwReporterInvocation& reporter_invocation) {
   ChromeCleanerController* cleaner_controller =
       ChromeCleanerController::GetInstance();
 
   if (cleaner_controller->state() != ChromeCleanerController::State::kIdle) {
     RecordPromptNotShownWithReasonHistogram(NO_PROMPT_REASON_NOT_ON_IDLE_STATE);
+    return;
+  }
+
+  // Don't show the prompt again if it's been shown before for this profile
+  // and for the current variations seed.
+  std::string incoming_seed = GetIncomingSRTSeed();
+  std::string old_seed = prefs->GetString(prefs::kSwReporterPromptSeed);
+  if (!incoming_seed.empty() && incoming_seed == old_seed) {
+    RecordReporterStepHistogram(SW_REPORTER_ALREADY_PROMPTED);
+    RecordPromptNotShownWithReasonHistogram(NO_PROMPT_REASON_ALREADY_PROMPTED);
+    return;
+  }
+
+  if (!incoming_seed.empty() && incoming_seed != old_seed)
+    prefs->SetString(prefs::kSwReporterPromptSeed, incoming_seed);
+
+  prefs->SetString(prefs::kSwReporterPromptVersion,
+                   reporter_version.GetString());
+
+  if (g_testing_delegate_) {
+    g_testing_delegate_->TriggerPrompt();
     return;
   }
 
