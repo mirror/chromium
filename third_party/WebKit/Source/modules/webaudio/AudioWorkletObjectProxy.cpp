@@ -29,7 +29,9 @@ void AudioWorkletObjectProxy::EvaluateScript(const String& source,
       ToAudioWorkletGlobalScope(worker_thread->GlobalScope());
   global_scope->ScriptController()->Evaluate(
       ScriptSourceCode(source, script_url));
+}
 
+void AudioWorkletObjectProxy::DidEvaluateModuleScript(bool success) {
   // TODO(crbug.com/755566): Extract/build the information for synchronization
   // and send it to the associated AudioWorkletMessagingProxy. Currently this
   // is an empty cross-thread call for the future implementation.

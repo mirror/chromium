@@ -28,15 +28,14 @@ class CORE_EXPORT ThreadedWorkletObjectProxy : public ThreadedObjectProxyBase {
       ParentFrameTaskRunners*);
   ~ThreadedWorkletObjectProxy() override;
 
-  virtual void EvaluateScript(const String& source,
-                              const KURL& script_url,
-                              WorkerThread*);
+  void EvaluateScript(const String& source,
+                      const KURL& script_url,
+                      WorkerThread*);
 
   // ThreadedObjectProxyBase overrides.
   void ReportException(const String& error_message,
                        std::unique_ptr<SourceLocation>,
                        int exception_id) final {}
-  void DidEvaluateWorkerScript(bool success) final {}
   void WillDestroyWorkerGlobalScope() final {}
 
  protected:
