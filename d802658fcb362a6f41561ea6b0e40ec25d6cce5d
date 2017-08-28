@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ce1e7f9a_11fb52e0",
+        "filename": "components/exo/surface.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 701,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-08-28T15:24:21Z",
+      "side": 1,
+      "message": "nit: thanks for the cleanup! now that this is so simple, I\u0027d prefer the following here instead:\n\nbool needs_blending \u003d\n    current_resource_has_alpha_ \u0026\u0026\n    state_.blend_mode !\u003d SkBlendMode::kSrc \u0026\u0026 \n    !state_.opaque_region.contains(gfx::RectToSkIRect(output_rect));",
+      "revId": "d802658fcb362a6f41561ea6b0e40ec25d6cce5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1d423ff_c9568267",
+        "filename": "components/exo/surface.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 703,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-08-28T15:24:21Z",
+      "side": 1,
+      "message": "fyi, quad_rect should be output_rect. just a heads up to avoid a potential regression when you rebase this",
+      "range": {
+        "startLine": 703,
+        "startChar": 59,
+        "endLine": 703,
+        "endChar": 68
+      },
+      "revId": "d802658fcb362a6f41561ea6b0e40ec25d6cce5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
