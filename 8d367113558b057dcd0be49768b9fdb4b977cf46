@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e11bdf55_511d5b84",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-08-28T10:22:00Z",
+      "side": 1,
+      "message": "There is:\n\n \"If fetching fails for any reason (...), or if URL is the empty string, then ... and then fire an event named error at the track element.\"\n\n(step 10, second/third paragraph)\n\nIf there\u0027s no \u0027src\u0027 attribute, then the URL will be set to the empty string per https://html.spec.whatwg.org/multipage/media.html#track-url .\n\nWhat does other browsers do?",
+      "range": {
+        "startLine": 13,
+        "startChar": 1,
+        "endLine": 14,
+        "endChar": 48
+      },
+      "revId": "8d367113558b057dcd0be49768b9fdb4b977cf46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
