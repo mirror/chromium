@@ -90,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "87cb1067_7886a716",
+        "filename": "content/browser/service_worker/service_worker_dispatcher_host.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-28T01:25:59Z",
+      "side": 1,
+      "message": "GetWebContents() is only two lines though... I\u0027d prefer to just copy it now to make the dependency more clear (i.e., ProviderHost only needs resource_context from DispatcherHost to make this call)",
+      "parentUuid": "c0d1daf1_aad8ff07",
+      "revId": "0935c85cf85e2b3a34bf690a3c495f1f9d087297",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b3089c00_e437af3d",
         "filename": "content/browser/service_worker/service_worker_dispatcher_host_unittest.cc",
         "patchSetId": 4
@@ -101,6 +119,24 @@
       "writtenOn": "2017-08-24T14:23:44Z",
       "side": 1,
       "message": "As SWProviderHost handles Register IPC now, I think we need to move Register related tests into unit test file of SWProviderHost. But I\u0027d like to keep them here for now and reconstruct all tests for all methods of SWProviderHost mojo interface later in unit test file of SWProviderHost.",
+      "revId": "0935c85cf85e2b3a34bf690a3c495f1f9d087297",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e4e4139_8cdc04f9",
+        "filename": "content/browser/service_worker/service_worker_dispatcher_host_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 375,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-28T01:25:59Z",
+      "side": 1,
+      "message": "I\u0027d prefer to have the tests move with the implementation but maybe I don\u0027t understand the concern. Is it difficult to add unit tests for ServiceWorkerProviderHost::Register() in ServiceWorkerProviderHostTest now?",
+      "parentUuid": "b3089c00_e437af3d",
       "revId": "0935c85cf85e2b3a34bf690a3c495f1f9d087297",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -136,6 +172,24 @@
       "side": 1,
       "message": "Yeah, right after the execution of this function, mojo will check whether the response callback has been run or scheduled for a later run, if no, will raise a crash like:\n[147560:147560:0824/173403.703703:8726266657920:FATAL:interface_endpoint_client.cc(32)] Check failed: !is_valid. The callback passed to ServiceWorkerProviderHost::Register() was never run.",
       "parentUuid": "b9f45fbd_452181f1",
+      "revId": "0935c85cf85e2b3a34bf690a3c495f1f9d087297",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5341f3fc_4aea6bff",
+        "filename": "content/browser/service_worker/service_worker_provider_host.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 946,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-28T01:25:59Z",
+      "side": 1,
+      "message": "I think if you use mojo::ReportBadMessage, you don\u0027t need to worry about the callback.\n\nhttps://groups.google.com/a/chromium.org/d/msg/chromium-mojo/NNsogKNurlA/HdyJxDsBAQAJ",
+      "parentUuid": "53e8c4d0_feb79d5d",
       "revId": "0935c85cf85e2b3a34bf690a3c495f1f9d087297",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

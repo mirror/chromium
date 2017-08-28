@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7ecd740b_c4fb90f5",
+        "filename": "content/browser/service_worker/service_worker_provider_host.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 915,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-28T01:25:59Z",
+      "side": 1,
+      "message": "If we can move to the mojo::BadMessage() thing, it may be better for IsValidRegisterMessage() to also return a string for the specific error so we can have more info on crash reports (I\u0027m assuming they show up there, not sure)",
+      "revId": "301423941d3dfd46afc2bd53edaf5964ee7ba1e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
