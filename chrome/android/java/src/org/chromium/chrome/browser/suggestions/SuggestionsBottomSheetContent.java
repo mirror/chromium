@@ -36,6 +36,7 @@ import org.chromium.chrome.browser.search_engines.TemplateUrlService.TemplateUrl
 import org.chromium.chrome.browser.snackbar.SnackbarManager;
 import org.chromium.chrome.browser.tabmodel.TabModelSelector;
 import org.chromium.chrome.browser.util.FeatureUtilities;
+import org.chromium.chrome.browser.util.ViewUtils;
 import org.chromium.chrome.browser.widget.FadingShadow;
 import org.chromium.chrome.browser.widget.FadingShadowView;
 import org.chromium.chrome.browser.widget.bottomsheet.BottomSheet;
@@ -64,7 +65,7 @@ public class SuggestionsBottomSheetContent implements BottomSheet.BottomSheetCon
     private final BottomSheet mSheet;
     private final LogoView mLogoView;
     private final LogoDelegateImpl mLogoDelegate;
-    private final View mToolbarView;
+    private final ViewGroup mToolbarView;
 
     private boolean mNewTabShown;
     private boolean mSearchProviderHasLogo = true;
@@ -160,13 +161,13 @@ public class SuggestionsBottomSheetContent implements BottomSheet.BottomSheetCon
                     SuggestionsMetrics.recordSurfaceFullyVisible();
                     mRecyclerView.setScrollEnabled(true);
                 }
-                updateLogoTransition();
             }
 
             @Override
             public void onSheetClosed() {
                 super.onSheetClosed();
                 mRecyclerView.setAdapter(null);
+                updateLogoTransition();
             }
 
             @Override
@@ -193,7 +194,7 @@ public class SuggestionsBottomSheetContent implements BottomSheet.BottomSheetCon
         });
 
         mLogoView = mView.findViewById(R.id.search_provider_logo);
-        mToolbarView = activity.findViewById(R.id.control_container);
+        mToolbarView = (ViewGroup) activity.findViewById(R.id.toolbar);
         mLogoDelegate = new LogoDelegateImpl(navigationDelegate, mLogoView, profile);
         updateSearchProviderHasLogo();
         if (mSearchProviderHasLogo) {
@@ -335,17 +336,19 @@ public class SuggestionsBottomSheetContent implements BottomSheet.BottomSheetCon
     }
 
     private void updateLogoTransition() {
-        boolean showLogo = mSearchProviderHasLogo && mNewTabShown
-                && FeatureUtilities.isChromeHomeDoodleEnabled() && mBottomSheetObserver.isVisible();
+        boolean showLogo = mSearchProviderHasLogo && mNewTabShown && mSheet.isSheetOpen()
+                && FeatureUtilities.isChromeHomeDoodleEnabled();
 
         if (!showLogo) {
             mLogoView.setVisibility(View.GONE);
             mToolbarView.setTranslationY(0);
             mRecyclerView.setTranslationY(0);
+            ViewUtils.setAncestorsShouldClipChildren(mToolbarView, true);
             return;
         }
 
         mLogoView.setVisibility(View.VISIBLE);
+        ViewUtils.setAncestorsShouldClipChildren(mToolbarView, false);
 
         // TODO(mvanouwerkerk): Consider using Material animation curves.
         final float transitionFraction;

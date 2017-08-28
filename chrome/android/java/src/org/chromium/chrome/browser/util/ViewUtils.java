@@ -124,4 +124,19 @@ public class ViewUtils {
         view.setBackgroundResource(resource);
         view.setPadding(left, top, right, bottom);
     }
+
+    /**
+     * Sets clip children for the provided ViewGroup and all of its ancestors.
+     * @param view The ViewGroup whose children should (not) be clipped.
+     * @param clip Whether to clip children to the parent bounds.
+     */
+    public static void setAncestorsShouldClipChildren(ViewGroup view, boolean clip) {
+        ViewGroup parent = view;
+        while (parent != null) {
+            parent.setClipChildren(clip);
+            if (!(parent.getParent() instanceof ViewGroup)) break;
+            if (parent.getId() == android.R.id.content) break;
+            parent = (ViewGroup) parent.getParent();
+        }
+    }
 }
