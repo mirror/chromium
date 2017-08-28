@@ -131,6 +131,30 @@
     },
     {
       "key": {
+        "uuid": "e2b4a91f_9e85d242",
+        "filename": "chrome/installer/setup/install_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 526,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-08-28T15:52:34Z",
+      "side": 1,
+      "message": "lgtm",
+      "parentUuid": "63737b40_b400099c",
+      "range": {
+        "startLine": 526,
+        "startChar": 6,
+        "endLine": 526,
+        "endChar": 23
+      },
+      "revId": "1eca1358f0377b2a8e9cc74f78e3c94c5dbfb789",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "852c27b4_ba35da23",
         "filename": "chrome/installer/setup/setup_util.cc",
         "patchSetId": 2
