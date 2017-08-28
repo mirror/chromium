@@ -113,6 +113,7 @@
 #include "content/renderer/input/input_event_filter.h"
 #include "content/renderer/input/input_handler_manager.h"
 #include "content/renderer/input/main_thread_input_event_filter.h"
+#include "content/renderer/input/target_frame_for_input_impl.h"
 #include "content/renderer/media/audio_input_message_filter.h"
 #include "content/renderer/media/audio_message_filter.h"
 #include "content/renderer/media/audio_renderer_mixer_manager.h"
@@ -1979,13 +1980,18 @@ void RenderThreadImpl::RequestNewLayerTreeFrameSink(
   viz::mojom::CompositorFrameSinkClientRequest client_request =
       mojo::MakeRequest(&client);
 
+  viz::mojom::TargetFrameForInputDelegatePtr hit_test;
+  viz::mojom::TargetFrameForInputDelegateRequest hit_test_request =
+      mojo::MakeRequest(&hit_test);
+
   if (command_line.HasSwitch(switches::kEnableVulkan)) {
     scoped_refptr<viz::VulkanContextProvider> vulkan_context_provider =
         viz::VulkanInProcessContextProvider::Create();
     if (vulkan_context_provider) {
       DCHECK(!layout_test_mode());
       frame_sink_provider_->CreateForWidget(routing_id, std::move(sink_request),
-                                            std::move(client));
+                                            std::move(client),
+                                            std::move(hit_test));
       callback.Run(base::MakeUnique<viz::ClientLayerTreeFrameSink>(
           std::move(vulkan_context_provider),
           std::move(synthetic_begin_frame_source), std::move(sink_info),
@@ -2015,7 +2021,8 @@ void RenderThreadImpl::RequestNewLayerTreeFrameSink(
   if (use_software) {
     DCHECK(!layout_test_mode());
     frame_sink_provider_->CreateForWidget(routing_id, std::move(sink_request),
-                                          std::move(client));
+                                          std::move(client),
+                                          std::move(hit_test));
     callback.Run(base::MakeUnique<viz::ClientLayerTreeFrameSink>(
         nullptr, nullptr, nullptr, shared_bitmap_manager(),
         std::move(synthetic_begin_frame_source), std::move(sink_info),
@@ -2089,7 +2096,7 @@ void RenderThreadImpl::RequestNewLayerTreeFrameSink(
   }
 #endif
   frame_sink_provider_->CreateForWidget(routing_id, std::move(sink_request),
-                                        std::move(client));
+                                        std::move(client), std::move(hit_test));
   callback.Run(base::MakeUnique<viz::ClientLayerTreeFrameSink>(
       std::move(context_provider), std::move(worker_context_provider),
       GetGpuMemoryBufferManager(), nullptr,

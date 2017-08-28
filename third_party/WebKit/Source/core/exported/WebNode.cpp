@@ -45,6 +45,7 @@
 #include "core/exported/WebPluginContainerImpl.h"
 #include "core/html/HTMLCollection.h"
 #include "core/html/HTMLElement.h"
+#include "core/html/HTMLFrameOwnerElement.h"
 #include "core/layout/LayoutEmbeddedContent.h"
 #include "core/layout/LayoutObject.h"
 #include "platform/wtf/PtrUtil.h"
@@ -97,6 +98,15 @@ WebString WebNode::NodeValue() const {
 
 WebDocument WebNode::GetDocument() const {
   return WebDocument(&private_->GetDocument());
+}
+
+WebFrame* WebNode::ContentFrame() const {
+  Frame* target_frame = nullptr;
+  if (private_->IsFrameOwnerElement())
+    target_frame = ToHTMLFrameOwnerElement(private_.Get())->ContentFrame();
+  else
+    target_frame = private_->GetDocument().GetFrame();
+  return WebFrame::FromFrame(target_frame);
 }
 
 WebNode WebNode::FirstChild() const {

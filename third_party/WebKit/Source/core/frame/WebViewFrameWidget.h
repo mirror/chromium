@@ -57,6 +57,7 @@ class CORE_EXPORT WebViewFrameWidget : public WebFrameWidgetBase {
   void CompositeAndReadbackAsync(
       WebCompositeAndReadbackAsyncCallback*) override;
   void ThemeChanged() override;
+  //  WebFrame* HitTestFrameAt(const WebFloatPoint&) override;
   WebInputEventResult HandleInputEvent(const WebCoalescedInputEvent&) override;
   void SetCursorVisibilityState(bool is_visible) override;
   bool HasTouchEventHandlersAt(const WebPoint&) override;
@@ -104,6 +105,7 @@ class CORE_EXPORT WebViewFrameWidget : public WebFrameWidgetBase {
   WebLayerTreeView* GetLayerTreeView() const override;
   CompositorAnimationHost* AnimationHost() const override;
   WebWidgetClient* Client() const override { return client_; }
+  WebHitTestResult HitTestResultAt(const WebPoint&) override;
   HitTestResult CoreHitTestResultAt(const WebPoint&) override;
 
   DECLARE_VIRTUAL_TRACE();

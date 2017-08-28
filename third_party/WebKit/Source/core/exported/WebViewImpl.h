@@ -132,6 +132,7 @@ class CORE_EXPORT WebViewImpl final
   void CompositeAndReadbackAsync(
       WebCompositeAndReadbackAsyncCallback*) override;
   void ThemeChanged() override;
+  //  WebFrame* HitTestFrameAt(const WebFloatPoint&) override;
   WebInputEventResult HandleInputEvent(const WebCoalescedInputEvent&) override;
   void SetCursorVisibilityState(bool is_visible) override;
   bool HasTouchEventHandlersAt(const WebPoint&) override;

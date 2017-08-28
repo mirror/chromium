@@ -2126,6 +2126,22 @@ bool WebViewImpl::HasVerticalScrollbar() {
       ->VerticalScrollbar();
 }
 
+// WebFrame* WebViewImpl::HitTestFrameAt(const WebFloatPoint& point) {
+//  if (!MainFrameImpl())
+//    return nullptr;
+//
+//  HitTestResult hit_test_result =
+//      MainFrameImpl()->GetFrame()->GetEventHandler().HitTestResultAtPoint(
+//          LayoutPoint((FloatPoint)point));
+//  Frame* target_frame = nullptr;
+//  Node* target_node = hit_test_result.InnerNode();
+//  if (target_node->IsFrameOwnerElement())
+//    target_frame = ToHTMLFrameOwnerElement(target_node)->ContentFrame();
+//  else
+//    target_frame = target_node->GetDocument().GetFrame();
+//  return WebFrame::FromFrame(target_frame);
+//}
+
 WebInputEventResult WebViewImpl::HandleInputEvent(
     const WebCoalescedInputEvent& coalesced_event) {
   const WebInputEvent& input_event = coalesced_event.Event();

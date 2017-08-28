@@ -374,10 +374,11 @@ void DelegatedFrameHost::AttemptFrameSubscriberCapture(
 }
 
 void DelegatedFrameHost::DidCreateNewRendererCompositorFrameSink(
-    viz::mojom::CompositorFrameSinkClient* renderer_compositor_frame_sink) {
+    viz::mojom::CompositorFrameSinkClient* renderer_compositor_frame_sink,
+    viz::mojom::TargetFrameForInputDelegate* input_delegate) {
   ResetCompositorFrameSinkSupport();
   renderer_compositor_frame_sink_ = renderer_compositor_frame_sink;
-  CreateCompositorFrameSinkSupport();
+  CreateCompositorFrameSinkSupport(input_delegate);
   has_frame_ = false;
 }
 
@@ -843,15 +844,17 @@ void DelegatedFrameHost::UnlockResources() {
   frame_evictor_->UnlockFrame();
 }
 
-void DelegatedFrameHost::CreateCompositorFrameSinkSupport() {
+void DelegatedFrameHost::CreateCompositorFrameSinkSupport(
+    viz::mojom::TargetFrameForInputDelegate* input_delegate) {
   DCHECK(!support_);
   constexpr bool is_root = false;
   constexpr bool needs_sync_points = true;
   ImageTransportFactory* factory = ImageTransportFactory::GetInstance();
-  support_ = factory->GetContextFactoryPrivate()
-                 ->GetHostFrameSinkManager()
-                 ->CreateCompositorFrameSinkSupport(this, frame_sink_id_,
-                                                    is_root, needs_sync_points);
+  support_ =
+      factory->GetContextFactoryPrivate()
+          ->GetHostFrameSinkManager()
+          ->CreateCompositorFrameSinkSupport(
+              this, input_delegate, frame_sink_id_, is_root, needs_sync_points);
   if (compositor_)
     compositor_->AddFrameSink(frame_sink_id_);
   if (needs_begin_frame_)

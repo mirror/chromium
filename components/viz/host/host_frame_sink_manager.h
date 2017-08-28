@@ -115,6 +115,7 @@ class VIZ_HOST_EXPORT HostFrameSinkManager
   // CompositorFrameSinkSupportManager:
   std::unique_ptr<CompositorFrameSinkSupport> CreateCompositorFrameSinkSupport(
       CompositorFrameSinkSupportClient* client,
+      mojom::TargetFrameForInputDelegate*,
       const FrameSinkId& frame_sink_id,
       bool is_root,
       bool needs_sync_points) override;
@@ -156,6 +157,10 @@ class VIZ_HOST_EXPORT HostFrameSinkManager
     // Track frame sink hierarchy in both directions.
     std::vector<FrameSinkId> parents;
     std::vector<FrameSinkId> children;
+
+    // Hit test interface from the renderer.
+    mojom::TargetFrameForInputDelegate* target_frame_for_input_delegate =
+        nullptr;
 
    private:
     DISALLOW_COPY_AND_ASSIGN(FrameSinkData);
