@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "97b9e34d_d85b9d49",
+        "filename": "third_party/WebKit/Source/devtools/front_end/resources/ServiceWorkersView.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-08-28T23:12:44Z",
+      "side": 0,
+      "message": "Let\u0027s remove this from ServiceWorkerManager and protocol as well?",
+      "revId": "60358094ba966ef30f1bcc446aa2c4afbdc1b4ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
