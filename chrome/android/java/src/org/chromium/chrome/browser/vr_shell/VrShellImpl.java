@@ -649,6 +649,8 @@ public class VrShellImpl extends GvrLayout implements VrShell, SurfaceHolder.Cal
                 UrlConstants.NTP_URL, TabLaunchType.FROM_CHROME_UI);
     }
 
+    @VisibleForTesting
+    @Override
     @CalledByNative
     public void navigateForward() {
         if (!mCanGoForward) return;
@@ -656,6 +658,8 @@ public class VrShellImpl extends GvrLayout implements VrShell, SurfaceHolder.Cal
         updateHistoryButtonsVisibility();
     }
 
+    @VisibleForTesting
+    @Override
     @CalledByNative
     public void navigateBack() {
         if (!mCanGoBack) return;
@@ -716,6 +720,12 @@ public class VrShellImpl extends GvrLayout implements VrShell, SurfaceHolder.Cal
     @Override
     public Boolean isBackButtonEnabled() {
         return mCanGoBack;
+    }
+
+    @VisibleForTesting
+    @Override
+    public Boolean isForwardButtonEnabled() {
+        return mCanGoForward;
     }
 
     @VisibleForTesting
