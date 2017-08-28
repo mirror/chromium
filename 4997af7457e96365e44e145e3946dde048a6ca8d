@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ba377b4a_d5808cc4",
+        "filename": "third_party/WebKit/Source/platform/wtf/typed_arrays/ArrayBufferContents.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2017-08-28T23:07:58Z",
+      "side": 1,
+      "message": "This is safe because Linux is guaranteed to be 64-bit and hence will have the trap handling thing going on. But on 32-bit platforms, we can never do this, right? Since the JavaScript caller might specify an arbitrary offset from NULL, and hence result in a valid-but-wrong memory reference?\n\nIf I have that right, it might make sense to add a comment that effect, so that future maintainers don\u0027t get overzealous.",
+      "revId": "4997af7457e96365e44e145e3946dde048a6ca8d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
