@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "4f269eba_8c553627",
+        "filename": "ios/clean/chrome/browser/ui/dialogs/http_auth_dialogs/http_auth_dialog_coordinator.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-08-28T22:27:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "60b0014a_68e73949",
+      "revId": "94a0553c387f9ee1abacd391fbac02abc8574200",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a17bf3be_e31d6e39",
         "filename": "ios/clean/chrome/browser/ui/dialogs/http_auth_dialogs/http_auth_dialog_coordinator.h",
         "patchSetId": 4
@@ -33,6 +51,24 @@
       "revId": "94a0553c387f9ee1abacd391fbac02abc8574200",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "064dadf0_d74c1733",
+        "filename": "ios/clean/chrome/browser/ui/dialogs/http_auth_dialogs/http_auth_dialog_coordinator.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-08-28T22:27:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a17bf3be_e31d6e39",
+      "revId": "94a0553c387f9ee1abacd391fbac02abc8574200",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "e9f295f4_b9d39d4a",
+        "filename": "ios/clean/chrome/browser/ui/dialogs/http_auth_dialogs/http_auth_dialog_mediator.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-08-28T22:27:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "adc0f0bb_853748b1",
+      "revId": "94a0553c387f9ee1abacd391fbac02abc8574200",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c7eb8db4_2b0ec58a",
         "filename": "ios/clean/chrome/browser/ui/dialogs/http_auth_dialogs/http_auth_dialog_request.h",
         "patchSetId": 4
@@ -67,6 +121,24 @@
       "revId": "94a0553c387f9ee1abacd391fbac02abc8574200",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25b05003_b583ab97",
+        "filename": "ios/clean/chrome/browser/ui/dialogs/http_auth_dialogs/http_auth_dialog_request.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-08-28T22:27:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c7eb8db4_2b0ec58a",
+      "revId": "94a0553c387f9ee1abacd391fbac02abc8574200",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "a19a30ed_3d0e8b6a",
+        "filename": "ios/clean/chrome/browser/ui/dialogs/http_auth_dialogs/http_auth_dialog_request.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-08-28T22:27:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "58ef7ca1_4155fda0",
+      "revId": "94a0553c387f9ee1abacd391fbac02abc8574200",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4074205a_a0aee899",
         "filename": "ios/clean/chrome/browser/ui/dialogs/http_auth_dialogs/http_auth_dialog_request.h",
         "patchSetId": 4
@@ -101,6 +191,24 @@
       "revId": "94a0553c387f9ee1abacd391fbac02abc8574200",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8447337d_4e1ae267",
+        "filename": "ios/clean/chrome/browser/ui/dialogs/http_auth_dialogs/http_auth_dialog_request.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-08-28T22:27:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4074205a_a0aee899",
+      "revId": "94a0553c387f9ee1abacd391fbac02abc8574200",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "d1b0b07d_a76d26b7",
+        "filename": "ios/clean/chrome/browser/ui/dialogs/http_auth_dialogs/http_auth_dialog_request.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-08-28T22:27:06Z",
+      "side": 1,
+      "message": "Same reasoning as the JavaScriptDialogRequest.",
+      "parentUuid": "58ddcfcb_6dee984e",
+      "revId": "94a0553c387f9ee1abacd391fbac02abc8574200",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3407b12d_009dd1b2",
         "filename": "ios/clean/chrome/browser/ui/dialogs/http_auth_dialogs/http_auth_dialog_request.mm",
         "patchSetId": 4
@@ -135,6 +261,24 @@
       "revId": "94a0553c387f9ee1abacd391fbac02abc8574200",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bacc91d7_89906b15",
+        "filename": "ios/clean/chrome/browser/ui/dialogs/http_auth_dialogs/http_auth_dialog_request.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-08-28T22:27:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3407b12d_009dd1b2",
+      "revId": "94a0553c387f9ee1abacd391fbac02abc8574200",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
