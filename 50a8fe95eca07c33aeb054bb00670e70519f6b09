@@ -52,6 +52,24 @@
       "revId": "50a8fe95eca07c33aeb054bb00670e70519f6b09",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf977474_ff3e09f2",
+        "filename": "ash/wm/power_button_controller.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-08-28T21:12:26Z",
+      "side": 1,
+      "message": "CL is here: https://codereview.chromium.org/2533373002/\nBecause we have both user preference and local preference for touchscreen. User preference is used for debug short cut. The combination determines the final state of touchscreen.",
+      "parentUuid": "3758c79b_a8438103",
+      "revId": "50a8fe95eca07c33aeb054bb00670e70519f6b09",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
