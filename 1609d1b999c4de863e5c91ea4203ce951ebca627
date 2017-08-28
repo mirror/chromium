@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6de0af2f_ed33b9f8",
+        "filename": "chrome/browser/metrics/metrics_service_browsertest.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-08-28T19:31:15Z",
+      "side": 1,
+      "message": "but this won\u0027t necessarily be true in prod. Only foreground renderer crashes will increment kStabilityRendererCrashCount. Shouldn\u0027t we make this conditonally return the histogram value instead? I mean, it\u0027s probably true for these tests but doesn\u0027t reflect reality. And unfortunately we can\u0027t write a chrome/ layer browser test on android to verify the difference because android doesn\u0027t user the Browser object",
+      "range": {
+        "startLine": 66,
+        "startChar": 2,
+        "endLine": 66,
+        "endChar": 11
+      },
+      "revId": "1609d1b999c4de863e5c91ea4203ce951ebca627",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
