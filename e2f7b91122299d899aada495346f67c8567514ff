@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "f76aa280_135ea169",
+        "filename": "third_party/WebKit/Source/core/inspector/InspectorMemoryAgent.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1151889
+      },
+      "writtenOn": "2017-08-28T01:24:46Z",
+      "side": 1,
+      "message": "I discussed this with haraken offline, and decided to make BlinkLeakDetector back to non-gc in order to make sure that BlinkLeakDetector would not outlive its client. The reason why the client should live longer than the detector is because the detector has a raw pointer to the client even when the client, which could be either gc or non-gc, dies.",
+      "parentUuid": "060d8916_97e6166c",
+      "revId": "e2f7b91122299d899aada495346f67c8567514ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d7c1883c_c6644ddd",
         "filename": "third_party/WebKit/Source/core/inspector/InspectorMemoryAgent.cpp",
         "patchSetId": 5
