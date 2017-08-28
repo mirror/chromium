@@ -304,5 +304,119 @@ class TestExtendedAttribute(unittest.TestCase):
     self.assertEqual('ExtAttribute', attribute.GetClass())
     self.assertEqual('Attribute1', attribute.GetName())
 
+
+class TestDefaultValue(unittest.TestCase):
+  def setUp(self):
+    self.parser = IDLParser(IDLLexer(), mute_error=True)
+
+  def _ParseDefaultValue(self, default_value_text):
+    idl_text = 'interface I {void hello(' + default_value_text + ');};'
+    filenode = self.parser.ParseText(filename='', data=idl_text)
+    self.assertEqual(1, len(filenode.GetChildren()))
+    node = filenode.GetChildren()[0]
+    children = node.GetChildren()
+    self.assertEqual('Interface', node.GetClass())
+    self.assertEqual('I', node.GetName())
+    self.assertEqual(1, len(children))
+    Operation = children[0]
+    self.assertEqual('Operation', Operation.GetClass())
+    self.assertEqual('hello', Operation.GetName())
+    self.assertEqual(2, len(Operation.GetChildren()))
+    self.assertEqual('Arguments', Operation.GetChildren()[0].GetClass())
+    self.assertEqual(2, len(Operation.GetChildren()[0].GetChildren()))
+    argument0 = Operation.GetChildren()[0].GetChildren()[0]
+    self.assertEqual('Argument', argument0.GetClass())
+    self.assertEqual('prefix', argument0.GetName())
+    self.assertEqual('Type', argument0.GetChildren()[0].GetClass())
+    self.assertEqual(1, len(argument0.GetChildren()[0].GetChildren()))
+    default = Operation.GetChildren()[0].GetChildren()[1]
+    self.assertEqual('Argument', default.GetClass())
+    self.assertEqual('prefix', default.GetName())
+    self.assertEqual('Type', default.GetChildren()[0].GetClass())
+    func = Operation.GetChildren()[1].GetChildren()[0]
+    self.assertEqual('PrimitiveType', func.GetClass())
+    self.assertEqual('void', func.GetName())
+    self.assertEqual('Type', Operation.GetChildren()[1].GetClass())
+    arguments = Operation.GetChildren()[0].GetChildren()
+    return arguments
+
+  def testDefaultValueDOMString(self):
+    default_value_text = 'DOMString prefix, optional DOMString prefix = "foo"'
+    arguments = self._ParseDefaultValue(default_value_text)
+    argument0 = arguments[0]
+    default = arguments[1]
+    argument0Type = argument0.GetChildren()[0].GetChildren()[0]
+    self.assertEqual('StringType', argument0Type.GetClass())
+    self.assertEqual('DOMString', argument0Type.GetName())
+    defaultType = default.GetChildren()[0].GetChildren()[0]
+    self.assertEqual('StringType', defaultType.GetClass())
+    self.assertEqual('DOMString', defaultType.GetName())
+    defaultValue = default.GetChildren()[1]
+    self.assertEqual('Default', defaultValue.GetClass())
+    self.assertEqual('foo', defaultValue.GetProperty('VALUE'))
+
+  def testDefaultValueInteger(self):
+    default_value_text = 'integer prefix, optional integer prefix = 10'
+    arguments = self._ParseDefaultValue(default_value_text)
+    argument0 = arguments[0]
+    default = arguments[1]
+    argument0Type = argument0.GetChildren()[0].GetChildren()[0]
+    self.assertEqual('Typeref', argument0Type.GetClass())
+    self.assertEqual('integer', argument0Type.GetName())
+    defaultType = default.GetChildren()[0].GetChildren()[0]
+    self.assertEqual('Typeref', defaultType.GetClass())
+    self.assertEqual('integer', defaultType.GetName())
+    defaultValue = default.GetChildren()[1]
+    self.assertEqual('Default', defaultValue.GetClass())
+    self.assertEqual('10', defaultValue.GetProperty('VALUE'))
+
+  def testDefaultValueFloat(self):
+    default_value_text = 'float prefix, optional float prefix = 1.5'
+    arguments = self._ParseDefaultValue(default_value_text)
+    argument0 = arguments[0]
+    default = arguments[1]
+    argument0Type = argument0.GetChildren()[0].GetChildren()[0]
+    self.assertEqual('PrimitiveType', argument0Type.GetClass())
+    self.assertEqual('float', argument0Type.GetName())
+    defaultType = default.GetChildren()[0].GetChildren()[0]
+    self.assertEqual('PrimitiveType', defaultType.GetClass())
+    self.assertEqual('float', defaultType.GetName())
+    defaultValue = default.GetChildren()[1]
+    self.assertEqual('Default', defaultValue.GetClass())
+    self.assertEqual('float', defaultValue.GetProperty('TYPE'))
+    self.assertEqual('1.5', defaultValue.GetProperty('VALUE'))
+
+  def testDefaultValueBoolean(self):
+    default_value_text = 'boolean prefix, optional boolean prefix = true'
+    arguments = self._ParseDefaultValue(default_value_text)
+    argument0 = arguments[0]
+    default = arguments[1]
+    argument0Type = argument0.GetChildren()[0].GetChildren()[0]
+    self.assertEqual('PrimitiveType', argument0Type.GetClass())
+    self.assertEqual('boolean', argument0Type.GetName())
+    defaultType = default.GetChildren()[0].GetChildren()[0]
+    self.assertEqual('PrimitiveType', defaultType.GetClass())
+    self.assertEqual('boolean', defaultType.GetName())
+    defaultValue = default.GetChildren()[1]
+    self.assertEqual('Default', defaultValue.GetClass())
+    self.assertEqual('boolean', defaultValue.GetProperty('TYPE'))
+    self.assertEqual(True, defaultValue.GetProperty('VALUE'))
+
+  def testDefaultValueBoolean(self):
+    default_value_text = 'NULL prefix, optional NULL prefix = null'
+    arguments = self._ParseDefaultValue(default_value_text)
+    argument0 = arguments[0]
+    default = arguments[1]
+    argument0Type = argument0.GetChildren()[0].GetChildren()[0]
+    self.assertEqual('Typeref', argument0Type.GetClass())
+    self.assertEqual('NULL', argument0Type.GetName())
+    defaultType = default.GetChildren()[0].GetChildren()[0]
+    self.assertEqual('Typeref', defaultType.GetClass())
+    self.assertEqual('NULL', defaultType.GetName())
+    defaultValue = default.GetChildren()[1]
+    self.assertEqual('Default', defaultValue.GetClass())
+    self.assertEqual('NULL', defaultValue.GetProperty('TYPE'))
+    self.assertEqual('NULL', defaultValue.GetProperty('VALUE'))
+
 if __name__ == '__main__':
   unittest.main(verbosity=2)
