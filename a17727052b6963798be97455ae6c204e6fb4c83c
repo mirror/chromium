@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "95d264fe_f0f3587e",
+        "filename": "tools/traffic_annotation/auditor/traffic_annotation_auditor.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2017-08-28T14:25:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e8644164_2391c27d",
+      "range": {
+        "startLine": 57,
+        "startChar": 6,
+        "endLine": 57,
+        "endChar": 25
+      },
+      "revId": "a17727052b6963798be97455ae6c204e6fb4c83c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bb143d56_0ef781c2",
         "filename": "tools/traffic_annotation/auditor/traffic_annotation_auditor.cc",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "a17727052b6963798be97455ae6c204e6fb4c83c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0089976_00a644a1",
+        "filename": "tools/traffic_annotation/auditor/traffic_annotation_auditor.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2017-08-28T14:25:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bb143d56_0ef781c2",
+      "range": {
+        "startLine": 186,
+        "startChar": 4,
+        "endLine": 186,
+        "endChar": 59
+      },
+      "revId": "a17727052b6963798be97455ae6c204e6fb4c83c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
