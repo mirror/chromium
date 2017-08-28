@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "64aa2f68_0cc81534",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletGlobalScope.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-08-28T18:59:59Z",
+      "side": 1,
+      "message": "Done.\n\nI was planning to add a layout test once AudioWorkletNode, AudioNodeProcessor interface is completed. I looked up how to instantiate all infra (e.g. AudioWorkletMessagingProxy, AudioWorkletObjectProxy and AudioWorkletGlobalScope with multiple threads) within the unit test, and it wasn\u0027t really trivial. Instead, I would like to spend more time in writing layout test later.",
+      "parentUuid": "71318ad9_480f866d",
+      "revId": "c64344417093a38f22758dc21e6c8d6d55a9d819",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "51c5327e_8846d082",
         "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletObjectProxy.cpp",
         "patchSetId": 6
@@ -33,6 +51,24 @@
       "revId": "c64344417093a38f22758dc21e6c8d6d55a9d819",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "689e61c5_b61da6a0",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletObjectProxy.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-08-28T18:59:59Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "51c5327e_8846d082",
+      "revId": "c64344417093a38f22758dc21e6c8d6d55a9d819",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "110cb40a_42791f16",
+        "filename": "third_party/WebKit/Source/modules/webaudio/CrossThreadAudioWorkletProcessorInfo.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-08-28T18:59:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d131f759_ba8f3d5e",
+      "revId": "c64344417093a38f22758dc21e6c8d6d55a9d819",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d3ca9936_e43316d6",
         "filename": "third_party/WebKit/Source/modules/webaudio/CrossThreadAudioWorkletProcessorInfo.h",
         "patchSetId": 6
@@ -67,6 +121,24 @@
       "revId": "c64344417093a38f22758dc21e6c8d6d55a9d819",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86d90268_a68b6007",
+        "filename": "third_party/WebKit/Source/modules/webaudio/CrossThreadAudioWorkletProcessorInfo.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-08-28T18:59:59Z",
+      "side": 1,
+      "message": "This is difficult because of the copy assignment in AudioWorkletMessagingProxy::SynchronizeWorkletProcessorInfoList(). If this is a must, I\u0027ll handle it in a different CL.",
+      "parentUuid": "d3ca9936_e43316d6",
+      "revId": "c64344417093a38f22758dc21e6c8d6d55a9d819",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
