@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d47f11a2_df8c21e7",
+        "filename": "third_party/WebKit/Source/modules/mediastream/MediaStream.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-08-28T11:48:22Z",
+      "side": 0,
+      "message": "Correct.",
+      "parentUuid": "5b879185_f298cd52",
+      "revId": "cf15748fe1cd4ad9fc1984729e42c38186130294",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e27ac56e_1bbd4070",
         "filename": "third_party/WebKit/Source/modules/mediastream/MediaStream.cpp",
         "patchSetId": 4
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "f068c80a_c1949f45",
+        "filename": "third_party/WebKit/Source/modules/mediastream/MediaStream.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-08-28T11:48:22Z",
+      "side": 0,
+      "message": "For this CL at least, I think it\u0027s better to keep the two lists because it preserves existing behavior in a straightforward manner (this CL just moves the list from content::MediaStream to blink::MediaStreamDescriptor) and the primary goal is to remove content::MediaStream.\n\nWhile the two lists have a similar purpose, putting non GC objects in a list of GC objects is not as straightforward as this CL. We need to define a new GC class in Blink to maintain the references to the WebMediaStreamObservers and we need to find the right owner for these GC objects since the list of observers has weak references. We might end up with yet another list plus a new GC class, which would be worse than just the list. In addition, we also have to verify that notifications for the two lists are exactly the same in order to avoid regressions.",
+      "parentUuid": "e27ac56e_1bbd4070",
+      "revId": "cf15748fe1cd4ad9fc1984729e42c38186130294",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e0b3bfc3_b225c1fb",
         "filename": "third_party/WebKit/Source/modules/mediastream/MediaStream.cpp",
         "patchSetId": 4
@@ -47,6 +83,24 @@
       "writtenOn": "2017-08-28T10:37:40Z",
       "side": 0,
       "message": "We don\u0027t need descriptor_-\u003eRemoveTrack() to notify WebMediaStreamObservers because descriptor_-\u003eRemoveComponent() handles that, right?",
+      "revId": "cf15748fe1cd4ad9fc1984729e42c38186130294",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f7cac6ce_a04587ee",
+        "filename": "third_party/WebKit/Source/modules/mediastream/MediaStream.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-08-28T11:48:22Z",
+      "side": 0,
+      "message": "Right.",
+      "parentUuid": "e0b3bfc3_b225c1fb",
       "revId": "cf15748fe1cd4ad9fc1984729e42c38186130294",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
