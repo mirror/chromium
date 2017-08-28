@@ -57,7 +57,7 @@ class DownloadRequestLimiterTest : public ChromeRenderViewHostTestHarness {
           PermissionRequestManager::FromWebContents(web_contents());
       mock_permission_prompt_factory_.reset(
           new MockPermissionPromptFactory(manager));
-      manager->DisplayPendingRequests();
+      manager->SetTabActiveForUnitTest();
     } else {
 #if defined(OS_ANDROID)
       InfoBarService::CreateForWebContents(web_contents());
