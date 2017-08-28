@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "08ca5427_91cd7059",
+        "filename": "base/numerics/safe_conversions_impl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-08-28T19:42:28Z",
+      "side": 1,
+      "message": "Although you\u0027re going to get __builtin_trap() for Chrome anyway (soon) unless you move the __debugbreak() above the __clang__ case. Not sure which you want. I think __builtin_trap() is a ud2, not an int3 on clang-cl.",
+      "revId": "875642b795e0a0837dbe5ccceb002be1387ee956",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
