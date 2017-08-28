@@ -126,6 +126,8 @@ void Pointer::SetCursor(Surface* surface, const gfx::Point& hotspot) {
   if (hotspot != hotspot_)
     cursor_changed = true;
 
+  last_set_hotspot_ = hotspot;
+
   // Early out if cursor did not change.
   if (!cursor_changed) {
     // Cursor scale or rotation may have changed.
@@ -157,7 +159,7 @@ void Pointer::OnSurfaceCommit() {
 
   // Capture new cursor to reflect result of commit.
   if (focus_surface_)
-    CaptureCursor(hotspot_);
+    CaptureCursor(last_set_hotspot_);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
