@@ -210,16 +210,32 @@ bool IsMITMSoftwareInterstitialEnabled() {
   return base::FeatureList::IsEnabled(kMITMSoftwareInterstitial);
 }
 
-std::unique_ptr<std::vector<std::pair<std::unique_ptr<re2::RE2>, std::string>>>
-LoadMITMSoftwareList(const chrome_browser_ssl::SSLErrorAssistantConfig& proto) {
-  auto list = base::MakeUnique<
-      std::vector<std::pair<std::unique_ptr<re2::RE2>, std::string>>>();
-  for (const chrome_browser_ssl::MITMSoftware& entry : proto.mitm_software()) {
-    std::unique_ptr<re2::RE2> compiled_regex(new re2::RE2(entry.regex()));
-    list.get()->push_back(
-        std::make_pair(std::move(compiled_regex), entry.name()));
+// Struct which stores data about a known MITM software pulled from the
+// SSLErrorAssistant proto.
+struct MITMSoftwareType {
+  MITMSoftwareType(const std::string& name,
+                   const std::string& issuer_common_name_pattern,
+                   const std::string& issuer_organization_pattern)
+      : name(name),
+        issuer_common_name_pattern(issuer_common_name_pattern),
+        issuer_organization_pattern(issuer_organization_pattern) {}
+
+  const std::string name;
+  const std::string issuer_common_name_pattern;
+  const std::string issuer_organization_pattern;
+};
+
+std::unique_ptr<std::vector<MITMSoftwareType>> LoadMITMSoftwareList(
+    const chrome_browser_ssl::SSLErrorAssistantConfig& proto) {
+  auto mitm_software_list = base::MakeUnique<std::vector<MITMSoftwareType>>();
+
+  for (const chrome_browser_ssl::MITMSoftware& proto_entry :
+       proto.mitm_software()) {
+    mitm_software_list.get()->push_back(MITMSoftwareType mitm_software(
+        proto_entry.name(), proto_entry.issuer_common_name_pattern(),
+        proto_entry.issuer_organization_pattern()));
   }
-  return list;
+  return mitm_software_list;
 }
 #endif
 
@@ -298,9 +314,7 @@ class ConfigSingleton {
   std::unique_ptr<chrome_browser_ssl::SSLErrorAssistantConfig>
       error_assistant_proto_;
 
-  std::unique_ptr<
-      std::vector<std::pair<std::unique_ptr<re2::RE2>, std::string>>>
-      mitm_software_list_;
+  std::unique_ptr<std::vector<MITMSoftwareType>> mitm_software_list_;
 
   enum EnterpriseManaged {
     ENTERPRISE_MANAGED_STATUS_NOT_SET,
@@ -466,14 +480,27 @@ bool ConfigSingleton::IsKnownCaptivePortalCert(const net::SSLInfo& ssl_info) {
 #endif
 
 #if !defined(OS_IOS)
+
+bool RegexMatchesAny(const std::vector<std::string>& organization_names,
+                     const std::string& pattern) {
+  for (const std::string& organization_name : organization_names) {
+    if (re2::RE2::FullMatch(organization_name, re2::RE2(pattern))) {
+      return true;
+    }
+  }
+  return false;
+}
+
 const std::string ConfigSingleton::MatchKnownMITMSoftware(
     const scoped_refptr<net::X509Certificate> cert) {
-  // If the certificate doesn't have an issuer common name return an empty
-  // string as a sentinel.
-  if (cert->issuer().common_name.empty()) {
+  // Ignore if the certificate doesn't have an issuer common name or an
+  // organization name.
+  if (cert->issuer().common_name.empty() &&
+      cert->issuer().organization_names.size() == 0) {
     return std::string();
   }
 
+  // Load MITM software data from the SSL error assistant proto.
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
   if (!mitm_software_list_) {
     error_assistant_proto_ = ReadErrorAssistantProtoFromResourceBundle();
@@ -481,14 +508,42 @@ const std::string ConfigSingleton::MatchKnownMITMSoftware(
     mitm_software_list_ = LoadMITMSoftwareList(*error_assistant_proto_);
   }
 
-  // Compares the common name of the issuer of the certificate to our
-  // MITM software regexes.
-  for (const std::pair<std::unique_ptr<re2::RE2>, std::string>& pair :
-       *mitm_software_list_) {
-    if (re2::RE2::FullMatch(cert->issuer().common_name, *pair.first)) {
-      return pair.second;
+  for (const MITMSoftwareType& mitm_software : *mitm_software_list_) {
+    if (mitm_software.issuer_common_name_pattern.empty() &&
+        mitm_software.issuer_organization_pattern.empty()) {
+      return std::string();
+    }
+
+    // Both the |issuer_common_name_pattern| and |issuer_organization_pattern|
+    // are set.
+    if (!mitm_software.issuer_common_name_pattern.empty() &&
+        !mitm_software.issuer_organization_pattern.empty()) {
+      if (re2::RE2::FullMatch(
+              cert->issuer().common_name,
+              re2::RE2(mitm_software.issuer_common_name_pattern)) &&
+          RegexMatchesAny(cert->issuer().organization_names,
+                          mitm_software.issuer_organization_pattern)) {
+        return mitm_software.name;
+      }
+
+      // Only the |issuer_organization_pattern| is set.
+    } else if (mitm_software.issuer_common_name_pattern.empty()) {
+      if (RegexMatchesAny(cert->issuer().organization_names,
+                          mitm_software.issuer_organization_pattern)) {
+        return mitm_software.name;
+      }
+
+      // Only the |issuer_common_name_pattern| is set.
+    } else if (mitm_software.issuer_organization_pattern.empty()) {
+      if (re2::RE2::FullMatch(
+              cert->issuer().common_name,
+              re2::RE2(mitm_software.issuer_common_name_pattern))) {
+        return mitm_software.name;
+      }
     }
   }
+
+  // Should not be reached.
   return std::string();
 }
 #endif
