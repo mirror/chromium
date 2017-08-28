@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "chrome/browser/notifications/login_state_notification_blocker_chromeos.h"
+#include "ash/system/web_notification/login_state_notification_blocker.h"
 
 #include <memory>
 
@@ -20,13 +20,16 @@ using base::UTF8ToUTF16;
 using session_manager::SessionManager;
 using session_manager::SessionState;
 
-class LoginStateNotificationBlockerChromeOSTest
+namespace ash {
+
+namespace {
+
+class LoginStateNotificationBlockerTest
     : public ash::AshTestBase,
       public message_center::NotificationBlocker::Observer {
  public:
-  LoginStateNotificationBlockerChromeOSTest()
-      : state_changed_count_(0) {}
-  ~LoginStateNotificationBlockerChromeOSTest() override {}
+  LoginStateNotificationBlockerTest() : state_changed_count_(0) {}
+  ~LoginStateNotificationBlockerTest() override {}
 
   // ash::tests::AshTestBase overrides:
   void SetUp() override {
@@ -34,7 +37,7 @@ class LoginStateNotificationBlockerChromeOSTest
     session_manager_->SetSessionState(SessionState::LOGIN_PRIMARY);
 
     ash::AshTestBase::SetUp();
-    blocker_.reset(new LoginStateNotificationBlockerChromeOS(
+    blocker_.reset(new LoginStateNotificationBlocker(
         message_center::MessageCenter::Get()));
     blocker_->AddObserver(this);
   }
@@ -62,8 +65,8 @@ class LoginStateNotificationBlockerChromeOSTest
     message_center::Notification notification(
         message_center::NOTIFICATION_TYPE_SIMPLE, "chromeos-id",
         UTF8ToUTF16("chromeos-title"), UTF8ToUTF16("chromeos-message"),
-        gfx::Image(), UTF8ToUTF16("chromeos-source"), GURL(),
-        notifier_id, message_center::RichNotificationData(), NULL);
+        gfx::Image(), UTF8ToUTF16("chromeos-source"), GURL(), notifier_id,
+        message_center::RichNotificationData(), NULL);
     return blocker_->ShouldShowNotificationAsPopup(notification);
   }
 
@@ -77,10 +80,10 @@ class LoginStateNotificationBlockerChromeOSTest
   std::unique_ptr<message_center::NotificationBlocker> blocker_;
   std::unique_ptr<session_manager::SessionManager> session_manager_;
 
-  DISALLOW_COPY_AND_ASSIGN(LoginStateNotificationBlockerChromeOSTest);
+  DISALLOW_COPY_AND_ASSIGN(LoginStateNotificationBlockerTest);
 };
 
-TEST_F(LoginStateNotificationBlockerChromeOSTest, BaseTest) {
+TEST_F(LoginStateNotificationBlockerTest, BaseTest) {
   // Default status: OOBE.
   message_center::NotifierId notifier_id(
       message_center::NotifierId::APPLICATION, "test-notifier");
@@ -107,7 +110,7 @@ TEST_F(LoginStateNotificationBlockerChromeOSTest, BaseTest) {
   EXPECT_TRUE(ShouldShowNotificationAsPopup(notifier_id));
 }
 
-TEST_F(LoginStateNotificationBlockerChromeOSTest, AlwaysAllowedNotifier) {
+TEST_F(LoginStateNotificationBlockerTest, AlwaysAllowedNotifier) {
   // NOTIFIER_DISPLAY is allowed to shown in the login screen.
   message_center::NotifierId notifier_id(
       message_center::NotifierId::SYSTEM_COMPONENT,
@@ -136,3 +139,6 @@ TEST_F(LoginStateNotificationBlockerChromeOSTest, AlwaysAllowedNotifier) {
   EXPECT_EQ(1, GetStateChangedCountAndReset());
   EXPECT_TRUE(ShouldShowNotificationAsPopup(notifier_id));
 }
+
+}  // namespace
+}  // namespace ash
