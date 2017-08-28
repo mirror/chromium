@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f39d228e_ed6903d3",
+        "filename": "chrome/browser/devtools/chrome_devtools_manager_delegate.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 398,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-08-28T22:01:52Z",
+      "side": 1,
+      "message": "let\u0027s not add this.",
+      "revId": "c5f5466b3cac640548a8f906d6b047a4a45c23f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da90dac2_ef196d8a",
+        "filename": "chrome/browser/devtools/chrome_devtools_manager_delegate.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 401,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-08-28T22:01:52Z",
+      "side": 1,
+      "message": "no need for this?",
+      "revId": "c5f5466b3cac640548a8f906d6b047a4a45c23f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5394669f_1df7a69b",
+        "filename": "chrome/browser/devtools/chrome_devtools_manager_delegate.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 409,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-08-28T22:01:52Z",
+      "side": 1,
+      "message": "return kTypePage;",
+      "revId": "c5f5466b3cac640548a8f906d6b047a4a45c23f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
