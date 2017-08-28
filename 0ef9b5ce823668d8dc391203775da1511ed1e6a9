@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "32b55ca8_ac160836",
+        "filename": "third_party/WebKit/Source/platform/graphics/Canvas2DLayerBridge.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 435,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-08-28T18:28:47Z",
+      "side": 1,
+      "message": "junov@: I am still getting non-sense drawing results. Suggestions?",
+      "range": {
+        "startLine": 435,
+        "startChar": 4,
+        "endLine": 435,
+        "endChar": 79
+      },
+      "revId": "0ef9b5ce823668d8dc391203775da1511ed1e6a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
