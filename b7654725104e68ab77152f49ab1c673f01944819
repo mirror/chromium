@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e1f31c4b_334243f5",
+        "filename": "third_party/WebKit/Source/core/editing/LayoutSelection.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 457,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-08-28T08:13:10Z",
+      "side": 1,
+      "message": "Could you also check DocumentLifecycle?",
+      "revId": "b7654725104e68ab77152f49ab1c673f01944819",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc56471e_a52b8e2d",
+        "filename": "third_party/WebKit/Source/core/editing/LayoutSelection.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 458,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-08-28T08:13:10Z",
+      "side": 1,
+      "message": "We don\u0027t want to have this if-statement, since we don\u0027t want to ignore\nthis situation.",
+      "revId": "b7654725104e68ab77152f49ab1c673f01944819",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e90245b_591a3935",
+        "filename": "third_party/WebKit/Source/core/editing/LayoutSelection.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 467,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-08-28T08:13:10Z",
+      "side": 1,
+      "message": "Please remove this DCHECK() since it is done in newly add DCHECK().\nCould you use DocumentLifecycle::DisallowTransitionScope?",
+      "revId": "b7654725104e68ab77152f49ab1c673f01944819",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
