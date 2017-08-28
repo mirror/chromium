@@ -23,6 +23,8 @@ source_set("web") {
     "navigation_manager_util.mm",
     "network_activity_indicator_tab_helper.h",
     "network_activity_indicator_tab_helper.mm",
+    "origin_security_checker.h",
+    "origin_security_checker.mm",
     "page_placeholder_tab_helper.h",
     "page_placeholder_tab_helper.mm",
     "repost_form_tab_helper.h",
@@ -35,6 +37,7 @@ source_set("web") {
   deps = [
     ":placeholder_overlay_tab_helper_delegate",
     "//base",
+    "//components/security_state/core:core",
     "//components/strings",
     "//ios/chrome/app/strings:ios_strings_grit",
     "//ios/chrome/browser",

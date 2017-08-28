@@ -42,7 +42,6 @@
 #include "ios/chrome/browser/payments/ios_payment_instrument_launcher.h"
 #include "ios/chrome/browser/payments/ios_payment_instrument_launcher_factory.h"
 #include "ios/chrome/browser/payments/ios_payment_request_cache_factory.h"
-#include "ios/chrome/browser/payments/origin_security_checker.h"
 #include "ios/chrome/browser/payments/payment_request.h"
 #import "ios/chrome/browser/payments/payment_request_cache.h"
 #import "ios/chrome/browser/payments/payment_response_helper.h"
@@ -51,6 +50,7 @@
 #import "ios/chrome/browser/ui/payments/js_payment_request_manager.h"
 #import "ios/chrome/browser/ui/payments/payment_request_coordinator.h"
 #include "ios/chrome/browser/ui/toolbar/toolbar_model_ios.h"
+#include "ios/chrome/browser/web/origin_security_checker.h"
 #include "ios/web/public/favicon_status.h"
 #include "ios/web/public/navigation_item.h"
 #include "ios/web/public/navigation_manager.h"
@@ -770,23 +770,20 @@ struct PendingPaymentResponse {
 
   const GURL lastCommittedURL = _activeWebState->GetLastCommittedURL();
 
-  if (!payments::OriginSecurityChecker::IsContextSecure(lastCommittedURL)) {
+  if (!web::IsContextSecure(lastCommittedURL)) {
     DLOG(ERROR) << "Not in a secure context.";
     return NO;
   }
 
-  if (!payments::OriginSecurityChecker::IsSchemeCryptographic(
-          lastCommittedURL) &&
-      !payments::OriginSecurityChecker::IsOriginLocalhostOrFile(
-          lastCommittedURL)) {
+  if (!security_state::IsSchemeCryptographic(lastCommittedURL) &&
+      !security_state::IsOriginLocalhostOrFile(lastCommittedURL)) {
     DLOG(ERROR) << "Not localhost, or with file or cryptographic scheme.";
     return NO;
   }
 
   // If the scheme is cryptographic, the SSL certificate must also be valid.
-  return !payments::OriginSecurityChecker::IsSchemeCryptographic(
-             lastCommittedURL) ||
-         payments::OriginSecurityChecker::IsSSLCertificateValid(
+  return !security_state::IsSchemeCryptographic(lastCommittedURL) ||
+         security_state::IsSSLCertificateValid(
              _toolbarModel->GetToolbarModel()->GetSecurityLevel(true));
 }
 
@@ -939,7 +936,7 @@ requestFullCreditCard:(const autofill::CreditCard&)creditCard
 
   // Set the JS isContextSecure global variable at the earliest opportunity.
   [_paymentRequestJsManager
-       setContextSecure:payments::OriginSecurityChecker::IsContextSecure(
+       setContextSecure:web::IsContextSecure(
                             _activeWebState->GetLastCommittedURL())
       completionHandler:nil];
 }
