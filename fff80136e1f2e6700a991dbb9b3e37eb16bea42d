@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7778d823_0f1f9a95",
+        "filename": "chrome/browser/safe_browsing/download_protection/check_client_download_request.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 802,
+      "author": {
+        "id": 1168342
+      },
+      "writtenOn": "2017-08-28T14:08:04Z",
+      "side": 1,
+      "message": "Nit: Looks like the unit tests are already testing this proto, should we add a check that this field is set?",
+      "range": {
+        "startLine": 802,
+        "startChar": 40,
+        "endLine": 802,
+        "endChar": 60
+      },
+      "revId": "fff80136e1f2e6700a991dbb9b3e37eb16bea42d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
