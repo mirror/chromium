@@ -8,6 +8,7 @@
 #include <utility>
 
 #include "base/memory/ptr_util.h"
+#include "base/metrics/histogram_macros.h"
 #include "base/strings/string_piece.h"
 #include "base/strings/string_split.h"
 #include "base/strings/string_util.h"
@@ -58,6 +59,10 @@ const char kLanguage[] = "language";
 const char kPreference[] = "preference";
 const char kProbability[] = "probability";
 const char kReading[] = "reading";
+
+// Name for uma histograms.
+const char kUMATranslateLanguageSettingsChanges[] =
+    "Translate.LanguageSettingsChanges";
 
 // The below properties used to be used but now are deprecated. Don't use them
 // since an old profile might have some values there.
@@ -482,6 +487,8 @@ void TranslatePrefs::UpdateLanguageList(
   ExpandLanguageCodes(languages, &accept_languages);
   std::string accept_languages_str = base::JoinString(accept_languages, ",");
   prefs_->SetString(accept_languages_pref_, accept_languages_str);
+  // UMA logging for changes to language settings.
+  UMA_HISTOGRAM_BOOLEAN(kUMATranslateLanguageSettingsChanges, true);
 }
 
 bool TranslatePrefs::CanTranslateLanguage(
