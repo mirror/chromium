@@ -1,0 +1,226 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "80788c2c_a6b5b6a2",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/compositor/CompositorView.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 280,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-08-28T20:36:35Z",
+      "side": 1,
+      "message": "umm... this is clearly not @Override, but this name is super confusing, hmm...",
+      "revId": "c820f4642a3912000674377391e0a1fb11acd794",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69ab0e77_a178c225",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/tab/Tab.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2108,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-08-28T20:36:35Z",
+      "side": 1,
+      "message": "view is not rect\n\nalso why is this chunk of code needed?",
+      "range": {
+        "startLine": 2108,
+        "startChar": 12,
+        "endLine": 2108,
+        "endChar": 21
+      },
+      "revId": "c820f4642a3912000674377391e0a1fb11acd794",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7a98f92_a9a62d02",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/tab/Tab.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2344,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-08-28T20:36:35Z",
+      "side": 1,
+      "message": "static?",
+      "revId": "c820f4642a3912000674377391e0a1fb11acd794",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f707a2e7_e18bd9af",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/tab/Tab.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2380,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-08-28T20:36:35Z",
+      "side": 1,
+      "message": "fix comment",
+      "revId": "c820f4642a3912000674377391e0a1fb11acd794",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8897ea6a_5c340a67",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/tab/Tab.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2401,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-08-28T20:36:35Z",
+      "side": 1,
+      "message": "might need to null check mNativeTabAndroid",
+      "revId": "c820f4642a3912000674377391e0a1fb11acd794",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a079255_dac6ccf7",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/tab/Tab.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2999,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-08-28T20:36:35Z",
+      "side": 1,
+      "message": "after static comment is fixed, don\u0027t call static method on an object",
+      "range": {
+        "startLine": 2999,
+        "startChar": 22,
+        "endLine": 2999,
+        "endChar": 26
+      },
+      "revId": "c820f4642a3912000674377391e0a1fb11acd794",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb9e4824_6e4e224c",
+        "filename": "chrome/browser/android/bottombar/overlay_panel_content.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-08-28T20:36:35Z",
+      "side": 1,
+      "message": "this (and everywhere that does this) is just confusing, OnSizeChanged calling OnPhysicalBackingSizeChanged..",
+      "range": {
+        "startLine": 65,
+        "startChar": 33,
+        "endLine": 65,
+        "endChar": 61
+      },
+      "revId": "c820f4642a3912000674377391e0a1fb11acd794",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1336c449_5a11b311",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/ContentViewRenderView.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-08-28T20:36:35Z",
+      "side": 1,
+      "message": "what\u0027s the point of storing these? they don\u0027t seem to be used",
+      "revId": "c820f4642a3912000674377391e0a1fb11acd794",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0c852a2_a83789ba",
+        "filename": "ui/android/view_android.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-08-28T20:36:35Z",
+      "side": 1,
+      "message": "so why are these 0 checks required? are they copied from somewhere?",
+      "revId": "c820f4642a3912000674377391e0a1fb11acd794",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06e19d94_960e855a",
+        "filename": "ui/android/view_android.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-08-28T20:36:35Z",
+      "side": 1,
+      "message": "what if size changes here?",
+      "revId": "c820f4642a3912000674377391e0a1fb11acd794",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3051d96e_3e6304c6",
+        "filename": "ui/android/view_android.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 359,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-08-28T20:36:35Z",
+      "side": 1,
+      "message": "should probably assert here that this is not match parent?",
+      "revId": "c820f4642a3912000674377391e0a1fb11acd794",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "380fa6ec_847ddcec",
+        "filename": "ui/android/view_android.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 393,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-08-28T20:36:35Z",
+      "side": 1,
+      "message": "so changing physical backing size changes size, but not the other way around?\n\neither they are the same, and shouldbe merged. or they are independent and should not affect each other",
+      "revId": "c820f4642a3912000674377391e0a1fb11acd794",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
