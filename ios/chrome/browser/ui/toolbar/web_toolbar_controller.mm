@@ -45,6 +45,7 @@
 #include "ios/chrome/browser/ui/commands/start_voice_search_command.h"
 #import "ios/chrome/browser/ui/image_util.h"
 #include "ios/chrome/browser/ui/omnibox/location_bar_controller_impl.h"
+#include "ios/chrome/browser/ui/omnibox/omnibox_text_field_paste_delegate.h"
 #include "ios/chrome/browser/ui/omnibox/omnibox_view_ios.h"
 #import "ios/chrome/browser/ui/popup_menu/popup_menu_view.h"
 #import "ios/chrome/browser/ui/reversed_animation.h"
@@ -242,6 +243,7 @@ CGRect RectShiftedDownAndResizedForStatusBar(CGRect rect) {
   UIButton* _starButton;
   UIButton* _voiceSearchButton;
   OmniboxTextFieldIOS* _omniBox;
+  OmniboxTextFieldPasteDelegate* _pasteDelegate;
   UIButton* _cancelButton;
   // Progress bar used to show what fraction of the page has loaded.
   MDCProgressView* _determinateProgressView;
@@ -393,6 +395,11 @@ CGRect RectShiftedDownAndResizedForStatusBar(CGRect rect) {
                                             font:[MDCTypography subheadFont]
                                        textColor:textColor
                                        tintColor:tintColor];
+
+  if (base::ios::IsRunningOnIOS11OrLater()) {
+    _pasteDelegate = [[OmniboxTextFieldPasteDelegate alloc] init];
+    _omniBox.pasteDelegate = _pasteDelegate;
+  }
 
   // Disable default drop interactions on the omnibox.
   // TODO(crbug.com/739903): Handle drop events once Chrome iOS is built with
