@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ac883874_0e027ca6",
+        "filename": "chrome/browser/plugins/pdf_iframe_navigation_throttle.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1232077
+      },
+      "writtenOn": "2017-08-28T19:09:00Z",
+      "side": 1,
+      "message": "Yes it can be nullptr if they haven\u0027t been received yet or if there aren\u0027t any. Response headers should be received by the time WillProcessResponse is called, so the only nullptr case would be if there aren\u0027t any headers. This is the case in several unit tests that broke when the throttles were being created without the feature flag. I\u0027m not sure if there are many other cases where there aren\u0027t any headers. So, not sure how to handle this.",
+      "parentUuid": "cde00239_992b8f35",
+      "revId": "f5a87f28142fa36d1be07a991bf596ca1f822329",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "beaf3a6c_53959f9c",
         "filename": "chrome/browser/plugins/pdf_iframe_navigation_throttle.cc",
         "patchSetId": 5
@@ -33,6 +51,24 @@
       "revId": "f5a87f28142fa36d1be07a991bf596ca1f822329",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "faed5100_5d19122d",
+        "filename": "chrome/browser/plugins/pdf_iframe_navigation_throttle.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1232077
+      },
+      "writtenOn": "2017-08-28T19:09:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "beaf3a6c_53959f9c",
+      "revId": "f5a87f28142fa36d1be07a991bf596ca1f822329",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -56,6 +92,30 @@
       "revId": "f5a87f28142fa36d1be07a991bf596ca1f822329",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9564bc14_863ece3c",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 29821,
+      "author": {
+        "id": 1232077
+      },
+      "writtenOn": "2017-08-28T19:09:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b9244ea3_e423e952",
+      "range": {
+        "startLine": 29821,
+        "startChar": 52,
+        "endLine": 29821,
+        "endChar": 58
+      },
+      "revId": "f5a87f28142fa36d1be07a991bf596ca1f822329",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
