@@ -46,6 +46,14 @@
     console.log("end");
   `);
 
+  // Add Violation message.
+  var violationMessage = new ConsoleModel.ConsoleMessage(
+      null, ConsoleModel.ConsoleMessage.MessageSource.Violation,
+      ConsoleModel.ConsoleMessage.MessageLevel.Verbose,
+      "Violation message text",
+      ConsoleModel.ConsoleMessage.MessageType.Log);
+  ConsoleModel.consoleModel.addMessage(violationMessage);
+
   var messages = Console.ConsoleView.instance()._visibleViewMessages;
 
   function dumpVisibleMessages() {
@@ -65,6 +73,11 @@
   TestRunner.runTestSuite([
     function beforeFilter(next) {
       TestRunner.addResult(arguments.callee.name);
+      dumpVisibleMessages();
+      next();
+    },
+    function allLevelsFilter(next) {
+      Console.ConsoleViewFilter.levelFilterSetting().set(Console.ConsoleViewFilter.allLevelsFilterValue());
       dumpVisibleMessages();
       next();
     },
@@ -94,12 +107,38 @@
       next();
     },
     function checkContextFilter(next) {
-      Console.ConsoleView.instance()._filter.setContext('context1');
+      Console.ConsoleView.instance()._filter.onSidebarItemChanged({
+        type: Console.ConsoleSidebar.GroupType.Context,
+        name: 'context1',
+        value: 'context1',
+        info: 0,
+        warning: 0,
+        error: 0
+      });
+      dumpVisibleMessages();
+      next();
+    },
+    function checkViolationFilter(next) {
+      Console.ConsoleView.instance()._filter.onSidebarItemChanged({
+        type: Console.ConsoleSidebar.GroupType.Violation,
+        name: 'violation',
+        value: 'violation',
+        info: 0,
+        warning: 0,
+        error: 0
+      });
       dumpVisibleMessages();
       next();
     },
     function checkAllContextsFilter(next) {
-      Console.ConsoleView.instance()._filter.setContext(Console.ConsoleSidebar.AllContextsFilter);
+      Console.ConsoleView.instance()._filter.onSidebarItemChanged({
+        type: Console.ConsoleSidebar.GroupType.All,
+        name: 'All',
+        value: 'All',
+        info: 0,
+        warning: 0,
+        error: 0
+      });
       dumpVisibleMessages();
       next();
     },
