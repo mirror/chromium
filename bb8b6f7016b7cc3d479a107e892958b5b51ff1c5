@@ -34,6 +34,24 @@
       "revId": "bb8b6f7016b7cc3d479a107e892958b5b51ff1c5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5cecc6d7_e09b3945",
+        "filename": "media/midi/task_service.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-08-28T05:22:57Z",
+      "side": 1,
+      "message": "ctor/dtor are called on the main thread, but bind/unbind are on I/O thread.",
+      "parentUuid": "eaa71dbb_9451accc",
+      "revId": "bb8b6f7016b7cc3d479a107e892958b5b51ff1c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
