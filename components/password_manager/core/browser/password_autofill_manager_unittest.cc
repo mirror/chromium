@@ -34,6 +34,10 @@
 #include "ui/base/l10n/l10n_util.h"
 #include "ui/gfx/geometry/rect_f.h"
 
+#if defined(OS_ANDROID)
+#include "base/android/build_info.h"
+#endif
+
 // The name of the username/password element in the form.
 const char kUsernameName[] = "username";
 const char kInvalidUsername[] = "no-username";
@@ -91,6 +95,15 @@ class MockAutofillClient : public autofill::TestAutofillClient {
   MOCK_METHOD1(ExecuteCommand, void(int));
 };
 
+bool IsPreLollipopAndroid() {
+#if defined(OS_ANDROID)
+  return (base::android::BuildInfo::GetInstance()->sdk_int() <
+          base::android::SDK_VERSION_LOLLIPOP);
+#else
+  return false;
+#endif
+}
+
 }  // namespace
 
 class PasswordAutofillManagerTest : public testing::Test {
@@ -143,7 +156,8 @@ class PasswordAutofillManagerTest : public testing::Test {
 
   static bool IsManualFallbackForFillingEnabled() {
     return base::FeatureList::IsEnabled(
-        password_manager::features::kEnableManualFallbacksFilling);
+               password_manager::features::kEnableManualFallbacksFilling) &&
+           !IsPreLollipopAndroid();
   }
 
   std::unique_ptr<PasswordAutofillManager> password_autofill_manager_;
@@ -1004,16 +1018,19 @@ TEST_F(PasswordAutofillManagerTest, ShowAllPasswordsOptionOnPasswordField) {
 
   SetManualFallbacksForFilling(true);
 
+  std::vector<base::string16> elements = {title, test_username_};
+  if (!IsPreLollipopAndroid()) {
 #if !defined(OS_ANDROID)
-  auto elements = testing::ElementsAre(title, test_username_, base::string16(),
-                                       show_all_saved_row_text);
-#else
-  auto elements =
-      testing::ElementsAre(title, test_username_, show_all_saved_row_text);
+    elements.push_back(base::string16());
 #endif
-  EXPECT_CALL(*autofill_client,
-              ShowAutofillPopup(element_bounds, _,
-                                SuggestionVectorValuesAre(elements), _));
+    elements.push_back(show_all_saved_row_text);
+  }
+  EXPECT_CALL(
+      *autofill_client,
+      ShowAutofillPopup(
+          element_bounds, _,
+          SuggestionVectorIdsAre(testing::ElementsAreArray(elements)), _));
+
   password_autofill_manager_->OnShowPasswordSuggestions(
       dummy_key, base::i18n::RIGHT_TO_LEFT, test_username_,
       autofill::IS_PASSWORD_FIELD, element_bounds);
