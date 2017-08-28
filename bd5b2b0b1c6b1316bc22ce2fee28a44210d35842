@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8cf8854c_692699a9",
+        "filename": "chrome/browser/ui/cocoa/md_hover_button.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-08-28T20:38:26Z",
+      "side": 1,
+      "message": "Is this file supposed to be in this CL?",
+      "revId": "bd5b2b0b1c6b1316bc22ce2fee28a44210d35842",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
