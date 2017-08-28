@@ -34,6 +34,24 @@
       "revId": "08b9105a9e26e28f61a00e25f1db692ca3873438",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "107d5c52_590ba41d",
+        "filename": "third_party/WebKit/Source/core/css/CSSComputedStyleDeclaration.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1212729
+      },
+      "writtenOn": "2017-08-28T21:53:50Z",
+      "side": 1,
+      "message": "I don\u0027t understand what you\u0027re proposing, we already have that behavior (with this patch). See the ComputeComputedStyle method, which reads:\n\n  return styled_node-\u003eEnsureComputedStyle(styled_node-\u003eIsPseudoElement()\n                                              ? kPseudoIdNone\n                                              : pseudo_element_specifier_);\n\nSo we compute a pseudo-element style if needed for the pseudo (returning the correct value for the color property). We were just incorrectly using `styled_node-\u003eGetLayoutObject()` for layout-dependent properties.",
+      "parentUuid": "8b0ee752_c4947f65",
+      "revId": "08b9105a9e26e28f61a00e25f1db692ca3873438",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
