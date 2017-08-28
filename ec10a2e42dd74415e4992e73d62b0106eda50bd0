@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f1d89212_4dca5e32",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-08-28T17:16:28Z",
+      "side": 1,
+      "message": "Let\u0027s link to the intent to unship thread here.",
+      "revId": "ec10a2e42dd74415e4992e73d62b0106eda50bd0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
