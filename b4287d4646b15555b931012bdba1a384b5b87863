@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cac70617_b6632fe0",
+        "filename": "base/allocator/partition_allocator/page_allocator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 340,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2017-08-28T22:32:26Z",
+      "side": 1,
+      "message": "It seems like we are no longer guaranteed that |mem| really is aligned by |alignment| — only that |alignment| passes the DCHECKs above.",
+      "revId": "b4287d4646b15555b931012bdba1a384b5b87863",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
