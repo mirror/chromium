@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "91353947_c7359f15",
+        "filename": "url/gurl.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 401,
+      "author": {
+        "id": 1175790
+      },
+      "writtenOn": "2017-08-28T12:26:36Z",
+      "side": 1,
+      "message": "typos: the input should be lowercase except for escape chars.",
+      "revId": "8c1dc8ac296ca7227feba64e70b713c9c5e2ef2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c4df4d5c_853d8fd9",
+        "filename": "url/gurl.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 403,
+      "author": {
+        "id": 1175790
+      },
+      "writtenOn": "2017-08-28T12:26:36Z",
+      "side": 1,
+      "message": "nit: Could you merge this line with the lines below? Now it\u0027s couple of words short.",
+      "revId": "8c1dc8ac296ca7227feba64e70b713c9c5e2ef2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
