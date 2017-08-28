@@ -52,6 +52,24 @@
       "revId": "08b9105a9e26e28f61a00e25f1db692ca3873438",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0495c8fd_a927f29d",
+        "filename": "third_party/WebKit/Source/core/css/CSSComputedStyleDeclaration.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1115751
+      },
+      "writtenOn": "2017-08-28T22:06:55Z",
+      "side": 1,
+      "message": "Right, I see that now. So StyledNode() is the pseudo element when it\u0027s actually generated, but the actual element when we have no content property. That\u0027s a bit confusing. I guess we do so to avoid having to deal with creating a pseudo element when querying computed style for one when it\u0027s not generating content.",
+      "parentUuid": "107d5c52_590ba41d",
+      "revId": "08b9105a9e26e28f61a00e25f1db692ca3873438",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
