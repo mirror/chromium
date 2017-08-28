@@ -16,6 +16,24 @@
       "revId": "08b9105a9e26e28f61a00e25f1db692ca3873438",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b0ee752_c4947f65",
+        "filename": "third_party/WebKit/Source/core/css/CSSComputedStyleDeclaration.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1115751
+      },
+      "writtenOn": "2017-08-28T21:42:57Z",
+      "side": 1,
+      "message": "The CSSOM spec says:\n\n\"In this specification the ::before and ::after pseudo-elements are assumed to exist for all elements even if no box is generated for them.\"",
+      "parentUuid": "5bc45486_ee02947a",
+      "revId": "08b9105a9e26e28f61a00e25f1db692ca3873438",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
