@@ -175,6 +175,7 @@ void ScrollableArea::SetScrollOffset(const ScrollOffset& offset,
                                      ScrollType scroll_type,
                                      ScrollBehavior behavior) {
   if (scroll_type != kSequencedScroll && scroll_type != kClampingScroll &&
+      scroll_type != kUserSequencedScroll &&
       scroll_type != kAnchoringScroll) {
     if (SmoothScrollSequencer* sequencer = GetSmoothScrollSequencer())
       sequencer->AbortAnimations();
@@ -202,6 +203,7 @@ void ScrollableArea::SetScrollOffset(const ScrollOffset& offset,
     case kSequencedScroll:
       ProgrammaticScrollHelper(clamped_offset, behavior, true);
       break;
+    case kUserSequencedScroll:
     case kUserScroll:
       UserScrollHelper(clamped_offset, behavior);
       break;
