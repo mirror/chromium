@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "07d5f41e_a8245c01",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2017-08-28T22:44:04Z",
+      "side": 1,
+      "message": "Updated.",
+      "parentUuid": "de19e882_0ea7200c",
+      "revId": "ed43181b1799cf1af02658cd6aefed14bbda82c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "37eea38c_69118b7d",
         "filename": "ash/shelf/shelf_layout_manager.cc",
         "patchSetId": 2
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "82258be8_fb03a572",
+        "filename": "ash/shelf/shelf_layout_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1138,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2017-08-28T22:44:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "37eea38c_69118b7d",
+      "range": {
+        "startLine": 1137,
+        "startChar": 74,
+        "endLine": 1138,
+        "endChar": 33
+      },
+      "revId": "ed43181b1799cf1af02658cd6aefed14bbda82c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6a650d17_96757460",
         "filename": "ash/shelf/shelf_layout_manager.h",
         "patchSetId": 2
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "6e473944_ac8f64a9",
+        "filename": "ash/shelf/shelf_layout_manager.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2017-08-28T22:44:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6a650d17_96757460",
+      "revId": "ed43181b1799cf1af02658cd6aefed14bbda82c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "016c47d5_9392c24b",
         "filename": "ash/shelf/shelf_layout_manager.h",
         "patchSetId": 2
@@ -70,6 +130,24 @@
       "writtenOn": "2017-08-28T16:33:11Z",
       "side": 1,
       "message": "These numbers seem awfully specific. Are they derived from other numbers (like typical screen height)? If so, please document where they came from.",
+      "revId": "ed43181b1799cf1af02658cd6aefed14bbda82c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46624970_f8bb17c5",
+        "filename": "ash/shelf/shelf_layout_manager.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2017-08-28T22:44:04Z",
+      "side": 1,
+      "message": "Added the ux spec link. Please check the commit message.",
+      "parentUuid": "016c47d5_9392c24b",
       "revId": "ed43181b1799cf1af02658cd6aefed14bbda82c3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -93,6 +171,24 @@
     },
     {
       "key": {
+        "uuid": "9c095060_758be40e",
+        "filename": "ash/shelf/shelf_layout_manager_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 317,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2017-08-28T22:44:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b2efdec2_a875c53a",
+      "revId": "ed43181b1799cf1af02658cd6aefed14bbda82c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "abd0be03_9353423d",
         "filename": "ash/shelf/shelf_layout_manager_unittest.cc",
         "patchSetId": 2
@@ -107,6 +203,24 @@
       "revId": "ed43181b1799cf1af02658cd6aefed14bbda82c3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15dcac1e_de1a6e98",
+        "filename": "ash/shelf/shelf_layout_manager_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 320,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2017-08-28T22:44:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "abd0be03_9353423d",
+      "revId": "ed43181b1799cf1af02658cd6aefed14bbda82c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -127,6 +241,24 @@
     },
     {
       "key": {
+        "uuid": "3b9bd397_73b7c48c",
+        "filename": "ash/shelf/shelf_layout_manager_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 325,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2017-08-28T22:44:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b5aba558_e6231e5c",
+      "revId": "ed43181b1799cf1af02658cd6aefed14bbda82c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bafee054_80634888",
         "filename": "ash/shelf/shelf_layout_manager_unittest.cc",
         "patchSetId": 2
@@ -141,6 +273,24 @@
       "revId": "ed43181b1799cf1af02658cd6aefed14bbda82c3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1fb47251_c7872867",
+        "filename": "ash/shelf/shelf_layout_manager_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 326,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2017-08-28T22:44:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bafee054_80634888",
+      "revId": "ed43181b1799cf1af02658cd6aefed14bbda82c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -161,6 +311,24 @@
     },
     {
       "key": {
+        "uuid": "25ea1f14_916873e1",
+        "filename": "ash/shelf/shelf_layout_manager_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 335,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2017-08-28T22:44:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4bc4dd54_6cf8b3c2",
+      "revId": "ed43181b1799cf1af02658cd6aefed14bbda82c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7981fd6d_2759331d",
         "filename": "ash/shelf/shelf_layout_manager_unittest.cc",
         "patchSetId": 2
@@ -175,6 +343,24 @@
       "revId": "ed43181b1799cf1af02658cd6aefed14bbda82c3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f3b5337_0070a31c",
+        "filename": "ash/shelf/shelf_layout_manager_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1444,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2017-08-28T22:44:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7981fd6d_2759331d",
+      "revId": "ed43181b1799cf1af02658cd6aefed14bbda82c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -212,6 +398,24 @@
     },
     {
       "key": {
+        "uuid": "0cf15094_2ca73e30",
+        "filename": "ash/shelf/shelf_layout_manager_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1461,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2017-08-28T22:44:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "875ab808_1415db9e",
+      "revId": "ed43181b1799cf1af02658cd6aefed14bbda82c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3dcc8349_efb97d6b",
         "filename": "ash/shelf/shelf_layout_manager_unittest.cc",
         "patchSetId": 2
@@ -223,6 +427,24 @@
       "writtenOn": "2017-08-28T16:33:11Z",
       "side": 1,
       "message": "The comment says this is testing fling down, but Y seems to be going up? What\u0027s happening here?",
+      "revId": "ed43181b1799cf1af02658cd6aefed14bbda82c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0f8e0be_e3dcdec0",
+        "filename": "ash/shelf/shelf_layout_manager_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1469,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2017-08-28T22:44:04Z",
+      "side": 1,
+      "message": "The delta_y here means the event location moves 10px up, but the velocity of the fling event is a positive in line 1470, which means is fling down.",
+      "parentUuid": "3dcc8349_efb97d6b",
       "revId": "ed43181b1799cf1af02658cd6aefed14bbda82c3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -263,6 +485,24 @@
     },
     {
       "key": {
+        "uuid": "4b1074b7_233e9505",
+        "filename": "ash/shelf/shelf_layout_manager_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1502,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2017-08-28T22:44:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "82fb4a24_92ab3c3c",
+      "revId": "ed43181b1799cf1af02658cd6aefed14bbda82c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "954e338c_bf0ed8b6",
         "filename": "ash/shelf/shelf_layout_manager_unittest.cc",
         "patchSetId": 2
@@ -274,6 +514,24 @@
       "writtenOn": "2017-08-28T16:33:11Z",
       "side": 1,
       "message": "When does the show actually happen? After the first scroll update event? If so, expect it there.",
+      "revId": "ed43181b1799cf1af02658cd6aefed14bbda82c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cbe75b98_dd45f6b5",
+        "filename": "ash/shelf/shelf_layout_manager_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1528,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2017-08-28T22:44:04Z",
+      "side": 1,
+      "message": "Yes, the show_count changes only after call StartScroll, but we need to do EXPECT until call RunAllPendingInMessageLoop().",
+      "parentUuid": "954e338c_bf0ed8b6",
       "revId": "ed43181b1799cf1af02658cd6aefed14bbda82c3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -297,6 +555,24 @@
     },
     {
       "key": {
+        "uuid": "7acc0001_873b759c",
+        "filename": "ash/shelf/shelf_layout_manager_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1531,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2017-08-28T22:44:04Z",
+      "side": 1,
+      "message": "Thanks. Updated.",
+      "parentUuid": "f9eeba4a_75bf31e2",
+      "revId": "ed43181b1799cf1af02658cd6aefed14bbda82c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6a09d6b3_517ae9f4",
         "filename": "ash/shelf/shelf_layout_manager_unittest.cc",
         "patchSetId": 2
@@ -308,6 +584,24 @@
       "writtenOn": "2017-08-28T16:33:11Z",
       "side": 1,
       "message": "I\u0027m just curious, no need to change things, why do these tests use EventGenerator whereas the ones above call directly into ShelfLayoutManager gesture processing methods?",
+      "revId": "ed43181b1799cf1af02658cd6aefed14bbda82c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a90a7577_99fa394b",
+        "filename": "ash/shelf/shelf_layout_manager_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1556,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2017-08-28T22:44:04Z",
+      "side": 1,
+      "message": "ChangeShelfAlignmentDuringAppListDragging is going to test change shelf alignment during dragging, which means we need to split the scroll sequence. But GestureScrollSequence in EventGenerator send a full scroll sequence. So I split the sequence to start/update/end and call into ShelfLayoutManager ProcessGestureEvent directly.\nFlingUpOnShelfForFullscreenAppList aims to test the scroll sequence ends with fling event. But GestureScrollSequence in EventGenerator always ends with GESTURE_END event. So I didn\u0027t use EventGenerator in this case too.",
+      "parentUuid": "6a09d6b3_517ae9f4",
       "revId": "ed43181b1799cf1af02658cd6aefed14bbda82c3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -331,6 +625,24 @@
     },
     {
       "key": {
+        "uuid": "22fc0aa0_2f568a4d",
+        "filename": "ash/shelf/shelf_layout_manager_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1630,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2017-08-28T22:44:04Z",
+      "side": 1,
+      "message": "Yes, I just move the test down and only changed the expect of the app_list_state. Sorry for the confusing, will mention in the commit message.",
+      "parentUuid": "7a43295f_f6489d05",
+      "revId": "ed43181b1799cf1af02658cd6aefed14bbda82c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0a0a2749_57d58888",
         "filename": "ash/shelf/shelf_layout_manager_unittest.cc",
         "patchSetId": 2
@@ -342,6 +654,24 @@
       "writtenOn": "2017-08-28T16:33:11Z",
       "side": 1,
       "message": "should this also assert that it hid? I\u0027m not clear on whether it shows then immediately hides, or does something else.",
+      "revId": "ed43181b1799cf1af02658cd6aefed14bbda82c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ada49e11_c0aee565",
+        "filename": "ash/shelf/shelf_layout_manager_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1659,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2017-08-28T22:44:04Z",
+      "side": 1,
+      "message": "Do you mean to add the expect of dismiss_count()? I changed the logic in CompleteAppListDrag. It calls SetState() instead of DismissAppList(). The SetState(app_list_state) in AppListView will set the state of app list and animate the app list to its target bounds. So I didn\u0027t add the expect of dismiss_count() here, only check the state.",
+      "parentUuid": "0a0a2749_57d58888",
       "revId": "ed43181b1799cf1af02658cd6aefed14bbda82c3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -400,6 +730,24 @@
     },
     {
       "key": {
+        "uuid": "b55d2298_3925971b",
+        "filename": "ash/shell.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 543,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2017-08-28T22:44:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "30b087e4_044285c6",
+      "revId": "ed43181b1799cf1af02658cd6aefed14bbda82c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "40ead2f5_de4e2af4",
         "filename": "ui/app_list/views/app_list_view.cc",
         "patchSetId": 2
@@ -414,6 +762,24 @@
       "revId": "ed43181b1799cf1af02658cd6aefed14bbda82c3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc9be16b_cc5c6f6b",
+        "filename": "ui/app_list/views/app_list_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1225,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2017-08-28T22:44:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "40ead2f5_de4e2af4",
+      "revId": "ed43181b1799cf1af02658cd6aefed14bbda82c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
