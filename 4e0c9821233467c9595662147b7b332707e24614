@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "72f65889_a32bd934",
+        "filename": "tools/gn/bin/roll_gn.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1001907
+      },
+      "writtenOn": "2017-08-28T23:18:07Z",
+      "side": 1,
+      "message": "nit: I would consider a little struct class here",
+      "range": {
+        "startLine": 219,
+        "startChar": 24,
+        "endLine": 219,
+        "endChar": 25
+      },
+      "revId": "4e0c9821233467c9595662147b7b332707e24614",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b788b594_6f223157",
+        "filename": "tools/gn/bin/roll_gn.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 253,
+      "author": {
+        "id": 1001907
+      },
+      "writtenOn": "2017-08-28T23:18:07Z",
+      "side": 1,
+      "message": "nit: bonus parens :)",
+      "range": {
+        "startLine": 253,
+        "startChar": 14,
+        "endLine": 253,
+        "endChar": 15
+      },
+      "revId": "4e0c9821233467c9595662147b7b332707e24614",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
