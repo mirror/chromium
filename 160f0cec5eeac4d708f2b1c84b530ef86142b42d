@@ -119,6 +119,24 @@
     },
     {
       "key": {
+        "uuid": "94b0fec1_a2ff57e9",
+        "filename": "ui/file_manager/file_manager/foreground/js/ui/file_tap_handler.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1110159
+      },
+      "writtenOn": "2017-08-28T12:49:02Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "3d228959_4c464972",
+      "revId": "160f0cec5eeac4d708f2b1c84b530ef86142b42d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "aad35f79_2b7d11a2",
         "filename": "ui/file_manager/file_manager/foreground/js/ui/file_tap_handler.js",
         "patchSetId": 6
