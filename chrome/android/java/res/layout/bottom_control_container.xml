@@ -7,7 +7,8 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/bottom_sheet"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content" >
+    android:layout_height="wrap_content"
+    android:clipChildren="false" >
 
     <FrameLayout
         android:id="@+id/bottom_sheet_content"
@@ -21,13 +22,15 @@
         android:id="@+id/control_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:minHeight="@dimen/bottom_control_container_height" >
+        android:minHeight="@dimen/bottom_control_container_height"
+        android:clipChildren="false" >
 
         <view
             class="org.chromium.chrome.browser.toolbar.ToolbarControlContainer$ToolbarViewResourceFrameLayout"
             android:id="@+id/toolbar_container"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" >
+            android:layout_height="wrap_content"
+            android:clipChildren="false" >
 
             <ImageView
                 android:id="@+id/bottom_toolbar_shadow"

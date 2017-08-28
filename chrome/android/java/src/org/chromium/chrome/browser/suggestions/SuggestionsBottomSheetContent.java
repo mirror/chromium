@@ -160,13 +160,13 @@ public class SuggestionsBottomSheetContent implements BottomSheet.BottomSheetCon
                     SuggestionsMetrics.recordSurfaceFullyVisible();
                     mRecyclerView.setScrollEnabled(true);
                 }
-                updateLogoTransition();
             }
 
             @Override
             public void onSheetClosed() {
                 super.onSheetClosed();
                 mRecyclerView.setAdapter(null);
+                updateLogoTransition();
             }
 
             @Override
@@ -193,7 +193,7 @@ public class SuggestionsBottomSheetContent implements BottomSheet.BottomSheetCon
         });
 
         mLogoView = mView.findViewById(R.id.search_provider_logo);
-        mToolbarView = activity.findViewById(R.id.control_container);
+        mToolbarView = activity.findViewById(R.id.toolbar);
         mLogoDelegate = new LogoDelegateImpl(navigationDelegate, mLogoView, profile);
         updateSearchProviderHasLogo();
         if (mSearchProviderHasLogo) {
@@ -335,8 +335,8 @@ public class SuggestionsBottomSheetContent implements BottomSheet.BottomSheetCon
     }
 
     private void updateLogoTransition() {
-        boolean showLogo = mSearchProviderHasLogo && mNewTabShown
-                && FeatureUtilities.isChromeHomeDoodleEnabled() && mBottomSheetObserver.isVisible();
+        boolean showLogo = mSearchProviderHasLogo && mNewTabShown && mSheet.isSheetOpen()
+                && FeatureUtilities.isChromeHomeDoodleEnabled();
 
         if (!showLogo) {
             mLogoView.setVisibility(View.GONE);
