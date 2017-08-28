@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b925d65c_ab106df9",
+        "filename": "chrome/browser/ui/ash/launcher/chrome_launcher_controller.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 529,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-28T20:12:18Z",
+      "side": 1,
+      "message": "I tend to think the explicit Deactivate() shouldn\u0027t be necessary. What\u0027s the specific bug you\u0027re hitting without it?",
+      "range": {
+        "startLine": 529,
+        "startChar": 3,
+        "endLine": 529,
+        "endChar": 25
+      },
+      "revId": "bde8541f228c50efc901eeb7fd05870b4ef3a2ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
