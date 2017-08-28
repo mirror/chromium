@@ -3175,6 +3175,9 @@ You must have Bluetooth and Location turned on in order to use the Physical Web.
       <message name="IDS_BOTTOM_SHEET_HOME_TAB" desc="Accessibility string read when the home tab is selected.">
         Home tab selected
       </message>
+      <message name="IDS_BOTTOM_SHEET_APP_MENU_IPH" desc="String displayed in the app menu helping users find things that moved to the bottom sheet when Chrome Home is enabled.">
+        Where did my stuff go?
+      </message>
 
       <!-- Photo picker -->
       <message name="IDS_PHOTO_PICKER_SELECT_IMAGES" desc="The label in the title bar of the Photo Picker dialog, suggesting which action the user should take.">

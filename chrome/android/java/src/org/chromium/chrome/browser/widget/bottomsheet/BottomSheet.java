@@ -1604,39 +1604,50 @@ public class BottomSheet
                     return;
                 }
 
-                boolean showExpandButtonHelpBubble =
-                        ChromeFeatureList.isEnabled(ChromeFeatureList.CHROME_HOME_EXPAND_BUTTON);
-
-                View anchorView = showExpandButtonHelpBubble
-                        ? mControlContainer.findViewById(R.id.expand_sheet_button)
-                        : mControlContainer;
-                int stringId = showExpandButtonHelpBubble
-                        ? R.string.bottom_sheet_expand_button_help_bubble_message
-                        : R.string.bottom_sheet_help_bubble_message;
-                int accessibilityStringId = showExpandButtonHelpBubble
-                        ? R.string.bottom_sheet_accessibility_expand_button_help_bubble_message
-                        : R.string.bottom_sheet_accessibility_help_bubble_message;
-
-                ViewAnchoredTextBubble helpBubble = new ViewAnchoredTextBubble(
-                        getContext(), anchorView, stringId, accessibilityStringId);
-                helpBubble.setDismissOnTouchInteraction(true);
-                helpBubble.addOnDismissListener(new OnDismissListener() {
-                    @Override
-                    public void onDismiss() {
-                        tracker.dismissed(FeatureConstants.CHROME_HOME_EXPAND_FEATURE);
-                        ViewHighlighter.turnOffHighlight(anchorView);
-                    }
-                });
-
-                if (showExpandButtonHelpBubble) {
-                    ViewHighlighter.turnOnHighlight(anchorView, true);
-                }
-
-                int inset = getContext().getResources().getDimensionPixelSize(
-                        R.dimen.bottom_sheet_help_bubble_inset);
-                helpBubble.setInsetPx(0, inset, 0, inset);
-                helpBubble.show();
+                showHelpBubble();
             }
         });
+    }
+
+    /**
+     * Show the in-product help bubble for the {@link BottomSheet} regardless of whether it has
+     * been shown before. This method must be called after the toolbar has had at least one layout
+     * pass and ChromeFeatureList has been initialized.
+     */
+    public void showHelpBubble() {
+        final Tracker tracker = TrackerFactory.getTrackerForProfile(Profile.getLastUsedProfile());
+
+        boolean showExpandButtonHelpBubble =
+                ChromeFeatureList.isEnabled(ChromeFeatureList.CHROME_HOME_EXPAND_BUTTON);
+
+        View anchorView = showExpandButtonHelpBubble
+                ? mControlContainer.findViewById(R.id.expand_sheet_button)
+                : mControlContainer;
+        int stringId = showExpandButtonHelpBubble
+                ? R.string.bottom_sheet_expand_button_help_bubble_message
+                : R.string.bottom_sheet_help_bubble_message;
+        int accessibilityStringId = showExpandButtonHelpBubble
+                ? R.string.bottom_sheet_accessibility_expand_button_help_bubble_message
+                : R.string.bottom_sheet_accessibility_help_bubble_message;
+
+        ViewAnchoredTextBubble helpBubble = new ViewAnchoredTextBubble(
+                getContext(), anchorView, stringId, accessibilityStringId);
+        helpBubble.setDismissOnTouchInteraction(true);
+        helpBubble.addOnDismissListener(new OnDismissListener() {
+            @Override
+            public void onDismiss() {
+                tracker.dismissed(FeatureConstants.CHROME_HOME_EXPAND_FEATURE);
+                ViewHighlighter.turnOffHighlight(anchorView);
+            }
+        });
+
+        if (showExpandButtonHelpBubble) {
+            ViewHighlighter.turnOnHighlight(anchorView, true);
+        }
+
+        int inset = getContext().getResources().getDimensionPixelSize(
+                R.dimen.bottom_sheet_help_bubble_inset);
+        helpBubble.setInsetPx(0, inset, 0, inset);
+        helpBubble.show();
     }
 }
