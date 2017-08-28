@@ -4,7 +4,9 @@
 
 #include "services/video_capture/public/cpp/receiver_media_to_mojo_adapter.h"
 
-#include "media/capture/video/shared_memory_buffer_tracker.h"
+#include "base/logging.h"
+#include "base/sequence_checker.h"
+#include "media/capture/video/video_capture_buffer_handle.h"
 #include "mojo/public/cpp/bindings/strong_binding.h"
 #include "mojo/public/cpp/system/platform_handle.h"
 
@@ -14,25 +16,62 @@ class MojoBufferHandleProvider
     : public media::VideoCaptureDevice::Client::Buffer::HandleProvider {
  public:
   MojoBufferHandleProvider(mojo::ScopedSharedBufferHandle buffer_handle)
-      : buffer_handle_(std::move(buffer_handle)) {}
+      : buffer_handle_(std::move(buffer_handle)) {
+    // It's okay to be constructed at any time, but all public methods must be
+    // invoked in-sequence or else locking would be required throughout the
+    // implementation.
+    DETACH_FROM_SEQUENCE(sequence_checker_);
+  }
+
+  ~MojoBufferHandleProvider() override {
+    DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+    DCHECK_EQ(map_ref_count_, 0);
+  }
 
   // Implementation of Buffer::HandleProvider:
   mojo::ScopedSharedBufferHandle GetHandleForInterProcessTransit() override {
+    DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
     return buffer_handle_->Clone();
   }
   base::SharedMemoryHandle GetNonOwnedSharedMemoryHandleForLegacyIPC()
       override {
+    DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
     LazyUnwrapHandleAndMapMemory();
     return shared_memory_->handle();
   }
   std::unique_ptr<media::VideoCaptureBufferHandle> GetHandleForInProcessAccess()
       override {
+    DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
     LazyUnwrapHandleAndMapMemory();
-    return base::MakeUnique<media::SharedMemoryBufferHandle>(
-        &shared_memory_.value(), memory_size_);
+    return std::make_unique<Handle>(this);
   }
 
  private:
+  // Simple "accessor" to provide a view of the mapped memory.
+  class Handle : public media::VideoCaptureBufferHandle {
+   public:
+    Handle(MojoBufferHandleProvider* owner) : owner_(owner) {
+      DCHECK_CALLED_ON_VALID_SEQUENCE(owner_->sequence_checker_);
+      DCHECK_GE(owner_->map_ref_count_++, 0);
+    }
+
+    ~Handle() final {
+      DCHECK_CALLED_ON_VALID_SEQUENCE(owner_->sequence_checker_);
+      DCHECK_GT(owner_->map_ref_count_--, 0);
+    }
+
+    size_t mapped_size() const final { return owner_->memory_size_; }
+    uint8_t* data() const final {
+      return static_cast<uint8_t*>(owner_->shared_memory_->memory());
+    }
+    const uint8_t* const_data() const final {
+      return static_cast<const uint8_t*>(owner_->shared_memory_->memory());
+    }
+
+   private:
+    MojoBufferHandleProvider* const owner_;
+  };
+
   void LazyUnwrapHandleAndMapMemory() {
     if (shared_memory_.has_value())
       return;  // already done before
@@ -54,6 +93,12 @@ class MojoBufferHandleProvider
   base::Optional<base::SharedMemory> shared_memory_;
   size_t memory_size_ = 0;
   bool read_only_flag_ = false;
+
+#if DCHECK_IS_ON()
+  int map_ref_count_ = 0;
+#endif
+
+  SEQUENCE_CHECKER(sequence_checker_);
 };
 
 class ScopedAccessPermissionMojoToMediaAdapter

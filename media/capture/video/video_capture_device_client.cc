@@ -80,7 +80,8 @@ class BufferPoolBufferHandleProvider
 
   // Implementation of HandleProvider:
   mojo::ScopedSharedBufferHandle GetHandleForInterProcessTransit() override {
-    return buffer_pool_->GetHandleForInterProcessTransit(buffer_id_);
+    return buffer_pool_->GetHandleForInterProcessTransit(buffer_id_,
+                                                         true /* read-only */);
   }
   base::SharedMemoryHandle GetNonOwnedSharedMemoryHandleForLegacyIPC()
       override {
