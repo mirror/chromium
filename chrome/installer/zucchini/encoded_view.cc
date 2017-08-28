@@ -19,7 +19,7 @@ EncodedView::value_type EncodedView::Projection(const ImageIndex& image_index,
   DCHECK_LT(location, image_index.size());
 
   // Find out what lies at |location|.
-  TypeTag type = image_index.GetType(location);
+  TypeTag type = image_index.LookupType(location);
 
   // |location| points into raw data.
   if (type == kNoTypeTag) {

@@ -129,6 +129,8 @@ class EncodedView {
   // values returned by Projection().
   value_type Cardinality() const;
 
+  const ImageIndex& GetImageIndex() const { return *image_index_; }
+
   // View functions.
   size_type size() const { return size_type(image_index_->size()); }
   const_iterator begin() const {
