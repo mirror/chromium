@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "331384e7_6dd9588d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1116070
+      },
+      "writtenOn": "2017-08-28T06:03:56Z",
+      "side": 1,
+      "message": "Change tense to present \"Remove\" because you do something in this patch.",
+      "revId": "993dd625bb09b2e5468fe0e02dd8dc807f71b92d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
