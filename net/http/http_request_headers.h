@@ -156,6 +156,8 @@ class NET_EXPORT HttpRequestHeaders {
     headers_.swap(other->headers_);
   }
 
+  void Swap(HttpRequestHeaders::HeaderVector* other) { headers_.swap(*other); }
+
   // Serializes HttpRequestHeaders to a string representation.  Joins all the
   // header keys and values with ": ", and inserts "\r\n" between each header
   // line, and adds the trailing "\r\n".
@@ -166,6 +168,8 @@ class NET_EXPORT HttpRequestHeaders {
   std::unique_ptr<base::Value> NetLogCallback(
       const std::string* request_line,
       NetLogCaptureMode capture_mode) const;
+
+  const HeaderVector& GetHeaderVector() const { return headers_; }
 
  private:
   HeaderVector::iterator FindHeader(const base::StringPiece& key);
