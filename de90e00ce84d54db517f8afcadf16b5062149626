@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "f75fa9e6_71da08de",
+        "filename": "remoting/host/linux/linux_me2me_host.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000528
+      },
+      "writtenOn": "2017-08-28T19:30:04Z",
+      "side": 1,
+      "message": "I was thinking something about what would break if we tried to use Python 3. If it\u0027s widely known that there are significant incompatibilities (such that shebang lines like this are common) then feel free to ignore this comment.",
+      "parentUuid": "bfec9941_1f0bb42a",
+      "revId": "de90e00ce84d54db517f8afcadf16b5062149626",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c3b7112d_5d18880d",
         "filename": "remoting/host/linux/linux_me2me_host.py",
         "patchSetId": 1
@@ -176,6 +194,30 @@
     },
     {
       "key": {
+        "uuid": "e3797428_7144046a",
+        "filename": "remoting/host/linux/linux_me2me_host.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 866,
+      "author": {
+        "id": 1000528
+      },
+      "writtenOn": "2017-08-28T19:30:04Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "97af3673_6056840a",
+      "range": {
+        "startLine": 866,
+        "startChar": 23,
+        "endLine": 866,
+        "endChar": 0
+      },
+      "revId": "de90e00ce84d54db517f8afcadf16b5062149626",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c46a4eae_ba9ad8a6",
         "filename": "remoting/host/linux/linux_me2me_host.py",
         "patchSetId": 1
@@ -271,6 +313,30 @@
       "revId": "de90e00ce84d54db517f8afcadf16b5062149626",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7b4c883_6cc258f1",
+        "filename": "remoting/host/setup/daemon_controller_delegate_linux.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1000528
+      },
+      "writtenOn": "2017-08-28T19:30:04Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "9a82544d_51e7f0f0",
+      "range": {
+        "startLine": 224,
+        "startChar": 74,
+        "endLine": 224,
+        "endChar": 0
+      },
+      "revId": "de90e00ce84d54db517f8afcadf16b5062149626",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
