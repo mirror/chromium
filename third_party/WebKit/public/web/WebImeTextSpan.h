@@ -41,15 +41,15 @@ namespace blink {
 // setComposition() method.
 struct WebImeTextSpan {
   enum class Type {
-    // Creates a composition marker
-    kComposition,
+    // Creates an ImeFormatting marker.
+    kFormatting,
     // Creates a suggestion marker that isn't cleared after the user picks a
-    // replacement
+    // replacement.
     kSuggestion,
   };
 
   WebImeTextSpan()
-      : type(Type::kComposition),
+      : type(Type::kFormatting),
         start_offset(0),
         end_offset(0),
         underline_color(0),

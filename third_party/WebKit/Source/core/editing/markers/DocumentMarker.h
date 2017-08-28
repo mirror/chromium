@@ -42,7 +42,7 @@ class CORE_EXPORT DocumentMarker
     kSpellingMarkerIndex = 0,
     kGrammarMarkerIndex,
     kTextMatchMarkerIndex,
-    kCompositionMarkerIndex,
+    kImeFormattingMarkerIndex,
     kActiveSuggestionMarkerIndex,
     kSuggestionMarkerIndex,
     kMarkerTypeIndexesCount
@@ -52,7 +52,7 @@ class CORE_EXPORT DocumentMarker
     kSpelling = 1 << kSpellingMarkerIndex,
     kGrammar = 1 << kGrammarMarkerIndex,
     kTextMatch = 1 << kTextMatchMarkerIndex,
-    kComposition = 1 << kCompositionMarkerIndex,
+    kImeFormatting = 1 << kImeFormattingMarkerIndex,
     kActiveSuggestion = 1 << kActiveSuggestionMarkerIndex,
     kSuggestion = 1 << kSuggestionMarkerIndex,
   };

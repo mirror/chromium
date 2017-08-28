@@ -36,11 +36,11 @@
 #include "core/editing/iterators/TextIterator.h"
 #include "core/editing/markers/ActiveSuggestionMarker.h"
 #include "core/editing/markers/ActiveSuggestionMarkerListImpl.h"
-#include "core/editing/markers/CompositionMarker.h"
-#include "core/editing/markers/CompositionMarkerListImpl.h"
 #include "core/editing/markers/DocumentMarkerListEditor.h"
 #include "core/editing/markers/GrammarMarker.h"
 #include "core/editing/markers/GrammarMarkerListImpl.h"
+#include "core/editing/markers/ImeFormattingMarker.h"
+#include "core/editing/markers/ImeFormattingMarkerListImpl.h"
 #include "core/editing/markers/SpellingMarker.h"
 #include "core/editing/markers/SpellingMarkerListImpl.h"
 #include "core/editing/markers/SuggestionMarker.h"
@@ -67,8 +67,8 @@ DocumentMarker::MarkerTypeIndex MarkerTypeToMarkerIndex(
       return DocumentMarker::kGrammarMarkerIndex;
     case DocumentMarker::kTextMatch:
       return DocumentMarker::kTextMatchMarkerIndex;
-    case DocumentMarker::kComposition:
-      return DocumentMarker::kCompositionMarkerIndex;
+    case DocumentMarker::kImeFormatting:
+      return DocumentMarker::kImeFormattingMarkerIndex;
     case DocumentMarker::kActiveSuggestion:
       return DocumentMarker::kActiveSuggestionMarkerIndex;
     case DocumentMarker::kSuggestion:
@@ -83,8 +83,8 @@ DocumentMarkerList* CreateListForType(DocumentMarker::MarkerType type) {
   switch (type) {
     case DocumentMarker::kActiveSuggestion:
       return new ActiveSuggestionMarkerListImpl();
-    case DocumentMarker::kComposition:
-      return new CompositionMarkerListImpl();
+    case DocumentMarker::kImeFormatting:
+      return new ImeFormattingMarkerListImpl();
     case DocumentMarker::kSpelling:
       return new SpellingMarkerListImpl();
     case DocumentMarker::kGrammar:
@@ -162,7 +162,7 @@ void DocumentMarkerController::AddTextMatchMarker(
   // throttling algorithm. crbug.com/6819.
 }
 
-void DocumentMarkerController::AddCompositionMarker(
+void DocumentMarkerController::AddImeFormattingMarker(
     const EphemeralRange& range,
     Color underline_color,
     StyleableMarker::Thickness thickness,
@@ -170,8 +170,8 @@ void DocumentMarkerController::AddCompositionMarker(
   DCHECK(!document_->NeedsLayoutTreeUpdate());
   AddMarkerInternal(range, [underline_color, thickness, background_color](
                                int start_offset, int end_offset) {
-    return new CompositionMarker(start_offset, end_offset, underline_color,
-                                 thickness, background_color);
+    return new ImeFormattingMarker(start_offset, end_offset, underline_color,
+                                   thickness, background_color);
   });
 }
 

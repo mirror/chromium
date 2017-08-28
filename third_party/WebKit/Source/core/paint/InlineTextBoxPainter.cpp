@@ -6,8 +6,8 @@
 
 #include "build/build_config.h"
 #include "core/editing/Editor.h"
-#include "core/editing/markers/CompositionMarker.h"
 #include "core/editing/markers/DocumentMarkerController.h"
+#include "core/editing/markers/ImeFormattingMarker.h"
 #include "core/editing/markers/TextMatchMarker.h"
 #include "core/frame/LocalFrame.h"
 #include "core/layout/LayoutTextCombine.h"
@@ -404,7 +404,7 @@ void InlineTextBoxPainter::Paint(const PaintInfo& paint_info,
   LayoutPoint text_origin(box_origin.X(), box_origin.Y() + ascent);
 
   // 1. Paint backgrounds behind text if needed. Examples of such backgrounds
-  // include selection and composition highlights.
+  // include selection and IME highlights.
   if (paint_info.phase != kPaintPhaseSelection &&
       paint_info.phase != kPaintPhaseTextClip && !is_printing) {
     PaintDocumentMarkers(paint_info, box_origin, style_to_use, font,
@@ -694,7 +694,7 @@ void InlineTextBoxPainter::PaintDocumentMarkers(
               paint_info, box_origin, ToTextMatchMarker(marker), style, font);
         }
         break;
-      case DocumentMarker::kComposition:
+      case DocumentMarker::kImeFormatting:
       case DocumentMarker::kActiveSuggestion: {
         const StyleableMarker& styleable_marker = ToStyleableMarker(marker);
         if (marker_paint_phase == DocumentMarkerPaintPhase::kBackground) {
