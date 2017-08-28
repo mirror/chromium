@@ -510,10 +510,12 @@ class GarbageCollected {
     return ThreadHeap::Allocate<T>(size, eagerly_sweep);
   }
 
-  void operator delete(void* p) { NOTREACHED(); }
-
  protected:
   GarbageCollected() {}
+
+  // Protected to disallow creating garbage collected objects with
+  // std::make_unique, base::WrapUnique, etc.
+  void operator delete(void* p) { NOTREACHED(); }
 };
 
 // Assigning class types to their arenas.
