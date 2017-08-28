@@ -22,10 +22,14 @@ cr.define('bookmarks.ApiListener', function() {
    * can be called in a tight loop by UI actions.
    */
   function batchUIUpdates() {
-    if (!debouncer || debouncer.done()) {
-      bookmarks.Store.getInstance().beginBatchUpdate();
+    if (!debouncer) {
       debouncer = new bookmarks.Debouncer(
           () => bookmarks.Store.getInstance().endBatchUpdate());
+    }
+
+    if (debouncer.done()) {
+      bookmarks.Store.getInstance().beginBatchUpdate();
+      debouncer.reset();
     }
 
     debouncer.resetTimeout();
