@@ -681,7 +681,7 @@ void Surface::AppendContentsToFrame(const gfx::Point& origin,
   const std::unique_ptr<cc::RenderPass>& render_pass =
       frame->render_pass_list.back();
   gfx::Rect output_rect(origin, content_size_);
-  gfx::Rect quad_rect(origin, current_resource_.size);
+  gfx::Rect quad_rect(current_resource_.size);
   gfx::Rect damage_rect;
 
   if (needs_full_damage) {
@@ -697,9 +697,9 @@ void Surface::AppendContentsToFrame(const gfx::Point& origin,
   // Create a transformation matrix that maps buffer coordinates to target by
   // inverting the transform and scale of buffer.
   SkMatrix buffer_to_target_matrix;
+  buffer_to_target_matrix.setTranslate(origin.x(), origin.y());
   switch (state_.buffer_transform) {
     case Transform::NORMAL:
-      buffer_to_target_matrix.setIdentity();
       break;
     case Transform::ROTATE_90:
       buffer_to_target_matrix.setSinCos(-1, 0);
