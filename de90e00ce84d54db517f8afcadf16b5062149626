@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "bfec9941_1f0bb42a",
+        "filename": "remoting/host/linux/linux_me2me_host.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1144161
+      },
+      "writtenOn": "2017-08-28T18:58:54Z",
+      "side": 1,
+      "message": "To me, this feels pretty self-explanatory. (The script targets python 2.) What would you like to see clarified?",
+      "parentUuid": "a2d92d73_2b477697",
+      "revId": "de90e00ce84d54db517f8afcadf16b5062149626",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c3b7112d_5d18880d",
         "filename": "remoting/host/linux/linux_me2me_host.py",
         "patchSetId": 1
@@ -134,6 +152,30 @@
     },
     {
       "key": {
+        "uuid": "97af3673_6056840a",
+        "filename": "remoting/host/linux/linux_me2me_host.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 866,
+      "author": {
+        "id": 1144161
+      },
+      "writtenOn": "2017-08-28T18:58:54Z",
+      "side": 1,
+      "message": "I don\u0027t have a strong opinion on which approach to fallback would be better. One advantage of the approach here is that it only applies on upgrade. Once the script has been updated and any existing sessions relaunched, the script will always use the new behavior. By having the fallback use the default config path, any Python script named chrome-remote-desktop running without a --config flag would be identified, which may not be desired.\n\nI\u0027d prefer not to remove re-execing, since it serves to normalize the config path. E.g., if the user starts the script with a relative config path and stops it with an absolute path (or even a relative path with a different starting directory), I\u0027d still like it to find the appropriate process.\n\nOne of the oddities of the old approach was that if you started the script using a relative path, you\u0027d have to stop it using the same relative path, unless the script had relaunched itself at some point, in which case you\u0027d have to use an absolute path. I\u0027d like to avoid weirdness like that, here.\n\nI suppose I could normalize the config path on start if specified, but leave it absent, if not, but I\u0027m not sure what the advantage would be, at that point.",
+      "parentUuid": "80710328_3741fc20",
+      "range": {
+        "startLine": 866,
+        "startChar": 23,
+        "endLine": 866,
+        "endChar": 0
+      },
+      "revId": "de90e00ce84d54db517f8afcadf16b5062149626",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c46a4eae_ba9ad8a6",
         "filename": "remoting/host/linux/linux_me2me_host.py",
         "patchSetId": 1
@@ -205,6 +247,30 @@
       "revId": "de90e00ce84d54db517f8afcadf16b5062149626",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a82544d_51e7f0f0",
+        "filename": "remoting/host/setup/daemon_controller_delegate_linux.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1144161
+      },
+      "writtenOn": "2017-08-28T18:58:54Z",
+      "side": 1,
+      "message": "This is important so we reload/stop the correct process, e.g., if we\u0027re running a host using test Gaia. We already unconditionally pass the config file for --start (see line 200), so this isn\u0027t adding any duplication that doesn\u0027t already exist.",
+      "parentUuid": "00f710f4_8c201a1c",
+      "range": {
+        "startLine": 224,
+        "startChar": 74,
+        "endLine": 224,
+        "endChar": 0
+      },
+      "revId": "de90e00ce84d54db517f8afcadf16b5062149626",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
