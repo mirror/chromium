@@ -143,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "99bb4412_ce12643b",
+        "filename": "media/gpu/android/media_codec_video_decoder.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 434,
+      "author": {
+        "id": 1119171
+      },
+      "writtenOn": "2017-08-28T06:12:25Z",
+      "side": 1,
+      "message": "Added a comment. The idea is that this should never happen but if it does we would leak MCVD. I\u0027ve now made it kForDestroy only because it\u0027s not obviously correct for kForReset and also won\u0027t result in a leak.",
+      "parentUuid": "f5acf675_3ad06aba",
+      "range": {
+        "startLine": 434,
+        "startChar": 6,
+        "endLine": 434,
+        "endChar": 20
+      },
+      "revId": "200e013c2ce61e709a35c04fc9a3560a6b27e86d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4845cd31_6c3c55e9",
         "filename": "media/gpu/android/media_codec_video_decoder.cc",
         "patchSetId": 6
@@ -248,6 +272,24 @@
       "writtenOn": "2017-08-28T05:54:42Z",
       "side": 1,
       "message": "i don\u0027t follow this one.",
+      "revId": "200e013c2ce61e709a35c04fc9a3560a6b27e86d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2fbd315_4dc8e77a",
+        "filename": "media/gpu/android/media_codec_video_decoder_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 565,
+      "author": {
+        "id": 1119171
+      },
+      "writtenOn": "2017-08-28T06:12:25Z",
+      "side": 1,
+      "message": "Yeah, sorry, this was subtle. Hopefully comments clarify.",
+      "parentUuid": "d48b506e_70a7d869",
       "revId": "200e013c2ce61e709a35c04fc9a3560a6b27e86d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
