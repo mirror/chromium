@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ee7e9e00_46a04d21",
+        "filename": "third_party/WebKit/Source/modules/indexeddb/IDBObserver.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-08-28T06:44:00Z",
+      "side": 1,
+      "message": "We need to trace the base class in addition to |callback_|.",
+      "revId": "75312fb6d5258c7a32241159db3f59d12673d909",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
