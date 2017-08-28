@@ -28,8 +28,8 @@ class TestAppListPresenter : public app_list::mojom::AppListPresenter {
   void StartVoiceInteractionSession() override;
   void ToggleVoiceInteractionSession() override;
   void UpdateYPositionAndOpacity(int y_position_in_screen,
-                                 float background_opacity,
-                                 bool is_end_gesture) override;
+                                 float background_opacity) override;
+  void EndDragFromShelf(int app_list_state) override;
 
   size_t show_count() const { return show_count_; }
   size_t dismiss_count() const { return dismiss_count_; }
@@ -39,6 +39,7 @@ class TestAppListPresenter : public app_list::mojom::AppListPresenter {
     return voice_session_toggle_count_;
   }
   size_t set_y_position_count() const { return set_y_position_count_; }
+  int app_list_state() const { return app_list_state_; }
 
  private:
   size_t show_count_ = 0u;
@@ -47,6 +48,7 @@ class TestAppListPresenter : public app_list::mojom::AppListPresenter {
   size_t voice_session_count_ = 0u;
   size_t voice_session_toggle_count_ = 0u;
   size_t set_y_position_count_ = 0u;
+  int app_list_state_ = 0;
 
   mojo::Binding<app_list::mojom::AppListPresenter> binding_;
 
