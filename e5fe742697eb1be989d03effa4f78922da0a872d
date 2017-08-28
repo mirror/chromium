@@ -72,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "47411a89_894c9f1d",
+        "filename": "base/bind.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-28T21:41:33Z",
+      "side": 1,
+      "message": "It\u0027s not really clear to me why std::decay_t\u003cArg\u003e works as the storage type... but that\u0027s how it seems to work. *shrug*",
+      "parentUuid": "35dd2cde_71e7c38d",
+      "range": {
+        "startLine": 63,
+        "startChar": 0,
+        "endLine": 64,
+        "endChar": 18
+      },
+      "revId": "e5fe742697eb1be989d03effa4f78922da0a872d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fba73adb_624f9cff",
         "filename": "base/bind.h",
         "patchSetId": 6
