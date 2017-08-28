@@ -592,6 +592,7 @@ void PasswordFormManager::ProcessMatches(
     size_t filtered_count) {
   blacklisted_matches_.clear();
   new_blacklisted_.reset();
+  blacklisted_origin_found_ = false;
 
   std::unique_ptr<BrowserSavePasswordProgressLogger> logger;
   if (password_manager_util::IsLoggingActive(client_)) {
@@ -607,6 +608,13 @@ void PasswordFormManager::ProcessMatches(
   std::copy_if(non_federated.begin(), non_federated.end(), matches.begin(),
                [this](const PasswordForm* form) { return IsMatch(*form); });
   ScoreMatches(matches);
+
+  for (const auto* form : non_federated) {
+    if (form->blacklisted_by_user &&
+        form->origin.GetOrigin() != observed_form_.origin.GetOrigin()) {
+      blacklisted_origin_found_ = true;
+    }
+  }
 
   // Copy out blacklisted matches.
   blacklisted_matches_.resize(std::count_if(
@@ -652,6 +660,9 @@ void PasswordFormManager::ProcessFrameInternal(
   DCHECK_EQ(PasswordForm::SCHEME_HTML, observed_form_.scheme);
   if (!driver)
     return;
+
+  if (blacklisted_origin_found_)
+    driver->MatchingBlacklistedFormFound();
 
   driver->AllowPasswordGenerationForForm(observed_form_);
 
