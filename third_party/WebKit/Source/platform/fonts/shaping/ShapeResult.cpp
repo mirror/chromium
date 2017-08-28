@@ -309,12 +309,12 @@ template <typename TextContainerType>
 void ShapeResult::ApplySpacing(ShapeResultSpacing<TextContainerType>& spacing,
                                const TextContainerType& text,
                                bool is_rtl) {
-  float offset_x, offset_y;
-  float& offset = spacing.IsVerticalOffset() ? offset_y : offset_x;
+  float offset = 0;
   float total_space = 0;
   for (auto& run : runs_) {
     if (!run)
       continue;
+    float& offset = run->IsHorizontal() ? offset_x : offset_y;
     float total_space_for_run = 0;
     for (size_t i = 0; i < run->glyph_data_.size(); i++) {
       HarfBuzzRunGlyphData& glyph_data = run->glyph_data_[i];
@@ -330,7 +330,6 @@ void ShapeResult::ApplySpacing(ShapeResultSpacing<TextContainerType>& spacing,
           glyph_data.offset.Expand(offset_x, offset_y);
         }
       } else {
-        offset_x = offset_y = 0;
         float space = spacing.ComputeSpacing(
             text, run->start_index_ + glyph_data.character_index, offset);
         glyph_data.advance += space;
@@ -339,9 +338,17 @@ void ShapeResult::ApplySpacing(ShapeResultSpacing<TextContainerType>& spacing,
           // In RTL, spacing should be added to left side of glyphs.
           offset += space;
         }
-        glyph_data.offset.Expand(offset_x, offset_y);
+        if (UNLIKELY(offset)) {
+          // |offset| can be non-zero only for CJK characters.
+          if (run->IsHorizontal()) {
+            glyph_data.offset.SetWidth(glyph_data.offset.Width() + offset);
+          } else {
+            glyph_data.offset.SetHeight(glyph_data.offset.Height() + offset);
+            has_vertical_offsets_ = true;
+          }
+          offset = 0;
+        }
       }
-      has_vertical_offsets_ |= (glyph_data.offset.Height() != 0);
     }
     run->width_ += total_space_for_run;
     total_space += total_space_for_run;
