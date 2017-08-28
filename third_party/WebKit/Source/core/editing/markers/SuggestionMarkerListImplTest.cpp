@@ -6,6 +6,8 @@
 
 #include "core/editing/markers/SuggestionMarker.h"
 #include "core/editing/markers/SuggestionMarkerReplacementScope.h"
+#include "core/editing/markers/TextMatchMarker.h"
+#include "core/editing/markers/UnsortedDocumentMarkerListEditor.h"
 #include "platform/heap/Handle.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
@@ -24,6 +26,15 @@ class SuggestionMarkerListImplTest : public ::testing::Test {
   }
 
   Persistent<SuggestionMarkerListImpl> marker_list_;
+};
+
+// TODO(rlanday): split UnsortedDocumentMarkerListEditorTest into its own file.
+class UnsortedDocumentMarkerListEditorTest : public ::testing::Test {
+ protected:
+  DocumentMarker* CreateMarker(unsigned startOffset, unsigned endOffset) {
+    return new TextMatchMarker(startOffset, endOffset,
+                               TextMatchMarker::MatchStatus::kInactive);
+  }
 };
 
 namespace {
@@ -91,42 +102,65 @@ TEST_F(SuggestionMarkerListImplTest, AddOverlapping) {
   EXPECT_EQ(50u, markers[9]->EndOffset());
 }
 
-TEST_F(SuggestionMarkerListImplTest, FirstMarkerIntersectingRange_Empty) {
-  DocumentMarker* marker = marker_list_->FirstMarkerIntersectingRange(0, 10);
+TEST_F(UnsortedDocumentMarkerListEditorTest,
+       FirstMarkerIntersectingRange_Empty) {
+  UnsortedDocumentMarkerListEditor::MarkerList markers;
+  DocumentMarker* marker =
+      UnsortedDocumentMarkerListEditor::FirstMarkerIntersectingRange(markers, 0,
+                                                                     10);
   EXPECT_EQ(nullptr, marker);
 }
 
-TEST_F(SuggestionMarkerListImplTest,
+TEST_F(UnsortedDocumentMarkerListEditorTest,
+       FirstMarkerIntersectingRange_EmptyRange) {
+  UnsortedDocumentMarkerListEditor::MarkerList markers;
+  markers.push_back(CreateMarker(0, 5));
+  DocumentMarker* marker =
+      UnsortedDocumentMarkerListEditor::FirstMarkerIntersectingRange(markers, 5,
+                                                                     15);
+  EXPECT_EQ(nullptr, marker);
+}
+
+TEST_F(UnsortedDocumentMarkerListEditorTest,
        FirstMarkerIntersectingRange_TouchingStart) {
-  marker_list_->Add(CreateMarker(1, 10));
-  marker_list_->Add(CreateMarker(0, 10));
+  UnsortedDocumentMarkerListEditor::MarkerList markers;
+  markers.push_back(CreateMarker(1, 10));
+  markers.push_back(CreateMarker(0, 10));
 
-  DocumentMarker* marker = marker_list_->FirstMarkerIntersectingRange(0, 1);
-
-  EXPECT_NE(nullptr, marker);
-  EXPECT_EQ(0u, marker->StartOffset());
-  EXPECT_EQ(10u, marker->EndOffset());
-}
-
-TEST_F(SuggestionMarkerListImplTest, FirstMarkerIntersectingRange_TouchingEnd) {
-  marker_list_->Add(CreateMarker(0, 9));
-  marker_list_->Add(CreateMarker(0, 10));
-
-  DocumentMarker* marker = marker_list_->FirstMarkerIntersectingRange(9, 10);
+  DocumentMarker* marker =
+      UnsortedDocumentMarkerListEditor::FirstMarkerIntersectingRange(markers, 0,
+                                                                     1);
 
   EXPECT_NE(nullptr, marker);
   EXPECT_EQ(0u, marker->StartOffset());
   EXPECT_EQ(10u, marker->EndOffset());
 }
 
-TEST_F(SuggestionMarkerListImplTest, MarkersIntersectingRange_TouchingStart) {
-  marker_list_->Add(CreateMarker(0, 9));
-  marker_list_->Add(CreateMarker(1, 9));
-  marker_list_->Add(CreateMarker(0, 10));
-  marker_list_->Add(CreateMarker(1, 10));
+TEST_F(UnsortedDocumentMarkerListEditorTest,
+       FirstMarkerIntersectingRange_TouchingEnd) {
+  UnsortedDocumentMarkerListEditor::MarkerList markers;
+  markers.push_back(CreateMarker(0, 9));
+  markers.push_back(CreateMarker(0, 10));
 
-  DocumentMarkerVector markers_intersecting_range =
-      marker_list_->MarkersIntersectingRange(0, 1);
+  DocumentMarker* marker =
+      UnsortedDocumentMarkerListEditor::FirstMarkerIntersectingRange(markers, 9,
+                                                                     10);
+
+  EXPECT_NE(nullptr, marker);
+  EXPECT_EQ(0u, marker->StartOffset());
+  EXPECT_EQ(10u, marker->EndOffset());
+}
+
+TEST_F(UnsortedDocumentMarkerListEditorTest,
+       MarkersIntersectingRange_TouchingStart) {
+  UnsortedDocumentMarkerListEditor::MarkerList markers;
+  markers.push_back(CreateMarker(0, 9));
+  markers.push_back(CreateMarker(1, 9));
+  markers.push_back(CreateMarker(0, 10));
+  markers.push_back(CreateMarker(1, 10));
+
+  UnsortedDocumentMarkerListEditor::MarkerList markers_intersecting_range =
+      UnsortedDocumentMarkerListEditor::MarkersIntersectingRange(markers, 0, 1);
 
   EXPECT_EQ(2u, markers_intersecting_range.size());
 
@@ -137,14 +171,17 @@ TEST_F(SuggestionMarkerListImplTest, MarkersIntersectingRange_TouchingStart) {
   EXPECT_EQ(10u, markers_intersecting_range[1]->EndOffset());
 }
 
-TEST_F(SuggestionMarkerListImplTest, MarkersIntersectingRange_TouchingEnd) {
-  marker_list_->Add(CreateMarker(0, 9));
-  marker_list_->Add(CreateMarker(1, 9));
-  marker_list_->Add(CreateMarker(0, 10));
-  marker_list_->Add(CreateMarker(1, 10));
+TEST_F(UnsortedDocumentMarkerListEditorTest,
+       MarkersIntersectingRange_TouchingEnd) {
+  UnsortedDocumentMarkerListEditor::MarkerList markers;
+  markers.push_back(CreateMarker(0, 9));
+  markers.push_back(CreateMarker(1, 9));
+  markers.push_back(CreateMarker(0, 10));
+  markers.push_back(CreateMarker(1, 10));
 
-  DocumentMarkerVector markers_intersecting_range =
-      marker_list_->MarkersIntersectingRange(9, 10);
+  UnsortedDocumentMarkerListEditor::MarkerList markers_intersecting_range =
+      UnsortedDocumentMarkerListEditor::MarkersIntersectingRange(markers, 9,
+                                                                 10);
 
   EXPECT_EQ(2u, markers_intersecting_range.size());
 
@@ -202,21 +239,24 @@ TEST_F(SuggestionMarkerListImplTest, MoveMarkers) {
   EXPECT_EQ(10u, dst_list_markers[0]->EndOffset());
 }
 
-TEST_F(SuggestionMarkerListImplTest, RemoveMarkersEmptyList) {
-  EXPECT_FALSE(marker_list_->RemoveMarkers(0, 10));
-  EXPECT_EQ(0u, marker_list_->GetMarkers().size());
+TEST_F(UnsortedDocumentMarkerListEditorTest, RemoveMarkersEmptyList) {
+  UnsortedDocumentMarkerListEditor::MarkerList markers;
+  EXPECT_FALSE(
+      UnsortedDocumentMarkerListEditor::RemoveMarkers(&markers, 0, 10));
+  EXPECT_EQ(0u, markers.size());
 }
 
 TEST_F(SuggestionMarkerListImplTest, RemoveMarkersTouchingEndpoints) {
-  marker_list_->Add(CreateMarker(30, 40));
-  marker_list_->Add(CreateMarker(40, 50));
-  marker_list_->Add(CreateMarker(10, 20));
-  marker_list_->Add(CreateMarker(0, 10));
-  marker_list_->Add(CreateMarker(20, 30));
+  UnsortedDocumentMarkerListEditor::MarkerList markers;
+  markers.push_back(CreateMarker(30, 40));
+  markers.push_back(CreateMarker(40, 50));
+  markers.push_back(CreateMarker(10, 20));
+  markers.push_back(CreateMarker(0, 10));
+  markers.push_back(CreateMarker(20, 30));
 
-  EXPECT_TRUE(marker_list_->RemoveMarkers(20, 10));
+  EXPECT_TRUE(
+      UnsortedDocumentMarkerListEditor::RemoveMarkers(&markers, 20, 10));
 
-  DocumentMarkerVector markers = marker_list_->GetMarkers();
   std::sort(markers.begin(), markers.end(), compare_markers);
 
   EXPECT_EQ(4u, markers.size());
@@ -235,15 +275,16 @@ TEST_F(SuggestionMarkerListImplTest, RemoveMarkersTouchingEndpoints) {
 }
 
 TEST_F(SuggestionMarkerListImplTest, RemoveMarkersOneCharacterIntoInterior) {
-  marker_list_->Add(CreateMarker(30, 40));
-  marker_list_->Add(CreateMarker(40, 50));
-  marker_list_->Add(CreateMarker(10, 20));
-  marker_list_->Add(CreateMarker(0, 10));
-  marker_list_->Add(CreateMarker(20, 30));
+  UnsortedDocumentMarkerListEditor::MarkerList markers;
+  markers.push_back(CreateMarker(30, 40));
+  markers.push_back(CreateMarker(40, 50));
+  markers.push_back(CreateMarker(10, 20));
+  markers.push_back(CreateMarker(0, 10));
+  markers.push_back(CreateMarker(20, 30));
 
-  EXPECT_TRUE(marker_list_->RemoveMarkers(19, 12));
+  EXPECT_TRUE(
+      UnsortedDocumentMarkerListEditor::RemoveMarkers(&markers, 19, 12));
 
-  DocumentMarkerVector markers = marker_list_->GetMarkers();
   std::sort(markers.begin(), markers.end(), compare_markers);
 
   EXPECT_EQ(2u, markers.size());
