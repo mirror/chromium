@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1f649990_30d141c5",
+        "filename": "third_party/WebKit/Source/core/workers/WorkletModuleResponsesMap.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-28T05:11:17Z",
+      "side": 1,
+      "message": "nit: not sure if this meant to refer to \u0027the\u0027 MemoryCache or not, but the other MemoryCache doesn\u0027t perform a fetch on its own so this might feel slightly confusing",
+      "revId": "ff6bc66c0e303e887bffd8c0e40082a7945a77cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
