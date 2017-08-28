@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5ccbe68d_d537a04f",
+        "filename": "components/payments/core/payment_currency_amount.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-08-28T13:46:07Z",
+      "side": 1,
+      "message": "Can you increase the --similarity parameter value for \"git cl upload\" command to make sure these files are recognized as a copy?",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 3,
+        "endChar": 29
+      },
+      "revId": "43c3dbfa8393a833e40882bd49e1fe7bc7698951",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a236708_cb99aad3",
+        "filename": "ios/web/public/payments/payment_request.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-08-28T13:46:07Z",
+      "side": 1,
+      "message": "Please be more specific.",
+      "range": {
+        "startLine": 20,
+        "startChar": 8,
+        "endLine": 20,
+        "endChar": 18
+      },
+      "revId": "43c3dbfa8393a833e40882bd49e1fe7bc7698951",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
