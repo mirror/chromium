@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "bdc053b3_044a6599",
+        "filename": "third_party/WebKit/Source/modules/vr/NavigatorVR.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-08-28T20:54:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ff092a3c_eb79ca71",
+      "range": {
+        "startLine": 74,
+        "startChar": 4,
+        "endLine": 74,
+        "endChar": 10
+      },
+      "revId": "4ef1371690821052b81a1aad45e7d49fba4480e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ad05f18c_437ea75b",
         "filename": "third_party/WebKit/Source/modules/vr/NavigatorVR.cpp",
         "patchSetId": 3
@@ -36,6 +60,30 @@
       "writtenOn": "2017-08-28T18:57:43Z",
       "side": 1,
       "message": "If feature policy in general is disabled, we just always reject webVR for non-main frames? That feels wrong. Looks like other feature policy features still allow use of their feature under certain conditions if feature policy is disabled. For example, vibrate will still vibrate if feature policy is disabled, as long as the frame has received a gesture.",
+      "range": {
+        "startLine": 86,
+        "startChar": 15,
+        "endLine": 86,
+        "endChar": 36
+      },
+      "revId": "4ef1371690821052b81a1aad45e7d49fba4480e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00bcb31a_4bedd4b5",
+        "filename": "third_party/WebKit/Source/modules/vr/NavigatorVR.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-08-28T20:54:40Z",
+      "side": 1,
+      "message": "This is probably more a question for Brandon and feature policy owner(Ian or Luna). My assumption is that we want to do that. While vibration api allows it in certain cases, USB api disallow it the same way as here.",
+      "parentUuid": "ad05f18c_437ea75b",
       "range": {
         "startLine": 86,
         "startChar": 15,
