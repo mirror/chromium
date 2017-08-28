@@ -28,12 +28,12 @@
 #include "components/cloud_devices/common/printer_description.h"
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/child_process_data.h"
-#include "content/public/browser/utility_process_host.h"
-#include "content/public/browser/utility_process_host_client.h"
+#include "content/public/common/service_manager_connection.h"
 #include "mojo/public/cpp/system/platform_handle.h"
 #include "printing/pdf_render_settings.h"
 #include "printing/pwg_raster_settings.h"
 #include "printing/units.h"
+#include "services/service_manager/public/cpp/connector.h"
 #include "ui/base/l10n/l10n_util.h"
 #include "ui/gfx/geometry/rect.h"
 #include "ui/gfx/geometry/size.h"
@@ -106,36 +106,32 @@ bool FileHandlers::IsValid() {
 // Internal workflow is following:
 // 1. Create instance on the UI thread. (files_, settings_,)
 // 2. Create file on |blocking_task_runner_|.
-// 3. Start utility process and start conversion on the IO thread.
+// 3. Connect to the printing utility service and start the conversion.
 // 4. Run result callback on the UI thread.
 // 5. Instance is destroyed from any thread that has the last reference.
 // 6. FileHandlers destroyed on |blocking_task_runner_|.
 //    This step posts |FileHandlers| to be destroyed on |blocking_task_runner_|.
 // All these steps work sequentially, so no data should be accessed
 // simultaneously by several threads.
-class PwgUtilityProcessHostClient : public content::UtilityProcessHostClient {
+class PWGRasterConverterHelper
+    : public base::RefCounted<PWGRasterConverterHelper> {
  public:
-  PwgUtilityProcessHostClient(
-      const PdfRenderSettings& settings,
-      const PwgRasterSettings& bitmap_settings);
+  PWGRasterConverterHelper(const PdfRenderSettings& settings,
+                           const PwgRasterSettings& bitmap_settings);
 
   void Convert(base::RefCountedMemory* data,
                const PWGRasterConverter::ResultCallback& callback);
 
-  // UtilityProcessHostClient implementation.
-  void OnProcessCrashed(int exit_code) override;
-  bool OnMessageReceived(const IPC::Message& message) override;
-
  private:
-  ~PwgUtilityProcessHostClient() override;
+  friend class base::RefCounted<PWGRasterConverterHelper>;
+
+  ~PWGRasterConverterHelper();
 
   // Message handlers.
   void OnSucceeded();
   void OnFailed();
 
   void RunCallback(bool success);
-
-  void StartProcessOnIOThread();
 
   void RunCallbackOnUIThread(bool success);
   void OnFilesReadyOnUIThread();
@@ -148,10 +144,10 @@ class PwgUtilityProcessHostClient : public content::UtilityProcessHostClient {
   const scoped_refptr<base::SequencedTaskRunner> blocking_task_runner_;
   std::unique_ptr<FileHandlers, base::OnTaskRunnerDeleter> files_;
 
-  DISALLOW_COPY_AND_ASSIGN(PwgUtilityProcessHostClient);
+  DISALLOW_COPY_AND_ASSIGN(PWGRasterConverterHelper);
 };
 
-PwgUtilityProcessHostClient::PwgUtilityProcessHostClient(
+PWGRasterConverterHelper::PWGRasterConverterHelper(
     const PdfRenderSettings& settings,
     const PwgRasterSettings& bitmap_settings)
     : settings_(settings),
@@ -161,10 +157,9 @@ PwgUtilityProcessHostClient::PwgUtilityProcessHostClient(
            base::TaskShutdownBehavior::BLOCK_SHUTDOWN})),
       files_(nullptr, base::OnTaskRunnerDeleter(blocking_task_runner_)) {}
 
-PwgUtilityProcessHostClient::~PwgUtilityProcessHostClient() {
-}
+PWGRasterConverterHelper::~PWGRasterConverterHelper() {}
 
-void PwgUtilityProcessHostClient::Convert(
+void PWGRasterConverterHelper::Convert(
     base::RefCountedMemory* data,
     const PWGRasterConverter::ResultCallback& callback) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
@@ -177,79 +172,49 @@ void PwgUtilityProcessHostClient::Convert(
       FROM_HERE,
       base::BindOnce(&FileHandlers::Init, base::Unretained(files_.get()),
                      base::RetainedRef(data)),
-      base::BindOnce(&PwgUtilityProcessHostClient::OnFilesReadyOnUIThread,
-                     this));
+      base::BindOnce(&PWGRasterConverterHelper::OnFilesReadyOnUIThread, this));
 }
 
-void PwgUtilityProcessHostClient::OnProcessCrashed(int exit_code) {
-  OnFailed();
-}
-
-bool PwgUtilityProcessHostClient::OnMessageReceived(
-  const IPC::Message& message) {
-  return false;
-}
-
-void PwgUtilityProcessHostClient::OnSucceeded() {
+void PWGRasterConverterHelper::OnSucceeded() {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
   RunCallback(true);
 }
 
-void PwgUtilityProcessHostClient::OnFailed() {
+void PWGRasterConverterHelper::OnFailed() {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
   RunCallback(false);
 }
 
-void PwgUtilityProcessHostClient::OnFilesReadyOnUIThread() {
+void PWGRasterConverterHelper::OnFilesReadyOnUIThread() {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
 
   if (!files_->IsValid()) {
     RunCallbackOnUIThread(false);
     return;
   }
-  BrowserThread::PostTask(
-      BrowserThread::IO, FROM_HERE,
-      base::BindOnce(&PwgUtilityProcessHostClient::StartProcessOnIOThread,
-                     this));
-}
 
-void PwgUtilityProcessHostClient::StartProcessOnIOThread() {
-  DCHECK_CURRENTLY_ON(BrowserThread::IO);
+  content::ServiceManagerConnection::GetForProcess()
+      ->GetConnector()
+      ->BindInterface(printing::mojom::kUtilityServiceName,
+                      &pdf_to_pwg_raster_converter_ptr_);
 
-  auto request = MakeRequest(&pdf_to_pwg_raster_converter_ptr_);
   pdf_to_pwg_raster_converter_ptr_.set_connection_error_handler(
-      base::Bind(&PwgUtilityProcessHostClient::RunCallback, this, false));
-
-  base::string16 process_name =
-      l10n_util::GetStringUTF16(IDS_UTILITY_PROCESS_PWG_RASTER_CONVERTOR_NAME);
-  content::UtilityProcessHost* utility_process_host =
-      content::UtilityProcessHost::Create(this,
-                                          base::ThreadTaskRunnerHandle::Get());
-  utility_process_host->SetName(process_name);
-  if (!utility_process_host->Start()) {
-    LOG(ERROR) << "Failed to start utility process host " << process_name;
-    RunCallbackOnUIThread(false);
-    return;
-  }
-
-  utility_process_host->BindInterface(
-      printing::mojom::PDFToPWGRasterConverter::Name_,
-      request.PassMessagePipe());
+      base::Bind(&PWGRasterConverterHelper::RunCallback, this, false));
 
   pdf_to_pwg_raster_converter_ptr_->Convert(
       mojo::WrapPlatformFile(files_->GetPdfForProcess()), settings_,
       bitmap_settings_, mojo::WrapPlatformFile(files_->GetPwgForProcess()),
-      base::Bind(&PwgUtilityProcessHostClient::RunCallback, this));
+      base::Bind(&PWGRasterConverterHelper::RunCallback, this));
 }
 
-void PwgUtilityProcessHostClient::RunCallback(bool success) {
+void PWGRasterConverterHelper::RunCallback(bool success) {
   BrowserThread::PostTask(
       BrowserThread::UI, FROM_HERE,
-      base::BindOnce(&PwgUtilityProcessHostClient::RunCallbackOnUIThread, this,
+      base::BindOnce(&PWGRasterConverterHelper::RunCallbackOnUIThread, this,
                      success));
 }
 
-void PwgUtilityProcessHostClient::RunCallbackOnUIThread(bool success) {
+void PWGRasterConverterHelper::RunCallbackOnUIThread(bool success) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
   if (callback_.is_null())
     return;
@@ -271,7 +236,7 @@ class PWGRasterConverterImpl : public PWGRasterConverter {
              const ResultCallback& callback) override;
 
  private:
-  scoped_refptr<PwgUtilityProcessHostClient> utility_client_;
+  scoped_refptr<PWGRasterConverterHelper> utility_client_;
   base::CancelableCallback<ResultCallback::RunType> callback_;
 
   DISALLOW_COPY_AND_ASSIGN(PWGRasterConverterImpl);
@@ -290,7 +255,7 @@ void PWGRasterConverterImpl::Start(base::RefCountedMemory* data,
   // Rebind cancelable callback to avoid calling callback if
   // PWGRasterConverterImpl is destroyed.
   callback_.Reset(callback);
-  utility_client_ = base::MakeRefCounted<PwgUtilityProcessHostClient>(
+  utility_client_ = base::MakeRefCounted<PWGRasterConverterHelper>(
       conversion_settings, bitmap_settings);
   utility_client_->Convert(data, callback_.callback());
 }
