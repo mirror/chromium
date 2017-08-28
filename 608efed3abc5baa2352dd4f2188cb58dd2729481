@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "b0acf61f_96436273",
+        "filename": "ios/chrome/browser/ios_chrome_main_parts.mm",
+        "patchSetId": 25
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-08-28T09:34:07Z",
+      "side": 1,
+      "message": "Another option is to change this array to a static variable.",
+      "parentUuid": "575bb202_0408156b",
+      "revId": "608efed3abc5baa2352dd4f2188cb58dd2729481",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e78e13f7_ba7b3f8f",
         "filename": "ios/chrome/test/ios_chrome_unit_test_suite.mm",
         "patchSetId": 25
