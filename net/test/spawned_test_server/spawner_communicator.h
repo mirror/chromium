@@ -52,7 +52,7 @@ class ScopedPortException;
 // (2) Kill Python test server, format is:
 // Path: "/kill".
 // Method: "GET".
-// Data to server: None.
+// Data to server: port=<server_port>.
 // Data from server: String "killed" returned if success.
 //
 // (3) Ping Python test server to see whether it is alive, format is:
