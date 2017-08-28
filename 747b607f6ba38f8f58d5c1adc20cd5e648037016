@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8947563c_03681265",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-08-28T21:27:39Z",
+      "side": 1,
+      "message": "nit: Forces. Also comment that this is a no-op unless the service is started?",
+      "range": {
+        "startLine": 55,
+        "startChar": 5,
+        "endLine": 55,
+        "endChar": 10
+      },
+      "revId": "747b607f6ba38f8f58d5c1adc20cd5e648037016",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
