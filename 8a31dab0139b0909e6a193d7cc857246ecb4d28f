@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5c654ae8_4d7a11a3",
+        "filename": "cc/input/scroll_customization.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-08-28T19:14:30Z",
+      "side": 1,
+      "message": "Actually looking at it more carefully. I think you may need to use the current\npattern as it is how  StyleBuilderConverter::ConvertFlags expects it to behave.\n\nSo I am fine with this given that it matches TouchAction as well.",
+      "parentUuid": "157b6c6e_5def2111",
+      "revId": "8a31dab0139b0909e6a193d7cc857246ecb4d28f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f04f5be6_a2f05f27",
         "filename": "cc/input/scroll_customization.h",
         "patchSetId": 9
