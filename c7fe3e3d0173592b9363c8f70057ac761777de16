@@ -298,6 +298,24 @@
       "revId": "c7fe3e3d0173592b9363c8f70057ac761777de16",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3037fe90_fa30bd88",
+        "filename": "ios/chrome/browser/ui/bookmarks/cells/bookmark_table_signin_promo_cell.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1181484
+      },
+      "writtenOn": "2017-08-28T06:59:23Z",
+      "side": 1,
+      "message": "I don\u0027t see the margin here: https://docs.google.com/presentation/d/17a2NJQaWYbjKdbOOFW8lSwwGpum2MFrZMjsDZMkOSIU/edit?ts\u003d59703656#slide\u003did.g24a134b28b_14_0",
+      "parentUuid": "40d0bd47_d12a5148",
+      "revId": "c7fe3e3d0173592b9363c8f70057ac761777de16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
