@@ -11,6 +11,7 @@
 #include "base/run_loop.h"
 #include "base/sequenced_task_runner.h"
 #include "base/test/scoped_feature_list.h"
+#include "base/time/time.h"
 #include "chrome/browser/feature_engagement/feature_tracker.h"
 #include "chrome/browser/feature_engagement/session_duration_updater.h"
 #include "chrome/browser/feature_engagement/session_duration_updater_factory.h"
@@ -169,6 +170,7 @@ class NewTabTrackerTest : public testing::Test {
         "name:new_tab_clicked;comparator:any;window:3650;storage:3650";
     new_tab_params["session_rate"] = "<=3";
     new_tab_params["availability"] = "any";
+    new_tab_params["x_minutes"] = "1";
 
     SetFeatureParams(kIPHNewTabFeature, new_tab_params);
 
@@ -254,6 +256,14 @@ TEST_F(NewTabTrackerTest, TestShouldShowPromo) {
   new_tab_tracker_->OnOmniboxNavigation();
 
   EXPECT_TRUE(new_tab_tracker_->ShouldShowPromo());
+}
+
+// Test that a promo is shown if the session time is met and an omnibox
+// navigation occurs. If OnSessionTimeMet() and OnOmniboxNavigation()
+// are called, ShouldShowPromo() should return true.
+TEST_F(NewTabTrackerTest, TestSessionTimeFromFieldTrial) {
+  EXPECT_EQ(new_tab_tracker_->GetSessionTimeRequiredToShow(),
+            base::TimeDelta::FromMinutes(1));
 }
 
 }  // namespace feature_engagement
