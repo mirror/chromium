@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ed0b9441_a3d2dde7",
+        "filename": "content/renderer/fetchers/resource_fetcher_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-08-28T12:37:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6d682c40_52afed21",
+      "revId": "ffd863b8f39715283f7d0bbdb45ba629381401b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d0819b90_38c293ed",
         "filename": "content/renderer/fetchers/resource_fetcher_impl.cc",
         "patchSetId": 2
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "3ffe7293_13aa29d3",
+        "filename": "content/renderer/fetchers/resource_fetcher_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-08-28T12:37:18Z",
+      "side": 1,
+      "message": "I sometime write a protection code, e.g. DCHECK failure cases will cause a crash on release build, but probably it is unusual.\n\nOK, I will remove.",
+      "parentUuid": "d0819b90_38c293ed",
+      "revId": "ffd863b8f39715283f7d0bbdb45ba629381401b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4d7af575_1e824694",
         "filename": "content/renderer/fetchers/resource_fetcher_impl.cc",
         "patchSetId": 2
@@ -50,6 +86,24 @@
       "revId": "ffd863b8f39715283f7d0bbdb45ba629381401b5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea8de79b_a1e815ab",
+        "filename": "content/renderer/fetchers/resource_fetcher_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-08-28T12:37:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4d7af575_1e824694",
+      "revId": "ffd863b8f39715283f7d0bbdb45ba629381401b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
