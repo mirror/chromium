@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3456e4d2_73ecff0b",
+        "filename": "chrome/common/extensions/docs/examples/tutorials/getstarted/popup.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-28T22:03:24Z",
+      "side": 1,
+      "message": "nit: we typically don\u0027t have hyphens here",
+      "revId": "6fafeef61bc63cecf1f84c8340142ff3a2057680",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3c1ba3a_ccde1f4b",
+        "filename": "chrome/common/extensions/docs/examples/tutorials/getstarted/popup.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-28T22:03:24Z",
+      "side": 1,
+      "message": "nit: end the script in a semicolon, too.",
+      "revId": "6fafeef61bc63cecf1f84c8340142ff3a2057680",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ca6ff63_0f002495",
+        "filename": "chrome/common/extensions/docs/examples/tutorials/getstarted/popup.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-28T22:03:24Z",
+      "side": 1,
+      "message": "It\u0027d be nice to add some comments explaining what this code is doing, similar to the old sample.",
+      "revId": "6fafeef61bc63cecf1f84c8340142ff3a2057680",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a7ad943_5b89d4b9",
+        "filename": "chrome/common/extensions/docs/examples/tutorials/getstarted/popup.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-28T22:03:24Z",
+      "side": 1,
+      "message": "nit: no quotes in keys in JS",
+      "revId": "6fafeef61bc63cecf1f84c8340142ff3a2057680",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4677109_ec4c8d3e",
+        "filename": "chrome/common/extensions/docs/examples/tutorials/getstarted/popup.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-28T22:03:24Z",
+      "side": 1,
+      "message": "single-quotes in JS",
+      "revId": "6fafeef61bc63cecf1f84c8340142ff3a2057680",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a42b4608_b64e093d",
+        "filename": "chrome/common/extensions/docs/examples/tutorials/getstarted/popup.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-28T22:03:24Z",
+      "side": 1,
+      "message": "We could take this opportunity to update to ES6 fanciness. :)\n\ndropdown.addEventListener(\u0027change\u0027, () \u003d\u003e {\n  changeBackgroundColor(dropdown.value);\n});",
+      "revId": "6fafeef61bc63cecf1f84c8340142ff3a2057680",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e054030_8c917a18",
+        "filename": "chrome/common/extensions/docs/templates/articles/getstarted.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-28T22:03:24Z",
+      "side": 1,
+      "message": "s/us/the user?",
+      "revId": "6fafeef61bc63cecf1f84c8340142ff3a2057680",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
