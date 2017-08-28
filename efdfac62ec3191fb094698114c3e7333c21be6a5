@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e6ec3ed9_b859790a",
+        "filename": "components/crash/content/app/crash_export_thunks.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1177549
+      },
+      "writtenOn": "2017-08-28T13:31:35Z",
+      "side": 1,
+      "message": "Thanks - I might as well take care of it while I\u0027m in here. As a rule, I don\u0027t like passing non-POD across module boundaries, so I\u0027d be for pairs of const char*/size_t here. I realize that StringPiece doesn\u0027t have any memory ownership issues, but I just don\u0027t like setting a precedent of non-POD across modules.",
+      "parentUuid": "1ffce8d5_1f58caf6",
+      "revId": "efdfac62ec3191fb094698114c3e7333c21be6a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "80def7db_1838567f",
         "filename": "components/crash/content/app/crashpad.cc",
         "patchSetId": 11
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-26T23:11:38Z",
       "side": 1,
       "message": "As was observed elsewhere, this is not safe, since StringPiece objects are not guaranteed to be NUL-terminated. In practice in this case they are always NUL-terminated but we should enforce that with DCHECKs. See here for examples:\n\nhttps://chromium-review.googlesource.com/c/chromium/src/+/634344/8/components/crash/content/app/crashpad.cc#53",
+      "revId": "efdfac62ec3191fb094698114c3e7333c21be6a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c4c605f_a4fcf970",
+        "filename": "components/crash/content/app/crashpad.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1177549
+      },
+      "writtenOn": "2017-08-28T13:31:35Z",
+      "side": 1,
+      "message": "The right thing to do would be to chase this into Crashpad - I don\u0027t think that should be a problem. Filed https://bugs.chromium.org/p/crashpad/issues/detail?id\u003d193.",
+      "parentUuid": "80def7db_1838567f",
       "revId": "efdfac62ec3191fb094698114c3e7333c21be6a5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
