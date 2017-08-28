@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "76824ff5_c76599fb",
+        "filename": "third_party/WebKit/LayoutTests/editing/execCommand/insert-paragraph-into-table.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-08-28T18:03:42Z",
+      "side": 1,
+      "message": "nit: Use crbug.com/535510.",
+      "range": {
+        "startLine": 6,
+        "startChar": 26,
+        "endLine": 6,
+        "endChar": 86
+      },
+      "revId": "6bb35f978a3da78ac62540a5b7a4ed17848868ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d15acfe9_0bd8a312",
+        "filename": "third_party/WebKit/LayoutTests/editing/execCommand/insert-paragraph-into-table.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-08-28T18:03:42Z",
+      "side": 1,
+      "message": "Use single quote for the outer quotes, and double quote as the inner ones.",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 17,
+        "endChar": 10
+      },
+      "revId": "6bb35f978a3da78ac62540a5b7a4ed17848868ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a953f754_2ea9921f",
+        "filename": "third_party/WebKit/LayoutTests/editing/execCommand/insert-paragraph-into-table.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-08-28T18:03:42Z",
+      "side": 1,
+      "message": "Use single quote for the outer quotes, and double quote as the inner ones.\n\nIn this you you don\u0027t need to write the escape sequence \\\" inside the strings.",
+      "range": {
+        "startLine": 20,
+        "startChar": 0,
+        "endLine": 29,
+        "endChar": 10
+      },
+      "revId": "6bb35f978a3da78ac62540a5b7a4ed17848868ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
