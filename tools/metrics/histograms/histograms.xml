@@ -30047,6 +30047,17 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="Media.Audio.OutputDeviceAuthorizationTimeForRenderer"
+    units="ms">
+  <owner>maxmorin@chromium.org</owner>
+  <summary>
+    Similar to Media.Audio.OutputDeviceAuthorizationTime, this histogram
+    measures the time required for device authorization, but it is measured from
+    when AudioOutputDevice calls RequestDeviceAuthorization until it receives
+    OnDeviceAuthorized.
+  </summary>
+</histogram>
+
 <histogram name="Media.Audio.PhysicalProcessorsMac">
   <owner>henrika@chromium.org</owner>
   <summary>

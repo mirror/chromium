@@ -14,7 +14,6 @@
 #include "base/macros.h"
 #include "base/metrics/histogram_macros.h"
 #include "base/threading/thread_restrictions.h"
-#include "base/time/time.h"
 #include "base/timer/timer.h"
 #include "base/trace_event/trace_event.h"
 #include "build/build_config.h"
@@ -179,7 +178,9 @@ bool AudioOutputDevice::CurrentThreadIsRenderingThread() {
 void AudioOutputDevice::RequestDeviceAuthorizationOnIOThread() {
   DCHECK(task_runner()->BelongsToCurrentThread());
   DCHECK_EQ(state_, IDLE);
+
   state_ = AUTHORIZING;
+  auth_start_time_ = base::TimeTicks::Now();
   ipc_->RequestDeviceAuthorization(this, session_id_, device_id_,
                                    security_origin_);
 
@@ -319,6 +320,10 @@ void AudioOutputDevice::OnDeviceAuthorized(
   DCHECK(task_runner()->BelongsToCurrentThread());
 
   auth_timeout_action_.reset();
+  UMA_HISTOGRAM_CUSTOM_COUNTS(
+      "Media.Audio.OutputDeviceAuthorizationTimeForRenderer",
+      (base::TimeTicks::Now() - auth_start_time_).InMilliseconds(), 1, 30000,
+      300);
 
   // Do nothing if late authorization is received after timeout.
   if (state_ == IPC_CLOSED)
