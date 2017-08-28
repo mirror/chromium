@@ -238,7 +238,11 @@ void X11EventSource::ExtractCookieDataDispatchEvent(XEvent* xevent) {
 
   dispatching_event_ = xevent;
 
-  delegate_->ProcessXEvent(xevent);
+  if (!filter_ || !filter_->OnPlatformEvent(xevent)) {
+    delegate_->ProcessXEvent(xevent);
+  } else {
+    LOG(ERROR) << "Block XEvent " << xevent;
+  }
   PostDispatchEvent(xevent);
 
   dispatching_event_ = nullptr;
@@ -299,6 +303,11 @@ void X11EventSource::OnDispatcherListChanged() {
     // Force the initial device query to have an update list of active devices.
     hotplug_event_handler_->OnHotplugEvent();
   }
+}
+
+void X11EventSource::set_platform_key_event_filter(
+    keyboard_lock::PlatformKeyEventFilter* filter) {
+  filter_ = filter;
 }
 
 }  // namespace ui

@@ -35,6 +35,7 @@ component("x11") {
 
   deps = [
     "//base",
+    "//components/keyboard_lock:key_event_filter",
   ]
 
   if (use_glib) {

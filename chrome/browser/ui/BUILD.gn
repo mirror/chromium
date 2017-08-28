@@ -524,6 +524,7 @@ split_static_library("ui") {
     "//components/image_fetcher/core",
     "//components/infobars/core",
     "//components/invalidation/impl",
+    "//components/keyboard_lock:definition",
     "//components/keyed_service/content",
     "//components/keyed_service/core",
     "//components/metrics:profiler",

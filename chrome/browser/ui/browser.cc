@@ -395,6 +395,8 @@ Browser::Browser(const CreateParams& params)
       bookmark_bar_state_(BookmarkBar::HIDDEN),
       command_controller_(new chrome::BrowserCommandController(this)),
       window_has_shown_(false),
+      keyboard_lock_host_(new keyboard_lock::KeyboardLockHost(
+          this, base::ThreadTaskRunnerHandle::Get())),
       chrome_updater_factory_(this),
       weak_factory_(this) {
   // If this causes a crash then a window is being opened using a profile type

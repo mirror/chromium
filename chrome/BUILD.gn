@@ -179,7 +179,7 @@ if (!is_android && !is_mac) {
 
       if (is_win) {
         sources += [
-          "app/chrome_exe.rc",
+          # "app/chrome_exe.rc",
           "app/chrome_exe_load_config_win.cc",
           "app/chrome_exe_main_win.cc",
           "app/chrome_watcher_client_win.cc",
@@ -505,6 +505,7 @@ if (is_win) {
         "//chrome_elf",
         "//components/browser_watcher:browser_watcher_client",
         "//components/crash/content/app",
+        "//components/keyboard_lock",
         "//content/public/app:child",
         "//content/public/common:service_names",
         "//headless:headless_shell_child_lib",
@@ -1417,6 +1418,7 @@ group("browser_dependencies") {
   public_deps = [
     "//chrome/browser",
     "//chrome/common",
+    "//components/keyboard_lock",
     "//components/sync",
   ]
   if (enable_plugins) {

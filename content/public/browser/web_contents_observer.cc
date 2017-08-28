@@ -4,6 +4,7 @@
 
 #include "content/public/browser/web_contents_observer.h"
 
+#include "base/threading/platform_thread.h"
 #include "content/browser/web_contents/web_contents_impl.h"
 #include "content/public/browser/navigation_details.h"
 #include "content/public/browser/render_view_host.h"

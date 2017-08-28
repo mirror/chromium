@@ -1,0 +1,124 @@
+# Copyright 2017 The Chromium Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+import("//build/config/ui.gni")
+import("//ui/ozone/ozone.gni")
+
+source_set("key_event_filter") {
+  sources = [
+    "key_event_filter.h",
+    "platform_key_event_filter.h",
+    "platform_key_event_filter.cc",
+  ]
+
+  deps = [
+    "//base",
+    "//ui/events:event_constants",
+    "//ui/events",
+    "//ui/events/platform",
+  ]
+}
+
+source_set("definition") {
+  sources = [
+    "active_key_event_filter_tracker.h",
+    "key_hook.h",
+    "key_hook_activator.h",
+    "key_hook_activator_collection.h",
+    "key_hook_thread_wrapper.h",
+    "keyboard_lock_host.h",
+  ]
+
+  deps = [
+    ":key_event_filter",
+    "//base",
+    "//ui/events:event_constants",
+  ]
+}
+
+static_library("keyboard_lock") {
+  sources = [
+    "active_key_event_filter_registrar.cc",
+    "active_key_event_filter_registrar.h",
+    "active_key_event_filter_tracker.cc",
+    "active_key_event_filter.cc",
+    "active_key_event_filter.h",
+    "key_event_filter_share_wrapper.cc",
+    "key_event_filter_share_wrapper.h",
+    "key_event_filter_thread_proxy.cc",
+    "key_event_filter_thread_proxy.h",
+    "key_hook_share_wrapper.cc",
+    "key_hook_share_wrapper.h",
+    "key_hook_activator_collection.cc",
+    "key_hook_activator_thread_proxy.cc",
+    "key_hook_activator_thread_proxy.h",
+    "key_hook_state_keeper.cc",
+    "key_hook_state_keeper.h",
+    "key_hook_thread_wrapper.cc",
+    "keyboard_lock_host.cc",
+    "keyboard_lock_host.h",
+    "page_observer.cc",
+    "page_observer.h",
+    "platform_key_hook.h",
+    "register_once_key_hook.cc",
+    "register_once_key_hook.h",
+    "sync_key_hook.cc",
+    "sync_key_hook.h",
+    "widget_key_event_filter.cc",
+    "widget_key_event_filter.h",
+  ]
+
+  deps = [
+    ":definition",
+    ":key_event_filter",
+    "//base",
+    "//chrome/browser",
+    "//chrome/browser/ui",
+    "//content/public/browser",
+    "//ui/events:dom_keycode_converter",
+    "//ui/events/platform",
+  ]
+
+  if (use_x11 || ozone_platform_x11) {
+    sources += [
+      "keyboard_lock_host_x11.cc",
+      "platform_key_hook_x11.cc",
+    ]
+
+    deps += [
+      "//ui/base/x",
+      "//ui/events/platform/x11",
+      "//ui/gfx/x",
+    ]
+  } else if (is_win) {
+    sources += [
+      "keyboard_lock_host_win.cc",
+      "platform_key_hook_win.cc",
+    ]
+  } else {
+    sources += [
+      "keyboard_lock_host_null.cc",
+      "platform_key_hook_null.cc",
+    ]
+  }
+
+  public_deps = [
+    ":definition",
+    ":key_event_filter",
+  ]
+}
+
+source_set("unit_tests") {
+  testonly = true
+  sources = [
+    "keyboard_lock_host_unittest.cc",
+    "key_hook_state_keeper_unittest.cc",
+  ]
+
+  deps = [
+    ":keyboard_lock",
+    "//base",
+    "//testing/gtest",
+  ]
+}

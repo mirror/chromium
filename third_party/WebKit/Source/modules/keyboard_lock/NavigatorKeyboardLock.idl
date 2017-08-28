@@ -18,6 +18,6 @@
 //    document cleanup steps run with a document.
 //    See https://github.com/w3c/keyboard-lock/issues/22
 partial interface Navigator {
-    [SecureContext, RuntimeEnabled=KeyboardLock, CallWith=ScriptState] Promise<void> requestKeyboardLock(optional sequence<DOMString> keyCodes = []);
-    [SecureContext, RuntimeEnabled=KeyboardLock] void cancelKeyboardLock();
+    [RuntimeEnabled=KeyboardLock, CallWith=ScriptState] Promise<void> requestKeyboardLock(optional sequence<DOMString> keyCodes = []);
+    [RuntimeEnabled=KeyboardLock] void cancelKeyboardLock();
 };
