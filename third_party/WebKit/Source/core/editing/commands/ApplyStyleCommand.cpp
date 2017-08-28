@@ -174,12 +174,16 @@ void ApplyStyleCommand::UpdateStartEnd(const Position& new_start,
 
   if (!use_ending_selection_ && (new_start != start_ || new_end != end_))
     use_ending_selection_ = true;
+  GetDocument().UpdateStyleAndLayoutIgnorePendingStylesheets();
+  const VisibleSelection& visible_selection = CreateVisibleSelection(
+      SelectionInDOMTree::Builder()
+          .Collapse(new_start)
+          .Extend(new_end)
+          .SetIsDirectional(EndingSelection().IsDirectional())
+          .Build());
 
-  SetEndingSelection(SelectionInDOMTree::Builder()
-                         .Collapse(new_start)
-                         .Extend(new_end)
-                         .SetIsDirectional(EndingSelection().IsDirectional())
-                         .Build());
+  SetEndingSelection(
+      SelectionForUndoStep::From(visible_selection.AsSelection()));
   start_ = new_start;
   end_ = new_end;
 }
