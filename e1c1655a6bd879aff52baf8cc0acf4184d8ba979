@@ -16,6 +16,24 @@
       "revId": "e1c1655a6bd879aff52baf8cc0acf4184d8ba979",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41d81c3b_fcc866c3",
+        "filename": "chrome/app/theme/theme_resources.grd",
+        "patchSetId": 3
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1229180
+      },
+      "writtenOn": "2017-08-28T18:19:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1302f545_71b118e2",
+      "revId": "e1c1655a6bd879aff52baf8cc0acf4184d8ba979",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
