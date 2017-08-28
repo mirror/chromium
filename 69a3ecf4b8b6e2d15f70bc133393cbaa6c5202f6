@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "56f20599_7de82911",
+        "filename": "chrome/browser/extensions/bookmark_app_url_redirector_browsertest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-28T16:19:55Z",
+      "side": 1,
+      "message": "You sure you don\u0027t want an assert here? Is there really any point in continuing if execution fails?",
+      "range": {
+        "startLine": 285,
+        "startChar": 2,
+        "endLine": 285,
+        "endChar": 13
+      },
+      "revId": "69a3ecf4b8b6e2d15f70bc133393cbaa6c5202f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
