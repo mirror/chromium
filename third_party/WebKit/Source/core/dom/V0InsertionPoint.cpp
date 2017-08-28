@@ -225,6 +225,7 @@ Node::InsertionNotificationRequest V0InsertionPoint::InsertedInto(
         if (CanBeActive() && !registered_with_shadow_root_ &&
             insertion_point->GetTreeScope().RootNode() == root) {
           registered_with_shadow_root_ = true;
+          CountUsage();
           root->DidAddInsertionPoint(this);
           if (CanAffectSelector())
             root_owner->V0().WillAffectSelector();

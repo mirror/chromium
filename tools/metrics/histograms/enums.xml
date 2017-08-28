@@ -16175,6 +16175,8 @@ uploading your change for review.  These are checked by presubmit scripts.
   <int value="2119" label="V8LabeledExpressionStatement"/>
   <int value="2120" label="PaymentRequestSupportedMethodsArray"/>
   <int value="2121" label="NavigatorDeviceMemory"/>
+  <int value="2122" label="HTMLContentElementAsInsertionPoint"/>
+  <int value="2123" label="HTMLShadowElementAsInsertionPoint"/>
 </enum>
 
 <enum name="FeedbackSource">

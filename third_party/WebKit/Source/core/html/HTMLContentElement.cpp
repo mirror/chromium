@@ -135,4 +135,9 @@ bool HTMLContentElement::MatchSelector(Element& element) const {
   return false;
 }
 
+void HTMLContentElement::CountUsage() const {
+  UseCounter::Count(GetDocument(),
+                    WebFeature::kHTMLContentElementAsInsertionPoint);
+}
+
 }  // namespace blink

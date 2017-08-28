@@ -49,6 +49,8 @@ class HTMLShadowElement final : public V0InsertionPoint {
   explicit HTMLShadowElement(Document&);
   InsertionNotificationRequest InsertedInto(
       ContainerNode* insertion_point) override;
+
+  void CountUsage() const override;
 };
 
 }  // namespace blink

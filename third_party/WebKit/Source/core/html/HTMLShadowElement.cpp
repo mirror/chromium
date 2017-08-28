@@ -82,4 +82,9 @@ Node::InsertionNotificationRequest HTMLShadowElement::InsertedInto(
   return V0InsertionPoint::InsertedInto(insertion_point);
 }
 
+void HTMLShadowElement::CountUsage() const {
+  UseCounter::Count(GetDocument(),
+                    WebFeature::kHTMLShadowElementAsInsertionPoint);
+}
+
 }  // namespace blink
