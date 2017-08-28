@@ -183,6 +183,9 @@ class APP_LIST_EXPORT AppListView : public views::BubbleDialogDelegateView,
   // Gets current work area bottom.
   int GetWorkAreaBottom();
 
+  // Gets the apps grid view owned by this view.
+  AppsGridView* GetAppsGridView() const;
+
   views::Widget* get_fullscreen_widget_for_test() const {
     return fullscreen_widget_;
   }
@@ -253,9 +256,6 @@ class APP_LIST_EXPORT AppListView : public views::BubbleDialogDelegateView,
 
   // Gets the display nearest to the parent window.
   display::Display GetDisplayNearestView() const;
-
-  // Gets the apps grid view owned by this view.
-  AppsGridView* GetAppsGridView() const;
 
   // Gets the AppListStateTransitionSource for |app_list_state_| to
   // |target_state|. If we are not interested in recording a state transition

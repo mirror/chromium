@@ -1039,6 +1039,11 @@ void AppsGridView::OnGestureEvent(ui::GestureEvent* event) {
       pagination_controller_->OnGestureEvent(*event, GetContentsBounds())) {
     event->SetHandled();
   } else {
+    // Convert the event location to AppListView coordinates and send to the
+    // AppListView.
+    gfx::Point location = event->location();
+    ConvertPointToTarget(this, contents_view_->app_list_view(), &location);
+    event->set_location(location);
     contents_view_->app_list_view()->OnGestureEvent(event);
   }
 }
