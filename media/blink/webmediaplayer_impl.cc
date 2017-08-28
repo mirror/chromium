@@ -336,6 +336,7 @@ WebMediaPlayerImpl::~WebMediaPlayerImpl() {
 void WebMediaPlayerImpl::Load(LoadType load_type,
                               const blink::WebMediaPlayerSource& source,
                               CORSMode cors_mode) {
+  TRACE_EVENT0("media", "WebMediaPlayerImpl::Load");
   DVLOG(1) << __func__;
   // Only URL or MSE blob URL is supported.
   DCHECK(source.IsURL());
