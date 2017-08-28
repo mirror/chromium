@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f6e8d45e_138ebcf3",
+        "filename": "content/browser/frame_host/navigator_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-08-28T16:54:41Z",
+      "side": 1,
+      "message": "Note: this is a non-PlzNavigate code path. If your feature is set to launch not immediately, you can consider implementing only for PlzNavigate, which will be much easier.",
+      "revId": "a1da693bf4490054e9d05ef1200b807edc04cea8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea3f5c79_505e9836",
+        "filename": "content/browser/frame_host/navigator_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 901,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-08-28T16:54:41Z",
+      "side": 1,
+      "message": "These two entries correspond to the special case of transfer navigations, that is navigations that are ready to commit, but that we are sending to a new renderer because the current one is not appropriate to use for the navigation. In particular, by the time we reach this point, all NavigationThrottles methods have run, making setting the window disposition irrelevant.",
+      "revId": "a1da693bf4490054e9d05ef1200b807edc04cea8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "141f603e_4e765e33",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 4092,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-08-28T16:54:41Z",
+      "side": 1,
+      "message": "This is a same-document navigation, so the window disposition has to be CURRENT.",
+      "revId": "a1da693bf4490054e9d05ef1200b807edc04cea8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "22eecc0c_02c85051",
+        "filename": "content/common/navigation_params.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-08-28T16:54:41Z",
+      "side": 1,
+      "message": "If I read the patch correctly, this parameter is one the renderer sends to the browser, but not one the renderer uses when sent by the browser. Therefore, it should not be part of CommonNavigationParams but BeginNavigationParams.",
+      "revId": "a1da693bf4490054e9d05ef1200b807edc04cea8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "299e024e_2351a2b2",
+        "filename": "content/public/browser/navigation_controller.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-08-28T16:54:41Z",
+      "side": 1,
+      "message": "I don\u0027t think we want to change this function. Instead, iff needed, LoadURL can be modified.",
+      "revId": "a1da693bf4490054e9d05ef1200b807edc04cea8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "070fae34_a4d5d8a1",
+        "filename": "content/public/browser/navigation_entry.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-08-28T16:54:41Z",
+      "side": 1,
+      "message": "I don\u0027t think it makes sense to put this parameter on the NavigationEntry. NavigationEntry stores data that should persist when the navigation is over, and I don\u0027t think this data qualifies. Instead, it should be passed down as a parameter to the content/ Navigator.\n\nIn particular, it should not be part of the public content/ API.",
+      "revId": "a1da693bf4490054e9d05ef1200b807edc04cea8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3abfc953_fc8e2744",
+        "filename": "content/renderer/render_view_impl.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-08-28T16:54:41Z",
+      "side": 1,
+      "message": "Note: this function is already being used by RenderFrameImpl, which is a friend of RenderViewImpl, so you don\u0027t need to expose it publicly to make it available in RenderFrameImpl.",
+      "revId": "a1da693bf4490054e9d05ef1200b807edc04cea8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
