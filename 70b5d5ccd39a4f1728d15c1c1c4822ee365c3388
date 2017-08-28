@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4084feef_f17dbe48",
+        "filename": "chrome/browser/ui/views/touch_events_interactive_uitest_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-08-28T13:51:03Z",
+      "side": 1,
+      "message": "std::make_unique\u003cTestingGestureRecongizer\u003e() is the preferred approach here (or not allocated it dynamically)",
+      "range": {
+        "startLine": 101,
+        "startChar": 30,
+        "endLine": 101,
+        "endChar": 33
+      },
+      "revId": "70b5d5ccd39a4f1728d15c1c1c4822ee365c3388",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
