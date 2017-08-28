@@ -1,0 +1,248 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "07a6f4e5_3ba4dec5",
+        "filename": "cc/animation/animation_host.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 652,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-08-28T20:57:09Z",
+      "side": 1,
+      "message": "Did you mean continue? I assume we want to update the rest of them even if one ended.",
+      "revId": "0563a87bbd624b949a1ad15ed5c10096e9e7a907",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d9184f7_2e08e764",
+        "filename": "cc/animation/animation_player_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 446,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-08-28T20:57:09Z",
+      "side": 1,
+      "message": "I\u0027m confused how this is testing the custom timing model.",
+      "revId": "0563a87bbd624b949a1ad15ed5c10096e9e7a907",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49f13b27_30cf0c5a",
+        "filename": "cc/animation/worklet_animation_player.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-08-28T20:57:09Z",
+      "side": 1,
+      "message": "How about just adding Animation::ConvertFromActive? As long as the logic is centralized and tested it\u0027s fine.",
+      "revId": "0563a87bbd624b949a1ad15ed5c10096e9e7a907",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8bc97ed9_77b50829",
+        "filename": "cc/animation/worklet_animation_player.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-08-28T20:57:09Z",
+      "side": 1,
+      "message": "not necessary since we use it immediately.",
+      "revId": "0563a87bbd624b949a1ad15ed5c10096e9e7a907",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b28b7cf_1695a721",
+        "filename": "cc/animation/worklet_animation_player.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-08-28T20:57:09Z",
+      "side": 1,
+      "message": "If we\u0027re not using this outside of WorkletAnimationPlayer then it doesn\u0027t need to be exposed. We can have an inline function in the cc file for getting the ManagedTimingModel\u0026.",
+      "revId": "0563a87bbd624b949a1ad15ed5c10096e9e7a907",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2561c32_4ef0e864",
+        "filename": "cc/trees/layer_tree_mutator.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-08-28T20:57:09Z",
+      "side": 1,
+      "message": "Needs comment. Also, it seems like we should have a separate mechanism / structure for passing new animation data since they need to be explicitly constructed and will also have options dictionaries. This can be a TODO for now.",
+      "revId": "0563a87bbd624b949a1ad15ed5c10096e9e7a907",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24d882b0_5a0fea5f",
+        "filename": "cc/trees/layer_tree_mutator.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-08-28T20:57:09Z",
+      "side": 1,
+      "message": "Comment / bug that we will eventually pass currentTime of timelines which have been proxied to the animator?",
+      "revId": "0563a87bbd624b949a1ad15ed5c10096e9e7a907",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7740bf80_221288c8",
+        "filename": "cc/trees/layer_tree_mutator.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-08-28T20:57:09Z",
+      "side": 1,
+      "message": "Presumably this will need to change when we implement group effects?",
+      "revId": "0563a87bbd624b949a1ad15ed5c10096e9e7a907",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7faeb46c_1007e483",
+        "filename": "third_party/WebKit/Source/core/animation/CompositorMutatorImpl.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-08-28T20:57:09Z",
+      "side": 1,
+      "message": "Probably cleaner to split into two methods rather than making the mutation update optional.",
+      "range": {
+        "startLine": 76,
+        "startChar": 35,
+        "endLine": 76,
+        "endChar": 42
+      },
+      "revId": "0563a87bbd624b949a1ad15ed5c10096e9e7a907",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6549360_f3e0d16d",
+        "filename": "third_party/WebKit/Source/modules/compositorworker/AnimationWorkletGlobalScope.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-08-28T20:57:09Z",
+      "side": 1,
+      "message": "Only if it\u0027s new?",
+      "revId": "0563a87bbd624b949a1ad15ed5c10096e9e7a907",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a433a02_af45115f",
+        "filename": "third_party/WebKit/Source/modules/compositorworker/AnimationWorkletProxyClientImpl.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-08-28T20:57:09Z",
+      "side": 1,
+      "message": "This seems like the likely place we\u0027ll do the thread hop, maybe call this out with a TODO(petermayo)?",
+      "revId": "0563a87bbd624b949a1ad15ed5c10096e9e7a907",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc1e1315_d538cd8c",
+        "filename": "third_party/WebKit/Source/modules/compositorworker/AnimationWorkletProxyClientImpl.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-08-28T20:57:09Z",
+      "side": 1,
+      "message": "It\u0027s probably going to be a while before we change whether an update is needed from within the animator code (i.e. support changing attached timelines) and when we do it\u0027ll need a different update structure. We should consider moving the needs update logic to cc as it should know based on the input timelines.",
+      "revId": "0563a87bbd624b949a1ad15ed5c10096e9e7a907",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ad05601_879111ad",
+        "filename": "third_party/WebKit/Source/modules/compositorworker/CompositorWorkerProxyClientImpl.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-08-28T20:57:09Z",
+      "side": 1,
+      "message": "If this is proving awkward at all to maintain we can probably remove it now. Once you have AnimationWorklet tested ticking on the real compositor we don\u0027t need to keep the CompositorWorker path.",
+      "revId": "0563a87bbd624b949a1ad15ed5c10096e9e7a907",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ecf2076_64bf335b",
+        "filename": "third_party/WebKit/Source/modules/compositorworker/EffectProxy.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-08-28T20:57:09Z",
+      "side": 1,
+      "message": "Since localTime is spec\u0027d to be a double, why not just use a double here and convert to time within cc internals?",
+      "revId": "0563a87bbd624b949a1ad15ed5c10096e9e7a907",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
