@@ -1,0 +1,211 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f57fb512_ecc5b0ca",
+        "filename": "content/browser/android/text_suggestion_host_android.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1116193
+      },
+      "writtenOn": "2017-08-28T19:28:47Z",
+      "side": 1,
+      "message": "how about just passing parameter values instead of creating a new object? Then we don\u0027t need to expose SuggestionInfo at all.",
+      "range": {
+        "startLine": 171,
+        "startChar": 32,
+        "endLine": 171,
+        "endChar": 56
+      },
+      "revId": "21ea7a35f3ad13c6fec64aff009293058c6e672f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c1db097_c0c40012",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/input/ImeAdapter.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 927,
+      "author": {
+        "id": 1116193
+      },
+      "writtenOn": "2017-08-28T19:28:47Z",
+      "side": 1,
+      "message": "Could you change the structure as follows?\n\n// Copied from Android\u0027s Editor.java [and other places] for a similar look and feel.\nint underlineColor \u003d ...\nint newAlpha \u003d ...\nint suggestionHighlightColor \u003d ...",
+      "range": {
+        "startLine": 927,
+        "startChar": 16,
+        "endLine": 927,
+        "endChar": 45
+      },
+      "revId": "21ea7a35f3ad13c6fec64aff009293058c6e672f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d6f3d6c_c585dc1c",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/input/SuggestionsPopupWindow.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 284,
+      "author": {
+        "id": 1116193
+      },
+      "writtenOn": "2017-08-28T19:28:47Z",
+      "side": 1,
+      "message": "Unless this is used separately, could you just merge this, setHighlightedText() with showTextSuggestionMenu()?\n\npublic void showTextSuggestionMenu(double caretX, double caretY, String highlightedText, String[] suggestions);\n\nI don\u0027t want us to allow public methods to call setSpellCheckSuggestions() and then showTextSuggestionMenu(). \n\nOr better yet,\n\nhow about subclassing SuggestionsPopupWindow into SpellCheckPopupWindow and TextSuggestionPopupWindow? Then you can remove mMode and rename show...() as show().",
+      "range": {
+        "startLine": 284,
+        "startChar": 16,
+        "endLine": 284,
+        "endChar": 34
+      },
+      "revId": "21ea7a35f3ad13c6fec64aff009293058c6e672f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64dd31e8_0dce13bc",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/input/TextSuggestionHost.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1116193
+      },
+      "writtenOn": "2017-08-28T19:28:47Z",
+      "side": 1,
+      "message": "I think you can hide all the details in the popup window itself. I\u0027ve mentioned this in another place but I\u0027d prefer subclassing popup window for each mode.\n\nprivate void showTextSuggestionMenu(...) {\n  if (mSpellCheckPopupWindow !\u003d null) mSpellCheckPopupWindow.dismiss();\n  if (mTextSuggestionPopupWindow \u003d\u003d null) mTextSuggestionPopupWindow \u003d new ...;\n  float density \u003d ...;\n  float coordX \u003d ...;\n  float coordY \u003d ...;\n  mTextSuggestionPopupWindow.show(coordX, coordY, markedText, suggestions);\n}",
+      "range": {
+        "startLine": 61,
+        "startChar": 32,
+        "endLine": 61,
+        "endChar": 50
+      },
+      "revId": "21ea7a35f3ad13c6fec64aff009293058c6e672f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "919060e1_7067847f",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/input/TextSuggestionHost.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1116193
+      },
+      "writtenOn": "2017-08-28T19:28:47Z",
+      "side": 1,
+      "message": "nit: active",
+      "range": {
+        "startLine": 88,
+        "startChar": 34,
+        "endLine": 88,
+        "endChar": 41
+      },
+      "revId": "21ea7a35f3ad13c6fec64aff009293058c6e672f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88e9e850_3bea22a7",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/input/TextSuggestionHost.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1116193
+      },
+      "writtenOn": "2017-08-28T19:28:47Z",
+      "side": 1,
+      "message": "onNewWordAddedToDictionary(...) for consistency with android style elsewhere.",
+      "range": {
+        "startLine": 105,
+        "startChar": 16,
+        "endLine": 105,
+        "endChar": 40
+      },
+      "revId": "21ea7a35f3ad13c6fec64aff009293058c6e672f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6915005d_a0e2603f",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/input/TextSuggestionHost.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1116193
+      },
+      "writtenOn": "2017-08-28T19:28:47Z",
+      "side": 1,
+      "message": "onSuggestionMenuClosed(...) for android styling.",
+      "range": {
+        "startLine": 113,
+        "startChar": 16,
+        "endLine": 113,
+        "endChar": 36
+      },
+      "revId": "21ea7a35f3ad13c6fec64aff009293058c6e672f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d51bef35_61011015",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/input/TextSuggestionHost.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1116193
+      },
+      "writtenOn": "2017-08-28T19:28:47Z",
+      "side": 1,
+      "message": "Do you need to dismiss popup windows here?",
+      "range": {
+        "startLine": 121,
+        "startChar": 17,
+        "endLine": 121,
+        "endChar": 24
+      },
+      "revId": "21ea7a35f3ad13c6fec64aff009293058c6e672f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2a3da2a_a9ac78f7",
+        "filename": "content/public/android/javatests/src/org/chromium/content/browser/input/TextSuggestionMenuTest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1116193
+      },
+      "writtenOn": "2017-08-28T19:28:47Z",
+      "side": 1,
+      "message": "nit: testMenu... for consistency?",
+      "range": {
+        "startLine": 151,
+        "startChar": 16,
+        "endLine": 151,
+        "endChar": 20
+      },
+      "revId": "21ea7a35f3ad13c6fec64aff009293058c6e672f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
