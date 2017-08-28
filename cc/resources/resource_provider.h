@@ -411,6 +411,9 @@ class CC_EXPORT ResourceProvider
 
   // For tests only!
   void CreateForTesting(viz::ResourceId id);
+  void SetYUVHighbitResourceFormatForTesting(viz::ResourceFormat format) {
+    settings_.yuv_highbit_resource_format = format;
+  }
 
   // Sets the current read fence. If a resource is locked for read
   // and has read fences enabled, the resource will not allow writes
@@ -633,7 +636,7 @@ class CC_EXPORT ResourceProvider
   // Returns null if we do not have a viz::ContextProvider.
   gpu::gles2::GLES2Interface* ContextGL() const;
 
-  // Holds const settings for the ResourceProvider. Never changed after init.
+  // Holds settings for the ResourceProvider. Never changed after init.
   struct Settings {
     Settings(viz::ContextProvider* compositor_context_provider,
              bool delegated_sync_points_needed,
@@ -652,7 +655,7 @@ class CC_EXPORT ResourceProvider
     viz::ResourceFormat best_render_buffer_format = viz::RGBA_8888;
     bool enable_color_correct_rasterization = false;
     bool delegated_sync_points_required = false;
-  } const settings_;
+  } settings_;
 
   ResourceMap resources_;
   ChildMap children_;
