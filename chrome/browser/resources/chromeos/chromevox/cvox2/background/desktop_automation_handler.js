@@ -217,9 +217,12 @@ DesktopAutomationHandler.prototype = {
   onActiveDescendantChanged: function(evt) {
     if (!evt.target.activeDescendant || !evt.target.state.focused)
       return;
-    var event = new CustomAutomationEvent(
-        EventType.FOCUS, evt.target.activeDescendant, evt.eventFrom);
-    this.onEventDefault(event);
+    var prevRange = ChromeVoxState.instance.currentRange;
+    var range = cursors.Range.fromNode(evt.target.activeDescendant);
+    ChromeVoxState.instance.setCurrentRange(range);
+    new Output()
+        .withRichSpeechAndBraille(range, prevRange, Output.EventType.NAVIGATE)
+        .go();
   },
 
   /**
