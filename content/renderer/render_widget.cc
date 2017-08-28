@@ -35,7 +35,6 @@
 #include "content/common/input/synthetic_gesture_packet.h"
 #include "content/common/input_messages.h"
 #include "content/common/render_message_filter.mojom.h"
-#include "content/common/swapped_out_messages.h"
 #include "content/common/text_input_state.h"
 #include "content/common/view_messages.h"
 #include "content/public/common/content_client.h"
@@ -667,11 +666,8 @@ bool RenderWidget::OnMessageReceived(const IPC::Message& message) {
 }
 
 bool RenderWidget::Send(IPC::Message* message) {
-  // Don't send any messages after the browser has told us to close, and filter
-  // most outgoing messages while swapped out.
-  if ((is_swapped_out_ &&
-       !SwappedOutMessages::CanSendWhileSwappedOut(message)) ||
-      closing_) {
+  // Don't send any messages after the browser has told us to close.
+  if (closing_) {
     delete message;
     return false;
   }
@@ -764,7 +760,7 @@ void RenderWidget::OnResize(const ResizeParams& params) {
 }
 
 void RenderWidget::OnEnableDeviceEmulation(
-   const blink::WebDeviceEmulationParams& params) {
+    const blink::WebDeviceEmulationParams& params) {
   if (!screen_metrics_emulator_) {
     ResizeParams resize_params;
     resize_params.screen_info = screen_info_;
@@ -2022,8 +2018,9 @@ void RenderWidget::SetHidden(bool hidden) {
   if (is_hidden_) {
     RenderThreadImpl::current()->WidgetHidden();
     first_update_visual_state_after_hidden_ = true;
-  } else
+  } else {
     RenderThreadImpl::current()->WidgetRestored();
+  }
 
   if (render_widget_scheduling_state_)
     render_widget_scheduling_state_->SetHidden(hidden);
