@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "2ced9c1b_35e6fd07",
+        "filename": "ui/file_manager/file_manager/foreground/js/ui/file_tap_handler.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1166720
+      },
+      "writtenOn": "2017-08-28T12:38:59Z",
+      "side": 1,
+      "message": "Done. I think \u0027item\u0027 is more suited here for consistency within this file.",
+      "parentUuid": "a50c97fc_fff1f513",
+      "revId": "160f0cec5eeac4d708f2b1c84b530ef86142b42d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6606bd5f_cf6411b2",
         "filename": "ui/file_manager/file_manager/foreground/js/ui/file_tap_handler.js",
         "patchSetId": 6
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "97a0e0d6_a152134d",
+        "filename": "ui/file_manager/file_manager/foreground/js/ui/file_tap_handler.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1166720
+      },
+      "writtenOn": "2017-08-28T12:38:59Z",
+      "side": 1,
+      "message": "Done. It just meant \"but\" in this case.",
+      "parentUuid": "6606bd5f_cf6411b2",
+      "range": {
+        "startLine": 122,
+        "startChar": 54,
+        "endLine": 123,
+        "endChar": 65
+      },
+      "revId": "160f0cec5eeac4d708f2b1c84b530ef86142b42d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e03ca597_611ba20e",
         "filename": "ui/file_manager/file_manager/foreground/js/ui/file_tap_handler.js",
         "patchSetId": 6
@@ -56,6 +98,24 @@
       "revId": "160f0cec5eeac4d708f2b1c84b530ef86142b42d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d228959_4c464972",
+        "filename": "ui/file_manager/file_manager/foreground/js/ui/file_tap_handler.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1166720
+      },
+      "writtenOn": "2017-08-28T12:38:59Z",
+      "side": 1,
+      "message": "I could not find a statement that says the identifier is non-negative. It is just said to be a long value. So I think we should continue using undefined.\nhttps://www.w3.org/TR/touch-events/#widl-Touch-identifier",
+      "parentUuid": "e03ca597_611ba20e",
+      "revId": "160f0cec5eeac4d708f2b1c84b530ef86142b42d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -79,6 +139,30 @@
       "revId": "160f0cec5eeac4d708f2b1c84b530ef86142b42d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a1d0c3c_d1c9bb9c",
+        "filename": "ui/file_manager/file_manager/foreground/js/ui/file_tap_handler.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1166720
+      },
+      "writtenOn": "2017-08-28T12:38:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aad35f79_2b7d11a2",
+      "range": {
+        "startLine": 199,
+        "startChar": 28,
+        "endLine": 199,
+        "endChar": 40
+      },
+      "revId": "160f0cec5eeac4d708f2b1c84b530ef86142b42d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
