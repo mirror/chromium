@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "285e598d_0cc4d235",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_home_view_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1181484
+      },
+      "writtenOn": "2017-08-28T06:57:13Z",
+      "side": 1,
+      "message": "Can we move this into a function in bookmark_utils.cc under ios/chrome/browser/bookmarks? Since this is used multiple times, its probably nicer to have this logic in one place?",
+      "range": {
+        "startLine": 163,
+        "startChar": 8,
+        "endLine": 163,
+        "endChar": 48
+      },
+      "revId": "e2098f9f14389aa9fcca8ef4c886278ca6138ebb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

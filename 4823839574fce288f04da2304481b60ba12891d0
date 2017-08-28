@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f01d6b6c_1f79e85c",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_table_view.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 334,
+      "author": {
+        "id": 1181484
+      },
+      "writtenOn": "2017-08-28T06:57:13Z",
+      "side": 1,
+      "message": "Can you add a comment here describing what this method does? So that we document it clearly.",
+      "range": {
+        "startLine": 334,
+        "startChar": 8,
+        "endLine": 334,
+        "endChar": 40
+      },
+      "revId": "4823839574fce288f04da2304481b60ba12891d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb90aa08_c4e12520",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_table_view.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 338,
+      "author": {
+        "id": 1181484
+      },
+      "writtenOn": "2017-08-28T06:57:13Z",
+      "side": 1,
+      "message": "Is this the logic that was followed in previous UI? What if a user logs in, and syncs but has no bookmarks in \"Bookmarks Bar\"?",
+      "range": {
+        "startLine": 338,
+        "startChar": 2,
+        "endLine": 338,
+        "endChar": 76
+      },
+      "revId": "4823839574fce288f04da2304481b60ba12891d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d45e989_ba9f1a35",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_table_view.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 352,
+      "author": {
+        "id": 1181484
+      },
+      "writtenOn": "2017-08-28T06:57:13Z",
+      "side": 1,
+      "message": "The check here should be !\u003d. Note that the currentRootNode should never be null in this class.",
+      "range": {
+        "startLine": 352,
+        "startChar": 23,
+        "endLine": 352,
+        "endChar": 25
+      },
+      "revId": "4823839574fce288f04da2304481b60ba12891d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c557e16f_06acb596",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_table_view.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 388,
+      "author": {
+        "id": 1181484
+      },
+      "writtenOn": "2017-08-28T06:57:13Z",
+      "side": 1,
+      "message": "Does this work? The reason it was added as a separate view is because the table view should hidden when there is nothing to show.\nAlso every time we show empty background we set the tableview background to empty, this seems like code that can be run one time rather than every time we show empty background.",
+      "range": {
+        "startLine": 388,
+        "startChar": 2,
+        "endLine": 388,
+        "endChar": 64
+      },
+      "revId": "4823839574fce288f04da2304481b60ba12891d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
