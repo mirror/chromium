@@ -50,6 +50,7 @@ public class MainPreferences extends PreferenceFragment
     @VisibleForTesting
     public static final String VIEW_PASSWORDS = "view-passwords";
 
+    private SignInPreference mSignInPreference;
     private ManagedPreferenceDelegate mManagedPreferenceDelegate;
 
     public MainPreferences() {
@@ -71,6 +72,7 @@ public class MainPreferences extends PreferenceFragment
 
         if (SigninManager.get(getActivity()).isSigninSupported()) {
             SigninManager.get(getActivity()).addSignInStateObserver(this);
+            setupSignInPref();
         }
     }
 
@@ -79,6 +81,7 @@ public class MainPreferences extends PreferenceFragment
         super.onPause();
         if (SigninManager.get(getActivity()).isSigninSupported()) {
             SigninManager.get(getActivity()).removeSignInStateObserver(this);
+            clearSignInPref();
         }
     }
 
@@ -171,6 +174,18 @@ public class MainPreferences extends PreferenceFragment
 
     private void setOnOffSummary(Preference pref, boolean isOn) {
         pref.setSummary(getResources().getString(isOn ? R.string.text_on : R.string.text_off));
+    }
+
+    private void setupSignInPref() {
+        mSignInPreference = (SignInPreference) findPreference(PREF_SIGN_IN);
+        mSignInPreference.registerForUpdates();
+    }
+
+    private void clearSignInPref() {
+        if (mSignInPreference != null) {
+            mSignInPreference.unregisterForUpdates();
+            mSignInPreference = null;
+        }
     }
 
     // SignInStateObserver
