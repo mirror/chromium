@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6c7f76e4_5e178eed",
+        "filename": "content/browser/web_contents/web_contents_impl_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 979,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-08-28T16:19:52Z",
+      "side": 1,
+      "message": "Let\u0027s have a ReadyToCommit stage in this navigation as well, so that we can keep the EXPECT_FALSE(contents()-\u003eCrossProcessNavigationPending());",
+      "revId": "2514ccbdaf49db99d49e10e67799005e8db2b3ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
