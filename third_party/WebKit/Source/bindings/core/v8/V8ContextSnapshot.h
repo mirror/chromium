@@ -54,6 +54,7 @@ class CORE_EXPORT V8ContextSnapshot {
 
   // Do not call this in production.
   static v8::StartupData TakeSnapshot();
+  static void Dispose();
 
  private:
   static v8::StartupData SerializeInternalField(v8::Local<v8::Object> holder,

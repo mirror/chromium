@@ -180,7 +180,10 @@ void V8PerIsolateData::Destroy(v8::Isolate* isolate) {
     g_main_thread_per_isolate_data = 0;
 
   // FIXME: Remove once all v8::Isolate::GetCurrent() calls are gone.
-  isolate->Exit();
+  // SnapshotCreator closes down its Isolate in its destructor.
+  if (!data->isolate_holder_.snapshot_creator())
+    isolate->Exit();
+
   delete data;
 }
 
