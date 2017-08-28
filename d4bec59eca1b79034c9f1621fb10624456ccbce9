@@ -1,0 +1,174 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b89ce4db_9b68a62c",
+        "filename": "components/ui_devtools/views/ui_devtools_dom_agent.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-08-28T21:19:33Z",
+      "side": 1,
+      "message": "Use hovered_rect.IsEmpty() instead.",
+      "revId": "d4bec59eca1b79034c9f1621fb10624456ccbce9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1720013e_07235ae6",
+        "filename": "components/ui_devtools/views/ui_devtools_dom_agent.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-08-28T21:19:33Z",
+      "side": 1,
+      "message": "You should never reach here (or the width() \u003d\u003d 0 case above), because of the first IsEmpty() check.",
+      "revId": "d4bec59eca1b79034c9f1621fb10624456ccbce9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "afe3ef66_31f645f4",
+        "filename": "components/ui_devtools/views/ui_devtools_dom_agent.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 402,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-08-28T21:19:33Z",
+      "side": 1,
+      "message": "Use r1.bottom(), instead of r1.y() + r1.height() (here and other places)",
+      "revId": "d4bec59eca1b79034c9f1621fb10624456ccbce9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b6abf94_8c745d9e",
+        "filename": "components/ui_devtools/views/ui_devtools_dom_agent.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 420,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-08-28T21:19:33Z",
+      "side": 1,
+      "message": "What about the else cases here? NOTREACHED()?",
+      "revId": "d4bec59eca1b79034c9f1621fb10624456ccbce9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b65a4e0f_1b3d52d0",
+        "filename": "components/ui_devtools/views/ui_devtools_dom_agent.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 430,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-08-28T21:19:33Z",
+      "side": 1,
+      "message": "hovered_rect_f",
+      "revId": "d4bec59eca1b79034c9f1621fb10624456ccbce9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6791cdc5_f0a7b609",
+        "filename": "components/ui_devtools/views/ui_devtools_dom_agent.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 461,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-08-28T21:19:33Z",
+      "side": 1,
+      "message": "pinned_rect_f",
+      "revId": "d4bec59eca1b79034c9f1621fb10624456ccbce9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f6bb8581_2b9e19df",
+        "filename": "components/ui_devtools/views/ui_devtools_dom_agent.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-08-28T21:19:33Z",
+      "side": 1,
+      "message": "For a public function, document what the function does, so the caller knows when to call this. In this case, for example, it could be something like \"Shows the distances between the nodes identified by |pinned_id| and |element_id| in the highlight overlay.\" The function can probably be renamed to \"ShowDistancesInHighlightOverlay(pinned, element)\"",
+      "revId": "d4bec59eca1b79034c9f1621fb10624456ccbce9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc88c930_e69e6326",
+        "filename": "components/ui_devtools/views/ui_devtools_dom_agent.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-08-28T21:19:33Z",
+      "side": 1,
+      "message": "This should be of type RectPositionsType.\n\nBut that enum needs a better name. How about \u0027HighlightRectsConfiguration\u0027?",
+      "revId": "d4bec59eca1b79034c9f1621fb10624456ccbce9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2c0ea54_18f9549b",
+        "filename": "components/ui_devtools/views/ui_devtools_overlay_agent.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-08-28T21:19:33Z",
+      "side": 1,
+      "message": "Please add a comment explaining the behaviour of this code.",
+      "revId": "d4bec59eca1b79034c9f1621fb10624456ccbce9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7101ee9_7f5e08d5",
+        "filename": "components/ui_devtools/views/ui_devtools_overlay_agent.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-08-28T21:19:33Z",
+      "side": 1,
+      "message": "Add comment for what false means. e.g.:\n   dom_agent_-\u003eHighlightNode(element_id, false /* show_size */);\n\nor\n\n  constexpr bool show_size \u003d false;\n  dom_agent_-\u003eHighlightNode(element_id, show_size);\n\n(and in the above calls too)",
+      "revId": "d4bec59eca1b79034c9f1621fb10624456ccbce9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
