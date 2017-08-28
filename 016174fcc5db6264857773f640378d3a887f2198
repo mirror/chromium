@@ -81,6 +81,24 @@
       "revId": "016174fcc5db6264857773f640378d3a887f2198",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7d59bdb_afb7ab46",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/access-control-basic-get-fail-non-simple.htm",
+        "patchSetId": 3
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-08-28T09:08:00Z",
+      "side": 1,
+      "message": "Makes sense.",
+      "parentUuid": "23529bfc_c1af48a2",
+      "revId": "016174fcc5db6264857773f640378d3a887f2198",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
