@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d456c0d8_6ff4cba4",
+        "filename": "components/exo/surface.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 701,
+      "author": {
+        "id": 1158749
+      },
+      "writtenOn": "2017-08-28T18:28:55Z",
+      "side": 1,
+      "message": "Sorry, i missed this simple logic:\nif ()\n  assign true\nassign false\n\nupdated.",
+      "parentUuid": "ce1e7f9a_11fb52e0",
+      "revId": "d802658fcb362a6f41561ea6b0e40ec25d6cce5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f1d423ff_c9568267",
         "filename": "components/exo/surface.cc",
         "patchSetId": 9
@@ -39,6 +57,30 @@
       "revId": "d802658fcb362a6f41561ea6b0e40ec25d6cce5d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b1bf314_30b4ee82",
+        "filename": "components/exo/surface.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 703,
+      "author": {
+        "id": 1158749
+      },
+      "writtenOn": "2017-08-28T18:28:55Z",
+      "side": 1,
+      "message": "Thanks, for heads up",
+      "parentUuid": "f1d423ff_c9568267",
+      "range": {
+        "startLine": 703,
+        "startChar": 59,
+        "endLine": 703,
+        "endChar": 68
+      },
+      "revId": "d802658fcb362a6f41561ea6b0e40ec25d6cce5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
