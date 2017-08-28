@@ -1,0 +1,234 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "62df2078_b8393caa",
+        "filename": "remoting/host/file_transfer_message_handler.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1133074
+      },
+      "writtenOn": "2017-08-28T18:31:57Z",
+      "side": 1,
+      "message": "Add comment above on why using \u0027 base::Unretained\u0027 is safe here.  It should be safe since the lifetime of |file_proxy_wrapper_| is controlled by this instance and the callback cannot be run after this instance is destroyed.  Any time you don\u0027t use a WeakPtr or Refcounted object, it is good to describe why it is safe.",
+      "range": {
+        "startLine": 25,
+        "startChar": 3,
+        "endLine": 25,
+        "endChar": 43
+      },
+      "revId": "50cbd6342012e31be90bf2a0b1a17a3446ab2007",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dbf4dcbe_2fe114c7",
+        "filename": "remoting/host/file_transfer_message_handler.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1133074
+      },
+      "writtenOn": "2017-08-28T18:31:57Z",
+      "side": 1,
+      "message": "nit, you could rewrite this to:\n  if (request_) {\n    // Comment\n    SendToFileProxy(std::move(buffer));\n  } else {\n    // Comment\n    ParseNewRequest(std::move(buffer));\n  }\n\nJust a style preference though : )",
+      "range": {
+        "startLine": 38,
+        "startChar": 0,
+        "endLine": 47,
+        "endChar": 37
+      },
+      "revId": "50cbd6342012e31be90bf2a0b1a17a3446ab2007",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e12b99a2_f2a1d54f",
+        "filename": "remoting/host/file_transfer_message_handler.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1133074
+      },
+      "writtenOn": "2017-08-28T18:31:57Z",
+      "side": 1,
+      "message": "You may want to add this above:\nDCHECK(file_proxy_wrapper_);",
+      "range": {
+        "startLine": 76,
+        "startChar": 2,
+        "endLine": 76,
+        "endChar": 31
+      },
+      "revId": "50cbd6342012e31be90bf2a0b1a17a3446ab2007",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0b87b1c_65ce2577",
+        "filename": "remoting/host/file_transfer_message_handler.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1133074
+      },
+      "writtenOn": "2017-08-28T18:31:57Z",
+      "side": 1,
+      "message": "Based on Chromium style, if you DCHECK for a condition then you don\u0027t need to handle it (the expectation is that any errors will be found during testing with debug builds).\n\nYou can remove this line and one level of indentation.",
+      "range": {
+        "startLine": 78,
+        "startChar": 2,
+        "endLine": 78,
+        "endChar": 71
+      },
+      "revId": "50cbd6342012e31be90bf2a0b1a17a3446ab2007",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ebbea114_fb4bce11",
+        "filename": "remoting/host/file_transfer_message_handler.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1133074
+      },
+      "writtenOn": "2017-08-28T18:31:57Z",
+      "side": 1,
+      "message": "This code is duplicated below, would it make sense to add a CleanupAndClose(const std::string\u0026 error_message) helper method which logs the errors and closes / cancels the transfer?",
+      "range": {
+        "startLine": 101,
+        "startChar": 0,
+        "endLine": 106,
+        "endChar": 37
+      },
+      "revId": "50cbd6342012e31be90bf2a0b1a17a3446ab2007",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b374ca7e_3187ef4a",
+        "filename": "remoting/host/file_transfer_message_handler.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1133074
+      },
+      "writtenOn": "2017-08-28T18:31:57Z",
+      "side": 1,
+      "message": "nit: Add IWYU headers:\n\n#include \u003ccstdint\u003e\n#include \u003cmemory\u003e\n#include \u003cstring\u003e",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 8,
+        "endChar": 1
+      },
+      "revId": "50cbd6342012e31be90bf2a0b1a17a3446ab2007",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d17dcf7_6c5cd7f6",
+        "filename": "remoting/host/file_transfer_message_handler_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1133074
+      },
+      "writtenOn": "2017-08-28T18:31:57Z",
+      "side": 1,
+      "message": "IWUY:\n\n#include \u003cmemory\u003e\n#include \u003cqueue\u003e\n#include \u003cstring\u003e\n#include \u003cutility\u003e\n#include \u003cvector\u003e",
+      "range": {
+        "startLine": 6,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 1
+      },
+      "revId": "50cbd6342012e31be90bf2a0b1a17a3446ab2007",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5159b9f9_0166f91b",
+        "filename": "remoting/host/file_transfer_message_handler_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1133074
+      },
+      "writtenOn": "2017-08-28T18:31:57Z",
+      "side": 1,
+      "message": "Generally only POD datatypes should be defined at global or file scope.  Can you make these protected members of your test fixture?",
+      "range": {
+        "startLine": 18,
+        "startChar": 0,
+        "endLine": 19,
+        "endChar": 67
+      },
+      "revId": "50cbd6342012e31be90bf2a0b1a17a3446ab2007",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a47e5536_3df287a6",
+        "filename": "remoting/host/file_transfer_message_handler_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1133074
+      },
+      "writtenOn": "2017-08-28T18:31:57Z",
+      "side": 1,
+      "message": "Can you add the following to make it explicit that the * is no longer valid after this call (same with your other test):\nfile_proxy_wrapper_ptr \u003d nullptr;",
+      "range": {
+        "startLine": 166,
+        "startChar": 0,
+        "endLine": 166,
+        "endChar": 26
+      },
+      "revId": "50cbd6342012e31be90bf2a0b1a17a3446ab2007",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33338d1a_444a2a15",
+        "filename": "remoting/host/file_transfer_message_handler_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1133074
+      },
+      "writtenOn": "2017-08-28T18:31:57Z",
+      "side": 1,
+      "message": "If you need to switch the base::Unretained() bind calls in the FileTransferMessageHandler class to use a WeakPtr, you can use that mechanism here (expose a \u0027WeakPtrForTesting()\u0027 method) to guarantee that the instance is destroyed and not leaked.",
+      "range": {
+        "startLine": 199,
+        "startChar": 2,
+        "endLine": 199,
+        "endChar": 68
+      },
+      "revId": "50cbd6342012e31be90bf2a0b1a17a3446ab2007",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
