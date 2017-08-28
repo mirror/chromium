@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "01ce90f1_bdd63cdc",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/selection/SelectableItemView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-08-28T20:45:52Z",
+      "side": 1,
+      "message": "I feel like it might be fine to completely remove the highlight view then.",
+      "parentUuid": "74ab8795_7c6f53a4",
+      "range": {
+        "startLine": 101,
+        "startChar": 8,
+        "endLine": 101,
+        "endChar": 22
+      },
+      "revId": "e3ccec725001a651c52a52de25f12a43c12302b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "98b89f21_8b9f2b76",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/selection/SelectableItemView.java",
         "patchSetId": 1
@@ -59,6 +83,30 @@
       "writtenOn": "2017-08-28T20:17:46Z",
       "side": 1,
       "message": "Since downloads overrides this method, it\u0027s still using a square when modern isn\u0027t enabled, correct?",
+      "range": {
+        "startLine": 107,
+        "startChar": 12,
+        "endLine": 107,
+        "endChar": 87
+      },
+      "revId": "e3ccec725001a651c52a52de25f12a43c12302b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e3fa158_a691b0ca",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/selection/SelectableItemView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-08-28T20:45:52Z",
+      "side": 1,
+      "message": "yes download is still using square. See screenshots here: https://bugs.chromium.org/p/chromium/issues/detail?id\u003d753493\u0026desc\u003d2#c13",
+      "parentUuid": "98b89f21_8b9f2b76",
       "range": {
         "startLine": 107,
         "startChar": 12,
