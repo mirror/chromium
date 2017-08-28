@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "e36837f0_fea58b00",
+        "filename": "base/android/sys_utils.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1132034
+      },
+      "writtenOn": "2017-08-28T16:39:23Z",
+      "side": 1,
+      "message": "I wanted to also log how many time we spend collecting the data, seems to be ~4ms on a N5X.",
+      "parentUuid": "266cec34_c8725d43",
+      "range": {
+        "startLine": 44,
+        "startChar": 2,
+        "endLine": 44,
+        "endChar": 18
+      },
+      "revId": "8b85df83fa1721f3038f93a63387b01728a12f20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "240b689b_bbda73d5",
         "filename": "base/process/process_metrics.h",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "8b85df83fa1721f3038f93a63387b01728a12f20",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24382438_fe7e5e36",
+        "filename": "base/process/process_metrics.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 1132034
+      },
+      "writtenOn": "2017-08-28T16:39:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "240b689b_bbda73d5",
+      "range": {
+        "startLine": 234,
+        "startChar": 30,
+        "endLine": 234,
+        "endChar": 47
+      },
+      "revId": "8b85df83fa1721f3038f93a63387b01728a12f20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "527b75f2_69cf8f86",
+        "filename": "base/process/process_metrics_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 632,
+      "author": {
+        "id": 1132034
+      },
+      "writtenOn": "2017-08-28T16:39:23Z",
+      "side": 1,
+      "message": "Changed to using SharedMemory::CreateAndMapAnonymous().\nThis avoids relying on malloc() and compiler trickery.",
+      "parentUuid": "c85d0882_d6e7c7b4",
+      "range": {
+        "startLine": 632,
+        "startChar": 2,
+        "endLine": 632,
+        "endChar": 10
+      },
+      "revId": "8b85df83fa1721f3038f93a63387b01728a12f20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "01fcf142_1e453b7f",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/init/AsyncInitTaskRunner.java",
         "patchSetId": 1
@@ -82,6 +154,30 @@
       "writtenOn": "2017-08-25T16:04:12Z",
       "side": 1,
       "message": "Are we going to report this somewhere else too? (Like in the place where we report Startup.FirstCommitNavigationTime?)",
+      "range": {
+        "startLine": 48,
+        "startChar": 16,
+        "endLine": 48,
+        "endChar": 24
+      },
+      "revId": "8b85df83fa1721f3038f93a63387b01728a12f20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d892ddb4_086c609a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/init/AsyncInitTaskRunner.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1132034
+      },
+      "writtenOn": "2017-08-28T16:39:23Z",
+      "side": 1,
+      "message": "Yes, I want to use that to report delta in number of page faults, but rather than building something a bit overkill at first, wanted to have the basics in place.",
+      "parentUuid": "01fcf142_1e453b7f",
       "range": {
         "startLine": 48,
         "startChar": 16,
