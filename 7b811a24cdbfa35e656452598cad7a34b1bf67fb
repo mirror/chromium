@@ -16,6 +16,24 @@
       "revId": "7b811a24cdbfa35e656452598cad7a34b1bf67fb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c08d3cfe_13117e44",
+        "filename": "third_party/WebKit/Source/core/editing/commands/InsertLineBreakCommand.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1238128
+      },
+      "writtenOn": "2017-08-28T05:12:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "56daed6c_515863e8",
+      "revId": "7b811a24cdbfa35e656452598cad7a34b1bf67fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
