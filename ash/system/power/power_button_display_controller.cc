@@ -59,6 +59,7 @@ PowerButtonDisplayController::~PowerButtonDisplayController() {
 void PowerButtonDisplayController::SetDisplayForcedOff(bool forced_off) {
   if (backlights_forced_off_ == forced_off)
     return;
+  LOG(ERROR) << "SetDisplayForcedOff(" << forced_off << ")";
 
   // Set the display and keyboard backlights (if present) to |forced_off|.
   chromeos::DBusThreadManager::Get()
@@ -76,6 +77,7 @@ void PowerButtonDisplayController::SetDisplayForcedOff(bool forced_off) {
 }
 
 void PowerButtonDisplayController::PowerManagerRestarted() {
+  LOG(ERROR) << "PowerManagerRestarted()";
   chromeos::DBusThreadManager::Get()
       ->GetPowerManagerClient()
       ->SetBacklightsForcedOff(backlights_forced_off_);
@@ -83,6 +85,7 @@ void PowerButtonDisplayController::PowerManagerRestarted() {
 
 void PowerButtonDisplayController::BrightnessChanged(int level,
                                                      bool user_initiated) {
+  LOG(ERROR) << "BrightnessChanged(" << level << ", " << user_initiated << ")";
   const ScreenState old_state = screen_state_;
   if (level != 0)
     screen_state_ = ScreenState::ON;
@@ -98,6 +101,7 @@ void PowerButtonDisplayController::BrightnessChanged(int level,
 
 void PowerButtonDisplayController::SuspendDone(
     const base::TimeDelta& sleep_duration) {
+  LOG(ERROR) << "SuspendDone SetDisplayForcedOff(false)";
   // Stop forcing backlights off on resume to handle situations where the power
   // button resumed but we didn't receive the event (crbug.com/735291).
   SetDisplayForcedOff(false);
@@ -106,6 +110,7 @@ void PowerButtonDisplayController::SuspendDone(
 void PowerButtonDisplayController::LidEventReceived(
     chromeos::PowerManagerClient::LidState state,
     const base::TimeTicks& timestamp) {
+  LOG(ERROR) << "LidEventReceived SetDisplayForcedOff(false)";
   SetDisplayForcedOff(false);
 }
 
@@ -115,26 +120,32 @@ void PowerButtonDisplayController::OnKeyEvent(ui::KeyEvent* event) {
   if (event->key_code() == ui::VKEY_POWER)
     return;
 
-  if (!IsTabletModeActive() && backlights_forced_off_)
+  if (!IsTabletModeActive() && backlights_forced_off_) {
+    LOG(ERROR) << "OnKeyEvent SetDisplayForcedOff(false)";
     SetDisplayForcedOff(false);
+  }
 }
 
 void PowerButtonDisplayController::OnMouseEvent(ui::MouseEvent* event) {
   if (event->flags() & ui::EF_IS_SYNTHESIZED)
     return;
 
-  if (!IsTabletModeActive() && backlights_forced_off_)
+  if (!IsTabletModeActive() && backlights_forced_off_) {
+    LOG(ERROR) << "OnMouseEvent SetDisplayForcedOff(false)";
     SetDisplayForcedOff(false);
+  }
 }
 
 void PowerButtonDisplayController::OnStylusStateChanged(ui::StylusState state) {
   if (IsTabletModeSupported() && state == ui::StylusState::REMOVED &&
       backlights_forced_off_) {
+    LOG(ERROR) << "OnStylusStateChanged SetDisplayForcedOff(false)";
     SetDisplayForcedOff(false);
   }
 }
 
 void PowerButtonDisplayController::GetInitialBacklightsForcedOff() {
+  LOG(ERROR) << "GetInitialBacklightsForcedOff";
   chromeos::DBusThreadManager::Get()
       ->GetPowerManagerClient()
       ->GetBacklightsForcedOff(base::Bind(
@@ -144,6 +155,7 @@ void PowerButtonDisplayController::GetInitialBacklightsForcedOff() {
 
 void PowerButtonDisplayController::OnGotInitialBacklightsForcedOff(
     bool is_forced_off) {
+  LOG(ERROR) << "OnGotInitialBacklightsForcedOff(" << is_forced_off << ")";
   backlights_forced_off_ = is_forced_off;
   UpdateTouchscreenStatus();
 }
@@ -151,6 +163,9 @@ void PowerButtonDisplayController::OnGotInitialBacklightsForcedOff(
 void PowerButtonDisplayController::UpdateTouchscreenStatus() {
   const bool enable_touchscreen =
       !backlights_forced_off_ && (screen_state_ != ScreenState::OFF_AUTO);
+  LOG(ERROR) << "UpdateTouchscreenStatus("
+             << "backlights_forced_off_=" << backlights_forced_off_
+             << ", screen_state_=" << static_cast<int>(screen_state_) << ")";
   ShellDelegate* delegate = Shell::Get()->shell_delegate();
   delegate->SetTouchscreenEnabledInPrefs(enable_touchscreen,
                                          true /* use_local_state */);
