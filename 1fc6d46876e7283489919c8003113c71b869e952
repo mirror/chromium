@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "b29333c6_1a8d44c9",
+        "filename": "ios/chrome/browser/ui/content_suggestions/ntp_home_constant.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-08-28T11:02:46Z",
+      "side": 1,
+      "message": "From my understanding the values needs to be uppercase but not the enum name.\nDone.",
+      "parentUuid": "9b2ee1ca_32f31f6a",
+      "revId": "1fc6d46876e7283489919c8003113c71b869e952",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ccd4ce4f_8233e4e3",
         "filename": "ios/chrome/browser/ui/ntp/new_tab_page_egtest.mm",
         "patchSetId": 1
@@ -57,6 +75,30 @@
       "revId": "1fc6d46876e7283489919c8003113c71b869e952",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4976a53a_a019f587",
+        "filename": "ios/chrome/browser/ui/ntp/new_tab_page_egtest.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-08-28T11:02:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ccd4ce4f_8233e4e3",
+      "range": {
+        "startLine": 70,
+        "startChar": 22,
+        "endLine": 70,
+        "endChar": 64
+      },
+      "revId": "1fc6d46876e7283489919c8003113c71b869e952",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
