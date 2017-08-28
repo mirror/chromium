@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1366eb3e_be21f0c3",
+        "filename": "third_party/WebKit/Source/core/leak_detector/WebLeakDetector.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-08-28T01:52:44Z",
+      "side": 1,
+      "message": "Can we delay the instantiation of the detector_ to PrepareForLeakDetection()?",
+      "revId": "cfc25318269e09c38ff4a83915ab605c1b649e74",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
