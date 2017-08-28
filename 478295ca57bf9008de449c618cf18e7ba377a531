@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b850a1ee_b1d95af2",
+        "filename": "base/android/jni_int_wrapper.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-08-28T22:10:19Z",
+      "side": 1,
+      "message": "Should we do it on entry too?",
+      "range": {
+        "startLine": 16,
+        "startChar": 25,
+        "endLine": 16,
+        "endChar": 0
+      },
+      "revId": "478295ca57bf9008de449c618cf18e7ba377a531",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
