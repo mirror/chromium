@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d674ada2_ee71d9ea",
+        "filename": "content/browser/loader/resource_scheduler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1012,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-08-28T13:33:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e33fb7a8_8c60987c",
+      "revId": "5c085b685b081ec2cd1d13534a617637371ed93f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "76c0d986_cd19600f",
         "filename": "content/browser/loader/resource_scheduler_unittest.cc",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-25T19:18:20Z",
       "side": 1,
       "message": "Can you include a test for kHeadPrioritySupportedRequestsDelayable which shows they are delayed before OnWillInsertBody?",
+      "revId": "5c085b685b081ec2cd1d13534a617637371ed93f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7402a5a0_37905e24",
+        "filename": "content/browser/loader/resource_scheduler_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 836,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-08-28T13:33:58Z",
+      "side": 1,
+      "message": "Of course, done.",
+      "parentUuid": "76c0d986_cd19600f",
       "revId": "5c085b685b081ec2cd1d13534a617637371ed93f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
