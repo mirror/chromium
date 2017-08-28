@@ -135,6 +135,7 @@
 #include "core/svg/SVGAElement.h"
 #include "core/svg/SVGElement.h"
 #include "core/svg/SVGTreeScopeResources.h"
+#include "core/timing/TextElementTimingAncestorTracker.h"
 #include "platform/EventDispatchForbiddenScope.h"
 #include "platform/RuntimeEnabledFeatures.h"
 #include "platform/bindings/DOMDataStore.h"
@@ -1844,7 +1845,19 @@ void Element::AttachLayoutTree(AttachContext& context) {
   if (ElementShadow* shadow = this->Shadow())
     shadow->Attach(context);
 
-  ContainerNode::AttachLayoutTree(context);
+  if (!context.text_element_timing_ancestor_tracker) {
+    context.text_element_timing_ancestor_tracker =
+        TextElementTimingAncestorTracker::Create();
+    context.text_element_timing_ancestor_tracker
+        ->InitializeAncestorElementTimingStack(this);
+  }
+
+  {
+    TextElementTimingAncestorTracker::ScopedElementTimingNameTracker
+        scoped_element_timing_tracker(
+            this, context.text_element_timing_ancestor_tracker);
+    ContainerNode::AttachLayoutTree(context);
+  }
 
   CreatePseudoElementIfNeeded(kPseudoIdAfter);
   CreatePseudoElementIfNeeded(kPseudoIdBackdrop);
