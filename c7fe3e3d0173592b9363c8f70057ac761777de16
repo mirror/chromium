@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "e0b00507_bf253498",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_home_view_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 459,
+      "author": {
+        "id": 1212314
+      },
+      "writtenOn": "2017-08-28T06:27:38Z",
+      "side": 1,
+      "message": "got it. thx.",
+      "parentUuid": "abfeda2c_becef712",
+      "revId": "c7fe3e3d0173592b9363c8f70057ac761777de16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "deb46621_b534ae27",
         "filename": "ios/chrome/browser/ui/bookmarks/bookmark_promo_controller.mm",
         "patchSetId": 2
@@ -101,6 +119,24 @@
       "side": 1,
       "message": "Sorry this was just test code, removed now.",
       "parentUuid": "deb46621_b534ae27",
+      "revId": "c7fe3e3d0173592b9363c8f70057ac761777de16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c2703365_e9e1b95c",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_promo_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1212314
+      },
+      "writtenOn": "2017-08-28T06:27:38Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "613dbf2f_fa113362",
       "revId": "c7fe3e3d0173592b9363c8f70057ac761777de16",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
@@ -142,6 +178,24 @@
     },
     {
       "key": {
+        "uuid": "2c904212_b5c68de5",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_table_view.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1212314
+      },
+      "writtenOn": "2017-08-28T06:27:38Z",
+      "side": 1,
+      "message": "sorry. I overlooked that. it\u0027s fine.",
+      "parentUuid": "42444b5e_d9812d88",
+      "revId": "c7fe3e3d0173592b9363c8f70057ac761777de16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "997dbd22_ef4d821a",
         "filename": "ios/chrome/browser/ui/bookmarks/bookmark_table_view.mm",
         "patchSetId": 2
@@ -171,6 +225,24 @@
       "side": 1,
       "message": "I had done that initially, but i want the cell-deselection to happen at the end before leaving this method. Hence the reverse check.",
       "parentUuid": "997dbd22_ef4d821a",
+      "revId": "c7fe3e3d0173592b9363c8f70057ac761777de16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f9533fc8_f8cce1cc",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_table_view.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 304,
+      "author": {
+        "id": 1212314
+      },
+      "writtenOn": "2017-08-28T06:27:38Z",
+      "side": 1,
+      "message": "I see thx.",
+      "parentUuid": "66a09797_a142f5a8",
       "revId": "c7fe3e3d0173592b9363c8f70057ac761777de16",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false

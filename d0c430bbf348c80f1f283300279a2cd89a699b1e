@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3b39e44f_af08f8dd",
+        "filename": "ios/chrome/browser/ui/bookmarks/cells/bookmark_table_cell.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1212314
+      },
+      "writtenOn": "2017-08-28T06:27:38Z",
+      "side": 1,
+      "message": "wondering if we need this line?",
+      "revId": "d0c430bbf348c80f1f283300279a2cd89a699b1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
