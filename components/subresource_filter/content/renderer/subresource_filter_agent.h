@@ -61,8 +61,9 @@ class SubresourceFilterAgent
       const DocumentLoadStatistics& statistics);
 
  private:
-  // Assumes that the parent will be in a local frame relative to this one, upon
-  // construction.
+  // Traverses the tree upwards from its parent frame to find the first frame
+  // that is a local frame relative to this one and returns the activation state
+  // of that frame.
   static ActivationState GetParentActivationState(
       content::RenderFrame* render_frame);
 
