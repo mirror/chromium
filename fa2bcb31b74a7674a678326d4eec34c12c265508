@@ -36,6 +36,29 @@
     },
     {
       "key": {
+        "uuid": "c73846b0_9accc86a",
+        "filename": "chrome/browser/android/vr_shell/vr_shell_gl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 401,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-08-28T14:38:58Z",
+      "side": 1,
+      "message": "IIUC, this CL enforces the following\n- A WebVR page should pump out a frame within 10s of calling requestPresent\n- A WebVR page should pump out a new frame ever 10s\n\nWe still don\u0027t handle the case where a page doesn\u0027t request present after we dispatch vrdisplayactivate right?",
+      "range": {
+        "startLine": 401,
+        "startChar": 4,
+        "endLine": 401,
+        "endChar": 22
+      },
+      "revId": "fa2bcb31b74a7674a678326d4eec34c12c265508",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "60a35e67_40fb48bc",
         "filename": "chrome/browser/vr/ui_scene_manager.cc",
         "patchSetId": 1
