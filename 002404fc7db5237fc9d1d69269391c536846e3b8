@@ -191,6 +191,24 @@
     },
     {
       "key": {
+        "uuid": "04bf639b_a9c04f3b",
+        "filename": "components/autofill/content/renderer/password_autofill_agent.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2017-08-28T17:58:06Z",
+      "side": 1,
+      "message": "I didn\u0027t know about remote debugging. Yeah, the main concern is in performance and a web-developer can open the mobile version of a site on Desktop. So it looks it\u0027s enough to cover mobile sites. WDYT?",
+      "parentUuid": "df019740_3d5a4f3d",
+      "revId": "002404fc7db5237fc9d1d69269391c536846e3b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "632fb387_570c02b6",
         "filename": "third_party/WebKit/Source/core/frame/WebLocalFrameImpl.cpp",
         "patchSetId": 15
