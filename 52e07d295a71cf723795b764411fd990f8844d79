@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ee1a443a_93471645",
+        "filename": "third_party/WebKit/Source/core/editing/markers/SuggestionMarkerListImpl.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-08-28T20:57:57Z",
+      "side": 1,
+      "message": "nit: We don\u0027t move this function",
+      "revId": "52e07d295a71cf723795b764411fd990f8844d79",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53b49386_05c94b66",
+        "filename": "third_party/WebKit/Source/core/editing/markers/SuggestionMarkerListImplTest.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-08-28T20:57:57Z",
+      "side": 1,
+      "message": "nit: these converted tests can be made less verbose by:\n1. Moving |markers| into UnsortedDocumentMarkerListEditorTest\n2. Add wrapper functions into UnsortedDocumentMarkerListEditorTest to access |markers| and |UnsortedDMLEditor|, so that the test bodies don\u0027t need to repeat them.",
+      "revId": "52e07d295a71cf723795b764411fd990f8844d79",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b6c8525_ecc3a04f",
+        "filename": "third_party/WebKit/Source/core/editing/markers/SuggestionMarkerListImplTest.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-08-28T20:57:57Z",
+      "side": 1,
+      "message": "Should this test be converted?",
+      "revId": "52e07d295a71cf723795b764411fd990f8844d79",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6980089_c59ec299",
+        "filename": "third_party/WebKit/Source/core/editing/markers/UnsortedDocumentMarkerListEditor.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-08-28T20:57:57Z",
+      "side": 1,
+      "message": "nit: say something.",
+      "revId": "52e07d295a71cf723795b764411fd990f8844d79",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
