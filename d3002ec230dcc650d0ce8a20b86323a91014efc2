@@ -16,6 +16,24 @@
       "revId": "d3002ec230dcc650d0ce8a20b86323a91014efc2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b060674_6b1eeb5e",
+        "filename": "ash/display/display_configuration_controller_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2017-08-28T18:23:29Z",
+      "side": 1,
+      "message": "Default is sync in test code. Many tests are setup with the switch in ash_test_helper, so in the test will call sync by default. Any test for new animation, we need to remove the switch or attach empty switch.",
+      "parentUuid": "1f0adfc9_05824456",
+      "revId": "d3002ec230dcc650d0ce8a20b86323a91014efc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
