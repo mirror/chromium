@@ -34,6 +34,24 @@
       "revId": "071113c310bfb4029a9ff0a068af479c93942270",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa23bac0_7ae5e13f",
+        "filename": "chrome/test/data/local_ntp/voice_browsertest.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-28T16:39:29Z",
+      "side": 1,
+      "message": "I\u0027d prefer to keep the tests separate if that\u0027s possible. IMO the voice tests shouldn\u0027t need most of the local NTP stuff.",
+      "parentUuid": "f1f0ed16_2c47b97c",
+      "revId": "071113c310bfb4029a9ff0a068af479c93942270",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

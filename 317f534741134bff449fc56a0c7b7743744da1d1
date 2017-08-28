@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e3ae47cb_8954b967",
+        "filename": "chrome/browser/ui/search/local_ntp_browsertest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 336,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-28T16:39:29Z",
+      "side": 1,
+      "message": "nit: js_file_name (yup, it\u0027s confusing that JS has different naming conventions than C++...)",
+      "revId": "317f534741134bff449fc56a0c7b7743744da1d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5a7b904_63194185",
+        "filename": "chrome/browser/ui/search/local_ntp_browsertest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 355,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-28T16:39:29Z",
+      "side": 1,
+      "message": "We need to find a better way to wait for async things to happen. One option is to have the script send a message once it finishes loading, search for \"ConsoleObserverDelegate\" in this file.\nAlternatively, and simpler, can we just load all the test code immediately, synchronously?",
+      "revId": "317f534741134bff449fc56a0c7b7743744da1d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7aefd696_42092828",
+        "filename": "chrome/test/data/local_ntp/voice_browsertest.html",
+        "patchSetId": 10
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-28T16:39:29Z",
+      "side": 1,
+      "message": "Is the local-ntp.js actually needed for these tests? If at all possible, I\u0027d prefer to test the voice stuff independently from the \"main\" local NTP code.",
+      "revId": "317f534741134bff449fc56a0c7b7743744da1d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
