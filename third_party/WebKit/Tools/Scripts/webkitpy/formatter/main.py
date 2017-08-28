@@ -2,8 +2,14 @@
 # Use of this source code is governed by a BSD-style license that can be
 # found in the LICENSE file.
 
+import os
+import sys
+
 import argparse
 import lib2to3.refactor
+
+# Put webkitpy/thirdparty/ in the import path for autopep8 to import pep8.
+sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'thirdparty'))
 
 from webkitpy.common.system.system_host import SystemHost
 from webkitpy.thirdparty import autopep8
