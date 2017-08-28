@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "c221a544_4196b9d3",
+        "filename": "third_party/WebKit/LayoutTests/fast/media/style-media-change.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1115751
+      },
+      "writtenOn": "2017-08-28T10:07:51Z",
+      "side": 1,
+      "message": "Indentation is inconsistent in this file. Use 2 spaces or 4 spaces.",
+      "revId": "2e018cc172ca3f8e02082e990dc3456c6205b6d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3aa3b404_3462a68b",
+        "filename": "third_party/WebKit/LayoutTests/fast/media/style-media-change.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1115751
+      },
+      "writtenOn": "2017-08-28T10:07:51Z",
+      "side": 1,
+      "message": "I think a testharness.js test for this would be better.\n\nsetTimeout in tests tend to cause race conditions. You can do all synchronous and inline in this script:\n\n1. Check that getComputedStyle on body is initially not green\n2. Modify the media attribute\n3. Check that getComputedStyle on body is green",
+      "revId": "2e018cc172ca3f8e02082e990dc3456c6205b6d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c67dc365_fcb5ca50",
         "filename": "third_party/WebKit/Source/core/html/HTMLStyleElement.cpp",
         "patchSetId": 2
@@ -31,6 +65,24 @@
       "side": 1,
       "message": "Yes. Gecko and IE creating sheet for \u003cstyle\u003e element regardless of media type.\nNot having access to  verify on Safari/Edge.\n\nHere main part is StyleElement::ChildrenChanged(*this) to be called which make sure it will create styleSheet. I have added error notification since it used similar way in other places.\nI will remove this for interop.",
       "parentUuid": "c67dc365_fcb5ca50",
+      "revId": "2e018cc172ca3f8e02082e990dc3456c6205b6d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e608a5c_fe9d95c2",
+        "filename": "third_party/WebKit/Source/core/html/HTMLStyleElement.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1115751
+      },
+      "writtenOn": "2017-08-28T10:07:51Z",
+      "side": 1,
+      "message": "Then, I think you might want to fix this by fixing https://crbug.com/757450 instead.",
+      "parentUuid": "fb05513f_02451446",
       "revId": "2e018cc172ca3f8e02082e990dc3456c6205b6d8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
