@@ -104,6 +104,9 @@ class Pointer : public SurfaceTreeHost,
   // The position of the pointer surface relative to the pointer location.
   gfx::Point hotspot_;
 
+  // The most recent hotspot set by the call to SetCursor().
+  gfx::Point last_set_hotspot_;
+
   // Latest cursor snapshot.
   SkBitmap cursor_bitmap_;
 
