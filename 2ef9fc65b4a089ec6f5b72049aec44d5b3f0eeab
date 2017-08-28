@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a6b52e03_de884dff",
+        "filename": "services/resource_coordinator/coordination_unit/background_metrics_reporter.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-28T07:22:11Z",
+      "side": 1,
+      "message": "I would strongly suggest using an enum here to make it clearer at the instantiation sites would true / false means.",
+      "range": {
+        "startLine": 62,
+        "startChar": 10,
+        "endLine": 62,
+        "endChar": 41
+      },
+      "revId": "2ef9fc65b4a089ec6f5b72049aec44d5b3f0eeab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cabf167f_ea522d90",
+        "filename": "services/resource_coordinator/coordination_unit/metrics_collector.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-28T07:22:11Z",
+      "side": 1,
+      "message": "Prefer emplace over insert + std::make_pair",
+      "range": {
+        "startLine": 82,
+        "startChar": 31,
+        "endLine": 83,
+        "endChar": 23
+      },
+      "revId": "2ef9fc65b4a089ec6f5b72049aec44d5b3f0eeab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ddd93aad_86162b1a",
+        "filename": "services/resource_coordinator/coordination_unit/metrics_collector.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-28T07:22:11Z",
+      "side": 1,
+      "message": "It seems like there\u0027s a lot of duplicate code. For example, this is basically identical to lines 180-190.",
+      "range": {
+        "startLine": 165,
+        "startChar": 0,
+        "endLine": 175,
+        "endChar": 71
+      },
+      "revId": "2ef9fc65b4a089ec6f5b72049aec44d5b3f0eeab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6296e8ab_6a19b452",
+        "filename": "services/resource_coordinator/coordination_unit/metrics_collector.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-28T07:22:11Z",
+      "side": 1,
+      "message": "This is also pretty similar to the above blocks. I would suggest trying to figure out how to dedupe things in a followup.",
+      "range": {
+        "startLine": 202,
+        "startChar": 0,
+        "endLine": 208,
+        "endChar": 71
+      },
+      "revId": "2ef9fc65b4a089ec6f5b72049aec44d5b3f0eeab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
