@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f48aff17_f508aa77",
+        "filename": "net/test/spawned_test_server/remote_test_server.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-08-28T15:35:43Z",
+      "side": 1,
+      "message": "no longer needed.",
+      "range": {
+        "startLine": 16,
+        "startChar": 15,
+        "endLine": 16,
+        "endChar": 28
+      },
+      "revId": "a900596416dbda0e816938f37d02e50e0b698a1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7e6a947_ea355765",
+        "filename": "net/test/spawned_test_server/spawner_communicator.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-08-28T15:35:43Z",
+      "side": 1,
+      "message": "blank line between C++ and C headers",
+      "range": {
+        "startLine": 7,
+        "startChar": 21,
+        "endLine": 7,
+        "endChar": 0
+      },
+      "revId": "a900596416dbda0e816938f37d02e50e0b698a1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a24260f3_4c36564a",
+        "filename": "net/test/spawned_test_server/spawner_communicator.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-08-28T15:35:43Z",
+      "side": 1,
+      "message": "A single SpawnerCommunicator is only used to start/stop a single test server, right?  So the SpawnerCommunicator can just store the port itself.  Think that provides a cleaner API.  Could also add a DCHECK in SpawnerCommunicator::StartServer() that the server hasn\u0027t already been started.",
+      "range": {
+        "startLine": 75,
+        "startChar": 18,
+        "endLine": 75,
+        "endChar": 26
+      },
+      "revId": "a900596416dbda0e816938f37d02e50e0b698a1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
