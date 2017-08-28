@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "338b841d_76768161",
+        "filename": "components/ntp_tiles/most_visited_sites.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1200319
+      },
+      "writtenOn": "2017-08-28T11:16:22Z",
+      "side": 1,
+      "message": "\u003e Pet peeve: don\u0027t document things as \"simple\" or \"convenient\". If they\u0027re really simple or convenient, let them speak for themselves :)\n\nOkay gone.\n\n\u003e That aside, this sentence is a little hard for me to parse. I\u0027d write it something like:\n\u003e \n\u003e URL host prefixes. Hosts with these prefixes often redirect to each other, or have the same content.\n\nThat is pretty good. Stolen and used.",
+      "parentUuid": "ae498a19_304c7f33",
+      "range": {
+        "startLine": 38,
+        "startChar": 5,
+        "endLine": 38,
+        "endChar": 11
+      },
+      "revId": "5a0c162be523d52b8ce046fa78ba81283f7cc5a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5afccef9_4f6bf529",
         "filename": "components/ntp_tiles/most_visited_sites.cc",
         "patchSetId": 2
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "3bee035e_25fef7e5",
+        "filename": "components/ntp_tiles/most_visited_sites.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1200319
+      },
+      "writtenOn": "2017-08-28T11:16:22Z",
+      "side": 1,
+      "message": "Done, thanks! Seems like your classes paid off.",
+      "parentUuid": "5afccef9_4f6bf529",
+      "range": {
+        "startLine": 40,
+        "startChar": 49,
+        "endLine": 40,
+        "endChar": 54
+      },
+      "revId": "5a0c162be523d52b8ce046fa78ba81283f7cc5a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4f3741d6_0b65b008",
         "filename": "components/ntp_tiles/most_visited_sites.cc",
         "patchSetId": 2
@@ -65,6 +113,24 @@
     },
     {
       "key": {
+        "uuid": "d9dc4e88_fa9422cd",
+        "filename": "components/ntp_tiles/most_visited_sites.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1200319
+      },
+      "writtenOn": "2017-08-28T11:16:22Z",
+      "side": 1,
+      "message": "Short answer: No.\n\nLong answer: I really like the idea, so I tried. But it introduces a special case as I only remove the first matching prefix and \"\" matches any string. Therefore, the could would not get easier, just different.\nRemoving multiple prefixes is vastly different from what I do currently: www.mobile.de and m.mobile.de wouldn\u0027t be deduplicated anymore. (mobile.de is an ebay-owned company with about 70 Mio. visits, so we should not break for this. I added it to the test set.)",
+      "parentUuid": "4f3741d6_0b65b008",
+      "revId": "5a0c162be523d52b8ce046fa78ba81283f7cc5a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cab12b46_743f7e80",
         "filename": "components/ntp_tiles/most_visited_sites.cc",
         "patchSetId": 2
@@ -76,6 +142,30 @@
       "writtenOn": "2017-08-28T09:43:06Z",
       "side": 1,
       "message": "You\u0027ve added tests for MVS that test this behavior, but this function looks interesting enough that it would be nice to expose and test it directly.",
+      "range": {
+        "startLine": 78,
+        "startChar": 5,
+        "endLine": 78,
+        "endChar": 28
+      },
+      "revId": "5a0c162be523d52b8ce046fa78ba81283f7cc5a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ceb1701_9bd13d76",
+        "filename": "components/ntp_tiles/most_visited_sites.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1200319
+      },
+      "writtenOn": "2017-08-28T11:16:22Z",
+      "side": 1,
+      "message": "Apart from me being reluctant to expose implementation details just for testing, I fear misuse.\nIf this is publicly accessible this would make it look like this is the way to compare known sites when it\u0027s really just applicable to popular sites. WDYT?",
+      "parentUuid": "cab12b46_743f7e80",
       "range": {
         "startLine": 78,
         "startChar": 5,
