@@ -99,7 +99,8 @@ class MockSubresourceFilterClient : public SubresourceFilterClient {
     return ruleset_dealer_.get();
   }
 
-  MOCK_METHOD1(ToggleNotificationVisibility, void(bool));
+  MOCK_METHOD0(ShowNotification, void());
+  MOCK_METHOD0(OnNewNavigationStarted, void());
   MOCK_METHOD0(ForceActivationInCurrentWebContents, bool());
 
   void ClearWhitelist() { whitelisted_hosts_.clear(); }
@@ -584,10 +585,10 @@ TEST_F(SubresourceFilterSafeBrowsingActivationThrottleTest,
        NotificationVisibility) {
   GURL url(kURL);
   ConfigureForMatch(url);
-  EXPECT_CALL(*client(), ToggleNotificationVisibility(false)).Times(1);
+  EXPECT_CALL(*client(), OnNewNavigationStarted()).Times(1);
   content::RenderFrameHost* rfh = SimulateNavigateAndCommit({url}, main_rfh());
 
-  EXPECT_CALL(*client(), ToggleNotificationVisibility(true)).Times(1);
+  EXPECT_CALL(*client(), ShowNotification()).Times(1);
   EXPECT_FALSE(CreateAndNavigateDisallowedSubframe(rfh));
 }
 
@@ -599,7 +600,8 @@ TEST_F(SubresourceFilterSafeBrowsingActivationThrottleTest,
 
   GURL url(kURL);
   content::RenderFrameHost* rfh = SimulateNavigateAndCommit({url}, main_rfh());
-  EXPECT_CALL(*client(), ToggleNotificationVisibility(::testing::_)).Times(0);
+  EXPECT_CALL(*client(), ShowNotification()).Times(0);
+  EXPECT_CALL(*client(), OnNewNavigationStarted()).Times(0);
   EXPECT_FALSE(CreateAndNavigateDisallowedSubframe(rfh));
 }
 
