@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "6eab991e_63e11c6e",
+        "filename": "components/translate/core/browser/translate_prefs.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1176036
+      },
+      "writtenOn": "2017-08-28T01:54:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1f140e7a_7677bc59",
+      "revId": "c01ae879aa1bf3c4704cda639a8be203882c5be6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4e5edd26_abe9a7fa",
         "filename": "components/translate/core/browser/translate_prefs.cc",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "c01ae879aa1bf3c4704cda639a8be203882c5be6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9bef7a29_f1d58d50",
+        "filename": "components/translate/core/browser/translate_prefs.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 500,
+      "author": {
+        "id": 1176036
+      },
+      "writtenOn": "2017-08-28T01:54:45Z",
+      "side": 1,
+      "message": "I will draft another cl for the 1)",
+      "parentUuid": "4e5edd26_abe9a7fa",
+      "revId": "c01ae879aa1bf3c4704cda639a8be203882c5be6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
