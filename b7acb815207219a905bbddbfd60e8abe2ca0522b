@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ea4a8a26_a8992fa2",
+        "filename": "net/http/http_cache_transaction.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1927,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-08-28T19:10:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6ea0dcd9_efd10bc1",
+      "range": {
+        "startLine": 1927,
+        "startChar": 46,
+        "endLine": 1927,
+        "endChar": 47
+      },
+      "revId": "b7acb815207219a905bbddbfd60e8abe2ca0522b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "72e99379_67c89461",
         "filename": "net/http/http_cache_transaction.cc",
         "patchSetId": 2
@@ -71,6 +95,54 @@
     },
     {
       "key": {
+        "uuid": "53b39453_08ea2f68",
+        "filename": "net/http/http_cache_transaction.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1928,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-08-28T19:10:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "093750f3_9ed19b6b",
+      "range": {
+        "startLine": 1928,
+        "startChar": 4,
+        "endLine": 1928,
+        "endChar": 5
+      },
+      "revId": "b7acb815207219a905bbddbfd60e8abe2ca0522b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3abb110e_21d89396",
+        "filename": "net/http/http_cache_transaction.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1928,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-08-28T19:10:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "72e99379_67c89461",
+      "range": {
+        "startLine": 1928,
+        "startChar": 38,
+        "endLine": 1928,
+        "endChar": 49
+      },
+      "revId": "b7acb815207219a905bbddbfd60e8abe2ca0522b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c1228a2b_99b3913f",
         "filename": "net/http/http_cache_transaction.cc",
         "patchSetId": 2
@@ -82,6 +154,30 @@
       "writtenOn": "2017-08-11T17:22:18Z",
       "side": 1,
       "message": "Is this shortcut necessary? I\u0027d rather not special-case if it can be helped.",
+      "range": {
+        "startLine": 1931,
+        "startChar": 0,
+        "endLine": 1932,
+        "endChar": 14
+      },
+      "revId": "b7acb815207219a905bbddbfd60e8abe2ca0522b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70c02329_0636b653",
+        "filename": "net/http/http_cache_transaction.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1932,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-08-28T19:10:00Z",
+      "side": 1,
+      "message": "The shortcut is necessary because we want to return Start() call so that the consumer can invoke RestartWithAuth(). If we don\u0027t do the shortcut then this transaction may either become a writer or a reader and then RestartWithAuth will be invoked on it which seems \"more\" inconsistent. Also that will mean that no parallel validation can happen since this transaction could have taken the write lock even though it is in the headers phase.",
+      "parentUuid": "c1228a2b_99b3913f",
       "range": {
         "startLine": 1931,
         "startChar": 0,
