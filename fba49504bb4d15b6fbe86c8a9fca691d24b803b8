@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b6f78e14_f0f828b6",
+        "filename": "content/browser/service_worker/service_worker_installed_scripts_sender.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 447,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-28T05:33:04Z",
+      "side": 1,
+      "message": "nit: cnosider just removing this DCHECK for simplicity, as this function doesn\u0027t touch finished_reason_ and we have DCHECKs against calling this when state is kFinished",
+      "revId": "fba49504bb4d15b6fbe86c8a9fca691d24b803b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

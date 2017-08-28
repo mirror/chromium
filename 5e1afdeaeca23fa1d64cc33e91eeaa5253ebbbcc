@@ -177,6 +177,24 @@
     },
     {
       "key": {
+        "uuid": "4180eecf_6af5d902",
+        "filename": "content/browser/service_worker/service_worker_installed_scripts_sender_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 544,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-28T05:33:04Z",
+      "side": 1,
+      "message": "I still like the explanation of \u00274\u0027 here, so recommending keeping lines 543-544.",
+      "parentUuid": "dc5d73de_0ee076d4",
+      "revId": "5e1afdeaeca23fa1d64cc33e91eeaa5253ebbbcc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b930897e_9380ecec",
         "filename": "content/browser/service_worker/service_worker_installed_scripts_sender_unittest.cc",
         "patchSetId": 2
