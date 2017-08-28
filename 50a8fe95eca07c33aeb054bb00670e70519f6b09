@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e28e47e3_1a770840",
+        "filename": "ash/wm/power_button_controller.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-08-28T20:52:28Z",
+      "side": 1,
+      "message": "just to check, are there any other cases where we set this pref that we don\u0027t want to break here?",
+      "revId": "50a8fe95eca07c33aeb054bb00670e70519f6b09",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
