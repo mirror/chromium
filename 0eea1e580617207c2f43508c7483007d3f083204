@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d254b6ad_380e222e",
+        "filename": "chrome/browser/ui/search/search_delegate_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-28T17:10:04Z",
+      "side": 0,
+      "message": "This was actually broken and only passed kinda by accident: AddTab() adds the new tab at index 0, so this actually activated the first tab again.",
+      "range": {
+        "startLine": 30,
+        "startChar": 55,
+        "endLine": 30,
+        "endChar": 0
+      },
+      "revId": "0eea1e580617207c2f43508c7483007d3f083204",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "29e70811_309f176c",
+        "filename": "chrome/browser/ui/search/search_tab_helper.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-28T17:10:04Z",
+      "side": 0,
+      "message": "Unrelated cleanup: Never called.",
+      "revId": "0eea1e580617207c2f43508c7483007d3f083204",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
