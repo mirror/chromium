@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4f9bd571_3f118143",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/access-control-basic-non-cors-safelisted-deny-cached.htm",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-08-28T09:20:57Z",
+      "side": 1,
+      "message": "Maybe access-control-basic-non-cors-safelisted-content-type is better for this file\u0027s name?",
+      "revId": "62ec0e81c89a83710e7e8f941292d9baeaef877b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
