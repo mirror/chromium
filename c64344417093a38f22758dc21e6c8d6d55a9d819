@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "71318ad9_480f866d",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletGlobalScope.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-08-28T13:56:21Z",
+      "side": 1,
+      "message": "This needs to be initialized:\n\n  auto processor_info_list \u003d\n      WTF::MakeUnique\u003cVector\u003cCrossThreadAudioWorkletProcessorInfo\u003e\u003e()?\n\nIs it possible to add tests that cover code newly added by this CL?",
+      "revId": "c64344417093a38f22758dc21e6c8d6d55a9d819",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51c5327e_8846d082",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletObjectProxy.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-08-28T13:56:21Z",
+      "side": 1,
+      "message": "JFYI: I\u0027ll remove this function in favor of module loading and introduce WorkerReportingProxy::DidEvaluateModuleScript() to do something after module script evaluation. I\u0027ll move line 33-48 to the function later.",
+      "revId": "c64344417093a38f22758dc21e6c8d6d55a9d819",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d131f759_ba8f3d5e",
+        "filename": "third_party/WebKit/Source/modules/webaudio/CrossThreadAudioWorkletProcessorInfo.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-08-28T13:56:21Z",
+      "side": 1,
+      "message": "Can you call |param_info_list_.ReserveInitialCapacity(definition.GetAudioParamDescriptorNames().size())| here to avoid unnecessary reallocations of the vector?",
+      "revId": "c64344417093a38f22758dc21e6c8d6d55a9d819",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3ca9936_e43316d6",
+        "filename": "third_party/WebKit/Source/modules/webaudio/CrossThreadAudioWorkletProcessorInfo.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-08-28T13:56:21Z",
+      "side": 1,
+      "message": "const Vector\u003cCrossThreadAudioParamInfo\u003e\u0026 ?",
+      "revId": "c64344417093a38f22758dc21e6c8d6d55a9d819",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
