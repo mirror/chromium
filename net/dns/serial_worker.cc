@@ -6,8 +6,8 @@
 
 #include "base/bind.h"
 #include "base/location.h"
+#include "base/task_scheduler/post_task.h"
 #include "base/threading/thread_task_runner_handle.h"
-#include "base/threading/worker_pool.h"
 
 namespace net {
 
@@ -21,22 +21,13 @@ void SerialWorker::WorkNow() {
   DCHECK(task_runner_->BelongsToCurrentThread());
   switch (state_) {
     case IDLE:
-      if (!base::WorkerPool::PostTask(FROM_HERE, base::Bind(
-          &SerialWorker::DoWorkJob, this), false)) {
-#if defined(OS_POSIX)
-        // See worker_pool_posix.cc.
-        NOTREACHED() << "WorkerPool::PostTask is not expected to fail on posix";
-#else
-        LOG(WARNING) << "Failed to WorkerPool::PostTask, will retry later";
-        const int kWorkerPoolRetryDelayMs = 100;
-        task_runner_->PostDelayedTask(
-            FROM_HERE,
-            base::Bind(&SerialWorker::RetryWork, this),
-            base::TimeDelta::FromMilliseconds(kWorkerPoolRetryDelayMs));
-        state_ = WAITING;
-        return;
-#endif
-      }
+      // WithBaseSyncPrimitives() is required to allow unit tests to provide
+      // a SerialWorker that waits on a WaitableEvent.
+      base::PostTaskWithTraits(
+          FROM_HERE,
+          {base::MayBlock(), base::WithBaseSyncPrimitives(),
+           base::TaskShutdownBehavior::CONTINUE_ON_SHUTDOWN},
+          base::BindOnce(&SerialWorker::DoWorkJob, this));
       state_ = WORKING;
       return;
     case WORKING:
