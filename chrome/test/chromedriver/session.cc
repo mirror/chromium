@@ -39,6 +39,8 @@ Session::Session(const std::string& id)
       detach(false),
       force_devtools_screenshot(false),
       sticky_modifiers(0),
+      active_input_sources(new base::ListValue()),
+      input_state_table(new base::DictionaryValue()),
       mouse_position(0, 0),
       page_load_timeout(kDefaultPageLoadTimeout),
       auto_reporting_enabled(false) {}
@@ -51,6 +53,8 @@ Session::Session(const std::string& id, std::unique_ptr<Chrome> chrome)
       force_devtools_screenshot(false),
       chrome(std::move(chrome)),
       sticky_modifiers(0),
+      active_input_sources(new base::ListValue()),
+      input_state_table(new base::DictionaryValue()),
       mouse_position(0, 0),
       page_load_timeout(kDefaultPageLoadTimeout),
       auto_reporting_enabled(false) {}
