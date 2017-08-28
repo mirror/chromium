@@ -39,8 +39,9 @@ static void MakeAsyncCopyRequest(
     const gfx::Rect& source_rect,
     viz::CopyOutputRequest::CopyOutputRequestCallback callback) {
   std::unique_ptr<viz::CopyOutputRequest> request =
-      viz::CopyOutputRequest::CreateBitmapRequest(std::move(callback));
-
+      base::MakeUnique<viz::CopyOutputRequest>(
+          viz::CopyOutputRequest::ResultFormat::RGBA_BITMAP,
+          std::move(callback));
   float scale = ui::GetScaleFactorForNativeView(window);
   request->set_area(gfx::ScaleToEnclosingRect(source_rect, scale));
   window->GetCompositor()->RequestCopyOfOutputOnRootLayer(std::move(request));
