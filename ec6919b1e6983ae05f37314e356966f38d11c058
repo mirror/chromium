@@ -36,6 +36,23 @@
     },
     {
       "key": {
+        "uuid": "2332b28e_efbeffe7",
+        "filename": "content/renderer/fetchers/resource_fetcher_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-08-28T05:26:32Z",
+      "side": 1,
+      "message": "I\u0027m not sure why |failed_| is needed. Can we reset response_ and data_ when setting failed_?",
+      "revId": "ec6919b1e6983ae05f37314e356966f38d11c058",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ae066fdd_85933de8",
         "filename": "content/renderer/fetchers/resource_fetcher_impl.cc",
         "patchSetId": 1
@@ -70,6 +87,47 @@
     },
     {
       "key": {
+        "uuid": "242fa7da_6c9c0a85",
+        "filename": "content/renderer/fetchers/resource_fetcher_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-08-28T05:26:32Z",
+      "side": 1,
+      "message": "No, this is end-of-data notification.",
+      "parentUuid": "35c4f418_73ae11d9",
+      "revId": "ec6919b1e6983ae05f37314e356966f38d11c058",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54093538_fd66a141",
+        "filename": "content/renderer/fetchers/resource_fetcher_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-08-28T05:26:32Z",
+      "side": 1,
+      "message": "Close() is always followed by MayComplete(). Is it a good idea to have the former call the latter?",
+      "range": {
+        "startLine": 158,
+        "startChar": 0,
+        "endLine": 158,
+        "endChar": 16
+      },
+      "revId": "ec6919b1e6983ae05f37314e356966f38d11c058",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c62d1f16_e8457f32",
         "filename": "content/renderer/fetchers/resource_fetcher_impl.cc",
         "patchSetId": 1
@@ -81,6 +139,23 @@
       "writtenOn": "2017-08-28T03:36:10Z",
       "side": 1,
       "message": "What error would we expect here?",
+      "revId": "ec6919b1e6983ae05f37314e356966f38d11c058",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3dddbce2_1ac24491",
+        "filename": "content/renderer/fetchers/resource_fetcher_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-08-28T05:26:32Z",
+      "side": 1,
+      "message": "Don\u0027t you need to call response_.SetURL here?",
       "revId": "ec6919b1e6983ae05f37314e356966f38d11c058",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
