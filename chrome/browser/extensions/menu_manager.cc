@@ -856,6 +856,10 @@ void MenuManager::OnExtensionLoaded(content::BrowserContext* browser_context,
         base::Bind(
             &MenuManager::ReadFromStorage, AsWeakPtr(), extension->id()));
   }
+
+  if (extension->from_bookmark()) {
+    icon_manager_.LoadIcon(browser_context_, extension);
+  }
 }
 
 void MenuManager::OnExtensionUnloaded(content::BrowserContext* browser_context,

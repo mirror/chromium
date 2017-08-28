@@ -24,6 +24,7 @@
 #include "chrome/app/chrome_command_ids.h"
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/chrome_notification_types.h"
+#include "chrome/browser/extensions/bookmark_app_helper.h"
 #include "chrome/browser/pdf/pdf_extension_test_util.h"
 #include "chrome/browser/profiles/profile_attributes_entry.h"
 #include "chrome/browser/profiles/profile_attributes_storage.h"
@@ -57,6 +58,8 @@
 #include "content/public/test/browser_test_utils.h"
 #include "content/public/test/test_utils.h"
 #include "extensions/browser/api/extensions_api_client.h"
+#include "extensions/browser/extension_registry.h"
+#include "extensions/browser/extension_system.h"
 #include "extensions/browser/guest_view/mime_handler_view/mime_handler_view_guest.h"
 #include "extensions/browser/guest_view/mime_handler_view/test_mime_handler_view_guest.h"
 #include "net/base/load_flags.h"
@@ -130,6 +133,30 @@ class ContextMenuBrowserTest : public InProcessBrowserTest {
     profile_path = profile_path.AppendASCII(
         base::StringPrintf("New Profile %d", profile_num));
     return profile_manager->GetProfile(profile_path);
+  }
+
+  void InstallTestBookmarkApp() {
+    Profile* profile = browser()->profile();
+    size_t num_extensions = extensions::ExtensionRegistry::Get(profile)
+                                ->enabled_extensions()
+                                .size();
+    WebApplicationInfo web_app_info;
+    web_app_info.app_url = GURL("https://www.google.com/");
+    web_app_info.scope = GURL("https://www.google.com/");
+    web_app_info.title = base::UTF8ToUTF16("Test app");
+    web_app_info.description = base::UTF8ToUTF16("Test description");
+
+    content::WindowedNotificationObserver windowed_observer(
+        extensions::NOTIFICATION_CRX_INSTALLER_DONE,
+        content::NotificationService::AllSources());
+    extensions::CreateOrUpdateBookmarkApp(
+        extensions::ExtensionSystem::Get(profile)->extension_service(),
+        &web_app_info);
+    windowed_observer.Wait();
+
+    ASSERT_EQ(++num_extensions, extensions::ExtensionRegistry::Get(profile)
+                                    ->enabled_extensions()
+                                    .size());
   }
 };
 
@@ -211,6 +238,41 @@ IN_PROC_BROWSER_TEST_F(ContextMenuBrowserTest,
 
   ASSERT_TRUE(menu->IsItemPresent(IDC_CONTENT_CONTEXT_OPENLINKNEWTAB));
   ASSERT_TRUE(menu->IsItemPresent(IDC_CONTENT_CONTEXT_OPENLINKNEWWINDOW));
+  ASSERT_TRUE(menu->IsItemPresent(IDC_CONTENT_CONTEXT_COPYLINKLOCATION));
+  ASSERT_FALSE(menu->IsItemPresent(IDC_CONTENT_CONTEXT_OPENLINKBOOKMARKAPP));
+  ASSERT_FALSE(menu->IsItemPresent(IDC_CONTENT_CONTEXT_OPENLINKINPROFILE));
+  ASSERT_FALSE(menu->IsItemInRangePresent(IDC_OPEN_LINK_IN_PROFILE_FIRST,
+                                          IDC_OPEN_LINK_IN_PROFILE_LAST));
+}
+
+IN_PROC_BROWSER_TEST_F(ContextMenuBrowserTest,
+                       OpenEntryPresentForURLsInScopeOfBookmarkApp) {
+  InstallTestBookmarkApp();
+
+  std::unique_ptr<TestRenderViewContextMenu> menu =
+      CreateContextMenuMediaTypeNone(GURL("https://www.google.com/"),
+                                     GURL("https://www.google.com/"));
+
+  ASSERT_TRUE(menu->IsItemPresent(IDC_CONTENT_CONTEXT_OPENLINKNEWTAB));
+  ASSERT_TRUE(menu->IsItemPresent(IDC_CONTENT_CONTEXT_OPENLINKNEWWINDOW));
+  ASSERT_TRUE(menu->IsItemPresent(IDC_CONTENT_CONTEXT_OPENLINKBOOKMARKAPP));
+  ASSERT_TRUE(menu->IsItemPresent(IDC_CONTENT_CONTEXT_COPYLINKLOCATION));
+  ASSERT_FALSE(menu->IsItemPresent(IDC_CONTENT_CONTEXT_OPENLINKINPROFILE));
+  ASSERT_FALSE(menu->IsItemInRangePresent(IDC_OPEN_LINK_IN_PROFILE_FIRST,
+                                          IDC_OPEN_LINK_IN_PROFILE_LAST));
+}
+
+IN_PROC_BROWSER_TEST_F(ContextMenuBrowserTest,
+                       OpenEntryNotPresentForURLsOutOfScopeOfBookmarkApp) {
+  InstallTestBookmarkApp();
+
+  std::unique_ptr<TestRenderViewContextMenu> menu =
+      CreateContextMenuMediaTypeNone(GURL("https://www.google.com/"),
+                                     GURL("https://www.example.com/"));
+
+  ASSERT_TRUE(menu->IsItemPresent(IDC_CONTENT_CONTEXT_OPENLINKNEWTAB));
+  ASSERT_TRUE(menu->IsItemPresent(IDC_CONTENT_CONTEXT_OPENLINKNEWWINDOW));
+  ASSERT_FALSE(menu->IsItemPresent(IDC_CONTENT_CONTEXT_OPENLINKBOOKMARKAPP));
   ASSERT_TRUE(menu->IsItemPresent(IDC_CONTENT_CONTEXT_COPYLINKLOCATION));
   ASSERT_FALSE(menu->IsItemPresent(IDC_CONTENT_CONTEXT_OPENLINKINPROFILE));
   ASSERT_FALSE(menu->IsItemInRangePresent(IDC_OPEN_LINK_IN_PROFILE_FIRST,
@@ -416,6 +478,31 @@ IN_PROC_BROWSER_TEST_F(ContextMenuBrowserTest, OpenIncognitoNoneReferrer) {
       "window.domAutomationController.send(window.document.referrer);",
       &page_referrer));
   ASSERT_EQ(kEmptyReferrer, page_referrer);
+}
+
+// Verify that "Open link in App" opens a new App window.
+IN_PROC_BROWSER_TEST_F(ContextMenuBrowserTest, OpenLinkInBookmarkApp) {
+  InstallTestBookmarkApp();
+
+  ASSERT_TRUE(embedded_test_server()->Start());
+
+  // size_t num_browsers = chrome::GetBrowserCount(browser()->profile());
+  // int num_tabs = browser()->tab_strip_model()->count();
+  content::WebContents* initial_tab =
+      browser()->tab_strip_model()->GetActiveWebContents();
+  // const GURL initial_url = initial_tab->GetLastCommittedURL();
+
+  const GURL app_url("https://www.google.com/");
+  ui_test_utils::UrlLoadObserver url_observer(
+      app_url, content::NotificationService::AllSources());
+  content::ContextMenuParams params;
+  params.page_url = GURL("https://www.example.com/");
+  params.link_url = app_url;
+  TestRenderViewContextMenu menu(initial_tab->GetMainFrame(), params);
+  menu.Init();
+  menu.ExecuteCommand(IDC_CONTENT_CONTEXT_OPENLINKBOOKMARKAPP,
+                      0 /* event_flags */);
+  url_observer.Wait();
 }
 
 // Check filename on clicking "Save Link As" via a "real" context menu.
