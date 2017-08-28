@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8a8ca2e7_596875f4",
+        "filename": "chrome/browser/apps/guest_view/web_view_interactive_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 901,
+      "author": {
+        "id": 1003324
+      },
+      "writtenOn": "2017-08-28T20:50:43Z",
+      "side": 1,
+      "message": "Why are you asking the guest? Normally the main class using web contents and asking about the focused web contents is holding a pointer to the outermost web contents.",
+      "revId": "8602fba58697765bbcaea872447fabd6419abf74",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab8aa535_56700865",
+        "filename": "chrome/browser/apps/guest_view/web_view_interactive_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 910,
+      "author": {
+        "id": 1003324
+      },
+      "writtenOn": "2017-08-28T20:50:43Z",
+      "side": 1,
+      "message": "What exactly do these waits mean? According to the header it seems that there are browser and renderer threads that get \"sync-ed\", but what exactly is that. I agree that we do need to wait until at least the guest has processed the javascript, sent some ipcs out that make work for the embedder and possibly receive some incoming ipc as a result from the renderer. I\u0027m not sure that this has the whole process guaranteed to be in sync.",
+      "revId": "8602fba58697765bbcaea872447fabd6419abf74",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd89cf6b_d90929ca",
+        "filename": "content/browser/web_contents/web_contents_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1651,
+      "author": {
+        "id": 1003324
+      },
+      "writtenOn": "2017-08-28T20:50:43Z",
+      "side": 1,
+      "message": "This makes sense now.",
+      "revId": "8602fba58697765bbcaea872447fabd6419abf74",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e7a93567_71d45d2d",
+        "filename": "content/browser/web_contents/web_contents_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 5280,
+      "author": {
+        "id": 1003324
+      },
+      "writtenOn": "2017-08-28T20:50:43Z",
+      "side": 1,
+      "message": "Top/Outermost WebContents.",
+      "revId": "8602fba58697765bbcaea872447fabd6419abf74",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
