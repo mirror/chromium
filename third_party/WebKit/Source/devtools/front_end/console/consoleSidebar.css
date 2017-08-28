@@ -11,14 +11,14 @@
 
 .list {
     flex: 1;
-    overflow-x: hidden;
 }
 
 .context-item {
     cursor: pointer;
+    overflow: hidden;
+    text-overflow: ellipsis;
     padding: 6px 6px 6px 16px;
     height: 28px;
-    display: flex;
 }
 
 .context-item.selected {
@@ -26,11 +26,9 @@
 }
 
 .name {
-    flex-grow: 1;
-    flex-shrink: 0;
-    overflow: hidden;
-    max-width: 100%;
-    text-overflow: ellipsis;
+    display: inline-block;
+    white-space: nowrap;
+    margin-bottom: 10px;
 }
 
 .context-item.selected .name {
@@ -42,8 +40,9 @@
   border-radius: 4px;
   margin: 0 3px;
   text-align: center;
-  height: 14px;
-  line-height: 14px;
+  --bubble-size: 14px;
+  height: var(--bubble-size);
+  line-height: var(--bubble-size);
   padding: 0px 3px;
 }
 
@@ -58,5 +57,6 @@
 }
 
 .counters {
-  margin-left: 10px;
+  display: inline-block;
+  float: right;
 }
