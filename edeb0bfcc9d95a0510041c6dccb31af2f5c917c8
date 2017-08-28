@@ -1,0 +1,188 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "06f630e3_4095cd25",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-08-28T23:09:46Z",
+      "side": 1,
+      "message": "Something like MemoryAllocatorDump store attribute values instead of TracedValue.",
+      "range": {
+        "startLine": 7,
+        "startChar": 19,
+        "endLine": 7,
+        "endChar": 16
+      },
+      "revId": "edeb0bfcc9d95a0510041c6dccb31af2f5c917c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06ffcd98_c1203ab0",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-08-28T23:09:46Z",
+      "side": 1,
+      "message": "I can\u0027t see why we would add lot of string copies?\nBut, if we want to optimize it further, we can make the \"size\" attribute a member of MAD. Most dumps have only size attribute added to it. So, making that a field will reduce considerable number of Entry(s).",
+      "range": {
+        "startLine": 13,
+        "startChar": 2,
+        "endLine": 13,
+        "endChar": 41
+      },
+      "revId": "edeb0bfcc9d95a0510041c6dccb31af2f5c917c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "505d9d5d_0a570196",
+        "filename": "base/trace_event/memory_allocator_dump.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-08-28T23:09:46Z",
+      "side": 1,
+      "message": "You\u0027d need strcmp here. But I am expecting this to be used only in tests?",
+      "range": {
+        "startLine": 152,
+        "startChar": 13,
+        "endLine": 152,
+        "endChar": 15
+      },
+      "revId": "edeb0bfcc9d95a0510041c6dccb31af2f5c917c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f6697dc_0617a327",
+        "filename": "base/trace_event/memory_allocator_dump.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-08-28T23:09:46Z",
+      "side": 1,
+      "message": "Are we going to have lot of getters and setters in this function that mojo will need?",
+      "range": {
+        "startLine": 37,
+        "startChar": 9,
+        "endLine": 37,
+        "endChar": 14
+      },
+      "revId": "edeb0bfcc9d95a0510041c6dccb31af2f5c917c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b37bc39_e139954d",
+        "filename": "base/trace_event/memory_allocator_dump.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-08-28T23:09:46Z",
+      "side": 1,
+      "message": "Since we are here, we can actually remove this field. It was never used in any provider.",
+      "range": {
+        "startLine": 40,
+        "startChar": 6,
+        "endLine": 40,
+        "endChar": 12
+      },
+      "revId": "edeb0bfcc9d95a0510041c6dccb31af2f5c917c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "589e742b_5aadf26b",
+        "filename": "base/trace_event/memory_allocator_dump.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-08-28T23:09:46Z",
+      "side": 1,
+      "message": "Do you need a copy constructor?",
+      "range": {
+        "startLine": 48,
+        "startChar": 4,
+        "endLine": 48,
+        "endChar": 9
+      },
+      "revId": "edeb0bfcc9d95a0510041c6dccb31af2f5c917c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3909a5ba_7250c144",
+        "filename": "base/trace_event/memory_allocator_dump.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-08-28T23:09:46Z",
+      "side": 1,
+      "message": "const char*",
+      "range": {
+        "startLine": 51,
+        "startChar": 4,
+        "endLine": 51,
+        "endChar": 15
+      },
+      "revId": "edeb0bfcc9d95a0510041c6dccb31af2f5c917c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad9c7171_8149f615",
+        "filename": "base/trace_event/memory_allocator_dump.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-08-28T23:09:46Z",
+      "side": 1,
+      "message": "entries_for_testing?",
+      "range": {
+        "startLine": 121,
+        "startChar": 21,
+        "endLine": 121,
+        "endChar": 28
+      },
+      "revId": "edeb0bfcc9d95a0510041c6dccb31af2f5c917c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
