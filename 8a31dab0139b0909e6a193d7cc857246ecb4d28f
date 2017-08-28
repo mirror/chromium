@@ -1,0 +1,267 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "157b6c6e_5def2111",
+        "filename": "cc/input/scroll_customization.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-08-28T19:11:46Z",
+      "side": 1,
+      "message": "I think the new preferred way to do these type of bitflags is to use struct with constant integer values. See for example MutableProperties [1].\n\nIn particular, use uint32_t to represent the \"scroll_customization_\" value which is a bitset\nof the above flags.\n\n[1] https://codesearch.chromium.org/chromium/src/cc/trees/mutable_properties.h?type\u003dcs\u0026sq\u003dpackage:chromium\u0026l\u003d12",
+      "revId": "8a31dab0139b0909e6a193d7cc857246ecb4d28f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f04f5be6_a2f05f27",
+        "filename": "cc/input/scroll_customization.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-08-28T19:11:46Z",
+      "side": 1,
+      "message": "I am not sure if this is correct for example if one passes in\nkScrollCustomizationPanLeft and kScrollCustomizationPanUp. the\nresult is not a valid value in ScrollCustomization.\n\nSee above comment on how to define a safe bitflag.",
+      "revId": "8a31dab0139b0909e6a193d7cc857246ecb4d28f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8fff17b2_03f1c797",
+        "filename": "cc/input/scroll_customization.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-08-28T19:11:46Z",
+      "side": 1,
+      "message": "s/touch_action/scroll_customization/",
+      "range": {
+        "startLine": 53,
+        "startChar": 24,
+        "endLine": 53,
+        "endChar": 36
+      },
+      "revId": "8a31dab0139b0909e6a193d7cc857246ecb4d28f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c7bd04a_aac35069",
+        "filename": "cc/input/scroll_customization.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-08-28T19:11:46Z",
+      "side": 1,
+      "message": "hmmm, you are actually returning a \"mask\" so perhaps \n|GetScrollCustomizationMaskFromScrollStateData|\n\nwhy is this inline?",
+      "range": {
+        "startLine": 94,
+        "startChar": 27,
+        "endLine": 94,
+        "endChar": 68
+      },
+      "revId": "8a31dab0139b0909e6a193d7cc857246ecb4d28f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5d12096_1fec7bfc",
+        "filename": "cc/input/scroll_customization.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-08-28T19:11:46Z",
+      "side": 1,
+      "message": "I have seen this being used a few times, should we have a helper method on \nScrollStateDate e.g., GetEffectiveDelta{X, Y}() which returns this\nvalue?\n\nThat way you don\u0027t need to pass in the whole scrollStateData but just the\neffective delta.",
+      "range": {
+        "startLine": 98,
+        "startChar": 9,
+        "endLine": 98,
+        "endChar": 16
+      },
+      "revId": "8a31dab0139b0909e6a193d7cc857246ecb4d28f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4691a67d_040e6882",
+        "filename": "third_party/WebKit/LayoutTests/virtual/scroll_customization/fast/scroll-behavior/scroll-customization-property.html",
+        "patchSetId": 9
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-08-28T19:11:46Z",
+      "side": 1,
+      "message": "nit: layout tests should not have \u003chtml\u003e \u003chead\u003e \u003cbody\u003e [1]\n\n[1] https://chromium.googlesource.com/chromium/src/+/master/docs/testing/writing_layout_tests.md#javascript-tests",
+      "range": {
+        "startLine": 2,
+        "startChar": 1,
+        "endLine": 2,
+        "endChar": 5
+      },
+      "revId": "8a31dab0139b0909e6a193d7cc857246ecb4d28f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c3ec7e8_c3fe34a2",
+        "filename": "third_party/WebKit/LayoutTests/virtual/scroll_customization/fast/scroll-behavior/scroll-customization-property.html",
+        "patchSetId": 9
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-08-28T19:11:46Z",
+      "side": 1,
+      "message": "I think it will be nicer to have this method take a gesture value instead of delta and\nthen turn that into specific delta values.\n\nAlso it will be cleaner for it to return a promise.\n\nThen usage will be like:\napplyScrollGesture(\u0027right\u0027).then(verify);",
+      "revId": "8a31dab0139b0909e6a193d7cc857246ecb4d28f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cdceec8f_3bbde0d1",
+        "filename": "third_party/WebKit/LayoutTests/virtual/scroll_customization/fast/scroll-behavior/scroll-customization-property.html",
+        "patchSetId": 9
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-08-28T19:11:46Z",
+      "side": 1,
+      "message": "This is hard to read and understand. I think what you want is to set the \n|numberOfSetApplyScrollCalls| to zero just above and check here it it is \nnone zero. Also get rid of callsToApplyScroll etc.",
+      "revId": "8a31dab0139b0909e6a193d7cc857246ecb4d28f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b9a203d_c270d48a",
+        "filename": "third_party/WebKit/LayoutTests/virtual/scroll_customization/fast/scroll-behavior/scroll-customization-property.html",
+        "patchSetId": 9
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-08-28T19:11:46Z",
+      "side": 1,
+      "message": "See my comment above. These steps should be done for each test.\nPerhaps it should be part of a \"SetUp\" step for each test.",
+      "range": {
+        "startLine": 107,
+        "startChar": 8,
+        "endLine": 107,
+        "endChar": 35
+      },
+      "revId": "8a31dab0139b0909e6a193d7cc857246ecb4d28f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e14823dc_1436ee24",
+        "filename": "third_party/WebKit/LayoutTests/virtual/scroll_customization/fast/scroll-behavior/scroll-customization-property.html",
+        "patchSetId": 9
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-08-28T19:11:46Z",
+      "side": 1,
+      "message": "We should turn this conditional into an early return at the top of the script.",
+      "revId": "8a31dab0139b0909e6a193d7cc857246ecb4d28f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c500c3d1_2ad160fd",
+        "filename": "third_party/WebKit/LayoutTests/virtual/scroll_customization/fast/scroll-behavior/scroll-customization-property.html",
+        "patchSetId": 9
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-08-28T19:11:46Z",
+      "side": 1,
+      "message": "Most tests below do the same thing. Perhaps these should be a parametric test.\nEach table row will have an entry like this:\n\nconst test_table \u003d [\n [GESTURE_RIGHT, GESTURE_LEFT, GESTURE_TOP, GESTURE_DOWN], \"none\", , false]\n  ....\n];\n\n\nSo \ntest_table.forEach([gestures, value, expected, test_prefix]) {\n   gestures.forEach(gesture) {\n      testGesture(value, gesture, expected, `Verify if property \"${value}\" works correctly with gesture ${gesture}`);\n   }\n}\n\nThe test() is actually invoked inside testGesture. This way you get an individual test for\neach combination and also get rid of most of the boilerplate. \n\nbonus 1: make GESTURE_RIGHT etc strings so you can print them properly.\nbonus 2: each test is verifying a set gestures for true and the reverse of that set for false. I think you can event remove this bilerplate and generate both set of tests from a single entry in\ntest_table.",
+      "range": {
+        "startLine": 121,
+        "startChar": 10,
+        "endLine": 121,
+        "endChar": 21
+      },
+      "revId": "8a31dab0139b0909e6a193d7cc857246ecb4d28f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f36cff3_e74a5145",
+        "filename": "third_party/WebKit/Source/core/dom/Element.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 637,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-08-28T19:11:46Z",
+      "side": 1,
+      "message": "This should be merged with previous conditional e.g.,\n\nbool may_customize_scroll_for_gesture \u003d direction \u0026 scroll_customization\nif (!callback || disable_custom_callbacks || !may_customize_scroll_for_gesture)\n[...]",
+      "range": {
+        "startLine": 637,
+        "startChar": 4,
+        "endLine": 637,
+        "endChar": 26
+      },
+      "revId": "8a31dab0139b0909e6a193d7cc857246ecb4d28f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49f5fe54_41692605",
+        "filename": "third_party/WebKit/Source/core/dom/Element.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 731,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-08-28T19:11:46Z",
+      "side": 1,
+      "message": "Is this comment accurate? No value is being cached atm.",
+      "revId": "8a31dab0139b0909e6a193d7cc857246ecb4d28f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
