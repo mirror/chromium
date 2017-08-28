@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a9b0e68_4ef1c29b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/selection/SelectableItemHighlightView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-08-28T20:17:46Z",
+      "side": 1,
+      "message": "If this class is no longer functional, it needs an @Deprecated annotation and a TODO to quickly follow this up with removing the class entirely.",
+      "range": {
+        "startLine": 20,
+        "startChar": 13,
+        "endLine": 20,
+        "endChar": 40
+      },
+      "revId": "e3ccec725001a651c52a52de25f12a43c12302b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74ab8795_7c6f53a4",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/selection/SelectableItemView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-08-28T20:17:46Z",
+      "side": 1,
+      "message": "Instead of dropping the #onCreateDrawableState() method in SelectableItemHighlightView, can we remove references to mHighlighView here? It looks like there are only 4 lines in this file that refer to it. Excising it entirely should be pretty easy, unless I\u0027m missing some places it\u0027s used?",
+      "range": {
+        "startLine": 101,
+        "startChar": 8,
+        "endLine": 101,
+        "endChar": 22
+      },
+      "revId": "e3ccec725001a651c52a52de25f12a43c12302b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98b89f21_8b9f2b76",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/selection/SelectableItemView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-08-28T20:17:46Z",
+      "side": 1,
+      "message": "Since downloads overrides this method, it\u0027s still using a square when modern isn\u0027t enabled, correct?",
+      "range": {
+        "startLine": 107,
+        "startChar": 12,
+        "endLine": 107,
+        "endChar": 87
+      },
+      "revId": "e3ccec725001a651c52a52de25f12a43c12302b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d4bfeb6_5064f504",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/selection/SelectableItemView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-08-28T20:17:46Z",
+      "side": 1,
+      "message": "In my conversation with Hannah, I think we were going to hold back the grey circle for modern-only. But it\u0027s possible she\u0027s okay with the grey circle in non-modern if that\u0027s easier to get in for M62. Will you please ping her and ask?",
+      "range": {
+        "startLine": 210,
+        "startChar": 12,
+        "endLine": 212,
+        "endChar": 36
+      },
+      "revId": "e3ccec725001a651c52a52de25f12a43c12302b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
