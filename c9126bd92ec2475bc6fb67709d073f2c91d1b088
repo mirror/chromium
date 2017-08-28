@@ -2,6 +2,74 @@
   "comments": [
     {
       "key": {
+        "uuid": "021e6254_b349922f",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/fetch/api/cors/cors-preflight-cache.any.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-08-28T07:54:14Z",
+      "side": 1,
+      "message": "let\u0027s use the same name convention in a file. maybe by changing this to cors_url?",
+      "revId": "c9126bd92ec2475bc6fb67709d073f2c91d1b088",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70f4c42f_8139a182",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/fetch/api/cors/cors-preflight-cache.any.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-08-28T07:54:14Z",
+      "side": 1,
+      "message": "use the arrow function here too?",
+      "revId": "c9126bd92ec2475bc6fb67709d073f2c91d1b088",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f93afdc0_17a3092b",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/fetch/api/cors/cors-preflight-cache.any.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-08-28T07:54:14Z",
+      "side": 1,
+      "message": "how about building this URL before L12 and use it here and L33?",
+      "revId": "c9126bd92ec2475bc6fb67709d073f2c91d1b088",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8652a12c_4a147203",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/fetch/api/cors/cors-preflight-cache.any.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-08-28T07:54:14Z",
+      "side": 1,
+      "message": "are the parentheses placed for the single arguments intentionally?",
+      "revId": "c9126bd92ec2475bc6fb67709d073f2c91d1b088",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "df66d792_59d2bdd9",
         "filename": "third_party/WebKit/public/platform/WebCORSPreflightResultCache.h",
         "patchSetId": 6
