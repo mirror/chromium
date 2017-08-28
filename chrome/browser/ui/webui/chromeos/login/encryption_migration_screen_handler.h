@@ -18,6 +18,10 @@
 #include "services/device/public/interfaces/wake_lock.mojom.h"
 #include "third_party/cros_system_api/dbus/cryptohome/dbus-constants.h"
 
+namespace base {
+class ElapsedTimer;
+}
+
 namespace chromeos {
 
 class LoginFeedback;
@@ -37,6 +41,7 @@ class EncryptionMigrationScreenHandler : public EncryptionMigrationScreenView,
   void SetUserContext(const UserContext& user_context) override;
   void SetMode(EncryptionMigrationMode mode) override;
   void SetContinueLoginCallback(ContinueLoginCallback callback) override;
+  void SetRestartLoginCallback(RestartLoginCallback callback) override;
   void SetupInitialView() override;
 
   // BaseScreenHandler implementation:
@@ -55,6 +60,7 @@ class EncryptionMigrationScreenHandler : public EncryptionMigrationScreenView,
     MIGRATING = 2,
     MIGRATION_FAILED = 3,
     NOT_ENOUGH_STORAGE = 4,
+    MIGRATING_MINIMAL = 5,
     COUNT
   };
 
@@ -101,10 +107,18 @@ class EncryptionMigrationScreenHandler : public EncryptionMigrationScreenView,
   void OnDelayedRecordVisibleScreen(UIState state);
 
   // True if |mode_| suggests that we are resuming an incomplete migration.
-  bool IsResumingIncompleteMigration();
+  bool IsResumingIncompleteMigration() const;
 
   // True if |mode_| suggests that migration should start immediately.
-  bool IsStartImmediately();
+  bool IsStartImmediately() const;
+
+  // True if |mode_| suggests that we are starting or resuming a minimal
+  // migration.
+  bool IsMinimalMigration() const;
+
+  // Returns the UIState we should be in when migration is in progress.
+  // This will be different between regular and minimal migration.
+  UIState GetMigratingUIState() const;
 
   device::mojom::WakeLock* GetWakeLock();
 
@@ -120,6 +134,9 @@ class EncryptionMigrationScreenHandler : public EncryptionMigrationScreenView,
 
   // The callback which is used to log in to the session from the migration UI.
   ContinueLoginCallback continue_login_callback_;
+
+  // The callback which is used to require the user to re-enter their password.
+  RestartLoginCallback restart_login_callback_;
 
   // The migration mode (ask user / start migration automatically / resume
   // incomplete migratoin).
@@ -138,6 +155,9 @@ class EncryptionMigrationScreenHandler : public EncryptionMigrationScreenView,
   device::mojom::WakeLockPtr wake_lock_;
 
   std::unique_ptr<LoginFeedback> login_feedback_;
+
+  // Measures the time needed for minimal migration.
+  std::unique_ptr<base::ElapsedTimer> minimal_migration_timer_;
 
   base::WeakPtrFactory<EncryptionMigrationScreenHandler> weak_ptr_factory_;
 
