@@ -16,6 +16,24 @@
       "revId": "56f3aa8490acbf7b2d057214af2b6c9743f4806c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b822f3b2_df5990fc",
+        "filename": "third_party/WebKit/Source/core/html/custom/CustomElementRegistry.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2017-08-28T08:10:42Z",
+      "side": 1,
+      "message": "GetCustomElementReactionStack defines a thread-local static persistent.\n\nThe stack always outlived the registry as far as I can see. How would this matter?",
+      "parentUuid": "48376c08_ed7bbb12",
+      "revId": "56f3aa8490acbf7b2d057214af2b6c9743f4806c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
