@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9b060cbf_ae69fc7d",
+        "filename": "net/test/spawned_test_server/remote_test_server_config.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-08-28T19:45:09Z",
+      "side": 1,
+      "message": "nit:  Remove braces (Said \"nit(x2)\", in the last set which you probably missed)",
+      "range": {
+        "startLine": 64,
+        "startChar": 3,
+        "endLine": 64,
+        "endChar": 0
+      },
+      "revId": "bf1c1d21c9717f078509e89e116ebba5be6fe538",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
