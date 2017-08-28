@@ -500,6 +500,9 @@ class EventFilterRecorder : public ui::EventHandler {
 
   const EventLocations& mouse_locations() const { return mouse_locations_; }
   gfx::Point mouse_location(int i) const { return mouse_locations_[i]; }
+  gfx::Point mouse_root_location(int i) const {
+    return mouse_root_locations_[i];
+  }
   const EventLocations& touch_locations() const { return touch_locations_; }
   const EventLocations& gesture_locations() const { return gesture_locations_; }
   const EventFlags& mouse_event_flags() const { return mouse_event_flags_; }
@@ -519,6 +522,7 @@ class EventFilterRecorder : public ui::EventHandler {
   void Reset() {
     events_.clear();
     mouse_locations_.clear();
+    mouse_root_locations_.clear();
     touch_locations_.clear();
     gesture_locations_.clear();
     mouse_event_flags_.clear();
@@ -537,6 +541,7 @@ class EventFilterRecorder : public ui::EventHandler {
 
   void OnMouseEvent(ui::MouseEvent* event) override {
     mouse_locations_.push_back(event->location());
+    mouse_root_locations_.push_back(event->root_location());
     mouse_event_flags_.push_back(event->flags());
   }
 
@@ -563,6 +568,7 @@ class EventFilterRecorder : public ui::EventHandler {
 
   Events events_;
   EventLocations mouse_locations_;
+  EventLocations mouse_root_locations_;
   EventLocations touch_locations_;
   EventLocations gesture_locations_;
   EventFlags mouse_event_flags_;
@@ -2764,6 +2770,28 @@ TEST_P(WindowEventDispatcherTest, OnCursorMovedToRootLocationUpdatesHover) {
   EXPECT_TRUE(recorder.HasReceivedEvent(ui::ET_MOUSE_EXITED));
 
   w->RemovePreTargetHandler(&recorder);
+}
+
+// The root_location of the synthetic events should be in root location
+// coordinates.
+TEST_P(WindowEventDispatcherTest, OnCursorMovedToUsesRootLocation) {
+  WindowEventDispatcher* dispatcher = host()->dispatcher();
+
+  std::unique_ptr<Window> w(CreateNormalWindow(1, root_window(), nullptr));
+  w->SetBounds(gfx::Rect(20, 20, 20, 20));
+  w->Show();
+
+  // Move the cursor off of |w|.
+  dispatcher->OnCursorMovedToRootLocation(gfx::Point(100, 100));
+
+  EventFilterRecorder recorder;
+  w->AddPreTargetHandler(&recorder);
+  dispatcher->OnCursorMovedToRootLocation(gfx::Point(22, 22));
+
+  // Said root location should be reflected in the synthesized event, as any
+  // transform will be reapplied by event dispatch.
+  RunAllPendingInMessageLoop();
+  EXPECT_EQ(gfx::Point(22, 22), recorder.mouse_root_location(0));
 }
 
 // Tests that we correctly report the fraction of time without user input via
