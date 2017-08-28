@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "1576a5ae_f82df8e4",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/reporter_runner_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 587,
+      "author": {
+        "id": 1232105
+      },
+      "writtenOn": "2017-08-28T22:03:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6e0f485d_efcb6870",
+      "range": {
+        "startLine": 587,
+        "startChar": 80,
+        "endLine": 587,
+        "endChar": 0
+      },
+      "revId": "4df0e090831f9e46bbc28d622eca58ad866f5f8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9bc63138_c9bb4ee2",
         "filename": "chrome/browser/safe_browsing/chrome_cleaner/reporter_runner_win.cc",
         "patchSetId": 1
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "2d8f9886_10d54194",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/reporter_runner_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 600,
+      "author": {
+        "id": 1232105
+      },
+      "writtenOn": "2017-08-28T22:03:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9bc63138_c9bb4ee2",
+      "range": {
+        "startLine": 600,
+        "startChar": 51,
+        "endLine": 600,
+        "endChar": 0
+      },
+      "revId": "4df0e090831f9e46bbc28d622eca58ad866f5f8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1e6ec2f4_3f8e7e2f",
         "filename": "chrome/browser/safe_browsing/chrome_cleaner/reporter_runner_win.cc",
         "patchSetId": 1
@@ -68,6 +116,30 @@
       "revId": "4df0e090831f9e46bbc28d622eca58ad866f5f8c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9c28fd2_7a66cdfe",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/reporter_runner_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 611,
+      "author": {
+        "id": 1232105
+      },
+      "writtenOn": "2017-08-28T22:03:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1e6ec2f4_3f8e7e2f",
+      "range": {
+        "startLine": 611,
+        "startChar": 51,
+        "endLine": 611,
+        "endChar": 0
+      },
+      "revId": "4df0e090831f9e46bbc28d622eca58ad866f5f8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
