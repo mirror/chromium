@@ -49,11 +49,6 @@ UI_BASE_EXPORT std::string GetApplicationLocale(const std::string& pref_locale,
 // as the default ICU locale before returning it.
 UI_BASE_EXPORT std::string GetApplicationLocale(const std::string& pref_locale);
 
-// Returns true if a display name for |locale| is available in the locale
-// |display_locale|.
-UI_BASE_EXPORT bool IsLocaleNameTranslated(const char* locale,
-                                           const std::string& display_locale);
-
 // Given a locale code, return true if the OS is capable of supporting it.
 // For instance, Oriya is not well supported on Windows XP and we return
 // false for "or".
