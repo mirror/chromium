@@ -157,6 +157,24 @@
       "revId": "176c2ef8e2da6cbec2b8380b124bb0fab50ebaf2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "795f146f_6f417152",
+        "filename": "chrome/browser/resources/md_extensions/navigation_helper.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-08-28T22:17:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2bb62aa3_bdabff79",
+      "revId": "176c2ef8e2da6cbec2b8380b124bb0fab50ebaf2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
