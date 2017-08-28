@@ -22,6 +22,30 @@
       "revId": "c4dc2d09bd5461d5827f900023d264869427ca17",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c053fe71_b353fcea",
+        "filename": "chrome/test/base/chrome_test_launcher.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-08-28T16:21:29Z",
+      "side": 1,
+      "message": "I found this, which seems to confirm your explanation: https://cs.chromium.org/chromium/src/chrome/test/base/in_process_browser_test.cc?rcl\u003d7b4b0d1feadff5ac989f0a73f190a35c08cc0a07\u0026l\u003d282\n\nThis is unfortunate. Two proposed solutions from me:\n\n1. Give browser_tests a ChromeMain, or\n2. Build a separate helper executable for browser_tests which includes test code",
+      "parentUuid": "019355dd_de9c9f91",
+      "range": {
+        "startLine": 158,
+        "startChar": 7,
+        "endLine": 158,
+        "endChar": 34
+      },
+      "revId": "c4dc2d09bd5461d5827f900023d264869427ca17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
