@@ -70,6 +70,9 @@ class OmniboxController : public AutocompleteControllerDelegate {
   // Stores the bitmap in the OmniboxPopupModel.
   void SetAnswerBitmap(const SkBitmap& bitmap);
 
+  // Stores the match icon in OmniboxPopupModel.
+  void SetMatchIcon(size_t match_index, const gfx::Image& icon);
+
   // Weak, it owns us.
   // TODO(beaudoin): Consider defining a delegate to ease unit testing.
   OmniboxEditModel* omnibox_edit_model_;
