@@ -158,15 +158,6 @@ void SetupOnUIThread(
                      std::move(process_info), std::move(devtools_proxy)));
 }
 
-void CallDetach(EmbeddedWorkerInstance* instance) {
-  // This could be called on the UI thread if |client_| still be valid when the
-  // message loop on the UI thread gets destructed.
-  // TODO(shimazu): Remove this after https://crbug.com/604762 is fixed
-  if (!BrowserThread::CurrentlyOn(BrowserThread::IO))
-    return;
-  instance->Detach();
-}
-
 bool HasSentStartWorker(EmbeddedWorkerInstance::StartingPhase phase) {
   switch (phase) {
     case EmbeddedWorkerInstance::NOT_STARTING:
@@ -515,7 +506,7 @@ void EmbeddedWorkerInstance::Start(
   mojom::EmbeddedWorkerInstanceClientAssociatedRequest request =
       mojo::MakeRequest(&client_);
   client_.set_connection_error_handler(
-      base::BindOnce(&CallDetach, base::Unretained(this)));
+      base::BindOnce(&EmbeddedWorkerInstance::Detach, base::Unretained(this)));
   pending_dispatcher_request_ = std::move(dispatcher_request);
   pending_installed_scripts_info_ = std::move(installed_scripts_info);
 
@@ -834,6 +825,8 @@ void EmbeddedWorkerInstance::OnDetached() {
 }
 
 void EmbeddedWorkerInstance::Detach() {
+  // Temporary CHECK for debugging https://crbug.com/750267.
+  CHECK(BrowserThread::CurrentlyOn(BrowserThread::IO));
   if (status() == EmbeddedWorkerStatus::STOPPED)
     return;
   registry_->DetachWorker(process_id(), embedded_worker_id());
