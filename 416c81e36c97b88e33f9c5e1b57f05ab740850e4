@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9b94c46c_ce597b05",
+        "filename": "components/policy/core/common/cloud/cloud_policy_refresh_scheduler_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 431,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-08-28T13:27:49Z",
+      "side": 1,
+      "message": "nit: It\u0027s a bit weird to use CloudPolicyRefreshSchedulerSteadyStateTest, as it initializes |refresh_scheduler_| with non-empty DMToken and with even the NotifyPolicyFetched() being already called - and it\u0027s \"illegal\" to switch to the unregistered client state after that.\n\nI think it\u0027s cleaner to use CloudPolicyRefreshSchedulerTest and do all initialization you need explicitly in the test.",
+      "range": {
+        "startLine": 431,
+        "startChar": 7,
+        "endLine": 431,
+        "endChar": 49
+      },
+      "revId": "416c81e36c97b88e33f9c5e1b57f05ab740850e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b87119c_fe373e71",
+        "filename": "components/policy/core/common/cloud/cloud_policy_refresh_scheduler_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 433,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-08-28T13:27:49Z",
+      "side": 1,
+      "message": "nit: s/\"\"/std::string()/\n(for consistency with other tests in this file)",
+      "range": {
+        "startLine": 433,
+        "startChar": 21,
+        "endLine": 433,
+        "endChar": 23
+      },
+      "revId": "416c81e36c97b88e33f9c5e1b57f05ab740850e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2d5b5aa_3176eca6",
+        "filename": "components/policy/core/common/cloud/cloud_policy_refresh_scheduler_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 435,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-08-28T13:27:49Z",
+      "side": 1,
+      "message": "nit: It\u0027s unclear what\u0027s the purpose of this operation.\nIf this is still needed after switching to another test fixture class (see my comment above), could you please leave an explanatory comment for this block?",
+      "range": {
+        "startLine": 434,
+        "startChar": 0,
+        "endLine": 435,
+        "endChar": 55
+      },
+      "revId": "416c81e36c97b88e33f9c5e1b57f05ab740850e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
