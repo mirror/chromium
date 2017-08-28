@@ -720,15 +720,21 @@ void HandleToggleHighContrast() {
   // Show a notification so the user knows that this accelerator toggled
   // high contrast mode, and that they can press it again to toggle back.
   // The message center automatically only shows this once per session.
-  std::unique_ptr<Notification> notification(new Notification(
-      message_center::NOTIFICATION_TYPE_SIMPLE,
-      kHighContrastToggleAccelNotificationId, base::string16() /* title */,
-      l10n_util::GetStringUTF16(IDS_HIGH_CONTRAST_ACCEL_MSG),
-      gfx::Image(CreateVectorIcon(kSystemMenuAccessibilityIcon, SK_ColorBLACK)),
-      base::string16() /* display source */, GURL(),
-      message_center::NotifierId(message_center::NotifierId::SYSTEM_COMPONENT,
-                                 system_notifier::kNotifierAccessibility),
-      message_center::RichNotificationData(), nullptr));
+  std::unique_ptr<Notification> notification =
+      system_notifier::CreateSystemNotification(
+          message_center::NOTIFICATION_TYPE_SIMPLE,
+          kHighContrastToggleAccelNotificationId,
+          l10n_util::GetStringUTF16(IDS_HIGH_CONTRAST_ACCEL_TITLE),
+          l10n_util::GetStringUTF16(IDS_HIGH_CONTRAST_ACCEL_MSG),
+          gfx::Image(
+              CreateVectorIcon(kSystemMenuAccessibilityIcon, SK_ColorBLACK)),
+          base::string16() /* display source */, GURL(),
+          message_center::NotifierId(
+              message_center::NotifierId::SYSTEM_COMPONENT,
+              system_notifier::kNotifierAccessibility),
+          message_center::RichNotificationData(), nullptr,
+          kNotificationAccessibilityIcon,
+          SystemNotificationWarningLevel::NORMAL);
   message_center::MessageCenter::Get()->AddNotification(
       std::move(notification));
 
