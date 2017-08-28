@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cb68f7fd_aab213c3",
+        "filename": "components/exo/surface_tree_host.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-08-28T18:05:00Z",
+      "side": 1,
+      "message": "Alternatively: window-\u003eGetHost()-\u003ecompositor()-\u003edevice_scale_factor(), or window-\u003elayer()-\u003edevice_scale_factor()",
+      "revId": "2cd95798cc730d8ab709b2078b3a8821cf0f4de7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
