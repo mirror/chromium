@@ -275,6 +275,7 @@ struct PendingPaymentResponse {
   _paymentRequestJsManager = nil;
   _activeWebStateObserver.reset();
   _activeWebState = webState;
+  [self enableActiveWebState];
 
   if (_activeWebState) {
     _paymentRequestJsManager =
