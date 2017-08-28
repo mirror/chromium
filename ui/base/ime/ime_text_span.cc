@@ -15,7 +15,7 @@ ImeTextSpan::ImeTextSpan(uint32_t start_offset,
                          uint32_t end_offset,
                          SkColor underline_color,
                          bool thick)
-    : ImeTextSpan(Type::kComposition,
+    : ImeTextSpan(Type::kFormatting,
                   start_offset,
                   end_offset,
                   underline_color,

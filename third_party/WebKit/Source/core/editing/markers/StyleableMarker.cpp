@@ -30,7 +30,7 @@ Color StyleableMarker::BackgroundColor() const {
 
 bool IsStyleableMarker(const DocumentMarker& marker) {
   DocumentMarker::MarkerType type = marker.GetType();
-  return type == DocumentMarker::kComposition ||
+  return type == DocumentMarker::kImeFormatting ||
          type == DocumentMarker::kActiveSuggestion ||
          type == DocumentMarker::kSuggestion;
 }
