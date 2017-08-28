@@ -48,6 +48,17 @@ interface SpellCheckHost {
   // requires a !BUILDFLAG(USE_BROWSER_SPELLCHECKER) build.
   CallSpellingService(mojo.common.mojom.String16 text) =>
       (bool success, array<SpellCheckResult> results);
+
+  // Asks the host to spellcheck the |text| using a platform-specific spell
+  // checker to do the spellchecking, and returns the spellchecked |results|.
+  // Note this API requires a BUILDFLAG(USE_BROWSER_SPELLCHECKER) build.
+  // TODO(xiaochengh): This API is currently Android-only. Make it work on Mac.
+  RequestTextCheck(mojo.common.mojom.String16 text) =>
+      (array<SpellCheckResult> results);
+
+  // An Android-only API toggling the enabled state of the platform-specific
+  // spell checker.
+  ToggleSpellCheck(bool enabled, bool checked);
 };
 
 enum Decoration {

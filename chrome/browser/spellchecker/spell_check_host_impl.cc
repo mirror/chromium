@@ -7,6 +7,7 @@
 #include "base/bind.h"
 #include "base/memory/ptr_util.h"
 #include "base/strings/utf_string_conversions.h"
+#include "build/build_config.h"
 #include "chrome/browser/spellchecker/spellcheck_custom_dictionary.h"
 #include "chrome/browser/spellchecker/spellcheck_factory.h"
 #include "chrome/browser/spellchecker/spellcheck_service.h"
@@ -16,10 +17,14 @@
 #include "content/public/browser/render_process_host.h"
 #include "mojo/public/cpp/bindings/strong_binding.h"
 
+#if !defined(OS_ANDROID)
+// Android needs different constructor and destructor due to |session_bridge_|.
+
 SpellCheckHostImpl::SpellCheckHostImpl(int render_process_id)
     : render_process_id_(render_process_id) {}
 
 SpellCheckHostImpl::~SpellCheckHostImpl() = default;
+#endif
 
 // static
 void SpellCheckHostImpl::Create(
@@ -130,3 +135,15 @@ std::vector<SpellCheckResult> SpellCheckHostImpl::FilterCustomWordResults(
 SpellcheckService* SpellCheckHostImpl::GetSpellcheckService() const {
   return SpellcheckServiceFactory::GetForRenderProcessId(render_process_id_);
 }
+
+#if !defined(OS_ANDROID)
+// Placeholder implementations of Android-only APIs.
+
+// TODO(xiaochengh): Support RequestTextCheck for Mac.
+void SpellCheckHostImpl::RequestTextCheck(const base::string16&,
+                                          RequestTextCheckCallback callback) {
+  std::move(callback).Run(std::vector<SpellCheckResult>());
+}
+
+void SpellCheckHostImpl::ToggleSpellCheck(bool, bool) {}
+#endif
