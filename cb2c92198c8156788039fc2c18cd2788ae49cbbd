@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a7e411eb_f1b96b78",
+        "filename": "chrome/browser/ui/cocoa/md_hover_button.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-08-28T20:19:45Z",
+      "side": 1,
+      "message": "Comment that you\u0027re not explicitly calling super here because… (avoid setNeedsDisplay:) ?",
+      "revId": "cb2c92198c8156788039fc2c18cd2788ae49cbbd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

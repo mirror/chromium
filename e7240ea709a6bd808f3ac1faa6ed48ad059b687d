@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "fb2a9277_82415e42",
+        "filename": "chrome/browser/ui/cocoa/md_hover_button.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-08-28T20:19:45Z",
+      "side": 1,
+      "message": "Will subclasses override the colors, or is it a future-proofing thing? If it\u0027s the former, then I think that\u0027s a good reason to differentiate. If it\u0027s the latter, it\u0027s probably okay I just wanted to know if there were a reason. Having C++ functions would probably be slightly preferable, because the compiler will just inline them rather than indirecting through two message-sends.",
+      "parentUuid": "f558cfde_8735e420",
+      "revId": "e7240ea709a6bd808f3ac1faa6ed48ad059b687d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ee1818d0_0c5dc9d9",
         "filename": "chrome/browser/ui/cocoa/md_hover_button.mm",
         "patchSetId": 3
@@ -116,6 +134,24 @@
       "revId": "e7240ea709a6bd808f3ac1faa6ed48ad059b687d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a488acf_9a6581d6",
+        "filename": "chrome/browser/ui/cocoa/md_hover_button.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-08-28T20:19:45Z",
+      "side": 1,
+      "message": "Yeah, I appreciate const-ness, but not if it requires unfamiliar constructs. As for a better way, I don\u0027t know of one. New C++ feature idea?!",
+      "parentUuid": "e168254e_0c9a1ba5",
+      "revId": "e7240ea709a6bd808f3ac1faa6ed48ad059b687d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
