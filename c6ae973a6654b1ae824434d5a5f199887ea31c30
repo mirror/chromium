@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "c37c1bbc_87f58120",
+        "filename": "chrome/browser/chromeos/login/screens/encryption_migration_screen_view.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1000623
+      },
+      "writtenOn": "2017-08-28T22:35:02Z",
+      "side": 1,
+      "message": "ok, let\u0027s not worry about it. I was hoping for an opportunistic cleanup.",
+      "parentUuid": "3c099cf0_550d4255",
+      "revId": "c6ae973a6654b1ae824434d5a5f199887ea31c30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "81c2cfb6_7f06f9b2",
         "filename": "chrome/browser/ui/webui/chromeos/login/encryption_migration_screen_handler.cc",
         "patchSetId": 13
