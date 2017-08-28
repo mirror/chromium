@@ -148,120 +148,12 @@ def OptimizeBmp(icon_dir_entry, icon_data):
       os.unlink(png_filename)
     os.rmdir(temp_dir)
 
-def ComputeANDMaskFromAlpha(image_data, width, height):
-  """Compute an AND mask from 32-bit BGRA image data."""
-  and_bytes = []
-  for y in range(height):
-    bit_count = 0
-    current_byte = 0
-    for x in range(width):
-      alpha = image_data[(y * width + x) * 4 + 3]
-      current_byte <<= 1
-      if ord(alpha) == 0:
-        current_byte |= 1
-      bit_count += 1
-      if bit_count == 8:
-        and_bytes.append(current_byte)
-        bit_count = 0
-        current_byte = 0
-
-    # At the end of a row, pad the current byte.
-    if bit_count > 0:
-      current_byte <<= (8 - bit_count)
-      and_bytes.append(current_byte)
-    # And keep padding until a multiple of 4 bytes.
-    while len(and_bytes) % 4 != 0:
-      and_bytes.append(0)
-
-  and_bytes = ''.join(map(chr, and_bytes))
-  return and_bytes
-
-def CheckANDMaskAgainstAlpha(xor_data, and_data, width, height):
-  """Checks whether an AND mask is "good" for 32-bit BGRA image data.
-
-  This checks that the mask is opaque wherever the alpha channel is not fully
-  transparent. Pixels that violate this condition will show up as black in some
-  contexts in Windows (http://crbug.com/526622). Also checks the inverse
-  condition, that the mask is transparent wherever the alpha channel is fully
-  transparent. While this does not appear to be strictly necessary, it is good
-  practice for backwards compatibility.
-
-  Returns True if the AND mask is "good", False otherwise.
-  """
-  xor_bytes_per_row = width * 4
-  and_bytes_per_row = BytesPerRowBMP(width, 1)
-
-  for y in range(height):
-    for x in range(width):
-      alpha = ord(xor_data[y * xor_bytes_per_row + x * 4 + 3])
-      mask = bool(ord(and_data[y * and_bytes_per_row + x // 8]) &
-                  (1 << (7 - (x % 8))))
-
-      if mask:
-        if alpha > 0:
-          # mask is transparent, alpha is partially or fully opaque. This pixel
-          # can show up as black on Windows due to a rendering bug.
-          return False
-      else:
-        if alpha == 0:
-          # mask is opaque, alpha is transparent. This pixel should be marked as
-          # transparent in the mask, for legacy reasons.
-          return False
-
-  return True
-
-def CheckOrRebuildANDMask(iconimage, rebuild=False):
-  """Checks the AND mask in an icon image for correctness, or rebuilds it.
-
-  GIMP (<=2.8.14) creates a bad AND mask on 32-bit icon images (pixels with <50%
-  opacity are marked as transparent, which end up looking black on Windows).
-  With rebuild == False, checks whether the mask is bad. With rebuild == True,
-  if this is a 32-bit image, throw the mask away and recompute it from the alpha
-  data. (See: https://bugzilla.gnome.org/show_bug.cgi?id=755200)
-
-  Args:
-    iconimage: Bytes of an icon image (the BMP data for an entry in an ICO
-      file). Must be in BMP format, not PNG. Does not need to be 32-bit (if it
-      is not 32-bit, this is a no-op).
-
-  Returns:
-    If rebuild == False, a bool indicating whether the mask is "good". If
-    rebuild == True, an updated |iconimage|, with the AND mask re-computed using
-    ComputeANDMaskFromAlpha.
-  """
-  # Parse BITMAPINFOHEADER.
-  (_, width, height, _, bpp, _, _, _, _, num_colors, _) = struct.unpack(
-      '<LLLHHLLLLLL', iconimage[:40])
-
-  if bpp != 32:
-    # No alpha channel, so the mask cannot be "wrong" (it is the only source of
-    # transparency information).
-    return iconimage if rebuild else True
-
-  height /= 2
-  xor_size = BytesPerRowBMP(width, bpp) * height
-
-  # num_colors can be 0, implying 2^bpp colors.
-  xor_palette_size = (num_colors or (1 << bpp if bpp < 24 else 0)) * 4
-  xor_data = iconimage[40 + xor_palette_size :
-                       40 + xor_palette_size + xor_size]
-
-  if rebuild:
-    and_data = ComputeANDMaskFromAlpha(xor_data, width, height)
-
-    # Replace the AND mask in the original icon data.
-    return iconimage[:40 + xor_palette_size + xor_size] + and_data
-  else:
-    and_data = iconimage[40 + xor_palette_size + xor_size:]
-    return CheckANDMaskAgainstAlpha(xor_data, and_data, width, height)
-
 def LintIcoFile(infile):
   """Read an ICO file and check whether it is acceptable.
 
   This checks for:
   - Basic structural integrity of the ICO.
-  - Large BMPs that could be converted to PNGs.
-  - 32-bit BMPs with buggy AND masks.
+  - BMPs that could be converted to PNGs.
 
   It will *not* check whether PNG images have been compressed sufficiently.
 
@@ -308,13 +200,8 @@ def LintIcoFile(infile):
                   height, size, 'PNG' if entry_is_png else 'BMP')
 
     if not entry_is_png:
-      if width >= 256 or height >= 256:
-        yield ('Entry #%d is a large image in uncompressed BMP format. It '
-               'should be in PNG format.' % (i + 1))
-
-      if not CheckOrRebuildANDMask(icon_data, rebuild=False):
-        yield ('Entry #%d has a bad mask that will display incorrectly in some '
-               'places in Windows.' % (i + 1))
+      yield ('Entry #%d is in uncompressed BMP format. It should be in PNG '
+             'format.' % (i + 1))
 
 def OptimizeIcoFile(infile, outfile, optimization_level=None):
   """Read an ICO file, optimize its PNGs, and write the output to outfile.
@@ -357,18 +244,12 @@ def OptimizeIcoFile(infile, outfile, optimization_level=None):
     if entry_is_png:
       # It is a PNG. Crush it.
       icon_data = OptimizePng(icon_data, optimization_level=optimization_level)
-    elif width >= 256 or height >= 256:
-      # It is a large BMP. Reformat as a PNG, then crush it.
-      # Note: Smaller images are kept uncompressed, for compatibility with
-      # Windows XP.
-      # TODO(mgiuca): Now that we no longer support XP, we can probably compress
-      # all of the images. https://crbug.com/663136
-      icon_data = OptimizeBmp(icon_dir_entries[i], icon_data)
     else:
-      new_icon_data = CheckOrRebuildANDMask(icon_data, rebuild=True)
-      if new_icon_data != icon_data:
-        logging.info('  * Rebuilt AND mask for this image from alpha channel.')
-        icon_data = new_icon_data
+      # It is a BMP. Reformat as a PNG, then crush it.
+      # Note: Icons smaller than 256x256 are supposed to be kept uncompressed,
+      # for compatibility with Windows XP and earlier. However, since Chrome no
+      # longer supports XP, we just compress all the images to save space.
+      icon_data = OptimizeBmp(icon_dir_entries[i], icon_data)
 
     new_size = len(icon_data)
     current_offset += new_size
