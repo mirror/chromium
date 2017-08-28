@@ -24,9 +24,10 @@ PaintWorkletGlobalScopeProxy::PaintWorkletGlobalScopeProxy(
     size_t global_scope_number) {
   DCHECK(IsMainThread());
   Document* document = frame->GetDocument();
+  reporting_proxy_ = WTF::MakeUnique<MainThreadWorkletReportingProxy>(document);
   global_scope_ = PaintWorkletGlobalScope::Create(
       frame, document->Url(), document->UserAgent(),
-      document->GetSecurityOrigin(), ToIsolate(document),
+      document->GetSecurityOrigin(), ToIsolate(document), *reporting_proxy_,
       pending_generator_registry, global_scope_number);
 }
 

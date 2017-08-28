@@ -12,19 +12,11 @@
 
 namespace blink {
 
-class MainThreadWorkletGlobalScopeForTest
-    : public MainThreadWorkletGlobalScope {
+class MainThreadWorkletReportingProxyForTest final
+    : public MainThreadWorkletReportingProxy {
  public:
-  MainThreadWorkletGlobalScopeForTest(LocalFrame* frame,
-                                      const KURL& url,
-                                      const String& user_agent,
-                                      RefPtr<SecurityOrigin> security_origin,
-                                      v8::Isolate* isolate)
-      : MainThreadWorkletGlobalScope(frame,
-                                     url,
-                                     user_agent,
-                                     std::move(security_origin),
-                                     isolate),
+  MainThreadWorkletReportingProxyForTest()
+      : MainThreadWorkletReportingProxy(nullptr /* document */),
         reported_features_(static_cast<int>(WebFeature::kNumberOfFeatures)) {}
 
   void ReportFeature(WebFeature feature) override {
@@ -43,7 +35,7 @@ class MainThreadWorkletGlobalScopeForTest
 
  private:
   BitVector reported_features_;
-};
+}
 
 class MainThreadWorkletTest : public ::testing::Test {
  public:
@@ -51,9 +43,11 @@ class MainThreadWorkletTest : public ::testing::Test {
     KURL url(kParsedURLString, "https://example.com/");
     page_ = DummyPageHolder::Create();
     security_origin_ = SecurityOrigin::Create(url);
+    reporting_proxy_ =
+        WTF::MakeUnique<MainThreadWorkletReportingProxyForTest>();
     global_scope_ = new MainThreadWorkletGlobalScope(
         &page_->GetFrame(), url, "fake user agent", security_origin_.Get(),
-        ToIsolate(page_->GetFrame().GetDocument()));
+        ToIsolate(page_->GetFrame().GetDocument()), reporting_proxy_.get());
   }
 
   void TearDown() override { global_scope_->Terminate(); }
@@ -61,6 +55,7 @@ class MainThreadWorkletTest : public ::testing::Test {
  protected:
   RefPtr<SecurityOrigin> security_origin_;
   std::unique_ptr<DummyPageHolder> page_;
+  std::unique_ptr<MainThreadWorkletReportingProxyForTest> reporting_proxy_;
   Persistent<MainThreadWorkletGlobalScope> global_scope_;
 };
 
@@ -77,7 +72,7 @@ TEST_F(MainThreadWorkletTest, UseCounter) {
   EXPECT_TRUE(UseCounter::IsCounted(document, kFeature1));
 
   // API use should be reported to the Document only one time. See comments in
-  // MainThreadGlobalScopeForTest::ReportFeature.
+  // MainThreadWorkletReportingProxyForTest::ReportFeature.
   UseCounter::Count(global_scope_, kFeature1);
 
   // This feature is randomly selected from Deprecation::deprecationMessage().
@@ -90,7 +85,7 @@ TEST_F(MainThreadWorkletTest, UseCounter) {
   EXPECT_TRUE(UseCounter::IsCounted(document, kFeature2));
 
   // API use should be reported to the Document only one time. See comments in
-  // MainThreadWorkletGlobalScopeForTest::ReportDeprecation.
+  // MainThreadWorkletReportingProxyForTest::ReportDeprecation.
   Deprecation::CountDeprecation(global_scope_, kFeature2);
 }
 
