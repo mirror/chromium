@@ -16,6 +16,24 @@
       "revId": "9187fe987cd010d635ec53f00d58ec99461541fd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "546ae6fc_d8ce782a",
+        "filename": "chrome/browser/ui/views/feature_promos/feature_promo_bubble_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1223632
+      },
+      "writtenOn": "2017-08-28T18:47:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dfb9c8aa_350690d3",
+      "revId": "9187fe987cd010d635ec53f00d58ec99461541fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
