@@ -8,11 +8,13 @@
 #include <string>
 
 #include "base/macros.h"
+#include "base/threading/thread.h"
 #include "net/test/spawned_test_server/base_test_server.h"
 
 namespace net {
 
 class SpawnerCommunicator;
+class RemoteTestServerProxy;
 
 // The RemoteTestServer runs an external Python-based test server in another
 // machine that is different from the machine in which RemoteTestServer runs.
@@ -51,15 +53,15 @@ class RemoteTestServer : public BaseTestServer {
  private:
   bool Init(const base::FilePath& document_root);
 
-  // The local port used to communicate with the TestServer spawner. This is
-  // used to control the startup and shutdown of the Python TestServer running
-  // on the remote machine. On Android, this port will be redirected to the
-  // same port on the host machine.
-  int spawner_server_port_;
+  // Thread used to run all IO activity in |test_server_proxy_|.
+  // TODO(sergeyu): Use it for |spawner_communicator_| as well.
+  base::Thread io_thread_;
 
   // Helper to start and stop instances of the Python test server that runs on
   // the host machine.
   std::unique_ptr<SpawnerCommunicator> spawner_communicator_;
+
+  std::unique_ptr<RemoteTestServerProxy> test_server_proxy_;
 
   DISALLOW_COPY_AND_ASSIGN(RemoteTestServer);
 };
