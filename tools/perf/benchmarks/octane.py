@@ -21,6 +21,7 @@ from telemetry.page import legacy_page_test
 from telemetry import story
 from telemetry.util import statistics
 from telemetry.value import scalar
+from telemetry.story import expectations
 
 _GB = 1024 * 1024 * 1024
 
@@ -143,5 +144,7 @@ class Octane(perf_benchmark.PerfBenchmark):
   def GetExpectations(self):
     class StoryExpectations(story.expectations.StoryExpectations):
       def SetExpectations(self):
-        pass # Octane not disabled.
+        self.DisableStory(
+            'http://chromium.github.io/octane/index.html?auto=1',
+            [expectations.ANDROID_ONE], 'crbug.com/759792')
     return StoryExpectations()
