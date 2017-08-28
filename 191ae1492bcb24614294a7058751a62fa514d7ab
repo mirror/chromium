@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "36ab3b92_29af5f47",
+        "filename": "base/metrics/record_histogram_checker.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-08-28T18:25:24Z",
+      "side": 1,
+      "message": "Note: You should remove the ; at the end of this line so that \"git cl format\" will actually remove the space between () and {}",
+      "parentUuid": "0fac0a17_ee18412d",
+      "revId": "191ae1492bcb24614294a7058751a62fa514d7ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b0537b32_caae01a8",
         "filename": "base/metrics/statistics_recorder_unittest.cc",
         "patchSetId": 20
