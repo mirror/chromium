@@ -105,6 +105,9 @@ class CrosSettings {
   bool FindEmailInList(const std::string& path,
                        const std::string& email,
                        bool* wildcard_match) const;
+  bool FindEmailInList(const base::ListValue* list,
+                       const std::string& email,
+                       bool* wildcard_match) const;
 
   // Adding/removing of providers.
   bool AddSettingsProvider(std::unique_ptr<CrosSettingsProvider> provider);

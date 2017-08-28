@@ -1655,6 +1655,7 @@ static_library("test_support") {
     "//skia",
     "//testing/gmock",
     "//testing/gtest",
+    "//third_party/icu",
   ]
 }
 
