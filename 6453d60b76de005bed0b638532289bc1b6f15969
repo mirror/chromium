@@ -16,6 +16,24 @@
       "revId": "6453d60b76de005bed0b638532289bc1b6f15969",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e498a4c6_b6e16063",
+        "filename": "third_party/WebKit/Source/core/workers/WorkletModuleResponsesMap.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2017-08-28T06:47:19Z",
+      "side": 1,
+      "message": "To be clear, this caches module script creation params (including src code), not \"module script\" spec concept.",
+      "parentUuid": "361af328_62741170",
+      "revId": "6453d60b76de005bed0b638532289bc1b6f15969",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
