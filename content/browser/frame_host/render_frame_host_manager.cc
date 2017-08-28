@@ -1598,6 +1598,7 @@ void RenderFrameHostManager::CreatePendingRenderFrameHost(
 void RenderFrameHostManager::CreateProxiesForNewRenderFrameHost(
     SiteInstance* old_instance,
     SiteInstance* new_instance) {
+  LOG(INFO) << id() << "RenderFrameHostManager::CreateProxiesForNewRenderFrameHost";
   // Only create opener proxies if they are in the same BrowsingInstance.
   if (new_instance->IsRelatedSiteInstance(old_instance)) {
     CreateOpenerProxies(new_instance, frame_tree_node_);
@@ -1613,6 +1614,10 @@ void RenderFrameHostManager::CreateProxiesForNewRenderFrameHost(
     frame_tree_node_->frame_tree()->CreateProxiesForSiteInstance(
         frame_tree_node_, new_instance);
   }
+
+  // A new cross-process navigation should always start off with a
+  // corresponding proxy.
+  //CreateRenderFrameProxy(new_instance); // This is now done via NodeIterator.
 }
 
 void RenderFrameHostManager::CreateProxiesForNewNamedFrame() {
@@ -1686,6 +1691,9 @@ RenderFrameHostManager::CreateRenderFrameHost(
 bool RenderFrameHostManager::CreateSpeculativeRenderFrameHost(
     SiteInstance* old_instance,
     SiteInstance* new_instance) {
+  LOG(INFO) << id() << "RenderFrameHostManager::CreateSpeculativeRenderFrameHost";
+  LOG(INFO) << "  old_instance=" << old_instance->GetSiteURL();
+  LOG(INFO) << "  new_instance=" << new_instance->GetSiteURL();
   CHECK(new_instance);
   CHECK_NE(old_instance, new_instance);
 
@@ -1704,10 +1712,17 @@ bool RenderFrameHostManager::CreateSpeculativeRenderFrameHost(
   return !!speculative_render_frame_host_;
 }
 
+std::string RenderFrameHostManager::id() {
+  return base::StringPrintf("[%d] ", frame_tree_node_->frame_tree_node_id());
+}
+
 std::unique_ptr<RenderFrameHostImpl> RenderFrameHostManager::CreateRenderFrame(
     SiteInstance* instance,
     bool hidden,
     int* view_routing_id_ptr) {
+  LOG(INFO) << id() << "RenderFrameHostManager::CreateRenderFrame";
+  LOG(INFO) << "  instance=" << instance->GetSiteURL();
+
   int32_t widget_routing_id = MSG_ROUTING_NONE;
   RenderFrameProxyHost* proxy = GetRenderFrameProxyHost(instance);
 
@@ -1718,8 +1733,8 @@ std::unique_ptr<RenderFrameHostImpl> RenderFrameHostManager::CreateRenderFrame(
   if (view_routing_id_ptr)
     *view_routing_id_ptr = MSG_ROUTING_NONE;
 
-  // We are creating a pending, speculative or swapped out RFH here. We should
-  // never create it in the same SiteInstance as our current RFH.
+  // We are creating a pending or speculative RFH here. We should never create
+  // it in the same SiteInstance as our current RFH.
   CHECK_NE(render_frame_host_->GetSiteInstance(), instance);
 
   // A RenderFrame in a different process from its parent RenderFrame
@@ -1728,6 +1743,7 @@ std::unique_ptr<RenderFrameHostImpl> RenderFrameHostManager::CreateRenderFrame(
       frame_tree_node_->parent()->current_frame_host()->GetSiteInstance() !=
           instance) {
     widget_routing_id = instance->GetProcess()->GetNextRoutingID();
+    LOG(INFO) << "  Cross-site parent exists; created widget_routing_id";
   }
 
   new_render_frame_host = CreateRenderFrameHost(
@@ -1781,6 +1797,9 @@ std::unique_ptr<RenderFrameHostImpl> RenderFrameHostManager::CreateRenderFrame(
 }
 
 int RenderFrameHostManager::CreateRenderFrameProxy(SiteInstance* instance) {
+  LOG(INFO) << id() << "RenderFrameHostManager::CreateRenderFrameProxy";
+  LOG(INFO) << "  instance=" << instance->GetSiteURL();
+
   // A RenderFrameProxyHost should never be created in the same SiteInstance as
   // the current RFH.
   CHECK(instance);
@@ -1794,20 +1813,28 @@ int RenderFrameHostManager::CreateRenderFrameProxy(SiteInstance* instance) {
       frame_tree_node_->frame_tree()->GetRenderViewHost(instance);
   if (!render_view_host) {
     CHECK(frame_tree_node_->IsMainFrame());
+    LOG(INFO) << "  creating new RVH";
     render_view_host = frame_tree_node_->frame_tree()->CreateRenderViewHost(
         instance, MSG_ROUTING_NONE, MSG_ROUTING_NONE, true, true);
   }
 
   RenderFrameProxyHost* proxy = GetRenderFrameProxyHost(instance);
-  if (proxy && proxy->is_render_frame_proxy_live())
+  if (proxy && proxy->is_render_frame_proxy_live()) {
+    LOG(INFO) << "  RFPH exists, and it's already live";
     return proxy->GetRoutingID();
+  } else if (proxy) {
+    LOG(INFO) << "  RFPH exists, but it's not live";
+  }
 
-  if (!proxy)
+  if (!proxy) {
+    LOG(INFO) << "  RFPH doesn't exist, creating";
     proxy = CreateRenderFrameProxyHost(instance, render_view_host);
+  }
 
   if (frame_tree_node_->IsMainFrame()) {
     InitRenderView(render_view_host, proxy);
   } else {
+    LOG(INFO) << "  calling InitRenderFrameProxy (subframe case)";
     proxy->InitRenderFrameProxy();
   }
 
@@ -1832,15 +1859,21 @@ void RenderFrameHostManager::EnsureRenderViewInitialized(
     RenderViewHostImpl* render_view_host,
     SiteInstance* instance) {
   DCHECK(frame_tree_node_->IsMainFrame());
+  LOG(INFO) << id() << "RFHM::EnsureRenderViewInitialized";
+  LOG(INFO) << "  instance=" << instance->GetSiteURL();
 
-  if (render_view_host->IsRenderViewLive())
+  if (render_view_host->IsRenderViewLive()) {
+    LOG(INFO) << "  already live, returning";
     return;
+  }
 
   // If the proxy in |instance| doesn't exist, this RenderView is not swapped
   // out and shouldn't be reinitialized here.
   RenderFrameProxyHost* proxy = GetRenderFrameProxyHost(instance);
-  if (!proxy)
+  if (!proxy) {
+    LOG(INFO) << "  no proxy exists, returning";
     return;
+  }
 
   InitRenderView(render_view_host, proxy);
 }
@@ -1880,14 +1913,19 @@ void RenderFrameHostManager::SetRWHViewForInnerContents(
 bool RenderFrameHostManager::InitRenderView(
     RenderViewHostImpl* render_view_host,
     RenderFrameProxyHost* proxy) {
+  LOG(INFO) << id() << "RenderFrameHostManager::InitRenderView";
+  LOG(INFO) << "  proxy=" << proxy;
+
   // Ensure the renderer process is initialized before creating the
   // RenderView.
   if (!render_view_host->GetProcess()->Init())
     return false;
 
   // We may have initialized this RenderViewHost for another RenderFrameHost.
-  if (render_view_host->IsRenderViewLive())
+  if (render_view_host->IsRenderViewLive()) {
+    LOG(INFO) << "  view already live, returning";
     return true;
+  }
 
   int opener_frame_routing_id =
       GetOpenerRoutingID(render_view_host->GetSiteInstance());
@@ -1896,9 +1934,14 @@ bool RenderFrameHostManager::InitRenderView(
       render_view_host, opener_frame_routing_id,
       proxy ? proxy->GetRoutingID() : MSG_ROUTING_NONE,
       frame_tree_node_->current_replication_state());
-
-  if (created && proxy)
+  LOG(INFO) << "  created=" << created;
+  if (created && proxy) {
+    LOG(INFO) << "  Setting proxy to live";
     proxy->set_render_frame_proxy_created(true);
+  } else {
+    if (!created && proxy)
+      LOG(INFO) << "  |created| is false; NOT setting proxy to live";
+  }
 
   return created;
 }
@@ -1961,8 +2004,11 @@ RenderFrameHostManager::GetSiteInstanceForNavigationRequest(
 
 bool RenderFrameHostManager::InitRenderFrame(
     RenderFrameHostImpl* render_frame_host) {
-  if (render_frame_host->IsRenderFrameLive())
+  LOG(INFO) << id() << "RenderFrameHostManager::InitRenderFrame";
+  if (render_frame_host->IsRenderFrameLive()) {
+    LOG(INFO) << "  already live, early return";
     return true;
+  }
 
   SiteInstance* site_instance = render_frame_host->GetSiteInstance();
 
@@ -2582,9 +2628,6 @@ void RenderFrameHostManager::CreateOpenerProxiesForFrameTree(
   // actually work correctly for subframes as well, so if that need ever
   // arises, it should be sufficient to remove this DCHECK.
   DCHECK(frame_tree_node_->IsMainFrame());
-
-  if (frame_tree_node_ == skip_this_node)
-    return;
 
   FrameTree* frame_tree = frame_tree_node_->frame_tree();
 

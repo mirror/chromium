@@ -3393,6 +3393,7 @@ bool RenderProcessHost::ShouldTryToUseExistingProcessHost(
 RenderProcessHost* RenderProcessHost::GetExistingProcessHost(
     BrowserContext* browser_context,
     const GURL& site_url) {
+  LOG(INFO) << "RenderProcessHost::GetExistingProcessHost";
   // First figure out which existing renderers we can use.
   std::vector<RenderProcessHost*> suitable_renderers;
   suitable_renderers.reserve(g_all_hosts.Get().size());
@@ -3402,7 +3403,10 @@ RenderProcessHost* RenderProcessHost::GetExistingProcessHost(
     if (iter.GetCurrentValue()->MayReuseHost() &&
         RenderProcessHostImpl::IsSuitableHost(iter.GetCurrentValue(),
                                               browser_context, site_url)) {
+
       suitable_renderers.push_back(iter.GetCurrentValue());
+      LOG(INFO) << "  pushing " << iter.GetCurrentValue()->GetID()
+          << " which is " << (iter.GetCurrentValue()->HasConnection() ? "live" : "dead");
     }
     iter.Advance();
   }

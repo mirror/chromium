@@ -50,11 +50,11 @@ FrameTree::NodeIterator::NodeIterator(const NodeIterator& other) = default;
 FrameTree::NodeIterator::~NodeIterator() {}
 
 FrameTree::NodeIterator& FrameTree::NodeIterator::operator++() {
-  for (size_t i = 0; i < current_node_->child_count(); ++i) {
-    FrameTreeNode* child = current_node_->child_at(i);
-    if (child == node_to_skip_)
-      continue;
-    queue_.push(child);
+  if (current_node_ != node_to_skip_) {
+    for (size_t i = 0; i < current_node_->child_count(); ++i) {
+      FrameTreeNode* child = current_node_->child_at(i);
+      queue_.push(child);
+    }
   }
 
   if (!queue_.empty()) {
@@ -73,7 +73,7 @@ bool FrameTree::NodeIterator::operator==(const NodeIterator& rhs) const {
 
 FrameTree::NodeIterator::NodeIterator(FrameTreeNode* starting_node,
                                       FrameTreeNode* node_to_skip)
-    : current_node_(starting_node != node_to_skip ? starting_node : nullptr),
+    : current_node_(starting_node),
       node_to_skip_(node_to_skip) {}
 
 FrameTree::NodeIterator FrameTree::NodeRange::begin() {
@@ -234,12 +234,18 @@ void FrameTree::RemoveFrame(FrameTreeNode* child) {
 void FrameTree::CreateProxiesForSiteInstance(
     FrameTreeNode* source,
     SiteInstance* site_instance) {
+  LOG(INFO) << "FrameTree::CreateProxiesForSiteInstance";
+  LOG(INFO) << "  site_instance=" << site_instance->GetSiteURL();
+  LOG(INFO) << "  source ftn=" << (source ? source->frame_tree_node_id() : -1);
+  LOG(INFO) << "  source ftn is root=" << (source ? source->IsMainFrame() : false);
   // Create the RenderFrameProxyHost for the new SiteInstance.
   if (!source || !source->IsMainFrame()) {
     RenderViewHostImpl* render_view_host = GetRenderViewHost(site_instance);
     if (!render_view_host) {
+      LOG(INFO) << "  entered subframe case.  There's no RVH.  Calling root->CreateRenderFrameProxy";
       root()->render_manager()->CreateRenderFrameProxy(site_instance);
     } else {
+      LOG(INFO) << "  entered subframe case.  There's a RVH.  Ensuring it's initialized.";
       root()->render_manager()->EnsureRenderViewInitialized(render_view_host,
                                                             site_instance);
     }
@@ -253,6 +259,7 @@ void FrameTree::CreateProxiesForSiteInstance(
     // that SiteInstance don't need a proxy for the new frame.
     SiteInstance* current_instance =
         node->render_manager()->current_frame_host()->GetSiteInstance();
+    LOG(INFO) << "node " << node->frame_tree_node_id() << ": current=" << current_instance->GetSiteURL() << ", new=" << site_instance->GetSiteURL();
     if (current_instance != site_instance)
       node->render_manager()->CreateRenderFrameProxy(site_instance);
   }

@@ -1024,7 +1024,16 @@ void RenderFrameImpl::CreateFrame(
     const FrameOwnerProperties& frame_owner_properties) {
   blink::WebLocalFrame* web_frame;
   RenderFrameImpl* render_frame;
+  LOG(INFO) << "RenderFrameImpl::CreateFrame";
+  LOG(INFO) << "  proxy_routing_id=" << proxy_routing_id;
   if (proxy_routing_id == MSG_ROUTING_NONE) {
+    // TODO(alexmos): This path is currently used only:
+    // 1) When recreating a RenderFrame after a crash.
+    // 2) In tests that issue this IPC directly.
+    // These two cases should be cleaned up to also pass a proxy_routing_id,
+    // which would allow removing this branch altogether.  See
+    // https://crbug.com/756790.
+
     RenderFrameProxy* parent_proxy =
         RenderFrameProxy::FromRoutingID(parent_routing_id);
     // If the browser is sending a valid parent routing id, it should already
@@ -1058,6 +1067,7 @@ void RenderFrameImpl::CreateFrame(
     // call to createLocalChild.
     render_frame->in_frame_tree_ = true;
   } else {
+    LOG(INFO) << "  proxy path.";
     RenderFrameProxy* proxy =
         RenderFrameProxy::FromRoutingID(proxy_routing_id);
     // The remote frame could've been detached while the remote-to-local
