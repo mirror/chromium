@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "66bd4fc6_f8d7b773",
+        "filename": "content/child/service_worker/service_worker_event_dispatcher_holder.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-28T13:52:01Z",
+      "side": 1,
+      "message": "ahh... oops",
+      "revId": "8534eb01c435be8c232fbd3341d3d1816c57b509",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aba4284b_d34b4151",
+        "filename": "content/child/service_worker/service_worker_subresource_loader.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-28T13:52:01Z",
+      "side": 1,
+      "message": "Maybe to make it clear it\u0027s not just the same as event_dispatcher_.get(), do:\n\nDCHECK(event_dispatcher_ \u0026\u0026 event_dispatcher_-\u003eget())?",
+      "revId": "8534eb01c435be8c232fbd3341d3d1816c57b509",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
