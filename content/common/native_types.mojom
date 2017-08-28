@@ -79,3 +79,9 @@ enum TouchState;
 
 [Native]
 struct DidOverscrollParams;
+
+[Native]
+enum TouchAction;
+
+[Native]
+struct TouchActionOptional;
