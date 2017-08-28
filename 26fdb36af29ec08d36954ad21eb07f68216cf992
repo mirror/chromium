@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "419ba575_ba992bd8",
+        "filename": "build/config/coverage/BUILD.gn",
+        "patchSetId": 5
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-08-28T20:30:44Z",
+      "side": 1,
+      "message": "doesn\u0027t look like there\u0027s a need for a separate .gni file for this at the moment?",
+      "range": {
+        "startLine": 5,
+        "startChar": 12,
+        "endLine": 5,
+        "endChar": 18
+      },
+      "revId": "26fdb36af29ec08d36954ad21eb07f68216cf992",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53dbf9e6_f3a8fcb9",
+        "filename": "build/config/coverage/BUILD.gn",
+        "patchSetId": 5
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-08-28T20:30:44Z",
+      "side": 1,
+      "message": "spurious newline",
+      "revId": "26fdb36af29ec08d36954ad21eb07f68216cf992",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "776377f6_3f07ad6a",
+        "filename": "build/config/coverage/BUILD.gn",
+        "patchSetId": 5
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-08-28T20:30:44Z",
+      "side": 1,
+      "message": "Does just adding `-coverage` to cflags and ldflags do the right thing?",
+      "range": {
+        "startLine": 12,
+        "startChar": 8,
+        "endLine": 12,
+        "endChar": 17
+      },
+      "revId": "26fdb36af29ec08d36954ad21eb07f68216cf992",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c4521a3d_234b7f30",
+        "filename": "build/config/coverage/BUILD.gn",
+        "patchSetId": 5
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-08-28T20:30:44Z",
+      "side": 1,
+      "message": "Why is this needed?",
+      "range": {
+        "startLine": 13,
+        "startChar": 20,
+        "endLine": 13,
+        "endChar": 26
+      },
+      "revId": "26fdb36af29ec08d36954ad21eb07f68216cf992",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
