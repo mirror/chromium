@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b85d624d_6c1ccd21",
+        "filename": "third_party/s2cellid/src/s2/s2cellid.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2017-08-28T20:38:34Z",
+      "side": 1,
+      "message": "What happens if this arithmetic overflows, or results in a negative value?",
+      "revId": "417e9eb156b38ed8f4f7446074cfbe541eaff226",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3510ca37_2eded216",
+        "filename": "third_party/s2cellid/src/s2/s2cellid.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 310,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2017-08-28T20:38:34Z",
+      "side": 1,
+      "message": "Same question here.",
+      "revId": "417e9eb156b38ed8f4f7446074cfbe541eaff226",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
