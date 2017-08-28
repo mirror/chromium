@@ -46,6 +46,30 @@
       "revId": "25d6013f47586b2c538c1b059ea51d80f09cb399",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "05b0059f_81dfdacf",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 50164,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-08-28T20:03:18Z",
+      "side": 1,
+      "message": "If you already have OfflinePages.Prefetching.DownloadedArchiveSizeVsExpected, is it really useful to add both of these new histograms, or would just one of them provide equivalent information?  LGTM if you really need both, but it seems like what you want is one, plus OfflinePages.Prefetching.DownloadedArchiveSizeVsExpected.",
+      "parentUuid": "1d1118b4_67897b85",
+      "range": {
+        "startLine": 50150,
+        "startChar": 0,
+        "endLine": 50164,
+        "endChar": 12
+      },
+      "revId": "25d6013f47586b2c538c1b059ea51d80f09cb399",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
