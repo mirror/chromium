@@ -143,6 +143,7 @@ class CORE_EXPORT FrameFetchContext final : public BaseFetchContext {
                                const FetchParameters::ResourceWidth&,
                                ResourceRequest&) override;
   void SetFirstPartyCookieAndRequestorOrigin(ResourceRequest&) override;
+  WebCORSPreflightResultCache* GetCORSPreflightResultCache() override;
 
   // Exposed for testing.
   void ModifyRequestForCSP(ResourceRequest&);
