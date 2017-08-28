@@ -8,9 +8,9 @@
 #include "bindings/core/v8/WorkerOrWorkletScriptController.h"
 #include "core/workers/ThreadedWorkletMessagingProxy.h"
 #include "core/workers/WorkerThread.h"
+#include "modules/webaudio/CrossThreadAudioWorkletProcessorInfo.h"
 #include "modules/webaudio/AudioWorkletGlobalScope.h"
 #include "modules/webaudio/AudioWorkletMessagingProxy.h"
-
 #include "platform/CrossThreadFunctional.h"
 
 namespace blink {
@@ -30,15 +30,22 @@ void AudioWorkletObjectProxy::EvaluateScript(const String& source,
   global_scope->ScriptController()->Evaluate(
       ScriptSourceCode(source, script_url));
 
-  // TODO(crbug.com/755566): Extract/build the information for synchronization
-  // and send it to the associated AudioWorkletMessagingProxy. Currently this
-  // is an empty cross-thread call for the future implementation.
-  GetParentFrameTaskRunners()->Get(TaskType::kUnthrottled)
-       ->PostTask(
-           BLINK_FROM_HERE,
-           CrossThreadBind(
-                &AudioWorkletMessagingProxy::SynchronizeWorkletData,
-                GetAudioWorkletMessagingProxyWeakPtr()));
+  if (global_scope->NumberOfRegisteredDefinitions() == 0)
+    return;
+
+  std::unique_ptr<Vector<CrossThreadAudioWorkletProcessorInfo>>
+      processor_info_list =
+          global_scope->WorkletProcessorInfoListForSynchronization();
+
+  if (processor_info_list->size() == 0)
+    return;
+
+  GetParentFrameTaskRunners()->Get(TaskType::kUnthrottled)->PostTask(
+      BLINK_FROM_HERE,
+      CrossThreadBind(
+          &AudioWorkletMessagingProxy::SynchronizeWorkletProcessorInfoList,
+          GetAudioWorkletMessagingProxyWeakPtr(),
+          WTF::Passed(std::move(processor_info_list))));
 }
 
 CrossThreadWeakPersistent<AudioWorkletMessagingProxy>
