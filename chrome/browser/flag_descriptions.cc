@@ -2025,6 +2025,11 @@ const char kTetherDescription[] =
 #endif  // defined(OS_CHROMEOS)
 
 #if defined(OS_CHROMEOS)
+const char kDisableLockScreenAppsName[] = "Disable lock screen note taking";
+const char kDisableLockScreenAppsDescription[] =
+    "Disable new-note action handler apps on the lock screen. The user will "
+    "not be able to launch the preferred note-taking action from the lock "
+    "screen, provided that the app supports lock screen note taking.";
 
 const char kFirstRunUiTransitionsName[] =
     "Animated transitions in the first-run tutorial";
