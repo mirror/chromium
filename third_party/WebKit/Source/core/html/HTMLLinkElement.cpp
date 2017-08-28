@@ -52,6 +52,7 @@ inline HTMLLinkElement::HTMLLinkElement(Document& document,
                                         bool created_by_parser)
     : HTMLElement(linkTag, document),
       link_loader_(LinkLoader::Create(this)),
+      referrer_policy_(kReferrerPolicyDefault),
       sizes_(DOMTokenList::Create(*this, HTMLNames::sizesAttr)),
       rel_list_(RelList::Create(this)),
       created_by_parser_(created_by_parser) {}
