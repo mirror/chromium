@@ -202,6 +202,7 @@ AXNodeData::AXNodeData()
       role(AX_ROLE_UNKNOWN),
       state(AX_STATE_NONE),
       actions(AX_ACTION_NONE),
+      index_in_parent(-1),
       offset_container_id(-1) {}
 
 AXNodeData::~AXNodeData() {
@@ -212,6 +213,7 @@ AXNodeData::AXNodeData(const AXNodeData& other) {
   role = other.role;
   state = other.state;
   actions = other.actions;
+  index_in_parent = other.index_in_parent;
   string_attributes = other.string_attributes;
   int_attributes = other.int_attributes;
   float_attributes = other.float_attributes;
@@ -231,6 +233,7 @@ AXNodeData& AXNodeData::operator=(AXNodeData other) {
   role = other.role;
   state = other.state;
   actions = other.actions;
+  index_in_parent = other.index_in_parent;
   string_attributes = other.string_attributes;
   int_attributes = other.int_attributes;
   float_attributes = other.float_attributes;
