@@ -314,6 +314,25 @@
     },
     {
       "key": {
+        "uuid": "af29e90a_24079582",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/style/checkers/cpp.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 1831,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-08-28T03:28:26Z",
+      "side": 0,
+      "message": "(This is off topic for this review, but can you elaborate on this? Renaming files shouldn\u0027t affect blame, should it? Is there some bug I could star?)",
+      "parentUuid": "e6971ce6_57de2e96",
+      "tag": "mailMessageId\u003d\u003cCAMGbLiHC4uF_d_tupwmZSpDZSHAu5qCuhmhGcCSK+6viSrDRUQ@mail.gmail.com\u003e",
+      "revId": "aee19604c92edaee401c6edd57c546973a20a446",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d5594167_ade560cd",
         "filename": "third_party/WebKit/Tools/Scripts/webkitpy/style/checkers/cpp.py",
         "patchSetId": 2
