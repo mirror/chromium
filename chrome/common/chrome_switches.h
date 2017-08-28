@@ -50,6 +50,7 @@ extern const char kAuthServerWhitelist[];
 extern const char kAutoOpenDevToolsForTabs[];
 extern const char kAutoSelectDesktopCaptureSource[];
 extern const char kBypassAppBannerEngagementChecks[];
+extern const char kCastChannelRetryStrategy[];
 extern const char kCheckForUpdateIntervalSec[];
 extern const char kCipherSuiteBlacklist[];
 extern const char kCloudPrintFile[];

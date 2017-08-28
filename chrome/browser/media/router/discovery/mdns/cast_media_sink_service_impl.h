@@ -31,6 +31,43 @@ class CastMediaSinkServiceImpl
       public base::SupportsWeakPtr<CastMediaSinkServiceImpl>,
       public DiscoveryNetworkMonitor::Observer {
  public:
+  // Parameters for exponential backoff retry strategy.
+  struct RetryStrategyParams {
+    // Command line parameter names.
+    static constexpr char kInitialDelayMSName[] = "initial_delay_ms";
+    static constexpr char kMaxRetryAttemptsName[] = "max_retry_attempts";
+    static constexpr char kExponentialName[] = "exponential";
+
+    // Default value of |initial_delay_ms_|.
+    static constexpr int kInitialDelayMS = 15 * 1000;  // 15 seconds
+    // Default value of |max_retry_attempts_|.
+    static constexpr int kMaxRetryAttempts = 3;
+    // Default value of |exponential_|.
+    static constexpr double kExponential = 1.0;
+
+    // Initial delay in milliseconds for exponential backoff.
+    int initial_delay_ms_;
+    // Max number of retry attempts allowed.
+    int max_retry_attempts_;
+    // Multiplier parameter for exponential backoff. If it is set to 1.0, there
+    // is uniform delays between two retry attempts.
+    double exponential_;
+
+    RetryStrategyParams();
+    RetryStrategyParams(int initial_delay_ms,
+                        int max_retry_attempts,
+                        double exponential);
+    ~RetryStrategyParams();
+
+    bool operator==(const RetryStrategyParams& other) const;
+
+    // Parsed command line parameter into a RetryStrategyPramas object.
+    // Example of valid |retry_strategy_switch|:
+    //   "initial_delay_ms=5000,max_retry_attempts=3,exponential=1".
+    static RetryStrategyParams ParseCastChannelRetryStrategyParams(
+        const std::string& retry_strategy_switch);
+  };
+
   // Default Cast control port to open Cast Socket from DIAL sink.
   static const int kCastControlPort;
 
@@ -87,6 +124,11 @@ class CastMediaSinkServiceImpl
   void OnChannelOpened(MediaSinkInternal cast_sink,
                        cast_channel::CastSocket* socket);
 
+  // Initializes |retry_strategy_params_| to values specified in
+  // "--cast-channel-retry-strategy" command line switch. Sets to default value
+  // if command line switch is not enabled, or if parsing fails.
+  void InitCastChannelRetryStrategySwitch();
+
   // Set of mDNS service IP endpoints from current round of discovery.
   std::set<net::IPEndPoint> current_service_ip_endpoints_;
 
@@ -112,6 +154,8 @@ class CastMediaSinkServiceImpl
   std::map<std::string, std::vector<MediaSinkInternal>> sink_cache_;
 
   CastDeviceCountMetrics metrics_;
+
+  RetryStrategyParams retry_strategy_params_;
 
   SEQUENCE_CHECKER(sequence_checker_);
 

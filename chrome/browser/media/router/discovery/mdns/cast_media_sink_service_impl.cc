@@ -4,9 +4,13 @@
 
 #include "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl.h"
 
+#include "base/command_line.h"
 #include "base/memory/ptr_util.h"
+#include "base/strings/string_number_conversions.h"
+#include "base/strings/string_split.h"
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/media/router/discovery/media_sink_service_base.h"
+#include "chrome/common/chrome_switches.h"
 #include "chrome/common/media_router/discovery/media_sink_internal.h"
 #include "chrome/common/media_router/discovery/media_sink_service.h"
 #include "chrome/common/media_router/media_sink.h"
@@ -60,6 +64,8 @@ CastMediaSinkServiceImpl::CastMediaSinkServiceImpl(
   DCHECK(cast_socket_service_);
   DCHECK(network_monitor_);
   network_monitor_->AddObserver(this);
+
+  InitCastChannelRetryStrategySwitch();
 }
 
 CastMediaSinkServiceImpl::~CastMediaSinkServiceImpl() {
@@ -225,6 +231,92 @@ void CastMediaSinkServiceImpl::OnDialSinkAdded(const MediaSinkInternal& sink) {
   // TODO(crbug.com/753175): Dual discovery should not try to open cast channel
   // for non-Cast device.
   OpenChannel(ip_endpoint, CreateCastSinkFromDialSink(sink));
+}
+
+void CastMediaSinkServiceImpl::InitCastChannelRetryStrategySwitch() {
+  base::CommandLine* command_line = base::CommandLine::ForCurrentProcess();
+  if (!command_line->HasSwitch(switches::kCastChannelRetryStrategy))
+    return;
+
+  std::string retry_strategy_switch =
+      command_line->GetSwitchValueASCII(switches::kCastChannelRetryStrategy);
+  retry_strategy_params_ =
+      RetryStrategyParams::ParseCastChannelRetryStrategyParams(
+          retry_strategy_switch);
+}
+
+// static
+constexpr char
+    CastMediaSinkServiceImpl::RetryStrategyParams::kInitialDelayMSName[];
+constexpr char
+    CastMediaSinkServiceImpl::RetryStrategyParams::kMaxRetryAttemptsName[];
+constexpr char
+    CastMediaSinkServiceImpl::RetryStrategyParams::kExponentialName[];
+constexpr int CastMediaSinkServiceImpl::RetryStrategyParams::kInitialDelayMS;
+constexpr int CastMediaSinkServiceImpl::RetryStrategyParams::kMaxRetryAttempts;
+constexpr double CastMediaSinkServiceImpl::RetryStrategyParams::kExponential;
+
+CastMediaSinkServiceImpl::RetryStrategyParams::RetryStrategyParams()
+    : initial_delay_ms_(kInitialDelayMS),
+      max_retry_attempts_(kMaxRetryAttempts),
+      exponential_(kExponential) {}
+
+CastMediaSinkServiceImpl::RetryStrategyParams::RetryStrategyParams(
+    int initial_delay_ms,
+    int max_retry_attempts,
+    double exponential)
+    : initial_delay_ms_(initial_delay_ms),
+      max_retry_attempts_(max_retry_attempts),
+      exponential_(exponential) {}
+
+CastMediaSinkServiceImpl::RetryStrategyParams::~RetryStrategyParams() {}
+
+bool CastMediaSinkServiceImpl::RetryStrategyParams::operator==(
+    const RetryStrategyParams& other) const {
+  return initial_delay_ms_ == other.initial_delay_ms_ &&
+         max_retry_attempts_ == other.max_retry_attempts_ &&
+         exponential_ == other.exponential_;
+}
+
+// static
+CastMediaSinkServiceImpl::RetryStrategyParams CastMediaSinkServiceImpl::
+    RetryStrategyParams::ParseCastChannelRetryStrategyParams(
+        const std::string& retry_strategy_switch) {
+  base::StringPairs kv_pairs;
+  if (!base::SplitStringIntoKeyValuePairs(retry_strategy_switch, '=', ',',
+                                          &kv_pairs)) {
+    DLOG(WARNING)
+        << "Could not fully parse cast-channel-retry-strategy switch \""
+        << retry_strategy_switch << "\"";
+    return RetryStrategyParams();
+  }
+
+  int initial_delay_ms = kInitialDelayMS;
+  int max_retry_attemps = kMaxRetryAttempts;
+  double exponential = kExponential;
+
+  bool succeeded = true;
+
+  for (auto it : kv_pairs) {
+    if (it.first == kInitialDelayMSName)
+      succeeded = succeeded && base::StringToInt(it.second, &initial_delay_ms);
+    if (it.first == kMaxRetryAttemptsName)
+      succeeded = succeeded && base::StringToInt(it.second, &max_retry_attemps);
+    if (it.first == kExponentialName)
+      succeeded = succeeded && base::StringToDouble(it.second, &exponential);
+  }
+
+  if (!succeeded) {
+    DLOG(WARNING) << "Fail to convert some parameters to numbers \""
+                  << retry_strategy_switch << "\"";
+    return RetryStrategyParams();
+  }
+
+  DVLOG(2) << "Parsed retry strategy parameters "
+           << " [" << kInitialDelayMSName << "]: " << initial_delay_ms << " ["
+           << kMaxRetryAttemptsName << "]: " << max_retry_attemps << " ["
+           << kExponentialName << "]: " << exponential;
+  return RetryStrategyParams(initial_delay_ms, max_retry_attemps, exponential);
 }
 
 }  // namespace media_router

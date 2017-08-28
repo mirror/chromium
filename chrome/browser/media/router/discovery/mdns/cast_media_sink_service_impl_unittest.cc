@@ -813,4 +813,35 @@ TEST_F(CastMediaSinkServiceImplTest, DualDiscoveryDoesntDuplicateCacheItems) {
   content::RunAllBlockingPoolTasksUntilIdle();
 }
 
+TEST_F(CastMediaSinkServiceImplTest, TestParseCastChannelRetryStrategyParams) {
+  CastMediaSinkServiceImpl::RetryStrategyParams default_params;
+  // empty command line
+  std::string retry_strategy_switch = "";
+  CastMediaSinkServiceImpl::RetryStrategyParams params =
+      CastMediaSinkServiceImpl::RetryStrategyParams::
+          ParseCastChannelRetryStrategyParams(retry_strategy_switch);
+  EXPECT_EQ(default_params, params);
+
+  // command line parameters in wrong format
+  retry_strategy_switch = "initial_delay_ms,max_retry_attempts,exponential";
+  params = CastMediaSinkServiceImpl::RetryStrategyParams::
+      ParseCastChannelRetryStrategyParams(retry_strategy_switch);
+  EXPECT_EQ(default_params, params);
+
+  // command line parameters in wrong types
+  retry_strategy_switch =
+      "initial_delay_ms=abc,max_retry_attempts=def,exponential=123";
+  params = CastMediaSinkServiceImpl::RetryStrategyParams::
+      ParseCastChannelRetryStrategyParams(retry_strategy_switch);
+  EXPECT_EQ(default_params, params);
+
+  // Valid parameters
+  CastMediaSinkServiceImpl::RetryStrategyParams expected_params(2000, 20, 2.0);
+  retry_strategy_switch =
+      "initial_delay_ms=2000,max_retry_attempts=20,exponential=2.0";
+  params = CastMediaSinkServiceImpl::RetryStrategyParams::
+      ParseCastChannelRetryStrategyParams(retry_strategy_switch);
+  EXPECT_EQ(expected_params, params);
+}
+
 }  // namespace media_router

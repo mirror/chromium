@@ -94,6 +94,13 @@ const char kAutoSelectDesktopCaptureSource[] =
 const char kBypassAppBannerEngagementChecks[] =
     "bypass-app-banner-engagement-checks";
 
+// This flag specifies parameters of a retry strategy used by Media Router to
+// reopen cast channel when error occurs.
+// Usage: --cast-channel-retry-strategy=
+// "initial_delay_ms=15000,max_retry_attempts=3,exponential=1" -> If open cast
+// channel fails, retry 3 times, and wait 15 seonds between two retry attempts.
+const char kCastChannelRetryStrategy[] = "cast-channel-retry-strategy";
+
 // How often (in seconds) to check for updates. Should only be used for testing
 // purposes.
 const char kCheckForUpdateIntervalSec[]     = "check-for-update-interval";
