@@ -17,8 +17,10 @@ namespace content {
 
 class AppCacheHost;
 class AppCacheJob;
+class AppCacheRequestHandler;
 class AppCacheServiceImpl;
 class URLLoaderFactoryGetter;
+struct SubresourceLoadInfo;
 
 // Implements the URLLoaderFactory mojom for AppCache subresource requests.
 class CONTENT_EXPORT AppCacheSubresourceURLFactory
@@ -48,6 +50,15 @@ class CONTENT_EXPORT AppCacheSubresourceURLFactory
                                 traffic_annotation) override;
   void Clone(mojom::URLLoaderFactoryRequest request) override;
 
+  base::WeakPtr<AppCacheSubresourceURLFactory> GetWeakPtr();
+
+  // Called bythe AppCacheURLLoaderJob to restart the request during a
+  // redirect. We attempt to serve the request out of the AppCache and if
+  // that fails we go to the network.
+  void Restart(const net::RedirectInfo& redirect_info,
+               std::unique_ptr<AppCacheRequestHandler> subresource_handler,
+               std::unique_ptr<SubresourceLoadInfo> subresource_load_info);
+
  private:
   friend class AppCacheNetworkServiceBrowserTest;
 
@@ -60,6 +71,16 @@ class CONTENT_EXPORT AppCacheSubresourceURLFactory
   // actual error.
   void NotifyError(mojom::URLLoaderClientPtr client, int error_code);
 
+  // Forwards the request to the network loader.
+  void DeliverNetworkResponse(mojom::URLLoaderRequest url_loader_request,
+                              int32_t routing_id,
+                              int32_t request_id,
+                              uint32_t options,
+                              const ResourceRequest& request,
+                              mojom::URLLoaderClientPtr client,
+                              const net::MutableNetworkTrafficAnnotationTag&
+                                  traffic_annotation);
+
   // Mojo bindings.
   mojo::BindingSet<mojom::URLLoaderFactory> bindings_;
 
@@ -68,6 +89,8 @@ class CONTENT_EXPORT AppCacheSubresourceURLFactory
   scoped_refptr<URLLoaderFactoryGetter> default_url_loader_factory_getter_;
 
   base::WeakPtr<AppCacheHost> appcache_host_;
+
+  base::WeakPtrFactory<AppCacheSubresourceURLFactory> weak_factory_;
 
   DISALLOW_COPY_AND_ASSIGN(AppCacheSubresourceURLFactory);
 };
