@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2f9b47b2_1678cfa4",
+        "filename": "chrome/app/chrome_main_delegate.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-08-28T09:33:34Z",
+      "side": 1,
+      "message": "nit: you could use an \"std::array\u003cchar*, 2\u003e\"; this is a pod-type (afaict) and it knows the size of the stored data, so no need to also expose it",
+      "revId": "608efed3abc5baa2352dd4f2188cb58dd2729481",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "575bb202_0408156b",
+        "filename": "ios/chrome/browser/ios_chrome_main_parts.mm",
+        "patchSetId": 25
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-08-28T09:33:34Z",
+      "side": 1,
+      "message": "This is incorrect, you are passing a pointer to a stack variable and then storing the pointer in a global variable (in g_non_domain_wildcard_non_port_schemes).\n\nI would recommend instead changing SetNonWildcardDomainNonPortSchemes to supports null for the array iff count is zero; something like DCHECK(schemes || count \u003d\u003d 0).",
+      "revId": "608efed3abc5baa2352dd4f2188cb58dd2729481",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e78e13f7_ba7b3f8f",
+        "filename": "ios/chrome/test/ios_chrome_unit_test_suite.mm",
+        "patchSetId": 25
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-08-28T09:33:34Z",
+      "side": 1,
+      "message": "ditto, passing a pointer to a local variable",
+      "revId": "608efed3abc5baa2352dd4f2188cb58dd2729481",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
