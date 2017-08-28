@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "77ee9440_ad1d1c3a",
+        "filename": "chrome/browser/android/vr_shell/vr_gl_thread.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-08-28T15:04:18Z",
+      "side": 1,
+      "message": "As discussed offline, we\u0027ll refactor this later.",
+      "parentUuid": "c284b7b9_65d0ee2c",
+      "revId": "fa2bcb31b74a7674a678326d4eec34c12c265508",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3b6d01ae_7ab73749",
         "filename": "chrome/browser/android/vr_shell/vr_shell_gl.cc",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "fa2bcb31b74a7674a678326d4eec34c12c265508",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7ed8d6a_01a8d4af",
+        "filename": "chrome/browser/android/vr_shell/vr_shell_gl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-08-28T15:04:18Z",
+      "side": 1,
+      "message": "Yeah it\u0027s probably not needed. I just found a few examples of others also cancelling in the destructor so figured I\u0027d be safe. I looked through the code more and it\u0027s probably safe so I\u0027ll remove this.",
+      "parentUuid": "3b6d01ae_7ab73749",
+      "revId": "fa2bcb31b74a7674a678326d4eec34c12c265508",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "9988db0d_65101cbe",
+        "filename": "chrome/browser/android/vr_shell/vr_shell_gl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 401,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-08-28T15:04:18Z",
+      "side": 1,
+      "message": "We do handle that. See native VrShellDelegate#OnActivateDisplayHandled",
+      "parentUuid": "c73846b0_9accc86a",
+      "range": {
+        "startLine": 401,
+        "startChar": 4,
+        "endLine": 401,
+        "endChar": 22
+      },
+      "revId": "fa2bcb31b74a7674a678326d4eec34c12c265508",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "60a35e67_40fb48bc",
         "filename": "chrome/browser/vr/ui_scene_manager.cc",
         "patchSetId": 1
@@ -73,6 +133,24 @@
       "revId": "fa2bcb31b74a7674a678326d4eec34c12c265508",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80a20087_e838151a",
+        "filename": "chrome/browser/vr/ui_scene_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 631,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-08-28T15:04:18Z",
+      "side": 1,
+      "message": "As discussed offline, we\u0027ll refactor this later.",
+      "parentUuid": "60a35e67_40fb48bc",
+      "revId": "fa2bcb31b74a7674a678326d4eec34c12c265508",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
