@@ -118,6 +118,7 @@ class CONTENT_EXPORT RenderFrameProxy : public IPC::Listener,
   int routing_id() { return routing_id_; }
   RenderViewImpl* render_view() { return render_view_; }
   blink::WebRemoteFrame* web_frame() { return web_frame_; }
+  const blink::WebRemoteFrame* web_frame() const { return web_frame_; }
   const std::string& unique_name() const { return unique_name_; }
 
   void set_provisional_frame_routing_id(int routing_id) {
@@ -158,6 +159,10 @@ class CONTENT_EXPORT RenderFrameProxy : public IPC::Listener,
             RenderWidget* render_widget);
 
   void ResendFrameRects();
+
+  // Indicates whether this proxy is the root of a remote frame and will
+  // thus embed a surface ID.
+  bool IsSurfaceHost() const;
 
   // IPC::Listener
   bool OnMessageReceived(const IPC::Message& msg) override;
@@ -207,6 +212,8 @@ class CONTENT_EXPORT RenderFrameProxy : public IPC::Listener,
   gfx::Rect frame_rect_;
   viz::LocalSurfaceId local_surface_id_;
   viz::LocalSurfaceIdAllocator local_surface_id_allocator_;
+
+  bool enable_surface_synchronization_ = false;
 
   DISALLOW_COPY_AND_ASSIGN(RenderFrameProxy);
 };

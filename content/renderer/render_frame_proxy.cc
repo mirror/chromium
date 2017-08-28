@@ -10,6 +10,7 @@
 
 #include "base/command_line.h"
 #include "base/lazy_instance.h"
+#include "components/viz/common/switches.h"
 #include "content/child/feature_policy/feature_policy_platform.h"
 #include "content/child/web_url_request_util.h"
 #include "content/child/webmessageportchannel_impl.h"
@@ -22,6 +23,7 @@
 #include "content/common/site_isolation_policy.h"
 #include "content/common/swapped_out_messages.h"
 #include "content/common/view_messages.h"
+#include "content/public/common/content_switches.h"
 #include "content/renderer/child_frame_compositing_helper.h"
 #include "content/renderer/frame_owner_properties.h"
 #include "content/renderer/render_frame_impl.h"
@@ -51,6 +53,11 @@ static base::LazyInstance<RoutingIDProxyMap>::DestructorAtExit
 typedef std::map<blink::WebRemoteFrame*, RenderFrameProxy*> FrameMap;
 base::LazyInstance<FrameMap>::DestructorAtExit g_frame_map =
     LAZY_INSTANCE_INITIALIZER;
+
+bool IsRunningInMash() {
+  const base::CommandLine* cmdline = base::CommandLine::ForCurrentProcess();
+  return cmdline->HasSwitch(switches::kIsRunningInMash);
+}
 
 }  // namespace
 
@@ -211,6 +218,12 @@ void RenderFrameProxy::Init(blink::WebRemoteFrame* web_frame,
   std::pair<FrameMap::iterator, bool> result =
       g_frame_map.Get().insert(std::make_pair(web_frame_, this));
   CHECK(result.second) << "Inserted a duplicate item.";
+
+  const base::CommandLine& command_line =
+      *base::CommandLine::ForCurrentProcess();
+  enable_surface_synchronization_ =
+      IsRunningInMash() ||
+      command_line.HasSwitch(switches::kEnableSurfaceSynchronization);
 }
 
 void RenderFrameProxy::ResendFrameRects() {
@@ -218,6 +231,14 @@ void RenderFrameProxy::ResendFrameRects() {
   gfx::Rect rect = frame_rect_;
   frame_rect_ = gfx::Rect();
   FrameRectsChanged(rect);
+}
+
+bool RenderFrameProxy::IsSurfaceHost() const {
+  if (!web_frame()->Parent())
+    return false;
+
+  fprintf(stderr, ">>>IsLocal? %d\n", web_frame()->Parent()->IsWebLocalFrame());
+  return web_frame()->Parent()->IsWebLocalFrame();
 }
 
 void RenderFrameProxy::WillBeginCompositorFrame() {
@@ -328,7 +349,7 @@ void RenderFrameProxy::OnDeleteProxy() {
 }
 
 void RenderFrameProxy::OnChildFrameProcessGone() {
-  if (compositing_helper_.get())
+  if (compositing_helper_)
     compositing_helper_->ChildFrameGone();
 }
 
@@ -342,14 +363,16 @@ void RenderFrameProxy::OnSetChildFrameSurface(
   if (!web_frame()->Parent())
     return;
 
-  if (!compositing_helper_.get()) {
+  if (!compositing_helper_) {
     compositing_helper_ =
         ChildFrameCompositingHelper::CreateForRenderFrameProxy(this);
   }
+
   // TODO(fsamuel): When surface synchronization is enabled, only set the
   // fallback here. The primary should be updated on resize/device scale factor
   // change.
-  compositing_helper_->SetPrimarySurfaceInfo(surface_info);
+  if (!enable_surface_synchronization_)
+    compositing_helper_->SetPrimarySurfaceInfo(surface_info);
   compositing_helper_->SetFallbackSurfaceInfo(surface_info, sequence);
 }
 
@@ -532,6 +555,22 @@ void RenderFrameProxy::FrameRectsChanged(const blink::WebRect& frame_rect) {
   }
 
   Send(new FrameHostMsg_FrameRectChanged(routing_id_, rect, local_surface_id_));
+
+  if (IsSurfaceHost()) {
+    if (!compositing_helper_) {
+      compositing_helper_ =
+          ChildFrameCompositingHelper::CreateForRenderFrameProxy(this);
+    }
+
+    if (enable_surface_synchronization_) {
+      float device_scale_factor = render_widget()->device_scale_factor();
+      viz::SurfaceInfo surface_info(
+          viz::SurfaceId(render_widget()->frame_sink_id(), local_surface_id_),
+          device_scale_factor,
+          gfx::ScaleToCeiledSize(frame_rect_.size(), device_scale_factor));
+      compositing_helper_->SetPrimarySurfaceInfo(surface_info);
+    }
+  }
 }
 
 void RenderFrameProxy::UpdateRemoteViewportIntersection(
