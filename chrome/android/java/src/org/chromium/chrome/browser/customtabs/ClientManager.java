@@ -596,6 +596,7 @@ class ClientManager {
     public synchronized void cleanupSession(CustomTabsSessionToken session) {
         SessionParams params = mSessionParams.get(session);
         if (params == null) return;
+
         mSessionParams.remove(session);
         if (params.postMessageHandler != null) {
             params.postMessageHandler.cleanup(mContext);
