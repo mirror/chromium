@@ -298,6 +298,8 @@ class CORE_EXPORT PaintLayerScrollableArea final
   CompositorAnimationTimeline* GetCompositorAnimationTimeline() const override;
   void GetTickmarks(Vector<IntRect>&) const override;
 
+  LayoutRect LayoutContentRect(IncludeScrollbarsInRect) const;
+
   void VisibleSizeChanged();
 
   // FIXME: We shouldn't allow access to m_overflowRect outside this class.
