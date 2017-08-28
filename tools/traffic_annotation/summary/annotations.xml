@@ -48,6 +48,7 @@ Refer to README.md for content description and update process.
  <item id="data_reduction_proxy_pingback" hash_code="68561428" content_hash_code="78407792"/>
  <item id="data_reduction_proxy_secure_proxy_check" hash_code="131236802" content_hash_code="122297136"/>
  <item id="data_reduction_proxy_warmup" hash_code="8250451" content_hash_code="6321249"/>
+ <item id="desktop_ios_promotion" hash_code="13694792" content_hash_code="19776951"/>
  <item id="device_geolocation_request" hash_code="77673751" content_hash_code="97181773"/>
  <item id="device_management_service" hash_code="117782019" content_hash_code="127535409"/>
  <item id="devtools_free_data_source" hash_code="22774132" content_hash_code="136324050"/>
@@ -112,7 +113,7 @@ Refer to README.md for content description and update process.
  <item id="ntp_snippets_fetch" hash_code="15418154" content_hash_code="10078959"/>
  <item id="oauth2_access_token_fetcher" hash_code="27915688" content_hash_code="33501872"/>
  <item id="oauth2_mint_token_flow" hash_code="1112842" content_hash_code="70101159"/>
- <item id="ocsp_start_url_request" hash_code="60921996" content_hash_code="24127780"/>
+ <item id="ocsp_start_url_request" hash_code="60921996" deprecated="2017-08-28" content_hash_code="24127780"/>
  <item id="offline_prefetch" hash_code="19185953" content_hash_code="57248156"/>
  <item id="omnibox_navigation_observer" hash_code="61684939" content_hash_code="70941231"/>
  <item id="omnibox_prefetch_image" hash_code="109200878" content_hash_code="107906693"/>
@@ -128,6 +129,7 @@ Refer to README.md for content description and update process.
  <item id="payment_instrument_icon_fetcher" hash_code="73309970" content_hash_code="84709873"/>
  <item id="payment_manifest_downloader" hash_code="84045030" content_hash_code="19293316"/>
  <item id="payments_sync_cards" hash_code="95588446" content_hash_code="56526513"/>
+ <item id="pdf_plugin_placeholder" hash_code="56866367" content_hash_code="16907221"/>
  <item id="permission_reporting" hash_code="131741641" content_hash_code="7213535"/>
  <item id="permission_request_creator" hash_code="43206794" content_hash_code="73571699"/>
  <item id="persist_blob_to_indexed_db" hash_code="32030464" content_hash_code="35410079"/>
@@ -150,6 +152,7 @@ Refer to README.md for content description and update process.
  <item id="resource_dispatcher_host" hash_code="81157007" content_hash_code="35725167"/>
  <item id="resource_dispather_host" hash_code="58963098" deprecated="2017-08-23" content_hash_code="72581415"/>
  <item id="resource_prefetch" hash_code="110815970" content_hash_code="39251261"/>
+ <item id="rlz_ping" hash_code="99279418" content_hash_code="102108802"/>
  <item id="safe_browsing_backup_request" hash_code="106980485" content_hash_code="101760679"/>
  <item id="safe_browsing_cache_collector" hash_code="115907811" content_hash_code="36392362"/>
  <item id="safe_browsing_certificate_error_reporting" hash_code="66590631" content_hash_code="50197576"/>
