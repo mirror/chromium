@@ -143,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "c69d3dd2_8cb478c5",
+        "filename": "remoting/host/file_transfer_message_handler.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1133074
+      },
+      "writtenOn": "2017-08-28T19:05:52Z",
+      "side": 1,
+      "message": "SGTM",
+      "parentUuid": "7a36428e_f7c5ea00",
+      "range": {
+        "startLine": 76,
+        "startChar": 2,
+        "endLine": 76,
+        "endChar": 31
+      },
+      "revId": "50cbd6342012e31be90bf2a0b1a17a3446ab2007",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c0b87b1c_65ce2577",
         "filename": "remoting/host/file_transfer_message_handler.cc",
         "patchSetId": 5
@@ -460,6 +484,30 @@
       "side": 1,
       "message": "If its important to verify that FileTransferMessageHandler deletes itself I\u0027ll add a weak factory. Otherwise, I\u0027ll leave it as is. It also sounds like functionality which should go in a unit test for NamedMessagePipeHandler.",
       "parentUuid": "33338d1a_444a2a15",
+      "range": {
+        "startLine": 199,
+        "startChar": 2,
+        "endLine": 199,
+        "endChar": 68
+      },
+      "revId": "50cbd6342012e31be90bf2a0b1a17a3446ab2007",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "12287dc8_f37557d9",
+        "filename": "remoting/host/file_transfer_message_handler_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1133074
+      },
+      "writtenOn": "2017-08-28T19:05:52Z",
+      "side": 1,
+      "message": "I would be fine with that.  It isn\u0027t needed for this CL though.",
+      "parentUuid": "617eaf65_09ca3bc2",
       "range": {
         "startLine": 199,
         "startChar": 2,

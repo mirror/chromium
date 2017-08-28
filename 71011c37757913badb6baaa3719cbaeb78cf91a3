@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3d5540b0_0cce4e0f",
+        "filename": "remoting/host/file_transfer_message_handler.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1133074
+      },
+      "writtenOn": "2017-08-28T19:05:52Z",
+      "side": 1,
+      "message": "nit: If you allow passing a string into the CancelAndSendError method, then you can compress the log and method call lines into one.",
+      "range": {
+        "startLine": 102,
+        "startChar": 3,
+        "endLine": 102,
+        "endChar": 53
+      },
+      "revId": "71011c37757913badb6baaa3719cbaeb78cf91a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "adf33297_bde7d5e7",
+        "filename": "remoting/host/file_transfer_message_handler_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1133074
+      },
+      "writtenOn": "2017-08-28T19:05:52Z",
+      "side": 1,
+      "message": "I think these should just be const (static is only for POD members).  Also, can you add an underscore to their names since they are part of the class now?",
+      "range": {
+        "startLine": 74,
+        "startChar": 27,
+        "endLine": 74,
+        "endChar": 39
+      },
+      "revId": "71011c37757913badb6baaa3719cbaeb78cf91a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
