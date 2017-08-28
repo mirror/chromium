@@ -299,7 +299,10 @@ void ViewAndroid::OnCursorChanged(int type,
     return;
   JNIEnv* env = base::android::AttachCurrentThread();
   if (type == WebCursorInfo::kTypeCustom) {
-    if (custom_image.drawsNothing()) {
+    if (custom_image.drawsNothing() || custom_image.width() <= 0 ||
+        custom_image.height() <= 0 ||
+        (custom_image.colorType() != kRGB_565_SkColorType &&
+         custom_image.colorType() != kN32_SkColorType)) {
       Java_ViewAndroidDelegate_onCursorChanged(env, delegate,
                                                WebCursorInfo::kTypePointer);
       return;
