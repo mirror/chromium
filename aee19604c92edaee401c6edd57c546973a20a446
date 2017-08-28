@@ -333,6 +333,24 @@
     },
     {
       "key": {
+        "uuid": "3e101563_b11fc71f",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/style/checkers/cpp.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 1831,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-28T06:17:01Z",
+      "side": 0,
+      "message": "https://bugs.chromium.org/p/chromium/issues/detail?id\u003d584560\n\n(The renaming itself would affect the blame around the include lines, but you\u0027re right that it wouldn\u0027t affect renames--unless git itself didn\u0027t detect it as a rename.)",
+      "parentUuid": "af29e90a_24079582",
+      "revId": "aee19604c92edaee401c6edd57c546973a20a446",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d5594167_ade560cd",
         "filename": "third_party/WebKit/Tools/Scripts/webkitpy/style/checkers/cpp.py",
         "patchSetId": 2
