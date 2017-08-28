@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "64a1264a_9dc8eed9",
+        "filename": "components/viz/service/hit_test/hit_test_aggregator.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1231224
+      },
+      "writtenOn": "2017-08-28T18:52:25Z",
+      "side": 1,
+      "message": "Good call. \n\nDone",
+      "parentUuid": "9606c205_ec4a3214",
+      "revId": "eea2ca1cc6f919095eafe0cf4324ad0e9a767caf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ca3e64f4_56fd9113",
         "filename": "services/viz/public/interfaces/hit_test/hit_test_region_list.mojom",
         "patchSetId": 4
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-28T18:13:06Z",
       "side": 1,
       "message": "This must always be valid, right?",
+      "revId": "eea2ca1cc6f919095eafe0cf4324ad0e9a767caf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43581885_77fdac45",
+        "filename": "services/viz/public/interfaces/hit_test/hit_test_region_list.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1231224
+      },
+      "writtenOn": "2017-08-28T18:52:25Z",
+      "side": 1,
+      "message": "Right.  I had wondered about stating that in the comment but it seems implied - it\u0027s not marked optional.",
+      "parentUuid": "ca3e64f4_56fd9113",
       "revId": "eea2ca1cc6f919095eafe0cf4324ad0e9a767caf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -50,6 +86,24 @@
       "revId": "eea2ca1cc6f919095eafe0cf4324ad0e9a767caf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66184b82_7a9dd4dc",
+        "filename": "ui/aura/mus/hit_test_data_provider_aura.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1231224
+      },
+      "writtenOn": "2017-08-28T18:52:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aea33b3b_7e760e88",
+      "revId": "eea2ca1cc6f919095eafe0cf4324ad0e9a767caf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
