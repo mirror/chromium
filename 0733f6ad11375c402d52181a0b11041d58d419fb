@@ -1,0 +1,152 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "67d64899_12f69fc2",
+        "filename": "chrome/browser/vr/elements/ui_element.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-08-28T15:29:01Z",
+      "side": 1,
+      "message": "Does this method need to be static?  (as opposed to g_text_id)",
+      "revId": "0733f6ad11375c402d52181a0b11041d58d419fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80f0d8de_a2b409dc",
+        "filename": "chrome/browser/vr/elements/ui_element.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-08-28T15:29:01Z",
+      "side": 1,
+      "message": "Why not call this \"child\" here too?",
+      "range": {
+        "startLine": 183,
+        "startChar": 39,
+        "endLine": 183,
+        "endChar": 48
+      },
+      "revId": "0733f6ad11375c402d52181a0b11041d58d419fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4cb2ac9a_ad4f6a2f",
+        "filename": "chrome/browser/vr/elements/ui_element.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-08-28T15:29:01Z",
+      "side": 1,
+      "message": "Just so I fully get this - the check is making sure we erased something, which is actually checking that the input pointer was valid, right?",
+      "revId": "0733f6ad11375c402d52181a0b11041d58d419fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67392288_d7a5f58f",
+        "filename": "chrome/browser/vr/ui_scene.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-08-28T15:29:01Z",
+      "side": 1,
+      "message": "Why do this check after the DCHECKs above?",
+      "revId": "0733f6ad11375c402d52181a0b11041d58d419fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6b00fdf_96f336cb",
+        "filename": "chrome/browser/vr/ui_scene.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-08-28T15:29:01Z",
+      "side": 1,
+      "message": "Should we remove this comment and change the method name to InitializeElements()?",
+      "revId": "0733f6ad11375c402d52181a0b11041d58d419fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd48ebb5_19227add",
+        "filename": "chrome/browser/vr/ui_scene_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-08-28T15:29:01Z",
+      "side": 1,
+      "message": "This layout could easily rot if someone misses it while adding an element.  But I guess it\u0027ll be short-lived if the declarative thing happens?",
+      "revId": "0733f6ad11375c402d52181a0b11041d58d419fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d165d23_8f7916e7",
+        "filename": "chrome/browser/vr/ui_scene_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-08-28T15:29:01Z",
+      "side": 1,
+      "message": "s/foolowing/above/ ?",
+      "range": {
+        "startLine": 205,
+        "startChar": 22,
+        "endLine": 205,
+        "endChar": 31
+      },
+      "revId": "0733f6ad11375c402d52181a0b11041d58d419fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2fa2c780_d51ed6c4",
+        "filename": "chrome/browser/vr/ui_scene_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-08-28T15:29:01Z",
+      "side": 1,
+      "message": "Out of curiosity - does this test take much longer to run (ie. hundreds of MS) because of the death test?  I previously saw this.",
+      "revId": "0733f6ad11375c402d52181a0b11041d58d419fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
