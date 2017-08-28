@@ -1,0 +1,361 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "de19e882_0ea7200c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-28T16:33:11Z",
+      "side": 1,
+      "message": "I don\u0027t understand what you mean here by \"active\".",
+      "revId": "ed43181b1799cf1af02658cd6aefed14bbda82c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a650d17_96757460",
+        "filename": "ash/shelf/shelf_layout_manager.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-28T16:33:11Z",
+      "side": 1,
+      "message": "nit: please document if these are DIPs or pixels.",
+      "revId": "ed43181b1799cf1af02658cd6aefed14bbda82c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "016c47d5_9392c24b",
+        "filename": "ash/shelf/shelf_layout_manager.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-28T16:33:11Z",
+      "side": 1,
+      "message": "These numbers seem awfully specific. Are they derived from other numbers (like typical screen height)? If so, please document where they came from.",
+      "revId": "ed43181b1799cf1af02658cd6aefed14bbda82c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2efdec2_a875c53a",
+        "filename": "ash/shelf/shelf_layout_manager_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 317,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-28T16:33:11Z",
+      "side": 1,
+      "message": "const \u0026, or copy",
+      "revId": "ed43181b1799cf1af02658cd6aefed14bbda82c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "abd0be03_9353423d",
+        "filename": "ash/shelf/shelf_layout_manager_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 320,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-28T16:33:11Z",
+      "side": 1,
+      "message": "nit: Just do:\n\nui::GestureEvent event(start.x(), start.y(), ...)\n\nhere and below",
+      "revId": "ed43181b1799cf1af02658cd6aefed14bbda82c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5aba558_e6231e5c",
+        "filename": "ash/shelf/shelf_layout_manager_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 325,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-28T16:33:11Z",
+      "side": 1,
+      "message": "const \u0026, or copy",
+      "revId": "ed43181b1799cf1af02658cd6aefed14bbda82c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bafee054_80634888",
+        "filename": "ash/shelf/shelf_layout_manager_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 326,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-28T16:33:11Z",
+      "side": 1,
+      "message": "const \u0026, or just copy it (it\u0027s an int64 under the hood)",
+      "revId": "ed43181b1799cf1af02658cd6aefed14bbda82c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4bc4dd54_6cf8b3c2",
+        "filename": "ash/shelf/shelf_layout_manager_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 335,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-28T16:33:11Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "ed43181b1799cf1af02658cd6aefed14bbda82c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7981fd6d_2759331d",
+        "filename": "ash/shelf/shelf_layout_manager_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1444,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-28T16:33:11Z",
+      "side": 1,
+      "message": "super-nit: \"that exceeds\" or \"exceeding\"",
+      "revId": "ed43181b1799cf1af02658cd6aefed14bbda82c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "933ffe9f_e2ec6fe4",
+        "filename": "ash/shelf/shelf_layout_manager_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1450,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-28T16:33:11Z",
+      "side": 1,
+      "message": "Does this number 10 mean anything in particular? Is it the same 10 as in the lines below? If it\u0027s the same 10, put it in a constant. Either way, document it.",
+      "revId": "ed43181b1799cf1af02658cd6aefed14bbda82c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "875ab808_1415db9e",
+        "filename": "ash/shelf/shelf_layout_manager_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1461,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-28T16:33:11Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "ed43181b1799cf1af02658cd6aefed14bbda82c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3dcc8349_efb97d6b",
+        "filename": "ash/shelf/shelf_layout_manager_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1469,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-28T16:33:11Z",
+      "side": 1,
+      "message": "The comment says this is testing fling down, but Y seems to be going up? What\u0027s happening here?",
+      "revId": "ed43181b1799cf1af02658cd6aefed14bbda82c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b489e58_aa25e37a",
+        "filename": "ash/shelf/shelf_layout_manager_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1496,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-28T16:33:11Z",
+      "side": 1,
+      "message": "I find this test hard to read. There seems to be a lot of setup code for each event, but the interesting piece is what each event does. Maybe add some blank lines between the setup for each event, or comment each event, or break the test into small pieces.",
+      "revId": "ed43181b1799cf1af02658cd6aefed14bbda82c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82fb4a24_92ab3c3c",
+        "filename": "ash/shelf/shelf_layout_manager_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1502,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-28T16:33:11Z",
+      "side": 1,
+      "message": "optional: You could eliminate having to copy/paste these 3 lines by introducing ShelfLayoutManagerFullscreenAppListTest as a subclass of ShelfLayoutManager and doing the feature setup once there.",
+      "revId": "ed43181b1799cf1af02658cd6aefed14bbda82c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "954e338c_bf0ed8b6",
+        "filename": "ash/shelf/shelf_layout_manager_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1528,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-28T16:33:11Z",
+      "side": 1,
+      "message": "When does the show actually happen? After the first scroll update event? If so, expect it there.",
+      "revId": "ed43181b1799cf1af02658cd6aefed14bbda82c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9eeba4a_75bf31e2",
+        "filename": "ash/shelf/shelf_layout_manager_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1531,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-28T16:33:11Z",
+      "side": 1,
+      "message": "I think these tests would be easier to read if the SendScroll* helper methods had more state. It would be nice if the tests read more like:\n\nStartScroll(shelf_widget-\u003eGetWindowBoundsInScreen().CenterPoint());\nUpdateScroll(-peeking_threshold);\nSetAlignment();\nUpdateScroll(-10);\nEndGesture();\nEXPECT_FOO();\n\nYou could probably making it look more like this if you added a start_, timestamp_ etc. member variable to the helpers.",
+      "revId": "ed43181b1799cf1af02658cd6aefed14bbda82c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a09d6b3_517ae9f4",
+        "filename": "ash/shelf/shelf_layout_manager_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1556,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-28T16:33:11Z",
+      "side": 1,
+      "message": "I\u0027m just curious, no need to change things, why do these tests use EventGenerator whereas the ones above call directly into ShelfLayoutManager gesture processing methods?",
+      "revId": "ed43181b1799cf1af02658cd6aefed14bbda82c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a43295f_f6489d05",
+        "filename": "ash/shelf/shelf_layout_manager_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1630,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-28T16:33:11Z",
+      "side": 1,
+      "message": "Did you just move this test down in the file, mostly unchanged? If so, that\u0027s great, since it puts all these tests closer together. It helps me as a reviewer, though, if you can mention that it moved unchanged, or point out the significant changes. (I think just the final expectation changed.)",
+      "revId": "ed43181b1799cf1af02658cd6aefed14bbda82c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a0a2749_57d58888",
+        "filename": "ash/shelf/shelf_layout_manager_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1659,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-28T16:33:11Z",
+      "side": 1,
+      "message": "should this also assert that it hid? I\u0027m not clear on whether it shows then immediately hides, or does something else.",
+      "revId": "ed43181b1799cf1af02658cd6aefed14bbda82c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e861f460_a9cefac6",
+        "filename": "ash/shelf/shelf_layout_manager_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1691,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-28T16:33:11Z",
+      "side": 1,
+      "message": "Thank you for adding all this test coverage!",
+      "revId": "ed43181b1799cf1af02658cd6aefed14bbda82c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ef66e27_5fa8b2f4",
+        "filename": "ash/shell.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 543,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-28T16:33:11Z",
+      "side": 1,
+      "message": "This should take a state enum, not an int. Please either extract the enum to a mojom file, or to its own header and write a struct_traits or enum_traits for it.\n\nAlso, there are too many applist-specific methods on Shell. Shell is supposed to just be a bag of controllers. I would just expose an app_list() getter and not put this method here. I would also eliminate UpdateAppListYPositionAndOpacity, since you are touching it in this CL.",
+      "revId": "ed43181b1799cf1af02658cd6aefed14bbda82c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
