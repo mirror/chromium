@@ -6,6 +6,7 @@
 
 #include "core/dom/Document.h"
 #include "core/frame/LocalFrame.h"
+#include "platform/weborigin/KURL.h"
 #include "platform/wtf/Functional.h"
 #include "services/service_manager/public/cpp/interface_provider.h"
 
@@ -100,7 +101,8 @@ void InstalledAppController::FilterByInstalledApps(
     DCHECK(!related_application.platform.IsEmpty());
     converted_application->platform = related_application.platform;
     converted_application->id = related_application.id;
-    converted_application->url = related_application.url;
+    if (!related_application.url.isNull())
+      converted_application->url = KURL(related_application.url);
     mojo_related_apps.push_back(std::move(converted_application));
   }
 
@@ -127,7 +129,8 @@ void InstalledAppController::OnFilterInstalledApps(
   for (const auto& res : result) {
     blink::WebRelatedApplication app;
     app.platform = res->platform;
-    app.url = res->url;
+    if (res->url)
+      app.url = *res->url;
     app.id = res->id;
     applications.push_back(app);
   }

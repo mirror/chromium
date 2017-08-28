@@ -6,6 +6,7 @@
 #define WebRelatedApplication_h
 
 #include "public/platform/WebString.h"
+#include "public/platform/WebURL.h"
 
 namespace blink {
 
@@ -13,7 +14,7 @@ struct WebRelatedApplication {
   WebRelatedApplication() {}
 
   WebString platform;
-  WebString url;
+  WebURL url;
   WebString id;
 };
 

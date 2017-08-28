@@ -41,10 +41,7 @@ void RelatedAppsFetcher::OnGetManifestForRelatedApplications(
         blink::WebString::FromUTF16(relatedApplication.platform);
     webRelatedApplication.id =
         blink::WebString::FromUTF16(relatedApplication.id);
-    if (!relatedApplication.url.is_empty()) {
-      webRelatedApplication.url =
-          blink::WebString::FromUTF8(relatedApplication.url.spec());
-    }
+    webRelatedApplication.url = blink::WebURL(relatedApplication.url);
     related_apps.push_back(std::move(webRelatedApplication));
   }
   callbacks->OnSuccess(std::move(related_apps));

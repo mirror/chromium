@@ -61,9 +61,11 @@ class RelatedAppArray {
       ScriptPromiseResolver*,
       const WebVector<WebRelatedApplication>& web_info) {
     HeapVector<Member<RelatedApplication>> applications;
-    for (const auto& web_application : web_info)
+    for (const auto& web_application : web_info) {
       applications.push_back(RelatedApplication::Create(
-          web_application.platform, web_application.url, web_application.id));
+          web_application.platform, web_application.url.string(),
+          web_application.id));
+    }
     return applications;
   }
 };

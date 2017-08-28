@@ -2,7 +2,15 @@
 
 function assert_relatedapplication_equals(actual, expected, description) {
   assert_equals(actual.platform, expected.platform, description);
-  assert_equals(actual.url, expected.url, description);
+  // |url| can be a string (if comparing IDL RelatedApplications) or a
+  // url.mojom.Url (if comparing Mojo RelatedApplications). Either can be null.
+  assert_equals(actual.url === null, expected.url === null, description);
+  assert_equals(typeof(actual.url), typeof(expected.url), description);
+  if (typeof(actual.url) === 'object' && actual.url !== null) {
+    assert_equals(actual.url.url, expected.url.url, description);
+  } else {
+    assert_equals(actual.url, expected.url, description);
+  }
   assert_equals(actual.id, expected.id, description);
 }
 
@@ -17,9 +25,10 @@ function assert_array_relatedapplication_equals(
 let mockInstalledAppProvider = loadMojoModules(
     'mockInstalledAppProvider',
     ['mojo/public/js/bindings',
+     'url/mojo/url.mojom',
      'third_party/WebKit/public/platform/modules/installedapp/installed_app_provider.mojom',
     ]).then(mojo => {
-  let [bindings, installedAppProvider] = mojo.modules;
+  let [bindings, urlModule, installedAppProvider] = mojo.modules;
 
   class MockInstalledAppProvider {
     constructor(interfaceProvider) {
@@ -37,6 +46,11 @@ let mockInstalledAppProvider = loadMojoModules(
       this.callQueue_ = [];
 
       return new Promise((resolve, reject) => {this.reject_ = reject});
+    }
+
+    // Creates a url.mojom.Url from a URL string.
+    makeUrl(url) {
+      return new urlModule.Url({url: url});
     }
 
     filterInstalledApps(relatedApps) {

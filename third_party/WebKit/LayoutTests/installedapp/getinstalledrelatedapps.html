@@ -7,12 +7,13 @@
 <script>
 
 installedapp_test((t, mock) => {
+  let itunesUrl = mock.makeUrl('https://itunes.apple.com/');
   // The expected input to the Mojo method FilterInstalledRelatedApps is the
   // list of related_applications from this page's manifest. The mock service
   // returns the empty list, implying that none are installed.
   mock.pushExpectedCall(
       [{platform: 'play', url: null, id: 'com.test'},
-       {platform: 'itunes', url: 'https://itunes.apple.com/', id: null}],
+       {platform: 'itunes', url: itunesUrl, id: null}],
       []);
   return navigator.getInstalledRelatedApps().then(result => {
     assert_array_relatedapplication_equals(result, []);
@@ -20,13 +21,14 @@ installedapp_test((t, mock) => {
 }, 'getInstalledRelatedApps with related apps, none installed');
 
 installedapp_test((t, mock) => {
+  let itunesUrl = mock.makeUrl('https://itunes.apple.com/');
   // The expected input to the Mojo method FilterInstalledRelatedApps is the
   // list of related_applications from this page's manifest. The mock service
   // returns just the 'play' entry. Expect that result to be returned by
   // getInstalledRelatedApps.
   mock.pushExpectedCall(
       [{platform: 'play', url: null, id: 'com.test'},
-       {platform: 'itunes', url: 'https://itunes.apple.com/', id: null}],
+       {platform: 'itunes', url: itunesUrl, id: null}],
       [{platform: 'play', url: null, id: 'com.test'}]);
   // TODO(mgiuca): The |url| field should be omitted from the result, not ''.
   return navigator.getInstalledRelatedApps().then(result => {
@@ -36,15 +38,16 @@ installedapp_test((t, mock) => {
 }, 'getInstalledRelatedApps with related and installed apps (no url)');
 
 installedapp_test((t, mock) => {
+  let itunesUrl = mock.makeUrl('https://itunes.apple.com/');
   // The expected input to the Mojo method FilterInstalledRelatedApps is the
   // list of related_applications from this page's manifest. The mock service
   // returns both entries. Expect that result to be returned by
   // getInstalledRelatedApps.
   mock.pushExpectedCall(
       [{platform: 'play', url: null, id: 'com.test'},
-       {platform: 'itunes', url: 'https://itunes.apple.com/', id: null}],
+       {platform: 'itunes', url: itunesUrl, id: null}],
       [{platform: 'play', url: null, id: 'com.test'},
-       {platform: 'itunes', url: 'https://itunes.apple.com/', id: null}]);
+       {platform: 'itunes', url: itunesUrl, id: null}]);
   // TODO(mgiuca): The null fields should be omitted from the result, not ''.
   return navigator.getInstalledRelatedApps().then(result => {
     assert_array_relatedapplication_equals(
