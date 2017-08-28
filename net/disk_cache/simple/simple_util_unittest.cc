@@ -4,8 +4,11 @@
 
 #include <stdint.h>
 #include <string>
+#include <unordered_map>
 
 #include "base/logging.h"
+#include "base/rand_util.h"
+#include "base/strings/stringprintf.h"
 #include "net/disk_cache/simple/simple_util.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
@@ -75,4 +78,45 @@ TEST_F(SimpleUtilTest, SizesAndOffsets) {
   const int data_size = 1000;
   const int file_size = GetFileSizeFromDataSize(key.size(), data_size);
   EXPECT_EQ(data_size, GetDataSizeFromFileSize(key.size(), file_size));
+}
+
+
+static std::string escape(const std::string& in) {
+  std::string out = "\"";
+  for (unsigned i = 0; i < in.size(); ++i) {
+    char c = in[i];
+    //if (c < 32 || c > 126) {
+      out += base::StringPrintf("\\x%02x", unsigned((unsigned char)c));
+    //} else {
+    //  out += c;
+    //}
+  }
+  out += '"';
+  return out;
+}
+
+TEST_F(SimpleUtilTest, FindCollision) {
+  typedef std::unordered_map<uint64_t, std::string> Dict;
+  const int k = (1 << 27);
+
+  Dict rev;
+  rev.reserve(k);
+
+  for (int i = 0; i < k; ++i) {
+    if (i % (1024 * 1024) == 1) {
+      LOG(ERROR) << "Progress:" << (100 * double(i)/k) << "%";
+    }
+
+    std::string key(16, ' ');   // 512/8 is the full space...
+    base::RandBytes(&key[0], key.length());
+
+    uint64_t hash = GetEntryHashKey(key);
+    std::pair<Dict::iterator, bool> res = rev.insert(std::make_pair(hash, key));
+    if (!res.second) {
+      if (res.first->second != key) {
+        LOG(ERROR) << "Collision:" << escape(res.first->second) << " vs " << escape(key) << " at " << hash;
+        break;
+      }
+    }
+  }
 }
