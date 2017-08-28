@@ -183,6 +183,30 @@
     },
     {
       "key": {
+        "uuid": "54d0b89e_9da7cd80",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-08-28T05:22:11Z",
+      "side": 1,
+      "message": "And please add a test for this case.",
+      "parentUuid": "e3efa574_19acc4f4",
+      "range": {
+        "startLine": 25,
+        "startChar": 33,
+        "endLine": 25,
+        "endChar": 37
+      },
+      "revId": "8594ea31ebba32ca9cde9ab2b912fc7c873f67bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "baf7f9af_87adf7d3",
         "filename": "third_party/WebKit/Source/bindings/scripts/idl_definitions.py",
         "patchSetId": 4
