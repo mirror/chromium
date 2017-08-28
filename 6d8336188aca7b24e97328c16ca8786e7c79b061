@@ -16,6 +16,24 @@
       "revId": "6d8336188aca7b24e97328c16ca8786e7c79b061",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4724fb35_1390fc14",
+        "filename": "cc/trees/layer_tree_host_unittest_animation.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1191,
+      "author": {
+        "id": 1128438
+      },
+      "writtenOn": "2017-08-28T18:33:48Z",
+      "side": 1,
+      "message": "How about this? We can\u0027t quite do either, the test wants to run through WillPrepareTilesOnThread() with a source frame number !\u003d 0 at least once before calling EndTest().\n\nIf we fall back to the active tree we can do that gracefully (and is what the test was doing before my CommitToActiveTree() rework). Or we can just bail out if we\u0027ve no sync tree, and we will still end gracefully on a subsequent call. Open to other thoughts.",
+      "parentUuid": "a3e8ca40_d5e8b91c",
+      "revId": "6d8336188aca7b24e97328c16ca8786e7c79b061",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
