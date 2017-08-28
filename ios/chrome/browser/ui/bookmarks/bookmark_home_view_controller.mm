@@ -162,27 +162,28 @@ const CGFloat kMenuWidth = 264;
     [self.bookmarksTableView setTranslatesAutoresizingMaskIntoConstraints:NO];
     [_containerView addSubview:self.bookmarksTableView];
 
-    // TODO(crbug.com/695749): Hide the context bar when browsing
-    // bookmarkModel->root_node.
-    self.contextBar = [[BookmarkContextBar alloc] initWithFrame:CGRectZero];
-    self.contextBar.delegate = self;
-    [self.contextBar setTranslatesAutoresizingMaskIntoConstraints:NO];
+    if (_rootNode != self.bookmarks->root_node()) {
+      self.contextBar = [[BookmarkContextBar alloc] initWithFrame:CGRectZero];
+      self.contextBar.delegate = self;
+      [self.contextBar setTranslatesAutoresizingMaskIntoConstraints:NO];
 
-    // TODO(crbug.com/695749): Check if we need to create new strings for the
-    // context bar buttons.
-    [self.contextBar setButtonVisibility:YES forButton:ContextBarLeadingButton];
-    [self.contextBar
-        setButtonTitle:l10n_util::GetNSStringWithFixup(
-                           IDS_IOS_BOOKMARK_NEW_GROUP_EDITOR_CREATE_TITLE)
-             forButton:ContextBarLeadingButton];
+      // TODO(crbug.com/695749): Check if we need to create new strings for the
+      // context bar buttons.
+      [self.contextBar setButtonVisibility:YES
+                                 forButton:ContextBarLeadingButton];
+      [self.contextBar
+          setButtonTitle:l10n_util::GetNSStringWithFixup(
+                             IDS_IOS_BOOKMARK_NEW_GROUP_EDITOR_CREATE_TITLE)
+               forButton:ContextBarLeadingButton];
 
-    [self.contextBar setButtonVisibility:YES
-                               forButton:ContextBarTrailingButton];
-    [self.contextBar setButtonTitle:l10n_util::GetNSStringWithFixup(
-                                        IDS_IOS_BOOKMARK_ACTION_SELECT)
-                          forButton:ContextBarTrailingButton];
+      [self.contextBar setButtonVisibility:YES
+                                 forButton:ContextBarTrailingButton];
+      [self.contextBar setButtonTitle:l10n_util::GetNSStringWithFixup(
+                                          IDS_IOS_BOOKMARK_ACTION_SELECT)
+                            forButton:ContextBarTrailingButton];
 
-    [_containerView addSubview:self.contextBar];
+      [_containerView addSubview:self.contextBar];
+    }
 
     // Set up the navigation bar.
     NSString* doneTitle =
@@ -896,7 +897,8 @@ const CGFloat kMenuWidth = 264;
 
 - (void)updateViewConstraints {
   if (base::FeatureList::IsEnabled(
-          bookmark_new_generation::features::kBookmarkNewGeneration)) {
+          bookmark_new_generation::features::kBookmarkNewGeneration) &&
+      self.contextBar) {
     NSDictionary* views = @{
       @"tableView" : self.bookmarksTableView,
       @"contextBar" : self.contextBar,
