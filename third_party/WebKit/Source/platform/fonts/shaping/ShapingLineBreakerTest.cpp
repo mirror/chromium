@@ -13,6 +13,7 @@
 #include "platform/text/TextBreakIterator.h"
 #include "platform/text/TextRun.h"
 #include "platform/wtf/Vector.h"
+#include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 namespace blink {
@@ -41,6 +42,20 @@ class ShapingLineBreakerTest : public ::testing::Test {
   }
 
   void TearDown() override {}
+
+  // Private member accessors.
+  unsigned PreviousBreakOpportunity(const ShapingLineBreaker& breaker,
+                                    unsigned offset,
+                                    unsigned start,
+                                    bool* is_hyphenated) {
+    return breaker.PreviousBreakOpportunity(offset, start, is_hyphenated);
+  }
+  unsigned NextBreakOpportunity(const ShapingLineBreaker& breaker,
+                                unsigned offset,
+                                unsigned start,
+                                bool* is_hyphenated) {
+    return breaker.NextBreakOpportunity(offset, start, is_hyphenated);
+  }
 
   FontCachePurgePreventer font_cache_purge_preventer;
   FontDescription font_description;
@@ -257,4 +272,76 @@ TEST_F(ShapingLineBreakerTest, ShapeLineRangeEndMidWord) {
   EXPECT_EQ(2u, break_offset);
   EXPECT_EQ(result->Width(), line->Width());
 }
+
+struct BreakOpportunityTestData {
+  const char16_t* string;
+  Vector<unsigned> break_positions;
+  bool disable_soft_hyphen = false;
+
+  // VC2015 requries a constructor for the initializer list.
+  BreakOpportunityTestData(const char16_t* string,
+                           Vector<unsigned> break_positions,
+                           bool disable_soft_hyphen = false) {
+    this->string = string;
+    this->break_positions = std::move(break_positions);
+    this->disable_soft_hyphen = disable_soft_hyphen;
+  }
+};
+
+class BreakOpportunityTest
+    : public ShapingLineBreakerTest,
+      public ::testing::WithParamInterface<BreakOpportunityTestData> {};
+
+INSTANTIATE_TEST_CASE_P(
+    ShapingLineBreakerTest,
+    BreakOpportunityTest,
+    ::testing::Values(BreakOpportunityTestData{u"x y z", {1, 3, 5}},
+                      BreakOpportunityTestData{u"y\xADz", {2, 3}},
+                      BreakOpportunityTestData{u"y\xADz", {3}, true},
+                      BreakOpportunityTestData{u"\xADz", {2}, true},
+                      BreakOpportunityTestData{u"y\xAD", {2}, true},
+                      BreakOpportunityTestData{u"\xAD\xADz", {3}, true}));
+
+TEST_P(BreakOpportunityTest, Next) {
+  const BreakOpportunityTestData& data = GetParam();
+  String string(data.string);
+  LazyLineBreakIterator break_iterator(string);
+  ShapingLineBreaker breaker(nullptr, &font, nullptr, &break_iterator, nullptr,
+                             data.disable_soft_hyphen
+                                 ? ShapingLineBreaker::DisableSoftHyphen()
+                                 : nullptr);
+
+  Vector<unsigned> break_positions;
+  for (unsigned i = 0; i <= string.length(); i++) {
+    bool is_hyphenated = false;
+    unsigned next = NextBreakOpportunity(breaker, i, 0, &is_hyphenated);
+    if (break_positions.IsEmpty() || break_positions.back() != next)
+      break_positions.push_back(next);
+  }
+  EXPECT_THAT(break_positions,
+              ::testing::ElementsAreArray(data.break_positions));
+}
+
+TEST_P(BreakOpportunityTest, Previous) {
+  const BreakOpportunityTestData& data = GetParam();
+  String string(data.string);
+  LazyLineBreakIterator break_iterator(string);
+  ShapingLineBreaker breaker(nullptr, &font, nullptr, &break_iterator, nullptr,
+                             data.disable_soft_hyphen
+                                 ? ShapingLineBreaker::DisableSoftHyphen()
+                                 : nullptr);
+
+  Vector<unsigned> break_positions;
+  for (unsigned i = string.length(); i; i--) {
+    bool is_hyphenated = false;
+    unsigned previous = PreviousBreakOpportunity(breaker, i, 0, &is_hyphenated);
+    if (previous &&
+        (break_positions.IsEmpty() || break_positions.back() != previous))
+      break_positions.push_back(previous);
+  }
+  break_positions.Reverse();
+  EXPECT_THAT(break_positions,
+              ::testing::ElementsAreArray(data.break_positions));
+}
+
 }  // namespace blink

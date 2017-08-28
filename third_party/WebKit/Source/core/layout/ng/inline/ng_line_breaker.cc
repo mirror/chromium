@@ -768,8 +768,9 @@ void NGLineBreaker::SetCurrentStyle(const ComputedStyle& style) {
     }
     break_iterator_.SetBreakAfterSpace(style.BreakOnlyAfterWhiteSpace());
 
-    // TODO(kojii): Implement 'hyphens: none'.
-    hyphenation_ = style.GetHyphenation();
+    hyphenation_ = style.GetHyphens() != Hyphens::kNone
+                       ? style.GetHyphenation()
+                       : ShapingLineBreaker::DisableSoftHyphen();
   }
 
   spacing_.SetSpacing(style.GetFontDescription());
