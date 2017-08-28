@@ -246,6 +246,10 @@ void ChromeOSMetricsProvider::ProvideStabilityMetrics(
 void ChromeOSMetricsProvider::ProvidePreviousSessionData(
     metrics::ChromeUserMetricsExtension* uma_proto) {
   ProvideStabilityMetrics(uma_proto->mutable_system_profile());
+  // The enrollment status of a client is not likely to change between browser
+  // restarts.  Hence, it's safe and useful to attach this status to a previous
+  // session log.
+  RecordEnrollmentStatus();
 }
 
 void ChromeOSMetricsProvider::ProvideCurrentSessionData(
