@@ -6,12 +6,12 @@
 </div>
 <div id="log"></div>
 <script>
-test(function() {
+//test(function() {
     var selection = window.getSelection();
     var sample = document.getElementById('sample');
     selection.collapse(sample, 2);
     selection.extend(document.querySelector('rt').firstChild, 1);
-    document.execCommand('InsertParagraph');
-    assert_equals(sample.innerHTML.replace(/\n/g, ''), '<table><tbody><tr><td style="display:inline-block"><ruby><rt>a</rt></ruby></td></tr><tr><font size="1"><br></font></tr></tbody></table>');
-});
+  //  document.execCommand('InsertParagraph');
+//    assert_equals(sample.innerHTML.replace(/\n/g, ''), '<table><tbody><tr><td style="display:inline-block"><ruby><rt>a</rt></ruby></td></tr><tr><font size="1"><br></font></tr></tbody></table>');
+//});
 </script>
