@@ -34,6 +34,23 @@
       "revId": "cdb2e7347e272e46ff67f64460991bf38eb90461",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7b8a0815_00d7ae3b",
+        "filename": "components/subresource_filter/core/common/document_subresource_filter.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1185379
+      },
+      "writtenOn": "2017-08-28T05:35:31Z",
+      "side": 0,
+      "message": "Fix another problem: move ScopedThreadTimers::IsSupported() condition to the right place.",
+      "revId": "cdb2e7347e272e46ff67f64460991bf38eb90461",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
