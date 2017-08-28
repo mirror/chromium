@@ -12,11 +12,15 @@
 #include "components/ntp_snippets/content_suggestion.h"
 
 class GURL;
-class Profile;
+class PrefService;
 
 namespace gfx {
 class Image;
 }  // namespace gfx
+
+// False if auto opt out is enabled and the user has ignored enough
+// notifications that we no longer think that the user is interested in them.
+bool AreNotificationsEnabled(PrefService* prefs);
 
 class ContentSuggestionsNotifier {
  public:
@@ -43,10 +47,6 @@ class ContentSuggestionsNotifier {
   // the actions taken on notifications, and maybe the "opt outs" metric, which
   // is computed in turn from that.
   virtual void FlushCachedMetrics() = 0;
-
-  // False if auto opt out is enabled and the user has ignored enough
-  // notifications that we no longer think that the user is interested in them.
-  virtual bool IsEnabledForProfile(Profile* profile) = 0;
 
   // Registers or unregisters the notification channel on Android O. May be
   // called regardless of Android version or registration state; they are no-ops
