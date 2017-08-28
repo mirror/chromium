@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "24b9d5f1_531cc45e",
+        "filename": "third_party/WebKit/Source/devtools/front_end/resources/ServiceWorkersView.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-08-28T19:16:35Z",
+      "side": 1,
+      "message": "What is happening here?",
+      "revId": "822b94ec5aaa7e38fd5195162e9d1a7a5e1926fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
