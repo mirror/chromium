@@ -364,8 +364,9 @@ void MojoAsyncResourceHandler::FollowRedirect() {
     return;
   }
   if (!did_defer_on_redirect_) {
-    DVLOG(1) << "Malformed FollowRedirect request";
-    ReportBadMessage("Malformed FollowRedirect request");
+    DVLOG(1) << "Malformed FollowRedirect request (!did_defer_on_redirect_)";
+    ReportBadMessage(
+        "Malformed FollowRedirect request (!did_defer_on_redirect_)");
     return;
   }
 
