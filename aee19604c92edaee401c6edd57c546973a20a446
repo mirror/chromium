@@ -296,6 +296,24 @@
     },
     {
       "key": {
+        "uuid": "1ecf8182_dcef7eac",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/style/checkers/cpp.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 1831,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2017-08-28T01:31:28Z",
+      "side": 0,
+      "message": "I thought Blink C++ style enforced kFooBar, but the current one [1] doesn\u0027t. So I understand there are no differences between Blink and Chromium, and we should use kFooBar in Blink just for local consistency.  lgtm.\n\n[1] https://chromium.googlesource.com/chromium/src/+/master/styleguide/c++/blink-c++.md",
+      "parentUuid": "e6971ce6_57de2e96",
+      "revId": "aee19604c92edaee401c6edd57c546973a20a446",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d5594167_ade560cd",
         "filename": "third_party/WebKit/Tools/Scripts/webkitpy/style/checkers/cpp.py",
         "patchSetId": 2
