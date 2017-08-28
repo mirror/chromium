@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a13979de_cb311ff2",
+        "filename": "tools/v8_context_snapshot/v8_context_snapshot_generator.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-08-28T08:54:40Z",
+      "side": 1,
+      "message": "I\u0027m curious but what happens if you call _exit(0)?",
+      "revId": "4b34f0ad33b9d75c2c9981e207fda78cb1d58634",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
