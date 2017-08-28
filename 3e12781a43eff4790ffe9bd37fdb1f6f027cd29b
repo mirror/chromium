@@ -1,0 +1,257 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bf65e4ec_4946263f",
+        "filename": "chrome/browser/chromeos/BUILD.gn",
+        "patchSetId": 11
+      },
+      "lineNbr": 1658,
+      "author": {
+        "id": 1162075
+      },
+      "writtenOn": "2017-08-28T17:05:43Z",
+      "side": 1,
+      "message": "Not sure why it\u0027s needed for testing if you didn\u0027t modify/add tests here?",
+      "range": {
+        "startLine": 1658,
+        "startChar": 4,
+        "endLine": 1658,
+        "endChar": 23
+      },
+      "revId": "3e12781a43eff4790ffe9bd37fdb1f6f027cd29b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac1b170b_09d1367c",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1162075
+      },
+      "writtenOn": "2017-08-28T17:05:43Z",
+      "side": 1,
+      "message": "Why \u0027+minute\u0027 here?",
+      "range": {
+        "startLine": 228,
+        "startChar": 35,
+        "endLine": 228,
+        "endChar": 59
+      },
+      "revId": "3e12781a43eff4790ffe9bd37fdb1f6f027cd29b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd59a2de_b9928728",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 1162075
+      },
+      "writtenOn": "2017-08-28T17:05:43Z",
+      "side": 1,
+      "message": "|device_policies_|\nAlso, there is a different |device_policies| that is a parameter of IsCurrentUserAllowed. Are they the same?",
+      "range": {
+        "startLine": 283,
+        "startChar": 31,
+        "endLine": 283,
+        "endChar": 46
+      },
+      "revId": "3e12781a43eff4790ffe9bd37fdb1f6f027cd29b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "39724d6b_2129e6eb",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 333,
+      "author": {
+        "id": 1162075
+      },
+      "writtenOn": "2017-08-28T17:05:43Z",
+      "side": 1,
+      "message": "What if it\u0027s not initialized here? When it will start observing?",
+      "range": {
+        "startLine": 329,
+        "startChar": 0,
+        "endLine": 333,
+        "endChar": 3
+      },
+      "revId": "3e12781a43eff4790ffe9bd37fdb1f6f027cd29b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50ba4122_1d8d8959",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 451,
+      "author": {
+        "id": 1162075
+      },
+      "writtenOn": "2017-08-28T17:05:43Z",
+      "side": 1,
+      "message": "Not sure how this might happen if it\u0027s a member function.",
+      "range": {
+        "startLine": 449,
+        "startChar": 0,
+        "endLine": 451,
+        "endChar": 3
+      },
+      "revId": "3e12781a43eff4790ffe9bd37fdb1f6f027cd29b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a7cf47c_d84fd39e",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1162075
+      },
+      "writtenOn": "2017-08-28T17:05:43Z",
+      "side": 1,
+      "message": "Please, add a comment above.",
+      "range": {
+        "startLine": 48,
+        "startChar": 0,
+        "endLine": 48,
+        "endChar": 46
+      },
+      "revId": "3e12781a43eff4790ffe9bd37fdb1f6f027cd29b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f86df6c_df99d6c5",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1162075
+      },
+      "writtenOn": "2017-08-28T17:05:43Z",
+      "side": 1,
+      "message": "Move them into private section if they are not used from the outside,",
+      "range": {
+        "startLine": 65,
+        "startChar": 0,
+        "endLine": 75,
+        "endChar": 27
+      },
+      "revId": "3e12781a43eff4790ffe9bd37fdb1f6f027cd29b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "284161f8_8dfd2821",
+        "filename": "chrome/browser/chromeos/settings/cros_settings.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1162075
+      },
+      "writtenOn": "2017-08-28T17:05:43Z",
+      "side": 1,
+      "message": "Please, add documentation here",
+      "range": {
+        "startLine": 108,
+        "startChar": 0,
+        "endLine": 110,
+        "endChar": 51
+      },
+      "revId": "3e12781a43eff4790ffe9bd37fdb1f6f027cd29b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7af902a2_eede4423",
+        "filename": "chrome/browser/chromeos/settings/device_settings_service.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1162075
+      },
+      "writtenOn": "2017-08-28T17:05:43Z",
+      "side": 1,
+      "message": "nit: Move to DeviceSettingsService::Initialize() ?",
+      "range": {
+        "startLine": 69,
+        "startChar": 0,
+        "endLine": 72,
+        "endChar": 61
+      },
+      "revId": "3e12781a43eff4790ffe9bd37fdb1f6f027cd29b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b23bfa3b_cac12d84",
+        "filename": "chrome/browser/chromeos/settings/device_settings_service.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1162075
+      },
+      "writtenOn": "2017-08-28T17:05:43Z",
+      "side": 1,
+      "message": "We should think whether async Load() or sync LoadImmediately() should be used here. I\u0027m leaning towards the second one, as it has stronger guarantees.",
+      "range": {
+        "startLine": 243,
+        "startChar": 1,
+        "endLine": 243,
+        "endChar": 6
+      },
+      "revId": "3e12781a43eff4790ffe9bd37fdb1f6f027cd29b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dbefb007_43eb65f4",
+        "filename": "chrome/browser/chromeos/settings/device_settings_service.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 311,
+      "author": {
+        "id": 1162075
+      },
+      "writtenOn": "2017-08-28T17:05:43Z",
+      "side": 1,
+      "message": "I don\u0027t like this design as it implies that \"OffHoursMode\" is always applied. Either separated function DeviceOffHoursController::IsOffHoursMode() should be introduced, or just this one renamed",
+      "range": {
+        "startLine": 306,
+        "startChar": 0,
+        "endLine": 311,
+        "endChar": 5
+      },
+      "revId": "3e12781a43eff4790ffe9bd37fdb1f6f027cd29b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
