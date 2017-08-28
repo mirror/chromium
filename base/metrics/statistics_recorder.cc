@@ -7,6 +7,7 @@
 #include <memory>
 
 #include "base/at_exit.h"
+#include "base/debug/crash_logging.h"  // crbug/744734
 #include "base/debug/leak_annotations.h"
 #include "base/json/string_escape.h"
 #include "base/logging.h"
@@ -304,17 +305,8 @@ void StatisticsRecorder::ValidateAllHistograms() {
 
   auto known = GetKnownHistograms(/*include_persistent=*/true);
 
-  HistogramBase* last_invalid_histogram = nullptr;
-  int invalid_count = 0;
-  for (HistogramBase* h : known) {
-    const bool is_valid = h->ValidateHistogramContents(false, 0);
-    if (!is_valid) {
-      ++invalid_count;
-      last_invalid_histogram = h;
-    }
-  }
-  if (last_invalid_histogram)
-    last_invalid_histogram->ValidateHistogramContents(true, invalid_count);
+  for (HistogramBase* h : known)
+    h->ValidateHistogramContents(true, 0);
 }
 
 // static
