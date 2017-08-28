@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "cfc2f035_e3055b3b",
+        "filename": "chrome/browser/ui/views/tabs/browser_tab_strip_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2017-08-28T23:18:25Z",
+      "side": 1,
+      "message": "This was the impedance mismatch I was referring to. A WebContentsUserData solution sgtm. It\u0027s also easier to generalize for other tab-creation-origins, like \"opened bookmark folder\", or \"restored a window via history\", etc. I\u0027ll take that approach.",
+      "parentUuid": "16b3901c_c4722b08",
+      "range": {
+        "startLine": 201,
+        "startChar": 2,
+        "endLine": 201,
+        "endChar": 36
+      },
+      "revId": "7196393467136b6a052c371cf5507b840abff0b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "358ab85c_b3b84d94",
         "filename": "chrome/browser/ui/views/tabs/browser_tab_strip_controller.cc",
         "patchSetId": 2
