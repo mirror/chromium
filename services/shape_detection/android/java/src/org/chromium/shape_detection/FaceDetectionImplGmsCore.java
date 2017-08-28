@@ -16,6 +16,7 @@ import org.chromium.base.ContextUtils;
 import org.chromium.base.Log;
 import org.chromium.gfx.mojom.RectF;
 import org.chromium.mojo.system.MojoException;
+import org.chromium.shape_detection.mojom.ConstantsConstants;
 import org.chromium.shape_detection.mojom.FaceDetection;
 import org.chromium.shape_detection.mojom.FaceDetectionResult;
 import org.chromium.shape_detection.mojom.FaceDetectorOptions;
@@ -78,7 +79,7 @@ public class FaceDetectionImplGmsCore implements FaceDetection {
         Frame frame = BitmapUtils.convertToFrame(bitmapData);
         if (frame == null) {
             Log.e(TAG, "Error converting Mojom Bitmap to Frame");
-            callback.call(new FaceDetectionResult[0]);
+            callback.call(new FaceDetectionResult[0], ConstantsConstants.INVALID_BITMAP);
             return;
         }
 
@@ -143,6 +144,7 @@ public class FaceDetectionImplGmsCore implements FaceDetection {
                 faceArray[i].boundingBox.height = eyeMouthDistance > eyesDistance
                         ? eyeMouthDistance + eyesDistance
                         : 2 * eyesDistance;
+
             } else {
                 faceArray[i].boundingBox.x = corner.x;
                 faceArray[i].boundingBox.y = corner.y;
@@ -150,7 +152,7 @@ public class FaceDetectionImplGmsCore implements FaceDetection {
                 faceArray[i].boundingBox.height = face.getHeight();
             }
         }
-        callback.call(faceArray);
+        callback.call(faceArray, ConstantsConstants.DETECTOR_SUCCESS);
     }
 
     @Override
