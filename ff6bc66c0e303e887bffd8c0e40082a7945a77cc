@@ -42,6 +42,48 @@
     },
     {
       "key": {
+        "uuid": "c7acc871_392b6daf",
+        "filename": "third_party/WebKit/Source/core/workers/WorkletModuleResponsesMap.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-08-28T05:32:05Z",
+      "side": 1,
+      "message": "I meant \u0027the\u0027 MemoryCache. Updated this comment. How does \"cacher and fetcher mechanism\" sound to you?",
+      "parentUuid": "1f649990_30d141c5",
+      "revId": "ff6bc66c0e303e887bffd8c0e40082a7945a77cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f99e784_8fb369a0",
+        "filename": "third_party/WebKit/Source/core/workers/WorkletModuleResponsesMap.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-08-28T05:32:05Z",
+      "side": 1,
+      "message": "Removed this word.",
+      "parentUuid": "00814dae_d5bf6c86",
+      "range": {
+        "startLine": 24,
+        "startChar": 34,
+        "endLine": 24,
+        "endChar": 40
+      },
+      "revId": "ff6bc66c0e303e887bffd8c0e40082a7945a77cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d7105a46_62e642b2",
         "filename": "third_party/WebKit/Source/core/workers/WorkletModuleResponsesMap.h",
         "patchSetId": 18
@@ -56,6 +98,24 @@
       "revId": "ff6bc66c0e303e887bffd8c0e40082a7945a77cc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8241a542_ef8a61dd",
+        "filename": "third_party/WebKit/Source/core/workers/WorkletModuleResponsesMap.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-08-28T05:32:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d7105a46_62e642b2",
+      "revId": "ff6bc66c0e303e887bffd8c0e40082a7945a77cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
