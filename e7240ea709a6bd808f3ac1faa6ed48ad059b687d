@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f558cfde_8735e420",
+        "filename": "chrome/browser/ui/cocoa/md_hover_button.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-08-28T19:06:51Z",
+      "side": 1,
+      "message": "I picked class methods here so that subclasses could override the colors. When I wrote HarmonyButton, I went with C++ functions because I saw it as following a spec. But I wrote them a month or two apart, so they aren\u0027t *intentionally* different. I would be okay with making them consistent in either direction. Thoughts?",
+      "parentUuid": "be4ed881_d7585d1c",
+      "revId": "e7240ea709a6bd808f3ac1faa6ed48ad059b687d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ee1818d0_0c5dc9d9",
         "filename": "chrome/browser/ui/cocoa/md_hover_button.mm",
         "patchSetId": 3
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "ce8f98fb_a8bc2cbe",
+        "filename": "chrome/browser/ui/cocoa/md_hover_button.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-08-28T19:06:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ee1818d0_0c5dc9d9",
+      "range": {
+        "startLine": 68,
+        "startChar": 32,
+        "endLine": 68,
+        "endChar": 63
+      },
+      "revId": "e7240ea709a6bd808f3ac1faa6ed48ad059b687d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "256991ca_fc356116",
         "filename": "chrome/browser/ui/cocoa/md_hover_button.mm",
         "patchSetId": 3
@@ -53,6 +95,24 @@
       "writtenOn": "2017-08-28T18:20:54Z",
       "side": 1,
       "message": "I think this is a bit unusual. I\u0027d expect to see a block/lambda for a static, but not for a local const variable.",
+      "revId": "e7240ea709a6bd808f3ac1faa6ed48ad059b687d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e168254e_0c9a1ba5",
+        "filename": "chrome/browser/ui/cocoa/md_hover_button.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-08-28T19:06:51Z",
+      "side": 1,
+      "message": "I changed this to be more familiar, but lose the const-ness. Is there an even better way?",
+      "parentUuid": "256991ca_fc356116",
       "revId": "e7240ea709a6bd808f3ac1faa6ed48ad059b687d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -73,6 +133,24 @@
       "revId": "e7240ea709a6bd808f3ac1faa6ed48ad059b687d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7b55070_fab02d71",
+        "filename": "chrome/browser/ui/cocoa/md_hover_button.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-08-28T19:06:51Z",
+      "side": 1,
+      "message": "I find single-use variables confusing. I want to leave it as is, but we can chat about it if you want.",
+      "parentUuid": "441832bf_96b3029d",
+      "revId": "e7240ea709a6bd808f3ac1faa6ed48ad059b687d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -99,6 +177,30 @@
     },
     {
       "key": {
+        "uuid": "4ea8d917_bb56f710",
+        "filename": "chrome/browser/ui/cocoa/md_hover_button.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-08-28T19:06:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9eb3c2df_eb8fcf31",
+      "range": {
+        "startLine": 95,
+        "startChar": 23,
+        "endLine": 95,
+        "endChar": 27
+      },
+      "revId": "e7240ea709a6bd808f3ac1faa6ed48ad059b687d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8717b8ca_257ddd68",
         "filename": "chrome/browser/ui/cocoa/md_hover_button_unittest.mm",
         "patchSetId": 3
@@ -113,6 +215,24 @@
       "revId": "e7240ea709a6bd808f3ac1faa6ed48ad059b687d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f230068_028b6698",
+        "filename": "chrome/browser/ui/cocoa/md_hover_button_unittest.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-08-28T19:06:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8717b8ca_257ddd68",
+      "revId": "e7240ea709a6bd808f3ac1faa6ed48ad059b687d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
