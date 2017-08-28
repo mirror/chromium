@@ -16,6 +16,57 @@
       "revId": "d84d36c86bb94b785aec9f28ae396310cd740cab",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "484d1ee2_644ecafc",
+        "filename": "ui/accessibility/ax_enums.idl",
+        "patchSetId": 5
+      },
+      "lineNbr": 316,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-08-28T19:41:19Z",
+      "side": 1,
+      "message": "nit: wrap",
+      "revId": "d84d36c86bb94b785aec9f28ae396310cd740cab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34e55b32_592c5cfe",
+        "filename": "ui/accessibility/ax_enums.idl",
+        "patchSetId": 5
+      },
+      "lineNbr": 316,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-08-28T19:41:19Z",
+      "side": 1,
+      "message": "nit: wrap",
+      "revId": "d84d36c86bb94b785aec9f28ae396310cd740cab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc244746_43920f51",
+        "filename": "ui/strings/ui_strings.grd",
+        "patchSetId": 5
+      },
+      "lineNbr": 370,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-08-28T19:41:19Z",
+      "side": 1,
+      "message": "Is this really supposed to be localized? How will NVDA handle this\nin any language other than English?",
+      "revId": "d84d36c86bb94b785aec9f28ae396310cd740cab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
