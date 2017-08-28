@@ -344,7 +344,8 @@ void NativeMediaFileUtil::ReadDirectoryOnTaskRunnerThread(
       ReadDirectorySync(context.get(), url, &entry_list);
   content::BrowserThread::PostTask(
       content::BrowserThread::IO, FROM_HERE,
-      base::BindOnce(callback, error, entry_list, false /* has_more */));
+      base::BindOnce(callback, error, std::move(entry_list),
+                     false /* has_more */));
 }
 
 void NativeMediaFileUtil::CopyOrMoveFileLocalOnTaskRunnerThread(
@@ -565,7 +566,7 @@ base::File::Error NativeMediaFileUtil::ReadDirectorySync(
     entry.is_directory = info.IsDirectory();
     entry.name = enum_path.BaseName().value();
 
-    file_list->push_back(entry);
+    file_list->push_back(std::move(entry));
   }
 
   return base::File::FILE_OK;

@@ -83,8 +83,8 @@ FileSystemInterface* GetFileSystemFromUrl(const storage::FileSystemURL& url);
 // case).
 void RunFileSystemCallback(
     const FileSystemGetter& file_system_getter,
-    const base::Callback<void(FileSystemInterface*)>& callback,
-    const base::Closure& error_callback);
+    base::OnceCallback<void(FileSystemInterface*)> callback,
+    base::OnceClosure error_callback);
 
 // Returns the metadata info of the file at |file_path|.
 // Called from FileSystemProxy::GetFileInfo().

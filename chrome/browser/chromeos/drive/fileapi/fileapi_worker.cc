@@ -84,10 +84,10 @@ void RunReadDirectoryCallbackWithEntries(
 
     const PlatformFileInfoProto& file_info = resource_entry.file_info();
     entry.is_directory = file_info.is_directory();
-    entries.push_back(entry);
+    entries.push_back(std::move(entry));
   }
 
-  callback.Run(base::File::FILE_OK, entries, true /*has_more*/);
+  callback.Run(base::File::FILE_OK, std::move(entries), true /*has_more*/);
 }
 
 // Runs |callback| with |error|.
@@ -201,18 +201,18 @@ FileSystemInterface* GetFileSystemFromUrl(const storage::FileSystemURL& url) {
 
 void RunFileSystemCallback(
     const FileSystemGetter& file_system_getter,
-    const base::Callback<void(FileSystemInterface*)>& callback,
-    const base::Closure& on_error_callback) {
+    base::OnceCallback<void(FileSystemInterface*)> callback,
+    base::OnceClosure on_error_callback) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
   FileSystemInterface* file_system = file_system_getter.Run();
 
   if (!file_system) {
     if (!on_error_callback.is_null())
-      on_error_callback.Run();
+      std::move(on_error_callback).Run();
     return;
   }
 
-  callback.Run(file_system);
+  std::move(callback).Run(file_system);
 }
 
 void GetFileInfo(const base::FilePath& file_path,

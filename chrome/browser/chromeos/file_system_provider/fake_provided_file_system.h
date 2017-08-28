@@ -179,7 +179,7 @@ class FakeProvidedFileSystem : public ProvidedFileSystemInterface {
 
   // Utility function for posting a task which can be aborted by calling the
   // returned callback.
-  AbortCallback PostAbortableTask(const base::Closure& callback);
+  AbortCallback PostAbortableTask(base::OnceClosure callback);
 
   // Aborts a request. |task_id| refers to a posted callback returning a
   // response for the operation, which will be cancelled, hence not called.

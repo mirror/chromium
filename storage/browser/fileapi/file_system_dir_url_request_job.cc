@@ -141,7 +141,8 @@ void FileSystemDirURLRequestJob::DidReadDirectory(
     data_.append(net::GetDirectoryListingHeader(title));
   }
 
-  entries_.insert(entries_.end(), entries.begin(), entries.end());
+  entries_.insert(entries_.end(), std::make_move_iterator(entries.begin()),
+                  std::make_move_iterator(entries.end()));
 
   if (!has_more) {
     if (entries_.size()) {

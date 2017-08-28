@@ -42,7 +42,7 @@ bool ConvertRequestValueToEntryList(std::unique_ptr<RequestValue> value,
     output_entry.is_directory = *entry_metadata.is_directory;
     output_entry.name = *entry_metadata.name;
 
-    output->push_back(output_entry);
+    output->push_back(std::move(output_entry));
   }
 
   return true;
@@ -99,7 +99,7 @@ void ReadDirectory::OnSuccess(int /* request_id */,
     return;
   }
 
-  callback_.Run(base::File::FILE_OK, entry_list, has_more);
+  callback_.Run(base::File::FILE_OK, std::move(entry_list), has_more);
 }
 
 void ReadDirectory::OnError(int /* request_id */,
