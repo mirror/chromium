@@ -16,6 +16,24 @@
       "revId": "b8a3ded21358d49747f93017f4f93e6723336788",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c87b0eec_9f61bf9c",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 30
+      },
+      "lineNbr": 81091,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-08-28T15:17:40Z",
+      "side": 1,
+      "message": "I updated the CL with better description.\n\nThe swap metrics are part of the Too Many Tabs success metrics. It is used by both session restore and background tab opening. We can definitely discuss better alternatives. But I don\u0027t think that is this CL\u0027s problem. Doc: https://docs.google.com/document/d/1wvLrLpgRyl2tikYQLErglDpp-44RjvP1gAcmgoewiWg/\n\nI just scheduled a meeting with you today and we can discuss more there.",
+      "parentUuid": "4a5daded_59d2d835",
+      "revId": "b8a3ded21358d49747f93017f4f93e6723336788",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
