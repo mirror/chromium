@@ -16,6 +16,24 @@
       "revId": "50a8fe95eca07c33aeb054bb00670e70519f6b09",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "785706e4_443847c8",
+        "filename": "ash/wm/power_button_controller.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-08-28T20:55:47Z",
+      "side": 1,
+      "message": "this pref is only used for tablet power button. So it shouldn\u0027t have other broken places.",
+      "parentUuid": "e28e47e3_1a770840",
+      "revId": "50a8fe95eca07c33aeb054bb00670e70519f6b09",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
