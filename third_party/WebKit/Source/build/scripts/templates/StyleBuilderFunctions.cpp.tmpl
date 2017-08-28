@@ -5,6 +5,9 @@
 
     The `properties' dict can be used to access a property's parameters in
     jinja2 templates (i.e. setter, getter, initial, type_name)
+
+    TODO(meade): Delete this file once all StyleBuilderFunction generation
+    is moved to the CSSPropertyAPI.
 #}
 
 {{source_files_for_generated_file(template_file, input_files)}}
@@ -55,7 +58,9 @@ state.Style()->{{property.is_inherited_setter}}
 
 namespace blink {
 
-{% for property_id, property in properties.items() if property.should_declare_functions %}
+{% for property_id, property in properties.items()
+       if property.should_declare_functions
+          and not property.use_api_in_stylebuilder %}
 {% set apply_type = property.apply_type %}
 {% if not property.custom_initial %}
 {{declare_initial_function(property_id)}} {
