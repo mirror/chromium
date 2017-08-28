@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ab86bde9_6c36669b",
+        "filename": "headless/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 824,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-08-28T22:53:48Z",
+      "side": 1,
+      "message": "I think we shouldn\u0027t check this in. It\u0027s great that we can do something now, but we should be able to pass some automated tests or run an app or whatever.",
+      "range": {
+        "startLine": 822,
+        "startChar": 4,
+        "endLine": 824,
+        "endChar": 5
+      },
+      "revId": "88f7b956163b49cffa6a80f5de09a4a57779233e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
