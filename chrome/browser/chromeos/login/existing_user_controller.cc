@@ -132,6 +132,9 @@ enum class EcryptfsMigrationAction {
   WIPE,
   // Ask the user if migration should be performed.
   ASK_USER,
+  // Minimal migration - similar to WIPE in effect, but runs migration code with
+  // a small whitelist of files to preserve authentication data.
+  MINIMAL_MIGRATE,
   // Last value for validity checks.
   COUNT
 };
@@ -581,8 +584,16 @@ void ExistingUserController::PerformLogin(
 
 void ExistingUserController::ContinuePerformLogin(
     LoginPerformer::AuthorizationMode auth_mode,
-    const UserContext& user_context) {
-  login_performer_->PerformLogin(user_context, auth_mode);
+    const UserContext& user_context,
+    bool require_password_reentry) {
+  if (require_password_reentry) {
+    // Re-start login.
+    is_login_in_progress_ = false;
+    login_performer_.reset();
+    login_display_->ShowSigninUI(user_context.GetAccountId().GetUserEmail());
+  } else {
+    login_performer_->PerformLogin(user_context, auth_mode);
+  }
 }
 
 void ExistingUserController::ContinuePerformLoginWithoutMigration(
@@ -590,7 +601,7 @@ void ExistingUserController::ContinuePerformLoginWithoutMigration(
     const UserContext& user_context) {
   UserContext user_context_ecryptfs = user_context;
   user_context_ecryptfs.SetIsForcingDircrypto(false);
-  ContinuePerformLogin(auth_mode, user_context_ecryptfs);
+  ContinuePerformLogin(auth_mode, user_context_ecryptfs, false);
 }
 
 void ExistingUserController::MigrateUserData(const std::string& old_password) {
@@ -985,8 +996,14 @@ void ExistingUserController::OnOldEncryptionDetected(
   if (has_incomplete_migration) {
     // If migration was incomplete, continue migration without checking user
     // policy.
-    ShowEncryptionMigrationScreen(user_context,
-                                  EncryptionMigrationMode::RESUME_MIGRATION);
+    // If the last attempted migration was a minimal migration, try to resume
+    // minimal migration.
+    const EncryptionMigrationMode mode =
+        user_manager::known_user::WasUserHomeMinimalMigrationAttempted(
+            user_context.GetAccountId())
+            ? EncryptionMigrationMode::RESUME_MINIMAL_MIGRATION
+            : EncryptionMigrationMode::RESUME_MIGRATION;
+    ShowEncryptionMigrationScreen(user_context, mode);
     return;
   }
 
@@ -1056,11 +1073,15 @@ void ExistingUserController::OnPolicyFetchResult(
 
   switch (action) {
     case EcryptfsMigrationAction::MIGRATE:
+      user_manager::known_user::SetUserHomeMinimalMigrationAttempted(
+          user_context.GetAccountId(), false);
       ShowEncryptionMigrationScreen(user_context,
                                     EncryptionMigrationMode::START_MIGRATION);
       break;
 
     case EcryptfsMigrationAction::ASK_USER:
+      user_manager::known_user::SetUserHomeMinimalMigrationAttempted(
+          user_context.GetAccountId(), false);
       ShowEncryptionMigrationScreen(user_context,
                                     EncryptionMigrationMode::ASK_USER);
       break;
@@ -1070,6 +1091,18 @@ void ExistingUserController::OnPolicyFetchResult(
           cryptohome::Identification(user_context.GetAccountId()),
           base::Bind(&ExistingUserController::WipePerformed,
                      weak_factory_.GetWeakPtr(), user_context));
+      break;
+
+    case EcryptfsMigrationAction::MINIMAL_MIGRATE:
+      // Reset the profile ever initialized flag, so that user policy manager
+      // will block sign-in if no policy can be retrieved for the migrated
+      // profile.
+      user_manager::UserManager::Get()->ResetProfileEverInitialized(
+          user_context.GetAccountId());
+      user_manager::known_user::SetUserHomeMinimalMigrationAttempted(
+          user_context.GetAccountId(), true);
+      ShowEncryptionMigrationScreen(
+          user_context, EncryptionMigrationMode::START_MINIMAL_MIGRATION);
       break;
 
     case EcryptfsMigrationAction::DISALLOW_ARC_NO_MIGRATION:

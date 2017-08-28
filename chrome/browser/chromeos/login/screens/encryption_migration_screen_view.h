@@ -15,7 +15,8 @@ class UserContext;
 
 class EncryptionMigrationScreenView {
  public:
-  using ContinueLoginCallback = base::OnceCallback<void(const UserContext&)>;
+  using ContinueLoginCallback =
+      base::OnceCallback<void(const UserContext&, bool)>;
 
   class Delegate {
    public:

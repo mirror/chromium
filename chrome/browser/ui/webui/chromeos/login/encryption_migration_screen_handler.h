@@ -18,6 +18,10 @@
 #include "services/device/public/interfaces/wake_lock.mojom.h"
 #include "third_party/cros_system_api/dbus/cryptohome/dbus-constants.h"
 
+namespace base {
+class ElapsedTimer;
+}
+
 namespace chromeos {
 
 class LoginFeedback;
@@ -55,6 +59,7 @@ class EncryptionMigrationScreenHandler : public EncryptionMigrationScreenView,
     MIGRATING = 2,
     MIGRATION_FAILED = 3,
     NOT_ENOUGH_STORAGE = 4,
+    MIGRATING_MINIMAL = 5,
     COUNT
   };
 
@@ -106,6 +111,14 @@ class EncryptionMigrationScreenHandler : public EncryptionMigrationScreenView,
   // True if |mode_| suggests that migration should start immediately.
   bool IsStartImmediately();
 
+  // True if |mode_| suggests that we are starting or resuming a minimal
+  // migration.
+  bool IsMinimalMigration();
+
+  // Returns the UIState we should be in when migration is in progress.
+  // This will be different between regular and minimal migration.
+  UIState GetMigratingUIState();
+
   device::mojom::WakeLock* GetWakeLock();
 
   Delegate* delegate_ = nullptr;
@@ -138,6 +151,9 @@ class EncryptionMigrationScreenHandler : public EncryptionMigrationScreenView,
   device::mojom::WakeLockPtr wake_lock_;
 
   std::unique_ptr<LoginFeedback> login_feedback_;
+
+  // Measures the time needed for minimal migration.
+  std::unique_ptr<base::ElapsedTimer> minimal_migration_timer_;
 
   base::WeakPtrFactory<EncryptionMigrationScreenHandler> weak_ptr_factory_;
 
