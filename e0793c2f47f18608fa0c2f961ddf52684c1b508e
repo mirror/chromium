@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "06d38a40_915e4666",
+        "filename": "content/renderer/render_widget.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 2267,
+      "author": {
+        "id": 1116070
+      },
+      "writtenOn": "2017-08-28T02:02:12Z",
+      "side": 1,
+      "message": "If we can use WebTappedInfo structure through this interproc call and unpack |should_trigger| at \n something.java where we really need it, this is very simple.",
+      "revId": "e0793c2f47f18608fa0c2f961ddf52684c1b508e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
