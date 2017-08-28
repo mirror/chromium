@@ -19,7 +19,6 @@
 #include "base/strings/string16.h"
 #include "base/strings/string_util.h"
 #include "base/strings/utf_string_conversions.h"
-#include "base/threading/thread_task_runner_handle.h"
 #include "crypto/scoped_nss_types.h"
 #include "crypto/scoped_test_nss_db.h"
 #include "net/base/hash_value.h"
@@ -149,7 +148,6 @@ TEST_F(CertDatabaseNSSTest, ListCerts) {
   // This test isn't terribly useful, though it will at least let valgrind test
   // for leaks.
   CertificateList certs;
-  cert_db_->SetSlowTaskRunnerForTest(base::ThreadTaskRunnerHandle::Get());
   cert_db_->ListCerts(base::Bind(&SwapCertList, base::Unretained(&certs)));
   EXPECT_EQ(0U, certs.size());
 
