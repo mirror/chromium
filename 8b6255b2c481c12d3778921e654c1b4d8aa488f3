@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "611c962f_fc948482",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1232844
+      },
+      "writtenOn": "2017-08-28T22:46:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "998ea9d1_54ae5e2e",
+      "range": {
+        "startLine": 11,
+        "startChar": 46,
+        "endLine": 12,
+        "endChar": 17
+      },
+      "revId": "8b6255b2c481c12d3778921e654c1b4d8aa488f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "effcb3f0_ed43c0cc",
         "filename": "chrome/browser/chromeos/arc/voice_interaction/arc_voice_interaction_arc_home_service.cc",
         "patchSetId": 5
@@ -36,6 +60,30 @@
       "writtenOn": "2017-08-28T16:43:37Z",
       "side": 1,
       "message": "nit: ARC instance (for consistency with the rest of the codebase).",
+      "range": {
+        "startLine": 318,
+        "startChar": 20,
+        "endLine": 318,
+        "endChar": 29
+      },
+      "revId": "8b6255b2c481c12d3778921e654c1b4d8aa488f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37e2d853_e66d5176",
+        "filename": "chrome/browser/chromeos/arc/voice_interaction/arc_voice_interaction_arc_home_service.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 318,
+      "author": {
+        "id": 1232844
+      },
+      "writtenOn": "2017-08-28T22:46:11Z",
+      "side": 1,
+      "message": "These part does not seem to be needed anymore..",
+      "parentUuid": "effcb3f0_ed43c0cc",
       "range": {
         "startLine": 318,
         "startChar": 20,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "d8f7fa5a_82ed73e5",
+        "filename": "chrome/browser/chromeos/arc/voice_interaction/arc_voice_interaction_framework_service.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 304,
+      "author": {
+        "id": 1232844
+      },
+      "writtenOn": "2017-08-28T22:46:11Z",
+      "side": 1,
+      "message": "reverted",
+      "parentUuid": "ce1ce8a5_d895a513",
+      "range": {
+        "startLine": 304,
+        "startChar": 26,
+        "endLine": 304,
+        "endChar": 70
+      },
+      "revId": "8b6255b2c481c12d3778921e654c1b4d8aa488f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "777853cc_3f7fad5b",
         "filename": "chrome/browser/chromeos/arc/voice_interaction/arc_voice_interaction_framework_service.cc",
         "patchSetId": 5
@@ -82,6 +154,30 @@
       "writtenOn": "2017-08-28T16:43:37Z",
       "side": 1,
       "message": "What is the TODO here? Will you remove this code? Can you explicitly call that out?",
+      "range": {
+        "startLine": 306,
+        "startChar": 7,
+        "endLine": 306,
+        "endChar": 23
+      },
+      "revId": "8b6255b2c481c12d3778921e654c1b4d8aa488f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e44c75e8_dba299de",
+        "filename": "chrome/browser/chromeos/arc/voice_interaction/arc_voice_interaction_framework_service.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 306,
+      "author": {
+        "id": 1232844
+      },
+      "writtenOn": "2017-08-28T22:46:11Z",
+      "side": 1,
+      "message": "The idea here is to try not to break dogfooders, who are upgrading from a version where these flags are \"undefined\".",
+      "parentUuid": "777853cc_3f7fad5b",
       "range": {
         "startLine": 306,
         "startChar": 7,
