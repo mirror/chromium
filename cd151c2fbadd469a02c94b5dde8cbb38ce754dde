@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b7497290_9028d2e4",
+        "filename": "chrome/test/data/android/webvr_instrumentation/html/webvr_page_submits_once.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1163549
+      },
+      "writtenOn": "2017-08-28T21:34:38Z",
+      "side": 1,
+      "message": "If you aren\u0027t using anything in testharness.js (async_test, asserts, etc.), you should be able to remove this script import.",
+      "range": {
+        "startLine": 11,
+        "startChar": 76,
+        "endLine": 11,
+        "endChar": 87
+      },
+      "revId": "cd151c2fbadd469a02c94b5dde8cbb38ce754dde",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
