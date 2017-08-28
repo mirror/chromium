@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "9e50e4dc_d3a328b2",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXLayoutObject.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 745,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2017-08-28T13:29:43Z",
+      "side": 1,
+      "message": "I\u0027ve added a comment to the code.\n\nWhat I did was create a test file for manual testing, with pairs of each type of element styled as inline. I ran over this file with NVDA and JAWS using a Canary build. If the text was jammed to together in the output as one word, that meant we need to ensure the extra whitespace node is there. If however, the screen reader read the 2 items as separate anyway, I created an exception here so as to minimize extra nodes and test changes.",
+      "parentUuid": "384d02e1_544bb7da",
+      "revId": "2776d2d2671e938b2c428f7254ee25111b9e7d03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5b061dbe_f3be3165",
         "filename": "third_party/WebKit/Source/modules/accessibility/AXLayoutObject.cpp",
         "patchSetId": 8
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "41d48a24_4463cf95",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXLayoutObject.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 755,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2017-08-28T13:29:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5b061dbe_f3be3165",
+      "revId": "2776d2d2671e938b2c428f7254ee25111b9e7d03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "83abc66d_c68ecadd",
         "filename": "third_party/WebKit/Source/modules/accessibility/AXLayoutObject.cpp",
         "patchSetId": 8
@@ -50,6 +86,24 @@
       "revId": "2776d2d2671e938b2c428f7254ee25111b9e7d03",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0e3f6ad_ac8876d5",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXLayoutObject.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 775,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2017-08-28T13:29:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "83abc66d_c68ecadd",
+      "revId": "2776d2d2671e938b2c428f7254ee25111b9e7d03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
