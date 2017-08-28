@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4e745f36_2fecd638",
+        "filename": "content/browser/frame_host/input/input_injector_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-28T07:57:39Z",
+      "side": 1,
+      "message": "Nit: std::move() if passing WeakPtr by value (ditto below)",
+      "revId": "a8f127fb8d8af4251e8c7847eb78277f95d67237",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43c2fbd8_0cf46c2b",
+        "filename": "content/browser/renderer_host/input/synthetic_gesture_controller.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-28T07:57:39Z",
+      "side": 1,
+      "message": "FWIW, my personal opinion is it could be a bit surprising to keep a nulled-out callback around at the front. At the same time, I don\u0027t have a concrete suggestion for simplifying this, due to how it currently works.",
+      "revId": "a8f127fb8d8af4251e8c7847eb78277f95d67237",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "917787ef_0ca7c8dd",
+        "filename": "content/public/app/mojo/content_browser_manifest.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-28T07:57:39Z",
+      "side": 1,
+      "message": "Would you mind adding a comment that this interface is only exposed in GPU benchmarking mode?",
+      "revId": "a8f127fb8d8af4251e8c7847eb78277f95d67237",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ac2740e_72b042af",
+        "filename": "content/renderer/gpu/gpu_benchmarking_extension.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-28T07:57:39Z",
+      "side": 1,
+      "message": "Nit: explicit",
+      "revId": "a8f127fb8d8af4251e8c7847eb78277f95d67237",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
