@@ -90,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "43b87ca5_e5f08876",
+        "filename": "content/renderer/input/render_widget_input_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-08-28T16:03:10Z",
+      "side": 1,
+      "message": "No we don\u0027t stash a ref counted temporary on the stack to RenderWidget somewhere; we could if need be (probably in RenderWidget::HandleInputEvent). But that doesn\u0027t change this code; if the input event was destroying the RenderWidget that would happen inside the call on line 260; and then all of the code after that in this class would be executing on an free\u0027d variable but that call graph doesn\u0027t happen is what I was saying.",
+      "parentUuid": "aeab7d43_77645b07",
+      "revId": "184021616d30e182dc4c77c0c5b7599464578b55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a474bc68_1d8e9d4b",
         "filename": "content/renderer/input/widget_input_handler_manager.cc",
         "patchSetId": 2
@@ -155,6 +173,24 @@
       "side": 1,
       "message": "I\u0027m a little surprised that this works, but it\u0027s definitely not supported.\n\nBut I\u0027m wondering if you can get Aaway with just specifying that TouchActionOptional is typemapped to base::Optional\u003ccc::TouchAction\u003e in the typemap file?",
       "parentUuid": "da4ed733_7ef73d19",
+      "revId": "184021616d30e182dc4c77c0c5b7599464578b55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c68f13d9_758b76cc",
+        "filename": "content/renderer/input/widget_input_handler_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-08-28T16:03:10Z",
+      "side": 1,
+      "message": "Although that compiles it fails with:\n\n[37495:37495:0828/115939.341075:ERROR:validation_errors.cc(76)] Invalid message: VALIDATION_ERROR_UNEXPECTED_NULL_POINTER (null touch_action field in WidgetInputHandler_DispatchEvent_ResponseParams)\n[37495:37495:0828/115939.341106:ERROR:render_process_host_impl.cc(4097)] Terminating render process for bad Mojo message: Received bad user message: Validation failed for WidgetInputHandler ResponseValidator [VALIDATION_ERROR_UNEXPECTED_NULL_POINTER (null touch_action field in WidgetInputHandler_DispatchEvent_ResponseParams)]\n\nwhen it is run.",
+      "parentUuid": "ad34f516_65c9b3d0",
       "revId": "184021616d30e182dc4c77c0c5b7599464578b55",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
