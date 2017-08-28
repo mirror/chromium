@@ -13,8 +13,9 @@
 namespace ui {
 
 AXNode::AXNode(AXNode* parent, int32_t id, int32_t index_in_parent)
-    : index_in_parent_(index_in_parent), parent_(parent) {
+    : parent_(parent) {
   data_.id = id;
+  data_.index_in_parent = index_in_parent;
 }
 
 AXNode::~AXNode() {
@@ -42,7 +43,11 @@ void AXNode::SetLocation(int offset_container_id,
 }
 
 void AXNode::SetIndexInParent(int index_in_parent) {
-  index_in_parent_ = index_in_parent;
+  data_.index_in_parent = index_in_parent;
+}
+
+int AXNode::index_in_parent() const {
+  return data_.index_in_parent;
 }
 
 void AXNode::SwapChildren(std::vector<AXNode*>& children) {

@@ -9,6 +9,7 @@
 #include "ui/accessibility/ax_action_data.h"
 #include "ui/accessibility/ax_node_data.h"
 #include "ui/accessibility/ax_role_properties.h"
+#include "ui/accessibility/ax_tree_data.h"
 #include "ui/accessibility/platform/ax_platform_node_delegate.h"
 #include "ui/gfx/geometry/rect_conversions.h"
 
@@ -469,6 +470,84 @@ int AXPlatformNodeBase::GetTableRowSpan() const {
   if (GetIntAttribute(ui::AX_ATTR_TABLE_CELL_ROW_SPAN, &row_span))
     return row_span;
   return 1;
+}
+
+bool AXPlatformNodeBase::HasCaret() {
+  if (IsSimpleTextControl() && HasIntAttribute(ui::AX_ATTR_TEXT_SEL_START) &&
+      HasIntAttribute(ui::AX_ATTR_TEXT_SEL_END)) {
+    return true;
+  }
+
+  // The caret is always at the focus of the selection.
+  int32_t focus_id = delegate_->GetTreeData().sel_focus_object_id;
+  AXPlatformNodeBase* focus_object =
+      static_cast<AXPlatformNodeBase*>(delegate_->GetFromNodeID(focus_id));
+
+  if (!focus_object)
+    return false;
+
+  return focus_object->IsDescendantOf(this);
+}
+
+bool AXPlatformNodeBase::IsDescendantOf(AXPlatformNodeBase* ancestor) {
+  if (!ancestor)
+    return false;
+
+  if (this == ancestor)
+    return true;
+
+  AXPlatformNodeBase* parent = FromNativeViewAccessible(GetParent());
+  if (!parent)
+    return false;
+
+  return parent->IsDescendantOf(ancestor);
+}
+
+bool AXPlatformNodeBase::IsLeaf() {
+  if (GetChildCount() == 0)
+    return true;
+
+  // These types of objects may have children that we use as internal
+  // implementation details, but we want to expose them as leaves to platform
+  // accessibility APIs because screen readers might be confused if they find
+  // any children.
+  // Note that if a combo box, search box or text field are not native, they
+  // might present a menu of choices using aria-owns which should not be hidden
+  // from tree.
+  if (IsNativeTextControl() || IsTextOnlyObject())
+    return true;
+
+  // Roles whose children are only presentational according to the ARIA and
+  // HTML5 Specs should be hidden from screen readers.
+  // (Note that whilst ARIA buttons can have only presentational children, HTML5
+  // buttons are allowed to have content.)
+  switch (GetData().role) {
+    case ui::AX_ROLE_IMAGE:
+    case ui::AX_ROLE_METER:
+    case ui::AX_ROLE_SCROLL_BAR:
+    case ui::AX_ROLE_SLIDER:
+    case ui::AX_ROLE_SPLITTER:
+    case ui::AX_ROLE_PROGRESS_INDICATOR:
+      return true;
+    default:
+      return false;
+  }
+}
+
+bool AXPlatformNodeBase::IsChildOfLeaf() {
+  AXPlatformNodeBase* ancestor = FromNativeViewAccessible(GetParent());
+
+  while (ancestor) {
+    if (ancestor->IsLeaf())
+      return true;
+    ancestor = FromNativeViewAccessible(ancestor->GetParent());
+  }
+
+  return false;
+}
+
+base::string16 AXPlatformNodeBase::GetText() {
+  return GetInnerText();
 }
 
 }  // namespace ui

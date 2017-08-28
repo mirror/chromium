@@ -115,6 +115,28 @@ class AX_EXPORT AXPlatformNodeBase : public AXPlatformNode {
   // this cell spans. If not a cell, returns 0.
   int GetTableRowSpan() const;
 
+  // Returns true if the caret is active on this object.
+  bool HasCaret();
+
+  // Return true if this object is equal to or a descendant of |ancestor|.
+  bool IsDescendantOf(AXPlatformNodeBase* ancestor);
+
+  // Returns true if an ancestor of this node (not including itself) is a
+  // leaf node, meaning that this node is not actually exposed to the
+  // platform.
+  bool IsChildOfLeaf();
+
+  // Returns true if this is a leaf node on this platform, meaning any
+  // children should not be exposed to this platform's native accessibility
+  // layer. Each platform subclass should implement this itself.
+  // The definition of a leaf may vary depending on the platform,
+  // but a leaf node should never have children that are focusable or
+  // that might send notifications.
+  bool IsLeaf();
+
+  // TODO(dougt) Maybe promote this to AXPlatformNode at some point.
+  virtual base::string16 GetText();
+
   //
   // Delegate.  This is a weak reference which owns |this|.
   //

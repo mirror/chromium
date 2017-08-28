@@ -28,7 +28,7 @@ class AX_EXPORT AXNode {
   int child_count() const { return static_cast<int>(children_.size()); }
   const AXNodeData& data() const { return data_; }
   const std::vector<AXNode*>& children() const { return children_; }
-  int index_in_parent() const { return index_in_parent_; }
+  int index_in_parent() const;
 
   // Get the child at the given index.
   AXNode* ChildAtIndex(int index) const { return children_[index]; }
@@ -78,7 +78,6 @@ class AX_EXPORT AXNode {
   void ComputeLineStartOffsets(std::vector<int>* line_offsets,
                                int* start_offset) const;
 
-  int index_in_parent_;
   AXNode* parent_;
   std::vector<AXNode*> children_;
   AXNodeData data_;

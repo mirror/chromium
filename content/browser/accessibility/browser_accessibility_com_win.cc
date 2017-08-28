@@ -56,7 +56,6 @@ const GUID GUID_IAccessibleContentDocument = {
     0x4d8f,
     {0x95, 0x21, 0x07, 0xed, 0x28, 0xfb, 0x07, 0x2e}};
 
-const base::char16 BrowserAccessibilityComWin::kEmbeddedCharacter = L'\xfffc';
 
 void AddAccessibilityModeFlags(ui::AXMode mode_flags) {
   BrowserAccessibilityStateImpl::GetInstance()->AddAccessibilityModeFlags(
@@ -350,7 +349,7 @@ STDMETHODIMP BrowserAccessibilityComWin::get_nCharacters(LONG* n_characters) {
   if (!n_characters)
     return E_INVALIDARG;
 
-  *n_characters = static_cast<LONG>(owner()->GetText().size());
+  *n_characters = static_cast<LONG>(GetText().size());
   return S_OK;
 }
 
@@ -392,7 +391,7 @@ STDMETHODIMP BrowserAccessibilityComWin::get_characterExtents(
   if (!out_x || !out_y || !out_width || !out_height)
     return E_INVALIDARG;
 
-  const base::string16& text_str = owner()->GetText();
+  const base::string16& text_str = GetText();
   HandleSpecialTextOffset(&offset);
   if (offset < 0 || offset > static_cast<LONG>(text_str.size()))
     return E_INVALIDARG;
@@ -481,7 +480,7 @@ STDMETHODIMP BrowserAccessibilityComWin::get_text(LONG start_offset,
   if (!text)
     return E_INVALIDARG;
 
-  const base::string16& text_str = owner()->GetText();
+  const base::string16& text_str = GetText();
   HandleSpecialTextOffset(&start_offset);
   HandleSpecialTextOffset(&end_offset);
 
@@ -534,7 +533,7 @@ STDMETHODIMP BrowserAccessibilityComWin::get_textAtOffset(
   if (offset < 0)
     return E_INVALIDARG;
 
-  const base::string16& text_str = owner()->GetText();
+  const base::string16& text_str = GetText();
   LONG text_len = text_str.length();
   if (offset > text_len)
     return E_INVALIDARG;
@@ -578,7 +577,7 @@ STDMETHODIMP BrowserAccessibilityComWin::get_textBeforeOffset(
   *end_offset = 0;
   *text = NULL;
 
-  const base::string16& text_str = owner()->GetText();
+  const base::string16& text_str = GetText();
   LONG text_len = text_str.length();
   if (offset > text_len)
     return E_INVALIDARG;
@@ -612,7 +611,7 @@ STDMETHODIMP BrowserAccessibilityComWin::get_textAfterOffset(
   *end_offset = 0;
   *text = NULL;
 
-  const base::string16& text_str = owner()->GetText();
+  const base::string16& text_str = GetText();
   LONG text_len = text_str.length();
   if (offset > text_len)
     return E_INVALIDARG;
@@ -644,7 +643,7 @@ STDMETHODIMP BrowserAccessibilityComWin::get_newText(IA2TextSegment* new_text) {
   if (new_len == 0)
     return E_FAIL;
 
-  base::string16 substr = owner()->GetText().substr(start, new_len);
+  base::string16 substr = GetText().substr(start, new_len);
   new_text->text = SysAllocString(substr.c_str());
   new_text->start = static_cast<long>(start);
   new_text->end = static_cast<long>(start + new_len);
@@ -668,7 +667,7 @@ STDMETHODIMP BrowserAccessibilityComWin::get_oldText(IA2TextSegment* old_text) {
   if (old_len == 0)
     return E_FAIL;
 
-  base::string16 old_hypertext = old_win_attributes_->hypertext;
+  base::string16 old_hypertext = old_hypertext_;
   base::string16 substr = old_hypertext.substr(start, old_len);
   old_text->text = SysAllocString(substr.c_str());
   old_text->start = static_cast<long>(start);
@@ -801,7 +800,7 @@ STDMETHODIMP BrowserAccessibilityComWin::get_attributes(LONG offset,
   if (!owner())
     return E_FAIL;
 
-  const base::string16 text = owner()->GetText();
+  const base::string16 text = GetText();
   HandleSpecialTextOffset(&offset);
   if (offset < 0 || offset > static_cast<LONG>(text.size()))
     return E_INVALIDARG;
@@ -839,7 +838,7 @@ STDMETHODIMP BrowserAccessibilityComWin::get_nHyperlinks(
   if (!hyperlink_count)
     return E_INVALIDARG;
 
-  *hyperlink_count = hyperlink_offset_to_index().size();
+  *hyperlink_count = hyperlink_offset_to_index_.size();
   return S_OK;
 }
 
@@ -852,11 +851,11 @@ STDMETHODIMP BrowserAccessibilityComWin::get_hyperlink(
     return E_FAIL;
 
   if (!hyperlink || index < 0 ||
-      index >= static_cast<long>(hyperlinks().size())) {
+      index >= static_cast<long>(hyperlinks_.size())) {
     return E_INVALIDARG;
   }
 
-  int32_t id = hyperlinks()[index];
+  int32_t id = hyperlinks_[index];
   auto* link = static_cast<BrowserAccessibilityComWin*>(
       AXPlatformNodeWin::GetFromUniqueId(id));
   if (!link)
@@ -877,14 +876,13 @@ STDMETHODIMP BrowserAccessibilityComWin::get_hyperlinkIndex(
   if (!hyperlink_index)
     return E_INVALIDARG;
 
-  if (char_index < 0 ||
-      char_index >= static_cast<long>(owner()->GetText().size())) {
+  if (char_index < 0 || char_index >= static_cast<long>(GetText().size())) {
     return E_INVALIDARG;
   }
 
   std::map<int32_t, int32_t>::iterator it =
-      hyperlink_offset_to_index().find(char_index);
-  if (it == hyperlink_offset_to_index().end()) {
+      hyperlink_offset_to_index_.find(char_index);
+  if (it == hyperlink_offset_to_index_.end()) {
     *hyperlink_index = -1;
     return S_FALSE;
   }
@@ -909,7 +907,7 @@ STDMETHODIMP BrowserAccessibilityComWin::get_anchor(long index,
   if (index != 0 || !anchor)
     return E_INVALIDARG;
 
-  BSTR ia2_hypertext = SysAllocString(owner()->GetText().c_str());
+  BSTR ia2_hypertext = SysAllocString(GetText().c_str());
   DCHECK(ia2_hypertext);
   anchor->vt = VT_BSTR;
   anchor->bstrVal = ia2_hypertext;
@@ -966,8 +964,7 @@ STDMETHODIMP BrowserAccessibilityComWin::get_startIndex(long* index) {
   auto* parent = owner()->PlatformGetParent();
   if (parent) {
     hypertext_offset =
-        ToBrowserAccessibilityComWin(parent)->GetHypertextOffsetFromChild(
-            *this);
+        ToBrowserAccessibilityComWin(parent)->GetHypertextOffsetFromChild(this);
   }
   *index = static_cast<LONG>(hypertext_offset);
   return S_OK;
@@ -1663,8 +1660,7 @@ STDMETHODIMP BrowserAccessibilityComWin::get_unclippedSubstringBounds(
   if (!out_x || !out_y || !out_width || !out_height)
     return E_INVALIDARG;
 
-  unsigned int text_length =
-      static_cast<unsigned int>(owner()->GetText().size());
+  unsigned int text_length = static_cast<unsigned int>(GetText().size());
   if (start_index > text_length || end_index > text_length ||
       start_index > end_index) {
     return E_INVALIDARG;
@@ -1692,8 +1688,7 @@ STDMETHODIMP BrowserAccessibilityComWin::scrollToSubstring(
   if (!manager)
     return E_FAIL;
 
-  unsigned int text_length =
-      static_cast<unsigned int>(owner()->GetText().size());
+  unsigned int text_length = static_cast<unsigned int>(GetText().size());
   if (start_index > text_length || end_index > text_length ||
       start_index > end_index) {
     return E_INVALIDARG;
@@ -1901,9 +1896,7 @@ HRESULT WINAPI BrowserAccessibilityComWin::InternalQueryInterface(
       return E_NOINTERFACE;
     }
   } else if (iid == IID_IAccessibleHyperlink) {
-    auto* ax_object =
-        reinterpret_cast<const BrowserAccessibilityComWin*>(this_ptr);
-    if (!ax_object || !ax_object->IsHyperlink()) {
+    if (!accessibility || !accessibility->IsHyperlink()) {
       *object = nullptr;
       return E_NOINTERFACE;
     }
@@ -1968,7 +1961,7 @@ void BrowserAccessibilityComWin::ComputeStylesIfNeeded() {
     }
 
     if (child->owner()->IsTextOnlyObject())
-      start_offset += child->owner()->GetText().length();
+      start_offset += child->GetText().length();
     else
       start_offset += 1;
   }
@@ -2002,6 +1995,16 @@ void BrowserAccessibilityComWin::UpdateStep1ComputeWinAttributes() {
   // exactly what changed and fire appropriate events. Note that
   // old_win_attributes_ is cleared at the end of UpdateStep3FireEvents.
   old_win_attributes_.swap(win_attributes_);
+
+  old_hyperlinks_.swap(hyperlinks_);
+  hyperlinks_.clear();
+
+  old_hyperlink_offset_to_index_.swap(hyperlink_offset_to_index_);
+  hyperlink_offset_to_index_.clear();
+
+  old_hypertext_.swap(hypertext_);
+  hypertext_.clear();
+
   win_attributes_.reset(new WinAttributes());
 
   win_attributes_->ia_role = MSAARole();
@@ -2044,7 +2047,7 @@ void BrowserAccessibilityComWin::UpdateStep1ComputeWinAttributes() {
 
 void BrowserAccessibilityComWin::UpdateStep2ComputeHypertext() {
   if (owner()->IsSimpleTextControl()) {
-    win_attributes_->hypertext = value();
+    hypertext_ = value();
     return;
   }
 
@@ -2053,7 +2056,7 @@ void BrowserAccessibilityComWin::UpdateStep2ComputeHypertext() {
       // We don't want to expose any associated label in IA2 Hypertext.
       return;
     }
-    win_attributes_->hypertext = name();
+    hypertext_ = name();
     return;
   }
 
@@ -2062,19 +2065,20 @@ void BrowserAccessibilityComWin::UpdateStep2ComputeHypertext() {
   // embedded object character for all the other children. Build up a map from
   // the character index of each embedded object character to the id of the
   // child object it points to.
-  for (unsigned int i = 0; i < owner()->PlatformChildCount(); ++i) {
+  auto child_count = owner()->PlatformChildCount();
+  for (unsigned int i = 0; i < child_count; ++i) {
     auto* child = ToBrowserAccessibilityComWin(owner()->PlatformGetChild(i));
     DCHECK(child);
     // Similar to Firefox, we don't expose text-only objects in IA2 hypertext.
     if (child->owner()->IsTextOnlyObject()) {
-      win_attributes_->hypertext += child->name();
+      hypertext_ += child->name();
     } else {
-      int32_t char_offset = static_cast<int32_t>(owner()->GetText().size());
+      int32_t char_offset = static_cast<int32_t>(GetText().size());
       int32_t child_unique_id = child->unique_id();
-      int32_t index = hyperlinks().size();
-      win_attributes_->hyperlink_offset_to_index[char_offset] = index;
-      win_attributes_->hyperlinks.push_back(child_unique_id);
-      win_attributes_->hypertext += kEmbeddedCharacter;
+      int32_t index = hyperlinks_.size();
+      hyperlink_offset_to_index_[char_offset] = index;
+      hyperlinks_.push_back(child_unique_id);
+      hypertext_ += kEmbeddedCharacter;
     }
   }
 }
@@ -2161,6 +2165,9 @@ void BrowserAccessibilityComWin::UpdateStep3FireEvents(
   }
 
   old_win_attributes_.reset(nullptr);
+  old_hyperlinks_.clear();
+  old_hyperlink_offset_to_index_.clear();
+  old_hypertext_.clear();
 }
 
 BrowserAccessibilityManager* BrowserAccessibilityComWin::Manager() const {
@@ -2409,7 +2416,7 @@ BrowserAccessibilityComWin::GetSpellingAttributes() {
           spelling_attributes[start_offset + attribute.first] =
               std::move(attribute.second);
         }
-        start_offset += static_cast<int>(text_win->owner()->GetText().length());
+        start_offset += static_cast<int>(text_win->GetText().length());
       }
     }
   }
@@ -2484,358 +2491,6 @@ void BrowserAccessibilityComWin::SetIA2HypertextSelection(LONG start_offset,
       AXPlatformRange(std::move(start_position), std::move(end_position)));
 }
 
-bool BrowserAccessibilityComWin::IsHyperlink() const {
-  int32_t hyperlink_index = -1;
-  auto* parent = owner()->PlatformGetParent();
-  if (parent) {
-    hyperlink_index =
-        ToBrowserAccessibilityComWin(parent)->GetHyperlinkIndexFromChild(*this);
-  }
-
-  if (hyperlink_index >= 0)
-    return true;
-  return false;
-}
-
-BrowserAccessibilityComWin*
-BrowserAccessibilityComWin::GetHyperlinkFromHypertextOffset(int offset) const {
-  std::map<int32_t, int32_t>::iterator iterator =
-      hyperlink_offset_to_index().find(offset);
-  if (iterator == hyperlink_offset_to_index().end())
-    return nullptr;
-
-  int32_t index = iterator->second;
-  DCHECK_GE(index, 0);
-  DCHECK_LT(index, static_cast<int32_t>(hyperlinks().size()));
-  int32_t id = hyperlinks()[index];
-  auto* hyperlink = static_cast<BrowserAccessibilityComWin*>(
-      AXPlatformNodeWin::GetFromUniqueId(id));
-  if (!hyperlink)
-    return nullptr;
-  return hyperlink;
-}
-
-int32_t BrowserAccessibilityComWin::GetHyperlinkIndexFromChild(
-    const BrowserAccessibilityComWin& child) const {
-  if (hyperlinks().empty())
-    return -1;
-
-  auto iterator =
-      std::find(hyperlinks().begin(), hyperlinks().end(), child.unique_id());
-  if (iterator == hyperlinks().end())
-    return -1;
-
-  return static_cast<int32_t>(iterator - hyperlinks().begin());
-}
-
-int32_t BrowserAccessibilityComWin::GetHypertextOffsetFromHyperlinkIndex(
-    int32_t hyperlink_index) const {
-  for (auto& offset_index : hyperlink_offset_to_index()) {
-    if (offset_index.second == hyperlink_index)
-      return offset_index.first;
-  }
-
-  return -1;
-}
-
-int32_t BrowserAccessibilityComWin::GetHypertextOffsetFromChild(
-    BrowserAccessibilityComWin& child) {
-  DCHECK(child.owner()->PlatformGetParent() == owner());
-
-  // Handle the case when we are dealing with a direct text-only child.
-  // (Note that this object might be a platform leaf, e.g. an ARIA searchbox,
-  // and so |owner()->InternalChild...| functions need to be used. Also,
-  // direct text-only children should not be present at tree roots and so no
-  // cross-tree traversal is necessary.)
-  if (child.owner()->IsTextOnlyObject()) {
-    int32_t hypertextOffset = 0;
-    int32_t index_in_parent = child.GetIndexInParent();
-    DCHECK_GE(index_in_parent, 0);
-    DCHECK_LT(index_in_parent,
-              static_cast<int32_t>(owner()->InternalChildCount()));
-    for (uint32_t i = 0; i < static_cast<uint32_t>(index_in_parent); ++i) {
-      const BrowserAccessibilityComWin* sibling =
-          ToBrowserAccessibilityComWin(owner()->InternalGetChild(i));
-      DCHECK(sibling);
-      if (sibling->owner()->IsTextOnlyObject())
-        hypertextOffset += sibling->owner()->GetText().size();
-      else
-        ++hypertextOffset;
-    }
-    return hypertextOffset;
-  }
-
-  int32_t hyperlink_index = GetHyperlinkIndexFromChild(child);
-  if (hyperlink_index < 0)
-    return -1;
-
-  return GetHypertextOffsetFromHyperlinkIndex(hyperlink_index);
-}
-
-int32_t BrowserAccessibilityComWin::GetHypertextOffsetFromDescendant(
-    const BrowserAccessibilityComWin& descendant) const {
-  auto* parent_object =
-      ToBrowserAccessibilityComWin(descendant.owner()->PlatformGetParent());
-  auto* current_object = const_cast<BrowserAccessibilityComWin*>(&descendant);
-  while (parent_object && parent_object != this) {
-    current_object = parent_object;
-    parent_object = ToBrowserAccessibilityComWin(
-        current_object->owner()->PlatformGetParent());
-  }
-  if (!parent_object)
-    return -1;
-
-  return parent_object->GetHypertextOffsetFromChild(*current_object);
-}
-
-int BrowserAccessibilityComWin::GetHypertextOffsetFromEndpoint(
-    const BrowserAccessibilityComWin& endpoint_object,
-    int endpoint_offset) const {
-  // There are three cases:
-  // 1. Either the selection endpoint is inside this object or is an ancestor of
-  // of this object. endpoint_offset should be returned.
-  // 2. The selection endpoint is a pure descendant of this object. The offset
-  // of the character corresponding to the subtree in which the endpoint is
-  // located should be returned.
-  // 3. The selection endpoint is in a completely different part of the tree.
-  // Either 0 or text_length should be returned depending on the direction that
-  // one needs to travel to find the endpoint.
-
-  // Case 1.
-  //
-  // IsDescendantOf includes the case when endpoint_object == this.
-  if (owner()->IsDescendantOf(endpoint_object.owner()))
-    return endpoint_offset;
-
-  const BrowserAccessibility* common_parent = owner();
-  int32_t index_in_common_parent = owner()->GetIndexInParent();
-  while (common_parent &&
-         !endpoint_object.owner()->IsDescendantOf(common_parent)) {
-    index_in_common_parent = common_parent->GetIndexInParent();
-    common_parent = common_parent->PlatformGetParent();
-  }
-  if (!common_parent)
-    return -1;
-
-  DCHECK_GE(index_in_common_parent, 0);
-  DCHECK(!(common_parent->IsTextOnlyObject()));
-
-  // Case 2.
-  //
-  // We already checked in case 1 if our endpoint is inside this object.
-  // We can safely assume that it is a descendant or in a completely different
-  // part of the tree.
-  if (common_parent == owner()) {
-    int32_t hypertext_offset =
-        GetHypertextOffsetFromDescendant(endpoint_object);
-    if (endpoint_object.owner()->PlatformGetParent() == owner() &&
-        endpoint_object.owner()->IsTextOnlyObject()) {
-      hypertext_offset += endpoint_offset;
-    }
-
-    return hypertext_offset;
-  }
-
-  // Case 3.
-  //
-  // We can safely assume that the endpoint is in another part of the tree or
-  // at common parent, and that this object is a descendant of common parent.
-  int32_t endpoint_index_in_common_parent = -1;
-  for (uint32_t i = 0; i < common_parent->InternalChildCount(); ++i) {
-    const BrowserAccessibility* child = common_parent->InternalGetChild(i);
-    DCHECK(child);
-    if (endpoint_object.owner()->IsDescendantOf(child)) {
-      endpoint_index_in_common_parent = child->GetIndexInParent();
-      break;
-    }
-  }
-  DCHECK_GE(endpoint_index_in_common_parent, 0);
-
-  if (endpoint_index_in_common_parent < index_in_common_parent)
-    return 0;
-  if (endpoint_index_in_common_parent > index_in_common_parent)
-    return owner()->GetText().size();
-
-  NOTREACHED();
-  return -1;
-}
-
-int BrowserAccessibilityComWin::GetSelectionAnchor() const {
-  int32_t anchor_id = Manager()->GetTreeData().sel_anchor_object_id;
-  const BrowserAccessibilityComWin* anchor_object = GetFromID(anchor_id);
-  if (!anchor_object)
-    return -1;
-
-  int anchor_offset = Manager()->GetTreeData().sel_anchor_offset;
-  return GetHypertextOffsetFromEndpoint(*anchor_object, anchor_offset);
-}
-
-int BrowserAccessibilityComWin::GetSelectionFocus() const {
-  int32_t focus_id = Manager()->GetTreeData().sel_focus_object_id;
-  const BrowserAccessibilityComWin* focus_object = GetFromID(focus_id);
-  if (!focus_object)
-    return -1;
-
-  int focus_offset = Manager()->GetTreeData().sel_focus_offset;
-  return GetHypertextOffsetFromEndpoint(*focus_object, focus_offset);
-}
-
-void BrowserAccessibilityComWin::GetSelectionOffsets(int* selection_start,
-                                                     int* selection_end) const {
-  DCHECK(selection_start && selection_end);
-
-  if (owner()->IsSimpleTextControl() &&
-      owner()->GetIntAttribute(ui::AX_ATTR_TEXT_SEL_START, selection_start) &&
-      owner()->GetIntAttribute(ui::AX_ATTR_TEXT_SEL_END, selection_end)) {
-    return;
-  }
-
-  *selection_start = GetSelectionAnchor();
-  *selection_end = GetSelectionFocus();
-  if (*selection_start < 0 || *selection_end < 0)
-    return;
-
-  // There are three cases when a selection would start and end on the same
-  // character:
-  // 1. Anchor and focus are both in a subtree that is to the right of this
-  // object.
-  // 2. Anchor and focus are both in a subtree that is to the left of this
-  // object.
-  // 3. Anchor and focus are in a subtree represented by a single embedded
-  // object character.
-  // Only case 3 refers to a valid selection because cases 1 and 2 fall
-  // outside this object in their entirety.
-  // Selections that span more than one character are by definition inside this
-  // object, so checking them is not necessary.
-  if (*selection_start == *selection_end && !owner()->HasCaret()) {
-    *selection_start = -1;
-    *selection_end = -1;
-    return;
-  }
-
-  // The IA2 Spec says that if the largest of the two offsets falls on an
-  // embedded object character and if there is a selection in that embedded
-  // object, it should be incremented by one so that it points after the
-  // embedded object character.
-  // This is a signal to AT software that the embedded object is also part of
-  // the selection.
-  int* largest_offset =
-      (*selection_start <= *selection_end) ? selection_end : selection_start;
-  BrowserAccessibilityComWin* hyperlink =
-      GetHyperlinkFromHypertextOffset(*largest_offset);
-  if (!hyperlink)
-    return;
-
-  LONG n_selections = 0;
-  HRESULT hr = hyperlink->get_nSelections(&n_selections);
-  DCHECK(SUCCEEDED(hr));
-  if (n_selections > 0)
-    ++(*largest_offset);
-}
-
-bool BrowserAccessibilityComWin::IsSameHypertextCharacter(
-    size_t old_char_index,
-    size_t new_char_index) {
-  CHECK(old_win_attributes_);
-
-  // For anything other than the "embedded character", we just compare the
-  // characters directly.
-  base::char16 old_ch = old_win_attributes_->hypertext[old_char_index];
-  base::char16 new_ch = win_attributes_->hypertext[new_char_index];
-  if (old_ch != new_ch)
-    return false;
-  if (old_ch == new_ch && new_ch != kEmbeddedCharacter)
-    return true;
-
-  // If it's an embedded character, they're only identical if the child id
-  // the hyperlink points to is the same.
-  std::map<int32_t, int32_t>& old_offset_to_index =
-      old_win_attributes_->hyperlink_offset_to_index;
-  std::vector<int32_t>& old_hyperlinks = old_win_attributes_->hyperlinks;
-  int32_t old_hyperlinks_count = static_cast<int32_t>(old_hyperlinks.size());
-  std::map<int32_t, int32_t>::iterator iter;
-  iter = old_offset_to_index.find(old_char_index);
-  int old_index = (iter != old_offset_to_index.end()) ? iter->second : -1;
-  int old_child_id = (old_index >= 0 && old_index < old_hyperlinks_count)
-                         ? old_hyperlinks[old_index]
-                         : -1;
-
-  std::map<int32_t, int32_t>& new_offset_to_index =
-      win_attributes_->hyperlink_offset_to_index;
-  std::vector<int32_t>& new_hyperlinks = win_attributes_->hyperlinks;
-  int32_t new_hyperlinks_count = static_cast<int32_t>(new_hyperlinks.size());
-  iter = new_offset_to_index.find(new_char_index);
-  int new_index = (iter != new_offset_to_index.end()) ? iter->second : -1;
-  int new_child_id = (new_index >= 0 && new_index < new_hyperlinks_count)
-                         ? new_hyperlinks[new_index]
-                         : -1;
-
-  return old_child_id == new_child_id;
-}
-
-void BrowserAccessibilityComWin::ComputeHypertextRemovedAndInserted(
-    int* start,
-    int* old_len,
-    int* new_len) {
-  CHECK(old_win_attributes_);
-
-  *start = 0;
-  *old_len = 0;
-  *new_len = 0;
-
-  const base::string16& old_text = old_win_attributes_->hypertext;
-  const base::string16& new_text = owner()->GetText();
-
-  size_t common_prefix = 0;
-  while (common_prefix < old_text.size() && common_prefix < new_text.size() &&
-         IsSameHypertextCharacter(common_prefix, common_prefix)) {
-    ++common_prefix;
-  }
-
-  size_t common_suffix = 0;
-  while (common_prefix + common_suffix < old_text.size() &&
-         common_prefix + common_suffix < new_text.size() &&
-         IsSameHypertextCharacter(old_text.size() - common_suffix - 1,
-                                  new_text.size() - common_suffix - 1)) {
-    ++common_suffix;
-  }
-
-  *start = common_prefix;
-  *old_len = old_text.size() - common_prefix - common_suffix;
-  *new_len = new_text.size() - common_prefix - common_suffix;
-}
-
-void BrowserAccessibilityComWin::HandleSpecialTextOffset(LONG* offset) {
-  if (*offset == IA2_TEXT_OFFSET_LENGTH) {
-    *offset = static_cast<LONG>(owner()->GetText().length());
-  } else if (*offset == IA2_TEXT_OFFSET_CARET) {
-    // We shouldn't call |get_caretOffset| here as it affects UMA counts.
-    int selection_start, selection_end;
-    GetSelectionOffsets(&selection_start, &selection_end);
-    *offset = selection_end;
-  }
-}
-
-ui::TextBoundaryType BrowserAccessibilityComWin::IA2TextBoundaryToTextBoundary(
-    IA2TextBoundaryType ia2_boundary) {
-  switch (ia2_boundary) {
-    case IA2_TEXT_BOUNDARY_CHAR:
-      return ui::CHAR_BOUNDARY;
-    case IA2_TEXT_BOUNDARY_WORD:
-      return ui::WORD_BOUNDARY;
-    case IA2_TEXT_BOUNDARY_LINE:
-      return ui::LINE_BOUNDARY;
-    case IA2_TEXT_BOUNDARY_SENTENCE:
-      return ui::SENTENCE_BOUNDARY;
-    case IA2_TEXT_BOUNDARY_PARAGRAPH:
-      return ui::PARAGRAPH_BOUNDARY;
-    case IA2_TEXT_BOUNDARY_ALL:
-      return ui::ALL_BOUNDARY;
-  }
-  NOTREACHED();
-  return ui::CHAR_BOUNDARY;
-}
-
 LONG BrowserAccessibilityComWin::FindBoundary(
     IA2TextBoundaryType ia2_boundary,
     LONG start_offset,
@@ -2893,14 +2548,14 @@ LONG BrowserAccessibilityComWin::FindBoundary(
   // TODO(nektar): |AXPosition| can handle other types of boundaries as well.
   ui::TextBoundaryType boundary = IA2TextBoundaryToTextBoundary(ia2_boundary);
   return ui::FindAccessibleTextBoundary(
-      owner()->GetText(), owner()->GetLineStartOffsets(), boundary,
-      start_offset, direction, affinity);
+      GetText(), owner()->GetLineStartOffsets(), boundary, start_offset,
+      direction, affinity);
 }
 
 LONG BrowserAccessibilityComWin::FindStartOfStyle(
     LONG start_offset,
-    ui::TextBoundaryDirection direction) const {
-  LONG text_length = static_cast<LONG>(owner()->GetText().length());
+    ui::TextBoundaryDirection direction) {
+  LONG text_length = static_cast<LONG>(GetText().length());
   DCHECK_GE(start_offset, 0);
   DCHECK_LE(start_offset, text_length);
 
