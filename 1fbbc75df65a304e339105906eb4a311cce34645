@@ -1,0 +1,191 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "153dabb8_7f373419",
+        "filename": "content/browser/frame_host/requests_tracker_impl_holder.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-28T04:58:49Z",
+      "side": 1,
+      "message": "nit: IsKeepAliveRefCountDisabled() should probably be just DCHECK\u0027ed as we do in the ctor",
+      "revId": "1fbbc75df65a304e339105906eb4a311cce34645",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8863f721_e8c0ce85",
+        "filename": "content/browser/frame_host/requests_tracker_impl_holder.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-28T04:58:49Z",
+      "side": 1,
+      "message": "nit: should this put some error message if the given value is not reasonable?",
+      "revId": "1fbbc75df65a304e339105906eb4a311cce34645",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee13ee81_4fa17acb",
+        "filename": "content/browser/frame_host/requests_tracker_impl_holder.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-28T04:58:49Z",
+      "side": 1,
+      "message": "nit: const int",
+      "revId": "1fbbc75df65a304e339105906eb4a311cce34645",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ebce5c14_fbd08e0f",
+        "filename": "content/browser/frame_host/requests_tracker_impl_holder.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-28T04:58:49Z",
+      "side": 1,
+      "message": "Not used",
+      "revId": "1fbbc75df65a304e339105906eb4a311cce34645",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9bd635d2_9a4373a6",
+        "filename": "content/browser/frame_host/requests_tracker_impl_holder.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-28T04:58:49Z",
+      "side": 1,
+      "message": "Can you add a comment about how this, RequestsTrackerImpl, Context and RenderFrameHost work together, like: Context is a ref-counted object that is used to increment and decrement RenderProcessHost\u0027s KeepAliveRefCount, and its reference is owned by 1) mojom::RequestsTracker connection, which is passed to the renderer process and held as long as ..., and by 2) RenderFrameHostImpl via RequestsTrackerImplHolder, which triggers 30 sec timer to release the reference in its dtor",
+      "revId": "1fbbc75df65a304e339105906eb4a311cce34645",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c73435b9_1ad8d7ce",
+        "filename": "content/browser/loader/resource_dispatcher_host_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1869,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-28T04:58:49Z",
+      "side": 1,
+      "message": "nit: can you add a short comment about what happens if it\u0027s enabled?",
+      "revId": "1fbbc75df65a304e339105906eb4a311cce34645",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "713f3289_71c97c36",
+        "filename": "third_party/WebKit/Source/core/loader/FrameFetchContext.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-28T04:58:49Z",
+      "side": 1,
+      "message": "This method name sounds like we issue a new requests tracker when it\u0027s called, but it\u0027s not, which feels confusing.  TakeIssuedRequestsTracker() ?",
+      "revId": "1fbbc75df65a304e339105906eb4a311cce34645",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6081e0a5_bccf0681",
+        "filename": "third_party/WebKit/Source/core/loader/FrameFetchContext.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-28T04:58:49Z",
+      "side": 1,
+      "message": "Is this boolean for not re-creating requests_tracker_? But if we don\u0027t call CreateURLLoader when a frame is detached when might we do that?",
+      "revId": "1fbbc75df65a304e339105906eb4a311cce34645",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da7dfa45_00e8063e",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/FetchContext.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-28T04:58:49Z",
+      "side": 1,
+      "message": "This\u0027d need some documentation.",
+      "revId": "1fbbc75df65a304e339105906eb4a311cce34645",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "846c7e5a_1fc1a38e",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceFetcher.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-28T04:58:49Z",
+      "side": 1,
+      "message": "Please also document that this will keep WebURLRequestsTracker owned by \u0027self\u0027 alive for the duration of the timer, which also means that it prolongs the lifetime of the renderer process",
+      "revId": "1fbbc75df65a304e339105906eb4a311cce34645",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c11efa69_28d7f0df",
+        "filename": "third_party/WebKit/public/platform/WebURLRequestsTracker.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-28T04:58:49Z",
+      "side": 1,
+      "message": "Can you also document when it\u0027s created and who owns it (e.g. \"held by ResourceFetcher attached to the loading context, e.g. a frame\" or something like that)\n\nPlease also document that holding it would prolong the process\u0027s lifetime even after the frame\u0027s detached",
+      "revId": "1fbbc75df65a304e339105906eb4a311cce34645",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
