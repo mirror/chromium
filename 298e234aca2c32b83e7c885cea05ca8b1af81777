@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2b3d5bf3_352baabe",
+        "filename": "cc/animation/element_animations.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1128438
+      },
+      "writtenOn": "2017-08-28T16:51:10Z",
+      "side": 1,
+      "message": "Further note -- here we are essentially keeping a cache of the active/pending state. I believe it can change particularly since for example ui LayerAnimator has long-lived AnimationPlayers where animations come and go. But, InitAffectedElementTypes is only called by AnimationHost::RegisterPlayerForElement, so I think we may need to also update these bools whenever we update the animation\u0027s active/pending state.\n\nCurrently that happens in three places:\n\n1. AnimationPlayer::ActivateAnimations\n  - called by LayerTreeHostImpl::UpdateSyncTreeAfterCommitOrImplSideInvalidation\n    and ActivateSyncTree\n\n2. AnimationPlayer::PushNewAnimationsToImplThread\n3. ScrollOffsetAnimationsImpl::ScrollAnimationApplyAdjustment\n  - both (2) and (3) eventually called via LayerTreeHost::FinishCommitOnImplThread\n    animation push data flow",
+      "range": {
+        "startLine": 54,
+        "startChar": 2,
+        "endLine": 54,
+        "endChar": 32
+      },
+      "revId": "298e234aca2c32b83e7c885cea05ca8b1af81777",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
