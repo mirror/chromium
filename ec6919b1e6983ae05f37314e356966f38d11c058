@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a1c25e2_b9e552f7",
+        "filename": "content/renderer/fetchers/resource_fetcher_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-28T03:36:10Z",
+      "side": 1,
+      "message": "Should these traffic_annotation tag be given from the caller?",
+      "revId": "ec6919b1e6983ae05f37314e356966f38d11c058",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b61d87c_d115750b",
+        "filename": "content/renderer/fetchers/resource_fetcher_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-28T03:36:10Z",
+      "side": 1,
+      "message": "Could the Start method take URLLoaderFactory as a parameter instead?",
+      "revId": "ec6919b1e6983ae05f37314e356966f38d11c058",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae066fdd_85933de8",
+        "filename": "content/renderer/fetchers/resource_fetcher_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-28T03:36:10Z",
+      "side": 1,
+      "message": "This probably shouldn\u0027t happen? Maybe should be a DCHECK in result !\u003d MOJO_RESULT_OK clause?",
+      "revId": "ec6919b1e6983ae05f37314e356966f38d11c058",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35c4f418_73ae11d9",
+        "filename": "content/renderer/fetchers/resource_fetcher_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-28T03:36:10Z",
+      "side": 1,
+      "message": "Should this also set failed_ \u003d true?",
+      "revId": "ec6919b1e6983ae05f37314e356966f38d11c058",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c62d1f16_e8457f32",
+        "filename": "content/renderer/fetchers/resource_fetcher_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-28T03:36:10Z",
+      "side": 1,
+      "message": "What error would we expect here?",
+      "revId": "ec6919b1e6983ae05f37314e356966f38d11c058",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
