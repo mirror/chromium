@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ae68441a_149d64a5",
+        "filename": "content/browser/accessibility/accessibility_tree_formatter_utils_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-08-28T22:13:49Z",
+      "side": 1,
+      "message": "These aren\u0027t globals, so should they be \"const static\"?",
+      "parentUuid": "6f3e0dfc_3a849b95",
+      "revId": "af0d10df2a04598dd37a719f32a07ada2551963d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "12499b79_3158f340",
         "filename": "content/browser/accessibility/accessibility_tree_formatter_utils_win.cc",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-28T20:50:03Z",
       "side": 1,
       "message": "Would it be possible to skip the map entirely? If the array is sorted-as-defined then searching it will be faster than searching a map and will require zero memory allocations. If the array can\u0027t easily be sorted-as-defined then making it non-const and sorting it on first use would work very nicely.\n\nIt doesn\u0027t matter much - the amount of memory and overhead is small - but if avoiding a map is just as easy we might as well.\n\nNote also that the boiler-plate code to initialize the map and then search it can be extracted into a shared function.",
+      "revId": "af0d10df2a04598dd37a719f32a07ada2551963d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f32aa191_13e0e3d8",
+        "filename": "content/browser/accessibility/accessibility_tree_formatter_utils_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-08-28T22:13:49Z",
+      "side": 1,
+      "message": "Performance-wise it should be fine without the map. I just\nused a linear scan to keep it simple.\n\nUsed a shared function here.",
+      "parentUuid": "12499b79_3158f340",
       "revId": "af0d10df2a04598dd37a719f32a07ada2551963d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
