@@ -29,7 +29,7 @@ const char* const kDefaultDeviceId =
 const char kAnotherDeviceId[] = "another-device-id";
 const char kUnhealthyDeviceId[] = "i-am-sick";
 const int kRenderFrameId = 124;
-const int kDeleteTimeoutMs = 500;
+const int kDeleteTimeoutMs = 400;
 }  // namespace
 
 class AudioRendererSinkCacheTest : public testing::Test {
@@ -216,23 +216,14 @@ TEST_F(AudioRendererSinkCacheTest, GarbageCollection) {
   base::Thread thread("timeout_thread");
   thread.Start();
 
-  // 100 ms more than garbage collection timeout.
-  WaitOnAnotherThread(thread, kDeleteTimeoutMs + 100);
+  // Wait more than garbage collection timeout.
+  WaitOnAnotherThread(thread, kDeleteTimeoutMs * 1.5);
 
   // All the sinks should be garbage-collected by now.
   EXPECT_EQ(0, sink_count());
 }
 
-// Verify that the sink created with GetSinkInfo() is not deleted if used within
-// the timeout.
-// Flaky on Linux TSan Tests. https://crbug.com/754196
-#if defined(OS_LINUX)
-#define MAYBE_NoGarbageCollectionForUsedSink \
-  DISABLED_NoGarbageCollectionForUsedSink
-#else
-#define MAYBE_NoGarbageCollectionForUsedSink NoGarbageCollectionForUsedSink
-#endif
-TEST_F(AudioRendererSinkCacheTest, MAYBE_NoGarbageCollectionForUsedSink) {
+TEST_F(AudioRendererSinkCacheTest, NoGarbageCollectionForUsedSink) {
   EXPECT_EQ(0, sink_count());
   media::OutputDeviceInfo device_info =
       cache_->GetSinkInfo(kRenderFrameId, 0, kDefaultDeviceId, url::Origin());
@@ -242,9 +233,7 @@ TEST_F(AudioRendererSinkCacheTest, MAYBE_NoGarbageCollectionForUsedSink) {
   thread.Start();
 
   // Wait significantly less than grabage collection timeout.
-  int wait_a_bit = 100;
-  DCHECK_GT(kDeleteTimeoutMs, wait_a_bit * 2);
-  WaitOnAnotherThread(thread, wait_a_bit);
+  WaitOnAnotherThread(thread, kDeleteTimeoutMs / 10);
 
   // Sink is not deleted yet.
   EXPECT_EQ(1, sink_count());
@@ -256,7 +245,7 @@ TEST_F(AudioRendererSinkCacheTest, MAYBE_NoGarbageCollectionForUsedSink) {
   EXPECT_EQ(1, sink_count());
 
   // Wait more to hit garbage collection timeout.
-  WaitOnAnotherThread(thread, kDeleteTimeoutMs);
+  WaitOnAnotherThread(thread, kDeleteTimeoutMs * 1.5);
 
   // The sink is still in place.
   EXPECT_EQ(1, sink_count());
@@ -302,8 +291,8 @@ TEST_F(AudioRendererSinkCacheTest, ReleaseSinkBeforeScheduledDeletion) {
   base::Thread thread("timeout_thread");
   thread.Start();
 
-  // 100 ms more than garbage collection timeout.
-  WaitOnAnotherThread(thread, kDeleteTimeoutMs + 100);
+  // Wait more than garbage collection timeout.
+  WaitOnAnotherThread(thread, kDeleteTimeoutMs * 1.5);
 
   // Nothing crashed and the second sink deleted on schedule.
   EXPECT_EQ(0, sink_count());
