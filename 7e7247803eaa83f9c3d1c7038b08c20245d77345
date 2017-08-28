@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5ccc4f6f_5cbbd94c",
+        "filename": "content/public/common/url_loader_throttle.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-08-28T16:37:42Z",
+      "side": 1,
+      "message": "Does it make sense to use DetachFromCurrentSequence(), given that in general we are moving to a sequence-rather-than-thread world?\n\nBesides, please comment on when this could be called -- I think there is no need for throttles to worry about this call mixing with those Will* notifications.",
+      "range": {
+        "startLine": 41,
+        "startChar": 43,
+        "endLine": 41,
+        "endChar": 49
+      },
+      "revId": "7e7247803eaa83f9c3d1c7038b08c20245d77345",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
