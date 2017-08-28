@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "beeafcde_8611ee17",
+        "filename": "media/blink/webmediaplayer_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 339,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-08-28T22:37:54Z",
+      "side": 1,
+      "message": "Should probably be an async event that completes when DoLoad() ends. Otherwise when defer_load_cb_ is used this will not be accurate. defer should happen whenever we\u0027re in the background.",
+      "revId": "3e00bcc5b9096bf62551b50e2bd921a2defe78e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
