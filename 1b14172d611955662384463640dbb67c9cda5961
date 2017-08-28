@@ -16,6 +16,24 @@
       "revId": "1b14172d611955662384463640dbb67c9cda5961",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c147bd70_6905cc45",
+        "filename": "ui/webui/resources/cr_elements/cr_toolbar/cr_toolbar.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-08-28T00:51:29Z",
+      "side": 1,
+      "message": "Actually, I\u0027d rather not affect any ellipsising behavior here..\n\nChanged to fixing the line-height here. It looks like this was happening because the line-height: 154% which was on for bookmarks-app is calculated against the shadow root boundary??\n\ni.e 154% is against the cr-toolbar\u0027s font-size which is 100%, rather than the h1\u0027s font-size which is 123%, so it comes up short. Something weird is happening here..\n\nI\u0027m setting line-height: normal here which makes MD Bookmarks and Settings match History. (This issue affects Settings in Hindi as well)",
+      "parentUuid": "7e473160_57f00bcb",
+      "revId": "1b14172d611955662384463640dbb67c9cda5961",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
