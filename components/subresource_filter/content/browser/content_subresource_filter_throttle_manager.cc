@@ -25,11 +25,28 @@
 #include "content/public/browser/navigation_throttle.h"
 #include "content/public/browser/page_navigator.h"
 #include "content/public/browser/render_frame_host.h"
+#include "content/public/browser/render_process_host.h"
 #include "content/public/browser/web_contents.h"
 #include "content/public/common/console_message_level.h"
 #include "net/base/net_errors.h"
 
 namespace subresource_filter {
+
+namespace {
+
+// Helper function to return the first frame starting from |frame_host|'s
+// parent that is local to this frame.
+content::RenderFrameHost* GetFirstLocalParentForSpecialUrls(
+    content::RenderFrameHost* frame_host) {
+  content::RenderFrameHost* parent = frame_host->GetParent();
+  while (parent &&
+         frame_host->GetProcess()->GetID() != parent->GetProcess()->GetID()) {
+    parent = parent->GetParent();
+  }
+  return parent;
+}
+
+}  // namespace
 
 bool ContentSubresourceFilterThrottleManager::Delegate::
     AllowStrongPopupBlocking() {
@@ -328,7 +345,8 @@ ContentSubresourceFilterThrottleManager::GetParentFrameFilter(
 
     if (it->second.get())
       return it->second.get();
-    parent = it->first->GetParent();
+
+    parent = GetFirstLocalParentForSpecialUrls(parent);
   }
 
   // Since null filter is only possible for special navigations of iframes, the
@@ -385,9 +403,16 @@ void ContentSubresourceFilterThrottleManager::MaybeActivateSubframeSpecialUrls(
   if (!frame_host)
     return;
 
-  content::RenderFrameHost* parent = navigation_handle->GetParentFrame();
-  DCHECK(parent);
-  if (base::ContainsKey(activated_frame_hosts_, parent))
+  // Since for special urls there is no IPC before this point from the renderer,
+  // make sure that the browser process computes the activation state in the
+  // same manner as the renderer process. In the renderer the activation state
+  // of the first frame upwards from the parent frame, that is local to this
+  // frame is computed as the activation state of this frame. Using the same
+  // logic here.
+  content::RenderFrameHost* parent =
+      GetFirstLocalParentForSpecialUrls(frame_host);
+
+  if (parent && base::ContainsKey(activated_frame_hosts_, parent))
     activated_frame_hosts_[frame_host] = nullptr;
 }
 
