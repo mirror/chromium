@@ -316,6 +316,24 @@
       "revId": "c7fe3e3d0173592b9363c8f70057ac761777de16",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3d3c301_b9730ca8",
+        "filename": "ios/chrome/browser/ui/bookmarks/cells/bookmark_table_signin_promo_cell.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1181484
+      },
+      "writtenOn": "2017-08-28T07:04:30Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "3037fe90_fa30bd88",
+      "revId": "c7fe3e3d0173592b9363c8f70057ac761777de16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
