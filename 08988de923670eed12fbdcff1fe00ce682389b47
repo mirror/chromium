@@ -46,6 +46,30 @@
       "revId": "08988de923670eed12fbdcff1fe00ce682389b47",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82f4981e_84e3f3c1",
+        "filename": "base/profiler/native_stack_sampler_mac.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1002120
+      },
+      "writtenOn": "2017-08-28T19:13:23Z",
+      "side": 1,
+      "message": "This seems clear to me. Can you also mention explicitly that the check happens on unwinding of a frame after the frame that produced the bad IP?",
+      "parentUuid": "9d3a2c90_5029aa79",
+      "range": {
+        "startLine": 247,
+        "startChar": 0,
+        "endLine": 247,
+        "endChar": 32
+      },
+      "revId": "08988de923670eed12fbdcff1fe00ce682389b47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
