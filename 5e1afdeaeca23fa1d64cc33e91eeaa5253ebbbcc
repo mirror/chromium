@@ -1,0 +1,129 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "24bbca2c_dcd8047f",
+        "filename": "content/browser/service_worker/service_worker_installed_scripts_sender.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-28T04:36:11Z",
+      "side": 1,
+      "message": "nit: blank space here seemed logical",
+      "revId": "5e1afdeaeca23fa1d64cc33e91eeaa5253ebbbcc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a214f86_4f35a10b",
+        "filename": "content/browser/service_worker/service_worker_installed_scripts_sender.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 446,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-28T04:36:11Z",
+      "side": 1,
+      "message": "maybe add \u003c\u003c \"use Finish() for state kFinished\"",
+      "revId": "5e1afdeaeca23fa1d64cc33e91eeaa5253ebbbcc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37fe56ef_8ff1eb1f",
+        "filename": "content/browser/service_worker/service_worker_installed_scripts_sender.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 447,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-28T04:36:11Z",
+      "side": 1,
+      "message": "Is there a defined progression of states? We could be more rigorous with something like:\n\nswitch (state_) {\n  case kNotStarted:\n    DCHECK_EQ(kSendingMainScript, state);\n  ...\n}",
+      "revId": "5e1afdeaeca23fa1d64cc33e91eeaa5253ebbbcc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc7bd9a9_621796e6",
+        "filename": "content/browser/service_worker/service_worker_installed_scripts_sender_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 473,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-28T04:36:11Z",
+      "side": 1,
+      "message": "\"Use script bodies small enough to be read...\"",
+      "revId": "5e1afdeaeca23fa1d64cc33e91eeaa5253ebbbcc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c44723a_d3434620",
+        "filename": "content/browser/service_worker/service_worker_installed_scripts_sender_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 544,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-28T04:36:11Z",
+      "side": 1,
+      "message": "I thought lines 474-476 said we are trying to avoid two histograms per script.",
+      "revId": "5e1afdeaeca23fa1d64cc33e91eeaa5253ebbbcc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b930897e_9380ecec",
+        "filename": "content/browser/service_worker/service_worker_installed_scripts_sender_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 554,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-28T04:36:11Z",
+      "side": 1,
+      "message": "Not sure this aids readability. I\u0027d opt for a comment on line 551 that says something like:\n// Create a scripts sender for a version that has no installed scripts.",
+      "revId": "5e1afdeaeca23fa1d64cc33e91eeaa5253ebbbcc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0174be5_6ac12311",
+        "filename": "content/browser/service_worker/service_worker_installed_scripts_sender_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 560,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-28T04:36:11Z",
+      "side": 1,
+      "message": "are",
+      "range": {
+        "startLine": 560,
+        "startChar": 38,
+        "endLine": 560,
+        "endChar": 40
+      },
+      "revId": "5e1afdeaeca23fa1d64cc33e91eeaa5253ebbbcc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
