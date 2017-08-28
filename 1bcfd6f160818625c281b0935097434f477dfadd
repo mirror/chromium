@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "102c2e6b_922d988a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/metrics/PageLoadMetrics.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1132034
+      },
+      "writtenOn": "2017-08-28T13:23:01Z",
+      "side": 1,
+      "message": "It is nonetheless based on the same clock as System.currentTimeMillis(), right?",
+      "range": {
+        "startLine": 76,
+        "startChar": 11,
+        "endLine": 76,
+        "endChar": 20
+      },
+      "revId": "1bcfd6f160818625c281b0935097434f477dfadd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89139529_2f62ea9c",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/customtabs/CustomTabActivityTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 1222,
+      "author": {
+        "id": 1132034
+      },
+      "writtenOn": "2017-08-28T13:23:01Z",
+      "side": 1,
+      "message": "nit: While you\u0027re updating this test, can you convert it to using semaphores instead of polling? Would be cleaner.",
+      "revId": "1bcfd6f160818625c281b0935097434f477dfadd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

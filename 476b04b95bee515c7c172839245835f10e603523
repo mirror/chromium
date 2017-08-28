@@ -102,6 +102,30 @@
     },
     {
       "key": {
+        "uuid": "fc5eddf6_ac9059da",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/customtabs/CustomTabsConnection.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 983,
+      "author": {
+        "id": 1132034
+      },
+      "writtenOn": "2017-08-28T13:23:01Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "f3747809_9731ddd6",
+      "range": {
+        "startLine": 983,
+        "startChar": 8,
+        "endLine": 983,
+        "endChar": 13
+      },
+      "revId": "476b04b95bee515c7c172839245835f10e603523",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9a866636_0dd76d9b",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/customtabs/CustomTabsConnection.java",
         "patchSetId": 1
@@ -281,6 +305,24 @@
       "revId": "476b04b95bee515c7c172839245835f10e603523",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "efc4acc0_16c74578",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/metrics/PageLoadMetrics.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1132034
+      },
+      "writtenOn": "2017-08-28T13:23:01Z",
+      "side": 1,
+      "message": "Ack\n\nMight be worth pointing out to AGSA that the value will likely be statically determined based on the current connection type if Chrome just started, so that they know it\u0027s not likely to be better than the Java-level estimate they can get from values in ConnectivityManager.",
+      "parentUuid": "621fe5d2_c225fdbd",
+      "revId": "476b04b95bee515c7c172839245835f10e603523",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
