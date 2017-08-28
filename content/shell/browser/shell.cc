@@ -88,6 +88,9 @@ Shell::Shell(WebContents* web_contents)
     shell_created_callback_.Run(this);
     shell_created_callback_.Reset();
   }
+
+  web_contents_.reset(web_contents);
+  web_contents_->SetDelegate(this);
 }
 
 Shell::~Shell() {
@@ -106,15 +109,14 @@ Shell::~Shell() {
     base::ThreadTaskRunnerHandle::Get()->PostTask(
         FROM_HERE, base::MessageLoop::QuitWhenIdleClosure());
   }
+
+  web_contents_->SetDelegate(nullptr);
 }
 
 Shell* Shell::CreateShell(WebContents* web_contents,
                           const gfx::Size& initial_size) {
   Shell* shell = new Shell(web_contents);
   shell->PlatformCreateWindow(initial_size.width(), initial_size.height());
-
-  shell->web_contents_.reset(web_contents);
-  web_contents->SetDelegate(shell);
 
   shell->PlatformSetContents();
 
