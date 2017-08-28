@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e8644164_2391c27d",
+        "filename": "tools/traffic_annotation/auditor/traffic_annotation_auditor.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-08-28T14:07:19Z",
+      "side": 1,
+      "message": "Since we\u0027re adding character after character, would maybe std::string::reserve() help make this faster?",
+      "range": {
+        "startLine": 57,
+        "startChar": 6,
+        "endLine": 57,
+        "endChar": 25
+      },
+      "revId": "a17727052b6963798be97455ae6c204e6fb4c83c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb143d56_0ef781c2",
+        "filename": "tools/traffic_annotation/auditor/traffic_annotation_auditor.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-08-28T14:07:19Z",
+      "side": 1,
+      "message": "Please add a comment why \u0027\u003d\u0027 is handled here. It\u0027s obvious on line 192, but still, helps readability :)",
+      "range": {
+        "startLine": 186,
+        "startChar": 4,
+        "endLine": 186,
+        "endChar": 59
+      },
+      "revId": "a17727052b6963798be97455ae6c204e6fb4c83c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
