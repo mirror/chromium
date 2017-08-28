@@ -131,6 +131,7 @@ struct AX_EXPORT AXNodeData {
   AXRole role;
   uint32_t state;
   uint32_t actions;
+  int32_t index_in_parent;
   std::vector<std::pair<AXStringAttribute, std::string>> string_attributes;
   std::vector<std::pair<AXIntAttribute, int32_t>> int_attributes;
   std::vector<std::pair<AXFloatAttribute, float>> float_attributes;

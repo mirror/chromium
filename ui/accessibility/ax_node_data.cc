@@ -202,6 +202,7 @@ AXNodeData::AXNodeData()
       role(AX_ROLE_UNKNOWN),
       state(AX_STATE_NONE),
       actions(AX_ACTION_NONE),
+      index_in_parent(-1),
       offset_container_id(-1) {}
 
 AXNodeData::~AXNodeData() {
