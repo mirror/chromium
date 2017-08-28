@@ -16,6 +16,24 @@
       "revId": "071113c310bfb4029a9ff0a068af479c93942270",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1f0ed16_2c47b97c",
+        "filename": "chrome/test/data/local_ntp/voice_browsertest.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1229240
+      },
+      "writtenOn": "2017-08-28T15:18:10Z",
+      "side": 1,
+      "message": "We would then also be able to merge the two LocalNTP*JavaScriptTests classes.",
+      "parentUuid": "89ecf159_838f8f40",
+      "revId": "071113c310bfb4029a9ff0a068af479c93942270",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
