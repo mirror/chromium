@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9480e3f6_18eb466e",
+        "filename": "net/test/spawned_test_server/remote_test_server.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-08-28T23:04:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f48aff17_f508aa77",
+      "range": {
+        "startLine": 16,
+        "startChar": 15,
+        "endLine": 16,
+        "endChar": 28
+      },
+      "revId": "a900596416dbda0e816938f37d02e50e0b698a1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d7e6a947_ea355765",
         "filename": "net/test/spawned_test_server/spawner_communicator.cc",
         "patchSetId": 7
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "732b13da_c7317c7d",
+        "filename": "net/test/spawned_test_server/spawner_communicator.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-08-28T23:04:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d7e6a947_ea355765",
+      "range": {
+        "startLine": 7,
+        "startChar": 21,
+        "endLine": 7,
+        "endChar": 0
+      },
+      "revId": "a900596416dbda0e816938f37d02e50e0b698a1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a24260f3_4c36564a",
         "filename": "net/test/spawned_test_server/spawner_communicator.h",
         "patchSetId": 7
@@ -59,6 +107,30 @@
       "writtenOn": "2017-08-28T15:35:43Z",
       "side": 1,
       "message": "A single SpawnerCommunicator is only used to start/stop a single test server, right?  So the SpawnerCommunicator can just store the port itself.  Think that provides a cleaner API.  Could also add a DCHECK in SpawnerCommunicator::StartServer() that the server hasn\u0027t already been started.",
+      "range": {
+        "startLine": 75,
+        "startChar": 18,
+        "endLine": 75,
+        "endChar": 26
+      },
+      "revId": "a900596416dbda0e816938f37d02e50e0b698a1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd8f5042_4b914704",
+        "filename": "net/test/spawned_test_server/spawner_communicator.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-08-28T23:04:14Z",
+      "side": 1,
+      "message": "\u003e A single SpawnerCommunicator is only used to start/stop a single test server, right?  \n\u003e So the SpawnerCommunicator can just store the port itself.  Think that provides a \n\u003e cleaner API.  \n\u003e Could also add a DCHECK in SpawnerCommunicator::StartServer() that the server hasn\u0027t already been started.\n\nPort number is returned as part of server_data. In https://chromium-review.googlesource.com/c/chromium/src/+/627541  I moved server_data parsing from SpawnerCommunicator, so it no longer returns port from StartServer(). This is necessary to avoid duplicating that code in two places and to pass whole server_data to BaseTestServer.\n\nI\u0027m not sure this DCHECK would make sense. SpawnerCommunicator is a helper class to send requests to the spawner. RemoteTestServer is supposed to keep track of the state of the test server. I don\u0027t think it makes sense to keep track of the state of the server in SpawnerCommunicator as well. \n\nAnyway I\u0027ll need to make one more change for SpawnerCommunicator in order to implement RemoteTestServer::StartInBackground(). I plan to cleanup how responsibilities are split between these two classes. I think that CL will address both of your concerns, i.e. we won\u0027t need to pass port SpawnerCommunicator.",
+      "parentUuid": "a24260f3_4c36564a",
       "range": {
         "startLine": 75,
         "startChar": 18,
