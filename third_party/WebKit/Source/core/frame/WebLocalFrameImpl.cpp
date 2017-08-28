@@ -641,6 +641,12 @@ void WebLocalFrameImpl::DispatchUnloadEvent() {
   GetFrame()->Loader().DispatchUnloadEvent();
 }
 
+bool WebLocalFrameImpl::IsAttached() {
+  if (!GetFrame())
+    return false;
+  return GetFrame()->IsAttached();
+}
+
 void WebLocalFrameImpl::ExecuteScript(const WebScriptSource& source) {
   DCHECK(GetFrame());
   TextPosition position(OrdinalNumber::FromOneBasedInt(source.start_line),
