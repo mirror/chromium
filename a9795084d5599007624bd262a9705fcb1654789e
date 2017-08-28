@@ -1,0 +1,164 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "632716ff_76f6300f",
+        "filename": "chrome/browser/ui/cocoa/harmony_button.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-08-28T18:04:47Z",
+      "side": 1,
+      "message": "Header guards.",
+      "revId": "a9795084d5599007624bd262a9705fcb1654789e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc950c83_1c2ba627",
+        "filename": "chrome/browser/ui/cocoa/harmony_button.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-08-28T18:04:47Z",
+      "side": 1,
+      "message": "Harmony?",
+      "range": {
+        "startLine": 11,
+        "startChar": 49,
+        "endLine": 11,
+        "endChar": 50
+      },
+      "revId": "a9795084d5599007624bd262a9705fcb1654789e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "05c404cd_0c985bab",
+        "filename": "chrome/browser/ui/cocoa/harmony_button.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-08-28T18:04:47Z",
+      "side": 1,
+      "message": "nit: blank line after",
+      "revId": "a9795084d5599007624bd262a9705fcb1654789e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0156b587_219fcc48",
+        "filename": "chrome/browser/ui/cocoa/harmony_button.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-08-28T18:04:47Z",
+      "side": 1,
+      "message": "naming: dark_theme",
+      "range": {
+        "startLine": 14,
+        "startChar": 51,
+        "endLine": 14,
+        "endChar": 60
+      },
+      "revId": "a9795084d5599007624bd262a9705fcb1654789e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb8bf65c_28df5d4c",
+        "filename": "chrome/browser/ui/cocoa/harmony_button.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-08-28T18:04:47Z",
+      "side": 1,
+      "message": "same",
+      "range": {
+        "startLine": 36,
+        "startChar": 29,
+        "endLine": 36,
+        "endChar": 38
+      },
+      "revId": "a9795084d5599007624bd262a9705fcb1654789e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03098652_4beb6660",
+        "filename": "chrome/browser/ui/cocoa/harmony_button.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-08-28T18:04:47Z",
+      "side": 1,
+      "message": "A window\u0027s themeProvider can be NULL. See e.g. https://crbug.com/156101 for when it can be NULL in production.",
+      "revId": "a9795084d5599007624bd262a9705fcb1654789e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01464530_847cc2ad",
+        "filename": "chrome/browser/ui/cocoa/harmony_button.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-08-28T18:04:47Z",
+      "side": 1,
+      "message": "Why dereference into a const\u0026 instead of just keeping a const* ?",
+      "range": {
+        "startLine": 103,
+        "startChar": 43,
+        "endLine": 103,
+        "endChar": 44
+      },
+      "revId": "a9795084d5599007624bd262a9705fcb1654789e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f59a4a45_500df6b3",
+        "filename": "chrome/browser/ui/cocoa/harmony_button.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-08-28T18:04:47Z",
+      "side": 1,
+      "message": "Prefer scoped_nsobject\u003c\u003e here to autorelease, and on line 168.",
+      "revId": "a9795084d5599007624bd262a9705fcb1654789e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
