@@ -16,6 +16,24 @@
       "revId": "8c228faf52f12f8492fd7630d3ac0ddeefc2bd17",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75a0ce8a_24045ace",
+        "filename": "tools/gn/bin/roll_gn.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2017-08-28T22:19:25Z",
+      "side": 1,
+      "message": "done.",
+      "parentUuid": "fda56fa9_7039eb02",
+      "revId": "8c228faf52f12f8492fd7630d3ac0ddeefc2bd17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
