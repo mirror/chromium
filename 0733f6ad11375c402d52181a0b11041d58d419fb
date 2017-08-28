@@ -321,6 +321,24 @@
       "revId": "0733f6ad11375c402d52181a0b11041d58d419fb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f22e44b_cf865222",
+        "filename": "chrome/browser/vr/ui_scene_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-08-28T18:47:48Z",
+      "side": 1,
+      "message": "Yeah, we should keep an eye on the time of our tests. We\u0027re currently sitting at just over 1 second, so this feels like something we could swallow, but we can\u0027t keep doing that forever.",
+      "parentUuid": "e58fb91f_9cb496b0",
+      "revId": "0733f6ad11375c402d52181a0b11041d58d419fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
