@@ -12,6 +12,8 @@
 #import "ios/clean/chrome/browser/ui/commands/context_menu_commands.h"
 #import "ios/clean/chrome/browser/ui/context_menu/context_menu_context_impl.h"
 #import "ios/clean/chrome/browser/ui/context_menu/web_context_menu_coordinator.h"
+#import "ios/clean/chrome/browser/ui/dialogs/http_auth_dialogs/http_auth_dialog_coordinator.h"
+#import "ios/clean/chrome/browser/ui/dialogs/http_auth_dialogs/http_auth_dialog_request.h"
 #import "ios/clean/chrome/browser/ui/dialogs/java_script_dialogs/java_script_dialog_overlay_presenter.h"
 #import "ios/clean/chrome/browser/ui/overlays/overlay_service.h"
 #import "ios/clean/chrome/browser/ui/overlays/overlay_service_factory.h"
@@ -135,6 +137,28 @@
       [[WebContextMenuCoordinator alloc] initWithContext:context];
   [self addChildCoordinator:contextMenu];
   [contextMenu start];
+}
+
+- (void)webState:(web::WebState*)webState
+    didRequestHTTPAuthForProtectionSpace:(NSURLProtectionSpace*)protectionSpace
+                      proposedCredential:(NSURLCredential*)proposedCredential
+                       completionHandler:(void (^)(NSString* username,
+                                                   NSString* password))handler {
+  HTTPAuthDialogRequest* request =
+      [HTTPAuthDialogRequest requestWithWebState:webState
+                                 protectionSpace:protectionSpace
+                                      credential:proposedCredential
+                                        callback:handler];
+  HTTPAuthDialogCoordinator* dialogCoordinator =
+      [[HTTPAuthDialogCoordinator alloc] initWithRequest:request];
+  OverlayService* overlayService =
+      OverlayServiceFactory::GetInstance()->GetForBrowserState(
+          self.browser->browser_state());
+  if (overlayService) {
+    overlayService->ShowOverlayForWebState(dialogCoordinator, webState);
+  } else {
+    [dialogCoordinator cancelOverlay];
+  }
 }
 
 #pragma mark -
