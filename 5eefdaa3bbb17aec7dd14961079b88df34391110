@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "6b6357a6_c47eee8c",
+        "filename": "content/browser/renderer_host/media/audio_input_sync_writer.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1201454
+      },
+      "writtenOn": "2017-08-28T23:31:40Z",
+      "side": 1,
+      "message": "Are you suggesting crashing the browser in case the renderer requests a buffer that\u0027s too large? Or do you mean it should return some special value for invalid sizes?",
+      "parentUuid": "2ef3cb5e_e68a4b82",
+      "revId": "5eefdaa3bbb17aec7dd14961079b88df34391110",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a99c5654_99df5614",
         "filename": "content/browser/renderer_host/media/audio_input_sync_writer_unittest.cc",
         "patchSetId": 13
@@ -47,6 +65,24 @@
       "writtenOn": "2017-08-28T22:54:15Z",
       "side": 1,
       "message": "Same comment here (have |ComputeAudioOutputBufferSize| invoke |ValueOrDie| when returning, to save source and object code size).\n\nIs the value of `shared_memory_-\u003erequested_size()` dynamic based on potentially-hostile input, or known at compile time? DCHECK won\u0027t provide a safety guarantee in production builds, so if we need that we shouldn\u0027t use DCHECK here.",
+      "revId": "5eefdaa3bbb17aec7dd14961079b88df34391110",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0311e18_f32c6a98",
+        "filename": "content/browser/renderer_host/media/audio_sync_reader.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1201454
+      },
+      "writtenOn": "2017-08-28T23:31:40Z",
+      "side": 1,
+      "message": "|shared_memory_| is constructed on the browser side (with the output ComputeAudioOutputBufferSize(params), no less), this is just an extra sanity check.",
+      "parentUuid": "9f9d34aa_2312e034",
       "revId": "5eefdaa3bbb17aec7dd14961079b88df34391110",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
