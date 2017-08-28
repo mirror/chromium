@@ -7,6 +7,7 @@ import("//build/config/features.gni")
 import("//build/config/sysroot.gni")
 import("//extensions/features/features.gni")
 import("//printing/features/features.gni")
+import("//services/service_manager/public/service_manifest.gni")
 
 static_library("utility") {
   sources = [
@@ -18,6 +19,8 @@ static_library("utility") {
     "cloud_print/pwg_encoder.h",
     "printing/pdf_to_pwg_raster_converter_impl.cc",
     "printing/pdf_to_pwg_raster_converter_impl.h",
+    "printing/printing_utility_service.cc",
+    "printing/printing_utility_service.h",
     "printing_handler.cc",
     "printing_handler.h",
     "shell_handler_impl_win.cc",
@@ -196,4 +199,9 @@ static_library("utility") {
       "media_router/dial_device_description_parser_impl.h",
     ]
   }
+}
+
+service_manifest("printing_utility_manifest") {
+  name = "printing_utility"
+  source = "printing/printing_utility_manifest.json"
 }

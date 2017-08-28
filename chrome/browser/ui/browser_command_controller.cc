@@ -87,6 +87,12 @@
 #include "chrome/browser/feature_engagement/new_tab/new_tab_tracker_factory.h"
 #endif
 
+#include "printing/pdf_render_settings.h"
+#include "printing/pwg_raster_settings.h"
+#include "chrome/browser/printing/pwg_raster_converter.h"
+
+
+
 using content::NavigationEntry;
 using content::NavigationController;
 using content::WebContents;
@@ -262,6 +268,11 @@ void BrowserCommandController::ExtensionStateChanged() {
 ////////////////////////////////////////////////////////////////////////////////
 // BrowserCommandController, CommandUpdaterDelegate implementation:
 
+void callback(bool success, const base::FilePath& temp_file) {
+  LOG(ERROR) << "** JAY ** CONVERTER DONE " << success;
+}
+
+
 void BrowserCommandController::ExecuteCommandWithDisposition(
     int id,
     WindowOpenDisposition disposition) {
@@ -297,7 +308,15 @@ void BrowserCommandController::ExecuteCommandWithDisposition(
       GoForward(browser_, disposition);
       break;
     case IDC_RELOAD:
-      Reload(browser_, disposition);
+      //Reload(browser_, disposition);
+      {
+      std::unique_ptr<printing::PWGRasterConverter> converter =
+          printing::PWGRasterConverter::CreateDefault();
+      converter->Start(new base::RefCountedStaticMemory("0123456789", 10),
+                       printing::PdfRenderSettings(),
+                       printing::PwgRasterSettings(),
+                       base::Bind(&callback));
+    }
       break;
     case IDC_RELOAD_CLEARING_CACHE:
       ClearCache(browser_);

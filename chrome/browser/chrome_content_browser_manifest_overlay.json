@@ -43,6 +43,7 @@
         "nacl_broker": [ "browser" ],
         "nacl_loader": [ "browser" ],
         "profiling": [ "memlog" ],
+        "printing_utility": [ "utility" ],
         "preferences": [ "pref_client", "pref_control" ],
         "ui": [
           "display_controller",

@@ -98,16 +98,11 @@ bool RenderPDFPagesToPWGRaster(base::File pdf_file,
 
 }  // namespace
 
-// static
-void PDFToPWGRasterConverterImpl::Create(
-    printing::mojom::PDFToPWGRasterConverterRequest request) {
-  mojo::MakeStrongBinding(base::MakeUnique<PDFToPWGRasterConverterImpl>(),
-                          std::move(request));
-}
+PDFToPWGRasterConverterImpl::PDFToPWGRasterConverterImpl(
+    std::unique_ptr<service_manager::ServiceContextRef> service_ref)
+    : service_ref_(std::move(service_ref)) {}
 
-PDFToPWGRasterConverterImpl::PDFToPWGRasterConverterImpl() = default;
-
-PDFToPWGRasterConverterImpl::~PDFToPWGRasterConverterImpl() = default;
+PDFToPWGRasterConverterImpl::~PDFToPWGRasterConverterImpl() {}
 
 void PDFToPWGRasterConverterImpl::Convert(
     mojo::ScopedHandle pdf_file_in,
@@ -115,6 +110,9 @@ void PDFToPWGRasterConverterImpl::Convert(
     const PwgRasterSettings& pwg_raster_settings,
     mojo::ScopedHandle pwg_raster_file_out,
     ConvertCallback callback) {
+
+  LOG(ERROR) << "** JAY ** PDFToPWGRasterConverterImpl::Convert";
+
   base::PlatformFile pdf_file;
   if (mojo::UnwrapPlatformFile(std::move(pdf_file_in), &pdf_file) !=
       MOJO_RESULT_OK) {
