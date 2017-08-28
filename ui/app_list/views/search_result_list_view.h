@@ -22,8 +22,8 @@ namespace test {
 class SearchResultListViewTest;
 }
 
+class AppListMainView;
 class AppListViewDelegate;
-class SearchResultListViewDelegate;
 class SearchResultView;
 
 // SearchResultListView displays SearchResultList with a list of
@@ -31,8 +31,7 @@ class SearchResultView;
 class APP_LIST_EXPORT SearchResultListView : public gfx::AnimationDelegate,
                                              public SearchResultContainerView {
  public:
-  SearchResultListView(SearchResultListViewDelegate* delegate,
-                       AppListViewDelegate* view_delegate);
+  explicit SearchResultListView(AppListMainView* main_view);
   ~SearchResultListView() override;
 
   void UpdateAutoLaunchState();
@@ -87,7 +86,7 @@ class APP_LIST_EXPORT SearchResultListView : public gfx::AnimationDelegate,
   void AnimationEnded(const gfx::Animation* animation) override;
   void AnimationProgressed(const gfx::Animation* animation) override;
 
-  SearchResultListViewDelegate* delegate_;  // Not owned.
+  AppListMainView* main_view_;          // Owned by views hierarchy.
   AppListViewDelegate* view_delegate_;  // Not owned.
 
   views::View* results_container_;
