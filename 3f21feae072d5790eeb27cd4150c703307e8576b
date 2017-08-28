@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "eb486f5e_b9963c1d",
+        "filename": "ios/chrome/browser/ui/omnibox/omnibox_text_field_paste_delegate.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1116294
+      },
+      "writtenOn": "2017-08-28T16:53:47Z",
+      "side": 1,
+      "message": "I thought you could use something like API_AVAILABLE(ios(11.0)) ?",
+      "revId": "3f21feae072d5790eeb27cd4150c703307e8576b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
