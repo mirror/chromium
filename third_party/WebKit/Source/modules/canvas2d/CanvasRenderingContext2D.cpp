@@ -165,7 +165,7 @@ void CanvasRenderingContext2D::ValidateStateStack() const {
 bool CanvasRenderingContext2D::IsAccelerated() const {
   if (!HasImageBuffer())
     return false;
-  return GetImageBuffer()->IsAccelerated();
+  return !GetImageBuffer()->IsRecording();
 }
 
 bool CanvasRenderingContext2D::IsComposited() const {

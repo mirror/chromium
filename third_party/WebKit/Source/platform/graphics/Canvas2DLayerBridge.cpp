@@ -27,6 +27,7 @@
 
 #include <memory>
 #include "base/memory/ptr_util.h"
+#include "components/viz/common/quads/shared_bitmap.h"
 #include "components/viz/common/quads/single_release_callback.h"
 #include "components/viz/common/quads/texture_mailbox.h"
 #include "gpu/command_buffer/client/gles2_interface.h"
@@ -420,6 +421,22 @@ bool Canvas2DLayerBridge::PrepareMailboxFromImage(
     RefPtr<StaticBitmapImage>&& image,
     MailboxInfo* mailbox_info,
     viz::TextureMailbox* out_mailbox) {
+  if (!image->IsTextureBacked()) {
+    sk_sp<SkImage> skia_image = image->PaintImageForCurrentFrame().GetSkImage();
+    SkPixmap pixmap;
+    if (!skia_image->peekPixels(&pixmap))
+      return false;
+    std::unique_ptr<viz::SharedBitmap> shared_bitmap =
+        Platform::Current()->AllocateSharedBitmap(
+            IntSize(pixmap.width(), pixmap.height()));
+    std::memcpy(shared_bitmap->pixels(),
+                static_cast<const uint8_t*>(pixmap.addr()),
+                pixmap.width() * pixmap.rowBytes());
+    *out_mailbox = viz::TextureMailbox(
+        shared_bitmap.get(), gfx::Size(pixmap.width(), pixmap.height()));
+    mailbox_info->image_ = std::move(image);
+    return true;
+  }
   if (!context_provider_wrapper_)
     return false;
 
@@ -620,7 +637,7 @@ SkSurface* Canvas2DLayerBridge::GetOrCreateSurface(AccelerationHint hint) {
     ReportSurfaceCreationFailure();
   }
 
-  if (surface_ && surface_is_accelerated && !layer_) {
+  if (surface_ && !layer_) {
     layer_ =
         Platform::Current()->CompositorSupport()->CreateExternalTextureLayer(
             this);
@@ -971,23 +988,30 @@ bool Canvas2DLayerBridge::PrepareTextureMailbox(
   // If the context is lost, we don't know if we should be producing GPU or
   // software frames, until we get a new context, since the compositor will
   // be trying to get a new context and may change modes.
-  if (!context_provider_wrapper_ ||
-      context_provider_wrapper_->ContextProvider()
-              ->ContextGL()
-              ->GetGraphicsResetStatusKHR() != GL_NO_ERROR)
+  if (acceleration_mode_ != kDisableAcceleration &&
+      (!context_provider_wrapper_ ||
+       context_provider_wrapper_->ContextProvider()
+               ->ContextGL()
+               ->GetGraphicsResetStatusKHR() != GL_NO_ERROR))
     return false;
 
   DCHECK(IsAccelerated() || IsHibernating() ||
-         software_rendering_while_hidden_);
+         software_rendering_while_hidden_ ||
+         acceleration_mode_ == kDisableAcceleration);
 
   // if hibernating but not hidden, we want to wake up from
   // hibernation
   if ((IsHibernating() || software_rendering_while_hidden_) && IsHidden())
     return false;
 
-  RefPtr<StaticBitmapImage> image =
-      NewImageSnapshot(kPreferAcceleration, kSnapshotReasonUnknown);
-  if (!image || !image->IsValid() || !image->IsTextureBacked())
+  RefPtr<StaticBitmapImage> image = NewImageSnapshot(
+      acceleration_mode_ != kDisableAcceleration ? kPreferAcceleration
+                                                 : kPreferNoAcceleration,
+      kSnapshotReasonUnknown);
+  if (!image || !image->IsValid() ||
+      (acceleration_mode_ != kDisableAcceleration &&
+       !image->IsTextureBacked()) ||
+      (acceleration_mode_ == kDisableAcceleration && image->IsTextureBacked()))
     return false;
 
   {
