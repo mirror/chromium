@@ -16,6 +16,24 @@
       "revId": "a9e0a0c43a8f9373f22f860a0615a69f55c91afa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81e6654b_06c4a378",
+        "filename": "chrome/browser/chrome_content_browser_client.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 3227,
+      "author": {
+        "id": 1111029
+      },
+      "writtenOn": "2017-08-28T17:58:03Z",
+      "side": 0,
+      "message": "We are removing this if-statement for the purposes of UMA counting the iframed PDFs",
+      "parentUuid": "e84bfcb8_97b1a85f",
+      "revId": "a9e0a0c43a8f9373f22f860a0615a69f55c91afa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
