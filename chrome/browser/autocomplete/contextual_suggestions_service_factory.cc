@@ -5,6 +5,7 @@
 #include "chrome/browser/autocomplete/contextual_suggestions_service_factory.h"
 
 #include "base/memory/singleton.h"
+#include "chrome/browser/profiles/incognito_helpers.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/signin/profile_oauth2_token_service_factory.h"
 #include "chrome/browser/signin/signin_manager_factory.h"
@@ -47,3 +48,9 @@ ContextualSuggestionsServiceFactory::ContextualSuggestionsServiceFactory()
 }
 
 ContextualSuggestionsServiceFactory::~ContextualSuggestionsServiceFactory() {}
+
+content::BrowserContext*
+ContextualSuggestionsServiceFactory::GetBrowserContextToUse(
+    content::BrowserContext* context) const {
+  return chrome::GetBrowserContextRedirectedInIncognito(context);
+}
