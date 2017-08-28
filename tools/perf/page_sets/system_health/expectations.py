@@ -150,6 +150,8 @@ class V8BrowsingMobileExpecations(expectations.StoryExpectations):
                       'crbug.com/714650')
     self.DisableStory('browse:news:toi', [expectations.ALL_ANDROID],
                       'crbug.com/728081')
+    self.DisableStory('browse:news:cnn', [expectations.ALL_ANDROID],
+                      'crbug.com/759797')
     # TODO(rnephew): This disabling should move to CanRunOnBrowser.
     self.DisableStory('browse:chrome:omnibox',
                       [expectations.ANDROID_WEBVIEW],
