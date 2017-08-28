@@ -1,0 +1,280 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c8e951a4_cab1324f",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 333,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-08-28T22:35:36Z",
+      "side": 1,
+      "message": "Are all of these renames necessary?",
+      "range": {
+        "startLine": 333,
+        "startChar": 31,
+        "endLine": 333,
+        "endChar": 42
+      },
+      "revId": "33e77fd7b6fed1813ecd3358fb4889a738c20090",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "939e7b6c_fe361117",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 480,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-08-28T22:35:36Z",
+      "side": 1,
+      "message": "I\u0027m wondering if it would be cleaner to abstract this away into the SchedulerWorkerPoolImpl. This way all capacity decisions occur at the SchedulerWorkerPoolImpl level instead of the delegate level.\n\nI understand this could make locking trickier.",
+      "range": {
+        "startLine": 480,
+        "startChar": 2,
+        "endLine": 480,
+        "endChar": 29
+      },
+      "revId": "33e77fd7b6fed1813ecd3358fb4889a738c20090",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35ccc32b_9eebb423",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 552,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-08-28T22:35:36Z",
+      "side": 1,
+      "message": "Should we start polling the start time here? If no one posts any more tasks after this and we\u0027re saturated, then who increases the capacity?",
+      "range": {
+        "startLine": 550,
+        "startChar": 0,
+        "endLine": 552,
+        "endChar": 43
+      },
+      "revId": "33e77fd7b6fed1813ecd3358fb4889a738c20090",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0cf2f1ff_ab8fe8d8",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 734,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-08-28T22:35:36Z",
+      "side": 1,
+      "message": "Maybe this should be done inside the for loop so we can catch the culprit as it happens.",
+      "range": {
+        "startLine": 734,
+        "startChar": 2,
+        "endLine": 734,
+        "endChar": 56
+      },
+      "revId": "33e77fd7b6fed1813ecd3358fb4889a738c20090",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d2672b0_fc7b6acd",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 747,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-08-28T22:35:36Z",
+      "side": 1,
+      "message": "Nit: can",
+      "range": {
+        "startLine": 747,
+        "startChar": 41,
+        "endLine": 747,
+        "endChar": 46
+      },
+      "revId": "33e77fd7b6fed1813ecd3358fb4889a738c20090",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f6ea07b_efcc4cfc",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 771,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-08-28T22:35:36Z",
+      "side": 1,
+      "message": "Add braces for the multiline conditional.",
+      "range": {
+        "startLine": 768,
+        "startChar": 14,
+        "endLine": 771,
+        "endChar": 0
+      },
+      "revId": "33e77fd7b6fed1813ecd3358fb4889a738c20090",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1b7b543_550fa4fa",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-08-28T22:35:36Z",
+      "side": 1,
+      "message": "Maybe just \n// Sets the MayBlock waiting threshold to Max()\n?",
+      "range": {
+        "startLine": 114,
+        "startChar": 0,
+        "endLine": 116,
+        "endChar": 24
+      },
+      "revId": "33e77fd7b6fed1813ecd3358fb4889a738c20090",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17cd6af5_515097c0",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-08-28T22:35:36Z",
+      "side": 1,
+      "message": "Scheduler (Missing the \"l\")",
+      "range": {
+        "startLine": 125,
+        "startChar": 19,
+        "endLine": 125,
+        "endChar": 27
+      },
+      "revId": "33e77fd7b6fed1813ecd3358fb4889a738c20090",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dec91907_cd3c3453",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-08-28T22:35:36Z",
+      "side": 1,
+      "message": "Nit: Polling period\n\nAlternatively\n\nThe period between calls to AdjustWorkerCapacity() when the pool is at capacity and workers are within a MAY_BLOCK ScopedBlockingCall.",
+      "range": {
+        "startLine": 127,
+        "startChar": 9,
+        "endLine": 127,
+        "endChar": 18
+      },
+      "revId": "33e77fd7b6fed1813ecd3358fb4889a738c20090",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32cc4fe2_3146656a",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-08-28T22:35:36Z",
+      "side": 1,
+      "message": "Nit: Examines",
+      "range": {
+        "startLine": 175,
+        "startChar": 5,
+        "endLine": 175,
+        "endChar": 12
+      },
+      "revId": "33e77fd7b6fed1813ecd3358fb4889a738c20090",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e38c60e_d6428ea2",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-08-28T22:35:36Z",
+      "side": 1,
+      "message": "Nit: \"Whether\" is sufficient. The indication is implied.",
+      "range": {
+        "startLine": 240,
+        "startChar": 5,
+        "endLine": 240,
+        "endChar": 22
+      },
+      "revId": "33e77fd7b6fed1813ecd3358fb4889a738c20090",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5856b39d_5729f459",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1067,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-08-28T22:35:36Z",
+      "side": 1,
+      "message": "Is it necessary to check these twice?",
+      "range": {
+        "startLine": 1064,
+        "startChar": 2,
+        "endLine": 1067,
+        "endChar": 54
+      },
+      "revId": "33e77fd7b6fed1813ecd3358fb4889a738c20090",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
