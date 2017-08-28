@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "976417da_d9d2d4d7",
+        "filename": "components/exo/surface.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 684,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-08-28T15:08:02Z",
+      "side": 1,
+      "message": "Origin is the offset relative to parent and not affected by crop. Quad rect is the output rect for surface before applying any transforms. Looks like this line is still wrong though. Origin should not be affected by the transforms below and by including in quad rect it is. Uploaded a fix for this here:\n\nhttps://chromium-review.googlesource.com/c/chromium/src/+/638470\n\nPlease give that a try asap and let me know if it doesn\u0027t fix the problems you were seeing.",
+      "parentUuid": "89393e59_143ed9a9",
+      "range": {
+        "startLine": 684,
+        "startChar": 30,
+        "endLine": 684,
+        "endChar": 47
+      },
+      "revId": "fca309bf8269d73b2b53267f400a5ec6009f0701",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "43102d7c_df95510f",
         "filename": "components/exo/surface.cc",
         "patchSetId": 6
