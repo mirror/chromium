@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dc3fc925_53f54ac3",
+        "filename": "ui/android/view_android.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 302,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2017-08-28T04:16:03Z",
+      "side": 1,
+      "message": "drawsNothing() already checks the validity of width/height. No need to add more if\u0027s here.\nColor doesn\u0027t seem to have to do with the reported crash. No need to put in this CL.",
+      "revId": "b075df18987fc3ad2b0bcf2215ecdbf4f542a315",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
