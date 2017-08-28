@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "acf6719e_e2094d3c",
+        "filename": "build/config/coverage/BUILD.gn",
+        "patchSetId": 5
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1160021
+      },
+      "writtenOn": "2017-08-28T21:12:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "419ba575_ba992bd8",
+      "range": {
+        "startLine": 5,
+        "startChar": 12,
+        "endLine": 5,
+        "endChar": 18
+      },
+      "revId": "26fdb36af29ec08d36954ad21eb07f68216cf992",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "53dbf9e6_f3a8fcb9",
         "filename": "build/config/coverage/BUILD.gn",
         "patchSetId": 5
@@ -39,6 +63,24 @@
       "revId": "26fdb36af29ec08d36954ad21eb07f68216cf992",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6116631_652d5740",
+        "filename": "build/config/coverage/BUILD.gn",
+        "patchSetId": 5
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1160021
+      },
+      "writtenOn": "2017-08-28T21:12:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "53dbf9e6_f3a8fcb9",
+      "revId": "26fdb36af29ec08d36954ad21eb07f68216cf992",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "8c923254_9a618320",
+        "filename": "build/config/coverage/BUILD.gn",
+        "patchSetId": 5
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1160021
+      },
+      "writtenOn": "2017-08-28T21:12:45Z",
+      "side": 1,
+      "message": "I\u0027m not sure what `-coverage` does. In any case, I think it\u0027s better to follow the LLVM official doc (https://clang.llvm.org/docs/SourceBasedCodeCoverage.html).",
+      "parentUuid": "776377f6_3f07ad6a",
+      "range": {
+        "startLine": 12,
+        "startChar": 8,
+        "endLine": 12,
+        "endChar": 17
+      },
+      "revId": "26fdb36af29ec08d36954ad21eb07f68216cf992",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c4521a3d_234b7f30",
         "filename": "build/config/coverage/BUILD.gn",
         "patchSetId": 5
@@ -76,6 +142,30 @@
       "writtenOn": "2017-08-28T20:30:44Z",
       "side": 1,
       "message": "Why is this needed?",
+      "range": {
+        "startLine": 13,
+        "startChar": 20,
+        "endLine": 13,
+        "endChar": 26
+      },
+      "revId": "26fdb36af29ec08d36954ad21eb07f68216cf992",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eea54cd9_136005bb",
+        "filename": "build/config/coverage/BUILD.gn",
+        "patchSetId": 5
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1160021
+      },
+      "writtenOn": "2017-08-28T21:12:45Z",
+      "side": 1,
+      "message": "It seems `atexit` isn\u0027t defined. I\u0027m not sure why. From talking to mmentovai@, this doesn\u0027t affect Chrome because Chrome doesn\u0027t use `atexit`.\n\nHere\u0027s an example error:\n\n```\n$ ninja -w \u0027dupbuild\u003derr\u0027 -C out/test_debug -j 2400 -l 96 angle_translator_fuzzer\nninja: Entering directory `out/test_debug\u0027\n[158/158] LINK ./angle_translator_fuzzer\nFAILED: angle_translator_fuzzer\npython \"../../build/toolchain/gcc_link_wrapper.py\" --output\u003d\"./angle_translator_fuzzer\" -- ../../third_party/llvm-build/Release+Asserts/bin/clang++ -Wl,--fatal-warnings -fPIC -Wl,-z,noexecstack -Wl,-z,now -Wl,-z,relro -Wl,-z,defs -Wl,--no-as-needed -lpthread -Wl,--as-needed -fuse-ld\u003dgold -B../../third_party/binutils/Linux_x64/Release/bin -Wl,--threads -Wl,--thread-count\u003d4 -Wl,--icf\u003dall -nodefaultlibs -m64 -Werror --sysroot\u003d../../build/linux/debian_jessie_amd64-sysroot -L../../build/linux/debian_jessie_amd64-sysroot/lib/x86_64-linux-gnu -Wl,-rpath-link\u003d../../build/linux/debian_jessie_amd64-sysroot/lib/x86_64-linux-gnu -L../../build/linux/debian_jessie_amd64-sysroot/usr/lib/x86_64-linux-gnu -Wl,-rpath-link\u003d../../build/linux/debian_jessie_amd64-sysroot/usr/lib/x86_64-linux-gnu -fprofile-instr-generate -Wl,-rpath-link\u003d. -Wl,--disable-new-dtags -o \"./angle_translator_fuzzer\" -Wl,--start-group @\"./angle_translator_fuzzer.rsp\"  -Wl,--end-group   -lc -lm -lgcc_s -lrt -ldl -lpthread\n/usr/local/google/home/tanin/projects/chromium/src/third_party/llvm-build/Release+Asserts/lib/clang/6.0.0/lib/linux/libclang_rt.profile-x86_64.a(InstrProfilingFile.c.o):function __llvm_profile_register_write_file_atexit: error: undefined reference to \u0027atexit\u0027\nclang: error: linker command failed with exit code 1 (use -v to see invocation)\nninja: build stopped: subcommand failed.\n```",
+      "parentUuid": "c4521a3d_234b7f30",
       "range": {
         "startLine": 13,
         "startChar": 20,
