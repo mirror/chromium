@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "662f1e43_0e594f9e",
+        "filename": "components/safe_browsing/web_ui/resources/safe_browsing.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-08-28T20:35:14Z",
+      "side": 1,
+      "message": "what does \u00273\u0027 represent here?",
+      "range": {
+        "startLine": 47,
+        "startChar": 59,
+        "endLine": 47,
+        "endChar": 60
+      },
+      "revId": "7e9976f9bb044c34ce010d81238e7a7c9738e795",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9325f1f_cc7cbe6b",
+        "filename": "components/safe_browsing/web_ui/safe_browsing_ui.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-08-28T20:35:14Z",
+      "side": 1,
+      "message": "not clear why we can\u0027t just use database_manager_info",
+      "range": {
+        "startLine": 257,
+        "startChar": 18,
+        "endLine": 257,
+        "endChar": 34
+      },
+      "revId": "7e9976f9bb044c34ce010d81238e7a7c9738e795",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
