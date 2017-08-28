@@ -16,6 +16,24 @@
       "revId": "875642b795e0a0837dbe5ccceb002be1387ee956",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f06ace55_fd9901b6",
+        "filename": "base/numerics/safe_conversions_impl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1002378
+      },
+      "writtenOn": "2017-08-28T22:11:37Z",
+      "side": 1,
+      "message": "I just wanted to make the base case reasonable for MSVC, since I plan to continue supporting it. However, I also noticed that there\u0027s a lot more going on per platform in crashpad, so I thought you might have an opinion on what\u0027s best.",
+      "parentUuid": "08ca5427_91cd7059",
+      "revId": "875642b795e0a0837dbe5ccceb002be1387ee956",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
