@@ -194,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "014f2c4d_eae4c242",
+        "filename": "ash/public/interfaces/link_handler.mojom",
+        "patchSetId": 8
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-08-28T19:36:22Z",
+      "side": 1,
+      "message": "\u003e In mash, does arc code live in both ash and the browser process? I had assumed only in ash.\n\nI\u0027m not familiar with this part.\n\n\u003e Currently Chrome calls into ash which delegates to arc, so it seemed like a good idea to mojoify the calling into ash part.\n\nThe code is for allowing the context menu to open a URL with an ARC app as Evan mentioned in the CL description. When I added the original code, the reviewer (beng) told me that c/b/renderer_context_menu/ shouldn\u0027t know anything about ARC, and suggested I implement the feature through an interface in ash/. This is the (only) reason why c/b/renderer_context_menu/ calls into components/arc/intent_helper/ through ash/.\n\nJames, does this answer your question?",
+      "parentUuid": "db83d971_8dcf1ce5",
+      "revId": "860e78d17e0b1c1d1ce56a0251175193be76ac69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "286c2933_6ecaecc9",
         "filename": "ash/shell.h",
         "patchSetId": 8
