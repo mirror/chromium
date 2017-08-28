@@ -22,6 +22,30 @@
       "revId": "755f33bd77ffca1738b5b25cf01614ae3299ff3b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0beb1a3b_ee4ad750",
+        "filename": "components/ntp_tiles/most_visited_sites.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1200319
+      },
+      "writtenOn": "2017-08-28T15:13:47Z",
+      "side": 1,
+      "message": "Minor reasons, yes. \n1) It covers the sites that are identical to prefixes (e.g. mobile.de).\n2) It covers (some) rare double prefixes like www.m.timesofindia.in or www.m.webmd.com (not the main intent)\n\nIf you prefer, I can remove it anyway.",
+      "parentUuid": "82d25cf1_4fc82a6a",
+      "range": {
+        "startLine": 125,
+        "startChar": 28,
+        "endLine": 125,
+        "endChar": 74
+      },
+      "revId": "755f33bd77ffca1738b5b25cf01614ae3299ff3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
