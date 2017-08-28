@@ -1,0 +1,326 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "edb6527e_996e1df3",
+        "filename": "remoting/host/file_transfer_message_handler.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1133074
+      },
+      "writtenOn": "2017-08-28T16:14:59Z",
+      "side": 1,
+      "message": "Parhaps move this into a helper method?  Something like \u0027HandleCurrentRequest(blah...)\u0027.  The reader has to parse the existing request logic and then see that it is an early return, then parse the new request logic.  Moving the existing, and possibly the new request, logic into a helper method will make this interface method more readable.",
+      "range": {
+        "startLine": 44,
+        "startChar": 2,
+        "endLine": 44,
+        "endChar": 17
+      },
+      "revId": "c9f5fc7cda6464c4d4c691806a90b613f750e226",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bdbd0427_711cd33e",
+        "filename": "remoting/host/file_transfer_message_handler.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1133074
+      },
+      "writtenOn": "2017-08-28T16:14:59Z",
+      "side": 1,
+      "message": "Perhaps use a DCHECK instead of an if else here?  You take care of the terminal states above so it would be unexpected if you received an incoming message before the file was created.",
+      "range": {
+        "startLine": 54,
+        "startChar": 6,
+        "endLine": 54,
+        "endChar": 16
+      },
+      "revId": "c9f5fc7cda6464c4d4c691806a90b613f750e226",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f38bd36_e915a69c",
+        "filename": "remoting/host/file_transfer_message_handler.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1133074
+      },
+      "writtenOn": "2017-08-28T16:14:59Z",
+      "side": 1,
+      "message": "nit: Try to make this one line, \"Received data while in invalid state: \"",
+      "range": {
+        "startLine": 54,
+        "startChar": 21,
+        "endLine": 55,
+        "endChar": 42
+      },
+      "revId": "c9f5fc7cda6464c4d4c691806a90b613f750e226",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6b80c26_32186ea3",
+        "filename": "remoting/host/file_transfer_message_handler.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1133074
+      },
+      "writtenOn": "2017-08-28T16:14:59Z",
+      "side": 1,
+      "message": "Check out the string_as_array method (it uses iterators instead of address of first char to expose the char[]):\nhttps://cs.chromium.org/chromium/src/base/stl_util.h?rcl\u003def0902b9ad6a44078dd366aa783e87320fafe92d\u0026l\u003d74\n\nExample usage is here:\nhttps://cs.chromium.org/chromium/src/remoting/host/security_key/security_key_message_reader_impl.cc?rcl\u003d1a30e52829a9bb72d8a01521ee48f0f45ea40f7f\u0026l\u003d80",
+      "range": {
+        "startLine": 69,
+        "startChar": 2,
+        "endLine": 69,
+        "endChar": 48
+      },
+      "revId": "c9f5fc7cda6464c4d4c691806a90b613f750e226",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1dda667_709fe52a",
+        "filename": "remoting/host/file_transfer_message_handler.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1133074
+      },
+      "writtenOn": "2017-08-28T16:14:59Z",
+      "side": 1,
+      "message": "MakeUnique\u003cprotocol::FileTransferRequest\u003e();",
+      "range": {
+        "startLine": 71,
+        "startChar": 13,
+        "endLine": 71,
+        "endChar": 66
+      },
+      "revId": "c9f5fc7cda6464c4d4c691806a90b613f750e226",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a94f06f5_b8282915",
+        "filename": "remoting/host/file_transfer_message_handler.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1133074
+      },
+      "writtenOn": "2017-08-28T16:14:59Z",
+      "side": 1,
+      "message": "This method can return false, you probably want to check that and log and error / cancel the transfer if it fails.",
+      "range": {
+        "startLine": 75,
+        "startChar": 4,
+        "endLine": 75,
+        "endChar": 20
+      },
+      "revId": "c9f5fc7cda6464c4d4c691806a90b613f750e226",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4ee9aa1_a9ca2c68",
+        "filename": "remoting/host/file_transfer_message_handler.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1133074
+      },
+      "writtenOn": "2017-08-28T16:14:59Z",
+      "side": 1,
+      "message": "Another note is that the done callback appears to be optional (i.e. it is not DCHECK\u0027d in the underlying Send methods).  Can you just pass base::Closure() here instead of creating an empty closure?",
+      "range": {
+        "startLine": 84,
+        "startChar": 20,
+        "endLine": 84,
+        "endChar": 45
+      },
+      "revId": "c9f5fc7cda6464c4d4c691806a90b613f750e226",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1e541b3_ba801f22",
+        "filename": "remoting/host/file_transfer_message_handler.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1133074
+      },
+      "writtenOn": "2017-08-28T16:14:59Z",
+      "side": 1,
+      "message": "nit: There is already a \u0027DoNothing\u0027 method defined in bind_helpers to use in cases like this:\nhttps://cs.chromium.org/chromium/src/base/bind_helpers.h?rcl\u003db70fcc637ffc6edb5dfcb5bbd409348ca79e8ac1\u0026l\u003d455",
+      "range": {
+        "startLine": 84,
+        "startChar": 21,
+        "endLine": 84,
+        "endChar": 45
+      },
+      "revId": "c9f5fc7cda6464c4d4c691806a90b613f750e226",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3f348a2_5ab6c082",
+        "filename": "remoting/host/file_transfer_message_handler.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1133074
+      },
+      "writtenOn": "2017-08-28T16:14:59Z",
+      "side": 1,
+      "message": "Simple types should be initialized in inline in the class header:\nuint64_t total_bytes_written_ \u003d 0;",
+      "range": {
+        "startLine": 35,
+        "startChar": 2,
+        "endLine": 35,
+        "endChar": 32
+      },
+      "revId": "c9f5fc7cda6464c4d4c691806a90b613f750e226",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89d29451_80d0ebbb",
+        "filename": "remoting/host/file_transfer_message_handler_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1133074
+      },
+      "writtenOn": "2017-08-28T16:14:59Z",
+      "side": 1,
+      "message": "Not used?",
+      "range": {
+        "startLine": 14,
+        "startChar": 0,
+        "endLine": 14,
+        "endChar": 46
+      },
+      "revId": "c9f5fc7cda6464c4d4c691806a90b613f750e226",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce00d3d0_93439661",
+        "filename": "remoting/host/file_transfer_message_handler_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1133074
+      },
+      "writtenOn": "2017-08-28T16:14:59Z",
+      "side": 1,
+      "message": "I think these can be removed, I don\u0027t see them being used below.",
+      "range": {
+        "startLine": 17,
+        "startChar": 0,
+        "endLine": 20,
+        "endChar": 19
+      },
+      "revId": "c9f5fc7cda6464c4d4c691806a90b613f750e226",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11ed5f21_ded82fc4",
+        "filename": "remoting/host/file_transfer_message_handler_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1133074
+      },
+      "writtenOn": "2017-08-28T16:14:59Z",
+      "side": 1,
+      "message": "nit: It is good to add a comment about lifetime / scope for this raw *.  Specifically it will be invalid after line 171 IIUC.  You can also explicitly null it out once it can no longer be used.",
+      "range": {
+        "startLine": 154,
+        "startChar": 2,
+        "endLine": 154,
+        "endChar": 45
+      },
+      "revId": "c9f5fc7cda6464c4d4c691806a90b613f750e226",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9ec0460_ef7b01d4",
+        "filename": "remoting/protocol/fake_message_pipe.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1133074
+      },
+      "writtenOn": "2017-08-28T16:14:59Z",
+      "side": 1,
+      "message": "nit: Simple accessors can be defined inline in the header.",
+      "range": {
+        "startLine": 130,
+        "startChar": 1,
+        "endLine": 130,
+        "endChar": 24
+      },
+      "revId": "c9f5fc7cda6464c4d4c691806a90b613f750e226",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e8871fe_ffaf1591",
+        "filename": "remoting/protocol/fake_message_pipe.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1133074
+      },
+      "writtenOn": "2017-08-28T16:14:59Z",
+      "side": 1,
+      "message": "This will make a copy of the queue and return it.  Would a const\u0026 or const* work for you here?  Then you can avoid the extra object creation.",
+      "range": {
+        "startLine": 54,
+        "startChar": 2,
+        "endLine": 54,
+        "endChar": 25
+      },
+      "revId": "c9f5fc7cda6464c4d4c691806a90b613f750e226",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
