@@ -95,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "568676a5_700bb93d",
+        "filename": "cc/animation/element_animations.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1128438
+      },
+      "writtenOn": "2017-08-28T18:02:18Z",
+      "side": 1,
+      "message": "Agreed. BTW after I wrote the above I discovered there is an existing setup via ElementAnimations::UpdateClientAnimationState() that looks like it is intended to allow updating things post-push, add, activate, remove, abort, finish, tick, etc. and may be the place to do this at least until/while we do keep the cache.",
+      "parentUuid": "92eb0869_2dbedf95",
+      "range": {
+        "startLine": 54,
+        "startChar": 2,
+        "endLine": 54,
+        "endChar": 32
+      },
+      "revId": "298e234aca2c32b83e7c885cea05ca8b1af81777",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "25da62ca_31972553",
         "filename": "cc/animation/element_animations.cc",
         "patchSetId": 4
