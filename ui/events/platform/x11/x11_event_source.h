@@ -11,6 +11,7 @@
 
 #include "base/macros.h"
 #include "base/optional.h"
+#include "components/keyboard_lock/platform_key_event_filter.h"
 #include "ui/events/events_export.h"
 #include "ui/gfx/x/x11_types.h"
 
@@ -87,6 +88,9 @@ class EVENTS_EXPORT X11EventSource {
   void StopCurrentEventStream();
   void OnDispatcherListChanged();
 
+  void set_platform_key_event_filter(
+      keyboard_lock::PlatformKeyEventFilter* filter);
+
  protected:
   // Extracts cookie data from |xevent| if it's of GenericType, and dispatches
   // the event. This function also frees up the cookie data after dispatch is
@@ -126,6 +130,8 @@ class EVENTS_EXPORT X11EventSource {
   bool continue_stream_ = true;
 
   std::unique_ptr<X11HotplugEventHandler> hotplug_event_handler_;
+
+  keyboard_lock::PlatformKeyEventFilter* filter_ = nullptr;
 
   DISALLOW_COPY_AND_ASSIGN(X11EventSource);
 };

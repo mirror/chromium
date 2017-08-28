@@ -32,6 +32,7 @@
 #include "chrome/browser/ui/tabs/tab_strip_model_observer.h"
 #include "components/content_settings/core/common/content_settings.h"
 #include "components/content_settings/core/common/content_settings_types.h"
+#include "components/keyboard_lock/keyboard_lock_host.h"
 #include "components/prefs/pref_change_registrar.h"
 #include "components/sessions/core/session_id.h"
 #include "components/toolbar/toolbar_model.h"
@@ -532,6 +533,10 @@ class Browser : public TabStripModelObserver,
   bool ShouldRunUnloadListenerBeforeClosing(content::WebContents* web_contents);
   bool RunUnloadListenerBeforeClosing(content::WebContents* web_contents);
 
+  keyboard_lock::KeyboardLockHost* GetKeyboardLockHost() const {
+    return keyboard_lock_host_.get();
+  }
+
  private:
   friend class BrowserTest;
   friend class FullscreenControllerInteractiveTest;
@@ -1019,6 +1024,8 @@ class Browser : public TabStripModelObserver,
 #endif
 
   std::unique_ptr<ScopedKeepAlive> keep_alive_;
+
+  const std::unique_ptr<keyboard_lock::KeyboardLockHost> keyboard_lock_host_;
 
   // The following factory is used for chrome update coalescing.
   base::WeakPtrFactory<Browser> chrome_updater_factory_;

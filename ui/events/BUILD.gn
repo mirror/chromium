@@ -38,6 +38,7 @@ static_library("dom_keycode_converter") {
 source_set("event_constants") {
   sources = [
     "event_constants.h",
+    "keycodes/keyboard_codes.h",
   ]
 }
 
@@ -68,7 +69,6 @@ component("events_base") {
     "keycodes/keyboard_code_conversion_mac.mm",
     "keycodes/keyboard_code_conversion_win.cc",
     "keycodes/keyboard_code_conversion_win.h",
-    "keycodes/keyboard_codes.h",
   ]
 
   defines = [ "EVENTS_BASE_IMPLEMENTATION" ]
@@ -153,6 +153,10 @@ component("events") {
     "//ui/display",
     "//ui/gfx",
     "//ui/gfx/geometry",
+  ]
+
+  public_configs = [
+    "//skia:skia_config",
   ]
 
   if (use_x11) {

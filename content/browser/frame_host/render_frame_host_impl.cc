@@ -2988,9 +2988,6 @@ void RenderFrameHostImpl::RegisterMojoInterfaces() {
                                      GetProcess()->GetID(), GetRoutingID()));
 #endif  // BUILDFLAG(ENABLE_MEDIA_REMOTING)
 
-  registry_->AddInterface(
-      base::Bind(&KeyboardLockServiceImpl::CreateMojoService));
-
   registry_->AddInterface(base::Bind(&ImageCaptureImpl::Create));
 
   registry_->AddInterface(
@@ -3025,6 +3022,9 @@ void RenderFrameHostImpl::RegisterMojoInterfaces() {
 
   registry_->AddInterface(
       base::Bind(&media::WatchTimeRecorder::CreateWatchTimeRecorderProvider));
+
+  registry_->AddInterface(base::Bind(
+      &KeyboardLockServiceImpl::CreateMojoService, base::Unretained(this)));
 }
 
 void RenderFrameHostImpl::ResetWaitingState() {
