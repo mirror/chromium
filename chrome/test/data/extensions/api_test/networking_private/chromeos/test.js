@@ -512,7 +512,7 @@ var availableTests = [
     var listener = new privateHelpers.listListener(expected, done);
     chrome.networkingPrivate.onNetworkListChanged.addListener(
       listener.listenForChanges);
-    chrome.networkingPrivate.requestNetworkScan();
+    chrome.networkingPrivate.requestNetworkScan('Cellular');
   },
   function getProperties() {
     chrome.networkingPrivate.getProperties(
