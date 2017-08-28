@@ -16,6 +16,24 @@
       "revId": "b4a5966bb51e6cb3f098133967f145321fdd6bd5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92c27b1f_c71a6546",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 4318,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-08-28T23:10:45Z",
+      "side": 1,
+      "message": "\u003e Later than... what exactly?\n\u003e \n\u003e It wouldn\u0027t hurt to be explicit about this. Rather than blindly posting a task, would it make sense to send the message explicitly after/when the \"other event\" happens?\n\nonselectionchanged js event, apparently\n\napparently samsung mail is assuming this event arrives on UI thread before the js event plumbed through the js bridge. In theory that\u0027s always going to be racy, because js bridge calls arrive on a background thread for the app, and has to be posted to UI thread again (or maybe they are doing something even less correct..)\n\nthey generally have no capability to update their own apps. but they are big enough to warrant a workaround unfortunately. :( and this appear to do the trick.",
+      "parentUuid": "014bcf4d_83bf8742",
+      "revId": "b4a5966bb51e6cb3f098133967f145321fdd6bd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
