@@ -7,11 +7,14 @@
 
 #include <string>
 
+#include "base/callback.h"
 #include "base/macros.h"
 #include "components/arc/common/tts.mojom.h"
 #include "components/arc/instance_holder.h"
 #include "components/keyed_service/core/keyed_service.h"
 #include "mojo/public/cpp/bindings/binding.h"
+
+class TtsController;
 
 namespace content {
 class BrowserContext;
@@ -27,6 +30,8 @@ class ArcTtsService : public KeyedService,
                       public InstanceHolder<mojom::TtsInstance>::Observer,
                       public mojom::TtsHost {
  public:
+  using TtsControllerGetter = base::Callback<TtsController*()>;
+
   // Returns singleton instance for the given BrowserContext,
   // or nullptr if the browser |context| is not allowed to use ARC.
   static ArcTtsService* GetForBrowserContext(content::BrowserContext* context);
@@ -44,10 +49,16 @@ class ArcTtsService : public KeyedService,
                   uint32_t char_index,
                   const std::string& error_msg) override;
 
+  void set_tts_controller_getter_for_testing(
+      const TtsControllerGetter& tts_controller_getter) {
+    tts_controller_getter_ = tts_controller_getter;
+  }
+
  private:
   ArcBridgeService* const arc_bridge_service_;  // Owned by ArcServiceManager.
 
   mojo::Binding<mojom::TtsHost> binding_;
+  TtsControllerGetter tts_controller_getter_;
 
   DISALLOW_COPY_AND_ASSIGN(ArcTtsService);
 };

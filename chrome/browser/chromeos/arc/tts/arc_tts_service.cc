@@ -6,6 +6,7 @@
 
 #include <utility>
 
+#include "base/bind.h"
 #include "base/logging.h"
 #include "base/memory/singleton.h"
 #include "chrome/browser/speech/tts_controller.h"
@@ -44,7 +45,9 @@ ArcTtsService* ArcTtsService::GetForBrowserContext(
 
 ArcTtsService::ArcTtsService(content::BrowserContext* context,
                              ArcBridgeService* bridge_service)
-    : arc_bridge_service_(bridge_service), binding_(this) {
+    : arc_bridge_service_(bridge_service),
+      binding_(this),
+      tts_controller_getter_(base::BindRepeating(&TtsController::GetInstance)) {
   arc_bridge_service_->tts()->AddObserver(this);
 }
 
@@ -65,7 +68,8 @@ void ArcTtsService::OnTtsEvent(uint32_t id,
                                mojom::TtsEventType event_type,
                                uint32_t char_index,
                                const std::string& error_msg) {
-  if (!TtsController::GetInstance())
+  TtsController* controller = tts_controller_getter_.Run();
+  if (!controller)
     return;
 
   TtsEventType chrome_event_type;
@@ -83,8 +87,7 @@ void ArcTtsService::OnTtsEvent(uint32_t id,
       chrome_event_type = TTS_EVENT_ERROR;
       break;
   }
-  TtsController::GetInstance()->OnTtsEvent(id, chrome_event_type, char_index,
-                                           error_msg);
+  controller->OnTtsEvent(id, chrome_event_type, char_index, error_msg);
 }
 
 }  // namespace arc
