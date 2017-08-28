@@ -1722,6 +1722,7 @@ crbug.com/626703 virtual/mojo-loading/http/tests/inspector/persistence/persisten
 crbug.com/626703 virtual/threaded/transitions/transition-end-event-multiple-03.html [ Pass Failure ]
 
 # ====== New tests from wpt-importer added here ======
+crbug.com/626703 external/wpt/audio-output/setSinkId-manual.https.html [ Skip ]
 crbug.com/626703 external/wpt/payment-request/payment-response/complete-method-manual.https.html [ Skip ]
 crbug.com/626703 external/wpt/payment-request/payment-response/methodName-attribute-manual.https.html [ Skip ]
 crbug.com/626703 external/wpt/payment-request/payment-response/payerEmail-attribute-manual.https.html [ Skip ]
