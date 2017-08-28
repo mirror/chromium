@@ -8,11 +8,13 @@
 #include <stddef.h>
 #include <stdint.h>
 
+#include <map>
 #include <vector>
 
 #include "base/logging.h"
 #include "base/optional.h"
 #include "chrome/installer/zucchini/buffer_view.h"
+#include "chrome/installer/zucchini/disassembler.h"
 #include "chrome/installer/zucchini/image_utils.h"
 #include "chrome/installer/zucchini/label_manager.h"
 
@@ -23,17 +25,16 @@ namespace zucchini {
 // relatively high, so this is only used during patch generation.
 class ImageIndex {
  public:
-  ImageIndex(ConstBufferView image,
-             std::vector<ReferenceTypeTraits>&& traits_map);
+  explicit ImageIndex(ConstBufferView image);
   ImageIndex(const ImageIndex&) = delete;
   ImageIndex(ImageIndex&& that);
   ~ImageIndex();
 
-  // Inserts all references of type |type_tag| read from |ref_reader| to this
-  // index. This should be called exactly once for each reference type. If
-  // overlap between any two references of any type is encountered, returns
-  // false and leaves the object in an invalid state. Otherwise, returns true.
-  bool InsertReferences(TypeTag type_tag, ReferenceReader&& ref_reader);
+  // Inserts all references read from |diasm|. This should be called exactly
+  // once. If overlap between any two references of any type is encountered,
+  // returns false and leaves the object in an invalid state. Otherwise, returns
+  // true.
+  bool Initialize(Disassembler* disasm);
 
   // Returns the number of reference type the index holds.
   size_t TypeCount() const { return types_.size(); }
@@ -41,22 +42,17 @@ class ImageIndex {
   // Returns the number of target pool discovered.
   size_t PoolCount() const { return pools_.size(); }
 
-  size_t LabelBound(PoolTag pool) const {
-    DCHECK_LT(pool.value(), pools_.size());
-    return pools_[pool.value()].label_bound;
-  }
+  size_t LabelBound(PoolTag pool) const { return pools_.at(pool).label_bound; }
 
   // Returns traits describing references of type |type|.
   const ReferenceTypeTraits& GetTraits(TypeTag type) const {
-    DCHECK_LT(type.value(), types_.size());
-    return types_[type.value()].traits;
+    return types_.at(type).traits;
   }
 
   PoolTag GetPoolTag(TypeTag type) const { return GetTraits(type).pool_tag; }
 
   const std::vector<TypeTag>& GetTypeTags(PoolTag pool) const {
-    DCHECK_LT(pool.value(), pools_.size());
-    return pools_[pool.value()].types;
+    return pools_.at(pool).types;
   }
 
   // Returns true if |raw_image_[location]| is either:
@@ -66,12 +62,12 @@ class ImageIndex {
 
   // Returns true if |raw_image_[location]| is part of a reference.
   bool IsReference(offset_t location) const {
-    return GetType(location) != kNoTypeTag;
+    return LookupType(location) != kNoTypeTag;
   }
 
   // Returns the type tag of the reference covering |location|, or kNoTypeTag if
   // |location| is not part of a reference.
-  TypeTag GetType(offset_t location) const {
+  TypeTag LookupType(offset_t location) const {
     DCHECK_EQ(type_tags_.size(), raw_image_.size());  // Sanity check.
     DCHECK_LT(location, size());
     return type_tags_[location];
@@ -90,8 +86,7 @@ class ImageIndex {
   // Returns a vector of references of type |type|, where references are sorted
   // by their location.
   const std::vector<Reference>& GetReferences(TypeTag type) const {
-    DCHECK_LT(type.value(), types_.size());
-    return types_[type.value()].references;
+    return types_.at(type).references;
   }
 
   // Creates and returns a vector of all targets in |pool|.
@@ -142,14 +137,20 @@ class ImageIndex {
     size_t label_bound = 0;      // Upper bound on Label indices for this pool.
   };
 
+  // Inserts all references of type |type_tag| read from |ref_reader| to this
+  // index. This should be called exactly once for each reference type. If
+  // overlap between any two references of any type is encountered, returns
+  // false and leaves the object in an invalid state. Otherwise, returns true.
+  bool InsertReferences(TypeTag type_tag, ReferenceReader&& ref_reader);
+
   const ConstBufferView raw_image_;
 
   // Used for random access lookup of reference type, for each byte in
   // |raw_image_|.
   std::vector<TypeTag> type_tags_;
 
-  std::vector<TypeInfo> types_;
-  std::vector<PoolInfo> pools_;
+  std::map<TypeTag, TypeInfo> types_;
+  std::map<PoolTag, PoolInfo> pools_;
 };
 
 }  // namespace zucchini

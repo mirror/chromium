@@ -21,8 +21,8 @@ double GetTokenSimilarity(const ImageIndex& old_image,
   DCHECK(old_image.IsToken(src));
   DCHECK(new_image.IsToken(dst));
 
-  TypeTag old_type = old_image.GetType(src);
-  TypeTag new_type = new_image.GetType(dst);
+  TypeTag old_type = old_image.LookupType(src);
+  TypeTag new_type = new_image.LookupType(dst);
   if (old_type != new_type)
     return kMismatchFatal;
 
@@ -78,8 +78,8 @@ EquivalenceCandidate ExtendEquivalenceForward(
                             equivalence.dst_offset + k < new_image.size();
        ++k) {
     // Mismatch in type, |candidate| cannot be extended further.
-    if (old_image.GetType(equivalence.src_offset + k) !=
-        new_image.GetType(equivalence.dst_offset + k))
+    if (old_image.LookupType(equivalence.src_offset + k) !=
+        new_image.LookupType(equivalence.dst_offset + k))
       break;
 
     if (!new_image.IsToken(equivalence.dst_offset + k)) {
@@ -120,8 +120,8 @@ EquivalenceCandidate ExtendEquivalenceBackward(
   for (offset_t k = 1;
        k <= equivalence.dst_offset && k <= equivalence.src_offset; ++k) {
     // Mismatch in type, |candidate| cannot be extended further.
-    if (old_image.GetType(equivalence.src_offset - k) !=
-        new_image.GetType(equivalence.dst_offset - k))
+    if (old_image.LookupType(equivalence.src_offset - k) !=
+        new_image.LookupType(equivalence.dst_offset - k))
       break;
 
     // Non-tokens are joined with the nearest previous token: skip until we
@@ -129,8 +129,8 @@ EquivalenceCandidate ExtendEquivalenceBackward(
     if (!new_image.IsToken(equivalence.dst_offset - k))
       continue;
 
-    DCHECK(old_image.GetType(equivalence.src_offset - k) ==
-           new_image.GetType(equivalence.dst_offset - k));  // Sanity check.
+    DCHECK(old_image.LookupType(equivalence.src_offset - k) ==
+           new_image.LookupType(equivalence.dst_offset - k));  // Sanity check.
     double similarity =
         GetTokenSimilarity(old_image, new_image, equivalence.src_offset - k,
                            equivalence.dst_offset - k);
