@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "998ea9d1_54ae5e2e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1123899
+      },
+      "writtenOn": "2017-08-28T16:26:11Z",
+      "side": 1,
+      "message": "if running outside of OOBE.",
+      "range": {
+        "startLine": 11,
+        "startChar": 46,
+        "endLine": 12,
+        "endChar": 17
+      },
+      "revId": "8b6255b2c481c12d3778921e654c1b4d8aa488f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce1ce8a5_d895a513",
+        "filename": "chrome/browser/chromeos/arc/voice_interaction/arc_voice_interaction_framework_service.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 304,
+      "author": {
+        "id": 1123899
+      },
+      "writtenOn": "2017-08-28T16:26:11Z",
+      "side": 1,
+      "message": "Now you only set the pref when the whole setup process is complete. It should be renamed to kArcVoiceInteractionSetupComplete.  Ideally we should introduce a new pref with this name and then remove kArcVoiceInteractionValuePropAccepted to make a clean transition.",
+      "range": {
+        "startLine": 304,
+        "startChar": 26,
+        "endLine": 304,
+        "endChar": 70
+      },
+      "revId": "8b6255b2c481c12d3778921e654c1b4d8aa488f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9592bf76_3ee70175",
+        "filename": "chrome/browser/chromeos/arc/voice_interaction/arc_voice_interaction_framework_service.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 405,
+      "author": {
+        "id": 1123899
+      },
+      "writtenOn": "2017-08-28T16:26:11Z",
+      "side": 1,
+      "message": "if (!framework_instance)\n    return;\n\t\n  if (should_start_runtime_flow_) {\n    should_start_runtime_flow_ \u003d false;\n    framework_instance-\u003eStartVoiceInteractionSession();\n  } else {\n    framework_instance-\u003eStartVoiceInteractionSetupWizard();\n  }",
+      "range": {
+        "startLine": 395,
+        "startChar": 0,
+        "endLine": 405,
+        "endChar": 57
+      },
+      "revId": "8b6255b2c481c12d3778921e654c1b4d8aa488f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
