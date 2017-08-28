@@ -68,23 +68,26 @@ class PLATFORM_EXPORT ShapingLineBreaker final {
                                     LayoutUnit available_space,
                                     Result* result_out);
 
+  // Pass this value to the constructor to disable soft hyphens.
+  static const Hyphenation* DisableSoftHyphen();
+
  private:
   const String& GetText() const;
 
   unsigned PreviousBreakOpportunity(unsigned offset,
                                     unsigned start,
-                                    bool* is_hyphenated);
+                                    bool* is_hyphenated) const;
   unsigned NextBreakOpportunity(unsigned offset,
                                 unsigned start,
-                                bool* is_hyphenated);
+                                bool* is_hyphenated) const;
   unsigned Hyphenate(unsigned offset,
                      unsigned start,
                      bool backwards,
-                     bool* is_hyphenated);
+                     bool* is_hyphenated) const;
   unsigned Hyphenate(unsigned offset,
                      unsigned word_start,
                      unsigned word_end,
-                     bool backwards);
+                     bool backwards) const;
 
   PassRefPtr<ShapeResult> Shape(TextDirection, unsigned start, unsigned end);
   PassRefPtr<ShapeResult> ShapeToEnd(unsigned start,
@@ -99,6 +102,8 @@ class PLATFORM_EXPORT ShapingLineBreaker final {
   // has expansions. Split spacing and expansions to make this const.
   ShapeResultSpacing<String>* spacing_;
   const Hyphenation* hyphenation_;
+
+  friend class ShapingLineBreakerTest;
 };
 
 }  // namespace blink
