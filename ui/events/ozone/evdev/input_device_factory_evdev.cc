@@ -348,17 +348,23 @@ bool InputDeviceFactoryEvdev::IsDeviceEnabled(
     const EventConverterEvdev* converter) {
   if (!input_device_settings_.enable_internal_touchpad &&
       converter->type() == InputDeviceType::INPUT_DEVICE_INTERNAL &&
-      converter->HasTouchpad())
+      converter->HasTouchpad()) {
+    LOG(ERROR) << "disabled reason: touchpad";
     return false;
+  }
 
   if (!input_device_settings_.enable_touch_screens &&
-      converter->HasTouchscreen())
+      converter->HasTouchscreen()) {
+    LOG(ERROR) << "disabled reason: touchscreen";
     return false;
+  }
 
   if (palm_suppression_enabled_ &&
       converter->type() == InputDeviceType::INPUT_DEVICE_INTERNAL &&
-      converter->HasTouchscreen() && !converter->HasPen())
+      converter->HasTouchscreen() && !converter->HasPen()) {
+    LOG(ERROR) << "disabled reason: palm suppression";
     return false;
+  }
 
   return input_device_settings_.enable_devices;
 }

@@ -310,6 +310,8 @@ void InputDeviceSettings::SetTouchscreenEnabledInPrefs(bool enabled,
 void InputDeviceSettings::UpdateTouchscreenStatusFromPrefs() {
   bool enabled_in_local_state = IsTouchscreenEnabledInPrefs(true);
   bool enabled_in_user_prefs = IsTouchscreenEnabledInPrefs(false);
+  LOG(ERROR) << "touchscreen local state: " << enabled_in_local_state;
+  LOG(ERROR) << "touchscreen user prefs: " << enabled_in_user_prefs;
   SetTouchscreensEnabled(enabled_in_local_state && enabled_in_user_prefs);
 }
 

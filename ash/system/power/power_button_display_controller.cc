@@ -144,6 +144,13 @@ void PowerButtonDisplayController::GetInitialBacklightsForcedOff() {
 
 void PowerButtonDisplayController::OnGotInitialBacklightsForcedOff(
     bool is_forced_off) {
+  if (is_forced_off) {
+    LOG(ERROR)
+        << "initial backlights are forced-off, touchscreen should be disabled";
+  } else {
+    LOG(ERROR) << "initial backlights are not forced-off, touchscreen should "
+                  "be enabled";
+  }
   backlights_forced_off_ = is_forced_off;
   UpdateTouchscreenStatus();
 }
