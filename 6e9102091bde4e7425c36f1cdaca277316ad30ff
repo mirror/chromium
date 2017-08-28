@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ff288df4_8e618151",
+        "filename": "chrome/android/java/res/layout/bottom_control_container.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-08-28T22:16:31Z",
+      "side": 1,
+      "message": "I don\u0027t know why it needs so many clipChildren \u003d false but it when I remove any of these three the toolbar doesn\u0027t show up when translated.",
+      "range": {
+        "startLine": 11,
+        "startChar": 26,
+        "endLine": 11,
+        "endChar": 31
+      },
+      "revId": "6e9102091bde4e7425c36f1cdaca277316ad30ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
