@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1ea99f6c_a1eb61b4",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/access-control-preflight-request-invalid-status-301.htm",
+        "patchSetId": 4
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-08-28T04:02:07Z",
+      "side": 1,
+      "message": "This needs an assumption that the handlers, onerror and onload, are retrieved right before dispatching an event and it happens after the current task completes.\n\nIt may work and it does for this case, but in principle, I recommend that we setup handlers before kicking the operation that uses the handlers.",
+      "revId": "f685fad2884c956d4d342407f4e1bb6ad0496364",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72a1d29a_7b997a07",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/resources/access-control-preflight-request-invalid-status.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-08-28T04:02:07Z",
+      "side": 1,
+      "message": "you don\u0027t need parentheses here",
+      "revId": "f685fad2884c956d4d342407f4e1bb6ad0496364",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be29a9ec_e7ed897e",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/resources/access-control-preflight-request-invalid-status.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-08-28T04:02:07Z",
+      "side": 1,
+      "message": "This test wants to test that an invalid response code causes preflight failure. So, all the other conditions should be valid except for it.\n\nAccess-Control-Allow-Headers must be emitted to accept the x-pass header.\n\nPlease test that this test fails (i.e. the preflight succeeds) when you change the \"code\" parameter in the HTML file to 200 to check this point.",
+      "revId": "f685fad2884c956d4d342407f4e1bb6ad0496364",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
