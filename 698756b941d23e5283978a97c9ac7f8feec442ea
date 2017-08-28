@@ -16,6 +16,24 @@
       "revId": "698756b941d23e5283978a97c9ac7f8feec442ea",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27b6921e_98ee1cc5",
+        "filename": "ios/clean/chrome/browser/ui/tab/tab_coordinator_unittest.mm",
+        "patchSetId": 20
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-08-28T22:45:31Z",
+      "side": 0,
+      "message": "These were removed because they were no longer useful tests. They have been replaced with more useful tests, but disabled because they were failing. They have been marked with a crbug.",
+      "parentUuid": "f2e1a287_8ad3e680",
+      "revId": "698756b941d23e5283978a97c9ac7f8feec442ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
