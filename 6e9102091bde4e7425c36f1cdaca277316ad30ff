@@ -22,6 +22,30 @@
       "revId": "6e9102091bde4e7425c36f1cdaca277316ad30ff",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "850e01a3_5cffe852",
+        "filename": "chrome/android/java/res/layout/bottom_control_container.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-08-28T23:07:54Z",
+      "side": 1,
+      "message": "IIRC there is some optimization that happens when clipChildren is true. I believe it has to do with the size of the surface allocated. Would it be possible to do this programatically when we need it and reset it when the animation is done?",
+      "parentUuid": "ff288df4_8e618151",
+      "range": {
+        "startLine": 11,
+        "startChar": 26,
+        "endLine": 11,
+        "endChar": 31
+      },
+      "revId": "6e9102091bde4e7425c36f1cdaca277316ad30ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
