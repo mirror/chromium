@@ -22,6 +22,30 @@
       "revId": "bde8541f228c50efc901eeb7fd05870b4ef3a2ea",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94807f3a_fea87c0e",
+        "filename": "chrome/browser/ui/ash/launcher/chrome_launcher_controller.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 529,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-08-28T21:05:53Z",
+      "side": 1,
+      "message": "I removed that call from this CL. Without it, Chrome stays active when minimized in mash, so the check above won\u0027t pass on the next click(s), and you can\u0027t restore the window after minimizing. That said, Deactivate isn\u0027t needed in classic ash, so presumably the real defect lies elsewhere, (perhaps DesktopWindowTreeHostMus \u0026 DesktopNativeWidgetAura). I\u0027ll leave that fix for another CL and keep this CL just about fixing the crash.",
+      "parentUuid": "b925d65c_ab106df9",
+      "range": {
+        "startLine": 529,
+        "startChar": 3,
+        "endLine": 529,
+        "endChar": 25
+      },
+      "revId": "bde8541f228c50efc901eeb7fd05870b4ef3a2ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
