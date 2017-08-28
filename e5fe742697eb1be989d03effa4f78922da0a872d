@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "35dd2cde_71e7c38d",
+        "filename": "base/bind.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1211094
+      },
+      "writtenOn": "2017-08-28T09:42:24Z",
+      "side": 1,
+      "message": "Instead of adding RepeatMode here, can we use Unwrapped here to check that?\nPlus, rather than matching Arg against Param here, can we match Arg to Storage, and Unwrapped to Param here?\nE.g.:\nusing Storage \u003d std::decay_t\u003cArg\u003e;\nstatic constexpr bool param_is_constructible \u003d\n  std::is_constructible\u003cParam, Unwrapped\u003e::value;\nstatic constexpr bool arg_is_storable \u003d\n  std::is_constructible\u003cStorage, Arg\u003e::value;\n\nstatic constexpr bool needs_passed \u003d\n  !param_is_constructible \u0026\u0026\n  std::is_constructible\u003cParam, std::decay_t\u003cUnwrapped\u003e\u0026\u0026\u003e::value;\nstatic constexpr bool needs_move \u003d\n  !arg_is_storable \u0026\u0026\n  std::is_constructible\u003cStorage, std::remove_reference_t\u003cArg\u003e\u0026\u0026\u003e::value;\nstatic constexpr bool needs_non_const_rvalue \u003d\n  std::is_constructible\u003cStorage, std::decay_t\u003cArg\u003e\u0026\u0026\u003e::value;\n... and other ...\n\nstatic_assert(!needs_passed, \"... Use base::Passed()?\");\nstatic_assert(!needs_move, \"... Use std::move()?\");",
+      "parentUuid": "143783a0_46313c1f",
+      "range": {
+        "startLine": 63,
+        "startChar": 0,
+        "endLine": 64,
+        "endChar": 18
+      },
+      "revId": "e5fe742697eb1be989d03effa4f78922da0a872d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fba73adb_624f9cff",
         "filename": "base/bind.h",
         "patchSetId": 6
