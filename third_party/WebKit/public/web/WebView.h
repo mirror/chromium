@@ -90,6 +90,7 @@ class WebView : protected WebWidget {
   using WebWidget::LayoutAndPaintAsync;
   using WebWidget::CompositeAndReadbackAsync;
   using WebWidget::ThemeChanged;
+  using WebWidget::HitTestResultAt;
   using WebWidget::HandleInputEvent;
   using WebWidget::SetCursorVisibilityState;
   using WebWidget::HasTouchEventHandlersAt;

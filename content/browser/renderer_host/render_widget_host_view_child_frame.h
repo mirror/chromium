@@ -116,8 +116,8 @@ class CONTENT_EXPORT RenderWidgetHostViewChildFrame
   void GestureEventAck(const blink::WebGestureEvent& event,
                        InputEventAckState ack_result) override;
   void DidCreateNewRendererCompositorFrameSink(
-      viz::mojom::CompositorFrameSinkClient* renderer_compositor_frame_sink)
-      override;
+      viz::mojom::CompositorFrameSinkClient* renderer_compositor_frame_sink,
+      viz::mojom::TargetFrameForInputDelegate*) override;
   void SubmitCompositorFrame(const viz::LocalSurfaceId& local_surface_id,
                              cc::CompositorFrame frame) override;
   void OnDidNotProduceFrame(const viz::BeginFrameAck& ack) override;
@@ -277,7 +277,8 @@ class CONTENT_EXPORT RenderWidgetHostViewChildFrame
                                 const ReadbackRequestCallback& callback,
                                 const SkColorType preferred_color_type);
 
-  void CreateCompositorFrameSinkSupport();
+  void CreateCompositorFrameSinkSupport(
+      viz::mojom::TargetFrameForInputDelegate* = nullptr);
   void ResetCompositorFrameSinkSupport();
   void DetachFromTouchSelectionClientManagerIfNecessary();
 

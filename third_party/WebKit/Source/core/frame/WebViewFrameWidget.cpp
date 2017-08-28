@@ -90,6 +90,10 @@ void WebViewFrameWidget::ThemeChanged() {
   return web_view_->ThemeChanged();
 }
 
+// WebFrame* WebViewFrameWidget::HitTestFrameAt(const WebFloatPoint& point) {
+//  return web_view_->HitTestFrameAt(point);
+//}
+
 WebInputEventResult WebViewFrameWidget::HandleInputEvent(
     const WebCoalescedInputEvent& event) {
   return web_view_->HandleInputEvent(event);
@@ -239,6 +243,10 @@ WebLayerTreeView* WebViewFrameWidget::GetLayerTreeView() const {
 
 CompositorAnimationHost* WebViewFrameWidget::AnimationHost() const {
   return web_view_->AnimationHost();
+}
+
+WebHitTestResult WebViewFrameWidget::HitTestResultAt(const WebPoint& point) {
+  return web_view_->HitTestResultAt(point);
 }
 
 HitTestResult WebViewFrameWidget::CoreHitTestResultAt(const WebPoint& point) {
