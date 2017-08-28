@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5683aaf3_3469ebea",
+        "filename": "ui/aura/mus/window_port_mus.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-08-28T18:32:15Z",
+      "side": 1,
+      "message": "I think on the client side, we should just always generate the hit-test data here. So this should not check the flag. (the code that generates the hit-test data will still run, we just will not be using that data for hit-testing in the WS until the flag is switched)",
+      "revId": "a728d62895e533b21a31740078ff17dbfe1c6ab8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
