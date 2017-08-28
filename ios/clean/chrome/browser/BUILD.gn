@@ -4,6 +4,8 @@
 
 source_set("browser") {
   sources = [
+    "experimental_flags.h",
+    "experimental_flags.mm",
     "url_opening.h",
   ]
 
