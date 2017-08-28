@@ -130,11 +130,16 @@ void AppListPresenterImpl::SetAppList(mojom::AppListPtr app_list) {
 }
 
 void AppListPresenterImpl::UpdateYPositionAndOpacity(int y_position_in_screen,
-                                                     float background_opacity,
-                                                     bool is_end_gesture) {
+                                                     float background_opacity) {
+  if (view_)
+    view_->UpdateYPositionAndOpacity(y_position_in_screen, background_opacity);
+}
+
+void AppListPresenterImpl::EndDragFromShelf(int app_list_state) {
   if (view_) {
-    view_->UpdateYPositionAndOpacity(y_position_in_screen, background_opacity,
-                                     is_end_gesture);
+    view_->SetState(app_list::AppListView::AppListState(app_list_state));
+    view_->SetIsInDrag(false);
+    view_->DraggingLayout();
   }
 }
 

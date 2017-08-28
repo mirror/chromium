@@ -505,11 +505,15 @@ void Shell::ShowAppList(app_list::AppListShowSource toggle_method) {
                       .id());
 }
 
-void Shell::UpdateAppListYPositionAndOpacity(int y_position_in_screen,
-                                             float app_list_background_opacity,
-                                             bool is_end_gesture) {
-  app_list_->UpdateYPositionAndOpacity(
-      y_position_in_screen, app_list_background_opacity, is_end_gesture);
+void Shell::UpdateAppListYPositionAndOpacity(
+    int y_position_in_screen,
+    float app_list_background_opacity) {
+  app_list_->UpdateYPositionAndOpacity(y_position_in_screen,
+                                       app_list_background_opacity);
+}
+
+void Shell::EndDragAppListFromShelf(int app_list_state) {
+  app_list_->EndDragFromShelf(app_list_state);
 }
 
 void Shell::DismissAppList() {
