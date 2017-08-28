@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "04f387d3_5722c02a",
+        "filename": "build/fuchsia/runner_common.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-08-28T22:24:11Z",
+      "side": 1,
+      "message": "No blank lines before else.",
+      "revId": "d127128b365b70ff9388e3e6cc8eabe97353960a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23f1fa2d_8508726f",
+        "filename": "build/fuchsia/runner_common.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 273,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-08-28T22:24:11Z",
+      "side": 1,
+      "message": "And here.",
+      "revId": "d127128b365b70ff9388e3e6cc8eabe97353960a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c6b2eb0_ce6c7bbb",
+        "filename": "build/fuchsia/runner_common.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-08-28T22:24:11Z",
+      "side": 1,
+      "message": "This looks like it will fit on the previous line.",
+      "revId": "d127128b365b70ff9388e3e6cc8eabe97353960a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
