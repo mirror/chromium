@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9d220f6a_b1537177",
+        "filename": "chrome/browser/chromeos/login/existing_user_controller.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-08-28T14:10:35Z",
+      "side": 1,
+      "message": "We decided to drop the values in the CL introducing this enum, please see [1].\n\n[1] https://chromium-review.googlesource.com/c/chromium/src/+/564609/7",
+      "parentUuid": "2ddefef6_625ab767",
+      "range": {
+        "startLine": 137,
+        "startChar": 2,
+        "endLine": 137,
+        "endChar": 17
+      },
+      "revId": "f3b9a73361c6f45e774efa34d70be2fb9f6e7468",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f8d9623e_85783e82",
         "filename": "components/policy/resources/policy_templates.json",
         "patchSetId": 12
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "7895f1e2_007c8dd7",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 12
+      },
+      "lineNbr": 9739,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-08-28T14:10:35Z",
+      "side": 1,
+      "message": "Done. I\u0027ll write a presubmit[1] when I have time.\n[1] https://bugs.chromium.org/p/chromium/issues/detail?id\u003d759549",
+      "parentUuid": "f8d9623e_85783e82",
+      "range": {
+        "startLine": 9739,
+        "startChar": 28,
+        "endLine": 9739,
+        "endChar": 29
+      },
+      "revId": "f3b9a73361c6f45e774efa34d70be2fb9f6e7468",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d1ff51cb_3422cfab",
         "filename": "components/policy/resources/policy_templates.json",
         "patchSetId": 12
@@ -68,6 +116,30 @@
       "revId": "f3b9a73361c6f45e774efa34d70be2fb9f6e7468",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8c0d2e9_2c189822",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 12
+      },
+      "lineNbr": 9765,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-08-28T14:10:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d1ff51cb_3422cfab",
+      "range": {
+        "startLine": 9765,
+        "startChar": 105,
+        "endLine": 9765,
+        "endChar": 112
+      },
+      "revId": "f3b9a73361c6f45e774efa34d70be2fb9f6e7468",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
