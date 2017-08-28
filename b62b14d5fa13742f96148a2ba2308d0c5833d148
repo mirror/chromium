@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7bba43f7_b9ac6deb",
+        "filename": "chrome/app/vector_icons/notification_captive_portal.icon",
+        "patchSetId": 4
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-08-28T18:17:14Z",
+      "side": 1,
+      "message": "in ash we already have captive_portal.icon, although that\u0027s a slightly different size so we may need to add this one as well. But why is there a separate 1x variety for ash but not in this case? I mentioned before that 1x wasn\u0027t necessary if the only difference from the 2x variety was scaling, i.e. all numbers are the same modulo a multiplicative factor. But sgabriel knows this so if he\u0027s providing two assets (I can\u0027t tell, since the linked bug doesn\u0027t seem to link to the assets themselves), it probably means there are other tweaks involved besides simple scaling.\n\nalso, needs copyright header",
+      "revId": "b62b14d5fa13742f96148a2ba2308d0c5833d148",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
