@@ -145,6 +145,7 @@ class AudioRendererImplTest : public ::testing::Test, public RendererClient {
 
   virtual ~AudioRendererImplTest() {
     SCOPED_TRACE("~AudioRendererImplTest()");
+    SetMediaClient(nullptr);
   }
 
   // Mock out demuxer reads.
@@ -1246,6 +1247,10 @@ TEST_F(AudioRendererImplTest, BitstreamEndOfStream) {
   EXPECT_FALSE(ConsumeBitstreamBufferedData(OutputFrames(1)));
   base::RunLoop().RunUntilIdle();
   EXPECT_TRUE(ended());
+
+  // Clear the use of |media_client_|, which was set in
+  // InitializeBitstreamFormat().
+  SetMediaClient(nullptr);
 }
 
 }  // namespace media
