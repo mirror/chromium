@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a3e8ca40_d5e8b91c",
+        "filename": "cc/trees/layer_tree_host_unittest_animation.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1191,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-08-28T17:57:21Z",
+      "side": 1,
+      "message": "I\u0027m assuming here that the flake is that the pending tree is the sync tree, which doesn\u0027t exist and so it crashes?\n\nIf the \"if (TestEnded())\" call is moved up to the top, would that fix the problem? Or alternatively if the sync tree doesn\u0027t exist, we should assert the test is ended and then early out?\n\nMy (very minor) concern is that this change makes it look like the test might want to look at something that\u0027s not the sync tree, when really that\u0027s not the case.",
+      "revId": "6d8336188aca7b24e97328c16ca8786e7c79b061",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
