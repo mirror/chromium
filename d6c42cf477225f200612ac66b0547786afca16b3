@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "38311cac_fa4fc7ef",
+        "filename": "third_party/WebKit/public/platform/WebGestureCurve.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-08-28T20:19:00Z",
+      "side": 1,
+      "message": "Why not just return the result? I don\u0027t see why you need an output param pointer.\n\nAlso perhaps we should just call it ComputeFinalScrollOffset() or just GetFinalOffset()",
+      "range": {
+        "startLine": 46,
+        "startChar": 15,
+        "endLine": 46,
+        "endChar": 39
+      },
+      "revId": "d6c42cf477225f200612ac66b0547786afca16b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "533b2776_7f1c2745",
+        "filename": "third_party/WebKit/public/platform/WebGestureCurve.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-08-28T20:19:00Z",
+      "side": 1,
+      "message": "I think we should avoid mutating the current curve. \nInstead the better approach will be to create a new curve to the\n\"snapped offset\". This is similar to how we are handling fling \nboosting. [1]\n\nI think one way to do this is to introduce alternative \noverloads for CreateFlingAnimationCurve that takes in\nfinal offset in addition/instead of initial velocity.\n\nSo it will be something like\n\n fling_curve \u003d CreateFlingAnimationCurveForVelocity(init_velocity)\n final_pos \u003d fling_curve-\u003eGetFinalOffset()\n snapped_final_pos \u003d get_snapped_posotion(final_pos)\n\n if (snapped_final_pos !\u003d final_position) // recreate the curve with final position\n   fling_curve.reset(CreateFlingAnimationCurveForPosition(final_position))\n  \n\n[1] See InputHandlerProxy::FilterInputEventForFlingBoosting",
+      "range": {
+        "startLine": 47,
+        "startChar": 15,
+        "endLine": 47,
+        "endChar": 40
+      },
+      "revId": "d6c42cf477225f200612ac66b0547786afca16b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
