@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "df66d792_59d2bdd9",
+        "filename": "third_party/WebKit/public/platform/WebCORSPreflightResultCache.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-28T07:41:04Z",
+      "side": 1,
+      "message": "Maybe this q is for yoshino-san..\n\nIs the behavior of preflight cache spec\u0027ed?  It feels ideally we should just always get or allocate this per thread using thread local (i.e. GetOrCreateCacheForThread())?",
+      "revId": "c9126bd92ec2475bc6fb67709d073f2c91d1b088",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
