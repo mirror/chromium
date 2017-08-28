@@ -16,6 +16,24 @@
       "revId": "1f4124c759550240ce91da53341d6c7363f12f54",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32221055_13fc20f1",
+        "filename": "ash/ash_strings.grd",
+        "patchSetId": 1
+      },
+      "lineNbr": 1066,
+      "author": {
+        "id": 1195459
+      },
+      "writtenOn": "2017-08-28T03:25:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "629cdd56_71771bc8",
+      "revId": "1f4124c759550240ce91da53341d6c7363f12f54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
