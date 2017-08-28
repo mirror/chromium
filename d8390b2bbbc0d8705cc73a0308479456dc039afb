@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0bb1410c_44950bc9",
+        "filename": "components/safe_browsing/browser/threat_details.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-08-28T23:48:13Z",
+      "side": 0,
+      "message": "Was this blank line removed by linter or intentionally? I\u0027d prefer to leave it there if it wasn\u0027t linted away.",
+      "revId": "d8390b2bbbc0d8705cc73a0308479456dc039afb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f907e7e7_eef5641e",
+        "filename": "components/safe_browsing/web_ui/safe_browsing_ui.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-08-28T23:48:13Z",
+      "side": 0,
+      "message": "let\u0027s leave this in.",
+      "revId": "d8390b2bbbc0d8705cc73a0308479456dc039afb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

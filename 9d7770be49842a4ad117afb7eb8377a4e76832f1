@@ -1,0 +1,303 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b840067a_8d8cf792",
+        "filename": "components/safe_browsing/web_ui/safe_browsing_ui.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-08-28T23:48:13Z",
+      "side": 1,
+      "message": "Can we return a const ref to this vector so that we don\u0027t create a copy of the vector everytime?",
+      "range": {
+        "startLine": 50,
+        "startChar": 0,
+        "endLine": 50,
+        "endChar": 44
+      },
+      "revId": "9d7770be49842a4ad117afb7eb8377a4e76832f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "677b905d_3f70e799",
+        "filename": "components/safe_browsing/web_ui/safe_browsing_ui.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-08-28T23:48:13Z",
+      "side": 1,
+      "message": "threat_details_sent",
+      "range": {
+        "startLine": 54,
+        "startChar": 54,
+        "endLine": 54,
+        "endChar": 68
+      },
+      "revId": "9d7770be49842a4ad117afb7eb8377a4e76832f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3620748_5b69c749",
+        "filename": "components/safe_browsing/web_ui/safe_browsing_ui.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-08-28T23:48:13Z",
+      "side": 1,
+      "message": "I\u0027d put these simpler cases above the more-code case.",
+      "range": {
+        "startLine": 62,
+        "startChar": 21,
+        "endLine": 62,
+        "endChar": 39
+      },
+      "revId": "9d7770be49842a4ad117afb7eb8377a4e76832f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "547c57d9_2d12b9c3",
+        "filename": "components/safe_browsing/web_ui/safe_browsing_ui.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 317,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-08-28T23:48:13Z",
+      "side": 1,
+      "message": "one liner: https://stackoverflow.com/a/39944",
+      "range": {
+        "startLine": 317,
+        "startChar": 0,
+        "endLine": 317,
+        "endChar": 69
+      },
+      "revId": "9d7770be49842a4ad117afb7eb8377a4e76832f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2fa7cc9_3f84874a",
+        "filename": "components/safe_browsing/web_ui/safe_browsing_ui.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-08-28T23:48:13Z",
+      "side": 1,
+      "message": "ThreatDetailsOperation?",
+      "range": {
+        "startLine": 24,
+        "startChar": 7,
+        "endLine": 24,
+        "endChar": 24
+      },
+      "revId": "9d7770be49842a4ad117afb7eb8377a4e76832f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b17987d_b05f01eb",
+        "filename": "components/safe_browsing/web_ui/safe_browsing_ui.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-08-28T23:48:13Z",
+      "side": 1,
+      "message": "ADD",
+      "range": {
+        "startLine": 25,
+        "startChar": 4,
+        "endLine": 25,
+        "endChar": 14
+      },
+      "revId": "9d7770be49842a4ad117afb7eb8377a4e76832f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "863d9e63_aea579e6",
+        "filename": "components/safe_browsing/web_ui/safe_browsing_ui.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-08-28T23:48:13Z",
+      "side": 1,
+      "message": "DELETE",
+      "range": {
+        "startLine": 26,
+        "startChar": 4,
+        "endLine": 26,
+        "endChar": 24
+      },
+      "revId": "9d7770be49842a4ad117afb7eb8377a4e76832f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3901c2e9_ad9329b5",
+        "filename": "components/safe_browsing/web_ui/safe_browsing_ui.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-08-28T23:48:13Z",
+      "side": 1,
+      "message": "GET",
+      "range": {
+        "startLine": 27,
+        "startChar": 4,
+        "endLine": 27,
+        "endChar": 22
+      },
+      "revId": "9d7770be49842a4ad117afb7eb8377a4e76832f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b669abae_c81b7a54",
+        "filename": "components/safe_browsing/web_ui/safe_browsing_ui.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-08-28T23:48:13Z",
+      "side": 1,
+      "message": "I\u0027m not sure if \"old\" is the right term. I\u0027m more inclined to call it:\nGetSentThreatDetails",
+      "range": {
+        "startLine": 33,
+        "startChar": 7,
+        "endLine": 33,
+        "endChar": 26
+      },
+      "revId": "9d7770be49842a4ad117afb7eb8377a4e76832f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9150a735_94d60811",
+        "filename": "components/safe_browsing/web_ui/safe_browsing_ui.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-08-28T23:48:13Z",
+      "side": 1,
+      "message": "Please adda  comment for all the members of this class.\n\nAlso, shouldn\u0027t be public.",
+      "range": {
+        "startLine": 38,
+        "startChar": 13,
+        "endLine": 38,
+        "endChar": 27
+      },
+      "revId": "9d7770be49842a4ad117afb7eb8377a4e76832f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "904f33b5_3257d40e",
+        "filename": "components/safe_browsing/web_ui/safe_browsing_ui.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-08-28T23:48:13Z",
+      "side": 1,
+      "message": "GetOrUpdateThreatDetails",
+      "range": {
+        "startLine": 41,
+        "startChar": 54,
+        "endLine": 41,
+        "endChar": 74
+      },
+      "revId": "9d7770be49842a4ad117afb7eb8377a4e76832f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0f340cf_480f3b10",
+        "filename": "components/safe_browsing/web_ui/safe_browsing_ui.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-08-28T23:48:13Z",
+      "side": 1,
+      "message": "this should be a const \u0026",
+      "range": {
+        "startLine": 42,
+        "startChar": 37,
+        "endLine": 42,
+        "endChar": 38
+      },
+      "revId": "9d7770be49842a4ad117afb7eb8377a4e76832f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2479cb3e_ce034c03",
+        "filename": "components/safe_browsing/web_ui/safe_browsing_ui.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-08-28T23:48:13Z",
+      "side": 1,
+      "message": "If we already have a webui_list, do we really need a counter?\n\nAlso, private.\nAlso, webui_list_",
+      "range": {
+        "startLine": 44,
+        "startChar": 45,
+        "endLine": 44,
+        "endChar": 55
+      },
+      "revId": "9d7770be49842a4ad117afb7eb8377a4e76832f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
