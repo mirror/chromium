@@ -7,6 +7,7 @@
 #include <memory>
 
 #include "apps/launcher.h"
+#include "base/run_loop.h"
 #include "base/auto_reset.h"
 #include "base/bind.h"
 #include "base/command_line.h"

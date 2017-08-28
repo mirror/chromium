@@ -7,6 +7,8 @@
 #include <vector>
 
 #include "base/base64.h"
+#include "base/run_loop.h"
+#include "base/message_loop/message_loop.h"
 #include "base/json/json_writer.h"
 #include "base/strings/stringprintf.h"
 #include "build/build_config.h"

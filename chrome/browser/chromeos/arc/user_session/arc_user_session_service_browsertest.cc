@@ -3,6 +3,7 @@
 // found in the LICENSE file.
 
 #include "base/run_loop.h"
+#include "base/message_loop/message_loop.h"
 #include "chrome/browser/chromeos/arc/user_session/arc_user_session_service.h"
 #include "chrome/test/base/in_process_browser_test.h"
 #include "components/arc/arc_bridge_service.h"

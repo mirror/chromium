@@ -5,6 +5,7 @@
 #include <utility>
 
 #include "base/macros.h"
+#include "base/run_loop.h"
 #include "base/memory/ptr_util.h"
 #include "extensions/common/extension_builder.h"
 #include "extensions/common/mojo/keep_alive.mojom.h"

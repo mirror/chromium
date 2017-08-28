@@ -3,6 +3,7 @@
 // found in the LICENSE file.
 
 #include "base/strings/utf_string_conversions.h"
+#include "base/run_loop.h"
 #include "services/ui/public/interfaces/window_server_test.mojom.h"
 #include "services/ui/public/interfaces/window_tree_constants.mojom.h"
 #include "ui/aura/mus/in_flight_change.h"

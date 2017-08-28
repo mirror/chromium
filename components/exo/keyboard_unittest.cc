@@ -5,6 +5,7 @@
 #include "components/exo/keyboard.h"
 
 #include "ash/shell.h"
+#include "base/run_loop.h"
 #include "ash/wm/tablet_mode/tablet_mode_controller.h"
 #include "base/macros.h"
 #include "components/exo/buffer.h"

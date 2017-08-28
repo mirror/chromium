@@ -11,6 +11,7 @@
 #include <vector>
 
 #include "base/bind.h"
+#include "base/run_loop.h"
 #include "base/files/scoped_temp_dir.h"
 #include "base/macros.h"
 #include "base/task_scheduler/post_task.h"

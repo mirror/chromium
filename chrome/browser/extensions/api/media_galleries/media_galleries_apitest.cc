@@ -5,6 +5,7 @@
 #include <stdint.h>
 
 #include "base/auto_reset.h"
+#include "base/run_loop.h"
 #include "base/callback.h"
 #include "base/files/file_util.h"
 #include "base/files/scoped_temp_dir.h"

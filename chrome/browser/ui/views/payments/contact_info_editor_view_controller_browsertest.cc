@@ -5,6 +5,7 @@
 #include <string>
 
 #include "base/strings/utf_string_conversions.h"
+#include "base/run_loop.h"
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/ui/views/payments/payment_request_browsertest_base.h"
 #include "chrome/browser/ui/views/payments/payment_request_dialog_view_ids.h"

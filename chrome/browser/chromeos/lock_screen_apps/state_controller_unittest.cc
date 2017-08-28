@@ -10,6 +10,7 @@
 #include <vector>
 
 #include "ash/public/interfaces/tray_action.mojom.h"
+#include "base/run_loop.h"
 #include "base/base64.h"
 #include "base/files/file_path.h"
 #include "base/memory/ptr_util.h"

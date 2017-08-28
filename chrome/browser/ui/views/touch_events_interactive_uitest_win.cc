@@ -3,6 +3,8 @@
 // found in the LICENSE file.
 
 #include "base/win/windows_version.h"
+#include "base/run_loop.h"
+#include "base/message_loop/message_loop.h"
 #include "chrome/test/base/testing_profile.h"
 #include "chrome/test/base/view_event_test_base.h"
 #include "ui/aura/window.h"

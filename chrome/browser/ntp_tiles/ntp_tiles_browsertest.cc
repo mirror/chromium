@@ -6,6 +6,7 @@
 #include <string>
 
 #include "base/strings/utf_string_conversions.h"
+#include "base/run_loop.h"
 #include "build/build_config.h"
 #include "chrome/browser/ntp_tiles/chrome_most_visited_sites_factory.h"
 #include "chrome/browser/ui/browser.h"

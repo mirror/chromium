@@ -5,6 +5,7 @@
 #include "remoting/protocol/http_ice_config_request.h"
 
 #include "base/bind.h"
+#include "base/run_loop.h"
 #include "base/logging.h"
 #include "base/memory/ptr_util.h"
 #include "base/message_loop/message_loop.h"

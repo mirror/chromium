@@ -8,6 +8,7 @@
 #include <vector>
 
 #include "base/command_line.h"
+#include "base/run_loop.h"
 #include "base/files/scoped_temp_dir.h"
 #include "base/macros.h"
 #include "base/threading/thread_restrictions.h"

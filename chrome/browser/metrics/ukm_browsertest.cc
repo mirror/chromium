@@ -3,6 +3,7 @@
 // found in the LICENSE file.
 
 #include "chrome/browser/browser_process.h"
+#include "base/run_loop.h"
 #include "chrome/browser/metrics/chrome_metrics_service_accessor.h"
 #include "chrome/browser/profiles/profile_manager.h"
 #include "chrome/browser/sync/profile_sync_service_factory.h"

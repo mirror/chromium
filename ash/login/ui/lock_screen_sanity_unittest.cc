@@ -3,6 +3,7 @@
 // found in the LICENSE file.
 
 #include "ash/login/mock_lock_screen_client.h"
+#include "base/run_loop.h"
 #include "ash/login/ui/lock_contents_view.h"
 #include "ash/login/ui/login_test_base.h"
 #include "ash/login/ui/login_test_utils.h"

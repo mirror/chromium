@@ -5,6 +5,7 @@
 #include "content/browser/renderer_host/render_widget_host_input_event_router.h"
 
 #include "base/test/scoped_task_environment.h"
+#include "base/run_loop.h"
 #include "content/browser/renderer_host/mock_widget_impl.h"
 #include "content/browser/renderer_host/render_widget_host_impl.h"
 #include "content/public/test/mock_render_process_host.h"

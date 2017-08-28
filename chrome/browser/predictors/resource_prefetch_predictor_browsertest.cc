@@ -7,6 +7,7 @@
 #include <set>
 
 #include "base/command_line.h"
+#include "base/run_loop.h"
 #include "base/memory/ptr_util.h"
 #include "base/strings/string_util.h"
 #include "base/test/histogram_tester.h"

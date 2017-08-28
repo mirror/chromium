@@ -12,6 +12,7 @@
 #include <utility>
 
 #include "base/compiler_specific.h"
+#include "base/message_loop/message_loop.h"
 #include "base/files/file_path.h"
 #include "base/files/file_util.h"
 #include "base/files/scoped_temp_dir.h"

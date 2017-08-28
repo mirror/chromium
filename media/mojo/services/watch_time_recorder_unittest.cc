@@ -7,6 +7,8 @@
 #include <stddef.h>
 
 #include "base/bind.h"
+#include "base/run_loop.h"
+#include "base/message_loop/message_loop.h"
 #include "base/bind_helpers.h"
 #include "base/test/histogram_tester.h"
 #include "base/test/test_message_loop.h"

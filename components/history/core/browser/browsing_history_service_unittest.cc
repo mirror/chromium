@@ -7,6 +7,7 @@
 #include <utility>
 
 #include "base/callback_forward.h"
+#include "base/run_loop.h"
 #include "base/files/scoped_temp_dir.h"
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"

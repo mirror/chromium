@@ -3,6 +3,7 @@
 // found in the LICENSE file.
 
 #include "ash/accessibility_types.h"
+#include "base/run_loop.h"
 #include "ash/login_status.h"
 #include "ash/magnifier/magnification_controller.h"
 #include "ash/public/cpp/ash_pref_names.h"

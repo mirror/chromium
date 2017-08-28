@@ -5,6 +5,7 @@
 #include "chrome/browser/metrics/process_memory_metrics_emitter.h"
 
 #include "base/memory/ref_counted.h"
+#include "base/run_loop.h"
 #include "base/message_loop/message_loop.h"
 #include "base/test/histogram_tester.h"
 #include "base/test/trace_event_analyzer.h"

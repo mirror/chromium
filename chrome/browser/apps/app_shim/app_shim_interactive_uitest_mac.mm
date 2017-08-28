@@ -6,6 +6,7 @@
 #include <vector>
 
 #include "apps/app_lifetime_monitor_factory.h"
+#include "base/run_loop.h"
 #include "apps/switches.h"
 #include "base/auto_reset.h"
 #include "base/mac/foundation_util.h"

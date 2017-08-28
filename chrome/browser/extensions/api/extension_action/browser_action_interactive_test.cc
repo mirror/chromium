@@ -3,6 +3,7 @@
 // found in the LICENSE file.
 
 #include "base/test/test_timeouts.h"
+#include "base/run_loop.h"
 #include "build/build_config.h"
 #include "chrome/browser/extensions/browser_action_test_util.h"
 #include "chrome/browser/extensions/extension_action.h"

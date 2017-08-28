@@ -10,6 +10,7 @@
 #include <vector>
 
 #include "base/command_line.h"
+#include "base/run_loop.h"
 #include "base/macros.h"
 #include "base/strings/string_split.h"
 #include "base/strings/stringprintf.h"

@@ -5,6 +5,7 @@
 #include "chrome/test/media_router/media_router_base_browsertest.h"
 
 #include "base/bind.h"
+#include "base/run_loop.h"
 #include "base/command_line.h"
 #include "base/location.h"
 #include "base/path_service.h"

@@ -5,6 +5,7 @@
 #include "services/ui/ws/platform_display_default.h"
 
 #include "base/time/time.h"
+#include "base/message_loop/message_loop.h"
 #include "services/ui/common/image_cursors_set.h"
 #include "services/ui/ws/threaded_image_cursors.h"
 #include "testing/gtest/include/gtest/gtest.h"

@@ -7,6 +7,7 @@
 #include <stdint.h>
 
 #include "base/files/scoped_temp_dir.h"
+#include "base/run_loop.h"
 #include "base/logging.h"
 #include "base/memory/ptr_util.h"
 #include "base/message_loop/message_loop.h"

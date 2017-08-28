@@ -5,6 +5,7 @@
 #include <utility>
 
 #include "base/base64.h"
+#include "base/run_loop.h"
 #include "base/base_switches.h"
 #include "base/bind.h"
 #include "base/bind_helpers.h"

@@ -3,6 +3,7 @@
 // found in the LICENSE file.
 
 #include "ash/system/system_notifier.h"
+#include "base/run_loop.h"
 #include "base/command_line.h"
 #include "base/macros.h"
 #include "base/strings/utf_string_conversions.h"

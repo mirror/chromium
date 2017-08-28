@@ -5,6 +5,7 @@
 #include "chrome/browser/ssl/security_state_tab_helper.h"
 
 #include "base/command_line.h"
+#include "base/run_loop.h"
 #include "base/files/file_path.h"
 #include "base/macros.h"
 #include "base/strings/string_split.h"

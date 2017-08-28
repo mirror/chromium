@@ -8,6 +8,7 @@
 #include <utility>
 
 #include "base/callback.h"
+#include "base/run_loop.h"
 #include "base/files/file_path.h"
 #include "base/location.h"
 #include "base/memory/ptr_util.h"

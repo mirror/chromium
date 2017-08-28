@@ -8,6 +8,7 @@
 #include <vector>
 
 #include "base/base_paths.h"
+#include "base/run_loop.h"
 #include "base/files/file_enumerator.h"
 #include "base/files/file_util.h"
 #include "base/hash.h"

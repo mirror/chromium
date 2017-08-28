@@ -5,6 +5,7 @@
 // Contains holistic tests of the bindings infrastructure
 
 #include "chrome/browser/extensions/api/permissions/permissions_api.h"
+#include "base/run_loop.h"
 #include "chrome/browser/extensions/extension_apitest.h"
 #include "chrome/browser/net/url_request_mock_util.h"
 #include "chrome/browser/ui/browser.h"

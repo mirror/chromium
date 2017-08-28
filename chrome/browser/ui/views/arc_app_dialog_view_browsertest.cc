@@ -5,6 +5,7 @@
 #include "chrome/browser/ui/app_list/arc/arc_app_dialog.h"
 
 #include "base/command_line.h"
+#include "base/run_loop.h"
 #include "base/macros.h"
 #include "chrome/browser/chromeos/arc/arc_auth_notification.h"
 #include "chrome/browser/chromeos/arc/arc_session_manager.h"

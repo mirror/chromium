@@ -5,6 +5,7 @@
 #include "chrome/browser/ui/views/frame/browser_non_client_frame_view_ash.h"
 
 #include "ash/ash_constants.h"
+#include "base/run_loop.h"
 #include "ash/frame/caption_buttons/frame_caption_button_container_view.h"
 #include "ash/frame/header_painter.h"
 #include "ash/public/cpp/immersive/immersive_fullscreen_controller_test_api.h"

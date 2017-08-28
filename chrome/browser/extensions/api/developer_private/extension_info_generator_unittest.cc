@@ -8,6 +8,7 @@
 #include <utility>
 
 #include "base/callback_helpers.h"
+#include "base/run_loop.h"
 #include "base/json/json_file_value_serializer.h"
 #include "base/json/json_writer.h"
 #include "base/macros.h"

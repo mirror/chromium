@@ -7,6 +7,7 @@
 #include <limits>
 
 #include "base/location.h"
+#include "base/run_loop.h"
 #include "base/macros.h"
 #include "base/single_thread_task_runner.h"
 #include "base/strings/stringprintf.h"

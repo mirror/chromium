@@ -5,6 +5,7 @@
 #include "chrome/browser/engagement/important_sites_usage_counter.h"
 
 #include "base/files/file_path.h"
+#include "base/run_loop.h"
 #include "base/files/file_util.h"
 #include "base/files/scoped_temp_dir.h"
 #include "base/test/histogram_tester.h"

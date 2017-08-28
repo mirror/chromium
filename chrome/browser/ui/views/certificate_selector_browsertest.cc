@@ -5,6 +5,7 @@
 #include "chrome/browser/ui/views/certificate_selector.h"
 
 #include "base/bind.h"
+#include "base/run_loop.h"
 #include "base/files/file_path.h"
 #include "base/macros.h"
 #include "base/memory/ptr_util.h"

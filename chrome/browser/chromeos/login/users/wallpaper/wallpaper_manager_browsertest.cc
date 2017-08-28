@@ -7,6 +7,7 @@
 #include <stddef.h>
 
 #include "ash/shell.h"
+#include "base/run_loop.h"
 #include "ash/wallpaper/wallpaper_controller.h"
 #include "base/command_line.h"
 #include "base/compiler_specific.h"

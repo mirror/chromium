@@ -5,6 +5,8 @@
 #include <memory>
 
 #include "base/command_line.h"
+#include "base/run_loop.h"
+#include "base/message_loop/message_loop.h"
 #include "base/macros.h"
 #include "base/values.h"
 #include "build/build_config.h"

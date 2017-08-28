@@ -5,6 +5,7 @@
 #include <string>
 
 #include "ash/magnifier/magnification_controller.h"
+#include "base/run_loop.h"
 #include "ash/shell.h"
 #include "base/command_line.h"
 #include "base/macros.h"

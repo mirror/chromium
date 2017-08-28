@@ -3,6 +3,7 @@
 // found in the LICENSE file.
 
 #include "chrome/browser/apps/app_browsertest_util.h"
+#include "base/run_loop.h"
 #include "chrome/browser/extensions/extension_apitest.h"
 #include "chrome/browser/extensions/extension_function_test_utils.h"
 #include "chrome/browser/extensions/test_extension_dir.h"

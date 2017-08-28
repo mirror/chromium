@@ -6,6 +6,7 @@
 #include <vector>
 
 #include "ash/accessibility_delegate.h"
+#include "base/run_loop.h"
 #include "ash/accessibility_types.h"
 #include "ash/app_list/test_app_list_presenter_impl.h"
 #include "ash/ash_switches.h"

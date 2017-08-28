@@ -14,6 +14,7 @@
 #include <vector>
 
 #include "base/callback_helpers.h"
+#include "base/run_loop.h"
 #include "base/files/file.h"
 #include "base/files/file_enumerator.h"
 #include "base/files/file_util.h"

@@ -26,6 +26,7 @@
 #include "platform/graphics/Canvas2DLayerBridge.h"
 
 #include "components/viz/common/quads/single_release_callback.h"
+#include "base/run_loop.h"
 #include "components/viz/common/quads/texture_mailbox.h"
 #include "components/viz/test/test_gpu_memory_buffer_manager.h"
 #include "gpu/command_buffer/client/gles2_interface.h"

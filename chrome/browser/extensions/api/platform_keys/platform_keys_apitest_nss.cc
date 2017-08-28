@@ -8,6 +8,7 @@
 #include <utility>
 
 #include "base/json/json_writer.h"
+#include "base/run_loop.h"
 #include "base/macros.h"
 #include "base/memory/ptr_util.h"
 #include "base/strings/stringprintf.h"
