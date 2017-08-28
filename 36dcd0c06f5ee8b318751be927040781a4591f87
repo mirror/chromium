@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "2d5121a9_2cc7c37c",
+        "filename": "device/bluetooth/dbus/bluetooth_le_advertising_manager_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1181214
+      },
+      "writtenOn": "2017-08-28T18:47:55Z",
+      "side": 1,
+      "message": "Tried this, but turns out weak_ptr_factory_.GetWeakPtr() is not const so this method cannot be const either.",
+      "parentUuid": "7953110f_c3743eaa",
+      "range": {
+        "startLine": 141,
+        "startChar": 2,
+        "endLine": 144,
+        "endChar": 67
+      },
+      "revId": "36dcd0c06f5ee8b318751be927040781a4591f87",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "40d39b1f_c494b172",
         "filename": "device/bluetooth/dbus/bluetooth_le_advertising_manager_client.cc",
         "patchSetId": 1
@@ -39,6 +63,24 @@
       "revId": "36dcd0c06f5ee8b318751be927040781a4591f87",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "737160c2_c7aa8017",
+        "filename": "device/bluetooth/dbus/bluetooth_le_advertising_manager_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1181214
+      },
+      "writtenOn": "2017-08-28T18:47:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "40d39b1f_c494b172",
+      "revId": "36dcd0c06f5ee8b318751be927040781a4591f87",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
