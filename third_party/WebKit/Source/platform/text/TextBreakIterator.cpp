@@ -325,6 +325,8 @@ inline int LazyLineBreakIterator::NextBreakablePosition(
                 break_iterator->following(i - 1 + prior_context_length);
             if (next_break >= 0) {
               next_break -= prior_context_length;
+            } else {
+              next_break = len;
             }
           }
         }
