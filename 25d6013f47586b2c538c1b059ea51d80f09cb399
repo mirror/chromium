@@ -70,6 +70,30 @@
       "revId": "25d6013f47586b2c538c1b059ea51d80f09cb399",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2345ba5f_880905d8",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 50164,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-08-28T21:19:54Z",
+      "side": 1,
+      "message": "Note that there\u0027s no guarantee that a file/data that was started downloading will be finished. The size comparison metric will not detect that but these two _together_ would.\n\nI also commit to removing them in the future in case they turn up to not be as useful as we currently believe they will be.",
+      "parentUuid": "05b0059f_81dfdacf",
+      "range": {
+        "startLine": 50150,
+        "startChar": 0,
+        "endLine": 50164,
+        "endChar": 12
+      },
+      "revId": "25d6013f47586b2c538c1b059ea51d80f09cb399",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
