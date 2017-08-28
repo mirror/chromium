@@ -16,6 +16,7 @@ import org.junit.runner.RunWith;
 
 import org.chromium.base.test.BaseJUnit4ClassRunner;
 import org.chromium.base.test.util.Feature;
+import org.chromium.shape_detection.mojom.ConstantsConstants;
 import org.chromium.shape_detection.mojom.FaceDetection;
 import org.chromium.shape_detection.mojom.FaceDetectionResult;
 import org.chromium.shape_detection.mojom.FaceDetectorOptions;
@@ -58,7 +59,8 @@ public class FaceDetectionImplTest {
 
         final ArrayBlockingQueue<FaceDetectionResult[]> queue = new ArrayBlockingQueue<>(1);
         detector.detect(mojoBitmap, new FaceDetection.DetectResponse() {
-            public void call(FaceDetectionResult[] results) {
+            public void call(FaceDetectionResult[] results, String status) {
+                Assert.assertEquals(status, ConstantsConstants.DETECTOR_SUCCESS);
                 queue.add(results);
             }
         });

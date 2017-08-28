@@ -26,7 +26,8 @@ class BarcodeDetectionImplMacTest : public ::testing::Test {
  public:
   ~BarcodeDetectionImplMacTest() override = default;
 
-  void DetectCallback(std::vector<mojom::BarcodeDetectionResultPtr> results) {
+  void DetectCallback(std::vector<mojom::BarcodeDetectionResultPtr> results,
+                      const std::string& status) {
     Detection(results.size(), results.empty() ? "" : results[0]->raw_value);
   }
   MOCK_METHOD2(Detection, void(size_t, const std::string&));
