@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3f22b999_ea7ba94d",
+        "filename": "ui/base/test/ui_controls_internal_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1196069
+      },
+      "writtenOn": "2017-08-28T17:43:43Z",
+      "side": 1,
+      "message": "Suggest to rename this function into\nUINT MapVirtualKeyToScanCode(UINT);\nand use it only in the virtual-key to scan-code scenario.\nYou may want to add some comments to explain the reason of this function.\n\nBut before that, please see my comments in the ShouldSendThroughScanCode() function.",
+      "range": {
+        "startLine": 142,
+        "startChar": 0,
+        "endLine": 142,
+        "endChar": 54
+      },
+      "revId": "78d33b4eae84cda82b5eaa05d988a378a59a17c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5bc54d34_3e54d758",
+        "filename": "ui/base/test/ui_controls_internal_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1196069
+      },
+      "writtenOn": "2017-08-28T17:43:43Z",
+      "side": 1,
+      "message": "There is a\nUINT MapVirtualKeyEx(UINT, UINT, HKL);\nhttps://msdn.microsoft.com/en-us/library/windows/desktop/ms646307(v\u003dvs.85).aspx\nIt supports a MAPVK_VK_TO_VSC_EX map type. Does it work as you expected?\n\nIf MapVirtualkeyEx() is used, you may want to add some comments to explain the reason.",
+      "range": {
+        "startLine": 175,
+        "startChar": 0,
+        "endLine": 175,
+        "endChar": 78
+      },
+      "revId": "78d33b4eae84cda82b5eaa05d988a378a59a17c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
