@@ -289,6 +289,17 @@ const Value* Value::FindKeyOfType(StringPiece key, Type type) const {
   return result;
 }
 
+Optional<Value> Value::RemoveKey(StringPiece key) {
+  CHECK(is_dict());
+  auto found = dict_->find(key);
+  if (found == dict_->end())
+    return nullopt;
+
+  auto value = make_optional(std::move(*found->second));
+  dict_->erase(found);
+  return value;
+}
+
 Value* Value::SetKey(StringPiece key, Value value) {
   CHECK(is_dict());
   return ((*dict_)[key.as_string()] = std::make_unique<Value>(std::move(value)))
@@ -383,6 +394,28 @@ Value* Value::SetPath(span<const StringPiece> path, Value value) {
   if (!cur->is_dict())
     return nullptr;
   return cur->SetKey(*cur_path, std::move(value));
+}
+
+Optional<Value> Value::RemovePath(std::initializer_list<StringPiece> path) {
+  return RemovePath(make_span(path.begin(), path.size()));
+}
+
+Optional<Value> Value::RemovePath(span<const StringPiece> path) {
+  if (!is_dict() || path.empty())
+    return nullopt;
+
+  if (path.size() == 1)
+    return RemoveKey(path[0]);
+
+  auto found = dict_->find(path[0]);
+  if (found == dict_->end() || !found->second->is_dict())
+    return nullopt;
+
+  auto result = found->second->RemovePath(path.subspan(1));
+  if (result && found->second->dict_->empty())
+    dict_->erase(found);
+
+  return result;
 }
 
 Value::dict_iterator_proxy Value::DictItems() {
