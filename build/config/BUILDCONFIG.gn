@@ -554,6 +554,7 @@ if (is_clang && !is_nacl) {
   default_compiler_configs += [
     "//build/config/clang:find_bad_constructs",
     "//build/config/clang:extra_warnings",
+    "//build/config/coverage:coverage",
   ]
 }
 
