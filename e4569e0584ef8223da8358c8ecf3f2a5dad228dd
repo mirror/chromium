@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "20f27cdc_ab9932c9",
+        "filename": "third_party/WebKit/Source/core/frame/FrameSerializerTest.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-08-28T07:56:38Z",
+      "side": 1,
+      "message": "this and one at line 103 should be merged to one member instance, as you did in BrowserControlsTest.cpp.",
+      "range": {
+        "startLine": 71,
+        "startChar": 4,
+        "endLine": 71,
+        "endChar": 32
+      },
+      "revId": "e4569e0584ef8223da8358c8ecf3f2a5dad228dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "169b9f08_254b50c8",
+        "filename": "third_party/WebKit/Source/core/frame/MHTMLTest.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-08-28T07:56:38Z",
+      "side": 1,
+      "message": "should be a member. This releases mocked URLs that are registered at line 105. To be consistent, this platform_ should be alive when RegisterMockedURLLoad and TearDown are called.",
+      "range": {
+        "startLine": 98,
+        "startChar": 4,
+        "endLine": 98,
+        "endChar": 32
+      },
+      "revId": "e4569e0584ef8223da8358c8ecf3f2a5dad228dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c75a2851_024d19ce",
+        "filename": "third_party/WebKit/Source/core/frame/VisualViewportTest.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-08-28T07:56:38Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 102,
+        "startChar": 4,
+        "endLine": 102,
+        "endChar": 32
+      },
+      "revId": "e4569e0584ef8223da8358c8ecf3f2a5dad228dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "671a6397_90b02e7c",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceFetcherTest.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 333,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-08-28T07:56:38Z",
+      "side": 1,
+      "message": "this should point the same platform instance with that tests made URL requests in each test.\n\nYou can follow what platform/loader/SubresourceIntegrityTest does. That solved similar problem.",
+      "range": {
+        "startLine": 333,
+        "startChar": 4,
+        "endLine": 333,
+        "endChar": 13
+      },
+      "revId": "e4569e0584ef8223da8358c8ecf3f2a5dad228dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed8ea94d_81ef9de4",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceFetcherTest.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 404,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-08-28T07:56:38Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 404,
+        "startChar": 4,
+        "endLine": 404,
+        "endChar": 32
+      },
+      "revId": "e4569e0584ef8223da8358c8ecf3f2a5dad228dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1b807ba_ce8f7c50",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceFetcherTest.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 420,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-08-28T07:56:38Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 420,
+        "startChar": 4,
+        "endLine": 420,
+        "endChar": 32
+      },
+      "revId": "e4569e0584ef8223da8358c8ecf3f2a5dad228dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
