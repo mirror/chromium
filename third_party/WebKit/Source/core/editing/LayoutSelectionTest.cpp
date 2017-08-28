@@ -110,7 +110,7 @@ TEST_F(LayoutSelectionTest, TraverseLayoutObject) {
                                .SelectAllChildren(*GetDocument().body())
                                .Build());
   Selection().CommitAppearanceIfNeeded();
-  TEST_NEXT(IsLayoutBlock, kStartAndEnd, ShouldInvalidate);
+  TEST_NEXT(IsLayoutBlock, kInside, ShouldInvalidate);
   TEST_NEXT("foo", kStart, ShouldInvalidate);
   TEST_NEXT(IsBR, kInside, ShouldInvalidate);
   TEST_NEXT("bar", kEnd, ShouldInvalidate);
@@ -126,7 +126,7 @@ TEST_F(LayoutSelectionTest, TraverseLayoutObjectTruncateVisibilityHidden) {
                                .SelectAllChildren(*GetDocument().body())
                                .Build());
   Selection().CommitAppearanceIfNeeded();
-  TEST_NEXT(IsLayoutBlock, kStartAndEnd, ShouldInvalidate);
+  TEST_NEXT(IsLayoutBlock, kInside, ShouldInvalidate);
   TEST_NEXT(IsLayoutInline, kNone, NotInvalidate);
   TEST_NEXT("before", kNone, NotInvalidate);
   TEST_NEXT("foo", kStartAndEnd, ShouldInvalidate);
@@ -141,7 +141,7 @@ TEST_F(LayoutSelectionTest, TraverseLayoutObjectBRs) {
                                .SelectAllChildren(*GetDocument().body())
                                .Build());
   Selection().CommitAppearanceIfNeeded();
-  TEST_NEXT(IsLayoutBlock, kStartAndEnd, ShouldInvalidate);
+  TEST_NEXT(IsLayoutBlock, kInside, ShouldInvalidate);
   TEST_NEXT(IsBR, kStart, ShouldInvalidate);
   TEST_NEXT(IsBR, kInside, ShouldInvalidate);
   TEST_NEXT("foo", kInside, ShouldInvalidate);
@@ -160,12 +160,12 @@ TEST_F(LayoutSelectionTest, TraverseLayoutObjectListStyleImage) {
                                .SelectAllChildren(*GetDocument().body())
                                .Build());
   Selection().CommitAppearanceIfNeeded();
-  TEST_NEXT(IsLayoutBlock, kStartAndEnd, ShouldInvalidate);
-  TEST_NEXT(IsLayoutBlockFlow, kStartAndEnd, ShouldInvalidate);
-  TEST_NEXT(IsListItem, kStart, ShouldInvalidate);
+  TEST_NEXT(IsLayoutBlock, kInside, ShouldInvalidate);
+  TEST_NEXT(IsLayoutBlockFlow, kInside, ShouldInvalidate);
+  TEST_NEXT(IsListItem, kInside, ShouldInvalidate);
   TEST_NEXT(IsListMarker, kNone, NotInvalidate);
   TEST_NEXT("foo", kStart, ShouldInvalidate);
-  TEST_NEXT(IsListItem, kEnd, ShouldInvalidate);
+  TEST_NEXT(IsListItem, kInside, ShouldInvalidate);
   TEST_NEXT(IsListMarker, kNone, NotInvalidate);
   TEST_NEXT("bar", kEnd, ShouldInvalidate);
   TEST_NO_NEXT_LAYOUT_OBJECT();
@@ -196,10 +196,10 @@ TEST_F(LayoutSelectionTest, TraverseLayoutObjectCrossingShadowBoundary) {
                             Position(GetDocument().QuerySelector("span"), 0))
           .Build());
   Selection().CommitAppearanceIfNeeded();
-  TEST_NEXT(IsLayoutBlock, kStartAndEnd, ShouldInvalidate);
-  TEST_NEXT(IsLayoutBlockFlow, kStart, ShouldInvalidate);
+  TEST_NEXT(IsLayoutBlock, kInside, ShouldInvalidate);
+  TEST_NEXT(IsLayoutBlockFlow, kInside, ShouldInvalidate);
   TEST_NEXT("foo", kStart, ShouldInvalidate);
-  TEST_NEXT(IsLayoutBlock, kEnd, ShouldInvalidate);
+  TEST_NEXT(IsLayoutBlock, kInside, ShouldInvalidate);
   TEST_NEXT("Foo", kInside, ShouldInvalidate);
   TEST_NEXT(IsLayoutInline, kNone, NotInvalidate);
   TEST_NEXT("bar2", kEnd, ShouldInvalidate);
@@ -220,10 +220,10 @@ TEST_F(LayoutSelectionTest,
                             Position(span->firstChild(), 3))
           .Build());
   Selection().CommitAppearanceIfNeeded();
-  TEST_NEXT(IsLayoutBlock, kStartAndEnd, ShouldInvalidate);
+  TEST_NEXT(IsLayoutBlock, kInside, ShouldInvalidate);
   TEST_NEXT(IsLayoutBlockFlow, kNone, NotInvalidate);
   TEST_NEXT("div1", kNone, NotInvalidate);
-  TEST_NEXT(IsLayoutBlockFlow, kStartAndEnd, ShouldInvalidate);
+  TEST_NEXT(IsLayoutBlockFlow, kInside, ShouldInvalidate);
   TEST_NEXT("foo", kNone, NotInvalidate);
   TEST_NEXT(IsLayoutInline, kNone, NotInvalidate);
   TEST_NEXT("bar", kStartAndEnd, ShouldInvalidate);
@@ -238,8 +238,8 @@ TEST_F(LayoutSelectionTest,
           .Build());
   // This commit should not crash.
   Selection().CommitAppearanceIfNeeded();
-  TEST_NEXT(IsLayoutBlock, kNone, ShouldInvalidate);
-  TEST_NEXT(IsLayoutBlockFlow, kStartAndEnd, ShouldInvalidate);
+  TEST_NEXT(IsLayoutBlock, kInside, ShouldInvalidate);
+  TEST_NEXT(IsLayoutBlockFlow, kInside, ShouldInvalidate);
   TEST_NEXT("div1", kStartAndEnd, ShouldInvalidate);
   TEST_NEXT(IsLayoutBlockFlow, kNone, ShouldInvalidate);
   TEST_NEXT("foo", kNone, NotInvalidate);
@@ -255,11 +255,42 @@ TEST_F(LayoutSelectionTest, TraverseLayoutObjectLineWrap) {
                                .SelectAllChildren(*GetDocument().body())
                                .Build());
   Selection().CommitAppearanceIfNeeded();
-  TEST_NEXT(IsLayoutBlock, kStartAndEnd, ShouldInvalidate);
+  TEST_NEXT(IsLayoutBlock, kInside, ShouldInvalidate);
   TEST_NEXT("bar\n", kStartAndEnd, ShouldInvalidate);
   TEST_NO_NEXT_LAYOUT_OBJECT();
   EXPECT_EQ(Selection().LayoutSelectionStart(), 0);
   EXPECT_EQ(Selection().LayoutSelectionEnd(), 4);
+}
+
+TEST_F(LayoutSelectionTest,
+       ContainingBlockWithoutSelectedChildrenShouldBeNone) {
+  SetBodyContent("<div id='d1'>div1</div><div id='d2'>div2</div>");
+  // "<div id='d1'>^div1|</div><div id='d2'>div2</div>"
+  Selection().SetSelection(
+      SelectionInDOMTree::Builder()
+          .SelectAllChildren(*GetDocument().QuerySelector("#d1"))
+          .Build());
+  Selection().CommitAppearanceIfNeeded();
+  TEST_NEXT(IsLayoutBlock, kInside, ShouldInvalidate);
+  TEST_NEXT(IsLayoutBlockFlow, kInside, ShouldInvalidate);
+  TEST_NEXT("div1", kStartAndEnd, ShouldInvalidate);
+  TEST_NEXT(IsLayoutBlockFlow, kNone, NotInvalidate);
+  TEST_NEXT("div2", kNone, NotInvalidate);
+  TEST_NO_NEXT_LAYOUT_OBJECT();
+
+  // "<div id='d1'>div1</div><div id='d2'>^div2|</div>"
+  Selection().SetSelection(
+      SelectionInDOMTree::Builder()
+          .SelectAllChildren(*GetDocument().QuerySelector("#d2"))
+          .Build());
+  // This commit should not crash.
+  Selection().CommitAppearanceIfNeeded();
+  TEST_NEXT(IsLayoutBlock, kInside, ShouldInvalidate);
+  TEST_NEXT(IsLayoutBlockFlow, kNone, ShouldInvalidate);
+  TEST_NEXT("div1", kNone, ShouldInvalidate);
+  TEST_NEXT(IsLayoutBlockFlow, kInside, ShouldInvalidate);
+  TEST_NEXT("div2", kStartAndEnd, ShouldInvalidate);
+  TEST_NO_NEXT_LAYOUT_OBJECT();
 }
 
 }  // namespace blink
