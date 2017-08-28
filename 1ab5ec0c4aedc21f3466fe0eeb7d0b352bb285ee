@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "2acdc6c9_7edbb3e0",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/UriUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-08-28T17:19:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "70c6f9ed_1855cee2",
+      "range": {
+        "startLine": 17,
+        "startChar": 31,
+        "endLine": 17,
+        "endChar": 49
+      },
+      "revId": "1ab5ec0c4aedc21f3466fe0eeb7d0b352bb285ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "af3df354_c9203be5",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/UriUtils.java",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "1ab5ec0c4aedc21f3466fe0eeb7d0b352bb285ee",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "856b0644_f0ec98a1",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/UriUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-08-28T17:19:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "af3df354_c9203be5",
+      "range": {
+        "startLine": 20,
+        "startChar": 32,
+        "endLine": 20,
+        "endChar": 61
+      },
+      "revId": "1ab5ec0c4aedc21f3466fe0eeb7d0b352bb285ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
