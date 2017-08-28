@@ -195,6 +195,24 @@
     },
     {
       "key": {
+        "uuid": "c133ccee_b50b5a8d",
+        "filename": "chrome/browser/resources/local_ntp/voice.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 298,
+      "author": {
+        "id": 1229240
+      },
+      "writtenOn": "2017-08-28T12:22:12Z",
+      "side": 1,
+      "message": "Agreed, it will come up later, when we call it from test tear down methods. Sorry for putting the change into this CL.",
+      "parentUuid": "a874cdf2_32fc0a6f",
+      "revId": "08faf90ace2cbd884e8d04b0cadbfca5097231ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c96986dc_f767c278",
         "filename": "chrome/browser/resources/local_ntp/voice.js",
         "patchSetId": 3
