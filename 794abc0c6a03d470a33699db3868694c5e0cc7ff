@@ -2,6 +2,74 @@
   "comments": [
     {
       "key": {
+        "uuid": "6eed64f0_a86cc2f6",
+        "filename": "third_party/WebKit/Source/core/workers/WorkletModuleResponsesMap.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-28T04:16:11Z",
+      "side": 1,
+      "message": "nit: const ModuleScriptCreationParams\u0026 ?",
+      "revId": "794abc0c6a03d470a33699db3868694c5e0cc7ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a0cbc01_28a2a63c",
+        "filename": "third_party/WebKit/Source/core/workers/WorkletModuleResponsesMap.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-28T04:16:11Z",
+      "side": 1,
+      "message": "nit: have NOTREACHED() here",
+      "revId": "794abc0c6a03d470a33699db3868694c5e0cc7ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "beb689d4_e5c4c829",
+        "filename": "third_party/WebKit/Source/core/workers/WorkletModuleResponsesMap.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-28T04:16:11Z",
+      "side": 1,
+      "message": "Please clearly document that this internally creates ModuleScriptFetcher with the ResourceFetcher that is given to its ctor when ReadEntry() is called and the entry is not fetched yet, here or at ReadEntry().",
+      "revId": "794abc0c6a03d470a33699db3868694c5e0cc7ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43f8b077_8197520d",
+        "filename": "third_party/WebKit/Source/core/workers/WorkletModuleResponsesMap.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-28T04:16:11Z",
+      "side": 1,
+      "message": "ReadOrCreateEntry -\u003e ReadEntry",
+      "revId": "794abc0c6a03d470a33699db3868694c5e0cc7ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "04d36cff_a891fe22",
         "filename": "third_party/WebKit/Source/core/workers/WorkletModuleResponsesMap.h",
         "patchSetId": 17
