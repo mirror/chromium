@@ -351,6 +351,24 @@
     },
     {
       "key": {
+        "uuid": "a8b862c8_de46191c",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/style/checkers/cpp.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 1831,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-08-28T14:28:51Z",
+      "side": 0,
+      "message": "(Ok, then I feel pretty strongly the renaming shouldn\u0027t be blocked on this :-) Happy to discuss more. We should of course check that git manages to treat the move as move, and possibly land the rename in small CL batches to facilitate that.)",
+      "parentUuid": "3e101563_b11fc71f",
+      "revId": "aee19604c92edaee401c6edd57c546973a20a446",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d5594167_ade560cd",
         "filename": "third_party/WebKit/Tools/Scripts/webkitpy/style/checkers/cpp.py",
         "patchSetId": 2
