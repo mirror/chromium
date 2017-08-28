@@ -310,11 +310,11 @@ void ShapeResult::ApplySpacing(ShapeResultSpacing<TextContainerType>& spacing,
                                const TextContainerType& text,
                                bool is_rtl) {
   float offset_x, offset_y;
-  float& offset = spacing.IsVerticalOffset() ? offset_y : offset_x;
   float total_space = 0;
   for (auto& run : runs_) {
     if (!run)
       continue;
+    float& offset = run->IsHorizontal() ? offset_x : offset_y;
     float total_space_for_run = 0;
     for (size_t i = 0; i < run->glyph_data_.size(); i++) {
       HarfBuzzRunGlyphData& glyph_data = run->glyph_data_[i];
