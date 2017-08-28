@@ -71,6 +71,8 @@ class CORE_EXPORT HTMLContentElement final : public V0InsertionPoint {
 
   void ParseAttribute(const AttributeModificationParams&) override;
 
+  void CountUsage() const override;
+
   bool ValidateSelect() const;
   void ParseSelect();
 

@@ -86,6 +86,7 @@ class CORE_EXPORT V0InsertionPoint : public HTMLElement {
   InsertionNotificationRequest InsertedInto(ContainerNode*) override;
   void RemovedFrom(ContainerNode*) override;
   void WillRecalcStyle(StyleRecalcChange) override;
+  virtual void CountUsage() const = 0;
 
  private:
   bool IsV0InsertionPoint() const =
