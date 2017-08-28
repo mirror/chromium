@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4f286e9c_142ce94c",
+        "filename": "net/test/spawned_test_server/remote_test_server.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-08-28T18:25:45Z",
+      "side": 1,
+      "message": "include RemoteTestServerConfig header.  Or could we just make SpawnerCommunicator automatically load the config itself?  I\u0027m happy, either way.",
+      "range": {
+        "startLine": 106,
+        "startChar": 44,
+        "endLine": 106,
+        "endChar": 66
+      },
+      "revId": "b75a1beef3ab4da742a286fdf94ce75a583f4be2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9e8d6fc_6b2126e4",
+        "filename": "net/test/spawned_test_server/remote_test_server_config.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-08-28T18:25:45Z",
+      "side": 1,
+      "message": "nit(x2):  Two line ifs shouldn\u0027t use braces.",
+      "range": {
+        "startLine": 59,
+        "startChar": 0,
+        "endLine": 59,
+        "endChar": 3
+      },
+      "revId": "b75a1beef3ab4da742a286fdf94ce75a583f4be2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a439ce76_b16a56d6",
+        "filename": "net/test/spawned_test_server/remote_test_server_config.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-08-28T18:25:45Z",
+      "side": 1,
+      "message": "nit:  specified base URL -\u003e specifies the base URL",
+      "range": {
+        "startLine": 32,
+        "startChar": 22,
+        "endLine": 32,
+        "endChar": 32
+      },
+      "revId": "b75a1beef3ab4da742a286fdf94ce75a583f4be2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ae28cb0_d0b92a3c",
+        "filename": "net/test/spawned_test_server/remote_test_server_config.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-08-28T18:25:45Z",
+      "side": 1,
+      "message": "Remove the comment about LocalTestServer?",
+      "range": {
+        "startLine": 37,
+        "startChar": 14,
+        "endLine": 37,
+        "endChar": 0
+      },
+      "revId": "b75a1beef3ab4da742a286fdf94ce75a583f4be2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f41d5a01_a19a14cc",
+        "filename": "net/test/spawned_test_server/spawner_communicator.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-08-28T18:25:45Z",
+      "side": 1,
+      "message": "nit:  const?",
+      "range": {
+        "startLine": 118,
+        "startChar": 2,
+        "endLine": 118,
+        "endChar": 25
+      },
+      "revId": "b75a1beef3ab4da742a286fdf94ce75a583f4be2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
