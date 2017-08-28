@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "245d15e1_3cca124d",
+        "filename": "chrome/android/java/res/values/dimens.xml",
+        "patchSetId": 12
+      },
+      "lineNbr": 472,
+      "author": {
+        "id": 1227244
+      },
+      "writtenOn": "2017-08-28T21:53:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bb5d5187_b85546d1",
+      "range": {
+        "startLine": 472,
+        "startChar": 5,
+        "endLine": 472,
+        "endChar": 60
+      },
+      "revId": "05572c3a5dbe67f0a1363d631786508829aa3847",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ed2e2272_b2b5b19f",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/SuggestionView.java",
         "patchSetId": 12
@@ -45,6 +69,30 @@
       "revId": "05572c3a5dbe67f0a1363d631786508829aa3847",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8ef80dc_70226069",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/SuggestionView.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1227244
+      },
+      "writtenOn": "2017-08-28T21:53:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ed2e2272_b2b5b19f",
+      "range": {
+        "startLine": 106,
+        "startChar": 39,
+        "endLine": 109,
+        "endChar": 16
+      },
+      "revId": "05572c3a5dbe67f0a1363d631786508829aa3847",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "0c76b6e8_4d2b1a9c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/selection/SelectableListToolbar.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 473,
+      "author": {
+        "id": 1227244
+      },
+      "writtenOn": "2017-08-28T21:53:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "928f25dc_5d854369",
+      "range": {
+        "startLine": 472,
+        "startChar": 8,
+        "endLine": 473,
+        "endChar": 73
+      },
+      "revId": "05572c3a5dbe67f0a1363d631786508829aa3847",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7edb3ef0_01c5e4c8",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/selection/SelectableListToolbar.java",
         "patchSetId": 12
@@ -91,6 +163,30 @@
       "revId": "05572c3a5dbe67f0a1363d631786508829aa3847",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0fd34453_2c984f88",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/selection/SelectableListToolbar.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 514,
+      "author": {
+        "id": 1227244
+      },
+      "writtenOn": "2017-08-28T21:53:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7edb3ef0_01c5e4c8",
+      "range": {
+        "startLine": 510,
+        "startChar": 8,
+        "endLine": 514,
+        "endChar": 9
+      },
+      "revId": "05572c3a5dbe67f0a1363d631786508829aa3847",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
