@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f4b478de_dfef9997",
+        "filename": "content/common/frame_messages.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 873,
+      "author": {
+        "id": 1001433
+      },
+      "writtenOn": "2017-08-28T17:23:00Z",
+      "side": 1,
+      "message": "nit: This comment is vague, since View is such an overloaded term. Maybe: \"Notifies RenderFrameProxy that its associated RenderWidgetHostView has changed.\"",
+      "revId": "34487a139dcb309616bd1b71c201a1fc92e63929",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
