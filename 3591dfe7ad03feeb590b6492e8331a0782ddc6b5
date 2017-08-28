@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "5921e944_6621c20b",
+        "filename": "chrome/browser/ui/webui/media_router/media_router_ui.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-08-28T22:56:08Z",
+      "side": 1,
+      "message": "Okay, thanks for the clarification.  Another option would be to factor the ctor logic into an Initialize() method that should be safe to call delete in.  I don\u0027t feel strongly though.",
+      "parentUuid": "6dd66ba8_683f226a",
+      "revId": "3591dfe7ad03feeb590b6492e8331a0782ddc6b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "65568840_3cf58588",
         "filename": "chrome/browser/ui/webui/media_router/media_router_ui.cc",
         "patchSetId": 5
