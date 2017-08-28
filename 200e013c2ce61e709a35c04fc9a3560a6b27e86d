@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d0b7a5f5_89034906",
+        "filename": "media/gpu/android/media_codec_video_decoder.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-08-28T05:54:42Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "2c3a4960_4d386d97",
+      "range": {
+        "startLine": 113,
+        "startChar": 56,
+        "endLine": 113,
+        "endChar": 67
+      },
+      "revId": "200e013c2ce61e709a35c04fc9a3560a6b27e86d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d7fedd30_3bd481a0",
         "filename": "media/gpu/android/media_codec_video_decoder.cc",
         "patchSetId": 6
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "7caa0f48_54dc4ed1",
+        "filename": "media/gpu/android/media_codec_video_decoder.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 389,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-08-28T05:54:42Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "d7fedd30_3bd481a0",
+      "range": {
+        "startLine": 389,
+        "startChar": 29,
+        "endLine": 389,
+        "endChar": 30
+      },
+      "revId": "200e013c2ce61e709a35c04fc9a3560a6b27e86d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a9e98cb2_7835c05d",
         "filename": "media/gpu/android/media_codec_video_decoder.cc",
         "patchSetId": 6
@@ -59,6 +107,30 @@
       "writtenOn": "2017-08-28T04:37:45Z",
       "side": 1,
       "message": "AVDA didn\u0027t have this. Not sure if it ever occurs but it can\u0027t hurt.",
+      "range": {
+        "startLine": 434,
+        "startChar": 6,
+        "endLine": 434,
+        "endChar": 20
+      },
+      "revId": "200e013c2ce61e709a35c04fc9a3560a6b27e86d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5acf675_3ad06aba",
+        "filename": "media/gpu/android/media_codec_video_decoder.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 434,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-08-28T05:54:42Z",
+      "side": 1,
+      "message": "not sure i follow why this should happen.  what if we complete the drain here, but the eof arrives later?",
+      "parentUuid": "a9e98cb2_7835c05d",
       "range": {
         "startLine": 434,
         "startChar": 6,
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "28826712_e8cc1af4",
+        "filename": "media/gpu/android/media_codec_video_decoder.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 612,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-08-28T05:54:42Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "4845cd31_6c3c55e9",
+      "range": {
+        "startLine": 612,
+        "startChar": 18,
+        "endLine": 612,
+        "endChar": 0
+      },
+      "revId": "200e013c2ce61e709a35c04fc9a3560a6b27e86d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "83710f74_d81b2845",
         "filename": "media/gpu/android/media_codec_video_decoder_unittest.cc",
         "patchSetId": 6
@@ -111,6 +207,47 @@
         "endLine": 207,
         "endChar": 36
       },
+      "revId": "200e013c2ce61e709a35c04fc9a3560a6b27e86d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f28032b4_12aa2c1b",
+        "filename": "media/gpu/android/media_codec_video_decoder_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-08-28T05:54:42Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "83710f74_d81b2845",
+      "range": {
+        "startLine": 207,
+        "startChar": 16,
+        "endLine": 207,
+        "endChar": 36
+      },
+      "revId": "200e013c2ce61e709a35c04fc9a3560a6b27e86d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d48b506e_70a7d869",
+        "filename": "media/gpu/android/media_codec_video_decoder_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 565,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-08-28T05:54:42Z",
+      "side": 1,
+      "message": "i don\u0027t follow this one.",
       "revId": "200e013c2ce61e709a35c04fc9a3560a6b27e86d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
