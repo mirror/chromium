@@ -215,6 +215,51 @@ TEST(SpdyStringUtilsTest, SpdyHexDigitToInt) {
   EXPECT_EQ(15, SpdyHexDigitToInt('F'));
 }
 
+TEST(SpdyStringUtilsTest, SpdyHexDecodeToUInt) {
+  uint32_t out;
+  EXPECT_TRUE(SpdyHexDecodeToUInt("0", &out));
+  EXPECT_EQ(0u, out);
+  EXPECT_TRUE(SpdyHexDecodeToUInt("00", &out));
+  EXPECT_EQ(0u, out);
+  EXPECT_TRUE(SpdyHexDecodeToUInt("0000000", &out));
+  EXPECT_EQ(0u, out);
+  EXPECT_TRUE(SpdyHexDecodeToUInt("00000000", &out));
+  EXPECT_EQ(0u, out);
+  EXPECT_TRUE(SpdyHexDecodeToUInt("1", &out));
+  EXPECT_EQ(1u, out);
+  EXPECT_TRUE(SpdyHexDecodeToUInt("ffffFFF", &out));
+  EXPECT_EQ(0xFFFFFFFu, out);
+  EXPECT_TRUE(SpdyHexDecodeToUInt("fFfFffFf", &out));
+  EXPECT_EQ(0xFFFFFFFFu, out);
+  EXPECT_TRUE(SpdyHexDecodeToUInt("01AEF", &out));
+  EXPECT_EQ(0x1AEFu, out);
+  EXPECT_TRUE(SpdyHexDecodeToUInt("abcde", &out));
+  EXPECT_EQ(0xABCDEu, out);
+
+  EXPECT_FALSE(SpdyHexDecodeToUInt("", &out));
+  EXPECT_FALSE(SpdyHexDecodeToUInt("111111111", &out));
+  EXPECT_FALSE(SpdyHexDecodeToUInt("1111111111", &out));
+  EXPECT_FALSE(SpdyHexDecodeToUInt("0x1111", &out));
+}
+
+TEST(SpdyStringUtilsTest, SpdyHexEncode) {
+  unsigned char bytes[] = {0x01, 0xff, 0x02, 0xfe, 0x03, 0x80, 0x81};
+  EXPECT_EQ("01ff02fe038081",
+            SpdyHexEncode(reinterpret_cast<char*>(bytes), sizeof(bytes)));
+}
+
+TEST(SpdyStringUtilsTest, SpdyHexEncodeUIntAndTrim) {
+  EXPECT_EQ("0", SpdyHexEncodeUIntAndTrim(0));
+  EXPECT_EQ("1", SpdyHexEncodeUIntAndTrim(1));
+  EXPECT_EQ("a", SpdyHexEncodeUIntAndTrim(0xA));
+  EXPECT_EQ("f", SpdyHexEncodeUIntAndTrim(0xF));
+  EXPECT_EQ("a9", SpdyHexEncodeUIntAndTrim(0xA9));
+  EXPECT_EQ("9abcdef", SpdyHexEncodeUIntAndTrim(0x9ABCDEF));
+  EXPECT_EQ("12345678", SpdyHexEncodeUIntAndTrim(0x12345678));
+  EXPECT_EQ("ffffffff", SpdyHexEncodeUIntAndTrim(0xFFFFFFFF));
+  EXPECT_EQ("10000001", SpdyHexEncodeUIntAndTrim(0x10000001));
+}
+
 }  // namespace
 }  // namespace test
 }  // namespace net

@@ -5,6 +5,7 @@
 #ifndef NET_SPDY_PLATFORM_IMPL_SPDY_STRING_UTILS_IMPL_H_
 #define NET_SPDY_PLATFORM_IMPL_SPDY_STRING_UTILS_IMPL_H_
 
+#include <netinet/in.h>
 #include <sstream>
 #include <utility>
 
@@ -47,6 +48,31 @@ inline char SpdyHexDigitToIntImpl(char c) {
 
 inline SpdyString SpdyHexDecodeImpl(SpdyStringPiece data) {
   return HexDecode(data);
+}
+
+inline bool SpdyHexDecodeToUIntImpl(SpdyStringPiece data, uint32_t* out) {
+  if (data.empty() || data.size() > 8u)
+    return false;
+  // Pad with leading zeros.
+  SpdyString data_padded =
+      SpdyString(8 - data.size(), '0').append(data.begin(), data.end());
+  return base::HexStringToUInt(data_padded, out);
+}
+
+inline SpdyString SpdyHexEncodeImpl(const char* bytes, size_t size) {
+  return base::ToLowerASCII(base::HexEncode(bytes, size));
+}
+
+inline SpdyString SpdyHexEncodeUIntAndTrimImpl(uint32_t data) {
+  if (data == 0)
+    return "0";
+  uint32_t data_network_order = htonl(data);
+  SpdyString hex_string = base::ToLowerASCII(base::HexEncode(
+      reinterpret_cast<char*>(&data_network_order), sizeof(uint32_t)));
+  // Trim leading zeros.
+  auto pos = hex_string.find_first_not_of('0');
+  DCHECK_NE(pos, SpdyString::npos);
+  return hex_string.substr(pos);
 }
 
 inline SpdyString SpdyHexDumpImpl(SpdyStringPiece data) {
