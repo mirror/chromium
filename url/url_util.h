@@ -179,10 +179,10 @@ URL_EXPORT bool GetStandardSchemeType(const char* spec,
 // and "www.google.com" domains.
 //
 // If either of the input StringPieces is empty, the return value is false. The
-// input domain should be a lower-case ASCII string in order to match the
-// canonicalized host.
+// input domain should match host canonicalization rules. i.e. it should be
+// lowercase except for escape chars.
 URL_EXPORT bool DomainIs(base::StringPiece canonicalized_host,
-                         base::StringPiece lower_ascii_domain);
+                         base::StringPiece domain);
 
 // Returns true if the hostname is an IP address. Note: this function isn't very
 // cheap, as it must re-parse the host to verify.
