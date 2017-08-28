@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "48376c08_ed7bbb12",
+        "filename": "third_party/WebKit/Source/core/html/custom/CustomElementRegistry.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1106664
+      },
+      "writtenOn": "2017-08-28T06:18:27Z",
+      "side": 1,
+      "message": "I\u0027m not sure this is right. What if the CustomElementReactionStack outlives all of the CustomElementRegistry instances?",
+      "revId": "56f3aa8490acbf7b2d057214af2b6c9743f4806c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
