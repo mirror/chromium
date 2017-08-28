@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0a7072b0_0ef5a3f1",
+        "filename": "chrome/common/media_router/media_route.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-28T08:18:35Z",
+      "side": 1,
+      "message": "Nit: enumerator names should use kStyleNaming\n\n(Also, just curious: how infeasible is it to just use the mojo enum directly here rather than having to map it?)",
+      "range": {
+        "startLine": 17,
+        "startChar": 33,
+        "endLine": 17,
+        "endChar": 37
+      },
+      "revId": "d07f81fe3c743971efd7bd612870c8acef043b10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "450dce94_15b010b2",
+        "filename": "chrome/common/media_router/mojo/media_controller.mojom",
+        "patchSetId": 16
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-28T08:18:35Z",
+      "side": 1,
+      "message": "Rather than splitting it up like this, would it be possible to have a MediaControllerFactory interface which can connect to the baseline MediaController or take an additional HangoutsMediaRouteController to connect to a hangouts-specific one?",
+      "revId": "d07f81fe3c743971efd7bd612870c8acef043b10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ee847f4_b8f0e7f2",
+        "filename": "chrome/common/media_router/mojo/media_router.mojom",
+        "patchSetId": 16
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-28T08:18:35Z",
+      "side": 1,
+      "message": "Nit: enumerator names in Chrome should use kStyleNaming.",
+      "revId": "d07f81fe3c743971efd7bd612870c8acef043b10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
