@@ -25,6 +25,29 @@
     },
     {
       "key": {
+        "uuid": "effcb3f0_ed43c0cc",
+        "filename": "chrome/browser/chromeos/arc/voice_interaction/arc_voice_interaction_arc_home_service.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 318,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-08-28T16:43:37Z",
+      "side": 1,
+      "message": "nit: ARC instance (for consistency with the rest of the codebase).",
+      "range": {
+        "startLine": 318,
+        "startChar": 20,
+        "endLine": 318,
+        "endChar": 29
+      },
+      "revId": "8b6255b2c481c12d3778921e654c1b4d8aa488f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ce1ce8a5_d895a513",
         "filename": "chrome/browser/chromeos/arc/voice_interaction/arc_voice_interaction_framework_service.cc",
         "patchSetId": 5
@@ -41,6 +64,29 @@
         "startChar": 26,
         "endLine": 304,
         "endChar": 70
+      },
+      "revId": "8b6255b2c481c12d3778921e654c1b4d8aa488f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "777853cc_3f7fad5b",
+        "filename": "chrome/browser/chromeos/arc/voice_interaction/arc_voice_interaction_framework_service.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 306,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-08-28T16:43:37Z",
+      "side": 1,
+      "message": "What is the TODO here? Will you remove this code? Can you explicitly call that out?",
+      "range": {
+        "startLine": 306,
+        "startChar": 7,
+        "endLine": 306,
+        "endChar": 23
       },
       "revId": "8b6255b2c481c12d3778921e654c1b4d8aa488f3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
