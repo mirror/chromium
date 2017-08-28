@@ -32,6 +32,7 @@ class ActiveKeyEventFilterRegistrar final : public KeyHookActivator {
                      base::Callback<void(bool)> on_result) override;
   void Activate(base::Callback<void(bool)> on_result) override;
   void Deactivate(base::Callback<void(bool)> on_result) override;
+  bool IsKeyReserved(ui::KeyboardCode code) const override;
 
   ActiveKeyEventFilterTracker* const tracker_;
   std::unique_ptr<KeyHookActivator> key_hook_;

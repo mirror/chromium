@@ -294,6 +294,7 @@ class BrowserView : public BrowserWindow,
       ExclusiveAccessBubbleHideCallback bubble_first_hide_callback) override;
   void OnExclusiveAccessUserInput() override;
   bool ShouldHideUIForFullscreen() const override;
+  bool IsEscapeKeyReserved() const override;
   bool IsFullscreen() const override;
   bool IsFullscreenBubbleVisible() const override;
   void MaybeShowNewBackShortcutBubble(bool forward) override;
