@@ -1,0 +1,42 @@
+layer at (0,0) size 800x600
+  LayoutView at (0,0) size 800x600
+layer at (0,0) size 800x335
+  LayoutBlockFlow {HTML} at (0,0) size 800x335
+    LayoutBlockFlow {BODY} at (8,16) size 784x303
+      LayoutBlockFlow {P} at (0,0) size 784x20
+        LayoutText {#text} at (0,0) size 512x19
+          text run at (0,0) width 512: "First, use directional navigation to navigate the focus to the \"START\" link below."
+      LayoutBlockFlow {P} at (0,36) size 784x20
+        LayoutText {#text} at (0,0) size 462x19
+          text run at (0,0) width 462: "Test passes if navigating left twice moves the focus to the \"FINISH\" link."
+      LayoutBlockFlow {P} at (0,72) size 784x20
+        LayoutInline {A} at (0,0) size 40x19 [color=#551A8B]
+          LayoutText {#text} at (0,0) size 40x19
+            text run at (0,0) width 40: "ignore"
+        LayoutText {#text} at (40,0) size 4x19
+          text run at (40,0) width 4: " "
+        LayoutInline {A} at (0,0) size 40x19 [color=#551A8B]
+          LayoutText {#text} at (44,0) size 40x19
+            text run at (44,0) width 40: "ignore"
+        LayoutText {#text} at (84,0) size 4x19
+          text run at (84,0) width 4: " "
+        LayoutInline {A} at (0,0) size 50x19 [color=#551A8B]
+          LayoutText {#text} at (88,0) size 50x19
+            text run at (88,0) width 50: "START"
+      LayoutBlockFlow (anonymous) at (0,108) size 784x159
+        LayoutText {#text} at (0,0) size 0x0
+      LayoutBlockFlow {P} at (0,283) size 784x20
+        LayoutInline {A} at (0,0) size 52x19 [color=#551A8B]
+          LayoutText {#text} at (0,0) size 52x19
+            text run at (0,0) width 52: "FINISH"
+layer at (8,124) size 304x154
+  LayoutIFrame {IFRAME} at (0,0) size 304x154 [border: (2px inset #EEEEEE)]
+    layer at (0,0) size 300x150
+      LayoutView at (0,0) size 300x150
+    layer at (0,0) size 300x52
+      LayoutBlockFlow {HTML} at (0,0) size 300x52
+        LayoutBlockFlow {BODY} at (8,16) size 284x20
+          LayoutBlockFlow {P} at (0,0) size 284x20
+            LayoutInline {A} at (0,0) size 40x19 [color=#551A8B]
+              LayoutText {#text} at (0,0) size 40x19
+                text run at (0,0) width 40: "ignore"

@@ -1,0 +1,49 @@
+layer at (0,0) size 800x600
+  LayoutView at (0,0) size 800x600
+layer at (0,0) size 800x324
+  LayoutBlockFlow {HTML} at (0,0) size 800x323.59
+    LayoutBlockFlow {BODY} at (8,21.44) size 784x286.16
+      LayoutBlockFlow {H1} at (0,0) size 784x37
+        LayoutText {#text} at (0,0) size 321x36
+          text run at (0,0) width 321: "navigator_online_event"
+      LayoutBlockFlow {OL} at (0,58.44) size 784x40
+        LayoutListItem {LI} at (40,0) size 744x20
+          LayoutListMarker (anonymous) at (-16,0) size 16x19: "1"
+          LayoutText {#text} at (0,0) size 203x19
+            text run at (0,0) width 203: "Change the 'work offline' mode."
+        LayoutListItem {LI} at (40,20) size 744x20
+          LayoutListMarker (anonymous) at (-16,0) size 16x19: "2"
+          LayoutText {#text} at (0,0) size 351x19
+            text run at (0,0) width 351: "If actual result and expected result are same, then test is "
+          LayoutInline {SPAN} at (0,0) size 28x19 [color=#008000]
+            LayoutText {#text} at (351,0) size 28x19
+              text run at (351,0) width 28: "Pass"
+          LayoutText {#text} at (379,0) size 73x19
+            text run at (379,0) width 73: ", otherwise "
+          LayoutInline {SPAN} at (0,0) size 24x19 [color=#FF0000]
+            LayoutText {#text} at (452,0) size 24x19
+              text run at (452,0) width 24: "Fail"
+          LayoutText {#text} at (476,0) size 4x19
+            text run at (476,0) width 4: "."
+      LayoutBlockFlow {H2} at (0,136.34) size 784x27
+        LayoutText {#text} at (0,0) size 139x26
+          text run at (0,0) width 139: "Actual Result"
+      LayoutBlockFlow {DIV} at (0,183.25) size 784x0
+        LayoutInline {SPAN} at (0,0) size 0x0
+        LayoutText {#text} at (0,0) size 0x0
+      LayoutBlockFlow {H2} at (0,183.25) size 784x27
+        LayoutText {#text} at (0,0) size 166x26
+          text run at (0,0) width 166: "Expected Result"
+      LayoutBlockFlow {DIV} at (0,230.16) size 784x56
+        LayoutBlockFlow (anonymous) at (0,0) size 784x20
+          LayoutInline {SPAN} at (0,0) size 269x19
+            LayoutText {#text} at (0,0) size 269x19
+              text run at (0,0) width 269: "apply 'work offline': offline event is raised."
+        LayoutBlockFlow (anonymous) at (0,36) size 784x20
+          LayoutBlockFlow {P} at (0,0) size 784x20
+            LayoutText {#text} at (0,0) size 275x19
+              text run at (0,0) width 275: "release 'work offline': online event is raised."
+        LayoutBlockFlow (anonymous) at (0,72) size 784x0
+          LayoutInline {SPAN} at (0,0) size 0x0
+layer at (8,136) size 784x2 clip at (0,0) size 0x0
+  LayoutBlockFlow {HR} at (0,114.44) size 784x2 [border: (1px inset #EEEEEE)]

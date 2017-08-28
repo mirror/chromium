@@ -1,0 +1,31 @@
+layer at (0,0) size 800x600
+  LayoutView at (0,0) size 800x600
+layer at (0,0) size 800x300
+  LayoutBlockFlow {HTML} at (0,0) size 800x300.44
+    LayoutBlockFlow {BODY} at (8,8) size 784x276.44
+      LayoutBlockFlow {FORM} at (0,0) size 784x19
+        LayoutMenuList {SELECT} at (0,1) size 269x18 [bgcolor=#F8F8F8]
+          LayoutBlockFlow (anonymous) at (0,0) size 269x18
+            LayoutText (anonymous) at (8,2) size 225x13
+              text run at (8,2) width 225: "Lecture 01: What holds our world together?"
+        LayoutText {#text} at (0,0) size 0x0
+      LayoutBlockFlow {H2} at (0,38.91) size 784x28
+        LayoutText {#text} at (0,0) size 119x28
+          text run at (0,0) width 119: "Description"
+      LayoutBlockFlow {P} at (0,86.81) size 784x18
+        LayoutText {#text} at (0,0) size 568x18
+          text run at (0,0) width 568: "This test validates that an optgroup element is disabled if its disabled attribute is present."
+      LayoutBlockFlow {H2} at (0,124.72) size 784x28
+        LayoutText {#text} at (0,0) size 107x28
+          text run at (0,0) width 107: "Test steps:"
+      LayoutBlockFlow {OL} at (0,172.63) size 784x18
+        LayoutListItem {LI} at (40,0) size 744x18
+          LayoutListMarker (anonymous) at (-16,0) size 16x18: "1"
+          LayoutText {#text} at (0,0) size 271x18
+            text run at (0,0) width 271: "Click the select flag to select section '8.01'"
+      LayoutBlockFlow {H2} at (0,210.53) size 784x28
+        LayoutText {#text} at (0,0) size 74x28
+          text run at (0,0) width 74: "Result:"
+      LayoutBlockFlow {P} at (0,258.44) size 784x18
+        LayoutText {#text} at (0,0) size 663x18
+          text run at (0,0) width 663: "Click the select flag and try to select section 8.01, test passes if the section 8.01 is disable to be selected"

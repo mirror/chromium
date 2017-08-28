@@ -1,0 +1,7 @@
+This is a testharness.js-based test.
+PASS Expecting logs: ["TEST COMPLETE"] 
+FAIL worker-importscripts-blocked assert_equals: expected "importScripts blocked" but got "importScripts allowed"
+FAIL worker-importscripts-blocked 1 assert_equals: expected "importScripts blocked" but got "importScripts allowed"
+PASS Violation report status OK. 
+Harness: the test ran to completion.
+

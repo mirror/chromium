@@ -1,0 +1,24 @@
+layer at (0,0) size 800x600
+  LayoutView at (0,0) size 800x600
+layer at (0,0) size 800x108
+  LayoutBlockFlow {html} at (0,0) size 800x108
+    LayoutBlockFlow {body} at (8,16) size 784x84
+      LayoutBlockFlow {p} at (0,0) size 784x20
+        LayoutText {#text} at (0,0) size 323x19
+          text run at (0,0) width 323: "Test passes if the 2 \"Text sample \x{30B5}\x{30F3}\x{30D7}\x{30EB}\x{6587}\" are "
+        LayoutInline {strong} at (0,0) size 58x19
+          LayoutText {#text} at (322,0) size 58x19
+            text run at (322,0) width 58: "identical"
+        LayoutText {#text} at (379,0) size 32x19
+          text run at (379,0) width 32: " and "
+        LayoutInline {strong} at (0,0) size 36x19
+          LayoutText {#text} at (410,0) size 36x19
+            text run at (410,0) width 36: "blink"
+        LayoutText {#text} at (445,0) size 258x19
+          text run at (445,0) width 258: " (alternate between visible and invisible)."
+      LayoutBlockFlow {div} at (0,36) size 784x24
+        LayoutText {#text} at (0,2) size 160x19
+          text run at (0,2) width 160: "Text sample \x{30B5}\x{30F3}\x{30D7}\x{30EB}\x{6587}"
+      LayoutBlockFlow {div} at (0,60) size 784x24
+        LayoutText {#text} at (0,2) size 160x19
+          text run at (0,2) width 160: "Text sample \x{30B5}\x{30F3}\x{30D7}\x{30EB}\x{6587}"

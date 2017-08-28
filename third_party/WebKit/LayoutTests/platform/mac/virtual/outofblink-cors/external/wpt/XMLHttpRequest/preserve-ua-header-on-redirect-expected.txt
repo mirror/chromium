@@ -1,0 +1,5 @@
+This is a testharness.js-based test.
+PASS XMLHttpRequest: User-Agent header is preserved on redirect 
+FAIL XMLHttpRequest: User-Agent header is preserved on redirect 1 assert_equals: expected "User-Agent: TEST\n" but got "User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/99.77.34.5 Safari/537.36\n"
+Harness: the test ran to completion.
+

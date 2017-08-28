@@ -1,0 +1,9 @@
+layer at (0,0) size 800x600
+  LayoutView at (0,0) size 800x600
+layer at (0,0) size 800x0
+  LayoutBlockFlow {HTML} at (0,0) size 800x0
+    LayoutBlockFlow {BODY} at (0,0) size 800x0
+layer at (0,16) size 420x18
+  LayoutBlockFlow (positioned) {P} at (0,16) size 419.61x18 [bgcolor=#FFFFFF]
+    LayoutText {#text} at (0,0) size 420x18
+      text run at (0,0) width 420: "Place the mouse cursor over the blue area. You should see no red."

@@ -1,0 +1,10 @@
+layer at (0,0) size 800x600
+  LayoutView at (0,0) size 800x600
+layer at (0,0) size 800x186
+  LayoutBlockFlow {HTML} at (0,0) size 800x186
+    LayoutBlockFlow {BODY} at (8,16) size 784x162
+      LayoutBlockFlow {P} at (0,0) size 784x40
+        LayoutText {#text} at (0,0) size 758x39
+          text run at (0,0) width 758: "The test passes if, when moved inside the blue box, the cursor indicates an alias of/shortcut to something is to be created."
+          text run at (0,20) width 403: "Often rendered as an arrow with a small curved arrow next to it."
+      LayoutBlockFlow {DIV} at (0,56) size 106x106 [border: (3px solid #0000FF)]

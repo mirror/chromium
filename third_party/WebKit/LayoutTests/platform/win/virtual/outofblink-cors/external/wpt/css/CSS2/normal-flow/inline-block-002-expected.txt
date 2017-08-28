@@ -1,0 +1,61 @@
+layer at (0,0) size 800x600 clip at (0,0) size 785x600 scrollHeight 784
+  LayoutView at (0,0) size 800x600
+layer at (0,0) size 785x784 backgroundClip at (0,0) size 785x600 clip at (0,0) size 785x600
+  LayoutBlockFlow {html} at (0,0) size 785x784
+    LayoutBlockFlow {body} at (8,16) size 769x752
+      LayoutBlockFlow {p} at (0,0) size 769x40
+        LayoutText {#text} at (0,0) size 744x39
+          text run at (0,0) width 410: "Make your window an inch or two bigger than than the width of "
+          text run at (410,0) width 334: "one inline-block: all inline-blocks should be the same"
+          text run at (0,20) width 59: "size. Try "
+          text run at (58,20) width 387: "resizing the window so that inline-blocks wrap in one or two "
+          text run at (444,20) width 58: "columns."
+      LayoutBlockFlow {p} at (0,56) size 769x696
+        LayoutBlockFlow {span} at (8,8) size 432x42 [color=#C0C0C0] [border: (3px solid #0000FF)]
+          LayoutText {#text} at (11,11) size 410x19
+            text run at (11,11) width 410: "this is an inline-block this is an inline-block this is an inline-block"
+        LayoutText {#text} at (0,0) size 0x0
+        LayoutBlockFlow {span} at (8,66) size 432x42 [color=#C0C0C0] [border: (3px solid #0000FF)]
+          LayoutText {#text} at (11,11) size 410x19
+            text run at (11,11) width 410: "this is an inline-block this is an inline-block this is an inline-block"
+        LayoutText {#text} at (0,0) size 0x0
+        LayoutBlockFlow {span} at (8,124) size 432x42 [color=#C0C0C0] [border: (3px solid #0000FF)]
+          LayoutText {#text} at (11,11) size 410x19
+            text run at (11,11) width 410: "this is an inline-block this is an inline-block this is an inline-block"
+        LayoutText {#text} at (0,0) size 0x0
+        LayoutBlockFlow {span} at (8,182) size 432x42 [color=#C0C0C0] [border: (3px solid #0000FF)]
+          LayoutText {#text} at (11,11) size 410x19
+            text run at (11,11) width 410: "this is an inline-block this is an inline-block this is an inline-block"
+        LayoutText {#text} at (0,0) size 0x0
+        LayoutBlockFlow {span} at (8,240) size 432x42 [color=#C0C0C0] [border: (3px solid #0000FF)]
+          LayoutText {#text} at (11,11) size 410x19
+            text run at (11,11) width 410: "this is an inline-block this is an inline-block this is an inline-block"
+        LayoutText {#text} at (0,0) size 0x0
+        LayoutBlockFlow {span} at (8,298) size 432x42 [color=#C0C0C0] [border: (3px solid #0000FF)]
+          LayoutText {#text} at (11,11) size 410x19
+            text run at (11,11) width 410: "this is an inline-block this is an inline-block this is an inline-block"
+        LayoutText {#text} at (0,0) size 0x0
+        LayoutBlockFlow {span} at (8,356) size 432x42 [color=#C0C0C0] [border: (3px solid #0000FF)]
+          LayoutText {#text} at (11,11) size 410x19
+            text run at (11,11) width 410: "this is an inline-block this is an inline-block this is an inline-block"
+        LayoutText {#text} at (0,0) size 0x0
+        LayoutBlockFlow {span} at (8,414) size 432x42 [color=#C0C0C0] [border: (3px solid #0000FF)]
+          LayoutText {#text} at (11,11) size 410x19
+            text run at (11,11) width 410: "this is an inline-block this is an inline-block this is an inline-block"
+        LayoutText {#text} at (0,0) size 0x0
+        LayoutBlockFlow {span} at (8,472) size 432x42 [color=#C0C0C0] [border: (3px solid #0000FF)]
+          LayoutText {#text} at (11,11) size 410x19
+            text run at (11,11) width 410: "this is an inline-block this is an inline-block this is an inline-block"
+        LayoutText {#text} at (0,0) size 0x0
+        LayoutBlockFlow {span} at (8,530) size 432x42 [color=#C0C0C0] [border: (3px solid #0000FF)]
+          LayoutText {#text} at (11,11) size 410x19
+            text run at (11,11) width 410: "this is an inline-block this is an inline-block this is an inline-block"
+        LayoutText {#text} at (0,0) size 0x0
+        LayoutBlockFlow {span} at (8,588) size 432x42 [color=#C0C0C0] [border: (3px solid #0000FF)]
+          LayoutText {#text} at (11,11) size 410x19
+            text run at (11,11) width 410: "this is an inline-block this is an inline-block this is an inline-block"
+        LayoutText {#text} at (0,0) size 0x0
+        LayoutBlockFlow {span} at (8,646) size 432x42 [color=#C0C0C0] [border: (3px solid #0000FF)]
+          LayoutText {#text} at (11,11) size 410x19
+            text run at (11,11) width 410: "this is an inline-block this is an inline-block this is an inline-block"
+        LayoutText {#text} at (0,0) size 0x0

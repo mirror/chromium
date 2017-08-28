@@ -1,0 +1,40 @@
+layer at (0,0) size 800x600
+  LayoutView at (0,0) size 800x600
+layer at (0,0) size 800x315
+  LayoutBlockFlow {HTML} at (0,0) size 800x315
+    LayoutBlockFlow {BODY} at (8,16) size 784x291
+      LayoutBlockFlow {P} at (0,0) size 784x36
+        LayoutText {#text} at (0,0) size 781x36
+          text run at (0,0) width 781: "The test passes if, when moved over every element inside the blue box, the cursor remains the platform-dependent default"
+          text run at (0,18) width 44: "cursor."
+      LayoutBlockFlow {P} at (0,52) size 784x18
+        LayoutText {#text} at (0,0) size 519x18
+          text run at (0,0) width 519: "Place the cursor into the orange box for a reference of what this should look like."
+      LayoutBlockFlow {DIV} at (0,86) size 206x99 [border: (3px solid #0000FF)]
+        LayoutText {#text} at (0,0) size 0x0
+        LayoutText {#text} at (0,0) size 0x0
+        LayoutTextControl {INPUT} at (3,58) size 123x19 [bgcolor=#FFFFFF] [border: (2px inset #EEEEEE)]
+        LayoutText {#text} at (0,0) size 0x0
+        LayoutText {#text} at (88,77) size 5x18
+          text run at (88,77) width 5: " "
+        LayoutMenuList {SELECT} at (92.81,78) size 36x18 [bgcolor=#F8F8F8]
+          LayoutBlockFlow (anonymous) at (0,0) size 36x18
+            LayoutText (anonymous) at (8,2) size 4x13
+              text run at (8,2) width 4: " "
+        LayoutText {#text} at (0,0) size 0x0
+      LayoutBlockFlow {DIV} at (0,185) size 106x106 [border: (3px solid #FFA500)]
+layer at (11,106) size 52x18 clip at (12,107) size 50x16
+  LayoutButton {BUTTON} at (3,4) size 51.56x18 [bgcolor=#FFFFFF] [border: (1px solid #D8D8D8) (1px solid #D1D1D1) (1px solid #BABABA) (1px solid #D1D1D1)]
+    LayoutBlockFlow (anonymous) at (8,2) size 35.56x13
+      LayoutText {#text} at (0,0) size 36x13
+        text run at (0,0) width 36: "button"
+layer at (11,124) size 161x32 clip at (12,125) size 159x30
+  LayoutTextControl {TEXTAREA} at (3,22) size 161x32 [bgcolor=#FFFFFF] [border: (1px solid #000000)]
+    LayoutBlockFlow {DIV} at (3,3) size 155x13
+layer at (14,163) size 117x13
+  LayoutBlockFlow {DIV} at (3,3) size 117x13
+layer at (11,180) size 86x18
+  LayoutButton {INPUT} at (3,78) size 85.81x18 [bgcolor=#FFFFFF]
+    LayoutBlockFlow (anonymous) at (8,2) size 69.81x13
+      LayoutText {#text} at (0,0) size 70x13
+        text run at (0,0) width 70: "input-button"

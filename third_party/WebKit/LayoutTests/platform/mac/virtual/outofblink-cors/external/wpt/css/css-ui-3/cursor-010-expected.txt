@@ -1,0 +1,11 @@
+layer at (0,0) size 800x600
+  LayoutView at (0,0) size 800x600
+layer at (0,0) size 800x182
+  LayoutBlockFlow {HTML} at (0,0) size 800x182
+    LayoutBlockFlow {BODY} at (8,16) size 784x158
+      LayoutBlockFlow {P} at (0,0) size 784x36
+        LayoutText {#text} at (0,0) size 763x36
+          text run at (0,0) width 763: "The test passes if, when moved inside the blue box, the cursor indicates that something is being grabbed (dragged to be"
+          text run at (0,18) width 57: "moved). "
+          text run at (56,18) width 514: "Often rendered as the backside of a hand with fingers closed mostly out of view."
+      LayoutBlockFlow {DIV} at (0,52) size 106x106 [border: (3px solid #0000FF)]

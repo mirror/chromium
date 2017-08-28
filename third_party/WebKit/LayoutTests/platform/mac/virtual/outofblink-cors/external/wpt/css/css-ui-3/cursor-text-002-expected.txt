@@ -1,0 +1,16 @@
+layer at (0,0) size 800x600 clip at (0,0) size 785x600 scrollHeight 664
+  LayoutView at (0,0) size 800x600
+layer at (0,0) size 785x128
+  LayoutBlockFlow {HTML} at (0,0) size 785x128
+    LayoutBlockFlow {BODY} at (8,16) size 769x104
+      LayoutBlockFlow {P} at (0,0) size 769x36
+        LayoutText {#text} at (0,0) size 766x36
+          text run at (0,0) width 766: "The test passes if, when moved over the blue rotated text, the cursor that indicates text that may be selected is rotated to"
+          text run at (0,18) width 175: "match the angle of the text."
+      LayoutBlockFlow {P} at (0,52) size 769x18
+        LayoutText {#text} at (0,0) size 282x18
+          text run at (0,0) width 282: "Disregard this test if there is no rotated text."
+layer at (8,102) size 769x18
+  LayoutBlockFlow {DIV} at (0,86) size 769x18 [color=#0000FF]
+    LayoutText {#text} at (0,0) size 86x18
+      text run at (0,0) width 86: "Lorem ipsum"

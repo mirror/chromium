@@ -1,0 +1,23 @@
+layer at (0,0) size 800x600
+  LayoutView at (0,0) size 800x600
+layer at (0,0) size 800x198
+  LayoutBlockFlow {html} at (0,0) size 800x198
+    LayoutBlockFlow {body} at (8,8) size 784x182
+      LayoutBlockFlow {div} at (0,0) size 784x43
+        LayoutInline {a} at (0,0) size 141x41 [color=#0000EE]
+          LayoutText {#text} at (0,1) size 141x41
+            text run at (0,1) width 141: "Test fonts"
+        LayoutText {#text} at (140,1) size 444x41
+          text run at (140,1) width 444: " must be installed for this test: "
+        LayoutInline {span} at (0,0) size 78x41
+          LayoutText {#text} at (583,1) size 78x41
+            text run at (583,1) width 78: "FAIL"
+      LayoutBlockFlow {p} at (0,59) size 784x20
+        LayoutText {#text} at (0,0) size 627x19
+          text run at (0,0) width 627: "Browser supports synthetic italics if PASS appears on both lines and the second line is slanted right:"
+      LayoutBlockFlow {div} at (0,95) size 784x43
+        LayoutText {#text} at (0,1) size 78x41
+          text run at (0,1) width 78: "FAIL"
+      LayoutBlockFlow {div} at (0,138) size 784x44
+        LayoutText {#text} at (0,1) size 72x42
+          text run at (0,1) width 72: "FAIL"

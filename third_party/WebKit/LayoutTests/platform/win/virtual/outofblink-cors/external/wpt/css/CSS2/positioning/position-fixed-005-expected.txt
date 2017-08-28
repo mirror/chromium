@@ -1,0 +1,19 @@
+layer at (0,0) size 800x600
+  LayoutView at (0,0) size 800x600
+layer at (0,0) size 800x600
+  LayoutBlockFlow {html} at (0,0) size 800x600
+    LayoutBlockFlow {body} at (0,0) size 800x600
+      LayoutBlockFlow {p} at (0,0) size 800x36
+        LayoutText {#text} at (16,16) size 378x19
+          text run at (16,16) width 378: "PREREQUISITE: Switch to print preview or a paged view."
+      LayoutBlockFlow {p} at (0,36) size 800x36
+        LayoutText {#text} at (16,16) size 661x19
+          text run at (16,16) width 661: "Test passes if there is only one page and there is no red underlined text visible when paginated or printed."
+layer at (0,80) size 469x600 backgroundClip at (0,0) size 800x600 clip at (0,0) size 800x600
+  LayoutBlockFlow (positioned) {div} at (0,80) size 468.89x600
+    LayoutBlockFlow {div} at (0,0) size 468.89x600
+    LayoutBlockFlow (anonymous) at (0,600) size 468.89x20
+      LayoutInline {span} at (0,0) size 469x19 [color=#FF0000]
+        LayoutText {#text} at (0,0) size 469x19
+          text run at (0,0) width 469: "Test fails if this line of text is visible when the page is paginated or printed."
+      LayoutText {#text} at (0,0) size 0x0

@@ -1,0 +1,13 @@
+layer at (0,0) size 800x600
+  LayoutView at (0,0) size 800x600
+layer at (0,0) size 800x242
+  LayoutBlockFlow {HTML} at (0,0) size 800x242
+    LayoutBlockFlow {BODY} at (8,16) size 784x218
+      LayoutBlockFlow {P} at (0,0) size 784x36
+        LayoutText {#text} at (0,0) size 739x36
+          text run at (0,0) width 739: "The test passes if, when moved inside the colored rectangle, the cursor looks like a sheep AND is not a sheep when"
+          text run at (0,18) width 51: "outside."
+      LayoutBlockFlow {P} at (0,52) size 784x18
+        LayoutText {#text} at (0,0) size 577x18
+          text run at (0,0) width 577: "If inside the rectangle the cursor does not change, or looks like a help cursor, the test fails."
+      LayoutBlockFlow {DIV} at (0,86) size 132x132 [bgcolor=#D2B48C] [border: (2px solid #555555)]

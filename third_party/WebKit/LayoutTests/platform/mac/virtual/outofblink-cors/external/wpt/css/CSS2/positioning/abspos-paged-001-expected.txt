@@ -1,0 +1,35 @@
+layer at (0,0) size 800x600
+  LayoutView at (0,0) size 800x600
+layer at (0,0) size 800x112
+  LayoutBlockFlow {html} at (0,0) size 800x112
+    LayoutBlockFlow {body} at (8,16) size 784x88
+      LayoutBlockFlow {p} at (0,0) size 784x18
+        LayoutText {#text} at (0,0) size 701x18
+          text run at (0,0) width 445: "Display this in a paged media. The word PASS should display below "
+          text run at (444,0) width 257: "(followed by three mostly-blank pages)."
+      LayoutBlockFlow {div} at (0,34) size 784x0
+      LayoutBlockFlow {div} at (0,34) size 784x18
+        LayoutText {#text} at (0,0) size 86x18
+          text run at (0,0) width 86: "Blank Page 1"
+      LayoutBlockFlow {div} at (0,52) size 784x18
+        LayoutText {#text} at (0,0) size 86x18
+          text run at (0,0) width 86: "Blank Page 2"
+      LayoutBlockFlow {div} at (0,70) size 784x18
+        LayoutText {#text} at (0,0) size 86x18
+          text run at (0,0) width 86: "Blank Page 3"
+layer at (78,208) size 47x90
+  LayoutBlockFlow (positioned) {h1} at (78,208.25) size 46.81x90
+    LayoutText {#text} at (0,0) size 47x90
+      text run at (0,0) width 47: "P"
+layer at (78,208) size 94x90
+  LayoutBlockFlow (positioned) {h1} at (78,208.25) size 93.63x90
+    LayoutText {#text} at (0,0) size 94x90
+      text run at (0,0) width 94: " A"
+layer at (78,208) size 140x90
+  LayoutBlockFlow (positioned) {h1} at (78,208.25) size 140.44x90
+    LayoutText {#text} at (0,0) size 141x90
+      text run at (0,0) width 141: "  S"
+layer at (78,208) size 187x90
+  LayoutBlockFlow (positioned) {h1} at (78,208.25) size 187.23x90
+    LayoutText {#text} at (0,0) size 188x90
+      text run at (0,0) width 188: "   S"

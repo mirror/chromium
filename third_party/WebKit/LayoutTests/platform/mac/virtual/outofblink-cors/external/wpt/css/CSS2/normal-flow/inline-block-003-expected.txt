@@ -1,0 +1,77 @@
+layer at (0,0) size 800x600
+  LayoutView at (0,0) size 800x600
+layer at (0,0) size 800x490
+  LayoutBlockFlow {html} at (0,0) size 800x490
+    LayoutBlockFlow {body} at (8,16) size 784x458
+      LayoutBlockFlow {p} at (0,0) size 784x72
+        LayoutText {#text} at (0,0) size 779x72
+          text run at (0,0) width 426: "Make your window slightly wider than the width of one blue box: "
+          text run at (425,0) width 337: "all boxes should be the same size. Try increasing the"
+          text run at (0,18) width 96: "window width "
+          text run at (96,18) width 445: "so that boxes wrap in two or more columns: the boxes should remain "
+          text run at (540,18) width 201: "the same size. Try reducing the"
+          text run at (0,36) width 236: "window width to less than the width "
+          text run at (235,36) width 458: "of one blue box: the words inside the boxes should wrap and the boxes "
+          text run at (692,36) width 87: "resize around"
+          text run at (0,54) width 361: "them so that the boxes continue to fit inside the window."
+      LayoutBlockFlow {p} at (0,88) size 784x18
+        LayoutText {#text} at (0,0) size 653x18
+          text run at (0,0) width 452: "There is filler text in the first line, it should merely indent the first line "
+          text run at (451,0) width 202: "but not affect the resulting size."
+      LayoutBlockFlow {p} at (0,122) size 784x336
+        LayoutText {#text} at (0,19) size 73x18
+          text run at (0,19) width 73: "(filler text) "
+        LayoutBlockFlow {span} at (80.86,8) size 263.31x40 [color=#C0C0C0] [border: (3px solid #0000FF)]
+          LayoutText {#text} at (11,11) size 242x18
+            text run at (11,11) width 242: "this is filler text inside an inline block"
+        LayoutText {#text} at (352,19) size 5x18
+          text run at (352,19) width 5: " "
+        LayoutBlockFlow {span} at (364.17,8) size 263.31x40 [color=#C0C0C0] [border: (3px solid #0000FF)]
+          LayoutText {#text} at (11,11) size 242x18
+            text run at (11,11) width 242: "this is filler text inside an inline block"
+        LayoutText {#text} at (0,0) size 0x0
+        LayoutBlockFlow {span} at (8,64) size 263.31x40 [color=#C0C0C0] [border: (3px solid #0000FF)]
+          LayoutText {#text} at (11,11) size 242x18
+            text run at (11,11) width 242: "this is filler text inside an inline block"
+        LayoutText {#text} at (279,75) size 5x18
+          text run at (279,75) width 5: " "
+        LayoutBlockFlow {span} at (291.31,64) size 263.31x40 [color=#C0C0C0] [border: (3px solid #0000FF)]
+          LayoutText {#text} at (11,11) size 242x18
+            text run at (11,11) width 242: "this is filler text inside an inline block"
+        LayoutText {#text} at (0,0) size 0x0
+        LayoutBlockFlow {span} at (8,120) size 263.31x40 [color=#C0C0C0] [border: (3px solid #0000FF)]
+          LayoutText {#text} at (11,11) size 242x18
+            text run at (11,11) width 242: "this is filler text inside an inline block"
+        LayoutText {#text} at (279,131) size 5x18
+          text run at (279,131) width 5: " "
+        LayoutBlockFlow {span} at (291.31,120) size 263.31x40 [color=#C0C0C0] [border: (3px solid #0000FF)]
+          LayoutText {#text} at (11,11) size 242x18
+            text run at (11,11) width 242: "this is filler text inside an inline block"
+        LayoutText {#text} at (0,0) size 0x0
+        LayoutBlockFlow {span} at (8,176) size 263.31x40 [color=#C0C0C0] [border: (3px solid #0000FF)]
+          LayoutText {#text} at (11,11) size 242x18
+            text run at (11,11) width 242: "this is filler text inside an inline block"
+        LayoutText {#text} at (279,187) size 5x18
+          text run at (279,187) width 5: " "
+        LayoutBlockFlow {span} at (291.31,176) size 263.31x40 [color=#C0C0C0] [border: (3px solid #0000FF)]
+          LayoutText {#text} at (11,11) size 242x18
+            text run at (11,11) width 242: "this is filler text inside an inline block"
+        LayoutText {#text} at (0,0) size 0x0
+        LayoutBlockFlow {span} at (8,232) size 263.31x40 [color=#C0C0C0] [border: (3px solid #0000FF)]
+          LayoutText {#text} at (11,11) size 242x18
+            text run at (11,11) width 242: "this is filler text inside an inline block"
+        LayoutText {#text} at (279,243) size 5x18
+          text run at (279,243) width 5: " "
+        LayoutBlockFlow {span} at (291.31,232) size 263.31x40 [color=#C0C0C0] [border: (3px solid #0000FF)]
+          LayoutText {#text} at (11,11) size 242x18
+            text run at (11,11) width 242: "this is filler text inside an inline block"
+        LayoutText {#text} at (0,0) size 0x0
+        LayoutBlockFlow {span} at (8,288) size 263.31x40 [color=#C0C0C0] [border: (3px solid #0000FF)]
+          LayoutText {#text} at (11,11) size 242x18
+            text run at (11,11) width 242: "this is filler text inside an inline block"
+        LayoutText {#text} at (279,299) size 5x18
+          text run at (279,299) width 5: " "
+        LayoutBlockFlow {span} at (291.31,288) size 263.31x40 [color=#C0C0C0] [border: (3px solid #0000FF)]
+          LayoutText {#text} at (11,11) size 242x18
+            text run at (11,11) width 242: "this is filler text inside an inline block"
+        LayoutText {#text} at (0,0) size 0x0

@@ -1,0 +1,10 @@
+layer at (0,0) size 800x600
+  LayoutView at (0,0) size 800x600
+layer at (0,0) size 800x158
+  LayoutBlockFlow {HTML} at (0,0) size 800x158
+    LayoutBlockFlow {BODY} at (8,16) size 784x134
+      LayoutBlockFlow {P} at (0,0) size 784x18
+        LayoutText {#text} at (0,0) size 754x18
+          text run at (0,0) width 754: "Drag the orange square to the right until the drag placeholder appears, then release it. Fail if this text does not change."
+      LayoutBlockFlow {DIV} at (0,34) size 100x100 [bgcolor=#FFA500]
+      LayoutBlockFlow {DIV} at (0,134) size 784x0

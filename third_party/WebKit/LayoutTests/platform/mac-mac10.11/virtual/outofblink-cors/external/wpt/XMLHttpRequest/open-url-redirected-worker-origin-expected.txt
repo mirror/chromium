@@ -1,0 +1,7 @@
+This is a testharness.js-based test.
+PASS XMLHttpRequest: redirected worker scripts, origin and referrer 
+FAIL Referer header assert_equals: expected "Referer: http://web-platform.test:8001/XMLHttpRequest/resources/workerxhr-origin-referrer.js\n" but got "Referer: http://web-platform.test:8001/XMLHttpRequest/resources/redirect.py?location=workerxhr-origin-referrer.js\n"
+PASS Origin header 
+PASS Request URL test 
+Harness: the test ran to completion.
+

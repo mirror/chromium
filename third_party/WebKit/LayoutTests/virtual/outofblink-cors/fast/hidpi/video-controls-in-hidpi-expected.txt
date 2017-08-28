@@ -1,0 +1,28 @@
+layer at (0,0) size 1600x1200
+  LayoutView at (0,0) size 1600x1200
+layer at (0,0) size 1600x378
+  LayoutBlockFlow {HTML} at (0,0) size 1600x378
+    LayoutBlockFlow {BODY} at (16,16) size 1568x346
+      LayoutBlockFlow {DIV} at (0,0) size 1568x37
+        LayoutText {#text} at (0,0) size 1100x36
+          text run at (0,0) width 1100: "This test passes if the video controls are non-blurry and properly positioned in HiDPI."
+      LayoutBlockFlow (anonymous) at (0,37) size 1568x309
+        LayoutText {#text} at (0,0) size 0x0
+layer at (16,53) size 600x300
+  LayoutVideo {VIDEO} at (0,0) size 600x300
+layer at (16,53) size 600x300
+  LayoutFlexibleBox (relative positioned) {DIV} at (0,0) size 600x300
+    LayoutBlockFlow {DIV} at (0,236) size 600x64
+layer at (16,53) size 600x216
+  LayoutFlexibleBox (relative positioned) {DIV} at (0,0) size 600x216
+layer at (16,289) size 600x64 scrollHeight 80
+  LayoutFlexibleBox (relative positioned) {DIV} at (0,0) size 600x64 [bgcolor=#FAFAFA]
+    LayoutButton {INPUT} at (0,0) size 64x64
+    LayoutFlexibleBox {DIV} at (64,0) size 46x64 [color=#5A5A5A]
+      LayoutBlockFlow (anonymous) at (0,0) size 46x64
+        LayoutText {#text} at (0,18) size 46x27
+          text run at (0,18) width 46: "0:00"
+    LayoutSlider {INPUT} at (146,30) size 418x4
+      LayoutFlexibleBox {DIV} at (0,0) size 418x4
+        LayoutBlockFlow {DIV} at (-36,-46) size 490x96
+          LayoutBlockFlow {DIV} at (0,0) size 72x96

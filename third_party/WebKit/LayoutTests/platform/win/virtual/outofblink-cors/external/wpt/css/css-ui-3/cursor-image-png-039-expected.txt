@@ -1,0 +1,27 @@
+layer at (0,0) size 800x600
+  LayoutView at (0,0) size 800x600
+layer at (0,0) size 800x404
+  LayoutBlockFlow {HTML} at (0,0) size 800x404
+    LayoutBlockFlow {BODY} at (8,16) size 784x372
+      LayoutBlockFlow {P} at (0,0) size 784x40
+        LayoutText {#text} at (0,0) size 781x39
+          text run at (0,0) width 654: "The test passes if all the reference images look the same, AND when moved inside the peach rectangle, "
+          text run at (654,0) width 127: "the cursor looks like"
+          text run at (0,20) width 450: "the reference images (ignoring the small numeric values in each image)."
+      LayoutBlockFlow {P} at (0,72) size 132x228 [bgcolor=#FFE5B4] [border: (2px solid #555555)]
+        LayoutImage {IMG} at (2,2) size 32x32
+        LayoutBR {BR} at (34,6) size 0x36
+        LayoutImage {IMG} at (2,40) size 32x32
+        LayoutBR {BR} at (34,44) size 0x36
+        LayoutImage {IMG} at (2,78) size 32x32
+        LayoutBR {BR} at (34,82) size 0x36
+        LayoutImage {IMG} at (2,116) size 32x32
+        LayoutBR {BR} at (34,120) size 0x36
+        LayoutImage {IMG} at (2,154) size 32x32
+        LayoutBR {BR} at (34,158) size 0x36
+        LayoutImage {IMG} at (2,192) size 32x32
+        LayoutBR {BR} at (34,196) size 0x36
+      LayoutBlockFlow {P} at (0,332) size 784x40
+        LayoutText {#text} at (0,0) size 781x39
+          text run at (0,0) width 781: "RGB PNG images with various gamma values, 8 bit/pixel. Pixel values adjusted so that, when gamma corrected, the images"
+          text run at (0,20) width 91: "look the same."

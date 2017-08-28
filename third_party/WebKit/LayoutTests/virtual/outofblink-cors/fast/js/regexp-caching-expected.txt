@@ -1,0 +1,23 @@
+This test checks our implementation of the special RegExp member variables.
+
+Properties of RegExp at startup:
+
+Properties of RegExp after /(1)(2)(3)(4)(5)(6)(7)(8)(9)(0)/.exec(<1234567890>):
+
+RegExp.$0 does not exist
+RegExp.$10 does not exist
+RegExp doesn't use RegExp.input
+RegExp.multiline doesn't coerce values to booleans
+RegExp.input coerces values to strings
+
+Properties of RegExp after /(1)(2)(3)(4)(5)(6)(7)(8)(9)(0)/.exec(XXX):
+multiline: {foo}
+
+---------- [Cleared RegExp values] ----------
+Properties of RegExp after <1234567890>.search(/(1)(2)(3)(4)(5)(6)(7)(8)(9)(0)/):
+multiline: {foo}
+
+---------- [Cleared RegExp values] ----------
+Properties of RegExp after <1234567890>.replace(/(1)(2)(3)(4)(5)(6)(7)(8)(9)(0)/):
+multiline: {foo}
+

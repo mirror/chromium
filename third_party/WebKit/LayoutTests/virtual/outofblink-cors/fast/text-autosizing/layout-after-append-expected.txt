@@ -1,0 +1,65 @@
+layer at (0,0) size 800x600 scrollHeight 2176
+  LayoutView at (0,0) size 800x600
+layer at (0,0) size 800x2176 backgroundClip at (0,0) size 800x600 clip at (0,0) size 800x600
+  LayoutBlockFlow {HTML} at (0,0) size 800x2176
+    LayoutBlockFlow {BODY} at (8,8) size 784x2160
+      LayoutBlockFlow {DIV} at (320,0) size 464x2113
+        LayoutInline {B} at (0,0) size 461x717 [color=#0000FF]
+          LayoutText {#text} at (0,1) size 461x93
+            text run at (0,1) width 461: "This test passes if no text is"
+            text run at (0,49) width 214: "overlapping."
+          LayoutBR {BR} at (214,49) size 0x45
+          LayoutText {#text} at (0,97) size 461x621
+            text run at (0,97) width 461: "Autosize Autosize Autosize"
+            text run at (0,145) width 461: "Autosize Autosize Autosize"
+            text run at (0,193) width 461: "Autosize Autosize Autosize"
+            text run at (0,241) width 461: "Autosize Autosize Autosize"
+            text run at (0,289) width 461: "Autosize Autosize Autosize"
+            text run at (0,337) width 461: "Autosize Autosize Autosize"
+            text run at (0,385) width 461: "Autosize Autosize Autosize"
+            text run at (0,433) width 461: "Autosize Autosize Autosize"
+            text run at (0,481) width 461: "Autosize Autosize Autosize"
+            text run at (0,529) width 461: "Autosize Autosize Autosize"
+            text run at (0,577) width 461: "Autosize Autosize Autosize"
+            text run at (0,625) width 461: "Autosize Autosize Autosize"
+            text run at (0,673) width 461: "Autosize Autosize Autosize"
+        LayoutInline {B} at (0,0) size 461x1390
+          LayoutText {#text} at (0,721) size 461x1390
+            text run at (0,721) width 461: "Autosize Autosize Autosize"
+            text run at (0,769) width 461: "Autosize Autosize Autosize"
+            text run at (0,817) width 461: "Autosize Autosize Autosize"
+            text run at (0,865) width 461: "Autosize Autosize Autosize"
+            text run at (0,913) width 461: "Autosize Autosize Autosize"
+            text run at (0,961) width 461: "Autosize Autosize Autosize"
+            text run at (0,1009) width 461: "Autosize Autosize Autosize"
+            text run at (0,1057) width 461: "Autosize Autosize Autosize"
+            text run at (0,1105) width 461: "Autosize Autosize Autosize"
+            text run at (0,1153) width 461: "Autosize Autosize Autosize"
+            text run at (0,1201) width 461: "Autosize Autosize Autosize"
+            text run at (0,1249) width 461: "Autosize Autosize Autosize"
+            text run at (0,1297) width 461: "Autosize Autosize Autosize"
+            text run at (0,1345) width 461: "Autosize Autosize Autosize"
+            text run at (0,1393) width 461: "Autosize Autosize Autosize"
+            text run at (0,1441) width 461: "Autosize Autosize Autosize"
+            text run at (0,1489) width 461: "Autosize Autosize Autosize"
+            text run at (0,1537) width 461: "Autosize Autosize Autosize"
+            text run at (0,1585) width 461: "Autosize Autosize Autosize"
+            text run at (0,1633) width 461: "Autosize Autosize Autosize"
+            text run at (0,1681) width 461: "Autosize Autosize Autosize"
+            text run at (0,1729) width 461: "Autosize Autosize Autosize"
+            text run at (0,1777) width 461: "Autosize Autosize Autosize"
+            text run at (0,1825) width 461: "Autosize Autosize Autosize"
+            text run at (0,1873) width 461: "Autosize Autosize Autosize"
+            text run at (0,1921) width 461: "Autosize Autosize Autosize"
+            text run at (0,1969) width 461: "Autosize Autosize Autosize"
+            text run at (0,2017) width 461: "Autosize Autosize Autosize"
+            text run at (0,2066) width 314: "Autosize Autosize "
+          LayoutInline {I} at (0,0) size 75x46
+            LayoutText {#text} at (314,2065) size 75x46
+              text run at (314,2065) width 75: "test2"
+          LayoutText {#text} at (0,0) size 0x0
+        LayoutText {#text} at (0,0) size 0x0
+      LayoutBlockFlow {DIV} at (0,2113) size 784x47
+        LayoutInline {B} at (0,0) size 80x45
+          LayoutText {#text} at (0,1) size 80x45
+            text run at (0,1) width 80: "test1"

@@ -1,0 +1,99 @@
+CONSOLE MESSAGE: line 9: sending a GET request to resources/xhr-exists.html
+CONSOLE MESSAGE: line 9: sending a GET request to resources/xhr-does-not-exist.html
+CONSOLE MESSAGE: line 9: sending a POST request to resources/post-target.cgi
+CONSOLE MESSAGE: line 9: sending a GET request to http://localhost:8000/inspector/resources/xhr-exists.html
+CONSOLE ERROR: Failed to load http://localhost:8000/inspector/resources/xhr-exists.html: No 'Access-Control-Allow-Origin' header is present on the requested resource. Origin 'http://127.0.0.1:8000' is therefore not allowed access. If an opaque response serves your needs, set the request's mode to 'no-cors' to fetch the resource with CORS disabled.
+CONSOLE MESSAGE: line 9: sending a GET request to resources/xhr-exists.html
+CONSOLE MESSAGE: line 9: sending a GET request to resources/xhr-does-not-exist.html
+CONSOLE MESSAGE: line 9: sending a POST request to resources/post-target.cgi
+CONSOLE MESSAGE: line 9: sending a GET request to http://localhost:8000/inspector/resources/xhr-exists.html
+CONSOLE ERROR: Failed to load http://localhost:8000/inspector/resources/xhr-exists.html: No 'Access-Control-Allow-Origin' header is present on the requested resource. Origin 'http://127.0.0.1:8000' is therefore not allowed access. If an opaque response serves your needs, set the request's mode to 'no-cors' to fetch the resource with CORS disabled.
+Tests that fetch logging works when XMLHttpRequest Logging is Enabled and doesn't show logs when it is Disabled.
+
+console-fetch-logging.html:4 sending a GET request to resources/xhr-exists.html
+console-fetch-logging.html:4 sending a GET request to resources/xhr-does-not-exist.html
+network-test.js:48 GET http://127.0.0.1:8000/inspector/resources/xhr-does-not-exist.html 404 (Not Found)
+makeFetch @ network-test.js:48
+requestHelper @ console-fetch-logging.html:11
+step2 @ console-fetch-logging.html:30
+setTimeout (async)
+delayCallback @ console-fetch-logging.html:9
+Promise resolved (async)
+requestHelper @ console-fetch-logging.html:11
+step1 @ console-fetch-logging.html:24
+makeRequests @ console-fetch-logging.html:18
+(anonymous) @ VM:1
+console-fetch-logging.html:4 sending a POST request to resources/post-target.cgi
+console-fetch-logging.html:4 sending a GET request to http://localhost:8000/inspector/resources/xhr-exists.html
+network-test.js:48 Fetch finished loading: GET "http://127.0.0.1:8000/inspector/resources/xhr-exists.html".
+makeFetch @ network-test.js:48
+requestHelper @ console-fetch-logging.html:11
+step1 @ console-fetch-logging.html:24
+makeRequests @ console-fetch-logging.html:18
+(anonymous) @ VM:1
+console-fetch-logging.html:1 Failed to load http://localhost:8000/inspector/resources/xhr-exists.html: No 'Access-Control-Allow-Origin' header is present on the requested resource. Origin 'http://127.0.0.1:8000' is therefore not allowed access. If an opaque response serves your needs, set the request's mode to 'no-cors' to fetch the resource with CORS disabled.
+network-test.js:48 Fetch failed loading: GET "http://127.0.0.1:8000/inspector/resources/xhr-does-not-exist.html".
+makeFetch @ network-test.js:48
+requestHelper @ console-fetch-logging.html:11
+step2 @ console-fetch-logging.html:30
+setTimeout (async)
+delayCallback @ console-fetch-logging.html:9
+Promise resolved (async)
+requestHelper @ console-fetch-logging.html:11
+step1 @ console-fetch-logging.html:24
+makeRequests @ console-fetch-logging.html:18
+(anonymous) @ VM:1
+network-test.js:48 Fetch finished loading: POST "http://127.0.0.1:8000/inspector/resources/post-target.cgi".
+makeFetch @ network-test.js:48
+requestHelper @ console-fetch-logging.html:11
+step3 @ console-fetch-logging.html:36
+setTimeout (async)
+delayCallback @ console-fetch-logging.html:9
+Promise resolved (async)
+requestHelper @ console-fetch-logging.html:11
+step2 @ console-fetch-logging.html:30
+setTimeout (async)
+delayCallback @ console-fetch-logging.html:9
+Promise resolved (async)
+requestHelper @ console-fetch-logging.html:11
+step1 @ console-fetch-logging.html:24
+makeRequests @ console-fetch-logging.html:18
+(anonymous) @ VM:1
+network-test.js:48 Fetch finished loading: GET "http://localhost:8000/inspector/resources/xhr-exists.html".
+makeFetch @ network-test.js:48
+requestHelper @ console-fetch-logging.html:11
+step4 @ console-fetch-logging.html:42
+setTimeout (async)
+delayCallback @ console-fetch-logging.html:9
+Promise resolved (async)
+requestHelper @ console-fetch-logging.html:11
+step3 @ console-fetch-logging.html:36
+setTimeout (async)
+delayCallback @ console-fetch-logging.html:9
+Promise resolved (async)
+requestHelper @ console-fetch-logging.html:11
+step2 @ console-fetch-logging.html:30
+setTimeout (async)
+delayCallback @ console-fetch-logging.html:9
+Promise resolved (async)
+requestHelper @ console-fetch-logging.html:11
+step1 @ console-fetch-logging.html:24
+makeRequests @ console-fetch-logging.html:18
+(anonymous) @ VM:1
+console-fetch-logging.html:4 sending a GET request to resources/xhr-exists.html
+console-fetch-logging.html:4 sending a GET request to resources/xhr-does-not-exist.html
+network-test.js:48 GET http://127.0.0.1:8000/inspector/resources/xhr-does-not-exist.html 404 (Not Found)
+makeFetch @ network-test.js:48
+requestHelper @ console-fetch-logging.html:11
+step2 @ console-fetch-logging.html:30
+setTimeout (async)
+delayCallback @ console-fetch-logging.html:9
+Promise resolved (async)
+requestHelper @ console-fetch-logging.html:11
+step1 @ console-fetch-logging.html:24
+makeRequests @ console-fetch-logging.html:18
+(anonymous) @ VM:1
+console-fetch-logging.html:4 sending a POST request to resources/post-target.cgi
+console-fetch-logging.html:4 sending a GET request to http://localhost:8000/inspector/resources/xhr-exists.html
+console-fetch-logging.html:1 Failed to load http://localhost:8000/inspector/resources/xhr-exists.html: No 'Access-Control-Allow-Origin' header is present on the requested resource. Origin 'http://127.0.0.1:8000' is therefore not allowed access. If an opaque response serves your needs, set the request's mode to 'no-cors' to fetch the resource with CORS disabled.
+

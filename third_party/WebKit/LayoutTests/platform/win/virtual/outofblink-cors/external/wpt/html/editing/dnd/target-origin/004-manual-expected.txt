@@ -1,0 +1,13 @@
+layer at (0,0) size 800x600 clip at (0,0) size 800x585 scrollWidth 7439
+  LayoutView at (0,0) size 800x600
+layer at (0,0) size 800x120
+  LayoutBlockFlow {HTML} at (0,0) size 800x120
+    LayoutBlockFlow {BODY} at (8,16) size 784x96
+      LayoutBlockFlow {P} at (0,0) size 784x20
+        LayoutText {#text} at (0,0) size 478x19
+          text run at (0,0) width 478: "Load the following URL in a new tab (copy & paste it into the address bar):"
+      LayoutBlockFlow (anonymous) at (0,36) size 784x60
+        LayoutText {#text} at (0,0) size 7431x59
+          text run at (0,0) width 7431: "data:text/html,%3C%21doctype%20html%3E%3Chtml%3E%09%3Chead%3E%09%09%3Ctitle%3EData%20URI%20does%20not%20match%20absolute%20HTTP%20URL%3C/title%3E%09%09%3Cstyle%20type%3D%22text/css%22%3Eiframe%20%7B%20border%3A%20none%3B%20height%3A%20150px%3B%20width%3A%20150px%3B%20%7D%09%09%3C/style%3E%09%09%3Cscript%20type%3D%22text/javascript%22%3Ewindow.onload%20%3D%20function%20%28%29%20%7B%09document.body.ondragenter%20%3D%20document.body.ondragleave%20%3D%20document.body.ondragover%20%3D%20document.body.ondrop%20%3D%20function%20%28e%29%20%7B%09%09e.preventDefault%28%29%3B%09%09document.body.innerHTML%20%3D%20%22FAIL%22%3B%09%7D%3B%7D%3B%09%09%3C/script%3E%09%3C/head%3E%09%3Cbody%3E%09%09%3Cp%3EDrag%20the%20orange%20square%20below%20over%20this%20text%2C%20and%20release%20it.%20Pass%20if%20this%20text%20does%20not%20change.%3C/p%3E%09%09%3Cp%3E%3Ciframe%20src%3D%22http%3A//web-"
+          text run at (0,20) width 415: "platform.test%3A8001/html/editing/dnd/target-origin/004-manual-"
+          text run at (0,40) width 505: "1.html%22%3E%3C/iframe%3E%3C/p%3E%09%3C/body%3E%3C/html%3E"

@@ -1,0 +1,12 @@
+layer at (0,0) size 800x600
+  LayoutView at (0,0) size 800x600
+layer at (0,0) size 800x202
+  LayoutBlockFlow {html} at (0,0) size 800x202
+    LayoutBlockFlow {body} at (8,16) size 784x178
+      LayoutBlockFlow {p} at (0,0) size 784x18
+        LayoutText {#text} at (0,0) size 599x18
+          text run at (0,0) width 599: "Test passes if, after scrolling down and to the right, all four edges of a blue square are visible."
+layer at (8,50) size 144x144 clip at (8,50) size 129x129 scrollWidth 178 scrollHeight 178
+  LayoutBlockFlow {div} at (0,34) size 144x144
+layer at (80,122) size 106x106 backgroundClip at (8,50) size 129x129 clip at (8,50) size 129x129
+  LayoutBlockFlow (relative positioned) {div} at (0,0) size 106x106 [border: (5px solid #0000FF)]

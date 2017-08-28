@@ -1,0 +1,15 @@
+layer at (0,0) size 800x600
+  LayoutView at (0,0) size 800x600
+layer at (0,0) size 800x121
+  LayoutBlockFlow {HTML} at (0,0) size 800x120.53
+    LayoutBlockFlow {BODY} at (8,21.27) size 784x91.27
+      LayoutBlockFlow {H4} at (0,0) size 784x36
+        LayoutText {#text} at (0,0) size 756x36
+          text run at (0,0) width 431: "There should not be any red anytime. Enter fullscreen or print "
+          text run at (430,0) width 326: "preview. You should not see the word fail on the"
+          text run at (0,18) width 68: "first page "
+          text run at (67,18) width 112: "after doing that."
+      LayoutFlexibleBox {DIV} at (0,57.27) size 322x34 [bgcolor=#FF0000] [border: (1px solid #FFFFFF)]
+        LayoutBlockFlow {P} at (1,1) size 320x32 [bgcolor=#FFFFFF]
+          LayoutText {#text} at (0,0) size 22x18
+            text run at (0,0) width 22: "fail"

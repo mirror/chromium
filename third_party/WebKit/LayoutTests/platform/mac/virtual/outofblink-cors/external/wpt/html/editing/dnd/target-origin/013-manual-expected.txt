@@ -1,0 +1,13 @@
+layer at (0,0) size 800x600
+  LayoutView at (0,0) size 800x600
+layer at (0,0) size 800x210
+  LayoutBlockFlow {HTML} at (0,0) size 800x210
+    LayoutBlockFlow {BODY} at (8,16) size 784x186
+      LayoutBlockFlow {P} at (0,0) size 784x18
+        LayoutText {#text} at (0,0) size 729x18
+          text run at (0,0) width 729: "This test is only relevant on platforms where it is possible to drop data onto the browser UI (eg. the address field)."
+      LayoutBlockFlow {P} at (0,34) size 784x36
+        LayoutText {#text} at (0,0) size 767x36
+          text run at (0,0) width 767: "Drag the orange block to the address field and release it. Fail if the word \"FAIL\" appears in the address field. Repeat for"
+          text run at (0,18) width 97: "other UI fields."
+      LayoutBlockFlow {DIV} at (0,86) size 100x100 [bgcolor=#FFA500]

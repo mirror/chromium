@@ -1,0 +1,12 @@
+layer at (0,0) size 800x600 clip at (0,0) size 785x585 scrollX 16.00 scrollWidth 801 scrollHeight 785
+  LayoutView at (0,0) size 800x600
+layer at (-16,0) size 801x785 backgroundClip at (0,0) size 785x585 clip at (0,0) size 785x585
+  LayoutBlockFlow {HTML} at (0,0) size 801x785
+    LayoutBlockFlow {BODY} at (8,8) size 769x86
+      LayoutBlockFlow {DIV} at (0,0) size 350x86
+        LayoutInline {SPAN} at (0,0) size 230x36 [border: (21px solid #000000) (30px solid #000000) (21px solid #000000)]
+          LayoutText {#text} at (85,46) size 29x6
+            text run at (85,46) width 6: " "
+          LayoutBR {BR} at (108,52) size 0x0
+          LayoutText {#text} at (235,25) size 29x6
+            text run at (235,25) width 6: " "

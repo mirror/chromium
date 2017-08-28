@@ -1,0 +1,11 @@
+layer at (0,0) size 800x600
+  LayoutView at (0,0) size 800x600
+layer at (0,0) size 800x182
+  LayoutBlockFlow {HTML} at (0,0) size 800x182
+    LayoutBlockFlow {BODY} at (8,16) size 784x158
+      LayoutBlockFlow {P} at (0,0) size 784x36
+        LayoutText {#text} at (0,0) size 766x36
+          text run at (0,0) width 634: "The test passes if, when moved inside the blue box, the cursor indicates something is to be copied. "
+          text run at (633,0) width 133: "Often rendered as an"
+          text run at (0,18) width 246: "arrow with a small plus sign next to it."
+      LayoutBlockFlow {DIV} at (0,52) size 106x106 [border: (3px solid #0000FF)]

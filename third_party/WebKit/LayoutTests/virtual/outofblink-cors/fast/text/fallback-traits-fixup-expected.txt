@@ -1,0 +1,31 @@
+layer at (0,0) size 800x600
+  LayoutView at (0,0) size 800x600
+layer at (0,0) size 800x600
+  LayoutBlockFlow {HTML} at (0,0) size 800x600
+    LayoutBlockFlow {BODY} at (8,8) size 784x576
+      LayoutBlockFlow {P} at (0,0) size 784x20
+        LayoutText {#text} at (0,0) size 52x19
+          text run at (0,0) width 52: "Test for "
+        LayoutInline {I} at (0,0) size 506x19
+          LayoutInline {A} at (0,0) size 154x19 [color=#0000EE]
+            LayoutText {#text} at (51,0) size 154x19
+              text run at (51,0) width 154: "rdar://problem/9528843"
+          LayoutText {#text} at (204,0) size 353x19
+            text run at (204,0) width 5: " "
+            text run at (208,0) width 349: "STIX glyphs not rendered on this stackoverflow answer"
+        LayoutText {#text} at (556,0) size 5x19
+          text run at (556,0) width 5: "."
+      LayoutBlockFlow {P} at (0,36) size 784x39
+        LayoutText {#text} at (0,15) size 96x19
+          text run at (0,15) width 96: "A black circle: "
+        LayoutInline {SPAN} at (0,0) size 27x36
+          LayoutText {#text} at (96,2) size 27x36
+            text run at (96,2) width 27: "\x{26AB}"
+        LayoutText {#text} at (0,0) size 0x0
+      LayoutBlockFlow {P} at (0,91) size 784x38
+        LayoutText {#text} at (0,15) size 136x19
+          text run at (0,15) width 136: "Another black circle: "
+        LayoutInline {SPAN} at (0,0) size 27x36
+          LayoutText {#text} at (136,1) size 27x36
+            text run at (136,1) width 27: "\x{26AB}"
+        LayoutText {#text} at (0,0) size 0x0

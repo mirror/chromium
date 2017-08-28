@@ -1,0 +1,163 @@
+layer at (0,0) size 800x600
+  LayoutView at (0,0) size 800x600
+layer at (0,0) size 800x266
+  LayoutBlockFlow {html} at (0,0) size 800x266
+    LayoutBlockFlow {body} at (8,16) size 784x242
+      LayoutBlockFlow {p} at (0,0) size 784x18
+        LayoutText {#text} at (0,0) size 589x18
+          text run at (0,0) width 589: "The picture below should change from a smiley-face to a landscape when you hover over it."
+      LayoutBlockFlow {div} at (0,34) size 784x208 [color=#000080]
+        LayoutInline {span} at (0,0) size 64x16
+          LayoutText {#text} at (0,0) size 64x16
+            text run at (0,0) width 64: "    "
+        LayoutInline {span} at (0,0) size 64x16
+          LayoutText {#text} at (64,0) size 64x16
+            text run at (64,0) width 16: " "
+            text run at (80,0) width 48: "###"
+        LayoutInline {span} at (0,0) size 128x32
+          LayoutText {#text} at (128,0) size 128x32
+            text run at (128,0) width 0: " "
+            text run at (0,16) width 16: " "
+        LayoutInline {span} at (0,0) size 112x16
+          LayoutText {#text} at (16,16) size 64x16
+            text run at (16,16) width 64: "  ##"
+          LayoutInline {span} at (0,0) size 16x16
+            LayoutText {#text} at (80,16) size 16x16
+              text run at (80,16) width 16: " "
+          LayoutText {#text} at (96,16) size 32x16
+            text run at (96,16) width 32: "  "
+        LayoutInline {span} at (0,0) size 160x32
+          LayoutText {#text} at (128,16) size 160x32
+            text run at (128,16) width 32: "##"
+            text run at (160,16) width 0: " "
+            text run at (0,32) width 16: " "
+        LayoutInline {span} at (0,0) size 176x32
+          LayoutText {#text} at (16,32) size 32x16
+            text run at (16,32) width 32: " #"
+          LayoutInline {span} at (0,0) size 128x16
+            LayoutText {#text} at (48,32) size 128x16
+              text run at (48,32) width 128: "       #"
+              text run at (176,32) width 0: " "
+          LayoutText {#text} at (0,48) size 32x16
+            text run at (0,48) width 32: " #"
+        LayoutInline {span} at (0,0) size 16x16
+          LayoutText {#text} at (32,48) size 16x16
+            text run at (32,48) width 16: " "
+        LayoutInline {span} at (0,0) size 144x16
+          LayoutText {#text} at (48,48) size 144x16
+            text run at (48,48) width 144: "        #"
+        LayoutInline {span} at (0,0) size 192x32
+          LayoutText {#text} at (192,48) size 192x32
+            text run at (192,48) width 0: " "
+            text run at (0,64) width 32: " #"
+        LayoutInline {span} at (0,0) size 16x16
+          LayoutText {#text} at (32,64) size 16x16
+            text run at (32,64) width 16: " "
+        LayoutInline {span} at (0,0) size 32x16
+          LayoutText {#text} at (48,64) size 32x16
+            text run at (48,64) width 32: " #"
+        LayoutInline {span} at (0,0) size 16x16
+          LayoutText {#text} at (80,64) size 16x16
+            text run at (80,64) width 16: " "
+        LayoutInline {span} at (0,0) size 48x16
+          LayoutText {#text} at (96,64) size 48x16
+            text run at (96,64) width 48: "  #"
+        LayoutInline {span} at (0,0) size 16x16
+          LayoutText {#text} at (144,64) size 16x16
+            text run at (144,64) width 16: " "
+        LayoutInline {span} at (0,0) size 32x16
+          LayoutText {#text} at (160,64) size 32x16
+            text run at (160,64) width 32: " #"
+        LayoutInline {span} at (0,0) size 0x16
+          LayoutText {#text} at (192,64) size 0x16
+            text run at (192,64) width 0: " "
+        LayoutInline {span} at (0,0) size 16x16
+          LayoutText {#text} at (0,80) size 16x16
+            text run at (0,80) width 16: "#"
+        LayoutInline {span} at (0,0) size 16x16
+          LayoutText {#text} at (16,80) size 16x16
+            text run at (16,80) width 16: " "
+        LayoutInline {span} at (0,0) size 16x16
+          LayoutText {#text} at (32,80) size 16x16
+            text run at (32,80) width 16: " "
+        LayoutInline {span} at (0,0) size 160x16
+          LayoutText {#text} at (48,80) size 160x16
+            text run at (48,80) width 160: "         #"
+        LayoutInline {span} at (0,0) size 16x16
+          LayoutText {#text} at (208,80) size 16x16
+            text run at (208,80) width 16: " "
+        LayoutInline {span} at (0,0) size 0x16
+          LayoutText {#text} at (224,80) size 0x16
+            text run at (224,80) width 0: " "
+        LayoutInline {span} at (0,0) size 32x16
+          LayoutText {#text} at (0,96) size 32x16
+            text run at (0,96) width 32: "# "
+        LayoutInline {span} at (0,0) size 112x16
+          LayoutText {#text} at (32,96) size 112x16
+            text run at (32,96) width 112: "       "
+        LayoutInline {span} at (0,0) size 208x32
+          LayoutText {#text} at (144,96) size 16x16
+            text run at (144,96) width 16: " "
+          LayoutInline {span} at (0,0) size 208x32
+            LayoutText {#text} at (160,96) size 208x32
+              text run at (160,96) width 48: "  #"
+              text run at (208,96) width 0: " "
+              text run at (0,112) width 16: "#"
+        LayoutInline {span} at (0,0) size 16x16
+          LayoutText {#text} at (16,112) size 16x16
+            text run at (16,112) width 16: " "
+        LayoutInline {span} at (0,0) size 224x32
+          LayoutText {#text} at (32,112) size 176x16
+            text run at (32,112) width 176: "          #"
+          LayoutInline {span} at (0,0) size 16x16
+            LayoutText {#text} at (208,112) size 16x16
+              text run at (208,112) width 16: " "
+          LayoutText {#text} at (224,112) size 224x32
+            text run at (224,112) width 0: " "
+            text run at (0,128) width 16: " "
+        LayoutInline {span} at (0,0) size 32x16
+          LayoutText {#text} at (16,128) size 32x16
+            text run at (16,128) width 32: "# "
+        LayoutInline {span} at (0,0) size 32x16
+          LayoutText {#text} at (48,128) size 32x16
+            text run at (48,128) width 16: " "
+            text run at (64,128) width 16: "#"
+        LayoutInline {span} at (0,0) size 32x16
+          LayoutText {#text} at (80,128) size 32x16
+            text run at (80,128) width 32: "  "
+        LayoutInline {span} at (0,0) size 48x16
+          LayoutText {#text} at (112,128) size 48x16
+            text run at (112,128) width 16: " "
+            text run at (128,128) width 32: "# "
+        LayoutInline {span} at (0,0) size 208x32
+          LayoutText {#text} at (160,128) size 32x16
+            text run at (160,128) width 32: " #"
+          LayoutInline {span} at (0,0) size 16x16
+            LayoutText {#text} at (192,128) size 16x16
+              text run at (192,128) width 16: " "
+          LayoutText {#text} at (208,128) size 208x32
+            text run at (208,128) width 0: " "
+            text run at (0,144) width 32: " #"
+        LayoutInline {span} at (0,0) size 16x16
+          LayoutText {#text} at (32,144) size 16x16
+            text run at (32,144) width 16: " "
+        LayoutInline {span} at (0,0) size 64x16
+          LayoutText {#text} at (48,144) size 64x16
+            text run at (48,144) width 64: "  ##"
+        LayoutInline {span} at (0,0) size 192x64
+          LayoutText {#text} at (112,144) size 192x48
+            text run at (112,144) width 80: "#   #"
+            text run at (192,144) width 0: " "
+            text run at (0,160) width 176: "  #       #"
+            text run at (176,160) width 0: " "
+            text run at (0,176) width 80: "   ##"
+          LayoutInline {span} at (0,0) size 32x16
+            LayoutText {#text} at (80,176) size 32x16
+              text run at (80,176) width 32: "  "
+          LayoutText {#text} at (112,176) size 160x32
+            text run at (112,176) width 48: " ##"
+            text run at (160,176) width 0: " "
+            text run at (0,192) width 128: "     ###"
+        LayoutInline {span} at (0,0) size 0x16
+          LayoutText {#text} at (0,0) size 0x0
+        LayoutText {#text} at (0,0) size 0x0

@@ -1,0 +1,14 @@
+layer at (0,0) size 800x600
+  LayoutView at (0,0) size 800x600
+layer at (0,0) size 800x224
+  LayoutBlockFlow {HTML} at (0,0) size 800x224
+    LayoutBlockFlow {BODY} at (8,16) size 784x200
+      LayoutBlockFlow {P} at (0,0) size 784x18
+        LayoutText {#text} at (0,0) size 587x18
+          text run at (0,0) width 436: "The test passes if, when moved inside the the colored rectangle, the "
+          text run at (435,0) width 152: "cursor does not change."
+      LayoutBlockFlow {P} at (0,34) size 784x18
+        LayoutText {#text} at (0,0) size 615x18
+          text run at (0,0) width 450: "If inside the rectangle the cursor changes to the word \"FAIL\" on a red "
+          text run at (449,0) width 166: "background, the test fails."
+      LayoutBlockFlow {DIV} at (0,68) size 132x132 [bgcolor=#D2B48C] [border: (2px solid #555555)]

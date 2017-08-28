@@ -1,0 +1,26 @@
+layer at (0,0) size 800x600
+  LayoutView at (0,0) size 800x600
+layer at (0,0) size 800x164
+  LayoutBlockFlow {html} at (0,0) size 800x164
+    LayoutBlockFlow {body} at (8,8) size 784x148
+      LayoutBlockFlow {div} at (0,0) size 784x20
+        LayoutInline {a} at (0,0) size 61x19 [color=#0000EE]
+          LayoutText {#text} at (0,0) size 61x19
+            text run at (0,0) width 61: "Test fonts"
+        LayoutText {#text} at (60,0) size 191x19
+          text run at (60,0) width 191: " must be installed for this test: "
+        LayoutInline {span} at (0,0) size 36x19
+          LayoutText {#text} at (250,0) size 36x19
+            text run at (250,0) width 36: "FAIL"
+      LayoutBlockFlow {p} at (0,36) size 784x20
+        LayoutText {#text} at (0,0) size 271x19
+          text run at (0,0) width 271: "Test passes if FAIL does not appear below."
+      LayoutBlockFlow {p} at (0,72) size 784x20
+        LayoutText {#text} at (0,0) size 399x19
+          text run at (0,0) width 399: "Prerequisites: these tests require that CSSTest fonts be installed."
+      LayoutBlockFlow {div} at (0,108) size 784x20
+        LayoutText {#text} at (0,0) size 35x19
+          text run at (0,0) width 35: "FAIL"
+      LayoutBlockFlow {div} at (0,128) size 784x20
+        LayoutText {#text} at (0,0) size 35x19
+          text run at (0,0) width 35: "FAIL"

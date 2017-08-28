@@ -1,0 +1,17 @@
+layer at (0,0) size 800x600 clip at (0,0) size 785x585 scrollX 16.00 scrollWidth 801 scrollHeight 785
+  LayoutView at (0,0) size 800x600
+layer at (-16,0) size 801x785 backgroundClip at (0,0) size 785x585 clip at (0,0) size 785x585
+  LayoutBlockFlow {HTML} at (0,0) size 801x785
+    LayoutBlockFlow {BODY} at (8,8) size 769x600
+      LayoutBlockFlow {DIV} at (0,0) size 144x600
+        LayoutInline {SPAN} at (0,0) size 137x598 [bgcolor=#FFFFE0] [border: (5px solid #008000)]
+          LayoutText {#text} at (8,21) size 127x578
+            text run at (8,21) width 578: "This sentence is too long to fit"
+            text run at (80,139) width 302: "on a single line."
+        LayoutText {#text} at (0,0) size 0x0
+      LayoutBlockFlow {DIV} at (194,0) size 144x600
+        LayoutInline {SPAN} at (0,0) size 137x598 [bgcolor=#FFFFE0] [border: (5px solid #008000)]
+          LayoutText {#text} at (8,21) size 127x578
+            text run at (8,21) width 578: "This sentence is too long to fit"
+            text run at (80,139) width 302: "on a single line."
+        LayoutText {#text} at (0,0) size 0x0
