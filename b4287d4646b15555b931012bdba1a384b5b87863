@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d8d87a6a_7f6f80e5",
+        "filename": "base/allocator/partition_allocator/page_allocator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1001213
+      },
+      "writtenOn": "2017-08-28T22:51:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3e157847_e0651b8e",
+      "revId": "b4287d4646b15555b931012bdba1a384b5b87863",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cc5708ea_7bbe4311",
         "filename": "base/allocator/partition_allocator/page_allocator.cc",
         "patchSetId": 1
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "6f22dd53_9db10709",
+        "filename": "base/allocator/partition_allocator/page_allocator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1001213
+      },
+      "writtenOn": "2017-08-28T22:51:32Z",
+      "side": 1,
+      "message": "I like it. Done.",
+      "parentUuid": "cc5708ea_7bbe4311",
+      "revId": "b4287d4646b15555b931012bdba1a384b5b87863",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cac70617_b6632fe0",
         "filename": "base/allocator/partition_allocator/page_allocator.cc",
         "patchSetId": 1
@@ -47,6 +83,24 @@
       "writtenOn": "2017-08-28T22:32:26Z",
       "side": 1,
       "message": "It seems like we are no longer guaranteed that |mem| really is aligned by |alignment| — only that |alignment| passes the DCHECKs above.",
+      "revId": "b4287d4646b15555b931012bdba1a384b5b87863",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f4eacec_6a2ed4d2",
+        "filename": "base/allocator/partition_allocator/page_allocator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 340,
+      "author": {
+        "id": 1001213
+      },
+      "writtenOn": "2017-08-28T22:51:32Z",
+      "side": 1,
+      "message": "Eliminated alignment param.",
+      "parentUuid": "cac70617_b6632fe0",
       "revId": "b4287d4646b15555b931012bdba1a384b5b87863",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
