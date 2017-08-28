@@ -16,6 +16,24 @@
       "revId": "2e018cc172ca3f8e02082e990dc3456c6205b6d8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb05513f_02451446",
+        "filename": "third_party/WebKit/Source/core/html/HTMLStyleElement.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1170229
+      },
+      "writtenOn": "2017-08-28T08:53:04Z",
+      "side": 1,
+      "message": "Yes. Gecko and IE creating sheet for \u003cstyle\u003e element regardless of media type.\nNot having access to  verify on Safari/Edge.\n\nHere main part is StyleElement::ChildrenChanged(*this) to be called which make sure it will create styleSheet. I have added error notification since it used similar way in other places.\nI will remove this for interop.",
+      "parentUuid": "c67dc365_fcb5ca50",
+      "revId": "2e018cc172ca3f8e02082e990dc3456c6205b6d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
