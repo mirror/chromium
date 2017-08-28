@@ -210,6 +210,24 @@
       "revId": "e632afe5af4ca0add47dd6caad6088572479e9ea",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b104d552_03d08f70",
+        "filename": "content/renderer/render_thread_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1953,
+      "author": {
+        "id": 1139801
+      },
+      "writtenOn": "2017-08-28T06:26:32Z",
+      "side": 1,
+      "message": "Sorry for not catch your idea last time.\nI think your idea is much better, updated.",
+      "parentUuid": "b3ef7c0d_14b4074a",
+      "revId": "e632afe5af4ca0add47dd6caad6088572479e9ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
