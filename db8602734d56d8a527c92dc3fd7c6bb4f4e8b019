@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4f771bb1_4c831c77",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1106664
+      },
+      "writtenOn": "2017-08-28T01:17:08Z",
+      "side": 1,
+      "message": "This looks right but this description and the comment together are a bit confusing. WDYT about floating the comment down to the *target \u003d \u0027\\0\u0027 line, so:\n\nDCHECK we generated something\ncomment about null terminators\nnull terminate",
+      "revId": "db8602734d56d8a527c92dc3fd7c6bb4f4e8b019",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
