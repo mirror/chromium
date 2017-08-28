@@ -1,0 +1,180 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c697ef7f_dc58b01d",
+        "filename": "components/ntp_snippets/breaking_news/breaking_news_gcm_app_handler.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-28T08:58:54Z",
+      "side": 1,
+      "message": "Hm, I still find this slightly confusing, with the two OnTokenValidated calls, where in this one, it wasn\u0027t actually validated...\nHow about:\n\nbase::Optional\u003cbool\u003e was_token_valid;\nif (result \u003d\u003d InstantID::SUCCESS) {\n  ...\n  was_token_valid \u003d old_token \u003d\u003d new_token;\n}\nmetrics::OnTokenValidated(was_token_valid);\n\nWDYT?\n\nI\u0027m also trying to come up with a better name for OnTokenValidated, since it\u0027s also called in places where nothing was actually validated, but I can\u0027t come up with anything... if you can\u0027t either, then it\u0027s okay as is.",
+      "revId": "ce1e05debb24c7ef3e6d3cbaf6b0b378093f035b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd717942_93a66d47",
+        "filename": "components/ntp_snippets/breaking_news/breaking_news_gcm_app_handler.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 308,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-28T08:58:54Z",
+      "side": 1,
+      "message": "optional: Make a\nbool contains_pushed_news \u003d it \u003d\u003d message.data.end();\nand then you can have only a single call to OnMessageReceived(contains_pushed_news).",
+      "revId": "ce1e05debb24c7ef3e6d3cbaf6b0b378093f035b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33d32f5b_156d94c4",
+        "filename": "components/ntp_snippets/breaking_news/breaking_news_gcm_app_handler_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 826,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-28T08:58:54Z",
+      "side": 1,
+      "message": "nit: Mention in a comment what the \"0\" bucket means?",
+      "revId": "ce1e05debb24c7ef3e6d3cbaf6b0b378093f035b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b43a02f_01bdff81",
+        "filename": "components/ntp_snippets/breaking_news/breaking_news_gcm_app_handler_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 848,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-28T08:58:54Z",
+      "side": 1,
+      "message": "Similar here. Also, add some newlines as above?",
+      "revId": "ce1e05debb24c7ef3e6d3cbaf6b0b378093f035b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06a4e8e2_41e5e236",
+        "filename": "components/ntp_snippets/breaking_news/breaking_news_gcm_app_handler_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 950,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-28T08:58:54Z",
+      "side": 1,
+      "message": "nitty nit: double \".\"",
+      "revId": "ce1e05debb24c7ef3e6d3cbaf6b0b378093f035b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "519585fc_b6a419c3",
+        "filename": "components/ntp_snippets/breaking_news/breaking_news_metrics.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-28T08:58:54Z",
+      "side": 1,
+      "message": "optional: If these are all used just once, it\u0027s also okay to directly inline the strings below.",
+      "range": {
+        "startLine": 31,
+        "startChar": 79,
+        "endLine": 31,
+        "endChar": 0
+      },
+      "revId": "ce1e05debb24c7ef3e6d3cbaf6b0b378093f035b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9dfd978_420e4421",
+        "filename": "components/ntp_snippets/breaking_news/subscription_manager_impl_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 356,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-28T08:58:54Z",
+      "side": 1,
+      "message": "What\u0027s \"-320\"? Is there some constant we could use instead?",
+      "revId": "ce1e05debb24c7ef3e6d3cbaf6b0b378093f035b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3387bfa8_a5579dda",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 5945,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-28T08:58:54Z",
+      "side": 1,
+      "message": "Is the \"possibly empty\" very important? IMO it\u0027s a bit confusing; what\u0027s the difference between \"no pushed news\" and \"contains empty pushed news\"?",
+      "revId": "ce1e05debb24c7ef3e6d3cbaf6b0b378093f035b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca0a38a7_65bef445",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 46815,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-28T08:58:54Z",
+      "side": 1,
+      "message": "Also here, the \"possibly empty\" is confusing to me. Maybe at least put parens around it, to make clear it\u0027s not the main point?",
+      "revId": "ce1e05debb24c7ef3e6d3cbaf6b0b378093f035b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32ca78de_2ae4d816",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 46837,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-28T08:58:54Z",
+      "side": 1,
+      "message": "I think the \"outside of a validation\" part doesn\u0027t apply anymore?",
+      "revId": "ce1e05debb24c7ef3e6d3cbaf6b0b378093f035b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
