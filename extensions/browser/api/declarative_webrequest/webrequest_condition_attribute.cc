@@ -24,6 +24,7 @@
 #include "extensions/browser/api/declarative_webrequest/webrequest_constants.h"
 #include "extensions/browser/api/web_request/web_request_api_helpers.h"
 #include "extensions/browser/api/web_request/web_request_resource_type.h"
+#include "extensions/browser/response_headers_util.h"
 #include "extensions/common/error_utils.h"
 #include "net/base/net_errors.h"
 #include "net/base/registry_controlled_domains/registry_controlled_domain.h"
@@ -306,7 +307,11 @@ class HeaderMatcher {
       const base::ListValue* tests);
 
   // Does |this| match the header "|name|: |value|"?
-  bool TestNameValue(const std::string& name, const std::string& value) const;
+  // |response_url| is the URL when testing response headers. Should be null for
+  // requests.
+  bool TestNameValue(const GURL& response_url,
+                     const std::string& name,
+                     const std::string& value) const;
 
  private:
   // Represents a single string-matching test.
@@ -396,8 +401,11 @@ std::unique_ptr<const HeaderMatcher> HeaderMatcher::Create(
       new HeaderMatcher(std::move(header_tests)));
 }
 
-bool HeaderMatcher::TestNameValue(const std::string& name,
+bool HeaderMatcher::TestNameValue(const GURL& response_url,
+                                  const std::string& name,
                                   const std::string& value) const {
+  if (!response_url.is_empty() && HideResponseHeader(response_url, name))
+    return false;
   for (size_t i = 0; i < tests_.size(); ++i) {
     if (tests_[i]->Matches(name, value))
       return true;
@@ -615,7 +623,7 @@ bool WebRequestConditionAttributeRequestHeaders::IsFulfilled(
   bool passed = false;  // Did some header pass TestNameValue?
   net::HttpRequestHeaders::Iterator it(headers);
   while (!passed && it.GetNext())
-    passed |= header_matcher_->TestNameValue(it.name(), it.value());
+    passed |= header_matcher_->TestNameValue(GURL(), it.name(), it.value());
 
   return (positive_ ? passed : !passed);
 }
@@ -691,7 +699,8 @@ bool WebRequestConditionAttributeResponseHeaders::IsFulfilled(
   std::string value;
   size_t iter = 0;
   while (!passed && headers->EnumerateHeaderLines(&iter, &name, &value)) {
-    passed |= header_matcher_->TestNameValue(name, value);
+    passed |= header_matcher_->TestNameValue(request_data.request->url(), name,
+                                             value);
   }
 
   return (positive_ ? passed : !passed);
