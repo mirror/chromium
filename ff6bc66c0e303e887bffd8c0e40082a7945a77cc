@@ -16,6 +16,63 @@
       "revId": "ff6bc66c0e303e887bffd8c0e40082a7945a77cc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00814dae_d5bf6c86",
+        "filename": "third_party/WebKit/Source/core/workers/WorkletModuleResponsesMap.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-28T05:27:21Z",
+      "side": 1,
+      "message": "cache",
+      "range": {
+        "startLine": 24,
+        "startChar": 34,
+        "endLine": 24,
+        "endChar": 40
+      },
+      "revId": "ff6bc66c0e303e887bffd8c0e40082a7945a77cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7105a46_62e642b2",
+        "filename": "third_party/WebKit/Source/core/workers/WorkletModuleResponsesMap.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-28T05:27:21Z",
+      "side": 1,
+      "message": "Maybe as the second sentence say: \"Scripts are added and retrieved using ReadEntry().\"",
+      "revId": "ff6bc66c0e303e887bffd8c0e40082a7945a77cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0bba14eb_5918712e",
+        "filename": "third_party/WebKit/Source/core/workers/WorkletModuleResponsesMap.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-28T05:27:21Z",
+      "side": 1,
+      "message": "thanks much clearer :)",
+      "revId": "ff6bc66c0e303e887bffd8c0e40082a7945a77cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
