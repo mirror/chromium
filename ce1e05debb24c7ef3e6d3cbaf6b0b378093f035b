@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "a83efad0_d49529d0",
+        "filename": "components/ntp_snippets/breaking_news/breaking_news_gcm_app_handler.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-08-28T14:00:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "93e41fa5_06550e43",
+      "revId": "ce1e05debb24c7ef3e6d3cbaf6b0b378093f035b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dd717942_93a66d47",
         "filename": "components/ntp_snippets/breaking_news/breaking_news_gcm_app_handler.cc",
         "patchSetId": 5
@@ -394,6 +412,24 @@
       "side": 1,
       "message": "When would a token be retrieved outside of a validation, if we did have a token before?\nShould this just say\nWhenever a GCM token is retrieved, records the time since the previous validation (if any)?",
       "parentUuid": "d1dfd63d_123d96bf",
+      "revId": "ce1e05debb24c7ef3e6d3cbaf6b0b378093f035b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "17bec3ec_0328c615",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 46837,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-08-28T14:00:13Z",
+      "side": 1,
+      "message": "Done.\n\nAs per our discussion, I rewrote it as:\n\n    Android: Time between a token validation and the last successful token\n    retrieval from InstanceID. Recorded when InstanceID answers our token\n    request for a validation either with a token or an error. If the token was\n    never received before the validation, the metric is not recorded.",
+      "parentUuid": "02b2ea45_4513905c",
       "revId": "ce1e05debb24c7ef3e6d3cbaf6b0b378093f035b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
