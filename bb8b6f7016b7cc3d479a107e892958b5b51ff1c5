@@ -52,6 +52,24 @@
       "revId": "bb8b6f7016b7cc3d479a107e892958b5b51ff1c5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2ac88f8_a63ac4be",
+        "filename": "media/midi/task_service.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-08-28T17:11:37Z",
+      "side": 1,
+      "message": "Ah, since bind/unbind are always going to be on the I/O thread, we can strengthen this check then.",
+      "parentUuid": "5cecc6d7_e09b3945",
+      "revId": "bb8b6f7016b7cc3d479a107e892958b5b51ff1c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
