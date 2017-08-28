@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "2eea1b35_1ad24d14",
+        "filename": "chrome/installer/setup/install.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 326,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-08-28T08:44:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2e3930a8_4edec4d8",
+      "revId": "1eca1358f0377b2a8e9cc74f78e3c94c5dbfb789",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "045896ce_b202bdb2",
         "filename": "chrome/installer/setup/install_unittest.cc",
         "patchSetId": 2
@@ -30,6 +48,30 @@
       "writtenOn": "2017-08-25T16:54:33Z",
       "side": 1,
       "message": "Why testing::Bool() instead of Values(false)?",
+      "range": {
+        "startLine": 236,
+        "startChar": 21,
+        "endLine": 236,
+        "endChar": 36
+      },
+      "revId": "1eca1358f0377b2a8e9cc74f78e3c94c5dbfb789",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09ada1c5_17017bb6",
+        "filename": "chrome/installer/setup/install_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-08-28T08:44:01Z",
+      "side": 1,
+      "message": "This is shorthand for Values(false, true) so that the test runs for both the \"os doesn\u0027t support dark text\" and \"os supports dark text\" cases.",
+      "parentUuid": "045896ce_b202bdb2",
       "range": {
         "startLine": 236,
         "startChar": 21,
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "63737b40_b400099c",
+        "filename": "chrome/installer/setup/install_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 526,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-08-28T08:44:01Z",
+      "side": 1,
+      "message": "i thought of that. on the one hand, i don\u0027t want to unnecessarily slow down the test with an artificial delay. on the other, i don\u0027t want anyone to have to deal with flakes...\n...thinking...\ni\u0027ve added some code to backdate the files before the test operations. wdyt?",
+      "parentUuid": "f9c08793_e8bf4b9e",
+      "range": {
+        "startLine": 526,
+        "startChar": 6,
+        "endLine": 526,
+        "endChar": 23
+      },
+      "revId": "1eca1358f0377b2a8e9cc74f78e3c94c5dbfb789",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "852c27b4_ba35da23",
         "filename": "chrome/installer/setup/setup_util.cc",
         "patchSetId": 2
@@ -76,6 +142,30 @@
       "writtenOn": "2017-08-25T16:54:33Z",
       "side": 1,
       "message": "So optimistic!",
+      "range": {
+        "startLine": 854,
+        "startChar": 25,
+        "endLine": 854,
+        "endChar": 27
+      },
+      "revId": "1eca1358f0377b2a8e9cc74f78e3c94c5dbfb789",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74ecc413_47bba342",
+        "filename": "chrome/installer/setup/setup_util.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 854,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-08-28T08:44:01Z",
+      "side": 1,
+      "message": "That they won\u0027t break this in the next build? A guy\u0027s gotta dream.\n\nI\u0027m still doing some manual testing with various Windows versions. My 14393.1593 (RS1) machine seems to have partial support. Sometimes the dark text is drawn. There may be a Windows bug in handling the transition (light text during the logon session when Chrome switches from dark to light assets). I\u0027m still fiddling to see if it\u0027s worth enabling for RS1. I\u0027ll hold off on landing until I get some more testing done.",
+      "parentUuid": "852c27b4_ba35da23",
       "range": {
         "startLine": 854,
         "startChar": 25,
