@@ -62,6 +62,8 @@ enum InputToLoadPerfMetricReportPolicy : uint8_t {
 
 struct CrossThreadResourceRequestData;
 
+struct CORS;
+
 // A ResourceRequest is a "request" object for ResourceLoader. Conceptually
 // it is https://fetch.spec.whatwg.org/#concept-request, but it contains
 // a lot of blink specific fields. WebURLRequest is the "public version"
@@ -443,6 +445,20 @@ struct CrossThreadResourceRequestData {
   WebURLRequest::LoadingIPCType loading_ipc_type_;
   InputToLoadPerfMetricReportPolicy input_perf_metric_report_policy_;
   ResourceRequest::RedirectStatus redirect_status_;
+};
+
+// This class contains information required for CORS checking.
+struct CORS {
+  // True if corresponding AppCache group should be reset.
+  bool should_reset_appcache = false;
+
+  // https://wicg.github.io/cors-rfc1918/#external-request
+  bool is_external_request = false;
+
+  // Some clients have a need to suppress CORS preflight requests (e.g.
+  // EventSource and ResourceMultiBufferDataProvider). If true, no preflight
+  // requests will be performed.
+  bool prevent_preflight = false;
 };
 
 }  // namespace blink

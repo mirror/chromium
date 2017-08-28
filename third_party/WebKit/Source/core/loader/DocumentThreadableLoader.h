@@ -150,8 +150,6 @@ class CORE_EXPORT DocumentThreadableLoader final : public ThreadableLoader,
                                       const ResourceRequest&,
                                       const ResourceResponse&);
   void HandleResponseOutOfBlinkCORS(unsigned long identifier,
-                                    WebURLRequest::FetchRequestMode,
-                                    WebURLRequest::FetchCredentialsMode,
                                     const ResourceResponse&,
                                     std::unique_ptr<WebDataConsumerHandle>);
   // TODO(hintzed): CORS handled in Blink. Methods below named *BlinkCORS are to
