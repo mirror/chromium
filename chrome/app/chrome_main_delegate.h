@@ -32,6 +32,9 @@ class ChromeMainDelegate : public content::ContentMainDelegate {
       base::RepeatingCallback<std::unique_ptr<base::Value>(void)>;
   static void InstallServiceCatalogFactory(ServiceCatalogFactory factory);
 
+  static const char* const kNonWildcardDomainNonPortSchemes[];
+  static const size_t kNonWildcardDomainNonPortSchemesSize;
+
  protected:
   // content::ContentMainDelegate implementation:
   bool BasicStartupComplete(int* exit_code) override;
