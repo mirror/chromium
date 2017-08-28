@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9f1e412c_241cb961",
+        "filename": "third_party/WebKit/Source/core/dom/README.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 436,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2017-08-28T02:49:48Z",
+      "side": 1,
+      "message": "nit: s/We/we/",
+      "revId": "12c9d7d17d2bf7ba6be49cb04a5d0226b46c2a21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc937db4_5601fe92",
+        "filename": "third_party/WebKit/Source/core/dom/README.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 489,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2017-08-28T02:49:48Z",
+      "side": 1,
+      "message": "Mixing \"We\" and \"I\" in this sentence sounds a bit weird.  Unify both as \"we\".",
+      "revId": "12c9d7d17d2bf7ba6be49cb04a5d0226b46c2a21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
