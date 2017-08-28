@@ -56,6 +56,9 @@ class FrameGenerator : public viz::mojom::CompositorFrameSinkClient {
   // Generates the CompositorFrame.
   cc::CompositorFrame GenerateCompositorFrame();
 
+  // Generates the HitTestRegionList.
+  viz::mojom::HitTestRegionListPtr GenerateHitTestRegionList();
+
   // DrawWindow creates SurfaceDrawQuad for the window manager and appends it to
   // the provided cc::RenderPass.
   void DrawWindow(cc::RenderPass* pass);
