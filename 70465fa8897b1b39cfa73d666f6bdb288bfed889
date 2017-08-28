@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8969cc77_da2df16d",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/tracing/timeline-network/timeline-network-resource-details-expected.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1165714
+      },
+      "writtenOn": "2017-08-28T22:23:52Z",
+      "side": 1,
+      "message": "I\u0027m guessing this bump in data size is b/c of http headers? I tried serving an empty file from the test http server and the data size was 274 bytes.",
+      "revId": "70465fa8897b1b39cfa73d666f6bdb288bfed889",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0df26a5_8dc4be45",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/tracing/timeline-network/timeline-network-resource-expected.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1165714
+      },
+      "writtenOn": "2017-08-28T22:23:52Z",
+      "side": 1,
+      "message": "@caseq, does this test \u0026 expectations look reasonable to you? I had to add a query param to avoid having the file being served from cache depending on if the other timeline-network test ran beforehand.",
+      "revId": "70465fa8897b1b39cfa73d666f6bdb288bfed889",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
