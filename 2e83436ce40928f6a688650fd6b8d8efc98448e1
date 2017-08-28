@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d8268fa9_a4c4e805",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/FetchContext.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-28T05:26:47Z",
+      "side": 1,
+      "message": "Are the only impls that return nullptr mock ones for testing?  Should this return WebCORSPreflightResultCache\u0026 (and \u003d 0) or clearly document that it must return non-nullptr?",
+      "revId": "2e83436ce40928f6a688650fd6b8d8efc98448e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb18ded4_f9ef7498",
+        "filename": "third_party/WebKit/public/platform/WebCORSPreflightResultCache.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-28T05:26:47Z",
+      "side": 1,
+      "message": "nit: InMainThread -\u003e OnMainThread may sound more natural...",
+      "revId": "2e83436ce40928f6a688650fd6b8d8efc98448e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
