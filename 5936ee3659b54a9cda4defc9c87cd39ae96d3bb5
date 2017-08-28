@@ -1,0 +1,136 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "35883099_6fdcfaca",
+        "filename": "chrome/browser/ui/webui/sys_internals/sys_internals_message_handler.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-08-28T17:38:52Z",
+      "side": 1,
+      "message": "Style nit: usually people put a blank line after the namespace opening line.",
+      "range": {
+        "startLine": 21,
+        "startChar": 11,
+        "endLine": 21,
+        "endChar": 0
+      },
+      "revId": "5936ee3659b54a9cda4defc9c87cd39ae96d3bb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5c12a81_237cf763",
+        "filename": "chrome/browser/ui/webui/sys_internals/sys_internals_message_handler.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-08-28T17:38:52Z",
+      "side": 1,
+      "message": "You can just use |base::Value* result| for these function calls when you use the new-style API (see next comment).",
+      "range": {
+        "startLine": 115,
+        "startChar": 24,
+        "endLine": 115,
+        "endChar": 39
+      },
+      "revId": "5936ee3659b54a9cda4defc9c87cd39ae96d3bb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed925851_0a21adb2",
+        "filename": "chrome/browser/ui/webui/sys_internals/sys_internals_message_handler.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-08-28T17:38:52Z",
+      "side": 1,
+      "message": "The base::Value stuff is kind of in flux and kind of confusing so apologies. Would you mind using the new-style API? There are a number of ways to do it, but I would do it this way:\n  base::Value cpu_results(base::Value::Type::LIST);\n  ... loop ...\n  result-\u003eSetKey(\"cpus\", std::move(cpu_results);",
+      "range": {
+        "startLine": 118,
+        "startChar": 19,
+        "endLine": 118,
+        "endChar": 30
+      },
+      "revId": "5936ee3659b54a9cda4defc9c87cd39ae96d3bb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "842635be_331a4d79",
+        "filename": "chrome/browser/ui/webui/sys_internals/sys_internals_message_handler.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-08-28T17:38:52Z",
+      "side": 1,
+      "message": "These two lines could be simplified using the fancy new range-based for loops:\n  for (const CPUInfo\u0026 cpu : info) {\n    ... cpu.user);\n    ... cpu.kernel);\n    ...etc",
+      "range": {
+        "startLine": 120,
+        "startChar": 6,
+        "endLine": 120,
+        "endChar": 23
+      },
+      "revId": "5936ee3659b54a9cda4defc9c87cd39ae96d3bb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d76f0240_43eb060a",
+        "filename": "chrome/browser/ui/webui/sys_internals/sys_internals_message_handler.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-08-28T17:38:52Z",
+      "side": 1,
+      "message": "Here for the new Value API you would do something similar:\n  base::Value cpu_result(base::Value::Type::DICTIONARY);\n  cpu_result.SetKey(\"user\", base::Value(cpu.user));\n  ...",
+      "range": {
+        "startLine": 122,
+        "startChar": 26,
+        "endLine": 122,
+        "endChar": 36
+      },
+      "revId": "5936ee3659b54a9cda4defc9c87cd39ae96d3bb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61d76d3b_9382a21b",
+        "filename": "chrome/browser/ui/webui/sys_internals/sys_internals_message_handler.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-08-28T17:38:52Z",
+      "side": 1,
+      "message": "For the rest of the stuff, when you don\u0027t use DictionaryValue, you would use SetKey(\"...\", base::Value(...double number...));",
+      "revId": "5936ee3659b54a9cda4defc9c87cd39ae96d3bb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
