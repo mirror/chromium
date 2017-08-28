@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "b7e74d4d_a40c6af8",
+        "filename": "tools/battor_agent/battor_agent.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 582,
+      "author": {
+        "id": 1128909
+      },
+      "writtenOn": "2017-08-28T13:17:37Z",
+      "side": 1,
+      "message": "Yep! (as in BattOrSamples, not RawBattOrSamples)",
+      "parentUuid": "6207a94a_02bf58ac",
+      "revId": "495f5e59f6d3cb11a83f3ee39974f968f2cfa48a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e4b2101a_6d7d4454",
         "filename": "tools/battor_agent/battor_agent.cc",
         "patchSetId": 4
