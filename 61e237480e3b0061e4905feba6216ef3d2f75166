@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f03cf7d2_ff1c0076",
+        "filename": "third_party/WebKit/LayoutTests/virtual/color_space/fast/canvas/color-space/canvas-drawImage-linear-rgb.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2017-08-28T18:22:36Z",
+      "side": 1,
+      "message": "This test only covers extrema (0 and 1 values) which will not detect any problems with gamma correction.",
+      "range": {
+        "startLine": 6,
+        "startChar": 4,
+        "endLine": 6,
+        "endChar": 13
+      },
+      "revId": "61e237480e3b0061e4905feba6216ef3d2f75166",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72401b96_a851badf",
+        "filename": "third_party/WebKit/LayoutTests/virtual/color_space/fast/canvas/color-space/canvas-drawImage-linear-rgb.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2017-08-28T18:22:36Z",
+      "side": 1,
+      "message": "func name says P3. I think you mean linear rgb",
+      "range": {
+        "startLine": 23,
+        "startChar": 9,
+        "endLine": 23,
+        "endChar": 32
+      },
+      "revId": "61e237480e3b0061e4905feba6216ef3d2f75166",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb9ce785_8e9eff1e",
+        "filename": "third_party/WebKit/LayoutTests/virtual/color_space/fast/canvas/color-space/canvas-drawImage-linear-rgb.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2017-08-28T18:22:36Z",
+      "side": 1,
+      "message": "I found this test hard to read. Would be clearer if you used array of structs here. E.g.:\nvar expectations \u003d [{x: 5, y: 5, color: linearRed}, ...",
+      "range": {
+        "startLine": 31,
+        "startChar": 33,
+        "endLine": 31,
+        "endChar": 34
+      },
+      "revId": "61e237480e3b0061e4905feba6216ef3d2f75166",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ccfb10e_5e1653fe",
+        "filename": "third_party/WebKit/LayoutTests/virtual/color_space/fast/canvas/color-space/canvas-drawImage-rec2020.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2017-08-28T18:22:36Z",
+      "side": 1,
+      "message": "you mean rec2020?",
+      "range": {
+        "startLine": 23,
+        "startChar": 9,
+        "endLine": 23,
+        "endChar": 32
+      },
+      "revId": "61e237480e3b0061e4905feba6216ef3d2f75166",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
