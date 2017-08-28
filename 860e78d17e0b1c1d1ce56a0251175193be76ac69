@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "67b89a87_69219bff",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-08-28T18:01:39Z",
+      "side": 1,
+      "message": "added more context",
+      "parentUuid": "7114002d_5a4fce43",
+      "revId": "860e78d17e0b1c1d1ce56a0251175193be76ac69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6fac1e18_4aa6a7e8",
         "filename": "ash/link_handler_controller.cc",
         "patchSetId": 8
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-23T22:40:15Z",
       "side": 1,
       "message": "This could use a comment. Is it a classic ash vs. mash difference?",
+      "revId": "860e78d17e0b1c1d1ce56a0251175193be76ac69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d5d4187_a31aa4e3",
+        "filename": "ash/link_handler_controller.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-08-28T18:01:39Z",
+      "side": 1,
+      "message": "No, it\u0027s effectively arc vs no arc (or failed arc setup)\n\nhttps://cs.chromium.org/chromium/src/ash/link_handler_model_factory.h?rcl\u003d8bab7b56965a498c7b0f8d36a5e309b3a320278f\u0026l\u003d27",
+      "parentUuid": "6fac1e18_4aa6a7e8",
       "revId": "860e78d17e0b1c1d1ce56a0251175193be76ac69",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -50,6 +86,24 @@
       "revId": "860e78d17e0b1c1d1ce56a0251175193be76ac69",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a50fc9a3_1cd2f87a",
+        "filename": "ash/public/interfaces/link_handler.mojom",
+        "patchSetId": 8
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-08-28T18:01:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a407f290_49185fff",
+      "revId": "860e78d17e0b1c1d1ce56a0251175193be76ac69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -98,6 +152,24 @@
       "writtenOn": "2017-08-23T22:40:15Z",
       "side": 1,
       "message": "I don\u0027t understand this. Why are other parts of the system asking ash to open a link? If it\u0027s a normal URL, the browser should be handling this. If it\u0027s an ARC app, the ARC code in the browser process should be handling this. Something seems backwards here.",
+      "revId": "860e78d17e0b1c1d1ce56a0251175193be76ac69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d9da23d_da9f1d96",
+        "filename": "ash/public/interfaces/link_handler.mojom",
+        "patchSetId": 8
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-08-28T18:01:39Z",
+      "side": 1,
+      "message": "In mash, does arc code live in both ash and the browser process? I had assumed only in ash.\n\nCurrently Chrome calls into ash which delegates to arc, so it seemed like a good idea to mojoify the calling into ash part. Perhaps Yusuke can comment on why this is or if we\u0027d be better off calling directly into arc.",
+      "parentUuid": "97d29147_f2ebebc3",
       "revId": "860e78d17e0b1c1d1ce56a0251175193be76ac69",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
