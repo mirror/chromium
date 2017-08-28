@@ -33,6 +33,8 @@ class LoadingClusterTelemetry(loading._LoadingBase):
   def CreateStorySet(self, options):
     def Wait(action_runner):
       action_runner.Wait(options.wait_time)
+      action_runner.MeasureMemory(True)
+
     return page_set.CTPageSet(
       options.urls_list, options.user_agent, options.archive_data_file,
       traffic_setting=options.traffic_setting,
