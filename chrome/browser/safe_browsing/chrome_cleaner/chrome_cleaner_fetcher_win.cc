@@ -33,6 +33,7 @@
 #include "net/base/load_flags.h"
 #include "net/http/http_request_headers.h"
 #include "net/http/http_status_code.h"
+#include "net/traffic_annotation/network_traffic_annotation.h"
 #include "net/url_request/url_fetcher.h"
 #include "net/url_request/url_fetcher_delegate.h"
 #include "net/url_request/url_request_context_getter.h"
@@ -63,6 +64,27 @@ enum CleanerDownloadStatusHistogramValue {
 
   CLEANER_DOWNLOAD_STATUS_MAX,
 };
+
+net::NetworkTrafficAnnotationTag kTrafficAnnotation =
+    net::DefineNetworkTrafficAnnotation("...", R"(
+      semantics {
+        sender: "..."
+        description: "..."
+        trigger: "..."
+        data: "..."
+        destination: WEBSITE/GOOGLE_OWNED_SERVICE/OTHER/LOCAL
+      }
+      policy {
+        cookies_allowed: false/true
+        cookies_store: "..."
+        setting: "..."
+        chrome_policy {
+          [POLICY_NAME] {
+            [POLICY_NAME]: ... //(value to disable it)
+          }
+        }
+        policy_exception_justification: "..."
+  })");
 
 void RecordCleanerDownloadStatusHistogram(
     CleanerDownloadStatusHistogramValue value) {
@@ -116,7 +138,8 @@ ChromeCleanerFetcher::ChromeCleanerFetcher(
       url_fetcher_(net::URLFetcher::Create(0,
                                            GetSRTDownloadURL(),
                                            net::URLFetcher::GET,
-                                           this)),
+                                           this,
+                                           kTrafficAnnotation)),
       blocking_task_runner_(base::CreateSequencedTaskRunnerWithTraits(
           {base::MayBlock(), base::TaskPriority::BACKGROUND,
            base::TaskShutdownBehavior::CONTINUE_ON_SHUTDOWN})),
