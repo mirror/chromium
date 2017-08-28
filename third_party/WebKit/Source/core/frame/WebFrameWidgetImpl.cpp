@@ -72,6 +72,8 @@
 #include "platform/graphics/CompositorMutatorClient.h"
 #include "platform/wtf/AutoReset.h"
 #include "platform/wtf/PtrUtil.h"
+#include "public/platform/Platform.h"
+#include "public/platform/WebGestureCurve.h"
 #include "public/web/WebAutofillClient.h"
 #include "public/web/WebPlugin.h"
 #include "public/web/WebRange.h"
@@ -250,6 +252,7 @@ void WebFrameWidgetImpl::BeginFrame(double last_frame_time_monotonic) {
   TRACE_EVENT1("blink", "WebFrameWidgetImpl::beginFrame", "frameTime",
                last_frame_time_monotonic);
   DCHECK(last_frame_time_monotonic);
+  UpdateGestureAnimation(last_frame_time_monotonic);
   PageWidgetDelegate::Animate(*GetPage(), last_frame_time_monotonic);
   GetPage()->GetValidationMessageClient().LayoutOverlay();
 }
@@ -884,10 +887,14 @@ void WebFrameWidgetImpl::HandleMouseUp(LocalFrame& main_frame,
 }
 
 WebInputEventResult WebFrameWidgetImpl::HandleMouseWheel(
-    LocalFrame& main_frame,
+    LocalFrame& frame,
     const WebMouseWheelEvent& event) {
+  // Halt an in-progress fling on a wheel tick.
+  if (!event.has_precise_scrolling_deltas)
+    EndActiveFlingAnimation();
+
   View()->HidePopups();
-  return PageWidgetEventHandler::HandleMouseWheel(main_frame, event);
+  return PageWidgetEventHandler::HandleMouseWheel(frame, event);
 }
 
 WebInputEventResult WebFrameWidgetImpl::HandleGestureEvent(
@@ -922,8 +929,9 @@ WebInputEventResult WebFrameWidgetImpl::HandleGestureEvent(
       break;
     case WebInputEvent::kGestureFlingStart:
     case WebInputEvent::kGestureFlingCancel:
+      event_result = HandleGestureFlingEvent(event);
       client_->DidHandleGestureEvent(event, event_cancelled);
-      return WebInputEventResult::kNotHandled;
+      return event_result;
     default:
       NOTREACHED();
   }
@@ -932,6 +940,10 @@ WebInputEventResult WebFrameWidgetImpl::HandleGestureEvent(
   event_result = frame->GetEventHandler().HandleGestureEvent(scaled_event);
   client_->DidHandleGestureEvent(event, event_cancelled);
   return event_result;
+}
+
+PageWidgetEventHandler* WebFrameWidgetImpl::GetPageWidgetEventHandler() {
+  return this;
 }
 
 WebInputEventResult WebFrameWidgetImpl::HandleKeyEvent(
