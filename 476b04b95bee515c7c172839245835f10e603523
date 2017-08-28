@@ -337,6 +337,24 @@
     },
     {
       "key": {
+        "uuid": "7d6e6826_e5435c4d",
+        "filename": "chrome/browser/page_load_metrics/observers/android_page_load_metrics_observer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1154589
+      },
+      "writtenOn": "2017-08-28T08:09:00Z",
+      "side": 1,
+      "message": "Great, thanks for the clarification.",
+      "parentUuid": "59a316c2_c91a02a8",
+      "revId": "476b04b95bee515c7c172839245835f10e603523",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b9870448_10be1b20",
         "filename": "chrome/browser/page_load_metrics/observers/android_page_load_metrics_observer.cc",
         "patchSetId": 1
