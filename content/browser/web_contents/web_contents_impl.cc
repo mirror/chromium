@@ -2982,7 +2982,9 @@ void WebContentsImpl::AttachInterstitialPage(
 
   // Connect to outer WebContents if necessary.
   if (node_.OuterContentsFrameTreeNode()) {
-    if (GetRenderManager()->GetProxyToOuterDelegate()) {
+    RenderFrameProxyHost* proxy_host =
+        GetRenderManager()->GetProxyToOuterDelegate();
+    if (proxy_host) {
       DCHECK(
           static_cast<RenderWidgetHostViewBase*>(interstitial_page->GetView())
               ->IsRenderWidgetHostViewChildFrame());
