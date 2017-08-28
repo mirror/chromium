@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "85729e42_3b3ef1ce",
+        "filename": "content/child/service_worker/service_worker_provider_context.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-28T08:00:21Z",
+      "side": 1,
+      "message": "Can we make this symmetric with the host comment:\n\n\"// |container_host_| is the Mojo endpoint to the browser-side mojom::ServiceWorkerContainerHost that hosts this mojom::ServiceWorkerContainer.\"",
+      "range": {
+        "startLine": 156,
+        "startChar": 36,
+        "endLine": 156,
+        "endChar": 44
+      },
+      "revId": "9e1fee3706fca9d731cfd76be2e0768b4e9d568f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b197f37_75a5848a",
+        "filename": "content/child/service_worker/service_worker_provider_context.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-28T08:00:21Z",
+      "side": 1,
+      "message": "can we rename container_host_?",
+      "range": {
+        "startLine": 157,
+        "startChar": 50,
+        "endLine": 157,
+        "endChar": 62
+      },
+      "revId": "9e1fee3706fca9d731cfd76be2e0768b4e9d568f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f36c0965_3fb0d48e",
+        "filename": "content/common/service_worker/service_worker_container.mojom",
+        "patchSetId": 11
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-28T08:00:21Z",
+      "side": 1,
+      "message": "Let\u0027s put this in service_worker_provider.mojom or if it can\u0027t go there service_worker_provider_interfaces.mojom. I\u0027m not sure its relationship to Container yet.",
+      "revId": "9e1fee3706fca9d731cfd76be2e0768b4e9d568f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7ab8d49_bc481440",
+        "filename": "content/common/service_worker/service_worker_container.mojom",
+        "patchSetId": 11
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-28T08:00:21Z",
+      "side": 1,
+      "message": "Container",
+      "range": {
+        "startLine": 37,
+        "startChar": 24,
+        "endLine": 37,
+        "endChar": 31
+      },
+      "revId": "9e1fee3706fca9d731cfd76be2e0768b4e9d568f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
