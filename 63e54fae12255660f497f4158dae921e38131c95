@@ -16,6 +16,24 @@
       "revId": "63e54fae12255660f497f4158dae921e38131c95",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0ae4389_c86f07a0",
+        "filename": "content/renderer/render_frame_proxy.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 418,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-08-28T17:00:35Z",
+      "side": 1,
+      "message": "I\u0027ve introduced a new message: FrameMsg_ViewChanged and moved ResendFrameRects there. Now I don\u0027t need it in three different places. PTAL",
+      "parentUuid": "fc31223c_ab980385",
+      "revId": "63e54fae12255660f497f4158dae921e38131c95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
