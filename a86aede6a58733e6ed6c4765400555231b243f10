@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4e9ce198_3b008a9f",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css-scoping/slotted-with-pseudo-element.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2017-08-28T02:58:28Z",
+      "side": 1,
+      "message": "nit: the indentation here looks weird.",
+      "revId": "a86aede6a58733e6ed6c4765400555231b243f10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
