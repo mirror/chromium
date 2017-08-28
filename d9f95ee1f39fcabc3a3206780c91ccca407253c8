@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2de05462_3bc74d2d",
+        "filename": "base/allocator/partition_allocator/page_allocator.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2017-08-28T23:03:49Z",
+      "side": 1,
+      "message": "Maybe add a comment about how reservations are at a page-level granularity? Or is that completely obvious and hence unnecessary.",
+      "revId": "d9f95ee1f39fcabc3a3206780c91ccca407253c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

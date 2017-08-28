@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0147b70a_7ac063db",
+        "filename": "base/allocator/partition_allocator/page_allocator.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 331,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2017-08-28T23:03:49Z",
+      "side": 0,
+      "message": "Hmm, maybe this comment should stay? It seems useful to me.",
+      "revId": "0f00ad05a615e5eed13babcfd4e63397a821df4b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
