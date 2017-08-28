@@ -42,6 +42,7 @@
 #include "base/single_thread_task_runner.h"
 #include "base/strings/string_util.h"
 #include "base/strings/utf_string_conversions.h"
+#include "base/task_scheduler/post_task.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "base/threading/worker_pool.h"
 #include "base/time/time.h"
@@ -677,12 +678,10 @@ class HostResolverImpl::ProcTask
   ProcTask(const Key& key,
            const ProcTaskParams& params,
            const Callback& callback,
-           scoped_refptr<base::TaskRunner> worker_task_runner,
            const NetLogWithSource& job_net_log)
       : key_(key),
         params_(params),
         callback_(callback),
-        worker_task_runner_(std::move(worker_task_runner)),
         network_task_runner_(base::ThreadTaskRunnerHandle::Get()),
         attempt_number_(0),
         completed_attempt_number_(0),
@@ -739,20 +738,13 @@ class HostResolverImpl::ProcTask
     base::TimeTicks start_time = base::TimeTicks::Now();
     ++attempt_number_;
     // Dispatch the lookup attempt to a worker thread.
-    if (!worker_task_runner_->PostTask(
-            FROM_HERE, base::Bind(&ProcTask::DoLookup, this, start_time,
-                                  attempt_number_))) {
-      NOTREACHED();
-
-      // Since this method may have been called from Resolve(), can't just call
-      // OnLookupComplete().  Instead, must wait until Resolve() has returned
-      // (IO_PENDING).
-      network_task_runner_->PostTask(
-          FROM_HERE,
-          base::Bind(&ProcTask::OnLookupComplete, this, AddressList(),
-                     start_time, attempt_number_, ERR_UNEXPECTED, 0));
-      return;
-    }
+    // WithBaseSyncPrimitives() is required to allow unit tests to provide
+    // a HostResolverProc that waits on a ConditionVariable.
+    base::PostTaskWithTraits(
+        FROM_HERE,
+        {base::MayBlock(), base::WithBaseSyncPrimitives(),
+         base::TaskShutdownBehavior::CONTINUE_ON_SHUTDOWN},
+        base::Bind(&ProcTask::DoLookup, this, start_time, attempt_number_));
 
     net_log_.AddEvent(NetLogEventType::HOST_RESOLVER_IMPL_ATTEMPT_STARTED,
                       NetLog::IntCallback("attempt_number", attempt_number_));
@@ -997,9 +989,6 @@ class HostResolverImpl::ProcTask
 
   // The listener to the results of this ProcTask.
   Callback callback_;
-
-  // Task runner for the call to the HostResolverProc.
-  scoped_refptr<base::TaskRunner> worker_task_runner_;
 
   // Used to post events onto the network thread.
   scoped_refptr<base::SingleThreadTaskRunner> network_task_runner_;
@@ -1620,7 +1609,7 @@ class HostResolverImpl::Job : public PrioritizedDispatcher::Job,
         new ProcTask(key_, resolver_->proc_params_,
                      base::Bind(&Job::OnProcTaskComplete,
                                 base::Unretained(this), base::TimeTicks::Now()),
-                     worker_task_runner_, net_log_);
+                     net_log_);
 
     if (had_non_speculative_request_)
       proc_task_->set_had_non_speculative_request();

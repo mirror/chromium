@@ -8,6 +8,7 @@
 
 #include "base/logging.h"
 #include "base/sys_byteorder.h"
+#include "base/threading/scoped_blocking_call.h"
 #include "net/base/address_list.h"
 #include "net/base/net_errors.h"
 #include "net/base/sys_addrinfo.h"
@@ -194,7 +195,15 @@ int SystemHostResolverCall(const std::string& host,
     !defined(OS_ANDROID) && !defined(OS_FUCHSIA)
   DnsReloaderMaybeReload();
 #endif
-  int err = getaddrinfo(host.c_str(), NULL, &hints, &ai);
+  int err;
+  {
+    // getaddrinfo() can block for a long time. Use ScopedBlockingCall to
+    // increase the current thread pool's capacity and thus avoid reducing CPU
+    // usage by the current process during that time.
+    base::ScopedBlockingCall scoped_blocking_call(
+        base::BlockingType::WILL_BLOCK);
+    err = getaddrinfo(host.c_str(), NULL, &hints, &ai);
+  }
   bool should_retry = false;
   // If the lookup was restricted (either by address family, or address
   // detection), and the results where all localhost of a single family,
@@ -216,7 +225,11 @@ int SystemHostResolverCall(const std::string& host,
       freeaddrinfo(ai);
       ai = NULL;
     }
-    err = getaddrinfo(host.c_str(), NULL, &hints, &ai);
+    {
+      base::ScopedBlockingCall scoped_blocking_call(
+          base::BlockingType::WILL_BLOCK);
+      err = getaddrinfo(host.c_str(), NULL, &hints, &ai);
+    }
   }
 
   if (err) {
