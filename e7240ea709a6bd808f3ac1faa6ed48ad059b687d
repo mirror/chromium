@@ -1,0 +1,118 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "be4ed881_d7585d1c",
+        "filename": "chrome/browser/ui/cocoa/md_hover_button.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-08-28T18:20:54Z",
+      "side": 1,
+      "message": "In crrev.com/c/636605, these are C++ functions. Any reason to differ in style here? (Or to have the other use class methods?)",
+      "revId": "e7240ea709a6bd808f3ac1faa6ed48ad059b687d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee1818d0_0c5dc9d9",
+        "filename": "chrome/browser/ui/cocoa/md_hover_button.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-08-28T18:20:54Z",
+      "side": 1,
+      "message": "Where does this color come from? Is there a constant?",
+      "range": {
+        "startLine": 68,
+        "startChar": 32,
+        "endLine": 68,
+        "endChar": 63
+      },
+      "revId": "e7240ea709a6bd808f3ac1faa6ed48ad059b687d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "256991ca_fc356116",
+        "filename": "chrome/browser/ui/cocoa/md_hover_button.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-08-28T18:20:54Z",
+      "side": 1,
+      "message": "I think this is a bit unusual. I\u0027d expect to see a block/lambda for a static, but not for a local const variable.",
+      "revId": "e7240ea709a6bd808f3ac1faa6ed48ad059b687d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "441832bf_96b3029d",
+        "filename": "chrome/browser/ui/cocoa/md_hover_button.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-08-28T18:20:54Z",
+      "side": 1,
+      "message": "optional: I find blocks intermixed with other ObjC parameters hard to read, so I generally pull them out into a local, e.g. |auto animationGroup \u003d ^{ };|.",
+      "revId": "e7240ea709a6bd808f3ac1faa6ed48ad059b687d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9eb3c2df_eb8fcf31",
+        "filename": "chrome/browser/ui/cocoa/md_hover_button.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-08-28T18:20:54Z",
+      "side": 1,
+      "message": "Make the duration a constant?",
+      "range": {
+        "startLine": 95,
+        "startChar": 23,
+        "endLine": 95,
+        "endChar": 27
+      },
+      "revId": "e7240ea709a6bd808f3ac1faa6ed48ad059b687d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8717b8ca_257ddd68",
+        "filename": "chrome/browser/ui/cocoa/md_hover_button_unittest.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-08-28T18:20:54Z",
+      "side": 1,
+      "message": "Set an icon and iconSize too?",
+      "revId": "e7240ea709a6bd808f3ac1faa6ed48ad059b687d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
