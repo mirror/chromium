@@ -1410,11 +1410,11 @@ void SetAsNonUserGesture(FrameHostMsg_DidCommitProvisionalLoad_Params* params) {
 TEST_F(WebContentsImplTest, CrossSiteNotPreemptedDuringBeforeUnload) {
   // Navigate to WebUI URL.
   const GURL url("chrome://gpu");
-  controller().LoadURL(
-      url, Referrer(), ui::PAGE_TRANSITION_TYPED, std::string());
-  int entry1_id = controller().GetPendingEntry()->GetUniqueID();
+  auto navigation =
+      NavigationSimulator::CreateBrowserInitiated(url, contents());
+  navigation->SetHasUserGesture(false);
+  navigation->ReadyToCommit();
   TestRenderFrameHost* orig_rfh = main_test_rfh();
-  orig_rfh->PrepareForCommit();
   EXPECT_FALSE(contents()->CrossProcessNavigationPending());
 
   // Navigate to new site, with the beforeunload request in flight.
@@ -1430,8 +1430,7 @@ TEST_F(WebContentsImplTest, CrossSiteNotPreemptedDuringBeforeUnload) {
   // Suppose the first navigation tries to commit now, with a
   // FrameMsg_Stop in flight.  This should not cancel the pending navigation,
   // but it should act as if the beforeunload ack arrived.
-  orig_rfh->SendNavigateWithModificationCallback(
-      entry1_id, true, url, base::Bind(SetAsNonUserGesture));
+  navigation->Commit();
   EXPECT_TRUE(contents()->CrossProcessNavigationPending());
   EXPECT_EQ(orig_rfh, main_test_rfh());
   EXPECT_FALSE(orig_rfh->is_waiting_for_beforeunload_ack());
