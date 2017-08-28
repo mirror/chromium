@@ -207,6 +207,30 @@
     },
     {
       "key": {
+        "uuid": "3afaa3ec_b27ff153",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1239026
+      },
+      "writtenOn": "2017-08-28T07:12:36Z",
+      "side": 1,
+      "message": "True, not \"True\".\nIn this CL,when a default value\u0027s type is Python\u0027s type Boolean,\n\u0027VALUE\u0027 is not a literal but a boolean.\n\nThank you for your pointing it out and this inconsistency should be solved.\nI think \u0027VALUE\u0027s should always be literal, and follow-up CLs will solve this problem.\n\nI added unittests for 5 default value cases (\"foo\", 10, 1.5, true, NULL).",
+      "parentUuid": "e3efa574_19acc4f4",
+      "range": {
+        "startLine": 25,
+        "startChar": 33,
+        "endLine": 25,
+        "endChar": 37
+      },
+      "revId": "8594ea31ebba32ca9cde9ab2b912fc7c873f67bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "baf7f9af_87adf7d3",
         "filename": "third_party/WebKit/Source/bindings/scripts/idl_definitions.py",
         "patchSetId": 4
