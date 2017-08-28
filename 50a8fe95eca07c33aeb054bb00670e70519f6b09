@@ -88,6 +88,24 @@
       "revId": "50a8fe95eca07c33aeb054bb00670e70519f6b09",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b9202a9_d1d08f24",
+        "filename": "ash/wm/power_button_controller.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-08-28T21:49:23Z",
+      "side": 1,
+      "message": "Thanks Dan! Agree with your suggestions. Yes, let us remove this local state and make this local state dependent on TPBC is a bad idea. \n\nI will file a bug doing this. It may take a while but should be ok before m62 branch cut.\nThis cl is already cherry picked to m61. Shall we merge this CL to master or abandon it?",
+      "parentUuid": "e7b04bde_250bf9ac",
+      "revId": "50a8fe95eca07c33aeb054bb00670e70519f6b09",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
