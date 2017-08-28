@@ -4,8 +4,10 @@
 
 #include "ui/aura/mus/window_port_mus.h"
 
+#include "base/command_line.h"
 #include "base/memory/ptr_util.h"
 #include "components/viz/client/local_surface_id_provider.h"
+#include "services/ui/common/switches.h"
 #include "ui/aura/client/aura_constants.h"
 #include "ui/aura/client/transient_window_client.h"
 #include "ui/aura/env.h"
@@ -115,12 +117,18 @@ WindowPortMus::RequestLayerTreeFrameSink(
   viz::mojom::CompositorFrameSinkClientRequest client_request =
       mojo::MakeRequest(&client);
   constexpr bool enable_surface_synchronization = true;
+
+  std::unique_ptr<HitTestDataProviderAura> hit_test_data_provider;
+  if (base::CommandLine::ForCurrentProcess()->HasSwitch(
+          ui::switches::kUseVizHitTest)) {
+    hit_test_data_provider = base::MakeUnique<HitTestDataProviderAura>(window_);
+  }
+
   auto layer_tree_frame_sink = base::MakeUnique<viz::ClientLayerTreeFrameSink>(
       std::move(context_provider), nullptr /* worker_context_provider */,
       gpu_memory_buffer_manager, nullptr /* shared_bitmap_manager */,
       nullptr /* synthetic_begin_frame_source */, std::move(sink_info),
-      std::move(client_request),
-      base::MakeUnique<HitTestDataProviderAura>(window_),
+      std::move(client_request), std::move(hit_test_data_provider),
       base::MakeUnique<viz::DefaultLocalSurfaceIdProvider>(),
       enable_surface_synchronization);
   window_tree_client_->AttachCompositorFrameSink(

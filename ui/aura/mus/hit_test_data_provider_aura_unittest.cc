@@ -4,7 +4,9 @@
 
 #include "ui/aura/mus/window_tree_client.h"
 
+#include "base/command_line.h"
 #include "components/viz/client/hit_test_data_provider.h"
+#include "services/ui/common/switches.h"
 #include "ui/aura/client/aura_constants.h"
 #include "ui/aura/mus/window_mus.h"
 #include "ui/aura/mus/window_port_mus.h"
@@ -83,6 +85,9 @@ class HitTestDataProviderAuraTest : public test::AuraTestBaseMus {
   ~HitTestDataProviderAuraTest() override {}
 
   void SetUp() override {
+    base::CommandLine::ForCurrentProcess()->AppendSwitch(
+        ui::switches::kUseVizHitTest);
+
     test::AuraTestBaseMus::SetUp();
 
     root_ = base::MakeUnique<Window>(nullptr);
