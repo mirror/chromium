@@ -100,6 +100,11 @@ NGFragmentBuilder& NGFragmentBuilder::AddChild(
   return *this;
 }
 
+NGFragmentBuilder& NGFragmentBuilder::AddFinishedChild(NGBreakToken* token) {
+  child_break_tokens_.push_back(token);
+  return *this;
+}
+
 NGFragmentBuilder& NGFragmentBuilder::SetBfcOffset(const NGBfcOffset& offset) {
   bfc_offset_ = offset;
   return *this;

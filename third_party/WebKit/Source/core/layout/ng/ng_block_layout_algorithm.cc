@@ -293,10 +293,19 @@ RefPtr<NGLayoutResult> NGBlockLayoutAlgorithm::Layout() {
       input_bfc_block_offset, content_size_, input_margin_strut,
       /* empty_block_affected_by_clearance */ false};
 
-  NGBlockChildIterator child_iterator(Node().FirstChild(), BreakToken());
+  NGLayoutInputNode current_child = Node().FirstChild();
+  NGBlockChildIterator child_iterator(current_child, BreakToken());
   for (auto entry = child_iterator.NextChild();
        NGLayoutInputNode child = entry.node;
        entry = child_iterator.NextChild()) {
+    while (current_child != child) {
+      // Each child we're finished with also needs a break token, so that
+      // they're all in the list if we have to resume layout on this node later.
+      auto token = NGBlockBreakToken::Create(current_child, LayoutUnit());
+      container_builder_.AddFinishedChild(token.Get());
+      current_child = current_child.NextSibling();
+    }
+
     NGBreakToken* child_break_token = entry.token;
 
     if (child.IsOutOfFlowPositioned()) {
