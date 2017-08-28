@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "143c62c0_d98abf2a",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXLayoutObject.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 738,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-08-28T21:39:55Z",
+      "side": 1,
+      "message": "Also contenteditable?\n\nHow about \u003caudio controls\u003e, \u003cvideo controls\u003e, and \u003csummary\u003e\u003cdetails\u003e?\n\nIf none of those are needed, that\u0027s great, but I don\u0027t think this is\nall elements that are focusable by default.",
+      "revId": "e448376e3cb2296e954851c5816845833ed7c6f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5beefcaa_cdd8233c",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXLayoutObject.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 762,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-08-28T21:39:55Z",
+      "side": 1,
+      "message": "nit: it\u0027s -\u003e its",
+      "revId": "e448376e3cb2296e954851c5816845833ed7c6f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54eb664c_da0db626",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXLayoutObject.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 767,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-08-28T21:39:55Z",
+      "side": 1,
+      "message": "Good comment, explains the heuristic well",
+      "revId": "e448376e3cb2296e954851c5816845833ed7c6f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c462cd9_af1066db",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXLayoutObject.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 777,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-08-28T21:39:55Z",
+      "side": 1,
+      "message": "Any chance that FlatTreeTraversal::TraversePrevious and TraverseNext\nwould do this for you and you wouldn\u0027t need these helper functions\nat all?",
+      "revId": "e448376e3cb2296e954851c5816845833ed7c6f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a43c0a16_92f11804",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXLayoutObject.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 818,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-08-28T21:39:55Z",
+      "side": 1,
+      "message": "Doesn\u0027t the comment say the opposite of what we want?\nI think we want to *not ignore* whitespace-only text if both\nsibling roles requires it",
+      "revId": "e448376e3cb2296e954851c5816845833ed7c6f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
