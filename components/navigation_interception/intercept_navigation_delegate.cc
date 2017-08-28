@@ -17,6 +17,7 @@
 #include "content/public/browser/resource_request_info.h"
 #include "content/public/browser/web_contents.h"
 #include "jni/InterceptNavigationDelegate_jni.h"
+#include "net/base/load_flags.h"
 #include "net/url_request/url_request.h"
 #include "url/gurl.h"
 
@@ -97,7 +98,13 @@ void InterceptNavigationDelegate::UpdateUserGestureCarryoverInfo(
     net::URLRequest* request) {
   const content::ResourceRequestInfo* info =
       content::ResourceRequestInfo::ForRequest(request);
-  if (!info || !info->HasUserGesture())
+  // TODO (thildebr): Investigate why the user gesture flag in the
+  // ResourceRequestInfo isn't reliable on navigations that occur while a page
+  // is loading so we can use that exclusively.
+  bool has_user_gesture =
+      (info && info->HasUserGesture()) ||
+      (request->load_flags() & net::LOAD_MAYBE_USER_GESTURE);
+  if (!has_user_gesture)
     return;
 
   int render_process_id, render_frame_id;
