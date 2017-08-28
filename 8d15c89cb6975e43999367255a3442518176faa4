@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "61256345_1c57dfc9",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-08-28T19:53:46Z",
+      "side": 1,
+      "message": "This patch doesn\u0027t seem to be doing what this title claims it is doing.\nThis patch is adding BGRA/X formats to the client_native_pixmap_factory_dmabuf.cc, that is used to mmap buffers client side.\nWhat am I missing here?",
+      "revId": "8d15c89cb6975e43999367255a3442518176faa4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
