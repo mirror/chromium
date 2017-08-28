@@ -2,6 +2,52 @@
   "comments": [
     {
       "key": {
+        "uuid": "75cf1bec_8cdcea7f",
+        "filename": "third_party/WebKit/Source/core/frame/LocalDOMWindow.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1094,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-08-28T23:38:53Z",
+      "side": 0,
+      "message": "I am not sure if this TODO is 100% correct - recalculating a unique name using the current algorithm can result in a different unique name, even if the name didn\u0027t change (e.g. if the frame position changed).  This problem is present regardless of where the recalculation takes place (i.e. in the renderer VS the browser).\n\nIs it okay if I remove the TODO?",
+      "range": {
+        "startLine": 1092,
+        "startChar": 0,
+        "endLine": 1094,
+        "endChar": 74
+      },
+      "revId": "da770a76268822e7de088adcf311ad91fcfcdfc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "169e2df2_ca3896e1",
+        "filename": "third_party/WebKit/Source/core/frame/LocalDOMWindow.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1100,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-08-28T23:38:53Z",
+      "side": 0,
+      "message": "This code got moved into LocalFrame::SetName, so that it can be reused by 1) LocalDOMWindow::setName and by 2) WebLocalFrameImpl::SetName.",
+      "range": {
+        "startLine": 1088,
+        "startChar": 0,
+        "endLine": 1100,
+        "endChar": 44
+      },
+      "revId": "da770a76268822e7de088adcf311ad91fcfcdfc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5d031221_d0767c71",
         "filename": "third_party/WebKit/public/web/WebFrame.h",
         "patchSetId": 1
@@ -37,6 +83,30 @@
       "side": 0,
       "message": "It\u0027s not that bad to implement in WebFrame though, is it? We can use WebFrame::ToCoreFrame to do this generically.\n\nThat being said, I don\u0027t feel strongly about this and if it\u0027s not used...",
       "parentUuid": "5d031221_d0767c71",
+      "range": {
+        "startLine": 103,
+        "startChar": 20,
+        "endLine": 103,
+        "endChar": 34
+      },
+      "revId": "da770a76268822e7de088adcf311ad91fcfcdfc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0cbe546b_f62022c4",
+        "filename": "third_party/WebKit/public/web/WebFrame.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-08-28T23:38:53Z",
+      "side": 0,
+      "message": "I\u0027ve looked into this and:\n\n1. window.name cannot be read or set cross-origin (attempt to access window.parent.name of a cross-origin parent throws a JS exception saying \"Blocked a frame with origin \"...\" from accessing a cross-origin frame.\").  I think it makes sense to replicate this DOM restriction into the C++ API (for both WebLocalFrame::AssignedName and for WebLocalFrame::SetName).\n\n2. I looked at callers of FrameTree::SetName and I see that LocalDOMWindow::setName not only changes the name/string stored inside the FrameTree object, but also notifies others via LocalFrameClient::DidChangeName(name) which replicates the new name into all the renderers.  In the latest patchset I\u0027ve made sure that calling WebLocalFrame::SetName also performs the same notification (otherwise, the name set via ExtensionMsg_SetFrameName would not replicate to other renderers).",
+      "parentUuid": "fca459e3_43eb5eb7",
       "range": {
         "startLine": 103,
         "startChar": 20,
