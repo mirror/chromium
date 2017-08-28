@@ -1943,6 +1943,7 @@ void RenderThreadImpl::RequestNewLayerTreeFrameSink(
       IsRunningInMash() ||
       command_line.HasSwitch(switches::kEnableSurfaceSynchronization);
 
+  viz::ClientLayerTreeFrameSink::InitParams params;
   // In disable gpu vsync mode, also let the renderer tick as fast as it
   // can. The top level begin frame source will also be running as a back
   // to back begin frame source, but using a synthetic begin frame source
@@ -1952,6 +1953,8 @@ void RenderThreadImpl::RequestNewLayerTreeFrameSink(
   if (command_line.HasSwitch(switches::kDisableGpuVsync) &&
       command_line.GetSwitchValueASCII(switches::kDisableGpuVsync) != "gpu") {
     synthetic_begin_frame_source = CreateSyntheticBeginFrameSource();
+    params.synthetic_begin_frame_source =
+        std::move(synthetic_begin_frame_source);
   }
 
 #if defined(USE_AURA)
@@ -1978,9 +1981,9 @@ void RenderThreadImpl::RequestNewLayerTreeFrameSink(
   viz::mojom::CompositorFrameSinkPtrInfo sink_info;
   viz::mojom::CompositorFrameSinkRequest sink_request =
       mojo::MakeRequest(&sink_info);
+  params.compositor_frame_sink_info = std::move(sink_info);
   viz::mojom::CompositorFrameSinkClientPtr client;
-  viz::mojom::CompositorFrameSinkClientRequest client_request =
-      mojo::MakeRequest(&client);
+  params.client_request = mojo::MakeRequest(&client);
 
   if (command_line.HasSwitch(switches::kEnableVulkan)) {
     scoped_refptr<viz::VulkanContextProvider> vulkan_context_provider =
@@ -1989,12 +1992,11 @@ void RenderThreadImpl::RequestNewLayerTreeFrameSink(
       DCHECK(!layout_test_mode());
       frame_sink_provider_->CreateForWidget(routing_id, std::move(sink_request),
                                             std::move(client));
+      params.local_surface_id_provider =
+          base::MakeUnique<RendererLocalSurfaceIdProvider>();
+      params.enable_surface_synchronization = enable_surface_synchronization;
       callback.Run(base::MakeUnique<viz::ClientLayerTreeFrameSink>(
-          std::move(vulkan_context_provider),
-          std::move(synthetic_begin_frame_source), std::move(sink_info),
-          std::move(client_request), nullptr /* hit_test_data_provider */,
-          base::MakeUnique<RendererLocalSurfaceIdProvider>(),
-          enable_surface_synchronization));
+          std::move(vulkan_context_provider), &params));
       return;
     }
   }
@@ -2019,12 +2021,13 @@ void RenderThreadImpl::RequestNewLayerTreeFrameSink(
     DCHECK(!layout_test_mode());
     frame_sink_provider_->CreateForWidget(routing_id, std::move(sink_request),
                                           std::move(client));
+    params.shared_bitmap_manager = shared_bitmap_manager();
+    params.local_surface_id_provider =
+        base::MakeUnique<RendererLocalSurfaceIdProvider>();
+    params.enable_surface_synchronization = enable_surface_synchronization;
+
     callback.Run(base::MakeUnique<viz::ClientLayerTreeFrameSink>(
-        nullptr, nullptr, nullptr, shared_bitmap_manager(),
-        std::move(synthetic_begin_frame_source), std::move(sink_info),
-        std::move(client_request), nullptr /* hit_test_data_provider */,
-        base::MakeUnique<RendererLocalSurfaceIdProvider>(),
-        enable_surface_synchronization));
+        nullptr, nullptr, &params));
     return;
   }
 
@@ -2093,13 +2096,14 @@ void RenderThreadImpl::RequestNewLayerTreeFrameSink(
 #endif
   frame_sink_provider_->CreateForWidget(routing_id, std::move(sink_request),
                                         std::move(client));
+  params.gpu_memory_buffer_manager = GetGpuMemoryBufferManager();
+  params.local_surface_id_provider =
+      base::MakeUnique<RendererLocalSurfaceIdProvider>();
+  params.enable_surface_synchronization = enable_surface_synchronization;
+
   callback.Run(base::MakeUnique<viz::ClientLayerTreeFrameSink>(
       std::move(context_provider), std::move(worker_context_provider),
-      GetGpuMemoryBufferManager(), nullptr,
-      std::move(synthetic_begin_frame_source), std::move(sink_info),
-      std::move(client_request), nullptr /* hit_test_data_provider */,
-      base::MakeUnique<RendererLocalSurfaceIdProvider>(),
-      enable_surface_synchronization));
+      &params));
 }
 
 AssociatedInterfaceRegistry*
