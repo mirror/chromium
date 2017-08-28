@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "df05fdef_ec8876be",
+        "filename": "chrome/common/chrome_switches.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 731,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-08-28T23:07:22Z",
+      "side": 1,
+      "message": "Let me know if there\u0027s a better way to quote md docs/sections.",
+      "range": {
+        "startLine": 731,
+        "startChar": 7,
+        "endLine": 731,
+        "endChar": 58
+      },
+      "revId": "06f9fcbe0e48246b82e78592bb7693d4ac291665",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
