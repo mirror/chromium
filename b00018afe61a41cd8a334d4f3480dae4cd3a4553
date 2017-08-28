@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "32599aee_39174c2a",
+        "filename": "third_party/WebKit/Source/core/editing/LayoutSelection.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 483,
+      "author": {
+        "id": 1116070
+      },
+      "writtenOn": "2017-08-28T08:43:40Z",
+      "side": 1,
+      "message": "I guess we can do more abstraction these if-then statements,,,",
+      "revId": "b00018afe61a41cd8a334d4f3480dae4cd3a4553",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
