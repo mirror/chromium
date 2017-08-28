@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "544c8475_32f555a7",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 3010,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-28T06:05:57Z",
+      "side": 1,
+      "message": "nit: \"Some\"\n\nafter reading the tests, it looks like some sandbox iframes can use service worker, so would add \"Some sandboxed iframes...\"",
+      "revId": "35dc0d4158718356c081af5f85703aa69b8e9d1b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
