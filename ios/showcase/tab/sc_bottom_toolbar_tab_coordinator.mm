@@ -4,7 +4,7 @@
 
 #import "ios/showcase/tab/sc_bottom_toolbar_tab_coordinator.h"
 
-#import "ios/clean/chrome/browser/ui/tab/tab_container_view_controller.h"
+#import "ios/clean/chrome/browser/ui/tab/basic_tab_container_view_controller.h"
 
 #if !defined(__has_feature) || !__has_feature(objc_arc)
 #error "This file requires ARC support."
@@ -15,9 +15,19 @@
 @synthesize baseViewController;
 
 - (void)start {
-  UIViewController* bottomToolbarTabViewController =
-      [[BottomToolbarTabViewController alloc] init];
+  TabContainerViewController* bottomToolbarTabViewController =
+      [[BasicTabContainerViewController alloc] init];
+  bottomToolbarTabViewController.usesBottomToolbar = YES;
   bottomToolbarTabViewController.title = @"Bottom toolbar tab";
+
+  UIViewController* toolbar = [[UIViewController alloc] init];
+  toolbar.view.backgroundColor = [UIColor greenColor];
+  bottomToolbarTabViewController.toolbarViewController = toolbar;
+
+  UIViewController* content = [[UIViewController alloc] init];
+  content.view.backgroundColor = [UIColor whiteColor];
+  bottomToolbarTabViewController.contentViewController = content;
+
   [self.baseViewController pushViewController:bottomToolbarTabViewController
                                      animated:YES];
 }

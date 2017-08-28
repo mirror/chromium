@@ -27,7 +27,7 @@ class Browser;
 // method at the end of -start and at the beginning of -stop.
 // If the receiver is already started, -start is a no-op. If the receiver is
 // already stopped or never started, -stop is a no-op. In those cases, the
-// overriding implementations can early return withotu calling the superclass
+// overriding implementations can early return without calling the superclass
 // method:
 //   SubCoordinator.mm:
 //     - (void)start {
