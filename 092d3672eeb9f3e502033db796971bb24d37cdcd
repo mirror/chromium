@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "241bf0a9_18741439",
+        "filename": "content/browser/service_worker/service_worker_installed_scripts_sender.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 448,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-08-28T03:51:59Z",
+      "side": 1,
+      "message": "Ahhh, yes, probably I was sleeping during writing the code..\nFixed.",
+      "parentUuid": "7cf6b124_c5091c8d",
+      "revId": "092d3672eeb9f3e502033db796971bb24d37cdcd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c21935a2_9507f281",
         "filename": "content/browser/service_worker/service_worker_installed_scripts_sender.h",
         "patchSetId": 1
@@ -50,6 +68,24 @@
       "revId": "092d3672eeb9f3e502033db796971bb24d37cdcd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b171c140_be7dcecb",
+        "filename": "content/browser/service_worker/service_worker_installed_scripts_sender.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-08-28T03:51:59Z",
+      "side": 1,
+      "message": "That sounds much better. Updated, thanks.",
+      "parentUuid": "c21935a2_9507f281",
+      "revId": "092d3672eeb9f3e502033db796971bb24d37cdcd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
