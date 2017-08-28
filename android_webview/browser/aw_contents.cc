@@ -892,8 +892,7 @@ void AwContents::OnSizeChanged(JNIEnv* env,
                                int ow,
                                int oh) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
-  gfx::Size size(w, h);
-  web_contents_->GetNativeView()->OnPhysicalBackingSizeChanged(size);
+  web_contents_->GetNativeView()->OnPhysicalBackingSizeChanged(gfx::Size(w, h));
   browser_view_renderer_.OnSizeChanged(w, h);
 }
 
