@@ -5257,14 +5257,28 @@ void WebContentsImpl::SetAsFocusedWebContentsIfNecessary() {
 
 void WebContentsImpl::SetFocusedFrame(FrameTreeNode* node,
                                       SiteInstance* source) {
-  SetAsFocusedWebContentsIfNecessary();
-
   frame_tree_.SetFocusedFrame(node, source);
 
-  WebContentsImpl* inner_contents = node_.GetInnerWebContentsInFrame(node);
-
-  WebContentsImpl* contents_to_focus = inner_contents ? inner_contents : this;
-  contents_to_focus->SetAsFocusedWebContentsIfNecessary();
+  if (auto* inner_contents = node_.GetInnerWebContentsInFrame(node)) {
+    // |this| is an outer WebContents and |node| represents an inner
+    // WebContents. Transfer the focus to the inner contents if |this| is
+    // focused.
+    if (GetFocusedWebContents() == this)
+      inner_contents->SetAsFocusedWebContentsIfNecessary();
+  } else if (node_.OuterContentsFrameTreeNode() &&
+             node_.OuterContentsFrameTreeNode()
+                     ->current_frame_host()
+                     ->GetSiteInstance() == source) {
+    // |this| is an inner WebContents, |node| is its main FrameTreeNode and
+    // the outer WebContents FrameTreeNode is at |source|'s SiteInstance.
+    // Transfer the focus to the inner WebContents if the outer WebContents is
+    // focused.
+    if (GetFocusedWebContents() == GetOuterWebContents())
+      SetAsFocusedWebContentsIfNecessary();
+  } else if (!GetOuterWebContents()) {
+    // This is an outer WebContents.
+    SetAsFocusedWebContentsIfNecessary();
+  }
 }
 
 RenderFrameHost* WebContentsImpl::GetFocusedFrameIncludingInnerWebContents() {
@@ -5288,6 +5302,14 @@ RenderFrameHost* WebContentsImpl::GetFocusedFrameIncludingInnerWebContents() {
     focused_node = contents->frame_tree_.GetFocusedFrame();
     if (!focused_node)
       return contents->GetMainFrame();
+  }
+}
+
+void WebContentsImpl::OnAdvanceFocus(RenderFrameHostImpl* source_rfh) {
+  if (GetOuterWebContents() &&
+      GetOuterWebContents() == source_rfh->delegate()->GetAsWebContents() &&
+      GetFocusedWebContents() == GetOuterWebContents()) {
+    SetAsFocusedWebContentsIfNecessary();
   }
 }
 
