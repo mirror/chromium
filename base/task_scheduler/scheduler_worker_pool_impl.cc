@@ -10,6 +10,9 @@
 #include <utility>
 
 #include "base/atomicops.h"
+#include "base/bind.h"
+#include "base/bind_helpers.h"
+#include "base/location.h"
 #include "base/memory/ptr_util.h"
 #include "base/metrics/histogram.h"
 #include "base/sequence_token.h"
@@ -23,6 +26,8 @@
 
 namespace base {
 namespace internal {
+
+constexpr TimeDelta SchedulerWorkerPoolImpl::kBlockedWorkersPollPeriod;
 
 namespace {
 
@@ -83,6 +88,14 @@ class SchedulerWorkerPoolImpl::SchedulerWorkerDelegateImpl
   void BlockingScopeEntered(BlockingType blocking_type) override;
   void BlockingScopeExited(BlockingType blocking_type) override;
 
+  void MayBlockScopeEntered();
+  void WillBlockScopeEntered();
+
+  // Increases the worker capacity if this worker has been within a MAY_BLOCK
+  // ScopedBlockingCall for more than |blocked_time_threshold|.
+  void IncreaseWorkerCapacityIfNeededLockRequired(
+      TimeDelta blocked_time_threshold);
+
  private:
   // Returns true if |worker| is allowed to cleanup and remove itself from the
   // pool. Called from GetWork() when no work is available.
@@ -93,6 +106,10 @@ class SchedulerWorkerPoolImpl::SchedulerWorkerDelegateImpl
 
   // Called in GetWork() when a worker becomes idle.
   void OnWorkerBecomesIdleLockRequired(SchedulerWorker* worker);
+
+  // Increments |outer_->worker_capacity_| and updates
+  // |increased_worker_capacity_since_blocked_|.
+  void DoIncreaseWorkerCapacityLockRequired();
 
   SchedulerWorkerPoolImpl* outer_;
 
@@ -111,6 +128,18 @@ class SchedulerWorkerPoolImpl::SchedulerWorkerDelegateImpl
   // stack. This should only be accessed under the protection of
   // |outer_->lock_|.
   bool is_on_idle_workers_stack_ = true;
+
+  // Synchronizes access to |increased_worker_capacity_since_blocked_| and
+  // |may_block_start_time_|.
+  SchedulerLock blocking_lock_;
+
+  // Indicates whether |worker_capacity_| was incremented due to a
+  // ScopedBlockingCall on the thread.
+  bool increased_worker_capacity_since_blocked_ = false;
+
+  // Time when BlockingScopeEntered() was last called. Reset when
+  // BlockingScopeExited() is called.
+  TimeTicks may_block_start_time_;
 
   DISALLOW_COPY_AND_ASSIGN(SchedulerWorkerDelegateImpl);
 };
@@ -154,7 +183,9 @@ SchedulerWorkerPoolImpl::SchedulerWorkerPoolImpl(
           50,
           HistogramBase::kUmaTargetedHistogramFlag)) {}
 
-void SchedulerWorkerPoolImpl::Start(const SchedulerWorkerPoolParams& params) {
+void SchedulerWorkerPoolImpl::Start(
+    const SchedulerWorkerPoolParams& params,
+    scoped_refptr<TaskRunner> service_thread_task_runner) {
   AutoSchedulerLock auto_lock(lock_);
 
   DCHECK(workers_.empty());
@@ -163,6 +194,8 @@ void SchedulerWorkerPoolImpl::Start(const SchedulerWorkerPoolParams& params) {
   initial_worker_capacity_ = worker_capacity_;
   suggested_reclaim_time_ = params.suggested_reclaim_time();
   backward_compatibility_ = params.backward_compatibility();
+
+  service_thread_task_runner_ = std::move(service_thread_task_runner);
 
   // The initial number of workers is |num_wake_ups_before_start_| + 1 to try to
   // keep one at least one standby thread at all times (capacity permitting).
@@ -282,9 +315,13 @@ size_t SchedulerWorkerPoolImpl::NumberOfIdleWorkersForTesting() {
   return idle_workers_stack_.Size();
 }
 
+void SchedulerWorkerPoolImpl::MaximizeMayBlockThresholdForTesting() {
+  maximum_blocked_threshold_.Set();
+}
+
 SchedulerWorkerPoolImpl::SchedulerWorkerDelegateImpl::
     SchedulerWorkerDelegateImpl(SchedulerWorkerPoolImpl* outer)
-    : outer_(outer) {}
+    : outer_(outer), blocking_lock_(&outer->lock_) {}
 
 SchedulerWorkerPoolImpl::SchedulerWorkerDelegateImpl::
     ~SchedulerWorkerDelegateImpl() = default;
@@ -293,7 +330,7 @@ void SchedulerWorkerPoolImpl::SchedulerWorkerDelegateImpl::OnMainEntry(
     SchedulerWorker* worker) {
   {
 #if DCHECK_IS_ON()
-    AutoSchedulerLock auto_lock(outer_->lock_);
+    AutoSchedulerLock auto_lock_outer_lock(outer_->lock_);
     DCHECK(ContainsWorker(outer_->workers_, worker));
 #endif
   }
@@ -311,7 +348,7 @@ scoped_refptr<Sequence>
 SchedulerWorkerPoolImpl::SchedulerWorkerDelegateImpl::GetWork(
     SchedulerWorker* worker) {
   {
-    AutoSchedulerLock auto_lock(outer_->lock_);
+    AutoSchedulerLock auto_lock_outer_lock(outer_->lock_);
 
     DCHECK(ContainsWorker(outer_->workers_, worker));
 
@@ -364,7 +401,7 @@ SchedulerWorkerPoolImpl::SchedulerWorkerDelegateImpl::GetWork(
       //    |idle_workers_stack_| is empty.
       // 4. This thread adds itself to |idle_workers_stack_| and goes to sleep.
       //    No thread runs the Sequence inserted in step 2.
-      AutoSchedulerLock auto_lock(outer_->lock_);
+      AutoSchedulerLock auto_lock_outer_lock(outer_->lock_);
 
       OnWorkerBecomesIdleLockRequired(worker);
       return nullptr;
@@ -374,7 +411,7 @@ SchedulerWorkerPoolImpl::SchedulerWorkerDelegateImpl::GetWork(
   DCHECK(sequence);
 #if DCHECK_IS_ON()
   {
-    AutoSchedulerLock auto_lock(outer_->lock_);
+    AutoSchedulerLock auto_lock_outer_lock(outer_->lock_);
     DCHECK(!outer_->idle_workers_stack_.Contains(worker));
   }
 #endif
@@ -435,11 +472,20 @@ void SchedulerWorkerPoolImpl::SchedulerWorkerDelegateImpl::
   SetIsOnIdleWorkersStackLockRequired(worker);
 }
 
+void SchedulerWorkerPoolImpl::SchedulerWorkerDelegateImpl::
+    DoIncreaseWorkerCapacityLockRequired() {
+  outer_->lock_.AssertAcquired();
+  blocking_lock_.AssertAcquired();
+  DCHECK(!increased_worker_capacity_since_blocked_);
+  ++outer_->worker_capacity_;
+  increased_worker_capacity_since_blocked_ = true;
+}
+
 void SchedulerWorkerPoolImpl::SchedulerWorkerDelegateImpl::OnMainExit(
     SchedulerWorker* worker) {
 #if DCHECK_IS_ON()
   bool shutdown_complete = outer_->task_tracker_->IsShutdownComplete();
-  AutoSchedulerLock auto_lock(outer_->lock_);
+  AutoSchedulerLock auto_lock_outer_lock(outer_->lock_);
 
   // |worker| should already have been removed from the idle workers stack and
   // |workers_| by the time the thread is about to exit. (except in the cases
@@ -477,16 +523,45 @@ void SchedulerWorkerPoolImpl::SchedulerWorkerDelegateImpl::
 }
 #endif
 
-// TODO(crbug.com/757475): Support BlockingType::MAY_BLOCK.
 void SchedulerWorkerPoolImpl::SchedulerWorkerDelegateImpl::BlockingScopeEntered(
     BlockingType blocking_type) {
-  if (blocking_type != BlockingType::WILL_BLOCK)
-    return;
+  switch (blocking_type) {
+    case BlockingType::MAY_BLOCK:
+      MayBlockScopeEntered();
+      break;
+    case BlockingType::WILL_BLOCK:
+      WillBlockScopeEntered();
+      break;
+  }
+}
+
+void SchedulerWorkerPoolImpl::SchedulerWorkerDelegateImpl::BlockingScopeExited(
+    BlockingType blocking_type) {
+  AutoSchedulerLock auto_lock_outer_lock(outer_->lock_);
+  AutoSchedulerLock auto_lock_blocking_lock(blocking_lock_);
+  if (increased_worker_capacity_since_blocked_)
+    --outer_->worker_capacity_;
+  increased_worker_capacity_since_blocked_ = false;
+  may_block_start_time_ = TimeTicks();
+}
+
+void SchedulerWorkerPoolImpl::SchedulerWorkerDelegateImpl::
+    MayBlockScopeEntered() {
+  AutoSchedulerLock auto_lock(blocking_lock_);
+  DCHECK(!increased_worker_capacity_since_blocked_);
+  may_block_start_time_ = TimeTicks::Now();
+}
+
+void SchedulerWorkerPoolImpl::SchedulerWorkerDelegateImpl::
+    WillBlockScopeEntered() {
   std::unique_ptr<PriorityQueue::Transaction> shared_transaction(
       outer_->shared_priority_queue_.BeginTransaction());
-  AutoSchedulerLock auto_lock(outer_->lock_);
+  AutoSchedulerLock auto_lock_outer_lock(outer_->lock_);
 
-  ++outer_->worker_capacity_;
+  {
+    AutoSchedulerLock auto_lock_blocking_lock(blocking_lock_);
+    DoIncreaseWorkerCapacityLockRequired();
+  }
 
   // If the number of workers was less than the old worker capacity, PostTask
   // would've handled creating extra workers during WakeUpOneWorker. Therefore,
@@ -504,13 +579,17 @@ void SchedulerWorkerPoolImpl::SchedulerWorkerDelegateImpl::BlockingScopeEntered(
   }
 }
 
-// TODO(crbug.com/757475): Support BlockingType::MAY_BLOCK.
-void SchedulerWorkerPoolImpl::SchedulerWorkerDelegateImpl::BlockingScopeExited(
-    BlockingType blocking_type) {
-  if (blocking_type != BlockingType::WILL_BLOCK)
-    return;
-  AutoSchedulerLock auto_lock(outer_->lock_);
-  --outer_->worker_capacity_;
+void SchedulerWorkerPoolImpl::SchedulerWorkerDelegateImpl::
+    IncreaseWorkerCapacityIfNeededLockRequired(
+        TimeDelta blocked_time_threshold) {
+  outer_->lock_.AssertAcquired();
+
+  AutoSchedulerLock auto_lock_blocking_lock(blocking_lock_);
+  if (increased_worker_capacity_since_blocked_ &&
+      !may_block_start_time_.is_null() &&
+      TimeTicks::Now() - may_block_start_time_ >= blocked_time_threshold) {
+    DoIncreaseWorkerCapacityLockRequired();
+  }
 }
 
 void SchedulerWorkerPoolImpl::WaitForWorkersIdleLockRequiredForTesting(
@@ -541,6 +620,11 @@ void SchedulerWorkerPoolImpl::WakeUpOneWorkerLockRequired() {
       delegate->UnSetIsOnIdleWorkersStackLockRequired(worker);
       worker->WakeUp();
     }
+  }
+
+  if (NumberOfExcessWorkersLockRequired() >= idle_workers_stack_.Size() &&
+      !polling_worker_capacity_) {
+    PostAdjustWorkerCapacityPollingTaskLockRequired();
   }
 
   // Ensure that there is one worker that can run tasks on top of the idle
@@ -626,6 +710,68 @@ SchedulerWorkerPoolImpl::CreateRegisterAndStartSchedulerWorkerLockRequired() {
 size_t SchedulerWorkerPoolImpl::NumberOfExcessWorkersLockRequired() const {
   lock_.AssertAcquired();
   return std::max<int>(0, workers_.size() - worker_capacity_);
+}
+
+void SchedulerWorkerPoolImpl::AdjustWorkerCapacity() {
+  std::unique_ptr<PriorityQueue::Transaction> shared_transaction(
+      shared_priority_queue_.BeginTransaction());
+  AutoSchedulerLock auto_lock(lock_);
+
+  const size_t original_worker_capacity = worker_capacity_;
+
+  // Increase worker capacity for each worker that has been within a MAY_BLOCK
+  // ScopedBlockingCall for more than MayBlockThreshold().
+  for (scoped_refptr<SchedulerWorker> worker : workers_) {
+    // The delegates of workers inside a SchedulerWorkerPoolImpl should be
+    // SchedulerWorkerDelegateImpls.
+    SchedulerWorkerDelegateImpl* delegate =
+        static_cast<SchedulerWorkerDelegateImpl*>(worker->delegate());
+    delegate->IncreaseWorkerCapacityIfNeededLockRequired(MayBlockThreshold());
+  }
+
+  // Wake up a worker per pending sequence, capacity permitting.
+  const size_t num_pending_sequences = shared_transaction->Size();
+  DCHECK_GE(worker_capacity_, original_worker_capacity);
+  const size_t num_wake_ups_needed = std::min(
+      worker_capacity_ - original_worker_capacity, num_pending_sequences);
+
+  for (size_t i = 0; i < num_wake_ups_needed; ++i)
+    WakeUpOneWorkerLockRequired();
+
+  MaintainAtLeastOneIdleWorkerLockRequired();
+}
+
+TimeDelta SchedulerWorkerPoolImpl::MayBlockThreshold() const {
+  if (maximum_blocked_threshold_.IsSet())
+    return TimeDelta::Max();
+  // Arbitrary threshold. A better value could be found by running experiments.
+  return TimeDelta::FromMilliseconds(10);
+}
+
+void SchedulerWorkerPoolImpl::
+    PostAdjustWorkerCapacityPollingTaskLockRequired() {
+  lock_.AssertAcquired();
+
+  polling_worker_capacity_ = true;
+
+  service_thread_task_runner_->PostDelayedTask(
+      FROM_HERE,
+      base::BindOnce(
+          [](SchedulerWorkerPoolImpl* worker_pool) {
+            worker_pool->AdjustWorkerCapacity();
+
+            AutoSchedulerLock auto_lock(worker_pool->lock_);
+            DCHECK(worker_pool->polling_worker_capacity_);
+
+            if (worker_pool->NumberOfExcessWorkersLockRequired() <
+                worker_pool->idle_workers_stack_.Size())
+              worker_pool->polling_worker_capacity_ = false;
+            else
+              worker_pool->PostAdjustWorkerCapacityPollingTaskLockRequired();
+
+          },
+          Unretained(this)),
+      kBlockedWorkersPollPeriod);
 }
 
 }  // namespace internal
