@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ed5506b6_107b7815",
+        "filename": "ios/chrome/app/main_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 1453,
+      "author": {
+        "id": 1165759
+      },
+      "writtenOn": "2017-08-28T23:56:51Z",
+      "side": 1,
+      "message": "Correct, the 3 currents calls should happen on the main thread. Didn\u0027t want to do any extra changes since I think removing these commands is \"dangerous\" as is, but I think we should be fine here.\n\nDone.",
+      "parentUuid": "c152e27b_3cba69c4",
+      "revId": "2e0231317bd24f66b87c5055eadff9bc0456d084",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "13e90e6f_9445d9a5",
         "filename": "ios/chrome/browser/ui/commands/application_commands.h",
         "patchSetId": 2
@@ -39,6 +57,30 @@
       "revId": "2e0231317bd24f66b87c5055eadff9bc0456d084",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "caae4e0a_9836d1bd",
+        "filename": "ios/chrome/browser/ui/commands/application_commands.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1165759
+      },
+      "writtenOn": "2017-08-28T23:56:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "13e90e6f_9445d9a5",
+      "range": {
+        "startLine": 70,
+        "startChar": 20,
+        "endLine": 70,
+        "endChar": 23
+      },
+      "revId": "2e0231317bd24f66b87c5055eadff9bc0456d084",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
