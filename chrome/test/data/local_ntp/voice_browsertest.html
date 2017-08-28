@@ -12,7 +12,14 @@
   <link rel="stylesheet" href="chrome-search://local-ntp/voice.css"></link>
   <script src="test_utils.js"></script>
   <!-- Keep templates in sync with local_ntp.html. -->
-  <!-- TODO(oskopek): Add templates along with tests. -->
+  <template id="voice-text-template">
+    <div class="text-container">
+      <!-- Low confidence text underneath high confidence text. -->
+      <span id="voice-text-i" class="voice-text"></span>
+      <!-- High confidence text on top of low confidence text. -->
+      <span id="voice-text-f" class="voice-text"></span>
+    </div>
+  </template>
 </head>
 <body>
 </body>
