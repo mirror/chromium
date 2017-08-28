@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9cfaafcd_a99bde4f",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/formatter/main.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1116039
+      },
+      "writtenOn": "2017-08-28T17:10:05Z",
+      "side": 1,
+      "message": "Optional: you could put this in webkitpy/common/path_finder.py which has some similar methods for adding things to sys.path.",
+      "range": {
+        "startLine": 12,
+        "startChar": 45,
+        "endLine": 12,
+        "endChar": 53
+      },
+      "revId": "ebb6174e27a7d3a69de41ed7871626ad6cd43c05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
