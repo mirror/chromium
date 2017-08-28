@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "0cc4bde7_50df4c9c",
+        "filename": "components/security_state/core/security_state.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1229234
+      },
+      "writtenOn": "2017-08-28T14:30:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d8fe1185_ee56d84a",
+      "revId": "1956d20bd2747bb47b40b9a9e87f193b5d9d2008",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "09192252_e271d905",
         "filename": "ios/chrome/browser/passwords/credential_manager_unittest.mm",
         "patchSetId": 21
@@ -39,6 +57,30 @@
       "revId": "1956d20bd2747bb47b40b9a9e87f193b5d9d2008",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e714e78_9008c5f8",
+        "filename": "ios/chrome/browser/passwords/credential_manager_unittest.mm",
+        "patchSetId": 21
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1229234
+      },
+      "writtenOn": "2017-08-28T14:30:20Z",
+      "side": 1,
+      "message": "Done\nMoved to another CL: https://chromium-review.googlesource.com/c/chromium/src/+/638270/1/ios/chrome/browser/passwords/credential_manager_unittest.mm",
+      "parentUuid": "09192252_e271d905",
+      "range": {
+        "startLine": 57,
+        "startChar": 27,
+        "endLine": 57,
+        "endChar": 35
+      },
+      "revId": "1956d20bd2747bb47b40b9a9e87f193b5d9d2008",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "e0c8c7ee_c831a4c3",
+        "filename": "ios/chrome/browser/passwords/credential_manager_unittest.mm",
+        "patchSetId": 21
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1229234
+      },
+      "writtenOn": "2017-08-28T14:30:20Z",
+      "side": 1,
+      "message": "Done\nMoved to another CL: https://chromium-review.googlesource.com/c/chromium/src/+/638270/1/ios/chrome/browser/passwords/credential_manager_unittest.mm",
+      "parentUuid": "b9563686_24a367fe",
+      "range": {
+        "startLine": 59,
+        "startChar": 7,
+        "endLine": 59,
+        "endChar": 22
+      },
+      "revId": "1956d20bd2747bb47b40b9a9e87f193b5d9d2008",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a50b994d_f619b9c8",
         "filename": "ios/chrome/browser/passwords/credential_manager_unittest.mm",
         "patchSetId": 21
@@ -85,6 +151,30 @@
       "revId": "1956d20bd2747bb47b40b9a9e87f193b5d9d2008",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a55fd324_5de9ffc4",
+        "filename": "ios/chrome/browser/passwords/credential_manager_unittest.mm",
+        "patchSetId": 21
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1229234
+      },
+      "writtenOn": "2017-08-28T14:30:20Z",
+      "side": 1,
+      "message": "Done\nMoved to another CL: https://chromium-review.googlesource.com/c/chromium/src/+/638270/1/ios/chrome/browser/passwords/credential_manager_unittest.mm",
+      "parentUuid": "a50b994d_f619b9c8",
+      "range": {
+        "startLine": 67,
+        "startChar": 10,
+        "endLine": 67,
+        "endChar": 16
+      },
+      "revId": "1956d20bd2747bb47b40b9a9e87f193b5d9d2008",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -111,6 +201,30 @@
     },
     {
       "key": {
+        "uuid": "1c0bc80c_6d0a1206",
+        "filename": "ios/chrome/browser/passwords/credential_manager_unittest.mm",
+        "patchSetId": 21
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1229234
+      },
+      "writtenOn": "2017-08-28T14:30:20Z",
+      "side": 1,
+      "message": "Done\nMoved to another CL: https://chromium-review.googlesource.com/c/chromium/src/+/638270/1/ios/chrome/browser/passwords/credential_manager_unittest.mm",
+      "parentUuid": "11fa770d_a14d5cce",
+      "range": {
+        "startLine": 97,
+        "startChar": 3,
+        "endLine": 97,
+        "endChar": 7
+      },
+      "revId": "1956d20bd2747bb47b40b9a9e87f193b5d9d2008",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2ea0b421_16b79d16",
         "filename": "ios/chrome/browser/passwords/credential_manager_unittest.mm",
         "patchSetId": 21
@@ -131,6 +245,30 @@
       "revId": "1956d20bd2747bb47b40b9a9e87f193b5d9d2008",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa4279a1_ab7a28e9",
+        "filename": "ios/chrome/browser/passwords/credential_manager_unittest.mm",
+        "patchSetId": 21
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1229234
+      },
+      "writtenOn": "2017-08-28T14:30:20Z",
+      "side": 1,
+      "message": "Done\nI have left the method UpdateSslStatus() and overridden SetUp() in the base class CredentialManagerTest because I will surely need to mock secure context for other methods tested by CredentialManagerTest.\nMoved the file to another CL: https://chromium-review.googlesource.com/c/chromium/src/+/638270/1/ios/chrome/browser/passwords/credential_manager_unittest.mm",
+      "parentUuid": "2ea0b421_16b79d16",
+      "range": {
+        "startLine": 99,
+        "startChar": 7,
+        "endLine": 99,
+        "endChar": 28
+      },
+      "revId": "1956d20bd2747bb47b40b9a9e87f193b5d9d2008",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -157,6 +295,30 @@
     },
     {
       "key": {
+        "uuid": "3ff4b850_6004db37",
+        "filename": "ios/chrome/browser/passwords/credential_manager_util.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1229234
+      },
+      "writtenOn": "2017-08-28T14:30:20Z",
+      "side": 1,
+      "message": "Done\nMoved that file to another CL: https://chromium-review.googlesource.com/c/chromium/src/+/638270/1/ios/chrome/browser/passwords/credential_manager_util.h",
+      "parentUuid": "d7447c1a_5f53a229",
+      "range": {
+        "startLine": 88,
+        "startChar": 5,
+        "endLine": 88,
+        "endChar": 32
+      },
+      "revId": "1956d20bd2747bb47b40b9a9e87f193b5d9d2008",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a6b40c93_b843752d",
         "filename": "ios/chrome/browser/passwords/credential_manager_util.mm",
         "patchSetId": 21
@@ -177,6 +339,30 @@
       "revId": "1956d20bd2747bb47b40b9a9e87f193b5d9d2008",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb395327_46eec173",
+        "filename": "ios/chrome/browser/passwords/credential_manager_util.mm",
+        "patchSetId": 21
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1229234
+      },
+      "writtenOn": "2017-08-28T14:30:20Z",
+      "side": 1,
+      "message": "Done\nMoved the file to another CL: https://chromium-review.googlesource.com/c/chromium/src/+/638270/1/ios/chrome/browser/passwords/credential_manager_util.mm",
+      "parentUuid": "a6b40c93_b843752d",
+      "range": {
+        "startLine": 165,
+        "startChar": 30,
+        "endLine": 165,
+        "endChar": 57
+      },
+      "revId": "1956d20bd2747bb47b40b9a9e87f193b5d9d2008",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -203,6 +389,30 @@
     },
     {
       "key": {
+        "uuid": "ba426dda_d7de96b6",
+        "filename": "ios/chrome/browser/passwords/credential_manager_util.mm",
+        "patchSetId": 21
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1229234
+      },
+      "writtenOn": "2017-08-28T14:30:20Z",
+      "side": 1,
+      "message": "Done\nAdded IOSSecurityStateTabHelper::CreateForWebState(web_state) line before. It performs a check if the tab helper is already present for |web_state|.\nMoved the file to another CL: https://chromium-review.googlesource.com/c/chromium/src/+/638270/1/ios/chrome/browser/passwords/credential_manager_util.mm",
+      "parentUuid": "dd23d06c_fe47324f",
+      "range": {
+        "startLine": 170,
+        "startChar": 8,
+        "endLine": 170,
+        "endChar": 14
+      },
+      "revId": "1956d20bd2747bb47b40b9a9e87f193b5d9d2008",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c5409e48_08146910",
         "filename": "ios/chrome/browser/passwords/credential_manager_util.mm",
         "patchSetId": 21
@@ -223,6 +433,30 @@
       "revId": "1956d20bd2747bb47b40b9a9e87f193b5d9d2008",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59fe647c_09a72cb4",
+        "filename": "ios/chrome/browser/passwords/credential_manager_util.mm",
+        "patchSetId": 21
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1229234
+      },
+      "writtenOn": "2017-08-28T14:30:20Z",
+      "side": 1,
+      "message": "Done\nMoved the file to another CL: https://chromium-review.googlesource.com/c/chromium/src/+/638270/1/ios/chrome/browser/passwords/credential_manager_util.mm",
+      "parentUuid": "c5409e48_08146910",
+      "range": {
+        "startLine": 186,
+        "startChar": 32,
+        "endLine": 186,
+        "endChar": 46
+      },
+      "revId": "1956d20bd2747bb47b40b9a9e87f193b5d9d2008",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -249,6 +483,30 @@
     },
     {
       "key": {
+        "uuid": "f7644373_0c51fda1",
+        "filename": "ios/chrome/browser/passwords/credential_manager_util.mm",
+        "patchSetId": 21
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1229234
+      },
+      "writtenOn": "2017-08-28T14:30:20Z",
+      "side": 1,
+      "message": "Done\nMoved the file to another CL: https://chromium-review.googlesource.com/c/chromium/src/+/638270/1/ios/chrome/browser/passwords/credential_manager_util.mm",
+      "parentUuid": "076d65c4_62ee588a",
+      "range": {
+        "startLine": 200,
+        "startChar": 5,
+        "endLine": 200,
+        "endChar": 73
+      },
+      "revId": "1956d20bd2747bb47b40b9a9e87f193b5d9d2008",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bc9aa3bd_e38e29fc",
         "filename": "ios/chrome/browser/web/origin_security_checker.h",
         "patchSetId": 21
@@ -263,6 +521,24 @@
       "revId": "1956d20bd2747bb47b40b9a9e87f193b5d9d2008",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0dea6a79_ec9b5360",
+        "filename": "ios/chrome/browser/web/origin_security_checker.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1229234
+      },
+      "writtenOn": "2017-08-28T14:30:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bc9aa3bd_e38e29fc",
+      "revId": "1956d20bd2747bb47b40b9a9e87f193b5d9d2008",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -312,6 +588,30 @@
     },
     {
       "key": {
+        "uuid": "5bb102c4_30988974",
+        "filename": "ios/chrome/browser/web/origin_security_checker.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1229234
+      },
+      "writtenOn": "2017-08-28T14:30:20Z",
+      "side": 1,
+      "message": "\u003e Please add tests\n\nDone\n\n\u003e nit: Should this be in security_state.h?\n\nThis function uses web::IsOriginSecure from ios/web/public/origin_util.h.\nBTW, renamed this function to IsOriginSecureAndNonData, because that\u0027s what it checks for now.",
+      "parentUuid": "6e2083f3_0f7e67a6",
+      "range": {
+        "startLine": 19,
+        "startChar": 5,
+        "endLine": 19,
+        "endChar": 20
+      },
+      "revId": "1956d20bd2747bb47b40b9a9e87f193b5d9d2008",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "096d4947_843c3137",
         "filename": "ios/chrome/browser/web/origin_security_checker.mm",
         "patchSetId": 21
@@ -323,6 +623,30 @@
       "writtenOn": "2017-08-25T14:11:15Z",
       "side": 1,
       "message": "What is this strange code doing beyond \"url.scheme() !\u003d url::kDataScheme\"?",
+      "range": {
+        "startLine": 20,
+        "startChar": 16,
+        "endLine": 20,
+        "endChar": 29
+      },
+      "revId": "1956d20bd2747bb47b40b9a9e87f193b5d9d2008",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f06c55f0_4bef3709",
+        "filename": "ios/chrome/browser/web/origin_security_checker.mm",
+        "patchSetId": 21
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1229234
+      },
+      "writtenOn": "2017-08-28T14:30:20Z",
+      "side": 1,
+      "message": "Done\nI think the intention was to make it easy to add more URI schemes. Renamed the function to IsOriginSecureAndNonData, because that\u0027s what it checks now.",
+      "parentUuid": "096d4947_843c3137",
       "range": {
         "startLine": 20,
         "startChar": 16,
