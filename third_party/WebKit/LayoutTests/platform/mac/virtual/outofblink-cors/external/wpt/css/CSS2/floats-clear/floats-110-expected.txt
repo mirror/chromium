@@ -1,0 +1,55 @@
+layer at (0,0) size 800x600
+  LayoutView at (0,0) size 800x600
+layer at (0,0) size 800x534
+  LayoutBlockFlow {html} at (0,0) size 800x534
+    LayoutBlockFlow {body} at (8,16) size 784x54
+      LayoutBlockFlow {p} at (0,0) size 784x54
+        LayoutText {#text} at (0,0) size 729x36
+          text run at (0,0) width 415: "Make your window an inch or two bigger than than the width of "
+          text run at (414,0) width 315: "one float. All floats should be the same size. This"
+          text run at (0,18) width 114: "document should "
+          text run at (113,18) width 182: "be pixel-perfect identical to "
+        LayoutInline {a} at (0,0) size 51x18 [color=#0000EE]
+          LayoutText {#text} at (294,18) size 51x18
+            text run at (294,18) width 51: "this one"
+        LayoutText {#text} at (344,18) size 32x18
+          text run at (344,18) width 32: " and "
+        LayoutInline {a} at (0,0) size 51x18 [color=#0000EE]
+          LayoutText {#text} at (375,18) size 51x18
+            text run at (375,18) width 51: "this one"
+        LayoutText {#text} at (425,18) size 763x36
+          text run at (425,18) width 240: " at all window sizes. Try resizing the "
+          text run at (664,18) width 99: "window so that"
+          text run at (0,36) width 222: "floats wrap in one or two columns."
+      LayoutBlockFlow (floating) {div} at (0,70) size 631.36x56
+        LayoutBlockFlow {div} at (8,8) size 615.36x40 [border: (3px solid #000000)]
+          LayoutText {#text} at (11,11) size 594x18
+            text run at (11,11) width 594: "this is a float this is a float this is a float this is a float this is a float this is a float this is a float"
+      LayoutBlockFlow (floating) {div} at (0,126) size 631.36x56
+        LayoutBlockFlow {div} at (8,8) size 615.36x40 [border: (3px solid #000000)]
+          LayoutText {#text} at (11,11) size 594x18
+            text run at (11,11) width 594: "this is a float this is a float this is a float this is a float this is a float this is a float this is a float"
+      LayoutBlockFlow (floating) {div} at (0,182) size 631.36x56
+        LayoutBlockFlow {div} at (8,8) size 615.36x40 [border: (3px solid #000000)]
+          LayoutText {#text} at (11,11) size 594x18
+            text run at (11,11) width 594: "this is a float this is a float this is a float this is a float this is a float this is a float this is a float"
+      LayoutBlockFlow (floating) {div} at (0,238) size 631.36x56
+        LayoutBlockFlow {div} at (8,8) size 615.36x40 [border: (3px solid #000000)]
+          LayoutText {#text} at (11,11) size 594x18
+            text run at (11,11) width 594: "this is a float this is a float this is a float this is a float this is a float this is a float this is a float"
+      LayoutBlockFlow (floating) {div} at (0,294) size 631.36x56
+        LayoutBlockFlow {div} at (8,8) size 615.36x40 [border: (3px solid #000000)]
+          LayoutText {#text} at (11,11) size 594x18
+            text run at (11,11) width 594: "this is a float this is a float this is a float this is a float this is a float this is a float this is a float"
+      LayoutBlockFlow (floating) {div} at (0,350) size 631.36x56
+        LayoutBlockFlow {div} at (8,8) size 615.36x40 [border: (3px solid #000000)]
+          LayoutText {#text} at (11,11) size 594x18
+            text run at (11,11) width 594: "this is a float this is a float this is a float this is a float this is a float this is a float this is a float"
+      LayoutBlockFlow (floating) {div} at (0,406) size 631.36x56
+        LayoutBlockFlow {div} at (8,8) size 615.36x40 [border: (3px solid #000000)]
+          LayoutText {#text} at (11,11) size 594x18
+            text run at (11,11) width 594: "this is a float this is a float this is a float this is a float this is a float this is a float this is a float"
+      LayoutBlockFlow (floating) {div} at (0,462) size 631.36x56
+        LayoutBlockFlow {div} at (8,8) size 615.36x40 [border: (3px solid #000000)]
+          LayoutText {#text} at (11,11) size 594x18
+            text run at (11,11) width 594: "this is a float this is a float this is a float this is a float this is a float this is a float this is a float"

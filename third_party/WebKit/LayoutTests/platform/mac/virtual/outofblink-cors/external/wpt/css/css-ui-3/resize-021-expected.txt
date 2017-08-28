@@ -1,0 +1,24 @@
+layer at (0,0) size 800x600
+  LayoutView at (0,0) size 800x600
+layer at (0,0) size 800x138
+  LayoutBlockFlow {HTML} at (0,0) size 800x138
+    LayoutBlockFlow {BODY} at (8,16) size 784x106
+      LayoutBlockFlow {P} at (0,0) size 784x18
+        LayoutText {#text} at (0,0) size 590x18
+          text run at (0,0) width 590: "Attempt to resize the orange box below so that it is large enough to fully cover the blue one."
+      LayoutBlockFlow {P} at (0,34) size 784x72
+        LayoutText {#text} at (0,0) size 325x18
+          text run at (0,0) width 325: "If you cannot enlarge the orange box, the test fails."
+        LayoutBR {BR} at (324,0) size 1x18
+        LayoutText {#text} at (0,18) size 312x18
+          text run at (0,18) width 312: "If you can fully cover the blue box, the test fails."
+        LayoutBR {BR} at (311,18) size 1x18
+        LayoutText {#text} at (0,36) size 469x18
+          text run at (0,36) width 469: "Even if the blue box is not fully covered, if you see any red, the test fails."
+        LayoutBR {BR} at (468,36) size 1x18
+        LayoutText {#text} at (0,54) size 169x18
+          text run at (0,54) width 169: "Otherwise, the test passes."
+layer at (8,138) size 300x300
+  LayoutBlockFlow (positioned) {DIV} at (8,138) size 300x300 [bgcolor=#0000FF]
+layer at (8,138) size 100x100
+  LayoutBlockFlow (positioned) {DIV} at (8,138) size 100x100 [bgcolor=#FFA500]

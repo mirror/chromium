@@ -1,0 +1,11 @@
+layer at (0,0) size 800x600
+  LayoutView at (0,0) size 800x600
+layer at (0,0) size 800x182
+  LayoutBlockFlow {HTML} at (0,0) size 800x182
+    LayoutBlockFlow {BODY} at (8,16) size 784x158
+      LayoutBlockFlow {P} at (0,0) size 784x36
+        LayoutText {#text} at (0,0) size 759x36
+          text run at (0,0) width 759: "The test passes if, when moved inside the blue box, the cursor indicates that the dragged item cannot be dropped at the"
+          text run at (0,18) width 153: "current cursor location. "
+          text run at (152,18) width 492: "Often rendered as a hand or pointer with a small circle with a line through it."
+      LayoutBlockFlow {DIV} at (0,52) size 106x106 [border: (3px solid #0000FF)]

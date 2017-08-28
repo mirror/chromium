@@ -1,0 +1,26 @@
+layer at (0,0) size 800x600
+  LayoutView at (0,0) size 800x600
+layer at (0,0) size 800x110
+  LayoutBlockFlow {HTML} at (0,0) size 800x110
+    LayoutBlockFlow {BODY} at (8,16) size 784x86
+      LayoutBlockFlow {P} at (0,0) size 784x18
+        LayoutText {#text} at (0,0) size 520x18
+          text run at (0,0) width 520: "First, use directional navigation to navigate the focus to the \"START\" link below."
+      LayoutBlockFlow {P} at (0,34) size 784x18
+        LayoutText {#text} at (0,0) size 486x18
+          text run at (0,0) width 486: "Test passes if the \"START\" element remains focused when navigating right."
+      LayoutBlockFlow {DIV} at (0,68) size 784x18
+        LayoutInline {A} at (0,0) size 41x18 [color=#551A8B]
+          LayoutText {#text} at (0,0) size 41x18
+            text run at (0,0) width 41: "ignore"
+        LayoutText {#text} at (40,0) size 5x18
+          text run at (40,0) width 5: " "
+        LayoutInline {A} at (0,0) size 50x18 [color=#551A8B]
+          LayoutText {#text} at (44,0) size 50x18
+            text run at (44,0) width 50: "START"
+        LayoutText {#text} at (93,0) size 5x18
+          text run at (93,0) width 5: " "
+        LayoutInline {A} at (0,0) size 42x18 [color=#551A8B]
+          LayoutText {#text} at (97,0) size 42x18
+            text run at (97,0) width 42: "ignore"
+        LayoutText {#text} at (0,0) size 0x0

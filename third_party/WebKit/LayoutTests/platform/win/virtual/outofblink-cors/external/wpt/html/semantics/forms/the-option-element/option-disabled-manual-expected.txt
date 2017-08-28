@@ -1,0 +1,31 @@
+layer at (0,0) size 800x600
+  LayoutView at (0,0) size 800x600
+layer at (0,0) size 800x304
+  LayoutBlockFlow {HTML} at (0,0) size 800x304.44
+    LayoutBlockFlow {BODY} at (8,8) size 784x280.44
+      LayoutBlockFlow {DIV} at (0,0) size 784x20
+        LayoutMenuList {SELECT} at (0,0) size 67x20 [bgcolor=#C0C0C0] [border: (1px solid #A9A9A9)]
+          LayoutBlockFlow (anonymous) at (1,1) size 65x18
+            LayoutText (anonymous) at (4,1) size 45x16
+              text run at (4,1) width 45: "Option1"
+        LayoutText {#text} at (0,0) size 0x0
+      LayoutBlockFlow {H2} at (0,39.91) size 784x27
+        LayoutText {#text} at (0,0) size 119x26
+          text run at (0,0) width 119: "Description"
+      LayoutBlockFlow {P} at (0,86.81) size 784x20
+        LayoutText {#text} at (0,0) size 534x19
+          text run at (0,0) width 534: "This test validates that an option element is disabled if its disabled attribute is present."
+      LayoutBlockFlow {H2} at (0,126.72) size 784x27
+        LayoutText {#text} at (0,0) size 106x26
+          text run at (0,0) width 106: "Test steps:"
+      LayoutBlockFlow {OL} at (0,173.63) size 784x20
+        LayoutListItem {LI} at (40,0) size 744x20
+          LayoutListMarker (anonymous) at (-16,0) size 16x19: "1"
+          LayoutText {#text} at (0,0) size 241x19
+            text run at (0,0) width 241: "Click the select flag to select 'Option2'"
+      LayoutBlockFlow {H2} at (0,213.53) size 784x27
+        LayoutText {#text} at (0,0) size 73x26
+          text run at (0,0) width 73: "Result:"
+      LayoutBlockFlow {P} at (0,260.44) size 784x20
+        LayoutText {#text} at (0,0) size 254x19
+          text run at (0,0) width 254: "Test passes if not able to select 'Option2'"

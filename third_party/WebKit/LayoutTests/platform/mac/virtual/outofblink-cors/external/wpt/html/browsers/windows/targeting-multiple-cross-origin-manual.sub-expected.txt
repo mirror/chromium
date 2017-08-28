@@ -1,0 +1,25 @@
+layer at (0,0) size 800x600
+  LayoutView at (0,0) size 800x600
+layer at (0,0) size 800x600
+  LayoutBlockFlow {HTML} at (0,0) size 800x600
+    LayoutBlockFlow {BODY} at (8,8) size 784x576
+      LayoutBlockFlow {P} at (0,0) size 784x36
+        LayoutText {#text} at (0,0) size 784x36
+          text run at (0,0) width 784: "Follow this link to open a new browsing context in a separate origin. Follow the instructions in that new window, and then"
+          text run at (0,18) width 175: "come back to this window. "
+        LayoutInline {A} at (0,0) size 26x18 [color=#0000EE]
+          LayoutText {#text} at (174,18) size 26x18
+            text run at (174,18) width 26: "link"
+        LayoutText {#text} at (199,18) size 5x18
+          text run at (199,18) width 5: "."
+      LayoutBlockFlow {P} at (0,52) size 784x18
+        LayoutText {#text} at (0,0) size 327x18
+          text run at (0,0) width 327: "Once you come back to this page, follow this link. "
+        LayoutInline {A} at (0,0) size 26x18 [color=#0000EE]
+          LayoutText {#text} at (326,0) size 26x18
+            text run at (326,0) width 26: "link"
+        LayoutText {#text} at (351,0) size 5x18
+          text run at (351,0) width 5: "."
+      LayoutBlockFlow {P} at (0,86) size 784x18
+        LayoutText {#text} at (0,0) size 464x18
+          text run at (0,0) width 464: "After clicking that link, you should have three additional windows open."

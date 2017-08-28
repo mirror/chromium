@@ -1,0 +1,38 @@
+layer at (0,0) size 800x600
+  LayoutView at (0,0) size 800x600
+layer at (0,0) size 800x134
+  LayoutBlockFlow {HTML} at (0,0) size 800x134
+    LayoutBlockFlow {BODY} at (8,16) size 784x110
+      LayoutBlockFlow {OL} at (0,0) size 784x36
+        LayoutListItem {LI} at (40,0) size 744x18
+          LayoutListMarker (anonymous) at (-16,0) size 16x18: "1"
+          LayoutText {#text} at (0,0) size 112x18
+            text run at (0,0) width 112: "Refresh the page."
+        LayoutListItem {LI} at (40,18) size 744x18
+          LayoutListMarker (anonymous) at (-16,0) size 16x18: "2"
+          LayoutText {#text} at (0,0) size 272x18
+            text run at (0,0) width 272: "If the frame element is loaded, then test is "
+          LayoutInline {SPAN} at (0,0) size 39x18 [color=#008000]
+            LayoutInline {B} at (0,0) size 39x18
+              LayoutText {#text} at (271,0) size 39x18
+                text run at (271,0) width 39: "PASS"
+          LayoutText {#text} at (309,0) size 76x18
+            text run at (309,0) width 76: ", otherwise "
+          LayoutInline {SPAN} at (0,0) size 38x18 [color=#FF0000]
+            LayoutInline {B} at (0,0) size 38x18
+              LayoutText {#text} at (384,0) size 38x18
+                text run at (384,0) width 38: "FAIL"
+          LayoutText {#text} at (421,0) size 5x18
+            text run at (421,0) width 5: "."
+      LayoutBlockFlow (anonymous) at (0,52) size 784x58
+        LayoutText {#text} at (0,0) size 0x0
+layer at (8,68) size 604x54
+  LayoutIFrame {IFRAME} at (0,0) size 604x54 [border: (2px inset #EEEEEE)]
+    layer at (0,0) size 600x50
+      LayoutView at (0,0) size 600x50
+    layer at (0,0) size 600x50
+      LayoutBlockFlow {HTML} at (0,0) size 600x50
+        LayoutBlockFlow {BODY} at (8,8) size 584x29
+          LayoutBlockFlow {PRE} at (0,0) size 584x15
+            LayoutText {#text} at (0,0) size 305x15
+              text run at (0,0) width 305: "{\"error\": {\"message\": \"\", \"code\": 404}}"

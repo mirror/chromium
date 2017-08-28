@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+FAIL subscribe() is rejected when a subscription with a different sender IDalready exists assert_unreached: unexpected rejection: assert_equals: expected "InvalidStateError" but got "NotAllowedError" Reached unreachable code
+Harness: the test ran to completion.
+

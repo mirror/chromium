@@ -1,0 +1,18 @@
+layer at (0,0) size 800x600
+  LayoutView at (0,0) size 800x600
+layer at (0,0) size 800x112
+  LayoutBlockFlow {HTML} at (0,0) size 800x112
+    LayoutBlockFlow {BODY} at (8,16) size 784x88
+      LayoutBlockFlow {P} at (0,0) size 784x36
+        LayoutText {#text} at (0,0) size 744x36
+          text run at (0,0) width 379: "Test passes if there is a \"Placeholder Text\" in the text area, "
+          text run at (378,0) width 366: "and if the \"Placeholder Text\" disappears after type in any"
+          text run at (0,18) width 62: "character."
+      LayoutBlockFlow (anonymous) at (0,52) size 784x36
+        LayoutText {#text} at (0,0) size 0x0
+layer at (8,68) size 141x32 clip at (9,69) size 139x30
+  LayoutTextControl {TEXTAREA} at (0,0) size 141x32 [bgcolor=#FFFFFF] [border: (1px solid #000000)]
+    LayoutBlockFlow {DIV} at (3,3) size 135x13 [color=#757575]
+      LayoutText {#text} at (0,0) size 83x13
+        text run at (0,0) width 83: "Placeholder Text"
+    LayoutBlockFlow {DIV} at (3,3) size 135x13

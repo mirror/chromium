@@ -1,0 +1,15 @@
+layer at (0,0) size 800x600
+  LayoutView at (0,0) size 800x600
+layer at (0,0) size 800x168
+  LayoutBlockFlow {HTML} at (0,0) size 800x168
+    LayoutBlockFlow {BODY} at (8,16) size 784x136
+      LayoutBlockFlow {P} at (0,0) size 784x18
+        LayoutText {#text} at (0,0) size 642x18
+          text run at (0,0) width 378: "The test passes if, when moved inside the peach rectangle, "
+          text run at (377,0) width 265: "the cursor looks like the reference image."
+      LayoutBlockFlow {P} at (0,34) size 132x68 [bgcolor=#FFE5B4] [border: (2px solid #555555)]
+        LayoutInline {<pseudo:before>} at (0,0) size 32x18
+          LayoutImage (anonymous) at (2,2) size 32x32
+      LayoutBlockFlow {P} at (0,118) size 784x18
+        LayoutText {#text} at (0,0) size 401x18
+          text run at (0,0) width 401: "Greyscale PNG image, with transparency (tRNS), 16 bit/pixel."

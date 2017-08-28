@@ -1,0 +1,20 @@
+layer at (0,0) size 800x600
+  LayoutView at (0,0) size 800x600
+layer at (0,0) size 800x167
+  LayoutBlockFlow {HTML} at (0,0) size 800x167
+    LayoutBlockFlow {BODY} at (8,16) size 784x143
+      LayoutBlockFlow {P} at (0,0) size 784x18
+        LayoutText {#text} at (0,0) size 777x18
+          text run at (0,0) width 777: "Select the elipsis character (\x{201C}\x{2026}\x{201D}) in the blue box below, copy it to the clipboard, and paste the result into the orange box."
+      LayoutBlockFlow {P} at (0,34) size 784x18
+        LayoutText {#text} at (0,0) size 645x18
+          text run at (0,0) width 645: "This test passes if the pasted text is \x{201C}This test passes\x{201D}. If only part of that text is pasted, the test fails."
+      LayoutBlockFlow (anonymous) at (0,103) size 784x40
+        LayoutText {#text} at (0,0) size 0x0
+layer at (8,84) size 51x35 clip at (11,87) size 45x29 scrollWidth 269
+  LayoutBlockFlow {DIV} at (0,68) size 51x35 [border: (3px solid #0000FF)]
+    LayoutText {#text} at (3,3) size 256x29
+      text run at (3,3) width 256: " This test passes"
+layer at (8,119) size 784x36 clip at (11,122) size 778x30
+  LayoutTextControl {TEXTAREA} at (0,0) size 784x36 [bgcolor=#FFFFFF] [border: (3px solid #FFA500)]
+    LayoutBlockFlow {DIV} at (5,5) size 774x13

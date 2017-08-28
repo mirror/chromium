@@ -1,0 +1,11 @@
+layer at (0,0) size 800x600
+  LayoutView at (0,0) size 800x600
+layer at (0,0) size 800x182
+  LayoutBlockFlow {HTML} at (0,0) size 800x182
+    LayoutBlockFlow {BODY} at (8,16) size 784x158
+      LayoutBlockFlow {P} at (0,0) size 784x36
+        LayoutText {#text} at (0,0) size 775x36
+          text run at (0,0) width 661: "The test passes if, when moved inside the blue box, the cursor indicates availability of a context menu. "
+          text run at (660,0) width 115: "Often rendered as"
+          text run at (0,18) width 325: "an arrow with a small menu-like graphic next to it."
+      LayoutBlockFlow {DIV} at (0,52) size 106x106 [border: (3px solid #0000FF)]

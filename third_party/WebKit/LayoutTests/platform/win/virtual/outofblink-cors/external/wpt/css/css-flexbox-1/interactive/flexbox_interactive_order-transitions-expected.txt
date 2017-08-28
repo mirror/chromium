@@ -1,0 +1,48 @@
+layer at (0,0) size 800x600
+  LayoutView at (0,0) size 800x600
+layer at (0,0) size 800x380
+  LayoutBlockFlow {HTML} at (0,0) size 800x380
+    LayoutBlockFlow {BODY} at (8,16) size 784x186
+      LayoutFlexibleBox {DIV} at (0,0) size 322x130 [bgcolor=#0000FF] [border: (1px solid #000000)]
+        LayoutBlockFlow {SPAN} at (177,89) size 128x24 [bgcolor=#FFC0CB]
+          LayoutText {#text} at (0,0) size 23x19
+            text run at (0,0) width 23: "one"
+        LayoutBlockFlow {SPAN} at (17,33) size 128x24 [bgcolor=#FFFF00]
+          LayoutText {#text} at (0,0) size 24x19
+            text run at (0,0) width 24: "two"
+        LayoutBlockFlow {SPAN} at (17,89) size 128x24 [color=#FFFFFF] [bgcolor=#000000]
+          LayoutText {#text} at (0,0) size 31x19
+            text run at (0,0) width 31: "three"
+        LayoutBlockFlow {SPAN} at (177,33) size 128x24 [color=#FFFFFF] [bgcolor=#FF00FF]
+          LayoutText {#text} at (0,0) size 26x19
+            text run at (0,0) width 26: "four"
+      LayoutBlockFlow {P} at (0,146) size 784x40
+        LayoutText {#text} at (0,0) size 768x39
+          text run at (0,0) width 742: "Verify that the box above looks exactly like the first of the boxes below. Then hover the blue area above and leave the"
+          text run at (0,20) width 768: "mouse there for 4 seconds. After the specified time, the box above should look exactly like the second of the boxes below."
+      LayoutBlockFlow (floating) {DIV} at (0,218) size 322x130 [bgcolor=#0000FF] [border: (1px solid #000000)]
+        LayoutBlockFlow (floating) {SPAN} at (17,33) size 128x24 [bgcolor=#FFFF00]
+          LayoutText {#text} at (0,0) size 24x19
+            text run at (0,0) width 24: "two"
+        LayoutBlockFlow (floating) {SPAN} at (177,33) size 128x24 [color=#FFFFFF] [bgcolor=#FF00FF]
+          LayoutText {#text} at (0,0) size 26x19
+            text run at (0,0) width 26: "four"
+        LayoutBlockFlow (floating) {SPAN} at (17,89) size 128x24 [color=#FFFFFF] [bgcolor=#000000]
+          LayoutText {#text} at (0,0) size 31x19
+            text run at (0,0) width 31: "three"
+        LayoutBlockFlow (floating) {SPAN} at (177,89) size 128x24 [bgcolor=#FFC0CB]
+          LayoutText {#text} at (0,0) size 23x19
+            text run at (0,0) width 23: "one"
+      LayoutBlockFlow (floating) {DIV} at (338,218) size 322x130 [bgcolor=#0000FF] [border: (1px solid #000000)]
+        LayoutBlockFlow (floating) {SPAN} at (17,33) size 128x24 [bgcolor=#FFC0CB]
+          LayoutText {#text} at (0,0) size 23x19
+            text run at (0,0) width 23: "one"
+        LayoutBlockFlow (floating) {SPAN} at (177,33) size 128x24 [color=#FFFFFF] [bgcolor=#000000]
+          LayoutText {#text} at (0,0) size 31x19
+            text run at (0,0) width 31: "three"
+        LayoutBlockFlow (floating) {SPAN} at (17,89) size 128x24 [bgcolor=#FFFF00]
+          LayoutText {#text} at (0,0) size 24x19
+            text run at (0,0) width 24: "two"
+        LayoutBlockFlow (floating) {SPAN} at (177,89) size 128x24 [color=#FFFFFF] [bgcolor=#FF00FF]
+          LayoutText {#text} at (0,0) size 26x19
+            text run at (0,0) width 26: "four"

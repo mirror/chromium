@@ -1,0 +1,277 @@
+layer at (0,0) size 800x600 clip at (0,0) size 785x600 scrollHeight 996
+  LayoutView at (0,0) size 800x600
+layer at (0,0) size 785x996 backgroundClip at (0,0) size 785x600 clip at (0,0) size 785x600
+  LayoutBlockFlow {html} at (0,0) size 785x996
+    LayoutBlockFlow {body} at (8,16) size 769x964
+      LayoutBlockFlow {p} at (0,0) size 769x36
+        LayoutText {#text} at (0,0) size 750x36
+          text run at (0,0) width 439: "Resize your window slowly from a wide size to a narrow size. Each "
+          text run at (438,0) width 312: "\"XXXXXXXXXXXXXXX\" should be wrapped"
+          text run at (0,18) width 141: "by a blue border. The "
+          text run at (140,18) width 476: "XXXXXXXXXXXXXXX-filled boxes below should always be perfectly "
+          text run at (615,18) width 109: "aligned in a grid."
+      LayoutBlockFlow {p} at (0,52) size 769x912
+        LayoutInline {span} at (0,0) size 687x892
+          LayoutText {#text} at (0,0) size 0x0
+          LayoutInline {span} at (0,0) size 225x24 [color=#808080] [border: (3px solid #0000FF)]
+            LayoutText {#text} at (3,15) size 219x18
+              text run at (3,15) width 219: "XXXXXXXXXXXXXXX"
+          LayoutText {#text} at (224,15) size 8x18
+            text run at (224,15) width 8: " "
+          LayoutInline {span} at (0,0) size 225x24 [color=#808080] [border: (3px solid #0000FF)]
+            LayoutText {#text} at (234,15) size 219x18
+              text run at (234,15) width 219: "XXXXXXXXXXXXXXX"
+          LayoutText {#text} at (455,15) size 8x18
+            text run at (455,15) width 8: " "
+          LayoutInline {span} at (0,0) size 225x24 [color=#808080] [border: (3px solid #0000FF)]
+            LayoutText {#text} at (465,15) size 219x18
+              text run at (465,15) width 219: "XXXXXXXXXXXXXXX"
+          LayoutText {#text} at (0,0) size 0x0
+          LayoutInline {span} at (0,0) size 225x24 [color=#808080] [border: (3px solid #0000FF)]
+            LayoutText {#text} at (3,63) size 219x18
+              text run at (3,63) width 219: "XXXXXXXXXXXXXXX"
+          LayoutText {#text} at (224,63) size 8x18
+            text run at (224,63) width 8: " "
+          LayoutInline {span} at (0,0) size 225x24 [color=#808080] [border: (3px solid #0000FF)]
+            LayoutText {#text} at (234,63) size 219x18
+              text run at (234,63) width 219: "XXXXXXXXXXXXXXX"
+          LayoutText {#text} at (455,63) size 8x18
+            text run at (455,63) width 8: " "
+          LayoutInline {span} at (0,0) size 225x24 [color=#808080] [border: (3px solid #0000FF)]
+            LayoutText {#text} at (465,63) size 219x18
+              text run at (465,63) width 219: "XXXXXXXXXXXXXXX"
+          LayoutText {#text} at (0,0) size 0x0
+          LayoutInline {span} at (0,0) size 225x24 [color=#808080] [border: (3px solid #0000FF)]
+            LayoutText {#text} at (3,111) size 219x18
+              text run at (3,111) width 219: "XXXXXXXXXXXXXXX"
+          LayoutText {#text} at (224,111) size 8x18
+            text run at (224,111) width 8: " "
+          LayoutInline {span} at (0,0) size 225x24 [color=#808080] [border: (3px solid #0000FF)]
+            LayoutText {#text} at (234,111) size 219x18
+              text run at (234,111) width 219: "XXXXXXXXXXXXXXX"
+          LayoutText {#text} at (455,111) size 8x18
+            text run at (455,111) width 8: " "
+          LayoutInline {span} at (0,0) size 225x24 [color=#808080] [border: (3px solid #0000FF)]
+            LayoutText {#text} at (465,111) size 219x18
+              text run at (465,111) width 219: "XXXXXXXXXXXXXXX"
+          LayoutText {#text} at (0,0) size 0x0
+          LayoutInline {span} at (0,0) size 225x24 [color=#808080] [border: (3px solid #0000FF)]
+            LayoutText {#text} at (3,159) size 219x18
+              text run at (3,159) width 219: "XXXXXXXXXXXXXXX"
+          LayoutText {#text} at (224,159) size 8x18
+            text run at (224,159) width 8: " "
+          LayoutInline {span} at (0,0) size 225x24 [color=#808080] [border: (3px solid #0000FF)]
+            LayoutText {#text} at (234,159) size 219x18
+              text run at (234,159) width 219: "XXXXXXXXXXXXXXX"
+          LayoutText {#text} at (455,159) size 8x18
+            text run at (455,159) width 8: " "
+          LayoutInline {span} at (0,0) size 225x24 [color=#808080] [border: (3px solid #0000FF)]
+            LayoutText {#text} at (465,159) size 219x18
+              text run at (465,159) width 219: "XXXXXXXXXXXXXXX"
+          LayoutText {#text} at (0,0) size 0x0
+          LayoutInline {span} at (0,0) size 225x24 [color=#808080] [border: (3px solid #0000FF)]
+            LayoutText {#text} at (3,207) size 219x18
+              text run at (3,207) width 219: "XXXXXXXXXXXXXXX"
+          LayoutText {#text} at (224,207) size 8x18
+            text run at (224,207) width 8: " "
+          LayoutInline {span} at (0,0) size 225x24 [color=#808080] [border: (3px solid #0000FF)]
+            LayoutText {#text} at (234,207) size 219x18
+              text run at (234,207) width 219: "XXXXXXXXXXXXXXX"
+          LayoutText {#text} at (455,207) size 8x18
+            text run at (455,207) width 8: " "
+          LayoutInline {span} at (0,0) size 225x24 [color=#808080] [border: (3px solid #0000FF)]
+            LayoutText {#text} at (465,207) size 219x18
+              text run at (465,207) width 219: "XXXXXXXXXXXXXXX"
+          LayoutText {#text} at (0,0) size 0x0
+          LayoutInline {span} at (0,0) size 225x24 [color=#808080] [border: (3px solid #0000FF)]
+            LayoutText {#text} at (3,255) size 219x18
+              text run at (3,255) width 219: "XXXXXXXXXXXXXXX"
+          LayoutText {#text} at (224,255) size 8x18
+            text run at (224,255) width 8: " "
+          LayoutInline {span} at (0,0) size 225x24 [color=#808080] [border: (3px solid #0000FF)]
+            LayoutText {#text} at (234,255) size 219x18
+              text run at (234,255) width 219: "XXXXXXXXXXXXXXX"
+          LayoutText {#text} at (455,255) size 8x18
+            text run at (455,255) width 8: " "
+          LayoutInline {span} at (0,0) size 225x24 [color=#808080] [border: (3px solid #0000FF)]
+            LayoutText {#text} at (465,255) size 219x18
+              text run at (465,255) width 219: "XXXXXXXXXXXXXXX"
+          LayoutText {#text} at (0,0) size 0x0
+          LayoutInline {span} at (0,0) size 225x24 [color=#808080] [border: (3px solid #0000FF)]
+            LayoutText {#text} at (3,303) size 219x18
+              text run at (3,303) width 219: "XXXXXXXXXXXXXXX"
+          LayoutText {#text} at (224,303) size 8x18
+            text run at (224,303) width 8: " "
+          LayoutInline {span} at (0,0) size 225x24 [color=#808080] [border: (3px solid #0000FF)]
+            LayoutText {#text} at (234,303) size 219x18
+              text run at (234,303) width 219: "XXXXXXXXXXXXXXX"
+          LayoutText {#text} at (455,303) size 8x18
+            text run at (455,303) width 8: " "
+          LayoutInline {span} at (0,0) size 225x24 [color=#808080] [border: (3px solid #0000FF)]
+            LayoutText {#text} at (465,303) size 219x18
+              text run at (465,303) width 219: "XXXXXXXXXXXXXXX"
+          LayoutText {#text} at (0,0) size 0x0
+          LayoutInline {span} at (0,0) size 225x24 [color=#808080] [border: (3px solid #0000FF)]
+            LayoutText {#text} at (3,351) size 219x18
+              text run at (3,351) width 219: "XXXXXXXXXXXXXXX"
+          LayoutText {#text} at (224,351) size 8x18
+            text run at (224,351) width 8: " "
+          LayoutInline {span} at (0,0) size 225x24 [color=#808080] [border: (3px solid #0000FF)]
+            LayoutText {#text} at (234,351) size 219x18
+              text run at (234,351) width 219: "XXXXXXXXXXXXXXX"
+          LayoutText {#text} at (455,351) size 8x18
+            text run at (455,351) width 8: " "
+          LayoutInline {span} at (0,0) size 225x24 [color=#808080] [border: (3px solid #0000FF)]
+            LayoutText {#text} at (465,351) size 219x18
+              text run at (465,351) width 219: "XXXXXXXXXXXXXXX"
+          LayoutText {#text} at (0,0) size 0x0
+          LayoutInline {span} at (0,0) size 225x24 [color=#808080] [border: (3px solid #0000FF)]
+            LayoutText {#text} at (3,399) size 219x18
+              text run at (3,399) width 219: "XXXXXXXXXXXXXXX"
+          LayoutText {#text} at (224,399) size 8x18
+            text run at (224,399) width 8: " "
+          LayoutInline {span} at (0,0) size 225x24 [color=#808080] [border: (3px solid #0000FF)]
+            LayoutText {#text} at (234,399) size 219x18
+              text run at (234,399) width 219: "XXXXXXXXXXXXXXX"
+          LayoutText {#text} at (455,399) size 8x18
+            text run at (455,399) width 8: " "
+          LayoutInline {span} at (0,0) size 225x24 [color=#808080] [border: (3px solid #0000FF)]
+            LayoutText {#text} at (465,399) size 219x18
+              text run at (465,399) width 219: "XXXXXXXXXXXXXXX"
+          LayoutText {#text} at (0,0) size 0x0
+          LayoutInline {span} at (0,0) size 225x24 [color=#808080] [border: (3px solid #0000FF)]
+            LayoutText {#text} at (3,447) size 219x18
+              text run at (3,447) width 219: "XXXXXXXXXXXXXXX"
+          LayoutText {#text} at (224,447) size 8x18
+            text run at (224,447) width 8: " "
+          LayoutInline {span} at (0,0) size 225x24 [color=#808080] [border: (3px solid #0000FF)]
+            LayoutText {#text} at (234,447) size 219x18
+              text run at (234,447) width 219: "XXXXXXXXXXXXXXX"
+          LayoutText {#text} at (455,447) size 8x18
+            text run at (455,447) width 8: " "
+          LayoutInline {span} at (0,0) size 225x24 [color=#808080] [border: (3px solid #0000FF)]
+            LayoutText {#text} at (465,447) size 219x18
+              text run at (465,447) width 219: "XXXXXXXXXXXXXXX"
+          LayoutText {#text} at (0,0) size 0x0
+          LayoutInline {span} at (0,0) size 225x24 [color=#808080] [border: (3px solid #0000FF)]
+            LayoutText {#text} at (3,495) size 219x18
+              text run at (3,495) width 219: "XXXXXXXXXXXXXXX"
+          LayoutText {#text} at (224,495) size 8x18
+            text run at (224,495) width 8: " "
+          LayoutInline {span} at (0,0) size 225x24 [color=#808080] [border: (3px solid #0000FF)]
+            LayoutText {#text} at (234,495) size 219x18
+              text run at (234,495) width 219: "XXXXXXXXXXXXXXX"
+          LayoutText {#text} at (455,495) size 8x18
+            text run at (455,495) width 8: " "
+          LayoutInline {span} at (0,0) size 225x24 [color=#808080] [border: (3px solid #0000FF)]
+            LayoutText {#text} at (465,495) size 219x18
+              text run at (465,495) width 219: "XXXXXXXXXXXXXXX"
+          LayoutText {#text} at (0,0) size 0x0
+          LayoutInline {span} at (0,0) size 225x24 [color=#808080] [border: (3px solid #0000FF)]
+            LayoutText {#text} at (3,543) size 219x18
+              text run at (3,543) width 219: "XXXXXXXXXXXXXXX"
+          LayoutText {#text} at (224,543) size 8x18
+            text run at (224,543) width 8: " "
+          LayoutInline {span} at (0,0) size 225x24 [color=#808080] [border: (3px solid #0000FF)]
+            LayoutText {#text} at (234,543) size 219x18
+              text run at (234,543) width 219: "XXXXXXXXXXXXXXX"
+          LayoutText {#text} at (455,543) size 8x18
+            text run at (455,543) width 8: " "
+          LayoutInline {span} at (0,0) size 225x24 [color=#808080] [border: (3px solid #0000FF)]
+            LayoutText {#text} at (465,543) size 219x18
+              text run at (465,543) width 219: "XXXXXXXXXXXXXXX"
+          LayoutText {#text} at (0,0) size 0x0
+          LayoutInline {span} at (0,0) size 225x24 [color=#808080] [border: (3px solid #0000FF)]
+            LayoutText {#text} at (3,591) size 219x18
+              text run at (3,591) width 219: "XXXXXXXXXXXXXXX"
+          LayoutText {#text} at (224,591) size 8x18
+            text run at (224,591) width 8: " "
+          LayoutInline {span} at (0,0) size 225x24 [color=#808080] [border: (3px solid #0000FF)]
+            LayoutText {#text} at (234,591) size 219x18
+              text run at (234,591) width 219: "XXXXXXXXXXXXXXX"
+          LayoutText {#text} at (455,591) size 8x18
+            text run at (455,591) width 8: " "
+          LayoutInline {span} at (0,0) size 225x24 [color=#808080] [border: (3px solid #0000FF)]
+            LayoutText {#text} at (465,591) size 219x18
+              text run at (465,591) width 219: "XXXXXXXXXXXXXXX"
+          LayoutText {#text} at (0,0) size 0x0
+          LayoutInline {span} at (0,0) size 225x24 [color=#808080] [border: (3px solid #0000FF)]
+            LayoutText {#text} at (3,639) size 219x18
+              text run at (3,639) width 219: "XXXXXXXXXXXXXXX"
+          LayoutText {#text} at (224,639) size 8x18
+            text run at (224,639) width 8: " "
+          LayoutInline {span} at (0,0) size 225x24 [color=#808080] [border: (3px solid #0000FF)]
+            LayoutText {#text} at (234,639) size 219x18
+              text run at (234,639) width 219: "XXXXXXXXXXXXXXX"
+          LayoutText {#text} at (455,639) size 8x18
+            text run at (455,639) width 8: " "
+          LayoutInline {span} at (0,0) size 225x24 [color=#808080] [border: (3px solid #0000FF)]
+            LayoutText {#text} at (465,639) size 219x18
+              text run at (465,639) width 219: "XXXXXXXXXXXXXXX"
+          LayoutText {#text} at (0,0) size 0x0
+          LayoutInline {span} at (0,0) size 225x24 [color=#808080] [border: (3px solid #0000FF)]
+            LayoutText {#text} at (3,687) size 219x18
+              text run at (3,687) width 219: "XXXXXXXXXXXXXXX"
+          LayoutText {#text} at (224,687) size 8x18
+            text run at (224,687) width 8: " "
+          LayoutInline {span} at (0,0) size 225x24 [color=#808080] [border: (3px solid #0000FF)]
+            LayoutText {#text} at (234,687) size 219x18
+              text run at (234,687) width 219: "XXXXXXXXXXXXXXX"
+          LayoutText {#text} at (455,687) size 8x18
+            text run at (455,687) width 8: " "
+          LayoutInline {span} at (0,0) size 225x24 [color=#808080] [border: (3px solid #0000FF)]
+            LayoutText {#text} at (465,687) size 219x18
+              text run at (465,687) width 219: "XXXXXXXXXXXXXXX"
+          LayoutText {#text} at (0,0) size 0x0
+          LayoutInline {span} at (0,0) size 225x24 [color=#808080] [border: (3px solid #0000FF)]
+            LayoutText {#text} at (3,735) size 219x18
+              text run at (3,735) width 219: "XXXXXXXXXXXXXXX"
+          LayoutText {#text} at (224,735) size 8x18
+            text run at (224,735) width 8: " "
+          LayoutInline {span} at (0,0) size 225x24 [color=#808080] [border: (3px solid #0000FF)]
+            LayoutText {#text} at (234,735) size 219x18
+              text run at (234,735) width 219: "XXXXXXXXXXXXXXX"
+          LayoutText {#text} at (455,735) size 8x18
+            text run at (455,735) width 8: " "
+          LayoutInline {span} at (0,0) size 225x24 [color=#808080] [border: (3px solid #0000FF)]
+            LayoutText {#text} at (465,735) size 219x18
+              text run at (465,735) width 219: "XXXXXXXXXXXXXXX"
+          LayoutText {#text} at (0,0) size 0x0
+          LayoutInline {span} at (0,0) size 225x24 [color=#808080] [border: (3px solid #0000FF)]
+            LayoutText {#text} at (3,783) size 219x18
+              text run at (3,783) width 219: "XXXXXXXXXXXXXXX"
+          LayoutText {#text} at (224,783) size 8x18
+            text run at (224,783) width 8: " "
+          LayoutInline {span} at (0,0) size 225x24 [color=#808080] [border: (3px solid #0000FF)]
+            LayoutText {#text} at (234,783) size 219x18
+              text run at (234,783) width 219: "XXXXXXXXXXXXXXX"
+          LayoutText {#text} at (455,783) size 8x18
+            text run at (455,783) width 8: " "
+          LayoutInline {span} at (0,0) size 225x24 [color=#808080] [border: (3px solid #0000FF)]
+            LayoutText {#text} at (465,783) size 219x18
+              text run at (465,783) width 219: "XXXXXXXXXXXXXXX"
+          LayoutText {#text} at (0,0) size 0x0
+          LayoutInline {span} at (0,0) size 225x24 [color=#808080] [border: (3px solid #0000FF)]
+            LayoutText {#text} at (3,831) size 219x18
+              text run at (3,831) width 219: "XXXXXXXXXXXXXXX"
+          LayoutText {#text} at (224,831) size 8x18
+            text run at (224,831) width 8: " "
+          LayoutInline {span} at (0,0) size 225x24 [color=#808080] [border: (3px solid #0000FF)]
+            LayoutText {#text} at (234,831) size 219x18
+              text run at (234,831) width 219: "XXXXXXXXXXXXXXX"
+          LayoutText {#text} at (455,831) size 8x18
+            text run at (455,831) width 8: " "
+          LayoutInline {span} at (0,0) size 225x24 [color=#808080] [border: (3px solid #0000FF)]
+            LayoutText {#text} at (465,831) size 219x18
+              text run at (465,831) width 219: "XXXXXXXXXXXXXXX"
+          LayoutText {#text} at (0,0) size 0x0
+          LayoutInline {span} at (0,0) size 225x24 [color=#808080] [border: (3px solid #0000FF)]
+            LayoutText {#text} at (3,879) size 219x18
+              text run at (3,879) width 219: "XXXXXXXXXXXXXXX"
+          LayoutText {#text} at (224,879) size 8x18
+            text run at (224,879) width 8: " "
+          LayoutInline {span} at (0,0) size 225x24 [color=#808080] [border: (3px solid #0000FF)]
+            LayoutText {#text} at (234,879) size 219x18
+              text run at (234,879) width 219: "XXXXXXXXXXXXXXX"
+          LayoutText {#text} at (0,0) size 0x0
+        LayoutText {#text} at (0,0) size 0x0

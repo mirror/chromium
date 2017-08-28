@@ -1,0 +1,12 @@
+layer at (0,0) size 800x600
+  LayoutView at (0,0) size 800x600
+layer at (0,0) size 800x133
+  LayoutBlockFlow {HTML} at (0,0) size 800x132.53
+    LayoutBlockFlow {BODY} at (8,21.27) size 784x103.27
+      LayoutBlockFlow {H4} at (0,0) size 784x18
+        LayoutText {#text} at (0,0) size 508x18
+          text run at (0,0) width 441: "Enter fullscreen or print preview. There should be no red on the "
+          text run at (440,0) width 68: "first page."
+      LayoutFlexibleBox {DIV} at (0,39.27) size 320x64
+        LayoutBlockFlow {P} at (0,0) size 320x32 [bgcolor=#FFFFFF]
+        LayoutBlockFlow {P} at (0,32) size 320x32 [bgcolor=#FF0000]

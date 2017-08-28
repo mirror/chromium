@@ -1,0 +1,18 @@
+layer at (0,0) size 800x600
+  LayoutView at (0,0) size 800x600
+layer at (0,0) size 800x162
+  LayoutBlockFlow {html} at (0,0) size 800x162
+    LayoutBlockFlow {body} at (8,8) size 784x118
+      LayoutBlockFlow {div} at (0,0) size 784x41
+        LayoutInline {a} at (0,0) size 141x41 [color=#0000EE]
+          LayoutText {#text} at (0,0) size 141x41
+            text run at (0,0) width 141: "Test fonts"
+        LayoutText {#text} at (140,0) size 444x41
+          text run at (140,0) width 444: " must be installed for this test: "
+        LayoutInline {span} at (0,0) size 78x41
+          LayoutText {#text} at (583,0) size 78x41
+            text run at (583,0) width 78: "FAIL"
+      LayoutBlockFlow {div} at (0,77) size 784x41
+        LayoutBlockFlow {p} at (0,0) size 784x41
+          LayoutText {#text} at (0,0) size 71x41
+            text run at (0,0) width 71: "PaSs"

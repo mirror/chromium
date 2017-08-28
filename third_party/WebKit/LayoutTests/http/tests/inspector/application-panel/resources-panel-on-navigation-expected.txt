@@ -19,6 +19,7 @@ Storage
     http://127.0.0.1:8000
 Cache
   Cache Storage
+    credentials - http://127.0.0.1:8000
   Application Cache
 Frames
   top
@@ -47,6 +48,7 @@ Storage
     http://127.0.0.1:8000
 Cache
   Cache Storage
+    credentials - http://127.0.0.1:8000
   Application Cache
 Frames
   top

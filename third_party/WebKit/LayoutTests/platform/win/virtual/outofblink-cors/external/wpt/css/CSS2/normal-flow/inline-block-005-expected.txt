@@ -1,0 +1,75 @@
+layer at (0,0) size 800x600 clip at (0,0) size 785x600 scrollHeight 880
+  LayoutView at (0,0) size 800x600
+layer at (0,0) size 785x880 backgroundClip at (0,0) size 785x600 clip at (0,0) size 785x600
+  LayoutBlockFlow {html} at (0,0) size 785x880
+    LayoutBlockFlow {body} at (8,16) size 769x848
+      LayoutBlockFlow {p} at (0,0) size 769x40
+        LayoutText {#text} at (80,0) size 751x39
+          text run at (80,0) width 410: "Make your window an inch or two bigger than than the width of "
+          text run at (490,0) width 261: "one inline-block. All inline-blocks should"
+          text run at (0,20) width 137: "be the same size. Try "
+          text run at (136,20) width 387: "resizing the window so that inline-blocks wrap in one or two "
+          text run at (522,20) width 58: "columns."
+      LayoutBlockFlow {p} at (0,56) size 769x80
+        LayoutText {#text} at (80,0) size 758x59
+          text run at (80,0) width 458: "The first line is indented. Therefore, the first block on the first line, if the "
+          text run at (538,0) width 220: "line is short enough, should end up"
+          text run at (0,20) width 295: "wrapping onto two lines internally. In addition "
+          text run at (294,20) width 462: "each inline-block has 5em indentation on the left and 5em padding on the"
+          text run at (0,40) width 37: "right, "
+          text run at (37,40) width 536: "which should make no difference except that the boxes should be slightly wider than "
+        LayoutInline {a} at (0,0) size 41x19 [color=#0000EE]
+          LayoutText {#text} at (572,40) size 41x19
+            text run at (572,40) width 41: "before"
+        LayoutText {#text} at (612,40) size 751x39
+          text run at (612,40) width 139: ". They shouldn't wrap"
+          text run at (0,60) width 190: "particularily more than before."
+      LayoutBlockFlow {p} at (0,152) size 769x696
+        LayoutBlockFlow {span} at (88,8) size 438x42 [color=#C0C0C0] [border: (3px solid #0000FF)]
+          LayoutText {#text} at (83,11) size 272x19
+            text run at (83,11) width 272: "this is an inline-block this is an inline-block"
+        LayoutText {#text} at (0,0) size 0x0
+        LayoutBlockFlow {span} at (8,66) size 438x42 [color=#C0C0C0] [border: (3px solid #0000FF)]
+          LayoutText {#text} at (83,11) size 272x19
+            text run at (83,11) width 272: "this is an inline-block this is an inline-block"
+        LayoutText {#text} at (0,0) size 0x0
+        LayoutBlockFlow {span} at (8,124) size 438x42 [color=#C0C0C0] [border: (3px solid #0000FF)]
+          LayoutText {#text} at (83,11) size 272x19
+            text run at (83,11) width 272: "this is an inline-block this is an inline-block"
+        LayoutText {#text} at (0,0) size 0x0
+        LayoutBlockFlow {span} at (8,182) size 438x42 [color=#C0C0C0] [border: (3px solid #0000FF)]
+          LayoutText {#text} at (83,11) size 272x19
+            text run at (83,11) width 272: "this is an inline-block this is an inline-block"
+        LayoutText {#text} at (0,0) size 0x0
+        LayoutBlockFlow {span} at (8,240) size 438x42 [color=#C0C0C0] [border: (3px solid #0000FF)]
+          LayoutText {#text} at (83,11) size 272x19
+            text run at (83,11) width 272: "this is an inline-block this is an inline-block"
+        LayoutText {#text} at (0,0) size 0x0
+        LayoutBlockFlow {span} at (8,298) size 438x42 [color=#C0C0C0] [border: (3px solid #0000FF)]
+          LayoutText {#text} at (83,11) size 272x19
+            text run at (83,11) width 272: "this is an inline-block this is an inline-block"
+        LayoutText {#text} at (0,0) size 0x0
+        LayoutBlockFlow {span} at (8,356) size 438x42 [color=#C0C0C0] [border: (3px solid #0000FF)]
+          LayoutText {#text} at (83,11) size 272x19
+            text run at (83,11) width 272: "this is an inline-block this is an inline-block"
+        LayoutText {#text} at (0,0) size 0x0
+        LayoutBlockFlow {span} at (8,414) size 438x42 [color=#C0C0C0] [border: (3px solid #0000FF)]
+          LayoutText {#text} at (83,11) size 272x19
+            text run at (83,11) width 272: "this is an inline-block this is an inline-block"
+        LayoutText {#text} at (0,0) size 0x0
+        LayoutBlockFlow {span} at (8,472) size 438x42 [color=#C0C0C0] [border: (3px solid #0000FF)]
+          LayoutText {#text} at (83,11) size 272x19
+            text run at (83,11) width 272: "this is an inline-block this is an inline-block"
+        LayoutText {#text} at (0,0) size 0x0
+        LayoutBlockFlow {span} at (8,530) size 438x42 [color=#C0C0C0] [border: (3px solid #0000FF)]
+          LayoutText {#text} at (83,11) size 272x19
+            text run at (83,11) width 272: "this is an inline-block this is an inline-block"
+        LayoutText {#text} at (0,0) size 0x0
+        LayoutBlockFlow {span} at (8,588) size 438x42 [color=#C0C0C0] [border: (3px solid #0000FF)]
+          LayoutText {#text} at (83,11) size 272x19
+            text run at (83,11) width 272: "this is an inline-block this is an inline-block"
+        LayoutText {#text} at (0,0) size 0x0
+        LayoutBlockFlow {span} at (8,646) size 438x42 [color=#C0C0C0] [border: (3px solid #0000FF)]
+          LayoutText {#text} at (83,11) size 272x19
+            text run at (83,11) width 272: "this is an inline-block this is an inline-block"
+        LayoutText {#text} at (0,0) size 0x0

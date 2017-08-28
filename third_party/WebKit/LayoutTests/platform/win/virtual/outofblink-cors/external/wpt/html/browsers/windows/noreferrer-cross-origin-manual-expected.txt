@@ -1,0 +1,41 @@
+layer at (0,0) size 800x600
+  LayoutView at (0,0) size 800x600
+layer at (0,0) size 800x600
+  LayoutBlockFlow {HTML} at (0,0) size 800x600
+    LayoutBlockFlow {BODY} at (8,8) size 784x576
+      LayoutBlockFlow {OL} at (0,0) size 784x56
+        LayoutListItem {LI} at (40,0) size 744x20
+          LayoutBlockFlow {P} at (0,0) size 744x20
+            LayoutListMarker (anonymous) at (-16,0) size 16x19: "1"
+            LayoutText {#text} at (0,0) size 565x19
+              text run at (0,0) width 565: "After clicking these two links in order a single browsing context should be open showing "
+            LayoutInline {CODE} at (0,0) size 88x16
+              LayoutText {#text} at (565,3) size 88x16
+                text run at (565,3) width 88: "example.org"
+            LayoutText {#text} at (653,0) size 8x19
+              text run at (653,0) width 8: ": "
+            LayoutInline {A} at (0,0) size 23x19 [color=#0000EE]
+              LayoutText {#text} at (661,0) size 23x19
+                text run at (661,0) width 23: "one"
+            LayoutText {#text} at (684,0) size 8x19
+              text run at (684,0) width 8: ", "
+            LayoutInline {A} at (0,0) size 24x19 [color=#0000EE]
+              LayoutText {#text} at (692,0) size 24x19
+                text run at (692,0) width 24: "two"
+            LayoutText {#text} at (716,0) size 4x19
+              text run at (716,0) width 4: "."
+        LayoutListItem {LI} at (40,36) size 744x20
+          LayoutBlockFlow {P} at (0,0) size 744x20
+            LayoutListMarker (anonymous) at (-16,0) size 16x19: "2"
+            LayoutText {#text} at (0,0) size 504x19
+              text run at (0,0) width 504: "After clicking these two links two browsing contexts should have been opened: "
+            LayoutInline {A} at (0,0) size 23x19 [color=#0000EE]
+              LayoutText {#text} at (504,0) size 23x19
+                text run at (504,0) width 23: "one"
+            LayoutText {#text} at (527,0) size 8x19
+              text run at (527,0) width 8: ", "
+            LayoutInline {A} at (0,0) size 24x19 [color=#0000EE]
+              LayoutText {#text} at (535,0) size 24x19
+                text run at (535,0) width 24: "two"
+            LayoutText {#text} at (559,0) size 4x19
+              text run at (559,0) width 4: "."

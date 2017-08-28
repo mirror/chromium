@@ -1,0 +1,28 @@
+layer at (0,0) size 800x600
+  LayoutView at (0,0) size 800x600
+layer at (0,0) size 800x234
+  LayoutBlockFlow {HTML} at (0,0) size 800x234
+    LayoutBlockFlow {BODY} at (8,16) size 784x210
+      LayoutBlockFlow {P} at (0,0) size 784x36
+        LayoutText {#text} at (0,0) size 122x18
+          text run at (0,0) width 122: "Test passes if both "
+        LayoutInline {STRONG} at (0,0) size 40x18
+          LayoutText {#text} at (121,0) size 40x18
+            text run at (121,0) width 40: "width"
+        LayoutText {#text} at (160,0) size 32x18
+          text run at (160,0) width 32: " and "
+        LayoutInline {STRONG} at (0,0) size 44x18
+          LayoutText {#text} at (191,0) size 44x18
+            text run at (191,0) width 44: "height"
+        LayoutText {#text} at (234,0) size 734x36
+          text run at (234,0) width 500: " of the box surrounding the orange box below can be adjusted (for instance by"
+          text run at (0,18) width 220: "dragging the bottom-right corner)."
+      LayoutBlockFlow (anonymous) at (0,52) size 784x158
+        LayoutText {#text} at (0,0) size 0x0
+layer at (8,68) size 304x154
+  LayoutIFrame {IFRAME} at (0,0) size 304x154 [border: (2px inset #EEEEEE)]
+    layer at (0,0) size 300x150
+      LayoutView at (0,0) size 300x150
+    layer at (0,0) size 100x100
+      LayoutSVGRoot {svg} at (0,0) size 100x100
+        LayoutSVGRect {rect} at (0,0) size 100x100 [fill={[type=SOLID] [color=#FFA500]}] [x=0.00] [y=0.00] [width=100.00] [height=100.00]

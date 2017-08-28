@@ -1,0 +1,51 @@
+layer at (0,0) size 800x600
+  LayoutView at (0,0) size 800x600
+layer at (0,0) size 800x137
+  LayoutBlockFlow {html} at (0,0) size 800x137
+    LayoutBlockFlow {body} at (8,16) size 784x105
+      LayoutBlockFlow {p} at (0,0) size 784x36
+        LayoutText {#text} at (0,0) size 762x36
+          text run at (0,0) width 571: "If scripting is supported: there should be only a single static jumble below with the word "
+          text run at (570,0) width 192: "\"Control\" blinking steadily. If"
+          text run at (0,18) width 199: "there are two squares, or if the "
+          text run at (198,18) width 275: "square is animated, then the test has failed."
+      LayoutBlockFlow {p} at (0,52) size 784x18
+        LayoutText {#text} at (0,0) size 524x18
+          text run at (0,0) width 366: "If scripting is unsupported: there should be two identical "
+          text run at (365,0) width 159: "patterned squares below."
+      LayoutBlockFlow {p} at (0,86) size 784x19
+        LayoutButton {button} at (0,1) size 59.39x18 [bgcolor=#FFFFFF] [border: (1px solid #D8D8D8) (1px solid #D1D1D1) (1px solid #BABABA) (1px solid #D1D1D1)]
+          LayoutBlockFlow (anonymous) at (8,2) size 43.39x13
+            LayoutText {#text} at (0,0) size 44x13
+              text run at (0,0) width 44: "Examine"
+layer at (28,157) size 240x240
+  LayoutBlockFlow (positioned) {pre} at (28,157) size 240x240 [color=#000080] [bgcolor=#FFFF00]
+    LayoutText {#text} at (0,0) size 260x240
+      text run at (0,0) width 240: "############"
+      text run at (240,0) width 0: " "
+      text run at (0,20) width 240: "#AA1       #"
+      text run at (240,20) width 0: " "
+      text run at (0,40) width 240: "#AA        #"
+      text run at (240,40) width 0: " "
+      text run at (0,60) width 240: "#B222222222#"
+      text run at (240,60) width 0: " "
+      text run at (0,80) width 240: "#BCDEEF3   #"
+      text run at (240,80) width 0: " "
+      text run at (0,100) width 240: "# C EE444  #"
+      text run at (240,100) width 0: " "
+      text run at (0,120) width 240: "# C55555555#"
+      text run at (240,120) width 0: " "
+      text run at (0,140) width 240: "# C66666   #"
+      text run at (240,140) width 0: " "
+      text run at (0,160) width 240: "# C        #"
+      text run at (240,160) width 0: " "
+      text run at (0,180) width 240: "#777777777 #"
+      text run at (240,180) width 0: " "
+      text run at (0,200) width 240: "#          #"
+      text run at (240,200) width 0: " "
+      text run at (0,220) width 260: "############ "
+    LayoutInline {span} at (0,0) size 46x17
+      LayoutText {#text} at (260,223) size 46x17
+        text run at (260,223) width 46: "Control"
+    LayoutText {#text} at (305,220) size 1x20
+      text run at (305,220) width 1: " "

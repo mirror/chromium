@@ -1,0 +1,13 @@
+layer at (0,0) size 800x600
+  LayoutView at (0,0) size 800x600
+layer at (0,0) size 800x254
+  LayoutBlockFlow {html} at (0,0) size 800x254
+    LayoutBlockFlow {body} at (8,8) size 784x238
+      LayoutBlockFlow {div} at (0,0) size 784x115
+        LayoutImage {img} at (0,0) size 627x110
+      LayoutBlockFlow {div} at (0,115) size 784x41
+        LayoutImage {img} at (0,0) size 651x36
+      LayoutBlockFlow {div} at (0,156) size 784x41
+        LayoutImage {img} at (0,0) size 651x36
+      LayoutBlockFlow {div} at (0,197) size 784x41
+        LayoutImage {img} at (0,0) size 651x36

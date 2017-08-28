@@ -1,3 +1,4 @@
+CONSOLE ERROR: line 57: Uncaught TypeError: Cannot read property 'dispatchMessage' of undefined
 Tests that console logging dumps proper messages.
 
 console-tests.js:11 log console-message-wrapper console-info-level > console-message

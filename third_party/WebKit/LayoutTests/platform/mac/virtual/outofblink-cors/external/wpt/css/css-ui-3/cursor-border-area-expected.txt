@@ -1,0 +1,10 @@
+layer at (0,0) size 800x600
+  LayoutView at (0,0) size 800x600
+layer at (0,0) size 800x176
+  LayoutBlockFlow {HTML} at (0,0) size 800x176
+    LayoutBlockFlow {BODY} at (8,16) size 784x152
+      LayoutBlockFlow {P} at (0,0) size 784x36
+        LayoutText {#text} at (0,0) size 731x36
+          text run at (0,0) width 731: "The test passes if, when moved inside the blue rectangle, the cursor looks like a crosshair (e.g. short line segments"
+          text run at (0,18) width 149: "resembling a \"+\" sign)."
+      LayoutBlockFlow {DIV} at (0,52) size 784x100 [border: (50px solid #0000FF)]

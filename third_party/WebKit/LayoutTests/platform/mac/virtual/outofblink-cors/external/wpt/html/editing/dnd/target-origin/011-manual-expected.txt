@@ -1,0 +1,11 @@
+layer at (0,0) size 800x600
+  LayoutView at (0,0) size 800x600
+layer at (0,0) size 800x168
+  LayoutBlockFlow {HTML} at (0,0) size 800x168
+    LayoutBlockFlow {BODY} at (8,16) size 784x36
+      LayoutBlockFlow {P} at (0,0) size 784x36
+        LayoutText {#text} at (0,0) size 738x36
+          text run at (0,0) width 738: "Drag the orange square over the blue square then back to the orange square, then release it. Fail if this text does not"
+          text run at (0,18) width 50: "change."
+      LayoutBlockFlow (floating) {DIV} at (0,52) size 100x100 [bgcolor=#FFA500]
+      LayoutBlockFlow (floating) {DIV} at (100,52) size 100x100 [bgcolor=#0000FF]

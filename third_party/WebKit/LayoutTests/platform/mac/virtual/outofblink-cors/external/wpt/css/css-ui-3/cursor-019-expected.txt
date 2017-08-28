@@ -1,0 +1,11 @@
+layer at (0,0) size 800x600
+  LayoutView at (0,0) size 800x600
+layer at (0,0) size 800x182
+  LayoutBlockFlow {HTML} at (0,0) size 800x182
+    LayoutBlockFlow {BODY} at (8,16) size 784x158
+      LayoutBlockFlow {P} at (0,0) size 784x36
+        LayoutText {#text} at (0,0) size 726x36
+          text run at (0,0) width 689: "The test passes if, when moved inside the blue box, the cursor indicates that something can be zoomed out. "
+          text run at (688,0) width 38: "Often"
+          text run at (0,18) width 429: "rendered as a magnifying glass with a \"-\" in the center of the glass."
+      LayoutBlockFlow {DIV} at (0,52) size 106x106 [border: (3px solid #0000FF)]

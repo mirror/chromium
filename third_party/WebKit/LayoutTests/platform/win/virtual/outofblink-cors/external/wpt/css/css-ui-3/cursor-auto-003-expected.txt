@@ -1,0 +1,16 @@
+layer at (0,0) size 800x600
+  LayoutView at (0,0) size 800x600
+layer at (0,0) size 800x271
+  LayoutBlockFlow {HTML} at (0,0) size 800x271
+    LayoutBlockFlow {BODY} at (8,16) size 784x247
+      LayoutBlockFlow {P} at (0,0) size 784x20
+        LayoutText {#text} at (0,0) size 664x19
+          text run at (0,0) width 664: "The test passes if, when moved over the image below, the cursor is the platform-dependent default cursor."
+      LayoutBlockFlow {P} at (0,36) size 784x20
+        LayoutText {#text} at (0,0) size 508x19
+          text run at (0,0) width 508: "Place the cursor into the orange box for a reference of what this should look like."
+      LayoutBlockFlow (anonymous) at (0,72) size 784x69
+        LayoutInline {A} at (0,0) size 64x19 [color=#0000EE]
+          LayoutImage {IMG} at (0,0) size 64x64
+        LayoutText {#text} at (0,0) size 0x0
+      LayoutBlockFlow {DIV} at (0,141) size 106x106 [border: (3px solid #FFA500)]

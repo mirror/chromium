@@ -1,0 +1,47 @@
+layer at (0,0) size 800x600
+  LayoutView at (0,0) size 800x600
+layer at (0,0) size 800x332
+  LayoutBlockFlow {HTML} at (0,0) size 800x332
+    LayoutBlockFlow {BODY} at (8,8) size 784x180
+      LayoutFlexibleBox {DIV} at (0,0) size 320x128
+        LayoutBlockFlow {SPAN} at (0,0) size 80x128 [bgcolor=#FFFF00]
+          LayoutText {#text} at (0,0) size 24x18
+            text run at (0,0) width 24: "one"
+        LayoutBlockFlow {SPAN} at (80,0) size 80x128 [bgcolor=#FFFF00]
+          LayoutText {#text} at (0,0) size 24x18
+            text run at (0,0) width 24: "two"
+        LayoutBlockFlow {SPAN} at (160,0) size 80x128 [bgcolor=#FFFF00]
+          LayoutText {#text} at (0,0) size 32x18
+            text run at (0,0) width 32: "three"
+        LayoutBlockFlow {SPAN} at (240,0) size 80x128 [bgcolor=#3366CC]
+          LayoutText {#text} at (0,0) size 27x18
+            text run at (0,0) width 27: "four"
+      LayoutBlockFlow {P} at (0,144) size 784x36
+        LayoutText {#text} at (0,0) size 761x36
+          text run at (0,0) width 739: "Verify that the box above looks exactly like the second of the boxes below. Then hover the box above and leave the"
+          text run at (0,18) width 761: "mouse there for 4 seconds. After the specified time, the box above should look exactly like the first of the boxes below."
+      LayoutBlockFlow (floating) {DIV} at (0,196) size 320x128 [bgcolor=#3366CC]
+        LayoutBlockFlow (floating) {SPAN} at (0,0) size 23.11x128 [bgcolor=#FFFF00]
+          LayoutText {#text} at (0,0) size 24x18
+            text run at (0,0) width 24: "one"
+        LayoutBlockFlow (floating) {SPAN} at (23.11,0) size 24x128 [bgcolor=#FFFF00]
+          LayoutText {#text} at (0,0) size 24x18
+            text run at (0,0) width 24: "two"
+        LayoutBlockFlow (floating) {SPAN} at (47.11,0) size 31.98x128 [bgcolor=#FFFF00]
+          LayoutText {#text} at (0,0) size 32x18
+            text run at (0,0) width 32: "three"
+        LayoutText {#text} at (79,0) size 27x18
+          text run at (79,0) width 27: "four"
+      LayoutBlockFlow (floating) {DIV} at (336,196) size 320x128
+        LayoutBlockFlow (floating) {SPAN} at (0,0) size 80x128 [bgcolor=#FFFF00]
+          LayoutText {#text} at (0,0) size 24x18
+            text run at (0,0) width 24: "one"
+        LayoutBlockFlow (floating) {SPAN} at (80,0) size 80x128 [bgcolor=#FFFF00]
+          LayoutText {#text} at (0,0) size 24x18
+            text run at (0,0) width 24: "two"
+        LayoutBlockFlow (floating) {SPAN} at (160,0) size 80x128 [bgcolor=#FFFF00]
+          LayoutText {#text} at (0,0) size 32x18
+            text run at (0,0) width 32: "three"
+        LayoutBlockFlow (floating) {SPAN} at (240,0) size 80x128 [bgcolor=#3366CC]
+          LayoutText {#text} at (0,0) size 27x18
+            text run at (0,0) width 27: "four"

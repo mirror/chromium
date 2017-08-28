@@ -1,0 +1,670 @@
+layer at (0,0) size 800x600
+  LayoutView at (0,0) size 800x600
+layer at (0,0) size 800x248
+  LayoutBlockFlow {html} at (0,0) size 800x248
+    LayoutBlockFlow {body} at (8,16) size 784x216
+      LayoutBlockFlow {p} at (0,0) size 784x40
+        LayoutText {#text} at (0,0) size 766x39
+          text run at (0,0) width 463: "Resize your window slowly from a wide size to a narrow size. Each \"X\" "
+          text run at (463,0) width 303: "should be wrapped by a blue border. The boxed"
+          text run at (0,20) width 178: "Xs below should always be "
+          text run at (178,20) width 165: "perfectly aligned in a grid."
+      LayoutBlockFlow {p} at (0,56) size 784x160
+        LayoutInline {span} at (0,0) size 777x157
+          LayoutText {#text} at (0,0) size 0x0
+          LayoutInline {span} at (0,0) size 21x25 [color=#808080] [border: (3px solid #0000FF)]
+            LayoutText {#text} at (3,6) size 15x19
+              text run at (3,6) width 15: "X"
+          LayoutText {#text} at (21,6) size 7x19
+            text run at (21,6) width 7: " "
+          LayoutInline {span} at (0,0) size 21x25 [color=#808080] [border: (3px solid #0000FF)]
+            LayoutText {#text} at (31,6) size 15x19
+              text run at (31,6) width 15: "X"
+          LayoutText {#text} at (49,6) size 7x19
+            text run at (49,6) width 7: " "
+          LayoutInline {span} at (0,0) size 21x25 [color=#808080] [border: (3px solid #0000FF)]
+            LayoutText {#text} at (59,6) size 15x19
+              text run at (59,6) width 15: "X"
+          LayoutText {#text} at (77,6) size 7x19
+            text run at (77,6) width 7: " "
+          LayoutInline {span} at (0,0) size 21x25 [color=#808080] [border: (3px solid #0000FF)]
+            LayoutText {#text} at (87,6) size 15x19
+              text run at (87,6) width 15: "X"
+          LayoutText {#text} at (105,6) size 7x19
+            text run at (105,6) width 7: " "
+          LayoutInline {span} at (0,0) size 21x25 [color=#808080] [border: (3px solid #0000FF)]
+            LayoutText {#text} at (115,6) size 15x19
+              text run at (115,6) width 15: "X"
+          LayoutText {#text} at (133,6) size 7x19
+            text run at (133,6) width 7: " "
+          LayoutInline {span} at (0,0) size 21x25 [color=#808080] [border: (3px solid #0000FF)]
+            LayoutText {#text} at (143,6) size 15x19
+              text run at (143,6) width 15: "X"
+          LayoutText {#text} at (161,6) size 7x19
+            text run at (161,6) width 7: " "
+          LayoutInline {span} at (0,0) size 21x25 [color=#808080] [border: (3px solid #0000FF)]
+            LayoutText {#text} at (171,6) size 15x19
+              text run at (171,6) width 15: "X"
+          LayoutText {#text} at (189,6) size 7x19
+            text run at (189,6) width 7: " "
+          LayoutInline {span} at (0,0) size 21x25 [color=#808080] [border: (3px solid #0000FF)]
+            LayoutText {#text} at (199,6) size 15x19
+              text run at (199,6) width 15: "X"
+          LayoutText {#text} at (217,6) size 7x19
+            text run at (217,6) width 7: " "
+          LayoutInline {span} at (0,0) size 21x25 [color=#808080] [border: (3px solid #0000FF)]
+            LayoutText {#text} at (227,6) size 15x19
+              text run at (227,6) width 15: "X"
+          LayoutText {#text} at (245,6) size 7x19
+            text run at (245,6) width 7: " "
+          LayoutInline {span} at (0,0) size 21x25 [color=#808080] [border: (3px solid #0000FF)]
+            LayoutText {#text} at (255,6) size 15x19
+              text run at (255,6) width 15: "X"
+          LayoutText {#text} at (273,6) size 7x19
+            text run at (273,6) width 7: " "
+          LayoutInline {span} at (0,0) size 21x25 [color=#808080] [border: (3px solid #0000FF)]
+            LayoutText {#text} at (283,6) size 15x19
+              text run at (283,6) width 15: "X"
+          LayoutText {#text} at (301,6) size 7x19
+            text run at (301,6) width 7: " "
+          LayoutInline {span} at (0,0) size 21x25 [color=#808080] [border: (3px solid #0000FF)]
+            LayoutText {#text} at (311,6) size 15x19
+              text run at (311,6) width 15: "X"
+          LayoutText {#text} at (329,6) size 7x19
+            text run at (329,6) width 7: " "
+          LayoutInline {span} at (0,0) size 21x25 [color=#808080] [border: (3px solid #0000FF)]
+            LayoutText {#text} at (339,6) size 15x19
+              text run at (339,6) width 15: "X"
+          LayoutText {#text} at (357,6) size 7x19
+            text run at (357,6) width 7: " "
+          LayoutInline {span} at (0,0) size 21x25 [color=#808080] [border: (3px solid #0000FF)]
+            LayoutText {#text} at (367,6) size 15x19
+              text run at (367,6) width 15: "X"
+          LayoutText {#text} at (385,6) size 7x19
+            text run at (385,6) width 7: " "
+          LayoutInline {span} at (0,0) size 21x25 [color=#808080] [border: (3px solid #0000FF)]
+            LayoutText {#text} at (395,6) size 15x19
+              text run at (395,6) width 15: "X"
+          LayoutText {#text} at (413,6) size 7x19
+            text run at (413,6) width 7: " "
+          LayoutInline {span} at (0,0) size 21x25 [color=#808080] [border: (3px solid #0000FF)]
+            LayoutText {#text} at (423,6) size 15x19
+              text run at (423,6) width 15: "X"
+          LayoutText {#text} at (441,6) size 7x19
+            text run at (441,6) width 7: " "
+          LayoutInline {span} at (0,0) size 21x25 [color=#808080] [border: (3px solid #0000FF)]
+            LayoutText {#text} at (451,6) size 15x19
+              text run at (451,6) width 15: "X"
+          LayoutText {#text} at (469,6) size 7x19
+            text run at (469,6) width 7: " "
+          LayoutInline {span} at (0,0) size 21x25 [color=#808080] [border: (3px solid #0000FF)]
+            LayoutText {#text} at (479,6) size 15x19
+              text run at (479,6) width 15: "X"
+          LayoutText {#text} at (497,6) size 7x19
+            text run at (497,6) width 7: " "
+          LayoutInline {span} at (0,0) size 21x25 [color=#808080] [border: (3px solid #0000FF)]
+            LayoutText {#text} at (507,6) size 15x19
+              text run at (507,6) width 15: "X"
+          LayoutText {#text} at (525,6) size 7x19
+            text run at (525,6) width 7: " "
+          LayoutInline {span} at (0,0) size 21x25 [color=#808080] [border: (3px solid #0000FF)]
+            LayoutText {#text} at (535,6) size 15x19
+              text run at (535,6) width 15: "X"
+          LayoutText {#text} at (553,6) size 7x19
+            text run at (553,6) width 7: " "
+          LayoutInline {span} at (0,0) size 21x25 [color=#808080] [border: (3px solid #0000FF)]
+            LayoutText {#text} at (563,6) size 15x19
+              text run at (563,6) width 15: "X"
+          LayoutText {#text} at (581,6) size 7x19
+            text run at (581,6) width 7: " "
+          LayoutInline {span} at (0,0) size 21x25 [color=#808080] [border: (3px solid #0000FF)]
+            LayoutText {#text} at (591,6) size 15x19
+              text run at (591,6) width 15: "X"
+          LayoutText {#text} at (609,6) size 7x19
+            text run at (609,6) width 7: " "
+          LayoutInline {span} at (0,0) size 21x25 [color=#808080] [border: (3px solid #0000FF)]
+            LayoutText {#text} at (619,6) size 15x19
+              text run at (619,6) width 15: "X"
+          LayoutText {#text} at (637,6) size 7x19
+            text run at (637,6) width 7: " "
+          LayoutInline {span} at (0,0) size 21x25 [color=#808080] [border: (3px solid #0000FF)]
+            LayoutText {#text} at (647,6) size 15x19
+              text run at (647,6) width 15: "X"
+          LayoutText {#text} at (665,6) size 7x19
+            text run at (665,6) width 7: " "
+          LayoutInline {span} at (0,0) size 21x25 [color=#808080] [border: (3px solid #0000FF)]
+            LayoutText {#text} at (675,6) size 15x19
+              text run at (675,6) width 15: "X"
+          LayoutText {#text} at (693,6) size 7x19
+            text run at (693,6) width 7: " "
+          LayoutInline {span} at (0,0) size 21x25 [color=#808080] [border: (3px solid #0000FF)]
+            LayoutText {#text} at (703,6) size 15x19
+              text run at (703,6) width 15: "X"
+          LayoutText {#text} at (721,6) size 7x19
+            text run at (721,6) width 7: " "
+          LayoutInline {span} at (0,0) size 21x25 [color=#808080] [border: (3px solid #0000FF)]
+            LayoutText {#text} at (731,6) size 15x19
+              text run at (731,6) width 15: "X"
+          LayoutText {#text} at (749,6) size 7x19
+            text run at (749,6) width 7: " "
+          LayoutInline {span} at (0,0) size 21x25 [color=#808080] [border: (3px solid #0000FF)]
+            LayoutText {#text} at (759,6) size 15x19
+              text run at (759,6) width 15: "X"
+          LayoutText {#text} at (0,0) size 0x0
+          LayoutInline {span} at (0,0) size 21x25 [color=#808080] [border: (3px solid #0000FF)]
+            LayoutText {#text} at (3,38) size 15x19
+              text run at (3,38) width 15: "X"
+          LayoutText {#text} at (21,38) size 7x19
+            text run at (21,38) width 7: " "
+          LayoutInline {span} at (0,0) size 21x25 [color=#808080] [border: (3px solid #0000FF)]
+            LayoutText {#text} at (31,38) size 15x19
+              text run at (31,38) width 15: "X"
+          LayoutText {#text} at (49,38) size 7x19
+            text run at (49,38) width 7: " "
+          LayoutInline {span} at (0,0) size 21x25 [color=#808080] [border: (3px solid #0000FF)]
+            LayoutText {#text} at (59,38) size 15x19
+              text run at (59,38) width 15: "X"
+          LayoutText {#text} at (77,38) size 7x19
+            text run at (77,38) width 7: " "
+          LayoutInline {span} at (0,0) size 21x25 [color=#808080] [border: (3px solid #0000FF)]
+            LayoutText {#text} at (87,38) size 15x19
+              text run at (87,38) width 15: "X"
+          LayoutText {#text} at (105,38) size 7x19
+            text run at (105,38) width 7: " "
+          LayoutInline {span} at (0,0) size 21x25 [color=#808080] [border: (3px solid #0000FF)]
+            LayoutText {#text} at (115,38) size 15x19
+              text run at (115,38) width 15: "X"
+          LayoutText {#text} at (133,38) size 7x19
+            text run at (133,38) width 7: " "
+          LayoutInline {span} at (0,0) size 21x25 [color=#808080] [border: (3px solid #0000FF)]
+            LayoutText {#text} at (143,38) size 15x19
+              text run at (143,38) width 15: "X"
+          LayoutText {#text} at (161,38) size 7x19
+            text run at (161,38) width 7: " "
+          LayoutInline {span} at (0,0) size 21x25 [color=#808080] [border: (3px solid #0000FF)]
+            LayoutText {#text} at (171,38) size 15x19
+              text run at (171,38) width 15: "X"
+          LayoutText {#text} at (189,38) size 7x19
+            text run at (189,38) width 7: " "
+          LayoutInline {span} at (0,0) size 21x25 [color=#808080] [border: (3px solid #0000FF)]
+            LayoutText {#text} at (199,38) size 15x19
+              text run at (199,38) width 15: "X"
+          LayoutText {#text} at (217,38) size 7x19
+            text run at (217,38) width 7: " "
+          LayoutInline {span} at (0,0) size 21x25 [color=#808080] [border: (3px solid #0000FF)]
+            LayoutText {#text} at (227,38) size 15x19
+              text run at (227,38) width 15: "X"
+          LayoutText {#text} at (245,38) size 7x19
+            text run at (245,38) width 7: " "
+          LayoutInline {span} at (0,0) size 21x25 [color=#808080] [border: (3px solid #0000FF)]
+            LayoutText {#text} at (255,38) size 15x19
+              text run at (255,38) width 15: "X"
+          LayoutText {#text} at (273,38) size 7x19
+            text run at (273,38) width 7: " "
+          LayoutInline {span} at (0,0) size 21x25 [color=#808080] [border: (3px solid #0000FF)]
+            LayoutText {#text} at (283,38) size 15x19
+              text run at (283,38) width 15: "X"
+          LayoutText {#text} at (301,38) size 7x19
+            text run at (301,38) width 7: " "
+          LayoutInline {span} at (0,0) size 21x25 [color=#808080] [border: (3px solid #0000FF)]
+            LayoutText {#text} at (311,38) size 15x19
+              text run at (311,38) width 15: "X"
+          LayoutText {#text} at (329,38) size 7x19
+            text run at (329,38) width 7: " "
+          LayoutInline {span} at (0,0) size 21x25 [color=#808080] [border: (3px solid #0000FF)]
+            LayoutText {#text} at (339,38) size 15x19
+              text run at (339,38) width 15: "X"
+          LayoutText {#text} at (357,38) size 7x19
+            text run at (357,38) width 7: " "
+          LayoutInline {span} at (0,0) size 21x25 [color=#808080] [border: (3px solid #0000FF)]
+            LayoutText {#text} at (367,38) size 15x19
+              text run at (367,38) width 15: "X"
+          LayoutText {#text} at (385,38) size 7x19
+            text run at (385,38) width 7: " "
+          LayoutInline {span} at (0,0) size 21x25 [color=#808080] [border: (3px solid #0000FF)]
+            LayoutText {#text} at (395,38) size 15x19
+              text run at (395,38) width 15: "X"
+          LayoutText {#text} at (413,38) size 7x19
+            text run at (413,38) width 7: " "
+          LayoutInline {span} at (0,0) size 21x25 [color=#808080] [border: (3px solid #0000FF)]
+            LayoutText {#text} at (423,38) size 15x19
+              text run at (423,38) width 15: "X"
+          LayoutText {#text} at (441,38) size 7x19
+            text run at (441,38) width 7: " "
+          LayoutInline {span} at (0,0) size 21x25 [color=#808080] [border: (3px solid #0000FF)]
+            LayoutText {#text} at (451,38) size 15x19
+              text run at (451,38) width 15: "X"
+          LayoutText {#text} at (469,38) size 7x19
+            text run at (469,38) width 7: " "
+          LayoutInline {span} at (0,0) size 21x25 [color=#808080] [border: (3px solid #0000FF)]
+            LayoutText {#text} at (479,38) size 15x19
+              text run at (479,38) width 15: "X"
+          LayoutText {#text} at (497,38) size 7x19
+            text run at (497,38) width 7: " "
+          LayoutInline {span} at (0,0) size 21x25 [color=#808080] [border: (3px solid #0000FF)]
+            LayoutText {#text} at (507,38) size 15x19
+              text run at (507,38) width 15: "X"
+          LayoutText {#text} at (525,38) size 7x19
+            text run at (525,38) width 7: " "
+          LayoutInline {span} at (0,0) size 21x25 [color=#808080] [border: (3px solid #0000FF)]
+            LayoutText {#text} at (535,38) size 15x19
+              text run at (535,38) width 15: "X"
+          LayoutText {#text} at (553,38) size 7x19
+            text run at (553,38) width 7: " "
+          LayoutInline {span} at (0,0) size 21x25 [color=#808080] [border: (3px solid #0000FF)]
+            LayoutText {#text} at (563,38) size 15x19
+              text run at (563,38) width 15: "X"
+          LayoutText {#text} at (581,38) size 7x19
+            text run at (581,38) width 7: " "
+          LayoutInline {span} at (0,0) size 21x25 [color=#808080] [border: (3px solid #0000FF)]
+            LayoutText {#text} at (591,38) size 15x19
+              text run at (591,38) width 15: "X"
+          LayoutText {#text} at (609,38) size 7x19
+            text run at (609,38) width 7: " "
+          LayoutInline {span} at (0,0) size 21x25 [color=#808080] [border: (3px solid #0000FF)]
+            LayoutText {#text} at (619,38) size 15x19
+              text run at (619,38) width 15: "X"
+          LayoutText {#text} at (637,38) size 7x19
+            text run at (637,38) width 7: " "
+          LayoutInline {span} at (0,0) size 21x25 [color=#808080] [border: (3px solid #0000FF)]
+            LayoutText {#text} at (647,38) size 15x19
+              text run at (647,38) width 15: "X"
+          LayoutText {#text} at (665,38) size 7x19
+            text run at (665,38) width 7: " "
+          LayoutInline {span} at (0,0) size 21x25 [color=#808080] [border: (3px solid #0000FF)]
+            LayoutText {#text} at (675,38) size 15x19
+              text run at (675,38) width 15: "X"
+          LayoutText {#text} at (693,38) size 7x19
+            text run at (693,38) width 7: " "
+          LayoutInline {span} at (0,0) size 21x25 [color=#808080] [border: (3px solid #0000FF)]
+            LayoutText {#text} at (703,38) size 15x19
+              text run at (703,38) width 15: "X"
+          LayoutText {#text} at (721,38) size 7x19
+            text run at (721,38) width 7: " "
+          LayoutInline {span} at (0,0) size 21x25 [color=#808080] [border: (3px solid #0000FF)]
+            LayoutText {#text} at (731,38) size 15x19
+              text run at (731,38) width 15: "X"
+          LayoutText {#text} at (749,38) size 7x19
+            text run at (749,38) width 7: " "
+          LayoutInline {span} at (0,0) size 21x25 [color=#808080] [border: (3px solid #0000FF)]
+            LayoutText {#text} at (759,38) size 15x19
+              text run at (759,38) width 15: "X"
+          LayoutText {#text} at (0,0) size 0x0
+          LayoutInline {span} at (0,0) size 21x25 [color=#808080] [border: (3px solid #0000FF)]
+            LayoutText {#text} at (3,70) size 15x19
+              text run at (3,70) width 15: "X"
+          LayoutText {#text} at (21,70) size 7x19
+            text run at (21,70) width 7: " "
+          LayoutInline {span} at (0,0) size 21x25 [color=#808080] [border: (3px solid #0000FF)]
+            LayoutText {#text} at (31,70) size 15x19
+              text run at (31,70) width 15: "X"
+          LayoutText {#text} at (49,70) size 7x19
+            text run at (49,70) width 7: " "
+          LayoutInline {span} at (0,0) size 21x25 [color=#808080] [border: (3px solid #0000FF)]
+            LayoutText {#text} at (59,70) size 15x19
+              text run at (59,70) width 15: "X"
+          LayoutText {#text} at (77,70) size 7x19
+            text run at (77,70) width 7: " "
+          LayoutInline {span} at (0,0) size 21x25 [color=#808080] [border: (3px solid #0000FF)]
+            LayoutText {#text} at (87,70) size 15x19
+              text run at (87,70) width 15: "X"
+          LayoutText {#text} at (105,70) size 7x19
+            text run at (105,70) width 7: " "
+          LayoutInline {span} at (0,0) size 21x25 [color=#808080] [border: (3px solid #0000FF)]
+            LayoutText {#text} at (115,70) size 15x19
+              text run at (115,70) width 15: "X"
+          LayoutText {#text} at (133,70) size 7x19
+            text run at (133,70) width 7: " "
+          LayoutInline {span} at (0,0) size 21x25 [color=#808080] [border: (3px solid #0000FF)]
+            LayoutText {#text} at (143,70) size 15x19
+              text run at (143,70) width 15: "X"
+          LayoutText {#text} at (161,70) size 7x19
+            text run at (161,70) width 7: " "
+          LayoutInline {span} at (0,0) size 21x25 [color=#808080] [border: (3px solid #0000FF)]
+            LayoutText {#text} at (171,70) size 15x19
+              text run at (171,70) width 15: "X"
+          LayoutText {#text} at (189,70) size 7x19
+            text run at (189,70) width 7: " "
+          LayoutInline {span} at (0,0) size 21x25 [color=#808080] [border: (3px solid #0000FF)]
+            LayoutText {#text} at (199,70) size 15x19
+              text run at (199,70) width 15: "X"
+          LayoutText {#text} at (217,70) size 7x19
+            text run at (217,70) width 7: " "
+          LayoutInline {span} at (0,0) size 21x25 [color=#808080] [border: (3px solid #0000FF)]
+            LayoutText {#text} at (227,70) size 15x19
+              text run at (227,70) width 15: "X"
+          LayoutText {#text} at (245,70) size 7x19
+            text run at (245,70) width 7: " "
+          LayoutInline {span} at (0,0) size 21x25 [color=#808080] [border: (3px solid #0000FF)]
+            LayoutText {#text} at (255,70) size 15x19
+              text run at (255,70) width 15: "X"
+          LayoutText {#text} at (273,70) size 7x19
+            text run at (273,70) width 7: " "
+          LayoutInline {span} at (0,0) size 21x25 [color=#808080] [border: (3px solid #0000FF)]
+            LayoutText {#text} at (283,70) size 15x19
+              text run at (283,70) width 15: "X"
+          LayoutText {#text} at (301,70) size 7x19
+            text run at (301,70) width 7: " "
+          LayoutInline {span} at (0,0) size 21x25 [color=#808080] [border: (3px solid #0000FF)]
+            LayoutText {#text} at (311,70) size 15x19
+              text run at (311,70) width 15: "X"
+          LayoutText {#text} at (329,70) size 7x19
+            text run at (329,70) width 7: " "
+          LayoutInline {span} at (0,0) size 21x25 [color=#808080] [border: (3px solid #0000FF)]
+            LayoutText {#text} at (339,70) size 15x19
+              text run at (339,70) width 15: "X"
+          LayoutText {#text} at (357,70) size 7x19
+            text run at (357,70) width 7: " "
+          LayoutInline {span} at (0,0) size 21x25 [color=#808080] [border: (3px solid #0000FF)]
+            LayoutText {#text} at (367,70) size 15x19
+              text run at (367,70) width 15: "X"
+          LayoutText {#text} at (385,70) size 7x19
+            text run at (385,70) width 7: " "
+          LayoutInline {span} at (0,0) size 21x25 [color=#808080] [border: (3px solid #0000FF)]
+            LayoutText {#text} at (395,70) size 15x19
+              text run at (395,70) width 15: "X"
+          LayoutText {#text} at (413,70) size 7x19
+            text run at (413,70) width 7: " "
+          LayoutInline {span} at (0,0) size 21x25 [color=#808080] [border: (3px solid #0000FF)]
+            LayoutText {#text} at (423,70) size 15x19
+              text run at (423,70) width 15: "X"
+          LayoutText {#text} at (441,70) size 7x19
+            text run at (441,70) width 7: " "
+          LayoutInline {span} at (0,0) size 21x25 [color=#808080] [border: (3px solid #0000FF)]
+            LayoutText {#text} at (451,70) size 15x19
+              text run at (451,70) width 15: "X"
+          LayoutText {#text} at (469,70) size 7x19
+            text run at (469,70) width 7: " "
+          LayoutInline {span} at (0,0) size 21x25 [color=#808080] [border: (3px solid #0000FF)]
+            LayoutText {#text} at (479,70) size 15x19
+              text run at (479,70) width 15: "X"
+          LayoutText {#text} at (497,70) size 7x19
+            text run at (497,70) width 7: " "
+          LayoutInline {span} at (0,0) size 21x25 [color=#808080] [border: (3px solid #0000FF)]
+            LayoutText {#text} at (507,70) size 15x19
+              text run at (507,70) width 15: "X"
+          LayoutText {#text} at (525,70) size 7x19
+            text run at (525,70) width 7: " "
+          LayoutInline {span} at (0,0) size 21x25 [color=#808080] [border: (3px solid #0000FF)]
+            LayoutText {#text} at (535,70) size 15x19
+              text run at (535,70) width 15: "X"
+          LayoutText {#text} at (553,70) size 7x19
+            text run at (553,70) width 7: " "
+          LayoutInline {span} at (0,0) size 21x25 [color=#808080] [border: (3px solid #0000FF)]
+            LayoutText {#text} at (563,70) size 15x19
+              text run at (563,70) width 15: "X"
+          LayoutText {#text} at (581,70) size 7x19
+            text run at (581,70) width 7: " "
+          LayoutInline {span} at (0,0) size 21x25 [color=#808080] [border: (3px solid #0000FF)]
+            LayoutText {#text} at (591,70) size 15x19
+              text run at (591,70) width 15: "X"
+          LayoutText {#text} at (609,70) size 7x19
+            text run at (609,70) width 7: " "
+          LayoutInline {span} at (0,0) size 21x25 [color=#808080] [border: (3px solid #0000FF)]
+            LayoutText {#text} at (619,70) size 15x19
+              text run at (619,70) width 15: "X"
+          LayoutText {#text} at (637,70) size 7x19
+            text run at (637,70) width 7: " "
+          LayoutInline {span} at (0,0) size 21x25 [color=#808080] [border: (3px solid #0000FF)]
+            LayoutText {#text} at (647,70) size 15x19
+              text run at (647,70) width 15: "X"
+          LayoutText {#text} at (665,70) size 7x19
+            text run at (665,70) width 7: " "
+          LayoutInline {span} at (0,0) size 21x25 [color=#808080] [border: (3px solid #0000FF)]
+            LayoutText {#text} at (675,70) size 15x19
+              text run at (675,70) width 15: "X"
+          LayoutText {#text} at (693,70) size 7x19
+            text run at (693,70) width 7: " "
+          LayoutInline {span} at (0,0) size 21x25 [color=#808080] [border: (3px solid #0000FF)]
+            LayoutText {#text} at (703,70) size 15x19
+              text run at (703,70) width 15: "X"
+          LayoutText {#text} at (721,70) size 7x19
+            text run at (721,70) width 7: " "
+          LayoutInline {span} at (0,0) size 21x25 [color=#808080] [border: (3px solid #0000FF)]
+            LayoutText {#text} at (731,70) size 15x19
+              text run at (731,70) width 15: "X"
+          LayoutText {#text} at (749,70) size 7x19
+            text run at (749,70) width 7: " "
+          LayoutInline {span} at (0,0) size 21x25 [color=#808080] [border: (3px solid #0000FF)]
+            LayoutText {#text} at (759,70) size 15x19
+              text run at (759,70) width 15: "X"
+          LayoutText {#text} at (0,0) size 0x0
+          LayoutInline {span} at (0,0) size 21x25 [color=#808080] [border: (3px solid #0000FF)]
+            LayoutText {#text} at (3,102) size 15x19
+              text run at (3,102) width 15: "X"
+          LayoutText {#text} at (21,102) size 7x19
+            text run at (21,102) width 7: " "
+          LayoutInline {span} at (0,0) size 21x25 [color=#808080] [border: (3px solid #0000FF)]
+            LayoutText {#text} at (31,102) size 15x19
+              text run at (31,102) width 15: "X"
+          LayoutText {#text} at (49,102) size 7x19
+            text run at (49,102) width 7: " "
+          LayoutInline {span} at (0,0) size 21x25 [color=#808080] [border: (3px solid #0000FF)]
+            LayoutText {#text} at (59,102) size 15x19
+              text run at (59,102) width 15: "X"
+          LayoutText {#text} at (77,102) size 7x19
+            text run at (77,102) width 7: " "
+          LayoutInline {span} at (0,0) size 21x25 [color=#808080] [border: (3px solid #0000FF)]
+            LayoutText {#text} at (87,102) size 15x19
+              text run at (87,102) width 15: "X"
+          LayoutText {#text} at (105,102) size 7x19
+            text run at (105,102) width 7: " "
+          LayoutInline {span} at (0,0) size 21x25 [color=#808080] [border: (3px solid #0000FF)]
+            LayoutText {#text} at (115,102) size 15x19
+              text run at (115,102) width 15: "X"
+          LayoutText {#text} at (133,102) size 7x19
+            text run at (133,102) width 7: " "
+          LayoutInline {span} at (0,0) size 21x25 [color=#808080] [border: (3px solid #0000FF)]
+            LayoutText {#text} at (143,102) size 15x19
+              text run at (143,102) width 15: "X"
+          LayoutText {#text} at (161,102) size 7x19
+            text run at (161,102) width 7: " "
+          LayoutInline {span} at (0,0) size 21x25 [color=#808080] [border: (3px solid #0000FF)]
+            LayoutText {#text} at (171,102) size 15x19
+              text run at (171,102) width 15: "X"
+          LayoutText {#text} at (189,102) size 7x19
+            text run at (189,102) width 7: " "
+          LayoutInline {span} at (0,0) size 21x25 [color=#808080] [border: (3px solid #0000FF)]
+            LayoutText {#text} at (199,102) size 15x19
+              text run at (199,102) width 15: "X"
+          LayoutText {#text} at (217,102) size 7x19
+            text run at (217,102) width 7: " "
+          LayoutInline {span} at (0,0) size 21x25 [color=#808080] [border: (3px solid #0000FF)]
+            LayoutText {#text} at (227,102) size 15x19
+              text run at (227,102) width 15: "X"
+          LayoutText {#text} at (245,102) size 7x19
+            text run at (245,102) width 7: " "
+          LayoutInline {span} at (0,0) size 21x25 [color=#808080] [border: (3px solid #0000FF)]
+            LayoutText {#text} at (255,102) size 15x19
+              text run at (255,102) width 15: "X"
+          LayoutText {#text} at (273,102) size 7x19
+            text run at (273,102) width 7: " "
+          LayoutInline {span} at (0,0) size 21x25 [color=#808080] [border: (3px solid #0000FF)]
+            LayoutText {#text} at (283,102) size 15x19
+              text run at (283,102) width 15: "X"
+          LayoutText {#text} at (301,102) size 7x19
+            text run at (301,102) width 7: " "
+          LayoutInline {span} at (0,0) size 21x25 [color=#808080] [border: (3px solid #0000FF)]
+            LayoutText {#text} at (311,102) size 15x19
+              text run at (311,102) width 15: "X"
+          LayoutText {#text} at (329,102) size 7x19
+            text run at (329,102) width 7: " "
+          LayoutInline {span} at (0,0) size 21x25 [color=#808080] [border: (3px solid #0000FF)]
+            LayoutText {#text} at (339,102) size 15x19
+              text run at (339,102) width 15: "X"
+          LayoutText {#text} at (357,102) size 7x19
+            text run at (357,102) width 7: " "
+          LayoutInline {span} at (0,0) size 21x25 [color=#808080] [border: (3px solid #0000FF)]
+            LayoutText {#text} at (367,102) size 15x19
+              text run at (367,102) width 15: "X"
+          LayoutText {#text} at (385,102) size 7x19
+            text run at (385,102) width 7: " "
+          LayoutInline {span} at (0,0) size 21x25 [color=#808080] [border: (3px solid #0000FF)]
+            LayoutText {#text} at (395,102) size 15x19
+              text run at (395,102) width 15: "X"
+          LayoutText {#text} at (413,102) size 7x19
+            text run at (413,102) width 7: " "
+          LayoutInline {span} at (0,0) size 21x25 [color=#808080] [border: (3px solid #0000FF)]
+            LayoutText {#text} at (423,102) size 15x19
+              text run at (423,102) width 15: "X"
+          LayoutText {#text} at (441,102) size 7x19
+            text run at (441,102) width 7: " "
+          LayoutInline {span} at (0,0) size 21x25 [color=#808080] [border: (3px solid #0000FF)]
+            LayoutText {#text} at (451,102) size 15x19
+              text run at (451,102) width 15: "X"
+          LayoutText {#text} at (469,102) size 7x19
+            text run at (469,102) width 7: " "
+          LayoutInline {span} at (0,0) size 21x25 [color=#808080] [border: (3px solid #0000FF)]
+            LayoutText {#text} at (479,102) size 15x19
+              text run at (479,102) width 15: "X"
+          LayoutText {#text} at (497,102) size 7x19
+            text run at (497,102) width 7: " "
+          LayoutInline {span} at (0,0) size 21x25 [color=#808080] [border: (3px solid #0000FF)]
+            LayoutText {#text} at (507,102) size 15x19
+              text run at (507,102) width 15: "X"
+          LayoutText {#text} at (525,102) size 7x19
+            text run at (525,102) width 7: " "
+          LayoutInline {span} at (0,0) size 21x25 [color=#808080] [border: (3px solid #0000FF)]
+            LayoutText {#text} at (535,102) size 15x19
+              text run at (535,102) width 15: "X"
+          LayoutText {#text} at (553,102) size 7x19
+            text run at (553,102) width 7: " "
+          LayoutInline {span} at (0,0) size 21x25 [color=#808080] [border: (3px solid #0000FF)]
+            LayoutText {#text} at (563,102) size 15x19
+              text run at (563,102) width 15: "X"
+          LayoutText {#text} at (581,102) size 7x19
+            text run at (581,102) width 7: " "
+          LayoutInline {span} at (0,0) size 21x25 [color=#808080] [border: (3px solid #0000FF)]
+            LayoutText {#text} at (591,102) size 15x19
+              text run at (591,102) width 15: "X"
+          LayoutText {#text} at (609,102) size 7x19
+            text run at (609,102) width 7: " "
+          LayoutInline {span} at (0,0) size 21x25 [color=#808080] [border: (3px solid #0000FF)]
+            LayoutText {#text} at (619,102) size 15x19
+              text run at (619,102) width 15: "X"
+          LayoutText {#text} at (637,102) size 7x19
+            text run at (637,102) width 7: " "
+          LayoutInline {span} at (0,0) size 21x25 [color=#808080] [border: (3px solid #0000FF)]
+            LayoutText {#text} at (647,102) size 15x19
+              text run at (647,102) width 15: "X"
+          LayoutText {#text} at (665,102) size 7x19
+            text run at (665,102) width 7: " "
+          LayoutInline {span} at (0,0) size 21x25 [color=#808080] [border: (3px solid #0000FF)]
+            LayoutText {#text} at (675,102) size 15x19
+              text run at (675,102) width 15: "X"
+          LayoutText {#text} at (693,102) size 7x19
+            text run at (693,102) width 7: " "
+          LayoutInline {span} at (0,0) size 21x25 [color=#808080] [border: (3px solid #0000FF)]
+            LayoutText {#text} at (703,102) size 15x19
+              text run at (703,102) width 15: "X"
+          LayoutText {#text} at (721,102) size 7x19
+            text run at (721,102) width 7: " "
+          LayoutInline {span} at (0,0) size 21x25 [color=#808080] [border: (3px solid #0000FF)]
+            LayoutText {#text} at (731,102) size 15x19
+              text run at (731,102) width 15: "X"
+          LayoutText {#text} at (749,102) size 7x19
+            text run at (749,102) width 7: " "
+          LayoutInline {span} at (0,0) size 21x25 [color=#808080] [border: (3px solid #0000FF)]
+            LayoutText {#text} at (759,102) size 15x19
+              text run at (759,102) width 15: "X"
+          LayoutText {#text} at (0,0) size 0x0
+          LayoutInline {span} at (0,0) size 21x25 [color=#808080] [border: (3px solid #0000FF)]
+            LayoutText {#text} at (3,134) size 15x19
+              text run at (3,134) width 15: "X"
+          LayoutText {#text} at (21,134) size 7x19
+            text run at (21,134) width 7: " "
+          LayoutInline {span} at (0,0) size 21x25 [color=#808080] [border: (3px solid #0000FF)]
+            LayoutText {#text} at (31,134) size 15x19
+              text run at (31,134) width 15: "X"
+          LayoutText {#text} at (49,134) size 7x19
+            text run at (49,134) width 7: " "
+          LayoutInline {span} at (0,0) size 21x25 [color=#808080] [border: (3px solid #0000FF)]
+            LayoutText {#text} at (59,134) size 15x19
+              text run at (59,134) width 15: "X"
+          LayoutText {#text} at (77,134) size 7x19
+            text run at (77,134) width 7: " "
+          LayoutInline {span} at (0,0) size 21x25 [color=#808080] [border: (3px solid #0000FF)]
+            LayoutText {#text} at (87,134) size 15x19
+              text run at (87,134) width 15: "X"
+          LayoutText {#text} at (105,134) size 7x19
+            text run at (105,134) width 7: " "
+          LayoutInline {span} at (0,0) size 21x25 [color=#808080] [border: (3px solid #0000FF)]
+            LayoutText {#text} at (115,134) size 15x19
+              text run at (115,134) width 15: "X"
+          LayoutText {#text} at (133,134) size 7x19
+            text run at (133,134) width 7: " "
+          LayoutInline {span} at (0,0) size 21x25 [color=#808080] [border: (3px solid #0000FF)]
+            LayoutText {#text} at (143,134) size 15x19
+              text run at (143,134) width 15: "X"
+          LayoutText {#text} at (161,134) size 7x19
+            text run at (161,134) width 7: " "
+          LayoutInline {span} at (0,0) size 21x25 [color=#808080] [border: (3px solid #0000FF)]
+            LayoutText {#text} at (171,134) size 15x19
+              text run at (171,134) width 15: "X"
+          LayoutText {#text} at (189,134) size 7x19
+            text run at (189,134) width 7: " "
+          LayoutInline {span} at (0,0) size 21x25 [color=#808080] [border: (3px solid #0000FF)]
+            LayoutText {#text} at (199,134) size 15x19
+              text run at (199,134) width 15: "X"
+          LayoutText {#text} at (217,134) size 7x19
+            text run at (217,134) width 7: " "
+          LayoutInline {span} at (0,0) size 21x25 [color=#808080] [border: (3px solid #0000FF)]
+            LayoutText {#text} at (227,134) size 15x19
+              text run at (227,134) width 15: "X"
+          LayoutText {#text} at (245,134) size 7x19
+            text run at (245,134) width 7: " "
+          LayoutInline {span} at (0,0) size 21x25 [color=#808080] [border: (3px solid #0000FF)]
+            LayoutText {#text} at (255,134) size 15x19
+              text run at (255,134) width 15: "X"
+          LayoutText {#text} at (273,134) size 7x19
+            text run at (273,134) width 7: " "
+          LayoutInline {span} at (0,0) size 21x25 [color=#808080] [border: (3px solid #0000FF)]
+            LayoutText {#text} at (283,134) size 15x19
+              text run at (283,134) width 15: "X"
+          LayoutText {#text} at (301,134) size 7x19
+            text run at (301,134) width 7: " "
+          LayoutInline {span} at (0,0) size 21x25 [color=#808080] [border: (3px solid #0000FF)]
+            LayoutText {#text} at (311,134) size 15x19
+              text run at (311,134) width 15: "X"
+          LayoutText {#text} at (329,134) size 7x19
+            text run at (329,134) width 7: " "
+          LayoutInline {span} at (0,0) size 21x25 [color=#808080] [border: (3px solid #0000FF)]
+            LayoutText {#text} at (339,134) size 15x19
+              text run at (339,134) width 15: "X"
+          LayoutText {#text} at (357,134) size 7x19
+            text run at (357,134) width 7: " "
+          LayoutInline {span} at (0,0) size 21x25 [color=#808080] [border: (3px solid #0000FF)]
+            LayoutText {#text} at (367,134) size 15x19
+              text run at (367,134) width 15: "X"
+          LayoutText {#text} at (385,134) size 7x19
+            text run at (385,134) width 7: " "
+          LayoutInline {span} at (0,0) size 21x25 [color=#808080] [border: (3px solid #0000FF)]
+            LayoutText {#text} at (395,134) size 15x19
+              text run at (395,134) width 15: "X"
+          LayoutText {#text} at (413,134) size 7x19
+            text run at (413,134) width 7: " "
+          LayoutInline {span} at (0,0) size 21x25 [color=#808080] [border: (3px solid #0000FF)]
+            LayoutText {#text} at (423,134) size 15x19
+              text run at (423,134) width 15: "X"
+          LayoutText {#text} at (441,134) size 7x19
+            text run at (441,134) width 7: " "
+          LayoutInline {span} at (0,0) size 21x25 [color=#808080] [border: (3px solid #0000FF)]
+            LayoutText {#text} at (451,134) size 15x19
+              text run at (451,134) width 15: "X"
+          LayoutText {#text} at (469,134) size 7x19
+            text run at (469,134) width 7: " "
+          LayoutInline {span} at (0,0) size 21x25 [color=#808080] [border: (3px solid #0000FF)]
+            LayoutText {#text} at (479,134) size 15x19
+              text run at (479,134) width 15: "X"
+          LayoutText {#text} at (497,134) size 7x19
+            text run at (497,134) width 7: " "
+          LayoutInline {span} at (0,0) size 21x25 [color=#808080] [border: (3px solid #0000FF)]
+            LayoutText {#text} at (507,134) size 15x19
+              text run at (507,134) width 15: "X"
+          LayoutText {#text} at (525,134) size 7x19
+            text run at (525,134) width 7: " "
+          LayoutInline {span} at (0,0) size 21x25 [color=#808080] [border: (3px solid #0000FF)]
+            LayoutText {#text} at (535,134) size 15x19
+              text run at (535,134) width 15: "X"
+          LayoutText {#text} at (0,0) size 0x0
+        LayoutText {#text} at (0,0) size 0x0

@@ -1,0 +1,12 @@
+layer at (0,0) size 800x600 clip at (0,0) size 785x600 scrollHeight 900
+  LayoutView at (0,0) size 800x600
+layer at (0,0) size 785x600
+  LayoutBlockFlow {HTML} at (0,0) size 785x600
+    LayoutFlexibleBox {BODY} at (0,0) size 785x600
+      LayoutBlockFlow {DIV} at (0,0) size 785x450
+        LayoutText {#text} at (0,0) size 484x19
+          text run at (0,0) width 422: "Enter print preview. You should not see red or the word fail on the "
+          text run at (421,0) width 63: "first page."
+      LayoutBlockFlow {DIV} at (0,450) size 785x450
+        LayoutText {#text} at (0,0) size 35x19
+          text run at (0,0) width 35: "FAIL"

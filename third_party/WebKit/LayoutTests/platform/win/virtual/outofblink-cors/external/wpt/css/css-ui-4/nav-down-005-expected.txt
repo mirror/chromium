@@ -1,0 +1,37 @@
+layer at (0,0) size 800x600
+  LayoutView at (0,0) size 800x600
+layer at (0,0) size 800x128
+  LayoutBlockFlow {HTML} at (0,0) size 800x128
+    LayoutBlockFlow {BODY} at (8,16) size 784x92
+      LayoutBlockFlow {P} at (0,0) size 784x20
+        LayoutText {#text} at (0,0) size 512x19
+          text run at (0,0) width 512: "First, use directional navigation to navigate the focus to the \"START\" link below."
+      LayoutBlockFlow {P} at (0,36) size 784x20
+        LayoutText {#text} at (0,0) size 478x19
+          text run at (0,0) width 478: "Test passes if navigating down twice moves the focus to the \"FINISH\" link."
+      LayoutBlockFlow {DIV} at (0,72) size 784x0
+        LayoutBlockFlow (floating) {A} at (16,0) size 52x20 [color=#551A8B]
+          LayoutText {#text} at (0,0) size 52x19
+            text run at (0,0) width 52: "ignore 1"
+        LayoutBlockFlow (floating) {A} at (100,0) size 49.77x20 [color=#551A8B]
+          LayoutText {#text} at (0,0) size 50x19
+            text run at (0,0) width 50: "START"
+        LayoutBlockFlow (floating) {A} at (181.77,0) size 52x20 [color=#551A8B]
+          LayoutText {#text} at (0,0) size 52x19
+            text run at (0,0) width 52: "FINISH"
+        LayoutBlockFlow (floating) {A} at (265.77,0) size 52x20 [color=#551A8B]
+          LayoutText {#text} at (0,0) size 52x19
+            text run at (0,0) width 52: "ignore 3"
+      LayoutBlockFlow {DIV} at (0,92) size 784x0
+        LayoutBlockFlow (floating) {A} at (16,0) size 52x20 [color=#551A8B]
+          LayoutText {#text} at (0,0) size 52x19
+            text run at (0,0) width 52: "ignore 4"
+        LayoutBlockFlow (floating) {A} at (100,0) size 52x20 [color=#551A8B]
+          LayoutText {#text} at (0,0) size 52x19
+            text run at (0,0) width 52: "ignore 2"
+        LayoutBlockFlow (floating) {A} at (184,0) size 52x20 [color=#551A8B]
+          LayoutText {#text} at (0,0) size 52x19
+            text run at (0,0) width 52: "ignore 5"
+        LayoutBlockFlow (floating) {A} at (268,0) size 52x20 [color=#551A8B]
+          LayoutText {#text} at (0,0) size 52x19
+            text run at (0,0) width 52: "ignore 6"

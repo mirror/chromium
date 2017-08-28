@@ -1,0 +1,37 @@
+layer at (0,0) size 800x600
+  LayoutView at (0,0) size 800x600
+layer at (0,0) size 800x254
+  LayoutBlockFlow {HTML} at (0,0) size 800x254
+    LayoutBlockFlow {BODY} at (8,16) size 784x222
+      LayoutBlockFlow {DIV} at (0,0) size 784x222
+        LayoutBlockFlow {P} at (0,0) size 784x20
+          LayoutText {#text} at (0,0) size 65x19
+            text run at (0,0) width 65: "Test steps:"
+        LayoutBlockFlow {OL} at (0,36) size 784x40
+          LayoutListItem {LI} at (40,0) size 744x20
+            LayoutListMarker (anonymous) at (-16,0) size 16x19: "1"
+            LayoutText {#text} at (0,0) size 71x19
+              text run at (0,0) width 71: "Download "
+            LayoutInline {A} at (0,0) size 95x19 [color=#0000EE]
+              LayoutText {#text} at (71,0) size 95x19
+                text run at (71,0) width 95: "blue96x96.png"
+            LayoutText {#text} at (166,0) size 54x19
+              text run at (166,0) width 54: " to local."
+          LayoutListItem {LI} at (40,20) size 744x20
+            LayoutListMarker (anonymous) at (-16,0) size 16x19: "2"
+            LayoutText {#text} at (0,0) size 321x19
+              text run at (0,0) width 321: "Select the local file (blue96x96.png) to run the test."
+        LayoutBlockFlow {P} at (0,92) size 784x20
+          LayoutText {#text} at (0,0) size 103x19
+            text run at (0,0) width 103: "Pass/fail criteria:"
+        LayoutBlockFlow {P} at (0,128) size 784x20
+          LayoutText {#text} at (0,0) size 259x19
+            text run at (0,0) width 259: "Test passes if there is a filled blue square."
+        LayoutBlockFlow {P} at (0,164) size 784x22
+          LayoutFileUploadControl {INPUT} at (0,0) size 238x22 "No file chosen"
+            LayoutButton {INPUT} at (0,0) size 85x22 [bgcolor=#C0C0C0] [border: (2px outset #C0C0C0)]
+              LayoutBlockFlow (anonymous) at (8,3) size 69x16
+                LayoutText {#text} at (0,0) size 69x16
+                  text run at (0,0) width 69: "Choose File"
+        LayoutBlockFlow {P} at (0,202) size 784x20
+          LayoutImage {IMG} at (0,15) size 0x0

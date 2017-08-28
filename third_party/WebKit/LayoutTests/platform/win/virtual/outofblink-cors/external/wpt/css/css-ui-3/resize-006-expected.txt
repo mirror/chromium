@@ -1,0 +1,15 @@
+layer at (0,0) size 800x600
+  LayoutView at (0,0) size 800x600
+layer at (0,0) size 800x164
+  LayoutBlockFlow {HTML} at (0,0) size 800x164
+    LayoutBlockFlow {BODY} at (8,16) size 784x140
+      LayoutBlockFlow {P} at (0,0) size 784x20
+        LayoutText {#text} at (0,0) size 119x19
+          text run at (0,0) width 119: "Test passes if only "
+        LayoutInline {STRONG} at (0,0) size 43x19
+          LayoutText {#text} at (118,0) size 43x19
+            text run at (118,0) width 43: "height"
+        LayoutText {#text} at (160,0) size 599x19
+          text run at (160,0) width 599: " of blue border square below can be adjusted(for instance by dragging the bottom-right corner)."
+layer at (8,52) size 104x104 clip at (10,54) size 100x100
+  LayoutBlockFlow {DIV} at (0,36) size 104x104 [border: (2px solid #0000FF)]

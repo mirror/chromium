@@ -1,0 +1,33 @@
+layer at (0,0) size 800x600
+  LayoutView at (0,0) size 800x600
+layer at (0,0) size 800x600
+  LayoutBlockFlow {HTML} at (0,0) size 800x600
+    LayoutBlockFlow {BODY} at (8,8) size 784x576
+      LayoutBlockFlow {OL} at (0,0) size 784x92
+        LayoutListItem {LI} at (40,0) size 744x20
+          LayoutBlockFlow {P} at (0,0) size 744x20
+            LayoutListMarker (anonymous) at (-16,0) size 16x19: "1"
+            LayoutText {#text} at (0,0) size 522x19
+              text run at (0,0) width 522: "Clicking this link must navigate this page to a resource that contains \"THE END\": "
+            LayoutInline {A} at (0,0) size 21x19 [color=#0000EE]
+              LayoutText {#text} at (522,0) size 21x19
+                text run at (522,0) width 21: "test"
+            LayoutText {#text} at (0,0) size 0x0
+        LayoutListItem {LI} at (40,36) size 744x20
+          LayoutBlockFlow {P} at (0,0) size 744x20
+            LayoutListMarker (anonymous) at (-16,0) size 16x19: "2"
+            LayoutText {#text} at (0,0) size 424x19
+              text run at (0,0) width 424: "Clicking this link must open a new browsing context that is empty: "
+            LayoutInline {A} at (0,0) size 21x19 [color=#0000EE]
+              LayoutText {#text} at (424,0) size 21x19
+                text run at (424,0) width 21: "test"
+            LayoutText {#text} at (0,0) size 0x0
+        LayoutListItem {LI} at (40,72) size 744x20
+          LayoutBlockFlow {P} at (0,0) size 744x20
+            LayoutListMarker (anonymous) at (-16,0) size 16x19: "3"
+            LayoutText {#text} at (0,0) size 522x19
+              text run at (0,0) width 522: "Clicking this link must navigate this page to a resource that contains \"THE END\": "
+            LayoutInline {A} at (0,0) size 21x19 [color=#0000EE]
+              LayoutText {#text} at (522,0) size 21x19
+                text run at (522,0) width 21: "test"
+            LayoutText {#text} at (0,0) size 0x0

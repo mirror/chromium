@@ -1,0 +1,13 @@
+layer at (0,0) size 800x600
+  LayoutView at (0,0) size 800x600
+layer at (0,0) size 800x125
+  LayoutBlockFlow {HTML} at (0,0) size 800x125
+    LayoutBlockFlow {BODY} at (8,16) size 784x93
+      LayoutBlockFlow {P} at (0,0) size 784x20
+        LayoutText {#text} at (0,0) size 437x19
+          text run at (0,0) width 437: "When you mouse click the checkbox below it should not be checked:"
+      LayoutBlockFlow {P} at (0,36) size 784x21
+        LayoutBlockFlow {INPUT} at (4,3) size 13x13
+      LayoutBlockFlow {P} at (0,73) size 784x20
+        LayoutText {#text} at (0,0) size 442x19
+          text run at (0,0) width 442: "Now keyboard \"click\" the checkbox and confirm it's still not checked."

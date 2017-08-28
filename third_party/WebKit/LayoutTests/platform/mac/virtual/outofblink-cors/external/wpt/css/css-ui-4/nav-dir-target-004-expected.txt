@@ -1,0 +1,33 @@
+layer at (0,0) size 800x600
+  LayoutView at (0,0) size 800x600
+layer at (0,0) size 800x284
+  LayoutBlockFlow {HTML} at (0,0) size 800x284
+    LayoutBlockFlow {BODY} at (8,16) size 784x260
+      LayoutBlockFlow {P} at (0,0) size 784x18
+        LayoutText {#text} at (0,0) size 520x18
+          text run at (0,0) width 520: "First, use directional navigation to navigate the focus to the \"START\" link below."
+      LayoutBlockFlow {P} at (0,34) size 784x18
+        LayoutText {#text} at (0,0) size 461x18
+          text run at (0,0) width 461: "Test passes if navigating up once moves the focus to the \"FINISH\" link."
+      LayoutBlockFlow {P} at (0,68) size 784x18
+        LayoutInline {A} at (0,0) size 41x18 [color=#551A8B]
+          LayoutText {#text} at (0,0) size 41x18
+            text run at (0,0) width 41: "ignore"
+      LayoutBlockFlow (anonymous) at (0,102) size 784x158
+        LayoutText {#text} at (0,0) size 0x0
+layer at (8,118) size 304x154
+  LayoutIFrame {IFRAME} at (0,0) size 304x154 [border: (2px inset #EEEEEE)]
+    layer at (0,0) size 300x150
+      LayoutView at (0,0) size 300x150
+    layer at (0,0) size 300x50
+      LayoutBlockFlow {HTML} at (0,0) size 300x50
+        LayoutBlockFlow {BODY} at (8,16) size 284x18
+          LayoutBlockFlow {P} at (0,0) size 284x18
+            LayoutInline {A} at (0,0) size 49x18 [color=#551A8B]
+              LayoutText {#text} at (0,0) size 49x18
+                text run at (0,0) width 49: "START"
+            LayoutText {#text} at (48,0) size 5x18
+              text run at (48,0) width 5: " "
+            LayoutInline {A} at (0,0) size 52x18 [color=#551A8B]
+              LayoutText {#text} at (52,0) size 52x18
+                text run at (52,0) width 52: "FINISH"
