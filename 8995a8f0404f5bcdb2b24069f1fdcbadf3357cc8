@@ -16,6 +16,24 @@
       "revId": "8995a8f0404f5bcdb2b24069f1fdcbadf3357cc8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "563fabf9_2ce9a9f7",
+        "filename": "tools/perf/benchmarks/media.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1181219
+      },
+      "writtenOn": "2017-08-28T18:00:55Z",
+      "side": 1,
+      "message": "Done. The used events are now in \u0027media\u0027 category.",
+      "parentUuid": "963f28d8_11ab2d60",
+      "revId": "8995a8f0404f5bcdb2b24069f1fdcbadf3357cc8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
