@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0fac0a17_ee18412d",
+        "filename": "base/metrics/record_histogram_checker.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-08-28T18:22:43Z",
+      "side": 1,
+      "message": "style: Put the dtor first, add a new line, then list out the methods. See ValueSerializer or ValueDeserializer in base/values.h as an example. Also add a space between in between \"(){}\".",
+      "revId": "191ae1492bcb24614294a7058751a62fa514d7ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0537b32_caae01a8",
+        "filename": "base/metrics/statistics_recorder_unittest.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-08-28T18:22:43Z",
+      "side": 1,
+      "message": "Ditto. This should be formatted as:\n\n~OddRecordHistogramChecker() override {};\n\n// base::RecordHistogramChecker:\nbool ShouldRecord(uint64_t histogram_hash) const override {\n  ...\n}",
+      "revId": "191ae1492bcb24614294a7058751a62fa514d7ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
