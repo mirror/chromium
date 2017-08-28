@@ -24,6 +24,8 @@ cc_component("animation") {
     "animation_target.h",
     "animation_timeline.cc",
     "animation_timeline.h",
+    "effect_controller.cc",
+    "effect_controller.h",
     "element_animations.cc",
     "element_animations.h",
     "keyframed_animation_curve.cc",

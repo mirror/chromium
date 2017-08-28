@@ -22,6 +22,7 @@ class AnimationDelegate;
 class AnimationEvents;
 class AnimationHost;
 class AnimationTimeline;
+class EffectController;
 struct AnimationEvent;
 struct PropertyAnimationState;
 
@@ -95,7 +96,7 @@ class CC_ANIMATION_EXPORT AnimationPlayer
   bool HasTickingAnimation() const;
 
   // Returns true if there are any animations at all to process.
-  bool has_any_animation() const { return !animations_.empty(); }
+  bool has_any_animation() const;
 
   bool needs_push_properties() const { return needs_push_properties_; }
   void SetNeedsPushProperties();
@@ -201,11 +202,6 @@ class CC_ANIMATION_EXPORT AnimationPlayer
       AnimationPlayer* animation_player_impl) const;
   void PushPropertiesToImplThread(AnimationPlayer* animation_player_impl);
 
-  std::string AnimationsToString() const;
-
-  using Animations = std::vector<std::unique_ptr<Animation>>;
-  Animations animations_;
-
   AnimationHost* animation_host_;
   AnimationTimeline* animation_timeline_;
   // element_animations isn't null if player attached to an element (layer).
@@ -225,6 +221,8 @@ class CC_ANIMATION_EXPORT AnimationPlayer
   bool is_ticking_;
 
   bool scroll_offset_animation_was_interrupted_;
+
+  std::unique_ptr<EffectController> effect_controller_;
 
   DISALLOW_COPY_AND_ASSIGN(AnimationPlayer);
 };
