@@ -142,10 +142,7 @@ TEST_F(HitTestDataProviderAuraTest, Stacking) {
     EXPECT_EQ(region->flags, viz::mojom::kHitTestMine |
                                  viz::mojom::kHitTestMouse |
                                  viz::mojom::kHitTestTouch);
-    viz::SurfaceId surface_id(
-        WindowPortMus::Get(expected_order_1[i])->frame_sink_id(),
-        WindowMus::Get(expected_order_1[i])->GetLocalSurfaceId());
-    EXPECT_EQ(region->surface_id, surface_id);
+
     EXPECT_EQ(region->frame_sink_id,
               WindowPortMus::Get(expected_order_1[i])->frame_sink_id());
     EXPECT_EQ(region->rect.ToString(),
@@ -166,9 +163,9 @@ TEST_F(HitTestDataProviderAuraTest, Stacking) {
     viz::SurfaceId surface_id(
         WindowPortMus::Get(expected_order_2[i])->frame_sink_id(),
         WindowMus::Get(expected_order_2[i])->GetLocalSurfaceId());
-    EXPECT_EQ(region->surface_id, surface_id);
+
     EXPECT_EQ(region->frame_sink_id,
-              WindowPortMus::Get(expected_order_2[i])->frame_sink_id());
+              WindowPortMus::Get(expected_order_1[i])->frame_sink_id());
     EXPECT_EQ(region->rect.ToString(),
               expected_order_2[i]->bounds().ToString());
     i++;
@@ -197,10 +194,6 @@ TEST_F(HitTestDataProviderAuraTest, CustomTargeter) {
   ASSERT_EQ(hit_test_data->regions.size(), arraysize(expected_insets));
   int i = 0;
   for (const auto& region : hit_test_data->regions) {
-    viz::SurfaceId surface_id(
-        WindowPortMus::Get(expected_windows[i])->frame_sink_id(),
-        WindowMus::Get(expected_windows[i])->GetLocalSurfaceId());
-    EXPECT_EQ(region->surface_id, surface_id);
     EXPECT_EQ(region->frame_sink_id,
               WindowPortMus::Get(expected_windows[i])->frame_sink_id());
     EXPECT_EQ(region->flags, expected_flags[i]);
@@ -239,10 +232,6 @@ TEST_F(HitTestDataProviderAuraTest, HoleTargeter) {
   ASSERT_EQ(hit_test_data->regions.size(), expected_bounds.size());
   int i = 0;
   for (const auto& region : hit_test_data->regions) {
-    viz::SurfaceId surface_id(
-        WindowPortMus::Get(expected_windows[i])->frame_sink_id(),
-        WindowMus::Get(expected_windows[i])->GetLocalSurfaceId());
-    EXPECT_EQ(region->surface_id, surface_id);
     EXPECT_EQ(region->frame_sink_id,
               WindowPortMus::Get(expected_windows[i])->frame_sink_id());
     EXPECT_EQ(region->flags, expected_flags);
