@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bab7b73b_91f9f5d8",
+        "filename": "services/ui/ws/frame_generator.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-08-28T18:20:52Z",
+      "side": 1,
+      "message": "Does this need to set the transform in high-dpi? (it probably doesn\u0027t, but would be good to double-check)",
+      "revId": "1ea6a95f0bfaba90db5392d3fd33a16bda5d2506",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6bd2e18b_7f1c8098",
+        "filename": "services/ui/ws/frame_generator.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-08-28T18:20:52Z",
+      "side": 1,
+      "message": "const method. (Also, doesn\u0027t need the comment, imo)",
+      "revId": "1ea6a95f0bfaba90db5392d3fd33a16bda5d2506",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
