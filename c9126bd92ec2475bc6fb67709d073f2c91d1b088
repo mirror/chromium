@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "48824770_abca6847",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/fetch/api/cors/cors-preflight-cache.any.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1000781
+      },
+      "writtenOn": "2017-08-28T08:20:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "021e6254_b349922f",
+      "revId": "c9126bd92ec2475bc6fb67709d073f2c91d1b088",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "70f4c42f_8139a182",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/fetch/api/cors/cors-preflight-cache.any.js",
         "patchSetId": 6
@@ -33,6 +51,24 @@
       "revId": "c9126bd92ec2475bc6fb67709d073f2c91d1b088",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59251254_f1f2a05a",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/fetch/api/cors/cors-preflight-cache.any.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1000781
+      },
+      "writtenOn": "2017-08-28T08:20:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "70f4c42f_8139a182",
+      "revId": "c9126bd92ec2475bc6fb67709d073f2c91d1b088",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "e55efdf3_ef92bb5a",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/fetch/api/cors/cors-preflight-cache.any.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1000781
+      },
+      "writtenOn": "2017-08-28T08:20:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f93afdc0_17a3092b",
+      "revId": "c9126bd92ec2475bc6fb67709d073f2c91d1b088",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8652a12c_4a147203",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/fetch/api/cors/cors-preflight-cache.any.js",
         "patchSetId": 6
@@ -67,6 +121,24 @@
       "revId": "c9126bd92ec2475bc6fb67709d073f2c91d1b088",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d25f9b08_1cc0930c",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/fetch/api/cors/cors-preflight-cache.any.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1000781
+      },
+      "writtenOn": "2017-08-28T08:20:47Z",
+      "side": 1,
+      "message": "Yes.\n\nhttps://google.github.io/styleguide/jsguide.html#features-functions-arrow-functions\n\u003e Tip: It is a good practice to use parentheses even for single-argument arrows, since the code may still parse reasonably (but incorrectly) if the parentheses are forgotten when an additional argument is added.",
+      "parentUuid": "8652a12c_4a147203",
+      "revId": "c9126bd92ec2475bc6fb67709d073f2c91d1b088",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
