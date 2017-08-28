@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4480c024_08a6faef",
+        "filename": "services/resource_coordinator/coordination_unit/coordination_unit_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1211219
+      },
+      "writtenOn": "2017-08-28T22:07:53Z",
+      "side": 1,
+      "message": "Why is it commented out?",
+      "range": {
+        "startLine": 26,
+        "startChar": 2,
+        "endLine": 26,
+        "endChar": 62
+      },
+      "revId": "93876a16a77a308952c8b8ae1e5385f51f0b0849",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
