@@ -2,8 +2,10 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+#include <chrono>
 #include <memory>
 #include <string>
+#include <thread>
 #include <utility>
 #include <vector>
 
@@ -86,8 +88,8 @@ class LocalNTPTest : public InProcessBrowserTest, public InstantTestBase {
     ASSERT_TRUE(https_test_server().Start());
     GURL instant_url =
         https_test_server().GetURL("/instant_extended.html?strk=1&");
-    GURL ntp_url =
-        https_test_server().GetURL("/local_ntp_browsertest.html?strk=1&");
+    GURL ntp_url = https_test_server().GetURL(
+        "/local_ntp/local_ntp_browsertest.html?strk=1&");
     InstantTestBase::Init(instant_url, ntp_url, false);
   }
 };
@@ -260,8 +262,70 @@ IN_PROC_BROWSER_TEST_F(LocalNTPTest,
   EXPECT_EQ(base::ASCIIToUTF16("Nouvel onglet"), active_tab->GetTitle());
 }
 
-// In contrast to LocalNTPTest, this one doesn't set up any special NTP
-// wrangling. It just turns on the local NTP.
+// A test class that sets up voice_browsertest.html (which is mostly a copy
+// of the voice search part from the real local_ntp.html) as the NTP URL.
+class LocalNTPVoiceTest : public InProcessBrowserTest, public InstantTestBase {
+ public:
+  LocalNTPVoiceTest() {}
+
+ protected:
+  void SetUpInProcessBrowserTestFixture() override {
+    ASSERT_TRUE(https_test_server().Start());
+    GURL instant_url =
+        https_test_server().GetURL("/instant_extended.html?strk=1&");
+    GURL ntp_url =
+        https_test_server().GetURL("/local_ntp/voice_browsertest.html?strk=1&");
+    InstantTestBase::Init(instant_url, ntp_url, false);
+  }
+
+  // This runs a bunch of pure JS-side tests, i.e. those that don't require any
+  // interaction from the native side.
+  void RunJavascriptTests(const std::string& jsFileName) {
+    ASSERT_NO_FATAL_FAILURE(SetupInstant(browser()));
+
+    content::WebContents* active_tab = OpenNewTab(browser(), ntp_url());
+    ASSERT_TRUE(search::IsInstantNTP(active_tab));
+
+    bool success = false;
+    ASSERT_TRUE(instant_test_utils::GetBoolFromJS(
+        active_tab, "!!setUpBrowserTest('" + jsFileName + "')", &success));
+    EXPECT_TRUE(success);
+
+    // Wait until script loads.
+    for (size_t i = 0; i < 5; ++i) {
+      success = false;
+      ASSERT_TRUE(instant_test_utils::GetBoolFromJS(
+          active_tab, "typeof window.setUp === 'function'", &success));
+      if (success) {
+        break;
+      }
+      std::this_thread::sleep_for(std::chrono::seconds(1));
+    }
+    EXPECT_TRUE(success);
+
+    success = false;
+    ASSERT_TRUE(instant_test_utils::GetBoolFromJS(
+        active_tab, "!!runSimpleTests()", &success));
+    EXPECT_TRUE(success);
+  }
+};
+
+IN_PROC_BROWSER_TEST_F(LocalNTPVoiceTest, MicrophoneJavascriptTests) {
+  RunJavascriptTests("voice_microphone_browsertest.js");
+}
+
+IN_PROC_BROWSER_TEST_F(LocalNTPVoiceTest, SpeechJavascriptTests) {
+  RunJavascriptTests("voice_speech_browsertest.js");
+}
+
+IN_PROC_BROWSER_TEST_F(LocalNTPVoiceTest, TextJavascriptTests) {
+  RunJavascriptTests("voice_text_browsertest.js");
+}
+
+IN_PROC_BROWSER_TEST_F(LocalNTPVoiceTest, ViewJavascriptTests) {
+  RunJavascriptTests("voice_view_browsertest.js");
+}
+
 class LocalNTPSmokeTest : public InProcessBrowserTest {
  public:
   LocalNTPSmokeTest() {}
