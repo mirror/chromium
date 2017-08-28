@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d4814c77_d1669f55",
+        "filename": "tools/battor_agent/battor_connection_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 299,
+      "author": {
+        "id": 1128909
+      },
+      "writtenOn": "2017-08-28T15:33:15Z",
+      "side": 1,
+      "message": "This function wasn\u0027t actually changed, just moved near the other private functions.",
+      "range": {
+        "startLine": 299,
+        "startChar": 5,
+        "endLine": 299,
+        "endChar": 25
+      },
+      "revId": "688dda2bd927d9cec85194682d31a7d3adc1063c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
