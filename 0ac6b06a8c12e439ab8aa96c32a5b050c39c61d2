@@ -22,6 +22,30 @@
       "revId": "0ac6b06a8c12e439ab8aa96c32a5b050c39c61d2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4eb7357a_1b81dd74",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/paint-timing/first-paint-only.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1175814
+      },
+      "writtenOn": "2017-08-28T18:04:06Z",
+      "side": 1,
+      "message": "Are you sure? \nAccording to foolip@: \"anything that you are able to write as LayoutTests without depending on internal APIs, you would also be able to convert to a test in wpt.\"",
+      "parentUuid": "6d90e274_a5fd61a4",
+      "range": {
+        "startLine": 19,
+        "startChar": 15,
+        "endLine": 19,
+        "endChar": 37
+      },
+      "revId": "0ac6b06a8c12e439ab8aa96c32a5b050c39c61d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
