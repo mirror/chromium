@@ -16,7 +16,12 @@
 namespace extensions {
 
 // Source of provider file systems.
-enum FileSystemProviderSource { SOURCE_FILE, SOURCE_NETWORK, SOURCE_DEVICE };
+enum FileSystemProviderSource {
+  SOURCE_FILE,
+  SOURCE_NETWORK,
+  SOURCE_SMB,
+  SOURCE_DEVICE
+};
 
 // Represents capabilities of a file system provider.
 class FileSystemProviderCapabilities : public Extension::ManifestData {
