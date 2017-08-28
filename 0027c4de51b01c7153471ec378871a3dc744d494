@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bca6c9e4_cf1756a5",
+        "filename": "ui/app_list/views/search_result_list_view_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-08-28T22:46:23Z",
+      "side": 1,
+      "message": "I know this setup has code duplicates across several tests. Will file another bug to create a AppListViewTestBase.",
+      "revId": "0027c4de51b01c7153471ec378871a3dc744d494",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86a6a9c3_54a5b7d9",
+        "filename": "ui/app_list/views/search_result_list_view_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 258,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-08-28T22:46:23Z",
+      "side": 1,
+      "message": "This is because we changed the max count to 5 for new launcher: https://cs.chromium.org/chromium/src/ui/app_list/views/search_result_list_view.cc?q\u003dsearch_result_list_view.cc\u0026sq\u003dpackage:chromium\u0026dr\u0026l\u003d29, and this test sets 5 as the default search results.",
+      "revId": "0027c4de51b01c7153471ec378871a3dc744d494",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
