@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "384d02e1_544bb7da",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXLayoutObject.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 745,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-08-28T06:27:14Z",
+      "side": 1,
+      "message": "What\u0027s the logic behind all of these?\n\nWould any of them change if they had a different\ncss display property?",
+      "revId": "2776d2d2671e938b2c428f7254ee25111b9e7d03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b061dbe_f3be3165",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXLayoutObject.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 755,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-08-28T06:27:14Z",
+      "side": 1,
+      "message": "Use FlatTreeTraversal::PreviousSibling so that it\ncorrectly handles custom elements / shadow dom.",
+      "revId": "2776d2d2671e938b2c428f7254ee25111b9e7d03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83abc66d_c68ecadd",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXLayoutObject.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 775,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-08-28T06:27:14Z",
+      "side": 1,
+      "message": "This function assumes that it\u0027s only called if it\u0027s a LayoutText(),\nI\u0027d prefer to either check isText() inside, or add a DCHECK to the\ntop saying you should only call it if it\u0027s a LayoutText.",
+      "revId": "2776d2d2671e938b2c428f7254ee25111b9e7d03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
