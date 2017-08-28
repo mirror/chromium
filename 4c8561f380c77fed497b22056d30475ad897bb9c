@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "232a5b22_e2557a52",
+        "filename": "ui/app_list/views/apps_grid_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1042,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-08-28T21:20:20Z",
+      "side": 1,
+      "message": "Should the order of args for ConvertLocationToTarget be the other way around? The |event| should be in AppsGridView coordinates when this function gets called. And when we forward it AppListView, AppListView is the target.\n\ni.e.\n  event-\u003eConvertLocationToTarget(this, contents_view_-\u003eapp_list_view());",
+      "revId": "4c8561f380c77fed497b22056d30475ad897bb9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
