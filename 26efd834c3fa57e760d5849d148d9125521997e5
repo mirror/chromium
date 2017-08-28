@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a6295f62_90a05ab6",
+        "filename": "chrome/browser/resources/local_ntp/voice.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-28T11:20:53Z",
+      "side": 1,
+      "message": "nit: It\u0027s now init() again, without the underscore",
+      "revId": "26efd834c3fa57e760d5849d148d9125521997e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

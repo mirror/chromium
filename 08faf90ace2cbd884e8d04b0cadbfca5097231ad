@@ -177,6 +177,24 @@
     },
     {
       "key": {
+        "uuid": "a874cdf2_32fc0a6f",
+        "filename": "chrome/browser/resources/local_ntp/voice.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 298,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-28T11:20:53Z",
+      "side": 1,
+      "message": "It\u0027s hard to say what this should look like without seeing the tests that need it. I guess it\u0027s fine as-is for now; we can discuss more on the CL with actual tests.",
+      "parentUuid": "90f38808_4e30ea29",
+      "revId": "08faf90ace2cbd884e8d04b0cadbfca5097231ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c96986dc_f767c278",
         "filename": "chrome/browser/resources/local_ntp/voice.js",
         "patchSetId": 3
