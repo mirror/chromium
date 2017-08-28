@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "96f23c40_6b5fb500",
+        "filename": "chrome/installer/linux/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-08-28T21:22:32Z",
+      "side": 1,
+      "message": "Can you put the part that puts all the existing targets behind an if and that reindents the whole file in a separate cl? two reasons:\n\n1. There\u0027s some risk that some bot breaks due to a few targets disappearing in non-branded builds. Also, do (non-google) linux packagers use this? If so, it\u0027d probably be bad for them to lose access to these targets.\n\n2. It will make the actual change in this diff easier to read.",
+      "range": {
+        "startLine": 73,
+        "startChar": 9,
+        "endLine": 73,
+        "endChar": 16
+      },
+      "revId": "03f2bd809e4b765d944b3633680a1abfa661a02c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
