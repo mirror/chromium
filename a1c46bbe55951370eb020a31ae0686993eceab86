@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "210af50f_eb66f4d9",
+        "filename": "gpu/command_buffer/service/context_state.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 474,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-08-28T21:25:23Z",
+      "side": 1,
+      "message": "nit: we could probably get rid of this extra check, since we specially treat attribute 0 when setting/resetting the driver state, so it should accurately reflect what we want?",
+      "revId": "a1c46bbe55951370eb020a31ae0686993eceab86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c52b3e1_19aab660",
+        "filename": "gpu/command_buffer/service/gles2_cmd_decoder_unittest_base.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1979,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-08-28T21:25:23Z",
+      "side": 1,
+      "message": "nit: already_enabled",
+      "revId": "a1c46bbe55951370eb020a31ae0686993eceab86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b90fa6b1_2cb2b28d",
+        "filename": "gpu/command_buffer/service/gles2_cmd_decoder_unittest_base.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 730,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-08-28T21:25:23Z",
+      "side": 1,
+      "message": "nit: attribs_enabled_\n\nWhy not an array or vector?",
+      "revId": "a1c46bbe55951370eb020a31ae0686993eceab86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
