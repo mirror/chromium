@@ -235,9 +235,10 @@ InspectorTest.dumpConsoleClassesBrief = function()
     }
 }
 
-InspectorTest.dumpConsoleCounters = function()
+InspectorTest.dumpConsoleCounters = async function()
 {
     var counter = ConsoleCounters.WarningErrorCounter._instanceForTest;
+    await counter._throttler._waitForCompletionForTests();
     for (var index = 0; index < counter._titles.length; ++index)
         InspectorTest.addResult(counter._titles[index]);
     InspectorTest.dumpConsoleClassesBrief();

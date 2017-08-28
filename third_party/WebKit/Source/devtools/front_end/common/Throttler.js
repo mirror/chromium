@@ -27,6 +27,20 @@ Common.Throttler = class {
 
   _processCompletedForTests() {
     // For sniffing in tests.
+    if (this._waitForCompletionCallback) {
+      var callback = this._waitForCompletionCallback;
+      this._waitForCompletionCallback = null;
+      callback.call(null);
+    }
+  }
+
+  /**
+   * @return {!Promise}
+   */
+  _waitForCompletionForTests() {
+    if (!this._isRunningProcess && !this._process)
+      return Promise.resolve();
+    return new Promise(f => this._waitForCompletionCallback = f);
   }
 
   _onTimeout() {
