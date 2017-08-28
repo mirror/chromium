@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e8bea653_e0ca833e",
+        "filename": "components/webcrypto/fuzzer_support.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2017-08-28T18:26:42Z",
+      "side": 1,
+      "message": "Documenting notes for future readers:\n\n- I thought it was odd that this code would need to have a mojo::edk::Init call, as one would expect that Blink initialization would handle this.\n- However, on further investigation, this fuzzer is one of the few that uses blink::Platform::Initialize (from WebKit), rather than blink::Initialize. Looking at other tests that call blink::Initialize, they do initialize the mojo::edk beforehand (suggests there\u0027s a hidden dependency between these two)\n- I thought it odd that //components would know about //mojo, but then saw that //components/test/components_test_suite also initializes Mojo before running tests (and particularly, before any IPC)\n\nFrom this, I\u0027m concluding that:\n1) blink::Platform::Initialize doesn\u0027t necessarily know about mojo as an implementation (and indeed, it may not be used if Blink is being used in a single-proc mode, AFAICT)\n2) //components depending on //mojo is consistent with other //components unittests (but not necessarily directly in the //components)\n3) There don\u0027t appear to be any substantial initialization bits missing (compared with components_test_suite, initialization of OpenGL, content schemes, the PathProvider, and the UI resource pack are all irrelevant for these tests)\n\nSo I\u0027m going to go LGTM.\n\nHowever, as this is adding a new DEP rule, I\u0027m going to ask that a //mojo OWNER confirm this conclusion is correct before you land :)",
+      "revId": "744bdc4ab460beafd11973b4def64d3c52a8fc50",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
