@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9280a124_d90a3259",
+        "filename": "components/url_formatter/elide_url.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 323,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-08-28T23:26:18Z",
+      "side": 1,
+      "message": "Is there any overflow risk from moving |url_elided_domain_width| from one side of the inequality to the other?",
+      "revId": "f2336a68585df8270ddb132c315011bf98593fc8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a0994dd_e61c9e77",
+        "filename": "components/url_formatter/elide_url_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-08-28T23:26:18Z",
+      "side": 1,
+      "message": "Nit: Or just \"Test a case with an empty path.\"",
+      "revId": "f2336a68585df8270ddb132c315011bf98593fc8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ef0f8cb_38febd98",
+        "filename": "components/url_formatter/elide_url_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-08-28T23:26:18Z",
+      "side": 1,
+      "message": "Nit: How come trying to elide the \"www.\" also elides \"angelfire.\"?",
+      "revId": "f2336a68585df8270ddb132c315011bf98593fc8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
