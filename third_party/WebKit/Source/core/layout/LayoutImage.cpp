@@ -145,8 +145,6 @@ void LayoutImage::InvalidatePaintAndMarkForLayoutIfNeeded() {
     return;
 
   bool image_source_has_changed_size = old_intrinsic_size != new_intrinsic_size;
-  if (image_source_has_changed_size)
-    SetPreferredLogicalWidthsDirty();
 
   // If the actual area occupied by the image has changed and it is not
   // constrained by style then a layout is required.
@@ -162,9 +160,9 @@ void LayoutImage::InvalidatePaintAndMarkForLayoutIfNeeded() {
       Style()->LogicalMaxWidth().IsPercentOrCalc() ||
       Style()->LogicalMinWidth().IsPercentOrCalc();
 
-  if (image_source_has_changed_size &&
-      (!image_size_is_constrained ||
-       containing_block_needs_to_recompute_preferred_size)) {
+  if ((image_source_has_changed_size && !image_size_is_constrained) ||
+      containing_block_needs_to_recompute_preferred_size) {
+    SetPreferredLogicalWidthsDirty();
     SetNeedsLayoutAndFullPaintInvalidation(
         LayoutInvalidationReason::kSizeChanged);
     return;
