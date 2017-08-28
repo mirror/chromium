@@ -473,7 +473,7 @@ void EventRouter::DispatchEventImpl(const std::string& restrict_to_extension_id,
   // We don't expect to get events from a completely different browser context.
   DCHECK(!event->restrict_to_browser_context ||
          ExtensionsBrowserClient::Get()->IsSameContext(
-             browser_context_, event->restrict_to_browser_context));
+             event->restrict_to_browser_context, browser_context_));
   std::set<const EventListener*> listeners(
       listeners_.GetEventListeners(*event));
 
