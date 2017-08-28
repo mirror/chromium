@@ -16,6 +16,24 @@
       "revId": "cb8b7a70b3fcca7cfc3659768b92e0663fb99b6a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6464930d_362acc26",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1196069
+      },
+      "writtenOn": "2017-08-28T22:11:37Z",
+      "side": 1,
+      "message": "The workflow is reverse: PlatformKeyEventFilter receives ui::PlatformEvent from native APIs, which can be XNextEvent() on X11 or LowLevelKeyboardProc on Windows, and sends them to DesktopWindowTreeHostWin|X11 (or RenderWidgetHost) through KeyEventFilter. So both PlatformKeyEventFilter and KeyEventFilter do not know ui::Event. ui::Event will only be created when the event reaches DesktopWindowTreeHostWin|X11 or RenderWidgetHost layer.",
+      "parentUuid": "b57f129b_78e558a0",
+      "revId": "cb8b7a70b3fcca7cfc3659768b92e0663fb99b6a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
