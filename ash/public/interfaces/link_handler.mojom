@@ -1,0 +1,27 @@
+// Copyright 2017 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
+module ash.mojom;
+
+import "ui/gfx/image/mojo/image.mojom";
+import "url/mojo/url.mojom";
+
+// This struct describes a single entity that can handle a link. It contains
+// user-visible information which is displayed in a context menu.
+struct LinkHandlerInfo {
+  // The name of the app that will handle the link ("Open with [name]").
+  string name;
+  // An icon to display alongside the name.
+  gfx.mojom.ImageSkia? icon;
+  uint32 id;
+};
+
+interface LinkHandlerController {
+  ConnectModel(associated LinkHandlerObserver observer, url.mojom.Url link_url);
+  OpenLinkWithHandler(url.mojom.Url link_url, uint32 id);
+};
+
+interface LinkHandlerObserver {
+  OnLinkHandlerModelChanged(array<LinkHandlerInfo> handlers);
+};
