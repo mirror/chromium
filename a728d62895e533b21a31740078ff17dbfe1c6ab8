@@ -16,6 +16,24 @@
       "revId": "a728d62895e533b21a31740078ff17dbfe1c6ab8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5291267d_96f20f9e",
+        "filename": "ui/aura/mus/window_port_mus.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-08-28T23:19:58Z",
+      "side": 1,
+      "message": "We discussed offline about this, and there were worries that without the flag, we get crashes, because aura is generating incorrect data. So this CL is blocked on aura generating the correct hit-test data.\n\nWhen I tried this locally, I found that https://chromium-review.googlesource.com/c/chromium/src/+/635613 actually fixes the crash. So maybe land that one first, and then this one without the flag? That should be enough to unblock this CL.\n\n(btw: the crash I was getting was for invalid LocalSurfaceId, not invalid FrameSinkId. Not sure if that\u0027s the same, if you were getting some other crashes)",
+      "parentUuid": "5683aaf3_3469ebea",
+      "revId": "a728d62895e533b21a31740078ff17dbfe1c6ab8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
