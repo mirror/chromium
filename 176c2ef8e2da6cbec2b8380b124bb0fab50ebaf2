@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d247ac75_dc4b4295",
+        "filename": "chrome/browser/resources/md_extensions/manager.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 303,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-08-28T22:01:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c2e4f62a_3dc19bcf",
+      "revId": "176c2ef8e2da6cbec2b8380b124bb0fab50ebaf2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bea5fb7e_4851773f",
         "filename": "chrome/browser/resources/md_extensions/manager.js",
         "patchSetId": 7
@@ -33,6 +51,24 @@
       "revId": "176c2ef8e2da6cbec2b8380b124bb0fab50ebaf2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f7d58de_cad18c4e",
+        "filename": "chrome/browser/resources/md_extensions/manager.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 345,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-08-28T22:01:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bea5fb7e_4851773f",
+      "revId": "176c2ef8e2da6cbec2b8380b124bb0fab50ebaf2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "f8bbf66e_a024749b",
+        "filename": "chrome/browser/resources/md_extensions/navigation_helper.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-08-28T22:01:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1e167548_e4eced5b",
+      "revId": "176c2ef8e2da6cbec2b8380b124bb0fab50ebaf2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "408ab048_f4e7ee41",
         "filename": "chrome/browser/resources/md_extensions/navigation_helper.js",
         "patchSetId": 7
@@ -64,6 +118,24 @@
       "writtenOn": "2017-08-24T15:24:24Z",
       "side": 1,
       "message": "externs",
+      "revId": "176c2ef8e2da6cbec2b8380b124bb0fab50ebaf2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0d8f555_09f02300",
+        "filename": "chrome/browser/resources/md_extensions/navigation_helper.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-08-28T22:01:15Z",
+      "side": 1,
+      "message": "If I am understanding what you mean correctly - I don\u0027t think extern updates will be necessary since dependencies will know about extensions.navigation.navigateTo based on the return statement at the bottom of this file.",
+      "parentUuid": "408ab048_f4e7ee41",
       "revId": "176c2ef8e2da6cbec2b8380b124bb0fab50ebaf2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
