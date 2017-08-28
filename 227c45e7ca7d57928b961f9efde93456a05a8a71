@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "689b7b92_04d5bffe",
+        "filename": "ui/webui/resources/cr_elements/shared_vars_css.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-08-28T17:34:44Z",
+      "side": 1,
+      "message": "Hmm, I don\u0027t see paper-grey-900 anywhere in Settings... but this seems like something that Settings should also use somewhere?",
+      "revId": "227c45e7ca7d57928b961f9efde93456a05a8a71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
