@@ -22,6 +22,30 @@
       "revId": "2c8206ed4147bfd641d740ff8006488413b2dce6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b686edd6_2627eaf5",
+        "filename": "remoting/client/audio/audio_frame_supplier.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1163631
+      },
+      "writtenOn": "2017-08-28T20:53:05Z",
+      "side": 1,
+      "message": "Whoops! Yeah. Thanks.",
+      "parentUuid": "bef4c35b_681a9c4f",
+      "range": {
+        "startLine": 26,
+        "startChar": 0,
+        "endLine": 26,
+        "endChar": 71
+      },
+      "revId": "2c8206ed4147bfd641d740ff8006488413b2dce6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
