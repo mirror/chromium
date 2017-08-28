@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3f332462_f1651285",
+        "filename": "ash/app_list/app_list_presenter_delegate_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 941,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-08-28T19:30:12Z",
+      "side": 1,
+      "message": "Think |generator| expects screen coordinates. Why not use Display::bounds().bottom() ?",
+      "revId": "734dfabf68e7c6b26bb7bf7504ab4d36dafcb816",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e446e915_c0e736b7",
+        "filename": "ui/app_list/views/apps_grid_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1046,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-08-28T19:30:12Z",
+      "side": 1,
+      "message": "We can do\n  ConvertEventToTarget(contents_view_-\u003eapp_list_view(), event);\nor\n  event-\u003eConvertLocationToTarget(this, contents_view_-\u003eapp_list_view());",
+      "revId": "734dfabf68e7c6b26bb7bf7504ab4d36dafcb816",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
