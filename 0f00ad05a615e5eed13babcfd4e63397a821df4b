@@ -16,6 +16,47 @@
       "revId": "0f00ad05a615e5eed13babcfd4e63397a821df4b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3326cfab_959ec5a0",
+        "filename": "base/allocator/partition_allocator/page_allocator.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 331,
+      "author": {
+        "id": 1001213
+      },
+      "writtenOn": "2017-08-28T23:32:23Z",
+      "side": 0,
+      "message": "I took it out because it\u0027s no longer true - SystemAllocPages won\u0027t touch the globals. Things are simpler now that I don\u0027t call AllocPages, which is nice.",
+      "parentUuid": "0147b70a_7ac063db",
+      "revId": "0f00ad05a615e5eed13babcfd4e63397a821df4b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2acdf713_5ffa5885",
+        "filename": "base/allocator/partition_allocator/page_allocator.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 332,
+      "author": {
+        "id": 1001213
+      },
+      "writtenOn": "2017-08-28T23:32:23Z",
+      "side": 0,
+      "message": "On second thought this now seems superfluous so I\u0027m removing it.",
+      "range": {
+        "startLine": 332,
+        "startChar": 28,
+        "endLine": 332,
+        "endChar": 36
+      },
+      "revId": "0f00ad05a615e5eed13babcfd4e63397a821df4b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

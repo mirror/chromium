@@ -16,6 +16,24 @@
       "revId": "d9f95ee1f39fcabc3a3206780c91ccca407253c8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72694907_6c913c25",
+        "filename": "base/allocator/partition_allocator/page_allocator.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1001213
+      },
+      "writtenOn": "2017-08-28T23:32:23Z",
+      "side": 1,
+      "message": "I think it\u0027s a good idea, if we can make that contract. Otherwise, clients have to allocate extra, and align their usage. I\u0027ll add a DCHECK to make sure the ptr is so aligned.",
+      "parentUuid": "2de05462_3bc74d2d",
+      "revId": "d9f95ee1f39fcabc3a3206780c91ccca407253c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
