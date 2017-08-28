@@ -16,6 +16,24 @@
       "revId": "fec549e6e1027db3ba57e10e5a00440b0ee1bb36",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d1100ee_2f8d08c4",
+        "filename": "components/exo/surface.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 700,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-08-28T21:41:35Z",
+      "side": 1,
+      "message": "Doesn\u0027t apply to latest patch.",
+      "parentUuid": "037da590_bcaeac1a",
+      "revId": "fec549e6e1027db3ba57e10e5a00440b0ee1bb36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
