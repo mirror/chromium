@@ -208,7 +208,7 @@ TEST_F(FileSystemProviderOperationsReadDirectoryTest, OnSuccess) {
   EXPECT_EQ(base::File::FILE_OK, event->result());
 
   ASSERT_EQ(1u, event->entry_list().size());
-  const storage::DirectoryEntry entry = event->entry_list()[0];
+  const storage::DirectoryEntry& entry = event->entry_list()[0];
   EXPECT_FALSE(entry.is_directory);
   EXPECT_EQ("blueberries.txt", entry.name);
 }

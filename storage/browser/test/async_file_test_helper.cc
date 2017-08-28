@@ -68,7 +68,9 @@ void ReadDirectoryCallback(base::RunLoop* run_loop,
                            FileEntryList entries,
                            bool has_more) {
   *result_out = result;
-  entries_out->insert(entries_out->end(), entries.begin(), entries.end());
+  entries_out->insert(entries_out->end(),
+                      std::make_move_iterator(entries.begin()),
+                      std::make_move_iterator(entries.end()));
   if (result != base::File::FILE_OK || !has_more)
     run_loop->Quit();
 }

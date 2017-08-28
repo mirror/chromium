@@ -106,9 +106,9 @@ class FileSystemDispatcher::CallbackDispatcher {
     snapshot_callback_.Run(file_info, platform_path, request_id);
   }
 
-  void DidReadDirectory(const std::vector<storage::DirectoryEntry>& entries,
+  void DidReadDirectory(std::vector<storage::DirectoryEntry> entries,
                         bool has_more) {
-    directory_callback_.Run(entries, has_more);
+    directory_callback_.Run(std::move(entries), has_more);
   }
 
   void DidOpenFileSystem(const std::string& name,
@@ -376,11 +376,11 @@ void FileSystemDispatcher::OnDidCreateSnapshotFile(
 
 void FileSystemDispatcher::OnDidReadDirectory(
     int request_id,
-    const std::vector<storage::DirectoryEntry>& entries,
+    std::vector<storage::DirectoryEntry> entries,
     bool has_more) {
   CallbackDispatcher* dispatcher = dispatchers_.Lookup(request_id);
   DCHECK(dispatcher);
-  dispatcher->DidReadDirectory(entries, has_more);
+  dispatcher->DidReadDirectory(std::move(entries), has_more);
   if (!has_more)
     dispatchers_.Remove(request_id);
 }

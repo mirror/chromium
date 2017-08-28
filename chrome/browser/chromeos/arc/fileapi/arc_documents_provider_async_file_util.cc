@@ -47,9 +47,9 @@ void OnReadDirectoryOnUIThread(
                                         ? storage::DirectoryEntry::DIRECTORY
                                         : storage::DirectoryEntry::FILE);
 
-  BrowserThread::PostTask(
-      BrowserThread::IO, FROM_HERE,
-      base::BindOnce(callback, result, entries, false /* has_more */));
+  BrowserThread::PostTask(BrowserThread::IO, FROM_HERE,
+                          base::BindOnce(callback, result, std::move(entries),
+                                         false /* has_more */));
 }
 
 void GetFileInfoOnUIThread(

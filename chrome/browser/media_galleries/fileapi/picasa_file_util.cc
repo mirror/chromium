@@ -272,10 +272,10 @@ base::File::Error PicasaFileUtil::ReadDirectorySync(
         if (error != base::File::FILE_OK)
           return error;
 
-        for (EntryList::const_iterator it = super_list.begin();
+        for (EntryList::iterator it = super_list.begin();
              it != super_list.end(); ++it) {
           if (!it->is_directory)
-            file_list->push_back(*it);
+            file_list->push_back(std::move(*it));
         }
       }
 
@@ -386,9 +386,9 @@ void PicasaFileUtil::ReadDirectoryWithFreshDataProvider(
     bool success) {
   if (!success) {
     content::BrowserThread::PostTask(
-        content::BrowserThread::IO,
-        FROM_HERE,
-        base::Bind(callback, base::File::FILE_ERROR_IO, EntryList(), false));
+        content::BrowserThread::IO, FROM_HERE,
+        base::BindOnce(callback, base::File::FILE_ERROR_IO, EntryList(),
+                       false));
     return;
   }
   NativeMediaFileUtil::ReadDirectoryOnTaskRunnerThread(std::move(context), url,

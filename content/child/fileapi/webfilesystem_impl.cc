@@ -46,9 +46,9 @@ class WebFileSystemImpl::WaitableCallbackResults
             base::WaitableEvent::ResetPolicy::MANUAL,
             base::WaitableEvent::InitialState::NOT_SIGNALED) {}
 
-  void AddResultsAndSignal(const base::Closure& results_closure) {
+  void AddResultsAndSignal(base::OnceClosure results_closure) {
     base::AutoLock lock(lock_);
-    results_closures_.push_back(results_closure);
+    results_closures_.push_back(std::move(results_closure));
     results_available_event_.Signal();
   }
 
@@ -58,14 +58,14 @@ class WebFileSystemImpl::WaitableCallbackResults
   }
 
   void Run() {
-    std::vector<base::Closure> closures;
+    std::vector<base::OnceClosure> closures;
     {
       base::AutoLock lock(lock_);
       results_closures_.swap(closures);
       results_available_event_.Reset();
     }
     for (size_t i = 0; i < closures.size(); ++i)
-      closures[i].Run();
+      std::move(closures[i]).Run();
   }
 
  private:
@@ -75,7 +75,7 @@ class WebFileSystemImpl::WaitableCallbackResults
 
   base::Lock lock_;
   base::WaitableEvent results_available_event_;
-  std::vector<base::Closure> results_closures_;
+  std::vector<base::OnceClosure> results_closures_;
   DISALLOW_COPY_AND_ASSIGN(WaitableCallbackResults);
 };
 
@@ -137,7 +137,7 @@ void DidReadMetadata(const base::File::Info& file_info,
   callbacks->DidReadMetadata(web_file_info);
 }
 
-void DidReadDirectory(const std::vector<storage::DirectoryEntry>& entries,
+void DidReadDirectory(std::vector<storage::DirectoryEntry> entries,
                       bool has_more,
                       WebFileSystemCallbacks* callbacks) {
   WebVector<WebFileSystemEntry> file_system_entries(entries.size());
@@ -171,10 +171,9 @@ void DidFail(base::File::Error error, WebFileSystemCallbacks* callbacks) {
 }
 
 // Run WebFileSystemCallbacks's |method| with |params|.
-void RunCallbacks(
-    int callbacks_id,
-    const base::Callback<void(WebFileSystemCallbacks*)>& callback,
-    CallbacksUnregisterMode callbacks_unregister_mode) {
+void RunCallbacks(int callbacks_id,
+                  base::OnceCallback<void(WebFileSystemCallbacks*)> callback,
+                  CallbacksUnregisterMode callbacks_unregister_mode) {
   WebFileSystemImpl* filesystem =
       WebFileSystemImpl::ThreadSpecificInstance(NULL);
   if (!filesystem)
@@ -182,40 +181,41 @@ void RunCallbacks(
   WebFileSystemCallbacks callbacks = filesystem->GetCallbacks(callbacks_id);
   if (callbacks_unregister_mode == UNREGISTER_CALLBACKS)
     filesystem->UnregisterCallbacks(callbacks_id);
-  callback.Run(&callbacks);
+  std::move(callback).Run(&callbacks);
 }
 
 void DispatchResultsClosure(
     const scoped_refptr<base::SingleThreadTaskRunner>& task_runner,
     int callbacks_id,
     WaitableCallbackResults* waitable_results,
-    const base::Closure& results_closure) {
+    base::OnceClosure results_closure) {
   if (task_runner->BelongsToCurrentThread()) {
-    results_closure.Run();
+    std::move(results_closure).Run();
     return;
   }
 
   if (waitable_results) {
     // If someone is waiting, this should result in running the closure.
-    waitable_results->AddResultsAndSignal(results_closure);
+    waitable_results->AddResultsAndSignal(std::move(results_closure));
     // In case no one is waiting, post a task to run the closure.
     task_runner->PostTask(FROM_HERE,
                           base::BindOnce(&WaitableCallbackResults::Run,
                                          make_scoped_refptr(waitable_results)));
     return;
   }
-  task_runner->PostTask(FROM_HERE, results_closure);
+  task_runner->PostTask(FROM_HERE, std::move(results_closure));
 }
 
 void CallbackFileSystemCallbacks(
     const scoped_refptr<base::SingleThreadTaskRunner>& task_runner,
     int callbacks_id,
     WaitableCallbackResults* waitable_results,
-    const base::Callback<void(WebFileSystemCallbacks*)>& callback,
+    base::OnceCallback<void(WebFileSystemCallbacks*)> callback,
     CallbacksUnregisterMode callbacksunregister_mode) {
-  DispatchResultsClosure(task_runner, callbacks_id, waitable_results,
-                         base::Bind(&RunCallbacks, callbacks_id, callback,
-                                    callbacksunregister_mode));
+  DispatchResultsClosure(
+      task_runner, callbacks_id, waitable_results,
+      base::BindOnce(&RunCallbacks, callbacks_id, std::move(callback),
+                     callbacksunregister_mode));
 }
 
 //-----------------------------------------------------------------------------
@@ -230,7 +230,7 @@ void OpenFileSystemCallbackAdapter(
     const std::string& name,
     const GURL& root) {
   CallbackFileSystemCallbacks(task_runner, callbacks_id, waitable_results,
-                              base::Bind(&DidOpenFileSystem, name, root),
+                              base::BindOnce(&DidOpenFileSystem, name, root),
                               UNREGISTER_CALLBACKS);
 }
 
@@ -279,11 +279,11 @@ void ReadDirectoryCallbackAdapter(
     const scoped_refptr<base::SingleThreadTaskRunner>& task_runner,
     int callbacks_id,
     WaitableCallbackResults* waitable_results,
-    const std::vector<storage::DirectoryEntry>& entries,
+    std::vector<storage::DirectoryEntry> entries,
     bool has_more) {
   CallbackFileSystemCallbacks(
       task_runner, callbacks_id, waitable_results,
-      base::Bind(&DidReadDirectory, entries, has_more),
+      base::BindOnce(&DidReadDirectory, std::move(entries), has_more),
       has_more ? DO_NOT_UNREGISTER_CALLBACKS : UNREGISTER_CALLBACKS);
 }
 
