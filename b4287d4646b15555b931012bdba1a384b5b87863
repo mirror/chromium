@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "3e157847_e0651b8e",
+        "filename": "base/allocator/partition_allocator/page_allocator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2017-08-28T22:35:42Z",
+      "side": 1,
+      "message": "Nit: Maybe a blank line to separate the DCHECK stanza from the beginning of the function\u0027s actual work.",
+      "revId": "b4287d4646b15555b931012bdba1a384b5b87863",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc5708ea_7bbe4311",
+        "filename": "base/allocator/partition_allocator/page_allocator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2017-08-28T22:35:42Z",
+      "side": 1,
+      "message": "Nit: I would write this as:\n\n  const DWORD flags \u003d commit ? (MEM_RESERVE | MEM_COMMIT) : MEM_RESERVE;\n\nbut it\u0027s entirely a matter of taste.",
+      "revId": "b4287d4646b15555b931012bdba1a384b5b87863",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cac70617_b6632fe0",
         "filename": "base/allocator/partition_allocator/page_allocator.cc",
         "patchSetId": 1
