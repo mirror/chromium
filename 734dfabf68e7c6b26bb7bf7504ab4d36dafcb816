@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ae381dc9_cff27d74",
+        "filename": "ash/app_list/app_list_presenter_delegate_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 941,
+      "author": {
+        "id": 1189880
+      },
+      "writtenOn": "2017-08-28T21:08:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3f332462_f1651285",
+      "revId": "734dfabf68e7c6b26bb7bf7504ab4d36dafcb816",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e446e915_c0e736b7",
         "filename": "ui/app_list/views/apps_grid_view.cc",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "734dfabf68e7c6b26bb7bf7504ab4d36dafcb816",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7c98bb3_bc7024e8",
+        "filename": "ui/app_list/views/apps_grid_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1046,
+      "author": {
+        "id": 1189880
+      },
+      "writtenOn": "2017-08-28T21:08:38Z",
+      "side": 1,
+      "message": "Thanks! I didn\u0027t know this existed. Done.",
+      "parentUuid": "e446e915_c0e736b7",
+      "revId": "734dfabf68e7c6b26bb7bf7504ab4d36dafcb816",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
