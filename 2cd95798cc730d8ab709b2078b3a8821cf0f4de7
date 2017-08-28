@@ -16,6 +16,24 @@
       "revId": "2cd95798cc730d8ab709b2078b3a8821cf0f4de7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b793ca81_f8963848",
+        "filename": "components/exo/surface_tree_host.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1000050
+      },
+      "writtenOn": "2017-08-28T18:23:17Z",
+      "side": 1,
+      "message": "When the window is not added to a tree, the window-\u003eGetHost()-\u003ecompositor() is null, and the  window-\u003elayer()-\u003edevice_scale_factor() is the default value (1.0). Using the default value will cause problems. That is why I am using the device_scale_factor from the nearest display (seems GetDisplayNearestWindow(window) always returns the primary display).\n\nMay I ask what\u0027s the benefit of using window-\u003elayer()-\u003edevice_scale_factor()?",
+      "parentUuid": "cb68f7fd_aab213c3",
+      "revId": "2cd95798cc730d8ab709b2078b3a8821cf0f4de7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
