@@ -98,7 +98,8 @@ bool ExternalMountPoints::RegisterFileSystem(
     const FileSystemMountOption& mount_option,
     const base::FilePath& path_in) {
   base::AutoLock locker(lock_);
-
+  LOG(ERROR) << "*** ExternalMountPoints::RegisterFileSystem mount_name="
+             << mount_name << " path=" << path_in.value();
   base::FilePath path = NormalizeFilePath(path_in);
   if (!ValidateNewMountPoint(mount_name, type, path))
     return false;
@@ -118,6 +119,7 @@ bool ExternalMountPoints::HandlesFileSystemMountType(
 
 bool ExternalMountPoints::RevokeFileSystem(const std::string& mount_name) {
   base::AutoLock locker(lock_);
+  LOG(ERROR) << "*** ExternalMountPoints::RevokeFileSystem";
   auto found = instance_map_.find(mount_name);
   if (found == instance_map_.end())
     return false;
@@ -148,6 +150,9 @@ bool ExternalMountPoints::CrackVirtualPath(
     FileSystemMountOption* mount_option) const {
   DCHECK(mount_name);
   DCHECK(path);
+
+  LOG(ERROR) << "*** ExternalMountPoints::CrackVirtualPath mount_name="
+             << *mount_name << " virtual_path=" << virtual_path.value();
 
   // The path should not contain any '..' references.
   if (virtual_path.ReferencesParent())

@@ -52,6 +52,8 @@ std::string EscapeFileSystemId(const std::string& file_system_id) {
 base::FilePath GetMountPath(Profile* profile,
                             const std::string& extension_id,
                             const std::string& file_system_id) {
+  LOG(ERROR) << "*** mount_path_util.cc|GetMountPath extension_id="
+             << extension_id << " file_system_id" << file_system_id;
   const user_manager::User* const user =
       user_manager::UserManager::IsInitialized()
           ? chromeos::ProfileHelper::Get()->GetUserByProfile(
@@ -81,6 +83,8 @@ bool IsFileSystemProviderLocalPath(const base::FilePath& local_path) {
 
 FileSystemURLParser::FileSystemURLParser(const storage::FileSystemURL& url)
     : url_(url), file_system_(NULL) {
+  LOG(ERROR) << "*** FileSystemURLParser::FileSystemURLParser url="
+             << url.path().value();
 }
 
 FileSystemURLParser::~FileSystemURLParser() {
@@ -88,10 +92,11 @@ FileSystemURLParser::~FileSystemURLParser() {
 
 bool FileSystemURLParser::Parse() {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
-
+  LOG(ERROR) << "*** FileSystemURLParser::Parse";
   if (url_.type() != storage::kFileSystemTypeProvided)
     return false;
 
+  LOG(ERROR) << "*** FileSystemURLParser::Parse it is kFileSystemTypeProvided";
   // First, find the service handling the mount point of the URL.
   const std::vector<Profile*>& profiles =
       g_browser_process->profile_manager()->GetLoadedProfiles();
@@ -109,11 +114,15 @@ bool FileSystemURLParser::Parse() {
     if (!service)
       continue;
 
+    LOG(ERROR) << "*** FileSystemURLParser::Parse calling "
+                  "GetProvidedFileSystem file_system_id="
+               << url_.filesystem_id();
     ProvidedFileSystemInterface* const file_system =
         service->GetProvidedFileSystem(url_.filesystem_id());
     if (!file_system)
       continue;
 
+    LOG(ERROR) << "*** FileSystemURLParser::Parse Got file system";
     // Strip the mount path name from the local path, to extract the file path
     // within the provided file system.
     file_system_ = file_system;

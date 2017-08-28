@@ -203,6 +203,10 @@ void VolumeToVolumeMetadata(
       volume_metadata->source =
           extensions::api::file_manager_private::SOURCE_NETWORK;
       break;
+    case SOURCE_SMB:
+      volume_metadata->source =
+          extensions::api::file_manager_private::SOURCE_SMB;
+      break;
     case SOURCE_SYSTEM:
       volume_metadata->source =
           extensions::api::file_manager_private::SOURCE_SYSTEM;

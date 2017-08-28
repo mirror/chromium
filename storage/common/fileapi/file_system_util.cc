@@ -325,6 +325,8 @@ std::string GetFileSystemTypeString(FileSystemType type) {
       return "ArcContent";
     case kFileSystemTypeArcDocumentsProvider:
       return "ArcDocumentsProvider";
+    case kFileSystemTypeSmbFileShare:
+      return "SmbFileShare";
     case kFileSystemInternalTypeEnumStart:
     case kFileSystemInternalTypeEnumEnd:
       NOTREACHED();
