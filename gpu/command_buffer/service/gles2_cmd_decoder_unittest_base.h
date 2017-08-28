@@ -9,6 +9,7 @@
 #include <stdint.h>
 
 #include <memory>
+#include <set>
 
 #include "base/message_loop/message_loop.h"
 #include "gpu/command_buffer/client/client_test_helper.h"
@@ -385,6 +386,7 @@ class GLES2DecoderTestBase : public ::testing::TestWithParam<bool>,
 
   void DoEnableDisable(GLenum cap, bool enable);
 
+  void SetDriverVertexAttribEnabled(GLint index, bool enable);
   void DoEnableVertexAttribArray(GLint index);
 
   void DoBufferData(GLenum target, GLsizei size);
@@ -724,6 +726,8 @@ class GLES2DecoderTestBase : public ::testing::TestWithParam<bool>,
   EnableFlags enable_flags_;
 
   int shader_language_version_;
+
+  std::set<GLint> attribsEnabled;
 
  private:
   // MockGLStates is used to track GL states and emulate driver
