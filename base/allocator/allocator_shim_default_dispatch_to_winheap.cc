@@ -62,7 +62,7 @@ size_t DefaultWinHeapGetSizeEstimateImpl(const AllocatorDispatch*,
 
 }  // namespace
 
-const AllocatorDispatch AllocatorDispatch::default_dispatch = {
+constexpr AllocatorDispatch AllocatorDispatch::default_dispatch = {
     &DefaultWinHeapMallocImpl,
     &DefaultWinHeapCallocImpl,
     &DefaultWinHeapMemalignImpl,
