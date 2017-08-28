@@ -34,6 +34,24 @@
       "revId": "0e7179e22d60b9e49b337ca34c3b3b17e596984c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4ed335cd_56071c7f",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 97554,
+      "author": {
+        "id": 1124674
+      },
+      "writtenOn": "2017-08-28T23:45:03Z",
+      "side": 0,
+      "message": "The most effective way to mark these obsolete would probably be to create a new histogram_suffixes block, put \u003cobsolete\u003e and copy all the \u003csuffix\u003ees to it and move the \u003caffected-histogram\u003es to it.",
+      "parentUuid": "f4aea43a_c89fa122",
+      "revId": "0e7179e22d60b9e49b337ca34c3b3b17e596984c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
