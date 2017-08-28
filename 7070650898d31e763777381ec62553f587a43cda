@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b0faf57b_9ac1bcb1",
+        "filename": "ui/views/animation/ink_drop_mask.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-08-28T23:08:34Z",
+      "side": 1,
+      "message": "nit: do you need this?",
+      "revId": "7070650898d31e763777381ec62553f587a43cda",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b116da7a_3433a3e3",
+        "filename": "ui/views/animation/ink_drop_mask.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-08-28T23:08:34Z",
+      "side": 1,
+      "message": "nit: const",
+      "revId": "7070650898d31e763777381ec62553f587a43cda",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
