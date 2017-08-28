@@ -1,0 +1,214 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "df98a848_186df7b8",
+        "filename": "chrome/browser/ssl/ssl_error_assistant.proto",
+        "patchSetId": 9
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1002611
+      },
+      "writtenOn": "2017-08-28T17:44:41Z",
+      "side": 1,
+      "message": "Can we briefly explain how the matching logic works here?\n\nDoes both issuer_common_name and issuer_org need to match? Or is one of them matching sufficient? et.c.",
+      "revId": "af11b58f7259ed7bd8b877bde8782a43b1430185",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9cc63841_ca66e042",
+        "filename": "chrome/browser/ssl/ssl_error_assistant.proto",
+        "patchSetId": 9
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1002611
+      },
+      "writtenOn": "2017-08-28T17:44:41Z",
+      "side": 1,
+      "message": "I think we should keep these as regexes. It gives us more flexibility and leads to fewer false positives. E.g. we\u0027ll be able to match a prefix with a regex as opposed to a substring.",
+      "revId": "af11b58f7259ed7bd8b877bde8782a43b1430185",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9abd837_fe84238d",
+        "filename": "chrome/browser/ssl/ssl_error_assistant.proto",
+        "patchSetId": 9
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1002611
+      },
+      "writtenOn": "2017-08-28T17:44:41Z",
+      "side": 1,
+      "message": "nit: Rename to issuer_organization. And if we want to keep these as regexes, this can be issuer_organization_regex.",
+      "range": {
+        "startLine": 29,
+        "startChar": 18,
+        "endLine": 29,
+        "endChar": 28
+      },
+      "revId": "af11b58f7259ed7bd8b877bde8782a43b1430185",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "316ff58a_5c9e08d2",
+        "filename": "chrome/browser/ssl/ssl_error_handler.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1002611
+      },
+      "writtenOn": "2017-08-28T17:44:41Z",
+      "side": 1,
+      "message": "nit: Rename to issuer_common_name_regex. Also it seems like this and issuer_org can actually be of const re2::RE2 type since. That way, you can avoid creating regexes below in line 521 and 524.",
+      "revId": "af11b58f7259ed7bd8b877bde8782a43b1430185",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67fc5e19_e530fba3",
+        "filename": "chrome/browser/ssl/ssl_error_handler.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1002611
+      },
+      "writtenOn": "2017-08-28T17:44:41Z",
+      "side": 1,
+      "message": "nit: Rename to issuer_organization_regex.",
+      "revId": "af11b58f7259ed7bd8b877bde8782a43b1430185",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd982e18_9a94a34e",
+        "filename": "chrome/browser/ssl/ssl_error_handler.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1002611
+      },
+      "writtenOn": "2017-08-28T17:44:41Z",
+      "side": 1,
+      "message": "nit: Combine these two lines?\n\nmitm_software_list.get()-\u003epush_back(MITMSoftwareType(proto_entry.name(), ...));",
+      "revId": "af11b58f7259ed7bd8b877bde8782a43b1430185",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "faeaa20c_3b7b4b5b",
+        "filename": "chrome/browser/ssl/ssl_error_handler.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 485,
+      "author": {
+        "id": 1002611
+      },
+      "writtenOn": "2017-08-28T17:44:41Z",
+      "side": 1,
+      "message": "nit: Rename vec to regexes or patterns?",
+      "revId": "af11b58f7259ed7bd8b877bde8782a43b1430185",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76ef2a42_72b4e4fc",
+        "filename": "chrome/browser/ssl/ssl_error_handler.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 487,
+      "author": {
+        "id": 1002611
+      },
+      "writtenOn": "2017-08-28T17:44:41Z",
+      "side": 1,
+      "message": "Prefer range based for loops:\n\nfor (const string\u0026 pattern: patterns) {\n\n}",
+      "revId": "af11b58f7259ed7bd8b877bde8782a43b1430185",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61054e5b_6111fe93",
+        "filename": "chrome/browser/ssl/ssl_error_handler.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 498,
+      "author": {
+        "id": 1002611
+      },
+      "writtenOn": "2017-08-28T17:44:41Z",
+      "side": 1,
+      "message": "nit: \"Ignore if the certificate doesn\u0027t have an issuer common name or an organization name\"?",
+      "revId": "af11b58f7259ed7bd8b877bde8782a43b1430185",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0297d8d1_98259a93",
+        "filename": "chrome/browser/ssl/ssl_error_handler.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 511,
+      "author": {
+        "id": 1002611
+      },
+      "writtenOn": "2017-08-28T17:44:41Z",
+      "side": 1,
+      "message": "const MITMSoftwareType\u0026",
+      "revId": "af11b58f7259ed7bd8b877bde8782a43b1430185",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62c7c4f2_62d82025",
+        "filename": "chrome/browser/ssl/ssl_error_handler.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 524,
+      "author": {
+        "id": 1002611
+      },
+      "writtenOn": "2017-08-28T17:44:41Z",
+      "side": 1,
+      "message": "nit: This conditional is hard to parse. How about separating into two?\n\nif (!mitm_software.issuer_common_name.empty() \u0026\u0026 re2::RE2::FullMatch(\n                                 cert-\u003eissuer().common_name,\n                                 mitm_software.issuer_common_name_regex)) {\n  return mitm_software.name;\n}\n\n// Same for issuer_org\n\nActually I\u0027m not even sure if this is the same logic :)",
+      "revId": "af11b58f7259ed7bd8b877bde8782a43b1430185",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c4a335f_792f1f6d",
+        "filename": "chrome/browser/ssl/ssl_error_handler_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 1168,
+      "author": {
+        "id": 1002611
+      },
+      "writtenOn": "2017-08-28T17:44:41Z",
+      "side": 1,
+      "message": "Can you add documentation for this test? From the name it looks like a common name mismatch shouldn\u0027t show any interstitial. Is that right? (Probably not, but it should show generic SSL interstitial instead?)",
+      "revId": "af11b58f7259ed7bd8b877bde8782a43b1430185",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
