@@ -118,6 +118,30 @@
       "revId": "41c72aee515590542e3c7cfba4538a35c8d5f76a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "378a7d03_ca15f465",
+        "filename": "chrome/browser/feature_engagement/feature_tracker.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1223632
+      },
+      "writtenOn": "2017-08-28T03:06:14Z",
+      "side": 1,
+      "message": "Done. Changed to have the feature tracker constructor take in a Feature\u0026 and default time which also turned into a refactor where to get the session time required could be calculated in this base class and the sub trackers don\u0027t have to worry about it. I think it looks much cleaner now as we don\u0027t have to pass the Feature such as kIPHNewTabFeature every where since the base class already has it.",
+      "parentUuid": "dc1796b0_03d4783b",
+      "range": {
+        "startLine": 86,
+        "startChar": 2,
+        "endLine": 90,
+        "endChar": 49
+      },
+      "revId": "41c72aee515590542e3c7cfba4538a35c8d5f76a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
