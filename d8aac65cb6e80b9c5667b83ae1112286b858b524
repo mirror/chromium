@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cf60e885_28cda3b9",
+        "filename": "ui/android/view_android_unittests.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-08-28T22:44:02Z",
+      "side": 1,
+      "message": "one small clean up, let\u0027s just make WindowAndroid destructor public, maybe with a comment that object is owned by java in production. There is no point in hiding it since ViewAndroid destructor is public. then use a unique_ptr here\n\nAnd remove DestroyForTesting. nothing seem to be calling it anyway.",
+      "revId": "d8aac65cb6e80b9c5667b83ae1112286b858b524",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
