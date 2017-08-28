@@ -292,6 +292,24 @@
       "revId": "62b3505f235d00875a619b562816ea09c4454dd5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8ab992d_321aa5f8",
+        "filename": "content/test/test_render_frame.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-08-28T20:39:36Z",
+      "side": 1,
+      "message": "Sorry, at a glance I don\u0027t really recall why this would dead-lock, but it\u0027s probably very easy to understand if you poke at it with a debugger.",
+      "parentUuid": "cac81db8_2147ad81",
+      "revId": "62b3505f235d00875a619b562816ea09c4454dd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
