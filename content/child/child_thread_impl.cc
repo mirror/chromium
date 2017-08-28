@@ -71,7 +71,9 @@
 #include "mojo/public/cpp/system/platform_handle.h"
 #include "services/device/public/cpp/power_monitor/power_monitor_broadcast_source.h"
 #include "services/resource_coordinator/public/cpp/memory_instrumentation/client_process_impl.h"
+#include "services/resource_coordinator/public/cpp/tracing/chrome_trace_event_agent.h"
 #include "services/resource_coordinator/public/interfaces/memory_instrumentation/memory_instrumentation.mojom.h"
+#include "services/resource_coordinator/public/interfaces/service_constants.mojom.h"
 #include "services/service_manager/public/cpp/connector.h"
 #include "services/service_manager/public/cpp/interface_provider.h"
 #include "services/service_manager/runner/common/client_util.h"
@@ -510,6 +512,9 @@ void ChildThreadImpl::Init(const Options& options) {
     channel_->AddFilter(new tracing::ChildTraceMessageFilter(
         ChildProcess::current()->io_task_runner()));
 
+    chrome_trace_event_agent_ =
+        base::MakeUnique<tracing::ChromeTraceEventAgent>(GetConnector());
+
     if (service_manager_connection_) {
       std::string process_type_str =
           base::CommandLine::ForCurrentProcess()->GetSwitchValueASCII(
@@ -525,7 +530,8 @@ void ChildThreadImpl::Init(const Options& options) {
         process_type = memory_instrumentation::mojom::ProcessType::PLUGIN;
 
       memory_instrumentation::ClientProcessImpl::Config config(
-          GetConnector(), mojom::kBrowserServiceName, process_type);
+          GetConnector(), resource_coordinator::mojom::kServiceName,
+          process_type);
       memory_instrumentation::ClientProcessImpl::CreateInstance(config);
     }
   }
