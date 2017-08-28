@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "153db907_d7c63a63",
+        "filename": "components/ntp_snippets/breaking_news/breaking_news_gcm_app_handler.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-08-28T10:02:18Z",
+      "side": 1,
+      "message": "Done.\n\nOnTokenValidation feels better, but then it is inconsistent with other functions. So I leave it as it is.",
+      "parentUuid": "c697ef7f_dc58b01d",
+      "revId": "ce1e05debb24c7ef3e6d3cbaf6b0b378093f035b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dd717942_93a66d47",
         "filename": "components/ntp_snippets/breaking_news/breaking_news_gcm_app_handler.cc",
         "patchSetId": 5
@@ -33,6 +51,24 @@
       "revId": "ce1e05debb24c7ef3e6d3cbaf6b0b378093f035b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4fb605dd_e8315753",
+        "filename": "components/ntp_snippets/breaking_news/breaking_news_gcm_app_handler.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 308,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-08-28T10:02:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dd717942_93a66d47",
+      "revId": "ce1e05debb24c7ef3e6d3cbaf6b0b378093f035b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "17935a39_a8e4a882",
+        "filename": "components/ntp_snippets/breaking_news/breaking_news_gcm_app_handler_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 826,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-08-28T10:02:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "33d32f5b_156d94c4",
+      "revId": "ce1e05debb24c7ef3e6d3cbaf6b0b378093f035b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9b43a02f_01bdff81",
         "filename": "components/ntp_snippets/breaking_news/breaking_news_gcm_app_handler_unittest.cc",
         "patchSetId": 5
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "0a7ac5c1_afc4a62f",
+        "filename": "components/ntp_snippets/breaking_news/breaking_news_gcm_app_handler_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 848,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-08-28T10:02:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9b43a02f_01bdff81",
+      "revId": "ce1e05debb24c7ef3e6d3cbaf6b0b378093f035b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "06a4e8e2_41e5e236",
         "filename": "components/ntp_snippets/breaking_news/breaking_news_gcm_app_handler_unittest.cc",
         "patchSetId": 5
@@ -84,6 +156,24 @@
       "revId": "ce1e05debb24c7ef3e6d3cbaf6b0b378093f035b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89780a9d_1a8d625d",
+        "filename": "components/ntp_snippets/breaking_news/breaking_news_gcm_app_handler_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 950,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-08-28T10:02:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "06a4e8e2_41e5e236",
+      "revId": "ce1e05debb24c7ef3e6d3cbaf6b0b378093f035b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -110,6 +200,30 @@
     },
     {
       "key": {
+        "uuid": "9ff1e613_5cb382b8",
+        "filename": "components/ntp_snippets/breaking_news/breaking_news_metrics.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-08-28T10:02:18Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "519585fc_b6a419c3",
+      "range": {
+        "startLine": 31,
+        "startChar": 79,
+        "endLine": 31,
+        "endChar": 0
+      },
+      "revId": "ce1e05debb24c7ef3e6d3cbaf6b0b378093f035b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d9dfd978_420e4421",
         "filename": "components/ntp_snippets/breaking_news/subscription_manager_impl_unittest.cc",
         "patchSetId": 5
@@ -124,6 +238,24 @@
       "revId": "ce1e05debb24c7ef3e6d3cbaf6b0b378093f035b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f64824d6_182ce290",
+        "filename": "components/ntp_snippets/breaking_news/subscription_manager_impl_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 356,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-08-28T10:02:18Z",
+      "side": 1,
+      "message": "Done.\n\nERR_INVALID_RESPONSE",
+      "parentUuid": "d9dfd978_420e4421",
+      "revId": "ce1e05debb24c7ef3e6d3cbaf6b0b378093f035b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -144,6 +276,24 @@
     },
     {
       "key": {
+        "uuid": "774434b0_da88253f",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 5945,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-08-28T10:02:18Z",
+      "side": 1,
+      "message": "ACK.\n\nI just wanted to make it clear that this does not check the JSON itself.\n\nA message is just a map\u003cstring, string\u003e.\n\"no pushed news\" -\u003e map.count(\"payload\") \u003d\u003d 0\n\"contains empty pushed news -\u003e map.count(\"payload\") \u003d\u003d 1 \u0026\u0026 map[\"payload\"].empty()",
+      "parentUuid": "3387bfa8_a5579dda",
+      "revId": "ce1e05debb24c7ef3e6d3cbaf6b0b378093f035b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ca0a38a7_65bef445",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 5
@@ -161,6 +311,24 @@
     },
     {
       "key": {
+        "uuid": "2a25f5b3_44b30a78",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 46815,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-08-28T10:02:18Z",
+      "side": 1,
+      "message": "Done.\n\nI rewrote this bit.\n\nIt became:\n\nNumber of received messages and whether they contain pushed news. A\n    message contains pushed news if the payload key exists in the message. The\n    payload content is not checked at all (e.g. it may be empty). Recorded when\n    a message is received.",
+      "parentUuid": "ca0a38a7_65bef445",
+      "revId": "ce1e05debb24c7ef3e6d3cbaf6b0b378093f035b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "32ca78de_2ae4d816",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 5
@@ -175,6 +343,24 @@
       "revId": "ce1e05debb24c7ef3e6d3cbaf6b0b378093f035b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1dfd63d_123d96bf",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 46837,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-08-28T10:02:18Z",
+      "side": 1,
+      "message": "ACK.\n\nIt still applies.\n\nI am trying to say that any successful token retrieval counts as a validation.",
+      "parentUuid": "32ca78de_2ae4d816",
+      "revId": "ce1e05debb24c7ef3e6d3cbaf6b0b378093f035b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
