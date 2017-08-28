@@ -6,6 +6,7 @@
 #define CHROME_BROWSER_SPELLCHECKER_SPELL_CHECK_HOST_IMPL_H_
 
 #include "base/macros.h"
+#include "build/build_config.h"
 #include "components/spellcheck/browser/spelling_service_client.h"
 #include "components/spellcheck/common/spellcheck.mojom.h"
 #include "components/spellcheck/spellcheck_build_features.h"
@@ -14,6 +15,7 @@
 #error "Spellcheck should be enabled."
 #endif
 
+class SpellCheckerSessionBridge;
 class SpellcheckCustomDictionary;
 class SpellcheckService;
 
@@ -35,6 +37,9 @@ class SpellCheckHostImpl : public spellcheck::mojom::SpellCheckHost {
   void NotifyChecked(const base::string16& word, bool misspelled) override;
   void CallSpellingService(const base::string16& text,
                            CallSpellingServiceCallback callback) override;
+  void RequestTextCheck(const base::string16& text,
+                        RequestTextCheckCallback callback) override;
+  void ToggleSpellCheck(bool enabled, bool checked) override;
 
 #if !BUILDFLAG(USE_BROWSER_SPELLCHECKER)
   // Invoked when the remote Spelling service has finished checking the
@@ -62,6 +67,10 @@ class SpellCheckHostImpl : public spellcheck::mojom::SpellCheckHost {
 
   // A JSON-RPC client that calls the remote Spelling service.
   SpellingServiceClient client_;
+
+#if defined(OS_ANDROID)
+  std::unique_ptr<SpellCheckerSessionBridge> session_bridge_;
+#endif
 
   DISALLOW_COPY_AND_ASSIGN(SpellCheckHostImpl);
 };

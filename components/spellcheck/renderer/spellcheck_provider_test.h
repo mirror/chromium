@@ -71,6 +71,9 @@ class TestingSpellCheckProvider : public SpellCheckProvider,
   void NotifyChecked(const base::string16& word, bool misspelled) override;
   void CallSpellingService(const base::string16& text,
                            CallSpellingServiceCallback callback) override;
+  void RequestTextCheck(const base::string16& text,
+                        RequestTextCheckCallback callback) override;
+  void ToggleSpellCheck(bool enabled, bool checked) override;
 
   // Message loop (if needed) to deliver the SpellCheckHost request flow.
   std::unique_ptr<base::MessageLoop> loop_;
