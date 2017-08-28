@@ -30,6 +30,12 @@ function FileTapHandler() {
    * @type {boolean}
    * @private
    */
+  this.isTwoFingerTap_ = false;
+
+  /**
+   * @type {boolean}
+   * @private
+   */
   this.hasLongPressProcessed_ = false;
 
   /**
@@ -60,6 +66,12 @@ function FileTapHandler() {
    * @private
    */
   this.activeTouch_ = undefined;
+
+  /**
+   * The index of the entry which is being touched by the active touch.
+   * @type {number}
+   */
+  this.activeIndex_ = -1;
 }
 
 /**
@@ -87,7 +99,8 @@ FileTapHandler.MAX_TRACKING_FOR_TAP_ = 8;
 FileTapHandler.TapEvent = {
   TAP: 'tap',
   LONG_PRESS: 'longpress',
-  LONG_TAP: 'longtap'
+  LONG_TAP: 'longtap',
+  TWO_FINGER_TAP: 'twofingertap'
 };
 
 /**
@@ -106,16 +119,12 @@ FileTapHandler.TapEvent = {
 FileTapHandler.prototype.handleTouchEvents = function(event, index, callback) {
   switch (event.type) {
     case 'touchstart':
-      // Only process single touches.  If there is already a touch happening, or
-      // two simultaneous touches then just ignore them.
-      if (event.touches.length > 1) {
-        // Note that we could cancel an active touch here.  That would make
-        // simultaneous touch behave similar to near-simultaneous. However, if
-        // the user is dragging something, an accidental second touch could be
-        // quite disruptive if it cancelled their drag.  Better to just ignore
-        // it.
-
-        // Invalidate current touch to distinguish it from normal tap.
+      // Only track the position of the single touch. Though we detect
+      // two-finger tap for opening a context menu of the target.
+      if (event.touches.length == 2) {
+        this.isTwoFingerTap_ = true;
+        return false;
+      } else if (event.touches.length > 2) {
         this.tapStarted_ = false;
         return false;
       }
@@ -132,7 +141,9 @@ FileTapHandler.prototype.handleTouchEvents = function(event, index, callback) {
       this.startTouchY_ = this.lastTouchY_ = touch.clientY;
 
       this.tapStarted_ = true;
+      this.activeIndex_ = index;
       this.isLongTap_ = false;
+      this.isTwoFingerTap_ = false;
       this.hasLongPressProcessed_ = false;
       this.longTapDetectorTimerId_ = setTimeout(function() {
         this.longTapDetectorTimerId_ = -1;
@@ -146,6 +157,8 @@ FileTapHandler.prototype.handleTouchEvents = function(event, index, callback) {
       break;
 
     case 'touchmove':
+      if (!this.activeTouch_)
+        break;
       var touch = this.findActiveTouch_(event.changedTouches);
       if (!touch)
         break;
@@ -182,12 +195,16 @@ FileTapHandler.prototype.handleTouchEvents = function(event, index, callback) {
         break;
       if (this.isLongTap_) {
         if (this.hasLongPressProcessed_ ||
-            callback(event, index, FileTapHandler.TapEvent.LONG_TAP)) {
+            callback(
+                event, this.activeIndex_, FileTapHandler.TapEvent.LONG_TAP)) {
           event.preventDefault();
           return true;
         }
       } else {
-        if (callback(event, index, FileTapHandler.TapEvent.TAP)) {
+        if (callback(
+                event, this.activeIndex_,
+                this.isTwoFingerTap_ ? FileTapHandler.TapEvent.TWO_FINGER_TAP :
+                                       FileTapHandler.TapEvent.TAP)) {
           event.preventDefault();
           return true;
         }
