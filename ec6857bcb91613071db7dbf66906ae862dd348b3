@@ -2,6 +2,210 @@
   "comments": [
     {
       "key": {
+        "uuid": "4a6bf2ee_db20086e",
+        "filename": "chrome/browser/vr/elements/url_bar_texture.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 348,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-08-28T23:03:51Z",
+      "side": 1,
+      "message": "In general, they may not.  Maybe you can punt this for now but I\u0027d think you might need to embed formatting characters or teach the elider to measure correctly?  Matt Giuca is the expert here.",
+      "revId": "ec6857bcb91613071db7dbf66906ae862dd348b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d3f4953_0252200b",
+        "filename": "chrome/browser/vr/elements/url_bar_texture.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 359,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-08-28T23:03:51Z",
+      "side": 1,
+      "message": "Nit: Remove entirely (also for all commented/ifdefed code below)",
+      "revId": "ec6857bcb91613071db7dbf66906ae862dd348b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "626b3643_bb9ddc73",
+        "filename": "components/url_formatter/elide_url.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-08-28T23:03:51Z",
+      "side": 1,
+      "message": "Remove nognchecks and address properly?\n\nNit: Move to correct spot in #include list",
+      "revId": "ec6857bcb91613071db7dbf66906ae862dd348b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b67b3248_ccad0d48",
+        "filename": "components/url_formatter/elide_url.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 428,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-08-28T23:03:51Z",
+      "side": 1,
+      "message": "Nit: Remove whole commented block",
+      "revId": "ec6857bcb91613071db7dbf66906ae862dd348b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4576da97_118a4039",
+        "filename": "components/url_formatter/elide_url.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 432,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-08-28T23:03:51Z",
+      "side": 1,
+      "message": "Nit: This comment is more \"what\" (restating the code) than \"why\".  Either remove, or change to e.g. \"We can only securely elide standard non-file URLs, since non-standard URLs may have an arbitrary format and file URLs have no real origin.\"",
+      "revId": "ec6857bcb91613071db7dbf66906ae862dd348b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f2bf2b7_8e736d95",
+        "filename": "components/url_formatter/elide_url.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 433,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-08-28T23:03:51Z",
+      "side": 1,
+      "message": "Nit: {}",
+      "revId": "ec6857bcb91613071db7dbf66906ae862dd348b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef12ce8b_8011d12f",
+        "filename": "components/url_formatter/elide_url.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 441,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-08-28T23:03:51Z",
+      "side": 1,
+      "message": "Nit: |path_elision| would be better, since we only use this as the trailing elision when it\u0027s to elide the full path.",
+      "revId": "ec6857bcb91613071db7dbf66906ae862dd348b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5509942_7540fd4b",
+        "filename": "components/url_formatter/elide_url.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 445,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-08-28T23:03:51Z",
+      "side": 1,
+      "message": "Can standard, non-file URLs have no host?",
+      "revId": "ec6857bcb91613071db7dbf66906ae862dd348b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7ebe00a_9ef6fa88",
+        "filename": "components/url_formatter/elide_url.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 449,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-08-28T23:03:51Z",
+      "side": 1,
+      "message": "Nit: Casting end() to size_t instead would be safer.",
+      "revId": "ec6857bcb91613071db7dbf66906ae862dd348b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02cd4fec_3e85d345",
+        "filename": "components/url_formatter/elide_url.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 452,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-08-28T23:03:51Z",
+      "side": 1,
+      "message": "I have the vague sense that this block can be refactored, maybe with helper functions and/or a loop.  It seems like it\u0027s doing the same thing twice, just removing the scheme off the front the first time.  Within each part we use substr() to remove similar pieces twice.  Not quite sure how to rewrite but it seems like something briefer is possible.",
+      "revId": "ec6857bcb91613071db7dbf66906ae862dd348b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0236f516_ca000886",
+        "filename": "components/url_formatter/elide_url.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 453,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-08-28T23:03:51Z",
+      "side": 1,
+      "message": "Nit: \"shortest\" is a confusing name; maybe \"host_only\".",
+      "revId": "ec6857bcb91613071db7dbf66906ae862dd348b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7ec1f7c_9f6f48c1",
+        "filename": "components/url_formatter/elide_url.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 481,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-08-28T23:03:51Z",
+      "side": 1,
+      "message": "Nit: Or just return this value directly.\n\nCan collapse into a ?:, but probably not in few lines due to the length of the condition.",
+      "revId": "ec6857bcb91613071db7dbf66906ae862dd348b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "89820369_3be51bdc",
         "filename": "components/url_formatter/elide_url_unittest.cc",
         "patchSetId": 2
@@ -36,6 +240,30 @@
       "writtenOn": "2017-08-24T04:17:40Z",
       "side": 1,
       "message": "Why is this ssize_t? (I\u0027m not quite sure what that is but it looks like it\u0027s supposed to be a string length.)\n\nGetStringWidth returns an int. Write a comment that width is the width in pixels.",
+      "range": {
+        "startLine": 542,
+        "startChar": 8,
+        "endLine": 542,
+        "endChar": 15
+      },
+      "revId": "ec6857bcb91613071db7dbf66906ae862dd348b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2db2d8ed_a205d5a9",
+        "filename": "components/url_formatter/elide_url_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 542,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-08-28T23:03:51Z",
+      "side": 1,
+      "message": "Yeah, ssize_t is basically banned, and this should be the same as the GetStringWidth() return type anyway.\n\nI would prefer naming like \"int width_px\" to writing a comment to note it is in px.",
+      "parentUuid": "916e2209_d4f19d76",
       "range": {
         "startLine": 542,
         "startChar": 8,
@@ -99,6 +327,47 @@
       "writtenOn": "2017-08-24T04:17:40Z",
       "side": 1,
       "message": "I think (re the other CL) we\u0027ll want this for normal elision as well. Could you make the elider be a std::function parameter that gets passed into this function?",
+      "range": {
+        "startLine": 551,
+        "startChar": 33,
+        "endLine": 551,
+        "endChar": 58
+      },
+      "revId": "ec6857bcb91613071db7dbf66906ae862dd348b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "084dd25e_70e00e0e",
+        "filename": "components/url_formatter/elide_url_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 551,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-08-28T23:03:51Z",
+      "side": 1,
+      "message": "Nit: Here and below, I would spell out the type, since the return type of the function is not spelled out in the function name.  With functions with outparams like this, it\u0027s not instantly obvious to the reader whether the return value is e.g. \"bool elided\" vs. \"std::string elided\", both of which would be sane.",
+      "revId": "ec6857bcb91613071db7dbf66906ae862dd348b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9acd631_843a8187",
+        "filename": "components/url_formatter/elide_url_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 551,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-08-28T23:03:51Z",
+      "side": 1,
+      "message": "std::function is banned (see https://chromium-cpp.appspot.com/#library-blacklist ); use base::Callback for this.",
+      "parentUuid": "bbe4e2df_2efdef9b",
       "range": {
         "startLine": 551,
         "startChar": 33,
@@ -176,6 +445,41 @@
       "side": 1,
       "message": "I think your suggestion is compatible.  Either way, the test has to ratchet through all the pixel widths making strings, so we might as well keep them.  The verification step may then either match all strings, or a subset - it\u0027s a fairly minor difference.",
       "parentUuid": "2adaa304_02559156",
+      "revId": "ec6857bcb91613071db7dbf66906ae862dd348b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d24b79ee_93a9426d",
+        "filename": "components/url_formatter/elide_url_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 553,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-08-28T23:03:51Z",
+      "side": 1,
+      "message": "I like the idea of \"iterate to generate an ordered list of the elided strings, make sure it\u0027s a supserset (in the same order) compared to the passed in list\".",
+      "parentUuid": "fd54e5d7_9a7feb4c",
+      "revId": "ec6857bcb91613071db7dbf66906ae862dd348b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc973df0_4256c53a",
+        "filename": "components/url_formatter/elide_url_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 589,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-08-28T23:03:51Z",
+      "side": 1,
+      "message": "Nit: If this took a vector, it wouldn\u0027t need two args, and could use range-based for to iterate.",
       "revId": "ec6857bcb91613071db7dbf66906ae862dd348b3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
