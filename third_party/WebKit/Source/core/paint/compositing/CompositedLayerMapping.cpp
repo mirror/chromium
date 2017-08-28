@@ -289,6 +289,11 @@ void CompositedLayerMapping::UpdateBackdropFilters(const ComputedStyle& style) {
 }
 
 bool CompositedLayerMapping::UsesCompositedStickyPosition() const {
+  // The #document element doesnt have a nearest ancestor overflow node.
+  // TODO(smcgruer): According to flackr@ the root can be sticky, so we should
+  // handle that.
+  if (!owning_layer_.AncestorOverflowLayer())
+    return false;
   return GetLayoutObject().Style()->HasStickyConstrainedPosition() &&
          (owning_layer_.AncestorOverflowLayer()->IsRootLayer()
               ? GetLayoutObject().View()->GetFrameView()->IsScrollable()

@@ -91,8 +91,9 @@ void CompositingInputsUpdater::UpdateRecursive(PaintLayer* layer,
       update_type != kForceUpdate)
     return;
 
+  /*
   const PaintLayer* previous_overflow_layer = layer->AncestorOverflowLayer();
-  layer->UpdateAncestorOverflowLayer(info.last_overflow_clip_layer);
+  //layer->UpdateAncestorOverflowLayer(info.last_overflow_clip_layer);
   if (info.last_overflow_clip_layer && layer->NeedsCompositingInputsUpdate() &&
       layer->GetLayoutObject().Style()->HasStickyConstrainedPosition()) {
     if (!RuntimeEnabledFeatures::RootLayerScrollingEnabled()) {
@@ -120,15 +121,8 @@ void CompositingInputsUpdater::UpdateRecursive(PaintLayer* layer,
             ->AddViewportConstrainedObject(layer->GetLayoutObject());
       }
     }
-    layer->GetLayoutObject().UpdateStickyPositionConstraints();
-
-    // Sticky position constraints and ancestor overflow scroller affect
-    // the sticky layer position, so we need to update it again here.
-    // TODO(flackr): This should be refactored in the future to be clearer
-    // (i.e. update layer position and ancestor inputs updates in the
-    // same walk)
-    layer->UpdateLayerPosition();
   }
+  */
 
   geometry_map_.PushMappingsToAncestor(layer, layer->Parent());
 
