@@ -87,10 +87,17 @@ constexpr int kMessageViewWidth =
     message_center::kNotificationWidth - kIconViewSize.width() -
     kContentRowPadding.left() - kContentRowPadding.right();
 
-// Default FontList that all labels' FontList will be derived from.
-const gfx::FontList& GetDefaultFontList() {
-  return views::style::GetFont(views::style::CONTEXT_LABEL,
-                               views::style::STYLE_PRIMARY);
+// "Roboto-Regular, 13sp" is specified in the mock.
+constexpr int kTextFontSize = 13;
+
+// FontList for the texts except for the header.
+gfx::FontList GetTextFontList() {
+  gfx::Font default_font;
+  int font_size_delta = kTextFontSize - default_font.GetFontSize();
+  gfx::Font font = default_font.Derive(font_size_delta, gfx::Font::NORMAL,
+                                       gfx::Font::Weight::NORMAL);
+  DCHECK_EQ(kTextFontSize, font.GetFontSize());
+  return gfx::FontList(font);
 }
 
 // ItemView ////////////////////////////////////////////////////////////////////
@@ -112,8 +119,7 @@ ItemView::ItemView(const message_center::NotificationItem& item) {
   SetLayoutManager(
       new views::BoxLayout(views::BoxLayout::kHorizontal, gfx::Insets(), 0));
 
-  const gfx::FontList& font_list = GetDefaultFontList().Derive(
-      1, gfx::Font::NORMAL, gfx::Font::Weight::NORMAL);
+  const gfx::FontList font_list = GetTextFontList();
 
   views::Label* title = new views::Label(item.title);
   title->SetFontList(font_list);
@@ -174,8 +180,7 @@ const char* CompactTitleMessageView::GetClassName() const {
 CompactTitleMessageView::CompactTitleMessageView() {
   SetLayoutManager(new views::FillLayout());
 
-  const gfx::FontList& font_list = GetDefaultFontList().Derive(
-      1, gfx::Font::NORMAL, gfx::Font::Weight::NORMAL);
+  const gfx::FontList& font_list = GetTextFontList();
 
   title_view_ = new views::Label();
   title_view_->SetFontList(font_list);
@@ -194,8 +199,7 @@ void CompactTitleMessageView::OnPaint(gfx::Canvas* canvas) {
   base::string16 title = title_;
   base::string16 message = message_;
 
-  const gfx::FontList& font_list = GetDefaultFontList().Derive(
-      1, gfx::Font::NORMAL, gfx::Font::Weight::NORMAL);
+  const gfx::FontList& font_list = GetTextFontList();
 
   // Elides title and message. The behavior is based on Android's one.
   // * If the title is too long, only the title is shown.
@@ -610,8 +614,7 @@ void NotificationViewMD::CreateOrUpdateTitleView(
   base::string16 title = gfx::TruncateString(
       notification.title(), title_character_limit, gfx::WORD_BREAK);
   if (!title_view_) {
-    const gfx::FontList& font_list = GetDefaultFontList().Derive(
-        1, gfx::Font::NORMAL, gfx::Font::Weight::NORMAL);
+    const gfx::FontList& font_list = GetTextFontList();
 
     title_view_ = new views::Label(title);
     title_view_->SetFontList(font_list);
@@ -636,8 +639,7 @@ void NotificationViewMD::CreateOrUpdateMessageView(
   base::string16 text = gfx::TruncateString(
       notification.message(), kMessageCharacterLimit, gfx::WORD_BREAK);
 
-  const gfx::FontList& font_list = GetDefaultFontList().Derive(
-      1, gfx::Font::NORMAL, gfx::Font::Weight::NORMAL);
+  const gfx::FontList& font_list = GetTextFontList();
 
   if (!message_view_) {
     message_view_ = new BoundedLabel(text, font_list);
@@ -719,8 +721,7 @@ void NotificationViewMD::CreateOrUpdateProgressStatusView(
   }
 
   if (!status_view_) {
-    const gfx::FontList& font_list = GetDefaultFontList().Derive(
-        1, gfx::Font::NORMAL, gfx::Font::Weight::NORMAL);
+    const gfx::FontList& font_list = GetTextFontList();
     status_view_ = new views::Label();
     status_view_->SetFontList(font_list);
     status_view_->SetHorizontalAlignment(gfx::ALIGN_LEFT);
