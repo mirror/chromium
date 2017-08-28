@@ -197,7 +197,7 @@ void ZeroSuggestProvider::Stop(bool clear_cached_results,
   fetcher_.reset();
   waiting_for_most_visited_urls_request_ = false;
   auto* contextual_suggestions_service =
-      client()->GetContextualSuggestionsService(/*create_if_necessary=*/false);
+      client()->GetContextualSuggestionsService(/*create_if_necessary=*/true);
   // contextual_suggestions_service can be null if in incognito mode.
   if (contextual_suggestions_service != nullptr) {
     contextual_suggestions_service->StopCreatingContextualSuggestionsRequest();
