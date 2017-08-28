@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "e66f1b4e_4ea7559d",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_table_view.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 334,
+      "author": {
+        "id": 1212314
+      },
+      "writtenOn": "2017-08-28T08:05:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f01d6b6c_1f79e85c",
+      "range": {
+        "startLine": 334,
+        "startChar": 8,
+        "endLine": 334,
+        "endChar": 40
+      },
+      "revId": "4823839574fce288f04da2304481b60ba12891d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fb90aa08_c4e12520",
         "filename": "ios/chrome/browser/ui/bookmarks/bookmark_table_view.mm",
         "patchSetId": 8
@@ -45,6 +69,30 @@
       "revId": "4823839574fce288f04da2304481b60ba12891d0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d318f1c_c5e36003",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_table_view.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 338,
+      "author": {
+        "id": 1212314
+      },
+      "writtenOn": "2017-08-28T08:05:06Z",
+      "side": 1,
+      "message": "Yes, this is the logic from bookmark_menu_view.mm#reloadData\n\"Bookmarks Bar\" will be hidden in the case you mentioned.",
+      "parentUuid": "fb90aa08_c4e12520",
+      "range": {
+        "startLine": 338,
+        "startChar": 2,
+        "endLine": 338,
+        "endChar": 76
+      },
+      "revId": "4823839574fce288f04da2304481b60ba12891d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "e0f30426_cd0904c2",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_table_view.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 352,
+      "author": {
+        "id": 1212314
+      },
+      "writtenOn": "2017-08-28T08:05:06Z",
+      "side": 1,
+      "message": "I will remove _currentRootNode \u003d\u003d NULL here then.  thx~",
+      "parentUuid": "2d45e989_ba9f1a35",
+      "range": {
+        "startLine": 352,
+        "startChar": 23,
+        "endLine": 352,
+        "endChar": 25
+      },
+      "revId": "4823839574fce288f04da2304481b60ba12891d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c557e16f_06acb596",
         "filename": "ios/chrome/browser/ui/bookmarks/bookmark_table_view.mm",
         "patchSetId": 8
@@ -91,6 +163,30 @@
       "revId": "4823839574fce288f04da2304481b60ba12891d0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5394ddc1_9247fbb7",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_table_view.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 388,
+      "author": {
+        "id": 1212314
+      },
+      "writtenOn": "2017-08-28T08:05:06Z",
+      "side": 1,
+      "message": "Thanks.  It seems we don\u0027t need this line.  We needed this before because of spinner.  As spinner will never coexist with empty bg here.  This line can be removed.\n\nFor separate view thing, could I keep the empty bg as backgroundView of tableView (but not a separate view).  It seems table view will never be hidden.  Also, this way, it is more consistent to spinnerView.  And this is also the way we handle empty background in collection view.",
+      "parentUuid": "c557e16f_06acb596",
+      "range": {
+        "startLine": 388,
+        "startChar": 2,
+        "endLine": 388,
+        "endChar": 64
+      },
+      "revId": "4823839574fce288f04da2304481b60ba12891d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
