@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "431ff167_64128b1c",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/access-control-basic-denied-preflight-cache.htm",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-08-28T09:08:25Z",
+      "side": 1,
+      "message": "you can omit the parentheses as there\u0027s single argument",
+      "revId": "e2d0870021529562b12cdaff7f5f2da8887dcb82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84a8288a_5c6ee0e6",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/access-control-basic-denied-preflight-cache.htm",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-08-28T09:08:25Z",
+      "side": 1,
+      "message": "please replace 1 with XMLHttpRequest.OPENED using this opportunity",
+      "revId": "e2d0870021529562b12cdaff7f5f2da8887dcb82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3674781a_7fca8747",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/access-control-basic-denied-preflight-cache.htm",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-08-28T09:08:25Z",
+      "side": 1,
+      "message": "please replace 4 with XMLHttpRequest.DONE using this opportunity",
+      "revId": "e2d0870021529562b12cdaff7f5f2da8887dcb82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50ea0e85_e0485cfe",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/resources/access-control-basic-denied.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-08-28T09:08:25Z",
+      "side": 1,
+      "message": "It looks the original test was rather checking the behavior of the logic when caching is enabled.",
+      "revId": "e2d0870021529562b12cdaff7f5f2da8887dcb82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
