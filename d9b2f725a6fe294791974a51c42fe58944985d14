@@ -46,6 +46,30 @@
       "revId": "d9b2f725a6fe294791974a51c42fe58944985d14",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a51a6e8_74167eb7",
+        "filename": "tools/idl_parser/idl_parser_test.py",
+        "patchSetId": 14
+      },
+      "lineNbr": 344,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-08-28T08:57:10Z",
+      "side": 1,
+      "message": "It makes sense.  Thanks for the explanation.",
+      "parentUuid": "2dee556c_6354c170",
+      "range": {
+        "startLine": 344,
+        "startChar": 25,
+        "endLine": 344,
+        "endChar": 78
+      },
+      "revId": "d9b2f725a6fe294791974a51c42fe58944985d14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
