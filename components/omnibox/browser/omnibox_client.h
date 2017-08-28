@@ -5,6 +5,7 @@
 #ifndef COMPONENTS_OMNIBOX_BROWSER_OMNIBOX_CLIENT_H_
 #define COMPONENTS_OMNIBOX_BROWSER_OMNIBOX_CLIENT_H_
 
+#include "components/favicon_base/favicon_callback.h"
 #include "components/omnibox/browser/autocomplete_provider_client.h"
 #include "components/omnibox/browser/omnibox_navigation_observer.h"
 #include "components/omnibox/common/omnibox_focus_state.h"
@@ -20,10 +21,6 @@ struct OmniboxLog;
 
 namespace bookmarks {
 class BookmarkModel;
-}
-
-namespace gfx {
-class Image;
 }
 
 typedef base::Callback<void(const SkBitmap& bitmap)> BitmapFetchedCallback;
@@ -116,6 +113,15 @@ class OmniboxClient {
                                bool default_match_changed,
                                const BitmapFetchedCallback& on_bitmap_fetched) {
   }
+
+  // Called to the favicon for |page_url|. if the embedder supports fetching of
+  // favicons for URLs (not all embedders do), |callback| will be be called
+  // when the favicon has been fetched. Note that if OnResultChanged is called,
+  // all outstanding favicon requests will be canceled, and |callback| will
+  // never be called.
+  virtual void GetFaviconForPageUrl(
+      const GURL& page_url,
+      const favicon_base::FaviconImageCallback& callback) {}
 
   // Called when the current autocomplete match has changed.
   virtual void OnCurrentMatchChanged(const AutocompleteMatch& match) {}

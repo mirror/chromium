@@ -2,6 +2,7 @@ include_rules = [
   "+components/bookmarks/browser",
   "+components/bookmarks/test",
   "+components/data_use_measurement/core",
+  "+components/favicon_base/favicon_callback.h",
   "+components/grit/components_scaled_resources.h",
   "+components/history/core/browser",
   "+components/history/core/test",
