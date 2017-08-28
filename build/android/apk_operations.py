@@ -506,11 +506,13 @@ class _Command(object):
               "App's package name."))
 
     if self.needs_apk_path or self.needs_package_name:
-      # When passed by wrapper script, don't show in --help.
-      group.add_argument('--apk-path',
-          required=self.needs_apk_path and not self._from_wrapper_script,
-          help=argparse.SUPPRESS if self._from_wrapper_script else (
-              'Path to .apk'))
+      # When passed by wrapper script, don't add the argument so that we use
+      # the default.
+      if not self._from_wrapper_script:
+        group.add_argument('--apk-path',
+            required=self.needs_apk_path and not self._from_wrapper_script,
+            help=argparse.SUPPRESS if self._from_wrapper_script else (
+                'Path to .apk'))
 
     if self.supports_incremental:
       group.add_argument('--incremental',
