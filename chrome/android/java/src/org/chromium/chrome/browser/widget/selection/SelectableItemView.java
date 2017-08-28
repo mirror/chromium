@@ -17,7 +17,6 @@ import android.widget.TextView;
 
 import org.chromium.base.ApiCompatibilityUtils;
 import org.chromium.chrome.R;
-import org.chromium.chrome.browser.util.FeatureUtilities;
 import org.chromium.chrome.browser.widget.TintedImageView;
 import org.chromium.chrome.browser.widget.selection.SelectionDelegate.SelectionObserver;
 
@@ -42,8 +41,8 @@ public abstract class SelectableItemView<E> extends FrameLayout implements Check
     protected ColorStateList mIconColorList;
 
     private SelectionDelegate<E> mSelectionDelegate;
-    private SelectableItemHighlightView mHighlightView;
     private E mItem;
+    private boolean mIsChecked;
 
     /**
      * Constructor for inflating from XML.
@@ -98,16 +97,12 @@ public abstract class SelectableItemView<E> extends FrameLayout implements Check
     protected void onFinishInflate() {
         super.onFinishInflate();
 
-        inflate(getContext(), R.layout.selectable_item_highlight_view, this);
-        mHighlightView = (SelectableItemHighlightView) findViewById(R.id.highlight);
         mIconView = findViewById(R.id.icon_view);
         mTitleView = findViewById(R.id.title);
         mDescriptionView = findViewById(R.id.description);
 
         if (mIconView != null) {
-            if (FeatureUtilities.isChromeHomeModernEnabled()) {
-                mIconView.setBackgroundResource(R.drawable.selectable_item_icon_modern_bg);
-            }
+            mIconView.setBackgroundResource(R.drawable.selectable_item_icon_modern_bg);
             mIconView.setTint(null);
         }
 
@@ -169,7 +164,7 @@ public abstract class SelectableItemView<E> extends FrameLayout implements Check
     // Checkable implementations.
     @Override
     public boolean isChecked() {
-        return mHighlightView.isChecked();
+        return mIsChecked;
     }
 
     @Override
@@ -179,7 +174,8 @@ public abstract class SelectableItemView<E> extends FrameLayout implements Check
 
     @Override
     public void setChecked(boolean checked) {
-        mHighlightView.setChecked(checked);
+        if (checked == mIsChecked) return;
+        mIsChecked = checked;
         updateIconView();
     }
 
@@ -205,16 +201,14 @@ public abstract class SelectableItemView<E> extends FrameLayout implements Check
         // TODO(huayinz): Refactor this method so that mIconView is not exposed to subclass.
         if (mIconView == null) return;
 
-        if (FeatureUtilities.isChromeHomeModernEnabled()) {
-            if (isChecked()) {
-                mIconView.getBackground().setLevel(mSelectedLevel);
-                mIconView.setImageResource(R.drawable.ic_check_googblue_24dp);
-                mIconView.setTint(mIconColorList);
-            } else {
-                mIconView.getBackground().setLevel(mDefaultLevel);
-                mIconView.setImageDrawable(mIconDrawable);
-                mIconView.setTint(null);
-            }
+        if (isChecked()) {
+            mIconView.getBackground().setLevel(mSelectedLevel);
+            mIconView.setImageResource(R.drawable.ic_check_googblue_24dp);
+            mIconView.setTint(mIconColorList);
+        } else {
+            mIconView.getBackground().setLevel(mDefaultLevel);
+            mIconView.setImageDrawable(mIconDrawable);
+            mIconView.setTint(null);
         }
     }
 
