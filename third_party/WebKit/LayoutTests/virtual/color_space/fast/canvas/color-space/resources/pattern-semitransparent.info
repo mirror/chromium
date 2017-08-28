@@ -1,0 +1,71 @@
+pattern-semitransparent colors
+==============================
+
+Pixels in SRGB (RGBA order):
+top-left:		9B 1B 1B 80
+top-right:		1B 9B 1B 80
+bottom-left:	1B 1B 9B 80
+bottom-right:	1B 1B 1B 80
+
+Pixels in linear RGB (RGBA order):
+0.327778 0.010960 0.010960 0.501961
+0.010960 0.327778 0.010960 0.501961
+0.010960 0.010960 0.327778 0.501961
+0.010960 0.010960 0.010960 0.501961
+
+Pixels in P3 (RGBA order):
+0.299422 0.010959 0.010957 0.501961
+0.033902 0.317261 0.067184 0.501961
+0.016374 0.021479 0.271558 0.501961
+0.010960 0.010960 0.010960 0.501961
+
+Pixels in Rec2020 (RGBA order):
+0.294694 0.014558 0.024679 0.501961
+0.038849 0.302285 0.115265 0.501961
+0.016155 0.032855 0.209754 0.501961
+0.010960 0.010960 0.010960 0.501961
+
+==============================
+
+To correctly convert the colors for tests, a Skia fiddle must be used:
+
+void draw(SkCanvas* canvas) {
+    uint32_t rgba8888[4];
+    float rgbaF32[4*4];
+
+    rgba8888[0] = SkPackARGB32(0x80, 0x9B, 0x1B, 0x1B);
+    rgba8888[1] = SkPackARGB32(0x80, 0x1B, 0x9B, 0x1B);
+    rgba8888[2] = SkPackARGB32(0x80, 0x1B, 0x1B, 0x9B);
+    rgba8888[3] = SkPackARGB32(0x80, 0x1B, 0x1B, 0x1B);
+
+    sk_sp<SkColorSpace> srgb = SkColorSpace::MakeSRGB();
+    sk_sp<SkColorSpace> srgbLinear = SkColorSpace::MakeSRGBLinear();
+    sk_sp<SkColorSpace> p3 = SkColorSpace::MakeRGB(
+            SkColorSpace::kLinear_RenderTargetGamma,
+            SkColorSpace::kDCIP3_D65_Gamut);
+    sk_sp<SkColorSpace> rec2020 = SkColorSpace::MakeRGB(
+            SkColorSpace::kLinear_RenderTargetGamma,
+            SkColorSpace::kRec2020_Gamut);
+    sk_sp<SkColorSpace> targetColorSpaces [] = {srgbLinear, p3, rec2020};
+    SkString targetColorSpaceNames[3];
+    targetColorSpaceNames[0].append("linear RGB");
+    targetColorSpaceNames[1].append("P3");
+    targetColorSpaceNames[2].append("Rec2020");
+
+    for(int i = 0; i < 3; i++) {
+        std::unique_ptr<SkColorSpaceXform> xform =
+                SkColorSpaceXform::New(srgb.get(), targetColorSpaces[i].get());
+        xform->apply(SkColorSpaceXform::ColorFormat::kRGBA_F32_ColorFormat,
+                     rgbaF32,
+                     SkColorSpaceXform::ColorFormat::kRGBA_8888_ColorFormat,
+                     rgba8888, 4, kUnpremul_SkAlphaType);
+
+        SkDebugf("\nPixels in %s (RGBA order):\n",
+            targetColorSpaceNames[i].c_str());
+        for (int i = 0; i < 4; i++) {
+            SkDebugf("%f %f %f %f\n", rgbaF32[4*i+2], rgbaF32[4*i + 1],
+                     rgbaF32[4*i], rgbaF32[4*i + 3]);
+        }
+    }
+}
+
