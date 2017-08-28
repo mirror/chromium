@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8feaf5a9_8b49e9d2",
+        "filename": "components/autofill/content/renderer/password_autofill_agent.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2017-08-28T14:57:25Z",
+      "side": 1,
+      "message": "Nit: no empty line between mojom methods (just for unification with other methods in this file)",
+      "range": {
+        "startLine": 65,
+        "startChar": 1,
+        "endLine": 66,
+        "endChar": 0
+      },
+      "revId": "d38d9c13b1d1befa8f281767da48d06ae10f2bd8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15303ee1_9ee866ab",
+        "filename": "components/autofill/content/renderer/password_autofill_agent.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 328,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2017-08-28T14:57:25Z",
+      "side": 1,
+      "message": "You need to set this variable to false in PasswordAutofillAgent::FrameClosing() (PasswordAutofillAgent for main frame is not recreated on navigating to new site, but reused)",
+      "range": {
+        "startLine": 327,
+        "startChar": 2,
+        "endLine": 328,
+        "endChar": 0
+      },
+      "revId": "d38d9c13b1d1befa8f281767da48d06ae10f2bd8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76c63473_e3168be9",
+        "filename": "components/password_manager/core/browser/password_form_manager.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 612,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2017-08-28T14:57:25Z",
+      "side": 1,
+      "message": "Why don\u0027t to use |blacklisted_matches|? Isn\u0027t it enough just to check that | blacklisted_matches_| is not empty?",
+      "range": {
+        "startLine": 612,
+        "startChar": 26,
+        "endLine": 612,
+        "endChar": 39
+      },
+      "revId": "d38d9c13b1d1befa8f281767da48d06ae10f2bd8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e0a7b1d_31e7d2e0",
+        "filename": "components/password_manager/core/browser/password_form_manager.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 614,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2017-08-28T14:57:25Z",
+      "side": 1,
+      "message": "why not \u003d\u003d?",
+      "range": {
+        "startLine": 614,
+        "startChar": 33,
+        "endLine": 614,
+        "endChar": 36
+      },
+      "revId": "d38d9c13b1d1befa8f281767da48d06ae10f2bd8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4441b69_88517acc",
+        "filename": "components/password_manager/core/browser/password_form_manager.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 590,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2017-08-28T14:57:25Z",
+      "side": 1,
+      "message": "if a form",
+      "range": {
+        "startLine": 590,
+        "startChar": 12,
+        "endLine": 590,
+        "endChar": 19
+      },
+      "revId": "d38d9c13b1d1befa8f281767da48d06ae10f2bd8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
