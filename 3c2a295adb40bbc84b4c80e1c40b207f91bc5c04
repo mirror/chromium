@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "89266924_c741c9c0",
+        "filename": "content/browser/renderer_host/overscroll_controller.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1166494
+      },
+      "writtenOn": "2017-08-28T21:18:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a80a3fd7_adacfddf",
+      "revId": "3c2a295adb40bbc84b4c80e1c40b207f91bc5c04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6c9a019a_cb8084cc",
         "filename": "content/browser/renderer_host/overscroll_controller.cc",
         "patchSetId": 8
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "7429fb2a_f190202a",
+        "filename": "content/browser/renderer_host/overscroll_controller.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1166494
+      },
+      "writtenOn": "2017-08-28T21:18:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6c9a019a_cb8084cc",
+      "revId": "3c2a295adb40bbc84b4c80e1c40b207f91bc5c04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b4f65423_e9ff3033",
         "filename": "content/browser/renderer_host/overscroll_controller.cc",
         "patchSetId": 8
@@ -47,6 +83,24 @@
       "writtenOn": "2017-08-28T19:59:51Z",
       "side": 1,
       "message": "CL description says \"to *only* allow completing/resetting overscroll\nwhen processing ACKs\", but this function can be called from both WillHandleEvent() and ReceivedEventACK(). So, it seems to me that WillHandleEvent() can still complete/reset overscroll on GSE. Am I missing something?",
+      "revId": "3c2a295adb40bbc84b4c80e1c40b207f91bc5c04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d959920_fc7e0b31",
+        "filename": "content/browser/renderer_host/overscroll_controller.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 266,
+      "author": {
+        "id": 1166494
+      },
+      "writtenOn": "2017-08-28T21:18:01Z",
+      "side": 1,
+      "message": "Added early return in |WillHandleEvent()| to make the logic more clear.",
+      "parentUuid": "b4f65423_e9ff3033",
       "revId": "3c2a295adb40bbc84b4c80e1c40b207f91bc5c04",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "3db8b410_da933f8f",
+        "filename": "content/browser/renderer_host/overscroll_controller.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 271,
+      "author": {
+        "id": 1166494
+      },
+      "writtenOn": "2017-08-28T21:18:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f82962e4_9198c241",
+      "revId": "3c2a295adb40bbc84b4c80e1c40b207f91bc5c04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5b8dd5df_14cfd208",
         "filename": "content/browser/renderer_host/render_widget_host_view_aura_unittest.cc",
         "patchSetId": 8
@@ -84,6 +156,24 @@
       "revId": "3c2a295adb40bbc84b4c80e1c40b207f91bc5c04",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9eb207c3_adc18055",
+        "filename": "content/browser/renderer_host/render_widget_host_view_aura_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1166494
+      },
+      "writtenOn": "2017-08-28T21:18:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5b8dd5df_14cfd208",
+      "revId": "3c2a295adb40bbc84b4c80e1c40b207f91bc5c04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
