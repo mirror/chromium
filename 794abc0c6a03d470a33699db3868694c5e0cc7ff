@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "aa11599d_a4293f8d",
+        "filename": "third_party/WebKit/Source/core/workers/WorkletModuleResponsesMap.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-08-28T05:05:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6eed64f0_a86cc2f6",
+      "revId": "794abc0c6a03d470a33699db3868694c5e0cc7ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3a0cbc01_28a2a63c",
         "filename": "third_party/WebKit/Source/core/workers/WorkletModuleResponsesMap.cpp",
         "patchSetId": 17
@@ -33,6 +51,24 @@
       "revId": "794abc0c6a03d470a33699db3868694c5e0cc7ff",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91c8b1a7_d24d519e",
+        "filename": "third_party/WebKit/Source/core/workers/WorkletModuleResponsesMap.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-08-28T05:05:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3a0cbc01_28a2a63c",
+      "revId": "794abc0c6a03d470a33699db3868694c5e0cc7ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -70,6 +106,24 @@
     },
     {
       "key": {
+        "uuid": "69101cdf_0faec287",
+        "filename": "third_party/WebKit/Source/core/workers/WorkletModuleResponsesMap.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-08-28T05:05:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "43f8b077_8197520d",
+      "revId": "794abc0c6a03d470a33699db3868694c5e0cc7ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "04d36cff_a891fe22",
         "filename": "third_party/WebKit/Source/core/workers/WorkletModuleResponsesMap.h",
         "patchSetId": 17
@@ -81,6 +135,24 @@
       "writtenOn": "2017-08-28T01:11:40Z",
       "side": 1,
       "message": "nit: The mixing of \"read\" and \"fetch\" seems unnecessary. Could you pick one word? Or is there a difference?\n\nI\u0027m not too clear whether this class is reading from storage or fetching from network. The class documentation might be expanded to make that clear, since the spec is hard to read.",
+      "revId": "794abc0c6a03d470a33699db3868694c5e0cc7ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb94095f_413f954b",
+        "filename": "third_party/WebKit/Source/core/workers/WorkletModuleResponsesMap.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-08-28T05:05:03Z",
+      "side": 1,
+      "message": "\"Read\" means to read a fetched module script data from the map. \"Fetch\" means to fetch a module script from the network. Once the module script is fetched, it\u0027s cached in the map and ReadEntry() starts to synchronously return it. Added class-level comments about it.",
+      "parentUuid": "04d36cff_a891fe22",
       "revId": "794abc0c6a03d470a33699db3868694c5e0cc7ff",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
