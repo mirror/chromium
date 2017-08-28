@@ -18,9 +18,8 @@ class MODULES_EXPORT AudioWorkletObjectProxy final
   AudioWorkletObjectProxy(AudioWorkletMessagingProxy*,
                           ParentFrameTaskRunners*);
 
-  void EvaluateScript(const String& source,
-                      const KURL& script_url,
-                      WorkerThread*) final;
+  // Implements WorkerReportingProxy.
+  void DidEvaluateModuleScript(bool success) override;
 
  private:
   CrossThreadWeakPersistent<AudioWorkletMessagingProxy>

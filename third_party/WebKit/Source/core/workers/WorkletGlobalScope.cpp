@@ -13,6 +13,7 @@
 #include "core/inspector/MainThreadDebugger.h"
 #include "core/loader/modulescript/ModuleScriptFetchRequest.h"
 #include "core/probe/CoreProbes.h"
+#include "core/workers/WorkerReportingProxy.h"
 #include "core/workers/WorkletModuleResponsesMap.h"
 #include "core/workers/WorkletModuleTreeClient.h"
 #include "core/workers/WorkletPendingTasks.h"
@@ -49,11 +50,10 @@ void WorkletGlobalScope::EvaluateClassicScript(
   DCHECK(!cached_meta_data);
   // TODO(nhiroki): Call WorkerReportingProxy::WillEvaluateWorkerScript() or
   // something like that (e.g., WillEvaluateModuleScript()).
-  ScriptController()->Evaluate(ScriptSourceCode(source_code, script_url),
-                               nullptr /* error_event */,
-                               nullptr /* cache_handler */, v8_cache_options);
-  // TODO(nhiroki): Call WorkerReportingProxy::DidEvaluateWorkerScript() or
-  // something like that (e.g., DidEvaluateModuleScript()).
+  bool success = ScriptController()->Evaluate(
+      ScriptSourceCode(source_code, script_url), nullptr /* error_event */,
+      nullptr /* cache_handler */, v8_cache_options);
+  ReportingProxy().DidEvaluateModuleScript(success);
 }
 
 v8::Local<v8::Object> WorkletGlobalScope::Wrap(
