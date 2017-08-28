@@ -9,6 +9,7 @@
 #include "ash/public/cpp/shell_window_ids.h"
 #include "ash/shell.h"
 #include "ash/system/tray/system_tray_notifier.h"
+#include "ash/wm/splitview/split_view_controller.h"
 #include "ash/wm/window_util.h"
 #include "ash/wm/workspace/backdrop_delegate.h"
 #include "base/auto_reset.h"
@@ -110,30 +111,47 @@ void BackdropController::UpdateBackdrop() {
   if (in_restacking_ || force_hidden_counter_)
     return;
 
-  aura::Window* window = GetTopmostWindowWithBackdrop();
-  if (!window) {
+  std::vector<aura::Window*> windows = GetToplevelWindowsWithBackdrop();
+  if (windows.empty()) {
     // Hide backdrop since no suitable window was found.
     Hide();
     return;
   }
+
   // We are changing the order of windows which will cause recursion.
   base::AutoReset<bool> lock(&in_restacking_, true);
   EnsureBackdropWidget();
   UpdateAccessibilityMode();
 
-  if (window == backdrop_window_ && backdrop_->IsVisible())
+  if (windows.size() == 1 && windows.back() == backdrop_window_ &&
+      backdrop_->IsVisible()) {
     return;
-  if (window->GetRootWindow() != backdrop_window_->GetRootWindow())
-    return;
+  }
+
+  for (auto iter = windows.begin(); iter != windows.end(); iter++) {
+    if ((*iter)->GetRootWindow() != backdrop_window_->GetRootWindow())
+      return;
+  }
 
   if (!backdrop_->IsVisible())
     Show();
 
-  // Since the backdrop needs to be immediately behind the window and the
-  // stacking functions only guarantee a "it's above or below", we need
-  // to re-arrange the two windows twice.
-  container_->StackChildAbove(backdrop_window_, window);
-  container_->StackChildAbove(window, backdrop_window_);
+  // There are at most two windows in |windows|.
+  aura::Window* topmost_window = windows[0];
+  aura::Window* second_window = windows.size() > 1 ? windows[1] : nullptr;
+  if (!second_window) {
+    // Since the backdrop needs to be immediately behind the window and the
+    // stacking functions only guarantee a "it's above or below", we need
+    // to re-arrange the two windows twice.
+    container_->StackChildAbove(backdrop_window_, topmost_window);
+    container_->StackChildAbove(topmost_window, backdrop_window_);
+  } else {
+    // Same reason as above. We need to re-arrange the three windows three
+    // times in order to make the backdrop right behind the second window.
+    container_->StackChildAbove(backdrop_window_, topmost_window);
+    container_->StackChildAbove(second_window, backdrop_window_);
+    container_->StackChildAbove(topmost_window, second_window);
+  }
 }
 
 void BackdropController::OnOverviewModeStarting() {
@@ -141,14 +159,6 @@ void BackdropController::OnOverviewModeStarting() {
 }
 
 void BackdropController::OnOverviewModeEnded() {
-  RemoveForceHidden();
-}
-
-void BackdropController::OnSplitViewModeStarting() {
-  AddForceHidden();
-}
-
-void BackdropController::OnSplitViewModeEnded() {
   RemoveForceHidden();
 }
 
@@ -236,6 +246,28 @@ aura::Window* BackdropController::GetTopmostWindowWithBackdrop() {
     }
   }
   return nullptr;
+}
+
+std::vector<aura::Window*>
+BackdropController::GetToplevelWindowsWithBackdrop() {
+  std::vector<aura::Window*> windows;
+  aura::Window* topmost_window = GetTopmostWindowWithBackdrop();
+  if (!topmost_window)
+    return windows;
+
+  windows.push_back(topmost_window);
+  if (!Shell::Get()->IsSplitViewModeActive())
+    return windows;
+
+  SplitViewController* split_view_controller =
+      Shell::Get()->split_view_controller();
+  aura::Window* left_window = split_view_controller->left_window();
+  aura::Window* right_window = split_view_controller->right_window();
+  if (topmost_window == left_window && right_window)
+    windows.push_back(right_window);
+  else if (topmost_window == right_window && left_window)
+    windows.push_back(left_window);
+  return windows;
 }
 
 bool BackdropController::WindowShouldHaveBackdrop(aura::Window* window) {
