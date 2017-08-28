@@ -28,6 +28,7 @@ const base::Feature* const kAllFeatures[] = {
     &kPhysicalWebPageSuggestionsFeature,
     &kPublisherFaviconsFromNewServerFeature,
     &kRecentOfflineTabSuggestionsFeature,
+    &kNTPRemoteSuggestionsBackendFeature,
     nullptr};
 
 const base::Feature kArticleSuggestionsFeature{
@@ -47,6 +48,12 @@ const base::Feature kPhysicalWebPageSuggestionsFeature{
 
 const base::Feature kForeignSessionsSuggestionsFeature{
     "NTPForeignSessionsSuggestions", base::FEATURE_DISABLED_BY_DEFAULT};
+
+// Holds an experiment ID. So long as the feature is set through a server-side
+// variations config, this feature should exist on the client. This ensures that
+// the experiment ID is visible in chrome://snippets-internals.
+const base::Feature kNTPRemoteSuggestionsBackendFeature{
+    "NTPRemoteSuggestionsBackend", base::FEATURE_DISABLED_BY_DEFAULT};
 
 const base::Feature kBreakingNewsPushFeature{"BreakingNewsPush",
                                              base::FEATURE_DISABLED_BY_DEFAULT};
