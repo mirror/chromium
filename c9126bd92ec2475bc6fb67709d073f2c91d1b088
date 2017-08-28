@@ -84,6 +84,24 @@
       "revId": "c9126bd92ec2475bc6fb67709d073f2c91d1b088",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29b094c6_f89c20c6",
+        "filename": "third_party/WebKit/public/platform/WebCORSPreflightResultCache.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-08-28T08:07:39Z",
+      "side": 1,
+      "message": "In terms of the spec, there\u0027s no explicit requirement on the scope of the CORS preflight cache.\n\nDevelopers are having some different expectations on the duration and scope of the CORS preflight cache, and we\u0027re occasionally receiving some bugs from them about this point.\n\nWe\u0027ve been having CORS preflight cache instances for each renderer process and its duration has been the same as the renderer process\u0027s lifetime. But some might expect persisting it, single instance shared among all renderer processes, etc.\n\nI think the core point everyone cares behind the complaints is basically performance. Unless it doesn\u0027t hurt CORS preflight performance overall, anything is acceptable, IMO. Sorry but I don\u0027t have any data about this.",
+      "parentUuid": "df66d792_59d2bdd9",
+      "revId": "c9126bd92ec2475bc6fb67709d073f2c91d1b088",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
