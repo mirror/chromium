@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "e3eafb86_230895a9",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1238141
+      },
+      "writtenOn": "2017-08-28T08:53:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b1b6a87f_1d479455",
+      "range": {
+        "startLine": 7,
+        "startChar": 35,
+        "endLine": 7,
+        "endChar": 39
+      },
+      "revId": "32653765462c7835d47f4eefae2aa48316a4242a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ec257242_e7b97497",
         "filename": "content/browser/service_worker/service_worker_url_loader_job_unittest.cc",
         "patchSetId": 3
@@ -39,6 +63,24 @@
       "revId": "32653765462c7835d47f4eefae2aa48316a4242a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b0e42db_7af3ede3",
+        "filename": "content/browser/service_worker/service_worker_url_loader_job_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 444,
+      "author": {
+        "id": 1238141
+      },
+      "writtenOn": "2017-08-28T08:53:08Z",
+      "side": 1,
+      "message": "Done. Thank you for finding my miss.",
+      "parentUuid": "ec257242_e7b97497",
+      "revId": "32653765462c7835d47f4eefae2aa48316a4242a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
