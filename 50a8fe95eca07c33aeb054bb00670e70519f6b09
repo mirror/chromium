@@ -70,6 +70,24 @@
       "revId": "50a8fe95eca07c33aeb054bb00670e70519f6b09",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7b04bde_250bf9ac",
+        "filename": "ash/wm/power_button_controller.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-08-28T21:33:39Z",
+      "side": 1,
+      "message": "i\u0027m okay with this change going in if it fixes the issue, but the existing code seems fragile. in the non-forced path, are we dependent on TabletPowerButtonController to enable the touchscreen? TPBC doesn\u0027t get created until we receive accelerometer data, so it seems like the touchscreen could also get stuck in a disabled state if the accelerometer isn\u0027t sending data for some reason.\n\nin the longer term, it feels to me like we shouldn\u0027t be storing the touchscreen state in Local State. to determine the initial state, why don\u0027t we instead use the result of GetBacklightsForcedOff \u0026\u0026 the value of the user pref?\n\ninstead of making ShellDelegate write to Local State, can it instead have a bool member keeping track of the power-button-determined state? then we shouldn\u0027t need to worry about using a stale state after rebooting, right?",
+      "parentUuid": "cf977474_ff3e09f2",
+      "revId": "50a8fe95eca07c33aeb054bb00670e70519f6b09",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
