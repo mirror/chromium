@@ -16,6 +16,24 @@
       "revId": "8090c0eddb64b9cb1f529c5849c035e464b72773",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e34d045_2f52c4b9",
+        "filename": "chrome/browser/ui/cocoa/harmony_button.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-08-28T21:08:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "225e428a_ad1477e5",
+      "revId": "8090c0eddb64b9cb1f529c5849c035e464b72773",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
