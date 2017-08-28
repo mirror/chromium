@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "04b40868_275cd646",
+        "filename": "chrome/browser/vr/elements/viewport_aware_root.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-08-28T17:12:39Z",
+      "side": 1,
+      "message": "Yep. I\u0027ve updated the comment to reflect what I\u0027d like to do more precisely.",
+      "parentUuid": "6c96bdfa_de397bec",
+      "range": {
+        "startLine": 23,
+        "startChar": 4,
+        "endLine": 24,
+        "endChar": 21
+      },
+      "revId": "fcd4386470b7295321e4e7834e8771850cf1b882",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "abe3976d_93643c12",
         "filename": "chrome/browser/vr/ui_scene.cc",
         "patchSetId": 2
@@ -42,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "098a45b0_1ce30561",
+        "filename": "chrome/browser/vr/ui_scene.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-08-28T17:12:39Z",
+      "side": 1,
+      "message": "This is true, but just in case we hit this issue in release, I thought it\u0027d be good to ensure that this is a no-op and doesn\u0027t cause a crash.",
+      "parentUuid": "abe3976d_93643c12",
+      "revId": "fcd4386470b7295321e4e7834e8771850cf1b882",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d414b34b_658ded23",
         "filename": "chrome/browser/vr/ui_scene_manager.cc",
         "patchSetId": 2
@@ -53,6 +95,30 @@
       "writtenOn": "2017-08-28T15:42:29Z",
       "side": 1,
       "message": "it might make sense to group kWebVrPermanentHttpSecurityWarning and kWebVrTransientHttpSecurityWarning to a liner layout. For transientUrlBar and WebVrPresentationToast, I am not quite sure that we should. They are conceptually different UIs for different purpose. And they could independently show/hide and wont need to adjust their position in response of other element\u0027s state. So we might not want to group all of them to a linear layout.",
+      "range": {
+        "startLine": 198,
+        "startChar": 57,
+        "endLine": 198,
+        "endChar": 70
+      },
+      "revId": "fcd4386470b7295321e4e7834e8771850cf1b882",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "963a08f0_9d648fc7",
+        "filename": "chrome/browser/vr/ui_scene_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-08-28T17:12:39Z",
+      "side": 1,
+      "message": "Cool. Given what you\u0027ve said here, I\u0027m going to remove the TODO. Thanks for the info.",
+      "parentUuid": "d414b34b_658ded23",
       "range": {
         "startLine": 198,
         "startChar": 57,
