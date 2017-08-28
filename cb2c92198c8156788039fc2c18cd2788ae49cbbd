@@ -16,6 +16,24 @@
       "revId": "cb2c92198c8156788039fc2c18cd2788ae49cbbd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50df478e_c1271f7a",
+        "filename": "chrome/browser/ui/cocoa/md_hover_button.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-08-28T20:49:26Z",
+      "side": 1,
+      "message": "Looks like I *can* call super now, so I\u0027ll do that instead.",
+      "parentUuid": "a7e411eb_f1b96b78",
+      "revId": "cb2c92198c8156788039fc2c18cd2788ae49cbbd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

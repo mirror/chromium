@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "ffc2c7b1_2ce6d319",
+        "filename": "chrome/browser/ui/cocoa/md_hover_button.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-08-28T20:49:26Z",
+      "side": 1,
+      "message": "C++ified.",
+      "parentUuid": "fb2a9277_82415e42",
+      "revId": "e7240ea709a6bd808f3ac1faa6ed48ad059b687d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ee1818d0_0c5dc9d9",
         "filename": "chrome/browser/ui/cocoa/md_hover_button.mm",
         "patchSetId": 3
@@ -149,6 +167,24 @@
       "side": 1,
       "message": "Yeah, I appreciate const-ness, but not if it requires unfamiliar constructs. As for a better way, I don\u0027t know of one. New C++ feature idea?!",
       "parentUuid": "e168254e_0c9a1ba5",
+      "revId": "e7240ea709a6bd808f3ac1faa6ed48ad059b687d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f5054bcf_2ddecd3f",
+        "filename": "chrome/browser/ui/cocoa/md_hover_button.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-08-28T20:49:26Z",
+      "side": 1,
+      "message": "I think that idea is lambdas :P.",
+      "parentUuid": "9a488acf_9a6581d6",
       "revId": "e7240ea709a6bd808f3ac1faa6ed48ad059b687d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
