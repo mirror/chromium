@@ -33,12 +33,14 @@ class CORE_EXPORT CompositorMutatorImpl final : public CompositorMutator {
   static CompositorMutatorImpl* Create();
 
   // CompositorMutator implementation.
-  bool Mutate(double monotonic_time_now) override;
+  void Mutate(double monotonic_time_now,
+              std::unique_ptr<CompositorAnimatorsInputState>) override;
 
   void RegisterCompositorAnimator(CompositorAnimator*);
   void UnregisterCompositorAnimator(CompositorAnimator*);
 
-  void SetNeedsMutate();
+  void SetMutationUpdate(bool needs_mutate,
+                         std::unique_ptr<CompositorAnimatorsOutputState>);
 
   void SetClient(CompositorMutatorClient* client) { client_ = client; }
   CustomCompositorAnimationManager* AnimationManager() {

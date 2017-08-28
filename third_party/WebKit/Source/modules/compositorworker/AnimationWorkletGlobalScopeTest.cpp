@@ -136,11 +136,12 @@ class AnimationWorkletGlobalScopeTest : public ::testing::Test {
             });
           )JS"));
 
-    ScriptValue constructed =
+    ScriptValue constructed_before =
         global_scope->ScriptController()->EvaluateAndReturnValueForTest(
             ScriptSourceCode("constructed"));
-    EXPECT_TRUE(ToBoolean(isolate, constructed.V8Value(), ASSERT_NO_EXCEPTION))
-        << "constructor is not invoked";
+    EXPECT_FALSE(
+        ToBoolean(isolate, constructed_before.V8Value(), ASSERT_NO_EXCEPTION))
+        << "constructor is invoked early";
 
     ScriptValue animated_before =
         global_scope->ScriptController()->EvaluateAndReturnValueForTest(
@@ -149,7 +150,17 @@ class AnimationWorkletGlobalScopeTest : public ::testing::Test {
         ToBoolean(isolate, animated_before.V8Value(), ASSERT_NO_EXCEPTION))
         << "animate function is invoked early";
 
-    global_scope->Mutate();
+    // Passing a new input state with a new player id should cause the worklet
+    // to create and animate an animator.
+    CompositorAnimatorsInputState state = {{1, "test", base::TimeTicks()}};
+    global_scope->Mutate(state);
+
+    ScriptValue constructed_after =
+        global_scope->ScriptController()->EvaluateAndReturnValueForTest(
+            ScriptSourceCode("constructed"));
+    EXPECT_TRUE(
+        ToBoolean(isolate, constructed_after.V8Value(), ASSERT_NO_EXCEPTION))
+        << "constructor is not invoked";
 
     ScriptValue animated_after =
         global_scope->ScriptController()->EvaluateAndReturnValueForTest(
