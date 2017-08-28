@@ -266,7 +266,7 @@ bool LazyLevelDb::DeleteDbFile() {
   db_.reset();  // Close the database.
 
   leveldb::Status s =
-      leveldb::DestroyDB(db_path_.AsUTF8Unsafe(), leveldb_env::Options());
+      leveldb::DestroyDB(db_path_.AsUTF8Unsafe(), leveldb::Options());
   if (!s.ok()) {
     LOG(WARNING) << "Failed to destroy leveldb database at "
                  << db_path_.value();
