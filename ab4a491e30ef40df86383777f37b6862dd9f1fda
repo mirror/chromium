@@ -189,6 +189,30 @@
     },
     {
       "key": {
+        "uuid": "44541d3d_dd669c60",
+        "filename": "device/hid/hid_service.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-08-28T18:46:08Z",
+      "side": 1,
+      "message": "The reason not to is that there will be C++ consumers of this API such as //device/u2f and they should have the option (especially on remove) to not clone the entire struct. This moves the Clone into the call to Mojo version of OnDeviceAdded which makes it clear when and why the copy needs to happen.",
+      "parentUuid": "20b000ff_f5f8f654",
+      "range": {
+        "startLine": 42,
+        "startChar": 31,
+        "endLine": 42,
+        "endChar": 62
+      },
+      "revId": "ab4a491e30ef40df86383777f37b6862dd9f1fda",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d7280a75_4b10aef9",
         "filename": "device/hid/hid_service.h",
         "patchSetId": 11
