@@ -106,6 +106,24 @@
       "revId": "50a8fe95eca07c33aeb054bb00670e70519f6b09",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c744c09_b1e0fbe3",
+        "filename": "ash/wm/power_button_controller.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-08-28T22:15:49Z",
+      "side": 1,
+      "message": "thanks!\n\nyeah, if this is on M61, it should be on master too (i think that changes are supposed to be landed on master first and then merged). getting it to master first and then making further improvements there sounds good to me.",
+      "parentUuid": "0b9202a9_d1d08f24",
+      "revId": "50a8fe95eca07c33aeb054bb00670e70519f6b09",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
