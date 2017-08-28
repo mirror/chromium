@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "78d61138_643a120c",
+        "filename": "components/safe_browsing/browser/mojo_safe_browsing_impl.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-08-28T20:46:11Z",
+      "side": 1,
+      "message": "These functions are part of the same interface. Generally I\u0027ve seen no space between functions like this in a header.",
+      "parentUuid": "1ff4a711_810a92b3",
+      "revId": "7e7247803eaa83f9c3d1c7038b08c20245d77345",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5ccc4f6f_5cbbd94c",
         "filename": "content/public/common/url_loader_throttle.h",
         "patchSetId": 2
@@ -39,6 +57,30 @@
       "revId": "7e7247803eaa83f9c3d1c7038b08c20245d77345",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4273d864_d0d77443",
+        "filename": "content/public/common/url_loader_throttle.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-08-28T20:46:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5ccc4f6f_5cbbd94c",
+      "range": {
+        "startLine": 41,
+        "startChar": 43,
+        "endLine": 41,
+        "endChar": 49
+      },
+      "revId": "7e7247803eaa83f9c3d1c7038b08c20245d77345",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

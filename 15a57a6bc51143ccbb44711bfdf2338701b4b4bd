@@ -22,6 +22,30 @@
       "revId": "15a57a6bc51143ccbb44711bfdf2338701b4b4bd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc59a12f_b27072a3",
+        "filename": "content/public/common/url_loader_throttle.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-08-28T20:46:11Z",
+      "side": 0,
+      "message": "I want to avoid including base/logging.h in a header. Since that means creating a .cc file then I might as well move these there as well. It slightly improves compilation time by avoiding extra code generation.",
+      "parentUuid": "ca5efec0_bae4a43e",
+      "range": {
+        "startLine": 42,
+        "startChar": 77,
+        "endLine": 42,
+        "endChar": 79
+      },
+      "revId": "15a57a6bc51143ccbb44711bfdf2338701b4b4bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
