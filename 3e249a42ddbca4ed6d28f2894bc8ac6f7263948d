@@ -1,0 +1,303 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "de6d93ba_3484a57e",
+        "filename": "net/test/spawned_test_server/base_test_server.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 375,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-08-28T18:57:27Z",
+      "side": 1,
+      "message": "Document what |port| is (Not at all clear it\u0027s not the port in host_port_pair_).",
+      "range": {
+        "startLine": 375,
+        "startChar": 16,
+        "endLine": 375,
+        "endChar": 0
+      },
+      "revId": "3e249a42ddbca4ed6d28f2894bc8ac6f7263948d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a622228_ad3301c4",
+        "filename": "net/test/spawned_test_server/base_test_server.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 398,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-08-28T18:57:27Z",
+      "side": 1,
+      "message": "This is no longer accurate.  It\u0027s now a local address that can be used to communicate with the test server (Either a local port that forwards requests to it, or the local address of the test server).",
+      "range": {
+        "startLine": 398,
+        "startChar": 29,
+        "endLine": 398,
+        "endChar": 37
+      },
+      "revId": "3e249a42ddbca4ed6d28f2894bc8ac6f7263948d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e81d797b_728e1a5d",
+        "filename": "net/test/spawned_test_server/remote_test_server.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-08-28T18:57:27Z",
+      "side": 1,
+      "message": "Do we allow socket IO on the main thread in browser_tests?  I thought we had some sort of check that the thread was of type IO when doing socket IO?",
+      "range": {
+        "startLine": 142,
+        "startChar": 25,
+        "endLine": 142,
+        "endChar": 28
+      },
+      "revId": "3e249a42ddbca4ed6d28f2894bc8ac6f7263948d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "184c9fe5_752c4613",
+        "filename": "net/test/spawned_test_server/remote_test_server_proxy.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-08-28T18:57:27Z",
+      "side": 1,
+      "message": "I\u0027d suggest clearing write_buffer_ here, and having a DCHECK(!write_buffer_) in Read(), and a DCHECK(write_buffer_) in Write(), just to have a little sanity checking.",
+      "range": {
+        "startLine": 69,
+        "startChar": 12,
+        "endLine": 69,
+        "endChar": 0
+      },
+      "revId": "3e249a42ddbca4ed6d28f2894bc8ac6f7263948d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e222d496_e2fc85ca",
+        "filename": "net/test/spawned_test_server/remote_test_server_proxy.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-08-28T18:57:27Z",
+      "side": 1,
+      "message": "Suggest:\n\nDCHECK(!incoming_pump_);\nDCHECK(!outgoing_pump_);",
+      "range": {
+        "startLine": 134,
+        "startChar": 17,
+        "endLine": 134,
+        "endChar": 0
+      },
+      "revId": "3e249a42ddbca4ed6d28f2894bc8ac6f7263948d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8626f242_e11b40d1",
+        "filename": "net/test/spawned_test_server/remote_test_server_proxy.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-08-28T18:57:27Z",
+      "side": 1,
+      "message": "BUG:  return;",
+      "range": {
+        "startLine": 138,
+        "startChar": 4,
+        "endLine": 138,
+        "endChar": 11
+      },
+      "revId": "3e249a42ddbca4ed6d28f2894bc8ac6f7263948d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "399ac1db_ab95edff",
+        "filename": "net/test/spawned_test_server/remote_test_server_proxy.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-08-28T18:57:27Z",
+      "side": 1,
+      "message": "nit:  rv or result, to match net/ style.",
+      "range": {
+        "startLine": 164,
+        "startChar": 8,
+        "endLine": 164,
+        "endChar": 9
+      },
+      "revId": "3e249a42ddbca4ed6d28f2894bc8ac6f7263948d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2eb0a3f6_8221c62c",
+        "filename": "net/test/spawned_test_server/remote_test_server_proxy.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-08-28T18:57:27Z",
+      "side": 1,
+      "message": "DoAcceptLoop (Just to match standard net/ naming schemes)",
+      "range": {
+        "startLine": 178,
+        "startChar": 26,
+        "endLine": 178,
+        "endChar": 27
+      },
+      "revId": "3e249a42ddbca4ed6d28f2894bc8ac6f7263948d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1f78cc7_d7aa5aca",
+        "filename": "net/test/spawned_test_server/remote_test_server_proxy.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-08-28T18:57:27Z",
+      "side": 1,
+      "message": "optional:  I\u0027d recommend against a do loop - they\u0027re uncommon in Chrome (And thus harder to read for the average Chrome engineer), and in this case, it\u0027s just as many lines as a while(true) loop, anyways.",
+      "range": {
+        "startLine": 180,
+        "startChar": 6,
+        "endLine": 180,
+        "endChar": 0
+      },
+      "revId": "3e249a42ddbca4ed6d28f2894bc8ac6f7263948d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26a2c693_f67acbe8",
+        "filename": "net/test/spawned_test_server/remote_test_server_proxy.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-08-28T18:57:27Z",
+      "side": 1,
+      "message": "Think we should reverse this - make connections_ own the pointers, and the callback have a raw pointer.  Then when this class is destroyed, we will tear all of them down.  I don\u0027t think we have protection against that, otherwise?\n\nThis class is also complicated enough that we may want a couple tests for it - we really don\u0027t want random tests to fail because of bugs in this class.",
+      "range": {
+        "startLine": 207,
+        "startChar": 2,
+        "endLine": 207,
+        "endChar": 14
+      },
+      "revId": "3e249a42ddbca4ed6d28f2894bc8ac6f7263948d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "969243c3_02f630ba",
+        "filename": "net/test/spawned_test_server/remote_test_server_proxy.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-08-28T18:57:27Z",
+      "side": 1,
+      "message": "Suggest connection -\u003e socket everywhere (OnConnectionDone is ambiguous - it could mean we completed establishing a connection, or we\u0027re done with a connection)",
+      "range": {
+        "startLine": 217,
+        "startChar": 28,
+        "endLine": 217,
+        "endChar": 44
+      },
+      "revId": "3e249a42ddbca4ed6d28f2894bc8ac6f7263948d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a0849de_2ce8e0b1",
+        "filename": "net/test/spawned_test_server/remote_test_server_proxy.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-08-28T18:57:27Z",
+      "side": 1,
+      "message": "nit:  blank line between C and C++ headers",
+      "range": {
+        "startLine": 8,
+        "startChar": 1,
+        "endLine": 8,
+        "endChar": 9
+      },
+      "revId": "3e249a42ddbca4ed6d28f2894bc8ac6f7263948d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9287905f_37d0ea38",
+        "filename": "net/test/spawned_test_server/remote_test_server_proxy.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-08-28T18:57:27Z",
+      "side": 1,
+      "message": "nit: const",
+      "range": {
+        "startLine": 25,
+        "startChar": 11,
+        "endLine": 25,
+        "endChar": 21
+      },
+      "revId": "3e249a42ddbca4ed6d28f2894bc8ac6f7263948d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
