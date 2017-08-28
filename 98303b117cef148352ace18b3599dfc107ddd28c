@@ -16,6 +16,24 @@
       "revId": "98303b117cef148352ace18b3599dfc107ddd28c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95ce7b2e_58073591",
+        "filename": "chrome/browser/page_load_metrics/observers/android_page_load_metrics_observer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2017-08-28T09:52:10Z",
+      "side": 1,
+      "message": "other option would be to set main_resource_url_ in OnCommit.",
+      "parentUuid": "b40729f0_59ed5f53",
+      "revId": "98303b117cef148352ace18b3599dfc107ddd28c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
