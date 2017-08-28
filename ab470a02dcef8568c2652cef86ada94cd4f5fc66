@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cf56a623_46aa6a19",
+        "filename": "gpu/command_buffer/service/vertex_attrib_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1003154
+      },
+      "writtenOn": "2017-08-28T18:29:03Z",
+      "side": 1,
+      "message": "This is incorrect logic.  An attrib can be accessed by the shader but disabled, and the generic values will be used instead.  Here it\u0027s forced to be enabled.",
+      "range": {
+        "startLine": 220,
+        "startChar": 4,
+        "endLine": 220,
+        "endChar": 32
+      },
+      "revId": "ab470a02dcef8568c2652cef86ada94cd4f5fc66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
