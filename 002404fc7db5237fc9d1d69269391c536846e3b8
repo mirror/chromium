@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "01b413c9_2a1c1c7c",
+        "filename": "components/autofill/content/renderer/devtools_page_passwords_analyser.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2017-08-28T16:58:34Z",
+      "side": 1,
+      "message": "Nit set |ids|",
+      "range": {
+        "startLine": 161,
+        "startChar": 31,
+        "endLine": 161,
+        "endChar": 34
+      },
+      "revId": "002404fc7db5237fc9d1d69269391c536846e3b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e8a6d20_e4b1b2a1",
+        "filename": "components/autofill/content/renderer/devtools_page_passwords_analyser.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2017-08-28T16:58:34Z",
+      "side": 1,
+      "message": "Please add comment that id of |node| is added to |ids|.",
+      "range": {
+        "startLine": 176,
+        "startChar": 46,
+        "endLine": 176,
+        "endChar": 49
+      },
+      "revId": "002404fc7db5237fc9d1d69269391c536846e3b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc205001_f063fccf",
+        "filename": "components/autofill/content/renderer/devtools_page_passwords_analyser.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2017-08-28T16:58:34Z",
+      "side": 1,
+      "message": "It looks non-logical, we checked if we should skip |form| in the end of for-body and then make continue which doesn\u0027t make any effect. As far as I understand it\u0027s done for adding to |ids|, probably we should call ShouldSkipElement in another way, say RecordElementId or AddElementId, and it could return bool as now, depending whether it\u0027s a new element or already visited. WDYT?",
+      "range": {
+        "startLine": 219,
+        "startChar": 0,
+        "endLine": 221,
+        "endChar": 15
+      },
+      "revId": "002404fc7db5237fc9d1d69269391c536846e3b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "205c1b7e_f5e3386c",
+        "filename": "components/autofill/content/renderer/devtools_page_passwords_analyser.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2017-08-28T16:58:34Z",
+      "side": 1,
+      "message": "Nit: remove extra space",
+      "range": {
+        "startLine": 236,
+        "startChar": 43,
+        "endLine": 236,
+        "endChar": 54
+      },
+      "revId": "002404fc7db5237fc9d1d69269391c536846e3b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e305941_a363dde6",
+        "filename": "components/autofill/content/renderer/devtools_page_passwords_analyser.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2017-08-28T16:58:34Z",
+      "side": 1,
+      "message": "I\u0027m wondering whether we should check input element ids against all elements rather that just check input element ids. We can for example make ids of type map\u003cstring, int\u003e, ids[\u0027id\u0027] is number or occurences and just report when there ids[\u0027id\u0027] \u003e 1. \nThe main my concern is how fast is run of document.QuerySelectorAll(blink::WebString::FromUTF8(\"#\" + id_attr))); dozens of times for each id.\nWDYT?",
+      "range": {
+        "startLine": 239,
+        "startChar": 0,
+        "endLine": 239,
+        "endChar": 42
+      },
+      "revId": "002404fc7db5237fc9d1d69269391c536846e3b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
