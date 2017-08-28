@@ -16,6 +16,24 @@
       "revId": "4c8561f380c77fed497b22056d30475ad897bb9c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c8ef174_c057225a",
+        "filename": "ui/app_list/views/apps_grid_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1042,
+      "author": {
+        "id": 1189880
+      },
+      "writtenOn": "2017-08-28T23:45:08Z",
+      "side": 1,
+      "message": "Correct, Thanks! The static_cast was necessary because the compiler couldn\u0027t resolve a valid class between the two. (This was the case before I added the static_cast as well, I just compiled before saving and didn\u0027t notice.)",
+      "parentUuid": "232a5b22_e2557a52",
+      "revId": "4c8561f380c77fed497b22056d30475ad897bb9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
