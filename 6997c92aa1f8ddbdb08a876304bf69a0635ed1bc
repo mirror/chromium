@@ -22,6 +22,30 @@
       "revId": "6997c92aa1f8ddbdb08a876304bf69a0635ed1bc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46fa32c0_032ad3d5",
+        "filename": "chrome/app/chrome_main_delegate.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1229240
+      },
+      "writtenOn": "2017-08-28T09:21:06Z",
+      "side": 1,
+      "message": "Done. Had to introduce a size member as well, as the arraylist() macro doesn\u0027t match the type correctly across files.",
+      "parentUuid": "549a4553_d6a9d606",
+      "range": {
+        "startLine": 197,
+        "startChar": 0,
+        "endLine": 197,
+        "endChar": 52
+      },
+      "revId": "6997c92aa1f8ddbdb08a876304bf69a0635ed1bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
