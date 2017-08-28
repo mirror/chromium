@@ -22,6 +22,30 @@
       "revId": "8d367113558b057dcd0be49768b9fdb4b977cf46",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c36cfcf2_ea96075b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1237659
+      },
+      "writtenOn": "2017-08-28T11:17:33Z",
+      "side": 1,
+      "message": "Webkit and Firefox does not fire any events\nMS Edge - don\u0027t know exactly (unfortunately haven\u0027t Win machine at hand).\n\nBut well, thinking about it, considering removing attribute as setting it to the empty value, I can agree with you, and we can abandon this change and close a bug.",
+      "parentUuid": "e11bdf55_511d5b84",
+      "range": {
+        "startLine": 13,
+        "startChar": 1,
+        "endLine": 14,
+        "endChar": 48
+      },
+      "revId": "8d367113558b057dcd0be49768b9fdb4b977cf46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
