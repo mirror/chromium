@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3793e32c_7957751c",
+        "filename": "build/android/gyp/aar.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-08-28T15:56:12Z",
+      "side": 1,
+      "message": "nit: textwrap.dedent",
+      "revId": "260d39c520a9e7bea9b5ab548d0e3790291cc7a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af8bd909_5dcaf196",
+        "filename": "build/android/gyp/aar.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-08-28T15:56:12Z",
+      "side": 1,
+      "message": "huh, didn\u0027t know about FileType. Neat.",
+      "revId": "260d39c520a9e7bea9b5ab548d0e3790291cc7a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
