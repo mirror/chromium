@@ -46,6 +46,13 @@ const AcceleratorData kAcceleratorData[] = {
      MAGNIFY_SCREEN_ZOOM_OUT},
     {true, ui::VKEY_BRIGHTNESS_UP, ui::EF_CONTROL_DOWN | ui::EF_ALT_DOWN,
      MAGNIFY_SCREEN_ZOOM_IN},
+
+    {true, ui::VKEY_6, ui::EF_CONTROL_DOWN | ui::EF_ALT_DOWN,
+     MAGNIFY_SCREEN_ZOOM_OUT},
+    {true, ui::VKEY_7, ui::EF_CONTROL_DOWN | ui::EF_ALT_DOWN,
+     MAGNIFY_SCREEN_ZOOM_IN},
+
+    
     {true, ui::VKEY_L, ui::EF_COMMAND_DOWN, LOCK_SCREEN},
     {true, ui::VKEY_L, ui::EF_COMMAND_DOWN | ui::EF_SHIFT_DOWN, SUSPEND},
     // The lock key on Chrome OS keyboards produces F13 scancodes.

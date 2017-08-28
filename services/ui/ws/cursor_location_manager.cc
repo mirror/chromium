@@ -13,10 +13,13 @@ CursorLocationManager::CursorLocationManager() {}
 
 CursorLocationManager::~CursorLocationManager() {}
 
+// It seems the issue here is in raw cursor space. But what we want to send to
+// the other side is a point in post transformed coordinate space.
+
 void CursorLocationManager::OnMouseCursorLocationChanged(
-    const gfx::Point& point_in_dip) {
+    const gfx::Point& point_in_display) {
   current_cursor_location_ = static_cast<base::subtle::Atomic32>(
-      (point_in_dip.x() & 0xFFFF) << 16 | (point_in_dip.y() & 0xFFFF));
+      (point_in_display.x() & 0xFFFF) << 16 | (point_in_display.y() & 0xFFFF));
   if (cursor_location_memory()) {
     base::subtle::NoBarrier_Store(cursor_location_memory(),
                                   current_cursor_location_);

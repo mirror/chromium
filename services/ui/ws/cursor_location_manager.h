@@ -23,8 +23,8 @@ class CursorLocationManager {
   ~CursorLocationManager();
 
   // Sets the current cursor location to |point|. Atomically writes the location
-  // to shared memory. |point| should be in screen-coord and DIP.
-  void OnMouseCursorLocationChanged(const gfx::Point& point_in_dip);
+  // to shared memory. |point| should be in transformed screen-coord.
+  void OnMouseCursorLocationChanged(const gfx::Point& point_in_display);
 
   // Returns a read-only handle to the shared memory which contains the global
   // mouse cursor position. Each call returns a new handle.
