@@ -472,6 +472,19 @@ Console.ConsoleView = class extends UI.VBox {
   }
 
   /**
+   * @param {!Common.Event} event
+   */
+  _onConsoleMessageRemoved(event) {
+    var message = /** @type {!ConsoleModel.ConsoleMessage} */ (event.data);
+    var viewMessage = message[this._viewMessageSymbol];
+    var index = this._consoleMessages.indexOf(viewMessage);
+    if (viewMessage && index !== -1) {
+      this._consoleMessages.splice(index, 1);
+      this._updateMessageList();
+    }
+  }
+
+  /**
    * @param {!Console.ConsoleViewMessage} viewMessage
    */
   _consoleMessageAddedForTest(viewMessage) {

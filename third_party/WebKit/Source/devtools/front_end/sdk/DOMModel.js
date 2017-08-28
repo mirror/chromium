@@ -974,6 +974,17 @@ SDK.DeferredDOMNode = class {
   }
 
   /**
+   * @param {string=} objectGroup
+   * @return {!Promise<?SDK.RemoteObject>}
+   */
+  async resolveToObject(objectGroup) {
+    if (!this._domModel)
+      return null;
+    var object = await this._domModel._agent.resolveNode(undefined, this._backendNodeId, objectGroup);
+    return object && this._domModel._runtimeModel.createRemoteObject(object);
+  }
+
+  /**
    * @return {number}
    */
   backendNodeId() {
