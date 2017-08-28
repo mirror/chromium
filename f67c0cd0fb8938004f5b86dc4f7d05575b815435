@@ -1,0 +1,659 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "660f99c8_362627b9",
+        "filename": "chromeos/components/tether/disconnect_tethering_request_sender.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-28T23:50:10Z",
+      "side": 1,
+      "message": "entry.second-\u003eRemoveObserver(this)",
+      "range": {
+        "startLine": 20,
+        "startChar": 0,
+        "endLine": 20,
+        "endChar": 78
+      },
+      "revId": "f67c0cd0fb8938004f5b86dc4f7d05575b815435",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7dc73643_260b6d59",
+        "filename": "chromeos/components/tether/disconnect_tethering_request_sender.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-28T23:50:10Z",
+      "side": 1,
+      "message": "nit: This is unnecessary. All member fields have their destructors run when they are deleted.",
+      "range": {
+        "startLine": 23,
+        "startChar": 0,
+        "endLine": 23,
+        "endChar": 46
+      },
+      "revId": "f67c0cd0fb8938004f5b86dc4f7d05575b815435",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d1bef10_780d061d",
+        "filename": "chromeos/components/tether/disconnect_tethering_request_sender.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-28T23:50:10Z",
+      "side": 1,
+      "message": "nit: Log something about sending the request before this.",
+      "range": {
+        "startLine": 48,
+        "startChar": 0,
+        "endLine": 48,
+        "endChar": 1
+      },
+      "revId": "f67c0cd0fb8938004f5b86dc4f7d05575b815435",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4bc0b22_a1fd5148",
+        "filename": "chromeos/components/tether/disconnect_tethering_request_sender.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-28T23:50:10Z",
+      "side": 1,
+      "message": "nit: Fits on fewer lines.",
+      "range": {
+        "startLine": 62,
+        "startChar": 4,
+        "endLine": 63,
+        "endChar": 16
+      },
+      "revId": "f67c0cd0fb8938004f5b86dc4f7d05575b815435",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fdf57681_f2450032",
+        "filename": "chromeos/components/tether/disconnect_tethering_request_sender.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-28T23:50:10Z",
+      "side": 1,
+      "message": "nit: num_operations_erased",
+      "range": {
+        "startLine": 78,
+        "startChar": 6,
+        "endLine": 78,
+        "endChar": 12
+      },
+      "revId": "f67c0cd0fb8938004f5b86dc4f7d05575b815435",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce66fa0f_5b7b34e8",
+        "filename": "chromeos/components/tether/disconnect_tethering_request_sender.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-28T23:50:10Z",
+      "side": 1,
+      "message": "nit: Log should start on same line as PA_LOG().",
+      "range": {
+        "startLine": 81,
+        "startChar": 12,
+        "endLine": 81,
+        "endChar": 21
+      },
+      "revId": "f67c0cd0fb8938004f5b86dc4f7d05575b815435",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e0d4445_6b9bf0ea",
+        "filename": "chromeos/components/tether/disconnect_tethering_request_sender.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-28T23:50:10Z",
+      "side": 1,
+      "message": "Forward-declare both of these classes and move #include to the .cc.\n\nAlso, don\u0027t forget to forward-declare BleConnectionManager and #include the header file in the .cc file as well. The compiler didn\u0027t complain because you #included files which transitively #include that file.",
+      "range": {
+        "startLine": 10,
+        "startChar": 0,
+        "endLine": 10,
+        "endChar": 70
+      },
+      "revId": "f67c0cd0fb8938004f5b86dc4f7d05575b815435",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a582e9d_484b548e",
+        "filename": "chromeos/components/tether/disconnect_tethering_request_sender.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-28T23:50:10Z",
+      "side": 1,
+      "message": "nit: Remove this since it breaks encapsulation. Your class should not care how other classes use it - just describe what this class does.",
+      "range": {
+        "startLine": 18,
+        "startChar": 67,
+        "endLine": 20,
+        "endChar": 8
+      },
+      "revId": "f67c0cd0fb8938004f5b86dc4f7d05575b815435",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f28394a_249b5639",
+        "filename": "chromeos/components/tether/disconnect_tethering_request_sender.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-28T23:50:10Z",
+      "side": 1,
+      "message": "nit: device_id_to_operation_map_",
+      "range": {
+        "startLine": 43,
+        "startChar": 6,
+        "endLine": 43,
+        "endChar": 41
+      },
+      "revId": "f67c0cd0fb8938004f5b86dc4f7d05575b815435",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8386a58_9cd7a3ea",
+        "filename": "chromeos/components/tether/disconnect_tethering_request_sender_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-28T23:50:10Z",
+      "side": 1,
+      "message": "nit: Newline before this.",
+      "revId": "f67c0cd0fb8938004f5b86dc4f7d05575b815435",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c938492_10350382",
+        "filename": "chromeos/components/tether/disconnect_tethering_request_sender_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-28T23:50:10Z",
+      "side": 1,
+      "message": "const cryptauth::RemoteDevice\u0026",
+      "range": {
+        "startLine": 31,
+        "startChar": 2,
+        "endLine": 31,
+        "endChar": 25
+      },
+      "revId": "f67c0cd0fb8938004f5b86dc4f7d05575b815435",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eca1b28c_5794b658",
+        "filename": "chromeos/components/tether/disconnect_tethering_request_sender_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-28T23:50:10Z",
+      "side": 1,
+      "message": "/* parameter_name */",
+      "range": {
+        "startLine": 74,
+        "startChar": 63,
+        "endLine": 74,
+        "endChar": 67
+      },
+      "revId": "f67c0cd0fb8938004f5b86dc4f7d05575b815435",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64c904e5_bf43be96",
+        "filename": "chromeos/components/tether/disconnect_tethering_request_sender_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-28T23:50:10Z",
+      "side": 1,
+      "message": "Unnecessary - please remove.",
+      "range": {
+        "startLine": 87,
+        "startChar": 0,
+        "endLine": 87,
+        "endChar": 76
+      },
+      "revId": "f67c0cd0fb8938004f5b86dc4f7d05575b815435",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f6ac865_ccbca56a",
+        "filename": "chromeos/components/tether/disconnect_tethering_request_sender_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-28T23:50:10Z",
+      "side": 1,
+      "message": "You don\u0027t actually complete the operation successfully in the success case. Please do so.",
+      "range": {
+        "startLine": 104,
+        "startChar": 45,
+        "endLine": 104,
+        "endChar": 64
+      },
+      "revId": "f67c0cd0fb8938004f5b86dc4f7d05575b815435",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40012390_c28bcc38",
+        "filename": "chromeos/components/tether/disconnect_tethering_request_sender_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-28T23:50:10Z",
+      "side": 1,
+      "message": "Likewise, please complete the operations. For concurrent tests, you should test both failing, both succeeding, and one succeeding \u0026 one failing.",
+      "range": {
+        "startLine": 127,
+        "startChar": 7,
+        "endLine": 127,
+        "endChar": 56
+      },
+      "revId": "f67c0cd0fb8938004f5b86dc4f7d05575b815435",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62ea6a41_6d70f74f",
+        "filename": "chromeos/components/tether/disconnect_tethering_request_sender_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-28T23:50:10Z",
+      "side": 1,
+      "message": "Same thing - please complete the operation.",
+      "range": {
+        "startLine": 145,
+        "startChar": 7,
+        "endLine": 145,
+        "endChar": 51
+      },
+      "revId": "f67c0cd0fb8938004f5b86dc4f7d05575b815435",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13847529_5743f132",
+        "filename": "chromeos/components/tether/disconnect_tethering_request_sender_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-28T23:50:10Z",
+      "side": 1,
+      "message": "Complete the operation for the last one.",
+      "range": {
+        "startLine": 160,
+        "startChar": 7,
+        "endLine": 160,
+        "endChar": 42
+      },
+      "revId": "f67c0cd0fb8938004f5b86dc4f7d05575b815435",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66c420f9_8e9e93de",
+        "filename": "chromeos/components/tether/fake_disconnect_tethering_request_sender.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-28T23:50:10Z",
+      "side": 1,
+      "message": "#include \u003cstring\u003e\n#include \u003cvector\u003e",
+      "range": {
+        "startLine": 3,
+        "startChar": 0,
+        "endLine": 3,
+        "endChar": 1
+      },
+      "revId": "f67c0cd0fb8938004f5b86dc4f7d05575b815435",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a27f1894_d7367120",
+        "filename": "chromeos/components/tether/fake_disconnect_tethering_request_sender.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-28T23:50:10Z",
+      "side": 1,
+      "message": "// Test double for DisconnectTetheringRequestSender.",
+      "range": {
+        "startLine": 11,
+        "startChar": 0,
+        "endLine": 11,
+        "endChar": 1
+      },
+      "revId": "f67c0cd0fb8938004f5b86dc4f7d05575b815435",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5cc54c9_f10aaaf9",
+        "filename": "chromeos/components/tether/fake_disconnect_tethering_request_sender.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-28T23:50:10Z",
+      "side": 1,
+      "message": "// DisconnectTetheringRequestSender:",
+      "range": {
+        "startLine": 17,
+        "startChar": 0,
+        "endLine": 17,
+        "endChar": 1
+      },
+      "revId": "f67c0cd0fb8938004f5b86dc4f7d05575b815435",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "680d860f_0881f22c",
+        "filename": "chromeos/components/tether/fake_disconnect_tethering_request_sender.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-28T23:50:10Z",
+      "side": 1,
+      "message": "device_ids_sent_requests()",
+      "range": {
+        "startLine": 19,
+        "startChar": 27,
+        "endLine": 19,
+        "endChar": 37
+      },
+      "revId": "f67c0cd0fb8938004f5b86dc4f7d05575b815435",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f348299_ac8e4e4b",
+        "filename": "chromeos/components/tether/fake_disconnect_tethering_request_sender.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-28T23:50:10Z",
+      "side": 1,
+      "message": "device_ids_sent_requests_",
+      "range": {
+        "startLine": 22,
+        "startChar": 27,
+        "endLine": 22,
+        "endChar": 38
+      },
+      "revId": "f67c0cd0fb8938004f5b86dc4f7d05575b815435",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed4b70ac_f6b8295c",
+        "filename": "chromeos/components/tether/tether_disconnector_impl.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-28T23:50:10Z",
+      "side": 1,
+      "message": "disconnect_tethering_request_sender",
+      "range": {
+        "startLine": 47,
+        "startChar": 40,
+        "endLine": 47,
+        "endChar": 76
+      },
+      "revId": "f67c0cd0fb8938004f5b86dc4f7d05575b815435",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4cc08d36_e3a62bbb",
+        "filename": "chromeos/components/tether/tether_disconnector_impl_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 300,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-28T23:50:10Z",
+      "side": 1,
+      "message": "Remove.",
+      "range": {
+        "startLine": 300,
+        "startChar": 0,
+        "endLine": 300,
+        "endChar": 61
+      },
+      "revId": "f67c0cd0fb8938004f5b86dc4f7d05575b815435",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5b2a1f1_da89ace3",
+        "filename": "chromeos/components/tether/tether_disconnector_impl_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 316,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-28T23:50:10Z",
+      "side": 1,
+      "message": "For this and all tests where we do not expect the request to be sent, verify that it was not sent.",
+      "range": {
+        "startLine": 316,
+        "startChar": 35,
+        "endLine": 316,
+        "endChar": 68
+      },
+      "revId": "f67c0cd0fb8938004f5b86dc4f7d05575b815435",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ed289d7_47e0aa68",
+        "filename": "chromeos/components/tether/tether_disconnector_impl_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 391,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-28T23:50:10Z",
+      "side": 1,
+      "message": "For this and all tests where we do expect the request to be sent, verify that it was sent.",
+      "revId": "f67c0cd0fb8938004f5b86dc4f7d05575b815435",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "970c5227_448039d1",
+        "filename": "chromeos/components/tether/tether_network_disconnection_handler.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-28T23:50:10Z",
+      "side": 1,
+      "message": "nit: Just inline this into the SendDisconnectRequestToDevice() call.\n\nAlso, FYI: GetActiveHostDeviceId() does not return a reference, so you should not assign it to a reference.",
+      "range": {
+        "startLine": 54,
+        "startChar": 0,
+        "endLine": 54,
+        "endChar": 73
+      },
+      "revId": "f67c0cd0fb8938004f5b86dc4f7d05575b815435",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "868f87d0_344b3663",
+        "filename": "chromeos/components/tether/tether_network_disconnection_handler.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-28T23:50:10Z",
+      "side": 1,
+      "message": "Please update description according to your changes.",
+      "range": {
+        "startLine": 28,
+        "startChar": 6,
+        "endLine": 28,
+        "endChar": 39
+      },
+      "revId": "f67c0cd0fb8938004f5b86dc4f7d05575b815435",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49d6660f_6d748ddc",
+        "filename": "chromeos/components/tether/tether_network_disconnection_handler_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-28T23:50:10Z",
+      "side": 1,
+      "message": "Verify that the request was sent.",
+      "range": {
+        "startLine": 107,
+        "startChar": 46,
+        "endLine": 107,
+        "endChar": 70
+      },
+      "revId": "f67c0cd0fb8938004f5b86dc4f7d05575b815435",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
