@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "155f980b_ecfd6f86",
+        "filename": "components/infobars/core/infobar_delegate.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-08-28T23:48:46Z",
+      "side": 1,
+      "message": "Please revert this",
+      "revId": "02392b3a2e90ebdf763fe135c692fad061a638f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
