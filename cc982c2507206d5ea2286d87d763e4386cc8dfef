@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "804b28d8_20c99d19",
+        "filename": "third_party/WebKit/Source/platform/mediastream/MediaStreamDescriptor.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-08-28T12:00:44Z",
+      "side": 1,
+      "message": "Yes, forgot to remove it.",
+      "parentUuid": "5fc2c188_dbf77cff",
+      "revId": "cc982c2507206d5ea2286d87d763e4386cc8dfef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "03b0b920_84210ae9",
         "filename": "third_party/WebKit/Source/platform/mediastream/MediaStreamDescriptor.h",
         "patchSetId": 4
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-28T10:37:40Z",
       "side": 1,
       "message": "(Oh good, I was worried the observer list would be copied with WebMediaStream, making the lifetime of the pointers and registration/de-reg unpredictable, but it\u0027s on the \"meaty\" part that is the descriptor.)",
+      "revId": "cc982c2507206d5ea2286d87d763e4386cc8dfef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "633dea53_76399c6d",
+        "filename": "third_party/WebKit/Source/platform/mediastream/MediaStreamDescriptor.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-08-28T12:00:44Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "03b0b920_84210ae9",
       "revId": "cc982c2507206d5ea2286d87d763e4386cc8dfef",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
