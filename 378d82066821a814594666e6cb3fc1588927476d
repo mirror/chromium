@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a86e1f51_246bc1ed",
+        "filename": "third_party/WebKit/Source/devtools/front_end/audits2/Audits2Panel.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 515,
+      "author": {
+        "id": 1176943
+      },
+      "writtenOn": "2017-08-28T19:08:28Z",
+      "side": 1,
+      "message": "Anything else to add here @paulirish?",
+      "revId": "378d82066821a814594666e6cb3fc1588927476d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
