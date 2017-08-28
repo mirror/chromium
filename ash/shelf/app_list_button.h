@@ -54,6 +54,14 @@ class ASH_EXPORT AppListButton : public views::ImageButton,
   // gfx::Point if the back arrow is not shown.
   gfx::Point GetBackButtonCenterPoint() const;
 
+  // Called by shelf_view to notify app list button that it has started or
+  // finished animating. Hides the app list button ink drop during animation,
+  // and reactivates it when the animation is finished.
+  // TODO(sammiequon): Investigate whether shifting the ink drop with the app
+  // list button is possible.
+  void OnAnimationStarted();
+  void OnAnimationFinished();
+
  protected:
   // views::ImageButton:
   bool OnMousePressed(const ui::MouseEvent& event) override;

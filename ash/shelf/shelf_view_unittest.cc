@@ -2568,6 +2568,42 @@ TEST_F(ShelfViewInkDropTest, ShelfButtonWithMenuPressRelease) {
                           views::InkDropState::DEACTIVATED));
 }
 
+// Verify that when the app list button is animating and the app list is shown,
+// the ink drop is deactivated until the animation is finished.
+TEST_P(ShelfViewInkDropTest, AppListButtonInkDropDisabledOnAnimations) {
+  InitAppListButtonInkDrop();
+
+  // Display the app list.
+  TestAppListPresenterImpl app_list_presenter_impl;
+  app_list_presenter_impl.ShowAndRunLoop(GetPrimaryDisplay().id());
+  EXPECT_EQ(views::InkDropState::ACTIVATED,
+            app_list_button_ink_drop_->GetTargetInkDropState());
+  EXPECT_THAT(app_list_button_ink_drop_->GetAndResetRequestedStates(),
+              ElementsAre(views::InkDropState::ACTIVATED));
+
+  // Verify that when entering tablet mode, the ink drop gets deactivated until
+  // the animation finishes.
+  Shell::Get()->tablet_mode_controller()->EnableTabletModeWindowManager(true);
+  EXPECT_THAT(app_list_button_ink_drop_->GetAndResetRequestedStates(),
+              ElementsAre(views::InkDropState::DEACTIVATED));
+  test_api_->RunMessageLoopUntilAnimationsDone();
+  EXPECT_EQ(views::InkDropState::ACTIVATED,
+            app_list_button_ink_drop_->GetTargetInkDropState());
+  EXPECT_THAT(app_list_button_ink_drop_->GetAndResetRequestedStates(),
+              ElementsAre(views::InkDropState::ACTIVATED));
+
+  // Verify that when exiting tablet mode, the ink drop gets deactivated until
+  // the animation finishes.
+  Shell::Get()->tablet_mode_controller()->EnableTabletModeWindowManager(false);
+  EXPECT_THAT(app_list_button_ink_drop_->GetAndResetRequestedStates(),
+              ElementsAre(views::InkDropState::DEACTIVATED));
+  test_api_->RunMessageLoopUntilAnimationsDone();
+  EXPECT_EQ(views::InkDropState::ACTIVATED,
+            app_list_button_ink_drop_->GetTargetInkDropState());
+  EXPECT_THAT(app_list_button_ink_drop_->GetAndResetRequestedStates(),
+              ElementsAre(views::InkDropState::ACTIVATED));
+}
+
 namespace {
 
 // Test fixture to run app list button ink drop tests for both mouse and touch

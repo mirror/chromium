@@ -949,6 +949,9 @@ void ShelfView::AnimateToIdealBounds() {
     // padding of the first gets properly transferred to the new first item.
     if (i && view->border())
       view->SetBorder(views::NullBorder());
+
+    if (view == GetAppListButton())
+      GetAppListButton()->OnAnimationStarted();
   }
   overflow_button_->SetBoundsRect(overflow_bounds);
 }
@@ -1893,6 +1896,8 @@ void ShelfView::OnBoundsAnimatorDone(views::BoundsAnimator* animator) {
       snap_back_from_rip_off_view_ = nullptr;
     }
   }
+
+  GetAppListButton()->OnAnimationFinished();
 }
 
 bool ShelfView::IsRepostEvent(const ui::Event& event) {
