@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b40729f0_59ed5f53",
+        "filename": "chrome/browser/page_load_metrics/observers/android_page_load_metrics_observer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2017-08-28T09:47:20Z",
+      "side": 1,
+      "message": "let\u0027s also check for:\nextra_request_complete_info.detected_resource_type \u003d\u003d RESOURCE_TYPE_MAIN_RESOURCE\n\ni see we set main_resource_url_ in OnStart - this means we will deliver the wrong timing info for pages that have http redirects (We\u0027ll deliver the initial http redirect rather than the final committed resource). we may want to check the HTTP response code on the ExtraRequestCompleteInfo to make sure it\u0027s not a 3xx code. You can include the response code in ExtraRequestCompleteInfo, plumbing it through similarly to how you plumbed LoadTimingInfo.",
+      "revId": "98303b117cef148352ace18b3599dfc107ddd28c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
