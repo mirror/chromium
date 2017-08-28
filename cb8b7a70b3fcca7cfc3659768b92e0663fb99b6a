@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b57f129b_78e558a0",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-08-28T22:02:23Z",
+      "side": 1,
+      "message": "I am not sure about needing both PlatformKeyEventFilter and KeyEventFilter.\n\nI think we can do with only KeyEventFilter, which would handle a ui::KeyEvent. ui::PlatformWindow implementation (or DesktopWindowTreeHostWin|X11) will create a ui::KeyEvent out of the native event it receives, then it will call the KeyEventFilter to see if the event is the \u0027special\u0027 kind of event or not.",
+      "revId": "cb8b7a70b3fcca7cfc3659768b92e0663fb99b6a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
