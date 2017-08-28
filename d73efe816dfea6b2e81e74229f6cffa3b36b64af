@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2f1dbc82_813aa5cb",
+        "filename": "ios/clean/chrome/browser/ui/transitions/animators/swap_from_above_animator.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1144530
+      },
+      "writtenOn": "2017-08-28T13:16:03Z",
+      "side": 1,
+      "message": "test",
+      "range": {
+        "startLine": 6,
+        "startChar": 25,
+        "endLine": 6,
+        "endChar": 26
+      },
+      "revId": "d73efe816dfea6b2e81e74229f6cffa3b36b64af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
