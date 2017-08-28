@@ -275,6 +275,7 @@ struct PendingPaymentResponse {
   _paymentRequestJsManager = nil;
   _activeWebStateObserver.reset();
   _activeWebState = webState;
+  [self enableActiveWebState];
 
   if (_activeWebState) {
     _paymentRequestJsManager =
@@ -1002,7 +1003,6 @@ requestFullCreditCard:(const autofill::CreditCard&)creditCard
   }
 
   [self dismissUIWithCallback:nil];
-  [self enableActiveWebState];
 
   // The lifetime of a PaymentRequest is tied to the WebState it is associated
   // with and the current URL. Therefore, PaymentRequest instances should get
