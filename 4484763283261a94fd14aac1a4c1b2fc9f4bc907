@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ff958304_af88f5c9",
+        "filename": "components/keep_alive_registry/keep_alive_registry.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-08-28T23:35:35Z",
+      "side": 0,
+      "message": "This DCHECK relies on Chrome\u0027s BrowserProcess, so it needs to be reworked or just removed.\n\nI could replace this check with DCHECK(!is_shutting_down_) by adding members like:\n\n  void set_is_shutting_down() { is_shutting_down_ \u003d true; }\n  bool is_shutting_down_ \u003d false;\n\nChrome would then call set_is_shutting_down() when shutdown begins. That would catch all cases. (Except if the KeepAliveRegistry singleton is only created after Chrome shutdown begins, but that seems unlikely.)\n\njochen: Would you like me to apply the above refactoring, or is dropping the DCHECK okay?",
+      "range": {
+        "startLine": 89,
+        "startChar": 2,
+        "endLine": 89,
+        "endChar": 47
+      },
+      "revId": "4484763283261a94fd14aac1a4c1b2fc9f4bc907",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
