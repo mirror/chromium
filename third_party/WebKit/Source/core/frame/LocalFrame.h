@@ -132,6 +132,7 @@ class CORE_EXPORT LocalFrame final : public Frame,
   void DetachChildren();
   void DocumentAttached();
 
+  void SetName(const AtomicString& name);
   Frame* FindFrameForNavigation(const AtomicString& name,
                                 LocalFrame& active_frame,
                                 const KURL& destination_url);

@@ -392,6 +392,22 @@ void LocalFrame::DocumentAttached() {
   GetTextSuggestionController().DocumentAttached(GetDocument());
 }
 
+void LocalFrame::SetName(const AtomicString& name) {
+  // Avoid calling out to notify the embedder if the browsing context name
+  // didn't change. This is important to avoid violating the browser assumption
+  // that the unique name doesn't change if the browsing context name doesn't
+  // change.
+  // TODO(dcheng): This comment is indicative of a problematic layering
+  // violation. The browser should not be relying on the renderer to get this
+  // correct; unique name calculation should be moved up into the browser.
+  if (name == Tree().GetName())
+    return;
+
+  Tree().SetName(name);
+  DCHECK(Client());
+  Client()->DidChangeName(name);
+}
+
 Frame* LocalFrame::FindFrameForNavigation(const AtomicString& name,
                                           LocalFrame& active_frame,
                                           const KURL& destination_url) {
