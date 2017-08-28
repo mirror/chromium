@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "3700d3a4_1b10cfc5",
+        "filename": "third_party/WebKit/Source/core/css/properties/CSSPropertyAPITextEmphasisPosition.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1195481
+      },
+      "writtenOn": "2017-08-28T01:40:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3148fd22_e48f2d61",
+      "revId": "5f6bd62d95ac1d5565c1c14e37fdd6b5044eacfb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "08567525_fed33106",
         "filename": "third_party/WebKit/Source/core/css/properties/CSSPropertyAPITextEmphasisPosition.cpp",
         "patchSetId": 5
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "27053456_ebd3eca7",
+        "filename": "third_party/WebKit/Source/core/css/properties/CSSPropertyAPITextEmphasisPosition.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1195481
+      },
+      "writtenOn": "2017-08-28T01:40:42Z",
+      "side": 1,
+      "message": "Right, It is invalid, I thought I should return default value ( over right ).\nreturning nullptr also will be better.",
+      "parentUuid": "08567525_fed33106",
+      "revId": "5f6bd62d95ac1d5565c1c14e37fdd6b5044eacfb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a50f7a1f_371a0984",
         "filename": "third_party/WebKit/Source/core/css/properties/CSSPropertyAPITextEmphasisPosition.cpp",
         "patchSetId": 5
@@ -50,6 +86,24 @@
       "revId": "5f6bd62d95ac1d5565c1c14e37fdd6b5044eacfb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ffcb4406_02dd2acd",
+        "filename": "third_party/WebKit/Source/core/css/properties/CSSPropertyAPITextEmphasisPosition.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1195481
+      },
+      "writtenOn": "2017-08-28T01:40:42Z",
+      "side": 1,
+      "message": "Thanks for your code and looks much compact!",
+      "parentUuid": "a50f7a1f_371a0984",
+      "revId": "5f6bd62d95ac1d5565c1c14e37fdd6b5044eacfb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

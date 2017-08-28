@@ -91,6 +91,24 @@
     },
     {
       "key": {
+        "uuid": "a6138d4f_439b4141",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1195481
+      },
+      "writtenOn": "2017-08-28T01:40:42Z",
+      "side": 1,
+      "message": "It is little strange. In my local git,the commit message was already changed. It is not changed by uploading new patchset ( git cl upload ).\nI just modified the commit message from gerrit UI.",
+      "parentUuid": "1702c1d5_8b93aba2",
+      "revId": "b9e36174dc9c6a523d0fe045f30c6f92c7ae1be4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2e252f3b_20fd2167",
         "filename": "/COMMIT_MSG",
         "patchSetId": 3
@@ -156,6 +174,24 @@
       "side": 1,
       "message": "The description in Gerrit hasn\u0027t changed.",
       "parentUuid": "f81fb5a3_db4f6dfe",
+      "revId": "b9e36174dc9c6a523d0fe045f30c6f92c7ae1be4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4a4f42cb_03a2cca4",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1195481
+      },
+      "writtenOn": "2017-08-28T01:40:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0f5450aa_4d4248fc",
       "revId": "b9e36174dc9c6a523d0fe045f30c6f92c7ae1be4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
