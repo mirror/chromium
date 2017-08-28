@@ -135,7 +135,7 @@ bool ThreadSafeCaptureOracle::ObserveEventAndDecideCapture(
                            "frame_number", frame_number, "trigger",
                            VideoCaptureOracle::EventAsString(event));
 
-  auto output_buffer_access =
+  std::unique_ptr<VideoCaptureBufferHandle> output_buffer_access =
       output_buffer.handle_provider->GetHandleForInProcessAccess();
   DCHECK_EQ(media::PIXEL_STORAGE_CPU, params_.requested_format.pixel_storage);
   *storage = VideoFrame::WrapExternalSharedMemory(
@@ -151,6 +151,11 @@ bool ThreadSafeCaptureOracle::ObserveEventAndDecideCapture(
                     estimated_frame_duration, *storage, event_time, false);
     return false;
   }
+  // Hold onto the buffer access handle for the lifetime of the VideoFrame, to
+  // ensure the data pointers remain valid.
+  (*storage)->AddDestructionObserver(
+      base::BindOnce([](std::unique_ptr<VideoCaptureBufferHandle> handle) {},
+                     base::Passed(&output_buffer_access)));
 
   *callback = base::Bind(&ThreadSafeCaptureOracle::DidCaptureFrame, this,
                          frame_number, base::Passed(&output_buffer),
