@@ -10,7 +10,6 @@
 #include "base/memory/ptr_util.h"
 #include "base/strings/utf_string_conversions.h"
 #include "base/test/scoped_feature_list.h"
-#include "chrome/browser/media/router/create_presentation_connection_request.h"
 #include "chrome/browser/media/router/event_page_request_manager_factory.h"
 #include "chrome/browser/media/router/media_router_factory.h"
 #include "chrome/browser/media/router/mock_media_router.h"
@@ -122,7 +121,7 @@ class MediaRouterUITest : public ChromeRenderViewHostTestHarness {
     EXPECT_CALL(*mock_router_, UnregisterMediaRoutesObserver(_))
         .Times(AnyNumber());
     web_ui_contents_.reset();
-    create_session_request_.reset();
+    start_presentation_context_.reset();
     media_router_ui_.reset();
     message_handler_.reset();
     ChromeRenderViewHostTestHarness::TearDown();
@@ -157,7 +156,7 @@ class MediaRouterUITest : public ChromeRenderViewHostTestHarness {
         .Times(AnyNumber());
     media_router_ui_->InitForTest(
         mock_router_, web_contents(), message_handler_.get(),
-        std::move(create_session_request_), std::move(file_dialog));
+        std::move(start_presentation_context_), std::move(file_dialog));
     message_handler_->SetWebUIForTest(&web_ui_);
   }
 
@@ -191,7 +190,7 @@ class MediaRouterUITest : public ChromeRenderViewHostTestHarness {
   MockMediaRouter* mock_router_ = nullptr;
   content::TestWebUI web_ui_;
   std::unique_ptr<WebContents> web_ui_contents_;
-  std::unique_ptr<CreatePresentationConnectionRequest> create_session_request_;
+  std::unique_ptr<StartPresentationContext> start_presentation_context_;
   std::unique_ptr<MediaRouterUI> media_router_ui_;
   std::unique_ptr<MockMediaRouterWebUIMessageHandler> message_handler_;
   MockMediaRouterFileDialog* mock_file_dialog_ = nullptr;
@@ -562,12 +561,12 @@ TEST_F(MediaRouterUITest, NotFoundErrorOnCloseWithNoSinks) {
       content::PresentationErrorType::PRESENTATION_ERROR_NO_AVAILABLE_SCREENS,
       "No screens found.");
   PresentationRequestCallbacks request_callbacks(expected_error);
-  create_session_request_.reset(new CreatePresentationConnectionRequest(
+  start_presentation_context_ = base::MakeUnique<StartPresentationContext>(
       presentation_request_,
       base::Bind(&PresentationRequestCallbacks::Success,
                  base::Unretained(&request_callbacks)),
       base::Bind(&PresentationRequestCallbacks::Error,
-                 base::Unretained(&request_callbacks))));
+                 base::Unretained(&request_callbacks)));
   CreateMediaRouterUI(profile());
   // Destroying the UI should return the expected error from above to the error
   // callback.
@@ -579,12 +578,12 @@ TEST_F(MediaRouterUITest, NotFoundErrorOnCloseWithNoCompatibleSinks) {
       content::PresentationErrorType::PRESENTATION_ERROR_NO_AVAILABLE_SCREENS,
       "No screens found.");
   PresentationRequestCallbacks request_callbacks(expected_error);
-  create_session_request_.reset(new CreatePresentationConnectionRequest(
+  start_presentation_context_ = base::MakeUnique<StartPresentationContext>(
       presentation_request_,
       base::Bind(&PresentationRequestCallbacks::Success,
                  base::Unretained(&request_callbacks)),
       base::Bind(&PresentationRequestCallbacks::Error,
-                 base::Unretained(&request_callbacks))));
+                 base::Unretained(&request_callbacks)));
   CreateMediaRouterUI(profile());
 
   // Send a sink to the UI that is compatible with sources other than the
@@ -610,12 +609,12 @@ TEST_F(MediaRouterUITest, AbortErrorOnClose) {
           PRESENTATION_ERROR_PRESENTATION_REQUEST_CANCELLED,
       "Dialog closed.");
   PresentationRequestCallbacks request_callbacks(expected_error);
-  create_session_request_.reset(new CreatePresentationConnectionRequest(
+  start_presentation_context_ = base::MakeUnique<StartPresentationContext>(
       presentation_request_,
       base::Bind(&PresentationRequestCallbacks::Success,
                  base::Unretained(&request_callbacks)),
       base::Bind(&PresentationRequestCallbacks::Error,
-                 base::Unretained(&request_callbacks))));
+                 base::Unretained(&request_callbacks)));
   CreateMediaRouterUI(profile());
 
   // Send a sink to the UI that is compatible with the presentation url to avoid
@@ -757,12 +756,12 @@ TEST_F(MediaRouterUITest, SetsForcedCastModeWithPresentationURLs) {
       content::PresentationErrorType::PRESENTATION_ERROR_NO_AVAILABLE_SCREENS,
       "No screens found.");
   PresentationRequestCallbacks request_callbacks(expected_error);
-  create_session_request_.reset(new CreatePresentationConnectionRequest(
+  start_presentation_context_ = base::MakeUnique<StartPresentationContext>(
       presentation_request_,
       base::Bind(&PresentationRequestCallbacks::Success,
                  base::Unretained(&request_callbacks)),
       base::Bind(&PresentationRequestCallbacks::Error,
-                 base::Unretained(&request_callbacks))));
+                 base::Unretained(&request_callbacks)));
 
   SessionTabHelper::CreateForWebContents(web_contents());
   web_ui_contents_.reset(
@@ -795,9 +794,9 @@ TEST_F(MediaRouterUITest, SetsForcedCastModeWithPresentationURLs) {
                   expected_modes, "google.com",
                   base::Optional<MediaCastMode>(MediaCastMode::PRESENTATION)));
   media_router_ui_->UIInitialized();
-  media_router_ui_->InitForTest(mock_router_, web_contents(),
-                                message_handler_.get(),
-                                std::move(create_session_request_), nullptr);
+  media_router_ui_->InitForTest(
+      mock_router_, web_contents(), message_handler_.get(),
+      std::move(start_presentation_context_), nullptr);
   // |media_router_ui_| takes ownership of |request_callbacks|.
   media_router_ui_.reset();
 }
