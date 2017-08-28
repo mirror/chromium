@@ -37,13 +37,14 @@ class TextBreakIteratorTest : public ::testing::Test {
                        const LazyLineBreakIterator& break_iterator) {
     Vector<int> break_positions;
     int next_breakable = -1;
-    for (unsigned i = 0; i <= test_string_.length(); i++) {
+    const String& text = break_iterator.GetString();
+    for (unsigned i = 0; i <= text.length(); i++) {
       if (break_iterator.IsBreakable(i, next_breakable))
         break_positions.push_back(i);
     }
     EXPECT_THAT(break_positions,
                 ::testing::ElementsAreArray(expected_break_positions))
-        << break_iterator.BreakType() << " for " << test_string_;
+        << break_iterator.BreakType() << " for " << break_iterator.GetString();
   }
 
   // Test NextBreakOpportunity() by iterating break opportunities.
@@ -172,6 +173,34 @@ TEST_F(TextBreakIteratorTest, KeepEmojiModifierSequence) {
   MATCH_LINE_BREAKS(LineBreakType::kKeepAll, {3, 7, 11});
   MATCH_BREAK_AFTER_SPACE(LineBreakType::kNormal, {4, 8, 11});
   MATCH_BREAK_AFTER_SPACE(LineBreakType::kBreakAll, {1, 2, 4, 8, 9, 10, 11});
+}
+
+struct DisableSoftHyphenTestData {
+  String string;
+  Vector<int> break_positions;
+  Vector<int> break_positions_with_soft_hyphen_disabled;
+  LineBreakType break_type = LineBreakType::kNormal;
+};
+
+class DisableSoftHyphenTest
+    : public TextBreakIteratorTest,
+      public ::testing::WithParamInterface<DisableSoftHyphenTestData> {};
+
+INSTANTIATE_TEST_CASE_P(
+    TextBreakIteratorTest,
+    DisableSoftHyphenTest,
+    ::testing::Values(DisableSoftHyphenTestData{{"y\xADz"}, {2, 3}, {3}},
+                      DisableSoftHyphenTestData{{"\xADz"}, {1, 2}, {2}},
+                      DisableSoftHyphenTestData{{"x y\xAD"}, {1, 4}, {1, 4}},
+                      DisableSoftHyphenTestData{{"\xAD\xADz"}, {2, 3}, {3}}));
+
+TEST_P(DisableSoftHyphenTest, EmptyString) {
+  const DisableSoftHyphenTestData& data = GetParam();
+  LazyLineBreakIterator iterator(data.string);
+  iterator.SetBreakType(data.break_type);
+  TestIsBreakable(data.break_positions, iterator);
+  iterator.DisableSoftHyphen();
+  TestIsBreakable(data.break_positions_with_soft_hyphen_disabled, iterator);
 }
 
 }  // namespace blink

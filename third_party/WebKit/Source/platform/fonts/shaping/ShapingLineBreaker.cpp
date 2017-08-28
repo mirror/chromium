@@ -79,17 +79,30 @@ LayoutUnit SnapEnd(float value, TextDirection direction) {
                           : LayoutUnit::FromFloatFloor(value);
 }
 
+const Hyphenation* SoftHyphenDisabledMarker() {
+  return reinterpret_cast<const Hyphenation*>(1);
+}
+
 }  // namespace
 
 inline const String& ShapingLineBreaker::GetText() const {
   return break_iterator_->GetString();
 }
 
+bool ShapingLineBreaker::IsSoftHyphenDisabled() const {
+  return hyphenation_ == SoftHyphenDisabledMarker();
+}
+
+void ShapingLineBreaker::DisableSoftHyphen() {
+  hyphenation_ = SoftHyphenDisabledMarker();
+}
+
 unsigned ShapingLineBreaker::Hyphenate(unsigned offset,
                                        unsigned word_start,
                                        unsigned word_end,
-                                       bool backwards) {
+                                       bool backwards) const {
   DCHECK(hyphenation_);
+  DCHECK_NE(hyphenation_, SoftHyphenDisabledMarker());
   DCHECK_GT(word_end, word_start);
   DCHECK_GE(offset, word_start);
   DCHECK_LE(offset, word_end);
@@ -112,7 +125,7 @@ unsigned ShapingLineBreaker::Hyphenate(unsigned offset,
 unsigned ShapingLineBreaker::Hyphenate(unsigned offset,
                                        unsigned start,
                                        bool backwards,
-                                       bool* is_hyphenated) {
+                                       bool* is_hyphenated) const {
   const String& text = GetText();
   unsigned previous_break_opportunity =
       break_iterator_->PreviousBreakOpportunity(offset, start);
@@ -133,20 +146,40 @@ unsigned ShapingLineBreaker::Hyphenate(unsigned offset,
   return word_start + prefix_length;
 }
 
-unsigned ShapingLineBreaker::PreviousBreakOpportunity(unsigned offset,
-                                                      unsigned start,
-                                                      bool* is_hyphenated) {
+unsigned ShapingLineBreaker::PreviousBreakOpportunity(
+    unsigned offset,
+    unsigned start,
+    bool* is_hyphenated) const {
   if (!hyphenation_)
     return break_iterator_->PreviousBreakOpportunity(offset, start);
-  return Hyphenate(offset, start, true, is_hyphenated);
+
+  if (!IsSoftHyphenDisabled())
+    return Hyphenate(offset, start, true, is_hyphenated);
+
+  const String& text = GetText();
+  for (;; offset--) {
+    offset = break_iterator_->PreviousBreakOpportunity(offset, start);
+    if (offset <= start || offset >= text.length() ||
+        text[offset - 1] != kSoftHyphenCharacter)
+      return offset;
+  }
 }
 
 unsigned ShapingLineBreaker::NextBreakOpportunity(unsigned offset,
                                                   unsigned start,
-                                                  bool* is_hyphenated) {
+                                                  bool* is_hyphenated) const {
   if (!hyphenation_)
     return break_iterator_->NextBreakOpportunity(offset);
-  return Hyphenate(offset, start, false, is_hyphenated);
+
+  if (!IsSoftHyphenDisabled())
+    return Hyphenate(offset, start, false, is_hyphenated);
+
+  const String& text = GetText();
+  for (;; offset++) {
+    offset = break_iterator_->NextBreakOpportunity(offset);
+    if (offset >= text.length() || text[offset - 1] != kSoftHyphenCharacter)
+      return offset;
+  }
 }
 
 inline PassRefPtr<ShapeResult> ShapingLineBreaker::Shape(

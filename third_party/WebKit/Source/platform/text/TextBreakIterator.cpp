@@ -321,10 +321,22 @@ inline int LazyLineBreakIterator::NextBreakablePosition(
         if (i || prior_context_length) {
           TextBreakIterator* break_iterator = Get(prior_context_length);
           if (break_iterator) {
-            next_break =
-                break_iterator->following(i - 1 + prior_context_length);
-            if (next_break >= 0) {
-              next_break -= prior_context_length;
+            int after_index = i - 1;
+            while (true) {
+              next_break =
+                  break_iterator->following(after_index + prior_context_length);
+              if (next_break >= 0) {
+                next_break -= prior_context_length;
+                if (UNLIKELY(disable_soft_hyphen_ &&
+                             next_break > 0 &&
+                             str[next_break - 1] == kSoftHyphenCharacter)) {
+                  after_index = next_break;
+                  continue;
+                }
+              } else {
+                next_break = len;
+              }
+              break;
             }
           }
         }
