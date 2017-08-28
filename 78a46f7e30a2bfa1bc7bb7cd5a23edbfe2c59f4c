@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3e4ad96d_948ffa0c",
+        "filename": "content/browser/renderer_host/render_widget_host_view_aura.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 717,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-08-28T21:58:05Z",
+      "side": 1,
+      "message": "Is there a reason this doesn\u0027t just call Show()? Because I think the rest of the code in Show() should also happen here?",
+      "revId": "78a46f7e30a2bfa1bc7bb7cd5a23edbfe2c59f4c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6f4f0ae_0620c378",
+        "filename": "content/browser/renderer_host/render_widget_host_view_aura.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 726,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-08-28T21:58:05Z",
+      "side": 1,
+      "message": "Can this also just call Hide() instead?",
+      "revId": "78a46f7e30a2bfa1bc7bb7cd5a23edbfe2c59f4c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
