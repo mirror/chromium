@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "6175655f_3a750eb2",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1115863
+      },
+      "writtenOn": "2017-08-28T03:55:43Z",
+      "side": 1,
+      "message": "Yeah, please drop this line as the bug entry is directly related to this change.",
+      "parentUuid": "a942878b_3cce2d35",
+      "revId": "8594ea31ebba32ca9cde9ab2b912fc7c873f67bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0528f529_955807c1",
         "filename": "/COMMIT_MSG",
         "patchSetId": 4
@@ -93,6 +111,23 @@
     },
     {
       "key": {
+        "uuid": "baf7f9af_87adf7d3",
+        "filename": "third_party/WebKit/Source/bindings/scripts/idl_definitions.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 473,
+      "author": {
+        "id": 1115863
+      },
+      "writtenOn": "2017-08-28T03:55:43Z",
+      "side": 1,
+      "message": "Please remove this FIXME comment.",
+      "revId": "8594ea31ebba32ca9cde9ab2b912fc7c873f67bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "886e8252_47422944",
         "filename": "third_party/WebKit/Source/bindings/scripts/idl_definitions.py",
         "patchSetId": 4
@@ -104,6 +139,46 @@
       "writtenOn": "2017-08-28T03:17:42Z",
       "side": 1,
       "message": "Remove this commented original code.",
+      "revId": "8594ea31ebba32ca9cde9ab2b912fc7c873f67bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed726d5c_c8aa07e5",
+        "filename": "third_party/WebKit/Source/bindings/scripts/idl_definitions.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 528,
+      "author": {
+        "id": 1115863
+      },
+      "writtenOn": "2017-08-28T03:55:43Z",
+      "side": 1,
+      "message": "Please remove this FIXME comment.",
+      "revId": "8594ea31ebba32ca9cde9ab2b912fc7c873f67bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37774f6c_082a1069",
+        "filename": "third_party/WebKit/Source/bindings/scripts/idl_definitions.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 533,
+      "author": {
+        "id": 1115863
+      },
+      "writtenOn": "2017-08-28T03:55:43Z",
+      "side": 1,
+      "message": "Maybe better to move this line outside the if block and replace all node.GetProperty(\u0027VALUE\u0027) with |value|.",
+      "range": {
+        "startLine": 533,
+        "startChar": 8,
+        "endLine": 533,
+        "endChar": 41
+      },
       "revId": "8594ea31ebba32ca9cde9ab2b912fc7c873f67bc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
