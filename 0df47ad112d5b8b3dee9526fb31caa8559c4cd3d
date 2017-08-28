@@ -1,0 +1,140 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dbd23b55_cb428026",
+        "filename": "third_party/WebKit/Source/core/editing/iterators/TextIteratorTest.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 984,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-08-28T08:06:28Z",
+      "side": 1,
+      "message": "It is better to have \"\\n\" at end of string and \"\\t\\t...\" to at start of string.",
+      "revId": "0df47ad112d5b8b3dee9526fb31caa8559c4cd3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41074a9b_b2c6a9fa",
+        "filename": "third_party/WebKit/Source/core/editing/iterators/TextIteratorTest.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 1008,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-08-28T08:06:28Z",
+      "side": 1,
+      "message": "nit: s\" /\u003e\"\u003e\"",
+      "revId": "0df47ad112d5b8b3dee9526fb31caa8559c4cd3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fac8e72b_0037d773",
+        "filename": "third_party/WebKit/Source/core/editing/iterators/TextIteratorTest.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 1013,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-08-28T08:06:28Z",
+      "side": 1,
+      "message": "nit: s/Position/const Position/\nPlease use Position::FirstPositionInNode()",
+      "revId": "0df47ad112d5b8b3dee9526fb31caa8559c4cd3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b11fce35_c23ef187",
+        "filename": "third_party/WebKit/Source/core/editing/iterators/TextIteratorTest.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 1014,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-08-28T08:06:28Z",
+      "side": 1,
+      "message": "nit: s/Position/const Position/\nPlease use Position::LastPositionInNode()",
+      "revId": "0df47ad112d5b8b3dee9526fb31caa8559c4cd3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1c4ecfe_17de22d8",
+        "filename": "third_party/WebKit/Source/core/editing/iterators/TextIteratorTest.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 1016,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-08-28T08:06:28Z",
+      "side": 1,
+      "message": "nit: s/EntersOpenShadowRootsBehavior()//\n\nSince,internals.rangeAsText() \u003d\u003d Range::GetText() \n\u003d\u003d TextIterator EmitsObjectReplacementCharacter\n\nIn this case, there are no object replacement characters in input test,\nso we don\u0027t need to use  EmitsObjectReplacementCharacter() behavior.",
+      "revId": "0df47ad112d5b8b3dee9526fb31caa8559c4cd3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "604e2808_04ad3cfb",
+        "filename": "third_party/WebKit/Source/core/editing/iterators/TextIteratorTest.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 1025,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-08-28T08:06:28Z",
+      "side": 1,
+      "message": "Please use Position::FirstPositionInNode()",
+      "revId": "0df47ad112d5b8b3dee9526fb31caa8559c4cd3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4b02ba6_05531e8f",
+        "filename": "third_party/WebKit/Source/core/editing/iterators/TextIteratorTest.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 1026,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-08-28T08:06:28Z",
+      "side": 1,
+      "message": "Please use Position::LastPositionInNode()",
+      "revId": "0df47ad112d5b8b3dee9526fb31caa8559c4cd3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9fb913d5_01820b7d",
+        "filename": "third_party/WebKit/Source/core/editing/iterators/TextIteratorTest.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 1027,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-08-28T08:06:28Z",
+      "side": 1,
+      "message": "Same as L1015.\nWe should not have \"[\\n][\\n]\" since original test doesn\u0027t have it.\nI\u0027m not sure whether EntersOpenShadowRootsBehavior() adds \"[\\n][\\n]\" or not.\n\nIf after removing EntersOpenShadowRootsBehavior() yields \"[\\n][\\n]\",\nplease try INPUT element as original test.",
+      "revId": "0df47ad112d5b8b3dee9526fb31caa8559c4cd3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
