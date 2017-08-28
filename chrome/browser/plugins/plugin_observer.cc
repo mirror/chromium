@@ -42,6 +42,7 @@
 #include "content/public/browser/web_contents.h"
 #include "content/public/browser/web_contents_delegate.h"
 #include "content/public/common/webplugininfo.h"
+#include "services/service_manager/public/cpp/interface_provider.h"
 #include "ui/base/l10n/l10n_util.h"
 
 using content::PluginService;
@@ -128,24 +129,19 @@ bool ReloadPluginInfoBarDelegate::Accept() {
 class PluginObserver::PluginPlaceholderHost : public PluginInstallerObserver {
  public:
   PluginPlaceholderHost(PluginObserver* observer,
-                        int routing_id,
                         base::string16 plugin_name,
                         PluginInstaller* installer)
-      : PluginInstallerObserver(installer),
-        observer_(observer),
-        routing_id_(routing_id) {
+      : PluginInstallerObserver(installer), observer_(observer) {
     DCHECK(installer);
   }
 
   void DownloadFinished() override {
-    observer_->Send(new ChromeViewMsg_FinishedDownloadingPlugin(routing_id_));
+    observer_->plugin_renderer_interface()->FinishedDownloading();
   }
 
  private:
   // Weak pointer; owns us.
   PluginObserver* observer_;
-
-  int routing_id_;
 };
 
 class PluginObserver::ComponentObserver
@@ -170,17 +166,14 @@ class PluginObserver::ComponentObserver
       return;
     switch (event) {
       case Events::COMPONENT_UPDATED:
-        observer_->Send(
-            new ChromeViewMsg_PluginComponentUpdateSuccess(routing_id_));
+        observer_->plugin_renderer_interface()->UpdateSuccess();
         observer_->RemoveComponentObserver(routing_id_);
         break;
       case Events::COMPONENT_UPDATE_FOUND:
-        observer_->Send(
-            new ChromeViewMsg_PluginComponentUpdateDownloading(routing_id_));
+        observer_->plugin_renderer_interface()->UpdateDownloading();
         break;
       case Events::COMPONENT_NOT_UPDATED:
-        observer_->Send(
-            new ChromeViewMsg_PluginComponentUpdateFailure(routing_id_));
+        observer_->plugin_renderer_interface()->UpdateFailure();
         observer_->RemoveComponentObserver(routing_id_);
         break;
       default:
@@ -199,6 +192,9 @@ class PluginObserver::ComponentObserver
 PluginObserver::PluginObserver(content::WebContents* web_contents)
     : content::WebContentsObserver(web_contents),
       weak_ptr_factory_(this) {
+  content::RenderFrameHost* host = web_contents->GetMainFrame();
+  DCHECK(host);
+  host->GetRemoteInterfaces()->GetInterface(&plugin_renderer_interface_);
 }
 
 PluginObserver::~PluginObserver() {
@@ -282,8 +278,8 @@ void PluginObserver::OnBlockedOutdatedPlugin(int placeholder_id,
   std::unique_ptr<PluginMetadata> plugin;
   if (finder->FindPluginWithIdentifier(identifier, &installer, &plugin)) {
     plugin_placeholders_[placeholder_id] =
-        base::MakeUnique<PluginPlaceholderHost>(this, placeholder_id,
-                                                plugin->name(), installer);
+        base::MakeUnique<PluginPlaceholderHost>(this, plugin->name(),
+                                                installer);
     OutdatedPluginInfoBarDelegate::Create(
         InfoBarService::FromWebContents(web_contents()), installer,
         std::move(plugin));

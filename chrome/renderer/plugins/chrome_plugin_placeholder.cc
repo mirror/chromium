@@ -170,22 +170,6 @@ int32_t ChromePluginPlaceholder::CreateRoutingId() {
 }
 
 bool ChromePluginPlaceholder::OnMessageReceived(const IPC::Message& message) {
-  bool handled = true;
-  IPC_BEGIN_MESSAGE_MAP(ChromePluginPlaceholder, message)
-    IPC_MESSAGE_HANDLER(ChromeViewMsg_FinishedDownloadingPlugin,
-                        OnFinishedDownloadingPlugin)
-    IPC_MESSAGE_HANDLER(ChromeViewMsg_PluginComponentUpdateDownloading,
-                        OnPluginComponentUpdateDownloading)
-    IPC_MESSAGE_HANDLER(ChromeViewMsg_PluginComponentUpdateSuccess,
-                        OnPluginComponentUpdateSuccess)
-    IPC_MESSAGE_HANDLER(ChromeViewMsg_PluginComponentUpdateFailure,
-                        OnPluginComponentUpdateFailure)
-    IPC_MESSAGE_UNHANDLED(handled = false)
-  IPC_END_MESSAGE_MAP()
-
-  if (handled)
-    return true;
-
   // We don't swallow these messages because multiple blocked plugins and other
   // objects have an interest in them.
   IPC_BEGIN_MESSAGE_MAP(ChromePluginPlaceholder, message)
@@ -201,19 +185,24 @@ void ChromePluginPlaceholder::ShowPermissionBubbleCallback() {
       new ChromeViewHostMsg_ShowFlashPermissionBubble(routing_id()));
 }
 
-void ChromePluginPlaceholder::OnFinishedDownloadingPlugin() {
+void ChromePluginPlaceholder::OnPluginRendererRequest(
+    chrome::mojom::PluginRendererRequest request) {
+  plugin_renderer_bindings_.AddBinding(this, std::move(request));
+}
+
+void ChromePluginPlaceholder::FinishedDownloading() {
   SetMessage(l10n_util::GetStringFUTF16(IDS_PLUGIN_UPDATING, plugin_name_));
 }
 
-void ChromePluginPlaceholder::OnPluginComponentUpdateDownloading() {
+void ChromePluginPlaceholder::UpdateDownloading() {
   SetMessage(l10n_util::GetStringFUTF16(IDS_PLUGIN_DOWNLOADING, plugin_name_));
 }
 
-void ChromePluginPlaceholder::OnPluginComponentUpdateSuccess() {
+void ChromePluginPlaceholder::UpdateSuccess() {
   PluginListChanged();
 }
 
-void ChromePluginPlaceholder::OnPluginComponentUpdateFailure() {
+void ChromePluginPlaceholder::UpdateFailure() {
   SetMessage(l10n_util::GetStringFUTF16(IDS_PLUGIN_DOWNLOAD_ERROR_SHORT,
                                         plugin_name_));
 }

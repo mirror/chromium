@@ -241,23 +241,6 @@ IPC_SYNC_MESSAGE_CONTROL1_3(
 IPC_MESSAGE_ROUTED1(ChromeViewHostMsg_RemovePluginPlaceholderHost,
                     int /* placeholder_id */)
 
-// Notifies a missing plugin placeholder that we have finished downloading
-// the plugin.
-IPC_MESSAGE_ROUTED0(ChromeViewMsg_FinishedDownloadingPlugin)
-
-// Notifies a missing plugin placeholder that we have finished component-
-// updating the plug-in.
-IPC_MESSAGE_ROUTED0(ChromeViewMsg_PluginComponentUpdateSuccess)
-
-// Notifies a missing plugin placeholder that we have failed to component-update
-// the plug-in.
-IPC_MESSAGE_ROUTED0(ChromeViewMsg_PluginComponentUpdateFailure)
-
-// Notifies a missing plugin placeholder that we have started the component
-// download.
-IPC_MESSAGE_ROUTED0(ChromeViewMsg_PluginComponentUpdateDownloading)
-
-
 // Tells the browser to show the Flash permission bubble in the same tab.
 IPC_MESSAGE_ROUTED0(ChromeViewHostMsg_ShowFlashPermissionBubble)
 
