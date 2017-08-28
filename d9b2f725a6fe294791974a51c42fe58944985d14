@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "61efcea7_2c8743a9",
+        "filename": "tools/idl_parser/idl_parser_test.py",
+        "patchSetId": 14
+      },
+      "lineNbr": 344,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-08-28T07:18:16Z",
+      "side": 1,
+      "message": "Just a question, do we want a test case with more optionals?  e.g. two optionals in a single operation declaration?",
+      "range": {
+        "startLine": 344,
+        "startChar": 25,
+        "endLine": 344,
+        "endChar": 78
+      },
+      "revId": "d9b2f725a6fe294791974a51c42fe58944985d14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
