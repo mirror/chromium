@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "006d9be8_5ce5bbd3",
+        "filename": "content/browser/service_worker/service_worker_registration_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 284,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-28T05:08:02Z",
+      "side": 1,
+      "message": "why was this change needed?",
+      "revId": "b6b8eb0b044d8b32a48d9d20b8b2a77d14978931",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "088497c3_a46f034e",
+        "filename": "content/browser/service_worker/service_worker_version.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 349,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-28T05:08:02Z",
+      "side": 1,
+      "message": "Could we turn 350-359 into a switch on |status|. I think it would be\n\ncase NEW:\n  // |skip_waiting_| should not be set before the version is NEW.\n  NOTREACHED();\n  return;\ncase INSTALLING:\n  // Do nothing until INSTALLED time.\n  break;\ncase INSTALLED:\n  // Start recording the time when the version is trying to skip waiting.\n  RestartTick(...);\n  break;\ncase ACTIVATING:\n  ...\ncase ACTIVATED:\n  // Do nothing. The worker is already activated and any skip waiting requests should have been handled by now.\n  break;\ncase REDUNDANT:\n  // Clear any pending skip waiting requests since this version is dead.\n  pending_skip_waiting_requests_.clear();\n\n\nAnd DCHECK(pending_skip_waiting_requests_.empty() after this switch.",
+      "revId": "b6b8eb0b044d8b32a48d9d20b8b2a77d14978931",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9bd3deb0_e00b9535",
+        "filename": "content/browser/service_worker/service_worker_version.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 358,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-28T05:08:02Z",
+      "side": 1,
+      "message": "This could also be moved to ACTIVATING",
+      "revId": "b6b8eb0b044d8b32a48d9d20b8b2a77d14978931",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2fc23fff_e3e23ba5",
+        "filename": "content/browser/service_worker/service_worker_version.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1332,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-28T05:08:02Z",
+      "side": 1,
+      "message": "Add a comment about how the spec says this but also let\u0027s explain in English.\n\n// Per spec, resolve the skip waiting promise immediately if activation won\u0027t be triggered now. We know it\u0027ll only be triggered if we\u0027re in INSTALLED state: otherwise, it either will happen later or we\u0027re already being activating or are activated.",
+      "revId": "b6b8eb0b044d8b32a48d9d20b8b2a77d14978931",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8d89f89_2479b7bf",
+        "filename": "content/browser/service_worker/service_worker_version.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1349,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-28T05:08:02Z",
+      "side": 1,
+      "message": "According to the spec, we\u0027re supposed to resolve the promise if we\u0027re in INSTALLED but activation could not immediately occur.I think you could handle that at the end of this function:\n\n// We tried but could not trigger activation yet (the active version must be busy). The spec says to resolve the promises after trying to activate, even though we are still waiting to activate.\nif (status \u003d\u003d INSTALLED) {\n  // resolve the promises\n}",
+      "revId": "b6b8eb0b044d8b32a48d9d20b8b2a77d14978931",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
