@@ -906,6 +906,11 @@ class CONTENT_EXPORT RenderWidget
 
   viz::LocalSurfaceId local_surface_id_;
 
+  // Flag set to true when WillCommitCompositorFrame has been called and has
+  // not yet returned. This allows QueueMessage to avoid requesting an
+  // unnecessary commit at that time.
+  bool will_begin_compositor_frame_;
+
   scoped_refptr<MainThreadEventQueue> input_event_queue_;
 
   mojo::Binding<mojom::Widget> widget_binding_;

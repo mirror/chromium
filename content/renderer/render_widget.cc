@@ -1010,6 +1010,8 @@ void RenderWidget::WillBeginCompositorFrame() {
 
   GetWebWidget()->SetSuppressFrameRequestsWorkaroundFor704763Only(true);
 
+  will_begin_compositor_frame_ = true;
+
   // The UpdateTextInputState can result in further layout and possibly
   // enable GPU acceleration so they need to be called before any painting
   // is done.
@@ -1018,6 +1020,8 @@ void RenderWidget::WillBeginCompositorFrame() {
 
   for (auto& observer : render_frame_proxies_)
     observer.WillBeginCompositorFrame();
+
+  will_begin_compositor_frame_ = false;
 }
 
 std::unique_ptr<cc::SwapPromise> RenderWidget::RequestCopyOfOutputForLayoutTest(
@@ -1456,6 +1460,12 @@ void RenderWidget::QueueMessage(IPC::Message* msg,
     // or B) request a commit which is not needed because there are not pending
     // updates. If B) then the frame will be aborted early and the swap promises
     // will be broken (see EarlyOut_NoUpdates).
+    // If a message is being queued as a result of a call to
+    // WillBeginCompositorFrame, it will be sent along with the frame that is
+    // currently in progress (subject to the (B) above). Re-entrancy here can
+    // cause a cycle of commit requests even when there is no work to do.
+    // See https://crbug.com/755730.
+    // if (!will_begin_compositor_frame_)
     compositor_->SetNeedsBeginFrame();
   }
 }
