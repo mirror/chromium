@@ -4,6 +4,7 @@
 
 package org.chromium.chrome.browser.infobar;
 
+import android.app.Activity;
 import android.content.Context;
 import android.support.annotation.StringRes;
 import android.view.View;
@@ -105,6 +106,9 @@ class IPHInfoBarSupport implements OnDismissListener, InfoBarContainer.InfoBarAn
         if (params == null) return;
 
         if (!mTracker.shouldTriggerHelpUI(params.feature)) return;
+
+        Activity activity = (Activity) mContext;
+        if (activity == null || activity.isFinishing()) return;
 
         mCurrentState = new PopupState();
         mCurrentState.view = view;
