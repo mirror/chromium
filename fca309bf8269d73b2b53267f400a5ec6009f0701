@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "89393e59_143ed9a9",
+        "filename": "components/exo/surface.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 684,
+      "author": {
+        "id": 1002249
+      },
+      "writtenOn": "2017-08-28T06:44:25Z",
+      "side": 1,
+      "message": "This line seems wrong. When cropping a buffer, |origin| is equal to |state_.crop.origin|. That would make |quad_rect| equal to (crop_origin_x, crop_crop_origin_y, buffer_width, buffer_height), while it should be (crop_origin_x, crop_crop_origin_y, crop_width, crop_height) if I understand semantics of quad_rect correctly.",
+      "range": {
+        "startLine": 684,
+        "startChar": 30,
+        "endLine": 684,
+        "endChar": 47
+      },
+      "revId": "fca309bf8269d73b2b53267f400a5ec6009f0701",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "43102d7c_df95510f",
         "filename": "components/exo/surface.cc",
         "patchSetId": 6
