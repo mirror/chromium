@@ -1,0 +1,228 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "92489f4e_75fce77d",
+        "filename": "third_party/WebKit/Source/core/editing/iterators/TextIteratorTest.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-08-28T17:51:06Z",
+      "side": 1,
+      "message": "The #include lines should be:\n\n#include \"core/editing/iterators/TextIterator.h\"\n\n#include \"core/dom/Document.h\"\n#include \"core/editing/EditingTestBase.h\"\n#include \"core/frame/LocalFrameView.h\"\n#include \"core/html/TextControlElement.h\"\n\nFor .cpp files, we prefer the following include ordering:\n\n1. The main header file\n2. An empty line\n3. The remaining header files, sorted alphabetically",
+      "range": {
+        "startLine": 31,
+        "startChar": 0,
+        "endLine": 35,
+        "endChar": 41
+      },
+      "revId": "3af0791f516571674e27dc829fbbeca4fbf7bf9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f30b4c7a_ec32e0fa",
+        "filename": "third_party/WebKit/Source/core/editing/iterators/TextIteratorTest.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 966,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-08-28T17:51:06Z",
+      "side": 1,
+      "message": "nit: remove \"static\".\n\nDon\u0027t follow the other tests with \"static const char* ...\". That\u0027s a bad style.",
+      "range": {
+        "startLine": 966,
+        "startChar": 2,
+        "endLine": 966,
+        "endChar": 8
+      },
+      "revId": "3af0791f516571674e27dc829fbbeca4fbf7bf9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54435430_c89aab5e",
+        "filename": "third_party/WebKit/Source/core/editing/iterators/TextIteratorTest.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 975,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-08-28T17:51:06Z",
+      "side": 1,
+      "message": "Ditto.",
+      "range": {
+        "startLine": 975,
+        "startChar": 2,
+        "endLine": 975,
+        "endChar": 8
+      },
+      "revId": "3af0791f516571674e27dc829fbbeca4fbf7bf9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c57eec10_1413f1bb",
+        "filename": "third_party/WebKit/Source/core/editing/iterators/TextIteratorTest.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 1008,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-08-28T17:51:06Z",
+      "side": 1,
+      "message": "Ditto.",
+      "range": {
+        "startLine": 1008,
+        "startChar": 2,
+        "endLine": 1008,
+        "endChar": 8
+      },
+      "revId": "3af0791f516571674e27dc829fbbeca4fbf7bf9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b9624f5_6bb7953a",
+        "filename": "third_party/WebKit/Source/core/editing/iterators/TextIteratorTest.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 1011,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-08-28T17:51:06Z",
+      "side": 1,
+      "message": "Use |ToTextControlElement()| for safe type cast.",
+      "range": {
+        "startLine": 1011,
+        "startChar": 6,
+        "endLine": 1011,
+        "endChar": 27
+      },
+      "revId": "3af0791f516571674e27dc829fbbeca4fbf7bf9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d972462d_af9f1cb0",
+        "filename": "third_party/WebKit/Source/core/editing/iterators/TextIteratorTest.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 1014,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-08-28T17:51:06Z",
+      "side": 1,
+      "message": "The iteration range is different from the original test.\n\nShould be:\n\nconst ShadowRoot* shadow_root \u003d input_element-\u003eUserAgentShadowRoot();\nconst Position start \u003d Position::FirstPositionInNode(*shadow_root);\nconst Position end \u003d Position::LastPositionInNode(*shadow_root);",
+      "range": {
+        "startLine": 1013,
+        "startChar": 0,
+        "endLine": 1014,
+        "endChar": 67
+      },
+      "revId": "3af0791f516571674e27dc829fbbeca4fbf7bf9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6902e9fe_1098f0a1",
+        "filename": "third_party/WebKit/Source/core/editing/iterators/TextIteratorTest.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 1019,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-08-28T17:51:06Z",
+      "side": 1,
+      "message": "Ditto.",
+      "range": {
+        "startLine": 1019,
+        "startChar": 2,
+        "endLine": 1019,
+        "endChar": 8
+      },
+      "revId": "3af0791f516571674e27dc829fbbeca4fbf7bf9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82842df9_aee2cf93",
+        "filename": "third_party/WebKit/Source/core/editing/iterators/TextIteratorTest.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 1022,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-08-28T17:51:06Z",
+      "side": 1,
+      "message": "Ditto.",
+      "range": {
+        "startLine": 1022,
+        "startChar": 6,
+        "endLine": 1022,
+        "endChar": 27
+      },
+      "revId": "3af0791f516571674e27dc829fbbeca4fbf7bf9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47d5ed08_6586cb3f",
+        "filename": "third_party/WebKit/Source/core/editing/iterators/TextIteratorTest.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 1027,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-08-28T17:51:06Z",
+      "side": 1,
+      "message": "Ditto.",
+      "range": {
+        "startLine": 1026,
+        "startChar": 0,
+        "endLine": 1027,
+        "endChar": 67
+      },
+      "revId": "3af0791f516571674e27dc829fbbeca4fbf7bf9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc07c09c_f7100906",
+        "filename": "third_party/WebKit/Source/core/editing/iterators/TextIteratorTest.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 1028,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-08-28T17:51:06Z",
+      "side": 1,
+      "message": "Call \n\nGetDocument().UpdateStyleAndLayout();\n\nBefore this line. In general, if style or DOM is changed, we must update style and layout before using TextIterator.\n\nFor more background, ask yosin@ about the rendering pipeline.",
+      "revId": "3af0791f516571674e27dc829fbbeca4fbf7bf9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
