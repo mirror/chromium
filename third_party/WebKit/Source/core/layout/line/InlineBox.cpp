@@ -149,7 +149,7 @@ LayoutUnit InlineBox::LogicalHeight() const {
   if (GetLineLayoutItem().IsText()) {
     DCHECK(font_data);
     return bitfields_.IsText() && font_data
-               ? LayoutUnit(font_data->GetFontMetrics().Height())
+               ? LayoutUnit(font_data->GetFontMetrics().FloatHeight())
                : LayoutUnit();
   }
   if (GetLineLayoutItem().IsBox() && Parent()) {
@@ -160,7 +160,7 @@ LayoutUnit InlineBox::LogicalHeight() const {
   DCHECK(IsInlineFlowBox());
   LineLayoutBoxModel flow_object = BoxModelObject();
   DCHECK(font_data);
-  LayoutUnit result(font_data ? font_data->GetFontMetrics().Height() : 0);
+  LayoutUnit result(font_data ? font_data->GetFontMetrics().FloatHeight() : 0);
   if (Parent())
     result += flow_object.BorderAndPaddingLogicalHeight();
   return result;

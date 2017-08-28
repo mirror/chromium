@@ -139,11 +139,11 @@ LayoutUnit InlineTextBox::OffsetTo(LineVerticalPositionType position_type,
       if (position_type == LineVerticalPositionType::TopOfEmHeight) {
         // Use Ascent, not FixedAscent, to match to how InlineTextBoxPainter
         // computes the baseline position.
-        return metrics.Ascent(baseline_type) -
+        return LayoutUnit(metrics.FloatAscent(baseline_type)) -
                font_data->EmHeightAscent(baseline_type);
       }
       if (position_type == LineVerticalPositionType::BottomOfEmHeight) {
-        return metrics.Ascent(baseline_type) +
+        return LayoutUnit(metrics.FloatAscent(baseline_type)) +
                font_data->EmHeightDescent(baseline_type);
       }
     }

@@ -1234,7 +1234,7 @@ LayoutRect LayoutBoxModelObject::LocalCaretRectForEmptyElement(
   // crbug.com/595692 This check should not be needed but sometimes
   // primaryFont is null.
   if (font_data)
-    height = LayoutUnit(font_data->GetFontMetrics().Height());
+    height = LayoutUnit(font_data->GetFontMetrics().FloatHeight());
   LayoutUnit vertical_space =
       LineHeight(true,
                  current_style.IsHorizontalWritingMode() ? kHorizontalLine

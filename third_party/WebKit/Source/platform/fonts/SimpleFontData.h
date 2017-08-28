@@ -75,8 +75,7 @@ class PLATFORM_EXPORT SimpleFontData : public FontData {
       bool is_text_orientation_fallback = false,
       bool subpixel_ascent_descent = false) {
     return AdoptRef(new SimpleFontData(platform_data, std::move(custom_data),
-                                       is_text_orientation_fallback,
-                                       subpixel_ascent_descent));
+                                       is_text_orientation_fallback));
   }
 
   const FontPlatformData& PlatformData() const { return platform_data_; }
@@ -182,14 +181,13 @@ class PLATFORM_EXPORT SimpleFontData : public FontData {
  protected:
   SimpleFontData(const FontPlatformData&,
                  PassRefPtr<CustomFontData> custom_data,
-                 bool is_text_orientation_fallback = false,
-                 bool subpixel_ascent_descent = false);
+                 bool is_text_orientation_fallback = false);
 
   // Only used for testing.
   SimpleFontData(const FontPlatformData&, PassRefPtr<OpenTypeVerticalData>);
 
  private:
-  void PlatformInit(bool subpixel_ascent_descent);
+  void PlatformInit();
   void PlatformGlyphInit();
 
   PassRefPtr<SimpleFontData> CreateScaledFontData(const FontDescription&,

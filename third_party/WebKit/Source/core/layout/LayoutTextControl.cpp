@@ -361,7 +361,8 @@ LayoutUnit LayoutTextControl::FirstLineBoxBaseline() const {
   if (!font_data)
     return LayoutUnit(-1);
 
-  LayoutUnit baseline(font_data->GetFontMetrics().Ascent(kAlphabeticBaseline));
+  LayoutUnit baseline(
+      font_data->GetFontMetrics().FloatAscent(kAlphabeticBaseline));
   for (LayoutObject* box = inner_editor_layout_object; box && box != this;
        box = box->Parent()) {
     if (box->IsBox())

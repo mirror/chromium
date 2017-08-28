@@ -520,8 +520,8 @@ FontBaseline InlineFlowBox::DominantBaseline() const {
 
 void InlineFlowBox::AdjustMaxAscentAndDescent(LayoutUnit& max_ascent,
                                               LayoutUnit& max_descent,
-                                              int max_position_top,
-                                              int max_position_bottom) {
+                                              LayoutUnit max_position_top,
+                                              LayoutUnit max_position_bottom) {
   LayoutUnit original_max_ascent(max_ascent);
   LayoutUnit original_max_descent(max_descent);
   for (InlineBox* curr = FirstChild(); curr; curr = curr->NextOnLine()) {
@@ -700,10 +700,8 @@ void InlineFlowBox::PlaceBoxesInBlockDirection(
     if (!font_data)
       return;
     const FontMetrics& font_metrics = font_data->GetFontMetrics();
-    // RootInlineBoxes are always placed at pixel boundaries in their logical y
-    // direction. Not doing so results in incorrect layout of text decorations,
-    // most notably underlines.
-    SetLogicalTop(top + max_ascent - font_metrics.Ascent(baseline_type));
+    SetLogicalTop(top + max_ascent -
+                  LayoutUnit(font_metrics.FloatAscent(baseline_type)));
   }
 
   LayoutUnit adjustment_for_children_with_same_line_height_and_baseline;
@@ -759,7 +757,7 @@ void InlineFlowBox::PlaceBoxesInBlockDirection(
 
       const FontMetrics& font_metrics = font_data->GetFontMetrics();
       new_logical_top += curr->BaselinePosition(baseline_type) -
-                         font_metrics.Ascent(baseline_type);
+                         LayoutUnit(font_metrics.FloatAscent(baseline_type));
       if (curr->IsInlineFlowBox()) {
         LineLayoutBoxModel box_object =
             LineLayoutBoxModel(curr->GetLineLayoutItem());

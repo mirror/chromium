@@ -263,9 +263,10 @@ LayoutUnit RootInlineBox::AlignBoxesInBlockDirection(
                            BaselineType(), vertical_position_cache);
 
   if (max_ascent + max_descent <
-      std::max(max_position_top, max_position_bottom))
-    AdjustMaxAscentAndDescent(max_ascent, max_descent, max_position_top.ToInt(),
-                              max_position_bottom.ToInt());
+      std::max(max_position_top, max_position_bottom)) {
+    AdjustMaxAscentAndDescent(max_ascent, max_descent, max_position_top,
+                              max_position_bottom);
+  }
 
   if (uint8_t line_height_step =
           GetLineLayoutItem().StyleRef().LineHeightStep())
@@ -623,13 +624,14 @@ void RootInlineBox::AscentAndDescentForBox(
                               .PrimaryFont());
     for (size_t i = 0; i < used_fonts->size(); ++i) {
       const FontMetrics& font_metrics = used_fonts->at(i)->GetFontMetrics();
-      LayoutUnit used_font_ascent(font_metrics.Ascent(BaselineType()));
-      LayoutUnit used_font_descent(font_metrics.Descent(BaselineType()));
-      LayoutUnit half_leading(
-          (font_metrics.LineSpacing() - font_metrics.Height()) / 2);
+      LayoutUnit used_font_ascent(font_metrics.FloatAscent(BaselineType()));
+      LayoutUnit used_font_descent(font_metrics.FloatDescent(BaselineType()));
+      LayoutUnit half_leading(floorf(
+          (font_metrics.FloatLineSpacing() - font_metrics.FloatHeight()) / 2));
       LayoutUnit used_font_ascent_and_leading = used_font_ascent + half_leading;
       LayoutUnit used_font_descent_and_leading =
-          font_metrics.LineSpacing() - used_font_ascent_and_leading;
+          LayoutUnit(font_metrics.FloatLineSpacing()) -
+          used_font_ascent_and_leading;
       if (include_leading) {
         SetAscentAndDescent(ascent, descent, used_font_ascent_and_leading,
                             used_font_descent_and_leading, ascent_descent_set);
@@ -718,7 +720,7 @@ LayoutUnit RootInlineBox::VerticalPositionForBox(
     } else if (vertical_align == EVerticalAlign::kTextTop) {
       vertical_position += box_model.BaselinePosition(
                                BaselineType(), first_line, line_direction) -
-                           font_metrics.Ascent(BaselineType());
+                           font_metrics.FloatAscent(BaselineType());
     } else if (vertical_align == EVerticalAlign::kMiddle) {
       vertical_position = LayoutUnit(
           (vertical_position - LayoutUnit(font_metrics.XHeight() / 2) -
@@ -727,7 +729,7 @@ LayoutUnit RootInlineBox::VerticalPositionForBox(
                                       line_direction))
               .Round());
     } else if (vertical_align == EVerticalAlign::kTextBottom) {
-      vertical_position += font_metrics.Descent(BaselineType());
+      vertical_position += font_metrics.FloatDescent(BaselineType());
       // lineHeight - baselinePosition is always 0 for replaced elements (except
       // inline blocks), so don't bother wasting time in that case.
       if (!box_model.IsAtomicInlineLevel() ||

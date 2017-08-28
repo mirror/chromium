@@ -2604,11 +2604,13 @@ LayoutUnit LayoutBlockFlow::FirstLineBoxBaseline() const {
     // 'descent' instead. The result should be handled accordingly by the caller
     // as a 'descent' value, in order to compute properly the max baseline.
     if (StyleRef().IsFlippedLinesWritingMode()) {
-      return FirstLineBox()->LogicalTop() + font_data->GetFontMetrics().Descent(
-                                                FirstRootBox()->BaselineType());
+      return FirstLineBox()->LogicalTop() +
+             LayoutUnit(font_data->GetFontMetrics().FloatDescent(
+                 FirstRootBox()->BaselineType()));
     }
     return FirstLineBox()->LogicalTop() +
-           font_data->GetFontMetrics().Ascent(FirstRootBox()->BaselineType());
+           LayoutUnit(font_data->GetFontMetrics().FloatAscent(
+               FirstRootBox()->BaselineType()));
   }
   return LayoutUnit(-1);
 }
@@ -2635,10 +2637,12 @@ LayoutUnit LayoutBlockFlow::InlineBlockBaseline(
     // case of verticalLR mode, so we can assume verticalRL for now.
     if (Style()->IsFlippedLinesWritingMode()) {
       return LogicalHeight() - LastLineBox()->LogicalBottom() +
-             font_data->GetFontMetrics().Ascent(LastRootBox()->BaselineType());
+             LayoutUnit(font_data->GetFontMetrics().FloatAscent(
+                 LastRootBox()->BaselineType()));
     }
     return LastLineBox()->LogicalTop() +
-           font_data->GetFontMetrics().Ascent(LastRootBox()->BaselineType());
+           LayoutUnit(font_data->GetFontMetrics().FloatAscent(
+               LastRootBox()->BaselineType()));
   }
   if (!HasLineIfEmpty())
     return LayoutUnit(-1);
@@ -2650,13 +2654,12 @@ LayoutUnit LayoutBlockFlow::InlineBlockBaseline(
 
   const FontMetrics& font_metrics = font_data->GetFontMetrics();
   return LayoutUnit(
-      (font_metrics.Ascent() +
-       (LineHeight(true, line_direction, kPositionOfInteriorLineBoxes) -
-        font_metrics.Height()) /
-           2 +
-       (line_direction == kHorizontalLine ? BorderTop() + PaddingTop()
-                                          : BorderRight() + PaddingRight()))
-          .ToInt());
+      font_metrics.FloatAscent() +
+      floorf((LineHeight(true, line_direction, kPositionOfInteriorLineBoxes) -
+              font_metrics.FloatHeight()) /
+             2) +
+      (line_direction == kHorizontalLine ? BorderTop() + PaddingTop()
+                                         : BorderRight() + PaddingRight()));
 }
 
 void LayoutBlockFlow::RemoveFloatingObjectsFromDescendants() {
