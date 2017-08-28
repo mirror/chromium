@@ -64,10 +64,13 @@ class ContentSettingBubbleContents : public content::WebContentsObserver,
   void OnListItemRemovedAt(int index) override;
 
  protected:
+  // views::WidgetDelegate:
+  base::string16 GetWindowTitle() const override;
+  bool ShouldShowCloseButton() const override;
+
   // views::BubbleDialogDelegateView:
   void Init() override;
   View* CreateExtraView() override;
-  bool Cancel() override;
   bool Accept() override;
   bool Close() override;
   int GetDialogButtons() const override;
@@ -126,6 +129,7 @@ class ContentSettingBubbleContents : public content::WebContentsObserver,
   typedef std::vector<views::RadioButton*> RadioGroup;
   RadioGroup radio_group_;
   views::Link* custom_link_;
+  views::Link* manage_link_;
   views::LabelButton* manage_button_;
   views::Checkbox* manage_checkbox_;
   views::ImageButton* learn_more_button_;

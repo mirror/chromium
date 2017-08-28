@@ -120,6 +120,15 @@ class ContentSettingBubbleModel : public content::NotificationObserver {
   };
   typedef std::map<content::MediaStreamType, MediaMenu> MediaMenuMap;
 
+  enum class ManageTextStyle {
+    // Manage text is displayed as a text link below content.
+    kLink,
+    // Manage text is used as a checkbox title.
+    kCheckbox,
+    // Manage text is displayed as a non-prominient button.
+    kButton,
+  };
+
   struct BubbleContent {
     BubbleContent();
     ~BubbleContent();
@@ -133,7 +142,7 @@ class ContentSettingBubbleModel : public content::NotificationObserver {
     base::string16 custom_link;
     bool custom_link_enabled = false;
     base::string16 manage_text;
-    bool show_manage_text_as_checkbox = false;
+    ManageTextStyle manage_text_style = ManageTextStyle::kLink;
     MediaMenuMap media_menus;
     bool show_learn_more = false;
     base::string16 done_button_text;
@@ -236,8 +245,8 @@ class ContentSettingBubbleModel : public content::NotificationObserver {
   void set_manage_text(const base::string16& text) {
     bubble_content_.manage_text = text;
   }
-  void set_show_manage_text_as_checkbox(bool show_manage_text_as_checkbox) {
-    bubble_content_.show_manage_text_as_checkbox = show_manage_text_as_checkbox;
+  void set_manage_text_style(ManageTextStyle manage_text_style) {
+    bubble_content_.manage_text_style = manage_text_style;
   }
   void add_media_menu(content::MediaStreamType type, const MediaMenu& menu) {
     bubble_content_.media_menus[type] = menu;
