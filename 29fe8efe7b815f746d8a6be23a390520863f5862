@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "be5f252f_1d6b6b57",
+        "filename": "storage/browser/blob/blob_registry_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-28T13:45:34Z",
+      "side": 1,
+      "message": "Either works for me... but I just made the public ctor private per Joshua\u0027s (mild) suggestion in my previous upload, so let me keep it as is.",
+      "parentUuid": "7f7e6179_1d9b5a02",
+      "revId": "29fe8efe7b815f746d8a6be23a390520863f5862",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c13d0e17_df09449f",
         "filename": "storage/browser/blob/blob_registry_impl.cc",
         "patchSetId": 6
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "66a1a540_933e2416",
+        "filename": "storage/browser/blob/blob_registry_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-28T13:45:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c13d0e17_df09449f",
+      "range": {
+        "startLine": 68,
+        "startChar": 17,
+        "endLine": 68,
+        "endChar": 24
+      },
+      "revId": "29fe8efe7b815f746d8a6be23a390520863f5862",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "12369413_92a3d6fe",
         "filename": "storage/browser/blob/blob_registry_impl_unittest.cc",
         "patchSetId": 6
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "05d18f45_0b1f2202",
+        "filename": "storage/browser/blob/blob_registry_impl_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 964,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-28T13:45:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "12369413_92a3d6fe",
+      "revId": "29fe8efe7b815f746d8a6be23a390520863f5862",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e892316b_cb22cf29",
         "filename": "storage/public/interfaces/blobs.mojom",
         "patchSetId": 6
@@ -70,6 +130,24 @@
       "writtenOn": "2017-08-27T06:44:08Z",
       "side": 1,
       "message": "Do you mind updating the interface-level comment to mention that this is renderer -\u003e browser?\n\nAlso, this might be a silly question, but I assume |url| must be a blob: URL, right? Why do we let the renderer specify this instead of generating it in the browser?",
+      "revId": "29fe8efe7b815f746d8a6be23a390520863f5862",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0c1a55b_19b82cb9",
+        "filename": "storage/public/interfaces/blobs.mojom",
+        "patchSetId": 6
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-28T13:45:34Z",
+      "side": 1,
+      "message": "\u003e Do you mind updating the interface-level comment to mention that this is renderer -\u003e browser?\n\nDone.\n \n\u003e Also, this might be a silly question, but I assume |url| must be a blob: URL, right? Why do we let the renderer specify this instead of generating it in the browser?\n\nYeah I think that probably makes better sense, but I don\u0027t think the browser-side registry has the origin info to create a new blob URL.  Probably we should... added a TODO comment.",
+      "parentUuid": "e892316b_cb22cf29",
       "revId": "29fe8efe7b815f746d8a6be23a390520863f5862",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
