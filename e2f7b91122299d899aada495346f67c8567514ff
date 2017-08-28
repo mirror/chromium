@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "060d8916_97e6166c",
+        "filename": "third_party/WebKit/Source/core/inspector/InspectorMemoryAgent.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-08-28T00:11:32Z",
+      "side": 1,
+      "message": "If you want that behavior, would it be simpler to create a thin wrapper class for the callback?\n\nclass PrepareForLeakDetectionCallback : public GarbageCollected {\n    std::unique_ptr\u003cprotocol::Memory::Backend::PrepareForLeakDetectionCallback\u003e;\n    Member\u003cBlinkLeakDetector\u003e detector_;\n};\n\nclass InspectorMemoryAgent {\n    Member\u003cPrepareForLeakDetectionCallback\u003e callback_; // This is cleared when OnLeakDetectionComplete is done.\n};\n\nAlso would you help me understand why BlinkLeakDetector needs to be destructed before BlinkLeakDetectorClient?",
+      "parentUuid": "d3063126_fbd90e81",
+      "revId": "e2f7b91122299d899aada495346f67c8567514ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d7c1883c_c6644ddd",
         "filename": "third_party/WebKit/Source/core/inspector/InspectorMemoryAgent.cpp",
         "patchSetId": 5
