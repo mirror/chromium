@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "eb304a13_307c76a3",
+        "filename": "content/browser/renderer_host/media/audio_input_sync_writer.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2017-08-28T23:37:07Z",
+      "side": 1,
+      "message": "Oh. No. I am a bad person and didn\u0027t realize what process that computation runs in. Don\u0027t crash the browser if the renderer makes an unreasonable request. :)",
+      "parentUuid": "6b6357a6_c47eee8c",
+      "revId": "5eefdaa3bbb17aec7dd14961079b88df34391110",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a99c5654_99df5614",
         "filename": "content/browser/renderer_host/media/audio_input_sync_writer_unittest.cc",
         "patchSetId": 13
