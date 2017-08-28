@@ -249,6 +249,30 @@
       "revId": "ec6857bcb91613071db7dbf66906ae862dd348b3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b2da41e_c34abca3",
+        "filename": "components/url_formatter/elide_url_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 612,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-08-28T03:20:43Z",
+      "side": 1,
+      "message": "Execution time is somewhat important in tests... we want to make sure this isn\u0027t taking ~10s or more (for all ElideUrl tests combined) since testing time does slow down everyone\u0027s development. But yes, not a huge concern.",
+      "parentUuid": "1e1d5f17_3bb30004",
+      "range": {
+        "startLine": 612,
+        "startChar": 2,
+        "endLine": 612,
+        "endChar": 10
+      },
+      "revId": "ec6857bcb91613071db7dbf66906ae862dd348b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
