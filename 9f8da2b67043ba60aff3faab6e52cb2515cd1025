@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e0f07576_a1c0e80d",
+        "filename": "extensions/renderer/scripts_run_info.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1115941
+      },
+      "writtenOn": "2017-08-28T05:50:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "044d8d32_76183040",
+      "revId": "9f8da2b67043ba60aff3faab6e52cb2515cd1025",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9de58939_ec2c9af5",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 3
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "0b033603_f8828143",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 21877,
+      "author": {
+        "id": 1115941
+      },
+      "writtenOn": "2017-08-28T05:50:42Z",
+      "side": 1,
+      "message": "This histogram name will always be extended by Document{Start,End,Idle} suffixes.\nBase\u003d\"true\" instructs tools not to treat the base name as a distinct histogram.",
+      "parentUuid": "9de58939_ec2c9af5",
+      "revId": "9f8da2b67043ba60aff3faab6e52cb2515cd1025",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "86d0dc5f_bfea68a2",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 3
@@ -47,6 +83,24 @@
       "writtenOn": "2017-08-25T15:45:56Z",
       "side": 1,
       "message": "So, the idea here is that this is a single metric to look at for the YieldBetweenContentScripts experiment so that we can easily track difference.  But by itself, this isn\u0027t terribly useful, because we don\u0027t know what percentage of content scripts are greater than 50ms - in the extreme case, if only 0.000...1% of content scripts exceed that threshold, and the experiment makes a 1000x difference, that still doesn\u0027t really matter, because it affects such a low percentage of the population.\n\nNow, we actually *have* the data that would indicate the percentage of scripts that do exceed that threshold, so we can determine the actual impact here.  But it\u0027s at least worth noting the caveat here and referencing the other histograms, as well as what differentiates this from them.",
+      "revId": "9f8da2b67043ba60aff3faab6e52cb2515cd1025",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d60b178_2422b8eb",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 21884,
+      "author": {
+        "id": 1115941
+      },
+      "writtenOn": "2017-08-28T05:50:42Z",
+      "side": 1,
+      "message": "I see your point. I wanted to log only \u003e50ms samples because I defined that as a success metric of YieldBetweenContentScriptRuns experiment, but we could log all tasks, including \u003c50ms.\n\nI\u0027m worried that might make it harder to see the graph on the dashboard. Looking at Extensions.InjectEnd_Time histogram, already 56% of samples are in the 0-1 ms backet and \u003e\u003d48ms are 6%.\n\nFor now, just added note about the caveat and reference to other histograms.",
+      "parentUuid": "86d0dc5f_bfea68a2",
       "revId": "9f8da2b67043ba60aff3faab6e52cb2515cd1025",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
