@@ -2,6 +2,121 @@
   "comments": [
     {
       "key": {
+        "uuid": "26507b3d_9707db47",
+        "filename": "third_party/WebKit/Source/modules/canvas2d/CanvasRenderingContext2D.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2017-08-28T19:09:00Z",
+      "side": 1,
+      "message": "I think this is the line you meant to change",
+      "range": {
+        "startLine": 172,
+        "startChar": 9,
+        "endLine": 172,
+        "endChar": 22
+      },
+      "revId": "0ef9b5ce823668d8dc391203775da1511ed1e6a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a50ea0c_1377e842",
+        "filename": "third_party/WebKit/Source/platform/graphics/Canvas2DLayerBridge.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 424,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2017-08-28T19:09:00Z",
+      "side": 1,
+      "message": "put this block of code into a separate function.",
+      "range": {
+        "startLine": 424,
+        "startChar": 14,
+        "endLine": 424,
+        "endChar": 29
+      },
+      "revId": "0ef9b5ce823668d8dc391203775da1511ed1e6a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9dac285_db36f2d4",
+        "filename": "third_party/WebKit/Source/platform/graphics/Canvas2DLayerBridge.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 426,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2017-08-28T19:09:00Z",
+      "side": 1,
+      "message": "THIS is probably why you get garbage: This pointer is not being retained, so the shared bitmap is deleted before the compositor ever uses it.  You need to hold on to this object until the release callback is invoked.",
+      "range": {
+        "startLine": 426,
+        "startChar": 39,
+        "endLine": 426,
+        "endChar": 52
+      },
+      "revId": "0ef9b5ce823668d8dc391203775da1511ed1e6a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4fd66d9f_e669878f",
+        "filename": "third_party/WebKit/Source/platform/graphics/Canvas2DLayerBridge.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 427,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2017-08-28T19:09:00Z",
+      "side": 1,
+      "message": "you need to verify whether this allocation succeeded and return false if it did not.",
+      "range": {
+        "startLine": 427,
+        "startChar": 29,
+        "endLine": 427,
+        "endChar": 49
+      },
+      "revId": "0ef9b5ce823668d8dc391203775da1511ed1e6a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f666f05_90d0d8a4",
+        "filename": "third_party/WebKit/Source/platform/graphics/Canvas2DLayerBridge.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 429,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2017-08-28T19:09:00Z",
+      "side": 1,
+      "message": "call this dstPixels",
+      "range": {
+        "startLine": 429,
+        "startChar": 19,
+        "endLine": 429,
+        "endChar": 25
+      },
+      "revId": "0ef9b5ce823668d8dc391203775da1511ed1e6a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "32b55ca8_ac160836",
         "filename": "third_party/WebKit/Source/platform/graphics/Canvas2DLayerBridge.cpp",
         "patchSetId": 3
@@ -18,6 +133,75 @@
         "startChar": 4,
         "endLine": 435,
         "endChar": 79
+      },
+      "revId": "0ef9b5ce823668d8dc391203775da1511ed1e6a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "834de95f_17705edc",
+        "filename": "third_party/WebKit/Source/platform/graphics/Canvas2DLayerBridge.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 439,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2017-08-28T19:09:00Z",
+      "side": 1,
+      "message": "this is not necessary. The only reason to keep a ref on \u0027image\u0027 is to trigger copy-on-write, which is not necessary here because we already made a copy (to the shared bitmap).",
+      "range": {
+        "startLine": 439,
+        "startChar": 18,
+        "endLine": 439,
+        "endChar": 24
+      },
+      "revId": "0ef9b5ce823668d8dc391203775da1511ed1e6a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2daefffa_ec8d2180",
+        "filename": "third_party/WebKit/Source/platform/graphics/Canvas2DLayerBridge.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 1013,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2017-08-28T19:09:00Z",
+      "side": 1,
+      "message": "This condition is hard to parse for humans.  Please break it down.  IMHO, part of this should just be DCHECKS.",
+      "range": {
+        "startLine": 1013,
+        "startChar": 2,
+        "endLine": 1013,
+        "endChar": 4
+      },
+      "revId": "0ef9b5ce823668d8dc391203775da1511ed1e6a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "894ea72a_ffe32cbd",
+        "filename": "third_party/WebKit/Source/platform/graphics/Canvas2DLayerBridge.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 1036,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2017-08-28T19:09:00Z",
+      "side": 1,
+      "message": "You need a different release callback for the SharedBitmap case.",
+      "range": {
+        "startLine": 1036,
+        "startChar": 17,
+        "endLine": 1036,
+        "endChar": 38
       },
       "revId": "0ef9b5ce823668d8dc391203775da1511ed1e6a9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
