@@ -17,19 +17,23 @@ struct SequencedScroll final : public GarbageCollected<SequencedScroll> {
 
   SequencedScroll(ScrollableArea* area,
                   ScrollOffset offset,
-                  ScrollBehavior behavior)
+                  ScrollBehavior behavior,
+                  bool user)
       : scrollable_area(area),
         scroll_offset(offset),
-        scroll_behavior(behavior) {}
+        scroll_behavior(behavior),
+        is_user(user) {}
 
   SequencedScroll(const SequencedScroll& other)
       : scrollable_area(other.scrollable_area),
         scroll_offset(other.scroll_offset),
-        scroll_behavior(other.scroll_behavior) {}
+        scroll_behavior(other.scroll_behavior),
+        is_user(other.is_user) {}
 
   Member<ScrollableArea> scrollable_area;
   ScrollOffset scroll_offset;
   ScrollBehavior scroll_behavior;
+  bool is_user;
 
   DECLARE_TRACE();
 };
@@ -42,7 +46,8 @@ class PLATFORM_EXPORT SmoothScrollSequencer final
  public:
   SmoothScrollSequencer() {}
   // Add a scroll offset animation to the back of a queue.
-  void QueueAnimation(ScrollableArea*, ScrollOffset, ScrollBehavior);
+  void QueueAnimation(ScrollableArea*, ScrollOffset, ScrollBehavior,
+                      bool is_user = false);
 
   // Run the animation at the back of the queue.
   void RunQueuedAnimations();

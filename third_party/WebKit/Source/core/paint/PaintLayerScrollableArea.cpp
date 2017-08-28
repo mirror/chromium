@@ -1766,10 +1766,11 @@ LayoutRect PaintLayerScrollableArea::ScrollLocalRectIntoView(
       ToScrollOffset(FloatPoint(r.Location()) + old_scroll_offset))));
   if (is_for_scroll_sequence) {
     DCHECK(scroll_type == kProgrammaticScroll || scroll_type == kUserScroll);
-    ScrollBehavior behavior =
-        is_smooth ? kScrollBehaviorSmooth : kScrollBehaviorInstant;
-    GetSmoothScrollSequencer()->QueueAnimation(this, new_scroll_offset,
-                                               behavior);
+    ScrollBehavior behavior = is_smooth && (scroll_type != kUserScroll)
+                                  ? kScrollBehaviorSmooth
+                                  : kScrollBehaviorInstant;
+    GetSmoothScrollSequencer()->QueueAnimation(
+        this, new_scroll_offset, behavior, (scroll_type == kUserScroll));
   } else {
     SetScrollOffset(new_scroll_offset, scroll_type, kScrollBehaviorInstant);
   }

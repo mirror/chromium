@@ -80,7 +80,8 @@ enum ScrollType {
   // These are programmatic sequenced scrolls from SmoothScrollSequencer.
   // SetScrollOffset called with kSequencedScroll should not abort the smooth
   // scroll sequence.
-  kSequencedScroll
+  kSequencedScroll,
+  kUserSequencedScroll
 };
 
 // An explicit scroll is one that was requested by the user or the webpage.

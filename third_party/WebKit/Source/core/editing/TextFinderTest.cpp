@@ -15,8 +15,10 @@
 #include "core/frame/VisualViewport.h"
 #include "core/frame/WebLocalFrameImpl.h"
 #include "core/html/HTMLElement.h"
+#include "core/layout/LayoutBox.h"
 #include "core/layout/TextAutosizer.h"
 #include "core/page/Page.h"
+#include "core/paint/PaintLayer.h"
 #include "platform/testing/TestingPlatformSupport.h"
 #include "platform/testing/UnitTestHelpers.h"
 #include "public/platform/Platform.h"
@@ -571,6 +573,73 @@ TEST_F(TextFinderTest, FindTextJavaScriptUpdatesDOMAfterNoMatches) {
   Node* text_in_i_element = GetDocument().body()->lastChild()->firstChild();
   EXPECT_EQ(FindInPageRect(text_in_i_element, 2, text_in_i_element, 8),
             match_rects[0]);
+}
+
+TEST_F(TextFinderTest, NoScrollOnOverflowHidden) {
+  const char* kHtml =
+      "<!doctype html>"
+      "<div id='overflow_div' style='font-size:12px; width:50px; height: 20px; "
+      "overflow:hidden;'>"
+      "Foo bar bax boz bab rur mor dar far par"
+      "</div>";
+  GetDocument().body()->setInnerHTML(kHtml, ASSERT_NO_EXCEPTION);
+  GetDocument().UpdateStyleAndLayout();
+
+  ASSERT_TRUE(
+    GetTextFinder().Find(0, WebString("far"), WebFindOptions(), true));
+
+  auto* div = GetDocument().getElementById("overflow_div");
+  ASSERT_TRUE(div);
+
+  auto* div_layout_object = div->GetLayoutObject();
+  ASSERT_TRUE(div_layout_object);
+  ASSERT_TRUE(div_layout_object->IsBox());
+  ASSERT_TRUE(div_layout_object->HasOverflowClip());
+
+  auto* div_layer = ToLayoutBox(div_layout_object)->Layer();
+  ASSERT_TRUE(div_layout_object);
+
+  auto* div_scrollable_area = div_layer->GetScrollableArea();
+  ASSERT_TRUE(div_scrollable_area);
+
+  DoubleSize scroll_offset = div_scrollable_area->AdjustedScrollOffset();
+  EXPECT_DOUBLE_EQ(0., scroll_offset.Width());
+  EXPECT_DOUBLE_EQ(0., scroll_offset.Height());
+}
+
+TEST_F(TextFinderTest, SmoothScrollInsideOverflowHidden) {
+  const char* kHtml =
+      "<!doctype html>"
+      "<div id='overflow_div' style='font-size:12px; width:50px; height: 30px; "
+      "overflow:hidden;'>"
+      "<div id='inner_div' style='font-size:12px; width:40px; height: 20px; "
+      "overflow:scroll; scroll-behavior: smooth;'>"
+      "Foo bar bax boz bab rur mor dar far par"
+      "</div>"
+      "</div>";
+  GetDocument().body()->setInnerHTML(kHtml, ASSERT_NO_EXCEPTION);
+  GetDocument().UpdateStyleAndLayout();
+
+  ASSERT_TRUE(
+      GetTextFinder().Find(0, WebString("far"), WebFindOptions(), true));
+
+  auto* div = GetDocument().getElementById("inner_div");
+  ASSERT_TRUE(div);
+
+  auto* div_layout_object = div->GetLayoutObject();
+  ASSERT_TRUE(div_layout_object);
+  ASSERT_TRUE(div_layout_object->IsBox());
+  ASSERT_TRUE(div_layout_object->HasOverflowClip());
+
+  auto* div_layer = ToLayoutBox(div_layout_object)->Layer();
+  ASSERT_TRUE(div_layout_object);
+
+  auto* div_scrollable_area = div_layer->GetScrollableArea();
+  ASSERT_TRUE(div_scrollable_area);
+
+  DoubleSize scroll_offset = div_scrollable_area->AdjustedScrollOffset();
+  EXPECT_DOUBLE_EQ(0., scroll_offset.Width());
+  EXPECT_LT(0., scroll_offset.Height());
 }
 
 class TextFinderFakeTimerTest : public TextFinderTest {

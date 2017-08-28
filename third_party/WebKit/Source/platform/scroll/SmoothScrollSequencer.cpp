@@ -15,9 +15,10 @@ DEFINE_TRACE(SequencedScroll) {
 
 void SmoothScrollSequencer::QueueAnimation(ScrollableArea* scrollable,
                                            ScrollOffset offset,
-                                           ScrollBehavior behavior) {
+                                           ScrollBehavior behavior,
+                                           bool is_user) {
   if (scrollable->ClampScrollOffset(offset) != scrollable->GetScrollOffset())
-    queue_.push_back(new SequencedScroll(scrollable, offset, behavior));
+    queue_.push_back(new SequencedScroll(scrollable, offset, behavior, is_user));
 }
 
 void SmoothScrollSequencer::RunQueuedAnimations() {
@@ -29,7 +30,9 @@ void SmoothScrollSequencer::RunQueuedAnimations() {
   queue_.pop_back();
   current_scrollable_ = sequenced_scroll->scrollable_area;
   current_scrollable_->SetScrollOffset(sequenced_scroll->scroll_offset,
-                                       kSequencedScroll,
+                                       sequenced_scroll->is_user ?
+                                           kUserSequencedScroll :
+                                           kSequencedScroll,
                                        sequenced_scroll->scroll_behavior);
 }
 
