@@ -1,0 +1,140 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2aba4b6c_be14e870",
+        "filename": "chrome/browser/android/locale/special_locale_handler_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-08-28T23:41:51Z",
+      "side": 1,
+      "message": "Nit: does -\u003e do",
+      "revId": "a2e926a9ad0ff733ed9bf6d72f1421bfdd363922",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84c4d658_dae63a40",
+        "filename": "chrome/browser/android/locale/special_locale_handler_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-08-28T23:41:51Z",
+      "side": 1,
+      "message": "Nit: size_t",
+      "revId": "a2e926a9ad0ff733ed9bf6d72f1421bfdd363922",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e5d8efb_282e1db9",
+        "filename": "chrome/browser/android/locale/special_locale_handler_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-08-28T23:41:51Z",
+      "side": 1,
+      "message": "Nit: nullptr",
+      "revId": "a2e926a9ad0ff733ed9bf6d72f1421bfdd363922",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a61bac04_649cc95c",
+        "filename": "chrome/browser/android/locale/special_locale_handler_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-08-28T23:41:51Z",
+      "side": 1,
+      "message": "Nit: EXPECT?",
+      "revId": "a2e926a9ad0ff733ed9bf6d72f1421bfdd363922",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1cddfadc_1153fce5",
+        "filename": "chrome/browser/search_engines/template_url_service_android.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-08-28T23:41:51Z",
+      "side": 1,
+      "message": "Nit: Reads slightly clearer to me (no need for comment):\n\n  int urls_to_show \u003d filtering_disabled_\n                         ? recent_url_num\n                         : std::min(recent_url_num, kMaxRecentUrls);\n  auto end \u003d it + urls_to_show;",
+      "revId": "a2e926a9ad0ff733ed9bf6d72f1421bfdd363922",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65a9194b_9d8ea1bf",
+        "filename": "chrome/browser/search_engines/template_url_service_android.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-08-28T23:41:51Z",
+      "side": 1,
+      "message": "Nit: I wonder if this member and the API should speak about the enabled state rather than the disabled state -- \"not disabled\" is a bit of a double-negative.",
+      "revId": "a2e926a9ad0ff733ed9bf6d72f1421bfdd363922",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0128e0d_cd87d1b3",
+        "filename": "components/search_engines/template_url_prepopulate_data.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1163,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-08-28T23:41:51Z",
+      "side": 1,
+      "message": "This function no longer needs to take |prefs|.",
+      "revId": "a2e926a9ad0ff733ed9bf6d72f1421bfdd363922",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e665e4a_50201f53",
+        "filename": "components/search_engines/template_url_prepopulate_data.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1166,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-08-28T23:41:51Z",
+      "side": 1,
+      "message": "Nit: We frown on LOGs; do you really need this?  Is the data going to be analyzed, and the use of the LOG is time-limited?",
+      "revId": "a2e926a9ad0ff733ed9bf6d72f1421bfdd363922",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
