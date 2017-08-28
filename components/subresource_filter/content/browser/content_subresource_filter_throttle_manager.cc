@@ -318,22 +318,19 @@ ContentSubresourceFilterThrottleManager::GetParentFrameFilter(
   content::RenderFrameHost* parent = child_frame_navigation->GetParentFrame();
   DCHECK(parent);
 
-  // Filter will be null for those special url navigations that were added in
-  // MaybeActivateSubframeSpecialUrls. Return the filter of the first parent
-  // with a non-null filter.
   while (parent) {
     auto it = activated_frame_hosts_.find(parent);
     if (it == activated_frame_hosts_.end())
       return nullptr;
 
+    // Filter will be null for those special url navigations that were added in
+    // MaybeActivateSubframeSpecialUrls. Return the filter of the first parent
+    // with a non-null filter.
     if (it->second.get())
       return it->second.get();
     parent = it->first->GetParent();
   }
 
-  // Since null filter is only possible for special navigations of iframes, the
-  // above loop should have found a filter for at least the top level frame,
-  // thus making this unreachable.
   NOTREACHED();
   return nullptr;
 }

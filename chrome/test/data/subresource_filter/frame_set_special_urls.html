@@ -12,7 +12,7 @@
     blankFrame.contentDocument.body.appendChild(script);
 
     // Add a grandchild and add content to the grandchild frame.
-    let grandChild = document.createElement("iframe");
+    let grandChild = document.createElement("frame");
     grandChild.name = "grandChild";
     grandChild.src = "frame_with_included_script.html";
     blankFrame.contentDocument.body.appendChild(grandChild);
