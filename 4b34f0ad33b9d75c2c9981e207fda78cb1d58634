@@ -16,6 +16,24 @@
       "revId": "4b34f0ad33b9d75c2c9981e207fda78cb1d58634",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9f934c5_4ec32a5b",
+        "filename": "tools/v8_context_snapshot/v8_context_snapshot_generator.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-08-28T09:06:47Z",
+      "side": 1,
+      "message": "It works. I\u0027ll abandon this CL and will create another one with it.",
+      "parentUuid": "a13979de_cb311ff2",
+      "revId": "4b34f0ad33b9d75c2c9981e207fda78cb1d58634",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
