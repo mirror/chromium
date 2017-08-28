@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5ffc9b07_6222f4cd",
+        "filename": "chrome/browser/resources/local_ntp/voice.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 1229240
+      },
+      "writtenOn": "2017-08-28T11:06:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "22c73997_c0bc196b",
+      "revId": "08faf90ace2cbd884e8d04b0cadbfca5097231ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1862ef16_4e962544",
         "filename": "chrome/browser/resources/local_ntp/voice.js",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "08faf90ace2cbd884e8d04b0cadbfca5097231ad",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b669757_522b8bb9",
+        "filename": "chrome/browser/resources/local_ntp/voice.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 1229240
+      },
+      "writtenOn": "2017-08-28T11:06:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1862ef16_4e962544",
+      "revId": "08faf90ace2cbd884e8d04b0cadbfca5097231ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "c4edaf31_add65278",
+        "filename": "chrome/browser/resources/local_ntp/voice.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 266,
+      "author": {
+        "id": 1229240
+      },
+      "writtenOn": "2017-08-28T11:06:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a022fedc_6fd77db9",
+      "revId": "08faf90ace2cbd884e8d04b0cadbfca5097231ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6bdfd688_add63dab",
         "filename": "chrome/browser/resources/local_ntp/voice.js",
         "patchSetId": 3
@@ -67,6 +121,24 @@
       "revId": "08faf90ace2cbd884e8d04b0cadbfca5097231ad",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91d507aa_7505f6b5",
+        "filename": "chrome/browser/resources/local_ntp/voice.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 268,
+      "author": {
+        "id": 1229240
+      },
+      "writtenOn": "2017-08-28T11:06:00Z",
+      "side": 1,
+      "message": "Naming is hard :) Yes, I agree - after re-evaluating the testing process, I chose to merge them and call the functions \"init\" and \"uninit_\", for now. Happy to discuss more.",
+      "parentUuid": "6bdfd688_add63dab",
+      "revId": "08faf90ace2cbd884e8d04b0cadbfca5097231ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "90f38808_4e30ea29",
+        "filename": "chrome/browser/resources/local_ntp/voice.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 298,
+      "author": {
+        "id": 1229240
+      },
+      "writtenOn": "2017-08-28T11:06:00Z",
+      "side": 1,
+      "message": "Yes. It is only used in tests, which are not in this CL, yet. It resets the internal state to resemble a \"newly loaded\" NTP. Should we make it public?",
+      "parentUuid": "1af290c3_f3ddf47f",
+      "revId": "08faf90ace2cbd884e8d04b0cadbfca5097231ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c96986dc_f767c278",
         "filename": "chrome/browser/resources/local_ntp/voice.js",
         "patchSetId": 3
@@ -101,6 +191,24 @@
       "revId": "08faf90ace2cbd884e8d04b0cadbfca5097231ad",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df1b3c79_c44424f2",
+        "filename": "chrome/browser/resources/local_ntp/voice.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 440,
+      "author": {
+        "id": 1229240
+      },
+      "writtenOn": "2017-08-28T11:06:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c96986dc_f767c278",
+      "revId": "08faf90ace2cbd884e8d04b0cadbfca5097231ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
