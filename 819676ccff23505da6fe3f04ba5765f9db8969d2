@@ -16,6 +16,24 @@
       "revId": "819676ccff23505da6fe3f04ba5765f9db8969d2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "154a3087_6e7185c7",
+        "filename": "components/subresource_filter/content/browser/async_document_subresource_filter.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1185379
+      },
+      "writtenOn": "2017-08-28T05:16:43Z",
+      "side": 1,
+      "message": "I agree. But moving scoped timers will produce a code like this:\n{\n  SCOPED_UMA_HISTOGRAM_MICRO_TIMER(..);\n  SCOPED_UMA_HISTOGRAM_MICRO_THREAD_TIMER(..);\n  if (parent_document_origin.unique()) {\n    SCOPED_UMA_HISTOGRAM_MICRO_TIMER(..);\n    SCOPED_UMA_HISTOGRAM_MICRO_THREAD_TIMER();\n    ActivationState activation_state \u003d ComputeActivationState(..);\n  } else {\n    ActivationState activation_state \u003d ComputeActivationState(..); // Copy-Paste of 3 lines;(\n  }\n}\n\nBut I have found a better solution. Take another look, please.",
+      "parentUuid": "ff849bf3_1b0f0e55",
+      "revId": "819676ccff23505da6fe3f04ba5765f9db8969d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
