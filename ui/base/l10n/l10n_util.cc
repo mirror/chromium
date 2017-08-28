@@ -245,7 +245,7 @@ bool IsLocalePartiallyPopulated(const std::string& locale_name) {
 }
 
 #if !defined(OS_MACOSX)
-bool IsLocaleAvailable(const std::string& locale) {
+bool HasStringsForLocale(const std::string& locale) {
   // If locale has any illegal characters in it, we don't want to try to
   // load it because it may be pointing outside the locale data file directory.
   if (!base::i18n::IsFilenameLegal(base::ASCIIToUTF16(locale)))
@@ -256,8 +256,6 @@ bool IsLocaleAvailable(const std::string& locale) {
   // under a system locale Chrome is not localized to (e.g.Farsi on Linux),
   // but it'd slow down the start up time a little bit for locales Chrome is
   // localized to. So, we don't call it here.
-  if (!l10n_util::IsLocaleSupportedByOS(locale))
-    return false;
 
   // If the ResourceBundle is not yet initialized, return false to avoid the
   // CHECK failure in ResourceBundle::GetSharedInstance().
@@ -303,8 +301,6 @@ struct AvailableLocalesTraits
       // and to which Chrome is not localized.
       if (IsLocalePartiallyPopulated(locale_name))
         continue;
-      if (!l10n_util::IsLocaleSupportedByOS(locale_name))
-        continue;
       // Normalize underscores to hyphens because that's what our locale files
       // use.
       std::replace(locale_name.begin(), locale_name.end(), '_', '-');
@@ -337,13 +333,15 @@ std::string GetLanguage(const std::string& locale) {
 // TODO(jshin): revamp this function completely to use a more sytematic
 // and generic locale fallback based on ICU/CLDR.
 bool CheckAndResolveLocale(const std::string& locale,
-                           std::string* resolved_locale) {
+                           std::string* string_locale,
+                           std::string* format_locale) {
 #if defined(OS_MACOSX)
   NOTIMPLEMENTED();
   return false;
 #else
-  if (IsLocaleAvailable(locale)) {
-    *resolved_locale = locale;
+  if (HasStringsForLocale(locale)) {
+    *string_locale = locale;
+    *format_locale = locale;
     return true;
   }
 
@@ -395,8 +393,9 @@ bool CheckAndResolveLocale(const std::string& locale,
         tmp_locale.append("-US");
       }
     }
-    if (IsLocaleAvailable(tmp_locale)) {
-      resolved_locale->swap(tmp_locale);
+    if (HasStringsForLocale(tmp_locale)) {
+      string_locale->swap(tmp_locale);
+      *format_locale = locale;
       return true;
     }
   }
@@ -413,8 +412,9 @@ bool CheckAndResolveLocale(const std::string& locale,
   for (const auto& alias : alias_map) {
     if (base::LowerCaseEqualsASCII(lang, alias.source)) {
       std::string tmp_locale(alias.dest);
-      if (IsLocaleAvailable(tmp_locale)) {
-        resolved_locale->swap(tmp_locale);
+      if (HasStringsForLocale(tmp_locale)) {
+        string_locale->swap(tmp_locale);
+        *format_locale = *string_locale;
         return true;
       }
     }
@@ -424,7 +424,9 @@ bool CheckAndResolveLocale(const std::string& locale,
 #endif
 }
 
-std::string GetApplicationLocaleInternal(const std::string& pref_locale) {
+bool GetApplicationLocaleInternal(const std::string& pref_locale,
+                                  std::string* string_locale,
+                                  std::string* format_locale) {
 #if defined(OS_MACOSX)
 
   // Use any override (Cocoa for the browser), otherwise use the preference
@@ -438,11 +440,11 @@ std::string GetApplicationLocaleInternal(const std::string& pref_locale) {
   if (app_locale.empty())
     app_locale = "en-US";
 
-  return app_locale;
-
+  *string_locale = app_locale;
+  *format_locale = app_locale;
+  return true;
 #else
 
-  std::string resolved_locale;
   std::vector<std::string> candidates;
 
   // We only use --lang and the app pref on Windows.  On Linux, we only
@@ -497,30 +499,36 @@ std::string GetApplicationLocaleInternal(const std::string& pref_locale) {
 
 #endif
 
+  std::string resolved_locale;
   std::vector<std::string>::const_iterator i = candidates.begin();
   for (; i != candidates.end(); ++i) {
-    if (CheckAndResolveLocale(*i, &resolved_locale)) {
-      return resolved_locale;
+    if (CheckAndResolveLocale(*i, string_locale, format_locale)) {
+      return true;
     }
   }
 
   // Fallback on en-US.
   const std::string fallback_locale("en-US");
-  if (IsLocaleAvailable(fallback_locale)) {
-    return fallback_locale;
+  if (HasStringsForLocale(fallback_locale)) {
+    *string_locale = fallback_locale;
+    *format_locale = fallback_locale;
+    return true;
   }
 
-  return std::string();
+  return false;
 
 #endif
 }
 
 std::string GetApplicationLocale(const std::string& pref_locale,
                                  bool set_icu_locale) {
-  const std::string locale = GetApplicationLocaleInternal(pref_locale);
-  if (set_icu_locale && !locale.empty())
-    base::i18n::SetICUDefaultLocale(locale);
-  return locale;
+  std::string string_locale;
+  std::string format_locale;
+  bool success =
+      GetApplicationLocaleInternal(pref_locale, &string_locale, &format_locale);
+  if (set_icu_locale && !format_locale.empty())
+    base::i18n::SetICUDefaultLocale(format_locale);
+  return string_locale;
 }
 
 std::string GetApplicationLocale(const std::string& pref_locale) {
