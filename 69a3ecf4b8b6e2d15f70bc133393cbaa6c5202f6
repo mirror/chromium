@@ -22,6 +22,30 @@
       "revId": "69a3ecf4b8b6e2d15f70bc133393cbaa6c5202f6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0eae5c1_7e4acd8d",
+        "filename": "chrome/browser/extensions/bookmark_app_url_redirector_browsertest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-08-28T23:07:17Z",
+      "side": 1,
+      "message": "That should be an assert. Fixed.",
+      "parentUuid": "56f20599_7de82911",
+      "range": {
+        "startLine": 285,
+        "startChar": 2,
+        "endLine": 285,
+        "endChar": 13
+      },
+      "revId": "69a3ecf4b8b6e2d15f70bc133393cbaa6c5202f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
