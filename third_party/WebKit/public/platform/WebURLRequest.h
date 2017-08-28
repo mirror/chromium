@@ -166,7 +166,9 @@ class WebURLRequest {
     kPreviewsOff = 1 << 5,  // Request a normal (non-Preview) version of
                             // the resource. Server transformations may
                             // still happen if the page is heavy.
-    kPreviewsStateLast = kPreviewsOff
+    kPreviewsAMPRedirection = 1 << 6,  // Request the AMP version of the page if
+                                       // possible.
+    kPreviewsStateLast = kPreviewsAMPRedirection
   };
 
   // Indicates which service workers will receive fetch events for this request.
