@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b1c37443_66dc7fa6",
+        "filename": "third_party/WebKit/Source/core/editing/spellcheck/SpellChecker.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 358,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-08-28T18:06:53Z",
+      "side": 1,
+      "message": "nit: No need to check this, as null positions are directly rejected by IsSpellCheckingEnabledAt().",
+      "range": {
+        "startLine": 358,
+        "startChar": 35,
+        "endLine": 358,
+        "endChar": 56
+      },
+      "revId": "4590e4db02d2687416a8ed9ab5a38ef640ba4f47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f413b770_8adb5ab8",
+        "filename": "third_party/WebKit/Source/core/editing/spellcheck/SpellChecker.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 383,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-08-28T18:06:53Z",
+      "side": 1,
+      "message": "nit: Ditto.",
+      "range": {
+        "startLine": 383,
+        "startChar": 6,
+        "endLine": 383,
+        "endChar": 39
+      },
+      "revId": "4590e4db02d2687416a8ed9ab5a38ef640ba4f47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a4da17f_547d6c04",
+        "filename": "third_party/WebKit/Source/core/editing/spellcheck/SpellChecker.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 711,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-08-28T18:06:53Z",
+      "side": 1,
+      "message": "nit: Ditto.",
+      "range": {
+        "startLine": 711,
+        "startChar": 6,
+        "endLine": 711,
+        "endChar": 35
+      },
+      "revId": "4590e4db02d2687416a8ed9ab5a38ef640ba4f47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
