@@ -317,14 +317,8 @@ TEST_F(LayoutBoxModelObjectTest, StickyPositionConstraintInvalidation) {
                 .X());
   ToHTMLElement(target->GetNode())->classList().Add("hide");
   GetDocument().View()->UpdateLifecycleToLayoutClean();
-  // Layout should invalidate the sticky constraints of the sticky element and
-  // mark it as needing a compositing inputs update.
-  EXPECT_FALSE(
-      scrollable_area->GetStickyConstraintsMap().Contains(sticky->Layer()));
-  EXPECT_TRUE(sticky->Layer()->NeedsCompositingInputsUpdate());
 
-  // After updating compositing inputs we should have the updated position.
-  GetDocument().View()->UpdateAllLifecyclePhases();
+  // After updating layout we should have the updated position.
   EXPECT_EQ(50.f,
             GetScrollContainerRelativeStickyBoxRect(
                 scrollable_area->GetStickyConstraintsMap().at(sticky->Layer()))
