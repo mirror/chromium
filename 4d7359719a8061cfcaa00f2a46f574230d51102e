@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e9080da1_911d112e",
+        "filename": "device/hid/public/interfaces/hid.mojom",
+        "patchSetId": 13
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2017-08-28T16:59:53Z",
+      "side": 1,
+      "message": "can you give me some background on these limits?  Which process specifies them?  Are they used to size various things (in a more trusted process, perhaps)?  Are there limits?",
+      "range": {
+        "startLine": 68,
+        "startChar": 2,
+        "endLine": 70,
+        "endChar": 33
+      },
+      "revId": "4d7359719a8061cfcaa00f2a46f574230d51102e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
