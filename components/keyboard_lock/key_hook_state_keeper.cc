@@ -158,4 +158,8 @@ void KeyHookStateKeeper::Deactivate(base::Callback<void(bool)> on_result) {
   active_ = false;
 }
 
+bool KeyHookStateKeeper::IsKeyReserved(ui::KeyboardCode code) const {
+  return states_[code];
+}
+
 }  // namespace keyboard_lock

@@ -35,6 +35,9 @@ class ExclusiveAccessContext {
   // fullscreen.
   virtual bool IsFullscreen() const = 0;
 
+  // Returns true if the webpage has reserved the escape key via keyboard lock.
+  virtual bool IsEscapeKeyReserved() const = 0;
+
   // Called when we transition between tab and browser fullscreen. This method
   // updates the UI by showing/hiding the tab strip, toolbar and bookmark bar
   // in the browser fullscreen. Currently only supported on Mac.

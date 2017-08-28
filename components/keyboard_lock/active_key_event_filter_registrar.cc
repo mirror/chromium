@@ -50,4 +50,8 @@ void ActiveKeyEventFilterRegistrar::Deactivate(
   tracker_->erase(filter_);
 }
 
+bool ActiveKeyEventFilterRegistrar::IsKeyReserved(ui::KeyboardCode code) const {
+  return key_hook_->IsKeyReserved(code);
+}
+
 }  // namespace keyboard_lock

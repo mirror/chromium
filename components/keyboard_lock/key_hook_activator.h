@@ -30,6 +30,8 @@ class KeyHookActivator : public KeyHook {
 
   // Disables all registered key codes.
   virtual void Deactivate(base::Callback<void(bool)> on_result) = 0;
+
+  virtual bool IsKeyReserved(ui::KeyboardCode code) const = 0;
 };
 
 }  // namespace keyboard_lock

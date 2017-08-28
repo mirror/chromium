@@ -68,4 +68,8 @@ void KeyHookThreadWrapper::Deactivate(
   key_hook_->Deactivate(on_result);
 }
 
+bool KeyHookThreadWrapper::IsKeyReserved(ui::KeyboardCode code) const {
+  return key_hook_->IsKeyReserved(code);
+}
+
 }  // namespace keyboard_lock

@@ -72,4 +72,8 @@ void KeyHookActivatorThreadProxy::Deactivate(
       std::move(on_result)));
 }
 
+bool KeyHookActivatorThreadProxy::IsKeyReserved(ui::KeyboardCode code) const {
+  return key_hook_->IsKeyReserved(code);
+}
+
 }  // namespace keyboard_lock

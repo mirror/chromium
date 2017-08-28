@@ -27,6 +27,7 @@ class KeyHookActivatorThreadProxy final : public KeyHookActivator {
                      base::Callback<void(bool)> on_result) override;
   void Activate(base::Callback<void(bool)> on_result) override;
   void Deactivate(base::Callback<void(bool)> on_result) override;
+  bool IsKeyReserved(ui::KeyboardCode code) const override;
 
  private:
   KeyHookActivator* const key_hook_;

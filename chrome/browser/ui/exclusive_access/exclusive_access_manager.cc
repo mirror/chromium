@@ -56,7 +56,7 @@ ExclusiveAccessManager::GetExclusiveAccessExitBubbleType() const {
       return EXCLUSIVE_ACCESS_BUBBLE_TYPE_NONE;
     }
 
-    if (IsExperimentalKeyboardLockUIEnabled())
+    if (exclusive_access_context_->IsEscapeKeyReserved())
       return EXCLUSIVE_ACCESS_BUBBLE_TYPE_KEYBOARD_LOCK_EXIT_INSTRUCTION;
 
     if (mouse_lock_controller_.IsMouseLocked())

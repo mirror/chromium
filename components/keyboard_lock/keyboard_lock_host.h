@@ -54,6 +54,9 @@ class KeyboardLockHost final {
   void ClearReservedKeys(content::WebContents* contents,
                          base::Callback<void(bool)> on_result);
 
+  bool IsKeyReserved(content::WebContents* contents,
+                     ui::KeyboardCode code) const;
+
  private:
   static ui::KeyboardCode NativeKeycodeToKeyboardCode(uint32_t keycode);
 

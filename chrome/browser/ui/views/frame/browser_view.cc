@@ -923,6 +923,11 @@ bool BrowserView::ShouldHideUIForFullscreen() const {
   return IsFullscreen();
 }
 
+bool BrowserView::IsEscapeKeyReserved() const {
+  return browser_->GetKeyboardLockHost()->IsKeyReserved(
+      GetActiveWebContents(), ui::KeyboardCode::VKEY_ESCAPE);
+}
+
 bool BrowserView::IsFullscreen() const {
   return frame_->IsFullscreen();
 }

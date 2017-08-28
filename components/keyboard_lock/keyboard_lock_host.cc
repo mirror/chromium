@@ -140,4 +140,13 @@ void KeyboardLockHost::ClearReservedKeys(content::WebContents* contents,
   key_hooks_.Erase(contents);
 }
 
+bool KeyboardLockHost::IsKeyReserved(content::WebContents* contents,
+                                     ui::KeyboardCode code) const {
+  KeyHookActivator* key_hook = key_hooks_.Find(contents);
+  if (!key_hook) {
+    return false;
+  }
+  return key_hook->IsKeyReserved(code);
+}
+
 }  // namespace keyboard_lock
