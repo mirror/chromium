@@ -43,6 +43,7 @@
 #include "modules/indexeddb/IndexedDB.h"
 #include "platform/bindings/ActiveScriptWrappable.h"
 #include "platform/bindings/ScriptState.h"
+#include "platform/bindings/TraceWrapperMember.h"
 #include "platform/heap/Handle.h"
 #include "platform/wtf/RefPtr.h"
 #include "public/platform/modules/indexeddb/WebIDBDatabase.h"
