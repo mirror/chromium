@@ -400,6 +400,11 @@ int UDPSocketWin::RecvFrom(IOBuffer* buf,
 int UDPSocketWin::Write(IOBuffer* buf,
                         int buf_len,
                         const CompletionCallback& callback) {
+  if (deferred_dscp_value_) {
+    if (TrySetDiffServCodePoint(*deferred_dscp_value_) == OK) {
+      deferred_dscp_value_.reset();
+    }
+  }
   return SendToOrWrite(buf, buf_len, remote_address_.get(), callback);
 }
 
@@ -407,7 +412,30 @@ int UDPSocketWin::SendTo(IOBuffer* buf,
                          int buf_len,
                          const IPEndPoint& address,
                          const CompletionCallback& callback) {
+  if (deferred_dscp_value_) {
+    if (remote_address_) {
+      if (TrySetDiffServCodePoint(*deferred_dscp_value_) == OK) {
+        deferred_dscp_value_.reset();
+      }
+    } else {
+      // This will happen every send if we are not connected (since address
+      // might vary). WebRTC can currently hit this code path every time it
+      // sends a packet, so it might be worth optimizing.
+      remote_address_ = std::make_unique<IPEndPoint>(address);
+      TrySetDiffServCodePoint(*deferred_dscp_value_);
+      remote_address_.reset();
+    }
+  }
   return SendToOrWrite(buf, buf_len, &address, callback);
+}
+
+int UDPSocketWin::TrySetDiffServCodePoint(DiffServCodePoint dscp) {
+  auto result = SetDiffServCodePoint(dscp);
+  if (result != OK) {
+    // TODO(zstein): Use net_log_?
+    LOG(WARNING) << "SetDiffServCodePoint failed with error " << result;
+  }
+  return result;
 }
 
 int UDPSocketWin::SendToOrWrite(IOBuffer* buf,
@@ -1102,8 +1130,12 @@ int UDPSocketWin::SetDiffServCodePoint(DiffServCodePoint dscp) {
     return OK;
   }
 
-  if (!is_connected())
+  if (!remote_address_) {
+    // If we don't know where we will be sending to yet, remember the value so
+    // we can try and set it later.
+    deferred_dscp_value_.emplace(dscp);
     return ERR_SOCKET_NOT_CONNECTED;
+  }
 
   QwaveAPI& qos(QwaveAPI::Get());
 
@@ -1162,12 +1194,15 @@ int UDPSocketWin::SetDiffServCodePoint(DiffServCodePoint dscp) {
     qos.RemoveSocketFromFlow(qos_handle_, NULL, qos_flow_id_, 0);
     qos_flow_id_ = 0;
   }
-  if (!qos.AddSocketToFlow(qos_handle_,
-                           socket_,
-                           NULL,
-                           traffic_type,
-                           QOS_NON_ADAPTIVE_FLOW,
-                           &qos_flow_id_)) {
+
+  SockaddrStorage storage;
+  if (!remote_address_->ToSockAddr(storage.addr, &storage.addr_len)) {
+    LOG(WARNING) << "invalid remote_address_";
+    return ERR_SOCKET_NOT_CONNECTED;
+  }
+
+  if (!qos.AddSocketToFlow(qos_handle_, socket_, storage.addr, traffic_type,
+                           QOS_NON_ADAPTIVE_FLOW, &qos_flow_id_)) {
     DWORD err = GetLastError();
     if (err == ERROR_DEVICE_REINITIALIZATION_NEEDED) {
       qos.CloseHandle(qos_handle_);
