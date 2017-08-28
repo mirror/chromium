@@ -84,6 +84,24 @@
     },
     {
       "key": {
+        "uuid": "6907cf54_2bfc3b2b",
+        "filename": "chrome/browser/vr/ui_scene.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-08-28T17:28:21Z",
+      "side": 1,
+      "message": "I think it is not recommended to handle DCHECK failure. See https://chromium.googlesource.com/chromium/src/+/master/styleguide/c++/c++.md#check_dcheck_and-notreached",
+      "parentUuid": "098a45b0_1ce30561",
+      "revId": "fcd4386470b7295321e4e7834e8771850cf1b882",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d414b34b_658ded23",
         "filename": "chrome/browser/vr/ui_scene_manager.cc",
         "patchSetId": 2
@@ -186,6 +204,24 @@
       "revId": "fcd4386470b7295321e4e7834e8771850cf1b882",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0015704d_ef192c34",
+        "filename": "chrome/browser/vr/ui_scene_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-08-28T17:28:21Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "295429c5_f8233ec4",
+      "revId": "fcd4386470b7295321e4e7834e8771850cf1b882",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
