@@ -31,8 +31,9 @@ class SearchResultView;
 class APP_LIST_EXPORT SearchResultListView : public gfx::AnimationDelegate,
                                              public SearchResultContainerView {
  public:
-  SearchResultListView(SearchResultListViewDelegate* delegate,
-                       AppListViewDelegate* view_delegate);
+  // SearchResultListView(SearchResultListViewDelegate* delegate,
+  //                      AppListViewDelegate* view_delegate);
+  explicit SearchResultListView(ContentsView* contents_view);
   ~SearchResultListView() override;
 
   void UpdateAutoLaunchState();
@@ -87,6 +88,7 @@ class APP_LIST_EXPORT SearchResultListView : public gfx::AnimationDelegate,
   void AnimationEnded(const gfx::Animation* animation) override;
   void AnimationProgressed(const gfx::Animation* animation) override;
 
+  ContentsView* contents_view_;             // Owned by views hierarchy.
   SearchResultListViewDelegate* delegate_;  // Not owned.
   AppListViewDelegate* view_delegate_;  // Not owned.
 
