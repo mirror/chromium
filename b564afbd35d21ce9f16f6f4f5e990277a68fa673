@@ -307,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "54185ef2_5d387689",
+        "filename": "chrome/browser/translate/translate_language_browsertest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1215199
+      },
+      "writtenOn": "2017-08-28T07:01:34Z",
+      "side": 1,
+      "message": "If we\u0027re not waiting to let the translate complete before reverting, I don\u0027t think you should include the test in this CL (it essentially has a race inside it).\n\nCan we remove it until the more complicated change?",
+      "parentUuid": "e6a08a1a_1d479668",
+      "range": {
+        "startLine": 135,
+        "startChar": 39,
+        "endLine": 135,
+        "endChar": 0
+      },
+      "revId": "b564afbd35d21ce9f16f6f4f5e990277a68fa673",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a1d2d2fb_5e490904",
         "filename": "chrome/browser/translate/translate_language_browsertest.cc",
         "patchSetId": 9
