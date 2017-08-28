@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ff092a3c_eb79ca71",
+        "filename": "third_party/WebKit/Source/modules/vr/NavigatorVR.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-08-28T18:57:43Z",
+      "side": 1,
+      "message": "nit: no need for this to be in an else block, we return on the true case.",
+      "range": {
+        "startLine": 74,
+        "startChar": 4,
+        "endLine": 74,
+        "endChar": 10
+      },
+      "revId": "4ef1371690821052b81a1aad45e7d49fba4480e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad05f18c_437ea75b",
+        "filename": "third_party/WebKit/Source/modules/vr/NavigatorVR.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-08-28T18:57:43Z",
+      "side": 1,
+      "message": "If feature policy in general is disabled, we just always reject webVR for non-main frames? That feels wrong. Looks like other feature policy features still allow use of their feature under certain conditions if feature policy is disabled. For example, vibrate will still vibrate if feature policy is disabled, as long as the frame has received a gesture.",
+      "range": {
+        "startLine": 86,
+        "startChar": 15,
+        "endLine": 86,
+        "endChar": 36
+      },
+      "revId": "4ef1371690821052b81a1aad45e7d49fba4480e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
