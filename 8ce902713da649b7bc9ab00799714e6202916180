@@ -46,6 +46,30 @@
       "revId": "8ce902713da649b7bc9ab00799714e6202916180",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9d8af7c8_74dd2d37",
+        "filename": "ash/app_list/app_list_presenter_delegate_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-28T23:23:31Z",
+      "side": 1,
+      "message": "Sorry if I wasn\u0027t clear. I was hoping you had a switch/flag you can look at to test if the new launcher is the default. That way the test body becomes:\n\nif (IsNewLauncherEnabled()) {\n  // TODO: this test needs to be reevaluated for new-launcher, bug-id.\n  return;\n}\n\nIf you don\u0027t have such a switch, how about adding one? In fact IsNewLauncherEnabled() could trivially return true if you have no switch with a comment.",
+      "parentUuid": "4a625a9b_39f9f034",
+      "range": {
+        "startLine": 168,
+        "startChar": 37,
+        "endLine": 168,
+        "endChar": 76
+      },
+      "revId": "8ce902713da649b7bc9ab00799714e6202916180",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
