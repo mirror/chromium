@@ -763,6 +763,8 @@ void LayoutBox::UpdateAfterLayout() {
     Layer()->UpdateTransformationMatrix();
     Layer()->UpdateSizeAndScrollingAfterLayout();
   }
+
+  LayoutBoxModelObject::UpdateAfterLayout();
 }
 
 LayoutUnit LayoutBox::LogicalHeightWithVisibleOverflow() const {
