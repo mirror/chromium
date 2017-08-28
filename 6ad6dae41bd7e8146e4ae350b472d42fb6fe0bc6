@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3dfc1c4f_9b2f553c",
+        "filename": "build/android/pylib/instrumentation/instrumentation_test_instance.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-08-28T18:20:59Z",
+      "side": 1,
+      "message": "super nit: \u0027%s\\n%s\u0027 % (bundle[\u0027stack\u0027], \u0027\\n\u0027.join(...))",
+      "revId": "6ad6dae41bd7e8146e4ae350b472d42fb6fe0bc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
