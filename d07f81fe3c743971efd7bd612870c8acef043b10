@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "e976a044_067076ad",
+        "filename": "chrome/common/media_router/media_route.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-08-28T21:12:05Z",
+      "side": 1,
+      "message": "It\u0027s probably fine to use mojo enum directly, but I thought I would use C++ enum since type mapping already exists for this class. I can try to switch to mojo enum here if you prefer.",
+      "parentUuid": "0a7072b0_0ef5a3f1",
+      "range": {
+        "startLine": 17,
+        "startChar": 33,
+        "endLine": 17,
+        "endChar": 37
+      },
+      "revId": "d07f81fe3c743971efd7bd612870c8acef043b10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "450dce94_15b010b2",
         "filename": "chrome/common/media_router/mojo/media_controller.mojom",
         "patchSetId": 16
@@ -42,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "8a965a2b_8e56f921",
+        "filename": "chrome/common/media_router/mojo/media_controller.mojom",
+        "patchSetId": 16
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-08-28T21:12:05Z",
+      "side": 1,
+      "message": "That would be like extending CreateMediaRouteController() in media_router.mojom to take an HangoutsMediaRouteController\u0026?, right?\n\nI decided against that, because if we introduce other types of extended controllers (and we probably will, for things like media remoting) then we would have to add another FooController\u0026? parameter in CreateMediaRouteController(). It doesn\u0027t seem to scale very well.",
+      "parentUuid": "450dce94_15b010b2",
+      "revId": "d07f81fe3c743971efd7bd612870c8acef043b10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2ee847f4_b8f0e7f2",
         "filename": "chrome/common/media_router/mojo/media_router.mojom",
         "patchSetId": 16
@@ -53,6 +95,24 @@
       "writtenOn": "2017-08-28T08:18:35Z",
       "side": 1,
       "message": "Nit: enumerator names in Chrome should use kStyleNaming.",
+      "revId": "d07f81fe3c743971efd7bd612870c8acef043b10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73dfe39b_a6ab51dc",
+        "filename": "chrome/common/media_router/mojo/media_router.mojom",
+        "patchSetId": 16
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-08-28T21:12:05Z",
+      "side": 1,
+      "message": "Hmm... most mojom enums that I see uses upper case naming? Is this a new rule? (I can change it, but just wondering)",
+      "parentUuid": "2ee847f4_b8f0e7f2",
       "revId": "d07f81fe3c743971efd7bd612870c8acef043b10",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
