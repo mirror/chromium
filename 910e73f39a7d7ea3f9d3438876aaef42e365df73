@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1abf822d_cffc72af",
+        "filename": "ios/chrome/browser/ui/omnibox/omnibox_popup_material_view_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 760,
+      "author": {
+        "id": 1148126
+      },
+      "writtenOn": "2017-08-28T13:31:02Z",
+      "side": 1,
+      "message": "No, just moving code around. Will drop const\u0026.",
+      "parentUuid": "00d34f50_80096f92",
+      "revId": "910e73f39a7d7ea3f9d3438876aaef42e365df73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "42934906_426036e8",
         "filename": "ios/chrome/browser/ui/omnibox/omnibox_popup_view_ios.mm",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "910e73f39a7d7ea3f9d3438876aaef42e365df73",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bfe49889_8bb5a6b4",
+        "filename": "ios/chrome/browser/ui/omnibox/omnibox_popup_view_ios.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 1148126
+      },
+      "writtenOn": "2017-08-28T13:31:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "42934906_426036e8",
+      "revId": "910e73f39a7d7ea3f9d3438876aaef42e365df73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
