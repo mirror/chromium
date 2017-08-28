@@ -57,7 +57,6 @@ class AwAccessTokenStore : public device::AccessTokenStore {
     AccessTokenStore::AccessTokenMap access_token_map;
     // AccessTokenMap and net::URLRequestContextGetter not used on Android,
     // but Run needs to be called to finish the geolocation setup.
-    request.Run(access_token_map, NULL);
   }
   void SaveAccessToken(const GURL& server_url,
                        const base::string16& access_token) override {}
