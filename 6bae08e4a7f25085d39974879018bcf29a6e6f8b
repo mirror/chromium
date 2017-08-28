@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bb8793e6_db80c734",
+        "filename": "chrome/browser/ssl/ssl_error_handler.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 487,
+      "author": {
+        "id": 1002611
+      },
+      "writtenOn": "2017-08-28T21:46:50Z",
+      "side": 1,
+      "message": "nit: Pull re2::RE2 above:\n\nconst re2::RE2 regex(pattern);\nfor (const ...) {\n  if (re2::RE2::FullMatch(organization_name, regex)) {\n  ...\n  }\n}\n...",
+      "revId": "6bae08e4a7f25085d39974879018bcf29a6e6f8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "012393f7_f937b4ea",
+        "filename": "chrome/browser/ssl/ssl_error_handler.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 514,
+      "author": {
+        "id": 1002611
+      },
+      "writtenOn": "2017-08-28T21:46:50Z",
+      "side": 1,
+      "message": "You can add a DCHECK here as well. We should never have both as empty strings. But if it is, should we just ignore this and move to the next instead of returning an empty value?",
+      "revId": "6bae08e4a7f25085d39974879018bcf29a6e6f8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1362e55_eea1cde1",
+        "filename": "chrome/browser/ssl/ssl_error_handler.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 546,
+      "author": {
+        "id": 1002611
+      },
+      "writtenOn": "2017-08-28T21:46:50Z",
+      "side": 1,
+      "message": "nit: Add NOTREACHED(); instead.",
+      "revId": "6bae08e4a7f25085d39974879018bcf29a6e6f8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19149ea5_8717c2e6",
+        "filename": "chrome/browser/ssl/ssl_error_handler_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 1257,
+      "author": {
+        "id": 1002611
+      },
+      "writtenOn": "2017-08-28T21:46:50Z",
+      "side": 1,
+      "message": "Which scenario does this test? Does it test a matching common name or a matching organization? Can we add tests for both?",
+      "revId": "6bae08e4a7f25085d39974879018bcf29a6e6f8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
