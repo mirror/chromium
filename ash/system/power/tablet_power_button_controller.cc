@@ -169,6 +169,7 @@ void TabletPowerButtonController::OnPowerButtonEvent(
     screen_off_when_power_button_down_ =
         display_controller_->screen_state() !=
         PowerButtonDisplayController::ScreenState::ON;
+    LOG(ERROR) << "OnPowerButtonEvent SetDisplayForcedOff(false)";
     display_controller_->SetDisplayForcedOff(false);
     StartShutdownTimer();
   } else {
@@ -200,6 +201,7 @@ void TabletPowerButtonController::OnPowerButtonEvent(
     if (shutdown_timer_.IsRunning()) {
       shutdown_timer_.Stop();
       if (!screen_off_when_power_button_down_ && force_off_on_button_up_) {
+        LOG(ERROR) << "OnPowerButtonEvent SetDisplayForcedOff(true)";
         display_controller_->SetDisplayForcedOff(true);
         LockScreenIfRequired();
       }
