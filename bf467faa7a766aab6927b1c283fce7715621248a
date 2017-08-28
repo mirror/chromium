@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "88510cb5_df77df96",
+        "filename": "ui/file_manager/file_manager/foreground/js/app_state_controller.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1166720
+      },
+      "writtenOn": "2017-08-28T11:48:29Z",
+      "side": 1,
+      "message": "nit: Did you mean \"field\"?\nAlso I feel like \"in the Recent folder\" would be better as there\u0027s only one Recent folder now.",
+      "range": {
+        "startLine": 33,
+        "startChar": 5,
+        "endLine": 33,
+        "endChar": 26
+      },
+      "revId": "bf467faa7a766aab6927b1c283fce7715621248a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
