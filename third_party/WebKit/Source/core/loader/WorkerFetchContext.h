@@ -9,6 +9,7 @@
 #include "core/CoreExport.h"
 #include "core/loader/BaseFetchContext.h"
 #include "platform/wtf/Forward.h"
+#include "public/platform/WebCORSPreflightResultCache.h"
 
 namespace blink {
 
@@ -100,6 +101,7 @@ class WorkerFetchContext final : public BaseFetchContext {
                                const FetchParameters::ResourceWidth&,
                                ResourceRequest&) override;
   void SetFirstPartyCookieAndRequestorOrigin(ResourceRequest&) override;
+  WebCORSPreflightResultCache* GetCORSPreflightResultCache() override;
 
   DECLARE_VIRTUAL_TRACE();
 
@@ -112,6 +114,7 @@ class WorkerFetchContext final : public BaseFetchContext {
   Member<SubresourceFilter> subresource_filter_;
   Member<ResourceFetcher> resource_fetcher_;
   RefPtr<WebTaskRunner> loading_task_runner_;
+  WebCORSPreflightResultCache cors_preflight_result_cache_;
 };
 
 }  // namespace blink

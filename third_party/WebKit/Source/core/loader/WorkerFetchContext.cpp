@@ -337,6 +337,10 @@ void WorkerFetchContext::SetFirstPartyCookieAndRequestorOrigin(
     out_request.SetRequestorOrigin(GetSecurityOrigin());
 }
 
+WebCORSPreflightResultCache* WorkerFetchContext::GetCORSPreflightResultCache() {
+  return &cors_preflight_result_cache_;
+}
+
 DEFINE_TRACE(WorkerFetchContext) {
   visitor->Trace(global_scope_);
   visitor->Trace(subresource_filter_);
