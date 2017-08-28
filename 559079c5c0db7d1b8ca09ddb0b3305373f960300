@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a5b974c3_fc9f9bd3",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/SuggestionView.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-08-28T23:15:11Z",
+      "side": 1,
+      "message": "Do we need to somehow check mBottomSheet !\u003d null here too so that suggestions aren\u0027t incorrectly offset in the search widget (..now that I remember it exists)?",
+      "range": {
+        "startLine": 191,
+        "startChar": 25,
+        "endLine": 191,
+        "endChar": 69
+      },
+      "revId": "559079c5c0db7d1b8ca09ddb0b3305373f960300",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
