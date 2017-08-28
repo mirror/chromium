@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a80a3fd7_adacfddf",
+        "filename": "content/browser/renderer_host/overscroll_controller.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1002242
+      },
+      "writtenOn": "2017-08-28T19:59:51Z",
+      "side": 1,
+      "message": "Is this needed anymore?",
+      "revId": "3c2a295adb40bbc84b4c80e1c40b207f91bc5c04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c9a019a_cb8084cc",
+        "filename": "content/browser/renderer_host/overscroll_controller.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1002242
+      },
+      "writtenOn": "2017-08-28T19:59:51Z",
+      "side": 1,
+      "message": "You can also get rid of this check for kMouseWheel event, I believe.",
+      "revId": "3c2a295adb40bbc84b4c80e1c40b207f91bc5c04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4f65423_e9ff3033",
+        "filename": "content/browser/renderer_host/overscroll_controller.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 266,
+      "author": {
+        "id": 1002242
+      },
+      "writtenOn": "2017-08-28T19:59:51Z",
+      "side": 1,
+      "message": "CL description says \"to *only* allow completing/resetting overscroll\nwhen processing ACKs\", but this function can be called from both WillHandleEvent() and ReceivedEventACK(). So, it seems to me that WillHandleEvent() can still complete/reset overscroll on GSE. Am I missing something?",
+      "revId": "3c2a295adb40bbc84b4c80e1c40b207f91bc5c04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f82962e4_9198c241",
+        "filename": "content/browser/renderer_host/overscroll_controller.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 271,
+      "author": {
+        "id": 1002242
+      },
+      "writtenOn": "2017-08-28T19:59:51Z",
+      "side": 1,
+      "message": "Avoid resetting the state on *GestureScrollBegin*?",
+      "revId": "3c2a295adb40bbc84b4c80e1c40b207f91bc5c04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b8dd5df_14cfd208",
+        "filename": "content/browser/renderer_host/render_widget_host_view_aura_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1002242
+      },
+      "writtenOn": "2017-08-28T19:59:51Z",
+      "side": 1,
+      "message": "const std::vector\u003cOverscrollMode\u003e\u0026 ?",
+      "revId": "3c2a295adb40bbc84b4c80e1c40b207f91bc5c04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
