@@ -529,8 +529,9 @@ IN_PROC_BROWSER_TEST_F(BackgroundTracingManagerBrowserTest,
     SetupBackgroundTracingManager();
 
     base::RunLoop run_loop;
+    TestBackgroundTracingObserver observer(run_loop.QuitClosure());
     BackgroundTracingManagerUploadConfigWrapper upload_config_wrapper(
-        run_loop.QuitClosure());
+        (base::Closure()));
 
     base::DictionaryValue dict;
     dict.SetString("mode", "PREEMPTIVE_TRACING_MODE");
@@ -567,6 +568,7 @@ IN_PROC_BROWSER_TEST_F(BackgroundTracingManagerBrowserTest,
     EXPECT_EQ(
         command_line->GetSwitchValueASCII(switches::kDisableBlinkFeatures),
         "SlowerWeb1,SlowerWeb2");
+    run_loop.Run();
   }
 }
 
@@ -744,6 +746,7 @@ IN_PROC_BROWSER_TEST_F(BackgroundTracingManagerBrowserTest,
     SetupBackgroundTracingManager();
 
     base::RunLoop run_loop;
+    TestBackgroundTracingObserver observer(run_loop.QuitClosure());
     BackgroundTracingManagerUploadConfigWrapper upload_config_wrapper(
         (base::Closure()));
 
@@ -761,8 +764,7 @@ IN_PROC_BROWSER_TEST_F(BackgroundTracingManagerBrowserTest,
         base::Bind(&DisableScenarioWhenIdle));
 
     BackgroundTracingManager::GetInstance()->TriggerNamedEvent(
-        handle,
-        base::Bind(&StartedFinalizingCallback, run_loop.QuitClosure(), false));
+        handle, base::Bind(&StartedFinalizingCallback, base::Closure(), false));
 
     run_loop.Run();
 
@@ -785,6 +787,7 @@ IN_PROC_BROWSER_TEST_F(BackgroundTracingManagerBrowserTest,
     SetupBackgroundTracingManager();
 
     base::RunLoop run_loop;
+    TestBackgroundTracingObserver observer(run_loop.QuitClosure());
     BackgroundTracingManagerUploadConfigWrapper upload_config_wrapper(
         (base::Closure()));
 
@@ -805,8 +808,7 @@ IN_PROC_BROWSER_TEST_F(BackgroundTracingManagerBrowserTest,
         base::Bind(&DisableScenarioWhenIdle));
 
     BackgroundTracingManager::GetInstance()->TriggerNamedEvent(
-        handle,
-        base::Bind(&StartedFinalizingCallback, run_loop.QuitClosure(), false));
+        handle, base::Bind(&StartedFinalizingCallback, base::Closure(), false));
 
     run_loop.Run();
 
@@ -830,6 +832,7 @@ IN_PROC_BROWSER_TEST_F(BackgroundTracingManagerBrowserTest,
     SetupBackgroundTracingManager();
 
     base::RunLoop run_loop;
+    TestBackgroundTracingObserver observer(run_loop.QuitWhenIdleClosure());
     BackgroundTracingManagerUploadConfigWrapper upload_config_wrapper(
         (base::Closure()));
 
@@ -866,8 +869,7 @@ IN_PROC_BROWSER_TEST_F(BackgroundTracingManagerBrowserTest,
         base::Bind(&DisableScenarioWhenIdle));
 
     BackgroundTracingManager::GetInstance()->TriggerNamedEvent(
-        handle,
-        base::Bind(&StartedFinalizingCallback, run_loop.QuitClosure(), false));
+        handle, base::Bind(&StartedFinalizingCallback, base::Closure(), false));
 
     run_loop.Run();
 
@@ -1068,9 +1070,9 @@ IN_PROC_BROWSER_TEST_F(BackgroundTracingManagerBrowserTest,
     SetupBackgroundTracingManager();
 
     base::RunLoop run_loop;
-
+    TestBackgroundTracingObserver observer(run_loop.QuitWhenIdleClosure());
     BackgroundTracingManagerUploadConfigWrapper upload_config_wrapper(
-        run_loop.QuitClosure());
+        (base::Closure()));
 
     base::DictionaryValue dict;
     dict.SetString("mode", "PREEMPTIVE_TRACING_MODE");
@@ -1104,7 +1106,7 @@ IN_PROC_BROWSER_TEST_F(BackgroundTracingManagerBrowserTest,
     // the reference value above.
     LOCAL_HISTOGRAM_COUNTS("fake", 0);
 
-    run_loop.RunUntilIdle();
+    run_loop.Run();
 
     EXPECT_TRUE(upload_config_wrapper.get_receive_count() == 0);
   }
@@ -1126,9 +1128,9 @@ IN_PROC_BROWSER_TEST_F(BackgroundTracingManagerBrowserTest,
     SetupBackgroundTracingManager();
 
     base::RunLoop run_loop;
-
+    TestBackgroundTracingObserver observer(run_loop.QuitWhenIdleClosure());
     BackgroundTracingManagerUploadConfigWrapper upload_config_wrapper(
-        run_loop.QuitClosure());
+        (base::Closure()));
 
     base::DictionaryValue dict;
     dict.SetString("mode", "PREEMPTIVE_TRACING_MODE");
@@ -1163,7 +1165,7 @@ IN_PROC_BROWSER_TEST_F(BackgroundTracingManagerBrowserTest,
     // the upper reference value above.
     LOCAL_HISTOGRAM_COUNTS("fake", 0);
 
-    run_loop.RunUntilIdle();
+    run_loop.Run();
 
     EXPECT_TRUE(upload_config_wrapper.get_receive_count() == 0);
   }
