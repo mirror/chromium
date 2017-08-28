@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "7bbeb3f9_2df9e331",
+        "filename": "media/blink/video_frame_compositor.cc",
+        "patchSetId": 33
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1215059
+      },
+      "writtenOn": "2017-08-28T23:31:22Z",
+      "side": 1,
+      "message": "We actually want some check here. There is work to do in the next CL to plumb through a signal of the destruction/creation of the SurfaceLayerImpl. Right now we arent doing this, and are just forcing the issue in tests. I\u0027ve updated things to be more clear that that is the intent. \n\n(the checks to the client_ are actually low key checks to see if the VideoLayerImpl exists. We want to do something similar, but since the |submitter_| is owned by the VideoFrameCompositor, things are tricky.)",
+      "parentUuid": "da97cf08_9b6c3ce7",
+      "revId": "f852897c8ada854b44acdcae8821a834f13737cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3eb9193f_5da5cf5d",
         "filename": "media/blink/video_frame_compositor.cc",
         "patchSetId": 33
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "c17fb149_5e084b2c",
+        "filename": "media/blink/video_frame_compositor.cc",
+        "patchSetId": 33
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1215059
+      },
+      "writtenOn": "2017-08-28T23:31:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3eb9193f_5da5cf5d",
+      "revId": "f852897c8ada854b44acdcae8821a834f13737cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "34576433_8e72c2a6",
         "filename": "media/blink/video_frame_compositor.cc",
         "patchSetId": 33
@@ -47,6 +83,24 @@
       "writtenOn": "2017-08-26T01:54:46Z",
       "side": 1,
       "message": "No need for the |submitter_| check here.\n\nWith that removed, I think you can simplify this to:\n\nif (ProcessNewFrame(frame, repaint_duplicate_frame)) {\n  if (is_surface_layer_for_video_enabled())\n    submitter_-\u003eDidReceiveFrame();\n  else if (client_)\n    client_-\u003eDidReceiveFrame();\n}",
+      "revId": "f852897c8ada854b44acdcae8821a834f13737cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5e998f9_9e8b24ef",
+        "filename": "media/blink/video_frame_compositor.cc",
+        "patchSetId": 33
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1215059
+      },
+      "writtenOn": "2017-08-28T23:31:22Z",
+      "side": 1,
+      "message": "Same as comment above. Updated now to reflect this intent.",
+      "parentUuid": "34576433_8e72c2a6",
       "revId": "f852897c8ada854b44acdcae8821a834f13737cd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "4f574952_000d4511",
+        "filename": "media/blink/video_frame_compositor.cc",
+        "patchSetId": 33
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1215059
+      },
+      "writtenOn": "2017-08-28T23:31:22Z",
+      "side": 1,
+      "message": "Same as above.",
+      "parentUuid": "dce74815_fe79d464",
+      "revId": "f852897c8ada854b44acdcae8821a834f13737cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "946d4ecf_813a2a0d",
         "filename": "media/blink/video_frame_compositor.cc",
         "patchSetId": 33
@@ -84,6 +156,24 @@
       "revId": "f852897c8ada854b44acdcae8821a834f13737cd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7bfaa0c0_bc9ca8f8",
+        "filename": "media/blink/video_frame_compositor.cc",
+        "patchSetId": 33
+      },
+      "lineNbr": 264,
+      "author": {
+        "id": 1215059
+      },
+      "writtenOn": "2017-08-28T23:31:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "946d4ecf_813a2a0d",
+      "revId": "f852897c8ada854b44acdcae8821a834f13737cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "e411e246_89a722a7",
+        "filename": "media/blink/video_frame_compositor.h",
+        "patchSetId": 33
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1215059
+      },
+      "writtenOn": "2017-08-28T23:31:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9c738f7e_4ec32958",
+      "revId": "f852897c8ada854b44acdcae8821a834f13737cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "902094da_a42bed47",
         "filename": "media/blink/video_frame_compositor.h",
         "patchSetId": 33
@@ -115,6 +223,24 @@
       "writtenOn": "2017-08-26T01:54:46Z",
       "side": 1,
       "message": "Can you have this be std::unique_ptr\u003c\u003e rather than a bare-pointer parameter, please?",
+      "revId": "f852897c8ada854b44acdcae8821a834f13737cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78ecd111_4449031d",
+        "filename": "media/blink/video_frame_compositor.h",
+        "patchSetId": 33
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1215059
+      },
+      "writtenOn": "2017-08-28T23:31:22Z",
+      "side": 1,
+      "message": "I don\u0027t think that is possible, because we want the test to still be able to access the |submitter| after it is set here. We could either do a getter, or leave it as is, unless you have a better idea. To clarify my concern, I believe that if you std::move |submitter| into |submitter_| the caller of this function will not have a pointer to submitter any more. Please correct me if this belief is mistaken.",
+      "parentUuid": "902094da_a42bed47",
       "revId": "f852897c8ada854b44acdcae8821a834f13737cd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -138,6 +264,24 @@
     },
     {
       "key": {
+        "uuid": "b26505eb_9c8eda74",
+        "filename": "media/blink/video_frame_compositor.h",
+        "patchSetId": 33
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1215059
+      },
+      "writtenOn": "2017-08-28T23:31:22Z",
+      "side": 1,
+      "message": "Sure.  I wasn\u0027t sure if that is all true though, because there are multiple threads that access this class.",
+      "parentUuid": "71ea82f4_b42f0c78",
+      "revId": "f852897c8ada854b44acdcae8821a834f13737cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "77a873f1_8050947b",
         "filename": "media/blink/video_frame_compositor.h",
         "patchSetId": 33
@@ -155,6 +299,24 @@
     },
     {
       "key": {
+        "uuid": "d2536618_e711334d",
+        "filename": "media/blink/video_frame_compositor.h",
+        "patchSetId": 33
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1215059
+      },
+      "writtenOn": "2017-08-28T23:31:22Z",
+      "side": 1,
+      "message": "We are using a SurfaceLayer. The Surface is a browser-side concept. Here in the renderer it is a SurfaceLayer. Also, since we are using this flag elsewhere, not just in this class, it is perhaps cleaner to keep it as it is.",
+      "parentUuid": "77a873f1_8050947b",
+      "revId": "f852897c8ada854b44acdcae8821a834f13737cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d18af776_5e6b0164",
         "filename": "media/blink/webmediaplayer_impl.cc",
         "patchSetId": 33
@@ -166,6 +328,24 @@
       "writtenOn": "2017-08-28T17:14:44Z",
       "side": 1,
       "message": "Can you just pass in FrameSinkId here? That way we don\u0027t need an external StartSubmitting function? If disabled, the value can just be zero.",
+      "revId": "f852897c8ada854b44acdcae8821a834f13737cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1fe40e6_71fa9e89",
+        "filename": "media/blink/webmediaplayer_impl.cc",
+        "patchSetId": 33
+      },
+      "lineNbr": 268,
+      "author": {
+        "id": 1215059
+      },
+      "writtenOn": "2017-08-28T23:31:22Z",
+      "side": 1,
+      "message": "We will need the external function probably either way, as we will need to turn submitting on and off according to whether there is a SurfaceLayerImpl. We just arent tracking that yet.",
+      "parentUuid": "d18af776_5e6b0164",
       "revId": "f852897c8ada854b44acdcae8821a834f13737cd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
