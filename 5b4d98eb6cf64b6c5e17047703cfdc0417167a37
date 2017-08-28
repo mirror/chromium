@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "2329f97f_fc9a004a",
+        "filename": "third_party/WebKit/Source/core/editing/commands/ReplaceSelectionCommand.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 1004,
+      "author": {
+        "id": 1210620
+      },
+      "writtenOn": "2017-08-28T12:43:22Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "f35f95b3_76174cb4",
+      "range": {
+        "startLine": 1004,
+        "startChar": 41,
+        "endLine": 1004,
+        "endChar": 74
+      },
+      "revId": "5b4d98eb6cf64b6c5e17047703cfdc0417167a37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3d82bb1d_5b9120df",
         "filename": "third_party/WebKit/Source/core/editing/commands/ReplaceSelectionCommand.cpp",
         "patchSetId": 5
@@ -95,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "1b5b072e_d2316388",
+        "filename": "third_party/WebKit/Source/core/editing/commands/ReplaceSelectionCommand.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 1168,
+      "author": {
+        "id": 1210620
+      },
+      "writtenOn": "2017-08-28T12:43:22Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "c7892762_b5293b49",
+      "range": {
+        "startLine": 1168,
+        "startChar": 27,
+        "endLine": 1168,
+        "endChar": 49
+      },
+      "revId": "5b4d98eb6cf64b6c5e17047703cfdc0417167a37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c5210571_37790449",
         "filename": "third_party/WebKit/Source/core/editing/commands/ReplaceSelectionCommand.cpp",
         "patchSetId": 5
@@ -115,6 +163,30 @@
       "revId": "5b4d98eb6cf64b6c5e17047703cfdc0417167a37",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57adc58e_05ae9b92",
+        "filename": "third_party/WebKit/Source/core/editing/commands/ReplaceSelectionCommand.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 1182,
+      "author": {
+        "id": 1210620
+      },
+      "writtenOn": "2017-08-28T12:43:22Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "c5210571_37790449",
+      "range": {
+        "startLine": 1182,
+        "startChar": 15,
+        "endLine": 1182,
+        "endChar": 37
+      },
+      "revId": "5b4d98eb6cf64b6c5e17047703cfdc0417167a37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
