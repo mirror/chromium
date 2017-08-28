@@ -70,6 +70,30 @@
       "revId": "73ff08f0be9774c7b6d43d7de3b6ada8073615f0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e44ac50_05b6f873",
+        "filename": "components/policy/core/common/cloud/cloud_policy_refresh_scheduler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1144419
+      },
+      "writtenOn": "2017-08-28T09:21:23Z",
+      "side": 1,
+      "message": "Checking the code, it is updated every time a policy fetch happens regardless if it succeeds or fails. I\u0027ve updated the comment of the variable to reflect this. Thank you for your help here.",
+      "parentUuid": "03563fa1_6792fcd1",
+      "range": {
+        "startLine": 193,
+        "startChar": 29,
+        "endLine": 193,
+        "endChar": 58
+      },
+      "revId": "73ff08f0be9774c7b6d43d7de3b6ada8073615f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
