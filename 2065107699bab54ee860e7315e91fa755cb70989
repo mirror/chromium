@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "54bfb067_da3cd5b7",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-08-28T18:06:43Z",
+      "side": 1,
+      "message": "nit: In Chromium, we usually call the project just \"ARC\" (no ++).",
+      "revId": "2065107699bab54ee860e7315e91fa755cb70989",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
