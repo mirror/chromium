@@ -34,6 +34,24 @@
       "revId": "98303b117cef148352ace18b3599dfc107ddd28c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59f567f6_17b13029",
+        "filename": "chrome/browser/page_load_metrics/observers/android_page_load_metrics_observer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1154589
+      },
+      "writtenOn": "2017-08-28T10:53:28Z",
+      "side": 1,
+      "message": "Thanks! I had convinced myself that OnStart does the right thing w/rt redirects, but I should have added a test.\n\nI had originally used the resource_type field, but in the one test I did write, it never fired on the main resource, which is why I\u0027m using the URL.\n\nI will write a test that uses redirects and will confirm that OnCommit does the right thing.",
+      "parentUuid": "95ce7b2e_58073591",
+      "revId": "98303b117cef148352ace18b3599dfc107ddd28c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
