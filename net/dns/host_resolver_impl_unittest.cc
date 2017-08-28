@@ -24,6 +24,7 @@
 #include "base/synchronization/condition_variable.h"
 #include "base/synchronization/lock.h"
 #include "base/test/test_timeouts.h"
+#include "base/threading/scoped_blocking_call.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "base/time/time.h"
 #include "net/base/address_list.h"
@@ -151,8 +152,11 @@ class MockHostResolverProc : public HostResolverProc {
     capture_list_.push_back(ResolveKey(hostname, address_family));
     ++num_requests_waiting_;
     requests_waiting_.Broadcast();
-    while (!num_slots_available_)
+    while (!num_slots_available_) {
+      base::ScopedBlockingCall scoped_blocking_call(
+          base::BlockingType::WILL_BLOCK);
       slots_available_.Wait();
+    }
     DCHECK_GT(num_requests_waiting_, 0u);
     --num_slots_available_;
     --num_requests_waiting_;
