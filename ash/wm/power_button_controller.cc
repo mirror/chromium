@@ -9,6 +9,7 @@
 #include "ash/public/cpp/shell_window_ids.h"
 #include "ash/session/session_controller.h"
 #include "ash/shell.h"
+#include "ash/shell_delegate.h"
 #include "ash/shutdown_reason.h"
 #include "ash/system/audio/tray_audio.h"
 #include "ash/system/power/tablet_power_button_controller.h"
@@ -205,6 +206,11 @@ void PowerButtonController::ProcessCommandLine() {
   has_legacy_power_button_ = cl->HasSwitch(switches::kAuraLegacyPowerButton);
   force_clamshell_power_button_ =
       cl->HasSwitch(switches::kForceClamshellPowerButton);
+  if (force_clamshell_power_button_) {
+    ShellDelegate* delegate = Shell::Get()->shell_delegate();
+    delegate->SetTouchscreenEnabledInPrefs(true, true /* use_local_state */);
+    delegate->UpdateTouchscreenStatusFromPrefs();
+  }
 }
 
 }  // namespace ash
