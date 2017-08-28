@@ -99,7 +99,11 @@ IsolateHolder::~IsolateHolder() {
 #endif
   isolate_memory_dump_provider_.reset();
   isolate_data_.reset();
-  isolate_->Dispose();
+
+  // SnapshotCreator closes down its Isolate in its destructor.
+  if (!snapshot_creator()) {
+    isolate_->Dispose();
+  }
   isolate_ = nullptr;
 }
 

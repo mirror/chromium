@@ -16,6 +16,7 @@ namespace blink {
 class BLINK_EXPORT WebV8ContextSnapshot {
  public:
   static v8::StartupData TakeSnapshot();
+  static void Dispose();
 };
 
 }  // namespace blink

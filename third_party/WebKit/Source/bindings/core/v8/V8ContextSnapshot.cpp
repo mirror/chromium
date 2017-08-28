@@ -326,6 +326,14 @@ v8::StartupData V8ContextSnapshot::TakeSnapshot() {
   return blob;
 }
 
+void V8ContextSnapshot::Dispose() {
+  v8::Isolate* isolate =
+      V8PerIsolateData::From(V8PerIsolateData::MainThreadIsolate())
+          ->GetIsolate();
+  V8PerIsolateData::WillBeDestroyed(isolate);
+  V8PerIsolateData::Destroy(isolate);
+}
+
 v8::StartupData V8ContextSnapshot::SerializeInternalField(
     v8::Local<v8::Object> object,
     int index,

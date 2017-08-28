@@ -64,6 +64,7 @@ int main(int argc, char** argv) {
   CHECK_LT(0, base::WriteFile(file_path, blob.data, blob.raw_size));
 
   delete[] blob.data;
+  blink::WebV8ContextSnapshot::Dispose();
 
   return 0;
 }

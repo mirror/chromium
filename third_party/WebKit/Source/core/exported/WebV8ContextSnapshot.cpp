@@ -13,4 +13,8 @@ v8::StartupData WebV8ContextSnapshot::TakeSnapshot() {
   return V8ContextSnapshot::TakeSnapshot();
 }
 
+void WebV8ContextSnapshot::Dispose() {
+  V8ContextSnapshot::Dispose();
+}
+
 }  // namespace blink
