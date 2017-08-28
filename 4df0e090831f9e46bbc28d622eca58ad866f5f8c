@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9bc63138_c9bb4ee2",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/reporter_runner_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 600,
+      "author": {
+        "id": 1115445
+      },
+      "writtenOn": "2017-08-28T21:51:51Z",
+      "side": 1,
+      "message": "nit: can you make this and the next string consts?",
+      "range": {
+        "startLine": 600,
+        "startChar": 51,
+        "endLine": 600,
+        "endChar": 0
+      },
+      "revId": "4df0e090831f9e46bbc28d622eca58ad866f5f8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
