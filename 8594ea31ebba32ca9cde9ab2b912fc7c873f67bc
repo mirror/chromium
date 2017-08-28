@@ -70,6 +70,29 @@
     },
     {
       "key": {
+        "uuid": "e3efa574_19acc4f4",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-08-28T03:18:32Z",
+      "side": 1,
+      "message": "\"True\"?",
+      "range": {
+        "startLine": 25,
+        "startChar": 33,
+        "endLine": 25,
+        "endChar": 37
+      },
+      "revId": "8594ea31ebba32ca9cde9ab2b912fc7c873f67bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "886e8252_47422944",
         "filename": "third_party/WebKit/Source/bindings/scripts/idl_definitions.py",
         "patchSetId": 4
