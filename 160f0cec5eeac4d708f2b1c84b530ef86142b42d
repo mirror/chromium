@@ -1,0 +1,84 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a50c97fc_fff1f513",
+        "filename": "ui/file_manager/file_manager/foreground/js/ui/file_tap_handler.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1110159
+      },
+      "writtenOn": "2017-08-28T11:43:43Z",
+      "side": 1,
+      "message": "Could you rename the variable to make it clear that the index is entry\u0027s index? (e.g. activeEntryIndex_)",
+      "revId": "160f0cec5eeac4d708f2b1c84b530ef86142b42d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6606bd5f_cf6411b2",
+        "filename": "ui/file_manager/file_manager/foreground/js/ui/file_tap_handler.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1110159
+      },
+      "writtenOn": "2017-08-28T11:43:43Z",
+      "side": 1,
+      "message": "Something is missing after \"Though ...\" clause?",
+      "range": {
+        "startLine": 122,
+        "startChar": 54,
+        "endLine": 123,
+        "endChar": 65
+      },
+      "revId": "160f0cec5eeac4d708f2b1c84b530ef86142b42d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e03ca597_611ba20e",
+        "filename": "ui/file_manager/file_manager/foreground/js/ui/file_tap_handler.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1110159
+      },
+      "writtenOn": "2017-08-28T11:43:43Z",
+      "side": 1,
+      "message": "The comment for |activeTouch_| says 0 is valid, but it\u0027s ignored here.\n\nHow about renaming activeTouch_ to activeTouchId_ and use -1 for invalid value to prevent future errors like this?",
+      "revId": "160f0cec5eeac4d708f2b1c84b530ef86142b42d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aad35f79_2b7d11a2",
+        "filename": "ui/file_manager/file_manager/foreground/js/ui/file_tap_handler.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1110159
+      },
+      "writtenOn": "2017-08-28T11:43:43Z",
+      "side": 1,
+      "message": "|index| of this method is not valid on \u0027touchend\u0027 event?\nIf so, could you mention it in the comment of this method?",
+      "range": {
+        "startLine": 199,
+        "startChar": 28,
+        "endLine": 199,
+        "endChar": 40
+      },
+      "revId": "160f0cec5eeac4d708f2b1c84b530ef86142b42d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
