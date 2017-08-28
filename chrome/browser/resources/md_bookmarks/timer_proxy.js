@@ -28,15 +28,15 @@ cr.define('bookmarks', function() {
   };
 
   /**
-   * A one-shot debouncer which fires the given callback after a delay. The
-   * delay can be refreshed by calling resetTimer. Resetting with no delay moves
+   * A debouncer which fires the given callback after a delay. The delay can be
+   * refreshed by calling resetTimer. Resetting the timeout with no delay moves
    * the callback to the end of the task queue.
-   * @param {!function()} callback
+   * @param {?function()=} callback
    * @constructor
    */
   function Debouncer(callback) {
-    /** @private {!function()} */
-    this.callback_ = callback;
+    /** @private {?function()} */
+    this.callback_ = callback || null;
     /** @private {!bookmarks.TimerProxy} */
     this.timerProxy_ = new TimerProxy();
     /** @private {?number} */
@@ -51,11 +51,16 @@ cr.define('bookmarks', function() {
 
   Debouncer.prototype = {
     /**
+     * Starts the timer for the callback, cancelling the old timer if there is
+     * one.
      * @param {number=} delay
      */
     resetTimeout: function(delay) {
-      if (this.timer_)
-        this.timerProxy_.clearTimeout(this.timer_);
+      assert(!this.isDone_);
+      if (!this.callback_)
+        return;
+
+      this.cancelTimeout_();
       this.timer_ =
           this.timerProxy_.setTimeout(this.boundTimerCallback_, delay);
     },
@@ -74,8 +79,39 @@ cr.define('bookmarks', function() {
       return this.promiseResolver_.promise;
     },
 
+    /**
+     * Sets a new completion callback, resetting the debouncer.
+     * @param {!function()} callback
+     */
+    setCallback: function(callback) {
+      this.reset();
+
+      this.callback_ = callback;
+    },
+
+    /**
+     * Resets the debouncer as if it had been newly instantiated.
+     */
+    reset: function() {
+      this.isDone_ = false;
+      this.promiseResolver_ = new PromiseResolver();
+      this.cancelTimeout_();
+    },
+
+    /**
+     * Cancel the timer callback, which can be restarted by calling
+     * resetTimeout().
+     * @private
+     */
+    cancelTimeout_: function() {
+      if (this.timer_)
+        this.timerProxy_.clearTimeout(this.timer_);
+    },
+
     /** @private */
     timerCallback_: function() {
+      assert(this.callback_);
+
       this.isDone_ = true;
       this.callback_.call();
       this.promiseResolver_.resolve();
