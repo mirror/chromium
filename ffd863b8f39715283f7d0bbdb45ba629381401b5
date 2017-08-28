@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6d682c40_52afed21",
+        "filename": "content/renderer/fetchers/resource_fetcher_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-08-28T09:38:01Z",
+      "side": 1,
+      "message": "You can replace this branch with DCHECK (if you are certain about L173).",
+      "revId": "ffd863b8f39715283f7d0bbdb45ba629381401b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0819b90_38c293ed",
+        "filename": "content/renderer/fetchers/resource_fetcher_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-08-28T09:38:01Z",
+      "side": 1,
+      "message": "We usually don\u0027t have protection code for DCHECK violation, right?",
+      "revId": "ffd863b8f39715283f7d0bbdb45ba629381401b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d7af575_1e824694",
+        "filename": "content/renderer/fetchers/resource_fetcher_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-08-28T09:38:01Z",
+      "side": 1,
+      "message": "You may want to call Close() too.",
+      "revId": "ffd863b8f39715283f7d0bbdb45ba629381401b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
