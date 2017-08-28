@@ -152,6 +152,24 @@
       "revId": "d5997b72ae9026f793db87fb709cad7ee7db2986",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "745c91b1_91f73038",
+        "filename": "third_party/WebKit/Source/core/frame/csp/ContentSecurityPolicy.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 699,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-08-28T12:34:13Z",
+      "side": 1,
+      "message": "Existing users assume there are only two values. It means they may interpret kSuppressOnlyEvent as either kSuppressReporting (as it\u0027s not kReporting) or kReport(as it\u0027s not kSuppressReporting).",
+      "parentUuid": "37513cf3_4bb4e065",
+      "revId": "d5997b72ae9026f793db87fb709cad7ee7db2986",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
