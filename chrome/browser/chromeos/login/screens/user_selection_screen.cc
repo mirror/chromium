@@ -148,9 +148,10 @@ bool AllowFingerprintForUser(const user_manager::User* user) {
 
 // Returns true if dircrypto migration check should be performed.
 bool ShouldCheckNeedDircryptoMigration() {
-  return !base::CommandLine::ForCurrentProcess()->HasSwitch(
-             switches::kDisableEncryptionMigration) &&
-         arc::IsArcAvailable() && arc::IsArcMigrationAllowed();
+  // Disable dircrypto migration banner on user selection screen.
+  // TODO(bug747907): This should be removed going forward, but has been
+  // disabled as a first step.
+  return false;
 }
 
 // Returns true if the user can run ARC based on the user type.

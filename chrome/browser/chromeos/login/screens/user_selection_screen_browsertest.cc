@@ -62,7 +62,8 @@ IN_PROC_BROWSER_TEST_F(UserSelectionScreenTest,
   StartupUtils::MarkOobeCompleted();
 }
 
-// Test that a banner shows up for users that need dircrypto migration.
+// Test that we don't show a banner shows up for users that need dircrypto
+// migration.
 IN_PROC_BROWSER_TEST_F(UserSelectionScreenTest, ShowDircryptoMigrationBanner) {
   // Enable ARC. Otherwise, the banner would not show.
   base::CommandLine::ForCurrentProcess()->AppendSwitchASCII(
@@ -85,7 +86,7 @@ IN_PROC_BROWSER_TEST_F(UserSelectionScreenTest, ShowDircryptoMigrationBanner) {
   base::RunLoop().RunUntilIdle();
 
   // Banner should be shown for the 2nd user.
-  JSExpect("$('signin-banner').classList.contains('message-set')");
+  JSExpect("!$('signin-banner').classList.contains('message-set')");
 }
 
 }  // namespace chromeos
