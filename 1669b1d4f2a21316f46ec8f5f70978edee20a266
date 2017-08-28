@@ -16,6 +16,24 @@
       "revId": "1669b1d4f2a21316f46ec8f5f70978edee20a266",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b8d90ca_6e24c5f1",
+        "filename": "ui/message_center/views/notification_header_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1000175
+      },
+      "writtenOn": "2017-08-28T04:05:33Z",
+      "side": 1,
+      "message": "I thought these DCHECK is necessary to prevent future layout brakes by changes in the default font. This is the purpose of DCHECK. A future modifier would easily get to know this breaks layout in tests before the future change ships.\n\nAnyway, I\u0027ve just realized we should specify the font specs directly rather than deriving from the default font list. I updated the CL accordingly.",
+      "parentUuid": "bd5bdb67_9d60f28c",
+      "revId": "1669b1d4f2a21316f46ec8f5f70978edee20a266",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
