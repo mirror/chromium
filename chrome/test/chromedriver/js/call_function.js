@@ -249,9 +249,10 @@ function getPageCache(opt_doc, opt_w3c) {
  * appropriate objects to cached object IDs.
  *
  * @param {*} value The value to wrap.
+ * @param {number} depth Recursion depth.
  * @return {*} The wrapped value.
  */
-function wrap(value) {
+function wrap(value, depth) {
   // As of crrev.com/1316933002, typeof() for some elements will return
   // 'function', not 'object'. So we need to check for both non-null objects, as
   // well Elements that also happen to be callable functions (e.g. <embed> and
@@ -271,15 +272,18 @@ function wrap(value) {
       return wrapped;
     }
 
+    if (++depth > 5)
+      return value;
+
     var obj;
     if (typeof(value.length) == 'number') {
       obj = [];
       for (var i = 0; i < value.length; i++)
-        obj[i] = wrap(value[i]);
+        obj[i] = wrap(value[i], depth);
     } else {
       obj = {};
       for (var prop in value)
-        obj[prop] = wrap(value[prop]);
+        obj[prop] = wrap(value[prop], depth);
     }
     return obj;
   }
@@ -292,22 +296,26 @@ function wrap(value) {
  *
  * @param {*} value The value to unwrap.
  * @param {Cache} cache The cache to retrieve wrapped elements from.
+ * @param {number} depth Recursion depth.
  * @return {*} The unwrapped value.
  */
-function unwrap(value, cache) {
+function unwrap(value, cache, depth) {
   if (typeof(value) == 'object' && value != null) {
     if (ELEMENT_KEY in value)
       return cache.retrieveItem(value[ELEMENT_KEY]);
+
+    if (++depth > 5)
+      return value;
 
     var obj;
     if (typeof(value.length) == 'number') {
       obj = [];
       for (var i = 0; i < value.length; i++)
-        obj[i] = unwrap(value[i], cache);
+        obj[i] = unwrap(value[i], cache, depth);
     } else {
       obj = {};
       for (var prop in value)
-        obj[prop] = unwrap(value[prop], cache);
+        obj[prop] = unwrap(value[prop], cache, depth);
     }
     return obj;
   }
@@ -354,11 +362,11 @@ function callFunction(shadowHostIds, func, args, w3c, opt_unwrappedReturn) {
   }
 
   if (opt_unwrappedReturn)
-    return func.apply(null, unwrap(args, cache));
+    return func.apply(null, unwrap(args, cache, 0));
 
   var status = 0;
   try {
-    var returnValue = wrap(func.apply(null, unwrap(args, cache)));
+    var returnValue = wrap(func.apply(null, unwrap(args, cache, 0)), 0);
   } catch (error) {
     status = error.code || StatusCode.UNKNOWN_ERROR;
     var returnValue = error.message;
