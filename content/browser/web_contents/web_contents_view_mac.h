@@ -48,6 +48,8 @@ CONTENT_EXPORT
   BOOL mouseDownCanMoveWindow_;
 }
 
+- (id)initWithWebContentsViewMac:(content::WebContentsViewMac*)w;
+- (content::WebContentsImpl*)webContents;
 - (void)setMouseDownCanMoveWindow:(BOOL)canMove;
 
 // Returns the available drag operations. This is a required method for
@@ -139,6 +141,10 @@ class WebContentsViewMac : public WebContentsView,
   CONTENT_EXPORT static void InstallCreateHookForTests(
       RenderWidgetHostViewCreateFunction create_render_widget_host_view);
 
+ protected:
+  // The Cocoa NSView that lives in the view hierarchy.
+  base::scoped_nsobject<WebContentsViewCocoa> cocoa_view_;
+
  private:
   // Returns the fullscreen view, if one exists; otherwise, returns the content
   // native view. This ensures that the view currently attached to a NSWindow is
@@ -147,9 +153,6 @@ class WebContentsViewMac : public WebContentsView,
 
   // The WebContentsImpl whose contents we display.
   WebContentsImpl* web_contents_;
-
-  // The Cocoa NSView that lives in the view hierarchy.
-  base::scoped_nsobject<WebContentsViewCocoa> cocoa_view_;
 
   // Keeps track of which NSView has focus so we can restore the focus when
   // focus returns.

@@ -30,6 +30,7 @@
 #include "ui/base/clipboard/custom_data_helper.h"
 #import "ui/base/cocoa/focus_tracker.h"
 #include "ui/base/dragdrop/cocoa_dnd_util.h"
+#include "ui/base/ui_features.h"
 #include "ui/display/screen.h"
 #include "ui/gfx/image/image_skia_util_mac.h"
 #include "ui/gfx/mac/coordinate_conversion.h"
@@ -61,7 +62,6 @@ STATIC_ASSERT_ENUM(NSDragOperationDelete, blink::kWebDragOperationDelete);
 STATIC_ASSERT_ENUM(NSDragOperationEvery, blink::kWebDragOperationEvery);
 
 @interface WebContentsViewCocoa (Private)
-- (id)initWithWebContentsViewMac:(WebContentsViewMac*)w;
 - (void)registerDragTypes;
 - (void)setCurrentDragOperation:(NSDragOperation)operation;
 - (DropData*)dropData;
@@ -118,6 +118,7 @@ void WebContentsView::GetDefaultScreenInfo(ScreenInfo* results) {
   *results = GetNSViewScreenInfo(nil);
 }
 
+#if !BUILDFLAG(MAC_VIEWS_BROWSER)
 WebContentsView* CreateWebContentsView(
     WebContentsImpl* web_contents,
     WebContentsViewDelegate* delegate,
@@ -126,6 +127,7 @@ WebContentsView* CreateWebContentsView(
   *render_view_host_delegate_view = rv;
   return rv;
 }
+#endif
 
 WebContentsViewMac::WebContentsViewMac(WebContentsImpl* web_contents,
                                        WebContentsViewDelegate* delegate)

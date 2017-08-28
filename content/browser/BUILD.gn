@@ -1579,6 +1579,8 @@ source_set("browser") {
     "web_contents/web_contents_view_guest.h",
     "web_contents/web_contents_view_mac.h",
     "web_contents/web_contents_view_mac.mm",
+    "web_contents/web_contents_view_views_mac.h",
+    "web_contents/web_contents_view_views_mac.mm",
     "web_contents/web_drag_dest_mac.h",
     "web_contents/web_drag_dest_mac.mm",
     "web_contents/web_drag_source_mac.h",
