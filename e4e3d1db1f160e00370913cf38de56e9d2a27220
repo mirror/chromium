@@ -22,6 +22,30 @@
       "revId": "e4e3d1db1f160e00370913cf38de56e9d2a27220",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8bfbd587_9b3bc15a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-08-28T17:53:56Z",
+      "side": 1,
+      "message": "Done.\n\nThanks! I didn\u0027t realize that BUG\u003d footers aren\u0027t mandatory anymore.",
+      "parentUuid": "7e8e8501_7a66a2f5",
+      "range": {
+        "startLine": 23,
+        "startChar": 3,
+        "endLine": 23,
+        "endChar": 4
+      },
+      "revId": "e4e3d1db1f160e00370913cf38de56e9d2a27220",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
