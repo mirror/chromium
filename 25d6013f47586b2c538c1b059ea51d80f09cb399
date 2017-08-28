@@ -22,6 +22,30 @@
       "revId": "25d6013f47586b2c538c1b059ea51d80f09cb399",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d1118b4_67897b85",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 50164,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-08-28T17:17:04Z",
+      "side": 1,
+      "message": "We do already have the direct file size comparison from another recently landed histogram (OfflinePages.Prefetching.DownloadedArchiveSizeVsExpected). \n\nFrom this one here we want to obtain an idea of the requested and effectively downloaded data amounts. If we notice a big difference (even it from medians) or just large swings in timelines we might have a problem with our feature.",
+      "parentUuid": "c06e680b_d9761fa2",
+      "range": {
+        "startLine": 50150,
+        "startChar": 0,
+        "endLine": 50164,
+        "endChar": 12
+      },
+      "revId": "25d6013f47586b2c538c1b059ea51d80f09cb399",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
