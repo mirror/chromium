@@ -145,7 +145,10 @@ void HostCache::Entry::GetStaleness(base::TimeTicks now,
 }
 
 HostCache::HostCache(size_t max_entries)
-    : max_entries_(max_entries), network_changes_(0), delegate_(nullptr) {}
+    : max_entries_(max_entries),
+      network_changes_(0),
+      restore_size_(0),
+      delegate_(nullptr) {}
 
 HostCache::~HostCache() {
   DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
@@ -343,6 +346,7 @@ void HostCache::GetAsListValue(base::ListValue* entry_list,
 }
 
 bool HostCache::RestoreFromListValue(const base::ListValue& old_cache) {
+  restore_size_ = old_cache.GetSize();
   for (auto it = old_cache.begin(); it != old_cache.end(); it++) {
     const base::DictionaryValue* entry_dict;
     if (!it->GetAsDictionary(&entry_dict))

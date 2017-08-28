@@ -2183,6 +2183,24 @@ int HostResolverImpl::ResolveStaleFromCache(
   return rv;
 }
 
+size_t HostResolverImpl::RestoredCacheSize() {
+  DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
+
+  if (cache_)
+    return cache_->restore_size();
+
+  return 0;
+}
+
+size_t HostResolverImpl::CacheSize() {
+  DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
+
+  if (cache_)
+    return cache_->size();
+
+  return 0;
+}
+
 void HostResolverImpl::SetNoIPv6OnWifi(bool no_ipv6_on_wifi) {
   DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
   assume_ipv6_failure_on_wifi_ = no_ipv6_on_wifi;
