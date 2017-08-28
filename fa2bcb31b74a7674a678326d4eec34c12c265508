@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c284b7b9_65d0ee2c",
+        "filename": "chrome/browser/android/vr_shell/vr_gl_thread.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-08-28T14:24:06Z",
+      "side": 1,
+      "message": "Is this something you\u0027re planning to change due to separate \"what should scene manager do\" discussion?  Scene manager shouldn\u0027t be getting events like this - if GL concludes a timeout has happened, it should put the UI in a \"timed out\" state, and when appropriate, transition to something else.  Thoughts?",
+      "revId": "fa2bcb31b74a7674a678326d4eec34c12c265508",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b6d01ae_7ab73749",
+        "filename": "chrome/browser/android/vr_shell/vr_shell_gl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-08-28T14:24:06Z",
+      "side": 1,
+      "message": "Isn\u0027t this implicit when the object gets destroyed?  Why is this explicitly needed?",
+      "revId": "fa2bcb31b74a7674a678326d4eec34c12c265508",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60a35e67_40fb48bc",
+        "filename": "chrome/browser/vr/ui_scene_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 631,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-08-28T14:24:06Z",
+      "side": 1,
+      "message": "Ah, interesting.  Why funnel this through the scene manager?",
+      "revId": "fa2bcb31b74a7674a678326d4eec34c12c265508",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
