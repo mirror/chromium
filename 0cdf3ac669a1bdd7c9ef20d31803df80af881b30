@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e3097fec_73c3c6b7",
+        "filename": "components/spellcheck/browser/spellcheck_message_filter_platform.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-08-28T14:39:36Z",
+      "side": 1,
+      "message": "Let\u0027s do an \"#if defined(OS_MACOSX)\" in here for clarity, consistency with line 29, and to avoid bugs when another platform gets added.",
+      "range": {
+        "startLine": 60,
+        "startChar": 0,
+        "endLine": 60,
+        "endChar": 5
+      },
+      "revId": "0cdf3ac669a1bdd7c9ef20d31803df80af881b30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
