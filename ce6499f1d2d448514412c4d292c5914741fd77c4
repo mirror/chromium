@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bfe99d15_8f5a9b2c",
+        "filename": "content/browser/web_contents/web_contents_impl_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1401,
+      "author": {
+        "id": 1214679
+      },
+      "writtenOn": "2017-08-28T08:35:32Z",
+      "side": 0,
+      "message": "Moved above the only remaining function that uses it.",
+      "revId": "ce6499f1d2d448514412c4d292c5914741fd77c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "798c3e17_ece12fa7",
+        "filename": "content/browser/web_contents/web_contents_impl_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1401,
+      "author": {
+        "id": 1214679
+      },
+      "writtenOn": "2017-08-28T08:35:32Z",
+      "side": 0,
+      "message": "Moved above the only function that still uses it.",
+      "range": {
+        "startLine": 1401,
+        "startChar": 5,
+        "endLine": 1401,
+        "endChar": 24
+      },
+      "revId": "ce6499f1d2d448514412c4d292c5914741fd77c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f652285f_8173ca40",
+        "filename": "content/browser/web_contents/web_contents_impl_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1504,
+      "author": {
+        "id": 1214679
+      },
+      "writtenOn": "2017-08-28T08:35:32Z",
+      "side": 0,
+      "message": "This had nothing to do with a renderer initiated navigation after looking at the bug.",
+      "range": {
+        "startLine": 1504,
+        "startChar": 12,
+        "endLine": 1504,
+        "endChar": 50
+      },
+      "revId": "ce6499f1d2d448514412c4d292c5914741fd77c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0db869f_8f39ccf9",
+        "filename": "content/browser/web_contents/web_contents_impl_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 3627,
+      "author": {
+        "id": 1214679
+      },
+      "writtenOn": "2017-08-28T08:35:32Z",
+      "side": 0,
+      "message": "Confusing url here bringing no added value. Moved to more standard ones.",
+      "range": {
+        "startLine": 3627,
+        "startChar": 0,
+        "endLine": 3627,
+        "endChar": 53
+      },
+      "revId": "ce6499f1d2d448514412c4d292c5914741fd77c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
