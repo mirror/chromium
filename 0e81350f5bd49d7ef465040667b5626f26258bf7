@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6276efa1_be00fdc4",
+        "filename": "content/shell/browser/shell.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1228344
+      },
+      "writtenOn": "2017-08-28T14:53:17Z",
+      "side": 0,
+      "message": "In an additional CL, I can probably refactor this code. |web_contents| is a pointer to an owned instance. Using std::unique_ptr\u003cWebContents\u003e here and in the Shell constructor would be better.",
+      "range": {
+        "startLine": 111,
+        "startChar": 39,
+        "endLine": 111,
+        "endChar": 51
+      },
+      "revId": "0e81350f5bd49d7ef465040667b5626f26258bf7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
