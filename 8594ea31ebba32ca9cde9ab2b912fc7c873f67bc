@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4809b787_7eb680b8",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-08-28T03:17:42Z",
+      "side": 1,
+      "message": "Always stores default values into \u0027VALUE\u0027 property\n?",
+      "revId": "8594ea31ebba32ca9cde9ab2b912fc7c873f67bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a942878b_3cce2d35",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-08-28T03:17:42Z",
+      "side": 1,
+      "message": "Drop this line.\nIf you\u0027d like to write, I recommend to write what is bad with current code,\nand what this CL makes happier in few sentences.\n\n(if this comment conflicts with bashi@\u0027s advice, please follow his comment.)",
+      "revId": "8594ea31ebba32ca9cde9ab2b912fc7c873f67bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0528f529_955807c1",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-08-28T03:17:42Z",
+      "side": 1,
+      "message": "Before this CL, IDL default values are stored in different properties depending on their types:",
+      "revId": "8594ea31ebba32ca9cde9ab2b912fc7c873f67bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0a57c4e_220a4275",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-08-28T03:17:42Z",
+      "side": 1,
+      "message": "After this CL, all default values are stored in \u0027VALUE\u0027 properties:",
+      "revId": "8594ea31ebba32ca9cde9ab2b912fc7c873f67bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "886e8252_47422944",
+        "filename": "third_party/WebKit/Source/bindings/scripts/idl_definitions.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 476,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-08-28T03:17:42Z",
+      "side": 1,
+      "message": "Remove this commented original code.",
+      "revId": "8594ea31ebba32ca9cde9ab2b912fc7c873f67bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
