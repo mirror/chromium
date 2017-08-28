@@ -70,6 +70,30 @@
       "revId": "755f33bd77ffca1738b5b25cf01614ae3299ff3b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "25ed3212_f36ffe6e",
+        "filename": "components/ntp_tiles/most_visited_sites.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1200319
+      },
+      "writtenOn": "2017-08-28T15:34:22Z",
+      "side": 1,
+      "message": "1) If mobile.de is known, yes. If only www.mobile.de, or m.mobile.de is known, it wouldn\u0027t work. (Covered by test case)\n2) host\u003dm.timesofindia.in then no_prefix_host\u003d\"timesofindia.in\", so for prefix\u003d\"wwww.\", we would find a known wwww.m.timesofindia.in.\n\nYour cases are valid and possible too, but not the reason for this adding a prefix to the host.",
+      "parentUuid": "73bdb03e_c4bd9fec",
+      "range": {
+        "startLine": 125,
+        "startChar": 28,
+        "endLine": 125,
+        "endChar": 74
+      },
+      "revId": "755f33bd77ffca1738b5b25cf01614ae3299ff3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
