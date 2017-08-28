@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "e8678e15_3ad80315",
+        "filename": "device/hid/hid_device_filter.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-08-28T07:37:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6cf280bb_20ffc62a",
+      "range": {
+        "startLine": 26,
+        "startChar": 15,
+        "endLine": 26,
+        "endChar": 50
+      },
+      "revId": "ab4a491e30ef40df86383777f37b6862dd9f1fda",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0c4f1a1a_3b195bc3",
         "filename": "device/hid/hid_device_filter.h",
         "patchSetId": 11
@@ -68,6 +92,30 @@
       "revId": "ab4a491e30ef40df86383777f37b6862dd9f1fda",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f6ef469_a60c9a5d",
+        "filename": "device/hid/hid_device_filter.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-08-28T07:37:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0c4f1a1a_3b195bc3",
+      "range": {
+        "startLine": 28,
+        "startChar": 25,
+        "endLine": 28,
+        "endChar": 60
+      },
+      "revId": "ab4a491e30ef40df86383777f37b6862dd9f1fda",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +165,30 @@
     },
     {
       "key": {
+        "uuid": "20b000ff_f5f8f654",
+        "filename": "device/hid/hid_service.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-08-28T07:37:41Z",
+      "side": 1,
+      "message": "How about we keep passing by value here, because the mojo interface will be passing by value.",
+      "parentUuid": "9e7a4124_d143a497",
+      "range": {
+        "startLine": 42,
+        "startChar": 31,
+        "endLine": 42,
+        "endChar": 62
+      },
+      "revId": "ab4a491e30ef40df86383777f37b6862dd9f1fda",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d7280a75_4b10aef9",
         "filename": "device/hid/hid_service.h",
         "patchSetId": 11
@@ -128,6 +200,30 @@
       "writtenOn": "2017-08-25T17:32:08Z",
       "side": 1,
       "message": "This should be passed by value so that callees can move HidDeviceInfoPtrs out of the vector if they want to keep them.",
+      "range": {
+        "startLine": 50,
+        "startChar": 26,
+        "endLine": 50,
+        "endChar": 77
+      },
+      "revId": "ab4a491e30ef40df86383777f37b6862dd9f1fda",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8584097d_cd47a297",
+        "filename": "device/hid/hid_service.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-08-28T07:37:41Z",
+      "side": 1,
+      "message": "Yes, change it to pass by value.\nDone.",
+      "parentUuid": "d7280a75_4b10aef9",
       "range": {
         "startLine": 50,
         "startChar": 26,
@@ -163,6 +259,30 @@
     },
     {
       "key": {
+        "uuid": "acb69113_c1833fbb",
+        "filename": "device/hid/hid_service_linux.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-08-28T07:37:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6b56cc94_5c508b48",
+      "range": {
+        "startLine": 159,
+        "startChar": 52,
+        "endLine": 161,
+        "endChar": 71
+      },
+      "revId": "ab4a491e30ef40df86383777f37b6862dd9f1fda",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c3782534_e60b43b1",
         "filename": "device/hid/hid_service_mac.cc",
         "patchSetId": 11
@@ -183,6 +303,30 @@
       "revId": "ab4a491e30ef40df86383777f37b6862dd9f1fda",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed3ff02a_3aa66cbe",
+        "filename": "device/hid/hid_service_mac.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-08-28T07:37:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c3782534_e60b43b1",
+      "range": {
+        "startLine": 88,
+        "startChar": 50,
+        "endLine": 89,
+        "endChar": 80
+      },
+      "revId": "ab4a491e30ef40df86383777f37b6862dd9f1fda",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -209,6 +353,30 @@
     },
     {
       "key": {
+        "uuid": "80d3b89d_5d2190e6",
+        "filename": "device/hid/hid_service_win.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 264,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-08-28T07:37:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a880931f_daedf8e2",
+      "range": {
+        "startLine": 263,
+        "startChar": 50,
+        "endLine": 264,
+        "endChar": 80
+      },
+      "revId": "ab4a491e30ef40df86383777f37b6862dd9f1fda",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ad4289cc_f41ea36f",
         "filename": "device/hid/public/interfaces/hid_struct_traits.cc",
         "patchSetId": 11
@@ -232,6 +400,30 @@
     },
     {
       "key": {
+        "uuid": "c49bfc70_41873bc0",
+        "filename": "device/hid/public/interfaces/hid_struct_traits.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-08-28T07:37:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ad4289cc_f41ea36f",
+      "range": {
+        "startLine": 222,
+        "startChar": 0,
+        "endLine": 226,
+        "endChar": 3
+      },
+      "revId": "ab4a491e30ef40df86383777f37b6862dd9f1fda",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fbf042ad_aa07eb93",
         "filename": "device/hid/public/interfaces/typemaps.gni",
         "patchSetId": 11
@@ -243,6 +435,24 @@
       "writtenOn": "2017-08-25T17:32:08Z",
       "side": 1,
       "message": "Eventually we should deprecate the native structs/enums and just use the Mojo generate types instead of maintaining typemaps unless there is a compelling reason not to.",
+      "revId": "ab4a491e30ef40df86383777f37b6862dd9f1fda",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c55ed22_402d756f",
+        "filename": "device/hid/public/interfaces/typemaps.gni",
+        "patchSetId": 11
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-08-28T07:37:41Z",
+      "side": 1,
+      "message": "Yes. I\u0027ll remove the native structs/enum after mojofication.",
+      "parentUuid": "fbf042ad_aa07eb93",
       "revId": "ab4a491e30ef40df86383777f37b6862dd9f1fda",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -296,6 +506,30 @@
     },
     {
       "key": {
+        "uuid": "902ba0e3_576b3544",
+        "filename": "device/u2f/u2f_request.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-08-28T07:37:41Z",
+      "side": 1,
+      "message": "Thanks, then let\u0027s change it as passing by value, and clients can do std::move().\nDone.",
+      "parentUuid": "6bfc2c8b_0e27e7bc",
+      "range": {
+        "startLine": 60,
+        "startChar": 4,
+        "endLine": 60,
+        "endChar": 64
+      },
+      "revId": "ab4a491e30ef40df86383777f37b6862dd9f1fda",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "622b30aa_84f58603",
         "filename": "extensions/browser/api/device_permissions_manager.cc",
         "patchSetId": 11
@@ -307,6 +541,30 @@
       "writtenOn": "2017-08-25T17:32:08Z",
       "side": 1,
       "message": "Now that we are tracking ephemeral devices by GUID we no longer actually have to keep a full copy of the HidDeviceInfo struct in the DevicePermissionEntry so you should be able to remove the |hid_device_| member and have the constructor take a const device::mojom::HidDeviceInfo\u0026.",
+      "range": {
+        "startLine": 375,
+        "startChar": 0,
+        "endLine": 376,
+        "endChar": 48
+      },
+      "revId": "ab4a491e30ef40df86383777f37b6862dd9f1fda",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8443e50_f04c7f5c",
+        "filename": "extensions/browser/api/device_permissions_manager.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 376,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-08-28T07:37:41Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "622b30aa_84f58603",
       "range": {
         "startLine": 375,
         "startChar": 0,
@@ -336,6 +594,24 @@
     },
     {
       "key": {
+        "uuid": "b32f9304_7b4e1897",
+        "filename": "extensions/browser/api/device_permissions_manager.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 567,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-08-28T07:37:41Z",
+      "side": 1,
+      "message": "Sorry for this. Done.",
+      "parentUuid": "99f75eac_86be40fd",
+      "revId": "ab4a491e30ef40df86383777f37b6862dd9f1fda",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2684e328_d8ace228",
         "filename": "extensions/browser/api/device_permissions_manager.cc",
         "patchSetId": 11
@@ -350,6 +626,24 @@
       "revId": "ab4a491e30ef40df86383777f37b6862dd9f1fda",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17d59133_feb47f7c",
+        "filename": "extensions/browser/api/device_permissions_manager.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 572,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-08-28T07:37:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2684e328_d8ace228",
+      "revId": "ab4a491e30ef40df86383777f37b6862dd9f1fda",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -376,6 +670,30 @@
     },
     {
       "key": {
+        "uuid": "24ff5ac9_20b428b6",
+        "filename": "extensions/browser/api/device_permissions_manager.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-08-28T07:37:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "344f8f6d_2533b985",
+      "range": {
+        "startLine": 118,
+        "startChar": 6,
+        "endLine": 118,
+        "endChar": 41
+      },
+      "revId": "ab4a491e30ef40df86383777f37b6862dd9f1fda",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "583a667b_7d89cb2b",
         "filename": "extensions/browser/api/device_permissions_prompt.cc",
         "patchSetId": 11
@@ -396,6 +714,30 @@
       "revId": "ab4a491e30ef40df86383777f37b6862dd9f1fda",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e31b6789_6ae96012",
+        "filename": "extensions/browser/api/device_permissions_prompt.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-08-28T07:37:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "583a667b_7d89cb2b",
+      "range": {
+        "startLine": 219,
+        "startChar": 8,
+        "endLine": 219,
+        "endChar": 54
+      },
+      "revId": "ab4a491e30ef40df86383777f37b6862dd9f1fda",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -422,6 +764,30 @@
     },
     {
       "key": {
+        "uuid": "3d0f1890_a1c9885e",
+        "filename": "extensions/browser/api/hid/hid_device_manager.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-08-28T07:37:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "82bed951_814b0b4d",
+      "range": {
+        "startLine": 69,
+        "startChar": 21,
+        "endLine": 69,
+        "endChar": 56
+      },
+      "revId": "ab4a491e30ef40df86383777f37b6862dd9f1fda",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "36185233_a990e333",
         "filename": "extensions/browser/api/hid/hid_device_manager.h",
         "patchSetId": 11
@@ -442,6 +808,30 @@
       "revId": "ab4a491e30ef40df86383777f37b6862dd9f1fda",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72e2d269_845e658b",
+        "filename": "extensions/browser/api/hid/hid_device_manager.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-08-28T07:37:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "36185233_a990e333",
+      "range": {
+        "startLine": 114,
+        "startChar": 21,
+        "endLine": 114,
+        "endChar": 56
+      },
+      "revId": "ab4a491e30ef40df86383777f37b6862dd9f1fda",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
