@@ -277,6 +277,11 @@ public class CompositorView
         IntentWithGesturesHandler.getInstance().clear();
     }
 
+    void onSizeChanged(WebContents webContents, int w, int h) {
+        if (webContents == null) return;
+        nativeOnSizeChanged(mNativeCompositorView, webContents, w, h);
+    }
+
     void onPhysicalBackingSizeChanged(WebContents webContents, int width, int height) {
         nativeOnPhysicalBackingSizeChanged(mNativeCompositorView, webContents, width, height);
     }
@@ -413,6 +418,8 @@ public class CompositorView
     private native void nativeSurfaceDestroyed(long nativeCompositorView);
     private native void nativeSurfaceChanged(
             long nativeCompositorView, int format, int width, int height, Surface surface);
+    private native void nativeOnSizeChanged(
+            long nativeCompositorView, WebContents webContents, int width, int height);
     private native void nativeOnPhysicalBackingSizeChanged(
             long nativeCompositorView, WebContents webContents, int width, int height);
     private native void nativeFinalizeLayers(long nativeCompositorView);

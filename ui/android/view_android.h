@@ -151,6 +151,8 @@ class UI_ANDROID_EXPORT ViewAndroid {
                         const base::android::JavaRef<jobject>& jimage);
 
   gfx::Size GetPhysicalBackingSize();
+
+  void OnSizeChanged(int width, int height);
   void OnPhysicalBackingSizeChanged(const gfx::Size& size);
   void OnCursorChanged(int type,
                        const SkBitmap& custom_image,
@@ -219,6 +221,9 @@ class UI_ANDROID_EXPORT ViewAndroid {
   // Checks if there is any event forwarder in the node paths down to
   // each leaf of subtree.
   static bool SubtreeHasEventForwarder(ViewAndroid* view);
+
+  void OnSizeChangedInternal(int width, int height);
+  void DispatchOnSizeChanged();
 
   // Returns the Java delegate for this view. This is used to delegate work
   // up to the embedding view (or the embedder that can deal with the

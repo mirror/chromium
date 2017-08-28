@@ -5,6 +5,7 @@
 #include "ui/android/view_android.h"
 
 #include <algorithm>
+#include <cmath>
 
 #include "base/android/jni_android.h"
 #include "base/android/jni_string.h"
@@ -139,6 +140,12 @@ void ViewAndroid::AddChild(ViewAndroid* child) {
   // accidentally overwrite the valid ones in the children.
   if (!physical_size_.IsEmpty())
     child->OnPhysicalBackingSizeChanged(physical_size_);
+
+  if (layout_params_.match_parent &&
+      (layout_params_.width != 0 || layout_params_.height != 0)) {
+    child->OnSizeChangedInternal(layout_params_.width, layout_params_.height);
+    DispatchOnSizeChanged();
+  }
 }
 
 // static
@@ -349,6 +356,31 @@ int ViewAndroid::GetSystemWindowInsetBottom() {
   return Java_ViewAndroidDelegate_getSystemWindowInsetBottom(env, delegate);
 }
 
+void ViewAndroid::OnSizeChanged(int width, int height) {
+  float scale = GetDipScale();
+  OnSizeChangedInternal(std::ceil(width / scale), std::ceil(height / scale));
+
+  // Signal resize event after all the views in the tree get the updated size.
+  DispatchOnSizeChanged();
+}
+
+void ViewAndroid::OnSizeChangedInternal(int width, int height) {
+  // TODO(jinsukkim): Set the top ViewAndroid of each content to have explicit
+  //     size. Their children can keep |match_parent| attribute.
+  layout_params_.width = width;
+  layout_params_.height = height;
+  for (auto* child : children_) {
+    if (child->layout_params_.match_parent)
+      child->OnSizeChangedInternal(width, height);
+  }
+}
+
+void ViewAndroid::DispatchOnSizeChanged() {
+  client_->OnSizeChanged();
+  for (auto* child : children_)
+    child->DispatchOnSizeChanged();
+}
+
 void ViewAndroid::OnPhysicalBackingSizeChanged(const gfx::Size& size) {
   if (physical_size_ == size)
     return;
@@ -357,6 +389,8 @@ void ViewAndroid::OnPhysicalBackingSizeChanged(const gfx::Size& size) {
 
   for (auto* child : children_)
     child->OnPhysicalBackingSizeChanged(size);
+
+  OnSizeChanged(size.width(), size.height());
 }
 
 gfx::Size ViewAndroid::GetPhysicalBackingSize() {
