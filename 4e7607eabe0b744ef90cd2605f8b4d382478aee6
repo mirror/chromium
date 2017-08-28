@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "53299d93_176a28f5",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-08-28T15:28:55Z",
+      "side": 1,
+      "message": "I am not sure, I used what bookmarks are using. I have no idea if there is a standard :)\nI did not see that much iPad/iPhone on class names though.",
+      "parentUuid": "d59a14e2_f5183820",
+      "revId": "4e7607eabe0b744ef90cd2605f8b4d382478aee6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bf934e58_057d41f8",
         "filename": "ios/chrome/browser/ui/ntp/recent_tabs/recent_tabs_handset_view_controller.mm",
         "patchSetId": 8
