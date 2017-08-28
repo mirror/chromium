@@ -16,6 +16,24 @@
       "revId": "62ec0e81c89a83710e7e8f941292d9baeaef877b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93a1e7f3_32b43c23",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/access-control-basic-non-cors-safelisted-deny-cached.htm",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1225177
+      },
+      "writtenOn": "2017-08-28T23:38:27Z",
+      "side": 1,
+      "message": "That makes more sense to me, too! I\u0027ll change it. Thanks for your help!",
+      "parentUuid": "4f9bd571_3f118143",
+      "revId": "62ec0e81c89a83710e7e8f941292d9baeaef877b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
