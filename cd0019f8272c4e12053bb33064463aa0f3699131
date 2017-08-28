@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9969d0d3_e9b82ae6",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/PaymentInstrument.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-08-28T13:58:38Z",
+      "side": 1,
+      "message": "1) Let\u0027s rename \"result\" into \"abortSucceeded\".\n\n2) Let\u0027s rename onInstrumentDetailsAborted(abortSucceeded) into onInstrumentAbortResult(abortSucceeded).\n\n3) Let\u0027s separate onInstrumentAbortResult(abortSucceeded) into its own interface AbortCallback.",
+      "range": {
+        "startLine": 54,
+        "startChar": 48,
+        "endLine": 54,
+        "endChar": 54
+      },
+      "revId": "cd0019f8272c4e12053bb33064463aa0f3699131",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d57be8fb_3d9ffa91",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/PaymentInstrument.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-08-28T13:58:38Z",
+      "side": 1,
+      "message": "\"abortPayment()\" seems cleaner.",
+      "range": {
+        "startLine": 159,
+        "startChar": 16,
+        "endLine": 159,
+        "endChar": 37
+      },
+      "revId": "cd0019f8272c4e12053bb33064463aa0f3699131",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8813bbe0_a49ed81c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/PaymentRequestImpl.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 1431,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-08-28T13:58:38Z",
+      "side": 1,
+      "message": "I\u0027m not confident that mPaymentMethodsSection.getSelectedItem() value will remain constant. Let\u0027s save the invoked payment instrument into a member variable instead. For example, \"mInvokedPaymentInstrument\".",
+      "range": {
+        "startLine": 1431,
+        "startChar": 33,
+        "endLine": 1431,
+        "endChar": 73
+      },
+      "revId": "cd0019f8272c4e12053bb33064463aa0f3699131",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
