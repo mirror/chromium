@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "99344dd4_bc5de436",
+        "filename": "build/android/gyp/aar.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-08-28T18:04:43Z",
+      "side": 1,
+      "message": "Looks like the second line goes over 80 chars if I indent it 4 spaces and add textwrap.dedent().\n\nI could also do a \u0027\\n\u0027.join([...]), but that runs into the same problem. \n\nI think leaving as-is is the most readable option.",
+      "parentUuid": "3793e32c_7957751c",
+      "revId": "260d39c520a9e7bea9b5ab548d0e3790291cc7a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "af8bd909_5dcaf196",
         "filename": "build/android/gyp/aar.py",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-28T15:56:12Z",
       "side": 1,
       "message": "huh, didn\u0027t know about FileType. Neat.",
+      "revId": "260d39c520a9e7bea9b5ab548d0e3790291cc7a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4049057e_593760e8",
+        "filename": "build/android/gyp/aar.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-08-28T18:04:43Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "af8bd909_5dcaf196",
       "revId": "260d39c520a9e7bea9b5ab548d0e3790291cc7a5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
