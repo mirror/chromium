@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "309e7d63_0ac5720c",
+        "filename": "chrome/browser/android/vr_shell/vr_shell.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 355,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-08-28T16:41:12Z",
+      "side": 1,
+      "message": "We probably want to cancel the polling in OnPause too right? No reason to poll if we\u0027re backgrounded.",
+      "range": {
+        "startLine": 355,
+        "startChar": 2,
+        "endLine": 355,
+        "endChar": 21
+      },
+      "revId": "a01996b6d4e7b2af363b517c2b9654b5dd82bd4d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
