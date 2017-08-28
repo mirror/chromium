@@ -16,6 +16,24 @@
       "revId": "227c45e7ca7d57928b961f9efde93456a05a8a71",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7df73a23_10dff4a2",
+        "filename": "ui/webui/resources/cr_elements/shared_vars_css.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-08-28T19:29:35Z",
+      "side": 1,
+      "message": "Yep, totally agree. \nIt should also be used in several other webui pages and controls.\nI think it will be easier to review that in a separate CL though.",
+      "parentUuid": "689b7b92_04d5bffe",
+      "revId": "227c45e7ca7d57928b961f9efde93456a05a8a71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
