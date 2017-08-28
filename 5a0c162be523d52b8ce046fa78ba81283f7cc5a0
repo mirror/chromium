@@ -149,6 +149,24 @@
     },
     {
       "key": {
+        "uuid": "6ccef4c1_f5458f25",
+        "filename": "components/ntp_tiles/most_visited_sites.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1200319
+      },
+      "writtenOn": "2017-08-28T14:01:55Z",
+      "side": 1,
+      "message": "I made it work. The empty string has to remain last now.",
+      "parentUuid": "3e3905d0_18782629",
+      "revId": "5a0c162be523d52b8ce046fa78ba81283f7cc5a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cab12b46_743f7e80",
         "filename": "components/ntp_tiles/most_visited_sites.cc",
         "patchSetId": 2
@@ -217,6 +235,30 @@
       "revId": "5a0c162be523d52b8ce046fa78ba81283f7cc5a0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ba08ad1_afc0eb50",
+        "filename": "components/ntp_tiles/most_visited_sites.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1200319
+      },
+      "writtenOn": "2017-08-28T14:01:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a6302b45_d769e4c2",
+      "range": {
+        "startLine": 78,
+        "startChar": 5,
+        "endLine": 78,
+        "endChar": 28
+      },
+      "revId": "5a0c162be523d52b8ce046fa78ba81283f7cc5a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
