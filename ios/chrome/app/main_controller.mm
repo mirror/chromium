@@ -645,8 +645,6 @@ enum class StackViewDismissalMode { NONE, NORMAL, INCOGNITO };
 
   RegisterComponentsForUpdate();
 
-  [BackgroundUploadAlert setupBackgroundUploadAlert];
-
   // Remove the extra browser states as Chrome iOS is single profile in M48+.
   ChromeBrowserStateRemovalController::GetInstance()
       ->RemoveBrowserStatesIfNecessary();
