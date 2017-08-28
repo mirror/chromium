@@ -33,6 +33,114 @@
       "revId": "0e3f089152a8e76e18cfcca8e2088272235e19d7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ec0aa3f_9f7b1981",
+        "filename": "content/browser/service_worker/service_worker_url_loader_job_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 440,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-28T05:54:36Z",
+      "side": 1,
+      "message": "It\u0027s not really the stream response that got cancelled, but the job itself.\n\n// Test when the job is cancelled while a stream response is being written.",
+      "revId": "0e3f089152a8e76e18cfcca8e2088272235e19d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a2a815d_1319a3a4",
+        "filename": "content/browser/service_worker/service_worker_url_loader_job_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 456,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-28T05:54:36Z",
+      "side": 1,
+      "message": "then cancel the job",
+      "range": {
+        "startLine": 456,
+        "startChar": 46,
+        "endLine": 456,
+        "endChar": 49
+      },
+      "revId": "0e3f089152a8e76e18cfcca8e2088272235e19d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ba6dd05_aabac3f9",
+        "filename": "content/browser/service_worker/service_worker_url_loader_job_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 463,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-28T05:54:36Z",
+      "side": 1,
+      "message": "we can add EXPECT_TRUE(version_-\u003eHasWork())",
+      "revId": "0e3f089152a8e76e18cfcca8e2088272235e19d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b94511e3_992f1928",
+        "filename": "content/browser/service_worker/service_worker_url_loader_job_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 468,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-28T05:54:36Z",
+      "side": 1,
+      "message": "Expand this comment:\n\n// Although ServiceworkerURLLoaderJob resets its URLLoaderClient pointer in Cancel(), the URLLoaderClient still exists. In this test, it is |client_| which owns the data pipe, so it\u0027s still valid to write data to it.",
+      "revId": "0e3f089152a8e76e18cfcca8e2088272235e19d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12878ee5_5c727544",
+        "filename": "content/browser/service_worker/service_worker_url_loader_job_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 471,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-28T05:54:36Z",
+      "side": 1,
+      "message": "TODO(falken): This should probably be an error.",
+      "revId": "0e3f089152a8e76e18cfcca8e2088272235e19d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bda13841_fc91b859",
+        "filename": "content/browser/service_worker/service_worker_url_loader_job_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 472,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-28T05:54:36Z",
+      "side": 1,
+      "message": "no need to ASSERT here, can just be EXPECT_EQ",
+      "revId": "0e3f089152a8e76e18cfcca8e2088272235e19d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
