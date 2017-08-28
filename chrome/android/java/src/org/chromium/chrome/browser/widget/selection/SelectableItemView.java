@@ -17,7 +17,6 @@ import android.widget.TextView;
 
 import org.chromium.base.ApiCompatibilityUtils;
 import org.chromium.chrome.R;
-import org.chromium.chrome.browser.util.FeatureUtilities;
 import org.chromium.chrome.browser.widget.TintedImageView;
 import org.chromium.chrome.browser.widget.selection.SelectionDelegate.SelectionObserver;
 
@@ -105,9 +104,7 @@ public abstract class SelectableItemView<E> extends FrameLayout implements Check
         mDescriptionView = findViewById(R.id.description);
 
         if (mIconView != null) {
-            if (FeatureUtilities.isChromeHomeModernEnabled()) {
-                mIconView.setBackgroundResource(R.drawable.selectable_item_icon_modern_bg);
-            }
+            mIconView.setBackgroundResource(R.drawable.selectable_item_icon_modern_bg);
             mIconView.setTint(null);
         }
 
@@ -205,16 +202,14 @@ public abstract class SelectableItemView<E> extends FrameLayout implements Check
         // TODO(huayinz): Refactor this method so that mIconView is not exposed to subclass.
         if (mIconView == null) return;
 
-        if (FeatureUtilities.isChromeHomeModernEnabled()) {
-            if (isChecked()) {
-                mIconView.getBackground().setLevel(mSelectedLevel);
-                mIconView.setImageResource(R.drawable.ic_check_googblue_24dp);
-                mIconView.setTint(mIconColorList);
-            } else {
-                mIconView.getBackground().setLevel(mDefaultLevel);
-                mIconView.setImageDrawable(mIconDrawable);
-                mIconView.setTint(null);
-            }
+        if (isChecked()) {
+            mIconView.getBackground().setLevel(mSelectedLevel);
+            mIconView.setImageResource(R.drawable.ic_check_googblue_24dp);
+            mIconView.setTint(mIconColorList);
+        } else {
+            mIconView.getBackground().setLevel(mDefaultLevel);
+            mIconView.setImageDrawable(mIconDrawable);
+            mIconView.setTint(null);
         }
     }
 
