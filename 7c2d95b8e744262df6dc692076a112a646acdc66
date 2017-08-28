@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "2a892e2d_5ec3d6d9",
+        "filename": "base/synchronization/waitable_event_mac.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-08-28T17:39:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "416da4d3_3de7512a",
+      "revId": "7c2d95b8e744262df6dc692076a112a646acdc66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5acca7bb_b5c30568",
         "filename": "base/synchronization/waitable_event_mac.cc",
         "patchSetId": 2
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "4362048d_743863cc",
+        "filename": "base/synchronization/waitable_event_mac.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-08-28T17:39:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5acca7bb_b5c30568",
+      "range": {
+        "startLine": 216,
+        "startChar": 12,
+        "endLine": 216,
+        "endChar": 32
+      },
+      "revId": "7c2d95b8e744262df6dc692076a112a646acdc66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fe74cbcf_d8b51af5",
         "filename": "base/synchronization/waitable_event_mac.cc",
         "patchSetId": 2
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "6e5a9c42_be0993d5",
+        "filename": "base/synchronization/waitable_event_mac.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-08-28T17:39:38Z",
+      "side": 1,
+      "message": "Yes, if you called WaitMany as you described it will return immediately with the second event signaled for auto-reset events. For manual-reset events, if the event were not reset, then it would return the same signaled event.",
+      "parentUuid": "fe74cbcf_d8b51af5",
+      "revId": "7c2d95b8e744262df6dc692076a112a646acdc66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a61a3b11_bdffc800",
         "filename": "base/synchronization/waitable_event_mac.cc",
         "patchSetId": 2
@@ -73,6 +133,24 @@
       "revId": "7c2d95b8e744262df6dc692076a112a646acdc66",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1fad536_141df007",
+        "filename": "base/synchronization/waitable_event_mac.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 258,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-08-28T17:39:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a61a3b11_bdffc800",
+      "revId": "7c2d95b8e744262df6dc692076a112a646acdc66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
