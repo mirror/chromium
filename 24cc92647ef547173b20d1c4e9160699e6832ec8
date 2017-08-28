@@ -225,6 +225,24 @@
     },
     {
       "key": {
+        "uuid": "22212c87_f2ee0f82",
+        "filename": "chrome/browser/translate/translate_language_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1215199
+      },
+      "writtenOn": "2017-08-28T04:57:48Z",
+      "side": 1,
+      "message": "Right, you could pass in the same browser object to GetUrlLanguageHistogram too.\n\nI was thinking it wouldn\u0027t be stateful because everything (except GetCurrentBubble) in this method applies to browser_, which could just be an argument.\n\nSpeaking of GetCurrentBubble: how does it work when you spawn an incognito window? Does it refer to the bubble on the incognito session or the original session?",
+      "parentUuid": "94416f60_69cb3439",
+      "revId": "24cc92647ef547173b20d1c4e9160699e6832ec8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b3693b71_8eb9a0d7",
         "filename": "chrome/browser/translate/translate_language_browsertest.cc",
         "patchSetId": 6
@@ -354,6 +372,30 @@
       "side": 1,
       "message": "that\u0027s a very good suggestion, can you point me to where to get the translate_manager in this case?",
       "parentUuid": "060ad490_150cf951",
+      "range": {
+        "startLine": 113,
+        "startChar": 20,
+        "endLine": 113,
+        "endChar": 0
+      },
+      "revId": "24cc92647ef547173b20d1c4e9160699e6832ec8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4bb37c1_d22caecd",
+        "filename": "chrome/browser/translate/translate_language_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1215199
+      },
+      "writtenOn": "2017-08-28T04:57:48Z",
+      "side": 1,
+      "message": "You could use\nChromeTranslateClient::FromWebContents(web_contents())-\u003eGetLanguageState()\nand check e.g.\ncurrent_language()\ntranslation_error()\nIsPageTranslated()\n\nYou might have to define another observer (for the actual translation to complete), though.",
+      "parentUuid": "a2d9171d_e6799fc2",
       "range": {
         "startLine": 113,
         "startChar": 20,
