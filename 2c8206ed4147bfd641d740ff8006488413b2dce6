@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bef4c35b_681a9c4f",
+        "filename": "remoting/client/audio/audio_frame_supplier.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1152109
+      },
+      "writtenOn": "2017-08-28T20:49:14Z",
+      "side": 1,
+      "message": "Const should be applied to the function instead of the return type...\n\n  virtual AudioPacket::SamplingRate buffered_sampling_rate() const \u003d 0\n\nWell I know C++\u0027s const semantics are a bit mysterious X_X",
+      "range": {
+        "startLine": 26,
+        "startChar": 0,
+        "endLine": 26,
+        "endChar": 71
+      },
+      "revId": "2c8206ed4147bfd641d740ff8006488413b2dce6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
