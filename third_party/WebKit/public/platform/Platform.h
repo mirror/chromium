@@ -89,6 +89,7 @@ class Local;
 namespace blink {
 
 class InterfaceProvider;
+class TrialPolicy;
 class WebAudioBus;
 class WebAudioLatencyHint;
 class WebBlobRegistry;
@@ -697,7 +698,8 @@ class BLINK_PLATFORM_EXPORT Platform {
 
   // Experimental Framework ----------------------------------------------
 
-  virtual WebTrialTokenValidator* TrialTokenValidator() { return nullptr; }
+  virtual std::unique_ptr<WebTrialTokenValidator> TrialTokenValidator();
+  virtual std::unique_ptr<TrialPolicy> OriginTrialPolicy();
 
   // Media Capabilities --------------------------------------------------
 
