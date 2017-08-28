@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7021f988_386e9578",
+        "filename": "headless/lib/browser/headless_browser_manifest_overlay.json",
+        "patchSetId": 15
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-28T21:46:28Z",
+      "side": 1,
+      "message": "FWIW, I think this should probably be called compositor as well, but that can be addressed separately.",
+      "range": {
+        "startLine": 6,
+        "startChar": 29,
+        "endLine": 6,
+        "endChar": 38
+      },
+      "revId": "ebe3d9b732602a7733de55c87f636a1203cdd734",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
