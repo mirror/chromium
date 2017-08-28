@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "1e30edab_946a5c6d",
+        "filename": "content/browser/android/text_suggestion_host_android.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1229332
+      },
+      "writtenOn": "2017-08-28T22:11:35Z",
+      "side": 1,
+      "message": "Can you please clarify what you\u0027re suggesting?\n\nAre you saying we should have a method on the Java TextSuggestionHost that the C++ code can call to add a suggestion? And call it several times in a loop before calling showTextSuggestionMenu()? You said in another comment, \"I don\u0027t want us to allow public methods to call setSpellCheckSuggestions() and then showTextSuggestionMenu(),\" which seems to contradict this possibility.\n\nAnother option would be to pass five separate arrays, one for each field in SuggestionInfo, but I think that would be really messy.",
+      "parentUuid": "f57fb512_ecc5b0ca",
+      "range": {
+        "startLine": 171,
+        "startChar": 32,
+        "endLine": 171,
+        "endChar": 56
+      },
+      "revId": "21ea7a35f3ad13c6fec64aff009293058c6e672f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6c1db097_c0c40012",
         "filename": "content/public/android/java/src/org/chromium/content/browser/input/ImeAdapter.java",
         "patchSetId": 6
@@ -36,6 +60,30 @@
       "writtenOn": "2017-08-28T19:28:47Z",
       "side": 1,
       "message": "Could you change the structure as follows?\n\n// Copied from Android\u0027s Editor.java [and other places] for a similar look and feel.\nint underlineColor \u003d ...\nint newAlpha \u003d ...\nint suggestionHighlightColor \u003d ...",
+      "range": {
+        "startLine": 927,
+        "startChar": 16,
+        "endLine": 927,
+        "endChar": 45
+      },
+      "revId": "21ea7a35f3ad13c6fec64aff009293058c6e672f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dad3a8ef_06bc2ecf",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/input/ImeAdapter.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 927,
+      "author": {
+        "id": 1229332
+      },
+      "writtenOn": "2017-08-28T22:11:35Z",
+      "side": 1,
+      "message": "Ok",
+      "parentUuid": "6c1db097_c0c40012",
       "range": {
         "startLine": 927,
         "startChar": 16,
@@ -82,6 +130,30 @@
       "writtenOn": "2017-08-28T19:28:47Z",
       "side": 1,
       "message": "I think you can hide all the details in the popup window itself. I\u0027ve mentioned this in another place but I\u0027d prefer subclassing popup window for each mode.\n\nprivate void showTextSuggestionMenu(...) {\n  if (mSpellCheckPopupWindow !\u003d null) mSpellCheckPopupWindow.dismiss();\n  if (mTextSuggestionPopupWindow \u003d\u003d null) mTextSuggestionPopupWindow \u003d new ...;\n  float density \u003d ...;\n  float coordX \u003d ...;\n  float coordY \u003d ...;\n  mTextSuggestionPopupWindow.show(coordX, coordY, markedText, suggestions);\n}",
+      "range": {
+        "startLine": 61,
+        "startChar": 32,
+        "endLine": 61,
+        "endChar": 50
+      },
+      "revId": "21ea7a35f3ad13c6fec64aff009293058c6e672f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd1f428f_78731450",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/input/TextSuggestionHost.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1229332
+      },
+      "writtenOn": "2017-08-28T22:11:35Z",
+      "side": 1,
+      "message": "Ok",
+      "parentUuid": "64dd31e8_0dce13bc",
       "range": {
         "startLine": 61,
         "startChar": 32,
@@ -174,6 +246,30 @@
       "writtenOn": "2017-08-28T19:28:47Z",
       "side": 1,
       "message": "Do you need to dismiss popup windows here?",
+      "range": {
+        "startLine": 121,
+        "startChar": 17,
+        "endLine": 121,
+        "endChar": 24
+      },
+      "revId": "21ea7a35f3ad13c6fec64aff009293058c6e672f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48899d7f_6becc491",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/input/TextSuggestionHost.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1229332
+      },
+      "writtenOn": "2017-08-28T22:11:35Z",
+      "side": 1,
+      "message": "I\u0027m not sure under what circumstances this would be called with the popup open...perhaps?",
+      "parentUuid": "d51bef35_61011015",
       "range": {
         "startLine": 121,
         "startChar": 17,
