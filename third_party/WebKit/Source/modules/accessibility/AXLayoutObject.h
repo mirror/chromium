@@ -210,6 +210,13 @@ class MODULES_EXPORT AXLayoutObject : public AXNodeObject {
   AXRange TextControlSelection() const;
   int IndexForVisiblePosition(const VisiblePosition&) const;
   AXLayoutObject* GetUnignoredObjectFromNode(Node&) const;
+
+  bool CanIgnoreTextAsEmpty() const;
+  bool CanIgnoreSeparatingSpaceNextTo(Node*) const;
+  Node* AnyNextNode(Node*) const;
+  Node* AnyPreviousNode(Node*) const;
+  bool IsNativelyFocusable(Element*) const;
+  bool HasAriaCellRole(Element*) const;
 };
 
 DEFINE_AX_OBJECT_TYPE_CASTS(AXLayoutObject, IsAXLayoutObject());
