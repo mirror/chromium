@@ -1497,11 +1497,11 @@ TEST(ExtensionWebRequestHelpersTest, TestCalculateOnHeadersReceivedDelta) {
   // Key3 is deleted
   new_headers.push_back(ResponseHeader("Key4", "Value4"));  // Added
   new_headers.push_back(ResponseHeader("Key5", "Value5, end5"));  // Unchanged
-  GURL effective_new_url;
+  GURL url;
 
-  std::unique_ptr<EventResponseDelta> delta(CalculateOnHeadersReceivedDelta(
-      "extid", base::Time::Now(), cancel, effective_new_url, base_headers.get(),
-      &new_headers));
+  std::unique_ptr<EventResponseDelta> delta(
+      CalculateOnHeadersReceivedDelta("extid", base::Time::Now(), cancel, url,
+                                      url, base_headers.get(), &new_headers));
   ASSERT_TRUE(delta.get());
   EXPECT_TRUE(delta->cancel);
   EXPECT_EQ(2u, delta->added_response_headers.size());

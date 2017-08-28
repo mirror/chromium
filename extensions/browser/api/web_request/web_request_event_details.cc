@@ -18,6 +18,7 @@
 #include "extensions/browser/api/web_request/web_request_api_constants.h"
 #include "extensions/browser/api/web_request/web_request_api_helpers.h"
 #include "extensions/browser/api/web_request/web_request_resource_type.h"
+#include "extensions/browser/response_headers_util.h"
 #include "ipc/ipc_message.h"
 #include "net/base/auth.h"
 #include "net/base/upload_data_stream.h"
@@ -154,8 +155,11 @@ void WebRequestEventDetails::SetResponseHeaders(
       size_t iter = 0;
       std::string name;
       std::string value;
-      while (response_headers->EnumerateHeaderLines(&iter, &name, &value))
+      while (response_headers->EnumerateHeaderLines(&iter, &name, &value)) {
+        if (HideResponseHeader(request->url(), name))
+          continue;
         headers->Append(helpers::CreateHeaderDictionary(name, value));
+      }
     }
     response_headers_.reset(headers);
   }
