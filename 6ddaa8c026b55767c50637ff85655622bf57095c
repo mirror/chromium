@@ -19,6 +19,70 @@
     },
     {
       "key": {
+        "uuid": "de6b6453_d3177dee",
+        "filename": "chrome/android/java/res/values/dimens.xml",
+        "patchSetId": 14
+      },
+      "lineNbr": 466,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-08-28T22:06:52Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "dc97849c_7d2560c6",
+      "revId": "6ddaa8c026b55767c50637ff85655622bf57095c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "82470695_f8c92fba",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/history/HistoryItemView.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-08-28T22:06:52Z",
+      "side": 1,
+      "message": "This can revert back to selectable_list_layout_row_padding",
+      "range": {
+        "startLine": 55,
+        "startChar": 70,
+        "endLine": 55,
+        "endChar": 98
+      },
+      "revId": "6ddaa8c026b55767c50637ff85655622bf57095c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f75af8c_9768d1b6",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/LocationBarLayout.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 1726,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-08-28T22:06:52Z",
+      "side": 1,
+      "message": "The \u0026\u0026 mBottomSheet !\u003d null part of the check shouldn\u0027t be needed.",
+      "range": {
+        "startLine": 1726,
+        "startChar": 64,
+        "endLine": 1726,
+        "endChar": 84
+      },
+      "revId": "6ddaa8c026b55767c50637ff85655622bf57095c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "70b86383_84e0f0ab",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/SuggestionView.java",
         "patchSetId": 14
@@ -30,6 +94,47 @@
       "writtenOn": "2017-08-28T21:53:54Z",
       "side": 1,
       "message": "@twellington could you verify that the operations here are correct?",
+      "revId": "6ddaa8c026b55767c50637ff85655622bf57095c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57b22dfa_9b615907",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/SuggestionView.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 863,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-08-28T22:06:52Z",
+      "side": 1,
+      "message": "Typically RTL and LTR have inverse operations, but it\u0027s hard to confirm that this is correct without knowing what it looks like. Will you please grab some screenshots in RTL? You can either force RTL in developer settings, or change the device language to an RTL language like Hebrew.",
+      "parentUuid": "70b86383_84e0f0ab",
+      "revId": "6ddaa8c026b55767c50637ff85655622bf57095c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23d6d4bd_c71e7ada",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/selection/SelectableListToolbar.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 516,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-08-28T22:06:52Z",
+      "side": 1,
+      "message": "The end padding is only applied in selection mode? Does the magnifying glass align properly without the extra end padding?\n\nIF you want to limit to selection mode, you can check mIsSelectionEnabled rather than mNumberRollView#getVisibility().",
+      "range": {
+        "startLine": 514,
+        "startChar": 7,
+        "endLine": 516,
+        "endChar": 20
+      },
       "revId": "6ddaa8c026b55767c50637ff85655622bf57095c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
