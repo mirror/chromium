@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a2fc1a7_dca059cf",
+        "filename": "components/translate/core/browser/translate_prefs.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 490,
+      "author": {
+        "id": 1234767
+      },
+      "writtenOn": "2017-08-28T02:29:30Z",
+      "side": 1,
+      "message": "\"UMA logging for changes to language settings\"\n\nI think it gives a better idea of what we\u0027re doing.",
+      "revId": "390128fd24f598e26e3f332c2c601384f92a846f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c82ef2e_82537a64",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 83274,
+      "author": {
+        "id": 1234767
+      },
+      "writtenOn": "2017-08-28T02:29:30Z",
+      "side": 1,
+      "message": "\"Logs everytime users make a change...\"",
+      "revId": "390128fd24f598e26e3f332c2c601384f92a846f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
