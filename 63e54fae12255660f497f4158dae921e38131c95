@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fc31223c_ab980385",
+        "filename": "content/renderer/render_frame_proxy.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 418,
+      "author": {
+        "id": 1001433
+      },
+      "writtenOn": "2017-08-28T15:02:04Z",
+      "side": 1,
+      "message": "Having this here isn\u0027t great, because the link between when the origin changes and when the child frame swapping processes is tenuous, introducing assumptions in the renderer process about isolation policy. Many (probably most?) origin changes for a child frame won\u0027t result in a new process getting created, so at the very least we will be cycling the LocalSurfaceId more often than is necessary.\n\nDo you think we can modify RenderWidgetHostViewChildFrame to send a FrameMsg_ChildFrameProcessGone (or similar) message *any time* a child frame loses its process (which corresponds to the RWHVCF getting destroyed, I believe)?  That gets a stronger connection between generating a new LocalSurfaceId and needing one.\n\nIf that ends up being difficult, you could land this as is and investigate that as a follow up.",
+      "revId": "63e54fae12255660f497f4158dae921e38131c95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
