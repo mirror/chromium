@@ -18,6 +18,7 @@
 #include "base/memory/ref_counted.h"
 #include "base/synchronization/atomic_flag.h"
 #include "base/synchronization/condition_variable.h"
+#include "base/task_runner.h"
 #include "base/task_scheduler/priority_queue.h"
 #include "base/task_scheduler/scheduler_lock.h"
 #include "base/task_scheduler/scheduler_worker.h"
@@ -60,8 +61,10 @@ class BASE_EXPORT SchedulerWorkerPoolImpl : public SchedulerWorkerPool {
       DelayedTaskManager* delayed_task_manager);
 
   // Creates workers following the |params| specification, allowing existing and
-  // future tasks to run. Can only be called once. CHECKs on failure.
-  void Start(const SchedulerWorkerPoolParams& params);
+  // future tasks to run. Uses |service_thread_task_runner| to monitor for
+  // blocked threads in the pool. Can only be called once. CHECKs on failure.
+  void Start(const SchedulerWorkerPoolParams& params,
+             scoped_refptr<TaskRunner> service_thread_task_runner);
 
   // Destroying a SchedulerWorkerPoolImpl returned by Create() is not allowed in
   // production; it is always leaked. In tests, it can only be destroyed after
@@ -108,8 +111,18 @@ class BASE_EXPORT SchedulerWorkerPoolImpl : public SchedulerWorkerPool {
   // Returns the number of workers that are idle (i.e. not running tasks).
   size_t NumberOfIdleWorkersForTesting();
 
+  // After being called, workers will need to be blocked for TimeDelta::Max()
+  // before |worker_capacity_| can be increased.
+  void MaximizeBlockedThresholdForTesting() {
+    maximum_blocked_threshold_.Set();
+  }
+
  private:
   class SchedulerWorkerDelegateImpl;
+
+  // How often the |delayed_task_manager_| monitors for blocked workers.
+  static constexpr TimeDelta kBlockedWorkersPollPeriod =
+      TimeDelta::FromMilliseconds(30);
 
   SchedulerWorkerPoolImpl(const SchedulerWorkerPoolParams& params,
                           TaskTracker* task_tracker,
@@ -154,6 +167,20 @@ class BASE_EXPORT SchedulerWorkerPoolImpl : public SchedulerWorkerPool {
   // the pool being over worker capacity.
   size_t NumberOfExcessWorkersLockRequired() const;
 
+  // Examine the list of SchedulerWorkers for blocked tasks to check for and
+  // carry out any necessary increases to |worker_capacity_|.
+  void AdjustWorkerCapacity();
+
+  // Returns the amount of time that a SchedulerWorker must be within the scope
+  // of a ScopedMayBlock before |worker_capacity_| can be increased.
+  TimeDelta BlockedThreshold() const;
+
+  // Posts a task to |service_thread_task_runner_| to periodically check and
+  // adjust worker capacity until there are idle workers that can run tasks in
+  // the pool. This should be called under the protection of |lock_| as it needs
+  // to access |polling_worker_capacity_|.
+  void PostAdjustWorkerCapacityPollingTaskLockRequired();
+
   const std::string name_;
   const ThreadPriority priority_hint_;
 
@@ -169,6 +196,7 @@ class BASE_EXPORT SchedulerWorkerPoolImpl : public SchedulerWorkerPool {
   // Synchronizes accesses to |workers_|, |worker_capacity_|,
   // |idle_workers_stack_|, |idle_workers_stack_cv_for_testing_|,
   // |num_wake_ups_before_start_|, |cleanup_timestamps_|,
+  // |polling_worker_capacity_|,
   // |SchedulerWorkerDelegateImpl::is_on_idle_workers_stack_|, and
   // |SchedulerWorkerDelegateImpl::increased_worker_capacity_since_blocked_|.
   // Has |shared_priority_queue_|'s lock as its predecessor so that a worker can
@@ -204,6 +232,13 @@ class BASE_EXPORT SchedulerWorkerPoolImpl : public SchedulerWorkerPool {
   // Timestamps get popped off the stack as new workers are added.
   std::stack<TimeTicks, std::vector<TimeTicks>> cleanup_timestamps_;
 
+  // Indicates whether we are currently polling for necessary adjustments to
+  // |worker_capacity_|.
+  bool polling_worker_capacity_ = false;
+
+  // Used for testing and makes BlockedThreshold() return the maximum TimeDelta.
+  AtomicFlag maximum_blocked_threshold_;
+
   // Signaled once JoinForTesting() has returned.
   WaitableEvent join_for_testing_returned_;
 
@@ -226,6 +261,16 @@ class BASE_EXPORT SchedulerWorkerPoolImpl : public SchedulerWorkerPool {
   // TaskScheduler.NumTasksBetweenWaits.[worker pool name] histogram.
   // Intentionally leaked.
   HistogramBase* const num_tasks_between_waits_histogram_;
+
+  scoped_refptr<TaskRunner> service_thread_task_runner_;
+
+  // Friend TaskSchedulerWorkerPoolBlockingEnterExitTest so that it can access
+  // |kBlockedWorkersPollPeriod| and BlockedThreshold().
+  friend class TaskSchedulerWorkerPoolBlockingEnterExitTest;
+
+  /// Friend TaskScheduerWorkerPoolMayBlockTest for access to
+  /// |kBlockedWorkersPollPeriod| and BlockedThreshold().
+  friend class TaskScheduerWorkerPoolMayBlockTest;
 
   DISALLOW_COPY_AND_ASSIGN(SchedulerWorkerPoolImpl);
 };
