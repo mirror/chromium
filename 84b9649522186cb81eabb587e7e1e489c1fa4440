@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "9d3f1fb7_09728886",
+        "filename": "components/security_interstitials_strings.grdp",
+        "patchSetId": 2
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1229947
+      },
+      "writtenOn": "2017-08-28T21:34:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b5846d69_687bab65",
+      "revId": "84b9649522186cb81eabb587e7e1e489c1fa4440",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1cc5c280_8b2de29d",
         "filename": "components/security_interstitials_strings.grdp",
         "patchSetId": 2
@@ -48,6 +66,24 @@
       "writtenOn": "2017-08-26T01:00:14Z",
       "side": 1,
       "message": "ditto for the first sentence.\n\nI think it\u0027s not a good idea to reference exact related strings, as these can change.\n(A better approach is to provide example screenshots, but... that effort is stuck.)\n\nThe \"IT administrator\" explanation is good!\n\nThe placeholder description sounds redundant with the inline format, although I don\u0027t think it hurts.",
+      "revId": "84b9649522186cb81eabb587e7e1e489c1fa4440",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80a19c37_dcb44ed4",
+        "filename": "components/security_interstitials_strings.grdp",
+        "patchSetId": 2
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1229947
+      },
+      "writtenOn": "2017-08-28T21:34:19Z",
+      "side": 1,
+      "message": "I agree that listing the specific string text could be risky, but Shimi encouraged me to provide them with the context of what other text is on the page, and I\u0027m not sure how to do that otherwise? WDYT?",
+      "parentUuid": "1cc5c280_8b2de29d",
       "revId": "84b9649522186cb81eabb587e7e1e489c1fa4440",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -83,6 +119,24 @@
       "side": 1,
       "message": "To be a bit more explicit about how, the best usual approach for something like this is to create a string like:\n\n\u003cplaceholder for first sentence\u003e Applications that can cause this error includes antivirus, firewall, and web-filtering or proxy software.\n\n... and then put the first sentence into this string.",
       "parentUuid": "fd393f3d_7b821c53",
+      "revId": "84b9649522186cb81eabb587e7e1e489c1fa4440",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b94ff84e_4b9d1ff5",
+        "filename": "components/security_interstitials_strings.grdp",
+        "patchSetId": 2
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1229947
+      },
+      "writtenOn": "2017-08-28T21:34:19Z",
+      "side": 1,
+      "message": "I get where you\u0027re going with this, but I think that so much of this context needs to be repeated regardless that it wouldn\u0027t actually save space in the file.\n\nFor example, I would need to include this context in the new string description as well: \n\"Extended description for an error page hidden behind an \u0027Advanced\u0027 button. A user visits a website, antivirus or firewall software interferes with their connection, and they are shown this error. Page title reads \u0027An application is stopping Chrome from safely connection to this site\u0027 and there is a shorter description of the error shown above.\"\n\nWDYT?",
+      "parentUuid": "b7423fae_efa4b956",
       "revId": "84b9649522186cb81eabb587e7e1e489c1fa4440",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
