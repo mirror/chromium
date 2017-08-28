@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e65cacc0_20a2777c",
+        "filename": "chrome/browser/chromeos/accessibility/accessibility_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 631,
+      "author": {
+        "id": 1000623
+      },
+      "writtenOn": "2017-08-28T18:37:44Z",
+      "side": 0,
+      "message": "Why not leave this in? This is the only thing telemetry cares about",
+      "revId": "ddd335bf17b019cf09a3af74bcc0ba73b90de57a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
