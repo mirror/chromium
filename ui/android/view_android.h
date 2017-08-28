@@ -150,7 +150,12 @@ class UI_ANDROID_EXPORT ViewAndroid {
   bool StartDragAndDrop(const base::android::JavaRef<jstring>& jtext,
                         const base::android::JavaRef<jobject>& jimage);
 
+  gfx::Size GetSize() const;  // Returns size in DIP unit.
+  void SetTopControlsHeight(int height, bool shrink_blink_size);
+  void SetBottomControlsHeight(int height);
   gfx::Size GetPhysicalBackingSize();
+
+  void OnSizeChanged(int width, int height);
   void OnPhysicalBackingSizeChanged(const gfx::Size& size);
   void OnCursorChanged(int type,
                        const SkBitmap& custom_image,
@@ -173,6 +178,10 @@ class UI_ANDROID_EXPORT ViewAndroid {
   gfx::Point GetLocationOfContainerViewOnScreen();
 
   float GetDipScale();
+
+  bool do_browser_controls_shrink_blink_size() { return shrink_blink_size_; }
+  int top_controls_height() { return top_controls_height_; }
+  int bottom_controls_height() { return bottom_controls_height_; }
 
  protected:
   ViewAndroid* parent_;
@@ -220,6 +229,11 @@ class UI_ANDROID_EXPORT ViewAndroid {
   // each leaf of subtree.
   static bool SubtreeHasEventForwarder(ViewAndroid* view);
 
+  void OnSizeChangedInternal(int width, int height);
+  void SetTopControlsHeightInternal(int height, bool shrink_blink_size);
+  void SetBottomControlsHeightInternal(int height);
+  void Resized();
+
   // Returns the Java delegate for this view. This is used to delegate work
   // up to the embedding view (or the embedder that can deal with the
   // implementation details).
@@ -238,6 +252,12 @@ class UI_ANDROID_EXPORT ViewAndroid {
 
   // In physical pixel.
   gfx::Size physical_size_;
+
+  // In DIP unit.
+  int top_controls_height_;
+  int bottom_controls_height_;
+
+  bool shrink_blink_size_;
 
   FrameInfo frame_info_;
 

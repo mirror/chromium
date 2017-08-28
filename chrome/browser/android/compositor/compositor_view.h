@@ -68,12 +68,23 @@ class CompositorView : public content::CompositorClient,
                       jint width,
                       jint height,
                       const base::android::JavaParamRef<jobject>& surface);
+  void OnSizeChanged(JNIEnv* env,
+                     const base::android::JavaParamRef<jobject>& obj,
+                     const base::android::JavaParamRef<jobject>& jweb_contents,
+                     int width,
+                     int height);
   void OnPhysicalBackingSizeChanged(
       JNIEnv* env,
       const base::android::JavaParamRef<jobject>& obj,
       const base::android::JavaParamRef<jobject>& jweb_contents,
       jint width,
       jint height);
+  void SetControlsHeight(
+      JNIEnv* env,
+      const base::android::JavaParamRef<jobject>& obj,
+      const base::android::JavaParamRef<jobject>& jweb_contents,
+      jint top_controls_height,
+      jint bottom_controls_height);
 
   void SetOverlayVideoMode(JNIEnv* env,
                            const base::android::JavaParamRef<jobject>& object,

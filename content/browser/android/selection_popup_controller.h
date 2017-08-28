@@ -38,6 +38,8 @@ class SelectionPopupController : public RenderWidgetHostConnector {
                                   int start_adjust,
                                   int end_adjust);
 
+  void OnShowUnhandledTapUIIfNeeded(int x, int y);
+
  private:
   ~SelectionPopupController() override {}
   JavaObjectWeakGlobalRef java_obj_;
