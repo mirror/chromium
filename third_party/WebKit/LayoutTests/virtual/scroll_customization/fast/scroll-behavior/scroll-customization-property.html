@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Scroll customization properties.</title>
+  <script src="../../../../resources/testharness.js"></script>
+  <script src="../../../../resources/testharnessreport.js"></script>
+  <style>
+
+    * {
+      margin: 0;
+      padding: 0;
+    }
+
+    *::-webkit-scrollbar {
+      width: 0 !important;
+      height: 0 !important;
+    }
+
+    .a {
+      height: 400px;
+      width: 400px;
+      overflow: scroll;
+    }
+
+    body {
+      height: 3000px;
+    }
+
+  </style>
+</head>
+<body>
+
+  <div class="a">
+  </div>
+
+  <script>
+    test(function() {
+      assert_true('ScrollState' in window, "'ScrollState' in window");
+    }, "These tests only work with scroll customization enabled.");
+
+    internals.settings.setScrollAnimatorEnabled(false);
+
+
+    function applyDelta(deltaX, deltaY, callback) {
+      chrome.gpuBenchmarking.pointerActionSequence(
+        [{
+          source: 'touch',
+          actions: [
+            { name: 'pointerDown', x: 0, y: 0 },
+            { name: 'pointerMove', x: deltaX, y: deltaY },
+            { name: 'pointerUp', x: (deltaX * 2), y: (deltaY * 2) },
+          ]}], callback);
+    }
+
+    var GESTURE_RIGHT = 0;
+    var GESTURE_LEFT = 1;
+    var GESTURE_TOP = 2;
+    var GESTURE_DOWN = 3;
+
+    var element = document.querySelector('div');
+
+    test(function() {
+      assert_true('scrollCustomization' in element.style);
+    }, "'scroll-customization' missing from element style.");
+
+    function changeResultErrorMessage(expectedValue, keyword) {
+      if (expectedValue) {
+        return 'Expected ' + keyword + 'to change.';
+      } else {
+        return 'Did not expect ' + keyword + 'to change.';
+      }
+    }
+
+
+    function testGesture(scrollCustomization, gesture, expectChange) {
+      element.style.scrollCustomization = scrollCustomization;
+      var callsToApplyScroll = numberOfSetApplyScrollCalls;
+      var callsToDistributeScroll = numberOfSetDistributeScrollCalls;
+
+      function verify() {
+        var applyScrollDidChange = callsToApplyScroll < numberOfSetApplyScrollCalls;
+        var distributeScrollDidChange = callsToDistributeScroll < numberOfSetDistributeScrollCalls;
+
+        assert_equals(expectChange, applyScrollDidChange, changeResultErrorMessage(
+            expectChange, 'number of calls to apply scroll'));
+
+        assert_equals(expectChange, distributeScrollDidChange, changeResultErrorMessage(
+            expectChange, 'number of calls to distribute scroll'));
+      }
+
+      switch (gesture) {
+        case GESTURE_RIGHT:
+        applyDelta(-100, 0, verify);
+        break;
+        case GESTURE_LEFT:
+        applyDelta(100, 0, verify);
+        break;
+        case GESTURE_TOP:
+        applyDelta(0, 100, verify);
+        break;
+        case GESTURE_DOWN:
+        applyDelta(0, -100, verify);
+      }
+    }
+
+    var numberOfSetApplyScrollCalls = 0;
+    var numberOfSetDistributeScrollCalls = 0;
+
+    if ('ScrollState' in window) {
+      element.setApplyScroll(function() {
+        numberOfSetApplyScrollCalls++;
+      }, "perform-before-native-scroll");
+
+      element.setDistributeScroll(function() {
+        numberOfSetDistributeScrollCalls++;
+      }, "perform-before-native-scroll");
+
+      test(function() {
+        [GESTURE_RIGHT, GESTURE_LEFT, GESTURE_TOP, GESTURE_DOWN].forEach(function(gesture) {
+          testGesture('none', gesture, false);
+        });
+      }, 'Verify if property "none" works correctly.');
+
+      test(function() {
+        [GESTURE_RIGHT, GESTURE_LEFT, GESTURE_TOP, GESTURE_DOWN].forEach(function(gesture) {
+          testGesture('auto', gesture, true);
+        });
+      }, 'Verify if property "auto" works correctly.');
+
+      test(function() {
+        [GESTURE_RIGHT, GESTURE_LEFT].forEach(function(gesture) {
+          testGesture('pan-x', gesture, true);
+        });
+
+        [GESTURE_TOP, GESTURE_DOWN].forEach(function(gesture) {
+          testGesture('pan-x', gesture, false);
+        });
+      }, 'Verify if property "pan-x" works correctly.');
+
+      test(function() {
+        [GESTURE_TOP, GESTURE_DOWN].forEach(function(gesture) {
+          testGesture('pan-y', gesture, true);
+        });
+
+        [GESTURE_RIGHT, GESTURE_LEFT].forEach(function(gesture) {
+          testGesture('pan-y', gesture, false);
+        });
+      }, 'Verify if property "pan-y" works correctly.');
+
+      test(function() {
+        [GESTURE_RIGHT].forEach(function(gesture) {
+          testGesture('pan-right', gesture, true);
+        });
+
+        [GESTURE_LEFT, GESTURE_TOP, GESTURE_DOWN].forEach(function(gesture) {
+          testGesture('pan-right', gesture, false);
+        });
+      }, 'Verify if property "pan-right" works correctly.');
+
+      test(function() {
+        [GESTURE_LEFT].forEach(function(gesture) {
+          testGesture('pan-left', gesture, true);
+        });
+
+        [GESTURE_RIGHT, GESTURE_TOP, GESTURE_DOWN].forEach(function(gesture) {
+          testGesture('pan-left', gesture, false);
+        });
+      }, 'Verify if property "pan-left" works correctly.');
+
+      test(function() {
+        [GESTURE_TOP].forEach(function(gesture) {
+          testGesture('pan-up', gesture, true);
+        });
+
+        [GESTURE_RIGHT, GESTURE_LEFT, GESTURE_DOWN].forEach(function(gesture) {
+          testGesture('pan-up', gesture, false);
+        });
+      }, 'Verify if property "pan-up" works correctly.');
+
+      test(function() {
+        [GESTURE_DOWN].forEach(function(gesture) {
+          testGesture('pan-down', gesture, true);
+        });
+
+        [GESTURE_RIGHT, GESTURE_LEFT, GESTURE_TOP].forEach(function(gesture) {
+          testGesture('pan-down', gesture, false);
+        });
+      }, 'Verify if property "pan-down" works correctly.');
+    }
+
+  </script>
+</body>
+</html>
