@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "32058699_18e8d13d",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXLayoutObject.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 745,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2017-08-28T15:37:02Z",
+      "side": 1,
+      "message": "We only get here for things that are display:inline (maybe inline-block), otherwise the rendering tree doesn\u0027t bother putting in the extra \" \" layout text.",
+      "parentUuid": "80d12e9d_2fa57c83",
+      "revId": "2776d2d2671e938b2c428f7254ee25111b9e7d03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5b061dbe_f3be3165",
         "filename": "third_party/WebKit/Source/modules/accessibility/AXLayoutObject.cpp",
         "patchSetId": 8
