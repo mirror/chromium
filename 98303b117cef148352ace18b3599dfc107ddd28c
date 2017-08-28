@@ -70,6 +70,24 @@
       "revId": "98303b117cef148352ace18b3599dfc107ddd28c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "673e850f_10c5d4ba",
+        "filename": "chrome/browser/page_load_metrics/observers/android_page_load_metrics_observer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2017-08-28T13:00:23Z",
+      "side": 1,
+      "message": "Great, thanks for checking!\n\nDo you know if this ends up succeeding for all redirects as well as the final resource? My suspicion is that it will fire for all, whereas I think we only want it to succeed for the final resource in a redirect chain. If that\u0027s the case we probably do want to forward the HTTP response code and only process non-3xx cases. Can we write a browsertest for this case (HTTP redirect) that verifies that the expected callback only gets invoked once, for the final resource in the chain?",
+      "parentUuid": "3f29cdbb_041d6918",
+      "revId": "98303b117cef148352ace18b3599dfc107ddd28c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
