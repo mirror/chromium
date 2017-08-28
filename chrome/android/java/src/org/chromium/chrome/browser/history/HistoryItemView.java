@@ -51,8 +51,8 @@ public class HistoryItemView extends SelectableItemView<HistoryItem> implements 
                 getResources(), R.color.default_favicon_background_color);
         mIconGenerator = new RoundedIconGenerator(mDisplayedIconSize , mDisplayedIconSize,
                 mCornerRadius, iconColor, textSize);
-        mEndPadding = context.getResources().getDimensionPixelSize(
-                R.dimen.selectable_list_layout_row_padding);
+        mEndPadding =
+                context.getResources().getDimensionPixelSize(R.dimen.history_item_view_end_padding);
 
         mIconColorList = ApiCompatibilityUtils.getColorStateList(
                 context.getResources(), R.color.white_mode_tint);
