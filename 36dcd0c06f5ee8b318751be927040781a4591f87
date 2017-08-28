@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7953110f_c3743eaa",
+        "filename": "device/bluetooth/dbus/bluetooth_le_advertising_manager_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1111839
+      },
+      "writtenOn": "2017-08-28T18:39:10Z",
+      "side": 1,
+      "message": "\"const\" should be used as a keyword of CallObjectProxyMethod, since this function does not make change to any class member variable.",
+      "range": {
+        "startLine": 141,
+        "startChar": 2,
+        "endLine": 144,
+        "endChar": 67
+      },
+      "revId": "36dcd0c06f5ee8b318751be927040781a4591f87",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40d39b1f_c494b172",
+        "filename": "device/bluetooth/dbus/bluetooth_le_advertising_manager_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1111839
+      },
+      "writtenOn": "2017-08-28T18:39:10Z",
+      "side": 1,
+      "message": "nit: add a blank line right above",
+      "revId": "36dcd0c06f5ee8b318751be927040781a4591f87",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
