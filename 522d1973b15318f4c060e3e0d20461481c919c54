@@ -1,0 +1,243 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "daab421c_73ad0afa",
+        "filename": "ui/views/cocoa/bridged_native_widget.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-08-28T15:17:02Z",
+      "side": 1,
+      "message": "nit: Called by |mouse_down_monitor_| to close a bubble.",
+      "range": {
+        "startLine": 250,
+        "startChar": 15,
+        "endLine": 250,
+        "endChar": 34
+      },
+      "revId": "522d1973b15318f4c060e3e0d20461481c919c54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd3eb661_d77e21f1",
+        "filename": "ui/views/widget/native_widget_mac_interactive_uitest.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-08-28T15:17:02Z",
+      "side": 1,
+      "message": "I think the test will be (intrinsically) documented more clearly without this extra |close| argument here -- the test can call bubble-\u003eset_close_on_deactivate(false) (it just needs to a separate variable)",
+      "range": {
+        "startLine": 164,
+        "startChar": 47,
+        "endLine": 164,
+        "endChar": 52
+      },
+      "revId": "522d1973b15318f4c060e3e0d20461481c919c54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55e639d1_780f4a59",
+        "filename": "ui/views/widget/native_widget_mac_interactive_uitest.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-08-28T15:17:02Z",
+      "side": 1,
+      "message": "The CloseNow() calls are necessary here. Without them, when I run ParentWindowTrafficLights I get\n\n[45058:775:0828/104413.128730:151556128536759:FATAL:views_test_helper_mac.mm(64)] Check failed: !Widget::GetWidgetForNativeWindow(window). Widget not closed.",
+      "revId": "522d1973b15318f4c060e3e0d20461481c919c54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "073a7c92_9c93afe5",
+        "filename": "ui/views/widget/native_widget_mac_interactive_uitest.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-08-28T15:17:02Z",
+      "side": 1,
+      "message": "this check can be removed - it\u0027s confusing since no events have been sent yet, so there\u0027s nothing being tested.",
+      "revId": "522d1973b15318f4c060e3e0d20461481c919c54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d37337a_7f04426a",
+        "filename": "ui/views/widget/native_widget_mac_interactive_uitest.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-08-28T15:17:02Z",
+      "side": 1,
+      "message": "sentence case for comments (capital, full stop), Also I think the location doesn\u0027t really matter -- we aren\u0027t doing hit testing, so perhaps just.\n\n// First, test with LeftMouseDown in the parent window.",
+      "range": {
+        "startLine": 232,
+        "startChar": 5,
+        "endLine": 232,
+        "endChar": 10
+      },
+      "revId": "522d1973b15318f4c060e3e0d20461481c919c54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73ac22d1_a0fed85b",
+        "filename": "ui/views/widget/native_widget_mac_interactive_uitest.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-08-28T15:17:02Z",
+      "side": 1,
+      "message": "remove",
+      "revId": "522d1973b15318f4c060e3e0d20461481c919c54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0270f474_fad9a562",
+        "filename": "ui/views/widget/native_widget_mac_interactive_uitest.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-08-28T15:17:02Z",
+      "side": 1,
+      "message": "// Test with RightMouseDown in the parent window.",
+      "revId": "522d1973b15318f4c060e3e0d20461481c919c54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2765f30e_d2a4ec0d",
+        "filename": "ui/views/widget/native_widget_mac_interactive_uitest.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-08-28T15:17:02Z",
+      "side": 1,
+      "message": "remove",
+      "revId": "522d1973b15318f4c060e3e0d20461481c919c54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d993625_814d84fd",
+        "filename": "ui/views/widget/native_widget_mac_interactive_uitest.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 254,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-08-28T15:17:02Z",
+      "side": 1,
+      "message": "// Test with RightMouseDown in the bubble (bubble should stay open).",
+      "revId": "522d1973b15318f4c060e3e0d20461481c919c54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8fafef1_7ee6111f",
+        "filename": "ui/views/widget/native_widget_mac_interactive_uitest.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-08-28T15:17:02Z",
+      "side": 1,
+      "message": "Test with ... .",
+      "revId": "522d1973b15318f4c060e3e0d20461481c919c54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8efcbb6_338123d1",
+        "filename": "ui/views/widget/native_widget_mac_interactive_uitest.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-08-28T15:17:02Z",
+      "side": 1,
+      "message": "TestBubbleView* bubble_view \u003d new TestBubbleView(parent_widget);\nbubble_view-\u003eset_close_on_deactivate(false);\nbubble_widget \u003d ...",
+      "revId": "522d1973b15318f4c060e3e0d20461481c919c54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5ed7f64_f5bd592a",
+        "filename": "ui/views/widget/native_widget_mac_interactive_uitest.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-08-28T15:17:02Z",
+      "side": 1,
+      "message": "remove",
+      "revId": "522d1973b15318f4c060e3e0d20461481c919c54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa90ca48_9c72fdcb",
+        "filename": "ui/views/widget/native_widget_mac_interactive_uitest.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 271,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-08-28T15:17:02Z",
+      "side": 1,
+      "message": "I get the same error for this test, i.e.\n\n[45074:775:0828/104633.580806:151696570095018:FATAL:views_test_helper_mac.mm(64)] Check failed: !Widget::GetWidgetForNativeWindow(window). Widget not closed.\n\nthis needs parent_widget-\u003eCloseNow() here.",
+      "revId": "522d1973b15318f4c060e3e0d20461481c919c54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
