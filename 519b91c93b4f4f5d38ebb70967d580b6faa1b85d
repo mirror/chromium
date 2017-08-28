@@ -1,0 +1,84 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f5e7372f_117b7956",
+        "filename": "chrome/test/chromedriver/window_commands.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 781,
+      "author": {
+        "id": 1181219
+      },
+      "writtenOn": "2017-08-28T18:59:50Z",
+      "side": 1,
+      "message": "This |break| should be inside |if|",
+      "range": {
+        "startLine": 781,
+        "startChar": 4,
+        "endLine": 781,
+        "endChar": 9
+      },
+      "revId": "519b91c93b4f4f5d38ebb70967d580b6faa1b85d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08a57b8f_1eb89610",
+        "filename": "chrome/test/chromedriver/window_commands.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 791,
+      "author": {
+        "id": 1181219
+      },
+      "writtenOn": "2017-08-28T18:59:50Z",
+      "side": 1,
+      "message": "|pointer_type| can be an empty string at this point, since |parameters| is optional. According to https://w3c.github.io/webdriver/webdriver-spec.html#dfn-default-pointer-parameters, the default |pointer_type| should be set to \"mouse\" in this case.",
+      "revId": "519b91c93b4f4f5d38ebb70967d580b6faa1b85d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d04a6b0_5536ebb2",
+        "filename": "chrome/test/chromedriver/window_commands.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 835,
+      "author": {
+        "id": 1181219
+      },
+      "writtenOn": "2017-08-28T18:59:50Z",
+      "side": 1,
+      "message": "|pointer_type| can be empty at this point, in which case no comparison with |source_pointer_type| is necessary.",
+      "range": {
+        "startLine": 835,
+        "startChar": 8,
+        "endLine": 835,
+        "endChar": 20
+      },
+      "revId": "519b91c93b4f4f5d38ebb70967d580b6faa1b85d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "551e135b_cf550cfd",
+        "filename": "chrome/test/chromedriver/window_commands.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 906,
+      "author": {
+        "id": 1181219
+      },
+      "writtenOn": "2017-08-28T18:59:50Z",
+      "side": 1,
+      "message": "There is also a \"pointerCancel\".",
+      "revId": "519b91c93b4f4f5d38ebb70967d580b6faa1b85d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
