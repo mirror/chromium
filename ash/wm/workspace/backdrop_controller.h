@@ -6,6 +6,7 @@
 #define ASH_WM_WORKSPACE_WORKSPACE_BACKDROP_DELEGATE_IMPL_H_
 
 #include <memory>
+#include <vector>
 
 #include "ash/shell_observer.h"
 #include "ash/system/accessibility_observer.h"
@@ -33,8 +34,8 @@ class WindowState;
 class BackdropDelegate;
 
 // A backdrop which gets created for a container |window| and which gets
-// stacked behind the top level, activatable window that meets the following
-// criteria.
+// stacked behind the top level, activatable windows (there are at most two
+// windows) that meets the following criteria.
 //
 // 1) Has a aura::client::kHasBackdrop property = true.
 // 2) BackdropDelegate::HasBackdrop(aura::Window* window) returns true.
@@ -60,8 +61,6 @@ class BackdropController : public ShellObserver, public AccessibilityObserver {
   // ShellObserver:
   void OnOverviewModeStarting() override;
   void OnOverviewModeEnded() override;
-  void OnSplitViewModeStarting() override;
-  void OnSplitViewModeEnded() override;
   void OnAppListVisibilityChanged(bool shown,
                                   aura::Window* root_window) override;
 
@@ -78,6 +77,11 @@ class BackdropController : public ShellObserver, public AccessibilityObserver {
 
   // Returns the current visible top level window in the container.
   aura::Window* GetTopmostWindowWithBackdrop();
+
+  // Returns a list of visible top level windows that should be placed above
+  // the backdrop. The list might contain at most two windows if the splitscreen
+  // is currently active.
+  std::vector<aura::Window*> GetToplevelWindowsWithBackdrop();
 
   bool WindowShouldHaveBackdrop(aura::Window* window);
 
