@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ad59e2bf_8a370f07",
+        "filename": "chrome/browser/ssl/ssl_error_assistant.proto",
+        "patchSetId": 9
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1229947
+      },
+      "writtenOn": "2017-08-28T21:18:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "df98a848_186df7b8",
+      "revId": "af11b58f7259ed7bd8b877bde8782a43b1430185",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9cc63841_ca66e042",
         "filename": "chrome/browser/ssl/ssl_error_assistant.proto",
         "patchSetId": 9
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "bf97aa43_c53da924",
+        "filename": "chrome/browser/ssl/ssl_error_assistant.proto",
+        "patchSetId": 9
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1229947
+      },
+      "writtenOn": "2017-08-28T21:18:52Z",
+      "side": 1,
+      "message": "Yes, they\u0027re being used as regexes in ssl_error_handler.cc, but there isn\u0027t a regex type in the proto buffer world. I\u0027ll update the comment to make this more clear!",
+      "parentUuid": "9cc63841_ca66e042",
+      "revId": "af11b58f7259ed7bd8b877bde8782a43b1430185",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d9abd837_fe84238d",
         "filename": "chrome/browser/ssl/ssl_error_assistant.proto",
         "patchSetId": 9
@@ -47,6 +83,30 @@
       "writtenOn": "2017-08-28T17:44:41Z",
       "side": 1,
       "message": "nit: Rename to issuer_organization. And if we want to keep these as regexes, this can be issuer_organization_regex.",
+      "range": {
+        "startLine": 29,
+        "startChar": 18,
+        "endLine": 29,
+        "endChar": 28
+      },
+      "revId": "af11b58f7259ed7bd8b877bde8782a43b1430185",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33703951_2ca906b8",
+        "filename": "chrome/browser/ssl/ssl_error_assistant.proto",
+        "patchSetId": 9
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1229947
+      },
+      "writtenOn": "2017-08-28T21:18:52Z",
+      "side": 1,
+      "message": "I went with \"issuer_organization_pattern\" since this technically isn\u0027t a regex type until I convert it later in ssl_error_handler. WDYT?",
+      "parentUuid": "d9abd837_fe84238d",
       "range": {
         "startLine": 29,
         "startChar": 18,
@@ -76,6 +136,24 @@
     },
     {
       "key": {
+        "uuid": "26465e07_6a185852",
+        "filename": "chrome/browser/ssl/ssl_error_handler.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1229947
+      },
+      "writtenOn": "2017-08-28T21:18:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "316ff58a_5c9e08d2",
+      "revId": "af11b58f7259ed7bd8b877bde8782a43b1430185",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "67fc5e19_e530fba3",
         "filename": "chrome/browser/ssl/ssl_error_handler.cc",
         "patchSetId": 9
@@ -90,6 +168,24 @@
       "revId": "af11b58f7259ed7bd8b877bde8782a43b1430185",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5dd82299_cbc300cb",
+        "filename": "chrome/browser/ssl/ssl_error_handler.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1229947
+      },
+      "writtenOn": "2017-08-28T21:18:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "67fc5e19_e530fba3",
+      "revId": "af11b58f7259ed7bd8b877bde8782a43b1430185",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -110,6 +206,24 @@
     },
     {
       "key": {
+        "uuid": "e52a7bf1_ab472134",
+        "filename": "chrome/browser/ssl/ssl_error_handler.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1229947
+      },
+      "writtenOn": "2017-08-28T21:18:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fd982e18_9a94a34e",
+      "revId": "af11b58f7259ed7bd8b877bde8782a43b1430185",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "faeaa20c_3b7b4b5b",
         "filename": "chrome/browser/ssl/ssl_error_handler.cc",
         "patchSetId": 9
@@ -124,6 +238,24 @@
       "revId": "af11b58f7259ed7bd8b877bde8782a43b1430185",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec033aa2_3ee73f04",
+        "filename": "chrome/browser/ssl/ssl_error_handler.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 485,
+      "author": {
+        "id": 1229947
+      },
+      "writtenOn": "2017-08-28T21:18:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "faeaa20c_3b7b4b5b",
+      "revId": "af11b58f7259ed7bd8b877bde8782a43b1430185",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -144,6 +276,24 @@
     },
     {
       "key": {
+        "uuid": "2f5eca11_dc4e49e7",
+        "filename": "chrome/browser/ssl/ssl_error_handler.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 487,
+      "author": {
+        "id": 1229947
+      },
+      "writtenOn": "2017-08-28T21:18:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "76ef2a42_72b4e4fc",
+      "revId": "af11b58f7259ed7bd8b877bde8782a43b1430185",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "61054e5b_6111fe93",
         "filename": "chrome/browser/ssl/ssl_error_handler.cc",
         "patchSetId": 9
@@ -158,6 +308,24 @@
       "revId": "af11b58f7259ed7bd8b877bde8782a43b1430185",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f52ad8a_ac2ca397",
+        "filename": "chrome/browser/ssl/ssl_error_handler.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 498,
+      "author": {
+        "id": 1229947
+      },
+      "writtenOn": "2017-08-28T21:18:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "61054e5b_6111fe93",
+      "revId": "af11b58f7259ed7bd8b877bde8782a43b1430185",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -178,6 +346,24 @@
     },
     {
       "key": {
+        "uuid": "a64a7846_6ccdb5a5",
+        "filename": "chrome/browser/ssl/ssl_error_handler.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 511,
+      "author": {
+        "id": 1229947
+      },
+      "writtenOn": "2017-08-28T21:18:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0297d8d1_98259a93",
+      "revId": "af11b58f7259ed7bd8b877bde8782a43b1430185",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "62c7c4f2_62d82025",
         "filename": "chrome/browser/ssl/ssl_error_handler.cc",
         "patchSetId": 9
@@ -192,6 +378,24 @@
       "revId": "af11b58f7259ed7bd8b877bde8782a43b1430185",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6445578b_8c95b257",
+        "filename": "chrome/browser/ssl/ssl_error_handler.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 524,
+      "author": {
+        "id": 1229947
+      },
+      "writtenOn": "2017-08-28T21:18:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "62c7c4f2_62d82025",
+      "revId": "af11b58f7259ed7bd8b877bde8782a43b1430185",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
