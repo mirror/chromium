@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "6eed4a98_23834d01",
+        "filename": "chrome/browser/chromeos/login/existing_user_controller.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 589,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-08-28T22:07:30Z",
+      "side": 1,
+      "message": "Hrm, good point. done. Split into ContinuePerformLogin and RestartLogin.",
+      "parentUuid": "0e9cca52_c0875123",
+      "revId": "c6ae973a6654b1ae824434d5a5f199887ea31c30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dcf15ccb_bc447823",
         "filename": "chrome/browser/chromeos/login/screens/encryption_migration_screen_view.h",
         "patchSetId": 13
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-28T19:05:00Z",
       "side": 1,
       "message": "Is it possible to consolidate the copies of ContinueLoginCallback?",
+      "revId": "c6ae973a6654b1ae824434d5a5f199887ea31c30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c099cf0_550d4255",
+        "filename": "chrome/browser/chromeos/login/screens/encryption_migration_screen_view.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-08-28T22:07:30Z",
+      "side": 1,
+      "message": "Currently none of the files includes the other one --\nI could move the definition into encryption_migration_mode.h and rename it to e.g. encryption_migration_shared.h -- WDYT?",
+      "parentUuid": "dcf15ccb_bc447823",
       "revId": "c6ae973a6654b1ae824434d5a5f199887ea31c30",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "cf240ed4_29e636c4",
+        "filename": "chrome/browser/ui/webui/chromeos/login/encryption_migration_screen_handler.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 558,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-08-28T22:07:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "81c2cfb6_7f06f9b2",
+      "revId": "c6ae973a6654b1ae824434d5a5f199887ea31c30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f5ae84fc_ad050faf",
         "filename": "chrome/browser/ui/webui/chromeos/login/encryption_migration_screen_handler.cc",
         "patchSetId": 13
@@ -67,6 +121,24 @@
       "revId": "c6ae973a6654b1ae824434d5a5f199887ea31c30",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "422d832e_5576f696",
+        "filename": "chrome/browser/ui/webui/chromeos/login/encryption_migration_screen_handler.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 674,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-08-28T22:07:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f5ae84fc_ad050faf",
+      "revId": "c6ae973a6654b1ae824434d5a5f199887ea31c30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "c59d7ab9_c30bd0fe",
+        "filename": "chrome/browser/ui/webui/chromeos/login/encryption_migration_screen_handler.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 675,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-08-28T22:07:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f9b28089_4e7c29c2",
+      "revId": "c6ae973a6654b1ae824434d5a5f199887ea31c30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "eb6df903_a22cee13",
         "filename": "chrome/browser/ui/webui/chromeos/login/encryption_migration_screen_handler.cc",
         "patchSetId": 13
@@ -101,6 +191,24 @@
       "revId": "c6ae973a6654b1ae824434d5a5f199887ea31c30",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cfb91494_5dbc31a0",
+        "filename": "chrome/browser/ui/webui/chromeos/login/encryption_migration_screen_handler.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 721,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-08-28T22:07:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eb6df903_a22cee13",
+      "revId": "c6ae973a6654b1ae824434d5a5f199887ea31c30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "2f3cd263_8e9299b9",
+        "filename": "chrome/browser/ui/webui/chromeos/login/encryption_migration_screen_handler.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 725,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-08-28T22:07:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "93e48754_e0ed0b1f",
+      "revId": "c6ae973a6654b1ae824434d5a5f199887ea31c30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cd96e990_778e8d7c",
         "filename": "chrome/browser/ui/webui/chromeos/login/encryption_migration_screen_handler.h",
         "patchSetId": 13
@@ -138,6 +264,24 @@
     },
     {
       "key": {
+        "uuid": "3c7c638b_d21583b9",
+        "filename": "chrome/browser/ui/webui/chromeos/login/encryption_migration_screen_handler.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-08-28T22:07:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cd96e990_778e8d7c",
+      "revId": "c6ae973a6654b1ae824434d5a5f199887ea31c30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "be025f43_5f9c5407",
         "filename": "chrome/browser/ui/webui/chromeos/login/encryption_migration_screen_handler.h",
         "patchSetId": 13
@@ -152,6 +296,24 @@
       "revId": "c6ae973a6654b1ae824434d5a5f199887ea31c30",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "edc28885_416e4078",
+        "filename": "chrome/browser/ui/webui/chromeos/login/encryption_migration_screen_handler.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-08-28T22:07:30Z",
+      "side": 1,
+      "message": "Done for the new methods - will do the rest in a follow-up CL.",
+      "parentUuid": "be025f43_5f9c5407",
+      "revId": "c6ae973a6654b1ae824434d5a5f199887ea31c30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
