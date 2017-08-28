@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "abcf19ea_0906f5c8",
+        "filename": "ash/wm/power_button_controller.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-08-28T20:12:40Z",
+      "side": 1,
+      "message": "Probably we don\u0027t need this if-condition, as it will always be ok to set enabled firstly here.",
+      "revId": "c45c0e03a44fa074133cce0976f488ada304b1b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
