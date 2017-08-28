@@ -36,6 +36,23 @@
     },
     {
       "key": {
+        "uuid": "e6b29470_85fc2137",
+        "filename": "third_party/WebKit/Source/core/editing/markers/UnsortedDocumentMarkerListEditor.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1229332
+      },
+      "writtenOn": "2017-08-28T18:19:35Z",
+      "side": 1,
+      "message": "Note: this isn\u0027t needed until we start using UnsortedDocumentMarkerListEditor for composition markers. I\u0027ll leave this method out in the first part of the CL.",
+      "revId": "1ab838a5dc153deb50109410ba4bcb761a9e9b62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "62570ca1_9059b7c8",
         "filename": "third_party/WebKit/Source/core/editing/markers/UnsortedDocumentMarkerListEditor.h",
         "patchSetId": 2
