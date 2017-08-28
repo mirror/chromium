@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ae498a19_304c7f33",
+        "filename": "components/ntp_tiles/most_visited_sites.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2017-08-28T09:43:06Z",
+      "side": 1,
+      "message": "Pet peeve: don\u0027t document things as \"simple\" or \"convenient\". If they\u0027re really simple or convenient, let them speak for themselves :)\n\nThat aside, this sentence is a little hard for me to parse. I\u0027d write it something like:\n\nURL host prefixes. Hosts with these prefixes often redirect to each other, or have the same content.",
+      "range": {
+        "startLine": 38,
+        "startChar": 5,
+        "endLine": 38,
+        "endChar": 11
+      },
+      "revId": "5a0c162be523d52b8ce046fa78ba81283f7cc5a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5afccef9_4f6bf529",
+        "filename": "components/ntp_tiles/most_visited_sites.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2017-08-28T09:43:06Z",
+      "side": 1,
+      "message": "Also confused by \"would be\". I think this whole bit:\n\n  When used for popular sites, the popular site would only be\n\ncould be:\n\n  Popular Sites are\n\nwithout loss of meaning.\n\n(Sorry, I took Technical Writing 101 last week :) )",
+      "range": {
+        "startLine": 40,
+        "startChar": 49,
+        "endLine": 40,
+        "endChar": 54
+      },
+      "revId": "5a0c162be523d52b8ce046fa78ba81283f7cc5a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f3741d6_0b65b008",
+        "filename": "components/ntp_tiles/most_visited_sites.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2017-08-28T09:43:06Z",
+      "side": 1,
+      "message": "Question: if you included the empty string here, would it simplify the code below?",
+      "revId": "5a0c162be523d52b8ce046fa78ba81283f7cc5a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cab12b46_743f7e80",
+        "filename": "components/ntp_tiles/most_visited_sites.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2017-08-28T09:43:06Z",
+      "side": 1,
+      "message": "You\u0027ve added tests for MVS that test this behavior, but this function looks interesting enough that it would be nice to expose and test it directly.",
+      "range": {
+        "startLine": 78,
+        "startChar": 5,
+        "endLine": 78,
+        "endChar": 28
+      },
+      "revId": "5a0c162be523d52b8ce046fa78ba81283f7cc5a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
