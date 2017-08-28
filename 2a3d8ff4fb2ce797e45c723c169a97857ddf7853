@@ -168,6 +168,30 @@
     },
     {
       "key": {
+        "uuid": "b236d61b_9fedd29b",
+        "filename": "ui/views/bubble/tray_bubble_view.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-28T16:59:28Z",
+      "side": 1,
+      "message": "\u003e I think it\u0027s okay that reserved key combos are consumed before tray bubble view consumes it. My understanding is that key event will be consumed in the following order.\n\u003e \n\u003e 1. Reserved key combos\n\u003e 2. Focus manager of the currently focused widget\n\u003e 3. Accelerator Controller of the widget\n\u003e 4. Global Accelerator Controller (non reserved ones)\n\u003e \n\u003e We want to capture key combos between 1 and 2.\n\nDon\u0027t you also want to avoid sending to the focused widget? The tray is up and you want to eat key events, right? Again, this seems similar to a menu which does not events go to the focused widget (2 \u0026 3).\n\n\u003e \n\u003e For marking the event, I think it\u0027s the responsibility of the widget. RerouteEventHandler is just rerouting it. I\u0027ll double check whether it\u0027s the case or not by injecting log here tomorrow.",
+      "parentUuid": "735d2768_93a7929f",
+      "range": {
+        "startLine": 154,
+        "startChar": 2,
+        "endLine": 154,
+        "endChar": 29
+      },
+      "revId": "2a3d8ff4fb2ce797e45c723c169a97857ddf7853",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6c12869b_600421cd",
         "filename": "ui/views/bubble/tray_bubble_view.cc",
         "patchSetId": 21
