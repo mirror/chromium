@@ -30,6 +30,12 @@ function FileTapHandler() {
    * @type {boolean}
    * @private
    */
+  this.isMultiTouch_ = false;
+
+  /**
+   * @type {boolean}
+   * @private
+   */
   this.hasLongPressProcessed_ = false;
 
   /**
@@ -87,7 +93,8 @@ FileTapHandler.MAX_TRACKING_FOR_TAP_ = 8;
 FileTapHandler.TapEvent = {
   TAP: 'tap',
   LONG_PRESS: 'longpress',
-  LONG_TAP: 'longtap'
+  LONG_TAP: 'longtap',
+  TWO_FINGER_TAP: 'twofingertap'
 };
 
 /**
@@ -114,9 +121,7 @@ FileTapHandler.prototype.handleTouchEvents = function(event, index, callback) {
         // the user is dragging something, an accidental second touch could be
         // quite disruptive if it cancelled their drag.  Better to just ignore
         // it.
-
-        // Invalidate current touch to distinguish it from normal tap.
-        this.tapStarted_ = false;
+        this.isMultiTouch_ = true;
         return false;
       }
 
@@ -133,6 +138,7 @@ FileTapHandler.prototype.handleTouchEvents = function(event, index, callback) {
 
       this.tapStarted_ = true;
       this.isLongTap_ = false;
+      this.isMultiTouch_ = false;
       this.hasLongPressProcessed_ = false;
       this.longTapDetectorTimerId_ = setTimeout(function() {
         this.longTapDetectorTimerId_ = -1;
@@ -146,6 +152,9 @@ FileTapHandler.prototype.handleTouchEvents = function(event, index, callback) {
       break;
 
     case 'touchmove':
+      if (!this.activeTouch_)
+        // Ignore touchmove events of a touch that is not tracked.
+        break;
       var touch = this.findActiveTouch_(event.changedTouches);
       if (!touch)
         break;
@@ -187,7 +196,10 @@ FileTapHandler.prototype.handleTouchEvents = function(event, index, callback) {
           return true;
         }
       } else {
-        if (callback(event, index, FileTapHandler.TapEvent.TAP)) {
+        if (callback(
+                event, index,
+                this.isMultiTouch_ ? FileTapHandler.TapEvent.TWO_FINGER_TAP :
+                                     FileTapHandler.TapEvent.TAP)) {
           event.preventDefault();
           return true;
         }
