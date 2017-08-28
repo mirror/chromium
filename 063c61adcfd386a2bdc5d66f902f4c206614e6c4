@@ -2,6 +2,52 @@
   "comments": [
     {
       "key": {
+        "uuid": "96e31584_174a4507",
+        "filename": "content/browser/frame_host/navigation_request.h",
+        "patchSetId": 25
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-08-28T04:06:15Z",
+      "side": 1,
+      "message": "can this be a const ref? no need to copy it all the way through, AFAICT",
+      "range": {
+        "startLine": 214,
+        "startChar": 29,
+        "endLine": 214,
+        "endChar": 37
+      },
+      "revId": "063c61adcfd386a2bdc5d66f902f4c206614e6c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "004260cc_3c99d445",
+        "filename": "content/browser/loader/navigation_resource_handler.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-08-28T04:06:15Z",
+      "side": 1,
+      "message": "Did you mean to leave this log statement in?",
+      "range": {
+        "startLine": 163,
+        "startChar": 2,
+        "endLine": 164,
+        "endChar": 31
+      },
+      "revId": "063c61adcfd386a2bdc5d66f902f4c206614e6c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "24f43172_fbd38893",
         "filename": "content/browser/loader/navigation_resource_handler.cc",
         "patchSetId": 25
@@ -18,6 +64,115 @@
         "startChar": 16,
         "endLine": 171,
         "endChar": 34
+      },
+      "revId": "063c61adcfd386a2bdc5d66f902f4c206614e6c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dbd040a3_91b6bfab",
+        "filename": "content/browser/loader/navigation_url_loader_delegate.h",
+        "patchSetId": 25
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-08-28T04:06:15Z",
+      "side": 1,
+      "message": "ditto: I think everywhere except where you pass it across threads can be const refs",
+      "range": {
+        "startLine": 69,
+        "startChar": 37,
+        "endLine": 69,
+        "endChar": 45
+      },
+      "revId": "063c61adcfd386a2bdc5d66f902f4c206614e6c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15853f76_dcc8d401",
+        "filename": "content/browser/loader/navigation_url_loader_unittest.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-08-28T04:06:15Z",
+      "side": 1,
+      "message": "nit: since web_contents_ is protected, not sure you need this as a method; you could just reset it in the tests themselves",
+      "range": {
+        "startLine": 151,
+        "startChar": 7,
+        "endLine": 151,
+        "endChar": 23
+      },
+      "revId": "063c61adcfd386a2bdc5d66f902f4c206614e6c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6c75534_fae0dc06",
+        "filename": "content/browser/loader/navigation_url_loader_unittest.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-08-28T04:06:15Z",
+      "side": 1,
+      "message": "Can we test that the ssl_info is populated as expected? Could just sanity-check some fields like is_valid(), cert or unverified_cert, and cert_status.",
+      "revId": "063c61adcfd386a2bdc5d66f902f4c206614e6c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dbc849ca_046cf8cf",
+        "filename": "content/browser/loader/navigation_url_loader_unittest.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-08-28T04:06:15Z",
+      "side": 1,
+      "message": "nit: differentiate from line 197?",
+      "range": {
+        "startLine": 216,
+        "startChar": 3,
+        "endLine": 216,
+        "endChar": 56
+      },
+      "revId": "063c61adcfd386a2bdc5d66f902f4c206614e6c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48bd4897_7438b86d",
+        "filename": "content/browser/loader/navigation_url_loader_unittest.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-08-28T04:06:15Z",
+      "side": 1,
+      "message": "Is this guaranteed to run before the certificate error occurs? If not, perhaps put it before calling MakeTestLoader().",
+      "range": {
+        "startLine": 233,
+        "startChar": 28,
+        "endLine": 233,
+        "endChar": 35
       },
       "revId": "063c61adcfd386a2bdc5d66f902f4c206614e6c4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
