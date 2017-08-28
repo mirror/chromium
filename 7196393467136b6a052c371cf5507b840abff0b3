@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "16b3901c_c4722b08",
+        "filename": "chrome/browser/ui/views/tabs/browser_tab_strip_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-28T23:15:09Z",
+      "side": 1,
+      "message": "How about setting a property (WebContentsUserData) on the WebContents indicating it was created from session restore so that this is not needed? That would be helpful on the mac side as well as I assume it will want this logic at some point in the future too. It also means you don\u0027t need pending_session_restore_tab_, which is a bit icky given it\u0027s only transiently needed.",
+      "range": {
+        "startLine": 201,
+        "startChar": 2,
+        "endLine": 201,
+        "endChar": 36
+      },
+      "revId": "7196393467136b6a052c371cf5507b840abff0b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "358ab85c_b3b84d94",
+        "filename": "chrome/browser/ui/views/tabs/browser_tab_strip_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 486,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-28T23:15:09Z",
+      "side": 1,
+      "message": "The active tab changing is a more specific form of the selection changing. As this code already overrides TabSelectionChanged (which covers all cases), can\u0027t TabStrip::SetSelection() deal with updating the data you need?  TabStrip::SetSelection() already calls to the tabs when the active status changes too.",
+      "range": {
+        "startLine": 462,
+        "startChar": 0,
+        "endLine": 486,
+        "endChar": 1
+      },
+      "revId": "7196393467136b6a052c371cf5507b840abff0b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
