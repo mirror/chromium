@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "6dd66ba8_683f226a",
+        "filename": "chrome/browser/ui/webui/media_router/media_router_ui.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-08-28T21:05:47Z",
+      "side": 1,
+      "message": "Mark: I asked for this in an earlier round of comments (actually, for the wrong reason, I just discovered). Basically, it\u0027s dangerous to \"delete this\" from a ctor. According to the C++ spec, it\u0027s undefined behavior to call operator delete on an object whose lifetime has not yet started; and the spec defines \"started\" as \"after the constructor returns.\"",
+      "parentUuid": "6e4b0894_7a71870a",
+      "revId": "3591dfe7ad03feeb590b6492e8331a0782ddc6b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "65568840_3cf58588",
         "filename": "chrome/browser/ui/webui/media_router/media_router_ui.cc",
         "patchSetId": 5
