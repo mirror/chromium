@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9edf3e5c_59701efc",
+        "filename": "chrome/browser/extensions/api/tab_capture/offscreen_tab.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-08-28T17:39:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b7c31f03_1e534c46",
+      "range": {
+        "startLine": 43,
+        "startChar": 47,
+        "endLine": 43,
+        "endChar": 63
+      },
+      "revId": "057fc09118008d634bca3910571eb9584544dcde",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d273e4a7_5316d25e",
         "filename": "chrome/browser/extensions/api/tab_capture/offscreen_tab.cc",
         "patchSetId": 4
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "bf08e211_bb9e7af3",
+        "filename": "chrome/browser/extensions/api/tab_capture/offscreen_tab.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-08-28T17:39:05Z",
+      "side": 1,
+      "message": "Done. Didn\u0027t know about base::Erase, thanks.",
+      "parentUuid": "d273e4a7_5316d25e",
+      "range": {
+        "startLine": 140,
+        "startChar": 0,
+        "endLine": 141,
+        "endChar": 64
+      },
+      "revId": "057fc09118008d634bca3910571eb9584544dcde",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "243a0c8c_149055c3",
         "filename": "chrome/browser/extensions/api/tab_capture/tab_capture_apitest.cc",
         "patchSetId": 4
@@ -68,6 +116,30 @@
       "revId": "057fc09118008d634bca3910571eb9584544dcde",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b599869_68032c13",
+        "filename": "chrome/browser/extensions/api/tab_capture/tab_capture_apitest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-08-28T17:39:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "243a0c8c_149055c3",
+      "range": {
+        "startLine": 224,
+        "startChar": 54,
+        "endLine": 224,
+        "endChar": 56
+      },
+      "revId": "057fc09118008d634bca3910571eb9584544dcde",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
