@@ -1,0 +1,157 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0e9cca52_c0875123",
+        "filename": "chrome/browser/chromeos/login/existing_user_controller.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 589,
+      "author": {
+        "id": 1000623
+      },
+      "writtenOn": "2017-08-28T19:05:00Z",
+      "side": 1,
+      "message": "Why not split this function into 2 functions instead of this boolean? The name of this function doesn\u0027t really make sense anymore?",
+      "revId": "c6ae973a6654b1ae824434d5a5f199887ea31c30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dcf15ccb_bc447823",
+        "filename": "chrome/browser/chromeos/login/screens/encryption_migration_screen_view.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1000623
+      },
+      "writtenOn": "2017-08-28T19:05:00Z",
+      "side": 1,
+      "message": "Is it possible to consolidate the copies of ContinueLoginCallback?",
+      "revId": "c6ae973a6654b1ae824434d5a5f199887ea31c30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81c2cfb6_7f06f9b2",
+        "filename": "chrome/browser/ui/webui/chromeos/login/encryption_migration_screen_handler.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 558,
+      "author": {
+        "id": 1000623
+      },
+      "writtenOn": "2017-08-28T19:05:00Z",
+      "side": 1,
+      "message": "Drop {}",
+      "revId": "c6ae973a6654b1ae824434d5a5f199887ea31c30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5ae84fc_ad050faf",
+        "filename": "chrome/browser/ui/webui/chromeos/login/encryption_migration_screen_handler.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 674,
+      "author": {
+        "id": 1000623
+      },
+      "writtenOn": "2017-08-28T19:05:00Z",
+      "side": 1,
+      "message": "Expand comment to talk about the timeout",
+      "revId": "c6ae973a6654b1ae824434d5a5f199887ea31c30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9b28089_4e7c29c2",
+        "filename": "chrome/browser/ui/webui/chromeos/login/encryption_migration_screen_handler.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 675,
+      "author": {
+        "id": 1000623
+      },
+      "writtenOn": "2017-08-28T19:05:00Z",
+      "side": 1,
+      "message": "nit const",
+      "revId": "c6ae973a6654b1ae824434d5a5f199887ea31c30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb6df903_a22cee13",
+        "filename": "chrome/browser/ui/webui/chromeos/login/encryption_migration_screen_handler.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 721,
+      "author": {
+        "id": 1000623
+      },
+      "writtenOn": "2017-08-28T19:05:00Z",
+      "side": 1,
+      "message": "should be const",
+      "revId": "c6ae973a6654b1ae824434d5a5f199887ea31c30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93e48754_e0ed0b1f",
+        "filename": "chrome/browser/ui/webui/chromeos/login/encryption_migration_screen_handler.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 725,
+      "author": {
+        "id": 1000623
+      },
+      "writtenOn": "2017-08-28T19:05:00Z",
+      "side": 1,
+      "message": "should be const",
+      "revId": "c6ae973a6654b1ae824434d5a5f199887ea31c30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd96e990_778e8d7c",
+        "filename": "chrome/browser/ui/webui/chromeos/login/encryption_migration_screen_handler.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1000623
+      },
+      "writtenOn": "2017-08-28T19:05:00Z",
+      "side": 1,
+      "message": "nit const",
+      "revId": "c6ae973a6654b1ae824434d5a5f199887ea31c30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be025f43_5f9c5407",
+        "filename": "chrome/browser/ui/webui/chromeos/login/encryption_migration_screen_handler.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1000623
+      },
+      "writtenOn": "2017-08-28T19:05:00Z",
+      "side": 1,
+      "message": "nit const.\n\nIt may make sense to make all the methods const in this or a follow-up Cl",
+      "revId": "c6ae973a6654b1ae824434d5a5f199887ea31c30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
