@@ -1449,6 +1449,12 @@ enum class StackViewDismissalMode { NONE, NORMAL, INCOGNITO };
                  completion:nil];
 }
 
+- (void)showReportAnIssueUI {
+  dispatch_async(dispatch_get_main_queue(), ^{
+    [self showReportAnIssue];
+  });
+}
+
 #pragma mark - chromeExecuteCommand
 
 - (IBAction)chromeExecuteCommand:(id)sender {
@@ -1458,11 +1464,6 @@ enum class StackViewDismissalMode { NONE, NORMAL, INCOGNITO };
     case IDC_OPEN_URL:
       [self openUrl:base::mac::ObjCCast<OpenUrlCommand>(sender)];
       break;
-    case IDC_REPORT_AN_ISSUE: {
-      dispatch_async(dispatch_get_main_queue(), ^{
-        [self showReportAnIssue];
-      });
-    } break;
     case IDC_SHOW_SIGNIN_IOS: {
       ShowSigninCommand* command =
           base::mac::ObjCCastStrict<ShowSigninCommand>(sender);
