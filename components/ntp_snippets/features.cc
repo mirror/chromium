@@ -28,6 +28,7 @@ const base::Feature* const kAllFeatures[] = {
     &kPhysicalWebPageSuggestionsFeature,
     &kPublisherFaviconsFromNewServerFeature,
     &kRecentOfflineTabSuggestionsFeature,
+    &kNTPRemoteSuggestionsBackendFeature,
     nullptr};
 
 const base::Feature kArticleSuggestionsFeature{
@@ -47,6 +48,9 @@ const base::Feature kPhysicalWebPageSuggestionsFeature{
 
 const base::Feature kForeignSessionsSuggestionsFeature{
     "NTPForeignSessionsSuggestions", base::FEATURE_DISABLED_BY_DEFAULT};
+
+const base::Feature kNTPRemoteSuggestionsBackendFeature{
+    "NTPRemoteSuggestionsBackend", base::FEATURE_DISABLED_BY_DEFAULT};
 
 const base::Feature kBreakingNewsPushFeature{"BreakingNewsPush",
                                              base::FEATURE_DISABLED_BY_DEFAULT};

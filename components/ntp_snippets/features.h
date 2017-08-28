@@ -33,6 +33,7 @@ extern const base::Feature kBookmarkSuggestionsFeature;
 extern const base::Feature kRecentOfflineTabSuggestionsFeature;
 extern const base::Feature kPhysicalWebPageSuggestionsFeature;
 extern const base::Feature kForeignSessionsSuggestionsFeature;
+extern const base::Feature kNTPRemoteSuggestionsBackendFeature;
 
 // Feature to allow UI as specified here: https://crbug.com/660837.
 extern const base::Feature kIncreasedVisibility;
