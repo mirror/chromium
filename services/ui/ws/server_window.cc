@@ -459,10 +459,14 @@ std::string ServerWindow::GetDebugWindowInfo() const {
   if (has_created_compositor_frame_sink_)
     frame_sink = " [" + frame_sink_id_.ToString() + "]";
 
-  return base::StringPrintf("id=%s visible=%s bounds=%s name=%s%s",
+  std::string transform;
+  if (!transform_.IsIdentity())
+    transform = " {Transformed}";
+
+  return base::StringPrintf("id=%s visible=%s bounds=%s name=%s%s%s",
                             id_.ToString().c_str(), visible_ ? "true" : "false",
                             bounds_.ToString().c_str(), name.c_str(),
-                            frame_sink.c_str());
+                            frame_sink.c_str(), transform.c_str());
 }
 
 void ServerWindow::BuildDebugInfo(const std::string& depth,
