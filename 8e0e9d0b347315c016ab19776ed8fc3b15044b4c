@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b22d37d4_a3ac2553",
+        "filename": "chrome/browser/android/chrome_feature_list.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-08-28T17:20:50Z",
+      "side": 1,
+      "message": "Can you add a bug number to this one since it\u0027s a little non-obvious what it refers to?",
+      "revId": "8e0e9d0b347315c016ab19776ed8fc3b15044b4c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
