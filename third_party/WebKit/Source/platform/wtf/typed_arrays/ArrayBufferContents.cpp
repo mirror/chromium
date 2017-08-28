@@ -138,7 +138,9 @@ void* ArrayBufferContents::ReserveMemory(size_t size) {
   // Linux by default has a small address space limit, which we chew up pretty
   // quickly with large memory reservations. To mitigate this, we bump up the
   // limit for array buffer reservations. See https://crbug.com/750378
-  CHECK(sandbox::ResourceLimits::AdjustCurrent(RLIMIT_AS, size));
+  if (!sandbox::ResourceLimits::AdjustCurrent(RLIMIT_AS, size)) {
+    return nullptr;
+  }
 #endif
 
   // TODO(crbug.com/735209): On Windows this commits all the memory, rather than
