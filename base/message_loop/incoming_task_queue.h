@@ -7,6 +7,7 @@
 
 #include "base/base_export.h"
 #include "base/callback.h"
+#include "base/debug/task_annotator.h"
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
 #include "base/pending_task.h"
@@ -55,6 +56,9 @@ class BASE_EXPORT IncomingTaskQueue
   // scheduling work.
   void StartScheduling();
 
+  // Runs |pending_task|.
+  void RunTask(PendingTask* pending_task);
+
  private:
   friend class RefCountedThreadSafe<IncomingTaskQueue>;
   virtual ~IncomingTaskQueue();
@@ -67,6 +71,8 @@ class BASE_EXPORT IncomingTaskQueue
 
   // Wakes up the message loop and schedules work.
   void ScheduleWork();
+
+  debug::TaskAnnotator task_annotator_;
 
   // Number of tasks that require high resolution timing. This value is kept
   // so that ReloadWorkQueue() completes in constant time.
