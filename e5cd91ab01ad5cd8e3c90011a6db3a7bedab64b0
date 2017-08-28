@@ -22,6 +22,30 @@
       "revId": "e5cd91ab01ad5cd8e3c90011a6db3a7bedab64b0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3af3d988_13ae0798",
+        "filename": "content/browser/renderer_host/overscroll_controller.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 1166494
+      },
+      "writtenOn": "2017-08-28T18:03:39Z",
+      "side": 1,
+      "message": "Sorry for the typo. Changed to \"GestureScrollBegin/End ACK will reset overscroll state when necessary.\"",
+      "parentUuid": "d2c16d96_66c87f2f",
+      "range": {
+        "startLine": 249,
+        "startChar": 30,
+        "endLine": 249,
+        "endChar": 71
+      },
+      "revId": "e5cd91ab01ad5cd8e3c90011a6db3a7bedab64b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
