@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a8aa26de_85d7aeac",
+        "filename": "ios/chrome/browser/prefs/browser_prefs.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1212314
+      },
+      "writtenOn": "2017-08-28T02:05:32Z",
+      "side": 1,
+      "message": "you may need to insert \"//ios/chrome/browser/bookmarks:features\" to browser_prefs\u0027s deps in BUILD.gn",
+      "revId": "c7fe3e3d0173592b9363c8f70057ac761777de16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf586c76_44545036",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_home_view_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 459,
+      "author": {
+        "id": 1212314
+      },
+      "writtenOn": "2017-08-28T02:05:32Z",
+      "side": 1,
+      "message": "Not sure if we can remove the parameter tableView so that both TableView and CollectionView can reuse this function?  same for the 2 functions below.",
+      "revId": "c7fe3e3d0173592b9363c8f70057ac761777de16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "deb46621_b534ae27",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_promo_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1212314
+      },
+      "writtenOn": "2017-08-28T02:05:32Z",
+      "side": 1,
+      "message": "missing ;",
+      "revId": "c7fe3e3d0173592b9363c8f70057ac761777de16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6aa0e0f0_6cfa0933",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_table_view.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1212314
+      },
+      "writtenOn": "2017-08-28T02:05:32Z",
+      "side": 1,
+      "message": "After patching this CL and run, I can still see a line between bookmarks and promo section.  Add a TODO to fix that later?",
+      "revId": "c7fe3e3d0173592b9363c8f70057ac761777de16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "997dbd22_ef4d821a",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_table_view.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 304,
+      "author": {
+        "id": 1212314
+      },
+      "writtenOn": "2017-08-28T02:05:32Z",
+      "side": 1,
+      "message": "Will it be better if\nif (indexPath.section \u003d\u003d self.promoSection) {\n    // User tapped inside promo cell but not the bookmark or folder cell. Ignore it.\n    return;\n}",
+      "revId": "c7fe3e3d0173592b9363c8f70057ac761777de16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ba27f50_ab734db2",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmarks_egtest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 1147,
+      "author": {
+        "id": 1212314
+      },
+      "writtenOn": "2017-08-28T02:05:32Z",
+      "side": 1,
+      "message": "Could we add a test (or TODO) to verify that promo view doesn\u0027t appear at the child level of root?",
+      "revId": "c7fe3e3d0173592b9363c8f70057ac761777de16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40d0bd47_d12a5148",
+        "filename": "ios/chrome/browser/ui/bookmarks/cells/bookmark_table_signin_promo_cell.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1212314
+      },
+      "writtenOn": "2017-08-28T02:05:32Z",
+      "side": 1,
+      "message": "Should the 0 be (margin) as well? (according to the Bookmarks_iOS_AR_WIP doc)",
+      "revId": "c7fe3e3d0173592b9363c8f70057ac761777de16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
