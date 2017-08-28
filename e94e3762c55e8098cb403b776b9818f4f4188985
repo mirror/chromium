@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a241179c_9175e56f",
+        "filename": "third_party/WebKit/Source/core/editing/commands/InsertListCommand.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1116070
+      },
+      "writtenOn": "2017-08-28T01:51:55Z",
+      "side": 0,
+      "message": "No.\n!(!A \u0026\u0026 !B \u0026\u0026 !C) \u003d\u003d\u003d A || B || C.",
+      "revId": "e94e3762c55e8098cb403b776b9818f4f4188985",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

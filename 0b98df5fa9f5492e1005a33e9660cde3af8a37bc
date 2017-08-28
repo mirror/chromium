@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e0961b34_782cad39",
+        "filename": "third_party/WebKit/Source/core/editing/commands/InsertListCommand.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1116070
+      },
+      "writtenOn": "2017-08-28T01:51:55Z",
+      "side": 1,
+      "message": "Ditto to:\nhttps://chromium-review.googlesource.com/c/chromium/src/+/632296/2/third_party/WebKit/Source/core/editing/FrameSelection.cpp#631",
+      "revId": "0b98df5fa9f5492e1005a33e9660cde3af8a37bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
