@@ -182,6 +182,7 @@ enum Source {
   file,
   device,
   network,
+  smb,
   system
 };
 

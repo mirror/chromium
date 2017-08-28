@@ -514,6 +514,10 @@ FileManagerPrivateGetProvidingExtensionsFunction::Run() {
         providing_extension.source =
             api::manifest_types::FILE_SYSTEM_PROVIDER_SOURCE_NETWORK;
         break;
+      case SOURCE_SMB:
+        providing_extension.source =
+            api::manifest_types::FILE_SYSTEM_PROVIDER_SOURCE_SMB;
+        break;
     }
     providing_extensions.push_back(std::move(providing_extension));
   }

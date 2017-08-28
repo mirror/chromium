@@ -96,6 +96,9 @@ bool FileSystemProviderCapabilitiesHandler::Parse(Extension* extension,
     case api::manifest_types::FILE_SYSTEM_PROVIDER_SOURCE_NETWORK:
       source = SOURCE_NETWORK;
       break;
+    case api::manifest_types::FILE_SYSTEM_PROVIDER_SOURCE_SMB:
+      source = SOURCE_SMB;
+      break;
     case api::manifest_types::FILE_SYSTEM_PROVIDER_SOURCE_NONE:
       NOTREACHED();
   }

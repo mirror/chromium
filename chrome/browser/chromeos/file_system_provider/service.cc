@@ -18,6 +18,7 @@
 #include "chrome/browser/chromeos/file_system_provider/registry.h"
 #include "chrome/browser/chromeos/file_system_provider/registry_interface.h"
 #include "chrome/browser/chromeos/file_system_provider/service_factory.h"
+#include "chrome/browser/chromeos/file_system_provider/smb_provided_file_system.h"
 #include "chrome/browser/chromeos/file_system_provider/throttled_file_system.h"
 #include "components/prefs/pref_service.h"
 #include "components/prefs/scoped_user_pref_update.h"
@@ -41,6 +42,21 @@ std::unique_ptr<ProvidedFileSystemInterface> CreateProvidedFileSystem(
     Profile* profile,
     const ProvidedFileSystemInfo& file_system_info) {
   DCHECK(profile);
+  // TODO(zentaro): Could probably check file_system_info.source() to identify
+  // and return a different implementation.
+  LOG(ERROR) << "service.cc: CreateProvidedFileSystem";
+
+  if (file_system_info.source() == extensions::SOURCE_NETWORK) {
+    LOG(ERROR) << "service.cc: CreateProvidedFileSystem: source=network eid="
+               << file_system_info.extension_id()
+               << " fsid=" << file_system_info.file_system_id()
+               << " dn=" << file_system_info.display_name();
+    LOG(ERROR) << "service.cc: CreateProvidedFileSystem: source=network";
+    return base::MakeUnique<ThrottledFileSystem>(
+        base::MakeUnique<SmbProvidedFileSystem>(file_system_info));
+  } else if (file_system_info.source() == extensions::SOURCE_SMB) {
+    LOG(ERROR) << "service.cc: CreateProvidedFileSystem: source=smb";
+  }
   return base::MakeUnique<ThrottledFileSystem>(
       base::MakeUnique<ProvidedFileSystem>(profile, file_system_info));
 }
@@ -60,10 +76,12 @@ Service::Service(Profile* profile,
       file_system_factory_(base::Bind(&CreateProvidedFileSystem)),
       registry_(new Registry(profile)),
       weak_ptr_factory_(this) {
+  LOG(ERROR) << "Service::Service";
   extension_registry_->AddObserver(this);
 }
 
 Service::~Service() {
+  LOG(ERROR) << "Service::~Service";
   extension_registry_->RemoveObserver(this);
 
   // Provided file systems should be already unmounted because of receiving
@@ -103,6 +121,7 @@ void Service::RemoveObserver(Observer* observer) {
 void Service::SetFileSystemFactoryForTesting(
     const FileSystemFactoryCallback& factory_callback) {
   DCHECK(!factory_callback.is_null());
+  // TODO(zentaro): Maybe can/need to see if this is useful.
   file_system_factory_ = factory_callback;
 }
 
@@ -114,6 +133,7 @@ void Service::SetRegistryForTesting(
 
 base::File::Error Service::MountFileSystem(const std::string& extension_id,
                                            const MountOptions& options) {
+  LOG(ERROR) << "Service::MountFileSystem eid=" << extension_id;
   return MountFileSystemInternal(extension_id, options, MOUNT_CONTEXT_USER);
 }
 
@@ -122,13 +142,15 @@ base::File::Error Service::MountFileSystemInternal(
     const MountOptions& options,
     MountContext context) {
   DCHECK(thread_checker_.CalledOnValidThread());
-
+  LOG(ERROR) << "Service::MountFileSystemInternal eid=" << extension_id;
   // The mount point path and name are unique per system, since they are system
   // wide. This is necessary for copying between profiles.
   const base::FilePath& mount_path =
       util::GetMountPath(profile_, extension_id, options.file_system_id);
   const std::string mount_point_name = mount_path.BaseName().AsUTF8Unsafe();
 
+  LOG(ERROR) << "Service::MountFileSystemInternal mount_name="
+             << mount_point_name << " mount_path=" << mount_path.value();
   ProvidingExtensionInfo provider_info;
   // TODO(mtomasz): Set up a testing extension in unit tests.
   GetProvidingExtensionInfo(extension_id, &provider_info);
@@ -307,6 +329,8 @@ ProvidedFileSystemInterface* Service::GetProvidedFileSystem(
     const std::string& file_system_id) {
   DCHECK(thread_checker_.CalledOnValidThread());
 
+  LOG(ERROR) << "Service::GetProvidedFileSystem eid=" << extension_id
+             << " fsid=" << file_system_id;
   const auto file_system_it =
       file_system_map_.find(FileSystemKey(extension_id, file_system_id));
   if (file_system_it == file_system_map_.end())
