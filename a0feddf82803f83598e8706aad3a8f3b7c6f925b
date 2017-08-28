@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "04bf06d3_47cf8482",
+        "filename": "ios/clean/chrome/browser/ui/tab/basic_tab_container_view_controller.mm",
+        "patchSetId": 22
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-08-28T18:47:59Z",
+      "side": 1,
+      "message": "Style guide says that all private API should be declared in a private interface in the .mm file.  Can we move the declarations and their comments into one at the top of this file?",
+      "revId": "a0feddf82803f83598e8706aad3a8f3b7c6f925b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a90419bc_938b0d8b",
+        "filename": "ios/clean/chrome/browser/ui/tab/tab_container_view_controller.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-08-28T18:47:59Z",
+      "side": 1,
+      "message": "Why this change?  Doesn\u0027t look like you\u0027ve added any ui types to this header.  If it\u0027s needed in the implementation, can you move it to the .mm (or the Internal category)?",
+      "revId": "a0feddf82803f83598e8706aad3a8f3b7c6f925b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b35684bc_a9e63ddc",
+        "filename": "ios/clean/chrome/browser/ui/tab/tab_coordinator_unittest.mm",
+        "patchSetId": 22
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-08-28T18:47:59Z",
+      "side": 1,
+      "message": "Optional: In his code reviews, Sylvain has often recommended leaving just a simple test to verify that the coordinator can be instantiated.  Not sure it adds THAT much value, but should probably add one here as well.  If it DHCECKs from the message loop issue, we can just add it DISABLED with a TODO to reenable.",
+      "revId": "a0feddf82803f83598e8706aad3a8f3b7c6f925b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09a5b115_0f4037f7",
+        "filename": "ios/clean/chrome/browser/ui/toolbar/toolbar_view_controller.mm",
+        "patchSetId": 22
+      },
+      "lineNbr": 431,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-08-28T18:47:59Z",
+      "side": 1,
+      "message": "Does this compile without suppressing the performSelector warning?  I think that |-performSelector:| should be used when the calling code doesn\u0027t know which selectors to call (e.g. if a superclass is dispatching a selector supplied by a subclass).  Since the selectors are chosen by this code, I think it\u0027s better to avoid |-performSelector:| and instead directly call the selectors in the dispatcher\u0027s protocols:\n\nif (self.usesTabStrip)\n  [self.dispatcher showTabStrip];\nelse\n  [self.dispatcher showTabGrid];",
+      "revId": "a0feddf82803f83598e8706aad3a8f3b7c6f925b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
