@@ -27,14 +27,14 @@ namespace {
 blink::WebImeTextSpan::Type ConvertUiImeTextSpanTypeToBlinkType(
     ui::ImeTextSpan::Type type) {
   switch (type) {
-    case ui::ImeTextSpan::Type::kComposition:
-      return blink::WebImeTextSpan::Type::kComposition;
+    case ui::ImeTextSpan::Type::kFormatting:
+      return blink::WebImeTextSpan::Type::kFormatting;
     case ui::ImeTextSpan::Type::kSuggestion:
       return blink::WebImeTextSpan::Type::kSuggestion;
   }
 
   NOTREACHED();
-  return blink::WebImeTextSpan::Type::kComposition;
+  return blink::WebImeTextSpan::Type::kFormatting;
 }
 
 std::vector<blink::WebImeTextSpan> ConvertUIImeTextSpansToBlinkImeTextSpans(

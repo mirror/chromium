@@ -1146,7 +1146,7 @@ void Internals::addCompositionMarker(const Range* range,
       [&document_marker_controller](
           const EphemeralRange& range, Color underline_color,
           StyleableMarker::Thickness thickness, Color background_color) {
-        document_marker_controller.AddCompositionMarker(
+        document_marker_controller.AddImeFormattingMarker(
             range, underline_color, thickness, background_color);
       });
 }

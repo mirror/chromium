@@ -44,14 +44,14 @@ Vector<String> ConvertStdVectorOfStdStringsToVectorOfStrings(
 
 ImeTextSpan::Type ConvertWebTypeToType(WebImeTextSpan::Type type) {
   switch (type) {
-    case WebImeTextSpan::Type::kComposition:
-      return ImeTextSpan::Type::kComposition;
+    case WebImeTextSpan::Type::kFormatting:
+      return ImeTextSpan::Type::kFormatting;
     case WebImeTextSpan::Type::kSuggestion:
       return ImeTextSpan::Type::kSuggestion;
   }
 
   NOTREACHED();
-  return ImeTextSpan::Type::kComposition;
+  return ImeTextSpan::Type::kFormatting;
 }
 
 }  // namespace

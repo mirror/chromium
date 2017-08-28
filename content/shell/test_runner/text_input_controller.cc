@@ -313,7 +313,7 @@ void TextInputController::SetComposition(const std::string& text) {
 
   std::vector<blink::WebImeTextSpan> ime_text_spans;
   ime_text_spans.push_back(blink::WebImeTextSpan(
-      blink::WebImeTextSpan::Type::kComposition, 0, textLength, SK_ColorBLACK,
+      blink::WebImeTextSpan::Type::kFormatting, 0, textLength, SK_ColorBLACK,
       false, SK_ColorTRANSPARENT));
   if (auto* controller = GetInputMethodController()) {
     controller->SetComposition(

@@ -20,8 +20,8 @@ namespace ui {
 
 struct UI_BASE_IME_EXPORT ImeTextSpan {
   enum class Type {
-    // Creates a composition marker.
-    kComposition,
+    // Creates an ImeFormatting marker.
+    kFormatting,
     // Creates a suggestion marker that isn't cleared after the user picks a
     // replacement.
     kSuggestion,

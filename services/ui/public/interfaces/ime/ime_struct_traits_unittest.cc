@@ -112,7 +112,7 @@ TEST_F(IMEStructTraitsTest, CompositionText) {
   input.text = base::UTF8ToUTF16("abcdefghij");
   input.ime_text_spans.push_back(ImeTextSpan(0, 2, SK_ColorGRAY, false));
   input.ime_text_spans.push_back(ImeTextSpan(
-      ImeTextSpan::Type::kComposition, 3, 6, SK_ColorRED, true, SK_ColorGREEN));
+      ImeTextSpan::Type::kFormatting, 3, 6, SK_ColorRED, true, SK_ColorGREEN));
   input.selection = gfx::Range(1, 7);
 
   CompositionText output;

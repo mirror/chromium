@@ -32,8 +32,8 @@
 #include "core/CoreExport.h"
 #include "core/dom/SynchronousMutationObserver.h"
 #include "core/editing/iterators/TextIterator.h"
-#include "core/editing/markers/CompositionMarker.h"
 #include "core/editing/markers/DocumentMarker.h"
+#include "core/editing/markers/ImeFormattingMarker.h"
 #include "core/editing/markers/SuggestionMarker.h"
 #include "core/editing/markers/TextMatchMarker.h"
 #include "platform/geometry/IntRect.h"
@@ -61,10 +61,10 @@ class CORE_EXPORT DocumentMarkerController final
   void AddGrammarMarker(const EphemeralRange&,
                         const String& description = g_empty_string);
   void AddTextMatchMarker(const EphemeralRange&, TextMatchMarker::MatchStatus);
-  void AddCompositionMarker(const EphemeralRange&,
-                            Color underline_color,
-                            StyleableMarker::Thickness,
-                            Color background_color);
+  void AddImeFormattingMarker(const EphemeralRange&,
+                              Color underline_color,
+                              StyleableMarker::Thickness,
+                              Color background_color);
   void AddActiveSuggestionMarker(const EphemeralRange&,
                                  Color underline_color,
                                  StyleableMarker::Thickness,

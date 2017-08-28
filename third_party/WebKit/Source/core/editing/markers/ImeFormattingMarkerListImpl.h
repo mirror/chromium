@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CompositionMarkerListImpl_h
-#define CompositionMarkerListImpl_h
+#ifndef ImeFormattingMarkerListImpl_h
+#define ImeFormattingMarkerListImpl_h
 
 #include "core/editing/markers/DocumentMarkerList.h"
 
@@ -15,9 +15,10 @@ namespace blink {
 // the split). This means we can keep the list in sorted order to do some
 // operations more efficiently, while still being able to do inserts in O(1)
 // time at the end of the list.
-class CORE_EXPORT CompositionMarkerListImpl final : public DocumentMarkerList {
+class CORE_EXPORT ImeFormattingMarkerListImpl final
+    : public DocumentMarkerList {
  public:
-  CompositionMarkerListImpl() = default;
+  ImeFormattingMarkerListImpl() = default;
 
   // DocumentMarkerList implementations
   DocumentMarker::MarkerType MarkerType() const final;
@@ -46,9 +47,9 @@ class CORE_EXPORT CompositionMarkerListImpl final : public DocumentMarkerList {
  private:
   HeapVector<Member<DocumentMarker>> markers_;
 
-  DISALLOW_COPY_AND_ASSIGN(CompositionMarkerListImpl);
+  DISALLOW_COPY_AND_ASSIGN(ImeFormattingMarkerListImpl);
 };
 
 }  // namespace blink
 
-#endif  // CompositionMarkerListImpl_h
+#endif  // ImeFormattingMarkerListImpl_h

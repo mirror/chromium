@@ -324,7 +324,7 @@ void InputMethodController::Clear() {
     composition_range_->setStart(&GetDocument(), 0);
     composition_range_->collapse(true);
   }
-  GetDocument().Markers().RemoveMarkersOfTypes(DocumentMarker::kComposition);
+  GetDocument().Markers().RemoveMarkersOfTypes(DocumentMarker::kImeFormatting);
 }
 
 void InputMethodController::ContextDestroyed(Document*) {
@@ -496,7 +496,7 @@ void InputMethodController::AddImeTextSpans(
     if (ephemeral_line_range.IsNull())
       continue;
 
-    GetDocument().Markers().AddCompositionMarker(
+    GetDocument().Markers().AddImeFormattingMarker(
         ephemeral_line_range, ime_text_span.UnderlineColor(),
         ime_text_span.Thick() ? StyleableMarker::Thickness::kThick
                               : StyleableMarker::Thickness::kThin,
@@ -722,7 +722,7 @@ void InputMethodController::SetComposition(
   SetEditableSelectionOffsets(selected_range, TypingContinuation::kContinue);
 
   if (ime_text_spans.IsEmpty()) {
-    GetDocument().Markers().AddCompositionMarker(
+    GetDocument().Markers().AddImeFormattingMarker(
         EphemeralRange(composition_range_), Color::kBlack,
         StyleableMarker::Thickness::kThin,
         LayoutTheme::GetTheme().PlatformDefaultCompositionBackgroundColor());

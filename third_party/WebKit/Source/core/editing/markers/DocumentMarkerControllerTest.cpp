@@ -206,10 +206,10 @@ TEST_F(DocumentMarkerControllerTest, UpdateRenderedRects) {
 TEST_F(DocumentMarkerControllerTest, CompositionMarkersNotMerged) {
   SetBodyContent("<div style='margin: 100px'>foo</div>");
   Node* text = GetDocument().body()->firstChild()->firstChild();
-  MarkerController().AddCompositionMarker(
+  MarkerController().AddImeFormattingMarker(
       EphemeralRange(Position(text, 0), Position(text, 1)), Color::kBlack,
       StyleableMarker::Thickness::kThin, Color::kBlack);
-  MarkerController().AddCompositionMarker(
+  MarkerController().AddImeFormattingMarker(
       EphemeralRange(Position(text, 1), Position(text, 3)), Color::kBlack,
       StyleableMarker::Thickness::kThick, Color::kBlack);
 
