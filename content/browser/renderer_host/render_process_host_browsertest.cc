@@ -462,6 +462,8 @@ class MediaStopObserver : public WebContentsObserver {
 #define KillProcessZerosAudioStreams DISABLED_KillProcessZerosAudioStreams
 #endif
 IN_PROC_BROWSER_TEST_F(RenderProcessHostTest, KillProcessZerosAudioStreams) {
+  // TODO(maxmorin): This test only uses an output stream. There should be a
+  // similar test for input streams.
   embedded_test_server()->ServeFilesFromSourceDirectory(
       media::GetTestDataPath());
   ASSERT_TRUE(embedded_test_server()->Start());
