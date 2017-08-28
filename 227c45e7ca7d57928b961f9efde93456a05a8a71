@@ -34,6 +34,24 @@
       "revId": "227c45e7ca7d57928b961f9efde93456a05a8a71",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec834c69_c713d774",
+        "filename": "ui/webui/resources/cr_elements/shared_vars_css.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-08-28T20:18:56Z",
+      "side": 1,
+      "message": "Hmm, fair, although if we immediately move this then this CL will just be churn; scanning through settings_shared_css.html there\u0027s actually a bunch of text related stuff that would make a good foundation for a \u0027cr_common.html\u0027. That said, if you want to land this, that seems fine.",
+      "parentUuid": "7df73a23_10dff4a2",
+      "revId": "227c45e7ca7d57928b961f9efde93456a05a8a71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
