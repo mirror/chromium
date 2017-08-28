@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a5c5cc31_8bb91a53",
+        "filename": "ios/chrome/browser/prefs/browser_prefs.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1181484
+      },
+      "writtenOn": "2017-08-28T05:29:07Z",
+      "side": 1,
+      "message": "Thanks, done :)",
+      "parentUuid": "a8aa26de_85d7aeac",
+      "revId": "c7fe3e3d0173592b9363c8f70057ac761777de16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cf586c76_44545036",
         "filename": "ios/chrome/browser/ui/bookmarks/bookmark_home_view_controller.mm",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "c7fe3e3d0173592b9363c8f70057ac761777de16",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "abfeda2c_becef712",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_home_view_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 459,
+      "author": {
+        "id": 1181484
+      },
+      "writtenOn": "2017-08-28T05:29:07Z",
+      "side": 1,
+      "message": "It\u0027s generally the norm to include the UI element that caused this delegate call. Also since these are 2 separate delegate methods (one for collection view and another for table view) keeping them as is.",
+      "parentUuid": "cf586c76_44545036",
+      "revId": "c7fe3e3d0173592b9363c8f70057ac761777de16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "613dbf2f_fa113362",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_promo_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1181484
+      },
+      "writtenOn": "2017-08-28T05:29:07Z",
+      "side": 1,
+      "message": "Sorry this was just test code, removed now.",
+      "parentUuid": "deb46621_b534ae27",
+      "revId": "c7fe3e3d0173592b9363c8f70057ac761777de16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6aa0e0f0_6cfa0933",
         "filename": "ios/chrome/browser/ui/bookmarks/bookmark_table_view.mm",
         "patchSetId": 2
@@ -67,6 +121,24 @@
       "revId": "c7fe3e3d0173592b9363c8f70057ac761777de16",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42444b5e_d9812d88",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_table_view.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1181484
+      },
+      "writtenOn": "2017-08-28T05:29:07Z",
+      "side": 1,
+      "message": "What do you mean? The TODO added here is to remove that separator.",
+      "parentUuid": "6aa0e0f0_6cfa0933",
+      "revId": "c7fe3e3d0173592b9363c8f70057ac761777de16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "66a09797_a142f5a8",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_table_view.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 304,
+      "author": {
+        "id": 1181484
+      },
+      "writtenOn": "2017-08-28T05:29:07Z",
+      "side": 1,
+      "message": "I had done that initially, but i want the cell-deselection to happen at the end before leaving this method. Hence the reverse check.",
+      "parentUuid": "997dbd22_ef4d821a",
+      "revId": "c7fe3e3d0173592b9363c8f70057ac761777de16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5ba27f50_ab734db2",
         "filename": "ios/chrome/browser/ui/bookmarks/bookmarks_egtest.mm",
         "patchSetId": 2
@@ -101,6 +191,24 @@
       "revId": "c7fe3e3d0173592b9363c8f70057ac761777de16",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63aeb5f6_e4eae46d",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmarks_egtest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 1147,
+      "author": {
+        "id": 1181484
+      },
+      "writtenOn": "2017-08-28T05:29:07Z",
+      "side": 1,
+      "message": "Good idea. Added a test case for the same.",
+      "parentUuid": "5ba27f50_ab734db2",
+      "revId": "c7fe3e3d0173592b9363c8f70057ac761777de16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
