@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6f3e0dfc_3a849b95",
+        "filename": "content/browser/accessibility/accessibility_tree_formatter_utils_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1128439
+      },
+      "writtenOn": "2017-08-28T20:50:03Z",
+      "side": 1,
+      "message": "This should be \u0027const\u0027 so it goes in the read-only data segment. Note that in C++ global variables \u0027const\u0027 implies \u0027static\u0027 so you can replace static with const rather than adding const.",
+      "revId": "af0d10df2a04598dd37a719f32a07ada2551963d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12499b79_3158f340",
+        "filename": "content/browser/accessibility/accessibility_tree_formatter_utils_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1128439
+      },
+      "writtenOn": "2017-08-28T20:50:03Z",
+      "side": 1,
+      "message": "Would it be possible to skip the map entirely? If the array is sorted-as-defined then searching it will be faster than searching a map and will require zero memory allocations. If the array can\u0027t easily be sorted-as-defined then making it non-const and sorting it on first use would work very nicely.\n\nIt doesn\u0027t matter much - the amount of memory and overhead is small - but if avoiding a map is just as easy we might as well.\n\nNote also that the boiler-plate code to initialize the map and then search it can be extracted into a shared function.",
+      "revId": "af0d10df2a04598dd37a719f32a07ada2551963d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
