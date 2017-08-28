@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "80d12e9d_2fa57c83",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXLayoutObject.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 745,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-08-28T15:05:07Z",
+      "side": 1,
+      "message": "Neat, good idea. However, I\u0027m still suspicious that the screen reader\nisn\u0027t looking at just the role to decide that.\n\nI suspect that what we\u0027re seeing is based more on display: inline\nvs display: block - all of your examples below are inline, I believe.\n\nWhat about things like \u003cem\u003e, \u003cstrong\u003e, or \u003ccode\u003e? Add something like\naria-label\u003d\"\" to force them to be not ignored.\n\nWould there be any negative side effects if you just checked for\ndisplay:inline here?",
+      "parentUuid": "9e50e4dc_d3a328b2",
+      "revId": "2776d2d2671e938b2c428f7254ee25111b9e7d03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5b061dbe_f3be3165",
         "filename": "third_party/WebKit/Source/modules/accessibility/AXLayoutObject.cpp",
         "patchSetId": 8
