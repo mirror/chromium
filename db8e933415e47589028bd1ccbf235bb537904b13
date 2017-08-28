@@ -1,0 +1,107 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "231a1fda_d6086721",
+        "filename": "third_party/WebKit/Source/core/editing/commands/TypingCommand.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-08-28T18:27:07Z",
+      "side": 1,
+      "message": "I guess SetStartingSelection(VisibleSelection) is also retiring... And the logic is also a little convoluted.\n\nHow about adding SelectionForUndoStep::From(VisibleSelection), so that we can use\n\ntyping_command-\u003eSetStartingSelection(SelectionForUndoStep::From(current_selection));\ntyping_command-\u003eSetEndingSelection(SelectionForUndoStep::From(current_selection));",
+      "range": {
+        "startLine": 260,
+        "startChar": 1,
+        "endLine": 261,
+        "endChar": 74
+      },
+      "revId": "db8e933415e47589028bd1ccbf235bb537904b13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7aa85729_f39ee1da",
+        "filename": "third_party/WebKit/Source/core/editing/commands/TypingCommand.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 363,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-08-28T18:27:07Z",
+      "side": 1,
+      "message": "Ditto.",
+      "range": {
+        "startLine": 361,
+        "startChar": 0,
+        "endLine": 363,
+        "endChar": 52
+      },
+      "revId": "db8e933415e47589028bd1ccbf235bb537904b13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac5e2d70_ce2ceda5",
+        "filename": "third_party/WebKit/Source/core/editing/commands/TypingCommand.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 387,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-08-28T18:27:07Z",
+      "side": 1,
+      "message": "Ditto.",
+      "range": {
+        "startLine": 386,
+        "startChar": 0,
+        "endLine": 387,
+        "endChar": 62
+      },
+      "revId": "db8e933415e47589028bd1ccbf235bb537904b13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb769b08_6ba021c7",
+        "filename": "third_party/WebKit/Source/core/editing/commands/TypingCommand.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 634,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-08-28T18:27:07Z",
+      "side": 1,
+      "message": "Do we need clean layout here?",
+      "revId": "db8e933415e47589028bd1ccbf235bb537904b13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "235a0c60_83e1e1e0",
+        "filename": "third_party/WebKit/Source/core/editing/commands/TypingCommand.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 646,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-08-28T18:27:07Z",
+      "side": 1,
+      "message": "Do we need clean layout here?",
+      "revId": "db8e933415e47589028bd1ccbf235bb537904b13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
