@@ -473,10 +473,11 @@ class IdlConstant(TypedObject):
         # FIXME: This code is unnecessarily complicated due to the rather
         # inconsistent way the upstream IDL parser outputs default values.
         # http://crbug.com/374178
-        if value_node.GetProperty('TYPE') == 'float':
-            self.value = value_node.GetProperty('VALUE')
-        else:
-            self.value = value_node.GetName()
+        # if value_node.GetProperty('TYPE') == 'float':
+        #     self.value = value_node.GetProperty('VALUE')
+        # else:
+        #     self.value = value_node.GetName()
+        self.value = value_node.GetProperty('VALUE')
 
         if num_children == 3:
             ext_attributes_node = children[2]
@@ -529,12 +530,12 @@ def default_node_to_idl_literal(node):
     # http://crbug.com/374178
     idl_type = node.GetProperty('TYPE')
     if idl_type == 'DOMString':
-        value = node.GetProperty('NAME')
+        value = node.GetProperty('VALUE')
         if '"' in value or '\\' in value:
             raise ValueError('Unsupported string value: %r' % value)
         return IdlLiteral(idl_type, value)
     if idl_type == 'integer':
-        return IdlLiteral(idl_type, int(node.GetProperty('NAME'), base=0))
+        return IdlLiteral(idl_type, int(node.GetProperty('VALUE'), base=0))
     if idl_type == 'float':
         return IdlLiteral(idl_type, float(node.GetProperty('VALUE')))
     if idl_type in ['boolean', 'sequence']:
