@@ -303,6 +303,24 @@
       "revId": "0733f6ad11375c402d52181a0b11041d58d419fb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e58fb91f_9cb496b0",
+        "filename": "chrome/browser/vr/ui_scene_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-08-28T17:57:14Z",
+      "side": 1,
+      "message": "ooog.  That\u0027s unfortunate but not enough to worry about I think.  It\u0027s probably better to have the method return a failure that we can EXPECT() on, rather than ensuring we crashed, but that defeats the purpose of your crash. :)",
+      "parentUuid": "6588b6b5_91762b31",
+      "revId": "0733f6ad11375c402d52181a0b11041d58d419fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
