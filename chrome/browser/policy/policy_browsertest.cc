@@ -3229,7 +3229,6 @@ class MediaStreamDevicesControllerBrowserTest
               browser()->tab_strip_model()->GetActiveWebContents());
       prompt_factory_.reset(new MockPermissionPromptFactory(manager));
       prompt_factory_->set_response_type(PermissionRequestManager::ACCEPT_ALL);
-      manager->DisplayPendingRequests();
     } else {
       prompt_delegate_.set_response_type(PermissionRequestManager::ACCEPT_ALL);
     }

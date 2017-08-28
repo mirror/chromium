@@ -456,7 +456,7 @@ TEST_F(PermissionManagerTest, PermissionIgnoredCleanup) {
   PermissionRequestManager* manager =
       PermissionRequestManager::FromWebContents(contents);
   auto prompt_factory = base::MakeUnique<MockPermissionPromptFactory>(manager);
-  manager->DisplayPendingRequests();
+  manager->SetTabActiveForUnitTest();
 
   NavigateAndCommit(url());
 
