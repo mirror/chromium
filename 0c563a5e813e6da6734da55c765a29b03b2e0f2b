@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d380b00a_d2fc017a",
+        "filename": "components/sync_preferences/pref_service_syncable.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2017-08-28T20:08:07Z",
+      "side": 1,
+      "message": "Another place to put data validation would be inside |RegisterOverlayPref|, but it may be too late there. (And it doesn\u0027t do anything now.) (For example, the char* is already turned into a const string\u0026 at that point.)",
+      "revId": "0c563a5e813e6da6734da55c765a29b03b2e0f2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a56f8ae_5ee4a793",
+        "filename": "services/preferences/pref_store_manager_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2017-08-28T20:08:07Z",
+      "side": 1,
+      "message": "Do you need to do any validation here? Is literally any vector of char* acceptable here, or are there any limits? (E.g. the size of the vector, values of char*s, lexical structure of the pointed-to strings, et c.)",
+      "revId": "0c563a5e813e6da6734da55c765a29b03b2e0f2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
