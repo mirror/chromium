@@ -16,6 +16,7 @@
 #include "base/location.h"
 #include "base/stl_util.h"
 #include "base/task_runner.h"
+#include "base/task_scheduler/post_task.h"
 #include "net/cert/x509_certificate.h"
 
 namespace net {
@@ -49,10 +50,12 @@ void NSSCertDatabaseChromeOS::ListCerts(
 
   // base::Pased will NULL out |certs|, so cache the underlying pointer here.
   CertificateList* raw_certs = certs.get();
-  GetSlowTaskRunner()->PostTaskAndReply(
-      FROM_HERE, base::Bind(&NSSCertDatabaseChromeOS::ListCertsImpl,
-                            profile_filter_, base::Unretained(raw_certs)),
-      base::Bind(callback, base::Passed(&certs)));
+  base::PostTaskWithTraitsAndReply(
+      FROM_HERE,
+      {base::MayBlock(), base::TaskShutdownBehavior::CONTINUE_ON_SHUTDOWN},
+      base::BindOnce(&NSSCertDatabaseChromeOS::ListCertsImpl, profile_filter_,
+                     base::Unretained(raw_certs)),
+      base::BindOnce(callback, base::Passed(&certs)));
 }
 
 crypto::ScopedPK11Slot NSSCertDatabaseChromeOS::GetSystemSlot() const {
