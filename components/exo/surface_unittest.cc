@@ -103,7 +103,7 @@ TEST_F(SurfaceTest, RequestFrameCallback) {
 }
 
 const cc::CompositorFrame& GetFrameFromSurface(ShellSurface* shell_surface) {
-  viz::SurfaceId surface_id = shell_surface->host_window()->GetSurfaceId();
+  viz::SurfaceId surface_id = shell_surface->surface_host()->GetSurfaceId();
   viz::SurfaceManager* surface_manager = aura::Env::GetInstance()
                                              ->context_factory_private()
                                              ->GetFrameSinkManager()
@@ -228,12 +228,12 @@ TEST_F(SurfaceTest, MirrorLayers) {
 
   EXPECT_EQ(buffer_size, surface->window()->bounds().size());
   EXPECT_EQ(buffer_size, surface->window()->layer()->bounds().size());
-  std::unique_ptr<ui::LayerTreeOwner> old_layer_owner =
-      ::wm::MirrorLayers(shell_surface->host_window(), false /* sync_bounds */);
+  std::unique_ptr<ui::LayerTreeOwner> old_layer_owner = ::wm::MirrorLayers(
+      shell_surface->surface_host(), false /* sync_bounds */);
   EXPECT_EQ(buffer_size, surface->window()->bounds().size());
   EXPECT_EQ(buffer_size, surface->window()->layer()->bounds().size());
   EXPECT_EQ(buffer_size, old_layer_owner->root()->bounds().size());
-  EXPECT_TRUE(shell_surface->host_window()->layer()->has_external_content());
+  EXPECT_TRUE(shell_surface->surface_host()->layer()->has_external_content());
   EXPECT_TRUE(old_layer_owner->root()->has_external_content());
 }
 

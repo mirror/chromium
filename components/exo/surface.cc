@@ -668,6 +668,7 @@ void Surface::AppendContentsToFrame(const gfx::Point& origin,
     damage_rect.Intersect(output_rect);
   }
 
+  render_pass->output_rect.Union(output_rect);
   render_pass->damage_rect.Union(damage_rect);
   cc::SharedQuadState* quad_state =
       render_pass->CreateAndAppendSharedQuadState();
