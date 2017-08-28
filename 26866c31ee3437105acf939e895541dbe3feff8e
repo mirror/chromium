@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b854b343_3494b4a4",
+        "filename": "ios/clean/chrome/browser/ui/transitions/helper_view_controllers/status_bar_hiding_view_controller.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2017-08-28T08:22:07Z",
+      "side": 1,
+      "message": "The implementation doesn\u0027t seem to touch the color of the status bar, just the mask view.",
+      "revId": "26866c31ee3437105acf939e895541dbe3feff8e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04bf1a21_78999271",
+        "filename": "ios/clean/chrome/browser/ui/transitions/helper_view_controllers/status_bar_hiding_view_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2017-08-28T08:22:07Z",
+      "side": 1,
+      "message": "You are missing a call to [child didMoveToParentViewController:self];.",
+      "revId": "26866c31ee3437105acf939e895541dbe3feff8e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
