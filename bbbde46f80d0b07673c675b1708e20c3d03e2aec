@@ -34,6 +34,24 @@
       "revId": "bbbde46f80d0b07673c675b1708e20c3d03e2aec",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24e0af5a_27dc8218",
+        "filename": "chrome/gpu/chrome_arc_video_decode_accelerator.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-08-28T16:42:39Z",
+      "side": 1,
+      "message": "My question was: since we\u0027ll have to support VerifyDmabuf for NV12 eventually, can we change VerifyDmabuf and make it work just with NV12 in this patch, while we can skip it for RGB if you want?\nIf any problem arises from switching to NV12, better catch it as early as possible.\n\nI don\u0027t see anything in VerifyDmabuf that depends on minigbm.",
+      "parentUuid": "5ff53b87_8d1ff0f9",
+      "revId": "bbbde46f80d0b07673c675b1708e20c3d03e2aec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
