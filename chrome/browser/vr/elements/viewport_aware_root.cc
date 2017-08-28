@@ -19,8 +19,10 @@ ViewportAwareRoot::~ViewportAwareRoot() = default;
 
 void ViewportAwareRoot::AdjustRotationForHeadPose(
     const gfx::Vector3dF& look_at) {
-  // This must be a top level element.
-  DCHECK(!parent());
+  // We must not inherit a transform.
+  // TODO(vollick): ensure that this check happens at the right time in the
+  // frame lifecycle.
+  DCHECK(parent()->world_space_transform().IsIdentity());
   DCHECK(viewport_aware());
 
   gfx::Vector3dF rotated_center_vector{0.f, 0.f, -1.0f};
