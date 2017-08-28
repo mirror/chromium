@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f6bec1f3_9f381a66",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 839,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-28T16:50:30Z",
+      "side": 1,
+      "message": "There\u0027s a comment on included_in_last_server_response in the header that\u0027s not accurate anymore, please update it.\n\nAs a potential follow-up: Do we still need included_in_last_server_response at all? In the \"stable state\" (i.e. outside of this method), it should always be true now, right?",
+      "range": {
+        "startLine": 839,
+        "startChar": 20,
+        "endLine": 839,
+        "endChar": 52
+      },
+      "revId": "9a406935ea92249966bc3e579d5042bd0749cb62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
