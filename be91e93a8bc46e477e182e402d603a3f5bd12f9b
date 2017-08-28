@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2a7fde3c_9caf97d0",
+        "filename": "gin/isolate_holder.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-08-28T06:03:21Z",
+      "side": 1,
+      "message": "Considering the intent of the original implementation, should we clear |isolate_| with nullptr even when we\u0027re using snapshot_creator_?  It prevents UaF.",
+      "revId": "be91e93a8bc46e477e182e402d603a3f5bd12f9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
