@@ -1,0 +1,112 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b8c50b5b_dd2ba2c1",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-08-28T21:30:37Z",
+      "side": 1,
+      "message": "nit: adjust message line lengths and wrapping",
+      "revId": "1d96f69dfeafe45d8999ef20d639b33448b8423a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e0ac109_8354db7f",
+        "filename": "content/browser/appcache/appcache_subresource_url_factory.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-08-28T21:30:37Z",
+      "side": 1,
+      "message": "can this todo can be removed now?",
+      "revId": "1d96f69dfeafe45d8999ef20d639b33448b8423a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "baaf9394_2a08bf0e",
+        "filename": "content/browser/appcache/appcache_subresource_url_factory.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-08-28T21:30:37Z",
+      "side": 1,
+      "message": "The ownership hieraerchy and control flow is tricky, I\u0027m thinking about taking a cut at restructuring along these lines...\n\nAppCacheSubresourceURLFactory creates a SubresourceLoader that provides the URLLoader bindings to the remove client. Once bound, it sticks.\n\nThe SubresourceLoader internally delegates to either an AppCacheLoader to read from disk or a regular loader to load from the network. The SubresourceLoader would be the client of it\u0027s delegate loader and proxy URLLoader/Client interactions, it would check for fallback handling in  OnRedirect(), OnResponse(), and FollowRedirect() and switch to an AppCacheLoader when needed.\n\nSo the division of labor is more factored\n- subresourceLoader mediates between client and the (networkloader or appcacheloader)\n- networkloader just loads from network\n- appcacheloader just loads from disk\n\n\ncurrently the appcacheloader itself is wearing those different hats and its tricky to follow the logic",
+      "revId": "1d96f69dfeafe45d8999ef20d639b33448b8423a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "079a417d_2ae5a39d",
+        "filename": "content/browser/appcache/appcache_url_loader_job.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-08-28T21:30:37Z",
+      "side": 1,
+      "message": "I think this code creates a new loader from scratch to chase the new location. Is that right?\n\nAll things being equal, it would be good to have the network_loader_-\u003eFollowRedirect in cases where there is no appcache hit for new location of the redirect.",
+      "revId": "1d96f69dfeafe45d8999ef20d639b33448b8423a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8279794_e8f54114",
+        "filename": "content/browser/appcache/appcache_url_loader_job.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-08-28T21:30:37Z",
+      "side": 1,
+      "message": "by unbinding/rebinding, is it possible we can we miss any msgs? just chekcing",
+      "revId": "1d96f69dfeafe45d8999ef20d639b33448b8423a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34b1df78_a47854eb",
+        "filename": "content/browser/appcache/appcache_url_loader_job.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-08-28T21:30:37Z",
+      "side": 1,
+      "message": "we only need the redirect_info in this case maybe only set it here when we need it\n\nalso consider reversing the order of the if/else to test for the positive case of loading a fallback",
+      "range": {
+        "startLine": 186,
+        "startChar": 33,
+        "endLine": 186,
+        "endChar": 40
+      },
+      "revId": "1d96f69dfeafe45d8999ef20d639b33448b8423a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
