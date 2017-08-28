@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0662a95a_872e21cb",
+        "filename": "chrome/browser/media_galleries/chromeos/mtp_device_delegate_impl_chromeos.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1605,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-08-28T14:24:10Z",
+      "side": 1,
+      "message": "|entry| is already moved at line 1598. Is this safe?",
+      "range": {
+        "startLine": 1605,
+        "startChar": 37,
+        "endLine": 1605,
+        "endChar": 47
+      },
+      "revId": "33160a5ee25dad2c07cbf4fbdb44d23856c6c310",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf7d2d5a_b6ae07a0",
+        "filename": "storage/browser/fileapi/async_file_util_adapter.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-08-28T14:24:10Z",
+      "side": 1,
+      "message": "Is |clear()| necessary?",
+      "revId": "33160a5ee25dad2c07cbf4fbdb44d23856c6c310",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
