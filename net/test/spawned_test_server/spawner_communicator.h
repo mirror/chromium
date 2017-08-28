@@ -75,6 +75,7 @@ class SpawnerCommunicator : public URLRequest::Delegate {
   // data returned by the spawner.
   bool StartServer(const std::string& arguments,
                    std::string* server_data) WARN_UNUSED_RESULT;
+
   bool StopServer() WARN_UNUSED_RESULT;
 
  private:
