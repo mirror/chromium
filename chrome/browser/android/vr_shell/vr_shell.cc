@@ -351,6 +351,8 @@ void VrShell::OnResume(JNIEnv* env, const JavaParamRef<jobject>& obj) {
   if (metrics_helper_)
     metrics_helper_->SetVRActive(true);
   SetIsInVR(GetNonNativePageWebContents(), true);
+
+  PollMediaAccessFlag();
 }
 
 void VrShell::SetSurface(JNIEnv* env,
