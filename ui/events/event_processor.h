@@ -23,13 +23,12 @@ class EVENTS_EXPORT EventProcessor : public EventDispatcherDelegate,
   // EventSink overrides:
   EventDispatchDetails OnEventFromSource(Event* event) override;
 
+  // Returns the initial target for the event.
+  virtual EventTarget* GetInitialEventTarget(Event* event) = 0;
+
   // Returns the EventTarget with the right EventTargeter that we should use for
   // dispatching this |event|.
-  virtual EventTarget* GetRootForEvent(Event* event) = 0;
-
-  // If the root target returned by GetRootForEvent() does not have a
-  // targeter set, then the default targeter is used to find the target.
-  virtual EventTargeter* GetDefaultEventTargeter() = 0;
+  virtual EventTarget* GetRootTarget() = 0;
 
  protected:
   // Invoked at the start of processing, before an EventTargeter is used to

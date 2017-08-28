@@ -794,9 +794,8 @@ TEST_F(TouchSelectionControllerImplTest, HandlesStackAboveParent) {
   if (IsMus())
     return;
 
-  aura::Window* root = GetContext();
-  ui::EventTargeter* targeter =
-      root->GetHost()->dispatcher()->GetDefaultEventTargeter();
+  ui::EventTarget* root = GetContext();
+  ui::EventTargeter* targeter = root->GetEventTargeter();
 
   // Create the first window containing a Views::Textfield.
   CreateTextfield();
