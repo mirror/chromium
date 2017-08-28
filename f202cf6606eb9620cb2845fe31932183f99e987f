@@ -33,6 +33,24 @@
       "revId": "f202cf6606eb9620cb2845fe31932183f99e987f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "71d793ee_6686425d",
+        "filename": "content/browser/frame_host/render_frame_host_manager_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1813,
+      "author": {
+        "id": 1214679
+      },
+      "writtenOn": "2017-08-28T09:12:36Z",
+      "side": 1,
+      "message": "This will cause a SEGV due to rfh1 not being around anymore line 1818 and 1822. I believe the commit will force the swapout and deletion, making this test useless as it is testing a specific combination of these events. Same for below.",
+      "parentUuid": "c0735a2d_17f4b059",
+      "revId": "f202cf6606eb9620cb2845fe31932183f99e987f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
