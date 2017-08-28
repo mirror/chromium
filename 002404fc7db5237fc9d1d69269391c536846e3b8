@@ -71,6 +71,23 @@
     },
     {
       "key": {
+        "uuid": "ece2d2eb_9b4c9d88",
+        "filename": "components/autofill/content/renderer/devtools_page_passwords_analyser.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-08-28T17:32:06Z",
+      "side": 1,
+      "message": "Let\u0027s rephrase this to indicate the problem instead:\n\"Password field is not contained in a form\".",
+      "revId": "002404fc7db5237fc9d1d69269391c536846e3b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "205c1b7e_f5e3386c",
         "filename": "components/autofill/content/renderer/devtools_page_passwords_analyser.cc",
         "patchSetId": 15
@@ -111,6 +128,177 @@
         "endLine": 239,
         "endChar": 42
       },
+      "revId": "002404fc7db5237fc9d1d69269391c536846e3b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "249032ca_10efd2cf",
+        "filename": "components/autofill/content/renderer/devtools_page_passwords_analyser.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-08-28T17:32:06Z",
+      "side": 1,
+      "message": "\"Found %d elements with non-unique id #%s: \"",
+      "revId": "002404fc7db5237fc9d1d69269391c536846e3b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9fe43971_dda81b28",
+        "filename": "components/autofill/content/renderer/devtools_page_passwords_analyser.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 254,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-08-28T17:32:06Z",
+      "side": 1,
+      "message": "|id_attr| is empty here. Let\u0027s omit the second part of the message.",
+      "range": {
+        "startLine": 254,
+        "startChar": 69,
+        "endLine": 254,
+        "endChar": 76
+      },
+      "revId": "002404fc7db5237fc9d1d69269391c536846e3b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df019740_3d5a4f3d",
+        "filename": "components/autofill/content/renderer/password_autofill_agent.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-08-28T17:32:06Z",
+      "side": 1,
+      "message": "I\u0027m interested why android is excluded? We provide remote debugging capabilities, if that\u0027s the only concern. If you care about performance here, it might make sense.",
+      "revId": "002404fc7db5237fc9d1d69269391c536846e3b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "632fb387_570c02b6",
+        "filename": "third_party/WebKit/Source/core/frame/WebLocalFrameImpl.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 724,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-08-28T17:32:06Z",
+      "side": 1,
+      "message": "std::move(backend_node_ids)",
+      "range": {
+        "startLine": 724,
+        "startChar": 46,
+        "endLine": 724,
+        "endChar": 62
+      },
+      "revId": "002404fc7db5237fc9d1d69269391c536846e3b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5a5e44e_9f287a73",
+        "filename": "third_party/WebKit/Source/core/inspector/ConsoleMessage.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-08-28T17:32:06Z",
+      "side": 1,
+      "message": "style: extra _ at the end",
+      "range": {
+        "startLine": 48,
+        "startChar": 61,
+        "endLine": 48,
+        "endChar": 78
+      },
+      "revId": "002404fc7db5237fc9d1d69269391c536846e3b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b20a8db8_fa8b9600",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleViewMessage.js",
+        "patchSetId": 15
+      },
+      "lineNbr": 647,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-08-28T17:32:06Z",
+      "side": 1,
+      "message": "Surprisingly, this call added a lot of plumbing around. Let\u0027s instead show grey \u003ccollected\u003e for every DOM node which did not resolve? Makes everything much easier.",
+      "revId": "002404fc7db5237fc9d1d69269391c536846e3b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da4d5c9b_747a3e5c",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sdk/DOMModel.js",
+        "patchSetId": 15
+      },
+      "lineNbr": 957,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-08-28T17:32:06Z",
+      "side": 1,
+      "message": "Just inline it as |this._domModel._agent| at the callsite.",
+      "revId": "002404fc7db5237fc9d1d69269391c536846e3b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "332625ae_27e182bb",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sdk/DOMModel.js",
+        "patchSetId": 15
+      },
+      "lineNbr": 982,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-08-28T17:32:06Z",
+      "side": 1,
+      "message": "Check this._domModel (similar to resolvePromise()).",
+      "revId": "002404fc7db5237fc9d1d69269391c536846e3b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3417c05c_576b7c12",
+        "filename": "third_party/WebKit/public/web/WebConsoleMessage.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-08-28T17:32:06Z",
+      "side": 1,
+      "message": ": WebConsoleMessage(level, text),\n  nodes(nodes) {}",
       "revId": "002404fc7db5237fc9d1d69269391c536846e3b8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
