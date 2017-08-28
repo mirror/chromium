@@ -102,6 +102,24 @@
       "revId": "c9126bd92ec2475bc6fb67709d073f2c91d1b088",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "56fc3ee6_3a1c7e9c",
+        "filename": "third_party/WebKit/public/platform/WebCORSPreflightResultCache.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-28T08:13:03Z",
+      "side": 1,
+      "message": "Thanks. I think always using per-thread instance is a little more consistent, wdyt? (I assume the behavior would be same btw in the current implementation?)\n\nAlso: if we don\u0027t do that could we add documentation about when SharedOnMainThread() should be called and when the ctor is used?  Having both without documentation is a bit confusing.",
+      "parentUuid": "29b094c6_f89c20c6",
+      "revId": "c9126bd92ec2475bc6fb67709d073f2c91d1b088",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
