@@ -2,6 +2,57 @@
   "comments": [
     {
       "key": {
+        "uuid": "f3715c0d_eb6631bf",
+        "filename": "chrome/browser/extensions/extension_message_bubble_controller_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1200,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-28T20:22:21Z",
+      "side": 1,
+      "message": "nit: prefer std::make_unique in new code:\nauto controller \u003d\n    std::make_unique\u003cTestExtensionMessageBubbleController\u003e(\n        new DevModeBubbleDelegate(browser()-\u003eprofile()), browser()));",
+      "revId": "9f5b0276c97f8970c0580d7879085753c0ed60b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6f970e5_d651f820",
+        "filename": "chrome/browser/extensions/extension_message_bubble_controller_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1207,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-28T20:22:21Z",
+      "side": 1,
+      "message": "Also wrong in the test above, but this could just be model-\u003eis_highlighting (similar for the check below)",
+      "revId": "9f5b0276c97f8970c0580d7879085753c0ed60b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3111063e_14cc639a",
+        "filename": "chrome/browser/extensions/extension_message_bubble_controller_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1210,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-28T20:22:21Z",
+      "side": 1,
+      "message": "nullptr in new code :)",
+      "revId": "9f5b0276c97f8970c0580d7879085753c0ed60b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "926af1c5_6d96ea9c",
         "filename": "chrome/browser/extensions/extension_message_bubble_controller_unittest.cc",
         "patchSetId": 1
@@ -19,6 +70,47 @@
         "endLine": 1211,
         "endChar": 14
       },
+      "revId": "9f5b0276c97f8970c0580d7879085753c0ed60b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3dbf4b7b_d3b17545",
+        "filename": "chrome/browser/extensions/extension_message_bubble_controller_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1211,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-28T20:22:21Z",
+      "side": 1,
+      "message": "Yep, we need to keep force_dev_mode_highlighting.  Otherwise, the bubble feature doesn\u0027t trigger.",
+      "parentUuid": "926af1c5_6d96ea9c",
+      "range": {
+        "startLine": 1211,
+        "startChar": 2,
+        "endLine": 1211,
+        "endChar": 14
+      },
+      "revId": "9f5b0276c97f8970c0580d7879085753c0ed60b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "deeca8cc_f3d3a607",
+        "filename": "chrome/browser/extensions/extension_message_bubble_controller_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1214,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-28T20:22:21Z",
+      "side": 1,
+      "message": "This is probably good enough for this CL, since we want to land it quickly, but let\u0027s add a TODO here to also test\na) disabling an extension rather than uninstalling\nb) a suspicious bubble controller + uninstalling, which has disabled extensions\n\nand then maybe address those in a followup.",
       "revId": "9f5b0276c97f8970c0580d7879085753c0ed60b2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
