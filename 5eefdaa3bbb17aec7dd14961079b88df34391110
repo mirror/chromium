@@ -1,0 +1,174 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2ef3cb5e_e68a4b82",
+        "filename": "content/browser/renderer_host/media/audio_input_sync_writer.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2017-08-28T22:54:15Z",
+      "side": 1,
+      "message": "Assuming |ComputeAudioInputBufferSize| uses |CheckedNumeric| and returns |CheckedNumeric\u003cuint32_t\u003e|, you could save yourself some source (and possibly object) code size by having |ComputeAudioInputBufferSize| just return uint32_t if and only if the return value IsValid() (`return ret.ValueOrDie()`).\n\nThen, since you do no further computation in this call site, you could just declare |requested_memory_size| as a regular uint32_t.",
+      "revId": "5eefdaa3bbb17aec7dd14961079b88df34391110",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a99c5654_99df5614",
+        "filename": "content/browser/renderer_host/media/audio_input_sync_writer_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2017-08-28T22:54:15Z",
+      "side": 1,
+      "message": "Similar comment here.",
+      "revId": "5eefdaa3bbb17aec7dd14961079b88df34391110",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f9d34aa_2312e034",
+        "filename": "content/browser/renderer_host/media/audio_sync_reader.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2017-08-28T22:54:15Z",
+      "side": 1,
+      "message": "Same comment here (have |ComputeAudioOutputBufferSize| invoke |ValueOrDie| when returning, to save source and object code size).\n\nIs the value of `shared_memory_-\u003erequested_size()` dynamic based on potentially-hostile input, or known at compile time? DCHECK won\u0027t provide a safety guarantee in production builds, so if we need that we shouldn\u0027t use DCHECK here.",
+      "revId": "5eefdaa3bbb17aec7dd14961079b88df34391110",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7098df0_593b6563",
+        "filename": "content/browser/renderer_host/media/audio_sync_reader.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2017-08-28T22:54:15Z",
+      "side": 1,
+      "message": "Same comment here.",
+      "revId": "5eefdaa3bbb17aec7dd14961079b88df34391110",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e1e9835_faf41272",
+        "filename": "content/renderer/media/speech_recognition_audio_sink.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2017-08-28T22:54:15Z",
+      "side": 1,
+      "message": "and here",
+      "revId": "5eefdaa3bbb17aec7dd14961079b88df34391110",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92e784c5_ac9052c9",
+        "filename": "content/renderer/media/speech_recognition_audio_sink_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2017-08-28T22:54:15Z",
+      "side": 1,
+      "message": "and here",
+      "revId": "5eefdaa3bbb17aec7dd14961079b88df34391110",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02c4c02f_35196794",
+        "filename": "media/audio/audio_input_device.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 362,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2017-08-28T22:54:15Z",
+      "side": 1,
+      "message": "and here",
+      "revId": "5eefdaa3bbb17aec7dd14961079b88df34391110",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "376f3dd1_41ce4e18",
+        "filename": "media/audio/audio_output_device.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 449,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2017-08-28T22:54:15Z",
+      "side": 1,
+      "message": "and here",
+      "revId": "5eefdaa3bbb17aec7dd14961079b88df34391110",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "010d4cc3_62d8413f",
+        "filename": "media/audio/audio_output_device_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2017-08-28T22:54:15Z",
+      "side": 1,
+      "message": "and here :)",
+      "revId": "5eefdaa3bbb17aec7dd14961079b88df34391110",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc19af76_7f7435b6",
+        "filename": "media/base/audio_parameters.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2017-08-28T22:54:15Z",
+      "side": 1,
+      "message": "It might very well be that you can declare all of these functions to return uint32_t, have them invoke |ValueOrDie| upon return, and clean up all call sites.",
+      "revId": "5eefdaa3bbb17aec7dd14961079b88df34391110",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
