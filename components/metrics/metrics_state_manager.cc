@@ -67,6 +67,12 @@ int64_t RoundSecondsToHour(int64_t time_in_seconds) {
   return 3600 * (time_in_seconds / 3600);
 }
 
+// Records the cloned install histogram if appropriate.
+void LogClonedInstall(PrefService* local_state) {
+  if (local_state->GetBoolean(prefs::kMetricsResetIds))
+    UMA_HISTOGRAM_BOOLEAN("UMA.IsClonedInstall", true);
+}
+
 class MetricsStateMetricsProvider : public MetricsProvider {
  public:
   MetricsStateMetricsProvider(PrefService* local_state)
@@ -81,10 +87,17 @@ class MetricsStateMetricsProvider : public MetricsProvider {
         RoundSecondsToHour(ReadInstallDate(local_state_)));
   }
 
+  void ProvidePreviousSessionData(
+      ChromeUserMetricsExtension* uma_proto) override {
+    // Whether an install is cloned or not is not likely to change between
+    // browser restarts.  Hence, it's safe and useful to attach this status to
+    // a previous session log.
+    LogClonedInstall(local_state_);
+  }
+
   void ProvideCurrentSessionData(
       ChromeUserMetricsExtension* uma_proto) override {
-    if (local_state_->GetBoolean(prefs::kMetricsResetIds))
-      UMA_HISTOGRAM_BOOLEAN("UMA.IsClonedInstall", true);
+    LogClonedInstall(local_state_);
   }
 
  private:
