@@ -52,6 +52,24 @@
       "revId": "98303b117cef148352ace18b3599dfc107ddd28c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f29cdbb_041d6918",
+        "filename": "chrome/browser/page_load_metrics/observers/android_page_load_metrics_observer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1154589
+      },
+      "writtenOn": "2017-08-28T12:39:11Z",
+      "side": 1,
+      "message": "Okay, the reliable way to work for both redirects and regular loads is to use the resource type. The main resource load frequently (always?) comes in before OnCommit fires. PTAL",
+      "parentUuid": "59f567f6_17b13029",
+      "revId": "98303b117cef148352ace18b3599dfc107ddd28c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
