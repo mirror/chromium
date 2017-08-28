@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "52c3b813_666fdc1a",
+        "filename": "services/ui/ws/frame_generator.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-08-28T13:05:59Z",
+      "side": 1,
+      "message": "nit: I would pull this code out into a separate function GenerateHitTestRegionList().",
+      "range": {
+        "startLine": 111,
+        "startChar": 0,
+        "endLine": 120,
+        "endChar": 70
+      },
+      "revId": "da30e83ab1636744d8c41e1d9c973c82a6e2b53b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
