@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6f2bf0ce_a2199960",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleViewMessage.js",
+        "patchSetId": 18
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 1230559
+      },
+      "writtenOn": "2017-08-28T23:54:12Z",
+      "side": 1,
+      "message": "Is there some Set-specific logic that requires us to wrap this in a Set?  If so, can we have the ConsoleMessage constructor create backendNodeIds as a Set from the start?\nthis.backendNodeIds \u003d new Set(backendNodeIds || []);",
+      "range": {
+        "startLine": 260,
+        "startChar": 65,
+        "endLine": 260,
+        "endChar": 68
+      },
+      "revId": "931494ecf917abdd3a2abb890d86ba1e4d995eeb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "555407b7_2190435e",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleViewMessage.js",
+        "patchSetId": 18
+      },
+      "lineNbr": 654,
+      "author": {
+        "id": 1230559
+      },
+      "writtenOn": "2017-08-28T23:54:12Z",
+      "side": 1,
+      "message": "This argument isn\u0027t used, should it replace the message.runtimeModel().target()?",
+      "range": {
+        "startLine": 654,
+        "startChar": 46,
+        "endLine": 654,
+        "endChar": 52
+      },
+      "revId": "931494ecf917abdd3a2abb890d86ba1e4d995eeb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da4f1b0d_2d5a9cb5",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleViewMessage.js",
+        "patchSetId": 18
+      },
+      "lineNbr": 666,
+      "author": {
+        "id": 1230559
+      },
+      "writtenOn": "2017-08-28T23:54:12Z",
+      "side": 1,
+      "message": "nit: can we do \u0027\u003c\u0027 + Common.UIString(\u0027collected\u0027) + \u0027\u003e\u0027   ?\nThis is usually done for user-facing natural language strings.",
+      "range": {
+        "startLine": 666,
+        "startChar": 34,
+        "endLine": 666,
+        "endChar": 43
+      },
+      "revId": "931494ecf917abdd3a2abb890d86ba1e4d995eeb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "657929bd_82ae38da",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleViewMessage.js",
+        "patchSetId": 18
+      },
+      "lineNbr": 667,
+      "author": {
+        "id": 1230559
+      },
+      "writtenOn": "2017-08-28T23:54:12Z",
+      "side": 1,
+      "message": "nit: Please add jsdoc for @return value",
+      "range": {
+        "startLine": 667,
+        "startChar": 6,
+        "endLine": 667,
+        "endChar": 12
+      },
+      "revId": "931494ecf917abdd3a2abb890d86ba1e4d995eeb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
