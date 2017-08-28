@@ -56,6 +56,24 @@
       "revId": "c90cd7865eb24e8e66e98d1b3d54556f4b688af3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9661beae_6d414ab4",
+        "filename": "chrome/browser/chromeos/accessibility/accessibility_manager.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2017-08-28T16:57:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ec8408cc_9a475d18",
+      "revId": "c90cd7865eb24e8e66e98d1b3d54556f4b688af3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
