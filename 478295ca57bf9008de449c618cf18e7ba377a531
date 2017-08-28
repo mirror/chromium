@@ -22,6 +22,30 @@
       "revId": "478295ca57bf9008de449c618cf18e7ba377a531",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19f9b4d4_b7231772",
+        "filename": "base/android/jni_int_wrapper.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1117419
+      },
+      "writtenOn": "2017-08-28T22:16:26Z",
+      "side": 1,
+      "message": "I\u0027m not sure.  I was worried that the overhead would be too high.  On the other hand, we could do the test only to find out that it\u0027s not enough information without the \"before\" check as well.\n\nWhat do you think?",
+      "parentUuid": "b850a1ee_b1d95af2",
+      "range": {
+        "startLine": 16,
+        "startChar": 25,
+        "endLine": 16,
+        "endChar": 0
+      },
+      "revId": "478295ca57bf9008de449c618cf18e7ba377a531",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
