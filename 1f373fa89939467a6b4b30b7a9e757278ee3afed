@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "606b9603_9e91ab01",
+        "filename": "net/test/spawned_test_server/spawner_communicator.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-08-28T15:20:06Z",
+      "side": 1,
+      "message": "nit:  No longer needed",
+      "range": {
+        "startLine": 14,
+        "startChar": 22,
+        "endLine": 14,
+        "endChar": 30
+      },
+      "revId": "1f373fa89939467a6b4b30b7a9e757278ee3afed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
