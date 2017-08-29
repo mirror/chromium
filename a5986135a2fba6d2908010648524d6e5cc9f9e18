@@ -22,6 +22,30 @@
       "revId": "a5986135a2fba6d2908010648524d6e5cc9f9e18",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2d8577f_dad0c7fa",
+        "filename": "components/printing/DEPS",
+        "patchSetId": 1
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-08-29T00:14:41Z",
+      "side": 1,
+      "message": "Since components/printing only contains sub-directories with headers and doesn\u0027t contain any headers itself, there are no \"users\" (did you mean dependents?) of components/printing. All dependents are for subdirectories of components/printing.\n\nIf this is removed, then components/printing/{browser,renderer,test} all need this rule. So this is here as a convenience. Unless there is a reason to not let someone depend on components/printing/common.",
+      "parentUuid": "0aa02a07_38cc2fef",
+      "range": {
+        "startLine": 3,
+        "startChar": 2,
+        "endLine": 3,
+        "endChar": 31
+      },
+      "revId": "a5986135a2fba6d2908010648524d6e5cc9f9e18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
