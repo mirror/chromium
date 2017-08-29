@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "86d9d04c_00bd2f0f",
+        "filename": "chrome/browser/ui/views/tabs/tab.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 669,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-08-29T23:32:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6bdbff1a_ba45a685",
+      "revId": "30b8985ffcdbbeccd68b63856f65d8e7b25cfd6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8a3d97ee_bb67e1c1",
         "filename": "chrome/browser/ui/views/tabs/tab.cc",
         "patchSetId": 5
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-29T00:52:38Z",
       "side": 1,
       "message": "AFAICT, the effect here is that if we\u0027re toggling the favicon, and both old and new title are non-empty, we animate the full bounds rect (both start and end pos).  It seems like instead we should just animate the start pos of the bounds, and use the width of the desired bounds rect as the bounds width immediately.  That would simply require a minor tweak to how start_title_bounds_ is computed below, I think?",
+      "revId": "30b8985ffcdbbeccd68b63856f65d8e7b25cfd6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3ab2801_41a5d33d",
+        "filename": "chrome/browser/ui/views/tabs/tab.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 848,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-08-29T23:32:32Z",
+      "side": 1,
+      "message": "Then when the favicon is going away (back-nav to new tab) the text may extend past the end of the tab, if, for example, the tab is the perfect size to hold the text \"New Tab\".\n\nWhen the favicon is appearing (new tab navigating to some site), the text layout width is getting smaller (because some space is taken up by the favicon), so this would mean we might truncate earlier than we need to --- not necessarily a bad thing but I don\u0027t see the advantage.",
+      "parentUuid": "8a3d97ee_bb67e1c1",
       "revId": "30b8985ffcdbbeccd68b63856f65d8e7b25cfd6f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
