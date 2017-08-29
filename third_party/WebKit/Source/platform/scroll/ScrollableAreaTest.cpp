@@ -9,6 +9,7 @@
 #include "platform/scroll/ScrollbarTestSuite.h"
 #include "platform/scroll/ScrollbarTheme.h"
 #include "platform/scroll/ScrollbarThemeMock.h"
+#include "platform/scroll/ScrollbarThemeOverlayMock.h"
 #include "platform/testing/FakeGraphicsLayer.h"
 #include "platform/testing/FakeGraphicsLayerClient.h"
 #include "platform/testing/TestingPlatformSupport.h"
@@ -266,6 +267,25 @@ TEST_F(ScrollableAreaTest, ScrollableAreaDidScroll) {
   // After calling didScroll, the new offset should account for scroll origin.
   EXPECT_EQ(20, scrollable_area->ScrollOffsetInt().Width());
   EXPECT_EQ(21, scrollable_area->ScrollOffsetInt().Height());
+}
+
+TEST_F(ScrollableAreaTest, PopupOverlayScrollbarShouldNotFadeOut) {
+  ScopedTestingPlatformSupport<TestingPlatformSupportWithMockScheduler>
+      platform;
+
+  MockScrollableArea* scrollable_area =
+      MockScrollableArea::Create(ScrollOffset(0, 100));
+  scrollable_area->SetPopup();
+
+  ScrollbarThemeOverlayMock theme;
+  Scrollbar* scrollbar = Scrollbar::CreateForTesting(
+      scrollable_area, kHorizontalScrollbar, kRegularScrollbar, &theme);
+
+  DCHECK(scrollbar->IsOverlayScrollbar());
+  DCHECK(scrollbar->Enabled());
+
+  // Forced GC in order to finalize objects depending on the mock object.
+  ThreadState::Current()->CollectAllGarbage();
 }
 
 }  // namespace blink

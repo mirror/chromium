@@ -77,6 +77,8 @@ class PagePopupChromeClient final : public EmptyChromeClient {
     popup_->SetWindowRect(rect);
   }
 
+  bool IsPopup() override { return true; }
+
  private:
   explicit PagePopupChromeClient(WebPagePopupImpl* popup) : popup_(popup) {
     DCHECK(popup_->WidgetClient());
@@ -250,6 +252,7 @@ WebPagePopupImpl::WebPagePopupImpl(WebWidgetClient* client)
       root_graphics_layer_(0),
       is_accelerated_compositing_active_(false) {
   DCHECK(client);
+  LOG(ERROR) << "WebPagePopupImpl";
 }
 
 WebPagePopupImpl::~WebPagePopupImpl() {
