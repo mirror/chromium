@@ -38,6 +38,7 @@ static jint Init(JNIEnv* env, const base::android::JavaParamRef<jobject>&
 
 JNI_GENERATOR_EXPORT jint Java_org_chromium_TestJni_nativeInit(JNIEnv* env,
     jobject jcaller) {
+  HistogramValidator validator;
   return Init(env, base::android::JavaParamRef<jobject>(env, jcaller));
 }
 
@@ -47,6 +48,7 @@ JNI_GENERATOR_EXPORT void Java_org_chromium_TestJni_nativeDestroy(JNIEnv* env,
   ChromeBrowserProvider* native =
       reinterpret_cast<ChromeBrowserProvider*>(nativeChromeBrowserProvider);
   CHECK_NATIVE_PTR(env, jcaller, native, "Destroy");
+  HistogramValidator validator;
   return native->Destroy(env, base::android::JavaParamRef<jobject>(env,
       jcaller));
 }
@@ -61,6 +63,7 @@ JNI_GENERATOR_EXPORT jlong Java_org_chromium_TestJni_nativeAddBookmark(JNIEnv*
   ChromeBrowserProvider* native =
       reinterpret_cast<ChromeBrowserProvider*>(nativeChromeBrowserProvider);
   CHECK_NATIVE_PTR(env, jcaller, native, "AddBookmark", 0);
+  HistogramValidator validator;
   return native->AddBookmark(env, base::android::JavaParamRef<jobject>(env,
       jcaller), base::android::JavaParamRef<jstring>(env, url),
       base::android::JavaParamRef<jstring>(env, title), isFolder, parentId);
@@ -145,6 +148,7 @@ JNI_GENERATOR_EXPORT jlong
   ChromeBrowserProvider* native =
       reinterpret_cast<ChromeBrowserProvider*>(nativeChromeBrowserProvider);
   CHECK_NATIVE_PTR(env, jcaller, native, "AddBookmarkFromAPI", 0);
+  HistogramValidator validator;
   return native->AddBookmarkFromAPI(env,
       base::android::JavaParamRef<jobject>(env, jcaller),
       base::android::JavaParamRef<jstring>(env, url),
@@ -186,6 +190,7 @@ JNI_GENERATOR_EXPORT jobject Java_org_chromium_TestJni_nativeQueryBitmap(JNIEnv*
   ChromeBrowserProvider* native =
       reinterpret_cast<ChromeBrowserProvider*>(nativeChromeBrowserProvider);
   CHECK_NATIVE_PTR(env, jcaller, native, "QueryBitmap", NULL);
+  HistogramValidator validator;
   return native->QueryBitmap(env, base::android::JavaParamRef<jobject>(env,
       jcaller), base::android::JavaParamRef<jobjectArray>(env, projection),
       base::android::JavaParamRef<jstring>(env, selection),
@@ -202,6 +207,7 @@ JNI_GENERATOR_EXPORT void Java_org_chromium_TestJni_nativeGotOrientation(JNIEnv*
   DataFetcherImplAndroid* native =
       reinterpret_cast<DataFetcherImplAndroid*>(nativeDataFetcherImplAndroid);
   CHECK_NATIVE_PTR(env, jcaller, native, "GotOrientation");
+  HistogramValidator validator;
   return native->GotOrientation(env, base::android::JavaParamRef<jobject>(env,
       jcaller), alpha, beta, gamma);
 }
