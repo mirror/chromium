@@ -46,6 +46,30 @@
       "revId": "353664f4d7ff5dbf018e2ae2773a02937d808da7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "424eef3e_055c3589",
+        "filename": "third_party/WebKit/Source/core/workers/WorkerBackingThread.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-08-29T04:01:02Z",
+      "side": 1,
+      "message": "Thank you for adding the annotation.\n\nThis is in core/workers and code readers (including me) may not have enough knowledge about the relationship between the context snapshot feature and the external reference table. In addition, the type of |reference_table| is |intptr_t*| and it would imply nothing about the relationship.\n\nI think simple comments would be sufficient, for example, as follows: \n\n// The worker doesn\u0027t use the context snapshot feature, so we also don\u0027t have to pass an external reference used for the feature.",
+      "parentUuid": "cb621f88_f657d751",
+      "range": {
+        "startLine": 80,
+        "startChar": 60,
+        "endLine": 80,
+        "endChar": 67
+      },
+      "revId": "353664f4d7ff5dbf018e2ae2773a02937d808da7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
