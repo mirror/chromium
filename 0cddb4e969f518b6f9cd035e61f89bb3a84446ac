@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "46a6ca71_c4d5c5af",
+        "filename": "content/browser/android/overscroll_controller_android.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-08-29T01:40:21Z",
+      "side": 1,
+      "message": "can just do scale_factor \u003d Enabled() ? 1.f : dpi_scale_\n\nAlso probably deserves a comment why it should be 1 here?",
+      "revId": "0cddb4e969f518b6f9cd035e61f89bb3a84446ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
