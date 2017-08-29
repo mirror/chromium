@@ -2,6 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+//#include "chrome/browser/notifications/login_state_notification_blocker_chromeos.h"
+
 #include "ash/system/system_notifier.h"
 #include "base/command_line.h"
 #include "base/macros.h"
@@ -10,7 +12,6 @@
 #include "chrome/browser/chromeos/login/login_manager_test.h"
 #include "chrome/browser/chromeos/login/startup_utils.h"
 #include "chrome/browser/chromeos/login/ui/user_adding_screen.h"
-#include "chrome/browser/notifications/login_state_notification_blocker_chromeos.h"
 #include "content/public/test/test_utils.h"
 #include "ui/message_center/message_center.h"
 
@@ -74,9 +75,9 @@ class LoginStateNotificationBlockerChromeOSBrowserTest
 
  protected:
   void CreateBlocker() {
-    blocker_.reset(new LoginStateNotificationBlockerChromeOS(
-        message_center::MessageCenter::Get()));
-    blocker_->AddObserver(this);
+ //   blocker_.reset(new LoginStateNotificationBlocker(
+ //       message_center::MessageCenter::Get()));
+ //   blocker_->AddObserver(this);
   }
 
   // message_center::NotificationBlocker::Observer ovverrides:
@@ -98,7 +99,7 @@ class LoginStateNotificationBlockerChromeOSBrowserTest
         UTF8ToUTF16("browser-title"), UTF8ToUTF16("browser-message"),
         gfx::Image(), UTF8ToUTF16("browser-source"), GURL(),
         notifier_id, message_center::RichNotificationData(), NULL);
-    return blocker_->ShouldShowNotificationAsPopup(notification);
+    return !message_center::MessageCenter::Get()->GetPopupNotifications().empty();
   }
 
  private:
