@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "82827825_7c3e2296",
+        "filename": "chrome/browser/chromeos/arc/tts/arc_tts_service.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-08-29T04:19:30Z",
+      "side": 1,
+      "message": "nit: s/Callback/RepeatingCallback/",
+      "revId": "f5592606afdfd963c1ee19baf5764ca5931a6354",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a39b45b_95eaa7dd",
+        "filename": "chrome/browser/chromeos/arc/tts/arc_tts_service.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-08-29T04:19:30Z",
+      "side": 1,
+      "message": "TtsController is a base::Singleton\u003c\u003e class in real use case.\nSo, how about keeping just a ptr,\ncalling GetInstance() in the ctor (or can be done lazily if necessary),\nand set_tts_controller_for_testing(TtsController* controller), instead of getter Callback?",
+      "revId": "f5592606afdfd963c1ee19baf5764ca5931a6354",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f39fc19_ec075838",
+        "filename": "chrome/browser/chromeos/arc/tts/arc_tts_service_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-08-29T04:19:30Z",
+      "side": 1,
+      "message": "Could you instantiate the service via factory\u0027s SetTestingFactoryAndUse()?",
+      "revId": "f5592606afdfd963c1ee19baf5764ca5931a6354",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
