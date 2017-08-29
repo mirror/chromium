@@ -232,6 +232,15 @@ HitTestResult HitTestInDocument(const Document* document,
   return result;
 }
 
+Element* TreeScope::Retarget(const Element& target) const {
+  for (const Element* ancestor = &target; ancestor;
+       ancestor = ancestor->OwnerShadowHost()) {
+    if (ancestor->GetTreeScope().IsInclusiveAncestorOf(*this))
+      return const_cast<Element*>(ancestor);
+  }
+  return nullptr;
+}
+
 Element* TreeScope::ElementFromPoint(int x, int y) const {
   return HitTestPoint(x, y,
                       HitTestRequest::kReadOnly | HitTestRequest::kActive);
@@ -245,10 +254,13 @@ Element* TreeScope::HitTestPoint(int x,
   Node* node = result.InnerNode();
   if (!node || node->IsDocumentNode())
     return nullptr;
+  Element* element;
   if (node->IsPseudoElement() || node->IsTextNode())
-    node = node->ParentOrShadowHostNode();
-  DCHECK(!node || node->IsElementNode() || node->IsShadowRoot());
-  node = AncestorInThisScope(node);
+    element = node->ParentOrShadowHostElement();
+  else
+    element = ToElement(node);
+
+  node = Retarget(*element);
   if (!node || !node->IsElementNode())
     return nullptr;
   return ToElement(node);
@@ -354,15 +366,6 @@ void TreeScope::AdoptIfNeeded(Node& node) {
   TreeScopeAdopter adopter(node, *this);
   if (adopter.NeedsScopeChange())
     adopter.Execute();
-}
-
-Element* TreeScope::Retarget(const Element& target) const {
-  for (const Element* ancestor = &target; ancestor;
-       ancestor = ancestor->OwnerShadowHost()) {
-    if (this == ancestor->GetTreeScope())
-      return const_cast<Element*>(ancestor);
-  }
-  return nullptr;
 }
 
 Element* TreeScope::AdjustedFocusedElement() const {
