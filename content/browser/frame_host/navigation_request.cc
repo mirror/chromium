@@ -780,27 +780,28 @@ void NavigationRequest::OnRequestFailed(
   //   URLs should be allowed to transfer away from the current process, which
   //   didn't request the navigation and may have a higher privilege level than
   //   the blocked destination.
-  RenderFrameHostImpl* render_frame_host = nullptr;
   if (net_error == net::ERR_BLOCKED_BY_CLIENT && !browser_initiated()) {
-    render_frame_host = frame_tree_node_->current_frame_host();
+    render_frame_host_ = frame_tree_node_->current_frame_host();
   } else {
-    render_frame_host =
+    render_frame_host_ =
         frame_tree_node_->render_manager()->GetFrameHostForNavigation(*this);
   }
 
   // Don't ask the renderer to commit an URL if the browser will kill it when
   // it does.
-  DCHECK(render_frame_host->CanCommitURL(common_params_.url));
+  DCHECK(render_frame_host_->CanCommitURL(common_params_.url));
 
-  NavigatorImpl::CheckWebUIRendererDoesNotDisplayNormalURL(render_frame_host,
+  NavigatorImpl::CheckWebUIRendererDoesNotDisplayNormalURL(render_frame_host_,
                                                            common_params_.url);
 
-  TransferNavigationHandleOwnership(render_frame_host);
-  render_frame_host->navigation_handle()->ReadyToCommitNavigation(
-      render_frame_host);
-  render_frame_host->FailedNavigation(common_params_, begin_params_,
-                                      request_params_, has_stale_copy_in_cache,
-                                      net_error);
+  has_stale_copy_in_cache_ = has_stale_copy_in_cache;
+  net_error_ = net_error;
+
+  // Check if the navigation should be allowed to proceed.
+  navigation_handle_->WillFailRequest(
+      static_cast<net::Error>(net_error), ssl_info, should_ssl_errors_be_fatal,
+      base::Bind(&NavigationRequest::OnFailureChecksComplete,
+                 base::Unretained(this)));
 }
 
 void NavigationRequest::OnRequestStarted(base::TimeTicks timestamp) {
@@ -951,6 +952,18 @@ void NavigationRequest::OnRedirectChecksComplete(
   }
 
   loader_->FollowRedirect();
+}
+
+void NavigationRequest::OnFailureChecksComplete(
+    NavigationThrottle::ThrottleCheckResult result) {
+  DCHECK(result != NavigationThrottle::DEFER);
+
+  TransferNavigationHandleOwnership(render_frame_host_);
+  render_frame_host_->navigation_handle()->ReadyToCommitNavigation(
+      render_frame_host_);
+  render_frame_host_->FailedNavigation(common_params_, begin_params_,
+                                       request_params_,
+                                       has_stale_copy_in_cache_, net_error_);
 }
 
 void NavigationRequest::OnWillProcessResponseChecksComplete(
