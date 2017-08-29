@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "39a5f3e7_8a8885c4",
+        "filename": "chrome/browser/ui/webui/print_preview/printer_backend_proxy.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-08-29T00:58:52Z",
+      "side": 1,
+      "message": "Changed to avoid matching the default Mojo callback type name for the argument to PrintBackendHandler::EnumeratePrinters.",
+      "range": {
+        "startLine": 24,
+        "startChar": 6,
+        "endLine": 24,
+        "endChar": 26
+      },
+      "revId": "1a29cf781bab8c45b51aa8bac40dcd754c85f282",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
