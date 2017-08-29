@@ -1,0 +1,163 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b79c1d9e_d251bcbd",
+        "filename": "chrome/browser/ssl/ssl_browser_tests.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 5597,
+      "author": {
+        "id": 1002611
+      },
+      "writtenOn": "2017-08-29T22:04:17Z",
+      "side": 1,
+      "message": "nit: \"Check that a MITM software interstitial was not recorded in histograms?\"",
+      "revId": "d5824a6c20f63590413cf59b55c31015462b0bbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21859eef_a80f2471",
+        "filename": "chrome/browser/ssl/ssl_browser_tests.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 5650,
+      "author": {
+        "id": 1002611
+      },
+      "writtenOn": "2017-08-29T22:04:17Z",
+      "side": 1,
+      "message": "Same comment here.",
+      "revId": "d5824a6c20f63590413cf59b55c31015462b0bbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d5aba71_fd9431ab",
+        "filename": "chrome/browser/ssl/ssl_browser_tests.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 5700,
+      "author": {
+        "id": 1002611
+      },
+      "writtenOn": "2017-08-29T22:04:17Z",
+      "side": 1,
+      "message": "Ditto",
+      "revId": "d5824a6c20f63590413cf59b55c31015462b0bbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de3c4744_d4fda398",
+        "filename": "chrome/browser/ssl/ssl_error_assistant.proto",
+        "patchSetId": 15
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1002611
+      },
+      "writtenOn": "2017-08-29T22:04:17Z",
+      "side": 1,
+      "message": "I understand your intent here, but required keyword is discouraged and actually removed in protobuf v3: https://developers.google.com/protocol-buffers/docs/proto\n\nSo I\u0027d keep it optional and DCHECK that the field is non-empty in the code.",
+      "revId": "d5824a6c20f63590413cf59b55c31015462b0bbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1fe799e_9e848ced",
+        "filename": "chrome/browser/ssl/ssl_error_handler.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 521,
+      "author": {
+        "id": 1002611
+      },
+      "writtenOn": "2017-08-29T22:04:17Z",
+      "side": 1,
+      "message": "Don\u0027t forget to remove logs :)",
+      "revId": "d5824a6c20f63590413cf59b55c31015462b0bbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a89fe6f3_aae1de67",
+        "filename": "chrome/browser/ssl/ssl_error_handler.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 532,
+      "author": {
+        "id": 1002611
+      },
+      "writtenOn": "2017-08-29T22:04:17Z",
+      "side": 1,
+      "message": "nit: \"If both |issuer_common_name_regex| and |issuer_organization_regex| are set, both should match\"",
+      "revId": "d5824a6c20f63590413cf59b55c31015462b0bbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9dcca910_907bdff6",
+        "filename": "chrome/browser/ssl/ssl_error_handler.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 543,
+      "author": {
+        "id": 1002611
+      },
+      "writtenOn": "2017-08-29T22:04:17Z",
+      "side": 1,
+      "message": "nit: \"If only |issuer_organization_regex| is set, it should match.\" or something like that. Same below.",
+      "revId": "d5824a6c20f63590413cf59b55c31015462b0bbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "14214766_cb19d8bf",
+        "filename": "chrome/browser/ssl/ssl_error_handler_unittest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 1243,
+      "author": {
+        "id": 1002611
+      },
+      "writtenOn": "2017-08-29T22:04:17Z",
+      "side": 1,
+      "message": "\"...but not a common name regex\"",
+      "range": {
+        "startLine": 1243,
+        "startChar": 34,
+        "endLine": 1243,
+        "endChar": 62
+      },
+      "revId": "d5824a6c20f63590413cf59b55c31015462b0bbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2223029_1bdeb070",
+        "filename": "chrome/browser/ssl/ssl_error_handler_unittest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 1259,
+      "author": {
+        "id": 1002611
+      },
+      "writtenOn": "2017-08-29T22:04:17Z",
+      "side": 1,
+      "message": "Can you add another test case where common name or organization name only partially matches the cert? In this case we shouldn\u0027t show an interstitial.\n\n(This will be moot if we decide to use PartialMatch of course)",
+      "revId": "d5824a6c20f63590413cf59b55c31015462b0bbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
