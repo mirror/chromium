@@ -13,6 +13,7 @@
 #include "base/process/process.h"
 #include "base/strings/string_number_conversions.h"
 #include "base/strings/utf_string_conversions.h"
+#include "base/sys_info.h"
 #include "chrome/browser/extensions/api/tabs/tabs_constants.h"
 #include "chrome/browser/extensions/extension_tab_util.h"
 #include "chrome/browser/profiles/profile.h"
@@ -137,7 +138,13 @@ void FillProcessData(
   if (!include_optional)
     return;
 
-  out_process->cpu.reset(new double(task_manager->GetCpuUsage(id)));
+  // |process.cpu| is documented as returning a value in the range 0-100%,
+  // with the implication that this is percentage-of-total-available-CPU used.
+  // Platform-independent CPU usage is percentage-of-one-core used, so we need
+  // to divide down by the number of cores available, to get a 0-100% value.
+  out_process->cpu.reset(
+      new double(task_manager->GetPlatformIndependentCPUUsage(id) /
+                 base::SysInfo::NumberOfProcessors()));
 
   out_process->network.reset(new double(static_cast<double>(
       task_manager->GetProcessTotalNetworkUsage(id))));
