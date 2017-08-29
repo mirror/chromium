@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "cf230b91_f8418814",
+        "filename": "base/message_loop/incoming_task_queue.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-08-29T16:45:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "021b0c76_dd07c018",
+      "range": {
+        "startLine": 155,
+        "startChar": 23,
+        "endLine": 155,
+        "endChar": 32
+      },
+      "revId": "ce05b1134a99102859a38315f5b6eb4711e16c95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f0cc2f0a_ad52026c",
         "filename": "base/message_loop/incoming_task_queue.cc",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "ce05b1134a99102859a38315f5b6eb4711e16c95",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa04a702_e32ff839",
+        "filename": "base/message_loop/incoming_task_queue.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-08-29T16:45:17Z",
+      "side": 1,
+      "message": "While that is true, there would have been an exclusive lock at the beginning of the function which would have blocked (old message_loop_ check), preventing enqueues during that call. The use of a separate flag addresses that.",
+      "parentUuid": "f0cc2f0a_ad52026c",
+      "range": {
+        "startLine": 180,
+        "startChar": 4,
+        "endLine": 180,
+        "endChar": 43
+      },
+      "revId": "ce05b1134a99102859a38315f5b6eb4711e16c95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
