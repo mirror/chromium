@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1664068c_55414b27",
+        "filename": "tools/binary_size/libsupersize/integration_test.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-08-29T20:40:09Z",
+      "side": 1,
+      "message": "nit: delte lines 189-193 since they\u0027re already covered by test_Console. Or, just add Csv() to test_Console()",
+      "revId": "ae540d2b99e3990e18ea18c0690469047f60a2a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
