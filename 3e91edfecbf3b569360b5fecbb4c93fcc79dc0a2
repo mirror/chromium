@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "03f60759_5451c432",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsBottomSheetContent.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-08-29T16:21:53Z",
+      "side": 1,
+      "message": "I\u0027m seeing issues with touch event handling as well (touches aren\u0027t going to the toolbar with this current patch). I\u0027m working on debugging. I\u0027m hoping to avoid adding special touch event handling, but that may not be possible. In my simple Android test app, a button translated outside of its parent view no longer receives touch events. StackOverflow seems to think this is WAI. Depending on where I get w/ debugging the touche event handling, it may be worth revisiting some of the other initial options we considered for showing the Doodle.\n\n#setAncestorsShouldClipChildren() is needed to make the toolbar visible. If the toolbar\u0027s ancestors clip their child views, the toolbar doesn\u0027t show up when it\u0027s translated outside of the control container\u0027s bounds. The (ViewGroup) cast is needed because #setAncestorsShouldClipChildren() requires a ViewGroup.",
+      "parentUuid": "a5e787af_f37a140b",
+      "range": {
+        "startLine": 197,
+        "startChar": 62,
+        "endLine": 197,
+        "endChar": 69
+      },
+      "revId": "3e91edfecbf3b569360b5fecbb4c93fcc79dc0a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d33089a8_e7338f33",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheet.java",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2017-08-29T15:23:13Z",
       "side": 1,
       "message": "Should the color be removed again when it is open?",
+      "range": {
+        "startLine": 1017,
+        "startChar": 13,
+        "endLine": 1017,
+        "endChar": 25
+      },
+      "revId": "3e91edfecbf3b569360b5fecbb4c93fcc79dc0a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "197ffd81_f47d21fe",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheet.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1017,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-08-29T16:21:53Z",
+      "side": 1,
+      "message": "The color is removed at the end of the animation (see line 996 above)",
+      "parentUuid": "d33089a8_e7338f33",
       "range": {
         "startLine": 1017,
         "startChar": 13,
