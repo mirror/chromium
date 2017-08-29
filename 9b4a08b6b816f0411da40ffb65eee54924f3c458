@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "9d0a5e00_b4912792",
+        "filename": "net/http/http_network_transaction_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 10183,
+      "author": {
+        "id": 1116491
+      },
+      "writtenOn": "2017-08-29T23:37:35Z",
+      "side": 1,
+      "message": "Yes, and I\u0027m doing it in line 10198.\n\nOther tests that also EXPECT this before the request are HonorAlternativeServiceHeader, DoNotParseAlternativeServiceHeaderOnInsecureRequest, and HonorMultipleAlternativeServiceHeaders.  If you find it confusing, I\u0027m happy to remove it from before the transaction in this test.",
+      "parentUuid": "43a81673_798294b3",
+      "revId": "9b4a08b6b816f0411da40ffb65eee54924f3c458",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3a697fab_f31bd9e3",
         "filename": "net/http/http_network_transaction_unittest.cc",
         "patchSetId": 5
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "f421113c_7da2e7fc",
+        "filename": "net/http/http_network_transaction_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 10220,
+      "author": {
+        "id": 1116491
+      },
+      "writtenOn": "2017-08-29T23:37:35Z",
+      "side": 1,
+      "message": "Same as in quic_network_transaction_unittest.cc: turns out response_.ssl_info.is_valid() returns false without a cert, so this still seems to be necessary.",
+      "parentUuid": "3a697fab_f31bd9e3",
+      "revId": "9b4a08b6b816f0411da40ffb65eee54924f3c458",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "99b39e35_e76a16ae",
         "filename": "net/quic/chromium/quic_network_transaction_unittest.cc",
         "patchSetId": 5
@@ -50,6 +86,24 @@
       "revId": "9b4a08b6b816f0411da40ffb65eee54924f3c458",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99431a60_25508a5b",
+        "filename": "net/quic/chromium/quic_network_transaction_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1116491
+      },
+      "writtenOn": "2017-08-29T23:37:35Z",
+      "side": 1,
+      "message": "Turns out response_.ssl_info.is_valid() returns false without a cert, so this still seems to be necessary.",
+      "parentUuid": "99b39e35_e76a16ae",
+      "revId": "9b4a08b6b816f0411da40ffb65eee54924f3c458",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
