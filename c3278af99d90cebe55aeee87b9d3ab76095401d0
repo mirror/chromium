@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a2fee650_2a409287",
+        "filename": "chrome/android/java/res/layout/signin_and_sync_view.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-08-29T23:38:47Z",
+      "side": 1,
+      "message": "It looks like SigninAndSyncView is also used in recent tabs, so we should check that the extra padding being set and background look good there too. Recent tabs has a light grey background currently so we may have to conditionally set this styling only for bookmarks.",
+      "range": {
+        "startLine": 12,
+        "startChar": 4,
+        "endLine": 13,
+        "endChar": 62
+      },
+      "revId": "c3278af99d90cebe55aeee87b9d3ab76095401d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
