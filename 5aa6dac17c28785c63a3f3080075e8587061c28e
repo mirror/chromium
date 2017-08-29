@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dae29c63_3488c477",
+        "filename": "ash/accelerators/debug_commands.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-08-29T18:33:00Z",
+      "side": 1,
+      "message": "these bools make me a bit anxious, especially when so many of them are being flipped here. would you mind changing the delegate to declare and use an enum instead? maybe something like this:\n\n  enum class TouchscreenStatusSource {\n    USER_PREF,\n    GLOBAL,\n  };",
+      "range": {
+        "startLine": 146,
+        "startChar": 38,
+        "endLine": 146,
+        "endChar": 42
+      },
+      "revId": "5aa6dac17c28785c63a3f3080075e8587061c28e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae2da890_997fda08",
+        "filename": "ash/shell_delegate.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-08-29T18:33:00Z",
+      "side": 1,
+      "message": "how about calling this SaveTouchscreenStatus instead? i think it\u0027s a bit hard to tell the difference between Set and Update otherwise.\n\nfor similar reasons, GetTouchscreenStatus may also be clearer if it\u0027s renamed to LoadTouchscreenStatus -- just looking at the name, it\u0027s hard to tell whether the status is coming from a pref or from the actual device, otherwise.\n\nthinking even bigger, would it be possible to get rid of UpdateTouchscreenStatus entirely, so that callers don\u0027t need to remember to call it? it\u0027d be nice if they could just ask the delegate to set the state (either globally or in the user pref) and have the device get updated automatically. are there reasons that wouldn\u0027t work?",
+      "range": {
+        "startLine": 122,
+        "startChar": 15,
+        "endLine": 122,
+        "endChar": 35
+      },
+      "revId": "5aa6dac17c28785c63a3f3080075e8587061c28e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
