@@ -97,6 +97,30 @@
     },
     {
       "key": {
+        "uuid": "9d1995f7_dd4db621",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-08-29T17:00:26Z",
+      "side": 1,
+      "message": "OK, so, Daria, please remove these trailing underscores here.\n\nAnd re constructors - I don\u0027t have strong opinion on that; to me, personally, it looks fine to have the constructor arguments named identically to the members.",
+      "parentUuid": "d2b77989_934af5f2",
+      "range": {
+        "startLine": 33,
+        "startChar": 6,
+        "endLine": 33,
+        "endChar": 17
+      },
+      "revId": "9f901b409488fd2f09261503f0e562340845506f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f90767f1_6f9a84a3",
         "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.cc",
         "patchSetId": 4
