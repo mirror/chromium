@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a657339_f7a0ed74",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/document/ChromeLauncherActivity.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 321,
+      "author": {
+        "id": 1116074
+      },
+      "writtenOn": "2017-08-29T22:17:41Z",
+      "side": 1,
+      "message": "nit: can we put this towards the end, since the main traffic will be for Herb, and then CCT and then VR?",
+      "range": {
+        "startLine": 321,
+        "startChar": 13,
+        "endLine": 321,
+        "endChar": 26
+      },
+      "revId": "ec67862f64d75509a99d2b408f662fb8ab5bdfdc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
