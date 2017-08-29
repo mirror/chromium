@@ -484,6 +484,11 @@
     "args": ["--enable-features=OutOfBlinkCORS,LoadingWithMojo"]
   },
   {
+    "prefix": "outofblink-cors",
+    "base": "external/wpt/service-workers",
+    "args": ["--enable-features=OutOfBlinkCORS,LoadingWithMojo"]
+  },
+  {
     "prefix": "presentation",
     "base": "receiver",
     "args": ["--force-presentation-receiver-for-testing"]
