@@ -715,6 +715,14 @@ bool RenderWidgetHostViewAura::IsShowing() {
   return window_->IsVisible();
 }
 
+void RenderWidgetHostViewAura::WasUnOccluded() {
+  Show();
+}
+
+void RenderWidgetHostViewAura::WasOccluded() {
+  Hide();
+}
+
 gfx::Rect RenderWidgetHostViewAura::GetViewBounds() const {
   return window_->GetBoundsInScreen();
 }
