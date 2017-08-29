@@ -302,11 +302,13 @@ static void SetShouldInvalidateSelection(const SelectionMarkingRange& new_range,
   // Invalidate previous selected LayoutObjects except already invalidated
   // above.
   for (LayoutObject* layout_object : old_invalidation_set.layout_objects) {
-    layout_object->SetSelectionStateIfNeeded(SelectionState::kNone);
+    layout_object->SetSelectionState(SelectionState::kNone);
     layout_object->SetShouldInvalidateSelection();
   }
-  for (LayoutBlock* layout_block : old_invalidation_set.layout_blocks)
+  for (LayoutBlock* layout_block : old_invalidation_set.layout_blocks) {
+    layout_block->SetSelectionState(SelectionState::kNone);
     layout_block->SetShouldInvalidateSelection();
+  }
 }
 
 base::Optional<int> LayoutSelection::SelectionStart() const {
@@ -335,7 +337,7 @@ void LayoutSelection::ClearSelection() {
 
   for (auto layout_object : paint_range_) {
     const SelectionState old_state = layout_object->GetSelectionState();
-    layout_object->SetSelectionStateIfNeeded(SelectionState::kNone);
+    layout_object->SetSelectionState(SelectionState::kNone);
     if (layout_object->GetSelectionState() == old_state)
       continue;
     layout_object->SetShouldInvalidateSelection();
@@ -376,10 +378,27 @@ static LayoutTextFragment* FirstLetterPartFor(LayoutObject* layout_object) {
       AssociatedLayoutObjectOf(*layout_object->GetNode(), 0)));
 }
 
+static void SetSelectionStatePropagateIfNeeds(LayoutObject* layout_object,
+                                              SelectionState state) {
+  DCHECK(state != SelectionState::kNone);
+  layout_object->SetSelectionState(state);
+  if (!layout_object->IsText())
+    return;
+  // This selectionstate propagation is needed for invalidation about pesudo
+  // CSS ::selection element. See LayoutObject::InvalidatePaintForSelection()
+  for (LayoutBlock* containing_block = layout_object->ContainingBlock();
+       containing_block && !containing_block->IsLayoutView();
+       containing_block = containing_block->ContainingBlock()) {
+    if (containing_block->GetSelectionState() == SelectionState::kInside)
+      return;
+    containing_block->SetSelectionState(SelectionState::kInside);
+  }
+}
+
 static void MarkSelected(PaintInvalidationSet* invalidation_set,
                          LayoutObject* layout_object,
                          SelectionState state) {
-  layout_object->SetSelectionStateIfNeeded(state);
+  SetSelectionStatePropagateIfNeeds(layout_object, state);
   InsertLayoutObjectAndAncestorBlocks(invalidation_set, layout_object);
 }
 
@@ -621,11 +640,10 @@ static SelectionMarkingRange CalcSelectionRangeAndSetSelectionState(
   const int end_offset = ComputeEndOffset(
       *end_layout_object, selection.EndPosition().ToOffsetInAnchor());
 
-  if (start_layout_object == end_layout_object) {
+  if (start_layout_object == end_layout_object)
     return MarkStartAndEndInOneNode(std::move(invalidation_set),
                                     start_layout_object, start_offset,
                                     end_offset);
-  }
   return MarkStartAndEndInTwoNodes(std::move(invalidation_set),
                                    start_layout_object, start_offset,
                                    end_layout_object, end_offset);
@@ -650,43 +668,15 @@ void LayoutSelection::Commit() {
   DCHECK(!frame_selection_->GetDocument().NeedsLayoutTreeUpdate());
   SetShouldInvalidateSelection(new_range, paint_range_);
   paint_range_ = new_range.ToPaintRange();
-  // TODO(yoichio): Remove this if state.
-  // This SelectionState reassignment is ad-hoc patch for
-  // prohibiting use-after-free(crbug.com/752715).
-  // LayoutText::setSelectionState(state) propergates |state| to ancestor
-  // LayoutObjects, which can accidentally change start/end LayoutObject state
-  // then LayoutObject::IsSelectionBorder() returns false although we should
-  // clear selection at LayoutObject::WillBeRemoved().
-  // We should make LayoutObject::setSelectionState() trivial and remove
-  // such propagation or at least do it in LayoutSelection.
-  if ((paint_range_.StartLayoutObject()->GetSelectionState() !=
-           SelectionState::kStart &&
-       paint_range_.StartLayoutObject()->GetSelectionState() !=
-           SelectionState::kStartAndEnd) ||
-      (paint_range_.EndLayoutObject()->GetSelectionState() !=
-           SelectionState::kEnd &&
-       paint_range_.EndLayoutObject()->GetSelectionState() !=
-           SelectionState::kStartAndEnd)) {
-    if (paint_range_.StartLayoutObject() == paint_range_.EndLayoutObject()) {
-      paint_range_.StartLayoutObject()->SetSelectionStateIfNeeded(
-          SelectionState::kStartAndEnd);
-    } else {
-      paint_range_.StartLayoutObject()->SetSelectionStateIfNeeded(
-          SelectionState::kStart);
-      paint_range_.EndLayoutObject()->SetSelectionStateIfNeeded(
-          SelectionState::kEnd);
-    }
+  if (paint_range_.StartLayoutObject() == paint_range_.EndLayoutObject()) {
+    DCHECK(paint_range_.StartLayoutObject()->GetSelectionState() ==
+           SelectionState::kStartAndEnd);
+  } else {
+    DCHECK(paint_range_.StartLayoutObject()->GetSelectionState() ==
+           SelectionState::kStart);
+    DCHECK(paint_range_.EndLayoutObject()->GetSelectionState() ==
+           SelectionState::kEnd);
   }
-  // TODO(yoichio): If start == end, they should be kStartAndEnd.
-  // If not, start.SelectionState == kStart and vice versa.
-  DCHECK(paint_range_.StartLayoutObject()->GetSelectionState() ==
-             SelectionState::kStart ||
-         paint_range_.StartLayoutObject()->GetSelectionState() ==
-             SelectionState::kStartAndEnd);
-  DCHECK(paint_range_.EndLayoutObject()->GetSelectionState() ==
-             SelectionState::kEnd ||
-         paint_range_.EndLayoutObject()->GetSelectionState() ==
-             SelectionState::kStartAndEnd);
 }
 
 void LayoutSelection::OnDocumentShutdown() {
