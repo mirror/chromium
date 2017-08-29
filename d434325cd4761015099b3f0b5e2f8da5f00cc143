@@ -22,6 +22,30 @@
       "revId": "d434325cd4761015099b3f0b5e2f8da5f00cc143",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8cbddf0_5dc2182f",
+        "filename": "remoting/webapp/crd/manifest.json.jinja2",
+        "patchSetId": 1
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1000528
+      },
+      "writtenOn": "2017-08-29T23:23:19Z",
+      "side": 1,
+      "message": "Thinking about this some more, I don\u0027t think this buys us anything in terms of security, and requires an otherwise unnecessary app release if we change our URL structure. I don\u0027t think it\u0027s worth locking it down more than this.",
+      "parentUuid": "c0a0c78d_79154b0a",
+      "range": {
+        "startLine": 74,
+        "startChar": 40,
+        "endLine": 74,
+        "endChar": 41
+      },
+      "revId": "d434325cd4761015099b3f0b5e2f8da5f00cc143",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
