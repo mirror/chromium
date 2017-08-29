@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5ec90b92_a1cce5b5",
+        "filename": "chrome/browser/android/ntp/content_suggestions_notifier_service.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2017-08-29T10:16:27Z",
+      "side": 1,
+      "message": "This is gross, but unfortunately Java\u0027s ApplicationState.onStateChangeForTesting isn\u0027t exposed to JNI. (I think that it would work, and do the right thing)",
+      "revId": "709d4977cf5e618bc4b0bab290920ccf88557d97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
