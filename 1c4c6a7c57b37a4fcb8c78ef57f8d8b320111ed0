@@ -49,6 +49,54 @@
     },
     {
       "key": {
+        "uuid": "a5464d37_68484117",
+        "filename": "ui/native_theme/native_theme_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 427,
+      "author": {
+        "id": 1161819
+      },
+      "writtenOn": "2017-08-29T20:55:33Z",
+      "side": 1,
+      "message": "I like tapted@\u0027s suggestion below. It sidesteps the whole MD/non-MD and color inversion under MD issue.",
+      "parentUuid": "31d04a96_61bc18a0",
+      "range": {
+        "startLine": 427,
+        "startChar": 38,
+        "endLine": 427,
+        "endChar": 70
+      },
+      "revId": "1c4c6a7c57b37a4fcb8c78ef57f8d8b320111ed0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cf764b00_6f83173f",
+        "filename": "ui/native_theme/native_theme_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 427,
+      "author": {
+        "id": 1161819
+      },
+      "writtenOn": "2017-08-29T20:55:33Z",
+      "side": 1,
+      "message": "Should we then introduce a new kColorId_XXXXX that is specific to selected/focused Checkbox/Radio button color so that GetAuraColor() can process it as a non-System color? That seems like a lot more chance to really mess things up.",
+      "parentUuid": "31d04a96_61bc18a0",
+      "range": {
+        "startLine": 427,
+        "startChar": 38,
+        "endLine": 427,
+        "endChar": 70
+      },
+      "revId": "1c4c6a7c57b37a4fcb8c78ef57f8d8b320111ed0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "47b1bff9_fb6a4592",
         "filename": "ui/native_theme/native_theme_win.cc",
         "patchSetId": 2
@@ -66,6 +114,24 @@
     },
     {
       "key": {
+        "uuid": "a29389a1_39fec8c4",
+        "filename": "ui/native_theme/native_theme_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 452,
+      "author": {
+        "id": 1161819
+      },
+      "writtenOn": "2017-08-29T20:55:33Z",
+      "side": 1,
+      "message": "This is probably the best approach given the above info from pkasting@.",
+      "parentUuid": "47b1bff9_fb6a4592",
+      "revId": "1c4c6a7c57b37a4fcb8c78ef57f8d8b320111ed0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6ceb82a0_f35241f2",
         "filename": "ui/views/controls/button/checkbox.cc",
         "patchSetId": 2
@@ -80,6 +146,24 @@
       "revId": "1c4c6a7c57b37a4fcb8c78ef57f8d8b320111ed0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63a9bb63_2ee981bc",
+        "filename": "ui/views/controls/button/checkbox.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1161819
+      },
+      "writtenOn": "2017-08-29T20:55:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6ceb82a0_f35241f2",
+      "revId": "1c4c6a7c57b37a4fcb8c78ef57f8d8b320111ed0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -120,6 +204,24 @@
       "revId": "1c4c6a7c57b37a4fcb8c78ef57f8d8b320111ed0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b4b8e7e_a31f5db7",
+        "filename": "ui/views/controls/button/checkbox.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1161819
+      },
+      "writtenOn": "2017-08-29T20:55:33Z",
+      "side": 1,
+      "message": "I\u0027d suggest a task-bug be opened for that and not address that issue right here.",
+      "parentUuid": "7ff9c883_0ce80148",
+      "revId": "1c4c6a7c57b37a4fcb8c78ef57f8d8b320111ed0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
