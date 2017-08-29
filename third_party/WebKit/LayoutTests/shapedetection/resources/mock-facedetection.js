@@ -57,7 +57,7 @@ class MockFaceDetection {
           boundingBox: {x: 3.0, y: 3.0, width: 300.0, height: 300.0},
           landmarks: []
         },
-      ]
+      ], status: shapeDetection.mojom.kDetectorSuccess
     });
   }
 }

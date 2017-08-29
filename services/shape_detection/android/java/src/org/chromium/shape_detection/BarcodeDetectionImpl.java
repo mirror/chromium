@@ -22,7 +22,7 @@ import org.chromium.mojo.system.MojoException;
 import org.chromium.services.service_manager.InterfaceFactory;
 import org.chromium.shape_detection.mojom.BarcodeDetection;
 import org.chromium.shape_detection.mojom.BarcodeDetectionResult;
-
+import org.chromium.shape_detection.mojom.ConstantsConstants;
 /**
  * Implementation of mojo BarcodeDetection, using Google Play Services vision package.
  */
@@ -42,7 +42,8 @@ public class BarcodeDetectionImpl implements BarcodeDetection {
                     ContextUtils.getApplicationContext())
                 != ConnectionResult.SUCCESS) {
             Log.e(TAG, "Google Play Services not available");
-            callback.call(new BarcodeDetectionResult[0]);
+            callback.call(
+                    new BarcodeDetectionResult[0], ConstantsConstants.UNAVAILABLE_GOOGLE_PLAY);
             return;
         }
         // The vision library will be downloaded the first time the API is used
@@ -51,14 +52,14 @@ public class BarcodeDetectionImpl implements BarcodeDetection {
         // v.9.2, see https://developers.google.com/android/guides/releases.
         if (!mBarcodeDetector.isOperational()) {
             Log.e(TAG, "BarcodeDetector is not operational");
-            callback.call(new BarcodeDetectionResult[0]);
+            callback.call(new BarcodeDetectionResult[0], ConstantsConstants.INOPERABLE_DETECTOR);
             return;
         }
 
         Frame frame = BitmapUtils.convertToFrame(bitmapData);
         if (frame == null) {
             Log.e(TAG, "Error converting Mojom Bitmap to Frame");
-            callback.call(new BarcodeDetectionResult[0]);
+            callback.call(new BarcodeDetectionResult[0], ConstantsConstants.INVALID_BITMAP);
             return;
         }
 
@@ -83,7 +84,7 @@ public class BarcodeDetectionImpl implements BarcodeDetection {
                 barcodeArray[i].cornerPoints[j].y = corners[j].y;
             }
         }
-        callback.call(barcodeArray);
+        callback.call(barcodeArray, ConstantsConstants.DETECTOR_SUCCESS);
     }
 
     @Override

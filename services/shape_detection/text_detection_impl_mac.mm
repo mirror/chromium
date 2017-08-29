@@ -37,16 +37,19 @@ void TextDetectionImplMac::Detect(const SkBitmap& bitmap,
                                   DetectCallback callback) {
   DCHECK(base::mac::IsAtLeastOS10_11());
   DetectCallback scoped_callback = media::ScopedCallbackRunner(
-      std::move(callback), std::vector<mojom::TextDetectionResultPtr>());
+      std::move(callback), std::vector<mojom::TextDetectionResultPtr>(),
+      std::string());
 
+  std::vector<mojom::TextDetectionResultPtr> results;
   base::scoped_nsobject<CIImage> ci_image = CreateCIImageFromSkBitmap(bitmap);
-  if (!ci_image)
+  if (!ci_image) {
+    std::move(scoped_callback).Run(std::move(results), mojom::kInvalidBitmap);
     return;
+  }
 
   NSArray* const features = [detector_ featuresInImage:ci_image];
 
   const int height = bitmap.height();
-  std::vector<mojom::TextDetectionResultPtr> results;
   for (CIRectangleFeature* const f in features) {
     // CIRectangleFeature only has bounding box information.
     auto result = mojom::TextDetectionResult::New();
@@ -59,7 +62,7 @@ void TextDetectionImplMac::Detect(const SkBitmap& bitmap,
     result->bounding_box = std::move(boundingbox);
     results.push_back(std::move(result));
   }
-  std::move(scoped_callback).Run(std::move(results));
+  std::move(scoped_callback).Run(std::move(results), mojom::kDetectorSuccess);
 }
 
 }  // namespace shape_detection

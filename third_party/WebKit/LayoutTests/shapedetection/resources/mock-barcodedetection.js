@@ -37,7 +37,7 @@ class MockBarcodeDetection {
             { x: 2.0, y: 52.0 }
           ],
         },
-      ],
+      ], status: shapeDetection.mojom.kDetectorSuccess
     });
   }
 

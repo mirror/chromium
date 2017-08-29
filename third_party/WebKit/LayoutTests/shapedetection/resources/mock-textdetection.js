@@ -25,7 +25,7 @@ class MockTextDetection {
           rawValue : "dogs",
           boundingBox: { x: 2.0, y: 2.0, width: 50.0, height: 50.0 }
         },
-      ],
+      ], status: shapeDetection.mojom.kDetectorSuccess
     });
   }
 

@@ -68,9 +68,16 @@ ScriptPromise FaceDetector::DoDetect(ScriptPromiseResolver* resolver,
 void FaceDetector::OnDetectFaces(
     ScriptPromiseResolver* resolver,
     Vector<shape_detection::mojom::blink::FaceDetectionResultPtr>
-        face_detection_results) {
+        face_detection_results,
+    const String& status) {
   DCHECK(face_service_requests_.Contains(resolver));
   face_service_requests_.erase(resolver);
+
+  if (status != shape_detection::mojom::blink::kDetectorSuccess) {
+    resolver->Reject(
+        DOMException::Create(ShapeDetector::getErrorCode(status), status));
+    return;
+  }
 
   HeapVector<Member<DetectedFace>> detected_faces;
   for (const auto& face : face_detection_results) {
