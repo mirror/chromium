@@ -184,6 +184,24 @@
       "revId": "b90fcc73c1134f66131f813f92f5daf7400f3b9a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "709d6146_0294d49c",
+        "filename": "components/subresource_filter/content/renderer/subresource_filter_agent.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-08-29T12:27:05Z",
+      "side": 1,
+      "message": "Sorry, I should have mentioned, but there would be 2 more CLs subsequent to this one:\n- to make browser side logic in sync with this one (WIP https://chromium-review.googlesource.com/c/chromium/src/+/638870). Both of these should essentially be\n landed together.\n- Another CL would be to fall back on the last activation state of this frame if there is no\nlocal ancestor frame. That should work for case 1?",
+      "parentUuid": "d155a84a_3106d6d3",
+      "revId": "b90fcc73c1134f66131f813f92f5daf7400f3b9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
