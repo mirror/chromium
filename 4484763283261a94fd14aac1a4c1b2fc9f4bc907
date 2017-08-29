@@ -22,6 +22,30 @@
       "revId": "4484763283261a94fd14aac1a4c1b2fc9f4bc907",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d912bad2_2b6e6751",
+        "filename": "components/keep_alive_registry/keep_alive_registry.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1176519
+      },
+      "writtenOn": "2017-08-29T10:21:41Z",
+      "side": 0,
+      "message": "hum, maybe it\u0027s better to keep the DCHECK as you described.",
+      "parentUuid": "ff958304_af88f5c9",
+      "range": {
+        "startLine": 89,
+        "startChar": 2,
+        "endLine": 89,
+        "endChar": 47
+      },
+      "revId": "4484763283261a94fd14aac1a4c1b2fc9f4bc907",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
