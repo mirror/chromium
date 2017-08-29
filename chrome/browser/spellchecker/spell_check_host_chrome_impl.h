@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CHROME_BROWSER_SPELLCHECKER_SPELL_CHECK_HOST_IMPL_H_
-#define CHROME_BROWSER_SPELLCHECKER_SPELL_CHECK_HOST_IMPL_H_
+#ifndef CHROME_BROWSER_SPELLCHECKER_SPELL_CHECK_HOST_CHROME_IMPL_H_
+#define CHROME_BROWSER_SPELLCHECKER_SPELL_CHECK_HOST_CHROME_IMPL_H_
 
 #include "base/macros.h"
 #include "components/spellcheck/browser/spelling_service_client.h"
@@ -19,10 +19,10 @@ class SpellcheckService;
 
 struct SpellCheckResult;
 
-class SpellCheckHostImpl : public spellcheck::mojom::SpellCheckHost {
+class SpellCheckHostChromeImpl : public spellcheck::mojom::SpellCheckHost {
  public:
-  explicit SpellCheckHostImpl(int render_process_id);
-  ~SpellCheckHostImpl() override;
+  explicit SpellCheckHostChromeImpl(int render_process_id);
+  ~SpellCheckHostChromeImpl() override;
 
   static void Create(int render_process_id,
                      spellcheck::mojom::SpellCheckHostRequest request);
@@ -63,7 +63,7 @@ class SpellCheckHostImpl : public spellcheck::mojom::SpellCheckHost {
   // A JSON-RPC client that calls the remote Spelling service.
   SpellingServiceClient client_;
 
-  DISALLOW_COPY_AND_ASSIGN(SpellCheckHostImpl);
+  DISALLOW_COPY_AND_ASSIGN(SpellCheckHostChromeImpl);
 };
 
-#endif  // CHROME_BROWSER_SPELLCHECKER_SPELL_CHECK_HOST_IMPL_H_
+#endif  // CHROME_BROWSER_SPELLCHECKER_SPELL_CHECK_HOST_CHROME_IMPL_H_

@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "chrome/browser/spellchecker/spell_check_host_impl.h"
+#include "chrome/browser/spellchecker/spell_check_host_chrome_impl.h"
 
 #include "base/macros.h"
 #include "base/memory/ptr_util.h"
@@ -34,7 +34,7 @@ class TestSpellCheckHostImpl {
   std::vector<SpellCheckResult> FilterCustomWordResults(
       const std::string& text,
       const std::vector<SpellCheckResult>& service_results) const {
-    return SpellCheckHostImpl::FilterCustomWordResults(
+    return SpellCheckHostChromeImpl::FilterCustomWordResults(
         text, GetCustomDictionary(), service_results);
   }
 

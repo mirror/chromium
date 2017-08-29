@@ -19,7 +19,7 @@
 #include "base/threading/thread_restrictions.h"
 #include "base/values.h"
 #include "chrome/browser/profiles/profile.h"
-#include "chrome/browser/spellchecker/spell_check_host_impl.h"
+#include "chrome/browser/spellchecker/spell_check_host_chrome_impl.h"
 #include "chrome/browser/spellchecker/spellcheck_factory.h"
 #include "chrome/browser/spellchecker/spellcheck_service.h"
 #include "chrome/browser/ui/browser.h"
@@ -256,8 +256,8 @@ class SpellcheckServiceHostBrowserTest : public SpellcheckServiceBrowserTest {
 
  private:
   void RequestSpellCheckHost(spellcheck::mojom::SpellCheckHostPtr* interface) {
-    SpellCheckHostImpl::Create(GetRenderer()->GetID(),
-                               mojo::MakeRequest(interface));
+    SpellCheckHostChromeImpl::Create(GetRenderer()->GetID(),
+                                     mojo::MakeRequest(interface));
   }
 
   void SpellingServiceDone(bool success,

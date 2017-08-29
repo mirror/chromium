@@ -368,7 +368,7 @@
 #endif
 
 #if BUILDFLAG(ENABLE_SPELLCHECK)
-#include "chrome/browser/spellchecker/spell_check_host_impl.h"
+#include "chrome/browser/spellchecker/spell_check_host_chrome_impl.h"
 #if BUILDFLAG(HAS_SPELLCHECK_PANEL)
 #include "chrome/browser/spellchecker/spell_check_panel_host_impl.h"
 #endif
@@ -2847,9 +2847,9 @@ void ChromeContentBrowserClient::ExposeInterfacesToRenderer(
       base::Bind(&BudgetServiceImpl::Create, render_process_host->GetID()),
       ui_task_runner);
 #if BUILDFLAG(ENABLE_SPELLCHECK)
-  registry->AddInterface(
-      base::Bind(&SpellCheckHostImpl::Create, render_process_host->GetID()),
-      ui_task_runner);
+  registry->AddInterface(base::Bind(&SpellCheckHostChromeImpl::Create,
+                                    render_process_host->GetID()),
+                         ui_task_runner);
 #if BUILDFLAG(HAS_SPELLCHECK_PANEL)
   registry->AddInterface(base::Bind(&SpellCheckPanelHostImpl::Create),
                          ui_task_runner);
