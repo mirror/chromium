@@ -57,6 +57,24 @@
       "revId": "2d6828355b0fc854798a44fe7f375accfc1588fc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f2aff2b_d7454e1e",
+        "filename": "chrome/browser/offline_pages/prefetch/prefetch_importer_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-08-29T21:09:09Z",
+      "side": 1,
+      "message": "I agree with your disagreement, but then the lines 50 and 51 should not exist either..",
+      "parentUuid": "d7b7e424_0b2eb9a3",
+      "revId": "2d6828355b0fc854798a44fe7f375accfc1588fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
