@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5506af72_58787023",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-08-29T21:19:43Z",
+      "side": 1,
+      "message": "It was wrong.  Corrected.",
+      "parentUuid": "f16612eb_d82793d6",
+      "revId": "7ae6f51faa31779be43592dea07d19006ad03f29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d5fd48d3_8658fe77",
         "filename": "chrome/browser/metrics/chromeos_metrics_provider.cc",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-29T21:14:37Z",
       "side": 1,
       "message": "The only thing I want to make sure of is that this doesn\u0027t end up overreporting Arc.State counts per reporting period.  There is a pipeline on the server side that rejects multiply reported data. See cs/ getUniqueHistogramValue for details",
+      "revId": "7ae6f51faa31779be43592dea07d19006ad03f29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a2905be_d9ab1ed9",
+        "filename": "chrome/browser/metrics/chromeos_metrics_provider.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-08-29T21:19:43Z",
+      "side": 1,
+      "message": "\u003e The only thing I want to make sure of is that this doesn\u0027t end up overreporting Arc.State counts per reporting period.  There is a pipeline on the server side that rejects multiply reported data. See cs/ getUniqueHistogramValue for details\n\nI believe this is true.  I\u0027ll get this change reviewed by another metrics person and ask them.",
+      "parentUuid": "d5fd48d3_8658fe77",
       "revId": "7ae6f51faa31779be43592dea07d19006ad03f29",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
