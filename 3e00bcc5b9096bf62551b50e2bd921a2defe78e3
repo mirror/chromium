@@ -16,6 +16,24 @@
       "revId": "3e00bcc5b9096bf62551b50e2bd921a2defe78e3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7fd1caa3_79dbea80",
+        "filename": "media/blink/webmediaplayer_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 339,
+      "author": {
+        "id": 1181219
+      },
+      "writtenOn": "2017-08-29T04:36:19Z",
+      "side": 1,
+      "message": "To clarify, to calculate time_to_play, should we start the timer when DoLoad() ends? It seems an easy way would be put TRACE_EVENT0 inside WebMediaPlayerImpl::DoLoad instead of this method, unless we also want to record the time lapse from beginning of WebMediaPlayerImpl::Load to the end WebMediaPlayerImpl::OnLoad, in which case I can use an async event.",
+      "parentUuid": "beeafcde_8611ee17",
+      "revId": "3e00bcc5b9096bf62551b50e2bd921a2defe78e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
