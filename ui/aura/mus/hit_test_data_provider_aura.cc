@@ -20,8 +20,12 @@ viz::mojom::HitTestRegionPtr CreateHitTestRegion(
 
   auto hit_test_region = viz::mojom::HitTestRegion::New();
   hit_test_region->frame_sink_id = window_port->frame_sink_id();
-  if (layer->GetPrimarySurfaceInfo())
-    hit_test_region->surface_id = layer->GetPrimarySurfaceInfo()->id();
+  if (layer->GetPrimarySurfaceInfo()) {
+    DCHECK(window_port->frame_sink_id() ==
+           layer->GetPrimarySurfaceInfo()->id().frame_sink_id());
+    hit_test_region->local_surface_id =
+        layer->GetPrimarySurfaceInfo()->id().local_surface_id();
+  }
   hit_test_region->flags = flags;
   hit_test_region->rect = rect;
   hit_test_region->transform = layer->transform();
