@@ -34,6 +34,24 @@
       "revId": "cb8b7a70b3fcca7cfc3659768b92e0663fb99b6a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7833a4d_5e734eba",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-08-29T15:00:23Z",
+      "side": 1,
+      "message": "On aura platforms, we create the ui::KeyEvent in aura/views. So the event is not created in RenderWidgetHostView. In both windows, linux, and chromeos, the ui::KeyEvent starts being processed here [1]. I am suggesting this is where the KeyEventFilter should be used. This way, we don\u0027t need any platform-specific code in handling the events once received from the platform [2]. I don\u0027t see why we need a PlatformKeyEventFilter.\n\n[1] https://cs.chromium.org/chromium/src/ui/aura/window_event_dispatcher.cc?sq\u003dpackage:chromium\u0026dr\u003dSs\u0026l\u003d953\n[2] We would, of course, still need platform-specific code to request the keys in the first place.",
+      "parentUuid": "6464930d_362acc26",
+      "revId": "cb8b7a70b3fcca7cfc3659768b92e0663fb99b6a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
