@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fa71ffbb_057841b8",
+        "filename": "components/cronet/ios/Cronet.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 496,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-08-29T21:25:30Z",
+      "side": 1,
+      "message": "gQuicHints.clear()?",
+      "range": {
+        "startLine": 496,
+        "startChar": 13,
+        "endLine": 496,
+        "endChar": 14
+      },
+      "revId": "64734f3b04bfc648ec81157cd19c7fd7dba068f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cafbd760_77242a6f",
+        "filename": "components/cronet/ios/Cronet.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 502,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-08-29T21:25:30Z",
+      "side": 1,
+      "message": "gPkpList.clear()?",
+      "range": {
+        "startLine": 502,
+        "startChar": 6,
+        "endLine": 502,
+        "endChar": 17
+      },
+      "revId": "64734f3b04bfc648ec81157cd19c7fd7dba068f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "273c548b_94321231",
+        "filename": "components/cronet/ios/cronet_environment.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-08-29T21:25:30Z",
+      "side": 1,
+      "message": "nit: non-inline non-trivial methods should use CamelCase. Please either rename or inline. \nAlso const;\nAlso maybe it should return base::SingleThreadTaskRunner as that\u0027s the one used in test?",
+      "range": {
+        "startLine": 123,
+        "startChar": 16,
+        "endLine": 123,
+        "endChar": 43
+      },
+      "revId": "64734f3b04bfc648ec81157cd19c7fd7dba068f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d26a515e_ccecba59",
+        "filename": "components/cronet/ios/test/cronet_prefs_test.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-08-29T21:25:30Z",
+      "side": 1,
+      "message": "nit: // namespace",
+      "range": {
+        "startLine": 19,
+        "startChar": 1,
+        "endLine": 19,
+        "endChar": 0
+      },
+      "revId": "64734f3b04bfc648ec81157cd19c7fd7dba068f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e00f1c0_e87cdd4a",
+        "filename": "components/cronet/ios/test/cronet_prefs_test.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-08-29T21:25:30Z",
+      "side": 1,
+      "message": "nit: may be easier to just hardcode the json string?",
+      "range": {
+        "startLine": 110,
+        "startChar": 15,
+        "endLine": 110,
+        "endChar": 16
+      },
+      "revId": "64734f3b04bfc648ec81157cd19c7fd7dba068f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3fcd403c_220ad031",
+        "filename": "components/cronet/ios/test/cronet_prefs_test.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-08-29T21:25:30Z",
+      "side": 1,
+      "message": "nit: 75 seconds. :)",
+      "range": {
+        "startLine": 128,
+        "startChar": 10,
+        "endLine": 128,
+        "endChar": 12
+      },
+      "revId": "64734f3b04bfc648ec81157cd19c7fd7dba068f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
