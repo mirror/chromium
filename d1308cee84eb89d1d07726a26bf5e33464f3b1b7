@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d98662c6_913c4335",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-08-29T20:48:47Z",
+      "side": 1,
+      "message": "Can you also run \u0027git cl try\u0027 to run trybots here? (you can also do it by setting Commit-Queue to \"+1\" via Gerrit UI. +1 is for running trybots, and +2 is for landing the CL.)",
+      "revId": "d1308cee84eb89d1d07726a26bf5e33464f3b1b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ccea3fef_990cfdf7",
+        "filename": "chrome/browser/chromeos/arc/arc_session_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 503,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-08-29T20:48:47Z",
+      "side": 1,
+      "message": "Please omit {} for one-line if.",
+      "revId": "d1308cee84eb89d1d07726a26bf5e33464f3b1b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "466c7341_acd9d934",
+        "filename": "chrome/browser/chromeos/arc/arc_session_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 505,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-08-29T20:48:47Z",
+      "side": 1,
+      "message": "same",
+      "revId": "d1308cee84eb89d1d07726a26bf5e33464f3b1b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94e9b10b_c6414487",
+        "filename": "chrome/browser/chromeos/arc/arc_session_manager.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 295,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-08-29T20:48:47Z",
+      "side": 1,
+      "message": "Default arguments are not completely banned these days, but Chromium code almost never uses the feature because (IIUC) Chromium devs think it\u0027s error-prone.\n\nhttps://google.github.io/styleguide/cppguide.html#Default_Arguments\n\nCan you remove \u0027\u003d false\u0027 and instead fix all call sites?",
+      "revId": "d1308cee84eb89d1d07726a26bf5e33464f3b1b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
