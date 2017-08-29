@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "492da0ed_1630f5c4",
+        "filename": "pdf/pdfium/pdfium_engine.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 3430,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-08-29T08:40:37Z",
+      "side": 1,
+      "message": "I thought about making this a vector of pp::Rect, and filling it using pp::Rect::Intersect() + pp::Rect::IsEmpty() in the for-loop right below. However, that doesn\u0027t make the second added for-loop any cheaper, as it still need to check Contains() for a given coordinate.",
+      "revId": "a9948566c0f37bfe26b770a6aa083d3d75a21f94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
