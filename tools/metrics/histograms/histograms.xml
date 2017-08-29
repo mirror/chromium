@@ -60111,6 +60111,43 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="PreconnectManager.PreconnectCount" units="origins">
+  <owner>alexilin@chromium.org</owner>
+  <summary>
+    The number of origins that were preconnected for a page load. It includes
+    preconnect attempts that don't result in new opened connection. Logged after
+    the preconnect manager completes all jobs attached to the page load.
+  </summary>
+</histogram>
+
+<histogram name="PreconnectManager.PreconnectHitsPercentage" units="%">
+  <owner>alexilin@chromium.org</owner>
+  <summary>
+    The percentage of origins that were preconnected and requested by a page
+    load to the total number of origins that were preconnected for a page load.
+    Logged after the preconnect manager completes all jobs attached to the page
+    load.
+  </summary>
+</histogram>
+
+<histogram name="PreconnectManager.PreresolveCount" units="hosts">
+  <owner>alexilin@chromium.org</owner>
+  <summary>
+    The number of hosts that were preresolved for a page load. It includes only
+    successful DNS lookups. Logged after the preconnect manager completes all
+    jobs attached to the page load.
+  </summary>
+</histogram>
+
+<histogram name="PreconnectManager.PreresolveHitsPercentage" units="%">
+  <owner>alexilin@chromium.org</owner>
+  <summary>
+    The percentage of hosts that were preresolved and requested by a page load
+    to the total number of hosts that were preresolved for a page load. Logged
+    after the preconnect manager completes all jobs attached to the page load.
+  </summary>
+</histogram>
+
 <histogram name="PrefService.CreateProfilePrefsTime" units="ms">
   <owner>rkaplow@chromium.org</owner>
   <summary>The amount of time that elapsed during CreateProfilePrefs.</summary>
