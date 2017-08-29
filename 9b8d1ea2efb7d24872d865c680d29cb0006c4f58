@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8131dd2d_e67cdcfe",
+        "filename": "build/android/apk_operations.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 365,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-08-29T19:02:05Z",
+      "side": 1,
+      "message": "Maybe still skip lines until fast\u003dFalse.",
+      "revId": "9b8d1ea2efb7d24872d865c680d29cb0006c4f58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4452d4bd_5e50d6ac",
+        "filename": "build/android/apk_operations.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 370,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-08-29T19:02:05Z",
+      "side": 1,
+      "message": "nit: probably better to limit the array length via: line.split(None, 4)",
+      "revId": "9b8d1ea2efb7d24872d865c680d29cb0006c4f58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f0d0ebc_e2bd6123",
+        "filename": "build/android/apk_operations.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 382,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-08-29T19:02:05Z",
+      "side": 1,
+      "message": "nit: might be marginally more performant to do:\nmy_pids.extend(get_my_pids())\nif pid in my_pids:",
+      "revId": "9b8d1ea2efb7d24872d865c680d29cb0006c4f58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03f8c408_35dc2b9f",
+        "filename": "build/android/apk_operations.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 394,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-08-29T19:02:05Z",
+      "side": 1,
+      "message": "Rather than wait for 3 seconds, how about doing:\n\nnonce \u003d \u0027logcat marker {}\u0027.format(random.random())\ndevice.RunShellCommand([\u0027log\u0027, nonce])\nfast \u003d False\nwhile True:\n  line \u003d process.stdout.readline()\n  fast \u003d fast or nonce in line\n  process_line(line, fast\u003dTrue)",
+      "revId": "9b8d1ea2efb7d24872d865c680d29cb0006c4f58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
