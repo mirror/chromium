@@ -16,6 +16,23 @@
       "revId": "a9948566c0f37bfe26b770a6aa083d3d75a21f94",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a0744b5_908d3d68",
+        "filename": "pdf/pdfium/pdfium_engine.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 3436,
+      "author": {
+        "id": 1002142
+      },
+      "writtenOn": "2017-08-29T13:16:29Z",
+      "side": 1,
+      "message": "If the new_rect is Contains() one of the highlighted_rects we don\u0027t need to push it at all. If it\u0027s overlapping, we only need to push the non-overlapping part?\n\nSo, could we change the above for() to have something like:\n\nfor(...) {\n  if (highlighted_rects[i]-\u003eContains(new_rect))\n    new_rect \u003d pp::Rect();\n  if (highlighted_rects[i]-\u003eIntersect(new_rect))\n    new_rect -\u003d highlighted_rects[i];  (Not sure if this does what I want, make new_rect\n                                        not contain the part covered by highlghted_rects)\n  if (new_rect.IsEmpty())\n    break;\n}\n\nif (!new_rect.IsEmpty())\n  highlighted_rects-\u003epush_back(new_rect)\n\n\nThat way, we only get non-overlapping rectangles in the array and we don\u0027t end up drawing the same pixels multiple times.",
+      "revId": "a9948566c0f37bfe26b770a6aa083d3d75a21f94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
