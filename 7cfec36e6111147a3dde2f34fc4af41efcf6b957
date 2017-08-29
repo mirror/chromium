@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2cec0753_8a346a1d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-08-29T06:30:57Z",
+      "side": 1,
+      "message": "nit: s/BUG\u003d/Bug:/",
+      "revId": "7cfec36e6111147a3dde2f34fc4af41efcf6b957",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
