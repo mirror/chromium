@@ -22,6 +22,30 @@
       "revId": "cac5900a9adf6fb0c136bf0d78ac9f62f1a68732",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "144abffc_07dc231a",
+        "filename": "ios/chrome/browser/experimental_flags.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1115986
+      },
+      "writtenOn": "2017-08-29T13:28:51Z",
+      "side": 1,
+      "message": "The comment is to remove this method, not the feature. How it is removed I\u0027m not too fussy about :). You\u0027re welcome to keep the code around, but if you could get rid of this particular function ASAP that would be helpful. Changing to base::Feature is easy, I refer you to the sample CLs referenced in the go/feature-flags-on-ios doc.",
+      "parentUuid": "d0b9ee74_39004ff1",
+      "range": {
+        "startLine": 108,
+        "startChar": 27,
+        "endLine": 108,
+        "endChar": 52
+      },
+      "revId": "cac5900a9adf6fb0c136bf0d78ac9f62f1a68732",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
