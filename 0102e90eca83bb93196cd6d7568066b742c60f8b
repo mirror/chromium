@@ -440,6 +440,24 @@
     },
     {
       "key": {
+        "uuid": "3e358be3_2e1c5f3b",
+        "filename": "ash/system/tray_caps_lock.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1214366
+      },
+      "writtenOn": "2017-08-29T05:00:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "84489b1b_5e754016",
+      "revId": "0102e90eca83bb93196cd6d7568066b742c60f8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8a742b64_dd38d9cb",
         "filename": "ash/system/tray_caps_lock.h",
         "patchSetId": 6
