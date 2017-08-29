@@ -1,0 +1,211 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1119c461_1b6bdf26",
+        "filename": "chromeos/components/tether/disconnect_tethering_request_sender.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-29T21:01:29Z",
+      "side": 1,
+      "message": "nit: No curlies needed for a single line.",
+      "range": {
+        "startLine": 23,
+        "startChar": 56,
+        "endLine": 23,
+        "endChar": 57
+      },
+      "revId": "3df5ad9196c3e52e5ea315793b447e91d1d53906",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc43ca31_906697a9",
+        "filename": "chromeos/components/tether/disconnect_tethering_request_sender.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-29T21:01:29Z",
+      "side": 1,
+      "message": "nit: Use base::ContainsKey().",
+      "range": {
+        "startLine": 30,
+        "startChar": 6,
+        "endLine": 31,
+        "endChar": 39
+      },
+      "revId": "3df5ad9196c3e52e5ea315793b447e91d1d53906",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "adc73c56_d103d9bc",
+        "filename": "chromeos/components/tether/disconnect_tethering_request_sender.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-29T21:01:29Z",
+      "side": 1,
+      "message": "nit: Remove extra space.",
+      "range": {
+        "startLine": 51,
+        "startChar": 19,
+        "endLine": 51,
+        "endChar": 20
+      },
+      "revId": "3df5ad9196c3e52e5ea315793b447e91d1d53906",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c234a7b8_245da799",
+        "filename": "chromeos/components/tether/disconnect_tethering_request_sender_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-29T21:01:29Z",
+      "side": 1,
+      "message": "nit: \"Send requests to two devices concurrently.\"",
+      "range": {
+        "startLine": 90,
+        "startChar": 0,
+        "endLine": 91,
+        "endChar": 20
+      },
+      "revId": "3df5ad9196c3e52e5ea315793b447e91d1d53906",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b2f1a85_ee16c94c",
+        "filename": "chromeos/components/tether/disconnect_tethering_request_sender_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-29T21:01:29Z",
+      "side": 1,
+      "message": "nit: Only one request is sent, and it is not concurrent with any other request. Please rename the function accordingly.",
+      "range": {
+        "startLine": 110,
+        "startChar": 7,
+        "endLine": 110,
+        "endChar": 40
+      },
+      "revId": "3df5ad9196c3e52e5ea315793b447e91d1d53906",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f70bf4e_00f9ed20",
+        "filename": "chromeos/components/tether/disconnect_tethering_request_sender_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-29T21:01:29Z",
+      "side": 1,
+      "message": "nit: Also rename these appropriately.",
+      "range": {
+        "startLine": 193,
+        "startChar": 7,
+        "endLine": 193,
+        "endChar": 71
+      },
+      "revId": "3df5ad9196c3e52e5ea315793b447e91d1d53906",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da622e45_2be6f649",
+        "filename": "chromeos/components/tether/tether_disconnector_impl_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 403,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-29T21:01:29Z",
+      "side": 1,
+      "message": "nit: Just use EXPECT_EQ(). vector has an operator\u003d\u003d method.\n\nEXPECT_EQ(std::vector\u003cstd::string\u003e{test_devices_[0].GetDeviceId()},\n          fake_disconnect_tethering_request_sender_-\u003edevice_ids_sent_requests());\n\nSame below.",
+      "range": {
+        "startLine": 398,
+        "startChar": 0,
+        "endLine": 403,
+        "endChar": 80
+      },
+      "revId": "3df5ad9196c3e52e5ea315793b447e91d1d53906",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bdd57399_e2a1af37",
+        "filename": "chromeos/components/tether/tether_network_disconnection_handler.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-29T21:01:29Z",
+      "side": 1,
+      "message": "nit: This whole sentence can be removed - it\u0027s pretty redundant.",
+      "range": {
+        "startLine": 27,
+        "startChar": 17,
+        "endLine": 28,
+        "endChar": 76
+      },
+      "revId": "3df5ad9196c3e52e5ea315793b447e91d1d53906",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09c16c82_231db4b7",
+        "filename": "chromeos/components/tether/tether_network_disconnection_handler_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-29T21:01:29Z",
+      "side": 1,
+      "message": "Same thing - compare vectors.",
+      "range": {
+        "startLine": 120,
+        "startChar": 2,
+        "endLine": 120,
+        "endChar": 11
+      },
+      "revId": "3df5ad9196c3e52e5ea315793b447e91d1d53906",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

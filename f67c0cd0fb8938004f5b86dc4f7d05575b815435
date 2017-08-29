@@ -883,6 +883,30 @@
     },
     {
       "key": {
+        "uuid": "78c0d107_5fbde629",
+        "filename": "chromeos/components/tether/fake_disconnect_tethering_request_sender.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-29T21:01:29Z",
+      "side": 1,
+      "message": "nit: Add period at end of sentence.",
+      "parentUuid": "52b5d78e_4b52551a",
+      "range": {
+        "startLine": 11,
+        "startChar": 0,
+        "endLine": 11,
+        "endChar": 1
+      },
+      "revId": "f67c0cd0fb8938004f5b86dc4f7d05575b815435",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c5cc54c9_f10aaaf9",
         "filename": "chromeos/components/tether/fake_disconnect_tethering_request_sender.h",
         "patchSetId": 6
