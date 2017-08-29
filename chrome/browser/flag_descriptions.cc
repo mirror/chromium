@@ -2522,6 +2522,11 @@ const char kWakeOnPacketsName[] = "Wake On Packets";
 const char kWakeOnPacketsDescription[] =
     "Enables waking the device based on the receipt of some network packets.";
 
+const char kMultiDeviceServiceName[] = "Enables MultiDevice Service";
+const char kMultiDeviceServiceDescription[] =
+    "Enable Mojo-based service which provides synced device metadata and the "
+    "ability to connect to other devices associated with a Google account.";
+
 #endif  // defined(OS_CHROMEOS)
 
 // Random platform combinations -----------------------------------------------
