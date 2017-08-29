@@ -72,6 +72,10 @@ HttpAuthNegotiateAndroid::HttpAuthNegotiateAndroid(
 HttpAuthNegotiateAndroid::~HttpAuthNegotiateAndroid() {
 }
 
+bool HttpAuthNegotiateAndroid::Register(JNIEnv* env) {
+  return RegisterNativesImpl(env);
+}
+
 bool HttpAuthNegotiateAndroid::Init() {
   return true;
 }

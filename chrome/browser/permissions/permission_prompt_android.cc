@@ -26,7 +26,12 @@ PermissionPromptAndroid::PermissionPromptAndroid(
       weak_factory_(this) {
   DCHECK(web_contents);
 
-  if (PermissionDialogDelegate::ShouldShowDialog()) {
+  bool has_gesture = true;
+  for (const PermissionRequest* request : delegate_->Requests()) {
+    has_gesture &=
+        request->GetGestureType() == PermissionRequestGestureType::GESTURE;
+  }
+  if (PermissionDialogDelegate::ShouldShowDialog(has_gesture)) {
     PermissionDialogDelegate::Create(web_contents_, this);
     return;
   }

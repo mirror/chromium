@@ -6,51 +6,59 @@
 
 #include <vector>
 
-#include "chrome/common/cloud_print/cloud_print_proxy_info.h"
-#include "mojo/public/cpp/bindings/strong_binding.h"
+#include "chrome/common/service_messages.h"
+#include "ipc/ipc_sender.h"
 
 namespace cloud_print {
 
 CloudPrintMessageHandler::CloudPrintMessageHandler(
+    IPC::Sender* ipc_sender,
     CloudPrintProxy::Provider* proxy_provider)
-    : proxy_provider_(proxy_provider) {
+    : ipc_sender_(ipc_sender), proxy_provider_(proxy_provider) {
+  DCHECK(ipc_sender);
   DCHECK(proxy_provider);
 }
 
-CloudPrintMessageHandler::~CloudPrintMessageHandler() = default;
-
-// static
-void CloudPrintMessageHandler::Create(
-    CloudPrintProxy::Provider* proxy_provider,
-    cloud_print::mojom::CloudPrintRequest request) {
-  mojo::MakeStrongBinding(
-      base::MakeUnique<CloudPrintMessageHandler>(proxy_provider),
-      std::move(request));
+CloudPrintMessageHandler::~CloudPrintMessageHandler() {
 }
 
-void CloudPrintMessageHandler::EnableCloudPrintProxyWithRobot(
+bool CloudPrintMessageHandler::HandleMessage(const IPC::Message& message) {
+  bool handled = true;
+  IPC_BEGIN_MESSAGE_MAP(CloudPrintMessageHandler, message)
+    IPC_MESSAGE_HANDLER(ServiceMsg_EnableCloudPrintProxyWithRobot,
+                        OnEnableCloudPrintProxyWithRobot)
+    IPC_MESSAGE_HANDLER(ServiceMsg_DisableCloudPrintProxy,
+                        OnDisableCloudPrintProxy)
+    IPC_MESSAGE_HANDLER(ServiceMsg_GetCloudPrintProxyInfo,
+                        OnGetCloudPrintProxyInfo)
+    IPC_MESSAGE_HANDLER(ServiceMsg_GetPrinters, OnGetPrinters)
+    IPC_MESSAGE_UNHANDLED(handled = false)
+  IPC_END_MESSAGE_MAP()
+  return handled;
+}
+
+void CloudPrintMessageHandler::OnEnableCloudPrintProxyWithRobot(
     const std::string& robot_auth_code,
     const std::string& robot_email,
     const std::string& user_email,
-    std::unique_ptr<base::DictionaryValue> user_settings) {
+    const base::DictionaryValue& user_settings) {
   proxy_provider_->GetCloudPrintProxy()->EnableForUserWithRobot(
-      robot_auth_code, robot_email, user_email, *user_settings);
+      robot_auth_code, robot_email, user_email, user_settings);
 }
 
-void CloudPrintMessageHandler::GetCloudPrintProxyInfo(
-    GetCloudPrintProxyInfoCallback callback) {
+void CloudPrintMessageHandler::OnGetCloudPrintProxyInfo() {
   CloudPrintProxyInfo info;
   proxy_provider_->GetCloudPrintProxy()->GetProxyInfo(&info);
-  std::move(callback).Run(info.enabled, info.email, info.proxy_id);
+  ipc_sender_->Send(new ServiceHostMsg_CloudPrintProxy_Info(info));
 }
 
-void CloudPrintMessageHandler::GetPrinters(GetPrintersCallback callback) {
+void CloudPrintMessageHandler::OnGetPrinters() {
   std::vector<std::string> printers;
   proxy_provider_->GetCloudPrintProxy()->GetPrinters(&printers);
-  std::move(callback).Run(printers);
+  ipc_sender_->Send(new ServiceHostMsg_Printers(printers));
 }
 
-void CloudPrintMessageHandler::DisableCloudPrintProxy() {
+void CloudPrintMessageHandler::OnDisableCloudPrintProxy() {
   proxy_provider_->GetCloudPrintProxy()->UnregisterPrintersAndDisableForUser();
 }
 

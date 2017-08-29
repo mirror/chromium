@@ -33,22 +33,21 @@ class CSSParserObserverWrapper {
 
   // Overloads that work with streams
   unsigned StartOffset(CSSParserTokenStream& stream) {
-    return StartOffset(stream.MakeSubRangeAtCurrentPosition());
+    return StartOffset(stream.MakeRangeToEOF());
   }
   unsigned PreviousTokenStartOffset(CSSParserTokenStream& stream) {
-    return PreviousTokenStartOffset(stream.MakeSubRangeAtCurrentPosition());
+    return PreviousTokenStartOffset(stream.MakeRangeToEOF());
   }
   unsigned EndOffset(CSSParserTokenStream& stream) {
-    return EndOffset(stream.MakeSubRangeAtCurrentPosition());
+    return EndOffset(stream.MakeRangeToEOF());
   }
 
   void SkipCommentsBefore(CSSParserTokenStream& stream,
                           bool leave_directly_before) {
-    return SkipCommentsBefore(stream.MakeSubRangeAtCurrentPosition(),
-                              leave_directly_before);
+    return SkipCommentsBefore(stream.MakeRangeToEOF(), leave_directly_before);
   }
   void YieldCommentsBefore(CSSParserTokenStream& stream) {
-    return YieldCommentsBefore(stream.MakeSubRangeAtCurrentPosition());
+    return YieldCommentsBefore(stream.MakeRangeToEOF());
   }
 
   CSSParserObserver& Observer() { return observer_; }

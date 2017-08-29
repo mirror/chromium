@@ -42,10 +42,10 @@ constexpr char v2_sandbox_enabled_arg[] = "--v2-sandbox-enabled";
 // sandbox policy.
 constexpr char fd_mapping_arg[] = "--fd_mapping=";
 
-void SandboxInit(const char* exec_path,
-                 int argc,
-                 char* argv[],
-                 int fd_mapping) {
+__attribute__((noreturn)) void SandboxExec(const char* exec_path,
+                                           int argc,
+                                           char* argv[],
+                                           int fd_mapping) {
   char rp[MAXPATHLEN];
   if (realpath(exec_path, rp) == NULL) {
     perror("realpath");
@@ -82,6 +82,11 @@ void SandboxInit(const char* exec_path,
   // const_cast is safe.
   new_argv.push_back(const_cast<char*>(v2_sandbox_enabled_arg));
   new_argv.push_back(nullptr);
+
+  // The helper executable re-executes itself under the sandbox.
+  execv(exec_path, new_argv.data());
+  perror("execve");
+  abort();
 }
 #endif  // defined(HELPER_EXECUTABLE)
 
@@ -120,9 +125,9 @@ __attribute__((visibility("default"))) int main(int argc, char* argv[]) {
     abort();
   }
 
-  // SandboxInit enables the sandbox and then returns.
+  // SandboxExec either aborts or execs, but there is no return.
   if (enable_v2_sandbox)
-    SandboxInit(exec_path, argc, argv, fd_mapping);
+    SandboxExec(exec_path, argc, argv, fd_mapping);
 
   const char* const rel_path =
       "../../../" PRODUCT_FULLNAME_STRING

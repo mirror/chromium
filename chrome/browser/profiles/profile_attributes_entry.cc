@@ -2,52 +2,21 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include <utility>
-
-#include "base/strings/utf_string_conversions.h"
 #include "chrome/browser/profiles/profile_attributes_entry.h"
 #include "chrome/browser/profiles/profile_info_cache.h"
 #include "chrome/browser/signin/signin_util.h"
-#include "chrome/common/pref_names.h"
-#include "components/prefs/pref_service.h"
-#include "components/prefs/scoped_user_pref_update.h"
-
-namespace {
-
-const char kShortcutNameKey[] = "shortcut_name";
-const char kActiveTimeKey[] = "active_time";
-const char kUserNameKey[] = "user_name";
-const char kAuthCredentialsKey[] = "local_auth_credentials";
-const char kPasswordTokenKey[] = "gaia_password_token";
-const char kBackgroundAppsKey[] = "background_apps";
-const char kProfileIsEphemeral[] = "is_ephemeral";
-const char kIsAuthErrorKey[] = "is_auth_error";
-
-}  // namespace
 
 ProfileAttributesEntry::ProfileAttributesEntry()
-    : profile_info_cache_(nullptr),
-      prefs_(nullptr),
-      profile_path_(base::FilePath()) {}
+    : profile_info_cache_(nullptr), profile_path_(base::FilePath()) {}
 
-void ProfileAttributesEntry::Initialize(ProfileInfoCache* cache,
-                                        const base::FilePath& path,
-                                        PrefService* prefs) {
+void ProfileAttributesEntry::Initialize(
+    ProfileInfoCache* cache, const base::FilePath& path) {
   DCHECK(!profile_info_cache_);
   DCHECK(cache);
   profile_info_cache_ = cache;
-
   DCHECK(profile_path_.empty());
   DCHECK(!path.empty());
   profile_path_ = path;
-
-  DCHECK(!prefs_);
-  DCHECK(prefs);
-  prefs_ = prefs;
-
-  DCHECK(profile_info_cache_->GetUserDataDir() == profile_path_.DirName());
-  storage_key_ = profile_path_.BaseName().MaybeAsASCII();
-
   is_force_signin_enabled_ = signin_util::IsForceSigninEnabled();
   if (!IsAuthenticated() && is_force_signin_enabled_)
     is_force_signin_profile_locked_ = true;
@@ -58,23 +27,19 @@ base::string16 ProfileAttributesEntry::GetName() const {
 }
 
 base::string16 ProfileAttributesEntry::GetShortcutName() const {
-  return GetString16(kShortcutNameKey);
+  return profile_info_cache_->GetShortcutNameOfProfileAtIndex(profile_index());
 }
 
 base::FilePath ProfileAttributesEntry::GetPath() const {
-  return profile_path_;
+  return profile_info_cache_->GetPathOfProfileAtIndex(profile_index());
 }
 
 base::Time ProfileAttributesEntry::GetActiveTime() const {
-  if (IsDouble(kActiveTimeKey)) {
-    return base::Time::FromDoubleT(GetDouble(kActiveTimeKey));
-  } else {
-    return base::Time();
-  }
+  return profile_info_cache_->GetProfileActiveTimeAtIndex(profile_index());
 }
 
 base::string16 ProfileAttributesEntry::GetUserName() const {
-  return GetString16(kUserNameKey);
+  return profile_info_cache_->GetUserNameOfProfileAtIndex(profile_index());
 }
 
 const gfx::Image& ProfileAttributesEntry::GetAvatarIcon() const {
@@ -82,15 +47,18 @@ const gfx::Image& ProfileAttributesEntry::GetAvatarIcon() const {
 }
 
 std::string ProfileAttributesEntry::GetLocalAuthCredentials() const {
-  return GetString(kAuthCredentialsKey);
+  return profile_info_cache_->GetLocalAuthCredentialsOfProfileAtIndex(
+      profile_index());
 }
 
 std::string ProfileAttributesEntry::GetPasswordChangeDetectionToken() const {
-  return GetString(kPasswordTokenKey);
+  return profile_info_cache_->GetPasswordChangeDetectionTokenAtIndex(
+      profile_index());
 }
 
 bool ProfileAttributesEntry::GetBackgroundStatus() const {
-  return GetBool(kBackgroundAppsKey);
+  return profile_info_cache_->GetBackgroundStatusOfProfileAtIndex(
+      profile_index());
 }
 
 base::string16 ProfileAttributesEntry::GetGAIAName() const {
@@ -146,7 +114,7 @@ std::string ProfileAttributesEntry::GetSupervisedUserId() const {
 }
 
 bool ProfileAttributesEntry::IsEphemeral() const {
-  return GetBool(kProfileIsEphemeral);
+  return profile_info_cache_->ProfileIsEphemeralAtIndex(profile_index());
 }
 
 bool ProfileAttributesEntry::IsUsingDefaultName() const {
@@ -154,11 +122,7 @@ bool ProfileAttributesEntry::IsUsingDefaultName() const {
 }
 
 bool ProfileAttributesEntry::IsAuthenticated() const {
-  // The profile is authenticated if the gaia_id of the info is not empty.
-  // If it is empty, also check if the user name is not empty.  This latter
-  // check is needed in case the profile has not been loaded yet and the
-  // gaia_id property has not yet been written.
-  return !GetGAIAId().empty() || !GetUserName().empty();
+  return profile_info_cache_->ProfileIsAuthenticatedAtIndex(profile_index());
 }
 
 bool ProfileAttributesEntry::IsUsingDefaultAvatar() const {
@@ -167,7 +131,7 @@ bool ProfileAttributesEntry::IsUsingDefaultAvatar() const {
 }
 
 bool ProfileAttributesEntry::IsAuthError() const {
-  return GetBool(kIsAuthErrorKey);
+  return profile_info_cache_->ProfileIsAuthErrorAtIndex(profile_index());
 }
 
 size_t ProfileAttributesEntry::GetAvatarIconIndex() const {
@@ -180,15 +144,11 @@ void ProfileAttributesEntry::SetName(const base::string16& name) {
 }
 
 void ProfileAttributesEntry::SetShortcutName(const base::string16& name) {
-  SetString16(kShortcutNameKey, name);
+  profile_info_cache_->SetShortcutNameOfProfileAtIndex(profile_index(), name);
 }
 
 void ProfileAttributesEntry::SetActiveTimeToNow() {
-  if (IsDouble(kActiveTimeKey) &&
-      base::Time::Now() - GetActiveTime() < base::TimeDelta::FromHours(1)) {
-    return;
-  }
-  SetDouble(kActiveTimeKey, base::Time::Now().ToDoubleT());
+  profile_info_cache_->SetProfileActiveTimeAtIndex(profile_index());
 }
 
 void ProfileAttributesEntry::SetIsOmitted(bool is_omitted) {
@@ -200,16 +160,19 @@ void ProfileAttributesEntry::SetSupervisedUserId(const std::string& id) {
 }
 
 void ProfileAttributesEntry::SetLocalAuthCredentials(const std::string& auth) {
-  SetString(kAuthCredentialsKey, auth);
+  profile_info_cache_->SetLocalAuthCredentialsOfProfileAtIndex(
+      profile_index(), auth);
 }
 
 void ProfileAttributesEntry::SetPasswordChangeDetectionToken(
     const std::string& token) {
-  SetString(kPasswordTokenKey, token);
+  profile_info_cache_->SetPasswordChangeDetectionTokenAtIndex(
+      profile_index(), token);
 }
 
 void ProfileAttributesEntry::SetBackgroundStatus(bool running_background_apps) {
-  SetBool(kBackgroundAppsKey, running_background_apps);
+  profile_info_cache_->SetBackgroundStatusOfProfileAtIndex(
+      profile_index(), running_background_apps);
 }
 
 void ProfileAttributesEntry::SetGAIAName(const base::string16& name) {
@@ -244,7 +207,7 @@ void ProfileAttributesEntry::LockForceSigninProfile(bool is_lock) {
 }
 
 void ProfileAttributesEntry::SetIsEphemeral(bool value) {
-  SetBool(kProfileIsEphemeral, value);
+  profile_info_cache_->SetProfileIsEphemeralAtIndex(profile_index(), value);
 }
 
 void ProfileAttributesEntry::SetIsUsingDefaultName(bool value) {
@@ -258,7 +221,7 @@ void ProfileAttributesEntry::SetIsUsingDefaultAvatar(bool value) {
 }
 
 void ProfileAttributesEntry::SetIsAuthError(bool value) {
-  SetBool(kIsAuthErrorKey, value);
+  profile_info_cache_->SetProfileIsAuthErrorAtIndex(profile_index(), value);
 }
 
 void ProfileAttributesEntry::SetAvatarIconIndex(size_t icon_index) {
@@ -276,119 +239,4 @@ size_t ProfileAttributesEntry::profile_index() const {
   size_t index = profile_info_cache_->GetIndexOfProfileWithPath(profile_path_);
   DCHECK(index < profile_info_cache_->GetNumberOfProfiles());
   return index;
-}
-
-const base::Value* ProfileAttributesEntry::GetEntryData() const {
-  const base::DictionaryValue* cache =
-      prefs_->GetDictionary(prefs::kProfileInfoCache);
-  return cache->FindKeyOfType(storage_key_, base::Value::Type::DICTIONARY);
-}
-
-void ProfileAttributesEntry::SetEntryData(base::Value data) {
-  DCHECK(data.is_dict());
-
-  DictionaryPrefUpdate update(prefs_, prefs::kProfileInfoCache);
-  base::DictionaryValue* cache = update.Get();
-  cache->SetKey(storage_key_, std::move(data));
-}
-
-const base::Value* ProfileAttributesEntry::GetValue(const char* key) const {
-  const base::Value* entry_data = GetEntryData();
-  return entry_data ? entry_data->FindKey(key) : nullptr;
-}
-
-std::string ProfileAttributesEntry::GetString(const char* key) const {
-  const base::Value* value = GetValue(key);
-  if (!value || !value->is_string())
-    return std::string();
-  return value->GetString();
-}
-
-base::string16 ProfileAttributesEntry::GetString16(const char* key) const {
-  const base::Value* value = GetValue(key);
-  if (!value || !value->is_string())
-    return base::string16();
-  return base::UTF8ToUTF16(value->GetString());
-}
-
-double ProfileAttributesEntry::GetDouble(const char* key) const {
-  const base::Value* value = GetValue(key);
-  if (!value || !value->is_double())
-    return 0.0;
-  return value->GetDouble();
-}
-
-bool ProfileAttributesEntry::GetBool(const char* key) const {
-  const base::Value* value = GetValue(key);
-  return value && value->is_bool() && value->GetBool();
-}
-
-// Type checking. Only IsDouble is implemented because others do not have
-// callsites.
-bool ProfileAttributesEntry::IsDouble(const char* key) const {
-  const base::Value* value = GetValue(key);
-  return value && value->is_double();
-}
-
-// Internal setters using keys;
-bool ProfileAttributesEntry::SetString(const char* key, std::string value) {
-  const base::Value* old_data = GetEntryData();
-  if (old_data) {
-    const base::Value* old_value = old_data->FindKey(key);
-    if (old_value && old_value->is_string() && old_value->GetString() == value)
-      return false;
-  }
-
-  base::Value new_data = old_data ? GetEntryData()->Clone()
-                                  : base::Value(base::Value::Type::DICTIONARY);
-  new_data.SetKey(key, base::Value(value));
-  SetEntryData(std::move(new_data));
-  return true;
-}
-
-bool ProfileAttributesEntry::SetString16(const char* key,
-                                         base::string16 value) {
-  const base::Value* old_data = GetEntryData();
-  if (old_data) {
-    const base::Value* old_value = old_data->FindKey(key);
-    if (old_value && old_value->is_string() &&
-        base::UTF8ToUTF16(old_value->GetString()) == value)
-      return false;
-  }
-
-  base::Value new_data = old_data ? GetEntryData()->Clone()
-                                  : base::Value(base::Value::Type::DICTIONARY);
-  new_data.SetKey(key, base::Value(value));
-  SetEntryData(std::move(new_data));
-  return true;
-}
-
-bool ProfileAttributesEntry::SetDouble(const char* key, double value) {
-  const base::Value* old_data = GetEntryData();
-  if (old_data) {
-    const base::Value* old_value = old_data->FindKey(key);
-    if (old_value && old_value->is_double() && old_value->GetDouble() == value)
-      return false;
-  }
-
-  base::Value new_data = old_data ? GetEntryData()->Clone()
-                                  : base::Value(base::Value::Type::DICTIONARY);
-  new_data.SetKey(key, base::Value(value));
-  SetEntryData(std::move(new_data));
-  return true;
-}
-
-bool ProfileAttributesEntry::SetBool(const char* key, bool value) {
-  const base::Value* old_data = GetEntryData();
-  if (old_data) {
-    const base::Value* old_value = old_data->FindKey(key);
-    if (old_value && old_value->is_bool() && old_value->GetBool() == value)
-      return false;
-  }
-
-  base::Value new_data = old_data ? GetEntryData()->Clone()
-                                  : base::Value(base::Value::Type::DICTIONARY);
-  new_data.SetKey(key, base::Value(value));
-  SetEntryData(std::move(new_data));
-  return true;
 }

@@ -23,7 +23,6 @@
 #include "extensions/browser/extension_util.h"
 #include "extensions/browser/notification_types.h"
 #include "extensions/browser/test_extension_registry_observer.h"
-#include "extensions/test/extension_test_notification_observer.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 namespace extensions {
@@ -58,9 +57,9 @@ scoped_refptr<const Extension> ChromeTestExtensionLoader::LoadExtension(
   }
 
   if (should_fail_ && extension)
-    ADD_FAILURE() << "Expected extension load failure, but succeeded";
+    ADD_FAILURE() << "Expected extension installation failure, but succeeded";
   else if (!should_fail_ && !extension)
-    ADD_FAILURE() << "Failed to load extension";
+    ADD_FAILURE() << "Failed to install extension";
 
   if (!extension)
     return nullptr;
@@ -71,10 +70,8 @@ scoped_refptr<const Extension> ChromeTestExtensionLoader::LoadExtension(
   // non-shared modules.
   // TODO(devlin): That's not good; we shouldn't be crashing.
   if (!SharedModuleInfo::IsSharedModule(extension.get())) {
-    CheckPermissions(extension.get());
-    // Make |extension| null since it may have been reloaded invalidating
-    // pointers to it.
     extension = nullptr;
+    CheckPermissions(extension_id_);
   }
 
   if (!install_param_.empty()) {
@@ -91,7 +88,7 @@ scoped_refptr<const Extension> ChromeTestExtensionLoader::LoadExtension(
   extension = extension_registry_->enabled_extensions().GetByID(extension_id_);
   if (!extension)
     return nullptr;
-  if (!CheckInstallWarnings(*extension))
+  if (!CheckErrors(*extension))
     return nullptr;
 
   base::RunLoop().RunUntilIdle();
@@ -193,25 +190,15 @@ scoped_refptr<const Extension> ChromeTestExtensionLoader::LoadCrx(
   return extension;
 }
 
-void ChromeTestExtensionLoader::CheckPermissions(const Extension* extension) {
-  std::string id = extension->id();
-
-  // If the client explicitly set |allow_file_access_|, use that value. Else
-  // use the default as per the extensions manifest location.
-  if (!allow_file_access_) {
-    allow_file_access_ =
-        Manifest::ShouldAlwaysAllowFileAccess(extension->location());
-  }
-
-  // |extension| may be reloaded subsequently, invalidating the pointer. Hence
-  // make it null.
-  extension = nullptr;
+void ChromeTestExtensionLoader::CheckPermissions(
+    const std::string& extension_id) {
+  std::string id = extension_id;
 
   // Toggling incognito or file access will reload the extension, so wait for
   // the reload.
-  if (*allow_file_access_ != util::AllowFileAccess(id, browser_context_)) {
+  if (allow_file_access_ != util::AllowFileAccess(id, browser_context_)) {
     TestExtensionRegistryObserver registry_observer(extension_registry_, id);
-    util::SetAllowFileAccess(id, browser_context_, *allow_file_access_);
+    util::SetAllowFileAccess(id, browser_context_, allow_file_access_);
     registry_observer.WaitForExtensionLoaded();
   }
 
@@ -233,19 +220,12 @@ scoped_refptr<const Extension> ChromeTestExtensionLoader::LoadUnpacked(
   installer->set_require_modern_manifest_version(
       require_modern_manifest_version_);
   installer->Load(file_path);
-  if (!should_fail_) {
-    extension = registry_observer.WaitForExtensionLoaded();
-  } else {
-    EXPECT_TRUE(ExtensionTestNotificationObserver(browser_context_)
-                    .WaitForExtensionLoadError())
-        << "No load error observed";
-  }
+  extension = registry_observer.WaitForExtensionLoaded();
 
   return extension;
 }
 
-bool ChromeTestExtensionLoader::CheckInstallWarnings(
-    const Extension& extension) {
+bool ChromeTestExtensionLoader::CheckErrors(const Extension& extension) {
   if (ignore_manifest_warnings_)
     return true;
   const std::vector<InstallWarning>& install_warnings =

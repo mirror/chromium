@@ -931,7 +931,10 @@ void Predictor::PrepareFrameSubresources(const GURL& original_url,
     } else if (connection_expectation > kDNSPreresolutionWorthyExpectedValue) {
       evalution = PRERESOLUTION;
       future_url->second.preresolution_increment();
-      AppendToResolutionQueue(future_url->first, motivation);
+      UrlInfo* queued_info = AppendToResolutionQueue(future_url->first,
+                                                     motivation);
+      if (queued_info)
+        queued_info->SetReferringHostname(url);
     }
     // Remove future urls that are below the discardable threshold here. This is
     // the only place where the future urls of a referrer are iterated through,
@@ -961,18 +964,16 @@ void Predictor::OnLookupFinished(const GURL& url, int result) {
 
 void Predictor::LookupFinished(const GURL& url, bool found) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
-  auto info_it = results_.find(url);
-  UrlInfo* info = &info_it->second;
+  UrlInfo* info = &results_[url];
   DCHECK(info->HasUrl(url));
-  bool is_marked_to_delete = info->is_marked_to_delete();
-
-  if (found)
-    info->SetFoundState();
-  else
-    info->SetNoSuchNameState();
-
-  if (is_marked_to_delete)
-    results_.erase(info_it);
+  if (info->is_marked_to_delete()) {
+    results_.erase(url);
+  } else {
+    if (found)
+      info->SetFoundState();
+    else
+      info->SetNoSuchNameState();
+  }
 }
 
 bool Predictor::WouldLikelyProxyURL(const GURL& url) {
@@ -986,33 +987,37 @@ bool Predictor::WouldLikelyProxyURL(const GURL& url) {
   return synchronous_success && !info.is_direct();
 }
 
-void Predictor::AppendToResolutionQueue(
+UrlInfo* Predictor::AppendToResolutionQueue(
     const GURL& url,
     UrlInfo::ResolutionMotivation motivation) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
   DCHECK(url.has_host());
 
   if (shutdown_)
-    return;
+    return nullptr;
 
   UrlInfo* info = &results_[url];
   info->SetUrl(url);  // Initialize or DCHECK.
+  // TODO(jar):  I need to discard names that have long since expired.
+  // Currently we only add to the domain map :-/
+
   DCHECK(info->HasUrl(url));
 
   if (!info->NeedsDnsUpdate()) {
     info->DLogResultsStats("DNS PrefetchNotUpdated");
-    return;
+    return nullptr;
   }
 
   if (WouldLikelyProxyURL(url)) {
     info->DLogResultsStats("DNS PrefetchForProxiedRequest");
-    return;
+    return nullptr;
   }
 
   info->SetQueuedState(motivation);
   work_queue_.Push(url, motivation);
 
   StartSomeQueuedResolutions();
+  return info;
 }
 
 bool Predictor::CongestionControlPerformed(UrlInfo* info) {
@@ -1042,7 +1047,6 @@ void Predictor::StartSomeQueuedResolutions() {
     UrlInfo* info = &results_[url];
     DCHECK(info->HasUrl(url));
     info->SetAssignedState();
-    info->SetPendingDeleteState();
 
     if (CongestionControlPerformed(info)) {
       DCHECK(work_queue_.IsEmpty());

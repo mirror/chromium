@@ -106,12 +106,8 @@ login.createScreen('ResetScreen', 'reset', function() {
                 return;
               console.log(self);
               reset.ConfirmResetOverlay.getInstance().initializePage();
-              if (!$('reset-confirm-overlay-md').hidden)
-                $('reset-confirm-overlay-md').showModal();
             } else {
               $('overlay-reset').setAttribute('hidden', true);
-              if ($('reset-confirm-overlay-md').open)
-                $('reset-confirm-overlay-md').close();
             }
           });
 

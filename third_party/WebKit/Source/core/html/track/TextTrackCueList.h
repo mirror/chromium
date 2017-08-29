@@ -48,8 +48,6 @@ class TextTrackCueList final : public GarbageCollected<TextTrackCueList>,
   bool Add(TextTrackCue*);
   bool Remove(TextTrackCue*);
 
-  void RemoveAll();
-
   void CollectActiveCues(TextTrackCueList&) const;
   void UpdateCueIndex(TextTrackCue*);
   bool IsCueIndexValid(unsigned probe_index) const {

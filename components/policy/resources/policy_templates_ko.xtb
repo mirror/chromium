@@ -54,7 +54,7 @@
       이 정책이 설정되지 않은 경우 기본 빈도는 3시간입니다. 허용되는
       최소 빈도는 60초입니다.</translation>
 <translation id="1221359380862872747">데모 로그인 시 지정된 URL 로드</translation>
-<translation id="123081309365616809">기기에 콘텐츠 전송 허용</translation>
+<translation id="123081309365616809">기기에 콘텐츠 전송 사용 설정</translation>
 <translation id="1265053460044691532">SAML을 통해 인증한 사용자가 오프라인에서 로그인할 수 있는 기간을 제한</translation>
 <translation id="1291880496936992484">경고: 버전 52(2016년 9월경)부터 <ph name="PRODUCT_NAME" />에서 RC4가 완전히 제거되며, 이후 이 정책은 적용되지 않습니다.
 
@@ -590,6 +590,11 @@
       이 정책이 설정되지 않았거나 'false'로 설정된 경우 TLS DHE 암호화 기술이 사용 설정되지 않습니다. 반대로 정책을 'true'로 설정하면 DHE 암호화 기술을 사용하도록 설정하여 오래된 서버와의 호환성을 유지할 수 있습니다. 이는 임시 조치이며 서버는 다시 구성해야 합니다.
 
       서버는 ECDHE 암호화 기술로 이전하는 것이 좋습니다. ECDHE 암호화 기술을 사용할 수 없는 경우 RSA 키 교환을 사용한 암호화 기술이 사용되었는지 확인합니다.</translation>
+<translation id="3153348162326497318">사용자가 설치할 수 없는 확장 프로그램을 지정하도록 허용합니다. 이미 설치된 확장 프로그램의 경우 삭제됩니다.
+
+          차단목록 값 '*'는 허용목록에 명시적으로 나열되지 않은 경우 모든 확장 프로그램이 차단됨을 의미합니다.
+
+          이 정책을 설정하지 않은 경우 사용자가 <ph name="PRODUCT_NAME" />에 모든 확장 프로그램을 설치할 수 있습니다.</translation>
 <translation id="316778957754360075">이 설정은 <ph name="PRODUCT_NAME" /> 버전 29를 기준으로 지원 중단되었습니다. 기관/단체에서 호스팅하는 확장 프로그램/앱 컬렉션을 설정하는 가장 좋은 방법은 CRX 패키지를 호스팅하는 사이트를 ExtensionInstallSources에 포함시키고 패키지에 대한 직접 다운로드 링크를 웹페이지에 제공하는 것입니다. 웹페이지 런처는 ExtensionInstallForcelist 정책을 사용하여 만들 수 있습니다.</translation>
 <translation id="3185009703220253572">버전 <ph name="SINCE_VERSION" /> 이상</translation>
 <translation id="3187220842205194486">Android 앱은 기업 키에 액세스할 수 없습니다. 이 정책은 Android 앱에 아무런 영향을 미치지 않습니다.</translation>
@@ -966,9 +971,9 @@
       이 정책 값이 0인 경우 기본 캐시 크기가 사용되지만 사용자가 변경할 수는 없습니다.
 
       이 정책이 설정되지 않으면 기본 크기가 사용되며 사용자는 --media-cache-size 플래그를 통해 기본 크기를 변경할 수 있습니다.</translation>
-<translation id="4508686775017063528">이 정책을 'true'로 설정하거나 설정하지 않으면 <ph name="PRODUCT_NAME" />이(가) 사용 설정되어 사용자가 앱 메뉴, 페이지 컨텍스트 메뉴, Cast 지원 웹사이트의 미디어 컨트롤, Cast 툴바 아이콘(표시된 경우)을 통해 실행할 수 있습니다.
+<translation id="4508686775017063528">이 정책을 true로 설정하거나 설정하지 않으면 <ph name="PRODUCT_NAME" />이(가) 사용 설정되어 사용자가 앱 메뉴, 페이지 컨텍스트 메뉴, Cast 지원 웹사이트의 미디어 컨트롤, Cast 툴바 아이콘(표시된 경우)을 통해 실행할 수 있습니다.
 
-          이 정책을 'false'로 설정하면 <ph name="PRODUCT_NAME" />이(가) 사용 중지됩니다.</translation>
+          이 정책을 false로 설정하면 <ph name="PRODUCT_NAME" />이(가) 사용 중지됩니다.</translation>
 <translation id="4518251772179446575">사이트에서 사용자의 실제 위치를 추적할 때마다 확인</translation>
 <translation id="4519046672992331730"><ph name="PRODUCT_NAME" />의 검색주소창에서 추천 검색어를 사용하도록 설정하고 사용자가 이 설정을 변경하지 못하게 합니다.
 

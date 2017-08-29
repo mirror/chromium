@@ -892,14 +892,14 @@ IN_PROC_BROWSER_TEST_F(PasswordManagerBrowserTestBase,
   // Now navigate to a login form that has similar HTML markup.
   NavigateToFile("/password/password_form.html");
 
-  // The form should be filled with the previously submitted username.
-  CheckElementValue("username_field", "my_username");
-
   // Simulate a user click to force an autofill of the form's DOM value, not
   // just the suggested value.
   content::SimulateMouseClick(WebContents(), 0,
                               blink::WebMouseEvent::Button::kLeft);
-  WaitForElementValue("password_field", "password");
+
+  // The form should be filled with the previously submitted username.
+  CheckElementValue("username_field", "my_username");
+  CheckElementValue("password_field", "password");
 
   // Submit the form and verify that there is no infobar (as the password
   // has already been saved).
@@ -3156,38 +3156,6 @@ IN_PROC_BROWSER_TEST_F(PasswordManagerBrowserTestBase, ReattachWebContents) {
   tab_strip_model->AddWebContents(detached_web_contents.release(), -1,
                                   ::ui::PAGE_TRANSITION_AUTO_TOPLEVEL,
                                   TabStripModel::ADD_ACTIVE);
-}
-
-IN_PROC_BROWSER_TEST_F(PasswordManagerBrowserTestBase,
-                       FillWhenFormWithHiddenUsername) {
-  // At first let us save a credential to the password store.
-  scoped_refptr<password_manager::TestPasswordStore> password_store =
-      static_cast<password_manager::TestPasswordStore*>(
-          PasswordStoreFactory::GetForProfile(
-              browser()->profile(), ServiceAccessType::IMPLICIT_ACCESS)
-              .get());
-  autofill::PasswordForm signin_form;
-  signin_form.signon_realm = embedded_test_server()->base_url().spec();
-  signin_form.origin = embedded_test_server()->base_url();
-  signin_form.action = embedded_test_server()->base_url();
-  signin_form.username_value = base::ASCIIToUTF16("current_username");
-  signin_form.password_value = base::ASCIIToUTF16("current_username_password");
-  password_store->AddLogin(signin_form);
-  signin_form.username_value = base::ASCIIToUTF16("last_used_username");
-  signin_form.password_value = base::ASCIIToUTF16("last_used_password");
-  signin_form.preferred = true;
-  password_store->AddLogin(signin_form);
-  WaitForPasswordStore();
-
-  NavigateToFile("/password/hidden_username.html");
-
-  // Let the user interact with the page.
-  content::SimulateMouseClickAt(
-      WebContents(), 0, blink::WebMouseEvent::Button::kLeft, gfx::Point(1, 1));
-
-  // current_username is hardcoded in the invisible text on the page so
-  // current_username_password should be filled rather than last_used_password.
-  WaitForElementValue("password", "current_username_password");
 }
 
 // Verify the Form-Not-Secure warning is shown on a non-secure username field.

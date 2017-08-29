@@ -37,7 +37,7 @@ class Truncate : public Operation {
            const ProvidedFileSystemInfo& file_system_info,
            const base::FilePath& file_path,
            int64_t length,
-           storage::AsyncFileUtil::StatusCallback callback);
+           const storage::AsyncFileUtil::StatusCallback& callback);
   ~Truncate() override;
 
   // Operation overrides.
@@ -52,7 +52,7 @@ class Truncate : public Operation {
  private:
   base::FilePath file_path_;
   int64_t length_;
-  storage::AsyncFileUtil::StatusCallback callback_;
+  const storage::AsyncFileUtil::StatusCallback callback_;
 
   DISALLOW_COPY_AND_ASSIGN(Truncate);
 };

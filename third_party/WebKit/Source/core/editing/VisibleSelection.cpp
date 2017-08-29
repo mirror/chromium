@@ -48,17 +48,17 @@ VisibleSelectionTemplate<Strategy>::VisibleSelectionTemplate()
 
 template <typename Strategy>
 VisibleSelectionTemplate<Strategy>::VisibleSelectionTemplate(
-    const SelectionTemplate<Strategy>& selection)
-    : base_(selection.Base()),
-      extent_(selection.Extent()),
-      affinity_(selection.Affinity()),
-      base_is_first_(selection.IsBaseFirst()),
-      is_directional_(selection.IsDirectional()) {}
+    const SelectionTemplate<Strategy>& selection,
+    TextGranularity granularity)
+    : affinity_(selection.Affinity()),
+      is_directional_(selection.IsDirectional()) {
+  Validate(selection, granularity);
+}
 
 template <typename Strategy>
 VisibleSelectionTemplate<Strategy> VisibleSelectionTemplate<Strategy>::Create(
     const SelectionTemplate<Strategy>& selection) {
-  return CreateWithGranularity(selection, TextGranularity::kCharacter);
+  return VisibleSelectionTemplate(selection, TextGranularity::kCharacter);
 }
 
 VisibleSelection CreateVisibleSelection(const SelectionInDOMTree& selection) {
@@ -70,20 +70,12 @@ VisibleSelectionInFlatTree CreateVisibleSelection(
   return VisibleSelectionInFlatTree::Create(selection);
 }
 
-// TODO(editing-dev): We should move |ComputeVisibleSelection()| to here to
-// avoid forward declaration.
-template <typename Strategy>
-static SelectionTemplate<Strategy> ComputeVisibleSelection(
-    const SelectionTemplate<Strategy>&,
-    TextGranularity);
-
 template <typename Strategy>
 VisibleSelectionTemplate<Strategy>
 VisibleSelectionTemplate<Strategy>::CreateWithGranularity(
     const SelectionTemplate<Strategy>& selection,
     TextGranularity granularity) {
-  return VisibleSelectionTemplate(
-      ComputeVisibleSelection(selection, granularity));
+  return VisibleSelectionTemplate(selection, granularity);
 }
 
 VisibleSelection CreateVisibleSelectionWithGranularity(
@@ -488,32 +480,38 @@ AdjustSelectionToAvoidCrossingEditingBoundaries(
     const PositionTemplate<Strategy>& base);
 
 template <typename Strategy>
-static SelectionTemplate<Strategy> ComputeVisibleSelection(
+void VisibleSelectionTemplate<Strategy>::Validate(
     const SelectionTemplate<Strategy>& passed_selection,
     TextGranularity granularity) {
-  DCHECK(!NeedsLayoutTreeUpdate(passed_selection.Base()));
-  DCHECK(!NeedsLayoutTreeUpdate(passed_selection.Extent()));
+  DCHECK(!NeedsLayoutTreeUpdate(base_));
+  DCHECK(!NeedsLayoutTreeUpdate(extent_));
+  // TODO(xiaochengh): Add a DocumentLifecycle::DisallowTransitionScope here.
 
   const SelectionTemplate<Strategy>& canonicalized_selection =
       CanonicalizeSelection(passed_selection);
 
-  if (canonicalized_selection.IsNone())
-    return SelectionTemplate<Strategy>();
+  if (canonicalized_selection.IsNone()) {
+    base_ = extent_ = PositionTemplate<Strategy>();
+    base_is_first_ = true;
+    affinity_ = TextAffinity::kDownstream;
+    return;
+  }
 
-  const TextAffinity affinity = canonicalized_selection.Affinity();
+  base_ = canonicalized_selection.Base();
+  extent_ = canonicalized_selection.Extent();
+  base_is_first_ = base_ <= extent_;
 
-  const PositionTemplate<Strategy> start =
-      canonicalized_selection.ComputeStartPosition();
+  const PositionTemplate<Strategy> start = base_is_first_ ? base_ : extent_;
   const PositionTemplate<Strategy> new_start =
       ComputeStartRespectingGranularity(
-          PositionWithAffinityTemplate<Strategy>(start, affinity), granularity);
+          PositionWithAffinityTemplate<Strategy>(start, affinity_),
+          granularity);
   const PositionTemplate<Strategy> expanded_start =
       new_start.IsNotNull() ? new_start : start;
 
-  const PositionTemplate<Strategy> end =
-      canonicalized_selection.ComputeEndPosition();
+  const PositionTemplate<Strategy> end = base_is_first_ ? extent_ : base_;
   const PositionTemplate<Strategy> new_end = ComputeEndRespectingGranularity(
-      expanded_start, PositionWithAffinityTemplate<Strategy>(end, affinity),
+      expanded_start, PositionWithAffinityTemplate<Strategy>(end, affinity_),
       granularity);
   const PositionTemplate<Strategy> expanded_end =
       new_end.IsNotNull() ? new_end : end;
@@ -522,7 +520,7 @@ static SelectionTemplate<Strategy> ComputeVisibleSelection(
                                                         expanded_end);
 
   const EphemeralRangeTemplate<Strategy> shadow_adjusted_range =
-      canonicalized_selection.IsBaseFirst()
+      base_is_first_
           ? EphemeralRangeTemplate<Strategy>(
                 expanded_range.StartPosition(),
                 SelectionAdjuster::
@@ -535,12 +533,11 @@ static SelectionTemplate<Strategy> ComputeVisibleSelection(
                 expanded_range.EndPosition());
 
   const EphemeralRangeTemplate<Strategy> editing_adjusted_range =
-      AdjustSelectionToAvoidCrossingEditingBoundaries(
-          shadow_adjusted_range, canonicalized_selection.Base());
+      AdjustSelectionToAvoidCrossingEditingBoundaries(shadow_adjusted_range,
+                                                      base_);
   const SelectionType selection_type =
       ComputeSelectionType(editing_adjusted_range.StartPosition(),
                            editing_adjusted_range.EndPosition());
-  DCHECK_NE(selection_type, kNoSelection);
 
   // "Constrain" the selection to be the smallest equivalent range of
   // nodes. This is a somewhat arbitrary choice, but experience shows that
@@ -559,22 +556,14 @@ static SelectionTemplate<Strategy> ComputeVisibleSelection(
                 MostBackwardCaretPosition(editing_adjusted_range.EndPosition()))
           : editing_adjusted_range;
   if (selection_type == kCaretSelection) {
-    return typename SelectionTemplate<Strategy>::Builder()
-        .Collapse(PositionWithAffinityTemplate<Strategy>(
-            range.StartPosition(), passed_selection.Affinity()))
-        .SetIsDirectional(passed_selection.IsDirectional())
-        .Build();
+    base_ = extent_ = range.StartPosition();
+    base_is_first_ = true;
+    return;
   }
-  if (canonicalized_selection.IsBaseFirst()) {
-    return typename SelectionTemplate<Strategy>::Builder()
-        .SetIsDirectional(passed_selection.IsDirectional())
-        .SetAsForwardSelection(range)
-        .Build();
-  }
-  return typename SelectionTemplate<Strategy>::Builder()
-      .SetIsDirectional(passed_selection.IsDirectional())
-      .SetAsBackwardSelection(range)
-      .Build();
+  // Affinity only makes sense for a caret
+  affinity_ = TextAffinity::kDownstream;
+  base_ = base_is_first_ ? range.StartPosition() : range.EndPosition();
+  extent_ = base_is_first_ ? range.EndPosition() : range.StartPosition();
 }
 
 template <typename Strategy>
@@ -798,6 +787,11 @@ AdjustSelectionToAvoidCrossingEditingBoundaries(
 template <typename Strategy>
 bool VisibleSelectionTemplate<Strategy>::IsContentEditable() const {
   return IsEditablePosition(Start());
+}
+
+template <typename Strategy>
+bool VisibleSelectionTemplate<Strategy>::IsContentRichlyEditable() const {
+  return IsRichlyEditablePosition(ToPositionInDOMTree(Start()));
 }
 
 template <typename Strategy>

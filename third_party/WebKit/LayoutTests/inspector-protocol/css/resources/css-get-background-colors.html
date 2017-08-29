@@ -20,9 +20,8 @@ p {
 </style>
 <!-- No text -->
 <div class="testCase noText">
-  <div class="layer">
-    <p></p>
-  </div>
+  <p class="layer">
+  </p>
 </div>
 
 <!-- No background color -->
@@ -41,28 +40,9 @@ p {
 </style>
 <div class="testCase opaqueBgColor">
   <div class="background layer"></div>
-  <div class="layer">
-    <p>
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+  <p class="layer">
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
   </p>
-  </div>
-</div>
-
-<!-- No direct text -->
-<style>
-.noDirectText > .background {
-  background-color: red;
-}
-</style>
-<div class="testCase noDirectText">
-  <div class="background layer"></div>
-  <div class="layer">
-    <p>
-      <span>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-      </span>
-    </p>
-  </div>
 </div>
 
 <!-- Layered opaque background colors -->
@@ -79,8 +59,7 @@ p {
   background-color: blue;
 }
 .layeredOpaqueBgColors > .background.obscuring,
-.layeredOpaqueBgColors > .inner.layer {
-  position: absolute;
+.layeredOpaqueBgColors > p {
   top: 50px;
   left: 50px;
 }
@@ -89,11 +68,9 @@ p {
 <div class="testCase layeredOpaqueBgColors">
   <div class="background layer obscured"></div>
   <div class="background layer obscuring"></div>
-  <div class="inner layer">
-    <p>
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-    </p>
-  </div>
+  <p class="layer">
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+  </p>
 </div>
 
 <!-- Semi-transparent background color -->
@@ -104,11 +81,9 @@ p {
 </style>
 <div class="testCase semitransparentBgColor">
   <div class="background layer"></div>
-  <div class="layer">
-    <p>
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-    </p>
-  </div>
+  <p class="layer">
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+  </p>
 </div>
 
 <!-- Two layered semi-transparent background colors -->
@@ -120,11 +95,9 @@ p {
 <div class="testCase twoSemitransparentBgColors">
   <div class="background layer"></div>
   <div class="background layer"></div>
-  <div class="layer">
-    <p >
+  <p class="layer">
     Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-    </p>
-  </div>
+  </p>
 </div>
 
 <!-- Opaque gradient background -->
@@ -135,11 +108,9 @@ p {
 </style>
 <div class="testCase opaqueGradientBg">
   <div class="background layer"></div>
-  <div class="layer">
-    <p>
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-    </p>
-  </div>
+  <p class="layer">
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+  </p>
 </div>
 
 <!-- Opaque gradient background behind scrim-->
@@ -154,11 +125,9 @@ p {
 <div class="testCase opaqueGradientBehindScrim">
   <div class="background layer gradient"></div>
   <div class="background layer scrim"></div>
-  <div class="layer">
-    <p>
+  <p class="layer">
     Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-    </p>
-  </div>
+  </p>
 </div>
 
 <!-- Opaque gradient background and color background -->
@@ -170,11 +139,9 @@ p {
 </style>
 <div class="testCase opaqueGradientAndColorBg">
   <div class="background layer"></div>
-  <div class="layer">
-    <p>
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-    </p>
-  </div>
+  <p class="layer">
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+  </p>
 </div>
 
 <!-- Semi-transparent gradient background -->
@@ -185,11 +152,9 @@ p {
 </style>
 <div class="testCase semitransparentGradientBg">
   <div class="background layer"></div>
-  <div class="layer">
-    <p>
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-    </p>
-  </div>
+  <p class="layer">
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+  </p>
 </div>
 
 <!-- Semi-transparent gradient background and color background -->
@@ -201,11 +166,9 @@ p {
 </style>
 <div class="testCase semitransparentGradientAndColorBg">
   <div class="background layer"></div>
-  <div class="layer">
-    <p>
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-    </p>
-  </div>
+  <p class="layer">
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+  </p>
 </div>
 
 <!-- Layered semi-transparent gradient backgrounds -->
@@ -217,11 +180,9 @@ p {
 <div class="testCase twoSemitransparentGradientBgs">
   <div class="background layer"></div>
   <div class="background layer"></div>
-  <div class="layer">
-    <p>
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-    </p>
-  </div>
+  <p class="layer">
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+  </p>
 </div>
 
 <!-- Partially overlapping background element -->
@@ -233,11 +194,9 @@ p {
 </style>
 <div class="testCase partiallyOverlappingBackground">
   <div class="background layer"></div>
-  <div class="layer">
-    <p>
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-    </p>
-  </div>
+  <p class="layer">
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+  </p>
 </div>
 
 <!-- Smaller background element -->
@@ -250,11 +209,9 @@ p {
 </style>
 <div class="testCase smallerBackground">
   <div class="background layer"></div>
-  <div class="layer">
-    <p>
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-    </p>
-  </div>
+  <p class="layer">
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+  </p>
 </div>
 
 <!-- Partially overlapping background element which is overlapped by opaque element -->
@@ -271,11 +228,9 @@ p {
 <div class="testCase obscuredPartiallyOverlappingBackground">
   <div class="background layer partiallyOverlapping"></div>
   <div class="background layer obscuring"></div>
-  <div class="layer">
-    <p>
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-    </p>
-  </div>
+  <p class="layer">
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+  </p>
 </div>
 
 <!-- Background image -->
@@ -286,11 +241,9 @@ p {
 </style>
 <div class="testCase backgroundImage">
   <div class="background layer"></div>
-  <div class="layer">
-    <p>
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-    </p>
-  </div>
+  <p class="layer">
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+  </p>
 </div>
 
 <!-- Background image and background color -->
@@ -302,11 +255,9 @@ p {
 </style>
 <div class="testCase backgroundImageAndBgColor">
   <div class="background layer"></div>
-  <div class="layer">
-    <p>
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-    </p>
-  </div>
+  <p class="layer">
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+  </p>
 </div>
 
 <!-- Background image behind semi-opaque scrim -->
@@ -322,11 +273,9 @@ p {
 <div class="testCase backgroundImageBehindScrim">
   <div class="background layer backgroundImage"></div>
   <div class="background layer scrim"></div>
-  <div class="layer">
-    <p>
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-    </p>
-  </div>
+  <p class="layer">
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+  </p>
 </div>
 
 <!-- Image behind text -->
@@ -334,11 +283,9 @@ p {
   <div class="background layer">
     <img width="200" height="200" src="../../../media/content/abe.png" alt="Abraham Lincoln">
   </div>
-  <div class="layer">
-    <p>
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-    </p>
-  </div>
+  <p class="layer">
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+  </p>
 </div>
 
 <!-- Image behind scrim -->
@@ -352,11 +299,9 @@ p {
     <img width="200" height="200" src="../../../media/content/abe.png" alt="Abraham Lincoln">
   </div>
   <div class="background layer scrim"></div>
-  <div class="layer">
-    <p>
+  <p class="layer">
     Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-    </p>
-  </div>
+  </p>
 </div>
 
 <!-- Canvas behind text -->
@@ -365,11 +310,9 @@ p {
     <canvas width="200" height="200"></canvas>
     <img width="200" height="200" style="visibility: hidden;" src="../../../media/content/abe.png"></img>
   </div>
-  <div class="layer">
-    <p>
+  <p class="layer">
     Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-    </p>
-  </div>
+  </p>
 </div>
 <script type="text/javascript">
   var image = document.querySelector(".canvas img");
@@ -383,11 +326,9 @@ p {
   <div class="background layer">
     <embed width="200" height="200" src="../../../media/content/abe.png"></embed>
   </div>
-  <div class="layer">
-    <p>
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-    </p>
-  </div>
+  <p class="layer">
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+  </p>
 </div>
 
 <!-- Object behind text -->
@@ -395,11 +336,9 @@ p {
   <div class="background layer">
     <object width="200" height="200" data="../../../media/content/abe.png"></object>
   </div>
-  <div class="layer">
-    <p>
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-    </p>
-  </div>
+  <p class="layer">
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+  </p>
 </div>
 
 <!-- Picture behind text -->
@@ -407,11 +346,9 @@ p {
   <div class="background layer">
     <picture><source type="image/webp" srcset="../../../images/resources/test.webp"><img src="../../../media/content/abe.png" height="200" width="200"></picture>
   </div>
-  <div class="layer">
-    <p>
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-    </p>
-  </div>
+  <p class="layer">
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+  </p>
 </div>
 
 <!-- SVG behind text -->
@@ -419,11 +356,9 @@ p {
   <div class="background layer">
     <svg width="100%" height="100%" viewBox="0 0 400 400"><circle r="200" cx="200" cy="200" stroke="red" stroke-width="1" fill="yellow" /><ellipse cx="120" cy="180" rx="18" ry="33" fill="black"/><ellipse cx="280" cy="120" rx="18" ry="33" fill="black"/><ellipse cx="200" cy="220" rx="8" ry="15" fill="black"/><path stroke-width="10" stroke="black" fill="none" stroke-linecap="round" d="M120,280 Q200,330 290,280"/></svg>
   </div>
-  <div class="layer">
-    <p>
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-    </p>
-  </div>
+  <p class="layer">
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+  </p>
 </div>
 
 <!-- Video behind text -->
@@ -431,46 +366,7 @@ p {
   <div class="background layer">
     <video src="../../../media/content/test.ogv" height="200"></video>
   </div>
-  <div class="layer">
-    <p>
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-    </p>
-  </div>
-</div>
-
-<!-- Element in Shadow DOM -->
-<style>
-.shadowDom > .background {
-  background-color: red;
-}
-</style>
-<div class="testCase shadowDOM">
-  <div class="background layer"></div>
-  <div class="shadowHost layer">
-    <div class="layer">
-      <p>
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-      </p>
-    </div>
-  </div>
-  <template id="template-shadowDOM">
-    <style>
-      .background {
-        width: 200px;
-        height: 200px;
-        overflow: hidden;
-        background-color: blue;
-        position: absolute;
-        top: 0;
-        left: 0;
-      }
-    </style>
-    <div class="background layer"></div>
-    <slot></slot>
-  </template>
-  <script>
-    let template = document.getElementById('template-shadowDOM');
-    let shadowRoot = document.querySelector('.testCase.shadowDOM .shadowHost').attachShadow({mode: 'open'});
-    shadowRoot.appendChild(template.content.cloneNode(true));
-  </script>
+  <p class="layer">
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+  </p>
 </div>

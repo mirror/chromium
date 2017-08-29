@@ -16,7 +16,6 @@
 #include "device/usb/mock_usb_device.h"
 #include "device/usb/mock_usb_service.h"
 #include "extensions/browser/api/device_permissions_manager.h"
-#include "extensions/browser/api/hid/hid_device_manager.h"
 #include "extensions/browser/extension_prefs.h"
 #include "extensions/common/extension.h"
 #include "testing/gmock/include/gmock/gmock.h"
@@ -39,11 +38,6 @@ const uint64_t kTestDeviceIds[] = {1, 2, 3, 4};
 const char* kTestDeviceIds[] = {"A", "B", "C", "D"};
 #endif
 
-std::unique_ptr<KeyedService> CreateHidDeviceManager(
-    content::BrowserContext* context) {
-  return base::MakeUnique<HidDeviceManager>(context);
-}
-
 }  // namespace
 
 class DevicePermissionsManagerTest : public testing::Test {
@@ -61,9 +55,6 @@ class DevicePermissionsManagerTest : public testing::Test {
                                 "  },"
                                 "  \"permissions\": [ \"hid\", \"usb\" ]"
                                 "}"));
-
-    HidDeviceManager::GetFactoryInstance()->SetTestingFactory(
-        env_->profile(), &CreateHidDeviceManager);
     device0_ =
         new MockUsbDevice(0, 0, "Test Manufacturer", "Test Product", "ABCDE");
     device1_ = new MockUsbDevice(0, 0, "Test Manufacturer", "Test Product", "");
@@ -193,10 +184,6 @@ TEST_F(DevicePermissionsManagerTest, DisconnectDevice) {
 
   device_client_.usb_service()->RemoveDevice(device0_);
   device_client_.usb_service()->RemoveDevice(device1_);
-
-  // Wait until HidDeviceManager::GetDevicesCallback is run. HidService
-  // won't send notifications to its observers before that.
-  base::RunLoop().RunUntilIdle();
   device_client_.hid_service()->RemoveDevice(device4_->platform_device_id());
   device_client_.hid_service()->RemoveDevice(device5_->platform_device_id());
 

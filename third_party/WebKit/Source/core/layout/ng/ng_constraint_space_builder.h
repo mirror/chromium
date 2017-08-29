@@ -5,9 +5,7 @@
 #ifndef NGConstraintSpaceBuilder_h
 #define NGConstraintSpaceBuilder_h
 
-#include "core/layout/ng/geometry/ng_bfc_offset.h"
 #include "core/layout/ng/ng_constraint_space.h"
-#include "core/layout/ng/ng_exclusion.h"
 #include "core/layout/ng/ng_unpositioned_float.h"
 #include "platform/wtf/Allocator.h"
 #include "platform/wtf/Optional.h"
@@ -18,17 +16,16 @@ class CORE_EXPORT NGConstraintSpaceBuilder final {
   DISALLOW_NEW();
 
  public:
-  // NOTE: This constructor doesn't act like a copy-constructor, it uses the
-  // writing_mode and icb_size from the parent constraint space, and passes
-  // them to the constructor below.
-  NGConstraintSpaceBuilder(const NGConstraintSpace& parent_space);
+  NGConstraintSpaceBuilder(const NGConstraintSpace* parent_space);
 
-  NGConstraintSpaceBuilder(NGWritingMode writing_mode, NGPhysicalSize icb_size);
+  NGConstraintSpaceBuilder(NGWritingMode writing_mode);
 
   NGConstraintSpaceBuilder& SetAvailableSize(NGLogicalSize available_size);
 
   NGConstraintSpaceBuilder& SetPercentageResolutionSize(
       NGLogicalSize percentage_resolution_size);
+
+  NGConstraintSpaceBuilder& SetInitialContainingBlockSize(NGPhysicalSize);
 
   NGConstraintSpaceBuilder& SetFragmentainerSpaceAvailable(LayoutUnit space) {
     fragmentainer_space_available_ = space;
@@ -56,15 +53,12 @@ class CORE_EXPORT NGConstraintSpaceBuilder final {
 
   NGConstraintSpaceBuilder& SetMarginStrut(const NGMarginStrut& margin_strut);
 
-  NGConstraintSpaceBuilder& SetBfcOffset(const NGBfcOffset& bfc_offset);
+  NGConstraintSpaceBuilder& SetBfcOffset(const NGLogicalOffset& bfc_offset);
   NGConstraintSpaceBuilder& SetFloatsBfcOffset(
-      const WTF::Optional<NGBfcOffset>& floats_bfc_offset);
+      const WTF::Optional<NGLogicalOffset>& floats_bfc_offset);
 
   NGConstraintSpaceBuilder& SetClearanceOffset(
       const WTF::Optional<LayoutUnit>& clearance_offset);
-
-  NGConstraintSpaceBuilder& SetExclusionSpace(
-      const NGExclusionSpace& exclusion_space);
 
   void AddBaselineRequests(const Vector<NGBaselineRequest>&);
   NGConstraintSpaceBuilder& AddBaselineRequest(const NGBaselineRequest&);
@@ -100,9 +94,9 @@ class CORE_EXPORT NGConstraintSpaceBuilder final {
   unsigned text_direction_ : 1;
 
   NGMarginStrut margin_strut_;
-  NGBfcOffset bfc_offset_;
-  WTF::Optional<NGBfcOffset> floats_bfc_offset_;
-  const NGExclusionSpace* exclusion_space_;
+  NGLogicalOffset bfc_offset_;
+  WTF::Optional<NGLogicalOffset> floats_bfc_offset_;
+  std::shared_ptr<NGExclusionSpace> exclusion_space_;
   WTF::Optional<LayoutUnit> clearance_offset_;
   Vector<RefPtr<NGUnpositionedFloat>> unpositioned_floats_;
   Vector<NGBaselineRequest> baseline_requests_;

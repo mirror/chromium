@@ -57,6 +57,7 @@ class ArcSessionRunnerTest : public testing::Test,
     arc_session_runner_ =
         base::MakeUnique<ArcSessionRunner>(base::Bind(FakeArcSession::Create));
     arc_session_runner_->AddObserver(this);
+    ArcSessionRunner::ResetEmitLoginPromptVisibleCalledCalledForTesting();
   }
 
   void TearDown() override {

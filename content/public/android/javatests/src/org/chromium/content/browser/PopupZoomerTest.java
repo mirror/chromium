@@ -13,7 +13,6 @@ import android.support.test.InstrumentationRegistry;
 import android.support.test.filters.SmallTest;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewGroup;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -45,9 +44,8 @@ public class PopupZoomerTest {
         Canvas mCanvas;
         long mPendingDraws = 0;
 
-        CustomCanvasPopupZoomer(
-                Context context, WebContents webContents, ViewGroup containerView, Canvas c) {
-            super(context, webContents, containerView);
+        CustomCanvasPopupZoomer(Context context, Canvas c) {
+            super(context);
             mCanvas = c;
         }
 
@@ -69,21 +67,18 @@ public class PopupZoomerTest {
             return true;
         }
 
-        @Override
-        protected void initOptionalListeners(final ViewGroup containerView) {}
-
         public void finishPendingDraws() {
             // Finish all pending draw calls. A draw call may change mPendingDraws.
             while (mPendingDraws > 0) {
                 onDraw(mCanvas);
             }
         }
+
     }
 
-    private CustomCanvasPopupZoomer createPopupZoomerForTest(
-            Context context, WebContents webContents, ViewGroup containerView) {
-        return new CustomCanvasPopupZoomer(context, webContents, containerView,
-                new Canvas(Bitmap.createBitmap(100, 100, Bitmap.Config.ALPHA_8)));
+    private CustomCanvasPopupZoomer createPopupZoomerForTest(Context context) {
+        return new CustomCanvasPopupZoomer(
+                context, new Canvas(Bitmap.createBitmap(100, 100, Bitmap.Config.ALPHA_8)));
     }
 
     private void sendSingleTapTouchEventOnView(View view, float x, float y) {
@@ -105,14 +100,14 @@ public class PopupZoomerTest {
                 mContentViewCore = new ContentViewCore(context, "");
                 mContentViewCore.setSelectionPopupControllerForTesting(new SelectionPopupController(
                         context, null, webContents, null, mContentViewCore.getRenderCoordinates()));
-                ViewGroup containerView = mActivityTestRule.getContentViewCore().getContainerView();
-                mContentViewCore.setImeAdapterForTest(new ImeAdapter(webContents, containerView,
+                mContentViewCore.setImeAdapterForTest(new ImeAdapter(webContents,
+                        mActivityTestRule.getContentViewCore().getContainerView(),
                         new TestInputMethodManagerWrapper(mContentViewCore)));
-                mPopupZoomer = createPopupZoomerForTest(
-                        InstrumentationRegistry.getTargetContext(), webContents, containerView);
+                mPopupZoomer = createPopupZoomerForTest(InstrumentationRegistry.getTargetContext());
                 mContentViewCore.setPopupZoomerForTest(mPopupZoomer);
-                mContentViewCore.setTextSuggestionHostForTesting(
-                        new TextSuggestionHost(mActivityTestRule.getContentViewCore()));
+                mContentViewCore.setTextSuggestionHostForTesting(new TextSuggestionHost(context,
+                        webContents, mActivityTestRule.getContentViewCore().getContainerView(),
+                        mContentViewCore, mContentViewCore.getRenderCoordinates()));
             }
         });
     }

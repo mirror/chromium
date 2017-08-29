@@ -696,7 +696,7 @@ void LayoutBlock::MarkFixedPositionObjectForLayoutIfNeeded(
     return;
 
   LayoutObject* o = child->Parent();
-  while (!o->IsLayoutView() &&
+  while (o && !o->IsLayoutView() &&
          o->Style()->GetPosition() != EPosition::kAbsolute)
     o = o->Parent();
   // The LayoutView is absolute-positioned, but does not move.

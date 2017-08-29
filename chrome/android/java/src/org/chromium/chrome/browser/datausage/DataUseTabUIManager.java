@@ -17,7 +17,6 @@ import android.widget.TextView;
 import org.chromium.base.ContextUtils;
 import org.chromium.base.FieldTrialList;
 import org.chromium.base.metrics.RecordHistogram;
-import org.chromium.blink_public.web.WebReferrerPolicy;
 import org.chromium.chrome.R;
 import org.chromium.chrome.browser.customtabs.CustomTabActivity;
 import org.chromium.chrome.browser.profiles.Profile;
@@ -103,7 +102,7 @@ public class DataUseTabUIManager {
      *
      * @param tab The tab that is being queried for data use tracking.
      * @param pageTransitionType transition type of the navigation
-     * @param mPackageName package name of the app package that started this navigation.
+     * @param packageName package name of the app package that started this navigation.
      * @return true If {@link tab} is currently tracked but would stop if the navigation were to
      * continue.
      */
@@ -202,7 +201,7 @@ public class DataUseTabUIManager {
                                         pageTransitionType);
                                 if (!TextUtils.isEmpty(referrerUrl)) {
                                     Referrer referrer = new Referrer(referrerUrl,
-                                            WebReferrerPolicy.WEB_REFERRER_POLICY_ALWAYS);
+                                            Referrer.REFERRER_POLICY_ALWAYS);
                                     loadUrlParams.setReferrer(referrer);
                                 }
                                 tab.loadUrl(loadUrlParams);

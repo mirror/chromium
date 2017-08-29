@@ -15,7 +15,6 @@
 #include "components/offline_pages/core/offline_event_logger.h"
 #include "components/offline_pages/core/prefetch/add_unique_urls_task.h"
 #include "components/offline_pages/core/prefetch/download_archives_task.h"
-#include "components/offline_pages/core/prefetch/download_cleanup_task.h"
 #include "components/offline_pages/core/prefetch/download_completed_task.h"
 #include "components/offline_pages/core/prefetch/generate_page_bundle_reconcile_task.h"
 #include "components/offline_pages/core/prefetch/generate_page_bundle_task.h"
@@ -59,17 +58,6 @@ void PrefetchDispatcherImpl::SetService(PrefetchService* service) {
 
 void PrefetchDispatcherImpl::SchedulePipelineProcessing() {
   needs_pipeline_processing_ = true;
-  service_->GetLogger()->RecordActivity(
-      "Dispatcher: Scheduled more pipeline processing.");
-}
-
-void PrefetchDispatcherImpl::EnsureTaskScheduled() {
-  if (background_task_) {
-    background_task_->SetNeedsReschedule(true /* reschedule */,
-                                         false /* backoff */);
-  } else {
-    service_->GetPrefetchBackgroundTaskHandler()->EnsureTaskScheduled();
-  }
 }
 
 void PrefetchDispatcherImpl::AddCandidatePrefetchURLs(
@@ -78,17 +66,13 @@ void PrefetchDispatcherImpl::AddCandidatePrefetchURLs(
   if (!service_->GetPrefetchConfiguration()->IsPrefetchingEnabled())
     return;
 
-  service_->GetLogger()->RecordActivity("Dispatcher: Received " +
-                                        std::to_string(prefetch_urls.size()) +
-                                        " suggested URLs.");
-
   PrefetchStore* prefetch_store = service_->GetPrefetchStore();
   std::unique_ptr<Task> add_task = base::MakeUnique<AddUniqueUrlsTask>(
-      this, prefetch_store, name_space, prefetch_urls);
+      prefetch_store, name_space, prefetch_urls);
   task_queue_.AddTask(std::move(add_task));
 
   // TODO(dewittj): Remove when we have proper scheduling.
-  EnsureTaskScheduled();
+  service_->GetPrefetchBackgroundTaskHandler()->EnsureTaskScheduled();
 }
 
 void PrefetchDispatcherImpl::RemoveAllUnprocessedPrefetchURLs(
@@ -111,8 +95,7 @@ void PrefetchDispatcherImpl::BeginBackgroundTask(
     std::unique_ptr<ScopedBackgroundTask> background_task) {
   if (!service_->GetPrefetchConfiguration()->IsPrefetchingEnabled())
     return;
-  service_->GetLogger()->RecordActivity(
-      "Dispatcher: Beginning background task.");
+  service_->GetLogger()->RecordActivity("Beginning Background Task.");
 
   background_task_ = std::move(background_task);
 
@@ -121,13 +104,12 @@ void PrefetchDispatcherImpl::BeginBackgroundTask(
 }
 
 void PrefetchDispatcherImpl::QueueReconcileTasks() {
-  service_->GetLogger()->RecordActivity("Dispatcher: Adding reconcile tasks.");
   // Note: For optimal results StaleEntryFinalizerTask should be executed before
   // other reconciler tasks that deal with external systems so that entries
   // finalized by it will promptly effect any external processing they relate
   // to.
-  task_queue_.AddTask(base::MakeUnique<StaleEntryFinalizerTask>(
-      this, service_->GetPrefetchStore()));
+  task_queue_.AddTask(
+      base::MakeUnique<StaleEntryFinalizerTask>(service_->GetPrefetchStore()));
 
   task_queue_.AddTask(base::MakeUnique<GeneratePageBundleReconcileTask>(
       service_->GetPrefetchStore(),
@@ -146,7 +128,6 @@ void PrefetchDispatcherImpl::QueueReconcileTasks() {
 }
 
 void PrefetchDispatcherImpl::QueueActionTasks() {
-  service_->GetLogger()->RecordActivity("Dispatcher: Adding action tasks.");
   std::unique_ptr<Task> download_archives_task =
       base::MakeUnique<DownloadArchivesTask>(service_->GetPrefetchStore(),
                                              service_->GetPrefetchDownloader());
@@ -176,9 +157,6 @@ void PrefetchDispatcherImpl::QueueActionTasks() {
 void PrefetchDispatcherImpl::StopBackgroundTask() {
   if (!service_->GetPrefetchConfiguration()->IsPrefetchingEnabled())
     return;
-
-  service_->GetLogger()->RecordActivity(
-      "Dispatcher: Stopping background task.");
 
   DisposeTask();
 }
@@ -217,11 +195,9 @@ void PrefetchDispatcherImpl::GCMOperationCompletedMessageReceived(
   if (!service_->GetPrefetchConfiguration()->IsPrefetchingEnabled())
     return;
 
-  service_->GetLogger()->RecordActivity("Dispatcher: Received GCM message.");
-
   PrefetchStore* prefetch_store = service_->GetPrefetchStore();
-  task_queue_.AddTask(base::MakeUnique<MarkOperationDoneTask>(
-      this, prefetch_store, operation_name));
+  task_queue_.AddTask(
+      base::MakeUnique<MarkOperationDoneTask>(prefetch_store, operation_name));
 }
 
 void PrefetchDispatcherImpl::DidGenerateBundleRequest(
@@ -242,15 +218,6 @@ void PrefetchDispatcherImpl::DidGetOperationRequest(
   task_queue_.AddTask(base::MakeUnique<PageBundleUpdateTask>(
       prefetch_store, this, operation_name, pages));
   LogRequestResult("GetOperationRequest", status, operation_name, pages);
-}
-
-void PrefetchDispatcherImpl::CleanupDownloads(
-    const std::set<std::string>& outstanding_download_ids,
-    const std::map<std::string, std::pair<base::FilePath, int64_t>>&
-        success_downloads) {
-  task_queue_.AddTask(base::MakeUnique<DownloadCleanupTask>(
-      service_->GetPrefetchDispatcher(), service_->GetPrefetchStore(),
-      outstanding_download_ids, success_downloads));
 }
 
 void PrefetchDispatcherImpl::DownloadCompleted(

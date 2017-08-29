@@ -23,6 +23,7 @@ Lisateavet privaatsuse kohta vaadake Google'i privaatsuseeskirjadest (http://goo
 <translation id="1520828917794284345">Muuda suurust töölaua sobitamiseks</translation>
 <translation id="154040539590487450">Kaugühenduse teenuse käivitamine ebaõnnestus.</translation>
 <translation id="1546934824884762070">Ilmnes ootamatu viga. Teatage sellest probleemist arendajatele.</translation>
+<translation id="1619813076098775562">Ühendus ülekandeseadmesse suleti.</translation>
 <translation id="1643640058022401035">Lehelt lahkudes katkeb teie rakenduse Chromoting seanss.</translation>
 <translation id="1654128982815600832">Arvuti kaugühenduste lubamine …</translation>
 <translation id="170207782578677537">Arvuti registreerimine ebaõnnestus.</translation>
@@ -40,6 +41,10 @@ Lisateavet privaatsuse kohta vaadake Google'i privaatsuseeskirjadest (http://goo
 <translation id="2013996867038862849">Kõik seotud kliendid on kustutatud.</translation>
 <translation id="2038229918502634450">Host taaskäivitub, et arvestada muutunud eeskirjadega.</translation>
 <translation id="2046651113449445291">Järgmised kliendid on seotud selle arvutiga ja saavad luua ühenduse ilma PIN-koodi esitamata. Saate selle loa igal ajal tühistada ühe või ka kõikide klientide puhul.</translation>
+<translation id="2053901200959289492">• Lisatud mitme akna tugi operatsioonisüsteemi Android Nougat jaoks.
+• Töölaua täiustatud pildikvaliteet, reageerimisvõime ja akukasutus.
+• Lohistamiseks klõpsamise toimingute täiustatud reageerimisvõime.
+• Mitme kasutajaliidese animatsiooni täiustatud efektid.</translation>
 <translation id="2078880767960296260">Hosti protsess</translation>
 <translation id="20876857123010370">Puuteplaadirežiim</translation>
 <translation id="2089514346391228378">Selles arvutis on lubatud kaugühendused.</translation>
@@ -75,7 +80,6 @@ Lisateavet privaatsuse kohta vaadake Google'i privaatsuseeskirjadest (http://goo
 <translation id="2676780859508944670">Töötab …</translation>
 <translation id="2699970397166997657">Chromoting</translation>
 <translation id="2747641796667576127">Tarkvaravärskendused toimuvad tavaliselt automaatselt, kuid mõnel üksikul juhul võivad need ebaõnnestuda. Tarkvara värskendamine ei tohiks võtta üle paari minuti ja saate seda teha, kui olete oma arvutiga ühendatud kaugühenduse abil.</translation>
-<translation id="2758123043070977469">Autentimisel ilmnes probleem. Logige uuesti sisse.</translation>
 <translation id="2803375539583399270">Sisestage PIN-kood</translation>
 <translation id="2841013758207633010">Aeg</translation>
 <translation id="2851754573186462851">Chromiumi rakenduste voogesitus</translation>
@@ -171,6 +175,12 @@ Lisateavet privaatsuse kohta vaadake Google'i privaatsuseeskirjadest (http://goo
 <translation id="5156271271724754543">Sisestage mõlemale väljale sama PIN-kood.</translation>
 <translation id="5170982930780719864">Sobimatu hosti ID.</translation>
 <translation id="518094545883702183">Seda teavet kasutatakse ainult teavitatud probleemi diagnoosimiseks, see on saadaval ainult probleemiga tegelejale ja seda ei säilitata üle 30 päeva.</translation>
+<translation id="5196958630269420102">Hankige oma iOS-i seadmest turvaliselt juurdepääs oma arvutitele.
+
+• Seadistage igas arvutis kaugjuurdepääs, kasutades rakendust Chrome Remote Desktop, mille saab alla laadida Chrome'i veebipoest: https://chrome.google.com/remotedesktop
+• Avage iOS-i seadmes rakendus ja puudutage ühenduse loomiseks mõnda võrgus olevat arvutit.
+
+Lisateavet privaatsuse kohta leiate Google'i privaatsuseeskirjadest (http://goo.gl/SyrVzj) ja Chrome'i privaatsuseeskirjadest (http://goo.gl/0uXE5d).</translation>
 <translation id="5204575267916639804">KKK-d</translation>
 <translation id="5222676887888702881">Logi välja</translation>
 <translation id="5254120496627797685">Lehelt lahkudes katkeb teie Chrome Remote Desktopi seanss.</translation>
@@ -183,6 +193,7 @@ Lisateavet privaatsuse kohta vaadake Google'i privaatsuseeskirjadest (http://goo
 <translation id="5419418238395129586">Viimati veebis: <ph name="DATE" /></translation>
 <translation id="544077782045763683">Host on välja lülitatud.</translation>
 <translation id="5510035215749041527">Katkesta kohe ühendus</translation>
+<translation id="5537725057119320332">Ülekanne</translation>
 <translation id="5593560073513909978">Teenus on ajutiselt kättesaamatu. Proovige hiljem uuesti.</translation>
 <translation id="5601503069213153581">PIN-kood</translation>
 <translation id="5619148062500147964">Selle arvutiga</translation>
@@ -191,10 +202,10 @@ Lisateavet privaatsuse kohta vaadake Google'i privaatsuseeskirjadest (http://goo
 <translation id="5708869785009007625">Teie töölauda jagatakse praegu kasutajaga <ph name="USER" />.</translation>
 <translation id="5773590752998175013">Sidumise kuupäev</translation>
 <translation id="579702532610384533">Ühenda uuesti</translation>
-<translation id="5810269635982033450">Ekraan toimib puuteplaadina</translation>
 <translation id="5841343754884244200">Kuvavalikud</translation>
 <translation id="5843054235973879827">Miks on see ohutu?</translation>
 <translation id="5859141382851488196">Uus aken ...</translation>
+<translation id="5885438903806970186">Veebis.</translation>
 <translation id="6011539954251327702">Rakendus Chromoting võimaldab teil arvutit turvaliselt veebi kaudu jagada. Mõlemad kasutajad peavad käitama rakendust Chromoting, mille leiate aadressilt <ph name="URL" />.</translation>
 <translation id="6033507038939587647">Klaviatuurivalikud</translation>
 <translation id="6040143037577758943">Sulge</translation>
@@ -224,6 +235,11 @@ Lisateavet privaatsuse kohta vaadake Google'i privaatsuseeskirjadest (http://goo
 <translation id="6570205395680337606">Rakenduse lähtestamine. Kaotate kogu salvestamata töö.</translation>
 <translation id="6572345186230665992">Macile (OS X Mavericks 10.9 ja uuemad versioonid)</translation>
 <translation id="6583902294974160967">Tugi</translation>
+<translation id="6598484667010442494">Chrome Remote Desktop
+Remote Desktop
+Kaug-PC
+Kaugarvuti
+Kaugjuurdepääs</translation>
 <translation id="6612717000975622067">Saada klahvikombinatsioon Ctrl + Alt + Del</translation>
 <translation id="6668065415969892472">Teie PIN-kood on värskendatud.</translation>
 <translation id="6681800064886881394">Autoriõigus 2013 Google Inc. Kõik õigused kaitstud.</translation>
@@ -243,7 +259,7 @@ Lisateavet privaatsuse kohta vaadake Google'i privaatsuseeskirjadest (http://goo
 <translation id="7019153418965365059">Tundmatu hostiviga: <ph name="HOST_OFFLINE_REASON" />.</translation>
 <translation id="701976023053394610">Kaugabi</translation>
 <translation id="7038683108611689168">Aidake meil rakendust Chromoting täiustada, lubades kasutusstatistika ja krahhiaruannete kogumise.</translation>
-<translation id="7067321367069083429">Ekraan toimib puuteekraanina</translation>
+<translation id="712467900648340229">Ülekandeseadmega ühenduse loomine ebaõnnestus.</translation>
 <translation id="7144878232160441200">Proovi uuesti</translation>
 <translation id="7149517134817561223">Rakendus, millega saate Chrome Remote Desktopi hostile käske saata.</translation>
 <translation id="7215059001581613786">Sisestage vähemalt kuuest numbrist koosnev PIN-kood.</translation>

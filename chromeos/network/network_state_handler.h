@@ -111,9 +111,6 @@ class CHROMEOS_EXPORT NetworkStateHandler
   bool IsTechnologyProhibited(const NetworkTypePattern& type) const {
     return GetTechnologyState(type) == TECHNOLOGY_PROHIBITED;
   }
-  bool IsTechnologyUninitialized(const NetworkTypePattern& type) const {
-    return GetTechnologyState(type) == TECHNOLOGY_UNINITIALIZED;
-  }
 
   // Asynchronously sets the technology enabled property for |type|. Only
   // NetworkTypePattern::Primitive, ::Mobile and ::Ethernet are supported.

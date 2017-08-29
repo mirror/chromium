@@ -6,6 +6,10 @@
 
 #include "core/layout/ng/inline/ng_inline_node.h"
 #include "core/layout/ng/inline/ng_physical_text_fragment.h"
+#include "core/layout/ng/ng_fragment.h"
+#include "core/layout/ng/ng_layout_result.h"
+#include "core/layout/ng/ng_unpositioned_float.h"
+#include "platform/heap/Handle.h"
 
 namespace blink {
 
@@ -50,12 +54,6 @@ NGTextFragmentBuilder& NGTextFragmentBuilder::SetShapeResult(
   return *this;
 }
 
-NGTextFragmentBuilder& NGTextFragmentBuilder::SetEndEffect(
-    NGTextEndEffect end_effect) {
-  end_effect_ = end_effect;
-  return *this;
-}
-
 RefPtr<NGPhysicalTextFragment> NGTextFragmentBuilder::ToTextFragment(
     unsigned index,
     unsigned start_offset,
@@ -63,7 +61,7 @@ RefPtr<NGPhysicalTextFragment> NGTextFragmentBuilder::ToTextFragment(
   return AdoptRef(new NGPhysicalTextFragment(
       node_.GetLayoutObject(), Style(), node_.Text(), index, start_offset,
       end_offset, size_.ConvertToPhysical(WritingMode()),
-      ToLineOrientation(WritingMode()), end_effect_, std::move(shape_result_)));
+      ToLineOrientation(WritingMode()), std::move(shape_result_)));
 }
 
 }  // namespace blink

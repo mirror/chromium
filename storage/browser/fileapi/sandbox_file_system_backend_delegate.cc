@@ -133,11 +133,11 @@ void OpenFileSystemOnFileTaskRunner(
 
 void DidOpenFileSystem(
     base::WeakPtr<SandboxFileSystemBackendDelegate> delegate,
-    base::OnceCallback<void(base::File::Error error)> callback,
+    const base::Callback<void(base::File::Error error)>& callback,
     base::File::Error* error) {
-  if (delegate)
-    delegate->CollectOpenFileSystemMetrics(*error);
-  std::move(callback).Run(*error);
+  if (delegate.get())
+    delegate.get()->CollectOpenFileSystemMetrics(*error);
+  callback.Run(*error);
 }
 
 template <typename T>
@@ -249,11 +249,10 @@ void SandboxFileSystemBackendDelegate::OpenFileSystem(
     const GURL& origin_url,
     FileSystemType type,
     OpenFileSystemMode mode,
-    OpenFileSystemCallback callback,
+    const OpenFileSystemCallback& callback,
     const GURL& root_url) {
   if (!IsAllowedScheme(origin_url)) {
-    std::move(callback).Run(GURL(), std::string(),
-                            base::File::FILE_ERROR_SECURITY);
+    callback.Run(GURL(), std::string(), base::File::FILE_ERROR_SECURITY);
     return;
   }
 
@@ -262,11 +261,13 @@ void SandboxFileSystemBackendDelegate::OpenFileSystem(
   base::File::Error* error_ptr = new base::File::Error;
   file_task_runner_->PostTaskAndReply(
       FROM_HERE,
-      base::BindOnce(&OpenFileSystemOnFileTaskRunner, obfuscated_file_util(),
-                     origin_url, type, mode, base::Unretained(error_ptr)),
-      base::BindOnce(&DidOpenFileSystem, weak_factory_.GetWeakPtr(),
-                     base::BindOnce(std::move(callback), root_url, name),
-                     base::Owned(error_ptr)));
+      base::Bind(&OpenFileSystemOnFileTaskRunner,
+                 obfuscated_file_util(), origin_url, type, mode,
+                 base::Unretained(error_ptr)),
+      base::Bind(&DidOpenFileSystem,
+                 weak_factory_.GetWeakPtr(),
+                 base::Bind(callback, root_url, name),
+                 base::Owned(error_ptr)));
 
   io_thread_checker_.DetachFromThread();
   is_filesystem_opened_ = true;

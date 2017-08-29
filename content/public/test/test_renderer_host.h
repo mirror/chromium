@@ -80,6 +80,32 @@ class RenderFrameHostTester {
   // Gives tests access to RenderFrameHostImpl::OnDetach. Destroys |this|.
   virtual void Detach() = 0;
 
+  // Simulates a renderer-initiated navigation to |url| starting in the
+  // RenderFrameHost.
+  // DEPRECATED: use NavigationSimulator instead.
+  virtual void SimulateNavigationStart(const GURL& url) = 0;
+
+  // Simulates a redirect to |new_url| for the navigation in the
+  // RenderFrameHost.
+  // Note: this is deprecated for simulating renderer-initiated navigations. Use
+  // NavigationSimulator instead.
+  virtual void SimulateRedirect(const GURL& new_url) = 0;
+
+  // Simulates a navigation to |url| committing in the RenderFrameHost.
+  // Note: this is deprecated for simulating renderer-initiated navigations. Use
+  // NavigationSimulator instead.
+  virtual void SimulateNavigationCommit(const GURL& url) = 0;
+
+  // Simulates a navigation to |url| failing with the error code |error_code|.
+  // Note: this is deprecated for simulating renderer-initiated navigations. Use
+  // NavigationSimulator instead.
+  virtual void SimulateNavigationError(const GURL& url, int error_code) = 0;
+
+  // Simulates the commit of an error page following a navigation failure.
+  // Note: this is deprecated for simulating renderer-initiated navigations. Use
+  // NavigationSimulator instead.
+  virtual void SimulateNavigationErrorPageCommit() = 0;
+
   // Simulates a navigation stopping in the RenderFrameHost.
   virtual void SimulateNavigationStop() = 0;
 
@@ -94,6 +120,9 @@ class RenderFrameHostTester {
   // - did_create_new_entry should be true if simulating a navigation that
   //   created a new navigation entry; false for history navigations, reloads,
   //   and other navigations that don't affect the history list.
+  virtual void SendNavigate(int nav_entry_id,
+                            bool did_create_new_entry,
+                            const GURL& url) = 0;
   virtual void SendFailedNavigate(int nav_entry_id,
                                   bool did_create_new_entry,
                                   const GURL& url) = 0;

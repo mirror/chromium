@@ -274,8 +274,11 @@ void PaintInvalidationCapableScrollableArea::DidScrollWithScrollbar(
 
 CompositorElementId
 PaintInvalidationCapableScrollableArea::GetCompositorElementId() const {
-  return CompositorElementIdFromUniqueObjectId(
-      GetLayoutBox()->UniqueId(), CompositorElementIdNamespace::kScroll);
+  return GetLayoutBox()
+      ->FirstFragment()
+      ->PaintProperties()
+      ->ScrollTranslation()
+      ->GetCompositorElementId();
 }
 
 }  // namespace blink

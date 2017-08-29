@@ -237,9 +237,6 @@ void GIFImageDecoder::Decode(size_t index) {
       if (previous_frame_index == kNotFound) {
         previous_frame_index = required_previous_frame_index;
         Decode(previous_frame_index);
-        if (Failed()) {
-          return;
-        }
       }
 
       // We try to reuse |previous_frame| as starting state to avoid copying.
@@ -279,7 +276,7 @@ void GIFImageDecoder::Decode(size_t index) {
       SkCodec::FrameInfo frame_info;
       bool frame_info_received = codec_->getFrameInfo(index, &frame_info);
       DCHECK(frame_info_received);
-      frame.SetHasAlpha(frame_info.fAlpha != SkEncodedInfo::kOpaque_Alpha);
+      frame.SetHasAlpha(!SkAlphaTypeIsOpaque(frame_info.fAlphaType));
       frame.SetPixelsChanged(true);
       frame.SetStatus(ImageFrame::kFrameComplete);
       PostDecodeProcessing(index);

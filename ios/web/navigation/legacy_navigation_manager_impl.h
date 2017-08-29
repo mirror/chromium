@@ -36,6 +36,8 @@ class LegacyNavigationManagerImpl : public NavigationManagerImpl {
   void SetBrowserState(BrowserState* browser_state) override;
   void SetSessionController(CRWSessionController* session_controller) override;
   void InitializeSession() override;
+  void ReplaceSessionHistory(std::vector<std::unique_ptr<NavigationItem>> items,
+                             int current_index) override;
   void OnNavigationItemsPruned(size_t pruned_item_count) override;
   void OnNavigationItemChanged() override;
   void OnNavigationItemCommitted() override;
@@ -69,8 +71,6 @@ class LegacyNavigationManagerImpl : public NavigationManagerImpl {
   void GoForward() override;
   NavigationItemList GetBackwardItems() const override;
   NavigationItemList GetForwardItems() const override;
-  void Restore(int last_committed_item_index,
-               std::vector<std::unique_ptr<NavigationItem>> items) override;
   void CopyStateFromAndPrune(const NavigationManager* source) override;
   bool CanPruneAllButLastCommittedItem() const override;
 
@@ -89,6 +89,10 @@ class LegacyNavigationManagerImpl : public NavigationManagerImpl {
   // Returns true if the PageTransition for the underlying navigation item at
   // |index| has ui::PAGE_TRANSITION_IS_REDIRECT_MASK.
   bool IsRedirectItemAtIndex(int index) const;
+
+  // Returns the most recent NavigationItem that does not have an app-specific
+  // URL.
+  NavigationItem* GetLastCommittedNonAppSpecificItem() const;
 
   // CRWSessionController that backs this instance.
   // TODO(stuartmorgan): Fold CRWSessionController into this class.

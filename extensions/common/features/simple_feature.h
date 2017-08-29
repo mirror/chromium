@@ -70,7 +70,7 @@ class SimpleFeature : public Feature {
   }
 
   // extension::Feature:
-  Availability IsAvailableToManifest(const HashedExtensionId& hashed_id,
+  Availability IsAvailableToManifest(const std::string& extension_id,
                                      Manifest::Type type,
                                      Manifest::Location location,
                                      int manifest_version,
@@ -79,10 +79,9 @@ class SimpleFeature : public Feature {
                                     Context context,
                                     const GURL& url,
                                     Platform platform) const override;
-  Availability IsAvailableToEnvironment() const override;
   bool IsInternal() const override;
-  bool IsIdInBlacklist(const HashedExtensionId& hashed_id) const override;
-  bool IsIdInWhitelist(const HashedExtensionId& hashed_id) const override;
+  bool IsIdInBlacklist(const std::string& extension_id) const override;
+  bool IsIdInWhitelist(const std::string& extension_id) const override;
 
   static bool IsIdInArray(const std::string& extension_id,
                           const char* const array[],
@@ -208,7 +207,7 @@ class SimpleFeature : public Feature {
   // Holds String to Enum value mappings.
   struct Mappings;
 
-  static bool IsIdInList(const HashedExtensionId& hashed_id,
+  static bool IsIdInList(const std::string& extension_id,
                          const std::vector<std::string>& list);
 
   bool MatchesManifestLocation(Manifest::Location manifest_location) const;
@@ -221,7 +220,6 @@ class SimpleFeature : public Feature {
       const base::Callback<Availability(const Feature*)>& checker) const;
 
   static bool IsValidExtensionId(const std::string& extension_id);
-  static bool IsValidHashedExtensionId(const HashedExtensionId& hashed_id);
 
   // Returns the availability of the feature with respect to the basic
   // environment Chrome is running in.
@@ -233,7 +231,7 @@ class SimpleFeature : public Feature {
 
   // Returns the availability of the feature with respect to a given extension's
   // properties.
-  Availability GetManifestAvailability(const HashedExtensionId& hashed_id,
+  Availability GetManifestAvailability(const std::string& extension_id,
                                        Manifest::Type type,
                                        Manifest::Location location,
                                        int manifest_version) const;

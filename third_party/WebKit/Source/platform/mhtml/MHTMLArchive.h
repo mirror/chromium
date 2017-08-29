@@ -64,7 +64,6 @@ class PLATFORM_EXPORT MHTMLArchive final
   // generateMHTMLPart and generateMHTMLFooter calls that belong to the same
   // MHTML document (see also rfc1341, section 7.2.1, "boundary" description).
   static void GenerateMHTMLHeader(const String& boundary,
-                                  const KURL&,
                                   const String& title,
                                   const String& mime_type,
                                   Vector<char>& output_buffer);

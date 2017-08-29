@@ -27,7 +27,6 @@
 <translation id="1746730358044914197">Адміністратор налаштував методи введення.</translation>
 <translation id="1747827819627189109">Екранну клавіатуру ввімкнено</translation>
 <translation id="1823873187264960516">Ethernet: <ph name="ADDRESS" /></translation>
-<translation id="1836215606488044471">Помічник (завантаження…)</translation>
 <translation id="1850504506766569011">Wi-Fi вимкнено.</translation>
 <translation id="1856813161013948396">Торкніться сканера відбитків пальців, щоб пропустити заблокований екран. Натисніть, щоб налаштувати.</translation>
 <translation id="1864454756846565995">Пристрій із портом USB типу C (на задній панелі)</translation>
@@ -55,7 +54,6 @@
 <translation id="2338501278241028356">Щоб знайти пристрої поблизу, увімкніть Bluetooth</translation>
 <translation id="2352467521400612932">Налаштування стилуса</translation>
 <translation id="2354174487190027830">Активація <ph name="NAME" /></translation>
-<translation id="2365393535144473978">Якщо ввімкнути мобільне передавання даних, увімкнеться Bluetooth.</translation>
 <translation id="2391579633712104609">180°</translation>
 <translation id="2429753432712299108">Пристрою Bluetooth "<ph name="DEVICE_NAME" />" потрібен дозвіл на підключення. Перш ніж надати його, підтвердьте, що на пристрої відображається цей ключ доступу: <ph name="PASSKEY" /></translation>
 <translation id="2475982808118771221">Сталася помилка</translation>
@@ -125,7 +123,6 @@
 <translation id="4279490309300973883">Дзеркальне відображення</translation>
 <translation id="4321179778687042513">ctrl</translation>
 <translation id="4338109981321384717">Лупа</translation>
-<translation id="4351433414020964307">Помічник завантажується…</translation>
 <translation id="4378551569595875038">Підключення…</translation>
 <translation id="4421231901400348175">Спільний доступ до екрана для користувача <ph name="HELPER_NAME" /> через віддалену допомогу.</translation>
 <translation id="4430019312045809116">Гучність</translation>
@@ -172,7 +169,6 @@
 <translation id="5927132638760172455">Трансляція на невідомий приймач</translation>
 <translation id="5947494881799873997">Повернути</translation>
 <translation id="595202126637698455">Відстеження ефективності ввімкнено</translation>
-<translation id="5957083217255311415">Мобільне передавання даних вимкнено.</translation>
 <translation id="5958529069007801266">Контрольований користувач</translation>
 <translation id="5977415296283489383">Навушники</translation>
 <translation id="5978382165065462689">Спільний доступ до екрана через віддалену допомогу.</translation>
@@ -206,7 +202,6 @@
 <translation id="6691659475504239918">Search+Shift+H</translation>
 <translation id="6700713906295497288">Кнопка меню IME</translation>
 <translation id="6713285437468012787">Пристрій Bluetooth "<ph name="DEVICE_NAME" />" підключено. Він доступний для всіх користувачів. Відключити пристрій можна в Налаштуваннях.</translation>
-<translation id="6715542151869432661">Мобільних пристроїв не знайдено.</translation>
 <translation id="6785414152754474415">Акумулятор заряджений на <ph name="PERCENTAGE" />% і заряджається.</translation>
 <translation id="6803622936009808957">Не вдалося дублювати зображення екранів, оскільки не знайдено підтримувані значення роздільної здатності. Натомість запущено режим розширеного робочого столу.</translation>
 <translation id="683971173229319003">Search (Пошук)+L</translation>
@@ -272,7 +267,6 @@
 <translation id="8828714802988429505">90°</translation>
 <translation id="8850991929411075241">Search (Пошук)+Esc</translation>
 <translation id="8878886163241303700">Розширення екрана</translation>
-<translation id="8921624153894383499">Google Помічник не підтримує цю мову.</translation>
 <translation id="8938800817013097409">Пристрій, під’єднаний до порту USB-C (праворуч на задній панелі)</translation>
 <translation id="8940956008527784070">Низький заряд акумулятора (<ph name="PERCENTAGE" />%)</translation>
 <translation id="9074739597929991885">Bluetooth</translation>

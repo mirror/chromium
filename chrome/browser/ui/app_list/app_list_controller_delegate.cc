@@ -51,7 +51,7 @@ AppListControllerDelegate::~AppListControllerDelegate() {}
 
 void AppListControllerDelegate::ViewClosing() {}
 
-gfx::Rect AppListControllerDelegate::GetAppInfoDialogBounds() {
+gfx::Rect AppListControllerDelegate::GetAppListBounds() {
   return gfx::Rect();
 }
 
@@ -102,7 +102,10 @@ void AppListControllerDelegate::DoShowAppInfoFlow(
   // Since the AppListControllerDelegate is a leaky singleton, passing its raw
   // pointer around is OK.
   ShowAppInfoInAppList(
-      GetAppListWindow(), GetAppInfoDialogBounds(), profile, extension,
+      GetAppListWindow(),
+      GetAppListBounds(),
+      profile,
+      extension,
       base::Bind(&AppListControllerDelegate::OnCloseChildDialog,
                  base::Unretained(this)));
 }

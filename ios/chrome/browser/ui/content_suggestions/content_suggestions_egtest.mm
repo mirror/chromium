@@ -36,9 +36,8 @@
 #import "ios/chrome/test/earl_grey/chrome_earl_grey_ui.h"
 #import "ios/chrome/test/earl_grey/chrome_matchers.h"
 #import "ios/chrome/test/earl_grey/chrome_test_case.h"
-#import "ios/testing/wait_util.h"
-#include "net/test/embedded_test_server/http_request.h"
-#include "net/test/embedded_test_server/http_response.h"
+#import "ios/web/public/test/http_server/http_server.h"
+#include "ios/web/public/test/http_server/http_server_util.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "ui/strings/grit/ui_strings.h"
 
@@ -50,11 +49,7 @@ using namespace ntp_snippets;
 
 namespace {
 
-const char kPageLoadedString[] = "Page loaded!";
-const char kPageURL[] = "/test-page.html";
-const char kPageTitle[] = "Page title!";
-
-//  Scrolls the collection view in order to have the toolbar menu icon visible.
+//  Scroll the collection view in order to have the toolbar menu icon visible.
 void ScrollUp() {
   [[[EarlGrey
       selectElementWithMatcher:grey_allOf(chrome_test_util::ToolsMenuButton(),
@@ -64,21 +59,6 @@ void ScrollUp() {
                                [ContentSuggestionsViewController
                                    collectionAccessibilityIdentifier])]
       assertWithMatcher:grey_notNil()];
-}
-
-// Provides responses for redirect and changed window location URLs.
-std::unique_ptr<net::test_server::HttpResponse> StandardResponse(
-    const net::test_server::HttpRequest& request) {
-  if (request.relative_url != kPageURL) {
-    return nullptr;
-  }
-  std::unique_ptr<net::test_server::BasicHttpResponse> http_response =
-      base::MakeUnique<net::test_server::BasicHttpResponse>();
-  http_response->set_code(net::HTTP_OK);
-  http_response->set_content("<html><head><title>" + std::string(kPageTitle) +
-                             "</title></head><body>" +
-                             std::string(kPageLoadedString) + "</body></html>");
-  return std::move(http_response);
 }
 
 // Returns a suggestion created from the |category|, |suggestion_id| and the
@@ -173,19 +153,12 @@ GREYElementInteraction* CellWithMatcher(id<GREYMatcher> matcher) {
       ReadingListModelFactory::GetForBrowserState(self.browserState);
   readingListModel->DeleteAllEntries();
   [super setUp];
-  if (IsIPadIdiom()) {
-    [[EarlGrey selectElementWithMatcher:
-                   chrome_test_util::ButtonWithAccessibilityLabelId(
-                       IDS_IOS_NEW_TAB_HOME)] performAction:grey_tap()];
-  }
 }
 
 - (void)tearDown {
   self.provider->FireCategoryStatusChanged(
       self.category, CategoryStatus::ALL_SUGGESTIONS_EXPLICITLY_DISABLED);
   _scopedCommandLine.reset();
-  chrome_test_util::ClearBrowsingHistory();
-  [[GREYUIThreadExecutor sharedInstance] drainUntilIdle];
   [super tearDown];
 }
 
@@ -194,6 +167,11 @@ GREYElementInteraction* CellWithMatcher(id<GREYMatcher> matcher) {
 // Tests that after dismissing a ReadingList item, it is not displayed on the
 // NTP. But it is still unread in the Reading List surface.
 - (void)testSwipeToDismissReadingListItem {
+  // TODO(crbug.com/756950): Re-enable this test for iPhone idiom.
+  if (!IsIPadIdiom()) {
+    EARL_GREY_TEST_DISABLED(@"Test disabled on iPhone devices.");
+  }
+
   // Add two items to Reading List.
   std::string stdTitle1{"test title1"};
   std::string stdTitle2{"test title2"};
@@ -235,7 +213,6 @@ GREYElementInteraction* CellWithMatcher(id<GREYMatcher> matcher) {
       assertWithMatcher:grey_nil()];
 
   // Open the Reading List surface.
-  ScrollUp();
   [ChromeEarlGreyUI openToolsMenu];
   [[EarlGrey
       selectElementWithMatcher:chrome_test_util::ButtonWithAccessibilityLabelId(
@@ -256,22 +233,11 @@ GREYElementInteraction* CellWithMatcher(id<GREYMatcher> matcher) {
   [[EarlGrey selectElementWithMatcher:
                  chrome_test_util::StaticTextWithAccessibilityLabel(title1)]
       assertWithMatcher:grey_sufficientlyVisible()];
-
-  // On iPad two Reading List items are displayed as the Reading List view is
-  // displayed modally, the NTP is still visible.
   [[EarlGrey
       selectElementWithMatcher:
           grey_allOf(chrome_test_util::StaticTextWithAccessibilityLabel(title2),
-                     grey_not(grey_ancestor(
-                         grey_accessibilityID([ContentSuggestionsViewController
-                             collectionAccessibilityIdentifier]))),
-                     nil)] assertWithMatcher:grey_sufficientlyVisible()];
-
-  // Close Reading List.
-  [[EarlGrey
-      selectElementWithMatcher:chrome_test_util::ButtonWithAccessibilityLabelId(
-                                   IDS_IOS_READING_LIST_DONE_BUTTON)]
-      performAction:grey_tap()];
+                     grey_sufficientlyVisible(), nil)]
+      assertWithMatcher:grey_notNil()];
 }
 
 // Tests that only the 3 most recent Reading List items are displayed.
@@ -403,7 +369,7 @@ GREYElementInteraction* CellWithMatcher(id<GREYMatcher> matcher) {
 // Tests that when long pressing a Reading List entry, a context menu is shown.
 - (void)testReadingListLongPress {
   NSString* title = @"ReadingList test title";
-  std::string sTitle{"ReadingList test title"};
+  std::string sTitle = "ReadingList test title";
   ReadingListModel* readingListModel =
       ReadingListModelFactory::GetForBrowserState(self.browserState);
   readingListModel->AddEntry(GURL("http://chromium.org"), sTitle,
@@ -411,6 +377,18 @@ GREYElementInteraction* CellWithMatcher(id<GREYMatcher> matcher) {
 
   [CellWithMatcher(grey_accessibilityID(title)) performAction:grey_longPress()];
 
+  [[EarlGrey
+      selectElementWithMatcher:chrome_test_util::ButtonWithAccessibilityLabelId(
+                                   IDS_IOS_CONTENT_CONTEXT_OPENLINKNEWTAB)]
+      assertWithMatcher:grey_interactable()];
+  [[EarlGrey selectElementWithMatcher:
+                 chrome_test_util::ButtonWithAccessibilityLabelId(
+                     IDS_IOS_CONTENT_CONTEXT_OPENLINKNEWINCOGNITOTAB)]
+      assertWithMatcher:grey_interactable()];
+  [[EarlGrey
+      selectElementWithMatcher:chrome_test_util::ButtonWithAccessibilityLabelId(
+                                   IDS_IOS_CONTENT_SUGGESTIONS_REMOVE)]
+      assertWithMatcher:grey_interactable()];
   if (!IsIPadIdiom()) {
     [[EarlGrey selectElementWithMatcher:
                    chrome_test_util::ButtonWithAccessibilityLabelId(
@@ -424,215 +402,49 @@ GREYElementInteraction* CellWithMatcher(id<GREYMatcher> matcher) {
       assertWithMatcher:grey_nil()];
 }
 
-// Tests that "Open in New Tab" in context menu opens in a new tab.
-- (void)testReadingListOpenNewTab {
-  // Setup.
-  [self setupReadingListContextMenu];
-  const GURL pageURL = self.testServer->GetURL(kPageURL);
-
-  // Open in new tab.
-  [[EarlGrey
-      selectElementWithMatcher:chrome_test_util::ButtonWithAccessibilityLabelId(
-                                   IDS_IOS_CONTENT_CONTEXT_OPENLINKNEWTAB)]
-      performAction:grey_tap()];
-
-  // Check a new page in normal model is opened.
-  [ChromeEarlGrey waitForMainTabCount:2];
-  [ChromeEarlGrey waitForIncognitoTabCount:0];
-
-  // Check that the tab has been opened in background.
-  ConditionBlock condition = ^{
-    NSError* error = nil;
-    [[EarlGrey
-        selectElementWithMatcher:grey_accessibilityID(
-                                     [ContentSuggestionsViewController
-                                         collectionAccessibilityIdentifier])]
-        assertWithMatcher:grey_sufficientlyVisible()
-                    error:&error];
-    return error == nil;
-  };
-  GREYAssert(testing::WaitUntilConditionOrTimeout(
-                 testing::kWaitForUIElementTimeout, condition),
-             @"Collection view not visible");
-
-  // Check the page has been correctly opened.
-  chrome_test_util::SelectTabAtIndexInCurrentMode(1);
-  [ChromeEarlGrey waitForWebViewContainingText:kPageLoadedString];
-  [[EarlGrey selectElementWithMatcher:chrome_test_util::OmniboxText(
-                                          pageURL.GetContent())]
-      assertWithMatcher:grey_notNil()];
-}
-
-// Tests that "Open in New Incognito Tab" in context menu opens in a new
-// incognito tab.
-- (void)testReadingListOpenNewIncognitoTab {
-  // Setup.
-  [self setupReadingListContextMenu];
-  const GURL pageURL = self.testServer->GetURL(kPageURL);
-
-  // Open in new incognito tab.
-  [[EarlGrey selectElementWithMatcher:
-                 chrome_test_util::ButtonWithAccessibilityLabelId(
-                     IDS_IOS_CONTENT_CONTEXT_OPENLINKNEWINCOGNITOTAB)]
-      performAction:grey_tap()];
-
-  // Check that the tab has been opened in foreground.
-  [ChromeEarlGrey waitForWebViewContainingText:kPageLoadedString];
-  [[EarlGrey selectElementWithMatcher:chrome_test_util::OmniboxText(
-                                          pageURL.GetContent())]
-      assertWithMatcher:grey_notNil()];
-
-  GREYAssertTrue(chrome_test_util::IsIncognitoMode(),
-                 @"Test did not switch to incognito");
-
-  // Check only one incognito tab has been opened.
-  [ChromeEarlGrey waitForIncognitoTabCount:1];
-  [ChromeEarlGrey waitForMainTabCount:1];
-}
-
-// Tests that "Remove" in context menu removes the entry.
-- (void)testReadingListRemove {
-  // Setup.
-  NSString* title = @"ReadingList test title";
-  [self setupReadingListContextMenu];
-  const GURL pageURL = self.testServer->GetURL(kPageURL);
-
-  // Remove the element.
-  [[EarlGrey
-      selectElementWithMatcher:chrome_test_util::ButtonWithAccessibilityLabelId(
-                                   IDS_IOS_CONTENT_SUGGESTIONS_REMOVE)]
-      performAction:grey_tap()];
-
-  // Check the entry has been removed.
-  [[EarlGrey
-      selectElementWithMatcher:grey_allOf(grey_accessibilityID(title),
-                                          grey_sufficientlyVisible(), nil)]
-      assertWithMatcher:grey_nil()];
-
-  // Check the entry is still unread in the Reading List model.
-  ReadingListModel* readingListModel =
-      ReadingListModelFactory::GetForBrowserState(self.browserState);
-  GREYAssertEqual(1, readingListModel->unread_size(),
-                  @"The number of unread entry has been changed.");
-}
-
-// Tests the "Open in New Tab" action of the Most Visited context menu.
-- (void)testMostVisitedNewTab {
-  [self setupMostVisitedTileLongPress];
-  const GURL pageURL = self.testServer->GetURL(kPageURL);
-
-  // Open in new tab.
-  [[EarlGrey
-      selectElementWithMatcher:chrome_test_util::ButtonWithAccessibilityLabelId(
-                                   IDS_IOS_CONTENT_CONTEXT_OPENLINKNEWTAB)]
-      performAction:grey_tap()];
-
-  // Check a new page in normal model is opened.
-  [ChromeEarlGrey waitForMainTabCount:2];
-  [ChromeEarlGrey waitForIncognitoTabCount:0];
-
-  // Check that the tab has been opened in background.
-  ConditionBlock condition = ^{
-    NSError* error = nil;
-    [[EarlGrey
-        selectElementWithMatcher:grey_accessibilityID(
-                                     [ContentSuggestionsViewController
-                                         collectionAccessibilityIdentifier])]
-        assertWithMatcher:grey_sufficientlyVisible()
-                    error:&error];
-    return error == nil;
-  };
-  GREYAssert(testing::WaitUntilConditionOrTimeout(
-                 testing::kWaitForUIElementTimeout, condition),
-             @"Collection view not visible");
-
-  // Check the page has been correctly opened.
-  chrome_test_util::SelectTabAtIndexInCurrentMode(1);
-  [ChromeEarlGrey waitForWebViewContainingText:kPageLoadedString];
-  [[EarlGrey selectElementWithMatcher:chrome_test_util::OmniboxText(
-                                          pageURL.GetContent())]
-      assertWithMatcher:grey_notNil()];
-}
-
-// Tests the "Open in New Incognito Tab" action of the Most Visited context
-// menu.
-- (void)testMostVisitedNewIncognitoTab {
-  [self setupMostVisitedTileLongPress];
-  const GURL pageURL = self.testServer->GetURL(kPageURL);
-
-  // Open in new incognito tab.
-  [[EarlGrey selectElementWithMatcher:
-                 chrome_test_util::ButtonWithAccessibilityLabelId(
-                     IDS_IOS_CONTENT_CONTEXT_OPENLINKNEWINCOGNITOTAB)]
-      performAction:grey_tap()];
-
-  [ChromeEarlGrey waitForMainTabCount:1];
-  [ChromeEarlGrey waitForIncognitoTabCount:1];
-
-  // Check that the tab has been opened in foreground.
-  [ChromeEarlGrey waitForWebViewContainingText:kPageLoadedString];
-  [[EarlGrey selectElementWithMatcher:chrome_test_util::OmniboxText(
-                                          pageURL.GetContent())]
-      assertWithMatcher:grey_notNil()];
-
-  GREYAssertTrue(chrome_test_util::IsIncognitoMode(),
-                 @"Test did not switch to incognito");
-}
-
-// Tests the "Remove" action of the Most Visited context menu, and the "Undo"
-// action.
-- (void)testMostVisitedRemoveUndo {
-  [self setupMostVisitedTileLongPress];
-  const GURL pageURL = self.testServer->GetURL(kPageURL);
-  NSString* pageTitle = base::SysUTF8ToNSString(kPageTitle);
-
-  // Tap on remove.
-  [[EarlGrey
-      selectElementWithMatcher:chrome_test_util::ButtonWithAccessibilityLabelId(
-                                   IDS_IOS_CONTENT_SUGGESTIONS_REMOVE)]
-      performAction:grey_tap()];
-
-  // Check the tile is removed.
-  [[EarlGrey
-      selectElementWithMatcher:
-          grey_allOf(
-              chrome_test_util::StaticTextWithAccessibilityLabel(pageTitle),
-              grey_sufficientlyVisible(), nil)] assertWithMatcher:grey_nil()];
-
-  // Check the snack bar notifying the user that an element has been removed is
-  // displayed.
-  [[EarlGrey
-      selectElementWithMatcher:chrome_test_util::ButtonWithAccessibilityLabelId(
-                                   IDS_IOS_NEW_TAB_MOST_VISITED_ITEM_REMOVED)]
-      assertWithMatcher:grey_sufficientlyVisible()];
-
-  // Tap on undo.
-  [[EarlGrey
-      selectElementWithMatcher:chrome_test_util::ButtonWithAccessibilityLabelId(
-                                   IDS_NEW_TAB_UNDO_THUMBNAIL_REMOVE)]
-      performAction:grey_tap()];
-
-  // Check the tile is back.
-  [[EarlGrey selectElementWithMatcher:
-                 chrome_test_util::StaticTextWithAccessibilityLabel(pageTitle)]
-      assertWithMatcher:grey_sufficientlyVisible()];
-}
-
-// Tests that the context menu has the correct actions.
+// Tests that when long pressing a Most Visited tile, a context menu is shown.
 - (void)testMostVisitedLongPress {
-  [self setupMostVisitedTileLongPress];
+  std::map<GURL, std::string> responses;
+  GURL URL = web::test::HttpServer::MakeUrl("http://simple_tile.html");
+  responses[URL] =
+      "<head><title>title1</title></head>"
+      "<body>You are here.</body>";
+  web::test::SetUpSimpleHttpServer(responses);
 
+  // Clear history and verify that the tile does not exist.
+  chrome_test_util::ClearBrowsingHistory();
+  [[GREYUIThreadExecutor sharedInstance] drainUntilIdle];
+  [ChromeEarlGrey loadURL:URL];
+
+  // After loading URL, need to do another action before opening a new tab
+  // with the icon present.
+  [ChromeEarlGrey goBack];
+
+  chrome_test_util::OpenNewTab();
+  [[EarlGrey selectElementWithMatcher:
+                 chrome_test_util::StaticTextWithAccessibilityLabel(@"title1")]
+      performAction:grey_longPress()];
+
+  [[EarlGrey
+      selectElementWithMatcher:chrome_test_util::ButtonWithAccessibilityLabelId(
+                                   IDS_IOS_CONTENT_CONTEXT_OPENLINKNEWTAB)]
+      assertWithMatcher:grey_interactable()];
+  [[EarlGrey selectElementWithMatcher:
+                 chrome_test_util::ButtonWithAccessibilityLabelId(
+                     IDS_IOS_CONTENT_CONTEXT_OPENLINKNEWINCOGNITOTAB)]
+      assertWithMatcher:grey_interactable()];
+  [[EarlGrey
+      selectElementWithMatcher:chrome_test_util::ButtonWithAccessibilityLabelId(
+                                   IDS_IOS_CONTENT_SUGGESTIONS_REMOVE)]
+      assertWithMatcher:grey_interactable()];
   if (!IsIPadIdiom()) {
     [[EarlGrey selectElementWithMatcher:
                    chrome_test_util::ButtonWithAccessibilityLabelId(
                        IDS_APP_CANCEL)] assertWithMatcher:grey_interactable()];
   }
 
-  // No read later.
-  [[EarlGrey
-      selectElementWithMatcher:chrome_test_util::ButtonWithAccessibilityLabelId(
-                                   IDS_IOS_CONTENT_CONTEXT_ADDTOREADINGLIST)]
-      assertWithMatcher:grey_nil()];
+  chrome_test_util::ClearBrowsingHistory();
+  [[GREYUIThreadExecutor sharedInstance] drainUntilIdle];
 }
 
 #pragma mark - Properties
@@ -647,51 +459,6 @@ GREYElementInteraction* CellWithMatcher(id<GREYMatcher> matcher) {
 
 - (Category)category {
   return Category::FromKnownCategory(KnownCategories::ARTICLES);
-}
-
-#pragma mark - Test utils
-
-// Setup a Reading List item and long press it to open the context menu.
-- (void)setupReadingListContextMenu {
-  self.testServer->RegisterRequestHandler(base::Bind(&StandardResponse));
-  GREYAssertTrue(self.testServer->Start(), @"Test server failed to start.");
-  const GURL pageURL = self.testServer->GetURL(kPageURL);
-  std::string sTitle{"ReadingList test title"};
-  NSString* title = @"ReadingList test title";
-  ReadingListModel* readingListModel =
-      ReadingListModelFactory::GetForBrowserState(self.browserState);
-  readingListModel->AddEntry(pageURL, sTitle,
-                             reading_list::ADDED_VIA_CURRENT_APP);
-  [CellWithMatcher(grey_accessibilityID(title)) performAction:grey_longPress()];
-  [ChromeEarlGrey waitForMainTabCount:1];
-  [ChromeEarlGrey waitForIncognitoTabCount:0];
-  GREYAssertEqual(1, readingListModel->unread_size(),
-                  @"There should be only one unread entry.");
-}
-
-// Setup a most visited tile, and open the context menu by long pressing on it.
-- (void)setupMostVisitedTileLongPress {
-  self.testServer->RegisterRequestHandler(base::Bind(&StandardResponse));
-  GREYAssertTrue(self.testServer->Start(), @"Test server failed to start.");
-  const GURL pageURL = self.testServer->GetURL(kPageURL);
-  NSString* pageTitle = base::SysUTF8ToNSString(kPageTitle);
-
-  // Clear history and verify that the tile does not exist.
-  chrome_test_util::ClearBrowsingHistory();
-  [[GREYUIThreadExecutor sharedInstance] drainUntilIdle];
-  [ChromeEarlGrey loadURL:pageURL];
-  [ChromeEarlGrey waitForWebViewContainingText:kPageLoadedString];
-
-  // After loading URL, need to do another action before opening a new tab
-  // with the icon present.
-  [ChromeEarlGrey goBack];
-
-  [[self class] closeAllTabs];
-
-  chrome_test_util::OpenNewTab();
-  [[EarlGrey selectElementWithMatcher:
-                 chrome_test_util::StaticTextWithAccessibilityLabel(pageTitle)]
-      performAction:grey_longPress()];
 }
 
 @end

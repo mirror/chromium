@@ -48,7 +48,7 @@ class LayerTreeHostImpl;
 class CC_EXPORT ScrollElasticityHelper {
  public:
   static ScrollElasticityHelper* CreateForLayerTreeHostImpl(
-      LayerTreeHostImpl* host_impl);
+      LayerTreeHostImpl* layer_tree_host_impl);
 
   virtual ~ScrollElasticityHelper() {}
 

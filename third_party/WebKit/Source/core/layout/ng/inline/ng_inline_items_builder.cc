@@ -5,7 +5,10 @@
 #include "core/layout/ng/inline/ng_inline_items_builder.h"
 
 #include "core/layout/LayoutObject.h"
+#include "core/layout/ng/inline/ng_inline_node.h"
 #include "core/layout/ng/inline/ng_offset_mapping_builder.h"
+#include "core/layout/ng/ng_layout_result.h"
+#include "core/layout/ng/ng_unpositioned_float.h"
 #include "core/style/ComputedStyle.h"
 
 namespace blink {
@@ -306,6 +309,7 @@ void NGInlineItemsBuilderTemplate<OffsetMappingBuilder>::Append(
     const ComputedStyle* style,
     LayoutObject* layout_object) {
   DCHECK_NE(character, kSpaceCharacter);
+  DCHECK_NE(character, kZeroWidthSpaceCharacter);
 
   text_.Append(character);
   mapping_builder_.AppendIdentityMapping(1);

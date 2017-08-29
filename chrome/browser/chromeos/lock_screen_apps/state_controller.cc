@@ -66,8 +66,8 @@ std::string GenerateCryptoKey() {
 
 // static
 bool StateController::IsEnabled() {
-  return !base::CommandLine::ForCurrentProcess()->HasSwitch(
-      chromeos::switches::kDisableLockScreenApps);
+  return base::CommandLine::ForCurrentProcess()->HasSwitch(
+      chromeos::switches::kEnableLockScreenApps);
 }
 
 // static
@@ -383,8 +383,13 @@ bool StateController::HandleTakeFocus(content::WebContents* web_contents,
 }
 
 void StateController::MoveToBackground() {
-  ResetNoteTakingWindowAndMoveToNextState(
-      true /*close_window*/, NoteTakingExitReason::kUnlockButtonPressed);
+  if (GetLockScreenNoteState() == TrayActionState::kLaunching) {
+    note_app_window_metrics_->Reset();
+    UpdateLockScreenNoteState(TrayActionState::kAvailable);
+  } else if (GetLockScreenNoteState() == TrayActionState::kActive) {
+    note_app_window_metrics_->MovedToBackground();
+    UpdateLockScreenNoteState(TrayActionState::kBackground);
+  }
 }
 
 void StateController::MoveToForeground() {

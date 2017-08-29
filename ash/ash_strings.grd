@@ -447,12 +447,6 @@ This file contains the strings for ash.
       <message name="IDS_ASH_PALETTE_SETTINGS" desc="The label on the setting button used to open palette setting page.">
         Stylus settings
       </message>
-      <message name="IDS_ASH_VOICE_INTERACTION_LOCALE_UNSUPPORTED_TOAST_MESSAGE" desc="Message content on the toast that appears when the voice interaction shortcut is pressed but the locale is unsupported.">
-        The Google Assistant doesn’t speak this language.
-      </message>
-      <message name="IDS_ASH_VOICE_INTERACTION_SECONDARY_USER_TOAST_MESSAGE" desc="Message content on the toast that appears when the voice interaction shortcut is pressed but the locale is unsupported.">
-        Assistant is only available for primary profile.
-      </message>
 
       <message name="IDS_ASH_TOAST_DISMISS_BUTTON" desc="The text button shown in toasts to close the toast immediately without waiting timeout.">
         DISMISS
@@ -887,15 +881,6 @@ This file contains the strings for ash.
       <message name="IDS_ASH_STATUS_TRAY_NO_MOBILE_NETWORKS" desc="The message to display in the network list when no mobile networks are available.">
         No mobile network available
       </message>
-      <message name="IDS_ASH_STATUS_TRAY_NO_MOBILE_DEVICES_FOUND" desc="The message to display in the network list when no mobile devices which can provide a tether hotspot have been discovered nearby.">
-        No mobile devices found.
-      </message>
-      <message name="IDS_ASH_STATUS_TRAY_ENABLING_MOBILE_ENABLES_BLUETOOTH" desc="The message to display in the mobile section of the network list when Bluetooth is off. If Bluetooth is off and mobile data is turned on, Bluetooth will also be turned on for the user to support this feature.">
-        Enabling mobile data will enable Bluetooth.
-      </message>
-      <message name="IDS_ASH_STATUS_TRAY_NETWORK_MOBILE_DISABLED" desc="The message to display in the network list when mobile data is turned off.">
-        Mobile data is turned off.
-      </message>
       <message name="IDS_ASH_STATUS_TRAY_ENABLE_BLUETOOTH" desc="The message to display in the network list when Tether is enabled but Bluetooth is disabled.">
         Turn on Bluetooth to discover nearby devices
       </message>
@@ -1068,10 +1053,6 @@ This file contains the strings for ash.
       </message>
 
       <!-- Notification that an accelerator was pressed, so the user knows how to toggle it back -->
-      <message name="IDS_HIGH_CONTRAST_ACCEL_TITLE"
-               desc="Notification title to tell users that they just pressed the Search+Shift+H shortcut to toggle High Contrast Mode, and that pressing it again will toggle it off.">
-        High Contrast Mode
-      </message>
       <message name="IDS_HIGH_CONTRAST_ACCEL_MSG"
                desc="Notification message to tell users that they just pressed the Search+Shift+H shortcut to toggle High Contrast Mode, and that pressing it again will toggle it off.">
         High Contrast Mode enabled. Press Ctrl+Search+H again to toggle it off.

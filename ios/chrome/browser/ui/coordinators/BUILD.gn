@@ -31,7 +31,6 @@ source_set("test_support") {
   deps = [
     ":coordinators",
     "//base",
-    "//base/test:test_support",
     "//ios/chrome/browser/browser_state:test_support",
     "//ios/chrome/browser/ui/browser_list",
     "//testing/gtest",

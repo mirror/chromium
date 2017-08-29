@@ -6,7 +6,6 @@ import re
 
 from core import perf_benchmark
 from telemetry import benchmark
-from telemetry import story
 from telemetry.timeline import chrome_trace_config
 from telemetry.timeline import chrome_trace_category_filter
 from telemetry.web_perf import timeline_based_measurement
@@ -150,7 +149,6 @@ class _V8RuntimeStatsBrowsingBenchmark(_v8BrowsingBenchmarkBaseClass):
 @benchmark.Owner(emails=['ulan@chromium.org'])
 class V8DesktopBrowsingBenchmark(_V8BrowsingBenchmark):
   PLATFORM = 'desktop'
-  SUPPORTED_PLATFORMS = [story.expectations.ALL_DESKTOP]
 
   @classmethod
   def Name(cls):
@@ -160,7 +158,6 @@ class V8DesktopBrowsingBenchmark(_V8BrowsingBenchmark):
 @benchmark.Owner(emails=['ulan@chromium.org'])
 class V8MobileBrowsingBenchmark(_V8BrowsingBenchmark):
   PLATFORM = 'mobile'
-  SUPPORTED_PLATFORMS = [story.expectations.ALL_MOBILE]
 
   @classmethod
   def Name(cls):
@@ -171,7 +168,6 @@ class V8MobileBrowsingBenchmark(_V8BrowsingBenchmark):
 class V8RuntimeStatsDesktopBrowsingBenchmark(
     _V8RuntimeStatsBrowsingBenchmark):
   PLATFORM = 'desktop'
-  SUPPORTED_PLATFORMS = [story.expectations.ALL_DESKTOP]
 
   @classmethod
   def Name(cls):
@@ -182,7 +178,6 @@ class V8RuntimeStatsDesktopBrowsingBenchmark(
 class V8RuntimeStatsMobileBrowsingBenchmark(
     _V8RuntimeStatsBrowsingBenchmark):
   PLATFORM = 'mobile'
-  SUPPORTED_PLATFORMS = [story.expectations.ALL_MOBILE]
 
   @classmethod
   def Name(cls):

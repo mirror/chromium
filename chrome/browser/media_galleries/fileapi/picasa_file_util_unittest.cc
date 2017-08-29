@@ -142,13 +142,12 @@ class TestFolder {
 void ReadDirectoryTestHelperCallback(
     base::RunLoop* run_loop,
     FileSystemOperation::FileEntryList* contents,
-    bool* completed,
-    base::File::Error error,
-    FileSystemOperation::FileEntryList file_list,
+    bool* completed, base::File::Error error,
+    const FileSystemOperation::FileEntryList& file_list,
     bool has_more) {
   DCHECK(!*completed);
   *completed = !has_more && error == base::File::FILE_OK;
-  *contents = std::move(file_list);
+  *contents = file_list;
   run_loop->Quit();
 }
 
@@ -160,8 +159,8 @@ void ReadDirectoryTestHelper(storage::FileSystemOperationRunner* runner,
   DCHECK(completed);
   base::RunLoop run_loop;
   runner->ReadDirectory(
-      url, base::BindRepeating(&ReadDirectoryTestHelperCallback, &run_loop,
-                               contents, completed));
+      url, base::Bind(&ReadDirectoryTestHelperCallback, &run_loop, contents,
+                      completed));
   run_loop.Run();
 }
 
@@ -181,7 +180,7 @@ void CreateSnapshotFileTestHelperCallback(
     base::File::Error result,
     const base::File::Info& file_info,
     const base::FilePath& platform_path,
-    scoped_refptr<storage::ShareableFileReference> file_ref) {
+    const scoped_refptr<storage::ShareableFileReference>& file_ref) {
   DCHECK(run_loop);
   DCHECK(error);
   DCHECK(platform_path_result);

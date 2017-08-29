@@ -303,7 +303,8 @@ ManagePasswordsBubbleModel::ManagePasswordsBubbleModel(
   } else if (state_ == password_manager::ui::MANAGE_STATE) {
     local_credentials_ = DeepCopyForms(delegate_->GetCurrentForms());
     UpdateManageStateTitle();
-    manage_link_ = l10n_util::GetStringUTF16(IDS_MANAGE_PASSWORDS_BUBBLE_LINK);
+    manage_link_ =
+        l10n_util::GetStringUTF16(IDS_OPTIONS_PASSWORDS_MANAGE_PASSWORDS_LINK);
   }
 
   if (state_ == password_manager::ui::CONFIRMATION_STATE) {

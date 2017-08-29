@@ -4,7 +4,6 @@
 
 #import "ios/clean/chrome/app/steps/step_collections.h"
 
-#import "ios/clean/chrome/app/steps/breakpad_initializer.h"
 #import "ios/clean/chrome/app/steps/browser_state_setter.h"
 #import "ios/clean/chrome/app/steps/bundle_and_defaults_configurator.h"
 #import "ios/clean/chrome/app/steps/chrome_main.h"
@@ -20,8 +19,7 @@
     [[BrowserStateSetter alloc] init],
     [[BundleAndDefaultsConfigurator alloc] init], [[ChromeMain alloc] init],
     [[Foregrounder alloc] init], [[ProviderInitializer alloc] init],
-    [[UIInitializer alloc] init], [[RootCoordinatorInitializer alloc] init],
-    [[BreakpadInitializer alloc] init]
+    [[UIInitializer alloc] init], [[RootCoordinatorInitializer alloc] init]
   ];
 }
 

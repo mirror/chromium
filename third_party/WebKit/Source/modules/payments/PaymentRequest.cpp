@@ -74,7 +74,7 @@ struct TypeConverter<PaymentCurrencyAmountPtr, blink::PaymentCurrencyAmount> {
   static PaymentCurrencyAmountPtr Convert(
       const blink::PaymentCurrencyAmount& input) {
     PaymentCurrencyAmountPtr output = PaymentCurrencyAmount::New();
-    output->currency = input.currency().UpperASCII();
+    output->currency = input.currency();
     output->value = input.value();
     output->currency_system = input.currencySystem();
     return output;
@@ -206,7 +206,7 @@ void ValidateShippingOptionOrPaymentItem(const T& item,
   if (!PaymentsValidators::IsValidCurrencyCodeFormat(
           item.amount().currency(), item.amount().currencySystem(),
           &error_message)) {
-    exception_state.ThrowRangeError(error_message);
+    exception_state.ThrowTypeError(error_message);
     return;
   }
 }
@@ -571,31 +571,19 @@ void ValidateAndConvertPaymentDetailsModifiers(
         return;
     }
 
-    Vector<String> supported_methods;
-    if (modifier.supportedMethods().isString()) {
-      supported_methods.push_back(modifier.supportedMethods().getAsString());
-    }
-    if (modifier.supportedMethods().isStringSequence()) {
-      supported_methods = modifier.supportedMethods().getAsStringSequence();
-      if (supported_methods.size() > 1) {
-        Deprecation::CountDeprecation(
-            &execution_context,
-            WebFeature::kPaymentRequestSupportedMethodsArray);
-      }
-    }
-    if (supported_methods.IsEmpty()) {
+    if (modifier.supportedMethods().IsEmpty()) {
       exception_state.ThrowTypeError(
           "Must specify at least one payment method identifier");
       return;
     }
 
-    if (supported_methods.size() > kMaxListSize) {
+    if (modifier.supportedMethods().size() > kMaxListSize) {
       exception_state.ThrowTypeError(
           "At most 1024 supportedMethods allowed for modifier");
       return;
     }
 
-    for (const String& method : supported_methods) {
+    for (const String& method : modifier.supportedMethods()) {
       if (method.length() > kMaxStringLength) {
         exception_state.ThrowTypeError(
             "Supported method name for identifier cannot be longer than 1024 "
@@ -603,17 +591,17 @@ void ValidateAndConvertPaymentDetailsModifiers(
         return;
       }
     }
-    CountPaymentRequestNetworkNameInSupportedMethods(supported_methods,
-                                                     execution_context);
+    CountPaymentRequestNetworkNameInSupportedMethods(
+        modifier.supportedMethods(), execution_context);
 
     output.back()->method_data =
         payments::mojom::blink::PaymentMethodData::New();
-    output.back()->method_data->supported_methods = supported_methods;
+    output.back()->method_data->supported_methods = modifier.supportedMethods();
 
     if (modifier.hasData() && !modifier.data().IsEmpty()) {
-      StringifyAndParseMethodSpecificData(supported_methods, modifier.data(),
-                                          output.back()->method_data,
-                                          exception_state);
+      StringifyAndParseMethodSpecificData(
+          modifier.supportedMethods(), modifier.data(),
+          output.back()->method_data, exception_state);
     } else {
       output.back()->method_data->stringified_data = "";
     }
@@ -712,34 +700,20 @@ void ValidateAndConvertPaymentMethodData(
   }
 
   for (const PaymentMethodData payment_method_data : input) {
-    Vector<String> supported_methods;
-    if (payment_method_data.supportedMethods().isString()) {
-      supported_methods.push_back(
-          payment_method_data.supportedMethods().getAsString());
-    }
-    if (payment_method_data.supportedMethods().isStringSequence()) {
-      supported_methods =
-          payment_method_data.supportedMethods().getAsStringSequence();
-      if (supported_methods.size() > 1) {
-        Deprecation::CountDeprecation(
-            &execution_context,
-            WebFeature::kPaymentRequestSupportedMethodsArray);
-      }
-    }
-    if (supported_methods.IsEmpty()) {
+    if (payment_method_data.supportedMethods().IsEmpty()) {
       exception_state.ThrowTypeError(
           "Each payment method needs to include at least one payment method "
           "identifier");
       return;
     }
 
-    if (supported_methods.size() > kMaxListSize) {
+    if (payment_method_data.supportedMethods().size() > kMaxListSize) {
       exception_state.ThrowTypeError(
           "At most 1024 payment method identifiers are supported");
       return;
     }
 
-    for (const String identifier : supported_methods) {
+    for (const String identifier : payment_method_data.supportedMethods()) {
       if (identifier.length() > kMaxStringLength) {
         exception_state.ThrowTypeError(
             "A payment method identifier cannot be longer than 1024 "
@@ -748,17 +722,17 @@ void ValidateAndConvertPaymentMethodData(
       }
     }
 
-    CountPaymentRequestNetworkNameInSupportedMethods(supported_methods,
-                                                     execution_context);
+    CountPaymentRequestNetworkNameInSupportedMethods(
+        payment_method_data.supportedMethods(), execution_context);
 
     output.push_back(payments::mojom::blink::PaymentMethodData::New());
-    output.back()->supported_methods = supported_methods;
+    output.back()->supported_methods = payment_method_data.supportedMethods();
 
     if (payment_method_data.hasData() &&
         !payment_method_data.data().IsEmpty()) {
-      StringifyAndParseMethodSpecificData(supported_methods,
-                                          payment_method_data.data(),
-                                          output.back(), exception_state);
+      StringifyAndParseMethodSpecificData(
+          payment_method_data.supportedMethods(), payment_method_data.data(),
+          output.back(), exception_state);
     } else {
       output.back()->stringified_data = "";
     }
@@ -959,13 +933,6 @@ void PaymentRequest::OnUpdatePaymentDetails(
   if (exception_state.HadException()) {
     show_resolver_->Reject(
         DOMException::Create(kSyntaxError, exception_state.Message()));
-    ClearResolversAndCloseMojoConnection();
-    return;
-  }
-
-  if (!details.hasTotal()) {
-    show_resolver_->Reject(
-        DOMException::Create(kSyntaxError, "Total required"));
     ClearResolversAndCloseMojoConnection();
     return;
   }

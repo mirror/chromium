@@ -19,7 +19,6 @@
 #include "cc/quads/solid_color_draw_quad.h"
 #include "cc/quads/surface_draw_quad.h"
 #include "cc/quads/texture_draw_quad.h"
-#include "cc/resources/display_resource_provider.h"
 #include "cc/test/fake_compositor_frame_sink_support_client.h"
 #include "cc/test/fake_resource_provider.h"
 #include "cc/test/render_pass_test_utils.h"
@@ -2130,8 +2129,7 @@ class SurfaceAggregatorWithResourcesTest : public testing::Test {
   void SetUp() override {
     shared_bitmap_manager_ = base::MakeUnique<cc::TestSharedBitmapManager>();
     resource_provider_ =
-        cc::FakeResourceProvider::Create<cc::DisplayResourceProvider>(
-            nullptr, shared_bitmap_manager_.get());
+        cc::FakeResourceProvider::Create(nullptr, shared_bitmap_manager_.get());
 
     aggregator_ = base::MakeUnique<SurfaceAggregator>(
         manager_.surface_manager(), resource_provider_.get(), false);
@@ -2141,7 +2139,7 @@ class SurfaceAggregatorWithResourcesTest : public testing::Test {
  protected:
   FrameSinkManagerImpl manager_;
   std::unique_ptr<SharedBitmapManager> shared_bitmap_manager_;
-  std::unique_ptr<cc::DisplayResourceProvider> resource_provider_;
+  std::unique_ptr<cc::ResourceProvider> resource_provider_;
   std::unique_ptr<SurfaceAggregator> aggregator_;
 };
 
@@ -2170,6 +2168,7 @@ void SubmitCompositorFrameWithResources(ResourceId* resource_ids,
     frame.resource_list.push_back(resource);
     auto* quad = pass->CreateAndAppendDrawQuad<cc::TextureDrawQuad>();
     const gfx::Rect rect;
+    const gfx::Rect opaque_rect;
     const gfx::Rect visible_rect;
     bool needs_blending = false;
     bool premultiplied_alpha = false;
@@ -2180,10 +2179,10 @@ void SubmitCompositorFrameWithResources(ResourceId* resource_ids,
     bool flipped = false;
     bool nearest_neighbor = false;
     bool secure_output_only = true;
-    quad->SetAll(sqs, rect, visible_rect, needs_blending, resource_ids[i],
-                 gfx::Size(), premultiplied_alpha, uv_top_left, uv_bottom_right,
-                 background_color, vertex_opacity, flipped, nearest_neighbor,
-                 secure_output_only);
+    quad->SetAll(sqs, rect, opaque_rect, visible_rect, needs_blending,
+                 resource_ids[i], gfx::Size(), premultiplied_alpha, uv_top_left,
+                 uv_bottom_right, background_color, vertex_opacity, flipped,
+                 nearest_neighbor, secure_output_only);
   }
   frame.render_pass_list.push_back(std::move(pass));
   support->SubmitCompositorFrame(surface_id.local_surface_id(),

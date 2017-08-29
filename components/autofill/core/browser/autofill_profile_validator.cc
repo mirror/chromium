@@ -15,7 +15,6 @@
 #include "base/threading/sequenced_task_runner_handle.h"
 #include "base/time/time.h"
 #include "components/autofill/core/browser/address_validation_util.h"
-#include "components/autofill/core/browser/phone_email_validation_util.h"
 #include "third_party/libaddressinput/src/cpp/include/libaddressinput/address_data.h"
 #include "third_party/libaddressinput/src/cpp/include/libaddressinput/address_validator.h"
 
@@ -62,20 +61,7 @@ void AutofillProfileValidator::ValidationRequest::OnRulesLoaded() {
     return;
   has_responded_ = true;
   AutofillProfile::ValidityState profile_validity =
-      AutofillProfile::UNVALIDATED;
-  AutofillProfile::ValidityState address_validity =
       address_validation_util::ValidateAddress(profile_, validator_);
-  AutofillProfile::ValidityState phone_email_validity =
-      phone_email_validation_util::ValidatePhoneAndEmail(profile_);
-
-  if (address_validity == AutofillProfile::INVALID ||
-      phone_email_validity == AutofillProfile::INVALID) {
-    profile_validity = AutofillProfile::INVALID;
-  } else if (address_validity == AutofillProfile::VALID &&
-             phone_email_validity == AutofillProfile::VALID) {
-    profile_validity = AutofillProfile::VALID;
-  }
-
   std::move(on_validated_).Run(profile_validity);
 }
 
@@ -119,8 +105,7 @@ void AutofillProfileValidator::OnAddressValidationRulesLoaded(
     const std::string& region_code,
     bool success) {
   // Even if success = false, we can still validate address partially. We can
-  // check for missing fields or unexpected fields. We can also validate
-  // non-address fields.
+  // check for missing fields or unexpected fields.
 
   // Check if there is any request for that region code.
   auto it = pending_requests_.find(region_code);

@@ -26,8 +26,7 @@ class MediaEngagementContentsObserverTest
     : public ChromeRenderViewHostTestHarness {
  public:
   void SetUp() override {
-    scoped_feature_list_.InitFromCommandLine("RecordMediaEngagementScores",
-                                             std::string());
+    scoped_feature_list_.InitFromCommandLine("media-engagement", std::string());
 
     ChromeRenderViewHostTestHarness::SetUp();
     SetContents(content::WebContentsTester::CreateTestWebContents(
@@ -165,8 +164,7 @@ class MediaEngagementContentsObserverTest
                       int playbacks_total,
                       int visits_total,
                       int score,
-                      int playbacks_delta,
-                      bool high_score) {
+                      int playbacks_delta) {
     using Entry = ukm::builders::Media_Engagement_SessionFinished;
 
     std::vector<std::pair<const char*, int64_t>> metrics = {
@@ -174,7 +172,6 @@ class MediaEngagementContentsObserverTest
         {Entry::kVisits_TotalName, visits_total},
         {Entry::kEngagement_ScoreName, score},
         {Entry::kPlaybacks_DeltaName, playbacks_delta},
-        {Entry::kEngagement_IsHighName, high_score},
     };
 
     const ukm::UkmSource* source =
@@ -635,7 +632,7 @@ TEST_F(MediaEngagementContentsObserverTest, RecordUkmMetricsOnDestroy) {
   EXPECT_TRUE(WasSignificantPlaybackRecorded());
 
   SimulateDestroy();
-  ExpectUkmEntry(url, 6, 7, 86, 1, true);
+  ExpectUkmEntry(url, 6, 7, 86, 1);
 }
 
 TEST_F(MediaEngagementContentsObserverTest,
@@ -648,7 +645,7 @@ TEST_F(MediaEngagementContentsObserverTest,
   ExpectScores(url, 5.0 / 7.0, 7, 5);
 
   SimulateDestroy();
-  ExpectUkmEntry(url, 5, 7, 71, 0, true);
+  ExpectUkmEntry(url, 5, 7, 71, 0);
 }
 
 TEST_F(MediaEngagementContentsObserverTest, RecordUkmMetricsOnNavigate) {
@@ -663,20 +660,20 @@ TEST_F(MediaEngagementContentsObserverTest, RecordUkmMetricsOnNavigate) {
   EXPECT_TRUE(WasSignificantPlaybackRecorded());
 
   Navigate(GURL("https://www.example.org"));
-  ExpectUkmEntry(url, 6, 7, 86, 1, true);
+  ExpectUkmEntry(url, 6, 7, 86, 1);
 }
 
 TEST_F(MediaEngagementContentsObserverTest,
        RecordUkmMetricsOnNavigate_NoPlaybacks) {
   GURL url("https://www.google.com");
-  SetScores(url, 9, 2);
+  SetScores(url, 6, 5);
   Navigate(url);
 
   EXPECT_FALSE(WasSignificantPlaybackRecorded());
-  ExpectScores(url, 2 / 10.0, 10, 2);
+  ExpectScores(url, 5.0 / 7.0, 7, 5);
 
   Navigate(GURL("https://www.example.org"));
-  ExpectUkmEntry(url, 2, 10, 20, 0, false);
+  ExpectUkmEntry(url, 5, 7, 71, 0);
 }
 
 TEST_F(MediaEngagementContentsObserverTest, DoNotRecordMetricsOnInternalUrl) {

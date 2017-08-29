@@ -347,23 +347,6 @@ const BrowserAccessibilityAndroid*
   return sole_interesting_node;
 }
 
-bool BrowserAccessibilityAndroid::AreInlineTextBoxesLoaded() const {
-  if (GetRole() == ui::AX_ROLE_STATIC_TEXT)
-    return InternalChildCount() > 0;
-
-  // Return false if any descendant needs to load inline text boxes.
-  for (uint32_t i = 0; i < InternalChildCount(); ++i) {
-    BrowserAccessibilityAndroid* child =
-        static_cast<BrowserAccessibilityAndroid*>(InternalGetChild(i));
-    if (!child->AreInlineTextBoxesLoaded())
-      return false;
-  }
-
-  // Otherwise return true - either they're all loaded, or there aren't
-  // any descendants that need to load inline text boxes.
-  return true;
-}
-
 bool BrowserAccessibilityAndroid::CanOpenPopup() const {
   return HasState(ui::AX_STATE_HASPOPUP);
 }
@@ -379,11 +362,25 @@ base::string16 BrowserAccessibilityAndroid::GetText() const {
     return base::string16();
   }
 
+  // We can only expose one accessible name on Android,
+  // not 2 or 3 like on Windows or Mac.
+
   // First, always return the |value| attribute if this is an
   // input field.
   base::string16 value = GetValue();
-  if (ShouldExposeValueAsName())
-    return value;
+  if (!value.empty()) {
+    if (HasState(ui::AX_STATE_EDITABLE))
+      return value;
+
+    switch (GetRole()) {
+      case ui::AX_ROLE_COMBO_BOX:
+      case ui::AX_ROLE_POP_UP_BUTTON:
+      case ui::AX_ROLE_TEXT_FIELD:
+        return value;
+      default:
+        break;
+    }
+  }
 
   // For color wells, the color is stored in separate attributes.
   // Perhaps we could return color names in the future?
@@ -398,6 +395,13 @@ base::string16 BrowserAccessibilityAndroid::GetText() const {
   }
 
   base::string16 text = GetString16Attribute(ui::AX_ATTR_NAME);
+  base::string16 description = GetString16Attribute(ui::AX_ATTR_DESCRIPTION);
+  if (!description.empty()) {
+    if (!text.empty())
+      text += base::ASCIIToUTF16(" ");
+    text += description;
+  }
+
   if (text.empty())
     text = value;
 
@@ -425,22 +429,6 @@ base::string16 BrowserAccessibilityAndroid::GetText() const {
   }
 
   return text;
-}
-
-base::string16 BrowserAccessibilityAndroid::GetHint() const {
-  base::string16 description = GetString16Attribute(ui::AX_ATTR_DESCRIPTION);
-
-  // If we're returning the value as the main text, then return both the
-  // accessible name and description as the hint.
-  if (ShouldExposeValueAsName()) {
-    base::string16 name = GetString16Attribute(ui::AX_ATTR_NAME);
-    if (!name.empty() && !description.empty())
-      return name + base::ASCIIToUTF16(" ") + description;
-    else if (!name.empty())
-      return name;
-  }
-
-  return description;
 }
 
 base::string16 BrowserAccessibilityAndroid::GetRoleDescription() const {
@@ -1378,26 +1366,6 @@ bool BrowserAccessibilityAndroid::HasOnlyTextAndImageChildren() const {
 bool BrowserAccessibilityAndroid::IsIframe() const {
   return (GetRole() == ui::AX_ROLE_IFRAME ||
           GetRole() == ui::AX_ROLE_IFRAME_PRESENTATIONAL);
-}
-
-bool BrowserAccessibilityAndroid::ShouldExposeValueAsName() const {
-  base::string16 value = GetValue();
-  if (value.empty())
-    return false;
-
-  if (HasState(ui::AX_STATE_EDITABLE))
-    return true;
-
-  switch (GetRole()) {
-    case ui::AX_ROLE_COMBO_BOX:
-    case ui::AX_ROLE_POP_UP_BUTTON:
-    case ui::AX_ROLE_TEXT_FIELD:
-      return true;
-    default:
-      break;
-  }
-
-  return false;
 }
 
 void BrowserAccessibilityAndroid::OnDataChanged() {

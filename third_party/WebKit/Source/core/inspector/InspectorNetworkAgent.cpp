@@ -31,8 +31,6 @@
 #include "core/inspector/InspectorNetworkAgent.h"
 
 #include <memory>
-#include <utility>
-
 #include "bindings/core/v8/ExceptionState.h"
 #include "bindings/core/v8/SourceLocation.h"
 #include "core/dom/Document.h"
@@ -415,6 +413,9 @@ BuildObjectForResourceResponse(const ResourceResponse& response,
       break;
     case ResourceResponse::kSecurityStyleAuthenticationBroken:
       security_state = protocol::Security::SecurityStateEnum::Insecure;
+      break;
+    case ResourceResponse::kSecurityStyleWarning:
+      security_state = protocol::Security::SecurityStateEnum::Warning;
       break;
     case ResourceResponse::kSecurityStyleAuthenticated:
       security_state = protocol::Security::SecurityStateEnum::Secure;
@@ -871,7 +872,6 @@ void InspectorNetworkAgent::DidReceiveCORSRedirectResponse(
 }
 
 void InspectorNetworkAgent::DidFailLoading(unsigned long identifier,
-                                           DocumentLoader*,
                                            const ResourceError& error) {
   String request_id = IdentifiersFactory::RequestId(identifier);
   bool canceled = error.IsCancellation();

@@ -8,7 +8,6 @@
 
 #include "base/bind.h"
 #include "base/macros.h"
-#include "base/memory/ptr_util.h"
 #include "base/metrics/histogram_macros.h"
 #include "base/strings/string16.h"
 #include "base/win/message_window.h"
@@ -55,8 +54,8 @@ void UpdateNumberBatteriesHistogram() {
 class BatteryStatusObserver {
  public:
   explicit BatteryStatusObserver(const BatteryCallback& callback)
-      : power_handle_(nullptr),
-        battery_change_handle_(nullptr),
+      : power_handle_(NULL),
+        battery_change_handle_(NULL),
         callback_(callback) {}
 
   ~BatteryStatusObserver() { DCHECK(!window_); }
@@ -84,11 +83,11 @@ class BatteryStatusObserver {
   void Stop() {
     if (power_handle_) {
       UnregisterNotification(power_handle_);
-      power_handle_ = nullptr;
+      power_handle_ = NULL;
     }
     if (battery_change_handle_) {
       UnregisterNotification(battery_change_handle_);
-      battery_change_handle_ = nullptr;
+      battery_change_handle_ = NULL;
     }
     window_.reset();
   }
@@ -112,7 +111,7 @@ class BatteryStatusObserver {
             wparam == PBT_POWERSETTINGCHANGE) {
           BatteryChanged();
         }
-        *result = 0;
+        *result = NULL;
         return true;
       default:
         return false;
@@ -130,7 +129,7 @@ class BatteryStatusObserver {
 
   bool CreateMessageWindow() {
     // TODO(timvolodine): consider reusing the message window of PowerMonitor.
-    window_ = base::MakeUnique<base::win::MessageWindow>();
+    window_.reset(new base::win::MessageWindow());
     if (!window_->CreateNamed(base::Bind(&BatteryStatusObserver::HandleMessage,
                                          base::Unretained(this)),
                               base::string16(kWindowClassName))) {
@@ -152,7 +151,7 @@ class BatteryStatusObserver {
 class BatteryStatusManagerWin : public BatteryStatusManager {
  public:
   explicit BatteryStatusManagerWin(const BatteryCallback& callback)
-      : battery_observer_(base::MakeUnique<BatteryStatusObserver>(callback)) {}
+      : battery_observer_(new BatteryStatusObserver(callback)) {}
   ~BatteryStatusManagerWin() override { battery_observer_->Stop(); }
 
  public:
@@ -201,7 +200,8 @@ mojom::BatteryStatus ComputeWebBatteryStatus(
 // static
 std::unique_ptr<BatteryStatusManager> BatteryStatusManager::Create(
     const BatteryStatusService::BatteryUpdateCallback& callback) {
-  return base::MakeUnique<BatteryStatusManagerWin>(callback);
+  return std::unique_ptr<BatteryStatusManager>(
+      new BatteryStatusManagerWin(callback));
 }
 
 }  // namespace device

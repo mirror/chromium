@@ -1,4 +1,0 @@
-include_rules = [
-  "+components/printing/service/",
-  "+content/public/utility",
-]

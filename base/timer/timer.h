@@ -308,8 +308,16 @@ class DelayTimer : protected Timer {
               false,
               tick_clock) {}
 
-  using Timer::Reset;
+  void Reset() override;
 };
+
+// This class has a templated method so it can not be exported without failing
+// to link in MSVC. But clang-plugin does not allow inline definitions of
+// virtual methods, so the inline definition lives in the header file here
+// to satisfy both.
+inline void DelayTimer::Reset() {
+  Timer::Reset();
+}
 
 }  // namespace base
 

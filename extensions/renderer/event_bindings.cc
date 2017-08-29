@@ -99,7 +99,7 @@ bool AddFilter(const std::string& event_name,
   FilteredEventListenerCounts::const_iterator counts = all_counts.find(key);
   if (counts == all_counts.end()) {
     counts =
-        all_counts.insert(std::make_pair(key, std::make_unique<ValueCounter>()))
+        all_counts.insert(std::make_pair(key, base::MakeUnique<ValueCounter>()))
             .first;
   }
   return counts->second->Add(filter);
@@ -336,7 +336,7 @@ void EventBindings::AttachFilteredEvent(
 
   int id = g_event_filter.Get().AddEventMatcher(
       event_name,
-      std::make_unique<EventMatcher>(
+      base::MakeUnique<EventMatcher>(
           std::move(filter), context()->GetRenderFrame()->GetRoutingID()));
   if (id == -1) {
     args.GetReturnValue().Set(static_cast<int32_t>(-1));

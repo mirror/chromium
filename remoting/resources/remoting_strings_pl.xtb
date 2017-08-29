@@ -23,6 +23,7 @@ Informacje na temat prywatności znajdziesz w Polityce prywatności Google (http
 <translation id="1520828917794284345">Dopasuj pulpit</translation>
 <translation id="154040539590487450">Nie udało się uruchomić usługi dostępu zdalnego.</translation>
 <translation id="1546934824884762070">Wystąpił nieoczekiwany błąd. Zgłoś ten problem programistom.</translation>
+<translation id="1619813076098775562">Połączenie z urządzeniem Cast zostało zakończone.</translation>
 <translation id="1643640058022401035">Jeśli opuścisz tę stronę, sesja Chromoting zostanie zakończona.</translation>
 <translation id="1654128982815600832">Włączam połączenia zdalne z tym komputerem…</translation>
 <translation id="170207782578677537">Nie udało się zarejestrować tego komputera.</translation>
@@ -40,6 +41,10 @@ Informacje na temat prywatności znajdziesz w Polityce prywatności Google (http
 <translation id="2013996867038862849">Wszystkie sparowane klienty zostały usunięte.</translation>
 <translation id="2038229918502634450">Host uruchamia się ponownie, by uwzględnić zmianę zasad.</translation>
 <translation id="2046651113449445291">Te klienty zostały sparowane z tym komputerem i mogą łączyć się bez podawania kodu PIN. Możesz anulować to uprawnienie w dowolnym momencie – pojedynczo lub dla wszystkich klientów.</translation>
+<translation id="2053901200959289492">• Dodana obsługa wielu okien w Androidzie Nougat.
+• Lepsza jakość obrazu pulpitu, poprawa reakcji i mniejsze zużycie baterii.
+• Poprawiona reakcja na klikanie i przeciąganie.
+• Poprawione niektóre animacje interfejsu użytkownika.</translation>
 <translation id="2078880767960296260">Proces hosta</translation>
 <translation id="20876857123010370">Tryb trackpada</translation>
 <translation id="2089514346391228378">Połączenia zdalne z tym komputerem zostały włączone.</translation>
@@ -75,7 +80,6 @@ Informacje na temat prywatności znajdziesz w Polityce prywatności Google (http
 <translation id="2676780859508944670">Przetwarzam…</translation>
 <translation id="2699970397166997657">Chromoting</translation>
 <translation id="2747641796667576127">Aktualizacje oprogramowania są zwykle instalowane automatycznie, ale w niektórych rzadkich przypadkach kończą się niepowodzeniem. Aktualizacja oprogramowania nie powinna trwać dłużej niż kilka minut i można ją wykonać przy zdalnym połączeniu z komputerem.</translation>
-<translation id="2758123043070977469">Podczas uwierzytelniania wystąpił problem. Zaloguj się ponownie.</translation>
 <translation id="2803375539583399270">Wpisz kod PIN</translation>
 <translation id="2841013758207633010">Godzina</translation>
 <translation id="2851754573186462851">Chromium App Streaming</translation>
@@ -144,7 +148,7 @@ Informacje na temat prywatności znajdziesz w Polityce prywatności Google (http
 <translation id="4517233780764084060">UWAGA: aby wszystkie skróty klawiszowe były dostępne, ustaw Chromoting na „Otwórz jako okno”.</translation>
 <translation id="4563926062592110512">Rozłączył się klient: <ph name="CLIENT_USERNAME" />.</translation>
 <translation id="4572065712096155137">Połącz</translation>
-<translation id="4592037108270173918">Gdy łączysz się z urządzeniem przez sieć komórkową, może być pobierana opłata za przesyłanie danych. Czy chcesz kontynuować?</translation>
+<translation id="4592037108270173918">W przypadku łączenia się z urządzeniem przez sieć komórkową może być pobierana opłata za przesyłanie danych. Czy chcesz kontynuować?</translation>
 <translation id="4619978527973181021">Zaakceptuj i zainstaluj</translation>
 <translation id="4635770493235256822">Urządzenia zdalne</translation>
 <translation id="4660011489602794167">Pokaż klawiaturę</translation>
@@ -171,6 +175,12 @@ Informacje na temat prywatności znajdziesz w Polityce prywatności Google (http
 <translation id="5156271271724754543">Wpisz ten sam PIN w obu polach.</translation>
 <translation id="5170982930780719864">Nieprawidłowy identyfikator hosta.</translation>
 <translation id="518094545883702183">Użyjemy tych informacji jedynie do zdiagnozowania zgłoszonego problemu, udostępnimy je tylko osobie sprawdzającej zgłoszenie i usuniemy w ciągu 30 dni.</translation>
+<translation id="5196958630269420102">Uzyskaj bezpieczny dostęp do swoich komputerów z urządzenia z iOS.
+
+• Na każdym ze swoich komputerów skonfiguruj dostęp zdalny w aplikacji Pulpit zdalny Chrome, którą znajdziesz w Chrome Web Store: https://chrome.google.com/remotedesktop
+• Otwórz aplikację na urządzeniu z iOS i wybierz jeden z dostępnych komputerów, by się połączyć.
+
+Informacje na temat prywatności znajdziesz w Polityce prywatności Google (http://goo.gl/SyrVzj) i Polityce prywatności Chrome (http://goo.gl/0uXE5d).</translation>
 <translation id="5204575267916639804">Najczęstsze pytania</translation>
 <translation id="5222676887888702881">Wyloguj się</translation>
 <translation id="5254120496627797685">Jeśli opuścisz tę stronę, sesja Pulpitu zdalnego Chrome zostanie zakończona.</translation>
@@ -183,6 +193,7 @@ Informacje na temat prywatności znajdziesz w Polityce prywatności Google (http
 <translation id="5419418238395129586">Ostatnio online: <ph name="DATE" /></translation>
 <translation id="544077782045763683">Host został wyłączony.</translation>
 <translation id="5510035215749041527">Odłącz teraz</translation>
+<translation id="5537725057119320332">Przesyłaj</translation>
 <translation id="5593560073513909978">Usługa jest tymczasowo niedostępna. Spróbuj ponownie później.</translation>
 <translation id="5601503069213153581">PIN</translation>
 <translation id="5619148062500147964">Z tym komputerem</translation>
@@ -191,10 +202,10 @@ Informacje na temat prywatności znajdziesz w Polityce prywatności Google (http
 <translation id="5708869785009007625">Twój pulpit jest obecnie udostępniany użytkownikowi: <ph name="USER" />.</translation>
 <translation id="5773590752998175013">Data parowania</translation>
 <translation id="579702532610384533">Połącz ponownie</translation>
-<translation id="5810269635982033450">Ekran działa jak trackpad</translation>
 <translation id="5841343754884244200">Opcje wyświetlania</translation>
 <translation id="5843054235973879827">Dlaczego to bezpieczne?</translation>
 <translation id="5859141382851488196">Nowe okno...</translation>
+<translation id="5885438903806970186">Online.</translation>
 <translation id="6011539954251327702">Chromoting pozwala na bezpieczne udostępnianie komputera przez internet. Obaj użytkownicy muszą mieć uruchomioną aplikację Chromoting, którą można znaleźć na <ph name="URL" />.</translation>
 <translation id="6033507038939587647">Opcje klawiatury</translation>
 <translation id="6040143037577758943">Zamknij</translation>
@@ -224,6 +235,11 @@ Informacje na temat prywatności znajdziesz w Polityce prywatności Google (http
 <translation id="6570205395680337606">Zresetuj aplikację. Niezapisane dane zostaną utracone.</translation>
 <translation id="6572345186230665992">Mac (OS X Mavericks 10.9 lub nowszy)</translation>
 <translation id="6583902294974160967">Pomoc</translation>
+<translation id="6598484667010442494">Pulpit zdalny Chrome
+Pulpit zdalny
+Zdalny pecet
+Zdalny komputer
+Zdalny dostęp</translation>
 <translation id="6612717000975622067">Wyślij Ctrl-Alt-Del</translation>
 <translation id="6668065415969892472">PIN został zaktualizowany.</translation>
 <translation id="6681800064886881394">Copyright 2013 Google Inc. Wszelkie prawa zastrzeżone.</translation>
@@ -243,7 +259,7 @@ Informacje na temat prywatności znajdziesz w Polityce prywatności Google (http
 <translation id="7019153418965365059">Nieznany błąd hosta: <ph name="HOST_OFFLINE_REASON" />.</translation>
 <translation id="701976023053394610">Pomoc zdalna</translation>
 <translation id="7038683108611689168">Pomóż nam udoskonalić Chromoting, zezwalając na gromadzenie przez nas statystyk użytkowania i raportów o awariach.</translation>
-<translation id="7067321367069083429">Ekran działa jak ekran dotykowy</translation>
+<translation id="712467900648340229">Nie można połączyć się z urządzeniem Cast.</translation>
 <translation id="7144878232160441200">Ponów próbę</translation>
 <translation id="7149517134817561223">Aplikacja do wysyłania poleceń do hosta Pulpitu zdalnego Chrome.</translation>
 <translation id="7215059001581613786">Wpisz PIN złożony z co najmniej sześciu cyfr.</translation>

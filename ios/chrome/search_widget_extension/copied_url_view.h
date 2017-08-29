@@ -18,9 +18,12 @@
 @property(nonatomic, copy) NSString* copiedURLString;
 
 // Designated initializer, creates the copiedURLView with a |target| to open the
-// URL.
+// URL. The |primaryVibrancyEffect| and |secondaryVibrancyEffect| are used to
+// display view elements.
 - (instancetype)initWithActionTarget:(id)target
                       actionSelector:(SEL)actionSelector
+                       primaryEffect:(UIVisualEffect*)primaryEffect
+                     secondaryEffect:(UIVisualEffect*)secondaryEffect
     NS_DESIGNATED_INITIALIZER;
 - (instancetype)initWithFrame:(CGRect)frame NS_UNAVAILABLE;
 - (instancetype)initWithCoder:(NSCoder*)aDecoder NS_UNAVAILABLE;

@@ -141,15 +141,8 @@ ios::ChromeBrowserState* ChromeBrowserStateManagerImpl::GetBrowserState(
     return iter->second.get();
   }
 
-  // Get sequenced task runner for making sure that file operations of
-  // this profile are executed in expected order (what was previously assured by
-  // the FILE thread).
-  scoped_refptr<base::SequencedTaskRunner> io_task_runner =
-      base::CreateSequencedTaskRunnerWithTraits(
-          {base::TaskShutdownBehavior::BLOCK_SHUTDOWN, base::MayBlock()});
-
   std::unique_ptr<ChromeBrowserStateImpl> browser_state_impl(
-      new ChromeBrowserStateImpl(io_task_runner, path));
+      new ChromeBrowserStateImpl(path));
   DCHECK(!browser_state_impl->IsOffTheRecord());
 
   std::pair<ChromeBrowserStateImplPathMap::iterator, bool> insert_result =

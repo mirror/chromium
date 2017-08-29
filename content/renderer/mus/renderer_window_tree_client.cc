@@ -102,6 +102,7 @@ void RendererWindowTreeClient::DestroySelf() {
 }
 
 void RendererWindowTreeClient::OnEmbed(
+    ui::ClientSpecificId client_id,
     ui::mojom::WindowDataPtr root,
     ui::mojom::WindowTreePtr tree,
     int64_t display_id,

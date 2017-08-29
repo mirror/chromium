@@ -1619,6 +1619,14 @@ void PushAnnotateOps(PaintOpBuffer* buffer) {
   ValidateOps<AnnotateOp>(buffer);
 }
 
+void PushClipDeviceRectOps(PaintOpBuffer* buffer) {
+  for (size_t i = 1; i < test_irects.size(); i += 2) {
+    SkClipOp op = i % 3 ? SkClipOp::kDifference : SkClipOp::kIntersect;
+    buffer->push<ClipDeviceRectOp>(test_irects[i - 1], test_irects[0], op);
+  }
+  ValidateOps<ClipDeviceRectOp>(buffer);
+}
+
 void PushClipPathOps(PaintOpBuffer* buffer) {
   for (size_t i = 0; i < test_paths.size(); ++i) {
     SkClipOp op = i % 3 ? SkClipOp::kDifference : SkClipOp::kIntersect;
@@ -1649,6 +1657,17 @@ void PushConcatOps(PaintOpBuffer* buffer) {
   for (size_t i = 0; i < test_matrices.size(); ++i)
     buffer->push<ConcatOp>(test_matrices[i]);
   ValidateOps<ConcatOp>(buffer);
+}
+
+void PushDrawArcOps(PaintOpBuffer* buffer) {
+  size_t len = std::min(std::min(test_floats.size() - 1, test_flags.size()),
+                        test_rects.size());
+  for (size_t i = 0; i < len; ++i) {
+    bool use_center = !!(i % 2);
+    buffer->push<DrawArcOp>(test_rects[i], test_floats[i], test_floats[i + 1],
+                            use_center, test_flags[i]);
+  }
+  ValidateOps<DrawArcOp>(buffer);
 }
 
 void PushDrawColorOps(PaintOpBuffer* buffer) {
@@ -1845,6 +1864,15 @@ void CompareAnnotateOp(const AnnotateOp* original, const AnnotateOp* written) {
   }
 }
 
+void CompareClipDeviceRectOp(const ClipDeviceRectOp* original,
+                             const ClipDeviceRectOp* written) {
+  EXPECT_TRUE(original->IsValid());
+  EXPECT_TRUE(written->IsValid());
+  EXPECT_EQ(original->device_rect, written->device_rect);
+  EXPECT_EQ(original->subtract_rect, written->subtract_rect);
+  EXPECT_EQ(original->op, written->op);
+}
+
 void CompareClipPathOp(const ClipPathOp* original, const ClipPathOp* written) {
   EXPECT_TRUE(original->IsValid());
   EXPECT_TRUE(written->IsValid());
@@ -1875,6 +1903,16 @@ void CompareConcatOp(const ConcatOp* original, const ConcatOp* written) {
   EXPECT_TRUE(written->IsValid());
   EXPECT_EQ(original->matrix, written->matrix);
   EXPECT_EQ(original->matrix.getType(), written->matrix.getType());
+}
+
+void CompareDrawArcOp(const DrawArcOp* original, const DrawArcOp* written) {
+  EXPECT_TRUE(original->IsValid());
+  EXPECT_TRUE(written->IsValid());
+  CompareFlags(original->flags, written->flags);
+  EXPECT_EQ(original->oval, written->oval);
+  EXPECT_EQ(original->start_angle, written->start_angle);
+  EXPECT_EQ(original->sweep_angle, written->sweep_angle);
+  EXPECT_EQ(original->use_center, written->use_center);
 }
 
 void CompareDrawColorOp(const DrawColorOp* original,
@@ -2069,6 +2107,9 @@ class PaintOpSerializationTest : public ::testing::TestWithParam<uint8_t> {
       case PaintOpType::Annotate:
         PushAnnotateOps(&buffer_);
         break;
+      case PaintOpType::ClipDeviceRect:
+        PushClipDeviceRectOps(&buffer_);
+        break;
       case PaintOpType::ClipPath:
         PushClipPathOps(&buffer_);
         break;
@@ -2080,6 +2121,9 @@ class PaintOpSerializationTest : public ::testing::TestWithParam<uint8_t> {
         break;
       case PaintOpType::Concat:
         PushConcatOps(&buffer_);
+        break;
+      case PaintOpType::DrawArc:
+        PushDrawArcOps(&buffer_);
         break;
       case PaintOpType::DrawColor:
         PushDrawColorOps(&buffer_);
@@ -2158,6 +2202,10 @@ class PaintOpSerializationTest : public ::testing::TestWithParam<uint8_t> {
         CompareAnnotateOp(static_cast<const AnnotateOp*>(original),
                           static_cast<const AnnotateOp*>(written));
         break;
+      case PaintOpType::ClipDeviceRect:
+        CompareClipDeviceRectOp(static_cast<const ClipDeviceRectOp*>(original),
+                                static_cast<const ClipDeviceRectOp*>(written));
+        break;
       case PaintOpType::ClipPath:
         CompareClipPathOp(static_cast<const ClipPathOp*>(original),
                           static_cast<const ClipPathOp*>(written));
@@ -2173,6 +2221,10 @@ class PaintOpSerializationTest : public ::testing::TestWithParam<uint8_t> {
       case PaintOpType::Concat:
         CompareConcatOp(static_cast<const ConcatOp*>(original),
                         static_cast<const ConcatOp*>(written));
+        break;
+      case PaintOpType::DrawArc:
+        CompareDrawArcOp(static_cast<const DrawArcOp*>(original),
+                         static_cast<const DrawArcOp*>(written));
         break;
       case PaintOpType::DrawColor:
         CompareDrawColorOp(static_cast<const DrawColorOp*>(original),
@@ -2618,6 +2670,8 @@ TEST(PaintOpBufferTest, ValidateRects) {
                           SkData::MakeWithCString("test1"));
   buffer.push<ClipRectOp>(bad_rect, SkClipOp::kDifference, true);
 
+  buffer.push<DrawArcOp>(bad_rect, test_floats[0], test_floats[1], true,
+                         test_flags[0]);
   buffer.push<DrawImageRectOp>(test_images[0], bad_rect, test_rects[1], nullptr,
                                PaintCanvas::kStrict_SrcRectConstraint);
   buffer.push<DrawImageRectOp>(test_images[0], test_rects[0], bad_rect, nullptr,
@@ -2643,6 +2697,19 @@ TEST(PaintOpBufferTest, ValidateRects) {
                              deserialized.get(), buffer_size, &bytes_read);
     EXPECT_FALSE(written) << "op: " << op_idx;
     ++op_idx;
+  }
+}
+
+TEST(PaintOpBufferTest, BoundingRect_DrawArcOp) {
+  PaintOpBuffer buffer;
+  PushDrawArcOps(&buffer);
+
+  SkRect rect;
+  for (auto* base_op : PaintOpBuffer::Iterator(&buffer)) {
+    auto* op = static_cast<DrawArcOp*>(base_op);
+
+    ASSERT_TRUE(PaintOp::GetBounds(op, &rect));
+    EXPECT_EQ(rect, op->oval.makeSorted());
   }
 }
 

@@ -4,8 +4,6 @@
 
 #include "chrome/installer/zucchini/io_utils.h"
 
-#include <stdint.h>
-
 #include <sstream>
 #include <string>
 

@@ -12,6 +12,7 @@
 #include <memory>
 #include <set>
 #include <string>
+#include <unordered_map>
 #include <vector>
 
 #include "base/gtest_prod_util.h"
@@ -25,6 +26,7 @@
 #include "content/common/service_worker/service_worker_provider_host_info.h"
 #include "content/common/service_worker/service_worker_provider_interfaces.mojom.h"
 #include "content/common/service_worker/service_worker_types.h"
+#include "content/common/worker_url_loader_factory_provider.mojom.h"
 #include "content/public/common/request_context_frame_type.h"
 #include "content/public/common/request_context_type.h"
 #include "content/public/common/resource_type.h"
@@ -149,13 +151,14 @@ class CONTENT_EXPORT ServiceWorkerProviderHost
   // to an exceptional circumstance (here also it is not "using" the
   // registration).
   // (3) During algorithms such as the update, skipWaiting(), and claim() steps,
-  // the active version and controller may temporarily differ. For example, to
-  // perform skipWaiting(), the registration's active version is updated first
-  // and then the provider host's controlling version is updated to match it.
-  ServiceWorkerVersion* controller() const {
+  // the active_version and controlling_version may temporarily differ. For
+  // example, to perform skipWaiting(), the registration's active version is
+  // updated first and then the provider host's controlling version is updated
+  // to match it.
+  ServiceWorkerVersion* controlling_version() const {
     // Only clients can have controllers.
-    DCHECK(!controller_ || IsProviderForClient());
-    return controller_.get();
+    DCHECK(!controlling_version_ || IsProviderForClient());
+    return controlling_version_.get();
   }
 
   ServiceWorkerVersion* active_version() const {
@@ -323,6 +326,12 @@ class CONTENT_EXPORT ServiceWorkerProviderHost
   // cache.
   void NotifyControllerLost();
 
+  // Binds the ServiceWorkerWorkerClient of a dedicated (or shared) worker to
+  // the parent frame's ServiceWorkerProviderHost. (This is used only when
+  // off-main-thread-fetch is enabled.)
+  void BindWorkerFetchContext(
+      mojom::ServiceWorkerWorkerClientAssociatedPtrInfo client_ptr_info);
+
  private:
   friend class ForeignFetchRequestHandlerTest;
   friend class LinkHeaderServiceWorkerTest;
@@ -368,9 +377,9 @@ class CONTENT_EXPORT ServiceWorkerProviderHost
       ServiceWorkerRegistration* registration) override;
   void OnSkippedWaiting(ServiceWorkerRegistration* registration) override;
 
-  // Sets the controller field to |version| or if |version| is nullptr, clears
-  // the field. If |notify_controllerchange| is true, instructs the renderer to
-  // dispatch a 'controller' change event.
+  // Sets the controller version field to |version| or if |version| is nullptr,
+  // clears the field. If |notify_controllerchange| is true, instructs the
+  // renderer to dispatch a 'controller' change event.
   void SetControllerVersionAttribute(ServiceWorkerVersion* version,
                                      bool notify_controllerchange);
 
@@ -391,15 +400,15 @@ class CONTENT_EXPORT ServiceWorkerProviderHost
   bool IsReadyToSendMessages() const;
   void Send(IPC::Message* message) const;
 
-  // Sends information about the controller to the providers of the service
-  // worker clients in the renderer. If |notify_controllerchange| is true,
-  // instructs the renderer to dispatch a 'controllerchange' event.  If
-  // |version| is non-null, it must be the same as |controller_|. |version| can
-  // be null while |controller_| is non-null in the strange case of cross-site
-  // transfer, which will be removed when the non-PlzNavigate code path is
-  // removed.
+  // Sends information about the controller to the providers of the worker
+  // clients in the renderer.  If |notify_controllerchange| is true,
+  // instructs the renderer to dispatch a 'controllerchange' event.
   void SendSetControllerServiceWorker(ServiceWorkerVersion* version,
                                       bool notify_controllerchange);
+
+  // Clears the information of the ServiceWorkerWorkerClient of dedicated (or
+  // shared) worker, when the connection to the worker is disconnected.
+  void UnregisterWorkerFetchContext(mojom::ServiceWorkerWorkerClient*);
 
   const std::string client_uuid_;
   const base::TimeTicks create_time_;
@@ -434,9 +443,9 @@ class CONTENT_EXPORT ServiceWorkerProviderHost
   ServiceWorkerRegistrationMap matching_registrations_;
 
   std::unique_ptr<OneShotGetReadyCallback> get_ready_callback_;
-  scoped_refptr<ServiceWorkerVersion> controller_;
+  scoped_refptr<ServiceWorkerVersion> controlling_version_;
   std::unique_ptr<BrowserSideServiceWorkerEventDispatcher>
-      controller_event_dispatcher_;
+      controlling_version_event_dispatcher_;
 
   scoped_refptr<ServiceWorkerVersion> running_hosted_version_;
   base::WeakPtr<ServiceWorkerContextCore> context_;
@@ -454,6 +463,12 @@ class CONTENT_EXPORT ServiceWorkerProviderHost
   mojo::AssociatedBinding<mojom::ServiceWorkerProviderHost> binding_;
 
   std::vector<base::Closure> queued_events_;
+
+  // Keeps ServiceWorkerWorkerClient pointers of dedicated or shared workers
+  // which are associated with the ServiceWorkerProviderHost.
+  std::unordered_map<mojom::ServiceWorkerWorkerClient*,
+                     mojom::ServiceWorkerWorkerClientAssociatedPtr>
+      worker_clients_;
 
   DISALLOW_COPY_AND_ASSIGN(ServiceWorkerProviderHost);
 };

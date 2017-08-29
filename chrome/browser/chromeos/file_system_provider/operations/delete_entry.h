@@ -34,7 +34,7 @@ class DeleteEntry : public Operation {
               const ProvidedFileSystemInfo& file_system_info,
               const base::FilePath& entry_path,
               bool recursive,
-              storage::AsyncFileUtil::StatusCallback callback);
+              const storage::AsyncFileUtil::StatusCallback& callback);
   ~DeleteEntry() override;
 
   // Operation overrides.
@@ -49,7 +49,7 @@ class DeleteEntry : public Operation {
  private:
   base::FilePath entry_path_;
   bool recursive_;
-  storage::AsyncFileUtil::StatusCallback callback_;
+  const storage::AsyncFileUtil::StatusCallback callback_;
 
   DISALLOW_COPY_AND_ASSIGN(DeleteEntry);
 };

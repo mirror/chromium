@@ -4,6 +4,7 @@
 
 #include "components/sync/user_events/user_event_service_impl.h"
 
+#include "base/memory/ptr_util.h"
 #include "base/message_loop/message_loop.h"
 #include "base/test/scoped_feature_list.h"
 #include "components/sync/base/model_type.h"
@@ -56,7 +57,7 @@ class UserEventServiceImplTest : public testing::Test {
       : sync_service_(true, false, {HISTORY_DELETE_DIRECTIVES}) {}
 
   std::unique_ptr<UserEventSyncBridge> MakeBridge() {
-    return std::make_unique<UserEventSyncBridge>(
+    return base::MakeUnique<UserEventSyncBridge>(
         ModelTypeStoreTestUtil::FactoryForInMemoryStoreForTest(),
         RecordingModelTypeChangeProcessor::FactoryForBridgeTest(&processor_),
         &mapper_);
@@ -91,7 +92,7 @@ TEST_F(UserEventServiceImplTest, MightRecordEventsFeatureDisabled) {
 TEST_F(UserEventServiceImplTest, ShouldNotRecordNoHistory) {
   TestSyncService no_history_sync_service(true, false, ModelTypeSet());
   UserEventServiceImpl service(&no_history_sync_service, MakeBridge());
-  service.RecordUserEvent(std::make_unique<UserEventSpecifics>());
+  service.RecordUserEvent(base::MakeUnique<UserEventSpecifics>());
   EXPECT_EQ(0u, processor().put_multimap().size());
 }
 
@@ -99,7 +100,7 @@ TEST_F(UserEventServiceImplTest, ShouldNotRecordPassphrase) {
   TestSyncService passphrase_sync_service(true, true,
                                           {HISTORY_DELETE_DIRECTIVES});
   UserEventServiceImpl service(&passphrase_sync_service, MakeBridge());
-  service.RecordUserEvent(std::make_unique<UserEventSpecifics>());
+  service.RecordUserEvent(base::MakeUnique<UserEventSpecifics>());
   EXPECT_EQ(0u, processor().put_multimap().size());
 }
 
@@ -108,25 +109,25 @@ TEST_F(UserEventServiceImplTest, ShouldNotRecordEngineOff) {
       false, false, {HISTORY_DELETE_DIRECTIVES});
   UserEventServiceImpl service(&engine_not_initialized_sync_service,
                                MakeBridge());
-  service.RecordUserEvent(std::make_unique<UserEventSpecifics>());
+  service.RecordUserEvent(base::MakeUnique<UserEventSpecifics>());
   EXPECT_EQ(0u, processor().put_multimap().size());
 }
 
 TEST_F(UserEventServiceImplTest, ShouldRecord) {
   UserEventServiceImpl service(sync_service(), MakeBridge());
-  service.RecordUserEvent(std::make_unique<UserEventSpecifics>());
+  service.RecordUserEvent(base::MakeUnique<UserEventSpecifics>());
   EXPECT_EQ(1u, processor().put_multimap().size());
 }
 
 TEST_F(UserEventServiceImplTest, SessionIdIsDifferent) {
   UserEventServiceImpl service1(sync_service(), MakeBridge());
-  service1.RecordUserEvent(std::make_unique<UserEventSpecifics>());
+  service1.RecordUserEvent(base::MakeUnique<UserEventSpecifics>());
   ASSERT_EQ(1u, processor().put_multimap().size());
   auto put1 = processor().put_multimap().begin();
   int64_t session_id1 = put1->second->specifics.user_event().session_id();
 
   UserEventServiceImpl service2(sync_service(), MakeBridge());
-  service2.RecordUserEvent(std::make_unique<UserEventSpecifics>());
+  service2.RecordUserEvent(base::MakeUnique<UserEventSpecifics>());
   // The object processor() points to has changed to be |service2|'s processor.
   ASSERT_EQ(1u, processor().put_multimap().size());
   auto put2 = processor().put_multimap().begin();

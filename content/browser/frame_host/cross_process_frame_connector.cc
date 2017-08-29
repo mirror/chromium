@@ -78,7 +78,6 @@ void CrossProcessFrameConnector::SetView(RenderWidgetHostViewChildFrame* view) {
     view_->SetFrameConnectorDelegate(nullptr);
   }
 
-  ResetFrameRect();
   view_ = view;
 
   // Attach ourselves to the new view and size it appropriately. Also update
@@ -89,8 +88,6 @@ void CrossProcessFrameConnector::SetView(RenderWidgetHostViewChildFrame* view) {
     SetRect(child_frame_rect_);
     if (is_hidden_)
       OnVisibilityChanged(false);
-    frame_proxy_in_parent_renderer_->Send(new FrameMsg_ViewChanged(
-        frame_proxy_in_parent_renderer_->GetRoutingID()));
   }
 }
 
@@ -270,9 +267,7 @@ void CrossProcessFrameConnector::UnlockMouse() {
 }
 
 void CrossProcessFrameConnector::OnFrameRectChanged(
-    const gfx::Rect& frame_rect,
-    const viz::LocalSurfaceId& local_surface_id) {
-  local_surface_id_ = local_surface_id;
+    const gfx::Rect& frame_rect) {
   if (!frame_rect.size().IsEmpty())
     SetRect(frame_rect);
 }
@@ -395,11 +390,6 @@ void CrossProcessFrameConnector::SetVisibilityForChildViews(
   frame_proxy_in_parent_renderer_->frame_tree_node()
       ->current_frame_host()
       ->SetVisibilityForChildViews(visible);
-}
-
-void CrossProcessFrameConnector::ResetFrameRect() {
-  local_surface_id_ = viz::LocalSurfaceId();
-  child_frame_rect_ = gfx::Rect();
 }
 
 }  // namespace content

@@ -27,9 +27,6 @@ class FullscreenHandler {
 
   void SetFullscreen(bool fullscreen);
 
-  // Informs the taskbar whether the window is a fullscreen window.
-  void MarkFullscreen(bool fullscreen);
-
   gfx::Rect GetRestoreBounds() const;
 
   bool fullscreen() const { return fullscreen_; }

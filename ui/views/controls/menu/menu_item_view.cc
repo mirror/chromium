@@ -184,13 +184,6 @@ void MenuItemView::GetAccessibleNodeData(ui::AXNodeData* node_data) {
       // No additional accessibility states currently for these menu states.
       break;
   }
-
-  base::char16 mnemonic = GetMnemonic();
-  if (mnemonic != '\0') {
-    node_data->AddStringAttribute(
-        ui::AX_ATTR_KEY_SHORTCUTS,
-        base::UTF16ToUTF8(base::string16(1, mnemonic)));
-  }
 }
 
 // static
@@ -762,7 +755,7 @@ const gfx::FontList& MenuItemView::GetFontList() const {
 
 void MenuItemView::AddEmptyMenus() {
   DCHECK(HasSubmenu());
-  if (!submenu_->HasVisibleChildren()) {
+  if (!submenu_->has_children()) {
     submenu_->AddChildViewAt(new EmptyMenuMenuItem(this), 0);
   } else {
     for (int i = 0, item_count = submenu_->GetMenuItemCount(); i < item_count;

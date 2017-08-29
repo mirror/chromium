@@ -105,16 +105,16 @@ void PlatformSensorProviderAndroid::CreateAbsoluteOrientationEulerAnglesSensor(
 
     // If this PlatformSensorFusion object is successfully initialized,
     // |callback| will be run with a reference to this object.
-    PlatformSensorFusion::Create(std::move(mapping), this,
-                                 std::move(sensor_fusion_algorithm), callback);
+    base::MakeRefCounted<PlatformSensorFusion>(
+        std::move(mapping), this, callback, std::move(sensor_fusion_algorithm));
   } else {
     auto sensor_fusion_algorithm = base::MakeUnique<
         AbsoluteOrientationEulerAnglesFusionAlgorithmUsingAccelerometerAndMagnetometer>();
 
     // If this PlatformSensorFusion object is successfully initialized,
     // |callback| will be run with a reference to this object.
-    PlatformSensorFusion::Create(std::move(mapping), this,
-                                 std::move(sensor_fusion_algorithm), callback);
+    base::MakeRefCounted<PlatformSensorFusion>(
+        std::move(mapping), this, callback, std::move(sensor_fusion_algorithm));
   }
 }
 
@@ -144,8 +144,8 @@ void PlatformSensorProviderAndroid::CreateAbsoluteOrientationQuaternionSensor(
 
     // If this PlatformSensorFusion object is successfully initialized,
     // |callback| will be run with a reference to this object.
-    PlatformSensorFusion::Create(std::move(mapping), this,
-                                 std::move(sensor_fusion_algorithm), callback);
+    base::MakeRefCounted<PlatformSensorFusion>(
+        std::move(mapping), this, callback, std::move(sensor_fusion_algorithm));
   }
 }
 
@@ -165,8 +165,8 @@ void PlatformSensorProviderAndroid::CreateRelativeOrientationEulerAnglesSensor(
 
     // If this PlatformSensorFusion object is successfully initialized,
     // |callback| will be run with a reference to this object.
-    PlatformSensorFusion::Create(std::move(mapping), this,
-                                 std::move(sensor_fusion_algorithm), callback);
+    base::MakeRefCounted<PlatformSensorFusion>(
+        std::move(mapping), this, callback, std::move(sensor_fusion_algorithm));
   } else {
     callback.Run(nullptr);
   }

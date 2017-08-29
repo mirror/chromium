@@ -6,8 +6,7 @@
 #define CONTENT_COMMON_MESSAGE_PORT_MESSAGE_H_
 
 #include <vector>
-
-#include "base/containers/span.h"
+#include "mojo/public/cpp/bindings/array_traits_span.h"
 #include "mojo/public/cpp/system/message_pipe.h"
 
 namespace content {
@@ -23,7 +22,7 @@ struct MessagePortMessage {
   // |owned_encoded_message| and just serializes whatever |encoded_message|
   // points to. When deserializing |owned_encoded_message| is set to the data
   // and |encoded_message| is set to point to |owned_encoded_message|.
-  base::span<const uint8_t> encoded_message;
+  mojo::ConstCArray<uint8_t> encoded_message;
   std::vector<uint8_t> owned_encoded_message;
 
   // Any ports being transfered as part of this message.

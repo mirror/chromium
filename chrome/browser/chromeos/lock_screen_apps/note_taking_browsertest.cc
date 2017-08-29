@@ -28,6 +28,7 @@ class LockScreenNoteTakingTest : public ExtensionBrowserTest {
   void SetUpCommandLine(base::CommandLine* cmd_line) override {
     cmd_line->AppendSwitchASCII(extensions::switches::kWhitelistedExtensionID,
                                 kTestAppId);
+    cmd_line->AppendSwitch(chromeos::switches::kEnableLockScreenApps);
 
     ExtensionBrowserTest::SetUpCommandLine(cmd_line);
   }

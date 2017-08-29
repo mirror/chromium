@@ -255,19 +255,17 @@ CommandHandler.onCommand = function(command) {
       current = current.move(cursors.Unit.CHARACTER, Dir.FORWARD);
       break;
     case 'previousCharacter':
-      dir = Dir.BACKWARD;
       didNavigate = true;
       speechProps['phoneticCharacters'] = true;
-      current = current.move(cursors.Unit.CHARACTER, dir);
+      current = current.move(cursors.Unit.CHARACTER, Dir.BACKWARD);
       break;
     case 'nextWord':
       didNavigate = true;
       current = current.move(cursors.Unit.WORD, Dir.FORWARD);
       break;
     case 'previousWord':
-      dir = Dir.BACKWARD;
       didNavigate = true;
-      current = current.move(cursors.Unit.WORD, dir);
+      current = current.move(cursors.Unit.WORD, Dir.BACKWARD);
       break;
     case 'forward':
     case 'nextLine':
@@ -276,9 +274,8 @@ CommandHandler.onCommand = function(command) {
       break;
     case 'backward':
     case 'previousLine':
-      dir = Dir.BACKWARD;
       didNavigate = true;
-      current = current.move(cursors.Unit.LINE);
+      current = current.move(cursors.Unit.LINE, Dir.BACKWARD);
       break;
     case 'nextButton':
       dir = Dir.FORWARD;
@@ -291,6 +288,7 @@ CommandHandler.onCommand = function(command) {
       predErrorMsg = 'no_previous_button';
       break;
     case 'nextCheckbox':
+      dir = Dir.FORWARD;
       pred = AutomationPredicate.checkBox;
       predErrorMsg = 'no_next_checkbox';
       break;
@@ -300,6 +298,7 @@ CommandHandler.onCommand = function(command) {
       predErrorMsg = 'no_previous_checkbox';
       break;
     case 'nextComboBox':
+      dir = Dir.FORWARD;
       pred = AutomationPredicate.comboBox;
       predErrorMsg = 'no_next_combo_box';
       break;
@@ -309,6 +308,7 @@ CommandHandler.onCommand = function(command) {
       predErrorMsg = 'no_previous_combo_box';
       break;
     case 'nextEditText':
+      dir = Dir.FORWARD;
       pred = AutomationPredicate.editText;
       predErrorMsg = 'no_next_edit_text';
       break;
@@ -318,6 +318,7 @@ CommandHandler.onCommand = function(command) {
       predErrorMsg = 'no_previous_edit_text';
       break;
     case 'nextFormField':
+      dir = Dir.FORWARD;
       pred = AutomationPredicate.formField;
       predErrorMsg = 'no_next_form_field';
       break;
@@ -332,34 +333,42 @@ CommandHandler.onCommand = function(command) {
       predErrorMsg = 'no_previous_graphic';
       break;
     case 'nextGraphic':
+      dir = Dir.FORWARD;
       pred = AutomationPredicate.image;
       predErrorMsg = 'no_next_graphic';
       break;
     case 'nextHeading':
+      dir = Dir.FORWARD;
       pred = AutomationPredicate.heading;
       predErrorMsg = 'no_next_heading';
       break;
     case 'nextHeading1':
+      dir = Dir.FORWARD;
       pred = AutomationPredicate.makeHeadingPredicate(1);
       predErrorMsg = 'no_next_heading_1';
       break;
     case 'nextHeading2':
+      dir = Dir.FORWARD;
       pred = AutomationPredicate.makeHeadingPredicate(2);
       predErrorMsg = 'no_next_heading_2';
       break;
     case 'nextHeading3':
+      dir = Dir.FORWARD;
       pred = AutomationPredicate.makeHeadingPredicate(3);
       predErrorMsg = 'no_next_heading_3';
       break;
     case 'nextHeading4':
+      dir = Dir.FORWARD;
       pred = AutomationPredicate.makeHeadingPredicate(4);
       predErrorMsg = 'no_next_heading_4';
       break;
     case 'nextHeading5':
+      dir = Dir.FORWARD;
       pred = AutomationPredicate.makeHeadingPredicate(5);
       predErrorMsg = 'no_next_heading_5';
       break;
     case 'nextHeading6':
+      dir = Dir.FORWARD;
       pred = AutomationPredicate.makeHeadingPredicate(6);
       predErrorMsg = 'no_next_heading_6';
       break;
@@ -399,6 +408,7 @@ CommandHandler.onCommand = function(command) {
       predErrorMsg = 'no_previous_heading_6';
       break;
     case 'nextLink':
+      dir = Dir.FORWARD;
       pred = AutomationPredicate.link;
       predErrorMsg = 'no_next_link';
       break;
@@ -408,6 +418,7 @@ CommandHandler.onCommand = function(command) {
       predErrorMsg = 'no_previous_link';
       break;
     case 'nextTable':
+      dir = Dir.FORWARD;
       pred = AutomationPredicate.table;
       predErrorMsg = 'no_next_table';
       break;
@@ -417,6 +428,7 @@ CommandHandler.onCommand = function(command) {
       predErrorMsg = 'no_previous_table';
       break;
     case 'nextVisitedLink':
+      dir = Dir.FORWARD;
       pred = AutomationPredicate.visitedLink;
       predErrorMsg = 'no_next_visited_link';
       break;
@@ -426,6 +438,7 @@ CommandHandler.onCommand = function(command) {
       predErrorMsg = 'no_previous_visited_link';
       break;
     case 'nextLandmark':
+      dir = Dir.FORWARD;
       pred = AutomationPredicate.landmark;
       predErrorMsg = 'no_next_landmark';
       break;
@@ -441,9 +454,8 @@ CommandHandler.onCommand = function(command) {
       break;
     case 'left':
     case 'previousObject':
-      dir = Dir.BACKWARD;
       didNavigate = true;
-      current = current.move(cursors.Unit.NODE, dir);
+      current = current.move(cursors.Unit.NODE, Dir.BACKWARD);
       break;
     case 'previousGroup':
       skipSync = true;
@@ -452,6 +464,7 @@ CommandHandler.onCommand = function(command) {
       break;
     case 'nextGroup':
       skipSync = true;
+      dir = Dir.FORWARD;
       pred = AutomationPredicate.group;
       break;
     case 'jumpToTop':
@@ -629,6 +642,7 @@ CommandHandler.onCommand = function(command) {
       rootPred = AutomationPredicate.row;
       break;
     case 'nextRow':
+      dir = Dir.FORWARD;
       var tableOpts = {row: true, dir: dir};
       pred = AutomationPredicate.makeTableCellPredicate(
           current.start.node, tableOpts);
@@ -636,6 +650,7 @@ CommandHandler.onCommand = function(command) {
       rootPred = AutomationPredicate.table;
       break;
     case 'nextCol':
+      dir = Dir.FORWARD;
       var tableOpts = {col: true, dir: dir};
       pred = AutomationPredicate.makeTableCellPredicate(
           current.start.node, tableOpts);
@@ -656,6 +671,7 @@ CommandHandler.onCommand = function(command) {
         current = cursors.Range.fromNode(end);
       break;
     case 'goToColFirstCell':
+      dir = Dir.FORWARD;
       var node = current.start.node;
       while (node && node.role != RoleType.TABLE)
         node = node.parent;
@@ -756,60 +772,6 @@ CommandHandler.onCommand = function(command) {
           return false;
         }
       }
-    }
-  }
-
-  if (current && current.start && current.start.node &&
-      ChromeVoxState.instance.currentRange.start.node) {
-    var exited = AutomationUtil.getUniqueAncestors(
-        current.start.node, ChromeVoxState.instance.currentRange.start.node);
-    var scrollable = null;
-    for (var i = 0; i < exited.length; i++) {
-      if (exited[i].scrollable) {
-        scrollable = exited[i];
-        break;
-      }
-    }
-
-    // TODO(dtseng): handle more precise positioning after scroll e.g. list with
-    // 10 items shoing 1-7, scroll forward, should position at item 8.
-    if (scrollable) {
-      var callback = function(result) {
-        if (result) {
-          var innerCallback = function(evt) {
-            scrollable.removeEventListener(
-                EventType.SCROLL_POSITION_CHANGED, innerCallback);
-
-            // Jump.
-            if (pred) {
-              CommandHandler.onCommand(command);
-              return;
-            }
-
-            // Otherwise, sync to the directed deepest child.
-            var sync = scrollable;
-            if (dir == Dir.FORWARD) {
-              while (sync.firstChild)
-                sync = sync.firstChild;
-            } else {
-              while (sync.lastChild)
-                sync = sync.lastChild;
-            }
-            ChromeVoxState.instance.navigateToRange(
-                cursors.Range.fromNode(sync), false, speechProps);
-          };
-          scrollable.addEventListener(
-              EventType.SCROLL_POSITION_CHANGED, innerCallback, true);
-        } else {
-          ChromeVoxState.instance.navigateToRange(current, false, speechProps);
-        }
-      };
-
-      if (dir == Dir.FORWARD)
-        scrollable.scrollForward(callback);
-      else
-        scrollable.scrollBackward(callback);
-      return false;
     }
   }
 

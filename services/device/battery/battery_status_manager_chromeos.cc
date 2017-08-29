@@ -7,7 +7,6 @@
 #include <memory>
 
 #include "base/macros.h"
-#include "base/memory/ptr_util.h"
 #include "base/memory/ref_counted.h"
 #include "chromeos/dbus/dbus_thread_manager.h"
 #include "chromeos/dbus/power_manager/power_supply_properties.pb.h"
@@ -128,7 +127,7 @@ class BatteryStatusManagerChromeOS
  public:
   explicit BatteryStatusManagerChromeOS(
       const BatteryStatusService::BatteryUpdateCallback& callback)
-      : observer_(base::MakeRefCounted<PowerManagerObserver>(callback)) {}
+      : observer_(new PowerManagerObserver(callback)) {}
 
   ~BatteryStatusManagerChromeOS() override { observer_->Stop(); }
 
@@ -151,7 +150,8 @@ class BatteryStatusManagerChromeOS
 // static
 std::unique_ptr<BatteryStatusManager> BatteryStatusManager::Create(
     const BatteryStatusService::BatteryUpdateCallback& callback) {
-  return base::MakeUnique<BatteryStatusManagerChromeOS>(callback);
+  return std::unique_ptr<BatteryStatusManager>(
+      new BatteryStatusManagerChromeOS(callback));
 }
 
 }  // namespace device

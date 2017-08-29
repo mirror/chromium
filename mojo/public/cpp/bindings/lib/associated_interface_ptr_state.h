@@ -115,7 +115,7 @@ class AssociatedInterfacePtrState : public AssociatedInterfacePtrStateBase {
     DCHECK(!proxy_);
     AssociatedInterfacePtrStateBase::Bind(
         info.PassHandle(), info.version(),
-        std::make_unique<typename Interface::ResponseValidator_>(),
+        base::MakeUnique<typename Interface::ResponseValidator_>(),
         std::move(runner));
     proxy_.reset(new Proxy(endpoint_client()));
   }

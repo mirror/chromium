@@ -112,13 +112,7 @@ enum DeviceEventType {
   // Format succeeded.
   format_success,
   // Format failed.
-  format_fail,
-  // Rename started.
-  rename_start,
-  // Rename succeeded.
-  rename_success,
-  // Rename failed.
-  rename_fail
+  format_fail
 };
 
 // Drive sync error type.
@@ -198,18 +192,6 @@ enum Verb {
   add_to,
   pack_with,
   share_with
-};
-
-// Recent file sources allowed in getRecentFiles().
-enum SourceRestriction {
-  // Allows any source.
-  any_source,
-
-  // Allows source with native local file system only.
-  native_source,
-
-  // Allows native source and Drive source.
-  native_or_drive_source
 };
 
 // A file task represents an action that the file manager can perform over the
@@ -384,9 +366,6 @@ dictionary VolumeMetadata {
 
   // Context in which the volume has been mounted.
   MountContext? mountContext;
-
-  // File system type indentifier.
-  DOMString? diskFileSystemType;
 };
 
 // Payload data for mount event.
@@ -860,11 +839,6 @@ interface Functions {
   // |volumeId| ID of the volume to be formatted.
   static void formatVolume(DOMString volumeId);
 
-  // Renames a mounted volume.
-  // |volumeId| ID of the volume to be renamed.
-  // |newName| New name of the target volume.
-  static void renameVolume(DOMString volumeId, DOMString newName);
-
   // Retrieves file manager preferences.
   // |callback|
   static void getPreferences(GetPreferencesCallback callback);
@@ -1018,11 +992,8 @@ interface Functions {
                                GetDirectorySizeCallback callback);
 
   // Gets recently modified files across file systems.
-  // |restriction| Flag to restrict sources of recent files.
-  // |callback|
   [nocompile]
-  static void getRecentFiles(SourceRestriction restriction,
-                             GetRecentFilesCallback callback);
+  static void getRecentFiles(GetRecentFilesCallback callback);
 };
 
 interface Events {

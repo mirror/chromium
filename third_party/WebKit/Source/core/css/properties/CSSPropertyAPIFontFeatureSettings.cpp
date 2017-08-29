@@ -6,7 +6,9 @@
 
 #include "core/css/properties/CSSPropertyFontUtils.h"
 
+class CSSParserContext;
 
+class CSSParserLocalContext;
 namespace blink {
 
 const CSSValue* CSSPropertyAPIFontFeatureSettings::ParseSingleValue(

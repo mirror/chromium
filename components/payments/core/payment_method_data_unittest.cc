@@ -9,9 +9,8 @@
 
 namespace payments {
 
-// Tests the success case when populating a PaymentMethodData from a dictionary
-// when the supportedMethods is an array of strings.
-TEST(PaymentMethodData, FromDictionaryValueSuccess_SupportedMethodsArray) {
+// Tests the success case when populating a PaymentMethodData from a dictionary.
+TEST(PaymentMethodData, FromDictionaryValueSuccess) {
   PaymentMethodData expected;
   expected.supported_methods.push_back("visa");
   expected.supported_methods.push_back("basic-card");
@@ -43,38 +42,7 @@ TEST(PaymentMethodData, FromDictionaryValueSuccess_SupportedMethodsArray) {
   EXPECT_EQ(expected, actual);
 }
 
-// Tests the success case when populating a PaymentMethodData from a dictionary
-// when the supportedMethods is a string.
-TEST(PaymentMethodData, FromDictionaryValueSuccess_SupportedMethodsString) {
-  PaymentMethodData expected;
-  expected.supported_methods.push_back("basic-card");
-  expected.data =
-      "{\"supportedNetworks\":[\"mastercard\"],"
-      "\"supportedTypes\":[\"debit\",\"credit\"]}";
-  expected.supported_networks.push_back("mastercard");
-  expected.supported_types.insert(autofill::CreditCard::CARD_TYPE_DEBIT);
-  expected.supported_types.insert(autofill::CreditCard::CARD_TYPE_CREDIT);
-
-  base::DictionaryValue method_data_dict;
-  method_data_dict.SetString("supportedMethods", "basic-card");
-  std::unique_ptr<base::DictionaryValue> data_dict(new base::DictionaryValue);
-  std::unique_ptr<base::ListValue> supported_networks_list(new base::ListValue);
-  supported_networks_list->AppendString("mastercard");
-  data_dict->Set("supportedNetworks", std::move(supported_networks_list));
-  std::unique_ptr<base::ListValue> supported_types_list(new base::ListValue);
-  supported_types_list->AppendString("debit");
-  supported_types_list->AppendString("credit");
-  data_dict->Set("supportedTypes", std::move(supported_types_list));
-  method_data_dict.Set("data", std::move(data_dict));
-
-  PaymentMethodData actual;
-  EXPECT_TRUE(actual.FromDictionaryValue(method_data_dict));
-
-  EXPECT_EQ(expected, actual);
-}
-
-// Tests the failure cases when populating a PaymentMethodData from a
-// dictionary.
+// Tests the failure case when populating a PaymentMethodData from a dictionary.
 TEST(PaymentMethodData, FromDictionaryValueFailure) {
   // At least one supported method is required.
   PaymentMethodData actual;
@@ -82,23 +50,9 @@ TEST(PaymentMethodData, FromDictionaryValueFailure) {
   EXPECT_FALSE(actual.FromDictionaryValue(method_data_dict));
 
   // The value in the supported methods list must be a string.
-  std::unique_ptr<base::ListValue> supported_methods_list1(new base::ListValue);
-  supported_methods_list1->AppendInteger(13);
-  method_data_dict.Set("supportedMethods", std::move(supported_methods_list1));
-  EXPECT_FALSE(actual.FromDictionaryValue(method_data_dict));
-
-  // The value in the supported methods list must be a non-empty string.
-  std::unique_ptr<base::ListValue> supported_methods_list2(new base::ListValue);
-  supported_methods_list2->AppendString("");
-  method_data_dict.Set("supportedMethods", std::move(supported_methods_list2));
-  EXPECT_FALSE(actual.FromDictionaryValue(method_data_dict));
-
-  // The value in the supported methods must be a string.
-  method_data_dict.SetInteger("supportedMethods", 13);
-  EXPECT_FALSE(actual.FromDictionaryValue(method_data_dict));
-
-  // The value in the supported methods must be a non-empty string.
-  method_data_dict.SetString("supportedMethods", "");
+  std::unique_ptr<base::ListValue> supported_methods_list(new base::ListValue);
+  supported_methods_list->AppendInteger(13);
+  method_data_dict.Set("supportedMethods", std::move(supported_methods_list));
   EXPECT_FALSE(actual.FromDictionaryValue(method_data_dict));
 }
 

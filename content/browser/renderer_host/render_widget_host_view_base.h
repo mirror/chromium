@@ -235,7 +235,7 @@ class CONTENT_EXPORT RenderWidgetHostViewBase : public RenderWidgetHostView,
       cc::CompositorFrame frame) = 0;
 
   virtual void OnDidNotProduceFrame(const viz::BeginFrameAck& ack) {}
-  virtual void OnFirstSurfaceActivation(const viz::SurfaceInfo& surface_info) {}
+  virtual void OnSurfaceChanged(const viz::SurfaceInfo& surface_info) {}
 
   // This method exists to allow removing of displayed graphics, after a new
   // page has been loaded, to prevent the displayed URL from being out of sync
@@ -255,11 +255,8 @@ class CONTENT_EXPORT RenderWidgetHostViewBase : public RenderWidgetHostView,
   virtual void DidStopFlinging() {}
 
   // Returns the ID associated with the CompositorFrameSink of this view.
-  // TODO(fsamuel): Return by const ref.
   virtual viz::FrameSinkId GetFrameSinkId();
 
-  // Returns the LocalSurfaceId allocated by the parent client for this view.
-  // TODO(fsamuel): Return by const ref.
   virtual viz::LocalSurfaceId GetLocalSurfaceId() const;
 
   // When there are multiple RenderWidgetHostViews for a single page, input

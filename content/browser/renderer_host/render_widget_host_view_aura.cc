@@ -1596,11 +1596,11 @@ bool RenderWidgetHostViewAura::HasHitTestMask() const {
 void RenderWidgetHostViewAura::GetHitTestMask(gfx::Path* mask) const {
 }
 
-void RenderWidgetHostViewAura::OnFirstSurfaceActivation(
+void RenderWidgetHostViewAura::OnWindowSurfaceChanged(
     const viz::SurfaceInfo& surface_info) {
   if (!is_guest_view_hack_)
     return;
-  host_->GetView()->OnFirstSurfaceActivation(surface_info);
+  host_->GetView()->OnSurfaceChanged(surface_info);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -2151,6 +2151,8 @@ void RenderWidgetHostViewAura::InternalSetBounds(const gfx::Rect& rect) {
   // a Window::SetBoundsInternal call.
   if (!in_bounds_changed_)
     window_->SetBounds(rect);
+  if (IsMus())
+    local_surface_id_ = aura::WindowMus::Get(window_)->GetLocalSurfaceId();
   host_->WasResized();
   if (delegated_frame_host_)
     delegated_frame_host_->WasResized();
@@ -2312,7 +2314,7 @@ viz::FrameSinkId RenderWidgetHostViewAura::GetFrameSinkId() {
 }
 
 viz::LocalSurfaceId RenderWidgetHostViewAura::GetLocalSurfaceId() const {
-  return window_->GetLocalSurfaceId();
+  return local_surface_id_;
 }
 
 viz::SurfaceId RenderWidgetHostViewAura::SurfaceIdForTesting() const {

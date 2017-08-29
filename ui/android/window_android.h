@@ -40,8 +40,6 @@ class UI_ANDROID_EXPORT WindowAndroid : public ViewAndroid {
  public:
   WindowAndroid(JNIEnv* env, jobject obj, int display_id);
 
-  ~WindowAndroid() override;
-
   void Destroy(JNIEnv* env, const base::android::JavaParamRef<jobject>& obj);
 
   base::android::ScopedJavaLocalRef<jobject> GetJavaObject();
@@ -84,6 +82,7 @@ class UI_ANDROID_EXPORT WindowAndroid : public ViewAndroid {
   bool CanRequestPermission(const std::string& permission);
 
   static WindowAndroid* CreateForTesting();
+  void DestroyForTesting();
 
   // Return the window token for this window, if one exists.
   base::android::ScopedJavaLocalRef<jobject> GetWindowToken();
@@ -92,6 +91,8 @@ class UI_ANDROID_EXPORT WindowAndroid : public ViewAndroid {
   class WindowBeginFrameSource;
   friend class DisplayAndroidManager;
   friend class WindowBeginFrameSource;
+
+  ~WindowAndroid() override;
 
   void SetNeedsBeginFrames(bool needs_begin_frames);
   void RequestVSyncUpdate();

@@ -51,6 +51,7 @@ namespace blink {
 
 class Blob;
 class EventTarget;
+class ExceptionState;
 class ExecutionContext;
 class ImageBitmapSource;
 class ImageBitmapOptions;
@@ -69,7 +70,8 @@ class ImageBitmapFactories final
   static ScriptPromise createImageBitmap(ScriptState*,
                                          EventTarget&,
                                          const ImageBitmapSourceUnion&,
-                                         const ImageBitmapOptions&);
+                                         const ImageBitmapOptions&,
+                                         ExceptionState&);
   static ScriptPromise createImageBitmap(ScriptState*,
                                          EventTarget&,
                                          const ImageBitmapSourceUnion&,
@@ -77,17 +79,20 @@ class ImageBitmapFactories final
                                          int sy,
                                          int sw,
                                          int sh,
-                                         const ImageBitmapOptions&);
+                                         const ImageBitmapOptions&,
+                                         ExceptionState&);
   static ScriptPromise createImageBitmap(ScriptState*,
                                          EventTarget&,
                                          ImageBitmapSource*,
                                          Optional<IntRect> crop_rect,
-                                         const ImageBitmapOptions&);
+                                         const ImageBitmapOptions&,
+                                         ExceptionState&);
   static ScriptPromise CreateImageBitmapFromBlob(ScriptState*,
                                                  EventTarget&,
                                                  ImageBitmapSource*,
                                                  Optional<IntRect> crop_rect,
-                                                 const ImageBitmapOptions&);
+                                                 const ImageBitmapOptions&,
+                                                 ExceptionState&);
 
   virtual ~ImageBitmapFactories() {}
 
@@ -121,12 +126,7 @@ class ImageBitmapFactories final
                       ScriptState*,
                       const ImageBitmapOptions&);
 
-    enum ImageBitmapRejectionReason {
-      kUndecodableImageBitmapRejectionReason,
-      kAllocationFailureImageBitmapRejectionReason,
-    };
-
-    void RejectPromise(ImageBitmapRejectionReason);
+    void RejectPromise();
 
     void ScheduleAsyncImageBitmapDecoding(DOMArrayBuffer*);
     void DecodeImageOnDecoderThread(

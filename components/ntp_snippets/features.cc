@@ -13,20 +13,13 @@
 
 namespace ntp_snippets {
 
-// Holds an experiment ID. So long as the feature is set through a server-side
-// variations config, this feature should exist on the client. This ensures that
-// the experiment ID is visible in chrome://snippets-internals.
-const base::Feature kRemoteSuggestionsBackendFeature{
-    "NTPRemoteSuggestionsBackend", base::FEATURE_DISABLED_BY_DEFAULT};
-
 // Keep sorted, and keep nullptr at the end.
 const base::Feature* const kAllFeatures[] = {
     &kArticleSuggestionsFeature,
     &kBookmarkSuggestionsFeature,
-    &kBreakingNewsPushFeature,
     &kCategoryOrder,
     &kCategoryRanker,
-    &kDeleteRemoteCategoriesNotPresentInLastFetch,
+    &kBreakingNewsPushFeature,
     &kForeignSessionsSuggestionsFeature,
     &kIncreasedVisibility,
     &kKeepPrefetchedContentSuggestions,
@@ -34,7 +27,6 @@ const base::Feature* const kAllFeatures[] = {
     &kPhysicalWebPageSuggestionsFeature,
     &kPublisherFaviconsFromNewServerFeature,
     &kRecentOfflineTabSuggestionsFeature,
-    &kRemoteSuggestionsBackendFeature,
     nullptr};
 
 const base::Feature kArticleSuggestionsFeature{
@@ -160,9 +152,5 @@ const char kNotificationsIgnoredLimitParam[] = "ignored_limit";
 
 const base::Feature kKeepPrefetchedContentSuggestions{
     "KeepPrefetchedContentSuggestions", base::FEATURE_DISABLED_BY_DEFAULT};
-
-const base::Feature kDeleteRemoteCategoriesNotPresentInLastFetch{
-    "DeleteRemoteCategoriesNotPresentInLastFetch",
-    base::FEATURE_DISABLED_BY_DEFAULT};
 
 }  // namespace ntp_snippets

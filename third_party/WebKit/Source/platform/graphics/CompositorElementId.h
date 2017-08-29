@@ -13,41 +13,54 @@
 
 namespace blink {
 
-const int kCompositorNamespaceBitCount = 3;
+const int kCompositorNamespaceBitCount = 4;
 
 enum class CompositorElementIdNamespace {
   kPrimary,
-  kUniqueObjectId,
+  kRootScroll,
   kScroll,
+  kScrollbar,
+  kScrollState,
+  kViewport,
+  kLinkHighlight,
   // The following are SPv2-only.
   kEffectFilter,
   kEffectMask,
+  kEffectRoot,
+  kSyntheticEffect,
   // A sentinel to indicate the maximum representable namespace id
   // (the maximum is one less than this value).
   kMaxRepresentableNamespaceId = 1 << kCompositorNamespaceBitCount
 };
 
 using CompositorElementId = cc::ElementId;
+using LayoutObjectId = uint64_t;
 using ScrollbarId = uint64_t;
-using UniqueObjectId = uint64_t;
 using DOMNodeId = uint64_t;
 using SyntheticEffectId = uint64_t;
 
-// Call this to get a globally unique object id for a newly allocated object.
-UniqueObjectId PLATFORM_EXPORT NewUniqueObjectId();
-
-// Call this with an appropriate namespace if more than one CompositorElementId
-// is required for the given UniqueObjectId.
 CompositorElementId PLATFORM_EXPORT
-    CompositorElementIdFromUniqueObjectId(UniqueObjectId,
+    CompositorElementIdFromLayoutObjectId(LayoutObjectId,
                                           CompositorElementIdNamespace);
-// ...and otherwise call this method if there is only one CompositorElementId
-// required for the given UniqueObjectId.
-CompositorElementId PLATFORM_EXPORT
-    CompositorElementIdFromUniqueObjectId(UniqueObjectId);
 
-// TODO(chrishtr): refactor ScrollState to remove this dependency.
-CompositorElementId PLATFORM_EXPORT CompositorElementIdFromDOMNodeId(DOMNodeId);
+// This method should only be used for "special" layers that are not allocated
+// during the normal lifecycle. Examples include VisualViewport,
+// root scrolling (when rootLayerScrollingEnabled is off), and LinkHighlight.
+// Otherwise, CompositorElementIdFromLayoutObjectId is preferred for performance
+// reasons (since computing a DOMNodeId requires a hash map lookup),
+// and future compatibility with multicol/pagination.
+CompositorElementId PLATFORM_EXPORT
+    CompositorElementIdFromDOMNodeId(DOMNodeId, CompositorElementIdNamespace);
+
+CompositorElementId PLATFORM_EXPORT
+    CompositorElementIdFromScrollbarId(ScrollbarId,
+                                       CompositorElementIdNamespace);
+
+CompositorElementId PLATFORM_EXPORT
+CompositorElementIdFromRootEffectId(uint64_t id);
+
+CompositorElementId PLATFORM_EXPORT
+    CompositorElementIdFromSyntheticEffectId(SyntheticEffectId);
 
 // Note cc::ElementId has a hash function already implemented via
 // ElementIdHash::operator(). However for consistency's sake we choose to use

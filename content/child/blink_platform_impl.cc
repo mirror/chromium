@@ -177,6 +177,8 @@ static int ToMessageID(WebLocalizedString::Name name) {
       return IDS_FORM_CALENDAR_TODAY;
     case WebLocalizedString::kDetailsLabel:
       return IDS_DETAILS_WITHOUT_SUMMARY_LABEL;
+    case WebLocalizedString::kDownloadButtonLabel:
+      return IDS_DOWNLOAD_BUTTON_LABEL;
     case WebLocalizedString::kFileButtonChooseFileLabel:
       return IDS_FORM_FILE_BUTTON_LABEL;
     case WebLocalizedString::kFileButtonChooseMultipleFilesLabel:
@@ -376,22 +378,6 @@ std::unique_ptr<blink::WebThread> BlinkPlatformImpl::CreateThread(
   std::unique_ptr<blink::scheduler::WebThreadBase> thread =
       blink::scheduler::WebThreadBase::CreateWorkerThread(
           name, base::Thread::Options());
-  thread->Init();
-  WaitUntilWebThreadTLSUpdate(thread.get());
-  return std::move(thread);
-}
-
-std::unique_ptr<blink::WebThread> BlinkPlatformImpl::CreateWebAudioThread() {
-  base::Thread::Options thread_options;
-
-  // WebAudio uses a thread with |DISPLAY| priority to avoid glitch when the
-  // system is under the high pressure. Note that the main browser thread also
-  // runs with same priority. (see: crbug.com/734539)
-  thread_options.priority = base::ThreadPriority::DISPLAY;
-
-  std::unique_ptr<blink::scheduler::WebThreadBase> thread =
-      blink::scheduler::WebThreadBase::CreateWorkerThread(
-          "WebAudio Rendering Thread", thread_options);
   thread->Init();
   WaitUntilWebThreadTLSUpdate(thread.get());
   return std::move(thread);

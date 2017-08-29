@@ -20,65 +20,70 @@ function onload()
     runTest();
 }
 
-function test() {
-  var scriptFormatter;
-  var linkifier;
-  var link;
-  var script;
-  var uiSourceCode;
+function test()
+{
+    var scriptFormatter;
+    var linkifier;
+    var link;
+    var script;
+    var uiSourceCode;
 
-  SourcesTestRunner.scriptFormatter().then(startDebuggerTest);
+    SourcesTestRunner.scriptFormatter().then(startDebuggerTest);
 
-  function startDebuggerTest(sf) {
-    scriptFormatter = sf;
-    SourcesTestRunner.startDebuggerTest(waitForScripts);
-  }
-
-  function waitForScripts() {
-    SourcesTestRunner.showScriptSource('linkifier.html', debuggerTest);
-  }
-
-  function debuggerTest() {
-    for (var scriptCandidate of TestRunner.debuggerModel.scripts()) {
-      if (scriptCandidate.sourceURL === TestRunner.mainTarget.inspectedURL() && scriptCandidate.lineOffset === 4) {
-        script = scriptCandidate;
-        break;
-      }
+    function startDebuggerTest(sf)
+    {
+        scriptFormatter = sf;
+        SourcesTestRunner.startDebuggerTest(waitForScripts);
     }
 
-    uiSourceCode = Workspace.workspace.uiSourceCodeForURL(TestRunner.mainTarget.inspectedURL());
+    function waitForScripts()
+    {
+        SourcesTestRunner.showScriptSource("linkifier.html", debuggerTest);
+    }
 
-    linkifier = new Components.Linkifier();
-    var count1 = liveLocationsCount();
-    link = linkifier.linkifyScriptLocation(
-        SDK.targetManager.mainTarget(), null, TestRunner.mainTarget.inspectedURL(), 8, 0, 'dummy-class');
-    var count2 = liveLocationsCount();
+    function debuggerTest()
+    {
+        for (var scriptCandidate of TestRunner.debuggerModel.scripts()) {
+            if (scriptCandidate.sourceURL === TestRunner.mainTarget.inspectedURL() && scriptCandidate.lineOffset === 4) {
+                script = scriptCandidate;
+                break;
+            }
+        }
 
-    TestRunner.addResult('listeners added on raw source code: ' + (count2 - count1));
-    TestRunner.addResult('original location: ' + link.textContent);
-    TestRunner.addSniffer(Sources.ScriptFormatterEditorAction.prototype, '_updateButton', uiSourceCodeScriptFormatted);
-    scriptFormatter._toggleFormatScriptSource();
-  }
+        uiSourceCode = Workspace.workspace.uiSourceCodeForURL(TestRunner.mainTarget.inspectedURL());
 
-  function uiSourceCodeScriptFormatted() {
-    TestRunner.addResult('pretty printed location: ' + link.textContent);
-    Sources.sourceFormatter.discardFormattedUISourceCode(UI.panels.sources.visibleView.uiSourceCode());
-    TestRunner.addResult('reverted location: ' + link.textContent);
+        linkifier = new Components.Linkifier();
+        var count1 = liveLocationsCount();
+        link = linkifier.linkifyScriptLocation(SDK.targetManager.mainTarget(), null, TestRunner.mainTarget.inspectedURL(), 8, 0, "dummy-class");
+        var count2 = liveLocationsCount();
 
-    var count1 = liveLocationsCount();
-    linkifier.reset();
-    var count2 = liveLocationsCount();
+        TestRunner.addResult("listeners added on raw source code: " + (count2 - count1));
+        TestRunner.addResult("original location: " + link.textContent);
+        TestRunner.addSniffer(Sources.ScriptFormatterEditorAction.prototype, "_updateButton", uiSourceCodeScriptFormatted);
+        scriptFormatter._toggleFormatScriptSource();
+    }
 
-    TestRunner.addResult('listeners removed from raw source code: ' + (count1 - count2));
+    function uiSourceCodeScriptFormatted()
+    {
+        TestRunner.addResult("pretty printed location: " + link.textContent);
+        Sources.sourceFormatter.discardFormattedUISourceCode(UI.panels.sources.visibleView.uiSourceCode());
+        TestRunner.addResult("reverted location: " + link.textContent);
 
-    SourcesTestRunner.completeDebuggerTest();
-  }
+        var count1 = liveLocationsCount();
+        linkifier.reset();
+        var count2 = liveLocationsCount();
 
-  function liveLocationsCount() {
-    var modelData = Bindings.debuggerWorkspaceBinding._debuggerModelToData.get(script.debuggerModel);
-    var locations = modelData._locations.get(script);
-    return locations.size;
-  }
+        TestRunner.addResult("listeners removed from raw source code: " + (count1 - count2));
+
+        SourcesTestRunner.completeDebuggerTest();
+    }
+
+    function liveLocationsCount()
+    {
+        var modelData = Bindings.debuggerWorkspaceBinding._debuggerModelToData.get(script.debuggerModel);
+        var locations = modelData._locations.get(script);
+        return locations.size;
+    }
 }
 
 </script>

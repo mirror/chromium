@@ -11,13 +11,14 @@
 #include "cc/ipc/filter_operations_struct_traits.h"
 #include "cc/ipc/frame_sink_id_struct_traits.h"
 #include "cc/ipc/local_surface_id_struct_traits.h"
+#include "cc/ipc/surface_id_struct_traits.h"
 #include "cc/ipc/texture_mailbox_struct_traits.h"
 #include "cc/output/compositor_frame.h"
 #include "cc/quads/debug_border_draw_quad.h"
 #include "cc/quads/render_pass.h"
 #include "cc/quads/solid_color_draw_quad.h"
 #include "components/viz/common/frame_sinks/begin_frame_args.h"
-#include "components/viz/common/resources/resource_format.h"
+#include "components/viz/common/quads/resource_format.h"
 #include "components/viz/common/resources/resource_settings.h"
 #include "components/viz/common/resources/returned_resource.h"
 #include "components/viz/common/resources/transferable_resource.h"
@@ -37,7 +38,6 @@
 #include "services/viz/public/cpp/compositing/returned_resource_struct_traits.h"
 #include "services/viz/public/cpp/compositing/selection_struct_traits.h"
 #include "services/viz/public/cpp/compositing/shared_quad_state_struct_traits.h"
-#include "services/viz/public/cpp/compositing/surface_id_struct_traits.h"
 #include "services/viz/public/cpp/compositing/surface_info_struct_traits.h"
 #include "services/viz/public/cpp/compositing/surface_sequence_struct_traits.h"
 #include "services/viz/public/cpp/compositing/transferable_resource_struct_traits.h"
@@ -176,11 +176,11 @@ TEST_F(StructTraitsTest, SharedQuadState) {
   const float opacity = 0.9f;
   const SkBlendMode blend_mode = SkBlendMode::kSrcOver;
   const int sorting_context_id = 1337;
-  SharedQuadState input_sqs;
+  cc::SharedQuadState input_sqs;
   input_sqs.SetAll(quad_to_target_transform, layer_rect, visible_layer_rect,
                    clip_rect, is_clipped, opacity, blend_mode,
                    sorting_context_id);
-  SharedQuadState output_sqs;
+  cc::SharedQuadState output_sqs;
   SerializeAndDeserialize<mojom::SharedQuadState>(input_sqs, &output_sqs);
   EXPECT_EQ(quad_to_target_transform, output_sqs.quad_to_target_transform);
   EXPECT_EQ(layer_rect, output_sqs.quad_layer_rect);
@@ -212,7 +212,7 @@ TEST_F(StructTraitsTest, CompositorFrame) {
   std::unique_ptr<cc::RenderPass> render_pass = cc::RenderPass::Create();
   render_pass->SetNew(1, gfx::Rect(5, 6), gfx::Rect(2, 3), gfx::Transform());
 
-  // SharedQuadState.
+  // cc::SharedQuadState.
   const gfx::Transform sqs_quad_to_target_transform(
       1.f, 2.f, 3.f, 4.f, 5.f, 6.f, 7.f, 8.f, 9.f, 10.f, 11.f, 12.f, 13.f, 14.f,
       15.f, 16.f);
@@ -223,7 +223,7 @@ TEST_F(StructTraitsTest, CompositorFrame) {
   const float sqs_opacity = 0.9f;
   const SkBlendMode sqs_blend_mode = SkBlendMode::kSrcOver;
   const int sqs_sorting_context_id = 1337;
-  SharedQuadState* sqs = render_pass->CreateAndAppendSharedQuadState();
+  cc::SharedQuadState* sqs = render_pass->CreateAndAppendSharedQuadState();
   sqs->SetAll(sqs_quad_to_target_transform, sqs_layer_rect,
               sqs_visible_layer_rect, sqs_clip_rect, sqs_is_clipped,
               sqs_opacity, sqs_blend_mode, sqs_sorting_context_id);
@@ -298,7 +298,7 @@ TEST_F(StructTraitsTest, CompositorFrame) {
   ASSERT_EQ(2u, out_render_pass->quad_list.size());
   ASSERT_EQ(1u, out_render_pass->shared_quad_state_list.size());
 
-  const SharedQuadState* out_sqs =
+  const cc::SharedQuadState* out_sqs =
       out_render_pass->shared_quad_state_list.ElementAt(0);
   EXPECT_EQ(sqs_quad_to_target_transform, out_sqs->quad_to_target_transform);
   EXPECT_EQ(sqs_layer_rect, out_sqs->quad_layer_rect);
@@ -499,14 +499,14 @@ TEST_F(StructTraitsTest, RenderPass) {
                 has_transparent_background, cache_render_pass,
                 has_damage_from_contributing_content);
 
-  SharedQuadState* shared_state_1 = input->CreateAndAppendSharedQuadState();
+  cc::SharedQuadState* shared_state_1 = input->CreateAndAppendSharedQuadState();
   shared_state_1->SetAll(
       gfx::Transform(16.1f, 15.3f, 14.3f, 13.7f, 12.2f, 11.4f, 10.4f, 9.8f,
                      8.1f, 7.3f, 6.3f, 5.7f, 4.8f, 3.4f, 2.4f, 1.2f),
       gfx::Rect(1, 2), gfx::Rect(1337, 5679, 9101112, 131415),
       gfx::Rect(1357, 2468, 121314, 1337), true, 2, SkBlendMode::kSrcOver, 1);
 
-  SharedQuadState* shared_state_2 = input->CreateAndAppendSharedQuadState();
+  cc::SharedQuadState* shared_state_2 = input->CreateAndAppendSharedQuadState();
   shared_state_2->SetAll(
       gfx::Transform(1.1f, 2.3f, 3.3f, 4.7f, 5.2f, 6.4f, 7.4f, 8.8f, 9.1f,
                      10.3f, 11.3f, 12.7f, 13.8f, 14.4f, 15.4f, 16.2f),
@@ -551,7 +551,7 @@ TEST_F(StructTraitsTest, RenderPass) {
   EXPECT_EQ(filters, output->filters);
   EXPECT_EQ(background_filters, output->background_filters);
 
-  SharedQuadState* out_sqs1 = output->shared_quad_state_list.ElementAt(0);
+  cc::SharedQuadState* out_sqs1 = output->shared_quad_state_list.ElementAt(0);
   EXPECT_EQ(shared_state_1->quad_to_target_transform,
             out_sqs1->quad_to_target_transform);
   EXPECT_EQ(shared_state_1->quad_layer_rect, out_sqs1->quad_layer_rect);
@@ -563,7 +563,7 @@ TEST_F(StructTraitsTest, RenderPass) {
   EXPECT_EQ(shared_state_1->blend_mode, out_sqs1->blend_mode);
   EXPECT_EQ(shared_state_1->sorting_context_id, out_sqs1->sorting_context_id);
 
-  SharedQuadState* out_sqs2 = output->shared_quad_state_list.ElementAt(1);
+  cc::SharedQuadState* out_sqs2 = output->shared_quad_state_list.ElementAt(1);
   EXPECT_EQ(shared_state_2->quad_to_target_transform,
             out_sqs2->quad_to_target_transform);
   EXPECT_EQ(shared_state_2->quad_layer_rect, out_sqs2->quad_layer_rect);
@@ -638,7 +638,7 @@ TEST_F(StructTraitsTest, QuadListBasic) {
   std::unique_ptr<cc::RenderPass> render_pass = cc::RenderPass::Create();
   render_pass->SetNew(1, gfx::Rect(), gfx::Rect(), gfx::Transform());
 
-  SharedQuadState* sqs = render_pass->CreateAndAppendSharedQuadState();
+  cc::SharedQuadState* sqs = render_pass->CreateAndAppendSharedQuadState();
 
   const gfx::Rect rect1(1234, 4321, 1357, 7531);
   const SkColor color1 = SK_ColorRED;
@@ -700,13 +700,13 @@ TEST_F(StructTraitsTest, QuadListBasic) {
   const gfx::Size resource_size_in_pixels5(1234, 5678);
   cc::TextureDrawQuad* texture_draw_quad =
       render_pass->CreateAndAppendDrawQuad<cc::TextureDrawQuad>();
-  texture_draw_quad->SetAll(
-      sqs, rect5, rect5, needs_blending, resource_id5, resource_size_in_pixels5,
-      premultiplied_alpha, uv_top_left, uv_bottom_right, background_color,
-      vertex_opacity, y_flipped, nearest_neighbor, secure_output_only);
+  texture_draw_quad->SetAll(sqs, rect5, rect5, rect5, needs_blending,
+                            resource_id5, resource_size_in_pixels5,
+                            premultiplied_alpha, uv_top_left, uv_bottom_right,
+                            background_color, vertex_opacity, y_flipped,
+                            nearest_neighbor, secure_output_only);
 
   const gfx::Rect rect6(321, 765, 11109, 151413);
-  const bool needs_blending6 = false;
   const ResourceId resource_id6(1234);
   const gfx::Size resource_size_in_pixels(1234, 5678);
   const gfx::Transform matrix(16.1f, 15.3f, 14.3f, 13.7f, 12.2f, 11.4f, 10.4f,
@@ -714,8 +714,8 @@ TEST_F(StructTraitsTest, QuadListBasic) {
                               1.2f);
   cc::StreamVideoDrawQuad* stream_video_draw_quad =
       render_pass->CreateAndAppendDrawQuad<cc::StreamVideoDrawQuad>();
-  stream_video_draw_quad->SetNew(sqs, rect6, rect6, needs_blending6,
-                                 resource_id6, resource_size_in_pixels, matrix);
+  stream_video_draw_quad->SetNew(sqs, rect6, rect6, rect6, resource_id6,
+                                 resource_size_in_pixels, matrix);
 
   std::unique_ptr<cc::RenderPass> output;
   SerializeAndDeserialize<mojom::RenderPass>(render_pass->DeepCopy(), &output);
@@ -726,7 +726,6 @@ TEST_F(StructTraitsTest, QuadListBasic) {
       cc::DebugBorderDrawQuad::MaterialCast(output->quad_list.ElementAt(0));
   EXPECT_EQ(rect1, out_debug_border_draw_quad->rect);
   EXPECT_EQ(rect1, out_debug_border_draw_quad->visible_rect);
-  EXPECT_FALSE(out_debug_border_draw_quad->needs_blending);
   EXPECT_EQ(color1, out_debug_border_draw_quad->color);
   EXPECT_EQ(width1, out_debug_border_draw_quad->width);
 
@@ -734,7 +733,6 @@ TEST_F(StructTraitsTest, QuadListBasic) {
       cc::SolidColorDrawQuad::MaterialCast(output->quad_list.ElementAt(1));
   EXPECT_EQ(rect2, out_solid_color_draw_quad->rect);
   EXPECT_EQ(rect2, out_solid_color_draw_quad->visible_rect);
-  EXPECT_FALSE(out_solid_color_draw_quad->needs_blending);
   EXPECT_EQ(color2, out_solid_color_draw_quad->color);
   EXPECT_EQ(force_anti_aliasing_off,
             out_solid_color_draw_quad->force_anti_aliasing_off);
@@ -743,7 +741,6 @@ TEST_F(StructTraitsTest, QuadListBasic) {
       cc::SurfaceDrawQuad::MaterialCast(output->quad_list.ElementAt(2));
   EXPECT_EQ(rect3, out_primary_surface_draw_quad->rect);
   EXPECT_EQ(rect3, out_primary_surface_draw_quad->visible_rect);
-  EXPECT_TRUE(out_primary_surface_draw_quad->needs_blending);
   EXPECT_EQ(primary_surface_id, out_primary_surface_draw_quad->surface_id);
   EXPECT_EQ(cc::SurfaceDrawQuadType::PRIMARY,
             out_primary_surface_draw_quad->surface_draw_quad_type);
@@ -754,7 +751,6 @@ TEST_F(StructTraitsTest, QuadListBasic) {
             out_primary_surface_draw_quad->fallback_quad);
   EXPECT_EQ(rect3, out_fallback_surface_draw_quad->rect);
   EXPECT_EQ(rect3, out_fallback_surface_draw_quad->visible_rect);
-  EXPECT_TRUE(out_fallback_surface_draw_quad->needs_blending);
   EXPECT_EQ(fallback_surface_id, out_fallback_surface_draw_quad->surface_id);
   EXPECT_EQ(cc::SurfaceDrawQuadType::FALLBACK,
             out_fallback_surface_draw_quad->surface_draw_quad_type);
@@ -764,7 +760,6 @@ TEST_F(StructTraitsTest, QuadListBasic) {
       cc::RenderPassDrawQuad::MaterialCast(output->quad_list.ElementAt(4));
   EXPECT_EQ(rect4, out_render_pass_draw_quad->rect);
   EXPECT_EQ(rect4, out_render_pass_draw_quad->visible_rect);
-  EXPECT_TRUE(out_fallback_surface_draw_quad->needs_blending);
   EXPECT_EQ(render_pass_id, out_render_pass_draw_quad->render_pass_id);
   EXPECT_EQ(resource_id4, out_render_pass_draw_quad->mask_resource_id());
   EXPECT_EQ(mask_texture_size, out_render_pass_draw_quad->mask_texture_size);
@@ -773,6 +768,7 @@ TEST_F(StructTraitsTest, QuadListBasic) {
   const cc::TextureDrawQuad* out_texture_draw_quad =
       cc::TextureDrawQuad::MaterialCast(output->quad_list.ElementAt(5));
   EXPECT_EQ(rect5, out_texture_draw_quad->rect);
+  EXPECT_EQ(rect5, out_texture_draw_quad->opaque_rect);
   EXPECT_EQ(rect5, out_texture_draw_quad->visible_rect);
   EXPECT_EQ(needs_blending, out_texture_draw_quad->needs_blending);
   EXPECT_EQ(resource_id5, out_texture_draw_quad->resource_id());
@@ -793,23 +789,12 @@ TEST_F(StructTraitsTest, QuadListBasic) {
   const cc::StreamVideoDrawQuad* out_stream_video_draw_quad =
       cc::StreamVideoDrawQuad::MaterialCast(output->quad_list.ElementAt(6));
   EXPECT_EQ(rect6, out_stream_video_draw_quad->rect);
+  EXPECT_EQ(rect6, out_stream_video_draw_quad->opaque_rect);
   EXPECT_EQ(rect6, out_stream_video_draw_quad->visible_rect);
-  EXPECT_EQ(needs_blending6, out_stream_video_draw_quad->needs_blending);
   EXPECT_EQ(resource_id6, out_stream_video_draw_quad->resource_id());
   EXPECT_EQ(resource_size_in_pixels,
             out_stream_video_draw_quad->resource_size_in_pixels());
   EXPECT_EQ(matrix, out_stream_video_draw_quad->matrix);
-}
-
-TEST_F(StructTraitsTest, SurfaceId) {
-  static constexpr FrameSinkId frame_sink_id(1337, 1234);
-  static LocalSurfaceId local_surface_id(0xfbadbeef,
-                                         base::UnguessableToken::Create());
-  SurfaceId input(frame_sink_id, local_surface_id);
-  SurfaceId output;
-  SerializeAndDeserialize<mojom::SurfaceId>(input, &output);
-  EXPECT_EQ(frame_sink_id, output.frame_sink_id());
-  EXPECT_EQ(local_surface_id, output.local_surface_id());
 }
 
 TEST_F(StructTraitsTest, TransferableResource) {
@@ -890,14 +875,15 @@ TEST_F(StructTraitsTest, YUVDrawQuad) {
   const uint32_t bits_per_channel = 13;
   const bool require_overlay = true;
 
-  SharedQuadState* sqs = render_pass->CreateAndAppendSharedQuadState();
+  cc::SharedQuadState* sqs = render_pass->CreateAndAppendSharedQuadState();
   cc::YUVVideoDrawQuad* quad =
       render_pass->CreateAndAppendDrawQuad<cc::YUVVideoDrawQuad>();
-  quad->SetAll(sqs, rect, visible_rect, needs_blending, ya_tex_coord_rect,
-               uv_tex_coord_rect, ya_tex_size, uv_tex_size, y_plane_resource_id,
-               u_plane_resource_id, v_plane_resource_id, a_plane_resource_id,
-               color_space, video_color_space, resource_offset,
-               resource_multiplier, bits_per_channel, require_overlay);
+  quad->SetAll(sqs, rect, opaque_rect, visible_rect, needs_blending,
+               ya_tex_coord_rect, uv_tex_coord_rect, ya_tex_size, uv_tex_size,
+               y_plane_resource_id, u_plane_resource_id, v_plane_resource_id,
+               a_plane_resource_id, color_space, video_color_space,
+               resource_offset, resource_multiplier, bits_per_channel,
+               require_overlay);
 
   std::unique_ptr<cc::RenderPass> output;
   SerializeAndDeserialize<mojom::RenderPass>(render_pass->DeepCopy(), &output);
@@ -908,6 +894,7 @@ TEST_F(StructTraitsTest, YUVDrawQuad) {
   const cc::YUVVideoDrawQuad* out_quad =
       cc::YUVVideoDrawQuad::MaterialCast(output->quad_list.ElementAt(0));
   EXPECT_EQ(rect, out_quad->rect);
+  EXPECT_EQ(opaque_rect, out_quad->opaque_rect);
   EXPECT_EQ(visible_rect, out_quad->visible_rect);
   EXPECT_EQ(needs_blending, out_quad->needs_blending);
   EXPECT_EQ(ya_tex_coord_rect, out_quad->ya_tex_coord_rect);

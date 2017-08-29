@@ -380,7 +380,7 @@ bool EventHandler::ShouldShowIBeamForNode(const Node* node,
     PaintLayer* layer = layout_object->EnclosingLayer();
     if (layer->GetScrollableArea() &&
         layer->GetScrollableArea()->IsPointInResizeControl(
-            result.RoundedPointInMainFrame(), kResizerForPointer)) {
+            result.RoundedPointInContent(), kResizerForPointer)) {
       return false;
     }
 
@@ -1395,7 +1395,7 @@ bool EventHandler::BestClickableNodeForHitTestResult(
   }
 
   IntPoint touch_center =
-      frame_->View()->ContentsToRootFrame(result.RoundedPointInMainFrame());
+      frame_->View()->ContentsToRootFrame(result.RoundedPointInContent());
   IntRect touch_rect = frame_->View()->ContentsToRootFrame(
       result.GetHitTestLocation().BoundingBox());
 
@@ -1415,7 +1415,7 @@ bool EventHandler::BestContextMenuNodeForHitTestResult(
     Node*& target_node) {
   DCHECK(result.IsRectBasedTest());
   IntPoint touch_center =
-      frame_->View()->ContentsToRootFrame(result.RoundedPointInMainFrame());
+      frame_->View()->ContentsToRootFrame(result.RoundedPointInContent());
   IntRect touch_rect = frame_->View()->ContentsToRootFrame(
       result.GetHitTestLocation().BoundingBox());
   HeapVector<Member<Node>, 11> nodes;
@@ -1826,8 +1826,8 @@ WebInputEventResult EventHandler::ShowNonLocatedContextMenu(
 
     int x = right_aligned ? first_rect.MaxX() : first_rect.X();
     // In a multiline edit, firstRect.maxY() would end up on the next line, so
-    // take the midpoint.
-    int y = (first_rect.MaxY() + first_rect.Y()) / 2;
+    // -1.
+    int y = first_rect.MaxY() ? first_rect.MaxY() - 1 : 0;
     location_in_root_frame = view->ContentsToRootFrame(IntPoint(x, y));
   } else if (focused_element) {
     IntRect clipped_rect = focused_element->BoundsInViewport();

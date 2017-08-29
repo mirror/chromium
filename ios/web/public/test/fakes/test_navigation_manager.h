@@ -44,8 +44,6 @@ class TestNavigationManager : public NavigationManager {
   void Reload(ReloadType reload_type, bool check_for_reposts) override;
   NavigationItemList GetBackwardItems() const override;
   NavigationItemList GetForwardItems() const override;
-  void Restore(int last_committed_item_index,
-               std::vector<std::unique_ptr<NavigationItem>> items) override;
   void CopyStateFromAndPrune(const NavigationManager* source) override;
   bool CanPruneAllButLastCommittedItem() const override;
 
@@ -68,14 +66,8 @@ class TestNavigationManager : public NavigationManager {
   // be either -1 or between 0 and GetItemCount()-1, inclusively.
   void SetLastCommittedItemIndex(const int index);
 
-  // Sets the index to be returned by GetBrowserState().
-  void SetBrowserState(web::BrowserState* browser_state);
-
   // Returns whether LoadURLWithParams has been called.
   bool LoadURLWithParamsWasCalled();
-
-  // Returns whether LoadIfNecessary has been called.
-  bool LoadIfNecessaryWasCalled();
 
  private:
   // A list of items constructed by calling AddItem().
@@ -85,9 +77,7 @@ class TestNavigationManager : public NavigationManager {
   NavigationItem* pending_item_;
   NavigationItem* last_committed_item_;
   NavigationItem* visible_item_;
-  web::BrowserState* browser_state_;
   bool load_url_with_params_was_called_;
-  bool load_if_necessary_was_called_;
 };
 
 }  // namespace web

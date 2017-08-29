@@ -29,11 +29,11 @@ class PasswordReuseDetectionManager : public PasswordReuseDetectorConsumer {
   void DidNavigateMainFrame(const GURL& main_frame_url);
   void OnKeyPressed(const base::string16& text);
 
-  // PasswordReuseDetectorConsumer implementation
+  // PasswordReuseDetectorConsumer
   void OnReuseFound(const base::string16& password,
-                    bool matches_sync_password,
-                    const std::vector<std::string>& matching_domains,
-                    int saved_passwords) override;
+                    const std::string& legitimate_domain,
+                    int saved_passwords,
+                    int number_matches) override;
 
   void SetClockForTesting(std::unique_ptr<base::Clock> clock);
 

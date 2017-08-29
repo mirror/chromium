@@ -237,17 +237,6 @@ template <typename Strategy>
 SelectionTemplate<Strategy> SelectionTemplate<Strategy>::Builder::Build()
     const {
   DCHECK(selection_.AssertValid());
-  if (selection_.direction_ == Direction::kBackward) {
-    DCHECK_LE(selection_.extent_, selection_.base_);
-    return selection_;
-  }
-  if (selection_.direction_ == Direction::kForward) {
-    if (selection_.IsNone())
-      return selection_;
-    DCHECK_LE(selection_.base_, selection_.extent_);
-    return selection_;
-  }
-  DCHECK_EQ(selection_.direction_, Direction::kNotComputed);
   selection_.ResetDirectionCache();
   return selection_;
 }
@@ -283,7 +272,6 @@ SelectionTemplate<Strategy>::Builder::Extend(
   DCHECK(selection_.Base().IsConnected()) << selection_.Base();
   DCHECK(selection_.AssertValid());
   selection_.extent_ = position;
-  selection_.direction_ = Direction::kNotComputed;
   return *this;
 }
 
@@ -304,39 +292,6 @@ SelectionTemplate<Strategy>::Builder::SetAffinity(TextAffinity affinity) {
 
 template <typename Strategy>
 typename SelectionTemplate<Strategy>::Builder&
-SelectionTemplate<Strategy>::Builder::SetAsBackwardSelection(
-    const EphemeralRangeTemplate<Strategy>& range) {
-  DCHECK(range.IsNotNull());
-  DCHECK(!range.IsCollapsed());
-  DCHECK(selection_.IsNone()) << selection_;
-  selection_.base_ = range.EndPosition();
-  selection_.extent_ = range.StartPosition();
-  selection_.direction_ = Direction::kBackward;
-  DCHECK_GT(selection_.base_, selection_.extent_);
-#if DCHECK_IS_ON()
-  selection_.dom_tree_version_ = range.GetDocument().DomTreeVersion();
-#endif
-  return *this;
-}
-
-template <typename Strategy>
-typename SelectionTemplate<Strategy>::Builder&
-SelectionTemplate<Strategy>::Builder::SetAsForwardSelection(
-    const EphemeralRangeTemplate<Strategy>& range) {
-  DCHECK(range.IsNotNull());
-  DCHECK(selection_.IsNone()) << selection_;
-  selection_.base_ = range.StartPosition();
-  selection_.extent_ = range.EndPosition();
-  selection_.direction_ = Direction::kForward;
-  DCHECK_LE(selection_.base_, selection_.extent_);
-#if DCHECK_IS_ON()
-  selection_.dom_tree_version_ = range.GetDocument().DomTreeVersion();
-#endif
-  return *this;
-}
-
-template <typename Strategy>
-typename SelectionTemplate<Strategy>::Builder&
 SelectionTemplate<Strategy>::Builder::SetBaseAndExtent(
     const EphemeralRangeTemplate<Strategy>& range) {
   if (range.IsNull()) {
@@ -347,7 +302,7 @@ SelectionTemplate<Strategy>::Builder::SetBaseAndExtent(
 #endif
     return *this;
   }
-  return SetAsForwardSelection(range);
+  return Collapse(range.StartPosition()).Extend(range.EndPosition());
 }
 
 template <typename Strategy>

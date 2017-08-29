@@ -8,8 +8,6 @@
 
 #include "base/logging.h"
 #include "base/values.h"
-#include "components/feedback/feedback_uploader.h"
-#include "components/feedback/feedback_uploader_factory.h"
 #include "components/feedback/system_logs/system_logs_fetcher.h"
 #include "components/feedback/system_logs/system_logs_source.h"
 #include "content/public/browser/browser_context.h"
@@ -48,11 +46,5 @@ std::string ShellFeedbackPrivateDelegate::GetSignedInUserEmail(
 }
 
 void ShellFeedbackPrivateDelegate::NotifyFeedbackDelayed() const {}
-
-feedback::FeedbackUploader*
-ShellFeedbackPrivateDelegate::GetFeedbackUploaderForContext(
-    content::BrowserContext* context) const {
-  return feedback::FeedbackUploaderFactory::GetForBrowserContext(context);
-}
 
 }  // namespace extensions

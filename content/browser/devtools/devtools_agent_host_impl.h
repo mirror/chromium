@@ -26,7 +26,7 @@ class DevToolsSession;
 class CONTENT_EXPORT DevToolsAgentHostImpl : public DevToolsAgentHost {
  public:
   // DevToolsAgentHost implementation.
-  void AttachClient(DevToolsAgentHostClient* client) override;
+  bool AttachClient(DevToolsAgentHostClient* client) override;
   void ForceAttachClient(DevToolsAgentHostClient* client) override;
   bool DetachClient(DevToolsAgentHostClient* client) override;
   bool DispatchProtocolMessage(DevToolsAgentHostClient* client,
@@ -44,6 +44,7 @@ class CONTENT_EXPORT DevToolsAgentHostImpl : public DevToolsAgentHost {
   void DisconnectWebContents() override;
   void ConnectWebContents(WebContents* wc) override;
 
+  void AttachMultiClient(DevToolsAgentHostClient* client);
   bool Inspect();
 
  protected:

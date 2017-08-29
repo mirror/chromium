@@ -7,7 +7,6 @@ package org.chromium.android_webview.test;
 import static org.junit.Assert.assertNotEquals;
 
 import android.content.Context;
-import android.content.ContextWrapper;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.Color;
@@ -1013,46 +1012,11 @@ public class SafeBrowsingTest {
     @Test
     @SmallTest
     @Feature({"AndroidWebView"})
-    @CommandLineFlags.Add(AwSwitches.WEBVIEW_ENABLE_SAFEBROWSING_SUPPORT)
-    public void testInitSafeBrowsingUsesAppContext() throws Throwable {
-        MockContext ctx =
-                new MockContext(InstrumentationRegistry.getInstrumentation().getTargetContext());
-        CallbackHelper helper = new CallbackHelper();
-        int count = helper.getCallCount();
-
-        AwContentsStatics.initSafeBrowsing(ctx, b -> helper.notifyCalled());
-        helper.waitForCallback(count);
-        Assert.assertTrue(
-                "Should only use application context", ctx.wasGetApplicationContextCalled());
-    }
-
-    private static class MockContext extends ContextWrapper {
-        private boolean mGetApplicationContextWasCalled;
-
-        public MockContext(Context context) {
-            super(context);
-        }
-
-        public Context getApplicationContext() {
-            mGetApplicationContextWasCalled = true;
-            return super.getApplicationContext();
-        }
-
-        public boolean wasGetApplicationContextCalled() {
-            return mGetApplicationContextWasCalled;
-        }
-    }
-
-    @Test
-    @SmallTest
-    @Feature({"AndroidWebView"})
     public void testGetSafeBrowsingPrivacyPolicyUrl() throws Throwable {
-        final Uri privacyPolicyUrl =
-                Uri.parse("https://www.google.com/chrome/browser/privacy/")
-                        .buildUpon()
-                        .appendQueryParameter("hl", LocaleUtils.getDefaultLocaleString())
-                        .fragment("safe-browsing-policies")
-                        .build();
+        final Uri privacyPolicyUrl = Uri.parse("https://www.google.com/chrome/browser/privacy/")
+                                             .buildUpon()
+                                             .fragment("safe-browsing-policies")
+                                             .build();
         Assert.assertEquals(privacyPolicyUrl, AwContentsStatics.getSafeBrowsingPrivacyPolicyUrl());
         Assert.assertNotNull(AwContentsStatics.getSafeBrowsingPrivacyPolicyUrl());
     }

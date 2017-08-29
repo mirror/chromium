@@ -79,18 +79,9 @@ class InlineTextBoxPainter {
 
   void PaintStyleableMarkerUnderline(GraphicsContext&,
                                      const LayoutPoint& box_origin,
-                                     const StyleableMarker&,
-                                     const ComputedStyle&,
-                                     const Font&);
-  struct PaintOffsets {
-    unsigned start;
-    unsigned end;
-  };
-  PaintOffsets ApplyTruncationToPaintOffsets(const PaintOffsets&);
-  // For markers that shouldn't draw over a truncation ellipsis (i.e., not
-  // text match markers, which do draw over said ellipsis)
-  PaintOffsets MarkerPaintStartAndEnd(const DocumentMarker&);
-
+                                     const StyleableMarker&);
+  unsigned MarkerPaintStart(const DocumentMarker&);
+  unsigned MarkerPaintEnd(const DocumentMarker&);
   bool ShouldPaintTextBox(const PaintInfo&);
   void ExpandToIncludeNewlineForSelection(LayoutRect&);
   LayoutObject& InlineLayoutObject() const;

@@ -37,13 +37,13 @@ public class MainPreferences extends PreferenceFragment
     public static final String PREF_SEARCH_ENGINE = "search_engine";
     public static final String PREF_SAVED_PASSWORDS = "saved_passwords";
     public static final String PREF_HOMEPAGE = "homepage";
+    public static final String PREF_SUGGESTIONS = "suggestions";
     public static final String PREF_DATA_REDUCTION = "data_reduction";
     public static final String PREF_NOTIFICATIONS = "notifications";
 
     public static final String ACCOUNT_PICKER_DIALOG_TAG = "account_picker_dialog_tag";
     public static final String EXTRA_SHOW_SEARCH_ENGINE_PICKER = "show_search_engine_picker";
 
-    private SignInPreference mSignInPreference;
     private ManagedPreferenceDelegate mManagedPreferenceDelegate;
 
     public MainPreferences() {
@@ -65,7 +65,6 @@ public class MainPreferences extends PreferenceFragment
 
         if (SigninManager.get(getActivity()).isSigninSupported()) {
             SigninManager.get(getActivity()).addSignInStateObserver(this);
-            setupSignInPref();
         }
     }
 
@@ -74,7 +73,6 @@ public class MainPreferences extends PreferenceFragment
         super.onPause();
         if (SigninManager.get(getActivity()).isSigninSupported()) {
             SigninManager.get(getActivity()).removeSignInStateObserver(this);
-            clearSignInPref();
         }
     }
 
@@ -186,18 +184,6 @@ public class MainPreferences extends PreferenceFragment
 
     private void setOnOffSummary(Preference pref, boolean isOn) {
         pref.setSummary(getResources().getString(isOn ? R.string.text_on : R.string.text_off));
-    }
-
-    private void setupSignInPref() {
-        mSignInPreference = (SignInPreference) findPreference(PREF_SIGN_IN);
-        mSignInPreference.registerForUpdates();
-    }
-
-    private void clearSignInPref() {
-        if (mSignInPreference != null) {
-            mSignInPreference.unregisterForUpdates();
-            mSignInPreference = null;
-        }
     }
 
     // SignInStateObserver

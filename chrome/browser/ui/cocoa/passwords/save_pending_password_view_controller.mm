@@ -9,20 +9,9 @@
 #import "chrome/browser/ui/cocoa/passwords/passwords_bubble_utils.h"
 #import "chrome/browser/ui/cocoa/passwords/passwords_list_view_controller.h"
 #include "chrome/browser/ui/passwords/manage_passwords_bubble_model.h"
-#include "chrome/common/chrome_features.h"
 #include "chrome/grit/generated_resources.h"
 #include "components/password_manager/core/common/password_manager_features.h"
-#import "ui/base/cocoa/touch_bar_util.h"
 #include "ui/base/l10n/l10n_util.h"
-
-namespace {
-
-// Touch bar item identifiers.
-NSString* const kEditTouchBarId = @"EDIT";
-NSString* const kNeverTouchBarId = @"NEVER";
-NSString* const kSaveTouchBarId = @"SAVE";
-
-}  // end namespace
 
 @interface SavePendingPasswordViewController ()<NSTextFieldDelegate>
 - (void)onSaveClicked:(id)sender;
@@ -42,21 +31,7 @@ NSString* const kSaveTouchBarId = @"SAVE";
   return saveButton_;
 }
 
-- (void)dealloc {
-  PendingPasswordItemView* row =
-      [[passwordItemContainer_ subviews] objectAtIndex:0];
-  [[row usernameField] setDelegate:nil];
-  [super dealloc];
-}
-
 - (void)onSaveClicked:(id)sender {
-  if (editMode_) {
-    PendingPasswordItemView* row =
-        [[passwordItemContainer_ subviews] objectAtIndex:0];
-    self.model->OnUsernameEdited(
-        base::SysNSStringToUTF16([[row usernameField] stringValue]));
-    [self disableEditMode];
-  }
   ManagePasswordsBubbleModel* model = self.model;
   if (model) {
     model->OnSaveClicked();
@@ -93,13 +68,11 @@ NSString* const kSaveTouchBarId = @"SAVE";
 
 // Focus handler for editable username field.
 - (void)controlTextDidEndEditing:(NSNotification*)notification {
-  if (editMode_) {
-    PendingPasswordItemView* row =
-        [[passwordItemContainer_ subviews] objectAtIndex:0];
-    self.model->OnUsernameEdited(
-        base::SysNSStringToUTF16([[row usernameField] stringValue]));
-    [self disableEditMode];
-  }
+  PendingPasswordItemView* row =
+      [[passwordItemContainer_ subviews] objectAtIndex:0];
+  self.model->OnUsernameEdited(
+      base::SysNSStringToUTF16([[row usernameField] stringValue]));
+  [self disableEditMode];
 }
 
 - (BOOL)disableEditMode {
@@ -174,52 +147,6 @@ NSString* const kSaveTouchBarId = @"SAVE";
     return @[ saveButton_, neverButton_, editButton_ ];
   }
   return @[ saveButton_, neverButton_ ];
-}
-
-- (NSTouchBar*)makeTouchBar {
-  if (!base::FeatureList::IsEnabled(features::kDialogTouchBar))
-    return nil;
-
-  base::scoped_nsobject<NSTouchBar> touchBar([[ui::NSTouchBar() alloc] init]);
-  [touchBar setDelegate:self];
-
-  NSArray* dialogItems = @[
-    [self touchBarIdForItem:kEditTouchBarId],
-    [self touchBarIdForItem:kNeverTouchBarId],
-    [self touchBarIdForItem:kSaveTouchBarId]
-  ];
-
-  [touchBar setDefaultItemIdentifiers:dialogItems];
-  return touchBar.autorelease();
-}
-
-- (NSTouchBarItem*)touchBar:(NSTouchBar*)touchBar
-      makeItemForIdentifier:(NSTouchBarItemIdentifier)identifier
-    API_AVAILABLE(macos(10.12.2)) {
-  NSButton* button;
-  if ([identifier isEqual:[self touchBarIdForItem:kEditTouchBarId]]) {
-    button = [NSButton
-        buttonWithTitle:l10n_util::GetNSString(IDS_PASSWORD_MANAGER_EDIT_BUTTON)
-                 target:self
-                 action:@selector(onEditClicked:)];
-  } else if ([identifier isEqual:[self touchBarIdForItem:kNeverTouchBarId]]) {
-    button = [NSButton
-        buttonWithTitle:l10n_util::GetNSString(
-                            IDS_PASSWORD_MANAGER_BUBBLE_BLACKLIST_BUTTON)
-                 target:self
-                 action:@selector(onNeverForThisSiteClicked:)];
-  } else if ([identifier isEqual:[self touchBarIdForItem:kSaveTouchBarId]]) {
-    button = ui::GetBlueTouchBarButton(
-        l10n_util::GetNSString(IDS_PASSWORD_MANAGER_SAVE_BUTTON), self,
-        @selector(onSaveClicked:));
-  } else {
-    return nil;
-  }
-
-  base::scoped_nsobject<NSCustomTouchBarItem> item(
-      [[ui::NSCustomTouchBarItem() alloc] initWithIdentifier:identifier]);
-  [item setView:button];
-  return item.autorelease();
 }
 
 @end

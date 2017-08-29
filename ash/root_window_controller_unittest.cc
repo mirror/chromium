@@ -416,7 +416,7 @@ TEST_F(RootWindowControllerTest, ModalContainerNotLoggedInLoggedIn) {
 
   // Configure login screen environment.
   SessionController* session_controller = Shell::Get()->session_controller();
-  ClearLogin();
+  SetUserLoggedIn(false);
   EXPECT_EQ(0, session_controller->NumberOfLoggedInUsers());
   EXPECT_FALSE(session_controller->IsActiveUserSessionStarted());
 
@@ -436,7 +436,8 @@ TEST_F(RootWindowControllerTest, ModalContainerNotLoggedInLoggedIn) {
   login_modal_widget->Close();
 
   // Configure user session environment.
-  CreateUserSessions(1);
+  SetUserLoggedIn(true);
+  SetSessionStarted(true);
   EXPECT_EQ(1, session_controller->NumberOfLoggedInUsers());
   EXPECT_TRUE(session_controller->IsActiveUserSessionStarted());
   EXPECT_EQ(GetLayoutManager(controller, kShellWindowId_SystemModalContainer),

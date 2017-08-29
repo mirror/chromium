@@ -19,7 +19,6 @@
 #include "base/time/time.h"
 #include "base/trace_event/trace_event.h"
 #include "content/child/background_sync/background_sync_type_converters.h"
-#include "content/child/child_url_loader_factory_getter.h"
 #include "content/child/notifications/notification_data_conversions.h"
 #include "content/child/request_extra_data.h"
 #include "content/child/service_worker/service_worker_dispatcher.h"
@@ -40,10 +39,10 @@
 #include "content/common/service_worker/service_worker_messages.h"
 #include "content/common/service_worker/service_worker_status_code.h"
 #include "content/common/service_worker/service_worker_utils.h"
+#include "content/common/worker_url_loader_factory_provider.mojom.h"
 #include "content/public/common/content_features.h"
 #include "content/public/common/push_event_payload.h"
 #include "content/public/common/referrer.h"
-#include "content/public/common/service_names.mojom.h"
 #include "content/public/renderer/content_renderer_client.h"
 #include "content/public/renderer/document_state.h"
 #include "content/renderer/devtools/devtools_agent.h"
@@ -58,12 +57,9 @@
 #include "ipc/ipc_message_macros.h"
 #include "net/base/net_errors.h"
 #include "net/http/http_response_headers.h"
-#include "services/service_manager/public/cpp/connector.h"
-#include "services/service_manager/public/cpp/interface_provider.h"
 #include "storage/common/blob_storage/blob_handle.h"
 #include "storage/public/interfaces/blobs.mojom.h"
 #include "third_party/WebKit/public/platform/InterfaceProvider.h"
-#include "third_party/WebKit/public/platform/Platform.h"
 #include "third_party/WebKit/public/platform/URLConversion.h"
 #include "third_party/WebKit/public/platform/WebBlobRegistry.h"
 #include "third_party/WebKit/public/platform/WebMessagePortChannel.h"
@@ -80,7 +76,6 @@
 #include "third_party/WebKit/public/platform/modules/serviceworker/WebServiceWorkerNetworkProvider.h"
 #include "third_party/WebKit/public/platform/modules/serviceworker/WebServiceWorkerRequest.h"
 #include "third_party/WebKit/public/platform/modules/serviceworker/WebServiceWorkerResponse.h"
-#include "third_party/WebKit/public/platform/modules/serviceworker/service_worker_error_type.mojom.h"
 #include "third_party/WebKit/public/web/modules/serviceworker/WebServiceWorkerContextClient.h"
 #include "third_party/WebKit/public/web/modules/serviceworker/WebServiceWorkerContextProxy.h"
 
@@ -303,11 +298,6 @@ template <typename Key, typename Callback>
 void AbortPendingEventCallbacks(std::map<Key, Callback>& callbacks) {
   for (auto& item : callbacks)
     std::move(item.second).Run(SERVICE_WORKER_ERROR_ABORT, base::Time::Now());
-}
-
-void GetBlobRegistry(storage::mojom::BlobRegistryRequest request) {
-  ChildThreadImpl::current()->GetConnector()->BindInterface(
-      mojom::kBrowserServiceName, std::move(request));
 }
 
 }  // namespace
@@ -593,7 +583,7 @@ class ServiceWorkerContextClient::NavigationPreloadRequest final
     // This will delete |this|.
     client->OnNavigationPreloadError(
         fetch_event_id_, base::MakeUnique<blink::WebServiceWorkerError>(
-                             blink::mojom::ServiceWorkerErrorType::kNetwork,
+                             blink::WebServiceWorkerError::kErrorTypeNetwork,
                              blink::WebString::FromUTF8(message),
                              blink::WebString::FromUTF8(unsanitized_message)));
   }
@@ -824,8 +814,6 @@ void ServiceWorkerContextClient::WillDestroyWorkerContext(
   // (while we're still on the worker thread).
   proxy_ = NULL;
 
-  blob_registry_.reset();
-
   // Aborts all the pending events callbacks.
   AbortPendingEventCallbacks(context_->install_event_callbacks,
                              false /* has_fetch_handler */);
@@ -1042,25 +1030,10 @@ void ServiceWorkerContextClient::RespondToFetchEvent(
       blob_ptr = response.blob->TakeBlobPtr();
       response.blob = nullptr;
     } else {
-      if (!blob_registry_) {
-        // TODO(kinuko): We should use per-frame / per-worker InterfaceProvider
-        // instead (crbug.com/734210).
-        main_thread_task_runner_->PostTask(
-            FROM_HERE,
-            base::BindOnce(&GetBlobRegistry, MakeRequest(&blob_registry_)));
-      }
-      blob_registry_->GetBlobFromUUID(MakeRequest(&blob_ptr),
-                                      response.blob_uuid);
-    }
-    if (ServiceWorkerUtils::IsServicificationEnabled()) {
-      // Blob's lifetime is guaranteed via mojom::BlobPtr, but
-      // we need to retain a reference in the BlobDispatcherHost
-      // to register a public URL in the controllee side as it
-      // still goes through the legacy IPC path.
-      // TODO(kinuko): Remove this code before this hits production
-      // code, there's a risk to leak a blob. (crbug.com/756743)
-      blink::Platform::Current()->GetBlobRegistry()->AddBlobDataRef(
-          blink::WebString::FromASCII(response.blob_uuid));
+      blob_ptr.Bind(storage::mojom::BlobPtrInfo(
+          blink::WebBlobRegistry::GetBlobPtrFromUUID(
+              blink::WebString::FromASCII(response.blob_uuid)),
+          storage::mojom::Blob::Version_));
     }
     response_callback->OnResponseBlob(
         response, std::move(blob_ptr),
@@ -1244,15 +1217,15 @@ std::unique_ptr<blink::WebWorkerFetchContext>
 ServiceWorkerContextClient::CreateServiceWorkerFetchContext() {
   DCHECK(main_thread_task_runner_->RunsTasksInCurrentSequence());
   DCHECK(base::FeatureList::IsEnabled(features::kOffMainThreadFetch));
+  mojom::WorkerURLLoaderFactoryProviderPtr worker_url_loader_factory_provider;
+  RenderThreadImpl::current()
+      ->blink_platform_impl()
+      ->GetInterfaceProvider()
+      ->GetInterface(mojo::MakeRequest(&worker_url_loader_factory_provider));
 
-  scoped_refptr<ChildURLLoaderFactoryGetter> url_loader_factory_getter =
-      RenderThreadImpl::current()
-          ->blink_platform_impl()
-          ->CreateDefaultURLLoaderFactoryGetter();
-  DCHECK(url_loader_factory_getter);
   // Blink is responsible for deleting the returned object.
   return base::MakeUnique<ServiceWorkerFetchContextImpl>(
-      script_url_, url_loader_factory_getter->GetClonedInfo(),
+      script_url_, worker_url_loader_factory_provider.PassInterface(),
       provider_context_->provider_id());
 }
 
@@ -1713,7 +1686,7 @@ void ServiceWorkerContextClient::OnOpenWindowError(
     return;
   }
   callbacks->OnError(blink::WebServiceWorkerError(
-      blink::mojom::ServiceWorkerErrorType::kNavigation,
+      blink::WebServiceWorkerError::kErrorTypeNavigation,
       blink::WebString::FromUTF8(message)));
   context_->client_callbacks.Remove(request_id);
 }
@@ -1736,7 +1709,7 @@ void ServiceWorkerContextClient::OnFocusClientResponse(
     callback->OnSuccess(std::move(web_client));
   } else {
     callback->OnError(blink::WebServiceWorkerError(
-        blink::mojom::ServiceWorkerErrorType::kNotFound,
+        blink::WebServiceWorkerError::kErrorTypeNotFound,
         "The WindowClient was not found."));
   }
 
@@ -1776,7 +1749,7 @@ void ServiceWorkerContextClient::OnNavigateClientError(int request_id,
   }
   std::string message = "Cannot navigate to URL: " + url.spec();
   callbacks->OnError(blink::WebServiceWorkerError(
-      blink::mojom::ServiceWorkerErrorType::kNavigation,
+      blink::WebServiceWorkerError::kErrorTypeNavigation,
       blink::WebString::FromUTF8(message)));
   context_->client_callbacks.Remove(request_id);
 }
@@ -1809,7 +1782,7 @@ void ServiceWorkerContextClient::OnDidClaimClients(int request_id) {
 
 void ServiceWorkerContextClient::OnClaimClientsError(
     int request_id,
-    blink::mojom::ServiceWorkerErrorType error_type,
+    blink::WebServiceWorkerError::ErrorType error_type,
     const base::string16& message) {
   TRACE_EVENT0("ServiceWorker",
                "ServiceWorkerContextClient::OnClaimClientsError");

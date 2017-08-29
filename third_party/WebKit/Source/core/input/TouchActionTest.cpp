@@ -97,13 +97,13 @@ class TouchActionTest : public ::testing::Test {
   TouchActionTest() : base_url_("http://www.test.com/") {
     URLTestHelpers::RegisterMockedURLLoadFromBase(
         WebString::FromUTF8(base_url_), testing::CoreTestDataPath(),
-        "touch-action-tests.css", "text/css");
+        "touch-action-tests.css");
     URLTestHelpers::RegisterMockedURLLoadFromBase(
         WebString::FromUTF8(base_url_), testing::CoreTestDataPath(),
-        "touch-action-tests.js", "text/javascript");
+        "touch-action-tests.js");
     URLTestHelpers::RegisterMockedURLLoadFromBase(
         WebString::FromUTF8(base_url_), testing::CoreTestDataPath(),
-        "white-1x1.png", "image/png");
+        "white-1x1.png");
   }
 
   void TearDown() override {
@@ -166,7 +166,7 @@ void TouchActionTest::RunShadowDOMTest(std::string file) {
   ASSERT_GE(host_nodes->length(), 1u);
 
   for (unsigned index = 0; index < host_nodes->length(); index++) {
-    ShadowRoot* shadow_root = host_nodes->item(index)->OpenShadowRoot();
+    ShadowRoot* shadow_root = host_nodes->item(index)->openShadowRoot();
     RunTestOnTree(shadow_root, web_view, client);
   }
 

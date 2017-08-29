@@ -13,9 +13,10 @@
 
 namespace web {
 
-id<GREYAction> LongPressElementForContextMenu(const std::string& element_id) {
+id<GREYAction> LongPressElementForContextMenu(const std::string& element_id,
+                                              bool triggers_context_menu) {
   return WebViewLongPressElementForContextMenu(
-      shell_test_util::GetCurrentWebState(), element_id, true);
+      shell_test_util::GetCurrentWebState(), element_id, triggers_context_menu);
 }
 
 }  // namespace web

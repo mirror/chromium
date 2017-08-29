@@ -30,11 +30,6 @@ content::ContentRendererClient*
 HeadlessContentMainDelegate::CreateContentRendererClient() {
   return nullptr;
 }
-
-content::ContentUtilityClient*
-HeadlessContentMainDelegate::CreateContentUtilityClient() {
-  return nullptr;
-}
 #endif  // defined(CHROME_MULTIPLE_DLL_BROWSER)
 
 }  // namespace headless

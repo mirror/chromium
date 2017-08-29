@@ -157,6 +157,16 @@ void SkiaPaintCanvas::clear(SkColor color) {
   canvas_->clear(color);
 }
 
+void SkiaPaintCanvas::clipDeviceRect(const SkIRect& device_rect,
+                                     const SkIRect& subtract_rect,
+                                     SkClipOp op) {
+  SkRegion device_region;
+  device_region.setRect(device_rect);
+  if (!subtract_rect.isEmpty())
+    device_region.op(subtract_rect, SkRegion::kDifference_Op);
+  canvas_->clipRegion(device_region, op);
+}
+
 void SkiaPaintCanvas::drawLine(SkScalar x0,
                                SkScalar y0,
                                SkScalar x1,
@@ -191,6 +201,15 @@ void SkiaPaintCanvas::drawDRRect(const SkRRect& outer,
                                  const PaintFlags& flags) {
   SkPaint paint = flags.ToSkPaint();
   canvas_->drawDRRect(outer, inner, paint);
+}
+
+void SkiaPaintCanvas::drawArc(const SkRect& oval,
+                              SkScalar start_angle,
+                              SkScalar sweep_angle,
+                              bool use_center,
+                              const PaintFlags& flags) {
+  SkPaint paint = flags.ToSkPaint();
+  canvas_->drawArc(oval, start_angle, sweep_angle, use_center, paint);
 }
 
 void SkiaPaintCanvas::drawRoundRect(const SkRect& rect,

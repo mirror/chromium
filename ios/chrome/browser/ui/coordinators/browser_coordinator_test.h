@@ -7,7 +7,6 @@
 
 #include <memory>
 
-#include "base/test/scoped_task_environment.h"
 #include "testing/platform_test.h"
 
 class Browser;
@@ -21,7 +20,6 @@ class BrowserCoordinatorTest : public PlatformTest {
   Browser* GetBrowser() { return browser_.get(); }
 
  private:
-  base::test::ScopedTaskEnvironment task_environment_;
   std::unique_ptr<Browser> browser_;
   std::unique_ptr<TestChromeBrowserState> chrome_browser_state_;
 };

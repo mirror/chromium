@@ -8,7 +8,6 @@
 #include "ash/login/ui/login_test_utils.h"
 #include "ash/public/cpp/config.h"
 #include "ash/shell.h"
-#include "base/run_loop.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "ui/events/test/event_generator.h"
 #include "ui/views/focus/focus_manager.h"

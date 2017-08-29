@@ -84,7 +84,6 @@ class GPU_EXPORT FeatureInfo : public base::RefCounted<FeatureInfo> {
     bool angle_texture_usage = false;
     bool ext_texture_storage = false;
     bool chromium_path_rendering = false;
-    bool chromium_raster_transport = false;
     bool chromium_framebuffer_mixed_samples = false;
     bool blend_equation_advanced = false;
     bool blend_equation_advanced_coherent = false;
@@ -117,7 +116,6 @@ class GPU_EXPORT FeatureInfo : public base::RefCounted<FeatureInfo> {
     bool arb_robustness = false;
     bool khr_robustness = false;
     bool ext_robustness = false;
-    bool ext_pixel_buffer_object = false;
   };
 
   FeatureInfo();
@@ -125,6 +123,10 @@ class GPU_EXPORT FeatureInfo : public base::RefCounted<FeatureInfo> {
   // Constructor with workarounds taken from the current process's CommandLine
   explicit FeatureInfo(
       const GpuDriverBugWorkarounds& gpu_driver_bug_workarounds);
+
+  // Constructor with workarounds taken from |command_line|.
+  FeatureInfo(const base::CommandLine& command_line,
+              const GpuDriverBugWorkarounds& gpu_driver_bug_workarounds);
 
   // Initializes the feature information. Needs a current GL context.
   bool Initialize(ContextType context_type,

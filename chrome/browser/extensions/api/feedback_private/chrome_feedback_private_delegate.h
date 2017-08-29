@@ -29,8 +29,6 @@ class ChromeFeedbackPrivateDelegate : public FeedbackPrivateDelegate {
   std::string GetSignedInUserEmail(
       content::BrowserContext* context) const override;
   void NotifyFeedbackDelayed() const override;
-  feedback::FeedbackUploader* GetFeedbackUploaderForContext(
-      content::BrowserContext* context) const override;
 
  private:
   DISALLOW_COPY_AND_ASSIGN(ChromeFeedbackPrivateDelegate);

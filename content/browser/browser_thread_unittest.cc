@@ -91,7 +91,7 @@ class UIThreadDestructionObserver
             BrowserThread::GetTaskRunnerForThread(BrowserThread::UI)),
         did_shutdown_(did_shutdown) {
     BrowserThread::GetTaskRunnerForThread(BrowserThread::UI)
-        ->PostTask(FROM_HERE, base::BindOnce(&Watch, this));
+        ->PostTask(FROM_HERE, base::Bind(&Watch, this));
   }
 
  private:
@@ -120,8 +120,9 @@ class UIThreadDestructionObserver
 
 TEST_F(BrowserThreadTest, PostTask) {
   BrowserThread::PostTask(
-      BrowserThread::FILE, FROM_HERE,
-      base::BindOnce(&BasicFunction, base::MessageLoop::current()));
+      BrowserThread::FILE,
+      FROM_HERE,
+      base::Bind(&BasicFunction, base::MessageLoop::current()));
   base::RunLoop().Run();
 }
 
@@ -142,7 +143,7 @@ TEST_F(BrowserThreadTest, PostTaskViaTaskRunner) {
   scoped_refptr<base::SingleThreadTaskRunner> task_runner =
       BrowserThread::GetTaskRunnerForThread(BrowserThread::FILE);
   task_runner->PostTask(
-      FROM_HERE, base::BindOnce(&BasicFunction, base::MessageLoop::current()));
+      FROM_HERE, base::Bind(&BasicFunction, base::MessageLoop::current()));
   base::RunLoop().Run();
 }
 
@@ -157,8 +158,8 @@ TEST_F(BrowserThreadTest, PostTaskAndReply) {
   // Most of the heavy testing for PostTaskAndReply() is done inside the
   // task runner test.  This just makes sure we get piped through at all.
   ASSERT_TRUE(BrowserThread::PostTaskAndReply(
-      BrowserThread::FILE, FROM_HERE, base::BindOnce(&base::DoNothing),
-      base::BindOnce(&base::RunLoop::QuitCurrentWhenIdleDeprecated)));
+      BrowserThread::FILE, FROM_HERE, base::Bind(&base::DoNothing),
+      base::Bind(&base::RunLoop::QuitCurrentWhenIdleDeprecated)));
   base::RunLoop().Run();
 }
 
@@ -168,7 +169,7 @@ TEST_F(BrowserThreadTest, RunsTasksInCurrentSequencedDuringShutdown) {
   UIThreadDestructionObserver observer(&did_shutdown, loop.QuitClosure());
   base::ThreadTaskRunnerHandle::Get()->PostTask(
       FROM_HERE,
-      base::BindOnce(&BrowserThreadTest::StopUIThread, base::Unretained(this)));
+      base::Bind(&BrowserThreadTest::StopUIThread, base::Unretained(this)));
   loop.Run();
 
   EXPECT_TRUE(did_shutdown);

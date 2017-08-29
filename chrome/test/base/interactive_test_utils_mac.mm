@@ -8,7 +8,6 @@
 #import <Cocoa/Cocoa.h>
 
 #include "base/message_loop/message_loop.h"
-#include "base/run_loop.h"
 #include "chrome/app/chrome_command_ids.h"
 #import "ui/base/test/windowed_nsnotification_observer.h"
 

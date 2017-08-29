@@ -7,7 +7,7 @@
       result.exceptionDetails.exceptionId = 0;
       result.exceptionDetails.exception.objectId = 0;
     }
-    testRunner.log(result);
+    testRunner.logObject(result);
   }
 
   await testRunner.runTestSuite([

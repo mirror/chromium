@@ -480,10 +480,7 @@ def parse_args(args):
                 help='If specified, upload results json files to this appengine server.'),
         ]))
 
-    option_parser = optparse.OptionParser(
-        prog='run-webkit-tests',
-        usage='%prog [options] [tests]',
-        description='Runs Blink layout tests as described in docs/testing/layout_tests.md')
+    option_parser = optparse.OptionParser()
 
     for group_name, group_options in option_group_definitions:
         option_group = optparse.OptionGroup(option_parser, group_name)

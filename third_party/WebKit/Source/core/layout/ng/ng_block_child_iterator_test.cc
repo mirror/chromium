@@ -7,21 +7,12 @@
 #include "core/layout/LayoutTestHelper.h"
 #include "core/layout/ng/ng_block_break_token.h"
 #include "core/layout/ng/ng_block_node.h"
-#include "platform/RuntimeEnabledFeatures.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 namespace blink {
 namespace {
 
-class NGBlockChildIteratorTest : public RenderingTest {
- public:
-  NGBlockChildIteratorTest() {
-    RuntimeEnabledFeatures::SetLayoutNGEnabled(true);
-  }
-  ~NGBlockChildIteratorTest() {
-    RuntimeEnabledFeatures::SetLayoutNGEnabled(false);
-  }
-};
+class NGBlockChildIteratorTest : public RenderingTest {};
 
 TEST_F(NGBlockChildIteratorTest, NullFirstChild) {
   NGBlockChildIterator iterator(nullptr, nullptr);
@@ -64,7 +55,7 @@ TEST_F(NGBlockChildIteratorTest, BreakTokenWithFinishedChild) {
   NGLayoutInputNode node3 = node2.NextSibling();
 
   Vector<RefPtr<NGBreakToken>> child_break_tokens;
-  child_break_tokens.push_back(NGBlockBreakToken::Create(node1, LayoutUnit()));
+  child_break_tokens.push_back(NGBlockBreakToken::Create(node1));
   RefPtr<NGBlockBreakToken> parent_token =
       NGBlockBreakToken::Create(container, LayoutUnit(50), child_break_tokens);
 
@@ -75,7 +66,7 @@ TEST_F(NGBlockChildIteratorTest, BreakTokenWithFinishedChild) {
   ASSERT_EQ(NGBlockChildIterator::Entry(nullptr, nullptr),
             iterator.NextChild());
 
-  child_break_tokens.push_back(NGBlockBreakToken::Create(node2, LayoutUnit()));
+  child_break_tokens.push_back(NGBlockBreakToken::Create(node2));
   parent_token =
       NGBlockBreakToken::Create(container, LayoutUnit(50), child_break_tokens);
 

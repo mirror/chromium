@@ -139,11 +139,12 @@ GetMetadata::GetMetadata(
     const ProvidedFileSystemInfo& file_system_info,
     const base::FilePath& entry_path,
     ProvidedFileSystemInterface::MetadataFieldMask fields,
-    ProvidedFileSystemInterface::GetMetadataCallback callback)
+    const ProvidedFileSystemInterface::GetMetadataCallback& callback)
     : Operation(event_router, file_system_info),
       entry_path_(entry_path),
       fields_(fields),
-      callback_(std::move(callback)) {}
+      callback_(callback) {
+}
 
 GetMetadata::~GetMetadata() {
 }
@@ -177,7 +178,6 @@ bool GetMetadata::Execute(int request_id) {
 void GetMetadata::OnSuccess(int /* request_id */,
                             std::unique_ptr<RequestValue> result,
                             bool has_more) {
-  DCHECK(callback_);
   std::unique_ptr<EntryMetadata> metadata(new EntryMetadata);
   const bool convert_result = ConvertRequestValueToFileInfo(
       std::move(result), fields_,
@@ -185,18 +185,18 @@ void GetMetadata::OnSuccess(int /* request_id */,
 
   if (!convert_result) {
     LOG(ERROR) << "Failed to parse a response for the get metadata operation.";
-    std::move(callback_).Run(nullptr, base::File::FILE_ERROR_IO);
+    callback_.Run(base::WrapUnique<EntryMetadata>(NULL),
+                  base::File::FILE_ERROR_IO);
     return;
   }
 
-  std::move(callback_).Run(std::move(metadata), base::File::FILE_OK);
+  callback_.Run(std::move(metadata), base::File::FILE_OK);
 }
 
 void GetMetadata::OnError(int /* request_id */,
                           std::unique_ptr<RequestValue> /* result */,
                           base::File::Error error) {
-  DCHECK(callback_);
-  std::move(callback_).Run(nullptr, error);
+  callback_.Run(base::WrapUnique<EntryMetadata>(NULL), error);
 }
 
 }  // namespace operations

@@ -20,7 +20,7 @@
 #include "chrome/browser/chromeos/arc/fileapi/arc_documents_provider_root.h"
 #include "chrome/browser/chromeos/arc/fileapi/arc_documents_provider_root_map.h"
 #include "chrome/browser/chromeos/arc/fileapi/arc_documents_provider_util.h"
-#include "chrome/browser/chromeos/fileapi/recent_file.h"
+#include "chrome/browser/chromeos/fileapi/recent_context.h"
 #include "chrome/browser/profiles/profile.h"
 #include "components/arc/common/file_system.mojom.h"
 #include "content/public/browser/browser_thread.h"
@@ -75,7 +75,7 @@ class RecentArcMediaSource::MediaRoot {
   MediaRoot(const std::string& root_id, Profile* profile);
   ~MediaRoot();
 
-  void GetRecentFiles(Params params);
+  void GetRecentFiles(RecentContext context, GetRecentFilesCallback callback);
 
  private:
   void OnGetRecentDocuments(
@@ -96,19 +96,20 @@ class RecentArcMediaSource::MediaRoot {
   const base::FilePath relative_mount_path_;
 
   // Set at the beginning of GetRecentFiles().
-  base::Optional<Params> params_;
+  RecentContext context_;
+  GetRecentFilesCallback callback_;
 
   // Number of in-flight ReadDirectory() calls by ScanDirectory().
   int num_inflight_readdirs_ = 0;
 
-  // Maps a document ID to a RecentFile.
+  // Maps a document ID to a file path on Media View.
   // In OnGetRecentDocuments(), this map is initialized with document IDs
   // returned by GetRecentDocuments(), and its values are filled as we scan the
   // tree in ScanDirectory().
-  // In case of multiple files with the same document ID found, the file with
-  // lexicographically smallest URL is kept. A nullopt value means the
-  // corresponding file is not (yet) found.
-  std::map<std::string, base::Optional<RecentFile>> document_id_to_file_;
+  // In case of multiple files with the same document ID found, the file path of
+  // lexicographically largest one is kept. An empty path means a corresponding
+  // file is not (yet) found.
+  std::map<std::string, base::FilePath> document_id_to_path_;
 
   base::WeakPtrFactory<MediaRoot> weak_ptr_factory_;
 
@@ -128,13 +129,17 @@ RecentArcMediaSource::MediaRoot::~MediaRoot() {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
 }
 
-void RecentArcMediaSource::MediaRoot::GetRecentFiles(Params params) {
+void RecentArcMediaSource::MediaRoot::GetRecentFiles(
+    RecentContext context,
+    GetRecentFilesCallback callback) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
-  DCHECK(!params_.has_value());
+  DCHECK(!context_.is_valid());
+  DCHECK(callback_.is_null());
   DCHECK_EQ(0, num_inflight_readdirs_);
-  DCHECK(document_id_to_file_.empty());
+  DCHECK(document_id_to_path_.empty());
 
-  params_.emplace(std::move(params));
+  context_ = std::move(context);
+  callback_ = std::move(callback);
 
   auto* runner =
       arc::ArcFileSystemOperationRunner::GetForBrowserContext(profile_);
@@ -152,11 +157,12 @@ void RecentArcMediaSource::MediaRoot::GetRecentFiles(Params params) {
 void RecentArcMediaSource::MediaRoot::OnGetRecentDocuments(
     base::Optional<std::vector<arc::mojom::DocumentPtr>> maybe_documents) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
-  DCHECK(params_.has_value());
+  DCHECK(context_.is_valid());
+  DCHECK(!callback_.is_null());
   DCHECK_EQ(0, num_inflight_readdirs_);
-  DCHECK(document_id_to_file_.empty());
+  DCHECK(document_id_to_path_.empty());
 
-  // Initialize |document_id_to_file_| with recent document IDs returned.
+  // Initialize |document_id_to_path_| with recent document IDs returned.
   if (maybe_documents.has_value()) {
     for (const auto& document : maybe_documents.value()) {
       // Exclude media files under Downloads directory since they are covered
@@ -167,11 +173,11 @@ void RecentArcMediaSource::MediaRoot::OnGetRecentDocuments(
                            base::CompareCase::SENSITIVE))
         continue;
 
-      document_id_to_file_.emplace(document->document_id, base::nullopt);
+      document_id_to_path_.emplace(document->document_id, base::FilePath());
     }
   }
 
-  if (document_id_to_file_.empty()) {
+  if (document_id_to_path_.empty()) {
     OnComplete();
     return;
   }
@@ -183,7 +189,8 @@ void RecentArcMediaSource::MediaRoot::OnGetRecentDocuments(
 void RecentArcMediaSource::MediaRoot::ScanDirectory(
     const base::FilePath& path) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
-  DCHECK(params_.has_value());
+  DCHECK(context_.is_valid());
+  DCHECK(!callback_.is_null());
 
   ++num_inflight_readdirs_;
 
@@ -193,8 +200,7 @@ void RecentArcMediaSource::MediaRoot::ScanDirectory(
     // We already checked ARC is allowed for this profile (indirectly), so
     // this should never happen.
     LOG(ERROR) << "ArcDocumentsProviderRootMap is not available";
-    OnReadDirectory(path, base::File::FILE_ERROR_FAILED,
-                    std::vector<arc::ArcDocumentsProviderRoot::ThinFileInfo>());
+    OnReadDirectory(path, base::File::FILE_ERROR_FAILED, {});
     return;
   }
 
@@ -203,8 +209,7 @@ void RecentArcMediaSource::MediaRoot::ScanDirectory(
   if (!root) {
     // Media roots should always exist.
     LOG(ERROR) << "ArcDocumentsProviderRoot is missing";
-    OnReadDirectory(path, base::File::FILE_ERROR_NOT_FOUND,
-                    std::vector<arc::ArcDocumentsProviderRoot::ThinFileInfo>());
+    OnReadDirectory(path, base::File::FILE_ERROR_NOT_FOUND, {});
     return;
   }
 
@@ -218,7 +223,8 @@ void RecentArcMediaSource::MediaRoot::OnReadDirectory(
     base::File::Error result,
     std::vector<arc::ArcDocumentsProviderRoot::ThinFileInfo> files) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
-  DCHECK(params_.has_value());
+  DCHECK(context_.is_valid());
+  DCHECK(!callback_.is_null());
 
   for (const auto& file : files) {
     base::FilePath subpath = path.Append(file.name);
@@ -227,18 +233,13 @@ void RecentArcMediaSource::MediaRoot::OnReadDirectory(
       continue;
     }
 
-    auto iter = document_id_to_file_.find(file.document_id);
-    if (iter == document_id_to_file_.end())
-      continue;
-
-    // Update |document_id_to_file_|.
-    // We keep the lexicographically smallest URL to stabilize the results when
-    // there are multiple files with the same document ID.
-    auto url = BuildDocumentsProviderUrl(subpath);
-    base::Optional<RecentFile>& entry = iter->second;
-    if (!entry.has_value() ||
-        storage::FileSystemURL::Comparator()(url, entry.value().url()))
-      entry = RecentFile(url, file.last_modified);
+    // Update |document_id_to_path_| if there is an entry.
+    // We compute std::max of paths to stabilize the results when there are
+    // multiple files with the same document ID. Note that an empty
+    // base::FilePath is minimum.
+    auto iter = document_id_to_path_.find(file.document_id);
+    if (iter != document_id_to_path_.end())
+      iter->second = std::max(iter->second, subpath);
   }
 
   --num_inflight_readdirs_;
@@ -250,33 +251,35 @@ void RecentArcMediaSource::MediaRoot::OnReadDirectory(
 
 void RecentArcMediaSource::MediaRoot::OnComplete() {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
-  DCHECK(params_.has_value());
+  DCHECK(context_.is_valid());
+  DCHECK(!callback_.is_null());
   DCHECK_EQ(0, num_inflight_readdirs_);
 
-  std::vector<RecentFile> files;
-  for (const auto& entry : document_id_to_file_) {
-    const base::Optional<RecentFile>& file = entry.second;
-    if (file.has_value())
-      files.emplace_back(file.value());
+  RecentFileList files;
+  for (const auto& entry : document_id_to_path_) {
+    const base::FilePath& path = entry.second;
+    if (!path.empty())
+      files.emplace_back(BuildDocumentsProviderUrl(path));
   }
-  document_id_to_file_.clear();
+  document_id_to_path_.clear();
 
-  Params params = std::move(params_.value());
-  params_.reset();
-  std::move(params.callback()).Run(std::move(files));
+  context_ = RecentContext();
+  GetRecentFilesCallback callback;
+  std::swap(callback, callback_);
+  std::move(callback).Run(std::move(files));
 }
 
 storage::FileSystemURL
 RecentArcMediaSource::MediaRoot::BuildDocumentsProviderUrl(
     const base::FilePath& path) const {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
-  DCHECK(params_.has_value());
+  DCHECK(context_.is_valid());
 
   storage::ExternalMountPoints* mount_points =
       storage::ExternalMountPoints::GetSystemInstance();
 
   return mount_points->CreateExternalFileSystemURL(
-      params_.value().origin(), arc::kDocumentsProviderMountPointName,
+      context_.origin(), arc::kDocumentsProviderMountPointName,
       relative_mount_path_.Append(path));
 }
 
@@ -291,27 +294,19 @@ RecentArcMediaSource::~RecentArcMediaSource() {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
 }
 
-void RecentArcMediaSource::GetRecentFiles(Params params) {
+void RecentArcMediaSource::GetRecentFiles(RecentContext context,
+                                          GetRecentFilesCallback callback) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
-  DCHECK(!params_.has_value());
+  DCHECK(context.is_valid());
+  DCHECK(!callback.is_null());
+  DCHECK(!context_.is_valid());
+  DCHECK(callback_.is_null());
   DCHECK(build_start_time_.is_null());
   DCHECK_EQ(0, num_inflight_roots_);
   DCHECK(files_.empty());
 
-  // If ARC file system operations will be deferred, return immediately without
-  // recording UMA metrics.
-  //
-  // TODO(nya): Return files progressively rather than simply giving up.
-  // Also, it is wrong to assume all following operations will not be deferred
-  // just because this function returned true. However, in practice, it is rare
-  // ArcFileSystemOperationRunner's deferring state switches from disabled to
-  // enabled (one such case is when ARC container crashes).
-  if (!WillArcFileSystemOperationsRunImmediately()) {
-    std::move(params.callback()).Run(std::vector<RecentFile>());
-    return;
-  }
-
-  params_.emplace(std::move(params));
+  context_ = std::move(context);
+  callback_ = std::move(callback);
 
   build_start_time_ = base::TimeTicks::Now();
 
@@ -323,17 +318,15 @@ void RecentArcMediaSource::GetRecentFiles(Params params) {
 
   for (auto& root : roots_) {
     root->GetRecentFiles(
-        Params(params_.value().file_system_context(), params_.value().origin(),
-               params_.value().max_files(), params_.value().cutoff_time(),
-               base::BindOnce(&RecentArcMediaSource::OnGetRecentFilesForRoot,
-                              weak_ptr_factory_.GetWeakPtr())));
+        context_, base::BindOnce(&RecentArcMediaSource::OnGetRecentFilesForRoot,
+                                 weak_ptr_factory_.GetWeakPtr()));
   }
 }
 
-void RecentArcMediaSource::OnGetRecentFilesForRoot(
-    std::vector<RecentFile> files) {
+void RecentArcMediaSource::OnGetRecentFilesForRoot(RecentFileList files) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
-  DCHECK(params_.has_value());
+  DCHECK(context_.is_valid());
+  DCHECK(!callback_.is_null());
 
   files_.insert(files_.end(), std::make_move_iterator(files.begin()),
                 std::make_move_iterator(files.end()));
@@ -345,7 +338,8 @@ void RecentArcMediaSource::OnGetRecentFilesForRoot(
 
 void RecentArcMediaSource::OnComplete() {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
-  DCHECK(params_.has_value());
+  DCHECK(context_.is_valid());
+  DCHECK(!callback_.is_null());
   DCHECK(!build_start_time_.is_null());
   DCHECK_EQ(0, num_inflight_roots_);
 
@@ -353,24 +347,12 @@ void RecentArcMediaSource::OnComplete() {
                       base::TimeTicks::Now() - build_start_time_);
   build_start_time_ = base::TimeTicks();
 
-  Params params = std::move(params_.value());
-  params_.reset();
-  std::vector<RecentFile> files = std::move(files_);
-  files_.clear();
-  std::move(params.callback()).Run(std::move(files));
-}
-
-bool RecentArcMediaSource::WillArcFileSystemOperationsRunImmediately() {
-  DCHECK_CURRENTLY_ON(BrowserThread::UI);
-
-  auto* runner =
-      arc::ArcFileSystemOperationRunner::GetForBrowserContext(profile_);
-
-  // If ARC is not allowed the user, |runner| is nullptr.
-  if (!runner)
-    return false;
-
-  return !runner->WillDefer();
+  context_ = RecentContext();
+  GetRecentFilesCallback callback;
+  std::swap(callback, callback_);
+  RecentFileList files;
+  std::swap(files, files_);
+  std::move(callback).Run(std::move(files));
 }
 
 }  // namespace chromeos

@@ -71,7 +71,7 @@ public class BookmarkItemRow extends BookmarkRow implements LargeIconCallback {
     BookmarkItem setBookmarkId(BookmarkId bookmarkId) {
         BookmarkItem item = super.setBookmarkId(bookmarkId);
         mUrl = item.getUrl();
-        mIconView.setImageDrawable(null);
+        mIconImageView.setImageDrawable(null);
         mTitleView.setText(item.getTitle());
         mDescriptionView.setText(item.getUrlForDisplay());
         mDelegate.getLargeIconBridge().getLargeIconForUrl(mUrl, mMinIconSize, this);
@@ -86,14 +86,13 @@ public class BookmarkItemRow extends BookmarkRow implements LargeIconCallback {
         if (icon == null) {
             mIconGenerator.setBackgroundColor(fallbackColor);
             icon = mIconGenerator.generateIconForUrl(mUrl);
-            mIconView.setImageDrawable(new BitmapDrawable(getResources(), icon));
+            mIconImageView.setImageDrawable(new BitmapDrawable(getResources(), icon));
         } else {
             RoundedBitmapDrawable roundedIcon = RoundedBitmapDrawableFactory.create(
                     getResources(),
                     Bitmap.createScaledBitmap(icon, mDisplayedIconSize, mDisplayedIconSize, false));
             roundedIcon.setCornerRadius(mCornerRadius);
-            mIconView.setImageDrawable(roundedIcon);
+            mIconImageView.setImageDrawable(roundedIcon);
         }
-        onIconDrawableChanged();
     }
 }

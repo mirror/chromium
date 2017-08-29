@@ -60,7 +60,7 @@ class NavigationManagerImpl : public NavigationManager {
   // Keeps a strong reference to |session_controller|.
   // This method should only be called when deserializing |session_controller|
   // and joining it with its NavigationManager. Other cases should call
-  // InitializeSession() or Restore().
+  // InitializeSession() or ReplaceSessionHistory().
   // TODO(stuartmorgan): Also move deserialization of CRWSessionControllers
   // under the control of this class, and move the bulk of CRWSessionController
   // logic into it.
@@ -69,6 +69,13 @@ class NavigationManagerImpl : public NavigationManager {
 
   // Initializes a new session history.
   virtual void InitializeSession() = 0;
+
+  // Replace the session history with a new one, where |items| is the
+  // complete set of navigation items in the new history, and |current_index|
+  // is the index of the currently active item.
+  virtual void ReplaceSessionHistory(
+      std::vector<std::unique_ptr<NavigationItem>> items,
+      int current_index) = 0;
 
   // Helper functions for notifying WebStateObservers of changes.
   // TODO(stuartmorgan): Make these private once the logic triggering them moves
@@ -128,13 +135,6 @@ class NavigationManagerImpl : public NavigationManager {
   // redirects. Does nothing if there is no pending item.
   void UpdatePendingItemUrl(const GURL& url) const;
 
-  // The current NavigationItem. During a pending navigation, returns the
-  // NavigationItem for that navigation. If a transient NavigationItem exists,
-  // this NavigationItem will be returned.
-  // TODO(crbug.com/661316): Make this private once all navigation code is moved
-  // out of CRWWebController.
-  NavigationItemImpl* GetCurrentItemImpl() const;
-
   // NavigationManager:
   NavigationItem* GetLastCommittedItem() const final;
   NavigationItem* GetPendingItem() const final;
@@ -164,10 +164,9 @@ class NavigationManagerImpl : public NavigationManager {
       const NavigationItem* inherit_from,
       NavigationItem* pending_item);
 
-  // Creates a NavigationItem using the given properties, where |previous_url|
-  // is the URL of the navigation just prior to the current one. If
-  // |url_rewriters| is not nullptr, apply them before applying the permanent
-  // URL rewriters from BrowserState.
+  // Creates a NavigationItem using the given properties. If |url_rewriters| is
+  // not nullptr, apply them before applying the permanent URL rewriters from
+  // BrowserState.
   // TODO(crbug.com/738020): Make this private when WKBasedNavigationManagerImpl
   // is merged into this class.
   std::unique_ptr<NavigationItemImpl> CreateNavigationItemWithRewriters(
@@ -175,12 +174,7 @@ class NavigationManagerImpl : public NavigationManager {
       const Referrer& referrer,
       ui::PageTransition transition,
       NavigationInitiationType initiation_type,
-      const GURL& previous_url,
       const std::vector<BrowserURLRewriter::URLRewriter>* url_rewriters) const;
-
-  // Returns the most recent NavigationItem that does not have an app-specific
-  // URL.
-  NavigationItem* GetLastCommittedNonAppSpecificItem() const;
 
   // Identical to GetItemAtIndex() but returns the underlying NavigationItemImpl
   // instead of the public NavigationItem interface. This is used by

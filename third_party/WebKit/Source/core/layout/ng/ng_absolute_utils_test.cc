@@ -4,8 +4,8 @@
 
 #include "core/layout/ng/ng_absolute_utils.h"
 
-#include "core/layout/ng/geometry/ng_static_position.h"
 #include "core/layout/ng/ng_constraint_space_builder.h"
+#include "core/layout/ng/ng_layout_result.h"
 #include "core/layout/ng/ng_length_utils.h"
 #include "core/style/ComputedStyle.h"
 #include "testing/gtest/include/gtest/gtest.h"
@@ -26,9 +26,7 @@ class NGAbsoluteUtilsTest : public ::testing::Test {
     style_->SetBorderBottomStyle(EBorderStyle::kSolid);
     style_->SetBoxSizing(EBoxSizing::kBorderBox);
     container_size_ = NGLogicalSize(LayoutUnit(200), LayoutUnit(300));
-    NGConstraintSpaceBuilder builder(
-        kHorizontalTopBottom,
-        /* icb_size */ container_size_.ConvertToPhysical(kHorizontalTopBottom));
+    NGConstraintSpaceBuilder builder(kHorizontalTopBottom);
     builder.SetAvailableSize(container_size_);
     ltr_space_ = builder.SetTextDirection(TextDirection::kLtr)
                      .ToConstraintSpace(kHorizontalTopBottom);

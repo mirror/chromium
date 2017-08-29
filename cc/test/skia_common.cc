@@ -10,7 +10,6 @@
 #include "cc/paint/display_item_list.h"
 #include "cc/paint/paint_canvas.h"
 #include "cc/paint/paint_image_builder.h"
-#include "cc/test/stub_paint_image_generator.h"
 #include "third_party/skia/include/core/SkImageGenerator.h"
 #include "third_party/skia/include/core/SkPixmap.h"
 #include "ui/gfx/geometry/rect.h"
@@ -20,17 +19,18 @@ namespace cc {
 
 namespace {
 
-class TestImageGenerator : public StubPaintImageGenerator {
+class TestImageGenerator : public SkImageGenerator {
  public:
   explicit TestImageGenerator(const SkImageInfo& info)
-      : StubPaintImageGenerator(info),
+      : SkImageGenerator(info),
         image_backing_memory_(info.getSafeSize(info.minRowBytes()), 0),
         image_pixmap_(info, image_backing_memory_.data(), info.minRowBytes()) {}
 
-  bool GetPixels(const SkImageInfo& info,
-                 void* pixels,
-                 size_t rowBytes,
-                 uint32_t lazy_pixel_ref) override {
+ protected:
+  bool onGetPixels(const SkImageInfo& info,
+                   void* pixels,
+                   size_t rowBytes,
+                   const Options&) override {
     return image_pixmap_.readPixels(info, pixels, rowBytes, 0, 0);
   }
 
@@ -68,17 +68,15 @@ bool AreDisplayListDrawingResultsSame(const gfx::Rect& layer_rect,
   return !memcmp(pixels_a.get(), pixels_b.get(), pixel_size);
 }
 
-sk_sp<PaintImageGenerator> CreatePaintImageGenerator(const gfx::Size& size) {
-  return sk_make_sp<TestImageGenerator>(
-      SkImageInfo::MakeN32Premul(size.width(), size.height()));
+sk_sp<SkImage> CreateDiscardableImage(const gfx::Size& size) {
+  return SkImage::MakeFromGenerator(base::MakeUnique<TestImageGenerator>(
+      SkImageInfo::MakeN32Premul(size.width(), size.height())));
 }
 
-PaintImage CreateDiscardablePaintImage(const gfx::Size& size,
-                                       sk_sp<SkColorSpace> color_space) {
+PaintImage CreateDiscardablePaintImage(const gfx::Size& size) {
   return PaintImageBuilder()
       .set_id(PaintImage::GetNextId())
-      .set_paint_image_generator(sk_make_sp<TestImageGenerator>(
-          SkImageInfo::MakeN32Premul(size.width(), size.height(), color_space)))
+      .set_image(CreateDiscardableImage(size))
       .TakePaintImage();
 }
 

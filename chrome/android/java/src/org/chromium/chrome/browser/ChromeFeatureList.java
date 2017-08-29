@@ -157,7 +157,6 @@ public abstract class ChromeFeatureList {
     public static final String CCT_POST_MESSAGE_API = "CCTPostMessageAPI";
     public static final String CCT_REDIRECT_PRECONNECT = "CCTRedirectPreconnect";
     public static final String CHROME_HOME = "ChromeHome";
-    public static final String CHROME_HOME_DOODLE = "ChromeHomeDoodle";
     public static final String CHROME_HOME_EXPAND_BUTTON = "ChromeHomeExpandButton";
     public static final String CHROME_HOME_MODERN_LAYOUT = "ChromeHomeModernLayout";
     public static final String CONSISTENT_OMNIBOX_GEOLOCATION = "ConsistentOmniboxGeolocation";
@@ -193,7 +192,6 @@ public abstract class ChromeFeatureList {
             "SearchEnginePromo.ExistingDevice";
     public static final String SEARCH_ENGINE_PROMO_NEW_DEVICE = "SearchEnginePromo.NewDevice";
     public static final String MATERIAL_DESIGN_INCOGNITO_NTP = "MaterialDesignIncognitoNTP";
-    public static final String MODAL_PERMISSION_PROMPTS = "ModalPermissionPrompts";
     public static final String NEW_PHOTO_PICKER = "NewPhotoPicker";
     public static final String NO_CREDIT_CARD_ABORT = "NoCreditCardAbort";
     public static final String NTP_CONDENSED_LAYOUT = "NTPCondensedLayout";
@@ -207,7 +205,6 @@ public abstract class ChromeFeatureList {
             "NTPTilesLowerResolutionFavicons";
     public static final String OMNIBOX_SPARE_RENDERER = "OmniboxSpareRenderer";
     public static final String PAY_WITH_GOOGLE_V1 = "PayWithGoogleV1";
-    public static final String PWA_PERSISTENT_NOTIFICATION = "PwaPersistentNotification";
     public static final String READER_MODE_IN_CCT = "ReaderModeInCCT";
     public static final String SERVICE_WORKER_PAYMENT_APPS = "ServiceWorkerPaymentApps";
     public static final String SITE_EXPLORATION_UI = "SiteExplorationUi";

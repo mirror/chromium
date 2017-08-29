@@ -49,7 +49,8 @@ class ManifestUnitTest : public testing::Test {
   void MutateManifest(std::unique_ptr<Manifest>* manifest,
                       const std::string& key,
                       std::unique_ptr<base::Value> value) {
-    auto manifest_value = manifest->get()->value()->CreateDeepCopy();
+    auto manifest_value =
+        base::MakeUnique<base::DictionaryValue>(*manifest->get()->value());
     if (value)
       manifest_value->Set(key, std::move(value));
     else

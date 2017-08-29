@@ -25,7 +25,6 @@ class HeadlessContentBrowserClient : public content::ContentBrowserClient {
   content::DevToolsManagerDelegate* GetDevToolsManagerDelegate() override;
   std::unique_ptr<base::Value> GetServiceManifestOverlay(
       base::StringPiece name) override;
-  void RegisterOutOfProcessServices(OutOfProcessServiceMap* services) override;
   content::QuotaPermissionContext* CreateQuotaPermissionContext() override;
   void GetQuotaSettings(
       content::BrowserContext* context,
@@ -59,7 +58,6 @@ class HeadlessContentBrowserClient : public content::ContentBrowserClient {
  private:
   std::unique_ptr<base::Value> GetBrowserServiceManifestOverlay();
   std::unique_ptr<base::Value> GetRendererServiceManifestOverlay();
-  std::unique_ptr<base::Value> GetPackagedServicesServiceManifestOverlay();
 
   HeadlessBrowserImpl* browser_;  // Not owned.
 

@@ -32,7 +32,7 @@ StreamContext* StreamContext::GetFor(BrowserContext* context) {
     if (BrowserThread::IsMessageLoopValid(BrowserThread::IO)) {
       BrowserThread::PostTask(
           BrowserThread::IO, FROM_HERE,
-          base::BindOnce(&StreamContext::InitializeOnIOThread, stream));
+          base::Bind(&StreamContext::InitializeOnIOThread, stream));
     }
   }
 

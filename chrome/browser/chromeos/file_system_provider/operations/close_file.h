@@ -31,7 +31,7 @@ class CloseFile : public Operation {
   CloseFile(extensions::EventRouter* event_router,
             const ProvidedFileSystemInfo& file_system_info,
             int open_request_id,
-            storage::AsyncFileUtil::StatusCallback callback);
+            const storage::AsyncFileUtil::StatusCallback& callback);
   ~CloseFile() override;
 
   // Operation overrides.
@@ -45,7 +45,7 @@ class CloseFile : public Operation {
 
  private:
   int open_request_id_;
-  storage::AsyncFileUtil::StatusCallback callback_;
+  const storage::AsyncFileUtil::StatusCallback callback_;
 
   DISALLOW_COPY_AND_ASSIGN(CloseFile);
 };

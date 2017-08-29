@@ -33,27 +33,31 @@ class MemlogImpl : public mojom::Memlog {
                  mojo::ScopedHandle sender_pipe,
                  AddSenderCallback callback) override;
   void DumpProcess(base::ProcessId pid,
-                   mojo::ScopedHandle output_file,
-                   std::unique_ptr<base::DictionaryValue> metadata,
-                   DumpProcessCallback callback) override;
-  void DumpProcessForTracing(base::ProcessId pid,
-                             DumpProcessForTracingCallback callback) override;
+                   mojo::ScopedHandle output_file) override;
 
  private:
-  void OnGetVmRegionsCompleteForDumpProcess(
+  // Helper for managing lifetime of MemlogConnectionManager.
+  struct DeleteOnRunner {
+    DeleteOnRunner(const tracked_objects::Location& location,
+                   base::SequencedTaskRunner* runner)
+        : location(location), runner(runner) {}
+
+    void operator()(MemlogConnectionManager* ptr) {
+      runner->DeleteSoon(location, ptr);
+    }
+
+    const tracked_objects::Location& location;
+    base::SequencedTaskRunner* runner;
+  };
+
+  void OnGetVmRegionsComplete(
       base::ProcessId pid,
-      std::unique_ptr<base::DictionaryValue> metadata,
       base::File file,
-      DumpProcessCallback callback,
-      bool success,
-      memory_instrumentation::mojom::GlobalMemoryDumpPtr dump);
-  void OnGetVmRegionsCompleteForDumpProcessForTracing(
-      base::ProcessId pid,
-      DumpProcessForTracingCallback callback,
       bool success,
       memory_instrumentation::mojom::GlobalMemoryDumpPtr dump);
 
-  std::unique_ptr<MemlogConnectionManager> connection_manager_;
+  scoped_refptr<base::SequencedTaskRunner> io_runner_;
+  std::unique_ptr<MemlogConnectionManager, DeleteOnRunner> connection_manager_;
 
   // Must be last.
   base::WeakPtrFactory<MemlogImpl> weak_factory_;

@@ -11,6 +11,8 @@
 #include "components/strings/grit/components_strings.h"
 #include "ios/chrome/browser/ui/autofill/card_unmask_prompt_view_bridge.h"
 #import "ios/chrome/browser/ui/payments/payment_request_egtest_base.h"
+#import "ios/chrome/browser/ui/payments/payment_request_error_view_controller.h"
+#import "ios/chrome/browser/ui/payments/payment_request_view_controller.h"
 #import "ios/chrome/test/app/chrome_test_util.h"
 #import "ios/chrome/test/earl_grey/chrome_earl_grey.h"
 #import "ios/chrome/test/earl_grey/chrome_matchers.h"
@@ -53,13 +55,15 @@ const char kNoShippingPage[] =
   [ChromeEarlGrey tapWebViewElementWithID:@"buy"];
 
   // Confirm that the Payment Request UI is showing.
-  [[EarlGrey selectElementWithMatcher:chrome_test_util::PaymentRequestView()]
+  [[EarlGrey selectElementWithMatcher:grey_accessibilityID(
+                                          kPaymentRequestCollectionViewID)]
       assertWithMatcher:grey_notNil()];
 
   [ChromeEarlGrey loadURL:web::test::HttpServer::MakeUrl(kNoShippingPage)];
 
   // Confirm that the Payment Request UI is not showing.
-  [[EarlGrey selectElementWithMatcher:chrome_test_util::PaymentRequestView()]
+  [[EarlGrey selectElementWithMatcher:grey_accessibilityID(
+                                          kPaymentRequestCollectionViewID)]
       assertWithMatcher:grey_nil()];
 }
 
@@ -70,13 +74,15 @@ const char kNoShippingPage[] =
   [ChromeEarlGrey tapWebViewElementWithID:@"buy"];
 
   // Confirm that the Payment Request UI is showing.
-  [[EarlGrey selectElementWithMatcher:chrome_test_util::PaymentRequestView()]
+  [[EarlGrey selectElementWithMatcher:grey_accessibilityID(
+                                          kPaymentRequestCollectionViewID)]
       assertWithMatcher:grey_notNil()];
 
   [ChromeEarlGrey reload];
 
   // Confirm that the Payment Request UI is not showing.
-  [[EarlGrey selectElementWithMatcher:chrome_test_util::PaymentRequestView()]
+  [[EarlGrey selectElementWithMatcher:grey_accessibilityID(
+                                          kPaymentRequestCollectionViewID)]
       assertWithMatcher:grey_nil()];
 }
 
@@ -87,13 +93,15 @@ const char kNoShippingPage[] =
   [ChromeEarlGrey tapWebViewElementWithID:@"buy"];
 
   // Confirm that the Payment Request UI is showing.
-  [[EarlGrey selectElementWithMatcher:chrome_test_util::PaymentRequestView()]
+  [[EarlGrey selectElementWithMatcher:grey_accessibilityID(
+                                          kPaymentRequestCollectionViewID)]
       assertWithMatcher:grey_notNil()];
 
   [ChromeEarlGrey goBack];
 
   // Confirm that the Payment Request UI is not showing.
-  [[EarlGrey selectElementWithMatcher:chrome_test_util::PaymentRequestView()]
+  [[EarlGrey selectElementWithMatcher:grey_accessibilityID(
+                                          kPaymentRequestCollectionViewID)]
       assertWithMatcher:grey_nil()];
 }
 
@@ -111,7 +119,8 @@ const char kNoShippingPage[] =
   [ChromeEarlGrey tapWebViewElementWithID:@"buy"];
 
   // Confirm that the Payment Request UI is showing.
-  [[EarlGrey selectElementWithMatcher:chrome_test_util::PaymentRequestView()]
+  [[EarlGrey selectElementWithMatcher:grey_accessibilityID(
+                                          kPaymentRequestCollectionViewID)]
       assertWithMatcher:grey_notNil()];
 
   // Tap the cancel button.
@@ -120,7 +129,8 @@ const char kNoShippingPage[] =
       performAction:grey_tap()];
 
   // Confirm that the Payment Request UI is not showing.
-  [[EarlGrey selectElementWithMatcher:chrome_test_util::PaymentRequestView()]
+  [[EarlGrey selectElementWithMatcher:grey_accessibilityID(
+                                          kPaymentRequestCollectionViewID)]
       assertWithMatcher:grey_nil()];
 
   [self waitForWebViewContainingTexts:{"AbortError", "Request cancelled"}];
@@ -141,7 +151,8 @@ const char kNoShippingPage[] =
   [ChromeEarlGrey tapWebViewElementWithID:@"buy"];
 
   // Confirm that the Payment Request UI is showing.
-  [[EarlGrey selectElementWithMatcher:chrome_test_util::PaymentRequestView()]
+  [[EarlGrey selectElementWithMatcher:grey_accessibilityID(
+                                          kPaymentRequestCollectionViewID)]
       assertWithMatcher:grey_notNil()];
 
   // Tap the settings link.
@@ -149,7 +160,8 @@ const char kNoShippingPage[] =
       performAction:grey_tap()];
 
   // Confirm that the Payment Request UI is not showing.
-  [[EarlGrey selectElementWithMatcher:chrome_test_util::PaymentRequestView()]
+  [[EarlGrey selectElementWithMatcher:grey_accessibilityID(
+                                          kPaymentRequestCollectionViewID)]
       assertWithMatcher:grey_nil()];
 
   // Confirm that the Autofill Settings UI is showing.
@@ -175,7 +187,8 @@ const char kNoShippingPage[] =
   [ChromeEarlGrey tapWebViewElementWithID:@"buy"];
 
   // Confirm that the Payment Request UI is showing.
-  [[EarlGrey selectElementWithMatcher:chrome_test_util::PaymentRequestView()]
+  [[EarlGrey selectElementWithMatcher:grey_accessibilityID(
+                                          kPaymentRequestCollectionViewID)]
       assertWithMatcher:grey_notNil()];
 
   // Tap the Buy button.
@@ -195,12 +208,12 @@ const char kNoShippingPage[] =
 
   // Tap the Confirm button.
   [[EarlGrey
-      selectElementWithMatcher:ButtonWithAccessibilityLabelId(
-                                   IDS_AUTOFILL_CARD_UNMASK_CONFIRM_BUTTON)]
+      selectElementWithMatcher:ButtonWithAccessibilityLabelId(IDS_ACCNAME_OK)]
       performAction:grey_tap()];
 
   // Confirm that the Payment Request UI is not showing.
-  [[EarlGrey selectElementWithMatcher:chrome_test_util::PaymentRequestView()]
+  [[EarlGrey selectElementWithMatcher:grey_accessibilityID(
+                                          kPaymentRequestCollectionViewID)]
       assertWithMatcher:grey_nil()];
 }
 
@@ -211,14 +224,15 @@ const char kNoShippingPage[] =
   [ChromeEarlGrey tapWebViewElementWithID:@"buy"];
 
   // Confirm that the Payment Request UI is showing.
-  [[EarlGrey selectElementWithMatcher:chrome_test_util::PaymentRequestView()]
+  [[EarlGrey selectElementWithMatcher:grey_accessibilityID(
+                                          kPaymentRequestCollectionViewID)]
       assertWithMatcher:grey_notNil()];
 
   [ChromeEarlGrey tapWebViewElementWithID:@"abort"];
 
   // Confirm that the error confirmation UI is showing.
-  [[EarlGrey
-      selectElementWithMatcher:chrome_test_util::PaymentRequestErrorView()]
+  [[EarlGrey selectElementWithMatcher:grey_accessibilityID(
+                                          kPaymentRequestErrorCollectionViewID)]
       assertWithMatcher:grey_notNil()];
 
   // Confirm the error.
@@ -227,7 +241,8 @@ const char kNoShippingPage[] =
       performAction:grey_tap()];
 
   // Confirm that the Payment Request UI is not showing.
-  [[EarlGrey selectElementWithMatcher:chrome_test_util::PaymentRequestView()]
+  [[EarlGrey selectElementWithMatcher:grey_accessibilityID(
+                                          kPaymentRequestCollectionViewID)]
       assertWithMatcher:grey_nil()];
 
   [self waitForWebViewContainingTexts:{"Aborted"}];

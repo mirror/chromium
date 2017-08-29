@@ -16,7 +16,6 @@
 #include "core/testing/DummyModulator.h"
 #include "core/testing/DummyPageHolder.h"
 #include "core/workers/MainThreadWorkletGlobalScope.h"
-#include "core/workers/MainThreadWorkletReportingProxy.h"
 #include "platform/heap/Handle.h"
 #include "platform/loader/fetch/ResourceFetcher.h"
 #include "platform/loader/testing/FetchTestingPlatformSupport.h"
@@ -132,7 +131,6 @@ class ModuleScriptLoaderTest : public ::testing::Test {
  protected:
   ScopedTestingPlatformSupport<FetchTestingPlatformSupport> platform_;
   std::unique_ptr<DummyPageHolder> dummy_page_holder_;
-  std::unique_ptr<MainThreadWorkletReportingProxy> reporting_proxy_;
   Persistent<ResourceFetcher> fetcher_;
   Persistent<ModuleScriptLoaderTestModulator> modulator_;
   Persistent<MainThreadWorkletGlobalScope> global_scope_;
@@ -141,8 +139,7 @@ class ModuleScriptLoaderTest : public ::testing::Test {
 void ModuleScriptLoaderTest::SetUp() {
   platform_->AdvanceClockSeconds(1.);  // For non-zero DocumentParserTimings
   dummy_page_holder_ = DummyPageHolder::Create(IntSize(500, 500));
-  GetDocument().SetURL(KURL(kParsedURLString, "https://example.test"));
-  GetDocument().SetSecurityOrigin(SecurityOrigin::Create(GetDocument().Url()));
+  GetDocument().SetURL(KURL(NullURL(), "https://example.test"));
   auto* context =
       MockFetchContext::Create(MockFetchContext::kShouldLoadNewResource);
   fetcher_ = ResourceFetcher::Create(context);
@@ -155,16 +152,14 @@ void ModuleScriptLoaderTest::InitializeForDocument() {
 }
 
 void ModuleScriptLoaderTest::InitializeForWorklet() {
-  reporting_proxy_ =
-      WTF::MakeUnique<MainThreadWorkletReportingProxy>(&GetDocument());
   global_scope_ = new MainThreadWorkletGlobalScope(
-      &GetFrame(), KURL(kParsedURLString, "https://example.test/worklet.js"),
+      &GetFrame(), KURL(NullURL(), "https://example.test/worklet.js"),
       "fake user agent", GetDocument().GetSecurityOrigin(),
-      ToIsolate(&GetDocument()), *reporting_proxy_);
+      ToIsolate(&GetDocument()));
   global_scope_->ScriptController()->InitializeContextIfNeeded("Dummy Context");
   global_scope_->SetModuleResponsesMapProxyForTesting(
       WorkletModuleResponsesMapProxy::Create(
-          new WorkletModuleResponsesMap(Fetcher()),
+          new WorkletModuleResponsesMap,
           TaskRunnerHelper::Get(TaskType::kUnspecedLoading, &GetDocument()),
           TaskRunnerHelper::Get(TaskType::kUnspecedLoading, global_scope_)));
   modulator_ = new ModuleScriptLoaderTestModulator(
@@ -175,7 +170,7 @@ void ModuleScriptLoaderTest::InitializeForWorklet() {
 void ModuleScriptLoaderTest::TestFetchDataURL(
     TestModuleScriptLoaderClient* client) {
   ModuleScriptLoaderRegistry* registry = ModuleScriptLoaderRegistry::Create();
-  KURL url(kParsedURLString, "data:text/javascript,export default 'grapes';");
+  KURL url(NullURL(), "data:text/javascript,export default 'grapes';");
   ModuleScriptFetchRequest module_request(
       url, String(), kParserInserted, WebURLRequest::kFetchCredentialsModeOmit);
   registry->Fetch(module_request, ModuleGraphLevel::kTopLevelModuleFetch,
@@ -223,7 +218,7 @@ TEST_F(ModuleScriptLoaderTest, FetchDataURL_OnWorklet) {
 void ModuleScriptLoaderTest::TestInvalidSpecifier(
     TestModuleScriptLoaderClient* client) {
   ModuleScriptLoaderRegistry* registry = ModuleScriptLoaderRegistry::Create();
-  KURL url(kParsedURLString,
+  KURL url(NullURL(),
            "data:text/javascript,import 'invalid';export default 'grapes';");
   ModuleScriptFetchRequest module_request(
       url, String(), kParserInserted, WebURLRequest::kFetchCredentialsModeOmit);
@@ -293,7 +288,7 @@ TEST_F(ModuleScriptLoaderTest, FetchInvalidURL_OnWorklet) {
 
 void ModuleScriptLoaderTest::TestFetchURL(
     TestModuleScriptLoaderClient* client) {
-  KURL url(kParsedURLString, "https://example.test/module.js");
+  KURL url(kParsedURLString, "http://127.0.0.1:8000/module.js");
   URLTestHelpers::RegisterMockedURLLoad(
       url, testing::CoreTestDataPath("module.js"), "text/javascript");
 
@@ -314,7 +309,7 @@ TEST_F(ModuleScriptLoaderTest, FetchURL) {
   platform_->GetURLLoaderMockFactory()->ServeAsynchronousRequests();
 
   EXPECT_TRUE(client->WasNotifyFinished());
-  EXPECT_TRUE(client->GetModuleScript());
+  EXPECT_FALSE(client->GetModuleScript());
 }
 
 TEST_F(ModuleScriptLoaderTest, FetchURL_OnWorklet) {
@@ -332,7 +327,7 @@ TEST_F(ModuleScriptLoaderTest, FetchURL_OnWorklet) {
   platform_->GetURLLoaderMockFactory()->ServeAsynchronousRequests();
 
   EXPECT_TRUE(client->WasNotifyFinished());
-  EXPECT_TRUE(client->GetModuleScript());
+  EXPECT_FALSE(client->GetModuleScript());
 }
 
 }  // namespace blink

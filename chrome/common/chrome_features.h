@@ -93,10 +93,6 @@ extern const base::Feature kDesktopPWAWindowing;
 
 extern const base::Feature kDisplayPersistenceToggleInPermissionPrompts;
 
-#if !defined(OS_ANDROID)
-extern const base::Feature kDoodlesOnLocalNtp;
-#endif
-
 extern const base::Feature kExpectCTReporting;
 
 extern const base::Feature kExperimentalAppBanners;
@@ -157,10 +153,6 @@ extern const base::Feature kMultidevice;
 extern const base::Feature kNativeNotifications;
 #endif
 
-#if BUILDFLAG(ENABLE_NATIVE_WINDOW_NAV_BUTTONS)
-extern const base::Feature kNativeWindowNavButtons;
-#endif
-
 extern const base::Feature kNetworkPrediction;
 
 extern const base::Feature kOfflinePageDownloadSuggestionsFeature;
@@ -204,8 +196,6 @@ extern const base::Feature kSiteDetails;
 #if defined(OS_ANDROID)
 extern const base::Feature kSiteNotificationChannels;
 #endif
-
-extern const base::Feature kSoundContentSetting;
 
 #if !defined(OS_ANDROID)
 extern const base::Feature kStaggeredBackgroundTabOpen;

@@ -6,7 +6,6 @@
 #define UI_CHROMEOS_TOUCH_EXPLORATION_CONTROLLER_H_
 
 #include "base/macros.h"
-#include "base/memory/weak_ptr.h"
 #include "base/timer/timer.h"
 #include "base/values.h"
 #include "ui/accessibility/ax_enums.h"
@@ -183,7 +182,7 @@ class UI_CHROMEOS_EXPORT TouchExplorationController
   explicit TouchExplorationController(
       aura::Window* root_window,
       ui::TouchExplorationControllerDelegate* delegate,
-      base::WeakPtr<TouchAccessibilityEnabler> touch_accessibility_enabler);
+      TouchAccessibilityEnabler* touch_accessibility_enabler);
   ~TouchExplorationController() override;
 
   // Make synthesized touch events are anchored at this point. This is
@@ -536,15 +535,12 @@ class UI_CHROMEOS_EXPORT TouchExplorationController
   // accessibility. That handler is always running, whereas this is not,
   // but events need to be sent to TouchAccessibilityEnabler before being
   // rewritten when TouchExplorationController is running.
-  base::WeakPtr<TouchAccessibilityEnabler> touch_accessibility_enabler_;
+  TouchAccessibilityEnabler* touch_accessibility_enabler_;
 
   // Any touch exploration that both starts and ends (touch pressed, and
   // released) within this rectangle, triggers a simulated single finger tap at
   // the anchor point on release.
   gfx::Rect lift_activation_bounds_;
-
-  // Whether or not we've seen a touch press event yet.
-  bool seen_press_ = false;
 
   DISALLOW_COPY_AND_ASSIGN(TouchExplorationController);
 };

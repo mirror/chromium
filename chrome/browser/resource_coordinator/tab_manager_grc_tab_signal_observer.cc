@@ -4,7 +4,6 @@
 
 #include "chrome/browser/resource_coordinator/tab_manager_grc_tab_signal_observer.h"
 
-#include "base/lazy_instance.h"
 #include "base/time/time.h"
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/resource_coordinator/tab_manager_stats_collector.h"
@@ -16,26 +15,6 @@
 #include "services/service_manager/public/cpp/connector.h"
 
 namespace resource_coordinator {
-
-namespace {
-base::LazyInstance<TabManager::GRCTabSignalObserver>::Leaky
-    g_grc_tab_signal_observer;
-}
-
-// static
-bool TabManager::GRCTabSignalObserver::IsEnabled() {
-  // Check that service_manager is active and GRC is enabled.
-  return content::ServiceManagerConnection::GetForProcess() != nullptr &&
-         resource_coordinator::IsResourceCoordinatorEnabled();
-}
-
-// static
-TabManager::GRCTabSignalObserver*
-TabManager::GRCTabSignalObserver::GetInstance() {
-  if (!IsEnabled())
-    return nullptr;
-  return g_grc_tab_signal_observer.Pointer();
-}
 
 TabManager::GRCTabSignalObserver::GRCTabSignalObserver() : binding_(this) {
   content::ServiceManagerConnection* service_manager_connection =
@@ -54,6 +33,13 @@ TabManager::GRCTabSignalObserver::GRCTabSignalObserver() : binding_(this) {
 }
 
 TabManager::GRCTabSignalObserver::~GRCTabSignalObserver() = default;
+
+// static
+bool TabManager::GRCTabSignalObserver::IsEnabled() {
+  // Check that service_manager is active and GRC is enabled.
+  return content::ServiceManagerConnection::GetForProcess() != nullptr &&
+         resource_coordinator::IsResourceCoordinatorEnabled();
+}
 
 void TabManager::GRCTabSignalObserver::OnEventReceived(
     const CoordinationUnitID& cu_id,
@@ -77,8 +63,7 @@ void TabManager::GRCTabSignalObserver::OnPropertyChanged(
     if (web_contents_iter == cu_id_web_contents_map_.end())
       return;
     g_browser_process->GetTabManager()
-        ->stats_collector()
-        ->RecordExpectedTaskQueueingDuration(
+        ->tab_manager_stats_collector_->RecordExpectedTaskQueueingDuration(
             web_contents_iter->second,
             base::TimeDelta::FromMilliseconds(value));
   }

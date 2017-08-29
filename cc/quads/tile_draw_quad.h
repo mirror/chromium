@@ -18,10 +18,10 @@ class CC_EXPORT TileDrawQuad : public ContentDrawQuadBase {
   TileDrawQuad();
   ~TileDrawQuad() override;
 
-  void SetNew(const viz::SharedQuadState* shared_quad_state,
+  void SetNew(const SharedQuadState* shared_quad_state,
               const gfx::Rect& rect,
+              const gfx::Rect& opaque_rect,
               const gfx::Rect& visible_rect,
-              bool needs_blending,
               unsigned resource_id,
               // |tex_coord_rect| contains non-normalized coordinates.
               // TODO(reveman): Make the use of normalized vs non-normalized
@@ -31,8 +31,9 @@ class CC_EXPORT TileDrawQuad : public ContentDrawQuadBase {
               bool swizzle_contents,
               bool nearest_neighbor);
 
-  void SetAll(const viz::SharedQuadState* shared_quad_state,
+  void SetAll(const SharedQuadState* shared_quad_state,
               const gfx::Rect& rect,
+              const gfx::Rect& opaque_rect,
               const gfx::Rect& visible_rect,
               bool needs_blending,
               unsigned resource_id,

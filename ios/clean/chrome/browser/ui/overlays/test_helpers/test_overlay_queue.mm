@@ -23,8 +23,3 @@ void TestOverlayQueue::StartNextOverlay() {
 void TestOverlayQueue::AddOverlay(OverlayCoordinator* overlay) {
   OverlayQueue::AddOverlay(overlay);
 }
-
-void TestOverlayQueue::SetBrowser(Browser* browser) {
-  browser_ = browser;
-  parent_.browser = browser;
-}

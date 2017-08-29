@@ -231,9 +231,8 @@ void RootScrollerController::ElementRemoved(const Element& element) {
   if (element != effective_root_scroller_.Get())
     return;
 
-  effective_root_scroller_ = document_;
-  if (Page* page = document_->GetPage())
-    page->GlobalRootScrollerController().DidChangeRootScroller();
+  RecomputeEffectiveRootScroller();
+  DCHECK(element != effective_root_scroller_.Get());
 }
 
 }  // namespace blink

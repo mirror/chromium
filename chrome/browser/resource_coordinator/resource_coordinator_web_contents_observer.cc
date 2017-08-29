@@ -9,9 +9,7 @@
 #include "base/atomic_sequence_num.h"
 #include "base/feature_list.h"
 #include "base/strings/string_number_conversions.h"
-#include "build/build_config.h"
 #include "chrome/browser/browser_process.h"
-#include "chrome/browser/resource_coordinator/tab_manager_grc_tab_signal_observer.h"
 #include "components/ukm/ukm_interface.h"
 #include "content/public/browser/navigation_handle.h"
 #include "content/public/browser/render_frame_host.h"
@@ -28,10 +26,6 @@
 
 DEFINE_WEB_CONTENTS_USER_DATA_KEY(ResourceCoordinatorWebContentsObserver);
 
-// We delay the sending of favicon/title update signal to GRC for 5 minutes
-// after the main frame navigation is committed.
-const base::TimeDelta kFaviconAndTitleUpdateIgnoredTimeout =
-    base::TimeDelta::FromMinutes(5);
 bool ResourceCoordinatorWebContentsObserver::ukm_recorder_initialized = false;
 
 ResourceCoordinatorWebContentsObserver::ResourceCoordinatorWebContentsObserver(
@@ -56,16 +50,6 @@ ResourceCoordinatorWebContentsObserver::ResourceCoordinatorWebContentsObserver(
   if (base::FeatureList::IsEnabled(ukm::kUkmFeature)) {
     EnsureUkmRecorderInterface();
   }
-
-#if !defined(OS_ANDROID)
-  if (auto* grc_tab_signal_observer = resource_coordinator::TabManager::
-          GRCTabSignalObserver::GetInstance()) {
-    // Gets CoordinationUnitID for this WebContents and adds it to
-    // GRCTabSignalObserver.
-    grc_tab_signal_observer->AssociateCoordinationUnitIDWithWebContents(
-        tab_resource_coordinator_->id(), web_contents);
-  }
-#endif
 }
 
 // TODO(matthalp) integrate into ResourceCoordinatorService once the UKM mojo
@@ -111,6 +95,13 @@ ResourceCoordinatorWebContentsObserver::
     ~ResourceCoordinatorWebContentsObserver() = default;
 
 // static
+ukm::SourceId ResourceCoordinatorWebContentsObserver::CreateUkmSourceId() {
+  static base::AtomicSequenceNumber seq;
+  return ConvertToSourceId(seq.GetNext() + 1,
+                           ukm::SourceIdType::RESOURCE_COORDINATOR);
+}
+
+// static
 bool ResourceCoordinatorWebContentsObserver::IsEnabled() {
   // Check that service_manager is active and GRC is enabled.
   return content::ServiceManagerConnection::GetForProcess() != nullptr &&
@@ -127,18 +118,6 @@ void ResourceCoordinatorWebContentsObserver::WasHidden() {
       resource_coordinator::mojom::PropertyType::kVisible, false);
 }
 
-void ResourceCoordinatorWebContentsObserver::WebContentsDestroyed() {
-#if !defined(OS_ANDROID)
-  if (auto* grc_tab_signal_observer = resource_coordinator::TabManager::
-          GRCTabSignalObserver::GetInstance()) {
-    // Gets CoordinationUnitID for this WebContents and removes it from
-    // GRCTabSignalObserver.
-    grc_tab_signal_observer->RemoveCoordinationUnitID(
-        tab_resource_coordinator_->id());
-  }
-#endif
-}
-
 void ResourceCoordinatorWebContentsObserver::DidFinishNavigation(
     content::NavigationHandle* navigation_handle) {
   if (!navigation_handle->HasCommitted() || navigation_handle->IsErrorPage() ||
@@ -147,9 +126,7 @@ void ResourceCoordinatorWebContentsObserver::DidFinishNavigation(
   }
 
   if (navigation_handle->IsInMainFrame()) {
-    UpdateUkmRecorder(navigation_handle->GetNavigationId());
-    ResetFlag();
-    navigation_finished_time_ = base::TimeTicks::Now();
+    UpdateUkmRecorder(navigation_handle->GetURL());
   }
 
   content::RenderFrameHost* render_frame_host =
@@ -167,51 +144,26 @@ void ResourceCoordinatorWebContentsObserver::DidFinishNavigation(
 void ResourceCoordinatorWebContentsObserver::TitleWasSet(
     content::NavigationEntry* entry,
     bool explicit_set) {
-  if (!first_time_title_set_) {
-    first_time_title_set_ = true;
-    return;
-  }
-  // Ignore update when the tab is in foreground or the update happens within 5
-  // minutes after the main frame is committed.
-  if (web_contents()->IsVisible() ||
-      base::TimeTicks::Now() - navigation_finished_time_ <
-          kFaviconAndTitleUpdateIgnoredTimeout) {
+  // Ignore first time title updated event, since it happens as part of loading
+  // process.
+  if (!first_time_title_updated_) {
+    first_time_title_updated_ = true;
     return;
   }
   tab_resource_coordinator_->SendEvent(
       resource_coordinator::mojom::Event::kTitleUpdated);
 }
 
-void ResourceCoordinatorWebContentsObserver::DidUpdateFaviconURL(
-    const std::vector<content::FaviconURL>& candidates) {
-  if (!first_time_favicon_set_) {
-    first_time_favicon_set_ = true;
-    return;
-  }
-  // Ignore update when the tab is in foreground or the update happens within 5
-  // minutes after the main frame is committed.
-  if (web_contents()->IsVisible() ||
-      base::TimeTicks::Now() - navigation_finished_time_ <
-          kFaviconAndTitleUpdateIgnoredTimeout) {
-    return;
-  }
-  tab_resource_coordinator_->SendEvent(
-      resource_coordinator::mojom::Event::kFaviconUpdated);
-}
-
 void ResourceCoordinatorWebContentsObserver::UpdateUkmRecorder(
-    int64_t navigation_id) {
+    const GURL& url) {
   if (!base::FeatureList::IsEnabled(ukm::kUkmFeature)) {
     return;
   }
 
-  ukm_source_id_ =
-      ukm::ConvertToSourceId(navigation_id, ukm::SourceIdType::NAVIGATION_ID);
+  // TODO(oysteine): Use NavigationID instead of a new sourceID, when it
+  // lands (https://chromium-review.googlesource.com/c/580586).
+  ukm_source_id_ = CreateUkmSourceId();
+  ukm::UkmRecorder::Get()->UpdateSourceURL(ukm_source_id_, url);
   tab_resource_coordinator_->SetProperty(
       resource_coordinator::mojom::PropertyType::kUKMSourceId, ukm_source_id_);
-}
-
-void ResourceCoordinatorWebContentsObserver::ResetFlag() {
-  first_time_title_set_ = false;
-  first_time_favicon_set_ = false;
 }

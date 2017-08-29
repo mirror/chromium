@@ -42,7 +42,6 @@ class WebFrameClient;
 class WebFrameWidget;
 class WebFrameScheduler;
 class WebInputMethodController;
-class WebPerformance;
 class WebRange;
 class WebSecurityOrigin;
 class WebScriptExecutionCallback;
@@ -216,11 +215,6 @@ class WebLocalFrame : public WebFrame {
 
   // Returns the document loader that is currently loading.  May be null.
   virtual WebDocumentLoader* GetProvisionalDocumentLoader() const = 0;
-
-  // View-source rendering mode.  Set this before loading an URL to cause
-  // it to be rendered in view-source mode.
-  virtual void EnableViewSourceMode(bool) = 0;
-  virtual bool IsViewSourceModeEnabled() const = 0;
 
   // Returns the document loader that is currently loaded.
   virtual WebDocumentLoader* GetDocumentLoader() const = 0;
@@ -788,10 +782,6 @@ class WebLocalFrame : public WebFrame {
   // Shift + TAB. (Will be extended to other form controls like select element,
   // checkbox, radio etc.)
   virtual void AdvanceFocusInForm(WebFocusType) = 0;
-
-  // Performance --------------------------------------------------------
-
-  virtual WebPerformance Performance() const = 0;
 
   // Testing ------------------------------------------------------------------
 

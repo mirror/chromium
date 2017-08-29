@@ -121,7 +121,8 @@ void FakeShillDeviceClient::SetPropertyInternal(
     PostNotFoundError(error_callback);
     return;
   }
-  device_properties->SetKey(name, value.Clone());
+  device_properties->SetWithoutPathExpansion(
+      name, base::MakeUnique<base::Value>(value));
   base::ThreadTaskRunnerHandle::Get()->PostTask(
       FROM_HERE,
       base::Bind(&FakeShillDeviceClient::NotifyObserversPropertyChanged,

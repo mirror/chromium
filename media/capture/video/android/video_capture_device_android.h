@@ -53,6 +53,7 @@ class CAPTURE_EXPORT VideoCaptureDeviceAndroid : public VideoCaptureDevice {
 
   static VideoCaptureDevice* Create(
       const VideoCaptureDeviceDescriptor& device_descriptor);
+  static bool RegisterVideoCaptureDevice(JNIEnv* env);
 
   // Registers the Java VideoCaptureDevice pointer, used by the rest of the
   // methods of the class to operate the Java capture code. This method must be

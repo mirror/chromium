@@ -45,7 +45,7 @@ DirectLayerTreeFrameSink::DirectLayerTreeFrameSink(
     CompositorFrameSinkSupportManager* support_manager,
     FrameSinkManagerImpl* frame_sink_manager,
     Display* display,
-    scoped_refptr<VulkanContextProvider> vulkan_context_provider)
+    scoped_refptr<cc::VulkanContextProvider> vulkan_context_provider)
     : LayerTreeFrameSink(std::move(vulkan_context_provider)),
       frame_sink_id_(frame_sink_id),
       support_manager_(support_manager),
@@ -102,12 +102,12 @@ void DirectLayerTreeFrameSink::SubmitCompositorFrame(
   DCHECK_LE(BeginFrameArgs::kStartingFrameNumber,
             frame.metadata.begin_frame_ack.sequence_number);
 
-  if (!local_surface_id_.is_valid() ||
-      frame.size_in_pixels() != last_swap_frame_size_ ||
-      frame.device_scale_factor() != device_scale_factor_) {
+  gfx::Size frame_size = frame.render_pass_list.back()->output_rect.size();
+  if (!local_surface_id_.is_valid() || frame_size != last_swap_frame_size_ ||
+      frame.metadata.device_scale_factor != device_scale_factor_) {
     local_surface_id_ = local_surface_id_allocator_.GenerateId();
-    last_swap_frame_size_ = frame.size_in_pixels();
-    device_scale_factor_ = frame.device_scale_factor();
+    last_swap_frame_size_ = frame_size;
+    device_scale_factor_ = frame.metadata.device_scale_factor;
     display_->SetLocalSurfaceId(local_surface_id_, device_scale_factor_);
   }
 

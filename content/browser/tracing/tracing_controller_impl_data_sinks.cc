@@ -39,8 +39,8 @@ class StringTraceDataEndpoint : public TraceDataEndpoint {
 
     BrowserThread::PostTask(
         BrowserThread::UI, FROM_HERE,
-        base::BindOnce(completion_callback_, base::Passed(std::move(metadata)),
-                       base::RetainedRef(str)));
+        base::Bind(completion_callback_, base::Passed(std::move(metadata)),
+                   base::RetainedRef(str)));
   }
 
   void ReceiveTraceChunk(std::unique_ptr<std::string> chunk) override {
@@ -67,15 +67,15 @@ class FileTraceDataEndpoint : public TraceDataEndpoint {
   void ReceiveTraceChunk(std::unique_ptr<std::string> chunk) override {
     BrowserThread::PostTask(
         BrowserThread::FILE, FROM_HERE,
-        base::BindOnce(&FileTraceDataEndpoint::ReceiveTraceChunkOnFileThread,
-                       this, base::Passed(std::move(chunk))));
+        base::Bind(&FileTraceDataEndpoint::ReceiveTraceChunkOnFileThread, this,
+                   base::Passed(std::move(chunk))));
   }
 
   void ReceiveTraceFinalContents(
       std::unique_ptr<const base::DictionaryValue>) override {
     BrowserThread::PostTask(
         BrowserThread::FILE, FROM_HERE,
-        base::BindOnce(&FileTraceDataEndpoint::CloseOnFileThread, this));
+        base::Bind(&FileTraceDataEndpoint::CloseOnFileThread, this));
   }
 
  private:
@@ -105,7 +105,7 @@ class FileTraceDataEndpoint : public TraceDataEndpoint {
     }
     BrowserThread::PostTask(
         BrowserThread::UI, FROM_HERE,
-        base::BindOnce(&FileTraceDataEndpoint::FinalizeOnUIThread, this));
+        base::Bind(&FileTraceDataEndpoint::FinalizeOnUIThread, this));
   }
 
   void FinalizeOnUIThread() { completion_callback_.Run(); }
@@ -194,16 +194,16 @@ class CompressedTraceDataEndpoint : public TraceDataEndpoint {
   void ReceiveTraceChunk(std::unique_ptr<std::string> chunk) override {
     BrowserThread::PostTask(
         BrowserThread::FILE, FROM_HERE,
-        base::BindOnce(&CompressedTraceDataEndpoint::CompressOnFileThread, this,
-                       base::Passed(std::move(chunk))));
+        base::Bind(&CompressedTraceDataEndpoint::CompressOnFileThread, this,
+                   base::Passed(std::move(chunk))));
   }
 
   void ReceiveTraceFinalContents(
       std::unique_ptr<const base::DictionaryValue> metadata) override {
     BrowserThread::PostTask(
         BrowserThread::FILE, FROM_HERE,
-        base::BindOnce(&CompressedTraceDataEndpoint::CloseOnFileThread, this,
-                       base::Passed(std::move(metadata))));
+        base::Bind(&CompressedTraceDataEndpoint::CloseOnFileThread, this,
+                   base::Passed(std::move(metadata))));
   }
 
  private:

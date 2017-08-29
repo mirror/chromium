@@ -39,7 +39,7 @@ class STORAGE_EXPORT SandboxFileSystemBackend
   void Initialize(FileSystemContext* context) override;
   void ResolveURL(const FileSystemURL& url,
                   OpenFileSystemMode mode,
-                  OpenFileSystemCallback callback) override;
+                  const OpenFileSystemCallback& callback) override;
   AsyncFileUtil* GetAsyncFileUtil(FileSystemType type) override;
   WatcherManager* GetWatcherManager(FileSystemType type) override;
   CopyOrMoveFileValidatorFactory* GetCopyOrMoveFileValidatorFactory(

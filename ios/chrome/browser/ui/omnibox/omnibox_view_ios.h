@@ -171,6 +171,8 @@ class OmniboxViewIOS : public OmniboxView,
   base::scoped_nsobject<OmniboxTextFieldIOS> field_;
   WebOmniboxEditController* controller_;  // weak, owns us
   std::unique_ptr<OmniboxPopupViewIOS> popup_view_;
+  // |preloader_| should be __weak but is included from non-ARC code.
+  __unsafe_unretained id<PreloadProvider> preloader_;
 
   State state_before_change_;
   base::scoped_nsobject<NSString> marked_text_before_change_;
@@ -192,7 +194,7 @@ class OmniboxViewIOS : public OmniboxView,
 
   // Temporary pointer to the attributed display string, stored as color and
   // other emphasis attributes are applied by the superclass.
-  NSMutableAttributedString* attributing_display_string_;
+  NSMutableAttributedString* attributing_display_string_;  // weak
 };
 
 #endif  // IOS_CHROME_BROWSER_UI_OMNIBOX_OMNIBOX_VIEW_IOS_H_

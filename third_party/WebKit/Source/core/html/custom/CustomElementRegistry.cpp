@@ -83,8 +83,7 @@ CustomElementRegistry::CustomElementRegistry(const LocalDOMWindow* owner)
     : element_definition_is_running_(false),
       owner_(owner),
       v0_(new V0RegistrySet()),
-      upgrade_candidates_(new UpgradeCandidateMap()),
-      reaction_stack_(&CustomElementReactionStack::Current()) {}
+      upgrade_candidates_(new UpgradeCandidateMap()) {}
 
 DEFINE_TRACE(CustomElementRegistry) {
   visitor->Trace(definitions_);
@@ -95,7 +94,9 @@ DEFINE_TRACE(CustomElementRegistry) {
 }
 
 DEFINE_TRACE_WRAPPERS(CustomElementRegistry) {
-  visitor->TraceWrappers(reaction_stack_);
+  // TODO(mlippautz): This is not safe for incremental marking.
+  visitor->TraceWrappersWithManualWriteBarrier(
+      &CustomElementReactionStack::Current());
   for (auto definition : definitions_)
     visitor->TraceWrappers(definition);
 }

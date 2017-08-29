@@ -7,8 +7,6 @@
 #include "base/callback.h"
 #include "base/command_line.h"
 #include "base/memory/ptr_util.h"
-#include "base/metrics/histogram_macros.h"
-#include "base/timer/elapsed_timer.h"
 #include "content/public/child/worker_thread.h"
 #include "content/public/common/console_message_level.h"
 #include "content/public/common/content_switches.h"
@@ -409,9 +407,9 @@ NativeExtensionBindingsSystem::NativeExtensionBindingsSystem(
       "contentSettings.ContentSetting",
       base::Bind(&ContentSetting::Create, base::Bind(&CallJsFunction)));
   api_system_.GetHooksForAPI("webRequest")
-      ->SetDelegate(std::make_unique<WebRequestHooks>());
+      ->SetDelegate(base::MakeUnique<WebRequestHooks>());
   api_system_.GetHooksForAPI("declarativeContent")
-      ->SetDelegate(std::make_unique<DeclarativeContentHooksDelegate>());
+      ->SetDelegate(base::MakeUnique<DeclarativeContentHooksDelegate>());
 }
 
 NativeExtensionBindingsSystem::~NativeExtensionBindingsSystem() {}
@@ -424,7 +422,7 @@ void NativeExtensionBindingsSystem::DidCreateScriptContext(
   gin::PerContextData* per_context_data = gin::PerContextData::From(v8_context);
   DCHECK(per_context_data);
   DCHECK(!per_context_data->GetUserData(kBindingsSystemPerContextKey));
-  auto data = std::make_unique<BindingsSystemPerContextData>(
+  auto data = base::MakeUnique<BindingsSystemPerContextData>(
       weak_factory_.GetWeakPtr());
   per_context_data->SetUserData(kBindingsSystemPerContextKey, std::move(data));
 
@@ -454,7 +452,6 @@ void NativeExtensionBindingsSystem::WillReleaseScriptContext(
 
 void NativeExtensionBindingsSystem::UpdateBindingsForContext(
     ScriptContext* context) {
-  base::ElapsedTimer timer;
   v8::Isolate* isolate = context->isolate();
   v8::HandleScope handle_scope(isolate);
   v8::Local<v8::Context> v8_context = context->v8_context();
@@ -512,7 +509,6 @@ void NativeExtensionBindingsSystem::UpdateBindingsForContext(
     if (IsRuntimeAvailableToContext(context) && !set_accessor("runtime"))
       LOG(ERROR) << "Failed to create API on Chrome object.";
 
-    LogUpdateBindingsForContextTime(context->context_type(), timer.Elapsed());
     return;
   }
 
@@ -544,8 +540,6 @@ void NativeExtensionBindingsSystem::UpdateBindingsForContext(
       return;
     }
   }
-
-  LogUpdateBindingsForContextTime(context->context_type(), timer.Elapsed());
 }
 
 void NativeExtensionBindingsSystem::DispatchEventInContext(
@@ -653,7 +647,6 @@ v8::Local<v8::Object> NativeExtensionBindingsSystem::GetAPIHelper(
   CHECK(
       gin::Converter<std::string>::FromV8(isolate, api_name, &api_name_string));
 
-  base::ElapsedTimer timer;
   v8::Local<v8::Object> root_binding = CreateFullBinding(
       context, script_context, &data->bindings_system->api_system_,
       FeatureProvider::GetAPIFeatures(), api_name_string);
@@ -665,9 +658,6 @@ v8::Local<v8::Object> NativeExtensionBindingsSystem::GetAPIHelper(
   if (!success.IsJust() || !success.FromJust())
     return v8::Local<v8::Object>();
 
-  UMA_HISTOGRAM_CUSTOM_COUNTS("Extensions.Bindings.NativeBindingCreationTime",
-                              timer.Elapsed().InMicroseconds(), 1, 10000000,
-                              50);
   return root_binding;
 }
 
@@ -762,7 +752,7 @@ void NativeExtensionBindingsSystem::SendRequest(
   else
     url = script_context->url();
 
-  auto params = std::make_unique<ExtensionHostMsg_Request_Params>();
+  auto params = base::MakeUnique<ExtensionHostMsg_Request_Params>();
   params->name = request->method_name;
   params->arguments.Swap(request->arguments.get());
   params->extension_id = script_context->GetExtensionID();

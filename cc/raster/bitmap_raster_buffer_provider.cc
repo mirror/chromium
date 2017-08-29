@@ -15,7 +15,6 @@
 #include "base/trace_event/trace_event.h"
 #include "base/trace_event/trace_event_argument.h"
 #include "cc/raster/raster_source.h"
-#include "cc/resources/layer_tree_resource_provider.h"
 #include "cc/resources/resource.h"
 #include "components/viz/common/resources/platform_color.h"
 
@@ -24,7 +23,7 @@ namespace {
 
 class RasterBufferImpl : public RasterBuffer {
  public:
-  RasterBufferImpl(LayerTreeResourceProvider* resource_provider,
+  RasterBufferImpl(ResourceProvider* resource_provider,
                    const Resource* resource,
                    uint64_t resource_content_id,
                    uint64_t previous_content_id)
@@ -69,13 +68,13 @@ class RasterBufferImpl : public RasterBuffer {
 
 // static
 std::unique_ptr<RasterBufferProvider> BitmapRasterBufferProvider::Create(
-    LayerTreeResourceProvider* resource_provider) {
+    ResourceProvider* resource_provider) {
   return base::WrapUnique<RasterBufferProvider>(
       new BitmapRasterBufferProvider(resource_provider));
 }
 
 BitmapRasterBufferProvider::BitmapRasterBufferProvider(
-    LayerTreeResourceProvider* resource_provider)
+    ResourceProvider* resource_provider)
     : resource_provider_(resource_provider) {}
 
 BitmapRasterBufferProvider::~BitmapRasterBufferProvider() {}

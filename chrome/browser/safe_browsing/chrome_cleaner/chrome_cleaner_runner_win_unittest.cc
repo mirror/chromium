@@ -262,12 +262,12 @@ class ChromeCleanerRunnerTest
     cleaner_process_options_.AddSwitchesToCommandLine(
         &test_process_command_line);
 
-    base::Process process = base::SpawnMultiProcessTestChild(
+    base::SpawnChildResult result = base::SpawnMultiProcessTestChild(
         "MockChromeCleanerProcessMain", test_process_command_line,
         launch_options);
 
-    EXPECT_TRUE(process.IsValid());
-    return process;
+    EXPECT_TRUE(result.process.IsValid());
+    return std::move(result.process);
   }
 
   void OnCleanerProcessDone(

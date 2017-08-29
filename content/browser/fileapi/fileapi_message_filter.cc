@@ -167,10 +167,8 @@ void FileAPIMessageFilter::OnOpenFileSystem(int request_id,
   }
   storage::OpenFileSystemMode mode =
       storage::OPEN_FILE_SYSTEM_CREATE_IF_NONEXISTENT;
-  context_->OpenFileSystem(
-      origin_url, type, mode,
-      base::BindOnce(&FileAPIMessageFilter::DidOpenFileSystem, this,
-                     request_id));
+  context_->OpenFileSystem(origin_url, type, mode, base::Bind(
+      &FileAPIMessageFilter::DidOpenFileSystem, this, request_id));
 }
 
 void FileAPIMessageFilter::OnResolveURL(
@@ -333,8 +331,8 @@ void FileAPIMessageFilter::OnReadDirectory(
   }
 
   operations_[request_id] = operation_runner()->ReadDirectory(
-      url, base::BindRepeating(&FileAPIMessageFilter::DidReadDirectory, this,
-                               request_id));
+      url, base::Bind(&FileAPIMessageFilter::DidReadDirectory,
+                      this, request_id));
 }
 
 void FileAPIMessageFilter::OnWrite(int request_id,
@@ -501,12 +499,11 @@ void FileAPIMessageFilter::DidGetMetadataForStreaming(
 void FileAPIMessageFilter::DidReadDirectory(
     int request_id,
     base::File::Error result,
-    std::vector<storage::DirectoryEntry> entries,
+    const std::vector<storage::DirectoryEntry>& entries,
     bool has_more) {
   if (result == base::File::FILE_OK) {
     if (!entries.empty() || !has_more)
-      Send(new FileSystemMsg_DidReadDirectory(request_id, std::move(entries),
-                                              has_more));
+      Send(new FileSystemMsg_DidReadDirectory(request_id, entries, has_more));
   } else {
     DCHECK(!has_more);
     Send(new FileSystemMsg_DidFail(request_id, result));
@@ -574,7 +571,7 @@ void FileAPIMessageFilter::DidCreateSnapshot(
     base::File::Error result,
     const base::File::Info& info,
     const base::FilePath& platform_path,
-    scoped_refptr<storage::ShareableFileReference> /* unused */) {
+    const scoped_refptr<storage::ShareableFileReference>& /* unused */) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
   operations_.erase(request_id);
 

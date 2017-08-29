@@ -170,8 +170,7 @@ QuadList::Iterator DCLayerOverlayProcessor::ProcessRenderPassDrawQuad(
   pass_info_[render_pass->id] = std::vector<PunchThroughRect>();
   auto& pass_info = pass_info_[rpdq->render_pass_id];
 
-  const viz::SharedQuadState* original_shared_quad_state =
-      rpdq->shared_quad_state;
+  const SharedQuadState* original_shared_quad_state = rpdq->shared_quad_state;
 
   // Punch holes through for all child video quads that will be displayed in
   // underlays. This doesn't work perfectly in all cases - it breaks with
@@ -190,9 +189,9 @@ QuadList::Iterator DCLayerOverlayProcessor::ProcessRenderPassDrawQuad(
   rpdq = nullptr;
   for (size_t i = 0; i < pass_info.size(); i++, ++it) {
     auto& punch_through = pass_info[i];
-    viz::SharedQuadState* new_shared_quad_state =
+    SharedQuadState* new_shared_quad_state =
         render_pass->shared_quad_state_list
-            .AllocateAndConstruct<viz::SharedQuadState>();
+            .AllocateAndConstruct<SharedQuadState>();
     gfx::Transform new_transform(
         original_shared_quad_state->quad_to_target_transform,
         punch_through.transform_to_target);
@@ -203,7 +202,8 @@ QuadList::Iterator DCLayerOverlayProcessor::ProcessRenderPassDrawQuad(
                                   new_opacity, SkBlendMode::kDstOut, 0);
     SolidColorDrawQuad* solid_quad = static_cast<SolidColorDrawQuad*>(*it);
     solid_quad->SetAll(new_shared_quad_state, punch_through.rect,
-                       punch_through.rect, false, 0xff000000, true);
+                       punch_through.rect, punch_through.rect, false,
+                       0xff000000, true);
     damage_rect->Union(gfx::ToEnclosingRect(ClippedQuadRectangle(solid_quad)));
 
     // Add transformed info to list in case this renderpass is included in
@@ -360,17 +360,18 @@ bool DCLayerOverlayProcessor::ProcessForUnderlay(
     *this_frame_underlay_rect = quad_rectangle;
   }
   dc_layer->shared_state->z_order = -1;
-  const viz::SharedQuadState* shared_quad_state = it->shared_quad_state;
+  const SharedQuadState* shared_quad_state = it->shared_quad_state;
   gfx::Rect rect = it->visible_rect;
 
   if (shared_quad_state->opacity < 1.0) {
-    viz::SharedQuadState* new_shared_quad_state =
+    SharedQuadState* new_shared_quad_state =
         render_pass->shared_quad_state_list.AllocateAndCopyFrom(
             shared_quad_state);
     new_shared_quad_state->blend_mode = SkBlendMode::kDstOut;
     SolidColorDrawQuad* replacement =
         render_pass->quad_list.ReplaceExistingElement<SolidColorDrawQuad>(it);
-    replacement->SetAll(shared_quad_state, rect, rect, false, 0xff000000, true);
+    replacement->SetAll(shared_quad_state, rect, rect, rect, false, 0xff000000,
+                        true);
   } else {
     // When the opacity == 1.0, drawing with transparent will be done without
     // blending and will have the proper effect of completely clearing the

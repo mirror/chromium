@@ -553,19 +553,6 @@ bool DebuggerFunction::InitClientHost() {
   if (!InitAgentHost())
     return false;
 
-  client_host_ = FindClientHost();
-  if (!client_host_) {
-    FormatErrorMessage(keys::kNotAttachedError);
-    return false;
-  }
-
-  return true;
-}
-
-ExtensionDevToolsClientHost* DebuggerFunction::FindClientHost() {
-  if (!agent_host_.get())
-    return nullptr;
-
   const std::string& extension_id = extension()->id();
   DevToolsAgentHost* agent_host = agent_host_.get();
   AttachedClientHosts& hosts = g_attached_client_hosts.Get();
@@ -576,8 +563,15 @@ ExtensionDevToolsClientHost* DebuggerFunction::FindClientHost() {
                client_host->extension_id() == extension_id;
       });
 
-  return it == hosts.end() ? nullptr : *it;
+  if (it == hosts.end()) {
+    FormatErrorMessage(keys::kNotAttachedError);
+    return false;
+  }
+
+  client_host_ = *it;
+  return true;
 }
+
 
 // DebuggerAttachFunction -----------------------------------------------------
 
@@ -603,7 +597,7 @@ bool DebuggerAttachFunction::RunAsync() {
     return false;
   }
 
-  if (FindClientHost()) {
+  if (agent_host_->IsAttached()) {
     FormatErrorMessage(keys::kAlreadyAttachedError);
     return false;
   }

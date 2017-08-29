@@ -14,6 +14,7 @@
 #include "base/files/file_enumerator.h"
 #include "base/guid.h"
 #include "base/logging.h"
+#include "base/memory/ptr_util.h"
 #include "base/metrics/histogram_macros.h"
 #include "base/strings/string_number_conversions.h"
 #include "base/strings/stringprintf.h"
@@ -188,7 +189,7 @@ DirOpenResult Directory::OpenImpl(
   Directory::MetahandlesMap tmp_handles_map;
 
   std::unique_ptr<JournalIndex> delete_journals =
-      std::make_unique<JournalIndex>();
+      base::MakeUnique<JournalIndex>();
   MetahandleSet metahandles_to_purge;
 
   DirOpenResult result = store_->Load(&tmp_handles_map, delete_journals.get(),
@@ -198,9 +199,9 @@ DirOpenResult Directory::OpenImpl(
 
   DCHECK(!kernel_);
   kernel_ =
-      std::make_unique<Kernel>(name, info, delegate, transaction_observer);
+      base::MakeUnique<Kernel>(name, info, delegate, transaction_observer);
   kernel_->metahandles_to_purge.swap(metahandles_to_purge);
-  delete_journal_ = std::make_unique<DeleteJournal>(std::move(delete_journals));
+  delete_journal_ = base::MakeUnique<DeleteJournal>(std::move(delete_journals));
   InitializeIndices(&tmp_handles_map);
 
   // Save changes back in case there are any metahandles to purge.
@@ -564,7 +565,7 @@ void Directory::TakeSnapshotForSaveChanges(SaveChangesSnapshot* snapshot) {
     if (!entry->is_dirty())
       continue;
     snapshot->dirty_metas.insert(snapshot->dirty_metas.end(),
-                                 std::make_unique<EntryKernel>(*entry));
+                                 base::MakeUnique<EntryKernel>(*entry));
     DCHECK_EQ(1U, kernel_->dirty_metahandles.count(*i));
     // We don't bother removing from the index here as we blow the entire thing
     // in a moment, and it unnecessarily complicates iteration.

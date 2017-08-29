@@ -24,7 +24,6 @@
 #include "ui/aura/window_tree_host.h"
 #include "ui/base/layout.h"
 #include "ui/gfx/canvas.h"
-#include "ui/gfx/geometry/rect.h"
 #include "ui/gfx/gpu_memory_buffer.h"
 #include "ui/views/widget/widget.h"
 
@@ -344,30 +343,31 @@ void FastInkView::UpdateSurface() {
       gpu::MailboxHolder(resource->mailbox, sync_token, GL_TEXTURE_2D);
   transferable_resource.is_overlay_candidate = true;
 
-  float device_scale_factor = widget_->GetLayer()->device_scale_factor();
-  gfx::Transform target_to_buffer_transform(screen_to_buffer_transform_);
-  target_to_buffer_transform.Scale(1.f / device_scale_factor,
-                                   1.f / device_scale_factor);
-
-  gfx::Transform buffer_to_target_transform;
-  bool rv = target_to_buffer_transform.GetInverse(&buffer_to_target_transform);
+  gfx::Transform buffer_to_screen_transform;
+  bool rv = screen_to_buffer_transform_.GetInverse(&buffer_to_screen_transform);
   DCHECK(rv);
 
-  gfx::Rect output_rect(gfx::ScaleToEnclosingRect(
-      gfx::Rect(widget_->GetNativeView()->GetBoundsInScreen().size()),
-      device_scale_factor));
-  gfx::Rect quad_rect(buffer_size);
-  bool needs_blending = true;
+  gfx::Rect output_rect(widget_->GetNativeView()->GetBoundsInScreen().size());
+  // |quad_rect| is under normal cricumstances equal to |buffer_size| but to
+  // be more resilient to rounding errors in the compositor that might cause
+  // off-by-one problems when the transform is non-trivial we compute this rect
+  // by mapping the output rect back into buffer space and intersecting by
+  // buffer bounds. This avoids some corner cases where one row or column
+  // would end up outside the screen and we would fail to take advantage of HW
+  // overlays.
+  gfx::Rect quad_rect = gfx::ToEnclosedRect(cc::MathUtil::MapClippedRect(
+      screen_to_buffer_transform_, gfx::RectF(output_rect)));
+  quad_rect.Intersect(gfx::Rect(buffer_size));
 
   const int kRenderPassId = 1;
   std::unique_ptr<cc::RenderPass> render_pass = cc::RenderPass::Create();
   render_pass->SetNew(kRenderPassId, output_rect, surface_damage_rect_,
-                      buffer_to_target_transform);
+                      buffer_to_screen_transform);
   surface_damage_rect_ = gfx::Rect();
 
-  viz::SharedQuadState* quad_state =
+  cc::SharedQuadState* quad_state =
       render_pass->CreateAndAppendSharedQuadState();
-  quad_state->SetAll(buffer_to_target_transform,
+  quad_state->SetAll(buffer_to_screen_transform,
                      /*quad_layer_rect=*/output_rect,
                      /*visible_quad_layer_rect=*/output_rect,
                      /*clip_rect=*/gfx::Rect(),
@@ -380,13 +380,14 @@ void FastInkView::UpdateSurface() {
   // accordingly.
   frame.metadata.begin_frame_ack =
       viz::BeginFrameAck::CreateManualAckWithDamage();
-  frame.metadata.device_scale_factor = device_scale_factor;
+  frame.metadata.device_scale_factor =
+      widget_->GetLayer()->device_scale_factor();
   cc::TextureDrawQuad* texture_quad =
       render_pass->CreateAndAppendDrawQuad<cc::TextureDrawQuad>();
   float vertex_opacity[4] = {1.0, 1.0, 1.0, 1.0};
   gfx::PointF uv_top_left(0.f, 0.f);
   gfx::PointF uv_bottom_right(1.f, 1.f);
-  texture_quad->SetNew(quad_state, quad_rect, quad_rect, needs_blending,
+  texture_quad->SetNew(quad_state, quad_rect, gfx::Rect(), quad_rect,
                        transferable_resource.id, true, uv_top_left,
                        uv_bottom_right, SK_ColorTRANSPARENT, vertex_opacity,
                        false, false, false);

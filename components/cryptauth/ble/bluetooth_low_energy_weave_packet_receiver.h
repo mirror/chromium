@@ -108,7 +108,23 @@ class BluetoothLowEnergyWeavePacketReceiver {
     PACKET_OUT_OF_SEQUENCE
   };
 
-  explicit BluetoothLowEnergyWeavePacketReceiver(ReceiverType receiver_type);
+  class Factory {
+   public:
+    static std::unique_ptr<BluetoothLowEnergyWeavePacketReceiver> NewInstance(
+        ReceiverType receiver_type);
+
+    // Exposed for testing.
+    static void SetInstanceForTesting(Factory* factory);
+
+   protected:
+    // Exposed for testing.
+    virtual std::unique_ptr<BluetoothLowEnergyWeavePacketReceiver>
+    BuildInstance(ReceiverType receiver_type);
+
+   private:
+    static Factory* factory_instance_;
+  };
+
   ~BluetoothLowEnergyWeavePacketReceiver();
 
   typedef std::vector<uint8_t> Packet;
@@ -142,6 +158,9 @@ class BluetoothLowEnergyWeavePacketReceiver {
 
   // Add a packet that's just been received over Connection to the receiver.
   virtual State ReceivePacket(const Packet& packet);
+
+ protected:
+  explicit BluetoothLowEnergyWeavePacketReceiver(ReceiverType receiver_type);
 
  private:
   void ReceiveFirstPacket(const Packet& packet);

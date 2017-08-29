@@ -64,7 +64,8 @@ class WebappBrowserControlsDelegate extends TabStateBrowserControlsVisibilityDel
     }
 
     private boolean shouldShowBrowserControlsForSecurityLevel(int securityLevel) {
-        return securityLevel == ConnectionSecurityLevel.DANGEROUS;
+        return securityLevel == ConnectionSecurityLevel.DANGEROUS
+                || securityLevel == ConnectionSecurityLevel.SECURITY_WARNING;
     }
 
     private boolean shouldShowBrowserControlsForDisplayMode(WebappInfo info) {

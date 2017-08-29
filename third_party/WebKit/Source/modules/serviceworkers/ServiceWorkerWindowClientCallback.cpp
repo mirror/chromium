@@ -10,7 +10,6 @@
 #include "modules/serviceworkers/ServiceWorkerWindowClient.h"
 #include "platform/bindings/V8ThrowException.h"
 #include "platform/wtf/PtrUtil.h"
-#include "public/platform/modules/serviceworker/service_worker_error_type.mojom-blink.h"
 
 namespace blink {
 
@@ -28,7 +27,7 @@ void NavigateClientCallback::OnError(const WebServiceWorkerError& error) {
       resolver_->GetExecutionContext()->IsContextDestroyed())
     return;
 
-  if (error.error_type == mojom::blink::ServiceWorkerErrorType::kNavigation) {
+  if (error.error_type == WebServiceWorkerError::kErrorTypeNavigation) {
     ScriptState::Scope scope(resolver_->GetScriptState());
     resolver_->Reject(V8ThrowException::CreateTypeError(
         resolver_->GetScriptState()->GetIsolate(), error.message));

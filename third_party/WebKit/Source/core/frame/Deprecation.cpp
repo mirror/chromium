@@ -423,17 +423,20 @@ String Deprecation::DeprecationMessage(WebFeature feature) {
     case WebFeature::kNotificationAPIInsecureOriginIframe:
     case WebFeature::kNotificationPermissionRequestedInsecureOrigin:
       return String::Format(
-          "The Notification API may no longer be used from insecure origins. "
-          "You should consider switching your application to a secure origin, "
-          "such as HTTPS. See https://goo.gl/rStTGz for more details.");
+          "Using the Notification API on insecure origins is "
+          "deprecated and will be removed in %s. You should consider "
+          "switching your application to a secure origin, such as HTTPS. See "
+          "https://goo.gl/rStTGz for more details.",
+          milestoneString(M61));
 
     case WebFeature::kNotificationPermissionRequestedIframe:
       return String::Format(
-          "Permission for the Notification API may no longer be requested from "
-          "a cross-origin iframe. You should consider requesting permission "
-          "from a top-level frame or opening a new window instead. See "
+          "Using the Notification API from an iframe is deprecated and will "
+          "be removed in %s. You should consider requesting permission from "
+          "the top-level frame or opening a new window instead. See "
           "https://www.chromestatus.com/feature/6451284559265792 for more "
-          "details.");
+          "details.",
+          milestoneString(M61));
 
     case WebFeature::kElementCreateShadowRootMultiple:
       return "Calling Element.createShadowRoot() for an element which already "
@@ -557,11 +560,6 @@ String Deprecation::DeprecationMessage(WebFeature feature) {
           "deprecated and will be removed in M68. You should consider "
           "switching your application to a secure origin, such as HTTPS. See "
           "https://goo.gl/rStTGz for more details.");
-
-    case WebFeature::kPaymentRequestSupportedMethodsArray:
-      return replacedWillBeRemoved(
-          "PaymentRequest's supportedMethods taking an array",
-          "a single string", M64, "5177301645918208");
 
     // Features that aren't deprecated don't have a deprecation message.
     default:

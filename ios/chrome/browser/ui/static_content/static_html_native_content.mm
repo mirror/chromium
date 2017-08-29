@@ -30,7 +30,7 @@
   // a web view.
   StaticHtmlViewController* _staticHTMLViewController;
   // Responsible for loading a particular URL.
-  __weak id<UrlLoader> _loader;  // weak
+  id<UrlLoader> _loader;  // weak
   // The controller handling the overscroll actions.
   OverscrollActionsController* _overscrollActionsController;
 }

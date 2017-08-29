@@ -12,7 +12,6 @@
 #include "components/autofill/core/browser/autofill_client.h"
 #include "components/autofill/core/browser/autofill_popup_delegate.h"
 #include "components/autofill/core/common/password_form_fill_data.h"
-#include "components/password_manager/core/browser/password_manager_metrics_util.h"
 
 namespace gfx {
 class RectF;
@@ -20,15 +19,13 @@ class RectF;
 
 namespace password_manager {
 
-class PasswordManagerClient;
 class PasswordManagerDriver;
 
 // This class is responsible for filling password forms.
 class PasswordAutofillManager : public autofill::AutofillPopupDelegate {
  public:
   PasswordAutofillManager(PasswordManagerDriver* password_manager_driver,
-                          autofill::AutofillClient* autofill_client,
-                          PasswordManagerClient* password_client);
+                          autofill::AutofillClient* autofill_client);
   virtual ~PasswordAutofillManager();
 
   // AutofillPopupDelegate implementation.
@@ -130,14 +127,7 @@ class PasswordAutofillManager : public autofill::AutofillPopupDelegate {
   // navigation. Used for metrics.
   bool did_show_form_not_secure_warning_ = false;
 
-  // Context in which the "Show all saved passwords" fallback was shown.
-  metrics_util::ShowAllSavedPasswordsContext
-      show_all_saved_passwords_shown_context_ =
-          metrics_util::SHOW_ALL_SAVED_PASSWORDS_CONTEXT_NONE;
-
   autofill::AutofillClient* autofill_client_;  // weak
-
-  PasswordManagerClient* password_client_;
 
   base::WeakPtrFactory<PasswordAutofillManager> weak_ptr_factory_;
 

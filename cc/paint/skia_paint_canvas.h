@@ -58,6 +58,9 @@ class CC_PAINT_EXPORT SkiaPaintCanvas final : public PaintCanvas {
                  SkClipOp op,
                  bool do_anti_alias) override;
   void clipPath(const SkPath& path, SkClipOp op, bool do_anti_alias) override;
+  void clipDeviceRect(const SkIRect& device_rect,
+                      const SkIRect& subtract_rect,
+                      SkClipOp op) override;
   bool quickReject(const SkRect& rect) const override;
   bool quickReject(const SkPath& path) const override;
   SkRect getLocalClipBounds() const override;
@@ -79,6 +82,11 @@ class CC_PAINT_EXPORT SkiaPaintCanvas final : public PaintCanvas {
   void drawDRRect(const SkRRect& outer,
                   const SkRRect& inner,
                   const PaintFlags& flags) override;
+  void drawArc(const SkRect& oval,
+               SkScalar start_angle,
+               SkScalar sweep_angle,
+               bool use_center,
+               const PaintFlags& flags) override;
   void drawRoundRect(const SkRect& rect,
                      SkScalar rx,
                      SkScalar ry,

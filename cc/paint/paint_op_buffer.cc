@@ -86,8 +86,7 @@ class ScopedImageFlags {
 
     sk_sp<SkImage> sk_image =
         sk_ref_sp<SkImage>(const_cast<SkImage*>(decoded_image.image().get()));
-    PaintImage decoded_paint_image = PaintImageBuilder()
-                                         .set_id(paint_image.stable_id())
+    PaintImage decoded_paint_image = PaintImageBuilder(std::move(paint_image))
                                          .set_image(std::move(sk_image))
                                          .TakePaintImage();
     decoded_flags_.emplace(flags);
@@ -180,10 +179,12 @@ void RasterWithAlpha(const PaintOp* op,
 
 #define TYPES(M)      \
   M(AnnotateOp)       \
+  M(ClipDeviceRectOp) \
   M(ClipPathOp)       \
   M(ClipRectOp)       \
   M(ClipRRectOp)      \
   M(ConcatOp)         \
+  M(DrawArcOp)        \
   M(DrawColorOp)      \
   M(DrawDRRectOp)     \
   M(DrawImageOp)      \
@@ -342,6 +343,8 @@ std::string PaintOpTypeToString(PaintOpType type) {
   switch (type) {
     case PaintOpType::Annotate:
       return "Annotate";
+    case PaintOpType::ClipDeviceRect:
+      return "ClipDeviceRect";
     case PaintOpType::ClipPath:
       return "ClipPath";
     case PaintOpType::ClipRect:
@@ -350,6 +353,8 @@ std::string PaintOpTypeToString(PaintOpType type) {
       return "ClipRRect";
     case PaintOpType::Concat:
       return "Concat";
+    case PaintOpType::DrawArc:
+      return "DrawArc";
     case PaintOpType::DrawColor:
       return "DrawColor";
     case PaintOpType::DrawDRRect:
@@ -420,6 +425,13 @@ size_t AnnotateOp::Serialize(const PaintOp* base_op,
   return helper.size();
 }
 
+size_t ClipDeviceRectOp::Serialize(const PaintOp* op,
+                                   void* memory,
+                                   size_t size,
+                                   const SerializeOptions& options) {
+  return SimpleSerialize<ClipDeviceRectOp>(op, memory, size);
+}
+
 size_t ClipPathOp::Serialize(const PaintOp* base_op,
                              void* memory,
                              size_t size,
@@ -451,6 +463,20 @@ size_t ConcatOp::Serialize(const PaintOp* op,
                            size_t size,
                            const SerializeOptions& options) {
   return SimpleSerialize<ConcatOp>(op, memory, size);
+}
+
+size_t DrawArcOp::Serialize(const PaintOp* base_op,
+                            void* memory,
+                            size_t size,
+                            const SerializeOptions& options) {
+  auto* op = static_cast<const DrawArcOp*>(base_op);
+  PaintOpWriter helper(memory, size);
+  helper.Write(op->flags);
+  helper.Write(op->oval);
+  helper.Write(op->start_angle);
+  helper.Write(op->sweep_angle);
+  helper.Write(op->use_center);
+  return helper.size();
 }
 
 size_t DrawColorOp::Serialize(const PaintOp* op,
@@ -702,6 +728,15 @@ PaintOp* AnnotateOp::Deserialize(const volatile void* input,
   return op;
 }
 
+PaintOp* ClipDeviceRectOp::Deserialize(const volatile void* input,
+                                       size_t input_size,
+                                       void* output,
+                                       size_t output_size) {
+  DCHECK_GE(output_size, sizeof(ClipDeviceRectOp));
+  return SimpleDeserialize<ClipDeviceRectOp>(input, input_size, output,
+                                             output_size);
+}
+
 PaintOp* ClipPathOp::Deserialize(const volatile void* input,
                                  size_t input_size,
                                  void* output,
@@ -744,6 +779,27 @@ PaintOp* ConcatOp::Deserialize(const volatile void* input,
                                size_t output_size) {
   DCHECK_GE(output_size, sizeof(ConcatOp));
   return SimpleDeserialize<ConcatOp>(input, input_size, output, output_size);
+}
+
+PaintOp* DrawArcOp::Deserialize(const volatile void* input,
+                                size_t input_size,
+                                void* output,
+                                size_t output_size) {
+  DCHECK_GE(output_size, sizeof(DrawArcOp));
+  DrawArcOp* op = new (output) DrawArcOp;
+
+  PaintOpReader helper(input, input_size);
+  helper.Read(&op->flags);
+  helper.Read(&op->oval);
+  helper.Read(&op->start_angle);
+  helper.Read(&op->sweep_angle);
+  helper.Read(&op->use_center);
+  if (!helper.valid() || !op->IsValid()) {
+    op->~DrawArcOp();
+    return nullptr;
+  }
+  UpdateTypeAndSkip(op);
+  return op;
 }
 
 PaintOp* DrawColorOp::Deserialize(const volatile void* input,
@@ -1056,6 +1112,16 @@ void AnnotateOp::Raster(const AnnotateOp* op,
   }
 }
 
+void ClipDeviceRectOp::Raster(const ClipDeviceRectOp* op,
+                              SkCanvas* canvas,
+                              const PlaybackParams& params) {
+  SkRegion device_region;
+  device_region.setRect(op->device_rect);
+  if (!op->subtract_rect.isEmpty())
+    device_region.op(op->subtract_rect, SkRegion::kDifference_Op);
+  canvas->clipRegion(device_region, op->op);
+}
+
 void ClipPathOp::Raster(const ClipPathOp* op,
                         SkCanvas* canvas,
                         const PlaybackParams& params) {
@@ -1078,6 +1144,15 @@ void ConcatOp::Raster(const ConcatOp* op,
                       SkCanvas* canvas,
                       const PlaybackParams& params) {
   canvas->concat(op->matrix);
+}
+
+void DrawArcOp::RasterWithFlags(const DrawArcOp* op,
+                                const PaintFlags* flags,
+                                SkCanvas* canvas,
+                                const PlaybackParams& params) {
+  SkPaint paint = flags->ToSkPaint();
+  canvas->drawArc(op->oval, op->start_angle, op->sweep_angle, op->use_center,
+                  paint);
 }
 
 void DrawColorOp::Raster(const DrawColorOp* op,
@@ -1365,6 +1440,12 @@ bool PaintOp::GetBounds(const PaintOp* op, SkRect* rect) {
   DCHECK(op->IsDrawOp());
 
   switch (op->GetType()) {
+    case PaintOpType::DrawArc: {
+      auto* arc_op = static_cast<const DrawArcOp*>(op);
+      *rect = arc_op->oval;
+      rect->sort();
+      return true;
+    }
     case PaintOpType::DrawColor:
       return false;
     case PaintOpType::DrawDRRect: {

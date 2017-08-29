@@ -50,16 +50,16 @@ class AppListControllerDelegate {
   // Dismisses the view.
   virtual void DismissView() = 0;
 
-  // Handles the view being closed.
+  // Handle the view being closed.
   virtual void ViewClosing();
 
-  // Gets app list window.
+  // Get app list window.
   virtual gfx::NativeWindow GetAppListWindow() = 0;
 
-  // Gets the content bounds of the app info dialog of the app list in the
-  // screen coordinates. On platforms that do not use views, this returns a 0x0
-  // rectangle.
-  virtual gfx::Rect GetAppInfoDialogBounds();
+  // Get the content bounds of the app list in the screen. On platforms that
+  // use views, this returns the bounds of the AppListView. Without views, this
+  // returns a 0x0 rectangle.
+  virtual gfx::Rect GetAppListBounds();
 
   // Control of pinning apps.
   virtual bool IsAppPinned(const std::string& app_id) = 0;

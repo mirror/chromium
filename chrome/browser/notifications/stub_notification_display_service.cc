@@ -22,11 +22,6 @@ StubNotificationDisplayService::StubNotificationDisplayService(Profile* profile)
 
 StubNotificationDisplayService::~StubNotificationDisplayService() = default;
 
-void StubNotificationDisplayService::SetNotificationAddedClosure(
-    base::RepeatingClosure closure) {
-  notification_added_closure_ = std::move(closure);
-}
-
 std::vector<Notification>
 StubNotificationDisplayService::GetDisplayedNotificationsForType(
     NotificationCommon::Type type) const {
@@ -95,8 +90,6 @@ void StubNotificationDisplayService::Display(
   DCHECK(handler);
 
   handler->OnShow(profile_, notification_id);
-  if (notification_added_closure_)
-    notification_added_closure_.Run();
 
   notifications_.emplace_back(notification_type, notification);
 }

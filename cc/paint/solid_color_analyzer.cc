@@ -197,6 +197,7 @@ base::Optional<SkColor> SolidColorAnalyzer::DetermineIfSolidColor(
       }
 
       // Any of the following ops result in non solid content.
+      case PaintOpType::DrawArc:
       case PaintOpType::DrawDRRect:
       case PaintOpType::DrawImage:
       case PaintOpType::DrawImageRect:
@@ -258,6 +259,20 @@ base::Optional<SkColor> SolidColorAnalyzer::DetermineIfSolidColor(
         // a rect, this is no longer solid color.
         const ClipRectOp* clip_op = static_cast<const ClipRectOp*>(op);
         if (clip_op->op == SkClipOp::kDifference)
+          return base::nullopt;
+        op->Raster(&canvas, params);
+        break;
+      }
+      case PaintOpType::ClipDeviceRect: {
+        // Similar to the ClipRect comment above, if clipDeviceRect uses
+        // a difference op or has an implicit subtraction (which would
+        // create a non-rect), then this creates a non-rect clip and
+        // we assume non-solid color.
+        const ClipDeviceRectOp* clip_op =
+            static_cast<const ClipDeviceRectOp*>(op);
+        if (clip_op->op == SkClipOp::kDifference)
+          return base::nullopt;
+        if (!clip_op->subtract_rect.isEmpty())
           return base::nullopt;
         op->Raster(&canvas, params);
         break;

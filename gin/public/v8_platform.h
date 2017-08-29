@@ -31,7 +31,6 @@ class GIN_EXPORT V8Platform : public v8::Platform {
                                   v8::IdleTask* task) override;
   bool IdleTasksEnabled(v8::Isolate* isolate) override;
   double MonotonicallyIncreasingTime() override;
-  double CurrentClockTimeMillis() override;
   StackTracePrinter GetStackTracePrinter() override;
   v8::TracingController* GetTracingController() override;
 

@@ -124,7 +124,6 @@ public class ToolbarPhone extends ToolbarLayout
     private TextView mUrlBar;
     protected View mUrlActionContainer;
     protected ImageView mToolbarShadow;
-    // TODO(twellington): Make this final after modern is always enabled for Chrome Home.
     protected boolean mToolbarShadowPermanentlyHidden;
 
     private final int mProgressBackBackgroundColorWhite;
@@ -311,6 +310,10 @@ public class ToolbarPhone extends ToolbarLayout
         super(context, attrs);
         mToolbarSidePadding = getResources().getDimensionPixelOffset(
                 R.dimen.toolbar_edge_padding);
+        mLocationBarVerticalMargin =
+                getResources().getDimensionPixelOffset(R.dimen.location_bar_vertical_margin);
+        mLocationBarBackgroundCornerRadius =
+                getResources().getDimensionPixelOffset(R.dimen.location_bar_corner_radius);
         mProgressBackBackgroundColorWhite = ApiCompatibilityUtils.getColor(getResources(),
                 R.color.progress_bar_background_white);
         mLightModeDefaultColor =
@@ -338,7 +341,12 @@ public class ToolbarPhone extends ToolbarLayout
         mTabSwitcherAnimationBgOverlay =
                 new ColorDrawable(getToolbarColorForVisualState(VisualState.NORMAL));
 
-        initLocationBarBackground();
+        mLocationBarBackground =
+                ApiCompatibilityUtils.getDrawable(getResources(), R.drawable.card_single);
+        mLocationBarBackground.getPadding(mLocationBarBackgroundPadding);
+        mLocationBar.setPadding(mLocationBarBackgroundPadding.left,
+                mLocationBarBackgroundPadding.top, mLocationBarBackgroundPadding.right,
+                mLocationBarBackgroundPadding.bottom);
 
         setLayoutTransition(null);
 
@@ -346,23 +354,6 @@ public class ToolbarPhone extends ToolbarLayout
         inflateTabSwitchingResources();
 
         setWillNotDraw(false);
-    }
-
-    /**
-     * Initializes the background, padding, margins, etc. for the location bar background.
-     */
-    protected void initLocationBarBackground() {
-        mLocationBarVerticalMargin =
-                getResources().getDimensionPixelOffset(R.dimen.location_bar_vertical_margin);
-        mLocationBarBackgroundCornerRadius =
-                getResources().getDimensionPixelOffset(R.dimen.location_bar_corner_radius);
-
-        mLocationBarBackground =
-                ApiCompatibilityUtils.getDrawable(getResources(), R.drawable.card_single);
-        mLocationBarBackground.getPadding(mLocationBarBackgroundPadding);
-        mLocationBar.setPadding(mLocationBarBackgroundPadding.left,
-                mLocationBarBackgroundPadding.top, mLocationBarBackgroundPadding.right,
-                mLocationBarBackgroundPadding.bottom);
     }
 
     private void inflateTabSwitchingResources() {
@@ -2155,10 +2146,7 @@ public class ToolbarPhone extends ToolbarLayout
         return ntp != null && ntp.isLocationBarShownInNTP();
     }
 
-    /**
-     * Update the visibility of the toolbar shadow.
-     */
-    protected void updateShadowVisibility() {
+    private void updateShadowVisibility() {
         if (mToolbarShadowPermanentlyHidden) return;
 
         boolean shouldDrawShadow = shouldDrawShadow();
@@ -2305,7 +2293,7 @@ public class ToolbarPhone extends ToolbarLayout
         mLocationBar.updateVisualsForState();
         // Remove the side padding for incognito to ensure the badge icon aligns correctly with the
         // background of the location bar.
-        if (mLocationBar.isIncognitoBadgeVisible()) {
+        if (isIncognito) {
             mLocationBar.setPadding(
                     0, mLocationBarBackgroundPadding.top, 0, mLocationBarBackgroundPadding.bottom);
         } else {

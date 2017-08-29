@@ -304,7 +304,11 @@ void Image::DrawPattern(GraphicsContext& context,
   // Fetch this now as subsetting may swap the image.
   auto image_id = image.GetSkImage()->uniqueID();
 
-  image = image.MakeSubset(EnclosingIntRect(norm_src_rect));
+  // TODO(vmpstr): PaintImage might need to be smart about subsetting.
+  image = PaintImageBuilder(image)
+              .set_image(image.GetSkImage()->makeSubset(
+                  EnclosingIntRect(norm_src_rect)))
+              .TakePaintImage();
   if (!image)
     return;
 

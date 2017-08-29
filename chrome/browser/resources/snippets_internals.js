@@ -34,7 +34,7 @@ cr.define('chrome.SnippetsInternals', function() {
     });
 
     $('background-fetch-button').addEventListener('click', function(event) {
-      chrome.send('fetchRemoteSuggestionsInTheBackgroundIn2Seconds');
+      chrome.send('fetchRemoteSuggestionsInTheBackground');
       event.preventDefault();
     });
 
@@ -54,12 +54,6 @@ cr.define('chrome.SnippetsInternals', function() {
           $('contextual-suggestions-request-result').textContent =
               'Fetching contextual suggestions for ' + url;
           chrome.send('fetchContextualSuggestions', [url]);
-          event.preventDefault();
-        });
-
-    $('reset-notifications-state-button')
-        .addEventListener('click', function(event) {
-          chrome.send('resetNotificationsState');
           event.preventDefault();
         });
 

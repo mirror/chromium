@@ -24,10 +24,9 @@ PaintWorkletGlobalScopeProxy::PaintWorkletGlobalScopeProxy(
     size_t global_scope_number) {
   DCHECK(IsMainThread());
   Document* document = frame->GetDocument();
-  reporting_proxy_ = WTF::MakeUnique<MainThreadWorkletReportingProxy>(document);
   global_scope_ = PaintWorkletGlobalScope::Create(
       frame, document->Url(), document->UserAgent(),
-      document->GetSecurityOrigin(), ToIsolate(document), *reporting_proxy_,
+      document->GetSecurityOrigin(), ToIsolate(document),
       pending_generator_registry, global_scope_number);
 }
 
@@ -51,9 +50,8 @@ void PaintWorkletGlobalScopeProxy::WorkletObjectDestroyed() {
 void PaintWorkletGlobalScopeProxy::TerminateWorkletGlobalScope() {
   DCHECK(IsMainThread());
   global_scope_->Terminate();
-  // Nullify these fields to cut a potential reference cycle.
+  // Nullify the global scope to cut a potential reference cycle.
   global_scope_ = nullptr;
-  reporting_proxy_.reset();
 }
 
 CSSPaintDefinition* PaintWorkletGlobalScopeProxy::FindDefinition(

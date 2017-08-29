@@ -21,14 +21,11 @@
 #include "components/autofill/core/common/autofill_switches.h"
 #include "components/autofill/core/common/form_field_data.h"
 #include "components/autofill/core/common/password_form_fill_data.h"
-#include "components/password_manager/core/browser/password_manager.h"
-#include "components/password_manager/core/browser/password_manager_metrics_util.h"
 #include "components/password_manager/core/browser/stub_password_manager_client.h"
 #include "components/password_manager/core/browser/stub_password_manager_driver.h"
 #include "components/password_manager/core/common/password_manager_features.h"
 #include "components/security_state/core/security_state.h"
 #include "components/strings/grit/components_strings.h"
-#include "components/ukm/test_ukm_recorder.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "ui/base/l10n/l10n_util.h"
@@ -56,28 +53,20 @@ namespace password_manager {
 
 namespace {
 
-constexpr char kMainFrameUrl[] = "https://example.com/";
-
 class MockPasswordManagerDriver : public StubPasswordManagerDriver {
  public:
   MOCK_METHOD2(FillSuggestion,
                void(const base::string16&, const base::string16&));
   MOCK_METHOD2(PreviewSuggestion,
                void(const base::string16&, const base::string16&));
-  MOCK_METHOD0(GetPasswordManager, PasswordManager*());
 };
 
 class TestPasswordManagerClient : public StubPasswordManagerClient {
  public:
-  TestPasswordManagerClient() : main_frame_url_(kMainFrameUrl) {}
-  ~TestPasswordManagerClient() override = default;
-
   MockPasswordManagerDriver* mock_driver() { return &driver_; }
-  const GURL& GetMainFrameURL() const override { return main_frame_url_; }
 
  private:
   MockPasswordManagerDriver driver_;
-  GURL main_frame_url_;
 };
 
 class MockAutofillClient : public autofill::TestAutofillClient {
@@ -116,8 +105,8 @@ class PasswordAutofillManagerTest : public testing::Test {
   void InitializePasswordAutofillManager(
       TestPasswordManagerClient* client,
       autofill::AutofillClient* autofill_client) {
-    password_autofill_manager_.reset(new PasswordAutofillManager(
-        client->mock_driver(), autofill_client, client));
+    password_autofill_manager_.reset(
+        new PasswordAutofillManager(client->mock_driver(), autofill_client));
     password_autofill_manager_->OnAddPasswordFormMapping(fill_data_id_,
                                                          fill_data_);
   }
@@ -968,21 +957,9 @@ TEST_F(PasswordAutofillManagerTest,
 // "Use password for" in the popup when the feature which controls its
 // appearance is enabled.
 TEST_F(PasswordAutofillManagerTest, ShowAllPasswordsOptionOnPasswordField) {
-  const char kShownContextHistogram[] =
-      "PasswordManager.ShowAllSavedPasswordsShownContext";
-  const char kAcceptedContextHistogram[] =
-      "PasswordManager.ShowAllSavedPasswordsAcceptedContext";
-  base::HistogramTester histograms;
-  ukm::TestAutoSetUkmRecorder test_ukm_recorder;
-
   auto client = base::MakeUnique<TestPasswordManagerClient>();
   auto autofill_client = base::MakeUnique<MockAutofillClient>();
-  auto manager =
-      base::MakeUnique<password_manager::PasswordManager>(client.get());
   InitializePasswordAutofillManager(client.get(), autofill_client.get());
-
-  ON_CALL(*(client->mock_driver()), GetPasswordManager())
-      .WillByDefault(testing::Return(manager.get()));
 
   gfx::RectF element_bounds;
   autofill::PasswordFormFillData data;
@@ -1018,11 +995,6 @@ TEST_F(PasswordAutofillManagerTest, ShowAllPasswordsOptionOnPasswordField) {
       dummy_key, base::i18n::RIGHT_TO_LEFT, test_username_,
       autofill::IS_PASSWORD_FIELD, element_bounds);
 
-  // Expect a sample only in the shown histogram.
-  histograms.ExpectUniqueSample(
-      kShownContextHistogram,
-      metrics_util::SHOW_ALL_SAVED_PASSWORDS_CONTEXT_PASSWORD, 1);
-
   // Clicking at the "Show all passwords row" should trigger a call to open the
   // Password Manager settings page and hide the popup.
   EXPECT_CALL(
@@ -1031,46 +1003,12 @@ TEST_F(PasswordAutofillManagerTest, ShowAllPasswordsOptionOnPasswordField) {
   EXPECT_CALL(*autofill_client, HideAutofillPopup());
   password_autofill_manager_->DidAcceptSuggestion(
       base::string16(), autofill::POPUP_ITEM_ID_ALL_SAVED_PASSWORDS_ENTRY, 0);
-
-  // Expect a sample in both the shown and accepted histogram.
-  histograms.ExpectUniqueSample(
-      kShownContextHistogram,
-      metrics_util::SHOW_ALL_SAVED_PASSWORDS_CONTEXT_PASSWORD, 1);
-  histograms.ExpectUniqueSample(
-      kAcceptedContextHistogram,
-      metrics_util::SHOW_ALL_SAVED_PASSWORDS_CONTEXT_PASSWORD, 1);
-
-  // Trigger UKM reporting, which happens at destruction time.
-  manager.reset();
-  autofill_client.reset();
-  client.reset();
-
-  const ukm::UkmSource* source =
-      test_ukm_recorder.GetSourceForUrl(kMainFrameUrl);
-  ASSERT_TRUE(source);
-  test_ukm_recorder.ExpectMetric(
-      *source, "PageWithPassword", password_manager::kUkmPageLevelUserAction,
-      static_cast<int64_t>(
-          password_manager::PasswordManagerMetricsRecorder::
-              PageLevelUserAction::kShowAllPasswordsWhileSomeAreSuggested));
 }
 
 TEST_F(PasswordAutofillManagerTest, ShowStandaloneShowAllPasswords) {
-  const char kShownContextHistogram[] =
-      "PasswordManager.ShowAllSavedPasswordsShownContext";
-  const char kAcceptedContextHistogram[] =
-      "PasswordManager.ShowAllSavedPasswordsAcceptedContext";
-  base::HistogramTester histograms;
-  ukm::TestAutoSetUkmRecorder test_ukm_recorder;
-
   auto client = base::MakeUnique<TestPasswordManagerClient>();
   auto autofill_client = base::MakeUnique<MockAutofillClient>();
-  auto manager =
-      base::MakeUnique<password_manager::PasswordManager>(client.get());
   InitializePasswordAutofillManager(client.get(), autofill_client.get());
-
-  ON_CALL(*(client->mock_driver()), GetPasswordManager())
-      .WillByDefault(testing::Return(manager.get()));
 
   gfx::RectF element_bounds;
   autofill::PasswordFormFillData data;
@@ -1091,12 +1029,6 @@ TEST_F(PasswordAutofillManagerTest, ShowStandaloneShowAllPasswords) {
                                 SuggestionVectorValuesAre(elements), _));
   password_autofill_manager_->OnShowManualFallbackSuggestion(
       base::i18n::RIGHT_TO_LEFT, element_bounds);
-
-  // Expect a sample only in the shown histogram.
-  histograms.ExpectUniqueSample(
-      kShownContextHistogram,
-      metrics_util::SHOW_ALL_SAVED_PASSWORDS_CONTEXT_MANUAL_FALLBACK, 1);
-
   // Clicking at the "Show all passwords row" should trigger a call to open the
   // Password Manager settings page and hide the popup.
   EXPECT_CALL(
@@ -1105,28 +1037,6 @@ TEST_F(PasswordAutofillManagerTest, ShowStandaloneShowAllPasswords) {
   EXPECT_CALL(*autofill_client, HideAutofillPopup());
   password_autofill_manager_->DidAcceptSuggestion(
       base::string16(), autofill::POPUP_ITEM_ID_ALL_SAVED_PASSWORDS_ENTRY, 0);
-
-  // Expect a sample in both the shown and accepted histogram.
-  histograms.ExpectUniqueSample(
-      kShownContextHistogram,
-      metrics_util::SHOW_ALL_SAVED_PASSWORDS_CONTEXT_MANUAL_FALLBACK, 1);
-  histograms.ExpectUniqueSample(
-      kAcceptedContextHistogram,
-      metrics_util::SHOW_ALL_SAVED_PASSWORDS_CONTEXT_MANUAL_FALLBACK, 1);
-
-  // Trigger UKM reporting, which happens at destruction time.
-  manager.reset();
-  autofill_client.reset();
-  client.reset();
-
-  const ukm::UkmSource* source =
-      test_ukm_recorder.GetSourceForUrl(kMainFrameUrl);
-  ASSERT_TRUE(source);
-  test_ukm_recorder.ExpectMetric(
-      *source, "PageWithPassword", password_manager::kUkmPageLevelUserAction,
-      static_cast<int64_t>(
-          password_manager::PasswordManagerMetricsRecorder::
-              PageLevelUserAction::kShowAllPasswordsWhileNoneAreSuggested));
 }
 
 // Tests that the "Show all passwords" fallback doesn't shows up in non-password

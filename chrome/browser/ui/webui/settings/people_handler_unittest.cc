@@ -38,7 +38,6 @@
 #include "content/public/browser/web_contents.h"
 #include "content/public/browser/web_ui.h"
 #include "content/public/browser/web_ui_controller.h"
-#include "content/public/test/navigation_simulator.h"
 #include "content/public/test/test_browser_thread.h"
 #include "content/public/test/test_browser_thread_bundle.h"
 #include "content/public/test/test_web_ui.h"
@@ -507,9 +506,8 @@ TEST_F(PeopleHandlerTest, AcquireSyncBlockerWhenLoadingSyncSettingsSubpage) {
 
   EXPECT_FALSE(handler_->sync_blocker_);
 
-  auto navigation = content::NavigationSimulator::CreateBrowserInitiated(
-      chrome::GetSettingsUrl(chrome::kSyncSetupSubPage), web_contents());
-  navigation->Start();
+  content::WebContentsTester::For(web_contents())
+      ->StartNavigation(chrome::GetSettingsUrl(chrome::kSyncSetupSubPage));
   handler_->InitializeSyncBlocker();
 
   EXPECT_TRUE(handler_->sync_blocker_);

@@ -4,11 +4,10 @@
 
 #include "content/browser/android/dialog_overlay_impl.h"
 
-#include "content/browser/web_contents/web_contents_impl.h"
+#include "content/public/browser/web_contents.h"
 #include "content/public/browser/web_contents_delegate.h"
 #include "gpu/ipc/common/gpu_surface_tracker.h"
 #include "jni/DialogOverlayImpl_jni.h"
-#include "ui/android/view_android_observer.h"
 #include "ui/android/window_android.h"
 
 using base::android::AttachCurrentThread;
@@ -41,21 +40,28 @@ static jlong Init(JNIEnv* env,
   if (web_contents_impl->HasPersistentVideo())
     return 0;
 
+  ContentViewCore* cvc = ContentViewCore::FromWebContents(web_contents_impl);
+
+  if (!cvc)
+    return 0;
+
   return reinterpret_cast<jlong>(
-      new DialogOverlayImpl(obj, rfhi, web_contents_impl));
+      new DialogOverlayImpl(obj, rfhi, web_contents_impl, cvc));
 }
 
 DialogOverlayImpl::DialogOverlayImpl(const JavaParamRef<jobject>& obj,
                                      RenderFrameHostImpl* rfhi,
-                                     WebContents* web_contents)
-    : WebContentsObserver(web_contents), rfhi_(rfhi) {
+                                     WebContents* web_contents,
+                                     ContentViewCore* cvc)
+    : WebContentsObserver(web_contents), rfhi_(rfhi), cvc_(cvc) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
   DCHECK(rfhi_);
+  DCHECK(cvc_);
 
   JNIEnv* env = AttachCurrentThread();
   obj_ = JavaObjectWeakGlobalRef(env, obj);
 
-  web_contents->GetNativeView()->AddObserver(this);
+  cvc_->AddObserver(this);
 
   // Note that we're not allowed to call back into |obj| before it calls
   // CompleteInit.  However, the observer won't actually call us back until the
@@ -67,30 +73,25 @@ void DialogOverlayImpl::CompleteInit(JNIEnv* env,
                                      const JavaParamRef<jobject>& obj) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
 
-  WebContentsDelegate* delegate = web_contents()->GetDelegate();
-
-  if (!delegate) {
-    Stop();
-    return;
-  }
-
   // Note: It's ok to call SetOverlayMode() directly here, because there can be
   // at most one overlay alive at the time. This logic needs to be updated if
   // ever AndroidOverlayProviderImpl.MAX_OVERLAYS > 1.
-  delegate->SetOverlayMode(true);
+  web_contents()->GetDelegate()->SetOverlayMode(true);
 
   // Send the initial token, if there is one.  The observer will notify us about
   // changes only.
-  if (auto* window = web_contents()->GetNativeView()->GetWindowAndroid()) {
+  if (ui::WindowAndroid* window = cvc_->GetWindowAndroid()) {
     ScopedJavaLocalRef<jobject> token = window->GetWindowToken();
     if (!token.is_null())
       Java_DialogOverlayImpl_onWindowToken(env, obj, token);
-    // else we will send one if we get a callback from ViewAndroid.
+    // else we will send one if we get a callback from |cvc_|.
   }
 }
 
 DialogOverlayImpl::~DialogOverlayImpl() {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
+  // We should only be deleted after one unregisters for token callbacks.
+  DCHECK(!cvc_);
 }
 
 void DialogOverlayImpl::Stop() {
@@ -115,8 +116,11 @@ void DialogOverlayImpl::GetCompositorOffset(
     JNIEnv* env,
     const base::android::JavaParamRef<jobject>& obj,
     const base::android::JavaParamRef<jobject>& rect) {
-  gfx::Point point =
-      web_contents()->GetNativeView()->GetLocationOfContainerViewOnScreen();
+  gfx::Point point;
+  if (cvc_) {
+    if (ui::ViewAndroid* view = cvc_->GetViewAndroid())
+      point = view->GetLocationOfContainerViewOnScreen();
+  }
 
   Java_DialogOverlayImpl_receiveCompositorOffset(env, rect, point.x(),
                                                  point.y());
@@ -124,19 +128,21 @@ void DialogOverlayImpl::GetCompositorOffset(
 
 void DialogOverlayImpl::UnregisterForTokensIfNeeded() {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
-
-  if (!rfhi_)
+  if (!cvc_)
     return;
 
   // We clear overlay mode here rather than in Destroy(), because we may have
   // been called via a WebContentsDestroyed() event, and this might be the last
   // opportunity we have to access web_contents().
-  WebContentsDelegate* delegate = web_contents()->GetDelegate();
-  if (delegate)
-    delegate->SetOverlayMode(false);
+  web_contents()->GetDelegate()->SetOverlayMode(false);
 
-  web_contents()->GetNativeView()->RemoveObserver(this);
+  cvc_->RemoveObserver(this);
+  cvc_ = nullptr;
   rfhi_ = nullptr;
+}
+
+void DialogOverlayImpl::OnContentViewCoreDestroyed() {
+  // We will receive a destruction notification via WebContentsDestroyed().
 }
 
 void DialogOverlayImpl::RenderFrameDeleted(RenderFrameHost* render_frame_host) {
@@ -174,7 +180,7 @@ void DialogOverlayImpl::OnAttachedToWindow() {
 
   ScopedJavaLocalRef<jobject> token;
 
-  if (auto* window = web_contents()->GetNativeView()->GetWindowAndroid())
+  if (ui::WindowAndroid* window = cvc_->GetWindowAndroid())
     token = window->GetWindowToken();
 
   ScopedJavaLocalRef<jobject> obj = obj_.get(env);

@@ -142,7 +142,6 @@ bool ShellMainDelegate::BasicStartupComplete(int* exit_code) {
   // BlinkTestPlatformInitialize() are called.
   OverrideFrameworkBundlePath();
   OverrideChildProcessPath();
-  OverrideSourceRootPath();
   EnsureCorrectResolutionSettings();
 #endif  // OS_MACOSX
 

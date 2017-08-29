@@ -881,10 +881,9 @@ bool AXNodeObject::HasContentEditableAttributeSet() const {
          EqualIgnoringASCIICase(content_editable_value, "true");
 }
 
-// TODO(dmazzoni) Find a more appropriate name or consider returning false
+// TODO(aleventhal) Find a more appropriate name or consider returning false
 // for everything but a searchbox or textfield, as a combobox and spinbox
 // can contain a field but should not be considered edit controls themselves.
-// Combo box text fields should return true though.
 bool AXNodeObject::IsTextControl() const {
   if (HasContentEditableAttributeSet())
     return true;
@@ -893,7 +892,6 @@ bool AXNodeObject::IsTextControl() const {
     case kTextFieldRole:
     case kComboBoxRole:
     case kSearchBoxRole:
-    // TODO(dmazzoni): kSpinButtonRole might need to be removed.
     case kSpinButtonRole:
       return true;
     default:
@@ -976,13 +974,13 @@ Element* AXNodeObject::MenuItemElementForMenu() const {
 Element* AXNodeObject::MouseButtonListener() const {
   Node* node = this->GetNode();
   if (!node)
-    return nullptr;
+    return 0;
 
   if (!node->IsElementNode())
     node = node->parentElement();
 
   if (!node)
-    return nullptr;
+    return 0;
 
   for (Element* element = ToElement(node); element;
        element = element->parentElement()) {
@@ -2390,7 +2388,7 @@ bool AXNodeObject::CanHaveChildren() const {
     return false;
 
   if (GetNode() && isHTMLMapElement(GetNode()))
-    return false;  // Does not have a role, so check here
+    return false;
 
   // Placeholder gets exposed as an attribute on the input accessibility node,
   // so there's no need to add its text children.
@@ -2399,80 +2397,74 @@ bool AXNodeObject::CanHaveChildren() const {
     return false;
   }
 
-  switch (NativeAccessibilityRoleIgnoringAria()) {
-    case kButtonRole:
-    case kCheckBoxRole:
-    case kImageRole:
-    case kListBoxOptionRole:
-    case kMenuButtonRole:
-    case kMenuListOptionRole:
-    case kMenuItemRole:
-    case kMenuItemCheckBoxRole:
-    case kMenuItemRadioRole:
-    case kProgressIndicatorRole:
-    case kRadioButtonRole:
-    case kScrollBarRole:
-    // case kSearchBoxRole:
-    case kSliderRole:
-    case kSplitterRole:
-    case kSwitchRole:
-    case kTabRole:
-    // case kTextFieldRole:
-    case kToggleButtonRole:
-      return false;
-    case kPopUpButtonRole:
-      return true;
-    case kStaticTextRole:
-      return AxObjectCache().InlineTextBoxAccessibilityEnabled();
-    default:
-      break;
-  }
+  AccessibilityRole role = RoleValue();
 
-  switch (AriaRoleAttribute()) {
+  // If an element has an ARIA role of presentation, we need to consider the
+  // native role when deciding whether it can have children or not - otherwise
+  // giving something a role of presentation could expose inner implementation
+  // details.
+  if (IsPresentational())
+    role = NativeAccessibilityRoleIgnoringAria();
+
+  switch (role) {
     case kImageRole:
-      return false;
     case kButtonRole:
     case kCheckBoxRole:
-    case kListBoxOptionRole:
-    case kMathRole:  // role="math" is flat, unlike <math>
-    case kMenuButtonRole:
-    case kMenuListOptionRole:
-    case kMenuItemRole:
-    case kMenuItemCheckBoxRole:
-    case kMenuItemRadioRole:
-    case kPopUpButtonRole:
-    case kProgressIndicatorRole:
     case kRadioButtonRole:
-    case kScrollBarRole:
-    case kSliderRole:
-    case kSplitterRole:
     case kSwitchRole:
     case kTabRole:
-    case kToggleButtonRole: {
-      // These roles have ChildrenPresentational: true in the ARIA spec.
-      // We used to remove/prune all descendants of them, but that removed
-      // useful content if the author didn't follow the spec perfectly, for
-      // example if they wanted a complex radio button with a textfield child.
-      // We are now only pruning these if there is a single text child,
-      // otherwise the subtree is exposed. The ChildrenPresentational rule
-      // is thus useful for authoring/verification tools but does not break
-      // complex widget implementations.
-      Element* element = GetElement();
-      return element && !element->HasOneTextChild();
-    }
+    case kToggleButtonRole:
+    case kListBoxOptionRole:
+    case kMenuButtonRole:
+    case kMenuListOptionRole:
+    case kScrollBarRole:
+      return false;
+    case kPopUpButtonRole:
+      return isHTMLSelectElement(GetNode());
+    case kStaticTextRole:
+      if (!AxObjectCache().InlineTextBoxAccessibilityEnabled())
+        return false;
     default:
-      break;
+      return true;
   }
-  return true;
 }
 
 Element* AXNodeObject::ActionElement() const {
   Node* node = this->GetNode();
   if (!node)
-    return nullptr;
+    return 0;
 
-  if (node->IsElementNode() && IsClickable())
+  if (isHTMLInputElement(*node)) {
+    HTMLInputElement& input = toHTMLInputElement(*node);
+    if (!input.IsDisabledFormControl() &&
+        (IsCheckboxOrRadio() || input.IsTextButton() ||
+         input.type() == InputTypeNames::file))
+      return &input;
+  } else if (isHTMLButtonElement(*node)) {
     return ToElement(node);
+  }
+
+  if (AXObject::IsARIAInput(AriaRoleAttribute()))
+    return ToElement(node);
+
+  if (IsImageButton())
+    return ToElement(node);
+
+  if (isHTMLSelectElement(*node))
+    return ToElement(node);
+
+  switch (RoleValue()) {
+    case kButtonRole:
+    case kPopUpButtonRole:
+    case kToggleButtonRole:
+    case kTabRole:
+    case kMenuItemRole:
+    case kMenuItemCheckBoxRole:
+    case kMenuItemRadioRole:
+      return ToElement(node);
+    default:
+      break;
+  }
 
   Element* anchor = AnchorElement();
   Element* click_element = MouseButtonListener();
@@ -2597,14 +2589,10 @@ void AXNodeObject::ChildrenChanged() {
   if (!GetNode() && !GetLayoutObject())
     return;
 
-  // If this node's children are not part of the accessibility tree then
-  // invalidate the children but skip notification and walking up the ancestors.
-  // Cases where this happens:
-  // - an ancestor has only presentational children, or
-  // - this or an ancestor is a leaf node
-  // Uses |cached_is_descendant_of_leaf_node_| to avoid updating cached
-  // attributes for eachc change via | UpdateCachedAttributeValuesIfNeeded()|.
-  if (!CanHaveChildren() || cached_is_descendant_of_leaf_node_) {
+  // If this is not part of the accessibility tree because an ancestor
+  // has only presentational children, invalidate this object's children but
+  // skip sending a notification and skip walking up the ancestors.
+  if (AncestorForWhichThisIsAPresentationalChild()) {
     SetNeedsToUpdateChildren();
     return;
   }

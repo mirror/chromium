@@ -368,7 +368,7 @@ bool KeywordProvider::ExtractKeywordFromInput(const AutocompleteInput& input,
 }
 
 // static
-int KeywordProvider::CalculateRelevance(metrics::OmniboxInputType type,
+int KeywordProvider::CalculateRelevance(metrics::OmniboxInputType::Type type,
                                         bool complete,
                                         bool sufficiently_complete,
                                         bool supports_replacement,

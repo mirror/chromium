@@ -118,8 +118,8 @@
 
     currentTest.action();
 
-    if (window.internals && internals.runtimeFlags.idleTimeSpellCheckingEnabled)
-      internals.runIdleTimeSpellChecker(document);
+    // TODO(xiaochengh): Force idle time spell checker to run after it is
+    // enabled in layout tests.
   }
 
   add_result_callback(testObject => {

@@ -18,16 +18,14 @@ bool PaymentsValidators::IsValidCurrencyCodeFormat(
     const String& system,
     String* optional_error_message) {
   if (system == "urn:iso:std:iso:4217") {
-    if (ScriptRegexp("^[A-Z]{3}$", kTextCaseUnicodeInsensitive).Match(code) ==
-        0)
+    if (ScriptRegexp("^[A-Z]{3}$", kTextCaseSensitive).Match(code) == 0)
       return true;
 
-    if (optional_error_message) {
+    if (optional_error_message)
       *optional_error_message =
           "'" + code +
           "' is not a valid ISO 4217 currency code, should "
-          "be well-formed 3-letter alphabetic code.";
-    }
+          "be 3 upper case letters [A-Z]";
 
     return false;
   }

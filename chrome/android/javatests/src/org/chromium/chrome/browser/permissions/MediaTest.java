@@ -70,16 +70,16 @@ public class MediaTest extends PermissionTestCaseBase {
     }
 
     /**
-     * Verify asking for camera with no gesture creates a dialog when the modal flag is turned on,
+     * Verify asking for camera with no gesture creates an infobar when the modal flag is turned on,
      * and works when the permission is granted.
      * @throws Exception
      */
     @MediumTest
     @Feature({"MediaPermissions", "Main"})
     @CommandLineFlags.Add({FAKE_DEVICE, "enable-features=" + MODAL_FLAG})
-    public void testCameraPermissionsPlumbingDialog() throws Exception {
+    public void testCameraPermissionsPlumbingNoGestureCreatesInfoBar() throws Exception {
         testMediaPermissionsPlumbing(
-                "Camera count:", "initiate_getCamera()", 1, false, true, false, false);
+                "Camera count:", "initiate_getCamera()", 1, false, false, false, false);
     }
 
     /**
@@ -89,7 +89,7 @@ public class MediaTest extends PermissionTestCaseBase {
      */
     @MediumTest
     @Feature({"MediaPermissions", "Main"})
-    @CommandLineFlags.Add({FAKE_DEVICE, "disable-features=" + MODAL_FLAG})
+    @CommandLineFlags.Add(FAKE_DEVICE)
     public void testCombinedPermissionsPlumbing() throws Exception {
         testMediaPermissionsPlumbing(
                 "Combined count:", "initiate_getCombined()", 1, false, false, false, false);

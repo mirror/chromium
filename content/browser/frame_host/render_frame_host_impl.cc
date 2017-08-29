@@ -19,7 +19,6 @@
 #include "base/process/kill.h"
 #include "base/time/time.h"
 #include "build/build_config.h"
-#include "cc/base/switches.h"
 #include "content/browser/accessibility/browser_accessibility_manager.h"
 #include "content/browser/accessibility/browser_accessibility_state_impl.h"
 #include "content/browser/bluetooth/web_bluetooth_service_impl.h"
@@ -32,7 +31,6 @@
 #include "content/browser/frame_host/debug_urls.h"
 #include "content/browser/frame_host/frame_tree.h"
 #include "content/browser/frame_host/frame_tree_node.h"
-#include "content/browser/frame_host/input/input_injector_impl.h"
 #include "content/browser/frame_host/input/legacy_ipc_frame_input_handler.h"
 #include "content/browser/frame_host/navigation_entry_impl.h"
 #include "content/browser/frame_host/navigation_handle_impl.h"
@@ -118,7 +116,6 @@
 #include "media/mojo/interfaces/media_service.mojom.h"
 #include "media/mojo/interfaces/remoting.mojom.h"
 #include "media/mojo/services/media_interface_provider.h"
-#include "media/mojo/services/video_decode_stats_recorder.h"
 #include "media/mojo/services/watch_time_recorder.h"
 #include "mojo/public/cpp/bindings/associated_interface_ptr.h"
 #include "mojo/public/cpp/bindings/strong_binding.h"
@@ -343,10 +340,9 @@ void NotifyForEachFrameFromUI(
     if (pending_frame_host)
       routing_ids->insert(pending_frame_host->GetGlobalFrameRoutingId());
   }
-  BrowserThread::PostTask(
-      BrowserThread::IO, FROM_HERE,
-      base::BindOnce(&NotifyRouteChangesOnIO, frame_callback,
-                     base::Passed(std::move(routing_ids))));
+  BrowserThread::PostTask(BrowserThread::IO, FROM_HERE,
+                          base::Bind(&NotifyRouteChangesOnIO, frame_callback,
+                                     base::Passed(std::move(routing_ids))));
 }
 
 void LookupRenderFrameHostOrProxy(int process_id,
@@ -580,8 +576,8 @@ RenderFrameHostImpl::~RenderFrameHostImpl() {
     g_token_frame_map.Get().erase(*overlay_routing_token_);
 
   BrowserThread::PostTask(BrowserThread::IO, FROM_HERE,
-                          base::BindOnce(&NotifyRenderFrameDetachedOnIO,
-                                         GetProcess()->GetID(), routing_id_));
+                          base::Bind(&NotifyRenderFrameDetachedOnIO,
+                                     GetProcess()->GetID(), routing_id_));
 
   site_instance_->RemoveObserver(this);
 
@@ -1854,10 +1850,6 @@ void RenderFrameHostImpl::OnRenderProcessGone(int status, int exit_code) {
   // process's channel.
   remote_associated_interfaces_.reset();
 
-  // Any termination disablers in content loaded by the new process will
-  // be sent again.
-  sudden_termination_disabler_types_enabled_ = 0;
-
   if (!is_active()) {
     // If the process has died, we don't need to wait for the swap out ack from
     // this RenderFrame if it is pending deletion.  Complete the swap out to
@@ -1984,11 +1976,6 @@ void RenderFrameHostImpl::OnRunJavaScriptDialog(
     const GURL& frame_url,
     JavaScriptDialogType dialog_type,
     IPC::Message* reply_msg) {
-  if (dialog_type == JavaScriptDialogType::JAVASCRIPT_DIALOG_TYPE_ALERT) {
-    GetFrameResourceCoordinator()->SendEvent(
-        resource_coordinator::mojom::Event::kAlertFired);
-  }
-
   if (IsWaitingForUnloadACK()) {
     SendJavaScriptDialogReply(reply_msg, true, base::string16());
     return;
@@ -2355,6 +2342,7 @@ void RenderFrameHostImpl::OnAbortNavigation() {
 void RenderFrameHostImpl::OnDispatchLoad() {
   TRACE_EVENT1("navigation", "RenderFrameHostImpl::OnDispatchLoad",
                "frame_tree_node", frame_tree_node_->frame_tree_node_id());
+  CHECK(SiteIsolationPolicy::AreCrossProcessFramesPossible());
 
   // Don't forward the load event if this RFH is pending deletion.  This can
   // happen in a race where this RenderFrameHost finishes loading just after
@@ -2556,7 +2544,8 @@ void RenderFrameHostImpl::OnToggleFullscreen(bool enter_fullscreen) {
   // A-B-A-B hierarchy, if the bottom frame goes fullscreen, this only needs to
   // notify its parent, and Blink-side logic will take care of applying
   // necessary changes to the other two ancestors.
-  if (enter_fullscreen) {
+  if (enter_fullscreen &&
+      SiteIsolationPolicy::AreCrossProcessFramesPossible()) {
     std::set<SiteInstance*> notified_instances;
     notified_instances.insert(GetSiteInstance());
     for (FrameTreeNode* node = frame_tree_node_; node->parent();
@@ -3014,7 +3003,8 @@ void RenderFrameHostImpl::RegisterMojoInterfaces() {
         base::Bind(&AuthenticatorImpl::Create, base::Unretained(this)));
   }
 
-  if (permission_manager) {
+  if (base::FeatureList::IsEnabled(features::kGenericSensor) &&
+      permission_manager) {
     sensor_provider_proxy_.reset(
         new SensorProviderProxyImpl(permission_manager, this));
     registry_->AddInterface(
@@ -3028,14 +3018,6 @@ void RenderFrameHostImpl::RegisterMojoInterfaces() {
 
   registry_->AddInterface(
       base::Bind(&media::WatchTimeRecorder::CreateWatchTimeRecorderProvider));
-
-  if (base::CommandLine::ForCurrentProcess()->HasSwitch(
-          cc::switches::kEnableGpuBenchmarking)) {
-    registry_->AddInterface(
-        base::Bind(&InputInjectorImpl::Create, weak_ptr_factory_.GetWeakPtr()));
-  }
-
-  registry_->AddInterface(base::Bind(&media::VideoDecodeStatsRecorder::Create));
 }
 
 void RenderFrameHostImpl::ResetWaitingState() {

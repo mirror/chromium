@@ -7,7 +7,6 @@
 
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
-#include "components/viz/common/surfaces/local_surface_id_allocator.h"
 #include "content/common/content_export.h"
 #include "content/common/feature_policy/feature_policy.h"
 #include "ipc/ipc_listener.h"
@@ -157,8 +156,6 @@ class CONTENT_EXPORT RenderFrameProxy : public IPC::Listener,
             RenderViewImpl* render_view,
             RenderWidget* render_widget);
 
-  void ResendFrameRects();
-
   // IPC::Listener
   bool OnMessageReceived(const IPC::Message& msg) override;
 
@@ -169,7 +166,6 @@ class CONTENT_EXPORT RenderFrameProxy : public IPC::Listener,
   void OnSetChildFrameSurface(const viz::SurfaceInfo& surface_info,
                               const viz::SurfaceSequence& sequence);
   void OnUpdateOpener(int opener_routing_id);
-  void OnViewChanged();
   void OnDidStopLoading();
   void OnDidUpdateFramePolicy(
       blink::WebSandboxFlags flags,
@@ -203,10 +199,6 @@ class CONTENT_EXPORT RenderFrameProxy : public IPC::Listener,
 
   RenderViewImpl* render_view_;
   RenderWidget* render_widget_;
-
-  gfx::Rect frame_rect_;
-  viz::LocalSurfaceId local_surface_id_;
-  viz::LocalSurfaceIdAllocator local_surface_id_allocator_;
 
   DISALLOW_COPY_AND_ASSIGN(RenderFrameProxy);
 };

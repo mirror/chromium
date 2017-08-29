@@ -48,7 +48,7 @@ enum ShareExtensionSource {
 };
 
 ShareExtensionSource SourceIDFromSource(NSString* source) {
-  if ([source isEqualToString:app_group::kShareItemSourceShareExtension]) {
+  if ([source isEqualToString:app_group::kShareItemShareExtensionSource]) {
     return SHARE_EXTENSION;
   }
   return UNKNOWN_SOURCE;

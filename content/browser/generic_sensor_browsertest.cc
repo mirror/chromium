@@ -57,7 +57,10 @@ class FakeAmbientLightSensor : public device::mojom::Sensor {
   }
 
   void RemoveConfiguration(
-      const device::PlatformSensorConfiguration& configuration) override {}
+      const device::PlatformSensorConfiguration& configuration,
+      RemoveConfigurationCallback callback) override {
+    std::move(callback).Run(true);
+  }
 
   void Suspend() override {}
   void Resume() override {}
@@ -174,16 +177,15 @@ class GenericSensorBrowserTest : public ContentBrowserTest {
             base::WaitableEvent::ResetPolicy::AUTOMATIC,
             base::WaitableEvent::InitialState::NOT_SIGNALED) {
     base::CommandLine* cmd_line = base::CommandLine::ForCurrentProcess();
-    cmd_line->AppendSwitchASCII(switches::kEnableFeatures,
-                                "GenericSensor, GenericSensorExtraClasses");
+    cmd_line->AppendSwitchASCII(switches::kEnableFeatures, "GenericSensor");
   }
 
   void SetUpOnMainThread() override {
     fake_sensor_provider_ = base::MakeUnique<FakeSensorProvider>();
     BrowserThread::PostTask(
         BrowserThread::IO, FROM_HERE,
-        base::BindOnce(&GenericSensorBrowserTest::SetBinderOnIOThread,
-                       base::Unretained(this)));
+        base::Bind(&GenericSensorBrowserTest::SetBinderOnIOThread,
+                   base::Unretained(this)));
 
     io_loop_finished_event_.Wait();
   }

@@ -158,8 +158,11 @@ VrShell::VrShell(JNIEnv* env,
     UMA_HISTOGRAM_BOOLEAN("VRAutopresentedWebVR", !for_web_vr);
 }
 
-void VrShell::RestoreLayer(JNIEnv* env, const JavaParamRef<jobject>& obj) {
-  compositor_->SetLayer(nullptr);
+void VrShell::SetSplashScreenIcon(JNIEnv* env,
+                                  const JavaParamRef<jobject>& obj,
+                                  const JavaParamRef<jobject>& bitmap) {
+  ui_->SetSplashScreenIcon(
+      gfx::CreateSkBitmapFromJavaBitmap(gfx::JavaBitmap(bitmap)));
 }
 
 void VrShell::Destroy(JNIEnv* env, const JavaParamRef<jobject>& obj) {
@@ -342,8 +345,6 @@ void VrShell::OnPause(JNIEnv* env, const JavaParamRef<jobject>& obj) {
   if (metrics_helper_)
     metrics_helper_->SetVRActive(false);
   SetIsInVR(GetNonNativePageWebContents(), false);
-
-  poll_capturing_media_task_.Cancel();
 }
 
 void VrShell::OnResume(JNIEnv* env, const JavaParamRef<jobject>& obj) {
@@ -353,8 +354,6 @@ void VrShell::OnResume(JNIEnv* env, const JavaParamRef<jobject>& obj) {
   if (metrics_helper_)
     metrics_helper_->SetVRActive(true);
   SetIsInVR(GetNonNativePageWebContents(), true);
-
-  PollMediaAccessFlag();
 }
 
 void VrShell::SetSurface(JNIEnv* env,

@@ -116,6 +116,10 @@ void WebRuntimeFeatures::ForceDisplayList2dCanvas(bool enable) {
   RuntimeEnabledFeatures::SetForceDisplayList2dCanvasEnabled(enable);
 }
 
+void WebRuntimeFeatures::ForceDisable2dCanvasCopyOnWrite(bool enable) {
+  RuntimeEnabledFeatures::SetForceDisable2dCanvasCopyOnWriteEnabled(enable);
+}
+
 void WebRuntimeFeatures::EnableDisplayList2dCanvas(bool enable) {
   RuntimeEnabledFeatures::SetDisplayList2dCanvasEnabled(enable);
 }
@@ -148,10 +152,6 @@ void WebRuntimeFeatures::EnableGenericSensor(bool enable) {
   RuntimeEnabledFeatures::SetSensorEnabled(enable);
 }
 
-void WebRuntimeFeatures::EnableGenericSensorExtraClasses(bool enable) {
-  RuntimeEnabledFeatures::SetSensorExtraClassesEnabled(enable);
-}
-
 void WebRuntimeFeatures::EnableHeapCompaction(bool enable) {
   RuntimeEnabledFeatures::SetHeapCompactionEnabled(enable);
 }
@@ -170,6 +170,10 @@ void WebRuntimeFeatures::EnableLoadingWithMojo(bool enable) {
 
 void WebRuntimeFeatures::EnableMediaCapture(bool enable) {
   RuntimeEnabledFeatures::SetMediaCaptureEnabled(enable);
+}
+
+void WebRuntimeFeatures::EnableMediaDocumentDownloadButton(bool enable) {
+  RuntimeEnabledFeatures::SetMediaDocumentDownloadButtonEnabled(enable);
 }
 
 void WebRuntimeFeatures::EnableMediaSession(bool enable) {
@@ -246,10 +250,6 @@ void WebRuntimeFeatures::EnablePaymentRequest(bool enable) {
 
 void WebRuntimeFeatures::EnablePermissionsAPI(bool enable) {
   RuntimeEnabledFeatures::SetPermissionsEnabled(enable);
-}
-
-void WebRuntimeFeatures::EnablePreloadDefaultIsMetadata(bool enable) {
-  RuntimeEnabledFeatures::SetPreloadDefaultIsMetadataEnabled(enable);
 }
 
 void WebRuntimeFeatures::EnableScriptedSpeech(bool enable) {

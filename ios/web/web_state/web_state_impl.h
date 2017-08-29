@@ -162,10 +162,10 @@ class WebStateImpl : public WebState, public NavigationManagerDelegate {
 
   // Returns whether the navigation corresponding to |request| should be allowed
   // to continue by asking its policy deciders. Defaults to true.
-  bool ShouldAllowRequest(NSURLRequest* request, ui::PageTransition transition);
+  bool ShouldAllowRequest(NSURLRequest* request);
   // Returns whether the navigation corresponding to |response| should be
   // allowed to continue by asking its policy deciders. Defaults to true.
-  bool ShouldAllowResponse(NSURLResponse* response, bool for_main_frame);
+  bool ShouldAllowResponse(NSURLResponse* response);
 
   // WebState:
   WebStateDelegate* GetDelegate() override;
@@ -197,7 +197,6 @@ class WebStateImpl : public WebState, public NavigationManagerDelegate {
   bool IsLoading() const override;
   double GetLoadingProgress() const override;
   bool IsCrashed() const override;
-  bool IsEvicted() const override;
   bool IsBeingDestroyed() const override;
   const GURL& GetVisibleURL() const override;
   const GURL& GetLastCommittedURL() const override;
@@ -226,7 +225,7 @@ class WebStateImpl : public WebState, public NavigationManagerDelegate {
   // Notifies the delegate that the load progress was updated.
   void SendChangeLoadProgress(double progress);
   // Notifies the delegate that a context menu needs handling.
-  void HandleContextMenu(const ContextMenuParams& params);
+  bool HandleContextMenu(const ContextMenuParams& params);
 
   // Notifies the delegate that a Form Repost dialog needs to be presented.
   void ShowRepostFormWarningDialog(const base::Callback<void(bool)>& callback);
@@ -264,7 +263,8 @@ class WebStateImpl : public WebState, public NavigationManagerDelegate {
   void RecordPageStateInNavigationItem() override;
   void UpdateHtml5HistoryState() override;
   void WillChangeUserAgentType() override;
-  void WillLoadCurrentItemWithUrl(const GURL&) override;
+  void WillLoadCurrentItemWithParams(const NavigationManager::WebLoadParams&,
+                                     bool is_initial_navigation) override;
   void LoadCurrentItem() override;
   void LoadIfNecessary() override;
   void Reload() override;

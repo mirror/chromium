@@ -11,41 +11,15 @@
 #include "base/metrics/histogram_macros.h"
 #include "chrome/browser/chromeos/drive/file_system_util.h"
 #include "chrome/browser/chromeos/file_manager/fileapi_util.h"
-#include "chrome/browser/chromeos/fileapi/recent_file.h"
+#include "chrome/browser/chromeos/fileapi/recent_context.h"
+#include "chrome/browser/chromeos/fileapi/recent_model.h"
 #include "content/public/browser/browser_thread.h"
-#include "storage/browser/fileapi/file_system_operation.h"
-#include "storage/browser/fileapi/file_system_operation_runner.h"
 #include "storage/browser/fileapi/file_system_url.h"
 #include "storage/common/fileapi/file_system_types.h"
 
 using content::BrowserThread;
 
 namespace chromeos {
-
-namespace {
-
-void OnGetMetadataOnIOThread(
-    const storage::FileSystemOperation::GetMetadataCallback& callback,
-    base::File::Error result,
-    const base::File::Info& info) {
-  DCHECK_CURRENTLY_ON(BrowserThread::IO);
-
-  BrowserThread::PostTask(BrowserThread::UI, FROM_HERE,
-                          base::BindOnce(callback, result, info));
-}
-
-void GetMetadataOnIOThread(
-    scoped_refptr<storage::FileSystemContext> file_system_context,
-    const storage::FileSystemURL& url,
-    int fields,
-    const storage::FileSystemOperation::GetMetadataCallback& callback) {
-  DCHECK_CURRENTLY_ON(BrowserThread::IO);
-
-  file_system_context->operation_runner()->GetMetadata(
-      url, fields, base::Bind(&OnGetMetadataOnIOThread, callback));
-}
-
-}  // namespace
 
 const char RecentDriveSource::kLoadHistogramName[] =
     "FileBrowser.Recent.LoadDrive";
@@ -59,110 +33,63 @@ RecentDriveSource::~RecentDriveSource() {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
 }
 
-void RecentDriveSource::GetRecentFiles(Params params) {
+void RecentDriveSource::GetRecentFiles(RecentContext context,
+                                       GetRecentFilesCallback callback) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
-  DCHECK(!params_.has_value());
-  DCHECK(files_.empty());
-  DCHECK_EQ(0, num_inflight_stats_);
-  DCHECK(build_start_time_.is_null());
 
-  params_.emplace(std::move(params));
-
-  build_start_time_ = base::TimeTicks::Now();
+  base::TimeTicks build_start_time = base::TimeTicks::Now();
 
   drive::FileSystemInterface* file_system =
       drive::util::GetFileSystemByProfile(profile_);
   if (!file_system) {
     // |file_system| is nullptr if Drive is disabled.
-    OnSearchMetadata(drive::FILE_ERROR_FAILED, nullptr);
+    OnSearchMetadata(std::move(context), std::move(callback), build_start_time,
+                     drive::FILE_ERROR_FAILED, nullptr);
     return;
   }
 
   file_system->SearchMetadata(
       "" /* query */, drive::SEARCH_METADATA_EXCLUDE_DIRECTORIES,
-      params_.value().max_files(), drive::MetadataSearchOrder::LAST_MODIFIED,
+      kMaxFilesFromSingleSource, drive::MetadataSearchOrder::LAST_MODIFIED,
       base::Bind(&RecentDriveSource::OnSearchMetadata,
-                 weak_ptr_factory_.GetWeakPtr()));
+                 weak_ptr_factory_.GetWeakPtr(),
+                 base::Passed(std::move(context)),
+                 base::Passed(std::move(callback)), build_start_time));
 }
 
 void RecentDriveSource::OnSearchMetadata(
+    RecentContext context,
+    GetRecentFilesCallback callback,
+    const base::TimeTicks& build_start_time,
     drive::FileError error,
     std::unique_ptr<drive::MetadataSearchResultVector> results) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
-  DCHECK(params_.has_value());
-  DCHECK(files_.empty());
-  DCHECK_EQ(0, num_inflight_stats_);
-  DCHECK(!build_start_time_.is_null());
 
-  if (error != drive::FILE_ERROR_OK) {
-    OnComplete();
-    return;
+  std::vector<storage::FileSystemURL> files;
+
+  if (error == drive::FILE_ERROR_OK) {
+    DCHECK(results.get());
+
+    std::string extension_id = context.origin().host();
+
+    for (const auto& result : *results) {
+      if (result.is_directory)
+        continue;
+
+      base::FilePath virtual_path =
+          file_manager::util::ConvertDrivePathToRelativeFileSystemPath(
+              profile_, extension_id, result.path);
+      storage::FileSystemURL file =
+          context.file_system_context()->CreateCrackedFileSystemURL(
+              context.origin(), storage::kFileSystemTypeExternal, virtual_path);
+      files.emplace_back(file);
+    }
   }
-
-  DCHECK(results.get());
-
-  std::string extension_id = params_.value().origin().host();
-
-  for (const auto& result : *results) {
-    if (result.is_directory)
-      continue;
-
-    base::FilePath virtual_path =
-        file_manager::util::ConvertDrivePathToRelativeFileSystemPath(
-            profile_, extension_id, result.path);
-    storage::FileSystemURL url =
-        params_.value().file_system_context()->CreateCrackedFileSystemURL(
-            params_.value().origin(), storage::kFileSystemTypeExternal,
-            virtual_path);
-    ++num_inflight_stats_;
-    BrowserThread::PostTask(
-        BrowserThread::IO, FROM_HERE,
-        base::BindOnce(
-            &GetMetadataOnIOThread,
-            make_scoped_refptr(params_.value().file_system_context()), url,
-            storage::FileSystemOperation::GET_METADATA_FIELD_LAST_MODIFIED,
-            base::Bind(&RecentDriveSource::OnGetMetadata,
-                       weak_ptr_factory_.GetWeakPtr(), url)));
-  }
-
-  if (num_inflight_stats_ == 0)
-    OnComplete();
-}
-
-void RecentDriveSource::OnGetMetadata(const storage::FileSystemURL& url,
-                                      base::File::Error result,
-                                      const base::File::Info& info) {
-  DCHECK_CURRENTLY_ON(BrowserThread::UI);
-
-  if (result == base::File::FILE_OK)
-    files_.emplace_back(url, info.last_modified);
-
-  --num_inflight_stats_;
-  if (num_inflight_stats_ == 0)
-    OnComplete();
-}
-
-void RecentDriveSource::OnComplete() {
-  DCHECK_CURRENTLY_ON(BrowserThread::UI);
-  DCHECK(params_.has_value());
-  DCHECK_EQ(0, num_inflight_stats_);
-  DCHECK(!build_start_time_.is_null());
 
   UMA_HISTOGRAM_TIMES(kLoadHistogramName,
-                      base::TimeTicks::Now() - build_start_time_);
-  build_start_time_ = base::TimeTicks();
+                      base::TimeTicks::Now() - build_start_time);
 
-  Params params = std::move(params_.value());
-  params_.reset();
-  std::vector<RecentFile> files = std::move(files_);
-  files_.clear();
-
-  DCHECK(!params_.has_value());
-  DCHECK(files_.empty());
-  DCHECK_EQ(0, num_inflight_stats_);
-  DCHECK(build_start_time_.is_null());
-
-  std::move(params.callback()).Run(std::move(files));
+  std::move(callback).Run(std::move(files));
 }
 
 }  // namespace chromeos

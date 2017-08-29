@@ -4,7 +4,6 @@
 
 #import "ios/web/navigation/navigation_manager_impl.h"
 
-#include <array>
 #include <string>
 
 #include "base/logging.h"
@@ -73,7 +72,8 @@ class TestNavigationManagerDelegate : public NavigationManagerDelegate {
   MOCK_METHOD0(ClearTransientContent, void());
   MOCK_METHOD0(RecordPageStateInNavigationItem, void());
   MOCK_METHOD0(UpdateHtml5HistoryState, void());
-  MOCK_METHOD1(WillLoadCurrentItemWithUrl, void(const GURL&));
+  MOCK_METHOD2(WillLoadCurrentItemWithParams,
+               void(const NavigationManager::WebLoadParams&, bool));
   MOCK_METHOD0(WillChangeUserAgentType, void());
   MOCK_METHOD0(LoadCurrentItem, void());
   MOCK_METHOD0(LoadIfNecessary, void());
@@ -1320,11 +1320,11 @@ TEST_P(NavigationManagerTest, OverrideUserAgentWithInheritAfterDesktop) {
 // Tests that the UserAgentType is propagated to subsequent NavigationItems if
 // a native URL exists in between navigations.
 TEST_P(NavigationManagerTest, UserAgentTypePropagationPastNativeItems) {
-  // This test manipuates the WKBackForwardListItems in mock_wk_list_ directly
-  // because it relies on the associated NavigationItems.
-  WKBackForwardListItem* wk_item1 =
-      [CRWTestBackForwardList itemWithURLString:@"http://www.1.com"];
-
+  if (GetParam() == TEST_WK_BASED_NAVIGATION_MANAGER) {
+    // TODO(crbug.com/734150): Enable this test once |AddPendingItem| is
+    // integrated with native views.
+    return;
+  }
   // GURL::Replacements that will replace a GURL's scheme with the test native
   // scheme.
   GURL::Replacements native_scheme_replacement;
@@ -1336,7 +1336,7 @@ TEST_P(NavigationManagerTest, UserAgentTypePropagationPastNativeItems) {
       web::NavigationInitiationType::USER_INITIATED,
       web::NavigationManager::UserAgentOverrideOption::INHERIT);
 
-  mock_wk_list_.currentItem = wk_item1;
+  [mock_wk_list_ setCurrentURL:@"http://www.1.com"];
   navigation_manager()->CommitPendingItem();
 
   web::NavigationItem* item1 = navigation_manager()->GetLastCommittedItem();
@@ -1348,10 +1348,9 @@ TEST_P(NavigationManagerTest, UserAgentTypePropagationPastNativeItems) {
       web::NavigationInitiationType::USER_INITIATED,
       web::NavigationManager::UserAgentOverrideOption::INHERIT);
 
-  WKBackForwardListItem* wk_native_item2 = [CRWTestBackForwardList
-      itemWithURLString:base::SysUTF8ToNSString(item2_url.spec())];
-  mock_wk_list_.currentItem = wk_native_item2;
-  mock_wk_list_.backList = @[ wk_item1 ];
+  [mock_wk_list_ setCurrentURL:base::SysUTF8ToNSString(item2_url.spec())
+                  backListURLs:@[ @"http://www.1.com" ]
+               forwardListURLs:nil];
   navigation_manager()->CommitPendingItem();
 
   web::NavigationItem* native_item1 =
@@ -1362,10 +1361,12 @@ TEST_P(NavigationManagerTest, UserAgentTypePropagationPastNativeItems) {
       web::NavigationInitiationType::USER_INITIATED,
       web::NavigationManager::UserAgentOverrideOption::INHERIT);
 
-  WKBackForwardListItem* wk_item2 =
-      [CRWTestBackForwardList itemWithURLString:@"http://www.2.com"];
-  mock_wk_list_.currentItem = wk_item2;
-  mock_wk_list_.backList = @[ wk_item1, wk_native_item2 ];
+  [mock_wk_list_
+        setCurrentURL:@"http://www.2.com"
+         backListURLs:@[
+           @"http://www.1.com", base::SysUTF8ToNSString(item2_url.spec())
+         ]
+      forwardListURLs:nil];
   navigation_manager()->CommitPendingItem();
   web::NavigationItem* item2 = navigation_manager()->GetLastCommittedItem();
 
@@ -1383,12 +1384,14 @@ TEST_P(NavigationManagerTest, UserAgentTypePropagationPastNativeItems) {
       web::NavigationInitiationType::USER_INITIATED,
       web::NavigationManager::UserAgentOverrideOption::INHERIT);
 
-  WKBackForwardListItem* wk_native_item3 = [CRWTestBackForwardList
-      itemWithURLString:base::SysUTF8ToNSString(item3_url.spec())];
-  mock_wk_list_.currentItem = wk_native_item3;
-  mock_wk_list_.backList = @[ wk_item1, wk_native_item2, wk_item2 ];
+  [mock_wk_list_
+        setCurrentURL:base::SysUTF8ToNSString(item3_url.spec())
+         backListURLs:@[
+           @"http://www.1.com", base::SysUTF8ToNSString(item2_url.spec()),
+           @"http://www.2.com"
+         ]
+      forwardListURLs:nil];
   navigation_manager()->CommitPendingItem();
-
   web::NavigationItem* native_item2 =
       navigation_manager()->GetLastCommittedItem();
   ASSERT_EQ(web::UserAgentType::NONE, native_item2->GetUserAgentType());
@@ -1397,13 +1400,14 @@ TEST_P(NavigationManagerTest, UserAgentTypePropagationPastNativeItems) {
       web::NavigationInitiationType::USER_INITIATED,
       web::NavigationManager::UserAgentOverrideOption::INHERIT);
 
-  WKBackForwardListItem* wk_item3 =
-      [CRWTestBackForwardList itemWithURLString:@"http://www.3.com"];
-  mock_wk_list_.currentItem = wk_item3;
-  mock_wk_list_.backList =
-      @[ wk_item1, wk_native_item2, wk_item2, wk_native_item3 ];
+  [mock_wk_list_
+        setCurrentURL:@"http://www.3.com"
+         backListURLs:@[
+           @"http://www.1.com", base::SysUTF8ToNSString(item2_url.spec()),
+           @"http://www.2.com", base::SysUTF8ToNSString(item3_url.spec())
+         ]
+      forwardListURLs:nil];
   navigation_manager()->CommitPendingItem();
-
   web::NavigationItem* item3 = navigation_manager()->GetLastCommittedItem();
 
   // Verify that |item2|'s UserAgentType is propagated to |item3|.
@@ -1899,35 +1903,6 @@ TEST_P(NavigationManagerTest, TestBackwardForwardItems) {
   EXPECT_EQ("http://www.url.com/2", forward_items[0]->GetURL().spec());
 }
 
-// Tests that Restore() creates the correct navigation state.
-TEST_P(NavigationManagerTest, Restore) {
-  // Create some NavigationItems and keep a raw pointer to them.
-  std::array<const NavigationItem*, 3> raw_items;
-  std::vector<std::unique_ptr<NavigationItem>> items;
-  for (size_t index = 0; index < raw_items.size(); ++index) {
-    items.push_back(NavigationItem::Create());
-    raw_items[index] = items.back().get();
-  }
-
-  // Call Restore() and check that the NavigationItems are in the correct order
-  // and that the last committed index is correct too.
-  navigation_manager()->Restore(1, std::move(items));
-
-  if (GetParam() == TEST_WK_BASED_NAVIGATION_MANAGER) {
-    // TODO(crbug.com/734150): Enable this test once |Restore| is implemented
-    // in WKBasedNavigationManager.
-    return;
-  }
-
-  ASSERT_EQ(3, navigation_manager()->GetItemCount());
-  EXPECT_EQ(1, navigation_manager()->GetLastCommittedItemIndex());
-  EXPECT_EQ(raw_items[1], navigation_manager()->GetLastCommittedItem());
-
-  for (size_t i = 0; i < raw_items.size(); ++i) {
-    EXPECT_EQ(raw_items[i], navigation_manager()->GetItemAtIndex(i));
-  }
-}
-
 // Tests that pending item is not considered part of session history so that
 // GetBackwardItems returns the second last committed item even if there is a
 // pendign item.
@@ -2136,7 +2111,8 @@ TEST_P(NavigationManagerTest, LoadURLWithParamsWithExtraHeadersAndPostData) {
       .Times(1);
   EXPECT_CALL(navigation_manager_delegate(), ClearTransientContent()).Times(1);
   EXPECT_CALL(navigation_manager_delegate(),
-              WillLoadCurrentItemWithUrl(::testing::Ref(params.url)));
+              WillLoadCurrentItemWithParams(::testing::Ref(params),
+                                            true /* is_initial_navigation */));
   EXPECT_CALL(navigation_manager_delegate(), LoadCurrentItem()).Times(1);
 
   navigation_manager()->LoadURLWithParams(params);
@@ -2169,7 +2145,8 @@ TEST_P(NavigationManagerTest, LoadURLWithParamsSavesStateOnCurrentItem) {
       .Times(1);
   EXPECT_CALL(navigation_manager_delegate(), ClearTransientContent()).Times(1);
   EXPECT_CALL(navigation_manager_delegate(),
-              WillLoadCurrentItemWithUrl(::testing::Ref(params.url)));
+              WillLoadCurrentItemWithParams(::testing::Ref(params),
+                                            false /* is_initial_navigation */));
   EXPECT_CALL(navigation_manager_delegate(), LoadCurrentItem()).Times(1);
 
   navigation_manager()->LoadURLWithParams(params);
@@ -2326,36 +2303,6 @@ TEST_P(NavigationManagerTest, GoToIndexDifferentUserAgentType) {
 TEST_P(NavigationManagerTest, LoadIfNecessary) {
   EXPECT_CALL(navigation_manager_delegate(), LoadIfNecessary()).Times(1);
   navigation_manager()->LoadIfNecessary();
-}
-
-// Tests that GetCurrentItemImpl() returns the transient item, pending item or
-// last committed item in that precedence order.
-TEST_P(NavigationManagerTest, GetCurrentItemImpl) {
-  ASSERT_EQ(nullptr, navigation_manager()->GetCurrentItemImpl());
-
-  navigation_manager()->AddPendingItem(
-      GURL("http://www.url.com/0"), Referrer(), ui::PAGE_TRANSITION_TYPED,
-      web::NavigationInitiationType::USER_INITIATED,
-      web::NavigationManager::UserAgentOverrideOption::INHERIT);
-  [mock_wk_list_ setCurrentURL:@"http://www.url.com/0"];
-  navigation_manager()->CommitPendingItem();
-  NavigationItem* last_committed_item =
-      navigation_manager()->GetLastCommittedItem();
-  ASSERT_NE(last_committed_item, nullptr);
-  EXPECT_EQ(last_committed_item, navigation_manager()->GetCurrentItemImpl());
-
-  navigation_manager()->AddPendingItem(
-      GURL("http://www.url.com/1"), Referrer(), ui::PAGE_TRANSITION_TYPED,
-      web::NavigationInitiationType::USER_INITIATED,
-      web::NavigationManager::UserAgentOverrideOption::INHERIT);
-  NavigationItem* pending_item = navigation_manager()->GetPendingItem();
-  ASSERT_NE(pending_item, nullptr);
-  EXPECT_EQ(pending_item, navigation_manager()->GetCurrentItemImpl());
-
-  navigation_manager()->AddTransientItem(GURL("http://www.url.com/2"));
-  NavigationItem* transient_item = navigation_manager()->GetTransientItem();
-  ASSERT_NE(transient_item, nullptr);
-  EXPECT_EQ(transient_item, navigation_manager()->GetCurrentItemImpl());
 }
 
 INSTANTIATE_TEST_CASE_P(

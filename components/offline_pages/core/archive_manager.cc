@@ -132,8 +132,4 @@ void ArchiveManager::GetStorageStats(
                             base::ThreadTaskRunnerHandle::Get(), callback));
 }
 
-const base::FilePath& ArchiveManager::GetArchivesDir() const {
-  return archives_dir_;
-}
-
 }  // namespace offline_pages

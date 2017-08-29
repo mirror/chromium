@@ -134,7 +134,7 @@ class WindowTreeTestApi {
   void StopPointerWatcher();
 
   bool ProcessSetDisplayRoot(const display::Display& display_to_create,
-                             const display::ViewportMetrics& viewport_metrics,
+                             const mojom::WmViewportMetrics& viewport_metrics,
                              bool is_primary_display,
                              const ClientWindowId& client_window_id) {
     return tree_->ProcessSetDisplayRoot(display_to_create, viewport_metrics,
@@ -358,7 +358,7 @@ class TestWindowManager : public mojom::WindowManager {
 
  private:
   // WindowManager:
-  void OnConnect() override;
+  void OnConnect(uint16_t client_id) override;
   void WmNewDisplayAdded(
       const display::Display& display,
       ui::mojom::WindowDataPtr root,
@@ -442,6 +442,7 @@ class TestWindowTreeClient : public ui::mojom::WindowTreeClient {
  private:
   // WindowTreeClient:
   void OnEmbed(
+      uint16_t client_id,
       mojom::WindowDataPtr root,
       ui::mojom::WindowTreePtr tree,
       int64_t display_id,
@@ -750,8 +751,6 @@ class TestPlatformDisplay : public PlatformDisplay {
 
   gfx::Rect confine_cursor_bounds() const { return confine_cursor_bounds_; }
 
-  const display::ViewportMetrics& metrics() const { return metrics_; }
-
   // PlatformDisplay:
   void Init(PlatformDisplayDelegate* delegate) override;
   void SetViewportSize(const gfx::Size& size) override;
@@ -765,7 +764,6 @@ class TestPlatformDisplay : public PlatformDisplay {
   void UpdateTextInputState(const ui::TextInputState& state) override;
   void SetImeVisibility(bool visible) override;
   void UpdateViewportMetrics(const display::ViewportMetrics& metrics) override;
-  const display::ViewportMetrics& GetViewportMetrics() override;
   gfx::AcceleratedWidget GetAcceleratedWidget() const override;
   FrameGenerator* GetFrameGenerator() override;
   EventSink* GetEventSink() override;

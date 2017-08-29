@@ -70,20 +70,6 @@ class WebLayerTreeViewWithLayerTreeFrameSink
   }
 };
 
-class FakeScrollClient : public WebLayerScrollClient {
- public:
-  FakeScrollClient() : did_scroll_count(0) {}
-
-  void DidScroll(const gfx::ScrollOffset& offset,
-                 const CompositorElementId&) final {
-    did_scroll_count++;
-    last_scroll_offset = offset;
-  };
-
-  gfx::ScrollOffset last_scroll_offset;
-  unsigned did_scroll_count;
-};
-
 class PaintArtifactCompositorTestWithPropertyTrees
     : public ::testing::Test,
       private ScopedSlimmingPaintV2ForTest {
@@ -95,8 +81,7 @@ class PaintArtifactCompositorTestWithPropertyTrees
 
   void SetUp() override {
     // Delay constructing the compositor until after the feature is set.
-    paint_artifact_compositor_ =
-        PaintArtifactCompositor::Create(scroll_client_);
+    paint_artifact_compositor_ = PaintArtifactCompositor::Create();
     paint_artifact_compositor_->EnableExtraDataForTesting();
 
     cc::LayerTreeSettings settings =
@@ -175,7 +160,7 @@ class PaintArtifactCompositorTestWithPropertyTrees
   }
 
   CompositorElementId ScrollElementId(unsigned id) {
-    return CompositorElementIdFromUniqueObjectId(
+    return CompositorElementIdFromLayoutObjectId(
         id, CompositorElementIdNamespace::kScroll);
   }
 
@@ -188,21 +173,6 @@ class PaintArtifactCompositorTestWithPropertyTrees
     return paint_artifact_compositor_->GetExtraDataForTesting()
         ->synthesized_clip_layers[index]
         .get();
-  }
-
-  cc::Layer* ScrollHitTestLayerAt(unsigned index) {
-    return paint_artifact_compositor_->GetExtraDataForTesting()
-        ->scroll_hit_test_layers[index]
-        .get();
-  }
-
-  // Return the index of |layer| in the root layer list, or -1 if not found.
-  int LayerIndex(const cc::Layer* layer) {
-    for (size_t i = 0; i < RootLayer()->children().size(); ++i) {
-      if (RootLayer()->children()[i] == layer)
-        return i;
-    }
-    return -1;
   }
 
   void AddSimpleRectChunk(TestPaintArtifact& artifact) {
@@ -235,10 +205,7 @@ class PaintArtifactCompositorTestWithPropertyTrees
     return PaintArtifactCompositor::MightOverlap(a, b);
   }
 
-  FakeScrollClient& ScrollClient() { return scroll_client_; }
-
  private:
-  FakeScrollClient scroll_client_;
   std::unique_ptr<PaintArtifactCompositor> paint_artifact_compositor_;
   scoped_refptr<base::TestSimpleTaskRunner> task_runner_;
   base::ThreadTaskRunnerHandle task_runner_handle_;
@@ -762,7 +729,7 @@ TEST_F(PaintArtifactCompositorTestWithPropertyTrees, EffectTreeConversion) {
 
   const cc::EffectNode& converted_root_effect = *effect_tree.Node(1);
   EXPECT_EQ(-1, converted_root_effect.parent_id);
-  EXPECT_EQ(CompositorElementIdFromUniqueObjectId(1).ToInternalValue(),
+  EXPECT_EQ(CompositorElementIdFromRootEffectId(1).ToInternalValue(),
             converted_root_effect.stable_id);
 
   const cc::EffectNode& converted_effect1 = *effect_tree.Node(2);
@@ -783,12 +750,27 @@ TEST_F(PaintArtifactCompositorTestWithPropertyTrees, EffectTreeConversion) {
   EXPECT_EQ(converted_effect3.id, ContentLayerAt(2)->effect_tree_index());
 }
 
+class FakeScrollClient : public WebLayerScrollClient {
+ public:
+  FakeScrollClient() : did_scroll_count(0) {}
+
+  void DidScroll(const gfx::ScrollOffset& scroll_offset) final {
+    did_scroll_count++;
+    last_scroll_offset = scroll_offset;
+  };
+
+  gfx::ScrollOffset last_scroll_offset;
+  unsigned did_scroll_count;
+};
+
 TEST_F(PaintArtifactCompositorTestWithPropertyTrees, OneScrollNode) {
-  CompositorElementId scroll_element_id = ScrollElementId(2);
+  FakeScrollClient scroll_client;
+
+  CompositorElementId expected_compositor_element_id = ScrollElementId(2);
   RefPtr<ScrollPaintPropertyNode> scroll = ScrollPaintPropertyNode::Create(
-      ScrollPaintPropertyNode::Root(), IntPoint(3, 5), IntSize(11, 13),
+      ScrollPaintPropertyNode::Root(), IntPoint(), IntSize(11, 13),
       IntSize(27, 31), true, false, 0 /* mainThreadScrollingReasons */,
-      scroll_element_id);
+      expected_compositor_element_id, &scroll_client);
   RefPtr<TransformPaintPropertyNode> scroll_translation =
       TransformPaintPropertyNode::Create(
           TransformPaintPropertyNode::Root(),
@@ -796,10 +778,6 @@ TEST_F(PaintArtifactCompositorTestWithPropertyTrees, OneScrollNode) {
           kCompositingReasonNone, CompositorElementId(), scroll);
 
   TestPaintArtifact artifact;
-  artifact
-      .Chunk(TransformPaintPropertyNode::Root(), ClipPaintPropertyNode::Root(),
-             EffectPaintPropertyNode::Root())
-      .ScrollHitTest(scroll_translation);
   artifact
       .Chunk(scroll_translation, ClipPaintPropertyNode::Root(),
              EffectPaintPropertyNode::Root())
@@ -815,15 +793,17 @@ TEST_F(PaintArtifactCompositorTestWithPropertyTrees, OneScrollNode) {
   EXPECT_TRUE(scroll_node.user_scrollable_horizontal);
   EXPECT_FALSE(scroll_node.user_scrollable_vertical);
   EXPECT_EQ(1, scroll_node.parent_id);
-  EXPECT_EQ(scroll_element_id, scroll_node.element_id);
-  EXPECT_EQ(scroll_node.id, ElementIdToScrollNodeIndex(scroll_element_id));
-  EXPECT_EQ(scroll_element_id, ScrollHitTestLayerAt(0)->element_id());
+  EXPECT_EQ(expected_compositor_element_id, scroll_node.element_id);
+  EXPECT_EQ(scroll_node.id,
+            ElementIdToScrollNodeIndex(expected_compositor_element_id));
+  EXPECT_EQ(expected_compositor_element_id, ContentLayerAt(0)->element_id());
 
   const cc::TransformTree& transform_tree = GetPropertyTrees().transform_tree;
   const cc::TransformNode& transform_node =
       *transform_tree.Node(scroll_node.transform_id);
   EXPECT_TRUE(transform_node.local.IsIdentity());
   EXPECT_EQ(gfx::ScrollOffset(-7, -9), transform_node.scroll_offset);
+
   EXPECT_EQ(MainThreadScrollingReason::kNotScrollingOnMain,
             scroll_node.main_thread_scrolling_reasons);
 
@@ -833,25 +813,20 @@ TEST_F(PaintArtifactCompositorTestWithPropertyTrees, OneScrollNode) {
   auto scroll_node_index = layer->scroll_tree_index();
   EXPECT_EQ(scroll_node_index, scroll_node.id);
 
-  auto* scroll_layer = ScrollHitTestLayerAt(0);
-  EXPECT_TRUE(scroll_layer->scrollable());
-  // The scroll layer should be sized to the container bounds beca
-  EXPECT_EQ(gfx::Size(11, 13), scroll_layer->bounds());
-  EXPECT_EQ(gfx::Vector2dF(3, 5), scroll_layer->offset_to_transform_parent());
-  EXPECT_EQ(scroll_layer->scroll_tree_index(), scroll_node.id);
-  EXPECT_EQ(scroll_layer->transform_tree_index(), transform_node.parent_id);
-
-  EXPECT_EQ(0u, ScrollClient().did_scroll_count);
-  scroll_layer->SetScrollOffsetFromImplSide(gfx::ScrollOffset(1, 2));
-  EXPECT_EQ(1u, ScrollClient().did_scroll_count);
-  EXPECT_EQ(gfx::ScrollOffset(1, 2), ScrollClient().last_scroll_offset);
+  EXPECT_EQ(0u, scroll_client.did_scroll_count);
+  // TODO(pdr): The PaintArtifactCompositor should set the scrolling content
+  // bounds so the Layer is scrollable. This call should be removed.
+  layer->SetScrollable(gfx::Size(1, 1));
+  layer->SetScrollOffsetFromImplSide(gfx::ScrollOffset(1, 2));
+  EXPECT_EQ(1u, scroll_client.did_scroll_count);
+  EXPECT_EQ(gfx::ScrollOffset(1, 2), scroll_client.last_scroll_offset);
 }
 
 TEST_F(PaintArtifactCompositorTestWithPropertyTrees, TransformUnderScrollNode) {
   RefPtr<ScrollPaintPropertyNode> scroll = ScrollPaintPropertyNode::Create(
       ScrollPaintPropertyNode::Root(), IntPoint(), IntSize(11, 13),
       IntSize(27, 31), true, false, 0 /* mainThreadScrollingReasons */,
-      CompositorElementId());
+      CompositorElementId(), nullptr);
   RefPtr<TransformPaintPropertyNode> scroll_translation =
       TransformPaintPropertyNode::Create(
           TransformPaintPropertyNode::Root(),
@@ -896,12 +871,12 @@ TEST_F(PaintArtifactCompositorTestWithPropertyTrees, NestedScrollNodes) {
   RefPtr<EffectPaintPropertyNode> effect =
       CreateOpacityOnlyEffect(EffectPaintPropertyNode::Root(), 0.5);
 
-  CompositorElementId scroll_element_id_a = ScrollElementId(2);
+  CompositorElementId expected_compositor_element_id_a = ScrollElementId(2);
   RefPtr<ScrollPaintPropertyNode> scroll_a = ScrollPaintPropertyNode::Create(
       ScrollPaintPropertyNode::Root(), IntPoint(), IntSize(2, 3), IntSize(5, 7),
       false, true,
       MainThreadScrollingReason::kHasBackgroundAttachmentFixedObjects,
-      scroll_element_id_a);
+      expected_compositor_element_id_a, nullptr);
   RefPtr<TransformPaintPropertyNode> scroll_translation_a =
       TransformPaintPropertyNode::Create(
           TransformPaintPropertyNode::Root(),
@@ -909,11 +884,11 @@ TEST_F(PaintArtifactCompositorTestWithPropertyTrees, NestedScrollNodes) {
           kCompositingReasonLayerForScrollingContents, CompositorElementId(),
           scroll_a);
 
-  CompositorElementId scroll_element_id_b = ScrollElementId(3);
+  CompositorElementId expected_compositor_element_id_b = ScrollElementId(3);
   RefPtr<ScrollPaintPropertyNode> scroll_b = ScrollPaintPropertyNode::Create(
       scroll_translation_a->ScrollNode(), IntPoint(), IntSize(19, 23),
       IntSize(29, 31), true, false, 0 /* mainThreadScrollingReasons */,
-      scroll_element_id_b);
+      expected_compositor_element_id_b, nullptr);
   RefPtr<TransformPaintPropertyNode> scroll_translation_b =
       TransformPaintPropertyNode::Create(
           scroll_translation_a, TransformationMatrix().Translate(37, 41),
@@ -922,240 +897,33 @@ TEST_F(PaintArtifactCompositorTestWithPropertyTrees, NestedScrollNodes) {
   TestPaintArtifact artifact;
   artifact.Chunk(scroll_translation_a, ClipPaintPropertyNode::Root(), effect)
       .RectDrawing(FloatRect(7, 11, 13, 17), Color::kWhite);
-  artifact
-      .Chunk(scroll_translation_a->Parent(), ClipPaintPropertyNode::Root(),
-             effect)
-      .ScrollHitTest(scroll_translation_a);
   artifact.Chunk(scroll_translation_b, ClipPaintPropertyNode::Root(), effect)
       .RectDrawing(FloatRect(1, 2, 3, 5), Color::kWhite);
-  artifact
-      .Chunk(scroll_translation_b->Parent(), ClipPaintPropertyNode::Root(),
-             effect)
-      .ScrollHitTest(scroll_translation_b);
   Update(artifact.Build());
 
   const cc::ScrollTree& scroll_tree = GetPropertyTrees().scroll_tree;
   // Node #0 reserved for null; #1 for root render surface.
-  ASSERT_EQ(4u, scroll_tree.size());
-  const cc::ScrollNode& scroll_node_a = *scroll_tree.Node(2);
-  EXPECT_EQ(gfx::Size(2, 3), scroll_node_a.container_bounds);
-  EXPECT_EQ(gfx::Size(5, 7), scroll_node_a.bounds);
-  EXPECT_FALSE(scroll_node_a.user_scrollable_horizontal);
-  EXPECT_TRUE(scroll_node_a.user_scrollable_vertical);
-  EXPECT_EQ(1, scroll_node_a.parent_id);
-  EXPECT_EQ(scroll_element_id_a, scroll_node_a.element_id);
-  EXPECT_EQ(scroll_node_a.id, ElementIdToScrollNodeIndex(scroll_element_id_a));
-  EXPECT_TRUE(scroll_node_a.main_thread_scrolling_reasons &
+  ASSERT_EQ(3u, scroll_tree.size());
+  const cc::ScrollNode& scroll_node = *scroll_tree.Node(2);
+  EXPECT_EQ(gfx::Size(2, 3), scroll_node.container_bounds);
+  EXPECT_EQ(gfx::Size(5, 7), scroll_node.bounds);
+  EXPECT_FALSE(scroll_node.user_scrollable_horizontal);
+  EXPECT_TRUE(scroll_node.user_scrollable_vertical);
+  EXPECT_EQ(1, scroll_node.parent_id);
+  EXPECT_EQ(expected_compositor_element_id_a, scroll_node.element_id);
+  EXPECT_EQ(scroll_node.id,
+            ElementIdToScrollNodeIndex(expected_compositor_element_id_a));
+
+  EXPECT_EQ(expected_compositor_element_id_a, ContentLayerAt(0)->element_id());
+
+  const cc::TransformTree& transform_tree = GetPropertyTrees().transform_tree;
+  const cc::TransformNode& transform_node_a =
+      *transform_tree.Node(scroll_node.transform_id);
+  EXPECT_TRUE(transform_node_a.local.IsIdentity());
+  EXPECT_EQ(gfx::ScrollOffset(-11, -13), transform_node_a.scroll_offset);
+
+  EXPECT_TRUE(scroll_node.main_thread_scrolling_reasons &
               MainThreadScrollingReason::kHasBackgroundAttachmentFixedObjects);
-  EXPECT_EQ(scroll_element_id_a, ScrollHitTestLayerAt(0)->element_id());
-
-  const cc::TransformTree& transform_tree = GetPropertyTrees().transform_tree;
-  const cc::TransformNode& transform_node_a =
-      *transform_tree.Node(scroll_node_a.transform_id);
-  EXPECT_TRUE(transform_node_a.local.IsIdentity());
-  EXPECT_EQ(gfx::ScrollOffset(-11, -13), transform_node_a.scroll_offset);
-
-  const cc::ScrollNode& scroll_node_b = *scroll_tree.Node(3);
-  EXPECT_EQ(gfx::Size(19, 23), scroll_node_b.container_bounds);
-  EXPECT_EQ(gfx::Size(29, 31), scroll_node_b.bounds);
-  EXPECT_EQ(scroll_node_a.id, scroll_node_b.parent_id);
-  EXPECT_EQ(scroll_element_id_b, scroll_node_b.element_id);
-  EXPECT_EQ(scroll_node_b.id, ElementIdToScrollNodeIndex(scroll_element_id_b));
-  EXPECT_EQ(scroll_element_id_b, ScrollHitTestLayerAt(1)->element_id());
-
-  const cc::TransformNode& transform_node_b =
-      *transform_tree.Node(scroll_node_b.transform_id);
-  EXPECT_TRUE(transform_node_b.local.IsIdentity());
-  EXPECT_EQ(gfx::ScrollOffset(-37, -41), transform_node_b.scroll_offset);
-}
-
-TEST_F(PaintArtifactCompositorTestWithPropertyTrees, ScrollHitTestLayerOrder) {
-  RefPtr<ClipPaintPropertyNode> clip = ClipPaintPropertyNode::Create(
-      ClipPaintPropertyNode::Root(), TransformPaintPropertyNode::Root(),
-      FloatRoundedRect(0, 0, 100, 100));
-
-  CompositorElementId scroll_element_id = ScrollElementId(2);
-  RefPtr<ScrollPaintPropertyNode> scroll = ScrollPaintPropertyNode::Create(
-      ScrollPaintPropertyNode::Root(), IntPoint(), IntSize(100, 100),
-      IntSize(100, 100), true, false, 0 /* mainThreadScrollingReasons */,
-      scroll_element_id);
-  RefPtr<TransformPaintPropertyNode> scroll_translation =
-      TransformPaintPropertyNode::Create(
-          TransformPaintPropertyNode::Root(),
-          TransformationMatrix().Translate(7, 9), FloatPoint3D(), false, 0,
-          kCompositingReasonWillChangeCompositingHint, CompositorElementId(),
-          scroll);
-
-  RefPtr<TransformPaintPropertyNode> transform =
-      TransformPaintPropertyNode::Create(
-          scroll_translation, TransformationMatrix().Translate(5, 5),
-          FloatPoint3D(), false, 0, kCompositingReason3DTransform);
-
-  TestPaintArtifact artifact;
-  artifact.Chunk(scroll_translation, clip, EffectPaintPropertyNode::Root())
-      .RectDrawing(FloatRect(0, 0, 100, 100), Color::kWhite);
-  artifact
-      .Chunk(scroll_translation->Parent(), clip,
-             EffectPaintPropertyNode::Root())
-      .ScrollHitTest(scroll_translation);
-  artifact.Chunk(transform, clip, EffectPaintPropertyNode::Root())
-      .RectDrawing(FloatRect(0, 0, 50, 50), Color::kBlack);
-  Update(artifact.Build());
-
-  // The first content layer (background) should not have the scrolling element
-  // id set.
-  EXPECT_EQ(CompositorElementId(), ContentLayerAt(0)->element_id());
-
-  // The scroll layer should be after the first content layer (background).
-  EXPECT_LT(LayerIndex(ContentLayerAt(0)), LayerIndex(ScrollHitTestLayerAt(0)));
-  const cc::ScrollTree& scroll_tree = GetPropertyTrees().scroll_tree;
-  auto* scroll_node =
-      scroll_tree.Node(ScrollHitTestLayerAt(0)->scroll_tree_index());
-  ASSERT_EQ(scroll_element_id, scroll_node->element_id);
-  EXPECT_EQ(scroll_element_id, ScrollHitTestLayerAt(0)->element_id());
-
-  // The second content layer should appear after the first.
-  EXPECT_LT(LayerIndex(ScrollHitTestLayerAt(0)), LayerIndex(ContentLayerAt(1)));
-  EXPECT_EQ(CompositorElementId(), ContentLayerAt(1)->element_id());
-}
-
-TEST_F(PaintArtifactCompositorTestWithPropertyTrees,
-       NestedScrollHitTestLayerOrder) {
-  RefPtr<ClipPaintPropertyNode> clip_1 = ClipPaintPropertyNode::Create(
-      ClipPaintPropertyNode::Root(), TransformPaintPropertyNode::Root(),
-      FloatRoundedRect(0, 0, 100, 100));
-  CompositorElementId scroll_1_element_id = ScrollElementId(1);
-  RefPtr<ScrollPaintPropertyNode> scroll_1 = ScrollPaintPropertyNode::Create(
-      ScrollPaintPropertyNode::Root(), IntPoint(), IntSize(100, 100),
-      IntSize(100, 100), true, false, 0 /* mainThreadScrollingReasons */,
-      scroll_1_element_id);
-  RefPtr<TransformPaintPropertyNode> scroll_translation_1 =
-      TransformPaintPropertyNode::Create(
-          TransformPaintPropertyNode::Root(),
-          TransformationMatrix().Translate(7, 9), FloatPoint3D(), false, 0,
-          kCompositingReasonWillChangeCompositingHint, CompositorElementId(),
-          scroll_1);
-
-  RefPtr<ClipPaintPropertyNode> clip_2 = ClipPaintPropertyNode::Create(
-      clip_1, scroll_translation_1, FloatRoundedRect(0, 0, 50, 50));
-  CompositorElementId scroll_2_element_id = ScrollElementId(2);
-  RefPtr<ScrollPaintPropertyNode> scroll_2 = ScrollPaintPropertyNode::Create(
-      ScrollPaintPropertyNode::Root(), IntPoint(), IntSize(50, 50),
-      IntSize(50, 50), true, false, 0 /* mainThreadScrollingReasons */,
-      scroll_2_element_id);
-  RefPtr<TransformPaintPropertyNode> scroll_translation_2 =
-      TransformPaintPropertyNode::Create(
-          TransformPaintPropertyNode::Root(),
-          TransformationMatrix().Translate(0, 0), FloatPoint3D(), false, 0,
-          kCompositingReasonWillChangeCompositingHint, CompositorElementId(),
-          scroll_2);
-
-  TestPaintArtifact artifact;
-  artifact
-      .Chunk(scroll_translation_1->Parent(), clip_1->Parent(),
-             EffectPaintPropertyNode::Root())
-      .ScrollHitTest(scroll_translation_1);
-  artifact
-      .Chunk(scroll_translation_2->Parent(), clip_2->Parent(),
-             EffectPaintPropertyNode::Root())
-      .ScrollHitTest(scroll_translation_2);
-  artifact.Chunk(scroll_translation_2, clip_2, EffectPaintPropertyNode::Root())
-      .RectDrawing(FloatRect(0, 0, 50, 50), Color::kWhite);
-  Update(artifact.Build());
-
-  // Two scroll layers should be created for each scroll translation node.
-  const cc::ScrollTree& scroll_tree = GetPropertyTrees().scroll_tree;
-  const cc::ClipTree& clip_tree = GetPropertyTrees().clip_tree;
-  auto* scroll_1_node =
-      scroll_tree.Node(ScrollHitTestLayerAt(0)->scroll_tree_index());
-  ASSERT_EQ(scroll_1_element_id, scroll_1_node->element_id);
-  auto* scroll_1_clip_node =
-      clip_tree.Node(ScrollHitTestLayerAt(0)->clip_tree_index());
-  // The scroll is not under clip_1.
-  EXPECT_EQ(gfx::RectF(0, 0, 0, 0), scroll_1_clip_node->clip);
-
-  auto* scroll_2_node =
-      scroll_tree.Node(ScrollHitTestLayerAt(1)->scroll_tree_index());
-  ASSERT_EQ(scroll_2_element_id, scroll_2_node->element_id);
-  auto* scroll_2_clip_node =
-      clip_tree.Node(ScrollHitTestLayerAt(1)->clip_tree_index());
-  // The scroll is not under clip_2 but is under the parent clip, clip_1.
-  EXPECT_EQ(gfx::RectF(0, 0, 100, 100), scroll_2_clip_node->clip);
-
-  // The first layer should be before the second scroll layer.
-  EXPECT_LT(LayerIndex(ScrollHitTestLayerAt(0)),
-            LayerIndex(ScrollHitTestLayerAt(1)));
-
-  // The content layer should be after the second scroll layer.
-  EXPECT_LT(LayerIndex(ScrollHitTestLayerAt(1)), LayerIndex(ContentLayerAt(0)));
-}
-
-// If a scroll node is encountered before its parent, ensure the parent scroll
-// node is correctly created.
-TEST_F(PaintArtifactCompositorTestWithPropertyTrees, AncestorScrollNodes) {
-  CompositorElementId scroll_element_id_a = ScrollElementId(2);
-  RefPtr<ScrollPaintPropertyNode> scroll_a = ScrollPaintPropertyNode::Create(
-      ScrollPaintPropertyNode::Root(), IntPoint(), IntSize(2, 3), IntSize(5, 7),
-      false, true, 0 /* mainThreadScrollingReasons */, scroll_element_id_a);
-  RefPtr<TransformPaintPropertyNode> scroll_translation_a =
-      TransformPaintPropertyNode::Create(
-          TransformPaintPropertyNode::Root(),
-          TransformationMatrix().Translate(11, 13), FloatPoint3D(), false, 0,
-          kCompositingReasonLayerForScrollingContents, CompositorElementId(),
-          scroll_a);
-
-  CompositorElementId scroll_element_id_b = ScrollElementId(3);
-  RefPtr<ScrollPaintPropertyNode> scroll_b = ScrollPaintPropertyNode::Create(
-      scroll_translation_a->ScrollNode(), IntPoint(), IntSize(19, 23),
-      IntSize(29, 31), true, false, 0 /* mainThreadScrollingReasons */,
-      scroll_element_id_b);
-  RefPtr<TransformPaintPropertyNode> scroll_translation_b =
-      TransformPaintPropertyNode::Create(
-          scroll_translation_a, TransformationMatrix().Translate(37, 41),
-          FloatPoint3D(), false, 0, kCompositingReasonNone,
-          CompositorElementId(), scroll_b);
-
-  TestPaintArtifact artifact;
-  artifact
-      .Chunk(TransformPaintPropertyNode::Root(), ClipPaintPropertyNode::Root(),
-             EffectPaintPropertyNode::Root())
-      .ScrollHitTest(scroll_translation_b);
-  artifact
-      .Chunk(scroll_translation_b, ClipPaintPropertyNode::Root(),
-             EffectPaintPropertyNode::Root())
-      .ScrollHitTest(scroll_translation_a);
-  Update(artifact.Build());
-
-  const cc::ScrollTree& scroll_tree = GetPropertyTrees().scroll_tree;
-  // Node #0 reserved for null; #1 for root render surface.
-  ASSERT_EQ(4u, scroll_tree.size());
-
-  const cc::ScrollNode& scroll_node_a = *scroll_tree.Node(2);
-  EXPECT_EQ(1, scroll_node_a.parent_id);
-  EXPECT_EQ(scroll_element_id_a, scroll_node_a.element_id);
-  EXPECT_EQ(scroll_node_a.id, ElementIdToScrollNodeIndex(scroll_element_id_a));
-  // The second scroll hit test layer should be associated with the first
-  // scroll node (a).
-  EXPECT_EQ(scroll_element_id_a, ScrollHitTestLayerAt(1)->element_id());
-
-  const cc::TransformTree& transform_tree = GetPropertyTrees().transform_tree;
-  const cc::TransformNode& transform_node_a =
-      *transform_tree.Node(scroll_node_a.transform_id);
-  EXPECT_TRUE(transform_node_a.local.IsIdentity());
-  EXPECT_EQ(gfx::ScrollOffset(-11, -13), transform_node_a.scroll_offset);
-
-  const cc::ScrollNode& scroll_node_b = *scroll_tree.Node(3);
-  EXPECT_EQ(scroll_node_a.id, scroll_node_b.parent_id);
-  EXPECT_EQ(scroll_element_id_b, scroll_node_b.element_id);
-  EXPECT_EQ(scroll_node_b.id, ElementIdToScrollNodeIndex(scroll_element_id_b));
-  // The first scroll hit test layer should be associated with the second scroll
-  // node (b).
-  EXPECT_EQ(scroll_element_id_b, ScrollHitTestLayerAt(0)->element_id());
-
-  const cc::TransformNode& transform_node_b =
-      *transform_tree.Node(scroll_node_b.transform_id);
-  EXPECT_TRUE(transform_node_b.local.IsIdentity());
-  EXPECT_EQ(gfx::ScrollOffset(-37, -41), transform_node_b.scroll_offset);
 }
 
 TEST_F(PaintArtifactCompositorTestWithPropertyTrees, MergeSimpleChunks) {

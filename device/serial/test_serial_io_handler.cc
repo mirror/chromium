@@ -42,8 +42,8 @@ void TestSerialIoHandler::ReadImpl() {
 
   size_t num_bytes =
       std::min(buffer_.size(), static_cast<size_t>(pending_read_buffer_len()));
-  memcpy(pending_read_buffer(), buffer_.data(), num_bytes);
-  buffer_.erase(buffer_.begin(), buffer_.begin() + num_bytes);
+  memcpy(pending_read_buffer(), buffer_.c_str(), num_bytes);
+  buffer_ = buffer_.substr(num_bytes);
   ReadCompleted(static_cast<uint32_t>(num_bytes),
                 mojom::SerialReceiveError::NONE);
 }
@@ -57,8 +57,7 @@ void TestSerialIoHandler::WriteImpl() {
     std::move(send_callback_).Run();
     return;
   }
-  buffer_.insert(buffer_.end(), pending_write_buffer(),
-                 pending_write_buffer() + pending_write_buffer_len());
+  buffer_ += std::string(pending_write_buffer(), pending_write_buffer_len());
   WriteCompleted(pending_write_buffer_len(), mojom::SerialSendError::NONE);
   if (pending_read_buffer())
     ReadImpl();
@@ -110,15 +109,6 @@ bool TestSerialIoHandler::SetBreak() {
 
 bool TestSerialIoHandler::ClearBreak() {
   return true;
-}
-
-void TestSerialIoHandler::ForceReceiveError(
-    device::mojom::SerialReceiveError error) {
-  ReadCompleted(0, error);
-}
-
-void TestSerialIoHandler::ForceSendError(device::mojom::SerialSendError error) {
-  WriteCompleted(0, error);
 }
 
 TestSerialIoHandler::~TestSerialIoHandler() {

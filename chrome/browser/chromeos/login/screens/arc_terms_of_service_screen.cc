@@ -44,11 +44,11 @@ void ArcTermsOfServiceScreen::Hide() {
 }
 
 void ArcTermsOfServiceScreen::OnSkip() {
-  Finish(ScreenExitCode::ARC_TERMS_OF_SERVICE_SKIPPED);
+  Finish(ScreenExitCode::ARC_TERMS_OF_SERVICE_FINISHED);
 }
 
 void ArcTermsOfServiceScreen::OnAccept() {
-  Finish(ScreenExitCode::ARC_TERMS_OF_SERVICE_ACCEPTED);
+  Finish(ScreenExitCode::ARC_TERMS_OF_SERVICE_FINISHED);
 }
 
 void ArcTermsOfServiceScreen::OnViewDestroyed(

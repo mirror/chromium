@@ -9,7 +9,6 @@
 #include "base/memory/ptr_util.h"
 #include "base/message_loop/message_loop.h"
 #include "base/run_loop.h"
-#include "base/single_thread_task_runner.h"
 #include "base/strings/stringprintf.h"
 #include "base/synchronization/waitable_event.h"
 #include "chrome/browser/browser_process.h"
@@ -40,6 +39,7 @@
 #include "components/signin/core/browser/profile_oauth2_token_service.h"
 #include "components/user_manager/user.h"
 #include "components/user_manager/user_manager.h"
+#include "content/public/browser/browser_thread.h"
 #include "content/public/browser/notification_service.h"
 #include "content/public/test/browser_test_utils.h"
 #include "extensions/browser/process_manager.h"
@@ -142,19 +142,18 @@ class OAuth2LoginManagerStateWaiter : public OAuth2LoginManager::Observer {
   DISALLOW_COPY_AND_ASSIGN(OAuth2LoginManagerStateWaiter);
 };
 
-// Blocks a thread associated with a given |task_runner| on construction and
-// unblocks it on destruction.
-class ThreadBlocker {
+// Blocks a BrowserThread on construction and unblocks it on destruction.
+class BrowserThreadBlocker {
  public:
-  explicit ThreadBlocker(base::SingleThreadTaskRunner* task_runner)
+  explicit BrowserThreadBlocker(content::BrowserThread::ID identifier)
       : unblock_event_(new base::WaitableEvent(
             base::WaitableEvent::ResetPolicy::MANUAL,
             base::WaitableEvent::InitialState::NOT_SIGNALED)) {
-    task_runner->PostTask(
-        FROM_HERE,
+    content::BrowserThread::PostTask(
+        identifier, FROM_HERE,
         base::BindOnce(&BlockThreadOnThread, base::Owned(unblock_event_)));
   }
-  ~ThreadBlocker() { unblock_event_->Signal(); }
+  ~BrowserThreadBlocker() { unblock_event_->Signal(); }
 
  private:
   // Blocks the target thread until |event| is signaled.
@@ -163,7 +162,7 @@ class ThreadBlocker {
   // |unblock_event_| is deleted after BlockThreadOnThread returns.
   base::WaitableEvent* const unblock_event_;
 
-  DISALLOW_COPY_AND_ASSIGN(ThreadBlocker);
+  DISALLOW_COPY_AND_ASSIGN(BrowserThreadBlocker);
 };
 
 }  // namespace
@@ -539,8 +538,15 @@ IN_PROC_BROWSER_TEST_F(OAuth2Test, PRE_OverlappingContinueSessionRestore) {
   StartNewUserSession(true);
 }
 
+#if defined(OS_CHROMEOS)
+#define MAYBE_OverlappingContinueSessionRestore \
+  DISABLED_OverlappingContinueSessionRestore
+#else
+#define MAYBE_OverlappingContinueSessionRestore \
+  OverlappingContinueSessionRestore
+#endif
 // Tests that ContinueSessionRestore could be called multiple times.
-IN_PROC_BROWSER_TEST_F(OAuth2Test, DISABLED_OverlappingContinueSessionRestore) {
+IN_PROC_BROWSER_TEST_F(OAuth2Test, MAYBE_OverlappingContinueSessionRestore) {
   SetupGaiaServerForUnexpiredAccount();
   SimulateNetworkOnline();
 
@@ -550,9 +556,9 @@ IN_PROC_BROWSER_TEST_F(OAuth2Test, DISABLED_OverlappingContinueSessionRestore) {
       content::NotificationService::AllSources())
       .Wait();
 
-  // Blocks database thread to control TokenService::LoadCredentials timing.
-  // TODO(achuith): Fix this. crbug.com/753615.
-  auto thread_blocker = base::MakeUnique<ThreadBlocker>(nullptr);
+  // Blocks DB thread to control TokenService::LoadCredentials timing.
+  std::unique_ptr<BrowserThreadBlocker> db_blocker =
+      base::MakeUnique<BrowserThreadBlocker>(content::BrowserThread::DB);
 
   // Signs in as the existing user created in pre test.
   EXPECT_TRUE(
@@ -578,7 +584,7 @@ IN_PROC_BROWSER_TEST_F(OAuth2Test, DISABLED_OverlappingContinueSessionRestore) {
   login_manager->ContinueSessionRestore();
 
   // Let go DB thread to finish TokenService::LoadCredentials.
-  thread_blocker.reset();
+  db_blocker.reset();
 
   // Session restore can finish normally and token is loaded.
   WaitForMergeSessionCompletion(OAuth2LoginManager::SESSION_RESTORE_DONE);

@@ -9,10 +9,6 @@
 #include "ios/web/public/browser_state.h"
 #import "ios/web/public/web_state/web_state.h"
 
-#if !defined(__has_feature) || !__has_feature(objc_arc)
-#error "This file requires ARC support."
-#endif
-
 DEFINE_WEB_STATE_USER_DATA_KEY(CaptivePortalDetectorTabHelper);
 
 captive_portal::CaptivePortalDetector*

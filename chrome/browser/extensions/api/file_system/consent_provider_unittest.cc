@@ -20,6 +20,7 @@
 #include "extensions/common/extension.h"
 #include "extensions/common/extension_builder.h"
 #include "extensions/common/manifest.h"
+#include "extensions/common/test_util.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 using extensions::file_system_api::ConsentProvider;
@@ -132,8 +133,8 @@ TEST_F(FileSystemApiConsentProviderTest, ForNonKioskApps) {
   // Component apps are not granted unless they are whitelisted.
   {
     scoped_refptr<Extension> component_extension(
-        ExtensionBuilder("Test", ExtensionBuilder::Type::PLATFORM_APP)
-            .SetLocation(Manifest::COMPONENT)
+        test_util::BuildApp(
+            std::move(ExtensionBuilder().SetLocation(Manifest::COMPONENT)))
             .Build());
     TestingConsentProviderDelegate delegate;
     ConsentProvider provider(&delegate);
@@ -144,8 +145,8 @@ TEST_F(FileSystemApiConsentProviderTest, ForNonKioskApps) {
   // user.
   {
     scoped_refptr<Extension> whitelisted_component_extension(
-        ExtensionBuilder("Test", ExtensionBuilder::Type::PLATFORM_APP)
-            .SetLocation(Manifest::COMPONENT)
+        test_util::BuildApp(
+            std::move(ExtensionBuilder().SetLocation(Manifest::COMPONENT)))
             .Build());
     TestingConsentProviderDelegate delegate;
     delegate.SetComponentWhitelist(whitelisted_component_extension->id());
@@ -167,7 +168,7 @@ TEST_F(FileSystemApiConsentProviderTest, ForNonKioskApps) {
   // asking for user consent.
   {
     scoped_refptr<Extension> non_component_extension(
-        ExtensionBuilder("Test").Build());
+        test_util::CreateEmptyExtension());
     TestingConsentProviderDelegate delegate;
     ConsentProvider provider(&delegate);
     EXPECT_FALSE(provider.IsGrantable(*non_component_extension));
@@ -179,7 +180,7 @@ TEST_F(FileSystemApiConsentProviderTest, ForKioskApps) {
   // instantly without asking for user consent, but with a notification.
   {
     scoped_refptr<Extension> auto_launch_kiosk_app(
-        ExtensionBuilder("Test", ExtensionBuilder::Type::PLATFORM_APP)
+        test_util::BuildApp(ExtensionBuilder())
             .MergeManifest(DictionaryBuilder()
                                .SetBoolean("kiosk_enabled", true)
                                .SetBoolean("kiosk_only", true)
@@ -209,7 +210,7 @@ TEST_F(FileSystemApiConsentProviderTest, ForKioskApps) {
   // Non-component apps in manual-launch kiosk mode will be granted access after
   // receiving approval from the user.
   scoped_refptr<Extension> manual_launch_kiosk_app(
-      ExtensionBuilder("Test", ExtensionBuilder::Type::PLATFORM_APP)
+      test_util::BuildApp(ExtensionBuilder())
           .MergeManifest(DictionaryBuilder()
                              .SetBoolean("kiosk_enabled", true)
                              .SetBoolean("kiosk_only", true)

@@ -28,8 +28,9 @@
 
 #include "core/html/ImageData.h"
 
+#include "bindings/core/v8/ExceptionState.h"
 #include "bindings/core/v8/V8Uint8ClampedArray.h"
-#include "core/dom/DOMException.h"
+#include "core/dom/ExceptionCode.h"
 #include "core/imagebitmap/ImageBitmap.h"
 #include "core/imagebitmap/ImageBitmapOptions.h"
 #include "platform/RuntimeEnabledFeatures.h"
@@ -440,7 +441,7 @@ ImageData* ImageData::CropRect(const IntRect& crop_rect, bool flip_y) {
   } else {
     unsigned data_type_size =
         ImageData::StorageFormatDataSize(color_settings_.storageFormat());
-    int src_index = (dst_rect.X() + dst_rect.Y() * src_rect.Width()) * 4;
+    int src_index = (dst_rect.X() * src_rect.Width() + dst_rect.Y()) * 4;
     int dst_index = 0;
     if (flip_y)
       dst_index = (dst_rect.Height() - 1) * dst_rect.Width() * 4;
@@ -462,13 +463,22 @@ ImageData* ImageData::CropRect(const IntRect& crop_rect, bool flip_y) {
 ScriptPromise ImageData::CreateImageBitmap(ScriptState* script_state,
                                            EventTarget& event_target,
                                            Optional<IntRect> crop_rect,
-                                           const ImageBitmapOptions& options) {
+                                           const ImageBitmapOptions& options,
+                                           ExceptionState& exception_state) {
+  if ((crop_rect &&
+       !ImageBitmap::IsSourceSizeValid(crop_rect->Width(), crop_rect->Height(),
+                                       exception_state)) ||
+      !ImageBitmap::IsSourceSizeValid(BitmapSourceSize().Width(),
+                                      BitmapSourceSize().Height(),
+                                      exception_state))
+    return ScriptPromise();
   if (data()->BufferBase()->IsNeutered()) {
-    return ScriptPromise::RejectWithDOMException(
-        script_state,
-        DOMException::Create(kInvalidStateError,
-                             "The source data has been detached."));
+    exception_state.ThrowDOMException(kInvalidStateError,
+                                      "The source data has been neutered.");
+    return ScriptPromise();
   }
+  if (!ImageBitmap::IsResizeOptionValid(options, exception_state))
+    return ScriptPromise();
   return ImageBitmapSource::FulfillImageBitmap(
       script_state, ImageBitmap::Create(this, crop_rect, options));
 }

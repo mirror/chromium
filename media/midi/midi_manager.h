@@ -106,11 +106,7 @@ class MIDI_EXPORT MidiManager {
   void StartSession(MidiManagerClient* client);
 
   // A client calls EndSession() to stop receiving MIDI data.
-  // Returns false if |client| did not start a session.
-  bool EndSession(MidiManagerClient* client);
-
-  // Returns true if there is at least one client that keep a session open.
-  bool HasOpenSession();
+  void EndSession(MidiManagerClient* client);
 
   // Invoke AccumulateMidiBytesSent() for |client| safely. If the session was
   // already closed, do nothing.

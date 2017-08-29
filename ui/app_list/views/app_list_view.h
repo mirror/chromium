@@ -19,10 +19,6 @@
 #include "ui/views/bubble/bubble_dialog_delegate.h"
 #include "ui/views/widget/widget.h"
 
-namespace aura {
-class Window;
-}
-
 namespace display {
 class Screen;
 }
@@ -54,13 +50,13 @@ class APP_LIST_EXPORT AppListView : public views::BubbleDialogDelegateView,
   static constexpr float kNumOfShelfSize = 2.0;
 
   // The opacity of the app list background.
-  static constexpr float kAppListOpacity = 0.95;
+  static constexpr float kAppListOpacity = 0.8;
 
   // The opacity of the app list background with blur.
   static constexpr float kAppListOpacityWithBlur = 0.7;
 
   // The preferred blend alpha with wallpaper color for background.
-  static constexpr int kAppListColorDarkenAlpha = 178;
+  static constexpr int kDarkMutedBlendAlpha = 0x3f;
 
   // The defualt color of the app list background.
   static constexpr SkColor kDefaultBackgroundColor = SK_ColorBLACK;
@@ -85,10 +81,6 @@ class APP_LIST_EXPORT AppListView : public views::BubbleDialogDelegateView,
   // Does not take ownership of |delegate|.
   explicit AppListView(AppListViewDelegate* delegate);
   ~AppListView() override;
-
-  // Prevents handling input events for the |window| in context of handling in
-  // app list.
-  static void ExcludeWindowFromEventHandling(aura::Window* window);
 
   // Initializes the widget as a bubble or fullscreen view depending on if the
   // fullscreen app list feature is set. |parent| and |initial_apps_page| are
@@ -156,9 +148,6 @@ class APP_LIST_EXPORT AppListView : public views::BubbleDialogDelegateView,
   // in progress it will be interrupted.
   void StartAnimationForState(AppListState new_state);
 
-  // Starts the close animation.
-  void StartCloseAnimation(base::TimeDelta animation_duration);
-
   // Changes the app list state depending on the current |app_list_state_| and
   // whether the search box is empty.
   void SetStateFromSearchBoxView(bool search_box_is_empty);
@@ -172,16 +161,6 @@ class APP_LIST_EXPORT AppListView : public views::BubbleDialogDelegateView,
 
   // Gets the PaginationModel owned by this view's apps grid.
   PaginationModel* GetAppsPaginationModel() const;
-
-  // Gets the content bounds of the app info dialog of the app list in the
-  // screen coordinates.
-  gfx::Rect GetAppInfoDialogBounds() const;
-
-  // Sets |is_in_drag_| and updates the visibility of app list items.
-  void SetIsInDrag(bool is_in_drag);
-
-  // Gets current work area bottom.
-  int GetWorkAreaBottom();
 
   views::Widget* get_fullscreen_widget_for_test() const {
     return fullscreen_widget_;
@@ -208,12 +187,12 @@ class APP_LIST_EXPORT AppListView : public views::BubbleDialogDelegateView,
     return app_list_y_position_in_screen_;
   }
 
+  int work_area_bottom() const { return work_area_bottom_; }
+
   void set_app_list_animation_duration_ms_for_testing(
       int app_list_animation_duration_ms) {
     app_list_animation_duration_ms_ = app_list_animation_duration_ms;
   }
-
-  bool drag_started_from_peeking() const { return drag_started_from_peeking_; }
 
  private:
   // A widget observer that is responsible for keeping the AppListView state up
@@ -299,7 +278,6 @@ class APP_LIST_EXPORT AppListView : public views::BubbleDialogDelegateView,
   void SetBackgroundShieldColor();
 
   AppListViewDelegate* delegate_;  // Weak. Owned by AppListService.
-  AppListModel* const model_;      // Not Owned.
 
   AppListMainView* app_list_main_view_ = nullptr;
   SpeechView* speech_view_ = nullptr;
@@ -325,6 +303,9 @@ class APP_LIST_EXPORT AppListView : public views::BubbleDialogDelegateView,
   // Y position of the app list in screen space coordinate during dragging.
   int app_list_y_position_in_screen_ = 0;
 
+  // Bottom of work area.
+  int work_area_bottom_ = 0;
+
   // The opacity of app list background during dragging.
   float background_opacity_ = 0.f;
 
@@ -338,8 +319,6 @@ class APP_LIST_EXPORT AppListView : public views::BubbleDialogDelegateView,
   float last_fling_velocity_ = 0;
   // Whether the fullscreen app list feature is enabled.
   const bool is_fullscreen_app_list_enabled_;
-  // Whether the background blur is enabled.
-  const bool is_background_blur_enabled_;
   // The state of the app list, controlled via SetState().
   AppListState app_list_state_ = PEEKING;
   // An observer that notifies AppListView when the display has changed.
@@ -360,9 +339,6 @@ class APP_LIST_EXPORT AppListView : public views::BubbleDialogDelegateView,
 
   // Animation duration in milliseconds.
   int app_list_animation_duration_ms_;
-
-  // True if the dragging started from PEEKING state.
-  bool drag_started_from_peeking_ = false;
 
   DISALLOW_COPY_AND_ASSIGN(AppListView);
 };

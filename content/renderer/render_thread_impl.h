@@ -511,7 +511,9 @@ class CONTENT_EXPORT RenderThreadImpl
   };
   bool GetRendererMemoryMetrics(RendererMemoryMetrics* memory_metrics) const;
 
-  bool NeedsToRecordFirstActivePaint(int metric_type) const;
+  bool NeedsToRecordFirstActivePaint() const {
+    return needs_to_record_first_active_paint_;
+  }
 
  protected:
   RenderThreadImpl(
@@ -557,9 +559,6 @@ class CONTENT_EXPORT RenderThreadImpl
   // mojom::Renderer:
   void CreateView(mojom::CreateViewParamsPtr params) override;
   void CreateFrame(mojom::CreateFrameParamsPtr params) override;
-  void SetUpEmbeddedWorkerChannelForServiceWorker(
-      mojom::EmbeddedWorkerInstanceClientAssociatedRequest client_request)
-      override;
   void CreateFrameProxy(int32_t routing_id,
                         int32_t render_view_routing_id,
                         int32_t opener_routing_id,
@@ -655,9 +654,6 @@ class CONTENT_EXPORT RenderThreadImpl
   std::unique_ptr<VideoCaptureImplManager> vc_manager_;
 
   std::unique_ptr<viz::ClientSharedBitmapManager> shared_bitmap_manager_;
-
-  // The time Blink was initialized. Used for UMA.
-  base::TimeTicks blink_initialized_time_;
 
   // The count of RenderWidgets running through this thread.
   int widget_count_;
@@ -798,7 +794,6 @@ class CONTENT_EXPORT RenderThreadImpl
 
   RendererMemoryMetrics purge_and_suspend_memory_metrics_;
   bool needs_to_record_first_active_paint_;
-  base::TimeTicks was_backgrounded_time_;
   int process_foregrounded_count_;
 
   int32_t client_id_;

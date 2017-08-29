@@ -7,8 +7,10 @@
 
 #include "core/CoreExport.h"
 #include "core/layout/MinMaxSize.h"
+#include "core/layout/ng/geometry/ng_box_strut.h"
 #include "core/layout/ng/geometry/ng_logical_size.h"
 #include "core/layout/ng/geometry/ng_physical_size.h"
+#include "core/layout/ng/geometry/ng_static_position.h"
 #include "platform/LayoutUnit.h"
 #include "platform/wtf/Optional.h"
 
@@ -16,7 +18,6 @@ namespace blink {
 
 class ComputedStyle;
 class NGConstraintSpace;
-struct NGStaticPosition;
 
 struct CORE_EXPORT NGAbsolutePhysicalPosition {
   NGPhysicalBoxStrut inset;

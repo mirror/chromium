@@ -121,10 +121,13 @@ constexpr const char kEvaluationCPUDuration[] =
 #if defined(GOOGLE_CHROME_BUILD)
 // Names of navigation chain patterns histogram.
 const char kMatchesPatternHistogramName[] =
-    "SubresourceFilter.PageLoad.ActivationList";
+    "SubresourceFilter.PageLoad.FinalURLMatch";
 const char kNavigationChainSize[] =
     "SubresourceFilter.PageLoad.RedirectChainLength";
 const char kSubresourceFilterOnlySuffix[] = ".SubresourceFilterOnly";
+const char kSocialEngineeringAdsInterstitialSuffix[] =
+    ".SocialEngineeringAdsInterstitial";
+const char kPhishingInterstitialSuffix[] = ".PhishingInterstitial";
 #endif
 
 // Other histograms.
@@ -831,13 +834,9 @@ void ExpectHistogramsAreRecordedForTestFrameSet(
   tester.ExpectTotalCount(kEvaluationCPUDuration,
                           time_recorded ? num_subresource_checks : 0);
 
-  // Activation WallDuration histogram is always recorded.
+  // Activation timing histograms are always recorded.
   tester.ExpectTotalCount(kActivationWallDuration, 6);
-
-  // Activation CPUDuration histogram is recorded only if base::ThreadTicks is
-  // supported.
-  tester.ExpectTotalCount(kActivationCPUDuration,
-                          ScopedThreadTimers::IsSupported() ? 6 : 0);
+  tester.ExpectTotalCount(kActivationCPUDuration, 6);
 
   tester.ExpectUniqueSample(
       kDocumentLoadActivationLevel,
@@ -1097,8 +1096,16 @@ IN_PROC_BROWSER_TEST_F(
   ui_test_utils::NavigateToURL(browser(), url);
 
   tester.ExpectUniqueSample(
-      kMatchesPatternHistogramName,
-      static_cast<int>(ActivationList::SUBRESOURCE_FILTER), 1);
+      std::string(kMatchesPatternHistogramName) +
+          std::string(kSocialEngineeringAdsInterstitialSuffix),
+      false, 1);
+  tester.ExpectUniqueSample(std::string(kMatchesPatternHistogramName) +
+                                std::string(kSubresourceFilterOnlySuffix),
+                            true, 1);
+
+  tester.ExpectUniqueSample(std::string(kMatchesPatternHistogramName) +
+                                std::string(kPhishingInterstitialSuffix),
+                            false, 1);
   EXPECT_THAT(tester.GetAllSamples(std::string(kNavigationChainSize) +
                                    std::string(kSubresourceFilterOnlySuffix)),
               ::testing::ElementsAre(base::Bucket(1, 1)));
@@ -1120,8 +1127,17 @@ IN_PROC_BROWSER_TEST_F(
   ConfigureAsSubresourceFilterOnlyURL(url.GetOrigin());
   base::HistogramTester tester;
   ui_test_utils::NavigateToURL(browser(), url);
-  tester.ExpectUniqueSample(kMatchesPatternHistogramName,
-                            static_cast<int>(ActivationList::NONE), 1);
+  tester.ExpectUniqueSample(
+      std::string(kMatchesPatternHistogramName) +
+          std::string(kSocialEngineeringAdsInterstitialSuffix),
+      false, 1);
+  tester.ExpectUniqueSample(std::string(kMatchesPatternHistogramName) +
+                                std::string(kSubresourceFilterOnlySuffix),
+                            false, 1);
+
+  tester.ExpectUniqueSample(std::string(kMatchesPatternHistogramName) +
+                                std::string(kPhishingInterstitialSuffix),
+                            false, 1);
 }
 #endif
 

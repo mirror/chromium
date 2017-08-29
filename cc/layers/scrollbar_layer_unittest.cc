@@ -124,7 +124,7 @@ class BaseScrollbarLayerTest : public testing::Test {
 
     std::unique_ptr<FakeResourceTrackingUIResourceManager>
         fake_ui_resource_manager =
-            std::make_unique<FakeResourceTrackingUIResourceManager>();
+            base::MakeUnique<FakeResourceTrackingUIResourceManager>();
     fake_ui_resource_manager_ = fake_ui_resource_manager.get();
 
     layer_tree_host_.reset(new FakeLayerTreeHost(

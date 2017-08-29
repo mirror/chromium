@@ -35,7 +35,6 @@ const char kTestVendorName[] = "A vendor";
 const char kTestProductId[] = "abcd";
 const char kTestProductName[] = "A product";
 const char kTestUuid[] = "FFFF-FFFF";
-const char kTestFileSystemType[] = "vfat";
 
 }  // namespace
 
@@ -81,13 +80,12 @@ void MockDiskMountManager::NotifyDeviceInsertEvents() {
           std::string(kTestProductId), std::string(kTestProductName),
           std::string(kTestUuid), std::string(kTestSystemPathPrefix),
           DEVICE_TYPE_USB, 4294967295U,
-          false,  // is_parent
-          false,  // is_read_only
-          true,   // has_media
-          false,  // on_boot_device
-          true,   // on_removable_device
-          false,  // is_hidden
-          std::string(kTestFileSystemType), std::string());
+          false,   // is_parent
+          false,   // is_read_only
+          true,    // has_media
+          false,   // on_boot_device
+          true,    // on_removable_device
+          false);  // is_hidden
   DiskMountManager::Disk* disk1 = disk1_ptr.get();
 
   disks_.clear();
@@ -110,13 +108,12 @@ void MockDiskMountManager::NotifyDeviceInsertEvents() {
           std::string(kTestProductId), std::string(kTestProductName),
           std::string(kTestUuid), std::string(kTestSystemPathPrefix),
           DEVICE_TYPE_MOBILE, 1073741824,
-          false,  // is_parent
-          false,  // is_read_only
-          true,   // has_media
-          false,  // on_boot_device
-          true,   // on_removable_device
-          false,  // is_hidden
-          std::string(kTestFileSystemType), std::string());
+          false,   // is_parent
+          false,   // is_read_only
+          true,    // has_media
+          false,   // on_boot_device
+          true,    // on_removable_device
+          false);  // is_hidden
   DiskMountManager::Disk* disk2 = disk2_ptr.get();
   disks_.clear();
   disks_[std::string(kTestDevicePath)] = std::move(disk2_ptr);
@@ -134,13 +131,12 @@ void MockDiskMountManager::NotifyDeviceRemoveEvents() {
           std::string(kTestProductId), std::string(kTestProductName),
           std::string(kTestUuid), std::string(kTestSystemPathPrefix),
           DEVICE_TYPE_SD, 1073741824,
-          false,  // is_parent
-          false,  // is_read_only
-          true,   // has_media
-          false,  // on_boot_device
-          true,   // on_removable_device
-          false,  // is_hidden
-          std::string(kTestFileSystemType), std::string());
+          false,   // is_parent
+          false,   // is_read_only
+          true,    // has_media
+          false,   // on_boot_device
+          true,    // on_removable_device
+          false);  // is_hidden
   DiskMountManager::Disk* disk = disk_ptr.get();
   disks_.clear();
   disks_[std::string(kTestDevicePath)] = std::move(disk_ptr);
@@ -180,8 +176,7 @@ void MockDiskMountManager::CreateDiskEntryForMountDevice(
     bool is_parent,
     bool has_media,
     bool on_boot_device,
-    bool on_removable_device,
-    const std::string& file_system_type) {
+    bool on_removable_device) {
   std::unique_ptr<DiskMountManager::Disk> disk_ptr =
       base::MakeUnique<DiskMountManager::Disk>(
           mount_info.source_path, mount_info.mount_path,
@@ -198,8 +193,7 @@ void MockDiskMountManager::CreateDiskEntryForMountDevice(
           device_type, total_size_in_bytes, is_parent,
           false,  // is_read_only
           has_media, on_boot_device, on_removable_device,
-          false,  // is_hidden
-          file_system_type, std::string());
+          false);  // is_hidden
   disks_[std::string(mount_info.source_path)] = std::move(disk_ptr);
 }
 

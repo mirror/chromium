@@ -30,6 +30,9 @@ const char kDisableIOSPhysicalWeb[] = "disable-ios-physical-web";
 // Disables the Suggestions UI
 const char kDisableSuggestionsUI[] = "disable-suggestions-ui";
 
+// Disables bookmark reordering.
+const char kDisableBookmarkReordering[] = "disable-bookmark-reordering";
+
 // Disables the WKBackForwardList based navigation manager experiment.
 const char kDisableSlimNavigationManager[] = "disable-slim-navigation-manager";
 
@@ -49,6 +52,9 @@ const char kEnableIOSFeatures[] = "enable-features";
 const char kEnableIOSHandoffToOtherDevices[] =
     "enable-ios-handoff-to-other-devices";
 
+// Enables context-sensitive reader mode button in the toolbar.
+const char kEnableReaderModeToolbarIcon[] = "enable-reader-mode-toolbar-icon";
+
 // Enables the Spotlight actions.
 const char kEnableSpotlightActions[] = "enable-spotlight-actions";
 
@@ -57,6 +63,9 @@ const char kEnableIOSPhysicalWeb[] = "enable-ios-physical-web";
 
 // Enables the Suggestions UI
 const char kEnableSuggestionsUI[] = "enable-suggestions-ui";
+
+// Enables bookmark reordering.
+const char kEnableBookmarkReordering[] = "enable-bookmark-reordering";
 
 // Enables the WKBackForwardList based navigation manager experiment.
 const char kEnableSlimNavigationManager[] = "enable-slim-navigation-manager";

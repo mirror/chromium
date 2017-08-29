@@ -4,7 +4,6 @@
 
 #include "core/imagebitmap/ImageBitmapSource.h"
 
-#include "core/dom/DOMException.h"
 #include "core/imagebitmap/ImageBitmap.h"
 #include "core/imagebitmap/ImageBitmapOptions.h"
 
@@ -17,8 +16,8 @@ ScriptPromise ImageBitmapSource::FulfillImageBitmap(ScriptState* script_state,
   if (image_bitmap && image_bitmap->BitmapImage()) {
     resolver->Resolve(image_bitmap);
   } else {
-    resolver->Reject(DOMException::Create(
-        kInvalidStateError, "The ImageBitmap could not be allocated."));
+    resolver->Reject(
+        ScriptValue(script_state, v8::Null(script_state->GetIsolate())));
   }
   return promise;
 }
@@ -27,7 +26,8 @@ ScriptPromise ImageBitmapSource::CreateImageBitmap(
     ScriptState* script_state,
     EventTarget& event_target,
     Optional<IntRect> crop_rect,
-    const ImageBitmapOptions& options) {
+    const ImageBitmapOptions& options,
+    ExceptionState& exception_state) {
   return ScriptPromise();
 }
 

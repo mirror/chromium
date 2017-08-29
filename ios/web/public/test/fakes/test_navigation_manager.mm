@@ -15,14 +15,13 @@ TestNavigationManager::TestNavigationManager()
       pending_item_(nullptr),
       last_committed_item_(nullptr),
       visible_item_(nullptr),
-      browser_state_(nullptr),
-      load_url_with_params_was_called_(false),
-      load_if_necessary_was_called_(false) {}
+      load_url_with_params_was_called_(false) {}
 
 TestNavigationManager::~TestNavigationManager() {}
 
 BrowserState* TestNavigationManager::GetBrowserState() const {
-  return browser_state_;
+  NOTREACHED();
+  return nullptr;
 }
 
 WebState* TestNavigationManager::GetWebState() const {
@@ -69,7 +68,7 @@ void TestNavigationManager::LoadURLWithParams(
 }
 
 void TestNavigationManager::LoadIfNecessary() {
-  load_if_necessary_was_called_ = true;
+  NOTREACHED();
 }
 
 void TestNavigationManager::AddTransientURLRewriter(
@@ -158,12 +157,6 @@ NavigationItemList TestNavigationManager::GetForwardItems() const {
   return NavigationItemList();
 }
 
-void TestNavigationManager::Restore(
-    int last_committed_item_index,
-    std::vector<std::unique_ptr<NavigationItem>> items) {
-  NOTREACHED();
-}
-
 void TestNavigationManager::CopyStateFromAndPrune(
     const NavigationManager* source) {
   NOTREACHED();
@@ -184,16 +177,8 @@ void TestNavigationManager::AddItem(const GURL& url,
   SetLastCommittedItemIndex(GetItemCount() - 1);
 }
 
-void TestNavigationManager::SetBrowserState(web::BrowserState* browser_state) {
-  browser_state_ = browser_state;
-}
-
 bool TestNavigationManager::LoadURLWithParamsWasCalled() {
   return load_url_with_params_was_called_;
-}
-
-bool TestNavigationManager::LoadIfNecessaryWasCalled() {
-  return load_if_necessary_was_called_;
 }
 
 }  // namespace web

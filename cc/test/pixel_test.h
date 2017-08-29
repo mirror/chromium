@@ -3,7 +3,6 @@
 // found in the LICENSE file.
 
 #include "base/files/file_util.h"
-#include "cc/output/output_surface.h"
 #include "cc/output/software_renderer.h"
 #include "cc/quads/render_pass.h"
 #include "cc/test/pixel_comparator.h"
@@ -18,15 +17,15 @@
 
 namespace viz {
 class CopyOutputResult;
-class TestGpuMemoryBufferManager;
 }
 
 namespace cc {
-class DisplayResourceProvider;
 class DirectRenderer;
 class FakeOutputSurfaceClient;
 class OutputSurface;
+class ResourceProvider;
 class SoftwareRenderer;
+class TestGpuMemoryBufferManager;
 class TestSharedBitmapManager;
 
 class PixelTest : public testing::Test {
@@ -65,15 +64,15 @@ class PixelTest : public testing::Test {
   std::unique_ptr<FakeOutputSurfaceClient> output_surface_client_;
   std::unique_ptr<OutputSurface> output_surface_;
   std::unique_ptr<TestSharedBitmapManager> shared_bitmap_manager_;
-  std::unique_ptr<viz::TestGpuMemoryBufferManager> gpu_memory_buffer_manager_;
+  std::unique_ptr<TestGpuMemoryBufferManager> gpu_memory_buffer_manager_;
   std::unique_ptr<BlockingTaskRunner> main_thread_task_runner_;
-  std::unique_ptr<DisplayResourceProvider> resource_provider_;
+  std::unique_ptr<ResourceProvider> resource_provider_;
   std::unique_ptr<TextureMailboxDeleter> texture_mailbox_deleter_;
   std::unique_ptr<DirectRenderer> renderer_;
   SoftwareRenderer* software_renderer_ = nullptr;
   std::unique_ptr<SkBitmap> result_bitmap_;
 
-  void SetUpGLRenderer(bool flipped_output_surface);
+  void SetUpGLRenderer(bool use_skia_gpu_backend, bool flipped_output_surface);
   void SetUpSoftwareRenderer();
 
   void EnableExternalStencilTest();
@@ -105,7 +104,7 @@ class GLRendererWithExpandedViewport : public viz::GLRenderer {
  public:
   GLRendererWithExpandedViewport(const viz::RendererSettings* settings,
                                  OutputSurface* output_surface,
-                                 DisplayResourceProvider* resource_provider,
+                                 ResourceProvider* resource_provider,
                                  TextureMailboxDeleter* texture_mailbox_deleter)
       : viz::GLRenderer(settings,
                         output_surface,
@@ -115,10 +114,9 @@ class GLRendererWithExpandedViewport : public viz::GLRenderer {
 
 class SoftwareRendererWithExpandedViewport : public SoftwareRenderer {
  public:
-  SoftwareRendererWithExpandedViewport(
-      const viz::RendererSettings* settings,
-      OutputSurface* output_surface,
-      DisplayResourceProvider* resource_provider)
+  SoftwareRendererWithExpandedViewport(const viz::RendererSettings* settings,
+                                       OutputSurface* output_surface,
+                                       ResourceProvider* resource_provider)
       : SoftwareRenderer(settings, output_surface, resource_provider) {}
 };
 
@@ -126,7 +124,7 @@ class GLRendererWithFlippedSurface : public viz::GLRenderer {
  public:
   GLRendererWithFlippedSurface(const viz::RendererSettings* settings,
                                OutputSurface* output_surface,
-                               DisplayResourceProvider* resource_provider,
+                               ResourceProvider* resource_provider,
                                TextureMailboxDeleter* texture_mailbox_deleter)
       : viz::GLRenderer(settings,
                         output_surface,
@@ -136,17 +134,17 @@ class GLRendererWithFlippedSurface : public viz::GLRenderer {
 
 template <>
 inline void RendererPixelTest<viz::GLRenderer>::SetUp() {
-  SetUpGLRenderer(false);
+  SetUpGLRenderer(false, false);
 }
 
 template<>
 inline void RendererPixelTest<GLRendererWithExpandedViewport>::SetUp() {
-  SetUpGLRenderer(false);
+  SetUpGLRenderer(false, false);
 }
 
 template <>
 inline void RendererPixelTest<GLRendererWithFlippedSurface>::SetUp() {
-  SetUpGLRenderer(true);
+  SetUpGLRenderer(false, true);
 }
 
 template <>

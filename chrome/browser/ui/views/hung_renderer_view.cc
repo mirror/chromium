@@ -16,7 +16,6 @@
 #include "chrome/browser/ui/tab_contents/core_tab_helper.h"
 #include "chrome/browser/ui/tab_contents/tab_contents_iterator.h"
 #include "chrome/browser/ui/views/harmony/chrome_layout_provider.h"
-#include "chrome/browser/ui/views/harmony/chrome_typography.h"
 #include "chrome/common/chrome_constants.h"
 #include "chrome/common/crash_keys.h"
 #include "chrome/common/logging_chrome.h"
@@ -129,6 +128,13 @@ void HungPagesTableModel::SetObserver(ui::TableModelObserver* observer) {
   observer_ = observer;
 }
 
+void HungPagesTableModel::GetGroupRange(int model_index,
+                                        views::GroupRange* range) {
+  DCHECK(range);
+  range->start = 0;
+  range->length = RowCount();
+}
+
 void HungPagesTableModel::TabDestroyed(WebContentsObserverImpl* tab) {
   // Clean up tab_observers_ and notify our observer.
   size_t index = 0;
@@ -164,11 +170,12 @@ void HungPagesTableModel::WebContentsObserverImpl::WebContentsDestroyed() {
 ///////////////////////////////////////////////////////////////////////////////
 // HungRendererDialogView
 
+// static
+gfx::ImageSkia* HungRendererDialogView::frozen_icon_ = NULL;
+
 // The dimensions of the hung pages list table view, in pixels.
-namespace {
-constexpr int kTableViewWidth = 300;
-constexpr int kTableViewHeight = 80;
-}  // namespace
+static const int kTableViewWidth = 300;
+static const int kTableViewHeight = 100;
 
 ///////////////////////////////////////////////////////////////////////////////
 // HungRendererDialogView, public:
@@ -223,6 +230,7 @@ bool HungRendererDialogView::IsFrameActive(WebContents* contents) {
 
 HungRendererDialogView::HungRendererDialogView()
     : info_label_(nullptr), hung_pages_table_(nullptr), initialized_(false) {
+  InitClass();
   chrome::RecordDialogCreation(chrome::DialogIdentifier::HUNG_RENDERER);
 }
 
@@ -313,10 +321,6 @@ base::string16 HungRendererDialogView::GetWindowTitle() const {
       hung_pages_table_model_->RowCount());
 }
 
-bool HungRendererDialogView::ShouldShowCloseButton() const {
-  return false;
-}
-
 void HungRendererDialogView::WindowClosing() {
   // We are going to be deleted soon, so make sure our instance is destroyed.
   g_instance_ = NULL;
@@ -402,8 +406,10 @@ void HungRendererDialogView::ViewHierarchyChanged(
 // HungRendererDialogView, private:
 
 void HungRendererDialogView::Init() {
-  info_label_ = new views::Label(base::string16(), CONTEXT_BODY_TEXT_LARGE,
-                                 STYLE_SECONDARY);
+  views::ImageView* frozen_icon_view = new views::ImageView;
+  frozen_icon_view->SetImage(frozen_icon_);
+
+  info_label_ = new views::Label();
   info_label_->SetMultiLine(true);
   info_label_->SetHorizontalAlignment(gfx::ALIGN_LEFT);
 
@@ -412,27 +418,49 @@ void HungRendererDialogView::Init() {
   columns.push_back(ui::TableColumn());
   hung_pages_table_ = new views::TableView(
       hung_pages_table_model_.get(), columns, views::ICON_AND_TEXT, true);
+  hung_pages_table_->SetGrouper(hung_pages_table_model_.get());
 
   using views::GridLayout;
+  using views::ColumnSet;
 
   GridLayout* layout = GridLayout::CreatePanel(this);
   ChromeLayoutProvider* provider = ChromeLayoutProvider::Get();
 
-  constexpr int kColumnSetId = 0;
-  views::ColumnSet* column_set = layout->AddColumnSet(kColumnSetId);
+  const int double_column_set_id = 0;
+  ColumnSet* column_set = layout->AddColumnSet(double_column_set_id);
+  column_set->AddColumn(GridLayout::LEADING, GridLayout::LEADING, 0,
+                        GridLayout::FIXED, frozen_icon_->width(), 0);
+  column_set->AddPaddingColumn(
+      0,
+      provider->GetDistanceMetric(DISTANCE_UNRELATED_CONTROL_HORIZONTAL_LARGE));
   column_set->AddColumn(GridLayout::FILL, GridLayout::FILL, 1,
                         GridLayout::USE_PREF, 0, 0);
 
-  layout->StartRow(0, kColumnSetId);
-  layout->AddView(info_label_);
+  layout->StartRow(0, double_column_set_id);
+  layout->AddView(frozen_icon_view, 1, 3);
+  // Add the label with a preferred width of 1, this way it doesn't affect the
+  // overall preferred size of the dialog.
+  layout->AddView(
+      info_label_, 1, 1, GridLayout::FILL, GridLayout::LEADING, 1, 0);
 
-  layout->AddPaddingRow(0, provider->GetDistanceMetric(
-                               views::DISTANCE_UNRELATED_CONTROL_VERTICAL));
+  layout->AddPaddingRow(
+      0, provider->GetDistanceMetric(views::DISTANCE_RELATED_CONTROL_VERTICAL));
 
-  layout->StartRow(1, kColumnSetId);
+  layout->StartRow(1, double_column_set_id);
+  layout->SkipColumns(1);
   layout->AddView(hung_pages_table_->CreateParentIfNecessary(), 1, 1,
-                  views::GridLayout::FILL, views::GridLayout::FILL,
-                  kTableViewWidth, kTableViewHeight);
+                  views::GridLayout::FILL,
+                  views::GridLayout::FILL, kTableViewWidth, kTableViewHeight);
 
   initialized_ = true;
+}
+
+// static
+void HungRendererDialogView::InitClass() {
+  static bool initialized = false;
+  if (!initialized) {
+    ui::ResourceBundle& rb = ui::ResourceBundle::GetSharedInstance();
+    frozen_icon_ = rb.GetImageSkiaNamed(IDR_FROZEN_TAB_ICON);
+    initialized = true;
+  }
 }

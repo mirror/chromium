@@ -27,7 +27,7 @@
 #include "cc/quads/solid_color_draw_quad.h"
 #include "cc/quads/stream_video_draw_quad.h"
 #include "cc/quads/texture_draw_quad.h"
-#include "cc/resources/display_resource_provider.h"
+#include "cc/resources/resource_provider.h"
 #include "cc/test/fake_output_surface_client.h"
 #include "cc/test/fake_resource_provider.h"
 #include "cc/test/geometry_test_utils.h"
@@ -44,7 +44,6 @@
 
 using testing::_;
 using testing::Mock;
-using viz::SharedQuadState;
 
 namespace cc {
 namespace {
@@ -74,7 +73,7 @@ void MailboxReleased(const gpu::SyncToken& sync_token,
 class FullscreenOverlayValidator : public OverlayCandidateValidator {
  public:
   void GetStrategies(OverlayProcessor::StrategyList* strategies) override {
-    strategies->push_back(std::make_unique<OverlayStrategyFullscreen>(this));
+    strategies->push_back(base::MakeUnique<OverlayStrategyFullscreen>(this));
   }
   bool AllowCALayerOverlays() override { return false; }
   bool AllowDCLayerOverlays() override { return false; }
@@ -86,8 +85,8 @@ class SingleOverlayValidator : public OverlayCandidateValidator {
   SingleOverlayValidator() : expected_rects_(1, gfx::RectF(kOverlayRect)) {}
 
   void GetStrategies(OverlayProcessor::StrategyList* strategies) override {
-    strategies->push_back(std::make_unique<OverlayStrategySingleOnTop>(this));
-    strategies->push_back(std::make_unique<OverlayStrategyUnderlay>(this));
+    strategies->push_back(base::MakeUnique<OverlayStrategySingleOnTop>(this));
+    strategies->push_back(base::MakeUnique<OverlayStrategyUnderlay>(this));
   }
 
   bool AllowCALayerOverlays() override { return false; }
@@ -149,21 +148,21 @@ class DCLayerValidator : public OverlayCandidateValidator {
 class SingleOnTopOverlayValidator : public SingleOverlayValidator {
  public:
   void GetStrategies(OverlayProcessor::StrategyList* strategies) override {
-    strategies->push_back(std::make_unique<OverlayStrategySingleOnTop>(this));
+    strategies->push_back(base::MakeUnique<OverlayStrategySingleOnTop>(this));
   }
 };
 
 class UnderlayOverlayValidator : public SingleOverlayValidator {
  public:
   void GetStrategies(OverlayProcessor::StrategyList* strategies) override {
-    strategies->push_back(std::make_unique<OverlayStrategyUnderlay>(this));
+    strategies->push_back(base::MakeUnique<OverlayStrategyUnderlay>(this));
   }
 };
 
 class UnderlayCastOverlayValidator : public SingleOverlayValidator {
  public:
   void GetStrategies(OverlayProcessor::StrategyList* strategies) override {
-    strategies->push_back(std::make_unique<OverlayStrategyUnderlayCast>(this));
+    strategies->push_back(base::MakeUnique<OverlayStrategyUnderlayCast>(this));
   }
 };
 
@@ -292,7 +291,6 @@ TextureDrawQuad* CreateCandidateQuadAt(ResourceProvider* resource_provider,
                                        const SharedQuadState* shared_quad_state,
                                        RenderPass* render_pass,
                                        const gfx::Rect& rect) {
-  bool needs_blending = false;
   bool premultiplied_alpha = false;
   bool flipped = false;
   bool nearest_neighbor = false;
@@ -304,10 +302,10 @@ TextureDrawQuad* CreateCandidateQuadAt(ResourceProvider* resource_provider,
 
   TextureDrawQuad* overlay_quad =
       render_pass->CreateAndAppendDrawQuad<TextureDrawQuad>();
-  overlay_quad->SetNew(shared_quad_state, rect, rect, needs_blending,
-                       resource_id, premultiplied_alpha, kUVTopLeft,
-                       kUVBottomRight, SK_ColorTRANSPARENT, vertex_opacity,
-                       flipped, nearest_neighbor, false);
+  overlay_quad->SetNew(shared_quad_state, rect, rect, rect, resource_id,
+                       premultiplied_alpha, kUVTopLeft, kUVBottomRight,
+                       SK_ColorTRANSPARENT, vertex_opacity, flipped,
+                       nearest_neighbor, false);
   overlay_quad->set_resource_size_in_pixels(resource_size_in_pixels);
 
   return overlay_quad;
@@ -318,7 +316,7 @@ TextureDrawQuad* CreateTransparentCandidateQuadAt(
     const SharedQuadState* shared_quad_state,
     RenderPass* render_pass,
     const gfx::Rect& rect) {
-  bool needs_blending = true;
+  gfx::Rect opaque_rect = gfx::Rect();
   bool premultiplied_alpha = false;
   bool flipped = false;
   bool nearest_neighbor = false;
@@ -330,10 +328,10 @@ TextureDrawQuad* CreateTransparentCandidateQuadAt(
 
   TextureDrawQuad* overlay_quad =
       render_pass->CreateAndAppendDrawQuad<TextureDrawQuad>();
-  overlay_quad->SetNew(shared_quad_state, rect, rect, needs_blending,
-                       resource_id, premultiplied_alpha, kUVTopLeft,
-                       kUVBottomRight, SK_ColorTRANSPARENT, vertex_opacity,
-                       flipped, nearest_neighbor, false);
+  overlay_quad->SetNew(shared_quad_state, rect, opaque_rect, rect, resource_id,
+                       premultiplied_alpha, kUVTopLeft, kUVBottomRight,
+                       SK_ColorTRANSPARENT, vertex_opacity, flipped,
+                       nearest_neighbor, false);
   overlay_quad->set_resource_size_in_pixels(resource_size_in_pixels);
 
   return overlay_quad;
@@ -345,7 +343,6 @@ StreamVideoDrawQuad* CreateCandidateVideoQuadAt(
     RenderPass* render_pass,
     const gfx::Rect& rect,
     const gfx::Transform& transform) {
-  bool needs_blending = false;
   gfx::Size resource_size_in_pixels = rect.size();
   bool is_overlay_candidate = true;
   viz::ResourceId resource_id = CreateResource(
@@ -353,8 +350,8 @@ StreamVideoDrawQuad* CreateCandidateVideoQuadAt(
 
   StreamVideoDrawQuad* overlay_quad =
       render_pass->CreateAndAppendDrawQuad<StreamVideoDrawQuad>();
-  overlay_quad->SetNew(shared_quad_state, rect, rect, needs_blending,
-                       resource_id, resource_size_in_pixels, transform);
+  overlay_quad->SetNew(shared_quad_state, rect, rect, rect, resource_id,
+                       resource_size_in_pixels, transform);
 
   return overlay_quad;
 }
@@ -381,7 +378,6 @@ YUVVideoDrawQuad* CreateFullscreenCandidateYUVVideoQuad(
     ResourceProvider* resource_provider,
     const SharedQuadState* shared_quad_state,
     RenderPass* render_pass) {
-  bool needs_blending = false;
   gfx::RectF tex_coord_rect(0, 0, 1, 1);
   gfx::Rect rect = render_pass->output_rect;
   gfx::Size resource_size_in_pixels = rect.size();
@@ -391,8 +387,8 @@ YUVVideoDrawQuad* CreateFullscreenCandidateYUVVideoQuad(
 
   YUVVideoDrawQuad* overlay_quad =
       render_pass->CreateAndAppendDrawQuad<YUVVideoDrawQuad>();
-  overlay_quad->SetNew(shared_quad_state, rect, rect, needs_blending,
-                       tex_coord_rect, tex_coord_rect, resource_size_in_pixels,
+  overlay_quad->SetNew(shared_quad_state, rect, rect, rect, tex_coord_rect,
+                       tex_coord_rect, resource_size_in_pixels,
                        resource_size_in_pixels, resource_id, resource_id,
                        resource_id, resource_id, YUVVideoDrawQuad::REC_601,
                        gfx::ColorSpace(), 0, 1.0, 8);
@@ -465,13 +461,13 @@ class OverlayTest : public testing::Test {
   void SetUp() override {
     provider_ = TestContextProvider::Create();
     provider_->BindToCurrentThread();
-    output_surface_ = std::make_unique<OutputSurfaceType>(provider_);
+    output_surface_ = base::MakeUnique<OutputSurfaceType>(provider_);
     output_surface_->BindToClient(&client_);
     output_surface_->SetOverlayCandidateValidator(
         new OverlayCandidateValidatorType);
 
     shared_bitmap_manager_.reset(new TestSharedBitmapManager());
-    resource_provider_ = FakeResourceProvider::Create<DisplayResourceProvider>(
+    resource_provider_ = FakeResourceProvider::Create(
         provider_.get(), shared_bitmap_manager_.get());
 
     overlay_processor_.reset(new OverlayProcessor(output_surface_.get()));
@@ -482,7 +478,7 @@ class OverlayTest : public testing::Test {
   std::unique_ptr<OutputSurfaceType> output_surface_;
   FakeOutputSurfaceClient client_;
   std::unique_ptr<viz::SharedBitmapManager> shared_bitmap_manager_;
-  std::unique_ptr<DisplayResourceProvider> resource_provider_;
+  std::unique_ptr<ResourceProvider> resource_provider_;
   std::unique_ptr<OverlayProcessor> overlay_processor_;
   gfx::Rect damage_rect_;
   std::vector<gfx::Rect> content_bounds_;
@@ -513,9 +509,8 @@ TEST(OverlayTest, OverlaysProcessorHasStrategy) {
 
   std::unique_ptr<viz::SharedBitmapManager> shared_bitmap_manager(
       new TestSharedBitmapManager());
-  std::unique_ptr<DisplayResourceProvider> resource_provider =
-      FakeResourceProvider::Create<DisplayResourceProvider>(
-          provider.get(), shared_bitmap_manager.get());
+  std::unique_ptr<ResourceProvider> resource_provider =
+      FakeResourceProvider::Create(provider.get(), shared_bitmap_manager.get());
 
   std::unique_ptr<DefaultOverlayProcessor> overlay_processor(
       new DefaultOverlayProcessor(&output_surface));
@@ -906,6 +901,7 @@ TEST_F(SingleOverlayOnTopTest, AcceptBlending) {
                                     pass->shared_quad_state_list.back(),
                                     pass.get());
   quad->needs_blending = true;
+  quad->opaque_rect = gfx::Rect(0, 0, 0, 0);
 
   OverlayCandidateList candidate_list;
   OverlayProcessor::FilterOperationsMap render_pass_filters;
@@ -1278,8 +1274,8 @@ TEST_F(SingleOverlayOnTopTest, RejectTransparentColorOnTopWithoutBlending) {
   std::unique_ptr<RenderPass> pass = CreateRenderPass();
   SharedQuadState* shared_state = pass->CreateAndAppendSharedQuadState();
   CreateSolidColorQuadAt(shared_state, SK_ColorTRANSPARENT, pass.get(),
-                         kOverlayBottomRightRect)
-      ->needs_blending = false;
+                         kOverlayBottomRightRect)->opaque_rect =
+      kOverlayBottomRightRect;
   CreateCandidateQuadAt(resource_provider_.get(), shared_state, pass.get(),
                         kOverlayBottomRightRect);
 
@@ -1413,6 +1409,7 @@ TEST_F(UnderlayTest, OverlayLayerUnderMainLayer) {
   EXPECT_EQ(main_pass->quad_list.back()->material, DrawQuad::SOLID_COLOR);
   SolidColorDrawQuad* quad =
       static_cast<SolidColorDrawQuad*>(main_pass->quad_list.back());
+  EXPECT_EQ(quad->rect, quad->opaque_rect);
   EXPECT_EQ(quad->rect, quad->visible_rect);
   EXPECT_EQ(false, quad->needs_blending);
   EXPECT_EQ(SK_ColorTRANSPARENT, quad->color);
@@ -1443,6 +1440,7 @@ TEST_F(UnderlayTest, AllowOnTop) {
   EXPECT_EQ(main_pass->quad_list.front()->material, DrawQuad::SOLID_COLOR);
   SolidColorDrawQuad* quad =
       static_cast<SolidColorDrawQuad*>(main_pass->quad_list.front());
+  EXPECT_EQ(quad->rect, quad->opaque_rect);
   EXPECT_EQ(quad->rect, quad->visible_rect);
   EXPECT_EQ(false, quad->needs_blending);
   EXPECT_EQ(SK_ColorTRANSPARENT, quad->color);
@@ -2274,7 +2272,7 @@ class OverlayInfoRendererGL : public viz::GLRenderer {
  public:
   OverlayInfoRendererGL(const viz::RendererSettings* settings,
                         OutputSurface* output_surface,
-                        DisplayResourceProvider* resource_provider)
+                        ResourceProvider* resource_provider)
       : viz::GLRenderer(settings, output_surface, resource_provider, NULL),
         expect_overlays_(false) {}
 
@@ -2326,8 +2324,7 @@ class GLRendererWithOverlaysTest : public testing::Test {
     provider_->BindToCurrentThread();
     output_surface_.reset(new OutputSurfaceType(provider_));
     output_surface_->BindToClient(&output_surface_client_);
-    resource_provider_ = FakeResourceProvider::Create<DisplayResourceProvider>(
-        provider_.get(), nullptr);
+    resource_provider_ = FakeResourceProvider::Create(provider_.get(), nullptr);
 
     provider_->support()->SetScheduleOverlayPlaneCallback(base::Bind(
         &MockOverlayScheduler::Schedule, base::Unretained(&scheduler_)));
@@ -2337,7 +2334,7 @@ class GLRendererWithOverlaysTest : public testing::Test {
     if (use_validator)
       output_surface_->SetOverlayCandidateValidator(new SingleOverlayValidator);
 
-    renderer_ = std::make_unique<OverlayInfoRendererGL>(
+    renderer_ = base::MakeUnique<OverlayInfoRendererGL>(
         &settings_, output_surface_.get(), resource_provider_.get());
     renderer_->Initialize();
     renderer_->SetVisible(true);
@@ -2369,7 +2366,7 @@ class GLRendererWithOverlaysTest : public testing::Test {
   viz::RendererSettings settings_;
   FakeOutputSurfaceClient output_surface_client_;
   std::unique_ptr<OutputSurfaceType> output_surface_;
-  std::unique_ptr<DisplayResourceProvider> resource_provider_;
+  std::unique_ptr<ResourceProvider> resource_provider_;
   std::unique_ptr<OverlayInfoRendererGL> renderer_;
   scoped_refptr<TestContextProvider> provider_;
   MockOverlayScheduler scheduler_;

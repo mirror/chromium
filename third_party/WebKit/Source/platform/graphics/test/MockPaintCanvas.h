@@ -33,6 +33,10 @@ class MockPaintCanvas : public PaintCanvas {
                void(const SkRRect& rrect, SkClipOp op, bool do_anti_alias));
   MOCK_METHOD3(clipPath,
                void(const SkPath& path, SkClipOp op, bool do_anti_alias));
+  MOCK_METHOD3(clipDeviceRect,
+               void(const SkIRect& device_rect,
+                    const SkIRect& subtract_rect,
+                    SkClipOp op));
   MOCK_CONST_METHOD1(quickReject, bool(const SkRect& rect));
   MOCK_CONST_METHOD1(quickReject, bool(const SkPath& path));
   MOCK_CONST_METHOD0(getLocalClipBounds, SkRect());
@@ -54,6 +58,12 @@ class MockPaintCanvas : public PaintCanvas {
   MOCK_METHOD3(drawDRRect,
                void(const SkRRect& outer,
                     const SkRRect& inner,
+                    const PaintFlags& flags));
+  MOCK_METHOD5(drawArc,
+               void(const SkRect& oval,
+                    SkScalar start_angle,
+                    SkScalar sweep_angle,
+                    bool use_center,
                     const PaintFlags& flags));
   MOCK_METHOD4(drawRoundRect,
                void(const SkRect& rect,

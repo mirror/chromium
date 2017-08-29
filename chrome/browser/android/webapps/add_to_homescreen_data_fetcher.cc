@@ -216,8 +216,7 @@ void AddToHomescreenDataFetcher::OnDataTimedout() {
 
   if (check_webapk_compatibility_)
     observer_->OnDidDetermineWebApkCompatibility(false);
-  observer_->OnUserTitleAvailable(shortcut_info_.user_title,
-                                  shortcut_info_.url);
+  observer_->OnUserTitleAvailable(shortcut_info_.user_title);
 
   CreateLauncherIcon(raw_primary_icon_);
 }
@@ -238,8 +237,7 @@ void AddToHomescreenDataFetcher::OnDidGetManifestAndIcons(
   if (data.manifest.IsEmpty() || !data.primary_icon) {
     if (check_webapk_compatibility_)
       observer_->OnDidDetermineWebApkCompatibility(false);
-    observer_->OnUserTitleAvailable(shortcut_info_.user_title,
-                                    shortcut_info_.url);
+    observer_->OnUserTitleAvailable(shortcut_info_.user_title);
     data_timeout_timer_.Stop();
     FetchFavicon();
     return;
@@ -283,9 +281,7 @@ void AddToHomescreenDataFetcher::OnDidPerformInstallableCheck(
     observer_->OnDidDetermineWebApkCompatibility(webapk_compatible);
   }
 
-  observer_->OnUserTitleAvailable(
-      webapk_compatible ? shortcut_info_.name : shortcut_info_.user_title,
-      shortcut_info_.url);
+  observer_->OnUserTitleAvailable(shortcut_info_.user_title);
   if (webapk_compatible) {
     shortcut_info_.UpdateSource(ShortcutInfo::SOURCE_ADD_TO_HOMESCREEN_PWA);
     NotifyObserver(std::make_pair(raw_primary_icon_, false /* is_generated */));

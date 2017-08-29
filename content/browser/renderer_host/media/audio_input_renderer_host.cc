@@ -7,7 +7,6 @@
 #include <utility>
 
 #include "base/bind.h"
-#include "base/callback.h"
 #include "base/command_line.h"
 #include "base/files/file.h"
 #include "base/memory/shared_memory.h"
@@ -75,13 +74,15 @@ struct AudioInputRendererHost::AudioEntry {
   // Set to true after we called Close() for the controller.
   bool pending_close;
 
-#if defined(OS_CHROMEOS)
-  AudioInputDeviceManager::KeyboardMicRegistration keyboard_mic_registration;
-#endif
+  // If this entry's layout has a keyboard mic channel.
+  bool has_keyboard_mic;
 };
 
 AudioInputRendererHost::AudioEntry::AudioEntry()
-    : stream_id(0), pending_close(false) {}
+    : stream_id(0),
+      pending_close(false),
+      has_keyboard_mic(false) {
+}
 
 AudioInputRendererHost::AudioEntry::~AudioEntry() {
 }
@@ -286,8 +287,7 @@ void AudioInputRendererHost::OnCreateStream(
             base::BindOnce(&AudioInputRendererHost::DoCreateStream, this,
                            stream_id, render_frame_id, session_id, config));
   } else {
-    DoCreateStream(stream_id, render_frame_id, session_id, config,
-                   AudioInputDeviceManager::KeyboardMicRegistration());
+    DoCreateStream(stream_id, render_frame_id, session_id, config);
   }
 #else
   DoCreateStream(stream_id, render_frame_id, session_id, config);
@@ -298,12 +298,7 @@ void AudioInputRendererHost::DoCreateStream(
     int stream_id,
     int render_frame_id,
     int session_id,
-    const AudioInputHostMsg_CreateStream_Config& config
-#if defined(OS_CHROMEOS)
-    ,
-    AudioInputDeviceManager::KeyboardMicRegistration keyboard_mic_registration
-#endif
-    ) {
+    const AudioInputHostMsg_CreateStream_Config& config) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
 
   DCHECK_GT(render_frame_id, 0);
@@ -311,6 +306,7 @@ void AudioInputRendererHost::DoCreateStream(
   // media::AudioParameters is validated in the deserializer.
   if (LookupById(stream_id)) {
     SendErrorMessage(stream_id, STREAM_ALREADY_EXISTS);
+    MaybeUnregisterKeyboardMicStream(config);
     return;
   }
 
@@ -322,6 +318,7 @@ void AudioInputRendererHost::DoCreateStream(
     SendErrorMessage(stream_id, PERMISSION_DENIED);
     DLOG(WARNING) << "No permission has been granted to input stream with "
                   << "session_id=" << session_id;
+    MaybeUnregisterKeyboardMicStream(config);
     return;
   }
 
@@ -348,6 +345,7 @@ void AudioInputRendererHost::DoCreateStream(
 
   if (!entry->writer) {
     SendErrorMessage(stream_id, SYNC_WRITER_INIT_FAILED);
+    MaybeUnregisterKeyboardMicStream(config);
     return;
   }
 
@@ -386,11 +384,15 @@ void AudioInputRendererHost::DoCreateStream(
 
   if (!entry->controller.get()) {
     SendErrorMessage(stream_id, STREAM_CREATE_ERROR);
+    MaybeUnregisterKeyboardMicStream(config);
     return;
   }
 
 #if defined(OS_CHROMEOS)
-  entry->keyboard_mic_registration = std::move(keyboard_mic_registration);
+  if (config.params.channel_layout() ==
+          media::CHANNEL_LAYOUT_STEREO_AND_KEYBOARD_MIC) {
+    entry->has_keyboard_mic = true;
+  }
 #endif
 
   const std::string log_message = oss.str();
@@ -490,6 +492,13 @@ void AudioInputRendererHost::DeleteEntry(AudioEntry* entry) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
   LogMessage(entry->stream_id, "DeleteEntry: stream is now closed", true);
 
+#if defined(OS_CHROMEOS)
+  if (entry->has_keyboard_mic) {
+    media_stream_manager_->audio_input_device_manager()
+        ->UnregisterKeyboardMicStream();
+  }
+#endif
+
   // Delete the entry when this method goes out of scope.
   std::unique_ptr<AudioEntry> entry_deleter(entry);
 
@@ -529,6 +538,17 @@ AudioInputRendererHost::AudioEntry* AudioInputRendererHost::LookupByController(
       return i->second;
   }
   return nullptr;
+}
+
+void AudioInputRendererHost::MaybeUnregisterKeyboardMicStream(
+    const AudioInputHostMsg_CreateStream_Config& config) {
+#if defined(OS_CHROMEOS)
+  if (config.params.channel_layout() ==
+      media::CHANNEL_LAYOUT_STEREO_AND_KEYBOARD_MIC) {
+    media_stream_manager_->audio_input_device_manager()
+        ->UnregisterKeyboardMicStream();
+  }
+#endif
 }
 
 #if BUILDFLAG(ENABLE_WEBRTC)

@@ -129,6 +129,7 @@ class AURA_EXPORT WindowTreeClient
   FocusSynchronizer* focus_synchronizer() { return focus_synchronizer_.get(); }
 
   bool connected() const { return tree_ != nullptr; }
+  ClientSpecificId client_id() const { return client_id_; }
 
   void SetCanFocus(Window* window, bool can_focus);
   void SetCanAcceptDrops(WindowMus* window, bool can_accept_drops);
@@ -206,22 +207,6 @@ class AURA_EXPORT WindowTreeClient
 
   bool IsWindowKnown(aura::Window* window);
 
-  // Updates the coordinates of |event| to be in DIPs. |window| is the source
-  // of the event, and may be null. A null |window| means either there is no
-  // local window the event is targeted at *or* |window| was valid at the time
-  // the event was generated at the server but was deleted locally before the
-  // event was received.
-  void ConvertPointerEventLocationToDip(int64_t display_id,
-                                        WindowMus* window,
-                                        ui::LocatedEvent* event) const;
-
-  // Variant of ConvertPointerEventLocationToDip() that is used when in
-  // the window-manager.
-  void ConvertPointerEventLocationToDipInWindowManager(
-      int64_t display_id,
-      WindowMus* window,
-      ui::LocatedEvent* event) const;
-
   // Returns the oldest InFlightChange that matches |change|.
   InFlightChange* GetOldestInFlightChangeMatching(const InFlightChange& change);
 
@@ -251,9 +236,6 @@ class AURA_EXPORT WindowTreeClient
       WindowMus* window,
       const ui::mojom::WindowData& window_data);
 
-  const WindowTreeHostMus* GetWindowTreeHostForDisplayId(
-      int64_t display_id) const;
-
   // Creates a new WindowTreeHostMus.
   std::unique_ptr<WindowTreeHostMus> CreateWindowTreeHost(
       WindowMusType window_mus_type,
@@ -282,6 +264,7 @@ class AURA_EXPORT WindowTreeClient
 
   // OnEmbed() calls into this. Exposed as a separate function for testing.
   void OnEmbedImpl(ui::mojom::WindowTree* window_tree,
+                   ClientSpecificId client_id,
                    ui::mojom::WindowDataPtr root_data,
                    int64_t display_id,
                    Id focused_window_id,
@@ -348,6 +331,7 @@ class AURA_EXPORT WindowTreeClient
 
   // Overridden from WindowTreeClient:
   void OnEmbed(
+      ClientSpecificId client_id,
       ui::mojom::WindowDataPtr root,
       ui::mojom::WindowTreePtr tree,
       int64_t display_id,
@@ -443,7 +427,7 @@ class AURA_EXPORT WindowTreeClient
       mojo::AssociatedInterfaceRequest<WindowManager> internal) override;
 
   // Overridden from WindowManager:
-  void OnConnect() override;
+  void OnConnect(ClientSpecificId client_id) override;
   void WmNewDisplayAdded(
       const display::Display& display,
       ui::mojom::WindowDataPtr root_data,
@@ -595,6 +579,10 @@ class AURA_EXPORT WindowTreeClient
 
   // This may be null in tests.
   service_manager::Connector* connector_;
+
+  // This is set once and only once when we get OnEmbed(). It gives the unique
+  // id for this client.
+  ClientSpecificId client_id_;
 
   // Id assigned to the next window created.
   ClientSpecificId next_window_id_;

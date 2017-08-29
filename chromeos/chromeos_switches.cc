@@ -202,6 +202,9 @@ const char kDisableMultiDisplayLayout[] = "disable-multi-display-layout";
 const char kDisableNetworkPortalNotification[] =
     "disable-network-portal-notification";
 
+// Disables new channel switcher UI.
+const char kDisableNewChannelSwitcherUI[] = "disable-new-channel-switcher-ui";
+
 // Disables the new Korean IME in chrome://settings/languages.
 const char kDisableNewKoreanIme[] = "disable-new-korean-ime";
 
@@ -278,7 +281,7 @@ const char kEnableFileManagerTouchMode[] = "enable-file-manager-touch-mode";
 const char kEnableFirstRunUITransitions[] = "enable-first-run-ui-transitions";
 
 // Enables action handler apps (e.g. creating new notes) on lock screen.
-const char kDisableLockScreenApps[] = "disable-lock-screen-apps";
+const char kEnableLockScreenApps[] = "enable-lock-screen-apps";
 
 // Overrides Tether with stub service. Provide integer arguments for the number
 // of fake networks desired, e.g. 'tether-stub=2'.
@@ -286,9 +289,6 @@ const char kTetherStub[] = "tether-stub";
 
 // Disables material design OOBE UI.
 const char kDisableMdOobe[] = "disable-md-oobe";
-
-// Disables material design Error screen.
-const char kDisableMdErrorScreen[] = "disable-md-error-screen";
 
 // Enables notifications about captive portals in session.
 const char kEnableNetworkPortalNotification[] =
@@ -521,9 +521,6 @@ const char kEnterpriseEnableLicenseTypeSelection[] =
 // Disables per-user timezone.
 const char kDisablePerUserTimezone[] = "disable-per-user-timezone";
 
-// Enables a rename action for external drive such as USB and SD.
-const char kEnableExternalDriveRename[] = "enable-external-drive-rename";
-
 bool WakeOnWifiEnabled() {
   return !base::CommandLine::ForCurrentProcess()->HasSwitch(kDisableWakeOnWifi);
 }
@@ -583,31 +580,23 @@ bool IsCellularFirstDevice() {
   return base::CommandLine::ForCurrentProcess()->HasSwitch(kCellularFirst);
 }
 
-bool IsVoiceInteractionLocalesSupported() {
+bool IsVoiceInteractionEnabled() {
   // TODO(updowndota): Add DCHECK here to make sure the value never changes
   // after all the use case for this method has been moved into user session.
 
   // Disable voice interaction for non-supported locales.
-  std::string kLocale = icu::Locale::getDefault().getName();
-  if (kLocale != ULOC_US && kLocale != ULOC_UK && kLocale != ULOC_CANADA &&
-      base::CommandLine::ForCurrentProcess()
+  base::CommandLine* command_line = base::CommandLine::ForCurrentProcess();
+  std::string locale = icu::Locale::getDefault().getName();
+  if (locale != ULOC_US && locale != ULOC_UK && locale != ULOC_CANADA &&
+      command_line
               ->GetSwitchValueASCII(
                   chromeos::switches::kVoiceInteractionLocales)
-              .find(kLocale) == std::string::npos) {
+              .find(locale) == std::string::npos) {
     return false;
   }
-  return true;
-}
 
-bool IsVoiceInteractionFlagsEnabled() {
-  base::CommandLine* command_line = base::CommandLine::ForCurrentProcess();
   return command_line->HasSwitch(kEnableVoiceInteraction) ||
          base::FeatureList::IsEnabled(kVoiceInteractionFeature);
-}
-
-bool IsVoiceInteractionEnabled() {
-  return IsVoiceInteractionLocalesSupported() &&
-         IsVoiceInteractionFlagsEnabled();
 }
 
 }  // namespace switches

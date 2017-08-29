@@ -31,10 +31,6 @@ SkiaTextureHolder::SkiaTextureHolder(
 
   if (!ContextProvider())
     return;
-  if (texture_holder->IsAbandoned()) {
-    Abandon();
-    return;
-  }
 
   gpu::gles2::GLES2Interface* shared_gl = ContextProvider()->ContextGL();
   GrContext* shared_gr_context = ContextProvider()->GetGrContext();
@@ -56,16 +52,6 @@ SkiaTextureHolder::SkiaTextureHolder(
 SkiaTextureHolder::~SkiaTextureHolder() {
   // Object must be destroyed on the same thread where it was created.
   DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
-}
-
-void SkiaTextureHolder::Abandon() {
-  if (image_ && image_->getTexture())
-    image_->getTexture()->abandon();
-  TextureHolder::Abandon();
-}
-
-bool SkiaTextureHolder::IsValid() const {
-  return !IsAbandoned() && !!ContextProviderWrapper();
 }
 
 }  // namespace blink

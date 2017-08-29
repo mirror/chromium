@@ -34,8 +34,13 @@ GestureEventQueue::GestureEventQueue(
       ignore_next_ack_(false),
       allow_multiple_inflight_events_(
           base::FeatureList::IsEnabled(features::kVsyncAlignedInputEvents)),
-      debounce_interval_(config.debounce_interval),
-      fling_controller_(this, touchpad_client, config.fling_config) {
+      touchpad_tap_suppression_controller_(
+          touchpad_client,
+          config.touchpad_tap_suppression_config),
+      touchscreen_tap_suppression_controller_(
+          this,
+          config.touchscreen_tap_suppression_config),
+      debounce_interval_(config.debounce_interval) {
   DCHECK(client);
   DCHECK(touchpad_client);
 }
@@ -46,7 +51,8 @@ void GestureEventQueue::QueueEvent(
     const GestureEventWithLatencyInfo& gesture_event) {
   TRACE_EVENT0("input", "GestureEventQueue::QueueEvent");
   if (!ShouldForwardForBounceReduction(gesture_event) ||
-      fling_controller_.FilterGestureEvent(gesture_event)) {
+      !ShouldForwardForGFCFiltering(gesture_event) ||
+      !ShouldForwardForTapSuppression(gesture_event)) {
     return;
   }
 
@@ -106,6 +112,43 @@ bool GestureEventQueue::ShouldForwardForBounceReduction(
         debouncing_deferral_queue_.push_back(gesture_event);
         return false;
       }
+      return true;
+  }
+}
+
+bool GestureEventQueue::ShouldForwardForGFCFiltering(
+    const GestureEventWithLatencyInfo& gesture_event) const {
+  return gesture_event.event.GetType() != WebInputEvent::kGestureFlingCancel ||
+         !ShouldDiscardFlingCancelEvent(gesture_event);
+}
+
+bool GestureEventQueue::ShouldForwardForTapSuppression(
+    const GestureEventWithLatencyInfo& gesture_event) {
+  switch (gesture_event.event.GetType()) {
+    case WebInputEvent::kGestureFlingCancel:
+      if (gesture_event.event.source_device ==
+          blink::kWebGestureDeviceTouchscreen)
+        touchscreen_tap_suppression_controller_.GestureFlingCancel();
+      else if (gesture_event.event.source_device ==
+               blink::kWebGestureDeviceTouchpad)
+        touchpad_tap_suppression_controller_.GestureFlingCancel();
+      return true;
+    case WebInputEvent::kGestureTapDown:
+    case WebInputEvent::kGestureShowPress:
+    case WebInputEvent::kGestureTapUnconfirmed:
+    case WebInputEvent::kGestureTapCancel:
+    case WebInputEvent::kGestureTap:
+    case WebInputEvent::kGestureDoubleTap:
+    case WebInputEvent::kGestureLongPress:
+    case WebInputEvent::kGestureLongTap:
+    case WebInputEvent::kGestureTwoFingerTap:
+      if (gesture_event.event.source_device ==
+          blink::kWebGestureDeviceTouchscreen) {
+        return !touchscreen_tap_suppression_controller_.FilterTapEvent(
+            gesture_event);
+      }
+      return true;
+    default:
       return true;
   }
 }
@@ -224,8 +267,12 @@ void GestureEventQueue::AckGestureEventToClient(
   const bool processed = (INPUT_EVENT_ACK_STATE_CONSUMED == ack_result);
   if (event_with_latency.event.GetType() ==
       WebInputEvent::kGestureFlingCancel) {
-    fling_controller_.GestureFlingCancelAck(
-        event_with_latency.event.source_device, processed);
+    if (event_with_latency.event.source_device ==
+        blink::kWebGestureDeviceTouchscreen)
+      touchscreen_tap_suppression_controller_.GestureFlingCancelAck(processed);
+    else if (event_with_latency.event.source_device ==
+             blink::kWebGestureDeviceTouchpad)
+      touchpad_tap_suppression_controller_.GestureFlingCancelAck(processed);
   }
 }
 
@@ -258,8 +305,12 @@ void GestureEventQueue::LegacyProcessGestureAck(
 
   const bool processed = (INPUT_EVENT_ACK_STATE_CONSUMED == ack_result);
   if (type == WebInputEvent::kGestureFlingCancel) {
-    fling_controller_.GestureFlingCancelAck(
-        event_with_latency.event.source_device, processed);
+    if (event_with_latency.event.source_device ==
+        blink::kWebGestureDeviceTouchscreen)
+      touchscreen_tap_suppression_controller_.GestureFlingCancelAck(processed);
+    else if (event_with_latency.event.source_device ==
+             blink::kWebGestureDeviceTouchpad)
+      touchpad_tap_suppression_controller_.GestureFlingCancelAck(processed);
   }
   DCHECK_LT(event_index, coalesced_gesture_events_.size());
   coalesced_gesture_events_.erase(coalesced_gesture_events_.begin() +
@@ -295,7 +346,7 @@ void GestureEventQueue::LegacyProcessGestureAck(
 
 TouchpadTapSuppressionController*
     GestureEventQueue::GetTouchpadTapSuppressionController() {
-  return fling_controller_.GetTouchpadTapSuppressionController();
+  return &touchpad_tap_suppression_controller_;
 }
 
 void GestureEventQueue::FlingHasBeenHalted() {
@@ -315,7 +366,8 @@ void GestureEventQueue::SendScrollEndingEventsNow() {
   debouncing_deferral_queue.swap(debouncing_deferral_queue_);
   for (GestureQueue::const_iterator it = debouncing_deferral_queue.begin();
        it != debouncing_deferral_queue.end(); it++) {
-    if (!fling_controller_.FilterGestureEvent(*it)) {
+    if (ShouldForwardForGFCFiltering(*it) &&
+        ShouldForwardForTapSuppression(*it)) {
       QueueAndForwardIfNecessary(*it);
     }
   }

@@ -26,6 +26,8 @@
 #include "base/timer/timer.h"
 #include "chromeos/chromeos_switches.h"
 #include "components/signin/core/account_id/account_id.h"
+#include "components/user_manager/user.h"
+#include "components/user_manager/user_manager.h"
 #include "third_party/skia/include/core/SkPath.h"
 #include "ui/accessibility/ax_node_data.h"
 #include "ui/app_list/presenter/app_list.h"
@@ -460,8 +462,7 @@ gfx::Point AppListButton::GetBackButtonCenterPoint() const {
 
 void AppListButton::OnAppListVisibilityChanged(bool shown,
                                                aura::Window* root_window) {
-  aura::Window* window = GetWidget() ? GetWidget()->GetNativeWindow() : nullptr;
-  if (!window || window->GetRootWindow() != root_window)
+  if (shelf_ != Shelf::ForWindow(root_window))
     return;
 
   if (shown)
@@ -474,9 +475,6 @@ void AppListButton::OnVoiceInteractionStatusChanged(
     ash::VoiceInteractionState state) {
   voice_interaction_state_ = state;
   SchedulePaint();
-
-  if (!voice_interaction_overlay_)
-    return;
 
   switch (state) {
     case ash::VoiceInteractionState::STOPPED:
@@ -504,20 +502,13 @@ void AppListButton::OnVoiceInteractionStatusChanged(
   }
 }
 
-void AppListButton::OnVoiceInteractionEnabled(bool enabled) {
-  voice_interaction_settings_enabled_ = enabled;
-  SchedulePaint();
-}
-
 void AppListButton::OnActiveUserSessionChanged(const AccountId& account_id) {
   SchedulePaint();
-
   // If the active user is not the primary user, app list button animation will
   // be disabled.
-  const mojom::UserSession* const primary_user_session =
-      Shell::Get()->session_controller()->GetPrimaryUserSession();
-  if (!primary_user_session ||
-      account_id != primary_user_session->user_info->account_id) {
+  if (!user_manager::UserManager::IsInitialized() ||
+      account_id !=
+          user_manager::UserManager::Get()->GetPrimaryUser()->GetAccountId()) {
     is_primary_user_active_ = false;
     return;
   }
@@ -586,9 +577,9 @@ void AppListButton::GenerateAndSendBackEvent(
 }
 
 bool AppListButton::IsVoiceInteractionActive() {
-  if (voice_interaction_overlay_ &&
-      chromeos::switches::IsVoiceInteractionEnabled() &&
-      is_primary_user_active_ && voice_interaction_settings_enabled_) {
+  if (chromeos::switches::IsVoiceInteractionEnabled() &&
+      is_primary_user_active_) {
+    DCHECK(voice_interaction_overlay_);
     return true;
   }
   return false;

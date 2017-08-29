@@ -8,8 +8,8 @@
       "paintInvalidations": [
         {
           "object": "LayoutText #text",
-          "rect": [11, 35, 73, 19],
-          "reason": "selection"
+          "rect": [11, 35, 77, 19],
+          "reason": "geometry"
         },
         {
           "object": "LayoutText #text",
@@ -50,11 +50,11 @@
     },
     {
       "object": "LayoutText #text",
-      "reason": "selection"
+      "reason": "geometry"
     },
     {
       "object": "InlineTextBox 'Second cell'",
-      "reason": "selection"
+      "reason": "geometry"
     }
   ]
 }

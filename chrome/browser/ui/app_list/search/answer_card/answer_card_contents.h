@@ -60,12 +60,16 @@ class AnswerCardContents {
 
  protected:
   Delegate* delegate() const { return delegate_; }
+  // Notifies registered results about a mouse event.
+  void SetIsMouseInView(bool mouse_is_inside);
 
  private:
   // Results receiving input events.
   base::ObserverList<AnswerCardResult> results_;
   // Unowned delegate that handles content-related events.
   Delegate* delegate_ = nullptr;
+  // Whether the mouse is in |view()|.
+  bool mouse_is_in_view_ = false;
 
   DISALLOW_COPY_AND_ASSIGN(AnswerCardContents);
 };

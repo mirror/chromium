@@ -69,7 +69,6 @@ class GeolocationPermissionContextAndroid
 
  private:
   friend class GeolocationPermissionContextTests;
-  friend class PermissionManagerTest;
 
   static void AddDayOffsetForTesting(int days);
   static void SetDSEOriginForTesting(const char* dse_origin);

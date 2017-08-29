@@ -26,6 +26,10 @@ namespace {
 // device ID, power-line frequency, noise reduction, resolution and frame rate.
 const int kNumDefaultDistanceEntries = 5;
 
+// The default resolution to be preferred as tie-breaking criterion.
+const int kDefaultResolutionArea = MediaStreamVideoSource::kDefaultWidth *
+                                   MediaStreamVideoSource::kDefaultHeight;
+
 // The minimum aspect ratio to be supported by sources.
 const double kMinSourceAspectRatio = 0.05;
 
@@ -724,12 +728,13 @@ void AppendDistanceFromDefault(
       candidate.noise_reduction() ? HUGE_VAL : 0.0;
   distance_vector->push_back(noise_reduction_distance);
 
-  // Prefer a resolution closest to the default.
-  double resolution_distance = ResolutionSet::Point::SquareEuclideanDistance(
-      ResolutionSet::Point(candidate.format().frame_size.height(),
-                           candidate.format().frame_size.width()),
-      ResolutionSet::Point(MediaStreamVideoSource::kDefaultHeight,
-                           MediaStreamVideoSource::kDefaultWidth));
+  // Prefer a resolution with area close to the default.
+  int candidate_area = candidate.format().frame_size.GetArea();
+  double resolution_distance =
+      candidate_area == kDefaultResolutionArea
+          ? 0.0
+          : NumericConstraintFitnessDistance(candidate_area,
+                                             kDefaultResolutionArea);
   distance_vector->push_back(resolution_distance);
 
   // Prefer a frame rate close to the default.

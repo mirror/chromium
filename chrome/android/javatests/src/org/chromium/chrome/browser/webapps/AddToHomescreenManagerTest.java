@@ -7,6 +7,7 @@ package org.chromium.chrome.browser.webapps;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.support.test.InstrumentationRegistry;
 import android.support.test.filters.SmallTest;
 import android.text.TextUtils;
 
@@ -35,7 +36,7 @@ import org.chromium.chrome.test.util.browser.TabTitleObserver;
 import org.chromium.content.browser.test.util.Criteria;
 import org.chromium.content.browser.test.util.CriteriaHelper;
 import org.chromium.content.common.ContentSwitches;
-import org.chromium.net.test.EmbeddedTestServerRule;
+import org.chromium.net.test.EmbeddedTestServer;
 
 import java.util.concurrent.Callable;
 
@@ -50,9 +51,6 @@ public class AddToHomescreenManagerTest {
     @Rule
     public ChromeActivityTestRule<ChromeActivity> mActivityTestRule =
             new ChromeActivityTestRule<>(ChromeActivity.class);
-
-    @Rule
-    public EmbeddedTestServerRule mTestServerRule = new EmbeddedTestServerRule();
 
     private static final String WEBAPP_ACTION_NAME = "WEBAPP_ACTION";
 
@@ -155,8 +153,7 @@ public class AddToHomescreenManagerTest {
         public void showDialog() {
             AddToHomescreenManager.Observer observer = new AddToHomescreenManager.Observer() {
                 @Override
-                public void onUserTitleAvailable(
-                        String title, String url, boolean isTitleEditable) {
+                public void onUserTitleAvailable(String title) {
                     if (TextUtils.isEmpty(mTitle)) {
                         mTitle = title;
                     }
@@ -172,6 +169,7 @@ public class AddToHomescreenManagerTest {
         }
     }
 
+    private EmbeddedTestServer mTestServer;
     private ChromeActivity mActivity;
     private Tab mTab;
     private TestShortcutHelperDelegate mShortcutHelperDelegate;
@@ -179,6 +177,8 @@ public class AddToHomescreenManagerTest {
     @Before
     public void setUp() throws Exception {
         mActivityTestRule.startMainActivityOnBlankPage();
+        mTestServer = EmbeddedTestServer.createAndStartServer(
+                InstrumentationRegistry.getInstrumentation().getContext());
         mShortcutHelperDelegate = new TestShortcutHelperDelegate();
         ShortcutHelper.setDelegateForTests(mShortcutHelperDelegate);
         mActivity = mActivityTestRule.getActivity();
@@ -274,27 +274,32 @@ public class AddToHomescreenManagerTest {
             // TODO(yfriedman): Force WebApks off as this tests old A2HS behaviour.
             "disable-field-trial-config"})
     public void testAddWebappShortcutSplashScreenIcon() throws Exception {
-        // Sets the overridden factory to observe splash screen update.
-        final TestDataStorageFactory dataStorageFactory = new TestDataStorageFactory();
-        WebappDataStorage.setFactoryForTests(dataStorageFactory);
+        try {
+            // Sets the overriden factory to observer splash screen update.
+            final TestDataStorageFactory dataStorageFactory = new TestDataStorageFactory();
+            WebappDataStorage.setFactoryForTests(dataStorageFactory);
 
-        loadUrl(mTestServerRule.getServer().getURL(MANIFEST_PATH), MANIFEST_TITLE);
-        addShortcutToTab(mTab, "", true);
+            loadUrl(mTestServer.getURL(MANIFEST_PATH), MANIFEST_TITLE);
+            addShortcutToTab(mTab, "", true);
 
-        // Make sure that the splash screen image was downloaded.
-        CriteriaHelper.pollUiThread(new Criteria() {
-            @Override
-            public boolean isSatisfied() {
-                return dataStorageFactory.mSplashImage != null;
-            }
-        });
+            // Make sure that the splash screen image was downloaded.
+            CriteriaHelper.pollUiThread(new Criteria() {
+                @Override
+                public boolean isSatisfied() {
+                    return dataStorageFactory.mSplashImage != null;
+                }
+            });
 
-        // Test that bitmap sizes match expectations.
-        int idealSize = mActivity.getResources().getDimensionPixelSize(
-                R.dimen.webapp_splash_image_size_ideal);
-        Bitmap splashImage = ShortcutHelper.decodeBitmapFromString(dataStorageFactory.mSplashImage);
-        Assert.assertEquals(idealSize, splashImage.getWidth());
-        Assert.assertEquals(idealSize, splashImage.getHeight());
+            // Test that bitmap sizes match expectations.
+            int idealSize = mActivity.getResources().getDimensionPixelSize(
+                    R.dimen.webapp_splash_image_size_ideal);
+            Bitmap splashImage =
+                    ShortcutHelper.decodeBitmapFromString(dataStorageFactory.mSplashImage);
+            Assert.assertEquals(idealSize, splashImage.getWidth());
+            Assert.assertEquals(idealSize, splashImage.getHeight());
+        } finally {
+            mTestServer.stopAndDestroyServer();
+        }
     }
 
     /** Tests that the appinstalled event is fired when an app is installed.
@@ -303,13 +308,17 @@ public class AddToHomescreenManagerTest {
     @SmallTest
     @Feature("{Webapp}")
     public void testAddWebappShortcutAppInstalledEvent() throws Exception {
-        loadUrl(mTestServerRule.getServer().getURL(EVENT_WEBAPP_PATH), EVENT_WEBAPP_TITLE);
-        addShortcutToTab(mTab, "", true);
+        try {
+            loadUrl(mTestServer.getURL(EVENT_WEBAPP_PATH), EVENT_WEBAPP_TITLE);
+            addShortcutToTab(mTab, "", true);
 
-        // Wait for the tab title to change. This will happen (due to the JavaScript that runs
-        // in the page) once the appinstalled event has been fired twice: once to test
-        // addEventListener('appinstalled'), once to test onappinstalled attribute.
-        new TabTitleObserver(mTab, "Got appinstalled: listener, attr").waitForTitleUpdate(3);
+            // Wait for the tab title to change. This will happen (due to the JavaScript that runs
+            // in the page) once the appinstalled event has been fired twice: once to test
+            // addEventListener('appinstalled'), once to test onappinstalled attribute.
+            new TabTitleObserver(mTab, "Got appinstalled: listener, attr").waitForTitleUpdate(3);
+        } finally {
+            mTestServer.stopAndDestroyServer();
+        }
     }
 
     private void loadUrl(String url, String expectedPageTitle) throws Exception {

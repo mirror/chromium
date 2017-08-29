@@ -16,12 +16,9 @@
 #include "components/offline_pages/core/prefetch/prefetch_types.h"
 #include "components/offline_pages/core/prefetch/store/prefetch_store_test_util.h"
 #include "components/offline_pages/core/prefetch/task_test_base.h"
-#include "components/offline_pages/core/prefetch/test_prefetch_dispatcher.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 namespace offline_pages {
-
-using Result = StaleEntryFinalizerTask::Result;
 
 std::set<PrefetchItem> Filter(const std::set<PrefetchItem>& items,
                               PrefetchItemState state) {
@@ -44,18 +41,14 @@ class StaleEntryFinalizerTaskTest : public TaskTestBase {
   PrefetchItem CreateAndInsertItem(PrefetchItemState state,
                                    int hours_in_the_past);
 
-  TestPrefetchDispatcher* dispatcher() { return &dispatcher_; }
-
  protected:
-  TestPrefetchDispatcher dispatcher_;
   std::unique_ptr<StaleEntryFinalizerTask> stale_finalizer_task_;
   base::Time fake_now_;
 };
 
 void StaleEntryFinalizerTaskTest::SetUp() {
   TaskTestBase::SetUp();
-  stale_finalizer_task_ =
-      base::MakeUnique<StaleEntryFinalizerTask>(dispatcher(), store());
+  stale_finalizer_task_ = base::MakeUnique<StaleEntryFinalizerTask>(store());
   fake_now_ = base::Time() + base::TimeDelta::FromDays(100);
   stale_finalizer_task_->SetNowGetterForTesting(base::BindRepeating(
       [](base::Time t) -> base::Time { return t; }, fake_now_));
@@ -86,7 +79,7 @@ TEST_F(StaleEntryFinalizerTaskTest, EmptyRun) {
   ExpectTaskCompletes(stale_finalizer_task_.get());
   stale_finalizer_task_->Run();
   RunUntilIdle();
-  EXPECT_EQ(Result::NO_MORE_WORK, stale_finalizer_task_->final_status());
+  EXPECT_TRUE(stale_finalizer_task_->ran_successfully());
   EXPECT_EQ(0U, store_util()->GetAllItems(&no_items));
 }
 
@@ -130,7 +123,7 @@ TEST_F(StaleEntryFinalizerTaskTest, HandlesFreshnessTimesCorrectly) {
   ExpectTaskCompletes(stale_finalizer_task_.get());
   stale_finalizer_task_->Run();
   RunUntilIdle();
-  EXPECT_EQ(Result::MORE_WORK_NEEDED, stale_finalizer_task_->final_status());
+  EXPECT_TRUE(stale_finalizer_task_->ran_successfully());
 
   // Create the expected finished version of each stale item.
   PrefetchItem b1_item2_finished(b1_item2_stale);
@@ -183,7 +176,7 @@ TEST_F(StaleEntryFinalizerTaskTest, HandlesStalesInAllStatesCorrectly) {
   ExpectTaskCompletes(stale_finalizer_task_.get());
   stale_finalizer_task_->Run();
   RunUntilIdle();
-  EXPECT_EQ(Result::MORE_WORK_NEEDED, stale_finalizer_task_->final_status());
+  EXPECT_TRUE(stale_finalizer_task_->ran_successfully());
 
   // Checks item counts for states expected to still exist.
   std::set<PrefetchItem> post_items;
@@ -197,48 +190,6 @@ TEST_F(StaleEntryFinalizerTaskTest, HandlesStalesInAllStatesCorrectly) {
   EXPECT_EQ(1U, Filter(post_items, PrefetchItemState::IMPORTING).size());
   EXPECT_EQ(6U, Filter(post_items, PrefetchItemState::FINISHED).size());
   EXPECT_EQ(1U, Filter(post_items, PrefetchItemState::ZOMBIE).size());
-}
-
-TEST_F(StaleEntryFinalizerTaskTest, NoWorkInQueue) {
-  CreateAndInsertItem(PrefetchItemState::AWAITING_GCM, 0);
-  CreateAndInsertItem(PrefetchItemState::ZOMBIE, 0);
-
-  ExpectTaskCompletes(stale_finalizer_task_.get());
-  stale_finalizer_task_->Run();
-  RunUntilIdle();
-  EXPECT_EQ(Result::NO_MORE_WORK, stale_finalizer_task_->final_status());
-  EXPECT_EQ(0, dispatcher()->task_schedule_count);
-}
-
-TEST_F(StaleEntryFinalizerTaskTest, WorkInQueue) {
-  std::vector<PrefetchItemState> work_states = {
-      PrefetchItemState::NEW_REQUEST,
-      PrefetchItemState::SENT_GENERATE_PAGE_BUNDLE,
-      PrefetchItemState::RECEIVED_GCM,
-      PrefetchItemState::SENT_GET_OPERATION,
-      PrefetchItemState::RECEIVED_BUNDLE,
-      PrefetchItemState::DOWNLOADING,
-      PrefetchItemState::DOWNLOADED,
-      PrefetchItemState::IMPORTING,
-      PrefetchItemState::FINISHED};
-
-  for (auto& state : work_states) {
-    store_util()->DeleteStore();
-    store_util()->BuildStoreInMemory();
-    dispatcher()->task_schedule_count = 0;
-
-    PrefetchItem item = item_generator()->CreateItem(state);
-    ASSERT_TRUE(store_util()->InsertPrefetchItem(item))
-        << "Failed inserting item with state " << static_cast<int>(state);
-
-    StaleEntryFinalizerTask task(dispatcher(), store());
-    ExpectTaskCompletes(&task);
-    task.Run();
-    RunUntilIdle();
-    EXPECT_EQ(Result::MORE_WORK_NEEDED, task.final_status());
-
-    EXPECT_EQ(1, dispatcher()->task_schedule_count);
-  }
 }
 
 }  // namespace offline_pages

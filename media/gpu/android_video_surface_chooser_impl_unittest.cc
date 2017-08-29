@@ -43,11 +43,6 @@ class MockClient {
   // Note that this won't clear |overlay_|, which is helpful.
   MOCK_METHOD0(UseSurfaceTexture, void(void));
 
-  // Let the test have the overlay.
-  std::unique_ptr<AndroidOverlay> ReleaseOverlay() {
-    return std::move(overlay_);
-  }
-
  private:
   std::unique_ptr<AndroidOverlay> overlay_;
 };
@@ -59,7 +54,6 @@ class MockClient {
 enum class ShouldUseOverlay { No, Yes };
 enum class AllowDynamic { No, Yes };
 enum class IsFullscreen { No, Yes };
-enum class IsRequired { No, Yes };
 enum class IsSecure { No, Yes };
 enum class IsFrameHidden { No, Yes };
 enum class IsCCPromotable { No, Yes };
@@ -67,7 +61,6 @@ enum class IsExpectingRelayout { No, Yes };
 
 using TestParams = std::tuple<ShouldUseOverlay,
                               AllowDynamic,
-                              IsRequired,
                               IsFullscreen,
                               IsSecure,
                               IsFrameHidden,
@@ -306,34 +299,6 @@ TEST_F(AndroidVideoSurfaceChooserImplTest,
   overlay_callbacks_.OverlayReady.Run();
 }
 
-TEST_F(AndroidVideoSurfaceChooserImplTest,
-       UpdateStateAfterDeleteRetriesOverlay) {
-  // Make sure that SurfaceChooser notices that we delete the overlay, and have
-  // switched back to SurfaceTexture mode.
-
-  chooser_state_.is_fullscreen = true;
-  EXPECT_CALL(*this, MockOnOverlayCreated());
-  StartChooser(FactoryFor(std::move(overlay_)));
-  EXPECT_CALL(client_, UseOverlay(NotNull()));
-  overlay_callbacks_.OverlayReady.Run();
-
-  // Delete the overlay.
-  destruction_observer_ = nullptr;
-  client_.ReleaseOverlay();
-
-  // Force chooser to choose again.  We expect that it will retry the overlay,
-  // since the delete should have informed it that we've switched back to
-  // SurfaceTexture without a callback from SurfaceChooser.  If it didn't know
-  // this, then it would think that the client is still using an overlay, and
-  // take no action.
-
-  // Note that if it enforces a delay here before retrying, that might be okay
-  // too.  For now, we assume that it doesn't.
-  EXPECT_CALL(*this, MockOnOverlayCreated());
-  chooser_->UpdateState(base::Optional<AndroidOverlayFactoryCB>(),
-                        chooser_state_);
-}
-
 TEST_P(AndroidVideoSurfaceChooserImplTest, OverlayIsUsedOrNotBasedOnState) {
   // Provide a factory, and verify that it is used when the state says that it
   // should be.  If the overlay is used, then we also verify that it does not
@@ -341,12 +306,11 @@ TEST_P(AndroidVideoSurfaceChooserImplTest, OverlayIsUsedOrNotBasedOnState) {
 
   const bool should_use_overlay = IsYes(ShouldUseOverlay, 0);
   allow_dynamic_ = IsYes(AllowDynamic, 1);
-  chooser_state_.is_required = IsYes(IsRequired, 2);
-  chooser_state_.is_fullscreen = IsYes(IsFullscreen, 3);
-  chooser_state_.is_secure = IsYes(IsSecure, 4);
-  chooser_state_.is_frame_hidden = IsYes(IsFrameHidden, 5);
-  chooser_state_.is_compositor_promotable = IsYes(IsCCPromotable, 6);
-  chooser_state_.is_expecting_relayout = IsYes(IsExpectingRelayout, 7);
+  chooser_state_.is_fullscreen = IsYes(IsFullscreen, 2);
+  chooser_state_.is_secure = IsYes(IsSecure, 3);
+  chooser_state_.is_frame_hidden = IsYes(IsFrameHidden, 4);
+  chooser_state_.is_compositor_promotable = IsYes(IsCCPromotable, 5);
+  chooser_state_.is_expecting_relayout = IsYes(IsExpectingRelayout, 6);
 
   if (should_use_overlay) {
     EXPECT_CALL(client_, UseSurfaceTexture()).Times(0);
@@ -369,85 +333,62 @@ INSTANTIATE_TEST_CASE_P(NoFullscreenUsesSurfaceTexture,
                         AndroidVideoSurfaceChooserImplTest,
                         Combine(Values(ShouldUseOverlay::No),
                                 Either(AllowDynamic),
-                                Values(IsRequired::No),
                                 Values(IsFullscreen::No),
                                 Values(IsSecure::No),
                                 Either(IsFrameHidden),
                                 Either(IsCCPromotable),
                                 Either(IsExpectingRelayout)));
-
 INSTANTIATE_TEST_CASE_P(FullscreenUsesOverlay,
                         AndroidVideoSurfaceChooserImplTest,
                         Combine(Values(ShouldUseOverlay::Yes),
                                 Either(AllowDynamic),
-                                Either(IsRequired),
                                 Values(IsFullscreen::Yes),
                                 Values(IsSecure::No),
                                 Values(IsFrameHidden::No),
                                 Values(IsCCPromotable::Yes),
                                 Values(IsExpectingRelayout::No)));
-
-INSTANTIATE_TEST_CASE_P(RequiredUsesOverlay,
-                        AndroidVideoSurfaceChooserImplTest,
-                        Combine(Values(ShouldUseOverlay::Yes),
-                                Values(AllowDynamic::Yes),
-                                Values(IsRequired::Yes),
-                                Either(IsFullscreen),
-                                Either(IsSecure),
-                                Either(IsFrameHidden),
-                                Either(IsCCPromotable),
-                                Either(IsExpectingRelayout)));
-
-// Secure textures should use an overlay if the compositor will promote them.
-// We don't care about relayout, since it's transient; either behavior is okay
-// if a relayout is epected.  Similarly, hidden frames are fine either way.
-INSTANTIATE_TEST_CASE_P(SecureUsesOverlayIfPromotable,
+INSTANTIATE_TEST_CASE_P(SecureUsesOverlay,
                         AndroidVideoSurfaceChooserImplTest,
                         Combine(Values(ShouldUseOverlay::Yes),
                                 Either(AllowDynamic),
-                                Either(IsRequired),
                                 Either(IsFullscreen),
                                 Values(IsSecure::Yes),
                                 Values(IsFrameHidden::No),
                                 Values(IsCCPromotable::Yes),
-                                Values(IsExpectingRelayout::No)));
+                                Either(IsExpectingRelayout)));
 
 INSTANTIATE_TEST_CASE_P(HiddenFramesUseSurfaceTexture,
                         AndroidVideoSurfaceChooserImplTest,
                         Combine(Values(ShouldUseOverlay::No),
                                 Values(AllowDynamic::Yes),
-                                Values(IsRequired::No),
                                 Either(IsFullscreen),
                                 Either(IsSecure),
                                 Values(IsFrameHidden::Yes),
                                 Either(IsCCPromotable),
                                 Either(IsExpectingRelayout)));
-
 // For all dynamic cases, we shouldn't use an overlay if the compositor won't
-// promote it, unless it's marked as required.  This includes secure surfaces,
-// so that L3 will fall back to SurfaceTexture.  Non-dynamic is excluded, since
+// promote it.  For L1, it will fail either way until the CC supports "must
+// promote" overlays, so we ignore those cases.  Non-dynamic is excluded, since
 // we don't get (or use) compositor feedback before the first frame.  At that
 // point, we've already chosen the output surface and can't switch it.
-INSTANTIATE_TEST_CASE_P(NotCCPromotableNotRequiredUsesSurfaceTexture,
+INSTANTIATE_TEST_CASE_P(NotCCPromotableNotSecureUsesSurfaceTexture,
                         AndroidVideoSurfaceChooserImplTest,
                         Combine(Values(ShouldUseOverlay::No),
                                 Values(AllowDynamic::Yes),
-                                Values(IsRequired::No),
                                 Either(IsFullscreen),
-                                Either(IsSecure),
+                                Values(IsSecure::No),
                                 Values(IsFrameHidden::No),
                                 Values(IsCCPromotable::No),
                                 Either(IsExpectingRelayout)));
 
 // If we're expecting a relayout, then we should never use an overlay unless
-// it's required.
+// it's required for a secure output.
 INSTANTIATE_TEST_CASE_P(InsecureExpectingRelayoutUsesSurfaceTexture,
                         AndroidVideoSurfaceChooserImplTest,
                         Combine(Values(ShouldUseOverlay::No),
                                 Values(AllowDynamic::Yes),
-                                Values(IsRequired::No),
                                 Either(IsFullscreen),
-                                Either(IsSecure),
+                                Values(IsSecure::No),
                                 Either(IsFrameHidden),
                                 Either(IsCCPromotable),
                                 Values(IsExpectingRelayout::Yes)));
@@ -457,7 +398,6 @@ INSTANTIATE_TEST_CASE_P(NotDynamicInFullscreenUsesOverlay,
                         AndroidVideoSurfaceChooserImplTest,
                         Combine(Values(ShouldUseOverlay::Yes),
                                 Values(AllowDynamic::No),
-                                Either(IsRequired),
                                 Values(IsFullscreen::Yes),
                                 Either(IsSecure),
                                 Either(IsFrameHidden),
@@ -469,21 +409,8 @@ INSTANTIATE_TEST_CASE_P(NotDynamicSecureUsesOverlay,
                         AndroidVideoSurfaceChooserImplTest,
                         Combine(Values(ShouldUseOverlay::Yes),
                                 Values(AllowDynamic::No),
-                                Either(IsRequired),
                                 Either(IsFullscreen),
                                 Values(IsSecure::Yes),
-                                Either(IsFrameHidden),
-                                Either(IsCCPromotable),
-                                Either(IsExpectingRelayout)));
-
-// "is_required" should be enough to trigger an overlay pre-M.
-INSTANTIATE_TEST_CASE_P(NotDynamicRequiredUsesOverlay,
-                        AndroidVideoSurfaceChooserImplTest,
-                        Combine(Values(ShouldUseOverlay::Yes),
-                                Values(AllowDynamic::No),
-                                Values(IsRequired::Yes),
-                                Either(IsFullscreen),
-                                Either(IsSecure),
                                 Either(IsFrameHidden),
                                 Either(IsCCPromotable),
                                 Either(IsExpectingRelayout)));

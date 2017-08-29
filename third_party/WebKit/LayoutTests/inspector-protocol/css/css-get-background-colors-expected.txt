@@ -1,7 +1,7 @@
 Test css.getBackgroundColors method
 
 Running test: testNoText
-No text (and not a positioned element): should be null
+No text: should be null
 {}
 
 Running test: testNoBgColor
@@ -10,10 +10,6 @@ No background color: should be white
 
 Running test: testOpaqueBgColor
 Opaque background color: should be red
-{"backgroundColors":["rgb(255, 0, 0)"],"computedFontSize":"16px","computedFontWeight":"400","computedBodyFontSize":"16px"}
-
-Running test: testNoDirectText
-No direct text: should be red
 {"backgroundColors":["rgb(255, 0, 0)"],"computedFontSize":"16px","computedFontWeight":"400","computedBodyFontSize":"16px"}
 
 Running test: testLayeredOpaqueBgColors
@@ -107,8 +103,4 @@ SVG behind text: should be empty array
 Running test: testForegroundVideo
 Video behind text: should be empty array
 {"backgroundColors":[],"computedFontSize":"16px","computedFontWeight":"400","computedBodyFontSize":"16px"}
-
-Running test: testShadowDOM
-Background color in Shadow DOM: should be blue
-{"backgroundColors":["rgb(0, 0, 255)"],"computedFontSize":"16px","computedFontWeight":"400","computedBodyFontSize":"16px"}
 

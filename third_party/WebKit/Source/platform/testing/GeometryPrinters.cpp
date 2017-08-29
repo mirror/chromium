@@ -19,7 +19,6 @@
 #include "platform/geometry/LayoutPoint.h"
 #include "platform/geometry/LayoutRect.h"
 #include "platform/geometry/LayoutSize.h"
-#include "platform/wtf/text/WTFString.h"
 #include <ostream>  // NOLINT
 
 namespace blink {

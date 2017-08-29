@@ -16,8 +16,6 @@
 #include "core/layout/svg/SVGLayoutSupport.h"
 #include "core/layout/svg/SVGResources.h"
 #include "core/layout/svg/SVGResourcesCache.h"
-#include "core/page/Page.h"
-#include "core/page/scrolling/ScrollingCoordinator.h"
 #include "core/paint/FindPaintOffsetAndVisualRectNeedingUpdate.h"
 #include "core/paint/FindPropertiesNeedingUpdate.h"
 #include "core/paint/ObjectPaintProperties.h"
@@ -87,21 +85,24 @@ static bool UpdateScroll(
     const IntSize& bounds,
     bool user_scrollable_horizontal,
     bool user_scrollable_vertical,
-    MainThreadScrollingReasons main_thread_scrolling_reasons) {
+    MainThreadScrollingReasons main_thread_scrolling_reasons,
+    WebLayerScrollClient* scroll_client) {
   DCHECK(!RuntimeEnabledFeatures::RootLayerScrollingEnabled());
-  auto element_id = CompositorElementIdFromUniqueObjectId(
+  auto element_id = CompositorElementIdFromLayoutObjectId(
       frame_view.GetLayoutView()->UniqueId(),
       CompositorElementIdNamespace::kScroll);
   if (auto* existing_scroll = frame_view.ScrollNode()) {
     auto existing_reasons = existing_scroll->GetMainThreadScrollingReasons();
     existing_scroll->Update(
         std::move(parent), IntPoint(), clip, bounds, user_scrollable_horizontal,
-        user_scrollable_vertical, main_thread_scrolling_reasons, element_id);
+        user_scrollable_vertical, main_thread_scrolling_reasons, element_id,
+        scroll_client);
     return existing_reasons != main_thread_scrolling_reasons;
   }
   frame_view.SetScrollNode(ScrollPaintPropertyNode::Create(
       std::move(parent), IntPoint(), clip, bounds, user_scrollable_horizontal,
-      user_scrollable_vertical, main_thread_scrolling_reasons, element_id));
+      user_scrollable_vertical, main_thread_scrolling_reasons, element_id,
+      scroll_client));
   return true;
 }
 
@@ -192,7 +193,8 @@ void PaintPropertyTreeBuilder::UpdateProperties(
 
       full_context.force_subtree_update |= UpdateScroll(
           frame_view, context.current.scroll, scroll_clip, scroll_bounds,
-          user_scrollable_horizontal, user_scrollable_vertical, reasons);
+          user_scrollable_horizontal, user_scrollable_vertical, reasons,
+          frame_view.GetScrollableArea());
     } else if (frame_view.ScrollNode()) {
       // Ensure pre-existing properties are cleared if there is no scrolling.
       frame_view.SetScrollNode(nullptr);
@@ -446,7 +448,7 @@ void PaintPropertyTreeBuilder::UpdateTransform(
           context.current.transform, matrix, TransformOrigin(box),
           context.current.should_flatten_inherited_transform,
           rendering_context_id, compositing_reasons,
-          CompositorElementIdFromUniqueObjectId(
+          CompositorElementIdFromLayoutObjectId(
               object.UniqueId(), CompositorElementIdNamespace::kPrimary));
       force_subtree_update |= result.NewNodeCreated();
     } else {
@@ -614,7 +616,7 @@ void PaintPropertyTreeBuilder::UpdateEffect(
           context.current_effect, context.current.transform, output_clip,
           kColorFilterNone, CompositorFilterOperations(), style.Opacity(),
           blend_mode, compositing_reasons,
-          CompositorElementIdFromUniqueObjectId(
+          CompositorElementIdFromLayoutObjectId(
               object.UniqueId(), CompositorElementIdNamespace::kPrimary));
       force_subtree_update |= result.NewNodeCreated();
       if (has_mask) {
@@ -622,7 +624,7 @@ void PaintPropertyTreeBuilder::UpdateEffect(
             properties.Effect(), context.current.transform, output_clip,
             mask_color_filter, CompositorFilterOperations(), 1.f,
             SkBlendMode::kDstIn, kCompositingReasonNone,
-            CompositorElementIdFromUniqueObjectId(
+            CompositorElementIdFromLayoutObjectId(
                 object.UniqueId(), CompositorElementIdNamespace::kEffectMask));
         force_subtree_update |= result.NewNodeCreated();
       } else {
@@ -705,7 +707,7 @@ void PaintPropertyTreeBuilder::UpdateFilter(
           context.current_effect, context.current.transform, output_clip,
           kColorFilterNone, std::move(filter), 1.f, SkBlendMode::kSrcOver,
           compositing_reasons,
-          CompositorElementIdFromUniqueObjectId(
+          CompositorElementIdFromLayoutObjectId(
               object.UniqueId(), CompositorElementIdNamespace::kEffectFilter));
       force_subtree_update |= result.NewNodeCreated();
     } else {
@@ -1016,13 +1018,14 @@ void PaintPropertyTreeBuilder::UpdateScrollAndScrollTranslation(
           force_subtree_update = true;
       }
 
-      auto element_id = scrollable_area->GetCompositorElementId();
+      auto element_id = CompositorElementIdFromLayoutObjectId(
+          object.UniqueId(), CompositorElementIdNamespace::kScroll);
 
       // TODO(pdr): Set the correct compositing reasons here.
       auto result = properties.UpdateScroll(
           context.current.scroll, bounds_offset, container_bounds,
           scroll_bounds, user_scrollable_horizontal, user_scrollable_vertical,
-          reasons, element_id);
+          reasons, element_id, scrollable_area);
       force_subtree_update |= result.NewNodeCreated();
     } else {
       // Ensure pre-existing properties are cleared.

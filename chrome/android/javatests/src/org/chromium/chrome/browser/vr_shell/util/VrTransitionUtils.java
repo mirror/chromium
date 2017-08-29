@@ -18,7 +18,6 @@ import org.junit.Assert;
 
 import org.chromium.base.ThreadUtils;
 import org.chromium.chrome.browser.vr_shell.VrClassesWrapperImpl;
-import org.chromium.chrome.browser.vr_shell.VrIntentUtils;
 import org.chromium.chrome.browser.vr_shell.VrShellDelegate;
 import org.chromium.chrome.browser.vr_shell.VrTestFramework;
 import org.chromium.content.browser.ContentViewCore;
@@ -141,45 +140,6 @@ public class VrTransitionUtils {
     }
 
     /**
-     * @return Whether the VR forward button is enabled.
-     */
-    public static Boolean isForwardButtonEnabled() {
-        final AtomicBoolean isForwardButtonEnabled = new AtomicBoolean();
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                isForwardButtonEnabled.set(
-                        VrShellDelegate.getVrShellForTesting().isForwardButtonEnabled());
-            }
-        });
-        return isForwardButtonEnabled.get();
-    }
-
-    /**
-     * Navigates VrShell back.
-     */
-    public static void navigateBack() {
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                VrShellDelegate.getVrShellForTesting().navigateBack();
-            }
-        });
-    }
-
-    /**
-     * Navigates VrShell forward.
-     */
-    public static void navigateForward() {
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                VrShellDelegate.getVrShellForTesting().navigateForward();
-            }
-        });
-    }
-
-    /**
      * Sends an intent to Chrome telling it to autopresent the given URL. This
      * is expected to fail unless the trusted intent check is disabled in VrShellDelegate.
      *
@@ -192,7 +152,7 @@ public class VrTransitionUtils {
                 activity.getPackageManager().getLaunchIntentForPackage(activity.getPackageName());
         intent.setAction(Intent.ACTION_VIEW);
         intent.setData(Uri.parse(url));
-        intent.putExtra(VrIntentUtils.DAYDREAM_VR_EXTRA, true);
+        intent.putExtra(VrShellDelegate.DAYDREAM_VR_EXTRA, true);
         DaydreamApi.setupVrIntent(intent);
         intent.removeCategory("com.google.intent.category.DAYDREAM");
         CustomTabsIntent.setAlwaysUseBrowserUI(intent);

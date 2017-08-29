@@ -26,12 +26,6 @@
 
 class SkCanvas;
 
-namespace gpu {
-namespace gles2 {
-class GLES2Implementation;
-}  // namespace gles2
-}  // namespace gpu
-
 namespace base {
 namespace trace_event {
 class TracedValue;
@@ -174,7 +168,6 @@ class CC_PAINT_EXPORT DisplayItemList
  private:
   FRIEND_TEST_ALL_PREFIXES(DisplayItemListTest, AsValueWithNoOps);
   FRIEND_TEST_ALL_PREFIXES(DisplayItemListTest, AsValueWithOps);
-  friend gpu::gles2::GLES2Implementation;
 
   ~DisplayItemList();
 

@@ -22,7 +22,6 @@ class WebContents;
 
 namespace safe_browsing {
 
-class NetEventLogger;
 class UrlCheckerDelegate;
 
 // A SafeBrowsingUrlCheckerImpl instance is used to perform SafeBrowsing check
@@ -30,6 +29,7 @@ class UrlCheckerDelegate;
 // be used to handle queries from renderers. But it is also used to handle
 // queries from the browser. In that case, the public methods are called
 // directly instead of through Mojo.
+// Used when --enable-network-service is in effect.
 class SafeBrowsingUrlCheckerImpl : public mojom::SafeBrowsingUrlChecker,
                                    public SafeBrowsingDatabaseManager::Client {
  public:
@@ -44,17 +44,9 @@ class SafeBrowsingUrlCheckerImpl : public mojom::SafeBrowsingUrlChecker,
   ~SafeBrowsingUrlCheckerImpl() override;
 
   // mojom::SafeBrowsingUrlChecker implementation.
-  // NOTE: |callback| could be run synchronously before this method returns. Be
-  // careful if |callback| could destroy this object.
   void CheckUrl(const GURL& url,
                 const std::string& method,
                 CheckUrlCallback callback) override;
-
-  const GURL& GetCurrentlyCheckingUrl() const;
-
-  void set_net_event_logger(NetEventLogger* net_event_logger) {
-    net_event_logger_ = net_event_logger;
-  }
 
  private:
   // SafeBrowsingDatabaseManager::Client implementation:
@@ -64,19 +56,15 @@ class SafeBrowsingUrlCheckerImpl : public mojom::SafeBrowsingUrlChecker,
 
   void OnCheckUrlTimeout();
 
-  // NOTE: this method runs callbacks which could destroy this object.
   void ProcessUrls();
 
-  // NOTE: this method runs callbacks which could destroy this object.
   void BlockAndProcessUrls(bool showed_interstitial);
 
   void OnBlockingPageComplete(bool proceed);
 
   SBThreatType CheckWebUIUrls(const GURL& url);
 
-  // Returns false if this object has been destroyed by the callback. In that
-  // case none of the members of this object should be touched again.
-  bool RunNextCallback(bool proceed, bool showed_interstitial);
+  void RunNextCallback(bool proceed, bool showed_interstitial);
 
   enum State {
     // Haven't started checking or checking is complete.
@@ -121,8 +109,6 @@ class SafeBrowsingUrlCheckerImpl : public mojom::SafeBrowsingUrlChecker,
 
   // Timer to abort the SafeBrowsing check if it takes too long.
   base::OneShotTimer timer_;
-
-  NetEventLogger* net_event_logger_ = nullptr;
 
   base::WeakPtrFactory<SafeBrowsingUrlCheckerImpl> weak_factory_;
 

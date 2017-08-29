@@ -103,11 +103,11 @@ void SetExpectedPolicy(base::DictionaryValue* expected,
                        const std::string& scope,
                        const std::string& source,
                        const base::Value& value) {
-  const char prefix[] = "chromePolicies";
-  expected->SetPath({prefix, name.c_str(), "level"}, base::Value(level));
-  expected->SetPath({prefix, name.c_str(), "scope"}, base::Value(scope));
-  expected->SetPath({prefix, name.c_str(), "source"}, base::Value(source));
-  expected->SetPath({prefix, name.c_str(), "value"}, value.Clone());
+  std::string prefix = "chromePolicies." + name + ".";
+  expected->SetString(prefix + "level", level);
+  expected->SetString(prefix + "scope", scope);
+  expected->SetString(prefix + "source", source);
+  expected->Set(prefix + "value", base::MakeUnique<base::Value>(value));
 }
 
 // The temporary directory and file paths for policy saving.
@@ -299,7 +299,7 @@ IN_PROC_BROWSER_TEST_F(PolicyUITest, WritePoliciesToJSONFile) {
   popups_blocked_for_urls.AppendString("ccc");
   values.Set(policy::key::kPopupsBlockedForUrls, policy::POLICY_LEVEL_MANDATORY,
              policy::POLICY_SCOPE_MACHINE, policy::POLICY_SOURCE_PLATFORM,
-             popups_blocked_for_urls.CreateDeepCopy(), nullptr);
+             base::MakeUnique<base::Value>(popups_blocked_for_urls), nullptr);
   SetExpectedPolicy(&expected_values, policy::key::kPopupsBlockedForUrls,
                     "mandatory", "machine", "sourcePlatform",
                     popups_blocked_for_urls);
@@ -316,11 +316,12 @@ IN_PROC_BROWSER_TEST_F(PolicyUITest, WritePoliciesToJSONFile) {
   body.SetInteger("first", 0);
   body.SetBoolean("second", true);
   unknown_policy.SetInteger("head", 12);
-  unknown_policy.SetDictionary("body", body.CreateDeepCopy());
+  unknown_policy.SetDictionary("body",
+                               base::MakeUnique<base::DictionaryValue>(body));
   const std::string kUnknownPolicy = "NoSuchThing";
   values.Set(kUnknownPolicy, policy::POLICY_LEVEL_RECOMMENDED,
              policy::POLICY_SCOPE_USER, policy::POLICY_SOURCE_CLOUD,
-             unknown_policy.CreateDeepCopy(), nullptr);
+             base::MakeUnique<base::Value>(unknown_policy), nullptr);
   SetExpectedPolicy(&expected_values, kUnknownPolicy, "recommended", "user",
                     "sourceCloud", unknown_policy);
 
@@ -354,7 +355,7 @@ IN_PROC_BROWSER_TEST_F(PolicyUITest, WritePoliciesToJSONFile) {
   popups_blocked_for_urls.AppendString("ddd");
   values.Set(policy::key::kPopupsBlockedForUrls, policy::POLICY_LEVEL_MANDATORY,
              policy::POLICY_SCOPE_MACHINE, policy::POLICY_SOURCE_PLATFORM,
-             popups_blocked_for_urls.CreateDeepCopy(), nullptr);
+             base::MakeUnique<base::Value>(popups_blocked_for_urls), nullptr);
   SetExpectedPolicy(&expected_values, policy::key::kPopupsBlockedForUrls,
                     "mandatory", "machine", "sourcePlatform",
                     popups_blocked_for_urls);

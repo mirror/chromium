@@ -8,9 +8,9 @@
 #include "components/bookmarks/browser/bookmark_model.h"
 #include "components/strings/grit/components_strings.h"
 #include "ios/chrome/browser/bookmarks/bookmark_model_factory.h"
-#include "ios/chrome/browser/bookmarks/bookmark_new_generation_features.h"
 #include "ios/chrome/browser/bookmarks/bookmarks_utils.h"
 #include "ios/chrome/browser/browser_state/chrome_browser_state.h"
+#include "ios/chrome/browser/experimental_flags.h"
 #import "ios/chrome/browser/metrics/new_tab_page_uma.h"
 #import "ios/chrome/browser/ui/alert_coordinator/action_sheet_coordinator.h"
 #import "ios/chrome/browser/ui/bookmarks/bars/bookmark_context_bar.h"
@@ -124,8 +124,7 @@ const CGFloat kMenuWidth = 264;
 
 - (void)viewDidLoad {
   [super viewDidLoad];
-  if (!base::FeatureList::IsEnabled(
-          bookmark_new_generation::features::kBookmarkNewGeneration)) {
+  if (!experimental_flags::IsBookmarkReorderingEnabled()) {
     self.navigationBar =
         [[BookmarkNavigationBar alloc] initWithFrame:CGRectZero];
     [self.navigationBar setEditTarget:self
@@ -145,8 +144,7 @@ const CGFloat kMenuWidth = 264;
 #pragma mark - Protected
 
 - (void)loadBookmarkViews {
-  if (base::FeatureList::IsEnabled(
-          bookmark_new_generation::features::kBookmarkNewGeneration)) {
+  if (experimental_flags::IsBookmarkReorderingEnabled()) {
     // Set up new UI view. TODO(crbug.com/695749): Polish UI according to mocks.
     _containerView = [[UIView alloc] initWithFrame:self.view.bounds];
     [_containerView setAutoresizingMask:UIViewAutoresizingFlexibleWidth |
@@ -895,8 +893,7 @@ const CGFloat kMenuWidth = 264;
 }
 
 - (void)updateViewConstraints {
-  if (base::FeatureList::IsEnabled(
-          bookmark_new_generation::features::kBookmarkNewGeneration)) {
+  if (experimental_flags::IsBookmarkReorderingEnabled()) {
     NSDictionary* views = @{
       @"tableView" : self.bookmarksTableView,
       @"contextBar" : self.contextBar,

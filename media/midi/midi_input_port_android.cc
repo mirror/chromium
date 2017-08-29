@@ -52,4 +52,8 @@ void MidiInputPortAndroid::OnData(JNIEnv* env,
   delegate_->OnReceivedData(this, &bytes[offset], size, timestamp_to_pass);
 }
 
+bool MidiInputPortAndroid::Register(JNIEnv* env) {
+  return RegisterNativesImpl(env);
+}
+
 }  // namespace midi

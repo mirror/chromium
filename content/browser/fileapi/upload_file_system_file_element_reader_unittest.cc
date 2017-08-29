@@ -49,10 +49,11 @@ class UploadFileSystemFileElementReaderTest : public testing::Test {
         CreateFileSystemContextForTesting(NULL, temp_dir_.GetPath());
 
     file_system_context_->OpenFileSystem(
-        GURL(kFileSystemURLOrigin), kFileSystemType,
+        GURL(kFileSystemURLOrigin),
+        kFileSystemType,
         storage::OPEN_FILE_SYSTEM_CREATE_IF_NONEXISTENT,
-        base::BindOnce(&UploadFileSystemFileElementReaderTest::OnOpenFileSystem,
-                       base::Unretained(this)));
+        base::Bind(&UploadFileSystemFileElementReaderTest::OnOpenFileSystem,
+                   base::Unretained(this)));
     base::RunLoop().RunUntilIdle();
     ASSERT_TRUE(file_system_root_url_.is_valid());
 

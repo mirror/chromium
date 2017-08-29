@@ -6,14 +6,48 @@
 
 #include "core/dom/ExceptionCode.h"
 #include "platform/geometry/IntSize.h"
-#include "platform/graphics/ColorCorrectionTestUtils.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "third_party/skia/include/core/SkColorSpaceXform.h"
 
 namespace blink {
 namespace {
 
-class ImageDataTest : public ::testing::Test {};
+class ImageDataTest : public ::testing::Test {
+ protected:
+  virtual void SetUp() {
+    // Save the state of experimental canvas features and color correct
+    // rendering flags to restore them on teardown.
+    experimental_canvas_features =
+        RuntimeEnabledFeatures::ExperimentalCanvasFeaturesEnabled();
+    color_correct_rendering =
+        RuntimeEnabledFeatures::ColorCorrectRenderingEnabled();
+    RuntimeEnabledFeatures::SetExperimentalCanvasFeaturesEnabled(true);
+    RuntimeEnabledFeatures::SetColorCorrectRenderingEnabled(true);
+  }
+
+  virtual void TearDown() {
+    RuntimeEnabledFeatures::SetExperimentalCanvasFeaturesEnabled(
+        experimental_canvas_features);
+    RuntimeEnabledFeatures::SetColorCorrectRenderingEnabled(
+        color_correct_rendering);
+  }
+
+  bool experimental_canvas_features;
+  bool color_correct_rendering;
+};
+
+TEST_F(ImageDataTest, NegativeAndZeroIntSizeTest) {
+  ImageData* image_data;
+  // Test scenarios
+  const int num_test_cases = 6;
+  const IntSize image_data_sizes[6] = {IntSize(0, 10),  IntSize(10, 0),
+                                       IntSize(0, 0),   IntSize(-1, 10),
+                                       IntSize(10, -1), IntSize(-1, -1)};
+  for (int i = 1; i < num_test_cases; i++) {
+    image_data = ImageData::Create(image_data_sizes[i]);
+    EXPECT_EQ(image_data, nullptr);
+  }
+}
 
 // Under asan_clang_phone, the test crashes after the memory allocation
 // is not successful. It is probably related to the value of
@@ -38,13 +72,20 @@ TEST_F(ImageDataTest, MAYBE_CreateImageDataTooBig) {
   }
 }
 
+// Skia conversion does not guarantee to be exact, se we need to do approximate
+// comparisons.
+static inline bool IsNearlyTheSame(float f, float g) {
+  static const float kEpsilonScale = 0.01f;
+  return std::abs(f - g) <
+         kEpsilonScale *
+             std::max(std::max(std::abs(f), std::abs(g)), kEpsilonScale);
+}
+
 // This test verifies the correct behavior of ImageData member function used
 // to convert pixels data from canvas pixel format to image data storage
 // format. This function is used in BaseRenderingContext2D::getImageData.
 TEST_F(ImageDataTest,
        TestConvertPixelsFromCanvasPixelFormatToImageDataStorageFormat) {
-  // Enable color canvas extensions for this test
-  ScopedEnableColorCanvasExtensions color_canvas_extensions_enabler;
   // Source pixels in RGBA32
   unsigned char rgba32_pixels[] = {255, 0,   0,   255,  // Red
                                    0,   0,   0,   0,    // Transparent
@@ -112,8 +153,7 @@ TEST_F(ImageDataTest,
       const_cast<DOMFloat32Array*>(static_cast<const DOMFloat32Array*>(data));
   DCHECK(data_f32);
   for (unsigned i = 0; i < kNumColorComponents; i++) {
-    if (!ColorCorrectionTestUtils::IsNearlyTheSame(data_f32->Item(i),
-                                                   rgba32_pixels[i] / 255.0)) {
+    if (!IsNearlyTheSame(data_f32->Item(i), rgba32_pixels[i] / 255.0)) {
       test_passed = false;
       break;
     }
@@ -128,8 +168,7 @@ TEST_F(ImageDataTest,
       static_cast<const DOMUint8ClampedArray*>(data));
   DCHECK(data_u8);
   for (unsigned i = 0; i < kNumColorComponents; i++) {
-    if (!ColorCorrectionTestUtils::IsNearlyTheSame(data_u8->Item(i),
-                                                   rgba32_pixels[i])) {
+    if (!IsNearlyTheSame(data_u8->Item(i), rgba32_pixels[i])) {
       test_passed = false;
       break;
     }
@@ -144,8 +183,7 @@ TEST_F(ImageDataTest,
       const_cast<DOMFloat32Array*>(static_cast<const DOMFloat32Array*>(data));
   DCHECK(data_f32);
   for (unsigned i = 0; i < kNumColorComponents; i++) {
-    if (!ColorCorrectionTestUtils::IsNearlyTheSame(data_f32->Item(i),
-                                                   rgba32_pixels[i] / 255.0)) {
+    if (!IsNearlyTheSame(data_f32->Item(i), rgba32_pixels[i] / 255.0)) {
       test_passed = false;
       break;
     }
@@ -235,9 +273,6 @@ bool ConvertPixelsToColorSpaceAndPixelFormatForTest(
 // to convert image data from image data storage format to canvas pixel format.
 // This function is used in BaseRenderingContext2D::putImageData.
 TEST_F(ImageDataTest, TestGetImageDataInCanvasColorSettings) {
-  // Enable color canvas extensions for this test
-  ScopedEnableColorCanvasExtensions color_canvas_extensions_enabler;
-
   unsigned num_image_data_color_spaces = 3;
   CanvasColorSpace image_data_color_spaces[] = {
       kSRGBCanvasColorSpace, kRec2020CanvasColorSpace, kP3CanvasColorSpace,
@@ -361,9 +396,6 @@ TEST_F(ImageDataTest, TestGetImageDataInCanvasColorSettings) {
 
 // This test examines ImageData::CropRect()
 TEST_F(ImageDataTest, TestCropRect) {
-  // Enable color canvas extensions for this test
-  ScopedEnableColorCanvasExtensions color_canvas_extensions_enabler;
-
   const int num_image_data_storage_formats = 3;
   ImageDataStorageFormat image_data_storage_formats[] = {
       kUint8ClampedArrayStorageFormat, kUint16ArrayStorageFormat,
@@ -383,15 +415,15 @@ TEST_F(ImageDataTest, TestCropRect) {
   float* f32_pixels = new float[data_length];
 
   // Test scenarios
-  const int num_test_cases = 14;
-  const IntRect crop_rects[14] = {
+  const int num_test_cases = 12;
+  const IntRect crop_rects[12] = {
       IntRect(3, 4, 5, 6),     IntRect(3, 4, 5, 6),    IntRect(10, 10, 20, 20),
       IntRect(10, 10, 20, 20), IntRect(0, 0, 20, 20),  IntRect(0, 0, 20, 20),
       IntRect(0, 0, 10, 10),   IntRect(0, 0, 10, 10),  IntRect(0, 0, 10, 0),
       IntRect(0, 0, 0, 10),    IntRect(10, 0, 10, 10), IntRect(0, 10, 10, 10),
-      IntRect(0, 5, 20, 15),   IntRect(0, 5, 20, 15)};
-  const bool crop_flips[14] = {true,  false, true,  false, true,  false, true,
-                               false, false, false, false, false, true,  false};
+  };
+  const bool crop_flips[12] = {true, false, true,  false, true,  false,
+                               true, false, false, false, false, false};
 
   // Fill the pixels with numbers related to their positions
   unsigned set_value = 0;
@@ -458,7 +490,7 @@ TEST_F(ImageDataTest, TestCropRect) {
             index =
                 row_index * cropped_image_data->Size().Width() * 4 + m * 4 + n;
             expected_value =
-                (k + crop_rect.Y() + 1) * (m + crop_rect.X() + 1) * (n + 1);
+                (k + crop_rect.X() + 1) * (m + crop_rect.Y() + 1) * (n + 1);
             if (image_data_storage_formats[i] ==
                 kUint8ClampedArrayStorageFormat)
               expected_value %= 255;

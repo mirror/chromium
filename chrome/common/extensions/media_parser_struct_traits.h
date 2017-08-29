@@ -7,7 +7,6 @@
 
 #include <string>
 
-#include "base/containers/span.h"
 #include "chrome/common/extensions/media_parser.mojom.h"
 #include "chrome/common/media_galleries/metadata_types.h"
 #include "mojo/public/cpp/bindings/array_traits_span.h"
@@ -21,12 +20,11 @@ struct StructTraits<extensions::mojom::AttachedImageDataView,
     return image.type;
   }
 
-  static base::span<const uint8_t> data(
-      const ::metadata::AttachedImage& image) {
+  static ConstCArray<uint8_t> data(const ::metadata::AttachedImage& image) {
     // TODO(dcheng): perhaps metadata::AttachedImage should consider passing the
     // image data around in a std::vector<uint8_t>.
-    return base::make_span(reinterpret_cast<const uint8_t*>(image.data.data()),
-                           image.data.size());
+    return ConstCArray<uint8_t>(
+        reinterpret_cast<const uint8_t*>(image.data.data()), image.data.size());
   }
 
   static bool Read(extensions::mojom::AttachedImageDataView view,

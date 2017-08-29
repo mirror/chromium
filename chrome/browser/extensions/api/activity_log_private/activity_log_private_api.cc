@@ -23,7 +23,6 @@
 #include "extensions/browser/extensions_browser_client.h"
 #include "extensions/common/features/feature.h"
 #include "extensions/common/features/feature_provider.h"
-#include "extensions/common/hashed_extension_id.h"
 
 namespace extensions {
 
@@ -78,10 +77,8 @@ void ActivityLogAPI::Shutdown() {
 
 // static
 bool ActivityLogAPI::IsExtensionWhitelisted(const std::string& extension_id) {
-  // TODO(devlin): Pass in a HashedExtensionId to avoid this conversion.
-  return FeatureProvider::GetPermissionFeatures()
-      ->GetFeature("activityLogPrivate")
-      ->IsIdInWhitelist(HashedExtensionId(extension_id));
+  return FeatureProvider::GetPermissionFeatures()->
+      GetFeature("activityLogPrivate")->IsIdInWhitelist(extension_id);
 }
 
 void ActivityLogAPI::OnListenerAdded(const EventListenerInfo& details) {

@@ -34,14 +34,6 @@ login.createScreen('AppLaunchSplashScreen', 'app-launch-splash', function() {
       ensureTransitionEndEvent(networkContainer, 1050);
     },
 
-    /** @override */
-    onWindowResize: function() {
-      if (Oobe.getInstance().currentScreen !== this)
-        return;
-
-      Oobe.getInstance().updateScreenSize(this);
-    },
-
     /**
      * Event handler that is invoked just before the frame is shown.
      * @param {string} data Screen init payload.

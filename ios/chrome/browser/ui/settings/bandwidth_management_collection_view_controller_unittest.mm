@@ -7,6 +7,7 @@
 #include <memory>
 
 #include "base/compiler_specific.h"
+#include "base/message_loop/message_loop.h"
 #include "base/run_loop.h"
 #include "base/test/test_simple_task_runner.h"
 #include "components/pref_registry/pref_registry_syncable.h"
@@ -21,7 +22,7 @@
 #include "ios/chrome/grit/ios_strings.h"
 #include "ios/chrome/test/ios_chrome_scoped_testing_local_state.h"
 #include "ios/chrome/test/testing_application_context.h"
-#include "ios/web/public/test/test_web_thread_bundle.h"
+#include "ios/web/public/test/test_web_thread.h"
 #include "net/log/test_net_log.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "ui/base/l10n/l10n_util.h"
@@ -35,7 +36,10 @@ namespace {
 class BandwidthManagementCollectionViewControllerTest
     : public CollectionViewControllerTest {
  public:
-  BandwidthManagementCollectionViewControllerTest() {}
+  BandwidthManagementCollectionViewControllerTest()
+      : loop_(base::MessageLoop::TYPE_IO),
+        ui_thread_(web::WebThread::UI, &loop_),
+        io_thread_(web::WebThread::IO, &loop_) {}
 
  protected:
   void SetUp() override {
@@ -64,7 +68,9 @@ class BandwidthManagementCollectionViewControllerTest
         initWithBrowserState:chrome_browser_state_.get()];
   }
 
-  web::TestWebThreadBundle thread_bundle_;
+  base::MessageLoop loop_;
+  web::TestWebThread ui_thread_;
+  web::TestWebThread io_thread_;
   net::TestNetLog net_log_;
   IOSChromeScopedTestingLocalState local_state_;
 

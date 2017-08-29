@@ -23,10 +23,6 @@
 // https://w3c-test.org/credential-management/idl.https.html
 // pass.
 
-// TODO(crbug.com/435046) Declare Credential, PasswordCredential,
-// FederatedCredential and CredentialsContainer as classes once iOS9 is no
-// longer supported.
-
 // Namespace for credential management. __gCrWeb must have already
 // been defined.
 __gCrWeb.credentialManager = {
@@ -109,8 +105,6 @@ function Credential() {
   /** @type {string} */
   this.type;
 }
-Object.defineProperty(Credential.prototype, Symbol.toStringTag,
-    { value: 'Credential' });
 
 /**
  * PasswordCredential interace, for more information see
@@ -141,43 +135,28 @@ Object.defineProperty(PasswordCredential, 'prototype', { writable: false });
 PasswordCredential.prototype.constructor = PasswordCredential;
 Object.defineProperty(
     PasswordCredential.prototype, 'constructor', { enumerable: false });
-Object.defineProperty(PasswordCredential.prototype, Symbol.toStringTag,
-    { value: 'PasswordCredential' });
 
 /**
  * FederatedCredential interface, for more information see
  * https://w3c.github.io/webappsec-credential-management/#federatedcredential-interface
- * @param {FederatedCredentialInit} init Dictionary to create
- *     FederatedCredential from.
  * @extends {Credential}
  * @constructor
  */
-function FederatedCredential(init) {
-  if (!init.id) {
-    throw new TypeError('id must be a non-empty string');
-  }
-  if (!init.provider) {
-    throw new TypeError('provider must be a non-empty string');
-  }
-  if (!init.provider.startsWith('https://') &&
-      !init.provider.startsWith('http://')) {
-    throw new SyntaxError('invalid provider URL');
-  }
-  if (init.iconURL && !init.iconURL.startsWith('https://')) {
-    throw new SyntaxError('invalid iconURL');
-  }
+// TODO(crbug.com/435046) Implement constructor taking
+// FederatedCredentialInit
+function FederatedCredential() {
   /** @type {string} */
-  this._id = init.id;
+  this.id;
   /** @type {string} */
-  this._type = 'federated';
+  this.type;
   /** @type {string} */
-  this._name = (init.name ? init.name : '');
+  this.name;
   /** @type {string} */
-  this._iconURL = (init.iconURL ? init.iconURL : '');
+  this.iconURL;
   /** @type {string} */
-  this._provider = init.provider.replace(/\/$/, ''); // strip trailing slash
+  this.provider;
   /** @type {?string} */
-  this._protocol = (init.protocol ? init.protocol : '');
+  this.protocol;
 }
 
 FederatedCredential.prototype = {
@@ -186,52 +165,8 @@ FederatedCredential.prototype = {
 Object.defineProperty(FederatedCredential, 'prototype', { writable: false });
 
 FederatedCredential.prototype.constructor = FederatedCredential;
-Object.defineProperties(
-  FederatedCredential.prototype,
-  {
-    'constructor': {
-      enumerable: false
-    },
-    'id' : {
-      get: /** @this {FederatedCredential} */ function() {
-        return this._id;
-      }
-    },
-    'type' : {
-      get: /** @this {FederatedCredential} */ function() {
-        return this._type;
-      }
-    },
-    'provider': {
-      get: /** @this {FederatedCredential} */ function() {
-        return this._provider;
-      }
-      // TODO(crbug.com/435046): IDL tests require that getting property
-      // |provider| on PasswordCredential.prototype throws TypeError. Implement
-      // getter conforming to those tests.
-    },
-    'protocol': {
-      get: /** @this {FederatedCredential} */ function() {
-        return this._protocol;
-      }
-      // TODO(crbug.com/435046): IDL tests require that getting property
-      // |provider| on PasswordCredential.prototype throws TypeError. Implement
-      // getter conforming to those tests.
-    },
-    'iconURL' : {
-      get: /** @this {FederatedCredential} */ function() {
-        return this._iconURL;
-      }
-    },
-    'name' : {
-      get: /** @this {FederatedCredential} */ function() {
-        return this._name;
-      }
-    }
-  }
-);
-Object.defineProperty(FederatedCredential.prototype, Symbol.toStringTag,
-    { value: 'FederatedCredential' });
+Object.defineProperty(
+    FederatedCredential.prototype, 'constructor', { enumerable: false });
 
 /**
  * CredentialData dictionary
@@ -307,8 +242,6 @@ Object.defineProperty(CredentialsContainer, 'prototype', { writable: false });
 CredentialsContainer.prototype.constructor = CredentialsContainer;
 Object.defineProperty(
     CredentialsContainer.prototype, 'constructor', { enumerable: false });
-Object.defineProperty(CredentialsContainer.prototype, Symbol.toStringTag,
-    { value: 'CredentialsContainer' });
 
 /**
  * Performs the Request A Credential action described at

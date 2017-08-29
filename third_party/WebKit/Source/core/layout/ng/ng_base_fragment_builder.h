@@ -10,7 +10,6 @@
 #include "core/style/ComputedStyle.h"
 #include "platform/text/TextDirection.h"
 #include "platform/wtf/Allocator.h"
-#include "platform/wtf/RefPtr.h"
 
 namespace blink {
 

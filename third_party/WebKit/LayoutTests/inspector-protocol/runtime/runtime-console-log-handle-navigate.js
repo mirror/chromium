@@ -23,6 +23,6 @@
     dp.Runtime.onceExecutionContextCreated().then(result => contextId = result.params.context.id);
     await session.evaluateAsync(`appendIframe('${testRunner.url('../resources/console-log-navigate.html')}')`);
     testRunner.log(`Got new context: ${contextId !== undefined}`);
-    testRunner.log(await dp.Runtime.evaluate({ expression: expression, contextId: contextId }));
+    testRunner.logMessage(await dp.Runtime.evaluate({ expression: expression, contextId: contextId }));
   }
 })

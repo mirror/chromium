@@ -41,11 +41,8 @@ WindowTreeHostMus::WindowTreeHostMus(WindowTreeHostMusInitParams init_params)
       delegate_(init_params.window_tree_client) {
   gfx::Rect bounds_in_pixels;
   display_init_params_ = std::move(init_params.display_init_params);
-  if (display_init_params_) {
+  if (display_init_params_)
     bounds_in_pixels = display_init_params_->viewport_metrics.bounds_in_pixels;
-    if (display_init_params_->display)
-      DCHECK_EQ(display_id_, display_init_params_->display->id());
-  }
   window()->SetProperty(kWindowTreeHostMusKey, this);
   // TODO(sky): find a cleaner way to set this! Better solution is to likely
   // have constructor take aura::Window.
@@ -204,23 +201,13 @@ void WindowTreeHostMus::OnCloseRequest() {
 
 void WindowTreeHostMus::MoveCursorToScreenLocationInPixels(
     const gfx::Point& location_in_pixels) {
-  // |location_in_pixels| is relative to the display.
-  delegate_->OnWindowTreeHostMoveCursorToDisplayLocation(location_in_pixels,
-                                                         display_id_);
-}
+  gfx::Point screen_location_in_pixels = location_in_pixels;
+  gfx::Point location = GetLocationOnScreenInPixels();
+  screen_location_in_pixels.Offset(-location.x(), -location.y());
+  delegate_->OnWindowTreeHostMoveCursorToDisplayLocation(
+      screen_location_in_pixels, display_id_);
 
-gfx::Transform WindowTreeHostMus::GetRootTransformForLocalEventCoordinates()
-    const {
-  if (WindowMus::Get(window())->window_mus_type() !=
-      WindowMusType::DISPLAY_MANUALLY_CREATED) {
-    return WindowTreeHost::GetRootTransformForLocalEventCoordinates();
-  }
-  // Local events already have the transform set on the window applied, so
-  // don't apply it again.
-  gfx::Transform transform;
-  const float scale = window()->layer()->device_scale_factor();
-  transform.Scale(scale, scale);
-  return transform;
+  Env::GetInstance()->set_last_mouse_location(location_in_pixels);
 }
 
 }  // namespace aura

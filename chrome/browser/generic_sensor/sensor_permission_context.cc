@@ -22,8 +22,5 @@ ContentSetting SensorPermissionContext::GetPermissionStatusInternal(
 }
 
 bool SensorPermissionContext::IsRestrictedToSecureOrigins() const {
-  // This is to allow non-secure origins that use DeviceMotion and
-  // DeviceOrientation Event to be able to access sensors that are provided
-  // by generic_sensor.
-  return false;
+  return true;
 }

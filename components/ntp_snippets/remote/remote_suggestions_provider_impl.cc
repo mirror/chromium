@@ -187,25 +187,6 @@ bool IsSignedOutUsersSubscriptionForPushedSuggestionsEnabled() {
       kEnableSignedOutUsersSubscriptionForPushedSuggestionsDefault);
 }
 
-// Whether notification info is overriden for fetched suggestions. Note that
-// this param does not overwrite other switches which could disable these
-// notifications.
-const bool kForceFetchedSuggestionsNotificationsDefault = false;
-const char kForceFetchedSuggestionsNotificationsParamName[] =
-    "force_fetched_suggestions_notifications";
-
-bool ShouldForceFetchedSuggestionsNotifications() {
-  return base::GetFieldTrialParamByFeatureAsBool(
-      ntp_snippets::kNotificationsFeature,
-      kForceFetchedSuggestionsNotificationsParamName,
-      kForceFetchedSuggestionsNotificationsDefault);
-}
-
-bool IsDeletingRemoteCategoriesNotPresentInLastFetchResponseEnabled() {
-  return base::FeatureList::IsEnabled(
-      kDeleteRemoteCategoriesNotPresentInLastFetch);
-}
-
 template <typename SuggestionPtrContainer>
 std::unique_ptr<std::vector<std::string>> GetSuggestionIDVector(
     const SuggestionPtrContainer& suggestions) {
@@ -754,17 +735,11 @@ void RemoteSuggestionsProviderImpl::OnFetchFinished(
     return;
   }
 
-  if (fetched_categories) {
-    for (FetchedCategory& fetched_category : *fetched_categories) {
-      for (std::unique_ptr<RemoteSuggestion>& suggestion :
-           fetched_category.suggestions) {
-        if (ShouldForceFetchedSuggestionsNotifications() &&
-            IsFetchedSuggestionsNotificationsEnabled()) {
-          suggestion->set_should_notify(true);
-          suggestion->set_notification_deadline(clock_->Now() +
-                                                base::TimeDelta::FromDays(7));
-        }
-        if (!IsFetchedSuggestionsNotificationsEnabled()) {
+  if (!IsFetchedSuggestionsNotificationsEnabled()) {
+    if (fetched_categories) {
+      for (FetchedCategory& fetched_category : *fetched_categories) {
+        for (std::unique_ptr<RemoteSuggestion>& suggestion :
+             fetched_category.suggestions) {
           suggestion->set_should_notify(false);
         }
       }
@@ -840,20 +815,6 @@ void RemoteSuggestionsProviderImpl::OnFetchFinished(
   // TODO(tschumann): The suggestions fetcher needs to signal errors so that we
   // know why we received no data. If an error occured, none of the following
   // should take place.
-
-  if (fetched_categories &&
-      IsDeletingRemoteCategoriesNotPresentInLastFetchResponseEnabled()) {
-    std::vector<Category> categories_to_delete;
-    for (auto& item : category_contents_) {
-      Category category = item.first;
-      CategoryContent* content = &item.second;
-      if (!content->included_in_last_server_response &&
-          category != articles_category_) {
-        categories_to_delete.push_back(category);
-      }
-    }
-    DeleteCategories(categories_to_delete);
-  }
 
   // We might have gotten new categories (or updated the titles of existing
   // ones), so update the pref.
@@ -1065,29 +1026,6 @@ void RemoteSuggestionsProviderImpl::DismissSuggestionFromCategoryContent(
   content->suggestions.erase(it);
 }
 
-void RemoteSuggestionsProviderImpl::DeleteCategories(
-    const std::vector<Category>& categories) {
-  for (Category category : categories) {
-    auto it = category_contents_.find(category);
-    if (it == category_contents_.end()) {
-      continue;
-    }
-    const CategoryContent& content = it->second;
-
-    UpdateCategoryStatus(category, CategoryStatus::NOT_PROVIDED);
-
-    if (!content.suggestions.empty()) {
-      database_->DeleteImages(GetSuggestionIDVector(content.suggestions));
-      database_->DeleteSnippets(GetSuggestionIDVector(content.suggestions));
-    }
-    if (!content.dismissed.empty()) {
-      database_->DeleteImages(GetSuggestionIDVector(content.dismissed));
-      database_->DeleteSnippets(GetSuggestionIDVector(content.dismissed));
-    }
-    category_contents_.erase(it);
-  }
-}
-
 void RemoteSuggestionsProviderImpl::ClearExpiredDismissedSuggestions() {
   std::vector<Category> categories_to_erase;
 
@@ -1118,7 +1056,6 @@ void RemoteSuggestionsProviderImpl::ClearExpiredDismissedSuggestions() {
     }
   }
 
-  // TODO(vitaliii): Use DeleteCategories instead.
   for (Category category : categories_to_erase) {
     UpdateCategoryStatus(category, CategoryStatus::NOT_PROVIDED);
     category_contents_.erase(category);

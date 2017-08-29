@@ -48,6 +48,9 @@ bool IsAutoReloadEnabled();
 // Whether the lru snapshot cache experiment is enabled.
 bool IsLRUSnapshotCacheEnabled();
 
+// Whether the iOS MDM integration is enabled.
+bool IsMDMIntegrationEnabled();
+
 // Whether memory debugging tools are enabled.
 bool IsMemoryDebuggingEnabled();
 
@@ -63,6 +66,9 @@ bool IsPasswordGenerationEnabled();
 // Whether the Physical Web feature is enabled.
 bool IsPhysicalWebEnabled();
 
+// Whether reader mode is enabled.
+bool IsReaderModeEnabled();
+
 // Whether the Sign In Flow via SFSafariViewController is enabled.
 bool IsSafariVCSignInEnabled();
 
@@ -77,6 +83,9 @@ bool IsSuggestionsUIEnabled();
 
 // Whether Sign-in promo is enabled.
 bool IsSigninPromoEnabled();
+
+// Whether Bookmark reordering is enabled.
+bool IsBookmarkReorderingEnabled();
 
 // Whether a new version of FeedbackKit is the preferred feedback UI provider.
 bool IsNewFeedbackKitEnabled();

@@ -206,8 +206,6 @@ class V4GetHashProtocolManager : public net::URLFetcherDelegate {
   FRIEND_TEST_ALL_PREFIXES(V4GetHashProtocolManagerTest,
                            TestParseHashThreatPatternType);
   FRIEND_TEST_ALL_PREFIXES(V4GetHashProtocolManagerTest,
-                           TestParseSubresourceFilterMetadata);
-  FRIEND_TEST_ALL_PREFIXES(V4GetHashProtocolManagerTest,
                            TestParseHashResponseNonPermissionMetadata);
   FRIEND_TEST_ALL_PREFIXES(V4GetHashProtocolManagerTest,
                            TestParseHashResponseInconsistentThreatTypes);

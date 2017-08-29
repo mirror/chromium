@@ -66,7 +66,7 @@ int RunClientFunction(Func handler, bool pass_pipe_ownership_to_main) {
 MultiprocessTestHelper::MultiprocessTestHelper() {}
 
 MultiprocessTestHelper::~MultiprocessTestHelper() {
-  CHECK(!test_child_.IsValid());
+  CHECK(!test_child_.process.IsValid());
 }
 
 ScopedMessagePipeHandle MultiprocessTestHelper::StartChild(
@@ -82,7 +82,7 @@ ScopedMessagePipeHandle MultiprocessTestHelper::StartChildWithExtraSwitch(
     const std::string& switch_value,
     LaunchType launch_type) {
   CHECK(!test_child_name.empty());
-  CHECK(!test_child_.IsValid());
+  CHECK(!test_child_.process.IsValid());
 
   std::string test_child_main = test_child_name + "TestChildMain";
 
@@ -169,7 +169,7 @@ ScopedMessagePipeHandle MultiprocessTestHelper::StartChildWithExtraSwitch(
     command_line.AppendSwitch(kRunAsBrokerClient);
   } else if (launch_type == LaunchType::PEER ||
              launch_type == LaunchType::NAMED_PEER) {
-    peer_connection_ = std::make_unique<PeerConnection>();
+    peer_connection_ = base::MakeUnique<PeerConnection>();
     pipe = peer_connection_->Connect(
         ConnectionParams(TransportProtocol::kLegacy, std::move(server_handle)));
   }
@@ -183,22 +183,22 @@ ScopedMessagePipeHandle MultiprocessTestHelper::StartChildWithExtraSwitch(
       launch_type == LaunchType::NAMED_CHILD) {
     DCHECK(server_handle.is_valid());
     child_invitation.Send(
-        test_child_.Handle(),
+        test_child_.process.Handle(),
         ConnectionParams(TransportProtocol::kLegacy, std::move(server_handle)),
         process_error_callback_);
   }
 
-  CHECK(test_child_.IsValid());
+  CHECK(test_child_.process.IsValid());
   return pipe;
 }
 
 int MultiprocessTestHelper::WaitForChildShutdown() {
-  CHECK(test_child_.IsValid());
+  CHECK(test_child_.process.IsValid());
 
   int rv = -1;
-  WaitForMultiprocessTestChildExit(test_child_, TestTimeouts::action_timeout(),
-                                   &rv);
-  test_child_.Close();
+  WaitForMultiprocessTestChildExit(test_child_.process,
+                                   TestTimeouts::action_timeout(), &rv);
+  test_child_.process.Close();
   return rv;
 }
 

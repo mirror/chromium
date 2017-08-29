@@ -28,7 +28,6 @@
 #include "components/data_reduction_proxy/core/common/data_reduction_proxy_util.h"
 #include "components/data_reduction_proxy/proto/client_config.pb.h"
 #include "components/data_use_measurement/core/data_use_user_data.h"
-#include "components/variations/net/variations_http_headers.h"
 #include "net/base/host_port_pair.h"
 #include "net/base/load_flags.h"
 #include "net/base/load_timing_info.h"
@@ -391,15 +390,6 @@ void DataReductionProxyConfigServiceClient::RetrieveRemoteConfig() {
 
   fetcher_ = std::move(fetcher);
   fetch_in_progress_ = true;
-
-  // Attach variations headers.
-  net::HttpRequestHeaders headers;
-  variations::AppendVariationHeaders(config_service_url_, false /* incognito */,
-                                     false /* uma_enabled */,
-                                     false /* is_signed_in */, &headers);
-  if (!headers.IsEmpty())
-    fetcher_->SetExtraRequestHeaders(headers.ToString());
-
   fetcher_->Start();
 }
 

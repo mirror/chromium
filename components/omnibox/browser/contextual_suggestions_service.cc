@@ -33,8 +33,7 @@ ContextualSuggestionsService::ContextualSuggestionsService(
     net::URLRequestContextGetter* request_context)
     : request_context_(request_context),
       signin_manager_(signin_manager),
-      token_service_(token_service),
-      token_fetcher_(nullptr) {}
+      token_service_(token_service) {}
 
 ContextualSuggestionsService::~ContextualSuggestionsService() {}
 
@@ -73,11 +72,6 @@ void ContextualSuggestionsService::CreateContextualSuggestionsRequest(
       base::BindOnce(&ContextualSuggestionsService::AccessTokenAvailable,
                      base::Unretained(this), std::move(fetcher),
                      std::move(callback)));
-}
-
-void ContextualSuggestionsService::StopCreatingContextualSuggestionsRequest() {
-  std::unique_ptr<AccessTokenFetcher> token_fetcher_deleter(
-      std::move(token_fetcher_));
 }
 
 // static
@@ -181,7 +175,7 @@ std::unique_ptr<net::URLFetcher> ContextualSuggestionsService::CreateRequest(
           destination: GOOGLE_OWNED_SERVICE
         }
         policy {
-          cookies_allowed: NO
+          cookies_allowed: false
           setting:
             "Users can control this feature via the 'Use a prediction service "
             "to help complete searches and URLs typed in the address bar' "
@@ -208,7 +202,7 @@ std::unique_ptr<net::URLFetcher> ContextualSuggestionsService::CreateRequest(
           destination: GOOGLE_OWNED_SERVICE
         }
         policy {
-          cookies_allowed: YES
+          cookies_allowed: true
           cookies_store: "user"
           setting:
             "Users can control this feature via the 'Use a prediction service "
@@ -257,8 +251,7 @@ void ContextualSuggestionsService::AccessTokenAvailable(
     const GoogleServiceAuthError& error,
     const std::string& access_token) {
   DCHECK(token_fetcher_);
-  std::unique_ptr<AccessTokenFetcher> token_fetcher_deleter(
-      std::move(token_fetcher_));
+  token_fetcher_.reset();
 
   // If there were no errors obtaining the access token, append it to the
   // request as a header.

@@ -7,6 +7,7 @@
 #include "core/layout/LayoutBlock.h"
 #include "core/layout/LayoutView.h"
 #include "core/layout/ng/ng_constraint_space_builder.h"
+#include "core/layout/ng/ng_layout_result.h"
 
 namespace blink {
 
@@ -27,9 +28,9 @@ NGConstraintSpace::NGConstraintSpace(
     bool is_new_fc,
     bool is_anonymous,
     const NGMarginStrut& margin_strut,
-    const NGBfcOffset& bfc_offset,
-    const WTF::Optional<NGBfcOffset>& floats_bfc_offset,
-    const NGExclusionSpace& exclusion_space,
+    const NGLogicalOffset& bfc_offset,
+    const WTF::Optional<NGLogicalOffset>& floats_bfc_offset,
+    const std::shared_ptr<NGExclusionSpace>& exclusion_space,
     Vector<RefPtr<NGUnpositionedFloat>>& unpositioned_floats,
     const WTF::Optional<LayoutUnit>& clearance_offset,
     Vector<NGBaselineRequest>& baseline_requests)
@@ -54,7 +55,7 @@ NGConstraintSpace::NGConstraintSpace(
       margin_strut_(margin_strut),
       bfc_offset_(bfc_offset),
       floats_bfc_offset_(floats_bfc_offset),
-      exclusion_space_(WTF::MakeUnique<NGExclusionSpace>(exclusion_space)),
+      exclusion_space_(exclusion_space),
       clearance_offset_(clearance_offset) {
   unpositioned_floats_.swap(unpositioned_floats);
   baseline_requests_.swap(baseline_requests);
@@ -133,9 +134,10 @@ RefPtr<NGConstraintSpace> NGConstraintSpace::CreateFromLayoutObject(
   DCHECK_GE(initial_containing_block_size.width, LayoutUnit());
   DCHECK_GE(initial_containing_block_size.height, LayoutUnit());
 
-  return NGConstraintSpaceBuilder(writing_mode, initial_containing_block_size)
+  return NGConstraintSpaceBuilder(writing_mode)
       .SetAvailableSize(available_size)
       .SetPercentageResolutionSize(percentage_size)
+      .SetInitialContainingBlockSize(initial_containing_block_size)
       .SetIsInlineDirectionTriggersScrollbar(
           box.StyleRef().OverflowInlineDirection() == EOverflow::kAuto)
       .SetIsBlockDirectionTriggersScrollbar(
@@ -157,6 +159,10 @@ Optional<LayoutUnit> NGConstraintSpace::ParentPercentageResolutionInlineSize()
     return *parent_percentage_resolution_inline_size_;
   return initial_containing_block_size_.ConvertToLogical(WritingMode())
       .inline_size;
+}
+
+void NGConstraintSpace::AddExclusion(const NGExclusion& exclusion) {
+  exclusion_space_->Add(exclusion);
 }
 
 NGFragmentationType NGConstraintSpace::BlockFragmentationType() const {
@@ -209,7 +215,7 @@ bool NGConstraintSpace::operator!=(const NGConstraintSpace& other) const {
 String NGConstraintSpace::ToString() const {
   return String::Format(
       "Offset: %s,%s Size: %sx%s Clearance: %s",
-      bfc_offset_.line_offset.ToString().Ascii().data(),
+      bfc_offset_.inline_offset.ToString().Ascii().data(),
       bfc_offset_.block_offset.ToString().Ascii().data(),
       AvailableSize().inline_size.ToString().Ascii().data(),
       AvailableSize().block_size.ToString().Ascii().data(),

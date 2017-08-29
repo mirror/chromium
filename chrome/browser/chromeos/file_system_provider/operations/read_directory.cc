@@ -54,10 +54,11 @@ ReadDirectory::ReadDirectory(
     extensions::EventRouter* event_router,
     const ProvidedFileSystemInfo& file_system_info,
     const base::FilePath& directory_path,
-    storage::AsyncFileUtil::ReadDirectoryCallback callback)
+    const storage::AsyncFileUtil::ReadDirectoryCallback& callback)
     : Operation(event_router, file_system_info),
       directory_path_(directory_path),
-      callback_(std::move(callback)) {}
+      callback_(callback) {
+}
 
 ReadDirectory::~ReadDirectory() {
 }

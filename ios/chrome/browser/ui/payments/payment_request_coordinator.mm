@@ -342,8 +342,6 @@ requestFullCreditCard:(const autofill::CreditCard&)card
 - (void)paymentItemsDisplayCoordinatorDidConfirm:
     (PaymentItemsDisplayCoordinator*)coordinator {
   [_delegate paymentRequestCoordinatorDidConfirm:self];
-  [_itemsDisplayCoordinator stop];
-  _itemsDisplayCoordinator = nil;
 }
 
 #pragma mark - ContactInfoSelectionCoordinatorDelegate

@@ -188,13 +188,6 @@
 #include "media/device_monitors/device_monitor_mac.h"
 #endif
 
-#if defined(OS_FUCHSIA)
-#include <magenta/process.h>
-#include <magenta/syscalls.h>
-
-#include "base/fuchsia/default_job.h"
-#endif  // defined(OS_FUCHSIA)
-
 #if defined(OS_POSIX) && !defined(OS_MACOSX)
 #include "content/browser/renderer_host/render_sandbox_host_linux.h"
 #include "content/browser/zygote_host/zygote_host_impl_linux.h"
@@ -465,18 +458,6 @@ constexpr base::TimeDelta kSwapMetricsInterval =
     base::TimeDelta::FromSeconds(60);
 #endif  // !defined(OS_FUCHSIA)
 
-#if defined(OS_FUCHSIA)
-// Create and register the job which will contain all child processes
-// of the browser process as well as their descendents.
-void InitDefaultJob() {
-  base::ScopedMxHandle handle;
-  mx_status_t result = mx_job_create(mx_job_default(), 0, handle.receive());
-  CHECK_EQ(MX_OK, result) << "mx_job_create(job): "
-                          << mx_status_get_string(result);
-  base::SetDefaultJob(std::move(handle));
-}
-#endif  // defined(OS_FUCHSIA)
-
 }  // namespace
 
 #if defined(USE_X11) && !defined(OS_CHROMEOS)
@@ -625,10 +606,6 @@ void BrowserMainLoop::EarlyInitialization() {
 #if defined(USE_NSS_CERTS)
   // We want to be sure to init NSPR on the main thread.
   crypto::EnsureNSPRInit();
-#endif
-
-#if defined(OS_FUCHSIA)
-  InitDefaultJob();
 #endif
 
   if (parsed_command_line_.HasSwitch(switches::kRendererProcessLimit)) {
@@ -1213,8 +1190,8 @@ void BrowserMainLoop::ShutdownThreadsAndCleanUp() {
   base::ThreadRestrictions::SetIOAllowed(true);
   BrowserThread::PostTask(
       BrowserThread::IO, FROM_HERE,
-      base::BindOnce(
-          base::IgnoreResult(&base::ThreadRestrictions::SetIOAllowed), true));
+      base::Bind(base::IgnoreResult(&base::ThreadRestrictions::SetIOAllowed),
+                 true));
 
 #if defined(OS_ANDROID)
   g_browser_main_loop_shutting_down = true;
@@ -1629,9 +1606,9 @@ int BrowserMainLoop::BrowserThreadsStarted() {
                          TRACE_EVENT_SCOPE_THREAD);
     BrowserThread::PostTask(
         BrowserThread::IO, FROM_HERE,
-        base::BindOnce(base::IgnoreResult(&GpuProcessHost::Get),
-                       GpuProcessHost::GPU_PROCESS_KIND_SANDBOXED,
-                       true /* force_create */));
+        base::Bind(base::IgnoreResult(&GpuProcessHost::Get),
+                   GpuProcessHost::GPU_PROCESS_KIND_SANDBOXED,
+                   true /* force_create */));
   }
 
 #if defined(OS_MACOSX)
@@ -1757,8 +1734,6 @@ void BrowserMainLoop::InitializeMojo() {
 #if defined(OS_MACOSX)
   mojo::edk::SetMachPortProvider(MachBroker::GetInstance());
 #endif  // defined(OS_MACOSX)
-  GetContentClient()->OnServiceManagerConnected(
-      ServiceManagerConnection::GetForProcess());
   if (parts_) {
     parts_->ServiceManagerConnectionStarted(
         ServiceManagerConnection::GetForProcess());

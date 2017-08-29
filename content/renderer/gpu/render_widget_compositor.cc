@@ -429,8 +429,6 @@ cc::LayerTreeSettings RenderWidgetCompositor::GenerateLayerTreeSettings(
       base::FeatureList::IsEnabled(features::kColorCorrectRendering);
   settings.resource_settings.buffer_to_texture_target_map =
       compositor_deps->GetBufferToTextureTargetMap();
-  settings.enable_oop_rasterization =
-      cmd.HasSwitch(switches::kEnableOOPRasterization);
 
   // Build LayerTreeSettings from command line args.
   LayerTreeSettingsFactory::SetBrowserControlsSettings(settings, cmd);
@@ -540,10 +538,6 @@ cc::LayerTreeSettings RenderWidgetCompositor::GenerateLayerTreeSettings(
     settings.scrollbar_fade_duration = ui::kOverlayScrollbarFadeDuration;
     settings.scrollbar_thinning_duration =
         ui::kOverlayScrollbarThinningDuration;
-    settings.scrollbar_flash_after_any_scroll_update =
-        ui::OverlayScrollbarFlashAfterAnyScrollUpdate();
-    settings.scrollbar_flash_when_mouse_enter =
-        ui::OverlayScrollbarFlashWhenMouseEnter();
   }
 
   // On desktop, if there's over 4GB of memory on the machine, increase the

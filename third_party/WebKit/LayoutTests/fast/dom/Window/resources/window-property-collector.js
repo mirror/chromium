@@ -32,10 +32,6 @@ function emitExpectedResult(path, expected)
         return;
     }
 
-    // Skip history, which throws SecurityErrors and is covered by web-platform-tests.
-    if (path[0] == 'history')
-        return;
-
     // FIXME: Skip MemoryInfo for now, since it's not implemented as a DOMWindowProperty, and has
     // no way of knowing when it's detached. Eventually this should have the same behavior.
     if (path.length >= 2 && (path[0] == 'console' || path[0] == 'performance') && path[1] == 'memory')
@@ -85,7 +81,6 @@ function emitExpectedResult(path, expected)
         break;
     case "navigator.appCodeName":
     case "navigator.appName":
-    case "navigator.deviceMemory":
     case "navigator.hardwareConcurrency":
     case "navigator.language":
     case "navigator.onLine":

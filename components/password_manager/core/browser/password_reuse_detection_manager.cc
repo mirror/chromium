@@ -71,22 +71,16 @@ void PasswordReuseDetectionManager::OnKeyPressed(const base::string16& text) {
 
 void PasswordReuseDetectionManager::OnReuseFound(
     const base::string16& password,
-    bool matches_sync_password,
-    const std::vector<std::string>& matching_domains,
-    int saved_passwords) {
+    const std::string& legitimate_domain,
+    int saved_passwords,
+    int number_matches) {
   reuse_on_this_page_was_found_ = true;
   std::unique_ptr<BrowserSavePasswordProgressLogger> logger;
   if (password_manager_util::IsLoggingActive(client_)) {
     logger.reset(
         new BrowserSavePasswordProgressLogger(client_->GetLogManager()));
-    std::vector<std::string> domains_to_log(matching_domains);
-    if (matches_sync_password)
-      domains_to_log.push_back("CHROME SYNC PASSWORD");
-    // TODO(nparker): Implement LogList() to log all domains in one call.
-    for (const auto& domain : domains_to_log) {
-      logger->LogString(BrowserSavePasswordProgressLogger::STRING_REUSE_FOUND,
-                        domain);
-    }
+    logger->LogString(BrowserSavePasswordProgressLogger::STRING_REUSE_FOUND,
+                      legitimate_domain);
   }
 
   // PasswordManager could be nullptr in tests.
@@ -96,16 +90,16 @@ void PasswordReuseDetectionManager::OnReuseFound(
           : false;
 
   metrics_util::LogPasswordReuse(password.size(), saved_passwords,
-                                 matching_domains.size(),
-                                 password_field_detected);
+                                 number_matches, password_field_detected);
 #if defined(SAFE_BROWSING_DB_LOCAL)
   // TODO(jialiul): After CSD whitelist being added to Android, we should gate
   // this by either SAFE_BROWSING_DB_LOCAL or SAFE_BROWSING_DB_REMOTE.
-  if (matches_sync_password) {
+  if (!number_matches) {
+    // |number_matches| == 0 means sync password reuse was detected.
     client_->LogPasswordReuseDetectedEvent();
   }
 
-  client_->CheckProtectedPasswordEntry(matches_sync_password, matching_domains,
+  client_->CheckProtectedPasswordEntry(legitimate_domain,
                                        password_field_detected);
 #endif
 }

@@ -40,6 +40,10 @@ source_set("browser") {
   ]
 
   if (is_android) {
+    sources += [
+      "android/component_jni_registrar.cc",
+      "android/component_jni_registrar.h",
+    ]
     deps += [ "android:jni_headers" ]
   }
 }

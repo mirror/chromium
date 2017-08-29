@@ -114,12 +114,14 @@ void SyncFileSystemBackend::Initialize(storage::FileSystemContext* context) {
 
 void SyncFileSystemBackend::ResolveURL(const storage::FileSystemURL& url,
                                        storage::OpenFileSystemMode mode,
-                                       OpenFileSystemCallback callback) {
+                                       const OpenFileSystemCallback& callback) {
   DCHECK(CanHandleType(url.type()));
 
   if (skip_initialize_syncfs_service_for_testing_) {
-    GetDelegate()->OpenFileSystem(url.origin(), url.type(), mode,
-                                  std::move(callback),
+    GetDelegate()->OpenFileSystem(url.origin(),
+                                  url.type(),
+                                  mode,
+                                  callback,
                                   GetSyncableFileSystemRootURI(url.origin()));
     return;
   }
@@ -128,7 +130,7 @@ void SyncFileSystemBackend::ResolveURL(const storage::FileSystemURL& url,
   SyncStatusCallback initialize_callback =
       base::Bind(&SyncFileSystemBackend::DidInitializeSyncFileSystemService,
                  base::Unretained(this), base::RetainedRef(context_),
-                 url.origin(), url.type(), mode, base::Passed(&callback));
+                 url.origin(), url.type(), mode, callback);
   InitializeSyncFileSystemService(url.origin(), initialize_callback);
 }
 
@@ -292,7 +294,7 @@ void SyncFileSystemBackend::DidInitializeSyncFileSystemService(
     const GURL& origin_url,
     storage::FileSystemType type,
     storage::OpenFileSystemMode mode,
-    OpenFileSystemCallback callback,
+    const OpenFileSystemCallback& callback,
     SyncStatusCode status) {
   // Repost to switch from UI thread to IO thread.
   if (!BrowserThread::CurrentlyOn(BrowserThread::IO)) {
@@ -303,19 +305,19 @@ void SyncFileSystemBackend::DidInitializeSyncFileSystemService(
         base::BindOnce(
             &SyncFileSystemBackend::DidInitializeSyncFileSystemService,
             base::Unretained(this), base::RetainedRef(context), origin_url,
-            type, mode, std::move(callback), status));
+            type, mode, callback, status));
     return;
   }
 
   if (status != sync_file_system::SYNC_STATUS_OK) {
-    std::move(callback).Run(GURL(), std::string(),
-                            SyncStatusCodeToFileError(status));
+    callback.Run(GURL(), std::string(),
+                 SyncStatusCodeToFileError(status));
     return;
   }
 
-  std::move(callback).Run(GetSyncableFileSystemRootURI(origin_url),
-                          GetFileSystemName(origin_url, type),
-                          base::File::FILE_OK);
+  callback.Run(GetSyncableFileSystemRootURI(origin_url),
+               GetFileSystemName(origin_url, type),
+               base::File::FILE_OK);
 }
 
 }  // namespace sync_file_system

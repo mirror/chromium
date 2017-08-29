@@ -35,13 +35,17 @@ class CORE_EXPORT TextPainter : public TextPainterBase {
     combined_text_ = combined_text;
   }
 
-  void ClipDecorationsStripe(float upper,
-                             float stripe_width,
-                             float dilation) override;
+  void ClipDecorationsStripe(float upper, float stripe_width, float dilation);
   void Paint(unsigned start_offset,
              unsigned end_offset,
              unsigned length,
              const Style&);
+
+  void PaintDecorationUnderOrOverLine(GraphicsContext&,
+                                      const DecorationInfo&,
+                                      const AppliedTextDecoration&,
+                                      int line_offset,
+                                      float decoration_offset);
 
   static Style SelectionPaintingStyle(LineLayoutItem,
                                       bool have_selection,

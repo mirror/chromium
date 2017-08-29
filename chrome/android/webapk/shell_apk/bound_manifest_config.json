@@ -4,7 +4,6 @@
   "intent_filters": {
     "scope_url_scheme": "https",
     "scope_url_host": "pwa.rocks",
-    "scope_url_path_type": "android:pathPrefix",
     "scope_url_path": "/"
   },
   "start_url": "https://pwa.rocks/",

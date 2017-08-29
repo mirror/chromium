@@ -193,22 +193,11 @@ NSString* const kContentSuggestionsCollectionUpdaterSnackbarCategory =
 #pragma mark - ContentSuggestionsDataSink
 
 - (void)dataAvailableForSection:
-            (ContentSuggestionsSectionInformation*)sectionInfo
-                    forceReload:(BOOL)forceReload {
+    (ContentSuggestionsSectionInformation*)sectionInfo {
   SectionIdentifier sectionIdentifier = SectionIdentifierForInfo(sectionInfo);
+
   CSCollectionViewModel* model =
       self.collectionViewController.collectionViewModel;
-
-  if (forceReload && [model hasSectionForSectionIdentifier:sectionIdentifier]) {
-    NSInteger section = [model sectionForSectionIdentifier:sectionIdentifier];
-    NSInteger numberOfItem = [model numberOfItemsInSection:section];
-    for (NSInteger i = 0; i < numberOfItem; i++) {
-      [self.collectionViewController
-          dismissEntryAtIndexPath:[NSIndexPath indexPathForItem:0
-                                                      inSection:section]];
-    }
-  }
-
   if ([model hasSectionForSectionIdentifier:sectionIdentifier]) {
     NSArray<CSCollectionViewItem*>* items =
         [model itemsInSectionWithIdentifier:sectionIdentifier];
@@ -221,29 +210,6 @@ NSString* const kContentSuggestionsCollectionUpdaterSnackbarCategory =
   [self.collectionViewController
       addSuggestions:[self.dataSource itemsForSectionInfo:sectionInfo]
        toSectionInfo:sectionInfo];
-}
-
-- (void)section:(ContentSuggestionsSectionInformation*)sectionInfo
-      isLoading:(BOOL)isLoading {
-  SectionIdentifier sectionIdentifier = SectionIdentifierForInfo(sectionInfo);
-  CSCollectionViewModel* model =
-      self.collectionViewController.collectionViewModel;
-  if (![model hasSectionForSectionIdentifier:sectionIdentifier] ||
-      ![model footerForSectionWithIdentifier:sectionIdentifier])
-    return;
-
-  CollectionViewItem* footerItem =
-      [model footerForSectionWithIdentifier:sectionIdentifier];
-  ContentSuggestionsFooterItem* footer =
-      base::mac::ObjCCastStrict<ContentSuggestionsFooterItem>(footerItem);
-
-  if (footer.loading != isLoading) {
-    footer.loading = isLoading;
-    if (footer.configuredCell.delegate == footer) {
-      // The cell associated with this footer is probably still on screen.
-      [footer configureCell:footer.configuredCell];
-    }
-  }
 }
 
 - (void)clearSuggestion:(ContentSuggestionIdentifier*)suggestionIdentifier {

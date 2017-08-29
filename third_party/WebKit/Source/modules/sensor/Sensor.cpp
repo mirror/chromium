@@ -17,10 +17,6 @@
 
 namespace blink {
 
-namespace {
-const double kWaitingIntervalThreshold = 0.01;
-}  // namespace
-
 Sensor::Sensor(ExecutionContext* execution_context,
                const SensorOptions& sensor_options,
                ExceptionState& exception_state,
@@ -186,7 +182,8 @@ void Sensor::OnSensorReadingChanged() {
   // polling period.
   auto sensor_reading_changed =
       WTF::Bind(&Sensor::NotifyReading, WrapWeakPersistent(this));
-  if (waitingTime < kWaitingIntervalThreshold) {
+  double minWaitingInterval = 1 / device::GetSensorMaxAllowedFrequency(type_);
+  if (waitingTime < minWaitingInterval) {
     // Invoke JS callbacks in a different callchain to obviate
     // possible modifications of SensorProxy::observers_ container
     // while it is being iterated through.

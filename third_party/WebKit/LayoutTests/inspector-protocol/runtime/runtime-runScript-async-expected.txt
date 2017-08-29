@@ -17,13 +17,13 @@ Running test: testSyntaxErrorInScript
         exception : {
             className : SyntaxError
             description : SyntaxError: Unexpected token }
-            objectId : <number>
+            objectId : 0
             subtype : error
             type : object
         }
         exceptionId : 0
         lineNumber : 1
-        scriptId : <number>
+        scriptId : 0
         text : Uncaught
     }
 }
@@ -35,20 +35,20 @@ Running test: testSyntaxErrorInEvalInScript
         exception : {
             className : SyntaxError
             description : SyntaxError: Unexpected token }     at boo.js:2:2
-            objectId : <number>
+            objectId : 0
             subtype : error
             type : object
         }
         exceptionId : 0
         lineNumber : 0
-        scriptId : <number>
+        scriptId : 0
         stackTrace : {
             callFrames : [
                 [0] : {
                     columnNumber : 1
                     functionName : 
                     lineNumber : 1
-                    scriptId : <number>
+                    scriptId : 0
                     url : boo.js
                 }
             ]
@@ -58,7 +58,7 @@ Running test: testSyntaxErrorInEvalInScript
     result : {
         className : SyntaxError
         description : SyntaxError: Unexpected token }     at boo.js:2:2
-        objectId : <string>
+        objectId : [ObjectId]
         subtype : error
         type : object
     }
@@ -85,7 +85,7 @@ Running test: testRunScriptWithPreview
     result : {
         className : Object
         description : Object
-        objectId : <string>
+        objectId : [ObjectId]
         preview : {
             description : Object
             overflow : false
@@ -137,7 +137,7 @@ Running test: testAwaitRejectedPromise
     exceptionDetails : {
         columnNumber : 0
         exception : {
-            objectId : <number>
+            objectId : 0
             type : object
             value : {
                 a : 1

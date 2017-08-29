@@ -239,8 +239,7 @@ public class PickerBitmapView extends SelectableItemView<PickerBitmap> {
         Resources resources = mContext.getResources();
 
         if (isCameraTile()) {
-            image = VectorDrawableCompat.create(
-                    resources, R.drawable.ic_photo_camera_grey, mContext.getTheme());
+            image = ApiCompatibilityUtils.getDrawable(resources, R.drawable.ic_photo_camera);
             labelStringId = R.string.photo_picker_camera;
         } else {
             image = VectorDrawableCompat.create(

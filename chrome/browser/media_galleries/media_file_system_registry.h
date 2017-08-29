@@ -85,7 +85,7 @@ class MediaFileSystemRegistry
       content::WebContents* contents,
       const extensions::Extension* extension,
       MediaGalleryPrefId pref_id,
-      base::OnceCallback<void(base::File::Error result)> callback);
+      const base::Callback<void(base::File::Error result)>& callback);
 
   // Returns the media galleries preferences for the specified |profile|.
   // Caller is responsible for ensuring that the preferences are initialized

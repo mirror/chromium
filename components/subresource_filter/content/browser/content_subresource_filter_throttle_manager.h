@@ -19,6 +19,7 @@
 #include "content/public/browser/web_contents_observer.h"
 
 namespace content {
+struct OpenURLParams;
 class NavigationHandle;
 class NavigationThrottle;
 class RenderFrameHost;
@@ -58,6 +59,10 @@ class ContentSubresourceFilterThrottleManager
     // first load is disallowed for a given page load.
     virtual void OnFirstSubresourceLoadDisallowed() {}
 
+    // Whether the stronger version of the popup blocker is enabled for this
+    // page load.
+    virtual bool AllowStrongPopupBlocking();
+
     // Whether we should be using ruleset rules for this page load.
     virtual bool AllowRulesetRules();
   };
@@ -81,7 +86,9 @@ class ContentSubresourceFilterThrottleManager
       content::NavigationHandle* navigation_handle,
       std::vector<std::unique_ptr<content::NavigationThrottle>>* throttles);
 
-  PageLoadStatistics* page_load_statistics() const { return statistics_.get(); }
+  // Returns whether or not the current WebContents is allowed to create a new
+  // window.
+  bool ShouldDisallowNewWindow(const content::OpenURLParams* open_url_params);
 
   VerifiedRuleset::Handle* ruleset_handle_for_testing() {
     return ruleset_handle_.get();

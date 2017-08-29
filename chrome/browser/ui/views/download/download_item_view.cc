@@ -128,12 +128,7 @@ const int kDisabledOnOpenDuration = 3000;
 // The separator is drawn as a border. It's one dp wide.
 class SeparatorBorder : public views::FocusableBorder {
  public:
-  explicit SeparatorBorder(SkColor separator_color)
-      : separator_color_(separator_color) {
-    // Set the color used by FocusableBorder::Paint(), which could otherwise
-    // change when FocusableBorder relies on FocusRings instead.
-    SetColorId(ui::NativeTheme::kColorId_FocusedBorderColor);
-  }
+  explicit SeparatorBorder(SkColor color) : color_(color) {}
   ~SeparatorBorder() override {}
 
   void Paint(const views::View& view, gfx::Canvas* canvas) override {
@@ -143,7 +138,7 @@ class SeparatorBorder : public views::FocusableBorder {
     int end_x = base::i18n::IsRTL() ? 0 : view.width() - 1;
     canvas->DrawLine(gfx::Point(end_x, kTopBottomPadding),
                      gfx::Point(end_x, view.height() - kTopBottomPadding),
-                     separator_color_);
+                     color_);
   }
 
   gfx::Insets GetInsets() const override { return gfx::Insets(0, 0, 0, 1); }
@@ -153,7 +148,7 @@ class SeparatorBorder : public views::FocusableBorder {
   }
 
  private:
-  SkColor separator_color_;
+  SkColor color_;
 
   DISALLOW_COPY_AND_ASSIGN(SeparatorBorder);
 };

@@ -21,12 +21,10 @@ namespace blink {
 
 WorkerOrWorkletGlobalScope::WorkerOrWorkletGlobalScope(
     v8::Isolate* isolate,
-    WorkerClients* worker_clients,
-    WorkerReportingProxy& reporting_proxy)
+    WorkerClients* worker_clients)
     : worker_clients_(worker_clients),
       script_controller_(
           WorkerOrWorkletScriptController::Create(this, isolate)),
-      reporting_proxy_(reporting_proxy),
       used_features_(static_cast<int>(WebFeature::kNumberOfFeatures)) {
   if (worker_clients_)
     worker_clients_->ReattachThread();
@@ -35,17 +33,15 @@ WorkerOrWorkletGlobalScope::WorkerOrWorkletGlobalScope(
 WorkerOrWorkletGlobalScope::~WorkerOrWorkletGlobalScope() = default;
 
 void WorkerOrWorkletGlobalScope::CountFeature(WebFeature feature) {
-  DCHECK(IsContextThread());
   DCHECK_NE(WebFeature::kOBSOLETE_PageDestruction, feature);
   DCHECK_GT(WebFeature::kNumberOfFeatures, feature);
   if (used_features_.QuickGet(static_cast<int>(feature)))
     return;
   used_features_.QuickSet(static_cast<int>(feature));
-  ReportingProxy().CountFeature(feature);
+  ReportFeature(feature);
 }
 
 void WorkerOrWorkletGlobalScope::CountDeprecation(WebFeature feature) {
-  DCHECK(IsContextThread());
   DCHECK_NE(WebFeature::kOBSOLETE_PageDestruction, feature);
   DCHECK_GT(WebFeature::kNumberOfFeatures, feature);
   if (used_features_.QuickGet(static_cast<int>(feature)))
@@ -57,7 +53,8 @@ void WorkerOrWorkletGlobalScope::CountDeprecation(WebFeature feature) {
   AddConsoleMessage(
       ConsoleMessage::Create(kDeprecationMessageSource, kWarningMessageLevel,
                              Deprecation::DeprecationMessage(feature)));
-  ReportingProxy().CountDeprecation(feature);
+
+  ReportDeprecation(feature);
 }
 
 ResourceFetcher* WorkerOrWorkletGlobalScope::GetResourceFetcher() {

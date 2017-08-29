@@ -1089,7 +1089,7 @@ const ContentTypeToNibPath kNibPaths[] = {
 }
 
 - (IBAction)manageBlocking:(id)sender {
-  [self model]->OnManageButtonClicked();
+  [self model]->OnManageLinkClicked();
 }
 
 - (IBAction)closeBubble:(id)sender {

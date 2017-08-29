@@ -346,10 +346,6 @@ const char kEnableDistanceFieldText[]       = "enable-distance-field-text";
 const char kEnablePreferCompositingToLCDText[] =
     "enable-prefer-compositing-to-lcd-text";
 
-// Enable work-in-progress persistent storage for the Background Fetch API.
-const char kEnableBackgroundFetchPersistence[] =
-    "enable-background-fetch-persistence";
-
 // Enable one or more Blink runtime-enabled features.
 // Use names from RuntimeEnabledFeatures.json5, separated by commas.
 // Applied before kDisableBlinkFeatures, and after other flags that change these
@@ -946,12 +942,6 @@ const char kDisableWebRtcHWEncoding[] = "disable-webrtc-hw-encoding";
 // Enables negotiation of GCM cipher suites from RFC 7714 for SRTP in WebRTC.
 // See https://tools.ietf.org/html/rfc7714 for further information.
 const char kEnableWebRtcSrtpAesGcm[] = "enable-webrtc-srtp-aes-gcm";
-
-// Enables negotiation of encrypted header extensions from RFC 6904 for SRTP
-// in WebRTC.
-// See https://tools.ietf.org/html/rfc6904 for further information.
-const char kEnableWebRtcSrtpEncryptedHeaders[] =
-    "enable-webrtc-srtp-encrypted-headers";
 
 // Enables Origin header in Stun messages for WebRTC.
 const char kEnableWebRtcStunOrigin[]        = "enable-webrtc-stun-origin";

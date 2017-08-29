@@ -64,12 +64,6 @@ Status AutomationExtension::MaximizeWindow() {
   return UpdateWindow(update_info);
 }
 
-Status AutomationExtension::FullScreenWindow() {
-  base::DictionaryValue update_info;
-  update_info.SetString("state", "fullscreen");
-  return UpdateWindow(update_info);
-}
-
 Status AutomationExtension::GetWindowInfo(int* x,
                                           int* y,
                                           int* width,

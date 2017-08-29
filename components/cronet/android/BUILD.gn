@@ -197,8 +197,6 @@ source_set("cronet_static") {
     "//components/cronet/android/metrics_util.h",
     "//components/cronet/android/url_request_error.cc",
     "//components/cronet/android/url_request_error.h",
-    "//components/cronet/cronet_prefs_manager.cc",
-    "//components/cronet/cronet_prefs_manager.h",
     "//components/cronet/histogram_manager.cc",
     "//components/cronet/histogram_manager.h",
     "//components/cronet/host_cache_persistence_manager.cc",
@@ -493,11 +491,17 @@ shared_library("cronet_tests") {
     "test/cronet_url_request_context_config_test.cc",
     "test/cronet_url_request_context_config_test.h",
     "test/experimental_options_test.cc",
+    "test/experimental_options_test.h",
     "test/mock_cert_verifier.cc",
+    "test/mock_cert_verifier.h",
     "test/mock_url_request_job_factory.cc",
+    "test/mock_url_request_job_factory.h",
     "test/native_test_server.cc",
+    "test/native_test_server.h",
     "test/quic_test_server.cc",
+    "test/quic_test_server.h",
     "test/sdch_test_util.cc",
+    "test/sdch_test_util.h",
     "test/test_upload_data_stream_handler.cc",
     "test/test_upload_data_stream_handler.h",
   ]
@@ -1230,6 +1234,9 @@ action("generate_javadoc") {
 
 copy("cronet_package_copy") {
   sources = [
+    "$root_out_dir/lib.java/components/cronet/android/cronet_api.jar",
+    "$root_out_dir/lib.java/components/cronet/android/cronet_impl_common_java.jar",
+    "$root_out_dir/lib.java/components/cronet/android/cronet_impl_platform_java.jar",
     "$target_gen_dir/cronet_impl_native_proguard.cfg",
     "//AUTHORS",
     "//chrome/VERSION",
@@ -1243,43 +1250,6 @@ copy("cronet_package_copy") {
   deps = [
     ":cronet_api_java",
     ":cronet_combine_proguard_flags",
-    ":cronet_impl_common_java",
-    ":cronet_impl_platform_java",
-  ]
-}
-
-template("copy_java8_jars") {
-  _deps = []
-  foreach(dep, invoker.deps) {
-    _dep_name = get_label_info(dep, "name")
-    _source_jar = get_label_info(dep, "target_gen_dir") + "/" + _dep_name +
-                  "__compile_java.javac.jar"
-    _output_jar = "$_package_dir/" + _dep_name + ".jar"
-    _copy_dep = ":" + _dep_name + "__compile_java__javac"
-    _copy_target_name = "${target_name}_${dep}"
-
-    copy(_copy_target_name) {
-      sources = [
-        _source_jar,
-      ]
-      outputs = [
-        _output_jar,
-      ]
-      deps = [
-        _copy_dep,
-      ]
-    }
-    _deps += [ ":" + _copy_target_name ]
-  }
-
-  group(target_name) {
-    deps = _deps
-  }
-}
-
-copy_java8_jars("copy_cronet_java8_jars") {
-  deps = [
-    ":cronet_api_java",
     ":cronet_impl_common_java",
     ":cronet_impl_platform_java",
   ]
@@ -1480,7 +1450,6 @@ group("cronet_package") {
       (!(target_cpu == "arm" && arm_version == 7) || !arm_use_neon)) {
     deps = [
       ":api_static_checks",
-      ":copy_cronet_java8_jars",
       ":cronet_package_copy",
       ":cronet_package_copy_native_lib",
       ":cronet_package_copy_native_lib_unstripped",

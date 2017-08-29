@@ -8,6 +8,10 @@
 #include "base/values.h"
 #include "components/password_manager/core/common/credential_manager_types.h"
 
+namespace web {
+class WebState;
+}
+
 namespace credential_manager {
 
 // Keys for obtaining common Credential's fields from DictionaryValue
@@ -57,9 +61,6 @@ extern const char kMediationRequirementOptional[];
 extern const char kCredentialTypePassword[];
 extern const char kCredentialTypeFederated[];
 
-// TODO(crbug.com/435048): For ParseCredentialDictionary method, add ability to
-// pass an error message back to the caller.
-
 // Returns value of Parse* methods below is false if |json| is invalid, which
 // means it is missing required fields, contains fields of wrong type or
 // unexpected values. Otherwise return value is true.
@@ -81,6 +82,10 @@ bool ParseCredentialType(const base::DictionaryValue& json,
 // CredentialInfo.
 bool ParseCredentialDictionary(const base::DictionaryValue& json,
                                password_manager::CredentialInfo* credential);
+
+// Checks if |web_state|'s content is a secure HTML. This is done in order to
+// ignore API calls from insecure context.
+bool WebStateContentIsSecureHtml(const web::WebState* web_state);
 
 }  // namespace credential_manager
 

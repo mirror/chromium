@@ -27,7 +27,6 @@
 <translation id="1746730358044914197">Kaedah masukan dikonfigurasi oleh pentadbir anda.</translation>
 <translation id="1747827819627189109">Papan kekunci pada skrin didayakan</translation>
 <translation id="1823873187264960516">Ethernet: <ph name="ADDRESS" /></translation>
-<translation id="1836215606488044471">Pembantu (memuat...)</translation>
 <translation id="1850504506766569011">Wi-Fi dimatikan.</translation>
 <translation id="1856813161013948396">Langkau skrin kunci dengan mengetik penderia cap jari. Klik untuk mengkonfigurasi.</translation>
 <translation id="1864454756846565995">Peranti USB-C (port belakang)</translation>
@@ -55,7 +54,6 @@
 <translation id="2338501278241028356">Hidupkan Bluetooth untuk menemui peranti berdekatan</translation>
 <translation id="2352467521400612932">Tetapan stilus</translation>
 <translation id="2354174487190027830">Mengaktifkan <ph name="NAME" /></translation>
-<translation id="2365393535144473978">Tindakan mendayakan data mudah alih akan turut mendayakan Bluetooth.</translation>
 <translation id="2391579633712104609">180°</translation>
 <translation id="2429753432712299108">Peranti Bluetooth "<ph name="DEVICE_NAME" />" ingin kebenaran untuk berpasangan. Sebelum menerimanya, sila sahkan bahawa kekunci laluan ini dipaparkan pada peranti tersebut: <ph name="PASSKEY" /></translation>
 <translation id="2475982808118771221">Ralat berlaku</translation>
@@ -125,7 +123,6 @@
 <translation id="4279490309300973883">Pencerminan</translation>
 <translation id="4321179778687042513">ctrl</translation>
 <translation id="4338109981321384717">Kanta pembesar</translation>
-<translation id="4351433414020964307">Pembantu sedang dimuatkan...</translation>
 <translation id="4378551569595875038">Menyambung...</translation>
 <translation id="4421231901400348175">Berkongsi kawalan skrin anda dengan <ph name="HELPER_NAME" /> melalui Bantuan Jauh.</translation>
 <translation id="4430019312045809116">Kelantangan</translation>
@@ -172,7 +169,6 @@
 <translation id="5927132638760172455">Menghantar ke penerima yang tidak diketahui</translation>
 <translation id="5947494881799873997">Berbalik</translation>
 <translation id="595202126637698455">Penjejakan prestasi didayakan</translation>
-<translation id="5957083217255311415">Data mudah alih dimatikan.</translation>
 <translation id="5958529069007801266">Pengguna diselia</translation>
 <translation id="5977415296283489383">Fon kepala</translation>
 <translation id="5978382165065462689">Berkongsi kawalan skrin anda melalui Bantuan Jauh.</translation>
@@ -206,7 +202,6 @@
 <translation id="6691659475504239918">Cari+Shift+H</translation>
 <translation id="6700713906295497288">Butang menu IME</translation>
 <translation id="6713285437468012787">Peranti Bluetooth "<ph name="DEVICE_NAME" />" telah dipasangkan dan kini tersedia untuk semua pengguna. Anda boleh mengalih keluar pasangan ini menggunakan Tetapan.</translation>
-<translation id="6715542151869432661">Peranti mudah alih tidak ditemui.</translation>
 <translation id="6785414152754474415">Bateri <ph name="PERCENTAGE" />% penuh dan sedang dicas.</translation>
 <translation id="6803622936009808957">Tidak dapat membalikkan paparan memandangkan tiada peleraian disokong ditemui. Sebaliknya, memasuki mod desktop yang dilanjutkan.</translation>
 <translation id="683971173229319003">Carian+L</translation>
@@ -272,7 +267,6 @@
 <translation id="8828714802988429505">90°</translation>
 <translation id="8850991929411075241">Carian+Esc</translation>
 <translation id="8878886163241303700">Meluaskan skrin</translation>
-<translation id="8921624153894383499">Google Assistant tidak bertutur dalam bahasa ini.</translation>
 <translation id="8938800817013097409">Peranti USB-C (port kanan di belakang)</translation>
 <translation id="8940956008527784070">Bateri lemah (<ph name="PERCENTAGE" />%)</translation>
 <translation id="9074739597929991885">Bluetooth</translation>

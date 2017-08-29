@@ -41,7 +41,7 @@ ViewType GetViewType(WebContents* tab) {
 
 void SetViewType(WebContents* tab, ViewType type) {
   tab->SetUserData(&kViewTypeUserDataKey,
-                   std::make_unique<ViewTypeUserData>(type));
+                   base::MakeUnique<ViewTypeUserData>(type));
 
   ExtensionsBrowserClient::Get()->AttachExtensionTaskManagerTag(tab, type);
 }

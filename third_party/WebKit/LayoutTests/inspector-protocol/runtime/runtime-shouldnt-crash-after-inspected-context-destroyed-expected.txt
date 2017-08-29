@@ -1,6 +1,6 @@
 Tests that call to console after inspected context was destroyed shouldn't produce crash.
 {
-    id : <number>
+    id : <messageId>
     result : {
         result : {
             type : undefined

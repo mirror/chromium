@@ -21,6 +21,7 @@ class SpellCheckerSessionBridge {
  public:
   explicit SpellCheckerSessionBridge(int render_process_id);
   ~SpellCheckerSessionBridge();
+  static bool RegisterJNI(JNIEnv* env);
 
   // Receives text to be checked from the message filter and sends it to Java
   // to be spellchecked.

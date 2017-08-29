@@ -26,21 +26,22 @@ function performActions()
     return promise;
 }
 
-function test() {
-  PerformanceTestRunner.invokeAsyncWithTimeline('performActions', finish);
+function test()
+{
+    PerformanceTestRunner.invokeAsyncWithTimeline("performActions", finish);
 
-  function finish() {
-    var events = PerformanceTestRunner.timelineModel().mainThreadEvents();
-    for (var i = 0; i < events.length; ++i) {
-      if (events[i].name !== TimelineModel.TimelineModel.RecordType.TimerFire)
-        continue;
-      var functionCallChild =
-          PerformanceTestRunner.findChildEvent(events, i, TimelineModel.TimelineModel.RecordType.FunctionCall);
-      var fnCallSite = functionCallChild.args['data'];
-      TestRunner.addResult(`${events[i].name} ${fnCallSite.url}:${fnCallSite.lineNumber + 1}`);
+    function finish()
+    {
+        var events = PerformanceTestRunner.timelineModel().mainThreadEvents();
+        for (var i = 0; i < events.length; ++i) {
+            if (events[i].name !== TimelineModel.TimelineModel.RecordType.TimerFire)
+                continue;
+            var functionCallChild = PerformanceTestRunner.findChildEvent(events, i, TimelineModel.TimelineModel.RecordType.FunctionCall);
+            var fnCallSite = functionCallChild.args["data"];
+            TestRunner.addResult(`${events[i].name} ${fnCallSite.url}:${fnCallSite.lineNumber + 1}`);
+        }
+        TestRunner.completeTest();
     }
-    TestRunner.completeTest();
-  }
 }
 
 if (!window.testRunner)

@@ -23,10 +23,10 @@ class CC_EXPORT TextureDrawQuad : public DrawQuad {
   TextureDrawQuad();
   TextureDrawQuad(const TextureDrawQuad& other);
 
-  void SetNew(const viz::SharedQuadState* shared_quad_state,
+  void SetNew(const SharedQuadState* shared_quad_state,
               const gfx::Rect& rect,
+              const gfx::Rect& opaque_rect,
               const gfx::Rect& visible_rect,
-              bool needs_blending,
               unsigned resource_id,
               bool premultiplied_alpha,
               const gfx::PointF& uv_top_left,
@@ -37,8 +37,9 @@ class CC_EXPORT TextureDrawQuad : public DrawQuad {
               bool nearest_neighbor,
               bool secure_output_only);
 
-  void SetAll(const viz::SharedQuadState* shared_quad_state,
+  void SetAll(const SharedQuadState* shared_quad_state,
               const gfx::Rect& rect,
+              const gfx::Rect& opaque_rect,
               const gfx::Rect& visible_rect,
               bool needs_blending,
               unsigned resource_id,

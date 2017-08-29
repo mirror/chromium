@@ -284,23 +284,23 @@ TEST_F(CommonCustomTypesTest, Value) {
   ASSERT_TRUE(ptr->BounceValue(nullptr, &output));
   EXPECT_FALSE(output);
 
-  auto input = std::make_unique<base::Value>();
+  auto input = base::MakeUnique<base::Value>();
   ASSERT_TRUE(ptr->BounceValue(input->CreateDeepCopy(), &output));
   EXPECT_EQ(*input, *output);
 
-  input = std::make_unique<base::Value>(123);
+  input = base::MakeUnique<base::Value>(123);
   ASSERT_TRUE(ptr->BounceValue(input->CreateDeepCopy(), &output));
   EXPECT_EQ(*input, *output);
 
-  input = std::make_unique<base::Value>(1.23);
+  input = base::MakeUnique<base::Value>(1.23);
   ASSERT_TRUE(ptr->BounceValue(input->CreateDeepCopy(), &output));
   EXPECT_EQ(*input, *output);
 
-  input = std::make_unique<base::Value>(false);
+  input = base::MakeUnique<base::Value>(false);
   ASSERT_TRUE(ptr->BounceValue(input->CreateDeepCopy(), &output));
   EXPECT_EQ(*input, *output);
 
-  input = std::make_unique<base::Value>("test string");
+  input = base::MakeUnique<base::Value>("test string");
   ASSERT_TRUE(ptr->BounceValue(input->CreateDeepCopy(), &output));
   EXPECT_EQ(*input, *output);
 
@@ -308,14 +308,14 @@ TEST_F(CommonCustomTypesTest, Value) {
   ASSERT_TRUE(ptr->BounceValue(input->CreateDeepCopy(), &output));
   EXPECT_EQ(*input, *output);
 
-  auto dict = std::make_unique<base::DictionaryValue>();
+  auto dict = base::MakeUnique<base::DictionaryValue>();
   dict->SetBoolean("bool", false);
   dict->SetInteger("int", 2);
   dict->SetString("string", "some string");
   dict->SetBoolean("nested.bool", true);
   dict->SetInteger("nested.int", 9);
   dict->Set("some_binary", base::Value::CreateWithCopiedBuffer("mojo", 4));
-  dict->Set("null_value", std::make_unique<base::Value>());
+  dict->Set("null_value", base::MakeUnique<base::Value>());
   dict->SetKey("non_nested.int", base::Value(10));
   {
     std::unique_ptr<base::ListValue> dict_list(new base::ListValue());
@@ -332,12 +332,12 @@ TEST_F(CommonCustomTypesTest, Value) {
   ASSERT_TRUE(ptr->BounceValue(input->CreateDeepCopy(), &output));
   EXPECT_EQ(*input, *output);
 
-  auto list = std::make_unique<base::ListValue>();
+  auto list = base::MakeUnique<base::ListValue>();
   list->AppendString("string");
   list->AppendDouble(42.1);
   list->AppendBoolean(true);
   list->Append(base::Value::CreateWithCopiedBuffer("mojo", 4));
-  list->Append(std::make_unique<base::Value>());
+  list->Append(base::MakeUnique<base::Value>());
   {
     std::unique_ptr<base::DictionaryValue> list_dict(
         new base::DictionaryValue());

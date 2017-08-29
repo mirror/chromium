@@ -51,11 +51,6 @@ void AppList::StartVoiceInteractionSession() {
     presenter_->StartVoiceInteractionSession();
 }
 
-void AppList::ToggleVoiceInteractionSession() {
-  if (presenter_)
-    presenter_->ToggleVoiceInteractionSession();
-}
-
 bool AppList::IsVisible() const {
   return visible_;
 }

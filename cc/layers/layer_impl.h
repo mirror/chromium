@@ -31,12 +31,12 @@
 #include "cc/layers/performance_properties.h"
 #include "cc/layers/render_surface_impl.h"
 #include "cc/layers/touch_action_region.h"
+#include "cc/quads/shared_quad_state.h"
 #include "cc/resources/resource_provider.h"
 #include "cc/tiles/tile_priority.h"
 #include "cc/trees/element_id.h"
 #include "cc/trees/mutator_host_client.h"
 #include "cc/trees/target_property.h"
-#include "components/viz/common/quads/shared_quad_state.h"
 #include "third_party/skia/include/core/SkColor.h"
 #include "ui/gfx/geometry/point3_f.h"
 #include "ui/gfx/geometry/rect.h"
@@ -125,8 +125,8 @@ class CC_EXPORT LayerImpl {
 
   LayerTreeImpl* layer_tree_impl() const { return layer_tree_impl_; }
 
-  void PopulateSharedQuadState(viz::SharedQuadState* state) const;
-  void PopulateScaledSharedQuadState(viz::SharedQuadState* state,
+  void PopulateSharedQuadState(SharedQuadState* state) const;
+  void PopulateScaledSharedQuadState(SharedQuadState* state,
                                      float layer_to_content_scale_x,
                                      float layer_to_content_scale_y) const;
   // WillDraw must be called before AppendQuads. If WillDraw returns false,
@@ -175,6 +175,8 @@ class CC_EXPORT LayerImpl {
   // If contents_opaque(), return an opaque color else return a
   // non-opaque color.  Tries to return background_color(), if possible.
   SkColor SafeOpaqueBackgroundColor() const;
+
+  bool HasPotentiallyRunningFilterAnimation() const;
 
   void SetMasksToBounds(bool masks_to_bounds);
   bool masks_to_bounds() const { return masks_to_bounds_; }
@@ -325,6 +327,16 @@ class CC_EXPORT LayerImpl {
     return touch_action_region_;
   }
 
+  bool HasPotentiallyRunningTransformAnimation() const;
+
+  bool HasFilterAnimationThatInflatesBounds() const;
+  bool HasAnimationThatInflatesBounds() const;
+
+  bool FilterAnimationBoundsForBox(const gfx::BoxF& box,
+                                   gfx::BoxF* bounds) const;
+  bool TransformAnimationBoundsForBox(const gfx::BoxF& box,
+                                      gfx::BoxF* bounds) const;
+
   // Note this rect is in layer space (not content space).
   void SetUpdateRect(const gfx::Rect& update_rect);
   const gfx::Rect& update_rect() const { return update_rect_; }
@@ -408,7 +420,7 @@ class CC_EXPORT LayerImpl {
 
   bool has_copy_requests_in_target_subtree();
 
-  void UpdatePropertyTreeForAnimationIfNeeded(ElementId element_id);
+  void UpdatePropertyTreeForAnimationIfNeeded();
 
   float GetIdealContentsScale() const;
 
@@ -445,11 +457,11 @@ class CC_EXPORT LayerImpl {
 
   void AppendDebugBorderQuad(RenderPass* render_pass,
                              const gfx::Size& bounds,
-                             const viz::SharedQuadState* shared_quad_state,
+                             const SharedQuadState* shared_quad_state,
                              AppendQuadsData* append_quads_data) const;
   void AppendDebugBorderQuad(RenderPass* render_pass,
                              const gfx::Size& bounds,
-                             const viz::SharedQuadState* shared_quad_state,
+                             const SharedQuadState* shared_quad_state,
                              AppendQuadsData* append_quads_data,
                              SkColor color,
                              float width) const;
@@ -457,6 +469,10 @@ class CC_EXPORT LayerImpl {
   gfx::Rect GetScaledEnclosingRectInTargetSpace(float scale) const;
 
  private:
+  // This includes all animations, even those that are finished but haven't yet
+  // been deleted.
+  bool HasAnyAnimationTargetingProperty(TargetProperty::Type property) const;
+
   void ValidateQuadResourcesInternal(DrawQuad* quad) const;
 
   virtual const char* LayerTypeAsString() const;

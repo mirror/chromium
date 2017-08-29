@@ -17,21 +17,6 @@
 namespace mojo {
 namespace edk {
 
-namespace {
-
-std::string PrepareToPassHandleToChildProcessAsString(
-    const PlatformHandle& handle,
-    HandlePassingInformation* handle_passing_info) {
-  DCHECK(handle.is_valid());
-
-  const uint32_t id = PA_HND(PA_USER0, 0);
-  handle_passing_info->push_back({id, handle.as_handle()});
-
-  return base::UintToString(id);
-}
-
-}  // namespace
-
 PlatformChannelPair::PlatformChannelPair(bool client_is_blocking) {
   mx_handle_t handles[2] = {};
   mx_status_t result = mx_channel_create(0, &handles[0], &handles[1]);
@@ -66,15 +51,6 @@ PlatformChannelPair::PassClientHandleFromParentProcessFromString(
 void PlatformChannelPair::PrepareToPassClientHandleToChildProcess(
     base::CommandLine* command_line,
     HandlePassingInformation* handle_passing_info) const {
-  return PrepareToPassHandleToChildProcess(client_handle_.get(), command_line,
-                                           handle_passing_info);
-}
-
-// static
-void PlatformChannelPair::PrepareToPassHandleToChildProcess(
-    const PlatformHandle& handle,
-    base::CommandLine* command_line,
-    HandlePassingInformation* handle_passing_info) {
   DCHECK(command_line);
 
   // Log a warning if the command line already has the switch, but "clobber" it
@@ -88,7 +64,18 @@ void PlatformChannelPair::PrepareToPassHandleToChildProcess(
   // the last one appended takes precedence.)
   command_line->AppendSwitchASCII(
       kMojoPlatformChannelHandleSwitch,
-      PrepareToPassHandleToChildProcessAsString(handle, handle_passing_info));
+      PrepareToPassClientHandleToChildProcessAsString(handle_passing_info));
+}
+
+std::string
+PlatformChannelPair::PrepareToPassClientHandleToChildProcessAsString(
+    HandlePassingInformation* handle_passing_info) const {
+  DCHECK(client_handle_.is_valid());
+
+  const uint32_t id = PA_HND(PA_USER0, 0);
+  handle_passing_info->push_back({id, client_handle_.get().as_handle()});
+
+  return base::UintToString(id);
 }
 
 }  // namespace edk

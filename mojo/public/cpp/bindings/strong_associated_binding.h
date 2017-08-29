@@ -37,7 +37,7 @@ using StrongAssociatedBindingPtr =
 // To use, call StrongAssociatedBinding<T>::Create() (see below) or the helper
 // MakeStrongAssociatedBinding function:
 //
-//   mojo::MakeStrongAssociatedBinding(std::make_unique<FooImpl>(),
+//   mojo::MakeStrongAssociatedBinding(base::MakeUnique<FooImpl>(),
 //                                     std::move(foo_request));
 //
 template <typename Interface>

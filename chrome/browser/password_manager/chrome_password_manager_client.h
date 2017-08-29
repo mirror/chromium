@@ -51,7 +51,6 @@ class ChromePasswordManagerClient
   // PasswordManagerClient implementation.
   bool IsSavingAndFillingEnabledForCurrentPage() const override;
   bool IsFillingEnabledForCurrentPage() const override;
-  bool IsFillingFallbackEnabledForCurrentPage() const override;
   void PostHSTSQueryForHost(const GURL& origin,
                             const HSTSCallback& callback) const override;
   bool OnCredentialManagerUsed() override;
@@ -119,10 +118,8 @@ class ChromePasswordManagerClient
   void CheckSafeBrowsingReputation(const GURL& form_action,
                                    const GURL& frame_url) override;
 
-  void CheckProtectedPasswordEntry(
-      bool matches_sync_password,
-      const std::vector<std::string>& matching_domains,
-      bool password_field_exists) override;
+  void CheckProtectedPasswordEntry(const std::string& password_saved_domain,
+                                   bool password_field_exists) override;
 
   void LogPasswordReuseDetectedEvent() override;
 #endif

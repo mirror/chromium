@@ -16,8 +16,6 @@
 
 namespace blink {
 
-class ConsoleMessage;
-
 // ModuleScriptFetcher emits FetchParameters to ResourceFetcher
 // (via ScriptResource::Fetch). Then, it keeps track of the fetch progress by
 // being a ResourceOwner. Finally, it returns its client a fetched resource as
@@ -31,12 +29,12 @@ class CORE_EXPORT ModuleScriptFetcher
   class CORE_EXPORT Client : public GarbageCollectedMixin {
    public:
     virtual void NotifyFetchFinished(
-        const WTF::Optional<ModuleScriptCreationParams>&,
-        ConsoleMessage* error_message) = 0;
+        const WTF::Optional<ModuleScriptCreationParams>&) = 0;
   };
 
   ModuleScriptFetcher(const FetchParameters&,
                       ResourceFetcher*,
+                      Modulator*,
                       Client*);
 
   // 'virtual' for custom fetch.
@@ -46,17 +44,18 @@ class CORE_EXPORT ModuleScriptFetcher
   void NotifyFinished(Resource*) final;
   String DebugName() const final { return "ModuleScriptFetcher"; }
 
-  const FetchParameters& GetFetchParams() const { return fetch_params_; }
+  KURL GetRequestUrl() const { return fetch_params_.Url(); }
+  bool HasValidContext() const { return modulator_->HasValidContext(); }
 
   DECLARE_TRACE();
 
  protected:
-  virtual void Finalize(const WTF::Optional<ModuleScriptCreationParams>&,
-                        ConsoleMessage* error_message);
+  virtual void Finalize(const WTF::Optional<ModuleScriptCreationParams>&);
 
  private:
   FetchParameters fetch_params_;
   Member<ResourceFetcher> fetcher_;
+  Member<Modulator> modulator_;
   Member<Client> client_;
   bool was_fetched_ = false;
 };

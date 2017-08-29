@@ -129,7 +129,7 @@ class CONTENT_EXPORT ResourceScheduler {
   // Public for tests.
   static MaxRequestsForBDPRanges
   GetMaxDelayableRequestsExperimentConfigForTests() {
-    return ThrottleDelayble::GetMaxRequestsForBDPRanges();
+    return MaxDelayableRequestsNetworkOverrideExperiment::GetConfig();
   }
 
  private:
@@ -142,14 +142,36 @@ class CONTENT_EXPORT ResourceScheduler {
                     const ScheduledResourceRequest* b) const;
   };
 
+  // Experiment parameters and helper functions for the throttling of delayable
+  // requests in the presence of non-delayable requests in-flight.
+  class NonDelayableThrottlesDelayableExperiment {
+   public:
+    NonDelayableThrottlesDelayableExperiment();
+
+    // This method computes the correct weight for the non-delayable requests
+    // based on the current effective connection type. If it is out of bounds,
+    // it returns 0, effectively disabling the experiment.
+    double GetCurrentNonDelayableWeight(
+        const net::NetworkQualityEstimator* network_quality_estimator) const;
+
+   private:
+    // The maximum effective connection type for which the experiment should be
+    // enabled.
+    const net::EffectiveConnectionType max_effective_connection_type_;
+
+    // The weight of a non-delayable request when counting the effective number
+    // of non-delayable requests in-flight.
+    const double non_delayable_weight_;
+  };
+
   // Experiment parameters and helper functions for varying the maximum number
   // of delayable requests in-flight based on the observed bandwidth delay
-  // product (BDP), or in the presence of non-delayable requests in-flight.
-  class ThrottleDelayble {
+  // product (BDP).
+  class MaxDelayableRequestsNetworkOverrideExperiment {
    public:
-    ThrottleDelayble();
+    MaxDelayableRequestsNetworkOverrideExperiment();
 
-    ~ThrottleDelayble();
+    ~MaxDelayableRequestsNetworkOverrideExperiment();
 
     // Returns the maximum delayable requests based on the current
     // value of the bandwidth delay product (BDP). It falls back to the default
@@ -161,12 +183,6 @@ class CONTENT_EXPORT ResourceScheduler {
     // 3. The current value of the BDP is not in any of the ranges in
     // |max_requests_for_bdp_ranges_|.
     size_t GetMaxDelayableRequests(
-        const net::NetworkQualityEstimator* network_quality_estimator) const;
-
-    // This method computes the correct weight for the non-delayable requests
-    // based on the current effective connection type. If it is out of bounds,
-    // it returns 0, effectively disabling the experiment.
-    double GetCurrentNonDelayableWeight(
         const net::NetworkQualityEstimator* network_quality_estimator) const;
 
    private:
@@ -188,7 +204,7 @@ class CONTENT_EXPORT ResourceScheduler {
     // non-delayable requests should be limited to 2. When BDP > 150 and <= 200,
     // it should be limited to 4. For BDP > 200, the default value should be
     // used.
-    static MaxRequestsForBDPRanges GetMaxRequestsForBDPRanges();
+    static MaxRequestsForBDPRanges GetConfig();
 
     // The number of delayable requests in-flight for different ranges of the
     // bandwidth delay product (BDP).
@@ -196,10 +212,6 @@ class CONTENT_EXPORT ResourceScheduler {
 
     // The maximum ECT for which the experiment should be enabled.
     const net::EffectiveConnectionType max_effective_connection_type_;
-
-    // The weight of a non-delayable request when counting the effective number
-    // of non-delayable requests in-flight.
-    const double non_delayable_weight_;
   };
 
   typedef int64_t ClientId;
@@ -222,16 +234,18 @@ class CONTENT_EXPORT ResourceScheduler {
   // be delayed.
   bool priority_requests_delayable_;
 
-  // True if requests to servers that support priorities (e.g., H2/QUIC) can
-  // be delayed while the parser is in head.
-  bool head_priority_requests_delayable_;
-
   // True if the scheduler should yield between several successive calls to
   // start resource requests.
   bool yielding_scheduler_enabled_;
   int max_requests_before_yielding_;
 
-  const ThrottleDelayble throttle_delayable_;
+  const MaxDelayableRequestsNetworkOverrideExperiment
+      max_delayable_requests_network_override_experiment_;
+
+  // Parameters for the throttling of non-delayable requests in the
+  // presence of delayable requests.
+  const NonDelayableThrottlesDelayableExperiment
+      non_delayable_throttles_delayable_experiment_;
 
   SEQUENCE_CHECKER(sequence_checker_);
 

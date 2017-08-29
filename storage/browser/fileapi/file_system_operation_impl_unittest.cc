@@ -182,11 +182,12 @@ class FileSystemOperationImplTest
   }
 
   FileSystemOperation::ReadDirectoryCallback RecordReadDirectoryCallback(
-      base::RepeatingClosure closure,
+      const base::Closure& closure,
       base::File::Error* status) {
-    return base::BindRepeating(&FileSystemOperationImplTest::DidReadDirectory,
-                               weak_factory_.GetWeakPtr(), std::move(closure),
-                               status);
+    return base::Bind(&FileSystemOperationImplTest::DidReadDirectory,
+                      weak_factory_.GetWeakPtr(),
+                      closure,
+                      status);
   }
 
   FileSystemOperation::GetMetadataCallback RecordMetadataCallback(
@@ -214,12 +215,12 @@ class FileSystemOperationImplTest
     closure.Run();
   }
 
-  void DidReadDirectory(base::RepeatingClosure closure,
+  void DidReadDirectory(const base::Closure& closure,
                         base::File::Error* status,
                         base::File::Error actual,
-                        std::vector<storage::DirectoryEntry> entries,
+                        const std::vector<storage::DirectoryEntry>& entries,
                         bool /* has_more */) {
-    entries_ = std::move(entries);
+    entries_ = entries;
     *status = actual;
     closure.Run();
   }
@@ -239,11 +240,11 @@ class FileSystemOperationImplTest
       base::File::Error actual,
       const base::File::Info& info,
       const base::FilePath& platform_path,
-      scoped_refptr<ShareableFileReference> shareable_file_ref) {
+      const scoped_refptr<ShareableFileReference>& shareable_file_ref) {
     info_ = info;
     path_ = platform_path;
     *status = actual;
-    shareable_file_ref_ = std::move(shareable_file_ref);
+    shareable_file_ref_ = shareable_file_ref;
     closure.Run();
   }
 

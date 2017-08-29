@@ -11,7 +11,7 @@
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
 #include "chrome/browser/vr/color_scheme.h"
-#include "chrome/browser/vr/elements/ui_element_name.h"
+#include "chrome/browser/vr/elements/ui_element_debug_id.h"
 #include "third_party/skia/include/core/SkColor.h"
 
 namespace base {
@@ -21,10 +21,6 @@ class TimeTicks;
 namespace cc {
 class Animation;
 }  // namespace cc
-
-namespace gfx {
-class Vector3dF;
-}  // namespace gfx
 
 namespace vr {
 
@@ -44,7 +40,7 @@ class UiScene {
   UiScene();
   virtual ~UiScene();
 
-  void AddUiElement(UiElementName parent, std::unique_ptr<UiElement> element);
+  void AddUiElement(std::unique_ptr<UiElement> element);
 
   void RemoveUiElement(int element_id);
 
@@ -57,21 +53,21 @@ class UiScene {
   // Handles per-frame updates, giving each element the opportunity to update,
   // if necessary (eg, for animations). NB: |current_time| is the shared,
   // absolute begin frame time.
-  void OnBeginFrame(const base::TimeTicks& current_time,
-                    const gfx::Vector3dF& look_at);
+  void OnBeginFrame(const base::TimeTicks& current_time);
 
   // This function gets called just before rendering the elements in the
   // frame lifecycle. After this function, no element should be dirtied.
   void PrepareToDraw();
 
-  UiElement& root_element();
+  const std::vector<std::unique_ptr<UiElement>>& GetUiElements() const;
 
   UiElement* GetUiElementById(int element_id) const;
-  UiElement* GetUiElementByName(UiElementName name) const;
+  UiElement* GetUiElementByDebugId(UiElementDebugId debug_id) const;
 
   std::vector<const UiElement*> GetWorldElements() const;
   std::vector<const UiElement*> GetOverlayElements() const;
-  std::vector<const UiElement*> GetViewportAwareElements() const;
+  std::vector<const UiElement*> GetHeadLockedElements() const;
+  bool HasVisibleHeadLockedElements() const;
 
   float background_distance() const { return background_distance_; }
   void set_background_distance(float d) { background_distance_ = d; }
@@ -99,7 +95,7 @@ class UiScene {
   void Animate(const base::TimeTicks& current_time);
   void ApplyRecursiveTransforms(UiElement* element);
 
-  std::unique_ptr<UiElement> root_element_;
+  std::vector<std::unique_ptr<UiElement>> ui_elements_;
   ColorScheme::Mode mode_ = ColorScheme::kModeNormal;
 
   float background_distance_ = 10.0f;

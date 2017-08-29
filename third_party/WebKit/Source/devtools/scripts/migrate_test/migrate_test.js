@@ -9,6 +9,7 @@ const path = require('path');
 
 const cheerio = require('cheerio');
 const mkdirp = require('mkdirp');
+const prettier = require('prettier');
 const recast = require('recast');
 const types = recast.types;
 const b = recast.types.builders;
@@ -99,6 +100,7 @@ function migrateTest(inputPath, identifierMap) {
     outputCode = transformTestScript(
         inputCode, prologue, identifierMap, testHelpers, javascriptFixtures, getPanel(inputPath), domFixture,
         onloadFunctionName, relativeResourcePaths, stylesheetPaths);
+    outputCode = prettier.format(outputCode, {tabWidth: 2, printWidth: 120, singleQuote: true});
   } catch (err) {
     console.log('Unable to migrate: ', inputPath);
     console.log('ERROR: ', err);
@@ -308,8 +310,8 @@ function replaceBodyWithFunctionExpression(ast, functionName) {
   const index =
       ast.program.body.findIndex(n => n.type === 'VariableDeclaration' && n.declarations[0].id.name === functionName);
   if (index > -1) {
-    const functionNode = ast.program.body[index];
-    ast.program.body = functionNode.declarations[0].init.body.body;
+    const testFunctionNode = ast.program.body[index];
+    ast.program.body = testFunctionNode.declarations[0].init.body.body;
   }
 }
 
@@ -317,17 +319,21 @@ function inlineFunctionExpression(ast, functionName) {
   const index =
       ast.program.body.findIndex(n => n.type === 'VariableDeclaration' && n.declarations[0].id.name === functionName);
   if (index > -1) {
-    const functionNode = ast.program.body[index];
-    ast.program.body.splice(index, 1, ...functionNode.declarations[0].init.body.body);
+    const testFunctionNode = ast.program.body[index];
+    ast.program.body.splice(index, 1, ...testFunctionNode.declarations[0].init.body.body);
   }
 }
 
+/**
+ * Unwrap test if it's a function declaration
+ * function test () {...}
+ */
 function replaceBodyWithFunctionDeclaration(ast, functionName) {
   const index = ast.program.body.findIndex(n => n.type === 'FunctionDeclaration' && n.id.name === functionName);
   if (index > -1) {
-    const functionNode = ast.program.body[index];
+    const testFunctionNode = ast.program.body[index];
     ast.program.body.splice(index, 1);
-    ast.program.body = functionNode.body.body;
+    ast.program.body = testFunctionNode.body.body;
   }
 }
 
@@ -335,8 +341,8 @@ function inlineFunctionDeclaration(ast, functionName) {
   debugger;
   const index = ast.program.body.findIndex(n => n.type === 'FunctionDeclaration' && n.id.name === functionName);
   if (index > -1) {
-    const functionNode = ast.program.body[index];
-    ast.program.body.splice(index, 1, ...functionNode.body.body);
+    const testFunctionNode = ast.program.body[index];
+    ast.program.body.splice(index, 1, ...testFunctionNode.body.body);
   }
 }
 
@@ -381,7 +387,11 @@ function getPanel(inputPath) {
   const folder = inputPath.indexOf('LayoutTests/inspector') === -1 ? components[4] : components[2];
   if (folder.endsWith('.html'))
     return;
-  return panelByFolder[folder];
+  const panel = panelByFolder[folder];
+  if (!panel) {
+    throw new Error('Could not figure out which panel to map folder: ' + folder);
+  }
+  return panel;
 }
 
 function mapTestHelpers(testHelpers) {

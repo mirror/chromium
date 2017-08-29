@@ -24,11 +24,6 @@ constexpr char kTabMediaUrnFormat[] = "urn:x-org.chromium.media:source:tab:%d";
 constexpr char kDesktopMediaUrn[] = "urn:x-org.chromium.media:source:desktop";
 constexpr char kTabRemotingUrnFormat[] =
     "urn:x-org.chromium.media:source:tab_content_remoting:%d";
-
-// This will replacement the domain/path constants below once the transition to
-// use cast: Presentation URLs is complete.
-constexpr char kCastScheme[] = "cast";
-
 constexpr char kCastPresentationUrlDomain[] = "google.com";
 constexpr char kCastPresentationUrlPath[] = "/cast";
 
@@ -38,7 +33,7 @@ constexpr char kAutoJoinPresentationId[] = "auto-join";
 
 // List of non-http(s) schemes that are allowed in a Presentation URL.
 constexpr std::array<const char* const, 5> kAllowedSchemes{
-    {kCastScheme, "cast-dial", "dial", "remote-playback", "test"}};
+    {"cast", "cast-dial", "dial", "remote-playback", "test"}};
 
 bool IsSchemeAllowed(const GURL& url) {
   return url.SchemeIsHTTPOrHTTPS() ||
@@ -92,11 +87,10 @@ bool IsMirroringMediaSource(const MediaSource& source) {
 
 bool CanConnectToMediaSource(const MediaSource& source) {
   // Compare host, port, scheme, and path prefix for source.url().
-  const GURL& url = source.url();
-  return url.SchemeIs(kCastScheme) ||
-         (url.SchemeIs(url::kHttpsScheme) &&
-          url.DomainIs(kCastPresentationUrlDomain) && url.has_path() &&
-          url.path() == kCastPresentationUrlPath);
+  return source.url().SchemeIs(url::kHttpsScheme) &&
+         source.url().DomainIs(kCastPresentationUrlDomain) &&
+         source.url().has_path() &&
+         source.url().path() == kCastPresentationUrlPath;
 }
 
 int TabIdFromMediaSource(const MediaSource& source) {

@@ -42,14 +42,14 @@ FakeTileManager::FakeTileManager(TileManagerClient* client,
                   std::numeric_limits<size_t>::max(),
                   TileManagerSettings()),
       image_decode_cache_(
-          kN32_SkColorType,
+          viz::ResourceFormat::RGBA_8888,
           LayerTreeSettings().decoded_image_working_set_budget_bytes) {
   SetDecodedImageTracker(&decoded_image_tracker_);
   SetResources(resource_pool, &image_decode_cache_, GetGlobalTaskGraphRunner(),
                GetGlobalRasterBufferProvider(),
                std::numeric_limits<size_t>::max(),
                false /* use_gpu_rasterization */);
-  SetTileTaskManagerForTesting(std::make_unique<FakeTileTaskManagerImpl>());
+  SetTileTaskManagerForTesting(base::MakeUnique<FakeTileTaskManagerImpl>());
 }
 
 FakeTileManager::~FakeTileManager() {}

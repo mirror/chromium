@@ -228,12 +228,6 @@ void DumpAccessibilityTreeTest::AddDefaultFilters(
   AddFilter(filters, "roleDescription=*");
 
   //
-  // Android
-  //
-
-  AddFilter(filters, "hint=*");
-
-  //
   // General
   //
 

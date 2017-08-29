@@ -436,12 +436,11 @@ void SavePasswordsConsumer::OnGetPasswordStoreResults(
   if (!experimental_flags::IsViewCopyPasswordsEnabled())
     return;
 
-  PasswordDetailsCollectionViewController* controller =
+  UIViewController* controller =
       [[PasswordDetailsCollectionViewController alloc]
             initWithPasswordForm:form
                         delegate:self
           reauthenticationModule:reauthenticationModule_];
-  controller.dispatcher = self.dispatcher;
   [self.navigationController pushViewController:controller animated:YES];
 }
 

@@ -85,6 +85,8 @@ class SearchResultAnswerCardView::SearchAnswerContainerView
     return "SearchAnswerContainerView";
   }
 
+  void StateChanged(ButtonState old_state) override { UpdateBackgroundColor(); }
+
   bool OnKeyPressed(const ui::KeyEvent& event) override {
     if (event.key_code() == ui::VKEY_SPACE) {
       // Shouldn't eat Space; we want Space to go to the search box.
@@ -102,12 +104,17 @@ class SearchResultAnswerCardView::SearchAnswerContainerView
   }
 
   // SearchResultObserver overrides:
+  void OnViewHoverStateChanged() override { UpdateBackgroundColor(); }
+
   void OnResultDestroying() override { search_result_ = nullptr; }
 
  private:
   void UpdateBackgroundColor() {
     if (selected_) {
       SetBackground(views::CreateSolidBackground(kSelectedColor));
+    } else if (state() == STATE_HOVERED || state() == STATE_PRESSED ||
+               (search_result_ && search_result_->is_mouse_in_view())) {
+      SetBackground(views::CreateSolidBackground(kHighlightedColor));
     } else {
       SetBackground(nullptr);
     }
@@ -163,8 +170,7 @@ int SearchResultAnswerCardView::DoUpdate() {
 
   set_container_score(have_result ? display_results.front()->relevance() : 0);
   if (title_changed && search_answer_container_view_->selected())
-    search_answer_container_view_->NotifyAccessibilityEvent(
-        ui::AX_EVENT_SELECTION, true);
+    NotifyAccessibilityEvent(ui::AX_EVENT_SELECTION, true);
   return have_result ? 1 : 0;
 }
 
@@ -176,8 +182,7 @@ void SearchResultAnswerCardView::UpdateSelectedIndex(int old_selected,
   const bool is_selected = new_selected == 0;
   search_answer_container_view_->SetSelected(is_selected);
   if (is_selected)
-    search_answer_container_view_->NotifyAccessibilityEvent(
-        ui::AX_EVENT_SELECTION, true);
+    NotifyAccessibilityEvent(ui::AX_EVENT_SELECTION, true);
 }
 
 bool SearchResultAnswerCardView::OnKeyPressed(const ui::KeyEvent& event) {
@@ -189,10 +194,9 @@ bool SearchResultAnswerCardView::OnKeyPressed(const ui::KeyEvent& event) {
   return SearchResultContainerView::OnKeyPressed(event);
 }
 
-views::View* SearchResultAnswerCardView::GetSelectedView() const {
-  return search_answer_container_view_->selected()
-             ? search_answer_container_view_
-             : nullptr;
+void SearchResultAnswerCardView::GetAccessibleNodeData(
+    ui::AXNodeData* node_data) {
+  search_answer_container_view_->GetAccessibleNodeData(node_data);
 }
 
 }  // namespace app_list

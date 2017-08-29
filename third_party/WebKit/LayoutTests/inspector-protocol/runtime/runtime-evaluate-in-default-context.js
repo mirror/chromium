@@ -9,6 +9,6 @@
   `);
 
   var result = await dp.Runtime.evaluate({expression: 'window.a' });
-  testRunner.log(result);
+  testRunner.logMessage(result);
   testRunner.completeTest();
 })

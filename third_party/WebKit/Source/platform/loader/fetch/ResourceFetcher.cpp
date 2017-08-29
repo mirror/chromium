@@ -556,11 +556,6 @@ ResourceFetcher::PrepareRequestResult ResourceFetcher::PrepareRequest(
           ? SecurityViolationReportingPolicy::kSuppressReporting
           : SecurityViolationReportingPolicy::kReport;
 
-  // Note that resource_request.GetRedirectStatus() may return kFollowedRedirect
-  // here since e.g. DocumentThreadableLoader may create a new Resource from
-  // a ResourceRequest that originates from the ResourceRequest passed to
-  // the redirect handling callback.
-
   // Before modifying the request for CSP, evaluate report-only headers. This
   // allows site owners to learn about requests that are being modified
   // (e.g. mixed content that is being upgraded by upgrade-insecure-requests).
@@ -926,15 +921,14 @@ Resource* ResourceFetcher::MatchPreload(const FetchParameters& params,
   }
 
   const ResourceRequest& request = params.GetResourceRequest();
-  if (request.DownloadToFile())
+  if (IsDownloadOrStreamRequest(request))
     return nullptr;
 
   if (IsImageResourceDisallowedToBeReused(*resource) ||
       !resource->CanReuse(params))
     return nullptr;
 
-  if (!resource->MatchPreload(params))
-    return nullptr;
+  resource->MatchPreload();
   preloads_.erase(it);
   matched_preloads_.push_back(resource);
   return resource;
@@ -1218,10 +1212,6 @@ int ResourceFetcher::BlockingRequestCount() const {
 
 int ResourceFetcher::NonblockingRequestCount() const {
   return non_blocking_loaders_.size();
-}
-
-int ResourceFetcher::ActiveRequestCount() const {
-  return loaders_.size() + non_blocking_loaders_.size();
 }
 
 void ResourceFetcher::EnableIsPreloadedForTest() {

@@ -287,6 +287,9 @@ void BrowserCommandControllerInteractiveTest::
   // The window should not be closed.
   ASSERT_NO_FATAL_FAILURE(SendShiftShortcut(ui::VKEY_W));
   ASSERT_EQ(initial_browser_count, GetBrowserCount());
+  // TODO(zijiehe): ChromeOS incorrectly handles these;
+  // see http://crbug.com/737307.
+#if !defined(OS_CHROMEOS)
   // A new tab should not be created.
   ASSERT_NO_FATAL_FAILURE(SendShortcut(ui::VKEY_T));
   ASSERT_EQ(initial_tab_count, GetTabCount());
@@ -299,6 +302,7 @@ void BrowserCommandControllerInteractiveTest::
   // Last closed tab should not be restored.
   ASSERT_NO_FATAL_FAILURE(SendShiftShortcut(ui::VKEY_T));
   ASSERT_EQ(initial_tab_count, GetTabCount());
+#endif
   // Browser should not switch to the next tab.
   ASSERT_NO_FATAL_FAILURE(SendShortcut(ui::VKEY_TAB));
   ASSERT_EQ(initial_active_index, GetActiveTabIndex());
@@ -552,9 +556,8 @@ IN_PROC_BROWSER_TEST_F(BrowserCommandControllerInteractiveTest,
 // the page to exit fullscreen mode. So we need to maintain a list of exiting /
 // non-exiting commands, which is not the goal of this test.
 
-#if defined(OS_CHROMEOS) || defined(OS_LINUX)
-// This test is flaky on ChromeOS and Linux, see bugs http://crbug.com/754878
-// and http://crbug.com/759704.
+#if defined(OS_CHROMEOS)
+// This test is flaky on ChromeOS, see bug http://crbug.com/754878.
 #define MAYBE_ShortcutsShouldTakeEffectInJsFullscreen \
         DISABLED_ShortcutsShouldTakeEffectInJsFullscreen
 #else

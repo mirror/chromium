@@ -40,8 +40,7 @@ class GLImageNativePixmapTestDelegate {
         surface_factory->CreateNativePixmap(gfx::kNullAcceleratedWidget, size,
                                             format, usage);
     DCHECK(pixmap);
-    if (usage == gfx::BufferUsage::GPU_READ_CPU_READ_WRITE ||
-        usage == gfx::BufferUsage::SCANOUT_CAMERA_READ_WRITE) {
+    if (usage == gfx::BufferUsage::GPU_READ_CPU_READ_WRITE) {
       auto client_pixmap = client_pixmap_factory_->ImportFromHandle(
           pixmap->ExportHandle(), size, usage);
       bool mapped = client_pixmap->Map();
@@ -68,8 +67,7 @@ class GLImageNativePixmapTestDelegate {
   const uint8_t* GetImageColor() {
     if (format == gfx::BufferFormat::R_8) {
       return kRed;
-    } else if (format == gfx::BufferFormat::YVU_420 ||
-               format == gfx::BufferFormat::YUV_420_BIPLANAR) {
+    } else if (format == gfx::BufferFormat::YVU_420) {
       return kYvuColor;
     }
     return kGreen;
@@ -89,9 +87,7 @@ INSTANTIATE_TYPED_TEST_CASE_P(GLImageNativePixmapScanout,
 
 using GLImageReadWriteType = testing::Types<
     GLImageNativePixmapTestDelegate<gfx::BufferUsage::GPU_READ_CPU_READ_WRITE,
-                                    gfx::BufferFormat::R_8>,
-    GLImageNativePixmapTestDelegate<gfx::BufferUsage::SCANOUT_CAMERA_READ_WRITE,
-                                    gfx::BufferFormat::YUV_420_BIPLANAR>>;
+                                    gfx::BufferFormat::R_8>>;
 
 using GLImageBindTestTypes = testing::Types<
     GLImageNativePixmapTestDelegate<gfx::BufferUsage::GPU_READ_CPU_READ_WRITE,
@@ -101,8 +97,6 @@ using GLImageBindTestTypes = testing::Types<
     GLImageNativePixmapTestDelegate<gfx::BufferUsage::GPU_READ_CPU_READ_WRITE,
                                     gfx::BufferFormat::YVU_420>,
     GLImageNativePixmapTestDelegate<gfx::BufferUsage::GPU_READ_CPU_READ_WRITE,
-                                    gfx::BufferFormat::YUV_420_BIPLANAR>,
-    GLImageNativePixmapTestDelegate<gfx::BufferUsage::SCANOUT_CAMERA_READ_WRITE,
                                     gfx::BufferFormat::YUV_420_BIPLANAR>>;
 
 // These tests are disabled since the trybots are running with Ozone X11

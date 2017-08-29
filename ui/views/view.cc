@@ -642,6 +642,19 @@ void View::SetLayoutManager(LayoutManager* layout_manager) {
     layout_manager_->Installed(this);
 }
 
+void View::SnapLayerToPixelBoundary() {
+  if (!layer())
+    return;
+
+  if (snap_layer_to_pixel_boundary_ && layer()->parent() &&
+      layer()->GetCompositor()) {
+    ui::SnapLayerToPhysicalPixelBoundary(layer()->parent(), layer());
+  } else {
+    // Reset the offset.
+    layer()->SetSubpixelPositionOffset(gfx::Vector2dF());
+  }
+}
+
 // Attributes ------------------------------------------------------------------
 
 const char* View::GetClassName() const {
@@ -1582,20 +1595,18 @@ void View::OnPaintBorder(gfx::Canvas* canvas) {
 
 // Accelerated Painting --------------------------------------------------------
 
-View::LayerOffsetData View::CalculateOffsetToAncestorWithLayer(
+gfx::Vector2d View::CalculateOffsetToAncestorWithLayer(
     ui::Layer** layer_parent) {
   if (layer()) {
     if (layer_parent)
       *layer_parent = layer();
-    return LayerOffsetData(layer()->device_scale_factor());
+    return gfx::Vector2d();
   }
   if (!parent_)
-    return LayerOffsetData();
+    return gfx::Vector2d();
 
-  LayerOffsetData offset_data =
+  return gfx::Vector2d(GetMirroredX(), y()) +
       parent_->CalculateOffsetToAncestorWithLayer(layer_parent);
-
-  return offset_data + GetMirroredPosition().OffsetFromOrigin();
 }
 
 void View::UpdateParentLayer() {
@@ -1605,27 +1616,25 @@ void View::UpdateParentLayer() {
   ui::Layer* parent_layer = NULL;
   gfx::Vector2d offset(GetMirroredX(), y());
 
-  if (parent_) {
-    offset +=
-        parent_->CalculateOffsetToAncestorWithLayer(&parent_layer).offset();
-  }
+  if (parent_)
+    offset += parent_->CalculateOffsetToAncestorWithLayer(&parent_layer);
 
   ReparentLayer(offset, parent_layer);
 }
 
 void View::MoveLayerToParent(ui::Layer* parent_layer,
-                             const LayerOffsetData& offset_data) {
-  LayerOffsetData local_offset_data(offset_data);
+                             const gfx::Point& point) {
+  gfx::Point local_point(point);
   if (parent_layer != layer())
-    local_offset_data += GetMirroredPosition().OffsetFromOrigin();
-
+    local_point.Offset(GetMirroredX(), y());
   if (layer() && parent_layer != layer()) {
     parent_layer->Add(layer());
-    SetLayerBounds(size(), local_offset_data);
+    SetLayerBounds(gfx::Rect(local_point.x(), local_point.y(),
+                             width(), height()));
   } else {
     internal::ScopedChildrenLock lock(this);
     for (auto* child : children_)
-      child->MoveLayerToParent(parent_layer, local_offset_data);
+      child->MoveLayerToParent(parent_layer, local_point);
   }
 }
 
@@ -1690,14 +1699,14 @@ void View::NotifyParentsOfLayerChange() {
   }
 }
 
-void View::UpdateChildLayerBounds(const LayerOffsetData& offset_data) {
+void View::UpdateChildLayerBounds(const gfx::Vector2d& offset) {
   if (layer()) {
-    SetLayerBounds(size(), offset_data);
+    SetLayerBounds(GetLocalBounds() + offset);
   } else {
     internal::ScopedChildrenLock lock(this);
     for (auto* child : children_) {
       child->UpdateChildLayerBounds(
-          offset_data + child->GetMirroredPosition().OffsetFromOrigin());
+          offset + gfx::Vector2d(child->GetMirroredX(), child->y()));
     }
   }
 }
@@ -1713,23 +1722,8 @@ void View::OnDelegatedFrameDamage(
 void View::OnDeviceScaleFactorChanged(float device_scale_factor) {
   snap_layer_to_pixel_boundary_ =
       (device_scale_factor - std::floor(device_scale_factor)) != 0.0f;
-
-  if (!layer())
-    return;
-
-  // There can be no subpixel offset if the layer has no parent.
-  if (!parent() || !layer()->parent())
-    return;
-
-  if (layer()->parent() && layer()->GetCompositor() &&
-      layer()->GetCompositor()->is_pixel_canvas()) {
-    LayerOffsetData offset_data(
-        parent()->CalculateOffsetToAncestorWithLayer(nullptr));
-    offset_data += GetMirroredPosition().OffsetFromOrigin();
-    SnapLayerToPixelBoundary(offset_data);
-  } else {
-    SnapLayerToPixelBoundary(LayerOffsetData());
-  }
+  SnapLayerToPixelBoundary();
+  // Repainting with new scale factor will paint the content at the right scale.
 }
 
 void View::ReorderLayers() {
@@ -2229,23 +2223,6 @@ void View::VisibilityChangedImpl(View* starting_from, bool is_visible) {
   VisibilityChanged(starting_from, is_visible);
 }
 
-void View::SnapLayerToPixelBoundary(const LayerOffsetData& offset_data) {
-  if (!layer())
-    return;
-
-  if (snap_layer_to_pixel_boundary_ && layer()->parent() &&
-      layer()->GetCompositor()) {
-    if (layer()->GetCompositor()->is_pixel_canvas()) {
-      layer()->SetSubpixelPositionOffset(offset_data.GetSubpixelOffset());
-    } else {
-      ui::SnapLayerToPhysicalPixelBoundary(layer()->parent(), layer());
-    }
-  } else {
-    // Reset the offset.
-    layer()->SetSubpixelPositionOffset(gfx::Vector2dF());
-  }
-}
-
 void View::BoundsChanged(const gfx::Rect& previous_bounds) {
   if (visible_) {
     // Paint the new bounds.
@@ -2256,13 +2233,11 @@ void View::BoundsChanged(const gfx::Rect& previous_bounds) {
 
   if (layer()) {
     if (parent_) {
-      LayerOffsetData offset_data(
-          parent_->CalculateOffsetToAncestorWithLayer(nullptr));
-      offset_data += GetMirroredPosition().OffsetFromOrigin();
-      SetLayerBounds(size(), offset_data);
+      SetLayerBounds(GetLocalBounds() +
+                     gfx::Vector2d(GetMirroredX(), y()) +
+                     parent_->CalculateOffsetToAncestorWithLayer(NULL));
     } else {
-      SetLayerBounds(bounds_.size(),
-                     LayerOffsetData() + bounds_.OffsetFromOrigin());
+      SetLayerBounds(bounds_);
     }
 
     // In RTL mode, if our width has changed, our children's mirrored bounds
@@ -2272,8 +2247,7 @@ void View::BoundsChanged(const gfx::Rect& previous_bounds) {
       for (int i = 0; i < child_count(); ++i) {
         View* child = child_at(i);
         child->UpdateChildLayerBounds(
-            LayerOffsetData(layer()->device_scale_factor(),
-                            child->GetMirroredPosition().OffsetFromOrigin()));
+            gfx::Vector2d(child->GetMirroredX(), child->y()));
       }
     }
   } else {
@@ -2353,10 +2327,9 @@ void View::RemoveDescendantToNotify(View* view) {
     descendants_to_notify_.reset();
 }
 
-void View::SetLayerBounds(const gfx::Size& size,
-                          const LayerOffsetData& offset_data) {
-  layer()->SetBounds(gfx::Rect(size) + offset_data.offset());
-  SnapLayerToPixelBoundary(offset_data);
+void View::SetLayerBounds(const gfx::Rect& bounds) {
+  layer()->SetBounds(bounds);
+  SnapLayerToPixelBoundary();
 }
 
 // Transformations -------------------------------------------------------------
@@ -2493,7 +2466,7 @@ void View::ReparentLayer(const gfx::Vector2d& offset, ui::Layer* parent_layer) {
   if (parent_layer)
     parent_layer->Add(layer());
   layer()->SchedulePaint(GetLocalBounds());
-  MoveLayerToParent(layer(), LayerOffsetData(layer()->device_scale_factor()));
+  MoveLayerToParent(layer(), gfx::Point());
 }
 
 // Input -----------------------------------------------------------------------

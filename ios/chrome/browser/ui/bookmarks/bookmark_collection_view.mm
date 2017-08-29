@@ -9,7 +9,6 @@
 #include <map>
 #include <memory>
 
-#include "base/ios/ios_util.h"
 #include "base/logging.h"
 #include "base/mac/bind_objc_block.h"
 #include "base/mac/foundation_util.h"
@@ -55,10 +54,7 @@ namespace {
 CGSize PreferredCellSizeForWidth(UICollectionViewCell* cell, CGFloat width) {
   CGRect cellFrame = cell.frame;
   cellFrame.size.width = width;
-  // Increase the cell height to big height to avoid any horizontal constrants.
-  // To avoid a warning from _NSLayoutConstraintNumberExceedsLimit, the value
-  // has to be reasonable.
-  cellFrame.size.height = 2000.;
+  cellFrame.size.height = CGFLOAT_MAX;
   cell.frame = cellFrame;
   [cell setNeedsLayout];
   [cell layoutIfNeeded];
@@ -738,29 +734,27 @@ CGFloat minFaviconSizePt = 16;
 // The size of the cell at |indexPath|.
 - (CGSize)cellSizeForIndexPath:(NSIndexPath*)indexPath {
   if ([self isPromoSection:indexPath.section]) {
-    UICollectionViewCell* cellToMeasureHeight = nil;
-    // -[UICollectionView
-    // dequeueReusableCellWithReuseIdentifier:forIndexPath:] cannot be used
-    // here since this method is called by -[id<UICollectionViewDelegate>
-    // collectionView:layout:sizeForItemAtIndexPath:]. This would generate
-    // crash: SIGFPE, EXC_I386_DIV.
-    // The cell used currently by UICollectionView should not be used to compute
-    // the size. There is an issue with iOS 9 to modify the height of the
-    // current cell while being asked for its size. This leads to an infinite
-    // loop.
-    if (experimental_flags::IsSigninPromoEnabled()) {
-      DCHECK(_signinPromoViewMediator);
-      BookmarkSigninPromoCell* signinPromoCell =
-          [[BookmarkSigninPromoCell alloc]
-              initWithFrame:CGRectMake(0, 0, 1000, 1000)];
-      [[_signinPromoViewMediator createConfigurator]
-          configureSigninPromoView:signinPromoCell.signinPromoView];
-      cellToMeasureHeight = signinPromoCell;
-    } else {
-      cellToMeasureHeight = [[BookmarkPromoCell alloc] init];
+    UICollectionViewCell* cell =
+        [self.collectionView cellForItemAtIndexPath:indexPath];
+    if (!cell) {
+      // -[UICollectionView
+      // dequeueReusableCellWithReuseIdentifier:forIndexPath:] cannot be used
+      // here since this method is called by -[id<UICollectionViewDelegate>
+      // collectionView:layout:sizeForItemAtIndexPath:]. This would generate
+      // crash: SIGFPE, EXC_I386_DIV.
+      if (experimental_flags::IsSigninPromoEnabled()) {
+        DCHECK(_signinPromoViewMediator);
+        BookmarkSigninPromoCell* signinPromoCell =
+            [[BookmarkSigninPromoCell alloc]
+                initWithFrame:CGRectMake(0, 0, 1000, 1000)];
+        [[_signinPromoViewMediator createConfigurator]
+            configureSigninPromoView:signinPromoCell.signinPromoView];
+        cell = signinPromoCell;
+      } else {
+        cell = [[BookmarkPromoCell alloc] init];
+      }
     }
-    return PreferredCellSizeForWidth(cellToMeasureHeight,
-                                     CGRectGetWidth(self.bounds));
+    return PreferredCellSizeForWidth(cell, CGRectGetWidth(self.bounds));
   }
   DCHECK(![self isPromoSection:indexPath.section]);
   UIEdgeInsets insets = [self insetForSectionAtIndex:indexPath.section];

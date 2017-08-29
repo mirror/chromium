@@ -60,7 +60,7 @@ bool DNRManifestHandler::Parse(Extension* extension, base::string16* error) {
 
   extension->SetManifestData(
       keys::kDeclarativeNetRequestKey,
-      std::make_unique<DNRManifestData>(
+      base::MakeUnique<DNRManifestData>(
           extension->GetResource(json_ruleset_location)));
   return true;
 }

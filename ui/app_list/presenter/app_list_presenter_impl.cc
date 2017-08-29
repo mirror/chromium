@@ -79,6 +79,15 @@ void AppListPresenterImpl::Show(int64_t display_id) {
   base::RecordAction(base::UserMetricsAction("Launcher_Show"));
 }
 
+void AppListPresenterImpl::UpdateYPositionAndOpacity(int y_position_in_screen,
+                                                     float background_opacity,
+                                                     bool is_end_gesture) {
+  if (view_) {
+    view_->UpdateYPositionAndOpacity(y_position_in_screen, background_opacity,
+                                     is_end_gesture);
+  }
+}
+
 void AppListPresenterImpl::Dismiss() {
   if (!is_visible_)
     return;
@@ -129,15 +138,6 @@ void AppListPresenterImpl::SetAppList(mojom::AppListPtr app_list) {
   app_list_->OnVisibilityChanged(IsVisible(), GetDisplayId());
 }
 
-void AppListPresenterImpl::UpdateYPositionAndOpacity(int y_position_in_screen,
-                                                     float background_opacity,
-                                                     bool is_end_gesture) {
-  if (view_) {
-    view_->UpdateYPositionAndOpacity(y_position_in_screen, background_opacity,
-                                     is_end_gesture);
-  }
-}
-
 ////////////////////////////////////////////////////////////////////////////////
 // AppListPresenterImpl, private:
 
@@ -177,19 +177,18 @@ void AppListPresenterImpl::ScheduleAnimation() {
   views::Widget* widget = view_->GetWidget();
   ui::Layer* layer = GetLayer(widget);
   layer->GetAnimator()->StopAnimating();
+  gfx::Rect target_bounds = is_fullscreen_app_list_enabled_
+                                ? widget->GetNativeView()->bounds()
+                                : widget->GetWindowBoundsInScreen();
   ui::ScopedLayerAnimationSettings animation(layer->GetAnimator());
   aura::Window* root_window = widget->GetNativeView()->GetRootWindow();
   const gfx::Vector2d offset =
       presenter_delegate_->GetVisibilityAnimationOffset(root_window);
-  base::TimeDelta animation_duration =
+  animation.SetTransitionDuration(
       presenter_delegate_->GetVisibilityAnimationDuration(root_window,
-                                                          is_visible_);
-  animation.SetTransitionDuration(animation_duration);
-  gfx::Rect target_bounds = is_fullscreen_app_list_enabled_
-                                ? widget->GetNativeView()->bounds()
-                                : widget->GetWindowBoundsInScreen();
+                                                          is_visible_));
+
   if (is_fullscreen_app_list_enabled_) {
-    view_->StartCloseAnimation(animation_duration);
     target_bounds.Offset(offset);
   } else {
     if (is_visible_) {
@@ -202,11 +201,11 @@ void AppListPresenterImpl::ScheduleAnimation() {
   }
 
   animation.AddObserver(this);
+  layer->SetOpacity(is_visible_ ? 1.0 : 0.0);
   if (is_fullscreen_app_list_enabled_) {
     widget->GetNativeView()->SetBounds(target_bounds);
     return;
   }
-  layer->SetOpacity(is_visible_ ? 1.0 : 0.0);
   widget->SetBounds(target_bounds);
 }
 

@@ -263,13 +263,13 @@ class SchedulerTest : public testing::Test {
   TestScheduler* CreateScheduler(BeginFrameSourceType bfs_type) {
     viz::BeginFrameSource* frame_source = nullptr;
     unthrottled_frame_source_.reset(new viz::BackToBackBeginFrameSource(
-        std::make_unique<viz::FakeDelayBasedTimeSource>(now_src_.get(),
+        base::MakeUnique<viz::FakeDelayBasedTimeSource>(now_src_.get(),
                                                         task_runner_.get())));
     fake_external_begin_frame_source_.reset(
         new viz::FakeExternalBeginFrameSource(0.f, false));
     fake_external_begin_frame_source_->SetClient(client_.get());
     synthetic_frame_source_.reset(new viz::DelayBasedBeginFrameSource(
-        std::make_unique<viz::FakeDelayBasedTimeSource>(now_src_.get(),
+        base::MakeUnique<viz::FakeDelayBasedTimeSource>(now_src_.get(),
                                                         task_runner_.get())));
     switch (bfs_type) {
       case EXTERNAL_BFS:
@@ -309,11 +309,11 @@ class SchedulerTest : public testing::Test {
   }
 
   void SetUpScheduler(BeginFrameSourceType bfs_type) {
-    SetUpScheduler(bfs_type, std::make_unique<FakeSchedulerClient>());
+    SetUpScheduler(bfs_type, base::MakeUnique<FakeSchedulerClient>());
   }
 
   void SetUpSchedulerWithNoLayerTreeFrameSink(BeginFrameSourceType bfs_type) {
-    client_ = std::make_unique<FakeSchedulerClient>();
+    client_ = base::MakeUnique<FakeSchedulerClient>();
     CreateScheduler(bfs_type);
   }
 

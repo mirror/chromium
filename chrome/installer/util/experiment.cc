@@ -81,17 +81,15 @@ void Experiment::SetInactiveDays(int days) {
   inactive_days_ = days;
   double log_base = ExpBucketBase(ExperimentMetrics::kMaxLastUsed,
                                   ExperimentMetrics::kLastUsedBucketBits);
-  metrics_.last_used_bucket = LogFloor(
-      1 + std::min(days, static_cast<int>(ExperimentMetrics::kMaxLastUsed)),
-      log_base);
+  metrics_.last_used_bucket =
+      LogFloor(1 + std::min(days, ExperimentMetrics::kMaxLastUsed), log_base);
 }
 
 void Experiment::SetToastCount(int count) {
   DCHECK(!metrics_.InTerminalState());
   DCHECK(!metrics_.InInitialState());
   toast_count_ = count;
-  metrics_.toast_count =
-      std::min(count, static_cast<int>(ExperimentMetrics::kMaxToastCount));
+  metrics_.toast_count = std::min(count, ExperimentMetrics::kMaxToastCount);
 }
 
 void Experiment::SetDisplayTime(base::Time time) {
@@ -111,9 +109,9 @@ void Experiment::SetDisplayTime(base::Time time) {
       metrics_.first_toast_offset_days =
           ExperimentMetrics::kMaxFirstToastOffsetDays;
     } else {
-      metrics_.first_toast_offset_days = std::min(
-          metrics_.first_toast_offset_days,
-          static_cast<int>(ExperimentMetrics::kMaxFirstToastOffsetDays));
+      metrics_.first_toast_offset_days =
+          std::min(metrics_.first_toast_offset_days,
+                   ExperimentMetrics::kMaxFirstToastOffsetDays);
     }
   }
   latest_display_time_ = time;

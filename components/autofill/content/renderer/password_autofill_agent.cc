@@ -655,16 +655,13 @@ blink::WebInputElement FindUsernameElementPrecedingPasswordElement(
   return blink::WebInputElement();
 }
 
-bool ShouldShowStandaloneManuallFallback(const blink::WebInputElement& element,
-                                         const GURL& url) {
-  return (
-      element.IsPasswordField() &&
-      !IsCreditCardVerificationPasswordField(element) &&
-      !HasCreditCardAutocompleteAttributes(element) &&
-      !base::StartsWith(url.scheme(), "chrome", base::CompareCase::SENSITIVE) &&
-      !url.SchemeIs(url::kAboutScheme) &&
-      base::FeatureList::IsEnabled(
-          password_manager::features::kEnableManualFallbacksFilling));
+bool ShouldShowStandaloneManuallFallback(
+    const blink::WebInputElement& element) {
+  return (element.IsPasswordField() &&
+          !IsCreditCardVerificationPasswordField(element) &&
+          !HasCreditCardAutocompleteAttributes(element) &&
+          base::FeatureList::IsEnabled(
+              password_manager::features::kEnableManualFallbacksFilling));
 }
 
 }  // namespace
@@ -694,8 +691,6 @@ PasswordAutofillAgent::PasswordAutofillAgent(
     content::RenderFrame* render_frame,
     service_manager::BinderRegistry* registry)
     : content::RenderFrameObserver(render_frame),
-      web_input_to_password_info_(),
-      last_supplied_password_info_iter_(web_input_to_password_info_.end()),
       logging_state_active_(false),
       was_username_autofilled_(false),
       was_password_autofilled_(false),
@@ -958,7 +953,9 @@ bool PasswordAutofillAgent::FindPasswordInfoForElement(
       if (password_iter == password_to_username_.end()) {
         if (web_input_to_password_info_.empty())
           return false;
-        iter = last_supplied_password_info_iter_;
+        // Now all PasswordInfo items refer to the same set of credentials for
+        // fill, so it is ok to take any of them.
+        iter = web_input_to_password_info_.begin();
       } else {
         *username_element = password_iter->second;
       }
@@ -1041,8 +1038,6 @@ bool PasswordAutofillAgent::ShowSuggestions(
   if (!FindPasswordInfoForElement(element, &username_element, &password_element,
                                   &password_info)) {
     if (IsUsernameOrPasswordField(element)) {
-      blink::WebLocalFrame* frame = render_frame()->GetWebFrame();
-      GURL frame_url = GURL(frame->GetDocument().Url());
 #if defined(SAFE_BROWSING_DB_LOCAL)
       if (!checked_safe_browsing_reputation_) {
         checked_safe_browsing_reputation_ = true;
@@ -1050,12 +1045,13 @@ bool PasswordAutofillAgent::ShowSuggestions(
             element.Form().IsNull()
                 ? GURL()
                 : form_util::GetCanonicalActionForForm(element.Form());
+        blink::WebLocalFrame* frame = render_frame()->GetWebFrame();
+        GURL frame_url = GURL(frame->GetDocument().Url());
         GetPasswordManagerDriver()->CheckSafeBrowsingReputation(action_url,
                                                                 frame_url);
       }
 #endif
-      if (!generation_popup_showing &&
-          ShouldShowStandaloneManuallFallback(element, frame_url) &&
+      if (ShouldShowStandaloneManuallFallback(element) &&
           ShowManualFallbackSuggestion(element)) {
         return true;
       }
@@ -1625,13 +1621,17 @@ void PasswordAutofillAgent::GetFillableElementFromFormData(
     blink::WebInputElement main_element =
         username_element.IsNull() ? password_element : username_element;
 
+    // We might have already filled this form if there are two <form> elements
+    // with identical markup.
+    if (web_input_to_password_info_.find(main_element) !=
+        web_input_to_password_info_.end())
+      continue;
+
     PasswordInfo password_info;
     password_info.fill_data = form_data;
     password_info.key = key;
     password_info.password_field = password_element;
     web_input_to_password_info_[main_element] = password_info;
-    last_supplied_password_info_iter_ =
-        web_input_to_password_info_.find(main_element);
     if (!main_element.IsPasswordField())
       password_to_username_[password_element] = username_element;
     if (elements)
@@ -1649,7 +1649,6 @@ void PasswordAutofillAgent::GetFillableElementFromFormData(
     password_info.fill_data = form_data;
     password_info.key = key;
     web_input_to_password_info_[blink::WebInputElement()] = password_info;
-    last_supplied_password_info_iter_ = web_input_to_password_info_.begin();
   }
 }
 
@@ -1815,15 +1814,11 @@ void PasswordAutofillAgent::ProvisionallySavePassword(
 
   DCHECK(password_form && (!form.IsNull() || !input.IsNull()));
   provisionally_saved_form_.Set(std::move(password_form), form, input);
-
-  if (base::FeatureList::IsEnabled(
-          password_manager::features::kEnableManualSaving)) {
-    if (has_password) {
-      GetPasswordManagerDriver()->ShowManualFallbackForSaving(
-          provisionally_saved_form_.password_form());
-    } else {
-      GetPasswordManagerDriver()->HideManualFallbackForSaving();
-    }
+  if (has_password) {
+    GetPasswordManagerDriver()->ShowManualFallbackForSaving(
+        provisionally_saved_form_.password_form());
+  } else {
+    GetPasswordManagerDriver()->HideManualFallbackForSaving();
   }
 }
 

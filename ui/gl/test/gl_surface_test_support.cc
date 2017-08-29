@@ -25,8 +25,8 @@
 
 namespace gl {
 
-namespace {
-void InitializeOneOffHelper(bool init_extensions) {
+// static
+void GLSurfaceTestSupport::InitializeOneOff() {
   DCHECK_EQ(kGLImplementationNone, GetGLImplementation());
 
 #if defined(USE_X11)
@@ -50,10 +50,8 @@ void InitializeOneOffHelper(bool init_extensions) {
     use_software_gl = false;
   }
 
-#if defined(OS_ANDROID) || defined(OS_FUCHSIA)
+#if defined(OS_ANDROID)
   // On Android we always use hardware GL.
-  // On Fuchsia, we always use fake GL, but we don't want Mesa or other software
-  // GLs, but rather a stub implementation.
   use_software_gl = false;
 #endif
 
@@ -76,19 +74,7 @@ void InitializeOneOffHelper(bool init_extensions) {
   bool disable_gl_drawing = true;
 
   CHECK(init::InitializeGLOneOffImplementation(
-      impl, fallback_to_software_gl, gpu_service_logging, disable_gl_drawing,
-      init_extensions));
-}
-}  // namespace
-
-// static
-void GLSurfaceTestSupport::InitializeOneOff() {
-  InitializeOneOffHelper(true);
-}
-
-// static
-void GLSurfaceTestSupport::InitializeNoExtensionsOneOff() {
-  InitializeOneOffHelper(false);
+      impl, fallback_to_software_gl, gpu_service_logging, disable_gl_drawing));
 }
 
 // static
@@ -105,9 +91,8 @@ void GLSurfaceTestSupport::InitializeOneOffImplementation(
   bool gpu_service_logging = false;
   bool disable_gl_drawing = false;
 
-  CHECK(init::InitializeGLOneOffImplementation(impl, fallback_to_software_gl,
-                                               gpu_service_logging,
-                                               disable_gl_drawing, true));
+  CHECK(init::InitializeGLOneOffImplementation(
+      impl, fallback_to_software_gl, gpu_service_logging, disable_gl_drawing));
 }
 
 // static

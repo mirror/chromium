@@ -6,7 +6,7 @@
 
 #include <utility>
 
-#include "chrome/browser/chromeos/fileapi/recent_file.h"
+#include "chrome/browser/chromeos/fileapi/recent_context.h"
 
 namespace chromeos {
 
@@ -14,12 +14,13 @@ FakeRecentSource::FakeRecentSource() = default;
 
 FakeRecentSource::~FakeRecentSource() = default;
 
-void FakeRecentSource::AddFile(const RecentFile& file) {
+void FakeRecentSource::AddFile(const storage::FileSystemURL& file) {
   canned_files_.emplace_back(file);
 }
 
-void FakeRecentSource::GetRecentFiles(Params params) {
-  std::move(params.callback()).Run(canned_files_);
+void FakeRecentSource::GetRecentFiles(RecentContext context,
+                                      GetRecentFilesCallback callback) {
+  std::move(callback).Run(canned_files_);
 }
 
 }  // namespace chromeos

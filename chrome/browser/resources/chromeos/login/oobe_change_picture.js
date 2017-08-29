@@ -178,9 +178,7 @@ Polymer({
 
   /** @private */
   onDiscardImage_: function() {
-    this.pictureList_.setOldImageUrl(CrPicture.kDefaultImageUrl);
-    // Revert to profile image as we don't know what last used default image is.
-    this.sendSelectImage_(CrPicture.SelectionTypes.PROFILE, '');
+    this.pictureList_.setOldImageUrl('');
     chrome.send('discardPhoto');  // Plays 'SOUND_OBJECT_DELETE'.
     announceAccessibleMessage(this.i18n('photoDiscardAccessibleText'));
   },

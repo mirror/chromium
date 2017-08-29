@@ -309,7 +309,6 @@ class CORE_EXPORT Document : public ContainerNode,
   DEFINE_ATTRIBUTE_EVENT_LISTENER(securitypolicyviolation);
   DEFINE_ATTRIBUTE_EVENT_LISTENER(selectionchange);
   DEFINE_ATTRIBUTE_EVENT_LISTENER(selectstart);
-  DEFINE_ATTRIBUTE_EVENT_LISTENER(visibilitychange);
 
   bool ShouldMergeWithLegacyDescription(ViewportDescription::Type) const;
   bool ShouldOverrideLegacyDescription(ViewportDescription::Type) const;
@@ -580,9 +579,9 @@ class CORE_EXPORT Document : public ContainerNode,
   void open(Document* entered_document, ExceptionState&);
   // This is used internally and does not handle exceptions.
   void open();
-  DocumentParser* OpenForNavigation(ParserSynchronizationPolicy,
-                                    const AtomicString& mime_type,
-                                    const AtomicString& encoding);
+  void OpenForNavigation(ParserSynchronizationPolicy,
+                         const AtomicString& mime_type,
+                         const AtomicString& encoding);
   DocumentParser* ImplicitOpen(ParserSynchronizationPolicy);
 
   // This is the DOM API document.close()
@@ -698,7 +697,7 @@ class CORE_EXPORT Document : public ContainerNode,
   enum DocumentReadyState { kLoading, kInteractive, kComplete };
 
   void SetReadyState(DocumentReadyState);
-  bool IsLoadCompleted() const;
+  bool IsLoadCompleted();
 
   enum ParsingState { kParsing, kInDOMContentLoaded, kFinishedParsing };
   void SetParsingState(ParsingState);
@@ -1190,9 +1189,8 @@ class CORE_EXPORT Document : public ContainerNode,
   void DidLoadAllImports();
 
   void AdjustFloatQuadsForScrollAndAbsoluteZoom(Vector<FloatQuad>&,
-                                                const LayoutObject&) const;
-  void AdjustFloatRectForScrollAndAbsoluteZoom(FloatRect&,
-                                               const LayoutObject&) const;
+                                                LayoutObject&);
+  void AdjustFloatRectForScrollAndAbsoluteZoom(FloatRect&, LayoutObject&);
 
   void SetContextFeatures(ContextFeatures&);
   ContextFeatures& GetContextFeatures() const { return *context_features_; }

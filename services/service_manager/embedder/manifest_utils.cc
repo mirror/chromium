@@ -42,7 +42,8 @@ void MergeDictionary(base::DictionaryValue* target,
       }
     }
     // All other cases: Make a copy and hook it up.
-    target->SetKey(it.key(), merge_value->Clone());
+    target->SetWithoutPathExpansion(
+        it.key(), base::MakeUnique<base::Value>(*merge_value));
   }
 }
 

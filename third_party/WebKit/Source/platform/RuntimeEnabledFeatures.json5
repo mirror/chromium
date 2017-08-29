@@ -136,6 +136,10 @@
       status: "experimental",
     },
     {
+      name: "CanMakePayment",
+      status: "stable",
+    },
+    {
       name: "Canvas2dFixedRenderingMode",
       status: "test",
     },
@@ -443,6 +447,10 @@
       name: "FontCacheScaling",
       status: "test",
     },
+    // See crbug.com/585250.
+    {
+      name: "ForceDisable2dCanvasCopyOnWrite",
+    },
     {
       name: "ForceDisplayList2dCanvas",
     },
@@ -477,7 +485,7 @@
     },
     {
       name: "GamepadExtensions",
-      origin_trial_feature_name: "WebVR1.1M62",
+      origin_trial_feature_name: "WebVR1.1",
       status: "test",
     },
     {
@@ -564,9 +572,6 @@
     },
     {
       name: "LayoutNGFragmentCaching",
-    },
-    {
-      name: "LayoutNGPaintFragments",
     },
     {
       name: "LazyInitializeMediaControls",
@@ -703,10 +708,6 @@
       name: "NavigatorContentUtils",
     },
     {
-      name: "NavigatorDeviceMemory",
-      status: "experimental",
-    },
-    {
       name: "NetInfoDownlink",
       status: "stable",
     },
@@ -804,7 +805,7 @@
     },
     {
       name: "PaymentDetailsModifierData",
-      status: "stable",
+      status: "experimental",
     },
     // PaymentRequest is enabled by default on Android
     {
@@ -851,10 +852,6 @@
     {
       name: "PrefixedVideoFullscreen",
       status: "stable",
-    },
-    {
-      name: "PreloadDefaultIsMetadata",
-      status: "experimental",
     },
     {
       name: "Presentation",
@@ -954,11 +951,6 @@
       status: "experimental",
     },
     {
-      name: "SensorExtraClasses",
-      depends_on: ["Sensor"],
-      status: "experimental",
-    },
-    {
       name: "ServerTiming",
       status: "experimental",
     },
@@ -996,10 +988,6 @@
     {
       name: "SharedWorker",
       status: "stable",
-    },
-    {
-      name: "SignatureBasedIntegrity",
-      status: "experimental",
     },
     {
       name: "SkipCompositingSmallScrollers",
@@ -1077,10 +1065,6 @@
       status: "stable",
     },
     {
-      name: "V8ContextSnapshot",
-      status: "test",
-    },
-    {
       name: "V8IdleTasks",
     },
     {
@@ -1099,10 +1083,6 @@
     },
     {
       name: "VideoRotateToFullscreen",
-    },
-    {
-      name: "VisibilityCollapseColumn",
-      status: "experimental",
     },
     {
       name: "VisibilityCollapseRow",
@@ -1175,7 +1155,7 @@
     },
     {
       name: "WebVR",
-      origin_trial_feature_name: "WebVR1.1M62",
+      origin_trial_feature_name: "WebVR1.1",
       status: "test",
     },
     {

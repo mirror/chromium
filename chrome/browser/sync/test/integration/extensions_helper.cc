@@ -6,6 +6,7 @@
 
 #include "base/logging.h"
 #include "base/macros.h"
+#include "base/memory/ptr_util.h"
 #include "chrome/browser/chrome_notification_types.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/sync/test/integration/sync_datatype_helper.h"
@@ -134,7 +135,7 @@ ExtensionsMatchChecker::ExtensionsMatchChecker()
   for (Profile* profile : profiles_) {
     // Begin mocking the installation of synced extensions from the web store.
     synced_extension_installers_.push_back(
-        std::make_unique<SyncedExtensionInstaller>(profile));
+        base::MakeUnique<SyncedExtensionInstaller>(profile));
 
     extensions::ExtensionRegistry* registry =
         extensions::ExtensionRegistry::Get(profile);

@@ -130,8 +130,10 @@ PasswordFormFillData GetTestPasswordFormFillData() {
   return result;
 }
 
-MATCHER(WerePasswordsCleared, "Passwords not cleared") {
-  if (!arg.password_field.value.empty())
+MATCHER_P(WerePasswordsCleared,
+          should_preferred_password_cleared,
+          "Passwords not cleared") {
+  if (should_preferred_password_cleared && !arg.password_field.value.empty())
     return false;
 
   for (auto& credentials : arg.additional_logins)
@@ -226,10 +228,13 @@ TEST_F(ContentPasswordManagerDriverTest, ClearPasswordsOnAutofill) {
       new ContentPasswordManagerDriver(main_rfh(), &password_manager_client_,
                                        &autofill_client_));
 
+  for (bool wait_for_username : {false, true}) {
     PasswordFormFillData fill_data = GetTestPasswordFormFillData();
-    fill_data.wait_for_username = true;
-    EXPECT_CALL(fake_agent_, FillPasswordForm(_, WerePasswordsCleared()));
+    fill_data.wait_for_username = wait_for_username;
+    EXPECT_CALL(fake_agent_,
+                FillPasswordForm(_, WerePasswordsCleared(wait_for_username)));
     driver->FillPasswordForm(fill_data);
+  }
 }
 
 #if defined(SAFE_BROWSING_DB_LOCAL)

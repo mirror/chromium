@@ -603,6 +603,19 @@ const char kPpapiFlashPath[]                = "ppapi-flash-path";
 // defaults to "10.2.999.999".
 const char kPpapiFlashVersion[]             = "ppapi-flash-version";
 
+// Triggers prerendering of pages from suggestions in the omnibox. Only has an
+// effect when Instant is either disabled or restricted to search, and when
+// prerender is enabled.
+const char kPrerenderFromOmnibox[]          = "prerender-from-omnibox";
+
+// These are the values the kPrerenderFromOmnibox switch may have, as in
+// "--prerender-from-omnibox=auto". auto: Allow field trial selection.
+const char kPrerenderFromOmniboxSwitchValueAuto[] = "auto";
+//   disabled: No prerendering.
+const char kPrerenderFromOmniboxSwitchValueDisabled[] = "disabled";
+//   enabled: Guaranteed prerendering.
+const char kPrerenderFromOmniboxSwitchValueEnabled[] = "enabled";
+
 // Use IPv6 only for privet HTTP.
 const char kPrivetIPv6Only[]                   = "privet-ipv6-only";
 
@@ -727,10 +740,10 @@ const char kTryChromeAgain[]                = "try-chrome-again";
 const char kUnlimitedStorage[]              = "unlimited-storage";
 
 // Treat given (insecure) origins as secure origins. Multiple origins can be
-// supplied as a comma-separated list.
-//
+// supplied. Has no effect unless --user-data-dir is also supplied.
 // Example:
 // --unsafely-treat-insecure-origin-as-secure=http://a.test,http://b.test
+// --user-data-dir=/test/only/profile/dir
 const char kUnsafelyTreatInsecureOriginAsSecure[] =
     "unsafely-treat-insecure-origin-as-secure";
 
@@ -813,6 +826,9 @@ const char kForceShowUpdateMenuItemCustomSummary[] = "custom_summary";
 
 // Sets the market URL for Chrome for use in testing.
 const char kMarketUrlForTesting[] = "market-url-for-testing";
+
+// Switch to an existing tab for a suggestion opened from the New Tab Page.
+const char kNtpSwitchToExistingTab[] = "ntp-switch-to-existing-tab";
 
 // Specifies Android phone page loading progress bar animation.
 const char kProgressBarAnimation[]          = "progress-bar-animation";

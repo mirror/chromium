@@ -6,14 +6,14 @@
 #define NGLayoutOpportunityIterator_h
 
 #include "core/CoreExport.h"
-#include "core/layout/ng/geometry/ng_bfc_offset.h"
-#include "core/layout/ng/geometry/ng_bfc_rect.h"
+#include "core/layout/ng/ng_fragment.h"
 #include "core/layout/ng/ng_layout_opportunity_tree_node.h"
 #include "platform/wtf/Vector.h"
+#include "platform/wtf/text/StringBuilder.h"
 
 namespace blink {
 
-typedef NGBfcRect NGLayoutOpportunity;
+typedef NGLogicalRect NGLayoutOpportunity;
 typedef Vector<NGLayoutOpportunity> NGLayoutOpportunities;
 class NGExclusionSpace;
 
@@ -23,15 +23,15 @@ class CORE_EXPORT NGLayoutOpportunityIterator final {
  public:
   // Default constructor.
   //
-  // @param exclusion_space The exclusion space to use for generating layout
-  //                        opportunities.
+  // @param exclusions List of exclusions that should be avoided by this
+  //                   iterator while generating layout opportunities.
   // @param available_size Available size that represents a rectangle where this
   //                       iterator searches layout opportunities.
   // @param offset Offset used as a default starting point for layout
   //               opportunities.
-  NGLayoutOpportunityIterator(const NGExclusionSpace& exclusion_space,
+  NGLayoutOpportunityIterator(const NGExclusionSpace* exclusions,
                               const NGLogicalSize& available_size,
-                              const NGBfcOffset& offset);
+                              const NGLogicalOffset& offset);
 
   // @return If there is no more opportunities to iterate.
   //         This also means that the last returned opportunity does not have
@@ -46,7 +46,7 @@ class CORE_EXPORT NGLayoutOpportunityIterator final {
 
   // Offset that specifies the starting point to search layout opportunities.
   // It's either {@code opt_offset} or space->BfcOffset().
-  NGBfcOffset Offset() const { return offset_; }
+  NGLogicalOffset Offset() const { return offset_; }
 
 #ifndef NDEBUG
   // Prints Layout Opportunity tree for debug purposes.
@@ -56,7 +56,7 @@ class CORE_EXPORT NGLayoutOpportunityIterator final {
  private:
   NGLayoutOpportunities opportunities_;
   NGLayoutOpportunities::const_iterator opportunity_iter_;
-  NGBfcOffset offset_;
+  NGLogicalOffset offset_;
 };
 
 }  // namespace blink

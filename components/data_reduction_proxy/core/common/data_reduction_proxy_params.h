@@ -45,6 +45,13 @@ bool IsIncludedInHoldbackFieldTrial();
 // not included in a group.
 std::string HoldbackFieldTrialGroup();
 
+// Returns the name of the trusted SPDY/HTTP2 proxy field trial.
+const char* GetTrustedSpdyProxyFieldTrialName();
+
+// Returns true if this client is part of the enabled group of the trusted
+// SPDY/HTTP2 proxy field trial.
+bool IsIncludedInTrustedSpdyProxyFieldTrial();
+
 // Returns true if this client is part of the field trial that should display
 // a promotion for the data reduction proxy on Android One devices. This is for
 // testing purposes and should not be called outside of tests.
@@ -52,13 +59,23 @@ bool IsIncludedInAndroidOnePromoFieldTrialForTesting(
     base::StringPiece build_fingerprint);
 
 // Returns the name of the Lo-Fi field trial.
-// TODO(ryansturm): crbug.com/759052 Cleanup once fully cutover to new blacklist
 const char* GetLoFiFieldTrialName();
 
 // Returns the name of the Lo-Fi field trial that configures LoFi flags when it
 // is force enabled through flags.
-// TODO(ryansturm): crbug.com/759052 Cleanup once fully cutover to new blacklist
 const char* GetLoFiFlagFieldTrialName();
+
+// Returns true if this client is part of the "Enabled" or "Enabled_Preview"
+// group of the Lo-Fi field trial, both of which mean Lo-Fi should be enabled.
+bool IsIncludedInLoFiEnabledFieldTrial();
+
+// Returns true if this client is part of the "Control" group of the Lo-Fi field
+// trial.
+bool IsIncludedInLoFiControlFieldTrial();
+
+// Returns true if this client is part of the "Preview" group of the Lo-Fi field
+// trial.
+bool IsIncludedInLitePageFieldTrial();
 
 // Returns true if this client is part of the field trial that should enable
 // server experiments for the data reduction proxy.

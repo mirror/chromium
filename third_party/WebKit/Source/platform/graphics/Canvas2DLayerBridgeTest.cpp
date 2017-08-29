@@ -25,9 +25,9 @@
 
 #include "platform/graphics/Canvas2DLayerBridge.h"
 
+#include "cc/test/test_gpu_memory_buffer_manager.h"
 #include "components/viz/common/quads/single_release_callback.h"
 #include "components/viz/common/quads/texture_mailbox.h"
-#include "components/viz/test/test_gpu_memory_buffer_manager.h"
 #include "gpu/command_buffer/client/gles2_interface.h"
 #include "gpu/command_buffer/common/capabilities.h"
 #include "platform/CrossThreadFunctional.h"
@@ -122,7 +122,7 @@ class FakePlatformSupport : public TestingPlatformSupport {
     return &test_gpu_memory_buffer_manager_;
   }
 
-  viz::TestGpuMemoryBufferManager test_gpu_memory_buffer_manager_;
+  cc::TestGpuMemoryBufferManager test_gpu_memory_buffer_manager_;
 };
 
 }  // anonymous namespace
@@ -1113,6 +1113,11 @@ TEST_F(Canvas2DLayerBridgeTest, DISABLED_DeleteIOSurfaceAfterTeardown)
   EXPECT_EQ(1u, gl_.CreateImageCount());
   EXPECT_EQ(1u, gl_.DestroyImageCount());
 }
+
+class FlushMockGLES2Interface : public gpu::gles2::GLES2InterfaceStub {
+ public:
+  MOCK_METHOD0(Flush, void());
+};
 
 TEST_F(Canvas2DLayerBridgeTest, NoUnnecessaryFlushes) {
   EXPECT_CALL(gl_, Flush()).Times(0);

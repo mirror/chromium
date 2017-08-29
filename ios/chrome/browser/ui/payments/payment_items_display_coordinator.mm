@@ -26,7 +26,9 @@
 @synthesize delegate = _delegate;
 
 - (void)start {
-  _viewController = [[PaymentItemsDisplayViewController alloc] init];
+  BOOL payButtonEnabled = _paymentRequest->selected_payment_method() != nil;
+  _viewController = [[PaymentItemsDisplayViewController alloc]
+      initWithPayButtonEnabled:payButtonEnabled];
   [_viewController setDelegate:self];
   _mediator = [[PaymentItemsDisplayMediator alloc]
       initWithPaymentRequest:self.paymentRequest];

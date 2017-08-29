@@ -32,9 +32,6 @@ class GFX_EXPORT SequentialIDGenerator {
   // |number|.
   bool HasGeneratedIDFor(uint32_t number) const;
 
-  // Removes the ID previously generated for |number| if necessary.
-  void MaybeReleaseNumber(uint32_t number);
-
   // Removes the generated ID |id| from the internal mapping. Since the ID is
   // no longer mapped to any number, subsequent calls to |GetGeneratedID()| can
   // use this ID.

@@ -69,11 +69,7 @@ void PrefetchedPagesTrackerImpl::AddInitializationCompletedCallback(
 bool PrefetchedPagesTrackerImpl::PrefetchedOfflinePageExists(
     const GURL& url) const {
   DCHECK(initialized_);
-  DCHECK(prefetched_url_counts_.count(url) == 0 ||
-         prefetched_url_counts_.find(url)->second > 0);
-  // It is enough to check existence of an item (instead of its count), because
-  // the mapping does not contain zero counts.
-  return prefetched_url_counts_.count(url) == 1;
+  return prefetched_urls_.count(url) == 1;
 }
 
 void PrefetchedPagesTrackerImpl::OfflinePageModelLoaded(
@@ -91,22 +87,13 @@ void PrefetchedPagesTrackerImpl::OfflinePageAdded(
 
 void PrefetchedPagesTrackerImpl::OfflinePageDeleted(
     const offline_pages::OfflinePageModel::DeletedPageInfo& page_info) {
-  std::map<int64_t, GURL>::iterator offline_id_it =
+  std::map<int64_t, GURL>::iterator it =
       offline_id_to_url_mapping_.find(page_info.offline_id);
-
-  if (offline_id_it == offline_id_to_url_mapping_.end()) {
-    // We did not know about this page, thus, nothing to delete.
-    return;
+  if (it != offline_id_to_url_mapping_.end()) {
+    DCHECK(prefetched_urls_.count(it->second));
+    prefetched_urls_.erase(it->second);
+    offline_id_to_url_mapping_.erase(it);
   }
-
-  std::map<GURL, int>::iterator url_it =
-      prefetched_url_counts_.find(offline_id_it->second);
-  DCHECK(url_it != prefetched_url_counts_.end());
-  --url_it->second;
-  if (url_it->second == 0) {
-    prefetched_url_counts_.erase(url_it);
-  }
-  offline_id_to_url_mapping_.erase(offline_id_it);
 }
 
 void PrefetchedPagesTrackerImpl::Initialize(
@@ -126,9 +113,8 @@ void PrefetchedPagesTrackerImpl::Initialize(
 void PrefetchedPagesTrackerImpl::AddOfflinePage(
     const OfflinePageItem& offline_page_item) {
   const GURL& url = GetOfflinePageUrl(offline_page_item);
-  DCHECK(prefetched_url_counts_.count(url) == 0 ||
-         prefetched_url_counts_.find(url)->second > 0);
-  ++prefetched_url_counts_[url];
+  DCHECK(!prefetched_urls_.count(url));
+  prefetched_urls_.insert(url);
   offline_id_to_url_mapping_[offline_page_item.offline_id] = url;
 }
 

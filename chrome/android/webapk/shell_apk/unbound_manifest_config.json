@@ -4,11 +4,9 @@
   "intent_filters": {
     "scope_url_scheme": "https",
     "scope_url_host": "pwa.rocks",
-    "scope_url_path_type": "android:pathPrefix",
     "scope_url_path": "/"
   },
   "start_url": "https://pwa.rocks/",
-  "logged_intent_url_param": "originalUrl",
   "display_mode": "standalone",
   "orientation": "portrait",
   "theme_color": "2147483648L",

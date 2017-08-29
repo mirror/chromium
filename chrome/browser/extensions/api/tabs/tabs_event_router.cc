@@ -54,8 +54,7 @@ bool WillDispatchTabUpdatedEvent(
   const base::Value* value = nullptr;
   for (const auto& property : changed_property_names) {
     if (tab_value->Get(property, &value))
-      changed_properties->Set(property,
-                              base::MakeUnique<base::Value>(value->Clone()));
+      changed_properties->Set(property, base::MakeUnique<base::Value>(*value));
   }
 
   event->event_args->Set(1, std::move(changed_properties));

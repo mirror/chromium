@@ -18,6 +18,7 @@
 #include "base/callback.h"
 #include "base/macros.h"
 #include "base/memory/weak_ptr.h"
+#include "cc/ipc/surface_id.mojom.h"
 #include "mojo/public/cpp/bindings/associated_binding.h"
 #include "services/ui/public/interfaces/window_tree.mojom.h"
 #include "services/ui/ws/access_policy_delegate.h"
@@ -26,11 +27,7 @@
 #include "services/ui/ws/ids.h"
 #include "services/ui/ws/user_id.h"
 #include "services/ui/ws/window_tree_binding.h"
-#include "services/viz/public/interfaces/compositing/surface_id.mojom.h"
 
-namespace display {
-struct ViewportMetrics;
-}
 namespace gfx {
 class Insets;
 class Rect;
@@ -412,24 +409,13 @@ class WindowTree : public mojom::WindowTree,
   // of the display if successful, otherwise null.
   ServerWindow* ProcessSetDisplayRoot(
       const display::Display& display_to_create,
-      const display::ViewportMetrics& transport_viewport_metrics,
+      const mojom::WmViewportMetrics& transport_viewport_metrics,
       bool is_primary_display,
       const ClientWindowId& client_window_id);
 
   bool ProcessSwapDisplayRoots(int64_t display_id1, int64_t display_id2);
   bool ProcessSetBlockingContainers(std::vector<mojom::BlockingContainersPtr>
                                         transport_all_blocking_containers);
-
-  // Returns the ClientWindowId from a transport id or WindowId. Uses id_ as the
-  // ClientWindowId::client_id part if it was invalid. These functions do a
-  // straight mapping, there may not be a window with the returned id.
-  ClientWindowId MakeClientWindowId(Id transport_window_id) const;
-  ClientWindowId MakeClientWindowId(const WindowId& id) const;
-
-  // Before the ClientWindowId gets sent back to the client, making sure we
-  // reset the high 16 bits back to 0 if it's being sent back to the client
-  // that created the window.
-  Id ClientWindowIdToTransportId(const ClientWindowId& client_window_id) const;
 
   // WindowTree:
   void NewWindow(uint32_t change_id,
@@ -558,7 +544,7 @@ class WindowTree : public mojom::WindowTree,
                       const SetDisplayRootCallback& callback) override;
   void SetDisplayConfiguration(
       const std::vector<display::Display>& displays,
-      std::vector<ui::mojom::WmViewportMetricsPtr> transport_metrics,
+      std::vector<ui::mojom::WmViewportMetricsPtr> viewport_metrics,
       int64_t primary_display_id,
       int64_t internal_display_id,
       const SetDisplayConfigurationCallback& callback) override;

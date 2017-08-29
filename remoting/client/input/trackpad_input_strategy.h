@@ -30,8 +30,6 @@ class TrackpadInputStrategy : public TouchInputStrategy {
 
   ViewMatrix::Point GetCursorPosition() const override;
 
-  void FocusViewportOnCursor(DesktopViewport* viewport) const override;
-
   ViewMatrix::Vector2D MapScreenVectorToDesktop(
       const ViewMatrix::Vector2D& delta,
       const DesktopViewport& viewport) const override;

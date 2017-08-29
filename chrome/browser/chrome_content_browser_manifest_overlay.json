@@ -18,17 +18,14 @@
           "spellcheck::mojom::SpellCheckHost",
           "spellcheck::mojom::SpellCheckPanelHost",
           "translate::mojom::ContentTranslateDriver"
-        ],
+	],
         "url_keyed_metrics": [
           "ukm::mojom::UkmRecorderInterface"
         ],
         "gpu": [
           "metrics::mojom::CallStackProfileCollector"
         ],
-        "ime:ime_driver": [],
-        "memlog_client": [
-          "profiling::mojom::MemlogClient"
-        ]
+        "ime:ime_driver": []
       },
       "requires": {
         "accessibility_autoclick": [ "ash:autoclick" ],
@@ -37,7 +34,6 @@
         "ash_pref_connector": [ "pref_connector" ],
         // Only used in classic ash case.
         "chrome": [ "input_device_controller" ],
-        "content_browser": [ "memlog_client" ],
         "device": [ "device:fingerprint" ],
         "identity": [ "identity_manager" ],
         "nacl_broker": [ "browser" ],
@@ -59,7 +55,6 @@
           "autofill::mojom::PasswordManagerDriver",
           "blink::mojom::BudgetService",
           "blink::mojom::InstalledAppProvider",
-          "blink::mojom::MediaDownloadInProductHelp",
           "blink::mojom::ShareService",
           "blink::mojom::TextSuggestionHost",
           "bluetooth::mojom::AdapterFactory",

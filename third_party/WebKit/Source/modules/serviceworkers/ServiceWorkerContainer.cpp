@@ -63,7 +63,6 @@
 #include "public/platform/modules/serviceworker/WebServiceWorker.h"
 #include "public/platform/modules/serviceworker/WebServiceWorkerProvider.h"
 #include "public/platform/modules/serviceworker/WebServiceWorkerRegistration.h"
-#include "public/platform/modules/serviceworker/service_worker_error_type.mojom-blink.h"
 
 namespace blink {
 
@@ -160,7 +159,7 @@ void ServiceWorkerContainer::RegisterServiceWorkerImpl(
     std::unique_ptr<RegistrationCallbacks> callbacks) {
   if (!provider_) {
     callbacks->OnError(
-        WebServiceWorkerError(mojom::blink::ServiceWorkerErrorType::kState,
+        WebServiceWorkerError(WebServiceWorkerError::kErrorTypeState,
                               "Failed to register a ServiceWorker: The "
                               "document is in an invalid state."));
     return;
@@ -173,7 +172,7 @@ void ServiceWorkerContainer::RegisterServiceWorkerImpl(
   // https://w3c.github.io/webappsec/specs/powerfulfeatures/#settings-privileged
   if (!execution_context->IsSecureContext(error_message)) {
     callbacks->OnError(WebServiceWorkerError(
-        mojom::blink::ServiceWorkerErrorType::kSecurity, error_message));
+        WebServiceWorkerError::kErrorTypeSecurity, error_message));
     return;
   }
 
@@ -181,7 +180,7 @@ void ServiceWorkerContainer::RegisterServiceWorkerImpl(
   if (!SchemeRegistry::ShouldTreatURLSchemeAsAllowingServiceWorkers(
           page_url.Protocol())) {
     callbacks->OnError(WebServiceWorkerError(
-        mojom::blink::ServiceWorkerErrorType::kSecurity,
+        WebServiceWorkerError::kErrorTypeSecurity,
         String("Failed to register a ServiceWorker: The URL protocol of the "
                "current origin ('" +
                document_origin->ToString() + "') is not supported.")));
@@ -193,7 +192,7 @@ void ServiceWorkerContainer::RegisterServiceWorkerImpl(
   if (!document_origin->CanRequest(script_url)) {
     RefPtr<SecurityOrigin> script_origin = SecurityOrigin::Create(script_url);
     callbacks->OnError(
-        WebServiceWorkerError(mojom::blink::ServiceWorkerErrorType::kSecurity,
+        WebServiceWorkerError(WebServiceWorkerError::kErrorTypeSecurity,
                               String("Failed to register a ServiceWorker: The "
                                      "origin of the provided scriptURL ('" +
                                      script_origin->ToString() +
@@ -204,7 +203,7 @@ void ServiceWorkerContainer::RegisterServiceWorkerImpl(
   if (!SchemeRegistry::ShouldTreatURLSchemeAsAllowingServiceWorkers(
           script_url.Protocol())) {
     callbacks->OnError(WebServiceWorkerError(
-        mojom::blink::ServiceWorkerErrorType::kSecurity,
+        WebServiceWorkerError::kErrorTypeSecurity,
         String("Failed to register a ServiceWorker: The URL protocol of the "
                "script ('" +
                script_url.GetString() + "') is not supported.")));
@@ -217,7 +216,7 @@ void ServiceWorkerContainer::RegisterServiceWorkerImpl(
   if (!document_origin->CanRequest(pattern_url)) {
     RefPtr<SecurityOrigin> pattern_origin = SecurityOrigin::Create(pattern_url);
     callbacks->OnError(
-        WebServiceWorkerError(mojom::blink::ServiceWorkerErrorType::kSecurity,
+        WebServiceWorkerError(WebServiceWorkerError::kErrorTypeSecurity,
                               String("Failed to register a ServiceWorker: The "
                                      "origin of the provided scope ('" +
                                      pattern_origin->ToString() +
@@ -228,7 +227,7 @@ void ServiceWorkerContainer::RegisterServiceWorkerImpl(
   if (!SchemeRegistry::ShouldTreatURLSchemeAsAllowingServiceWorkers(
           pattern_url.Protocol())) {
     callbacks->OnError(WebServiceWorkerError(
-        mojom::blink::ServiceWorkerErrorType::kSecurity,
+        WebServiceWorkerError::kErrorTypeSecurity,
         String("Failed to register a ServiceWorker: The URL protocol of the "
                "scope ('" +
                pattern_url.GetString() + "') is not supported.")));
@@ -239,7 +238,7 @@ void ServiceWorkerContainer::RegisterServiceWorkerImpl(
   if (!provider_->ValidateScopeAndScriptURL(pattern_url, script_url,
                                             &web_error_message)) {
     callbacks->OnError(WebServiceWorkerError(
-        mojom::blink::ServiceWorkerErrorType::kType,
+        WebServiceWorkerError::kErrorTypeType,
         WebString::FromUTF8("Failed to register a ServiceWorker: " +
                             web_error_message.Utf8())));
     return;
@@ -253,7 +252,7 @@ void ServiceWorkerContainer::RegisterServiceWorkerImpl(
               script_url, ResourceRequest::RedirectStatus::kNoRedirect,
               SecurityViolationReportingPolicy::kReport))) {
       callbacks->OnError(WebServiceWorkerError(
-          mojom::blink::ServiceWorkerErrorType::kSecurity,
+          WebServiceWorkerError::kErrorTypeSecurity,
           String(
               "Failed to register a ServiceWorker: The provided scriptURL ('" +
               script_url.GetString() +

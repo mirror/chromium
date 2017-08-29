@@ -23,6 +23,7 @@ Per obtenir informació sobre la privadesa, vegeu la Política de privadesa de G
 <translation id="1520828917794284345">Ajusta la mida de l'escriptori</translation>
 <translation id="154040539590487450">No s'ha pogut iniciar el servei d'accés remot.</translation>
 <translation id="1546934824884762070">S'ha produït un error inesperat. Informeu d'aquest problema als desenvolupadors.</translation>
+<translation id="1619813076098775562">La connexió amb el dispositiu d'emissió s'ha tancat</translation>
 <translation id="1643640058022401035">Si sortiu d'aquesta pàgina, la sessió de Chromoting finalitzarà.</translation>
 <translation id="1654128982815600832">S'estan activant les connexions remotes en aquest ordinador...</translation>
 <translation id="170207782578677537">No s'ha pogut registrar aquest ordinador.</translation>
@@ -40,6 +41,10 @@ Per obtenir informació sobre la privadesa, vegeu la Política de privadesa de G
 <translation id="2013996867038862849">S'han suprimit tots els clients sincronitzats.</translation>
 <translation id="2038229918502634450">L'amfitrió s'està reiniciant per aplicar un canvi en la política.</translation>
 <translation id="2046651113449445291">Els clients següents s'han sincronitzat amb aquest ordinador i s'hi poden connectar sense indicar cap PIN. Podeu revocar aquest permís en qualsevol moment, ja sigui individualment o per a tots els clients.</translation>
+<translation id="2053901200959289492">• S'ha afegit compatibilitat amb el mode multifinestra per a Android Nougat.
+• S'ha millorat la qualitat d'imatge de l'escriptori, la capacitat de resposta i el consum de bateria.
+• S'ha millorat la capacitat de resposta de les operacions de fer clic i arrossegar.
+• S'han millorat diversos efectes d'animació de la interfície d'usuari.</translation>
 <translation id="2078880767960296260">Procés de l'amfitrió</translation>
 <translation id="20876857123010370">Mode de ratolí tàctil</translation>
 <translation id="2089514346391228378">S'han activat les connexions remotes en aquest ordinador.</translation>
@@ -75,7 +80,6 @@ Per obtenir informació sobre la privadesa, vegeu la Política de privadesa de G
 <translation id="2676780859508944670">S'hi està treballant...</translation>
 <translation id="2699970397166997657">Chromoting</translation>
 <translation id="2747641796667576127">Les actualitzacions de programari se solen fer automàticament, però poden fallar en casos excepcionals. L'actualització del programari hauria de trigar només uns minuts i es pot fer mentre esteu connectat a l'ordinador de forma remota.</translation>
-<translation id="2758123043070977469">S'ha produït un problema d'autenticació. Torna a iniciar la sessió.</translation>
 <translation id="2803375539583399270">Introdueix el PIN</translation>
 <translation id="2841013758207633010">Hora</translation>
 <translation id="2851754573186462851">Chromium App Streaming</translation>
@@ -171,6 +175,12 @@ Per obtenir informació sobre la privadesa, vegeu la Política de privadesa de G
 <translation id="5156271271724754543">Introduïu el mateix PIN als dos quadres.</translation>
 <translation id="5170982930780719864">L'identificador de l'amfitrió no és vàlid.</translation>
 <translation id="518094545883702183">Aquesta informació només s'utilitza per diagnosticar el problema de què esteu informant. Només hi poden accedir les persones que analitzen l'informe i es conserva com a màxim durant 30 dies.</translation>
+<translation id="5196958630269420102">Accedeix de manera segura als teus ordinadors des del dispositiu iOS.
+
+• A tots els ordinadors que facis servir, pots configurar l'accés remot amb l'aplicació Escriptori remot de Chrome, disponible a Chrome Web Store: https://chrome.google.com/remotedesktop
+• Al dispositiu iOS, obre l'aplicació i toca qualsevol dels teus ordinadors en línia per establir la connexió.
+
+Per obtenir informació sobre la privadesa, consulta la Política de privadesa de Google (http://goo.gl/SyrVzj) i la Política de privadesa de Chrome (http://goo.gl/0uXE5d).</translation>
 <translation id="5204575267916639804">Preguntes freqüents</translation>
 <translation id="5222676887888702881">Tanca la sessió</translation>
 <translation id="5254120496627797685">Si sortiu d'aquesta pàgina, la sessió de l'escriptori remot de Chrome finalitzarà.</translation>
@@ -183,6 +193,7 @@ Per obtenir informació sobre la privadesa, vegeu la Política de privadesa de G
 <translation id="5419418238395129586">Última connexió: <ph name="DATE" /></translation>
 <translation id="544077782045763683">L'amfitrió s'ha tancat.</translation>
 <translation id="5510035215749041527">Desconnecta ara</translation>
+<translation id="5537725057119320332">Emet</translation>
 <translation id="5593560073513909978">El servei està temporalment no disponible. Torneu-ho a provar més tard.</translation>
 <translation id="5601503069213153581">PIN</translation>
 <translation id="5619148062500147964">A aquest ordinador</translation>
@@ -191,10 +202,10 @@ Per obtenir informació sobre la privadesa, vegeu la Política de privadesa de G
 <translation id="5708869785009007625">Esteu compartint l'escriptori amb <ph name="USER" />.</translation>
 <translation id="5773590752998175013">Data de sincronització</translation>
 <translation id="579702532610384533">Torna a connectar</translation>
-<translation id="5810269635982033450">La pantalla fa de ratolí tàctil</translation>
 <translation id="5841343754884244200">Opcions de visualització</translation>
 <translation id="5843054235973879827">Per què és segur?</translation>
 <translation id="5859141382851488196">Finestra nova...</translation>
+<translation id="5885438903806970186">En línia</translation>
 <translation id="6011539954251327702">Chromoting us permet compartir l'ordinador de manera segura al web. Els dos usuaris han d'executar l'aplicació Chromoting, que podeu trobar a la pàgina <ph name="URL" />.</translation>
 <translation id="6033507038939587647">Opcions del teclat</translation>
 <translation id="6040143037577758943">Tanca</translation>
@@ -224,6 +235,11 @@ Per obtenir informació sobre la privadesa, vegeu la Política de privadesa de G
 <translation id="6570205395680337606">Restabliu l'aplicació. Els treballs que no s'hagin desat es perdran.</translation>
 <translation id="6572345186230665992">Per a Mac (OS X Mavericks 10.9 i versions posteriors)</translation>
 <translation id="6583902294974160967">Assistència</translation>
+<translation id="6598484667010442494">Escriptori remot de Chrome
+Escriptori remot
+PC remot
+Ordinador remot
+Accés remot</translation>
 <translation id="6612717000975622067">Envia Ctrl-Alt-Supr</translation>
 <translation id="6668065415969892472">S'ha actualitzat el vostre PIN.</translation>
 <translation id="6681800064886881394">Copyright 2013 Google Inc. Tots els drets reservats.</translation>
@@ -243,7 +259,7 @@ Per obtenir informació sobre la privadesa, vegeu la Política de privadesa de G
 <translation id="7019153418965365059">Error d'amfitrió no reconegut: <ph name="HOST_OFFLINE_REASON" />.</translation>
 <translation id="701976023053394610">Assistència remota</translation>
 <translation id="7038683108611689168">Ajudeu-nos a millorar Chromoting: permeteu-nos recollir estadístiques d'ús i informes d'error.</translation>
-<translation id="7067321367069083429">La pantalla fa de pantalla tàctil</translation>
+<translation id="712467900648340229">La connexió amb el dispositiu d'emissió no s'ha pogut establir</translation>
 <translation id="7144878232160441200">Torna-ho a provar</translation>
 <translation id="7149517134817561223">Aplicació que ha d'emetre les ordres per a l'amfitrió de l'escriptori remot de Chrome.</translation>
 <translation id="7215059001581613786">Introduïu un PIN que tingui sis dígits o més.</translation>

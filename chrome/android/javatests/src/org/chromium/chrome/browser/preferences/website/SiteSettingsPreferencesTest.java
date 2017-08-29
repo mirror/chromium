@@ -21,7 +21,6 @@ import org.chromium.base.test.util.CommandLineFlags;
 import org.chromium.base.test.util.Feature;
 import org.chromium.base.test.util.RetryOnFailure;
 import org.chromium.chrome.browser.ChromeActivity;
-import org.chromium.chrome.browser.ChromeFeatureList;
 import org.chromium.chrome.browser.ChromeSwitches;
 import org.chromium.chrome.browser.infobar.InfoBarContainer;
 import org.chromium.chrome.browser.preferences.ChromeBaseCheckBoxPreference;
@@ -104,12 +103,9 @@ public class SiteSettingsPreferencesTest {
 
     /**
      * Sets Allow Location Enabled to be true and make sure it is set correctly.
-     *
-     * TODO(timloh): Update this test once modals are enabled everywhere.
      */
     @Test
     @SmallTest
-    @CommandLineFlags.Add("disable-features=" + ChromeFeatureList.MODAL_PERMISSION_PROMPTS)
     @Feature({"Preferences"})
     public void testSetAllowLocationEnabled() throws Exception {
         setAllowLocation(true);
@@ -125,12 +121,9 @@ public class SiteSettingsPreferencesTest {
 
     /**
      * Sets Allow Location Enabled to be false and make sure it is set correctly.
-     *
-     * TODO(timloh): Update this test once modals are enabled everywhere.
      */
     @Test
     @SmallTest
-    @CommandLineFlags.Add("disable-features=" + ChromeFeatureList.MODAL_PERMISSION_PROMPTS)
     @Feature({"Preferences"})
     public void testSetAllowLocationNotEnabled() throws Exception {
         setAllowLocation(false);
@@ -492,16 +485,12 @@ public class SiteSettingsPreferencesTest {
 
     /**
      * Sets Allow Mic Enabled to be false and make sure it is set correctly.
-     *
-     * TODO(timloh): Update this test once modals are enabled everywhere.
-     *
      * @throws Exception
      */
     @Test
     @SmallTest
     @Feature({"Preferences"})
-    @CommandLineFlags.Add({ContentSwitches.USE_FAKE_DEVICE_FOR_MEDIA_STREAM,
-            "disable-features=" + ChromeFeatureList.MODAL_PERMISSION_PROMPTS})
+    @CommandLineFlags.Add(ContentSwitches.USE_FAKE_DEVICE_FOR_MEDIA_STREAM)
     public void testMicBlocked() throws Exception {
         setEnableMic(false);
 
@@ -516,16 +505,12 @@ public class SiteSettingsPreferencesTest {
 
     /**
      * Sets Allow Camera Enabled to be true and make sure it is set correctly.
-     *
-     * TODO(timloh): Update this test once modals are enabled everywhere.
-     *
      * @throws Exception
      */
     @Test
     @SmallTest
     @Feature({"Preferences"})
-    @CommandLineFlags.Add({ContentSwitches.USE_FAKE_DEVICE_FOR_MEDIA_STREAM,
-            "disable-features=" + ChromeFeatureList.MODAL_PERMISSION_PROMPTS})
+    @CommandLineFlags.Add(ContentSwitches.USE_FAKE_DEVICE_FOR_MEDIA_STREAM)
     public void testCameraNotBlocked() throws Exception {
         setEnableCamera(true);
 
@@ -542,16 +527,12 @@ public class SiteSettingsPreferencesTest {
 
     /**
      * Sets Allow Mic Enabled to be true and make sure it is set correctly.
-     *
-     * TODO(timloh): Update this test once modals are enabled everywhere.
-     *
      * @throws Exception
      */
     @Test
     @SmallTest
     @Feature({"Preferences"})
-    @CommandLineFlags.Add({ContentSwitches.USE_FAKE_DEVICE_FOR_MEDIA_STREAM,
-            "disable-features=" + ChromeFeatureList.MODAL_PERMISSION_PROMPTS})
+    @CommandLineFlags.Add(ContentSwitches.USE_FAKE_DEVICE_FOR_MEDIA_STREAM)
     public void testMicNotBlocked() throws Exception {
         setEnableCamera(true);
 

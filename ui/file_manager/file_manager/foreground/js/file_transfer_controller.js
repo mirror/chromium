@@ -452,15 +452,10 @@ FileTransferController.prototype.attachCopyPasteHandlers_ = function() {
  *     |clipboardData.effectAllowed| property.
  * @private
  */
-FileTransferController.prototype.cutOrCopy_ = function(
-    clipboardData, effectAllowed) {
-  var currentDirEntry = this.directoryModel_.getCurrentDirEntry();
-  if (!currentDirEntry)
-    return;
+FileTransferController.prototype.cutOrCopy_ =
+    function(clipboardData, effectAllowed) {
   var volumeInfo = this.volumeManager_.getVolumeInfo(
-      util.isRecentRoot(currentDirEntry) ?
-          this.selectionHandler_.selection.entries[0] :
-          currentDirEntry);
+      this.directoryModel_.getCurrentDirEntry());
   if (!volumeInfo)
     return;
 
@@ -1350,15 +1345,7 @@ FileTransferController.prototype.canCopyOrDrag_ = function() {
   if (this.selectionHandler_.selection.entries.length <= 0)
     return false;
   var entries = this.selectionHandler_.selection.entries;
-  for (var i = 0; i < entries.length; i++) {
-    if (util.isTeamDriveRoot(entries[i]))
-      return false;
-    // If selected entries are not in the same directory, we can't copy them by
-    // a single operation at this moment.
-    if (i > 0 && !util.isSiblingEntry(entries[0], entries[i]))
-      return false;
-  }
-  return true;
+  return entries.every(entry => !util.isTeamDriveRoot(entry));
 };
 
 /**

@@ -58,21 +58,6 @@ class StartupTabProvider {
 
 class StartupTabProviderImpl : public StartupTabProvider {
  public:
-  struct StandardOnboardingTabsParams {
-    bool is_first_run = false;
-    bool has_seen_welcome_page = false;
-    bool is_signin_allowed = false;
-    bool is_signed_in = false;
-    bool is_signin_in_progress = false;
-    bool is_supervised_user = false;
-  };
-
-  struct Win10OnboardingTabsParams {
-    bool has_seen_win10_promo = false;
-    bool set_default_browser_allowed = false;
-    bool is_default_browser = false;
-  };
-
   StartupTabProviderImpl() = default;
 
   // The static helper methods below implement the policies relevant to the
@@ -86,13 +71,16 @@ class StartupTabProviderImpl : public StartupTabProvider {
   // Returns true if the standard welcome page should be shown in a tab. This
   // should only be used following a positive result from CanShowWelcome.
   static bool ShouldShowWelcomeForOnboarding(bool has_seen_welcome_page,
-                                             bool is_signed_in,
-                                             bool is_signin_in_progress);
+                                             bool is_signed_in);
 
   // Determines which tabs should be shown according to onboarding/first
   // run policy.
   static StartupTabs GetStandardOnboardingTabsForState(
-      const StandardOnboardingTabsParams& params);
+      bool is_first_run,
+      bool has_seen_welcome_page,
+      bool is_signin_allowed,
+      bool is_signed_in,
+      bool is_supervised_user);
 
 #if defined(OS_WIN)
   // returns true if showing the Windows 10 welcome page is permissable.
@@ -107,8 +95,14 @@ class StartupTabProviderImpl : public StartupTabProvider {
   // Determines which tabs should be shown according to onboarding/first run
   // policy, including promo content specific to Windows 10.
   static StartupTabs GetWin10OnboardingTabsForState(
-      const StandardOnboardingTabsParams& standard_params,
-      const Win10OnboardingTabsParams& win10_params);
+      bool is_first_run,
+      bool has_seen_welcome_page,
+      bool has_seen_win10_promo,
+      bool is_signin_allowed,
+      bool is_signed_in,
+      bool set_default_browser_allowed,
+      bool is_default_browser,
+      bool is_supervised_user);
 #endif
 
   // Processes first run URLs specified in Master Preferences file, replacing

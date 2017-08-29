@@ -28,7 +28,8 @@ namespace extensions {
 // corresponds with an open serial port in remote side(Device Service). NOTE:
 // Instances of this object should only be constructed on the IO thread, and all
 // methods should only be called on the IO thread unless otherwise noted.
-class SerialConnection : public ApiResource {
+class SerialConnection : public ApiResource,
+                         public base::SupportsWeakPtr<SerialConnection> {
  public:
   using OpenCompleteCallback = device::mojom::SerialIoHandler::OpenCallback;
   using GetInfoCompleteCallback =
@@ -210,8 +211,6 @@ class SerialConnection : public ApiResource {
   // Closure which is set by client and will be called when |io_handler_|
   // connection encountered an error.
   base::OnceClosure connection_error_handler_;
-
-  base::WeakPtrFactory<SerialConnection> weak_factory_;
 };
 
 }  // namespace extensions

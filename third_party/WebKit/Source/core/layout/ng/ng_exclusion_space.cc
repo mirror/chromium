@@ -33,10 +33,10 @@ void NGExclusionSpace::Add(const NGExclusion& exclusion) {
 }
 
 NGLayoutOpportunity NGExclusionSpace::FindLayoutOpportunity(
-    const NGBfcOffset& offset,
+    const NGLogicalOffset& offset,
     const NGLogicalSize& available_size,
-    const NGLogicalSize& minimum_size) const {
-  NGLayoutOpportunityIterator opportunity_iter(*this, available_size, offset);
+    const NGLogicalSize& minimum_size) {
+  NGLayoutOpportunityIterator opportunity_iter(this, available_size, offset);
   NGLayoutOpportunity opportunity;
 
   while (true) {
@@ -51,7 +51,7 @@ NGLayoutOpportunity NGExclusionSpace::FindLayoutOpportunity(
   return NGLayoutOpportunity();
 }
 
-LayoutUnit NGExclusionSpace::ClearanceOffset(EClear clear_type) const {
+LayoutUnit NGExclusionSpace::ClearanceOffset(EClear clear_type) {
   switch (clear_type) {
     case EClear::kNone:
       return LayoutUnit::Min();  // nothing to do here.

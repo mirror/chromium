@@ -14,7 +14,6 @@
 #include "base/strings/stringprintf.h"
 #include "base/sys_info.h"
 #include "base/values.h"
-#include "build/build_config.h"
 #include "gpu/config/gpu_info.h"
 #include "third_party/re2/src/re2/re2.h"
 
@@ -642,8 +641,6 @@ GpuControlList::OsType GpuControlList::GetOsType() {
   return kOsWin;
 #elif defined(OS_ANDROID)
   return kOsAndroid;
-#elif defined(OS_FUCHSIA)
-  return kOsFuchsia;
 #elif defined(OS_LINUX) || defined(OS_OPENBSD)
   return kOsLinux;
 #elif defined(OS_MACOSX)

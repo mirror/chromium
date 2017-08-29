@@ -87,7 +87,7 @@ void XSLStyleSheetResource::DidAddClient(ResourceClient* c) {
   }
 }
 
-void XSLStyleSheetResource::NotifyFinished() {
+void XSLStyleSheetResource::CheckNotify() {
   TriggerNotificationForFinishObservers();
 
   if (Data())

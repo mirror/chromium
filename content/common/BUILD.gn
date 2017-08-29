@@ -177,6 +177,8 @@ source_set("common") {
     "input/input_event_struct_traits.h",
     "input/input_param_traits.cc",
     "input/input_param_traits.h",
+    "input/synthetic_gesture_packet.cc",
+    "input/synthetic_gesture_packet.h",
     "input/synthetic_gesture_params.cc",
     "input/synthetic_gesture_params.h",
     "input/synthetic_pinch_gesture_params.cc",
@@ -416,7 +418,7 @@ source_set("common") {
     "//services/service_manager/runner/common",
     "//services/ui/public/interfaces",
     "//services/video_capture/public/interfaces",
-    "//services/viz/public/interfaces",
+    "//services/viz/public/interfaces/compositing",
     "//skia",
     "//storage/common",
     "//third_party/boringssl",
@@ -611,7 +613,6 @@ mojom("mojo_bindings") {
     "image_downloader/image_downloader.mojom",
     "indexed_db/indexed_db.mojom",
     "input/input_handler.mojom",
-    "input/input_injector.mojom",
     "leveldb_wrapper.mojom",
     "manifest_observer.mojom",
     "media/media_devices.mojom",
@@ -636,6 +637,7 @@ mojom("mojo_bindings") {
     "storage_partition_service.mojom",
     "video_capture.mojom",
     "widget.mojom",
+    "worker_url_loader_factory_provider.mojom",
   ]
 
   import_dirs = [ "//mojo/services" ]
@@ -651,7 +653,7 @@ mojom("mojo_bindings") {
     "//services/service_manager/public/interfaces",
     "//services/ui/public/interfaces",
     "//services/video_capture/public/interfaces",
-    "//services/viz/public/interfaces",
+    "//services/viz/public/interfaces/compositing",
     "//skia/public/interfaces",
     "//storage/public/interfaces",
     "//third_party/WebKit/public:mojo_bindings",
@@ -661,12 +663,6 @@ mojom("mojo_bindings") {
     "//url/mojo:url_mojom_gurl",
     "//url/mojo:url_mojom_origin",
   ]
-
-  # //storage/public/interfaces is configured to be exported
-  # as STORAGE_COMMON, so override the dependencies to make it
-  # depend via //storage/common.
-  overridden_deps = [ "//storage/public/interfaces" ]
-  component_deps = [ "//storage/common" ]
 
   component_output_prefix = "content_common_mojo_bindings"
   export_class_attribute = "CONTENT_EXPORT"

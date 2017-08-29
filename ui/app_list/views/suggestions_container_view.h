@@ -41,7 +41,6 @@ class SuggestionsContainerView : public SearchResultContainerView {
                            bool directional_movement) override;
   void NotifyFirstResultYIndex(int y_index) override;
   int GetYSize() override;
-  views::View* GetSelectedView() const override;
 
  private:
   void CreateAppsGrid(int apps_num);

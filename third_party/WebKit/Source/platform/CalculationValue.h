@@ -33,9 +33,7 @@
 
 #include "platform/Length.h"
 #include "platform/LengthFunctions.h"
-#include "platform/wtf/PassRefPtr.h"
 #include "platform/wtf/RefCounted.h"
-#include "platform/wtf/RefPtr.h"
 
 namespace blink {
 

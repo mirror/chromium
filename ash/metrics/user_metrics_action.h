@@ -11,6 +11,16 @@ namespace ash {
 // DEPRECATED: Use base::RecordAction(base::UserMetricsAction("my_action"))
 // instead of adding things here.
 enum UserMetricsAction {
+  UMA_ACCEL_EXIT_FIRST_Q,
+  UMA_ACCEL_EXIT_SECOND_Q,
+  UMA_ACCEL_KEYBOARD_BRIGHTNESS_DOWN_F6,
+  UMA_ACCEL_KEYBOARD_BRIGHTNESS_UP_F7,
+  UMA_ACCEL_LOCK_SCREEN_LOCK_BUTTON,
+  UMA_ACCEL_LOCK_SCREEN_POWER_BUTTON,
+  UMA_ACCEL_MAXIMIZE_RESTORE_F4,
+  UMA_ACCEL_PREVWINDOW_F5,
+  UMA_ACCEL_RESTART_POWER_BUTTON,
+  UMA_ACCEL_SHUT_DOWN_POWER_BUTTON,
   UMA_DESKTOP_SWITCH_TASK,
   UMA_DRAG_MAXIMIZE_LEFT,
   UMA_DRAG_MAXIMIZE_RIGHT,
@@ -82,6 +92,11 @@ enum UserMetricsAction {
   UMA_STATUS_AREA_VPN_ADD_THIRD_PARTY_CLICKED,
   UMA_STATUS_AREA_VPN_DISCONNECT_CLICKED,
   UMA_STATUS_AREA_VPN_SETTINGS_OPENED,
+
+  // Track different window close actions in tablet mode.
+  UMA_TABLET_WINDOW_CLOSE_THROUGH_CAPTION_BUTTON,
+  UMA_TABLET_WINDOW_CLOSE_THROUGH_OVERVIEW_CLOSE_BUTTON,
+
   UMA_TOGGLE_MAXIMIZE_CAPTION_CLICK,
   UMA_TOGGLE_MAXIMIZE_CAPTION_GESTURE,
   UMA_TOGGLE_SINGLE_AXIS_MAXIMIZE_BORDER_CLICK,
@@ -98,6 +113,33 @@ enum UserMetricsAction {
   UMA_TRAY_SWIPE_TO_OPEN_SUCCESSFUL,
   UMA_TRAY_SWIPE_TO_OPEN_UNSUCCESSFUL,
   UMA_WINDOW_APP_CLOSE_BUTTON_CLICK,
+  UMA_WINDOW_CLOSE_BUTTON_CLICK,
+  UMA_WINDOW_MAXIMIZE_BUTTON_CLICK_EXIT_FULLSCREEN,
+  UMA_WINDOW_MAXIMIZE_BUTTON_CLICK_MAXIMIZE,
+  UMA_WINDOW_MAXIMIZE_BUTTON_CLICK_MINIMIZE,
+  UMA_WINDOW_MAXIMIZE_BUTTON_CLICK_RESTORE,
+  UMA_WINDOW_MAXIMIZE_BUTTON_MAXIMIZE_LEFT,
+  UMA_WINDOW_MAXIMIZE_BUTTON_MAXIMIZE_RIGHT,
+
+  // Window selection started by beginning an alt+tab cycle. This does not count
+  // each step through an alt+tab cycle.
+  UMA_WINDOW_CYCLE,
+
+  // Thumbnail sized overview of windows triggered by pressing the overview key.
+  UMA_WINDOW_OVERVIEW,
+
+  // User selected a window in overview mode different from the
+  // previously-active window.
+  UMA_WINDOW_OVERVIEW_ACTIVE_WINDOW_CHANGED,
+
+  // Selecting a window in overview mode by pressing the enter key.
+  UMA_WINDOW_OVERVIEW_ENTER_KEY,
+
+  // Closing a window in overview mode by clicking the 'X' button.
+  UMA_WINDOW_OVERVIEW_CLOSE_BUTTON,
+
+  // Closing a window in overview mode by pressing Ctrl+w shortcut.
+  UMA_WINDOW_OVERVIEW_CLOSE_KEY,
 
   // DEPRECATED: Do not add new values. See top of file.
 };

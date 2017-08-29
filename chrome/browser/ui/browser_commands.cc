@@ -51,7 +51,6 @@
 #include "chrome/browser/ui/tabs/tab_strip_model.h"
 #include "chrome/browser/ui/translate/translate_bubble_view_state_transition.h"
 #include "chrome/browser/upgrade_detector.h"
-#include "chrome/common/chrome_features.h"
 #include "chrome/common/content_restriction.h"
 #include "chrome/common/features.h"
 #include "chrome/common/pref_names.h"
@@ -744,12 +743,9 @@ void PinTab(Browser* browser) {
 }
 
 void MuteTab(Browser* browser) {
-  TabStripModel::ContextMenuCommand command_id =
-      base::FeatureList::IsEnabled(features::kSoundContentSetting)
-          ? TabStripModel::ContextMenuCommand::CommandToggleSiteMuted
-          : TabStripModel::ContextMenuCommand::CommandToggleTabAudioMuted;
   browser->tab_strip_model()->ExecuteContextMenuCommand(
-      browser->tab_strip_model()->active_index(), command_id);
+      browser->tab_strip_model()->active_index(),
+      TabStripModel::ContextMenuCommand::CommandToggleTabAudioMuted);
 }
 
 void ConvertPopupToTabbedBrowser(Browser* browser) {

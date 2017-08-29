@@ -176,11 +176,6 @@ const base::Feature kDisplayPersistenceToggleInPermissionPrompts{
     "DisplayPersistenceToggleInPermissionPrompts",
     base::FEATURE_DISABLED_BY_DEFAULT};
 
-#if !defined(OS_ANDROID)
-const base::Feature kDoodlesOnLocalNtp{"DoodlesOnLocalNtp",
-                                       base::FEATURE_DISABLED_BY_DEFAULT};
-#endif
-
 // Enables Expect CT reporting, which sends reports for opted-in sites
 // that don't serve sufficient Certificate Transparency information.
 const base::Feature kExpectCTReporting{"ExpectCTReporting",
@@ -228,7 +223,7 @@ const base::Feature kLinuxObsoleteSystemIsEndOfTheLine{
 // Enables or disables the Location Settings Dialog (LSD). The LSD is an Android
 // system-level geolocation permission prompt.
 const base::Feature kLsdPermissionPrompt{"LsdPermissionPrompt",
-                                         base::FEATURE_ENABLED_BY_DEFAULT};
+                                         base::FEATURE_DISABLED_BY_DEFAULT};
 
 #if defined(OS_MACOSX)
 // Enables RTL layout in macOS top chrome.
@@ -306,11 +301,6 @@ const base::Feature kNativeNotifications{"NativeNotifications",
                                          base::FEATURE_DISABLED_BY_DEFAULT};
 #endif
 #endif  // BUILDFLAG(ENABLE_NATIVE_NOTIFICATIONS)
-
-#if BUILDFLAG(ENABLE_NATIVE_WINDOW_NAV_BUTTONS)
-const base::Feature kNativeWindowNavButtons{"NativeWindowNavButtons",
-                                            base::FEATURE_ENABLED_BY_DEFAULT};
-#endif  // BUILDFLAG(ENABLE_NATIVE_WINDOW_NAV_BUTTONS)
 
 const base::Feature kNetworkPrediction{"NetworkPrediction",
                                        base::FEATURE_ENABLED_BY_DEFAULT};
@@ -392,11 +382,6 @@ const base::Feature kSimplifiedFullscreenUI{"ViewsSimplifiedFullscreenUI",
 // origin.
 const base::Feature kSiteDetails{"SiteDetails",
                                  base::FEATURE_ENABLED_BY_DEFAULT};
-
-// Enables or disables the ability to use the sound content setting to mute a
-// website.
-const base::Feature kSoundContentSetting{"SoundContentSetting",
-                                         base::FEATURE_DISABLED_BY_DEFAULT};
 
 #if !defined(OS_ANDROID)
 // Enables delaying the navigation of background tabs in order to improve

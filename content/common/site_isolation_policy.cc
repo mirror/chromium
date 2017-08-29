@@ -12,6 +12,11 @@
 namespace content {
 
 // static
+bool SiteIsolationPolicy::AreCrossProcessFramesPossible() {
+  return true;
+}
+
+// static
 bool SiteIsolationPolicy::UseDedicatedProcessesForAllSites() {
   return base::CommandLine::ForCurrentProcess()->HasSwitch(
       switches::kSitePerProcess);

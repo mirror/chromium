@@ -424,44 +424,36 @@ NSString* const kWebViewShellJavaScriptDialogTextFieldAccessibiltyIdentifier =
 #pragma mark CWVNavigationDelegate methods
 
 - (BOOL)webView:(CWVWebView*)webView
-    shouldStartLoadWithRequest:(NSURLRequest*)request
-                navigationType:(CWVNavigationType)navigationType {
-  NSLog(@"%@", NSStringFromSelector(_cmd));
+    shouldStartLoadWithRequest:(NSURLRequest*)request {
+  NSLog(@"shouldStartLoadWithRequest");
   return YES;
 }
 
 - (BOOL)webView:(CWVWebView*)webView
-    shouldContinueLoadWithResponse:(NSURLResponse*)response
-                      forMainFrame:(BOOL)forMainFrame {
-  NSLog(@"%@", NSStringFromSelector(_cmd));
+    shouldContinueLoadWithResponse:(NSURLResponse*)response {
+  NSLog(@"shouldContinueLoadWithResponse");
   return YES;
 }
 
 - (void)webViewDidStartProvisionalNavigation:(CWVWebView*)webView {
-  NSLog(@"%@", NSStringFromSelector(_cmd));
+  NSLog(@"webViewDidStartProvisionalNavigation");
   [self updateToolbar];
 }
 
 - (void)webViewDidCommitNavigation:(CWVWebView*)webView {
-  NSLog(@"%@", NSStringFromSelector(_cmd));
+  NSLog(@"webViewDidCommitNavigation");
   [self updateToolbar];
 }
 
-- (void)webViewDidFinishNavigation:(CWVWebView*)webView {
-  NSLog(@"%@", NSStringFromSelector(_cmd));
+- (void)webView:(CWVWebView*)webView didLoadPageWithSuccess:(BOOL)success {
+  NSLog(@"webView:didLoadPageWithSuccess");
   // TODO(crbug.com/679895): Add some visual indication that the page load has
   // finished.
   [self updateToolbar];
 }
 
-- (void)webView:(CWVWebView*)webView
-    didFailNavigationWithError:(NSError*)error {
-  NSLog(@"%@", NSStringFromSelector(_cmd));
-  [self updateToolbar];
-}
-
 - (void)webViewWebContentProcessDidTerminate:(CWVWebView*)webView {
-  NSLog(@"%@", NSStringFromSelector(_cmd));
+  NSLog(@"webViewWebContentProcessDidTerminate");
 }
 
 @end

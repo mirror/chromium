@@ -8,7 +8,6 @@ import android.content.Context;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.pm.Signature;
-import android.os.Process;
 import android.text.TextUtils;
 import android.util.Base64;
 
@@ -61,24 +60,6 @@ public class OfflinePageOrigin {
         } finally {
             mAppName = name;
             mSignatures = signatures;
-        }
-    }
-
-    /** Creates origin based on uid and context. */
-    public OfflinePageOrigin(Context context, int uid) {
-        if (uid == Process.myUid()) {
-            mAppName = "";
-            mSignatures = null;
-            return;
-        }
-        PackageManager pm = context.getPackageManager();
-        String[] packages = pm.getPackagesForUid(uid);
-        if (packages.length != 1) {
-            mAppName = "";
-            mSignatures = null;
-        } else {
-            mAppName = packages[0];
-            mSignatures = getAppSignaturesFor(context, mAppName);
         }
     }
 

@@ -330,7 +330,8 @@ void EasyUnlockServiceRegular::SetPermitAccess(
     const base::DictionaryValue& permit) {
   DictionaryPrefUpdate pairing_update(profile()->GetPrefs(),
                                       prefs::kEasyUnlockPairing);
-  pairing_update->SetKey(kKeyPermitAccess, permit.Clone());
+  pairing_update->SetWithoutPathExpansion(
+      kKeyPermitAccess, base::MakeUnique<base::Value>(permit));
 }
 
 void EasyUnlockServiceRegular::ClearPermitAccess() {
@@ -360,7 +361,8 @@ void EasyUnlockServiceRegular::SetRemoteDevices(
   if (devices.empty())
     pairing_update->RemoveWithoutPathExpansion(kKeyDevices, NULL);
   else
-    pairing_update->SetKey(kKeyDevices, devices.Clone());
+    pairing_update->SetWithoutPathExpansion(
+        kKeyDevices, base::MakeUnique<base::Value>(devices));
 
   RefreshCryptohomeKeysIfPossible();
 }
@@ -656,23 +658,18 @@ void EasyUnlockServiceRegular::OnScreenDidUnlock(
         base::Time::Now().ToJavaTime());
   }
 
-  // If we tried to load remote devices (e.g. after a sync or the
-  // service was initialized) while the screen was locked, we can now
-  // load the new remote devices.
-  //
-  // It's important to go through this code path even if unlocking the
-  // login screen. Because when the service is initialized while the
-  // user is signing in we need to load the remotes. Otherwise, the
-  // first time the user locks the screen the feature won't work.
+  // Do not process events for the login screen.
+  if (screen_type != proximity_auth::ScreenlockBridge::LockHandler::LOCK_SCREEN)
+    return;
+
+  // If we tried to load remote devices (e.g. after a sync) while the screen was
+  // locked, we can now load the new remote devices.
+  // Note: This codepath may be reachable when the login screen unlocks.
   if (deferring_device_load_) {
     PA_LOG(INFO) << "Loading deferred devices after screen unlock.";
     deferring_device_load_ = false;
     LoadRemoteDevices();
   }
-
-  // Do not process events for the login screen.
-  if (screen_type != proximity_auth::ScreenlockBridge::LockHandler::LOCK_SCREEN)
-    return;
 
   if (shown_pairing_changed_notification_) {
     shown_pairing_changed_notification_ = false;
@@ -761,21 +758,14 @@ EasyUnlockServiceRegular::GetCryptAuthDeviceManager() {
 
 void EasyUnlockServiceRegular::RefreshCryptohomeKeysIfPossible() {
 #if defined(OS_CHROMEOS)
-  // If the user reauthed on the settings page, then the UserContext will be
-  // cached.
   if (short_lived_user_context_ && short_lived_user_context_->user_context()) {
-    // We only sync the remote devices to cryptohome if the user has enabled
-    // EasyUnlock on the login screen.
-    base::ListValue empty_list;
-    const base::ListValue* remote_devices_list = GetRemoteDevices();
-    if (!IsChromeOSLoginEnabled() || !remote_devices_list)
-      remote_devices_list = &empty_list;
-
+    // If the user reauthed on the settings page, then the UserContext will be
+    // cached.
     chromeos::UserSessionManager::GetInstance()
         ->GetEasyUnlockKeyManager()
         ->RefreshKeys(
             *short_lived_user_context_->user_context(),
-            base::ListValue(remote_devices_list->GetList()),
+            IsChromeOSLoginEnabled() ? *GetRemoteDevices() : base::ListValue(),
             base::Bind(&EasyUnlockServiceRegular::SetHardlockAfterKeyOperation,
                        weak_ptr_factory_.GetWeakPtr(),
                        EasyUnlockScreenlockStateHandler::NO_HARDLOCK));

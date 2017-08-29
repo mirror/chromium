@@ -163,43 +163,48 @@ void AddA11yStrings(content::WebUIDataSource* html_source) {
     {"monoAudioLabel", IDS_SETTINGS_MONO_AUDIO_LABEL},
     {"a11yExplanation", IDS_SETTINGS_ACCESSIBILITY_EXPLANATION},
     {"caretHighlightLabel",
-     IDS_SETTINGS_ACCESSIBILITY_CARET_HIGHLIGHT_DESCRIPTION},
+     IDS_OPTIONS_SETTINGS_ACCESSIBILITY_CARET_HIGHLIGHT_DESCRIPTION},
     {"cursorHighlightLabel",
-     IDS_SETTINGS_ACCESSIBILITY_CURSOR_HIGHLIGHT_DESCRIPTION},
+     IDS_OPTIONS_SETTINGS_ACCESSIBILITY_CURSOR_HIGHLIGHT_DESCRIPTION},
     {"focusHighlightLabel",
-     IDS_SETTINGS_ACCESSIBILITY_FOCUS_HIGHLIGHT_DESCRIPTION},
-    {"selectToSpeakTitle", IDS_SETTINGS_ACCESSIBILITY_SELECT_TO_SPEAK_TITLE},
+     IDS_OPTIONS_SETTINGS_ACCESSIBILITY_FOCUS_HIGHLIGHT_DESCRIPTION},
+    {"selectToSpeakTitle",
+     IDS_OPTIONS_SETTINGS_ACCESSIBILITY_SELECT_TO_SPEAK_TITLE},
     {"selectToSpeakDescription",
-     IDS_SETTINGS_ACCESSIBILITY_SELECT_TO_SPEAK_DESCRIPTION},
+     IDS_OPTIONS_SETTINGS_ACCESSIBILITY_SELECT_TO_SPEAK_DESCRIPTION},
     {"selectToSpeakOptionsLabel",
-     IDS_SETTINGS_ACCESSIBILITY_SELECT_TO_SPEAK_OPTIONS_LABEL},
-    {"switchAccessLabel", IDS_SETTINGS_ACCESSIBILITY_SWITCH_ACCESS_DESCRIPTION},
+     IDS_OPTIONS_SETTINGS_ACCESSIBILITY_SELECT_TO_SPEAK_OPTIONS_LABEL},
+    {"switchAccessLabel",
+     IDS_OPTIONS_SETTINGS_ACCESSIBILITY_SWITCH_ACCESS_DESCRIPTION},
     {"switchAccessOptionsLabel",
-     IDS_SETTINGS_ACCESSIBILITY_SWITCH_ACCESS_OPTIONS_LABEL},
+     IDS_OPTIONS_SETTINGS_ACCESSIBILITY_SWITCH_ACCESS_OPTIONS_LABEL},
     {"manageAccessibilityFeatures",
-     IDS_SETTINGS_ACCESSIBILITY_MANAGE_ACCESSIBILITY_FEATURES},
-    {"textToSpeechHeading", IDS_SETTINGS_ACCESSIBILITY_TEXT_TO_SPEECH_HEADING},
-    {"displayHeading", IDS_SETTINGS_ACCESSIBILITY_DISPLAY_HEADING},
-    {"displaySettingsTitle", IDS_SETTINGS_ACCESSIBILITY_DISPLAY_SETTINGS_TITLE},
+     IDS_OPTIONS_SETTINGS_ACCESSIBILITY_MANAGE_ACCESSIBILITY_FEATURES},
+    {"textToSpeechHeading",
+     IDS_OPTIONS_SETTINGS_ACCESSIBILITY_TEXT_TO_SPEECH_HEADING},
+    {"displayHeading", IDS_OPTIONS_SETTINGS_ACCESSIBILITY_DISPLAY_HEADING},
+    {"displaySettingsTitle",
+     IDS_OPTIONS_SETTINGS_ACCESSIBILITY_DISPLAY_SETTINGS_TITLE},
     {"displaySettingsDescription",
-     IDS_SETTINGS_ACCESSIBILITY_DISPLAY_SETTINGS_DESCRIPTION},
+     IDS_OPTIONS_SETTINGS_ACCESSIBILITY_DISPLAY_SETTINGS_DESCRIPTION},
     {"appearanceSettingsTitle",
-     IDS_SETTINGS_ACCESSIBILITY_APPEARANCE_SETTINGS_TITLE},
+     IDS_OPTIONS_SETTINGS_ACCESSIBILITY_APPEARANCE_SETTINGS_TITLE},
     {"appearanceSettingsDescription",
-     IDS_SETTINGS_ACCESSIBILITY_APPEARANCE_SETTINGS_DESCRIPTION},
-    {"keyboardHeading", IDS_SETTINGS_ACCESSIBILITY_KEYBOARD_HEADING},
+     IDS_OPTIONS_SETTINGS_ACCESSIBILITY_APPEARANCE_SETTINGS_DESCRIPTION},
+    {"keyboardHeading", IDS_OPTIONS_SETTINGS_ACCESSIBILITY_KEYBOARD_HEADING},
     {"keyboardSettingsTitle",
-     IDS_SETTINGS_ACCESSIBILITY_KEYBOARD_SETTINGS_TITLE},
+     IDS_OPTIONS_SETTINGS_ACCESSIBILITY_KEYBOARD_SETTINGS_TITLE},
     {"keyboardSettingsDescription",
-     IDS_SETTINGS_ACCESSIBILITY_KEYBOARD_SETTINGS_DESCRIPTION},
+     IDS_OPTIONS_SETTINGS_ACCESSIBILITY_KEYBOARD_SETTINGS_DESCRIPTION},
     {"mouseAndTouchpadHeading",
-     IDS_SETTINGS_ACCESSIBILITY_MOUSE_AND_TOUCHPAD_HEADING},
-    {"mouseSettingsTitle", IDS_SETTINGS_ACCESSIBILITY_MOUSE_SETTINGS_TITLE},
+     IDS_OPTIONS_SETTINGS_ACCESSIBILITY_MOUSE_AND_TOUCHPAD_HEADING},
+    {"mouseSettingsTitle",
+     IDS_OPTIONS_SETTINGS_ACCESSIBILITY_MOUSE_SETTINGS_TITLE},
     {"mouseSettingsDescription",
-     IDS_SETTINGS_ACCESSIBILITY_MOUSE_SETTINGS_DESCRIPTION},
-    {"audioHeading", IDS_SETTINGS_ACCESSIBILITY_AUDIO_HEADING},
+     IDS_OPTIONS_SETTINGS_ACCESSIBILITY_MOUSE_SETTINGS_DESCRIPTION},
+    {"audioHeading", IDS_OPTIONS_SETTINGS_ACCESSIBILITY_AUDIO_HEADING},
     {"additionalFeaturesTitle",
-     IDS_SETTINGS_ACCESSIBILITY_ADDITIONAL_FEATURES_TITLE},
+     IDS_OPTIONS_SETTINGS_ACCESSIBILITY_ADDITIONAL_FEATURES_TITLE},
 #endif
   };
   AddLocalizedStringsBulk(html_source, localized_strings,
@@ -241,7 +246,6 @@ void AddAboutStrings(content::WebUIDataSource* html_source) {
     {"aboutArcVersionLabel", IDS_SETTINGS_ABOUT_PAGE_ARC_VERSION},
     {"aboutBuildDateLabel", IDS_VERSION_UI_BUILD_DATE},
     {"aboutChannelBeta", IDS_SETTINGS_ABOUT_PAGE_CURRENT_CHANNEL_BETA},
-    {"aboutChannelCanary", IDS_SETTINGS_ABOUT_PAGE_CURRENT_CHANNEL_CANARY},
     {"aboutChannelDev", IDS_SETTINGS_ABOUT_PAGE_CURRENT_CHANNEL_DEV},
     {"aboutChannelLabel", IDS_SETTINGS_ABOUT_PAGE_CHANNEL},
     {"aboutChannelStable", IDS_SETTINGS_ABOUT_PAGE_CURRENT_CHANNEL_STABLE},
@@ -356,7 +360,8 @@ void AddAppearanceStrings(content::WebUIDataSource* html_source,
     {"showWindowDecorations", IDS_SHOW_WINDOW_DECORATIONS},
 #endif
 #if defined(OS_MACOSX)
-    {"tabsToLinks", IDS_SETTINGS_TABS_TO_LINKS_PREF},
+    // TODO(dbeam): use an IDS_SETTINGS_* string instead.
+    {"tabsToLinks", IDS_OPTIONS_TABS_TO_LINKS_PREF},
 #endif
   };
   AddLocalizedStringsBulk(html_source, localized_strings,
@@ -502,7 +507,6 @@ void AddDeviceStrings(content::WebUIDataSource* html_source) {
       {"pointerFast", IDS_SETTINGS_POINTER_SPEED_FAST_LABEL},
       {"mouseSpeed", IDS_SETTINGS_MOUSE_SPEED_LABEL},
       {"mouseSwapButtons", IDS_SETTINGS_MOUSE_SWAP_BUTTONS_LABEL},
-      {"mouseReverseScroll", IDS_SETTINGS_MOUSE_REVERSE_SCROLL_LABEL},
   };
   AddLocalizedStringsBulk(html_source, pointers_strings,
                           arraysize(pointers_strings));
@@ -736,16 +740,17 @@ void AddResetStrings(content::WebUIDataSource* html_source) {
     {"resetPageCommit", IDS_RESET_PROFILE_SETTINGS_COMMIT_BUTTON},
     {"resetPageFeedback", IDS_SETTINGS_RESET_PROFILE_FEEDBACK},
 #if defined(OS_CHROMEOS)
-    {"powerwashTitle", IDS_SETTINGS_FACTORY_RESET},
-    {"powerwashDialogTitle", IDS_SETTINGS_FACTORY_RESET_HEADING},
-    {"powerwashDialogExplanation", IDS_SETTINGS_FACTORY_RESET_WARNING},
+    {"powerwashTitle", IDS_OPTIONS_FACTORY_RESET},
+    {"powerwashDialogTitle", IDS_OPTIONS_FACTORY_RESET_HEADING},
+    {"powerwashDialogExplanation", IDS_OPTIONS_FACTORY_RESET_WARNING},
     {"powerwashDialogButton", IDS_SETTINGS_RESTART},
     {"powerwashLearnMoreUrl", IDS_FACTORY_RESET_HELP_URL},
 #endif
     // Automatic reset banner (now a dialog).
     {"resetAutomatedDialogTitle", IDS_SETTINGS_RESET_AUTOMATED_DIALOG_TITLE},
-    {"resetProfileBannerButton", IDS_SETTINGS_RESET_BANNER_RESET_BUTTON_TEXT},
-    {"resetProfileBannerDescription", IDS_SETTINGS_RESET_BANNER_TEXT},
+    {"resetProfileBannerButton",
+     IDS_AUTOMATIC_SETTINGS_RESET_BANNER_RESET_BUTTON_TEXT},
+    {"resetProfileBannerDescription", IDS_AUTOMATIC_SETTINGS_RESET_BANNER_TEXT},
   };
   AddLocalizedStringsBulk(html_source, localized_strings,
                           arraysize(localized_strings));
@@ -757,7 +762,7 @@ void AddResetStrings(content::WebUIDataSource* html_source) {
 #if defined(OS_CHROMEOS)
   html_source->AddString(
       "powerwashDescription",
-      l10n_util::GetStringFUTF16(IDS_SETTINGS_FACTORY_RESET_DESCRIPTION,
+      l10n_util::GetStringFUTF16(IDS_OPTIONS_FACTORY_RESET_DESCRIPTION,
                                  l10n_util::GetStringUTF16(IDS_PRODUCT_NAME)));
 #endif
 }
@@ -1742,7 +1747,6 @@ void AddSiteSettingsStrings(content::WebUIDataSource* html_source,
     {"siteSettingsNotifications", IDS_SETTINGS_SITE_SETTINGS_NOTIFICATIONS},
     {"siteSettingsImages", IDS_SETTINGS_SITE_SETTINGS_IMAGES},
     {"siteSettingsJavascript", IDS_SETTINGS_SITE_SETTINGS_JAVASCRIPT},
-    {"siteSettingsSound", IDS_SETTINGS_SITE_SETTINGS_SOUND},
     {"siteSettingsFlash", IDS_SETTINGS_SITE_SETTINGS_FLASH},
     {"siteSettingsPdfDocuments", IDS_SETTINGS_SITE_SETTINGS_PDF_DOCUMENTS},
     {"siteSettingsPdfDownloadPdfs",
@@ -1911,10 +1915,6 @@ void AddSiteSettingsStrings(content::WebUIDataSource* html_source,
       "enableSafeBrowsingSubresourceFilter",
       base::FeatureList::IsEnabled(
           subresource_filter::kSafeBrowsingSubresourceFilterExperimentalUI));
-
-  html_source->AddBoolean(
-      "enableSoundContentSetting",
-      base::FeatureList::IsEnabled(features::kSoundContentSetting));
 
   if (PluginUtils::ShouldPreferHtmlOverPlugins(
           HostContentSettingsMapFactory::GetForProfile(profile))) {

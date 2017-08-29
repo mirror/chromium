@@ -84,8 +84,8 @@ bool PaintController::UseCachedDrawingIfPossible(
     ProcessNewItem(MoveItemFromCurrentListToNewList(cached_item));
 
   next_item_to_match_ = cached_item + 1;
-  // Items before |next_item_to_match_| have been copied so we don't need to
-  // index them.
+  // Items before m_nextItemToMatch have been copied so we don't need to index
+  // them.
   if (next_item_to_match_ > next_item_to_index_)
     next_item_to_index_ = next_item_to_match_;
 
@@ -127,15 +127,11 @@ bool PaintController::UseCachedSubsequenceIfPossible(
 
   EnsureNewDisplayItemListInitialCapacity();
 
-  if (next_item_to_match_ == markers->start) {
-    // We are matching new and cached display items sequentially. Skip the
-    // subsequence for later sequential matching of individual display items.
-    next_item_to_match_ = markers->end;
-    // Items before |next_item_to_match_| have been copied so we don't need to
-    // index them.
-    if (next_item_to_match_ > next_item_to_index_)
-      next_item_to_index_ = next_item_to_match_;
-  }
+  next_item_to_match_ = markers->end;
+  // Items before |next_item_to_match_| have been copied so we don't need to
+  // index them.
+  if (next_item_to_match_ > next_item_to_index_)
+    next_item_to_index_ = next_item_to_match_;
 
   num_cached_new_items_ += markers->end - markers->start;
 
@@ -443,10 +439,7 @@ size_t PaintController::FindOutOfOrderCachedItemForward(
   for (size_t i = next_item_to_index_;
        i < current_paint_artifact_.GetDisplayItemList().size(); ++i) {
     const DisplayItem& item = current_paint_artifact_.GetDisplayItemList()[i];
-    if (!item.HasValidClient()) {
-      // This item has been copied in a cached subsequence.
-      continue;
-    }
+    DCHECK(item.HasValidClient());
     if (id == item.GetId()) {
 #ifndef NDEBUG
       ++num_sequential_matches_;

@@ -36,22 +36,19 @@ class TraceWrapperMember : public Member<T> {
 
   TraceWrapperMember& operator=(const TraceWrapperMember& other) {
     Member<T>::operator=(other);
-    DCHECK_EQ(other.Get(), this->Get());
-    ScriptWrappableVisitor::WriteBarrier(this->Get());
+    ScriptWrappableVisitor::WriteBarrier(other);
     return *this;
   }
 
   TraceWrapperMember& operator=(const Member<T>& other) {
     Member<T>::operator=(other);
-    DCHECK_EQ(other.Get(), this->Get());
-    ScriptWrappableVisitor::WriteBarrier(this->Get());
+    ScriptWrappableVisitor::WriteBarrier(other);
     return *this;
   }
 
   TraceWrapperMember& operator=(T* other) {
     Member<T>::operator=(other);
-    DCHECK_EQ(other, this->Get());
-    ScriptWrappableVisitor::WriteBarrier(this->Get());
+    ScriptWrappableVisitor::WriteBarrier(other);
     return *this;
   }
 

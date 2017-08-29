@@ -82,11 +82,6 @@ void BackgroundFetchManager::DidFetch(
           kInvalidStateError,
           "There already is a registration for the given id."));
       return;
-    case mojom::blink::BackgroundFetchError::STORAGE_ERROR:
-      DCHECK(!registration);
-      resolver->Reject(DOMException::Create(
-          kAbortError, "Failed to store registration due to I/O error."));
-      return;
     case mojom::blink::BackgroundFetchError::INVALID_ARGUMENT:
     case mojom::blink::BackgroundFetchError::INVALID_ID:
       // Not applicable for this callback.
@@ -184,11 +179,6 @@ void BackgroundFetchManager::DidGetRegistration(
     case mojom::blink::BackgroundFetchError::INVALID_ID:
       resolver->Resolve(registration);
       return;
-    case mojom::blink::BackgroundFetchError::STORAGE_ERROR:
-      DCHECK(!registration);
-      resolver->Reject(DOMException::Create(
-          kAbortError, "Failed to get registration due to I/O error."));
-      return;
     case mojom::blink::BackgroundFetchError::DUPLICATED_ID:
     case mojom::blink::BackgroundFetchError::INVALID_ARGUMENT:
       // Not applicable for this callback.
@@ -222,11 +212,6 @@ void BackgroundFetchManager::DidGetIds(ScriptPromiseResolver* resolver,
   switch (error) {
     case mojom::blink::BackgroundFetchError::NONE:
       resolver->Resolve(ids);
-      return;
-    case mojom::blink::BackgroundFetchError::STORAGE_ERROR:
-      DCHECK(ids.IsEmpty());
-      resolver->Reject(DOMException::Create(
-          kAbortError, "Failed to get registration IDs due to I/O error."));
       return;
     case mojom::blink::BackgroundFetchError::DUPLICATED_ID:
     case mojom::blink::BackgroundFetchError::INVALID_ARGUMENT:

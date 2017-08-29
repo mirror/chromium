@@ -21,13 +21,13 @@ WriteFile::WriteFile(extensions::EventRouter* event_router,
                      scoped_refptr<net::IOBuffer> buffer,
                      int64_t offset,
                      int length,
-                     storage::AsyncFileUtil::StatusCallback callback)
+                     const storage::AsyncFileUtil::StatusCallback& callback)
     : Operation(event_router, file_system_info),
       file_handle_(file_handle),
       buffer_(buffer),
       offset_(offset),
       length_(length),
-      callback_(std::move(callback)) {}
+      callback_(callback) {}
 
 WriteFile::~WriteFile() {
 }
@@ -66,16 +66,14 @@ void WriteFile::OnSuccess(int /* request_id */,
                           std::unique_ptr<RequestValue> /* result */,
                           bool /* has_more */) {
   TRACE_EVENT0("file_system_provider", "WriteFile::OnSuccess");
-  DCHECK(callback_);
-  std::move(callback_).Run(base::File::FILE_OK);
+  callback_.Run(base::File::FILE_OK);
 }
 
 void WriteFile::OnError(int /* request_id */,
                         std::unique_ptr<RequestValue> /* result */,
                         base::File::Error error) {
   TRACE_EVENT0("file_system_provider", "WriteFile::OnError");
-  DCHECK(callback_);
-  std::move(callback_).Run(error);
+  callback_.Run(error);
 }
 
 }  // namespace operations

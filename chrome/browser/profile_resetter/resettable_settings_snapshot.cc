@@ -265,16 +265,14 @@ std::unique_ptr<base::ListValue> GetReadableFeedbackForSnapshot(
   base::string16 startup_type;
   switch (snapshot.startup_type()) {
     case SessionStartupPref::DEFAULT:
-      startup_type =
-          l10n_util::GetStringUTF16(IDS_SETTINGS_ON_STARTUP_OPEN_NEW_TAB);
+      startup_type = l10n_util::GetStringUTF16(IDS_OPTIONS_STARTUP_SHOW_NEWTAB);
       break;
     case SessionStartupPref::LAST:
-      startup_type =
-          l10n_util::GetStringUTF16(IDS_SETTINGS_ON_STARTUP_CONTINUE);
+      startup_type = l10n_util::GetStringUTF16(
+          IDS_OPTIONS_STARTUP_RESTORE_LAST_SESSION);
       break;
     case SessionStartupPref::URLS:
-      startup_type =
-          l10n_util::GetStringUTF16(IDS_SETTINGS_ON_STARTUP_OPEN_SPECIFIC);
+      startup_type = l10n_util::GetStringUTF16(IDS_OPTIONS_STARTUP_SHOW_PAGES);
       break;
     default:
       break;

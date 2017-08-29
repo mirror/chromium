@@ -27,7 +27,6 @@
 <translation id="1746730358044914197">输入法是由您的管理员配置的。</translation>
 <translation id="1747827819627189109">屏幕键盘已启用</translation>
 <translation id="1823873187264960516">以太网：<ph name="ADDRESS" /></translation>
-<translation id="1836215606488044471">智能助理（正在加载中…）</translation>
 <translation id="1850504506766569011">Wi-Fi 已关闭。</translation>
 <translation id="1856813161013948396">轻触指纹传感器即可略过锁定屏幕。点按一下即可进行配置。</translation>
 <translation id="1864454756846565995">USB-C 设备（背面端口）</translation>
@@ -55,7 +54,6 @@
 <translation id="2338501278241028356">开启蓝牙以发现附近的设备</translation>
 <translation id="2352467521400612932">触控笔设置</translation>
 <translation id="2354174487190027830">正在激活“<ph name="NAME" />”</translation>
-<translation id="2365393535144473978">如果您启用移动数据网络，蓝牙亦会随之开启。</translation>
 <translation id="2391579633712104609">180°</translation>
 <translation id="2429753432712299108">蓝牙设备“<ph name="DEVICE_NAME" />”需要配对许可。在接受之前，请确保该设备上显示以下配对密钥：<ph name="PASSKEY" /></translation>
 <translation id="2475982808118771221">出现错误</translation>
@@ -125,7 +123,6 @@
 <translation id="4279490309300973883">正在镜像</translation>
 <translation id="4321179778687042513">ctrl</translation>
 <translation id="4338109981321384717">放大镜</translation>
-<translation id="4351433414020964307">智能助理正在加载中…</translation>
 <translation id="4378551569595875038">正在连接…</translation>
 <translation id="4421231901400348175">正在通过远程协助与<ph name="HELPER_NAME" />共享您屏幕的控制权限。</translation>
 <translation id="4430019312045809116">音量</translation>
@@ -172,7 +169,6 @@
 <translation id="5927132638760172455">正在投射至未知接收器</translation>
 <translation id="5947494881799873997">还原</translation>
 <translation id="595202126637698455">已启用性能跟踪</translation>
-<translation id="5957083217255311415">移动数据网络现处于关闭状态。</translation>
 <translation id="5958529069007801266">受监管用户</translation>
 <translation id="5977415296283489383">耳机</translation>
 <translation id="5978382165065462689">正在通过远程协助共享您屏幕的控制权限。</translation>
@@ -206,7 +202,6 @@
 <translation id="6691659475504239918">搜索键+Shift+H</translation>
 <translation id="6700713906295497288">IME 菜单按钮</translation>
 <translation id="6713285437468012787">蓝牙设备“<ph name="DEVICE_NAME" />”已配对，现可供所有用户使用。您可以通过“设置”取消此配对。</translation>
-<translation id="6715542151869432661">找不到任何移动设备。</translation>
 <translation id="6785414152754474415">电池电量为<ph name="PERCENTAGE" />%（正在充电）。</translation>
 <translation id="6803622936009808957">找不到系统支持的分辨率，因此无法镜像显示屏。已改为进入扩展桌面。</translation>
 <translation id="683971173229319003">Search+L</translation>
@@ -272,7 +267,6 @@
 <translation id="8828714802988429505">90°</translation>
 <translation id="8850991929411075241">Search+Esc</translation>
 <translation id="8878886163241303700">正在扩展屏幕</translation>
-<translation id="8921624153894383499">Google 智能助理不支持此语言。</translation>
 <translation id="8938800817013097409">USB-C 设备（背面右侧端口）</translation>
 <translation id="8940956008527784070">电池电量不足 (<ph name="PERCENTAGE" />%)</translation>
 <translation id="9074739597929991885">蓝牙</translation>

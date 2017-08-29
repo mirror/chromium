@@ -105,14 +105,6 @@ enum class SelectionBehaviorOnFocus {
   kNone,
 };
 
-// https://html.spec.whatwg.org/multipage/dom.html#dom-document-nameditem-filter
-enum class NamedItemType {
-  kNone,
-  kName,
-  kNameOrId,
-  kNameOrIdWithName,
-};
-
 struct FocusParams {
   STACK_ALLOCATED();
 
@@ -480,7 +472,7 @@ class CORE_EXPORT Element : public ContainerNode {
                            ExceptionState&);
   ShadowRoot* CreateShadowRootInternal(ShadowRootType, ExceptionState&);
 
-  ShadowRoot* OpenShadowRoot() const;
+  ShadowRoot* openShadowRoot() const;
   ShadowRoot* ClosedShadowRoot() const;
   ShadowRoot* AuthorShadowRoot() const;
   ShadowRoot* UserAgentShadowRoot() const;
@@ -832,9 +824,8 @@ class CORE_EXPORT Element : public ContainerNode {
   virtual void DidRecalcStyle();
   virtual RefPtr<ComputedStyle> CustomStyleForLayoutObject();
 
-  virtual NamedItemType GetNamedItemType() const {
-    return NamedItemType::kNone;
-  }
+  virtual bool ShouldRegisterAsNamedItem() const { return false; }
+  virtual bool ShouldRegisterAsExtraNamedItem() const { return false; }
 
   bool SupportsSpatialNavigationFocus() const;
 
@@ -972,12 +963,10 @@ class CORE_EXPORT Element : public ContainerNode {
 
   QualifiedName tag_name_;
 
-  void UpdateNamedItemRegistration(NamedItemType,
-                                   const AtomicString& old_name,
+  void UpdateNamedItemRegistration(const AtomicString& old_name,
                                    const AtomicString& new_name);
-  void UpdateIdNamedItemRegistration(NamedItemType,
-                                     const AtomicString& old_name,
-                                     const AtomicString& new_name);
+  void UpdateExtraNamedItemRegistration(const AtomicString& old_name,
+                                        const AtomicString& new_name);
 
   void CreateUniqueElementData();
 

@@ -12,15 +12,13 @@
 #include "base/gtest_prod_util.h"
 #include "base/macros.h"
 #include "base/memory/weak_ptr.h"
-#include "base/optional.h"
 #include "base/time/time.h"
+#include "chrome/browser/chromeos/fileapi/recent_context.h"
 #include "chrome/browser/chromeos/fileapi/recent_source.h"
 
 class Profile;
 
 namespace chromeos {
-
-class RecentFile;
 
 // RecentSource implementation for ARC media view.
 //
@@ -31,31 +29,30 @@ class RecentArcMediaSource : public RecentSource {
   ~RecentArcMediaSource() override;
 
   // RecentSource overrides:
-  void GetRecentFiles(Params params) override;
+  void GetRecentFiles(RecentContext context,
+                      GetRecentFilesCallback callback) override;
 
  private:
-  FRIEND_TEST_ALL_PREFIXES(RecentArcMediaSourceTest, UmaStats);
-  FRIEND_TEST_ALL_PREFIXES(RecentArcMediaSourceTest, UmaStats_Deferred);
+  FRIEND_TEST_ALL_PREFIXES(RecentArcMediaSourceTest, GetRecentFiles_UmaStats);
 
   class MediaRoot;
 
   static const char kLoadHistogramName[];
 
-  void OnGetRecentFilesForRoot(std::vector<RecentFile> files);
+  void OnGetRecentFilesForRoot(RecentFileList files);
   void OnComplete();
-
-  bool WillArcFileSystemOperationsRunImmediately();
 
   Profile* const profile_;
   std::vector<std::unique_ptr<MediaRoot>> roots_;
 
-  base::Optional<Params> params_;
+  RecentContext context_;
+  GetRecentFilesCallback callback_;
 
   // Time when the build started.
   base::TimeTicks build_start_time_;
 
   int num_inflight_roots_ = 0;
-  std::vector<RecentFile> files_;
+  RecentFileList files_;
 
   base::WeakPtrFactory<RecentArcMediaSource> weak_ptr_factory_;
 

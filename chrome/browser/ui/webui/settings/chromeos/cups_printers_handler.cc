@@ -155,10 +155,11 @@ std::string GetPrinterQueue(const base::DictionaryValue& printer_dict) {
 
 CupsPrintersHandler::CupsPrintersHandler(content::WebUI* webui)
     : profile_(Profile::FromWebUI(webui)),
-      ppd_provider_(CreatePpdProvider(profile_)),
-      printer_configurer_(PrinterConfigurer::Create(profile_)),
       printers_manager_(CupsPrintersManager::Create(profile_)),
-      weak_factory_(this) {}
+      weak_factory_(this) {
+  ppd_provider_ = CreatePpdProvider(profile_);
+  printer_configurer_ = PrinterConfigurer::Create(profile_);
+}
 
 CupsPrintersHandler::~CupsPrintersHandler() {}
 
@@ -362,8 +363,11 @@ void CupsPrintersHandler::OnPrinterInfo(const std::string& callback_id,
 void CupsPrintersHandler::HandleAddCupsPrinter(const base::ListValue* args) {
   AllowJavascript();
 
+  std::string setup_method;
+  CHECK(args->GetString(0, &setup_method));
+
   const base::DictionaryValue* printer_dict = nullptr;
-  CHECK(args->GetDictionary(0, &printer_dict));
+  CHECK(args->GetDictionary(1, &printer_dict));
 
   std::string printer_id;
   std::string printer_name;

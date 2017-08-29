@@ -40,6 +40,7 @@ class GLES2Interface;
 }
 
 namespace blink {
+class ExceptionState;
 class ImageBitmapOptions;
 class MediaCustomControlsFullscreenDetector;
 class MediaRemotingInterstitial;
@@ -133,7 +134,8 @@ class CORE_EXPORT HTMLVideoElement final : public HTMLMediaElement,
   ScriptPromise CreateImageBitmap(ScriptState*,
                                   EventTarget&,
                                   Optional<IntRect> crop_rect,
-                                  const ImageBitmapOptions&) override;
+                                  const ImageBitmapOptions&,
+                                  ExceptionState&) override;
 
   // WebMediaPlayerClient implementation.
   void OnBecamePersistentVideo(bool) final;

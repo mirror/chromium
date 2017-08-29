@@ -357,7 +357,7 @@ LocationTarget EventDispatcher::AdjustLocationTargetForModal(
   updated_target.deepest_window.window =
       location_target.deepest_window.window
           ? delegate_->GetFallbackTargetForEventBlockedByModal(
-                location_target.deepest_window.window->GetRootForDrawn())
+                location_target.deepest_window.window->GetRoot())
           : nullptr;
   return updated_target;
 }
@@ -517,8 +517,8 @@ void EventDispatcher::ProcessPointerEventOnFoundTarget(
       if (is_mouse_event)
         SetMouseCursorSourceWindow(pointer_target.window);
       if (!any_pointers_down) {
-        // Don't attempt to change focus on pointer downs. We assume client code
-        // will do that.
+        if (pointer_target.window)
+          delegate_->SetFocusedWindowFromEventDispatcher(pointer_target.window);
         ServerWindow* capture_window = pointer_target.window;
         if (!capture_window) {
           gfx::Point event_location =
@@ -691,9 +691,7 @@ void EventDispatcher::DispatchToPointerTarget(const PointerTarget& target,
 void EventDispatcher::DispatchToClient(ServerWindow* window,
                                        ClientSpecificId client_id,
                                        const ui::LocatedEvent& event) {
-  gfx::Point location = ConvertPointFromRootForEventDispatch(
-      delegate_->GetRootWindowForEventDispatch(window), window,
-      event.location());
+  gfx::Point location = ConvertPointFromRoot(window, event.location());
   std::unique_ptr<ui::Event> clone = ui::Event::Clone(event);
   clone->AsLocatedEvent()->set_location(location);
   // TODO(jonross): add post-target accelerator support once accelerators
@@ -801,7 +799,7 @@ void EventDispatcher::OnWillChangeWindowHierarchy(ServerWindow* window,
   //   sending exit as necessary.
   // http://crbug.com/613646 .
   if (!new_parent || !new_parent->IsDrawn() ||
-      new_parent->GetRootForDrawn() != old_parent->GetRootForDrawn()) {
+      new_parent->GetRoot() != old_parent->GetRoot()) {
     CancelPointerEventsToTarget(window);
   }
 }

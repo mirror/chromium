@@ -34,7 +34,7 @@ class CreateFile : public Operation {
   CreateFile(extensions::EventRouter* event_router,
              const ProvidedFileSystemInfo& file_system_info,
              const base::FilePath& file_path,
-             storage::AsyncFileUtil::StatusCallback callback);
+             const storage::AsyncFileUtil::StatusCallback& callback);
   ~CreateFile() override;
 
   // Operation overrides.
@@ -48,7 +48,7 @@ class CreateFile : public Operation {
 
  private:
   base::FilePath file_path_;
-  storage::AsyncFileUtil::StatusCallback callback_;
+  const storage::AsyncFileUtil::StatusCallback callback_;
 
   DISALLOW_COPY_AND_ASSIGN(CreateFile);
 };

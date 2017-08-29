@@ -25,7 +25,6 @@ const char kConfigRuleTriggerDelay[] = "trigger_delay";
 const char kConfigRuleTriggerChance[] = "trigger_chance";
 const char kConfigRuleStopTracingOnRepeatedReactive[] =
     "stop_tracing_on_repeated_reactive";
-const char kConfigRuleArgsKey[] = "args";
 
 const char kConfigRuleHistogramNameKey[] = "histogram_name";
 const char kConfigRuleHistogramValueOldKey[] = "histogram_value";
@@ -182,13 +181,8 @@ class HistogramRule
     if (histogram_lower_value >= histogram_upper_value)
       return nullptr;
 
-    std::unique_ptr<BackgroundTracingRule> rule(new HistogramRule(
+    return std::unique_ptr<BackgroundTracingRule>(new HistogramRule(
         histogram_name, histogram_lower_value, histogram_upper_value, repeat));
-
-    const base::DictionaryValue* args_dict = nullptr;
-    if (dict->GetDictionary(kConfigRuleArgsKey, &args_dict))
-      rule->SetArgs(*args_dict);
-    return rule;
   }
 
   ~HistogramRule() override {
@@ -225,7 +219,7 @@ class HistogramRule
 
     content::BrowserThread::PostTask(
         content::BrowserThread::UI, FROM_HERE,
-        base::BindOnce(
+        base::Bind(
             &BackgroundTracingManagerImpl::OnRuleTriggered,
             base::Unretained(BackgroundTracingManagerImpl::GetInstance()), this,
             BackgroundTracingManager::StartedFinalizingCallback()));
@@ -234,7 +228,7 @@ class HistogramRule
   void AbortTracing() {
     content::BrowserThread::PostTask(
         content::BrowserThread::UI, FROM_HERE,
-        base::BindOnce(
+        base::Bind(
             &BackgroundTracingManagerImpl::AbortScenario,
             base::Unretained(BackgroundTracingManagerImpl::GetInstance())));
   }

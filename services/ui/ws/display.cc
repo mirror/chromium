@@ -14,7 +14,6 @@
 #include "services/ui/common/types.h"
 #include "services/ui/display/viewport_metrics.h"
 #include "services/ui/public/interfaces/cursor/cursor.mojom.h"
-#include "services/ui/ws/debug_utils.h"
 #include "services/ui/ws/display_binding.h"
 #include "services/ui/ws/display_manager.h"
 #include "services/ui/ws/focus_controller.h"
@@ -139,8 +138,6 @@ const WindowManagerDisplayRoot* Display::GetActiveWindowManagerDisplayRoot()
 }
 
 bool Display::SetFocusedWindow(ServerWindow* new_focused_window) {
-  DVLOG(3) << "Display::SetFocusedWindow id="
-           << DebugWindowId(new_focused_window);
   ServerWindow* old_focused_window = focus_controller_->GetFocusedWindow();
   if (old_focused_window == new_focused_window)
     return true;

@@ -65,7 +65,8 @@ function runGenericSensorTests(sensorType, updateReading, verifyReading) {
           .then(mockSensor => {
             return new Promise((resolve, reject) => {
               let wrapper = new CallbackWrapper(() => {
-                assert_less_than_equal(mockSensor.getSamplingFrequency(), 60);
+                let configuration = mockSensor.activeSensorConfigurations_[0];
+                assert_less_than_equal(configuration.frequency, 60);
                 sensorObject.stop();
                 assert_false(sensorObject.activated);
                 resolve(mockSensor);
@@ -112,7 +113,8 @@ function runGenericSensorTests(sensorType, updateReading, verifyReading) {
         .then(mockSensor => {
           return new Promise((resolve, reject) => {
             let wrapper = new CallbackWrapper(() => {
-              assert_equals(mockSensor.getSamplingFrequency(), maxSupportedFrequency);
+              let configuration = mockSensor.activeSensorConfigurations_[0];
+              assert_equals(configuration.frequency, maxSupportedFrequency);
               sensorObject.stop();
               assert_false(sensorObject.activated);
               resolve(mockSensor);
@@ -135,7 +137,8 @@ function runGenericSensorTests(sensorType, updateReading, verifyReading) {
         .then(mockSensor => {
           return new Promise((resolve, reject) => {
             let wrapper = new CallbackWrapper(() => {
-              assert_equals(mockSensor.getSamplingFrequency(), minSupportedFrequency);
+              let configuration = mockSensor.activeSensorConfigurations_[0];
+              assert_equals(configuration.frequency, minSupportedFrequency);
               sensorObject.stop();
               assert_false(sensorObject.activated);
               resolve(mockSensor);
@@ -366,16 +369,18 @@ function runGenericSensorTests(sensorType, updateReading, verifyReading) {
 
   function checkFrequencyHintWorks(sensor) {
     let fastSensor = new sensorType({frequency: 30});
-    let slowSensor = new sensorType({frequency: 5});
+    let slowSensor = new sensorType({frequency: 9});
     slowSensor.start();
 
     let testPromise = sensor.mockSensorProvider.getCreatedSensor()
-        .then(mockSensor =>
-              mockSensor.setUpdateSensorReadingFunction(updateReading))
+        .then(mockSensor => {
+          return mockSensor.setUpdateSensorReadingFunction(updateReading);
+        })
         .then(mockSensor => {
           return new Promise((resolve, reject) => {
             let fastSensorNotifiedCounter = 0;
             let slowSensorNotifiedCounter = 0;
+            let readingUpdatesCounter = 0;
 
             let fastSensorWrapper = new CallbackWrapper(() => {
               fastSensorNotifiedCounter++;
@@ -385,9 +390,13 @@ function runGenericSensorTests(sensorType, updateReading, verifyReading) {
               slowSensorNotifiedCounter++;
               if (slowSensorNotifiedCounter == 1) {
                   fastSensor.start();
-              } else if (slowSensorNotifiedCounter == 3) {
-                assert_true(fastSensorNotifiedCounter > 2,
-                            "Fast sensor overtakes the slow one");
+                  readingUpdatesCounter = mockSensor.readingUpdatesCount();
+              } else if (slowSensorNotifiedCounter == 2) {
+                let elapsedUpdates = mockSensor.readingUpdatesCount() - readingUpdatesCounter;
+                // Approximation because 'slowSensor.onreading' is sometimes
+                // called before 'fastSensor.onreading', in this case
+                // 'fastSensorNotifiedCounter == elapsedUpdates - 1'.
+                assert_approx_equals(fastSensorNotifiedCounter, elapsedUpdates, 1);
                 fastSensor.stop();
                 slowSensor.stop();
                 resolve(mockSensor);
@@ -400,7 +409,7 @@ function runGenericSensorTests(sensorType, updateReading, verifyReading) {
             slowSensor.onerror = reject;
           });
         })
-        .then(mockSensor => mockSensor.removeConfigurationCalled());
+        .then(mockSensor => { return mockSensor.removeConfigurationCalled(); });
 
     return testPromise;
   }

@@ -288,7 +288,8 @@ void DrmDisplayHostManager::OnAddGraphicsDevice(
     std::unique_ptr<DrmDeviceHandle> handle) {
   if (handle->IsValid()) {
     drm_devices_[dev_path] = sys_path;
-    proxy_->GpuAddGraphicsDevice(sys_path, handle->PassFD());
+    proxy_->GpuAddGraphicsDevice(sys_path,
+                                 base::FileDescriptor(handle->PassFD()));
     NotifyDisplayDelegate();
   }
 
@@ -331,7 +332,7 @@ void DrmDisplayHostManager::OnGpuProcessLaunched() {
   // Send the primary device first since this is used to initialize graphics
   // state.
   proxy_->GpuAddGraphicsDevice(drm_devices_[primary_graphics_card_path_],
-                               handle->PassFD());
+                               base::FileDescriptor(handle->PassFD()));
 }
 
 void DrmDisplayHostManager::OnGpuThreadReady() {

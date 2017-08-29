@@ -3,6 +3,5 @@ include_rules = [
   "-content",
   "+components/leveldb_proto",
   "+base",
-  "+jni",
   "+net",
 ]

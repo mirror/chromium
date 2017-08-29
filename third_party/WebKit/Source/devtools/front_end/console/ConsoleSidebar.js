@@ -18,12 +18,11 @@ Console.ConsoleSidebar = class extends UI.VBox {
     this._list.element.classList.add('list');
     this.contentElement.appendChild(this._list.element);
 
-    this._allGroup = this._createAllGroup();
-    this._items.replaceAll([this._allGroup]);
+    this._items.replaceAll([Console.ConsoleSidebar._createAllGroup()]);
     this._list.selectItem(this._items.at(0));
 
-    /** @type {!Map<string, !Console.ConsoleSidebar.GroupItem>} */
-    this._contextToItem = new Map();
+    /** @type {!Set<string>} */
+    this._contexts = new Set();
     /** @type {!Set<!Console.ConsoleSidebar.GroupItem>} */
     this._pendingItemsToAdd = new Set();
     this._pendingClear = false;
@@ -32,9 +31,8 @@ Console.ConsoleSidebar = class extends UI.VBox {
   /**
    * @return {!Console.ConsoleSidebar.GroupItem}
    */
-  _createAllGroup() {
-    this._allGroup = {context: Console.ConsoleSidebar.AllContextsFilter, name: 'All', info: 0, warning: 0, error: 0};
-    return this._allGroup;
+  static _createAllGroup() {
+    return {context: Console.ConsoleSidebar.AllContextsFilter, name: 'All'};
   }
 
   /**
@@ -53,43 +51,21 @@ Console.ConsoleSidebar = class extends UI.VBox {
   }
 
   /**
-   * @param {!ConsoleModel.ConsoleMessage} message
+   * @param {!Console.ConsoleSidebar.GroupItem} item
    */
-  onMessageAdded(message) {
+  addGroup(item) {
     if (!Runtime.experiments.isEnabled('logManagement'))
       return;
-    incrementCounters(this._allGroup, message.level);
-    var context = message.context;
-    if (!context)
+    if (this._contexts.has(item.context))
       return;
-
-    var item = this._contextToItem.get(context);
-    if (!item) {
-      item = {name: context, context: context, info: 0, warning: 0, error: 0};
-      this._contextToItem.set(context, item);
-      this._pendingItemsToAdd.add(item);
-    }
-    incrementCounters(item, message.level);
-
-    /**
-     * @param {!Console.ConsoleSidebar.GroupItem} item
-     * @param {?ConsoleModel.ConsoleMessage.MessageLevel} level
-     */
-    function incrementCounters(item, level) {
-      if (level === ConsoleModel.ConsoleMessage.MessageLevel.Info)
-        item.info++;
-      else if (level === ConsoleModel.ConsoleMessage.MessageLevel.Warning)
-        item.warning++;
-      else if (level === ConsoleModel.ConsoleMessage.MessageLevel.Error)
-        item.error++;
-      item[Console.ConsoleSidebar._itemIsDirtySymbol] = true;
-    }
+    this._contexts.add(item.context);
+    this._pendingItemsToAdd.add(item);
   }
 
   clear() {
     if (!Runtime.experiments.isEnabled('logManagement'))
       return;
-    this._contextToItem.clear();
+    this._contexts.clear();
     this._pendingItemsToAdd.clear();
     this._pendingClear = true;
   }
@@ -98,19 +74,10 @@ Console.ConsoleSidebar = class extends UI.VBox {
     if (!Runtime.experiments.isEnabled('logManagement'))
       return;
     if (this._pendingClear) {
-      this._items.replaceAll([this._createAllGroup()]);
+      this._items.replaceAll([Console.ConsoleSidebar._createAllGroup()]);
       this._list.selectItem(this._items.at(0));
       this._pendingClear = false;
     }
-    // Refresh counters for stale groups.
-    for (var item of this._items) {
-      if (item[Console.ConsoleSidebar._itemIsDirtySymbol]) {
-        this._list.refreshItem(item);
-        delete item[Console.ConsoleSidebar._itemIsDirtySymbol];
-      }
-    }
-
-    // Add new groups.
     if (this._pendingItemsToAdd.size > 0) {
       this._items.replaceRange(this._items.length, this._items.length, Array.from(this._pendingItemsToAdd));
       this._pendingItemsToAdd.clear();
@@ -126,13 +93,6 @@ Console.ConsoleSidebar = class extends UI.VBox {
     var element = createElementWithClass('div', 'context-item');
     element.createChild('div', 'name').textContent = item.name;
     element.title = item.name;
-    var counters = element.createChild('div', 'counters');
-    if (item.error)
-      counters.createChild('span', 'error-count').textContent = item.error > 99 ? '99+' : item.error;
-    if (item.warning)
-      counters.createChild('span', 'warning-count').textContent = item.warning > 99 ? '99+' : item.warning;
-    if (item.info)
-      counters.createChild('span', 'info-count').textContent = item.info > 99 ? '99+' : item.info;
     return element;
   }
 
@@ -179,15 +139,5 @@ Console.ConsoleSidebar.Events = {
   ContextSelected: Symbol('ContextSelected')
 };
 
-/** @typedef {{
-        context: (string|symbol),
-        name: string,
-        info: number,
-        warning: number,
-        error: number
-    }}
- */
+/** @typedef {{context: (string|symbol), name: string}} */
 Console.ConsoleSidebar.GroupItem;
-
-/** @type {symbol} */
-Console.ConsoleSidebar._itemIsDirtySymbol = Symbol('itemIsDirty');

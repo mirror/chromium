@@ -65,7 +65,7 @@ class TabletPowerButtonControllerTest : public AshTestBase {
     power_manager_client_ = new chromeos::FakePowerManagerClient();
     dbus_setter->SetPowerManagerClient(base::WrapUnique(power_manager_client_));
     base::CommandLine::ForCurrentProcess()->AppendSwitch(
-        switches::kAshEnableTabletMode);
+        switches::kAshEnableTouchView);
     AshTestBase::SetUp();
     // Trigger an accelerometer update so that |tablet_controller_| can be
     // initialized.
@@ -141,11 +141,7 @@ class TabletPowerButtonControllerTest : public AshTestBase {
   }
 
   void Initialize(LoginStatus status) {
-    if (status == LoginStatus::NOT_LOGGED_IN) {
-      ClearLogin();
-    } else {
-      CreateUserSessions(1);
-    }
+    SetUserLoggedIn(status != LoginStatus::NOT_LOGGED_IN);
   }
 
   void EnableTabletMode(bool enabled) {
@@ -396,15 +392,15 @@ TEST_F(TabletPowerButtonControllerTest, IgnorePowerOnKeyEvent) {
   // generated for each pressing and releasing, and multiple repeating pressed
   // events depending on holding.
   ASSERT_EQ(0, power_manager_client_->num_set_backlights_forced_off_calls());
-  test_api_->SendKeyEvent(&power_key_pressed);
-  test_api_->SendKeyEvent(&power_key_pressed);
+  tablet_controller_->OnKeyEvent(&power_key_pressed);
+  tablet_controller_->OnKeyEvent(&power_key_pressed);
   PressPowerButton();
-  test_api_->SendKeyEvent(&power_key_pressed);
-  test_api_->SendKeyEvent(&power_key_pressed);
-  test_api_->SendKeyEvent(&power_key_pressed);
+  tablet_controller_->OnKeyEvent(&power_key_pressed);
+  tablet_controller_->OnKeyEvent(&power_key_pressed);
+  tablet_controller_->OnKeyEvent(&power_key_pressed);
   ReleasePowerButton();
-  test_api_->SendKeyEvent(&power_key_released);
-  test_api_->SendKeyEvent(&power_key_released);
+  tablet_controller_->OnKeyEvent(&power_key_released);
+  tablet_controller_->OnKeyEvent(&power_key_released);
   EXPECT_EQ(1, power_manager_client_->num_set_backlights_forced_off_calls());
 }
 
@@ -740,20 +736,6 @@ TEST_F(TabletPowerButtonControllerTest, NonLockScreenContainersHideAnimation) {
   test_animator->Advance(test_animator->GetDuration(
       SessionStateAnimator::ANIMATION_SPEED_MOVE_WINDOWS));
   EXPECT_FALSE(lock_state_test_api_->is_animating_lock());
-}
-
-// Tests that updating power button behavior from tablet behavior to clamshell
-// behavior will initially enable the local state of touchscreen.
-TEST_F(TabletPowerButtonControllerTest, TouchscreenStatusClamshell) {
-  shell_delegate_->SetTouchscreenEnabledInPrefs(false,
-                                                true /* use_local_state */);
-  ASSERT_FALSE(shell_delegate_->IsTouchscreenEnabledInPrefs(true));
-
-  base::CommandLine::ForCurrentProcess()->AppendSwitch(
-      switches::kForceClamshellPowerButton);
-  ResetTabletPowerButtonController();
-  SendAccelerometerUpdate(kSidewaysVector, kSidewaysVector);
-  EXPECT_TRUE(shell_delegate_->IsTouchscreenEnabledInPrefs(true));
 }
 
 }  // namespace ash

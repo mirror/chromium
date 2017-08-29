@@ -13,8 +13,6 @@
 #include "base/macros.h"
 #include "base/strings/string16.h"
 #include "base/values.h"
-#include "extensions/common/extension_id.h"
-#include "extensions/common/hashed_extension_id.h"
 
 namespace extensions {
 struct InstallWarning;
@@ -125,10 +123,8 @@ class Manifest {
   Manifest(Location location, std::unique_ptr<base::DictionaryValue> value);
   virtual ~Manifest();
 
-  void SetExtensionId(const ExtensionId& id);
-
-  const ExtensionId& extension_id() const { return extension_id_; }
-  const HashedExtensionId& hashed_id() const { return hashed_id_; }
+  const std::string& extension_id() const { return extension_id_; }
+  void set_extension_id(const std::string& id) { extension_id_ = id; }
 
   Location location() const { return location_; }
 
@@ -194,10 +190,6 @@ class Manifest {
   // versions. It is generated as a SHA-256 hash of the extension's public
   // key, or as a hash of the path in the case of unpacked extensions.
   std::string extension_id_;
-
-  // The hex-encoding of the SHA1 of the extension id; used to determine feature
-  // availability.
-  HashedExtensionId hashed_id_;
 
   // The location the extension was loaded from.
   Location location_;

@@ -4,8 +4,6 @@
 
 #include "content/shell/browser/shell_download_manager_delegate.h"
 
-#include <string>
-
 #if defined(OS_WIN)
 #include <windows.h>
 #include <commdlg.h>
@@ -41,6 +39,8 @@ ShellDownloadManagerDelegate::ShellDownloadManagerDelegate()
 
 ShellDownloadManagerDelegate::~ShellDownloadManagerDelegate() {
   if (download_manager_) {
+    DCHECK_EQ(static_cast<DownloadManagerDelegate*>(this),
+              download_manager_->GetDelegate());
     download_manager_->SetDelegate(NULL);
     download_manager_ = NULL;
   }

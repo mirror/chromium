@@ -14,19 +14,10 @@ Polymer({
     isPowerwashView_: Boolean,
   },
 
-  showModal: function() {
-    this.$.dialog.showModal();
-  },
-
-  close: function() {
-    this.$.dialog.close();
-  },
-
   /**
    * On-tap event handler for continue button.
    */
   onContinueTap_: function() {
-    this.close();
     chrome.send('login.ResetScreen.userActed', ['powerwash-pressed']);
   },
 
@@ -34,7 +25,6 @@ Polymer({
    * On-tap event handler for cancel button.
    */
   onCancelTap_: function() {
-    this.close();
     chrome.send('login.ResetScreen.userActed', ['reset-confirm-dismissed']);
   },
 });

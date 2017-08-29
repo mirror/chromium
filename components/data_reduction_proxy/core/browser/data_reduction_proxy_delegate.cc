@@ -143,8 +143,12 @@ void DataReductionProxyDelegate::OnBeforeTunnelRequest(
 bool DataReductionProxyDelegate::IsTrustedSpdyProxy(
     const net::ProxyServer& proxy_server) {
   DCHECK(thread_checker_.CalledOnValidThread());
-  return proxy_server.is_valid() && proxy_server.is_https() && config_ &&
-         config_->IsDataReductionProxy(proxy_server, nullptr);
+  if (!proxy_server.is_https() ||
+      !params::IsIncludedInTrustedSpdyProxyFieldTrial() ||
+      !proxy_server.is_valid()) {
+    return false;
+  }
+  return config_ && config_->IsDataReductionProxy(proxy_server, nullptr);
 }
 
 void DataReductionProxyDelegate::OnTunnelHeadersReceived(

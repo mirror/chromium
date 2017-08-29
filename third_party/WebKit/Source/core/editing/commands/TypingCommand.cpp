@@ -666,8 +666,7 @@ void TypingCommand::InsertParagraphSeparatorInQuotedContent(
 }
 
 bool TypingCommand::MakeEditableRootEmpty(EditingState* editing_state) {
-  DCHECK(!GetDocument().NeedsLayoutTreeUpdate());
-  Element* root = RootEditableElementOf(EndingSelection().Base());
+  Element* root = EndingVisibleSelection().RootEditableElement();
   if (!root || !root->HasChildren())
     return false;
 

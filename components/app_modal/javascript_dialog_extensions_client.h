@@ -33,7 +33,7 @@ class JavaScriptDialogExtensionsClient {
   // |web_contents| in the |name_out| if there is one, returning true;
   // returns false otherwise.
   virtual bool GetExtensionName(content::WebContents* web_contents,
-                                const GURL& alerting_frame_url,
+                                const GURL& origin_url,
                                 std::string* name_out) = 0;
 };
 

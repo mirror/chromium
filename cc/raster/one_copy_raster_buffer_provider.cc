@@ -18,8 +18,8 @@
 #include "cc/base/math_util.h"
 #include "cc/resources/resource_util.h"
 #include "cc/resources/scoped_resource.h"
+#include "components/viz/common/quads/resource_format.h"
 #include "components/viz/common/resources/platform_color.h"
-#include "components/viz/common/resources/resource_format.h"
 #include "gpu/GLES2/gl2extchromium.h"
 #include "gpu/command_buffer/client/context_support.h"
 #include "gpu/command_buffer/client/gles2_interface.h"
@@ -37,7 +37,7 @@ const int kMaxBytesPerCopyOperation = 1024 * 1024 * 4;
 
 OneCopyRasterBufferProvider::RasterBufferImpl::RasterBufferImpl(
     OneCopyRasterBufferProvider* client,
-    LayerTreeResourceProvider* resource_provider,
+    ResourceProvider* resource_provider,
     const Resource* resource,
     uint64_t previous_content_id)
     : client_(client),
@@ -70,7 +70,7 @@ OneCopyRasterBufferProvider::OneCopyRasterBufferProvider(
     base::SequencedTaskRunner* task_runner,
     viz::ContextProvider* compositor_context_provider,
     viz::ContextProvider* worker_context_provider,
-    LayerTreeResourceProvider* resource_provider,
+    ResourceProvider* resource_provider,
     int max_copy_texture_chromium_size,
     bool use_partial_raster,
     int max_staging_buffer_usage_in_bytes,
@@ -108,7 +108,7 @@ OneCopyRasterBufferProvider::AcquireBufferForRaster(
     uint64_t previous_content_id) {
   // TODO(danakj): If resource_content_id != 0, we only need to copy/upload
   // the dirty rect.
-  return std::make_unique<RasterBufferImpl>(this, resource_provider_, resource,
+  return base::MakeUnique<RasterBufferImpl>(this, resource_provider_, resource,
                                             previous_content_id);
 }
 
@@ -132,8 +132,13 @@ void OneCopyRasterBufferProvider::OrderingBarrier() {
 }
 
 void OneCopyRasterBufferProvider::Flush() {
-  if (async_worker_context_enabled_)
-    compositor_context_provider_->ContextSupport()->FlushPendingWork();
+  if (async_worker_context_enabled_) {
+    int32_t worker_stream_id =
+        worker_context_provider_->ContextSupport()->GetStreamId();
+
+    compositor_context_provider_->ContextSupport()
+        ->FlushOrderingBarrierOnStream(worker_stream_id);
+  }
 }
 
 viz::ResourceFormat OneCopyRasterBufferProvider::GetResourceFormat(

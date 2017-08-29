@@ -27,6 +27,7 @@
 #include "extensions/common/features/simple_feature.h"
 #include "extensions/common/manifest.h"
 #include "extensions/common/manifest_constants.h"
+#include "extensions/common/test_util.h"
 #include "extensions/common/value_builder.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
@@ -68,6 +69,8 @@ class TestExtensionAPI : public ExtensionAPI {
 };
 
 }  // namespace
+
+using test_util::BuildExtension;
 
 TEST(ExtensionAPITest, Creation) {
   ExtensionAPI* shared_instance = ExtensionAPI::GetSharedInstance();
@@ -913,7 +916,8 @@ TEST(ExtensionAPITest, NoPermissions) {
 
   std::unique_ptr<ExtensionAPI> extension_api(
       ExtensionAPI::CreateWithDefaultConfiguration());
-  scoped_refptr<Extension> extension = ExtensionBuilder("Test").Build();
+  scoped_refptr<Extension> extension =
+      BuildExtension(ExtensionBuilder()).Build();
 
   for (size_t i = 0; i < arraysize(kTests); ++i) {
     EXPECT_EQ(kTests[i].expect_success,
@@ -933,8 +937,10 @@ TEST(ExtensionAPITest, ManifestKeys) {
       ExtensionAPI::CreateWithDefaultConfiguration());
 
   scoped_refptr<Extension> extension =
-      ExtensionBuilder("Test")
-          .SetAction(ExtensionBuilder::ActionType::BROWSER_ACTION)
+      BuildExtension(ExtensionBuilder())
+          .MergeManifest(DictionaryBuilder()
+                             .Set("browser_action", DictionaryBuilder().Build())
+                             .Build())
           .Build();
 
   EXPECT_TRUE(extension_api

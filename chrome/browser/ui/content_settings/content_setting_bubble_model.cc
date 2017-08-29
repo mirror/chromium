@@ -172,10 +172,23 @@ void ContentSettingSimpleBubbleModel::SetTitle() {
 }
 
 void ContentSettingSimpleBubbleModel::SetManageText() {
-  set_manage_text(l10n_util::GetStringUTF16(IDS_MANAGE));
+  static const ContentSettingsTypeIdEntry kLinkIDs[] = {
+    {CONTENT_SETTINGS_TYPE_COOKIES, IDS_BLOCKED_COOKIES_LINK},
+    {CONTENT_SETTINGS_TYPE_IMAGES, IDS_BLOCKED_IMAGES_LINK},
+    {CONTENT_SETTINGS_TYPE_JAVASCRIPT, IDS_BLOCKED_JAVASCRIPT_LINK},
+    {CONTENT_SETTINGS_TYPE_PLUGINS, IDS_BLOCKED_PLUGINS_LINK},
+    {CONTENT_SETTINGS_TYPE_POPUPS, IDS_BLOCKED_POPUPS_LINK},
+    {CONTENT_SETTINGS_TYPE_GEOLOCATION, IDS_GEOLOCATION_BUBBLE_MANAGE_LINK},
+    {CONTENT_SETTINGS_TYPE_MIXEDSCRIPT, IDS_LEARN_MORE},
+    {CONTENT_SETTINGS_TYPE_PROTOCOL_HANDLERS, IDS_HANDLERS_BUBBLE_MANAGE_LINK},
+    {CONTENT_SETTINGS_TYPE_PPAPI_BROKER, IDS_PPAPI_BROKER_BUBBLE_MANAGE_LINK},
+    {CONTENT_SETTINGS_TYPE_MIDI_SYSEX, IDS_MIDI_SYSEX_BUBBLE_MANAGE_LINK},
+  };
+  set_manage_text(l10n_util::GetStringUTF16(
+      GetIdForContentType(kLinkIDs, arraysize(kLinkIDs), content_type())));
 }
 
-void ContentSettingSimpleBubbleModel::OnManageButtonClicked() {
+void ContentSettingSimpleBubbleModel::OnManageLinkClicked() {
   if (delegate())
     delegate()->ShowContentSettingsPage(content_type());
 
@@ -455,7 +468,7 @@ ContentSettingPluginBubbleModel::ContentSettingPluginBubbleModel(
       map->GetWebsiteSetting(url, url, content_type(), std::string(), &info);
   ContentSetting setting = content_settings::ValueToContentSetting(value.get());
 
-  // If the setting is not managed by the user, hide the "Manage" button.
+  // If the setting is not managed by the user, hide the "Manage..." link.
   if (info.source != SETTING_SOURCE_USER)
     set_manage_text(base::string16());
 
@@ -694,7 +707,7 @@ ContentSettingMediaStreamBubbleModel*
   return this;
 }
 
-void ContentSettingMediaStreamBubbleModel::OnManageButtonClicked() {
+void ContentSettingMediaStreamBubbleModel::OnManageLinkClicked() {
   if (!delegate())
     return;
 
@@ -906,8 +919,21 @@ void ContentSettingMediaStreamBubbleModel::SetMediaMenus() {
 }
 
 void ContentSettingMediaStreamBubbleModel::SetManageText() {
-  DCHECK(CameraAccessed() || MicrophoneAccessed());
-  set_manage_text(l10n_util::GetStringUTF16(IDS_MANAGE));
+  // By default, the manage link refers to both media types. We only need
+  // to change the link text if only one media type was accessed.
+  int link_id;
+  if (CameraAccessed() && MicrophoneAccessed()) {
+    link_id = IDS_MEDIASTREAM_BUBBLE_MANAGE_LINK;
+  } else if (CameraAccessed()) {
+    link_id = IDS_MEDIASTREAM_CAMERA_BUBBLE_MANAGE_LINK;
+  } else if (MicrophoneAccessed()) {
+    link_id = IDS_MEDIASTREAM_MICROPHONE_BUBBLE_MANAGE_LINK;
+  } else {
+    NOTREACHED();
+    return;
+  }
+
+  set_manage_text(l10n_util::GetStringUTF16(link_id));
 }
 
 void ContentSettingMediaStreamBubbleModel::SetCustomLink() {
@@ -1500,10 +1526,10 @@ void ContentSettingDownloadsBubbleModel::SetTitle() {
 }
 
 void ContentSettingDownloadsBubbleModel::SetManageText() {
-  set_manage_text(l10n_util::GetStringUTF16(IDS_MANAGE));
+  set_manage_text(l10n_util::GetStringUTF16(IDS_BLOCKED_DOWNLOADS_LINK));
 }
 
-void ContentSettingDownloadsBubbleModel::OnManageButtonClicked() {
+void ContentSettingDownloadsBubbleModel::OnManageLinkClicked() {
   if (delegate())
     delegate()->ShowContentSettingsPage(
         CONTENT_SETTINGS_TYPE_AUTOMATIC_DOWNLOADS);

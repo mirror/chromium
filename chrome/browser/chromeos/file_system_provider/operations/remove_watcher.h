@@ -34,7 +34,7 @@ class RemoveWatcher : public Operation {
                 const ProvidedFileSystemInfo& file_system_info,
                 const base::FilePath& entry_path,
                 bool recursive,
-                storage::AsyncFileUtil::StatusCallback callback);
+                const storage::AsyncFileUtil::StatusCallback& callback);
   ~RemoveWatcher() override;
 
   // Operation overrides.
@@ -49,7 +49,7 @@ class RemoveWatcher : public Operation {
  private:
   const base::FilePath entry_path_;
   bool recursive_;
-  storage::AsyncFileUtil::StatusCallback callback_;
+  const storage::AsyncFileUtil::StatusCallback callback_;
 
   DISALLOW_COPY_AND_ASSIGN(RemoveWatcher);
 };

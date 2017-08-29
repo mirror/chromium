@@ -761,12 +761,6 @@ WebInputEventResult MouseEventManager::HandleMouseDraggedEvent(
   bool is_pen = event.Event().pointer_type ==
                 blink::WebPointerProperties::PointerType::kPen;
 
-  WebPointerProperties::Button pen_drag_button =
-      WebPointerProperties::Button::kLeft;
-  if (frame_->GetSettings() &&
-      frame_->GetSettings()->GetBarrelButtonForDragEnabled())
-    pen_drag_button = WebPointerProperties::Button::kBarrel;
-
   // While resetting m_mousePressed here may seem out of place, it turns out
   // to be needed to handle some bugs^Wfeatures in Blink mouse event handling:
   // 1. Certain elements, such as <embed>, capture mouse events. They do not
@@ -785,7 +779,8 @@ WebInputEventResult MouseEventManager::HandleMouseDraggedEvent(
   //    we get a mouse leave event here
   if ((!is_pen &&
        event.Event().button != WebPointerProperties::Button::kLeft) ||
-      (is_pen && event.Event().button != pen_drag_button) ||
+      (is_pen &&
+       event.Event().button != WebPointerProperties::Button::kBarrel) ||
       event.Event().GetType() == WebInputEvent::kMouseLeave) {
     mouse_pressed_ = false;
   }
@@ -793,14 +788,10 @@ WebInputEventResult MouseEventManager::HandleMouseDraggedEvent(
   if (!mouse_pressed_)
     return WebInputEventResult::kNotHandled;
 
-  // We disable the drag and drop actions on pen input on windows.
-  bool should_handle_drag = true;
-#if defined(OS_WIN)
-  should_handle_drag = !is_pen;
-#endif
-
-  if (should_handle_drag && HandleDrag(event, DragInitiator::kMouse))
+  // We disable the drag and drop actions on pen input.
+  if (!is_pen && HandleDrag(event, DragInitiator::kMouse)) {
     return WebInputEventResult::kHandledSystem;
+  }
 
   Node* target_node = event.InnerNode();
   if (!target_node)

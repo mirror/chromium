@@ -22,7 +22,6 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -84,8 +83,9 @@ public class SectionList
      * @param categoryStatus The category status.
      * @param alwaysAllowEmptySections Whether sections are always allowed to be displayed when
      *     they are empty, even when they are normally not.
+     * @return The number of suggestions for the section.
      */
-    private void resetSection(@CategoryInt int category, @CategoryStatus int categoryStatus,
+    private int resetSection(@CategoryInt int category, @CategoryStatus int categoryStatus,
             boolean alwaysAllowEmptySections) {
         SuggestionsSource suggestionsSource = mUiDelegate.getSuggestionsSource();
         List<SnippetArticle> suggestions = suggestionsSource.getSuggestionsForCategory(category);
@@ -97,7 +97,7 @@ public class SectionList
         if (suggestions.isEmpty() && !info.showIfEmpty() && !alwaysAllowEmptySections) {
             mBlacklistedCategories.add(category);
             if (section != null) removeSection(section);
-            return;
+            return 0;
         } else {
             mBlacklistedCategories.remove(category);
         }
@@ -116,7 +116,8 @@ public class SectionList
 
         // Set the new suggestions.
         section.setStatus(categoryStatus);
-        section.appendSuggestions(suggestions, /* keepSectionSize = */ true);
+        section.appendSuggestions(suggestions, /*keepSectionSize=*/true);
+        return suggestions.size();
     }
 
     @Override
@@ -223,43 +224,12 @@ public class SectionList
     }
 
     /**
-     * Fetches more suggestions. The SectionList should contain exactly 1 SuggestionsSection that
-     * supports fetching more.
+     * Clicks on the more button for the Articles for you section. This assumes that that is the
+     * only present section.
      */
-    public void fetchMore() {
-        List<SuggestionsSection> supportingSections = new LinkedList<>();
-
-        for (SuggestionsSection section : mSections.values()) {
-            if (section.getCategoryInfo().isFetchMoreSupported()) {
-                supportingSections.add(section);
-            }
-        }
-
-        if (supportingSections.size() > 1) {
-            assert false : "SectionList.fetchMore - Multiple supporting sections"
-                    + getCategoriesForDebugging();
-        } else if (supportingSections.size() == 0) {
-            Log.d(TAG, "SectionList.fetchMore - No supporting sections: %s",
-                    getCategoriesForDebugging());
-        } else if (getChildren().get(getChildren().size() - 1) != supportingSections.get(0)) {
-            Log.d(TAG, "SectionList.fetchMore - Supporting section not at end: %s",
-                    getCategoriesForDebugging());
-        } else {
-            supportingSections.get(0).clickMoreButton(mUiDelegate);
-        }
-    }
-
-    /** Returns a string showing the categories of all the contained sections. */
-    private String getCategoriesForDebugging() {
-        StringBuilder sb = new StringBuilder();
-        String sep = "";
-        for (SuggestionsSection section : mSections.values()) {
-            sb.append(sep);
-            sb.append(section.getCategory());
-            sep = ", ";
-        }
-
-        return sb.toString();
+    public void clickArticlesMoreButton() {
+        assert mSections.size() == 1;
+        mSections.get(KnownCategories.ARTICLES).clickMoreButton(mUiDelegate);
     }
 
     /**
@@ -357,33 +327,24 @@ public class SectionList
 
     /**
      * Records the currently visible suggestion state: which categories are visible and how many
-     * (prefetched) suggestions per category.
+     * suggestions per category.
      * @see org.chromium.chrome.browser.suggestions.SuggestionsEventReporter#onPageShown
      */
     private void recordDisplayedSuggestions(int[] categories) {
         int[] suggestionsPerCategory = new int[categories.length];
-        int[] prefetchedSuggestionsPerCategory = new int[categories.length];
         boolean[] isCategoryVisible = new boolean[categories.length];
 
         for (int i = 0; i < categories.length; ++i) {
             SuggestionsSection section = mSections.get(categories[i]);
             suggestionsPerCategory[i] = section != null ? section.getSuggestionsCount() : 0;
-            prefetchedSuggestionsPerCategory[i] =
-                    section != null ? section.getPrefetchedSuggestionsCount() : 0;
             isCategoryVisible[i] = section != null;
         }
 
-        mUiDelegate.getEventReporter().onPageShown(categories, suggestionsPerCategory,
-                prefetchedSuggestionsPerCategory, isCategoryVisible);
+        mUiDelegate.getEventReporter().onPageShown(
+                categories, suggestionsPerCategory, isCategoryVisible);
     }
 
-    /**
-     * Returns the {@link SuggestionsSection} for a given {@code categoryId}, or null if the
-     * category doesn't exist.
-     * @param categoryId The category ID of the section that should be returned.
-     * @return The Section with the given category ID.
-     */
-    public SuggestionsSection getSection(@CategoryInt int categoryId) {
+    SuggestionsSection getSectionForTesting(@CategoryInt int categoryId) {
         return mSections.get(categoryId);
     }
 }

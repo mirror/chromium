@@ -4,6 +4,8 @@
 
 #import "ios/chrome/search_widget_extension/search_widget_view_controller.h"
 
+#import <NotificationCenter/NotificationCenter.h>
+
 #include "base/ios/ios_util.h"
 #include "base/mac/foundation_util.h"
 #include "base/strings/sys_string_conversions.h"
@@ -37,11 +39,12 @@ NSString* const kXCallbackURLHost = @"x-callback-url";
 - (BOOL)updateWidget;
 // Opens the main application with the given |command|.
 - (void)openAppWithCommand:(NSString*)command;
-// Opens the main application with the given |command| and |URL|.
-- (void)openAppWithCommand:(NSString*)command URL:(NSString*)URL;
+// Opens the main application with the given |command| and |parameter|.
+- (void)openAppWithCommand:(NSString*)command parameter:(NSString*)parameter;
 // Returns the dictionary of commands to pass via user defaults to open the main
-// application for a given |command| and optional |URL|.
-+ (NSDictionary*)dictForCommand:(NSString*)command URL:(NSString*)URL;
+// application for a given |command| and |parameter|.
++ (NSDictionary*)dictForCommand:(NSString*)command
+                      parameter:(NSString*)parameter;
 // Register a display of the widget in the app_group NSUserDefaults.
 // Metrics on the widget usage will be sent (if enabled) on the next Chrome
 // startup.
@@ -72,17 +75,28 @@ NSString* const kXCallbackURLHost = @"x-callback-url";
 - (void)viewDidLoad {
   [super viewDidLoad];
 
+  UIVibrancyEffect* primary;
+  UIVibrancyEffect* secondary;
   CGFloat height =
       self.extensionContext && base::ios::IsRunningOnIOS10OrLater()
           ? [self.extensionContext
                 widgetMaximumSizeForDisplayMode:NCWidgetDisplayModeCompact]
                 .height
           : 110;
+  if (base::ios::IsRunningOnIOS10OrLater()) {
+    primary = [UIVibrancyEffect widgetPrimaryVibrancyEffect];
+    secondary = [UIVibrancyEffect widgetSecondaryVibrancyEffect];
+  } else {
+    primary = [UIVibrancyEffect notificationCenterVibrancyEffect];
+    secondary = [UIVibrancyEffect notificationCenterVibrancyEffect];
+  }
 
   // A local variable is necessary here as the property is declared weak and the
   // object would be deallocated before being retained by the addSubview call.
   SearchWidgetView* widgetView = [[SearchWidgetView alloc]
          initWithActionTarget:self
+        primaryVibrancyEffect:primary
+      secondaryVibrancyEffect:secondary
                 compactHeight:height
              initiallyCompact:(base::ios::IsRunningOnIOS10OrLater() &&
                                [self.extensionContext
@@ -196,13 +210,13 @@ NSString* const kXCallbackURLHost = @"x-callback-url";
   DCHECK(self.copiedURL);
   [self openAppWithCommand:base::SysUTF8ToNSString(
                                app_group::kChromeAppGroupOpenURLCommand)
-                       URL:self.copiedURL.absoluteString];
+                 parameter:self.copiedURL.absoluteString];
 }
 
 #pragma mark - internal
 
 - (void)openAppWithCommand:(NSString*)command {
-  return [self openAppWithCommand:command URL:nil];
+  return [self openAppWithCommand:command parameter:nil];
 }
 
 - (void)registerWidgetDisplay {
@@ -213,12 +227,13 @@ NSString* const kXCallbackURLHost = @"x-callback-url";
                       forKey:app_group::kSearchExtensionDisplayCount];
 }
 
-- (void)openAppWithCommand:(NSString*)command URL:(NSString*)URL {
+- (void)openAppWithCommand:(NSString*)command parameter:(NSString*)parameter {
   NSUserDefaults* sharedDefaults = app_group::GetGroupUserDefaults();
   NSString* defaultsKey =
       base::SysUTF8ToNSString(app_group::kChromeAppGroupCommandPreference);
   [sharedDefaults
-      setObject:[SearchWidgetViewController dictForCommand:command URL:URL]
+      setObject:[SearchWidgetViewController dictForCommand:command
+                                                 parameter:parameter]
          forKey:defaultsKey];
   [sharedDefaults synchronize];
 
@@ -238,7 +253,8 @@ NSString* const kXCallbackURLHost = @"x-callback-url";
   [self.extensionContext openURL:openURL completionHandler:nil];
 }
 
-+ (NSDictionary*)dictForCommand:(NSString*)command URL:(NSString*)URL {
++ (NSDictionary*)dictForCommand:(NSString*)command
+                      parameter:(NSString*)parameter {
   NSString* timePrefKey =
       base::SysUTF8ToNSString(app_group::kChromeAppGroupCommandTimePreference);
   NSString* appPrefKey =
@@ -246,19 +262,19 @@ NSString* const kXCallbackURLHost = @"x-callback-url";
   NSString* commandPrefKey = base::SysUTF8ToNSString(
       app_group::kChromeAppGroupCommandCommandPreference);
 
-  if (URL) {
-    NSString* URLPrefKey =
-        base::SysUTF8ToNSString(app_group::kChromeAppGroupCommandURLPreference);
+  if (parameter) {
+    NSString* paramPrefKey = base::SysUTF8ToNSString(
+        app_group::kChromeAppGroupCommandParameterPreference);
     return @{
       timePrefKey : [NSDate date],
-      appPrefKey : app_group::kOpenCommandSourceSearchExtension,
+      appPrefKey : @"TodayExtension",
       commandPrefKey : command,
-      URLPrefKey : URL,
+      paramPrefKey : parameter,
     };
   }
   return @{
     timePrefKey : [NSDate date],
-    appPrefKey : app_group::kOpenCommandSourceSearchExtension,
+    appPrefKey : @"TodayExtension",
     commandPrefKey : command,
   };
 }

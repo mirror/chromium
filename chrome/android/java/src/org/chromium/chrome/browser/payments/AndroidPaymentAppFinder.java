@@ -414,7 +414,7 @@ public class AndroidPaymentAppFinder implements ManifestVerifyCallback {
             for (URI supportedOrigin : method.supportedOrigins) {
                 Set<URI> supportedAppMethodNames =
                         mOriginToUriDefaultMethodsMapping.get(supportedOrigin);
-                if (supportedAppMethodNames == null) continue;
+                assert supportedAppMethodNames != null;
 
                 for (URI supportedAppMethodName : supportedAppMethodNames) {
                     PaymentMethod supportedAppMethod =
@@ -469,16 +469,9 @@ public class AndroidPaymentAppFinder implements ManifestVerifyCallback {
                 return;
             }
 
-            // Dedupe corresponding ServiceWorkerPaymentApp which is registered with the default
-            // payment method name as the scope and the scope is used as the app Id.
-            String webAppIdCanDeduped = resolveInfo.activityInfo.metaData == null
-                    ? null
-                    : resolveInfo.activityInfo.metaData.getString(
-                              META_DATA_NAME_OF_DEFAULT_PAYMENT_METHOD_NAME);
             app = new AndroidPaymentApp(mWebContents, packageName, resolveInfo.activityInfo.name,
-                    label.toString(), mPackageManagerDelegate.getAppIcon(resolveInfo), mIsIncognito,
-                    webAppIdCanDeduped == null ? null
-                                               : UriUtils.parseUriFromString(webAppIdCanDeduped));
+                    label.toString(), mPackageManagerDelegate.getAppIcon(resolveInfo),
+                    mIsIncognito);
             mValidApps.put(packageName, app);
         }
 

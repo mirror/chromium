@@ -33,6 +33,7 @@
 #include "core/animation/DocumentAnimations.h"
 #include "core/css/FontFaceSetDocument.h"
 #include "core/dom/AXObjectCache.h"
+#include "core/dom/DOMNodeIds.h"
 #include "core/dom/ElementVisibilityObserver.h"
 #include "core/dom/StyleChangeReason.h"
 #include "core/dom/TaskRunnerHelper.h"
@@ -209,7 +210,6 @@ LocalFrameView::LocalFrameView(LocalFrame& frame, IntRect frame_rect)
           DocumentLifecycle::kUninitialized),
       past_layout_lifecycle_update_(false),
       scroll_anchor_(this),
-      in_perform_scroll_anchoring_adjustments_(false),
       scrollbar_manager_(*this),
       needs_scrollbars_update_(false),
       suppress_adjust_view_size_(false),
@@ -217,8 +217,7 @@ LocalFrameView::LocalFrameView(LocalFrame& frame, IntRect frame_rect)
       forcing_layout_parent_view_(false),
       needs_intersection_observation_(false),
       main_thread_scrolling_reasons_(0),
-      paint_frame_count_(0),
-      unique_id_(NewUniqueObjectId()) {
+      paint_frame_count_(0) {
   Init();
 }
 
@@ -751,11 +750,9 @@ void LocalFrameView::AdjustViewSize() {
   const IntRect rect = layout_view_item.DocumentRect();
   const IntSize& size = rect.Size();
 
-  if (!RuntimeEnabledFeatures::RootLayerScrollingEnabled()) {
-    const IntPoint origin(-rect.X(), -rect.Y());
-    if (ScrollOrigin() != origin)
-      SetScrollOrigin(origin);
-  }
+  const IntPoint origin(-rect.X(), -rect.Y());
+  if (ScrollOrigin() != origin)
+    SetScrollOrigin(origin);
 
   SetContentsSize(size);
 }
@@ -2823,7 +2820,9 @@ void LocalFrameView::NotifyPageThatContentAreaWillPaint() const {
 
 CompositorElementId LocalFrameView::GetCompositorElementId() const {
   if (!RuntimeEnabledFeatures::RootLayerScrollingEnabled()) {
-    return CompositorElementIdFromUniqueObjectId(unique_id_);
+    return CompositorElementIdFromDOMNodeId(
+        DOMNodeIds::IdForNode(&GetLayoutView()->GetDocument()),
+        CompositorElementIdNamespace::kRootScroll);
   } else {
     return PaintInvalidationCapableScrollableArea::GetCompositorElementId();
   }
@@ -3248,20 +3247,13 @@ void LocalFrameView::EnqueueScrollAnchoringAdjustment(
 }
 
 void LocalFrameView::PerformScrollAnchoringAdjustments() {
-  // TODO(bokan): Temporary to get more information about crash in
-  // crbug.com/745686.
-  CHECK(!in_perform_scroll_anchoring_adjustments_);
-  in_perform_scroll_anchoring_adjustments_ = true;
-
   for (WeakMember<ScrollableArea>& scroller : anchoring_adjustment_queue_) {
-    if (scroller) {
-      DCHECK(scroller->GetScrollAnchor());
+    // TODO(bokan): GetScrollAnchor() should never return nullptr but this is a
+    // speculative fix to see if it stops crashes seen in crbug.com/745686.
+    if (scroller && scroller->GetScrollAnchor())
       scroller->GetScrollAnchor()->Adjust();
-    }
   }
   anchoring_adjustment_queue_.clear();
-
-  in_perform_scroll_anchoring_adjustments_ = false;
 }
 
 void LocalFrameView::PrePaint() {
@@ -3386,16 +3378,12 @@ void LocalFrameView::PushPaintArtifactToCompositor(
 
   DCHECK(RuntimeEnabledFeatures::SlimmingPaintV2Enabled());
 
-  if (!frame_->GetSettings()->GetAcceleratedCompositingEnabled())
-    return;
-
   Page* page = GetFrame().GetPage();
   if (!page)
     return;
 
   if (!paint_artifact_compositor_) {
-    paint_artifact_compositor_ =
-        PaintArtifactCompositor::Create(*page->GetScrollingCoordinator());
+    paint_artifact_compositor_ = PaintArtifactCompositor::Create();
     page->GetChromeClient().AttachRootLayer(
         paint_artifact_compositor_->GetWebLayer(), &GetFrame());
   }
@@ -3667,8 +3655,7 @@ IntPoint LocalFrameView::ConvertSelfToChild(const EmbeddedContentView& child,
   return new_point;
 }
 
-IntRect LocalFrameView::ConvertToContainingEmbeddedContentView(
-    const IntRect& local_rect) const {
+IntRect LocalFrameView::ConvertToParentView(const IntRect& local_rect) const {
   if (LocalFrameView* parent = ParentFrameView()) {
     // Get our layoutObject in the parent view
     LayoutEmbeddedContentItem layout_item = frame_->OwnerLayoutItem();
@@ -3685,7 +3672,7 @@ IntRect LocalFrameView::ConvertToContainingEmbeddedContentView(
   return local_rect;
 }
 
-IntRect LocalFrameView::ConvertFromContainingEmbeddedContentView(
+IntRect LocalFrameView::ConvertFromParentView(
     const IntRect& parent_rect) const {
   if (LocalFrameView* parent = ParentFrameView()) {
     IntRect local_rect = parent_rect;
@@ -3697,7 +3684,7 @@ IntRect LocalFrameView::ConvertFromContainingEmbeddedContentView(
   return parent_rect;
 }
 
-IntPoint LocalFrameView::ConvertToContainingEmbeddedContentView(
+IntPoint LocalFrameView::ConvertToParentView(
     const IntPoint& local_point) const {
   if (LocalFrameView* parent = ParentFrameView()) {
     // Get our layoutObject in the parent view
@@ -3716,7 +3703,7 @@ IntPoint LocalFrameView::ConvertToContainingEmbeddedContentView(
   return local_point;
 }
 
-IntPoint LocalFrameView::ConvertFromContainingEmbeddedContentView(
+IntPoint LocalFrameView::ConvertFromParentView(
     const IntPoint& parent_point) const {
   if (LocalFrameView* parent = ParentFrameView()) {
     // Get our layoutObject in the parent view
@@ -4075,7 +4062,7 @@ void LocalFrameView::ClipPaintRect(FloatRect* paint_rect) const {
 }
 
 IntSize LocalFrameView::MinimumScrollOffsetInt() const {
-  return ToIntSize(-ScrollOrigin());
+  return IntSize(-ScrollOrigin().X(), -ScrollOrigin().Y());
 }
 
 void LocalFrameView::AdjustScrollbarOpacity() {
@@ -4432,21 +4419,6 @@ void LocalFrameView::AdjustScrollOffsetFromUpdateScrollbars() {
     SetScrollOffset(clamped, kClampingScroll);
 }
 
-ScrollableArea* LocalFrameView::ScrollableAreaWithElementId(
-    const CompositorElementId& id) {
-  if (id == GetCompositorElementId())
-    return this;
-  if (scrollable_areas_) {
-    // This requires iterating over all scrollable areas. We may want to store a
-    // map of ElementId to ScrollableArea if this is an issue for performance.
-    for (ScrollableArea* scrollable_area : *scrollable_areas_) {
-      if (id == scrollable_area->GetCompositorElementId())
-        return scrollable_area;
-    }
-  }
-  return nullptr;
-}
-
 void LocalFrameView::ScrollContentsIfNeeded() {
   if (pending_scroll_delta_.IsZero())
     return;
@@ -4685,7 +4657,7 @@ LayoutRect LocalFrameView::ScrollIntoView(const LayoutRect& rect_in_content,
                         : target_offset;
 
     if (is_for_scroll_sequence) {
-      DCHECK(scroll_type == kProgrammaticScroll);
+      DCHECK(scroll_type == kProgrammaticScroll || scroll_type == kUserScroll);
       ScrollBehavior behavior =
           is_smooth ? kScrollBehaviorSmooth : kScrollBehaviorInstant;
       GetSmoothScrollSequencer()->QueueAnimation(this, target_offset, behavior);
@@ -4803,7 +4775,7 @@ bool LocalFrameView::ScrollbarCornerPresent() const {
 
 IntRect LocalFrameView::ConvertToRootFrame(const IntRect& local_rect) const {
   if (LocalFrameView* parent = ParentFrameView()) {
-    IntRect parent_rect = ConvertToContainingEmbeddedContentView(local_rect);
+    IntRect parent_rect = ConvertToParentView(local_rect);
     return parent->ConvertToRootFrame(parent_rect);
   }
   return local_rect;
@@ -4811,7 +4783,7 @@ IntRect LocalFrameView::ConvertToRootFrame(const IntRect& local_rect) const {
 
 IntPoint LocalFrameView::ConvertToRootFrame(const IntPoint& local_point) const {
   if (LocalFrameView* parent = ParentFrameView()) {
-    IntPoint parent_point = ConvertToContainingEmbeddedContentView(local_point);
+    IntPoint parent_point = ConvertToParentView(local_point);
     return parent->ConvertToRootFrame(parent_point);
   }
   return local_point;
@@ -4821,7 +4793,7 @@ IntRect LocalFrameView::ConvertFromRootFrame(
     const IntRect& rect_in_root_frame) const {
   if (LocalFrameView* parent = ParentFrameView()) {
     IntRect parent_rect = parent->ConvertFromRootFrame(rect_in_root_frame);
-    return ConvertFromContainingEmbeddedContentView(parent_rect);
+    return ConvertFromParentView(parent_rect);
   }
   return rect_in_root_frame;
 }
@@ -4830,7 +4802,7 @@ IntPoint LocalFrameView::ConvertFromRootFrame(
     const IntPoint& point_in_root_frame) const {
   if (LocalFrameView* parent = ParentFrameView()) {
     IntPoint parent_point = parent->ConvertFromRootFrame(point_in_root_frame);
-    return ConvertFromContainingEmbeddedContentView(parent_point);
+    return ConvertFromParentView(parent_point);
   }
   return point_in_root_frame;
 }
@@ -4857,7 +4829,7 @@ FloatPoint LocalFrameView::ConvertFromRootFrame(
   return parent_point;
 }
 
-IntPoint LocalFrameView::ConvertFromContainingEmbeddedContentViewToScrollbar(
+IntPoint LocalFrameView::ConvertFromParentViewToScrollbar(
     const Scrollbar& scrollbar,
     const IntPoint& parent_point) const {
   IntPoint new_point = parent_point;

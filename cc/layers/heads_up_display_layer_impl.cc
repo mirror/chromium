@@ -95,7 +95,7 @@ void HeadsUpDisplayLayerImpl::AcquireResource(
     }
   }
 
-  auto resource = std::make_unique<ScopedResource>(resource_provider);
+  auto resource = base::MakeUnique<ScopedResource>(resource_provider);
   resource->Allocate(internal_content_bounds_,
                      ResourceProvider::TEXTURE_HINT_IMMUTABLE_FRAMEBUFFER,
                      resource_provider->best_render_buffer_format(),
@@ -134,13 +134,13 @@ void HeadsUpDisplayLayerImpl::AppendQuads(
   if (!resources_.back()->id())
     return;
 
-  viz::SharedQuadState* shared_quad_state =
+  SharedQuadState* shared_quad_state =
       render_pass->CreateAndAppendSharedQuadState();
   PopulateScaledSharedQuadState(shared_quad_state, internal_contents_scale_,
                                 internal_contents_scale_);
 
   gfx::Rect quad_rect(internal_content_bounds_);
-  bool needs_blending = contents_opaque() ? false : true;
+  gfx::Rect opaque_rect(contents_opaque() ? quad_rect : gfx::Rect());
   gfx::Rect visible_quad_rect(quad_rect);
   bool premultiplied_alpha = true;
   gfx::PointF uv_top_left(0.f, 0.f);
@@ -150,7 +150,7 @@ void HeadsUpDisplayLayerImpl::AppendQuads(
   bool nearest_neighbor = false;
   TextureDrawQuad* quad =
       render_pass->CreateAndAppendDrawQuad<TextureDrawQuad>();
-  quad->SetNew(shared_quad_state, quad_rect, visible_quad_rect, needs_blending,
+  quad->SetNew(shared_quad_state, quad_rect, opaque_rect, visible_quad_rect,
                resources_.back()->id(), premultiplied_alpha, uv_top_left,
                uv_bottom_right, SK_ColorTRANSPARENT, vertex_opacity, flipped,
                nearest_neighbor, false);

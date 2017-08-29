@@ -1,6 +1,32 @@
 Tests accessibility values of ignored nodes.
 
 WebArea
+  tree
+    *Ignored
+{
+  "nodeId": "<string>",
+  "ignored": true,
+  "ignoredReasons": [
+    {
+      "name": "ancestorDisallowsChild",
+      "value": {
+        "type": "idref",
+        "relatedNodes": [
+          {
+            "nodeResult": "div"
+          }
+        ]
+      }
+    }
+  ],
+  "role": {
+    "type": "internalRole",
+    "value": "Ignored"
+  },
+  "domNode": "div"
+}
+
+WebArea
   img
     *Ignored
 {
@@ -8,7 +34,7 @@ WebArea
   "ignored": true,
   "ignoredReasons": [
     {
-      "name": "ancestorIsLeafNode",
+      "name": "ancestorDisallowsChild",
       "value": {
         "type": "idref",
         "relatedNodes": [
@@ -146,6 +172,7 @@ WebArea
 
 WebArea
   GenericContainer
+  tree
   img
   button "Buttons are leaf nodes"
   text "List item also presentational"
@@ -332,6 +359,7 @@ WebArea
 
 WebArea
   GenericContainer
+  tree
   img
   button "Buttons are leaf nodes"
   text "List item also presentational"

@@ -312,9 +312,7 @@ ServiceWorkerDispatcherHost* ServiceWorkerContextCore::GetDispatcherHost(
 }
 
 void ServiceWorkerContextCore::RemoveDispatcherHost(int process_id) {
-  // Temporary CHECKs for debugging https://crbug.com/750267.
-  CHECK(BrowserThread::CurrentlyOn(BrowserThread::IO));
-  CHECK(dispatcher_hosts_.find(process_id) != dispatcher_hosts_.end());
+  DCHECK(dispatcher_hosts_.find(process_id) != dispatcher_hosts_.end());
   RemoveAllProviderHostsForProcess(process_id);
   embedded_worker_registry_->RemoveProcess(process_id);
   dispatcher_hosts_.erase(process_id);
@@ -322,8 +320,6 @@ void ServiceWorkerContextCore::RemoveDispatcherHost(int process_id) {
 
 void ServiceWorkerContextCore::AddProviderHost(
     std::unique_ptr<ServiceWorkerProviderHost> host) {
-  // Temporary CHECK for debugging https://crbug.com/750267.
-  CHECK(BrowserThread::CurrentlyOn(BrowserThread::IO));
   int process_id = host->process_id();
   int provider_id = host->provider_id();
   ProviderMap* map = GetProviderMapForProcess(process_id);
@@ -345,8 +341,6 @@ ServiceWorkerProviderHost* ServiceWorkerContextCore::GetProviderHost(
 
 void ServiceWorkerContextCore::RemoveProviderHost(
     int process_id, int provider_id) {
-  // Temporary CHECK for debugging https://crbug.com/750267.
-  CHECK(BrowserThread::CurrentlyOn(BrowserThread::IO));
   ProviderMap* map = GetProviderMapForProcess(process_id);
   DCHECK(map);
   map->Remove(provider_id);
@@ -354,24 +348,18 @@ void ServiceWorkerContextCore::RemoveProviderHost(
 
 void ServiceWorkerContextCore::RemoveAllProviderHostsForProcess(
     int process_id) {
-  // Temporary CHECK for debugging https://crbug.com/750267.
-  CHECK(BrowserThread::CurrentlyOn(BrowserThread::IO));
   if (providers_->Lookup(process_id))
     providers_->Remove(process_id);
 }
 
 std::unique_ptr<ServiceWorkerContextCore::ProviderHostIterator>
 ServiceWorkerContextCore::GetProviderHostIterator() {
-  // Temporary CHECK for debugging https://crbug.com/750267.
-  CHECK(BrowserThread::CurrentlyOn(BrowserThread::IO));
   return base::WrapUnique(new ProviderHostIterator(
       providers_.get(), ProviderHostIterator::ProviderHostPredicate()));
 }
 
 std::unique_ptr<ServiceWorkerContextCore::ProviderHostIterator>
 ServiceWorkerContextCore::GetClientProviderHostIterator(const GURL& origin) {
-  // Temporary CHECK for debugging https://crbug.com/750267.
-  CHECK(BrowserThread::CurrentlyOn(BrowserThread::IO));
   return base::WrapUnique(new ProviderHostIterator(
       providers_.get(), base::Bind(IsSameOriginClientProviderHost, origin)));
 }
@@ -506,13 +494,6 @@ void ServiceWorkerContextCore::DidGetAllRegistrationsForUnregisterForOrigin(
     UnregisterServiceWorker(
         scope, base::Bind(&SuccessCollectorCallback, barrier, overall_success));
   }
-}
-
-ServiceWorkerContextCore::ProviderMap*
-ServiceWorkerContextCore::GetProviderMapForProcess(int process_id) {
-  // Temporary CHECK for debugging https://crbug.com/750267.
-  CHECK(BrowserThread::CurrentlyOn(BrowserThread::IO));
-  return providers_->Lookup(process_id);
 }
 
 void ServiceWorkerContextCore::RegistrationComplete(
@@ -933,6 +914,17 @@ void ServiceWorkerContextCore::OnRegistrationFinishedForCheckHasServiceWorker(
   }
 
   CheckFetchHandlerOfInstalledServiceWorker(callback, registration);
+}
+
+void ServiceWorkerContextCore::BindWorkerFetchContext(
+    int render_process_id,
+    int service_worker_provider_id,
+    mojom::ServiceWorkerWorkerClientAssociatedPtrInfo client_ptr_info) {
+  ServiceWorkerProviderHost* provider_host =
+      GetProviderHost(render_process_id, service_worker_provider_id);
+  if (!provider_host)
+    return;
+  provider_host->BindWorkerFetchContext(std::move(client_ptr_info));
 }
 
 }  // namespace content

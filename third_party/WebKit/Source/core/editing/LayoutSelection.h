@@ -60,6 +60,7 @@ class SelectionPaintRange {
 
    private:
     LayoutObject* current_;
+    const LayoutObject* included_end_;
     const LayoutObject* stop_;
   };
   Iterator begin() const { return Iterator(this); };
@@ -101,6 +102,8 @@ class LayoutSelection final : public GarbageCollected<LayoutSelection> {
   void InvalidatePaintForSelection();
 
   void ClearSelection();
+  // TODO(yoiciho): Replace SelectionStartEnd with SelectionStart/End.
+  std::pair<int, int> SelectionStartEnd();
   base::Optional<int> SelectionStart() const;
   base::Optional<int> SelectionEnd() const;
   void OnDocumentShutdown();

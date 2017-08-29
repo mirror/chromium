@@ -401,7 +401,7 @@ testing::AssertionResult SyncFaviconCacheTest::VerifyLocalCustomIcons(
 
 std::unique_ptr<syncer::SyncChangeProcessor>
 SyncFaviconCacheTest::CreateAndPassProcessor() {
-  return std::make_unique<syncer::SyncChangeProcessorWrapperForTest>(
+  return base::MakeUnique<syncer::SyncChangeProcessorWrapperForTest>(
       sync_processor_.get());
 }
 

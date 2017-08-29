@@ -36,8 +36,6 @@ class TestSerialIoHandler : public SerialIoHandler {
       const mojom::SerialHostControlSignals& signals) override;
   bool SetBreak() override;
   bool ClearBreak() override;
-  void ForceReceiveError(device::mojom::SerialReceiveError error);
-  void ForceSendError(device::mojom::SerialSendError error);
 
   mojom::SerialConnectionInfo* connection_info() { return &info_; }
   mojom::SerialDeviceControlSignals* device_control_signals() {
@@ -62,7 +60,7 @@ class TestSerialIoHandler : public SerialIoHandler {
   bool dtr_;
   bool rts_;
   mutable int flushes_;
-  std::vector<uint8_t> buffer_;
+  std::string buffer_;
   base::OnceClosure send_callback_;
 
   DISALLOW_COPY_AND_ASSIGN(TestSerialIoHandler);

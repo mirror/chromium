@@ -202,8 +202,9 @@ class HidDevicePermissionsPrompt : public DevicePermissionsPrompt::Prompt,
     if (observer) {
       HidService* service = device::DeviceClient::Get()->GetHidService();
       if (service && !service_observer_.IsObserving(service)) {
-        service->GetDevices(base::Bind(
-            &HidDevicePermissionsPrompt::OnDevicesEnumerated, this, service));
+        service->GetDevices(
+            base::Bind(&HidDevicePermissionsPrompt::OnDevicesEnumerated, this));
+        service_observer_.Add(service);
       }
     }
   }
@@ -265,12 +266,10 @@ class HidDevicePermissionsPrompt : public DevicePermissionsPrompt::Prompt,
   }
 
   void OnDevicesEnumerated(
-      HidService* service,
       const std::vector<scoped_refptr<device::HidDeviceInfo>>& devices) {
     for (const auto& device : devices) {
       OnDeviceAdded(device);
     }
-    service_observer_.Add(service);
   }
 
   bool HasUnprotectedCollections(scoped_refptr<device::HidDeviceInfo> device) {

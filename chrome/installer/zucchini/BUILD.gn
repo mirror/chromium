@@ -8,9 +8,7 @@ import("//testing/test.gni")
 
 static_library("zucchini_lib") {
   sources = [
-    "address_translator.cc",
     "address_translator.h",
-    "algorithm.h",
     "binary_data_histogram.cc",
     "binary_data_histogram.h",
     "buffer_sink.cc",
@@ -24,8 +22,6 @@ static_library("zucchini_lib") {
     "disassembler.h",
     "disassembler_no_op.cc",
     "disassembler_no_op.h",
-    "disassembler_win32.cc",
-    "disassembler_win32.h",
     "element_detection.cc",
     "element_detection.h",
     "encoded_view.cc",
@@ -56,25 +52,9 @@ static_library("zucchini_lib") {
     "zucchini_apply.h",
     "zucchini_gen.cc",
     "zucchini_gen.h",
-    "zucchini_tools.cc",
-    "zucchini_tools.h",
   ]
 
   deps = [
-    "//base",
-  ]
-}
-
-static_library("zucchini_io") {
-  sources = [
-    "mapped_file.cc",
-    "mapped_file.h",
-    "zucchini_integration.cc",
-    "zucchini_integration.h",
-  ]
-
-  deps = [
-    ":zucchini_lib",
     "//base",
   ]
 }
@@ -89,7 +69,6 @@ executable("zucchini") {
   ]
 
   deps = [
-    ":zucchini_io",
     ":zucchini_lib",
     "//base",
     "//build/config:exe_and_shlib_deps",
@@ -120,8 +99,6 @@ fuzzer_test("zucchini_patch_fuzzer") {
 
 test("zucchini_unittests") {
   sources = [
-    "address_translator_unittest.cc",
-    "algorithm_unittest.cc",
     "binary_data_histogram_unittest.cc",
     "buffer_sink_unittest.cc",
     "buffer_source_unittest.cc",
@@ -134,7 +111,6 @@ test("zucchini_unittests") {
     "image_utils_unittest.cc",
     "io_utils_unittest.cc",
     "label_manager_unittest.cc",
-    "mapped_file_unittest.cc",
     "patch_read_write_unittest.cc",
     "patch_utils_unittest.cc",
     "rel32_finder_unittest.cc",
@@ -145,21 +121,6 @@ test("zucchini_unittests") {
     "typed_value_unittest.cc",
     "zucchini_apply_unittest.cc",
     "zucchini_gen_unittest.cc",
-  ]
-
-  deps = [
-    ":zucchini_io",
-    ":zucchini_lib",
-    "//base",
-    "//base/test:run_all_unittests",
-    "//base/test:test_support",
-    "//testing/gtest",
-  ]
-}
-
-test("zucchini_integration_test") {
-  sources = [
-    "integration_test.cc",
   ]
 
   deps = [

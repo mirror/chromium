@@ -103,7 +103,7 @@ class TimedScriptInjectionCallback : public ScriptInjectionCallback {
       if (!start_time_.is_null()) {
         elapsed = timestamp - start_time_;
         if (async_run_info_)
-          async_run_info_->OnCompleted(timestamp, elapsed);
+          async_run_info_->OnCompleted(timestamp);
       }
       injection_->OnJsInjectionCompleted(result, elapsed);
     }
@@ -380,7 +380,7 @@ void ScriptInjection::OnJsInjectionCompleted(
           content::V8ValueConverter::Create()->FromV8Value(results[0], context);
     }
     if (!execution_result_.get())
-      execution_result_ = std::make_unique<base::Value>();
+      execution_result_ = base::MakeUnique<base::Value>();
   }
   did_inject_js_ = true;
 

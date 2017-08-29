@@ -171,20 +171,52 @@ TEST_F(NetworkIconTest, CompareImagesByNetworkType_Connected) {
 }
 
 TEST_F(NetworkIconTest,
-       GetCellularUninitializedMsg_NoUninitializedMessageExpected) {
-  EXPECT_EQ(0, GetCellularUninitializedMsg());
+       GetMobileUninitializedMsg_NoUninitializedMessageExpected) {
+  EXPECT_EQ(0, GetMobileUninitializedMsg());
 }
 
 TEST_F(NetworkIconTest,
-       GetCellularUninitializedMsg_CellularUninitialized_NoMobileNetworks) {
+       GetMobileUninitializedMsg_CellularUnavailable_BluetoothDisabled) {
+  SetCellularUnavailable();
+
+  handler_->SetTetherTechnologyState(
+      chromeos::NetworkStateHandler::TECHNOLOGY_UNINITIALIZED);
+  base::RunLoop().RunUntilIdle();
+
+  EXPECT_EQ(IDS_ASH_STATUS_TRAY_ENABLE_BLUETOOTH, GetMobileUninitializedMsg());
+}
+
+TEST_F(NetworkIconTest,
+       GetMobileUninitializedMsg_CellularUninitialized_NoMobileNetworks) {
   SetCellularUninitialized();
 
   EXPECT_EQ(IDS_ASH_STATUS_TRAY_INITIALIZING_CELLULAR,
-            GetCellularUninitializedMsg());
+            GetMobileUninitializedMsg());
 }
 
 TEST_F(NetworkIconTest,
-       GetCellularUninitializedMsg_CellularScanning_NoMobileNetworks) {
+       GetMobileUninitializedMsg_CellularUninitialized_MobileNetworksExist) {
+  SetCellularUninitialized();
+
+  handler_->SetTetherTechnologyState(
+      chromeos::NetworkStateHandler::TECHNOLOGY_ENABLED);
+  base::RunLoop().RunUntilIdle();
+
+  handler_->AddTetherNetworkState(
+      "guid", "name", "carrier", 100 /* battery_percentage */,
+      100 /* signal_strength */, false /* has_connected_to_host */);
+  base::RunLoop().RunUntilIdle();
+
+  chromeos::NetworkStateHandler::NetworkStateList mobile_networks;
+  handler_->GetVisibleNetworkListByType(chromeos::NetworkTypePattern::Tether(),
+                                        &mobile_networks);
+  ASSERT_FALSE(mobile_networks.empty());
+
+  EXPECT_EQ(0, GetMobileUninitializedMsg());
+}
+
+TEST_F(NetworkIconTest,
+       GetMobileUninitializedMsg_CellularScanning_NoMobileNetworks) {
   SetCellularUninitialized();
 
   test_manager_client()->AddTechnology(shill::kTypeCellular, true);
@@ -200,7 +232,7 @@ TEST_F(NetworkIconTest,
   ASSERT_TRUE(
       handler_->GetScanningByType(chromeos::NetworkTypePattern::Cellular()));
 
-  EXPECT_EQ(IDS_ASH_STATUS_TRAY_MOBILE_SCANNING, GetCellularUninitializedMsg());
+  EXPECT_EQ(IDS_ASH_STATUS_TRAY_MOBILE_SCANNING, GetMobileUninitializedMsg());
 }
 
 }  // namespace network_icon

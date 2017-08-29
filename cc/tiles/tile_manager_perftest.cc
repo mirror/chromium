@@ -50,7 +50,7 @@ class TileManagerPerfTest : public TestLayerTreeHostBase {
     host_impl()->SetVisible(true);
     host_impl()->InitializeRenderer(layer_tree_frame_sink());
     tile_manager()->SetTileTaskManagerForTesting(
-        std::make_unique<FakeTileTaskManagerImpl>());
+        base::MakeUnique<FakeTileTaskManagerImpl>());
   }
 
   void SetupDefaultTreesWithFixedTileSize(const gfx::Size& layer_bounds,
@@ -281,7 +281,7 @@ class TileManagerPerfTest : public TestLayerTreeHostBase {
 
       GlobalStateThatImpactsTilePriority global_state(GlobalStateForTest());
       tile_manager()->PrepareTiles(global_state);
-      tile_manager()->CheckForCompletedTasks();
+      tile_manager()->Flush();
       timer_.NextLap();
     } while (!timer_.HasTimeLimitExpired());
 

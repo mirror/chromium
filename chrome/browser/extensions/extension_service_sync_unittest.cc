@@ -56,6 +56,7 @@
 #include "extensions/common/extension_builder.h"
 #include "extensions/common/manifest_url_handlers.h"
 #include "extensions/common/permissions/permission_set.h"
+#include "extensions/common/value_builder.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 #if BUILDFLAG(ENABLE_SUPERVISED_USERS)
@@ -2167,10 +2168,8 @@ TEST_F(ExtensionServiceTestSupervised,
   profile()->AsTestingProfile()->SetSupervisedUserId(
       supervised_users::kChildAccountSUID);
 
-  // The extension should now be disabled.
-  EXPECT_TRUE(registry()->disabled_extensions().Contains(id));
-  EXPECT_EQ(extensions::disable_reason::DISABLE_BLOCKED_BY_POLICY,
-            ExtensionPrefs::Get(profile())->GetDisableReasons(id));
+  // The extension should not be loaded anymore.
+  EXPECT_FALSE(registry()->GetInstalledExtension(id));
 }
 
 TEST_F(ExtensionServiceTestSupervised, ExtensionApprovalBeforeInstallation) {
@@ -2567,9 +2566,18 @@ TEST_F(ExtensionServiceSyncTest, SyncExtensionHasAllhostsWithheld) {
   // Create an extension that needs all-hosts.
   const std::string kName("extension");
   scoped_refptr<const Extension> extension =
-      extensions::ExtensionBuilder(kName)
+      extensions::ExtensionBuilder()
           .SetLocation(Manifest::INTERNAL)
-          .AddPermission("*://*/*")
+          .SetManifest(
+              extensions::DictionaryBuilder()
+                  .Set("name", kName)
+                  .Set("description", "foo")
+                  .Set("manifest_version", 2)
+                  .Set("version", "1.0")
+                  .Set("permissions",
+                       extensions::ListBuilder().Append("*://*/*").Build())
+                  .Build())
+          .SetID(crx_file::id_util::GenerateId(kName))
           .Build();
 
   // Install and enable it.

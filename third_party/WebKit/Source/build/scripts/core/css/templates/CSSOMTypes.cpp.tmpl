@@ -11,7 +11,6 @@
 #include "core/css/cssom/CSSOMKeywords.h"
 #include "core/css/cssom/CSSKeywordValue.h"
 #include "core/css/cssom/CSSStyleValue.h"
-#include "core/css/properties/CSSPropertyAPI.h"
 
 namespace blink {
 
@@ -22,7 +21,7 @@ bool CSSOMTypes::PropertyCanTake(CSSPropertyID id,
         id, ToCSSKeywordValue(styleValue));
   }
   if (styleValue.ContainsPercent() &&
-      !CSSPropertyAPI::Get(id).SupportsPercentage()) {
+      !CSSPropertyMetadata::PropertySupportsPercentage(id)) {
     return false;
   }
   if (styleValue.GetType() == CSSStyleValue::kUnknownType) {

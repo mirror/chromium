@@ -59,7 +59,6 @@
 #include "chrome/browser/metrics/thread_watcher.h"
 #include "chrome/browser/net/chrome_net_log_helper.h"
 #include "chrome/browser/net/crl_set_fetcher.h"
-#include "chrome/browser/net/system_network_context_manager.h"
 #include "chrome/browser/notifications/notification_platform_bridge.h"
 #include "chrome/browser/notifications/notification_ui_manager.h"
 #include "chrome/browser/plugins/chrome_plugin_service_filter.h"
@@ -225,18 +224,18 @@ BrowserProcessImpl::BrowserProcessImpl(
       created_subresource_filter_ruleset_service_(false),
       shutting_down_(false),
       tearing_down_(false),
-      download_status_updater_(base::MakeUnique<DownloadStatusUpdater>()),
+      download_status_updater_(new DownloadStatusUpdater),
       local_state_task_runner_(local_state_task_runner),
       cached_default_web_client_state_(shell_integration::UNKNOWN_DEFAULT),
       pref_service_factory_(
           base::MakeUnique<prefs::InProcessPrefServiceFactory>()) {
   g_browser_process = this;
   rappor::SetDefaultServiceAccessor(&GetBrowserRapporService);
-  platform_part_ = base::MakeUnique<BrowserProcessPlatformPart>();
+  platform_part_.reset(new BrowserProcessPlatformPart());
 
 #if BUILDFLAG(ENABLE_PRINTING)
   // Must be created after the NotificationService.
-  print_job_manager_ = base::MakeUnique<printing::PrintJobManager>();
+  print_job_manager_.reset(new printing::PrintJobManager);
 #endif
 
   net_log_ = base::MakeUnique<net_log::ChromeNetLog>();
@@ -255,19 +254,18 @@ BrowserProcessImpl::BrowserProcessImpl(
   ui::InitIdleMonitor();
 #endif
 
-  device_client_ = base::MakeUnique<ChromeDeviceClient>();
+  device_client_.reset(new ChromeDeviceClient);
 
 #if BUILDFLAG(ENABLE_EXTENSIONS)
   extensions::AppWindowClient::Set(ChromeAppWindowClient::GetInstance());
 
-  extension_event_router_forwarder_ =
-      base::MakeRefCounted<extensions::EventRouterForwarder>();
+  extension_event_router_forwarder_ = new extensions::EventRouterForwarder;
 
   extensions::ExtensionsClient::Set(
       extensions::ChromeExtensionsClient::GetInstance());
 
-  extensions_browser_client_ =
-      base::MakeUnique<extensions::ChromeExtensionsBrowserClient>();
+  extensions_browser_client_.reset(
+      new extensions::ChromeExtensionsBrowserClient);
   extensions::ExtensionsBrowserClient::Set(extensions_browser_client_.get());
 #endif
 
@@ -377,8 +375,8 @@ void BrowserProcessImpl::StartTearDown() {
     webrtc_log_uploader_->StartShutdown();
 #endif
 
-  if (local_state_)
-    local_state_->CommitPendingWrite();
+  if (local_state())
+    local_state()->CommitPendingWrite();
 }
 
 void BrowserProcessImpl::PostDestroyThreads() {
@@ -389,9 +387,6 @@ void BrowserProcessImpl::PostDestroyThreads() {
   // Must outlive the file thread.
   webrtc_log_uploader_.reset();
 #endif
-
-  // This observes |local_state_|, so should be destroyed before it.
-  system_network_context_manager_.reset();
 
   // Reset associated state right after actual thread is stopped,
   // as io_thread_.global_ cleanup happens in CleanUp on the IO
@@ -474,8 +469,7 @@ bool RundownTaskCounter::TimedWaitUntil(const base::TimeTicks& end_time) {
 }  // namespace
 
 void BrowserProcessImpl::FlushLocalStateAndReply(base::OnceClosure reply) {
-  if (local_state_)
-    local_state_->CommitPendingWrite();
+  local_state()->CommitPendingWrite();
   local_state_task_runner_->PostTaskAndReply(
       FROM_HERE, base::Bind(&base::DoNothing), std::move(reply));
 }
@@ -484,8 +478,7 @@ void BrowserProcessImpl::EndSession() {
   // Mark all the profiles as clean.
   ProfileManager* pm = profile_manager();
   std::vector<Profile*> profiles(pm->GetLoadedProfiles());
-  scoped_refptr<RundownTaskCounter> rundown_counter =
-      base::MakeRefCounted<RundownTaskCounter>();
+  scoped_refptr<RundownTaskCounter> rundown_counter(new RundownTaskCounter());
   for (size_t i = 0; i < profiles.size(); ++i) {
     Profile* profile = profiles[i];
     profile->SetExitType(Profile::EXIT_SESSION_ENDED);
@@ -497,13 +490,13 @@ void BrowserProcessImpl::EndSession() {
 
   // Tell the metrics service it was cleanly shutdown.
   metrics::MetricsService* metrics = g_browser_process->metrics_service();
-  if (metrics && local_state_) {
+  if (metrics && local_state()) {
     metrics->RecordStartOfSessionEnd();
 #if !defined(OS_CHROMEOS)
     // MetricsService lazily writes to prefs, force it to write now.
     // On ChromeOS, chrome gets killed when hangs, so no need to
     // commit metrics::prefs::kStabilitySessionEndCompleted change immediately.
-    local_state_->CommitPendingWrite();
+    local_state()->CommitPendingWrite();
 
     rundown_counter->Post(local_state_task_runner_.get());
 #endif
@@ -543,11 +536,10 @@ metrics_services_manager::MetricsServicesManager*
 BrowserProcessImpl::GetMetricsServicesManager() {
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
   if (!metrics_services_manager_) {
-    auto client =
-        base::MakeUnique<ChromeMetricsServicesManagerClient>(local_state());
-    metrics_services_manager_ =
-        base::MakeUnique<metrics_services_manager::MetricsServicesManager>(
-            std::move(client));
+    metrics_services_manager_.reset(
+        new metrics_services_manager::MetricsServicesManager(
+            base::MakeUnique<ChromeMetricsServicesManagerClient>(
+                local_state())));
   }
   return metrics_services_manager_.get();
 }
@@ -571,13 +563,6 @@ IOThread* BrowserProcessImpl::io_thread() {
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
   DCHECK(io_thread_.get());
   return io_thread_.get();
-}
-
-SystemNetworkContextManager*
-BrowserProcessImpl::system_network_context_manager() {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
-  DCHECK(system_network_context_manager_.get());
-  return system_network_context_manager_.get();
 }
 
 WatchDogThread* BrowserProcessImpl::watchdog_thread() {
@@ -683,8 +668,8 @@ GpuProfileCache* BrowserProcessImpl::gpu_profile_cache() {
 
 GpuModeManager* BrowserProcessImpl::gpu_mode_manager() {
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
-  if (!gpu_mode_manager_)
-    gpu_mode_manager_ = base::MakeUnique<GpuModeManager>();
+  if (!gpu_mode_manager_.get())
+    gpu_mode_manager_.reset(new GpuModeManager());
   return gpu_mode_manager_.get();
 }
 
@@ -695,9 +680,8 @@ void BrowserProcessImpl::CreateDevToolsHttpProtocolHandler(
 #if !defined(OS_ANDROID)
   // StartupBrowserCreator::LaunchBrowser can be run multiple times when browser
   // is started with several profiles or existing browser process is reused.
-  if (!remote_debugging_server_) {
-    remote_debugging_server_ =
-        base::MakeUnique<RemoteDebuggingServer>(ip, port);
+  if (!remote_debugging_server_.get()) {
+    remote_debugging_server_.reset(new RemoteDebuggingServer(ip, port));
   }
 #endif
 }
@@ -707,8 +691,8 @@ void BrowserProcessImpl::CreateDevToolsAutoOpener() {
 #if !defined(OS_ANDROID)
   // StartupBrowserCreator::LaunchBrowser can be run multiple times when browser
   // is started with several profiles or existing browser process is reused.
-  if (!devtools_auto_opener_)
-    devtools_auto_opener_ = base::MakeUnique<DevToolsAutoOpener>();
+  if (!devtools_auto_opener_.get())
+    devtools_auto_opener_.reset(new DevToolsAutoOpener());
 #endif
 }
 
@@ -741,7 +725,7 @@ printing::BackgroundPrintingManager*
     BrowserProcessImpl::background_printing_manager() {
 #if BUILDFLAG(ENABLE_PRINT_PREVIEW)
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
-  if (!background_printing_manager_)
+  if (!background_printing_manager_.get())
     CreateBackgroundPrintingManager();
   return background_printing_manager_.get();
 #else
@@ -752,7 +736,7 @@ printing::BackgroundPrintingManager*
 
 IntranetRedirectDetector* BrowserProcessImpl::intranet_redirect_detector() {
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
-  if (!intranet_redirect_detector_)
+  if (!intranet_redirect_detector_.get())
     CreateIntranetRedirectDetector();
   return intranet_redirect_detector_.get();
 }
@@ -779,7 +763,7 @@ DownloadStatusUpdater* BrowserProcessImpl::download_status_updater() {
 MediaFileSystemRegistry* BrowserProcessImpl::media_file_system_registry() {
 #if BUILDFLAG(ENABLE_EXTENSIONS)
   if (!media_file_system_registry_)
-    media_file_system_registry_ = base::MakeUnique<MediaFileSystemRegistry>();
+    media_file_system_registry_.reset(new MediaFileSystemRegistry());
   return media_file_system_registry_.get();
 #else
   return NULL;
@@ -788,18 +772,18 @@ MediaFileSystemRegistry* BrowserProcessImpl::media_file_system_registry() {
 
 #if BUILDFLAG(ENABLE_WEBRTC)
 WebRtcLogUploader* BrowserProcessImpl::webrtc_log_uploader() {
-  if (!webrtc_log_uploader_)
-    webrtc_log_uploader_ = base::MakeUnique<WebRtcLogUploader>();
+  if (!webrtc_log_uploader_.get())
+    webrtc_log_uploader_.reset(new WebRtcLogUploader());
   return webrtc_log_uploader_.get();
 }
 #endif
 
 network_time::NetworkTimeTracker* BrowserProcessImpl::network_time_tracker() {
   if (!network_time_tracker_) {
-    network_time_tracker_ = base::MakeUnique<network_time::NetworkTimeTracker>(
+    network_time_tracker_.reset(new network_time::NetworkTimeTracker(
         base::WrapUnique(new base::DefaultClock()),
         base::WrapUnique(new base::DefaultTickClock()), local_state(),
-        system_request_context());
+        system_request_context()));
   }
   return network_time_tracker_.get();
 }
@@ -814,8 +798,8 @@ gcm::GCMDriver* BrowserProcessImpl::gcm_driver() {
 resource_coordinator::TabManager* BrowserProcessImpl::GetTabManager() {
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
 #if defined(OS_WIN) || defined(OS_MACOSX) || defined(OS_LINUX)
-  if (!tab_manager_)
-    tab_manager_ = base::MakeUnique<resource_coordinator::TabManager>();
+  if (!tab_manager_.get())
+    tab_manager_.reset(new resource_coordinator::TabManager());
   return tab_manager_.get();
 #else
   return nullptr;
@@ -885,16 +869,15 @@ void BrowserProcessImpl::RegisterPrefs(PrefRegistrySimple* registry) {
 
 DownloadRequestLimiter* BrowserProcessImpl::download_request_limiter() {
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
-  if (!download_request_limiter_.get()) {
-    download_request_limiter_ = base::MakeRefCounted<DownloadRequestLimiter>();
-  }
+  if (!download_request_limiter_.get())
+    download_request_limiter_ = new DownloadRequestLimiter();
   return download_request_limiter_.get();
 }
 
 BackgroundModeManager* BrowserProcessImpl::background_mode_manager() {
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
 #if BUILDFLAG(ENABLE_BACKGROUND)
-  if (!background_mode_manager_)
+  if (!background_mode_manager_.get())
     CreateBackgroundModeManager();
   return background_mode_manager_.get();
 #else
@@ -912,7 +895,7 @@ void BrowserProcessImpl::set_background_mode_manager_for_test(
 
 StatusTray* BrowserProcessImpl::status_tray() {
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
-  if (!status_tray_)
+  if (!status_tray_.get())
     CreateStatusTray();
   return status_tray_.get();
 }
@@ -973,7 +956,7 @@ BrowserProcessImpl::component_updater() {
 
 CRLSetFetcher* BrowserProcessImpl::crl_set_fetcher() {
   if (!crl_set_fetcher_)
-    crl_set_fetcher_ = base::MakeRefCounted<CRLSetFetcher>();
+    crl_set_fetcher_ = new CRLSetFetcher();
   return crl_set_fetcher_.get();
 }
 
@@ -982,7 +965,7 @@ BrowserProcessImpl::pnacl_component_installer() {
 #if !defined(DISABLE_NACL)
   if (!pnacl_component_installer_) {
     pnacl_component_installer_ =
-        base::MakeRefCounted<component_updater::PnaclComponentInstaller>();
+        new component_updater::PnaclComponentInstaller();
   }
   return pnacl_component_installer_.get();
 #else
@@ -1003,8 +986,8 @@ BrowserProcessImpl::supervised_user_whitelist_installer() {
 }
 
 void BrowserProcessImpl::ResourceDispatcherHostCreated() {
-  resource_dispatcher_host_delegate_ =
-      base::MakeUnique<ChromeResourceDispatcherHostDelegate>();
+  resource_dispatcher_host_delegate_.reset(
+      new ChromeResourceDispatcherHostDelegate);
   ResourceDispatcherHost::Get()->SetDelegate(
       resource_dispatcher_host_delegate_.get());
 
@@ -1028,7 +1011,7 @@ void BrowserProcessImpl::CreateWatchdogThread() {
   DCHECK(!created_watchdog_thread_ && !watchdog_thread_);
   created_watchdog_thread_ = true;
 
-  auto thread = base::MakeUnique<WatchDogThread>();
+  std::unique_ptr<WatchDogThread> thread(new WatchDogThread());
   base::Thread::Options options;
   options.timer_slack = base::TIMER_SLACK_MAXIMUM;
   if (!thread->StartWithOptions(options))
@@ -1042,7 +1025,7 @@ void BrowserProcessImpl::CreateProfileManager() {
 
   base::FilePath user_data_dir;
   PathService::Get(chrome::DIR_USER_DATA, &user_data_dir);
-  profile_manager_ = base::MakeUnique<ProfileManager>(user_data_dir);
+  profile_manager_.reset(new ProfileManager(user_data_dir));
 }
 
 void BrowserProcessImpl::CreateLocalState() {
@@ -1050,7 +1033,7 @@ void BrowserProcessImpl::CreateLocalState() {
 
   base::FilePath local_state_path;
   CHECK(PathService::Get(chrome::FILE_LOCAL_STATE, &local_state_path));
-  auto pref_registry = base::MakeRefCounted<PrefRegistrySimple>();
+  scoped_refptr<PrefRegistrySimple> pref_registry = new PrefRegistrySimple;
 
   // Register local state preferences.
   chrome::RegisterLocalState(pref_registry.get());
@@ -1095,15 +1078,9 @@ void BrowserProcessImpl::PreCreateThreads() {
       extensions::kExtensionScheme, true);
 #endif
 
-  // Must be created before the IOThread.
-  // TODO(mmenke): Once IOThread class is no longer needed (not the thread
-  // itself), this can be created on first use.
-  system_network_context_manager_ =
-      base::MakeUnique<SystemNetworkContextManager>();
-  io_thread_ = base::MakeUnique<IOThread>(
-      local_state(), policy_service(), net_log_.get(),
-      extension_event_router_forwarder(),
-      system_network_context_manager_.get());
+  io_thread_.reset(
+      new IOThread(local_state(), policy_service(), net_log_.get(),
+                   extension_event_router_forwarder()));
 }
 
 void BrowserProcessImpl::PreMainMessageLoopRun() {
@@ -1143,29 +1120,31 @@ void BrowserProcessImpl::PreMainMessageLoopRun() {
   storage_monitor::StorageMonitor::Create();
 #endif
 
-  child_process_watcher_ = base::MakeUnique<ChromeChildProcessWatcher>();
+  child_process_watcher_.reset(new ChromeChildProcessWatcher());
 
   CacheDefaultWebClientState();
 
   platform_part_->PreMainMessageLoopRun();
 
   if (base::FeatureList::IsEnabled(network_time::kNetworkTimeServiceQuerying)) {
-    network_time_tracker_ = base::MakeUnique<network_time::NetworkTimeTracker>(
+    network_time_tracker_.reset(new network_time::NetworkTimeTracker(
         base::WrapUnique(new base::DefaultClock()),
         base::WrapUnique(new base::DefaultTickClock()), local_state(),
-        system_request_context());
+        system_request_context()));
   }
 }
 
 void BrowserProcessImpl::CreateIconManager() {
   DCHECK(!created_icon_manager_ && !icon_manager_);
   created_icon_manager_ = true;
-  icon_manager_ = base::MakeUnique<IconManager>();
+  icon_manager_.reset(new IconManager);
 }
 
 void BrowserProcessImpl::CreateIntranetRedirectDetector() {
   DCHECK(!intranet_redirect_detector_);
-  intranet_redirect_detector_ = base::MakeUnique<IntranetRedirectDetector>();
+  std::unique_ptr<IntranetRedirectDetector> intranet_redirect_detector(
+      new IntranetRedirectDetector);
+  intranet_redirect_detector_.swap(intranet_redirect_detector);
 }
 
 void BrowserProcessImpl::CreateNotificationPlatformBridge() {
@@ -1189,9 +1168,10 @@ void BrowserProcessImpl::CreateNotificationUIManager() {
 void BrowserProcessImpl::CreateBackgroundModeManager() {
 #if BUILDFLAG(ENABLE_BACKGROUND)
   DCHECK(!background_mode_manager_);
-  background_mode_manager_ = base::MakeUnique<BackgroundModeManager>(
-      *base::CommandLine::ForCurrentProcess(),
-      &profile_manager()->GetProfileAttributesStorage());
+  background_mode_manager_.reset(
+      new BackgroundModeManager(
+              *base::CommandLine::ForCurrentProcess(),
+              &profile_manager()->GetProfileAttributesStorage()));
 #endif
 }
 
@@ -1204,7 +1184,7 @@ void BrowserProcessImpl::CreatePrintPreviewDialogController() {
 #if BUILDFLAG(ENABLE_PRINT_PREVIEW)
   DCHECK(!print_preview_dialog_controller_);
   print_preview_dialog_controller_ =
-      base::MakeRefCounted<printing::PrintPreviewDialogController>();
+      new printing::PrintPreviewDialogController();
 #else
   NOTIMPLEMENTED();
 #endif
@@ -1213,8 +1193,7 @@ void BrowserProcessImpl::CreatePrintPreviewDialogController() {
 void BrowserProcessImpl::CreateBackgroundPrintingManager() {
 #if BUILDFLAG(ENABLE_PRINT_PREVIEW)
   DCHECK(!background_printing_manager_);
-  background_printing_manager_ =
-      base::MakeUnique<printing::BackgroundPrintingManager>();
+  background_printing_manager_.reset(new printing::BackgroundPrintingManager());
 #else
   NOTIMPLEMENTED();
 #endif
@@ -1302,8 +1281,8 @@ void BrowserProcessImpl::ApplyDefaultBrowserPolicy() {
     // The worker pointer is reference counted. While it is running, the
     // message loops of the FILE and UI thread will hold references to it
     // and it will be automatically freed once all its tasks have finished.
-    auto set_browser_worker =
-        base::MakeRefCounted<shell_integration::DefaultBrowserWorker>(
+    scoped_refptr<shell_integration::DefaultBrowserWorker> set_browser_worker =
+        new shell_integration::DefaultBrowserWorker(
             shell_integration::DefaultWebClientWorkerCallback());
     // The user interaction must always be disabled when applying the default
     // browser policy since it is done at each browser startup and the result
@@ -1399,7 +1378,8 @@ const char* const kSwitchesToAddOnAutorestart[] = {
 
 void BrowserProcessImpl::RestartBackgroundInstance() {
   base::CommandLine* old_cl = base::CommandLine::ForCurrentProcess();
-  auto new_cl = base::MakeUnique<base::CommandLine>(old_cl->GetProgram());
+  std::unique_ptr<base::CommandLine> new_cl(
+      new base::CommandLine(old_cl->GetProgram()));
 
   std::map<std::string, base::CommandLine::StringType> switches =
       old_cl->GetSwitches();
@@ -1408,12 +1388,15 @@ void BrowserProcessImpl::RestartBackgroundInstance() {
 
   // Append the rest of the switches (along with their values, if any)
   // to the new command line
-  for (const auto& it : switches) {
-    base::CommandLine::StringType switch_value = it.second;
-    if (switch_value.length() > 0)
-      new_cl->AppendSwitchNative(it.first, it.second);
-    else
-      new_cl->AppendSwitch(it.first);
+  for (std::map<std::string, base::CommandLine::StringType>::const_iterator i =
+           switches.begin();
+       i != switches.end(); ++i) {
+    base::CommandLine::StringType switch_value = i->second;
+      if (switch_value.length() > 0) {
+        new_cl->AppendSwitchNative(i->first, i->second);
+      } else {
+        new_cl->AppendSwitch(i->first);
+      }
   }
 
   // Ensure that our desired switches are set on the new process.

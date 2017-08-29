@@ -16,10 +16,11 @@ namespace operations {
 CreateFile::CreateFile(extensions::EventRouter* event_router,
                        const ProvidedFileSystemInfo& file_system_info,
                        const base::FilePath& file_path,
-                       storage::AsyncFileUtil::StatusCallback callback)
+                       const storage::AsyncFileUtil::StatusCallback& callback)
     : Operation(event_router, file_system_info),
       file_path_(file_path),
-      callback_(std::move(callback)) {}
+      callback_(callback) {
+}
 
 CreateFile::~CreateFile() {
 }
@@ -46,15 +47,13 @@ bool CreateFile::Execute(int request_id) {
 void CreateFile::OnSuccess(int /* request_id */,
                            std::unique_ptr<RequestValue> /* result */,
                            bool has_more) {
-  DCHECK(callback_);
-  std::move(callback_).Run(base::File::FILE_OK);
+  callback_.Run(base::File::FILE_OK);
 }
 
 void CreateFile::OnError(int /* request_id */,
                          std::unique_ptr<RequestValue> /* result */,
                          base::File::Error error) {
-  DCHECK(callback_);
-  std::move(callback_).Run(error);
+  callback_.Run(error);
 }
 
 }  // namespace operations

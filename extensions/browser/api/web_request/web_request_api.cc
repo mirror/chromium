@@ -303,7 +303,7 @@ void SendOnMessageEventOnUI(
   // process. We use a filter here so that only event listeners for a particular
   // <webview> will fire.
   if (is_web_view_guest) {
-    event_filtering_info.instance_id = web_view_instance_id;
+    event_filtering_info.instance_id = is_web_view_guest;
     histogram_value = events::WEB_VIEW_INTERNAL_ON_MESSAGE;
     event_name = webview::kEventMessage;
   } else {
@@ -379,7 +379,7 @@ bool IsPublicSession() {
 std::unique_ptr<WebRequestEventDetails> CreateEventDetails(
     const net::URLRequest* request,
     int extra_info_spec) {
-  return std::make_unique<WebRequestEventDetails>(request, extra_info_spec);
+  return base::MakeUnique<WebRequestEventDetails>(request, extra_info_spec);
 }
 
 }  // namespace
@@ -1621,7 +1621,7 @@ helpers::EventResponseDelta* CalculateDelta(
 
 std::unique_ptr<base::Value> SerializeResponseHeaders(
     const helpers::ResponseHeaders& headers) {
-  auto serialized_headers = std::make_unique<base::ListValue>();
+  auto serialized_headers = base::MakeUnique<base::ListValue>();
   for (const auto& it : headers) {
     serialized_headers->Append(
         helpers::CreateHeaderDictionary(it.first, it.second));
@@ -1636,9 +1636,9 @@ std::unique_ptr<base::Value> SerializeResponseHeaders(
 template <typename CookieType>
 std::unique_ptr<base::ListValue> SummarizeCookieModifications(
     const std::vector<linked_ptr<CookieType>>& modifications) {
-  auto cookie_modifications = std::make_unique<base::ListValue>();
+  auto cookie_modifications = base::MakeUnique<base::ListValue>();
   for (const auto& it : modifications) {
-    auto summary = std::make_unique<base::DictionaryValue>();
+    auto summary = base::MakeUnique<base::DictionaryValue>();
     const CookieType& mod = *(it.get());
     switch (mod.type) {
       case helpers::ADD:
@@ -2384,7 +2384,7 @@ void WebRequestHandlerBehaviorChangedFunction::GetQuotaLimitHeuristics(
   QuotaLimitHeuristic::BucketMapper* bucket_mapper =
       new QuotaLimitHeuristic::SingletonBucketMapper();
   heuristics->push_back(
-      std::make_unique<ClearCacheQuotaHeuristic>(config, bucket_mapper));
+      base::MakeUnique<ClearCacheQuotaHeuristic>(config, bucket_mapper));
 }
 
 void WebRequestHandlerBehaviorChangedFunction::OnQuotaExceeded(

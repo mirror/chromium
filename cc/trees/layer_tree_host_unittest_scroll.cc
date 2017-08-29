@@ -145,9 +145,7 @@ class LayerTreeHostScrollTestScrollSimple : public LayerTreeHostScrollTest {
     }
   }
 
-  void DidScrollOuterViewport(const gfx::ScrollOffset&, const ElementId&) {
-    num_scrolls_++;
-  }
+  void DidScrollOuterViewport(const gfx::ScrollOffset&) { num_scrolls_++; }
 
   void AfterTest() override { EXPECT_EQ(1, num_scrolls_); }
 
@@ -230,9 +228,7 @@ class LayerTreeHostScrollTestScrollMultipleRedraw
     }
   }
 
-  void DidScrollOuterViewport(const gfx::ScrollOffset&, const ElementId&) {
-    num_scrolls_++;
-  }
+  void DidScrollOuterViewport(const gfx::ScrollOffset&) { num_scrolls_++; }
 
   void AfterTest() override { EXPECT_EQ(1, num_scrolls_); }
 
@@ -415,9 +411,7 @@ class LayerTreeHostScrollTestScrollAbortedCommit
     }
   }
 
-  void DidScrollOuterViewport(const gfx::ScrollOffset&, const ElementId&) {
-    num_impl_scrolls_++;
-  }
+  void DidScrollOuterViewport(const gfx::ScrollOffset&) { num_impl_scrolls_++; }
 
   void AfterTest() override {
     EXPECT_EQ(3, num_impl_scrolls_);
@@ -635,15 +629,12 @@ class LayerTreeHostScrollTestCaseWithChild : public LayerTreeHostScrollTest {
     }
   }
 
-  void DidScroll(const gfx::ScrollOffset& offset, const ElementId& element_id) {
+  void DidScroll(const gfx::ScrollOffset& offset) {
     final_scroll_offset_ = expected_scroll_layer_->scroll_offset();
     EXPECT_VECTOR_EQ(offset, final_scroll_offset_);
-    EXPECT_EQ(element_id, expected_scroll_layer_->element_id());
   }
 
-  void DidScrollOuterViewport(const gfx::ScrollOffset&, const ElementId&) {
-    num_scrolls_++;
-  }
+  void DidScrollOuterViewport(const gfx::ScrollOffset&) { num_scrolls_++; }
 
   void UpdateLayerTreeHost() override {
     EXPECT_VECTOR_EQ(gfx::Vector2d(),
@@ -935,9 +926,7 @@ class LayerTreeHostScrollTestSimple : public LayerTreeHostScrollTest {
     }
   }
 
-  void DidScrollOuterViewport(const gfx::ScrollOffset&, const ElementId&) {
-    num_scrolls_++;
-  }
+  void DidScrollOuterViewport(const gfx::ScrollOffset&) { num_scrolls_++; }
 
   void AfterTest() override { EXPECT_EQ(1, num_scrolls_); }
 
@@ -1449,9 +1438,7 @@ class LayerTreeHostScrollTestLayerStructureChange
  protected:
   class FakeLayerScrollClient {
    public:
-    void DidScroll(const gfx::ScrollOffset&, const ElementId&) {
-      owner_->DidScroll(layer_);
-    }
+    void DidScroll(const gfx::ScrollOffset&) { owner_->DidScroll(layer_); }
     LayerTreeHostScrollTestLayerStructureChange* owner_;
     Layer* layer_;
   };
@@ -1601,9 +1588,7 @@ class LayerTreeHostScrollTestScrollMFBA : public LayerTreeHostScrollTest {
     }
   }
 
-  void DidScrollOuterViewport(const gfx::ScrollOffset&, const ElementId&) {
-    num_scrolls_++;
-  }
+  void DidScrollOuterViewport(const gfx::ScrollOffset&) { num_scrolls_++; }
 
   void AfterTest() override {
     EXPECT_EQ(3, num_commits_);
@@ -1822,9 +1807,7 @@ class LayerTreeHostScrollTestScrollAbortedCommitMFBA
     num_draws_++;
   }
 
-  void DidScrollOuterViewport(const gfx::ScrollOffset&, const ElementId&) {
-    num_impl_scrolls_++;
-  }
+  void DidScrollOuterViewport(const gfx::ScrollOffset&) { num_impl_scrolls_++; }
 
   void AfterTest() override {
     EXPECT_EQ(3, num_impl_scrolls_);
@@ -2114,7 +2097,7 @@ class LayerTreeHostScrollTestImplSideInvalidation
     PostSetNeedsCommitToMainThread();
   }
 
-  void DidScrollOuterViewport(const gfx::ScrollOffset&, const ElementId&) {
+  void DidScrollOuterViewport(const gfx::ScrollOffset& offset) {
     // Defer responding to the main frame until an impl-side pending tree is
     // created for the invalidation request.
     {

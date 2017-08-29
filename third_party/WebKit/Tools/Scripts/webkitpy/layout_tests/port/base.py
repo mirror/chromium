@@ -49,8 +49,9 @@ from webkitpy.common.path_finder import PathFinder
 from webkitpy.common.system.executive import ScriptError
 from webkitpy.common.system.path import abspath_to_uri
 from webkitpy.layout_tests.layout_package.bot_test_expectations import BotTestExpectationsFactory
+from webkitpy.layout_tests.models import test_run_results
 from webkitpy.layout_tests.models.test_configuration import TestConfiguration
-from webkitpy.layout_tests.models.test_expectations import TestExpectationParser
+from webkitpy.layout_tests.models.test_expectations import SKIP
 from webkitpy.layout_tests.port import driver
 from webkitpy.layout_tests.port import server_process
 from webkitpy.layout_tests.port.factory import PortFactory
@@ -171,38 +172,18 @@ class Port(object):
         return 'Port{name=%s, version=%s, architecture=%s, test_configuration=%s}' % (
             self._name, self._version, self._architecture, self._test_configuration)
 
-    def primary_driver_flag(self):
-        """Returns the driver flag that is used for flag-specific expectations
-           and baselines.  This is the flag in LayoutTests/rwt.flag if present,
-           otherwise the first flag passed by --additional-driver-flag.
-        """
-        flag_file = self._filesystem.join(self.layout_tests_dir(), 'rwt.flag')
-        if self._filesystem.exists(flag_file):
-            flag = self._filesystem.read_text_file(flag_file).strip()
-            if flag:
-                return flag
-        flags = self.get_option('additional_driver_flag', [])
-        if flags:
-            return flags[0]
-
-    def additional_driver_flags(self):
-        flags = self.get_option('additional_driver_flag', [])
-        if flags and flags[0] == self.primary_driver_flag():
-            flags = flags[1:]
+    def additional_driver_flag(self):
         if self.driver_name() == self.CONTENT_SHELL_NAME:
-            # This is the fingerprint of wpt's certificate found in
-            # thirdparty/wpt/certs.  To regenerate, use:
+            # This is the fingerprint of wpt's certificate found in thirdparty/wpt/certs. Use
             #
             #   openssl x509 -noout -pubkey -in 127.0.0.1.pem |
             #   openssl pkey -pubin -outform der |
             #   openssl dgst -sha256 -binary |
             #   base64
             #
-            fingerprint = 'Nxvaj3+bY3oVrTc+Jp7m3E3sB1n3lXtnMDCyBsqEXiY='
-            flags += [
-                '--run-layout-test',
-                '--ignore-certificate-errors-spki-list=' + fingerprint]
-        return flags
+            # to regenerate.
+            return ['--run-layout-test', '--ignore-certificate-errors-spki-list=Nxvaj3+bY3oVrTc+Jp7m3E3sB1n3lXtnMDCyBsqEXiY=']
+        return []
 
     def supports_per_test_timeout(self):
         return False
@@ -562,7 +543,8 @@ class Port(object):
             suffix: file suffix of the expected results, including dot; e.g. '.txt'
                 or '.png'.  This should not be None, but may be an empty string.
             platform: the most-specific directory name to use to build the
-                search list of directories, e.g., 'win'.
+                search list of directories, e.g., 'win', or
+                'chromium-cg-mac-leopard' (we follow the WebKit format)
             return_default: if True, returns the path to the generic expectation if nothing
                 else is found; if False, returns None.
         """
@@ -899,6 +881,8 @@ class Port(object):
         """
         self._filesystem.write_binary_file(baseline_path, data)
 
+    # TODO(qyearsley): Update callers to create a finder and call it instead
+    # of these next two routines (which should be protected).
     def _path_from_chromium_base(self, *comps):
         return self._path_finder.path_from_chromium_base(*comps)
 
@@ -911,53 +895,34 @@ class Port(object):
             return custom_layout_tests_dir
         return self._path_finder.layout_tests_dir()
 
-    def skips_test(self, test):
+    def skipped_layout_tests(self, _):
+        # TODO(qyearsley): Remove this method.
+        return set()
+
+    def skips_test(self, test, generic_expectations, full_expectations):
         """Checks whether the given test is skipped for this port.
 
-        Returns True if the test is skipped because the port runs smoke tests
-        only or because the test is marked as WontFix, but *not* if the test
-        is only marked as Skip indicating a temporary skip.
+        This should return True if the test is skipped because the port
+        runs smoke tests only, or because the test is skipped in a file like
+        NeverFixTests (but not TestExpectations).
         """
-        return self.skipped_due_to_smoke_tests(test) or self.skipped_in_never_fix_tests(test)
+        fs = self.host.filesystem
+        if self.default_smoke_test_only():
+            smoke_test_filename = self.path_to_smoke_tests_file()
+            if fs.exists(smoke_test_filename) and test not in fs.read_text_file(smoke_test_filename):
+                return True
 
-    def skipped_due_to_smoke_tests(self, test):
-        """Checks if the test is skipped based on the set of Smoke tests.
-
-        Returns True if this port runs only smoke tests, and the test is not
-        in the smoke tests file; returns False otherwise.
-        """
-        if not self.default_smoke_test_only():
-            return False
-        smoke_test_filename = self.path_to_smoke_tests_file()
-        return (self._filesystem.exists(smoke_test_filename) and
-                test not in self._filesystem.read_text_file(smoke_test_filename))
+        # In general, Skip lines in the generic expectations file indicate
+        # that the test is temporarily skipped, whereas if the test is skipped
+        # in another file (e.g. WontFix in NeverFixTests), then the test may
+        # always be skipped for this port.
+        # TODO(qyearsley): Simplify this so that it doesn't rely on having
+        # two copies of the test expectations.
+        return (SKIP in full_expectations.get_expectations(test) and
+                SKIP not in generic_expectations.get_expectations(test))
 
     def path_to_smoke_tests_file(self):
-        return self._filesystem.join(self.layout_tests_dir(), 'SmokeTests')
-
-    def skipped_in_never_fix_tests(self, test):
-        """Checks if the test is marked as WontFix for this port.
-
-        In general, WontFix expectations are allowed in NeverFixTests but
-        not in other files, and only WontFix lines are allowed in NeverFixTests.
-        Some lines in NeverFixTests are platform-specific.
-
-        Note: this will not work with skipped directories. See also the same
-        issue with update_all_test_expectations_files in test_importer.py.
-        """
-        # TODO(qyearsley): Extract parsing logic (reading the file,
-        # constructing a parser, etc.) from here and test_copier.py.
-        path = self.path_to_never_fix_tests_file()
-        contents = self._filesystem.read_text_file(path)
-        parser = TestExpectationParser(self, all_tests=(), is_lint_mode=False)
-        expectation_lines = parser.parse(path, contents)
-        for line in expectation_lines:
-            if line.name == test and self.test_configuration() in line.matching_configurations:
-                return True
-        return False
-
-    def path_to_never_fix_tests_file(self):
-        return self._filesystem.join(self.layout_tests_dir(), 'NeverFixTests')
+        return self.host.filesystem.join(self.layout_tests_dir(), 'SmokeTests')
 
     def _tests_from_skipped_file_contents(self, skipped_file_contents):
         tests_to_skip = []
@@ -1024,6 +989,10 @@ class Port(object):
 
     def set_option_default(self, name, default_value):
         return self._options.ensure_value(name, default_value)
+
+    @memoized
+    def path_to_generic_test_expectations_file(self):
+        return self._filesystem.join(self.layout_tests_dir(), 'TestExpectations')
 
     def relative_test_filename(self, filename):
         """Returns a Unix-style path for a filename relative to LayoutTests.
@@ -1279,22 +1248,16 @@ class Port(object):
                 test_configurations.append(TestConfiguration(version, architecture, build_type))
         return test_configurations
 
-    def _flag_specific_expectations_path(self):
-        flag = self.primary_driver_flag()
-        if flag:
-            return self._filesystem.join(
-                self.layout_tests_dir(), 'FlagExpectations', flag.lstrip('-'))
+    def _flag_specific_expectations_files(self):
+        return [self._filesystem.join(self.layout_tests_dir(), 'FlagExpectations', flag.lstrip('-'))
+                for flag in self.get_option('additional_driver_flag', [])]
 
     def _flag_specific_baseline_search_path(self):
-        flag = self.primary_driver_flag()
-        if not flag:
-            return []
-        flag_dir = self._filesystem.join(
-            self.layout_tests_dir(), 'flag-specific', flag.lstrip('-'))
-        platform_dirs = [
-            self._filesystem.join(flag_dir, 'platform', platform_dir)
-            for platform_dir in self.FALLBACK_PATHS[self.version()]]
-        return platform_dirs + [flag_dir]
+        flag_dirs = [self._filesystem.join(self.layout_tests_dir(), 'flag-specific', flag.lstrip('-'))
+                     for flag in self.get_option('additional_driver_flag', [])]
+        return [self._filesystem.join(flag_dir, 'platform', platform_dir)
+                for platform_dir in self.FALLBACK_PATHS[self.version()]
+                for flag_dir in flag_dirs] + flag_dirs
 
     def expectations_dict(self):
         """Returns an OrderedDict of name -> expectations strings.
@@ -1366,34 +1329,14 @@ class Port(object):
         return {}
 
     def expectations_files(self):
-        """Returns a list of paths to expectations files that apply by default.
-
-        There are other "test expectations" files that may be applied if
-        the --additional-expectations flag is passed; those aren't included
-        here.
-        """
-        return filter(None, [
+        paths = [
             self.path_to_generic_test_expectations_file(),
             self._filesystem.join(self.layout_tests_dir(), 'NeverFixTests'),
             self._filesystem.join(self.layout_tests_dir(), 'StaleTestExpectations'),
             self._filesystem.join(self.layout_tests_dir(), 'SlowTests'),
-            self._flag_specific_expectations_path()
-        ])
-
-    def extra_expectations_files(self):
-        """Returns a list of paths to test expectations not loaded by default.
-
-        These paths are passed via --additional-expectations on some builders.
-        """
-        return [
-            self._filesystem.join(self.layout_tests_dir(), 'ASANExpectations'),
-            self._filesystem.join(self.layout_tests_dir(), 'LeakExpectations'),
-            self._filesystem.join(self.layout_tests_dir(), 'MSANExpectations'),
         ]
-
-    @memoized
-    def path_to_generic_test_expectations_file(self):
-        return self._filesystem.join(self.layout_tests_dir(), 'TestExpectations')
+        paths.extend(self._flag_specific_expectations_files())
+        return paths
 
     def repository_path(self):
         """Returns the repository path for the chromium code base."""
@@ -1560,7 +1503,6 @@ class Port(object):
             # For example, to turn on force-compositing-mode in the svg/ directory:
             # PhysicalTestSuite('svg', ['--force-compositing-mode']),
             PhysicalTestSuite('fast/text', ['--enable-direct-write', '--enable-font-antialiasing']),
-            PhysicalTestSuite('hdr', ['--force-color-profile=scrgb-linear']),
         ]
 
     def virtual_test_suites(self):

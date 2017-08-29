@@ -31,11 +31,12 @@ function sensorMocks() {
       this.reportingMode_ = reportingMode;
       this.sensorReadingTimerId_ = null;
       this.updateReadingFunction_ = null;
+      this.readingUpdatesCount_ = 0;
       this.suspendCalled_ = null;
       this.resumeCalled_ = null;
       this.addConfigurationCalled_ = null;
       this.removeConfigurationCalled_ = null;
-      this.requestedFrequencies_ = [];
+      this.activeSensorConfigurations_ = [];
       let rv = handle.mapBuffer(offset, size);
       assert_equals(rv.result, Mojo.RESULT_OK, "Failed to map shared buffer");
       this.bufferArray_ = rv.buffer;
@@ -53,15 +54,18 @@ function sensorMocks() {
       return Promise.resolve({frequency: 5});
     }
 
+    readingUpdatesCount() {
+      return this.readingUpdatesCount_;
+    }
     // Adds configuration for the sensor and starts reporting fake data
     // through updateReadingFunction_ callback.
     addConfiguration(configuration) {
       assert_not_equals(configuration, null, "Invalid sensor configuration.");
 
-      this.requestedFrequencies_.push(configuration.frequency);
+      this.activeSensorConfigurations_.push(configuration);
       // Sort using descending order.
-      this.requestedFrequencies_.sort(
-          (first, second) => { return second - first });
+      this.activeSensorConfigurations_.sort(
+          (first, second) => { return second.frequency - first.frequency });
 
       if (!this.startShouldFail_ )
         this.startReading();
@@ -74,19 +78,23 @@ function sensorMocks() {
 
     // Removes sensor configuration from the list of active configurations and
     // stops notification about sensor reading changes if
-    // requestedFrequencies_ is empty.
+    // activeSensorConfigurations_ is empty.
     removeConfiguration(configuration) {
       if (this.removeConfigurationCalled_ != null) {
         this.removeConfigurationCalled_(this);
       }
 
-      let index = this.requestedFrequencies_.indexOf(configuration.frequency);
-      if (index == -1)
-        return;
+      let index = this.activeSensorConfigurations_.indexOf(configuration);
+      if (index !== -1) {
+        this.activeSensorConfigurations_.splice(index, 1);
+      } else {
+        return sensorResponse(false);
+      }
 
-      this.requestedFrequencies_.splice(index, 1);
-      if (this.requestedFrequencies_.length === 0)
+      if (this.activeSensorConfigurations_.length === 0)
         this.stopReading();
+
+      return sensorResponse(true);
     }
 
     // Suspends sensor.
@@ -112,9 +120,10 @@ function sensorMocks() {
     reset() {
       this.stopReading();
 
+      this.readingUpdatesCount_ = 0;
       this.startShouldFail_ = false;
       this.updateReadingFunction_ = null;
-      this.requestedFrequencies_ = [];
+      this.activeSensorConfigurations_ = [];
       this.suspendCalled_ = null;
       this.resumeCalled_ = null;
       this.addConfigurationCalled_ = null;
@@ -173,7 +182,7 @@ function sensorMocks() {
     startReading() {
       if (this.updateReadingFunction_ != null) {
         this.stopReading();
-        let maxFrequencyUsed = this.requestedFrequencies_[0];
+        let maxFrequencyUsed = this.activeSensorConfigurations_[0].frequency;
         let timeout = (1 / maxFrequencyUsed) * 1000;
         this.sensorReadingTimerId_ = window.setInterval(() => {
           if (this.updateReadingFunction_) {
@@ -181,6 +190,7 @@ function sensorMocks() {
             // For all tests sensor reading should have monotonically
             // increasing timestamp in seconds.
             this.buffer_[1] = window.performance.now() * 0.001;
+            this.readingUpdatesCount_++;
           }
           if (this.reportingMode_ === device.mojom.ReportingMode.ON_CHANGE) {
             this.client_.sensorReadingChanged();
@@ -194,11 +204,6 @@ function sensorMocks() {
         window.clearInterval(this.sensorReadingTimerId_);
         this.sensorReadingTimerId_ = null;
       }
-    }
-
-    getSamplingFrequency() {
-       assert_true(this.requestedFrequencies_.length > 0);
-       return this.requestedFrequencies_[0];
     }
 
   }

@@ -9,11 +9,13 @@
 #include "core/layout/ng/geometry/ng_logical_size.h"
 #include "core/layout/ng/ng_block_break_token.h"
 #include "core/layout/ng/ng_block_node.h"
-#include "core/layout/ng/ng_layout_result.h"
+#include "core/layout/ng/ng_exclusion.h"
 #include "core/style/ComputedStyleConstants.h"
 #include "platform/wtf/RefPtr.h"
 
 namespace blink {
+
+class NGLayoutResult;
 
 // Struct that keeps all information needed to position floats in LayoutNG.
 struct CORE_EXPORT NGUnpositionedFloat
@@ -21,14 +23,14 @@ struct CORE_EXPORT NGUnpositionedFloat
  public:
   static RefPtr<NGUnpositionedFloat> Create(NGLogicalSize available_size,
                                             NGLogicalSize percentage_size,
-                                            LayoutUnit origin_bfc_line_offset,
-                                            LayoutUnit bfc_line_offset,
+                                            LayoutUnit origin_bfc_inline_offset,
+                                            LayoutUnit bfc_inline_offset,
                                             NGBoxStrut margins,
                                             NGBlockNode node,
                                             NGBlockBreakToken* token) {
     return AdoptRef(new NGUnpositionedFloat(
-        margins, available_size, percentage_size, origin_bfc_line_offset,
-        bfc_line_offset, node, token));
+        margins, available_size, percentage_size, origin_bfc_inline_offset,
+        bfc_inline_offset, node, token));
   }
 
   NGBlockNode node;
@@ -41,11 +43,11 @@ struct CORE_EXPORT NGUnpositionedFloat
 
   // This is the BFC inline-offset for where we begin searching for layout
   // opportunities for this float.
-  LayoutUnit origin_bfc_line_offset;
+  LayoutUnit origin_bfc_inline_offset;
 
   // This is the BFC inline-offset for the float's parent. This is used for
   // calculating the offset between the float and its parent.
-  LayoutUnit bfc_line_offset;
+  LayoutUnit bfc_inline_offset;
 
   // The margins are relative to the writing mode of the block formatting
   // context. They are stored for convinence and could be recomputed with other
@@ -64,16 +66,16 @@ struct CORE_EXPORT NGUnpositionedFloat
   NGUnpositionedFloat(const NGBoxStrut& margins,
                       const NGLogicalSize& available_size,
                       const NGLogicalSize& percentage_size,
-                      LayoutUnit origin_bfc_line_offset,
-                      LayoutUnit bfc_line_offset,
+                      LayoutUnit origin_bfc_inline_offset,
+                      LayoutUnit bfc_inline_offset,
                       NGBlockNode node,
                       NGBlockBreakToken* token)
       : node(node),
         token(token),
         available_size(available_size),
         percentage_size(percentage_size),
-        origin_bfc_line_offset(origin_bfc_line_offset),
-        bfc_line_offset(bfc_line_offset),
+        origin_bfc_inline_offset(origin_bfc_inline_offset),
+        bfc_inline_offset(bfc_inline_offset),
         margins(margins) {}
 };
 

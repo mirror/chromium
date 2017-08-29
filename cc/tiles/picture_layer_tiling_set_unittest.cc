@@ -8,7 +8,6 @@
 #include <vector>
 
 #include "base/memory/ptr_util.h"
-#include "cc/resources/layer_tree_resource_provider.h"
 #include "cc/resources/resource_provider.h"
 #include "cc/test/fake_output_surface.h"
 #include "cc/test/fake_output_surface_client.h"
@@ -47,7 +46,7 @@ class TestablePictureLayerTilingSet : public PictureLayerTilingSet {
 std::unique_ptr<TestablePictureLayerTilingSet> CreateTilingSetWithSettings(
     PictureLayerTilingClient* client,
     const LayerTreeSettings& settings) {
-  return std::make_unique<TestablePictureLayerTilingSet>(
+  return base::MakeUnique<TestablePictureLayerTilingSet>(
       ACTIVE_TREE, client, settings.tiling_interest_area_padding,
       settings.skewport_target_time_in_seconds,
       settings.skewport_extrapolation_limit_in_screen_pixels,
@@ -248,10 +247,10 @@ class PictureLayerTilingSetTestWithResources : public testing::Test {
     scoped_refptr<TestContextProvider> context_provider =
         TestContextProvider::Create();
     ASSERT_TRUE(context_provider->BindToCurrentThread());
-    auto shared_bitmap_manager = std::make_unique<TestSharedBitmapManager>();
+    auto shared_bitmap_manager = base::MakeUnique<TestSharedBitmapManager>();
     std::unique_ptr<ResourceProvider> resource_provider =
-        FakeResourceProvider::Create<LayerTreeResourceProvider>(
-            context_provider.get(), shared_bitmap_manager.get());
+        FakeResourceProvider::Create(context_provider.get(),
+                                     shared_bitmap_manager.get());
 
     FakePictureLayerTilingClient client(resource_provider.get());
     client.SetTileSize(gfx::Size(256, 256));

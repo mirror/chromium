@@ -29,7 +29,7 @@ class Configure : public Operation {
  public:
   Configure(extensions::EventRouter* event_router,
             const ProvidedFileSystemInfo& file_system_info,
-            storage::AsyncFileUtil::StatusCallback callback);
+            const storage::AsyncFileUtil::StatusCallback& callback);
   ~Configure() override;
 
   // Operation overrides.
@@ -42,7 +42,7 @@ class Configure : public Operation {
                base::File::Error error) override;
 
  private:
-  storage::AsyncFileUtil::StatusCallback callback_;
+  const storage::AsyncFileUtil::StatusCallback callback_;
 
   DISALLOW_COPY_AND_ASSIGN(Configure);
 };

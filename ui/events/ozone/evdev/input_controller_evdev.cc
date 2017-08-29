@@ -154,11 +154,6 @@ void InputControllerEvdev::SetPrimaryButtonRight(bool right) {
   button_map_->UpdateButtonMap(BTN_RIGHT, right ? BTN_LEFT : BTN_RIGHT);
 }
 
-void InputControllerEvdev::SetMouseReverseScroll(bool enabled) {
-  input_device_settings_.mouse_reverse_scroll_enabled = enabled;
-  ScheduleUpdateDeviceSettings();
-}
-
 void InputControllerEvdev::SetTapToClickPaused(bool state) {
   input_device_settings_.tap_to_click_paused = state;
   ScheduleUpdateDeviceSettings();

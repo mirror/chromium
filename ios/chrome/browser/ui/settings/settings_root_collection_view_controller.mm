@@ -10,7 +10,6 @@
 
 #include "ios/chrome/browser/browser_state/chrome_browser_state.h"
 #import "ios/chrome/browser/ui/commands/UIKit+ChromeExecuteCommand.h"
-#import "ios/chrome/browser/ui/commands/application_commands.h"
 #include "ios/chrome/browser/ui/commands/ios_command_ids.h"
 #import "ios/chrome/browser/ui/commands/open_url_command.h"
 #import "ios/chrome/browser/ui/settings/bar_button_activity_indicator.h"
@@ -48,7 +47,6 @@ const CGFloat kActivityIndicatorDimensionIPhone = 56;
 @synthesize shouldHideDoneButton = shouldHideDoneButton_;
 @synthesize collectionViewAccessibilityIdentifier =
     collectionViewAccessibilityIdentifier_;
-@synthesize dispatcher = _dispatcher;
 
 - (void)viewDidLoad {
   [super viewDidLoad];
@@ -123,10 +121,9 @@ const CGFloat kActivityIndicatorDimensionIPhone = 56;
 #pragma mark - CollectionViewFooterLinkDelegate
 
 - (void)cell:(CollectionViewFooterCell*)cell didTapLinkURL:(GURL)URL {
-  // Subclass must have a valid dispatcher assigned.
-  DCHECK(self.dispatcher);
   OpenUrlCommand* command = [[OpenUrlCommand alloc] initWithURLFromChrome:URL];
-  [self.dispatcher closeSettingsUIAndOpenURL:command];
+  [command setTag:IDC_CLOSE_SETTINGS_AND_OPEN_URL];
+  [self chromeExecuteCommand:command];
 }
 
 #pragma mark - Status bar

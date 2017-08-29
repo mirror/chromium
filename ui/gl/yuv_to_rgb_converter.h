@@ -7,18 +7,13 @@
 
 #include "ui/gfx/geometry/size.h"
 
-namespace gfx {
-class ColorSpace;
-}  // namespace gfx
-
 namespace gl {
 
 struct GLVersionInfo;
 
 class YUVToRGBConverter {
  public:
-  explicit YUVToRGBConverter(const GLVersionInfo& gl_version_info,
-                             const gfx::ColorSpace color_space);
+  explicit YUVToRGBConverter(const GLVersionInfo& gl_version_info);
   ~YUVToRGBConverter();
 
   // The input Y and UV textures should be bound to these texture objects

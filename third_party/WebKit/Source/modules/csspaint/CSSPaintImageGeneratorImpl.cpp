@@ -9,6 +9,7 @@
 #include "modules/csspaint/CSSPaintDefinition.h"
 #include "modules/csspaint/DocumentPaintDefinition.h"
 #include "modules/csspaint/PaintWorklet.h"
+#include "modules/csspaint/WindowPaintWorklet.h"
 #include "platform/graphics/Image.h"
 
 namespace blink {
@@ -17,7 +18,9 @@ CSSPaintImageGenerator* CSSPaintImageGeneratorImpl::Create(
     const String& name,
     const Document& document,
     Observer* observer) {
-  PaintWorklet* paint_worklet = PaintWorklet::From(*document.domWindow());
+  LocalDOMWindow* dom_window = document.domWindow();
+  PaintWorklet* paint_worklet =
+      WindowPaintWorklet::From(*dom_window).paintWorklet();
 
   DCHECK(paint_worklet);
   CSSPaintImageGeneratorImpl* generator;

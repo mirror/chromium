@@ -37,8 +37,7 @@
       "contentsOpaque": true,
       "drawsContent": true,
       "backfaceVisibility": "hidden",
-      "backgroundColor": "#FFFF00",
-      "hasClipParent": true
+      "backgroundColor": "#FFFF00"
     },
     {
       "name": "LayoutBlockFlow (relative positioned) DIV id='tall'",

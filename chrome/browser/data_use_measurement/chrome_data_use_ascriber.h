@@ -161,8 +161,6 @@ class ChromeDataUseAscriber : public DataUseAscriber {
     DISALLOW_COPY_AND_ASSIGN(MainRenderFrameEntry);
   };
 
-  DataUseRecorderEntry GetDataUseRecorderEntry(net::URLRequest* request);
-
   DataUseRecorderEntry GetOrCreateDataUseRecorderEntry(
       net::URLRequest* request);
 

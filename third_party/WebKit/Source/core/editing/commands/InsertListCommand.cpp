@@ -143,7 +143,7 @@ void InsertListCommand::DoApply(EditingState* editing_state) {
   if (!EndingVisibleSelection().IsNonOrphanedCaretOrRange())
     return;
 
-  if (!RootEditableElementOf(EndingSelection().Base()))
+  if (!EndingVisibleSelection().RootEditableElement())
     return;
 
   VisiblePosition visible_end = EndingVisibleSelection().VisibleEnd();
@@ -166,7 +166,7 @@ void InsertListCommand::DoApply(EditingState* editing_state) {
     if (new_end.IsNotNull())
       builder.Extend(new_end.DeepEquivalent());
     SetEndingSelection(SelectionForUndoStep::From(builder.Build()));
-    if (!RootEditableElementOf(EndingSelection().Base()))
+    if (!EndingVisibleSelection().RootEditableElement())
       return;
   }
 

@@ -58,7 +58,7 @@ bool TestAutoMountForURLRequest(
     const net::URLRequest* /*url_request*/,
     const storage::FileSystemURL& filesystem_url,
     const std::string& storage_domain,
-    base::OnceCallback<void(base::File::Error result)> callback) {
+    const base::Callback<void(base::File::Error result)>& callback) {
   if (storage_domain != "automount")
     return false;
 
@@ -72,9 +72,9 @@ bool TestAutoMountForURLRequest(
         storage::kFileSystemTypeTest,
         storage::FileSystemMountOption(),
         base::FilePath());
-    std::move(callback).Run(base::File::FILE_OK);
+    callback.Run(base::File::FILE_OK);
   } else {
-    std::move(callback).Run(base::File::FILE_ERROR_NOT_FOUND);
+    callback.Run(base::File::FILE_ERROR_NOT_FOUND);
   }
   return true;
 }

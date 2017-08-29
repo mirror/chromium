@@ -75,8 +75,6 @@ Common.Settings = class {
                             this.createSetting(settingName, defaultValue, storageType);
     if (descriptor['title'])
       setting.setTitle(descriptor['title']);
-    if (descriptor['userActionCondition'])
-      setting.setRequiresUserAction(!!Runtime.queryParam(descriptor['userActionCondition']));
     setting._extension = extension;
     this._moduleSettings.set(settingName, setting);
   }
@@ -304,19 +302,9 @@ Common.Setting = class {
   }
 
   /**
-   * @param {boolean} requiresUserAction
-   */
-  setRequiresUserAction(requiresUserAction) {
-    this._requiresUserAction = requiresUserAction;
-  }
-
-  /**
    * @return {V}
    */
   get() {
-    if (this._requiresUserAction && !this._hadUserAction)
-      return this._defaultValue;
-
     if (typeof this._value !== 'undefined')
       return this._value;
 
@@ -335,7 +323,6 @@ Common.Setting = class {
    * @param {V} value
    */
   set(value) {
-    this._hadUserAction = true;
     this._value = value;
     try {
       var settingString = JSON.stringify(value);

@@ -25,7 +25,8 @@ class CORE_EXPORT ImageElementBase : public CanvasImageSource,
   ScriptPromise CreateImageBitmap(ScriptState*,
                                   EventTarget&,
                                   Optional<IntRect>,
-                                  const ImageBitmapOptions&) override;
+                                  const ImageBitmapOptions&,
+                                  ExceptionState&) override;
 
   RefPtr<Image> GetSourceImageForCanvas(SourceImageStatus*,
                                         AccelerationHint,

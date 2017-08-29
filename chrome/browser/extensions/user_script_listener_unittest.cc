@@ -49,7 +49,6 @@ namespace {
 const char kMatchingUrl[] = "http://google.com/";
 const char kNotMatchingUrl[] = "http://example.com/";
 const char kTestData[] = "Hello, World!";
-const void* kUserDataKey = &kUserDataKey;
 
 class ThrottleDelegate : public base::SupportsUserData::Data,
                          public ResourceThrottle::Delegate {
@@ -186,8 +185,8 @@ class UserScriptListenerTest : public testing::Test {
 
     bool defer = false;
     if (throttle) {
-      request->SetUserData(kUserDataKey, base::MakeUnique<ThrottleDelegate>(
-                                             request.get(), throttle));
+      request->SetUserData(
+          nullptr, base::MakeUnique<ThrottleDelegate>(request.get(), throttle));
 
       throttle->WillStartRequest(&defer);
     }
@@ -356,8 +355,8 @@ TEST_F(UserScriptListenerTest, ResumeBeforeStart) {
   ResourceThrottle* throttle =
       listener_->CreateResourceThrottle(url, content::RESOURCE_TYPE_MAIN_FRAME);
   ASSERT_TRUE(throttle);
-  request->SetUserData(kUserDataKey, base::MakeUnique<ThrottleDelegate>(
-                                         request.get(), throttle));
+  request->SetUserData(
+      nullptr, base::MakeUnique<ThrottleDelegate>(request.get(), throttle));
 
   ASSERT_FALSE(request->is_pending());
 

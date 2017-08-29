@@ -337,8 +337,6 @@ void WindowPortMus::SetFallbackSurfaceInfo(
 
   fallback_surface_info_ = surface_info;
   UpdateClientSurfaceEmbedder();
-  if (window_->delegate())
-    window_->delegate()->OnFirstSurfaceActivation(fallback_surface_info_);
 }
 
 void WindowPortMus::DestroyFromServer() {
@@ -396,11 +394,7 @@ WindowPortMus::ChangeSource WindowPortMus::OnTransientChildRemoved(
              : ChangeSource::LOCAL;
 }
 
-void WindowPortMus::AllocateLocalSurfaceId() {
-  local_surface_id_ = local_surface_id_allocator_.GenerateId();
-}
-
-const viz::LocalSurfaceId& WindowPortMus::GetLocalSurfaceId() {
+const viz::LocalSurfaceId& WindowPortMus::GetLocalSurfaceId() const {
   return local_surface_id_;
 }
 
@@ -459,14 +453,6 @@ void WindowPortMus::OnPreInit(Window* window) {
 }
 
 void WindowPortMus::OnDeviceScaleFactorChanged(float device_scale_factor) {
-  if (last_device_scale_factor_ != device_scale_factor &&
-      local_surface_id_.is_valid()) {
-    last_device_scale_factor_ = device_scale_factor;
-    local_surface_id_ = local_surface_id_allocator_.GenerateId();
-    if (local_layer_tree_frame_sink_)
-      local_layer_tree_frame_sink_->SetLocalSurfaceId(local_surface_id_);
-  }
-
   if (window_->delegate())
     window_->delegate()->OnDeviceScaleFactorChanged(device_scale_factor);
 }
@@ -562,12 +548,12 @@ WindowPortMus::CreateLayerTreeFrameSink() {
       nullptr,
       aura::Env::GetInstance()->context_factory()->GetGpuMemoryBufferManager());
   local_layer_tree_frame_sink_ = frame_sink->GetWeakPtr();
-  local_surface_id_ = local_surface_id_allocator_.GenerateId();
   return std::move(frame_sink);
 }
 
 viz::SurfaceId WindowPortMus::GetSurfaceId() const {
-  return viz::SurfaceId(frame_sink_id_, local_surface_id_);
+  // This is only used by WindowPortLocal in unit tests.
+  return viz::SurfaceId();
 }
 
 void WindowPortMus::OnWindowAddedToRootWindow() {}
@@ -593,6 +579,8 @@ void WindowPortMus::UpdatePrimarySurfaceInfo() {
       viz::SurfaceId(frame_sink_id_, local_surface_id_),
       ScaleFactorForDisplay(window_), last_surface_size_in_pixels_);
   UpdateClientSurfaceEmbedder();
+  if (window_->delegate())
+    window_->delegate()->OnWindowSurfaceChanged(primary_surface_info_);
 }
 
 void WindowPortMus::UpdateClientSurfaceEmbedder() {

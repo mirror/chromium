@@ -270,6 +270,9 @@ void SetRuntimeFeaturesDefaultsAndUpdateFromArgs(
   if (base::FeatureList::IsEnabled(features::kLazyParseCSS))
     WebRuntimeFeatures::EnableLazyParseCSS(true);
 
+  WebRuntimeFeatures::EnableMediaDocumentDownloadButton(
+      base::FeatureList::IsEnabled(features::kMediaDocumentDownloadButton));
+
   WebRuntimeFeatures::EnablePassiveDocumentEventListeners(
       base::FeatureList::IsEnabled(features::kPassiveDocumentEventListeners));
 
@@ -320,8 +323,11 @@ void SetRuntimeFeaturesDefaultsAndUpdateFromArgs(
   WebRuntimeFeatures::EnableServiceWorkerScriptStreaming(
       base::FeatureList::IsEnabled(features::kServiceWorkerScriptStreaming));
 
-  WebRuntimeFeatures::EnableOffMainThreadFetch(
-      base::FeatureList::IsEnabled(features::kOffMainThreadFetch));
+  if (!base::FeatureList::IsEnabled(features::kNetworkService)) {
+    // http://crbug.com/756571: fix this to work with network service.
+    WebRuntimeFeatures::EnableOffMainThreadFetch(
+        base::FeatureList::IsEnabled(features::kOffMainThreadFetch));
+  }
 
   WebRuntimeFeatures::EnableMojoBlobs(
       base::FeatureList::IsEnabled(features::kMojoBlobs));
@@ -345,11 +351,8 @@ void SetRuntimeFeaturesDefaultsAndUpdateFromArgs(
   if (base::FeatureList::IsEnabled(features::kSkipCompositingSmallScrollers))
     WebRuntimeFeatures::EnableSkipCompositingSmallScrollers(true);
 
-  if (base::FeatureList::IsEnabled(features::kGenericSensor)) {
+  if (base::FeatureList::IsEnabled(features::kGenericSensor))
     WebRuntimeFeatures::EnableGenericSensor(true);
-    if (base::FeatureList::IsEnabled(features::kGenericSensorExtraClasses))
-      WebRuntimeFeatures::EnableGenericSensorExtraClasses(true);
-  }
 
   if (base::FeatureList::IsEnabled(features::kLoadingWithMojo) ||
       base::FeatureList::IsEnabled(features::kNetworkService))

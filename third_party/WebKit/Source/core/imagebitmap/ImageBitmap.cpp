@@ -354,6 +354,30 @@ sk_sp<SkImage> ImageBitmap::GetSkImageFromDecoder(
   return frame->FinalizePixelsAndGetImage();
 }
 
+bool ImageBitmap::IsResizeOptionValid(const ImageBitmapOptions& options,
+                                      ExceptionState& exception_state) {
+  if ((options.hasResizeWidth() && options.resizeWidth() == 0) ||
+      (options.hasResizeHeight() && options.resizeHeight() == 0)) {
+    exception_state.ThrowDOMException(
+        kInvalidStateError,
+        "The resizeWidth or/and resizeHeight is equal to 0.");
+    return false;
+  }
+  return true;
+}
+
+bool ImageBitmap::IsSourceSizeValid(int source_width,
+                                    int source_height,
+                                    ExceptionState& exception_state) {
+  if (!source_width || !source_height) {
+    exception_state.ThrowDOMException(
+        kIndexSizeError, String::Format("The source %s provided is 0.",
+                                        source_width ? "height" : "width"));
+    return false;
+  }
+  return true;
+}
+
 static RefPtr<StaticBitmapImage> CropImageAndApplyColorSpaceConversion(
     RefPtr<Image>&& image,
     ImageBitmap::ParsedOptions& parsed_options,
@@ -458,6 +482,7 @@ ImageBitmap::ImageBitmap(ImageElementBase* image,
 
   image_->SetOriginClean(
       !image->WouldTaintOrigin(document->GetSecurityOrigin()));
+  image_->SetPremultiplied(parsed_options.premultiply_alpha);
 }
 
 ImageBitmap::ImageBitmap(HTMLVideoElement* video,
@@ -486,11 +511,13 @@ ImageBitmap::ImageBitmap(HTMLVideoElement* video,
 
   image_->SetOriginClean(
       !video->WouldTaintOrigin(document->GetSecurityOrigin()));
+  image_->SetPremultiplied(parsed_options.premultiply_alpha);
 }
 
 ImageBitmap::ImageBitmap(HTMLCanvasElement* canvas,
                          Optional<IntRect> crop_rect,
                          const ImageBitmapOptions& options) {
+  DCHECK(canvas->IsPaintable());
   SourceImageStatus status;
   RefPtr<Image> image_input = canvas->GetSourceImageForCanvas(
       &status, kPreferAcceleration, kSnapshotReasonCreateImageBitmap,
@@ -512,6 +539,7 @@ ImageBitmap::ImageBitmap(HTMLCanvasElement* canvas,
     return;
 
   image_->SetOriginClean(canvas->OriginClean());
+  image_->SetPremultiplied(parsed_options.premultiply_alpha);
 }
 
 ImageBitmap::ImageBitmap(OffscreenCanvas* offscreen_canvas,
@@ -539,6 +567,7 @@ ImageBitmap::ImageBitmap(OffscreenCanvas* offscreen_canvas,
   if (!image_)
     return;
   image_->SetOriginClean(offscreen_canvas->OriginClean());
+  image_->SetPremultiplied(parsed_options.premultiply_alpha);
 }
 
 ImageBitmap::ImageBitmap(const void* pixel_data,
@@ -556,6 +585,7 @@ ImageBitmap::ImageBitmap(const void* pixel_data,
   image_ = StaticBitmapImage::Create(SkImage::MakeRasterCopy(pixmap));
   if (!image_)
     return;
+  image_->SetPremultiplied(is_image_bitmap_premultiplied);
   image_->SetOriginClean(is_image_bitmap_origin_clean);
 }
 
@@ -637,6 +667,8 @@ ImageBitmap::ImageBitmap(ImageData* data,
         ScaleImage(std::move(image_), parsed_options.resize_width,
                    parsed_options.resize_height, parsed_options.resize_quality);
   }
+
+  image_->SetPremultiplied(parsed_options.premultiply_alpha);
 }
 
 ImageBitmap::ImageBitmap(ImageBitmap* bitmap,
@@ -656,6 +688,7 @@ ImageBitmap::ImageBitmap(ImageBitmap* bitmap,
   if (!image_)
     return;
   image_->SetOriginClean(bitmap->OriginClean());
+  image_->SetPremultiplied(parsed_options.premultiply_alpha);
 }
 
 ImageBitmap::ImageBitmap(RefPtr<StaticBitmapImage> image,
@@ -673,6 +706,7 @@ ImageBitmap::ImageBitmap(RefPtr<StaticBitmapImage> image,
     return;
 
   image_->SetOriginClean(origin_clean);
+  image_->SetPremultiplied(parsed_options.premultiply_alpha);
 }
 
 ImageBitmap::ImageBitmap(RefPtr<StaticBitmapImage> image) {
@@ -773,8 +807,10 @@ void ImageBitmap::ResolvePromiseOnOriginalThread(
     return;
   }
   ImageBitmap* bitmap = new ImageBitmap(image);
-  if (bitmap && bitmap->BitmapImage())
+  if (bitmap && bitmap->BitmapImage()) {
     bitmap->BitmapImage()->SetOriginClean(origin_clean);
+    bitmap->BitmapImage()->SetPremultiplied(parsed_options->premultiply_alpha);
+  }
   if (bitmap && bitmap->BitmapImage()) {
     resolver->Resolve(bitmap);
   } else {
@@ -835,6 +871,7 @@ ScriptPromise ImageBitmap::CreateAsync(ImageElementBase* image,
     if (bitmap && bitmap->BitmapImage()) {
       bitmap->BitmapImage()->SetOriginClean(
           !image->WouldTaintOrigin(document->GetSecurityOrigin()));
+      bitmap->BitmapImage()->SetPremultiplied(parsed_options.premultiply_alpha);
     }
     if (bitmap && bitmap->BitmapImage()) {
       resolver->Resolve(bitmap);
@@ -925,11 +962,17 @@ IntSize ImageBitmap::Size() const {
   return IntSize(image_->width(), image_->height());
 }
 
-ScriptPromise ImageBitmap::CreateImageBitmap(
-    ScriptState* script_state,
-    EventTarget& event_target,
-    Optional<IntRect> crop_rect,
-    const ImageBitmapOptions& options) {
+ScriptPromise ImageBitmap::CreateImageBitmap(ScriptState* script_state,
+                                             EventTarget& event_target,
+                                             Optional<IntRect> crop_rect,
+                                             const ImageBitmapOptions& options,
+                                             ExceptionState& exception_state) {
+  if ((crop_rect && !IsSourceSizeValid(crop_rect->Width(), crop_rect->Height(),
+                                       exception_state)) ||
+      !IsSourceSizeValid(width(), height(), exception_state))
+    return ScriptPromise();
+  if (!IsResizeOptionValid(options, exception_state))
+    return ScriptPromise();
   return ImageBitmapSource::FulfillImageBitmap(
       script_state, Create(this, crop_rect, options));
 }

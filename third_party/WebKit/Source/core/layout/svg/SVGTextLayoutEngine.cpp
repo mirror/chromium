@@ -131,8 +131,10 @@ void SVGTextLayoutEngine::ComputeCurrentFragmentMetrics(
     return;
 
   float width = scaled_font.Width(run, nullptr, &glyph_overflow_bounds);
+  float ascent = font_data->GetFontMetrics().FloatAscent();
+  float descent = font_data->GetFontMetrics().FloatDescent();
   current_text_fragment_.glyph_overflow.SetFromBounds(glyph_overflow_bounds,
-                                                      scaled_font, width);
+                                                      ascent, descent, width);
   current_text_fragment_.glyph_overflow.top /= scaling_factor;
   current_text_fragment_.glyph_overflow.left /= scaling_factor;
   current_text_fragment_.glyph_overflow.right /= scaling_factor;

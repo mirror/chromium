@@ -115,8 +115,7 @@ class LocalNetworkRequestsPageLoadMetricsObserverTest
         (net_error ? 1024 * 20 : 0) /* raw_body_bytes */,
         0 /* original_network_content_length */,
         nullptr /* data_reduction_proxy_data */,
-        content::ResourceType::RESOURCE_TYPE_MAIN_FRAME, net_error,
-        {} /* load_timing_info */);
+        content::ResourceType::RESOURCE_TYPE_MAIN_FRAME, net_error);
 
     PageLoadMetricsObserverTestHarness::SimulateLoadedResource(
         request_info, navigation_simulator_->GetGlobalRequestID());
@@ -770,12 +769,14 @@ TEST_F(LocalNetworkRequestsPageLoadMetricsObserverTest,
   // Load a resource that has the IP address in the URL but returned an empty
   // socket address for some reason.
   PageLoadMetricsObserverTestHarness::SimulateLoadedResource(
-      {GURL(internal::kDiffSubnetRequest2.url), net::HostPortPair(),
-       -1 /* frame_tree_node_id */, true /* was_cached */,
-       1024 * 20 /* raw_body_bytes */, 0 /* original_network_content_length */,
-       nullptr /* data_reduction_proxy_data */,
-       content::ResourceType::RESOURCE_TYPE_MAIN_FRAME, 0,
-       nullptr /* load_timing_info */},
+      {
+          GURL(internal::kDiffSubnetRequest2.url), net::HostPortPair(),
+          -1 /* frame_tree_node_id */, true /* was_cached */,
+          1024 * 20 /* raw_body_bytes */,
+          0 /* original_network_content_length */,
+          nullptr /* data_reduction_proxy_data */,
+          content::ResourceType::RESOURCE_TYPE_MAIN_FRAME, 0,
+      },
       GetGlobalRequestID());
   DeleteContents();
 
@@ -798,12 +799,13 @@ TEST_F(LocalNetworkRequestsPageLoadMetricsObserverTest,
   // Load a resource that doesn't have the IP address in the URL and returned an
   // empty socket address (e.g., failed DNS resolution).
   PageLoadMetricsObserverTestHarness::SimulateLoadedResource(
-      {GURL(internal::kPrivatePage.url), net::HostPortPair(),
-       -1 /* frame_tree_node_id */, false /* was_cached */,
-       0 /* raw_body_bytes */, 0 /* original_network_content_length */,
-       nullptr /* data_reduction_proxy_data */,
-       content::ResourceType::RESOURCE_TYPE_MAIN_FRAME, -20,
-       nullptr /* load_timing_info */},
+      {
+          GURL(internal::kPrivatePage.url), net::HostPortPair(),
+          -1 /* frame_tree_node_id */, false /* was_cached */,
+          0 /* raw_body_bytes */, 0 /* original_network_content_length */,
+          nullptr /* data_reduction_proxy_data */,
+          content::ResourceType::RESOURCE_TYPE_MAIN_FRAME, -20,
+      },
       GetGlobalRequestID());
   DeleteContents();
 

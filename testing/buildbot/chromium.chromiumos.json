@@ -262,18 +262,6 @@
         "test": "latency_unittests"
       },
       {
-        "args": [
-          "--override-use-software-gl-for-tests",
-          "--test-launcher-filter-file=../../testing/buildbot/filters/single.mash.browser_tests.filter"
-        ],
-        "name": "single-mash_browser_test",
-        "swarming": {
-          "can_use_on_swarming_builders": true,
-          "hard_timeout": 1800
-        },
-        "test": "mash_browser_tests"
-      },
-      {
         "swarming": {
           "can_use_on_swarming_builders": true
         },
@@ -317,8 +305,7 @@
         ],
         "swarming": {
           "can_use_on_swarming_builders": true,
-          "hard_timeout": 1500,
-          "shards": 5
+          "hard_timeout": 900
         },
         "test": "mus_browser_tests"
       },

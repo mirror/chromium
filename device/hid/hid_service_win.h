@@ -36,7 +36,6 @@ class HidServiceWin : public HidService, public DeviceMonitorWin::Observer {
 
   void Connect(const std::string& device_id,
                const ConnectCallback& callback) override;
-  base::WeakPtr<HidService> GetWeakPtr() override;
 
  private:
   static void EnumerateBlocking(

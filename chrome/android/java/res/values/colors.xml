@@ -31,7 +31,6 @@
     <color name="modal_dialog_scrim_color">#7f000000</color>
 
     <color name="modern_grey_300">#DFE1E5</color>
-    <color name="modern_light_grey">#F1F3F4</color>
 
     <!-- New list of common text colors -->
     <color name="black_alpha_20">#33000000</color>
@@ -180,6 +179,8 @@
     <!-- WebappActivity colors -->
     <color name="webapp_default_bg">#fafafa</color>
     <color name="webapp_splash_title_light">#ffffff</color>
+    <color name="webapp_url_bar_bg">#fafafa</color>
+    <color name="webapp_url_bar_separator">#e1e1e1</color>
 
     <!-- Bookmark UI colors -->
     <color name="bookmark_detail_section">#7C7B79</color>
@@ -210,6 +211,7 @@
     <color name="translate_overflow_menu_divider_color">#e0e0e0</color>
 
     <!-- Other colors -->
+    <color name="selectable_list_item_highlight_color">#804281f4</color>
     <color name="media_viewer_bg">#000000</color>
     <color name="image_viewer_bg">#0e0e0e</color>
     <color name="modern_toolbar_bg">#E6FFFFFF</color>

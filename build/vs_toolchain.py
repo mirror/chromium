@@ -352,8 +352,8 @@ def _GetDesiredVsToolchainHashes():
     # Update 3 final with 10.0.15063.468 SDK and no vctip.exe.
     return ['f53e4598951162bad6330f7a167486c7ae5db1e5']
   if env_version == '2017':
-    # VS 2017 Update 3.2 with 10.0.15063.468 SDK.
-    return ['9bc7ccbf9f4bd50d4a3bd185e8ca94ff1618de0b']
+    # VS 2017 Update 3 Preview 4 with 10.0.15063.468 SDK.
+    return ['1f52d730755ac72dddaf121b73c9d6fd5c24ddf8']
   raise Exception('Unsupported VS version %s' % env_version)
 
 

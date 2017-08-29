@@ -27,9 +27,6 @@
 #ifndef ResourceResponse_h
 #define ResourceResponse_h
 
-#include <memory>
-#include <utility>
-
 #include "platform/PlatformExport.h"
 #include "platform/blob/BlobData.h"
 #include "platform/loader/fetch/ResourceLoadInfo.h"
@@ -73,6 +70,7 @@ class PLATFORM_EXPORT ResourceResponse final {
     kSecurityStyleUnknown,
     kSecurityStyleUnauthenticated,
     kSecurityStyleAuthenticationBroken,
+    kSecurityStyleWarning,
     kSecurityStyleAuthenticated
   };
 

@@ -6,7 +6,6 @@
 
 #include "core/layout/ng/inline/ng_baseline.h"
 #include "core/layout/ng/inline/ng_bidi_paragraph.h"
-#include "core/layout/ng/inline/ng_inline_box_state.h"
 #include "core/layout/ng/inline/ng_inline_break_token.h"
 #include "core/layout/ng/inline/ng_inline_node.h"
 #include "core/layout/ng/inline/ng_line_box_fragment.h"
@@ -14,14 +13,20 @@
 #include "core/layout/ng/inline/ng_line_breaker.h"
 #include "core/layout/ng/inline/ng_text_fragment.h"
 #include "core/layout/ng/inline/ng_text_fragment_builder.h"
+#include "core/layout/ng/layout_ng_block_flow.h"
 #include "core/layout/ng/ng_block_layout_algorithm.h"
 #include "core/layout/ng/ng_box_fragment.h"
 #include "core/layout/ng/ng_constraint_space.h"
+#include "core/layout/ng/ng_constraint_space_builder.h"
+#include "core/layout/ng/ng_floats_utils.h"
 #include "core/layout/ng/ng_fragment_builder.h"
+#include "core/layout/ng/ng_layout_opportunity_iterator.h"
 #include "core/layout/ng/ng_layout_result.h"
+#include "core/layout/ng/ng_length_utils.h"
 #include "core/layout/ng/ng_space_utils.h"
 #include "core/layout/ng/ng_unpositioned_float.h"
 #include "core/style/ComputedStyle.h"
+#include "platform/text/BidiRunList.h"
 
 namespace blink {
 namespace {
@@ -34,9 +39,10 @@ inline bool ShouldCreateBoxFragment(const NGInlineItem& item,
   return style.HasBoxDecorationBackground() || item_result.needs_box_when_empty;
 }
 
-NGBfcOffset GetOriginPointForFloats(const NGBfcOffset& container_bfc_offset,
-                                    LayoutUnit content_size) {
-  NGBfcOffset origin_point = container_bfc_offset;
+NGLogicalOffset GetOriginPointForFloats(
+    const NGLogicalOffset& container_bfc_offset,
+    LayoutUnit content_size) {
+  NGLogicalOffset origin_point = container_bfc_offset;
   origin_point.block_offset += content_size;
   return origin_point;
 }
@@ -45,7 +51,7 @@ NGBfcOffset GetOriginPointForFloats(const NGBfcOffset& container_bfc_offset,
 
 NGInlineLayoutAlgorithm::NGInlineLayoutAlgorithm(
     NGInlineNode inline_node,
-    const NGConstraintSpace& space,
+    NGConstraintSpace* space,
     NGInlineBreakToken* break_token)
     : NGLayoutAlgorithm(
           inline_node,
@@ -57,7 +63,8 @@ NGInlineLayoutAlgorithm::NGInlineLayoutAlgorithm(
           TextDirection::kLtr,
           break_token),
       is_horizontal_writing_mode_(
-          blink::IsHorizontalWritingMode(space.WritingMode())) {
+          blink::IsHorizontalWritingMode(space->WritingMode())),
+      space_builder_(space) {
   unpositioned_floats_ = ConstraintSpace().UnpositionedFloats();
 
   if (!is_horizontal_writing_mode_)
@@ -66,22 +73,20 @@ NGInlineLayoutAlgorithm::NGInlineLayoutAlgorithm(
 
 bool NGInlineLayoutAlgorithm::CreateLine(
     NGLineInfo* line_info,
-    NGExclusionSpace* exclusion_space,
     RefPtr<NGInlineBreakToken> break_token) {
   if (Node().IsBidiEnabled())
     BidiReorder(&line_info->Results());
 
-  if (!PlaceItems(line_info, *exclusion_space, break_token))
+  if (!PlaceItems(line_info, break_token))
     return false;
 
   // If something has resolved our BFC offset we can place all of the
   // unpositioned floats below the current line.
   if (container_builder_.BfcOffset()) {
-    NGBfcOffset origin_point =
+    NGLogicalOffset origin_point =
         GetOriginPointForFloats(ContainerBfcOffset(), content_size_);
-    PositionPendingFloats(ConstraintSpace(), origin_point.block_offset,
-                          &container_builder_, &unpositioned_floats_,
-                          exclusion_space);
+    PositionPendingFloats(origin_point.block_offset, &container_builder_,
+                          &unpositioned_floats_, MutableConstraintSpace());
   }
 
   return true;
@@ -134,7 +139,6 @@ void NGInlineLayoutAlgorithm::BidiReorder(NGInlineItemResults* line_items) {
 
 bool NGInlineLayoutAlgorithm::PlaceItems(
     NGLineInfo* line_info,
-    const NGExclusionSpace& exclusion_space,
     RefPtr<NGInlineBreakToken> break_token) {
   NGInlineItemResults* line_items = &line_info->Results();
 
@@ -172,7 +176,6 @@ bool NGInlineLayoutAlgorithm::PlaceItems(
           box->AccumulateUsedFonts(item_result.shape_result.Get(),
                                    baseline_type_);
         }
-        text_builder.SetEndEffect(item_result.text_end_effect);
         text_builder.SetShapeResult(std::move(item_result.shape_result));
       } else {
         DCHECK(!item.TextShapeResult());  // kControl or unit tests.
@@ -271,7 +274,7 @@ bool NGInlineLayoutAlgorithm::PlaceItems(
   container_builder_.AddChild(line_box.ToLineBoxFragment(), offset);
 
   max_inline_size_ = std::max(max_inline_size_, inline_size);
-  content_size_ = ComputeContentSize(*line_info, exclusion_space, line_bottom);
+  content_size_ = ComputeContentSize(*line_info, line_bottom);
 
   return true;
 }
@@ -377,7 +380,6 @@ void NGInlineLayoutAlgorithm::ApplyTextAlign(ETextAlign text_align,
 
 LayoutUnit NGInlineLayoutAlgorithm::ComputeContentSize(
     const NGLineInfo& line_info,
-    const NGExclusionSpace& exclusion_space,
     LayoutUnit line_bottom) {
   LayoutUnit content_size = line_bottom;
 
@@ -394,9 +396,10 @@ LayoutUnit NGInlineLayoutAlgorithm::ComputeContentSize(
 
   // layout_object may be null in certain cases, e.g. if it's a kBidiControl.
   if (layout_object && layout_object->IsBR()) {
-    NGBfcOffset bfc_offset = {ContainerBfcOffset().line_offset,
-                              ContainerBfcOffset().block_offset + content_size};
-    AdjustToClearance(exclusion_space.ClearanceOffset(item.Style()->Clear()),
+    NGLogicalOffset bfc_offset =
+        ContainerBfcOffset() + NGLogicalOffset(LayoutUnit(), content_size);
+    AdjustToClearance(ConstraintSpace().ExclusionSpace()->ClearanceOffset(
+                          item.Style()->Clear()),
                       &bfc_offset);
     content_size = bfc_offset.block_offset - ContainerBfcOffset().block_offset;
   }
@@ -456,43 +459,37 @@ RefPtr<NGLayoutResult> NGInlineLayoutAlgorithm::Layout() {
   // We can resolve our BFC offset if we aren't an empty inline.
   if (!Node().IsEmptyInline()) {
     DCHECK(!container_builder_.BfcOffset());
-    LayoutUnit bfc_block_offset = constraint_space_.BfcOffset().block_offset +
-                                  constraint_space_.MarginStrut().Sum();
-    MaybeUpdateFragmentBfcOffset(constraint_space_, bfc_block_offset,
+    LayoutUnit bfc_block_offset = constraint_space_->BfcOffset().block_offset +
+                                  constraint_space_->MarginStrut().Sum();
+    MaybeUpdateFragmentBfcOffset(*constraint_space_, bfc_block_offset,
                                  &container_builder_);
 
     // If we have unpositioned floats from a previous sibling, we need to abort
     // our layout, and tell our parent that we now know our BFC offset.
     if (!unpositioned_floats_.IsEmpty()) {
-      container_builder_.SwapUnpositionedFloats(&unpositioned_floats_);
+      // TODO(ikilpatrick): This should be swapping in its unpositioned floats
+      // before aborting, but as because NGLayoutInputNode::IsInline isn't
+      // stable, we can't do this yet.
+      // container_builder_.SwapUnpositionedFloats(&unpositioned_floats_);
       return container_builder_.Abort(NGLayoutResult::kBfcOffsetResolved);
     }
   }
 
   NGLineBreaker line_breaker(Node(), constraint_space_, &container_builder_,
                              &unpositioned_floats_, BreakToken());
-
-  std::unique_ptr<NGExclusionSpace> exclusion_space(
-      WTF::MakeUnique<NGExclusionSpace>(ConstraintSpace().ExclusionSpace()));
   NGLineInfo line_info;
-  while (line_breaker.NextLine({LayoutUnit(), content_size_}, *exclusion_space,
-                               &line_info)) {
-    CreateLine(&line_info, line_breaker.ExclusionSpace(),
-               line_breaker.CreateBreakToken());
-    exclusion_space =
-        WTF::MakeUnique<NGExclusionSpace>(*line_breaker.ExclusionSpace());
-  }
+  while (line_breaker.NextLine(&line_info, {LayoutUnit(), content_size_}))
+    CreateLine(&line_info, line_breaker.CreateBreakToken());
 
   // Place any remaining floats which couldn't fit on the previous line.
   // TODO(ikilpatrick): This is duplicated from CreateLine, but flushes any
   // floats if we didn't create a line-box. Refactor this such that this isn't
   // needed.
   if (container_builder_.BfcOffset()) {
-    NGBfcOffset origin_point =
+    NGLogicalOffset origin_point =
         GetOriginPointForFloats(ContainerBfcOffset(), content_size_);
-    PositionPendingFloats(ConstraintSpace(), origin_point.block_offset,
-                          &container_builder_, &unpositioned_floats_,
-                          exclusion_space.get());
+    PositionPendingFloats(origin_point.block_offset, &container_builder_,
+                          &unpositioned_floats_, MutableConstraintSpace());
   }
 
   // TODO(kojii): Check if the line box width should be content or available.
@@ -514,8 +511,6 @@ RefPtr<NGLayoutResult> NGInlineLayoutAlgorithm::Layout() {
     DCHECK(!container_builder_.BfcOffset());
     container_builder_.SwapUnpositionedFloats(&unpositioned_floats_);
   }
-
-  container_builder_.SetExclusionSpace(std::move(exclusion_space));
 
   PropagateBaselinesFromChildren();
 

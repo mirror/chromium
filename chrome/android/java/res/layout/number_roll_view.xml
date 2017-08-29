@@ -16,7 +16,8 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
         android:singleLine="true"
-        android:textAppearance="@style/WhiteHeadline2" />
+        android:textColor="@android:color/white"
+        android:textSize="20sp" />
 
     <TextView
         android:id="@+id/down"
@@ -24,5 +25,6 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
         android:singleLine="true"
-        android:textAppearance="@style/WhiteHeadline2" />
+        android:textColor="@android:color/white"
+        android:textSize="20sp" />
 </org.chromium.chrome.browser.widget.NumberRollView>

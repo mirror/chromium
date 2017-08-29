@@ -55,10 +55,9 @@ class MemoryTracingTest : public ContentBrowserTest {
     // the run loop (which is the IN_PROC_BROWSER_TEST_F main thread).
     if (!task_runner->RunsTasksInCurrentSequence()) {
       task_runner->PostTask(
-          FROM_HERE,
-          base::BindOnce(&MemoryTracingTest::OnGlobalMemoryDumpDone,
-                         base::Unretained(this), task_runner, closure,
-                         request_index, success, dump_guid));
+          FROM_HERE, base::Bind(&MemoryTracingTest::OnGlobalMemoryDumpDone,
+                                base::Unretained(this), task_runner, closure,
+                                request_index, success, dump_guid));
       return;
     }
     if (success)
@@ -74,10 +73,9 @@ class MemoryTracingTest : public ContentBrowserTest {
       const MemoryDumpLevelOfDetail& level_of_detail,
       const base::Closure& closure) {
     uint32_t request_index = next_request_index_++;
-    memory_instrumentation::MemoryInstrumentation::
-        RequestGlobalDumpAndAppendToTraceCallback callback = base::Bind(
-            &MemoryTracingTest::OnGlobalMemoryDumpDone, base::Unretained(this),
-            base::ThreadTaskRunnerHandle::Get(), closure, request_index);
+    base::trace_event::GlobalMemoryDumpCallback callback = base::Bind(
+        &MemoryTracingTest::OnGlobalMemoryDumpDone, base::Unretained(this),
+        base::ThreadTaskRunnerHandle::Get(), closure, request_index);
     if (from_renderer_thread) {
       PostTaskToInProcessRendererAndWait(base::Bind(
           &memory_instrumentation::MemoryInstrumentation::

@@ -58,8 +58,7 @@ std::string ChildWindowIDsAsString(ServerWindow* parent) {
        ++i) {
     if (!result.empty())
       result += " ";
-    WindowId id = (*i)->id();
-    result += base::IntToString((id.client_id << 16) | id.window_id);
+    result += base::IntToString(WindowIdToTransportId((*i)->id()));
   }
   return result;
 }

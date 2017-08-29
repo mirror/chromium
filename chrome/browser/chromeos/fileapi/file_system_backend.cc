@@ -121,7 +121,7 @@ void FileSystemBackend::Initialize(storage::FileSystemContext* context) {
 
 void FileSystemBackend::ResolveURL(const storage::FileSystemURL& url,
                                    storage::OpenFileSystemMode mode,
-                                   OpenFileSystemCallback callback) {
+                                   const OpenFileSystemCallback& callback) {
   std::string id;
   storage::FileSystemType type;
   std::string cracked_id;
@@ -135,8 +135,7 @@ void FileSystemBackend::ResolveURL(const storage::FileSystemURL& url,
     // accessible.
     GURL root_url = GURL(storage::GetExternalFileSystemRootURIString(
         url.origin(), std::string()));
-    std::move(callback).Run(root_url, std::string(),
-                            base::File::FILE_ERROR_SECURITY);
+    callback.Run(root_url, std::string(), base::File::FILE_ERROR_SECURITY);
     return;
   }
 
@@ -154,8 +153,8 @@ void FileSystemBackend::ResolveURL(const storage::FileSystemURL& url,
     if (components.size() < 2) {
       // Unable to access /archive and /removable directories directly. The
       // inner mount name must be specified.
-      std::move(callback).Run(GURL(root_url), std::string(),
-                              base::File::FILE_ERROR_SECURITY);
+      callback.Run(
+          GURL(root_url), std::string(), base::File::FILE_ERROR_SECURITY);
       return;
     }
     std::string inner_mount_name = components[1];
@@ -170,8 +169,8 @@ void FileSystemBackend::ResolveURL(const storage::FileSystemURL& url,
     base::FilePath unused_path;
     if (!arc::ParseDocumentsProviderUrl(url, &authority, &root_document_id,
                                         &unused_path)) {
-      std::move(callback).Run(GURL(root_url), std::string(),
-                              base::File::FILE_ERROR_SECURITY);
+      callback.Run(GURL(root_url), std::string(),
+                   base::File::FILE_ERROR_SECURITY);
       return;
     }
     base::FilePath mount_path =
@@ -186,7 +185,7 @@ void FileSystemBackend::ResolveURL(const storage::FileSystemURL& url,
     name = id;
   }
 
-  std::move(callback).Run(GURL(root_url), name, base::File::FILE_OK);
+  callback.Run(GURL(root_url), name, base::File::FILE_OK);
 }
 
 storage::FileSystemQuotaUtil* FileSystemBackend::GetQuotaUtil() {

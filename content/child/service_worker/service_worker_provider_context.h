@@ -6,11 +6,12 @@
 #define CONTENT_CHILD_SERVICE_WORKER_SERVICE_WORKER_PROVIDER_CONTEXT_H_
 
 #include <memory>
+#include <set>
+#include <vector>
 
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
 #include "base/sequenced_task_runner_helpers.h"
-#include "content/child/child_url_loader_factory_getter.h"
 #include "content/child/service_worker/service_worker_dispatcher.h"
 #include "content/common/content_export.h"
 #include "content/common/service_worker/service_worker_event_dispatcher.mojom.h"
@@ -23,10 +24,6 @@ class SingleThreadTaskRunner;
 }
 
 namespace content {
-
-namespace mojom {
-class URLLoaderFactory;
-}
 
 class ServiceWorkerHandleReference;
 class ServiceWorkerRegistrationHandleReference;
@@ -61,20 +58,11 @@ class CONTENT_EXPORT ServiceWorkerProviderContext
   // the content::ServiceWorkerProviderHost that notifies of changes to the
   // registration's and workers' status. |request| is bound with |binding_|.
   // The new instance is registered to |dispatcher|, which is not owned.
-  //
-  // For S13nServiceWorker:
-  // |default_loader_factory_getter| contains a set of default loader
-  // factories for the associated loading context, and is used when we
-  // create a subresource loader for controllees. This is non-null only
-  // if the provider is created for controllees, and if the loading context,
-  // e.g. a frame, provides the default URLLoaderFactoryGetter.
   ServiceWorkerProviderContext(
       int provider_id,
       ServiceWorkerProviderType provider_type,
       mojom::ServiceWorkerProviderAssociatedRequest request,
-      mojom::ServiceWorkerProviderHostAssociatedPtrInfo host_ptr_info,
-      ServiceWorkerDispatcher* dispatcher,
-      scoped_refptr<ChildURLLoaderFactoryGetter> default_loader_factory_getter);
+      ServiceWorkerDispatcher* dispatcher);
 
   int provider_id() const { return provider_id_; }
 
@@ -102,34 +90,13 @@ class CONTENT_EXPORT ServiceWorkerProviderContext
       mojom::ServiceWorkerEventDispatcherPtrInfo event_dispatcher_ptr_info);
   ServiceWorkerHandleReference* controller();
 
-  // S13nServiceWorker:
-  // For service worker clients. Returns URLLoaderFactory for loading
-  // subresources with the controller ServiceWorker.
-  mojom::URLLoaderFactory* subresource_loader_factory();
+  // For service worker clients. Gets the ServiceWorkerEventDispatcher
+  // for dispatching events to the controller ServiceWorker.
+  mojom::ServiceWorkerEventDispatcher* event_dispatcher();
 
   // For service worker clients. Keeps track of feature usage for UseCounter.
   void CountFeature(uint32_t feature);
   const std::set<uint32_t>& used_features() const;
-
-  // For service worker clients. Creates a ServiceWorkerWorkerClientRequest
-  // which can be used to bind with a WorkerFetchContextImpl in a (dedicated or
-  // shared) worker thread and receive SetControllerServiceWorker() method call
-  // from the main thread.
-  // A dedicated worker's WorkerFetchContext calls CreateWorkerClientRequest()
-  // on its parent Document's ServiceWorkerProviderContext. A shared worker's
-  // fetch context calls CreateWorkerClientRequest() on its own
-  // ServiceWorkerProviderContext.
-  mojom::ServiceWorkerWorkerClientRequest CreateWorkerClientRequest();
-
-  // Called when ServiceWorkerNetworkProvider is destructed. This function
-  // severs the Mojo binding to the browser-side ServiceWorkerProviderHost. The
-  // reason ServiceWorkerNetworkProvider is special compared to the other
-  // providers, is that it is destructed synchronously when a service worker
-  // client (Document) is removed from the DOM. Once this happens, the
-  // ServiceWorkerProviderHost must destruct quickly in order to remove the
-  // ServiceWorkerClient from the system (thus allowing unregistration/update to
-  // occur and ensuring the Clients API doesn't return the client).
-  void OnNetworkProviderDestroyed();
 
  private:
   friend class base::DeleteHelper<ServiceWorkerProviderContext>;
@@ -142,10 +109,6 @@ class CONTENT_EXPORT ServiceWorkerProviderContext
   ~ServiceWorkerProviderContext() override;
   void DestructOnMainThread() const;
 
-  // Clears the information of the ServiceWorkerWorkerClient of dedicated (or
-  // shared) worker, when the connection to the worker is disconnected.
-  void UnregisterWorkerFetchContext(mojom::ServiceWorkerWorkerClient*);
-
   const int provider_id_;
   scoped_refptr<base::SingleThreadTaskRunner> main_thread_task_runner_;
 
@@ -153,8 +116,6 @@ class CONTENT_EXPORT ServiceWorkerProviderContext
   // connection to the content::ServiceWorkerProviderHost in the browser process
   // alive.
   mojo::AssociatedBinding<mojom::ServiceWorkerProvider> binding_;
-  // Browser-side Mojo endpoint for provider host.
-  mojom::ServiceWorkerProviderHostAssociatedPtr provider_host_;
 
   // Either |controllee_state_| or |controller_state_| is non-null.
   std::unique_ptr<ControlleeState> controllee_state_;

@@ -465,6 +465,11 @@ String Internals::getResourceHeader(const String& url,
   return resource->GetResourceRequest().HttpHeaderField(header.Utf8().data());
 }
 
+bool Internals::isSharingStyle(Element* element1, Element* element2) const {
+  DCHECK(element1 && element2);
+  return element1->GetComputedStyle() == element2->GetComputedStyle();
+}
+
 bool Internals::isValidContentSelect(Element* insertion_point,
                                      ExceptionState& exception_state) {
   DCHECK(insertion_point);
@@ -814,12 +819,6 @@ String Internals::visiblePlaceholder(Element* element) {
   }
 
   return String();
-}
-
-bool Internals::isValidationMessageVisible(Element* element) {
-  DCHECK(element);
-  return IsHTMLFormControlElement(element) &&
-         ToHTMLFormControlElement(element)->IsValidationMessageVisible();
 }
 
 void Internals::selectColorInColorChooser(Element* element,
@@ -3101,11 +3100,10 @@ String Internals::textSurroundingNode(Node* node,
     return String();
   blink::WebPoint point(x, y);
   SurroundingText surrounding_text(
-      EphemeralRange(
-          CreateVisiblePosition(node->GetLayoutObject()->PositionForPoint(
-                                    static_cast<IntPoint>(point)))
-              .DeepEquivalent()
-              .ParentAnchoredEquivalent()),
+      CreateVisiblePosition(node->GetLayoutObject()->PositionForPoint(
+                                static_cast<IntPoint>(point)))
+          .DeepEquivalent()
+          .ParentAnchoredEquivalent(),
       max_length);
   return surrounding_text.Content();
 }

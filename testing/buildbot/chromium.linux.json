@@ -3510,10 +3510,8 @@
   "Fuchsia Compile": {
     "additional_compile_targets": [
       "base_unittests",
-      "content_unittests",
       "crypto_unittests",
       "gl_unittests",
-      "headless_shell",
       "ipc_tests",
       "media_unittests",
       "mojo_common_unittests",
@@ -3604,7 +3602,8 @@
           "can_use_on_swarming_builders": true,
           "shards": 5
         },
-        "test": "browser_tests"
+        "test": "browser_tests",
+        "upload_to_flake_predictor": true
       },
       {
         "args": [

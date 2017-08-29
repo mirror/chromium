@@ -27,7 +27,6 @@
 <translation id="1746730358044914197">Die Eingabemethoden werden von Ihrem Administrator konfiguriert.</translation>
 <translation id="1747827819627189109">Bildschirmtastatur aktiviert</translation>
 <translation id="1823873187264960516">Ethernet: <ph name="ADDRESS" /></translation>
-<translation id="1836215606488044471">Assistant (wird geladen…)</translation>
 <translation id="1850504506766569011">WLAN ist deaktiviert.</translation>
 <translation id="1856813161013948396">Um den Sperrbildschirm zu überspringen, tippen Sie auf den Fingerabdrucksensor. Zum Konfigurieren klicken.</translation>
 <translation id="1864454756846565995">USB-C-Gerät (Port hinten)</translation>
@@ -55,7 +54,6 @@
 <translation id="2338501278241028356">Aktivieren Sie Bluetooth, damit Geräte in der Nähe gefunden werden</translation>
 <translation id="2352467521400612932">Eingabestift-Einstellungen</translation>
 <translation id="2354174487190027830"><ph name="NAME" /> wird aktiviert</translation>
-<translation id="2365393535144473978">Bei Aktivierung der mobilen Daten wird auch Bluetooth aktiviert.</translation>
 <translation id="2391579633712104609">180°</translation>
 <translation id="2429753432712299108">Das Bluetooth-Gerät "<ph name="DEVICE_NAME" />" bittet um Erlaubnis für Kopplung. Bevor Sie akzeptieren, überprüfen Sie, ob folgender Zugangscode auf dem Gerät angezeigt wird: <ph name="PASSKEY" />.</translation>
 <translation id="2475982808118771221">Ein Fehler ist aufgetreten.</translation>
@@ -125,7 +123,6 @@
 <translation id="4279490309300973883">Spiegelung</translation>
 <translation id="4321179778687042513">Strg</translation>
 <translation id="4338109981321384717">Lupe</translation>
-<translation id="4351433414020964307">Assistant wird geladen…</translation>
 <translation id="4378551569595875038">Verbindung wird hergestellt...</translation>
 <translation id="4421231901400348175">Sie teilen sich die Bildschirmsteuerung mit <ph name="HELPER_NAME" /> per Remote-Unterstützung.</translation>
 <translation id="4430019312045809116">Lautstärke</translation>
@@ -172,7 +169,6 @@
 <translation id="5927132638760172455">Übertragung an unbekannten Empfänger</translation>
 <translation id="5947494881799873997">Rückgängig machen</translation>
 <translation id="595202126637698455">Leistungsnachverfolgung aktiviert</translation>
-<translation id="5957083217255311415">Mobile Daten sind deaktiviert.</translation>
 <translation id="5958529069007801266">Betreuter Nutzer</translation>
 <translation id="5977415296283489383">Kopfhörer</translation>
 <translation id="5978382165065462689">Sie teilen sich die Bildschirmsteuerung per Remote-Unterstützung.</translation>
@@ -206,7 +202,6 @@
 <translation id="6691659475504239918">Suche + Shift + H</translation>
 <translation id="6700713906295497288">IME-Menüschaltfläche</translation>
 <translation id="6713285437468012787">Das Bluetooth-Gerät "<ph name="DEVICE_NAME" />" wurde gekoppelt und ist nun für alle Nutzer verfügbar. Sie können es unter "Einstellungen" wieder entkoppeln.</translation>
-<translation id="6715542151869432661">Keine Mobilgeräte gefunden.</translation>
 <translation id="6785414152754474415">Akku ist zu <ph name="PERCENTAGE" /> % geladen und wird geladen.</translation>
 <translation id="6803622936009808957">Der Bildschirm konnte nicht gespiegelt werden, da die Auflösung nicht unterstützt wird. Stattdessen wurde der Modus für den erweiterten Desktop gestartet.</translation>
 <translation id="683971173229319003">Suche + L</translation>
@@ -264,7 +259,7 @@
 <translation id="8477270416194247200">Drücken Sie Alt + Such-Taste oder Shift, um die Aktivierung aufzuheben.</translation>
 <translation id="8484916590211895857"><ph name="NAME" />: Verbindung wird wiederhergestellt...</translation>
 <translation id="8517041960877371778">Ihr <ph name="DEVICE_TYPE" /> wird möglicherweise nicht aufgeladen, wenn es eingeschaltet ist.</translation>
-<translation id="8639760480004882931"><ph name="PERCENTAGE" /> verbleibend</translation>
+<translation id="8639760480004882931"><ph name="PERCENTAGE" /> % verbleibend</translation>
 <translation id="8673028979667498656">270°</translation>
 <translation id="8676770494376880701">Schwachstrom-Ladegerät angeschlossen</translation>
 <translation id="8814190375133053267">WLAN</translation>
@@ -272,7 +267,6 @@
 <translation id="8828714802988429505">90°</translation>
 <translation id="8850991929411075241">Suche + Esc</translation>
 <translation id="8878886163241303700">Bildschirmerweiterung</translation>
-<translation id="8921624153894383499">Google Assistant spricht diese Sprache nicht.</translation>
 <translation id="8938800817013097409">USB-C-Gerät (rechter Port hinten)</translation>
 <translation id="8940956008527784070">Niedriger Akkustand (<ph name="PERCENTAGE" /> %)</translation>
 <translation id="9074739597929991885">Bluetooth</translation>

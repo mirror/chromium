@@ -152,20 +152,10 @@ HttpHandler::HttpHandler(
                         base::Bind(&ExecuteAlertCommand,
                                    base::Bind(&ExecuteAcceptAlert)))),
       CommandMapping(
-          kGet, "session/:sessionId/alert/text",
-          WrapToCommand("GetAlertMessage",
-                        base::Bind(&ExecuteAlertCommand,
-                                   base::Bind(&ExecuteGetAlertText)))),
-      CommandMapping(
           kGet, "session/:sessionId/alert_text",
           WrapToCommand("GetAlertMessage",
                         base::Bind(&ExecuteAlertCommand,
                                    base::Bind(&ExecuteGetAlertText)))),
-      CommandMapping(
-          kPost, "session/:sessionId/alert/text",
-          WrapToCommand("SetAlertPrompt",
-                        base::Bind(&ExecuteAlertCommand,
-                                   base::Bind(&ExecuteSetAlertText)))),
       CommandMapping(
           kPost, "session/:sessionId/alert_text",
           WrapToCommand("SetAlertPrompt",
@@ -216,9 +206,6 @@ HttpHandler::HttpHandler(
       CommandMapping(
           kPost, "session/:sessionId/elements",
           WrapToCommand("FindElements", base::Bind(&ExecuteFindElements, 50))),
-      CommandMapping(kGet, "session/:sessionId/element/active",
-                     WrapToCommand("GetActiveElement",
-                                   base::Bind(&ExecuteGetActiveElement))),
       CommandMapping(kPost, "session/:sessionId/element/active",
                      WrapToCommand("GetActiveElement",
                                    base::Bind(&ExecuteGetActiveElement))),
@@ -321,7 +308,7 @@ HttpHandler::HttpHandler(
           WrapToCommand("MaximizeWindow", base::Bind(&ExecuteMaximizeWindow))),
       CommandMapping(kPost, "session/:sessionId/window/fullscreen",
                      WrapToCommand("FullscreenWindow",
-                                   base::Bind(&ExecuteFullScreenWindow))),
+                                   base::Bind(&ExecuteUnimplementedCommand))),
       CommandMapping(kDelete, "session/:sessionId/window",
                      WrapToCommand("CloseWindow", base::Bind(&ExecuteClose))),
       CommandMapping(
@@ -340,9 +327,6 @@ HttpHandler::HttpHandler(
       CommandMapping(
           kPost, "session/:sessionId/timeouts",
           WrapToCommand("SetTimeout", base::Bind(&ExecuteSetTimeout))),
-      CommandMapping(
-          kGet, "session/:sessionId/timeouts",
-          WrapToCommand("GetTimeouts", base::Bind(&ExecuteGetTimeouts))),
       CommandMapping(kPost, "session/:sessionId/execute_sql",
                      WrapToCommand("ExecuteSql",
                                    base::Bind(&ExecuteUnimplementedCommand))),

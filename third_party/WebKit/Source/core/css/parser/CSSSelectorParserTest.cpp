@@ -148,13 +148,10 @@ TEST(CSSSelectorParserTest, PseudoElementsInCompoundLists) {
 }
 
 TEST(CSSSelectorParserTest, ValidSimpleAfterPseudoElementInCompound) {
-  const char* test_cases[] = {"::-webkit-volume-slider:hover",
-                              "::selection:window-inactive",
-                              "::-webkit-scrollbar:disabled",
-                              "::-webkit-volume-slider:not(:hover)",
-                              "::-webkit-scrollbar:not(:horizontal)",
-                              "::slotted(span)::before",
-                              "::slotted(div)::after"};
+  const char* test_cases[] = {
+      "::-webkit-volume-slider:hover", "::selection:window-inactive",
+      "::-webkit-scrollbar:disabled", "::-webkit-volume-slider:not(:hover)",
+      "::-webkit-scrollbar:not(:horizontal)"};
 
   for (auto test_case : test_cases) {
     CSSTokenizer tokenizer(test_case);
@@ -177,14 +174,7 @@ TEST(CSSSelectorParserTest, InvalidSimpleAfterPseudoElementInCompound) {
       "::shadow:not(::after)",
       "::-webkit-scrollbar:vertical:not(:first-child)",
       "video::-webkit-media-text-track-region-container.scrolling",
-      "div ::before.a",
-      "::slotted(div):hover",
-      "::slotted(div)::slotted(span)",
-      "::slotted(div)::before:hover",
-      "::slotted(div)::before::slotted(span)",
-      "::slotted(*)::first-letter",
-      "::slotted(.class)::first-line",
-      "::slotted([attr])::-webkit-scrollbar"};
+      "div ::before.a"};
 
   for (auto test_case : test_cases) {
     CSSTokenizer tokenizer(test_case);

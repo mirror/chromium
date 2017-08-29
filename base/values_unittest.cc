@@ -121,25 +121,6 @@ TEST(ValuesTest, ConstructDict) {
   EXPECT_EQ(Value::Type::DICTIONARY, value.type());
 }
 
-TEST(ValuesTest, ConstructDictFromStorage) {
-  Value::DictStorage storage;
-  storage.emplace("foo", std::make_unique<Value>("bar"));
-  {
-    DictionaryValue value(storage);
-    EXPECT_EQ(Value::Type::DICTIONARY, value.type());
-    EXPECT_EQ(Value::Type::STRING, value.FindKey("foo")->type());
-    EXPECT_EQ("bar", value.FindKey("foo")->GetString());
-  }
-
-  *storage["foo"] = base::Value("baz");
-  {
-    DictionaryValue value(std::move(storage));
-    EXPECT_EQ(Value::Type::DICTIONARY, value.type());
-    EXPECT_EQ(Value::Type::STRING, value.FindKey("foo")->type());
-    EXPECT_EQ("baz", value.FindKey("foo")->GetString());
-  }
-}
-
 TEST(ValuesTest, ConstructList) {
   ListValue value;
   EXPECT_EQ(Value::Type::LIST, value.type());
@@ -148,6 +129,7 @@ TEST(ValuesTest, ConstructList) {
 TEST(ValuesTest, ConstructListFromStorage) {
   Value::ListStorage storage;
   storage.emplace_back("foo");
+
   {
     ListValue value(storage);
     EXPECT_EQ(Value::Type::LIST, value.type());
@@ -171,74 +153,74 @@ TEST(ValuesTest, ConstructListFromStorage) {
 // Equals being correct.
 TEST(ValuesTest, CopyBool) {
   Value true_value(true);
-  Value copied_true_value(true_value.Clone());
+  Value copied_true_value(true_value);
   EXPECT_EQ(true_value.type(), copied_true_value.type());
   EXPECT_EQ(true_value.GetBool(), copied_true_value.GetBool());
 
   Value false_value(false);
-  Value copied_false_value(false_value.Clone());
+  Value copied_false_value(false_value);
   EXPECT_EQ(false_value.type(), copied_false_value.type());
   EXPECT_EQ(false_value.GetBool(), copied_false_value.GetBool());
 
   Value blank;
 
-  blank = true_value.Clone();
+  blank = true_value;
   EXPECT_EQ(true_value.type(), blank.type());
   EXPECT_EQ(true_value.GetBool(), blank.GetBool());
 
-  blank = false_value.Clone();
+  blank = false_value;
   EXPECT_EQ(false_value.type(), blank.type());
   EXPECT_EQ(false_value.GetBool(), blank.GetBool());
 }
 
 TEST(ValuesTest, CopyInt) {
   Value value(74);
-  Value copied_value(value.Clone());
+  Value copied_value(value);
   EXPECT_EQ(value.type(), copied_value.type());
   EXPECT_EQ(value.GetInt(), copied_value.GetInt());
 
   Value blank;
 
-  blank = value.Clone();
+  blank = value;
   EXPECT_EQ(value.type(), blank.type());
   EXPECT_EQ(value.GetInt(), blank.GetInt());
 }
 
 TEST(ValuesTest, CopyDouble) {
   Value value(74.896);
-  Value copied_value(value.Clone());
+  Value copied_value(value);
   EXPECT_EQ(value.type(), copied_value.type());
   EXPECT_EQ(value.GetDouble(), copied_value.GetDouble());
 
   Value blank;
 
-  blank = value.Clone();
+  blank = value;
   EXPECT_EQ(value.type(), blank.type());
   EXPECT_EQ(value.GetDouble(), blank.GetDouble());
 }
 
 TEST(ValuesTest, CopyString) {
   Value value("foobar");
-  Value copied_value(value.Clone());
+  Value copied_value(value);
   EXPECT_EQ(value.type(), copied_value.type());
   EXPECT_EQ(value.GetString(), copied_value.GetString());
 
   Value blank;
 
-  blank = value.Clone();
+  blank = value;
   EXPECT_EQ(value.type(), blank.type());
   EXPECT_EQ(value.GetString(), blank.GetString());
 }
 
 TEST(ValuesTest, CopyBinary) {
   Value value(Value::BlobStorage({0xF, 0x0, 0x0, 0xB, 0xA, 0x2}));
-  Value copied_value(value.Clone());
+  Value copied_value(value);
   EXPECT_EQ(value.type(), copied_value.type());
   EXPECT_EQ(value.GetBlob(), copied_value.GetBlob());
 
   Value blank;
 
-  blank = value.Clone();
+  blank = value;
   EXPECT_EQ(value.type(), blank.type());
   EXPECT_EQ(value.GetBlob(), blank.GetBlob());
 }
@@ -248,24 +230,22 @@ TEST(ValuesTest, CopyDictionary) {
   storage.emplace("Int", std::make_unique<Value>(123));
   Value value(std::move(storage));
 
-  Value copied_value(value.Clone());
+  Value copied_value(value);
   EXPECT_EQ(value, copied_value);
 
   Value blank;
-  blank = value.Clone();
+  blank = value;
   EXPECT_EQ(value, blank);
 }
 
 TEST(ValuesTest, CopyList) {
-  Value::ListStorage storage;
-  storage.emplace_back(123);
-  Value value(std::move(storage));
+  Value value(Value::ListStorage{Value(123)});
 
-  Value copied_value(value.Clone());
+  Value copied_value(value);
   EXPECT_EQ(value, copied_value);
 
   Value blank;
-  blank = value.Clone();
+  blank = value;
   EXPECT_EQ(value, blank);
 }
 
@@ -366,15 +346,15 @@ TEST(ValuesTest, MoveAssignDictionary) {
 }
 
 TEST(ValuesTest, MoveList) {
-  Value::ListStorage storage;
-  storage.emplace_back(123);
-  Value value(storage);
+  const Value::ListStorage list = {Value(123)};
+  Value value(list);
   Value moved_value(std::move(value));
   EXPECT_EQ(Value::Type::LIST, moved_value.type());
   EXPECT_EQ(123, moved_value.GetList().back().GetInt());
 
   Value blank;
-  blank = Value(std::move(storage));
+
+  blank = Value(list);
   EXPECT_EQ(Value::Type::LIST, blank.type());
   EXPECT_EQ(123, blank.GetList().back().GetInt());
 }
@@ -623,11 +603,11 @@ TEST(ValuesTest, FindPath) {
   EXPECT_TRUE(found->is_dict());
 
   // Double key, second not found.
-  found = root.FindPath(std::vector<StringPiece>{"foo", "notfound"});
+  found = root.FindPath({"foo", "notfound"});
   EXPECT_FALSE(found);
 
   // Double key, found.
-  found = root.FindPath(std::vector<StringPiece>{"foo", "bar"});
+  found = root.FindPath({"foo", "bar"});
   EXPECT_TRUE(found);
   EXPECT_TRUE(found->is_int());
   EXPECT_EQ(123, found->GetInt());
@@ -642,7 +622,7 @@ TEST(ValuesTest, SetPath) {
   EXPECT_EQ(inserted, found);
   EXPECT_EQ(123, found->GetInt());
 
-  inserted = root.SetPath(std::vector<StringPiece>{"foo", "bar"}, Value(123));
+  inserted = root.SetPath({"foo", "bar"}, Value(123));
   found = root.FindPathOfType({"foo", "bar"}, Value::Type::INTEGER);
   ASSERT_TRUE(found);
   EXPECT_EQ(inserted, found);
@@ -650,14 +630,12 @@ TEST(ValuesTest, SetPath) {
 
   // Overwrite with a different value.
   root.SetPath({"foo", "bar"}, Value("hello"));
-  found = root.FindPathOfType(std::vector<StringPiece>{"foo", "bar"},
-                              Value::Type::STRING);
+  found = root.FindPathOfType({"foo", "bar"}, Value::Type::STRING);
   ASSERT_TRUE(found);
   EXPECT_EQ("hello", found->GetString());
 
   // Can't change existing non-dictionary keys to dictionaries.
-  found =
-      root.SetPath(std::vector<StringPiece>{"foo", "bar", "baz"}, Value(123));
+  found = root.SetPath({"foo", "bar", "baz"}, Value(123));
   EXPECT_FALSE(found);
 }
 
@@ -846,7 +824,7 @@ TEST(ValuesTest, ListRemoval) {
   {
     ListValue list;
     auto value = std::make_unique<Value>();
-    Value original_value = value->Clone();
+    Value original_value = *value;
     list.Append(std::move(value));
     size_t index = 0;
     list.Remove(original_value, &index);
@@ -1044,11 +1022,9 @@ TEST(ValuesTest, DeepCopy) {
   Value* binary_weak = original_dict.Set(
       "binary", std::make_unique<Value>(Value::BlobStorage(42, '!')));
 
-  Value::ListStorage storage;
-  storage.emplace_back(0);
-  storage.emplace_back(1);
-  Value* list_weak =
-      original_dict.Set("list", std::make_unique<Value>(std::move(storage)));
+  Value* list_weak = original_dict.Set(
+      "list",
+      std::make_unique<Value>(Value::ListStorage({Value(0), Value(1)})));
   Value* list_element_0_weak = &list_weak->GetList()[0];
   Value* list_element_1_weak = &list_weak->GetList()[1];
 
@@ -1056,7 +1032,7 @@ TEST(ValuesTest, DeepCopy) {
       "dictionary", std::make_unique<DictionaryValue>());
   dict_weak->SetString("key", "value");
 
-  auto copy_dict = original_dict.CreateDeepCopy();
+  auto copy_dict = std::make_unique<DictionaryValue>(original_dict);
   ASSERT_TRUE(copy_dict.get());
   ASSERT_NE(copy_dict.get(), &original_dict);
 
@@ -1177,13 +1153,13 @@ TEST(ValuesTest, Equals) {
   dv.SetString("d2", ASCIIToUTF16("http://google.com"));
   dv.Set("e", std::make_unique<Value>());
 
-  auto copy = dv.CreateDeepCopy();
+  auto copy = std::make_unique<DictionaryValue>(dv);
   EXPECT_EQ(dv, *copy);
 
   std::unique_ptr<ListValue> list(new ListValue);
   list->Append(std::make_unique<Value>());
   list->Append(WrapUnique(new DictionaryValue));
-  auto list_copy = std::make_unique<Value>(list->Clone());
+  auto list_copy = std::make_unique<Value>(*list);
 
   ListValue* list_weak = dv.SetList("f", std::move(list));
   EXPECT_NE(dv, *copy);
@@ -1194,7 +1170,7 @@ TEST(ValuesTest, Equals) {
   EXPECT_NE(dv, *copy);
 
   // Check if Equals detects differences in only the keys.
-  copy = dv.CreateDeepCopy();
+  copy = std::make_unique<DictionaryValue>(dv);
   EXPECT_EQ(dv, *copy);
   copy->Remove("a", NULL);
   copy->SetBoolean("aa", false);
@@ -1307,15 +1283,8 @@ TEST(ValuesTest, Comparisons) {
   EXPECT_FALSE(int_dict1 >= int_dict2);
 
   // Test Values of different types.
-  std::vector<Value> values;
-  values.emplace_back(std::move(null1));
-  values.emplace_back(std::move(bool1));
-  values.emplace_back(std::move(int1));
-  values.emplace_back(std::move(double1));
-  values.emplace_back(std::move(string1));
-  values.emplace_back(std::move(binary1));
-  values.emplace_back(std::move(int_dict1));
-  values.emplace_back(std::move(int_list1));
+  std::vector<Value> values = {null1,   bool1,   int1,      double1,
+                               string1, binary1, int_dict1, int_list1};
   for (size_t i = 0; i < values.size(); ++i) {
     for (size_t j = i + 1; j < values.size(); ++j) {
       EXPECT_FALSE(values[i] == values[j]);
@@ -1330,30 +1299,32 @@ TEST(ValuesTest, Comparisons) {
 
 TEST(ValuesTest, DeepCopyCovariantReturnTypes) {
   DictionaryValue original_dict;
-  Value* null_weak = original_dict.SetKey("null", Value());
-  Value* bool_weak = original_dict.SetKey("bool", Value(true));
-  Value* int_weak = original_dict.SetKey("int", Value(42));
-  Value* double_weak = original_dict.SetKey("double", Value(3.14));
-  Value* string_weak = original_dict.SetKey("string", Value("hello"));
-  Value* string16_weak =
-      original_dict.SetKey("string16", Value(ASCIIToUTF16("hello16")));
-  Value* binary_weak =
-      original_dict.SetKey("binary", Value(Value::BlobStorage(42, '!')));
+  Value* null_weak = original_dict.Set("null", std::make_unique<Value>());
+  Value* bool_weak = original_dict.Set("bool", std::make_unique<Value>(true));
+  Value* int_weak = original_dict.Set("int", std::make_unique<Value>(42));
+  Value* double_weak =
+      original_dict.Set("double", std::make_unique<Value>(3.14));
+  Value* string_weak =
+      original_dict.Set("string", std::make_unique<Value>("hello"));
+  Value* string16_weak = original_dict.Set(
+      "string16", std::make_unique<Value>(ASCIIToUTF16("hello16")));
 
-  Value::ListStorage storage;
-  storage.emplace_back(0);
-  storage.emplace_back(1);
-  Value* list_weak = original_dict.SetKey("list", Value(std::move(storage)));
+  Value* binary_weak = original_dict.Set(
+      "binary", std::make_unique<Value>(Value::BlobStorage(42, '!')));
 
-  auto copy_dict = std::make_unique<Value>(original_dict.Clone());
-  auto copy_null = std::make_unique<Value>(null_weak->Clone());
-  auto copy_bool = std::make_unique<Value>(bool_weak->Clone());
-  auto copy_int = std::make_unique<Value>(int_weak->Clone());
-  auto copy_double = std::make_unique<Value>(double_weak->Clone());
-  auto copy_string = std::make_unique<Value>(string_weak->Clone());
-  auto copy_string16 = std::make_unique<Value>(string16_weak->Clone());
-  auto copy_binary = std::make_unique<Value>(binary_weak->Clone());
-  auto copy_list = std::make_unique<Value>(list_weak->Clone());
+  Value* list_weak = original_dict.Set(
+      "list",
+      std::make_unique<Value>(Value::ListStorage({Value(0), Value(1)})));
+
+  auto copy_dict = std::make_unique<Value>(original_dict);
+  auto copy_null = std::make_unique<Value>(*null_weak);
+  auto copy_bool = std::make_unique<Value>(*bool_weak);
+  auto copy_int = std::make_unique<Value>(*int_weak);
+  auto copy_double = std::make_unique<Value>(*double_weak);
+  auto copy_string = std::make_unique<Value>(*string_weak);
+  auto copy_string16 = std::make_unique<Value>(*string16_weak);
+  auto copy_binary = std::make_unique<Value>(*binary_weak);
+  auto copy_list = std::make_unique<Value>(*list_weak);
 
   EXPECT_EQ(original_dict, *copy_dict);
   EXPECT_EQ(*null_weak, *copy_null);
@@ -1528,7 +1499,7 @@ TEST(ValuesTest, DictionaryIterator) {
   }
 
   Value value1("value1");
-  dict.SetKey("key1", value1.Clone());
+  dict.Set("key1", std::make_unique<Value>(value1));
   bool seen1 = false;
   for (DictionaryValue::Iterator it(dict); !it.IsAtEnd(); it.Advance()) {
     EXPECT_FALSE(seen1);
@@ -1539,7 +1510,7 @@ TEST(ValuesTest, DictionaryIterator) {
   EXPECT_TRUE(seen1);
 
   Value value2("value2");
-  dict.SetKey("key2", value2.Clone());
+  dict.Set("key2", std::make_unique<Value>(value2));
   bool seen2 = seen1 = false;
   for (DictionaryValue::Iterator it(dict); !it.IsAtEnd(); it.Advance()) {
     if (it.key() == "key1") {
@@ -1565,7 +1536,7 @@ TEST(ValuesTest, StdDictionaryIterator) {
   }
 
   Value value1("value1");
-  dict.SetKey("key1", value1.Clone());
+  dict.Set("key1", std::make_unique<Value>(value1));
   bool seen1 = false;
   for (const auto& it : dict) {
     EXPECT_FALSE(seen1);
@@ -1576,7 +1547,7 @@ TEST(ValuesTest, StdDictionaryIterator) {
   EXPECT_TRUE(seen1);
 
   Value value2("value2");
-  dict.SetKey("key2", value2.Clone());
+  dict.Set("key2", std::make_unique<Value>(value2));
   bool seen2 = seen1 = false;
   for (const auto& it : dict) {
     if (it.first == "key1") {
@@ -1609,21 +1580,21 @@ TEST(ValuesTest, GetWithNullOutValue) {
   DictionaryValue dict_value;
   ListValue list_value;
 
-  main_dict.SetKey("bool", bool_value.Clone());
-  main_dict.SetKey("int", int_value.Clone());
-  main_dict.SetKey("double", double_value.Clone());
-  main_dict.SetKey("string", string_value.Clone());
-  main_dict.SetKey("binary", binary_value.Clone());
-  main_dict.SetKey("dict", dict_value.Clone());
-  main_dict.SetKey("list", list_value.Clone());
+  main_dict.Set("bool", std::make_unique<Value>(bool_value));
+  main_dict.Set("int", std::make_unique<Value>(int_value));
+  main_dict.Set("double", std::make_unique<Value>(double_value));
+  main_dict.Set("string", std::make_unique<Value>(string_value));
+  main_dict.Set("binary", std::make_unique<Value>(binary_value));
+  main_dict.Set("dict", std::make_unique<Value>(dict_value));
+  main_dict.Set("list", std::make_unique<Value>(list_value));
 
-  main_list.Append(std::make_unique<Value>(bool_value.Clone()));
-  main_list.Append(std::make_unique<Value>(int_value.Clone()));
-  main_list.Append(std::make_unique<Value>(double_value.Clone()));
-  main_list.Append(std::make_unique<Value>(string_value.Clone()));
-  main_list.Append(std::make_unique<Value>(binary_value.Clone()));
-  main_list.Append(std::make_unique<Value>(dict_value.Clone()));
-  main_list.Append(std::make_unique<Value>(list_value.Clone()));
+  main_list.Append(std::make_unique<Value>(bool_value));
+  main_list.Append(std::make_unique<Value>(int_value));
+  main_list.Append(std::make_unique<Value>(double_value));
+  main_list.Append(std::make_unique<Value>(string_value));
+  main_list.Append(std::make_unique<Value>(binary_value));
+  main_list.Append(std::make_unique<Value>(dict_value));
+  main_list.Append(std::make_unique<Value>(list_value));
 
   EXPECT_TRUE(main_dict.Get("bool", NULL));
   EXPECT_TRUE(main_dict.Get("int", NULL));

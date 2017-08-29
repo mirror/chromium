@@ -341,11 +341,9 @@ void ArcNotificationContentView::SetSurface(ArcNotificationSurface* surface) {
   if (surface_ == surface)
     return;
 
-  // Put null to |control_buttos|view_| before deleting the widget, since it may
-  // be referred while deletion.
-  control_buttons_view_ = nullptr;
   // Reset |floating_control_buttons_widget_| when |surface_| is changed.
   floating_control_buttons_widget_.reset();
+  control_buttons_view_ = nullptr;
 
   if (surface_) {
     DCHECK(surface_->GetWindow());
@@ -500,11 +498,11 @@ void ArcNotificationContentView::Layout() {
   // Scale notification surface if necessary.
   gfx::Transform transform;
   const gfx::Size surface_size = surface_->GetSize();
-  if (!surface_size.IsEmpty()) {
-    const float factor =
-        static_cast<float>(message_center::kNotificationWidth) /
-        surface_size.width();
-    transform.Scale(factor, factor);
+  const gfx::Size contents_size = contents_bounds.size();
+  if (!surface_size.IsEmpty() && !contents_size.IsEmpty()) {
+    transform.Scale(
+        static_cast<float>(contents_size.width()) / surface_size.width(),
+        static_cast<float>(contents_size.height()) / surface_size.height());
   }
 
   // Apply the transform to the surface content so that close button can

@@ -19,7 +19,11 @@ TestContextSupport::TestContextSupport()
 
 TestContextSupport::~TestContextSupport() {}
 
-void TestContextSupport::FlushPendingWork() {}
+int32_t TestContextSupport::GetStreamId() const {
+  return 0;
+}
+
+void TestContextSupport::FlushOrderingBarrierOnStream(int32_t stream_id) {}
 
 void TestContextSupport::SignalSyncToken(const gpu::SyncToken& sync_token,
                                          const base::Closure& callback) {

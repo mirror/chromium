@@ -1188,13 +1188,12 @@ class LayerTreeHostAnimationTestPendingTreeAnimatesFirstCommit
   }
 
   void WillPrepareTilesOnThread(LayerTreeHostImpl* host_impl) override {
-    // After activating the sync tree PrepareTiles will be called
-    // again (which races with the test exiting).
-    LayerTreeImpl* sync_tree = host_impl->sync_tree();
-    if (!sync_tree || TestEnded())
+    if (host_impl->sync_tree()->source_frame_number() != 0)
       return;
 
-    if (sync_tree->source_frame_number() != 0)
+    // After checking this on the sync tree, we will activate, which will cause
+    // PrepareTiles to happen again (which races with the test exiting).
+    if (TestEnded())
       return;
 
     scoped_refptr<AnimationTimeline> timeline_impl =
@@ -1202,7 +1201,7 @@ class LayerTreeHostAnimationTestPendingTreeAnimatesFirstCommit
     scoped_refptr<AnimationPlayer> player_impl =
         timeline_impl->GetPlayerById(player_id_);
 
-    LayerImpl* child = sync_tree->LayerById(layer_->id());
+    LayerImpl* child = host_impl->sync_tree()->LayerById(layer_->id());
     Animation* animation = player_impl->GetAnimation(TargetProperty::TRANSFORM);
 
     // The animation should be starting for the first frame.

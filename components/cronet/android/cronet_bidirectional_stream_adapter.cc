@@ -91,6 +91,11 @@ static jlong CreateBidirectionalStream(
   return reinterpret_cast<jlong>(adapter);
 }
 
+// static
+bool CronetBidirectionalStreamAdapter::RegisterJni(JNIEnv* env) {
+  return RegisterNativesImpl(env);
+}
+
 CronetBidirectionalStreamAdapter::CronetBidirectionalStreamAdapter(
     CronetURLRequestContextAdapter* context,
     JNIEnv* env,

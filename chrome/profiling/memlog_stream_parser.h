@@ -25,13 +25,10 @@ class MemlogStreamParser : public MemlogStreamReceiver {
   void DisconnectReceivers();
 
   // StreamReceiver implementation.
-  bool OnStreamData(std::unique_ptr<char[]> data, size_t sz) override;
+  void OnStreamData(std::unique_ptr<char[]> data, size_t sz) override;
   void OnStreamComplete() override;
 
   base::Lock* GetLock() { return &lock_; }
-
-  // Returns true if this stream has encountered a fatal parse error.
-  bool has_error() const { return error_; }
 
  private:
   struct Block {
@@ -63,15 +60,12 @@ class MemlogStreamParser : public MemlogStreamReceiver {
   ReadStatus ParseAlloc();
   ReadStatus ParseFree();
 
-  void SetErrorState();
-
   // Not owned by this class.
   MemlogReceiver* receiver_;
 
   std::deque<Block> blocks_;
 
   bool received_header_ = false;
-  bool error_ = false;
 
   // Current offset into blocks_[0] of the next packet to process.
   size_t block_zero_offset_ = 0;

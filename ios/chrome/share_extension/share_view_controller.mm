@@ -294,7 +294,7 @@ const CGFloat kMediumAlpha = 0.5;
   if (title)
     [dict setObject:title forKey:app_group::kShareItemTitle];
   [dict setObject:date forKey:app_group::kShareItemDate];
-  [dict setObject:app_group::kShareItemSourceShareExtension
+  [dict setObject:app_group::kShareItemShareExtensionSource
            forKey:app_group::kShareItemSource];
 
   if (!cancel) {

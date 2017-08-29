@@ -54,8 +54,6 @@
 #include "components/bookmarks/managed/managed_bookmark_service.h"
 #include "components/dom_distiller/core/url_utils.h"
 #include "components/favicon/content/content_favicon_driver.h"
-#include "components/feature_engagement/public/feature_constants.h"
-#include "components/feature_engagement/public/feature_list.h"
 #include "components/navigation_interception/intercept_navigation_delegate.h"
 #include "components/navigation_interception/navigation_params.h"
 #include "components/sessions/content/content_live_tab.h"
@@ -74,15 +72,12 @@
 #include "content/public/common/browser_controls_state.h"
 #include "content/public/common/resource_request_body.h"
 #include "jni/Tab_jni.h"
-#include "mojo/public/cpp/bindings/strong_binding.h"
 #include "net/base/escape.h"
-#include "services/service_manager/public/cpp/bind_source_info.h"
 #include "services/service_manager/public/cpp/interface_provider.h"
 #include "skia/ext/image_operations.h"
 #include "third_party/WebKit/public/platform/WebReferrerPolicy.h"
 #include "ui/android/view_android.h"
 #include "ui/android/window_android.h"
-#include "ui/base/layout.h"
 #include "ui/base/resource/resource_bundle.h"
 #include "ui/base/window_open_disposition.h"
 #include "ui/display/display.h"
@@ -102,42 +97,6 @@ using content::NavigationController;
 using content::WebContents;
 using navigation_interception::InterceptNavigationDelegate;
 using navigation_interception::NavigationParams;
-
-// This class is created and owned by the MediaDownloadInProductHelpManager.
-class TabAndroid::MediaDownloadInProductHelp
-    : public blink::mojom::MediaDownloadInProductHelp {
- public:
-  MediaDownloadInProductHelp(
-      content::RenderFrameHost* render_frame_host,
-      TabAndroid* tab,
-      blink::mojom::MediaDownloadInProductHelpRequest request)
-      : render_frame_host_(render_frame_host),
-        tab_(tab),
-        binding_(this, std::move(request)) {
-    DCHECK(render_frame_host_);
-    DCHECK(tab_);
-
-    binding_.set_connection_error_handler(
-        base::BindOnce(&TabAndroid::OnMediaDownloadInProductHelpConnectionError,
-                       base::Unretained(tab_)));
-  }
-  ~MediaDownloadInProductHelp() override = default;
-
-  // blink::mojom::MediaPromoUI implementation.
-  void ShowInProductHelpWidget(const gfx::Rect& rect) override {
-    tab_->ShowMediaDownloadInProductHelp(rect);
-  }
-
-  content::RenderFrameHost* render_frame_host() const {
-    return render_frame_host_;
-  }
-
- private:
-  // The |manager_| and |render_frame_host_| outlive this class.
-  content::RenderFrameHost* const render_frame_host_;
-  TabAndroid* tab_;
-  mojo::Binding<blink::mojom::MediaDownloadInProductHelp> binding_;
-};
 
 TabAndroid* TabAndroid::FromWebContents(
   const content::WebContents* web_contents) {
@@ -168,12 +127,8 @@ TabAndroid::TabAndroid(JNIEnv* env, const JavaRef<jobject>& obj)
       content_layer_(cc::Layer::Create()),
       tab_content_manager_(NULL),
       synced_tab_delegate_(new browser_sync::SyncedTabDelegateAndroid(this)),
-      embedded_media_experience_enabled_(false),
-      weak_factory_(this) {
+      embedded_media_experience_enabled_(false) {
   Java_Tab_setNativePtr(env, obj, reinterpret_cast<intptr_t>(this));
-
-  frame_interfaces_.AddInterface(base::Bind(
-      &TabAndroid::CreateInProductHelpService, weak_factory_.GetWeakPtr()));
 }
 
 TabAndroid::~TabAndroid() {
@@ -316,6 +271,7 @@ void TabAndroid::SwapTabContents(content::WebContents* old_contents,
 void TabAndroid::Observe(int type,
                          const content::NotificationSource& source,
                          const content::NotificationDetails& details) {
+  JNIEnv* env = base::android::AttachCurrentThread();
   switch (type) {
     case chrome::NOTIFICATION_WEB_CONTENT_SETTINGS_CHANGED: {
       TabSpecificContentSettings* settings =
@@ -337,6 +293,9 @@ void TabAndroid::Observe(int type,
       }
       break;
     }
+    case content::NOTIFICATION_NAV_ENTRY_CHANGED:
+      Java_Tab_onNavEntryChanged(env, weak_java_tab_.get(env));
+      break;
     default:
       NOTREACHED() << "Unexpected notification " << type;
       break;
@@ -383,7 +342,6 @@ void TabAndroid::InitWebContents(
   DCHECK(web_contents_.get());
 
   AttachTabHelpers(web_contents_.get());
-  WebContentsObserver::Observe(web_contents_.get());
 
   SetWindowSessionID(session_window_id_.id());
 
@@ -404,6 +362,11 @@ void TabAndroid::InitWebContents(
       this,
       chrome::NOTIFICATION_WEB_CONTENT_SETTINGS_CHANGED,
       content::Source<content::WebContents>(web_contents()));
+  notification_registrar_.Add(
+      this,
+      content::NOTIFICATION_NAV_ENTRY_CHANGED,
+      content::Source<content::NavigationController>(
+           &web_contents()->GetController()));
 
   favicon::FaviconDriver* favicon_driver =
       favicon::ContentFaviconDriver::FromWebContents(web_contents_.get());
@@ -449,7 +412,11 @@ void TabAndroid::DestroyWebContents(JNIEnv* env,
       this,
       chrome::NOTIFICATION_WEB_CONTENT_SETTINGS_CHANGED,
       content::Source<content::WebContents>(web_contents()));
-  WebContentsObserver::Observe(nullptr);
+  notification_registrar_.Remove(
+      this,
+      content::NOTIFICATION_NAV_ENTRY_CHANGED,
+      content::Source<content::NavigationController>(
+           &web_contents()->GetController()));
 
   favicon::FaviconDriver* favicon_driver =
       favicon::ContentFaviconDriver::FromWebContents(web_contents_.get());
@@ -475,9 +442,6 @@ void TabAndroid::DestroyWebContents(JNIEnv* env,
     web_contents_.reset();
     synced_tab_delegate_->ResetWebContents();
   } else {
-    // Remove the link from the native WebContents to |this|, since the
-    // lifetimes of the two objects are no longer intertwined.
-    CoreTabHelper::FromWebContents(web_contents())->set_delegate(nullptr);
     // Release the WebContents so it does not get deleted by the scoped_ptr.
     ignore_result(web_contents_.release());
   }
@@ -865,76 +829,6 @@ void TabAndroid::ClearThumbnailPlaceholder(JNIEnv* env,
                                            const JavaParamRef<jobject>& obj) {
   if (tab_content_manager_)
     tab_content_manager_->NativeRemoveTabThumbnail(GetAndroidId());
-}
-
-void TabAndroid::OnInterfaceRequestFromFrame(
-    content::RenderFrameHost* render_frame_host,
-    const std::string& interface_name,
-    mojo::ScopedMessagePipeHandle* interface_pipe) {
-  frame_interfaces_.TryBindInterface(interface_name, interface_pipe,
-                                     render_frame_host);
-}
-
-void TabAndroid::RenderFrameDeleted(
-    content::RenderFrameHost* render_frame_host) {
-  if (media_in_product_help_ &&
-      media_in_product_help_->render_frame_host() == render_frame_host) {
-    DismissMediaDownloadInProductHelp();
-  }
-}
-
-void TabAndroid::NavigationEntryChanged(
-    const content::EntryChangedDetails& change_details) {
-  JNIEnv* env = base::android::AttachCurrentThread();
-  Java_Tab_onNavEntryChanged(env, weak_java_tab_.get(env));
-}
-
-void TabAndroid::ShowMediaDownloadInProductHelp(
-    const gfx::Rect& rect_in_frame) {
-  DCHECK(web_contents_);
-
-  // We need to account for the browser controls offset to get the location for
-  // the widget in the view.
-  float content_offset = web_contents_->GetNativeView()->content_offset();
-  gfx::Rect rect_in_view(rect_in_frame.x(), rect_in_frame.y() + content_offset,
-                         rect_in_frame.width(), rect_in_frame.height());
-  gfx::Rect rect_in_view_scaled = gfx::ScaleToEnclosingRectSafe(
-      rect_in_view,
-      ui::GetScaleFactorForNativeView(web_contents_->GetNativeView()));
-
-  JNIEnv* env = base::android::AttachCurrentThread();
-  Java_Tab_showMediaDownloadInProductHelp(
-      env, weak_java_tab_.get(env), rect_in_view_scaled.x(),
-      rect_in_view_scaled.y(), rect_in_view_scaled.width(),
-      rect_in_view_scaled.height());
-}
-
-void TabAndroid::DismissMediaDownloadInProductHelp() {
-  JNIEnv* env = base::android::AttachCurrentThread();
-  Java_Tab_hideMediaDownloadInProductHelp(env, weak_java_tab_.get(env));
-}
-
-void TabAndroid::MediaDownloadInProductHelpDismissed(
-    JNIEnv* env,
-    const base::android::JavaParamRef<jobject>& obj) {
-  DCHECK(media_in_product_help_);
-  media_in_product_help_.reset();
-}
-
-void TabAndroid::CreateInProductHelpService(
-    blink::mojom::MediaDownloadInProductHelpRequest request,
-    content::RenderFrameHost* render_frame_host) {
-  // If we are showing the UI already, ignore the request.
-  if (media_in_product_help_)
-    return;
-
-  media_in_product_help_ = base::MakeUnique<MediaDownloadInProductHelp>(
-      render_frame_host, this, std::move(request));
-}
-
-void TabAndroid::OnMediaDownloadInProductHelpConnectionError() {
-  DCHECK(media_in_product_help_);
-  DismissMediaDownloadInProductHelp();
 }
 
 scoped_refptr<content::DevToolsAgentHost> TabAndroid::GetDevToolsAgentHost() {

@@ -120,6 +120,8 @@
 
     <!-- Overlay panel dimensions -->
     <dimen name="overlay_panel_bar_height">56dp</dimen>
+    <dimen name="overlay_panel_bar_handle_offset_y">6dp</dimen>
+    <dimen name="overlay_panel_bar_padding_bottom">4dp</dimen>
 
     <!-- Password generation popup dimensions -->
     <dimen name="password_generation_divider_height">1dp</dimen>
@@ -198,6 +200,7 @@
     <dimen name="control_container_height">56dp</dimen>
     <dimen name="bottom_control_container_height">56dp</dimen>
     <dimen name="custom_tabs_control_container_height">56dp</dimen>
+    <dimen name="webapp_control_container_height">22dp</dimen>
 
     <!-- The combined height of the tab strip and toolbar. -->
     <dimen name="tab_strip_and_toolbar_height">56dp</dimen>
@@ -239,7 +242,7 @@
     <dimen name="toolbar_progress_bar_height">2dp</dimen>
     <dimen name="toolbar_button_width">48dp</dimen>
     <dimen name="toolbar_handle_height">3dp</dimen>
-    <dimen name="toolbar_handle_width">20dp</dimen>
+    <dimen name="toolbar_handle_width">24dp</dimen>
     <dimen name="toolbar_handle_corner_radius">1.5dp</dimen>
     <dimen name="toolbar_handle_margin_top">12dp</dimen>
 
@@ -250,6 +253,7 @@
     <!-- location_bar_google_g_width + 2 * location_bar_google_g_margin -->
     <dimen name="location_bar_google_g_container_width">40dp</dimen>
     <dimen name="location_bar_vertical_margin">8dp</dimen>
+    <dimen name="bottom_location_bar_vertical_margin">9dp</dimen>
     <dimen name="location_bar_url_text_size">16sp</dimen>
     <dimen name="location_bar_incognito_badge_padding">7dp</dimen>
     <dimen name="location_bar_icon_width">32dp</dimen>
@@ -263,15 +267,10 @@
     <!-- Bottom toolbar dimensions -->
     <dimen name="bottom_toolbar_top_margin">2dp</dimen>
     <dimen name="bottom_toolbar_url_bar_top_margin">3.5dp</dimen>
+    <dimen name="bottom_toolbar_background_size">36dp</dimen>
+    <dimen name="bottom_toolbar_background_corner_radius">18dp</dimen>
+    <dimen name="bottom_toolbar_background_lateral_inset">2dp</dimen>
     <dimen name="bottom_toolbar_background_focused_left_margin">6dp</dimen>
-    <dimen name="bottom_location_bar_vertical_margin">9dp</dimen>
-    <dimen name="bottom_location_bar_content_lateral_inset">8dp</dimen>
-    <dimen name="bottom_location_bar_content_vertical_inset">4dp</dimen>
-
-    <!-- Modern toolbar background dimensions -->
-    <dimen name="modern_toolbar_background_size">36dp</dimen>
-    <dimen name="modern_toolbar_background_corner_radius">18dp</dimen>
-    <dimen name="modern_toolbar_background_lateral_inset">2dp</dimen>
 
     <!-- Omnibox suggestions -->
     <dimen name="omnibox_suggestion_height">60dp</dimen>
@@ -451,21 +450,14 @@
     <dimen name="dialog_text_size">14sp</dimen>
     <dimen name="separator_height">1dp</dimen>
 
-    <!-- Modern List Item dimensions -->
-    <dimen name="list_item_min_height">60dp</dimen>
-    <dimen name="list_item_default_margin">16dp</dimen>
-    <dimen name="list_item_top_bottom_padding">10dp</dimen>
-    <dimen name="list_item_start_icon_right_margin">20dp</dimen>
-    <dimen name="list_item_start_icon_width">36dp</dimen>
-    <dimen name="list_item_start_icon_corner_radius">18dp</dimen>
-    <dimen name="list_item_end_icon_width">56dp</dimen>
+    <!-- Downloads dimensions. -->
+    <dimen name="downloads_item_icon_size">48dp</dimen>
 
     <!-- SelectableListLayout dimensions -->
     <dimen name="selectable_list_layout_row_padding">16dp</dimen>
+    <dimen name="selectable_list_layout_start_icon_width">36dp</dimen>
+    <dimen name="selectable_list_layout_end_icon_width">56dp</dimen>
     <dimen name="toolbar_wide_display_start_offset">13dp</dimen>
-    <dimen name="toolbar_modern_search_view_start_offset">4dp</dimen>
-    <dimen name="search_toolbar_modern_bg_top_bottom_inset">10dp</dimen>
-    <dimen name="search_toolbar_modern_bg_lateral_inset">8dp</dimen>
 
     <!-- Bottom sheet dimensions -->
     <dimen name="bottom_sheet_help_bubble_inset">10dp</dimen>
@@ -490,6 +482,7 @@
     <!--  Miscellaneous dimensions -->
     <dimen name="action_bar_shadow_height">10dp</dimen>
     <dimen name="card_corner_radius">2dp</dimen>
+    <dimen name="list_item_default_margin">16dp</dimen>
     <dimen name="signin_and_sync_view_padding">16dp</dimen>
     <dimen name="sad_tab_bullet_gap">12dp</dimen>
     <dimen name="sad_tab_bullet_leading_offset">1dp</dimen>

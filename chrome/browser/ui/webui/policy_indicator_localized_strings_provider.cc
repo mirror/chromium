@@ -12,18 +12,19 @@ namespace policy_indicator {
 
 void AddLocalizedStrings(content::WebUIDataSource* html_source) {
   html_source->AddLocalizedString("controlledSettingPolicy",
-                                  IDS_CONTROLLED_SETTING_POLICY);
+                                  IDS_OPTIONS_CONTROLLED_SETTING_POLICY);
   html_source->AddLocalizedString("controlledSettingRecommendedMatches",
-                                  IDS_CONTROLLED_SETTING_RECOMMENDED);
-  html_source->AddLocalizedString("controlledSettingRecommendedDiffers",
-                                  IDS_CONTROLLED_SETTING_HAS_RECOMMENDATION);
+                                  IDS_OPTIONS_CONTROLLED_SETTING_RECOMMENDED);
+  html_source->AddLocalizedString(
+      "controlledSettingRecommendedDiffers",
+      IDS_OPTIONS_CONTROLLED_SETTING_HAS_RECOMMENDATION);
   html_source->AddLocalizedString("controlledSettingExtension",
-                                  IDS_CONTROLLED_SETTING_EXTENSION);
+                                  IDS_OPTIONS_CONTROLLED_SETTING_EXTENSION);
 #if defined(OS_CHROMEOS)
   html_source->AddLocalizedString("controlledSettingShared",
-                                  IDS_CONTROLLED_SETTING_SHARED);
+                                  IDS_OPTIONS_CONTROLLED_SETTING_SHARED);
   html_source->AddLocalizedString("controlledSettingOwner",
-                                  IDS_CONTROLLED_SETTING_OWNER);
+                                  IDS_OPTIONS_CONTROLLED_SETTING_OWNER);
 #endif
 }
 

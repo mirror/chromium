@@ -9,7 +9,6 @@
 #include "base/command_line.h"
 #include "base/macros.h"
 #include "base/metrics/histogram_macros.h"
-#include "base/run_loop.h"
 #include "base/strings/pattern.h"
 #include "base/trace_event/trace_event.h"
 #include "content/browser/tracing/background_tracing_manager_impl.h"
@@ -31,18 +30,17 @@ class TestBackgroundTracingObserver
   ~TestBackgroundTracingObserver() override;
 
   void OnScenarioActivated(const BackgroundTracingConfigImpl* config) override;
-  void OnScenarioAborted() override;
   void OnTracingEnabled(
       BackgroundTracingConfigImpl::CategoryPreset preset) override;
 
  private:
-  bool is_scenario_active_;
+  bool was_scenario_activated_;
   base::Closure tracing_enabled_callback_;
 };
 
 TestBackgroundTracingObserver::TestBackgroundTracingObserver(
     base::Closure tracing_enabled_callback)
-    : is_scenario_active_(false),
+    : was_scenario_activated_(false),
       tracing_enabled_callback_(tracing_enabled_callback) {
   BackgroundTracingManagerImpl::GetInstance()->AddEnabledStateObserver(this);
 }
@@ -51,16 +49,12 @@ TestBackgroundTracingObserver::~TestBackgroundTracingObserver() {
   static_cast<BackgroundTracingManagerImpl*>(
       BackgroundTracingManager::GetInstance())
       ->RemoveEnabledStateObserver(this);
-  EXPECT_TRUE(is_scenario_active_);
+  EXPECT_TRUE(was_scenario_activated_);
 }
 
 void TestBackgroundTracingObserver::OnScenarioActivated(
     const BackgroundTracingConfigImpl* config) {
-  is_scenario_active_ = true;
-}
-
-void TestBackgroundTracingObserver::OnScenarioAborted() {
-  is_scenario_active_ = false;
+  was_scenario_activated_ = true;
 }
 
 void TestBackgroundTracingObserver::OnTracingEnabled(

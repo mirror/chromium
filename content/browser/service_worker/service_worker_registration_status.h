@@ -15,7 +15,7 @@ namespace content {
 void GetServiceWorkerRegistrationStatusResponse(
     ServiceWorkerStatusCode status,
     const std::string& status_message,
-    blink::mojom::ServiceWorkerErrorType* error_type,
+    blink::WebServiceWorkerError::ErrorType* error_type,
     base::string16* message);
 
 }  // namespace content

@@ -113,18 +113,6 @@ GLES2DecoderPassthroughImpl::ActiveQuery::operator=(const ActiveQuery&) =
 GLES2DecoderPassthroughImpl::ActiveQuery&
 GLES2DecoderPassthroughImpl::ActiveQuery::operator=(ActiveQuery&&) = default;
 
-GLES2DecoderPassthroughImpl::BoundTexture::BoundTexture() = default;
-GLES2DecoderPassthroughImpl::BoundTexture::~BoundTexture() = default;
-GLES2DecoderPassthroughImpl::BoundTexture::BoundTexture(const BoundTexture&) =
-    default;
-GLES2DecoderPassthroughImpl::BoundTexture::BoundTexture(BoundTexture&&) =
-    default;
-GLES2DecoderPassthroughImpl::BoundTexture&
-GLES2DecoderPassthroughImpl::BoundTexture::operator=(const BoundTexture&) =
-    default;
-GLES2DecoderPassthroughImpl::BoundTexture&
-GLES2DecoderPassthroughImpl::BoundTexture::operator=(BoundTexture&&) = default;
-
 GLES2DecoderPassthroughImpl::GLES2DecoderPassthroughImpl(
     GLES2DecoderClient* client,
     CommandBufferServiceBase* command_buffer_service,
@@ -304,11 +292,6 @@ bool GLES2DecoderPassthroughImpl::Initialize(
     return false;
   }
 
-  if (attrib_helper.enable_oop_rasterization) {
-    Destroy(true);
-    return false;
-  }
-
   bind_generates_resource_ = group_->bind_generates_resource();
 
   resources_ = group_->passthrough_resources();
@@ -320,39 +303,18 @@ bool GLES2DecoderPassthroughImpl::Initialize(
   glGetIntegerv(GL_MAX_COMBINED_TEXTURE_IMAGE_UNITS, &num_texture_units);
 
   active_texture_unit_ = 0;
-  bound_textures_[GL_TEXTURE_2D].resize(num_texture_units);
-  bound_textures_[GL_TEXTURE_CUBE_MAP].resize(num_texture_units);
+  bound_textures_[GL_TEXTURE_2D].resize(num_texture_units, 0);
+  bound_textures_[GL_TEXTURE_CUBE_MAP].resize(num_texture_units, 0);
   if (feature_info_->gl_version_info().IsAtLeastGLES(3, 0)) {
-    bound_textures_[GL_TEXTURE_2D_ARRAY].resize(num_texture_units);
-    bound_textures_[GL_TEXTURE_3D].resize(num_texture_units);
+    bound_textures_[GL_TEXTURE_2D_ARRAY].resize(num_texture_units, 0);
+    bound_textures_[GL_TEXTURE_3D].resize(num_texture_units, 0);
   }
   if (feature_info_->gl_version_info().IsAtLeastGLES(3, 1)) {
-    bound_textures_[GL_TEXTURE_2D_MULTISAMPLE].resize(num_texture_units);
+    bound_textures_[GL_TEXTURE_2D_MULTISAMPLE].resize(num_texture_units, 0);
   }
   if (feature_info_->feature_flags().oes_egl_image_external ||
       feature_info_->feature_flags().nv_egl_stream_consumer_external) {
-    bound_textures_[GL_TEXTURE_EXTERNAL_OES].resize(num_texture_units);
-  }
-
-  // Initialize the tracked buffer bindings
-  bound_buffers_[GL_ARRAY_BUFFER] = 0;
-  bound_buffers_[GL_ELEMENT_ARRAY_BUFFER] = 0;
-  if (feature_info_->gl_version_info().IsAtLeastGLES(3, 0) ||
-      feature_info_->feature_flags().ext_pixel_buffer_object) {
-    bound_buffers_[GL_PIXEL_PACK_BUFFER] = 0;
-    bound_buffers_[GL_PIXEL_UNPACK_BUFFER] = 0;
-  }
-  if (feature_info_->gl_version_info().IsAtLeastGLES(3, 0)) {
-    bound_buffers_[GL_COPY_READ_BUFFER] = 0;
-    bound_buffers_[GL_COPY_WRITE_BUFFER] = 0;
-    bound_buffers_[GL_TRANSFORM_FEEDBACK_BUFFER] = 0;
-    bound_buffers_[GL_UNIFORM_BUFFER] = 0;
-  }
-  if (feature_info_->gl_version_info().IsAtLeastGLES(3, 1)) {
-    bound_buffers_[GL_ATOMIC_COUNTER_BUFFER] = 0;
-    bound_buffers_[GL_SHADER_STORAGE_BUFFER] = 0;
-    bound_buffers_[GL_DRAW_INDIRECT_BUFFER] = 0;
-    bound_buffers_[GL_DISPATCH_INDIRECT_BUFFER] = 0;
+    bound_textures_[GL_TEXTURE_EXTERNAL_OES].resize(num_texture_units, 0);
   }
 
   if (group_->gpu_preferences().enable_gpu_driver_debug_logging &&
@@ -376,15 +338,6 @@ void GLES2DecoderPassthroughImpl::Destroy(bool have_context) {
   if (have_context) {
     FlushErrors();
   }
-
-  if (!have_context) {
-    for (const auto& bound_texture_type : bound_textures_) {
-      for (const auto& bound_texture : bound_texture_type.second) {
-        bound_texture.texture->MarkContextLost();
-      }
-    }
-  }
-  bound_textures_.clear();
 
   DeleteServiceObjects(&framebuffer_id_map_, have_context,
                        [](GLuint client_id, GLuint framebuffer) {
@@ -687,13 +640,6 @@ bool GLES2DecoderPassthroughImpl::GetServiceTextureId(
                                                  service_texture_id);
 }
 
-TextureBase* GLES2DecoderPassthroughImpl::GetTextureBase(uint32_t client_id) {
-  auto texture_object_iter = resources_->texture_object_map.find(client_id);
-  return (texture_object_iter != resources_->texture_object_map.end())
-             ? texture_object_iter->second.get()
-             : nullptr;
-}
-
 bool GLES2DecoderPassthroughImpl::ClearLevel(Texture* texture,
                                              unsigned target,
                                              int level,
@@ -777,51 +723,6 @@ const gpu::gles2::ContextState* GLES2DecoderPassthroughImpl::GetContextState() {
 scoped_refptr<ShaderTranslatorInterface>
 GLES2DecoderPassthroughImpl::GetTranslator(GLenum type) {
   return nullptr;
-}
-
-void GLES2DecoderPassthroughImpl::BindImage(uint32_t client_texture_id,
-                                            uint32_t texture_target,
-                                            gl::GLImage* image,
-                                            bool can_bind_to_sampler) {
-  auto passthrough_texture_iter =
-      resources_->texture_object_map.find(client_texture_id);
-  if (passthrough_texture_iter == resources_->texture_object_map.end()) {
-    return;
-  }
-
-  TexturePassthrough* passthrough_texture =
-      passthrough_texture_iter->second.get();
-  DCHECK(passthrough_texture != nullptr);
-
-  GLenum bind_target = GLES2Util::GLFaceTargetToTextureTarget(texture_target);
-  if (passthrough_texture->target() != bind_target) {
-    return;
-  }
-
-  if (can_bind_to_sampler) {
-    // Binding an image to a texture requires that the texture is currently
-    // bound.
-    scoped_refptr<TexturePassthrough> current_texture =
-        bound_textures_[bind_target][active_texture_unit_].texture;
-    bool bind_new_texture = current_texture != passthrough_texture;
-    if (bind_new_texture) {
-      glBindTexture(bind_target, passthrough_texture->service_id());
-    }
-
-    if (!image->BindTexImage(texture_target)) {
-      image->CopyTexImage(texture_target);
-    }
-
-    // Re-bind the old texture
-    if (bind_new_texture) {
-      GLuint current_service_texture =
-          current_texture ? current_texture->service_id() : 0;
-      glBindTexture(bind_target, current_service_texture);
-    }
-  }
-
-  // Reference the image even if it is not bound as a sampler.
-  passthrough_texture->SetLevelImage(texture_target, 0, image);
 }
 
 const char* GLES2DecoderPassthroughImpl::GetCommandName(
@@ -1188,17 +1089,16 @@ void GLES2DecoderPassthroughImpl::RemovePendingQuery(GLuint service_id) {
   }
 }
 
-void GLES2DecoderPassthroughImpl::UpdateTextureBinding(
-    GLenum target,
-    GLuint client_id,
-    TexturePassthrough* texture) {
-  GLuint texture_service_id = texture ? texture->service_id() : 0;
+void GLES2DecoderPassthroughImpl::UpdateTextureBinding(GLenum target,
+                                                       GLuint client_id,
+                                                       GLuint service_id) {
   size_t cur_texture_unit = active_texture_unit_;
-  auto& target_bound_textures = bound_textures_.at(target);
+  const auto& target_bound_textures = bound_textures_.at(target);
   for (size_t bound_texture_index = 0;
        bound_texture_index < target_bound_textures.size();
        bound_texture_index++) {
-    if (target_bound_textures[bound_texture_index].client_id == client_id) {
+    GLuint bound_client_id = target_bound_textures[bound_texture_index];
+    if (bound_client_id == client_id) {
       // Update the active texture unit if needed
       if (bound_texture_index != cur_texture_unit) {
         glActiveTexture(static_cast<GLenum>(GL_TEXTURE0 + bound_texture_index));
@@ -1206,8 +1106,7 @@ void GLES2DecoderPassthroughImpl::UpdateTextureBinding(
       }
 
       // Update the texture binding
-      glBindTexture(target, texture_service_id);
-      target_bound_textures[bound_texture_index].texture = texture;
+      glBindTexture(target, service_id);
     }
   }
 
@@ -1232,9 +1131,9 @@ error::Error GLES2DecoderPassthroughImpl::BindTexImage2DCHROMIUMImpl(
     return error::kNoError;
   }
 
-  const BoundTexture& bound_texture =
+  GLuint current_client_texture =
       bound_textures_[GL_TEXTURE_2D][active_texture_unit_];
-  if (bound_texture.texture == nullptr) {
+  if (current_client_texture == 0) {
     InsertError(GL_INVALID_OPERATION, "No texture bound");
     return error::kNoError;
   }
@@ -1249,8 +1148,10 @@ error::Error GLES2DecoderPassthroughImpl::BindTexImage2DCHROMIUMImpl(
     }
   }
 
-  DCHECK(bound_texture.texture != nullptr);
-  bound_texture.texture->SetLevelImage(target, 0, image);
+  scoped_refptr<TexturePassthrough> passthrough_texture =
+      resources_->texture_object_map[current_client_texture];
+  DCHECK(passthrough_texture != nullptr);
+  passthrough_texture->SetLevelImage(target, 0, image);
 
   return error::kNoError;
 }
@@ -1259,15 +1160,6 @@ void GLES2DecoderPassthroughImpl::VerifyServiceTextureObjectsExist() {
   for (const auto& texture_mapping : resources_->texture_object_map) {
     DCHECK_EQ(GL_TRUE, glIsTexture(texture_mapping.second->service_id()));
   }
-}
-
-error::Error GLES2DecoderPassthroughImpl::HandleRasterCHROMIUM(
-    uint32_t immediate_data_size,
-    const volatile void* cmd_data) {
-  // TODO(enne): Add CHROMIUM_raster_transport extension support to the
-  // passthrough command buffer.
-  NOTIMPLEMENTED();
-  return error::kNoError;
 }
 
 #define GLES2_CMD_OP(name)                                               \

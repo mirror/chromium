@@ -13,8 +13,8 @@
         android:id="@+id/bottom_sheet_content"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="@dimen/toolbar_shadow_height"
-        android:background="@color/modern_primary_color"
+        android:paddingBottom="@dimen/bottom_nav_height"
+        android:background="@color/default_primary_color"
         android:visibility="invisible" />
 
     <org.chromium.chrome.browser.toolbar.ToolbarControlContainer
@@ -33,7 +33,7 @@
                 android:id="@+id/bottom_toolbar_shadow"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/toolbar_shadow_height"
-                android:src="@drawable/modern_toolbar_shadow"
+                android:src="@drawable/toolbar_shadow"
                 android:scaleType="fitXY"
                 android:scaleY="-1"
                 android:contentDescription="@null" />

@@ -34,7 +34,7 @@ class SurfaceTextureGLOwnerTest : public testing::Test {
  protected:
   void SetUp() override {
     gl::init::InitializeGLOneOffImplementation(gl::kGLImplementationEGLGLES2,
-                                               false, false, false, true);
+                                               false, false, false);
     surface_ = new gl::PbufferGLSurfaceEGL(gfx::Size(320, 240));
     surface_->Initialize();
 

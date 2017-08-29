@@ -555,7 +555,7 @@ void WindowManagerState::ScheduleInputEventTimeout(WindowTree* tree,
       base::MakeUnique<InFlightEventDispatchDetails>(this, tree, display_id,
                                                      event, phase);
 
-  // TODO(sad): Adjust this delay, possibly make this dynamic.
+  // TOOD(sad): Adjust this delay, possibly make this dynamic.
   const base::TimeDelta max_delay = base::debug::BeingDebugged()
                                         ? base::TimeDelta::FromDays(1)
                                         : GetDefaultAckTimerDelay();
@@ -571,11 +571,8 @@ bool WindowManagerState::ConvertPointToScreen(int64_t display_id,
   Display* display = display_manager()->GetDisplayById(display_id);
   if (display) {
     const display::Display& originated_display = display->GetDisplay();
-    const display::ViewportMetrics metrics =
-        display->platform_display()->GetViewportMetrics();
-    *point = gfx::ConvertPointToDIP(
-        originated_display.device_scale_factor() / metrics.ui_scale_factor,
-        *point);
+    *point = gfx::ConvertPointToDIP(originated_display.device_scale_factor(),
+                                    *point);
     *point += originated_display.bounds().origin().OffsetFromOrigin();
     return true;
   }
@@ -804,18 +801,6 @@ ServerWindow* WindowManagerState::GetRootWindowContaining(
   }
 
   return target_display_root->GetClientVisibleRoot();
-}
-
-ServerWindow* WindowManagerState::GetRootWindowForEventDispatch(
-    ServerWindow* window) {
-  for (auto& display_root_ptr : window_manager_display_roots_) {
-    ServerWindow* client_visible_root =
-        display_root_ptr->GetClientVisibleRoot();
-    if (client_visible_root->Contains(window))
-      return client_visible_root;
-  }
-  NOTREACHED();
-  return nullptr;
 }
 
 void WindowManagerState::OnEventTargetNotFound(const ui::Event& event,

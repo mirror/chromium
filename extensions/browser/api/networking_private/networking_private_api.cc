@@ -105,7 +105,7 @@ bool CanChangeSharedConfig(const Extension* extension,
 
 std::unique_ptr<NetworkingCastPrivateDelegate::Credentials> AsCastCredentials(
     api::networking_private::VerificationProperties& properties) {
-  return std::make_unique<NetworkingCastPrivateDelegate::Credentials>(
+  return base::MakeUnique<NetworkingCastPrivateDelegate::Credentials>(
       properties.certificate,
       properties.intermediate_certificates
           ? *properties.intermediate_certificates

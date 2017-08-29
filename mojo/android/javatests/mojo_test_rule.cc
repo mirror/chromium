@@ -2,6 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+#include "mojo/android/javatests/mojo_test_rule.h"
+
 #include "base/android/jni_android.h"
 #include "base/android/scoped_java_ref.h"
 #include "base/at_exit.h"
@@ -58,6 +60,10 @@ static void RunLoop(JNIEnv* env,
   } else {
     run_loop.RunUntilIdle();
   }
+}
+
+bool RegisterMojoTestRule(JNIEnv* env) {
+  return RegisterNativesImpl(env);
 }
 
 }  // namespace android

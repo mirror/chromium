@@ -33,6 +33,7 @@
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/resource_coordinator/background_tab_navigation_throttle.h"
 #include "chrome/browser/resource_coordinator/resource_coordinator_web_contents_observer.h"
+#include "chrome/browser/resource_coordinator/tab_manager_grc_tab_signal_observer.h"
 #include "chrome/browser/resource_coordinator/tab_manager_observer.h"
 #include "chrome/browser/resource_coordinator/tab_manager_stats_collector.h"
 #include "chrome/browser/resource_coordinator/tab_manager_web_contents_data.h"
@@ -228,7 +229,10 @@ TabManager::TabManager()
 #endif
   browser_tab_strip_tracker_.Init();
   session_restore_observer_.reset(new TabManagerSessionRestoreObserver(this));
-  stats_collector_.reset(new TabManagerStatsCollector());
+  if (GRCTabSignalObserver::IsEnabled()) {
+    grc_tab_signal_observer_.reset(new GRCTabSignalObserver());
+  }
+  tab_manager_stats_collector_.reset(new TabManagerStatsCollector(this));
 }
 
 TabManager::~TabManager() {
@@ -967,7 +971,7 @@ void TabManager::ActiveTabChanged(content::WebContents* old_contents,
                                   int reason) {
   // An active tab is not purged.
   // Calling GetWebContentsData() early ensures that the WebContentsData is
-  // created for |new_contents|, which |stats_collector_| expects.
+  // created for |new_contents|, which |tab_manager_stats_collector_| expects.
   GetWebContentsData(new_contents)->set_is_purged(false);
 
   // If |old_contents| is set, that tab has switched from being active to
@@ -980,7 +984,7 @@ void TabManager::ActiveTabChanged(content::WebContents* old_contents,
             GetTimeToPurge(min_time_to_purge_, max_time_to_purge_));
     // Only record switch-to-tab metrics when a switch happens, i.e.
     // |old_contents| is set.
-    stats_collector_->RecordSwitchToTab(old_contents, new_contents);
+    tab_manager_stats_collector_->RecordSwitchToTab(new_contents);
   }
 
   // Reload |web_contents| if it is in an active browser and discarded.
@@ -996,6 +1000,16 @@ void TabManager::TabInsertedAt(TabStripModel* tab_strip_model,
                                content::WebContents* contents,
                                int index,
                                bool foreground) {
+  // Gets CoordinationUnitID for this WebContents and adds it to
+  // GRCTabSignalObserver.
+  if (grc_tab_signal_observer_) {
+    auto* tab_resource_coordinator =
+        ResourceCoordinatorWebContentsObserver::FromWebContents(contents)
+            ->tab_resource_coordinator();
+    grc_tab_signal_observer_->AssociateCoordinationUnitIDWithWebContents(
+        tab_resource_coordinator->id(), contents);
+  }
+
   // Only interested in background tabs, as foreground tabs get taken care of by
   // ActiveTabChanged.
   if (foreground)
@@ -1007,6 +1021,20 @@ void TabManager::TabInsertedAt(TabStripModel* tab_strip_model,
   // Re-setting time-to-purge every time a tab becomes inactive.
   GetWebContentsData(contents)->set_time_to_purge(
       GetTimeToPurge(min_time_to_purge_, max_time_to_purge_));
+}
+
+void TabManager::TabClosingAt(TabStripModel* tab_strip_model,
+                              content::WebContents* contents,
+                              int index) {
+  // Gets CoordinationUnitID for this WebContents and removes it from
+  // GRCTabSignalObserver.
+  if (!grc_tab_signal_observer_)
+    return;
+  auto* tab_resource_coordinator =
+      ResourceCoordinatorWebContentsObserver::FromWebContents(contents)
+          ->tab_resource_coordinator();
+  grc_tab_signal_observer_->RemoveCoordinationUnitID(
+      tab_resource_coordinator->id());
 }
 
 void TabManager::OnBrowserSetLastActive(Browser* browser) {
@@ -1175,14 +1203,12 @@ void TabManager::OnDidFinishNavigation(
 void TabManager::OnDidStopLoading(content::WebContents* contents) {
   DCHECK_EQ(TAB_IS_LOADED, GetWebContentsData(contents)->tab_loading_state());
   loading_contents_.erase(contents);
-  stats_collector_->OnDidStopLoading(contents);
   LoadNextBackgroundTabIfNeeded();
 }
 
 void TabManager::OnWebContentsDestroyed(content::WebContents* contents) {
   RemovePendingNavigationIfNeeded(contents);
   loading_contents_.erase(contents);
-  stats_collector_->OnWebContentsDestroyed(contents);
   LoadNextBackgroundTabIfNeeded();
 }
 

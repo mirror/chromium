@@ -4,7 +4,6 @@
 
 #include "extensions/test/result_catcher.h"
 
-#include "base/run_loop.h"
 #include "content/public/browser/notification_service.h"
 #include "content/public/test/test_utils.h"
 #include "extensions/browser/notification_types.h"

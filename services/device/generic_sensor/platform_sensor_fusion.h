@@ -10,6 +10,7 @@
 
 #include "base/containers/flat_map.h"
 #include "base/macros.h"
+#include "base/timer/timer.h"
 #include "services/device/generic_sensor/platform_sensor.h"
 #include "services/device/generic_sensor/platform_sensor_provider_base.h"
 
@@ -34,14 +35,11 @@ class PlatformSensorFusion : public PlatformSensor,
   // Construct a platform fusion sensor of type |fusion_sensor_type| using
   // one or more sensors whose sensor types are |source_sensor_types|, given
   // a buffer |mapping| where readings will be written.
-  // The result of this method is passed asynchronously through the given
-  // |callback| call: it can be either newly created object on success or
-  // nullptr on failure.
-  static void Create(
+  PlatformSensorFusion(
       mojo::ScopedSharedBufferMapping mapping,
       PlatformSensorProvider* provider,
-      std::unique_ptr<PlatformSensorFusionAlgorithm> fusion_algorithm,
-      const PlatformSensorProviderBase::CreateSensorCallback& callback);
+      const PlatformSensorProviderBase::CreateSensorCallback& callback,
+      std::unique_ptr<PlatformSensorFusionAlgorithm> fusion_algorithm);
 
   // PlatformSensor:
   mojom::ReportingMode GetReportingMode() override;
@@ -57,14 +55,9 @@ class PlatformSensorFusion : public PlatformSensor,
   void OnSensorError() override;
   bool IsSuspended() override;
 
-  virtual bool GetSourceReading(mojom::SensorType type, SensorReading* result);
+  bool GetSourceReading(mojom::SensorType type, SensorReading* result);
 
  protected:
-  PlatformSensorFusion(
-      mojo::ScopedSharedBufferMapping mapping,
-      PlatformSensorProvider* provider,
-      const PlatformSensorProviderBase::CreateSensorCallback& callback,
-      std::unique_ptr<PlatformSensorFusionAlgorithm> fusion_algorithm);
   ~PlatformSensorFusion() override;
 
  private:

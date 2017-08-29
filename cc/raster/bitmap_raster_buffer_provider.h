@@ -18,14 +18,14 @@ class ConvertableToTraceFormat;
 }
 
 namespace cc {
-class LayerTreeResourceProvider;
+class ResourceProvider;
 
 class CC_EXPORT BitmapRasterBufferProvider : public RasterBufferProvider {
  public:
   ~BitmapRasterBufferProvider() override;
 
   static std::unique_ptr<RasterBufferProvider> Create(
-      LayerTreeResourceProvider* resource_provider);
+      ResourceProvider* resource_provider);
 
   // Overridden from RasterBufferProvider:
   std::unique_ptr<RasterBuffer> AcquireBufferForRaster(
@@ -46,14 +46,13 @@ class CC_EXPORT BitmapRasterBufferProvider : public RasterBufferProvider {
   void Shutdown() override;
 
  protected:
-  explicit BitmapRasterBufferProvider(
-      LayerTreeResourceProvider* resource_provider);
+  explicit BitmapRasterBufferProvider(ResourceProvider* resource_provider);
 
  private:
   std::unique_ptr<base::trace_event::ConvertableToTraceFormat> StateAsValue()
       const;
 
-  LayerTreeResourceProvider* resource_provider_;
+  ResourceProvider* resource_provider_;
 
   DISALLOW_COPY_AND_ASSIGN(BitmapRasterBufferProvider);
 };

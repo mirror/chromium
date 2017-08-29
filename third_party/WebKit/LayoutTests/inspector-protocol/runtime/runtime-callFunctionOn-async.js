@@ -10,7 +10,7 @@
       result.exceptionDetails.exceptionId = 0;
       result.exceptionDetails.exception.objectId = 0;
     }
-    testRunner.log(result);
+    testRunner.logObject(result);
   }
 
   async function callFunctionOn(objectExpression, functionDeclaration, argumentExpressions, returnByValue, generatePreview, awaitPromise) {
@@ -29,7 +29,7 @@
         callArguments.push({});
       } else {
         testRunner.log('Unexpected argument object:');
-        testRunner.log(result);
+        testRunner.logObject(result);
         testRunner.completeTest();
       }
     }

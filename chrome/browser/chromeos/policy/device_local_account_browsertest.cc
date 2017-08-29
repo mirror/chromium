@@ -1047,7 +1047,7 @@ IN_PROC_BROWSER_TEST_F(DeviceLocalAccountTest, StartSession) {
       SigninManagerFactory::GetForProfile(profile)->IsAuthenticated());
 }
 
-IN_PROC_BROWSER_TEST_F(DeviceLocalAccountTest, FullscreenAllowed) {
+IN_PROC_BROWSER_TEST_F(DeviceLocalAccountTest, FullscreenDisallowed) {
   UploadAndInstallDeviceLocalAccountPolicy();
   AddPublicSessionToDevicePolicy(kAccountId1);
 
@@ -1063,10 +1063,10 @@ IN_PROC_BROWSER_TEST_F(DeviceLocalAccountTest, FullscreenAllowed) {
   BrowserWindow* browser_window = browser->window();
   ASSERT_TRUE(browser_window);
 
-  // Verify that an attempt to enter fullscreen mode is allowed.
+  // Verify that an attempt to enter fullscreen mode is denied.
   EXPECT_FALSE(browser_window->IsFullscreen());
   chrome::ToggleFullscreenMode(browser);
-  EXPECT_TRUE(browser_window->IsFullscreen());
+  EXPECT_FALSE(browser_window->IsFullscreen());
 }
 
 IN_PROC_BROWSER_TEST_F(DeviceLocalAccountTest, ExtensionsUncached) {

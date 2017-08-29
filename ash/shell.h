@@ -91,7 +91,6 @@ class NativeCursorManagerAsh;
 class AshTouchTransformController;
 class AutoclickController;
 class BluetoothNotificationController;
-class BluetoothPowerController;
 class BrightnessControlDelegate;
 class CastConfigController;
 class DisplayColorManager;
@@ -308,7 +307,6 @@ class ASH_EXPORT Shell : public SessionObserver,
   DisplayConfigurationController* display_configuration_controller() {
     return display_configuration_controller_.get();
   }
-  EventClientImpl* event_client() { return event_client_.get(); }
   ::wm::CompoundEventFilter* env_filter() { return env_filter_.get(); }
   FocusCycler* focus_cycler() { return focus_cycler_.get(); }
   ImeController* ime_controller() { return ime_controller_.get(); }
@@ -324,6 +322,9 @@ class ASH_EXPORT Shell : public SessionObserver,
   }
   LockScreenController* lock_screen_controller() {
     return lock_screen_controller_.get();
+  }
+  TabletModeController* tablet_mode_controller() {
+    return tablet_mode_controller_.get();
   }
   MediaController* media_controller() { return media_controller_.get(); }
   MruWindowTracker* mru_window_tracker() { return mru_window_tracker_.get(); }
@@ -342,9 +343,6 @@ class ASH_EXPORT Shell : public SessionObserver,
   }
   SystemTrayNotifier* system_tray_notifier() {
     return system_tray_notifier_.get();
-  }
-  TabletModeController* tablet_mode_controller() {
-    return tablet_mode_controller_.get();
   }
   views::corewm::TooltipController* tooltip_controller() {
     return tooltip_controller_.get();
@@ -480,10 +478,6 @@ class ASH_EXPORT Shell : public SessionObserver,
     return tray_bluetooth_helper_.get();
   }
 
-  BluetoothPowerController* bluetooth_power_controller() {
-    return bluetooth_power_controller_.get();
-  }
-
   VirtualKeyboardController* virtual_keyboard_controller() {
     return virtual_keyboard_controller_.get();
   }
@@ -610,13 +604,7 @@ class ASH_EXPORT Shell : public SessionObserver,
 
   void NotifyAppListVisibilityChanged(bool visible, aura::Window* root_window);
 
-  // TODO(kaznacheev) Move voice interaction related methods to a separate
-  // controller (crbug.com/758650)
   void NotifyVoiceInteractionStatusChanged(VoiceInteractionState state);
-
-  void NotifyVoiceInteractionEnabled(bool enabled);
-
-  void NotifyVoiceInteractionContextEnabled(bool enabled);
 
  private:
   FRIEND_TEST_ALL_PREFIXES(ExtendedDesktopTest, TestCursor);
@@ -783,7 +771,6 @@ class ASH_EXPORT Shell : public SessionObserver,
       resolution_notification_controller_;
   std::unique_ptr<BluetoothNotificationController>
       bluetooth_notification_controller_;
-  std::unique_ptr<BluetoothPowerController> bluetooth_power_controller_;
   std::unique_ptr<TrayBluetoothHelper> tray_bluetooth_helper_;
   std::unique_ptr<VirtualKeyboardController> virtual_keyboard_controller_;
   std::unique_ptr<chromeos::AudioA11yController> audio_a11y_controller_;

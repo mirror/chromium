@@ -53,25 +53,9 @@ RuntimeCallTimer* RuntimeCallTimer::Stop() {
 
 RuntimeCallStats::RuntimeCallStats() {
   static const char* const names[] = {
-#define BINDINGS_COUNTER_NAME(name) "Blink_Bindings_" #name,
-      BINDINGS_COUNTERS(BINDINGS_COUNTER_NAME)  //
-#undef BINDINGS_COUNTER_NAME
-#define GC_COUNTER_NAME(name) "Blink_GC_" #name,
-      GC_COUNTERS(GC_COUNTER_NAME)  //
-#undef GC_COUNTER_NAME
-#define PARSING_COUNTER_NAME(name) "Blink_Parsing_" #name,
-      PARSING_COUNTERS(PARSING_COUNTER_NAME)  //
-#undef PARSING_COUNTER_NAME
-#define STYLE_COUNTER_NAME(name) "Blink_Style_" #name,
-      STYLE_COUNTERS(STYLE_COUNTER_NAME)  //
-#undef STYLE_COUNTER_NAME
-#define LAYOUT_COUNTER_NAME(name) "Blink_Layout_" #name,
-      LAYOUT_COUNTERS(LAYOUT_COUNTER_NAME)  //
-#undef STYLE_COUNTER_NAME
-#define COUNTER_NAME(name) "Blink_" #name,
-      CALLBACK_COUNTERS(COUNTER_NAME)  //
-      EXTRA_COUNTERS(COUNTER_NAME)
-#undef COUNTER_NAME
+#define COUNTER_NAME_ENTRY(name) "Blink_" #name,
+      FOR_EACH_COUNTER(COUNTER_NAME_ENTRY)
+#undef COUNTER_NAME_ENTRY
   };
 
   for (int i = 0; i < number_of_counters_; i++) {

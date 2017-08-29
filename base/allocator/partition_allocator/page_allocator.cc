@@ -69,24 +69,21 @@ size_t s_reservation_size = 0;
 
 // This internal function wraps the OS-specific page allocation call:
 // |VirtualAlloc| on Windows, and |mmap| on POSIX.
-static void* SystemAllocPages(void* hint,
-                              size_t length,
-                              PageAccessibilityConfiguration page_accessibility,
-                              bool commit = true) {
+static void* SystemAllocPages(
+    void* hint,
+    size_t length,
+    PageAccessibilityConfiguration page_accessibility) {
   DCHECK(!(length & kPageAllocationGranularityOffsetMask));
   DCHECK(!(reinterpret_cast<uintptr_t>(hint) &
            kPageAllocationGranularityOffsetMask));
-  DCHECK(commit || page_accessibility == PageInaccessible);
-
   void* ret;
   // Retry failed allocations once after calling ReleaseReservation().
   bool have_retried = false;
 #if defined(OS_WIN)
-  const DWORD access_flag =
+  DWORD access_flag =
       page_accessibility == PageAccessible ? PAGE_READWRITE : PAGE_NOACCESS;
-  const DWORD type_flags = commit ? (MEM_RESERVE | MEM_COMMIT) : MEM_RESERVE;
   while (true) {
-    ret = VirtualAlloc(hint, length, type_flags, access_flag);
+    ret = VirtualAlloc(hint, length, MEM_RESERVE | MEM_COMMIT, access_flag);
     if (ret)
       break;
     if (have_retried) {
@@ -330,16 +327,10 @@ void DiscardSystemPages(void* address, size_t length) {
 #endif
 }
 
-bool ReserveAddressSpace(size_t size) {
-  DCHECK(size >= kPageAllocationGranularity);
-  DCHECK(!(size & kPageAllocationGranularityOffsetMask));
-
+bool ReserveAddressSpace(size_t size, size_t alignment) {
   // Don't take |s_reserveLock| while allocating, since a failure would invoke
   // ReleaseReservation and deadlock.
-  void* mem = SystemAllocPages(nullptr, size, base::PageInaccessible, false);
-  // We guarantee this alignment when reserving address space.
-  DCHECK(!(reinterpret_cast<uintptr_t>(mem) &
-           kPageAllocationGranularityOffsetMask));
+  void* mem = AllocPages(nullptr, size, alignment, base::PageInaccessible);
   if (mem != nullptr) {
     {
       base::subtle::SpinLock::Guard guard(s_reserveLock);

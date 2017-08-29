@@ -10,7 +10,6 @@
 
 #include "base/strings/string_piece.h"
 #include "base/values.h"
-#include "extensions/common/hashed_extension_id.h"
 #include "extensions/common/manifest.h"
 
 class GURL;
@@ -110,14 +109,14 @@ class Feature {
 
   // Returns true if the feature is available to be parsed into a new extension
   // manifest.
-  Availability IsAvailableToManifest(const HashedExtensionId& hashed_id,
+  Availability IsAvailableToManifest(const std::string& extension_id,
                                      Manifest::Type type,
                                      Manifest::Location location,
                                      int manifest_version) const {
-    return IsAvailableToManifest(hashed_id, type, location, manifest_version,
+    return IsAvailableToManifest(extension_id, type, location, manifest_version,
                                  GetCurrentPlatform());
   }
-  virtual Availability IsAvailableToManifest(const HashedExtensionId& hashed_id,
+  virtual Availability IsAvailableToManifest(const std::string& extension_id,
                                              Manifest::Type type,
                                              Manifest::Location location,
                                              int manifest_version,
@@ -147,10 +146,10 @@ class Feature {
   // relies on an Extension now - maybe it will, one day, so if there's an
   // Extension available (or a runtime context, etc) then use the more targeted
   // method instead.
-  virtual Availability IsAvailableToEnvironment() const = 0;
+  Availability IsAvailableToEnvironment() const;
 
-  virtual bool IsIdInBlacklist(const HashedExtensionId& hashed_id) const = 0;
-  virtual bool IsIdInWhitelist(const HashedExtensionId& hashed_id) const = 0;
+  virtual bool IsIdInBlacklist(const std::string& extension_id) const = 0;
+  virtual bool IsIdInWhitelist(const std::string& extension_id) const = 0;
 
  protected:
   std::string name_;

@@ -27,7 +27,6 @@ class PrefetchDispatcherImpl : public PrefetchDispatcher,
 
   // PrefetchDispatcher implementation:
   void SetService(PrefetchService* service) override;
-  void EnsureTaskScheduled() override;
   void SchedulePipelineProcessing() override;
   void AddCandidatePrefetchURLs(
       const std::string& name_space,
@@ -39,10 +38,6 @@ class PrefetchDispatcherImpl : public PrefetchDispatcher,
   void StopBackgroundTask() override;
   void GCMOperationCompletedMessageReceived(
       const std::string& operation_name) override;
-  void CleanupDownloads(
-      const std::set<std::string>& outstanding_download_ids,
-      const std::map<std::string, std::pair<base::FilePath, int64_t>>&
-          success_downloads) override;
   void DownloadCompleted(
       const PrefetchDownloadResult& download_result) override;
   void ImportCompleted(int64_t offline_id, bool success) override;

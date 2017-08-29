@@ -713,17 +713,13 @@ void InspectorPageAgent::DidClearDocumentOfWindowObject(LocalFrame* frame) {
 void InspectorPageAgent::DomContentLoadedEventFired(LocalFrame* frame) {
   if (frame != inspected_frames_->Root())
     return;
-  double timestamp = MonotonicallyIncreasingTime();
-  GetFrontend()->domContentEventFired(timestamp);
-  GetFrontend()->lifecycleEvent("DOMContentLoaded", timestamp);
+  GetFrontend()->domContentEventFired(MonotonicallyIncreasingTime());
 }
 
 void InspectorPageAgent::LoadEventFired(LocalFrame* frame) {
   if (frame != inspected_frames_->Root())
     return;
-  double timestamp = MonotonicallyIncreasingTime();
-  GetFrontend()->loadEventFired(timestamp);
-  GetFrontend()->lifecycleEvent("load", timestamp);
+  GetFrontend()->loadEventFired(MonotonicallyIncreasingTime());
 }
 
 void InspectorPageAgent::WillCommitLoad(LocalFrame*, DocumentLoader* loader) {
@@ -731,7 +727,6 @@ void InspectorPageAgent::WillCommitLoad(LocalFrame*, DocumentLoader* loader) {
     FinishReload();
     script_to_evaluate_on_load_once_ = pending_script_to_evaluate_on_load_once_;
     pending_script_to_evaluate_on_load_once_ = String();
-    GetFrontend()->lifecycleEvent("commit", MonotonicallyIncreasingTime());
   }
   GetFrontend()->frameNavigated(BuildObjectForFrame(loader->GetFrame()));
 }
@@ -798,16 +793,6 @@ void InspectorPageAgent::DidResizeMainFrame() {
 
 void InspectorPageAgent::DidChangeViewport() {
   PageLayoutInvalidated(false);
-}
-
-void InspectorPageAgent::LifecycleEvent(const char* name, double timestamp) {
-  GetFrontend()->lifecycleEvent(name, timestamp);
-}
-
-void InspectorPageAgent::PaintTiming(Document* document,
-                                     const char* name,
-                                     double timestamp) {
-  GetFrontend()->lifecycleEvent(name, timestamp);
 }
 
 void InspectorPageAgent::Will(const probe::UpdateLayout&) {}

@@ -38,7 +38,7 @@ using StrongBindingPtr = base::WeakPtr<StrongBinding<Interface>>;
 // To use, call StrongBinding<T>::Create() (see below) or the helper
 // MakeStrongBinding function:
 //
-//   mojo::MakeStrongBinding(std::make_unique<FooImpl>(),
+//   mojo::MakeStrongBinding(base::MakeUnique<FooImpl>(),
 //                           std::move(foo_request));
 //
 template <typename Interface>

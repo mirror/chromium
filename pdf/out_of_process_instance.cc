@@ -1089,6 +1089,7 @@ void OutOfProcessInstance::DidOpen(int32_t result) {
       DocumentLoadFailed();
     }
   } else if (result != PP_ERROR_ABORTED) {  // Can happen in tests.
+    NOTREACHED();
     DocumentLoadFailed();
   }
 

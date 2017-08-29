@@ -22,7 +22,6 @@
 #include "modules/canvas2d/CanvasPattern.h"
 #include "modules/webgl/WebGLRenderingContext.h"
 #include "platform/graphics/CanvasHeuristicParameters.h"
-#include "platform/graphics/ColorCorrectionTestUtils.h"
 #include "platform/graphics/RecordingImageBufferSurface.h"
 #include "platform/graphics/StaticBitmapImage.h"
 #include "platform/graphics/UnacceleratedImageBufferSurface.h"
@@ -1067,18 +1066,16 @@ enum class ColorSpaceConversion : uint8_t {
   DEFAULT_COLOR_CORRECTED = 2,
   SRGB = 3,
   LINEAR_RGB = 4,
-  P3 = 5,
-  REC2020 = 6,
 
-  LAST = REC2020
+  LAST = LINEAR_RGB
 };
 
 static ImageBitmapOptions PrepareBitmapOptionsAndSetRuntimeFlags(
     const ColorSpaceConversion& color_space_conversion) {
   // Set the color space conversion in ImageBitmapOptions
   ImageBitmapOptions options;
-  static const Vector<String> kConversions = {
-      "none", "default", "default", "srgb", "linear-rgb", "p3", "rec2020"};
+  static const Vector<String> kConversions = {"none", "default", "default",
+                                              "srgb", "linear-rgb"};
   options.setColorSpaceConversion(
       kConversions[static_cast<uint8_t>(color_space_conversion)]);
 
@@ -1088,16 +1085,20 @@ static ImageBitmapOptions PrepareBitmapOptionsAndSetRuntimeFlags(
   RuntimeEnabledFeatures::SetExperimentalCanvasFeaturesEnabled(true);
   RuntimeEnabledFeatures::SetColorCorrectRenderingEnabled(flag);
   RuntimeEnabledFeatures::SetColorCanvasExtensionsEnabled(true);
-
   return options;
 }
 
-constexpr int kSRGBColorCorrectionTolerance = 1;
-constexpr float kWideGamutColorCorrectionTolerance = 0.01;
-
 TEST_F(CanvasRenderingContext2DTest, ImageBitmapColorSpaceConversion) {
-  // enable color canvas extensions for this test
-  ScopedEnableColorCanvasExtensions color_canvas_extensions_enabler;
+  bool experimental_canvas_features_runtime_flag =
+      RuntimeEnabledFeatures::ExperimentalCanvasFeaturesEnabled();
+  bool color_correct_rendering_runtime_flag =
+      RuntimeEnabledFeatures::ColorCorrectRenderingEnabled();
+  bool color_canvas_extensions_flag =
+      RuntimeEnabledFeatures::ColorCanvasExtensionsEnabled();
+
+  RuntimeEnabledFeatures::SetExperimentalCanvasFeaturesEnabled(true);
+  RuntimeEnabledFeatures::SetColorCorrectRenderingEnabled(true);
+  RuntimeEnabledFeatures::SetColorCanvasExtensionsEnabled(true);
 
   Persistent<HTMLCanvasElement> canvas =
       Persistent<HTMLCanvasElement>(CanvasElement());
@@ -1118,7 +1119,7 @@ TEST_F(CanvasRenderingContext2DTest, ImageBitmapColorSpaceConversion) {
     std::swap(src_pixel[0], src_pixel[2]);
 
   // Create and test the ImageBitmap objects.
-  Optional<IntRect> crop_rect = IntRect(0, 0, 10, 10);
+  Optional<IntRect> crop_rect = IntRect(0, 0, 300, 150);
   sk_sp<SkColorSpace> color_space = nullptr;
   SkColorType color_type = SkColorType::kN32_SkColorType;
   SkColorSpaceXform::ColorFormat color_format32 =
@@ -1162,20 +1163,6 @@ TEST_F(CanvasRenderingContext2DTest, ImageBitmapColorSpaceConversion) {
         color_type = SkColorType::kRGBA_F16_SkColorType;
         color_format = SkColorSpaceXform::ColorFormat::kRGBA_F16_ColorFormat;
         break;
-      case ColorSpaceConversion::P3:
-        color_space =
-            SkColorSpace::MakeRGB(SkColorSpace::kLinear_RenderTargetGamma,
-                                  SkColorSpace::kDCIP3_D65_Gamut);
-        color_type = SkColorType::kRGBA_F16_SkColorType;
-        color_format = SkColorSpaceXform::ColorFormat::kRGBA_F16_ColorFormat;
-        break;
-      case ColorSpaceConversion::REC2020:
-        color_space =
-            SkColorSpace::MakeRGB(SkColorSpace::kLinear_RenderTargetGamma,
-                                  SkColorSpace::kRec2020_Gamut);
-        color_type = SkColorType::kRGBA_F16_SkColorType;
-        color_format = SkColorSpaceXform::ColorFormat::kRGBA_F16_ColorFormat;
-        break;
       default:
         NOTREACHED();
     }
@@ -1198,10 +1185,17 @@ TEST_F(CanvasRenderingContext2DTest, ImageBitmapColorSpaceConversion) {
                              color_format32, src_pixel, 1,
                              SkAlphaType::kPremul_SkAlphaType);
 
-    ColorCorrectionTestUtils::CompareColorCorrectedPixels(
-        converted_pixel, transformed_pixel, image_info.bytesPerPixel(),
-        kWideGamutColorCorrectionTolerance);
+    int compare = std::memcmp(converted_pixel.get(), transformed_pixel.get(),
+                              image_info.bytesPerPixel());
+    ASSERT_EQ(compare, 0);
   }
+
+  RuntimeEnabledFeatures::SetExperimentalCanvasFeaturesEnabled(
+      experimental_canvas_features_runtime_flag);
+  RuntimeEnabledFeatures::SetColorCorrectRenderingEnabled(
+      color_correct_rendering_runtime_flag);
+  RuntimeEnabledFeatures::SetColorCanvasExtensionsEnabled(
+      color_canvas_extensions_flag);
 }
 
 bool ConvertPixelsToColorSpaceAndPixelFormatForTest(
@@ -1299,10 +1293,19 @@ enum class CanvasColorSpaceSettings : uint8_t {
 // color managed mode.
 void TestPutImageDataOnCanvasWithColorSpaceSettings(
     HTMLCanvasElement& canvas_element,
-    CanvasColorSpaceSettings canvas_colorspace_setting) {
-  // enable color canvas extensions for this test
-  ScopedEnableColorCanvasExtensions color_canvas_extensions_enabler;
+    CanvasColorSpaceSettings canvas_colorspace_setting,
+    float color_tolerance) {
+  bool experimental_canvas_features_runtime_flag =
+      RuntimeEnabledFeatures::ExperimentalCanvasFeaturesEnabled();
+  bool color_correct_rendering_runtime_flag =
+      RuntimeEnabledFeatures::ColorCorrectRenderingEnabled();
+  bool color_canvas_extensions_flag =
+      RuntimeEnabledFeatures::ColorCanvasExtensionsEnabled();
+  RuntimeEnabledFeatures::SetExperimentalCanvasFeaturesEnabled(true);
+  RuntimeEnabledFeatures::SetColorCorrectRenderingEnabled(true);
+  RuntimeEnabledFeatures::SetColorCanvasExtensionsEnabled(true);
 
+  bool test_passed = true;
   unsigned num_image_data_color_spaces = 3;
   CanvasColorSpace image_data_color_spaces[] = {
       kSRGBCanvasColorSpace, kRec2020CanvasColorSpace, kP3CanvasColorSpace,
@@ -1336,7 +1339,7 @@ void TestPutImageDataOnCanvasWithColorSpaceSettings(
   uint8_t u8_pixels[] = {255, 0,   0,   255,  // Red
                          0,   0,   0,   0,    // Transparent
                          255, 192, 128, 64,   // Decreasing values
-                         93,  117, 205, 41};  // Random values
+                         93,  117, 205, 11};  // Random values
   unsigned data_length = 16;
 
   uint16_t* u16_pixels = new uint16_t[data_length];
@@ -1417,10 +1420,21 @@ void TestPutImageDataOnCanvasWithColorSpaceSettings(
       if (canvas_pixel_formats[k] == kRGBA8CanvasPixelFormat) {
         pixels_from_get_image_data =
             context->getImageData(0, 0, 2, 2, exception_state)->data()->Data();
-        ColorCorrectionTestUtils::CompareColorCorrectedPixels(
-            static_cast<uint8_t*>((void*)(pixels_converted_manually.get())),
-            static_cast<uint8_t*>(pixels_from_get_image_data), data_length,
-            kSRGBColorCorrectionTolerance);
+        // Swizzle if needed
+        if (kN32_SkColorType == kBGRA_8888_SkColorType) {
+          SkSwapRB(static_cast<uint32_t*>(pixels_from_get_image_data),
+                   static_cast<uint32_t*>(pixels_from_get_image_data),
+                   data_length / 4);
+        }
+
+        unsigned char* cpixels1 =
+            static_cast<unsigned char*>(pixels_converted_manually.get());
+        unsigned char* cpixels2 =
+            static_cast<unsigned char*>(pixels_from_get_image_data);
+        for (unsigned m = 0; m < data_length; m++) {
+          if (abs(cpixels1[m] - cpixels2[m]) > color_tolerance)
+            test_passed = false;
+        }
       } else {
         pixels_from_get_image_data =
             context->getImageData(0, 0, 2, 2, exception_state)
@@ -1428,36 +1442,51 @@ void TestPutImageDataOnCanvasWithColorSpaceSettings(
                 .getAsFloat32Array()
                 .View()
                 ->Data();
-        ColorCorrectionTestUtils::CompareColorCorrectedPixels(
-            static_cast<float*>((void*)(pixels_converted_manually.get())),
-            static_cast<float*>(pixels_from_get_image_data), data_length,
-            kWideGamutColorCorrectionTolerance);
+        float* fpixels1 = nullptr;
+        float* fpixels2 = nullptr;
+        void* vpointer = pixels_converted_manually.get();
+        fpixels1 = static_cast<float*>(vpointer);
+        fpixels2 = static_cast<float*>(pixels_from_get_image_data);
+        for (unsigned m = 0; m < data_length; m++) {
+          if (fabs(fpixels1[m] - fpixels2[m]) > color_tolerance) {
+            test_passed = false;
+          }
+        }
+
+        ASSERT_TRUE(test_passed);
       }
     }
   }
   delete[] u16_pixels;
   delete[] f32_pixels;
+
+  RuntimeEnabledFeatures::SetExperimentalCanvasFeaturesEnabled(
+      experimental_canvas_features_runtime_flag);
+  RuntimeEnabledFeatures::SetColorCorrectRenderingEnabled(
+      color_correct_rendering_runtime_flag);
+  RuntimeEnabledFeatures::SetColorCanvasExtensionsEnabled(
+      color_canvas_extensions_flag);
 }
 
 TEST_F(CanvasRenderingContext2DTest, ColorManagedPutImageDataOnSRGBCanvas) {
   TestPutImageDataOnCanvasWithColorSpaceSettings(
-      CanvasElement(), CanvasColorSpaceSettings::CANVAS_SRGB);
+      CanvasElement(), CanvasColorSpaceSettings::CANVAS_SRGB, 0);
 }
 
 TEST_F(CanvasRenderingContext2DTest,
        ColorManagedPutImageDataOnLinearSRGBCanvas) {
   TestPutImageDataOnCanvasWithColorSpaceSettings(
-      CanvasElement(), CanvasColorSpaceSettings::CANVAS_LINEARSRGB);
+      CanvasElement(), CanvasColorSpaceSettings::CANVAS_LINEARSRGB, 0.01);
 }
 
 TEST_F(CanvasRenderingContext2DTest, ColorManagedPutImageDataOnRec2020Canvas) {
   TestPutImageDataOnCanvasWithColorSpaceSettings(
-      CanvasElement(), CanvasColorSpaceSettings::CANVAS_REC2020);
+      CanvasElement(), CanvasColorSpaceSettings::CANVAS_REC2020, 0.01);
 }
 
 TEST_F(CanvasRenderingContext2DTest, ColorManagedPutImageDataOnP3Canvas) {
   TestPutImageDataOnCanvasWithColorSpaceSettings(
-      CanvasElement(), CanvasColorSpaceSettings::CANVAS_P3);
+      CanvasElement(), CanvasColorSpaceSettings::CANVAS_P3, 0.01);
 }
 
 void OverrideScriptEnabled(Settings& settings) {

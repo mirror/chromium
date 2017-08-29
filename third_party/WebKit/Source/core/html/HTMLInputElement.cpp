@@ -1404,11 +1404,11 @@ static Vector<String> ParseAcceptAttribute(const String& accept_string,
   return types;
 }
 
-Vector<String> HTMLInputElement::AcceptMIMETypes() const {
+Vector<String> HTMLInputElement::AcceptMIMETypes() {
   return ParseAcceptAttribute(FastGetAttribute(acceptAttr), IsValidMIMEType);
 }
 
-Vector<String> HTMLInputElement::AcceptFileExtensions() const {
+Vector<String> HTMLInputElement::AcceptFileExtensions() {
   return ParseAcceptAttribute(FastGetAttribute(acceptAttr),
                               IsValidFileExtension);
 }
@@ -1712,6 +1712,19 @@ String HTMLInputElement::DefaultToolTip() const {
 
 bool HTMLInputElement::ShouldAppearIndeterminate() const {
   return input_type_->ShouldAppearIndeterminate();
+}
+
+CaptureFacingMode HTMLInputElement::capture() const {
+  const String capture = FastGetAttribute(captureAttr).LowerASCII();
+  if (capture == "user")
+    return CaptureFacingModeUser;
+
+  // |capture| is equivalent to 'environment' if unspecified.
+  return CaptureFacingModeEnvironment;
+}
+
+void HTMLInputElement::setCapture(const AtomicString& value) {
+  setAttribute(captureAttr, value);
 }
 
 bool HTMLInputElement::IsInRequiredRadioButtonGroup() {

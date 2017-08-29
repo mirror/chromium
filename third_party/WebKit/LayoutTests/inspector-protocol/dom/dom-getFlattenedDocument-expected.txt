@@ -4,232 +4,232 @@ Tests DOM.getFlattenedDocument method.
         [0] : {
             attributes : [
             ]
-            backendNodeId : <number>
+            backendNodeId : <backendNodeId>
             childNodeCount : 0
             children : [
             ]
             localName : head
-            nodeId : <number>
+            nodeId : <nodeId>
             nodeName : HEAD
             nodeType : 1
             nodeValue : 
-            parentId : <number>
+            parentId : <parentId>
         }
         [1] : {
-            backendNodeId : <number>
+            backendNodeId : <backendNodeId>
             localName : 
-            nodeId : <number>
+            nodeId : <nodeId>
             nodeName : #text
             nodeType : 3
             nodeValue :  A     
-            parentId : <number>
+            parentId : <parentId>
         }
         [2] : {
-            backendNodeId : <number>
+            backendNodeId : <backendNodeId>
             localName : 
-            nodeId : <number>
+            nodeId : <nodeId>
             nodeName : #text
             nodeType : 3
             nodeValue :  B       
-            parentId : <number>
+            parentId : <parentId>
         }
         [3] : {
-            backendNodeId : <number>
+            backendNodeId : <backendNodeId>
             localName : 
-            nodeId : <number>
+            nodeId : <nodeId>
             nodeName : #text
             nodeType : 3
             nodeValue :  C         
-            parentId : <number>
+            parentId : <parentId>
         }
         [4] : {
-            backendNodeId : <number>
+            backendNodeId : <backendNodeId>
             localName : 
-            nodeId : <number>
+            nodeId : <nodeId>
             nodeName : #text
             nodeType : 3
             nodeValue :  D           
-            parentId : <number>
+            parentId : <parentId>
         }
         [5] : {
-            backendNodeId : <number>
+            backendNodeId : <backendNodeId>
             localName : 
-            nodeId : <number>
+            nodeId : <nodeId>
             nodeName : #text
             nodeType : 3
             nodeValue :  E           
-            parentId : <number>
+            parentId : <parentId>
         }
         [6] : {
             attributes : [
                 [0] : id
                 [1] : E
             ]
-            backendNodeId : <number>
+            backendNodeId : <backendNodeId>
             childNodeCount : 1
             children : [
             ]
             localName : div
-            nodeId : <number>
+            nodeId : <nodeId>
             nodeName : DIV
             nodeType : 1
             nodeValue : 
-            parentId : <number>
+            parentId : <parentId>
         }
         [7] : {
             attributes : [
                 [0] : id
                 [1] : D
             ]
-            backendNodeId : <number>
+            backendNodeId : <backendNodeId>
             childNodeCount : 2
             children : [
             ]
             localName : div
-            nodeId : <number>
+            nodeId : <nodeId>
             nodeName : DIV
             nodeType : 1
             nodeValue : 
-            parentId : <number>
+            parentId : <parentId>
         }
         [8] : {
             attributes : [
                 [0] : id
                 [1] : C
             ]
-            backendNodeId : <number>
+            backendNodeId : <backendNodeId>
             childNodeCount : 2
             children : [
             ]
             localName : div
-            nodeId : <number>
+            nodeId : <nodeId>
             nodeName : DIV
             nodeType : 1
             nodeValue : 
-            parentId : <number>
+            parentId : <parentId>
         }
         [9] : {
             attributes : [
                 [0] : id
                 [1] : B
             ]
-            backendNodeId : <number>
+            backendNodeId : <backendNodeId>
             childNodeCount : 2
             children : [
             ]
             localName : div
-            nodeId : <number>
+            nodeId : <nodeId>
             nodeName : DIV
             nodeType : 1
             nodeValue : 
-            parentId : <number>
+            parentId : <parentId>
         }
         [10] : {
             attributes : [
                 [0] : id
                 [1] : A
             ]
-            backendNodeId : <number>
+            backendNodeId : <backendNodeId>
             childNodeCount : 2
             children : [
             ]
             localName : div
-            nodeId : <number>
+            nodeId : <nodeId>
             nodeName : DIV
             nodeType : 1
             nodeValue : 
-            parentId : <number>
+            parentId : <parentId>
         }
         [11] : {
-            backendNodeId : <number>
+            backendNodeId : <backendNodeId>
             localName : 
-            nodeId : <number>
+            nodeId : <nodeId>
             nodeName : #text
             nodeType : 3
             nodeValue :  @font-face {   font-family: 'ahem';   src: url(../../../resources/Ahem.ttf); } 
-            parentId : <number>
+            parentId : <parentId>
         }
         [12] : {
             attributes : [
             ]
-            backendNodeId : <number>
+            backendNodeId : <backendNodeId>
             childNodeCount : 1
             children : [
             ]
             localName : style
-            nodeId : <number>
+            nodeId : <nodeId>
             nodeName : STYLE
             nodeType : 1
             nodeValue : 
-            parentId : <number>
+            parentId : <parentId>
         }
         [13] : {
             attributes : [
             ]
-            backendNodeId : <number>
+            backendNodeId : <backendNodeId>
             childNodeCount : 1
             children : [
             ]
             localName : head
-            nodeId : <number>
+            nodeId : <nodeId>
             nodeName : HEAD
             nodeType : 1
             nodeValue : 
-            parentId : <number>
+            parentId : <parentId>
         }
         [14] : {
-            backendNodeId : <number>
+            backendNodeId : <backendNodeId>
             localName : 
-            nodeId : <number>
+            nodeId : <nodeId>
             nodeName : #text
             nodeType : 3
             nodeValue :  Hello from the iframe. 
-            parentId : <number>
+            parentId : <parentId>
         }
         [15] : {
             attributes : [
                 [0] : style
                 [1] : font-family: ahem;
             ]
-            backendNodeId : <number>
+            backendNodeId : <backendNodeId>
             childNodeCount : 1
             children : [
             ]
             localName : div
-            nodeId : <number>
+            nodeId : <nodeId>
             nodeName : DIV
             nodeType : 1
             nodeValue : 
-            parentId : <number>
+            parentId : <parentId>
         }
         [16] : {
             attributes : [
             ]
-            backendNodeId : <number>
+            backendNodeId : <backendNodeId>
             childNodeCount : 1
             children : [
             ]
             localName : body
-            nodeId : <number>
+            nodeId : <nodeId>
             nodeName : BODY
             nodeType : 1
             nodeValue : 
-            parentId : <number>
+            parentId : <parentId>
         }
         [17] : {
             attributes : [
             ]
-            backendNodeId : <number>
+            backendNodeId : <backendNodeId>
             childNodeCount : 2
             children : [
             ]
-            frameId : <string>
+            frameId : <frameId>
             localName : html
-            nodeId : <number>
+            nodeId : <nodeId>
             nodeName : HTML
             nodeType : 1
             nodeValue : 
-            parentId : <number>
+            parentId : <parentId>
         }
         [18] : {
             attributes : [
@@ -240,115 +240,115 @@ Tests DOM.getFlattenedDocument method.
                 [4] : height
                 [5] : 200
             ]
-            backendNodeId : <number>
+            backendNodeId : <backendNodeId>
             childNodeCount : 0
             children : [
             ]
             contentDocument : {
-                backendNodeId : <number>
-                baseURL : <string>
+                backendNodeId : <backendNodeId>
+                baseURL : <baseURL>
                 childNodeCount : 1
                 children : [
                 ]
-                documentURL : <string>
+                documentURL : <documentURL>
                 localName : 
-                nodeId : <number>
+                nodeId : <nodeId>
                 nodeName : #document
                 nodeType : 9
                 nodeValue : 
                 xmlVersion : 
             }
-            frameId : <string>
+            frameId : <frameId>
             localName : iframe
-            nodeId : <number>
+            nodeId : <nodeId>
             nodeName : IFRAME
             nodeType : 1
             nodeValue : 
-            parentId : <number>
+            parentId : <parentId>
         }
         [19] : {
-            backendNodeId : <number>
+            backendNodeId : <backendNodeId>
             localName : 
-            nodeId : <number>
+            nodeId : <nodeId>
             nodeName : #text
             nodeType : 3
             nodeValue :  :host {     color: red; } 
-            parentId : <number>
+            parentId : <parentId>
         }
         [20] : {
             attributes : [
             ]
-            backendNodeId : <number>
+            backendNodeId : <backendNodeId>
             childNodeCount : 1
             children : [
             ]
             localName : style
-            nodeId : <number>
+            nodeId : <nodeId>
             nodeName : STYLE
             nodeType : 1
             nodeValue : 
-            parentId : <number>
+            parentId : <parentId>
         }
         [21] : {
             attributes : [
             ]
-            backendNodeId : <number>
+            backendNodeId : <backendNodeId>
             childNodeCount : 0
             children : [
             ]
             localName : div
-            nodeId : <number>
+            nodeId : <nodeId>
             nodeName : DIV
             nodeType : 1
             nodeValue : 
-            parentId : <number>
+            parentId : <parentId>
         }
         [22] : {
-            backendNodeId : <number>
+            backendNodeId : <backendNodeId>
             localName : 
-            nodeId : <number>
+            nodeId : <nodeId>
             nodeName : #text
             nodeType : 3
             nodeValue : Hi from a template!
-            parentId : <number>
+            parentId : <parentId>
         }
         [23] : {
             attributes : [
             ]
-            backendNodeId : <number>
+            backendNodeId : <backendNodeId>
             childNodeCount : 1
             children : [
             ]
             localName : h1
-            nodeId : <number>
+            nodeId : <nodeId>
             nodeName : H1
             nodeType : 1
             nodeValue : 
-            parentId : <number>
+            parentId : <parentId>
         }
         [24] : {
             attributes : [
                 [0] : id
                 [1] : shadow-host
             ]
-            backendNodeId : <number>
+            backendNodeId : <backendNodeId>
             childNodeCount : 0
             children : [
             ]
             localName : div
-            nodeId : <number>
+            nodeId : <nodeId>
             nodeName : DIV
             nodeType : 1
             nodeValue : 
-            parentId : <number>
+            parentId : <parentId>
             shadowRoots : [
                 [0] : {
-                    backendNodeId : <number>
+                    backendNodeId : <backendNodeId>
                     childNodeCount : 3
                     children : [
                     ]
                     localName : 
-                    nodeId : <number>
+                    nodeId : <nodeId>
                     nodeName : #document-fragment
                     nodeType : 11
                     nodeValue : 
@@ -361,41 +361,41 @@ Tests DOM.getFlattenedDocument method.
                 [0] : class
                 [1] : body-class
             ]
-            backendNodeId : <number>
+            backendNodeId : <backendNodeId>
             childNodeCount : 3
             children : [
             ]
             localName : body
-            nodeId : <number>
+            nodeId : <nodeId>
             nodeName : BODY
             nodeType : 1
             nodeValue : 
-            parentId : <number>
+            parentId : <parentId>
         }
         [26] : {
             attributes : [
             ]
-            backendNodeId : <number>
+            backendNodeId : <backendNodeId>
             childNodeCount : 2
             children : [
             ]
-            frameId : <string>
+            frameId : <frameId>
             localName : html
-            nodeId : <number>
+            nodeId : <nodeId>
             nodeName : HTML
             nodeType : 1
             nodeValue : 
-            parentId : <number>
+            parentId : <parentId>
         }
         [27] : {
-            backendNodeId : <number>
-            baseURL : <string>
+            backendNodeId : <backendNodeId>
+            baseURL : <baseURL>
             childNodeCount : 1
             children : [
             ]
-            documentURL : <string>
+            documentURL : <documentURL>
             localName : 
-            nodeId : <number>
+            nodeId : <nodeId>
             nodeName : #document
             nodeType : 9
             nodeValue : 

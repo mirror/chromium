@@ -7,7 +7,6 @@
 #include "bindings/core/v8/ResizeObserverCallback.h"
 #include "core/dom/Element.h"
 #include "core/frame/LocalFrameView.h"
-#include "core/layout/LayoutObject.h"
 #include "core/resize_observer/ResizeObservation.h"
 #include "core/resize_observer/ResizeObserverController.h"
 #include "core/resize_observer/ResizeObserverEntry.h"
@@ -111,22 +110,8 @@ void ResizeObserver::DeliverObservations() {
     LayoutPoint location = observation->ComputeTargetLocation();
     LayoutSize size = observation->ComputeTargetSize();
     observation->SetObservationSize(size);
-
-    LayoutRect content_rect(location, size);
-    if (observation->Target()->GetLayoutObject()) {
-      // Must adjust for zoom in order to report non-zoomed size.
-      const ComputedStyle& style =
-          observation->Target()->GetLayoutObject()->StyleRef();
-      content_rect.SetX(
-          AdjustLayoutUnitForAbsoluteZoom(content_rect.X(), style));
-      content_rect.SetY(
-          AdjustLayoutUnitForAbsoluteZoom(content_rect.Y(), style));
-      content_rect.SetWidth(
-          AdjustLayoutUnitForAbsoluteZoom(content_rect.Width(), style));
-      content_rect.SetHeight(
-          AdjustLayoutUnitForAbsoluteZoom(content_rect.Height(), style));
-    }
-    auto entry = new ResizeObserverEntry(observation->Target(), content_rect);
+    auto entry = new ResizeObserverEntry(observation->Target(),
+                                         LayoutRect(location, size));
     entries.push_back(entry);
   }
   DCHECK(callback_ || delegate_);

@@ -6,17 +6,12 @@
 
 #include "base/allocator/features.h"
 #include "base/command_line.h"
-#include "base/files/file_util.h"
 #include "base/strings/string_number_conversions.h"
-#include "base/sys_info.h"
 #include "base/task_scheduler/post_task.h"
-#include "base/trace_event/memory_dump_manager.h"
 #include "build/build_config.h"
-#include "chrome/common/chrome_content_client.h"
 #include "chrome/common/chrome_switches.h"
 #include "chrome/common/profiling/constants.mojom.h"
 #include "chrome/common/profiling/profiling_constants.h"
-#include "components/version_info/version_info.h"
 #include "content/public/browser/browser_child_process_host.h"
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/notification_service.h"
@@ -26,47 +21,11 @@
 #include "content/public/common/child_process_host.h"
 #include "content/public/common/content_switches.h"
 #include "content/public/common/service_manager_connection.h"
-#include "content/public/common/service_names.mojom.h"
 #include "mojo/edk/embedder/platform_channel_pair.h"
 #include "mojo/edk/embedder/scoped_platform_handle.h"
 #include "mojo/public/cpp/system/platform_handle.h"
 
-namespace {
-
-// A wrapper classes that allows a string to be exported as JSON in a trace
-// event.
-class StringWrapper : public base::trace_event::ConvertableToTraceFormat {
- public:
-  explicit StringWrapper(std::string string) : json_(std::move(string)) {}
-
-  void AppendAsTraceFormat(std::string* out) const override {
-    out->append(json_);
-  }
-
-  std::string json_;
-};
-
-}  // namespace
-
 namespace profiling {
-
-namespace {
-
-const size_t kMaxTraceSizeUploadInBytes = 10 * 1024 * 1024;
-
-void UploadTraceToCrashServer(base::FilePath file_path) {
-  std::string file_contents;
-  if (!base::ReadFileToStringWithMaxSize(file_path, &file_contents,
-                                         kMaxTraceSizeUploadInBytes)) {
-    DLOG(ERROR) << "Cannot read trace file contents.";
-    return;
-  }
-
-  // TODO(bug 753514): Upload the trace |file_contents| to crash server (slow
-  // reports).
-}
-
-}  // namespace
 
 ProfilingProcessHost::ProfilingProcessHost() {
   Add(this);
@@ -138,51 +97,6 @@ void ProfilingProcessHost::Observe(
   SendPipeToProfilingService(std::move(memlog_client), pid);
 }
 
-bool ProfilingProcessHost::OnMemoryDump(
-    const base::trace_event::MemoryDumpArgs& args,
-    base::trace_event::ProcessMemoryDump* pmd) {
-  DCHECK_NE(GetCurrentMode(), Mode::kNone);
-  // TODO: Support dumping all processes for --memlog=all mode.
-  // https://crbug.com/758437.
-  memlog_->DumpProcessForTracing(
-      base::Process::Current().Pid(),
-      base::BindOnce(&ProfilingProcessHost::OnDumpProcessForTracingCallback,
-                     base::Unretained(this)));
-  return true;
-}
-
-void ProfilingProcessHost::OnDumpProcessForTracingCallback(
-    mojo::ScopedSharedBufferHandle buffer,
-    uint32_t size) {
-  if (!buffer->is_valid()) {
-    DLOG(ERROR) << "Failed to dump process for tracing";
-    return;
-  }
-
-  mojo::ScopedSharedBufferMapping mapping = buffer->Map(size);
-  if (!mapping) {
-    DLOG(ERROR) << "Failed to map buffer";
-    return;
-  }
-
-  const char* char_buffer = static_cast<const char*>(mapping.get());
-  std::string json(char_buffer, char_buffer + size);
-
-  const int kTraceEventNumArgs = 1;
-  const char* const kTraceEventArgNames[] = {"dumps"};
-  const unsigned char kTraceEventArgTypes[] = {TRACE_VALUE_TYPE_CONVERTABLE};
-  std::unique_ptr<base::trace_event::ConvertableToTraceFormat> wrapper(
-      new StringWrapper(std::move(json)));
-
-  TRACE_EVENT_API_ADD_TRACE_EVENT(
-      TRACE_EVENT_PHASE_MEMORY_DUMP,
-      base::trace_event::TraceLog::GetCategoryGroupEnabled(
-          base::trace_event::MemoryDumpManager::kTraceCategory),
-      "periodic_interval", trace_event_internal::kGlobalScope, 0x0,
-      kTraceEventNumArgs, kTraceEventArgNames, kTraceEventArgTypes,
-      nullptr /* arg_values */, &wrapper, TRACE_EVENT_FLAG_HAS_ID);
-}
-
 void ProfilingProcessHost::SendPipeToProfilingService(
     profiling::mojom::MemlogClientPtr memlog_client,
     base::ProcessId pid) {
@@ -208,18 +122,19 @@ void ProfilingProcessHost::SendPipeToClientProcess(
 // static
 ProfilingProcessHost::Mode ProfilingProcessHost::GetCurrentMode() {
 #if BUILDFLAG(USE_ALLOCATOR_SHIM)
-  if (base::CommandLine::ForCurrentProcess()->HasSwitch(switches::kMemlog)) {
-    std::string mode =
-        base::CommandLine::ForCurrentProcess()->GetSwitchValueASCII(
-            switches::kMemlog);
-    if (mode == switches::kMemlogModeAll)
-      return Mode::kAll;
-    if (mode == switches::kMemlogModeBrowser)
-      return Mode::kBrowser;
+  std::string mode =
+      base::CommandLine::ForCurrentProcess()->GetSwitchValueASCII(
+          switches::kMemlog);
+  if (mode.empty())
+    return Mode::kNone;
 
-    DLOG(ERROR) << "Unsupported value: \"" << mode << "\" passed to --"
-                << switches::kMemlog;
-  }
+  if (mode == switches::kMemlogModeAll)
+    return Mode::kAll;
+  if (mode == switches::kMemlogModeBrowser)
+    return Mode::kBrowser;
+
+  LOG(ERROR) << "Unsupported value: \"" << mode << "\" passed to --"
+             << switches::kMemlog;
   return Mode::kNone;
 #else
   LOG_IF(ERROR,
@@ -253,36 +168,14 @@ ProfilingProcessHost* ProfilingProcessHost::GetInstance() {
 void ProfilingProcessHost::RequestProcessDump(base::ProcessId pid,
                                               const base::FilePath& dest) {
   if (!connector_) {
-    DLOG(ERROR)
+    LOG(ERROR)
         << "Requesting process dump when profiling process hasn't started.";
     return;
   }
-
-  const bool kNoUpload = false;
   base::PostTaskWithTraits(
       FROM_HERE, {base::TaskPriority::USER_VISIBLE, base::MayBlock()},
       base::BindOnce(&ProfilingProcessHost::GetOutputFileOnBlockingThread,
-                     base::Unretained(this), pid, dest, kNoUpload));
-}
-
-void ProfilingProcessHost::RequestProcessReport(base::ProcessId pid) {
-  if (!connector_) {
-    DLOG(ERROR)
-        << "Requesting process dump when profiling process hasn't started.";
-    return;
-  }
-
-  base::FilePath output_path;
-  if (!CreateTemporaryFile(&output_path)) {
-    DLOG(ERROR) << "Cannot create temporary file for memory dump.";
-    return;
-  }
-
-  const bool kUpload = true;
-  base::PostTaskWithTraits(
-      FROM_HERE, {base::TaskPriority::BACKGROUND, base::MayBlock()},
-      base::BindOnce(&ProfilingProcessHost::GetOutputFileOnBlockingThread,
-                     base::Unretained(this), pid, output_path, kUpload));
+                     base::Unretained(this), pid, dest));
 }
 
 void ProfilingProcessHost::MakeConnector(
@@ -301,89 +194,45 @@ void ProfilingProcessHost::LaunchAsService() {
     return;
   }
 
-  // No need to unregister since ProfilingProcessHost is never destroyed.
-  base::trace_event::MemoryDumpManager::GetInstance()->RegisterDumpProvider(
-      this, "OutOfProcessHeapProfilingDumpProvider",
-      content::BrowserThread::GetTaskRunnerForThread(
-          content::BrowserThread::IO));
-
-  // Bind to the memlog service. This will start it if it hasn't started
-  // already.
+  // Ideally, we'd just call StartProfilingForClient, to interface with the
+  // memlog client in the current [browser] process, but ChromeContentClient is
+  // not correctly hooked up for the browser process. The MemlogClient there is
+  // never bound. Instead, we use the *second* MemlogClient instance in the
+  // process [a member variable of ProfilingProcessHost], which we also don't
+  // bind, but instead directly call StartProfiling.
   connector_->BindInterface(mojom::kServiceName, &memlog_);
 
-  // Tell the current process to start profiling.
-  profiling::mojom::MemlogClientPtr memlog_client;
-  profiling::mojom::MemlogClientRequest request =
-      mojo::MakeRequest(&memlog_client);
-  connector_->BindInterface(content::mojom::kBrowserServiceName,
-                            mojo::MakeRequest(&memlog_client));
-  base::ProcessId pid = base::Process::Current().Pid();
-  SendPipeToProfilingService(std::move(memlog_client), pid);
+  mojo::edk::PlatformChannelPair data_channel;
+  // Unretained is safe because this class is a leaky singleton that owns the
+  // client object.
+  memlog_->AddSender(
+      base::Process::Current().Pid(),
+      mojo::WrapPlatformFile(data_channel.PassServerHandle().release().handle),
+      base::BindOnce(&MemlogClient::StartProfiling,
+                     base::Unretained(&memlog_client_),
+                     mojo::WrapPlatformFile(
+                         data_channel.PassClientHandle().release().handle)));
 }
 
 void ProfilingProcessHost::GetOutputFileOnBlockingThread(
     base::ProcessId pid,
-    const base::FilePath& dest,
-    bool upload) {
+    const base::FilePath& dest) {
   base::File file(dest,
                   base::File::FLAG_CREATE_ALWAYS | base::File::FLAG_WRITE);
   content::BrowserThread::PostTask(
       content::BrowserThread::IO, FROM_HERE,
       base::BindOnce(&ProfilingProcessHost::HandleDumpProcessOnIOThread,
-                     base::Unretained(this), pid, std::move(dest),
-                     std::move(file), upload));
+                     base::Unretained(this), pid, std::move(file)));
 }
 
 void ProfilingProcessHost::HandleDumpProcessOnIOThread(base::ProcessId pid,
-                                                       base::FilePath file_path,
-                                                       base::File file,
-                                                       bool upload) {
+                                                       base::File file) {
   mojo::ScopedHandle handle = mojo::WrapPlatformFile(file.TakePlatformFile());
-  memlog_->DumpProcess(
-      pid, std::move(handle), GetMetadataJSONForTrace(),
-      base::BindOnce(&ProfilingProcessHost::OnProcessDumpComplete,
-                     base::Unretained(this), std::move(file_path), upload));
-}
-
-void ProfilingProcessHost::OnProcessDumpComplete(base::FilePath file_path,
-                                                 bool upload,
-                                                 bool success) {
-  if (!success) {
-    DLOG(ERROR) << "Cannot dump process.";
-    // On any errors, the requested trace output file is deleted.
-    base::DeleteFile(file_path, false);
-    return;
-  }
-
-  if (upload) {
-    UploadTraceToCrashServer(file_path);
-
-    // Uploaded file is a temporary file and must be deleted.
-    base::DeleteFile(file_path, false);
-  }
+  memlog_->DumpProcess(pid, std::move(handle));
 }
 
 void ProfilingProcessHost::SetMode(Mode mode) {
   mode_ = mode;
-}
-
-std::unique_ptr<base::DictionaryValue>
-ProfilingProcessHost::GetMetadataJSONForTrace() {
-  std::unique_ptr<base::DictionaryValue> metadata_dict(
-      new base::DictionaryValue);
-  metadata_dict->SetKey(
-      "product-version",
-      base::Value(version_info::GetProductNameAndVersionForUserAgent()));
-  metadata_dict->SetKey("user-agent", base::Value(GetUserAgent()));
-  metadata_dict->SetKey("os-name",
-                        base::Value(base::SysInfo::OperatingSystemName()));
-  metadata_dict->SetKey(
-      "command_line",
-      base::Value(
-          base::CommandLine::ForCurrentProcess()->GetCommandLineString()));
-  metadata_dict->SetKey(
-      "os-arch", base::Value(base::SysInfo::OperatingSystemArchitecture()));
-  return metadata_dict;
 }
 
 }  // namespace profiling

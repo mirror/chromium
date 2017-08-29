@@ -46,6 +46,7 @@
 #include "cc/base/switches.h"
 #include "cc/blink/web_layer_impl.h"
 #include "cc/output/layer_tree_frame_sink.h"
+#include "cc/output/vulkan_in_process_context_provider.h"
 #include "cc/raster/task_graph_runner.h"
 #include "cc/trees/layer_tree_host_common.h"
 #include "cc/trees/layer_tree_settings.h"
@@ -56,10 +57,8 @@
 #include "components/viz/client/client_shared_bitmap_manager.h"
 #include "components/viz/client/hit_test_data_provider.h"
 #include "components/viz/client/local_surface_id_provider.h"
-#include "components/viz/common/gpu/vulkan_in_process_context_provider.h"
 #include "components/viz/common/quads/copy_output_request.h"
 #include "components/viz/common/resources/buffer_to_texture_target_map.h"
-#include "components/viz/common/switches.h"
 #include "content/child/appcache/appcache_dispatcher.h"
 #include "content/child/appcache/appcache_frontend_impl.h"
 #include "content/child/blob_storage/blob_message_filter.h"
@@ -121,8 +120,6 @@
 #include "content/renderer/media/midi_message_filter.h"
 #include "content/renderer/media/render_media_client.h"
 #include "content/renderer/media/video_capture_impl_manager.h"
-#include "content/renderer/mus/render_widget_window_tree_client_factory.h"
-#include "content/renderer/mus/renderer_window_tree_client.h"
 #include "content/renderer/net_info_helper.h"
 #include "content/renderer/p2p/socket_dispatcher.h"
 #include "content/renderer/render_frame_proxy.h"
@@ -138,7 +135,6 @@
 #include "gin/public/debug.h"
 #include "gpu/GLES2/gl2extchromium.h"
 #include "gpu/command_buffer/client/shared_memory_limits.h"
-#include "gpu/config/gpu_switches.h"
 #include "gpu/ipc/client/command_buffer_proxy_impl.h"
 #include "gpu/ipc/client/gpu_channel_host.h"
 #include "ipc/ipc_channel_handle.h"
@@ -159,7 +155,6 @@
 #include "services/service_manager/public/cpp/connector.h"
 #include "services/service_manager/public/cpp/interface_provider.h"
 #include "services/ui/public/cpp/gpu/context_provider_command_buffer.h"
-#include "services/ui/public/cpp/gpu/gpu.h"
 #include "services/ui/public/interfaces/constants.mojom.h"
 #include "skia/ext/event_tracer_impl.h"
 #include "skia/ext/skia_memory_dump_provider.h"
@@ -172,6 +167,7 @@
 #include "third_party/WebKit/public/platform/WebThread.h"
 #include "third_party/WebKit/public/platform/scheduler/child/webthread_base.h"
 #include "third_party/WebKit/public/platform/scheduler/renderer/renderer_scheduler.h"
+#include "third_party/WebKit/public/web/WebDatabase.h"
 #include "third_party/WebKit/public/web/WebDocument.h"
 #include "third_party/WebKit/public/web/WebFrame.h"
 #include "third_party/WebKit/public/web/WebKit.h"
@@ -216,6 +212,11 @@
 #ifdef ENABLE_VTUNE_JIT_INTERFACE
 #include "v8/src/third_party/vtune/v8-vtune.h"
 #endif
+
+#include "content/public/common/service_manager_connection.h"
+#include "content/renderer/mus/render_widget_window_tree_client_factory.h"
+#include "content/renderer/mus/renderer_window_tree_client.h"
+#include "services/ui/public/cpp/gpu/gpu.h"
 
 #if defined(ENABLE_IPC_FUZZER)
 #include "content/common/external_ipc_dumper.h"
@@ -375,7 +376,6 @@ scoped_refptr<ui::ContextProviderCommandBuffer> CreateOffscreenContext(
     scoped_refptr<gpu::GpuChannelHost> gpu_channel_host,
     const gpu::SharedMemoryLimits& limits,
     bool support_locking,
-    bool support_oop_rasterization,
     ui::command_buffer_metrics::ContextType type,
     int32_t stream_id,
     gpu::SchedulingPriority stream_priority) {
@@ -393,8 +393,6 @@ scoped_refptr<ui::ContextProviderCommandBuffer> CreateOffscreenContext(
   attributes.sample_buffers = 0;
   attributes.bind_generates_resource = false;
   attributes.lose_context_when_out_of_memory = true;
-  attributes.enable_oop_rasterization = support_oop_rasterization;
-
   const bool automatic_flushes = false;
   return make_scoped_refptr(new ui::ContextProviderCommandBuffer(
       std::move(gpu_channel_host), stream_id, stream_priority,
@@ -682,7 +680,6 @@ void RenderThreadImpl::Init(
           GetChannel()->ipc_task_runner_refptr()));
 
   InitializeWebKit(resource_task_queue);
-  blink_initialized_time_ = base::TimeTicks::Now();
 
   // In single process the single process is all there is.
   webkit_shared_timer_suspended_ = false;
@@ -765,6 +762,9 @@ void RenderThreadImpl::Init(
   auto registry = base::MakeUnique<service_manager::BinderRegistryWithArgs<
       const service_manager::BindSourceInfo&>>();
   registry->AddInterface(base::Bind(&CreateFrameFactory),
+                         base::ThreadTaskRunnerHandle::Get());
+  registry->AddInterface(base::Bind(&EmbeddedWorkerInstanceClientImpl::Create,
+                                    base::TimeTicks::Now(), GetIOTaskRunner()),
                          base::ThreadTaskRunnerHandle::Get());
   GetServiceManagerConnection()->AddConnectionFilter(
       base::MakeUnique<SimpleConnectionFilterWithSourceInfo>(
@@ -936,7 +936,6 @@ void RenderThreadImpl::Init(
 
   process_foregrounded_count_ = 0;
   needs_to_record_first_active_paint_ = false;
-  was_backgrounded_time_ = base::TimeTicks::Min();
 
   base::MemoryCoordinatorClientRegistry::GetInstance()->Register(this);
 
@@ -1191,8 +1190,8 @@ void RenderThreadImpl::InitializeWebKit(
     gin::Debug::SetJitCodeEventHandler(vTune::GetVtuneCodeEventHandler());
 #endif
 
-  blink_platform_impl_.reset(
-      new RendererBlinkPlatformImpl(renderer_scheduler_.get()));
+  blink_platform_impl_.reset(new RendererBlinkPlatformImpl(
+      renderer_scheduler_.get(), GetConnector()->GetWeakPtr()));
   SetRuntimeFeaturesDefaultsAndUpdateFromArgs(command_line);
   GetContentClient()
       ->renderer()
@@ -1441,10 +1440,8 @@ media::GpuVideoAcceleratorFactories* RenderThreadImpl::GetGpuFactories() {
   // use lower limits than the default.
   gpu::SharedMemoryLimits limits = gpu::SharedMemoryLimits::ForMailboxContext();
   bool support_locking = true;
-  bool support_oop_rasterization = false;
   scoped_refptr<ui::ContextProviderCommandBuffer> media_context_provider =
       CreateOffscreenContext(gpu_channel_host, limits, support_locking,
-                             support_oop_rasterization,
                              ui::command_buffer_metrics::MEDIA_CONTEXT,
                              kGpuStreamIdDefault, kGpuStreamPriorityDefault);
   if (!media_context_provider->BindToCurrentThread())
@@ -1496,10 +1493,8 @@ RenderThreadImpl::SharedMainThreadContextProvider() {
   }
 
   bool support_locking = false;
-  bool support_oop_rasterization = false;
   shared_main_thread_contexts_ = CreateOffscreenContext(
       std::move(gpu_channel_host), gpu::SharedMemoryLimits(), support_locking,
-      support_oop_rasterization,
       ui::command_buffer_metrics::RENDERER_MAINTHREAD_CONTEXT,
       kGpuStreamIdDefault, kGpuStreamPriorityDefault);
   if (!shared_main_thread_contexts_->BindToCurrentThread())
@@ -1728,7 +1723,6 @@ void RenderThreadImpl::OnProcessBackgrounded(bool backgrounded) {
                    base::Unretained(this), "15min",
                    process_foregrounded_count_),
         base::TimeDelta::FromMinutes(15));
-    was_backgrounded_time_ = base::TimeTicks::Now();
   } else {
     process_foregrounded_count_++;
   }
@@ -1944,10 +1938,6 @@ void RenderThreadImpl::RequestNewLayerTreeFrameSink(
   if (command_line.HasSwitch(switches::kDisableGpuCompositing))
     use_software = true;
 
-  bool enable_surface_synchronization =
-      IsRunningInMash() ||
-      command_line.HasSwitch(switches::kEnableSurfaceSynchronization);
-
   // In disable gpu vsync mode, also let the renderer tick as fast as it
   // can. The top level begin frame source will also be running as a back
   // to back begin frame source, but using a synthetic begin frame source
@@ -1988,8 +1978,8 @@ void RenderThreadImpl::RequestNewLayerTreeFrameSink(
       mojo::MakeRequest(&client);
 
   if (command_line.HasSwitch(switches::kEnableVulkan)) {
-    scoped_refptr<viz::VulkanContextProvider> vulkan_context_provider =
-        viz::VulkanInProcessContextProvider::Create();
+    scoped_refptr<cc::VulkanContextProvider> vulkan_context_provider =
+        cc::VulkanInProcessContextProvider::Create();
     if (vulkan_context_provider) {
       DCHECK(!layout_test_mode());
       frame_sink_provider_->CreateForWidget(routing_id, std::move(sink_request),
@@ -1999,7 +1989,7 @@ void RenderThreadImpl::RequestNewLayerTreeFrameSink(
           std::move(synthetic_begin_frame_source), std::move(sink_info),
           std::move(client_request), nullptr /* hit_test_data_provider */,
           base::MakeUnique<RendererLocalSurfaceIdProvider>(),
-          enable_surface_synchronization));
+          false /* enable_surface_synchroninzation */));
       return;
     }
   }
@@ -2029,7 +2019,7 @@ void RenderThreadImpl::RequestNewLayerTreeFrameSink(
         std::move(synthetic_begin_frame_source), std::move(sink_info),
         std::move(client_request), nullptr /* hit_test_data_provider */,
         base::MakeUnique<RendererLocalSurfaceIdProvider>(),
-        enable_surface_synchronization));
+        false /* enable_surface_synchroninzation */));
     return;
   }
 
@@ -2104,7 +2094,7 @@ void RenderThreadImpl::RequestNewLayerTreeFrameSink(
       std::move(synthetic_begin_frame_source), std::move(sink_info),
       std::move(client_request), nullptr /* hit_test_data_provider */,
       base::MakeUnique<RendererLocalSurfaceIdProvider>(),
-      enable_surface_synchronization));
+      false /* enable_surface_synchroninzation */));
 }
 
 AssociatedInterfaceRegistry*
@@ -2191,18 +2181,14 @@ void RenderThreadImpl::CreateFrame(mojom::CreateFrameParamsPtr params) {
                                 params->widget_params->hidden ? "yes" : "no");
   base::debug::SetCrashKeyValue("newframe_replicated_origin",
                                 params->replication_state.origin.Serialize());
+  base::debug::SetCrashKeyValue("newframe_oopifs_possible",
+      SiteIsolationPolicy::AreCrossProcessFramesPossible() ? "yes" : "no");
   CompositorDependencies* compositor_deps = this;
   RenderFrameImpl::CreateFrame(
       params->routing_id, params->proxy_routing_id, params->opener_routing_id,
       params->parent_routing_id, params->previous_sibling_routing_id,
       params->replication_state, compositor_deps, *params->widget_params,
       params->frame_owner_properties);
-}
-
-void RenderThreadImpl::SetUpEmbeddedWorkerChannelForServiceWorker(
-    mojom::EmbeddedWorkerInstanceClientAssociatedRequest client_request) {
-  EmbeddedWorkerInstanceClientImpl::Create(
-      blink_initialized_time_, GetIOTaskRunner(), std::move(client_request));
 }
 
 void RenderThreadImpl::CreateFrameProxy(
@@ -2418,12 +2404,8 @@ RenderThreadImpl::SharedCompositorWorkerContextProvider() {
   }
 
   bool support_locking = true;
-  bool support_oop_rasterization =
-      base::CommandLine::ForCurrentProcess()->HasSwitch(
-          switches::kEnableOOPRasterization);
   shared_worker_context_provider_ = CreateOffscreenContext(
       std::move(gpu_channel_host), gpu::SharedMemoryLimits(), support_locking,
-      support_oop_rasterization,
       ui::command_buffer_metrics::RENDER_WORKER_CONTEXT, stream_id,
       stream_priority);
   if (!shared_worker_context_provider_->BindToCurrentThread())
@@ -2560,17 +2542,6 @@ void RenderThreadImpl::OnRendererInterfaceRequest(
     mojom::RendererAssociatedRequest request) {
   DCHECK(!renderer_binding_.is_bound());
   renderer_binding_.Bind(std::move(request));
-}
-
-bool RenderThreadImpl::NeedsToRecordFirstActivePaint(
-    int ttfap_metric_type) const {
-  if (ttfap_metric_type == RenderWidget::TTFAP_AFTER_PURGED)
-    return needs_to_record_first_active_paint_;
-
-  if (was_backgrounded_time_.is_min())
-    return false;
-  base::TimeDelta passed = base::TimeTicks::Now() - was_backgrounded_time_;
-  return passed.InMinutes() >= 5;
 }
 
 }  // namespace content

@@ -4,18 +4,21 @@
 
 #include "components/feedback/feedback_uploader.h"
 
+#include <stddef.h>
+
 #include <memory>
 #include <set>
 
 #include "base/bind.h"
 #include "base/memory/ptr_util.h"
 #include "base/run_loop.h"
-#include "base/single_thread_task_runner.h"
 #include "base/stl_util.h"
-#include "base/task_scheduler/post_task.h"
-#include "base/task_scheduler/task_traits.h"
+#include "build/build_config.h"
 #include "components/feedback/feedback_report.h"
+#include "components/feedback/feedback_uploader_chrome.h"
 #include "components/feedback/feedback_uploader_factory.h"
+#include "components/sync_preferences/testing_pref_service_syncable.h"
+#include "components/user_prefs/user_prefs.h"
 #include "content/public/test/test_browser_context.h"
 #include "content/public/test/test_browser_thread_bundle.h"
 #include "testing/gtest/include/gtest/gtest.h"
@@ -33,11 +36,11 @@ constexpr char kReportFive[] = "five";
 constexpr base::TimeDelta kRetryDelayForTest =
     base::TimeDelta::FromMilliseconds(100);
 
-class MockFeedbackUploader : public FeedbackUploader {
+class MockFeedbackUploader : public FeedbackUploaderChrome {
  public:
-  MockFeedbackUploader(content::BrowserContext* context)
-      : FeedbackUploader(context,
-                         FeedbackUploaderFactory::CreateUploaderTaskRunner()) {}
+  MockFeedbackUploader(content::BrowserContext* context,
+                       scoped_refptr<base::SingleThreadTaskRunner> task_runner)
+      : FeedbackUploaderChrome(context, task_runner) {}
   ~MockFeedbackUploader() override {}
 
   void RunMessageLoop() {
@@ -55,17 +58,16 @@ class MockFeedbackUploader : public FeedbackUploader {
 
  private:
   // FeedbackUploaderChrome:
-  void StartDispatchingReport() override {
-    if (base::ContainsKey(dispatched_reports_,
-                          report_being_dispatched()->data()))
-      dispatched_reports_[report_being_dispatched()->data()]++;
+  void DispatchReport(scoped_refptr<FeedbackReport> report) override {
+    if (base::ContainsKey(dispatched_reports_, report->data()))
+      dispatched_reports_[report->data()]++;
     else
-      dispatched_reports_[report_being_dispatched()->data()] = 1;
+      dispatched_reports_[report->data()] = 1;
 
     dispatched_reports_count_++;
 
     if (simulate_failure_)
-      OnReportUploadFailure(true /* should_retry */);
+      OnReportUploadFailure(report);
     else
       OnReportUploadSuccess();
 
@@ -88,27 +90,46 @@ class MockFeedbackUploader : public FeedbackUploader {
   DISALLOW_COPY_AND_ASSIGN(MockFeedbackUploader);
 };
 
+std::unique_ptr<KeyedService> CreateFeedbackUploaderService(
+    content::BrowserContext* context) {
+  return base::MakeUnique<MockFeedbackUploader>(
+      context, FeedbackUploaderFactory::CreateUploaderTaskRunner());
+}
+
 }  // namespace
 
 class FeedbackUploaderTest : public testing::Test {
  public:
-  FeedbackUploaderTest() {
+  FeedbackUploaderTest()
+      : context_(base::MakeUnique<content::TestBrowserContext>()),
+        prefs_(
+            base::MakeUnique<sync_preferences::TestingPrefServiceSyncable>()) {
+    user_prefs::UserPrefs::Set(context_.get(), prefs_.get());
+    FeedbackUploaderFactory::GetInstance()->SetTestingFactory(
+        context_.get(), &CreateFeedbackUploaderService);
+
     FeedbackUploader::SetMinimumRetryDelayForTesting(kRetryDelayForTest);
-    uploader_ = base::MakeUnique<MockFeedbackUploader>(&context_);
+    uploader_ = static_cast<MockFeedbackUploader*>(
+        FeedbackUploaderFactory::GetForBrowserContext(context_.get()));
   }
 
-  ~FeedbackUploaderTest() override = default;
+  ~FeedbackUploaderTest() override {
+    FeedbackUploaderFactory::GetInstance()->SetTestingFactory(
+        context_.get(), NULL);
+  }
 
   void QueueReport(const std::string& data) {
     uploader_->QueueReport(data);
   }
 
-  MockFeedbackUploader* uploader() const { return uploader_.get(); }
+  MockFeedbackUploader* uploader() const { return uploader_; }
 
  private:
   content::TestBrowserThreadBundle test_browser_thread_bundle_;
-  content::TestBrowserContext context_;
-  std::unique_ptr<MockFeedbackUploader> uploader_;
+  std::unique_ptr<content::TestBrowserContext> context_;
+  std::unique_ptr<PrefService> prefs_;
+
+  MockFeedbackUploader* uploader_;
 
   DISALLOW_COPY_AND_ASSIGN(FeedbackUploaderTest);
 };

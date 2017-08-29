@@ -66,18 +66,18 @@ struct AssertBindArgsValidity<std::index_sequence<Ns...>,
 };
 
 // The implementation of TransformToUnwrappedType below.
-template <bool is_once, typename T>
+template <RepeatMode, typename T>
 struct TransformToUnwrappedTypeImpl;
 
 template <typename T>
-struct TransformToUnwrappedTypeImpl<true, T> {
+struct TransformToUnwrappedTypeImpl<RepeatMode::Once, T> {
   using StoredType = std::decay_t<T>;
   using ForwardType = StoredType&&;
   using Unwrapped = decltype(Unwrap(std::declval<ForwardType>()));
 };
 
 template <typename T>
-struct TransformToUnwrappedTypeImpl<false, T> {
+struct TransformToUnwrappedTypeImpl<RepeatMode::Repeating, T> {
   using StoredType = std::decay_t<T>;
   using ForwardType = const StoredType&;
   using Unwrapped = decltype(Unwrap(std::declval<ForwardType>()));
@@ -85,40 +85,40 @@ struct TransformToUnwrappedTypeImpl<false, T> {
 
 // Transform |T| into `Unwrapped` type, which is passed to the target function.
 // Example:
-//   In is_once == true case,
+//   In repeat_mode == RepeatMode::Once case,
 //     `int&&` -> `int&&`,
 //     `const int&` -> `int&&`,
 //     `OwnedWrapper<int>&` -> `int*&&`.
-//   In is_once == false case,
+//   In repeat_mode == RepeatMode::Repeating case,
 //     `int&&` -> `const int&`,
 //     `const int&` -> `const int&`,
 //     `OwnedWrapper<int>&` -> `int* const &`.
-template <bool is_once, typename T>
+template <RepeatMode repeat_mode, typename T>
 using TransformToUnwrappedType =
-    typename TransformToUnwrappedTypeImpl<is_once, T>::Unwrapped;
+    typename TransformToUnwrappedTypeImpl<repeat_mode, T>::Unwrapped;
 
 // Transforms |Args| into `Unwrapped` types, and packs them into a TypeList.
 // If |is_method| is true, tries to dereference the first argument to support
 // smart pointers.
-template <bool is_once, bool is_method, typename... Args>
+template <RepeatMode repeat_mode, bool is_method, typename... Args>
 struct MakeUnwrappedTypeListImpl {
-  using Type = TypeList<TransformToUnwrappedType<is_once, Args>...>;
+  using Type = TypeList<TransformToUnwrappedType<repeat_mode, Args>...>;
 };
 
 // Performs special handling for this pointers.
 // Example:
 //   int* -> int*,
 //   std::unique_ptr<int> -> int*.
-template <bool is_once, typename Receiver, typename... Args>
-struct MakeUnwrappedTypeListImpl<is_once, true, Receiver, Args...> {
-  using UnwrappedReceiver = TransformToUnwrappedType<is_once, Receiver>;
+template <RepeatMode repeat_mode, typename Receiver, typename... Args>
+struct MakeUnwrappedTypeListImpl<repeat_mode, true, Receiver, Args...> {
+  using UnwrappedReceiver = TransformToUnwrappedType<repeat_mode, Receiver>;
   using Type = TypeList<decltype(&*std::declval<UnwrappedReceiver>()),
-                        TransformToUnwrappedType<is_once, Args>...>;
+                        TransformToUnwrappedType<repeat_mode, Args>...>;
 };
 
-template <bool is_once, bool is_method, typename... Args>
+template <RepeatMode repeat_mode, bool is_method, typename... Args>
 using MakeUnwrappedTypeList =
-    typename MakeUnwrappedTypeListImpl<is_once, is_method, Args...>::Type;
+    typename MakeUnwrappedTypeListImpl<repeat_mode, is_method, Args...>::Type;
 
 }  // namespace internal
 
@@ -139,8 +139,8 @@ BindOnce(Functor&& functor, Args&&... args) {
   using FunctorTraits = typename Helper::FunctorTraits;
   using BoundArgsList = typename Helper::BoundArgsList;
   using UnwrappedArgsList =
-      internal::MakeUnwrappedTypeList<true, FunctorTraits::is_method,
-                                      Args&&...>;
+      internal::MakeUnwrappedTypeList<internal::RepeatMode::Once,
+                                      FunctorTraits::is_method, Args&&...>;
   using BoundParamsList = typename Helper::BoundParamsList;
   static_assert(internal::AssertBindArgsValidity<
                     std::make_index_sequence<Helper::num_bounds>, BoundArgsList,
@@ -180,8 +180,8 @@ BindRepeating(Functor&& functor, Args&&... args) {
   using FunctorTraits = typename Helper::FunctorTraits;
   using BoundArgsList = typename Helper::BoundArgsList;
   using UnwrappedArgsList =
-      internal::MakeUnwrappedTypeList<false, FunctorTraits::is_method,
-                                      Args&&...>;
+      internal::MakeUnwrappedTypeList<internal::RepeatMode::Repeating,
+                                      FunctorTraits::is_method, Args&&...>;
   using BoundParamsList = typename Helper::BoundParamsList;
   static_assert(internal::AssertBindArgsValidity<
                     std::make_index_sequence<Helper::num_bounds>, BoundArgsList,

@@ -15,7 +15,7 @@
     return;
   }
 
-  testRunner.log(message.result.layoutViewport, 'LayoutViewport: ');
-  testRunner.log(message.result.visualViewport, 'VisualViewport: ');
+  testRunner.logObject(message.result.layoutViewport, 'LayoutViewport: ');
+  testRunner.logObject(message.result.visualViewport, 'VisualViewport: ');
   testRunner.completeTest();
 })

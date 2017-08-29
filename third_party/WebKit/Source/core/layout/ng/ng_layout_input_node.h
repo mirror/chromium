@@ -7,6 +7,7 @@
 
 #include "core/CoreExport.h"
 #include "platform/LayoutUnit.h"
+#include "platform/heap/Handle.h"
 #include "platform/wtf/Optional.h"
 
 namespace blink {
@@ -14,6 +15,7 @@ namespace blink {
 class ComputedStyle;
 class LayoutObject;
 class LayoutBox;
+class LayoutUnit;
 class NGBreakToken;
 class NGConstraintSpace;
 class NGLayoutResult;
@@ -49,7 +51,7 @@ class CORE_EXPORT NGLayoutInputNode {
   bool CreatesNewFormattingContext() const;
 
   // Performs layout on this input node, will return the layout result.
-  RefPtr<NGLayoutResult> Layout(const NGConstraintSpace&, NGBreakToken*);
+  RefPtr<NGLayoutResult> Layout(NGConstraintSpace*, NGBreakToken*);
 
   MinMaxSize ComputeMinMaxSize();
 

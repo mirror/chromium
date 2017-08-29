@@ -62,7 +62,6 @@
 #include "net/base/url_util.h"
 #include "net/url_request/url_request_context_getter.h"
 #include "net/url_request/url_request_test_util.h"
-#include "services/metrics/public/cpp/ukm_builders.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "ui/base/l10n/l10n_util.h"
@@ -79,9 +78,6 @@ using testing::UnorderedElementsAre;
 
 namespace autofill {
 namespace {
-
-using UkmCardUploadDecisionType = ukm::builders::Autofill_CardUploadDecision;
-using UkmDeveloperEngagementType = ukm::builders::Autofill_DeveloperEngagement;
 
 const int kDefaultPageID = 137;
 
@@ -1114,13 +1110,13 @@ class AutofillManagerTest : public testing::Test {
     EXPECT_EQ(source->id(), entry->source_id);
 
     // Check if there is an entry for developer engagement decision.
-    EXPECT_EQ(base::HashMetricName(UkmDeveloperEngagementType::kEntryName),
+    EXPECT_EQ(base::HashMetricName(internal::kUKMDeveloperEngagementEntryName),
               entry->event_hash);
     EXPECT_EQ(1U, entry->metrics.size());
 
     // Check that the expected developer engagement metric is logged.
     const ukm::mojom::UkmMetric* metric = ukm::TestUkmRecorder::FindMetric(
-        entry, UkmDeveloperEngagementType::kDeveloperEngagementName);
+        entry, internal::kUKMDeveloperEngagementMetricName);
     ASSERT_NE(nullptr, metric);
     EXPECT_EQ(1 << AutofillMetrics::FILLABLE_FORM_PARSED_WITHOUT_TYPE_HINTS,
               metric->value);
@@ -1143,14 +1139,14 @@ class AutofillManagerTest : public testing::Test {
   void ExpectCardUploadDecisionUkm(
       AutofillMetrics::CardUploadDecisionMetric upload_decision) {
     int expected_metric_value = upload_decision;
-    ExpectMetric(UkmCardUploadDecisionType::kUploadDecisionName,
-                 UkmCardUploadDecisionType::kEntryName, expected_metric_value,
-                 1 /* expected_num_matching_entries */);
+    ExpectMetric(internal::kUKMCardUploadDecisionMetricName,
+                 internal::kUKMCardUploadDecisionEntryName,
+                 expected_metric_value, 1 /* expected_num_matching_entries */);
   }
 
   void ExpectFillableFormParsedUkm(int num_fillable_forms_parsed) {
-    ExpectMetric(UkmDeveloperEngagementType::kDeveloperEngagementName,
-                 UkmDeveloperEngagementType::kEntryName,
+    ExpectMetric(internal::kUKMDeveloperEngagementMetricName,
+                 internal::kUKMDeveloperEngagementEntryName,
                  1 << AutofillMetrics::FILLABLE_FORM_PARSED_WITHOUT_TYPE_HINTS,
                  num_fillable_forms_parsed);
   }
@@ -5282,8 +5278,8 @@ TEST_F(AutofillManagerTest,
                            AutofillMetrics::CVC_FIELD_NOT_FOUND);
   // Verify that the correct UKM was logged.
   ExpectMetric(
-      UkmCardUploadDecisionType::kUploadDecisionName,
-      UkmCardUploadDecisionType::kEntryName,
+      internal::kUKMCardUploadDecisionMetricName,
+      internal::kUKMCardUploadDecisionEntryName,
       AutofillMetrics::UPLOAD_OFFERED | AutofillMetrics::CVC_FIELD_NOT_FOUND,
       1 /* expected_num_matching_entries */);
 }
@@ -5670,10 +5666,10 @@ TEST_F(AutofillManagerTest,
   ExpectCardUploadDecision(
       histogram_tester, AutofillMetrics::UPLOAD_NOT_OFFERED_NO_ADDRESS_PROFILE);
   // Verify that the correct UKM was logged.
-  ExpectMetric(UkmCardUploadDecisionType::kUploadDecisionName,
-               UkmCardUploadDecisionType::kEntryName,
+  ExpectMetric(internal::kUKMCardUploadDecisionMetricName,
+               internal::kUKMCardUploadDecisionEntryName,
                AutofillMetrics::CVC_VALUE_NOT_FOUND |
-                   AutofillMetrics::UPLOAD_NOT_OFFERED_NO_ADDRESS_PROFILE,
+               AutofillMetrics::UPLOAD_NOT_OFFERED_NO_ADDRESS_PROFILE,
                1 /* expected_num_matching_entries */);
 }
 

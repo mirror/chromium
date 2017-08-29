@@ -7,7 +7,7 @@
 
 #include "core/layout/ng/geometry/ng_logical_size.h"
 #include "core/layout/ng/inline/ng_inline_node.h"
-#include "core/layout/ng/inline/ng_text_end_effect.h"
+#include "core/layout/ng/inline/ng_line_height_metrics.h"
 #include "core/layout/ng/ng_base_fragment_builder.h"
 #include "platform/wtf/Allocator.h"
 
@@ -29,8 +29,6 @@ class CORE_EXPORT NGTextFragmentBuilder final : public NGBaseFragmentBuilder {
 
   NGTextFragmentBuilder& SetShapeResult(RefPtr<const ShapeResult>);
 
-  NGTextFragmentBuilder& SetEndEffect(NGTextEndEffect);
-
   // Creates the fragment. Can only be called once.
   RefPtr<NGPhysicalTextFragment> ToTextFragment(unsigned index,
                                                 unsigned start_offset,
@@ -43,7 +41,6 @@ class CORE_EXPORT NGTextFragmentBuilder final : public NGBaseFragmentBuilder {
 
   RefPtr<const ShapeResult> shape_result_;
 
-  NGTextEndEffect end_effect_ = NGTextEndEffect::kNone;
 };
 
 }  // namespace blink

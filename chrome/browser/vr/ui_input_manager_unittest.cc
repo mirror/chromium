@@ -16,7 +16,6 @@
 #include "chrome/browser/vr/ui_scene.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "third_party/WebKit/public/platform/WebGestureEvent.h"
-#include "ui/gfx/geometry/vector3d_f.h"
 
 namespace vr {
 
@@ -26,7 +25,7 @@ class UiInputManagerTest : public UiSceneManagerTest {
     UiSceneManagerTest::SetUp();
     MakeManager(kNotInCct, kNotInWebVr);
     input_manager_ = base::MakeUnique<UiInputManager>(scene_.get());
-    scene_->OnBeginFrame(MicrosecondsToTicks(1), gfx::Vector3dF());
+    scene_->OnBeginFrame(MicrosecondsToTicks(1));
   }
 
  protected:
@@ -38,7 +37,7 @@ TEST_F(UiInputManagerTest, NoMouseMovesDuringClick) {
   // mock out the underlying sensor data. For now, we will hallucinate
   // parameters to HandleInput.
   UiElement* content_quad =
-      scene_->GetUiElementByName(UiElementName::kContentQuad);
+      scene_->GetUiElementByDebugId(UiElementDebugId::kContentQuad);
   gfx::Point3F content_quad_center;
   content_quad->world_space_transform().TransformPoint(&content_quad_center);
   gfx::Point3F origin;
@@ -51,7 +50,8 @@ TEST_F(UiInputManagerTest, NoMouseMovesDuringClick) {
 
   // We should have hit the content quad if our math was correct.
   ASSERT_NE(nullptr, out_reticle_render_target);
-  EXPECT_EQ(UiElementName::kContentQuad, out_reticle_render_target->name());
+  EXPECT_EQ(UiElementDebugId::kContentQuad,
+            out_reticle_render_target->debug_id());
 
   // Unless we suppress content move events during clicks, this will cause us to
   // call OnContentMove on the delegate. We should do this suppression, so we

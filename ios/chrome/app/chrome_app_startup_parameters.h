@@ -97,8 +97,7 @@ enum MobileSessionCallerApp {
 @interface ChromeAppStartupParameters (Testing)
 
 + (instancetype)newAppStartupParametersForCommand:(NSString*)command
-                                  withExternalURL:(NSString*)externalURL
-                                        withIndex:(NSNumber*)index
+                                    withParameter:(id)parameter
                                           withURL:(NSURL*)url
                             fromSourceApplication:(NSString*)appId
                       fromSecureSourceApplication:(NSString*)secureSourceApp;

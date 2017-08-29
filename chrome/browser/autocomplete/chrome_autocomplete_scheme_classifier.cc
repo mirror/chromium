@@ -19,7 +19,7 @@ ChromeAutocompleteSchemeClassifier::ChromeAutocompleteSchemeClassifier(
 ChromeAutocompleteSchemeClassifier::~ChromeAutocompleteSchemeClassifier() {
 }
 
-metrics::OmniboxInputType
+metrics::OmniboxInputType::Type
 ChromeAutocompleteSchemeClassifier::GetInputTypeForScheme(
     const std::string& scheme) const {
   if (base::IsStringASCII(scheme) &&

@@ -30,7 +30,6 @@
 #include "ios/chrome/browser/autocomplete/autocomplete_scheme_classifier_impl.h"
 #include "ios/chrome/browser/browser_state/chrome_browser_state.h"
 #include "ios/chrome/browser/chrome_url_constants.h"
-#include "ios/chrome/browser/drag_and_drop/drag_and_drop_flag.h"
 #include "ios/chrome/browser/drag_and_drop/drop_and_navigate_delegate.h"
 #include "ios/chrome/browser/drag_and_drop/drop_and_navigate_interaction.h"
 #include "ios/chrome/browser/experimental_flags.h"
@@ -679,12 +678,10 @@ CGRect RectShiftedDownAndResizedForStatusBar(CGRect rect) {
   }
 
 #if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
-  if (DragAndDropIsEnabled()) {
-    if (@available(iOS 11, *)) {
-      _dropInteraction =
-          [[DropAndNavigateInteraction alloc] initWithDelegate:self];
-      [self.view addInteraction:_dropInteraction];
-    }
+  if (@available(iOS 11, *)) {
+    _dropInteraction =
+        [[DropAndNavigateInteraction alloc] initWithDelegate:self];
+    [self.view addInteraction:_dropInteraction];
   }
 #endif
 
@@ -1420,7 +1417,7 @@ CGRect RectShiftedDownAndResizedForStatusBar(CGRect rect) {
 
 #pragma mark - TabHistory Requirements
 
-- (CGPoint)originPointForToolbarButton:(ToolbarButtonType)toolbarButton {
+- (CGPoint)originPointForToolbarButton:(ToolbarButton)toolbarButton {
   UIButton* historyButton = toolbarButton ? _backButton : _forwardButton;
 
   // Set the origin for the tools popup to the leading side of the bottom of the
@@ -1433,7 +1430,7 @@ CGRect RectShiftedDownAndResizedForStatusBar(CGRect rect) {
   return origin;
 }
 
-- (void)updateUIForTabHistoryPresentationFrom:(ToolbarButtonType)button {
+- (void)updateUIForTabHistoryPresentationFrom:(ToolbarButton)button {
   UIButton* historyButton = button ? _backButton : _forwardButton;
   // Keep the button pressed by swapping the normal and highlighted images.
   [self setImagesForNavButton:historyButton withTabHistoryVisible:YES];
@@ -1797,7 +1794,7 @@ CGRect RectShiftedDownAndResizedForStatusBar(CGRect rect) {
 
 - (void)loadURLForQuery:(NSString*)query {
   GURL searchURL;
-  metrics::OmniboxInputType type = AutocompleteInput::Parse(
+  metrics::OmniboxInputType::Type type = AutocompleteInput::Parse(
       base::SysNSStringToUTF16(query), std::string(),
       AutocompleteSchemeClassifierImpl(), nullptr, nullptr, &searchURL);
   if (type != metrics::OmniboxInputType::URL || !searchURL.is_valid()) {

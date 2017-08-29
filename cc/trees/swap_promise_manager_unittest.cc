@@ -53,7 +53,7 @@ TEST(SwapPromiseManagerTest, SwapPromiseMonitors) {
 TEST(SwapPromiseManagerTest, SwapPromises) {
   SwapPromiseManager manager;
   std::unique_ptr<StrictMock<MockSwapPromise>> swap_promise =
-      std::make_unique<StrictMock<MockSwapPromise>>();
+      base::MakeUnique<StrictMock<MockSwapPromise>>();
   MockSwapPromise* mock_promise = swap_promise.get();
 
   manager.QueueSwapPromise(std::move(swap_promise));

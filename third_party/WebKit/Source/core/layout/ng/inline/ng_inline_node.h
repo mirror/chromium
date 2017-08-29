@@ -10,6 +10,7 @@
 #include "core/layout/ng/inline/ng_inline_node_data.h"
 #include "core/layout/ng/layout_ng_block_flow.h"
 #include "core/layout/ng/ng_layout_input_node.h"
+#include "platform/heap/Handle.h"
 #include "platform/wtf/Optional.h"
 #include "platform/wtf/text/WTFString.h"
 
@@ -19,6 +20,7 @@ template <typename OffsetMappingBuilder>
 class NGInlineItemsBuilderTemplate;
 
 class EmptyOffsetMappingBuilder;
+class LayoutBlockFlow;
 class LayoutNGBlockFlow;
 struct MinMaxSize;
 class NGConstraintSpace;
@@ -26,10 +28,8 @@ class NGInlineItem;
 class NGInlineItemRange;
 using NGInlineItemsBuilder =
     NGInlineItemsBuilderTemplate<EmptyOffsetMappingBuilder>;
-struct NGInlineNodeData;
 class NGLayoutResult;
 class NGOffsetMappingResult;
-class NGOffsetMappingUnit;
 
 // Represents an anonymous block box to be laid out, that contains consecutive
 // inline nodes and their descendants.
@@ -37,13 +37,12 @@ class CORE_EXPORT NGInlineNode : public NGLayoutInputNode {
  public:
   NGInlineNode(LayoutNGBlockFlow*);
 
-  LayoutNGBlockFlow* GetLayoutBlockFlow() const {
-    return ToLayoutNGBlockFlow(box_);
+  LayoutBlockFlow* GetLayoutBlockFlow() const {
+    return ToLayoutBlockFlow(box_);
   }
   NGLayoutInputNode NextSibling();
 
-  RefPtr<NGLayoutResult> Layout(const NGConstraintSpace&,
-                                NGBreakToken* = nullptr);
+  RefPtr<NGLayoutResult> Layout(NGConstraintSpace*, NGBreakToken* = nullptr);
 
   // Computes the value of min-content and max-content for this anonymous block
   // box. min-content is the inline size when lines wrap at every break

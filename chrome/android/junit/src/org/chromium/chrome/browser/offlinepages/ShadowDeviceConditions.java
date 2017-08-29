@@ -15,13 +15,9 @@ public class ShadowDeviceConditions {
     /** Device conditions for testing. */
     private static DeviceConditions sDeviceConditions = new DeviceConditions();
 
-    /** Whether to count the network as metered or not */
-    private static boolean sMetered = true;
-
     /** Sets device conditions that will be used in test. */
-    public static void setCurrentConditions(DeviceConditions deviceConditions, boolean metered) {
+    public static void setCurrentConditions(DeviceConditions deviceConditions) {
         sDeviceConditions = deviceConditions;
-        sMetered = metered;
     }
 
     @Implementation
@@ -42,10 +38,5 @@ public class ShadowDeviceConditions {
     @Implementation
     public static int getNetConnectionType(Context context) {
         return sDeviceConditions.getNetConnectionType();
-    }
-
-    @Implementation
-    public static boolean isActiveNetworkMetered(Context context) {
-        return sMetered;
     }
 }

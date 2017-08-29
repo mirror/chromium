@@ -13,7 +13,6 @@
 #include "components/offline_pages/core/task.h"
 
 namespace offline_pages {
-class PrefetchDispatcher;
 class PrefetchStore;
 
 // Reconciliation task responsible for finalizing entries for which their
@@ -23,11 +22,9 @@ class PrefetchStore;
 // were at.
 class StaleEntryFinalizerTask : public Task {
  public:
-  enum class Result { NO_MORE_WORK, MORE_WORK_NEEDED };
   using NowGetter = base::RepeatingCallback<base::Time()>;
 
-  StaleEntryFinalizerTask(PrefetchDispatcher* prefetch_dispatcher,
-                          PrefetchStore* prefetch_store);
+  StaleEntryFinalizerTask(PrefetchStore* prefetch_store);
   ~StaleEntryFinalizerTask() override;
 
   void Run() override;
@@ -37,13 +34,10 @@ class StaleEntryFinalizerTask : public Task {
   void SetNowGetterForTesting(NowGetter now_getter);
 
   // Will be set to true upon after an error-free run.
-  Result final_status() const { return final_status_; }
+  bool ran_successfully() { return ran_successfully_; }
 
  private:
-  void OnFinished(Result result);
-
-  // Not owned.
-  PrefetchDispatcher* prefetch_dispatcher_;
+  void OnFinished(bool success);
 
   // Prefetch store to execute against. Not owned.
   PrefetchStore* prefetch_store_;
@@ -51,7 +45,7 @@ class StaleEntryFinalizerTask : public Task {
   // Defaults to base::Time::Now upon construction.
   NowGetter now_getter_;
 
-  Result final_status_ = Result::NO_MORE_WORK;
+  bool ran_successfully_ = false;
 
   base::WeakPtrFactory<StaleEntryFinalizerTask> weak_ptr_factory_;
   DISALLOW_COPY_AND_ASSIGN(StaleEntryFinalizerTask);

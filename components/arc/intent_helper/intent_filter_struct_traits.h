@@ -8,7 +8,6 @@
 #include <string>
 #include <vector>
 
-#include "base/containers/span.h"
 #include "components/arc/common/intent_helper.mojom.h"
 #include "components/arc/intent_helper/intent_filter.h"
 
@@ -16,18 +15,19 @@ namespace mojo {
 
 template <>
 struct StructTraits<arc::mojom::IntentFilterDataView, arc::IntentFilter> {
-  static const base::span<std::string> actions(const arc::IntentFilter& r) {
+  static const mojo::CArray<std::string> actions(const arc::IntentFilter& r) {
     // Returns an empty array.
-    return base::span<std::string>();
+    return mojo::CArray<std::string>();
   }
-  static const base::span<std::string> categories(const arc::IntentFilter& r) {
-    // Returns an empty array.
-    return base::span<std::string>();
-  }
-  static const base::span<std::string> data_schemes(
+  static const mojo::CArray<std::string> categories(
       const arc::IntentFilter& r) {
     // Returns an empty array.
-    return base::span<std::string>();
+    return mojo::CArray<std::string>();
+  }
+  static const mojo::CArray<std::string> data_schemes(
+      const arc::IntentFilter& r) {
+    // Returns an empty array.
+    return mojo::CArray<std::string>();
   }
   static const std::vector<arc::IntentFilter::AuthorityEntry>& data_authorities(
       const arc::IntentFilter& r) {
@@ -37,10 +37,10 @@ struct StructTraits<arc::mojom::IntentFilterDataView, arc::IntentFilter> {
       const arc::IntentFilter& r) {
     return r.paths();
   }
-  static const base::span<arc::IntentFilter::PatternMatcher>
+  static const mojo::CArray<arc::IntentFilter::PatternMatcher>
   deprecated_data_scheme_specific_parts(const arc::IntentFilter& r) {
     // Returns an empty array.
-    return base::span<arc::IntentFilter::PatternMatcher>();
+    return mojo::CArray<arc::IntentFilter::PatternMatcher>();
   }
 
   static bool Read(arc::mojom::IntentFilterDataView data,

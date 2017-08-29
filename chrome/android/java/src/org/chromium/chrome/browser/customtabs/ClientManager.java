@@ -15,7 +15,6 @@ import android.os.SystemClock;
 import android.support.annotation.NonNull;
 import android.support.customtabs.CustomTabsCallback;
 import android.support.customtabs.CustomTabsService;
-import android.support.customtabs.CustomTabsService.Relation;
 import android.support.customtabs.CustomTabsSessionToken;
 import android.text.TextUtils;
 import android.util.SparseBooleanArray;
@@ -122,11 +121,11 @@ class ClientManager {
     private static class SessionParams {
         public final int uid;
         public final DisconnectCallback disconnectCallback;
+        public final String packageName;
         public final PostMessageHandler postMessageHandler;
         public boolean mIgnoreFragments;
         public boolean lowConfidencePrediction;
         public boolean highConfidencePrediction;
-        private String mPackageName;
         private boolean mShouldHideDomain;
         private boolean mShouldPrerenderOnCellular;
         private boolean mShouldSendNavigationInfo;
@@ -139,25 +138,11 @@ class ClientManager {
         public SessionParams(Context context, int uid, DisconnectCallback callback,
                 PostMessageHandler postMessageHandler) {
             this.uid = uid;
-            mPackageName = getPackageName(context, uid);
+            packageName = getPackageName(context, uid);
             disconnectCallback = callback;
             this.postMessageHandler = postMessageHandler;
-            if (postMessageHandler != null) this.postMessageHandler.setPackageName(mPackageName);
+            if (postMessageHandler != null) this.postMessageHandler.setPackageName(packageName);
             this.mSpeculationMode = CustomTabsConnection.SpeculationParams.PRERENDER;
-        }
-
-        /**
-         * Overrides package name with given String. TO be used for testing only.
-         */
-        void overridePackageNameForTesting(String newPackageName) {
-            mPackageName = newPackageName;
-        }
-
-        /**
-         * @return The package name for this session.
-         */
-        public String getPackageName() {
-            return mPackageName;
         }
 
         private static String getPackageName(Context context, int uid) {
@@ -344,7 +329,8 @@ class ClientManager {
     public synchronized boolean bindToPostMessageServiceForSession(CustomTabsSessionToken session) {
         SessionParams params = mSessionParams.get(session);
         if (params == null) return false;
-        return params.postMessageHandler.bindSessionToPostMessageService();
+        return params.postMessageHandler.bindSessionToPostMessageService(
+                mContext, params.packageName);
     }
 
     /**
@@ -358,13 +344,13 @@ class ClientManager {
     }
 
     /**
-     * See {@link PostMessageHandler#verifyAndInitializeWithOrigin(Uri, int)}.
+     * See {@link PostMessageHandler#verifyAndInitializeWithOrigin(Uri)}.
      */
     public synchronized void verifyAndInitializeWithPostMessageOriginForSession(
-            CustomTabsSessionToken session, Uri origin, @Relation int relation) {
+            CustomTabsSessionToken session, Uri origin) {
         SessionParams params = mSessionParams.get(session);
         if (params == null) return;
-        params.postMessageHandler.verifyAndInitializeWithOrigin(origin, relation);
+        params.postMessageHandler.verifyAndInitializeWithOrigin(origin);
     }
 
     /**
@@ -391,8 +377,10 @@ class ClientManager {
      * @return The referrer that is associated with the client owning given session.
      */
     public synchronized Referrer getReferrerForSession(CustomTabsSessionToken session) {
-        return IntentHandler.constructValidReferrerForAuthority(
-                getClientPackageNameForSession(session));
+        SessionParams params = mSessionParams.get(session);
+        if (params == null) return null;
+        final String packageName = params.packageName;
+        return IntentHandler.constructValidReferrerForAuthority(packageName);
     }
 
     /**
@@ -400,17 +388,7 @@ class ClientManager {
      */
     public synchronized String getClientPackageNameForSession(CustomTabsSessionToken session) {
         SessionParams params = mSessionParams.get(session);
-        return params == null ? null : params.getPackageName();
-    }
-
-    /**
-     * Overrides the package name for the given session to be the given package name. To be used
-     * for testing only.
-     */
-    public synchronized void overridePackageNameForSession(
-            CustomTabsSessionToken session, String packageName) {
-        SessionParams params = mSessionParams.get(session);
-        if (params != null) params.overridePackageNameForTesting(packageName);
+        return params == null ? null : params.packageName;
     }
 
     /**
@@ -544,8 +522,8 @@ class ClientManager {
      */
     public synchronized boolean isFirstPartyOriginForSession(
             CustomTabsSessionToken session, Uri origin) {
-        return OriginVerifier.isValidOrigin(getClientPackageNameForSession(session), origin,
-                CustomTabsService.RELATION_USE_AS_ORIGIN);
+        SessionParams params = mSessionParams.get(session);
+        return params == null ? false : OriginVerifier.isValidOrigin(params.packageName, origin);
     }
 
     /** Tries to bind to a client to keep it alive, and returns true for success. */

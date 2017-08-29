@@ -129,8 +129,9 @@ void TracingObserver::AddToTrace(
       nullptr /* arg_values */, &event_value, TRACE_EVENT_FLAG_HAS_ID);
 }
 
-bool TracingObserver::AddChromeDumpToTraceIfEnabled(
+bool TracingObserver::AddDumpToTraceIfEnabled(
     const base::trace_event::MemoryDumpRequestArgs& args,
+    const base::ProcessId pid,
     const ProcessMemoryDump* process_memory_dump) {
   if (!ShouldAddToTrace(args))
     return false;
@@ -138,7 +139,7 @@ bool TracingObserver::AddChromeDumpToTraceIfEnabled(
   std::unique_ptr<TracedValue> traced_value = base::MakeUnique<TracedValue>();
   process_memory_dump->AsValueInto(traced_value.get());
 
-  AddToTrace(args, base::kNullProcessId, std::move(traced_value));
+  AddToTrace(args, pid, std::move(traced_value));
 
   return true;
 }

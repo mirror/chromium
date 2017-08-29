@@ -2,14 +2,13 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef BASE_CONTAINERS_SPAN_H_
-#define BASE_CONTAINERS_SPAN_H_
+#ifndef BASE_SPAN_H_
+#define BASE_SPAN_H_
 
 #include <stddef.h>
 
 #include <algorithm>
 #include <array>
-#include <iterator>
 #include <type_traits>
 #include <utility>
 
@@ -82,12 +81,10 @@ using EnableIfConstSpanCompatibleContainer =
 
 }  // namespace internal
 
-// A span is a value type that represents an array of elements of type T. Since
-// it only consists of a pointer to memory with an associated size, it is very
-// light-weight. It is cheap to construct, copy, move and use spans, so that
-// users are encouraged to use it as a pass-by-value parameter. A span does not
-// own the underlying memory, so care must be taken to ensure that a span does
-// not outlive the backing store.
+// A span is a value type that represents an array of elements of type T.  It
+// consists of a pointer to memory with an associated size. A span does not own
+// the underlying memory, so care must be taken to ensure that a span does not
+// outlive the backing store.
 //
 // span is somewhat analogous to StringPiece, but with arbitrary element types,
 // allowing mutation if T is non-const.
@@ -101,31 +98,15 @@ using EnableIfConstSpanCompatibleContainer =
 // parameter: it allows the function to still act on an array-like type, while
 // allowing the caller code to be a bit more concise.
 //
-// For read-only data access pass a span<const T>: the caller can supply either
-// a span<const T> or a span<T>, while the callee will have a read-only view.
-// For read-write access a mutable span<T> is required.
-//
 // Without span:
-//   Read-Only:
-//     // std::string HexEncode(const uint8_t* data, size_t size);
-//     std::vector<uint8_t> data_buffer = GenerateData();
-//     std::string r = HexEncode(data_buffer.data(), data_buffer.size());
-//
-//  Mutable:
-//     // ssize_t SafeSNPrintf(char* buf, size_t N, const char* fmt, Args...);
-//     char str_buffer[100];
-//     SafeSNPrintf(str_buffer, sizeof(str_buffer), "Pi ~= %lf", 3.14);
+//   // std::string HexEncode(uint8_t* data, size_t size);
+//   std::vector<uint8_t> data_buffer = GenerateData();
+//   std::string r = HexEncode(data_buffer.data(), data_buffer.size());
 //
 // With span:
-//   Read-Only:
-//     // std::string HexEncode(base::span<const uint8_t> data);
-//     std::vector<uint8_t> data_buffer = GenerateData();
-//     std::string r = HexEncode(data_buffer);
-
-//  Mutable:
-//     // ssize_t SafeSNPrintf(base::span<char>, const char* fmt, Args...);
-//     char str_buffer[100];
-//     SafeSNPrintf(str_buffer, "Pi ~= %lf", 3.14);
+//   // std::string HexEncode(base::span<uint8_t> data);
+//   std::vector<uint8_t> data_buffer = GenerateData();
+//   std::string r = HexEncode(data_buffer);
 //
 // ======= Differences from the working group proposal =======
 // http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2017/p0122r5.pdf is the
@@ -133,14 +114,10 @@ using EnableIfConstSpanCompatibleContainer =
 // support a static extent template parameter. Other differences are documented
 // in subsections below.
 //
-// Differences from [views.constants]:
-// - no dynamic_extent constant
-//
 // Differences in constants and types:
 // - no element_type type alias
 // - no index_type type alias
 // - no different_type type alias
-// - no extent constant
 //
 // Differences from [span.cons]:
 // - no constructor from a pointer range
@@ -151,16 +128,21 @@ using EnableIfConstSpanCompatibleContainer =
 //   since MSVC complains about constexpr functions that aren't marked const.
 //
 // Differences from [span.sub]:
-// - no templated first()
-// - no templated last()
+// - no first()
+// - no last()
 // - no templated subspan()
-//
-// Differences from [span.obs]:
-// - no length_bytes()
-// - no size_bytes()
 //
 // Differences from [span.elem]:
 // - no operator ()()
+//
+// Differences from [span.iter]:
+// - no reverse iterators
+//
+// Differences from [span.comparison]:
+// - no operator <()
+// - no operator <=()
+// - no operator >()
+// - no operator >=()
 //
 // Differences from [span.objectrep]:
 // - no as_bytes()
@@ -173,12 +155,10 @@ class span {
   using reference = T&;
   using iterator = T*;
   using const_iterator = const T*;
-  using reverse_iterator = std::reverse_iterator<iterator>;
-  using const_reverse_iterator = std::reverse_iterator<const_iterator>;
+  // TODO(dcheng): What about reverse iterators?
 
-  // span constructors, copy, assignment, and destructor
+  // Span constructors, copy, assignment, and destructor
   constexpr span() noexcept : data_(nullptr), size_(0) {}
-  constexpr span(std::nullptr_t) noexcept : span() {}
   constexpr span(T* data, size_t size) noexcept : data_(data), size_(size) {}
   // TODO(dcheng): Implement construction from a |begin| and |end| pointer.
   template <size_t N>
@@ -202,44 +182,26 @@ class span {
   template <typename U, typename = internal::EnableIfLegalSpanConversion<U, T>>
   constexpr span(span<U>&& other) : span(other.data(), other.size()) {}
 
-  // span subviews
-  // Note: ideally all of these would DCHECK, but it requires fairly horrible
-  // contortions.
-  constexpr span first(size_t count) const { return span(data_, count); }
-
-  constexpr span last(size_t count) const {
-    return span(data_ + (size_ - count), count);
+  // Span subviews
+  constexpr span subspan(size_t pos, size_t count) const {
+    // Note: ideally this would DCHECK, but it requires fairly horrible
+    // contortions.
+    return span(data_ + pos, count);
   }
 
-  constexpr span subspan(size_t pos, size_t count = -1) const {
-    return span(data_ + pos, std::min(size_ - pos, count));
-  }
-
-  // span observers
-  constexpr size_t length() const noexcept { return size_; }
+  // Span observers
   constexpr size_t size() const noexcept { return size_; }
-  constexpr bool empty() const noexcept { return size_ == 0; }
 
-  // span element access
+  // Span element access
   constexpr T& operator[](size_t index) const noexcept { return data_[index]; }
   constexpr T* data() const noexcept { return data_; }
 
-  // span iterator support
+  // Span iterator support
   iterator begin() const noexcept { return data_; }
   iterator end() const noexcept { return data_ + size_; }
 
   const_iterator cbegin() const noexcept { return begin(); }
   const_iterator cend() const noexcept { return end(); }
-
-  reverse_iterator rbegin() const noexcept { return reverse_iterator(end()); }
-  reverse_iterator rend() const noexcept { return reverse_iterator(begin()); }
-
-  const_reverse_iterator crbegin() const noexcept {
-    return const_reverse_iterator(cend());
-  }
-  const_reverse_iterator crend() const noexcept {
-    return const_reverse_iterator(cbegin());
-  }
 
  private:
   T* data_;
@@ -257,26 +219,7 @@ constexpr bool operator!=(const span<T>& lhs, const span<T>& rhs) noexcept {
   return !(lhs == rhs);
 }
 
-template <typename T>
-constexpr bool operator<(const span<T>& lhs, const span<T>& rhs) noexcept {
-  return std::lexicographical_compare(lhs.cbegin(), lhs.cend(), rhs.cbegin(),
-                                      rhs.cend());
-}
-
-template <typename T>
-constexpr bool operator<=(const span<T>& lhs, const span<T>& rhs) noexcept {
-  return !(rhs < lhs);
-}
-
-template <typename T>
-constexpr bool operator>(const span<T>& lhs, const span<T>& rhs) noexcept {
-  return rhs < lhs;
-}
-
-template <typename T>
-constexpr bool operator>=(const span<T>& lhs, const span<T>& rhs) noexcept {
-  return !(lhs < rhs);
-}
+// TODO(dcheng): Implement other relational operators.
 
 // Type-deducing helpers for constructing a span.
 template <typename T>
@@ -306,4 +249,4 @@ constexpr span<T> make_span(const Container& container) {
 
 }  // namespace base
 
-#endif  // BASE_CONTAINERS_SPAN_H_
+#endif  // BASE_SPAN_H_

@@ -1846,9 +1846,7 @@ void TestRunner::setShouldEnableViewSource(bool value) {
   // is guaranteed to exist at this point.
   DCHECK(main_view_);
 
-  CHECK(main_view_->MainFrame()->IsWebLocalFrame())
-      << "This function requires that the main frame is a local frame.";
-  main_view_->MainFrame()->ToWebLocalFrame()->EnableViewSourceMode(value);
+  main_view_->MainFrame()->EnableViewSourceMode(value);
 }
 
 bool TestRunner::shouldDumpUserGestureInFrameLoadCallbacks() const {

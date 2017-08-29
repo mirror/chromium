@@ -15,8 +15,10 @@
 #include "base/synchronization/waitable_event.h"
 #include "base/threading/thread.h"
 #include "build/build_config.h"
+#include "chrome/common/service_messages.h"
+#include "ipc/ipc_channel.h"
+#include "ipc/ipc_channel_mojo.h"
 #include "mojo/public/cpp/system/message_pipe.h"
-#include "services/service_manager/public/cpp/interface_provider.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 namespace {
@@ -39,7 +41,7 @@ class FakeServiceIPCServerClient : public ServiceIPCServer::Client {
   int shutdown_calls_ = 0;
   int update_available_calls_ = 0;
   int ipc_client_disconnect_calls_ = 0;
-  service_manager::mojom::InterfaceProviderPtr interface_provider_;
+  mojo::ScopedMessagePipeHandle channel_handle_;
 };
 
 void FakeServiceIPCServerClient::OnShutdown() {
@@ -60,7 +62,33 @@ bool FakeServiceIPCServerClient::OnIPCClientDisconnect() {
 
 mojo::ScopedMessagePipeHandle
 FakeServiceIPCServerClient::CreateChannelMessagePipe() {
-  return mojo::MakeRequest(&interface_provider_).PassMessagePipe();
+  mojo::MessagePipe channel;
+  channel_handle_ = std::move(channel.handle0);
+  return std::move(channel.handle1);
+}
+
+class FakeChannelListener : public IPC::Listener {
+ public:
+  FakeChannelListener() {}
+  ~FakeChannelListener() override {}
+  bool OnMessageReceived(const IPC::Message& message) override { return true; }
+};
+
+class FakeMessageHandler : public ServiceIPCServer::MessageHandler {
+ public:
+  explicit FakeMessageHandler(bool should_handle);
+  bool HandleMessage(const IPC::Message& message) override;
+  bool should_handle_;
+  int handle_message_calls_;
+};
+
+FakeMessageHandler::FakeMessageHandler(bool should_handle)
+    : should_handle_(should_handle), handle_message_calls_(0) {
+}
+
+bool FakeMessageHandler::HandleMessage(const IPC::Message& message) {
+  handle_message_calls_++;
+  return should_handle_;
 }
 
 }  // namespace
@@ -79,14 +107,21 @@ class ServiceIPCServerTest : public ::testing::Test {
   // Simulates the browser process shutting down.
   void DestroyClientChannel();
 
+  // Sends |message| to the ServiceIPCServer.
+  void SendToServiceProcess(IPC::Message* message);
+
+  IPC::SyncChannel* GetServerChannel() {
+    return server_->channel_.get();
+  }
+
  protected:
   FakeServiceIPCServerClient service_process_client_;
   base::MessageLoopForUI main_message_loop_;
   base::Thread io_thread_;
   base::WaitableEvent shutdown_event_;
   std::unique_ptr<ServiceIPCServer> server_;
-  service_manager::InterfaceProvider remote_interfaces_;
-  chrome::mojom::ServiceProcessPtr service_process_;
+  FakeChannelListener client_process_channel_listener_;
+  std::unique_ptr<IPC::SyncChannel> client_process_channel_;
 };
 
 ServiceIPCServerTest::ServiceIPCServerTest()
@@ -108,9 +143,12 @@ void ServiceIPCServerTest::SetUp() {
 
 void ServiceIPCServerTest::TearDown() {
   // Close the ipc channels to prevent memory leaks.
-  if (service_process_) {
-    remote_interfaces_.Close();
-    service_process_.reset();
+  if (client_process_channel_) {
+    client_process_channel_->Close();
+    PumpLoops();
+  }
+  if (GetServerChannel()) {
+    GetServerChannel()->Close();
     PumpLoops();
   }
   io_thread_.Stop();
@@ -126,18 +164,22 @@ void ServiceIPCServerTest::PumpLoops() {
 }
 
 void ServiceIPCServerTest::ConnectClientChannel() {
-  remote_interfaces_.Close();
-  remote_interfaces_.Bind(
-      std::move(service_process_client_.interface_provider_));
-
-  remote_interfaces_.GetInterface(&service_process_);
-  service_process_->Hello(base::BindOnce(&base::DoNothing));
+  client_process_channel_ = IPC::SyncChannel::Create(
+      IPC::ChannelMojo::CreateClientFactory(
+          std::move(service_process_client_.channel_handle_),
+          io_thread_.task_runner()),
+      &client_process_channel_listener_, io_thread_.task_runner(),
+      true /* create_pipe_now */, &shutdown_event_);
   PumpLoops();
 }
 
 void ServiceIPCServerTest::DestroyClientChannel() {
-  remote_interfaces_.Close();
-  service_process_.reset();
+  client_process_channel_.reset();
+  PumpLoops();
+}
+
+void ServiceIPCServerTest::SendToServiceProcess(IPC::Message* message) {
+  client_process_channel_->Send(message);
   PumpLoops();
 }
 
@@ -157,8 +199,7 @@ TEST_F(ServiceIPCServerTest, ConnectDisconnectReconnect) {
 
   ConnectClientChannel();
   ASSERT_TRUE(server_->is_ipc_client_connected());
-  service_process_->UpdateAvailable();
-  PumpLoops();
+  SendToServiceProcess(new ServiceMsg_UpdateAvailable());
   ASSERT_TRUE(server_->is_ipc_client_connected());
 
   // Destroy the client process channel again to verify the
@@ -175,8 +216,7 @@ TEST_F(ServiceIPCServerTest, Shutdown) {
 
   // When a shutdown message is received, the ServiceIPCServer::Client is
   // notified.
-  service_process_->ShutDown();
-  PumpLoops();
+  SendToServiceProcess(new ServiceMsg_Shutdown());
   ASSERT_EQ(1, service_process_client_.shutdown_calls_);
 }
 
@@ -186,7 +226,40 @@ TEST_F(ServiceIPCServerTest, UpdateAvailable) {
 
   // When a product update message is received, the ServiceIPCServer::Client is
   // notified.
-  service_process_->UpdateAvailable();
-  PumpLoops();
+  SendToServiceProcess(new ServiceMsg_UpdateAvailable());
   ASSERT_EQ(1, service_process_client_.update_available_calls_);
+}
+
+TEST_F(ServiceIPCServerTest, SingleMessageHandler) {
+  ConnectClientChannel();
+  ASSERT_TRUE(server_->is_ipc_client_connected());
+
+  // Verify that a message handler is offered messages not handled by the server
+  // itself.
+  FakeMessageHandler* handler =
+      new FakeMessageHandler(true /* should_handle */);
+  server_->AddMessageHandler(base::WrapUnique(handler));
+  SendToServiceProcess(new ServiceMsg_DisableCloudPrintProxy());
+  ASSERT_EQ(1, handler->handle_message_calls_);
+}
+
+TEST_F(ServiceIPCServerTest, MultipleMessageHandlers) {
+  ConnectClientChannel();
+  ASSERT_TRUE(server_->is_ipc_client_connected());
+
+  // If there are multiple handlers they are offered the message in order of
+  // being added until it is handled.
+  FakeMessageHandler* handler1 =
+      new FakeMessageHandler(false /* should_handle */);
+  server_->AddMessageHandler(base::WrapUnique(handler1));
+  FakeMessageHandler* handler2 =
+      new FakeMessageHandler(true /* should_handle */);
+  server_->AddMessageHandler(base::WrapUnique(handler2));
+  FakeMessageHandler* handler3 =
+      new FakeMessageHandler(true /* should_handle */);
+  server_->AddMessageHandler(base::WrapUnique(handler3));
+  SendToServiceProcess(new ServiceMsg_DisableCloudPrintProxy());
+  ASSERT_EQ(1, handler1->handle_message_calls_);
+  ASSERT_EQ(1, handler2->handle_message_calls_);
+  ASSERT_EQ(0, handler3->handle_message_calls_);
 }

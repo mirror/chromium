@@ -143,6 +143,10 @@ WindowAndroid* WindowAndroid::CreateForTesting() {
   return reinterpret_cast<WindowAndroid*>(native_pointer);
 }
 
+void WindowAndroid::DestroyForTesting() {
+  delete this;
+}
+
 void WindowAndroid::OnCompositingDidCommit() {
   for (WindowAndroidObserver& observer : observer_list_)
     observer.OnCompositingDidCommit();

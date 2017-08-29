@@ -126,12 +126,14 @@ class GLES2DecoderLostContextTest : public GLES2DecoderManualInitTest {
   }
 
   void InitWithVirtualContextsAndRobustness() {
-    gpu::GpuDriverBugWorkarounds workarounds;
-    workarounds.use_virtualized_gl_contexts = true;
+    base::CommandLine command_line(0, NULL);
+    command_line.AppendSwitchASCII(
+        switches::kGpuDriverBugWorkarounds,
+        base::IntToString(USE_VIRTUALIZED_GL_CONTEXTS));
     InitState init;
     init.gl_version = "opengl es 2.0";
     init.extensions = "GL_KHR_robustness";
-    InitDecoderWithWorkarounds(init, workarounds);
+    InitDecoderWithCommandLine(init, &command_line);
   }
 
   void DoGetErrorWithContextLost(GLenum reset_status) {

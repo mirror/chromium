@@ -35,7 +35,7 @@ class OpenFile : public Operation {
            const ProvidedFileSystemInfo& file_system_info,
            const base::FilePath& file_path,
            OpenFileMode mode,
-           ProvidedFileSystemInterface::OpenFileCallback callback);
+           const ProvidedFileSystemInterface::OpenFileCallback& callback);
   ~OpenFile() override;
 
   // Operation overrides.
@@ -50,7 +50,7 @@ class OpenFile : public Operation {
  private:
   base::FilePath file_path_;
   OpenFileMode mode_;
-  ProvidedFileSystemInterface::OpenFileCallback callback_;
+  const ProvidedFileSystemInterface::OpenFileCallback callback_;
 
   DISALLOW_COPY_AND_ASSIGN(OpenFile);
 };

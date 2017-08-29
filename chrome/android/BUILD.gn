@@ -189,7 +189,6 @@ android_library("chrome_java") {
     "$google_play_services_package:google_play_services_nearby_java",
     "$google_play_services_package:google_play_services_tasks_java",
     "//base:base_java",
-    "//chrome/android/third_party/widget_bottomsheet_base:widget_bottomsheet_base_java",
     "//chrome/android/webapk/libs/client:client_java",
     "//chrome/android/webapk/libs/common:common_java",
     "//chrome/android/webapk/libs/runtime_library:webapk_service_aidl_java",
@@ -199,7 +198,6 @@ android_library("chrome_java") {
     "//components/crash/android:java",
     "//components/dom_distiller/content/browser/android:dom_distiller_content_java",
     "//components/dom_distiller/core/android:dom_distiller_core_java",
-    "//components/download/internal:internal_java",
     "//components/download/public:public_java",
     "//components/feature_engagement:feature_engagement_java",
     "//components/gcm_driver/android:gcm_driver_java",
@@ -533,7 +531,6 @@ android_library("chrome_test_java") {
     "//third_party/junit",
     "//third_party/ub-uiautomator:ub_uiautomator_java",
     "//ui/android:ui_java",
-    "//ui/android:ui_java_test_support",
     "//ui/base/mojo:mojo_bindings_java",
     "//url/mojo:url_mojom_gurl_java",
   ]
@@ -914,6 +911,8 @@ shared_library("chrome_sync_shell") {
   testonly = true
   sources = [
     "../browser/android/chrome_sync_shell_entry_point.cc",
+    "../browser/android/chrome_sync_shell_main_delegate.cc",
+    "../browser/android/chrome_sync_shell_main_delegate.h",
     "../browser/android/chrome_sync_shell_main_delegate_initializer.cc",
   ]
   deps = [

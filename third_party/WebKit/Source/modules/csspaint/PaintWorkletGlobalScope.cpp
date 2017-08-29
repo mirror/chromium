@@ -15,8 +15,8 @@
 #include "core/inspector/MainThreadDebugger.h"
 #include "modules/csspaint/CSSPaintDefinition.h"
 #include "modules/csspaint/CSSPaintImageGeneratorImpl.h"
-#include "modules/csspaint/CSSPaintWorklet.h"
 #include "modules/csspaint/PaintWorklet.h"
+#include "modules/csspaint/WindowPaintWorklet.h"
 #include "platform/bindings/V8BindingMacros.h"
 
 namespace blink {
@@ -28,13 +28,12 @@ PaintWorkletGlobalScope* PaintWorkletGlobalScope::Create(
     const String& user_agent,
     PassRefPtr<SecurityOrigin> security_origin,
     v8::Isolate* isolate,
-    WorkerReportingProxy& reporting_proxy,
     PaintWorkletPendingGeneratorRegistry* pending_generator_registry,
     size_t global_scope_number) {
   PaintWorkletGlobalScope* paint_worklet_global_scope =
       new PaintWorkletGlobalScope(frame, url, user_agent,
                                   std::move(security_origin), isolate,
-                                  reporting_proxy, pending_generator_registry);
+                                  pending_generator_registry);
   String context_name("PaintWorklet #");
   context_name.append(String::Number(global_scope_number));
   paint_worklet_global_scope->ScriptController()->InitializeContextIfNeeded(
@@ -52,14 +51,12 @@ PaintWorkletGlobalScope::PaintWorkletGlobalScope(
     const String& user_agent,
     PassRefPtr<SecurityOrigin> security_origin,
     v8::Isolate* isolate,
-    WorkerReportingProxy& reporting_proxy,
     PaintWorkletPendingGeneratorRegistry* pending_generator_registry)
     : MainThreadWorkletGlobalScope(frame,
                                    url,
                                    user_agent,
                                    std::move(security_origin),
-                                   isolate,
-                                   reporting_proxy),
+                                   isolate),
       pending_generator_registry_(pending_generator_registry) {}
 
 PaintWorkletGlobalScope::~PaintWorkletGlobalScope() {}
@@ -209,8 +206,9 @@ void PaintWorkletGlobalScope::registerPaint(const String& name,
 
   // TODO(xidachen): the following steps should be done with a postTask when
   // we move PaintWorklet off main thread.
+  LocalDOMWindow* dom_window = GetFrame()->GetDocument()->domWindow();
   PaintWorklet* paint_worklet =
-      PaintWorklet::From(*GetFrame()->GetDocument()->domWindow());
+      WindowPaintWorklet::From(*dom_window).paintWorklet();
   PaintWorklet::DocumentDefinitionMap& document_definition_map =
       paint_worklet->GetDocumentDefinitionMap();
   if (document_definition_map.Contains(name)) {

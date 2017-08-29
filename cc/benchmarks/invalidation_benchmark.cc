@@ -124,7 +124,7 @@ bool InvalidationBenchmark::ProcessMessage(std::unique_ptr<base::Value> value) {
   if (message->HasKey("notify_done")) {
     message->GetBoolean("notify_done", &notify_done);
     if (notify_done)
-      NotifyDone(std::make_unique<base::Value>());
+      NotifyDone(base::MakeUnique<base::Value>());
     return true;
   }
   return false;

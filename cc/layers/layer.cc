@@ -795,6 +795,10 @@ void Layer::SetScrollOffset(const gfx::ScrollOffset& scroll_offset) {
 
 void Layer::SetScrollOffsetFromImplSide(
     const gfx::ScrollOffset& scroll_offset) {
+  // TODO(pdr): This is a speculative CHECK to investigate crbug.com/747719 and
+  //            should be removed once that bug is resolved.
+  CHECK(layer_tree_host_);
+
   DCHECK(IsPropertyChangeAllowed());
   // This function only gets called during a BeginMainFrame, so there
   // is no need to call SetNeedsUpdate here.
@@ -807,7 +811,7 @@ void Layer::SetScrollOffsetFromImplSide(
   UpdateScrollOffset(scroll_offset);
 
   if (!inputs_.did_scroll_callback.is_null())
-    inputs_.did_scroll_callback.Run(scroll_offset, element_id());
+    inputs_.did_scroll_callback.Run(scroll_offset);
 
   // The callback could potentially change the layer structure:
   // "this" may have been destroyed during the process.

@@ -210,7 +210,7 @@ void TranslateInternalsHandler::SendPrefsToJs() {
   for (const char* key : keys) {
     const PrefService::Preference* pref = prefs->FindPreference(key);
     if (pref)
-      dict.SetKey(key, pref->GetValue()->Clone());
+      dict.Set(key, base::MakeUnique<base::Value>(*pref->GetValue()));
   }
 
   SendMessageToJs("prefsUpdated", dict);

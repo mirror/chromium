@@ -17,7 +17,7 @@ viz::HostFrameSinkManager* TestServerWindowDelegate::GetHostFrameSinkManager() {
   return nullptr;
 }
 
-ServerWindow* TestServerWindowDelegate::GetRootWindowForDrawn(
+ServerWindow* TestServerWindowDelegate::GetRootWindow(
     const ServerWindow* window) {
   return root_window_;
 }

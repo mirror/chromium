@@ -10,7 +10,6 @@
 #include "core/dom/ScriptedAnimationController.h"
 #include "core/dom/TaskRunnerHelper.h"
 #include "core/dom/UserGestureIndicator.h"
-#include "core/frame/LocalFrame.h"
 #include "core/frame/LocalFrameView.h"
 #include "core/frame/UseCounter.h"
 #include "core/imagebitmap/ImageBitmap.h"
@@ -319,7 +318,8 @@ ScriptPromise VRDisplay::requestPresent(ScriptState* script_state,
   // If the VRDisplay is already presenting, however, repeated calls are
   // allowed outside a user gesture so that the presented content may be
   // updated.
-  if (first_present && !UserGestureIndicator::ProcessingUserGesture()) {
+  if (first_present && !UserGestureIndicator::ProcessingUserGesture() &&
+      !in_display_activate_) {
     DOMException* exception = DOMException::Create(
         kInvalidStateError, "API can only be initiated by a user gesture.");
     resolver->Reject(exception);
@@ -329,7 +329,8 @@ ScriptPromise VRDisplay::requestPresent(ScriptState* script_state,
 
   // When we are requesting to start presentation with a user action or the
   // display has activated, record the user action.
-  if (first_present && UserGestureIndicator::ProcessingUserGesture()) {
+  if (first_present &&
+      (UserGestureIndicator::ProcessingUserGesture() || in_display_activate_)) {
     Platform::Current()->RecordAction(
         UserMetricsAction("VR.WebVR.requestPresent"));
   }
@@ -531,15 +532,6 @@ void VRDisplay::BeginPresent() {
   }
 
   if (doc) {
-    // TODO(mthiesse, crbug.com/756476): Remove this hack once crbug.com/756476
-    // is fixed. On Android, page visibilty state is set long after the page
-    // actually becomes visible, and can lead to webVR drawing frames before the
-    // page thinks it's visible. The page must be visible at this point if the
-    // presentation request was granted.
-    doc->GetPage()->SetVisibilityState(kPageVisibilityStateVisible, false);
-  }
-
-  if (doc) {
     Platform::Current()->RecordRapporURL("VR.WebVR.PresentSuccess",
                                          WebURL(doc->Url()));
   }
@@ -710,7 +702,7 @@ void VRDisplay::submitFrame() {
   StaticBitmapImage* static_image =
       static_cast<StaticBitmapImage*>(image_ref.Get());
   TRACE_EVENT_BEGIN0("gpu", "VRDisplay::EnsureMailbox");
-  static_image->EnsureMailbox(kVerifiedSyncToken);
+  static_image->EnsureMailbox();
   TRACE_EVENT_END0("gpu", "VRDisplay::EnsureMailbox");
 
   // Save a reference to the image to keep it alive until next frame,
@@ -833,14 +825,7 @@ void VRDisplay::StopPresenting() {
 
 void VRDisplay::OnActivate(device::mojom::blink::VRDisplayEventReason reason,
                            OnActivateCallback on_handled) {
-  Document* doc = GetDocument();
-  if (!doc)
-    return;
-
-  std::unique_ptr<UserGestureIndicator> gesture_indicator;
-  if (reason == device::mojom::blink::VRDisplayEventReason::MOUNTED)
-    gesture_indicator = LocalFrame::CreateUserGesture(doc->GetFrame());
-
+  AutoReset<bool> activating(&in_display_activate_, true);
   navigator_vr_->DispatchVREvent(VRDisplayEvent::Create(
       EventTypeNames::vrdisplayactivate, true, false, this, reason));
   std::move(on_handled).Run(!pending_present_request_ && !is_presenting_);
@@ -919,6 +904,15 @@ void VRDisplay::ProcessScheduledAnimations(double timestamp) {
   // Sanity check: If pending_vrdisplay_raf_ is true and the vsync provider
   // is connected, we must now have a pending vsync.
   DCHECK(!pending_vrdisplay_raf_ || pending_vsync_);
+
+  // For GVR, we shut down normal vsync processing during VR presentation.
+  // Trigger any callbacks on window.rAF manually so that they run after
+  // completing the vrDisplay.rAF processing.
+  if (is_presenting_ && !capabilities_->hasExternalDisplay()) {
+    Platform::Current()->CurrentThread()->GetWebTaskRunner()->PostTask(
+        BLINK_FROM_HERE, WTF::Bind(&VRDisplay::ProcessScheduledWindowAnimations,
+                                   WrapWeakPersistent(this), timestamp));
+  }
 }
 
 void VRDisplay::OnPresentingVSync(

@@ -313,7 +313,7 @@ class WindowServer : public ServerWindowDelegate,
   void CreateFrameSinkManager();
 
   // Overridden from ServerWindowDelegate:
-  ServerWindow* GetRootWindowForDrawn(const ServerWindow* window) override;
+  ServerWindow* GetRootWindow(const ServerWindow* window) override;
 
   // Overridden from ServerWindowObserver:
   void OnWindowDestroyed(ServerWindow* window) override;

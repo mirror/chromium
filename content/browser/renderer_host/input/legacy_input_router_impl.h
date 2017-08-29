@@ -80,8 +80,6 @@ class CONTENT_EXPORT LegacyInputRouterImpl
 
   cc::TouchAction AllowedTouchAction() override;
 
-  void SetForceEnableZoom(bool enabled) override;
-
   int routing_id() const { return routing_id_; }
 
  private:

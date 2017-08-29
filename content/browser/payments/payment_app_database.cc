@@ -88,7 +88,7 @@ std::unique_ptr<StoredPaymentApp> ToStoredPaymentApp(const std::string& input) {
 
   std::unique_ptr<StoredPaymentApp> app = base::MakeUnique<StoredPaymentApp>();
   app->registration_id = app_proto.registration_id();
-  app->scope = GURL(app_proto.scope());
+  app->origin = url::Origin(GURL(app_proto.origin()));
   app->name = app_proto.name();
   app->prefer_related_applications = app_proto.prefer_related_applications();
   for (const auto& related_app : app_proto.related_applications()) {
@@ -197,10 +197,10 @@ void PaymentAppDatabase::WritePaymentInstrument(
         base::MakeRefCounted<PaymentInstrumentIconFetcher>();
     instrument_icon_fetcher_->Start(
         instrument->icons, service_worker_context_,
-        base::BindOnce(&PaymentAppDatabase::DidFetchedPaymentInstrumentIcon,
-                       weak_ptr_factory_.GetWeakPtr(), scope, instrument_key,
-                       base::Passed(std::move(instrument)),
-                       base::Passed(std::move(callback))));
+        base::Bind(&PaymentAppDatabase::DidFetchedPaymentInstrumentIcon,
+                   weak_ptr_factory_.GetWeakPtr(), scope, instrument_key,
+                   base::Passed(std::move(instrument)),
+                   base::Passed(std::move(callback))));
   } else {
     service_worker_context_->FindReadyRegistrationForPattern(
         scope,
@@ -278,11 +278,10 @@ void PaymentAppDatabase::DidFindRegistrationToWritePaymentAppInfo(
 
   StoredPaymentAppProto payment_app_proto;
   payment_app_proto.set_registration_id(registration->id());
-  payment_app_proto.set_scope(registration->pattern().spec());
-  payment_app_proto.set_name(
-      app_info->name.empty()
-          ? GURL(payment_app_proto.scope()).GetOrigin().spec()
-          : app_info->name);
+  payment_app_proto.set_origin(
+      url::Origin(registration->pattern().GetOrigin()).Serialize());
+  payment_app_proto.set_name(app_info->name.empty() ? payment_app_proto.origin()
+                                                    : app_info->name);
   payment_app_proto.set_icon(app_info->icon);
   payment_app_proto.set_prefer_related_applications(
       app_info->prefer_related_applications);

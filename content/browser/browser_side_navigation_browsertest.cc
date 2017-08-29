@@ -206,7 +206,7 @@ IN_PROC_BROWSER_TEST_F(BrowserSideNavigationBrowserTest, FailedNavigation) {
         net::URLRequestFailedJob::GetMockHttpUrl(net::ERR_CONNECTION_RESET));
     BrowserThread::PostTask(
         BrowserThread::IO, FROM_HERE,
-        base::BindOnce(&net::URLRequestFailedJob::AddUrlHandler));
+        base::Bind(&net::URLRequestFailedJob::AddUrlHandler));
     NavigateToURL(shell(), error_url);
     EXPECT_EQ(error_url, observer.last_navigation_url());
     NavigationEntry* entry =

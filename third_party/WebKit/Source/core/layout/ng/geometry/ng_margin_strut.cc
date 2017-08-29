@@ -4,8 +4,6 @@
 
 #include "core/layout/ng/geometry/ng_margin_strut.h"
 
-#include <algorithm>
-
 namespace blink {
 
 LayoutUnit NGMarginStrut::Sum() const {

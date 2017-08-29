@@ -844,21 +844,12 @@ void WizardController::OnTermsOfServiceAccepted() {
   ShowArcTermsOfServiceScreen();
 }
 
-void WizardController::OnArcTermsOfServiceSkipped() {
+void WizardController::OnArcTermsOfServiceFinished() {
+  const Profile* profile = ProfileManager::GetActiveUserProfile();
   if (is_in_session_oobe_) {
-    PrefService* prefs = ProfileManager::GetActiveUserProfile()->GetPrefs();
-    prefs->SetBoolean(prefs::kArcVoiceInteractionValuePropAccepted, false);
+    if (profile->GetPrefs()->GetBoolean(prefs::kArcTermsAccepted))
+      StartVoiceInteractionSetupWizard();
     OnOobeFlowFinished();
-    return;
-  }
-  // If the user finished with the PlayStore Terms of Service, advance to the
-  // user image screen.
-  ShowUserImageScreen();
-}
-
-void WizardController::OnArcTermsOfServiceAccepted() {
-  if (is_in_session_oobe_) {
-    ShowWaitForContainerReadyScreen();
     return;
   }
   // If the user finished with the PlayStore Terms of Service, advance to the
@@ -1257,11 +1248,8 @@ void WizardController::OnExit(BaseScreen& /* screen */,
     case ScreenExitCode::TERMS_OF_SERVICE_ACCEPTED:
       OnTermsOfServiceAccepted();
       break;
-    case ScreenExitCode::ARC_TERMS_OF_SERVICE_SKIPPED:
-      OnArcTermsOfServiceSkipped();
-      break;
-    case ScreenExitCode::ARC_TERMS_OF_SERVICE_ACCEPTED:
-      OnArcTermsOfServiceAccepted();
+    case ScreenExitCode::ARC_TERMS_OF_SERVICE_FINISHED:
+      OnArcTermsOfServiceFinished();
       break;
     case ScreenExitCode::WRONG_HWID_WARNING_SKIPPED:
       OnWrongHWIDWarningSkipped();

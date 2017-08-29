@@ -8,17 +8,14 @@
 
 #import <EarlGrey/EarlGrey.h>
 
-#include "base/command_line.h"
 #include "base/mac/scoped_block.h"
 #include "base/strings/sys_string_conversions.h"
-#include "components/signin/core/common/signin_switches.h"
 #import "ios/chrome/test/app/chrome_test_util.h"
 #include "ios/chrome/test/app/settings_test_util.h"
 #include "ios/chrome/test/app/signin_test_util.h"
 #import "ios/chrome/test/app/sync_test_util.h"
 #import "ios/chrome/test/app/tab_test_util.h"
 #import "ios/web/public/test/http_server/http_server.h"
-#include "testing/coverage_util_ios.h"
 
 #if !defined(__has_feature) || !__has_feature(objc_arc)
 #error "This file requires ARC support."
@@ -151,8 +148,6 @@ const CFTimeInterval kDrainTimeout = 5;
   [self removeAnyOpenMenusAndInfoBars];
   [self closeAllTabs];
   chrome_test_util::SetContentSettingsBlockPopups(CONTENT_SETTING_DEFAULT);
-
-  coverage_util::ConfigureCoverageReportPath();
 }
 
 // Tear down called once for the class, to shutdown mock authentication and
@@ -179,7 +174,6 @@ const CFTimeInterval kDrainTimeout = 5;
   _isMockAuthenticationDisabled = NO;
   _tearDownHandler = nil;
 
-  chrome_test_util::ResetSigninPromoPreferences();
   chrome_test_util::OpenNewTab();
   [[GREYUIThreadExecutor sharedInstance] drainUntilIdle];
 }
@@ -264,11 +258,6 @@ const CFTimeInterval kDrainTimeout = 5;
 }
 
 + (void)enableMockAuthentication {
-  // Enable sign-in promo for all tests.
-  // TODO(crbug.com/739910): Remove this line when the sign-in promo is enabled
-  // by default.
-  base::CommandLine::ForCurrentProcess()->AppendSwitch(
-      switches::kEnableSigninPromo);
   chrome_test_util::SetUpMockAuthentication();
   chrome_test_util::SetUpMockAccountReconcilor();
   chrome_test_util::SetUpFakeSyncServer();

@@ -17,12 +17,8 @@ class CoordinationUnitImpl;
 class FrameCoordinationUnitImpl;
 class WebContentsCoordinationUnitImpl;
 
-extern const char kTabFromBackgroundedToFirstAlertFiredUMA[];
 extern const char kTabFromBackgroundedToFirstAudioStartsUMA[];
-extern const char kTabFromBackgroundedToFirstFaviconUpdatedUMA[];
 extern const char kTabFromBackgroundedToFirstTitleUpdatedUMA[];
-extern const char
-    kTabFromBackgroundedToFirstNonPersistentNotificationCreatedUMA[];
 
 // A MetricsCollector observes changes happened inside CoordinationUnit Graph,
 // and reports UMA/UKM.
@@ -42,8 +38,6 @@ class MetricsCollector : public CoordinationUnitGraphObserver {
       const WebContentsCoordinationUnitImpl* web_contents_cu,
       const mojom::PropertyType property_type,
       int64_t value) override;
-  void OnFrameEventReceived(const FrameCoordinationUnitImpl* frame_cu,
-                            const mojom::Event event) override;
   void OnWebContentsEventReceived(
       const WebContentsCoordinationUnitImpl* web_contents_cu,
       const mojom::Event event) override;
@@ -54,16 +48,8 @@ class MetricsCollector : public CoordinationUnitGraphObserver {
   struct MetricsReportRecord {
     MetricsReportRecord();
     void Reset();
-    // UMA histograms report.
-    bool first_alert_fired_after_backgrounded_reported;
     bool first_audible_after_backgrounded_reported;
-    bool first_favicon_updated_after_backgrounded_reported;
-    bool first_non_persistent_notification_created_after_backgrounded_reported;
     bool first_title_updated_after_backgrounded_reported;
-
-    // UKM collection report.
-    bool main_frame_first_audible_after_backgrounded_reported;
-    bool child_frame_first_audible_after_backgrounded_reported;
   };
 
   struct FrameData {
@@ -85,11 +71,6 @@ class MetricsCollector : public CoordinationUnitGraphObserver {
   void RecordCPUUsageForUkm(const CoordinationUnitID& web_contents_cu_id,
                             double cpu_usage,
                             size_t num_coresident_tabs);
-  void ReportAudibilityUKMIfNeeded(
-      const WebContentsCoordinationUnitImpl* web_contents_cu,
-      bool* reported,
-      bool is_main_frame,
-      base::TimeDelta duration);
   void UpdateUkmSourceIdForWebContents(
       const CoordinationUnitID& web_contents_cu_id,
       ukm::SourceId ukm_source_id);

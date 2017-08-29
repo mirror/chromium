@@ -8,6 +8,7 @@
 #import <UIKit/UIKit.h>
 
 #import "ios/web/net/crw_request_tracker_delegate.h"
+#import "ios/web/public/navigation_manager.h"
 #import "ios/web/public/web_state/js/crw_js_injection_evaluator.h"
 #import "ios/web/public/web_state/ui/crw_web_delegate.h"
 #include "ios/web/public/web_state/url_verification_constants.h"
@@ -60,27 +61,27 @@ class WebStateImpl;
 // Defaults to NO; this should be enabled before attempting to access the view.
 @property(nonatomic, assign) BOOL webUsageEnabled;
 
-@property(nonatomic, weak) id<CRWWebDelegate> delegate;
-@property(nonatomic, weak) id<CRWNativeContentProvider> nativeProvider;
-@property(nonatomic, weak) id<CRWSwipeRecognizerProvider>
-    swipeRecognizerProvider;
+@property(nonatomic, assign) id<CRWWebDelegate> delegate;
+@property(nonatomic, assign) id<CRWNativeContentProvider> nativeProvider;
+@property(nonatomic, assign)
+    id<CRWSwipeRecognizerProvider> swipeRecognizerProvider;
 @property(nonatomic, readonly) web::WebState* webState;
 @property(nonatomic, readonly) web::WebStateImpl* webStateImpl;
 
 // The container view used to display content.  If the view has been purged due
 // to low memory, this will recreate it.
-@property(weak, nonatomic, readonly) UIView* view;
+@property(nonatomic, readonly) UIView* view;
 
 // The web view proxy associated with this controller.
-@property(strong, nonatomic, readonly) id<CRWWebViewProxy> webViewProxy;
+@property(nonatomic, readonly) id<CRWWebViewProxy> webViewProxy;
 
 // The web view navigation proxy associated with this controller.
-@property(weak, nonatomic, readonly) id<CRWWebViewNavigationProxy>
+@property(nonatomic, readonly) id<CRWWebViewNavigationProxy>
     webViewNavigationProxy;
 
 // The view that generates print data when printing. It is nil if printing
 // is not supported.
-@property(weak, nonatomic, readonly) UIView* viewForPrinting;
+@property(nonatomic, readonly) UIView* viewForPrinting;
 
 // Returns the current page loading phase.
 @property(nonatomic, readonly) web::LoadPhase loadPhase;
@@ -154,10 +155,13 @@ class WebStateImpl;
 // to generate an overlay placeholder view.
 - (BOOL)canUseViewForGeneratingOverlayPlaceholderView;
 
-// Notifies delegate that |currentNavItem| will be loaded with |url|.
+// Notifies delegate that |currentNavItem| will be loaded with |params|. If this
+// is the first navigation, |isInitialNavigation| is YES.
 // TODO(crbug.com/674991): Remove this method when CRWWebDelegate is no longer
 // used.
-- (void)willLoadCurrentItemWithURL:(const GURL&)URL;
+- (void)willLoadCurrentItemWithParams:
+            (const web::NavigationManager::WebLoadParams&)params
+                  isInitialNavigation:(BOOL)isInitialNavigation;
 
 // Loads the URL indicated by current session state.
 - (void)loadCurrentURL;
@@ -169,6 +173,11 @@ class WebStateImpl;
 // Loads HTML in the page and presents it as if it was originating from an
 // application specific URL. |HTML| must not be empty.
 - (void)loadHTML:(NSString*)HTML forAppSpecificURL:(const GURL&)URL;
+
+// Loads HTML in the page and presents it as if it was originating from the
+// URL itself. Should be used only in specific cases, where the injected html
+// is guaranteed to be some derived representation of the original content.
+- (void)loadHTMLForCurrentURL:(NSString*)HTML;
 
 // Stops loading the page.
 - (void)stopLoading;

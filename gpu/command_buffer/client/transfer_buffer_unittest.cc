@@ -141,7 +141,6 @@ TEST_F(TransferBufferTest, Free) {
   EXPECT_FALSE(transfer_buffer_->HaveBuffer());
   EXPECT_EQ(base::UnguessableToken(),
             transfer_buffer_->shared_memory_handle().GetGUID());
-
   // See that it gets reallocated.
   EXPECT_TRUE(transfer_buffer_->GetResultBuffer() != NULL);
   EXPECT_TRUE(transfer_buffer_->HaveBuffer());
@@ -157,7 +156,6 @@ TEST_F(TransferBufferTest, Free) {
   EXPECT_FALSE(transfer_buffer_->HaveBuffer());
   EXPECT_EQ(base::UnguessableToken(),
             transfer_buffer_->shared_memory_handle().GetGUID());
-
   // See that it gets reallocated.
   unsigned int size = 0;
   void* data = transfer_buffer_->AllocUpTo(1, &size);
@@ -165,12 +163,9 @@ TEST_F(TransferBufferTest, Free) {
   EXPECT_TRUE(transfer_buffer_->HaveBuffer());
   EXPECT_NE(base::UnguessableToken(),
             transfer_buffer_->shared_memory_handle().GetGUID());
-  int32_t token = helper_->InsertToken();
-  int32_t put_offset = helper_->GetPutOffsetForTest();
-  transfer_buffer_->FreePendingToken(data, token);
+  transfer_buffer_->FreePendingToken(data, 1);
 
-  // Free buffer. Should cause a Flush.
-  EXPECT_CALL(*command_buffer(), Flush(_)).Times(AtMost(1));
+  // Free buffer.
   EXPECT_CALL(*command_buffer(), DestroyTransferBuffer(_))
       .Times(1)
       .RetiresOnSaturation();
@@ -179,11 +174,6 @@ TEST_F(TransferBufferTest, Free) {
   EXPECT_FALSE(transfer_buffer_->HaveBuffer());
   EXPECT_EQ(base::UnguessableToken(),
             transfer_buffer_->shared_memory_handle().GetGUID());
-  // Free should have flushed.
-  EXPECT_EQ(put_offset, command_buffer_->GetServicePutOffset());
-  // However it shouldn't have caused a finish.
-  EXPECT_LT(command_buffer_->GetState().get_offset, put_offset);
-
   // See that it gets reallocated.
   transfer_buffer_->GetResultOffset();
   EXPECT_TRUE(transfer_buffer_->HaveBuffer());
@@ -220,11 +210,11 @@ TEST_F(TransferBufferTest, MemoryAlignmentAfterZeroAllocation) {
   Initialize(32u);
   void* ptr = transfer_buffer_->Alloc(0);
   EXPECT_EQ((reinterpret_cast<uintptr_t>(ptr) & (kAlignment - 1)), 0u);
-  transfer_buffer_->FreePendingToken(ptr, helper_->InsertToken());
+  transfer_buffer_->FreePendingToken(ptr, static_cast<unsigned int>(-1));
   // Check that the pointer is aligned on the following allocation.
   ptr = transfer_buffer_->Alloc(4);
   EXPECT_EQ((reinterpret_cast<uintptr_t>(ptr) & (kAlignment - 1)), 0u);
-  transfer_buffer_->FreePendingToken(ptr, helper_->InsertToken());
+  transfer_buffer_->FreePendingToken(ptr, 1);
 }
 
 TEST_F(TransferBufferTest, Flush) {

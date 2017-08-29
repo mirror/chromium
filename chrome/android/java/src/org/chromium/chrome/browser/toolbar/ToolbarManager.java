@@ -73,7 +73,6 @@ import org.chromium.chrome.browser.tabmodel.TabModelSelector;
 import org.chromium.chrome.browser.tabmodel.TabModelSelectorObserver;
 import org.chromium.chrome.browser.toolbar.ActionModeController.ActionBarDelegate;
 import org.chromium.chrome.browser.util.FeatureUtilities;
-import org.chromium.chrome.browser.widget.ViewHighlighter;
 import org.chromium.chrome.browser.widget.findinpage.FindToolbarManager;
 import org.chromium.chrome.browser.widget.findinpage.FindToolbarObserver;
 import org.chromium.chrome.browser.widget.textbubble.ViewAnchoredTextBubble;
@@ -515,13 +514,13 @@ public class ToolbarManager implements ToolbarTabController, UrlFocusChangeListe
                 mTextBubble.addOnDismissListener(new OnDismissListener() {
                     @Override
                     public void onDismiss() {
-                        mHandler.postDelayed(new Runnable() {
+                        mHandler.post(new Runnable() {
                             @Override
                             public void run() {
                                 tracker.dismissed(FeatureConstants.DOWNLOAD_PAGE_FEATURE);
                                 activity.getAppMenuHandler().setMenuHighlight(null);
                             }
-                        }, ViewHighlighter.IPH_MIN_DELAY_BETWEEN_TWO_HIGHLIGHTS);
+                        });
                     }
                 });
                 activity.getAppMenuHandler().setMenuHighlight(R.id.offline_page_id);

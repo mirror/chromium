@@ -208,18 +208,18 @@ void ChildFrameCompositingHelper::UpdateWebLayer(
 }
 
 void ChildFrameCompositingHelper::CheckSizeAndAdjustLayerProperties(
-    const viz::SurfaceInfo& surface_info,
+    const gfx::Size& new_size,
+    float device_scale_factor,
     cc::Layer* layer) {
-  if (last_surface_size_in_pixels_ == surface_info.size_in_pixels())
-    return;
-
-  last_surface_size_in_pixels_ = surface_info.size_in_pixels();
-  // The container size is in DIP, so is the layer size.
-  // Buffer size is in physical pixels, so we need to adjust
-  // it by the device scale factor.
-  gfx::Size device_scale_adjusted_size = gfx::ScaleToFlooredSize(
-      surface_info.size_in_pixels(), 1.0f / surface_info.device_scale_factor());
-  layer->SetBounds(device_scale_adjusted_size);
+  if (buffer_size_ != new_size) {
+    buffer_size_ = new_size;
+    // The container size is in DIP, so is the layer size.
+    // Buffer size is in physical pixels, so we need to adjust
+    // it by the device scale factor.
+    gfx::Size device_scale_adjusted_size =
+        gfx::ScaleToFlooredSize(buffer_size_, 1.0f / device_scale_factor);
+    layer->SetBounds(device_scale_adjusted_size);
+  }
 }
 
 void ChildFrameCompositingHelper::OnContainerDestroy() {
@@ -259,42 +259,13 @@ void ChildFrameCompositingHelper::ChildFrameGone() {
   UpdateWebLayer(std::move(layer));
 }
 
-void ChildFrameCompositingHelper::SetPrimarySurfaceInfo(
-    const viz::SurfaceInfo& surface_info) {
-  last_primary_surface_id_ = surface_info.id();
-  float scale_factor = surface_info.device_scale_factor();
-  // TODO(oshima): This is a stopgap fix so that the compositor does not
-  // scaledown the content when 2x frame data is added to 1x parent frame data.
-  // Fix this in cc/.
-  if (IsUseZoomForDSFEnabled())
-    scale_factor = 1.0f;
-
-  surface_layer_ = cc::SurfaceLayer::Create(surface_reference_factory_);
-  surface_layer_->SetMasksToBounds(true);
-
-  viz::SurfaceInfo modified_surface_info(surface_info.id(), scale_factor,
-                                         surface_info.size_in_pixels());
-  surface_layer_->SetPrimarySurfaceInfo(modified_surface_info);
-
-  std::unique_ptr<cc_blink::WebLayerImpl> layer(
-      new cc_blink::WebLayerImpl(surface_layer_));
-  // TODO(lfg): Investigate if it's possible to propagate the information about
-  // the child surface's opacity. https://crbug.com/629851.
-  layer->SetOpaque(false);
-  layer->SetContentsOpaqueIsFixed(true);
-  UpdateWebLayer(std::move(layer));
-
-  UpdateVisibility(true);
-
-  CheckSizeAndAdjustLayerProperties(
-      surface_info,
-      static_cast<cc_blink::WebLayerImpl*>(web_layer_.get())->layer());
-}
-
-void ChildFrameCompositingHelper::SetFallbackSurfaceInfo(
+void ChildFrameCompositingHelper::OnSetSurface(
     const viz::SurfaceInfo& surface_info,
     const viz::SurfaceSequence& sequence) {
   float scale_factor = surface_info.device_scale_factor();
+  surface_id_ = surface_info.id();
+  scoped_refptr<cc::SurfaceLayer> surface_layer =
+      cc::SurfaceLayer::Create(surface_reference_factory_);
   // TODO(oshima): This is a stopgap fix so that the compositor does not
   // scaledown the content when 2x frame data is added to 1x parent frame data.
   // Fix this in cc/.
@@ -318,7 +289,22 @@ void ChildFrameCompositingHelper::SetFallbackSurfaceInfo(
 
   viz::SurfaceInfo modified_surface_info(surface_info.id(), scale_factor,
                                          surface_info.size_in_pixels());
-  surface_layer_->SetFallbackSurfaceInfo(modified_surface_info);
+  surface_layer->SetPrimarySurfaceInfo(modified_surface_info);
+  surface_layer->SetFallbackSurfaceInfo(modified_surface_info);
+  surface_layer->SetMasksToBounds(true);
+  std::unique_ptr<cc_blink::WebLayerImpl> layer(
+      new cc_blink::WebLayerImpl(surface_layer));
+  // TODO(lfg): Investigate if it's possible to propagate the information about
+  // the child surface's opacity. https://crbug.com/629851.
+  layer->SetOpaque(false);
+  layer->SetContentsOpaqueIsFixed(true);
+  UpdateWebLayer(std::move(layer));
+
+  UpdateVisibility(true);
+
+  CheckSizeAndAdjustLayerProperties(
+      surface_info.size_in_pixels(), surface_info.device_scale_factor(),
+      static_cast<cc_blink::WebLayerImpl*>(web_layer_.get())->layer());
 }
 
 void ChildFrameCompositingHelper::UpdateVisibility(bool visible) {

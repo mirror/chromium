@@ -241,7 +241,7 @@ void PhysicalWebProvider::ConstructZeroSuggestMatches(
 
     match.fill_into_edit =
         AutocompleteInput::FormattedStringWithEquivalentMeaning(
-            url, url_formatter::FormatUrl(url), client_->GetSchemeClassifier());
+            url, match.contents, client_->GetSchemeClassifier());
 
     match.description = title;
     match.description_class.push_back(

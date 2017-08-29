@@ -8,7 +8,6 @@
 #include "base/macros.h"
 #include "base/memory/singleton.h"
 #include "base/process/process.h"
-#include "base/trace_event/memory_dump_provider.h"
 #include "build/build_config.h"
 #include "chrome/common/chrome_features.h"
 #include "chrome/common/profiling/memlog.mojom.h"
@@ -44,8 +43,7 @@ namespace profiling {
 // TODO(ajwong): This host class seems over kill at this point. Can this be
 // fully subsumed by the ProfilingService class?
 class ProfilingProcessHost : public content::BrowserChildProcessObserver,
-                             content::NotificationObserver,
-                             base::trace_event::MemoryDumpProvider {
+                             content::NotificationObserver {
  public:
   enum class Mode {
     // No profiling enabled.
@@ -73,10 +71,6 @@ class ProfilingProcessHost : public content::BrowserChildProcessObserver,
   // memory data to the given file.
   void RequestProcessDump(base::ProcessId pid, const base::FilePath& dest);
 
-  // Sends a message to the profiling process that it report the given process'
-  // memory data to the crash server (slow-report).
-  void RequestProcessReport(base::ProcessId pid);
-
  private:
   friend struct base::DefaultSingletonTraits<ProfilingProcessHost>;
   ProfilingProcessHost();
@@ -96,13 +90,6 @@ class ProfilingProcessHost : public content::BrowserChildProcessObserver,
                const content::NotificationSource& source,
                const content::NotificationDetails& details) override;
 
-  // base::trace_event::MemoryDumpProvider
-  bool OnMemoryDump(const base::trace_event::MemoryDumpArgs& args,
-                    base::trace_event::ProcessMemoryDump* pmd) override;
-
-  void OnDumpProcessForTracingCallback(mojo::ScopedSharedBufferHandle buffer,
-                                       uint32_t size);
-
   // Starts the profiling process.
   void LaunchAsService();
 
@@ -115,25 +102,18 @@ class ProfilingProcessHost : public content::BrowserChildProcessObserver,
                                mojo::ScopedHandle handle);
 
   void GetOutputFileOnBlockingThread(base::ProcessId pid,
-                                     const base::FilePath& dest,
-                                     bool upload);
-  void HandleDumpProcessOnIOThread(base::ProcessId pid,
-                                   base::FilePath file_path,
-                                   base::File file,
-                                   bool upload);
-  void OnProcessDumpComplete(base::FilePath file_path,
-                             bool upload,
-                             bool success);
+                                     const base::FilePath& dest);
+  void HandleDumpProcessOnIOThread(base::ProcessId pid, base::File file);
 
   void SetMode(Mode mode);
-
-  // Returns the metadata for the trace. This is the minimum amount of metadata
-  // needed to symbolize the trace.
-  std::unique_ptr<base::DictionaryValue> GetMetadataJSONForTrace();
 
   content::NotificationRegistrar registrar_;
   std::unique_ptr<service_manager::Connector> connector_;
   mojom::MemlogPtr memlog_;
+
+  // Handles profiling for the current process, without connecting to any
+  // service manager interfaces.
+  profiling::MemlogClient memlog_client_;
 
   // The mode determines which processes should be profiled.
   Mode mode_;

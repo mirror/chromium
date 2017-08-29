@@ -213,13 +213,6 @@ void RenderFrameProxy::Init(blink::WebRemoteFrame* web_frame,
   CHECK(result.second) << "Inserted a duplicate item.";
 }
 
-void RenderFrameProxy::ResendFrameRects() {
-  // Reset |frame_rect_| in order to allocate a new viz::LocalSurfaceId.
-  gfx::Rect rect = frame_rect_;
-  frame_rect_ = gfx::Rect();
-  FrameRectsChanged(rect);
-}
-
 void RenderFrameProxy::WillBeginCompositorFrame() {
   if (compositing_helper_) {
     FrameHostMsg_HittestData_Params params;
@@ -290,7 +283,6 @@ bool RenderFrameProxy::OnMessageReceived(const IPC::Message& msg) {
     IPC_MESSAGE_HANDLER(FrameMsg_ChildFrameProcessGone, OnChildFrameProcessGone)
     IPC_MESSAGE_HANDLER(FrameMsg_SetChildFrameSurface, OnSetChildFrameSurface)
     IPC_MESSAGE_HANDLER(FrameMsg_UpdateOpener, OnUpdateOpener)
-    IPC_MESSAGE_HANDLER(FrameMsg_ViewChanged, OnViewChanged)
     IPC_MESSAGE_HANDLER(FrameMsg_DidStartLoading, OnDidStartLoading)
     IPC_MESSAGE_HANDLER(FrameMsg_DidStopLoading, OnDidStopLoading)
     IPC_MESSAGE_HANDLER(FrameMsg_DidUpdateFramePolicy, OnDidUpdateFramePolicy)
@@ -346,11 +338,7 @@ void RenderFrameProxy::OnSetChildFrameSurface(
     compositing_helper_ =
         ChildFrameCompositingHelper::CreateForRenderFrameProxy(this);
   }
-  // TODO(fsamuel): When surface synchronization is enabled, only set the
-  // fallback here. The primary should be updated on resize/device scale factor
-  // change.
-  compositing_helper_->SetPrimarySurfaceInfo(surface_info);
-  compositing_helper_->SetFallbackSurfaceInfo(surface_info, sequence);
+  compositing_helper_->OnSetSurface(surface_info, sequence);
 }
 
 void RenderFrameProxy::OnUpdateOpener(int opener_routing_id) {
@@ -360,12 +348,6 @@ void RenderFrameProxy::OnUpdateOpener(int opener_routing_id) {
 
 void RenderFrameProxy::OnDidStartLoading() {
   web_frame_->DidStartLoading();
-}
-
-void RenderFrameProxy::OnViewChanged() {
-  // Resend the FrameRects and allocate a new viz::LocalSurfaceId when the view
-  // changes.
-  ResendFrameRects();
 }
 
 void RenderFrameProxy::OnDidStopLoading() {
@@ -521,17 +503,11 @@ void RenderFrameProxy::Navigate(const blink::WebURLRequest& request,
 
 void RenderFrameProxy::FrameRectsChanged(const blink::WebRect& frame_rect) {
   gfx::Rect rect = frame_rect;
-  if (frame_rect_.size() != rect.size() || !local_surface_id_.is_valid())
-    local_surface_id_ = local_surface_id_allocator_.GenerateId();
-
-  frame_rect_ = rect;
-
   if (IsUseZoomForDSFEnabled()) {
     rect = gfx::ScaleToEnclosingRect(
         rect, 1.f / render_widget_->GetOriginalDeviceScaleFactor());
   }
-
-  Send(new FrameHostMsg_FrameRectChanged(routing_id_, rect, local_surface_id_));
+  Send(new FrameHostMsg_FrameRectChanged(routing_id_, rect));
 }
 
 void RenderFrameProxy::UpdateRemoteViewportIntersection(

@@ -1287,11 +1287,12 @@ TEST_F(FilePathTest, ContentUriTest) {
 }
 #endif
 
-// Test the operator<<(ostream, FilePath).
-TEST_F(FilePathTest, PrintToOstream) {
+// Test the PrintTo overload for FilePath (used when a test fails to compare two
+// FilePaths).
+TEST_F(FilePathTest, PrintTo) {
   std::stringstream ss;
   FilePath fp(FPL("foo"));
-  ss << fp;
+  base::PrintTo(fp, &ss);
   EXPECT_EQ("foo", ss.str());
 }
 

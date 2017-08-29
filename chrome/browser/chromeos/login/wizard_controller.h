@@ -177,8 +177,7 @@ class WizardController : public BaseScreenDelegate,
   void OnWrongHWIDWarningSkipped();
   void OnTermsOfServiceDeclined();
   void OnTermsOfServiceAccepted();
-  void OnArcTermsOfServiceSkipped();
-  void OnArcTermsOfServiceAccepted();
+  void OnArcTermsOfServiceFinished();
   void OnVoiceInteractionValuePropSkipped();
   void OnVoiceInteractionValuePropAccepted();
   void OnControllerPairingFinished();

@@ -34,7 +34,6 @@ import org.chromium.base.VisibleForTesting;
 import org.chromium.chrome.R;
 import org.chromium.chrome.browser.toolbar.ActionModeController;
 import org.chromium.chrome.browser.toolbar.ToolbarActionModeCallback;
-import org.chromium.chrome.browser.util.FeatureUtilities;
 import org.chromium.chrome.browser.widget.NumberRollView;
 import org.chromium.chrome.browser.widget.TintedDrawable;
 import org.chromium.chrome.browser.widget.TintedImageButton;
@@ -114,7 +113,6 @@ public class SelectableListToolbar<E> extends Toolbar implements SelectionObserv
     private TintedImageButton mClearTextButton;
     private SearchDelegate mSearchDelegate;
     private boolean mIsLightTheme = true;
-    private boolean mSelectableListHasItems;
 
     protected NumberRollView mNumberRollView;
     private DrawerLayout mDrawerLayout;
@@ -135,7 +133,6 @@ public class SelectableListToolbar<E> extends Toolbar implements SelectionObserv
 
     private UiConfig mUiConfig;
     private int mWideDisplayStartOffsetPx;
-    private int mModernSearchViewStartOffsetPx;
 
     private boolean mIsDestroyed;
 
@@ -202,10 +199,6 @@ public class SelectableListToolbar<E> extends Toolbar implements SelectionObserv
                 R.drawable.btn_menu);
         mSelectionMenuButton = TintedDrawable.constructTintedDrawable(getResources(),
                 R.drawable.btn_menu, android.R.color.white);
-
-        if (!FeatureUtilities.isChromeHomeModernEnabled()) {
-            setTitleTextAppearance(getContext(), R.style.BlackHeadline2);
-        }
     }
 
     /**
@@ -253,14 +246,6 @@ public class SelectableListToolbar<E> extends Toolbar implements SelectionObserv
                 mSearchEditText.setText("");
             }
         });
-
-        if (FeatureUtilities.isChromeHomeModernEnabled()) {
-            mClearTextButton.setPadding(ApiCompatibilityUtils.getPaddingStart(mClearTextButton),
-                    mClearTextButton.getPaddingTop(),
-                    getResources().getDimensionPixelSize(
-                            R.dimen.selectable_list_layout_row_padding),
-                    mClearTextButton.getPaddingBottom());
-        }
     }
 
     @Override
@@ -431,10 +416,8 @@ public class SelectableListToolbar<E> extends Toolbar implements SelectionObserv
      */
     protected void onDataChanged(int numItems) {
         if (mHasSearchView) {
-            mSelectableListHasItems = numItems != 0;
-            getMenu()
-                    .findItem(mSearchMenuItemId)
-                    .setVisible(!mIsSelectionEnabled && !mIsSearching && mSelectableListHasItems);
+            getMenu().findItem(mSearchMenuItemId).setVisible(
+                    !mIsSelectionEnabled && !mIsSearching && numItems != 0);
         }
     }
 
@@ -468,8 +451,6 @@ public class SelectableListToolbar<E> extends Toolbar implements SelectionObserv
     public void configureWideDisplayStyle(UiConfig uiConfig) {
         mWideDisplayStartOffsetPx =
                 getResources().getDimensionPixelSize(R.dimen.toolbar_wide_display_start_offset);
-        mModernSearchViewStartOffsetPx = getResources().getDimensionPixelSize(
-                R.dimen.toolbar_modern_search_view_start_offset);
 
         mUiConfig = uiConfig;
         mUiConfig.addObserver(this);
@@ -481,9 +462,6 @@ public class SelectableListToolbar<E> extends Toolbar implements SelectionObserv
         int padding =
                 SelectableListLayout.getPaddingForDisplayStyle(newDisplayStyle, getResources());
         int paddingStartOffset = 0;
-        boolean isModernSearchViewEnabled = mIsSearching && !mIsSelectionEnabled
-                && FeatureUtilities.isChromeHomeModernEnabled();
-        MarginLayoutParams params = (MarginLayoutParams) getLayoutParams();
 
         if (newDisplayStyle.horizontal == HorizontalDisplayStyle.WIDE
                 && !(mIsSearching || mIsSelectionEnabled
@@ -491,20 +469,6 @@ public class SelectableListToolbar<E> extends Toolbar implements SelectionObserv
             // The title in the wide display should be aligned with the texts of the list elements.
             paddingStartOffset = mWideDisplayStartOffsetPx;
         }
-
-        // The margin instead of padding will be set to adjust the modern search view background
-        // in search mode.
-        if (newDisplayStyle.horizontal == HorizontalDisplayStyle.WIDE
-                && isModernSearchViewEnabled) {
-            params.setMargins(padding, params.topMargin, padding, params.bottomMargin);
-            padding = 0;
-        } else {
-            params.setMargins(0, params.topMargin, 0, params.bottomMargin);
-        }
-        setLayoutParams(params);
-
-        // Navigation button should have more padding start in the modern search view.
-        if (isModernSearchViewEnabled) paddingStartOffset += mModernSearchViewStartOffsetPx;
 
         ApiCompatibilityUtils.setPaddingRelative(this, padding + paddingStartOffset,
                 this.getPaddingTop(), padding, this.getPaddingBottom());
@@ -554,10 +518,7 @@ public class SelectableListToolbar<E> extends Toolbar implements SelectionObserv
     protected void showNormalView() {
         getMenu().setGroupVisible(mNormalGroupResId, true);
         getMenu().setGroupVisible(mSelectedGroupResId, false);
-        if (mHasSearchView) {
-            mSearchView.setVisibility(View.GONE);
-            getMenu().findItem(mSearchMenuItemId).setVisible(mSelectableListHasItems);
-        }
+        if (mHasSearchView) mSearchView.setVisibility(View.GONE);
 
         setNavigationButton(NAVIGATION_BUTTON_MENU);
         setBackgroundColor(mNormalBackgroundColor);
@@ -595,11 +556,7 @@ public class SelectableListToolbar<E> extends Toolbar implements SelectionObserv
         mSearchView.setVisibility(View.VISIBLE);
 
         setNavigationButton(NAVIGATION_BUTTON_BACK);
-        if (FeatureUtilities.isChromeHomeModernEnabled()) {
-            setBackgroundResource(R.drawable.search_toolbar_modern_bg);
-        } else {
-            setBackgroundColor(mSearchBackgroundColor);
-        }
+        setBackgroundColor(mSearchBackgroundColor);
 
         onThemeChanged(true);
         updateDisplayStyleIfNecessary();

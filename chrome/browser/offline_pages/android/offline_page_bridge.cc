@@ -17,7 +17,6 @@
 #include "base/bind.h"
 #include "base/logging.h"
 #include "base/memory/ptr_util.h"
-#include "chrome/browser/android/tab_android.h"
 #include "chrome/browser/offline_pages/offline_page_mhtml_archiver.h"
 #include "chrome/browser/offline_pages/offline_page_model_factory.h"
 #include "chrome/browser/offline_pages/offline_page_utils.h"
@@ -283,18 +282,6 @@ ScopedJavaLocalRef<jobject> OfflinePageBridge::ConvertToJavaOfflinePage(
   return ToJavaOfflinePageItem(env, offline_page);
 }
 
-// static
-std::string OfflinePageBridge::GetEncodedOriginApp(
-    const content::WebContents* web_contents) {
-  TabAndroid* tab = TabAndroid::FromWebContents(web_contents);
-  if (!tab)
-    return "";
-  JNIEnv* env = base::android::AttachCurrentThread();
-  return ConvertJavaStringToUTF8(
-      env,
-      Java_OfflinePageBridge_getEncodedOriginApp(env, tab->GetJavaObject()));
-}
-
 OfflinePageBridge::OfflinePageBridge(JNIEnv* env,
                                      content::BrowserContext* browser_context,
                                      OfflinePageModel* offline_page_model)
@@ -514,13 +501,13 @@ void OfflinePageBridge::SelectPageForOnlineUrl(
       base::Bind(&SingleOfflinePageItemCallback, j_callback_ref));
 }
 
-void OfflinePageBridge::SavePage(JNIEnv* env,
-                                 const JavaParamRef<jobject>& obj,
-                                 const JavaParamRef<jobject>& j_callback_obj,
-                                 const JavaParamRef<jobject>& j_web_contents,
-                                 const JavaParamRef<jstring>& j_namespace,
-                                 const JavaParamRef<jstring>& j_client_id,
-                                 const JavaParamRef<jstring>& j_origin) {
+void OfflinePageBridge::SavePage(
+    JNIEnv* env,
+    const JavaParamRef<jobject>& obj,
+    const JavaParamRef<jobject>& j_callback_obj,
+    const JavaParamRef<jobject>& j_web_contents,
+    const JavaParamRef<jstring>& j_namespace,
+    const JavaParamRef<jstring>& j_client_id) {
   DCHECK(j_callback_obj);
   DCHECK(j_web_contents);
 
@@ -541,7 +528,6 @@ void OfflinePageBridge::SavePage(JNIEnv* env,
       ConvertJavaStringToUTF8(env, j_namespace);
   save_page_params.client_id.id = ConvertJavaStringToUTF8(env, j_client_id);
   save_page_params.is_background = false;
-  save_page_params.request_origin = ConvertJavaStringToUTF8(env, j_origin);
 
   offline_page_model_->SavePage(
       save_page_params, std::move(archiver),
@@ -553,7 +539,6 @@ void OfflinePageBridge::SavePageLater(JNIEnv* env,
                                       const JavaParamRef<jstring>& j_url,
                                       const JavaParamRef<jstring>& j_namespace,
                                       const JavaParamRef<jstring>& j_client_id,
-                                      const JavaParamRef<jstring>& j_origin,
                                       jboolean user_requested) {
   offline_pages::ClientId client_id;
   client_id.name_space = ConvertJavaStringToUTF8(env, j_namespace);
@@ -569,7 +554,6 @@ void OfflinePageBridge::SavePageLater(JNIEnv* env,
   params.user_requested = static_cast<bool>(user_requested);
   params.availability =
       RequestCoordinator::RequestAvailability::ENABLED_FOR_OFFLINER;
-  params.request_origin = ConvertJavaStringToUTF8(env, j_origin);
   coordinator->SavePageLater(params);
 }
 

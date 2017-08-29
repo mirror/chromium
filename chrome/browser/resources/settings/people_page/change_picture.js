@@ -199,7 +199,6 @@ Polymer({
    */
   onPhotoTaken_: function(event) {
     this.browserProxy_.photoTaken(event.detail.photoDataUrl);
-    this.pictureList_.setOldImageUrl(event.detail.photoDataUrl);
     this.pictureList_.setFocus();
     announceAccessibleMessage(
         loadTimeData.getString('photoCaptureAccessibleText'));
@@ -218,9 +217,7 @@ Polymer({
 
   /** @private */
   onDiscardImage_: function() {
-    this.pictureList_.setOldImageUrl(CrPicture.kDefaultImageUrl);
-    // Revert to profile image as we don't know what last used default image is.
-    this.browserProxy_.selectProfileImage();
+    this.pictureList_.setOldImageUrl('');
     announceAccessibleMessage(this.i18n('photoDiscardAccessibleText'));
   },
 

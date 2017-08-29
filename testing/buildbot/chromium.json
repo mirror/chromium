@@ -37,16 +37,5 @@
         "script": "checkbins.py"
       }
     ]
-  },
-  "Win x64": {
-    "additional_compile_targets": [
-      "all"
-    ],
-    "scripts": [
-      {
-        "name": "checkbins",
-        "script": "checkbins.py"
-      }
-    ]
   }
 }

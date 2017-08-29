@@ -14,11 +14,10 @@
 
 namespace printing {
 
-enum class SkiaDocumentType {
-  PDF,
+enum SkiaDocumentType {
+  PDF_SKIA_DOCUMENT_TYPE,
   // MSKP is an experimental, fragile, and diagnostic-only document type.
-  MSKP,
-  MAX = MSKP
+  MSKP_SKIA_DOCUMENT_TYPE,
 };
 
 sk_sp<SkDocument> MakePdfDocument(const std::string& creator,

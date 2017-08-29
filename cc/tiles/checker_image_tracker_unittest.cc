@@ -55,7 +55,7 @@ class TestImageController : public ImageController {
     ImageDecodeRequestId request_id = next_image_request_id_++;
 
     decoded_images_.push_back(image);
-    decodes_requested_.insert(image.paint_image().unique_id());
+    decodes_requested_.insert(image.image()->uniqueID());
     locked_images_.insert(request_id);
 
     // Post the callback asynchronously to match the behaviour in
@@ -85,7 +85,7 @@ class CheckerImageTrackerTest : public testing::Test,
 
   void SetUpTracker(bool checker_images_enabled) {
     size_t size_to_checker = 512 * 1024;
-    checker_image_tracker_ = std::make_unique<CheckerImageTracker>(
+    checker_image_tracker_ = base::MakeUnique<CheckerImageTracker>(
         &image_controller_, this, checker_images_enabled, size_to_checker);
     checker_image_tracker_->SetMaxDecodePriorityAllowed(
         CheckerImageTracker::DecodeType::kPreDecode);
@@ -112,10 +112,11 @@ class CheckerImageTrackerTest : public testing::Test,
         break;
     }
 
-    auto generator = CreatePaintImageGenerator(gfx::Size(dimension, dimension));
+    sk_sp<SkImage> image =
+        CreateDiscardableImage(gfx::Size(dimension, dimension));
     return DrawImage(PaintImageBuilder()
                          .set_id(PaintImage::GetNextId())
-                         .set_paint_image_generator(std::move(generator))
+                         .set_image(std::move(image))
                          .set_animation_type(animation)
                          .set_completion_state(completion)
                          .set_frame_count(1)
@@ -321,8 +322,8 @@ TEST_F(CheckerImageTrackerTest, CancelsScheduledDecodes) {
   // Only the first image in the queue should have been decoded.
   EXPECT_EQ(image_controller_.decodes_requested().size(), 1U);
   EXPECT_EQ(
-      image_controller_.decodes_requested().count(static_cast<PaintImage::Id>(
-          checkerable_image1.paint_image().unique_id())),
+      image_controller_.decodes_requested().count(
+          static_cast<PaintImage::Id>(checkerable_image1.image()->uniqueID())),
       1U);
 
   // Rebuild the queue before the tracker is notified of decode completion,
@@ -341,8 +342,8 @@ TEST_F(CheckerImageTrackerTest, CancelsScheduledDecodes) {
   // pending at a time.
   EXPECT_EQ(image_controller_.decodes_requested().size(), 1U);
   EXPECT_EQ(
-      image_controller_.decodes_requested().count(static_cast<PaintImage::Id>(
-          checkerable_image1.paint_image().unique_id())),
+      image_controller_.decodes_requested().count(
+          static_cast<PaintImage::Id>(checkerable_image1.image()->uniqueID())),
       1U);
 
   // Trigger completion for all decodes. Only 2 images should have been decoded
@@ -350,8 +351,8 @@ TEST_F(CheckerImageTrackerTest, CancelsScheduledDecodes) {
   base::RunLoop().RunUntilIdle();
   EXPECT_EQ(image_controller_.decodes_requested().size(), 2U);
   EXPECT_EQ(
-      image_controller_.decodes_requested().count(static_cast<PaintImage::Id>(
-          checkerable_image3.paint_image().unique_id())),
+      image_controller_.decodes_requested().count(
+          static_cast<PaintImage::Id>(checkerable_image3.image()->uniqueID())),
       1U);
   EXPECT_EQ(image_controller_.num_of_locked_images(), 2);
 }
@@ -433,15 +434,15 @@ TEST_F(CheckerImageTrackerTest, CheckersOnlyStaticCompletedImages) {
 
   // Change the partial image to complete and try again. It should sstill not
   // be checkered.
-  gfx::Size image_size = gfx::Size(partial_image.paint_image().width(),
-                                   partial_image.paint_image().height());
-  DrawImage completed_paint_image = DrawImage(
-      PaintImageBuilder()
-          .set_id(partial_image.paint_image().stable_id())
-          .set_paint_image_generator(CreatePaintImageGenerator(image_size))
-          .TakePaintImage(),
-      SkIRect::MakeWH(image_size.width(), image_size.height()),
-      kNone_SkFilterQuality, SkMatrix::I(), gfx::ColorSpace());
+  gfx::Size image_size = gfx::Size(partial_image.image()->width(),
+                                   partial_image.image()->height());
+  DrawImage completed_paint_image =
+      DrawImage(PaintImageBuilder()
+                    .set_id(partial_image.paint_image().stable_id())
+                    .set_image(CreateDiscardableImage(image_size))
+                    .TakePaintImage(),
+                SkIRect::MakeWH(image_size.width(), image_size.height()),
+                kNone_SkFilterQuality, SkMatrix::I(), gfx::ColorSpace());
   EXPECT_FALSE(checker_image_tracker_->ShouldCheckerImage(
       completed_paint_image, WhichTree::PENDING_TREE));
 }
@@ -550,7 +551,7 @@ TEST_F(CheckerImageTrackerTest, UseSrcRectForSize) {
   // be checkered.
   DrawImage image = CreateImage(ImageType::CHECKERABLE);
   image = DrawImage(image.paint_image(), SkIRect::MakeWH(200, 200),
-                    image.filter_quality(), SkMatrix::I(),
+                    image.filter_quality(), image.matrix(),
                     image.target_color_space());
   EXPECT_FALSE(checker_image_tracker_->ShouldCheckerImage(
       image, WhichTree::PENDING_TREE));

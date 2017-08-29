@@ -308,11 +308,8 @@ class NetworkingPrivateApiTest : public ApiUnitTest {
   void OnShillError(const base::Closure& callback,
                     const std::string& error_name,
                     std::unique_ptr<base::DictionaryValue> error_data) {
-    ADD_FAILURE() << "Error calling shill client " << error_name << " ";
-    if (error_data)
-      ADD_FAILURE() << *error_data;
-    else
-      ADD_FAILURE() << base::DictionaryValue();
+    ADD_FAILURE() << "Error calling shill client " << error_name << " "
+                  << (error_data ? *error_data : base::DictionaryValue());
     callback.Run();
   }
 

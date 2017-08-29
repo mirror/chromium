@@ -185,9 +185,7 @@ class TetherServiceTest : public chromeos::NetworkStateTest {
     mock_adapter_ =
         make_scoped_refptr(new NiceMock<MockExtendedBluetoothAdapter>());
     SetIsBluetoothPowered(true);
-    is_adapter_present_ = true;
-    ON_CALL(*mock_adapter_, IsPresent())
-        .WillByDefault(Invoke(this, &TetherServiceTest::IsBluetoothPresent));
+    ON_CALL(*mock_adapter_, IsPresent()).WillByDefault(Return(true));
     ON_CALL(*mock_adapter_, IsPowered())
         .WillByDefault(Invoke(this, &TetherServiceTest::IsBluetoothPowered));
     device::BluetoothAdapterFactory::SetAdapterForTesting(mock_adapter_);
@@ -265,9 +263,6 @@ class TetherServiceTest : public chromeos::NetworkStateTest {
       observer.AdapterPoweredChanged(mock_adapter_.get(), powered);
   }
 
-  void set_is_adapter_present(bool present) { is_adapter_present_ = present; }
-
-  bool IsBluetoothPresent() { return is_adapter_present_; }
   bool IsBluetoothPowered() { return is_adapter_powered_; }
 
   void DisconnectDefaultShillNetworks() {
@@ -301,7 +296,6 @@ class TetherServiceTest : public chromeos::NetworkStateTest {
   std::unique_ptr<cryptauth::FakeCryptAuthService> fake_cryptauth_service_;
 
   scoped_refptr<MockExtendedBluetoothAdapter> mock_adapter_;
-  bool is_adapter_present_;
   bool is_adapter_powered_;
 
   std::unique_ptr<TestTetherService> tether_service_;
@@ -522,20 +516,6 @@ TEST_F(TetherServiceTest, TestProhibitedByPolicy) {
       TetherService::TetherFeatureState::PROHIBITED);
 }
 
-TEST_F(TetherServiceTest, TestBluetoothNotPresent) {
-  set_is_adapter_present(false);
-
-  CreateTetherService();
-
-  EXPECT_EQ(
-      chromeos::NetworkStateHandler::TechnologyState::TECHNOLOGY_UNAVAILABLE,
-      network_state_handler()->GetTechnologyState(
-          chromeos::NetworkTypePattern::Tether()));
-
-  ShutdownAndVerifyFinalTetherFeatureState(
-      TetherService::TetherFeatureState::BLE_NOT_PRESENT);
-}
-
 TEST_F(TetherServiceTest, TestIsBluetoothPowered) {
   SetIsBluetoothPowered(false);
 
@@ -743,17 +723,6 @@ TEST_F(TetherServiceTest, TestBluetoothNotification) {
   // still *not* be available. It should only be shown when the service starts
   // up or when the network has been disconnected.
   SetIsBluetoothPowered(false);
-  EXPECT_FALSE(
-      fake_notification_presenter_->is_enable_bluetooth_notification_shown());
-
-  // Now, start connecting to the default Ethernet network. The notification
-  // still should not be shown.
-  SetServiceProperty(
-      network_state_handler()
-          ->GetNetworkStateFromGuid(
-              chromeos::FakeShillManagerClient::kFakeEthernetNetworkGuid)
-          ->path(),
-      shill::kStateProperty, base::Value(shill::kStateConfiguration));
   EXPECT_FALSE(
       fake_notification_presenter_->is_enable_bluetooth_notification_shown());
 

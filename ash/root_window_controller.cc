@@ -36,6 +36,7 @@
 #include "ash/wallpaper/wallpaper_delegate.h"
 #include "ash/wallpaper/wallpaper_widget_controller.h"
 #include "ash/wm/always_on_top_controller.h"
+#include "ash/wm/boot_splash_screen_chromeos.h"
 #include "ash/wm/container_finder.h"
 #include "ash/wm/fullscreen_window_finder.h"
 #include "ash/wm/lock_action_handler_layout_manager.h"
@@ -87,6 +88,12 @@
 
 namespace ash {
 namespace {
+
+// Duration for the animation that hides the boot splash screen, in
+// milliseconds.  This should be short enough in relation to
+// wm/window_animation.cc's brightness/grayscale fade animation that the login
+// wallpaper image animation isn't hidden by the splash screen animation.
+const int kBootSplashScreenHideDurationMs = 500;
 
 bool IsWindowAboveContainer(aura::Window* window,
                             aura::Window* blocking_container) {
@@ -276,13 +283,13 @@ std::vector<RootWindowController*>*
 
 RootWindowController::~RootWindowController() {
   Shutdown();
-  DCHECK(!animating_wallpaper_widget_controller_.get());
-  DCHECK(!wallpaper_widget_controller_.get());
   ash_host_.reset();
   mus_window_tree_host_.reset();
   // The CaptureClient needs to be around for as long as the RootWindow is
   // valid.
   capture_client_.reset();
+  if (animating_wallpaper_widget_controller_.get())
+    animating_wallpaper_widget_controller_->StopAnimating();
   root_window_controllers_->erase(std::find(root_window_controllers_->begin(),
                                             root_window_controllers_->end(),
                                             this));
@@ -461,9 +468,21 @@ void RootWindowController::SetAnimatingWallpaperWidgetController(
   animating_wallpaper_widget_controller_.reset(controller);
 }
 
+void RootWindowController::OnInitialWallpaperAnimationStarted() {
+  if (base::CommandLine::ForCurrentProcess()->HasSwitch(
+          switches::kAshAnimateFromBootSplashScreen) &&
+      boot_splash_screen_.get()) {
+    // Make the splash screen fade out so it doesn't obscure the wallpaper's
+    // brightness/grayscale animation.
+    boot_splash_screen_->StartHideAnimation(
+        base::TimeDelta::FromMilliseconds(kBootSplashScreenHideDurationMs));
+  }
+}
+
 void RootWindowController::OnWallpaperAnimationFinished(views::Widget* widget) {
   // Make sure the wallpaper is visible.
   system_wallpaper_->SetColor(SK_ColorBLACK);
+  boot_splash_screen_.reset();
   Shell::Get()->wallpaper_delegate()->OnWallpaperAnimationFinished();
   // Only removes old component when wallpaper animation finished. If we
   // remove the old one before the new wallpaper is done fading in there will
@@ -483,9 +502,6 @@ void RootWindowController::Shutdown() {
   touch_exploration_manager_.reset();
 
   ResetRootForNewWindowsIfNecessary();
-
-  SetAnimatingWallpaperWidgetController(nullptr);
-  wallpaper_widget_controller_.reset();
 
   CloseChildWindows();
   aura::Window* root_window = GetRootWindow();
@@ -984,6 +1000,15 @@ void RootWindowController::CreateSystemWallpaper(
     color = kChromeOsBootColor;
   system_wallpaper_.reset(
       new SystemWallpaperController(GetRootWindow(), color));
+
+  // Make a copy of the system's boot splash screen so we can composite it
+  // onscreen until the wallpaper is ready.
+  if (is_boot_splash_screen &&
+      (base::CommandLine::ForCurrentProcess()->HasSwitch(
+           switches::kAshCopyHostBackgroundAtBoot) ||
+       base::CommandLine::ForCurrentProcess()->HasSwitch(
+           switches::kAshAnimateFromBootSplashScreen)))
+    boot_splash_screen_.reset(new BootSplashScreen(GetHost()));
 }
 
 void RootWindowController::EnableTouchHudProjection() {

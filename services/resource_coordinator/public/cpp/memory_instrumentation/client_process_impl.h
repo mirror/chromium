@@ -70,7 +70,7 @@ class SERVICES_RESOURCE_COORDINATOR_PUBLIC_CPP_EXPORT ClientProcessImpl
       const base::trace_event::MemoryDumpRequestArgs& req_args,
       bool success,
       uint64_t dump_guid,
-      std::unique_ptr<base::trace_event::ProcessMemoryDump>);
+      const base::trace_event::ProcessMemoryDumpsMap&);
 
   // mojom::ClientProcess implementation. The Coordinator calls this.
   void RequestOSMemoryDump(

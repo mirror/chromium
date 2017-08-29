@@ -4,9 +4,6 @@
 
 #import "ios/chrome/content_widget_extension/most_visited_tile_view.h"
 
-#import <NotificationCenter/NotificationCenter.h>
-
-#include "base/ios/ios_util.h"
 #import "ios/chrome/browser/ui/favicon/favicon_view.h"
 #import "ios/chrome/browser/ui/util/constraints_ui_util.h"
 
@@ -32,43 +29,24 @@ const CGFloat kTileWidth = 73;
 
 #pragma mark - Public
 
-+ (CGFloat)tileWidth {
-  return kTileWidth;
-}
-
-- (instancetype)init {
-  self = [super initWithFrame:CGRectZero];
+- (instancetype)initWithFrame:(CGRect)frame {
+  self = [super initWithFrame:frame];
   if (self) {
-    UIVibrancyEffect* labelEffect;
-    if (base::ios::IsRunningOnIOS10OrLater()) {
-      labelEffect = [UIVibrancyEffect widgetSecondaryVibrancyEffect];
-    } else {
-      labelEffect = [UIVibrancyEffect notificationCenterVibrancyEffect];
-    }
-
-    UIVisualEffectView* titleLabelEffectView =
-        [[UIVisualEffectView alloc] initWithEffect:labelEffect];
-    titleLabelEffectView.translatesAutoresizingMaskIntoConstraints = NO;
-
     _titleLabel = [[UILabel alloc] initWithFrame:CGRectZero];
     _titleLabel.textColor = [UIColor colorWithWhite:kLabelTextColor alpha:1.0];
     _titleLabel.font =
-        [UIFont preferredFontForTextStyle:UIFontTextStyleCaption2];
+        [UIFont preferredFontForTextStyle:UIFontTextStyleFootnote];
     _titleLabel.textAlignment = NSTextAlignmentCenter;
     _titleLabel.isAccessibilityElement = NO;
     _titleLabel.numberOfLines = kLabelNumLines;
-    _titleLabel.translatesAutoresizingMaskIntoConstraints = NO;
-    [titleLabelEffectView.contentView addSubview:_titleLabel];
-    AddSameConstraints(titleLabelEffectView, _titleLabel);
 
     _faviconView = [[FaviconViewNew alloc] init];
     _faviconView.isAccessibilityElement = NO;
     _faviconView.font =
         [UIFont preferredFontForTextStyle:UIFontTextStyleHeadline];
-    _faviconView.translatesAutoresizingMaskIntoConstraints = NO;
 
     UIStackView* stack = [[UIStackView alloc]
-        initWithArrangedSubviews:@[ _faviconView, titleLabelEffectView ]];
+        initWithArrangedSubviews:@[ _faviconView, _titleLabel ]];
     stack.axis = UILayoutConstraintAxisVertical;
     stack.spacing = kSpaceFaviconTitle;
     stack.alignment = UIStackViewAlignmentCenter;

@@ -32,14 +32,11 @@ class ResourceSettings;
 class SingleThreadTaskGraphRunner;
 class SoftwareOutputDevice;
 class SurfaceManager;
+class VulkanInProcessContextProvider;
 }
 
 namespace ui {
 class ContextProviderCommandBuffer;
-}
-
-namespace viz {
-class VulkanInProcessContextProvider;
 }
 
 namespace content {
@@ -115,7 +112,7 @@ class GpuProcessTransportFactory : public ui::ContextFactory,
   void OnLostMainThreadSharedContextInsideCallback();
   void OnLostMainThreadSharedContext();
 
-  scoped_refptr<viz::VulkanInProcessContextProvider>
+  scoped_refptr<cc::VulkanInProcessContextProvider>
   SharedVulkanContextProvider();
 
   viz::FrameSinkIdAllocator frame_sink_id_allocator_;
@@ -142,7 +139,7 @@ class GpuProcessTransportFactory : public ui::ContextFactory,
   bool disable_display_vsync_ = false;
   bool wait_for_all_pipeline_stages_before_draw_ = false;
   bool shared_vulkan_context_provider_initialized_ = false;
-  scoped_refptr<viz::VulkanInProcessContextProvider>
+  scoped_refptr<cc::VulkanInProcessContextProvider>
       shared_vulkan_context_provider_;
 
   gpu::GpuChannelEstablishFactory* gpu_channel_factory_ = nullptr;

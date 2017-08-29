@@ -333,7 +333,6 @@ void ChromeContentUtilityClient::RegisterServices(
 #endif
 
   service_manager::EmbeddedServiceInfo profiling_info;
-  profiling_info.task_runner = content::ChildThread::Get()->GetIOTaskRunner();
   profiling_info.factory =
       base::Bind(&profiling::ProfilingService::CreateService);
   services->emplace(profiling::mojom::kServiceName, profiling_info);

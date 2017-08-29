@@ -14,6 +14,7 @@
 #include "base/bind.h"
 #include "base/bind_helpers.h"
 #include "base/debug/alias.h"
+#include "base/feature_list.h"
 #include "base/location.h"
 #include "base/macros.h"
 #include "base/message_loop/message_loop.h"
@@ -29,7 +30,6 @@
 #include "ui/base/ime/input_method.h"
 #include "ui/base/ime/text_input_client.h"
 #include "ui/base/ime/text_input_type.h"
-#include "ui/base/ui_base_switches.h"
 #include "ui/base/view_prop.h"
 #include "ui/base/win/internal_constants.h"
 #include "ui/base/win/lock_state.h"
@@ -242,12 +242,15 @@ ui::EventType GetTouchEventType(POINTER_FLAGS pointer_flags) {
 
 const int kTouchDownContextResetTimeout = 500;
 
-// Windows does not flag synthesized mouse messages from touch or pen in all
-// cases. This causes us grief as we don't want to process touch and mouse
-// messages concurrently. Hack as per msdn is to check if the time difference
-// between the touch/pen message and the mouse move is within 500 ms and at the
-// same location as the cursor.
-const int kSynthesizedMouseMessagesTimeDifference = 500;
+// Windows does not flag synthesized mouse messages from touch in all cases.
+// This causes us grief as we don't want to process touch and mouse messages
+// concurrently. Hack as per msdn is to check if the time difference between
+// the touch message and the mouse move is within 500 ms and at the same
+// location as the cursor.
+const int kSynthesizedMouseTouchMessagesTimeDifference = 500;
+
+const base::Feature kDirectManipulationStylus{"DirectManipulationStylus",
+                                              base::FEATURE_ENABLED_BY_DEFAULT};
 
 }  // namespace
 
@@ -337,7 +340,7 @@ base::LazyInstance<HWNDMessageHandler::FullscreenWindowMonitorMap>::
 ////////////////////////////////////////////////////////////////////////////////
 // HWNDMessageHandler, public:
 
-long HWNDMessageHandler::last_touch_or_pen_message_time_ = 0;
+long HWNDMessageHandler::last_touch_message_time_ = 0;
 
 HWNDMessageHandler::HWNDMessageHandler(HWNDMessageHandlerDelegate* delegate)
     : msg_handled_(FALSE),
@@ -358,9 +361,8 @@ HWNDMessageHandler::HWNDMessageHandler(HWNDMessageHandlerDelegate* delegate)
       is_first_nccalc_(true),
       menu_depth_(0),
       id_generator_(0),
-      pen_processor_(
-          &id_generator_,
-          base::FeatureList::IsEnabled(features::kDirectManipulationStylus)),
+      pen_processor_(&id_generator_,
+                     base::FeatureList::IsEnabled(kDirectManipulationStylus)),
       in_size_loop_(false),
       touch_down_contexts_(0),
       last_mouse_hwheel_time_(0),
@@ -1139,11 +1141,6 @@ void HWNDMessageHandler::PostProcessActivateMessage(
     GetMonitorInfo(MonitorFromWindow(hwnd(), MONITOR_DEFAULTTOPRIMARY),
                    &monitor_info);
     SetBoundsInternal(gfx::Rect(monitor_info.rcMonitor), false);
-    // Inform the taskbar that this window is now a fullscreen window so it go
-    // behind the window in the Z-Order. The taskbar heuristics to detect
-    // fullscreen windows are not reliable. Marking it explicitly seems to work
-    // around these problems.
-    fullscreen_handler()->MarkFullscreen(true);
     background_fullscreen_hack_ = false;
   } else {
     // If the window becoming active has a fullscreen window on the same
@@ -2321,7 +2318,7 @@ LRESULT HWNDMessageHandler::OnTouchEvent(UINT message,
 
       ScreenToClient(hwnd(), &point);
 
-      last_touch_or_pen_message_time_ = ::GetMessageTime();
+      last_touch_message_time_ = ::GetMessageTime();
 
       gfx::Point touch_point(point.x, point.y);
       unsigned int touch_id = id_generator_.GetGeneratedID(input[i].dwID);
@@ -2345,7 +2342,7 @@ LRESULT HWNDMessageHandler::OnTouchEvent(UINT message,
           touch_ids_.erase(input[i].dwID);
           GenerateTouchEvent(ui::ET_TOUCH_RELEASED, touch_point, touch_id,
                              event_time, &touch_events);
-          id_generator_.MaybeReleaseNumber(input[i].dwID);
+          id_generator_.ReleaseNumber(input[i].dwID);
         }
       }
     }
@@ -2753,7 +2750,7 @@ LRESULT HWNDMessageHandler::HandlePointerEventTypeTouch(UINT message,
   delegate_->HandleTouchEvent(event);
 
   if (event_type == ui::ET_TOUCH_RELEASED)
-    id_generator_.MaybeReleaseNumber(pointer_id);
+    id_generator_.ReleaseNumber(pointer_id);
   if (ref)
     SetMsgHandled(TRUE);
   return 0;
@@ -2792,7 +2789,6 @@ LRESULT HWNDMessageHandler::HandlePointerEventTypePen(UINT message,
     } else {
       NOTREACHED();
     }
-    last_touch_or_pen_message_time_ = ::GetMessageTime();
   }
 
   // Always mark as handled as we don't want to generate WM_MOUSE compatiblity
@@ -2810,10 +2806,9 @@ bool HWNDMessageHandler::IsSynthesizedMouseMessage(unsigned int message,
   // Ignore mouse messages which occur at the same location as the current
   // cursor position and within a time difference of 500 ms from the last
   // touch message.
-  if (last_touch_or_pen_message_time_ &&
-      message_time >= last_touch_or_pen_message_time_ &&
-      ((message_time - last_touch_or_pen_message_time_) <=
-       kSynthesizedMouseMessagesTimeDifference)) {
+  if (last_touch_message_time_ && message_time >= last_touch_message_time_ &&
+      ((message_time - last_touch_message_time_) <=
+          kSynthesizedMouseTouchMessagesTimeDifference)) {
     POINT mouse_location = CR_POINT_INITIALIZER_FROM_LPARAM(l_param);
     ::ClientToScreen(hwnd(), &mouse_location);
     POINT cursor_pos = {0};
@@ -3010,11 +3005,6 @@ void HWNDMessageHandler::OnBackgroundFullscreen() {
   shrunk_rect.set_height(shrunk_rect.height() - 1);
   background_fullscreen_hack_ = true;
   SetBoundsInternal(shrunk_rect, false);
-  // Inform the taskbar that this window is no longer a fullscreen window so it
-  // can bring itself to the top of the Z-Order. The taskbar heuristics to
-  // detect fullscreen windows are not reliable. Marking it explicitly seems to
-  // work around these problems.
-  fullscreen_handler()->MarkFullscreen(false);
 }
 
 void HWNDMessageHandler::DestroyAXSystemCaret() {

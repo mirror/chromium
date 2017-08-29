@@ -244,10 +244,6 @@ bool WebStateImpl::IsCrashed() const {
   return [web_controller_ isWebProcessCrashed];
 }
 
-bool WebStateImpl::IsEvicted() const {
-  return ![web_controller_ isViewAlive];
-}
-
 bool WebStateImpl::IsBeingDestroyed() const {
   return is_being_destroyed_;
 }
@@ -407,10 +403,11 @@ void WebStateImpl::SendChangeLoadProgress(double progress) {
     observer.LoadProgressChanged(progress);
 }
 
-void WebStateImpl::HandleContextMenu(const web::ContextMenuParams& params) {
+bool WebStateImpl::HandleContextMenu(const web::ContextMenuParams& params) {
   if (delegate_) {
-    delegate_->HandleContextMenu(this, params);
+    return delegate_->HandleContextMenu(this, params);
   }
+  return false;
 }
 
 void WebStateImpl::ShowRepostFormWarningDialog(
@@ -494,19 +491,17 @@ void WebStateImpl::SetContentsMimeType(const std::string& mime_type) {
   mime_type_ = mime_type;
 }
 
-bool WebStateImpl::ShouldAllowRequest(NSURLRequest* request,
-                                      ui::PageTransition transition) {
+bool WebStateImpl::ShouldAllowRequest(NSURLRequest* request) {
   for (auto& policy_decider : policy_deciders_) {
-    if (!policy_decider.ShouldAllowRequest(request, transition))
+    if (!policy_decider.ShouldAllowRequest(request))
       return false;
   }
   return true;
 }
 
-bool WebStateImpl::ShouldAllowResponse(NSURLResponse* response,
-                                       bool for_main_frame) {
+bool WebStateImpl::ShouldAllowResponse(NSURLResponse* response) {
   for (auto& policy_decider : policy_deciders_) {
-    if (!policy_decider.ShouldAllowResponse(response, for_main_frame))
+    if (!policy_decider.ShouldAllowResponse(response))
       return false;
   }
   return true;
@@ -749,8 +744,11 @@ void WebStateImpl::WillChangeUserAgentType() {
   [web_controller_ requirePageReconstruction];
 }
 
-void WebStateImpl::WillLoadCurrentItemWithUrl(const GURL& url) {
-  [web_controller_ willLoadCurrentItemWithURL:url];
+void WebStateImpl::WillLoadCurrentItemWithParams(
+    const NavigationManager::WebLoadParams& params,
+    bool is_initial_navigation) {
+  [web_controller_ willLoadCurrentItemWithParams:params
+                             isInitialNavigation:is_initial_navigation];
 }
 
 void WebStateImpl::LoadCurrentItem() {

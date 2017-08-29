@@ -50,7 +50,7 @@ class TestNoBenchmarkNamesDuplication(unittest.TestCase):
 class TestBenchmarkNamingMobile(unittest.TestCase):
 
   # TODO(rnephew): This needs to be fixed after we move to CanRunOnBrowser.
-  @decorators.Disabled('all')
+  @benchmark_module.Disabled('all')
   def runTest(self):
     all_benchmarks = _GetAllPerfBenchmarks()
     names_to_benchmarks = defaultdict(list)

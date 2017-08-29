@@ -162,7 +162,7 @@ bool StructTraits<viz::mojom::TextureQuadStateDataView, cc::DrawQuad>::Read(
     return false;
   }
   quad->background_color = data.background_color();
-  base::span<float> vertex_opacity_array(quad->vertex_opacity);
+  CArray<float> vertex_opacity_array(quad->vertex_opacity);
   if (!data.ReadVertexOpacity(&vertex_opacity_array))
     return false;
 
@@ -264,7 +264,8 @@ bool StructTraits<viz::mojom::YUVVideoQuadStateDataView, cc::DrawQuad>::Read(
 bool StructTraits<viz::mojom::DrawQuadDataView, cc::DrawQuad>::Read(
     viz::mojom::DrawQuadDataView data,
     cc::DrawQuad* out) {
-  if (!data.ReadRect(&out->rect) || !data.ReadVisibleRect(&out->visible_rect)) {
+  if (!data.ReadRect(&out->rect) || !data.ReadOpaqueRect(&out->opaque_rect) ||
+      !data.ReadVisibleRect(&out->visible_rect)) {
     return false;
   }
   out->needs_blending = data.needs_blending();

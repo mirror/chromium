@@ -9,7 +9,6 @@
 
 #include "base/mac/scoped_nsobject.h"
 #import "chrome/browser/ui/cocoa/passwords/base_passwords_content_view_controller.h"
-#import "ui/base/cocoa/touch_bar_forward_declarations.h"
 
 @class PasswordsListViewController;
 
@@ -19,18 +18,13 @@
 @end
 
 // Manages the view that allows users to manage passwords for a site.
-@interface ManagePasswordsViewController
-    : BasePasswordsContentViewController<NSTouchBarDelegate> {
+@interface ManagePasswordsViewController : BasePasswordsContentViewController {
  @private
   base::scoped_nsobject<NSButton> doneButton_;
   base::scoped_nsobject<NSButton> manageButton_;
   base::scoped_nsobject<NoPasswordsView> noPasswordsView_;
   base::scoped_nsobject<PasswordsListViewController> passwordsListController_;
 }
-
-// Overridden to customize the touch bar.
-- (NSTouchBar*)makeTouchBar API_AVAILABLE(macos(10.12.2));
-
 @end
 
 @interface ManagePasswordsViewController (Testing)

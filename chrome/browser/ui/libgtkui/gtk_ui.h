@@ -24,8 +24,8 @@ typedef struct _GtkWidget GtkWidget;
 
 namespace libgtkui {
 class Gtk2KeyBindingsHandler;
+class GConfListener;
 class DeviceScaleFactorObserver;
-class NavButtonLayoutManager;
 
 // Interface to GTK2 desktop features.
 //
@@ -37,7 +37,7 @@ class GtkUi : public views::LinuxUI {
   typedef base::Callback<ui::NativeTheme*(aura::Window* window)>
       NativeThemeGetter;
 
-  // Setters used by NavButtonLayoutManager:
+  // Setters used by GConfListener:
   void SetWindowButtonOrdering(
       const std::vector<views::FrameButton>& leading_buttons,
       const std::vector<views::FrameButton>& trailing_buttons);
@@ -65,7 +65,7 @@ class GtkUi : public views::LinuxUI {
       ui::SelectFileDialog::Listener* listener,
       std::unique_ptr<ui::SelectFilePolicy> policy) const override;
 
-  // views::LinuxUI:
+  // ui::LinuxUI:
   void Initialize() override;
   bool GetTint(int id, color_utils::HSL* tint) const override;
   bool GetColor(int id, SkColor* color) const override;
@@ -99,17 +99,18 @@ class GtkUi : public views::LinuxUI {
   bool UnityIsRunning() override;
   NonClientMiddleClickAction GetNonClientMiddleClickAction() override;
   void NotifyWindowManagerStartupComplete() override;
-  void UpdateDeviceScaleFactor() override;
-  float GetDeviceScaleFactor() const override;
   void AddDeviceScaleFactorObserver(
       views::DeviceScaleFactorObserver* observer) override;
   void RemoveDeviceScaleFactorObserver(
       views::DeviceScaleFactorObserver* observer) override;
-  std::unique_ptr<views::NavButtonProvider> CreateNavButtonProvider() override;
 
   // ui::TextEditKeybindingDelegate:
   bool MatchEvent(const ui::Event& event,
                   std::vector<ui::TextEditCommandAuraLinux>* commands) override;
+
+  // ui::Views::LinuxUI:
+  void UpdateDeviceScaleFactor() override;
+  float GetDeviceScaleFactor() const override;
 
  private:
   typedef std::map<int, SkColor> ColorMap;
@@ -171,11 +172,14 @@ class GtkUi : public views::LinuxUI {
   gfx::Font::Weight default_font_weight_ = gfx::Font::Weight::NORMAL;
   gfx::FontRenderParams default_font_render_params_;
 
-  std::unique_ptr<NavButtonLayoutManager> nav_button_layout_manager_;
+#if defined(USE_GCONF)
+  // Currently, the only source of window button configuration. This will
+  // change if we ever have to support XFCE's configuration system or KDE's.
+  std::unique_ptr<GConfListener> gconf_listener_;
+#endif  // defined(USE_GCONF)
 
-  // Frame button layout state.  If |nav_buttons_set_| is false, then
-  // |leading_buttons_| and |trailing_buttons_| are meaningless.
-  bool nav_buttons_set_ = false;
+  // If either of these vectors are non-empty, they represent the current
+  // window button configuration.
   std::vector<views::FrameButton> leading_buttons_;
   std::vector<views::FrameButton> trailing_buttons_;
 

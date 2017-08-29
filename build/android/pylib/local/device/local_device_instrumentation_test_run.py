@@ -467,8 +467,7 @@ class LocalDeviceInstrumentationTestRun(
     result_code, result_bundle, statuses = (
         self._test_instance.ParseAmInstrumentRawOutput(output))
     results = self._test_instance.GenerateTestResults(
-        result_code, result_bundle, statuses, start_ms, duration_ms,
-        device.product_cpu_abi, self._test_instance.symbolizer)
+        result_code, result_bundle, statuses, start_ms, duration_ms)
 
     def restore_flags():
       if flags_to_add:
@@ -609,6 +608,7 @@ class LocalDeviceInstrumentationTestRun(
         test_package = self._test_instance.test_package
         extras = {}
         extras['log'] = 'true'
+        extras['package'] = '.'.join(test_package.split('.')[:2])
         extras[_EXTRA_TEST_LIST] = dev_test_list_json.name
         target = '%s/%s' % (test_package, junit4_runner_class)
         test_list_run_output = dev.StartInstrumentation(

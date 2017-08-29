@@ -29,7 +29,6 @@
  */
 
 #include "modules/serviceworkers/ServiceWorkerError.h"
-#include "public/platform/modules/serviceworker/service_worker_error_type.mojom-blink.h"
 
 #include "bindings/core/v8/ScriptPromiseResolver.h"
 #include "bindings/core/v8/ToV8ForCore.h"
@@ -55,61 +54,60 @@ struct ExceptionParams {
 
 ExceptionParams GetExceptionParams(const WebServiceWorkerError& web_error) {
   switch (web_error.error_type) {
-    case mojom::blink::ServiceWorkerErrorType::kAbort:
+    case WebServiceWorkerError::kErrorTypeAbort:
       return ExceptionParams(kAbortError,
                              "The Service Worker operation was aborted.",
                              web_error.message);
-    case mojom::blink::ServiceWorkerErrorType::kActivate:
+    case WebServiceWorkerError::kErrorTypeActivate:
       // Not currently returned as a promise rejection.
       // TODO: Introduce new ActivateError type to ExceptionCodes?
       return ExceptionParams(kAbortError,
                              "The Service Worker activation failed.",
                              web_error.message);
-    case mojom::blink::ServiceWorkerErrorType::kDisabled:
+    case WebServiceWorkerError::kErrorTypeDisabled:
       return ExceptionParams(kNotSupportedError,
                              "Service Worker support is disabled.",
                              web_error.message);
-    case mojom::blink::ServiceWorkerErrorType::kInstall:
+    case WebServiceWorkerError::kErrorTypeInstall:
       // TODO: Introduce new InstallError type to ExceptionCodes?
       return ExceptionParams(kAbortError,
                              "The Service Worker installation failed.",
                              web_error.message);
-    case mojom::blink::ServiceWorkerErrorType::kScriptEvaluateFailed:
+    case WebServiceWorkerError::kErrorTypeScriptEvaluateFailed:
       return ExceptionParams(kAbortError,
                              "The Service Worker script failed to evaluate.",
                              web_error.message);
-    case mojom::blink::ServiceWorkerErrorType::kNavigation:
+    case WebServiceWorkerError::kErrorTypeNavigation:
       // ErrorTypeNavigation should have bailed out before calling this.
       NOTREACHED();
       return ExceptionParams(kUnknownError);
-    case mojom::blink::ServiceWorkerErrorType::kNetwork:
+    case WebServiceWorkerError::kErrorTypeNetwork:
       return ExceptionParams(kNetworkError,
                              "The Service Worker failed by network.",
                              web_error.message);
-    case mojom::blink::ServiceWorkerErrorType::kNotFound:
+    case WebServiceWorkerError::kErrorTypeNotFound:
       return ExceptionParams(
           kNotFoundError,
           "The specified Service Worker resource was not found.",
           web_error.message);
-    case mojom::blink::ServiceWorkerErrorType::kSecurity:
+    case WebServiceWorkerError::kErrorTypeSecurity:
       return ExceptionParams(
           kSecurityError,
           "The Service Worker security policy prevented an action.",
           web_error.message);
-    case mojom::blink::ServiceWorkerErrorType::kState:
+    case WebServiceWorkerError::kErrorTypeState:
       return ExceptionParams(kInvalidStateError,
                              "The Service Worker state was not valid.",
                              web_error.message);
-    case mojom::blink::ServiceWorkerErrorType::kTimeout:
+    case WebServiceWorkerError::kErrorTypeTimeout:
       return ExceptionParams(kAbortError,
                              "The Service Worker operation timed out.",
                              web_error.message);
-    case mojom::blink::ServiceWorkerErrorType::kUnknown:
+    case WebServiceWorkerError::kErrorTypeUnknown:
       return ExceptionParams(kUnknownError,
                              "An unknown error occurred within Service Worker.",
                              web_error.message);
-    case mojom::blink::ServiceWorkerErrorType::kNone:
-    case mojom::blink::ServiceWorkerErrorType::kType:
+    case WebServiceWorkerError::kErrorTypeType:
       // ErrorTypeType should have been handled before reaching this point.
       NOTREACHED();
       return ExceptionParams(kUnknownError);
@@ -134,14 +132,14 @@ v8::Local<v8::Value> ServiceWorkerErrorForUpdate::Take(
     const WebServiceWorkerError& web_error) {
   ScriptState* script_state = resolver->GetScriptState();
   switch (web_error.error_type) {
-    case mojom::blink::ServiceWorkerErrorType::kNetwork:
-    case mojom::blink::ServiceWorkerErrorType::kNotFound:
-    case mojom::blink::ServiceWorkerErrorType::kScriptEvaluateFailed:
+    case WebServiceWorkerError::kErrorTypeNetwork:
+    case WebServiceWorkerError::kErrorTypeNotFound:
+    case WebServiceWorkerError::kErrorTypeScriptEvaluateFailed:
       // According to the spec, these errors during update should result in
       // a TypeError.
       return V8ThrowException::CreateTypeError(
           script_state->GetIsolate(), GetExceptionParams(web_error).message);
-    case mojom::blink::ServiceWorkerErrorType::kType:
+    case WebServiceWorkerError::kErrorTypeType:
       return V8ThrowException::CreateTypeError(script_state->GetIsolate(),
                                                web_error.message);
     default:

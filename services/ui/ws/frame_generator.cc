@@ -10,8 +10,8 @@
 #include "cc/output/compositor_frame.h"
 #include "cc/quads/render_pass.h"
 #include "cc/quads/render_pass_draw_quad.h"
+#include "cc/quads/shared_quad_state.h"
 #include "cc/quads/surface_draw_quad.h"
-#include "components/viz/common/quads/shared_quad_state.h"
 
 namespace ui {
 
@@ -100,11 +100,12 @@ void FrameGenerator::OnBeginFrame(const viz::BeginFrameArgs& begin_frame_args) {
 
   // TODO(fsamuel): We should add a trace for generating a top level frame.
   cc::CompositorFrame frame(GenerateCompositorFrame());
+  gfx::Size frame_size = frame.render_pass_list.back()->output_rect.size();
   if (!local_surface_id_.is_valid() ||
-      frame.size_in_pixels() != last_submitted_frame_size_ ||
-      frame.device_scale_factor() != last_device_scale_factor_) {
-    last_device_scale_factor_ = frame.device_scale_factor();
-    last_submitted_frame_size_ = frame.size_in_pixels();
+      frame_size != last_submitted_frame_size_ ||
+      frame.metadata.device_scale_factor != last_device_scale_factor_) {
+    last_device_scale_factor_ = frame.metadata.device_scale_factor;
+    last_submitted_frame_size_ = frame_size;
     local_surface_id_ = id_allocator_.GenerateId();
   }
   compositor_frame_sink_->SubmitCompositorFrame(local_surface_id_,
@@ -125,7 +126,7 @@ cc::CompositorFrame FrameGenerator::GenerateCompositorFrame() {
   if (high_contrast_mode_enabled_) {
     std::unique_ptr<cc::RenderPass> invert_pass = cc::RenderPass::Create();
     invert_pass->SetNew(2, bounds, bounds, gfx::Transform());
-    viz::SharedQuadState* shared_state =
+    cc::SharedQuadState* shared_state =
         invert_pass->CreateAndAppendSharedQuadState();
     gfx::Size scaled_bounds = gfx::ScaleToCeiledSize(
         pixel_size_, window_manager_surface_info_.device_scale_factor(),
@@ -163,7 +164,7 @@ void FrameGenerator::DrawWindow(cc::RenderPass* pass) {
   quad_to_target_transform.Translate(bounds_at_origin.x(),
                                      bounds_at_origin.y());
 
-  viz::SharedQuadState* sqs = pass->CreateAndAppendSharedQuadState();
+  cc::SharedQuadState* sqs = pass->CreateAndAppendSharedQuadState();
 
   gfx::Size scaled_bounds = gfx::ScaleToCeiledSize(
       bounds_at_origin.size(),
@@ -178,7 +179,7 @@ void FrameGenerator::DrawWindow(cc::RenderPass* pass) {
       bounds_at_origin /* clip_rect */, false /* is_clipped */,
       1.0f /* opacity */, SkBlendMode::kSrcOver, 0 /* sorting-context_id */);
   auto* quad = pass->CreateAndAppendDrawQuad<cc::SurfaceDrawQuad>();
-  quad->SetAll(sqs, bounds_at_origin /* rect */,
+  quad->SetAll(sqs, bounds_at_origin /* rect */, gfx::Rect() /* opaque_rect */,
                bounds_at_origin /* visible_rect */, true /* needs_blending*/,
                window_manager_surface_info_.id(),
                cc::SurfaceDrawQuadType::PRIMARY, nullptr);

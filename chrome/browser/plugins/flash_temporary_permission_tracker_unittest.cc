@@ -7,7 +7,6 @@
 #include "chrome/test/base/testing_profile.h"
 #include "content/public/browser/render_frame_host.h"
 #include "content/public/browser/web_contents.h"
-#include "content/public/test/navigation_simulator.h"
 #include "content/public/test/test_renderer_host.h"
 #include "content/public/test/web_contents_tester.h"
 #include "testing/gtest/include/gtest/gtest.h"
@@ -33,16 +32,23 @@ class FlashTemporaryPermissionTrackerTest
   FlashTemporaryPermissionTracker* tracker() { return tracker_.get(); }
 
   content::RenderFrameHost* GetMainRFH(const char* origin) {
-    return content::NavigationSimulator::NavigateAndCommitFromDocument(
-        GURL(origin), web_contents()->GetMainFrame());
+    content::RenderFrameHost* result = web_contents()->GetMainFrame();
+    content::RenderFrameHostTester::For(result)
+        ->InitializeRenderFrameIfNeeded();
+    content::RenderFrameHostTester::For(result)->SimulateNavigationCommit(
+        GURL(origin));
+    return result;
   }
 
   content::RenderFrameHost* AddChildRFH(content::RenderFrameHost* parent,
                                         const char* origin) {
-    content::RenderFrameHost* subframe =
+    content::RenderFrameHost* result =
         content::RenderFrameHostTester::For(parent)->AppendChild("");
-    return content::NavigationSimulator::NavigateAndCommitFromDocument(
-        GURL(origin), subframe);
+    content::RenderFrameHostTester::For(result)
+        ->InitializeRenderFrameIfNeeded();
+    content::RenderFrameHostTester::For(result)->SimulateNavigationCommit(
+        GURL(origin));
+    return result;
   }
 
  private:
@@ -78,8 +84,8 @@ TEST_F(FlashTemporaryPermissionTrackerTest, GrantSurvivesNavigations) {
   EXPECT_TRUE(tracker()->IsFlashEnabled(GURL(kOrigin1)));
 
   // Navigate to another origin. Flash should still be enabled.
-  content::NavigationSimulator::NavigateAndCommitFromDocument(GURL(kOrigin2),
-                                                              rfh);
+  content::RenderFrameHostTester::For(rfh)->SimulateNavigationCommit(
+      GURL(kOrigin2));
   EXPECT_TRUE(tracker()->IsFlashEnabled(GURL(kOrigin1)));
 }
 
@@ -93,8 +99,8 @@ TEST_F(FlashTemporaryPermissionTrackerTest,
   EXPECT_TRUE(tracker()->IsFlashEnabled(GURL(kOrigin1)));
 
   // Navigate the child frame. Flash should still be enabled after this.
-  content::NavigationSimulator::NavigateAndCommitFromDocument(GURL(kOrigin3),
-                                                              child);
+  content::RenderFrameHostTester::For(child)->SimulateNavigationCommit(
+      GURL(kOrigin3));
   EXPECT_TRUE(tracker()->IsFlashEnabled(GURL(kOrigin1)));
 }
 

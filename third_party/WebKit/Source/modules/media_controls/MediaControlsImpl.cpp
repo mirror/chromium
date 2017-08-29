@@ -44,6 +44,7 @@
 #include "core/html/track/TextTrackContainer.h"
 #include "core/html/track/TextTrackList.h"
 #include "core/layout/LayoutObject.h"
+#include "core/layout/LayoutTheme.h"
 #include "core/page/SpatialNavigation.h"
 #include "core/resize_observer/ResizeObserver.h"
 #include "core/resize_observer/ResizeObserverEntry.h"
@@ -51,7 +52,6 @@
 #include "modules/media_controls/MediaControlsOrientationLockDelegate.h"
 #include "modules/media_controls/MediaControlsRotateToFullscreenDelegate.h"
 #include "modules/media_controls/MediaControlsWindowEventListener.h"
-#include "modules/media_controls/MediaDownloadInProductHelpManager.h"
 #include "modules/media_controls/elements/MediaControlCastButtonElement.h"
 #include "modules/media_controls/elements/MediaControlCurrentTimeDisplayElement.h"
 #include "modules/media_controls/elements/MediaControlDownloadButtonElement.h"
@@ -321,16 +321,6 @@ MediaControlsImpl* MediaControlsImpl::Create(HTMLMediaElement& media_element,
             toHTMLVideoElement(media_element));
   }
 
-  // Initialize download in-product-help for video elements if enabled.
-  if (media_element.GetDocument().GetSettings() &&
-      media_element.GetDocument()
-          .GetSettings()
-          ->GetMediaDownloadInProductHelpEnabled() &&
-      media_element.IsHTMLVideoElement()) {
-    controls->download_iph_manager_ =
-        new MediaDownloadInProductHelpManager(*controls);
-  }
-
   shadow_root.AppendChild(controls);
   return controls;
 }
@@ -525,6 +515,8 @@ void MediaControlsImpl::Reset() {
   BatchedControlUpdate batch(this);
 
   const double duration = MediaElement().duration();
+  duration_display_->setTextContent(
+      LayoutTheme::GetTheme().FormatMediaControlsTime(duration));
   duration_display_->SetCurrentValue(duration);
 
   // Show everything that we might hide.
@@ -579,8 +571,6 @@ void MediaControlsImpl::MaybeShow() {
   // Only make the controls visible if they won't get hidden by OnTimeUpdate.
   if (MediaElement().paused() || !ShouldHideMediaControls())
     MakeOpaque();
-  if (download_iph_manager_)
-    download_iph_manager_->SetControlsVisibility(true);
 }
 
 void MediaControlsImpl::Hide() {
@@ -588,8 +578,6 @@ void MediaControlsImpl::Hide() {
   panel_->SetIsDisplayed(false);
   if (overlay_play_button_)
     overlay_play_button_->SetIsWanted(false);
-  if (download_iph_manager_)
-    download_iph_manager_->SetControlsVisibility(false);
 }
 
 bool MediaControlsImpl::IsVisible() const {
@@ -645,10 +633,6 @@ bool MediaControlsImpl::ShouldHideMediaControls(unsigned behavior_flags) const {
   if (text_track_list_->IsWanted() || overflow_list_->IsWanted())
     return false;
 
-  // Don't hide the media controls while the in product help is showing.
-  if (download_iph_manager_ && download_iph_manager_->IsShowingInProductHelp())
-    return false;
-
   return true;
 }
 
@@ -681,7 +665,14 @@ void MediaControlsImpl::EndScrubbing() {
 }
 
 void MediaControlsImpl::UpdateCurrentTimeDisplay() {
-  current_time_display_->SetCurrentValue(MediaElement().currentTime());
+  double now = MediaElement().currentTime();
+  double duration = MediaElement().duration();
+
+  // Allow the theme to format the time.
+  current_time_display_->setInnerText(
+      LayoutTheme::GetTheme().FormatMediaControlsCurrentTime(now, duration),
+      IGNORE_EXCEPTION_FOR_TESTING);
+  current_time_display_->SetCurrentValue(now);
 }
 
 void MediaControlsImpl::ToggleTextTrackList() {
@@ -825,7 +816,8 @@ void MediaControlsImpl::DefaultEventHandler(Event* event) {
       is_mouse_over_controls_ = true;
       if (!MediaElement().paused()) {
         MakeOpaque();
-        StartHideMediaControlsIfNecessary();
+        if (ShouldHideMediaControls())
+          StartHideMediaControlsTimer();
       }
     }
     return;
@@ -957,9 +949,9 @@ void MediaControlsImpl::OnDurationChange() {
   const double duration = MediaElement().duration();
 
   // Update the displayed current time/duration.
+  duration_display_->setTextContent(
+      LayoutTheme::GetTheme().FormatMediaControlsTime(duration));
   duration_display_->SetCurrentValue(duration);
-  // TODO(crbug.com/756698): Determine if this is still needed since the format
-  // of the current time no longer depends on the duration.
   UpdateCurrentTimeDisplay();
 
   // Update the timeline (the UI with the seek marker).
@@ -970,9 +962,6 @@ void MediaControlsImpl::OnPlay() {
   UpdatePlayState();
   timeline_->SetPosition(MediaElement().currentTime());
   UpdateCurrentTimeDisplay();
-
-  if (download_iph_manager_)
-    download_iph_manager_->SetIsPlaying(true);
 }
 
 void MediaControlsImpl::OnPlaying() {
@@ -988,9 +977,6 @@ void MediaControlsImpl::OnPause() {
   MakeOpaque();
 
   StopHideMediaControlsTimer();
-
-  if (download_iph_manager_)
-    download_iph_manager_->SetIsPlaying(false);
 }
 
 void MediaControlsImpl::OnTextTracksAddedOrRemoved() {
@@ -1043,6 +1029,14 @@ void MediaControlsImpl::NotifyElementSizeChanged(DOMRectReadOnly* new_size) {
   IntSize old_size = size_;
   size_.SetWidth(new_size->width());
   size_.SetHeight(new_size->height());
+
+  // Adjust for effective zoom.
+  if (panel_->GetLayoutObject() && panel_->GetLayoutObject()->Style()) {
+    size_.SetWidth(ceil(size_.Width() /
+                        panel_->GetLayoutObject()->Style()->EffectiveZoom()));
+    size_.SetHeight(ceil(size_.Height() /
+                         panel_->GetLayoutObject()->Style()->EffectiveZoom()));
+  }
 
   // Don't bother to do any work if this matches the most recent size.
   if (old_size != size_)
@@ -1226,24 +1220,6 @@ void MediaControlsImpl::HideAllMenus() {
     text_track_list_->SetVisible(false);
 }
 
-void MediaControlsImpl::StartHideMediaControlsIfNecessary() {
-  if (ShouldHideMediaControls())
-    StartHideMediaControlsTimer();
-}
-
-const MediaControlDownloadButtonElement& MediaControlsImpl::DownloadButton()
-    const {
-  return *download_button_;
-}
-
-void MediaControlsImpl::DidDismissDownloadInProductHelp() {
-  StartHideMediaControlsIfNecessary();
-}
-
-MediaDownloadInProductHelpManager* MediaControlsImpl::DownloadInProductHelp() {
-  return download_iph_manager_;
-}
-
 DEFINE_TRACE(MediaControlsImpl) {
   visitor->Trace(element_mutation_callback_);
   visitor->Trace(resize_observer_);
@@ -1269,7 +1245,6 @@ DEFINE_TRACE(MediaControlsImpl) {
   visitor->Trace(window_event_listener_);
   visitor->Trace(orientation_lock_delegate_);
   visitor->Trace(rotate_to_fullscreen_delegate_);
-  visitor->Trace(download_iph_manager_);
   MediaControls::Trace(visitor);
   HTMLDivElement::Trace(visitor);
 }

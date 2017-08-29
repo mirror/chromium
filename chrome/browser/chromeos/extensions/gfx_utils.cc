@@ -146,13 +146,6 @@ namespace util {
 
 bool HasEquivalentInstalledArcApp(content::BrowserContext* context,
                                   const std::string& extension_id) {
-  std::unordered_set<std::string> arc_apps;
-  return GetEquivalentInstalledArcApps(context, extension_id, &arc_apps);
-}
-
-bool GetEquivalentInstalledArcApps(content::BrowserContext* context,
-                                   const std::string& extension_id,
-                                   std::unordered_set<std::string>* arc_apps) {
   const std::string arc_package_name =
       g_dual_badge_map.Get().GetArcPackageNameFromExtensionId(extension_id);
   if (arc_package_name.empty())
@@ -164,9 +157,7 @@ bool GetEquivalentInstalledArcApps(content::BrowserContext* context,
 
   // TODO(hidehiko): The icon is per launcher, so we should have more precise
   // check here.
-  DCHECK(arc_apps);
-  prefs->GetAppsForPackage(arc_package_name).swap(*arc_apps);
-  return !arc_apps->empty();
+  return !prefs->GetAppsForPackage(arc_package_name).empty();
 }
 
 const std::vector<std::string> GetEquivalentInstalledExtensions(

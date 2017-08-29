@@ -898,8 +898,7 @@ void WebMediaPlayerMS::ResetCanvasCache() {
 }
 
 void WebMediaPlayerMS::TriggerResize() {
-  if (HasVideo())
-    get_client()->SizeChanged();
+  get_client()->SizeChanged();
 
   delegate_->DidPlayerSizeChange(delegate_id_, NaturalSize());
 }

@@ -151,11 +151,13 @@ TEST_P(GLES3DecoderTest, GenerateMipmapBaseLevel) {
 // Same as GenerateMipmapClearsUnclearedTexture, but with workaround
 // |set_texture_filters_before_generating_mipmap|.
 TEST_P(GLES2DecoderManualInitTest, SetTextureFiltersBeforeGenerateMipmap) {
-  gpu::GpuDriverBugWorkarounds workarounds;
-  workarounds.set_texture_filter_before_generating_mipmap = true;
+  base::CommandLine command_line(0, NULL);
+  command_line.AppendSwitchASCII(
+      switches::kGpuDriverBugWorkarounds,
+      base::IntToString(gpu::SET_TEXTURE_FILTER_BEFORE_GENERATING_MIPMAP));
   InitState init;
   init.bind_generates_resource = true;
-  InitDecoderWithWorkarounds(init, workarounds);
+  InitDecoderWithCommandLine(init, &command_line);
 
   EXPECT_CALL(*gl_, GenerateMipmapEXT(_)).Times(0);
   DoBindTexture(GL_TEXTURE_2D, client_texture_id_, kServiceTextureId);
@@ -2908,13 +2910,16 @@ TEST_P(GLES2DecoderTest, TexSubImage2DDoesNotClearAfterTexImage2DNULLThenData) {
   EXPECT_EQ(error::kNoError, ExecuteCmd(cmd));
 }
 
-TEST_P(GLES2DecoderManualInitTest,
-       TexSubImage2DNotClearAfterTexImage2DNULLThenDataWithTexImage2DIsFaster) {
-  gpu::GpuDriverBugWorkarounds workarounds;
-  workarounds.texsubimage_faster_than_teximage = true;
+TEST_P(
+    GLES2DecoderManualInitTest,
+    TexSubImage2DDoesNotClearAfterTexImage2DNULLThenDataWithTexImage2DIsFaster) {
+  base::CommandLine command_line(0, NULL);
+  command_line.AppendSwitchASCII(
+      switches::kGpuDriverBugWorkarounds,
+      base::IntToString(gpu::TEXSUBIMAGE_FASTER_THAN_TEXIMAGE));
   InitState init;
   init.bind_generates_resource = true;
-  InitDecoderWithWorkarounds(init, workarounds);
+  InitDecoderWithCommandLine(init, &command_line);
   DoBindTexture(GL_TEXTURE_2D, client_texture_id_, kServiceTextureId);
   DoTexImage2D(
       GL_TEXTURE_2D, 0, GL_RGBA, 2, 2, 0, GL_RGBA, GL_UNSIGNED_BYTE, 0, 0);
@@ -4935,9 +4940,10 @@ TEST_P(GLES2DecoderTest, TestDeleteDiscardableTexture) {
 
 TEST_P(GLES2DecoderManualInitTest,
        TestDiscardableTextureUnusableWhileUnlocked) {
+  base::CommandLine command_line(0, NULL);
   InitState init;
   init.bind_generates_resource = false;
-  InitDecoder(init);
+  InitDecoderWithCommandLine(init, &command_line);
 
   DoInitializeDiscardableTextureCHROMIUM(client_texture_id_);
   DoBindTexture(GL_TEXTURE_2D, client_texture_id_, kServiceTextureId);

@@ -243,7 +243,6 @@ using blink::WebStorageQuotaCallbacks;
 using blink::WebStorageQuotaError;
 using blink::WebStorageQuotaType;
 using blink::WebString;
-using blink::WebTappedInfo;
 using blink::WebTextDirection;
 using blink::WebTouchEvent;
 using blink::WebURL;
@@ -826,6 +825,8 @@ void RenderView::ApplyWebPreferences(const WebPreferences& prefs,
   // Disable antialiasing for 2d canvas if requested on the command line.
   settings->SetAntialiased2dCanvasEnabled(
       !prefs.antialiased_2d_canvas_disabled);
+  WebRuntimeFeatures::ForceDisable2dCanvasCopyOnWrite(
+      prefs.disable_2d_canvas_copy_on_write);
 
   // Disable antialiasing of clips for 2d canvas if requested on the command
   // line.
@@ -872,7 +873,6 @@ void RenderView::ApplyWebPreferences(const WebPreferences& prefs,
   settings->SetPrimaryHoverType(
       static_cast<blink::HoverType>(prefs.primary_hover_type));
   settings->SetEnableTouchAdjustment(prefs.touch_adjustment_enabled);
-  settings->SetBarrelButtonForDragEnabled(prefs.barrel_button_for_drag_enabled);
 
   WebRuntimeFeatures::EnableColorCorrectRendering(
       prefs.color_correct_rendering_enabled);
@@ -970,8 +970,6 @@ void RenderView::ApplyWebPreferences(const WebPreferences& prefs,
   settings->SetEmbeddedMediaExperienceEnabled(
       prefs.embedded_media_experience_enabled);
   settings->SetPagePopupsSuppressed(prefs.page_popups_suppressed);
-  settings->SetMediaDownloadInProductHelpEnabled(
-      prefs.enable_media_download_in_product_help);
   settings->SetDoNotUpdateSelectionOnMutatingSelectionRange(
       prefs.do_not_update_selection_on_mutating_selection_range);
   WebRuntimeFeatures::EnableCSSHexAlphaColor(prefs.css_hex_alpha_color_enabled);
@@ -1018,9 +1016,6 @@ void RenderView::ApplyWebPreferences(const WebPreferences& prefs,
       prefs.background_video_track_optimization_enabled);
   WebRuntimeFeatures::EnableNewRemotePlaybackPipeline(
       base::FeatureList::IsEnabled(media::kNewRemotePlaybackPipeline));
-
-  WebRuntimeFeatures::EnablePreloadDefaultIsMetadata(
-      base::FeatureList::IsEnabled(media::kPreloadDefaultIsMetadata));
 
   settings->SetPresentationReceiver(prefs.presentation_receiver);
 
@@ -1797,8 +1792,11 @@ void RenderViewImpl::SetTouchAction(blink::WebTouchAction touchAction) {
 }
 
 void RenderViewImpl::ShowUnhandledTapUIIfNeeded(
-    const blink::WebTappedInfo& tappedInfo) {
-  RenderWidget::ShowUnhandledTapUIIfNeeded(tappedInfo);
+    const blink::WebPoint& tappedPosition,
+    const blink::WebNode& tappedNode,
+    bool pageChanged) {
+  RenderWidget::ShowUnhandledTapUIIfNeeded(tappedPosition, tappedNode,
+                                           pageChanged);
 }
 
 blink::WebWidgetClient* RenderViewImpl::WidgetClient() {

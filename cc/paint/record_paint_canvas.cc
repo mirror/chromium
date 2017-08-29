@@ -165,6 +165,12 @@ void RecordPaintCanvas::clipPath(const SkPath& path,
   return;
 }
 
+void RecordPaintCanvas::clipDeviceRect(const SkIRect& device_rect,
+                                       const SkIRect& subtract_rect,
+                                       SkClipOp op) {
+  list_->push<ClipDeviceRectOp>(device_rect, subtract_rect, op);
+}
+
 bool RecordPaintCanvas::quickReject(const SkRect& rect) const {
   return GetCanvas()->quickReject(rect);
 }
@@ -233,6 +239,14 @@ void RecordPaintCanvas::drawDRRect(const SkRRect& outer,
     return;
   }
   list_->push<DrawDRRectOp>(outer, inner, flags);
+}
+
+void RecordPaintCanvas::drawArc(const SkRect& oval,
+                                SkScalar start_angle,
+                                SkScalar sweep_angle,
+                                bool use_center,
+                                const PaintFlags& flags) {
+  list_->push<DrawArcOp>(oval, start_angle, sweep_angle, use_center, flags);
 }
 
 void RecordPaintCanvas::drawRoundRect(const SkRect& rect,

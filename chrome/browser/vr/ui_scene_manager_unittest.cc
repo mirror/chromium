@@ -8,9 +8,8 @@
 #include "base/message_loop/message_loop.h"
 #include "base/test/scoped_mock_time_message_loop_task_runner.h"
 #include "cc/base/math_util.h"
-#include "chrome/browser/vr/color_scheme.h"
 #include "chrome/browser/vr/elements/ui_element.h"
-#include "chrome/browser/vr/elements/ui_element_name.h"
+#include "chrome/browser/vr/elements/ui_element_debug_id.h"
 #include "chrome/browser/vr/target_property.h"
 #include "chrome/browser/vr/test/animation_utils.h"
 #include "chrome/browser/vr/test/constants.h"
@@ -28,18 +27,18 @@ using TargetProperty::VISIBILITY;
 using TargetProperty::OPACITY;
 
 namespace {
-std::set<UiElementName> kBackgroundElements = {
+std::set<UiElementDebugId> kBackgroundElements = {
     kBackgroundFront, kBackgroundLeft, kBackgroundBack,
     kBackgroundRight, kBackgroundTop,  kBackgroundBottom};
-std::set<UiElementName> kFloorCeilingBackgroundElements = {
+std::set<UiElementDebugId> kFloorCeilingBackgroundElements = {
     kBackgroundFront, kBackgroundLeft,   kBackgroundBack, kBackgroundRight,
     kBackgroundTop,   kBackgroundBottom, kCeiling,        kFloor};
-std::set<UiElementName> kElementsVisibleInBrowsing = {
+std::set<UiElementDebugId> kElementsVisibleInBrowsing = {
     kBackgroundFront, kBackgroundLeft, kBackgroundBack,
     kBackgroundRight, kBackgroundTop,  kBackgroundBottom,
     kCeiling,         kFloor,          kContentQuad,
     kBackplane,       kUrlBar,         kUnderDevelopmentNotice};
-std::set<UiElementName> kElementsVisibleWithExitPrompt = {
+std::set<UiElementDebugId> kElementsVisibleWithExitPrompt = {
     kBackgroundFront, kBackgroundLeft,     kBackgroundBack, kBackgroundRight,
     kBackgroundTop,   kBackgroundBottom,   kCeiling,        kFloor,
     kExitPrompt,      kExitPromptBackplane};
@@ -115,35 +114,27 @@ TEST_F(UiSceneManagerTest, ToastStateTransitions) {
   // presentation.
   MakeManager(kNotInCct, kInWebVr);
   EXPECT_FALSE(IsVisible(kExclusiveScreenToast));
-  EXPECT_FALSE(IsVisible(kExclusiveScreenToastViewportAware));
 
   MakeManager(kNotInCct, kNotInWebVr);
   EXPECT_FALSE(IsVisible(kExclusiveScreenToast));
-  EXPECT_FALSE(IsVisible(kExclusiveScreenToastViewportAware));
 
   manager_->SetFullscreen(true);
   EXPECT_TRUE(IsVisible(kExclusiveScreenToast));
-  EXPECT_FALSE(IsVisible(kExclusiveScreenToastViewportAware));
 
   manager_->SetWebVrMode(true, true);
-  EXPECT_FALSE(IsVisible(kExclusiveScreenToast));
-  EXPECT_TRUE(IsVisible(kExclusiveScreenToastViewportAware));
+  EXPECT_TRUE(IsVisible(kExclusiveScreenToast));
 
   manager_->SetWebVrMode(false, false);
   EXPECT_FALSE(IsVisible(kExclusiveScreenToast));
-  EXPECT_FALSE(IsVisible(kExclusiveScreenToastViewportAware));
 
   manager_->SetFullscreen(false);
   EXPECT_FALSE(IsVisible(kExclusiveScreenToast));
-  EXPECT_FALSE(IsVisible(kExclusiveScreenToastViewportAware));
 
   manager_->SetWebVrMode(true, false);
   EXPECT_FALSE(IsVisible(kExclusiveScreenToast));
-  EXPECT_FALSE(IsVisible(kExclusiveScreenToastViewportAware));
 
   manager_->SetWebVrMode(false, true);
   EXPECT_FALSE(IsVisible(kExclusiveScreenToast));
-  EXPECT_FALSE(IsVisible(kExclusiveScreenToastViewportAware));
 }
 
 TEST_F(UiSceneManagerTest, ToastTransience) {
@@ -158,12 +149,12 @@ TEST_F(UiSceneManagerTest, ToastTransience) {
   EXPECT_FALSE(IsVisible(kExclusiveScreenToast));
 
   manager_->SetWebVrMode(true, true);
-  EXPECT_TRUE(IsVisible(kExclusiveScreenToastViewportAware));
+  EXPECT_TRUE(IsVisible(kExclusiveScreenToast));
   task_runner_->FastForwardUntilNoTasksRemain();
-  EXPECT_FALSE(IsVisible(kExclusiveScreenToastViewportAware));
+  EXPECT_FALSE(IsVisible(kExclusiveScreenToast));
 
   manager_->SetWebVrMode(false, false);
-  EXPECT_FALSE(IsVisible(kExclusiveScreenToastViewportAware));
+  EXPECT_FALSE(IsVisible(kExclusiveScreenToast));
 }
 
 TEST_F(UiSceneManagerTest, CloseButtonVisibleInCctFullscreen) {
@@ -238,24 +229,25 @@ TEST_F(UiSceneManagerTest, WebVrAutopresentedInsecureOrigin) {
   // Initially, the security warnings should not be visible since the first
   // WebVR frame is not received.
   auto initial_elements = kBackgroundElements;
-  initial_elements.insert(kSplashScreenText);
-  VerifyElementsVisible("Initial", initial_elements);
+  initial_elements.insert(kSplashScreenIcon);
 
+  VerifyElementsVisible("Initial", initial_elements);
   manager_->OnWebVrFrameAvailable();
-  VerifyElementsVisible(
-      "Autopresented", std::set<UiElementName>{
-                           kWebVrPermanentHttpSecurityWarning,
-                           kWebVrTransientHttpSecurityWarning, kWebVrUrlToast});
+  VerifyElementsVisible("Autopresented", std::set<UiElementDebugId>{
+                                             kWebVrPermanentHttpSecurityWarning,
+                                             kWebVrTransientHttpSecurityWarning,
+                                             kTransientUrlBar});
 
   // Make sure the transient elements go away.
   task_runner_->FastForwardUntilNoTasksRemain();
-  UiElement* transient_url_bar = scene_->GetUiElementByName(kWebVrUrlToast);
+  UiElement* transient_url_bar =
+      scene_->GetUiElementByDebugId(kTransientUrlBar);
   EXPECT_TRUE(IsAnimating(transient_url_bar, {OPACITY, VISIBILITY}));
   // Finish the transition.
   AnimateBy(MsToDelta(1000));
   EXPECT_FALSE(IsAnimating(transient_url_bar, {OPACITY, VISIBILITY}));
-  VerifyElementsVisible(
-      "End state", std::set<UiElementName>{kWebVrPermanentHttpSecurityWarning});
+  VerifyElementsVisible("End state", std::set<UiElementDebugId>{
+                                         kWebVrPermanentHttpSecurityWarning});
 }
 
 TEST_F(UiSceneManagerTest, WebVrAutopresented) {
@@ -266,35 +258,24 @@ TEST_F(UiSceneManagerTest, WebVrAutopresented) {
 
   // Initially, we should only show the splash screen.
   auto initial_elements = kBackgroundElements;
-  initial_elements.insert(kSplashScreenText);
+  initial_elements.insert(kSplashScreenIcon);
   VerifyElementsVisible("Initial", initial_elements);
-  EXPECT_EQ(ColorScheme::GetColorScheme(ColorScheme::kModeNormal)
-                .splash_screen_background,
-            GetBackgroundColor());
 
   // Enter WebVR with autopresentation.
   manager_->SetWebVrMode(true, false);
   manager_->OnWebVrFrameAvailable();
   VerifyElementsVisible("Autopresented",
-                        std::set<UiElementName>{kWebVrUrlToast});
+                        std::set<UiElementDebugId>{kTransientUrlBar});
 
   // Make sure the transient URL bar times out.
   task_runner_->FastForwardUntilNoTasksRemain();
-  UiElement* transient_url_bar = scene_->GetUiElementByName(kWebVrUrlToast);
+  UiElement* transient_url_bar =
+      scene_->GetUiElementByDebugId(kTransientUrlBar);
   EXPECT_TRUE(IsAnimating(transient_url_bar, {OPACITY, VISIBILITY}));
   // Finish the transition.
   AnimateBy(MsToDelta(1000));
   EXPECT_FALSE(IsAnimating(transient_url_bar, {OPACITY, VISIBILITY}));
-  EXPECT_FALSE(IsVisible(kWebVrUrlToast));
-}
-
-TEST_F(UiSceneManagerTest, AppButtonClickForAutopresentation) {
-  MakeAutoPresentedManager();
-
-  // Clicking app button should be a no-op.
-  EXPECT_CALL(*browser_, ExitPresent()).Times(0);
-  EXPECT_CALL(*browser_, ExitFullscreen()).Times(0);
-  manager_->OnAppButtonClicked();
+  EXPECT_FALSE(IsVisible(kTransientUrlBar));
 }
 
 TEST_F(UiSceneManagerTest, UiUpdatesForFullscreenChanges) {
@@ -309,7 +290,7 @@ TEST_F(UiSceneManagerTest, UiUpdatesForFullscreenChanges) {
   // Hold onto the background color to make sure it changes.
   SkColor initial_background = GetBackgroundColor();
   VerifyElementsVisible("Initial", kElementsVisibleInBrowsing);
-  UiElement* content_quad = scene_->GetUiElementByName(kContentQuad);
+  UiElement* content_quad = scene_->GetUiElementByDebugId(kContentQuad);
   gfx::SizeF initial_content_size = content_quad->size();
   gfx::Transform initial_position = content_quad->LocalTransform();
 
@@ -396,7 +377,8 @@ TEST_F(UiSceneManagerTest, BackplaneClickTriggersOnExitPrompt) {
   EXPECT_CALL(*browser_,
               OnExitVrPromptResult(UiUnsupportedMode::kUnhandledPageInfo,
                                    ExitVrPromptChoice::CHOICE_NONE));
-  scene_->GetUiElementByName(kExitPromptBackplane)->OnButtonUp(gfx::PointF());
+  scene_->GetUiElementByDebugId(kExitPromptBackplane)
+      ->OnButtonUp(gfx::PointF());
   VerifyElementsVisible("Prompt still visible", kElementsVisibleWithExitPrompt);
 }
 
@@ -465,7 +447,7 @@ TEST_F(UiSceneManagerTest, UiUpdatesForWebVR) {
   manager_->SetBluetoothConnectedIndicator(true);
 
   // All elements should be hidden.
-  VerifyElementsVisible("Elements hidden", std::set<UiElementName>{});
+  VerifyElementsVisible("Elements hidden", std::set<UiElementDebugId>{});
 }
 
 TEST_F(UiSceneManagerTest, UiUpdateTransitionToWebVR) {
@@ -481,11 +463,11 @@ TEST_F(UiSceneManagerTest, UiUpdateTransitionToWebVR) {
   manager_->SetWebVrSecureOrigin(true);
 
   // All elements should be hidden.
-  VerifyElementsVisible("Elements hidden", std::set<UiElementName>{});
+  VerifyElementsVisible("Elements hidden", std::set<UiElementDebugId>{});
 }
 
 TEST_F(UiSceneManagerTest, CaptureIndicatorsVisibility) {
-  const std::set<UiElementName> indicators = {
+  const std::set<UiElementDebugId> indicators = {
       kAudioCaptureIndicator,       kVideoCaptureIndicator,
       kScreenCaptureIndicator,      kLocationAccessIndicator,
       kBluetoothConnectedIndicator,
@@ -557,7 +539,7 @@ TEST_F(UiSceneManagerTest, DontPropagateContentBoundsOnNegligibleChange) {
   AnimateBy(MsToDelta(0));
   manager_->OnProjMatrixChanged(kProjMatrix);
 
-  UiElement* content_quad = scene_->GetUiElementByName(kContentQuad);
+  UiElement* content_quad = scene_->GetUiElementByDebugId(kContentQuad);
   gfx::SizeF content_quad_size = content_quad->size();
   content_quad_size.Scale(1.2f);
   content_quad->SetSize(content_quad_size.width(), content_quad_size.height());

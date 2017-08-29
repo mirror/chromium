@@ -13,7 +13,6 @@ import org.chromium.payments.mojom.PaymentDetailsModifier;
 import org.chromium.payments.mojom.PaymentItem;
 import org.chromium.payments.mojom.PaymentMethodData;
 
-import java.net.URI;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
@@ -47,8 +46,6 @@ public class ServiceWorkerPaymentApp extends PaymentInstrument implements Paymen
      * @param webContents                    The web contents where PaymentRequest was invoked.
      * @param registrationId                 The registration id of the corresponding service worker
      *                                       payment app.
-     * @param scope                          The registration scope of the corresponding service
-     *                                       worker.
      * @param label                          The label of the payment app.
      * @param sublabel                       The sublabel of the payment app.
      * @param icon                           The drawable icon of the payment app.
@@ -56,10 +53,10 @@ public class ServiceWorkerPaymentApp extends PaymentInstrument implements Paymen
      *                                       app.
      * @param preferredRelatedApplicationIds A set of preferred related application Ids.
      */
-    public ServiceWorkerPaymentApp(WebContents webContents, long registrationId, URI scope,
-            String label, @Nullable String sublabel, @Nullable Drawable icon, String[] methodNames,
+    public ServiceWorkerPaymentApp(WebContents webContents, long registrationId, String label,
+            @Nullable String sublabel, @Nullable Drawable icon, String[] methodNames,
             String[] preferredRelatedApplicationIds) {
-        super(scope.toString(), label, sublabel, icon);
+        super(label + sublabel, label, sublabel, icon);
         mWebContents = webContents;
         mRegistrationId = registrationId;
         mIcon = icon;
@@ -108,6 +105,11 @@ public class ServiceWorkerPaymentApp extends PaymentInstrument implements Paymen
     @Override
     public String getAppIdentifier() {
         return getIdentifier();
+    }
+
+    @Override
+    public int getAdditionalAppTextResourceId() {
+        return 0;
     }
 
     @Override

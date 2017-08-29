@@ -611,7 +611,6 @@ interface CDATASection : Text
     attribute @@toStringTag
     method constructor
 interface CSS
-    static getter paintWorklet
     static method Hz
     static method ch
     static method cm
@@ -1561,7 +1560,6 @@ interface Document : Node
     getter ontouchend
     getter ontouchmove
     getter ontouchstart
-    getter onvisibilitychange
     getter onvolumechange
     getter onwaiting
     getter onwebkitfullscreenchange
@@ -1734,7 +1732,6 @@ interface Document : Node
     setter ontouchend
     setter ontouchmove
     setter ontouchstart
-    setter onvisibilitychange
     setter onvolumechange
     setter onwaiting
     setter onwebkitfullscreenchange
@@ -4437,13 +4434,13 @@ interface Navigator
     getter appCodeName
     getter appName
     getter appVersion
+    getter authentication
     getter bluetooth
     getter budget
     getter clipboard
     getter connection
     getter cookieEnabled
     getter credentials
-    getter deviceMemory
     getter doNotTrack
     getter geolocation
     getter hardwareConcurrency
@@ -4947,7 +4944,6 @@ interface PerformanceServerTiming
     getter duration
     getter name
     method constructor
-    method toJSON
 interface PerformanceTiming
     attribute @@toStringTag
     getter connectEnd
@@ -7291,6 +7287,11 @@ interface WaveShaperNode : AudioNode
     method constructor
     setter curve
     setter oversample
+interface WebAuthentication
+    attribute @@toStringTag
+    method constructor
+    method getAssertion
+    method makeCredential
 interface WebGL2RenderingContext
     attribute @@toStringTag
     attribute ACTIVE_ATTRIBUTES
@@ -9127,6 +9128,7 @@ interface webkitURL
     getter outerWidth
     getter pageXOffset
     getter pageYOffset
+    getter paintWorklet
     getter performance
     getter personalbar
     getter screen

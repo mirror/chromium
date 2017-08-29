@@ -1525,16 +1525,12 @@ IN_PROC_BROWSER_TEST_F(PolicyTest, MAYBE_ExtensionInstallBlacklistWildcard) {
                blacklist.CreateDeepCopy(), nullptr);
   UpdateProviderPolicy(policies);
 
-  // AdBlock should be disabled.
-  EXPECT_TRUE(service->GetExtensionById(kAdBlockCrxId, true));
-  EXPECT_FALSE(service->IsExtensionEnabled(kAdBlockCrxId));
+  // AdBlock was automatically removed.
+  ASSERT_FALSE(service->GetExtensionById(kAdBlockCrxId, true));
 
-  // It shouldn't be possible to re-enable AdBlock, until it satisfies
-  // management policy.
-  service->EnableExtension(kAdBlockCrxId);
-  EXPECT_FALSE(service->IsExtensionEnabled(kAdBlockCrxId));
-
-  // It shouldn't be possible to install good.crx.
+  // And can't be installed again, nor can good.crx.
+  EXPECT_FALSE(InstallExtension(kAdBlockCrxName));
+  EXPECT_FALSE(service->GetExtensionById(kAdBlockCrxId, true));
   EXPECT_FALSE(InstallExtension(kGoodCrxName));
   EXPECT_FALSE(service->GetExtensionById(kGoodCrxId, true));
 }
@@ -4364,17 +4360,18 @@ IN_PROC_BROWSER_TEST_F(ArcPolicyTest, ArcLocationServiceEnabled) {
   PrefService* const pref = browser()->profile()->GetPrefs();
 
   // Values of the ArcLocationServiceEnabled policy to be tested.
-  std::vector<base::Value> test_policy_values;
-  test_policy_values.emplace_back();       // unset
-  test_policy_values.emplace_back(false);  // disabled
-  test_policy_values.emplace_back(true);   // enabled
-
+  const std::vector<base::Value> test_policy_values = {
+      base::Value(),       // unset
+      base::Value(false),  // disabled
+      base::Value(true),   // enabled
+  };
   // Values of the DefaultGeolocationSetting policy to be tested.
-  std::vector<base::Value> test_default_geo_policy_values;
-  test_default_geo_policy_values.emplace_back();   // unset
-  test_default_geo_policy_values.emplace_back(1);  // 'AllowGeolocation'
-  test_default_geo_policy_values.emplace_back(2);  // 'BlockGeolocation'
-  test_default_geo_policy_values.emplace_back(3);  // 'AskGeolocation'
+  const std::vector<base::Value> test_default_geo_policy_values = {
+      base::Value(),   // unset
+      base::Value(1),  // 'AllowGeolocation'
+      base::Value(2),  // 'BlockGeolocation'
+      base::Value(3),  // 'AskGeolocation'
+  };
 
   // The pref is switched off by default.
   EXPECT_FALSE(pref->GetBoolean(prefs::kArcLocationServiceEnabled));
@@ -4506,6 +4503,7 @@ class NoteTakingOnLockScreenPolicyTest : public PolicyTest {
   ~NoteTakingOnLockScreenPolicyTest() override = default;
 
   void SetUpCommandLine(base::CommandLine* command_line) override {
+    command_line->AppendSwitch(chromeos::switches::kEnableLockScreenApps);
     // An app requires lockScreen permission to be enabled as a lock screen app.
     // This permission is protected by a whitelist, so the test app has to be
     // whitelisted as well.

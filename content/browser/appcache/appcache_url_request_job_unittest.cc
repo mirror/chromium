@@ -19,7 +19,6 @@
 #include "base/logging.h"
 #include "base/macros.h"
 #include "base/memory/weak_ptr.h"
-#include "base/message_loop/message_loop.h"
 #include "base/pickle.h"
 #include "base/single_thread_task_runner.h"
 #include "base/synchronization/waitable_event.h"
@@ -473,7 +472,7 @@ class AppCacheURLRequestJobTest : public testing::Test {
 
     std::unique_ptr<AppCacheURLRequestJob> job(
         new AppCacheURLRequestJob(request_.get(), nullptr, storage, nullptr,
-                                  false, base::BindOnce(&ExpectNotRestarted)));
+                                  false, base::Bind(&ExpectNotRestarted)));
     EXPECT_TRUE(job->IsWaiting());
     EXPECT_FALSE(job->IsDeliveringAppCacheResponse());
     EXPECT_FALSE(job->IsDeliveringNetworkResponse());
@@ -499,21 +498,21 @@ class AppCacheURLRequestJobTest : public testing::Test {
 
     std::unique_ptr<AppCacheURLRequestJob> job(
         new AppCacheURLRequestJob(request.get(), nullptr, storage, nullptr,
-                                  false, base::BindOnce(&ExpectNotRestarted)));
+                                  false, base::Bind(&ExpectNotRestarted)));
     job->DeliverErrorResponse();
     EXPECT_TRUE(job->IsDeliveringErrorResponse());
     EXPECT_FALSE(job->IsStarted());
 
     job.reset(new AppCacheURLRequestJob(request.get(), nullptr, storage,
                                         nullptr, false,
-                                        base::BindOnce(&ExpectNotRestarted)));
+                                        base::Bind(&ExpectNotRestarted)));
     job->DeliverNetworkResponse();
     EXPECT_TRUE(job->IsDeliveringNetworkResponse());
     EXPECT_FALSE(job->IsStarted());
 
     job.reset(new AppCacheURLRequestJob(request.get(), nullptr, storage,
                                         nullptr, false,
-                                        base::BindOnce(&ExpectNotRestarted)));
+                                        base::Bind(&ExpectNotRestarted)));
     const GURL kManifestUrl("http://blah/");
     const int64_t kCacheId(1);
     const AppCacheEntry kEntry(AppCacheEntry::EXPLICIT, 1);
@@ -546,7 +545,7 @@ class AppCacheURLRequestJobTest : public testing::Test {
     // a network response.
     std::unique_ptr<AppCacheURLRequestJob> mock_job(new AppCacheURLRequestJob(
         request_.get(), nullptr, storage, nullptr, false,
-        base::BindOnce(&SetIfCalled, &restart_callback_invoked_)));
+        base::Bind(&SetIfCalled, &restart_callback_invoked_)));
     mock_job->DeliverNetworkResponse();
     EXPECT_TRUE(mock_job->IsDeliveringNetworkResponse());
     EXPECT_FALSE(mock_job->IsStarted());
@@ -584,7 +583,7 @@ class AppCacheURLRequestJobTest : public testing::Test {
     // a network response.
     std::unique_ptr<AppCacheURLRequestJob> mock_job(
         new AppCacheURLRequestJob(request_.get(), nullptr, storage, nullptr,
-                                  false, base::BindOnce(&ExpectNotRestarted)));
+                                  false, base::Bind(&ExpectNotRestarted)));
     mock_job->DeliverErrorResponse();
     EXPECT_TRUE(mock_job->IsDeliveringErrorResponse());
     EXPECT_FALSE(mock_job->IsStarted());
@@ -636,7 +635,7 @@ class AppCacheURLRequestJobTest : public testing::Test {
     // a network response.
     std::unique_ptr<AppCacheURLRequestJob> job(
         new AppCacheURLRequestJob(request_.get(), NULL, storage, NULL, false,
-                                  base::BindOnce(&ExpectNotRestarted)));
+                                  base::Bind(&ExpectNotRestarted)));
 
     if (start_after_delivery_orders) {
       job->DeliverAppCachedResponse(
@@ -756,7 +755,7 @@ class AppCacheURLRequestJobTest : public testing::Test {
     // Create job with orders to deliver an appcached entry.
     std::unique_ptr<AppCacheURLRequestJob> job(
         new AppCacheURLRequestJob(request_.get(), NULL, storage, NULL, false,
-                                  base::BindOnce(&ExpectNotRestarted)));
+                                  base::Bind(&ExpectNotRestarted)));
     job->DeliverAppCachedResponse(
         GURL(), 111,
         AppCacheEntry(AppCacheEntry::EXPLICIT, written_response_id_), false);

@@ -259,8 +259,6 @@ void BluetoothLowEnergyConnectionFinder::OnConnectionStatusChanged(
                    weak_ptr_factory_.GetWeakPtr()));
   } else if (old_status == cryptauth::Connection::IN_PROGRESS) {
     PA_LOG(WARNING) << "Connection failed. Retrying.";
-    connection_->RemoveObserver(this);
-    connection_.reset();
     base::ThreadTaskRunnerHandle::Get()->PostTask(
         FROM_HERE,
         base::Bind(
@@ -270,11 +268,13 @@ void BluetoothLowEnergyConnectionFinder::OnConnectionStatusChanged(
 }
 
 void BluetoothLowEnergyConnectionFinder::RestartDiscoverySessionAsync() {
-  bool discovery_active = discovery_session_ && discovery_session_->IsActive();
-  if (!connection_ && !discovery_active) {
-    PA_LOG(INFO) << "Restarting discovery session.";
-    StartDiscoverySession();
+  PA_LOG(INFO) << "Restarting discovery session.";
+  if (connection_) {
+    connection_->RemoveObserver(this);
+    connection_.reset();
   }
+  if (!discovery_session_ || !discovery_session_->IsActive())
+    StartDiscoverySession();
 }
 
 void BluetoothLowEnergyConnectionFinder::InvokeCallbackAsync() {

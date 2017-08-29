@@ -246,7 +246,7 @@ INSTANTIATE_TEST_CASE_P(
                                       kPaymentTestOverwriteValue,
                                       "\\^%\\",
                                       true,
-                                      kV8RangeError)));
+                                      kV8TypeError)));
 
 INSTANTIATE_TEST_CASE_P(
     ValidValueFormat,

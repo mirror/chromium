@@ -13,7 +13,6 @@
 #include "cc/benchmarks/benchmark_instrumentation.h"
 #include "cc/output/compositor_frame.h"
 #include "cc/output/direct_renderer.h"
-#include "cc/output/output_surface.h"
 #include "cc/output/software_renderer.h"
 #include "cc/output/texture_mailbox_deleter.h"
 #include "components/viz/common/display/renderer_settings.h"
@@ -183,7 +182,7 @@ void Display::SetOutputIsSecure(bool secure) {
 void Display::InitializeRenderer() {
   // Not relevant for display compositor since it's not delegated.
   constexpr bool delegated_sync_points_required = false;
-  resource_provider_ = base::MakeUnique<cc::DisplayResourceProvider>(
+  resource_provider_ = base::MakeUnique<cc::ResourceProvider>(
       output_surface_->context_provider(), bitmap_manager_,
       gpu_memory_buffer_manager_, nullptr, delegated_sync_points_required,
       settings_.enable_color_correct_rendering, settings_.resource_settings);

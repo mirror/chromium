@@ -41,7 +41,6 @@
 #include "content/browser/android/content_view_core.h"
 #include "content/browser/android/ime_adapter_android.h"
 #include "content/browser/android/overscroll_controller_android.h"
-#include "content/browser/android/popup_zoomer.h"
 #include "content/browser/android/selection_popup_controller.h"
 #include "content/browser/android/synchronous_compositor_host.h"
 #include "content/browser/android/text_suggestion_host_android.h"
@@ -86,7 +85,6 @@
 #include "third_party/khronos/GLES2/gl2.h"
 #include "third_party/khronos/GLES2/gl2ext.h"
 #include "third_party/skia/include/core/SkCanvas.h"
-#include "ui/android/view_android_observer.h"
 #include "ui/android/window_android.h"
 #include "ui/android/window_android_compositor.h"
 #include "ui/base/layout.h"
@@ -997,7 +995,8 @@ bool RenderWidgetHostViewAndroid::OnTouchEvent(
       event, result.moved_beyond_slop_region);
   ui::LatencyInfo latency_info(ui::SourceEventType::TOUCH);
   latency_info.AddLatencyNumber(ui::INPUT_EVENT_LATENCY_UI_COMPONENT, 0, 0);
-  if (host_->delegate()->GetInputEventRouter()) {
+  if (host_->delegate()->GetInputEventRouter() &&
+      SiteIsolationPolicy::AreCrossProcessFramesPossible()) {
     host_->delegate()->GetInputEventRouter()->RouteTouchEvent(this, &web_event,
                                                               latency_info);
   } else {
@@ -1044,7 +1043,8 @@ void RenderWidgetHostViewAndroid::ResetGestureDetection() {
     latency_info.AddLatencyNumber(ui::INPUT_EVENT_LATENCY_UI_COMPONENT, 0, 0);
     blink::WebTouchEvent web_event =
         ui::CreateWebTouchEventFromMotionEvent(*cancel_event, causes_scrolling);
-    if (host_->delegate()->GetInputEventRouter()) {
+    if (SiteIsolationPolicy::AreCrossProcessFramesPossible() &&
+        host_->delegate()->GetInputEventRouter()) {
       host_->delegate()->GetInputEventRouter()->RouteTouchEvent(
           this, &web_event, latency_info);
     } else {
@@ -1165,10 +1165,10 @@ void RenderWidgetHostViewAndroid::CopyFromSurface(
 
 void RenderWidgetHostViewAndroid::ShowDisambiguationPopup(
     const gfx::Rect& rect_pixels, const SkBitmap& zoomed_bitmap) {
-  if (!popup_zoomer_)
+  if (!content_view_core_)
     return;
 
-  popup_zoomer_->ShowPopup(rect_pixels, zoomed_bitmap);
+  content_view_core_->ShowDisambiguationPopup(rect_pixels, zoomed_bitmap);
 }
 
 std::unique_ptr<SyntheticGestureTarget>
@@ -1883,7 +1883,8 @@ void RenderWidgetHostViewAndroid::SendMouseEvent(
   if (!host_ || !host_->delegate())
     return;
 
-  if (host_->delegate()->GetInputEventRouter()) {
+  if (SiteIsolationPolicy::AreCrossProcessFramesPossible() &&
+      host_->delegate()->GetInputEventRouter()) {
     host_->delegate()->GetInputEventRouter()->RouteMouseEvent(
         this, &mouse_event, ui::LatencyInfo());
   } else {
@@ -1923,7 +1924,9 @@ void RenderWidgetHostViewAndroid::SendMouseWheelEvent(
   ui::LatencyInfo latency_info(ui::SourceEventType::WHEEL);
   latency_info.AddLatencyNumber(ui::INPUT_EVENT_LATENCY_UI_COMPONENT, 0, 0);
   blink::WebMouseWheelEvent wheel_event(event);
-  bool should_route_event = !!host_->delegate()->GetInputEventRouter();
+  bool should_route_event =
+      SiteIsolationPolicy::AreCrossProcessFramesPossible() &&
+      host_->delegate()->GetInputEventRouter();
   if (wheel_scroll_latching_enabled()) {
     mouse_wheel_phase_handler_.AddPhaseIfNeededAndScheduleEndEvent(
         wheel_event, should_route_event);
@@ -1997,7 +2000,9 @@ void RenderWidgetHostViewAndroid::SendGestureEvent(
       mouse_wheel_phase_handler_.IgnorePendingWheelEndEvent();
     }
   }
-  bool should_route_event = !!host_->delegate()->GetInputEventRouter();
+  bool should_route_event =
+      SiteIsolationPolicy::AreCrossProcessFramesPossible() &&
+      host_->delegate()->GetInputEventRouter();
   if (should_route_event) {
     blink::WebGestureEvent gesture_event(event);
     host_->delegate()->GetInputEventRouter()->RouteGestureEvent(
@@ -2103,13 +2108,11 @@ void RenderWidgetHostViewAndroid::SetContentViewCore(
       resize = true;
     if (content_view_core_) {
       content_view_core_->RemoveObserver(this);
-      view_.RemoveObserver(this);
       view_.RemoveFromParent();
       view_.GetLayer()->RemoveFromParent();
     }
     if (content_view_core) {
       content_view_core->AddObserver(this);
-      view_.AddObserver(this);
       ui::ViewAndroid* parent_view = content_view_core->GetViewAndroid();
       parent_view->AddChild(&view_);
       parent_view->GetLayer()->AddChild(view_.GetLayer());
@@ -2220,9 +2223,6 @@ void RenderWidgetHostViewAndroid::OnRootWindowVisibilityChanged(bool visible) {
 }
 
 void RenderWidgetHostViewAndroid::OnAttachedToWindow() {
-  if (!content_view_core_)
-    return;
-
   if (is_showing_)
     StartObservingRootWindow();
   DCHECK(view_.GetWindowAndroid());

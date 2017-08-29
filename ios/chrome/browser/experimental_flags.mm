@@ -37,6 +37,7 @@ NSString* const kEnableNewClearBrowsingDataUI = @"EnableNewClearBrowsingDataUI";
 NSString* const kEnableStartupCrash = @"EnableStartupCrash";
 NSString* const kEnableViewCopyPasswords = @"EnableViewCopyPasswords";
 NSString* const kFirstRunForceEnabled = @"FirstRunForceEnabled";
+NSString* const kForceResetContextualSearch = @"ForceResetContextualSearch";
 NSString* const kGaiaEnvironment = @"GAIAEnvironment";
 NSString* const kOriginServerHost = @"AlternateOriginServerHost";
 NSString* const kSafariVCSignInDisabled = @"SafariVCSignInDisabled";
@@ -102,6 +103,12 @@ bool IsLRUSnapshotCacheEnabled() {
   return NO;
 }
 
+bool IsMDMIntegrationEnabled() {
+  // TODO(crbug.com/752073): Remove this function and its associated code,
+  // or convert it into a base::Feature.
+  return YES;
+}
+
 bool IsMemoryDebuggingEnabled() {
 // Always return true for Chromium builds, but check the user default for
 // official builds because memory debugging should never be enabled on stable.
@@ -152,6 +159,11 @@ bool IsPhysicalWebEnabled() {
                           base::CompareCase::INSENSITIVE_ASCII);
 }
 
+bool IsReaderModeEnabled() {
+  return base::CommandLine::ForCurrentProcess()->HasSwitch(
+      switches::kEnableReaderModeToolbarIcon);
+}
+
 bool IsSafariVCSignInEnabled() {
   return ![[NSUserDefaults standardUserDefaults]
       boolForKey:kSafariVCSignInDisabled];
@@ -196,6 +208,19 @@ bool IsSigninPromoEnabled() {
   std::string group_name = base::FieldTrialList::FindFullName("IOSSigninPromo");
   return base::StartsWith(group_name, "Enabled",
                           base::CompareCase::INSENSITIVE_ASCII);
+}
+
+bool IsBookmarkReorderingEnabled() {
+  // Check if the experimental flag is forced on or off.
+  base::CommandLine* command_line = base::CommandLine::ForCurrentProcess();
+  if (command_line->HasSwitch(switches::kEnableBookmarkReordering))
+    // Enabled only on iPhone for now.
+    return true && (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone);
+  if (command_line->HasSwitch(switches::kDisableBookmarkReordering))
+    return false;
+
+  // By default, disable it.
+  return false;
 }
 
 bool IsNewFeedbackKitEnabled() {

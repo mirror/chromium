@@ -41,7 +41,6 @@
 #include "core/css/StylePropertySet.h"
 #include "core/css/StyleRule.h"
 #include "core/css/parser/CSSParser.h"
-#include "core/css/properties/CSSPropertyAPI.h"
 #include "core/css/resolver/StyleResolver.h"
 #include "core/dom/Document.h"
 #include "core/dom/Element.h"
@@ -119,7 +118,7 @@ static const Vector<CSSPropertyID>& InheritableEditingProperties() {
         kStaticEditingProperties, WTF_ARRAY_LENGTH(kStaticEditingProperties),
         properties);
     for (size_t index = 0; index < properties.size();) {
-      if (!CSSPropertyAPI::Get(properties[index]).IsInherited()) {
+      if (!CSSPropertyMetadata::IsInheritedProperty(properties[index])) {
         properties.erase(index);
         continue;
       }

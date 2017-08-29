@@ -25,10 +25,8 @@ class WebViewWebStatePolicyDecider : public web::WebStatePolicyDecider {
   WebViewWebStatePolicyDecider(web::WebState* web_state, CWVWebView* web_view);
 
   // web::WebStatePolicyDecider overrides:
-  bool ShouldAllowRequest(NSURLRequest* request,
-                          ui::PageTransition transition) override;
-  bool ShouldAllowResponse(NSURLResponse* response,
-                           bool for_main_frame) override;
+  bool ShouldAllowRequest(NSURLRequest* request) override;
+  bool ShouldAllowResponse(NSURLResponse* response) override;
 
  private:
   // Delegates to |delegate| property of this web view.

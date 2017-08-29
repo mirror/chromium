@@ -95,7 +95,7 @@ public class OfflineBackgroundTaskTest {
                 .when(mTaskScheduler)
                 .schedule(eq(RuntimeEnvironment.application), mTaskInfo.capture());
 
-        ShadowDeviceConditions.setCurrentConditions(mDeviceConditions, false /* unmetered */);
+        ShadowDeviceConditions.setCurrentConditions(mDeviceConditions);
 
         // Set up background scheduler processor mock.
         BackgroundSchedulerProcessor.setInstanceForTesting(mBackgroundSchedulerProcessor);
@@ -136,8 +136,7 @@ public class OfflineBackgroundTaskTest {
         // Setup low battery conditions with no power connected.
         DeviceConditions deviceConditionsLowBattery = new DeviceConditions(
                 !POWER_CONNECTED, MINIMUM_BATTERY_LEVEL - 1, ConnectionType.CONNECTION_WIFI);
-        ShadowDeviceConditions.setCurrentConditions(
-                deviceConditionsLowBattery, false /* unmetered */);
+        ShadowDeviceConditions.setCurrentConditions(deviceConditionsLowBattery);
 
         // Verify that conditions for processing are not met.
         assertFalse(
@@ -161,8 +160,7 @@ public class OfflineBackgroundTaskTest {
         // Set battery percentage below minimum level, but connect power.
         DeviceConditions deviceConditionsPowerConnected = new DeviceConditions(
                 POWER_CONNECTED, MINIMUM_BATTERY_LEVEL - 1, ConnectionType.CONNECTION_WIFI);
-        ShadowDeviceConditions.setCurrentConditions(
-                deviceConditionsPowerConnected, false /* unmetered */);
+        ShadowDeviceConditions.setCurrentConditions(deviceConditionsPowerConnected);
 
         // Now verify that same battery level, with power connected, will pass the conditions.
         assertTrue(

@@ -121,11 +121,8 @@ std::unique_ptr<NavigationItemImpl> NavigationManagerImpl::CreateNavigationItem(
     const Referrer& referrer,
     ui::PageTransition transition,
     NavigationInitiationType initiation_type) {
-  NavigationItem* last_committed_item = GetLastCommittedItem();
   auto item = CreateNavigationItemWithRewriters(
-      url, referrer, transition, initiation_type,
-      last_committed_item ? last_committed_item->GetURL() : GURL::EmptyGURL(),
-      &transient_url_rewriters_);
+      url, referrer, transition, initiation_type, &transient_url_rewriters_);
   RemoveTransientURLRewriters();
   return item;
 }
@@ -146,18 +143,6 @@ void NavigationManagerImpl::UpdatePendingItemUrl(const GURL& url) const {
   // requests to GETs.
   pending_item->SetPostData(nil);
   pending_item->ResetHttpRequestHeaders();
-}
-
-NavigationItemImpl* NavigationManagerImpl::GetCurrentItemImpl() const {
-  NavigationItemImpl* transient_item = GetTransientItemImpl();
-  if (transient_item)
-    return transient_item;
-
-  NavigationItemImpl* pending_item = GetPendingItemImpl();
-  if (pending_item)
-    return pending_item;
-
-  return GetLastCommittedItemImpl();
 }
 
 void NavigationManagerImpl::GoToIndex(int index) {
@@ -206,6 +191,8 @@ void NavigationManagerImpl::LoadURLWithParams(
   delegate_->ClearTransientContent();
   delegate_->RecordPageStateInNavigationItem();
 
+  bool is_initial_navigation = !GetItemCount();
+
   NavigationInitiationType initiation_type =
       params.is_renderer_initiated
           ? NavigationInitiationType::RENDERER_INITIATED
@@ -247,7 +234,7 @@ void NavigationManagerImpl::LoadURLWithParams(
     added_item->SetShouldSkipRepostFormConfirmation(true);
   }
 
-  delegate_->WillLoadCurrentItemWithUrl(params.url);
+  delegate_->WillLoadCurrentItemWithParams(params, is_initial_navigation);
   delegate_->LoadCurrentItem();
 }
 
@@ -296,7 +283,6 @@ NavigationManagerImpl::CreateNavigationItemWithRewriters(
     const Referrer& referrer,
     ui::PageTransition transition,
     NavigationInitiationType initiation_type,
-    const GURL& previous_url,
     const std::vector<BrowserURLRewriter::URLRewriter>* additional_rewriters)
     const {
   GURL loaded_url(url);
@@ -313,13 +299,18 @@ NavigationManagerImpl::CreateNavigationItemWithRewriters(
   }
 
   if (initiation_type == web::NavigationInitiationType::RENDERER_INITIATED &&
-      loaded_url != url && web::GetWebClient()->IsAppSpecificURL(loaded_url) &&
-      !web::GetWebClient()->IsAppSpecificURL(previous_url)) {
-    // The URL should not be changed to app-specific URL if the load was
-    // renderer-initiated requested by non app-specific URL. Pages with
-    // app-specific urls have elevated previledges and should not be allowed
-    // to open app-specific URLs.
-    loaded_url = url;
+      loaded_url != url && web::GetWebClient()->IsAppSpecificURL(loaded_url)) {
+    const NavigationItem* last_committed_item = GetLastCommittedItem();
+    bool last_committed_url_is_app_specific =
+        last_committed_item &&
+        web::GetWebClient()->IsAppSpecificURL(last_committed_item->GetURL());
+    if (!last_committed_url_is_app_specific) {
+      // The URL should not be changed to app-specific URL if the load was
+      // renderer-initiated requested by non app-specific URL. Pages with
+      // app-specific urls have elevated previledges and should not be allowed
+      // to open app-specific URLs.
+      loaded_url = url;
+    }
   }
 
   auto item = base::MakeUnique<NavigationItemImpl>();
@@ -333,17 +324,6 @@ NavigationManagerImpl::CreateNavigationItemWithRewriters(
   }
 
   return item;
-}
-
-NavigationItem* NavigationManagerImpl::GetLastCommittedNonAppSpecificItem()
-    const {
-  WebClient* client = GetWebClient();
-  for (int index = GetLastCommittedItemIndex(); index >= 0; index--) {
-    NavigationItem* item = GetItemAtIndex(index);
-    if (!client->IsAppSpecificURL(item->GetVirtualURL()))
-      return item;
-  }
-  return nullptr;
 }
 
 }  // namespace web

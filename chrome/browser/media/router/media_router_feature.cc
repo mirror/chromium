@@ -6,7 +6,6 @@
 
 #include "base/feature_list.h"
 #include "build/build_config.h"
-#include "chrome/browser/profiles/profile.h"
 #include "content/public/browser/browser_context.h"
 #include "extensions/features/features.h"
 
@@ -51,10 +50,7 @@ bool MediaRouterEnabled(content::BrowserContext* context) {
     CHECK(pref->GetValue()->GetAsBoolean(&allowed));
     return allowed;
   }
-
-  // The component extension cannot be loaded in guest sessions.
-  // TODO(crbug.com/756243): Figure out why.
-  return !Profile::FromBrowserContext(context)->IsGuestSession();
+  return true;
 #else  // !(defined(OS_ANDROID) || BUILDFLAG(ENABLE_EXTENSIONS))
   return false;
 #endif  // defined(OS_ANDROID) || BUILDFLAG(ENABLE_EXTENSIONS)

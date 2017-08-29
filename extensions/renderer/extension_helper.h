@@ -25,6 +25,7 @@ class ExtensionHelper : public content::RenderViewObserver {
   void OnDestruct() override;
 
   void OnAppWindowClosed();
+  void OnSetFrameName(const std::string& name);
 
   Dispatcher* dispatcher_;
 

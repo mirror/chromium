@@ -4,7 +4,6 @@
 
 #include "storage/browser/blob/blob_impl.h"
 
-#include "base/run_loop.h"
 #include "base/task_scheduler/post_task.h"
 #include "base/test/scoped_task_environment.h"
 #include "mojo/common/data_pipe_drainer.h"

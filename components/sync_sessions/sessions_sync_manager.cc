@@ -9,6 +9,7 @@
 
 #include "base/format_macros.h"
 #include "base/logging.h"
+#include "base/memory/ptr_util.h"
 #include "base/metrics/field_trial.h"
 #include "base/metrics/histogram_macros.h"
 #include "base/strings/stringprintf.h"
@@ -170,7 +171,7 @@ SessionsSyncManager::SessionsSyncManager(
       page_revisit_broadcaster_(this, sessions_client),
       sessions_updated_callback_(sessions_updated_callback),
       datatype_refresh_callback_(datatype_refresh_callback),
-      task_tracker_(std::make_unique<TaskTracker>()) {}
+      task_tracker_(base::MakeUnique<TaskTracker>()) {}
 
 SessionsSyncManager::~SessionsSyncManager() {}
 
@@ -211,7 +212,7 @@ syncer::SyncMergeResult SessionsSyncManager::MergeDataAndStartSyncing(
   // already associated with |sync_processor|, so leave it alone.
   if (!lost_navigations_recorder_.get()) {
     lost_navigations_recorder_ =
-        std::make_unique<sync_sessions::LostNavigationsRecorder>();
+        base::MakeUnique<sync_sessions::LostNavigationsRecorder>();
     sync_processor_->AddLocalChangeObserver(lost_navigations_recorder_.get());
   }
 

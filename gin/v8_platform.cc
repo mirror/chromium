@@ -197,7 +197,7 @@ V8Platform::~V8Platform() {}
 
 size_t V8Platform::NumberOfAvailableBackgroundThreads() {
   return std::max(1, base::TaskScheduler::GetInstance()
-                         ->GetMaxConcurrentNonBlockedTasksWithTraitsDeprecated(
+                         ->GetMaxConcurrentTasksWithTraitsDeprecated(
                              kBackgroundThreadTaskTraits));
 }
 
@@ -255,10 +255,6 @@ bool V8Platform::IdleTasksEnabled(v8::Isolate* isolate) {
 double V8Platform::MonotonicallyIncreasingTime() {
   return base::TimeTicks::Now().ToInternalValue() /
       static_cast<double>(base::Time::kMicrosecondsPerSecond);
-}
-
-double V8Platform::CurrentClockTimeMillis() {
-  return base::Time::Now().ToJsTime();
 }
 
 v8::TracingController* V8Platform::GetTracingController() {

@@ -20,11 +20,8 @@
 #include "ui/base/l10n/l10n_util.h"
 #include "ui/gfx/color_palette.h"
 #include "ui/gfx/paint_vector_icon.h"
-#include "ui/message_center/message_center.h"
-#include "ui/message_center/message_center_style.h"
 
 using message_center::MessageCenter;
-using l10n_util::GetStringUTF16;
 
 namespace chromeos {
 namespace {
@@ -142,10 +139,11 @@ void EolNotification::OnEolStatus(update_engine::EndOfLifeStatus status) {
 
 void EolNotification::Update() {
   message_center::ButtonInfo learn_more(
-      GetStringUTF16(IDS_EOL_MORE_INFO_BUTTON));
+      l10n_util::GetStringUTF16(IDS_EOL_MORE_INFO_BUTTON));
   learn_more.icon = gfx::Image(
       CreateVectorIcon(vector_icons::kInfoOutlineIcon, kButtonIconColor));
-  message_center::ButtonInfo dismiss(GetStringUTF16(IDS_EOL_DISMISS_BUTTON));
+  message_center::ButtonInfo dismiss(
+      l10n_util::GetStringUTF16(IDS_EOL_DISMISS_BUTTON));
   dismiss.icon = gfx::Image(
       CreateVectorIcon(vector_icons::kNotificationsOffIcon, kButtonIconColor));
 
@@ -155,23 +153,13 @@ void EolNotification::Update() {
 
   Notification notification(
       message_center::NOTIFICATION_TYPE_SIMPLE,
-      GetStringUTF16(IDS_EOL_NOTIFICATION_TITLE),
-      GetStringUTF16(IDS_EOL_NOTIFICATION_EOL),
-      MessageCenter::IsNewStyleNotificationEnabled()
-          ? gfx::Image()
-          : gfx::Image(CreateVectorIcon(kEolIcon, kNotificationIconColor)),
+      l10n_util::GetStringUTF16(IDS_EOL_NOTIFICATION_TITLE),
+      l10n_util::GetStringUTF16(IDS_EOL_NOTIFICATION_EOL),
+      gfx::Image(CreateVectorIcon(kEolIcon, kNotificationIconColor)),
       message_center::NotifierId(message_center::NotifierId::SYSTEM_COMPONENT,
                                  kEolNotificationId),
-      GetStringUTF16(IDS_EOL_NOTIFICATION_DISPLAY_SOURCE), GURL(),
-      kEolNotificationId, data, new EolNotificationDelegate(profile_));
-  if (MessageCenter::IsNewStyleNotificationEnabled()) {
-    notification.set_accent_color(
-        message_center::kSystemNotificationColorCriticalWarning);
-    notification.set_small_image(gfx::Image(gfx::CreateVectorIcon(
-        kNotificationEndOfSupportIcon,
-        message_center::kSystemNotificationColorCriticalWarning)));
-    notification.set_vector_small_image(kNotificationEndOfSupportIcon);
-  }
+      base::string16(),  // display_source
+      GURL(), kEolNotificationId, data, new EolNotificationDelegate(profile_));
   g_browser_process->notification_ui_manager()->Add(notification, profile_);
 }
 

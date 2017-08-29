@@ -6,7 +6,6 @@
 
 #include <utility>
 
-#include "base/metrics/field_trial_params.h"
 #include "base/task_scheduler/delayed_task_manager.h"
 #include "base/task_scheduler/environment_config.h"
 #include "base/task_scheduler/scheduler_worker_pool_params.h"
@@ -48,13 +47,6 @@ TaskSchedulerImpl::~TaskSchedulerImpl() {
 }
 
 void TaskSchedulerImpl::Start(const TaskScheduler::InitParams& init_params) {
-  // This is set in Start() and not in the constructor because variation params
-  // are usually not ready when TaskSchedulerImpl is instantiated in a process.
-  if (base::GetFieldTrialParamValue("BrowserScheduler",
-                                    "AllTasksUserBlocking") == "true") {
-    all_tasks_user_blocking_.Set();
-  }
-
   // Start the service thread. On platforms that support it (POSIX except NaCL
   // SFI), the service thread runs a MessageLoopForIO which is used to support
   // FileDescriptorWatcher in the scope in which tasks run.
@@ -98,26 +90,21 @@ void TaskSchedulerImpl::PostDelayedTaskWithTraits(
     OnceClosure task,
     TimeDelta delay) {
   // Post |task| as part of a one-off single-task Sequence.
-  const TaskTraits new_traits = SetUserBlockingPriorityIfNeeded(traits);
-  GetWorkerPoolForTraits(new_traits)
-      ->PostTaskWithSequence(
-          std::make_unique<Task>(from_here, std::move(task), new_traits, delay),
-          MakeRefCounted<Sequence>());
+  GetWorkerPoolForTraits(traits)->PostTaskWithSequence(
+      std::make_unique<Task>(from_here, std::move(task), traits, delay),
+      make_scoped_refptr(new Sequence));
 }
 
 scoped_refptr<TaskRunner> TaskSchedulerImpl::CreateTaskRunnerWithTraits(
     const TaskTraits& traits) {
-  const TaskTraits new_traits = SetUserBlockingPriorityIfNeeded(traits);
-  return GetWorkerPoolForTraits(new_traits)
-      ->CreateTaskRunnerWithTraits(new_traits);
+  return GetWorkerPoolForTraits(traits)->CreateTaskRunnerWithTraits(traits);
 }
 
 scoped_refptr<SequencedTaskRunner>
 TaskSchedulerImpl::CreateSequencedTaskRunnerWithTraits(
     const TaskTraits& traits) {
-  const TaskTraits new_traits = SetUserBlockingPriorityIfNeeded(traits);
-  return GetWorkerPoolForTraits(new_traits)
-      ->CreateSequencedTaskRunnerWithTraits(new_traits);
+  return GetWorkerPoolForTraits(traits)->CreateSequencedTaskRunnerWithTraits(
+      traits);
 }
 
 scoped_refptr<SingleThreadTaskRunner>
@@ -125,8 +112,7 @@ TaskSchedulerImpl::CreateSingleThreadTaskRunnerWithTraits(
     const TaskTraits& traits,
     SingleThreadTaskRunnerThreadMode thread_mode) {
   return single_thread_task_runner_manager_
-      .CreateSingleThreadTaskRunnerWithTraits(
-          name_, SetUserBlockingPriorityIfNeeded(traits), thread_mode);
+      .CreateSingleThreadTaskRunnerWithTraits(name_, traits, thread_mode);
 }
 
 #if defined(OS_WIN)
@@ -135,7 +121,7 @@ TaskSchedulerImpl::CreateCOMSTATaskRunnerWithTraits(
     const TaskTraits& traits,
     SingleThreadTaskRunnerThreadMode thread_mode) {
   return single_thread_task_runner_manager_.CreateCOMSTATaskRunnerWithTraits(
-      name_, SetUserBlockingPriorityIfNeeded(traits), thread_mode);
+      name_, traits, thread_mode);
 }
 #endif  // defined(OS_WIN)
 
@@ -147,10 +133,9 @@ std::vector<const HistogramBase*> TaskSchedulerImpl::GetHistograms() const {
   return histograms;
 }
 
-int TaskSchedulerImpl::GetMaxConcurrentNonBlockedTasksWithTraitsDeprecated(
+int TaskSchedulerImpl::GetMaxConcurrentTasksWithTraitsDeprecated(
     const TaskTraits& traits) const {
-  return GetWorkerPoolForTraits(traits)
-      ->GetMaxConcurrentNonBlockedTasksDeprecated();
+  return GetWorkerPoolForTraits(traits)->GetMaxConcurrentTasksDeprecated();
 }
 
 void TaskSchedulerImpl::Shutdown() {
@@ -180,13 +165,6 @@ void TaskSchedulerImpl::JoinForTesting() {
 SchedulerWorkerPoolImpl* TaskSchedulerImpl::GetWorkerPoolForTraits(
     const TaskTraits& traits) const {
   return worker_pools_[GetEnvironmentIndexForTraits(traits)].get();
-}
-
-TaskTraits TaskSchedulerImpl::SetUserBlockingPriorityIfNeeded(
-    const TaskTraits& traits) const {
-  return all_tasks_user_blocking_.IsSet()
-             ? TaskTraits::Override(traits, {TaskPriority::USER_BLOCKING})
-             : traits;
 }
 
 }  // namespace internal

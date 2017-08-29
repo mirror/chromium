@@ -71,8 +71,6 @@ _NEGATIVE_FILTER = [
     'ChromeDriverTest.testAlertOnNewWindow',
     # https://bugs.chromium.org/p/chromedriver/issues/detail?id=1882
     'PerfTest.testColdExecuteScript',
-    # https://bugs.chromium.org/p/chromedriver/issues/detail?id=1954
-    'MobileEmulationCapabilityTest.testW3cCompliantResponses',
 ]
 
 _VERSION_SPECIFIC_FILTER = {}
@@ -80,7 +78,6 @@ _VERSION_SPECIFIC_FILTER['HEAD'] = [
     # https://bugs.chromium.org/p/chromedriver/issues/detail?id=1819
     'ChromeExtensionsCapabilityTest.testIFrameWithExtensionsSource',
     # https://bugs.chromium.org/p/chromedriver/issues/detail?id=1918
-    'ChromeDriverTest.testWindowFullScreen',
     'ChromeDriverTest.testWindowMaximize',
     'ChromeDriverTest.testWindowPosition',
     'ChromeDriverTest.testWindowSize',
@@ -106,8 +103,6 @@ _OS_SPECIFIC_FILTER['win'] = [
     'ChromeLogPathCapabilityTest.testChromeLogPath',
     # https://bugs.chromium.org/p/chromedriver/issues/detail?id=992
     'ChromeDownloadDirTest.testDownloadDirectoryOverridesExistingPreferences',
-    # https://bugs.chromium.org/p/chromedriver/issues/detail?id=1945
-    'ChromeDriverTest.testWindowFullScreen',
 ]
 _OS_SPECIFIC_FILTER['linux'] = [
     # Xvfb doesn't support maximization.
@@ -116,8 +111,6 @@ _OS_SPECIFIC_FILTER['linux'] = [
 _OS_SPECIFIC_FILTER['mac'] = [
     # https://bugs.chromium.org/p/chromedriver/issues/detail?id=1927
     'MobileEmulationCapabilityTest.testTapElement',
-    # https://bugs.chromium.org/p/chromedriver/issues/detail?id=1945
-    'ChromeDriverTest.testWindowFullScreen',
 ]
 
 _DESKTOP_NEGATIVE_FILTER = [
@@ -155,7 +148,6 @@ _ANDROID_NEGATIVE_FILTER['chrome'] = (
         # https://crbug.com/274650
         'ChromeDriverTest.testCloseWindow',
         # https://bugs.chromium.org/p/chromedriver/issues/detail?id=298
-        'ChromeDriverTest.testWindowFullScreen',
         'ChromeDriverTest.testWindowPosition',
         'ChromeDriverTest.testWindowSize',
         'ChromeDriverTest.testWindowMaximize',
@@ -240,11 +232,10 @@ _ANDROID_NEGATIVE_FILTER['chromedriver_webview_shell'] = (
         'ChromeDriverTest.testSendTextToAlert',
         'ChromeDriverTest.testUnexpectedAlertOpenExceptionMessage',
         # The WebView shell that we test against (on Kitkat) does not yet
-        # support Network.setCookie & deleteCookies DevTools command.
+        # support Network.setCookie DevTools command.
         # TODO(gmanikpure): reenable when it does.
         'ChromeDriverLogTest.testDisablingDriverLogsSuppressesChromeDriverLog',
         'ChromeDriverTest.testCookiePath',
-        'ChromeDriverTest.testDeleteCookie',
         'ChromeDriverTest.testGetHttpOnlyCookie',
         'ChromeDriverTest.testGetNamedCookie',
         # https://bugs.chromium.org/p/chromedriver/issues/detail?id=1941
@@ -966,20 +957,6 @@ class ChromeDriverTest(ChromeDriverBaseTestWithWebServer):
     self.assertEquals([100, 200], self._driver.GetWindowPosition())
     self.assertEquals([600, 400], self._driver.GetWindowSize())
 
-  def testWindowFullScreen(self):
-    self._driver.SetWindowPosition(100, 200)
-    self._driver.SetWindowSize(500, 300)
-    self._driver.FullScreenWindow()
-
-    self.assertNotEqual([100, 200], self._driver.GetWindowPosition())
-    self.assertNotEqual([500, 300], self._driver.GetWindowSize())
-    # Set size first so that the window isn't moved offscreen.
-    # See https://bugs.chromium.org/p/chromedriver/issues/detail?id=297.
-    self._driver.SetWindowSize(600, 400)
-    self._driver.SetWindowPosition(100, 200)
-    self.assertEquals([100, 200], self._driver.GetWindowPosition())
-    self.assertEquals([600, 400], self._driver.GetWindowSize())
-
   def testConsoleLogSources(self):
     self._driver.Load(self.GetHttpUrlForFile('/chromedriver/console_log.html'))
     logs = self._driver.GetLog('browser')
@@ -1500,19 +1477,6 @@ class ChromeDriverTest(ChromeDriverBaseTestWithWebServer):
     self.assertRaisesRegexp(
         chromedriver.NoSuchCookie, "no such cookie",
         self._driver.GetNamedCookie, 'foo')
-
-  def testDeleteCookie(self):
-    self._driver.Load(self.GetHttpUrlForFile(
-        '/chromedriver/empty.html'))
-    self._driver.AddCookie({'name': 'a', 'value': 'b'})
-    self._driver.AddCookie({'name': 'x', 'value': 'y'})
-    self._driver.AddCookie({'name': 'p', 'value': 'q'})
-    cookies = self._driver.GetCookies()
-    self.assertEquals(3, len(cookies))
-    self._driver.DeleteCookie('a')
-    self.assertEquals(2, len(self._driver.GetCookies()))
-    self._driver.DeleteAllCookies()
-    self.assertEquals(0, len(self._driver.GetCookies()))
 
   def testGetUrlOnInvalidUrl(self):
     # Make sure we don't return 'chrome-error://chromewebdata/' (see

@@ -108,10 +108,8 @@ Polymer({
     this.$$('add-printer-list').style.maxHeight = kPrinterListFullHeight + 'px';
     this.$.noPrinterMessage.hidden = !!this.discoveredPrinters.length;
 
-    if (!this.discoveredPrinters.length) {
-      this.selectedPrinter = getEmptyPrinter_();
+    if (!this.discoveredPrinters.length)
       this.fire('no-detected-printer');
-    }
   },
 
   /** @private */
@@ -155,7 +153,6 @@ Polymer({
 
   /** @private */
   switchToDiscoveryDialog_: function() {
-    this.newPrinter = getEmptyPrinter_();
     this.$$('add-printer-dialog').close();
     this.fire('open-discovery-printers-dialog');
   },

@@ -169,8 +169,11 @@ void DevToolsAgentHostImpl::InnerAttachClient(DevToolsAgentHostClient* client) {
     NotifyAttached();
 }
 
-void DevToolsAgentHostImpl::AttachClient(DevToolsAgentHostClient* client) {
+bool DevToolsAgentHostImpl::AttachClient(DevToolsAgentHostClient* client) {
+  if (!sessions_.empty())
+    return false;
   InnerAttachClient(client);
+  return true;
 }
 
 void DevToolsAgentHostImpl::ForceAttachClient(DevToolsAgentHostClient* client) {
@@ -178,6 +181,10 @@ void DevToolsAgentHostImpl::ForceAttachClient(DevToolsAgentHostClient* client) {
   if (!sessions_.empty())
     ForceDetachAllClients(true);
   DCHECK(sessions_.empty());
+  InnerAttachClient(client);
+}
+
+void DevToolsAgentHostImpl::AttachMultiClient(DevToolsAgentHostClient* client) {
   InnerAttachClient(client);
 }
 

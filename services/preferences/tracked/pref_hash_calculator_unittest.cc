@@ -93,8 +93,7 @@ TEST(PrefHashCalculatorTest, CatchHashChanges) {
   auto nested_empty_list = base::MakeUnique<base::ListValue>();
   nested_empty_list->Append(base::MakeUnique<base::DictionaryValue>());
   nested_empty_list->Append(base::MakeUnique<base::ListValue>());
-  nested_empty_list->Append(
-      base::MakeUnique<base::Value>(nested_empty_dict->Clone()));
+  nested_empty_list->Append(base::MakeUnique<base::Value>(*nested_empty_dict));
 
   // A dictionary with an empty dictionary, an empty list, and nested empty
   // dictionaries/lists in it.

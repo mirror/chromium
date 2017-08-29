@@ -23,6 +23,7 @@ Informácie o ochrane osobných údajov nájdete v Pravidlách ochrany osobných
 <translation id="1520828917794284345">Prispôsobiť veľkosť pracovnej plochy obrazovke klienta</translation>
 <translation id="154040539590487450">Spustenie služby vzdialeného prístupu zlyhalo.</translation>
 <translation id="1546934824884762070">Vyskytla sa neočakávaná chyba. Nahláste tento problém vývojárom.</translation>
+<translation id="1619813076098775562">Pripojenie k zariadeniu Cast bolo zavreté.</translation>
 <translation id="1643640058022401035">Ak opustíte túto stránku, relácia aplikácie Chromoting sa ukončí.</translation>
 <translation id="1654128982815600832">Prebieha povoľovanie vzdialených pripojení pre tento počítač...</translation>
 <translation id="170207782578677537">Registrácia tohto počítača zlyhala.</translation>
@@ -40,6 +41,10 @@ Informácie o ochrane osobných údajov nájdete v Pravidlách ochrany osobných
 <translation id="2013996867038862849">Všetky spárované klientske programy boli odstránené.</translation>
 <translation id="2038229918502634450">Hostiteľ sa reštartuje, aby zohľadnil zmenu v pravidlách</translation>
 <translation id="2046651113449445291">S týmto počítačom boli spárované nasledujúce klientske programy a môžu sa pripojiť bez kódu PIN. Toto povolenie môžete kedykoľvek odvolať buď pre jednotlivé programy, alebo pre všetky programy naraz.</translation>
+<translation id="2053901200959289492">• Pridaná podpora režimu viacerých okien pre Android Nougat.
+• Vylepšená kvalita obrázkov na ploche, rýchlosť reakcií a spotreba batérie.
+• Vylepšená rýchlosť reakcií operácií typu kliknutie a presunutie.
+• Vylepšené viaceré animované efekty používateľského rozhrania.</translation>
 <translation id="2078880767960296260">Proces hostiteľa</translation>
 <translation id="20876857123010370">Režim trackpadu</translation>
 <translation id="2089514346391228378">Vzdialené pripojenia k tomuto počítaču boli povolené.</translation>
@@ -75,7 +80,6 @@ Informácie o ochrane osobných údajov nájdete v Pravidlách ochrany osobných
 <translation id="2676780859508944670">Spracúva sa…</translation>
 <translation id="2699970397166997657">Chromoting</translation>
 <translation id="2747641796667576127">Aktualizácie systému zvyčajne prebiehajú automaticky, ale v zriedkavých prípadoch môžu zlyhať. Aktualizácia softvéru by nemala trvať dlhšie ako niekoľko sekúnd a dá sa vykonať prostredníctvom vzdialeného pripojenia k počítaču.</translation>
-<translation id="2758123043070977469">Pri overovaní totožnosti sa vyskytla chyba. Prihláste sa znova.</translation>
 <translation id="2803375539583399270">Zadajte kód PIN</translation>
 <translation id="2841013758207633010">Čas</translation>
 <translation id="2851754573186462851">Chromium App Streaming</translation>
@@ -171,6 +175,12 @@ Informácie o ochrane osobných údajov nájdete v Pravidlách ochrany osobných
 <translation id="5156271271724754543">Do obidvoch polí zadajte rovnaký kód PIN.</translation>
 <translation id="5170982930780719864">Neplatný identifikátor hostiteľa</translation>
 <translation id="518094545883702183">K týmto informáciám, ktoré sa používajú iba na diagnostiku vami nahláseného problému, má prístup výhradne osoba prešetrujúca vaše hlásenie. Tieto informácie budú uchovávané maximálne 30 dní.</translation>
+<translation id="5196958630269420102">Zaistite bezpečný prístup k počítačom zo svojho zariadenia so systémom iOS.
+
+• V každom zo svojich počítačov nastavte vzdialený prístup pomocou aplikácie Vzdialená plocha Chrome z Internetového obchodu Chrome na adrese https://chrome.google.com/remotedesktop.
+• V zariadení so systémom iOS spustite danú aplikáciu a klepnutím na niektorý počítač sa pripojte.
+
+Informácie o ochrane súkromia nájdete v pravidlách ochrany súkromia (http://goo.gl/SyrVzj) a v pravidlách ochrany súkromia prehliadača Chrome (http://goo.gl/0uXE5d).</translation>
 <translation id="5204575267916639804">Časté otázky</translation>
 <translation id="5222676887888702881">Odhlásiť sa</translation>
 <translation id="5254120496627797685">Ak opustíte túto stránku, relácia Vzdialenej plochy Chrome sa ukončí.</translation>
@@ -183,6 +193,7 @@ Informácie o ochrane osobných údajov nájdete v Pravidlách ochrany osobných
 <translation id="5419418238395129586">Naposledy online: <ph name="DATE" /></translation>
 <translation id="544077782045763683">Hostiteľ je vypnutý</translation>
 <translation id="5510035215749041527">Odpojiť</translation>
+<translation id="5537725057119320332">Prenášať</translation>
 <translation id="5593560073513909978">Služba je dočasne nedostupná. Skúste to znova neskôr.</translation>
 <translation id="5601503069213153581">Kód PIN</translation>
 <translation id="5619148062500147964">K tomuto počítaču</translation>
@@ -191,10 +202,10 @@ Informácie o ochrane osobných údajov nájdete v Pravidlách ochrany osobných
 <translation id="5708869785009007625">Pracovnú plochu momentálne zdieľate s používateľom <ph name="USER" />.</translation>
 <translation id="5773590752998175013">Dátum párovania</translation>
 <translation id="579702532610384533">Znova pripojiť</translation>
-<translation id="5810269635982033450">Obrazovka funguje ako trackpad</translation>
 <translation id="5841343754884244200">Možnosti zobrazenia</translation>
 <translation id="5843054235973879827">Prečo je to bezpečné?</translation>
 <translation id="5859141382851488196">Nové okno…</translation>
+<translation id="5885438903806970186">Online.</translation>
 <translation id="6011539954251327702">Funkcia Chromoting vám umožňuje bezpečne zdieľať váš počítač cez internet. Obaja používatelia musia mať spustenú aplikáciu Chromoting, ktorú nájdete na adrese <ph name="URL" />.</translation>
 <translation id="6033507038939587647">Možnosti klávesnice</translation>
 <translation id="6040143037577758943">Zavrieť</translation>
@@ -224,6 +235,11 @@ Informácie o ochrane osobných údajov nájdete v Pravidlách ochrany osobných
 <translation id="6570205395680337606">Resetovať aplikáciu. Prídete o všetku neuloženú prácu.</translation>
 <translation id="6572345186230665992">Pre počítače Mac (OS X Mavericks 10.9 a vyšší)</translation>
 <translation id="6583902294974160967">Podpora</translation>
+<translation id="6598484667010442494">Vzdialená plocha Chrome
+Vzdialená plocha
+Vzdialené PC
+Vzdialený počítač
+Vzdialený prístup</translation>
 <translation id="6612717000975622067">Odoslať akciu Ctrl-Alt-Del</translation>
 <translation id="6668065415969892472">Váš kód PIN bol aktualizovaný.</translation>
 <translation id="6681800064886881394">Copyright 2013 Google Inc. Všetky práva vyhradené.</translation>
@@ -243,7 +259,7 @@ Informácie o ochrane osobných údajov nájdete v Pravidlách ochrany osobných
 <translation id="7019153418965365059">Nerozpoznaná chyba hostiteľa: <ph name="HOST_OFFLINE_REASON" />.</translation>
 <translation id="701976023053394610">Pomoc na diaľku</translation>
 <translation id="7038683108611689168">Pomôžte nám zlepšiť aplikáciu Chromoting tým, že nám umožníte zhromažďovať štatistiky používania a správy o zlyhaní.</translation>
-<translation id="7067321367069083429">Obrazovka funguje ako dotyková obrazovka</translation>
+<translation id="712467900648340229">Nepodarilo sa pripojiť k zariadeniu Cast.</translation>
 <translation id="7144878232160441200">Skúsiť znova</translation>
 <translation id="7149517134817561223">Aplikácia na zadávanie príkazov hostiteľovi Vzdialenej plochy Chrome.</translation>
 <translation id="7215059001581613786">Zadajte kód PIN obsahujúci 6 alebo viac číslic.</translation>

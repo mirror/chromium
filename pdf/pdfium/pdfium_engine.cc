@@ -26,7 +26,6 @@
 #include "base/strings/string_util.h"
 #include "base/strings/utf_string_conversions.h"
 #include "base/threading/thread_task_runner_handle.h"
-#include "build/build_config.h"
 #include "gin/array_buffer.h"
 #include "gin/public/gin_embedders.h"
 #include "gin/public/isolate_holder.h"
@@ -518,19 +517,6 @@ void FormatStringForOS(base::string16* text) {
 #endif
 }
 
-// For double clicks, look for work breaks.
-// For triple clicks, look for line breaks.
-// The actual algorithm used in Blink is much more complicated, so do a simple
-// approximation.
-bool FindMultipleClickBoundary(bool is_double_click, base::char16 cur) {
-  if (!is_double_click)
-    return cur == '\n';
-
-  if (base::IsAsciiAlpha(cur) || base::IsAsciiDigit(cur) || cur == '_')
-    return false;
-  return cur < 128;
-};
-
 // Returns a VarDictionary (representing a bookmark), which in turn contains
 // child VarDictionaries (representing the child bookmarks).
 // If nullptr is passed in as the bookmark then we traverse from the "root".
@@ -664,26 +650,6 @@ bool CheckIfEditableFormTextArea(int flags, int form_type) {
 
 bool IsLinkArea(PDFiumPage::Area area) {
   return area == PDFiumPage::WEBLINK_AREA || area == PDFiumPage::DOCLINK_AREA;
-}
-
-// Normalize a MouseInputEvent. For Mac, this means transforming ctrl + left
-// button down events into a right button down events.
-pp::MouseInputEvent NormalizeMouseEvent(pp::Instance* instance,
-                                        const pp::MouseInputEvent& event) {
-  pp::MouseInputEvent normalized_event = event;
-#if defined(OS_MACOSX)
-  uint32_t modifiers = event.GetModifiers();
-  if ((modifiers & PP_INPUTEVENT_MODIFIER_CONTROLKEY) &&
-      event.GetButton() == PP_INPUTEVENT_MOUSEBUTTON_LEFT &&
-      event.GetType() == PP_INPUTEVENT_TYPE_MOUSEDOWN) {
-    uint32_t new_modifiers = modifiers & ~PP_INPUTEVENT_MODIFIER_CONTROLKEY;
-    normalized_event = pp::MouseInputEvent(
-        instance, PP_INPUTEVENT_TYPE_MOUSEDOWN, event.GetTimeStamp(),
-        new_modifiers, PP_INPUTEVENT_MOUSEBUTTON_RIGHT, event.GetPosition(), 1,
-        event.GetMovement());
-  }
-#endif
-  return normalized_event;
 }
 
 }  // namespace
@@ -1761,14 +1727,12 @@ PDFiumPage::Area PDFiumEngine::GetCharIndex(const pp::Point& point,
 }
 
 bool PDFiumEngine::OnMouseDown(const pp::MouseInputEvent& event) {
-  pp::MouseInputEvent normalized_event =
-      NormalizeMouseEvent(client_->GetPluginInstance(), event);
-  if (normalized_event.GetButton() == PP_INPUTEVENT_MOUSEBUTTON_LEFT)
-    return OnLeftMouseDown(normalized_event);
-  if (normalized_event.GetButton() == PP_INPUTEVENT_MOUSEBUTTON_MIDDLE)
-    return OnMiddleMouseDown(normalized_event);
-  if (normalized_event.GetButton() == PP_INPUTEVENT_MOUSEBUTTON_RIGHT)
-    return OnRightMouseDown(normalized_event);
+  if (event.GetButton() == PP_INPUTEVENT_MOUSEBUTTON_LEFT)
+    return OnLeftMouseDown(event);
+  if (event.GetButton() == PP_INPUTEVENT_MOUSEBUTTON_MIDDLE)
+    return OnMiddleMouseDown(event);
+  if (event.GetButton() == PP_INPUTEVENT_MOUSEBUTTON_RIGHT)
+    return OnRightMouseDown(event);
   return false;
 }
 
@@ -1780,15 +1744,14 @@ void PDFiumEngine::OnSingleClick(int page_index, int char_index) {
 void PDFiumEngine::OnMultipleClick(int click_count,
                                    int page_index,
                                    int char_index) {
-  DCHECK_GE(click_count, 2);
-  bool is_double_click = click_count == 2;
-
   // It would be more efficient if the SDK could support finding a space, but
   // now it doesn't.
   int start_index = char_index;
   do {
     base::char16 cur = pages_[page_index]->GetCharAtIndex(start_index);
-    if (FindMultipleClickBoundary(is_double_click, cur))
+    // For double click, we want to select one word so we look for whitespace
+    // boundaries.  For triple click, we want the whole line.
+    if (cur == '\n' || (click_count == 2 && (cur == ' ' || cur == '\t')))
       break;
   } while (--start_index >= 0);
   if (start_index)
@@ -1798,7 +1761,7 @@ void PDFiumEngine::OnMultipleClick(int click_count,
   int total = pages_[page_index]->GetCharCount();
   while (end_index++ <= total) {
     base::char16 cur = pages_[page_index]->GetCharAtIndex(end_index);
-    if (FindMultipleClickBoundary(is_double_click, cur))
+    if (cur == '\n' || (click_count == 2 && (cur == ' ' || cur == '\t')))
       break;
   }
 
@@ -1860,10 +1823,11 @@ bool PDFiumEngine::OnLeftMouseDown(const pp::MouseInputEvent& event) {
   if (area != PDFiumPage::TEXT_AREA)
     return true;  // Return true so WebKit doesn't do its own highlighting.
 
-  if (event.GetClickCount() == 1)
+  if (event.GetClickCount() == 1) {
     OnSingleClick(page_index, char_index);
-  else if (event.GetClickCount() == 2 || event.GetClickCount() == 3)
+  } else if (event.GetClickCount() == 2 || event.GetClickCount() == 3) {
     OnMultipleClick(event.GetClickCount(), page_index, char_index);
+  }
 
   return true;
 }

@@ -7,6 +7,7 @@ package org.chromium.chrome.browser.preferences;
 import android.accounts.Account;
 import android.content.Context;
 import android.preference.Preference;
+import android.preference.PreferenceManager;
 import android.support.v7.content.res.AppCompatResources;
 import android.util.AttributeSet;
 import android.view.View;
@@ -57,10 +58,10 @@ public class SignInPreference
         mProfileDataCache = new ProfileDataCache(context, Profile.getLastUsedProfile(), imageSize);
     }
 
-    /**
-     * Starts listening for updates to the sign-in and sync state.
-     */
-    public void registerForUpdates() {
+    @Override
+    protected void onAttachedToHierarchy(PreferenceManager preferenceManager) {
+        super.onAttachedToHierarchy(preferenceManager);
+
         AccountManagerFacade.get().addObserver(this);
         SigninManager.get(getContext()).addSignInAllowedObserver(this);
         mProfileDataCache.addObserver(this);
@@ -74,11 +75,8 @@ public class SignInPreference
         update();
     }
 
-    /**
-     * Stops listening for updates to the sign-in and sync state. Every call to registerForUpdates()
-     * must be matched with a call to this method.
-     */
-    public void unregisterForUpdates() {
+    @Override
+    protected void onPrepareForRemoval() {
         AccountManagerFacade.get().removeObserver(this);
         SigninManager.get(getContext()).removeSignInAllowedObserver(this);
         mProfileDataCache.removeObserver(this);
@@ -87,6 +85,8 @@ public class SignInPreference
         if (syncService != null) {
             syncService.removeSyncStateChangedListener(this);
         }
+
+        super.onPrepareForRemoval();
     }
 
     /**
@@ -97,9 +97,7 @@ public class SignInPreference
         if (SigninManager.get(getContext()).isSigninDisabledByPolicy()) {
             setupSigninDisabled();
         } else if (accountName == null) {
-            // Don't change the promo type if the promo is already being shown.
-            final boolean forceNew = mSigninPromoController != null;
-            if (forceNew || SigninPromoController.shouldShowPromo(SigninAccessPoint.SETTINGS)) {
+            if (SigninPromoController.shouldShowPromo(SigninAccessPoint.SETTINGS)) {
                 setupNewPromo();
             } else {
                 setupOldPromo();

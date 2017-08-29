@@ -26,9 +26,8 @@
 #include "components/autofill/core/common/autofill_data_validation.h"
 #include "components/autofill/core/common/autofill_util.h"
 #include "components/password_manager/core/browser/android_affiliation/affiliation_utils.h"
-#include "components/password_manager/core/browser/password_manager_client.h"
 #include "components/password_manager/core/browser/password_manager_driver.h"
-#include "components/password_manager/core/browser/password_manager_metrics_recorder.h"
+#include "components/password_manager/core/browser/password_manager_metrics_util.h"
 #include "components/password_manager/core/common/password_manager_features.h"
 #include "components/security_state/core/security_state.h"
 #include "components/strings/grit/components_strings.h"
@@ -138,12 +137,9 @@ void GetSuggestions(const autofill::PasswordFormFillData& fill_data,
 
 PasswordAutofillManager::PasswordAutofillManager(
     PasswordManagerDriver* password_manager_driver,
-    autofill::AutofillClient* autofill_client,
-    PasswordManagerClient* password_client)
-    : form_data_key_(-1),
-      password_manager_driver_(password_manager_driver),
+    autofill::AutofillClient* autofill_client)
+    : password_manager_driver_(password_manager_driver),
       autofill_client_(autofill_client),
-      password_client_(password_client),
       weak_ptr_factory_(this) {}
 
 PasswordAutofillManager::~PasswordAutofillManager() {
@@ -266,8 +262,7 @@ void PasswordAutofillManager::OnShowPasswordSuggestions(
 
   if (base::FeatureList::IsEnabled(
           password_manager::features::kEnableManualFallbacksFilling) &&
-      (options & autofill::IS_PASSWORD_FIELD) && password_client_ &&
-      password_client_->IsFillingFallbackEnabledForCurrentPage()) {
+      (options & autofill::IS_PASSWORD_FIELD)) {
 #if !defined(OS_ANDROID)
     suggestions.push_back(autofill::Suggestion());
     suggestions.back().frontend_id = autofill::POPUP_ITEM_ID_SEPARATOR;
@@ -278,11 +273,6 @@ void PasswordAutofillManager::OnShowPasswordSuggestions(
         std::string(), std::string(),
         autofill::POPUP_ITEM_ID_ALL_SAVED_PASSWORDS_ENTRY);
     suggestions.push_back(all_saved_passwords);
-
-    show_all_saved_passwords_shown_context_ =
-        metrics_util::SHOW_ALL_SAVED_PASSWORDS_CONTEXT_PASSWORD;
-    metrics_util::LogContextOfShowAllSavedPasswordsShown(
-        show_all_saved_passwords_shown_context_);
   }
 
   autofill_client_->ShowAutofillPopup(bounds,
@@ -322,21 +312,12 @@ void PasswordAutofillManager::OnShowManualFallbackSuggestion(
   // is NULL too.
   if (!autofill_client_)
     return;
-  if (!password_client_ ||
-      !password_client_->IsFillingFallbackEnabledForCurrentPage())
-    return;
   std::vector<autofill::Suggestion> suggestions;
   autofill::Suggestion all_saved_passwords(
       l10n_util::GetStringUTF8(IDS_AUTOFILL_SHOW_ALL_SAVED_FALLBACK),
       std::string(), std::string(),
       autofill::POPUP_ITEM_ID_ALL_SAVED_PASSWORDS_ENTRY);
   suggestions.push_back(all_saved_passwords);
-
-  show_all_saved_passwords_shown_context_ =
-      metrics_util::SHOW_ALL_SAVED_PASSWORDS_CONTEXT_MANUAL_FALLBACK;
-  metrics_util::LogContextOfShowAllSavedPasswordsShown(
-      show_all_saved_passwords_shown_context_);
-
   autofill_client_->ShowAutofillPopup(bounds, text_direction, suggestions,
                                       weak_ptr_factory_.GetWeakPtr());
 }
@@ -385,33 +366,6 @@ void PasswordAutofillManager::DidAcceptSuggestion(const base::string16& value,
         FillSuggestion(form_data_key_, GetUsernameFromSuggestion(value));
     DCHECK(success);
   }
-
-  if (identifier == autofill::POPUP_ITEM_ID_ALL_SAVED_PASSWORDS_ENTRY) {
-    DCHECK_NE(show_all_saved_passwords_shown_context_,
-              metrics_util::SHOW_ALL_SAVED_PASSWORDS_CONTEXT_NONE);
-
-    metrics_util::LogContextOfShowAllSavedPasswordsAccepted(
-        show_all_saved_passwords_shown_context_);
-
-    if (password_client_) {
-      using UserAction =
-          password_manager::PasswordManagerMetricsRecorder::PageLevelUserAction;
-      switch (show_all_saved_passwords_shown_context_) {
-        case metrics_util::SHOW_ALL_SAVED_PASSWORDS_CONTEXT_PASSWORD:
-          password_client_->GetMetricsRecorder().RecordPageLevelUserAction(
-              UserAction::kShowAllPasswordsWhileSomeAreSuggested);
-          break;
-        case metrics_util::SHOW_ALL_SAVED_PASSWORDS_CONTEXT_MANUAL_FALLBACK:
-          password_client_->GetMetricsRecorder().RecordPageLevelUserAction(
-              UserAction::kShowAllPasswordsWhileNoneAreSuggested);
-          break;
-        case metrics_util::SHOW_ALL_SAVED_PASSWORDS_CONTEXT_NONE:
-        case metrics_util::SHOW_ALL_SAVED_PASSWORDS_CONTEXT_COUNT:
-          NOTREACHED();
-      }
-    }
-  }
-
   autofill_client_->HideAutofillPopup();
 }
 

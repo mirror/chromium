@@ -34,7 +34,7 @@
     }
     if (result.scriptId)
       result.scriptId = 0;
-    testRunner.log(result, 'compilation result: ');
+    testRunner.logObject(result, 'compilation result: ');
     testRunner.log('-----');
   }
 })

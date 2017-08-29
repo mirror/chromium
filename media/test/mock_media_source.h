@@ -25,9 +25,6 @@ class MockMediaSource {
   MockMediaSource(const std::string& filename,
                   const std::string& mimetype,
                   size_t initial_append_size);
-  MockMediaSource(const scoped_refptr<DecoderBuffer>& data,
-                  const std::string& mimetype,
-                  size_t initial_append_size);
   ~MockMediaSource();
 
   std::unique_ptr<Demuxer> GetDemuxer();
@@ -39,10 +36,6 @@ class MockMediaSource {
 
   void set_demuxer_failure_cb(const PipelineStatusCB& demuxer_failure_cb) {
     demuxer_failure_cb_ = demuxer_failure_cb;
-  }
-
-  void set_do_eos_after_next_append(bool flag) {
-    do_eos_after_next_append_ = flag;
   }
 
   void Seek(base::TimeDelta seek_time,
@@ -73,10 +66,6 @@ class MockMediaSource {
     return last_timestamp_offset_;
   }
 
-  void set_expect_append_success(bool expectation) {
-    expect_append_success_ = expectation;
-  }
-
   void InitSegmentReceived(std::unique_ptr<MediaTracks> tracks);
   MOCK_METHOD1(InitSegmentReceivedMock, void(std::unique_ptr<MediaTracks>&));
 
@@ -93,8 +82,6 @@ class MockMediaSource {
   PipelineStatusCB demuxer_failure_cb_;
   Demuxer::EncryptedMediaInitDataCB encrypted_media_init_data_cb_;
   base::TimeDelta last_timestamp_offset_;
-  bool do_eos_after_next_append_ = false;
-  bool expect_append_success_ = true;
 
   DISALLOW_COPY_AND_ASSIGN(MockMediaSource);
 };

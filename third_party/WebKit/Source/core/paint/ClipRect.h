@@ -78,7 +78,7 @@ class ClipRect {
   bool IsEmpty() const { return rect_.IsEmpty(); }
   bool Intersects(const HitTestLocation&) const;
 
-  String ToString() const;
+  String ToString() const { return rect_.ToString(); }
 
  private:
   LayoutRect rect_;

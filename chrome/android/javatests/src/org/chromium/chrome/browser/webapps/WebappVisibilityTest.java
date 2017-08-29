@@ -69,6 +69,8 @@ public class WebappVisibilityTest {
         Assert.assertTrue(
                 canAutoHideBrowserControls(type, ConnectionSecurityLevel.HTTP_SHOW_WARNING));
         Assert.assertFalse(canAutoHideBrowserControls(type, ConnectionSecurityLevel.DANGEROUS));
+        Assert.assertFalse(
+                canAutoHideBrowserControls(type, ConnectionSecurityLevel.SECURITY_WARNING));
     }
 
     private static void testShouldShowBrowserControls(Type type, int displayMode) {
@@ -102,13 +104,19 @@ public class WebappVisibilityTest {
         Assert.assertFalse(shouldShowBrowserControls(
                         WEBAPP_URL, "", ConnectionSecurityLevel.NONE, type, displayMode));
 
-        // Show browser controls for Dangerous URLs.
+        // Show browser controls for non secure URLs.
         Assert.assertTrue(shouldShowBrowserControls(WEBAPP_URL, WEBAPP_URL,
-                ConnectionSecurityLevel.DANGEROUS, type, displayMode));
+                ConnectionSecurityLevel.SECURITY_WARNING, type, displayMode));
+        Assert.assertTrue(shouldShowBrowserControls(WEBAPP_URL, WEBAPP_URL + "/things.html",
+                ConnectionSecurityLevel.SECURITY_WARNING, type, displayMode));
+        Assert.assertTrue(shouldShowBrowserControls(WEBAPP_URL, WEBAPP_URL + "/stuff.html",
+                ConnectionSecurityLevel.SECURITY_WARNING, type, displayMode));
         Assert.assertTrue(shouldShowBrowserControls(WEBAPP_URL, WEBAPP_URL + "/stuff.html",
                 ConnectionSecurityLevel.DANGEROUS, type, displayMode));
         Assert.assertTrue(shouldShowBrowserControls(WEBAPP_URL, WEBAPP_URL + "/things.html",
                 ConnectionSecurityLevel.DANGEROUS, type, displayMode));
+        Assert.assertTrue(shouldShowBrowserControls(WEBAPP_URL, "http://sub.originalwebsite.com",
+                ConnectionSecurityLevel.SECURITY_WARNING, type, displayMode));
         Assert.assertTrue(shouldShowBrowserControls(WEBAPP_URL, "http://notoriginalwebsite.com",
                 ConnectionSecurityLevel.DANGEROUS, type, displayMode));
         Assert.assertTrue(shouldShowBrowserControls(WEBAPP_URL, "http://otherwebsite.com",

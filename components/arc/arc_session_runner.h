@@ -71,9 +71,6 @@ class ArcSessionRunner : public ArcSession::Observer,
   bool IsRunning() const;
   bool IsStopped() const;
 
-  // Returns whether LoginScreen instance is starting.
-  bool IsLoginScreenInstanceStarting() const;
-
   // Returns the current ArcSession instance for testing purpose.
   ArcSession* GetArcSessionForTesting() { return arc_session_.get(); }
 
@@ -81,6 +78,9 @@ class ArcSessionRunner : public ArcSession::Observer,
   // however, we'd like it to happen immediately to avoid adding unnecessary
   // delays.
   void SetRestartDelayForTesting(const base::TimeDelta& restart_delay);
+
+  // TODO(yusukes): Remove the function once crbug.com/756687 is fixed.
+  static void ResetEmitLoginPromptVisibleCalledCalledForTesting();
 
  private:
   // The possible states.  In the normal flow, the state changes in the

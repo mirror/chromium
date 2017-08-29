@@ -75,7 +75,7 @@ Polymer({
   is: 'oobe-welcome-secondary-button',
 
   properties: {
-    icon1x: {type: String, observer: 'updateIconVisibility_'},
+    icon1x: String,
     icon2x: String,
 
     /* Note that we are not using "aria-label" property here, because
@@ -87,9 +87,5 @@ Polymer({
 
   focus: function() {
     this.$.button.focus();
-  },
-
-  updateIconVisibility_: function() {
-    this.$.icon.hidden = (this.icon1x === undefined || this.icon1x.length == 0);
   },
 });

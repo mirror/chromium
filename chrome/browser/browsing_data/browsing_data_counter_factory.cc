@@ -94,7 +94,7 @@ BrowsingDataCounterFactory::GetForProfileAndPref(Profile* profile,
     return base::MakeUnique<DownloadsCounter>(profile);
 
   if (pref_name == browsing_data::prefs::kDeleteMediaLicenses)
-    return MediaLicensesCounter::Create(profile);
+    return base::MakeUnique<MediaLicensesCounter>(profile);
 
   if (pref_name == browsing_data::prefs::kDeleteSiteSettings) {
     return base::MakeUnique<browsing_data::SiteSettingsCounter>(

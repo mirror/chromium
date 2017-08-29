@@ -112,7 +112,6 @@ MediaCodecVideoDecoder::MediaCodecVideoDecoder(
     std::unique_ptr<VideoFrameFactory> video_frame_factory)
     : state_(State::kBeforeSurfaceInit),
       lazy_init_pending_(true),
-      reset_generation_(0),
       output_cb_(output_cb),
       gpu_task_runner_(gpu_task_runner),
       get_stub_cb_(get_stub_cb),
@@ -358,7 +357,8 @@ void MediaCodecVideoDecoder::OnCodecCreated(
 
 void MediaCodecVideoDecoder::Decode(const scoped_refptr<DecoderBuffer>& buffer,
                                     const DecodeCB& decode_cb) {
-  DVLOG(2) << __func__ << buffer->AsHumanReadableString();
+  DVLOG(2) << __func__;
+
   if (state_ == State::kError) {
     decode_cb.Run(DecodeStatus::DECODE_ERROR);
     return;
@@ -473,7 +473,7 @@ bool MediaCodecVideoDecoder::QueueInput() {
   MediaCodecStatus queue_status = codec_->QueueInputBuffer(
       input_buffer, pending_decode.buffer->data(),
       pending_decode.buffer->data_size(), pending_decode.buffer->timestamp());
-  DVLOG(2) << "QueueInputBuffer(pts="
+  DVLOG(2) << ": QueueInputBuffer(pts="
            << pending_decode.buffer->timestamp().InMilliseconds()
            << ") status=" << queue_status;
 
@@ -550,23 +550,12 @@ bool MediaCodecVideoDecoder::DequeueOutput() {
 
   video_frame_factory_->CreateVideoFrame(
       std::move(output_buffer), surface_texture_, presentation_time,
-      decoder_config_.natural_size(),
-      base::Bind(&MediaCodecVideoDecoder::ForwardVideoFrame,
-                 weak_factory_.GetWeakPtr(), reset_generation_));
+      decoder_config_.natural_size(), output_cb_);
   return true;
-}
-
-void MediaCodecVideoDecoder::ForwardVideoFrame(
-    int reset_generation,
-    VideoFrameFactory::ReleaseMailboxCB release_cb,
-    const scoped_refptr<VideoFrame>& frame) {
-  if (reset_generation_ == reset_generation)
-    output_cb_.Run(std::move(release_cb), frame);
 }
 
 void MediaCodecVideoDecoder::Reset(const base::Closure& closure) {
   DVLOG(2) << __func__;
-  reset_generation_++;
   ClearPendingDecodes(DecodeStatus::ABORTED);
   if (!codec_) {
     closure.Run();

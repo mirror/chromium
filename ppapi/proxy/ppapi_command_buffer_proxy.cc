@@ -184,7 +184,11 @@ gpu::CommandBufferId PpapiCommandBufferProxy::GetCommandBufferID() const {
   return command_buffer_id_;
 }
 
-void PpapiCommandBufferProxy::FlushPendingWork() {
+int32_t PpapiCommandBufferProxy::GetStreamId() const {
+  return 0;
+}
+
+void PpapiCommandBufferProxy::FlushOrderingBarrierOnStream(int32_t stream_id) {
   // This is only relevant for out-of-process command buffers.
 }
 

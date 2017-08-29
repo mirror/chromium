@@ -4,7 +4,6 @@
 
 #include "content/browser/geolocation/geolocation_service_impl.h"
 
-#include "base/run_loop.h"
 #include "base/test/scoped_feature_list.h"
 #include "content/public/browser/permission_manager.h"
 #include "content/public/browser/permission_type.h"
@@ -142,7 +141,7 @@ TEST_F(GeolocationServiceTest, PermissionGrantedPolicyViolation) {
   base::RunLoop loop;
   geolocation.set_connection_error_handler(loop.QuitClosure());
 
-  geolocation->QueryNextPosition(base::BindOnce([](GeopositionPtr geoposition) {
+  geolocation->QueryNextPosition(base::Bind([](GeopositionPtr geoposition) {
     ADD_FAILURE() << "Position updated unexpectedly";
   }));
   auto mock_geoposition = base::MakeUnique<Geoposition>();
@@ -170,10 +169,10 @@ TEST_F(GeolocationServiceTest, PermissionGrantedNoPolicyViolation) {
   service()->CreateGeolocation(mojo::MakeRequest(&geolocation), true);
 
   base::RunLoop loop;
-  geolocation.set_connection_error_handler(base::BindOnce(
+  geolocation.set_connection_error_handler(base::Bind(
       [] { ADD_FAILURE() << "Connection error handler called unexpectedly"; }));
 
-  geolocation->QueryNextPosition(base::BindOnce(
+  geolocation->QueryNextPosition(base::Bind(
       [](base::Closure callback, GeopositionPtr geoposition) {
         EXPECT_DOUBLE_EQ(kMockLatitude, geoposition->latitude);
         EXPECT_DOUBLE_EQ(kMockLongitude, geoposition->longitude);
@@ -197,10 +196,10 @@ TEST_F(GeolocationServiceTest, PermissionGrantedSync) {
   service()->CreateGeolocation(mojo::MakeRequest(&geolocation), true);
 
   base::RunLoop loop;
-  geolocation.set_connection_error_handler(base::BindOnce(
+  geolocation.set_connection_error_handler(base::Bind(
       [] { ADD_FAILURE() << "Connection error handler called unexpectedly"; }));
 
-  geolocation->QueryNextPosition(base::BindOnce(
+  geolocation->QueryNextPosition(base::Bind(
       [](base::Closure callback, GeopositionPtr geoposition) {
         EXPECT_DOUBLE_EQ(kMockLatitude, geoposition->latitude);
         EXPECT_DOUBLE_EQ(kMockLongitude, geoposition->longitude);
@@ -226,7 +225,7 @@ TEST_F(GeolocationServiceTest, PermissionDeniedSync) {
   base::RunLoop loop;
   geolocation.set_connection_error_handler(loop.QuitClosure());
 
-  geolocation->QueryNextPosition(base::BindOnce([](GeopositionPtr geoposition) {
+  geolocation->QueryNextPosition(base::Bind([](GeopositionPtr geoposition) {
     ADD_FAILURE() << "Position updated unexpectedly";
   }));
   auto mock_geoposition = base::MakeUnique<Geoposition>();
@@ -242,7 +241,7 @@ TEST_F(GeolocationServiceTest, PermissionGrantedAsync) {
   permission_manager()->SetRequestCallback(
       base::Bind([](const PermissionCallback& permission_callback) {
         base::ThreadTaskRunnerHandle::Get()->PostTask(
-            FROM_HERE, base::BindOnce(
+            FROM_HERE, base::Bind(
                            [](const PermissionCallback& callback) {
                              callback.Run(PermissionStatus::GRANTED);
                            },
@@ -252,10 +251,10 @@ TEST_F(GeolocationServiceTest, PermissionGrantedAsync) {
   service()->CreateGeolocation(mojo::MakeRequest(&geolocation), true);
 
   base::RunLoop loop;
-  geolocation.set_connection_error_handler(base::BindOnce(
+  geolocation.set_connection_error_handler(base::Bind(
       [] { ADD_FAILURE() << "Connection error handler called unexpectedly"; }));
 
-  geolocation->QueryNextPosition(base::BindOnce(
+  geolocation->QueryNextPosition(base::Bind(
       [](base::Closure callback, GeopositionPtr geoposition) {
         EXPECT_DOUBLE_EQ(kMockLatitude, geoposition->latitude);
         EXPECT_DOUBLE_EQ(kMockLongitude, geoposition->longitude);
@@ -275,7 +274,7 @@ TEST_F(GeolocationServiceTest, PermissionDeniedAsync) {
   permission_manager()->SetRequestCallback(
       base::Bind([](const PermissionCallback& permission_callback) {
         base::ThreadTaskRunnerHandle::Get()->PostTask(
-            FROM_HERE, base::BindOnce(
+            FROM_HERE, base::Bind(
                            [](const PermissionCallback& callback) {
                              callback.Run(PermissionStatus::DENIED);
                            },
@@ -287,7 +286,7 @@ TEST_F(GeolocationServiceTest, PermissionDeniedAsync) {
   base::RunLoop loop;
   geolocation.set_connection_error_handler(loop.QuitClosure());
 
-  geolocation->QueryNextPosition(base::BindOnce([](GeopositionPtr geoposition) {
+  geolocation->QueryNextPosition(base::Bind([](GeopositionPtr geoposition) {
     ADD_FAILURE() << "Position updated unexpectedly";
   }));
   auto mock_geoposition = base::MakeUnique<Geoposition>();
@@ -310,7 +309,7 @@ TEST_F(GeolocationServiceTest, ServiceClosedBeforePermissionResponse) {
   permission_manager()->SetCancelCallback(loop.QuitClosure());
   service_ptr()->reset();
 
-  geolocation->QueryNextPosition(base::BindOnce([](GeopositionPtr geoposition) {
+  geolocation->QueryNextPosition(base::Bind([](GeopositionPtr geoposition) {
     ADD_FAILURE() << "Position updated unexpectedly";
   }));
   auto mock_geoposition = base::MakeUnique<Geoposition>();

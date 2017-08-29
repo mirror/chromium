@@ -147,6 +147,7 @@
 
 നിങ്ങളുടെ തിരയൽ പദം ക്രമീകരിക്കാൻ, തിരഞ്ഞെടുക്കുന്നതിനായി ദീർഘനേരം അമർത്തിപ്പിടിക്കുക. തിരയൽ പരിഷ്‌ക്കരിക്കാൻ, എല്ലാ രീതിയിലും പാനൽ മുകളിലേക്ക് നീക്കി തിരയൽ ബോക്‌സ് സ്‌പർശിക്കുക.</translation>
 <translation id="3607167657931203000">ഓട്ടോഫിൽ ഡാറ്റ</translation>
+<translation id="3608436266458100337">റീഡർ മോഡ്</translation>
 <translation id="3628119975092896051">നിങ്ങളുടെ വായന ലിസ്‌റ്റ് ഓഫ്‌ലൈനിൽ ലഭ്യമാണ്. വായന ലിസ്‌റ്റിൽ ഒരു പേജ് ചേർക്കാൻ, <ph name="SHARE_OPENING_ICON" /> ടാപ്പുചെയ്യുക.</translation>
 <translation id="3638472932233958418">മുമ്പ് ലോഡുചെയ്‌ത വെബ്‌പേജുകൾ</translation>
 <translation id="3691593122358196899"><ph name="FOLDER_TITLE" /> ഫോൾഡറിലേക്ക് ബുക്ക്മാർക്ക് ചെയ്‌തു</translation>
@@ -174,7 +175,6 @@
 <translation id="4272631900155121838">QR കോഡ് സ്‌കാൻ ചെയ്യാൻ, ക്രമീകരണത്തിൽ നിന്ന് ക്യാമറ പ്രവർത്തനക്ഷമമാക്കുക</translation>
 <translation id="4281844954008187215">സേവന നിബന്ധനകൾ</translation>
 <translation id="430793432425771671">എല്ലാം സമന്വയിപ്പിക്കുക</translation>
-<translation id="4342284590510997375">പുതിയത്</translation>
 <translation id="4359125752503270327">ഈ പേജ് മറ്റൊരു അപ്ലിക്കേഷനിൽ തുറക്കും.</translation>
 <translation id="4375040482473363939">QR കോഡ് തിരയൽ</translation>
 <translation id="4378154925671717803">ഫോണ്‍</translation>
@@ -249,7 +249,6 @@
 <translation id="5982717868370722439">നിലവിലുള്ള വിവരങ്ങളെ <ph name="USER_EMAIL" /> എന്നതിലേക്ക് അയയ്‌ക്കുക.</translation>
 <translation id="6012140227487808125">എൻക്രിപ്റ്റുചെയ്യുന്നു...</translation>
 <translation id="6021332621416007159">ഇതിൽ തുറക്കുക...</translation>
-<translation id="6039429417015973673"><ph name="TITLE" />, <ph name="PUBLISHER_INFORMATION" />, <ph name="PUBLICATION_DATE" /></translation>
 <translation id="6039694632319341016"><ph name="USERNAME" /> എന്നയാളുടെ ഈ സൈറ്റിന്റെ പാസ്‌വേഡ് <ph name="PASSWORD_MANAGER_BRAND" /> അപ്‌ഡേറ്റുചെയ്യണോ?</translation>
 <translation id="6040143037577758943">അടയ്ക്കുക</translation>
 <translation id="6042308850641462728">കൂടുതൽ</translation>
@@ -362,7 +361,7 @@
 <translation id="8137558756159375272">Google തിരയലിന് സന്ദർഭം വ്യക്തമാക്കാൻ തിരഞ്ഞെടുത്ത വാക്കും നിലവിലെ പേജും, തിരയുന്നതിനായി സ്‌പർശിക്കുക അയയ്‌ക്കും. <ph name="BEGIN_LINK" />ക്രമീകരണത്തിൽ<ph name="END_LINK" /> നിന്ന് നിങ്ങൾക്കിത് ഓഫാക്കാം.</translation>
 <translation id="8205564605687841303">റദ്ദാക്കുക</translation>
 <translation id="8225985093977202398">കാഷെ ചെയ്‌ത ചിത്രങ്ങളും ഫയലുകളും</translation>
-<translation id="8261506727792406068">ഇല്ലാതാക്കുക</translation>
+<translation id="8261506727792406068">ഇല്ലാതാക്കൂ</translation>
 <translation id="8272426682713568063">ക്രെഡിറ്റ് കാര്‍‌ഡുകള്‍‌</translation>
 <translation id="8281781826761538115">ഡിഫോൾട്ട് - <ph name="DEFAULT_LOCALE" /></translation>
 <translation id="8381750437846184350">തിരയലും പരസ്യങ്ങളും മറ്റ് Google സേവനങ്ങളും വ്യക്തിപരമാക്കാൻ, Google നിങ്ങളുടെ ബ്രൗസിംഗ് ചരിത്രം ഉപയോഗിക്കുന്ന രീതി നിയന്ത്രിക്കുക</translation>

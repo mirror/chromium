@@ -202,9 +202,9 @@ NavigationHandleImpl::~NavigationHandleImpl() {
   // from the renderer need to be cleaned up. These are marked as protected in
   // the RDHI, so they do not get cancelled when frames are destroyed.
   if (is_transferring()) {
-    BrowserThread::PostTask(BrowserThread::IO, FROM_HERE,
-                            base::BindOnce(&NotifyAbandonedTransferNavigation,
-                                           GetGlobalRequestID()));
+    BrowserThread::PostTask(
+        BrowserThread::IO, FROM_HERE,
+        base::Bind(&NotifyAbandonedTransferNavigation, GetGlobalRequestID()));
   }
 
   if (!IsRendererDebugURL(url_))
@@ -1109,6 +1109,11 @@ bool NavigationHandleImpl::MaybeTransferAndProceedInternal() {
     return false;
   }
 
+  // Subframes shouldn't swap processes unless out-of-process iframes are
+  // possible.
+  if (!IsInMainFrame() && !SiteIsolationPolicy::AreCrossProcessFramesPossible())
+    return true;
+
   // If this is a download, do not do a cross-site check. The renderer will
   // see it is a download and abort the request.
   //
@@ -1135,7 +1140,8 @@ bool NavigationHandleImpl::MaybeTransferAndProceedInternal() {
   // above) that a process transfer is needed. Process transfers are skipped for
   // WebUI processes for now, since e.g. chrome://settings has multiple
   // "cross-site" chrome:// frames, and that doesn't yet work cross-process.
-  if (!ChildProcessSecurityPolicyImpl::GetInstance()->HasWebUIBindings(
+  if (SiteIsolationPolicy::AreCrossProcessFramesPossible() &&
+      !ChildProcessSecurityPolicyImpl::GetInstance()->HasWebUIBindings(
           render_frame_host_->GetProcess()->GetID())) {
     should_transfer |= manager->IsRendererTransferNeededForNavigation(
         render_frame_host_, url_);

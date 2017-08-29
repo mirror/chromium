@@ -35,7 +35,8 @@ class CONTENT_EXPORT WebContentsAccessibilityAndroid
   WebContentsAccessibilityAndroid(
       JNIEnv* env,
       const base::android::JavaParamRef<jobject>& obj,
-      WebContents* web_contents);
+      WebContents* web_contents,
+      bool should_focus_on_page_load);
   ~WebContentsAccessibilityAndroid() override;
 
   // --------------------------------------------------------------------------
@@ -184,34 +185,14 @@ class CONTENT_EXPORT WebContentsAccessibilityAndroid
               jint id,
               int direction);
 
-  // Returns true if the given subtree has inline text box data, or if there
-  // aren't any to load.
-  jboolean AreInlineTextBoxesLoaded(
-      JNIEnv* env,
-      const base::android::JavaParamRef<jobject>& obj,
-      jint id);
-
-  // Request loading inline text boxes for a given node.
-  void LoadInlineTextBoxes(JNIEnv* env,
-                           const base::android::JavaParamRef<jobject>& obj,
-                           jint id);
-
-  // Get the bounds of each character for a given static text node,
-  // starting from index |start| with length |len|. The resulting array
-  // of ints is 4 times the length |len|, with the bounds being returned
-  // as (left, top, right, bottom) in that order corresponding to a
-  // android.graphics.RectF.
-  base::android::ScopedJavaLocalRef<jintArray> GetCharacterBoundingBoxes(
-      JNIEnv* env,
-      const base::android::JavaParamRef<jobject>& obj,
-      jint id,
-      jint start,
-      jint len);
-
   void UpdateFrameInfo();
 
   void set_root_manager(BrowserAccessibilityManagerAndroid* manager) {
     root_manager_ = manager;
+  }
+
+  void set_should_focus_on_page_load(bool focus) {
+    should_focus_on_page_load_ = focus;
   }
 
   // --------------------------------------------------------------------------
@@ -247,6 +228,8 @@ class CONTENT_EXPORT WebContentsAccessibilityAndroid
   JavaObjectWeakGlobalRef java_ref_;
 
   WebContentsImpl* const web_contents_;
+
+  bool should_focus_on_page_load_;
 
   bool frame_info_initialized_;
 

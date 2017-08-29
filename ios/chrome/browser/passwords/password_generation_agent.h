@@ -14,7 +14,6 @@
 #import "ios/chrome/browser/passwords/passwords_ui_delegate.h"
 #import "ios/web/public/web_state/web_state_observer_bridge.h"
 
-@protocol ApplicationCommands;
 @class CRWWebController;
 @protocol FormInputAccessoryViewProvider;
 @class JsPasswordManager;
@@ -58,9 +57,6 @@ passwordManagerDriver:(password_manager::PasswordManagerDriver*)driver
 // Provides an input accessory view from this PasswordGenerationAgent.
 @property(nonatomic, readonly)
     id<FormInputAccessoryViewProvider> accessoryViewProvider;
-
-// The dispatcher used for the PasswordGenerationAgent.
-@property(nonatomic, weak) id<ApplicationCommands> dispatcher;
 
 @end
 

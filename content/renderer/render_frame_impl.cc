@@ -75,6 +75,7 @@
 #include "content/common/site_isolation_policy.h"
 #include "content/common/swapped_out_messages.h"
 #include "content/common/view_messages.h"
+#include "content/common/worker_url_loader_factory_provider.mojom.h"
 #include "content/public/common/appcache_info.h"
 #include "content/public/common/associated_interface_provider.h"
 #include "content/public/common/bindings_policy.h"
@@ -719,6 +720,15 @@ std::vector<gfx::Size> ConvertToFaviconSizes(
   return result;
 }
 
+mojom::URLLoaderFactoryPtr GetBlobURLLoaderFactoryGetter() {
+  mojom::URLLoaderFactoryPtr blob_loader_factory;
+  if (base::FeatureList::IsEnabled(features::kNetworkService)) {
+    RenderThreadImpl::current()->GetRendererHost()->GetBlobURLLoaderFactory(
+        mojo::MakeRequest(&blob_loader_factory));
+  }
+  return blob_loader_factory;
+}
+
 }  // namespace
 
 // The following methods are outside of the anonymous namespace to ensure that
@@ -1079,6 +1089,8 @@ void RenderFrameImpl::CreateFrame(
   CHECK(parent_routing_id != MSG_ROUTING_NONE || !web_frame->Parent());
 
   if (widget_params.routing_id != MSG_ROUTING_NONE) {
+    CHECK(!web_frame->Parent() ||
+          SiteIsolationPolicy::AreCrossProcessFramesPossible());
     render_frame->render_widget_ = RenderWidget::CreateForFrame(
         widget_params.routing_id, widget_params.hidden,
         render_frame->render_view_->screen_info(), compositor_deps, web_frame);
@@ -1787,6 +1799,9 @@ void RenderFrameImpl::OnSwapOut(
   TRACE_EVENT1("navigation,rail", "RenderFrameImpl::OnSwapOut",
                "id", routing_id_);
   RenderFrameProxy* proxy = NULL;
+
+  // This codepath should only be hit for subframes when in --site-per-process.
+  CHECK(is_main_frame_ || SiteIsolationPolicy::AreCrossProcessFramesPossible());
 
   // Swap this RenderFrame out so the frame can navigate to a page rendered by
   // a different process.  This involves running the unload handler and
@@ -2664,6 +2679,13 @@ blink::WebPlugin* RenderFrameImpl::CreatePlugin(
   return nullptr;
 }
 
+void RenderFrameImpl::LoadURLExternally(
+    const blink::WebURLRequest& request,
+    blink::WebNavigationPolicy policy,
+    blink::WebTriggeringEventInfo triggering_event_info) {
+  LoadURLExternally(request, policy, triggering_event_info, false);
+}
+
 void RenderFrameImpl::LoadErrorPage(int reason) {
   blink::WebURLError error;
   error.unreachable_url = frame_->GetDocument().Url();
@@ -3000,37 +3022,30 @@ RenderFrameImpl::CreateWorkerContentSettingsClient() {
 std::unique_ptr<blink::WebWorkerFetchContext>
 RenderFrameImpl::CreateWorkerFetchContext() {
   DCHECK(base::FeatureList::IsEnabled(features::kOffMainThreadFetch));
-  blink::WebServiceWorkerNetworkProvider* web_provider =
-      frame_->GetDocumentLoader()->GetServiceWorkerNetworkProvider();
-  DCHECK(web_provider);
-  ServiceWorkerNetworkProvider* provider =
-      ServiceWorkerNetworkProvider::FromWebServiceWorkerNetworkProvider(
-          web_provider);
-  mojom::ServiceWorkerWorkerClientRequest service_worker_client_request;
-  // Some sandboxed iframes are not allowed to use service worker so don't have
-  // a real service worker provider, so the provider context is null.
-  if (provider->context()) {
-    service_worker_client_request =
-        provider->context()->CreateWorkerClientRequest();
-  }
-
-  ChildURLLoaderFactoryGetter* url_loader_factory_getter =
-      GetDefaultURLLoaderFactoryGetter();
-  DCHECK(url_loader_factory_getter);
+  mojom::WorkerURLLoaderFactoryProviderPtr worker_url_loader_factory_provider;
+  RenderThreadImpl::current()
+      ->blink_platform_impl()
+      ->GetInterfaceProvider()
+      ->GetInterface(mojo::MakeRequest(&worker_url_loader_factory_provider));
   std::unique_ptr<WorkerFetchContextImpl> worker_fetch_context =
       base::MakeUnique<WorkerFetchContextImpl>(
-          std::move(service_worker_client_request),
-          url_loader_factory_getter->GetClonedInfo());
-
+          worker_url_loader_factory_provider.PassInterface());
   worker_fetch_context->set_parent_frame_id(routing_id_);
   worker_fetch_context->set_site_for_cookies(
       frame_->GetDocument().SiteForCookies());
   worker_fetch_context->set_is_secure_context(
       frame_->GetDocument().IsSecureContext());
+  blink::WebServiceWorkerNetworkProvider* web_provider =
+      frame_->GetDocumentLoader()->GetServiceWorkerNetworkProvider();
+  if (web_provider) {
+    ServiceWorkerNetworkProvider* provider =
+        ServiceWorkerNetworkProvider::FromWebServiceWorkerNetworkProvider(
+            web_provider);
     worker_fetch_context->set_service_worker_provider_id(
         provider->provider_id());
     worker_fetch_context->set_is_controlled_by_service_worker(
         provider->IsControlledByServiceWorker());
+  }
   for (auto& observer : observers_)
     observer.WillCreateWorkerFetchContext(worker_fetch_context.get());
   return std::move(worker_fetch_context);
@@ -3387,6 +3402,19 @@ void RenderFrameImpl::DownloadURL(const blink::WebURLRequest& request,
   Send(new FrameHostMsg_DownloadUrl(params));
 }
 
+void RenderFrameImpl::LoadURLExternally(
+    const blink::WebURLRequest& request,
+    blink::WebNavigationPolicy policy,
+    blink::WebTriggeringEventInfo triggering_event_info,
+    bool should_replace_current_entry) {
+  Referrer referrer(RenderViewImpl::GetReferrerFromRequest(frame_, request));
+  DCHECK_NE(policy, blink::kWebNavigationPolicyDownload);
+  OpenURL(request.Url(), IsHttpPost(request),
+          GetRequestBodyForWebURLRequest(request),
+          GetWebURLRequestHeaders(request), referrer, policy,
+          should_replace_current_entry, false, triggering_event_info);
+}
+
 void RenderFrameImpl::WillSendSubmitEvent(const blink::WebFormElement& form) {
   for (auto& observer : observers_)
     observer.WillSendSubmitEvent(form);
@@ -3506,12 +3534,10 @@ void RenderFrameImpl::DidCreateDocumentLoader(
   if (document_loader->GetServiceWorkerNetworkProvider())
     return;
 
-  RenderThreadImpl* render_thread = RenderThreadImpl::current();
   document_loader->SetServiceWorkerNetworkProvider(
       ServiceWorkerNetworkProvider::CreateForNavigation(
           routing_id_, navigation_state->request_params(), frame_,
-          content_initiated,
-          render_thread ? GetDefaultURLLoaderFactoryGetter() : nullptr));
+          content_initiated));
 }
 
 void RenderFrameImpl::DidStartProvisionalLoad(
@@ -3817,7 +3843,7 @@ void RenderFrameImpl::DidClearWindowObject() {
       *base::CommandLine::ForCurrentProcess();
 
   if (command_line.HasSwitch(cc::switches::kEnableGpuBenchmarking))
-    GpuBenchmarking::Install(this);
+    GpuBenchmarking::Install(frame_);
 
   if (command_line.HasSwitch(switches::kEnableSkiaBenchmarking))
     SkiaBenchmarking::Install(frame_);
@@ -4287,20 +4313,6 @@ void RenderFrameImpl::ShowContextMenu(const blink::WebContextMenuData& data) {
   blink::WebRect selection_in_window(data.selection_rect);
   GetRenderWidget()->ConvertViewportToWindow(&selection_in_window);
   params.selection_rect = selection_in_window;
-
-#if defined(OS_ANDROID)
-  // The Samsung Email app relies on the context menu being shown after the
-  // javascript onselectionchanged is triggered.
-  // See crbug.com/729488
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
-      FROM_HERE, base::Bind(&RenderFrameImpl::ShowDeferredContextMenu,
-                            weak_factory_.GetWeakPtr(), params));
-#else
-  ShowDeferredContextMenu(params);
-#endif
-}
-
-void RenderFrameImpl::ShowDeferredContextMenu(const ContextMenuParams& params) {
   Send(new FrameHostMsg_ContextMenu(routing_id_, params));
 }
 
@@ -5406,12 +5418,18 @@ WebNavigationPolicy RenderFrameImpl::DecidePolicyForNavigation(
   }
 #endif
 
+  Referrer referrer(
+      RenderViewImpl::GetReferrerFromRequest(frame_, info.url_request));
+
   // If the browser is interested, then give it a chance to look at the request.
   if (is_content_initiated && IsTopLevelNavigation(frame_) &&
       render_view_->renderer_preferences_
           .browser_handles_all_top_level_requests) {
-    OpenURL(info, /*send_referrer=*/true,
-            /*is_history_navigation_in_new_child=*/false);
+    OpenURL(url, IsHttpPost(info.url_request),
+            GetRequestBodyForWebURLRequest(info.url_request),
+            GetWebURLRequestHeaders(info.url_request), referrer,
+            info.default_policy, info.replaces_current_history_item, false,
+            info.triggering_event_info);
     return blink::kWebNavigationPolicyIgnore;  // Suppress the load here.
   }
 
@@ -5441,8 +5459,11 @@ WebNavigationPolicy RenderFrameImpl::DecidePolicyForNavigation(
       // case JavaScript on the page is trying to interrupt the history
       // navigation.
       if (!info.is_client_redirect) {
-        OpenURL(info, /*send_referrer=*/true,
-                /*is_history_navigation_in_new_child=*/true);
+        OpenURL(url, IsHttpPost(info.url_request),
+                GetRequestBodyForWebURLRequest(info.url_request),
+                GetWebURLRequestHeaders(info.url_request), referrer,
+                info.default_policy, info.replaces_current_history_item, true,
+                info.triggering_event_info);
         // Suppress the load in Blink but mark the frame as loading.
         return blink::kWebNavigationPolicyHandledByClientForInitialHistory;
       } else {
@@ -5503,8 +5524,12 @@ WebNavigationPolicy RenderFrameImpl::DecidePolicyForNavigation(
     }
 
     if (should_fork) {
-      OpenURL(info, send_referrer,
-              /*is_history_navigation_in_new_child=*/false);
+      OpenURL(url, IsHttpPost(info.url_request),
+              GetRequestBodyForWebURLRequest(info.url_request),
+              GetWebURLRequestHeaders(info.url_request),
+              send_referrer ? referrer : Referrer(), info.default_policy,
+              info.replaces_current_history_item, false,
+              info.triggering_event_info);
       return blink::kWebNavigationPolicyIgnore;  // Suppress the load here.
     }
   }
@@ -5542,10 +5567,12 @@ WebNavigationPolicy RenderFrameImpl::DecidePolicyForNavigation(
       info.navigation_type == blink::kWebNavigationTypeOther;
 
   if (is_fork) {
-    // Open the URL via the browser, not via WebKit. Make sure the referrer is
-    // stripped.
-    OpenURL(info, /*send_referrer=*/false,
-            /*is_history_navigation_in_new_child=*/false);
+    // Open the URL via the browser, not via WebKit.
+    OpenURL(url, IsHttpPost(info.url_request),
+            GetRequestBodyForWebURLRequest(info.url_request),
+            GetWebURLRequestHeaders(info.url_request), Referrer(),
+            info.default_policy, info.replaces_current_history_item, false,
+            info.triggering_event_info);
     return blink::kWebNavigationPolicyIgnore;
   }
 
@@ -5602,19 +5629,13 @@ WebNavigationPolicy RenderFrameImpl::DecidePolicyForNavigation(
       DownloadURL(info.url_request, blink::WebString());
       return blink::kWebNavigationPolicyIgnore;
     } else {
-      OpenURL(info, /*send_referrer=*/true,
-              /*is_history_navigation_in_new_child=*/false);
+      LoadURLExternally(info.url_request, info.default_policy,
+                        info.triggering_event_info);
       return blink::kWebNavigationPolicyIgnore;
     }
   }
 
-  if (info.default_policy == blink::kWebNavigationPolicyCurrentTab ||
-      info.default_policy == blink::kWebNavigationPolicyDownload) {
-    return info.default_policy;
-  }
-  OpenURL(info, /*send_referrer=*/true,
-          /*is_history_navigation_in_new_child=*/false);
-  return blink::kWebNavigationPolicyIgnore;
+  return info.default_policy;
 }
 
 void RenderFrameImpl::OnGetSavableResourceLinks() {
@@ -5966,21 +5987,24 @@ void RenderFrameImpl::OnSelectPopupMenuItems(
 #endif
 #endif
 
-void RenderFrameImpl::OpenURL(const NavigationPolicyInfo& info,
-                              bool send_referrer,
-                              bool is_history_navigation_in_new_child) {
-  WebNavigationPolicy policy = info.default_policy;
+void RenderFrameImpl::OpenURL(
+    const GURL& url,
+    bool uses_post,
+    const scoped_refptr<ResourceRequestBody>& resource_request_body,
+    const std::string& extra_headers,
+    const Referrer& referrer,
+    WebNavigationPolicy policy,
+    bool should_replace_current_entry,
+    bool is_history_navigation_in_new_child,
+    blink::WebTriggeringEventInfo triggering_event_info) {
   FrameHostMsg_OpenURL_Params params;
-  params.url = info.url_request.Url();
-  params.uses_post = IsHttpPost(info.url_request);
-  params.resource_request_body =
-      GetRequestBodyForWebURLRequest(info.url_request);
-  params.extra_headers = GetWebURLRequestHeaders(info.url_request);
-  params.referrer = send_referrer ? RenderViewImpl::GetReferrerFromRequest(
-                                        frame_, info.url_request)
-                                  : content::Referrer();
+  params.url = url;
+  params.uses_post = uses_post;
+  params.resource_request_body = resource_request_body;
+  params.extra_headers = extra_headers;
+  params.referrer = referrer;
   params.disposition = RenderViewImpl::NavigationPolicyToDisposition(policy);
-  params.triggering_event_info = info.triggering_event_info;
+  params.triggering_event_info = triggering_event_info;
 
   if (IsBrowserInitiated(pending_navigation_params_.get())) {
     // This is necessary to preserve the should_replace_current_entry value on
@@ -5990,8 +6014,8 @@ void RenderFrameImpl::OpenURL(const NavigationPolicyInfo& info,
     params.should_replace_current_entry =
         document_loader->ReplacesCurrentHistoryItem();
   } else {
-    params.should_replace_current_entry = info.replaces_current_history_item &&
-                                          render_view_->history_list_length_;
+    params.should_replace_current_entry =
+        should_replace_current_entry && render_view_->history_list_length_;
   }
   params.user_gesture = WebUserGestureIndicator::IsProcessingUserGesture();
   if (GetContentClient()->renderer()->AllowPopup())
@@ -6850,8 +6874,11 @@ RenderFrameImpl::GetDefaultURLLoaderFactoryGetter() {
   RenderThreadImpl* render_thread = RenderThreadImpl::current();
   DCHECK(render_thread);
   if (!url_loader_factory_getter_) {
-    url_loader_factory_getter_ = render_thread->blink_platform_impl()
-                                     ->CreateDefaultURLLoaderFactoryGetter();
+    url_loader_factory_getter_ =
+        base::MakeRefCounted<ChildURLLoaderFactoryGetter>(
+            render_thread->blink_platform_impl()
+                ->CreateNetworkURLLoaderFactory(),
+            base::BindOnce(&GetBlobURLLoaderFactoryGetter));
   }
   return url_loader_factory_getter_.get();
 }

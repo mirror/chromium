@@ -53,7 +53,7 @@
 namespace {
 
 const base::Feature kNtpTilesFeature{"NTPTilesInInstantService",
-                                     base::FEATURE_ENABLED_BY_DEFAULT};
+                                     base::FEATURE_DISABLED_BY_DEFAULT};
 
 }  // namespace
 
@@ -191,11 +191,14 @@ void InstantService::UndoAllMostVisitedDeletions() {
 
 void InstantService::UpdateThemeInfo() {
 #if !defined(OS_ANDROID)
-  // Initialize |theme_info_| if necessary.
+  // Update theme background info.
+  // Initialize |theme_info| if necessary.
   if (!theme_info_) {
-    BuildThemeInfo();
+    OnThemeChanged();
+  } else {
+    for (InstantServiceObserver& observer : observers_)
+      observer.ThemeInfoChanged(*theme_info_);
   }
-  NotifyAboutThemeInfo();
 #endif  // !defined(OS_ANDROID)
 }
 
@@ -253,8 +256,7 @@ void InstantService::Observe(int type,
       break;
 #if !defined(OS_ANDROID)
     case chrome::NOTIFICATION_BROWSER_THEME_CHANGED:
-      BuildThemeInfo();
-      NotifyAboutThemeInfo();
+      OnThemeChanged();
       break;
 #endif  // !defined(OS_ANDROID)
     default:
@@ -315,11 +317,6 @@ void InstantService::NotifyAboutMostVisitedItems() {
     observer.MostVisitedItemsChanged(most_visited_items_);
 }
 
-void InstantService::NotifyAboutThemeInfo() {
-  for (InstantServiceObserver& observer : observers_)
-    observer.ThemeInfoChanged(*theme_info_);
-}
-
 #if !defined(OS_ANDROID)
 
 namespace {
@@ -338,7 +335,7 @@ RGBAColor SkColorToRGBAColor(const SkColor& sKColor) {
 
 }  // namespace
 
-void InstantService::BuildThemeInfo() {
+void InstantService::OnThemeChanged() {
   // Get theme information from theme service.
   theme_info_.reset(new ThemeBackgroundInfo());
 
@@ -435,6 +432,9 @@ void InstantService::BuildThemeInfo() {
     theme_info_->has_attribution =
         theme_provider.HasCustomImage(IDR_THEME_NTP_ATTRIBUTION);
   }
+
+  for (InstantServiceObserver& observer : observers_)
+    observer.ThemeInfoChanged(*theme_info_);
 }
 #endif  // !defined(OS_ANDROID)
 

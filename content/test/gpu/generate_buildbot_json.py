@@ -71,11 +71,6 @@ class Predicates(object):
     return Predicates.FYI_AND_OPTIONAL(x) or Types.V8_FYI in x
 
   @staticmethod
-  def FYI_OPTIONAL_V8_AND_WIN_ANGLE_AMD(x):
-    return Predicates.FYI_OPTIONAL_AND_V8(x) or \
-      Types.WIN_ANGLE_AMD_TRYSERVER in x
-
-  @staticmethod
   def DEFAULT_PLUS_V8(x):
     return Predicates.DEFAULT(x) or Types.V8_FYI in x
 
@@ -83,9 +78,22 @@ class Predicates(object):
   def DEFAULT_AND_OPTIONAL(x):
     return Predicates.DEFAULT(x) or Types.OPTIONAL in x
 
+  # TODO(kbr): we're only temporarily running the dEQP tests on both
+  # the new dEQP bots as well as the regular bots. As soon as separate
+  # tryservers for the dEQP tests have been set up, these type testers
+  # will be removed, and replaced with ones that are specific to the
+  # dEQP.
   @staticmethod
-  def DEQP(x):
-    return Types.DEQP in x
+  def FYI_AND_OPTIONAL_AND_DEQP(x):
+    return Types.DEQP in x or Predicates.FYI_AND_OPTIONAL(x)
+
+  @staticmethod
+  def FYI_AND_OPTIONAL_AND_WIN_ANGLE_AMD_AND_DEQP(x):
+    return Types.DEQP in x or Predicates.FYI_AND_OPTIONAL_AND_WIN_ANGLE_AMD(x)
+
+  @staticmethod
+  def FYI_ONLY_AND_DEQP(x):
+    return Types.DEQP in x or Predicates.FYI_ONLY(x)
 
 WATERFALL = {
   'name': 'chromium.gpu',
@@ -127,8 +135,7 @@ WATERFALL = {
       'swarming_dimensions': [
         {
           'gpu': '8086:0a2e',
-          # TODO(crbug.com/754777): change to 10.12.6.
-          'os': 'Mac-10.12'
+          'os': 'Mac-10.12.5'
         },
       ],
       'build_config': 'Release',
@@ -139,8 +146,7 @@ WATERFALL = {
       'swarming_dimensions': [
         {
           'gpu': '8086:0a2e',
-          # TODO(crbug.com/754777): change to 10.12.6.
-          'os': 'Mac-10.12'
+          'os': 'Mac-10.12.5'
         },
       ],
       'build_config': 'Debug',
@@ -152,7 +158,6 @@ WATERFALL = {
         {
           'gpu': '1002:6821',
           'hidpi': '1',
-          # TODO(crbug.com/754777): change to 10.12.6.
           'os': 'Mac'
         },
       ],
@@ -165,7 +170,6 @@ WATERFALL = {
         {
           'gpu': '1002:6821',
           'hidpi': '1',
-          # TODO(crbug.com/754777): change to 10.12.6.
           'os': 'Mac'
         },
       ],
@@ -385,8 +389,7 @@ FYI_WATERFALL = {
       'swarming_dimensions': [
         {
           'gpu': '8086:0a2e',
-          # TODO(crbug.com/754777): change to 10.12.6.
-          'os': 'Mac-10.12'
+          'os': 'Mac-10.12.5'
         },
       ],
       'build_config': 'Release',
@@ -397,8 +400,7 @@ FYI_WATERFALL = {
       'swarming_dimensions': [
         {
           'gpu': '8086:0a2e',
-          # TODO(crbug.com/754777): change to 10.12.6.
-          'os': 'Mac-10.12'
+          'os': 'Mac-10.12.5'
         },
       ],
       'build_config': 'Debug',
@@ -436,7 +438,6 @@ FYI_WATERFALL = {
         {
           'gpu': '10de:0fe9',
           'hidpi': '1',
-          # TODO(crbug.com/754777): change to 10.12.6.
           'os': 'Mac'
         },
       ],
@@ -449,7 +450,6 @@ FYI_WATERFALL = {
         {
           'gpu': '10de:0fe9',
           'hidpi': '1',
-          # TODO(crbug.com/754777): change to 10.12.6.
           'os': 'Mac'
         },
       ],
@@ -462,7 +462,6 @@ FYI_WATERFALL = {
         {
           'gpu': '1002:6821',
           'hidpi': '1',
-          # TODO(crbug.com/754777): change to 10.12.6.
           'os': 'Mac'
         },
       ],
@@ -475,7 +474,6 @@ FYI_WATERFALL = {
         {
           'gpu': '1002:6821',
           'hidpi': '1',
-          # TODO(crbug.com/754777): change to 10.12.6.
           'os': 'Mac'
         },
       ],
@@ -526,13 +524,11 @@ FYI_WATERFALL = {
       'swarming_dimensions': [
         {
           'gpu': '8086:0a2e',
-          # TODO(crbug.com/754777): change to 10.12.6.
-          'os': 'Mac-10.12'
+          'os': 'Mac-10.12.5'
         },
         {
           'gpu': '1002:6821',
           'hidpi': '1',
-          # TODO(crbug.com/754777): change to 10.12.6.
           'os': 'Mac'
         },
       ],
@@ -540,6 +536,24 @@ FYI_WATERFALL = {
       'swarming': True,
       'os_type': 'mac',
       'is_asan': True,
+    },
+    'Mac dEQP Release': {
+      # This bot spawns jobs on multiple GPU types.
+      'swarming_dimensions': [
+        {
+          'gpu': '8086:0a2e',
+          'os': 'Mac-10.12.5'
+        },
+        {
+          'gpu': '1002:6821',
+          'hidpi': '1',
+          'os': 'Mac'
+        },
+      ],
+      'build_config': 'Release',
+      'swarming': True,
+      'os_type': 'mac',
+      'type': Types.DEQP,
     },
     'Linux Release (NVIDIA)': {
       'swarming_dimensions': [
@@ -727,20 +741,6 @@ FYI_WATERFALL = {
       'swarming': False,
       'os_type': 'android',
     },
-    'Android dEQP Release (Nexus 5X)': {
-      'swarming_dimensions': [
-        {
-          'android_devices': '1',
-          'device_type': 'bullhead',
-          'device_os': 'M',
-          'os': 'Android'
-        },
-      ],
-      'build_config': 'android-chromium',
-      'swarming': True,
-      'os_type': 'android',
-      'type': Types.DEQP,
-    },
 
     # The following "optional" testers don't actually exist on the
     # waterfall. They are present here merely to specify additional
@@ -763,8 +763,7 @@ FYI_WATERFALL = {
       'swarming_dimensions': [
         {
           'gpu': '8086:0a2e',
-          # TODO(crbug.com/754777): change to 10.12.6.
-          'os': 'Mac-10.12'
+          'os': 'Mac-10.12.5'
         },
       ],
       'build_config': 'Release',
@@ -777,7 +776,6 @@ FYI_WATERFALL = {
         {
           'gpu': '10de:0fe9',
           'hidpi': '1',
-          # TODO(crbug.com/754777): change to 10.12.6.
           'os': 'Mac'
         },
       ],
@@ -791,7 +789,6 @@ FYI_WATERFALL = {
         {
           'gpu': '1002:6821',
           'hidpi': '1',
-          # TODO(crbug.com/754777): change to 10.12.6.
           'os': 'Mac'
         },
       ],
@@ -914,8 +911,7 @@ V8_FYI_WATERFALL = {
       'swarming_dimensions': [
         {
           'gpu': '8086:0a2e',
-          # TODO(crbug.com/754777): change to 10.12.6.
-          'os': 'Mac-10.12'
+          'os': 'Mac-10.12.5'
         },
       ],
       'build_config': 'Release',
@@ -964,7 +960,8 @@ COMMON_GTESTS = {
   'angle_deqp_egl_tests': {
     'tester_configs': [
       {
-        'predicate': Predicates.DEQP,
+        # Run this on the FYI waterfall and optional tryservers.
+        'predicate': Predicates.FYI_AND_OPTIONAL_AND_DEQP,
         # Run only on the Win7 Release NVIDIA 32- and 64-bit bots
         # (and trybots) for the time being, at least until more capacity is
         # added.
@@ -993,7 +990,9 @@ COMMON_GTESTS = {
   'angle_deqp_gles2_d3d11_tests': {
     'tester_configs': [
       {
-        'predicate': Predicates.DEQP,
+        # Run this on the FYI waterfall, optional tryservers, and Win
+        # ANGLE AMD tryserver.
+        'predicate': Predicates.FYI_AND_OPTIONAL_AND_WIN_ANGLE_AMD_AND_DEQP,
         # Run only on the Win7 NVIDIA/AMD R7 240 32- and 64-bit bots (and
         # trybots) for the time being, at least until more capacity is
         # added.
@@ -1032,7 +1031,8 @@ COMMON_GTESTS = {
   'angle_deqp_gles2_gl_tests': {
     'tester_configs': [
       {
-        'predicate': Predicates.DEQP,
+        # Run this on the FYI waterfall and optional tryservers.
+        'predicate': Predicates.FYI_AND_OPTIONAL_AND_DEQP,
         # Run only on the Linux Release NVIDIA 32- and 64-bit bots (and
         # trybots) for the time being, at least until more capacity is added.
         'build_configs': ['Release', 'Release_x64'],
@@ -1065,7 +1065,8 @@ COMMON_GTESTS = {
   'angle_deqp_gles2_gles_tests': {
     'tester_configs': [
       {
-        'predicate': Predicates.DEQP,
+        # Run this on the FYI waterfall and optional tryservers.
+        'predicate': Predicates.FYI_AND_OPTIONAL_AND_DEQP,
         # Run on Nexus 5X swarmed bots.
         'build_configs': ['android-chromium'],
         'swarming_dimension_sets': [
@@ -1103,7 +1104,8 @@ COMMON_GTESTS = {
   'angle_deqp_gles3_gles_tests': {
     'tester_configs': [
       {
-        'predicate': Predicates.DEQP,
+        # Run this on the FYI waterfall and optional tryservers.
+        'predicate': Predicates.FYI_AND_OPTIONAL_AND_DEQP,
         # Run on Nexus 5X swarmed bots.
         'build_configs': ['android-chromium'],
         'swarming_dimension_sets': [
@@ -1145,7 +1147,7 @@ COMMON_GTESTS = {
     'tester_configs': [
       {
         # TODO(jmadill): Run this on ANGLE roll tryservers.
-        'predicate': Predicates.DEQP,
+        'predicate': Predicates.FYI_ONLY_AND_DEQP,
         # Run only on the NVIDIA and AMD Win7 bots (and trybots) for the time
         # being, at least until more capacity is added.
         'build_configs': ['Release'],
@@ -1187,7 +1189,7 @@ COMMON_GTESTS = {
     'tester_configs': [
       {
         # TODO(jmadill): Run this on ANGLE roll tryservers.
-        'predicate': Predicates.DEQP,
+        'predicate': Predicates.FYI_ONLY_AND_DEQP,
         # Run only on the Linux Release NVIDIA 32-bit bots (and trybots) for
         # the time being, at least until more capacity is added.
         'build_configs': ['Release'],
@@ -1220,7 +1222,7 @@ COMMON_GTESTS = {
   'angle_deqp_gles31_d3d11_tests': {
     'tester_configs': [
       {
-        'predicate': Predicates.DEQP,
+        'predicate': Predicates.FYI_ONLY_AND_DEQP,
         # Run on the Win Release NVIDIA bots.
         'build_configs': ['Release'],
         'swarming_dimension_sets': [
@@ -1253,7 +1255,7 @@ COMMON_GTESTS = {
   'angle_deqp_gles31_gl_tests': {
     'tester_configs': [
       {
-        'predicate': Predicates.DEQP,
+        'predicate': Predicates.FYI_ONLY_AND_DEQP,
         # Run on the Win Release NVIDIA bots.
         'build_configs': ['Release'],
         'swarming_dimension_sets': [
@@ -1978,7 +1980,7 @@ TELEMETRY_GPU_INTEGRATION_TESTS = {
          # The WebGL 2.0 conformance tests take over an hour to run on
          # the Debug bots, which is too long.
         'build_configs': ['Release', 'Release_x64'],
-        'predicate': Predicates.FYI_OPTIONAL_V8_AND_WIN_ANGLE_AMD,
+        'predicate': Predicates.FYI_OPTIONAL_AND_V8,
         'disabled_instrumentation_types': ['tsan'],
       },
     ],

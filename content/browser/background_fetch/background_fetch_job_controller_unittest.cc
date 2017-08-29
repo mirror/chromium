@@ -18,7 +18,6 @@
 #include "content/browser/background_fetch/background_fetch_data_manager.h"
 #include "content/browser/background_fetch/background_fetch_registration_id.h"
 #include "content/browser/background_fetch/background_fetch_test_base.h"
-#include "content/browser/service_worker/service_worker_context_wrapper.h"
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/download_item.h"
 #include "content/public/browser/storage_partition.h"
@@ -36,9 +35,7 @@ const char kExampleTag[] = "my-example-tag";
 
 class BackgroundFetchJobControllerTest : public BackgroundFetchTestBase {
  public:
-  BackgroundFetchJobControllerTest()
-      : data_manager_(browser_context(),
-                      embedded_worker_test_helper()->context_wrapper()) {}
+  BackgroundFetchJobControllerTest() : data_manager_(browser_context()) {}
   ~BackgroundFetchJobControllerTest() override = default;
 
   // Creates a new Background Fetch registration, whose id will be stored in

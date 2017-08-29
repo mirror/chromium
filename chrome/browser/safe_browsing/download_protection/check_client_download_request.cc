@@ -7,7 +7,6 @@
 #include "base/metrics/histogram_macros.h"
 #include "base/rand_util.h"
 #include "base/task_scheduler/post_task.h"
-#include "chrome/browser/browser_process.h"
 #include "chrome/browser/history/history_service_factory.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/safe_browsing/download_protection/download_feedback_service.h"
@@ -799,7 +798,6 @@ void CheckClientDownloadRequest::SendRequest() {
   request.set_length(item_->GetReceivedBytes());
   request.set_skipped_url_whitelist(skipped_url_whitelist_);
   request.set_skipped_certificate_whitelist(skipped_certificate_whitelist_);
-  request.set_locale(g_browser_process->GetApplicationLocale());
   for (size_t i = 0; i < item_->GetUrlChain().size(); ++i) {
     ClientDownloadRequest::Resource* resource = request.add_resources();
     resource->set_url(SanitizeUrl(item_->GetUrlChain()[i]));
@@ -919,7 +917,7 @@ void CheckClientDownloadRequest::SendRequest() {
             destination: GOOGLE_OWNED_SERVICE
           }
           policy {
-            cookies_allowed: YES
+            cookies_allowed: true
             cookies_store: "Safe Browsing cookies store"
             setting:
               "Users can enable or disable the entire Safe Browsing service in "

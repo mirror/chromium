@@ -134,11 +134,11 @@ public class OmniboxUrlEmphasizer {
      * @param isInternalPage Whether this page is an internal Chrome page.
      * @param useDarkColors Whether the text colors should be dark (i.e.
      *                      appropriate for use on a light background).
-     * @param emphasizeScheme Whether the scheme should be emphasized.
+     * @param emphasizeHttpsScheme Whether the https scheme should be emphasized.
      */
     public static void emphasizeUrl(Spannable url, Resources resources, Profile profile,
-            int securityLevel, boolean isInternalPage, boolean useDarkColors,
-            boolean emphasizeScheme) {
+            int securityLevel, boolean isInternalPage,
+            boolean useDarkColors, boolean emphasizeHttpsScheme) {
         String urlString = url.toString();
         EmphasizeComponentsResponse emphasizeResponse =
                 parseForEmphasizeComponents(profile, urlString);
@@ -154,7 +154,7 @@ public class OmniboxUrlEmphasizer {
         int startHostIndex = emphasizeResponse.hostStart;
         int endHostIndex = emphasizeResponse.hostStart + emphasizeResponse.hostLength;
 
-        // Format the scheme, if present, based on the security level.
+        // Color the HTTPS scheme.
         ForegroundColorSpan span;
         if (emphasizeResponse.hasScheme()) {
             int colorId = nonEmphasizedColorId;
@@ -164,6 +164,8 @@ public class OmniboxUrlEmphasizer {
                     case ConnectionSecurityLevel.NONE:
                     // Intentional fall-through:
                     case ConnectionSecurityLevel.HTTP_SHOW_WARNING:
+                    // Intentional fall-through:
+                    case ConnectionSecurityLevel.SECURITY_WARNING:
                         // Draw attention to the data: URI scheme for anti-spoofing reasons.
                         if (UrlConstants.DATA_SCHEME.equals(
                                     emphasizeResponse.extractScheme(urlString))) {
@@ -172,13 +174,13 @@ public class OmniboxUrlEmphasizer {
                         }
                         break;
                     case ConnectionSecurityLevel.DANGEROUS:
-                        if (emphasizeScheme) colorId = R.color.google_red_700;
+                        if (emphasizeHttpsScheme) colorId = R.color.google_red_700;
                         strikeThroughScheme = true;
                         break;
                     case ConnectionSecurityLevel.EV_SECURE:
                     // Intentional fall-through:
                     case ConnectionSecurityLevel.SECURE:
-                        if (emphasizeScheme) colorId = R.color.google_green_700;
+                        if (emphasizeHttpsScheme) colorId = R.color.google_green_700;
                         break;
                     default:
                         assert false;
@@ -194,8 +196,9 @@ public class OmniboxUrlEmphasizer {
             url.setSpan(
                     span, startSchemeIndex, endSchemeIndex, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
 
-            // Highlight the portion of the URL visible between the scheme and the host,
-            // typically :// or : depending on the scheme.
+            // Highlight the portion of the URL visible between the scheme and the host. For
+            // https, this will be ://. For normal pages, this will be empty as we trim off
+            // http://.
             if (emphasizeResponse.hasHost()) {
                 span = new UrlEmphasisColorSpan(
                         ApiCompatibilityUtils.getColor(resources, nonEmphasizedColorId));

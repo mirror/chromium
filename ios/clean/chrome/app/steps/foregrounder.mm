@@ -17,7 +17,7 @@
     self.providedFeature = step_features::kForeground;
     self.requiredFeatures = @[
       step_features::kBundleAndDefaults, step_features::kChromeMainStarted,
-      step_features::kBrowserState
+      step_features::kBrowserState, step_features::kChromeMainStarted
     ];
   }
   return self;

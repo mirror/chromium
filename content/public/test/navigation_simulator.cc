@@ -435,7 +435,8 @@ void NavigationSimulator::Fail(int error_code) {
 
   bool should_result_in_error_page = error_code != net::ERR_ABORTED;
   if (IsBrowserSideNavigationEnabled()) {
-    NavigationRequest* request = frame_tree_node_->navigation_request();
+    NavigationRequest* request =
+        render_frame_host_->frame_tree_node()->navigation_request();
     CHECK(request);
     TestNavigationURLLoader* url_loader =
         static_cast<TestNavigationURLLoader*>(request->loader_for_testing());

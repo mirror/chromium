@@ -6,13 +6,13 @@
 #define UI_OZONE_PLATFORM_DRM_COMMON_DISPLAY_TYPES_H_
 
 namespace display {
-class DisplaySnapshot;
+class DisplaySnapshotMojo;
 }  // namespace display
 
 namespace ui {
 
 using MovableDisplaySnapshots =
-    std::vector<std::unique_ptr<display::DisplaySnapshot>>;
+    std::vector<std::unique_ptr<display::DisplaySnapshotMojo>>;
 
 }  // namespace ui
 

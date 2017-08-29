@@ -18,9 +18,12 @@
 #include "gpu/command_buffer/service/image_manager.h"
 #include "gpu/command_buffer/service/mailbox_manager_impl.h"
 #include "gpu/command_buffer/service/service_discardable_manager.h"
-#include "gpu/config/gpu_feature_info.h"
 #include "ui/gfx/geometry/size.h"
 #include "ui/gfx/gpu_memory_buffer.h"
+
+namespace base {
+class CommandLine;
+}
 
 namespace gl {
 
@@ -80,18 +83,13 @@ class GLManager : private GpuControl {
   GLManager();
   ~GLManager() override;
 
-  // GPU feature info computed for the platform.
-  // Each test needs to apply them, plus the specific settings a test wants
-  // to test.
-  static GpuFeatureInfo g_gpu_feature_info;
-
   std::unique_ptr<gfx::GpuMemoryBuffer> CreateGpuMemoryBuffer(
       const gfx::Size& size,
       gfx::BufferFormat format);
 
   void Initialize(const Options& options);
-  void InitializeWithWorkarounds(const Options& options,
-                                 const GpuDriverBugWorkarounds& workarounds);
+  void InitializeWithCommandLine(const Options& options,
+                                 const base::CommandLine& command_line);
   void Destroy();
 
   bool IsInitialized() const { return gles2_implementation() != nullptr; }
@@ -140,7 +138,8 @@ class GLManager : private GpuControl {
   void EnsureWorkVisible() override;
   gpu::CommandBufferNamespace GetNamespaceID() const override;
   CommandBufferId GetCommandBufferID() const override;
-  void FlushPendingWork() override;
+  int32_t GetStreamId() const override;
+  void FlushOrderingBarrierOnStream(int32_t stream_id) override;
   uint64_t GenerateFenceSyncRelease() override;
   bool IsFenceSyncRelease(uint64_t release) override;
   bool IsFenceSyncFlushed(uint64_t release) override;
@@ -153,14 +152,8 @@ class GLManager : private GpuControl {
   void AddLatencyInfo(
       const std::vector<ui::LatencyInfo>& latency_info) override;
 
-  size_t GetSharedMemoryBytesAllocated() const;
-
  private:
   void SetupBaseContext();
-
-  void InitializeWithWorkaroundsImpl(
-      const Options& options,
-      const GpuDriverBugWorkarounds& workarounds);
 
   gpu::GpuPreferences gpu_preferences_;
 

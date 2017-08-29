@@ -22,8 +22,7 @@ tweak_info_plist("info_plist") {
   }
   args = [
     "--breakpad=$breakpad_enabled_as_int",
-    "--breakpad_staging",
-    "--branding=CS$chromium_short_name",
+    "--branding=$chromium_short_name",
   ]
 }
 

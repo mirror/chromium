@@ -32,6 +32,7 @@
 #include "content/common/content_switches_internal.h"
 #include "content/common/drag_event_source_info.h"
 #include "content/common/drag_messages.h"
+#include "content/common/input/synthetic_gesture_packet.h"
 #include "content/common/input_messages.h"
 #include "content/common/render_message_filter.mojom.h"
 #include "content/common/swapped_out_messages.h"
@@ -88,7 +89,6 @@
 #include "third_party/WebKit/public/web/WebPagePopup.h"
 #include "third_party/WebKit/public/web/WebPopupMenuInfo.h"
 #include "third_party/WebKit/public/web/WebRange.h"
-#include "third_party/WebKit/public/web/WebTappedInfo.h"
 #include "third_party/WebKit/public/web/WebView.h"
 #include "third_party/WebKit/public/web/WebWidget.h"
 #include "third_party/skia/include/core/SkShader.h"
@@ -144,7 +144,6 @@ using blink::WebRange;
 using blink::WebRect;
 using blink::WebSize;
 using blink::WebString;
-using blink::WebTappedInfo;
 using blink::WebTextDirection;
 using blink::WebTouchEvent;
 using blink::WebTouchPoint;
@@ -383,7 +382,7 @@ RenderWidget::RenderWidget(int32_t widget_routing_id,
 #if defined(OS_MACOSX)
       text_input_client_observer_(new TextInputClientObserver(this)),
 #endif
-      first_update_visual_state_after_hidden_(false),
+      time_to_first_active_paint_recorded_(true),
       was_shown_time_(base::TimeTicks::Now()),
       current_content_source_id_(0),
       widget_binding_(this, std::move(widget_request)),
@@ -629,6 +628,8 @@ bool RenderWidget::OnMessageReceived(const IPC::Message& message) {
     IPC_MESSAGE_HANDLER(InputMsg_SetEditCommandsForNextKeyEvent,
                         OnSetEditCommandsForNextKeyEvent)
     IPC_MESSAGE_HANDLER(InputMsg_SetFocus, OnSetFocus)
+    IPC_MESSAGE_HANDLER(InputMsg_SyntheticGestureCompleted,
+                        OnSyntheticGestureCompleted)
     IPC_MESSAGE_HANDLER(ViewMsg_ShowContextMenu, OnShowContextMenu)
     IPC_MESSAGE_HANDLER(ViewMsg_Close, OnClose)
     IPC_MESSAGE_HANDLER(ViewMsg_Resize, OnResize)
@@ -991,26 +992,17 @@ void RenderWidget::UpdateVisualState() {
   GetWebWidget()->UpdateAllLifecyclePhases();
   GetWebWidget()->SetSuppressFrameRequestsWorkaroundFor704763Only(false);
 
-  if (first_update_visual_state_after_hidden_) {
-    RecordTimeToFirstActivePaint();
-    first_update_visual_state_after_hidden_ = false;
-  }
-}
+  if (time_to_first_active_paint_recorded_)
+    return;
 
-void RenderWidget::RecordTimeToFirstActivePaint() {
   RenderThreadImpl* render_thread_impl = RenderThreadImpl::current();
+  if (!render_thread_impl->NeedsToRecordFirstActivePaint())
+    return;
+
+  time_to_first_active_paint_recorded_ = true;
   base::TimeDelta sample = base::TimeTicks::Now() - was_shown_time_;
-  if (render_thread_impl->NeedsToRecordFirstActivePaint(TTFAP_AFTER_PURGED)) {
-    UMA_HISTOGRAM_TIMES("PurgeAndSuspend.Experimental.TimeToFirstActivePaint",
-                        sample);
-  }
-  if (render_thread_impl->NeedsToRecordFirstActivePaint(
-          TTFAP_5MIN_AFTER_BACKGROUNDED)) {
-    UMA_HISTOGRAM_TIMES(
-        "PurgeAndSuspend.Experimental.TimeToFirstActivePaint."
-        "AfterBackgrounded.5min",
-        sample);
-  }
+  UMA_HISTOGRAM_TIMES("PurgeAndSuspend.Experimental.TimeToFirstActivePaint",
+                      sample);
 }
 
 void RenderWidget::WillBeginCompositorFrame() {
@@ -1550,6 +1542,19 @@ void RenderWidget::CloseWidgetSoon() {
       FROM_HERE, base::Bind(&RenderWidget::DoDeferredClose, this));
 }
 
+void RenderWidget::QueueSyntheticGesture(
+    std::unique_ptr<SyntheticGestureParams> gesture_params,
+    const SyntheticGestureCompletionCallback& callback) {
+  DCHECK(!callback.is_null());
+
+  pending_synthetic_gesture_callbacks_.push(callback);
+
+  SyntheticGesturePacket gesture_packet;
+  gesture_packet.set_gesture_params(std::move(gesture_params));
+
+  Send(new InputHostMsg_QueueSyntheticGesture(routing_id_, gesture_packet));
+}
+
 void RenderWidget::Close() {
   screen_metrics_emulator_.reset();
   WillCloseLayerTreeView();
@@ -1762,6 +1767,13 @@ void RenderWidget::OnRepaint(gfx::Size size_to_paint) {
   set_next_paint_is_repaint_ack();
   if (compositor_)
     compositor_->SetNeedsRedrawRect(gfx::Rect(size_to_paint));
+}
+
+void RenderWidget::OnSyntheticGestureCompleted() {
+  DCHECK(!pending_synthetic_gesture_callbacks_.empty());
+
+  pending_synthetic_gesture_callbacks_.front().Run();
+  pending_synthetic_gesture_callbacks_.pop();
 }
 
 void RenderWidget::OnSetTextDirection(WebTextDirection direction) {
@@ -2000,7 +2012,7 @@ void RenderWidget::SetHidden(bool hidden) {
 
   if (is_hidden_) {
     RenderThreadImpl::current()->WidgetHidden();
-    first_update_visual_state_after_hidden_ = true;
+    time_to_first_active_paint_recorded_ = false;
   } else
     RenderThreadImpl::current()->WidgetRestored();
 
@@ -2231,18 +2243,15 @@ blink::WebScreenInfo RenderWidget::GetScreenInfo() {
 }
 
 #if defined(OS_ANDROID)
-void RenderWidget::ShowUnhandledTapUIIfNeeded(
-    const WebTappedInfo& tapped_info) {
-  // Unpack tapped_info. TODO(donnd): inline unpacking.
-  bool page_changed = tapped_info.PageChanged();
-  const WebNode& tapped_node = tapped_info.GetNode();
-  const WebPoint& tapped_position = tapped_info.Position();
+void RenderWidget::ShowUnhandledTapUIIfNeeded(const WebPoint& tapped_position,
+                                              const WebNode& tapped_node,
+                                              bool page_changed) {
   bool should_trigger = !page_changed && tapped_node.IsTextNode() &&
                         !tapped_node.IsContentEditable() &&
                         !tapped_node.IsInsideFocusableElementOrARIAWidget();
   if (should_trigger) {
-    Send(new ViewHostMsg_ShowUnhandledTapUIIfNeeded(
-        routing_id_, tapped_position.x, tapped_position.y));
+    Send(new ViewHostMsg_ShowUnhandledTapUIIfNeeded(routing_id_,
+        tapped_position.x, tapped_position.y));
   }
 }
 #endif

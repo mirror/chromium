@@ -663,9 +663,8 @@ class CORE_EXPORT LocalFrameView final
   bool ScrollbarCornerPresent() const;
   IntRect ScrollCornerRect() const override;
 
-  IntPoint ConvertFromContainingEmbeddedContentViewToScrollbar(
-      const Scrollbar&,
-      const IntPoint&) const override;
+  IntPoint ConvertFromParentViewToScrollbar(const Scrollbar&,
+                                            const IntPoint&) const override;
 
   bool IsLocalFrameView() const override { return true; }
 
@@ -848,16 +847,6 @@ class CORE_EXPORT LocalFrameView final
 
   size_t PaintFrameCount() const { return paint_frame_count_; };
 
-  // Return the ScrollableArea in a FrameView with the given ElementId, if any.
-  // This is not recursive and will only return ScrollableAreas owned by this
-  // LocalFrameView (or possibly the LocalFrameView itself).
-  ScrollableArea* ScrollableAreaWithElementId(const CompositorElementId&);
-
-  PaintArtifactCompositor* GetPaintArtifactCompositorForTesting() {
-    DCHECK(RuntimeEnabledFeatures::SlimmingPaintV2Enabled());
-    return paint_artifact_compositor_.get();
-  }
-
  protected:
   // Scroll the content via the compositor.
   bool ScrollContentsFastPath(const IntSize& scroll_delta);
@@ -965,10 +954,10 @@ class CORE_EXPORT LocalFrameView final
 
   // Methods to do point conversion via layoutObjects, in order to take
   // transforms into account.
-  IntRect ConvertToContainingEmbeddedContentView(const IntRect&) const;
-  IntPoint ConvertToContainingEmbeddedContentView(const IntPoint&) const;
-  IntRect ConvertFromContainingEmbeddedContentView(const IntRect&) const;
-  IntPoint ConvertFromContainingEmbeddedContentView(const IntPoint&) const;
+  IntRect ConvertToParentView(const IntRect&) const;
+  IntPoint ConvertToParentView(const IntPoint&) const;
+  IntRect ConvertFromParentView(const IntRect&) const;
+  IntPoint ConvertFromParentView(const IntPoint&) const;
 
   void DidChangeGlobalRootScroller() override;
 
@@ -1206,10 +1195,6 @@ class CORE_EXPORT LocalFrameView final
       HeapLinkedHashSet<WeakMember<ScrollableArea>>;
   AnchoringAdjustmentQueue anchoring_adjustment_queue_;
 
-  // TODO(bokan): Temporary to get more information about crash in
-  // crbug.com/745686.
-  bool in_perform_scroll_anchoring_adjustments_;
-
   // ScrollbarManager holds the Scrollbar instances.
   ScrollbarManager scrollbar_manager_;
 
@@ -1245,8 +1230,6 @@ class CORE_EXPORT LocalFrameView final
 
   // From the beginning of the document, how many frames have painted.
   size_t paint_frame_count_;
-
-  UniqueObjectId unique_id_;
 
   FRIEND_TEST_ALL_PREFIXES(WebViewTest, DeviceEmulationResetScrollbars);
 };

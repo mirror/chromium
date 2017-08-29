@@ -27,8 +27,7 @@ WebMediaPlayerParams::WebMediaPlayerParams(
     base::TimeDelta max_keyframe_distance_to_disable_background_video_mse,
     bool enable_instant_source_buffer_gc,
     bool embedded_media_experience_enabled,
-    mojom::WatchTimeRecorderProvider* provider,
-    CreateCapabilitiesRecorderCB create_capabilities_recorder_cb)
+    mojom::WatchTimeRecorderProvider* provider)
     : defer_load_cb_(defer_load_cb),
       audio_renderer_sink_(audio_renderer_sink),
       media_log_(std::move(media_log)),
@@ -47,9 +46,7 @@ WebMediaPlayerParams::WebMediaPlayerParams(
           max_keyframe_distance_to_disable_background_video_mse),
       enable_instant_source_buffer_gc_(enable_instant_source_buffer_gc),
       embedded_media_experience_enabled_(embedded_media_experience_enabled),
-      watch_time_recorder_provider_(provider),
-      create_capabilities_recorder_cb_(
-          std::move(create_capabilities_recorder_cb)) {}
+      watch_time_recorder_provider_(provider) {}
 
 WebMediaPlayerParams::~WebMediaPlayerParams() {}
 

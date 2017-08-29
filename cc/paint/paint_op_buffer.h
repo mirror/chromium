@@ -57,10 +57,12 @@ class CC_PAINT_EXPORT ThreadsafePath : public SkPath {
 
 enum class PaintOpType : uint8_t {
   Annotate,
+  ClipDeviceRect,
   ClipPath,
   ClipRect,
   ClipRRect,
   Concat,
+  DrawArc,
   DrawColor,
   DrawDRRect,
   DrawImage,
@@ -247,6 +249,24 @@ class CC_PAINT_EXPORT AnnotateOp final : public PaintOp {
   AnnotateOp();
 };
 
+class CC_PAINT_EXPORT ClipDeviceRectOp final : public PaintOp {
+ public:
+  static constexpr PaintOpType kType = PaintOpType::ClipDeviceRect;
+  ClipDeviceRectOp(const SkIRect& device_rect,
+                   const SkIRect& subtract_rect,
+                   SkClipOp op)
+      : device_rect(device_rect), subtract_rect(subtract_rect), op(op) {}
+  static void Raster(const ClipDeviceRectOp* op,
+                     SkCanvas* canvas,
+                     const PlaybackParams& params);
+  bool IsValid() const { return IsValidSkClipOp(op); }
+  HAS_SERIALIZATION_FUNCTIONS();
+
+  SkIRect device_rect;
+  SkIRect subtract_rect;
+  SkClipOp op;
+};
+
 class CC_PAINT_EXPORT ClipPathOp final : public PaintOp {
  public:
   static constexpr PaintOpType kType = PaintOpType::ClipPath;
@@ -321,6 +341,36 @@ class CC_PAINT_EXPORT ConcatOp final : public PaintOp {
 
  private:
   ConcatOp() = default;
+};
+
+class CC_PAINT_EXPORT DrawArcOp final : public PaintOpWithFlags {
+ public:
+  static constexpr PaintOpType kType = PaintOpType::DrawArc;
+  static constexpr bool kIsDrawOp = true;
+  DrawArcOp(const SkRect& oval,
+            SkScalar start_angle,
+            SkScalar sweep_angle,
+            bool use_center,
+            const PaintFlags& flags)
+      : PaintOpWithFlags(flags),
+        oval(oval),
+        start_angle(start_angle),
+        sweep_angle(sweep_angle),
+        use_center(use_center) {}
+  static void RasterWithFlags(const DrawArcOp* op,
+                              const PaintFlags* flags,
+                              SkCanvas* canvas,
+                              const PlaybackParams& params);
+  bool IsValid() const { return flags.IsValid() && oval.isFinite(); }
+  HAS_SERIALIZATION_FUNCTIONS();
+
+  SkRect oval;
+  SkScalar start_angle;
+  SkScalar sweep_angle;
+  bool use_center;
+
+ private:
+  DrawArcOp() = default;
 };
 
 class CC_PAINT_EXPORT DrawColorOp final : public PaintOp {

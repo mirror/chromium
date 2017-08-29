@@ -10,7 +10,6 @@
 #include "base/files/scoped_temp_dir.h"
 #include "base/macros.h"
 #include "base/memory/ptr_util.h"
-#include "base/run_loop.h"
 #include "base/strings/string_util.h"
 #include "base/strings/utf_string_conversions.h"
 #include "base/synchronization/waitable_event.h"
@@ -893,11 +892,9 @@ TEST_F(PasswordStoreTest, CheckPasswordReuse) {
   for (const auto& test_data : kReuseTestData) {
     MockPasswordReuseDetectorConsumer mock_consumer;
     if (test_data.reused_password) {
-      EXPECT_CALL(
-          mock_consumer,
-          OnReuseFound(base::WideToUTF16(test_data.reused_password),
-                       false /* matches_sync_password */,
-                       std::vector<std::string>({test_data.reuse_domain}), 2));
+      EXPECT_CALL(mock_consumer,
+                  OnReuseFound(base::WideToUTF16(test_data.reused_password),
+                               std::string(test_data.reuse_domain), 2, 1));
     } else {
       EXPECT_CALL(mock_consumer, OnReuseFound(_, _, _, _)).Times(0);
     }
@@ -933,9 +930,9 @@ TEST_F(PasswordStoreTest, SavingClearingSyncPassword) {
 
   // Check that sync password reuse is found.
   MockPasswordReuseDetectorConsumer mock_consumer;
-  EXPECT_CALL(mock_consumer,
-              OnReuseFound(sync_password, true /* matches_sync_password */,
-                           std::vector<std::string>(), 1));
+  EXPECT_CALL(
+      mock_consumer,
+      OnReuseFound(sync_password, std::string(kSyncPasswordDomain), 1, 0));
   store->CheckReuse(input, "https://facebook.com", &mock_consumer);
   WaitForPasswordStore();
   testing::Mock::VerifyAndClearExpectations(&mock_consumer);

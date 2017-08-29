@@ -5,6 +5,7 @@
 #include "core/layout/ng/geometry/ng_logical_size.h"
 
 #include "core/layout/ng/geometry/ng_physical_size.h"
+#include "platform/text/TextDirection.h"
 
 namespace blink {
 

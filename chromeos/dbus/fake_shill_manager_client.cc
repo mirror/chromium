@@ -185,7 +185,8 @@ void FakeShillManagerClient::SetProperty(const std::string& name,
                                          const base::Closure& callback,
                                          const ErrorCallback& error_callback) {
   VLOG(2) << "SetProperty: " << name;
-  stub_properties_.SetKey(name, value.Clone());
+  stub_properties_.SetWithoutPathExpansion(
+      name, base::MakeUnique<base::Value>(value));
   CallNotifyObserversPropertyChanged(name);
   base::ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE, callback);
 }
@@ -457,7 +458,7 @@ void FakeShillManagerClient::AddGeoNetwork(
     list_value = stub_geo_networks_.SetListWithoutPathExpansion(
         technology, base::MakeUnique<base::ListValue>());
   }
-  list_value->GetList().push_back(network.Clone());
+  list_value->GetList().push_back(network);
 }
 
 void FakeShillManagerClient::AddProfile(const std::string& profile_path) {
@@ -1105,9 +1106,6 @@ bool FakeShillManagerClient::ParseOption(const std::string& arg0,
                                FakeShillDeviceClient::kSimPinRetryCount);
     }
     shill_device_property_map_[shill::kTypeCellular]
-                              [shill::kSIMPresentProperty] =
-                                  new base::Value(true);
-    shill_device_property_map_[shill::kTypeCellular]
                               [shill::kSIMLockStatusProperty] = simlock_dict;
     shill_device_property_map_[shill::kTypeCellular]
                               [shill::kTechnologyFamilyProperty] =
@@ -1118,8 +1116,6 @@ bool FakeShillManagerClient::ParseOption(const std::string& arg0,
     base::Value* sim_present = new base::Value(present);
     shill_device_property_map_[shill::kTypeCellular]
                               [shill::kSIMPresentProperty] = sim_present;
-    if (!present)
-      shill_initial_state_map_[shill::kTypeCellular] = kNetworkDisabled;
     return true;
   } else if (arg0 == "tdls_busy") {
     if (!arg1.empty())

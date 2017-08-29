@@ -96,9 +96,8 @@ void GLContextVirtual::SetUnbindFboOnMakeCurrent() {
   shared_context_->SetUnbindFboOnMakeCurrent();
 }
 
-gl::YUVToRGBConverter* GLContextVirtual::GetYUVToRGBConverter(
-    const gfx::ColorSpace& color_space) {
-  return shared_context_->GetYUVToRGBConverter(color_space);
+gl::YUVToRGBConverter* GLContextVirtual::GetYUVToRGBConverter() {
+  return shared_context_->GetYUVToRGBConverter();
 }
 
 void GLContextVirtual::ForceReleaseVirtuallyCurrent() {

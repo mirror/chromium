@@ -5,13 +5,16 @@
 #ifndef IOS_CHROME_BROWSER_UI_HISTORY_HISTORY_ENTRY_ITEM_H_
 #define IOS_CHROME_BROWSER_UI_HISTORY_HISTORY_ENTRY_ITEM_H_
 
-#include "components/history/core/browser/browsing_history_service.h"
 #import "ios/chrome/browser/ui/collection_view/cells/collection_view_item.h"
 #import "ios/third_party/material_components_ios/src/components/Collections/src/MaterialCollections.h"
 
 namespace base {
 class Time;
 }  // namespace base
+
+namespace history {
+struct HistoryEntry;
+}  // namespace history
 
 namespace ios {
 class ChromeBrowserState;
@@ -56,8 +59,7 @@ class GURL;
 
 // The |delegate| is notified when the favicon has loaded, and may be nil.
 - (instancetype)initWithType:(NSInteger)type
-                historyEntry:
-                    (const history::BrowsingHistoryService::HistoryEntry&)entry
+                historyEntry:(const history::HistoryEntry&)entry
                 browserState:(ios::ChromeBrowserState*)browserState
                     delegate:(id<HistoryEntryItemDelegate>)delegate
     NS_DESIGNATED_INITIALIZER;

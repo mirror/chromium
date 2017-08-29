@@ -42,6 +42,7 @@ startWebGLContext = function() {
   }
 
   if (window.domAutomationController) {
+    domAutomationController.setAutomationId(0);
     domAutomationController.send("FINISHED");
   }
 }

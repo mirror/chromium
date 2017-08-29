@@ -83,14 +83,8 @@ class MockWPTGitHub(object):
                 return pr
         return None
 
-    def extract_metadata(self, tag, commit_body, all_matches=False):
-        values = []
+    def extract_metadata(self, tag, commit_body):
         for line in commit_body.splitlines():
-            if not line.startswith(tag):
-                continue
-            value = line[len(tag):]
-            if all_matches:
-                values.append(value)
-            else:
-                return value
-        return values if all_matches else None
+            if line.startswith(tag):
+                return line[len(tag):]
+        return None

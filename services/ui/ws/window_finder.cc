@@ -73,16 +73,14 @@ bool IsLocationInExtendedHitRegion(EventSource event_source,
 
 gfx::Transform TransformFromParent(const ServerWindow* window,
                                    const gfx::Transform& current_transform) {
-  gfx::Transform result = current_transform;
-  if (window->bounds().origin() != gfx::Point()) {
-    gfx::Transform translation;
-    translation.Translate(static_cast<float>(window->bounds().x()),
-                          static_cast<float>(window->bounds().y()));
-    result.PreconcatTransform(translation);
-  }
+  gfx::Transform transform = current_transform;
   if (!window->transform().IsIdentity())
-    result.PreconcatTransform(window->transform());
-  return result;
+    transform.ConcatTransform(window->transform());
+  gfx::Transform translation;
+  translation.Translate(static_cast<float>(window->bounds().x()),
+                        static_cast<float>(window->bounds().y()));
+  transform.ConcatTransform(translation);
+  return transform;
 }
 
 bool FindDeepestVisibleWindowForLocationImpl(
@@ -154,19 +152,9 @@ bool FindDeepestVisibleWindowForLocationImpl(
 DeepestWindow FindDeepestVisibleWindowForLocation(ServerWindow* root_window,
                                                   EventSource event_source,
                                                   const gfx::Point& location) {
-  gfx::Point initial_location = location;
-  gfx::Transform root_transform = root_window->transform();
-  if (!root_transform.IsIdentity()) {
-    gfx::Point3F transformed_location(gfx::PointF{initial_location});
-    root_transform.TransformPointReverse(&transformed_location);
-    initial_location = gfx::ToFlooredPoint(transformed_location.AsPointF());
-  }
   DeepestWindow result;
-  // Allow the root to have a transform, which mirrors what happens with
-  // WindowManagerDisplayRoot.
   FindDeepestVisibleWindowForLocationImpl(root_window, event_source, location,
-                                          initial_location, root_transform,
-                                          &result);
+                                          location, gfx::Transform(), &result);
   return result;
 }
 

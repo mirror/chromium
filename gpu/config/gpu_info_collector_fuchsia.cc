@@ -25,7 +25,8 @@ CollectInfoResult CollectDriverInfoGL(GPUInfo* gpu_info) {
 }
 
 void MergeGPUInfo(GPUInfo* basic_gpu_info, const GPUInfo& context_gpu_info) {
-  MergeGPUInfoGL(basic_gpu_info, context_gpu_info);
+  // TODO(crbug.com/707031): Implement this.
+  NOTIMPLEMENTED();
 }
 
 }  // namespace gpu

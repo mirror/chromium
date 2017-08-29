@@ -121,7 +121,7 @@ class TestEventRouter : public extensions::EventRouter {
 
 std::unique_ptr<KeyedService> TestEventRouterFactoryFunction(
     content::BrowserContext* context) {
-  return std::make_unique<TestEventRouter>(context);
+  return base::MakeUnique<TestEventRouter>(context);
 }
 
 // Keeps track of all fake data items registered during a test.
@@ -185,10 +185,10 @@ class ItemRegistry {
       return nullptr;
 
     std::unique_ptr<base::DictionaryValue> result =
-        std::make_unique<base::DictionaryValue>();
+        base::MakeUnique<base::DictionaryValue>();
 
     for (const std::string& item_id : items_)
-      result->Set(item_id, std::make_unique<base::DictionaryValue>());
+      result->Set(item_id, base::MakeUnique<base::DictionaryValue>());
 
     return result;
   }
@@ -309,7 +309,7 @@ class OperationQueue {
       case OperationType::kRead: {
         std::unique_ptr<std::vector<char>> result_data;
         if (result == OperationResult::kSuccess) {
-          result_data = std::make_unique<std::vector<char>>(content_.begin(),
+          result_data = base::MakeUnique<std::vector<char>>(content_.begin(),
                                                             content_.end());
         }
 
@@ -382,7 +382,7 @@ class TestDataItem : public DataItem {
 class LockScreenItemStorageTest : public ExtensionsTest {
  public:
   LockScreenItemStorageTest()
-      : ExtensionsTest(std::make_unique<content::TestBrowserThreadBundle>()) {}
+      : ExtensionsTest(base::MakeUnique<content::TestBrowserThreadBundle>()) {}
   ~LockScreenItemStorageTest() override = default;
 
   void SetUp() override {
@@ -399,7 +399,7 @@ class LockScreenItemStorageTest : public ExtensionsTest {
         chromeos::LoginState::LOGGED_IN_USER_REGULAR, kTestUserIdHash);
 
     CreateTestExtension();
-    item_registry_ = std::make_unique<ItemRegistry>(extension()->id());
+    item_registry_ = base::MakeUnique<ItemRegistry>(extension()->id());
 
     // Inject custom data item factory to be used with LockScreenItemStorage
     // instances.
@@ -433,7 +433,7 @@ class LockScreenItemStorageTest : public ExtensionsTest {
 
   void ResetLockScreenItemStorage() {
     lock_screen_item_storage_.reset();
-    lock_screen_item_storage_ = std::make_unique<LockScreenItemStorage>(
+    lock_screen_item_storage_ = base::MakeUnique<LockScreenItemStorage>(
         browser_context(), &local_state_, kTestSymmetricKey,
         test_dir_.GetPath());
   }
@@ -557,10 +557,10 @@ class LockScreenItemStorageTest : public ExtensionsTest {
     OperationQueue* operation_queue = GetOperations(id);
     if (!operation_queue) {
       operations_[id] =
-          std::make_unique<OperationQueue>(id, item_registry_.get());
+          base::MakeUnique<OperationQueue>(id, item_registry_.get());
       operation_queue = operations_[id].get();
     }
-    return std::make_unique<TestDataItem>(id, extension_id, crypto_key,
+    return base::MakeUnique<TestDataItem>(id, extension_id, crypto_key,
                                           operation_queue);
   }
 

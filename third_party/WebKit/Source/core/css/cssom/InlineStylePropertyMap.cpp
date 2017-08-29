@@ -15,14 +15,13 @@
 #include "core/css/cssom/CSSOMTypes.h"
 #include "core/css/cssom/CSSUnsupportedStyleValue.h"
 #include "core/css/cssom/StyleValueFactory.h"
-#include "core/css/properties/CSSPropertyAPI.h"
 
 namespace blink {
 
 namespace {
 
 CSSValueList* CssValueListForPropertyID(CSSPropertyID property_id) {
-  char separator = CSSPropertyAPI::Get(property_id).RepetitionSeparator();
+  char separator = CSSPropertyMetadata::RepetitionSeparator(property_id);
   switch (separator) {
     case ' ':
       return CSSValueList::CreateSpaceSeparated();
@@ -49,7 +48,7 @@ const CSSValue* SingleStyleValueAsCSSValue(CSSPropertyID property_id,
   if (!css_value)
     return nullptr;
 
-  if (!CSSPropertyAPI::Get(property_id).IsRepeated() ||
+  if (!CSSPropertyMetadata::PropertyIsRepeated(property_id) ||
       css_value->IsCSSWideKeyword())
     return css_value;
 
@@ -132,7 +131,7 @@ void InlineStylePropertyMap::set(
     css_value =
         SingleStyleValueAsCSSValue(property_id, *item.getAsCSSStyleValue());
   } else if (item.isCSSStyleValueSequence()) {
-    if (!CSSPropertyAPI::Get(property_id).IsRepeated()) {
+    if (!CSSPropertyMetadata::PropertyIsRepeated(property_id)) {
       exception_state.ThrowTypeError(
           "Property does not support multiple values");
       return;
@@ -156,7 +155,7 @@ void InlineStylePropertyMap::append(
     CSSPropertyID property_id,
     CSSStyleValueOrCSSStyleValueSequenceOrString& item,
     ExceptionState& exception_state) {
-  if (!CSSPropertyAPI::Get(property_id).IsRepeated()) {
+  if (!CSSPropertyMetadata::PropertyIsRepeated(property_id)) {
     exception_state.ThrowTypeError("Property does not support multiple values");
     return;
   }

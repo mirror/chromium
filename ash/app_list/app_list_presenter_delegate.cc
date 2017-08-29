@@ -144,12 +144,18 @@ void AppListPresenterDelegate::Init(app_list::AppListView* view,
 
 void AppListPresenterDelegate::OnShown(int64_t display_id) {
   is_visible_ = true;
+  aura::Window* root_window = Shell::GetRootWindowForDisplayId(display_id);
+  Shell::Get()->NotifyAppListVisibilityChanged(is_visible_, root_window);
 }
 
 void AppListPresenterDelegate::OnDismissed() {
   DCHECK(is_visible_);
   DCHECK(view_);
+
   is_visible_ = false;
+  aura::Window* root_window =
+      RootWindowController::ForTargetRootWindow()->GetRootWindow();
+  Shell::Get()->NotifyAppListVisibilityChanged(is_visible_, root_window);
 }
 
 void AppListPresenterDelegate::UpdateBounds() {
@@ -166,18 +172,16 @@ gfx::Vector2d AppListPresenterDelegate::GetVisibilityAnimationOffset(
     aura::Window* root_window) {
   DCHECK(Shell::HasInstance());
 
-  Shelf* shelf = Shelf::ForWindow(root_window);
-
   // App list needs to know the new shelf layout in order to calculate its
   // UI layout when AppListView visibility changes.
   if (is_fullscreen_app_list_enabled_) {
-    int app_list_y = view_->GetBoundsInScreen().y();
-    return gfx::Vector2d(0, IsSideShelf(root_window)
-                                ? 0
-                                : shelf->GetIdealBounds().y() - app_list_y);
+    return gfx::Vector2d(
+        0, IsSideShelf(root_window) ? 0 : kAnimationOffsetFullscreen);
   }
 
+  Shelf* shelf = Shelf::ForWindow(root_window);
   shelf->UpdateAutoHideState();
+
   switch (shelf->alignment()) {
     case SHELF_ALIGNMENT_BOTTOM:
     case SHELF_ALIGNMENT_BOTTOM_LOCKED:
@@ -194,13 +198,9 @@ gfx::Vector2d AppListPresenterDelegate::GetVisibilityAnimationOffset(
 base::TimeDelta AppListPresenterDelegate::GetVisibilityAnimationDuration(
     aura::Window* root_window,
     bool is_visible) {
-  if (is_fullscreen_app_list_enabled_) {
-    // If the view is below the shelf, just hide immediately.
-    if (view_->GetBoundsInScreen().y() >
-        Shelf::ForWindow(root_window)->GetIdealBounds().y())
-      return base::TimeDelta::FromMilliseconds(0);
+  if (is_fullscreen_app_list_enabled_)
     return animation_duration_fullscreen(IsSideShelf(root_window));
-  }
+
   return is_visible ? base::TimeDelta::FromMilliseconds(0)
                     : animation_duration();
 }

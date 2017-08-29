@@ -8,7 +8,7 @@
   }
 
   var response = await dp.DOM.getDocument({depth: -1, pierce: true});
-  testRunner.log(response);
+  testRunner.logMessage(response);
   testRunner.completeTest();
 })
 

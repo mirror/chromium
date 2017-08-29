@@ -13,10 +13,6 @@
 // provides the UI models for the PaymentItemsDisplayViewController.
 @protocol PaymentItemsDisplayViewControllerDataSource<NSObject>
 
-// Returns whether the payment can be made and therefore the pay button should
-// be enabled.
-- (BOOL)canPay;
-
 // The total price item.
 - (CollectionViewItem*)totalItem;
 

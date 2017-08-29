@@ -236,6 +236,13 @@ FeatureInfo::FeatureInfo(
                            : nullptr);
 }
 
+FeatureInfo::FeatureInfo(
+    const base::CommandLine& command_line,
+    const GpuDriverBugWorkarounds& gpu_driver_bug_workarounds)
+    : workarounds_(gpu_driver_bug_workarounds) {
+  InitializeBasicState(&command_line);
+}
+
 void FeatureInfo::InitializeBasicState(const base::CommandLine* command_line) {
   if (!command_line)
     return;
@@ -250,9 +257,6 @@ void FeatureInfo::InitializeBasicState(const base::CommandLine* command_line) {
   feature_flags_.is_swiftshader =
       (command_line->GetSwitchValueASCII(switches::kUseGL) ==
        gl::kGLImplementationSwiftShaderName);
-
-  feature_flags_.chromium_raster_transport =
-      command_line->HasSwitch(switches::kEnableOOPRasterization);
 
   // The shader translator is needed to translate from WebGL-conformant GLES SL
   // to normal GLES SL, enforce WebGL conformance, translate from GLES SL 1.0 to
@@ -1401,8 +1405,6 @@ void FeatureInfo::InitializeFeatures() {
   feature_flags_.ext_robustness = extensions.Contains("GL_EXT_robustness");
   feature_flags_.chromium_texture_filtering_hint =
       extensions.Contains("GL_CHROMIUM_texture_filtering_hint");
-  feature_flags_.ext_pixel_buffer_object =
-      extensions.Contains("GL_NV_pixel_buffer_object");
 }
 
 void FeatureInfo::InitializeFloatAndHalfFloatFeatures(

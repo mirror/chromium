@@ -25,8 +25,6 @@ source_set("ntp") {
     "//components/reading_list/core",
     "//components/strings",
     "//ios/chrome/app/strings:ios_strings_grit",
-    "//ios/chrome/browser",
-    "//ios/chrome/browser/browser_state",
     "//ios/chrome/browser/content_suggestions",
     "//ios/chrome/browser/favicon",
     "//ios/chrome/browser/ntp_snippets",
@@ -47,7 +45,7 @@ source_set("ntp") {
     "//ios/clean/chrome/browser/ui/bookmarks",
     "//ios/clean/chrome/browser/ui/commands",
     "//ios/clean/chrome/browser/ui/recent_tabs",
-    "//ios/web:web",
+    "//ios/web:web_arc",
     "//ui/base:base",
     "//url:url",
   ]

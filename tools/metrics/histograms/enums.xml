@@ -388,13 +388,6 @@ uploading your change for review.  These are checked by presubmit scripts.
   <int value="2" label="Use resource from cache"/>
 </enum>
 
-<enum name="ActivationList">
-  <int value="0" label="No match"/>
-  <int value="1" label="Social Eng Ads Interstitial"/>
-  <int value="2" label="Phishing Interstitial"/>
-  <int value="3" label="Subresource Filter"/>
-</enum>
-
 <enum name="ActiveWindowShowType">
   <int value="0" label="No Active Window"/>
   <int value="1" label="Other"/>
@@ -1177,7 +1170,6 @@ uploading your change for review.  These are checked by presubmit scripts.
   <int value="6" label="LAUNCHER_SEARCH_PROVIDER"/>
   <int value="7" label="PLAY_STORE_UNINSTALLED_APP"/>
   <int value="8" label="PLAY_STORE_INSTANT_APP"/>
-  <int value="9" label="ANSWER_CARD"/>
 </enum>
 
 <enum name="AppListSearchResultDisplayType">
@@ -1185,12 +1177,6 @@ uploading your change for review.  These are checked by presubmit scripts.
   <int value="1" label="LIST"/>
   <int value="2" label="TILE"/>
   <int value="3" label="RECOMMENDATION"/>
-</enum>
-
-<enum name="ApplistSearchResultOpenedSource">
-  <int value="0" label="Half Clamshell"/>
-  <int value="1" label="Fullscreen Clamshell"/>
-  <int value="2" label="Fullscreen Tablet"/>
 </enum>
 
 <enum name="AppListShowSource">
@@ -3924,17 +3910,6 @@ uploading your change for review.  These are checked by presubmit scripts.
   <int value="7" label="DisplayList2DCanvasFallbackToRaster"/>
   <int value="8" label="GPUAccelerated2DCanvasDeferralDisabled"/>
   <int value="10" label="GPUAccelerated2DCanvasSurfaceCreationFailed"/>
-</enum>
-
-<enum name="CanvasCreateImageBitmapSource">
-  <int value="0" label="CreateImageBitmapFromBlob"/>
-  <int value="1" label="CreateImageBitmapFromImageBitmap"/>
-  <int value="2" label="CreateImageBitmapFromImageData"/>
-  <int value="3" label="CreateImageBitmapFromHTMLCanvasElement"/>
-  <int value="4" label="CreateImageBitmapFromHTMLImageElement"/>
-  <int value="5" label="CreateImageBitmapFromHTMLVideoElement"/>
-  <int value="6" label="CreateImageBitmapFromOffscreenCanvas"/>
-  <int value="7" label="CreateImageBitmapFromSVGImageElement"/>
 </enum>
 
 <enum name="CanvasDisplayListFallbackReason">
@@ -8493,9 +8468,6 @@ uploading your change for review.  These are checked by presubmit scripts.
 </enum>
 
 <enum name="DoodleConfigDownloadOutcome">
-  <obsolete>
-    Removed from code 2017-08.
-  </obsolete>
   <summary>
     These values are defined in the DownloadOutcome enum in
     components/doodle/doodle_service.h.
@@ -11683,7 +11655,6 @@ uploading your change for review.  These are checked by presubmit scripts.
   <int value="8192" label="EXTERNAL_EXTENSION"/>
   <int value="16384" label="UPDATE_REQUIRED_BY_POLICY"/>
   <int value="32768" label="CUSTODIAN_APPROVAL_REQUIRED"/>
-  <int value="65536" label="BLOCKED_BY_POLICY"/>
 </enum>
 
 <enum name="ExtensionEvents">
@@ -12108,7 +12079,6 @@ uploading your change for review.  These are checked by presubmit scripts.
   <int value="409" label="NETWORKING_PRIVATE_ON_CERTIFICATE_LISTS_CHANGED"/>
   <int value="410" label="LOCK_SCREEN_DATA_ON_DATA_ITEMS_AVAILABLE"/>
   <int value="411" label="WEB_VIEW_INTERNAL_ON_AUDIO_STATE_CHANGED"/>
-  <int value="412" label="AUTOMATION_INTERNAL_ON_ACTION_RESULT"/>
 </enum>
 
 <enum name="ExtensionFileWriteResult">
@@ -13348,8 +13318,6 @@ uploading your change for review.  These are checked by presubmit scripts.
   <int value="1187" label="WEBVIEWINTERNAL_ISAUDIOMUTED"/>
   <int value="1188" label="WEBVIEWINTERNAL_GETAUDIOSTATE"/>
   <int value="1189" label="FILEMANAGERPRIVATE_GETRECENTFILES"/>
-  <int value="1190" label="FILEMANAGERPRIVATE_RENAMEVOLUME"/>
-  <int value="1191" label="AUTOTESTPRIVATE_SETMOUSEREVERSESCROLL"/>
 </enum>
 
 <enum name="ExtensionIconState">
@@ -16057,7 +16025,7 @@ uploading your change for review.  These are checked by presubmit scripts.
   <int value="2009" label="UnitlessZeroAngleOffsetRotate"/>
   <int value="2010" label="UnitlessZeroAngleTransform"/>
   <int value="2011"
-      label="OBSOLETE_HTMLOListElementStartGetterReversedWithoutStartAttribute"/>
+      label="HTMLOListElementStartGetterReversedWithoutStartAttribute"/>
   <int value="2012" label="CredentialManagerPreventSilentAccess"/>
   <int value="2013" label="NetInfoEffectiveType"/>
   <int value="2014" label="V8SpeechRecognition_Start_Method"/>
@@ -16171,9 +16139,6 @@ uploading your change for review.  These are checked by presubmit scripts.
   <int value="2116" label="ARIAValueMinAttribute"/>
   <int value="2117" label="ARIAValueNowAttribute"/>
   <int value="2118" label="ARIAValueTextAttribute"/>
-  <int value="2119" label="V8LabeledExpressionStatement"/>
-  <int value="2120" label="PaymentRequestSupportedMethodsArray"/>
-  <int value="2121" label="NavigatorDeviceMemory"/>
 </enum>
 
 <enum name="FeedbackSource">
@@ -21031,7 +20996,6 @@ uploading your change for review.  These are checked by presubmit scripts.
   <int value="6" label="Bluetooth disabled"/>
   <int value="7" label="User preference disabled"/>
   <int value="8" label="Enabled"/>
-  <int value="9" label="BLE not present"/>
 </enum>
 
 <enum name="InstantTethering_HostScanResult">
@@ -21120,20 +21084,6 @@ uploading your change for review.  These are checked by presubmit scripts.
   <int value="0" label="MainFrameAllowed"/>
   <int value="1" label="SubframeAllowed"/>
   <int value="2" label="SubframeBlocked"/>
-</enum>
-
-<enum name="IOSNTPImpression">
-  <int value="0" label="Local suggestions"/>
-  <int value="1" label="Remote suggestions"/>
-</enum>
-
-<enum name="IOSSearchExtensionAction">
-  <int value="0" label="No Action"/>
-  <int value="1" label="New Search"/>
-  <int value="2" label="New Incognito Search"/>
-  <int value="3" label="New Voice Search"/>
-  <int value="4" label="New QR Code Search"/>
-  <int value="5" label="Open URL"/>
 </enum>
 
 <enum name="IOSShareExtensionReceivedEntrySource">
@@ -22837,7 +22787,6 @@ uploading your change for review.  These are checked by presubmit scripts.
   <int value="3" label="Device suspended"/>
   <int value="4" label="App window closed"/>
   <int value="5" label="Lock screen note taking disabled"/>
-  <int value="6" label="Unlock button pressed"/>
 </enum>
 
 <enum name="LockScreenNoteTakingUnlockUIAction">
@@ -22943,7 +22892,6 @@ uploading your change for review.  These are checked by presubmit scripts.
   <int value="-1948540128" label="disable-webrtc-hw-encoding (deprecated)"/>
   <int value="-1946595906" label="enable-push-api-background-mode"/>
   <int value="-1946522787" label="VrCustomTabBrowsing:disabled"/>
-  <int value="-1945524394" label="EnableBackgroundBlur:disabled"/>
   <int value="-1943507605" label="enable-new-video-renderer"/>
   <int value="-1941852572" label="floating-virtual-keyboard"/>
   <int value="-1940806558" label="enable-syncfs-directory-operation"/>
@@ -22962,8 +22910,6 @@ uploading your change for review.  These are checked by presubmit scripts.
       label="UploadCrashReportsUsingJobScheduler:disabled"/>
   <int value="-1912999136" label="enable-automatic-password-saving:enabled"/>
   <int value="-1911153473" label="enable-easy-signin"/>
-  <int value="-1909356390"
-      label="OverlayScrollbarFlashAfterAnyScrollUpdate:enabled"/>
   <int value="-1907342706" label="ReadItLaterInMenu:disabled"/>
   <int value="-1892555086" label="disable-compositor-animation-timelines"/>
   <int value="-1892000374" label="SeccompSandboxAndroid:enabled"/>
@@ -22984,7 +22930,6 @@ uploading your change for review.  These are checked by presubmit scripts.
   <int value="-1870961970" label="enable-filemanager-mtp"/>
   <int value="-1869845022" label="force-show-update-menu-item"/>
   <int value="-1868978829" label="spurious-power-button-accel-count"/>
-  <int value="-1868284723" label="DirectManipulationStylus:disabled"/>
   <int value="-1867382602" label="WebRTC-H264WithOpenH264FFmpeg:enabled"/>
   <int value="-1867342522" label="MaterialDesignHistory:enabled"/>
   <int value="-1861814223" label="MidiManagerDynamicInstantiation:enabled"/>
@@ -23022,7 +22967,6 @@ uploading your change for review.  These are checked by presubmit scripts.
   <int value="-1749176684" label="PauseBackgroundTabs:disabled"/>
   <int value="-1746767834" label="ssl-interstitial-v2-gray"/>
   <int value="-1740519217" label="disable-software-rasterizer"/>
-  <int value="-1736075054" label="EnableFullscreenAppList:enabled"/>
   <int value="-1735643253" label="enable-display-list-2d-canvas"/>
   <int value="-1734254845" label="ash-enable-night-light"/>
   <int value="-1732561795" label="ConsistentOmniboxGeolocation:enabled"/>
@@ -23108,9 +23052,6 @@ uploading your change for review.  These are checked by presubmit scripts.
   <int value="-1478876902" label="disable-permission-action-reporting"/>
   <int value="-1473668019" label="token-binding:disabled"/>
   <int value="-1473136627" label="enable-web-payments"/>
-  <int value="-1471021059"
-      label="OmniboxUIExperimentShowSuggestionFavicons:disabled"/>
-  <int value="-1469536698" label="ChromeHomeDoodle:enabled"/>
   <int value="-1469228683" label="QuickUnlockPinSignin:disabled"/>
   <int value="-1468126425" label="ResourceLoadScheduler:disabled"/>
   <int value="-1467332609" label="tab-management-experiment-type-anise"/>
@@ -23175,14 +23116,12 @@ uploading your change for review.  These are checked by presubmit scripts.
   <int value="-1269084216" label="ash-md"/>
   <int value="-1268836676" label="disable-out-of-process-pdf"/>
   <int value="-1267958145" label="disable-pdf-material-ui"/>
-  <int value="-1262152606" label="disable-lock-screen-apps"/>
   <int value="-1254070521" label="enable-slimming-paint-invalidation"/>
   <int value="-1251411236" label="disable-new-md-input-view"/>
   <int value="-1246840031" label="OptInImeMenu:disabled"/>
   <int value="-1241747717" label="enable-android-password-link"/>
   <int value="-1235586511" label="enable-datasaver-prompt"/>
   <int value="-1225198073" label="ReaderModeInCCT:disabled"/>
-  <int value="-1224962996" label="PwaImprovedSplashScreen:disabled"/>
   <int value="-1218608640" label="disable-offline-load-stale-cache"/>
   <int value="-1216837777" label="clear-data-reduction-proxy-data-savings"/>
   <int value="-1212855900" label="enable-all-bookmarks-view"/>
@@ -23214,7 +23153,6 @@ uploading your change for review.  These are checked by presubmit scripts.
   <int value="-1158993534" label="PrintScaling:enabled"/>
   <int value="-1155543191" label="CopylessPaste:disabled"/>
   <int value="-1151766565" label="enable-fullscreen-tab-detaching"/>
-  <int value="-1145246849" label="ThirdPartyDoodles:enabled"/>
   <int value="-1137442543" label="enable-slimming-paint"/>
   <int value="-1136627751" label="ignore-autocomplete-off-autofill"/>
   <int value="-1136509631" label="ssl-interstitial-v1"/>
@@ -23263,7 +23201,6 @@ uploading your change for review.  These are checked by presubmit scripts.
   <int value="-996673716" label="enable-web-app-frame"/>
   <int value="-991253797"
       label="OmniboxSpeculativeServiceWorkerStartOnQueryInput:disabled"/>
-  <int value="-984052166" label="DoodlesOnLocalNtp:enabled"/>
   <int value="-980260493" label="NTPSnippets:disabled"/>
   <int value="-979313250" label="enable-google-branded-context-menu"/>
   <int value="-979057409" label="enable-seccomp-filter-sandbox"/>
@@ -23341,8 +23278,6 @@ uploading your change for review.  These are checked by presubmit scripts.
   <int value="-770319039" label="enable-touch-editing"/>
   <int value="-763759697" label="enable-audio-support-for-desktop-share"/>
   <int value="-759830869" label="enable-tab-discarding"/>
-  <int value="-757946835"
-      label="OmniboxUIExperimentShowSuggestionFavicons:enabled"/>
   <int value="-751273871" label="AutofillCreditCardBankNameDisplay:enabled"/>
   <int value="-750175757" label="ClientLoFi:enabled"/>
   <int value="-749048160" label="enable-panels"/>
@@ -23375,7 +23310,6 @@ uploading your change for review.  These are checked by presubmit scripts.
   <int value="-649956990" label="enable-harfbuzz-rendertext"/>
   <int value="-645455405" label="MacViewsNativeDialogs:enabled"/>
   <int value="-641719457" label="disable-compositor-touch-hit-testing"/>
-  <int value="-632030508" label="NativeWindowNavButtons:disabled"/>
   <int value="-631740127" label="inert-visual-viewport"/>
   <int value="-622685174" label="enable-pdf-material-ui"/>
   <int value="-620030047" label="CrosCompUpdates:disabled"/>
@@ -23388,7 +23322,6 @@ uploading your change for review.  These are checked by presubmit scripts.
       label="ContentSuggestionsFaviconsFromNewServer:enabled"/>
   <int value="-604068396" label="disable-input-ime-api"/>
   <int value="-601384286" label="disable-contextual-search"/>
-  <int value="-599932554" label="DoodlesOnLocalNtp:disabled"/>
   <int value="-598050737" label="disable-es3-apis"/>
   <int value="-589096918" label="ash-enable-fullscreen-app-list"/>
   <int value="-579192400" label="disable-input-view"/>
@@ -23407,7 +23340,6 @@ uploading your change for review.  These are checked by presubmit scripts.
   <int value="-531651776" label="NewRemotePlaybackPipeline:enabled"/>
   <int value="-528927088" label="AutofillCreditCardPopupLayout:disabled"/>
   <int value="-528149352" label="WebRtcUseEchoCanceller3:enabled"/>
-  <int value="-523030434" label="EnableBackgroundBlur:enabled"/>
   <int value="-519960638" label="enable-site-engagement-service"/>
   <int value="-518104091" label="NewAudioRenderingMixingStrategy:enabled"/>
   <int value="-516845951" label="enable-embedded-extension-options"/>
@@ -23498,7 +23430,6 @@ uploading your change for review.  These are checked by presubmit scripts.
   <int value="-275164173" label="QuickUnlockPinSignin:enabled"/>
   <int value="-268357961" label="enable-feature-policy"/>
   <int value="-254887599" label="google-profile-info"/>
-  <int value="-250822813" label="PwaImprovedSplashScreen:enabled"/>
   <int value="-250721831" label="AndroidAutofillAccessibility:disabled"/>
   <int value="-248223420" label="AutofillKeyboardAccessory:disabled"/>
   <int value="-241353344" label="MidiManagerWinrt:disabled"/>
@@ -23509,7 +23440,6 @@ uploading your change for review.  These are checked by presubmit scripts.
   <int value="-231922000" label="enable-renderer-mojo-channel"/>
   <int value="-230824955" label="NTPMostLikelyFaviconsFromServer:enabled"/>
   <int value="-216219963" label="ash-shelf-color-scheme"/>
-  <int value="-215534141" label="NativeWindowNavButtons:enabled"/>
   <int value="-213518852" label="protect-sync-credential:enabled"/>
   <int value="-213214894" label="enable-chromevox-arc-support"/>
   <int value="-208435024" label="EnableUsernameCorrection:enabled"/>
@@ -23534,7 +23464,6 @@ uploading your change for review.  These are checked by presubmit scripts.
   <int value="-138983372" label="DesktopPWAWindowing:disabled"/>
   <int value="-138773929" label="PassiveDocumentEventListeners:enabled"/>
   <int value="-122492389" label="enable-browser-task-scheduler"/>
-  <int value="-120521482" label="DirectManipulationStylus:enabled"/>
   <int value="-119055644" label="GenericSensor:enabled"/>
   <int value="-108881882" label="NTPCondensedTileLayout:enabled"/>
   <int value="-102537270" label="extension-content-verification"/>
@@ -23599,7 +23528,6 @@ from previous Chrome versions.
   <int value="48159177" label="reduced-referrer-granularity"/>
   <int value="51793504" label="protect-sync-credential-on-reauth:disabled"/>
   <int value="56723110" label="enable-webfonts-intervention"/>
-  <int value="57639188" label="SoundContentSetting:disabled"/>
   <int value="57791920" label="MemoryCoordinator:enabled"/>
   <int value="59784035" label="ImeThread:disabled"/>
   <int value="59964519" label="OmniboxEnableClipboardProvider:disabled"/>
@@ -23632,7 +23560,6 @@ from previous Chrome versions.
   <int value="173288154" label="PrintPdfAsImage:enabled"/>
   <int value="178337215" label="enable-md-history"/>
   <int value="180074362" label="memory-pressure-thresholds"/>
-  <int value="185991204" label="enable-webrtc-srtp-encrypted-headers"/>
   <int value="189728101" label="FasterLocationReload:disabled"/>
   <int value="194573877" label="MacViewsNativeDialogs:disabled"/>
   <int value="194895489" label="passive-listeners-default"/>
@@ -23667,7 +23594,6 @@ from previous Chrome versions.
   <int value="332391072" label="cs-contextual-cards-bar-integration"/>
   <int value="334802038" label="OfflinePreviews:disabled"/>
   <int value="339671131" label="disable-per-user-timezone"/>
-  <int value="341152650" label="SoundContentSetting:enabled"/>
   <int value="346711293" label="enable-save-password-bubble"/>
   <int value="348854923" label="v8-cache-strategies-for-cache-storage"/>
   <int value="352191859" label="disabled-new-style-notification"/>
@@ -23677,7 +23603,6 @@ from previous Chrome versions.
   <int value="360599302" label="enable-gpu-rasterization"/>
   <int value="365467768" label="prefetch-search-results"/>
   <int value="368854020" label="ash-screen-rotation-animation"/>
-  <int value="369352033" label="GenericSensorExtraClasses:enabled"/>
   <int value="370486304" label="enable-origin-chip-on-srp"/>
   <int value="371268743" label="OmniboxUIExperimentVerticalMargin:disabled"/>
   <int value="372460068" label="QuickUnlockFingerprint:disabled"/>
@@ -23688,7 +23613,6 @@ from previous Chrome versions.
   <int value="387178525" label="VideoFullscreenOrientationLock:enabled"/>
   <int value="388996324" label="CustomContextMenu:disabled"/>
   <int value="393704200" label="account-consistency"/>
-  <int value="398903399" label="GenericSensorExtraClasses:disabled"/>
   <int value="400322063" label="ash-disable-screen-orientation-lock"/>
   <int value="401983950" label="enable-spdy4"/>
   <int value="402143634" label="enable-search-button-in-omnibox-always"/>
@@ -23720,8 +23644,6 @@ from previous Chrome versions.
       label="enable-non-validating-reload-on-refresh-content"/>
   <int value="470011024" label="NonValidatingReloadOnNormalReload:enabled"/>
   <int value="474743272" label="material-design-ink-drop"/>
-  <int value="475858648"
-      label="OverlayScrollbarFlashAfterAnyScrollUpdate:disabled"/>
   <int value="477967119" label="enable-unified-media-pipeline"/>
   <int value="479906041" label="RunAllFlashInAllowMode:disabled"/>
   <int value="480544447" label="NonValidatingReloadOnRefreshContentV2:enabled"/>
@@ -23785,10 +23707,8 @@ from previous Chrome versions.
   <int value="651421878" label="VideoRotateToFullscreen:enabled"/>
   <int value="651844675" label="EasyUnlockPromotions:enabled"/>
   <int value="652561231" label="CustomContextMenu:enabled"/>
-  <int value="659086147" label="OverlayScrollbarFlashWhenMouseEnter:enabled"/>
   <int value="684806628" label="TranslateLanguageByULP:disabled"/>
   <int value="685916283" label="enable-zip-archiver-on-file-manager"/>
-  <int value="687838135" label="ThirdPartyDoodles:disabled"/>
   <int value="689489984" label="disable-zero-suggest"/>
   <int value="690185633" label="NonValidatingReloadOnNormalReload:disabled"/>
   <int value="691020108" label="NTPCondensedTileLayout:disabled"/>
@@ -23828,7 +23748,6 @@ from previous Chrome versions.
   <int value="834326277" label="enable-answers-in-suggest"/>
   <int value="835018878" label="disable-quic"/>
   <int value="838887742" label="manual-enhanced-bookmarks"/>
-  <int value="841276069" label="ChromeHomeDoodle:disabled"/>
   <int value="841343322" label="disable-new-korean-ime"/>
   <int value="842432903" label="CaptureThumbnailOnNavigatingAway:enabled"/>
   <int value="846951416" label="CopylessPaste:enabled"/>
@@ -23906,7 +23825,6 @@ from previous Chrome versions.
   <int value="1081546525" label="ash-enable-docked-windows"/>
   <int value="1087235172" label="file-manager-enable-new-audio-player"/>
   <int value="1090377940" label="enable-quic-https"/>
-  <int value="1092896354" label="EnableFullscreenAppList:disabled"/>
   <int value="1094506652" label="UseGoogleLocalNtp:enabled"/>
   <int value="1095061640" label="enable-prominent-url-app-flow"/>
   <int value="1098823967" label="ash-enable-window-cycle-ui"/>
@@ -24099,7 +24017,6 @@ from previous Chrome versions.
   <int value="1646498561" label="OfflineBookmarks:disabled"/>
   <int value="1657713458" label="disable-virtual-keyboard-overscroll"/>
   <int value="1658644418" label="disable-app-list-voice-search"/>
-  <int value="1659082220" label="EnableManualSaving:disabled"/>
   <int value="1661925474" label="silent-debugger-extension-api"/>
   <int value="1664401033" label="ColorCorrectRendering:enabled"/>
   <int value="1665349789" label="spurious-power-button-window"/>
@@ -24127,7 +24044,6 @@ from previous Chrome versions.
   <int value="1730416578" label="NTPCondensedLayout:enabled"/>
   <int value="1731522433" label="enable-offer-store-unmasked-wallet-cards"/>
   <int value="1733390925" label="force-enable-stylus-tools"/>
-  <int value="1735934914" label="OverlayScrollbarFlashWhenMouseEnter:disabled"/>
   <int value="1747279677" label="disable-delegated-renderer"/>
   <int value="1752168018" label="enable-stale-while-revalidate"/>
   <int value="1762320532" label="AutofillKeyboardAccessory:enabled"/>
@@ -24211,7 +24127,6 @@ from previous Chrome versions.
   <int value="1969604362" label="enable-pinch-virtual-viewport"/>
   <int value="1980011075" label="debug-packed-apps"/>
   <int value="1980648371" label="PointerEventV1SpecCapturing:enabled"/>
-  <int value="1988506961" label="EnableManualSaving:enabled"/>
   <int value="1989051182" label="view-passwords:enabled"/>
   <int value="1989877708" label="PostScriptPrinting:enabled"/>
   <int value="1992466116" label="enable-passive-event-listeners-due-to-fling"/>
@@ -24452,42 +24367,6 @@ from previous Chrome versions.
   <int value="20" label="MacBookPro7,X"/>
   <int value="21" label="MacBookPro6,X"/>
   <int value="22" label="MacBookPro5,X"/>
-</enum>
-
-<enum name="MacOSBluetoothOperationsResult">
-  <int value="-2" label="Unknown error domain"/>
-  <int value="-1" label="No error"/>
-  <int value="0" label="CBATTErrorSuccess"/>
-  <int value="1" label="CBATTErrorInvalidHandle"/>
-  <int value="2" label="CBATTErrorReadNotPermitted"/>
-  <int value="3" label="CBATTErrorWriteNotPermitted"/>
-  <int value="4" label="CBATTErrorInvalidPdu"/>
-  <int value="5" label="CBATTErrorInsufficientAuthentication"/>
-  <int value="6" label="CBATTErrorRequestNotSupported"/>
-  <int value="7" label="CBATTErrorInvalidOffset"/>
-  <int value="8" label="CBATTErrorInsufficientAuthorization"/>
-  <int value="9" label="CBATTErrorPrepareQueueFull"/>
-  <int value="10" label="CBATTErrorAttributeNotFound"/>
-  <int value="11" label="CBATTErrorAttributeNotLong"/>
-  <int value="12" label="CBATTErrorInsufficientEncryptionKeySize"/>
-  <int value="13" label="CBATTErrorInvalidAttributeValueLength"/>
-  <int value="14" label="CBATTErrorUnlikelyError"/>
-  <int value="15" label="CBATTErrorInsufficientEncryption"/>
-  <int value="16" label="CBATTErrorUnsupportedGroupType"/>
-  <int value="17" label="CBATTErrorInsufficientResources"/>
-  <int value="999" label="Unknown CBATTError code"/>
-  <int value="1000" label="CBErrorUnknown"/>
-  <int value="1001" label="CBErrorInvalidParameters"/>
-  <int value="1002" label="CBErrorInvalidHandle"/>
-  <int value="1003" label="CBErrorNotConnected"/>
-  <int value="1004" label="CBErrorOutOfSpace"/>
-  <int value="1005" label="CBErrorOperationCancelled"/>
-  <int value="1006" label="CBErrorConnectionTimeout"/>
-  <int value="1007" label="CBErrorPeripheralDisconnected"/>
-  <int value="1008" label="CBErrorUUIDNotAllowed"/>
-  <int value="1009" label="CBErrorAlreadyAdvertising"/>
-  <int value="1010" label="CBErrorMaxConnection"/>
-  <int value="1999" label="Unknown CBError code"/>
 </enum>
 
 <enum name="MainFrameStorable">
@@ -25395,9 +25274,6 @@ from previous Chrome versions.
 </enum>
 
 <enum name="MediaDocumentDownloadButtonType">
-  <obsolete>
-    Deprecated 08/2017.
-  </obsolete>
   <int value="0" label="Shown"/>
   <int value="1" label="Clicked"/>
 </enum>
@@ -25811,9 +25687,6 @@ from previous Chrome versions.
 </enum>
 
 <enum name="MediaTypePredictionResult">
-  <obsolete>
-    Deprecated as of 08/2017.
-  </obsolete>
   <int value="0" label="All correct"/>
   <int value="1" label="All incorrect"/>
   <int value="2" label="Path-based was better"/>
@@ -25821,9 +25694,6 @@ from previous Chrome versions.
 </enum>
 
 <enum name="MediaUrlType">
-  <obsolete>
-    Deprecated as of 08/2017.
-  </obsolete>
   <int value="0" label="Non Http Live Stream Type"/>
   <int value="1" label="Http Live Stream Type"/>
 </enum>
@@ -27352,21 +27222,6 @@ from previous Chrome versions.
       label="Clicked on the Refresh button in the all dismissed state"/>
 </enum>
 
-<enum name="NewTabPageActioniOS">
-  <int value="0" label="Searched using the omnibox"/>
-  <int value="1" label="Navigated to Google search homepage using the omnibox"/>
-  <int value="2" label="Navigated to any other page using the omnibox"/>
-  <int value="3" label="Opened a most visited tile"/>
-  <int value="4" label="Opened a recent tab"/>
-  <int value="5" label="Opened a bookmark"/>
-  <int value="6" label="Opened a foreign session"/>
-  <int value="7" label="Opened the doodle"/>
-  <int value="8" label="Opened a Reading List entry"/>
-  <int value="9" label="Opened a suggestion"/>
-  <int value="10" label="Opened the Learn More link"/>
-  <int value="11" label="Opened the Promo"/>
-</enum>
-
 <enum name="NewTabPageBookmarkActionAndroid">
   <summary>
     These values are defined in PartnerBookmarkAction enum in
@@ -28038,92 +27893,6 @@ from previous Chrome versions.
   </int>
 </enum>
 
-<enum name="OfflinePrefetchArchiveActualSizeVsExpected">
-  <summary>
-    Percentage ranges for the ratios of actual downloaded size of a prefetched
-    offline page archive versus its expected size.
-  </summary>
-  <int value="0" label="archive_body_length = 0"/>
-  <int value="1" label="0% to 10%"/>
-  <int value="2" label="10% to 20%"/>
-  <int value="3" label="20% to 30%"/>
-  <int value="4" label="30% to 40%"/>
-  <int value="5" label="40% to 50%"/>
-  <int value="6" label="50% to 60%"/>
-  <int value="7" label="60% to 70%"/>
-  <int value="8" label="70% to 80%"/>
-  <int value="9" label="80% to 90%"/>
-  <int value="10" label="90% to 100%"/>
-  <int value="11" label="size matches (100%)"/>
-  <int value="12" label="100% to 110%"/>
-  <int value="13" label="110% to 120%"/>
-  <int value="14" label="120% to 130%"/>
-  <int value="15" label="130% to 140%"/>
-  <int value="16" label="140% to 150%"/>
-  <int value="17" label="150% to 160%"/>
-  <int value="18" label="160% to 170%"/>
-  <int value="19" label="170% to 180%"/>
-  <int value="20" label="180% to 190%"/>
-  <int value="21" label="190% to 200%"/>
-  <int value="22" label="above 200%"/>
-</enum>
-
-<enum name="OfflinePrefetchItemErrorCode">
-  <summary>
-    Error codes representing the reason why a prefetch item was finalized.
-  </summary>
-  <int value="0" label="SUCCESS">
-    The entry had gone through the pipeline and successfully completed
-    prefetching. Explicitly setting to 0 as that is the default value for the
-    respective SQLite column.
-  </int>
-  <int value="100" label="TOO_MANY_NEW_URLS">
-    Got too many URLs from suggestions, canceled this one. See kMaxUrlsToSend
-    defined in GeneratePageBundleTask.
-  </int>
-  <int value="200" label="DOWNLOAD_ERROR">
-    An error happened while attempting to download the archive file.
-  </int>
-  <int value="300" label="IMPORT_ERROR">
-    An error happened while importing the downloaded archive file int the
-    Offline Pages system.
-  </int>
-  <int value="400" label="ARCHIVING_FAILED">
-    Got a failure result from GetOperation (or the GeneratePageBundle metadata).
-  </int>
-  <int value="500" label="ARCHIVING_LIMIT_EXCEEDED">
-    Got a failure result from GetOperation or GeneratePageBundle that a
-    server-side limit on the page was exceeded.
-  </int>
-  <int value="600" label="STALE_AT_NEW_REQUEST">
-    Entry became stale while at the NEW_REQUEST state.
-  </int>
-  <int value="700" label="STALE_AT_AWAITING_GCM">
-    Entry became stale while at the AWAITING_GCM state.
-  </int>
-  <int value="800" label="STALE_AT_RECEIVED_GCM">
-    Entry became stale while at the RECEIVED_GCM state.
-  </int>
-  <int value="900" label="STALE_AT_RECEIVED_BUNDLE">
-    Entry became stale while at the RECEIVED_BUNDLE state.
-  </int>
-  <int value="1000" label="STALE_AT_DOWNLOADING">
-    Entry became stale while at the DOWNLOADING state.
-  </int>
-  <int value="1100" label="STALE_AT_UNKNOWN">
-    Entry became stale at an unknown state.
-  </int>
-  <int value="1200" label="GET_OPERATION_MAX_ATTEMPTS_REACHED">
-    Exceeding maximum retries for get operation request.
-  </int>
-  <int value="1300" label="GENERATE_PAGE_BUNDLE_REQUEST_MAX_ATTEMPTS_REACHED">
-    Exceeded maximum retries limit for generate page bundle request.
-  </int>
-  <int value="1400" label="DOWNLOAD_MAX_ATTEMPTS_REACHED">
-    Exceeded maximum retries for download.
-  </int>
-</enum>
-
 <enum name="OfflineStatus">
   <obsolete>
     Deprecated 4/2015.
@@ -28500,11 +28269,9 @@ from previous Chrome versions.
 </enum>
 
 <enum name="OsSuite">
-  <int value="0" label="Windows Home Edition (or unknown)"/>
-  <int value="1" label="Windows Professional/Ultimate Editions"/>
+  <int value="0" label="Windows Home Edition"/>
+  <int value="1" label="Windows Professional Edition (or better)"/>
   <int value="2" label="Windows Server Edition"/>
-  <int value="3" label="Windows Enterprise Edition"/>
-  <int value="4" label="Windows Education Edition"/>
 </enum>
 
 <enum name="OSXExceptionHandlerEvents">
@@ -29462,26 +29229,6 @@ from previous Chrome versions.
   <int value="0" label="Bubble lost focus / No infobar interaction"/>
   <int value="1" label="Clicked collect URL"/>
   <int value="2" label="Clicked do not collect URL"/>
-</enum>
-
-<enum name="PasswordManagerAndroidPasswordActions">
-  <int value="0" label="Copied"/>
-  <int value="1" label="Displayed"/>
-  <int value="2" label="Hidden"/>
-</enum>
-
-<enum name="PasswordManagerAndroidPasswordEntryActions">
-  <int value="0" label="Viewed"/>
-  <int value="1" label="Deleted"/>
-  <int value="2" label="Cancelled"/>
-</enum>
-
-<enum name="PasswordManagerAndroidUsernameActions">
-  <int value="0" label="Copied"/>
-</enum>
-
-<enum name="PasswordManagerAndroidWebsiteActions">
-  <int value="0" label="Copied"/>
 </enum>
 
 <enum name="PasswordManagerEmptyUsernameField">
@@ -31469,13 +31216,6 @@ from previous Chrome versions.
   <int value="28" label="GAIA"/>
 </enum>
 
-<enum name="ProfileAvatarLoadStatus">
-  <int value="0" label="Loaded"/>
-  <int value="1" label="Loading"/>
-  <int value="2" label="Missing"/>
-  <int value="3" label="Profile deleted"/>
-</enum>
-
 <enum name="ProfileCreateResult">
   <int value="0" label="Failed locally"/>
   <int value="1" label="Failed remotely"/>
@@ -33363,9 +33103,6 @@ from previous Chrome versions.
   <int value="4" label="Social Engineering Ads URL"/>
   <int value="5" label="Social Engineering Landing URL"/>
   <int value="6" label="Phishing URL"/>
-  <int value="7" label="Better Ads Standard violating URL"/>
-  <int value="8" label="Abusive Ads violating URL"/>
-  <int value="9" label="Both BAS/Abusive violating URL"/>
 </enum>
 
 <enum name="SB2SideEffectFreeWhitelistStatus">
@@ -34787,12 +34524,6 @@ from previous Chrome versions.
   <int value="19" label="SCHEME_FILESYSTEM"/>
 </enum>
 
-<enum name="ShowAllSavedPasswordsContext">
-  <int value="0" label="No Context"/>
-  <int value="1" label="Password Suggestions"/>
-  <int value="2" label="Manual Fallback"/>
-</enum>
-
 <enum name="ShutdownReason">
   <summary>
     The reason that the Chrome OS power manager shut down or rebooted the
@@ -34878,21 +34609,6 @@ from previous Chrome versions.
   <int value="0" label="Cancel"/>
   <int value="1" label="Continue"/>
   <int value="2" label="New Profile"/>
-</enum>
-
-<enum name="SigninDiceResponseHeader">
-  <int value="0" label="Signin"/>
-  <int value="1" label="SignoutPrimary">
-    Signout including the primary account.
-  </int>
-  <int value="2" label="SignoutSecondary">Signout only secondary accounts.</int>
-</enum>
-
-<enum name="SigninDiceTokenFetchResult">
-  <int value="0" label="Success"/>
-  <int value="1" label="Abort"/>
-  <int value="2" label="Failure">Failed with Gaia error.</int>
-  <int value="3" label="Timeout"/>
 </enum>
 
 <enum name="SigninFlowConfirmations">
@@ -36580,12 +36296,9 @@ from previous Chrome versions.
   <int value="7" label="Content setting: blocked (global)"/>
   <int value="8" label="Content setting: allowed (global)"/>
   <int value="9" label="Content setting: wildcard update (Deprecated)"/>
-  <int value="10" label="UI suppressed (Smart Logic)"/>
+  <int value="10" label="UI Suppressed (Smart Logic)"/>
   <int value="11" label="Content setting: allowed while UI suppressed"/>
   <int value="12" label="Forced filtering toggled on via devtools"/>
-  <int value="13"
-      label="UI suppressed and resources blocked (Forced Activation)"/>
-  <int value="14" label="Blocked popup (Strong Popup Blocker)"/>
 </enum>
 
 <enum name="SubresourceFilterActivationDecision">
@@ -37341,7 +37054,6 @@ would be helpful to identify which type is being sent.
   <int value="8" label="Sync"/>
   <int value="9" label="WebApk"/>
   <int value="10" label="Browser Actions"/>
-  <int value="11" label="Webapp Actions"/>
 </enum>
 
 <enum name="TabBackgroundLoadStatus">
@@ -37713,11 +37425,6 @@ would be helpful to identify which type is being sent.
 <enum name="TouchGestureEventFiltered">
   <int value="0" label="Touch gesture event not filtered"/>
   <int value="1" label="Touch gesture event filtered"/>
-</enum>
-
-<enum name="TouchHandleVerticallyFlipped">
-  <int value="0" label="Should not flip"/>
-  <int value="1" label="Should flip"/>
 </enum>
 
 <enum name="TouchpadDeviceState">
@@ -39452,9 +39159,6 @@ would be helpful to identify which type is being sent.
   <int value="3" label="Media permission was suppressed in VR"/>
   <int value="4" label="Permission request was suppressed in VR"/>
   <int value="5" label="Quota permission was suppressed in VR"/>
-  <int value="6" label="HTTP authentication dialog was suppressed in VR"/>
-  <int value="7" label="Download permission was suppressed in VR"/>
-  <int value="8" label="File access permission was suppressed in VR"/>
 </enum>
 
 <enum name="VRUnsupportedMode">
@@ -39646,9 +39350,6 @@ would be helpful to identify which type is being sent.
 </enum>
 
 <enum name="WebApkInstallInfoBarShown">
-  <obsolete>
-    Deprecated as of 8/2017
-  </obsolete>
   <int value="0" label="WebApk infobar shown from the app banner"/>
   <int value="1" label="WebApk infobar shown from the add to homescreen menu"/>
 </enum>
@@ -39677,9 +39378,6 @@ would be helpful to identify which type is being sent.
 </enum>
 
 <enum name="WebApkUserAction">
-  <obsolete>
-    Deprecated as of 8/2017.
-  </obsolete>
   <int value="0" label="Open a previously installed WebAPK"/>
   <int value="1" label="Dismiss to open a previously installed WebAPK"/>
   <int value="2" label="Open a newly installed WebAPK"/>

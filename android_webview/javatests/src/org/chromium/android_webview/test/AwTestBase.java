@@ -61,7 +61,6 @@ public class AwTestBase extends BaseActivityInstrumentationTestCase<AwTestRunner
 
     @Override
     protected void setUp() throws Exception {
-        super.setUp();
         mTestCommon.setUp();
     }
 

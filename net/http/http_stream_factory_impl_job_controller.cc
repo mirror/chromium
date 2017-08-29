@@ -182,6 +182,10 @@ void HttpStreamFactoryImpl::JobController::OnRequestComplete() {
   if (bound_job_) {
     if (bound_job_->job_type() == MAIN) {
       main_job_.reset();
+      // |alternative_job_| can be non-null if |main_job_| is resumed after
+      // |main_job_wait_time_| has elapsed. Allow |alternative_job_| to run to
+      // completion, rather than resetting it. OnOrphanedJobComplete() will
+      // clean up |this| when the job completes.
     } else {
       DCHECK(bound_job_->job_type() == ALTERNATIVE);
       alternative_job_.reset();
@@ -921,23 +925,45 @@ void HttpStreamFactoryImpl::JobController::OrphanUnboundJob() {
 
   if (bound_job_->job_type() == MAIN && alternative_job_) {
     DCHECK(!for_websockets());
-    // Allow |alternative_job_| to run to completion, rather than resetting it
-    // to check if there is any broken alternative service to report.
-    // OnOrphanedJobComplete() will clean up |this| when the job completes.
     alternative_job_->Orphan();
     return;
   }
 
   if (bound_job_->job_type() == ALTERNATIVE && main_job_) {
-    // |request_| is bound to the alternative job. This means that the main job
-    // is no longer needed, so cancel it now. Pending ConnectJobs will return
-    // established sockets to socket pools if applicable. crbug.com/757548.
-    main_job_.reset();
+    // Orphan main job.
+    // If ResumeMainJob() is not executed, reset |main_job_|. Otherwise,
+    // OnOrphanedJobComplete() will clean up |this| when the job completes.
+    // Use |main_job_is_blocked_| and |!main_job_wait_time_.is_zero()| instead
+    // of |main_job_|->is_waiting() because |main_job_| can be in proxy
+    // resolution step.
+    if (main_job_is_blocked_ || !main_job_wait_time_.is_zero()) {
+      DCHECK(alternative_job_);
+      main_job_.reset();
+    } else {
+      DCHECK(!for_websockets());
+      main_job_->Orphan();
+    }
   }
 }
 
 void HttpStreamFactoryImpl::JobController::OnJobSucceeded(Job* job) {
-  DCHECK(job);
+  // |job| should only be nullptr if we're being serviced by a late bound
+  // SpdySession (one that was not created by a job in our |jobs_| set).
+  if (!job) {
+    // TODO(xunjieli): This seems to be dead code. Remove it. crbug.com/475060.
+    CHECK(false);
+    DCHECK(!bound_job_);
+    // NOTE(willchan): We do *NOT* call OrphanUnboundJob() here. The reason is
+    // because we *WANT* to cancel the unnecessary Jobs from other requests if
+    // another Job completes first.
+    // TODO(mbelshe): Revisit this when we implement ip connection pooling of
+    // SpdySessions. Do we want to orphan the jobs for a different hostname so
+    // they complete? Or do we want to prevent connecting a new SpdySession if
+    // we've already got one available for a different hostname where the ip
+    // address matches up?
+    CancelJobs();
+    return;
+  }
 
   if (job->job_type() == MAIN && alternative_job_net_error_ != OK)
     ReportBrokenAlternativeService();

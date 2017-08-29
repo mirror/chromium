@@ -8,11 +8,6 @@
 
 namespace blink {
 
-UniqueObjectId NewUniqueObjectId() {
-  static UniqueObjectId counter = 0;
-  return ++counter;
-}
-
 static CompositorElementId CreateCompositorElementId(
     uint64_t blink_id,
     CompositorElementIdNamespace namespace_id) {
@@ -28,8 +23,8 @@ static CompositorElementId CreateCompositorElementId(
   return CompositorElementId(id);
 }
 
-CompositorElementId PLATFORM_EXPORT CompositorElementIdFromUniqueObjectId(
-    UniqueObjectId id,
+CompositorElementId PLATFORM_EXPORT CompositorElementIdFromLayoutObjectId(
+    LayoutObjectId id,
     CompositorElementIdNamespace namespace_id) {
   DCHECK(namespace_id == CompositorElementIdNamespace::kPrimary ||
          namespace_id == CompositorElementIdNamespace::kScroll ||
@@ -39,15 +34,31 @@ CompositorElementId PLATFORM_EXPORT CompositorElementIdFromUniqueObjectId(
 }
 
 CompositorElementId PLATFORM_EXPORT
-CompositorElementIdFromDOMNodeId(DOMNodeId id) {
-  return CreateCompositorElementId(
-      id, CompositorElementIdNamespace::kUniqueObjectId);
+CompositorElementIdFromDOMNodeId(DOMNodeId id,
+                                 CompositorElementIdNamespace namespace_id) {
+  DCHECK(namespace_id == CompositorElementIdNamespace::kViewport ||
+         namespace_id == CompositorElementIdNamespace::kLinkHighlight ||
+         namespace_id == CompositorElementIdNamespace::kRootScroll ||
+         namespace_id == CompositorElementIdNamespace::kScrollState);
+  return CreateCompositorElementId(id, namespace_id);
 }
 
 CompositorElementId PLATFORM_EXPORT
-CompositorElementIdFromUniqueObjectId(UniqueObjectId id) {
+CompositorElementIdFromScrollbarId(ScrollbarId id,
+                                   CompositorElementIdNamespace namespace_id) {
+  DCHECK(namespace_id == CompositorElementIdNamespace::kScrollbar);
+  return CreateCompositorElementId(id, namespace_id);
+}
+
+CompositorElementId CompositorElementIdFromRootEffectId(uint64_t id) {
+  return CreateCompositorElementId(id,
+                                   CompositorElementIdNamespace::kEffectRoot);
+}
+
+CompositorElementId CompositorElementIdFromSyntheticEffectId(
+    SyntheticEffectId id) {
   return CreateCompositorElementId(
-      id, CompositorElementIdNamespace::kUniqueObjectId);
+      id, CompositorElementIdNamespace::kSyntheticEffect);
 }
 
 CompositorElementIdNamespace NamespaceFromCompositorElementId(

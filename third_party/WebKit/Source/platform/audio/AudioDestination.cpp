@@ -58,12 +58,12 @@ namespace blink {
 // value and not a buffer size in the latencyHint. See: crbug.com/737047
 const size_t kFIFOSize = 8192;
 
-RefPtr<AudioDestination> AudioDestination::Create(
+std::unique_ptr<AudioDestination> AudioDestination::Create(
     AudioIOCallback& callback,
     unsigned number_of_output_channels,
     const WebAudioLatencyHint& latency_hint,
     RefPtr<SecurityOrigin> security_origin) {
-  return AdoptRef(
+  return WTF::WrapUnique(
       new AudioDestination(callback, number_of_output_channels, latency_hint,
                            std::move(security_origin)));
 }
@@ -110,8 +110,8 @@ void AudioDestination::Render(const WebVector<float*>& destination_data,
   TRACE_EVENT1("webaudio", "AudioDestination::Render",
                "callback_buffer_size", number_of_frames);
 
-  DCHECK(
-      !(worklet_backing_thread_ && worklet_backing_thread_->IsCurrentThread()));
+  // This method is called by AudioDeviceThread.
+  DCHECK(!IsRenderingThread());
 
   CHECK_EQ(destination_data.size(), number_of_output_channels_);
   CHECK_EQ(number_of_frames, callback_buffer_size_);
@@ -129,32 +129,27 @@ void AudioDestination::Render(const WebVector<float*>& destination_data,
 
   size_t frames_to_render = fifo_->Pull(output_bus_.Get(), number_of_frames);
 
-  // Use the dual-thread rendering model if the thread from AudioWorkletThread
-  // is available.
-  if (worklet_backing_thread_) {
-    worklet_backing_thread_->GetWebTaskRunner()->PostTask(
+  // TODO(hongchan): this check might be redundant, so consider removing later.
+  if (frames_to_render != 0 && GetRenderingThread()) {
+    GetRenderingThread()->GetWebTaskRunner()->PostTask(
         BLINK_FROM_HERE,
-        CrossThreadBind(&AudioDestination::RequestRender,
-                        WrapPassRefPtr(this), number_of_frames,
+        CrossThreadBind(&AudioDestination::RequestRenderOnWebThread,
+                        CrossThreadUnretained(this), number_of_frames,
                         frames_to_render, delay, delay_timestamp,
                         prior_frames_skipped));
-  } else {
-    // Otherwise use the single-thread rendering with AudioDeviceThread.
-    RequestRender(number_of_frames, frames_to_render, delay,
-                  delay_timestamp, prior_frames_skipped);
   }
 }
 
-void AudioDestination::RequestRender(size_t frames_requested,
-                                     size_t frames_to_render,
-                                     double delay,
-                                     double delay_timestamp,
-                                     size_t prior_frames_skipped) {
-  TRACE_EVENT1("webaudio", "AudioDestination::RequestRender",
+void AudioDestination::RequestRenderOnWebThread(size_t frames_requested,
+                                                size_t frames_to_render,
+                                                double delay,
+                                                double delay_timestamp,
+                                                size_t prior_frames_skipped) {
+  TRACE_EVENT1("webaudio", "AudioDestination::RequestRenderOnWebThread",
                "frames_to_render", frames_to_render);
 
-  DCHECK(
-      !worklet_backing_thread_ || worklet_backing_thread_->IsCurrentThread());
+  // This method is called by WebThread.
+  DCHECK(IsRenderingThread());
 
   frames_elapsed_ -= std::min(frames_elapsed_, prior_frames_skipped);
   AudioIOPosition output_position;
@@ -195,6 +190,8 @@ void AudioDestination::Start() {
   // Start the "audio device" after the rendering thread is ready.
   if (web_audio_device_ && !is_playing_) {
     TRACE_EVENT0("webaudio", "AudioDestination::Start");
+    rendering_thread_ =
+        Platform::Current()->CreateThread("WebAudio Rendering Thread");
     web_audio_device_->Start();
     is_playing_ = true;
   }
@@ -221,7 +218,7 @@ void AudioDestination::Stop() {
   if (web_audio_device_ && is_playing_) {
     TRACE_EVENT0("webaudio", "AudioDestination::Stop");
     web_audio_device_->Stop();
-    worklet_backing_thread_ = nullptr;
+    ClearRenderingThread();
     is_playing_ = false;
   }
 }
@@ -275,4 +272,24 @@ bool AudioDestination::CheckBufferSize() {
   DCHECK(is_buffer_size_valid);
   return is_buffer_size_valid;
 }
+
+bool AudioDestination::IsRenderingThread() {
+  return GetRenderingThread()->IsCurrentThread();
+}
+
+WebThread* AudioDestination::GetRenderingThread() {
+  if (RuntimeEnabledFeatures::AudioWorkletEnabled()) {
+    DCHECK(!rendering_thread_ && worklet_backing_thread_);
+    return worklet_backing_thread_;
+  }
+
+  DCHECK(rendering_thread_ && !worklet_backing_thread_);
+  return rendering_thread_.get();
+}
+
+void AudioDestination::ClearRenderingThread() {
+  rendering_thread_.reset();
+  worklet_backing_thread_ = nullptr;
+}
+
 }  // namespace blink

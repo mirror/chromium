@@ -23,6 +23,7 @@ Para obtener información sobre la privacidad, consulta la Política de Privacid
 <translation id="1520828917794284345">Ajustar el tamaño del escritorio</translation>
 <translation id="154040539590487450">No se ha podido iniciar el servicio de acceso remoto.</translation>
 <translation id="1546934824884762070">Se ha producido un error inesperado. Comunícaselo a los desarrolladores.</translation>
+<translation id="1619813076098775562">Se ha cerrado la conexión al dispositivo de transmisión.</translation>
 <translation id="1643640058022401035">Si abandonas esta página, finalizará tu sesión en Chromoting.</translation>
 <translation id="1654128982815600832">Habilitando conexiones remotas con este ordenador...</translation>
 <translation id="170207782578677537">No se ha podido registrar este ordenador.</translation>
@@ -40,6 +41,10 @@ Para obtener información sobre la privacidad, consulta la Política de Privacid
 <translation id="2013996867038862849">Se han eliminado todos los clientes sincronizados.</translation>
 <translation id="2038229918502634450">El host se está reiniciando para reflejar un cambio en una política.</translation>
 <translation id="2046651113449445291">Los siguientes clientes se han sincronizado con este ordenador y se pueden conectar sin un PIN. Puedes revocar este permiso en cualquier momento ya sea de forma individual o para todos los clientes.</translation>
+<translation id="2053901200959289492">• Se ha añadido compatibilidad con el modo multiventana en Android Nougat.
+• Se han mejorado el consumo de batería, la capacidad de respuesta y la calidad de imagen del escritorio.
+• Se ha mejorado la capacidad de respuesta de las operaciones de hacer clic y arrastrar.
+• Se han mejorado varios efectos de animación de la IU.</translation>
 <translation id="2078880767960296260">Proceso de host</translation>
 <translation id="20876857123010370">Modo de trackpad</translation>
 <translation id="2089514346391228378">Se han habilitado las conexiones remotas con este ordenador.</translation>
@@ -75,7 +80,6 @@ Para obtener información sobre la privacidad, consulta la Política de Privacid
 <translation id="2676780859508944670">Trabajando…</translation>
 <translation id="2699970397166997657">Chromoting</translation>
 <translation id="2747641796667576127">Las actualizaciones de software suelen realizarse automáticamente, pero pueden fallar en casos excepcionales. La actualización del software no debe durar más de unos minutos y se puede realizar mientras estás conectado a tu ordenador de forma remota.</translation>
-<translation id="2758123043070977469">No se ha podido completar la autenticación. Vuelve a iniciar sesión.</translation>
 <translation id="2803375539583399270">Introducir PIN</translation>
 <translation id="2841013758207633010">Hora</translation>
 <translation id="2851754573186462851">Flujo de aplicaciones de Chromium</translation>
@@ -171,6 +175,12 @@ Para obtener información sobre la privacidad, consulta la Política de Privacid
 <translation id="5156271271724754543">Debes introducir el mismo PIN en los dos cuadros.</translation>
 <translation id="5170982930780719864">Identificador del host no válido</translation>
 <translation id="518094545883702183">Esta información solo se utiliza para diagnosticar el problema del que has informado, solo está disponible para la persona que examine tu informe y se conserva durante un periodo de hasta 30 días.</translation>
+<translation id="5196958630269420102">Accede a tus ordenadores de forma segura desde tu dispositivo iOS.
+
+• En cada uno de tus ordenadores, configura el acceso remoto con la aplicación Escritorio Remoto de Chrome de Chrome Web Store: https://chrome.google.com/remotedesktop
+• En tu dispositivo iOS, abre la aplicación y toca cualquiera de tus ordenadores online para establecer la conexión.
+
+Para obtener información sobre privacidad, consulta la política de privacidad de Google (http://goo.gl/SyrVzj) y la política de privacidad de Chrome (http://goo.gl/0uXE5d).</translation>
 <translation id="5204575267916639804">Preguntas frecuentes</translation>
 <translation id="5222676887888702881">Cerrar sesión</translation>
 <translation id="5254120496627797685">Si abandonas esta página, finalizará tu sesión en Escritorio Remoto de Chrome.</translation>
@@ -183,6 +193,7 @@ Para obtener información sobre la privacidad, consulta la Política de Privacid
 <translation id="5419418238395129586">Última conexión: <ph name="DATE" /></translation>
 <translation id="544077782045763683">El host se ha desconectado.</translation>
 <translation id="5510035215749041527">Desconectar ahora</translation>
+<translation id="5537725057119320332">Enviar</translation>
 <translation id="5593560073513909978">El servicio no está disponible temporalmente. Vuelve a intentarlo más tarde.</translation>
 <translation id="5601503069213153581">PIN</translation>
 <translation id="5619148062500147964">Conexiones con este ordenador</translation>
@@ -191,10 +202,10 @@ Para obtener información sobre la privacidad, consulta la Política de Privacid
 <translation id="5708869785009007625">Tu ordenador está compartido actualmente con <ph name="USER" />.</translation>
 <translation id="5773590752998175013">Fecha de sincronización</translation>
 <translation id="579702532610384533">Reconectar</translation>
-<translation id="5810269635982033450">La pantalla hace de trackpad</translation>
 <translation id="5841343754884244200">Opciones de visualización</translation>
 <translation id="5843054235973879827">¿Por qué es segura esta operación?</translation>
 <translation id="5859141382851488196">Nueva ventana…</translation>
+<translation id="5885438903806970186">Online.</translation>
 <translation id="6011539954251327702">Chromoting permite compartir de forma segura tu ordenador a través de Internet. Ambos usuarios deben estar ejecutando la aplicación Chromoting, que está disponible en la página <ph name="URL" />.</translation>
 <translation id="6033507038939587647">Opciones del teclado</translation>
 <translation id="6040143037577758943">Cerrar</translation>
@@ -224,6 +235,11 @@ Para obtener información sobre la privacidad, consulta la Política de Privacid
 <translation id="6570205395680337606">Restablecer la aplicación. Se perderá cualquier trabajo que no hayas guardado.</translation>
 <translation id="6572345186230665992">Para Mac (OS X Mavericks 10.9 y versiones superiores)</translation>
 <translation id="6583902294974160967">Ayuda</translation>
+<translation id="6598484667010442494">Escritorio Remoto de Chrome
+Escritorio remoto
+PC remoto
+Ordenador remoto
+Acceso remoto</translation>
 <translation id="6612717000975622067">Enviar Ctrl-Alt-Supr</translation>
 <translation id="6668065415969892472">Se ha actualizado el PIN.</translation>
 <translation id="6681800064886881394">Copyright 2013 Google Inc. Todos los derechos reservados.</translation>
@@ -243,7 +259,7 @@ Para obtener información sobre la privacidad, consulta la Política de Privacid
 <translation id="7019153418965365059">Error de host no reconocido: <ph name="HOST_OFFLINE_REASON" />.</translation>
 <translation id="701976023053394610">Asistencia remota</translation>
 <translation id="7038683108611689168">Ayúdanos a mejorar la aplicación Chromoting autorizando la recopilación de estadísticas de uso e informes sobre fallos.</translation>
-<translation id="7067321367069083429">La pantalla hace de pantalla táctil</translation>
+<translation id="712467900648340229">Error al establecer conexión con el dispositivo de transmisión.</translation>
 <translation id="7144878232160441200">Volver a intentar</translation>
 <translation id="7149517134817561223">Aplicación para enviar comandos al host del Escritorio Remoto de Chrome.</translation>
 <translation id="7215059001581613786">Introduce un PIN que tenga como mínimo seis dígitos.</translation>

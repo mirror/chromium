@@ -319,9 +319,7 @@ cr.define('settings_people_page_change_picture', function() {
         MockInteractions.tap(discardButton);
 
         Polymer.dom.flush();
-        var profileImage = crPictureList.$.profileImage;
-        assertTrue(!!profileImage);
-        expectEquals(profileImage, changePicture.selectedItem_);
+        expectEquals(firstDefaultImage, changePicture.selectedItem_);
       });
     });
   });

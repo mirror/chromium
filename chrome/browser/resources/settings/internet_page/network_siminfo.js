@@ -78,7 +78,7 @@ Polymer({
     var simLockStatus = this.networkProperties.Cellular.SIMLockStatus;
     this.pukRequired_ =
         !!simLockStatus && simLockStatus.LockType == CrOnc.LockType.PUK;
-    this.lockEnabled_ = !!simLockStatus && simLockStatus.LockEnabled;
+    this.lockEnabled_ = simLockStatus.LockEnabled;
   },
 
   /** @private */
@@ -164,7 +164,7 @@ Polymer({
   onChangePinTap_: function(event) {
     if (!this.networkProperties || !this.networkProperties.Cellular)
       return;
-    event.stopPropagation();
+    event.preventDefault();
     this.error_ = ErrorType.NONE;
     this.$.changePinOld.value = '';
     this.$.changePinNew1.value = '';
@@ -200,17 +200,15 @@ Polymer({
   },
 
   /**
-   * Opens the Unlock PIN / PUK dialog.
+   * Opens the Unlock PIN dialog.
    * @param {!Event} event
    * @private
    */
   onUnlockPinTap_: function(event) {
-    event.stopPropagation();
-    if (this.pukRequired_) {
-      this.showUnlockPukDialog_();
-    } else {
-      this.showUnlockPinDialog_();
-    }
+    event.preventDefault();
+    this.error_ = ErrorType.NONE;
+    this.$.unlockPin.value = '';
+    this.$.unlockPinDialog.showModal();
   },
 
   /**
@@ -233,13 +231,6 @@ Polymer({
         this.$.unlockPinDialog.close();
       }
     });
-  },
-
-  /** @private */
-  showUnlockPinDialog_: function() {
-    this.error_ = ErrorType.NONE;
-    this.$.unlockPin.value = '';
-    this.$.unlockPinDialog.showModal();
   },
 
   /** @private */

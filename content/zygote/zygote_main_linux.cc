@@ -477,11 +477,9 @@ static void EnterLayerOneSandbox(LinuxSandbox* linux_sandbox,
 
   ZygotePreSandboxInit();
 
-// Check that the pre-sandbox initialization didn't spawn threads.
-// It's not just our code which may do so - some system-installed libraries
-// are known to be culprits, e.g. lttng.
+  // Check that the pre-sandbox initialization didn't spawn threads.
 #if !defined(THREAD_SANITIZER)
-  CHECK(sandbox::ThreadHelpers::IsSingleThreaded());
+  DCHECK(sandbox::ThreadHelpers::IsSingleThreaded());
 #endif
 
   sandbox::SetuidSandboxClient* setuid_sandbox =

@@ -24,21 +24,14 @@ class MediaEngagementScore final {
   // store the number of visits to an origin and kMediaPlaybacksKey
   // will store the number of media playbacks on an origin.
   // kLastMediaPlaybackTimeKey will store the timestamp of the last
-  // media playback on an origin. kHasHighScoreKey will store whether
-  // the score is considered high.
+  // media playback on an origin.
   static const char kVisitsKey[];
   static const char kMediaPlaybacksKey[];
   static const char kLastMediaPlaybackTimeKey[];
-  static const char kHasHighScoreKey[];
 
   // Origins with a number of visits less than this number will recieve
   // a score of zero.
   static const int kScoreMinVisits;
-
-  // The upper and lower threshold of whether the total score is considered
-  // to be high.
-  static constexpr double kHighScoreLowerThreshold = 0.5;
-  static constexpr double kHighScoreUpperThreshold = 0.7;
 
   MediaEngagementScore(base::Clock* clock,
                        const GURL& origin,
@@ -49,10 +42,7 @@ class MediaEngagementScore final {
   MediaEngagementScore& operator=(MediaEngagementScore&&);
 
   // Returns the total score, as per the formula.
-  double actual_score() const { return actual_score_; };
-
-  // Returns whether the total score is considered high.
-  bool high_score() const { return is_high_; };
+  double GetTotalScore() const;
 
   // Writes the values in this score into |settings_map_|. If there are multiple
   // instances of a score object for an origin, this could result in stale data
@@ -61,7 +51,7 @@ class MediaEngagementScore final {
 
   // Get/increment the number of visits this origin has had.
   int visits() const { return visits_; }
-  void IncrementVisits() { SetVisits(visits() + 1); }
+  void IncrementVisits() { visits_++; }
 
   // Get/increment the number of media playbacks this origin has had.
   int media_playbacks() const { return media_playbacks_; }
@@ -72,16 +62,13 @@ class MediaEngagementScore final {
     return last_media_playback_time_;
   }
 
+  void SetVisits(int visits) { visits_ = visits; }
+  void SetMediaPlaybacks(int media_playbacks) {
+    media_playbacks_ = media_playbacks;
+  }
+
   // Get a breakdown of the score that can be serialized by Mojo.
   media::mojom::MediaEngagementScoreDetailsPtr GetScoreDetails() const;
-
- protected:
-  friend class MediaEngagementAutoplayBrowserTest;
-  friend class MediaEngagementContentsObserverTest;
-  friend class MediaEngagementService;
-
-  void SetVisits(int visits);
-  void SetMediaPlaybacks(int media_playbacks);
 
  private:
   friend class MediaEngagementServiceTest;
@@ -97,21 +84,11 @@ class MediaEngagementScore final {
   // settings).
   bool UpdateScoreDict();
 
-  // If the number of playbacks or visits is updated then this will recalculate
-  // the total score and whether the score is considered high.
-  void Recalculate();
-
   // The number of media playbacks this origin has had.
   int media_playbacks_ = 0;
 
   // The number of visits this origin has had.
   int visits_ = 0;
-
-  // If the current score is considered high.
-  bool is_high_ = false;
-
-  // The current engagement score.
-  double actual_score_ = 0.0;
 
   // The last time media was played back on this origin.
   base::Time last_media_playback_time_;
@@ -127,7 +104,7 @@ class MediaEngagementScore final {
 
   // The content settings map that will persist the score,
   // has a lifetime of the Profile like the service which owns |this|.
-  HostContentSettingsMap* settings_map_ = nullptr;
+  HostContentSettingsMap* settings_map_;
 
   DISALLOW_COPY_AND_ASSIGN(MediaEngagementScore);
 };

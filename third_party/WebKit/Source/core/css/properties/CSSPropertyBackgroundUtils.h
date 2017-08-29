@@ -15,7 +15,6 @@ class CSSParserTokenRange;
 class CSSValue;
 
 enum class ParsingStyle { kLegacy, kNotLegacy };
-enum class AllowTextValue { kAllowed, kNotAllowed };
 
 class CSSPropertyBackgroundUtils {
   STATIC_ONLY(CSSPropertyBackgroundUtils);
@@ -39,16 +38,6 @@ class CSSPropertyBackgroundUtils {
                                         CSSPropertyParserHelpers::UnitlessQuirk,
                                         CSSValue*& result_x,
                                         CSSValue*& result_y);
-  static CSSValue* ConsumePrefixedBackgroundBox(CSSParserTokenRange&,
-                                                AllowTextValue);
-  static bool ConsumeRepeatStyleComponent(CSSParserTokenRange&,
-                                          CSSValue*& value1,
-                                          CSSValue*& value2,
-                                          bool& implicit);
-  static bool ConsumeRepeatStyle(CSSParserTokenRange&,
-                                 CSSValue*& result_x,
-                                 CSSValue*& result_y,
-                                 bool& implicit);
 };
 
 }  // namespace blink

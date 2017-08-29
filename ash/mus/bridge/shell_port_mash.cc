@@ -171,10 +171,10 @@ void ShellPortMash::SetGlobalOverrideCursor(
 }
 
 bool ShellPortMash::IsMouseEventsEnabled() {
-  if (GetAshConfig() == Config::MASH)
-    return cursor_touch_visible_;
+  if (GetAshConfig() == Config::MUS)
+    return Shell::Get()->cursor_manager()->IsMouseEventsEnabled();
 
-  return Shell::Get()->cursor_manager()->IsMouseEventsEnabled();
+  return cursor_touch_visible_;
 }
 
 void ShellPortMash::SetCursorTouchVisible(bool enabled) {
@@ -183,8 +183,8 @@ void ShellPortMash::SetCursorTouchVisible(bool enabled) {
 }
 
 void ShellPortMash::OnCursorTouchVisibleChanged(bool enabled) {
-  if (GetAshConfig() == Config::MASH)
-    cursor_touch_visible_ = enabled;
+  DCHECK_EQ(GetAshConfig(), Config::MASH);
+  cursor_touch_visible_ = enabled;
 }
 
 std::unique_ptr<WindowResizer> ShellPortMash::CreateDragWindowResizer(

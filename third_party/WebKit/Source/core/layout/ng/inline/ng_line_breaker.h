@@ -11,14 +11,16 @@
 #include "core/layout/ng/ng_layout_opportunity_iterator.h"
 #include "platform/fonts/shaping/HarfBuzzShaper.h"
 #include "platform/fonts/shaping/ShapeResultSpacing.h"
+#include "platform/heap/Handle.h"
 #include "platform/text/TextBreakIterator.h"
 #include "platform/wtf/Allocator.h"
+#include "platform/wtf/text/AtomicString.h"
 
 namespace blink {
 
-class Hyphenation;
 class NGInlineBreakToken;
 class NGInlineItem;
+class NGInlineNode;
 class NGFragmentBuilder;
 
 // Represents a line breaker.
@@ -26,26 +28,21 @@ class NGFragmentBuilder;
 // This class measures each NGInlineItem and determines items to form a line,
 // so that NGInlineLayoutAlgorithm can build a line box from the output.
 class CORE_EXPORT NGLineBreaker {
-  STACK_ALLOCATED();
-
  public:
   NGLineBreaker(NGInlineNode,
-                const NGConstraintSpace&,
+                NGConstraintSpace*,
                 NGFragmentBuilder*,
                 Vector<RefPtr<NGUnpositionedFloat>>*,
                 const NGInlineBreakToken* = nullptr);
   ~NGLineBreaker() {}
+  STACK_ALLOCATED();
 
   // Compute the next line break point and produces NGInlineItemResults for
   // the line.
-  bool NextLine(const NGLogicalOffset& content_offset,
-                const NGExclusionSpace&,
-                NGLineInfo*);
+  bool NextLine(NGLineInfo*, const NGLogicalOffset&);
 
   // Create an NGInlineBreakToken for the last line returned by NextLine().
   RefPtr<NGInlineBreakToken> CreateBreakToken() const;
-
-  NGExclusionSpace* ExclusionSpace() { return line_.exclusion_space.get(); }
 
  private:
   // This struct holds information for the current line.
@@ -58,8 +55,6 @@ class CORE_EXPORT NGLineBreaker {
 
     // The current opportunity.
     WTF::Optional<NGLayoutOpportunity> opportunity;
-
-    std::unique_ptr<NGExclusionSpace> exclusion_space;
 
     // We don't create "certain zero-height line boxes".
     // https://drafts.csswg.org/css2/visuren.html#phantom-line-box
@@ -82,7 +77,7 @@ class CORE_EXPORT NGLineBreaker {
 
   void BreakLine(NGLineInfo*);
 
-  void PrepareNextLine(const NGExclusionSpace&, NGLineInfo*);
+  void PrepareNextLine(NGLineInfo*);
 
   bool HasFloatsAffectingCurrentLine() const;
   void FindNextLayoutOpportunity();
@@ -107,7 +102,6 @@ class CORE_EXPORT NGLineBreaker {
   void BreakText(NGInlineItemResult*,
                  const NGInlineItem&,
                  LayoutUnit available_width);
-  static void AppendHyphen(const ComputedStyle&, ShapeResult*);
 
   LineBreakState HandleControlItem(const NGInlineItem&, NGInlineItemResult*);
   LineBreakState HandleAtomicInline(const NGInlineItem&,
@@ -133,7 +127,7 @@ class CORE_EXPORT NGLineBreaker {
 
   LineData line_;
   NGInlineNode node_;
-  const NGConstraintSpace& constraint_space_;
+  NGConstraintSpace* constraint_space_;
   NGFragmentBuilder* container_builder_;
   Vector<RefPtr<NGUnpositionedFloat>>* unpositioned_floats_;
   unsigned item_index_ = 0;
@@ -142,7 +136,6 @@ class CORE_EXPORT NGLineBreaker {
   LazyLineBreakIterator break_iterator_;
   HarfBuzzShaper shaper_;
   ShapeResultSpacing<String> spacing_;
-  const Hyphenation* hyphenation_ = nullptr;
 
   // Keep track of handled float items. See HandleFloat().
   unsigned handled_floats_end_item_index_ = 0;

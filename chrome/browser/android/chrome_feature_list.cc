@@ -58,7 +58,6 @@ const base::Feature* kFeaturesExposedToJava[] = {
     &kCCTPostMessageAPI,
     &kCCTRedirectPreconnect,
     &kChromeHomeFeature,
-    &kChromeHomeDoodle,
     &kChromeHomeExpandButton,
     &kChromeHomeModernLayout,
     &kChromeHomeSwipeLogic,
@@ -89,7 +88,6 @@ const base::Feature* kFeaturesExposedToJava[] = {
     &kPayWithGoogleV1,
     &kPhysicalWebFeature,
     &kPhysicalWebSharing,
-    &kPwaImprovedSplashScreen,
     &kPwaPersistentNotification,
     &kReaderModeInCCT,
     &kSearchEnginePromoExistingDevice,
@@ -114,8 +112,7 @@ const base::Feature* kFeaturesExposedToJava[] = {
     &ntp_tiles::kLowerResolutionFaviconsFeature,
     &ntp_tiles::kSiteExplorationUiFeature,
     &offline_pages::kBackgroundLoaderForDownloadsFeature,
-    &offline_pages::kOfflinePagesCTFeature,    // See crbug.com/620421.
-    &offline_pages::kOfflinePagesCTV2Feature,  // See crbug.com/734753.
+    &offline_pages::kOfflinePagesCTFeature,  // See crbug.com/620421.
     &offline_pages::kOfflinePagesSharingFeature,
     &password_manager::features::kViewPasswords,
     &subresource_filter::kSafeBrowsingSubresourceFilterExperimentalUI,
@@ -161,14 +158,8 @@ const base::Feature kCCTRedirectPreconnect{"CCTRedirectPreconnect",
 const base::Feature kChromeHomeFeature{"ChromeHome",
                                        base::FEATURE_DISABLED_BY_DEFAULT};
 
-const base::Feature kChromeHomeDoodle{"ChromeHomeDoodle",
-                                      base::FEATURE_DISABLED_BY_DEFAULT};
-
 const base::Feature kChromeHomeExpandButton{"ChromeHomeExpandButton",
                                             base::FEATURE_DISABLED_BY_DEFAULT};
-
-const base::Feature kChromeHomeModernLayout{"ChromeHomeModernLayout",
-                                            base::FEATURE_ENABLED_BY_DEFAULT};
 
 const base::Feature kChromeHomeSwipeLogic{"ChromeHomeSwipeLogic",
                                           base::FEATURE_DISABLED_BY_DEFAULT};
@@ -180,7 +171,7 @@ const base::Feature kContentSuggestionsScrollToLoad{
     "ContentSuggestionsScrollToLoad", base::FEATURE_ENABLED_BY_DEFAULT};
 
 const base::Feature kContentSuggestionsVideoOverlay{
-    "ContentSuggestionsVideoOverlay", base::FEATURE_DISABLED_BY_DEFAULT};
+    "ContentSuggestionsVideoOverlay", base::FEATURE_ENABLED_BY_DEFAULT};
 
 const base::Feature kContentSuggestionsSettings{
     "ContentSuggestionsSettings", base::FEATURE_ENABLED_BY_DEFAULT};
@@ -261,9 +252,6 @@ const base::Feature kPhysicalWebFeature{"PhysicalWeb",
 const base::Feature kPhysicalWebSharing{"PhysicalWebSharing",
                                         base::FEATURE_DISABLED_BY_DEFAULT};
 
-const base::Feature kPwaImprovedSplashScreen{"PwaImprovedSplashScreen",
-                                             base::FEATURE_DISABLED_BY_DEFAULT};
-
 const base::Feature kPwaPersistentNotification{
     "PwaPersistentNotification", base::FEATURE_DISABLED_BY_DEFAULT};
 
@@ -278,6 +266,9 @@ const base::Feature kSpecialLocaleFeature{"SpecialLocale",
 
 const base::Feature kSpecialLocaleWrapper{"SpecialLocaleWrapper",
                                           base::FEATURE_ENABLED_BY_DEFAULT};
+
+const base::Feature kChromeHomeModernLayout{"ChromeHomeModernLayout",
+                                            base::FEATURE_DISABLED_BY_DEFAULT};
 
 const base::Feature kTabReparenting{"TabReparenting",
                                     base::FEATURE_ENABLED_BY_DEFAULT};

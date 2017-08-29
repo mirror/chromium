@@ -35,7 +35,6 @@ Resources.ServiceWorkerCacheView = class extends UI.SimpleView {
     this._lastPageSize = null;
     /** @type {?number} */
     this._lastSkipCount = null;
-    this._refreshThrottler = new Common.Throttler(300);
 
     this._pageBackButton = new UI.ToolbarButton(Common.UIString('Show previous page'), 'largeicon-play-back');
     this._pageBackButton.addEventListener(UI.ToolbarButton.Events.Click, this._pageBackButtonClicked, this);
@@ -54,36 +53,43 @@ Resources.ServiceWorkerCacheView = class extends UI.SimpleView {
     this._deleteSelectedButton.addEventListener(UI.ToolbarButton.Events.Click, () => this._deleteButtonClicked(null));
     editorToolbar.appendToolbarItem(this._deleteSelectedButton);
 
+    var needsRefresh = createElement('div');
+    var needsRefreshIcon = needsRefresh.createChild('label', '', 'dt-icon-label');
+    needsRefreshIcon.type = 'smallicon-warning';
+    needsRefreshIcon.createChild('span').textContent = Common.UIString('Refresh needed');
+    this._needsRefresh = new UI.ToolbarItem(needsRefresh);
+    this._needsRefresh.setVisible(false);
+    this._needsRefresh.setTitle(Common.UIString('Some entries have been modified'));
+    editorToolbar.appendSpacer();
+    editorToolbar.appendToolbarItem(this._needsRefresh);
+
     this._pageSize = 50;
     this._skipCount = 0;
+
+    /** @type {!Array<!Resources.ServiceWorkerCacheView._Response>} */
+    this._recentlyPreviewedResponses = [];
 
     this.update(cache);
     this._entries = [];
   }
 
   /**
-   * @override
+   * @param {string} requestUrl
+   * @return {string}
    */
-  wasShown() {
-    this._model.addEventListener(
-        SDK.ServiceWorkerCacheModel.Events.CacheStorageContentUpdated, this._cacheContentUpdated, this);
-    this._updateData(true);
-  }
-
-  /**
-   * @override
-   */
-  willHide() {
-    this._model.removeEventListener(
-        SDK.ServiceWorkerCacheModel.Events.CacheStorageContentUpdated, this._cacheContentUpdated, this);
+  static _requestPath(requestUrl) {
+    var path = Common.ParsedURL.extractPath(requestUrl);
+    if (!path)
+      return requestUrl;
+    if (path.match(/\/.+/))
+      return path.substring(1);
+    return path;
   }
 
   /**
    * @param {?UI.Widget} preview
    */
   _showPreview(preview) {
-    if (this._preview === preview)
-      return;
     if (this._preview)
       this._preview.detach();
     if (!preview)
@@ -105,7 +111,7 @@ Resources.ServiceWorkerCacheView = class extends UI.SimpleView {
     var dataGrid = new DataGrid.DataGrid(
         columns, undefined, this._deleteButtonClicked.bind(this), this._updateData.bind(this, true));
     dataGrid.addEventListener(
-        DataGrid.DataGrid.Events.SelectedNode, event => this._previewCachedResponse(event.data.data), this);
+        DataGrid.DataGrid.Events.SelectedNode, event => this._previewCachedResponse(event.data.data['request']), this);
     dataGrid.setStriped(true);
     return dataGrid;
   }
@@ -135,7 +141,8 @@ Resources.ServiceWorkerCacheView = class extends UI.SimpleView {
       if (!node)
         return;
     }
-    await this._model.deleteCacheEntry(this._cache, /** @type {string} */ (node.data.url));
+
+    await this._model.deleteCacheEntry(this._cache, /** @type {string} */ (node.data['request']));
     node.remove();
   }
 
@@ -155,40 +162,26 @@ Resources.ServiceWorkerCacheView = class extends UI.SimpleView {
 
   /**
    * @param {number} skipCount
-   * @param {!Array<!SDK.ServiceWorkerCacheModel.Entry>} entries
+   * @param {!Array.<!SDK.ServiceWorkerCacheModel.Entry>} entries
    * @param {boolean} hasMore
    * @this {Resources.ServiceWorkerCacheView}
    */
   _updateDataCallback(skipCount, entries, hasMore) {
-    var selected = this._dataGrid.selectedNode && this._dataGrid.selectedNode.data.url;
     this._refreshButton.setEnabled(true);
-
-    /** @type {!Map<string, !DataGrid.DataGridNode>} */
-    var oldEntries = new Map();
-    var rootNode = this._dataGrid.rootNode();
-    for (var node of rootNode.children)
-      oldEntries.set(node.data.url, node);
-    rootNode.removeChildren();
+    this.clear();
     this._entries = entries;
-    var selectedNode = null;
-    for (var entry of entries) {
-      var node = oldEntries.get(entry.request);
-      if (!node || node.data.timestamp !== entry.timestamp) {
-        var data = new Resources.ServiceWorkerCacheView._Response(this._cache, entry.request, entry.timestamp);
-        node = new DataGrid.DataGridNode(data);
-        node.selectable = true;
-      }
-      rootNode.appendChild(node);
-      if (entry.request === selected)
-        selectedNode = node;
+    for (var i = 0; i < entries.length; ++i) {
+      var data = {};
+      data['request'] = entries[i].request;
+      data['path'] = Resources.ServiceWorkerCacheView._requestPath(entries[i].request);
+      data['responseTime'] = entries[i].responseTime;
+      var node = new DataGrid.DataGridNode(data);
+      node.selectable = true;
+      this._dataGrid.rootNode().appendChild(node);
     }
     this._pageBackButton.setEnabled(!!skipCount);
     this._pageForwardButton.setEnabled(hasMore);
-    if (!selectedNode)
-      this._showPreview(null);
-    else
-      selectedNode.revealAndSelect();
-    this._updatedForTest();
+    this._needsRefresh.setVisible(false);
   }
 
   /**
@@ -200,6 +193,7 @@ Resources.ServiceWorkerCacheView = class extends UI.SimpleView {
 
     if (!force && this._lastPageSize === pageSize && this._lastSkipCount === skipCount)
       return;
+    this._showPreview(null);
     this._refreshButton.setEnabled(false);
     if (this._lastPageSize !== pageSize) {
       skipCount = 0;
@@ -207,6 +201,7 @@ Resources.ServiceWorkerCacheView = class extends UI.SimpleView {
     }
     this._lastPageSize = pageSize;
     this._lastSkipCount = skipCount;
+    this._recentlyPreviewedResponses = [];
     this._model.loadCacheData(this._cache, skipCount, pageSize, this._updateDataCallback.bind(this, skipCount));
   }
 
@@ -217,27 +212,51 @@ Resources.ServiceWorkerCacheView = class extends UI.SimpleView {
     this._updateData(true);
   }
 
+  markNeedsRefresh() {
+    this._needsRefresh.setVisible(true);
+  }
+
+  clear() {
+    this._dataGrid.rootNode().removeChildren();
+    this._entries = [];
+  }
+
   /**
-   * @param {!Common.Event} event
+   * @param {string} url
+   * @return {!Resources.ServiceWorkerCacheView._Response}
    */
-  _cacheContentUpdated(event) {
-    var nameAndOrigin = event.data;
-    if (this._cache.securityOrigin !== nameAndOrigin.origin || this._cache.cacheName !== nameAndOrigin.cacheName)
+  _responseForUrl(url) {
+    var response = null;
+    var index = this._recentlyPreviewedResponses.findIndex(response => response.url === url);
+    if (index >= 0) {
+      response = this._recentlyPreviewedResponses[index];
+      this._recentlyPreviewedResponses.splice(index, 1);
+    } else {
+      response = new Resources.ServiceWorkerCacheView._Response(this._cache, url);
+    }
+    if (this._recentlyPreviewedResponses.length === Resources.ServiceWorkerCacheView._RESPONSE_CACHE_SIZE)
+      this._recentlyPreviewedResponses.pop();
+    this._recentlyPreviewedResponses.unshift(response);
+    return response;
+  }
+
+  /**
+   * @param {string} url
+   */
+  async _previewCachedResponse(url) {
+    var preview = await this._responseForUrl(url)._previewPromise;
+    // It is possible that table selection changes before the preview opens
+    var selectedRequest = this._dataGrid.selectedNode.data['request'];
+    if (url !== selectedRequest)
       return;
-    this._refreshThrottler.schedule(() => Promise.resolve(this._updateData(true)), true);
+    this._showPreview(preview);
   }
 
   /**
-   * @param {!Resources.ServiceWorkerCacheView._Response} response
+   * @override
    */
-  async _previewCachedResponse(response) {
-    var preview = await response._previewPromise;
-    // It is possible that table selection changes before the preview opens.
-    if (response === this._dataGrid.selectedNode.data)
-      this._showPreview(preview);
-  }
-
-  _updatedForTest() {
+  willHide() {
+    this._recentlyPreviewedResponses = [];
   }
 };
 
@@ -245,28 +264,11 @@ Resources.ServiceWorkerCacheView._Response = class {
   /**
    * @param {!SDK.ServiceWorkerCacheModel.Cache} cache
    * @param {string} url
-   * @param {number} timestamp
    */
-  constructor(cache, url, timestamp) {
+  constructor(cache, url) {
     this.url = url;
-    this.timestamp = timestamp;
     /** @type {!Promise<!UI.Widget>} */
     this._previewPromise = this._innerPreview(cache);
-    this.path = Resources.ServiceWorkerCacheView._Response._requestPath(url);
-    this.responseTime = new Date(timestamp * 1000).toLocaleString();
-  }
-
-  /**
-   * @param {string} url
-   * @return {string}
-   */
-  static _requestPath(url) {
-    var path = Common.ParsedURL.extractPath(url);
-    if (!path)
-      return url;
-    if (path.length > 1 && path.startsWith('/'))
-      return path.substring(1);
-    return path;
   }
 
   /**

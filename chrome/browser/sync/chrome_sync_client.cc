@@ -8,6 +8,7 @@
 
 #include "base/bind.h"
 #include "base/command_line.h"
+#include "base/memory/ptr_util.h"
 #include "base/path_service.h"
 #include "base/syslog_logging.h"
 #include "build/build_config.h"
@@ -232,7 +233,7 @@ void ChromeSyncClient::Initialize() {
     net::URLRequestContextGetter* url_request_context_getter =
         profile_->GetRequestContext();
 
-    component_factory_ = std::make_unique<ProfileSyncComponentsFactoryImpl>(
+    component_factory_ = base::MakeUnique<ProfileSyncComponentsFactoryImpl>(
         this, chrome::GetChannel(), chrome::GetVersionString(),
         ui::GetDeviceFormFactor() == ui::DEVICE_FORM_FACTOR_TABLET,
         *base::CommandLine::ForCurrentProcess(),
@@ -607,7 +608,7 @@ void ChromeSyncClient::RegisterDesktopDataTypes(
   // disabled.
   if (!disabled_types.Has(syncer::APPS)) {
     sync_service->RegisterDataTypeController(
-        std::make_unique<ExtensionDataTypeController>(
+        base::MakeUnique<ExtensionDataTypeController>(
             syncer::APPS, error_callback, this, profile_));
   }
 
@@ -615,7 +616,7 @@ void ChromeSyncClient::RegisterDesktopDataTypes(
   // disabled.
   if (!disabled_types.Has(syncer::EXTENSIONS)) {
     sync_service->RegisterDataTypeController(
-        std::make_unique<ExtensionDataTypeController>(
+        base::MakeUnique<ExtensionDataTypeController>(
             syncer::EXTENSIONS, error_callback, this, profile_));
   }
 #endif  // BUILDFLAG(ENABLE_EXTENSIONS)
@@ -624,7 +625,7 @@ void ChromeSyncClient::RegisterDesktopDataTypes(
   // Theme sync is enabled by default.  Register unless explicitly disabled.
   if (!disabled_types.Has(syncer::THEMES)) {
     sync_service->RegisterDataTypeController(
-        std::make_unique<ThemeDataTypeController>(error_callback, this,
+        base::MakeUnique<ThemeDataTypeController>(error_callback, this,
                                                   profile_));
   }
 #endif  // !defined(OS_ANDROID)
@@ -633,7 +634,7 @@ void ChromeSyncClient::RegisterDesktopDataTypes(
   // disabled.
   if (!disabled_types.Has(syncer::SEARCH_ENGINES)) {
     sync_service->RegisterDataTypeController(
-        std::make_unique<SearchEngineDataTypeController>(
+        base::MakeUnique<SearchEngineDataTypeController>(
             error_callback, this,
             TemplateURLServiceFactory::GetForProfile(profile_)));
   }
@@ -643,7 +644,7 @@ void ChromeSyncClient::RegisterDesktopDataTypes(
   // disabled.
   if (!disabled_types.Has(syncer::EXTENSION_SETTINGS)) {
     sync_service->RegisterDataTypeController(
-        std::make_unique<ExtensionSettingDataTypeController>(
+        base::MakeUnique<ExtensionSettingDataTypeController>(
             syncer::EXTENSION_SETTINGS, error_callback, this, profile_));
   }
 
@@ -651,7 +652,7 @@ void ChromeSyncClient::RegisterDesktopDataTypes(
   // disabled.
   if (!disabled_types.Has(syncer::APP_SETTINGS)) {
     sync_service->RegisterDataTypeController(
-        std::make_unique<ExtensionSettingDataTypeController>(
+        base::MakeUnique<ExtensionSettingDataTypeController>(
             syncer::APP_SETTINGS, error_callback, this, profile_));
   }
 #endif  // BUILDFLAG(ENABLE_EXTENSIONS)
@@ -659,7 +660,7 @@ void ChromeSyncClient::RegisterDesktopDataTypes(
 #if BUILDFLAG(ENABLE_APP_LIST)
   if (app_list::switches::IsAppListSyncEnabled()) {
     sync_service->RegisterDataTypeController(
-        std::make_unique<AsyncDirectoryTypeController>(
+        base::MakeUnique<AsyncDirectoryTypeController>(
             syncer::APP_LIST, error_callback, this, syncer::GROUP_UI,
             BrowserThread::GetTaskRunnerForThread(BrowserThread::UI)));
   }
@@ -669,7 +670,7 @@ void ChromeSyncClient::RegisterDesktopDataTypes(
   // Dictionary sync is enabled by default.
   if (!disabled_types.Has(syncer::DICTIONARY)) {
     sync_service->RegisterDataTypeController(
-        std::make_unique<AsyncDirectoryTypeController>(
+        base::MakeUnique<AsyncDirectoryTypeController>(
             syncer::DICTIONARY, error_callback, this, syncer::GROUP_UI,
             BrowserThread::GetTaskRunnerForThread(BrowserThread::UI)));
   }
@@ -677,16 +678,16 @@ void ChromeSyncClient::RegisterDesktopDataTypes(
 
 #if BUILDFLAG(ENABLE_SUPERVISED_USERS)
   sync_service->RegisterDataTypeController(
-      std::make_unique<SupervisedUserSyncDataTypeController>(
+      base::MakeUnique<SupervisedUserSyncDataTypeController>(
           syncer::SUPERVISED_USER_SETTINGS, error_callback, this, profile_));
   sync_service->RegisterDataTypeController(
-      std::make_unique<SupervisedUserSyncDataTypeController>(
+      base::MakeUnique<SupervisedUserSyncDataTypeController>(
           syncer::SUPERVISED_USER_WHITELISTS, error_callback, this, profile_));
   sync_service->RegisterDataTypeController(
-      std::make_unique<SupervisedUserSyncDataTypeController>(
+      base::MakeUnique<SupervisedUserSyncDataTypeController>(
           syncer::SUPERVISED_USERS, error_callback, this, profile_));
   sync_service->RegisterDataTypeController(
-      std::make_unique<SupervisedUserSyncDataTypeController>(
+      base::MakeUnique<SupervisedUserSyncDataTypeController>(
           syncer::SUPERVISED_USER_SHARED_SETTINGS, error_callback, this,
           profile_));
 #endif  // BUILDFLAG(ENABLE_SUPERVISED_USERS)
@@ -696,13 +697,13 @@ void ChromeSyncClient::RegisterDesktopDataTypes(
           switches::kEnableWifiCredentialSync) &&
       !disabled_types.Has(syncer::WIFI_CREDENTIALS)) {
     sync_service->RegisterDataTypeController(
-        std::make_unique<AsyncDirectoryTypeController>(
+        base::MakeUnique<AsyncDirectoryTypeController>(
             syncer::WIFI_CREDENTIALS, error_callback, this, syncer::GROUP_UI,
             BrowserThread::GetTaskRunnerForThread(BrowserThread::UI)));
   }
   if (arc::IsArcAllowedForProfile(profile_)) {
     sync_service->RegisterDataTypeController(
-        std::make_unique<ArcPackageSyncDataTypeController>(
+        base::MakeUnique<ArcPackageSyncDataTypeController>(
             syncer::ARC_PACKAGE, error_callback, this, profile_));
   }
 #endif  // defined(OS_CHROMEOS)
@@ -716,10 +717,10 @@ void ChromeSyncClient::RegisterAndroidDataTypes(
       base::Bind(&syncer::ReportUnrecoverableError, chrome::GetChannel());
 #if BUILDFLAG(ENABLE_SUPERVISED_USERS)
   sync_service->RegisterDataTypeController(
-      std::make_unique<SupervisedUserSyncDataTypeController>(
+      base::MakeUnique<SupervisedUserSyncDataTypeController>(
           syncer::SUPERVISED_USER_SETTINGS, error_callback, this, profile_));
   sync_service->RegisterDataTypeController(
-      std::make_unique<SupervisedUserSyncDataTypeController>(
+      base::MakeUnique<SupervisedUserSyncDataTypeController>(
           syncer::SUPERVISED_USER_WHITELISTS, error_callback, this, profile_));
 #endif  // BUILDFLAG(ENABLE_SUPERVISED_USERS)
 }

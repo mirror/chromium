@@ -75,7 +75,7 @@ ALWAYS_INLINE int SaturatedSet(int value) {
   if (value < kIntMinForLayoutUnit)
     return std::numeric_limits<int>::min();
 
-  return static_cast<unsigned>(value) << fractional_shift;
+  return value << fractional_shift;
 }
 
 template <int fractional_shift>

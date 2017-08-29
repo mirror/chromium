@@ -108,7 +108,8 @@ class TestUrlBarTexture : public UrlBarTexture {
 };
 
 TestUrlBarTexture::TestUrlBarTexture()
-    : UrlBarTexture(base::Bind(&TestUrlBarTexture::OnUnsupportedFeature,
+    : UrlBarTexture(false,
+                    base::Bind(&TestUrlBarTexture::OnUnsupportedFeature,
                                base::Unretained(this))) {
   gfx::FontList::SetDefaultFontDescription("Arial, Times New Roman, 15px");
 }

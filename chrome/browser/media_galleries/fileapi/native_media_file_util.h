@@ -44,7 +44,7 @@ class NativeMediaFileUtil : public storage::AsyncFileUtil {
       base::File::Error result,
       const base::File::Info& file_info,
       const base::FilePath& platform_path,
-      scoped_refptr<storage::ShareableFileReference> file_ref);
+      const scoped_refptr<storage::ShareableFileReference>& file_ref);
 
   // AsyncFileUtil overrides.
   void CreateOrOpen(

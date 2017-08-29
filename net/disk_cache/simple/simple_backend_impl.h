@@ -60,7 +60,7 @@ class NET_EXPORT_PRIVATE SimpleBackendImpl : public Backend,
       scoped_refptr<BackendCleanupTracker> cleanup_tracker,
       int max_bytes,
       net::CacheType cache_type,
-      const scoped_refptr<base::SequencedTaskRunner>& cache_runner,
+      const scoped_refptr<base::SingleThreadTaskRunner>& cache_thread,
       net::NetLog* net_log);
 
   ~SimpleBackendImpl() override;

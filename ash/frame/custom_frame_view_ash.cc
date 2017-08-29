@@ -12,11 +12,8 @@
 #include "ash/frame/header_view.h"
 #include "ash/public/cpp/immersive/immersive_fullscreen_controller.h"
 #include "ash/public/cpp/immersive/immersive_fullscreen_controller_delegate.h"
-#include "ash/shell.h"
 #include "ash/shell_port.h"
 #include "ash/wm/resize_handle_window_targeter.h"
-#include "ash/wm/tablet_mode/tablet_mode_controller.h"
-#include "ash/wm/tablet_mode/tablet_mode_observer.h"
 #include "ash/wm/window_state.h"
 #include "ash/wm/window_state_delegate.h"
 #include "ash/wm/window_state_observer.h"
@@ -46,8 +43,7 @@ namespace {
 // windows.
 class CustomFrameViewAshWindowStateDelegate : public wm::WindowStateDelegate,
                                               public wm::WindowStateObserver,
-                                              public aura::WindowObserver,
-                                              public TabletModeObserver {
+                                              public aura::WindowObserver {
  public:
   CustomFrameViewAshWindowStateDelegate(wm::WindowState* window_state,
                                         CustomFrameViewAsh* custom_frame_view,
@@ -65,8 +61,6 @@ class CustomFrameViewAshWindowStateDelegate : public wm::WindowStateDelegate,
     if (!enable_immersive)
       return;
 
-    Shell::Get()->tablet_mode_controller()->AddObserver(this);
-
     immersive_fullscreen_controller_ =
         ShellPort::Get()->CreateImmersiveFullscreenController();
     if (immersive_fullscreen_controller_) {
@@ -74,38 +68,15 @@ class CustomFrameViewAshWindowStateDelegate : public wm::WindowStateDelegate,
           immersive_fullscreen_controller_.get());
     }
   }
-
   ~CustomFrameViewAshWindowStateDelegate() override {
-    if (Shell::Get()->tablet_mode_controller())
-      Shell::Get()->tablet_mode_controller()->RemoveObserver(this);
-
     if (window_state_) {
       window_state_->RemoveObserver(this);
       window_state_->window()->RemoveObserver(this);
     }
   }
 
-  // TabletModeObserver:
-  void OnTabletModeStarted() override {
-    if (window_state_->IsFullscreen())
-      return;
-
-    if (Shell::Get()->tablet_mode_controller()->ShouldAutoHideTitlebars()) {
-      immersive_fullscreen_controller_->SetEnabled(
-          ImmersiveFullscreenController::WINDOW_TYPE_OTHER, true);
-    }
-  }
-
-  void OnTabletModeEnded() override {
-    if (window_state_->IsFullscreen())
-      return;
-
-    immersive_fullscreen_controller_->SetEnabled(
-        ImmersiveFullscreenController::WINDOW_TYPE_OTHER, false);
-  }
-
  private:
-  // wm::WindowStateDelegate:
+  // Overridden from wm::WindowStateDelegate:
   bool ToggleFullscreen(wm::WindowState* window_state) override {
     bool enter_fullscreen = !window_state->IsFullscreen();
     if (enter_fullscreen) {
@@ -121,32 +92,16 @@ class CustomFrameViewAshWindowStateDelegate : public wm::WindowStateDelegate,
     return true;
   }
 
-  // aura::WindowObserver:
+  // Overridden from aura::WindowObserver:
   void OnWindowDestroying(aura::Window* window) override {
     window_state_->RemoveObserver(this);
     window->RemoveObserver(this);
     window_state_ = nullptr;
   }
 
-  // wm::WindowStateObserver:
+  // Overridden from wm::WindowStateObserver:
   void OnPostWindowStateTypeChange(wm::WindowState* window_state,
                                    wm::WindowStateType old_type) override {
-    if (Shell::Get()->tablet_mode_controller() &&
-        Shell::Get()->tablet_mode_controller()->ShouldAutoHideTitlebars()) {
-      DCHECK(immersive_fullscreen_controller_);
-      if (window_state->IsMinimized() &&
-          immersive_fullscreen_controller_->IsEnabled()) {
-        immersive_fullscreen_controller_->SetEnabled(
-            ImmersiveFullscreenController::WINDOW_TYPE_OTHER, false);
-      } else if (window_state->IsMaximized() &&
-                 !immersive_fullscreen_controller_->IsEnabled()) {
-        immersive_fullscreen_controller_->SetEnabled(
-            ImmersiveFullscreenController::WINDOW_TYPE_OTHER, true);
-      }
-
-      return;
-    }
-
     if (!window_state->IsFullscreen() && !window_state->IsMinimized() &&
         immersive_fullscreen_controller_ &&
         immersive_fullscreen_controller_->IsEnabled()) {
@@ -481,18 +436,7 @@ CustomFrameViewAsh::GetFrameCaptionButtonContainerViewForTest() {
 }
 
 int CustomFrameViewAsh::NonClientTopBorderHeight() const {
-  if (frame_->IsFullscreen())
-    return 0;
-
-  const bool should_hide_titlebar_in_tablet_mode =
-      Shell::Get()->tablet_mode_controller() &&
-      Shell::Get()->tablet_mode_controller()->ShouldAutoHideTitlebars() &&
-      frame_->IsMaximized();
-
-  if (should_hide_titlebar_in_tablet_mode)
-    return 0;
-
-  return header_view_->GetPreferredHeight();
+  return frame_->IsFullscreen() ? 0 : header_view_->GetPreferredHeight();
 }
 
 }  // namespace ash

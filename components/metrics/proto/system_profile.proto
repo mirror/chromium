@@ -89,7 +89,7 @@ message SystemProfileProto {
     optional string version = 2;
 
     // The fingerprint of the build.  This field is used only on Android.
-    optional string build_fingerprint = 3;
+    optional string fingerprint = 3;
 
     // Whether the version of iOS appears to be "jailbroken". This field is
     // used only on iOS. Chrome for iOS detects whether device contains a
@@ -256,8 +256,7 @@ message SystemProfileProto {
     optional bool internal_display_supports_touch = 14;
 
     // Vendor ids and product ids of external touchscreens.
-    // Deprecated as of 8/11/2017.
-    message DeprecatedTouchScreen {
+    message TouchScreen {
       // Touch screen vendor id.
       optional uint32 vendor_id = 1;
       // Touch screen product id.
@@ -265,9 +264,7 @@ message SystemProfileProto {
     }
     // Lists vendor and product ids of external touchscreens.
     // Logged on ChromeOS only.
-    // Deprecated as of 8/11/2017.
-    repeated DeprecatedTouchScreen deprecated_external_touchscreen = 15
-        [deprecated = true];
+    repeated TouchScreen external_touchscreen = 15;
 
     // Drive messages are currently logged on Windows 7+, iOS, and Android.
     message Drive {

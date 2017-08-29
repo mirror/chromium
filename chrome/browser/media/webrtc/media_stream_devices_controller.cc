@@ -255,7 +255,7 @@ class MediaStreamDevicesController::PermissionPromptDelegateImpl
     PermissionUmaUtil::RecordPermissionPromptShown(
         request->GetPermissionRequestType(),
         PermissionUtil::GetGestureType(user_gesture));
-    if (PermissionDialogDelegate::ShouldShowDialog()) {
+    if (PermissionDialogDelegate::ShouldShowDialog(user_gesture)) {
       PermissionDialogDelegate::CreateMediaStreamDialog(
           web_contents, user_gesture, std::move(request));
     } else {

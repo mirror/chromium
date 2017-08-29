@@ -35,11 +35,13 @@ function dumpValues()
     output("JSON.stringify === myImpl => " + (JSON.stringify === myImpl));
 }
 
-function test() {
-  function callback() {
-    TestRunner.completeTest();
-  }
-  TestRunner.evaluateInPage('dumpValues()', callback);
+function test()
+{
+    function callback()
+    {
+        TestRunner.completeTest();
+    }
+    TestRunner.evaluateInPage("dumpValues()", callback);
 }
 </script>
 </head>

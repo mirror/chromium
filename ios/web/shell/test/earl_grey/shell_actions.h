@@ -11,12 +11,14 @@
 
 namespace web {
 
-// Action to longpress on element |element_id| in the shell's webview.  This
-// gesture is expected to cause the context menu to appear, and is not expected
-// to trigger events in the webview. This action doesn't fail if the context
-// menu isn't displayed; calling code should check for that separately with a
-// matcher.
-id<GREYAction> LongPressElementForContextMenu(const std::string& element_id);
+// Action to longpress on element |element_id| in the shell's webview.
+// If |triggers_context_menu| is true, this gesture is expected to
+// cause the context menu to appear, and is not expected to trigger events
+// in the webview. If |triggers_context_menu| is false, the converse is true.
+// This action doesn't fail if the context menu isn't displayed; calling code
+// should check for that separately with a matcher.
+id<GREYAction> LongPressElementForContextMenu(const std::string& element_id,
+                                              bool triggers_context_menu);
 
 }  // namespace web
 

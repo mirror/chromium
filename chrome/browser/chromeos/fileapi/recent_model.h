@@ -6,7 +6,6 @@
 #define CHROME_BROWSER_CHROMEOS_FILEAPI_RECENT_MODEL_H_
 
 #include <memory>
-#include <queue>
 #include <vector>
 
 #include "base/callback_forward.h"
@@ -17,32 +16,28 @@
 #include "base/optional.h"
 #include "base/time/time.h"
 #include "base/timer/timer.h"
-#include "chrome/browser/chromeos/fileapi/recent_file.h"
-#include "chrome/browser/chromeos/fileapi/recent_source.h"
 #include "components/keyed_service/core/keyed_service.h"
 #include "storage/browser/fileapi/file_system_url.h"
 
-class GURL;
 class Profile;
-
-namespace storage {
-
-class FileSystemContext;
-class FileSystemURL;
-
-}  // namespace storage
 
 namespace chromeos {
 
+class RecentContext;
 class RecentModelFactory;
+class RecentSource;
+
+// The maximum number of files from a single source.
+extern const size_t kMaxFilesFromSingleSource;
 
 // Provides a list of recently modified files.
 //
 // All member functions must be called on the UI thread.
 class RecentModel : public KeyedService {
  public:
+  using RecentFileList = std::vector<storage::FileSystemURL>;
   using GetRecentFilesCallback =
-      base::OnceCallback<void(const std::vector<storage::FileSystemURL>& urls)>;
+      base::OnceCallback<void(const RecentFileList& files)>;
 
   ~RecentModel() override;
 
@@ -53,19 +48,15 @@ class RecentModel : public KeyedService {
   static std::unique_ptr<RecentModel> CreateForTest(
       std::vector<std::unique_ptr<RecentSource>> sources);
 
-  // Returns a list of recent files by querying sources.
-  // Files are sorted by descending order of last modified time.
-  // Results might be internally cached for better performance.
-  void GetRecentFiles(storage::FileSystemContext* file_system_context,
-                      const GURL& origin,
-                      GetRecentFilesCallback callback);
+  // Returns a list of recent files by querying sources. Results are internally
+  // cached for better performance.
+  void GetRecentFiles(RecentContext context, GetRecentFilesCallback callback);
 
   // KeyedService overrides:
   void Shutdown() override;
 
  private:
   friend class RecentModelFactory;
-  friend class RecentModelTest;
   FRIEND_TEST_ALL_PREFIXES(RecentModelTest, GetRecentFiles_UmaStats);
 
   static const char kLoadHistogramName[];
@@ -73,28 +64,14 @@ class RecentModel : public KeyedService {
   explicit RecentModel(Profile* profile);
   explicit RecentModel(std::vector<std::unique_ptr<RecentSource>> sources);
 
-  void OnGetRecentFiles(size_t max_files,
-                        const base::Time& cutoff_time,
-                        std::vector<RecentFile> files);
+  void OnGetRecentFiles(RecentFileList files);
   void OnGetRecentFilesCompleted();
   void ClearCache();
 
-  void SetMaxFilesForTest(size_t max_files);
-  void SetForcedCutoffTimeForTest(const base::Time& forced_cutoff_time);
-
   std::vector<std::unique_ptr<RecentSource>> sources_;
 
-  // The maximum number of files in Recent. This value won't be changed from
-  // default except for unit tests.
-  size_t max_files_ = 1000;
-
-  // If this is set to non-null, it is used as a cut-off time. Should be used
-  // only in unit tests.
-  base::Optional<base::Time> forced_cutoff_time_;
-
-  // Cached GetRecentFiles() response.
-  base::Optional<std::vector<storage::FileSystemURL>> cached_urls_ =
-      base::nullopt;
+  // Cached RecentFileList.
+  base::Optional<RecentFileList> cached_files_ = base::nullopt;
 
   // Timer to clear the cache.
   base::OneShotTimer cache_clear_timer_;
@@ -110,8 +87,7 @@ class RecentModel : public KeyedService {
   int num_inflight_sources_ = 0;
 
   // Intermediate container of recent files while building a list.
-  std::priority_queue<RecentFile, std::vector<RecentFile>, RecentFileComparator>
-      intermediate_files_;
+  RecentFileList intermediate_files_;
 
   base::WeakPtrFactory<RecentModel> weak_ptr_factory_;
 

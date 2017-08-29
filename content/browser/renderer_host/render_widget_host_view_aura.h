@@ -256,7 +256,7 @@ class CONTENT_EXPORT RenderWidgetHostViewAura
   void OnWindowTargetVisibilityChanged(bool visible) override;
   bool HasHitTestMask() const override;
   void GetHitTestMask(gfx::Path* mask) const override;
-  void OnFirstSurfaceActivation(const viz::SurfaceInfo& surface_info) override;
+  void OnWindowSurfaceChanged(const viz::SurfaceInfo& surface_info) override;
 
   // Overridden from ui::EventHandler:
   void OnKeyEvent(ui::KeyEvent* event) override;
@@ -608,6 +608,7 @@ class CONTENT_EXPORT RenderWidgetHostViewAura
   std::unique_ptr<RenderWidgetHostViewEventHandler> event_handler_;
 
   viz::FrameSinkId frame_sink_id_;
+  viz::LocalSurfaceId local_surface_id_;
 
   std::unique_ptr<CursorManager> cursor_manager_;
 

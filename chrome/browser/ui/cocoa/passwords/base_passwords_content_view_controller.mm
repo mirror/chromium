@@ -7,14 +7,6 @@
 #include "base/logging.h"
 #include "base/mac/scoped_nsobject.h"
 #import "chrome/browser/ui/cocoa/passwords/passwords_bubble_utils.h"
-#import "ui/base/cocoa/touch_bar_util.h"
-
-namespace {
-
-// Touch bar identifier.
-NSString* const kManagePasswordTouchBarId = @"manage-password-bubble";
-
-}  // end namespace
 
 @implementation BasePasswordsContentViewController
 @synthesize delegate = delegate_;
@@ -55,10 +47,6 @@ NSString* const kManagePasswordTouchBarId = @"manage-password-bubble";
 
 - (NSButton*)defaultButton {
   return nil;
-}
-
-- (NSString*)touchBarIdForItem:(NSString*)item {
-  return ui::GetTouchBarItemId(kManagePasswordTouchBarId, item);
 }
 
 @end

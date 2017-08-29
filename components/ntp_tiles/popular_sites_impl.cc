@@ -128,7 +128,6 @@ PopularSites::SitesVector ParseSiteList(const base::ListValue& list) {
                        GURL(large_icon_url), GURL(thumbnail_url));
     item->GetInteger("default_icon_resource",
                      &sites.back().default_icon_resource);
-    item->GetBoolean("baked_in", &sites.back().baked_in);
   }
   return sites;
 }
@@ -212,10 +211,6 @@ std::unique_ptr<base::ListValue> DefaultPopularSites() {
           ResourceBundle::GetSharedInstance().GetRawDataResource(
               IDR_DEFAULT_POPULAR_SITES_JSON)));
   DCHECK(sites);
-  for (base::Value& site : *sites) {
-    base::DictionaryValue& dict = static_cast<base::DictionaryValue&>(site);
-    dict.SetBoolean("baked_in", true);
-  }
 #if defined(GOOGLE_CHROME_BUILD)
   int index = 0;
   for (int icon_resource :
@@ -242,7 +237,6 @@ PopularSites::Site::Site(const base::string16& title,
       favicon_url(favicon_url),
       large_icon_url(large_icon_url),
       thumbnail_url(thumbnail_url),
-      baked_in(false),
       default_icon_resource(-1) {}
 
 PopularSites::Site::Site(const Site& other) = default;

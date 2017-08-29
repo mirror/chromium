@@ -349,9 +349,12 @@ class WPTExpectationsUpdater(object):
 
     def skipped_specifiers(self, test_name):
         """Returns a list of platform specifiers for which the test is skipped."""
+        # TODO(qyearsley): Change Port.skips_test so that this can be simplified.
         specifiers = []
         for port in self.all_try_builder_ports():
-            if port.skips_test(test_name):
+            generic_expectations = TestExpectations(port, tests=[test_name], include_overrides=False)
+            full_expectations = TestExpectations(port, tests=[test_name], include_overrides=True)
+            if port.skips_test(test_name, generic_expectations, full_expectations):
                 specifiers.append(self.host.builders.version_specifier_for_port_name(port.name()))
         return specifiers
 

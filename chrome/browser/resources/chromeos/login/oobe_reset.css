@@ -27,6 +27,10 @@ a {
   display: inline;
 }
 
+.subtitle {
+  line-height: 20px;
+}
+
 #tpmFirmwareUpdate {
   -webkit-margin-start: 20px;
   color: rgba(0, 0, 0, 0.54);

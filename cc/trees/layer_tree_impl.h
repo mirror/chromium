@@ -43,11 +43,11 @@ class HeadsUpDisplayLayerImpl;
 class ImageDecodeCache;
 class LayerTreeDebugState;
 class LayerTreeImpl;
-class LayerTreeResourceProvider;
 class LayerTreeSettings;
 class MemoryHistory;
 class PictureLayerImpl;
 class TaskRunnerProvider;
+class ResourceProvider;
 class TileManager;
 class UIResourceRequest;
 class VideoFrameControllerClient;
@@ -91,7 +91,7 @@ class CC_EXPORT LayerTreeImpl {
   // This is the number of times a fixed point has to be hit continuously by a
   // layer to consider it as jittering.
   enum : int { kFixedPointHitsThreshold = 3 };
-  LayerTreeImpl(LayerTreeHostImpl* host_impl,
+  LayerTreeImpl(LayerTreeHostImpl* layer_tree_host_impl,
                 scoped_refptr<SyncedProperty<ScaleGroup>> page_scale_factor,
                 scoped_refptr<SyncedBrowserControls> top_controls_shown_ratio,
                 scoped_refptr<SyncedElasticOverscroll> elastic_overscroll);
@@ -107,7 +107,7 @@ class CC_EXPORT LayerTreeImpl {
   const LayerTreeSettings& settings() const;
   const LayerTreeDebugState& debug_state() const;
   viz::ContextProvider* context_provider() const;
-  LayerTreeResourceProvider* resource_provider() const;
+  ResourceProvider* resource_provider() const;
   TileManager* tile_manager() const;
   ImageDecodeCache* image_decode_cache() const;
   FrameRateCounter* frame_rate_counter() const;
@@ -135,7 +135,9 @@ class CC_EXPORT LayerTreeImpl {
   bool RequiresHighResToDraw() const;
   bool SmoothnessTakesPriority() const;
   VideoFrameControllerClient* GetVideoFrameControllerClient() const;
-  MutatorHost* mutator_host() const { return host_impl_->mutator_host(); }
+  MutatorHost* mutator_host() const {
+    return layer_tree_host_impl_->mutator_host();
+  }
 
   // Tree specific methods exposed to layer-impl tree.
   // ---------------------------------------------------------------------------
@@ -264,7 +266,6 @@ class CC_EXPORT LayerTreeImpl {
   }
 
   void UpdatePropertyTreeAnimationFromMainThread();
-
   void SetPageScaleOnActiveTree(float active_page_scale);
   void PushPageScaleFromMainThread(float page_scale_factor,
                                    float min_page_scale_factor,
@@ -337,7 +338,8 @@ class CC_EXPORT LayerTreeImpl {
   }
 
   bool is_in_resourceless_software_draw_mode() {
-    return (host_impl_->GetDrawMode() == DRAW_MODE_RESOURCELESS_SOFTWARE);
+    return (layer_tree_host_impl_->GetDrawMode() ==
+            DRAW_MODE_RESOURCELESS_SOFTWARE);
   }
 
   void set_needs_full_tree_sync(bool needs) { needs_full_tree_sync_ = needs; }
@@ -412,7 +414,7 @@ class CC_EXPORT LayerTreeImpl {
   bool DistributeRootScrollOffset(const gfx::ScrollOffset& root_offset);
 
   void ApplyScroll(ScrollNode* scroll_node, ScrollState* scroll_state) {
-    host_impl_->ApplyScroll(scroll_node, scroll_state);
+    layer_tree_host_impl_->ApplyScroll(scroll_node, scroll_state);
   }
 
   // Call this function when you expect there to be a swap buffer.
@@ -559,11 +561,7 @@ class CC_EXPORT LayerTreeImpl {
   void PushBrowserControls(const float* top_controls_shown_ratio);
   bool ClampBrowserControlsShownRatio();
 
- private:
-  ElementListType GetElementTypeForAnimation() const;
-  void UpdateTransformAnimation(ElementId element_id, int transform_node_index);
-
-  LayerTreeHostImpl* host_impl_;
+  LayerTreeHostImpl* layer_tree_host_impl_;
   int source_frame_number_;
   int is_first_frame_after_commit_tracker_;
   LayerImpl* root_layer_for_testing_;

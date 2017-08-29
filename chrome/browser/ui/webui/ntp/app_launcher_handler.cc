@@ -398,9 +398,10 @@ void AppLauncherHandler::FillAppDictionary(base::DictionaryValue* dictionary) {
     base::ListValue* list = update.Get();
     list->Set(0, base::MakeUnique<base::Value>(
                      l10n_util::GetStringUTF16(IDS_APP_DEFAULT_PAGE_NAME)));
-    dictionary->SetKey("appPageNames", list->Clone());
+    dictionary->Set("appPageNames", base::MakeUnique<base::Value>(*list));
   } else {
-    dictionary->SetKey("appPageNames", app_page_names->Clone());
+    dictionary->Set("appPageNames",
+                    base::MakeUnique<base::Value>(*app_page_names));
   }
 }
 

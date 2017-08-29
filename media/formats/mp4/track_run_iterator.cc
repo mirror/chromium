@@ -596,7 +596,7 @@ int64_t TrackRunIterator::sample_offset() const {
   return sample_offset_;
 }
 
-uint32_t TrackRunIterator::sample_size() const {
+int TrackRunIterator::sample_size() const {
   DCHECK(IsSampleValid());
   return sample_itr_->size;
 }

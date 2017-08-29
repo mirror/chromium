@@ -67,6 +67,7 @@ class RendererWindowTreeClient : public ui::mojom::WindowTreeClient {
   // implementations would require some amount of refactoring out of
   // RenderWidget and related classes (e.g. resize, input, ime etc.).
   void OnEmbed(
+      ui::ClientSpecificId client_id,
       ui::mojom::WindowDataPtr root,
       ui::mojom::WindowTreePtr tree,
       int64_t display_id,

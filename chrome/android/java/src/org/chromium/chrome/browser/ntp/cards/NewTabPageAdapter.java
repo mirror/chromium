@@ -17,7 +17,6 @@ import org.chromium.chrome.browser.ntp.ContextMenuManager;
 import org.chromium.chrome.browser.ntp.cards.NewTabPageViewHolder.PartialBindCallback;
 import org.chromium.chrome.browser.ntp.snippets.CategoryInt;
 import org.chromium.chrome.browser.ntp.snippets.CategoryStatus;
-import org.chromium.chrome.browser.ntp.snippets.KnownCategories;
 import org.chromium.chrome.browser.ntp.snippets.SectionHeaderViewHolder;
 import org.chromium.chrome.browser.ntp.snippets.SnippetArticleViewHolder;
 import org.chromium.chrome.browser.ntp.snippets.SnippetsBridge;
@@ -113,7 +112,7 @@ public class NewTabPageAdapter extends Adapter<NewTabPageViewHolder> implements 
         }
 
         if (FeatureUtilities.isChromeHomeModernEnabled()) {
-            mRoot.addChildren(mSigninPromo, mAllDismissed, mSections);
+            mRoot.addChildren(mSigninPromo, mSections, mAllDismissed);
         } else {
             mRoot.addChildren(mSections, mSigninPromo, mAllDismissed);
         }
@@ -262,15 +261,14 @@ public class NewTabPageAdapter extends Adapter<NewTabPageViewHolder> implements 
     private void updateAllDismissedVisibility() {
         boolean areRemoteSuggestionsEnabled =
                 mUiDelegate.getSuggestionsSource().areRemoteSuggestionsEnabled();
-        boolean hasAllBeenDismissed = hasAllBeenDismissed();
 
-        mAllDismissed.setVisible(areRemoteSuggestionsEnabled && hasAllBeenDismissed);
+        mAllDismissed.setVisible(areRemoteSuggestionsEnabled && hasAllBeenDismissed());
         if (!SuggestionsConfig.scrollToLoad()) {
-            mFooter.setVisible(areRemoteSuggestionsEnabled && !hasAllBeenDismissed);
+            mFooter.setVisible(areRemoteSuggestionsEnabled && !hasAllBeenDismissed());
         }
 
         if (mBottomSpacer != null) {
-            mBottomSpacer.setVisible(areRemoteSuggestionsEnabled || !hasAllBeenDismissed);
+            mBottomSpacer.setVisible(areRemoteSuggestionsEnabled || !hasAllBeenDismissed());
         }
     }
 
@@ -319,8 +317,9 @@ public class NewTabPageAdapter extends Adapter<NewTabPageViewHolder> implements 
         mRecyclerView = (SuggestionsRecyclerView) recyclerView;
 
         if (SuggestionsConfig.scrollToLoad()) {
-            mRecyclerView.addOnScrollListener(new ScrollToLoadListener(
-                    this, mRecyclerView.getLinearLayoutManager(), mSections));
+            mRecyclerView.addOnScrollListener(new ScrollToLoadListener(this,
+                    mRecyclerView.getLinearLayoutManager(), mUiDelegate,
+                    mSections));
         }
     }
 
@@ -349,13 +348,7 @@ public class NewTabPageAdapter extends Adapter<NewTabPageViewHolder> implements 
     }
 
     private boolean hasAllBeenDismissed() {
-        if (mSigninPromo.isVisible()) return false;
-
-        if (!FeatureUtilities.isChromeHomeModernEnabled()) return mSections.isEmpty();
-
-        // In the modern layout, we only consider articles.
-        SuggestionsSection suggestions = mSections.getSection(KnownCategories.ARTICLES);
-        return suggestions == null || !suggestions.hasSuggestions();
+        return mSections.isEmpty() && !mSigninPromo.isVisible();
     }
 
     private int getChildPositionOffset(TreeNode child) {
@@ -375,7 +368,7 @@ public class NewTabPageAdapter extends Adapter<NewTabPageViewHolder> implements 
         return mSections;
     }
 
-    public InnerNode getRootForTesting() {
+    InnerNode getRootForTesting() {
         return mRoot;
     }
 

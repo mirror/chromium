@@ -16,6 +16,8 @@ namespace switches {
 
 // Please keep alphabetized.
 // TODO(sky): fix order!
+ASH_EXPORT extern const char kAshAnimateFromBootSplashScreen[];
+ASH_EXPORT extern const char kAshCopyHostBackgroundAtBoot[];
 ASH_EXPORT extern const char kAshDebugShortcuts[];
 ASH_EXPORT extern const char kAshDeveloperShortcuts[];
 ASH_EXPORT extern const char kAshDisableSmoothScreenRotation[];
@@ -25,14 +27,14 @@ ASH_EXPORT extern const char kAshEnableNightLight[];
 ASH_EXPORT extern const char kAshEnablePaletteOnAllDisplays[];
 ASH_EXPORT extern const char kAshEnableScaleSettingsTray[];
 ASH_EXPORT extern const char kAshEnableTabletSplitView[];
-ASH_EXPORT extern const char kAshEnableTabletMode[];
+ASH_EXPORT extern const char kAshEnableTouchView[];
 ASH_EXPORT extern const char kAshEnableMirroredScreen[];
 ASH_EXPORT extern const char kAshEstimatedPresentationDelay[];
 ASH_EXPORT extern const char kAshForceEnableStylusTools[];
-ASH_EXPORT extern const char kAshUiMode[];
-ASH_EXPORT extern const char kAshUiModeAuto[];
-ASH_EXPORT extern const char kAshUiModeClamshell[];
-ASH_EXPORT extern const char kAshUiModeTablet[];
+ASH_EXPORT extern const char kAshForceTabletMode[];
+ASH_EXPORT extern const char kAshForceTabletModeAuto[];
+ASH_EXPORT extern const char kAshForceTabletModeClamshell[];
+ASH_EXPORT extern const char kAshForceTabletModeTouchView[];
 ASH_EXPORT extern const char kAshHideNotificationsForFactory[];
 ASH_EXPORT extern const char kAshShelfColor[];
 ASH_EXPORT extern const char kAshShelfColorEnabled[];

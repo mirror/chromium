@@ -33,8 +33,8 @@ class AnswerCardWebContents : public AnswerCardContents,
   views::View* GetView() override;
 
   // content::WebContentsDelegate overrides:
-  void ResizeDueToAutoResize(content::WebContents* web_contents,
-                             const gfx::Size& new_size) override;
+  void UpdatePreferredSize(content::WebContents* web_contents,
+                           const gfx::Size& pref_size) override;
   content::WebContents* OpenURLFromTab(
       content::WebContents* source,
       const content::OpenURLParams& params) override;
@@ -51,6 +51,7 @@ class AnswerCardWebContents : public AnswerCardContents,
                              content::RenderViewHost* new_host) override;
 
  private:
+  bool HandleMouseEvent(const blink::WebMouseEvent& event);
   void AttachToHost(content::RenderWidgetHost* host);
   void DetachFromHost();
 
@@ -59,6 +60,9 @@ class AnswerCardWebContents : public AnswerCardContents,
 
   // Web contents managed by this class.
   const std::unique_ptr<content::WebContents> web_contents_;
+
+  // Callbacks for mouse events in the web contents.
+  const content::RenderWidgetHost::MouseEventCallback mouse_event_callback_;
 
   // Current widget host.
   content::RenderWidgetHost* host_ = nullptr;

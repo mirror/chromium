@@ -163,7 +163,6 @@ ScreenRotationAnimator::ScreenRotationAnimator(aura::Window* root_window)
       metrics_reporter_(
           base::MakeUnique<ScreenRotationAnimationMetricsReporter>()),
       disable_animation_timers_for_test_(false),
-      // TODO(wutao): remove the flag. http://crbug.com/707800.
       has_switch_ash_disable_smooth_screen_rotation_(
           base::CommandLine::ForCurrentProcess()->HasSwitch(
               switches::kAshDisableSmoothScreenRotation) &&
@@ -195,9 +194,7 @@ void ScreenRotationAnimator::StartRotationAnimation(
   }
 
   rotation_request->old_rotation = current_rotation;
-  if (has_switch_ash_disable_smooth_screen_rotation_ ||
-      DisplayConfigurationController::ANIMATION_SYNC ==
-          rotation_request->mode) {
+  if (has_switch_ash_disable_smooth_screen_rotation_) {
     StartSlowAnimation(std::move(rotation_request));
   } else {
     std::unique_ptr<viz::CopyOutputRequest> copy_output_request =
@@ -436,10 +433,8 @@ void ScreenRotationAnimator::AnimateRotation(
   observer->SetActive();
 }
 
-void ScreenRotationAnimator::Rotate(
-    display::Display::Rotation new_rotation,
-    display::Display::RotationSource source,
-    DisplayConfigurationController::RotationAnimation mode) {
+void ScreenRotationAnimator::Rotate(display::Display::Rotation new_rotation,
+                                    display::Display::RotationSource source) {
   // |rotation_request_id_| is used to skip stale requests. Before the layer
   // CopyOutputResult callback called, there could have new rotation request.
   // Increases |rotation_request_id_| for each new request and in the callback,
@@ -450,7 +445,7 @@ void ScreenRotationAnimator::Rotate(
       display::Screen::GetScreen()->GetDisplayNearestWindow(root_window_).id();
   std::unique_ptr<ScreenRotationRequest> rotation_request =
       base::MakeUnique<ScreenRotationRequest>(rotation_request_id_, display_id,
-                                              new_rotation, source, mode);
+                                              new_rotation, source);
   target_rotation_ = new_rotation;
   switch (screen_rotation_state_) {
     case IDLE:

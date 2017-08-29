@@ -79,7 +79,8 @@ void BaseWebUIHandler::ShowScreenWithData(OobeScreen screen,
   base::DictionaryValue screen_params;
   screen_params.SetString("id", GetOobeScreenName(screen));
   if (data) {
-    screen_params.SetKey("data", data->Clone());
+    screen_params.SetWithoutPathExpansion("data",
+                                          base::MakeUnique<base::Value>(*data));
   }
   web_ui()->CallJavascriptFunctionUnsafe("cr.ui.Oobe.showScreen",
                                          screen_params);

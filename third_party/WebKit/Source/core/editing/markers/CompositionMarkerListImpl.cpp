@@ -4,7 +4,7 @@
 
 #include "core/editing/markers/CompositionMarkerListImpl.h"
 
-#include "core/editing/markers/SortedDocumentMarkerListEditor.h"
+#include "core/editing/markers/DocumentMarkerListEditor.h"
 
 namespace blink {
 
@@ -17,8 +17,8 @@ bool CompositionMarkerListImpl::IsEmpty() const {
 }
 
 void CompositionMarkerListImpl::Add(DocumentMarker* marker) {
-  SortedDocumentMarkerListEditor::AddMarkerWithoutMergingOverlapping(&markers_,
-                                                                     marker);
+  DocumentMarkerListEditor::AddMarkerWithoutMergingOverlapping(&markers_,
+                                                               marker);
 }
 
 void CompositionMarkerListImpl::Clear() {
@@ -33,34 +33,33 @@ CompositionMarkerListImpl::GetMarkers() const {
 DocumentMarker* CompositionMarkerListImpl::FirstMarkerIntersectingRange(
     unsigned start_offset,
     unsigned end_offset) const {
-  return SortedDocumentMarkerListEditor::FirstMarkerIntersectingRange(
+  return DocumentMarkerListEditor::FirstMarkerIntersectingRange(
       markers_, start_offset, end_offset);
 }
 
 HeapVector<Member<DocumentMarker>>
 CompositionMarkerListImpl::MarkersIntersectingRange(unsigned start_offset,
                                                     unsigned end_offset) const {
-  return SortedDocumentMarkerListEditor::MarkersIntersectingRange(
+  return DocumentMarkerListEditor::MarkersIntersectingRange(
       markers_, start_offset, end_offset);
 }
 
 bool CompositionMarkerListImpl::MoveMarkers(int length,
                                             DocumentMarkerList* dst_markers_) {
-  return SortedDocumentMarkerListEditor::MoveMarkers(&markers_, length,
-                                                     dst_markers_);
+  return DocumentMarkerListEditor::MoveMarkers(&markers_, length, dst_markers_);
 }
 
 bool CompositionMarkerListImpl::RemoveMarkers(unsigned start_offset,
                                               int length) {
-  return SortedDocumentMarkerListEditor::RemoveMarkers(&markers_, start_offset,
-                                                       length);
+  return DocumentMarkerListEditor::RemoveMarkers(&markers_, start_offset,
+                                                 length);
 }
 
 bool CompositionMarkerListImpl::ShiftMarkers(const String&,
                                              unsigned offset,
                                              unsigned old_length,
                                              unsigned new_length) {
-  return SortedDocumentMarkerListEditor::ShiftMarkersContentIndependent(
+  return DocumentMarkerListEditor::ShiftMarkersContentIndependent(
       &markers_, offset, old_length, new_length);
 }
 

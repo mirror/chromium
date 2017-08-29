@@ -64,9 +64,6 @@ id<GREYMatcher> PageSecurityInfoButton();
 // omnibox contents.
 id<GREYMatcher> OmniboxText(std::string text);
 
-// Returns matcher for |text| being a substring of the text in the omnibox.
-id<GREYMatcher> OmniboxContainingText(std::string text);
-
 // Matcher for Tools menu button.
 id<GREYMatcher> ToolsMenuButton();
 
@@ -110,14 +107,8 @@ id<GREYMatcher> ToolsMenuView();
 // Returns matcher for the OK button.
 id<GREYMatcher> OKButton();
 
-// Returns matcher for the primary button in the sign-in promo view. This is
-// "Sign in into Chrome" button for a cold state, or "Continue as John Doe" for
-// a warm state.
-id<GREYMatcher> PrimarySignInButton();
-
-// Returns matcher for the secondary button in the sign-in promo view. This is
-// "Not johndoe@example.com" button.
-id<GREYMatcher> SecondarySignInButton();
+// Returns matcher for the signin button in the settings menu.
+id<GREYMatcher> SignInMenuButton();
 
 // Returns matcher for the button for the currently signed in account in the
 // settings menu.
@@ -131,9 +122,6 @@ id<GREYMatcher> SettingsImportDataImportButton();
 
 // Returns matcher for the Keep Data Separate cell in switch sync account view.
 id<GREYMatcher> SettingsImportDataKeepSeparateButton();
-
-// Returns matcher for the Manage Synced Data button in sync setting view.
-id<GREYMatcher> SettingsSyncManageSyncedDataButton();
 
 // Returns matcher for the menu button to sync accounts.
 id<GREYMatcher> AccountsSyncButton();
@@ -149,12 +137,6 @@ id<GREYMatcher> SettingsMenuPrivacyButton();
 
 // Returns matcher for the Save passwords cell on the main Settings screen.
 id<GREYMatcher> SettingsMenuPasswordsButton();
-
-// Returns matcher for the payment request collection view.
-id<GREYMatcher> PaymentRequestView();
-
-// Returns matcher for the error confirmation view for payment request.
-id<GREYMatcher> PaymentRequestErrorView();
 
 }  // namespace chrome_test_util
 

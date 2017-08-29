@@ -56,7 +56,7 @@ class CompositingRequirementsUpdater {
   //      child.  This implies that its positive z-index children must also be
   //      compositing.
   //
-  void Update(PaintLayer* root, CompositingReasonsStats&);
+  void Update(PaintLayer* root);
 
  private:
   class OverlapMap;
@@ -68,8 +68,7 @@ class CompositingRequirementsUpdater {
                        RecursionData&,
                        bool& descendant_has3d_transform,
                        Vector<PaintLayer*>& unclipped_descendants,
-                       IntRect& absolute_descendant_bounding_box,
-                       CompositingReasonsStats&);
+                       IntRect& absolute_descendant_bounding_box);
 
   LayoutView& layout_view_;
   CompositingReasonFinder& compositing_reason_finder_;

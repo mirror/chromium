@@ -8,7 +8,6 @@
 #include <stdint.h>
 
 #include "ash/ash_export.h"
-#include "ash/display/display_configuration_controller.h"
 #include "base/callback_forward.h"
 #include "base/macros.h"
 #include "base/memory/weak_ptr.h"
@@ -47,8 +46,7 @@ class ASH_EXPORT ScreenRotationAnimator {
   // the target position, followed by a new |Rotate()| call with the pending
   // rotation request.
   void Rotate(display::Display::Rotation new_rotation,
-              display::Display::RotationSource source,
-              DisplayConfigurationController::RotationAnimation mode);
+              display::Display::RotationSource source);
 
   void AddScreenRotationAnimatorObserver(
       ScreenRotationAnimatorObserver* observer);
@@ -71,23 +69,19 @@ class ASH_EXPORT ScreenRotationAnimator {
   using CopyCallback =
       base::OnceCallback<void(std::unique_ptr<viz::CopyOutputResult> result)>;
   struct ScreenRotationRequest {
-    ScreenRotationRequest(
-        int64_t id,
-        int64_t display_id,
-        display::Display::Rotation to_rotation,
-        display::Display::RotationSource from_source,
-        DisplayConfigurationController::RotationAnimation mode)
+    ScreenRotationRequest(int64_t id,
+                          int64_t display_id,
+                          display::Display::Rotation to_rotation,
+                          display::Display::RotationSource from_source)
         : id(id),
           display_id(display_id),
           new_rotation(to_rotation),
-          source(from_source),
-          mode(mode) {}
+          source(from_source) {}
     int64_t id;
     int64_t display_id;
     display::Display::Rotation old_rotation;
     display::Display::Rotation new_rotation;
     display::Display::RotationSource source;
-    DisplayConfigurationController::RotationAnimation mode;
   };
 
   // This function can be overridden in unit test to test removing external

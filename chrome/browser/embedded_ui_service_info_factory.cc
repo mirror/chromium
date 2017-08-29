@@ -4,7 +4,6 @@
 
 #include "chrome/browser/embedded_ui_service_info_factory.h"
 
-#include "base/message_loop/message_loop.h"
 #include "content/public/browser/discardable_shared_memory_manager.h"
 #include "services/ui/public/interfaces/constants.mojom.h"
 #include "services/ui/service.h"

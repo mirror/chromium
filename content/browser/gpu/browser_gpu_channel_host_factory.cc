@@ -81,9 +81,8 @@ BrowserGpuChannelHostFactory::EstablishRequest::Create(
   // PostTask outside the constructor to ensure at least one reference exists.
   task_runner->PostTask(
       FROM_HERE,
-      base::BindOnce(
-          &BrowserGpuChannelHostFactory::EstablishRequest::EstablishOnIO,
-          establish_request));
+      base::Bind(&BrowserGpuChannelHostFactory::EstablishRequest::EstablishOnIO,
+                 establish_request));
   return establish_request;
 }
 
@@ -141,8 +140,8 @@ void BrowserGpuChannelHostFactory::EstablishRequest::FinishOnIO() {
   event_.Signal();
   main_task_runner_->PostTask(
       FROM_HERE,
-      base::BindOnce(
-          &BrowserGpuChannelHostFactory::EstablishRequest::FinishOnMain, this));
+      base::Bind(&BrowserGpuChannelHostFactory::EstablishRequest::FinishOnMain,
+                 this));
 }
 
 void BrowserGpuChannelHostFactory::EstablishRequest::FinishOnMain() {
@@ -219,7 +218,7 @@ BrowserGpuChannelHostFactory::BrowserGpuChannelHostFactory()
     if (!cache_dir.empty()) {
       GetIOThreadTaskRunner()->PostTask(
           FROM_HERE,
-          base::BindOnce(
+          base::Bind(
               &BrowserGpuChannelHostFactory::InitializeShaderDiskCacheOnIO,
               gpu_client_id_, cache_dir));
     }

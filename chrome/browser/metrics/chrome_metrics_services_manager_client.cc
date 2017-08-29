@@ -38,7 +38,6 @@
 #include "base/win/registry.h"
 #include "chrome/common/chrome_constants.h"
 #include "chrome/install_static/install_util.h"
-#include "components/crash/content/app/crash_export_thunks.h"
 #include "components/crash/content/app/crashpad.h"
 #endif  // OS_WIN
 
@@ -47,6 +46,17 @@
 #endif  // defined(OS_CHROMEOS)
 
 namespace {
+
+#if defined(OS_WIN)
+// Type for the function pointer to enable and disable crash reporting on
+// windows. Needed because the function is loaded from chrome_elf.
+typedef void (*SetUploadConsentPointer)(bool);
+
+// The name of the function used to set the uploads enabled state in
+// components/crash/content/app/crashpad.cc. This is used to call the function
+// exported by the chrome_elf dll.
+const char kCrashpadUpdateConsentFunctionName[] = "SetUploadConsentImpl";
+#endif  // OS_WIN
 
 // Name of the variations param that defines the sampling rate.
 const char kRateParamName[] = "sampling_rate_per_mille";
@@ -262,10 +272,19 @@ void ChromeMetricsServicesManagerClient::UpdateRunningServices(
   install_static::SetCollectStatsInSample(IsClientInSample());
 
   // Next, get Crashpad to pick up the sampling state for this session.
-  // Crashpad will use the kRegUsageStatsInSample registry value to apply
-  // sampling correctly, but may_record already reflects the sampling state.
-  // This isn't a problem though, since they will be consistent.
-  SetUploadConsentImpl(may_record && may_upload);
+
+  // The crash reporting is handled by chrome_elf.dll.
+  HMODULE elf_module = GetModuleHandle(chrome::kChromeElfDllName);
+  static SetUploadConsentPointer set_upload_consent =
+      reinterpret_cast<SetUploadConsentPointer>(
+          GetProcAddress(elf_module, kCrashpadUpdateConsentFunctionName));
+
+  if (set_upload_consent) {
+    // Crashpad will use the kRegUsageStatsInSample registry value to apply
+    // sampling correctly, but may_record already reflects the sampling state.
+    // This isn't a problem though, since they will be consistent.
+    set_upload_consent(may_record && may_upload);
+  }
 }
 #endif  // defined(OS_WIN)
 

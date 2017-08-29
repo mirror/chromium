@@ -13,14 +13,15 @@
 #include "tools/traffic_annotation/auditor/instance.h"
 #include "tools/traffic_annotation/traffic_annotation.pb.h"
 
-// Holds an item of safe list rules for auditor.
+// Holds an item of whitelist exception rule for auditor.
 struct AuditorException {
   enum class ExceptionType {
-    ALL,                // Ignore all errors (doesn't check the files at all).
-    MISSING,            // Ignore missing annotations.
-    DIRECT_ASSIGNMENT,  // Ignore direct assignment of annotation value.
-    EXCEPTION_TYPE_LAST = DIRECT_ASSIGNMENT
+    ALL,            // Ignore all errors (doesn't check the files at all).
+    MISSING,        // Ignore missing annotations.
+    EMPTY_MUTABLE,  // Ignore empty mutable annotation constructor.
+    EXCEPTION_TYPE_LAST = EMPTY_MUTABLE
   } type;
+  std::string partial_path;
 
   static bool TypeFromString(const std::string& type_string,
                              ExceptionType* type_value) {
@@ -28,8 +29,8 @@ struct AuditorException {
       *type_value = ExceptionType::ALL;
     } else if (type_string == "missing") {
       *type_value = ExceptionType::MISSING;
-    } else if (type_string == "direct_assignment") {
-      *type_value = ExceptionType::DIRECT_ASSIGNMENT;
+    } else if (type_string == "empty_mutable") {
+      *type_value = ExceptionType::EMPTY_MUTABLE;
     } else {
       return false;
     }
@@ -58,12 +59,12 @@ class TrafficAnnotationAuditor {
   // Computes the hash value of a traffic annotation unique id.
   static int ComputeHashValue(const std::string& unique_id);
 
-  // Loads the safe list file and populates |safe_list_|.
-  bool LoadSafeList();
+  // Loads the whitelist file and populates |ignore_list_|.
+  bool LoadWhiteList();
 
-  // Checks to see if a |file_path| matches a safe list with given type.
-  bool IsSafeListed(const std::string& file_path,
-                    AuditorException::ExceptionType exception_type);
+  // Checks to see if a |file_path| matches a whitelist with given type.
+  bool IsWhitelisted(const std::string& file_path,
+                     AuditorException::ExceptionType whitelist_type);
 
   // Checks to see if any unique id or extra id or their hash code are
   // duplicated. Adds errors to |errors_| and purges annotations with duplicate
@@ -144,11 +145,8 @@ class TrafficAnnotationAuditor {
   std::vector<CallInstance> extracted_calls_;
   std::vector<AuditorResult> errors_;
 
-  bool safe_list_loaded_;
-  std::vector<std::string>
-      safe_list_[static_cast<int>(
-                     AuditorException::ExceptionType::EXCEPTION_TYPE_LAST) +
-                 1];
+  std::vector<std::string> ignore_list_[static_cast<int>(
+      AuditorException::ExceptionType::EXCEPTION_TYPE_LAST)];
 
   base::FilePath gn_file_for_test_;
   std::map<std::string, bool> checked_dependencies_;

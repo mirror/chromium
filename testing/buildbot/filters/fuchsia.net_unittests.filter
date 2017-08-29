@@ -14,8 +14,10 @@
 -EffectiveConnectionTypeTest*
 -EmbeddedTestServer*
 -HostResolverImplDnsTest.DnsTask
--HttpCache.RangeGET_ParallelValidationDifferentRanges  # https://crbug.com/755552
--HttpCache.RangeGET_ParallelValidationOverlappingRanges  # https://crbug.com/758221
+
+# https://crbug.com/755552
+-HttpCache.RangeGET_ParallelValidationDifferentRanges
+
 -HttpNetworkTransactionTest.UploadUnreadableFile
 -HttpServerTest.*
 -NetworkInterfacesTest.GetNetworkList

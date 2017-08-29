@@ -105,10 +105,6 @@ chrome.test.runTests([
     chrome.autotestPrivate.setPrimaryButtonRight(false);
     chrome.test.succeed();
   },
-  function setMouseReverseScroll() {
-    chrome.autotestPrivate.setMouseReverseScroll(true);
-    chrome.test.succeed();
-  },
   function getVisibleNotifications() {
     chrome.autotestPrivate.getVisibleNotifications(function(){});
     chrome.test.succeed();

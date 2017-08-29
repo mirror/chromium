@@ -37,7 +37,6 @@
 #include "platform/geometry/FloatRect.h"
 #include "platform/geometry/FloatSize.h"
 #include "platform/geometry/IntSize.h"
-#include "platform/graphics/CompositorElementId.h"
 #include "platform/graphics/GraphicsLayerClient.h"
 #include "platform/scroll/ScrollableArea.h"
 #include "public/platform/WebScrollbar.h"
@@ -218,11 +217,6 @@ class CORE_EXPORT VisualViewport final
       IncludeScrollbarsInRect = kExcludeScrollbars) const override;
   RefPtr<WebTaskRunner> GetTimerTaskRunner() const final;
 
-  // VisualViewport scrolling may involve pinch zoom and gets routed through
-  // WebViewImpl explicitly rather than via ScrollingCoordinator::DidScroll
-  // since it needs to be set in tandem with the page scale delta.
-  void DidScroll(const gfx::ScrollOffset&) final { NOTREACHED(); }
-
   // Visual Viewport API implementation.
   double OffsetLeft() const;
   double OffsetTop() const;
@@ -296,7 +290,6 @@ class CORE_EXPORT VisualViewport final
   float browser_controls_adjustment_;
   float max_page_scale_;
   bool track_pinch_zoom_stats_for_page_;
-  UniqueObjectId unique_id_;
 };
 
 }  // namespace blink

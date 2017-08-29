@@ -50,7 +50,6 @@ MappedMemoryManager::MappedMemoryManager(CommandBufferHelper* helper,
 }
 
 MappedMemoryManager::~MappedMemoryManager() {
-  helper_->FlushLazy();
   CommandBuffer* cmd_buf = helper_->command_buffer();
   for (auto& chunk : chunks_) {
     cmd_buf->DestroyTransferBuffer(chunk->shm_id());
@@ -147,9 +146,7 @@ void MappedMemoryManager::FreeUnused() {
   while (iter != chunks_.end()) {
     MemoryChunk* chunk = (*iter).get();
     chunk->FreeUnused();
-    if (chunk->bytes_in_use() == 0u) {
-      if (chunk->InUseOrFreePending())
-        helper_->FlushLazy();
+    if (!chunk->InUse()) {
       cmd_buf->DestroyTransferBuffer(chunk->shm_id());
       allocated_memory_ -= chunk->GetSize();
       iter = chunks_.erase(iter);
@@ -203,17 +200,6 @@ bool MappedMemoryManager::OnMemoryDump(
   }
 
   return true;
-}
-
-FencedAllocator::State MappedMemoryManager::GetPointerStatusForTest(
-    void* pointer,
-    int32_t* token_if_pending) {
-  for (auto& chunk : chunks_) {
-    if (chunk->IsInChunk(pointer)) {
-      return chunk->GetPointerStatusForTest(pointer, token_if_pending);
-    }
-  }
-  return FencedAllocator::FREE;
 }
 
 void ScopedMappedMemoryPtr::Release() {

@@ -27,13 +27,12 @@ namespace {
 void OnReadDirectoryOnIOThread(
     const storage::FileSystemOperation::ReadDirectoryCallback& callback,
     base::File::Error result,
-    storage::FileSystemOperation::FileEntryList entries,
+    const storage::FileSystemOperation::FileEntryList& entries,
     bool has_more) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
 
-  BrowserThread::PostTask(
-      BrowserThread::UI, FROM_HERE,
-      base::BindOnce(callback, result, std::move(entries), has_more));
+  BrowserThread::PostTask(BrowserThread::UI, FROM_HERE,
+                          base::BindOnce(callback, result, entries, has_more));
 }
 
 void ReadDirectoryOnIOThread(
@@ -43,7 +42,7 @@ void ReadDirectoryOnIOThread(
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
 
   file_system_context->operation_runner()->ReadDirectory(
-      url, base::BindRepeating(&OnReadDirectoryOnIOThread, callback));
+      url, base::Bind(&OnReadDirectoryOnIOThread, callback));
 }
 
 void OnGetMetadataOnIOThread(
@@ -69,12 +68,30 @@ void GetMetadataOnIOThread(
 
 }  // namespace
 
+struct RecentDownloadSource::FileSystemURLWithLastModified {
+  storage::FileSystemURL url;
+  base::Time last_modified;
+
+  friend bool operator<(const FileSystemURLWithLastModified& a,
+                        const FileSystemURLWithLastModified& b) {
+    // Reverse the comparison order because std::priority_queue.pop() deletes
+    // the most *largest* element whereas we want to delete the *oldest*
+    // document.
+    return a.last_modified > b.last_modified;
+  }
+};
+
 const char RecentDownloadSource::kLoadHistogramName[] =
     "FileBrowser.Recent.LoadDownloads";
 
 RecentDownloadSource::RecentDownloadSource(Profile* profile)
+    : RecentDownloadSource(profile, kMaxFilesFromSingleSource) {}
+
+RecentDownloadSource::RecentDownloadSource(Profile* profile,
+                                           size_t max_num_files)
     : mount_point_name_(
           file_manager::util::GetDownloadsMountPointName(profile)),
+      max_num_files_(max_num_files),
       weak_ptr_factory_(this) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
 }
@@ -83,17 +100,21 @@ RecentDownloadSource::~RecentDownloadSource() {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
 }
 
-void RecentDownloadSource::GetRecentFiles(Params params) {
+void RecentDownloadSource::GetRecentFiles(RecentContext context,
+                                          GetRecentFilesCallback callback) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
-  DCHECK(!params_.has_value());
+  DCHECK(!context_.is_valid());
+  DCHECK(callback_.is_null());
   DCHECK(build_start_time_.is_null());
   DCHECK_EQ(0, inflight_readdirs_);
   DCHECK_EQ(0, inflight_stats_);
-  DCHECK(recent_files_.empty());
+  DCHECK(top_entries_.empty());
 
-  params_.emplace(std::move(params));
+  context_ = std::move(context);
+  callback_ = std::move(callback);
 
-  DCHECK(params_.has_value());
+  DCHECK(context_.is_valid());
+  DCHECK(!callback_.is_null());
 
   build_start_time_ = base::TimeTicks::Now();
 
@@ -102,7 +123,7 @@ void RecentDownloadSource::GetRecentFiles(Params params) {
 
 void RecentDownloadSource::ScanDirectory(const base::FilePath& path) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
-  DCHECK(params_.has_value());
+  DCHECK(context_.is_valid());
 
   storage::FileSystemURL url = BuildDownloadsURL(path);
 
@@ -110,8 +131,7 @@ void RecentDownloadSource::ScanDirectory(const base::FilePath& path) {
   BrowserThread::PostTask(
       BrowserThread::IO, FROM_HERE,
       base::BindOnce(&ReadDirectoryOnIOThread,
-                     make_scoped_refptr(params_.value().file_system_context()),
-                     url,
+                     make_scoped_refptr(context_.file_system_context()), url,
                      base::Bind(&RecentDownloadSource::OnReadDirectory,
                                 weak_ptr_factory_.GetWeakPtr(), path)));
 }
@@ -119,10 +139,10 @@ void RecentDownloadSource::ScanDirectory(const base::FilePath& path) {
 void RecentDownloadSource::OnReadDirectory(
     const base::FilePath& path,
     base::File::Error result,
-    storage::FileSystemOperation::FileEntryList entries,
+    const storage::FileSystemOperation::FileEntryList& entries,
     bool has_more) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
-  DCHECK(params_.has_value());
+  DCHECK(context_.is_valid());
 
   for (const auto& entry : entries) {
     base::FilePath subpath = path.Append(entry.name);
@@ -135,7 +155,7 @@ void RecentDownloadSource::OnReadDirectory(
           BrowserThread::IO, FROM_HERE,
           base::BindOnce(
               &GetMetadataOnIOThread,
-              make_scoped_refptr(params_.value().file_system_context()), url,
+              make_scoped_refptr(context_.file_system_context()), url,
               storage::FileSystemOperation::GET_METADATA_FIELD_LAST_MODIFIED,
               base::Bind(&RecentDownloadSource::OnGetMetadata,
                          weak_ptr_factory_.GetWeakPtr(), url)));
@@ -153,13 +173,12 @@ void RecentDownloadSource::OnGetMetadata(const storage::FileSystemURL& url,
                                          base::File::Error result,
                                          const base::File::Info& info) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
-  DCHECK(params_.has_value());
 
-  if (result == base::File::FILE_OK &&
-      info.last_modified >= params_.value().cutoff_time()) {
-    recent_files_.emplace(RecentFile(url, info.last_modified));
-    while (recent_files_.size() > params_.value().max_files())
-      recent_files_.pop();
+  if (result == base::File::FILE_OK) {
+    top_entries_.emplace(
+        FileSystemURLWithLastModified{url, info.last_modified});
+    while (top_entries_.size() > max_num_files_)
+      top_entries_.pop();
   }
 
   --inflight_stats_;
@@ -173,10 +192,10 @@ void RecentDownloadSource::OnReadOrStatFinished() {
     return;
 
   // All reads/scans completed.
-  std::vector<RecentFile> files;
-  while (!recent_files_.empty()) {
-    files.emplace_back(recent_files_.top());
-    recent_files_.pop();
+  RecentFileList files;
+  while (!top_entries_.empty()) {
+    files.emplace_back(top_entries_.top().url);
+    top_entries_.pop();
   }
 
   DCHECK(!build_start_time_.is_null());
@@ -184,27 +203,29 @@ void RecentDownloadSource::OnReadOrStatFinished() {
                       base::TimeTicks::Now() - build_start_time_);
   build_start_time_ = base::TimeTicks();
 
-  Params params = std::move(params_.value());
-  params_.reset();
+  context_ = RecentContext();
+  GetRecentFilesCallback callback;
+  std::swap(callback, callback_);
 
-  DCHECK(!params_.has_value());
+  DCHECK(!context_.is_valid());
+  DCHECK(callback_.is_null());
   DCHECK(build_start_time_.is_null());
   DCHECK_EQ(0, inflight_readdirs_);
   DCHECK_EQ(0, inflight_stats_);
-  DCHECK(recent_files_.empty());
+  DCHECK(top_entries_.empty());
 
-  std::move(params.callback()).Run(std::move(files));
+  std::move(callback).Run(std::move(files));
 }
 
 storage::FileSystemURL RecentDownloadSource::BuildDownloadsURL(
     const base::FilePath& path) const {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
-  DCHECK(params_.has_value());
+  DCHECK(context_.is_valid());
 
   storage::ExternalMountPoints* mount_points =
       storage::ExternalMountPoints::GetSystemInstance();
 
-  return mount_points->CreateExternalFileSystemURL(params_.value().origin(),
+  return mount_points->CreateExternalFileSystemURL(context_.origin(),
                                                    mount_point_name_, path);
 }
 

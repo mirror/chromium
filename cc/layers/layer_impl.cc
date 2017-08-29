@@ -147,7 +147,7 @@ void LayerImpl::SetScrollTreeIndex(int index) {
   scroll_tree_index_ = index;
 }
 
-void LayerImpl::PopulateSharedQuadState(viz::SharedQuadState* state) const {
+void LayerImpl::PopulateSharedQuadState(SharedQuadState* state) const {
   state->SetAll(draw_properties_.target_space_transform, gfx::Rect(bounds()),
                 draw_properties_.visible_layer_rect, draw_properties_.clip_rect,
                 draw_properties_.is_clipped, draw_properties_.opacity,
@@ -155,7 +155,7 @@ void LayerImpl::PopulateSharedQuadState(viz::SharedQuadState* state) const {
 }
 
 void LayerImpl::PopulateScaledSharedQuadState(
-    viz::SharedQuadState* state,
+    SharedQuadState* state,
     float layer_to_content_scale_x,
     float layer_to_content_scale_y) const {
   gfx::Transform scaled_draw_transform =
@@ -215,7 +215,7 @@ void LayerImpl::GetDebugBorderProperties(SkColor* color, float* width) const {
 void LayerImpl::AppendDebugBorderQuad(
     RenderPass* render_pass,
     const gfx::Size& bounds,
-    const viz::SharedQuadState* shared_quad_state,
+    const SharedQuadState* shared_quad_state,
     AppendQuadsData* append_quads_data) const {
   SkColor color;
   float width;
@@ -224,13 +224,12 @@ void LayerImpl::AppendDebugBorderQuad(
                         append_quads_data, color, width);
 }
 
-void LayerImpl::AppendDebugBorderQuad(
-    RenderPass* render_pass,
-    const gfx::Size& bounds,
-    const viz::SharedQuadState* shared_quad_state,
-    AppendQuadsData* append_quads_data,
-    SkColor color,
-    float width) const {
+void LayerImpl::AppendDebugBorderQuad(RenderPass* render_pass,
+                                      const gfx::Size& bounds,
+                                      const SharedQuadState* shared_quad_state,
+                                      AppendQuadsData* append_quads_data,
+                                      SkColor color,
+                                      float width) const {
   if (!ShowDebugBorders(DebugBorderType::LAYER))
     return;
 
@@ -384,12 +383,12 @@ std::unique_ptr<base::DictionaryValue> LayerImpl::LayerTreeAsJson() {
   result->SetInteger("LayerId", id());
   result->SetString("LayerType", LayerTypeAsString());
 
-  auto list = std::make_unique<base::ListValue>();
+  auto list = base::MakeUnique<base::ListValue>();
   list->AppendInteger(bounds().width());
   list->AppendInteger(bounds().height());
   result->Set("Bounds", std::move(list));
 
-  list = std::make_unique<base::ListValue>();
+  list = base::MakeUnique<base::ListValue>();
   list->AppendDouble(position_.x());
   list->AppendDouble(position_.y());
   result->Set("Position", std::move(list));
@@ -397,7 +396,7 @@ std::unique_ptr<base::DictionaryValue> LayerImpl::LayerTreeAsJson() {
   const gfx::Transform& gfx_transform = test_properties()->transform;
   double transform[16];
   gfx_transform.matrix().asColMajord(transform);
-  list = std::make_unique<base::ListValue>();
+  list = base::MakeUnique<base::ListValue>();
   for (int i = 0; i < 16; ++i)
     list->AppendDouble(transform[i]);
   result->Set("Transform", std::move(list));
@@ -416,7 +415,7 @@ std::unique_ptr<base::DictionaryValue> LayerImpl::LayerTreeAsJson() {
     result->Set("TouchRegion", std::move(region));
   }
 
-  list = std::make_unique<base::ListValue>();
+  list = base::MakeUnique<base::ListValue>();
   for (size_t i = 0; i < test_properties()->children.size(); ++i)
     list->Append(test_properties()->children[i]->LayerTreeAsJson());
   result->Set("Children", std::move(list));
@@ -487,6 +486,23 @@ void LayerImpl::ResetChangeTracking() {
 
 bool LayerImpl::has_copy_requests_in_target_subtree() {
   return GetEffectTree().Node(effect_tree_index())->subtree_has_copy_request;
+}
+
+void LayerImpl::UpdatePropertyTreeForAnimationIfNeeded() {
+  if (HasAnyAnimationTargetingProperty(TargetProperty::TRANSFORM)) {
+    if (TransformNode* node =
+            GetTransformTree().FindNodeFromElementId(element_id())) {
+      bool has_potential_animation = HasPotentiallyRunningTransformAnimation();
+      if (node->has_potential_animation != has_potential_animation) {
+        node->has_potential_animation = has_potential_animation;
+        node->has_only_translation_animations =
+            GetMutatorHost()->HasOnlyTranslationTransforms(
+                element_id(), GetElementTypeForAnimation());
+        GetTransformTree().set_needs_update(true);
+        layer_tree_impl()->set_needs_update_draw_properties();
+      }
+    }
+  }
 }
 
 gfx::ScrollOffset LayerImpl::ScrollOffsetForAnimation() const {
@@ -620,6 +636,11 @@ SkColor LayerImpl::SafeOpaqueBackgroundColor() const {
   return color;
 }
 
+bool LayerImpl::HasPotentiallyRunningFilterAnimation() const {
+  return GetMutatorHost()->HasPotentiallyRunningFilterAnimation(
+      element_id(), GetElementTypeForAnimation());
+}
+
 void LayerImpl::SetMasksToBounds(bool masks_to_bounds) {
   masks_to_bounds_ = masks_to_bounds;
 }
@@ -668,6 +689,37 @@ void LayerImpl::SetMutableProperties(uint32_t properties) {
 
 void LayerImpl::SetPosition(const gfx::PointF& position) {
   position_ = position;
+}
+
+bool LayerImpl::HasPotentiallyRunningTransformAnimation() const {
+  return GetMutatorHost()->HasPotentiallyRunningTransformAnimation(
+      element_id(), GetElementTypeForAnimation());
+}
+
+bool LayerImpl::HasAnyAnimationTargetingProperty(
+    TargetProperty::Type property) const {
+  return GetMutatorHost()->HasAnyAnimationTargetingProperty(element_id(),
+                                                            property);
+}
+
+bool LayerImpl::HasFilterAnimationThatInflatesBounds() const {
+  return GetMutatorHost()->HasFilterAnimationThatInflatesBounds(element_id());
+}
+
+bool LayerImpl::HasAnimationThatInflatesBounds() const {
+  return GetMutatorHost()->HasAnimationThatInflatesBounds(element_id());
+}
+
+bool LayerImpl::FilterAnimationBoundsForBox(const gfx::BoxF& box,
+                                            gfx::BoxF* bounds) const {
+  return GetMutatorHost()->FilterAnimationBoundsForBox(element_id(), box,
+                                                       bounds);
+}
+
+bool LayerImpl::TransformAnimationBoundsForBox(const gfx::BoxF& box,
+                                               gfx::BoxF* bounds) const {
+  return GetMutatorHost()->TransformAnimationBoundsForBox(element_id(), box,
+                                                          bounds);
 }
 
 void LayerImpl::SetUpdateRect(const gfx::Rect& update_rect) {
@@ -780,6 +832,8 @@ void LayerImpl::AsValueInto(base::trace_event::TracedValue* state) const {
 
   state->SetBoolean("can_use_lcd_text", CanUseLCDText());
   state->SetBoolean("contents_opaque", contents_opaque());
+
+  state->SetBoolean("has_animation_bounds", HasAnimationThatInflatesBounds());
 
   state->SetBoolean("has_will_change_transform_hint",
                     has_will_change_transform_hint());

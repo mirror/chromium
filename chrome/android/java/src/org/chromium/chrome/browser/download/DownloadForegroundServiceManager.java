@@ -101,7 +101,7 @@ public class DownloadForegroundServiceManager {
         // Stop the foreground service.
         // In the pending case, this will stop the foreground immediately after it was started.
         if (!isActive(downloadUpdate.mDownloadStatus)) {
-            stopAndUnbindService(downloadUpdate.mDownloadStatus == DownloadStatus.CANCEL);
+            stopAndUnbindService(downloadUpdate.mDownloadStatus == DownloadStatus.COMPLETE);
             cleanDownloadUpdateQueue();
             return;
         }
@@ -159,8 +159,9 @@ public class DownloadForegroundServiceManager {
     @VisibleForTesting
     void startAndBindServiceInternal(Context context) {
         DownloadForegroundService.startDownloadForegroundService(context);
-        context.bindService(new Intent(context, DownloadForegroundService.class), mConnection,
-                Context.BIND_AUTO_CREATE);
+        ContextUtils.getApplicationContext().bindService(
+                new Intent(ContextUtils.getApplicationContext(), DownloadForegroundService.class),
+                mConnection, Context.BIND_AUTO_CREATE);
     }
 
     private final ServiceConnection mConnection = new ServiceConnection() {
@@ -196,17 +197,17 @@ public class DownloadForegroundServiceManager {
     /** Helper code to stop and unbind service. */
 
     @VisibleForTesting
-    void stopAndUnbindService(boolean isCancelled) {
+    void stopAndUnbindService(boolean isComplete) {
         mIsServiceBound = false;
         if (mBoundService != null) {
-            stopAndUnbindServiceInternal(isCancelled);
+            stopAndUnbindServiceInternal(isComplete);
             mBoundService = null;
         }
     }
 
     @VisibleForTesting
-    void stopAndUnbindServiceInternal(boolean isCancelled) {
-        mBoundService.stopDownloadForegroundService(isCancelled);
+    void stopAndUnbindServiceInternal(boolean isComplete) {
+        mBoundService.stopDownloadForegroundService(isComplete);
         ContextUtils.getApplicationContext().unbindService(mConnection);
     }
 

@@ -192,7 +192,6 @@ component("core") {
     "//third_party/WebKit/Source/core/intersection_observer",
     "//third_party/WebKit/Source/core/layout",
     "//third_party/WebKit/Source/core/layout/svg:svg_layout",
-    "//third_party/WebKit/Source/core/leak_detector",
     "//third_party/WebKit/Source/core/loader",
     "//third_party/WebKit/Source/core/mojo",
     "//third_party/WebKit/Source/core/offscreencanvas",
@@ -425,7 +424,6 @@ css_properties("make_core_generated_computed_style_base") {
     "css/ComputedStyleDiffFunctions.json5",
     "css/CSSValueKeywords.json5",
     "css/CSSPropertiesRanking.json5",
-    "css/CSSGroupConfig.json5",
   ]
   other_inputs = [
     "../build/scripts/templates/fields/field.tmpl",
@@ -462,13 +460,9 @@ css_properties("make_core_generated_css_value_id_mappings") {
 
 css_properties("make_core_generated_css_property_api_baseclass") {
   script = "../build/scripts/core/css/properties/make_css_property_api_base.py"
-  other_inputs = [
-    "../build/scripts/core/css/properties/templates/CSSPropertyAPI.cpp.tmpl",
-    "../build/scripts/core/css/properties/templates/CSSPropertyAPI.h.tmpl",
-  ]
+  other_inputs = [ "../build/scripts/core/css/properties/templates/CSSPropertyAPI.cpp.tmpl" ]
   outputs = [
     "$blink_core_output_dir/css/properties/CSSPropertyAPI.cpp",
-    "$blink_core_output_dir/css/properties/CSSPropertyAPI.h",
   ]
 }
 
@@ -522,8 +516,8 @@ code_generator("make_core_generated_css_property_apis") {
     "$blink_core_output_dir/css/properties/CSSPropertyAPICounterReset.h",
     "$blink_core_output_dir/css/properties/CSSPropertyAPICursor.h",
     "$blink_core_output_dir/css/properties/CSSPropertyAPID.h",
+    "$blink_core_output_dir/css/properties/CSSPropertyAPIDefaultMetadata.h",
     "$blink_core_output_dir/css/properties/CSSPropertyAPIDelay.h",
-    "$blink_core_output_dir/css/properties/CSSPropertyAPIDescriptorOnly.h",
     "$blink_core_output_dir/css/properties/CSSPropertyAPIDuration.h",
     "$blink_core_output_dir/css/properties/CSSPropertyAPIFillOrStrokeOpacity.h",
     "$blink_core_output_dir/css/properties/CSSPropertyAPIFilter.h",
@@ -560,7 +554,6 @@ code_generator("make_core_generated_css_property_apis") {
     "$blink_core_output_dir/css/properties/CSSPropertyAPIMask.h",
     "$blink_core_output_dir/css/properties/CSSPropertyAPIMaskSourceType.h",
     "$blink_core_output_dir/css/properties/CSSPropertyAPIMaxWidthOrHeight.h",
-    "$blink_core_output_dir/css/properties/CSSPropertyAPIMinWidthOrHeight.h",
     "$blink_core_output_dir/css/properties/CSSPropertyAPIObjectPosition.h",
     "$blink_core_output_dir/css/properties/CSSPropertyAPIOffset.h",
     "$blink_core_output_dir/css/properties/CSSPropertyAPIOffsetAnchor.h",
@@ -628,6 +621,7 @@ code_generator("make_core_generated_css_property_apis") {
     "$blink_core_output_dir/css/properties/CSSPropertyAPIWebkitLineClamp.h",
     "$blink_core_output_dir/css/properties/CSSPropertyAPIWebkitMargin.h",
     "$blink_core_output_dir/css/properties/CSSPropertyAPIWebkitMaskComposite.h",
+    "$blink_core_output_dir/css/properties/CSSPropertyAPIWebkitMaskRepeat.h",
     "$blink_core_output_dir/css/properties/CSSPropertyAPIWebkitMaxLogicalWidthOrHeight.h",
     "$blink_core_output_dir/css/properties/CSSPropertyAPIWebkitOrigin.h",
     "$blink_core_output_dir/css/properties/CSSPropertyAPIWebkitOriginX.h",
@@ -699,6 +693,7 @@ code_generator("make_core_generated_css_property_apis") {
     "$blink_core_output_dir/css/properties/CSSShorthandPropertyAPIWebkitColumnBreakBefore.h",
     "$blink_core_output_dir/css/properties/CSSShorthandPropertyAPIWebkitColumnBreakInside.h",
     "$blink_core_output_dir/css/properties/CSSShorthandPropertyAPIWebkitMarginCollapse.h",
+    "$blink_core_output_dir/css/properties/CSSShorthandPropertyAPIWebkitMask.h",
     "$blink_core_output_dir/css/properties/CSSShorthandPropertyAPIWebkitMaskBoxImage.h",
     "$blink_core_output_dir/css/properties/CSSShorthandPropertyAPIWebkitMaskPosition.h",
     "$blink_core_output_dir/css/properties/CSSShorthandPropertyAPIWebkitMaskRepeat.h",
@@ -1490,7 +1485,6 @@ jumbo_source_set("unit_tests") {
     "imagebitmap/ImageBitmapTest.cpp",
     "input/EventHandlerTest.cpp",
     "input/ImeOnFocusTest.cpp",
-    "input/ScrollBoundaryBehaviorTest.cpp",
     "input/TouchActionTest.cpp",
     "inspector/ProtocolParserTest.cpp",
     "intersection_observer/IntersectionObserverTest.cpp",
@@ -1589,7 +1583,6 @@ jumbo_source_set("unit_tests") {
     "page/scrolling/ScrollingCoordinatorTest.cpp",
     "page/scrolling/SmoothScrollTest.cpp",
     "page/scrolling/SnapCoordinatorTest.cpp",
-    "paint/BlockPainterTest.cpp",
     "paint/BoxPaintInvalidatorTest.cpp",
     "paint/FirstMeaningfulPaintDetectorTest.cpp",
     "paint/HTMLCanvasPainterTest.cpp",
@@ -1620,7 +1613,6 @@ jumbo_source_set("unit_tests") {
     "paint/compositing/CompositingReasonFinderTest.cpp",
     "paint/compositing/CompositorWorkerTest.cpp",
     "paint/compositing/PaintLayerCompositorTest.cpp",
-    "paint/ng/ng_text_fragment_painter_test.cc",
     "resize_observer/ResizeObserverTest.cpp",
     "scheduler/ActiveConnectionThrottlingTest.cpp",
     "scheduler/FrameThrottlingTest.cpp",

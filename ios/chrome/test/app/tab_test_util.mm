@@ -128,12 +128,11 @@ BOOL SetCurrentTabsToBeColdStartTabs() {
   if (!GetCurrentTabModel().tabUsageRecorder)
     return NO;
   TabModel* tab_model = GetCurrentTabModel();
-  std::vector<web::WebState*> web_states;
+  NSMutableArray* tabs = [NSMutableArray array];
   for (Tab* tab in tab_model) {
-    web_states.push_back(tab.webState);
+    [tabs addObject:tab];
   }
-  tab_model.tabUsageRecorder->InitialRestoredTabs(tab_model.currentTab.webState,
-                                                  web_states);
+  tab_model.tabUsageRecorder->InitialRestoredTabs(tab_model.currentTab, tabs);
   return YES;
 }
 

@@ -27,7 +27,6 @@
 
 #include "platform/CalculationValue.h"
 #include "platform/animation/AnimationUtilities.h"
-#include "platform/wtf/HashMap.h"
 
 namespace blink {
 

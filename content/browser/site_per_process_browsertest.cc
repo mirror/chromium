@@ -19,7 +19,6 @@
 #include "base/location.h"
 #include "base/memory/ptr_util.h"
 #include "base/path_service.h"
-#include "base/run_loop.h"
 #include "base/sequenced_task_runner.h"
 #include "base/single_thread_task_runner.h"
 #include "base/strings/pattern.h"
@@ -31,6 +30,7 @@
 #include "build/build_config.h"
 #include "cc/input/touch_action.h"
 #include "components/network_session_configurator/common/network_switches.h"
+#include "content/browser/child_process_importance.h"
 #include "content/browser/frame_host/cross_process_frame_connector.h"
 #include "content/browser/frame_host/frame_navigation_entry.h"
 #include "content/browser/frame_host/frame_tree.h"
@@ -121,7 +121,6 @@
 #include "content/browser/android/ime_adapter_android.h"
 #include "content/browser/renderer_host/input/touch_selection_controller_client_manager_android.h"
 #include "content/browser/renderer_host/render_widget_host_view_android.h"
-#include "content/public/browser/android/child_process_importance.h"
 #include "content/test/mock_overscroll_refresh_handler_android.h"
 #include "ui/gfx/geometry/point_f.h"
 #endif
@@ -1031,16 +1030,14 @@ class FrameRectChangedMessageFilter : public content::BrowserMessageFilter {
  private:
   ~FrameRectChangedMessageFilter() override {}
 
-  void OnFrameRectChanged(const gfx::Rect& rect,
-                          const viz::LocalSurfaceId& local_surface_id) {
+  void OnFrameRectChanged(const gfx::Rect& rect) {
     content::BrowserThread::PostTask(
         content::BrowserThread::UI, FROM_HERE,
         base::Bind(&FrameRectChangedMessageFilter::OnFrameRectChangedOnUI, this,
-                   rect, local_surface_id));
+                   rect));
   }
 
-  void OnFrameRectChangedOnUI(const gfx::Rect& rect,
-                              const viz::LocalSurfaceId& local_surface_id) {
+  void OnFrameRectChangedOnUI(const gfx::Rect& rect) {
     last_rect_ = rect;
     if (!frame_rect_received_) {
       frame_rect_received_ = true;
@@ -11107,7 +11104,6 @@ IN_PROC_BROWSER_TEST_F(SitePerProcessBrowserTest,
                 ->GetProcess());
 }
 
-#if defined(OS_ANDROID)
 IN_PROC_BROWSER_TEST_F(SitePerProcessBrowserTest, TestChildProcessImportance) {
   web_contents()->SetImportance(ChildProcessImportance::MODERATE);
 
@@ -11200,6 +11196,7 @@ IN_PROC_BROWSER_TEST_F(SitePerProcessBrowserTest, TestChildProcessImportance) {
             interstitial_process->GetWidgetImportanceForTesting());
 }
 
+#if defined(OS_ANDROID)
 // Tests for Android TouchSelectionEditing.
 class TouchSelectionControllerClientAndroidSiteIsolationTest
     : public SitePerProcessBrowserTest {

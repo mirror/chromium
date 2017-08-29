@@ -39,6 +39,7 @@ core_idl_files =
                     "clipboard/Clipboard.idl",
                     "clipboard/DataTransfer.idl",
                     "clipboard/DataTransferItemList.idl",
+                    "css/CSS.idl",
                     "css/CSSConditionRule.idl",
                     "css/CSSFontFaceRule.idl",
                     "css/CSSGroupingRule.idl",
@@ -433,7 +434,6 @@ core_idl_files =
 core_idl_with_modules_dependency_files =
     get_path_info([
                     "clipboard/DataTransferItem.idl",
-                    "css/CSS.idl",
                     "frame/Navigator.idl",
                     "frame/Screen.idl",
                     "frame/Window.idl",

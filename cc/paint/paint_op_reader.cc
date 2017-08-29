@@ -246,30 +246,16 @@ void PaintOpReader::Read(sk_sp<PaintShader>* shader) {
   // TODO(vmpstr): Read sk_sp<PaintRecord> record_. http://crbug.com/737629
   decltype(ref.colors_)::size_type colors_size = 0;
   ReadSimple(&colors_size);
-
-  // If colors_bytes would overflow, then definitely too many.
-  if (colors_size > std::numeric_limits<size_t>::max() / sizeof(SkColor)) {
-    valid_ = false;
-    return;
-  }
   size_t colors_bytes = colors_size * sizeof(SkColor);
   if (colors_bytes > remaining_bytes_) {
     valid_ = false;
     return;
   }
-  // TODO(enne): maybe we should cap the number of colors or positions to
-  // something much more reasonable, e.g. 1k?
   ref.colors_.resize(colors_size);
   ReadData(colors_bytes, ref.colors_.data());
 
   decltype(ref.positions_)::size_type positions_size = 0;
   ReadSimple(&positions_size);
-  // TODO(enne): positions and colors have to have the same count, so maybe
-  // don't serialize this either?
-  if (positions_size != colors_size) {
-    valid_ = false;
-    return;
-  }
   size_t positions_bytes = positions_size * sizeof(SkScalar);
   if (positions_bytes > remaining_bytes_) {
     valid_ = false;
@@ -280,19 +266,8 @@ void PaintOpReader::Read(sk_sp<PaintShader>* shader) {
 
   // We don't write the cached shader, so don't attempt to read it either.
 
-  // TODO(vmpstr): add serialization of these shader types.  For the moment
-  // pretend that these shaders don't exist and that the serialization is
-  // successful.  Valid ops pre-serialization should not cause deserialization
-  // failures.
-  if (shader_type == PaintShader::Type::kPaintRecord ||
-      shader_type == PaintShader::Type::kImage) {
-    *shader = nullptr;
-    return;
-  }
-
-  if (!(*shader)->IsValid()) {
+  if (!(*shader)->IsValid())
     valid_ = false;
-  }
 }
 
 bool PaintOpReader::AlignMemory(size_t alignment) {

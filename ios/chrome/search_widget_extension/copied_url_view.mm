@@ -4,8 +4,6 @@
 
 #import "ios/chrome/search_widget_extension/copied_url_view.h"
 
-#import <NotificationCenter/NotificationCenter.h>
-
 #include "base/ios/ios_util.h"
 #import "ios/chrome/search_widget_extension/ui_util.h"
 
@@ -57,21 +55,13 @@ const CGFloat kURLButtonMargin = 10;
 @synthesize copiedButtonView = _copiedButtonView;
 
 - (instancetype)initWithActionTarget:(id)target
-                      actionSelector:(SEL)actionSelector {
+                      actionSelector:(SEL)actionSelector
+                       primaryEffect:(UIVisualEffect*)primaryEffect
+                     secondaryEffect:(UIVisualEffect*)secondaryEffect {
   DCHECK(target);
   self = [super initWithFrame:CGRectZero];
   if (self) {
     self.translatesAutoresizingMaskIntoConstraints = NO;
-
-    UIVibrancyEffect* primaryEffect;
-    UIVibrancyEffect* secondaryEffect;
-    if (base::ios::IsRunningOnIOS10OrLater()) {
-      primaryEffect = [UIVibrancyEffect widgetPrimaryVibrancyEffect];
-      secondaryEffect = [UIVibrancyEffect widgetSecondaryVibrancyEffect];
-    } else {
-      primaryEffect = [UIVibrancyEffect notificationCenterVibrancyEffect];
-      secondaryEffect = [UIVibrancyEffect notificationCenterVibrancyEffect];
-    }
 
     UIVisualEffectView* primaryEffectView =
         [[UIVisualEffectView alloc] initWithEffect:primaryEffect];

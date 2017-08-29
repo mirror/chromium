@@ -4,10 +4,10 @@
 
 #include "core/layout/ng/ng_length_utils.h"
 
-#include <algorithm>
-#include "core/layout/LayoutBox.h"
 #include "core/layout/ng/ng_constraint_space.h"
 #include "core/layout/ng/ng_constraint_space_builder.h"
+#include "core/layout/ng/ng_fragment.h"
+#include "core/layout/ng/ng_layout_result.h"
 #include "core/style/ComputedStyle.h"
 #include "platform/LayoutUnit.h"
 #include "platform/Length.h"
@@ -49,9 +49,6 @@ LayoutUnit ResolveInlineLength(const NGConstraintSpace& constraint_space,
             LayoutUnit());
   DCHECK_EQ(constraint_space.WritingMode(),
             FromPlatformWritingMode(style.GetWritingMode()));
-
-  if (constraint_space.IsAnonymous())
-    return constraint_space.AvailableSize().inline_size;
 
   if (type == LengthResolveType::kMinSize && length.IsAuto())
     return LayoutUnit();
@@ -133,9 +130,6 @@ LayoutUnit ResolveBlockLength(const NGConstraintSpace& constraint_space,
   DCHECK_EQ(constraint_space.WritingMode(),
             FromPlatformWritingMode(style.GetWritingMode()));
 
-  if (constraint_space.IsAnonymous())
-    return content_size;
-
   if (type == LengthResolveType::kMinSize && length.IsAuto())
     return LayoutUnit();
 
@@ -201,9 +195,9 @@ MinMaxSize ComputeMinAndMaxContentContribution(
   // Synthesize a zero-sized constraint space for passing to
   // ResolveInlineLength.
   NGWritingMode writing_mode = FromPlatformWritingMode(style.GetWritingMode());
-  NGConstraintSpaceBuilder builder(
-      writing_mode,
-      /* icb_size */ {NGSizeIndefinite, NGSizeIndefinite});
+  NGConstraintSpaceBuilder builder(writing_mode);
+  builder.SetInitialContainingBlockSize(
+      NGPhysicalSize{LayoutUnit(), LayoutUnit()});
   RefPtr<NGConstraintSpace> space = builder.ToConstraintSpace(writing_mode);
 
   MinMaxSize computed_sizes;
@@ -526,23 +520,6 @@ NGBoxStrut GetScrollbarSizes(const LayoutObject* layout_object) {
   }
   return sizes.ConvertToLogical(
       FromPlatformWritingMode(style->GetWritingMode()), style->Direction());
-}
-
-NGLogicalSize CalculateContentBoxSize(
-    const NGLogicalSize border_box_size,
-    const NGBoxStrut& border_scrollbar_padding) {
-  NGLogicalSize size = border_box_size;
-  size.inline_size -= border_scrollbar_padding.InlineSum();
-  size.inline_size = std::max(size.inline_size, LayoutUnit());
-
-  // Our calculated block-axis size may still be indefinite. If so, just leave
-  // the size as NGSizeIndefinite instead of subtracting borders and padding.
-  if (size.block_size != NGSizeIndefinite) {
-    size.block_size -= border_scrollbar_padding.BlockSum();
-    size.block_size = std::max(size.block_size, LayoutUnit());
-  }
-
-  return size;
 }
 
 }  // namespace blink

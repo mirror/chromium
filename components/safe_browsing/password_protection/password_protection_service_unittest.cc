@@ -29,7 +29,6 @@ namespace {
 const char kFormActionUrl[] = "https://form_action.com/";
 const char kPasswordFrameUrl[] = "https://password_frame.com/";
 const char kSavedDomain[] = "saved_domain.com";
-const char kSavedDomain2[] = "saved_domain2.com";
 const char kTargetUrl[] = "http://foo.com/";
 
 }  // namespace
@@ -155,8 +154,7 @@ class TestPasswordProtectionService : public PasswordProtectionService {
   DISALLOW_COPY_AND_ASSIGN(TestPasswordProtectionService);
 };
 
-class PasswordProtectionServiceTest
-    : public ::testing::TestWithParam<std::vector<bool>> {
+class PasswordProtectionServiceTest : public testing::Test {
  public:
   PasswordProtectionServiceTest(){};
 
@@ -182,10 +180,6 @@ class PasswordProtectionServiceTest
         base::MakeUnique<TestPasswordProtectionService>(
             database_manager_, dummy_request_context_getter_,
             content_setting_map_);
-
-    ASSERT_EQ(2ul, GetParam().size());
-    password_protection_service_->set_extended_reporting(GetParam()[0]);
-    password_protection_service_->set_incognito(GetParam()[1]);
   }
 
   void TearDown() override { content_setting_map_->ShutdownOnUIThread(); }
@@ -200,26 +194,23 @@ class PasswordProtectionServiceTest
 
     request_ = new PasswordProtectionRequest(
         nullptr, target_url, GURL(kFormActionUrl), GURL(kPasswordFrameUrl),
-        false /* matches_sync_password */, {},
-        LoginReputationClientRequest::UNFAMILIAR_LOGIN_PAGE, true,
-        password_protection_service_.get(), timeout_in_ms);
+        std::string(), LoginReputationClientRequest::UNFAMILIAR_LOGIN_PAGE,
+        true, password_protection_service_.get(), timeout_in_ms);
     request_->Start();
   }
 
-  void InitializeAndStartPasswordEntryRequest(
-      bool matches_sync_password,
-      const std::vector<std::string>& matching_domains,
-      bool match_whitelist,
-      int timeout_in_ms) {
+  void InitializeAndStartPasswordEntryRequest(const std::string& saved_domain,
+                                              bool match_whitelist,
+                                              int timeout_in_ms) {
     GURL target_url(kTargetUrl);
     EXPECT_CALL(*database_manager_.get(), CheckCsdWhitelistUrl(target_url, _))
         .WillRepeatedly(
             Return(match_whitelist ? AsyncMatch::MATCH : AsyncMatch::NO_MATCH));
 
     request_ = new PasswordProtectionRequest(
-        nullptr, target_url, GURL(), GURL(), matches_sync_password,
-        matching_domains, LoginReputationClientRequest::PASSWORD_REUSE_EVENT,
-        true, password_protection_service_.get(), timeout_in_ms);
+        nullptr, target_url, GURL(), GURL(), saved_domain,
+        LoginReputationClientRequest::PASSWORD_REUSE_EVENT, true,
+        password_protection_service_.get(), timeout_in_ms);
     request_->Start();
   }
 
@@ -282,7 +273,7 @@ class PasswordProtectionServiceTest
   base::HistogramTester histograms_;
 };
 
-TEST_P(PasswordProtectionServiceTest, TestParseInvalidVerdictEntry) {
+TEST_F(PasswordProtectionServiceTest, TestParseInvalidVerdictEntry) {
   std::unique_ptr<base::DictionaryValue> invalid_verdict_entry =
       base::MakeUnique<base::DictionaryValue>();
   invalid_verdict_entry->SetString("cache_creation_time", "invalid_time");
@@ -298,7 +289,7 @@ TEST_P(PasswordProtectionServiceTest, TestParseInvalidVerdictEntry) {
       invalid_verdict_entry.get(), &cache_creation_time, &response));
 }
 
-TEST_P(PasswordProtectionServiceTest, TestParseValidVerdictEntry) {
+TEST_F(PasswordProtectionServiceTest, TestParseValidVerdictEntry) {
   base::Time expected_creation_time = base::Time::Now();
   LoginReputationClientResponse expected_verdict(CreateVerdictProto(
       LoginReputationClientResponse::SAFE, 10 * 60, "test.com/foo"));
@@ -320,7 +311,7 @@ TEST_P(PasswordProtectionServiceTest, TestParseValidVerdictEntry) {
             actual_verdict.cache_expression());
 }
 
-TEST_P(PasswordProtectionServiceTest, TestPathVariantsMatchCacheExpression) {
+TEST_F(PasswordProtectionServiceTest, TestPathVariantsMatchCacheExpression) {
   // Cache expression without path.
   std::string cache_expression("google.com");
   std::string cache_expression_with_slash("google.com/");
@@ -358,7 +349,7 @@ TEST_P(PasswordProtectionServiceTest, TestPathVariantsMatchCacheExpression) {
       GURL("http://evil.com/worse/index.html"), cache_expression_with_slash));
 }
 
-TEST_P(PasswordProtectionServiceTest, TestCachePasswordReuseVerdicts) {
+TEST_F(PasswordProtectionServiceTest, TestCachePasswordReuseVerdicts) {
   ASSERT_EQ(0U, GetStoredVerdictCount(
                     LoginReputationClientRequest::PASSWORD_REUSE_EVENT));
 
@@ -409,7 +400,7 @@ TEST_P(PasswordProtectionServiceTest, TestCachePasswordReuseVerdicts) {
                     LoginReputationClientRequest::UNFAMILIAR_LOGIN_PAGE));
 }
 
-TEST_P(PasswordProtectionServiceTest, TestCacheUnfamiliarLoginVerdicts) {
+TEST_F(PasswordProtectionServiceTest, TestCacheUnfamiliarLoginVerdicts) {
   ASSERT_EQ(0U, GetStoredVerdictCount(
                     LoginReputationClientRequest::UNFAMILIAR_LOGIN_PAGE));
 
@@ -445,7 +436,7 @@ TEST_P(PasswordProtectionServiceTest, TestCacheUnfamiliarLoginVerdicts) {
                     LoginReputationClientRequest::PASSWORD_REUSE_EVENT));
 }
 
-TEST_P(PasswordProtectionServiceTest, TestGetCachedVerdicts) {
+TEST_F(PasswordProtectionServiceTest, TestGetCachedVerdicts) {
   ASSERT_EQ(0U, GetStoredVerdictCount(
                     LoginReputationClientRequest::PASSWORD_REUSE_EVENT));
   ASSERT_EQ(0U, GetStoredVerdictCount(
@@ -496,7 +487,7 @@ TEST_P(PasswordProtectionServiceTest, TestGetCachedVerdicts) {
           LoginReputationClientRequest::PASSWORD_REUSE_EVENT, &actual_verdict));
 }
 
-TEST_P(PasswordProtectionServiceTest, TestRemoveCachedVerdictOnURLsDeleted) {
+TEST_F(PasswordProtectionServiceTest, TestRemoveCachedVerdictOnURLsDeleted) {
   ASSERT_EQ(0U, GetStoredVerdictCount(
                     LoginReputationClientRequest::PASSWORD_REUSE_EVENT));
   ASSERT_EQ(0U, GetStoredVerdictCount(
@@ -564,7 +555,7 @@ TEST_P(PasswordProtectionServiceTest, TestRemoveCachedVerdictOnURLsDeleted) {
                     LoginReputationClientRequest::UNFAMILIAR_LOGIN_PAGE));
 }
 
-TEST_P(PasswordProtectionServiceTest, VerifyCanGetReputationOfURL) {
+TEST_F(PasswordProtectionServiceTest, VerifyCanGetReputationOfURL) {
   // Invalid main frame URL.
   EXPECT_FALSE(PasswordProtectionService::CanGetReputationOfURL(GURL()));
 
@@ -602,7 +593,7 @@ TEST_P(PasswordProtectionServiceTest, VerifyCanGetReputationOfURL) {
       GURL("http://www.chromium.org")));
 }
 
-TEST_P(PasswordProtectionServiceTest, TestNoRequestSentForWhitelistedURL) {
+TEST_F(PasswordProtectionServiceTest, TestNoRequestSentForWhitelistedURL) {
   histograms_.ExpectTotalCount(kPasswordOnFocusRequestOutcomeHistogramName, 0);
   InitializeAndStartPasswordOnFocusRequest(true /* match whitelist */,
                                            10000 /* timeout in ms*/);
@@ -613,7 +604,7 @@ TEST_P(PasswordProtectionServiceTest, TestNoRequestSentForWhitelistedURL) {
       ElementsAre(base::Bucket(4 /* MATCHED_WHITELIST */, 1)));
 }
 
-TEST_P(PasswordProtectionServiceTest, TestNoRequestSentIfVerdictAlreadyCached) {
+TEST_F(PasswordProtectionServiceTest, TestNoRequestSentIfVerdictAlreadyCached) {
   histograms_.ExpectTotalCount(kPasswordOnFocusRequestOutcomeHistogramName, 0);
   CacheVerdict(GURL(kTargetUrl),
                LoginReputationClientRequest::UNFAMILIAR_LOGIN_PAGE,
@@ -629,7 +620,7 @@ TEST_P(PasswordProtectionServiceTest, TestNoRequestSentIfVerdictAlreadyCached) {
             password_protection_service_->latest_response()->verdict_type());
 }
 
-TEST_P(PasswordProtectionServiceTest, TestResponseFetchFailed) {
+TEST_F(PasswordProtectionServiceTest, TestResponseFetchFailed) {
   histograms_.ExpectTotalCount(kPasswordOnFocusRequestOutcomeHistogramName, 0);
   net::TestURLFetcher failed_fetcher(0, GURL("http://bar.com"), nullptr);
   // Set up failed response.
@@ -646,7 +637,7 @@ TEST_P(PasswordProtectionServiceTest, TestResponseFetchFailed) {
       ElementsAre(base::Bucket(9 /* FETCH_FAILED */, 1)));
 }
 
-TEST_P(PasswordProtectionServiceTest, TestMalformedResponse) {
+TEST_F(PasswordProtectionServiceTest, TestMalformedResponse) {
   histograms_.ExpectTotalCount(kPasswordOnFocusRequestOutcomeHistogramName, 0);
   // Set up malformed response.
   net::TestURLFetcher fetcher(0, GURL("http://bar.com"), nullptr);
@@ -665,7 +656,7 @@ TEST_P(PasswordProtectionServiceTest, TestMalformedResponse) {
       ElementsAre(base::Bucket(10 /* RESPONSE_MALFORMED */, 1)));
 }
 
-TEST_P(PasswordProtectionServiceTest, TestRequestTimedout) {
+TEST_F(PasswordProtectionServiceTest, TestRequestTimedout) {
   histograms_.ExpectTotalCount(kPasswordOnFocusRequestOutcomeHistogramName, 0);
   InitializeAndStartPasswordOnFocusRequest(false /* match whitelist */,
                                            0 /* timeout immediately */);
@@ -676,7 +667,7 @@ TEST_P(PasswordProtectionServiceTest, TestRequestTimedout) {
       ElementsAre(base::Bucket(3 /* TIMEDOUT */, 1)));
 }
 
-TEST_P(PasswordProtectionServiceTest,
+TEST_F(PasswordProtectionServiceTest,
        TestPasswordOnFocusRequestAndResponseSuccessfull) {
   histograms_.ExpectTotalCount(kPasswordOnFocusRequestOutcomeHistogramName, 0);
   // Set up valid response.
@@ -707,7 +698,7 @@ TEST_P(PasswordProtectionServiceTest,
             actual_response->cache_duration_sec());
 }
 
-TEST_P(PasswordProtectionServiceTest,
+TEST_F(PasswordProtectionServiceTest,
        TestPasswordEntryRequestAndResponseSuccessfull) {
   histograms_.ExpectTotalCount(kPasswordEntryRequestOutcomeHistogramName, 0);
   histograms_.ExpectTotalCount(kSyncPasswordEntryRequestOutcomeHistogramName,
@@ -721,10 +712,9 @@ TEST_P(PasswordProtectionServiceTest,
       LoginReputationClientResponse::PHISHING, 600, GURL(kTargetUrl).host());
   fetcher.SetResponseString(expected_response.SerializeAsString());
 
-  // Initiate a saved password entry request (w/ no sync password).
+  // Initiate a saved password entry request.
   InitializeAndStartPasswordEntryRequest(
-      false /* matches_sync_password */, {"example.com"},
-      false /* match whitelist */, 10000 /* timeout in ms*/);
+      "example.com", false /* match whitelist */, 10000 /* timeout in ms*/);
   request_->OnURLFetchComplete(&fetcher);
   base::RunLoop().RunUntilIdle();
   EXPECT_THAT(
@@ -736,8 +726,8 @@ TEST_P(PasswordProtectionServiceTest,
   histograms_.ExpectTotalCount(kSyncPasswordEntryRequestOutcomeHistogramName,
                                0);
 
-  // Initiate a sync password entry request (w/ no saved password).
-  InitializeAndStartPasswordEntryRequest(true /* matches_sync_password */, {},
+  // Initiate a sync password entry request.
+  InitializeAndStartPasswordEntryRequest(password_manager::kSyncPasswordDomain,
                                          false /* match whitelist */,
                                          10000 /* timeout in ms*/);
   request_->OnURLFetchComplete(&fetcher);
@@ -756,14 +746,14 @@ TEST_P(PasswordProtectionServiceTest,
               ElementsAre(base::Bucket(3 /* PHISHING */, 1)));
 }
 
-TEST_P(PasswordProtectionServiceTest, TestTearDownWithPendingRequests) {
+TEST_F(PasswordProtectionServiceTest, TestTearDownWithPendingRequests) {
   histograms_.ExpectTotalCount(kPasswordOnFocusRequestOutcomeHistogramName, 0);
   GURL target_url(kTargetUrl);
   EXPECT_CALL(*database_manager_.get(), CheckCsdWhitelistUrl(target_url, _))
       .WillRepeatedly(Return(AsyncMatch::NO_MATCH));
   password_protection_service_->StartRequest(
       nullptr, target_url, GURL("http://foo.com/submit"),
-      GURL("http://foo.com/frame"), false, {},
+      GURL("http://foo.com/frame"), std::string(),
       LoginReputationClientRequest::UNFAMILIAR_LOGIN_PAGE, true);
 
   // Destroy password_protection_service_ while there is one request pending.
@@ -775,7 +765,7 @@ TEST_P(PasswordProtectionServiceTest, TestTearDownWithPendingRequests) {
       ElementsAre(base::Bucket(2 /* CANCELED */, 1)));
 }
 
-TEST_P(PasswordProtectionServiceTest, TestCleanUpExpiredVerdict) {
+TEST_F(PasswordProtectionServiceTest, TestCleanUpExpiredVerdict) {
   // Prepare 4 verdicts for PASSWORD_REUSE_EVENT:
   // (1) "foo.com/abc" valid
   // (2) "foo.com/def" expired
@@ -859,7 +849,7 @@ TEST_P(PasswordProtectionServiceTest, TestCleanUpExpiredVerdict) {
                 &actual_verdict));
 }
 
-TEST_P(PasswordProtectionServiceTest,
+TEST_F(PasswordProtectionServiceTest,
        TestCleanUpExpiredVerdictWithInvalidEntry) {
   CacheInvalidVerdict();
   ContentSettingsForOneType password_protection_settings;
@@ -876,7 +866,7 @@ TEST_P(PasswordProtectionServiceTest,
   EXPECT_TRUE(password_protection_settings.empty());
 }
 
-TEST_P(PasswordProtectionServiceTest, VerifyPasswordOnFocusRequestProto) {
+TEST_F(PasswordProtectionServiceTest, VerifyPasswordOnFocusRequestProto) {
   // Set up valid response.
   net::TestURLFetcher fetcher(0, GURL("http://bar.com"), nullptr);
   fetcher.set_status(
@@ -905,7 +895,7 @@ TEST_P(PasswordProtectionServiceTest, VerifyPasswordOnFocusRequestProto) {
   EXPECT_EQ(kFormActionUrl, actual_request->frames(1).forms(0).action_url());
 }
 
-TEST_P(PasswordProtectionServiceTest,
+TEST_F(PasswordProtectionServiceTest,
        VerifySyncPasswordProtectionRequestProto) {
   // Set up valid response.
   net::TestURLFetcher fetcher(0, GURL("http://bar.com"), nullptr);
@@ -917,9 +907,9 @@ TEST_P(PasswordProtectionServiceTest,
   fetcher.SetResponseString(expected_response.SerializeAsString());
 
   // Initialize request triggered by chrome sync password reuse.
-  InitializeAndStartPasswordEntryRequest(true /* matches_sync_password */, {},
-                                         false /* match whitelist */,
-                                         100000 /* timeout in ms*/);
+  InitializeAndStartPasswordEntryRequest(
+      std::string(password_manager::kSyncPasswordDomain),
+      false /* match whitelist */, 100000 /* timeout in ms*/);
   base::RunLoop().RunUntilIdle();
   request_->OnURLFetchComplete(&fetcher);
   base::RunLoop().RunUntilIdle();
@@ -935,10 +925,10 @@ TEST_P(PasswordProtectionServiceTest,
   ASSERT_TRUE(actual_request->has_password_reuse_event());
   const auto& reuse_event = actual_request->password_reuse_event();
   EXPECT_TRUE(reuse_event.is_chrome_signin_password());
-  EXPECT_EQ(0, reuse_event.domains_matching_password_size());
+  ASSERT_EQ(0, reuse_event.password_reused_original_origins_size());
 }
 
-TEST_P(PasswordProtectionServiceTest,
+TEST_F(PasswordProtectionServiceTest,
        VerifyNonSyncPasswordProtectionRequestProto) {
   // Set up valid response.
   net::TestURLFetcher fetcher(0, GURL("http://bar.com"), nullptr);
@@ -950,9 +940,9 @@ TEST_P(PasswordProtectionServiceTest,
   fetcher.SetResponseString(expected_response.SerializeAsString());
 
   // Initialize request triggered by saved password reuse.
-  InitializeAndStartPasswordEntryRequest(
-      false /* matches_sync_password */, {kSavedDomain, kSavedDomain2},
-      false /* match whitelist */, 100000 /* timeout in ms*/);
+  InitializeAndStartPasswordEntryRequest(std::string(kSavedDomain),
+                                         false /* match whitelist */,
+                                         100000 /* timeout in ms*/);
   base::RunLoop().RunUntilIdle();
   request_->OnURLFetchComplete(&fetcher);
   base::RunLoop().RunUntilIdle();
@@ -962,17 +952,11 @@ TEST_P(PasswordProtectionServiceTest,
   ASSERT_TRUE(actual_request->has_password_reuse_event());
   const auto& reuse_event = actual_request->password_reuse_event();
   EXPECT_FALSE(reuse_event.is_chrome_signin_password());
-
-  if (password_protection_service_->IsExtendedReporting() &&
-      !password_protection_service_->IsIncognito()) {
-    ASSERT_EQ(2, reuse_event.domains_matching_password_size());
-    EXPECT_EQ(kSavedDomain, reuse_event.domains_matching_password(0));
-    EXPECT_EQ(kSavedDomain2, reuse_event.domains_matching_password(1));
-  } else {
-    EXPECT_EQ(0, reuse_event.domains_matching_password_size());
-  }
+  ASSERT_EQ(1, reuse_event.password_reused_original_origins_size());
+  EXPECT_EQ(kSavedDomain, reuse_event.password_reused_original_origins(0));
 }
-TEST_P(PasswordProtectionServiceTest, VerifyCanSendPing) {
+
+TEST_F(PasswordProtectionServiceTest, VerifyCanSendPing) {
   GURL suspicious_url("http://phishing.com");
   EXPECT_TRUE(password_protection_service_->CanSendPing(
       kProtectedPasswordEntryPinging, suspicious_url,
@@ -986,13 +970,5 @@ TEST_P(PasswordProtectionServiceTest, VerifyCanSendPing) {
   EXPECT_EQ(kPasswordFieldOnFocusPinging.name,
             password_protection_service_->checked_feature_name());
 }
-
-INSTANTIATE_TEST_CASE_P(
-    InstSBERIncog,
-    PasswordProtectionServiceTest,
-    ::testing::Values(std::vector<bool>({false, false}),  // SBER, incog.
-                      std::vector<bool>({false, true}),
-                      std::vector<bool>({true, false}),
-                      std::vector<bool>({true, true})));
 
 }  // namespace safe_browsing

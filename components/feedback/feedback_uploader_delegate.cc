@@ -23,9 +23,12 @@ constexpr int kHttpPostFailServerError = 500;
 }  // namespace
 
 FeedbackUploaderDelegate::FeedbackUploaderDelegate(
+    scoped_refptr<FeedbackReport> pending_report,
     const base::Closure& success_callback,
     const ReportFailureCallback& error_callback)
-    : success_callback_(success_callback), error_callback_(error_callback) {}
+    : pending_report_(pending_report),
+      success_callback_(success_callback),
+      error_callback_(error_callback) {}
 
 FeedbackUploaderDelegate::~FeedbackUploaderDelegate() {}
 
@@ -58,7 +61,8 @@ void FeedbackUploaderDelegate::OnURLFetchComplete(
       error_stream << "Unknown error: HTTP response code " << response_code;
     }
 
-    error_callback_.Run(should_retry);
+    if (should_retry)
+      error_callback_.Run(pending_report_);
   }
 
   LOG(WARNING) << "FEEDBACK: Submission to feedback server ("

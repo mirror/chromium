@@ -26,13 +26,12 @@
 using testing::kWaitForDownloadTimeout;
 using testing::WaitUntilConditionOrTimeout;
 
-// TODO(crbug.com/757982): Remove this class, after LoadImage() is removed.
 // A helper delegate class that allows downloading responses with invalid
 // SSL certs.
-@interface TestURLSessionDelegateDeprecated : NSObject<NSURLSessionDelegate>
+@interface TestURLSessionDelegate : NSObject<NSURLSessionDelegate>
 @end
 
-@implementation TestURLSessionDelegateDeprecated
+@implementation TestURLSessionDelegate
 
 - (void)URLSession:(NSURLSession*)session
     didReceiveChallenge:(NSURLAuthenticationChallenge*)challenge
@@ -65,8 +64,8 @@ char kTestCssSelectorJavaScriptTemplate[] = "!!document.querySelector(\"%s\");";
 UIImage* LoadImage(const GURL& image_url) {
   __block UIImage* image;
   __block NSError* error;
-  TestURLSessionDelegateDeprecated* session_delegate =
-      [[TestURLSessionDelegateDeprecated alloc] init];
+  TestURLSessionDelegate* session_delegate =
+      [[TestURLSessionDelegate alloc] init];
   NSURLSessionConfiguration* session_config =
       [NSURLSessionConfiguration defaultSessionConfiguration];
   NSURLSession* session =

@@ -23,8 +23,8 @@ class ExclusiveScreenToast;
 class Grid;
 class LoadingIndicator;
 class Rect;
-class Text;
-class WebVrUrlToast;
+class SplashScreenIcon;
+class TransientUrlBar;
 class UiBrowserInterface;
 class UiElement;
 class UiScene;
@@ -55,6 +55,7 @@ class UiSceneManager {
   void SetScreenCapturingIndicator(bool enabled);
   void SetAudioCapturingIndicator(bool enabled);
   void SetLocationAccessIndicator(bool enabled);
+  void SetSplashScreenIcon(const SkBitmap& bitmap);
   void SetBluetoothConnectedIndicator(bool enabled);
 
   // These methods are currently stubbed.
@@ -72,8 +73,6 @@ class UiSceneManager {
   void OnExitPromptChoiceForTesting(bool chose_exit);
 
  private:
-  void Create2dBrowsingSubtreeRoots();
-  void CreateWebVrRoot();
   void CreateScreenDimmer();
   void CreateSecurityWarnings();
   void CreateSystemIndicators();
@@ -81,9 +80,8 @@ class UiSceneManager {
   void CreateSplashScreen();
   void CreateUnderDevelopmentNotice();
   void CreateBackground();
-  void CreateViewportAwareRoot();
   void CreateUrlBar();
-  void CreateWebVrUrlToast();
+  void CreateTransientUrlBar();
   void CreateCloseButton();
   void CreateExitPrompt();
   void CreateToasts();
@@ -99,6 +97,7 @@ class UiSceneManager {
   void OnExitPromptBackplaneClicked();
   void OnCloseButtonClicked();
   void OnUnsupportedMode(UiUnsupportedMode mode);
+  int AllocateId();
   ColorScheme::Mode mode() const;
   const ColorScheme& color_scheme() const;
 
@@ -109,7 +108,6 @@ class UiSceneManager {
   UiElement* permanent_security_warning_ = nullptr;
   TransientSecurityWarning* transient_security_warning_ = nullptr;
   ExclusiveScreenToast* exclusive_screen_toast_ = nullptr;
-  ExclusiveScreenToast* exclusive_screen_toast_viewport_aware_ = nullptr;
   ExitPrompt* exit_prompt_ = nullptr;
   UiElement* exit_prompt_backplane_ = nullptr;
   UiElement* exit_warning_ = nullptr;
@@ -123,9 +121,9 @@ class UiSceneManager {
   Rect* ceiling_ = nullptr;
   Grid* floor_ = nullptr;
   UiElement* close_button_ = nullptr;
-  Text* splash_screen_text_ = nullptr;
+  SplashScreenIcon* splash_screen_icon_ = nullptr;
   UrlBar* url_bar_ = nullptr;
-  WebVrUrlToast* webvr_url_toast_ = nullptr;
+  TransientUrlBar* transient_url_bar_ = nullptr;
   LoadingIndicator* loading_indicator_ = nullptr;
 
   std::vector<UiElement*> system_indicators_;
@@ -150,6 +148,8 @@ class UiSceneManager {
   bool location_access_ = false;
   bool bluetooth_connected_ = false;
   UiUnsupportedMode exit_vr_prompt_reason_ = UiUnsupportedMode::kCount;
+
+  int next_available_id_ = 1;
 
   std::vector<Rect*> background_panels_;
   std::vector<UiElement*> content_elements_;

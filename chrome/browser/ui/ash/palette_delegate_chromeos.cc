@@ -200,12 +200,23 @@ void PaletteDelegateChromeOS::CancelPartialScreenshot() {
   ash::Shell::Get()->screenshot_controller()->CancelScreenshotSession();
 }
 
-void PaletteDelegateChromeOS::ShowMetalayer() {
+bool PaletteDelegateChromeOS::IsMetalayerSupported() {
+  if (!profile_)
+    return false;
   auto* service =
       arc::ArcVoiceInteractionFrameworkService::GetForBrowserContext(profile_);
-  if (!service)
+  return service && service->IsMetalayerSupported();
+}
+
+void PaletteDelegateChromeOS::ShowMetalayer(const base::Closure& closed) {
+  auto* service =
+      arc::ArcVoiceInteractionFrameworkService::GetForBrowserContext(profile_);
+  if (!service) {
+    if (!closed.is_null())
+      closed.Run();
     return;
-  service->ShowMetalayer();
+  }
+  service->ShowMetalayer(closed);
 
   if (!highlighter_selection_observer_) {
     highlighter_selection_observer_ =

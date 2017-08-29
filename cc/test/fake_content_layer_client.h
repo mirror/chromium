@@ -80,10 +80,14 @@ class FakeContentLayerClient : public ContentLayerClient {
     draw_images_.push_back(data);
   }
 
-  void add_draw_image_with_transform(PaintImage image,
+  void add_draw_image_with_transform(sk_sp<SkImage> image,
                                      const gfx::Transform& transform,
                                      const PaintFlags& flags) {
-    ImageData data(std::move(image), transform, flags);
+    ImageData data(PaintImageBuilder()
+                       .set_id(PaintImage::GetNextId())
+                       .set_image(std::move(image))
+                       .TakePaintImage(),
+                   transform, flags);
     draw_images_.push_back(data);
   }
 

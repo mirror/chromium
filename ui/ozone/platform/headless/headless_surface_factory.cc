@@ -120,7 +120,10 @@ HeadlessSurfaceFactory::~HeadlessSurfaceFactory() {}
 std::vector<gl::GLImplementation>
 HeadlessSurfaceFactory::GetAllowedGLImplementations() {
 #if defined(OS_FUCHSIA)
-  return std::vector<gl::GLImplementation>{gl::kGLImplementationStubGL};
+  // TODO(fuchsia): Enable this or a variant with EGL support when GPU/UI is
+  // available. (crbug.com/750943)
+  NOTIMPLEMENTED();
+  return std::vector<gl::GLImplementation>{};
 #else
   return std::vector<gl::GLImplementation>{gl::kGLImplementationOSMesaGL};
 #endif

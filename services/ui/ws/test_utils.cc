@@ -34,7 +34,8 @@ ClientWindowId NextUnusedClientWindowId(WindowTree* tree) {
   ClientWindowId client_id;
   for (ClientSpecificId id = 1;; ++id) {
     // Used the id of the client in the upper bits to simplify things.
-    const ClientWindowId client_id = ClientWindowId(tree->id(), id);
+    const ClientWindowId client_id =
+        ClientWindowId(WindowIdToTransportId(WindowId(tree->id(), id)));
     if (!tree->GetWindowByClientId(client_id))
       return client_id;
   }
@@ -207,7 +208,7 @@ TestWindowManager::TestWindowManager() {}
 
 TestWindowManager::~TestWindowManager() {}
 
-void TestWindowManager::OnConnect() {
+void TestWindowManager::OnConnect(uint16_t client_id) {
   connect_count_++;
 }
 
@@ -292,6 +293,7 @@ void TestWindowTreeClient::Bind(
 }
 
 void TestWindowTreeClient::OnEmbed(
+    uint16_t client_id,
     mojom::WindowDataPtr root,
     ui::mojom::WindowTreePtr tree,
     int64_t display_id,
@@ -299,7 +301,7 @@ void TestWindowTreeClient::OnEmbed(
     bool drawn,
     const base::Optional<viz::LocalSurfaceId>& local_surface_id) {
   // TODO(sky): add test coverage of |focused_window_id|.
-  tracker_.OnEmbed(std::move(root), drawn);
+  tracker_.OnEmbed(client_id, std::move(root), drawn);
 }
 
 void TestWindowTreeClient::OnEmbeddedAppDisconnected(uint32_t window) {
@@ -577,8 +579,8 @@ ServerWindow* WindowEventTargetingHelper::CreatePrimaryTree(
     const gfx::Rect& root_window_bounds,
     const gfx::Rect& window_bounds) {
   WindowTree* wm_tree = window_server()->GetTreeWithId(1);
-  const ClientWindowId embed_window_id(wm_tree->id(),
-                                       next_primary_tree_window_id_++);
+  const ClientWindowId embed_window_id(WindowIdToTransportId(
+      WindowId(wm_tree->id(), next_primary_tree_window_id_++)));
   EXPECT_TRUE(wm_tree->NewWindow(embed_window_id, ServerWindow::Properties()));
   EXPECT_TRUE(wm_tree->SetWindowVisibility(embed_window_id, true));
   EXPECT_TRUE(wm_tree->AddWindow(FirstRootId(wm_tree), embed_window_id));
@@ -609,7 +611,8 @@ void WindowEventTargetingHelper::CreateSecondaryTree(
     ServerWindow** window) {
   WindowTree* tree1 = window_server()->GetTreeWithRoot(embed_window);
   ASSERT_TRUE(tree1 != nullptr);
-  const ClientWindowId child1_id(tree1->id(), 1);
+  const ClientWindowId child1_id(
+      WindowIdToTransportId(WindowId(tree1->id(), 1)));
   ASSERT_TRUE(tree1->NewWindow(child1_id, ServerWindow::Properties()));
   ServerWindow* child1 = tree1->GetWindowByClientId(child1_id);
   ASSERT_TRUE(child1);
@@ -705,9 +708,6 @@ void TestPlatformDisplay::SetImeVisibility(bool visible) {}
 void TestPlatformDisplay::UpdateViewportMetrics(
     const display::ViewportMetrics& metrics) {
   metrics_ = metrics;
-}
-const display::ViewportMetrics& TestPlatformDisplay::GetViewportMetrics() {
-  return metrics_;
 }
 gfx::AcceleratedWidget TestPlatformDisplay::GetAcceleratedWidget() const {
   return gfx::kNullAcceleratedWidget;

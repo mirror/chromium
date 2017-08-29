@@ -85,6 +85,11 @@ class CC_PAINT_EXPORT PaintCanvas {
   void clipPath(const SkPath& path, bool do_anti_alias) {
     clipPath(path, SkClipOp::kIntersect, do_anti_alias);
   }
+  // Clip a |device_rect| in canvas device space (subtracting out the
+  // |subtract_rect|, if non-empty, from that rect).
+  virtual void clipDeviceRect(const SkIRect& device_rect,
+                              const SkIRect& subtract_rect,
+                              SkClipOp op) = 0;
 
   virtual bool quickReject(const SkRect& rect) const = 0;
   virtual bool quickReject(const SkPath& path) const = 0;
@@ -110,6 +115,11 @@ class CC_PAINT_EXPORT PaintCanvas {
   virtual void drawDRRect(const SkRRect& outer,
                           const SkRRect& inner,
                           const PaintFlags& flags) = 0;
+  virtual void drawArc(const SkRect& oval,
+                       SkScalar start_angle,
+                       SkScalar sweep_angle,
+                       bool use_center,
+                       const PaintFlags& flags) = 0;
   virtual void drawRoundRect(const SkRect& rect,
                              SkScalar rx,
                              SkScalar ry,

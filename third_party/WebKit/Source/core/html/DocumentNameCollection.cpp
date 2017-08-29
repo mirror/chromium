@@ -13,7 +13,6 @@ DocumentNameCollection::DocumentNameCollection(ContainerNode& document,
                                                const AtomicString& name)
     : HTMLNameCollection(document, kDocumentNamedItems, name) {}
 
-// https://html.spec.whatwg.org/multipage/dom.html#dom-document-nameditem-filter
 bool DocumentNameCollection::ElementMatches(const HTMLElement& element) const {
   // Match images, forms, embeds, objects and iframes by name,
   // object by id, and images by id but only if they have
@@ -24,11 +23,9 @@ bool DocumentNameCollection::ElementMatches(const HTMLElement& element) const {
   if (isHTMLObjectElement(element) && toHTMLObjectElement(element).IsExposed())
     return element.GetNameAttribute() == name_ ||
            element.GetIdAttribute() == name_;
-  if (isHTMLImageElement(element)) {
-    const AtomicString& name_value = element.GetNameAttribute();
-    return name_value == name_ ||
-           (element.GetIdAttribute() == name_ && !name_value.IsEmpty());
-  }
+  if (isHTMLImageElement(element))
+    return element.GetNameAttribute() == name_ ||
+           (element.GetIdAttribute() == name_ && element.HasName());
   return false;
 }
 

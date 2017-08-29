@@ -79,9 +79,7 @@ class NetworkHandler : public DevToolsDomainHandler,
   Response SetUserAgentOverride(const std::string& user_agent) override;
   Response CanEmulateNetworkConditions(bool* result) override;
 
-  DispatchResponse SetRequestInterceptionEnabled(
-      bool enabled,
-      Maybe<protocol::Array<std::string>> patterns) override;
+  DispatchResponse SetRequestInterceptionEnabled(bool enabled) override;
   void ContinueInterceptedRequest(
       const std::string& request_id,
       Maybe<std::string> error_reason,

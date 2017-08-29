@@ -39,7 +39,6 @@ buildflag_header("features") {
     "ENABLE_HANGOUT_SERVICES_EXTENSION=$enable_hangout_services_extension",
     "ENABLE_ONE_CLICK_SIGNIN=$enable_one_click_signin",
     "ENABLE_NATIVE_NOTIFICATIONS=$enable_native_notifications",
-    "ENABLE_NATIVE_WINDOW_NAV_BUTTONS=$enable_native_window_nav_buttons",
     "ENABLE_PACKAGE_MASH_SERVICES=$enable_package_mash_services",
     "ENABLE_SERVICE_DISCOVERY=$enable_service_discovery",
     "ENABLE_SESSION_SERVICE=$enable_session_service",
@@ -198,7 +197,6 @@ static_library("common") {
 
   public_deps = [
     ":channel_info",
-    ":client_hints_mojom",
     ":common_param_traits_macros",
     ":features",
     ":ini_parser",
@@ -234,7 +232,6 @@ static_library("common") {
     "//components/network_session_configurator/common",
     "//components/ntp_tiles",
     "//components/offline_pages/core:switches",
-    "//components/offline_pages/features:features",
     "//components/omnibox/common",
     "//components/password_manager/core/common",
     "//components/policy:generated",
@@ -418,6 +415,7 @@ static_library("common") {
     if (enable_print_preview) {
       # Full printing support.
       sources += [
+        "service_messages.h",
         "service_process_util.cc",
         "service_process_util.h",
         "service_process_util_linux.cc",
@@ -443,7 +441,6 @@ static_library("common") {
   if (is_win) {
     deps = [
       "//chrome/common/win:eventlog_messages",
-      "//components/crash/content/app:crash_export_thunk_include",
     ]
 
     public_deps += [
@@ -674,7 +671,6 @@ source_set("app_mode_app_support") {
 mojom("mojo_bindings") {
   sources = [
     "cache_stats_recorder.mojom",
-    "chrome_render_frame.mojom",
     "constants.mojom",
     "file_patcher.mojom",
     "image_context_menu_renderer.mojom",
@@ -714,13 +710,9 @@ mojom("mojo_bindings") {
   public_deps = [
     "//components/content_settings/core/common:mojo_bindings",
     "//mojo/common:common_custom_types",
-    "//third_party/WebKit/public:mojo_bindings",
     "//ui/gfx/geometry/mojo",
     "//url/mojo:url_mojom_gurl",
   ]
-
-  overridden_deps = [ "//third_party/WebKit/public:mojo_bindings" ]
-  component_deps = [ "//content/public/common" ]
 
   # TODO(crbug.com/714018): Convert the implementation to use OnceCallback.
   use_once_callback = false
@@ -745,27 +737,5 @@ mojom("page_load_metrics_mojom") {
   public_deps = [
     "//mojo/common:common_custom_types",
     "//third_party/WebKit/public:web_feature_mojo_bindings",
-  ]
-}
-
-mojom("client_hints_mojom") {
-  sources = [
-    "client_hints.mojom",
-  ]
-
-  public_deps = [
-    "//mojo/common:common_custom_types",
-    "//third_party/WebKit/public:web_client_hints_types_mojo_bindings",
-    "//url/mojo:url_mojom_origin",
-  ]
-}
-
-mojom("service_process_mojom") {
-  sources = [
-    "cloud_print.mojom",
-    "service_process.mojom",
-  ]
-  public_deps = [
-    "//mojo/common:common_custom_types",
   ]
 }

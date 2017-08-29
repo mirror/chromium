@@ -392,10 +392,6 @@ const std::string& Extension::id() const {
   return manifest_->extension_id();
 }
 
-const HashedExtensionId& Extension::hashed_id() const {
-  return manifest_->hashed_id();
-}
-
 const std::string Extension::VersionString() const {
   return version()->GetString();
 }
@@ -459,7 +455,7 @@ bool Extension::InitExtensionID(extensions::Manifest* manifest,
                                 int creation_flags,
                                 base::string16* error) {
   if (!explicit_id.empty()) {
-    manifest->SetExtensionId(explicit_id);
+    manifest->set_extension_id(explicit_id);
     return true;
   }
 
@@ -472,7 +468,7 @@ bool Extension::InitExtensionID(extensions::Manifest* manifest,
       return false;
     }
     std::string extension_id = crx_file::id_util::GenerateId(public_key_bytes);
-    manifest->SetExtensionId(extension_id);
+    manifest->set_extension_id(extension_id);
     return true;
   }
 
@@ -488,7 +484,7 @@ bool Extension::InitExtensionID(extensions::Manifest* manifest,
       NOTREACHED() << "Could not create ID from path.";
       return false;
     }
-    manifest->SetExtensionId(extension_id);
+    manifest->set_extension_id(extension_id);
     return true;
   }
 }

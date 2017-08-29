@@ -71,7 +71,7 @@ struct AXSnapshotNodeAndroid {
   static std::unique_ptr<AXSnapshotNodeAndroid> WalkAXTreeDepthFirst(
       const AXNode* node,
       gfx::Rect rect,
-      const AXTreeUpdate& update,
+      const ui::AXTreeUpdate& update,
       const AXTree* tree,
       WalkAXTreeConfig& config);
 

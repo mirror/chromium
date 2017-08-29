@@ -148,8 +148,7 @@ class PasswordProtectionService : public history::HistoryServiceObserver {
                     const GURL& main_frame_url,
                     const GURL& password_form_action,
                     const GURL& password_form_frame_url,
-                    bool matches_sync_password,
-                    const std::vector<std::string>& matching_domains,
+                    const std::string& saved_domain,
                     TriggerType trigger_type,
                     bool password_field_exists);
 
@@ -162,8 +161,7 @@ class PasswordProtectionService : public history::HistoryServiceObserver {
   virtual void MaybeStartProtectedPasswordEntryRequest(
       content::WebContents* web_contents,
       const GURL& main_frame_url,
-      bool matches_sync_password,
-      const std::vector<std::string>& matching_domains,
+      const std::string& saved_domain,
       bool password_field_exists);
 
   // Records a Chrome Sync event that sync password reuse was detected.
@@ -194,7 +192,7 @@ class PasswordProtectionService : public history::HistoryServiceObserver {
   virtual void ShowModalWarning(
       content::WebContents* web_contents,
       const LoginReputationClientRequest* request_proto,
-      const LoginReputationClientResponse* response_proto) {}
+      const LoginReputationClientResponse* response_proto);
 
   // Record UMA stats and trigger event logger when warning UI is shown.
   virtual void OnWarningShown(content::WebContents* web_contents,

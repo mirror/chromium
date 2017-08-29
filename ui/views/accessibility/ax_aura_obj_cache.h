@@ -14,6 +14,7 @@
 #include "base/macros.h"
 #include "ui/accessibility/ax_enums.h"
 #include "ui/aura/client/focus_change_observer.h"
+#include "ui/aura/window_observer.h"
 #include "ui/views/views_export.h"
 
 namespace base {
@@ -21,6 +22,9 @@ template <typename T> struct DefaultSingletonTraits;
 }
 
 namespace aura {
+namespace client {
+class FocusClient;
+}
 class Window;
 }  // namespace aura
 
@@ -30,7 +34,9 @@ class View;
 class Widget;
 
 // A cache responsible for assigning id's to a set of interesting Aura views.
-class VIEWS_EXPORT AXAuraObjCache : public aura::client::FocusChangeObserver {
+class VIEWS_EXPORT AXAuraObjCache
+    : public aura::client::FocusChangeObserver,
+      public aura::WindowObserver {
  public:
   // Get the single instance of this class.
   static AXAuraObjCache* GetInstance();
@@ -88,12 +94,6 @@ class VIEWS_EXPORT AXAuraObjCache : public aura::client::FocusChangeObserver {
   // Indicates if this object's currently being destroyed.
   bool is_destroying() { return is_destroying_; }
 
-  // Notifies this cache of a change in root window.
-  void OnRootWindowObjCreated(aura::Window* window);
-
-  // Notifies this cache of a change in root window.
-  void OnRootWindowObjDestroyed(aura::Window* window);
-
   void SetDelegate(Delegate* delegate) { delegate_ = delegate; }
 
  private:
@@ -107,6 +107,10 @@ class VIEWS_EXPORT AXAuraObjCache : public aura::client::FocusChangeObserver {
   // aura::client::FocusChangeObserver override.
   void OnWindowFocused(aura::Window* gained_focus,
                        aura::Window* lost_focus) override;
+
+  // aura::WindowObserver override.
+  void OnWindowDestroying(aura::Window* window) override;
+  void OnWindowHierarchyChanged(const HierarchyChangeParams& params) override;
 
   template <typename AuraViewWrapper, typename AuraView>
   AXAuraObjWrapper* CreateInternal(
@@ -129,12 +133,12 @@ class VIEWS_EXPORT AXAuraObjCache : public aura::client::FocusChangeObserver {
   std::map<int32_t, std::unique_ptr<AXAuraObjWrapper>> cache_;
   int32_t current_id_;
 
+  aura::client::FocusClient* focus_client_;
+
   // True immediately when entering this object's destructor.
   bool is_destroying_;
 
   Delegate* delegate_;
-
-  aura::Window* root_window_;
 
   DISALLOW_COPY_AND_ASSIGN(AXAuraObjCache);
 };

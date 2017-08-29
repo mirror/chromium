@@ -21,7 +21,6 @@
 #include "ui/app_list/app_list_model_observer.h"
 #include "ui/app_list/pagination_model.h"
 #include "ui/app_list/pagination_model_observer.h"
-#include "ui/app_list/views/app_list_view.h"
 #include "ui/base/models/list_model_observer.h"
 #include "ui/compositor/layer_animation_observer.h"
 #include "ui/gfx/image/image_skia_operations.h"
@@ -50,7 +49,6 @@ class SuggestionsContainerView;
 class PageSwitcher;
 class PaginationController;
 class PulsingBlockView;
-class ExpandArrowView;
 
 // AppsGridView displays a grid for AppListItemList sub model.
 class APP_LIST_EXPORT AppsGridView : public views::View,
@@ -79,9 +77,6 @@ class APP_LIST_EXPORT AppsGridView : public views::View,
   // Returns the size of a tile view including its padding.
   static gfx::Size GetTotalTileSize();
 
-  // Returns the padding around a tile view.
-  static gfx::Insets GetTilePadding();
-
   // This resets the grid view to a fresh state for showing the app list.
   void ResetForShowApps();
 
@@ -97,7 +92,6 @@ class APP_LIST_EXPORT AppsGridView : public views::View,
   void ClearAnySelectedView();
   bool IsSelectedView(const AppListItemView* view) const;
   bool has_selected_view() const { return selected_view_ != nullptr; }
-  views::View* GetSelectedView() const;
 
   void InitiateDrag(AppListItemView* view,
                     Pointer pointer,
@@ -146,11 +140,6 @@ class APP_LIST_EXPORT AppsGridView : public views::View,
       std::set<ui::Clipboard::FormatType>* format_types) override;
   bool CanDrop(const OSExchangeData& data) override;
   int OnDragUpdated(const ui::DropTargetEvent& event) override;
-
-  // Updates the visibility of app list items according to |app_list_state| and
-  // |is_in_drag|.
-  void UpdateControlVisibility(AppListView::AppListState app_list_state,
-                               bool is_in_drag);
 
   // Overridden from ui::EventHandler:
   void OnGestureEvent(ui::GestureEvent* event) override;
@@ -205,10 +194,7 @@ class APP_LIST_EXPORT AppsGridView : public views::View,
   void OnFolderItemRemoved();
 
   // Updates the opacity of all the items in the grid during dragging.
-  void UpdateOpacity();
-
-  // Starts a timer during which we ignore scroll events.
-  void StartTimerToIgnoreScrollEvents();
+  void UpdateOpacity(int app_list_y_position_in_screen);
 
   // Return the view model for test purposes.
   const views::ViewModelT<AppListItemView>* view_model_for_test() const {
@@ -243,10 +229,6 @@ class APP_LIST_EXPORT AppsGridView : public views::View,
     page_flip_delay_in_ms_ = page_flip_delay_in_ms;
   }
 
-  ExpandArrowView* expand_arrow_view_for_test() const {
-    return expand_arrow_view_;
-  }
-
  private:
   class FadeoutLayerDelegate;
   friend class test::AppsGridViewTestApi;
@@ -278,6 +260,9 @@ class APP_LIST_EXPORT AppsGridView : public views::View,
 
   // Updates suggestions from app list model.
   void UpdateSuggestions();
+
+  // Helper method for layouting indicator based on the given bounds |rect|.
+  void LayoutAllAppsIndicator(gfx::Rect* rect);
 
   // Returns all apps tiles per page based on |page|.
   int TilesPerPage(int page) const;
@@ -321,12 +306,6 @@ class APP_LIST_EXPORT AppsGridView : public views::View,
   // Returns true if the given moving operation should be handled by
   // |suggestions_container_|, otherwise false.
   bool HandleSuggestionsMove(int page_delta,
-                             int slot_x_delta,
-                             int slot_y_delta);
-
-  // Returns true if the given moving operation should be handled by
-  // |expand_arrow_view_|, otherwise false.
-  bool HandleExpandArrowMove(int page_delta,
                              int slot_x_delta,
                              int slot_y_delta);
 
@@ -444,9 +423,6 @@ class APP_LIST_EXPORT AppsGridView : public views::View,
   // ui::ImplicitAnimationObserver overrides:
   void OnImplicitAnimationsCompleted() override;
 
-  // The callback function for |scroll_ignore_timer_|.
-  void StopIgnoringScrollEvents();
-
   // Hide a given view temporarily without losing (mouse) events and / or
   // changing the size of it. If |immediate| is set the change will be
   // immediately applied - otherwise it will change gradually.
@@ -530,7 +506,6 @@ class APP_LIST_EXPORT AppsGridView : public views::View,
   // Views below are owned by views hierarchy.
   SuggestionsContainerView* suggestions_container_ = nullptr;
   IndicatorChipView* all_apps_indicator_ = nullptr;
-  ExpandArrowView* expand_arrow_view_ = nullptr;
 
   int cols_ = 0;
   int rows_per_page_ = 0;
@@ -598,9 +573,6 @@ class APP_LIST_EXPORT AppsGridView : public views::View,
   // Timer to auto flip page when dragging an item near the left/right edges.
   base::OneShotTimer page_flip_timer_;
 
-  // Timer to ignore scroll events after the app list switches states.
-  base::OneShotTimer scroll_ignore_timer_;
-
   // Target page to switch to when |page_flip_timer_| fires.
   int page_flip_target_ = -1;
 
@@ -615,9 +587,6 @@ class APP_LIST_EXPORT AppsGridView : public views::View,
 
   // True if the drag_view_ item is a folder item being dragged for reparenting.
   bool dragging_for_reparent_item_ = false;
-
-  // Whether the AppListView is animating.
-  bool is_ignoring_scroll_events_ = false;
 
   std::unique_ptr<FadeoutLayerDelegate> fadeout_layer_delegate_;
 

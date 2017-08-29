@@ -15,6 +15,7 @@
 #include "ios/chrome/browser/payments/payment_request_util.h"
 #include "ios/chrome/browser/ui/autofill/card_unmask_prompt_view_bridge.h"
 #import "ios/chrome/browser/ui/payments/payment_request_egtest_base.h"
+#import "ios/chrome/browser/ui/payments/payment_request_view_controller.h"
 #import "ios/chrome/test/app/chrome_test_util.h"
 #import "ios/chrome/test/earl_grey/chrome_earl_grey.h"
 #import "ios/chrome/test/earl_grey/chrome_matchers.h"
@@ -46,13 +47,14 @@ id<GREYMatcher> PaymentMethodCellMatcher(
     const autofill::AutofillProfile& billing_profile) {
   NSString* billing_address_label =
       GetBillingAddressLabelFromAutofillProfile(billing_profile);
+  NSString* notification_label = nil;
   return chrome_test_util::ButtonWithAccessibilityLabel([NSString
-      stringWithFormat:@"%@, %@, %@",
+      stringWithFormat:@"%@, %@, %@, %@",
                        base::SysUTF16ToNSString(
                            credit_card.NetworkAndLastFourDigits()),
                        base::SysUTF16ToNSString(credit_card.GetRawInfo(
                            autofill::CREDIT_CARD_NAME_FULL)),
-                       billing_address_label]);
+                       billing_address_label, notification_label]);
 }
 
 }  // namepsace
@@ -125,7 +127,8 @@ std::unique_ptr<autofill::AutofillProfile> _profile;
   [ChromeEarlGrey tapWebViewElementWithID:@"buy"];
 
   // Confirm that the Payment Request UI is showing.
-  [[EarlGrey selectElementWithMatcher:chrome_test_util::PaymentRequestView()]
+  [[EarlGrey selectElementWithMatcher:grey_accessibilityID(
+                                          kPaymentRequestCollectionViewID)]
       assertWithMatcher:grey_notNil()];
 
   // Confirm that the Buy button is enabled.
@@ -143,7 +146,8 @@ std::unique_ptr<autofill::AutofillProfile> _profile;
   [ChromeEarlGrey tapWebViewElementWithID:@"buy"];
 
   // Confirm that the Payment Request UI is showing.
-  [[EarlGrey selectElementWithMatcher:chrome_test_util::PaymentRequestView()]
+  [[EarlGrey selectElementWithMatcher:grey_accessibilityID(
+                                          kPaymentRequestCollectionViewID)]
       assertWithMatcher:grey_notNil()];
 
   // Confirm that the Buy button is not enabled.
@@ -165,7 +169,8 @@ std::unique_ptr<autofill::AutofillProfile> _profile;
   [ChromeEarlGrey tapWebViewElementWithID:@"buy"];
 
   // Confirm that the Payment Request UI is showing.
-  [[EarlGrey selectElementWithMatcher:chrome_test_util::PaymentRequestView()]
+  [[EarlGrey selectElementWithMatcher:grey_accessibilityID(
+                                          kPaymentRequestCollectionViewID)]
       assertWithMatcher:grey_notNil()];
 
   // Select the local card
@@ -191,8 +196,7 @@ std::unique_ptr<autofill::AutofillProfile> _profile;
 
   // Tap the Confirm button.
   [[EarlGrey
-      selectElementWithMatcher:ButtonWithAccessibilityLabelId(
-                                   IDS_AUTOFILL_CARD_UNMASK_CONFIRM_BUTTON)]
+      selectElementWithMatcher:ButtonWithAccessibilityLabelId(IDS_ACCNAME_OK)]
       performAction:grey_tap()];
 
   // Verify that the CVC number is sent to the page.

@@ -7,8 +7,8 @@
 #import "ios/chrome/browser/ui/collection_view/cells/collection_view_text_item.h"
 #import "ios/chrome/browser/ui/collection_view/collection_view_controller_test.h"
 #import "ios/chrome/browser/web/fake_mailto_handler_helpers.h"
-#import "ios/chrome/browser/web/legacy_mailto_url_rewriter.h"
 #import "ios/chrome/browser/web/mailto_handler_system_mail.h"
+#import "ios/chrome/browser/web/mailto_url_rewriter.h"
 #include "ios/chrome/grit/ios_strings.h"
 #import "ios/third_party/material_components_ios/src/components/Palettes/src/MDCPalettes.h"
 #include "testing/gtest_mac.h"
@@ -19,6 +19,10 @@
 
 #pragma mark - MailtoURLRewriter private interface for testing.
 
+@interface MailtoURLRewriter ()
+- (void)addMailtoApps:(NSArray<MailtoHandler*>*)handlerApps;
+@end
+
 #pragma mark - ComposeEmailHandlerCollectionViewControllerTest
 
 class ComposeEmailHandlerCollectionViewControllerTest
@@ -26,11 +30,11 @@ class ComposeEmailHandlerCollectionViewControllerTest
  protected:
   // Before CreateController() is called, set |handers_| and optionally
   // |defaultHandlerID_| ivars. They will be used to seed the construction of
-  // the LegacyMailtoURLRewriter which in turn used for the construction of the
+  // the MailtoURLRewriter which in turn used for the construction of the
   // CollectionViewController.
   CollectionViewController* InstantiateController() override {
-    rewriter_ = [[LegacyMailtoURLRewriter alloc] init];
-    [rewriter_ setDefaultHandlers:handlers_];
+    rewriter_ = [[MailtoURLRewriter alloc] init];
+    [rewriter_ addMailtoApps:handlers_];
     if (defaultHandlerID_)
       [rewriter_ setDefaultHandlerID:defaultHandlerID_];
     return [[ComposeEmailHandlerCollectionViewController alloc]

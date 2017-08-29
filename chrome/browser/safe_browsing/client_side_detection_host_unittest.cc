@@ -30,7 +30,6 @@
 #include "content/public/browser/web_contents.h"
 #include "content/public/common/browser_side_navigation_policy.h"
 #include "content/public/test/mock_render_process_host.h"
-#include "content/public/test/navigation_simulator.h"
 #include "content/public/test/test_browser_thread.h"
 #include "content/public/test/test_renderer_host.h"
 #include "content/public/test/web_contents_tester.h"
@@ -166,8 +165,7 @@ class MockSafeBrowsingDatabaseManager : public TestSafeBrowsingDatabaseManager {
  public:
   MockSafeBrowsingDatabaseManager() {}
 
-  MOCK_METHOD2(CheckCsdWhitelistUrl,
-               AsyncMatch(const GURL&, SafeBrowsingDatabaseManager::Client*));
+  MOCK_METHOD1(MatchCsdWhitelistUrl, bool(const GURL&));
   MOCK_METHOD1(MatchMalwareIP, bool(const std::string& ip_address));
   MOCK_METHOD0(IsMalwareKillSwitchOn, bool());
 
@@ -279,9 +277,8 @@ class ClientSideDetectionHostTest : public ChromeRenderViewHostTestHarness {
           .WillRepeatedly(Return(*is_incognito));
     }
     if (match_csd_whitelist) {
-      EXPECT_CALL(*database_manager_.get(), CheckCsdWhitelistUrl(url, _))
-          .WillOnce(Return(*match_csd_whitelist ? AsyncMatch::MATCH
-                                                : AsyncMatch::NO_MATCH));
+      EXPECT_CALL(*database_manager_.get(), MatchCsdWhitelistUrl(url))
+          .WillOnce(Return(*match_csd_whitelist));
     }
     if (malware_killswitch) {
       EXPECT_CALL(*database_manager_.get(), IsMalwareKillSwitchOn())
@@ -784,10 +781,7 @@ TEST_F(
 
   // Create a pending navigation, but don't commit it.
   GURL pending_url("http://slow.example.com/");
-  auto pending_navigation =
-      content::NavigationSimulator::CreateBrowserInitiated(pending_url,
-                                                           web_contents());
-  pending_navigation->Start();
+  content::WebContentsTester::For(web_contents())->StartNavigation(pending_url);
 
   WaitAndCheckPreClassificationChecks();
 

@@ -2,15 +2,14 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "extensions/browser/api/api_resource_manager.h"
-
 #include "base/files/file_path.h"
 #include "base/strings/string_util.h"
 #include "content/public/browser/browser_thread.h"
 #include "extensions/browser/api/api_resource.h"
+#include "extensions/browser/api/api_resource_manager.h"
 #include "extensions/browser/api_unittest.h"
 #include "extensions/common/extension.h"
-#include "extensions/common/extension_builder.h"
+#include "extensions/common/test_util.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "url/gurl.h"
 
@@ -32,9 +31,9 @@ TEST_F(ApiResourceManagerUnitTest, TwoAppsCannotShareResources) {
   std::unique_ptr<ApiResourceManager<FakeApiResource>> manager(
       new ApiResourceManager<FakeApiResource>(browser_context()));
   scoped_refptr<extensions::Extension> extension_one =
-      ExtensionBuilder("one").Build();
+      test_util::CreateEmptyExtension("one");
   scoped_refptr<extensions::Extension> extension_two =
-      ExtensionBuilder("two").Build();
+      test_util::CreateEmptyExtension("two");
 
   const std::string extension_one_id(extension_one->id());
   const std::string extension_two_id(extension_two->id());

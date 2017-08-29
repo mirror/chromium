@@ -6,7 +6,7 @@
 
 #include "cc/output/compositor_frame.h"
 #include "cc/quads/texture_draw_quad.h"
-#include "components/viz/common/resources/resource_format.h"
+#include "components/viz/common/quads/resource_format.h"
 #include "platform/CrossThreadFunctional.h"
 #include "platform/Histogram.h"
 #include "platform/WebTaskRunner.h"
@@ -140,7 +140,7 @@ void OffscreenCanvasFrameDispatcherImpl::DispatchFrame(
                          damage_rect.height()),
                gfx::Transform());
 
-  viz::SharedQuadState* sqs = pass->CreateAndAppendSharedQuadState();
+  cc::SharedQuadState* sqs = pass->CreateAndAppendSharedQuadState();
   sqs->SetAll(gfx::Transform(), bounds, bounds, bounds, false, 1.f,
               SkBlendMode::kSrcOver, 0);
 
@@ -196,8 +196,9 @@ void OffscreenCanvasFrameDispatcherImpl::DispatchFrame(
 
   // TODO(crbug.com/705019): optimize for contexts that have {alpha: false}
   const bool kNeedsBlending = true;
+  gfx::Rect opaque_rect(0, 0);
 
-  // TODO(crbug.com/645993): this should be inherited from WebGL context's
+  // TOOD(crbug.com/645993): this should be inherited from WebGL context's
   // creation settings.
   const bool kPremultipliedAlpha = true;
   const gfx::PointF uv_top_left(0.f, 0.f);
@@ -208,8 +209,8 @@ void OffscreenCanvasFrameDispatcherImpl::DispatchFrame(
   // TODO(crbug.com/645590): filter should respect the image-rendering CSS
   // property of associated canvas element.
   const bool kNearestNeighbor = false;
-  quad->SetAll(sqs, bounds, bounds, kNeedsBlending, resource.id, gfx::Size(),
-               kPremultipliedAlpha, uv_top_left, uv_bottom_right,
+  quad->SetAll(sqs, bounds, opaque_rect, bounds, kNeedsBlending, resource.id,
+               gfx::Size(), kPremultipliedAlpha, uv_top_left, uv_bottom_right,
                SK_ColorTRANSPARENT, vertex_opacity, yflipped, kNearestNeighbor,
                false);
 

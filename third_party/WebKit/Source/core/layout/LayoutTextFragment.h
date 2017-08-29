@@ -51,7 +51,9 @@ class LayoutTextFragment final : public LayoutText {
 
   bool IsTextFragment() const override { return true; }
 
-  bool CanBeSelectionLeaf() const override { return GetNode(); }
+  bool CanBeSelectionLeaf() const override {
+    return GetNode() && HasEditableStyle(*GetNode());
+  }
 
   unsigned Start() const { return start_; }
   unsigned FragmentLength() const { return fragment_length_; }

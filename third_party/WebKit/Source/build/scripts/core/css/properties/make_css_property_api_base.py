@@ -23,8 +23,7 @@ class CSSPropertyAPIWriter(css_properties.CSSProperties):
     def __init__(self, json5_file_paths):
         super(CSSPropertyAPIWriter, self).__init__([json5_file_paths[0]])
         self._outputs = {
-            'CSSPropertyAPI.h': self.generate_property_api_header,
-            'CSSPropertyAPI.cpp': self.generate_property_api_implementation,
+            'CSSPropertyAPI.cpp': self.generate_property_api_baseclass,
         }
 
         # A list of (enum_value, property_id, api_class_name) tuples.
@@ -33,30 +32,13 @@ class CSSPropertyAPIWriter(css_properties.CSSProperties):
         self._api_classes = set()
         for property_ in self.properties().values():
             api_class = self.get_classname(property_)
-            if api_class is None:
-                # Use the baseclass if no class was specified.
-                api_class = "CSSPropertyAPI"
             self._api_classes_by_property_id.append(
                 ApiClassData(
                     enum_value=property_['enum_value'],
                     property_id=property_['property_id'],
                     classname=api_class))
-            self._api_classes.add(api_class)
-
-        # Manually add CSSPropertyVariable and CSSPropertyAtApply.
-        self._api_classes_by_property_id.append(
-            ApiClassData(
-                enum_value=1,
-                property_id="CSSPropertyApplyAtRule",
-                classname="CSSPropertyAPI"))
-        self._api_classes.add("CSSPropertyAPI")
-        self._api_classes_by_property_id.append(
-            ApiClassData(
-                enum_value=2,
-                property_id="CSSPropertyVariable",
-                classname="CSSPropertyAPIVariable"))
-        self._api_classes.add("CSSPropertyAPIVariable")
-
+            if api_class:
+                self._api_classes.add(api_class)
         # Sort by enum value.
         self._api_classes_by_property_id.sort(key=lambda t: t.enum_value)
 
@@ -87,21 +69,13 @@ class CSSPropertyAPIWriter(css_properties.CSSProperties):
         return property_['api_class']
 
     @template_expander.use_jinja(
-        'core/css/properties/templates/CSSPropertyAPI.h.tmpl')
-    def generate_property_api_header(self):
-        return {
-            'input_files': self._input_files,
-            'api_classnames': self._api_classes,
-            'api_classes_by_property_id': self._api_classes_by_property_id,
-        }
-
-    @template_expander.use_jinja(
         'core/css/properties/templates/CSSPropertyAPI.cpp.tmpl')
-    def generate_property_api_implementation(self):
+    def generate_property_api_baseclass(self):
         return {
             'input_files': self._input_files,
             'api_classnames': self._api_classes,
             'api_classes_by_property_id': self._api_classes_by_property_id,
+            'first_property_id': self._first_enum_value,
             'last_property_id': (self._first_enum_value +
                                  len(self._properties) - 1)
         }

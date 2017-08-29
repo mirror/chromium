@@ -25,12 +25,10 @@
 #include "third_party/skia/include/core/SkColor.h"
 #include "third_party/skia/include/core/SkImageFilter.h"
 #include "third_party/skia/include/core/SkMatrix.h"
-#include "third_party/skia/include/core/SkOverdrawCanvas.h"
 #include "third_party/skia/include/core/SkPath.h"
 #include "third_party/skia/include/core/SkPoint.h"
 #include "third_party/skia/include/core/SkShader.h"
 #include "third_party/skia/include/effects/SkLayerRasterizer.h"
-#include "third_party/skia/include/effects/SkOverdrawColorFilter.h"
 #include "third_party/skia/include/gpu/GrContext.h"
 #include "ui/gfx/geometry/axis_transform2d.h"
 #include "ui/gfx/geometry/rect_conversions.h"
@@ -58,7 +56,7 @@ bool IsScaleAndIntegerTranslate(const SkMatrix& matrix) {
 
 SkiaRenderer::SkiaRenderer(const RendererSettings* settings,
                            cc::OutputSurface* output_surface,
-                           cc::DisplayResourceProvider* resource_provider)
+                           cc::ResourceProvider* resource_provider)
     : DirectRenderer(settings, output_surface, resource_provider) {
   const auto& context_caps =
       output_surface_->context_provider()->ContextCapabilities();
@@ -111,17 +109,6 @@ void SkiaRenderer::BeginDrawingFrame() {
 
 void SkiaRenderer::FinishDrawingFrame() {
   TRACE_EVENT0("cc", "SkiaRenderer::FinishDrawingFrame");
-  if (settings_->show_overdraw_feedback) {
-    sk_sp<SkImage> image = overdraw_surface_->makeImageSnapshot();
-    SkPaint paint;
-    static const SkPMColor colors[SkOverdrawColorFilter::kNumColors] = {
-        0x00000000, 0x00000000, 0x2f0000ff, 0x2f00ff00, 0x3fff0000, 0x7fff0000,
-    };
-    sk_sp<SkColorFilter> color_filter = SkOverdrawColorFilter::Make(colors);
-    paint.setColorFilter(color_filter);
-    root_surface_->getCanvas()->drawImage(image.get(), 0, 0, &paint);
-    root_surface_->getCanvas()->flush();
-  }
   current_framebuffer_surface_lock_ = nullptr;
   current_framebuffer_lock_ = nullptr;
   current_canvas_ = nullptr;
@@ -198,19 +185,8 @@ void SkiaRenderer::BindFramebufferToOutputSurface() {
   }
 
   root_canvas_ = root_surface_->getCanvas();
-  if (settings_->show_overdraw_feedback) {
-    const gfx::Size size(root_surface_->width(), root_surface_->height());
-    overdraw_surface_ = root_surface_->makeSurface(
-        SkImageInfo::MakeA8(size.width(), size.height()));
-    nway_canvas_ = std::make_unique<SkNWayCanvas>(size.width(), size.height());
-    overdraw_canvas_ =
-        std::make_unique<SkOverdrawCanvas>(overdraw_surface_->getCanvas());
-    nway_canvas_->addCanvas(overdraw_canvas_.get());
-    nway_canvas_->addCanvas(root_canvas_);
-    current_canvas_ = nway_canvas_.get();
-  } else {
-    current_canvas_ = root_canvas_;
-  }
+
+  current_canvas_ = root_canvas_;
 }
 
 bool SkiaRenderer::BindFramebufferToTexture(const cc::ScopedResource* texture) {
@@ -494,8 +470,8 @@ void SkiaRenderer::DrawTextureQuad(const cc::TextureDrawQuad* quad) {
   }
 
   // TODO(skaslev): Add support for non-premultiplied alpha.
-  cc::DisplayResourceProvider::ScopedReadLockSkImage lock(resource_provider_,
-                                                          quad->resource_id());
+  cc::ResourceProvider::ScopedReadLockSkImage lock(resource_provider_,
+                                                   quad->resource_id());
   const SkImage* image = lock.sk_image();
   if (!image)
     return;
@@ -536,8 +512,8 @@ void SkiaRenderer::DrawTileQuad(const cc::TileDrawQuad* quad) {
   // should never produce tile quads in the first place.
   DCHECK(resource_provider_);
   DCHECK(IsSoftwareResource(quad->resource_id()));
-  cc::DisplayResourceProvider::ScopedReadLockSkImage lock(resource_provider_,
-                                                          quad->resource_id());
+  cc::ResourceProvider::ScopedReadLockSkImage lock(resource_provider_,
+                                                   quad->resource_id());
   if (!lock.sk_image())
     return;
   gfx::RectF visible_tex_coord_rect = cc::MathUtil::ScaleRectProportional(
@@ -560,8 +536,8 @@ void SkiaRenderer::DrawRenderPassQuad(const cc::RenderPassDrawQuad* quad) {
   DCHECK(content_texture);
   DCHECK(content_texture->id());
   DCHECK(IsSoftwareResource(content_texture->id()));
-  cc::DisplayResourceProvider::ScopedReadLockSkImage lock(
-      resource_provider_, content_texture->id());
+  cc::ResourceProvider::ScopedReadLockSkImage lock(resource_provider_,
+                                                   content_texture->id());
   if (!lock.sk_image())
     return;
 

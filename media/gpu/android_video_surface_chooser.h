@@ -20,13 +20,9 @@ class MEDIA_GPU_EXPORT AndroidVideoSurfaceChooser {
  public:
   // Input state used for choosing the surface type.
   struct State {
-    // Is an overlay required?
-    bool is_required = false;
-
-    // Is the player currently in fullscreen?
     bool is_fullscreen = false;
 
-    // Should the overlay be marked as secure?
+    // Does playback require a secure surface?
     bool is_secure = false;
 
     // Is the player's frame hidden / closed?

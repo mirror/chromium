@@ -59,14 +59,14 @@ class MediaFileSystemBackend : public storage::FileSystemBackend {
       const net::URLRequest* url_request,
       const storage::FileSystemURL& filesystem_url,
       const std::string& storage_domain,
-      base::OnceCallback<void(base::File::Error result)> callback);
+      const base::Callback<void(base::File::Error result)>& callback);
 
   // FileSystemBackend implementation.
   bool CanHandleType(storage::FileSystemType type) const override;
   void Initialize(storage::FileSystemContext* context) override;
   void ResolveURL(const storage::FileSystemURL& url,
                   storage::OpenFileSystemMode mode,
-                  OpenFileSystemCallback callback) override;
+                  const OpenFileSystemCallback& callback) override;
   storage::AsyncFileUtil* GetAsyncFileUtil(
       storage::FileSystemType type) override;
   storage::WatcherManager* GetWatcherManager(

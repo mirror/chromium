@@ -229,7 +229,7 @@ RenderViewHostImpl::RenderViewHostImpl(
   if (ResourceDispatcherHostImpl::Get()) {
     BrowserThread::PostTask(
         BrowserThread::IO, FROM_HERE,
-        base::BindOnce(
+        base::Bind(
             &ResourceDispatcherHostImpl::OnRenderViewHostCreated,
             base::Unretained(ResourceDispatcherHostImpl::Get()),
             GetProcess()->GetID(), GetRoutingID(),
@@ -247,9 +247,9 @@ RenderViewHostImpl::~RenderViewHostImpl() {
   if (ResourceDispatcherHostImpl::Get()) {
     BrowserThread::PostTask(
         BrowserThread::IO, FROM_HERE,
-        base::BindOnce(&ResourceDispatcherHostImpl::OnRenderViewHostDeleted,
-                       base::Unretained(ResourceDispatcherHostImpl::Get()),
-                       GetProcess()->GetID(), GetRoutingID()));
+        base::Bind(&ResourceDispatcherHostImpl::OnRenderViewHostDeleted,
+                   base::Unretained(ResourceDispatcherHostImpl::Get()),
+                   GetProcess()->GetID(), GetRoutingID()));
   }
   delegate_->RenderViewDeleted(this);
   GetProcess()->RemoveObserver(this);
@@ -471,13 +471,6 @@ WebPreferences RenderViewHostImpl::ComputeWebkitPrefs() {
   prefs.primary_hover_type =
       ui::GetPrimaryHoverType(prefs.available_hover_types);
 
-// TODO(dtapuska): Enable barrel button selection drag support on Android.
-// crbug.com/758042
-#if defined(OS_WIN)
-  prefs.barrel_button_for_drag_enabled =
-      base::FeatureList::IsEnabled(features::kDirectManipulationStylus);
-#endif  // defined(OS_WIN)
-
 #if defined(OS_ANDROID)
   prefs.video_fullscreen_orientation_lock_enabled =
       base::FeatureList::IsEnabled(media::kVideoFullscreenOrientationLock) &&
@@ -672,11 +665,13 @@ void RenderViewHostImpl::DirectoryEnumerationFinished(
 void RenderViewHostImpl::RenderWidgetWillSetIsLoading(bool is_loading) {
   if (ResourceDispatcherHostImpl::Get()) {
     BrowserThread::PostTask(
-        BrowserThread::IO, FROM_HERE,
-        base::BindOnce(
-            &ResourceDispatcherHostImpl::OnRenderViewHostSetIsLoading,
-            base::Unretained(ResourceDispatcherHostImpl::Get()),
-            GetProcess()->GetID(), GetRoutingID(), is_loading));
+        BrowserThread::IO,
+        FROM_HERE,
+        base::Bind(&ResourceDispatcherHostImpl::OnRenderViewHostSetIsLoading,
+                   base::Unretained(ResourceDispatcherHostImpl::Get()),
+                   GetProcess()->GetID(),
+                   GetRoutingID(),
+                   is_loading));
   }
 }
 
@@ -883,9 +878,6 @@ void RenderViewHostImpl::OnWebkitPreferencesChanged() {
     return;
   updating_web_preferences_ = true;
   UpdateWebkitPreferences(ComputeWebkitPrefs());
-#if defined(OS_ANDROID)
-  GetWidget()->SetForceEnableZoom(web_preferences_->force_enable_zoom);
-#endif
   updating_web_preferences_ = false;
 }
 
@@ -933,7 +925,7 @@ void RenderViewHostImpl::SelectWordAroundCaret() {
 }
 
 void RenderViewHostImpl::PostRenderViewReady() {
-  GetProcess()->PostTaskWhenProcessIsReady(base::BindOnce(
+  GetProcess()->PostTaskWhenProcessIsReady(base::Bind(
       &RenderViewHostImpl::RenderViewReady, weak_factory_.GetWeakPtr()));
 }
 

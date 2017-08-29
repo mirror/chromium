@@ -65,11 +65,8 @@ class PLATFORM_EXPORT ShapeResult : public RefCounted<ShapeResult> {
       unsigned count);
   ~ShapeResult();
 
-  // The logical width of this result.
   float Width() const { return width_; }
   LayoutUnit SnappedWidth() const { return LayoutUnit::FromFloatCeil(width_); }
-  // The glyph bounding box, in logical coordinates, using alphabetic baseline
-  // even when the result is in vertical flow.
   const FloatRect& Bounds() const { return glyph_bounding_box_; }
   unsigned NumCharacters() const { return num_characters_; }
   // The character start/end index of a range shape result.
@@ -80,11 +77,6 @@ class PLATFORM_EXPORT ShapeResult : public RefCounted<ShapeResult> {
     return static_cast<TextDirection>(direction_);
   }
   bool Rtl() const { return Direction() == TextDirection::kRtl; }
-
-  // True if at least one glyph in this result has vertical offsets.
-  //
-  // Vertical result always has vertical offsets, but horizontal result may also
-  // have vertical offsets.
   bool HasVerticalOffsets() const { return has_vertical_offsets_; }
 
   // For memory reporting.
@@ -99,7 +91,7 @@ class PLATFORM_EXPORT ShapeResult : public RefCounted<ShapeResult> {
     return LayoutUnit::FromFloatCeil(PositionForOffset(offset));
   }
 
-  void ApplySpacing(ShapeResultSpacing<String>&);
+  void ApplySpacing(ShapeResultSpacing<String>&, TextDirection);
   PassRefPtr<ShapeResult> ApplySpacingToCopy(ShapeResultSpacing<TextRun>&,
                                              const TextRun&) const;
 
@@ -117,13 +109,8 @@ class PLATFORM_EXPORT ShapeResult : public RefCounted<ShapeResult> {
 
   template <typename TextContainerType>
   void ApplySpacing(ShapeResultSpacing<TextContainerType>&,
-                    const TextContainerType&);
-  template <bool is_horizontal_run>
-  void ComputeGlyphPositions(ShapeResult::RunInfo*,
-                             unsigned start_glyph,
-                             unsigned num_glyphs,
-                             hb_buffer_t*,
-                             FloatRect* glyph_bounding_box);
+                    const TextContainerType&,
+                    bool is_rtl);
   void InsertRun(std::unique_ptr<ShapeResult::RunInfo>,
                  unsigned start_glyph,
                  unsigned num_glyphs,

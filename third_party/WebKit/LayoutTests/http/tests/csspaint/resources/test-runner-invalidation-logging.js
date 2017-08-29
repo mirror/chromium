@@ -32,7 +32,7 @@ function testRunnerInvalidationLogging(imageType, tests) {
         }
     `;
 
-    CSS.paintWorklet.addModule(URL.createObjectURL(new Blob([workletCode], {type: 'text/javascript'}))).then(function() {
+    paintWorklet.addModule(URL.createObjectURL(new Blob([workletCode], {type: 'text/javascript'}))).then(function() {
         for (let i = 0; i < tests.length; i++) {
             tests[i].paintName = 'paint-' + i;
             registerTest(imageType, tests[i]);

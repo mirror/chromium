@@ -389,7 +389,6 @@ class PasswordFormManagerTest : public testing::Test {
     observed_form_.password_element = ASCIIToUTF16("Passwd");
     observed_form_.submit_element = ASCIIToUTF16("signIn");
     observed_form_.signon_realm = "http://accounts.google.com";
-    observed_form_.form_data.name = ASCIIToUTF16("the-form-name");
 
     saved_match_ = observed_form_;
     saved_match_.origin = GURL("http://accounts.google.com/a/ServiceLoginAuth");
@@ -1917,26 +1916,6 @@ TEST_F(PasswordFormManagerTest, FormsMatchIfSignaturesMatch) {
                 PasswordFormManager::RESULT_SIGNATURE_MATCH);
 }
 
-TEST_F(PasswordFormManagerTest, NoMatchForEmptyNames) {
-  // If two forms have no name, it's not evidence for a match.
-  PasswordForm other_form(*observed_form());
-  const_cast<PasswordForm&>(form_manager()->observed_form())
-      .form_data.name.clear();
-  other_form.form_data.name.clear();
-  EXPECT_EQ(0, form_manager()->DoesManage(other_form, nullptr) &
-                   PasswordFormManager::RESULT_FORM_NAME_MATCH);
-}
-
-TEST_F(PasswordFormManagerTest, NoMatchForEmtpyActions) {
-  // If two forms have no actions, it's not evidence for a match.
-  PasswordForm other_form(*observed_form());
-  const_cast<PasswordForm&>(form_manager()->observed_form()).form_data.action =
-      GURL::EmptyGURL();
-  other_form.action = GURL::EmptyGURL();
-  EXPECT_EQ(0, form_manager()->DoesManage(other_form, nullptr) &
-                   PasswordFormManager::RESULT_ACTION_MATCH);
-}
-
 // Test that if multiple credentials with the same username are stored, and the
 // user updates the password, then all of the stored passwords get updated as
 // long as they have the same password value.
@@ -2583,8 +2562,8 @@ TEST_F(PasswordFormManagerTest, ProcessFrame_StoreUpdatesCausesAutofill) {
 }
 
 // TODO(crbug.com/639786): Restore the following test:
-// when PasswordFormManager::Save or PasswordFormManager::Update is called, then
-// PasswordFormManager also calls PasswordManager::UpdateFormManagers.
+// when PasswordFormManager::Save is called, then PasswordFormManager also
+// calls PasswordManager::UpdateFormManagers.
 
 TEST_F(PasswordFormManagerTest, UploadChangePasswordForm) {
   autofill::ServerFieldType kChangePasswordVotes[] = {

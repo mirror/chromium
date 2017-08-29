@@ -10,11 +10,6 @@
           "object": "LayoutView #document",
           "rect": [0, 0, 800, 600],
           "reason": "style change"
-        },
-        {
-          "object": "LayoutBlockFlow HTML",
-          "rect": [50, 50, 700, 500],
-          "reason": "appeared"
         }
       ]
     }

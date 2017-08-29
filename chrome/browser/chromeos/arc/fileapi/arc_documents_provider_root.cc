@@ -31,6 +31,13 @@ constexpr base::TimeDelta kCacheExpiration = base::TimeDelta::FromSeconds(60);
 
 }  // namespace
 
+// Thin representation of a document in documents provider.
+struct ArcDocumentsProviderRoot::ThinDocument {
+  std::string document_id;
+  bool is_directory;
+  base::Time last_modified;
+};
+
 // Represents the status of a document watcher.
 struct ArcDocumentsProviderRoot::WatcherData {
   // ID of a watcher in the remote file system service.
@@ -57,7 +64,7 @@ struct ArcDocumentsProviderRoot::WatcherData {
 // Cache of directory contents.
 struct ArcDocumentsProviderRoot::DirectoryCache {
   // Files under the directory.
-  NameToDocumentMap mapping;
+  NameToThinDocumentMap mapping;
 
   // Timer to delete this cache.
   base::OneShotTimer clear_timer;
@@ -93,34 +100,9 @@ void ArcDocumentsProviderRoot::GetFileInfo(
     const base::FilePath& path,
     const GetFileInfoCallback& callback) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
-  if (path.IsAbsolute()) {
-    callback.Run(base::File::FILE_ERROR_NOT_FOUND, base::File::Info());
-    return;
-  }
-
-  // Specially handle the root directory since Files app does not update the
-  // list of file systems (left pane) until all volumes respond to GetMetadata
-  // requests to root directories.
-  if (path.empty()) {
-    base::File::Info info;
-    info.size = -1;
-    info.is_directory = true;
-    info.is_symbolic_link = false;
-    info.last_modified = info.last_accessed = info.creation_time =
-        base::Time::UnixEpoch();  // arbitrary
-    callback.Run(base::File::FILE_OK, info);
-    return;
-  }
-
-  base::FilePath basename = path.BaseName();
-  base::FilePath parent = path.DirName();
-  if (parent.value() == base::FilePath::kCurrentDirectory)
-    parent = base::FilePath();
-
   ResolveToDocumentId(
-      parent,
-      base::Bind(&ArcDocumentsProviderRoot::GetFileInfoWithParentDocumentId,
-                 weak_ptr_factory_.GetWeakPtr(), callback, basename));
+      path, base::Bind(&ArcDocumentsProviderRoot::GetFileInfoWithDocumentId,
+                       weak_ptr_factory_.GetWeakPtr(), callback));
 }
 
 void ArcDocumentsProviderRoot::ReadDirectory(const base::FilePath& path,
@@ -200,48 +182,47 @@ void ArcDocumentsProviderRoot::OnWatchersCleared() {
     entry.second = kInvalidWatcherData;
 }
 
-void ArcDocumentsProviderRoot::GetFileInfoWithParentDocumentId(
+void ArcDocumentsProviderRoot::GetFileInfoWithDocumentId(
     const GetFileInfoCallback& callback,
-    const base::FilePath& basename,
-    const std::string& parent_document_id) {
+    const std::string& document_id) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
-  if (parent_document_id.empty()) {
+  if (document_id.empty()) {
     callback.Run(base::File::FILE_ERROR_NOT_FOUND, base::File::Info());
     return;
   }
-  ReadDirectoryInternal(
-      parent_document_id, false /* force_refresh */,
-      base::Bind(&ArcDocumentsProviderRoot::GetFileInfoWithNameToDocumentMap,
-                 weak_ptr_factory_.GetWeakPtr(), callback, basename));
+  // Specially handle the root directory since Files app does not update the
+  // list of file systems (left pane) until all volumes respond to GetMetadata
+  // requests to root directories.
+  if (document_id == root_document_id_) {
+    base::File::Info info;
+    info.size = -1;
+    info.is_directory = true;
+    info.is_symbolic_link = false;
+    info.last_modified = info.last_accessed = info.creation_time =
+        base::Time::UnixEpoch();  // arbitrary
+    callback.Run(base::File::FILE_OK, info);
+    return;
+  }
+  runner_->GetDocument(
+      authority_, document_id,
+      base::Bind(&ArcDocumentsProviderRoot::GetFileInfoWithDocument,
+                 weak_ptr_factory_.GetWeakPtr(), callback));
 }
 
-void ArcDocumentsProviderRoot::GetFileInfoWithNameToDocumentMap(
+void ArcDocumentsProviderRoot::GetFileInfoWithDocument(
     const GetFileInfoCallback& callback,
-    const base::FilePath& basename,
-    base::File::Error error,
-    const NameToDocumentMap& mapping) {
+    mojom::DocumentPtr document) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
-
-  if (error != base::File::FILE_OK) {
-    callback.Run(error, base::File::Info());
-    return;
-  }
-
-  auto iter = mapping.find(basename.value());
-  if (iter == mapping.end()) {
+  if (document.is_null()) {
     callback.Run(base::File::FILE_ERROR_NOT_FOUND, base::File::Info());
     return;
   }
-
-  const auto& document = iter->second;
-
   base::File::Info info;
   info.size = document->size;
   info.is_directory = document->mime_type == kAndroidDirectoryMimeType;
   info.is_symbolic_link = false;
   info.last_modified = info.last_accessed = info.creation_time =
       base::Time::FromJavaTime(document->last_modified);
-
   callback.Run(base::File::FILE_OK, info);
 }
 
@@ -250,35 +231,31 @@ void ArcDocumentsProviderRoot::ReadDirectoryWithDocumentId(
     const std::string& document_id) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
   if (document_id.empty()) {
-    std::move(callback).Run(base::File::FILE_ERROR_NOT_FOUND,
-                            std::vector<ThinFileInfo>());
+    std::move(callback).Run(base::File::FILE_ERROR_NOT_FOUND, {});
     return;
   }
   ReadDirectoryInternal(
       document_id, true /* force_refresh */,
-      base::Bind(&ArcDocumentsProviderRoot::ReadDirectoryWithNameToDocumentMap,
-                 weak_ptr_factory_.GetWeakPtr(),
-                 base::Passed(std::move(callback))));
+      base::Bind(
+          &ArcDocumentsProviderRoot::ReadDirectoryWithNameToThinDocumentMap,
+          weak_ptr_factory_.GetWeakPtr(), base::Passed(std::move(callback))));
 }
 
-void ArcDocumentsProviderRoot::ReadDirectoryWithNameToDocumentMap(
+void ArcDocumentsProviderRoot::ReadDirectoryWithNameToThinDocumentMap(
     ReadDirectoryCallback callback,
     base::File::Error error,
-    const NameToDocumentMap& mapping) {
+    const NameToThinDocumentMap& mapping) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
   if (error != base::File::FILE_OK) {
-    std::move(callback).Run(error, std::vector<ThinFileInfo>());
+    std::move(callback).Run(error, {});
     return;
   }
 
   std::vector<ThinFileInfo> files;
   for (const auto& pair : mapping) {
-    const base::FilePath::StringType& name = pair.first;
-    const mojom::DocumentPtr& document = pair.second;
-    files.emplace_back(
-        ThinFileInfo{name, document->document_id,
-                     document->mime_type == kAndroidDirectoryMimeType,
-                     base::Time::FromJavaTime(document->last_modified)});
+    files.emplace_back(ThinFileInfo{pair.first, pair.second.document_id,
+                                    pair.second.is_directory,
+                                    pair.second.last_modified});
   }
   std::move(callback).Run(base::File::FILE_OK, std::move(files));
 }
@@ -376,16 +353,16 @@ void ArcDocumentsProviderRoot::ResolveToDocumentIdRecursively(
   ReadDirectoryInternal(
       document_id, false /* force_refresh */,
       base::Bind(&ArcDocumentsProviderRoot::
-                     ResolveToDocumentIdRecursivelyWithNameToDocumentMap,
+                     ResolveToDocumentIdRecursivelyWithNameToThinDocumentMap,
                  weak_ptr_factory_.GetWeakPtr(), components, callback));
 }
 
 void ArcDocumentsProviderRoot::
-    ResolveToDocumentIdRecursivelyWithNameToDocumentMap(
+    ResolveToDocumentIdRecursivelyWithNameToThinDocumentMap(
         const std::vector<base::FilePath::StringType>& components,
         const ResolveToDocumentIdCallback& callback,
         base::File::Error error,
-        const NameToDocumentMap& mapping) {
+        const NameToThinDocumentMap& mapping) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
   DCHECK(!components.empty());
   if (error != base::File::FILE_OK) {
@@ -397,7 +374,7 @@ void ArcDocumentsProviderRoot::
     callback.Run(std::string());
     return;
   }
-  ResolveToDocumentIdRecursively(iter->second->document_id,
+  ResolveToDocumentIdRecursively(iter->second.document_id,
                                  std::vector<base::FilePath::StringType>(
                                      components.begin() + 1, components.end()),
                                  callback);
@@ -419,44 +396,24 @@ void ArcDocumentsProviderRoot::ReadDirectoryInternal(
     }
   }
 
-  auto& pending_callbacks = pending_callbacks_map_[document_id];
-  bool read_in_flight = !pending_callbacks.empty();
-  pending_callbacks.emplace_back(callback);
-
-  if (read_in_flight) {
-    // There is already an in-flight ReadDirectoryInternal() call, so
-    // just enqueue the callback and return.
-    return;
-  }
-
   runner_->GetChildDocuments(
       authority_, document_id,
       base::Bind(
           &ArcDocumentsProviderRoot::ReadDirectoryInternalWithChildDocuments,
-          weak_ptr_factory_.GetWeakPtr(), document_id));
+          weak_ptr_factory_.GetWeakPtr(), document_id, callback));
 }
 
 void ArcDocumentsProviderRoot::ReadDirectoryInternalWithChildDocuments(
     const std::string& document_id,
+    const ReadDirectoryInternalCallback& callback,
     base::Optional<std::vector<mojom::DocumentPtr>> maybe_children) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
 
-  auto iter = pending_callbacks_map_.find(document_id);
-  DCHECK(iter != pending_callbacks_map_.end());
-
-  std::vector<ReadDirectoryInternalCallback> pending_callbacks =
-      std::move(iter->second);
-  DCHECK(!pending_callbacks.empty());
-
-  pending_callbacks_map_.erase(iter);
-
   if (!maybe_children) {
-    for (const auto& callback : pending_callbacks)
-      callback.Run(base::File::FILE_ERROR_NOT_FOUND, NameToDocumentMap());
+    callback.Run(base::File::FILE_ERROR_NOT_FOUND, NameToThinDocumentMap());
     return;
   }
-
-  std::vector<mojom::DocumentPtr> children = std::move(maybe_children.value());
+  std::vector<mojom::DocumentPtr>& children = maybe_children.value();
 
   // Sort entries to keep the mapping stable as far as possible.
   std::sort(children.begin(), children.end(),
@@ -464,10 +421,10 @@ void ArcDocumentsProviderRoot::ReadDirectoryInternalWithChildDocuments(
               return a->document_id < b->document_id;
             });
 
-  NameToDocumentMap mapping;
+  NameToThinDocumentMap mapping;
   std::map<base::FilePath::StringType, int> suffix_counters;
 
-  for (mojom::DocumentPtr& document : children) {
+  for (const mojom::DocumentPtr& document : children) {
     base::FilePath::StringType filename = GetFileNameForDocument(document);
 
     if (mapping.count(filename) > 0) {
@@ -487,7 +444,9 @@ void ArcDocumentsProviderRoot::ReadDirectoryInternalWithChildDocuments(
 
     DCHECK_EQ(0u, mapping.count(filename));
 
-    mapping[filename] = std::move(document);
+    mapping[filename] = ThinDocument{
+        document->document_id, document->mime_type == kAndroidDirectoryMimeType,
+        base::Time::FromJavaTime(document->last_modified)};
   }
 
   // This may create a new cache, or just update an existing cache.
@@ -499,8 +458,7 @@ void ArcDocumentsProviderRoot::ReadDirectoryInternalWithChildDocuments(
       base::Bind(&ArcDocumentsProviderRoot::ClearDirectoryCache,
                  weak_ptr_factory_.GetWeakPtr(), document_id));
 
-  for (const auto& callback : pending_callbacks)
-    callback.Run(base::File::FILE_OK, cache.mapping);
+  callback.Run(base::File::FILE_OK, cache.mapping);
 }
 
 void ArcDocumentsProviderRoot::ClearDirectoryCache(

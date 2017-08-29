@@ -5,7 +5,6 @@
 #include "ash/rotator/screen_rotation_animator.h"
 
 #include "ash/ash_switches.h"
-#include "ash/display/screen_orientation_controller_chromeos.h"
 #include "ash/display/window_tree_host_manager.h"
 #include "ash/public/cpp/config.h"
 #include "ash/rotator/screen_rotation_animator_observer.h"
@@ -264,8 +263,7 @@ TEST_F(ScreenRotationAnimatorSlowAnimationTest, ShouldNotifyObserver) {
   EXPECT_FALSE(observer.notified());
 
   animator()->Rotate(display::Display::ROTATE_90,
-                     display::Display::ROTATION_SOURCE_USER,
-                     DisplayConfigurationController::ANIMATION_SYNC);
+                     display::Display::RotationSource::ROTATION_SOURCE_USER);
   EXPECT_FALSE(observer.notified());
 
   test_api()->CompleteAnimations();
@@ -281,13 +279,11 @@ TEST_F(ScreenRotationAnimatorSlowAnimationTest, ShouldNotifyObserverOnce) {
   EXPECT_FALSE(observer.notified());
 
   animator()->Rotate(display::Display::ROTATE_90,
-                     display::Display::ROTATION_SOURCE_USER,
-                     DisplayConfigurationController::ANIMATION_SYNC);
+                     display::Display::RotationSource::ROTATION_SOURCE_USER);
   EXPECT_FALSE(observer.notified());
 
   animator()->Rotate(display::Display::ROTATE_180,
-                     display::Display::ROTATION_SOURCE_USER,
-                     DisplayConfigurationController::ANIMATION_SYNC);
+                     display::Display::RotationSource::ROTATION_SOURCE_USER);
   EXPECT_FALSE(observer.notified());
 
   test_api()->CompleteAnimations();
@@ -299,8 +295,7 @@ TEST_F(ScreenRotationAnimatorSlowAnimationTest, ShouldNotifyObserverOnce) {
 TEST_F(ScreenRotationAnimatorSlowAnimationTest, RotatesToDifferentRotation) {
   SetDisplayRotation(display_id(), display::Display::ROTATE_0);
   animator()->Rotate(display::Display::ROTATE_90,
-                     display::Display::ROTATION_SOURCE_USER,
-                     DisplayConfigurationController::ANIMATION_SYNC);
+                     display::Display::RotationSource::ROTATION_SOURCE_USER);
   EXPECT_TRUE(test_api()->HasActiveAnimations());
 
   test_api()->CompleteAnimations();
@@ -311,8 +306,7 @@ TEST_F(ScreenRotationAnimatorSlowAnimationTest,
        ShouldNotRotateTheSameRotation) {
   SetDisplayRotation(display_id(), display::Display::ROTATE_0);
   animator()->Rotate(display::Display::ROTATE_0,
-                     display::Display::ROTATION_SOURCE_USER,
-                     DisplayConfigurationController::ANIMATION_SYNC);
+                     display::Display::RotationSource::ROTATION_SOURCE_USER);
   EXPECT_FALSE(test_api()->HasActiveAnimations());
 }
 
@@ -322,14 +316,12 @@ TEST_F(ScreenRotationAnimatorSlowAnimationTest,
 TEST_F(ScreenRotationAnimatorSlowAnimationTest, RotatesDuringRotation) {
   SetDisplayRotation(display_id(), display::Display::ROTATE_0);
   animator()->Rotate(display::Display::ROTATE_90,
-                     display::Display::ROTATION_SOURCE_USER,
-                     DisplayConfigurationController::ANIMATION_SYNC);
+                     display::Display::RotationSource::ROTATION_SOURCE_USER);
   EXPECT_TRUE(animator()->IsRotating());
   EXPECT_EQ(display::Display::ROTATE_90, animator()->GetTargetRotation());
 
   animator()->Rotate(display::Display::ROTATE_180,
-                     display::Display::ROTATION_SOURCE_USER,
-                     DisplayConfigurationController::ANIMATION_SYNC);
+                     display::Display::RotationSource::ROTATION_SOURCE_USER);
   EXPECT_TRUE(test_api()->HasActiveAnimations());
   EXPECT_TRUE(animator()->IsRotating());
   EXPECT_EQ(display::Display::ROTATE_180, animator()->GetTargetRotation());
@@ -346,18 +338,15 @@ TEST_F(ScreenRotationAnimatorSlowAnimationTest, RotatesDuringRotation) {
 TEST_F(ScreenRotationAnimatorSlowAnimationTest, ShouldCompleteAnimations) {
   SetDisplayRotation(display_id(), display::Display::ROTATE_0);
   animator()->Rotate(display::Display::ROTATE_90,
-                     display::Display::ROTATION_SOURCE_USER,
-                     DisplayConfigurationController::ANIMATION_SYNC);
+                     display::Display::RotationSource::ROTATION_SOURCE_USER);
   EXPECT_TRUE(test_api()->HasActiveAnimations());
 
   animator()->Rotate(display::Display::ROTATE_180,
-                     display::Display::ROTATION_SOURCE_USER,
-                     DisplayConfigurationController::ANIMATION_SYNC);
+                     display::Display::RotationSource::ROTATION_SOURCE_USER);
   EXPECT_TRUE(test_api()->HasActiveAnimations());
 
   animator()->Rotate(display::Display::ROTATE_270,
-                     display::Display::ROTATION_SOURCE_USER,
-                     DisplayConfigurationController::ANIMATION_SYNC);
+                     display::Display::RotationSource::ROTATION_SOURCE_USER);
   EXPECT_TRUE(test_api()->HasActiveAnimations());
 
   test_api()->CompleteAnimations();
@@ -382,8 +371,7 @@ TEST_F(ScreenRotationAnimatorSlowAnimationTest,
       ui::ScopedAnimationDurationScaleMode::ZERO_DURATION);
   SetDisplayRotation(display_id(), display::Display::ROTATE_0);
   animator()->Rotate(display::Display::ROTATE_90,
-                     display::Display::ROTATION_SOURCE_USER,
-                     DisplayConfigurationController::ANIMATION_SYNC);
+                     display::Display::RotationSource::ROTATION_SOURCE_USER);
 
   EXPECT_FALSE(GetTray()->visible());
 }
@@ -405,8 +393,7 @@ TEST_F(ScreenRotationAnimatorSmoothAnimationTest,
           base::Unretained(this)));
   SetDisplayRotation(display_id, display::Display::ROTATE_0);
   animator()->Rotate(display::Display::ROTATE_90,
-                     display::Display::ROTATION_SOURCE_USER,
-                     DisplayConfigurationController::ANIMATION_ASYNC);
+                     display::Display::RotationSource::ROTATION_SOURCE_USER);
   EXPECT_TRUE(animator()->IsRotating());
 
   EXPECT_EQ(display::Display::ROTATE_90, animator()->GetTargetRotation());
@@ -442,8 +429,7 @@ TEST_F(ScreenRotationAnimatorSmoothAnimationTest,
       run_loop_->QuitWhenIdleClosure());
   SetDisplayRotation(secondary_display_id, display::Display::ROTATE_0);
   animator()->Rotate(display::Display::ROTATE_90,
-                     display::Display::ROTATION_SOURCE_USER,
-                     DisplayConfigurationController::ANIMATION_ASYNC);
+                     display::Display::RotationSource::ROTATION_SOURCE_USER);
   WaitForCopyCallback();
   EXPECT_EQ(1U, display_manager()->GetNumDisplays());
   EXPECT_EQ(primary_display_id, display_manager()->GetDisplayAt(0).id());
@@ -468,8 +454,7 @@ TEST_F(ScreenRotationAnimatorSmoothAnimationTest,
       run_loop_->QuitWhenIdleClosure());
   SetDisplayRotation(primary_display_id, display::Display::ROTATE_0);
   animator()->Rotate(display::Display::ROTATE_90,
-                     display::Display::ROTATION_SOURCE_USER,
-                     DisplayConfigurationController::ANIMATION_ASYNC);
+                     display::Display::RotationSource::ROTATION_SOURCE_USER);
   WaitForCopyCallback();
   EXPECT_EQ(1U, display_manager()->GetNumDisplays());
   EXPECT_EQ(secondary_display_id, display_manager()->GetDisplayAt(0).id());
@@ -497,8 +482,7 @@ TEST_F(ScreenRotationAnimatorSmoothAnimationTest,
           base::Unretained(this), "640x480"));
   SetDisplayRotation(secondary_display_id, display::Display::ROTATE_0);
   animator()->Rotate(display::Display::ROTATE_90,
-                     display::Display::ROTATION_SOURCE_USER,
-                     DisplayConfigurationController::ANIMATION_ASYNC);
+                     display::Display::RotationSource::ROTATION_SOURCE_USER);
   WaitForCopyCallback();
   EXPECT_EQ(1U, display_manager()->GetNumDisplays());
   EXPECT_EQ(primary_display_id, display_manager()->GetDisplayAt(0).id());
@@ -528,8 +512,7 @@ TEST_F(ScreenRotationAnimatorSmoothAnimationTest,
           base::Unretained(this), "640x480"));
   SetDisplayRotation(primary_display_id, display::Display::ROTATE_0);
   animator()->Rotate(display::Display::ROTATE_90,
-                     display::Display::ROTATION_SOURCE_USER,
-                     DisplayConfigurationController::ANIMATION_ASYNC);
+                     display::Display::RotationSource::ROTATION_SOURCE_USER);
   WaitForCopyCallback();
   EXPECT_EQ(1U, display_manager()->GetNumDisplays());
   EXPECT_EQ(secondary_display_id, display_manager()->GetDisplayAt(0).id());
@@ -554,8 +537,7 @@ TEST_F(ScreenRotationAnimatorSmoothAnimationTest,
       run_loop_->QuitWhenIdleClosure());
   SetDisplayRotation(secondary_display_id, display::Display::ROTATE_0);
   animator()->Rotate(display::Display::ROTATE_90,
-                     display::Display::ROTATION_SOURCE_USER,
-                     DisplayConfigurationController::ANIMATION_ASYNC);
+                     display::Display::RotationSource::ROTATION_SOURCE_USER);
   WaitForCopyCallback();
   EXPECT_EQ(1U, display_manager()->GetNumDisplays());
   EXPECT_EQ(secondary_display_id, display_manager()->GetDisplayAt(0).id());
@@ -591,8 +573,7 @@ TEST_F(ScreenRotationAnimatorSmoothAnimationTest,
           base::Unretained(this)));
   SetDisplayRotation(display_id, display::Display::ROTATE_0);
   animator()->Rotate(display::Display::ROTATE_90,
-                     display::Display::ROTATION_SOURCE_USER,
-                     DisplayConfigurationController::ANIMATION_ASYNC);
+                     display::Display::RotationSource::ROTATION_SOURCE_USER);
   WaitForCopyCallback();
 
   GetTray()->layer()->GetAnimator()->StopAnimating();
@@ -617,8 +598,7 @@ TEST_F(ScreenRotationAnimatorSmoothAnimationTest,
           base::Unretained(this)));
   SetDisplayRotation(display_id, display::Display::ROTATE_0);
   animator()->Rotate(display::Display::ROTATE_90,
-                     display::Display::ROTATION_SOURCE_USER,
-                     DisplayConfigurationController::ANIMATION_ASYNC);
+                     display::Display::RotationSource::ROTATION_SOURCE_USER);
   WaitForCopyCallback();
   EXPECT_TRUE(test_api()->HasActiveAnimations());
 
@@ -633,8 +613,7 @@ TEST_F(ScreenRotationAnimatorSmoothAnimationTest,
 
   // Should work for another rotation.
   animator()->Rotate(display::Display::ROTATE_180,
-                     display::Display::ROTATION_SOURCE_USER,
-                     DisplayConfigurationController::ANIMATION_ASYNC);
+                     display::Display::RotationSource::ROTATION_SOURCE_USER);
   WaitForCopyCallback();
   EXPECT_TRUE(test_api()->HasActiveAnimations());
 
@@ -642,4 +621,5 @@ TEST_F(ScreenRotationAnimatorSmoothAnimationTest,
   EXPECT_FALSE(test_api()->HasActiveAnimations());
   EXPECT_EQ(display::Display::ROTATE_180, GetDisplayRotation(display_id));
 }
+
 }  // namespace ash

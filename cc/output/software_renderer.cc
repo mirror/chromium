@@ -55,7 +55,7 @@ bool IsScaleAndIntegerTranslate(const SkMatrix& matrix) {
 
 SoftwareRenderer::SoftwareRenderer(const viz::RendererSettings* settings,
                                    OutputSurface* output_surface,
-                                   DisplayResourceProvider* resource_provider)
+                                   ResourceProvider* resource_provider)
     : DirectRenderer(settings, output_surface, resource_provider),
       output_device_(output_surface->software_device()) {}
 
@@ -119,10 +119,10 @@ bool SoftwareRenderer::BindFramebufferToTexture(
   // same texture again.
   current_framebuffer_lock_ = nullptr;
   current_framebuffer_lock_ =
-      std::make_unique<ResourceProvider::ScopedWriteLockSoftware>(
+      base::MakeUnique<ResourceProvider::ScopedWriteLockSoftware>(
           resource_provider_, texture->id());
   current_framebuffer_canvas_ =
-      std::make_unique<SkCanvas>(current_framebuffer_lock_->sk_bitmap());
+      base::MakeUnique<SkCanvas>(current_framebuffer_lock_->sk_bitmap());
   current_canvas_ = current_framebuffer_canvas_.get();
   return true;
 }
@@ -387,8 +387,8 @@ void SoftwareRenderer::DrawTextureQuad(const TextureDrawQuad* quad) {
   }
 
   // TODO(skaslev): Add support for non-premultiplied alpha.
-  DisplayResourceProvider::ScopedReadLockSkImage lock(resource_provider_,
-                                                      quad->resource_id());
+  ResourceProvider::ScopedReadLockSkImage lock(resource_provider_,
+                                               quad->resource_id());
   if (!lock.valid())
     return;
   const SkImage* image = lock.sk_image();
@@ -430,8 +430,8 @@ void SoftwareRenderer::DrawTileQuad(const TileDrawQuad* quad) {
   DCHECK(resource_provider_);
   DCHECK(IsSoftwareResource(quad->resource_id()));
 
-  DisplayResourceProvider::ScopedReadLockSkImage lock(resource_provider_,
-                                                      quad->resource_id());
+  ResourceProvider::ScopedReadLockSkImage lock(resource_provider_,
+                                               quad->resource_id());
   if (!lock.valid())
     return;
 

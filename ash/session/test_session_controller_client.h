@@ -44,22 +44,19 @@ class TestSessionControllerClient : public ash::mojom::SessionControllerClient {
   void SetSessionState(session_manager::SessionState state);
 
   // Creates the |count| pre-defined user sessions. The users are named by
-  // numbers using "user%d@tray" template. The first user is set as active user
-  // to be consistent with crash-and-restore scenario.  Note that existing user
-  // sessions prior this call will be removed without sending out notifications.
+  // numbers using "user%d@tray" template. Note that existing user sessions
+  // prior this call will be removed without sending out notifications.
   void CreatePredefinedUserSessions(int count);
 
   // Adds a user session from a given display email. The display email will be
   // canonicalized and used to construct an AccountId. |enable_settings| sets
   // whether web UI settings are allowed. If |provide_pref_service| is true,
-  // eagerly inject a PrefService for this user. |is_new_profile| indicates
-  // whether the user has a newly created profile on the device.
+  // eagerly inject a PrefService for this user.
   void AddUserSession(
       const std::string& display_email,
       user_manager::UserType user_type = user_manager::USER_TYPE_REGULAR,
       bool enable_settings = true,
-      bool provide_pref_service = true,
-      bool is_new_profile = false);
+      bool provide_pref_service = true);
 
   // Simulates screen unlocking. It is virtual so that test cases can override
   // it. The default implementation sets the session state of SessionController

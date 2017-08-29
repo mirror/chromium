@@ -5,6 +5,7 @@
 #include "components/sync/driver/fake_sync_client.h"
 
 #include "base/bind.h"
+#include "base/memory/ptr_util.h"
 #include "components/sync/base/extensions_activity.h"
 #include "components/sync/base/sync_prefs.h"
 #include "components/sync/driver/fake_sync_service.h"
@@ -22,7 +23,7 @@ void DummyRegisterPlatformTypesCallback(SyncService* sync_service,
 FakeSyncClient::FakeSyncClient()
     : bridge_(nullptr),
       factory_(nullptr),
-      sync_service_(std::make_unique<FakeSyncService>()) {
+      sync_service_(base::MakeUnique<FakeSyncService>()) {
   // Register sync preferences and set them to "Sync everything" state.
   SyncPrefs::RegisterProfilePrefs(pref_service_.registry());
   SyncPrefs sync_prefs(GetPrefService());
@@ -31,7 +32,7 @@ FakeSyncClient::FakeSyncClient()
 }
 
 FakeSyncClient::FakeSyncClient(SyncApiComponentFactory* factory)
-    : factory_(factory), sync_service_(std::make_unique<FakeSyncService>()) {
+    : factory_(factory), sync_service_(base::MakeUnique<FakeSyncService>()) {
   SyncPrefs::RegisterProfilePrefs(pref_service_.registry());
 }
 

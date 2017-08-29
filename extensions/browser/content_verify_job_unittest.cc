@@ -78,7 +78,7 @@ class ContentVerifyJobUnittest : public ExtensionsTest {
  public:
   ContentVerifyJobUnittest()
       // The TestBrowserThreadBundle is needed for ContentVerifyJob::Start().
-      : ExtensionsTest(std::make_unique<content::TestBrowserThreadBundle>(
+      : ExtensionsTest(base::MakeUnique<content::TestBrowserThreadBundle>(
             content::TestBrowserThreadBundle::REAL_IO_THREAD)) {}
   ~ContentVerifyJobUnittest() override {}
 

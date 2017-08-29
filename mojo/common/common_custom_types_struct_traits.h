@@ -5,7 +5,6 @@
 #ifndef MOJO_COMMON_COMMON_CUSTOM_TYPES_STRUCT_TRAITS_H_
 #define MOJO_COMMON_COMMON_CUSTOM_TYPES_STRUCT_TRAITS_H_
 
-#include "base/containers/span.h"
 #include "base/files/file.h"
 #include "base/i18n/rtl.h"
 #include "base/process/process_handle.h"
@@ -27,15 +26,15 @@ namespace mojo {
 
 template <>
 struct StructTraits<common::mojom::String16DataView, base::StringPiece16> {
-  static base::span<const uint16_t> data(base::StringPiece16 str) {
-    return base::make_span(reinterpret_cast<const uint16_t*>(str.data()),
-                           str.size());
+  static ConstCArray<uint16_t> data(base::StringPiece16 str) {
+    return ConstCArray<uint16_t>(reinterpret_cast<const uint16_t*>(str.data()),
+                                 str.size());
   }
 };
 
 template <>
 struct StructTraits<common::mojom::String16DataView, base::string16> {
-  static base::span<const uint16_t> data(const base::string16& str) {
+  static ConstCArray<uint16_t> data(const base::string16& str) {
     return StructTraits<common::mojom::String16DataView,
                         base::StringPiece16>::data(str);
   }

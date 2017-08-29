@@ -208,8 +208,7 @@ void DecoderStream<StreamType>::Reset(const base::Closure& closure) {
 template <DemuxerStream::Type StreamType>
 bool DecoderStream<StreamType>::CanReadWithoutStalling() const {
   DCHECK(task_runner_->BelongsToCurrentThread());
-  return !ready_outputs_.empty() ||
-         (decoder_ && decoder_->CanReadWithoutStalling());
+  return !ready_outputs_.empty() || decoder_->CanReadWithoutStalling();
 }
 
 template <>
@@ -654,11 +653,8 @@ void DecoderStream<StreamType>::OnBufferReady(
     //   lost frames if we were to fallback then).
     pending_buffers_.clear();
 
-    const DecoderConfig& config = StreamTraits::GetDecoderConfig(stream_);
-    traits_.OnConfigChanged(config);
-
     if (!config_change_observer_cb_.is_null())
-      config_change_observer_cb_.Run(config);
+      config_change_observer_cb_.Run(StreamTraits::GetDecoderConfig(stream_));
 
     state_ = STATE_FLUSHING_DECODER;
     if (!reset_cb_.is_null()) {

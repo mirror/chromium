@@ -69,6 +69,7 @@ class WebRuntimeFeatures {
 
   BLINK_PLATFORM_EXPORT static void EnableDisplayList2dCanvas(bool);
   BLINK_PLATFORM_EXPORT static void ForceDisplayList2dCanvas(bool);
+  BLINK_PLATFORM_EXPORT static void ForceDisable2dCanvasCopyOnWrite(bool);
 
   BLINK_PLATFORM_EXPORT static void EnableOriginTrials(bool);
   BLINK_PLATFORM_EXPORT static bool IsOriginTrialsEnabled();
@@ -87,12 +88,12 @@ class WebRuntimeFeatures {
   BLINK_PLATFORM_EXPORT static void EnableForceTallerSelectPopup(bool);
   BLINK_PLATFORM_EXPORT static void EnableGamepadExtensions(bool);
   BLINK_PLATFORM_EXPORT static void EnableGenericSensor(bool);
-  BLINK_PLATFORM_EXPORT static void EnableGenericSensorExtraClasses(bool);
   BLINK_PLATFORM_EXPORT static void EnableHeapCompaction(bool);
   BLINK_PLATFORM_EXPORT static void EnableInputMultipleFieldsUI(bool);
   BLINK_PLATFORM_EXPORT static void EnableLazyParseCSS(bool);
   BLINK_PLATFORM_EXPORT static void EnableLoadingWithMojo(bool);
   BLINK_PLATFORM_EXPORT static void EnableMediaCapture(bool);
+  BLINK_PLATFORM_EXPORT static void EnableMediaDocumentDownloadButton(bool);
   BLINK_PLATFORM_EXPORT static void EnableMediaSession(bool);
   BLINK_PLATFORM_EXPORT static void EnableMiddleClickAutoscroll(bool);
   BLINK_PLATFORM_EXPORT static void EnableModuleScripts(bool);
@@ -113,7 +114,6 @@ class WebRuntimeFeatures {
   BLINK_PLATFORM_EXPORT static void EnablePaymentRequest(bool);
   BLINK_PLATFORM_EXPORT static void EnablePermissionsAPI(bool);
   BLINK_PLATFORM_EXPORT static void EnablePreciseMemoryInfo(bool);
-  BLINK_PLATFORM_EXPORT static void EnablePreloadDefaultIsMetadata(bool);
   BLINK_PLATFORM_EXPORT static void EnablePrintBrowser(bool);
   BLINK_PLATFORM_EXPORT static void EnablePresentationAPI(bool);
   BLINK_PLATFORM_EXPORT static void EnablePushMessaging(bool);

@@ -27,7 +27,6 @@
 <translation id="1746730358044914197">Metody wprowadzania zostały skonfigurowane przez administratora.</translation>
 <translation id="1747827819627189109">Klawiatura ekranowa włączona</translation>
 <translation id="1823873187264960516">Ethernet: <ph name="ADDRESS" /></translation>
-<translation id="1836215606488044471">Asystent (ładuję…)</translation>
 <translation id="1850504506766569011">Wi-Fi wyłączone.</translation>
 <translation id="1856813161013948396">Pomiń ekran blokady, dotykając czujnika linii papilarnych. Kliknij, by skonfigurować.</translation>
 <translation id="1864454756846565995">Urządzenie USB-C (tylny port)</translation>
@@ -55,7 +54,6 @@
 <translation id="2338501278241028356">Włącz Bluetooth, by wykryć urządzenia w pobliżu</translation>
 <translation id="2352467521400612932">Ustawienia rysika</translation>
 <translation id="2354174487190027830">Aktywuję <ph name="NAME" /></translation>
-<translation id="2365393535144473978">Wraz z mobilną transmisją danych zostanie włączony Bluetooth.</translation>
 <translation id="2391579633712104609">180°</translation>
 <translation id="2429753432712299108">Urządzenie Bluetooth „<ph name="DEVICE_NAME" />” chce się sparować. Zanim to zaakceptujesz, sprawdź, czy na tym urządzeniu wyświetla się klucz: <ph name="PASSKEY" /></translation>
 <translation id="2475982808118771221">Wystąpił błąd</translation>
@@ -125,7 +123,6 @@
 <translation id="4279490309300973883">Odbicie lustrzane</translation>
 <translation id="4321179778687042513">ctrl</translation>
 <translation id="4338109981321384717">Lupa</translation>
-<translation id="4351433414020964307">Trwa ładowanie Asystenta…</translation>
 <translation id="4378551569595875038">Łączę...</translation>
 <translation id="4421231901400348175">Udostępnianie sterowania ekranem użytkownikowi <ph name="HELPER_NAME" /> przy użyciu pomocy zdalnej.</translation>
 <translation id="4430019312045809116">Głośność</translation>
@@ -172,7 +169,6 @@
 <translation id="5927132638760172455">Przesyłam do nieznanego odbiornika</translation>
 <translation id="5947494881799873997">Przywróć</translation>
 <translation id="595202126637698455">Śledzenie wydajności jest włączone</translation>
-<translation id="5957083217255311415">Mobilna transmisja danych jest wyłączona.</translation>
 <translation id="5958529069007801266">Użytkownik nadzorowany</translation>
 <translation id="5977415296283489383">Słuchawki</translation>
 <translation id="5978382165065462689">Udostępnianie sterowania ekranem przy użyciu pomocy zdalnej.</translation>
@@ -206,7 +202,6 @@
 <translation id="6691659475504239918">Search+Shift+H</translation>
 <translation id="6700713906295497288">Przycisk menu IME</translation>
 <translation id="6713285437468012787">Urządzenie Bluetooth „<ph name="DEVICE_NAME" />” zostało sparowane i jest teraz dostępne dla wszystkich użytkowników. Możesz usunąć to sparowanie w Ustawieniach.</translation>
-<translation id="6715542151869432661">Nie znaleziono urządzeń mobilnych.</translation>
 <translation id="6785414152754474415">Naładowanie baterii: <ph name="PERCENTAGE" />%. Trwa ładowanie.</translation>
 <translation id="6803622936009808957">Nie można wyświetlić odbicia lustrzanego, ponieważ nie znaleziono obsługiwanych rozdzielczości. Zamiast tego został włączony pulpit rozszerzony.</translation>
 <translation id="683971173229319003">Szukaj+L</translation>
@@ -272,7 +267,6 @@
 <translation id="8828714802988429505">90°</translation>
 <translation id="8850991929411075241">Szukaj+Esc</translation>
 <translation id="8878886163241303700">Rozszerzony ekran</translation>
-<translation id="8921624153894383499">Asystent Google nie mówi w tym języku.</translation>
 <translation id="8938800817013097409">Urządzenie USB-C (prawy port z tyłu)</translation>
 <translation id="8940956008527784070">Niski stan baterii (<ph name="PERCENTAGE" />%)</translation>
 <translation id="9074739597929991885">Bluetooth</translation>

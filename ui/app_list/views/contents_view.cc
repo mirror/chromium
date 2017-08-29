@@ -24,7 +24,6 @@
 #include "ui/app_list/views/search_result_page_view.h"
 #include "ui/app_list/views/search_result_tile_item_list_view.h"
 #include "ui/app_list/views/start_page_view.h"
-#include "ui/compositor/scoped_layer_animation_settings.h"
 #include "ui/display/display.h"
 #include "ui/display/screen.h"
 #include "ui/events/event.h"
@@ -37,15 +36,6 @@ namespace {
 
 // Layout constants.
 constexpr int kDefaultContentsViewHeight = 623;
-
-void DoCloseAnimation(base::TimeDelta animation_duration, ui::Layer* layer) {
-  ui::ScopedLayerAnimationSettings animation(layer->GetAnimator());
-  animation.SetTransitionDuration(animation_duration);
-  animation.SetTweenType(gfx::Tween::EASE_OUT);
-  animation.SetPreemptionStrategy(
-      ui::LayerAnimator::IMMEDIATELY_ANIMATE_TO_NEW_TARGET);
-  layer->SetOpacity(0.0f);
-}
 
 }  // namespace
 
@@ -86,18 +76,10 @@ void ContentsView::Init(AppListModel* model) {
                     AppListModel::STATE_CUSTOM_LAUNCHER_PAGE);
   }
 
-  apps_container_view_ = new AppsContainerView(app_list_main_view_, model);
-
-  // Start page is only for non-fullscreen app list.
-  if (is_fullscreen_app_list_enabled_) {
-    // Add |apps_container_view_| as STATE_START corresponding page for
-    // fullscreen app list.
-    AddLauncherPage(apps_container_view_, AppListModel::STATE_START);
-  } else {
-    start_page_view_ =
-        new StartPageView(app_list_main_view_, view_delegate, app_list_view_);
-    AddLauncherPage(start_page_view_, AppListModel::STATE_START);
-  }
+  // Start page.
+  start_page_view_ =
+      new StartPageView(app_list_main_view_, view_delegate, app_list_view_);
+  AddLauncherPage(start_page_view_, AppListModel::STATE_START);
 
   // Search results UI.
   search_results_page_view_ = new SearchResultPageView();
@@ -118,6 +100,8 @@ void ContentsView::Init(AppListModel* model) {
                    GetSearchBoxView()->search_box(), view_delegate));
   AddLauncherPage(search_results_page_view_,
                   AppListModel::STATE_SEARCH_RESULTS);
+
+  apps_container_view_ = new AppsContainerView(app_list_main_view_, model);
 
   AddLauncherPage(apps_container_view_, AppListModel::STATE_APPS);
 
@@ -234,6 +218,8 @@ void ContentsView::ActivePageChanged() {
 
   app_list_main_view_->model()->SetState(state);
 
+  DCHECK(start_page_view_);
+
   // Set the visibility of the search box's back button.
   const bool folder_active = state == AppListModel::STATE_APPS &&
                              apps_container_view_->IsInFolderView();
@@ -348,10 +334,8 @@ void ContentsView::UpdateSearchBox(double progress,
         gfx::Tween::ColorValueBetween(progress, original_shadow.color(),
                                       target_shadow.color())));
   }
-  if (is_fullscreen_app_list_enabled_) {
-    search_box->UpdateLayout(progress, current_state, target_state);
+  if (is_fullscreen_app_list_enabled_)
     search_box->UpdateBackground(progress, current_state, target_state);
-  }
   search_box->GetWidget()->SetBounds(
       search_box->GetViewBoundsForSearchBoxContentsBounds(
           ConvertRectToWidget(search_box_rect)));
@@ -414,7 +398,7 @@ gfx::Rect ContentsView::GetDefaultSearchBoxBounds() const {
 gfx::Rect ContentsView::GetSearchBoxBoundsForState(
     AppListModel::State state) const {
   AppListPage* page = GetPageView(GetPageIndexForState(state));
-  return page->GetSearchBoxBoundsForState(state);
+  return page->GetSearchBoxBounds();
 }
 
 gfx::Rect ContentsView::GetDefaultContentsBounds() const {
@@ -567,16 +551,6 @@ int ContentsView::GetDisplayHeight() const {
       .work_area()
       .size()
       .height();
-}
-
-void ContentsView::FadeOutOnClose(base::TimeDelta animation_duration) {
-  DCHECK(is_fullscreen_app_list_enabled_);
-  DoCloseAnimation(animation_duration, this->layer());
-  DoCloseAnimation(animation_duration, GetSearchBoxView()->layer());
-}
-
-views::View* ContentsView::GetSelectedView() const {
-  return app_list_pages_[GetActivePageIndex()]->GetSelectedView();
 }
 
 }  // namespace app_list

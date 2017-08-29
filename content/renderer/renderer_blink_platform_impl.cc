@@ -8,7 +8,6 @@
 #include <utility>
 
 #include "base/command_line.h"
-#include "base/feature_list.h"
 #include "base/files/file_path.h"
 #include "base/guid.h"
 #include "base/lazy_instance.h"
@@ -27,7 +26,6 @@
 #include "build/build_config.h"
 #include "components/url_formatter/url_formatter.h"
 #include "content/child/blob_storage/webblobregistry_impl.h"
-#include "content/child/child_url_loader_factory_getter.h"
 #include "content/child/database_util.h"
 #include "content/child/file_info_util.h"
 #include "content/child/fileapi/webfilesystem_impl.h"
@@ -199,13 +197,6 @@ media::AudioParameters GetAudioHardwareParams() {
       .output_params();
 }
 
-mojom::URLLoaderFactoryPtr GetBlobURLLoaderFactoryGetter() {
-  mojom::URLLoaderFactoryPtr blob_loader_factory;
-  RenderThreadImpl::current()->GetRendererHost()->GetBlobURLLoaderFactory(
-      mojo::MakeRequest(&blob_loader_factory));
-  return blob_loader_factory;
-}
-
 }  // namespace
 
 //------------------------------------------------------------------------------
@@ -253,7 +244,8 @@ class RendererBlinkPlatformImpl::SandboxSupport
 //------------------------------------------------------------------------------
 
 RendererBlinkPlatformImpl::RendererBlinkPlatformImpl(
-    blink::scheduler::RendererScheduler* renderer_scheduler)
+    blink::scheduler::RendererScheduler* renderer_scheduler,
+    base::WeakPtr<service_manager::Connector> connector)
     : BlinkPlatformImpl(renderer_scheduler->DefaultTaskRunner()),
       main_thread_(renderer_scheduler->CreateMainThread()),
       clipboard_delegate_(new RendererClipboardDelegate),
@@ -263,7 +255,8 @@ RendererBlinkPlatformImpl::RendererBlinkPlatformImpl(
       default_task_runner_(renderer_scheduler->DefaultTaskRunner()),
       loading_task_runner_(renderer_scheduler->LoadingTaskRunner()),
       web_scrollbar_behavior_(new WebScrollbarBehaviorImpl),
-      renderer_scheduler_(renderer_scheduler) {
+      renderer_scheduler_(renderer_scheduler),
+      blink_interface_provider_(new BlinkInterfaceProviderImpl(connector)) {
 #if !defined(OS_ANDROID) && !defined(OS_WIN) && !defined(OS_FUCHSIA)
   if (g_sandbox_enabled && sandboxEnabled()) {
     sandbox_support_.reset(new RendererBlinkPlatformImpl::SandboxSupport);
@@ -296,8 +289,6 @@ RendererBlinkPlatformImpl::RendererBlinkPlatformImpl(
     connector_ = service_manager::Connector::Create(&request);
   }
 
-  blink_interface_provider_.reset(
-      new BlinkInterfaceProviderImpl(connector_.get()));
   top_level_blame_context_.Initialize();
   renderer_scheduler_->SetTopLevelBlameContext(&top_level_blame_context_);
 }
@@ -333,15 +324,6 @@ std::unique_ptr<blink::WebURLLoader> RendererBlinkPlatformImpl::CreateURLLoader(
   return base::MakeUnique<WebURLLoaderImpl>(
       child_thread ? child_thread->resource_dispatcher() : nullptr, task_runner,
       url_loader_factory_.get());
-}
-
-scoped_refptr<ChildURLLoaderFactoryGetter>
-RendererBlinkPlatformImpl::CreateDefaultURLLoaderFactoryGetter() {
-  return base::MakeRefCounted<ChildURLLoaderFactoryGetter>(
-      CreateNetworkURLLoaderFactory(),
-      base::FeatureList::IsEnabled(features::kNetworkService)
-          ? base::BindOnce(&GetBlobURLLoaderFactoryGetter)
-          : ChildURLLoaderFactoryGetter::URLLoaderFactoryGetterCallback());
 }
 
 PossiblyAssociatedInterfacePtr<mojom::URLLoaderFactory>

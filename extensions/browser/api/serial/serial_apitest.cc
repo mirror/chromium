@@ -73,7 +73,7 @@ class FakeSerialIoHandler : public device::mojom::SerialIoHandler {
   void Read(uint32_t bytes, ReadCallback callback) override {
     auto buffer =
         base::MakeRefCounted<net::IOBuffer>(static_cast<size_t>(bytes));
-    test_io_handler_->Read(std::make_unique<device::ReceiveBuffer>(
+    test_io_handler_->Read(base::MakeUnique<device::ReceiveBuffer>(
         buffer, bytes,
         base::BindOnce(
             [](ReadCallback callback, scoped_refptr<net::IOBuffer> buffer,
@@ -87,13 +87,14 @@ class FakeSerialIoHandler : public device::mojom::SerialIoHandler {
   }
   void Write(const std::vector<uint8_t>& data,
              WriteCallback callback) override {
-    test_io_handler_->Write(std::make_unique<device::SendBuffer>(
-        data, base::BindOnce(
-                  [](WriteCallback callback, int bytes_sent,
-                     device::mojom::SerialSendError error) {
-                    std::move(callback).Run(bytes_sent, error);
-                  },
-                  std::move(callback))));
+    test_io_handler_->Write(base::MakeUnique<device::SendBuffer>(
+        std::vector<char>(data.data(), data.data() + data.size()),
+        base::BindOnce(
+            [](WriteCallback callback, int bytes_sent,
+               device::mojom::SerialSendError error) {
+              std::move(callback).Run(bytes_sent, error);
+            },
+            std::move(callback))));
   }
   void CancelRead(device::mojom::SerialReceiveError reason) override {
     test_io_handler_->CancelRead(reason);
@@ -136,7 +137,7 @@ void BindSerialDeviceEnumerator(
     mojo::ScopedMessagePipeHandle handle,
     const service_manager::BindSourceInfo& source_info) {
   mojo::MakeStrongBinding(
-      std::make_unique<FakeSerialDeviceEnumerator>(),
+      base::MakeUnique<FakeSerialDeviceEnumerator>(),
       device::mojom::SerialDeviceEnumeratorRequest(std::move(handle)));
 }
 
@@ -144,7 +145,7 @@ void BindSerialIoHandler(const std::string& interface_name,
                          mojo::ScopedMessagePipeHandle handle,
                          const service_manager::BindSourceInfo& source_info) {
   mojo::MakeStrongBinding(
-      std::make_unique<FakeSerialIoHandler>(),
+      base::MakeUnique<FakeSerialIoHandler>(),
       device::mojom::SerialIoHandlerRequest(std::move(handle)));
 }
 

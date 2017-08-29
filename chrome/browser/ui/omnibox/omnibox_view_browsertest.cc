@@ -1304,7 +1304,7 @@ IN_PROC_BROWSER_TEST_F(OmniboxViewTest, DISABLED_DeleteItem) {
   ASSERT_FALSE(omnibox_view->IsSelectAll());
 
   // Delete the item.
-  ASSERT_NO_FATAL_FAILURE(SendKey(ui::VKEY_DELETE, ui::EF_SHIFT_DOWN));
+  popup_model->TryDeletingCurrentItem();
   ASSERT_NO_FATAL_FAILURE(WaitForAutocompleteControllerDone());
   // The selected line shouldn't be changed, because we have more than two
   // items.

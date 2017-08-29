@@ -37,7 +37,6 @@ class BattOrConnection {
     virtual void OnMessageRead(bool success,
                                BattOrMessageType type,
                                std::unique_ptr<std::vector<char>> bytes) = 0;
-    virtual void OnFlushComplete(bool success) = 0;
   };
 
   BattOrConnection(Listener* listener);
@@ -67,10 +66,7 @@ class BattOrConnection {
   // Cancels the current message read operation.
   virtual void CancelReadMessage() = 0;
 
-  // Flushes the serial connection to the BattOr, reading and throwing away
-  // bytes from the serial connection until the connection is quiet for a
-  // sufficiently long time. This also discards any trailing bytes from past
-  // successful reads.
+  // Flushes the serial connection to the BattOr.
   virtual void Flush() = 0;
 
  protected:

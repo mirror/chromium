@@ -34,8 +34,6 @@ void ScriptsRunInfo::LogRun(bool send_script_activity) {
             routing_id_, executing_scripts, frame_url_));
   }
 
-  base::TimeDelta elapsed = timer.Elapsed();
-
   switch (run_location_) {
     case UserScript::DOCUMENT_START:
       UMA_HISTOGRAM_COUNTS_100("Extensions.InjectStart_CssCount", num_css);
@@ -44,8 +42,7 @@ void ScriptsRunInfo::LogRun(bool send_script_activity) {
         UMA_HISTOGRAM_COUNTS_100("Extensions.InjectStart_BlockingScriptCount",
                                  num_blocking_js);
       } else if (num_css || num_js) {
-        UMA_HISTOGRAM_TIMES("Extensions.InjectStart_Time", elapsed);
-        LogLongInjectionTaskTime(run_location_, elapsed);
+        UMA_HISTOGRAM_TIMES("Extensions.InjectStart_Time", timer.Elapsed());
       }
       break;
     case UserScript::DOCUMENT_END:
@@ -54,8 +51,7 @@ void ScriptsRunInfo::LogRun(bool send_script_activity) {
         UMA_HISTOGRAM_COUNTS_100("Extensions.InjectEnd_BlockingScriptCount",
                                  num_blocking_js);
       } else if (num_js) {
-        UMA_HISTOGRAM_TIMES("Extensions.InjectEnd_Time", elapsed);
-        LogLongInjectionTaskTime(run_location_, elapsed);
+        UMA_HISTOGRAM_TIMES("Extensions.InjectEnd_Time", timer.Elapsed());
       }
       break;
     case UserScript::DOCUMENT_IDLE:
@@ -64,8 +60,7 @@ void ScriptsRunInfo::LogRun(bool send_script_activity) {
         UMA_HISTOGRAM_COUNTS_100("Extensions.InjectIdle_BlockingScriptCount",
                                  num_blocking_js);
       } else if (num_js) {
-        UMA_HISTOGRAM_TIMES("Extensions.InjectIdle_Time", elapsed);
-        LogLongInjectionTaskTime(run_location_, elapsed);
+        UMA_HISTOGRAM_TIMES("Extensions.InjectIdle_Time", timer.Elapsed());
       }
       break;
     case UserScript::RUN_DEFERRED:
@@ -75,35 +70,6 @@ void ScriptsRunInfo::LogRun(bool send_script_activity) {
     case UserScript::UNDEFINED:
     case UserScript::RUN_LOCATION_LAST:
       NOTREACHED();
-  }
-}
-
-void ScriptsRunInfo::LogLongInjectionTaskTime(
-    UserScript::RunLocation run_location,
-    const base::TimeDelta& elapsed) {
-  // We only record tasks longer than 50 milliseconds. This threshold aligns
-  // with the definition of "long task" in Long Tasks API
-  // (https://w3c.github.io/longtasks/).
-  const base::TimeDelta kLongTaskThreshold =
-      base::TimeDelta::FromMilliseconds(50);
-  if (elapsed < kLongTaskThreshold)
-    return;
-
-  switch (run_location) {
-    case UserScript::DOCUMENT_START:
-      UMA_HISTOGRAM_TIMES("Extensions.LongInjectionTaskTime.DocumentStart",
-                          elapsed);
-      break;
-    case UserScript::DOCUMENT_END:
-      UMA_HISTOGRAM_TIMES("Extensions.LongInjectionTaskTime.DocumentEnd",
-                          elapsed);
-      break;
-    case UserScript::DOCUMENT_IDLE:
-      UMA_HISTOGRAM_TIMES("Extensions.LongInjectionTaskTime.DocumentIdle",
-                          elapsed);
-      break;
-    default:
-      break;
   }
 }
 

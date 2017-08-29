@@ -21,7 +21,6 @@ suite('<bookmarks-toolbar>', function() {
           '6',
           [
             createItem('61'),
-            createItem('62'),
           ]),
     ]));
     store = new bookmarks.TestStore({
@@ -54,7 +53,7 @@ suite('<bookmarks-toolbar>', function() {
   });
 
   test('overlay does not show when editing is disabled', function() {
-    store.data.prefs.canEdit = false;
+    store.data.prefs.canEdit = false
     store.data.selection.items = new Set(['2', '3']);
     store.notifyObservers();
     assertFalse(toolbar.showSelectionOverlay);
@@ -129,27 +128,16 @@ suite('<bookmarks-toolbar>', function() {
     assertFalse(toolbar.canSortFolder_);
     assertTrue(toolbar.$$('#sortButton').disabled);
 
-    // Adding 2 bookmarks should enable sorting.
+    // Adding a bookmark should enable sorting.
     store.setReducersEnabled(true);
-    var item1 = {
+    var item = {
       id: '51',
       parentId: '5',
       index: 0,
       url: 'https://www.example.com',
     };
     store.dispatch(bookmarks.actions.createBookmark(
-        item1.id, item1));
-    assertFalse(toolbar.canSortFolder_);
-    assertTrue(toolbar.$$('#sortButton').disabled);
-
-    var item2 = {
-      id: '52',
-      parentId: '5',
-      index: 1,
-      url: 'https://www.example.com',
-    };
-    store.dispatch(bookmarks.actions.createBookmark(
-        item2.id, item2));
+        item.id, item));
     assertTrue(toolbar.canSortFolder_);
     assertFalse(toolbar.$$('#sortButton').disabled);
   });

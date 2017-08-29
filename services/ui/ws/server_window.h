@@ -113,14 +113,12 @@ class ServerWindow : public viz::HostFrameSinkClient {
   const ServerWindow* parent() const { return parent_; }
   ServerWindow* parent() { return parent_; }
 
-  // Returns the root window used in checking drawn status. This is not
-  // necessarily the same as the root window used in event dispatch.
   // NOTE: this returns null if the window does not have an ancestor associated
   // with a display.
-  const ServerWindow* GetRootForDrawn() const;
-  ServerWindow* GetRootForDrawn() {
+  const ServerWindow* GetRoot() const;
+  ServerWindow* GetRoot() {
     return const_cast<ServerWindow*>(
-        const_cast<const ServerWindow*>(this)->GetRootForDrawn());
+        const_cast<const ServerWindow*>(this)->GetRoot());
   }
 
   const Windows& children() const { return children_; }

@@ -7,6 +7,8 @@
 #include <algorithm>
 #include <vector>
 
+#include "ash/metrics/user_metrics_action.h"
+#include "ash/metrics/user_metrics_recorder.h"
 #include "ash/public/cpp/shell_window_ids.h"
 #include "ash/resources/vector_icons/vector_icons.h"
 #include "ash/shell.h"
@@ -20,7 +22,6 @@
 #include "ash/wm/tablet_mode/tablet_mode_controller.h"
 #include "ash/wm/window_state.h"
 #include "base/auto_reset.h"
-#include "base/metrics/user_metrics.h"
 #include "base/strings/string_util.h"
 #include "base/strings/utf_string_conversions.h"
 #include "base/time/time.h"
@@ -596,13 +597,13 @@ void WindowSelectorItem::SetDimmed(bool dimmed) {
 void WindowSelectorItem::ButtonPressed(views::Button* sender,
                                        const ui::Event& event) {
   if (sender == close_button_) {
-    base::RecordAction(
-        base::UserMetricsAction("WindowSelector_OverviewCloseButton"));
-    if (Shell::Get()
+    Shell::Get()->metrics()->RecordUserMetricsAction(
+        UMA_WINDOW_OVERVIEW_CLOSE_BUTTON);
+    if (ash::Shell::Get()
             ->tablet_mode_controller()
             ->IsTabletModeWindowManagerEnabled()) {
-      base::RecordAction(
-          base::UserMetricsAction("Tablet_WindowCloseFromOverviewButton"));
+      ash::Shell::Get()->metrics()->RecordUserMetricsAction(
+          ash::UMA_TABLET_WINDOW_CLOSE_THROUGH_OVERVIEW_CLOSE_BUTTON);
     }
     CloseWindow();
     return;

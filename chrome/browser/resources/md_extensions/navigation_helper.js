@@ -2,8 +2,6 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-cr.exportPath('extensions');
-
 /**
  * The different pages that can be shown at a time.
  * Note: This must remain in sync with the page ids in manager.html!
@@ -19,12 +17,6 @@ const Page = {
 /** @enum {string} */
 const Dialog = {
   OPTIONS: 'options',
-};
-
-/** @enum {number} */
-extensions.ShowingType = {
-  EXTENSIONS: 0,
-  APPS: 1,
 };
 
 /** @typedef {{page: Page,
@@ -47,9 +39,13 @@ cr.define('extensions', function() {
      *     forward in history; called with the new active page.
      */
     constructor(onHistoryChange) {
-      window.addEventListener('popstate', () => {
-        onHistoryChange(this.getCurrentPage());
-      });
+      this.onHistoryChange_ = onHistoryChange;
+      window.addEventListener('popstate', this.onPopState_.bind(this));
+    }
+
+    /** @private */
+    onPopState_() {
+      this.onHistoryChange_(this.getCurrentPage());
     }
 
     /**
@@ -71,10 +67,7 @@ cr.define('extensions', function() {
       if (location.pathname == '/shortcuts')
         return {page: Page.SHORTCUTS};
 
-      if (location.pathname == '/apps')
-        return {page: Page.LIST, type: extensions.ShowingType.APPS};
-
-      return {page: Page.LIST, type: extensions.ShowingType.EXTENSIONS};
+      return {page: Page.LIST};
     }
 
     /**
@@ -85,10 +78,7 @@ cr.define('extensions', function() {
       let path;
       switch (entry.page) {
         case Page.LIST:
-          if (entry.type && entry.type == extensions.ShowingType.APPS)
-            path = '/apps';
-          else
-            path = '/';
+          path = '/';
           break;
         case Page.DETAILS:
           if (entry.subpage) {

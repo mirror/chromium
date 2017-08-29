@@ -48,7 +48,6 @@
 #include "components/reading_list/core/reading_list_model.h"
 #include "components/search_engines/search_engines_pref_names.h"
 #include "components/search_engines/template_url_service.h"
-#include "components/sessions/core/session_types.h"
 #include "components/sessions/core/tab_restore_service_helper.h"
 #include "components/strings/grit/components_strings.h"
 #include "components/toolbar/toolbar_model_impl.h"
@@ -82,13 +81,11 @@
 #include "ios/chrome/browser/reading_list/reading_list_model_factory.h"
 #include "ios/chrome/browser/search_engines/template_url_service_factory.h"
 #include "ios/chrome/browser/sessions/ios_chrome_tab_restore_service_factory.h"
-#include "ios/chrome/browser/sessions/session_util.h"
 #include "ios/chrome/browser/sessions/tab_restore_service_delegate_impl_ios.h"
 #include "ios/chrome/browser/sessions/tab_restore_service_delegate_impl_ios_factory.h"
 #import "ios/chrome/browser/snapshots/snapshot_cache.h"
 #import "ios/chrome/browser/snapshots/snapshot_overlay.h"
 #import "ios/chrome/browser/snapshots/snapshot_overlay_provider.h"
-#import "ios/chrome/browser/ssl/ios_captive_portal_blocking_page_delegate.h"
 #import "ios/chrome/browser/store_kit/store_kit_tab_helper.h"
 #import "ios/chrome/browser/tabs/legacy_tab_helper.h"
 #import "ios/chrome/browser/tabs/tab.h"
@@ -96,7 +93,6 @@
 #import "ios/chrome/browser/tabs/tab_headers_delegate.h"
 #import "ios/chrome/browser/tabs/tab_model.h"
 #import "ios/chrome/browser/tabs/tab_model_observer.h"
-#import "ios/chrome/browser/tabs/tab_private.h"
 #import "ios/chrome/browser/tabs/tab_snapshotting_delegate.h"
 #import "ios/chrome/browser/ui/activity_services/activity_service_legacy_coordinator.h"
 #import "ios/chrome/browser/ui/activity_services/requirements/activity_service_presentation.h"
@@ -108,7 +104,6 @@
 #import "ios/chrome/browser/ui/browser_container_view.h"
 #import "ios/chrome/browser/ui/browser_view_controller_dependency_factory.h"
 #import "ios/chrome/browser/ui/bubble/bubble_view_controller_presenter.h"
-#import "ios/chrome/browser/ui/captive_portal/captive_portal_login_coordinator.h"
 #import "ios/chrome/browser/ui/chrome_web_view_factory.h"
 #import "ios/chrome/browser/ui/commands/UIKit+ChromeExecuteCommand.h"
 #import "ios/chrome/browser/ui/commands/application_commands.h"
@@ -131,7 +126,7 @@
 #import "ios/chrome/browser/ui/first_run/welcome_to_chrome_view_controller.h"
 #import "ios/chrome/browser/ui/fullscreen_controller.h"
 #import "ios/chrome/browser/ui/history_popup/requirements/tab_history_presentation.h"
-#import "ios/chrome/browser/ui/history_popup/tab_history_legacy_coordinator.h"
+#import "ios/chrome/browser/ui/history_popup/tab_history_coordinator.h"
 #import "ios/chrome/browser/ui/key_commands_provider.h"
 #import "ios/chrome/browser/ui/ntp/new_tab_page_controller.h"
 #import "ios/chrome/browser/ui/ntp/recent_tabs/recent_tabs_panel_view_controller.h"
@@ -356,7 +351,6 @@ bool IsURLAllowedInIncognito(const GURL& url) {
                                     CRWWebStateDelegate,
                                     DialogPresenterDelegate,
                                     FullScreenControllerDelegate,
-                                    IOSCaptivePortalBlockingPageDelegate,
                                     KeyCommandsPlumbing,
                                     MFMailComposeViewControllerDelegate,
                                     NewTabPageControllerObserver,
@@ -393,9 +387,6 @@ bool IsURLAllowedInIncognito(const GURL& url) {
 
   // Controller for edge swipe gestures for page and tab navigation.
   SideSwipeController* _sideSwipeController;
-
-  // Handles displaying the captive portal login page.
-  CaptivePortalLoginCoordinator* _captivePortalLoginCoordinator;
 
   // Handles displaying the context menu for all form factors.
   ContextMenuCoordinator* _contextMenuCoordinator;
@@ -537,7 +528,7 @@ bool IsURLAllowedInIncognito(const GURL& url) {
   QRScannerLegacyCoordinator* _qrScannerCoordinator;
 
   // Coordinator for Tab History Popup.
-  LegacyTabHistoryCoordinator* _tabHistoryCoordinator;
+  TabHistoryCoordinator* _tabHistoryCoordinator;
 }
 
 // The browser's side swipe controller.  Lazily instantiated on the first call.
@@ -546,6 +537,8 @@ bool IsURLAllowedInIncognito(const GURL& url) {
 @property(nonatomic, strong, readonly) DialogPresenter* dialogPresenter;
 // The object that manages keyboard commands on behalf of the BVC.
 @property(nonatomic, strong, readonly) KeyCommandsProvider* keyCommandsProvider;
+// Whether the current tab can enable the reader mode menu item.
+@property(nonatomic, assign, readonly) BOOL canUseReaderMode;
 // Whether the current tab can enable the request desktop menu item.
 @property(nonatomic, assign, readonly) BOOL canUseDesktopUserAgent;
 // Whether the sharing menu should be enabled.
@@ -1123,6 +1116,14 @@ applicationCommandEndpoint:(id<ApplicationCommands>)applicationCommandEndpoint {
   return _dialogPresenter;
 }
 
+- (BOOL)canUseReaderMode {
+  Tab* tab = [_model currentTab];
+  if ([self isTabNativePage:tab])
+    return NO;
+
+  return [tab canSwitchToReaderMode];
+}
+
 - (BOOL)canUseDesktopUserAgent {
   Tab* tab = [_model currentTab];
   if ([self isTabNativePage:tab])
@@ -1585,15 +1586,9 @@ applicationCommandEndpoint:(id<ApplicationCommands>)applicationCommandEndpoint {
   }
 
   // The rest of this function initiates the new tab animation, which is
-  // phone-specific.  Call the foreground tab added completion block; for
-  // iPhones, this will get executed after the animation has finished.
-  if (IsIPadIdiom()) {
-    if (self.foregroundTabWasAddedCompletionBlock) {
-      self.foregroundTabWasAddedCompletionBlock();
-      self.foregroundTabWasAddedCompletionBlock = nil;
-    }
+  // phone-specific.
+  if (IsIPadIdiom())
     return;
-  }
 
   // Do nothing if browsing is currently suspended.  The BVC will set everything
   // up correctly when browsing resumes.
@@ -1859,7 +1854,7 @@ applicationCommandEndpoint:(id<ApplicationCommands>)applicationCommandEndpoint {
   _qrScannerCoordinator.presentationProvider = self;
 
   _tabHistoryCoordinator =
-      [[LegacyTabHistoryCoordinator alloc] initWithBaseViewController:self];
+      [[TabHistoryCoordinator alloc] initWithBaseViewController:self];
   _tabHistoryCoordinator.dispatcher = _dispatcher;
   _tabHistoryCoordinator.positionProvider = _toolbarController;
   _tabHistoryCoordinator.tabModel = _model;
@@ -2325,7 +2320,6 @@ bubblePresenterForFeature:(const base::Feature&)feature
 
 - (void)installDelegatesForTab:(Tab*)tab {
   // Unregistration happens when the Tab is removed from the TabModel.
-  tab.iOSCaptivePortalBlockingPageDelegate = self;
   tab.dispatcher = self.dispatcher;
   tab.dialogDelegate = self;
   tab.snapshotOverlayProvider = self;
@@ -2348,7 +2342,6 @@ bubblePresenterForFeature:(const base::Feature&)feature
 }
 
 - (void)uninstallDelegatesForTab:(Tab*)tab {
-  tab.iOSCaptivePortalBlockingPageDelegate = nil;
   tab.dispatcher = nil;
   tab.dialogDelegate = nil;
   tab.snapshotOverlayProvider = nil;
@@ -2729,17 +2722,17 @@ bubblePresenterForFeature:(const base::Feature&)feature
   };
 }
 
-- (void)webState:(web::WebState*)webState
+- (BOOL)webState:(web::WebState*)webState
     handleContextMenu:(const web::ContextMenuParams&)params {
   // Prevent context menu from displaying for a tab which is no longer the
   // current one.
   if (webState != [_model currentTab].webState) {
-    return;
+    return NO;
   }
 
   // No custom context menu if no valid url is available in |params|.
   if (!params.link_url.is_valid() && !params.src_url.is_valid()) {
-    return;
+    return NO;
   }
 
   DCHECK(_browserState);
@@ -2871,6 +2864,7 @@ bubblePresenterForFeature:(const base::Feature&)feature
   }
 
   [_contextMenuCoordinator start];
+  return YES;
 }
 
 - (void)webState:(web::WebState*)webState
@@ -3256,8 +3250,7 @@ bubblePresenterForFeature:(const base::Feature&)feature
 
   id<CRWNativeContent> nativeController = nil;
   std::string url_host = url.host();
-  if (url_host == kChromeUINewTabHost ||
-      (IsIPadIdiom() && url_host == kChromeUIBookmarksHost)) {
+  if (url_host == kChromeUINewTabHost || url_host == kChromeUIBookmarksHost) {
     NewTabPageController* pageController =
         [[NewTabPageController alloc] initWithUrl:url
                                            loader:self
@@ -3973,12 +3966,7 @@ bubblePresenterForFeature:(const base::Feature&)feature
 }
 
 - (void)loadSessionTab:(const sessions::SessionTab*)sessionTab {
-  WebStateList* webStateList = [_model webStateList];
-  webStateList->ReplaceWebStateAt(
-      webStateList->active_index(),
-      session_util::CreateWebStateWithNavigationEntries(
-          [_model browserState], sessionTab->current_navigation_index,
-          sessionTab->navigations));
+  [[_model currentTab] loadSessionTab:sessionTab];
 }
 
 - (void)openJavascript:(NSString*)javascript {
@@ -4195,6 +4183,7 @@ bubblePresenterForFeature:(const base::Feature&)feature
     BOOL isBookmarked = _toolbarModelIOS->IsCurrentTabBookmarked();
     [toolsPopupController setIsCurrentPageBookmarked:isBookmarked];
     [toolsPopupController setCanShowFindBar:self.canShowFindBar];
+    [toolsPopupController setCanUseReaderMode:self.canUseReaderMode];
     [toolsPopupController setCanShowShareMenu:self.canShowShareMenu];
 
     if (!IsIPadIdiom())
@@ -4273,6 +4262,10 @@ bubblePresenterForFeature:(const base::Feature&)feature
                           loader:self];
 
   [_readingListCoordinator start];
+}
+
+- (void)switchToReaderMode {
+  [[_model currentTab] switchToReaderMode];
 }
 
 - (void)preloadVoiceSearch {
@@ -5151,24 +5144,10 @@ bubblePresenterForFeature:(const base::Feature&)feature
 
 #pragma mark - TabHistoryPresenter
 
-- (UIView*)viewForTabHistoryPresentation {
-  return self.view;
-}
-
 - (void)prepareForTabHistoryPresentation {
   DCHECK(self.visible || self.dismissingModal);
   [[self.tabModel currentTab].webController dismissKeyboard];
   [_toolbarController cancelOmniboxEdit];
-}
-
-#pragma mark - CaptivePortalDetectorTabHelperDelegate
-
-- (void)captivePortalBlockingPage:(IOSCaptivePortalBlockingPage*)blockingPage
-            connectWithLandingURL:(GURL)landingURL {
-  _captivePortalLoginCoordinator = [[CaptivePortalLoginCoordinator alloc]
-      initWithBaseViewController:self
-                      landingURL:landingURL];
-  [_captivePortalLoginCoordinator start];
 }
 
 @end

@@ -1524,40 +1524,39 @@ bool LayoutBox::NodeAtPoint(HitTestResult& result,
       return false;
   }
 
-  bool should_hit_test_self = IsInSelfHitTestingPhase(action);
-
-  if (should_hit_test_self && HasOverflowClip() &&
-      HitTestOverflowControl(result, location_in_container, adjusted_location))
+  if (action == kHitTestForeground && HasOverflowClip() &&
+      HitTestOverflowControl(result, location_in_container,
+                             adjusted_location)) {
     return true;
+  }
 
+  // TODO(pdr): We should also check for css clip in the !isSelfPaintingLayer
+  //            case, similar to overflow clip below.
   bool skip_children = false;
-  if (ShouldClipOverflow()) {
-    // PaintLayer::HitTestContentsForFragments checked the fragments'
-    // foreground rect for intersection if a layer is self painting,
-    // so only do the overflow clip check here for non-self-painting layers.
-    if (!HasSelfPaintingLayer() &&
-        !location_in_container.Intersects(OverflowClipRect(
-            adjusted_location, kExcludeOverlayScrollbarSizeForHitTesting))) {
+  if (ShouldClipOverflow() && !HasSelfPaintingLayer()) {
+    if (!location_in_container.Intersects(OverflowClipRect(
+            adjusted_location, kIgnorePlatformOverlayScrollbarSize))) {
       skip_children = true;
-    }
-    if (!skip_children && Style()->HasBorderRadius()) {
+    } else if (Style()->HasBorderRadius()) {
       LayoutRect bounds_rect(adjusted_location, Size());
       skip_children = !location_in_container.Intersects(
           Style()->GetRoundedInnerBorderFor(bounds_rect));
     }
   }
 
-  if (!skip_children && HitTestChildren(result, location_in_container,
-                                        adjusted_location, action)) {
+  // TODO(pdr): We should also include checks for hit testing border radius at
+  //            the layer level (see: crbug.com/568904).
+
+  if (!skip_children &&
+      HitTestChildren(result, location_in_container, adjusted_location, action))
     return true;
-  }
 
   if (Style()->HasBorderRadius() &&
       HitTestClippedOutByBorder(location_in_container, adjusted_location))
     return false;
 
   // Now hit test ourselves.
-  if (should_hit_test_self &&
+  if (IsInSelfHitTestingPhase(action) &&
       VisibleToHitTestRequest(result.GetHitTestRequest())) {
     LayoutRect bounds_rect(adjusted_location, Size());
     if (location_in_container.Intersects(bounds_rect)) {

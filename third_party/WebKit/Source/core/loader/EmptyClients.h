@@ -291,6 +291,10 @@ class CORE_EXPORT EmptyLocalFrameClient : public LocalFrameClient {
 
   void DownloadURL(const ResourceRequest&,
                    const String& suggested_name) override {}
+  void LoadURLExternally(const ResourceRequest&,
+                         NavigationPolicy,
+                         WebTriggeringEventInfo,
+                         bool) override {}
   void LoadErrorPage(int reason) override {}
 
   DocumentLoader* CreateDocumentLoader(LocalFrame*,

@@ -11,6 +11,6 @@
   message = await dp.DOM.querySelector({ nodeId: bodyId, selector: "#id" });
   await dp.DOM.setOuterHTML({nodeId: message.result.nodeId, outerHTML: "<div>Привет мир 1</div>"});
   message = await dp.DOM.getOuterHTML({nodeId: bodyId});
-  testRunner.log(message);
+  testRunner.logMessage(message);
   testRunner.completeTest();
 })

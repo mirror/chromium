@@ -6,7 +6,6 @@ package org.chromium.chrome.browser.payments;
 
 import org.chromium.payments.mojom.PaymentMethodData;
 
-import java.net.URI;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -75,18 +74,7 @@ public interface PaymentApp {
      * "com.alicepay"}.
      */
     @Nullable
-    default Set<String> getPreferredRelatedApplicationIds() {
-        return null;
-    }
-
-    /**
-     * Gets the app Id this application can dedupe. The return, for example, could be
-     * "https://bobpay.com";
-     */
-    @Nullable
-    default URI getCanDedupedApplicationId() {
-        return null;
-    }
+    Set<String> getPreferredRelatedApplicationIds();
 
     /**
      * Returns the identifier for this payment app to be saved in user preferences. For
@@ -101,7 +89,5 @@ public interface PaymentApp {
      * @return The resource identifier for the additional text that should be displayed to the user
      * when selecting a payment instrument from this payment app or 0 if not needed.
      */
-    default int getAdditionalAppTextResourceId() {
-        return 0;
-    }
+    int getAdditionalAppTextResourceId();
 }

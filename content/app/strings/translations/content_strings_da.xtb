@@ -36,7 +36,7 @@
 <translation id="248395913932153421">Dag</translation>
 <translation id="2507943997699731163">Udfyld dette felt.</translation>
 <translation id="2508569020611168319">faneliste</translation>
-<translation id="2561842179657104141">vis flere knapper til mediestyring</translation>
+<translation id="2561842179657104141">vis flere mediekontrolelementer</translation>
 <translation id="2572483411312390101">afspil</translation>
 <translation id="2613802280814924224">Angiv en gyldig værdi. Den nærmeste gyldige værdi er <ph name="VALID_VALUE" />.</translation>
 <translation id="2653659639078652383">Indsend</translation>
@@ -94,6 +94,7 @@
 <translation id="512758898067543763">rækkeoverskrift</translation>
 <translation id="5164977714490026579">Værdien skal være større end eller lig med <ph name="MINIMUM" />.</translation>
 <translation id="5307600278924710095">Angiv den del, der kommer før "<ph name="ATSIGN" />". "<ph name="INVALIDADDRESS" />" er ufuldstændig.</translation>
+<translation id="5317780077021120954">Gem</translation>
 <translation id="5406322316791861025">tal</translation>
 <translation id="5453733299334684579">træelement</translation>
 <translation id="5466621249238537318">Vælg en eller flere filer.</translation>
@@ -108,7 +109,7 @@
 <translation id="57838592816432529">Slå lyden fra</translation>
 <translation id="5860033963881614850">Fra</translation>
 <translation id="588258955323874662">Fuld skærm</translation>
-<translation id="5888666972993069672">Caster nu til <ph name="DEVICE_FRIENDLY_NAME" /></translation>
+<translation id="5888666972993069672">Castes nu til <ph name="DEVICE_FRIENDLY_NAME" /></translation>
 <translation id="5939518447894949180">Nulstil</translation>
 <translation id="5966707198760109579">Uge</translation>
 <translation id="5987525920412732405">skalafelt</translation>

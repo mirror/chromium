@@ -41,11 +41,11 @@ class CONTENT_EXPORT SyntheticGestureController {
       std::unique_ptr<SyntheticGestureTarget> gesture_target);
   virtual ~SyntheticGestureController();
 
-  typedef base::OnceCallback<void(SyntheticGesture::Result)>
+  typedef base::Callback<void(SyntheticGesture::Result)>
       OnGestureCompleteCallback;
   void QueueSyntheticGesture(
       std::unique_ptr<SyntheticGesture> synthetic_gesture,
-      OnGestureCompleteCallback completion_callback);
+      const OnGestureCompleteCallback& completion_callback);
 
   bool DispatchNextEvent(base::TimeTicks = base::TimeTicks::Now());
 
@@ -55,7 +55,7 @@ class CONTENT_EXPORT SyntheticGestureController {
   void StartTimer();
   void StartGesture(const SyntheticGesture& gesture);
   void StopGesture(const SyntheticGesture& gesture,
-                   OnGestureCompleteCallback completion_callback,
+                   const OnGestureCompleteCallback& completion_callback,
                    SyntheticGesture::Result result);
 
   Delegate* const delegate_;
@@ -68,9 +68,9 @@ class CONTENT_EXPORT SyntheticGestureController {
     GestureAndCallbackQueue();
     ~GestureAndCallbackQueue();
     void Push(std::unique_ptr<SyntheticGesture> gesture,
-              OnGestureCompleteCallback callback) {
+              const OnGestureCompleteCallback& callback) {
       gestures_.push_back(std::move(gesture));
-      callbacks_.push(std::move(callback));
+      callbacks_.push(callback);
     }
     void Pop() {
       gestures_.erase(gestures_.begin());
@@ -78,11 +78,8 @@ class CONTENT_EXPORT SyntheticGestureController {
       result_of_current_gesture_ = SyntheticGesture::GESTURE_RUNNING;
     }
     SyntheticGesture* FrontGesture() { return gestures_.front().get(); }
-    OnGestureCompleteCallback FrontCallback() {
-      // TODO(dtapuska): This is odd moving the top callback. Pop really
-      // should be rewritten to take two output parameters then we can
-      // remove FrontGesture/FrontCallback.
-      return std::move(callbacks_.front());
+    OnGestureCompleteCallback& FrontCallback() {
+      return callbacks_.front();
     }
     bool IsEmpty() const {
       CHECK(gestures_.empty() == callbacks_.empty());

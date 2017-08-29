@@ -63,7 +63,6 @@
 #include "core/html/forms/DateTimeChooserImpl.h"
 #include "core/html/forms/ExternalDateTimeChooser.h"
 #include "core/html/forms/ExternalPopupMenu.h"
-#include "core/html/forms/FileChooser.h"
 #include "core/html/forms/InternalPopupMenu.h"
 #include "core/inspector/DevToolsEmulator.h"
 #include "core/layout/HitTestResult.h"
@@ -75,6 +74,7 @@
 #include "core/page/PopupOpeningObserver.h"
 #include "core/paint/compositing/CompositedSelection.h"
 #include "platform/Cursor.h"
+#include "platform/FileChooser.h"
 #include "platform/Histogram.h"
 #include "platform/LayoutTestSupport.h"
 #include "platform/RuntimeEnabledFeatures.h"
@@ -587,7 +587,15 @@ void ChromeClientImpl::OpenFileChooser(LocalFrame* frame,
   if (!client)
     return;
 
-  const WebFileChooserParams& params = file_chooser->Params();
+  WebFileChooserParams params;
+  params.multi_select = file_chooser->GetSettings().allows_multiple_files;
+  params.directory = file_chooser->GetSettings().allows_directory_upload;
+  params.accept_types = file_chooser->GetSettings().AcceptTypes();
+  params.selected_files = file_chooser->GetSettings().selected_files;
+  params.use_media_capture = file_chooser->GetSettings().use_media_capture;
+  params.need_local_path = file_chooser->GetSettings().allows_directory_upload;
+  params.requestor = frame->GetDocument()->Url();
+
   WebFileChooserCompletionImpl* chooser_completion =
       new WebFileChooserCompletionImpl(std::move(file_chooser));
   if (client->RunFileChooser(params, chooser_completion))
@@ -605,11 +613,11 @@ void ChromeClientImpl::EnumerateChosenDirectory(FileChooser* file_chooser) {
       new WebFileChooserCompletionImpl(file_chooser);
 
   DCHECK(file_chooser);
-  DCHECK(file_chooser->Params().selected_files.size());
+  DCHECK(file_chooser->GetSettings().selected_files.size());
 
   // If the enumeration can't happen, call the callback with an empty list.
   if (!client->EnumerateChosenDirectory(
-          file_chooser->Params().selected_files[0], chooser_completion))
+          file_chooser->GetSettings().selected_files[0], chooser_completion))
     chooser_completion->DidChooseFile(WebVector<WebString>());
 }
 
@@ -984,12 +992,14 @@ void ChromeClientImpl::ShowVirtualKeyboardOnElementFocus(LocalFrame& frame) {
       ->ShowVirtualKeyboardOnElementFocus();
 }
 
-void ChromeClientImpl::ShowUnhandledTapUIIfNeeded(WebTappedInfo& tapped_info) {
-  //  Node* node = tapped_info.RawNode();
-  //  web_node(WebNode(node));
-  //  tapped_info.SetNode(web_node);
+void ChromeClientImpl::ShowUnhandledTapUIIfNeeded(
+    IntPoint tapped_position_in_viewport,
+    Node* tapped_node,
+    bool page_changed) {
   if (web_view_->Client()) {
-    web_view_->Client()->ShowUnhandledTapUIIfNeeded(tapped_info);
+    web_view_->Client()->ShowUnhandledTapUIIfNeeded(
+        WebPoint(tapped_position_in_viewport), WebNode(tapped_node),
+        page_changed);
   }
 }
 

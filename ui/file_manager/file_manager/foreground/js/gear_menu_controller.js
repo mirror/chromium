@@ -94,14 +94,8 @@ GearMenuController.prototype.onDirectoryChanged_ = function(event) {
  * @param {boolean} showLoadingCaption Whether show loading caption or not.
  * @private
  */
-GearMenuController.prototype.refreshRemainingSpace_ = function(
-    showLoadingCaption) {
-  var currentDirectory = this.directoryModel_.getCurrentDirEntry();
-  if (!currentDirectory || util.isRecentRoot(currentDirectory)) {
-    this.gearMenu_.setSpaceInfo(null, false);
-    return;
-  }
-
+GearMenuController.prototype.refreshRemainingSpace_ =
+    function(showLoadingCaption) {
   var currentVolumeInfo = this.directoryModel_.getCurrentVolumeInfo();
   if (!currentVolumeInfo)
     return;

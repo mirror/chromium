@@ -17,11 +17,9 @@ import logging
 from webkitpy.common.net.buildbot import current_build_link
 from webkitpy.common.net.git_cl import GitCL
 from webkitpy.common.path_finder import PathFinder
-from webkitpy.common.system.log_utils import configure_logging
 from webkitpy.layout_tests.models.test_expectations import TestExpectations, TestExpectationParser
 from webkitpy.layout_tests.port.base import Port
-from webkitpy.w3c.chromium_exportable_commits import exportable_commits_over_last_n_commits
-from webkitpy.w3c.common import read_credentials
+from webkitpy.w3c.common import read_credentials, exportable_commits_over_last_n_commits
 from webkitpy.w3c.directory_owners_extractor import DirectoryOwnersExtractor
 from webkitpy.w3c.local_wpt import LocalWPT
 from webkitpy.w3c.test_copier import TestCopier
@@ -53,7 +51,7 @@ class TestImporter(object):
 
         self.verbose = options.verbose
         log_level = logging.DEBUG if self.verbose else logging.INFO
-        configure_logging(logging_level=log_level, include_time=True)
+        logging.basicConfig(level=log_level, format='%(message)s')
 
         if not self.checkout_is_okay():
             return 1
@@ -146,7 +144,7 @@ class TestImporter(object):
         Returns True if everything is OK to continue, or False on failure.
         """
         _log.info('Triggering try jobs for updating expectations.')
-        self.git_cl.trigger_try_jobs(self.blink_try_bots())
+        self.git_cl.trigger_try_jobs()
         try_results = self.git_cl.wait_for_try_jobs(
             poll_delay_seconds=POLL_DELAY_SECONDS,
             timeout_seconds=TIMEOUT_SECONDS)
@@ -174,15 +172,6 @@ class TestImporter(object):
             timeout_seconds=TIMEOUT_SECONDS)
         try_results = self.git_cl.filter_latest(try_results)
 
-        # We only want to check the status of CQ bots. The set of CQ bots is
-        # determined by //infra/config/cq.cfg, but since in import jobs we only
-        # trigger CQ bots and Blink try bots, we just ignore the
-        # Blink try bots to get the set of CQ try bots.
-        # Important: if any CQ bots are added to the builder list
-        # (self.host.builders), then this logic will need to be updated.
-        try_results = {build: status for build, status in try_results.items()
-                       if build.builder_name not in self.blink_try_bots()}
-
         if not try_results:
             self.git_cl.run(['set-close'])
             _log.error('No CQ try job results, aborting.')
@@ -198,10 +187,6 @@ class TestImporter(object):
         self.git_cl.run(['set-close'])
         _log.error('CQ appears to have failed; aborting.')
         return False
-
-    def blink_try_bots(self):
-        """Returns the collection of builders used for updating expectations."""
-        return self.host.builders.all_try_builder_names()
 
     def parse_args(self, argv):
         parser = argparse.ArgumentParser()
@@ -255,7 +240,8 @@ class TestImporter(object):
             A list of commits applied (could be empty), or None if any
             of the patches could not be applied cleanly.
         """
-        commits = self.exportable_but_not_exported_commits(local_wpt)
+        # Ignore patch failures when importing. Exporter will report them.
+        commits, _ = self.exportable_but_not_exported_commits(local_wpt)
         for commit in commits:
             _log.info('Applying exportable commit locally:')
             _log.info(commit.url())
@@ -270,8 +256,6 @@ class TestImporter(object):
                 _log.warning('No pull request found.')
             error = local_wpt.apply_patch(commit.format_patch())
             if error:
-                _log.error('Commit cannot be applied cleanly:')
-                _log.error(error)
                 return None
             self.run(
                 ['git', 'commit', '--all', '-F', '-'],
@@ -280,17 +264,9 @@ class TestImporter(object):
         return commits
 
     def exportable_but_not_exported_commits(self, local_wpt):
-        """Returns a list of commits that would be clobbered by importer.
-
-        The list contains all exportable but not exported commits, not filtered
-        by whether they can apply cleanly.
-        """
-        # The errors returned by exportable_commits_over_last_n_commits are
-        # irrelevant and ignored here, because it tests patches *individually*
-        # while the importer tries to reapply these patches *cumulatively*.
-        commits, _ = exportable_commits_over_last_n_commits(
-            self.host, local_wpt, self.wpt_github, require_clean=False)
-        return commits
+        """Returns a list of commits that would be clobbered by importer
+        and a list of error messages for patches failing to apply cleanly."""
+        return exportable_commits_over_last_n_commits(self.host, local_wpt, self.wpt_github)
 
     def _generate_manifest(self):
         """Generates MANIFEST.json for imported tests.

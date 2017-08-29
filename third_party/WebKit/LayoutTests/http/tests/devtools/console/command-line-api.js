@@ -14,11 +14,6 @@
     </p><p id='bar'></p>
   `);
 
-  await TestRunner.evaluateInPagePromise(`
-    function Foo() {}
-    foo = new Foo();
-  `);
-
   var expressions = [
     'String($0)',
     '$3',
@@ -31,8 +26,7 @@
     `String($$('p'))`,
     `String($$('p', document.body))`,
     `String($('foo'))`,
-    `console.assert(keys(window).indexOf('__commandLineAPI') === -1)`,
-    'queryObjects(Foo)'
+    `console.assert(keys(window).indexOf('__commandLineAPI') === -1)`
   ];
 
   ElementsTestRunner.selectNodeWithId('foo', step1);

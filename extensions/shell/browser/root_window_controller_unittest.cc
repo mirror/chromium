@@ -12,7 +12,7 @@
 #include "content/public/browser/browser_context.h"
 #include "extensions/browser/app_window/app_window.h"
 #include "extensions/browser/app_window/native_app_window.h"
-#include "extensions/common/extension_builder.h"
+#include "extensions/common/test_util.h"
 #include "extensions/shell/browser/root_window_controller.h"
 #include "extensions/shell/browser/shell_app_window_client.h"
 #include "extensions/shell/browser/shell_native_app_window_aura.h"
@@ -38,7 +38,7 @@ class FakeDesktopDelegate : public RootWindowController::DesktopDelegate {
 
   RootWindowController* CreateRootWindowController() {
     root_window_controllers_.emplace_back(
-        std::make_unique<RootWindowController>(this, kScreenBounds,
+        base::MakeUnique<RootWindowController>(this, kScreenBounds,
                                                browser_context_));
     return root_window_controllers_.back().get();
   }
@@ -90,10 +90,10 @@ class RootWindowControllerTest : public ShellTestBaseAura {
     ShellTestBaseAura::SetUp();
 
     AppWindowClient::Set(&app_window_client_);
-    extension_ = ExtensionBuilder("Test").Build();
+    extension_ = test_util::CreateEmptyExtension();
 
     desktop_delegate_ =
-        std::make_unique<FakeDesktopDelegate>(browser_context());
+        base::MakeUnique<FakeDesktopDelegate>(browser_context());
   }
 
   void TearDown() override {

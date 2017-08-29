@@ -40,6 +40,7 @@ import org.chromium.chrome.browser.tab.Tab;
 import org.chromium.chrome.test.ChromeActivityTestRule;
 import org.chromium.chrome.test.ChromeJUnit4ClassRunner;
 import org.chromium.chrome.test.ChromeTabbedActivityTestRule;
+import org.chromium.chrome.test.util.ChromeRestriction;
 import org.chromium.chrome.test.util.ChromeTabUtils;
 import org.chromium.chrome.test.util.NewTabPageTestUtils;
 import org.chromium.chrome.test.util.browser.RecyclerViewTestUtils;
@@ -49,7 +50,6 @@ import org.chromium.chrome.test.util.browser.suggestions.SuggestionsDependencies
 import org.chromium.content.browser.test.util.TestTouchUtils;
 import org.chromium.content.browser.test.util.TouchCommon;
 import org.chromium.net.test.EmbeddedTestServer;
-import org.chromium.ui.test.util.UiRestriction;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -103,11 +103,7 @@ public class NewTabPageRecyclerViewTest {
                         ContentSuggestionsCardLayout.FULL_CARD,
                         ContentSuggestionsAdditionalAction.FETCH, /*showIfEmpty=*/true,
                         "noSuggestionsMessage"));
-
-        // Set the status as AVAILABLE so no spinner is shown. Showing the spinner during
-        // initialization can cause the test to hang because the message queue never becomes idle.
-        mSource.setStatusForCategory(TEST_CATEGORY, CategoryStatus.AVAILABLE);
-
+        mSource.setStatusForCategory(TEST_CATEGORY, CategoryStatus.INITIALIZING);
         mSuggestionsDeps.getFactory().suggestionsSource = mSource;
 
         mActivityTestRule.startMainActivityWithURL(UrlConstants.NTP_URL);
@@ -241,7 +237,7 @@ public class NewTabPageRecyclerViewTest {
     @Test
     @MediumTest
     @Feature({"NewTabPage"})
-    @Restriction({UiRestriction.RESTRICTION_TYPE_PHONE})
+    @Restriction({ChromeRestriction.RESTRICTION_TYPE_PHONE})
     @CommandLineFlags.Add({"disable-features=" + ChromeFeatureList.NTP_CONDENSED_LAYOUT})
     public void testSnapScroll_noCondensedLayout() {
         setSuggestionsAndWaitForUpdate(0);
@@ -278,7 +274,7 @@ public class NewTabPageRecyclerViewTest {
     @Test
     @MediumTest
     @Feature({"NewTabPage"})
-    @Restriction({UiRestriction.RESTRICTION_TYPE_PHONE})
+    @Restriction({ChromeRestriction.RESTRICTION_TYPE_PHONE})
     @CommandLineFlags.Add({"enable-features=" + ChromeFeatureList.NTP_CONDENSED_LAYOUT})
     public void testSnapScroll_condensedLayout() {
         setSuggestionsAndWaitForUpdate(0);
@@ -307,7 +303,7 @@ public class NewTabPageRecyclerViewTest {
     @Test
     @MediumTest
     @Feature({"NewTabPage"})
-    @Restriction({UiRestriction.RESTRICTION_TYPE_TABLET})
+    @Restriction({ChromeRestriction.RESTRICTION_TYPE_TABLET})
     public void testSnapScroll_tablet() {
         setSuggestionsAndWaitForUpdate(0);
 
@@ -434,6 +430,7 @@ public class NewTabPageRecyclerViewTest {
         Assert.assertTrue(InstrumentationRegistry.getInstrumentation().invokeContextMenuAction(
                 mActivityTestRule.getActivity(), contextMenuItemId, 0));
     }
+
 
     private static void assertArrayEquals(int[] expected, int[] actual) {
         Assert.assertEquals(Arrays.toString(expected), Arrays.toString(actual));

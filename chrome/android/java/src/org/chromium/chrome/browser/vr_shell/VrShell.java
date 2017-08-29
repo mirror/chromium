@@ -61,11 +61,6 @@ public interface VrShell {
     Boolean isBackButtonEnabled();
 
     /**
-     * Returns whether the forward button is enabled.
-     */
-    Boolean isForwardButtonEnabled();
-
-    /**
      * Requests to exit VR.
      */
     void requestToExitVr(@UiUnsupportedMode int reason);
@@ -75,14 +70,4 @@ public interface VrShell {
      * VrShell from the view hierarchy.
      */
     void onBeforeWindowDetached();
-
-    /**
-     *  Triggers VrShell to navigate forward.
-     */
-    void navigateForward();
-
-    /**
-     *  Triggers VrShell to navigate backward.
-     */
-    void navigateBack();
 }

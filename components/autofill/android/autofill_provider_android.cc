@@ -233,4 +233,8 @@ void AutofillProviderAndroid::Reset() {
   id_ = kNoQueryId;
 }
 
+bool RegisterAutofillProvider(JNIEnv* env) {
+  return RegisterNativesImpl(env);
+}
+
 }  // namespace autofill

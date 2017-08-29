@@ -87,16 +87,15 @@ void LocalFileSyncContext::MaybeInitializeFileSystemContext(
   // from read-only OpenFileSystem), so open the filesystem with
   // CREATE_IF_NONEXISTENT here.
   storage::FileSystemBackend::OpenFileSystemCallback open_filesystem_callback =
-      base::BindOnce(
-          &LocalFileSyncContext::InitializeFileSystemContextOnIOThread, this,
-          source_url, base::RetainedRef(file_system_context));
+      base::Bind(&LocalFileSyncContext::InitializeFileSystemContextOnIOThread,
+                 this, source_url, base::RetainedRef(file_system_context));
   io_task_runner_->PostTask(
       FROM_HERE,
       base::BindOnce(&storage::SandboxFileSystemBackendDelegate::OpenFileSystem,
                      base::Unretained(file_system_context->sandbox_delegate()),
                      source_url, storage::kFileSystemTypeSyncable,
                      storage::OPEN_FILE_SYSTEM_CREATE_IF_NONEXISTENT,
-                     std::move(open_filesystem_callback), GURL()));
+                     open_filesystem_callback, GURL()));
 }
 
 void LocalFileSyncContext::ShutdownOnUIThread() {

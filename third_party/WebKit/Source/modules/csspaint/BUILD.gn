@@ -10,8 +10,6 @@ blink_modules_sources("csspaint") {
     "CSSPaintDefinition.h",
     "CSSPaintImageGeneratorImpl.cpp",
     "CSSPaintImageGeneratorImpl.h",
-    "CSSPaintWorklet.cpp",
-    "CSSPaintWorklet.h",
     "DocumentPaintDefinition.cpp",
     "DocumentPaintDefinition.h",
     "PaintRenderingContext2D.cpp",
@@ -25,5 +23,7 @@ blink_modules_sources("csspaint") {
     "PaintWorkletGlobalScopeProxy.h",
     "PaintWorkletPendingGeneratorRegistry.cpp",
     "PaintWorkletPendingGeneratorRegistry.h",
+    "WindowPaintWorklet.cpp",
+    "WindowPaintWorklet.h",
   ]
 }

@@ -638,7 +638,7 @@ bool LayoutObject::ScrollRectToVisible(const LayoutRect& rect,
   GetDocument().GetPage()->GetSmoothScrollSequencer()->AbortAnimations();
   enclosing_box->ScrollRectToVisibleRecursive(
       rect, align_x, align_y, scroll_type, make_visible_in_visual_viewport,
-      scroll_behavior, scroll_type == kProgrammaticScroll);
+      scroll_behavior, true);
   GetDocument().GetPage()->GetSmoothScrollSequencer()->RunQueuedAnimations();
 
   return true;
@@ -1354,6 +1354,11 @@ Color LayoutObject::SelectionForegroundColor(
 Color LayoutObject::SelectionEmphasisMarkColor(
     const GlobalPaintFlags global_paint_flags) const {
   return SelectionColor(CSSPropertyWebkitTextEmphasisColor, global_paint_flags);
+}
+
+std::pair<int, int> LayoutObject::SelectionStartEnd() const {
+  DCHECK(!View()->NeedsLayout());
+  return GetFrame()->Selection().LayoutSelectionStartEnd();
 }
 
 // Called when an object that was floating or positioned becomes a normal flow

@@ -18,7 +18,6 @@ class PLATFORM_EXPORT UnacceleratedStaticBitmapImage final
 
   bool CurrentFrameKnownToBeOpaque(MetadataMode = kUseCurrentMetadata) override;
   IntSize Size() const override;
-  bool IsPremultiplied() const override;
 
   void Draw(PaintCanvas*,
             const PaintFlags&,

@@ -15,7 +15,6 @@
 #include "media/media_features.h"
 #include "media/mojo/features.h"
 #include "media/mojo/interfaces/remoting.mojom.h"
-#include "media/mojo/interfaces/video_decode_stats_recorder.mojom.h"
 #include "media/mojo/interfaces/watch_time_recorder.mojom.h"
 #include "third_party/WebKit/public/platform/WebMediaPlayerSource.h"
 #include "third_party/WebKit/public/platform/WebSecurityOrigin.h"
@@ -137,8 +136,6 @@ class MediaFactory {
 #endif
 
   media::CdmFactory* GetCdmFactory();
-
-  media::mojom::VideoDecodeStatsRecorderPtr CreateVideoDecodeStatsRecorder();
 
 #if BUILDFLAG(ENABLE_MOJO_MEDIA)
   media::mojom::InterfaceFactory* GetMediaInterfaceFactory();

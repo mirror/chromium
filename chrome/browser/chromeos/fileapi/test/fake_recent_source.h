@@ -9,10 +9,9 @@
 
 #include "base/macros.h"
 #include "chrome/browser/chromeos/fileapi/recent_source.h"
+#include "storage/browser/fileapi/file_system_url.h"
 
 namespace chromeos {
-
-class RecentFile;
 
 // Fake implementation of RecentSource that returns a canned set of files.
 //
@@ -23,13 +22,14 @@ class FakeRecentSource : public RecentSource {
   ~FakeRecentSource() override;
 
   // Add a file to the canned set.
-  void AddFile(const RecentFile& file);
+  void AddFile(const storage::FileSystemURL& file);
 
   // RecentSource overrides:
-  void GetRecentFiles(Params params) override;
+  void GetRecentFiles(RecentContext context,
+                      GetRecentFilesCallback callback) override;
 
  private:
-  std::vector<RecentFile> canned_files_;
+  std::vector<storage::FileSystemURL> canned_files_;
 
   DISALLOW_COPY_AND_ASSIGN(FakeRecentSource);
 };

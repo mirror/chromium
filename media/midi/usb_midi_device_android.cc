@@ -74,6 +74,10 @@ void UsbMidiDeviceAndroid::OnData(JNIEnv* env,
                                 base::TimeTicks::Now());
 }
 
+bool UsbMidiDeviceAndroid::RegisterUsbMidiDevice(JNIEnv* env) {
+  return RegisterNativesImpl(env);
+}
+
 void UsbMidiDeviceAndroid::GetDescriptorsInternal() {
   JNIEnv* env = base::android::AttachCurrentThread();
   base::android::ScopedJavaLocalRef<jbyteArray> descriptors =

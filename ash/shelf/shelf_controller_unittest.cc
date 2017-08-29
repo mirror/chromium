@@ -20,7 +20,6 @@
 #include "ash/test/ash_test_base.h"
 #include "ash/test/ash_test_helper.h"
 #include "ash/test_shell_delegate.h"
-#include "base/run_loop.h"
 #include "components/prefs/pref_service.h"
 #include "mojo/public/cpp/bindings/associated_binding.h"
 
@@ -161,6 +160,14 @@ class ShelfControllerPrefsTest : public AshTestBase {
  public:
   ShelfControllerPrefsTest() = default;
   ~ShelfControllerPrefsTest() override = default;
+
+  void SetUp() override {
+    AshTestBase::SetUp();
+    TestSessionControllerClient* session = GetSessionControllerClient();
+    session->AddUserSession("user1@test.com");
+    session->SetSessionState(session_manager::SessionState::ACTIVE);
+    session->SwitchActiveUser(AccountId::FromUserEmail("user1@test.com"));
+  }
 
  private:
   DISALLOW_COPY_AND_ASSIGN(ShelfControllerPrefsTest);

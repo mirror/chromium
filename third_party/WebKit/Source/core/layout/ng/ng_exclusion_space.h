@@ -6,16 +6,15 @@
 #define NGExclusionSpace_h
 
 #include "core/CoreExport.h"
-#include "core/layout/ng/geometry/ng_bfc_offset.h"
-#include "core/layout/ng/geometry/ng_bfc_rect.h"
 #include "core/layout/ng/ng_exclusion.h"
 #include "core/style/ComputedStyleConstants.h"
 #include "platform/LayoutUnit.h"
+#include "platform/wtf/Optional.h"
 #include "platform/wtf/Vector.h"
 
 namespace blink {
 
-typedef NGBfcRect NGLayoutOpportunity;
+typedef NGLogicalRect NGLayoutOpportunity;
 
 // The exclusion space represents all of the exclusions within a block
 // formatting context.
@@ -25,19 +24,17 @@ typedef NGBfcRect NGLayoutOpportunity;
 class CORE_EXPORT NGExclusionSpace {
  public:
   NGExclusionSpace();
-  ~NGExclusionSpace(){};
 
   void Add(const NGExclusion& exclusion);
 
   // Returns a layout opportunity, within the BFC, starting at the given offset,
   // with a size greater than {@code minimum_size}.
-  NGLayoutOpportunity FindLayoutOpportunity(
-      const NGBfcOffset& offset,
-      const NGLogicalSize& available_size,
-      const NGLogicalSize& minimum_size) const;
+  NGLayoutOpportunity FindLayoutOpportunity(const NGLogicalOffset& offset,
+                                            const NGLogicalSize& available_size,
+                                            const NGLogicalSize& minimum_size);
 
   // Returns the clearance offset based on the provided {@code clear_type}.
-  LayoutUnit ClearanceOffset(EClear clear_type) const;
+  LayoutUnit ClearanceOffset(EClear clear_type);
 
   // Returns the block start offset of the last float added.
   LayoutUnit LastFloatBlockStart() const { return last_float_block_start_; }

@@ -13,7 +13,6 @@
 #include <stdint.h>
 
 #include "base/atomicops.h"
-#include "base/memory/ptr_util.h"
 #include "base/numerics/safe_conversions.h"
 #include "gpu/command_buffer/client/gles2_cmd_helper.h"
 #include "gpu/command_buffer/client/gles2_implementation.h"
@@ -30,22 +29,6 @@ QuerySyncManager::Bucket::Bucket(QuerySync* sync_mem,
 
 QuerySyncManager::Bucket::~Bucket() = default;
 
-void QuerySyncManager::Bucket::FreePendingSyncs() {
-  auto it =
-      std::remove_if(pending_syncs.begin(), pending_syncs.end(),
-                     [this](const PendingSync& pending) {
-                       QuerySync* sync = this->syncs + pending.index;
-                       if (base::subtle::Acquire_Load(&sync->process_count) ==
-                           pending.submit_count) {
-                         this->in_use_query_syncs[pending.index] = false;
-                         return true;
-                       } else {
-                         return false;
-                       }
-                     });
-  pending_syncs.erase(it, pending_syncs.end());
-}
-
 QuerySyncManager::QuerySyncManager(MappedMemoryManager* manager)
     : mapped_memory_(manager) {
   DCHECK(manager);
@@ -54,6 +37,7 @@ QuerySyncManager::QuerySyncManager(MappedMemoryManager* manager)
 QuerySyncManager::~QuerySyncManager() {
   while (!buckets_.empty()) {
     mapped_memory_->Free(buckets_.front()->syncs);
+    delete buckets_.front();
     buckets_.pop_front();
   }
 }
@@ -61,10 +45,11 @@ QuerySyncManager::~QuerySyncManager() {
 bool QuerySyncManager::Alloc(QuerySyncManager::QueryInfo* info) {
   DCHECK(info);
   Bucket* bucket = nullptr;
-  for (auto& bucket_candidate : buckets_) {
-    bucket_candidate->FreePendingSyncs();
-    if (!bucket_candidate->in_use_query_syncs.all()) {
-      bucket = bucket_candidate.get();
+  for (Bucket* bucket_candidate : buckets_) {
+    // In C++11 STL this could be replaced with
+    // if (!bucket_candidate->in_use_queries.all()) { ... }
+    if (bucket_candidate->in_use_queries.count() != kSyncsPerBucket) {
+      bucket = bucket_candidate;
       break;
     }
   }
@@ -77,79 +62,62 @@ bool QuerySyncManager::Alloc(QuerySyncManager::QueryInfo* info) {
       return false;
     }
     QuerySync* syncs = static_cast<QuerySync*>(mem);
-    buckets_.push_back(base::MakeUnique<Bucket>(syncs, shm_id, shm_offset));
-    bucket = buckets_.back().get();
+    bucket = new Bucket(syncs, shm_id, shm_offset);
+    buckets_.push_back(bucket);
   }
 
   size_t index_in_bucket = 0;
   for (size_t i = 0; i < kSyncsPerBucket; i++) {
-    if (!bucket->in_use_query_syncs[i]) {
+    if (!bucket->in_use_queries[i]) {
       index_in_bucket = i;
       break;
     }
   }
 
-  *info = QueryInfo(bucket, index_in_bucket);
+  uint32_t shm_offset =
+      bucket->base_shm_offset + index_in_bucket * sizeof(QuerySync);
+  QuerySync* sync = bucket->syncs + index_in_bucket;
+  *info = QueryInfo(bucket, bucket->shm_id, shm_offset, sync);
   info->sync->Reset();
-  bucket->in_use_query_syncs[index_in_bucket] = true;
+  bucket->in_use_queries[index_in_bucket] = true;
   return true;
 }
 
 void QuerySyncManager::Free(const QuerySyncManager::QueryInfo& info) {
-  DCHECK_NE(info.bucket->in_use_query_syncs.count(), 0u);
-  unsigned short index_in_bucket = info.index();
-  DCHECK(info.bucket->in_use_query_syncs[index_in_bucket]);
-  if (base::subtle::Acquire_Load(&info.sync->process_count) !=
-      info.submit_count) {
-    // When you delete a query you can't mark its memory as unused until it's
-    // completed.
-    info.bucket->pending_syncs.push_back(
-        Bucket::PendingSync{index_in_bucket, info.submit_count});
-  } else {
-    info.bucket->in_use_query_syncs[index_in_bucket] = false;
-  }
+  DCHECK_NE(info.bucket->in_use_queries.count(), 0u);
+  unsigned short index_in_bucket = info.sync - info.bucket->syncs;
+  DCHECK(info.bucket->in_use_queries[index_in_bucket]);
+  info.bucket->in_use_queries[index_in_bucket] = false;
 }
 
-void QuerySyncManager::Shrink(CommandBufferHelper* helper) {
-  std::deque<std::unique_ptr<Bucket>> new_buckets;
-  bool has_token = false;
-  uint32_t token = 0;
+void QuerySyncManager::Shrink() {
+  std::deque<Bucket*> new_buckets;
   while (!buckets_.empty()) {
-    std::unique_ptr<Bucket>& bucket = buckets_.front();
-    bucket->FreePendingSyncs();
-    if (bucket->in_use_query_syncs.any()) {
-      if (bucket->in_use_query_syncs.count() == bucket->pending_syncs.size()) {
-        // Every QuerySync that is in-use is just pending completion. We know
-        // the query has been deleted, so nothing on the service side will
-        // access the shared memory after current commands, so we can
-        // free-pending-token.
-        token = helper->InsertToken();
-        has_token = true;
-        mapped_memory_->FreePendingToken(bucket->syncs, token);
-      } else {
-        new_buckets.push_back(std::move(bucket));
-      }
+    Bucket* bucket = buckets_.front();
+    if (bucket->in_use_queries.any()) {
+      new_buckets.push_back(bucket);
     } else {
-      // Every QuerySync is free or completed, so we know the service side won't
-      // access it any more, so we can free immediately.
       mapped_memory_->Free(bucket->syncs);
+      delete bucket;
     }
     buckets_.pop_front();
   }
   buckets_.swap(new_buckets);
 }
 
-QueryTracker::Query::Query(GLuint id,
-                           GLenum target,
+QueryTracker::Query::Query(GLuint id, GLenum target,
                            const QuerySyncManager::QueryInfo& info)
     : id_(id),
       target_(target),
       info_(info),
       state_(kUninitialized),
+      submit_count_(0),
       token_(0),
       flush_count_(0),
       client_begin_time_us_(0),
-      result_(0) {}
+      result_(0) {
+    }
+
 
 void QueryTracker::Query::Begin(GLES2Implementation* gl) {
   // init memory, inc count
@@ -192,25 +160,23 @@ void QueryTracker::Query::End(GLES2Implementation* gl) {
     }
   }
   flush_count_ = gl->helper()->flush_generation();
-  int32_t submit_count = NextSubmitCount();
-  gl->helper()->EndQueryEXT(target(), submit_count);
-  MarkAsPending(gl->helper()->InsertToken(), submit_count);
+  gl->helper()->EndQueryEXT(target(), submit_count());
+  MarkAsPending(gl->helper()->InsertToken());
 }
 
 void QueryTracker::Query::QueryCounter(GLES2Implementation* gl) {
   MarkAsActive();
   flush_count_ = gl->helper()->flush_generation();
-  int32_t submit_count = NextSubmitCount();
   gl->helper()->QueryCounterEXT(id(), target(), shm_id(), shm_offset(),
-                                submit_count);
-  MarkAsPending(gl->helper()->InsertToken(), submit_count);
+                                submit_count());
+  MarkAsPending(gl->helper()->InsertToken());
 }
 
 bool QueryTracker::Query::CheckResultsAvailable(
     CommandBufferHelper* helper) {
   if (Pending()) {
-    bool processed_all = base::subtle::Acquire_Load(
-                             &info_.sync->process_count) == submit_count();
+    bool processed_all =
+        base::subtle::Acquire_Load(&info_.sync->process_count) == submit_count_;
     // We check lost on the command buffer itself here instead of checking the
     // GLES2Implementation because the GLES2Implementation will not hear about
     // the loss until we exit out of this call stack (to avoid re-entrancy), and
@@ -262,8 +228,14 @@ QueryTracker::QueryTracker(MappedMemoryManager* manager)
 }
 
 QueryTracker::~QueryTracker() {
-  for (auto& kv : queries_)
-    query_sync_manager_.Free(kv.second->info_);
+  while (!queries_.empty()) {
+    delete queries_.begin()->second;
+    queries_.erase(queries_.begin());
+  }
+  while (!removed_queries_.empty()) {
+    delete removed_queries_.front();
+    removed_queries_.pop_front();
+  }
   if (disjoint_count_sync_) {
     mapped_memory_->Free(disjoint_count_sync_);
     disjoint_count_sync_ = nullptr;
@@ -272,21 +244,21 @@ QueryTracker::~QueryTracker() {
 
 QueryTracker::Query* QueryTracker::CreateQuery(GLuint id, GLenum target) {
   DCHECK_NE(0u, id);
+  FreeCompletedQueries();
   QuerySyncManager::QueryInfo info;
   if (!query_sync_manager_.Alloc(&info)) {
     return nullptr;
   }
-  auto query = base::MakeUnique<Query>(id, target, info);
-  Query* query_ptr = query.get();
+  Query* query = new Query(id, target, info);
   std::pair<QueryIdMap::iterator, bool> result =
-      queries_.emplace(id, std::move(query));
+      queries_.insert(std::make_pair(id, query));
   DCHECK(result.second);
-  return query_ptr;
+  return query;
 }
 
 QueryTracker::Query* QueryTracker::GetQuery(GLuint client_id) {
   QueryIdMap::iterator it = queries_.find(client_id);
-  return it != queries_.end() ? it->second.get() : nullptr;
+  return it != queries_.end() ? it->second : nullptr;
 }
 
 QueryTracker::Query* QueryTracker::GetCurrentQuery(GLenum target) {
@@ -297,7 +269,7 @@ QueryTracker::Query* QueryTracker::GetCurrentQuery(GLenum target) {
 void QueryTracker::RemoveQuery(GLuint client_id) {
   QueryIdMap::iterator it = queries_.find(client_id);
   if (it != queries_.end()) {
-    Query* query = it->second.get();
+    Query* query = it->second;
 
     // Erase from current targets map if it is the current target.
     const GLenum target = query->target();
@@ -306,13 +278,36 @@ void QueryTracker::RemoveQuery(GLuint client_id) {
       current_queries_.erase(target_it);
     }
 
-    query_sync_manager_.Free(query->info_);
+    // When you delete a query you can't mark its memory as unused until it's
+    // completed.
+    // Note: If you don't do this you won't mess up the service but you will
+    // mess up yourself.
+    removed_queries_.push_back(query);
     queries_.erase(it);
+    FreeCompletedQueries();
   }
 }
 
-void QueryTracker::Shrink(CommandBufferHelper* helper) {
-  query_sync_manager_.Shrink(helper);
+void QueryTracker::Shrink() {
+  FreeCompletedQueries();
+  query_sync_manager_.Shrink();
+}
+
+void QueryTracker::FreeCompletedQueries() {
+  QueryList::iterator it = removed_queries_.begin();
+  while (it != removed_queries_.end()) {
+    Query* query = *it;
+    if (query->Pending() &&
+        base::subtle::Acquire_Load(&query->info_.sync->process_count) !=
+            query->submit_count()) {
+      ++it;
+      continue;
+    }
+
+    query_sync_manager_.Free(query->info_);
+    it = removed_queries_.erase(it);
+    delete query;
+  }
 }
 
 bool QueryTracker::BeginQuery(GLuint id, GLenum target,

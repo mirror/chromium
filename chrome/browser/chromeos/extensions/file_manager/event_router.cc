@@ -1002,18 +1002,6 @@ void EventRouter::OnFormatCompleted(const std::string& device_path,
   // Do nothing.
 }
 
-void EventRouter::OnRenameStarted(const std::string& device_path,
-                                  bool success) {
-  DCHECK_CURRENTLY_ON(BrowserThread::UI);
-  // Do nothing.
-}
-
-void EventRouter::OnRenameCompleted(const std::string& device_path,
-                                    bool success) {
-  DCHECK_CURRENTLY_ON(BrowserThread::UI);
-  // Do nothing.
-}
-
 void EventRouter::SetDispatchDirectoryChangeEventImplForTesting(
     const DispatchDirectoryChangeEventImplCallback& callback) {
   dispatch_directory_change_event_impl_ = callback;

@@ -80,7 +80,12 @@ void SensorProxy::AddConfiguration(SensorConfigurationPtr configuration,
 void SensorProxy::RemoveConfiguration(SensorConfigurationPtr configuration) {
   DCHECK(IsInitialized());
   RemoveActiveFrequency(configuration->frequency);
-  sensor_->RemoveConfiguration(std::move(configuration));
+  sensor_->RemoveConfiguration(
+      std::move(configuration),
+      ConvertToBaseCallback(WTF::Bind([](bool result) {
+        if (!result)
+          DVLOG(1) << "Failure at sensor configuration removal";
+      })));
 }
 
 void SensorProxy::Suspend() {

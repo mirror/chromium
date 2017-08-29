@@ -26,8 +26,6 @@ enum class OrderDirection;
 }
 
 namespace viz {
-class FrameSinkId;
-class LocalSurfaceId;
 class SurfaceInfo;
 }
 
@@ -62,9 +60,6 @@ class AURA_EXPORT WindowMus {
   virtual ~WindowMus() {}
 
   // Returns the WindowMus associated with |window|.
-  static const WindowMus* Get(const Window* window) {
-    return const_cast<const WindowMus*>(Get(const_cast<Window*>(window)));
-  }
   static WindowMus* Get(Window* window);
 
   Id server_id() const { return server_id_; }
@@ -108,7 +103,7 @@ class AURA_EXPORT WindowMus {
   // Returns the currently used viz::LocalSurfaceId to embed this Window. Local
   // windows or windows that have not been embedded yet will have an invalid
   // viz::LocalSurfaceId.
-  virtual const viz::LocalSurfaceId& GetLocalSurfaceId() = 0;
+  virtual const viz::LocalSurfaceId& GetLocalSurfaceId() const = 0;
 
   // Called in the rare case when WindowTreeClient needs to change state and
   // can't go through one of the SetFooFromServer() functions above. Generally

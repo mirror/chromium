@@ -29,12 +29,12 @@ std::unique_ptr<MicroBenchmark> CreateBenchmark(
     std::unique_ptr<base::Value> value,
     const MicroBenchmark::DoneCallback& callback) {
   if (name == "invalidation_benchmark") {
-    return std::make_unique<InvalidationBenchmark>(std::move(value), callback);
+    return base::MakeUnique<InvalidationBenchmark>(std::move(value), callback);
   } else if (name == "rasterize_and_record_benchmark") {
-    return std::make_unique<RasterizeAndRecordBenchmark>(std::move(value),
+    return base::MakeUnique<RasterizeAndRecordBenchmark>(std::move(value),
                                                          callback);
   } else if (name == "unittest_only_benchmark") {
-    return std::make_unique<UnittestOnlyBenchmark>(std::move(value), callback);
+    return base::MakeUnique<UnittestOnlyBenchmark>(std::move(value), callback);
   }
   return nullptr;
 }

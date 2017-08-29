@@ -6,7 +6,6 @@
 #define COMPONENTS_PASSWORD_MANAGER_CORE_BROWSER_PASSWORD_REUSE_DETECTOR_CONSUMER_H_
 
 #include <string>
-#include <vector>
 
 #include "base/macros.h"
 #include "base/memory/weak_ptr.h"
@@ -22,13 +21,14 @@ class PasswordReuseDetectorConsumer
   virtual ~PasswordReuseDetectorConsumer();
 
   // Called when a password reuse is found.
-  // |matching_domains| is the list of domains for which |password| is saved
-  // (can be empty iff |matches_sync_password| == true),  |saved_passwords| is
-  // total number of passwords stored in Password Manager.
+  // |legitimate_domain| is the domain on which |password| is saved or
+  // safe_browsing::kChromeSyncDomain if |password| is a sync password.
+  // |saved_passwords| is total number of passwords stored in Password Manager.
+  // |number_matches| is a number of sites on which |password| is saved.
   virtual void OnReuseFound(const base::string16& password,
-                            bool matches_sync_password,
-                            const std::vector<std::string>& matching_domains,
-                            int saved_passwords) = 0;
+                            const std::string& legitimate_domain,
+                            int saved_passwords,
+                            int number_matches) = 0;
 };
 
 }  // namespace password_manager

@@ -70,9 +70,27 @@ class DeviceEventRouterTest : public testing::Test {
   Disk CreateTestDisk(const std::string& device_path,
                       const std::string& mount_path,
                       bool is_read_only_hardware) {
-    return Disk(device_path, mount_path, false, "", "", "", "", "", "", "", "",
-                "", device_path, chromeos::DEVICE_TYPE_UNKNOWN, 0, false,
-                is_read_only_hardware, false, false, false, false, "vfat", "");
+    return Disk(device_path,
+                mount_path,
+                false,
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                device_path,
+                chromeos::DEVICE_TYPE_UNKNOWN,
+                0,
+                false,
+                is_read_only_hardware,
+                false,
+                false,
+                false,
+                false);
   }
 
   std::unique_ptr<DeviceEventRouterImpl> device_event_router;

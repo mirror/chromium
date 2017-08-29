@@ -331,12 +331,13 @@ OfflinePageModelImpl::OfflinePageModelImpl()
 
 OfflinePageModelImpl::OfflinePageModelImpl(
     std::unique_ptr<OfflinePageMetadataStore> store,
-    std::unique_ptr<ArchiveManager> archive_manager,
+    const base::FilePath& archives_dir,
     const scoped_refptr<base::SequencedTaskRunner>& task_runner)
     : store_(std::move(store)),
+      archives_dir_(archives_dir),
       is_loaded_(false),
       policy_controller_(new ClientPolicyController()),
-      archive_manager_(std::move(archive_manager)),
+      archive_manager_(new ArchiveManager(archives_dir, task_runner)),
       testing_clock_(nullptr),
       skip_clearing_original_url_for_testing_(false),
       weak_ptr_factory_(this) {
@@ -388,7 +389,7 @@ void OfflinePageModelImpl::SavePage(
   create_archive_params.use_page_problem_detectors =
       save_page_params.use_page_problem_detectors;
   archiver->CreateArchive(
-      archive_manager_->GetArchivesDir(), create_archive_params,
+      archives_dir_, create_archive_params,
       base::Bind(&OfflinePageModelImpl::OnCreateArchiveDone,
                  weak_ptr_factory_.GetWeakPtr(), save_page_params, offline_id,
                  GetCurrentTime(), callback));

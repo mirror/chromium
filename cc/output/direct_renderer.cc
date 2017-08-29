@@ -16,7 +16,6 @@
 #include "cc/base/math_util.h"
 #include "cc/output/bsp_tree.h"
 #include "cc/output/bsp_walk_action.h"
-#include "cc/output/output_surface.h"
 #include "cc/quads/draw_quad.h"
 #include "cc/resources/scoped_resource.h"
 #include "components/viz/common/display/renderer_settings.h"
@@ -78,7 +77,7 @@ DirectRenderer::DrawingFrame::~DrawingFrame() = default;
 
 DirectRenderer::DirectRenderer(const viz::RendererSettings* settings,
                                OutputSurface* output_surface,
-                               DisplayResourceProvider* resource_provider)
+                               ResourceProvider* resource_provider)
     : settings_(settings),
       output_surface_(output_surface),
       resource_provider_(resource_provider),
@@ -218,15 +217,8 @@ void DirectRenderer::DecideRenderPassAllocationsForFrame(
 
   for (auto& pass : render_passes_in_draw_order) {
     auto& resource = render_pass_textures_[pass->id];
-    if (!resource) {
-      resource = std::make_unique<ScopedResource>(resource_provider_);
-
-      // |has_damage_from_contributing_content| is used to determine if previous
-      // contents can be reused when caching render pass and as a result needs
-      // to be true when a new resource is created to ensure that it is updated
-      // and not assumed to already contain correct contents.
-      pass->has_damage_from_contributing_content = true;
-    }
+    if (!resource)
+      resource = base::MakeUnique<ScopedResource>(resource_provider_);
   }
 }
 
@@ -637,13 +629,16 @@ bool DirectRenderer::UseRenderPass(const RenderPass* render_pass) {
     texture->Allocate(
         size, ResourceProvider::TEXTURE_HINT_IMMUTABLE_FRAMEBUFFER,
         BackbufferFormat(), current_frame()->current_render_pass->color_space);
-  } else if (render_pass->cache_render_pass &&
-             !render_pass->has_damage_from_contributing_content) {
-    return false;
-  } else if (current_frame()->ComputeScissorRectForRenderPass().IsEmpty()) {
-    return false;
   }
   DCHECK(texture->id());
+
+  if (render_pass->cache_render_pass &&
+      !render_pass->has_damage_from_contributing_content) {
+    return false;
+  }
+
+  if (current_frame()->ComputeScissorRectForRenderPass().IsEmpty())
+    return false;
 
   if (BindFramebufferToTexture(texture)) {
     InitializeViewport(current_frame(), render_pass->output_rect,

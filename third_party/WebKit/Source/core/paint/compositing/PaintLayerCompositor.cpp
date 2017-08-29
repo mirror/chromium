@@ -182,28 +182,11 @@ static LayoutVideo* FindFullscreenVideoLayoutObject(Document& document) {
 void PaintLayerCompositor::UpdateIfNeededRecursive(
     DocumentLifecycle::LifecycleState target_state) {
   SCOPED_BLINK_UMA_HISTOGRAM_TIMER("Blink.Compositing.UpdateTime");
-  CompositingReasonsStats compositing_reasons_stats;
-  UpdateIfNeededRecursiveInternal(target_state, compositing_reasons_stats);
-  UMA_HISTOGRAM_CUSTOM_COUNTS("Blink.Compositing.LayerPromotionCount.Overlap",
-                              compositing_reasons_stats.overlap_layers, 1, 100,
-                              5);
-  UMA_HISTOGRAM_CUSTOM_COUNTS(
-      "Blink.Compositing.LayerPromotionCount.ActiveAnimation",
-      compositing_reasons_stats.active_animation_layers, 1, 100, 5);
-  UMA_HISTOGRAM_CUSTOM_COUNTS(
-      "Blink.Compositing.LayerPromotionCount.AssumedOverlap",
-      compositing_reasons_stats.assumed_overlap_layers, 1, 100, 5);
-  UMA_HISTOGRAM_CUSTOM_COUNTS(
-      "Blink.Compositing.LayerPromotionCount.IndirectComposited",
-      compositing_reasons_stats.indirect_composited_layers, 1, 100, 5);
-  UMA_HISTOGRAM_CUSTOM_COUNTS(
-      "Blink.Compositing.LayerPromotionCount.TotalComposited",
-      compositing_reasons_stats.total_composited_layers, 1, 1000, 10);
+  UpdateIfNeededRecursiveInternal(target_state);
 }
 
 void PaintLayerCompositor::UpdateIfNeededRecursiveInternal(
-    DocumentLifecycle::LifecycleState target_state,
-    CompositingReasonsStats& compositing_reasons_stats) {
+    DocumentLifecycle::LifecycleState target_state) {
   DCHECK(target_state >= DocumentLifecycle::kCompositingInputsClean);
 
   LocalFrameView* view = layout_view_.GetFrameView();
@@ -224,8 +207,7 @@ void PaintLayerCompositor::UpdateIfNeededRecursiveInternal(
         !local_frame->ContentLayoutItem().IsNull()) {
       local_frame->ContentLayoutItem()
           .Compositor()
-          ->UpdateIfNeededRecursiveInternal(target_state,
-                                            compositing_reasons_stats);
+          ->UpdateIfNeededRecursiveInternal(target_state);
     }
   }
 
@@ -244,7 +226,7 @@ void PaintLayerCompositor::UpdateIfNeededRecursiveInternal(
 
   layout_view_.CommitPendingSelection();
 
-  UpdateIfNeeded(target_state, compositing_reasons_stats);
+  UpdateIfNeeded(target_state);
   DCHECK(Lifecycle().GetState() == DocumentLifecycle::kCompositingInputsClean ||
          Lifecycle().GetState() == DocumentLifecycle::kCompositingClean);
   if (target_state == DocumentLifecycle::kCompositingInputsClean)
@@ -404,8 +386,7 @@ GraphicsLayer* PaintLayerCompositor::ParentForContentLayers() const {
 }
 
 void PaintLayerCompositor::UpdateIfNeeded(
-    DocumentLifecycle::LifecycleState target_state,
-    CompositingReasonsStats& compositing_reasons_stats) {
+    DocumentLifecycle::LifecycleState target_state) {
   DCHECK(target_state >= DocumentLifecycle::kCompositingInputsClean);
 
   Lifecycle().AdvanceTo(DocumentLifecycle::kInCompositingUpdate);
@@ -459,7 +440,7 @@ void PaintLayerCompositor::UpdateIfNeeded(
     }
 
     CompositingRequirementsUpdater(layout_view_, compositing_reason_finder_)
-        .Update(update_root, compositing_reasons_stats);
+        .Update(update_root);
 
     CompositingLayerAssigner layer_assigner(this);
     layer_assigner.Assign(update_root, layers_needing_paint_invalidation);
@@ -757,6 +738,16 @@ void PaintLayerCompositor::RootFixedBackgroundsChanged() {
   // it just positions it (like the foreground layer).
   if (GraphicsLayer* background_layer = FixedRootBackgroundLayer())
     container_layer_->AddChildBelow(background_layer, scroll_layer_.get());
+}
+
+bool PaintLayerCompositor::ScrollingLayerDidChange(PaintLayer* layer) {
+  auto* scrollable_area = layer->GetScrollableArea();
+  auto* scrolling_coordinator = this->GetScrollingCoordinator();
+  if (scrolling_coordinator && scrollable_area) {
+    return scrolling_coordinator->ScrollableAreaScrollLayerDidChange(
+        scrollable_area);
+  }
+  return false;
 }
 
 std::unique_ptr<JSONObject> PaintLayerCompositor::LayerTreeAsJSON(

@@ -6,7 +6,6 @@
 
 #include "base/mac/foundation_util.h"
 #include "base/mac/scoped_nsobject.h"
-#include "base/metrics/histogram_macros.h"
 #include "base/metrics/user_metrics.h"
 #include "base/metrics/user_metrics_action.h"
 #include "base/strings/sys_string_conversions.h"
@@ -20,14 +19,12 @@
 #import "ios/chrome/browser/content_suggestions/content_suggestions_alert_factory.h"
 #import "ios/chrome/browser/content_suggestions/content_suggestions_header_view_controller.h"
 #import "ios/chrome/browser/content_suggestions/content_suggestions_mediator.h"
-#import "ios/chrome/browser/content_suggestions/ntp_home_metrics.h"
 #include "ios/chrome/browser/favicon/ios_chrome_large_icon_cache_factory.h"
 #include "ios/chrome/browser/favicon/ios_chrome_large_icon_service_factory.h"
 #include "ios/chrome/browser/favicon/large_icon_cache.h"
 #import "ios/chrome/browser/metrics/new_tab_page_uma.h"
 #include "ios/chrome/browser/ntp_snippets/ios_chrome_content_suggestions_service_factory.h"
 #include "ios/chrome/browser/ntp_tiles/ios_most_visited_sites_factory.h"
-#include "ios/chrome/browser/pref_names.h"
 #include "ios/chrome/browser/reading_list/reading_list_model_factory.h"
 #include "ios/chrome/browser/tabs/tab_constants.h"
 #import "ios/chrome/browser/ui/alert_coordinator/alert_coordinator.h"
@@ -49,7 +46,6 @@
 #import "ios/chrome/browser/ui/content_suggestions/content_suggestions_view_controller_audience.h"
 #import "ios/chrome/browser/ui/content_suggestions/content_suggestions_view_controller_delegate.h"
 #import "ios/chrome/browser/ui/content_suggestions/identifier/content_suggestion_identifier.h"
-#import "ios/chrome/browser/ui/content_suggestions/ntp_home_constant.h"
 #import "ios/chrome/browser/ui/ntp/google_landing_mediator.h"
 #import "ios/chrome/browser/ui/ntp/new_tab_page_header_constants.h"
 #import "ios/chrome/browser/ui/ntp/notification_promo_whats_new.h"
@@ -136,15 +132,6 @@ const char kNTPHelpURL[] = "https://support.google.com/chrome/?p=ios_new_tab";
           self.browserState);
   contentSuggestionsService->remote_suggestions_scheduler()
       ->OnSuggestionsSurfaceOpened();
-  PrefService* prefs =
-      ios::ChromeBrowserState::FromBrowserState(self.browserState)->GetPrefs();
-  bool contentSuggestionsEnabled =
-      prefs->GetBoolean(prefs::kSearchSuggestEnabled);
-  if (contentSuggestionsEnabled) {
-    ntp_home::RecordNTPImpression(ntp_home::REMOTE_SUGGESTIONS);
-  } else {
-    ntp_home::RecordNTPImpression(ntp_home::LOCAL_SUGGESTIONS);
-  }
 
   self.headerController = [[ContentSuggestionsHeaderViewController alloc] init];
   self.headerController.dispatcher = self.dispatcher;
@@ -243,8 +230,6 @@ const char kNTPHelpURL[] = "https://support.google.com/chrome/?p=ios_new_tab";
                  referrer:referrer
                transition:ui::PAGE_TRANSITION_AUTO_BOOKMARK
         rendererInitiated:NO];
-  new_tab_page_uma::RecordAction(self.browserState,
-                                 new_tab_page_uma::ACTION_OPENED_SUGGESTION);
 }
 
 - (void)openMostVisitedItem:(CollectionViewItem*)item
@@ -297,8 +282,6 @@ const char kNTPHelpURL[] = "https://support.google.com/chrome/?p=ios_new_tab";
       [self.contentSuggestionsMediator notificationPromo];
   DCHECK(notificationPromo);
   notificationPromo->HandleClosed();
-  new_tab_page_uma::RecordAction(self.browserState,
-                                 new_tab_page_uma::ACTION_OPENED_PROMO);
 
   if (notificationPromo->IsURLPromo()) {
     [self.URLLoader webPageOrderedOpen:notificationPromo->url()
@@ -318,25 +301,21 @@ const char kNTPHelpURL[] = "https://support.google.com/chrome/?p=ios_new_tab";
 }
 
 - (void)handleLearnMoreTapped {
+  // TODO(crbug.com/691979): Add metrics.
   [self.URLLoader loadURL:GURL(kNTPHelpURL)
                  referrer:web::Referrer()
                transition:ui::PAGE_TRANSITION_LINK
         rendererInitiated:NO];
-  new_tab_page_uma::RecordAction(self.browserState,
-                                 new_tab_page_uma::ACTION_OPENED_LEARN_MORE);
 }
 
 #pragma mark - ContentSuggestionsGestureCommands
 
 - (void)openNewTabWithSuggestionsItem:(ContentSuggestionsItem*)item
                             incognito:(BOOL)incognito {
-  new_tab_page_uma::RecordAction(self.browserState,
-                                 new_tab_page_uma::ACTION_OPENED_SUGGESTION);
   [self openNewTabWithURL:item.URL incognito:incognito];
 }
 
 - (void)addItemToReadingList:(ContentSuggestionsItem*)item {
-  self.contentSuggestionsMediator.readingListNeedsReload = YES;
   ReadingListAddCommand* command =
       [[ReadingListAddCommand alloc] initWithURL:item.URL title:item.title];
   [self.dispatcher addToReadingList:command];
@@ -471,31 +450,8 @@ const char kNTPHelpURL[] = "https://support.google.com/chrome/?p=ios_new_tab";
 - (CGFloat)alphaForBottomShadow {
   UICollectionView* collection = self.suggestionsViewController.collectionView;
 
-  NSInteger numberOfSection =
-      [collection.dataSource numberOfSectionsInCollectionView:collection];
-
-  NSInteger lastNonEmptySection = 0;
-  NSInteger lastItemIndex = 0;
-  for (NSInteger i = 0; i < numberOfSection; i++) {
-    NSInteger itemsInSection = [collection.dataSource collectionView:collection
-                                              numberOfItemsInSection:i];
-    if (itemsInSection > 0) {
-      // Some sections might be empty. Only consider the last non-empty one.
-      lastNonEmptySection = i;
-      lastItemIndex = itemsInSection - 1;
-    }
-  }
-  if (lastNonEmptySection == 0)
-    return 0;
-
-  NSIndexPath* lastCellIndexPath =
-      [NSIndexPath indexPathForItem:lastItemIndex
-                          inSection:lastNonEmptySection];
-  UICollectionViewLayoutAttributes* attributes =
-      [collection layoutAttributesForItemAtIndexPath:lastCellIndexPath];
-  CGRect lastCellFrame = attributes.frame;
   CGFloat pixelsBelowFrame =
-      CGRectGetMaxY(lastCellFrame) - CGRectGetMaxY(collection.bounds);
+      collection.contentSize.height - CGRectGetMaxY(collection.bounds);
   CGFloat alpha = pixelsBelowFrame / kNewTabPageDistanceToFadeShadow;
   return MIN(MAX(alpha, 0), 1);
 }

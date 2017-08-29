@@ -46,16 +46,6 @@ namespace network_icon {
 
 namespace {
 
-SkPath CreateArcPath(gfx::RectF oval, float start_angle, float sweep_angle) {
-  SkPath path;
-  path.setIsVolatile(true);
-  path.setFillType(SkPath::kWinding_FillType);
-  path.moveTo(oval.CenterPoint().x(), oval.CenterPoint().y());
-  path.arcTo(gfx::RectFToSkRect(oval), start_angle, sweep_angle, false);
-  path.close();
-  return path;
-}
-
 // Constants for offseting the badge displayed on top of the signal strength
 // icon. The badge will extend outside of the base icon bounds by these amounts.
 // All values are in dp.
@@ -715,8 +705,8 @@ void SignalStrengthImageSource::DrawArcs(gfx::Canvas* canvas) {
   // Background. Skip drawing for full signal.
   if (signal_strength_ != kNumNetworkImages - 1) {
     flags.setColor(SkColorSetA(color_, kSignalStrengthImageBgAlpha));
-    canvas->sk_canvas()->drawPath(
-        CreateArcPath(oval_bounds, kStartAngle, kSweepAngle), flags);
+    canvas->sk_canvas()->drawArc(gfx::RectFToSkRect(oval_bounds), kStartAngle,
+                                 kSweepAngle, true, flags);
   }
   // Foreground (signal strength).
   if (signal_strength_ != 0) {
@@ -728,8 +718,8 @@ void SignalStrengthImageSource::DrawArcs(gfx::Canvas* canvas) {
     const float wedge_percent = kWedgeHeightPercentages[signal_strength_];
     oval_bounds.Inset(
         gfx::InsetsF((oval_bounds.height() / 2) * (1.f - wedge_percent)));
-    canvas->sk_canvas()->drawPath(
-        CreateArcPath(oval_bounds, kStartAngle, kSweepAngle), flags);
+    canvas->sk_canvas()->drawArc(gfx::RectFToSkRect(oval_bounds), kStartAngle,
+                                 kSweepAngle, true, flags);
   }
 }
 
@@ -884,18 +874,25 @@ base::string16 GetLabelForNetwork(const chromeos::NetworkState* network,
   }
 }
 
-int GetCellularUninitializedMsg() {
+int GetMobileUninitializedMsg() {
   static base::Time s_uninitialized_state_time;
   static int s_uninitialized_msg(0);
 
   NetworkStateHandler* handler = NetworkHandler::Get()->network_state_handler();
 
-  // Never show messages if the list of Cellular networks is non-empty.
-  NetworkStateHandler::NetworkStateList cellular_networks;
-  handler->GetVisibleNetworkListByType(chromeos::NetworkTypePattern::Cellular(),
-                                       &cellular_networks);
-  if (!cellular_networks.empty())
+  // Never show messages if the list of Mobile networks is non-empty.
+  NetworkStateHandler::NetworkStateList mobile_networks;
+  handler->GetVisibleNetworkListByType(chromeos::NetworkTypePattern::Mobile(),
+                                       &mobile_networks);
+  if (!mobile_networks.empty())
     return 0;
+
+  if (handler->GetTechnologyState(NetworkTypePattern::Tether()) ==
+      NetworkStateHandler::TECHNOLOGY_UNINITIALIZED) {
+    s_uninitialized_msg = IDS_ASH_STATUS_TRAY_ENABLE_BLUETOOTH;
+    s_uninitialized_state_time = base::Time::Now();
+    return s_uninitialized_msg;
+  }
 
   if (handler->GetTechnologyState(NetworkTypePattern::Cellular()) ==
       NetworkStateHandler::TECHNOLOGY_UNINITIALIZED) {
@@ -911,7 +908,7 @@ int GetCellularUninitializedMsg() {
   }
 
   // There can be a delay between leaving the Initializing state and when
-  // a Cellular device shows up, so keep showing the initializing
+  // a Mobile device shows up, so keep showing the initializing
   // animation for a bit to avoid flashing the disconnect icon.
   const int kInitializingDelaySeconds = 1;
   base::TimeDelta dtime = base::Time::Now() - s_uninitialized_state_time;
@@ -969,8 +966,9 @@ void GetDefaultNetworkImageAndLabel(IconType icon_type,
   if (!network) {
     // If no connecting network, check for mobile initializing. Do not display
     // the message about enabling Bluetooth for Tether.
-    int uninitialized_msg = GetCellularUninitializedMsg();
-    if (uninitialized_msg != 0) {
+    int uninitialized_msg = GetMobileUninitializedMsg();
+    if (uninitialized_msg != 0 &&
+        uninitialized_msg != IDS_ASH_STATUS_TRAY_ENABLE_BLUETOOTH) {
       *image = GetConnectingImage(icon_type, shill::kTypeCellular);
       if (label)
         *label = l10n_util::GetStringUTF16(uninitialized_msg);

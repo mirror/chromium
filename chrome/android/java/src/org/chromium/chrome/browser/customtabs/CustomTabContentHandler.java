@@ -51,9 +51,4 @@ public interface CustomTabContentHandler {
      */
     boolean updateRemoteViews(RemoteViews remoteViews, int[] clickableIDs,
             PendingIntent pendingIntent);
-
-    /**
-     * @return The current url being displayed to the user.
-     */
-    String getCurrentUrl();
 }

@@ -146,5 +146,10 @@ static void Init(JNIEnv* env,
   new EmbeddedTestServerAndroid(env, jobj, jhttps);
 }
 
+// static
+bool EmbeddedTestServerAndroid::RegisterEmbeddedTestServerAndroid(JNIEnv* env) {
+  return RegisterNativesImpl(env);
+}
+
 }  // namespace test_server
 }  // namespace net

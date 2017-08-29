@@ -62,8 +62,9 @@ class WindowTreeClientPrivate {
 
   WindowTreeHostMusInitParams CallCreateInitParamsForNewDisplay();
 
-  // Sets the WindowTree.
-  void SetTree(ui::mojom::WindowTree* window_tree);
+  // Sets the WindowTree and client id.
+  void SetTreeAndClientId(ui::mojom::WindowTree* window_tree,
+                          ClientSpecificId client_id);
 
   void SetWindowManagerClient(ui::mojom::WindowManagerClient* client);
 

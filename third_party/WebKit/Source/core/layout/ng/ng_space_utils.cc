@@ -4,9 +4,12 @@
 
 #include "core/layout/ng/ng_space_utils.h"
 
-#include "core/layout/ng/geometry/ng_bfc_offset.h"
+#include "core/layout/ng/ng_block_node.h"
+#include "core/layout/ng/ng_exclusion.h"
+#include "core/layout/ng/ng_layout_input_node.h"
+#include "core/layout/ng/ng_layout_result.h"
+#include "core/layout/ng/ng_unpositioned_float.h"
 #include "core/layout/ng/ng_writing_mode.h"
-#include "core/style/ComputedStyle.h"
 
 namespace blink {
 
@@ -23,7 +26,7 @@ bool ShouldShrinkToFit(const ComputedStyle& parent_style,
 }
 
 bool AdjustToClearance(const WTF::Optional<LayoutUnit>& clearance_offset,
-                       NGBfcOffset* offset) {
+                       NGLogicalOffset* offset) {
   DCHECK(offset);
   if (clearance_offset && clearance_offset.value() > offset->block_offset) {
     offset->block_offset = clearance_offset.value();

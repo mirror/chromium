@@ -135,10 +135,8 @@ ChromeAutocompleteProviderClient::GetTemplateURLService() const {
 }
 
 ContextualSuggestionsService*
-ChromeAutocompleteProviderClient::GetContextualSuggestionsService(
-    bool create_if_necessary) const {
-  return ContextualSuggestionsServiceFactory::GetForProfile(
-      profile_, create_if_necessary);
+ChromeAutocompleteProviderClient::GetContextualSuggestionsService() const {
+  return ContextualSuggestionsServiceFactory::GetForProfile(profile_);
 }
 
 const

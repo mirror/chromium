@@ -148,7 +148,7 @@ void HandleToggleTouchscreen() {
   delegate->UpdateTouchscreenStatusFromPrefs();
 }
 
-void HandleToggleTabletMode() {
+void HandleToggleTouchView() {
   TabletModeController* controller = Shell::Get()->tablet_mode_controller();
   controller->EnableTabletModeWindowManager(
       !controller->IsTabletModeWindowManagerEnabled());
@@ -207,8 +207,8 @@ void PerformDebugActionIfEnabled(AcceleratorAction action) {
     case DEBUG_TOGGLE_TOUCH_SCREEN:
       HandleToggleTouchscreen();
       break;
-    case DEBUG_TOGGLE_TABLET_MODE:
-      HandleToggleTabletMode();
+    case DEBUG_TOGGLE_TOUCH_VIEW:
+      HandleToggleTouchView();
       break;
     case DEBUG_TOGGLE_WALLPAPER_MODE:
       HandleToggleWallpaperMode();

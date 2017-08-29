@@ -15,7 +15,6 @@ class Profile;
 namespace arc {
 
 class ArcSessionManager;
-class ArcAuthNotification;
 
 // Observes Google Play Store enabled preference (whose key is "arc.enabled"
 // for historical reason), and controls ARC via ArcSessionManager.
@@ -52,9 +51,6 @@ class ArcPlayStoreEnabledPreferenceHandler
 
   // Registrar used to monitor ARC enabled state.
   PrefChangeRegistrar pref_change_registrar_;
-
-  // Controls life-cycle of ARC auth notification.
-  std::unique_ptr<ArcAuthNotification> auth_notification_;
 
   // Must be the last member.
   base::WeakPtrFactory<ArcPlayStoreEnabledPreferenceHandler> weak_ptr_factory_;

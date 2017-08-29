@@ -45,9 +45,6 @@ class AutomationExtension {
   // Maximizes the current window.
   Status MaximizeWindow();
 
-  // Sets the current window to fullscreen state.
-  Status FullScreenWindow();
-
  private:
   Status GetWindowInfo(int* x, int* y, int* width, int* height);
   Status UpdateWindow(const base::DictionaryValue& update_info);

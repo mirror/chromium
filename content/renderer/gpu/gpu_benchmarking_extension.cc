@@ -42,7 +42,6 @@
 #include "gin/handle.h"
 #include "gin/object_template_builder.h"
 #include "gpu/ipc/common/gpu_messages.h"
-#include "services/service_manager/public/cpp/interface_provider.h"
 #include "third_party/WebKit/public/platform/WebMouseEvent.h"
 #include "third_party/WebKit/public/web/WebImageCache.h"
 #include "third_party/WebKit/public/web/WebKit.h"
@@ -335,7 +334,6 @@ void OnSyntheticGestureCompleted(CallbackAndContext* callback_and_context) {
 }
 
 bool BeginSmoothScroll(v8::Isolate* isolate,
-                       mojom::InputInjectorPtr& injector,
                        float pixels_to_scroll,
                        v8::Local<v8::Function> callback,
                        int gesture_source_type,
@@ -372,21 +370,22 @@ bool BeginSmoothScroll(v8::Isolate* isolate,
       new CallbackAndContext(isolate, callback,
                              context.web_frame()->MainWorldScriptContext());
 
-  SyntheticSmoothScrollGestureParams gesture_params;
+  std::unique_ptr<SyntheticSmoothScrollGestureParams> gesture_params(
+      new SyntheticSmoothScrollGestureParams);
 
   if (gesture_source_type < 0 ||
       gesture_source_type > SyntheticGestureParams::GESTURE_SOURCE_TYPE_MAX) {
     return false;
   }
-  gesture_params.gesture_source_type =
+  gesture_params->gesture_source_type =
       static_cast<SyntheticGestureParams::GestureSourceType>(
           gesture_source_type);
 
-  gesture_params.speed_in_pixels_s = speed_in_pixels_s;
-  gesture_params.prevent_fling = prevent_fling;
+  gesture_params->speed_in_pixels_s = speed_in_pixels_s;
+  gesture_params->prevent_fling = prevent_fling;
 
-  gesture_params.anchor.SetPoint(start_x * page_scale_factor,
-                                 start_y * page_scale_factor);
+  gesture_params->anchor.SetPoint(start_x * page_scale_factor,
+                                  start_y * page_scale_factor);
 
   float distance_length = pixels_to_scroll * page_scale_factor;
   gfx::Vector2dF distance;
@@ -413,17 +412,20 @@ bool BeginSmoothScroll(v8::Isolate* isolate,
   } else {
     return false;
   }
-  gesture_params.distances.push_back(distance);
+  gesture_params->distances.push_back(distance);
 
-  injector->QueueSyntheticSmoothScroll(
-      gesture_params, base::BindOnce(&OnSyntheticGestureCompleted,
-                                     base::RetainedRef(callback_and_context)));
+  // TODO(678879): If the render_view_impl is destroyed while the gesture is in
+  // progress, we will leak the callback and context. This needs to be fixed,
+  // somehow, see https://crbug.com/678879.
+  context.render_view_impl()->GetWidget()->QueueSyntheticGesture(
+      std::move(gesture_params),
+      base::Bind(&OnSyntheticGestureCompleted,
+                 base::RetainedRef(callback_and_context)));
 
   return true;
 }
 
 bool BeginSmoothDrag(v8::Isolate* isolate,
-                     mojom::InputInjectorPtr& injector,
                      float start_x,
                      float start_y,
                      float end_x,
@@ -438,25 +440,30 @@ bool BeginSmoothDrag(v8::Isolate* isolate,
       new CallbackAndContext(isolate, callback,
                              context.web_frame()->MainWorldScriptContext());
 
-  SyntheticSmoothDragGestureParams gesture_params;
+  std::unique_ptr<SyntheticSmoothDragGestureParams> gesture_params(
+      new SyntheticSmoothDragGestureParams);
 
   // Convert coordinates from CSS pixels to density independent pixels (DIPs).
   float page_scale_factor = context.web_view()->PageScaleFactor();
 
-  gesture_params.start_point.SetPoint(start_x * page_scale_factor,
-                                      start_y * page_scale_factor);
+  gesture_params->start_point.SetPoint(start_x * page_scale_factor,
+                                       start_y * page_scale_factor);
   gfx::PointF end_point(end_x * page_scale_factor,
                         end_y * page_scale_factor);
-  gfx::Vector2dF distance = end_point - gesture_params.start_point;
-  gesture_params.distances.push_back(distance);
-  gesture_params.speed_in_pixels_s = speed_in_pixels_s * page_scale_factor;
-  gesture_params.gesture_source_type =
+  gfx::Vector2dF distance = end_point - gesture_params->start_point;
+  gesture_params->distances.push_back(distance);
+  gesture_params->speed_in_pixels_s = speed_in_pixels_s * page_scale_factor;
+  gesture_params->gesture_source_type =
       static_cast<SyntheticGestureParams::GestureSourceType>(
           gesture_source_type);
 
-  injector->QueueSyntheticSmoothDrag(
-      gesture_params, base::BindOnce(&OnSyntheticGestureCompleted,
-                                     base::RetainedRef(callback_and_context)));
+  // TODO(678879): If the render_view_impl is destroyed while the gesture is in
+  // progress, we will leak the callback and context. This needs to be fixed,
+  // somehow, see https://crbug.com/678879.
+  context.render_view_impl()->GetWidget()->QueueSyntheticGesture(
+      std::move(gesture_params),
+      base::Bind(&OnSyntheticGestureCompleted,
+                 base::RetainedRef(callback_and_context)));
 
   return true;
 }
@@ -538,18 +545,17 @@ static sk_sp<SkDocument> MakeXPSDocument(SkWStream* s) {
 gin::WrapperInfo GpuBenchmarking::kWrapperInfo = {gin::kEmbedderNativeGin};
 
 // static
-void GpuBenchmarking::Install(RenderFrameImpl* frame) {
+void GpuBenchmarking::Install(blink::WebLocalFrame* frame) {
   v8::Isolate* isolate = blink::MainThreadIsolate();
   v8::HandleScope handle_scope(isolate);
-  v8::Local<v8::Context> context =
-      frame->GetWebFrame()->MainWorldScriptContext();
+  v8::Local<v8::Context> context = frame->MainWorldScriptContext();
   if (context.IsEmpty())
     return;
 
   v8::Context::Scope context_scope(context);
 
   gin::Handle<GpuBenchmarking> controller =
-      gin::CreateHandle(isolate, new GpuBenchmarking(frame));
+      gin::CreateHandle(isolate, new GpuBenchmarking());
   if (controller.IsEmpty())
     return;
 
@@ -558,9 +564,7 @@ void GpuBenchmarking::Install(RenderFrameImpl* frame) {
   chrome->Set(gin::StringToV8(isolate, "gpuBenchmarking"), controller.ToV8());
 }
 
-GpuBenchmarking::GpuBenchmarking(RenderFrameImpl* frame) {
-  frame->GetRemoteInterfaces()->GetInterface(
-      mojo::MakeRequest(&input_injector_));
+GpuBenchmarking::GpuBenchmarking() {
 }
 
 GpuBenchmarking::~GpuBenchmarking() {
@@ -698,9 +702,15 @@ bool GpuBenchmarking::SmoothScrollBy(gin::Arguments* args) {
     return false;
   }
 
-  return BeginSmoothScroll(args->isolate(), input_injector_, pixels_to_scroll,
-                           callback, gesture_source_type, direction,
-                           speed_in_pixels_s, true, start_x, start_y);
+  return BeginSmoothScroll(args->isolate(),
+                           pixels_to_scroll,
+                           callback,
+                           gesture_source_type,
+                           direction,
+                           speed_in_pixels_s,
+                           true,
+                           start_x,
+                           start_y);
 }
 
 bool GpuBenchmarking::SmoothDrag(gin::Arguments* args) {
@@ -726,8 +736,13 @@ bool GpuBenchmarking::SmoothDrag(gin::Arguments* args) {
     return false;
   }
 
-  return BeginSmoothDrag(args->isolate(), input_injector_, start_x, start_y,
-                         end_x, end_y, callback, gesture_source_type,
+  return BeginSmoothDrag(args->isolate(),
+                         start_x,
+                         start_y,
+                         end_x,
+                         end_y,
+                         callback,
+                         gesture_source_type,
                          speed_in_pixels_s);
 }
 
@@ -755,10 +770,15 @@ bool GpuBenchmarking::Swipe(gin::Arguments* args) {
     return false;
   }
 
-  return BeginSmoothScroll(
-      args->isolate(), input_injector_, -pixels_to_scroll, callback,
-      1,  // TOUCH_INPUT
-      direction, speed_in_pixels_s, false, start_x, start_y);
+  return BeginSmoothScroll(args->isolate(),
+                           -pixels_to_scroll,
+                           callback,
+                           1,  // TOUCH_INPUT
+                           direction,
+                           speed_in_pixels_s,
+                           false,
+                           start_x,
+                           start_y);
 }
 
 bool GpuBenchmarking::ScrollBounce(gin::Arguments* args) {
@@ -793,12 +813,13 @@ bool GpuBenchmarking::ScrollBounce(gin::Arguments* args) {
       new CallbackAndContext(args->isolate(), callback,
                              context.web_frame()->MainWorldScriptContext());
 
-  SyntheticSmoothScrollGestureParams gesture_params;
+  std::unique_ptr<SyntheticSmoothScrollGestureParams> gesture_params(
+      new SyntheticSmoothScrollGestureParams);
 
-  gesture_params.speed_in_pixels_s = speed_in_pixels_s;
+  gesture_params->speed_in_pixels_s = speed_in_pixels_s;
 
-  gesture_params.anchor.SetPoint(start_x * page_scale_factor,
-                                 start_y * page_scale_factor);
+  gesture_params->anchor.SetPoint(start_x * page_scale_factor,
+                                  start_y * page_scale_factor);
 
   distance_length *= page_scale_factor;
   overscroll_length *= page_scale_factor;
@@ -821,12 +842,17 @@ bool GpuBenchmarking::ScrollBounce(gin::Arguments* args) {
   }
 
   for (int i = 0; i < repeat_count; i++) {
-    gesture_params.distances.push_back(distance);
-    gesture_params.distances.push_back(-distance + overscroll);
+    gesture_params->distances.push_back(distance);
+    gesture_params->distances.push_back(-distance + overscroll);
   }
-  input_injector_->QueueSyntheticSmoothScroll(
-      gesture_params, base::BindOnce(&OnSyntheticGestureCompleted,
-                                     base::RetainedRef(callback_and_context)));
+
+  // TODO(678879): If the render_view_impl is destroyed while the gesture is in
+  // progress, we will leak the callback and context. This needs to be fixed,
+  // somehow, see https://crbug.com/678879.
+  context.render_view_impl()->GetWidget()->QueueSyntheticGesture(
+      std::move(gesture_params),
+      base::Bind(&OnSyntheticGestureCompleted,
+                 base::RetainedRef(callback_and_context)));
 
   return true;
 }
@@ -851,24 +877,30 @@ bool GpuBenchmarking::PinchBy(gin::Arguments* args) {
     return false;
   }
 
-  SyntheticPinchGestureParams gesture_params;
+  std::unique_ptr<SyntheticPinchGestureParams> gesture_params(
+      new SyntheticPinchGestureParams);
 
   // TODO(bokan): Remove page scale here when change land in Catapult.
   // Convert coordinates from CSS pixels to density independent pixels (DIPs).
   float page_scale_factor = context.web_view()->PageScaleFactor();
 
-  gesture_params.scale_factor = scale_factor;
-  gesture_params.anchor.SetPoint(anchor_x * page_scale_factor,
-                                 anchor_y * page_scale_factor);
-  gesture_params.relative_pointer_speed_in_pixels_s =
+  gesture_params->scale_factor = scale_factor;
+  gesture_params->anchor.SetPoint(anchor_x * page_scale_factor,
+                                  anchor_y * page_scale_factor);
+  gesture_params->relative_pointer_speed_in_pixels_s =
       relative_pointer_speed_in_pixels_s;
 
   scoped_refptr<CallbackAndContext> callback_and_context =
       new CallbackAndContext(args->isolate(), callback,
                              context.web_frame()->MainWorldScriptContext());
-  input_injector_->QueueSyntheticPinch(
-      gesture_params, base::BindOnce(&OnSyntheticGestureCompleted,
-                                     base::RetainedRef(callback_and_context)));
+
+  // TODO(678879): If the render_view_impl is destroyed while the gesture is in
+  // progress, we will leak the callback and context. This needs to be fixed,
+  // somehow, see https://crbug.com/678879.
+  context.render_view_impl()->GetWidget()->QueueSyntheticGesture(
+      std::move(gesture_params),
+      base::Bind(&OnSyntheticGestureCompleted,
+                 base::RetainedRef(callback_and_context)));
 
   return true;
 }
@@ -949,26 +981,32 @@ bool GpuBenchmarking::Tap(gin::Arguments* args) {
     return false;
   }
 
-  SyntheticTapGestureParams gesture_params;
+  std::unique_ptr<SyntheticTapGestureParams> gesture_params(
+      new SyntheticTapGestureParams);
 
-  gesture_params.position.SetPoint(position_x * page_scale_factor,
-                                   position_y * page_scale_factor);
-  gesture_params.duration_ms = duration_ms;
+  gesture_params->position.SetPoint(position_x * page_scale_factor,
+                                    position_y * page_scale_factor);
+  gesture_params->duration_ms = duration_ms;
 
   if (gesture_source_type < 0 ||
       gesture_source_type > SyntheticGestureParams::GESTURE_SOURCE_TYPE_MAX) {
     return false;
   }
-  gesture_params.gesture_source_type =
+  gesture_params->gesture_source_type =
       static_cast<SyntheticGestureParams::GestureSourceType>(
           gesture_source_type);
 
   scoped_refptr<CallbackAndContext> callback_and_context =
       new CallbackAndContext(args->isolate(), callback,
                              context.web_frame()->MainWorldScriptContext());
-  input_injector_->QueueSyntheticTap(
-      gesture_params, base::BindOnce(&OnSyntheticGestureCompleted,
-                                     base::RetainedRef(callback_and_context)));
+
+  // TODO(678879): If the render_view_impl is destroyed while the gesture is in
+  // progress, we will leak the callback and context. This needs to be fixed,
+  // somehow, see https://crbug.com/678879.
+  context.render_view_impl()->GetWidget()->QueueSyntheticGesture(
+      std::move(gesture_params),
+      base::Bind(&OnSyntheticGestureCompleted,
+                 base::RetainedRef(callback_and_context)));
 
   return true;
 }
@@ -997,6 +1035,9 @@ bool GpuBenchmarking::PointerActionSequence(gin::Arguments* args) {
   if (!actions_parser.ParsePointerActionSequence())
     return false;
 
+  std::unique_ptr<SyntheticPointerActionListParams> gesture_params =
+      actions_parser.gesture_params();
+
   if (!GetOptionalArg(args, &callback)) {
     args->ThrowError();
     return false;
@@ -1006,10 +1047,13 @@ bool GpuBenchmarking::PointerActionSequence(gin::Arguments* args) {
   scoped_refptr<CallbackAndContext> callback_and_context =
       new CallbackAndContext(args->isolate(), callback,
                              context.web_frame()->MainWorldScriptContext());
-  input_injector_->QueueSyntheticPointerAction(
-      actions_parser.gesture_params(),
-      base::BindOnce(&OnSyntheticGestureCompleted,
-                     base::RetainedRef(callback_and_context)));
+  // TODO(678879): If the render_view_impl is destroyed while the gesture is in
+  // progress, we will leak the callback and context. This needs to be fixed,
+  // somehow, see https://crbug.com/678879.
+  context.render_view_impl()->GetWidget()->QueueSyntheticGesture(
+      std::move(gesture_params),
+      base::Bind(&OnSyntheticGestureCompleted,
+                 base::RetainedRef(callback_and_context)));
   return true;
 }
 

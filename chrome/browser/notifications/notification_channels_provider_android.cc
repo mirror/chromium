@@ -8,24 +8,19 @@
 
 #include "base/android/jni_android.h"
 #include "base/android/jni_string.h"
-#include "base/feature_list.h"
 #include "base/logging.h"
 #include "base/macros.h"
 #include "base/strings/string_number_conversions.h"
 #include "base/strings/string_util.h"
 #include "base/time/default_clock.h"
 #include "chrome/browser/content_settings/host_content_settings_map_factory.h"
-#include "chrome/common/chrome_features.h"
-#include "chrome/common/pref_names.h"
 #include "components/content_settings/core/browser/content_settings_details.h"
-#include "components/content_settings/core/browser/content_settings_pref_provider.h"
 #include "components/content_settings/core/browser/content_settings_rule.h"
 #include "components/content_settings/core/browser/content_settings_utils.h"
 #include "components/content_settings/core/browser/host_content_settings_map.h"
 #include "components/content_settings/core/common/content_settings.h"
 #include "components/content_settings/core/common/content_settings_pattern.h"
 #include "components/content_settings/core/common/content_settings_utils.h"
-#include "components/prefs/scoped_user_pref_update.h"
 #include "content/public/browser/browser_thread.h"
 #include "jni/NotificationSettingsBridge_jni.h"
 #include "url/gurl.h"
@@ -142,15 +137,6 @@ class ChannelsRuleIterator : public content_settings::RuleIterator {
 
 }  // anonymous namespace
 
-// static
-void NotificationChannelsProviderAndroid::RegisterProfilePrefs(
-    user_prefs::PrefRegistrySyncable* registry) {
-  if (base::FeatureList::IsEnabled(features::kSiteNotificationChannels)) {
-    registry->RegisterBooleanPref(prefs::kMigratedToSiteNotificationChannels,
-                                  false);
-  }
-}
-
 NotificationChannel::NotificationChannel(const std::string& id,
                                          const std::string& origin,
                                          const base::Time& timestamp,
@@ -176,21 +162,6 @@ NotificationChannelsProviderAndroid::NotificationChannelsProviderAndroid(
 
 NotificationChannelsProviderAndroid::~NotificationChannelsProviderAndroid() =
     default;
-
-void NotificationChannelsProviderAndroid::MigrateToChannelsIfNecessary(
-    PrefService* prefs,
-    content_settings::ProviderInterface* pref_provider) {
-  if (!should_use_channels_ ||
-      prefs->GetBoolean(prefs::kMigratedToSiteNotificationChannels)) {
-    return;
-  }
-  std::unique_ptr<content_settings::RuleIterator> it(
-      pref_provider->GetRuleIterator(CONTENT_SETTINGS_TYPE_NOTIFICATIONS,
-                                     std::string(), false /* incognito */));
-  while (it && it->HasNext())
-    CreateChannelForRule(it->Next());
-  prefs->SetBoolean(prefs::kMigratedToSiteNotificationChannels, true);
-}
 
 std::unique_ptr<content_settings::RuleIterator>
 NotificationChannelsProviderAndroid::GetRuleIterator(
@@ -345,29 +316,6 @@ void NotificationChannelsProviderAndroid::CreateChannelIfRequired(
     // TODO(awdf): Maybe remove this DCHECK - channel status could change any
     // time so this may be vulnerable to a race condition.
     DCHECK_EQ(old_channel_status, new_channel_status);
-  }
-}
-
-void NotificationChannelsProviderAndroid::CreateChannelForRule(
-    const content_settings::Rule& rule) {
-  url::Origin origin = url::Origin(GURL(rule.primary_pattern.ToString()));
-  DCHECK(!origin.unique());
-  const std::string origin_string = origin.Serialize();
-  ContentSetting content_setting =
-      content_settings::ValueToContentSetting(rule.value.get());
-  switch (content_setting) {
-    case CONTENT_SETTING_ALLOW:
-      CreateChannelIfRequired(origin_string,
-                              NotificationChannelStatus::ENABLED);
-      break;
-    case CONTENT_SETTING_BLOCK:
-      CreateChannelIfRequired(origin_string,
-                              NotificationChannelStatus::BLOCKED);
-      break;
-    default:
-      // We assume notification preferences are either ALLOW/BLOCK.
-      NOTREACHED();
-      break;
   }
 }
 

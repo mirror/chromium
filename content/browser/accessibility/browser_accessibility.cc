@@ -876,9 +876,6 @@ gfx::Rect BrowserAccessibility::RelativeToAbsoluteBounds(
       }
     }
 
-    if (frame_only)
-      break;
-
     node = root->PlatformGetParent();
   }
 

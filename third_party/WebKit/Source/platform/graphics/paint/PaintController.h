@@ -427,6 +427,9 @@ class PLATFORM_EXPORT PaintController {
   size_t last_cached_subsequence_end_;
 
   class DisplayItemListAsJSON;
+
+  FRIEND_TEST_ALL_PREFIXES(PaintControllerTest, CachedSubsequenceSwapOrder);
+  FRIEND_TEST_ALL_PREFIXES(PaintControllerTest, CachedNestedSubsequenceUpdate);
 };
 
 }  // namespace blink

@@ -27,7 +27,7 @@ class TestNetworkChangeNotifier : public net::NetworkChangeNotifier {
   void SimulateNetworkConnectionChange(
       net::NetworkChangeNotifier::ConnectionType type) {
     connection_type_to_return_ = type;
-    net::NetworkChangeNotifier::NotifyObserversOfNetworkChangeForTests(
+    net::NetworkChangeNotifier::NotifyObserversOfConnectionTypeChangeForTests(
         connection_type_to_return_);
     base::RunLoop().RunUntilIdle();
   }

@@ -28,7 +28,7 @@
 #include "cc/output/layer_tree_frame_sink_client.h"
 #include "cc/output/managed_memory_policy.h"
 #include "cc/quads/render_pass.h"
-#include "cc/resources/layer_tree_resource_provider.h"
+#include "cc/resources/resource_provider.h"
 #include "cc/resources/ui_resource_client.h"
 #include "cc/scheduler/begin_frame_tracker.h"
 #include "cc/scheduler/commit_earlyout_reason.h"
@@ -273,6 +273,7 @@ class CC_EXPORT LayerTreeHostImpl
   void SetTreeLayerScrollOffsetMutated(ElementId element_id,
                                        LayerTreeImpl* tree,
                                        const gfx::ScrollOffset& scroll_offset);
+  bool AnimationsPreserveAxisAlignment(const LayerImpl* layer) const;
   void SetNeedUpdateGpuRasterizationStatus();
 
   // MutatorHostClient implementation.
@@ -337,7 +338,6 @@ class CC_EXPORT LayerTreeHostImpl
   void UnregisterScrollbarAnimationController(ElementId scroll_element_id);
   ScrollbarAnimationController* ScrollbarAnimationControllerForElementId(
       ElementId scroll_element_id) const;
-  void FlashAllScrollbars(bool did_scroll);
 
   DrawMode GetDrawMode() const;
 
@@ -474,9 +474,7 @@ class CC_EXPORT LayerTreeHostImpl
   FrameRateCounter* fps_counter() { return fps_counter_.get(); }
   MemoryHistory* memory_history() { return memory_history_.get(); }
   DebugRectHistory* debug_rect_history() { return debug_rect_history_.get(); }
-  LayerTreeResourceProvider* resource_provider() {
-    return resource_provider_.get();
-  }
+  ResourceProvider* resource_provider() { return resource_provider_.get(); }
   BrowserControlsOffsetManager* browser_controls_manager() {
     return browser_controls_offset_manager_.get();
   }
@@ -754,7 +752,7 @@ class CC_EXPORT LayerTreeHostImpl
   std::unique_ptr<viz::ContextCacheController::ScopedVisibility>
       worker_context_visibility_;
 
-  std::unique_ptr<LayerTreeResourceProvider> resource_provider_;
+  std::unique_ptr<ResourceProvider> resource_provider_;
   bool need_update_gpu_rasterization_status_;
   bool content_has_slow_paths_;
   bool content_has_non_aa_paint_;
@@ -772,7 +770,7 @@ class CC_EXPORT LayerTreeHostImpl
   std::unique_ptr<LayerTreeImpl> active_tree_;
 
   // In impl-side painting mode, tree with possibly incomplete rasterized
-  // content. May be promoted to active by ActivateSyncTree().
+  // content. May be promoted to active by ActivatePendingTree().
   std::unique_ptr<LayerTreeImpl> pending_tree_;
 
   // In impl-side painting mode, inert tree with layers that can be recycled

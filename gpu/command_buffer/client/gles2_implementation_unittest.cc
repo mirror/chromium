@@ -3389,11 +3389,11 @@ TEST_F(GLES2ImplementationTest, BeginEndQueryEXT) {
   struct EndCmds {
     cmds::EndQueryEXT end_query;
   };
-  commands = GetPut();
-  gl_->EndQueryEXT(GL_ANY_SAMPLES_PASSED_EXT);
   EndCmds expected_end_cmds;
   expected_end_cmds.end_query.Init(
       GL_ANY_SAMPLES_PASSED_EXT, query->submit_count());
+  commands = GetPut();
+  gl_->EndQueryEXT(GL_ANY_SAMPLES_PASSED_EXT);
   EXPECT_EQ(0, memcmp(
       &expected_end_cmds, commands, sizeof(expected_end_cmds)));
 
@@ -3406,12 +3406,11 @@ TEST_F(GLES2ImplementationTest, BeginEndQueryEXT) {
   // Test 2nd Begin/End increments count.
   base::subtle::Atomic32 old_submit_count = query->submit_count();
   gl_->BeginQueryEXT(GL_ANY_SAMPLES_PASSED_EXT, id1);
-  EXPECT_EQ(old_submit_count, query->submit_count());
-  commands = GetPut();
-  gl_->EndQueryEXT(GL_ANY_SAMPLES_PASSED_EXT);
   EXPECT_NE(old_submit_count, query->submit_count());
   expected_end_cmds.end_query.Init(
       GL_ANY_SAMPLES_PASSED_EXT, query->submit_count());
+  commands = GetPut();
+  gl_->EndQueryEXT(GL_ANY_SAMPLES_PASSED_EXT);
   EXPECT_EQ(0, memcmp(
       &expected_end_cmds, commands, sizeof(expected_end_cmds)));
 
@@ -3620,13 +3619,13 @@ TEST_F(GLES2ImplementationTest, ErrorQuery) {
     cmds::BeginQueryEXT begin_query;
     cmds::EndQueryEXT end_query;
   };
-  const void* commands = GetPut();
-  gl_->EndQueryEXT(GL_GET_ERROR_QUERY_CHROMIUM);
   EndCmds expected_end_cmds;
   expected_end_cmds.begin_query.Init(
       GL_GET_ERROR_QUERY_CHROMIUM, id, query->shm_id(), query->shm_offset());
   expected_end_cmds.end_query.Init(
       GL_GET_ERROR_QUERY_CHROMIUM, query->submit_count());
+  const void* commands = GetPut();
+  gl_->EndQueryEXT(GL_GET_ERROR_QUERY_CHROMIUM);
   EXPECT_EQ(0, memcmp(
       &expected_end_cmds, commands, sizeof(expected_end_cmds)));
   ClearCommands();
@@ -3970,6 +3969,7 @@ TEST_F(GLES2ImplementationTest, GenSyncTokenCHROMIUM) {
       .WillRepeatedly(Return(kNamespaceId));
   EXPECT_CALL(*gpu_control_, GetCommandBufferID())
       .WillRepeatedly(Return(kCommandBufferId));
+  EXPECT_CALL(*gpu_control_, GetStreamId()).WillRepeatedly(Return(0));
 
   gl_->GenSyncTokenCHROMIUM(kFenceSync, nullptr);
   EXPECT_EQ(GL_INVALID_VALUE, CheckError());
@@ -4014,6 +4014,7 @@ TEST_F(GLES2ImplementationTest, GenUnverifiedSyncTokenCHROMIUM) {
       .WillRepeatedly(Return(kNamespaceId));
   EXPECT_CALL(*gpu_control_, GetCommandBufferID())
       .WillRepeatedly(Return(kCommandBufferId));
+  EXPECT_CALL(*gpu_control_, GetStreamId()).WillRepeatedly(Return(0));
 
   gl_->GenUnverifiedSyncTokenCHROMIUM(kFenceSync, nullptr);
   EXPECT_EQ(GL_INVALID_VALUE, CheckError());
@@ -4065,6 +4066,7 @@ TEST_F(GLES2ImplementationTest, VerifySyncTokensCHROMIUM) {
       .WillRepeatedly(Return(kNamespaceId));
   EXPECT_CALL(*gpu_control_, GetCommandBufferID())
       .WillRepeatedly(Return(kCommandBufferId));
+  EXPECT_CALL(*gpu_control_, GetStreamId()).WillRepeatedly(Return(0));
 
   EXPECT_CALL(*gpu_control_, IsFenceSyncRelease(kFenceSync))
       .WillOnce(Return(true));
@@ -4119,6 +4121,7 @@ TEST_F(GLES2ImplementationTest, VerifySyncTokensCHROMIUM_Sequence) {
       .WillRepeatedly(Return(kNamespaceId));
   EXPECT_CALL(*gpu_control_, GetCommandBufferID())
       .WillRepeatedly(Return(kCommandBufferId));
+  EXPECT_CALL(*gpu_control_, GetStreamId()).WillRepeatedly(Return(0));
 
   // Generate sync token 1.
   EXPECT_CALL(*gpu_control_, IsFenceSyncRelease(kFenceSync1))
@@ -4195,6 +4198,7 @@ TEST_F(GLES2ImplementationTest, WaitSyncTokenCHROMIUM) {
   EXPECT_CALL(*gpu_control_, GetNamespaceID()).WillOnce(Return(kNamespaceId));
   EXPECT_CALL(*gpu_control_, GetCommandBufferID())
       .WillOnce(Return(kCommandBufferId));
+  EXPECT_CALL(*gpu_control_, GetStreamId()).WillOnce(Return(0));
   gl_->GenSyncTokenCHROMIUM(kFenceSync, sync_token_data);
 
   struct Cmds {
@@ -4532,6 +4536,7 @@ TEST_F(GLES2ImplementationTest, SignalSyncToken) {
   EXPECT_CALL(*gpu_control_, IsFenceSyncFlushReceived(fence_sync))
       .WillOnce(Return(true));
   EXPECT_CALL(*gpu_control_, GetNamespaceID()).WillOnce(Return(GPU_IO));
+  EXPECT_CALL(*gpu_control_, GetStreamId()).WillOnce(Return(0));
   EXPECT_CALL(*gpu_control_, GetCommandBufferID())
       .WillOnce(Return(CommandBufferId::FromUnsafeValue(1)));
   gpu::SyncToken sync_token;
@@ -4563,6 +4568,7 @@ TEST_F(GLES2ImplementationTest, SignalSyncTokenAfterContextLoss) {
   EXPECT_CALL(*gpu_control_, IsFenceSyncFlushReceived(fence_sync))
       .WillOnce(Return(true));
   EXPECT_CALL(*gpu_control_, GetNamespaceID()).WillOnce(Return(GPU_IO));
+  EXPECT_CALL(*gpu_control_, GetStreamId()).WillOnce(Return(0));
   EXPECT_CALL(*gpu_control_, GetCommandBufferID())
       .WillOnce(Return(CommandBufferId::FromUnsafeValue(1)));
   gpu::SyncToken sync_token;

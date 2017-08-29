@@ -10,7 +10,6 @@
 #include "core/testing/sim/SimDisplayItemList.h"
 #include "core/testing/sim/SimRequest.h"
 #include "core/testing/sim/SimTest.h"
-#include "public/web/WebFindOptions.h"
 #include "public/web/WebScriptSource.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
@@ -365,55 +364,6 @@ TEST_F(SmoothScrollTest, SmoothScrollAnchor) {
   Compositor().BeginFrame(1);
   ASSERT_EQ(container->scrollTop(),
             content->OffsetTop() - container->OffsetTop());
-}
-
-TEST_F(SmoothScrollTest, FindDoesNotScrollOverflowHidden) {
-  v8::HandleScope HandleScope(v8::Isolate::GetCurrent());
-  WebView().Resize(WebSize(800, 600));
-  SimRequest request("https://example.com/test.html", "text/html");
-  LoadURL("https://example.com/test.html");
-  request.Complete(
-      "<div id='container' style='height: 400px; overflow: hidden;'>"
-      "  <div id='space' style='height: 500px'></div>"
-      "  <div style='height: 500px'>hello</div>"
-      "</div>");
-  Element* container = GetDocument().getElementById("container");
-  Compositor().BeginFrame();
-  ASSERT_EQ(container->scrollTop(), 0);
-  const int kFindIdentifier = 12345;
-  WebFindOptions options;
-  MainFrame().Find(kFindIdentifier, WebString::FromUTF8("hello"), options,
-                   false);
-  ASSERT_EQ(container->scrollTop(), 0);
-}
-
-TEST_F(SmoothScrollTest, ApplyRootElementScrollBehaviorToViewport) {
-  v8::HandleScope HandleScope(v8::Isolate::GetCurrent());
-  WebView().Resize(WebSize(800, 600));
-  SimRequest request("https://example.com/test.html", "text/html");
-  LoadURL("https://example.com/test.html");
-  request.Complete("<html style='scroll-behavior: smooth'>"
-      "<div id='space' style='height: 1000px'></div>"
-      "<div id='content' style='height: 1000px'></div></html>");
-
-  Element* content = GetDocument().getElementById("content");
-  ScrollIntoViewOptionsOrBoolean arg;
-  ScrollIntoViewOptions options;
-  options.setBlock("start");
-  arg.setScrollIntoViewOptions(options);
-  Compositor().BeginFrame();
-  ASSERT_EQ(Window().scrollY(), 0);
-
-  content->scrollIntoView(arg);
-  // Scrolling the container
-  Compositor().BeginFrame();  // update run_state_.
-  Compositor().BeginFrame();  // Set start_time = now.
-  Compositor().BeginFrame(0.2);
-  ASSERT_EQ(Window().scrollY(), 299);
-
-  // Finish scrolling the container
-  Compositor().BeginFrame(1);
-  ASSERT_EQ(Window().scrollY(), content->OffsetTop());
 }
 
 }  // namespace

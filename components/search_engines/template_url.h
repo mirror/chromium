@@ -110,7 +110,7 @@ class TemplateURLRef {
     base::string16 original_query;
 
     // The type the original input query was identified as.
-    metrics::OmniboxInputType input_type;
+    metrics::OmniboxInputType::Type input_type;
 
     // The optional assisted query stats, aka AQS, used for logging purposes.
     // This string contains impressions of all autocomplete matches shown
@@ -569,8 +569,6 @@ class TemplateURL {
   const GURL& favicon_url() const { return data_.favicon_url; }
 
   const GURL& logo_url() const { return data_.logo_url; }
-
-  const GURL& doodle_url() const { return data_.doodle_url; }
 
   const GURL& originating_url() const { return data_.originating_url; }
 

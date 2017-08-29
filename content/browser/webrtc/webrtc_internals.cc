@@ -219,7 +219,7 @@ void WebRTCInternals::OnAddStats(base::ProcessId pid, int lid,
   dict->SetInteger("pid", static_cast<int>(pid));
   dict->SetInteger("lid", lid);
 
-  dict->SetKey("reports", value.Clone());
+  dict->Set("reports", base::MakeUnique<base::Value>(value));
 
   SendUpdate("addStats", std::move(dict));
 }

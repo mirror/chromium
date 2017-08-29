@@ -5,7 +5,6 @@
 #ifndef BASE_CONTAINERS_CIRCULAR_DEQUE_H_
 #define BASE_CONTAINERS_CIRCULAR_DEQUE_H_
 
-#include <algorithm>
 #include <cstddef>
 #include <iterator>
 #include <type_traits>
@@ -310,8 +309,8 @@ class circular_deque_iterator : public circular_deque_const_iterator<T> {
   using base::circular_deque_const_iterator;
 
   // Dereferencing.
-  T& operator*() const { return const_cast<T&>(base::operator*()); }
-  T* operator->() const { return const_cast<T*>(base::operator->()); }
+  T& operator*() { return const_cast<T&>(base::operator*()); }
+  T* operator->() { return const_cast<T*>(base::operator->()); }
 
   // Random access mutation.
   friend circular_deque_iterator operator+(const circular_deque_iterator& iter,

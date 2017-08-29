@@ -345,7 +345,7 @@ void Resource::CheckResourceIntegrity() {
   // Edge case: If a resource actually has zero bytes then it will not
   // typically have a resource buffer, but we still need to check integrity
   // because people might want to assert a zero-length resource.
-  CHECK(DecodedSize() == 0 || Data());
+  CHECK(EncodedSize() + DecodedSize() == 0 || Data());
   if (Data()) {
     data = Data()->Data();
     data_length = Data()->size();
@@ -360,8 +360,9 @@ void Resource::CheckResourceIntegrity() {
   DCHECK_NE(IntegrityDisposition(), ResourceIntegrityDisposition::kNotChecked);
 }
 
-void Resource::NotifyFinished() {
-  DCHECK(IsLoaded());
+void Resource::CheckNotify() {
+  if (IsLoading())
+    return;
 
   TriggerNotificationForFinishObservers();
 
@@ -444,7 +445,7 @@ void Resource::FinishAsError(const ResourceError& error) {
   ClearData();
   loader_ = nullptr;
   CheckResourceIntegrity();
-  NotifyFinished();
+  CheckNotify();
 }
 
 void Resource::Finish(double load_finish_time) {
@@ -454,7 +455,7 @@ void Resource::Finish(double load_finish_time) {
     status_ = ResourceStatus::kCached;
   loader_ = nullptr;
   CheckResourceIntegrity();
-  NotifyFinished();
+  CheckNotify();
 }
 
 AtomicString Resource::HttpContentType() const {
@@ -1079,7 +1080,7 @@ void Resource::MarkAsPreload() {
   is_unused_preload_ = true;
 }
 
-bool Resource::MatchPreload(const FetchParameters& params) {
+void Resource::MatchPreload() {
   DCHECK(is_unused_preload_);
   is_unused_preload_ = false;
 
@@ -1090,7 +1091,6 @@ bool Resource::MatchPreload(const FetchParameters& params) {
                         ("PreloadScanner.ReferenceTime", 0, 10000, 50));
     preload_discovery_histogram.Count(time_since_discovery);
   }
-  return true;
 }
 
 bool Resource::CanReuseRedirectChain() const {

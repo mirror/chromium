@@ -7,7 +7,6 @@
 
 #include "base/callback.h"
 #include "base/memory/ref_counted.h"
-#include "content/common/content_export.h"
 #include "content/common/possibly_associated_interface_ptr.h"
 #include "content/public/common/url_loader_factory.mojom.h"
 
@@ -16,7 +15,7 @@ namespace content {
 // ChildProcess version's URLLoaderFactoryGetter, i.e. a getter that holds
 // on to URLLoaderFactory's for a given loading context (e.g. a frame)
 // and allows code to access them.
-class CONTENT_EXPORT ChildURLLoaderFactoryGetter
+class ChildURLLoaderFactoryGetter
     : public base::RefCounted<ChildURLLoaderFactoryGetter> {
  public:
   using PossiblyAssociatedURLLoaderFactory =
@@ -24,33 +23,9 @@ class CONTENT_EXPORT ChildURLLoaderFactoryGetter
   using URLLoaderFactoryGetterCallback =
       base::OnceCallback<mojom::URLLoaderFactoryPtr()>;
 
-  // Info class stores necessary information to create a clone of
-  // ChildURLLoaderFactoryGetter in worker thread.
-  class Info {
-   public:
-    Info(mojom::URLLoaderFactoryPtrInfo network_loader_factory_info,
-         mojom::URLLoaderFactoryPtrInfo blob_loader_factory_info);
-    Info(Info&& other);
-    ~Info();
-
-    scoped_refptr<ChildURLLoaderFactoryGetter> Bind();
-
-   private:
-    mojom::URLLoaderFactoryPtrInfo network_loader_factory_info_;
-    mojom::URLLoaderFactoryPtrInfo blob_loader_factory_info_;
-  };
-
-  ChildURLLoaderFactoryGetter();
-
   ChildURLLoaderFactoryGetter(
       PossiblyAssociatedURLLoaderFactory network_loader_factory,
       URLLoaderFactoryGetterCallback blob_loader_factory_getter);
-
-  ChildURLLoaderFactoryGetter(
-      PossiblyAssociatedURLLoaderFactory network_loader_factory,
-      PossiblyAssociatedURLLoaderFactory blob_loader_factory_getter);
-
-  Info GetClonedInfo();
 
   mojom::URLLoaderFactory* GetNetworkLoaderFactory();
   mojom::URLLoaderFactory* GetBlobLoaderFactory();
@@ -62,8 +37,7 @@ class CONTENT_EXPORT ChildURLLoaderFactoryGetter
   PossiblyAssociatedURLLoaderFactory network_loader_factory_;
 
   // Either factory_getter or factory is non-null (to support
-  // lazy instantiation), or both could be null (if the default
-  // ctor is used).
+  // lazy instantiation).
   URLLoaderFactoryGetterCallback blob_loader_factory_getter_;
   PossiblyAssociatedURLLoaderFactory blob_loader_factory_;
 };

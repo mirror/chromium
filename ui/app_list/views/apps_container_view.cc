@@ -158,59 +158,36 @@ void AppsContainerView::OnWillBeShown() {
   app_list_folder_view()->items_grid_view()->ClearAnySelectedView();
 }
 
-gfx::Rect AppsContainerView::GetSearchBoxBounds() const {
-  return GetSearchBoxBoundsForState(contents_view()->GetActiveState());
-}
-
-gfx::Rect AppsContainerView::GetSearchBoxBoundsForState(
-    AppListModel::State state) const {
-  if (!is_fullscreen_app_list_enabled_)
-    return AppListPage::GetSearchBoxBounds();
-
-  gfx::Rect search_box_bounds(contents_view()->GetDefaultSearchBoxBounds());
-  bool is_in_drag = false;
-  if (contents_view()->app_list_view())
-    is_in_drag = contents_view()->app_list_view()->is_in_drag();
-  if (is_in_drag) {
-    search_box_bounds.set_y(GetSearchBoxTopPaddingDuringDragging());
-  } else {
-    if (state == AppListModel::STATE_START)
-      search_box_bounds.set_y(kSearchBoxPeekingTopPadding);
-    else
-      search_box_bounds.set_y(GetSearchBoxFinalTopPadding());
-  }
-
-  return search_box_bounds;
-}
-
 gfx::Rect AppsContainerView::GetPageBoundsForState(
     AppListModel::State state) const {
   gfx::Rect onscreen_bounds = GetDefaultContentsBounds();
-
-  if (!is_fullscreen_app_list_enabled_) {
-    if (state == AppListModel::STATE_APPS)
-      return onscreen_bounds;
-    return GetBelowContentsOffscreenBounds(onscreen_bounds.size());
-  }
-
-  // Both STATE_START and STATE_APPS are AppsContainerView page.
-  if (state == AppListModel::STATE_APPS || state == AppListModel::STATE_START) {
-    int y = GetSearchBoxBoundsForState(state).bottom();
-    if (state == AppListModel::STATE_START)
-      y -= (kSearchBoxFullscreenBottomPadding - kSearchBoxPeekingBottomPadding);
-    onscreen_bounds.set_y(y);
+  if (state == AppListModel::STATE_APPS) {
+    if (is_fullscreen_app_list_enabled_)
+      onscreen_bounds.set_y(GetSearchBoxBounds().bottom());
     return onscreen_bounds;
   }
 
   return GetBelowContentsOffscreenBounds(onscreen_bounds.size());
 }
 
+gfx::Rect AppsContainerView::GetSearchBoxBounds() const {
+  if (!is_fullscreen_app_list_enabled_)
+    return AppListPage::GetSearchBoxBounds();
+
+  gfx::Rect search_box_bounds(contents_view()->GetDefaultSearchBoxBounds());
+  if (contents_view()->app_list_view()->is_in_drag())
+    search_box_bounds.set_y(GetSearchBoxTopPaddingDuringDragging());
+  else
+    search_box_bounds.set_y(GetSearchBoxFinalTopPadding());
+
+  return search_box_bounds;
+}
+
 gfx::Rect AppsContainerView::GetPageBoundsDuringDragging(
     AppListModel::State state) const {
   float app_list_y_position_in_screen =
       contents_view()->app_list_view()->app_list_y_position_in_screen();
-  float work_area_bottom =
-      contents_view()->app_list_view()->GetWorkAreaBottom();
+  float work_area_bottom = contents_view()->app_list_view()->work_area_bottom();
   float drag_amount =
       std::max(0.f, work_area_bottom - app_list_y_position_in_screen);
 
@@ -243,17 +220,10 @@ gfx::Rect AppsContainerView::GetPageBoundsDuringDragging(
   }
 
   gfx::Rect onscreen_bounds = GetPageBoundsForState(state);
-  // Both STATE_START and STATE_APPS are AppsContainerView page.
-  if (state == AppListModel::STATE_APPS || state == AppListModel::STATE_START)
+  if (state == AppListModel::STATE_APPS)
     onscreen_bounds.set_y(y);
 
   return onscreen_bounds;
-}
-
-views::View* AppsContainerView::GetSelectedView() const {
-  return IsInFolderView()
-             ? app_list_folder_view_->items_grid_view()->GetSelectedView()
-             : apps_grid_view_->GetSelectedView();
 }
 
 void AppsContainerView::OnTopIconAnimationsComplete() {
@@ -375,7 +345,7 @@ int AppsContainerView::GetSearchBoxTopPaddingDuringDragging() const {
   float peeking_to_fullscreen_height =
       contents_view()->GetDisplayHeight() - kPeekingAppListHeight;
   float drag_amount = std::max(
-      0, contents_view()->app_list_view()->GetWorkAreaBottom() -
+      0, contents_view()->app_list_view()->work_area_bottom() -
              contents_view()->app_list_view()->app_list_y_position_in_screen());
 
   if (drag_amount <= (kPeekingAppListHeight - kShelfSize)) {
@@ -396,8 +366,7 @@ int AppsContainerView::GetSearchBoxTopPaddingDuringDragging() const {
              std::ceil((searchbox_final_y - kSearchBoxPeekingTopPadding) *
                        (drag_amount - (kPeekingAppListHeight - kShelfSize)) /
                        peeking_to_fullscreen_height));
-    y = std::max(kSearchBoxPeekingTopPadding,
-                 std::min<int>(searchbox_final_y, y));
+    y = std::max(kSearchBoxPeekingTopPadding, y);
     return y;
   }
 }

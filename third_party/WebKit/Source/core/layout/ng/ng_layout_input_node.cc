@@ -6,10 +6,13 @@
 
 #include "core/layout/LayoutReplaced.h"
 #include "core/layout/MinMaxSize.h"
-#include "core/layout/ng/geometry/ng_logical_size.h"
 #include "core/layout/ng/inline/ng_inline_node.h"
+#include "core/layout/ng/layout_ng_block_flow.h"
 #include "core/layout/ng/ng_block_node.h"
+#include "core/layout/ng/ng_constraint_space.h"
 #include "core/layout/ng/ng_layout_result.h"
+#include "core/layout/ng/ng_length_utils.h"
+#include "core/layout/ng/ng_unpositioned_float.h"
 #include "platform/wtf/text/StringBuilder.h"
 
 namespace blink {
@@ -83,10 +86,10 @@ bool NGLayoutInputNode::IsQuirkyContainer() const {
 }
 
 bool NGLayoutInputNode::CreatesNewFormattingContext() const {
-  return IsBlock() && box_->AvoidsFloats();
+  return box_->AvoidsFloats();
 }
 
-RefPtr<NGLayoutResult> NGLayoutInputNode::Layout(const NGConstraintSpace& space,
+RefPtr<NGLayoutResult> NGLayoutInputNode::Layout(NGConstraintSpace* space,
                                                  NGBreakToken* break_token) {
   return IsInline() ? ToNGInlineNode(*this).Layout(space, break_token)
                     : ToNGBlockNode(*this).Layout(space, break_token);

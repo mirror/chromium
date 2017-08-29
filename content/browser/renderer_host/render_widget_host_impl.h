@@ -28,6 +28,7 @@
 #include "components/viz/common/quads/shared_bitmap.h"
 #include "components/viz/common/surfaces/frame_sink_id.h"
 #include "components/viz/service/display_embedder/shared_bitmap_allocation_notifier_impl.h"
+#include "content/browser/child_process_importance.h"
 #include "content/browser/renderer_host/event_with_latency_info.h"
 #include "content/browser/renderer_host/input/input_disposition_handler.h"
 #include "content/browser/renderer_host/input/input_router_impl.h"
@@ -41,6 +42,7 @@
 #include "content/common/drag_event_source_info.h"
 #include "content/common/input/input_event_ack_state.h"
 #include "content/common/input/input_handler.mojom.h"
+#include "content/common/input/synthetic_gesture_packet.h"
 #include "content/common/render_widget_surface_properties.h"
 #include "content/common/view_message_enums.h"
 #include "content/common/widget.mojom.h"
@@ -56,10 +58,6 @@
 #include "ui/base/ui_base_types.h"
 #include "ui/gfx/native_widget_types.h"
 #include "ui/latency/latency_info.h"
-
-#if defined(OS_ANDROID)
-#include "content/public/browser/android/child_process_importance.h"
-#endif
 
 #if defined(OS_MACOSX)
 #include "services/device/public/interfaces/wake_lock.mojom.h"
@@ -276,12 +274,10 @@ class CONTENT_EXPORT RenderWidgetHostImpl
   void WasHidden();
   void WasShown(const ui::LatencyInfo& latency_info);
 
-#if defined(OS_ANDROID)
   // Set the importance of widget. The importance is passed onto
   // RenderProcessHost which aggregates importance of all of its widgets.
   void SetImportance(ChildProcessImportance importance);
   ChildProcessImportance importance() const { return importance_; }
-#endif
 
   // Returns true if the RenderWidget is hidden.
   bool is_hidden() const { return is_hidden_; }
@@ -403,7 +399,7 @@ class CONTENT_EXPORT RenderWidgetHostImpl
   // callback when the gesture is finished running.
   void QueueSyntheticGesture(
       std::unique_ptr<SyntheticGesture> synthetic_gesture,
-      base::OnceCallback<void(SyntheticGesture::Result)> on_complete);
+      const base::Callback<void(SyntheticGesture::Result)>& on_complete);
 
   void CancelUpdateTextDirection();
 
@@ -511,8 +507,6 @@ class CONTENT_EXPORT RenderWidgetHostImpl
   static void DisableResizeAckCheckForTesting();
 
   InputRouter* input_router() { return input_router_.get(); }
-
-  void SetForceEnableZoom(bool);
 
   // Get the BrowserAccessibilityManager for the root of the frame tree,
   BrowserAccessibilityManager* GetRootBrowserAccessibilityManager();
@@ -670,6 +664,7 @@ class CONTENT_EXPORT RenderWidgetHostImpl
   void OnSetTooltipText(const base::string16& tooltip_text,
                         blink::WebTextDirection text_direction_hint);
   void OnUpdateRect(const ViewHostMsg_UpdateRect_Params& params);
+  void OnQueueSyntheticGesture(const SyntheticGesturePacket& gesture_packet);
   void OnSetCursor(const WebCursor& cursor);
   void OnAutoscrollStart(const gfx::PointF& position);
   void OnAutoscrollFling(const gfx::Vector2dF& velocity);
@@ -739,6 +734,8 @@ class CONTENT_EXPORT RenderWidgetHostImpl
   void OnGestureEventAck(const GestureEventWithLatencyInfo& event,
                          InputEventAckState ack_result) override;
   void OnUnexpectedEventAck(UnexpectedEventAckType type) override;
+
+  void OnSyntheticGestureCompleted(SyntheticGesture::Result result);
 
   // Called when there is a new auto resize (using a post to avoid a stack
   // which may get in recursive loops).
@@ -814,11 +811,9 @@ class CONTENT_EXPORT RenderWidgetHostImpl
   // most recent call to process_->WidgetRestored() / WidgetHidden().
   bool is_hidden_;
 
-#if defined(OS_ANDROID)
   // Tracks the current importance of widget, so the old value can be passed to
   // RenderProcessHost on changes.
   ChildProcessImportance importance_ = ChildProcessImportance::NORMAL;
-#endif
 
   // Set if we are waiting for a repaint ack for the view.
   bool repaint_ack_pending_;

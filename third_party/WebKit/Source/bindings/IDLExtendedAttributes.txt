@@ -63,7 +63,6 @@ ImmutablePrototype
 ImplementedAs=*
 LegacyInterfaceTypeChecking
 LegacyTreatAsPartialInterface
-LegacyUnenumerableNamedProperties
 LenientThis
 LogActivity=|GetterOnly|SetterOnly
 LogAllWorlds

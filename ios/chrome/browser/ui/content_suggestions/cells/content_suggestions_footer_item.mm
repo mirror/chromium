@@ -32,7 +32,6 @@ const CGFloat kButtonPadding = 16;
 @synthesize title = _title;
 @synthesize callback = _callback;
 @synthesize loading = _loading;
-@synthesize configuredCell = _configuredCell;
 
 - (instancetype)initWithType:(NSInteger)type
                        title:(NSString*)title
@@ -53,7 +52,6 @@ const CGFloat kButtonPadding = 16;
   [cell setLoading:self.loading];
   [cell.button setTitle:self.title forState:UIControlStateNormal];
   cell.delegate = self;
-  self.configuredCell = cell;
 }
 
 #pragma mark ContentSuggestionsFooterCellDelegate
@@ -118,7 +116,6 @@ const CGFloat kButtonPadding = 16;
 - (void)prepareForReuse {
   [super prepareForReuse];
   [self.activityIndicator stopAnimating];
-  self.delegate = nil;
 }
 
 #pragma mark Private

@@ -275,20 +275,10 @@ SurfaceManager::SurfaceIdSet SurfaceManager::GetLiveSurfacesForReferences() {
   std::queue<SurfaceId> surface_queue;
   surface_queue.push(root_surface_id_);
 
-  // All surfaces not marked for destruction are reachable.
-  for (auto& map_entry : surface_map_) {
-    if (!IsMarkedForDestruction(map_entry.first)) {
-      reachable_surfaces.insert(map_entry.first);
-      surface_queue.push(map_entry.first);
-    }
-  }
-
-  // All surfaces with temporary references are also reachable.
+  // All temporary references are also reachable.
   for (auto& map_entry : temporary_references_) {
-    const SurfaceId& surface_id = map_entry.first;
-    if (reachable_surfaces.insert(surface_id).second) {
-      surface_queue.push(surface_id);
-    }
+    reachable_surfaces.insert(map_entry.first);
+    surface_queue.push(map_entry.first);
   }
 
   while (!surface_queue.empty()) {
@@ -561,13 +551,15 @@ void SurfaceManager::SurfaceReferencesToStringImpl(const SurfaceId& surface_id,
     if (surface->HasPendingFrame()) {
       // This provides the surface size from the root render pass.
       const cc::CompositorFrame& frame = surface->GetPendingFrame();
-      *str << " pending " << frame.size_in_pixels().ToString();
+      *str << " pending "
+           << frame.render_pass_list.back()->output_rect.size().ToString();
     }
 
     if (surface->HasActiveFrame()) {
       // This provides the surface size from the root render pass.
       const cc::CompositorFrame& frame = surface->GetActiveFrame();
-      *str << " active " << frame.size_in_pixels().ToString();
+      *str << " active "
+           << frame.render_pass_list.back()->output_rect.size().ToString();
     }
   } else {
     *str << surface_id;

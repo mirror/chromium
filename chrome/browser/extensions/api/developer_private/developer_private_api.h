@@ -509,7 +509,7 @@ class DeveloperPrivateLoadDirectoryFunction
       const base::FilePath& project_path,
       const base::FilePath& destination_path,
       base::File::Error result,
-      storage::FileSystemOperation::FileEntryList file_list,
+      const storage::FileSystemOperation::FileEntryList& file_list,
       bool has_more);
 
   void SnapshotFileCallback(
@@ -517,7 +517,7 @@ class DeveloperPrivateLoadDirectoryFunction
       base::File::Error result,
       const base::File::Info& file_info,
       const base::FilePath& platform_path,
-      scoped_refptr<storage::ShareableFileReference> file_ref);
+      const scoped_refptr<storage::ShareableFileReference>& file_ref);
 
   void CopyFile(const base::FilePath& src_path,
                 const base::FilePath& dest_path);

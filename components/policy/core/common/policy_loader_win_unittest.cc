@@ -779,8 +779,8 @@ class PolicyLoaderWinTest : public PolicyTestBase,
   }
 
   bool Matches(const PolicyBundle& expected) {
-    PolicyLoaderWin loader(scoped_task_environment_.GetMainThreadTaskRunner(),
-                           kTestPolicyKey, gpo_list_provider_);
+    PolicyLoaderWin loader(loop_.task_runner(), kTestPolicyKey,
+                           gpo_list_provider_);
     std::unique_ptr<PolicyBundle> loaded(
         loader.InitialLoad(schema_registry_.schema_map()));
     return loaded->Equals(expected);
@@ -938,14 +938,14 @@ TEST_F(PolicyLoaderWinTest, LoadStringEncodedValues) {
   policy.SetInteger("int", -123);
   policy.SetDouble("double", 456.78e9);
   base::ListValue list;
-  list.Append(base::MakeUnique<base::Value>(policy.Clone()));
-  list.Append(base::MakeUnique<base::Value>(policy.Clone()));
-  policy.SetKey("list", list.Clone());
+  list.Append(base::MakeUnique<base::Value>(policy));
+  list.Append(base::MakeUnique<base::Value>(policy));
+  policy.Set("list", base::MakeUnique<base::Value>(list));
   // Encode |policy| before adding the "dict" entry.
   std::string encoded_dict;
   base::JSONWriter::Write(policy, &encoded_dict);
   ASSERT_FALSE(encoded_dict.empty());
-  policy.SetKey("dict", policy.Clone());
+  policy.Set("dict", base::MakeUnique<base::Value>(policy));
   std::string encoded_list;
   base::JSONWriter::Write(list, &encoded_list);
   ASSERT_FALSE(encoded_list.empty());
@@ -1032,7 +1032,7 @@ TEST_F(PolicyLoaderWinTest, DefaultPropertySchemaType) {
   policy.SetString("double2", "123.456e7");
   policy.SetString("invalid", "omg");
   base::DictionaryValue all_policies;
-  all_policies.SetKey("policy", policy.Clone());
+  all_policies.Set("policy", base::MakeUnique<base::Value>(policy));
 
   const base::string16 kPathSuffix =
       kTestPolicyKey + base::ASCIIToUTF16("\\3rdparty\\extensions\\test");
@@ -1045,7 +1045,8 @@ TEST_F(PolicyLoaderWinTest, DefaultPropertySchemaType) {
   expected_policy.SetDouble("double1", 789.0);
   expected_policy.SetDouble("double2", 123.456e7);
   base::DictionaryValue expected_policies;
-  expected_policies.SetKey("policy", expected_policy.Clone());
+  expected_policies.Set("policy",
+                        base::MakeUnique<base::Value>(expected_policy));
   PolicyBundle expected;
   expected.Get(ns).LoadFrom(&expected_policies, POLICY_LEVEL_MANDATORY,
                             POLICY_SCOPE_USER, POLICY_SOURCE_PLATFORM);

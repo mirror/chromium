@@ -19,23 +19,16 @@
 #include "chrome/browser/ui/cocoa/test/cocoa_test_helper.h"
 #include "chrome/browser/ui/passwords/manage_passwords_bubble_model.h"
 #include "chrome/browser/ui/passwords/manage_passwords_ui_controller_mock.h"
-#include "chrome/common/chrome_features.h"
 #include "components/password_manager/core/common/password_manager_features.h"
 #include "components/password_manager/core/common/password_manager_pref_names.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "testing/gtest_mac.h"
-#import "ui/base/cocoa/touch_bar_forward_declarations.h"
 #import "ui/events/test/cocoa_test_event_utils.h"
 // Gmock matcher
 using testing::_;
 
 namespace {
-
-// Touch bar item identifiers.
-NSString* const kEditTouchBarId = @"EDIT";
-NSString* const kNeverTouchBarId = @"NEVER";
-NSString* const kSaveTouchBarId = @"SAVE";
 
 class SavePendingPasswordViewControllerTest
     : public ManagePasswordsControllerTest {
@@ -147,9 +140,6 @@ TEST_F(SavePendingPasswordViewControllerTest,
   feature_list.InitAndEnableFeature(
       password_manager::features::kEnableUsernameCorrection);
   SetUpSavePendingState(false);
-  // We need a window to be able to focus on username field and have an editor.
-  [[test_window() contentView] addSubview:[controller() view]];
-
   [controller().editButton performClick:nil];
   PendingPasswordItemView* row =
       [[controller().passwordItemContainer subviews] objectAtIndex:0];
@@ -157,6 +147,8 @@ TEST_F(SavePendingPasswordViewControllerTest,
   // User modifies the username and presses escape. We expect old username
   // restored in the label.
   [[row usernameField] setStringValue:@"tempusername"];
+  [[test_window() contentView] addSubview:[row usernameField]];
+  [test_window() makePretendKeyWindowAndSetFirstResponder:[row usernameField]];
   [[[row usernameField] currentEditor]
       keyDown:cocoa_test_event_utils::KeyEventWithKeyCode(kVK_Escape, '\e',
                                                           NSKeyDown, 0)];
@@ -171,34 +163,6 @@ TEST_F(SavePendingPasswordViewControllerTest,
   EXPECT_NSNE(@"tempusername",
               base::SysUTF16ToNSString(
                   [delegate() model]->pending_password().username_value));
-}
-
-TEST_F(SavePendingPasswordViewControllerTest,
-       ShouldSaveEditedUsernameAndDismissWhenSaveClicked) {
-  profile()->GetPrefs()->SetBoolean(
-      password_manager::prefs::kWasSignInPasswordPromoClicked, true);
-  base::test::ScopedFeatureList feature_list;
-  feature_list.InitAndEnableFeature(
-      password_manager::features::kEnableUsernameCorrection);
-  SetUpSavePendingState(false);
-
-  // We need a window to be able to focus on username field and have an editor.
-  [[test_window() contentView] addSubview:[controller() view]];
-
-  // User enters edit mode, edits the username, clicks save without exiting the
-  // edit mode.
-  [controller().editButton performClick:nil];
-  PendingPasswordItemView* row =
-      [[controller().passwordItemContainer subviews] objectAtIndex:0];
-  [[[row usernameField] currentEditor] insertText:@"editedusername"];
-  EXPECT_NSEQ(@"editedusername", [[row usernameField] stringValue]);
-
-  EXPECT_CALL(*ui_controller(),
-              SavePassword(base::SysNSStringToUTF16(@"editedusername")));
-  EXPECT_CALL(*ui_controller(), NeverSavePassword()).Times(0);
-  [controller().saveButton performClick:nil];
-
-  EXPECT_TRUE([delegate() dismissed]);
 }
 
 TEST_F(SavePendingPasswordViewControllerTest,
@@ -244,25 +208,6 @@ TEST_F(SavePendingPasswordViewControllerTest, CloseBubbleAndHandleClick) {
   [delegate() setModel:nil];
   [controller().neverButton performClick:nil];
   [controller().saveButton performClick:nil];
-}
-
-// Verifies the touch bar items.
-TEST_F(SavePendingPasswordViewControllerTest, TouchBar) {
-  SetUpSavePendingState(false);
-  if (@available(macOS 10.12.2, *)) {
-    base::test::ScopedFeatureList feature_list;
-    feature_list.InitAndEnableFeature(features::kDialogTouchBar);
-
-    NSTouchBar* touch_bar = [controller() makeTouchBar];
-    NSArray* touch_bar_items = [touch_bar itemIdentifiers];
-    EXPECT_EQ(3u, [touch_bar_items count]);
-    EXPECT_TRUE([touch_bar_items
-        containsObject:[controller() touchBarIdForItem:kEditTouchBarId]]);
-    EXPECT_TRUE([touch_bar_items
-        containsObject:[controller() touchBarIdForItem:kNeverTouchBarId]]);
-    EXPECT_TRUE([touch_bar_items
-        containsObject:[controller() touchBarIdForItem:kSaveTouchBarId]]);
-  }
 }
 
 }  // namespace

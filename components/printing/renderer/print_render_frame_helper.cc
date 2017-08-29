@@ -804,6 +804,7 @@ void PrepareFrameAndViewForPrint::ResizeForPrinting() {
       prev_scroll_offset_ = web_frame->ToWebLocalFrame()->GetScrollOffset();
   }
   prev_view_size_ = web_view->Size();
+
   web_view->Resize(print_layout_size);
 }
 
@@ -1299,8 +1300,8 @@ bool PrintRenderFrameHelper::CreatePreviewDocument() {
   const PrintMsg_Print_Params& print_params = print_pages_params_->params;
   const std::vector<int>& pages = print_pages_params_->pages;
 
-  if (!print_preview_context_.CreatePreviewDocument(
-          std::move(prep_frame_view_), pages, print_params.printed_doc_type)) {
+  if (!print_preview_context_.CreatePreviewDocument(prep_frame_view_.release(),
+                                                    pages)) {
     return false;
   }
 
@@ -1406,8 +1407,7 @@ bool PrintRenderFrameHelper::RenderPreviewPage(
   std::unique_ptr<PdfMetafileSkia> draft_metafile;
   PdfMetafileSkia* initial_render_metafile = print_preview_context_.metafile();
   if (print_preview_context_.IsModifiable() && is_print_ready_metafile_sent_) {
-    draft_metafile =
-        base::MakeUnique<PdfMetafileSkia>(print_params.printed_doc_type);
+    draft_metafile = base::MakeUnique<PdfMetafileSkia>(PDF_SKIA_DOCUMENT_TYPE);
     initial_render_metafile = draft_metafile.get();
   }
 
@@ -1425,7 +1425,7 @@ bool PrintRenderFrameHelper::RenderPreviewPage(
     DCHECK(!draft_metafile.get());
     draft_metafile =
         print_preview_context_.metafile()->GetMetafileForCurrentPage(
-            print_params.printed_doc_type);
+            PDF_SKIA_DOCUMENT_TYPE);
   }
   return PreviewPageRendered(page_number, draft_metafile.get());
 }
@@ -1438,8 +1438,9 @@ bool PrintRenderFrameHelper::FinalizePrintReadyDocument() {
   PdfMetafileSkia* metafile = print_preview_context_.metafile();
   PrintHostMsg_DidPreviewDocument_Params preview_params;
 
+  // Ask the browser to create the shared memory for us.
   if (!CopyMetafileDataToSharedMem(*metafile,
-                                   &preview_params.metafile_data_handle)) {
+                                   &(preview_params.metafile_data_handle))) {
     LOG(ERROR) << "CopyMetafileDataToSharedMem failed";
     print_preview_context_.set_error(PREVIEW_ERROR_METAFILE_COPY_FAILED);
     return false;
@@ -2139,13 +2140,13 @@ bool PrintRenderFrameHelper::PreviewPageRendered(int page_number,
   }
 
   PrintHostMsg_DidPreviewPage_Params preview_page_params;
-  if (!CopyMetafileDataToSharedMem(*metafile,
-                                   &preview_page_params.metafile_data_handle)) {
+  // Get the size of the resulting metafile.
+  if (!CopyMetafileDataToSharedMem(
+          *metafile, &(preview_page_params.metafile_data_handle))) {
     LOG(ERROR) << "CopyMetafileDataToSharedMem failed";
     print_preview_context_.set_error(PREVIEW_ERROR_METAFILE_COPY_FAILED);
     return false;
   }
-
   preview_page_params.data_size = metafile->GetDataSize();
   preview_page_params.page_number = page_number;
   preview_page_params.preview_request_id =
@@ -2194,14 +2195,13 @@ void PrintRenderFrameHelper::PrintPreviewContext::OnPrintPreview() {
 }
 
 bool PrintRenderFrameHelper::PrintPreviewContext::CreatePreviewDocument(
-    std::unique_ptr<PrepareFrameAndViewForPrint> prepared_frame,
-    const std::vector<int>& pages,
-    SkiaDocumentType doc_type) {
+    PrepareFrameAndViewForPrint* prepared_frame,
+    const std::vector<int>& pages) {
   DCHECK_EQ(INITIALIZED, state_);
   state_ = RENDERING;
 
   // Need to make sure old object gets destroyed first.
-  prep_frame_view_ = std::move(prepared_frame);
+  prep_frame_view_.reset(prepared_frame);
   prep_frame_view_->StartPrinting();
 
   total_page_count_ = prep_frame_view_->GetExpectedPageCount();
@@ -2211,7 +2211,7 @@ bool PrintRenderFrameHelper::PrintPreviewContext::CreatePreviewDocument(
     return false;
   }
 
-  metafile_ = base::MakeUnique<PdfMetafileSkia>(doc_type);
+  metafile_ = base::MakeUnique<PdfMetafileSkia>(PDF_SKIA_DOCUMENT_TYPE);
   CHECK(metafile_->Init());
 
   current_page_index_ = 0;

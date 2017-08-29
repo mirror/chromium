@@ -519,7 +519,6 @@ WebContentsImpl::WebContentsImpl(BrowserContext* browser_context)
       did_first_visually_non_empty_paint_(false),
       capturer_count_(0),
       should_normally_be_visible_(true),
-      should_normally_be_occluded_(false),
       did_first_set_visible_(false),
       is_being_destroyed_(false),
       is_notifying_observers_(false),
@@ -1359,7 +1358,7 @@ void WebContentsImpl::IncrementCapturerCount(const gfx::Size& capture_size) {
   }
 
   // Ensure that all views are un-occluded before capture begins.
-  DoWasUnOccluded();
+  WasUnOccluded();
 }
 
 void WebContentsImpl::DecrementCapturerCount() {
@@ -1375,14 +1374,11 @@ void WebContentsImpl::DecrementCapturerCount() {
     const gfx::Size old_size = preferred_size_for_capture_;
     preferred_size_for_capture_ = gfx::Size();
     OnPreferredSizeChanged(old_size);
+  }
 
-    if (IsHidden()) {
-      DVLOG(1) << "Executing delayed WasHidden().";
-      WasHidden();
-    }
-
-    if (should_normally_be_occluded_)
-      WasOccluded();
+  if (IsHidden()) {
+    DVLOG(1) << "Executing delayed WasHidden().";
+    WasHidden();
   }
 }
 
@@ -1549,7 +1545,6 @@ void WebContentsImpl::WasHidden() {
   should_normally_be_visible_ = false;
 }
 
-#if defined(OS_ANDROID)
 void WebContentsImpl::SetImportance(ChildProcessImportance importance) {
   // Not calling GetRenderWidgetHostView since importance should be set on both
   // the interstitial and underlying page.
@@ -1568,30 +1563,20 @@ void WebContentsImpl::SetImportance(ChildProcessImportance importance) {
   // TODO(boliu): If this is ever used on platforms other than Android, make
   // sure to also update inner WebContents.
 }
-#endif
 
 bool WebContentsImpl::IsVisible() const {
   return should_normally_be_visible_;
 }
 
 void WebContentsImpl::WasOccluded() {
-  if (capturer_count_ == 0) {
-    for (RenderWidgetHostView* view : GetRenderWidgetHostViewsInTree())
-      view->WasOccluded();
-  }
+  if (capturer_count_ > 0)
+    return;
 
-  should_normally_be_occluded_ = true;
+  for (RenderWidgetHostView* view : GetRenderWidgetHostViewsInTree())
+    view->WasOccluded();
 }
 
 void WebContentsImpl::WasUnOccluded() {
-  if (capturer_count_ == 0)
-    DoWasUnOccluded();
-
-  should_normally_be_occluded_ = false;
-}
-
-void WebContentsImpl::DoWasUnOccluded() {
-  // TODO(fdoray): Only call WasUnOccluded on frames in the active viewport.
   for (RenderWidgetHostView* view : GetRenderWidgetHostViewsInTree())
     view->WasUnOccluded();
 }
@@ -2049,6 +2034,9 @@ void WebContentsImpl::ReplicatePageFocus(bool is_focused) {
 
 RenderWidgetHostImpl* WebContentsImpl::GetFocusedRenderWidgetHost(
     RenderWidgetHostImpl* receiving_widget) {
+  if (!SiteIsolationPolicy::AreCrossProcessFramesPossible())
+    return receiving_widget;
+
   // Events for widgets other than the main frame (e.g., popup menus) should be
   // forwarded directly to the widget they arrived on.
   if (receiving_widget != GetMainFrame()->GetRenderWidgetHost())
@@ -2995,12 +2983,10 @@ void WebContentsImpl::AttachInterstitialPage(
     }
   }
 
-#if defined(OS_ANDROID)
   // Update importance of the interstitial.
   static_cast<RenderFrameHostImpl*>(interstitial_page_->GetMainFrame())
       ->GetRenderWidgetHost()
       ->SetImportance(GetMainFrame()->GetRenderWidgetHost()->importance());
-#endif
 }
 
 void WebContentsImpl::DidProceedOnInterstitial() {
@@ -3447,7 +3433,6 @@ void WebContentsImpl::LoadStateChanged(
 
 void WebContentsImpl::DidGetResourceResponseStart(
   const ResourceRequestDetails& details) {
-  SetNotWaitingForResponse();
   controller_.ssl_manager()->DidStartResourceResponse(
       details.url, details.has_certificate, details.ssl_cert_status);
 
@@ -4490,7 +4475,6 @@ void WebContentsImpl::NotifyViewSwapped(RenderViewHost* old_host,
 
 void WebContentsImpl::NotifyFrameSwapped(RenderFrameHost* old_host,
                                          RenderFrameHost* new_host) {
-#if defined(OS_ANDROID)
   // Try to copy importance from either |old_host| or parent of |new_host|.
   // If both are null, then this is the very first frame host created from Init.
   // There is no need to pass importance in this case because there is no chance
@@ -4502,7 +4486,6 @@ void WebContentsImpl::NotifyFrameSwapped(RenderFrameHost* old_host,
         ->GetRenderWidgetHost()
         ->SetImportance(importance_host->GetRenderWidgetHost()->importance());
   }
-#endif
   for (auto& observer : observers_)
     observer.RenderFrameHostChanged(old_host, new_host);
 }
@@ -4524,18 +4507,6 @@ void WebContentsImpl::NotifyNavigationEntryCommitted(
     const LoadCommittedDetails& load_details) {
   for (auto& observer : observers_)
     observer.NavigationEntryCommitted(load_details);
-}
-
-void WebContentsImpl::NotifyNavigationEntryChanged(
-    const EntryChangedDetails& change_details) {
-  for (auto& observer : observers_)
-    observer.NavigationEntryChanged(change_details);
-}
-
-void WebContentsImpl::NotifyNavigationListPruned(
-    const PrunedDetails& pruned_details) {
-  for (auto& observer : observers_)
-    observer.NavigationListPruned(pruned_details);
 }
 
 void WebContentsImpl::OnAssociatedInterfaceRequest(

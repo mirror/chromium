@@ -88,6 +88,7 @@ public class Clipboard implements ClipboardManager.OnPrimaryClipChangedListener 
         }
     }
 
+    // TODO(ctzsm): Remove this method after Android API is updated
     private boolean hasStyleSpan(Spanned spanned) {
         Class<?>[] styleClasses = {
                 CharacterStyle.class, ParagraphStyle.class, UpdateAppearance.class};

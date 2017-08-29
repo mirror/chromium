@@ -218,8 +218,7 @@ void BrowserAccessibilityManagerMac::NotifyAccessibilityEvent(
       break;
     case ui::AX_EVENT_DOCUMENT_SELECTION_CHANGED: {
       mac_notification = NSAccessibilitySelectedTextChangedNotification;
-      // WebKit fires a notification both on the focused object and the page
-      // root.
+      // WebKit fires a notification both on the focused object and the root.
       BrowserAccessibility* focus = GetFocus();
       if (!focus)
         break;  // Just fire a notification on the root.
@@ -232,10 +231,7 @@ void BrowserAccessibilityManagerMac::NotifyAccessibilityEvent(
         NSDictionary* user_info =
             GetUserInfoForSelectedTextChangedNotification();
 
-        BrowserAccessibilityManager* root_manager = GetRootManager();
-        if (!root_manager)
-          return;
-        BrowserAccessibility* root = root_manager->GetRoot();
+        BrowserAccessibility* root = GetRoot();
         if (!root)
           return;
 

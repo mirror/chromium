@@ -64,10 +64,6 @@ class CONTENT_EXPORT BrowserAccessibilityAndroid : public BrowserAccessibility {
   // if more than one is interesting, returns nullptr.
   const BrowserAccessibilityAndroid* GetSoleInterestingNodeFromSubtree() const;
 
-  // Returns true if the given subtree has inline text box data, or if there
-  // aren't any to load.
-  bool AreInlineTextBoxesLoaded() const;
-
   bool CanOpenPopup() const;
 
   bool HasFocusableNonOptionChild() const;
@@ -75,7 +71,6 @@ class CONTENT_EXPORT BrowserAccessibilityAndroid : public BrowserAccessibility {
 
   const char* GetClassName() const;
   base::string16 GetText() const override;
-  base::string16 GetHint() const;
 
   base::string16 GetRoleDescription() const;
 
@@ -151,7 +146,6 @@ class CONTENT_EXPORT BrowserAccessibilityAndroid : public BrowserAccessibility {
   bool HasOnlyTextChildren() const;
   bool HasOnlyTextAndImageChildren() const;
   bool IsIframe() const;
-  bool ShouldExposeValueAsName() const;
 
   void NotifyLiveRegionUpdate(base::string16& aria_live);
 

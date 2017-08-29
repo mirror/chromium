@@ -269,7 +269,7 @@ class STORAGE_EXPORT FileSystemOperationRunner
   void DidReadDirectory(const OperationHandle& handle,
                         const ReadDirectoryCallback& callback,
                         base::File::Error rv,
-                        std::vector<DirectoryEntry> entries,
+                        const std::vector<DirectoryEntry>& entries,
                         bool has_more);
   void DidWrite(const OperationHandle& handle,
                 const WriteCallback& callback,
@@ -287,7 +287,7 @@ class STORAGE_EXPORT FileSystemOperationRunner
       base::File::Error rv,
       const base::File::Info& file_info,
       const base::FilePath& platform_path,
-      scoped_refptr<storage::ShareableFileReference> file_ref);
+      const scoped_refptr<storage::ShareableFileReference>& file_ref);
 
   void OnCopyProgress(const OperationHandle& handle,
                       const CopyProgressCallback& callback,

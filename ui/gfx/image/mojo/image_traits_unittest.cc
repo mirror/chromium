@@ -131,17 +131,15 @@ TEST_F(ImageTraitsTest, NullImageSkia) {
   EXPECT_TRUE(output.isNull());
 }
 
-TEST_F(ImageTraitsTest, ImageSkiaRepsAreCreatedAsNeeded) {
+TEST_F(ImageTraitsTest, ImageSkiaWithNoRepsTreatedAsNull) {
   const gfx::Size kSize(1, 2);
   ImageSkia image(base::MakeUnique<TestImageSkiaSource>(kSize), kSize);
-  EXPECT_FALSE(image.isNull());
-  EXPECT_TRUE(image.image_reps().empty());
+  ASSERT_FALSE(image.isNull());
 
-  ImageSkia output;
-  EXPECT_TRUE(output.isNull());
+  ImageSkia output(ImageSkiaRep(gfx::Size(1, 1), 1.0f));
+  ASSERT_FALSE(output.isNull());
   service()->EchoImageSkia(image, &output);
-  EXPECT_FALSE(image.image_reps().empty());
-  EXPECT_FALSE(output.isNull());
+  EXPECT_TRUE(output.isNull());
 }
 
 TEST_F(ImageTraitsTest, ImageSkia) {

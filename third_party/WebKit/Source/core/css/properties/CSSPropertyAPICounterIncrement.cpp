@@ -6,6 +6,7 @@
 
 #include "core/css/properties/CSSPropertyCounterUtils.h"
 
+class CSSParserLocalContext;
 namespace blink {
 
 const CSSValue* CSSPropertyAPICounterIncrement::ParseSingleValue(

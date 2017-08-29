@@ -11,7 +11,6 @@
 #include <vector>
 #include "base/debug/proc_maps_linux.h"
 #include "base/memory/shared_memory.h"
-#include "build/build_config.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 namespace base {
@@ -23,6 +22,7 @@ const uint8_t kReadPrivate = base::debug::MappedMemoryRegion::READ |
                              base::debug::MappedMemoryRegion::PRIVATE;
 const uint8_t kExecutePrivate = base::debug::MappedMemoryRegion::EXECUTE |
                                 base::debug::MappedMemoryRegion::PRIVATE;
+const size_t kPageSize = 4096;
 }  // namespace
 
 TEST(NativeLibraryPrefetcherTest, TestIsGoodToPrefetchNoRange) {
@@ -96,12 +96,6 @@ TEST(NativeLibraryPrefetcherTest,
   EXPECT_EQ(ranges[0].second, 0x7U);
 }
 
-// Fails with ASAN, crbug.com/570423.
-#if !defined(ADDRESS_SANITIZER)
-namespace {
-const size_t kPageSize = 4096;
-}  // namespace
-
 TEST(NativeLibraryPrefetcherTest, DISABLED_TestPercentageOfResidentCode) {
   size_t length = 4 * kPageSize;
   base::SharedMemory shared_mem;
@@ -156,7 +150,6 @@ TEST(NativeLibraryPrefetcherTest,
   munlock(address, length);
   munlock(address2, length);
 }
-#endif  // !defined(ADDRESS_SANITIZER)
 
 }  // namespace android
 }  // namespace base

@@ -3,22 +3,25 @@
 <script src="../http/tests/inspector/inspector-test.js"></script>
 <script>
 
-function test() {
-  console.error = function() {
-    TestRunner.addResult(String.sprintf.apply(this, arguments));
-  };
+function test()
+{
 
-  TestRunner.NetworkAgent.setUserAgentOverride(1);
-  TestRunner.NetworkAgent.setUserAgentOverride();
-  TestRunner.NetworkAgent.setUserAgentOverride('123', 'not a function');
-  TestRunner.NetworkAgent.setUserAgentOverride('123', undefined);
-  TestRunner.RuntimeAgent.evaluate('true', 'test');
-  TestRunner.RuntimeAgent.evaluate('true', 'test', function() {});
-  TestRunner.RuntimeAgent.evaluate('true', 'test', undefined, function() {});
-  TestRunner.mainTarget._onMessage('{"method": "wrongDomain.something-strange", "params": {}}');
-  TestRunner.mainTarget._onMessage('{"method": "Inspector.something-strange", "params": {}}');
+    console.error = function()
+    {
+        TestRunner.addResult(String.sprintf.apply(this, arguments));
+    }
 
-  TestRunner.completeTest();
+    TestRunner.NetworkAgent.setUserAgentOverride(1);
+    TestRunner.NetworkAgent.setUserAgentOverride();
+    TestRunner.NetworkAgent.setUserAgentOverride("123", "not a function");
+    TestRunner.NetworkAgent.setUserAgentOverride("123", undefined);
+    TestRunner.RuntimeAgent.evaluate("true", "test");
+    TestRunner.RuntimeAgent.evaluate("true", "test", function(){});
+    TestRunner.RuntimeAgent.evaluate("true", "test", undefined, function(){});
+    TestRunner.mainTarget._onMessage('{"method": "wrongDomain.something-strange", "params": {}}');
+    TestRunner.mainTarget._onMessage('{"method": "Inspector.something-strange", "params": {}}');
+
+    TestRunner.completeTest();
 }
 
 </script>

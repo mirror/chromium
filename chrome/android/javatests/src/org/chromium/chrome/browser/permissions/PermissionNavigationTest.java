@@ -29,7 +29,7 @@ public class PermissionNavigationTest extends PermissionTestCaseBase {
      */
     // @MediumTest
     // @Feature({"Permissions"})
-    @CommandLineFlags.Add("enable-features=" + MODAL_FLAG)
+    @CommandLineFlags.Add({NO_GESTURE_FEATURE, FORCE_FIELDTRIAL, FORCE_FIELDTRIAL_PARAMS})
     // Flaky on official bots, https://crbug.com/699851#c8
     @DisabledTest
     public void testNavigationDismissesModalPermissionPrompt() throws Exception {

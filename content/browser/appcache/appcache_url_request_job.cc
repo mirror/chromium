@@ -101,7 +101,7 @@ AppCacheURLRequestJob::AppCacheURLRequestJob(
     AppCacheStorage* storage,
     AppCacheHost* host,
     bool is_main_resource,
-    OnPrepareToRestartCallback restart_callback)
+    const OnPrepareToRestartCallback& restart_callback)
     : net::URLRequestJob(request, network_delegate),
       host_(host),
       storage_(storage),
@@ -110,7 +110,7 @@ AppCacheURLRequestJob::AppCacheURLRequestJob(
       cache_id_(kAppCacheNoCacheId),
       is_fallback_(false),
       is_main_resource_(is_main_resource),
-      on_prepare_to_restart_callback_(std::move(restart_callback)) {
+      on_prepare_to_restart_callback_(restart_callback) {
   DCHECK(storage_);
 }
 
@@ -417,7 +417,7 @@ void AppCacheURLRequestJob::SetExtraRequestHeaders(
 }
 
 void AppCacheURLRequestJob::NotifyRestartRequired() {
-  std::move(on_prepare_to_restart_callback_).Run();
+  on_prepare_to_restart_callback_.Run();
   URLRequestJob::NotifyRestartRequired();
 }
 

@@ -1,5 +1,5 @@
 This is a testharness.js-based test.
-Found 3615 tests; 3601 PASS, 14 FAIL, 0 TIMEOUT, 0 NOTRUN.
+Found 3089 tests; 3075 PASS, 14 FAIL, 0 TIMEOUT, 0 NOTRUN.
 PASS html.title: 32 tests
 PASS html.lang: 32 tests
 PASS html.dir: 62 tests
@@ -22,21 +22,21 @@ PASS script.charset: 32 tests
 PASS script.defer: 33 tests
 PASS script.crossOrigin: 52 tests
 PASS script.nonce: 17 tests
-NOTRUN test
-NOTRUN test
-NOTRUN test
-NOTRUN test
-NOTRUN test
-NOTRUN test
-NOTRUN test
-NOTRUN test
-NOTRUN test
-NOTRUN test
-NOTRUN test
-NOTRUN test
-NOTRUN test
-NOTRUN test
-NOTRUN test
+FAIL script.nonce: IDL set to "" assert_equals: getAttribute() expected "" but got "test-valueOf"
+FAIL script.nonce: IDL set to " \0\x01\x02\x03\x04\x05\x06\x07 \b\t\n\v\f\r\x0e\x0f \x10\x11\x12\x13\x14\x15\x16\x17 \x18\x19\x1a\x1b\x1c\x1d\x1e\x1f  foo " assert_equals: getAttribute() expected " \0\x01\x02\x03\x04\x05\x06\x07 \b\t\n\v\f\r\x0e\x0f \x10\x11\x12\x13\x14\x15\x16\x17 \x18\x19\x1a\x1b\x1c\x1d\x1e\x1f  foo " but got "test-valueOf"
+FAIL script.nonce: IDL set to undefined assert_equals: getAttribute() expected "undefined" but got "test-valueOf"
+FAIL script.nonce: IDL set to 7 assert_equals: getAttribute() expected "7" but got "test-valueOf"
+FAIL script.nonce: IDL set to 1.5 assert_equals: getAttribute() expected "1.5" but got "test-valueOf"
+FAIL script.nonce: IDL set to true assert_equals: getAttribute() expected "true" but got "test-valueOf"
+FAIL script.nonce: IDL set to false assert_equals: getAttribute() expected "false" but got "test-valueOf"
+FAIL script.nonce: IDL set to object "[object Object]" assert_equals: getAttribute() expected "[object Object]" but got "test-valueOf"
+FAIL script.nonce: IDL set to NaN assert_equals: getAttribute() expected "NaN" but got "test-valueOf"
+FAIL script.nonce: IDL set to Infinity assert_equals: getAttribute() expected "Infinity" but got "test-valueOf"
+FAIL script.nonce: IDL set to -Infinity assert_equals: getAttribute() expected "-Infinity" but got "test-valueOf"
+FAIL script.nonce: IDL set to "\0" assert_equals: getAttribute() expected "\0" but got "test-valueOf"
+FAIL script.nonce: IDL set to null assert_equals: getAttribute() expected "null" but got "test-valueOf"
+FAIL script.nonce: IDL set to object "test-toString" assert_equals: getAttribute() expected "test-toString" but got "test-valueOf"
+PASS script.nonce: IDL set to object "test-valueOf" 
 PASS script.integrity: 32 tests
 PASS script.event: 32 tests
 PASS script.htmlFor (<script for>): 32 tests
@@ -47,21 +47,6 @@ PASS noscript.className (<noscript class>): 32 tests
 PASS noscript.hidden: 33 tests
 PASS noscript.accessKey: 32 tests
 PASS noscript.tabIndex: 24 tests
-PASS template.title: 32 tests
-PASS template.lang: 32 tests
-PASS template.dir: 62 tests
-PASS template.className (<template class>): 32 tests
-PASS template.hidden: 33 tests
-PASS template.accessKey: 32 tests
-PASS template.tabIndex: 24 tests
-PASS slot.title: 32 tests
-PASS slot.lang: 32 tests
-PASS slot.dir: 62 tests
-PASS slot.className (<slot class>): 32 tests
-PASS slot.hidden: 33 tests
-PASS slot.accessKey: 32 tests
-PASS slot.tabIndex: 24 tests
-PASS slot.name: 32 tests
 PASS ins.title: 32 tests
 PASS ins.lang: 32 tests
 PASS ins.dir: 62 tests

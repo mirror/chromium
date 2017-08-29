@@ -40,7 +40,7 @@ const ValueStore::WriteOptions DEFAULTS = ValueStore::DEFAULTS;
 class ExtensionSettingsFrontendTest : public ExtensionsTest {
  public:
   ExtensionSettingsFrontendTest()
-      : ExtensionsTest(std::make_unique<content::TestBrowserThreadBundle>()) {}
+      : ExtensionsTest(base::MakeUnique<content::TestBrowserThreadBundle>()) {}
 
   void SetUp() override {
     ExtensionsTest::SetUp();

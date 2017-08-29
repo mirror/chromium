@@ -63,9 +63,6 @@ class ArchiveManager {
       const base::Callback<void(const StorageStats& storage_sizes)>& callback)
       const;
 
-  // Gets the archive directory.
-  const base::FilePath& GetArchivesDir() const;
-
  protected:
   ArchiveManager();
 
@@ -74,8 +71,6 @@ class ArchiveManager {
   base::FilePath archives_dir_;
   // Task runner for running file operations.
   scoped_refptr<base::SequencedTaskRunner> task_runner_;
-
-  DISALLOW_COPY_AND_ASSIGN(ArchiveManager);
 };
 
 }  // namespace offline_pages

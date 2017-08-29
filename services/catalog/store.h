@@ -15,8 +15,6 @@ class Store {
   static const char kNameKey[];
   // Value is a string.
   static const char kDisplayNameKey[];
-  // Value is a string.
-  static const char kSandboxTypeKey[];
   // Value is a dictionary.
   static const char kInterfaceProviderSpecsKey[];
   // Value is a dictionary.

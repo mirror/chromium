@@ -4,7 +4,6 @@
 
 #include "core/workers/WorkletModuleResponsesMap.h"
 
-#include "core/loader/modulescript/ModuleScriptFetcher.h"
 #include "platform/wtf/Optional.h"
 
 namespace blink {
@@ -17,82 +16,40 @@ bool IsValidURL(const KURL& url) {
 
 }  // namespace
 
-class WorkletModuleResponsesMap::Entry final
-    : public GarbageCollectedFinalized<Entry>,
-      public ModuleScriptFetcher::Client {
-  USING_GARBAGE_COLLECTED_MIXIN(WorkletModuleResponsesMap::Entry);
-
+class WorkletModuleResponsesMap::Entry
+    : public GarbageCollectedFinalized<Entry> {
  public:
-  enum class State { kInitial, kFetching, kFetched, kFailed };
-
-  Entry() = default;
-  ~Entry() = default;
-
-  void Fetch(const FetchParameters fetch_params, ResourceFetcher* fetcher) {
-    AdvanceState(State::kFetching);
-    module_fetcher_ = new ModuleScriptFetcher(fetch_params, fetcher, this);
-    module_fetcher_->Fetch();
-  }
+  enum class State { kFetching, kFetched, kFailed };
 
   State GetState() const { return state_; }
-  const ModuleScriptCreationParams& GetParams() const { return *params_; }
+  ModuleScriptCreationParams GetParams() const { return *params_; }
 
-  void AddClient(WorkletModuleResponsesMap::Client* client) {
+  void AddClient(Client* client) {
     // Clients can be added only while a module script is being fetched.
-    DCHECK(state_ == State::kInitial || state_ == State::kFetching);
+    DCHECK_EQ(State::kFetching, state_);
     clients_.push_back(client);
   }
 
-  // Implements ModuleScriptFetcher::Client.
-  //
-  // Implementation of the second half of the custom fetch defined in the
-  // "fetch a worklet script" algorithm:
-  // https://drafts.css-houdini.org/worklets/#fetch-a-worklet-script
-  void NotifyFetchFinished(
-      const WTF::Optional<ModuleScriptCreationParams>& params,
-      ConsoleMessage* error_message) override {
-    // The entry can be disposed of during the resource fetch.
-    if (state_ == State::kFailed)
-      return;
-
-    if (!params) {
-      // TODO(nhiroki): Add |error_message| to the context's message storage.
-      NotifyFailure();
-      return;
-    }
-
+  void NotifyUpdate(const ModuleScriptCreationParams& params) {
     AdvanceState(State::kFetched);
-
-    // Step 7: "Let response be the result of fetch when it asynchronously
-    // completes."
-    // Step 8: "Set the value of the entry in cache whose key is url to
-    // response, and asynchronously complete this algorithm with response."
-    params_.emplace(*params);
-    for (WorkletModuleResponsesMap::Client* client : clients_)
-      client->OnRead(*params);
+    params_.emplace(params);
+    for (Client* client : clients_)
+      client->OnRead(params);
     clients_.clear();
-    module_fetcher_.Clear();
   }
 
   void NotifyFailure() {
     AdvanceState(State::kFailed);
-    for (WorkletModuleResponsesMap::Client* client : clients_)
+    for (Client* client : clients_)
       client->OnFailed();
     clients_.clear();
-    module_fetcher_.Clear();
   }
 
-  DEFINE_INLINE_TRACE() {
-    visitor->Trace(module_fetcher_);
-    visitor->Trace(clients_);
-  }
+  DEFINE_INLINE_TRACE() { visitor->Trace(clients_); }
 
  private:
   void AdvanceState(State new_state) {
     switch (state_) {
-      case State::kInitial:
-        DCHECK_EQ(new_state, State::kFetching);
-        break;
       case State::kFetching:
         DCHECK(new_state == State::kFetched || new_state == State::kFailed);
         break;
@@ -104,16 +61,10 @@ class WorkletModuleResponsesMap::Entry final
     state_ = new_state;
   }
 
-  State state_ = State::kInitial;
-
-  Member<ModuleScriptFetcher> module_fetcher_;
-
+  State state_ = State::kFetching;
   WTF::Optional<ModuleScriptCreationParams> params_;
-  HeapVector<Member<WorkletModuleResponsesMap::Client>> clients_;
+  HeapVector<Member<Client>> clients_;
 };
-
-WorkletModuleResponsesMap::WorkletModuleResponsesMap(ResourceFetcher* fetcher)
-    : fetcher_(fetcher) {}
 
 // Implementation of the first half of the custom fetch defined in the
 // "fetch a worklet script" algorithm:
@@ -122,21 +73,18 @@ WorkletModuleResponsesMap::WorkletModuleResponsesMap(ResourceFetcher* fetcher)
 // "To perform the fetch given request, perform the following steps:"
 // Step 1: "Let cache be the moduleResponsesMap."
 // Step 2: "Let url be request's url."
-void WorkletModuleResponsesMap::ReadEntry(const FetchParameters& fetch_params,
-                                          Client* client) {
+void WorkletModuleResponsesMap::ReadOrCreateEntry(const KURL& url,
+                                                  Client* client) {
   DCHECK(IsMainThread());
-  if (!is_available_ || !IsValidURL(fetch_params.Url())) {
+  if (!is_available_ || !IsValidURL(url)) {
     client->OnFailed();
     return;
   }
 
-  auto it = entries_.find(fetch_params.Url());
+  auto it = entries_.find(url);
   if (it != entries_.end()) {
     Entry* entry = it->value;
     switch (entry->GetState()) {
-      case Entry::State::kInitial:
-        NOTREACHED();
-        return;
       case Entry::State::kFetching:
         // Step 3: "If cache contains an entry with key url whose value is
         // "fetching", wait until that entry's value changes, then proceed to
@@ -154,19 +102,37 @@ void WorkletModuleResponsesMap::ReadEntry(const FetchParameters& fetch_params,
         client->OnFailed();
         return;
     }
-    NOTREACHED();
   }
 
   // Step 5: "Create an entry in cache with key url and value "fetching"."
-  Entry* entry = new Entry;
-  entry->AddClient(client);
-  entries_.insert(fetch_params.Url(), entry);
+  entries_.insert(url, new Entry);
 
   // Step 6: "Fetch request."
   // Running the callback with an empty params will make the fetcher to fallback
   // to regular module loading and Write() will be called once the fetch is
   // complete.
-  entry->Fetch(fetch_params, fetcher_.Get());
+  client->OnFetchNeeded();
+}
+
+// Implementation of the second half of the custom fetch defined in the
+// "fetch a worklet script" algorithm:
+// https://drafts.css-houdini.org/worklets/#fetch-a-worklet-script
+void WorkletModuleResponsesMap::UpdateEntry(
+    const KURL& url,
+    const ModuleScriptCreationParams& params) {
+  DCHECK(IsMainThread());
+  DCHECK(IsValidURL(url));
+  if (!is_available_)
+    return;
+
+  DCHECK(entries_.Contains(url));
+  Entry* entry = entries_.find(url)->value;
+
+  // Step 7: "Let response be the result of fetch when it asynchronously
+  // completes."
+  // Step 8: "Set the value of the entry in cache whose key is url to response,
+  // and asynchronously complete this algorithm with response."
+  entry->NotifyUpdate(params);
 }
 
 void WorkletModuleResponsesMap::InvalidateEntry(const KURL& url) {
@@ -184,9 +150,6 @@ void WorkletModuleResponsesMap::Dispose() {
   is_available_ = false;
   for (auto it : entries_) {
     switch (it.value->GetState()) {
-      case Entry::State::kInitial:
-        NOTREACHED();
-        break;
       case Entry::State::kFetching:
         it.value->NotifyFailure();
         break;
@@ -199,7 +162,6 @@ void WorkletModuleResponsesMap::Dispose() {
 }
 
 DEFINE_TRACE(WorkletModuleResponsesMap) {
-  visitor->Trace(fetcher_);
   visitor->Trace(entries_);
 }
 

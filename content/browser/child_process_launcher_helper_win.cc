@@ -8,7 +8,6 @@
 #include "base/strings/string_number_conversions.h"
 #include "base/win/scoped_handle.h"
 #include "base/win/win_util.h"
-#include "content/browser/child_process_launcher.h"
 #include "content/browser/child_process_launcher_helper.h"
 #include "content/common/sandbox_win.h"
 #include "content/public/common/result_codes.h"
@@ -110,10 +109,12 @@ void ChildProcessLauncherHelper::ForceNormalProcessTerminationSync(
 
 void ChildProcessLauncherHelper::SetProcessPriorityOnLauncherThread(
     base::Process process,
-    const ChildProcessLauncherPriority& priority) {
+    bool background,
+    bool boost_for_pending_views,
+    ChildProcessImportance importance) {
   DCHECK_CURRENTLY_ON(BrowserThread::PROCESS_LAUNCHER);
   if (process.CanBackgroundProcesses())
-    process.SetProcessBackgrounded(priority.background);
+    process.SetProcessBackgrounded(background);
 }
 
 // static

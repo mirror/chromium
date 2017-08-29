@@ -31,11 +31,11 @@
 #include "cc/test/fake_raster_source.h"
 #include "cc/test/fake_resource_provider.h"
 #include "cc/test/test_context_provider.h"
+#include "cc/test/test_gpu_memory_buffer_manager.h"
 #include "cc/test/test_shared_bitmap_manager.h"
 #include "cc/test/test_web_graphics_context_3d.h"
 #include "cc/tiles/tile_task_manager.h"
 #include "components/viz/common/resources/platform_color.h"
-#include "components/viz/test/test_gpu_memory_buffer_manager.h"
 #include "gpu/GLES2/gl2extchromium.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "ui/gfx/geometry/axis_transform2d.h"
@@ -163,7 +163,7 @@ class RasterBufferProviderTest
         break;
       case RASTER_BUFFER_PROVIDER_TYPE_ONE_COPY:
         Create3dResourceProvider();
-        raster_buffer_provider_ = std::make_unique<OneCopyRasterBufferProvider>(
+        raster_buffer_provider_ = base::MakeUnique<OneCopyRasterBufferProvider>(
             base::ThreadTaskRunnerHandle::Get().get(), context_provider_.get(),
             worker_context_provider_.get(), resource_provider_.get(),
             kMaxBytesPerCopyOperation, false, kMaxStagingBuffers,
@@ -171,7 +171,7 @@ class RasterBufferProviderTest
         break;
       case RASTER_BUFFER_PROVIDER_TYPE_ASYNC_ONE_COPY:
         Create3dResourceProvider();
-        raster_buffer_provider_ = std::make_unique<OneCopyRasterBufferProvider>(
+        raster_buffer_provider_ = base::MakeUnique<OneCopyRasterBufferProvider>(
             base::ThreadTaskRunnerHandle::Get().get(), context_provider_.get(),
             worker_context_provider_.get(), resource_provider_.get(),
             kMaxBytesPerCopyOperation, false, kMaxStagingBuffers,
@@ -179,17 +179,17 @@ class RasterBufferProviderTest
         break;
       case RASTER_BUFFER_PROVIDER_TYPE_GPU:
         Create3dResourceProvider();
-        raster_buffer_provider_ = std::make_unique<GpuRasterBufferProvider>(
+        raster_buffer_provider_ = base::MakeUnique<GpuRasterBufferProvider>(
             context_provider_.get(), worker_context_provider_.get(),
             resource_provider_.get(), false, 0,
-            viz::PlatformColor::BestTextureFormat(), false, false);
+            viz::PlatformColor::BestTextureFormat(), false);
         break;
       case RASTER_BUFFER_PROVIDER_TYPE_ASYNC_GPU:
         Create3dResourceProvider();
-        raster_buffer_provider_ = std::make_unique<GpuRasterBufferProvider>(
+        raster_buffer_provider_ = base::MakeUnique<GpuRasterBufferProvider>(
             context_provider_.get(), worker_context_provider_.get(),
             resource_provider_.get(), false, 0,
-            viz::PlatformColor::BestTextureFormat(), true, false);
+            viz::PlatformColor::BestTextureFormat(), true);
         break;
       case RASTER_BUFFER_PROVIDER_TYPE_BITMAP:
         CreateSoftwareResourceProvider();
@@ -237,7 +237,7 @@ class RasterBufferProviderTest
   }
 
   void AppendTask(unsigned id, const gfx::Size& size) {
-    auto resource = std::make_unique<ScopedResource>(resource_provider_.get());
+    auto resource = base::MakeUnique<ScopedResource>(resource_provider_.get());
     resource->Allocate(size, ResourceProvider::TEXTURE_HINT_IMMUTABLE,
                        viz::RGBA_8888, gfx::ColorSpace());
 
@@ -256,7 +256,7 @@ class RasterBufferProviderTest
   void AppendBlockingTask(unsigned id, base::Lock* lock) {
     const gfx::Size size(1, 1);
 
-    auto resource = std::make_unique<ScopedResource>(resource_provider_.get());
+    auto resource = base::MakeUnique<ScopedResource>(resource_provider_.get());
     resource->Allocate(size, ResourceProvider::TEXTURE_HINT_IMMUTABLE,
                        viz::RGBA_8888, gfx::ColorSpace());
 
@@ -297,16 +297,14 @@ class RasterBufferProviderTest
     worker_context_provider_ = TestContextProvider::CreateWorker();
     TestWebGraphicsContext3D* context3d = context_provider_->TestContext3d();
     context3d->set_support_sync_query(true);
-    resource_provider_ =
-        FakeResourceProvider::Create<LayerTreeResourceProvider>(
-            context_provider_.get(), &shared_bitmap_manager_,
-            &gpu_memory_buffer_manager_);
+    resource_provider_ = FakeResourceProvider::Create(
+        context_provider_.get(), &shared_bitmap_manager_,
+        &gpu_memory_buffer_manager_);
   }
 
   void CreateSoftwareResourceProvider() {
-    resource_provider_ =
-        FakeResourceProvider::Create<LayerTreeResourceProvider>(
-            nullptr, &shared_bitmap_manager_, &gpu_memory_buffer_manager_);
+    resource_provider_ = FakeResourceProvider::Create(
+        nullptr, &shared_bitmap_manager_, &gpu_memory_buffer_manager_);
   }
 
   void OnTimeout() {
@@ -317,10 +315,10 @@ class RasterBufferProviderTest
  protected:
   scoped_refptr<TestContextProvider> context_provider_;
   scoped_refptr<TestContextProvider> worker_context_provider_;
-  std::unique_ptr<LayerTreeResourceProvider> resource_provider_;
+  std::unique_ptr<ResourceProvider> resource_provider_;
   std::unique_ptr<TileTaskManager> tile_task_manager_;
   std::unique_ptr<RasterBufferProvider> raster_buffer_provider_;
-  viz::TestGpuMemoryBufferManager gpu_memory_buffer_manager_;
+  TestGpuMemoryBufferManager gpu_memory_buffer_manager_;
   TestSharedBitmapManager shared_bitmap_manager_;
   SynchronousTaskGraphRunner task_graph_runner_;
   base::CancelableClosure timeout_;

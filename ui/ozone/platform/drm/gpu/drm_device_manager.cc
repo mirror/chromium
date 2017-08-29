@@ -38,7 +38,8 @@ DrmDeviceManager::~DrmDeviceManager() {
 }
 
 bool DrmDeviceManager::AddDrmDevice(const base::FilePath& path,
-                                    base::File file) {
+                                    const base::FileDescriptor& fd) {
+  base::File file(fd.fd);
   auto it =
       std::find_if(devices_.begin(), devices_.end(), FindByDevicePath(path));
   if (it != devices_.end()) {

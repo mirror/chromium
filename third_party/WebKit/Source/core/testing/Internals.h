@@ -104,6 +104,8 @@ class Internals final : public GarbageCollected<Internals>,
   int getResourcePriority(const String& url, Document*);
   String getResourceHeader(const String& url, const String& header, Document*);
 
+  bool isSharingStyle(Element*, Element*) const;
+
   CSSStyleDeclaration* computedStyleIncludingVisitedInfo(Node*) const;
 
   void setBrowserControlsState(float top_height,
@@ -167,7 +169,6 @@ class Internals final : public GarbageCollected<Internals>,
   void clearHitTestCache(Document*, ExceptionState&) const;
 
   String visiblePlaceholder(Element*);
-  bool isValidationMessageVisible(Element*);
   void selectColorInColorChooser(Element*, const String& color_value);
   void endColorChooser(Element*);
   bool hasAutofocusRequest(Document*);

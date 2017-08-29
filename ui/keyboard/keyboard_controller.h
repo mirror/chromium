@@ -44,13 +44,17 @@ enum class KeyboardControllerState {
   // Keyboard has never been shown.
   INITIAL = 1,
   // Waiting for an extension to be loaded. Will move to HIDDEN if this is
-  // loading pre-emptively, otherwise will move to SHOWN.
+  // loading pre-emptively, otherwise will move to SHOWING.
   LOADING_EXTENSION = 2,
+  // Keyboard is being shown via animation.
+  SHOWING = 3,
   // Keyboard is shown.
   SHOWN = 4,
   // Keyboard is still shown, but will move to HIDING in a short period, or if
   // an input element gets focused again, will move to SHOWN.
   WILL_HIDE = 5,
+  // Keyboard is being hidden via animation.
+  HIDING = 6,
   // Keyboard is hidden, but has shown at least once.
   HIDDEN = 7,
   COUNT,
@@ -148,6 +152,8 @@ class KEYBOARD_EXPORT KeyboardController : public ui::InputMethodObserver,
   // For access to SetContainerBounds.
   friend class KeyboardLayoutManager;
 
+  bool show_on_resize() const { return show_on_resize_; }
+
   // aura::WindowObserver overrides
   void OnWindowHierarchyChanged(const HierarchyChangeParams& params) override;
   void OnWindowAddedToRootWindow(aura::Window* window) override;
@@ -166,8 +172,8 @@ class KEYBOARD_EXPORT KeyboardController : public ui::InputMethodObserver,
   void OnShowImeIfNeeded() override;
 
   // Sets the bounds of the container window. Shows the keyboard if contents
-  // is first loaded and show_on_content_update_ is true. Called by
-  // KeyboardLayoutManager.
+  // is first loaded and show_on_resize() is true. Called by
+  // KayboardLayoutManager.
   void SetContainerBounds(const gfx::Rect& new_bounds,
                           const bool contents_loaded);
 
@@ -181,8 +187,9 @@ class KEYBOARD_EXPORT KeyboardController : public ui::InputMethodObserver,
   // Called when show and hide animation finished successfully. If the animation
   // is aborted, it won't be called.
   void ShowAnimationFinished();
+  void HideAnimationFinished();
 
-  void NotifyKeyboardBoundsChangingAndEnsureCaretInWorkArea();
+  void NotifyKeyboardBoundsChangingAndEnsrueCaretInWorkArea();
 
   // Called when the keyboard mode is set or the keyboard is moved to another
   // display.
@@ -205,9 +212,7 @@ class KEYBOARD_EXPORT KeyboardController : public ui::InputMethodObserver,
   // uses container_'s animator.
   std::unique_ptr<CallbackAnimationObserver> animation_observer_;
 
-  // If true, show the keyboard window when keyboard UI content updates.
-  bool show_on_content_update_;
-
+  bool show_on_resize_;
   // If true, the keyboard is always visible even if no window has input focus.
   bool keyboard_locked_;
   KeyboardEventFilter event_filter_;

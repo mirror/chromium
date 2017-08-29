@@ -104,7 +104,7 @@ class V8Top25RuntimeStats(_Top25RuntimeStats):
   def GetExpectations(self):
     class StoryExpectations(story.expectations.StoryExpectations):
       def SetExpectations(self):
-        self.DisableBenchmark(
+        self.PermanentlyDisableBenchmark(
             [story.expectations.ALL_ANDROID, story.expectations.ALL_WIN],
             'crbug.com/664318')
     return StoryExpectations()

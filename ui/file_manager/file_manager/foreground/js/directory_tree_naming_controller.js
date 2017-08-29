@@ -41,16 +41,6 @@ function DirectoryTreeNamingController(
   this.editting_ = false;
 
   /**
-   * @private {boolean}
-   */
-  this.isRemovableRoot_ = false;
-
-  /**
-   * @private {VolumeInfo}
-   */
-  this.volumeInfo_ = null;
-
-  /**
    * @private {!HTMLInputElement}
    * @const
    */
@@ -77,36 +67,16 @@ DirectoryTreeNamingController.prototype.getInputElement = function() {
 
 /**
  * Attaches naming controller to specified directory item and start rename.
- * @param {!DirectoryItem} directoryItem An html element of a node of the
- *     target.
- * @param {boolean} isRemovableRoot Indicates whether the target is removable
- *     node or not.
- * @param {VolumeInfo} volumeInfo A volume information about the target node.
- *     |volumeInfo| can be null if method is invoked on a folder that is in the
- *     tree view and is not root of an external drive.
+ * @param {!DirectoryItem} directoryItem
  */
 DirectoryTreeNamingController.prototype.attachAndStart = function(
-    directoryItem, isRemovableRoot, volumeInfo) {
-
-  this.isRemovableRoot_ = isRemovableRoot;
-  this.volumeInfo_ = this.isRemovableRoot_ ? assert(volumeInfo) : null;
-
+    directoryItem) {
   if (!!this.currentDirectoryItem_)
     return;
 
   this.currentDirectoryItem_ = directoryItem;
   this.currentDirectoryItem_.setAttribute('renaming', true);
-
-  var renameInputElementPlaceholder =
-      this.currentDirectoryItem_.firstElementChild.getElementsByClassName(
-          'rename-placeholder');
-
-  if (this.isRemovableRoot_ && renameInputElementPlaceholder.length === 1) {
-    renameInputElementPlaceholder[0].appendChild(this.inputElement_);
-  } else {
-    this.currentDirectoryItem_.firstElementChild.appendChild(
-        this.inputElement_);
-  }
+  this.currentDirectoryItem_.firstElementChild.appendChild(this.inputElement_);
 
   this.inputElement_.value = this.currentDirectoryItem_.label;
   this.inputElement_.select();
@@ -133,32 +103,15 @@ DirectoryTreeNamingController.prototype.commitRename_ = function() {
     return;
   }
 
-  if (this.isRemovableRoot_) {
-    // Validate new name.
-    new Promise(entry.getParent.bind(entry))
-        .then(function(parentEntry) {
-          return util.validateExternalDriveName(
-              newName, assert(this.volumeInfo_));
-        }.bind(this))
-        .then(
-            this.performExternalDriveRename_.bind(this, entry, newName),
-            function(errorMessage) {
-              this.alertDialog_.show(errorMessage, this.detach_.bind(this));
-            }.bind(this));
-  } else {
-    // Validate new name.
-    new Promise(entry.getParent.bind(entry))
-        .then(function(parentEntry) {
-          return util.validateFileName(
-              parentEntry, newName,
-              this.directoryModel_.getFileFilter().isFilterHiddenOn());
-        }.bind(this))
-        .then(
-            this.performRename_.bind(this, entry, newName),
-            function(errorMessage) {
-              this.alertDialog_.show(errorMessage, this.detach_.bind(this));
-            }.bind(this));
-  }
+  // Validate new name.
+  new Promise(entry.getParent.bind(entry)).then(function(parentEntry) {
+    return util.validateFileName(parentEntry, newName,
+        this.directoryModel_.getFileFilter().isFilterHiddenOn());
+  }.bind(this)).then(
+  this.performRename_.bind(this, entry, newName),
+  function(errorMessage) {
+    this.alertDialog_.show(errorMessage, this.detach_.bind(this));
+  }.bind(this));
 };
 
 /**
@@ -174,57 +127,32 @@ DirectoryTreeNamingController.prototype.performRename_ = function(
   if (renamingCurrentDirectory)
     this.directoryModel_.setIgnoringCurrentDirectoryDeletion(true /* ignore */);
 
-  // TODO(yawano): Rename might take time on some volumes. Optimistically show
-  // new name in the UI before actual rename is completed.
-  new Promise(util.rename.bind(null, entry, newName))
-      .then(
-          function(newEntry) {
-            // Show new name before detaching input element to prevent showing
-            // old name.
-            var label =
-                this.currentDirectoryItem_.firstElementChild.querySelector(
-                    '.label');
-            label.textContent = newName;
+  // TODO(yawano): Rename might take time on some volumes. Optimiscally show new
+  //     name in the UI before actual rename is completed.
+  new Promise(util.rename.bind(null, entry, newName)).then(function(newEntry) {
+    // Show new name before detacching input element to prevent showing old
+    // name.
+    var label =
+        this.currentDirectoryItem_.firstElementChild.querySelector('.label');
+    label.textContent = newName;
 
-            this.currentDirectoryItem_.entry = newEntry;
+    this.currentDirectoryItem_.entry = newEntry;
 
-            this.detach_();
+    this.detach_();
 
-            // If renamed directory was current directory, change it to new one.
-            if (renamingCurrentDirectory) {
-              this.directoryModel_.changeDirectoryEntry(
-                  newEntry,
-                  this.directoryModel_.setIgnoringCurrentDirectoryDeletion.bind(
-                      this.directoryModel_, false /* not ignore */));
-            }
-          }.bind(this),
-          function(error) {
-            this.directoryModel_.setIgnoringCurrentDirectoryDeletion(
-                false /* not ignore*/);
-            this.detach_();
+    // If renamed directory was current directory, change it to new one.
+    if (renamingCurrentDirectory) {
+      this.directoryModel_.changeDirectoryEntry(newEntry,
+          this.directoryModel_.setIgnoringCurrentDirectoryDeletion.bind(
+              this.directoryModel_, false /* not ignore */));
+    }
+  }.bind(this), function(error) {
+    this.directoryModel_.setIgnoringCurrentDirectoryDeletion(
+        false /* not ignore*/);
+    this.detach_();
 
-            this.alertDialog_.show(
-                util.getRenameErrorMessage(error, entry, newName));
-          }.bind(this));
-};
-
-/**
- * Performs external drive rename operation.
- * @param {!DirectoryEntry} entry
- * @param {string} newName Validated name.
- * @private
- */
-DirectoryTreeNamingController.prototype.performExternalDriveRename_ = function(
-    entry, newName) {
-  // Invoke external drive rename
-  chrome.fileManagerPrivate.renameVolume(this.volumeInfo_.volumeId, newName);
-  // Show new name before detaching input element to prevent showing old
-  // name.
-  var label =
-      this.currentDirectoryItem_.firstElementChild.querySelector('.label');
-  label.textContent = newName;
-
-  this.detach_();
+    this.alertDialog_.show(util.getRenameErrorMessage(error, entry, newName));
+  }.bind(this));
 };
 
 /**
@@ -246,17 +174,7 @@ DirectoryTreeNamingController.prototype.cancelRename_ = function() {
 DirectoryTreeNamingController.prototype.detach_ = function() {
   assert(!!this.currentDirectoryItem_);
 
-  var renameInputElementPlaceholder =
-      this.currentDirectoryItem_.firstElementChild.getElementsByClassName(
-          'rename-placeholder');
-
-  if (this.isRemovableRoot_ && renameInputElementPlaceholder.length === 1) {
-    renameInputElementPlaceholder[0].removeChild(this.inputElement_);
-  } else {
-    this.currentDirectoryItem_.firstElementChild.removeChild(
-        this.inputElement_);
-  }
-
+  this.currentDirectoryItem_.firstElementChild.removeChild(this.inputElement_);
   this.currentDirectoryItem_.removeAttribute('renaming');
   this.currentDirectoryItem_ = null;
 

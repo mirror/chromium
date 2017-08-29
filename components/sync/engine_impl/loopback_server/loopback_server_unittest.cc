@@ -4,6 +4,7 @@
 
 #include "base/files/file_path.h"
 #include "base/files/file_util.h"
+#include "base/memory/ptr_util.h"
 #include "components/sync/base/cancelation_signal.h"
 #include "components/sync/engine_impl/loopback_server/loopback_connection_manager.h"
 #include "components/sync/engine_impl/syncer_proto_util.h"
@@ -21,7 +22,7 @@ class LoopbackServerTest : public testing::Test {
   void SetUp() override {
     base::CreateTemporaryFile(&persistent_file_);
     lcm_ =
-        std::make_unique<LoopbackConnectionManager>(&signal_, persistent_file_);
+        base::MakeUnique<LoopbackConnectionManager>(&signal_, persistent_file_);
   }
 
   static bool CallPostAndProcessHeaders(

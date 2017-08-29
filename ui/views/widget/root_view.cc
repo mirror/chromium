@@ -640,13 +640,12 @@ void RootView::OnPaint(gfx::Canvas* canvas) {
   View::OnPaint(canvas);
 }
 
-View::LayerOffsetData RootView::CalculateOffsetToAncestorWithLayer(
+gfx::Vector2d RootView::CalculateOffsetToAncestorWithLayer(
     ui::Layer** layer_parent) {
-  if (layer() || !widget_->GetLayer())
-    return View::CalculateOffsetToAncestorWithLayer(layer_parent);
-  if (layer_parent)
+  gfx::Vector2d offset(View::CalculateOffsetToAncestorWithLayer(layer_parent));
+  if (!layer() && layer_parent)
     *layer_parent = widget_->GetLayer();
-  return LayerOffsetData(widget_->GetLayer()->device_scale_factor());
+  return offset;
 }
 
 View::DragInfo* RootView::GetDragInfo() {

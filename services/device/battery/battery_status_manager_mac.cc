@@ -14,7 +14,6 @@
 #include "base/mac/foundation_util.h"
 #include "base/mac/scoped_cftyperef.h"
 #include "base/macros.h"
-#include "base/memory/ptr_util.h"
 #include "base/metrics/histogram_macros.h"
 #include "base/time/time.h"
 
@@ -160,7 +159,7 @@ void OnBatteryStatusChanged(const BatteryCallback& callback) {
   // TODO(timvolodine): implement the case when there are multiple internal
   // sources, e.g. when multiple batteries are present. Currently this will
   // fail a DCHECK.
-  DCHECK_EQ(1U, batteries.size());
+  DCHECK(batteries.size() == 1);
   callback.Run(batteries.front());
 }
 
@@ -213,7 +212,7 @@ class BatteryStatusObserver {
 class BatteryStatusManagerMac : public BatteryStatusManager {
  public:
   explicit BatteryStatusManagerMac(const BatteryCallback& callback)
-      : notifier_(base::MakeUnique<BatteryStatusObserver>(callback)) {}
+      : notifier_(new BatteryStatusObserver(callback)) {}
 
   ~BatteryStatusManagerMac() override { notifier_->Stop(); }
 
@@ -231,12 +230,13 @@ class BatteryStatusManagerMac : public BatteryStatusManager {
   DISALLOW_COPY_AND_ASSIGN(BatteryStatusManagerMac);
 };
 
-}  // namespace
+}  // end namespace
 
 // static
 std::unique_ptr<BatteryStatusManager> BatteryStatusManager::Create(
     const BatteryStatusService::BatteryUpdateCallback& callback) {
-  return base::MakeUnique<BatteryStatusManagerMac>(callback);
+  return std::unique_ptr<BatteryStatusManager>(
+      new BatteryStatusManagerMac(callback));
 }
 
 }  // namespace device

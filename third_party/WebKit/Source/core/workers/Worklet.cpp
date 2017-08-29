@@ -34,8 +34,7 @@ WebURLRequest::FetchCredentialsMode ParseCredentialsOption(
 
 Worklet::Worklet(LocalFrame* frame)
     : ContextLifecycleObserver(frame->GetDocument()),
-      module_responses_map_(
-          new WorkletModuleResponsesMap(frame->GetDocument()->Fetcher())) {
+      module_responses_map_(new WorkletModuleResponsesMap) {
   DCHECK(IsMainThread());
 }
 

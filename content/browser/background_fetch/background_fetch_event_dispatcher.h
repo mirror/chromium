@@ -38,7 +38,7 @@ class CONTENT_EXPORT BackgroundFetchEventDispatcher {
   };
 
   explicit BackgroundFetchEventDispatcher(
-      scoped_refptr<ServiceWorkerContextWrapper> service_worker_context);
+      const scoped_refptr<ServiceWorkerContextWrapper>& service_worker_context);
   ~BackgroundFetchEventDispatcher();
 
   // Dispatches the `backgroundfetchabort` event, which indicates that an active

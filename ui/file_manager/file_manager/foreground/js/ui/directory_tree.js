@@ -542,15 +542,11 @@ function VolumeItem(modelItem, tree) {
 
   item.setupIcon_(item.querySelector('.icon'), item.volumeInfo_);
 
-  // Attach a placeholder for rename input text box and the eject icon if the
-  // volume is ejectable
+  // Attach the "eject" icon if the volume is ejectable.
   if ((modelItem.volumeInfo_.source === VolumeManagerCommon.Source.DEVICE &&
        modelItem.volumeInfo_.volumeType !==
            VolumeManagerCommon.VolumeType.MTP) ||
       modelItem.volumeInfo_.source === VolumeManagerCommon.Source.FILE) {
-    // This placeholder is added to allow to put textbox before eject button
-    // while executing renaming action on external drive.
-    item.setupRenamePlaceholder_(item.rowElement);
     item.setupEjectButton_(item.rowElement);
   }
 
@@ -686,16 +682,6 @@ VolumeItem.prototype.setupEjectButton_ = function(rowElement) {
   ejectButton.appendChild(ripple);
 };
 
-/**
- * Set up rename input textbox placeholder if needed.
- * @param {HTMLElement} rowElement The parent element for placeholder.
- * @private
- */
-VolumeItem.prototype.setupRenamePlaceholder_ = function(rowElement) {
-  var placeholder = cr.doc.createElement('span');
-  placeholder.className = 'rename-placeholder';
-  rowElement.appendChild(placeholder);
-};
 
 ////////////////////////////////////////////////////////////////////////////////
 // DriveVolumeItem
@@ -1038,76 +1024,6 @@ MenuItem.prototype.activate = function() {
 };
 
 ////////////////////////////////////////////////////////////////////////////////
-// RecentItem
-
-/**
- * @param {!NavigationModelRecentItem} modelItem
- * @param {!DirectoryTree} tree Current tree, which contains this item.
- * @extends {cr.ui.TreeItem}
- * @constructor
- */
-function RecentItem(modelItem, tree) {
-  var item = new cr.ui.TreeItem();
-  item.__proto__ = RecentItem.prototype;
-
-  item.parentTree_ = tree;
-  item.modelItem_ = modelItem;
-  item.dirEntry_ = modelItem.entry;
-  item.innerHTML = TREE_ITEM_INNER_HTML;
-  item.label = modelItem.label;
-
-  var icon = queryRequiredElement('.icon', item);
-  icon.classList.add('item-icon');
-  icon.setAttribute('root-type-icon', 'recent');
-
-  return item;
-}
-
-RecentItem.prototype = {
-  __proto__: cr.ui.TreeItem.prototype,
-  get entry() {
-    return this.dirEntry_;
-  },
-  get modelItem() {
-    return this.modelItem_;
-  },
-  get labelElement() {
-    return this.firstElementChild.querySelector('.label');
-  }
-};
-
-/**
- * @param {!DirectoryEntry|!FakeEntry} entry
- * @return {boolean} True if the parent item is found.
- */
-RecentItem.prototype.searchAndSelectByEntry = function(entry) {
-  return false;
-};
-
-/**
- * @override
- */
-RecentItem.prototype.handleClick = function(e) {
-  this.activate();
-};
-
-/**
- * @param {!DirectoryEntry} entry
- */
-RecentItem.prototype.selectByEntry = function(entry) {
-  if (util.isSameEntry(entry, this.entry))
-    this.selected = true;
-};
-
-/**
- * Executes the command.
- */
-RecentItem.prototype.activate = function() {
-  this.parentTree_.directoryModel.activateDirectoryEntry(this.entry);
-};
-
-
-////////////////////////////////////////////////////////////////////////////////
 // DirectoryTree
 
 /**
@@ -1291,9 +1207,6 @@ DirectoryTree.prototype.updateSubElementsFromList = function(recursive) {
           break;
         case NavigationModelItemType.MENU:
           this.addAt(new MenuItem(modelItem, this), itemIndex);
-          break;
-        case NavigationModelItemType.RECENT:
-          this.addAt(new RecentItem(modelItem, this), itemIndex);
           break;
       }
     }

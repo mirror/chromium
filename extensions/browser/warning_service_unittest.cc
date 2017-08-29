@@ -37,7 +37,7 @@ class MockObserver : public WarningService::Observer {
 class WarningServiceTest : public ExtensionsTest {
  public:
   WarningServiceTest()
-      : ExtensionsTest(std::make_unique<content::TestBrowserThreadBundle>()) {}
+      : ExtensionsTest(base::MakeUnique<content::TestBrowserThreadBundle>()) {}
 };
 
 const char ext1_id[] = "extension1";

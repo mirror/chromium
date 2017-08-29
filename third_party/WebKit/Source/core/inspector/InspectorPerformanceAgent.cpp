@@ -17,15 +17,7 @@ namespace blink {
 using protocol::Response;
 
 namespace {
-
 static const char kPerformanceAgentEnabled[] = "PerformanceAgentEnabled";
-
-static const char* kInstanceCounterNames[] = {
-#define INSTANCE_COUNTER_NAME(name) #name "Count",
-    INSTANCE_COUNTERS_LIST(INSTANCE_COUNTER_NAME)
-#undef INSTANCE_COUNTER_NAME
-};
-
 }  // namespace
 
 InspectorPerformanceAgent::InspectorPerformanceAgent(
@@ -82,14 +74,20 @@ Response InspectorPerformanceAgent::getMetrics(
   std::unique_ptr<protocol::Array<protocol::Performance::Metric>> result =
       protocol::Array<protocol::Performance::Metric>::create();
 
-  // Renderer instance counters.
-  for (size_t i = 0; i < ARRAY_SIZE(kInstanceCounterNames); ++i) {
-    AppendMetric(result.get(), kInstanceCounterNames[i],
-                 InstanceCounters::CounterValue(
-                     static_cast<InstanceCounters::CounterType>(i)));
-  }
-
-  // Page performance metrics.
+  // Renderer counters.
+  AppendMetric(
+      result.get(), "DocumentCount",
+      InstanceCounters::CounterValue(InstanceCounters::kDocumentCounter));
+  AppendMetric(result.get(), "FrameCount",
+               InstanceCounters::CounterValue(InstanceCounters::kFrameCounter));
+  AppendMetric(result.get(), "JSEventListenerCount",
+               InstanceCounters::CounterValue(
+                   InstanceCounters::kJSEventListenerCounter));
+  AppendMetric(result.get(), "NodeCount",
+               InstanceCounters::CounterValue(InstanceCounters::kNodeCounter));
+  AppendMetric(
+      result.get(), "ResourceCount",
+      InstanceCounters::CounterValue(InstanceCounters::kResourceCounter));
   AppendMetric(result.get(), "LayoutCount", static_cast<double>(layout_count_));
   AppendMetric(result.get(), "RecalcStyleCount",
                static_cast<double>(recalc_style_count_));

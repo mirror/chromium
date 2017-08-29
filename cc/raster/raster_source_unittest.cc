@@ -11,7 +11,6 @@
 #include "cc/raster/playback_image_provider.h"
 #include "cc/test/fake_recording_source.h"
 #include "cc/test/skia_common.h"
-#include "cc/test/test_skcanvas.h"
 #include "cc/tiles/software_image_decode_cache.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "third_party/skia/include/core/SkPixelRef.h"
@@ -20,10 +19,6 @@
 #include "ui/gfx/geometry/axis_transform2d.h"
 #include "ui/gfx/geometry/rect.h"
 #include "ui/gfx/geometry/size_conversions.h"
-
-using ::testing::_;
-using ::testing::StrictMock;
-using ::testing::Sequence;
 
 namespace cc {
 namespace {
@@ -190,10 +185,10 @@ TEST(RasterSourceTest, PixelRefIteratorDiscardableRefsOneTile) {
   std::unique_ptr<FakeRecordingSource> recording_source =
       FakeRecordingSource::CreateFilledRecordingSource(layer_bounds);
 
-  PaintImage discardable_image[2][2];
-  discardable_image[0][0] = CreateDiscardablePaintImage(gfx::Size(32, 32));
-  discardable_image[0][1] = CreateDiscardablePaintImage(gfx::Size(32, 32));
-  discardable_image[1][1] = CreateDiscardablePaintImage(gfx::Size(32, 32));
+  sk_sp<SkImage> discardable_image[2][2];
+  discardable_image[0][0] = CreateDiscardableImage(gfx::Size(32, 32));
+  discardable_image[0][1] = CreateDiscardableImage(gfx::Size(32, 32));
+  discardable_image[1][1] = CreateDiscardableImage(gfx::Size(32, 32));
 
   // Discardable pixel refs are found in the following cells:
   // |---|---|
@@ -216,7 +211,7 @@ TEST(RasterSourceTest, PixelRefIteratorDiscardableRefsOneTile) {
     raster->GetDiscardableImagesInRect(gfx::Rect(0, 0, 256, 256), &images);
     EXPECT_EQ(1u, images.size());
     DrawImage image(*images[0], 1.f, target_color_space);
-    EXPECT_EQ(discardable_image[0][0], images[0]->paint_image());
+    EXPECT_EQ(discardable_image[0][0], image.image());
     EXPECT_EQ(target_color_space, image.target_color_space());
   }
   // Shifted tile sized iterators. These should find only one pixel ref.
@@ -226,7 +221,7 @@ TEST(RasterSourceTest, PixelRefIteratorDiscardableRefsOneTile) {
     raster->GetDiscardableImagesInRect(gfx::Rect(260, 260, 256, 256), &images);
     EXPECT_EQ(1u, images.size());
     DrawImage image(*images[0], 1.f, target_color_space);
-    EXPECT_EQ(discardable_image[1][1], images[0]->paint_image());
+    EXPECT_EQ(discardable_image[1][1], image.image());
     EXPECT_EQ(target_color_space, image.target_color_space());
   }
   // Ensure there's no discardable pixel refs in the empty cell
@@ -240,9 +235,9 @@ TEST(RasterSourceTest, PixelRefIteratorDiscardableRefsOneTile) {
     std::vector<const DrawImage*> images;
     raster->GetDiscardableImagesInRect(gfx::Rect(0, 0, 512, 512), &images);
     EXPECT_EQ(3u, images.size());
-    EXPECT_EQ(discardable_image[0][0], images[0]->paint_image());
-    EXPECT_EQ(discardable_image[0][1], images[1]->paint_image());
-    EXPECT_EQ(discardable_image[1][1], images[2]->paint_image());
+    EXPECT_EQ(discardable_image[0][0], images[0]->image());
+    EXPECT_EQ(discardable_image[0][1], images[1]->image());
+    EXPECT_EQ(discardable_image[1][1], images[2]->image());
   }
 }
 
@@ -557,7 +552,7 @@ TEST(RasterSourceTest, ImageHijackCanvasRespectsSharedCanvasTransform) {
       FakeRecordingSource::CreateFilledRecordingSource(size);
 
   // 1. Paint the image.
-  recording_source->add_draw_image(CreateDiscardablePaintImage(gfx::Size(5, 5)),
+  recording_source->add_draw_image(CreateDiscardableImage(gfx::Size(5, 5)),
                                    gfx::Point(0, 0));
 
   // 2. Cover everything in red.
@@ -580,7 +575,7 @@ TEST(RasterSourceTest, ImageHijackCanvasRespectsSharedCanvasTransform) {
   scoped_refptr<RasterSource> raster_source =
       recording_source->CreateRasterSource();
   SoftwareImageDecodeCache controller(
-      kN32_SkColorType,
+      viz::ResourceFormat::RGBA_8888,
       LayerTreeSettings().decoded_image_working_set_budget_bytes);
   PlaybackImageProvider image_provider(false, PaintImageIdFlatSet(),
                                        &controller, gfx::ColorSpace());
@@ -605,35 +600,6 @@ TEST(RasterSourceTest, ImageHijackCanvasRespectsSharedCanvasTransform) {
     EXPECT_EQ(SK_ColorRED, bitmap.getColor(x, 12));
   for (int y = 0; y < 24; ++y)
     EXPECT_EQ(SK_ColorRED, bitmap.getColor(24, y));
-}
-
-TEST(RasterSourceTest, RasterTransformWithoutRecordingScale) {
-  gfx::Size size(100, 100);
-  float recording_scale = 2.f;
-  std::unique_ptr<FakeRecordingSource> recording_source =
-      FakeRecordingSource::CreateFilledRecordingSource(size);
-  recording_source->Rerecord();
-  recording_source->SetRecordingScaleFactor(recording_scale);
-  scoped_refptr<RasterSource> raster_source =
-      recording_source->CreateRasterSource();
-
-  StrictMock<MockCanvas> mock_canvas;
-  Sequence s;
-  RasterSource::PlaybackSettings settings;
-  settings.playback_to_shared_canvas = true;
-
-  SkMatrix m;
-  m.setScale(1.f / recording_scale, 1.f / recording_scale);
-
-  EXPECT_CALL(mock_canvas, willSave()).InSequence(s);
-  // The call to raster_canvas->scale() should have values with the recording
-  // scale removed.
-  EXPECT_CALL(mock_canvas, didConcat(m)).InSequence(s);
-  EXPECT_CALL(mock_canvas, willRestore()).InSequence(s);
-
-  raster_source->PlaybackToCanvas(&mock_canvas, ColorSpaceForTesting(),
-                                  gfx::Rect(size), gfx::Rect(size),
-                                  gfx::AxisTransform2d(), settings);
 }
 
 }  // namespace

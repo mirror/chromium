@@ -9,7 +9,7 @@
 #include "cc/output/overlay_strategy_single_on_top.h"
 #include "cc/output/overlay_strategy_underlay.h"
 #include "cc/quads/draw_quad.h"
-#include "cc/resources/display_resource_provider.h"
+#include "cc/resources/resource_provider.h"
 #include "ui/gfx/geometry/rect_conversions.h"
 #include "ui/gfx/transform.h"
 
@@ -20,9 +20,8 @@ namespace {
 // before returning from ProcessForOverlays.
 class SendPromotionHintsBeforeReturning {
  public:
-  SendPromotionHintsBeforeReturning(
-      cc::DisplayResourceProvider* resource_provider,
-      cc::OverlayCandidateList* candidates)
+  SendPromotionHintsBeforeReturning(cc::ResourceProvider* resource_provider,
+                                    cc::OverlayCandidateList* candidates)
       : resource_provider_(resource_provider), candidates_(candidates) {}
   ~SendPromotionHintsBeforeReturning() {
     resource_provider_->SendPromotionHints(
@@ -30,7 +29,7 @@ class SendPromotionHintsBeforeReturning {
   }
 
  private:
-  cc::DisplayResourceProvider* resource_provider_;
+  cc::ResourceProvider* resource_provider_;
   cc::OverlayCandidateList* candidates_;
 
   DISALLOW_COPY_AND_ASSIGN(SendPromotionHintsBeforeReturning);
@@ -61,7 +60,7 @@ gfx::Rect OverlayProcessor::GetAndResetOverlayDamage() {
 }
 
 bool OverlayProcessor::ProcessForCALayers(
-    DisplayResourceProvider* resource_provider,
+    ResourceProvider* resource_provider,
     RenderPass* render_pass,
     const OverlayProcessor::FilterOperationsMap& render_pass_filters,
     const OverlayProcessor::FilterOperationsMap& render_pass_background_filters,
@@ -89,7 +88,7 @@ bool OverlayProcessor::ProcessForCALayers(
 }
 
 bool OverlayProcessor::ProcessForDCLayers(
-    DisplayResourceProvider* resource_provider,
+    ResourceProvider* resource_provider,
     RenderPassList* render_passes,
     const OverlayProcessor::FilterOperationsMap& render_pass_filters,
     const OverlayProcessor::FilterOperationsMap& render_pass_background_filters,
@@ -110,7 +109,7 @@ bool OverlayProcessor::ProcessForDCLayers(
 }
 
 void OverlayProcessor::ProcessForOverlays(
-    DisplayResourceProvider* resource_provider,
+    ResourceProvider* resource_provider,
     RenderPassList* render_passes,
     const OverlayProcessor::FilterOperationsMap& render_pass_filters,
     const OverlayProcessor::FilterOperationsMap& render_pass_background_filters,

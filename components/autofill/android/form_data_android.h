@@ -56,6 +56,8 @@ class FormDataAndroid {
   DISALLOW_COPY_AND_ASSIGN(FormDataAndroid);
 };
 
+bool RegisterFormDataAndroid(JNIEnv* env);
+
 }  // namespace autofill
 
 #endif  // COMPONENTS_AUTOFILL_ANDROID_FORM_DATA_ANDROID_H_

@@ -9,6 +9,7 @@
 #include "core/css/parser/CSSParserTokenRange.h"
 #include "core/css/parser/CSSPropertyParserHelpers.h"
 
+class CSSParserLocalContext;
 namespace blink {
 
 using namespace CSSPropertyParserHelpers;

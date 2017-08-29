@@ -727,33 +727,18 @@ class PredictorBrowserTest : public InProcessBrowserTest {
   }
 
   // This method verifies that |url| is in the predictor's |results_| map. This
-  // is used for pending lookups.
-  void ExpectUrlLookupIsInProgressOnUIThread(const GURL& url) {
+  // is used for pending lookups, and lookups performed before the observer is
+  // attached.
+  void ExpectUrlRequestedFromPredictorOnUIThread(const GURL& url) {
     DCHECK_CURRENTLY_ON(BrowserThread::UI);
     BrowserThread::PostTask(
         BrowserThread::IO, FROM_HERE,
-        base::BindOnce(&PredictorBrowserTest::ExpectUrlLookupIsInProgress,
+        base::BindOnce(&PredictorBrowserTest::ExpectUrlRequestedFromPredictor,
                        base::Unretained(this), url));
   }
 
-  void ExpectUrlLookupIsInProgress(const GURL& url) {
-    DCHECK_CURRENTLY_ON(BrowserThread::IO);
+  void ExpectUrlRequestedFromPredictor(const GURL& url) {
     EXPECT_TRUE(base::ContainsKey(predictor()->results_, url));
-  }
-
-  // This method verifies that the predictor's |results_| map is empty, i.e.
-  // there are no lookups in progress.
-  void ExpectNoLookupsAreInProgressOnUIThread() {
-    DCHECK_CURRENTLY_ON(BrowserThread::UI);
-    BrowserThread::PostTask(
-        BrowserThread::IO, FROM_HERE,
-        base::BindOnce(&PredictorBrowserTest::ExpectNoLookupsAreInProgress,
-                       base::Unretained(this)));
-  }
-
-  void ExpectNoLookupsAreInProgress() {
-    DCHECK_CURRENTLY_ON(BrowserThread::IO);
-    EXPECT_TRUE(predictor()->results_.empty());
   }
 
   void DiscardAllResultsOnUIThread() {
@@ -824,7 +809,6 @@ IN_PROC_BROWSER_TEST_F(PredictorBrowserTest, SingleLookupTest) {
   observer()->WaitUntilHostLookedUp(url);
   EXPECT_TRUE(observer()->HostFound(url));
   ExpectValidPeakPendingLookupsOnUI(1u);
-  ExpectNoLookupsAreInProgressOnUIThread();
 }
 
 IN_PROC_BROWSER_TEST_F(PredictorBrowserTest, ConcurrentLookupTest) {
@@ -843,7 +827,6 @@ IN_PROC_BROWSER_TEST_F(PredictorBrowserTest, ConcurrentLookupTest) {
   ExpectFoundUrls(found_names, not_found_names);
   ExpectValidPeakPendingLookupsOnUI(found_names.size() +
                                     not_found_names.size());
-  ExpectNoLookupsAreInProgressOnUIThread();
 }
 
 IN_PROC_BROWSER_TEST_F(PredictorBrowserTest, MassiveConcurrentLookupTest) {
@@ -858,7 +841,6 @@ IN_PROC_BROWSER_TEST_F(PredictorBrowserTest, MassiveConcurrentLookupTest) {
   WaitUntilHostsLookedUp(not_found_names);
   ExpectFoundUrls(std::vector<GURL>(), not_found_names);
   ExpectValidPeakPendingLookupsOnUI(not_found_names.size());
-  ExpectNoLookupsAreInProgressOnUIThread();
 }
 
 IN_PROC_BROWSER_TEST_F(PredictorBrowserTest,
@@ -873,7 +855,7 @@ IN_PROC_BROWSER_TEST_F(PredictorBrowserTest,
       base::TimeDelta::FromMilliseconds(500));
   base::RunLoop().Run();
 
-  ExpectUrlLookupIsInProgressOnUIThread(delayed_url);
+  ExpectUrlRequestedFromPredictor(delayed_url);
   EXPECT_FALSE(observer()->HasHostBeenLookedUp(delayed_url));
 }
 

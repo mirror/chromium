@@ -1546,7 +1546,8 @@ bool RenderWidgetHostViewMac::ShouldRouteEvent(
   DCHECK(WebInputEvent::IsMouseEventType(event.GetType()) ||
          event.GetType() == WebInputEvent::kMouseWheel);
   return render_widget_host_->delegate() &&
-         render_widget_host_->delegate()->GetInputEventRouter();
+         render_widget_host_->delegate()->GetInputEventRouter() &&
+         SiteIsolationPolicy::AreCrossProcessFramesPossible();
 }
 
 void RenderWidgetHostViewMac::ProcessMouseEvent(

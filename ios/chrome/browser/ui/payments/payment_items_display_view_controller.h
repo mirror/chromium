@@ -45,7 +45,11 @@ extern NSString* const kPaymentItemsDisplayItemID;
 @property(nonatomic, weak) id<PaymentItemsDisplayViewControllerDataSource>
     dataSource;
 
-- (instancetype)init NS_DESIGNATED_INITIALIZER;
+// Initializes this object with the given state for the "Pay" button.
+- (instancetype)initWithPayButtonEnabled:(BOOL)payButtonEnabled
+    NS_DESIGNATED_INITIALIZER;
+
+- (instancetype)init NS_UNAVAILABLE;
 
 - (instancetype)initWithLayout:(UICollectionViewLayout*)layout
                          style:(CollectionViewControllerStyle)style

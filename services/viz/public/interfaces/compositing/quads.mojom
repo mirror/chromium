@@ -4,7 +4,7 @@
 
 module viz.mojom;
 
-import "services/viz/public/interfaces/compositing/surface_id.mojom";
+import "cc/ipc/surface_id.mojom";
 import "services/viz/public/interfaces/compositing/shared_quad_state.mojom";
 import "ui/gfx/geometry/mojo/geometry.mojom";
 import "ui/gfx/mojo/color_space.mojom";
@@ -58,7 +58,7 @@ enum SurfaceDrawQuadType {
 };
 
 struct SurfaceQuadState {
-  SurfaceId surface;
+  cc.mojom.SurfaceId surface;
   SurfaceDrawQuadType surface_draw_quad_type;
 };
 
@@ -121,6 +121,10 @@ struct DrawQuad {
   // This rect, after applying the quad_transform(), gives the geometry that
   // this quad should draw to. This rect lives in content space.
   gfx.mojom.Rect rect;
+
+  // This specifies the region of the quad that is opaque. This rect lives in
+  // content space.
+  gfx.mojom.Rect opaque_rect;
 
   // Allows changing the rect that gets drawn to make it smaller. This value
   // should be clipped to |rect|. This rect lives in content space.

@@ -46,7 +46,7 @@ class BASE_EXPORT HistogramSamples {
   // A structure for managing an atomic single sample. Because this is generally
   // used in association with other atomic values, the defined methods use
   // acquire/release operations to guarantee ordering with outside values.
-  union BASE_EXPORT AtomicSingleSample {
+  union AtomicSingleSample {
     AtomicSingleSample() : as_atomic(0) {}
     AtomicSingleSample(subtle::Atomic32 rhs) : as_atomic(rhs) {}
 

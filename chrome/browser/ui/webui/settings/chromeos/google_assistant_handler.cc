@@ -65,10 +65,7 @@ void GoogleAssistantHandler::HandleSetGoogleAssistantContextEnabled(
 
 void GoogleAssistantHandler::HandleShowGoogleAssistantSettings(
     const base::ListValue* args) {
-  auto* service =
-      arc::ArcVoiceInteractionFrameworkService::GetForBrowserContext(profile_);
-  if (service)
-    service->ShowVoiceInteractionSettings();
+  // TODO(rcui): Implement.
 }
 
 }  // namespace settings

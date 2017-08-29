@@ -33,13 +33,13 @@
 
 #pragma mark Content Views
 // The web view content view being displayed.
-@property(nonatomic, strong, readonly)
+@property(nonatomic, retain, readonly)
     CRWWebViewContentView* webViewContentView;
 // The native controller whose content is being displayed.
-@property(nonatomic, strong, readonly) id<CRWNativeContent> nativeController;
+@property(nonatomic, retain, readonly) id<CRWNativeContent> nativeController;
 // The currently displayed transient content view.
-@property(nonatomic, strong, readonly) CRWContentView* transientContentView;
-@property(nonatomic, weak) id<CRWWebControllerContainerViewDelegate>
+@property(nonatomic, retain, readonly) CRWContentView* transientContentView;
+@property(nonatomic, assign) id<CRWWebControllerContainerViewDelegate>
     delegate;  // weak
 
 // Designated initializer.  |proxy|'s content view will be updated as different

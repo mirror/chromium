@@ -80,7 +80,7 @@ class CORE_EXPORT CSSStyleSheetResource final : public StyleSheetResource {
                         const TextResourceDecoderOptions&);
 
   bool CanUseSheet(MIMETypeCheck) const;
-  void NotifyFinished() override;
+  void CheckNotify() override;
 
   void SetParsedStyleSheetCache(StyleSheetContents*);
   void SetDecodedSheetText(const String&);

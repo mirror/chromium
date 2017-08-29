@@ -207,7 +207,7 @@ IN_PROC_BROWSER_TEST_F(LoggedInSpokenFeedbackTest,
                        DISABLED_NavigateNotificationCenter) {
   EnableChromeVox();
 
-  EXPECT_TRUE(PerformAcceleratorAction(ash::TOGGLE_MESSAGE_CENTER_BUBBLE));
+  EXPECT_TRUE(PerformAcceleratorAction(ash::SHOW_MESSAGE_CENTER_BUBBLE));
 
   // Tab to request the initial focus.
   SendKeyPress(ui::VKEY_TAB);
@@ -465,7 +465,7 @@ IN_PROC_BROWSER_TEST_P(SpokenFeedbackTest, DISABLED_ScreenBrightness) {
                                  "Brightness * percent"));
 }
 
-IN_PROC_BROWSER_TEST_P(SpokenFeedbackTest, DISABLED_VolumeSlider) {
+IN_PROC_BROWSER_TEST_P(SpokenFeedbackTest, VolumeSlider) {
   EnableChromeVox();
 
   // Volume slider does not fire valueChanged event on first key press because

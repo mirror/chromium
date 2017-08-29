@@ -151,16 +151,22 @@ volumeManagerUtil.createVolumeInfo = function(volumeMetadata) {
         }
         return new VolumeInfoImpl(
             /** @type {VolumeManagerCommon.VolumeType} */
-            (volumeMetadata.volumeType), volumeMetadata.volumeId, fileSystem,
-            volumeMetadata.mountCondition, volumeMetadata.deviceType,
-            volumeMetadata.devicePath, volumeMetadata.isReadOnly,
-            volumeMetadata.isReadOnlyRemovableDevice, volumeMetadata.profile,
-            localizedLabel, volumeMetadata.extensionId, volumeMetadata.hasMedia,
-            volumeMetadata.configurable, volumeMetadata.watchable,
+            (volumeMetadata.volumeType),
+            volumeMetadata.volumeId,
+            fileSystem,
+            volumeMetadata.mountCondition,
+            volumeMetadata.deviceType,
+            volumeMetadata.devicePath,
+            volumeMetadata.isReadOnly,
+            volumeMetadata.isReadOnlyRemovableDevice,
+            volumeMetadata.profile,
+            localizedLabel,
+            volumeMetadata.extensionId,
+            volumeMetadata.hasMedia,
+            volumeMetadata.configurable,
+            volumeMetadata.watchable,
             /** @type {VolumeManagerCommon.Source} */
-            (volumeMetadata.source),
-            /** @type {VolumeManagerCommon.FileSystemType} */
-            (volumeMetadata.diskFileSystemType));
+            (volumeMetadata.source));
   })
   .catch(
       /**
@@ -174,17 +180,22 @@ volumeManagerUtil.createVolumeInfo = function(volumeMetadata) {
 
         return new VolumeInfoImpl(
             /** @type {VolumeManagerCommon.VolumeType} */
-            (volumeMetadata.volumeType), volumeMetadata.volumeId,
+            (volumeMetadata.volumeType),
+            volumeMetadata.volumeId,
             null,  // File system is not found.
-            volumeMetadata.mountCondition, volumeMetadata.deviceType,
-            volumeMetadata.devicePath, volumeMetadata.isReadOnly,
-            volumeMetadata.isReadOnlyRemovableDevice, volumeMetadata.profile,
-            localizedLabel, volumeMetadata.extensionId, volumeMetadata.hasMedia,
-            volumeMetadata.configurable, volumeMetadata.watchable,
+            volumeMetadata.mountCondition,
+            volumeMetadata.deviceType,
+            volumeMetadata.devicePath,
+            volumeMetadata.isReadOnly,
+            volumeMetadata.isReadOnlyRemovableDevice,
+            volumeMetadata.profile,
+            localizedLabel,
+            volumeMetadata.extensionId,
+            volumeMetadata.hasMedia,
+            volumeMetadata.configurable,
+            volumeMetadata.watchable,
             /** @type {VolumeManagerCommon.Source} */
-            (volumeMetadata.source),
-            /** @type {VolumeManagerCommon.FileSystemType} */
-            (volumeMetadata.diskFileSystemType));
+            (volumeMetadata.source));
       });
 };
 

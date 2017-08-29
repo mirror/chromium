@@ -126,7 +126,7 @@ void RenderWidgetHostViewChildFrame::SetFrameConnectorDelegate(
           parent_frame_sink_id_, frame_sink_id_);
     }
     parent_frame_sink_id_ = viz::FrameSinkId();
-    last_received_local_surface_id_ = viz::LocalSurfaceId();
+    local_surface_id_ = viz::LocalSurfaceId();
 
     // Unlocks the mouse if this RenderWidgetHostView holds the lock.
     UnlockMouse();
@@ -477,17 +477,16 @@ void RenderWidgetHostViewChildFrame::DidCreateNewRendererCompositorFrameSink(
 void RenderWidgetHostViewChildFrame::ProcessCompositorFrame(
     const viz::LocalSurfaceId& local_surface_id,
     cc::CompositorFrame frame) {
-  current_surface_size_ = frame.size_in_pixels();
-  current_surface_scale_factor_ = frame.device_scale_factor();
+  current_surface_size_ = frame.render_pass_list.back()->output_rect.size();
+  current_surface_scale_factor_ = frame.metadata.device_scale_factor;
 
   bool result =
       support_->SubmitCompositorFrame(local_surface_id, std::move(frame));
   DCHECK(result);
   has_frame_ = true;
 
-  if (last_received_local_surface_id_ != local_surface_id ||
-      HasEmbedderChanged()) {
-    last_received_local_surface_id_ = local_surface_id;
+  if (local_surface_id_ != local_surface_id || HasEmbedderChanged()) {
+    local_surface_id_ = local_surface_id;
     SendSurfaceInfoToEmbedder();
   }
 
@@ -507,7 +506,7 @@ void RenderWidgetHostViewChildFrame::SendSurfaceInfoToEmbedder() {
   viz::SurfaceSequence sequence =
       viz::SurfaceSequence(frame_sink_id_, next_surface_sequence_++);
   viz::SurfaceManager* manager = GetFrameSinkManager()->surface_manager();
-  viz::SurfaceId surface_id(frame_sink_id_, last_received_local_surface_id_);
+  viz::SurfaceId surface_id(frame_sink_id_, local_surface_id_);
   // The renderer process will satisfy this dependency when it creates a
   // SurfaceLayer.
   if (!manager->using_surface_references())
@@ -537,6 +536,12 @@ void RenderWidgetHostViewChildFrame::SubmitCompositorFrame(
 void RenderWidgetHostViewChildFrame::OnDidNotProduceFrame(
     const viz::BeginFrameAck& ack) {
   support_->DidNotProduceFrame(ack);
+}
+
+void RenderWidgetHostViewChildFrame::OnSurfaceChanged(
+    const viz::SurfaceInfo& surface_info) {
+  viz::SurfaceSequence sequence(frame_sink_id_, next_surface_sequence_++);
+  SendSurfaceInfoToEmbedderImpl(surface_info, sequence);
 }
 
 void RenderWidgetHostViewChildFrame::ProcessFrameSwappedCallbacks() {
@@ -593,12 +598,6 @@ viz::FrameSinkId RenderWidgetHostViewChildFrame::GetFrameSinkId() {
   return frame_sink_id_;
 }
 
-viz::LocalSurfaceId RenderWidgetHostViewChildFrame::GetLocalSurfaceId() const {
-  if (frame_connector_)
-    return frame_connector_->local_surface_id();
-  return viz::LocalSurfaceId();
-}
-
 void RenderWidgetHostViewChildFrame::ProcessKeyboardEvent(
     const NativeWebKeyboardEvent& event,
     const ui::LatencyInfo& latency) {
@@ -641,11 +640,11 @@ void RenderWidgetHostViewChildFrame::ProcessGestureEvent(
 
 gfx::Point RenderWidgetHostViewChildFrame::TransformPointToRootCoordSpace(
     const gfx::Point& point) {
-  if (!frame_connector_ || !last_received_local_surface_id_.is_valid())
+  if (!frame_connector_ || !local_surface_id_.is_valid())
     return point;
 
   return frame_connector_->TransformPointToRootCoordSpace(
-      point, viz::SurfaceId(frame_sink_id_, last_received_local_surface_id_));
+      point, viz::SurfaceId(frame_sink_id_, local_surface_id_));
 }
 
 bool RenderWidgetHostViewChildFrame::TransformPointToLocalCoordSpace(
@@ -653,20 +652,19 @@ bool RenderWidgetHostViewChildFrame::TransformPointToLocalCoordSpace(
     const viz::SurfaceId& original_surface,
     gfx::Point* transformed_point) {
   *transformed_point = point;
-  if (!frame_connector_ || !last_received_local_surface_id_.is_valid())
+  if (!frame_connector_ || !local_surface_id_.is_valid())
     return false;
 
   return frame_connector_->TransformPointToLocalCoordSpace(
       point, original_surface,
-      viz::SurfaceId(frame_sink_id_, last_received_local_surface_id_),
-      transformed_point);
+      viz::SurfaceId(frame_sink_id_, local_surface_id_), transformed_point);
 }
 
 bool RenderWidgetHostViewChildFrame::TransformPointToCoordSpaceForView(
     const gfx::Point& point,
     RenderWidgetHostViewBase* target_view,
     gfx::Point* transformed_point) {
-  if (!frame_connector_ || !last_received_local_surface_id_.is_valid())
+  if (!frame_connector_ || !local_surface_id_.is_valid())
     return false;
 
   if (target_view == this) {
@@ -675,8 +673,7 @@ bool RenderWidgetHostViewChildFrame::TransformPointToCoordSpaceForView(
   }
 
   return frame_connector_->TransformPointToCoordSpaceForView(
-      point, target_view,
-      viz::SurfaceId(frame_sink_id_, last_received_local_surface_id_),
+      point, target_view, viz::SurfaceId(frame_sink_id_, local_surface_id_),
       transformed_point);
 }
 
@@ -789,8 +786,8 @@ void RenderWidgetHostViewChildFrame::OnBeginFramePausedChanged(bool paused) {
 
 void RenderWidgetHostViewChildFrame::OnFirstSurfaceActivation(
     const viz::SurfaceInfo& surface_info) {
-  viz::SurfaceSequence sequence(frame_sink_id_, next_surface_sequence_++);
-  SendSurfaceInfoToEmbedderImpl(surface_info, sequence);
+  // TODO(fsamuel): Once surface synchronization is turned on, the fallback
+  // surface should be set here.
 }
 
 void RenderWidgetHostViewChildFrame::SetNeedsBeginFrames(
@@ -873,7 +870,7 @@ bool RenderWidgetHostViewChildFrame::IsChildFrameForTesting() const {
 }
 
 viz::SurfaceId RenderWidgetHostViewChildFrame::SurfaceIdForTesting() const {
-  return viz::SurfaceId(frame_sink_id_, last_received_local_surface_id_);
+  return viz::SurfaceId(frame_sink_id_, local_surface_id_);
 }
 
 void RenderWidgetHostViewChildFrame::CreateCompositorFrameSinkSupport() {

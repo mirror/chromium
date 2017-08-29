@@ -26,7 +26,6 @@ PaintImage PaintImageBuilder::TakePaintImage() const {
   if (paint_image_.sk_image_) {
     DCHECK(!paint_image_.paint_record_);
     DCHECK(!paint_image_.paint_image_generator_);
-    DCHECK(!paint_image_.sk_image_->isLazyGenerated());
   } else if (paint_image_.paint_record_) {
     DCHECK(!paint_image_.sk_image_);
     DCHECK(!paint_image_.paint_image_generator_);
@@ -35,7 +34,6 @@ PaintImage PaintImageBuilder::TakePaintImage() const {
     DCHECK(!paint_image_.paint_record_);
   }
 #endif
-
   return std::move(paint_image_);
 }
 

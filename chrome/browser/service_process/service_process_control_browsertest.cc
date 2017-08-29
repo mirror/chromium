@@ -21,7 +21,7 @@
 #include "build/build_config.h"
 #include "chrome/browser/ui/browser.h"
 #include "chrome/common/chrome_constants.h"
-#include "chrome/common/cloud_print.mojom.h"
+#include "chrome/common/service_messages.h"
 #include "chrome/common/service_process_util.h"
 #include "chrome/test/base/in_process_browser_test.h"
 #include "components/version_info/version_info.h"
@@ -64,9 +64,8 @@ class ServiceProcessControlBrowserTest
     base::RunLoop::QuitCurrentWhenIdleDeprecated();
   }
 
-  static void CloudPrintInfoCallback(bool enabled,
-                                     const std::string& email,
-                                     const std::string& proxy_id) {
+  static void CloudPrintInfoCallback(
+      const cloud_print::CloudPrintProxyInfo& proxy_info) {
     QuitMessageLoop();
   }
 
@@ -157,11 +156,8 @@ IN_PROC_BROWSER_TEST_F(RealServiceProcessControlBrowserTest,
 
   // Make sure we are connected to the service process.
   ASSERT_TRUE(ServiceProcessControl::GetInstance()->IsConnected());
-  cloud_print::mojom::CloudPrintPtr cloud_print_proxy;
-  ServiceProcessControl::GetInstance()->remote_interfaces().GetInterface(
-      &cloud_print_proxy);
-  cloud_print_proxy->GetCloudPrintProxyInfo(
-      base::Bind(&ServiceProcessControlBrowserTest::CloudPrintInfoCallback));
+  ServiceProcessControl::GetInstance()->GetCloudPrintProxyInfo(
+        base::Bind(&ServiceProcessControlBrowserTest::CloudPrintInfoCallback));
   content::RunMessageLoop();
 
   // And then shutdown the service process.
@@ -173,11 +169,8 @@ IN_PROC_BROWSER_TEST_F(ServiceProcessControlBrowserTest, LaunchAndIPC) {
 
   // Make sure we are connected to the service process.
   ASSERT_TRUE(ServiceProcessControl::GetInstance()->IsConnected());
-  cloud_print::mojom::CloudPrintPtr cloud_print_proxy;
-  ServiceProcessControl::GetInstance()->remote_interfaces().GetInterface(
-      &cloud_print_proxy);
-  cloud_print_proxy->GetCloudPrintProxyInfo(
-      base::Bind(&ServiceProcessControlBrowserTest::CloudPrintInfoCallback));
+  ServiceProcessControl::GetInstance()->GetCloudPrintProxyInfo(
+        base::Bind(&ServiceProcessControlBrowserTest::CloudPrintInfoCallback));
   content::RunMessageLoop();
 
   // And then shutdown the service process.
@@ -190,15 +183,10 @@ IN_PROC_BROWSER_TEST_F(ServiceProcessControlBrowserTest, LaunchAndReconnect) {
   // Make sure we are connected to the service process.
   ASSERT_TRUE(ServiceProcessControl::GetInstance()->IsConnected());
   // Send an IPC that will keep the service process alive after we disconnect.
-  cloud_print::mojom::CloudPrintPtr cloud_print_proxy;
-  ServiceProcessControl::GetInstance()->remote_interfaces().GetInterface(
-      &cloud_print_proxy);
-  cloud_print_proxy->EnableCloudPrintProxyWithRobot(
-      "", "", "", base::MakeUnique<base::DictionaryValue>());
-
-  ServiceProcessControl::GetInstance()->remote_interfaces().GetInterface(
-      &cloud_print_proxy);
-  cloud_print_proxy->GetCloudPrintProxyInfo(
+  ServiceProcessControl::GetInstance()->Send(
+      new ServiceMsg_EnableCloudPrintProxyWithRobot(
+          "", "", "", base::DictionaryValue()));
+  ServiceProcessControl::GetInstance()->GetCloudPrintProxyInfo(
       base::Bind(&ServiceProcessControlBrowserTest::CloudPrintInfoCallback));
   content::RunMessageLoop();
   Disconnect();
@@ -208,9 +196,7 @@ IN_PROC_BROWSER_TEST_F(ServiceProcessControlBrowserTest, LaunchAndReconnect) {
   ASSERT_TRUE(ServiceProcessControl::GetInstance()->IsConnected());
   content::RunMessageLoop();
 
-  ServiceProcessControl::GetInstance()->remote_interfaces().GetInterface(
-      &cloud_print_proxy);
-  cloud_print_proxy->GetCloudPrintProxyInfo(
+  ServiceProcessControl::GetInstance()->GetCloudPrintProxyInfo(
       base::Bind(&ServiceProcessControlBrowserTest::CloudPrintInfoCallback));
   content::RunMessageLoop();
 
@@ -232,20 +218,15 @@ IN_PROC_BROWSER_TEST_F(ServiceProcessControlBrowserTest, MAYBE_LaunchTwice) {
 
   // Make sure we are connected to the service process.
   ASSERT_TRUE(ServiceProcessControl::GetInstance()->IsConnected());
-  cloud_print::mojom::CloudPrintPtr cloud_print_proxy;
-  ServiceProcessControl::GetInstance()->remote_interfaces().GetInterface(
-      &cloud_print_proxy);
-  cloud_print_proxy->GetCloudPrintProxyInfo(
-      base::Bind(&ServiceProcessControlBrowserTest::CloudPrintInfoCallback));
+  EXPECT_TRUE(ServiceProcessControl::GetInstance()->GetCloudPrintProxyInfo(
+        base::Bind(&ServiceProcessControlBrowserTest::CloudPrintInfoCallback)));
   content::RunMessageLoop();
 
   // Launch the service process again.
   LaunchServiceProcessControl(true);
   ASSERT_TRUE(ServiceProcessControl::GetInstance()->IsConnected());
-  ServiceProcessControl::GetInstance()->remote_interfaces().GetInterface(
-      &cloud_print_proxy);
-  cloud_print_proxy->GetCloudPrintProxyInfo(
-      base::Bind(&ServiceProcessControlBrowserTest::CloudPrintInfoCallback));
+  EXPECT_TRUE(ServiceProcessControl::GetInstance()->GetCloudPrintProxyInfo(
+        base::Bind(&ServiceProcessControlBrowserTest::CloudPrintInfoCallback)));
   content::RunMessageLoop();
 }
 

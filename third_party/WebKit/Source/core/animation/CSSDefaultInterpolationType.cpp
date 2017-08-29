@@ -40,10 +40,6 @@ InterpolationValue CSSDefaultInterpolationType::MaybeConvertSingle(
     const InterpolationEnvironment&,
     const InterpolationValue&,
     ConversionCheckers&) const {
-  if (!ToCSSPropertySpecificKeyframe(keyframe).Value()) {
-    DCHECK(keyframe.IsNeutral());
-    return nullptr;
-  }
   return InterpolationValue(
       InterpolableList::Create(0),
       CSSDefaultNonInterpolableValue::Create(
@@ -54,7 +50,6 @@ void CSSDefaultInterpolationType::Apply(
     const InterpolableValue&,
     const NonInterpolableValue* non_interpolable_value,
     InterpolationEnvironment& environment) const {
-  DCHECK(ToCSSDefaultNonInterpolableValue(non_interpolable_value)->CssValue());
   StyleBuilder::ApplyProperty(
       GetProperty().CssProperty(),
       ToCSSInterpolationEnvironment(environment).GetState(),

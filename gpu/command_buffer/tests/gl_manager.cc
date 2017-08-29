@@ -33,7 +33,6 @@
 #include "gpu/command_buffer/service/gpu_switches.h"
 #include "gpu/command_buffer/service/memory_tracking.h"
 #include "gpu/command_buffer/service/service_utils.h"
-#include "gpu/command_buffer/service/transfer_buffer_manager.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "ui/gfx/buffer_format_util.h"
 #include "ui/gfx/gpu_memory_buffer.h"
@@ -202,8 +201,6 @@ int GLManager::use_count_;
 scoped_refptr<gl::GLShareGroup>* GLManager::base_share_group_;
 scoped_refptr<gl::GLSurface>* GLManager::base_surface_;
 scoped_refptr<gl::GLContext>* GLManager::base_context_;
-// static
-GpuFeatureInfo GLManager::g_gpu_feature_info;
 
 GLManager::Options::Options() = default;
 
@@ -245,28 +242,13 @@ std::unique_ptr<gfx::GpuMemoryBuffer> GLManager::CreateGpuMemoryBuffer(
 }
 
 void GLManager::Initialize(const GLManager::Options& options) {
-  GpuDriverBugWorkarounds platform_workarounds(
-      g_gpu_feature_info.enabled_gpu_driver_bug_workarounds);
-  InitializeWithWorkaroundsImpl(options, platform_workarounds);
+  InitializeWithCommandLine(options, *base::CommandLine::ForCurrentProcess());
 }
 
-void GLManager::InitializeWithWorkarounds(
+void GLManager::InitializeWithCommandLine(
     const GLManager::Options& options,
-    const GpuDriverBugWorkarounds& workarounds) {
-  GpuDriverBugWorkarounds combined_workarounds(
-      g_gpu_feature_info.enabled_gpu_driver_bug_workarounds);
-  combined_workarounds.Append(workarounds);
-  InitializeWithWorkaroundsImpl(options, combined_workarounds);
-}
-
-void GLManager::InitializeWithWorkaroundsImpl(
-    const GLManager::Options& options,
-    const GpuDriverBugWorkarounds& workarounds) {
+    const base::CommandLine& command_line) {
   const SharedMemoryLimits limits;
-  const base::CommandLine& command_line =
-      *base::CommandLine::ForCurrentProcess();
-  DCHECK(!command_line.HasSwitch(switches::kGpuDriverBugWorkarounds));
-  DCHECK(!command_line.HasSwitch(switches::kDisableGLExtensions));
   InitializeGpuPreferencesForTestingFromCommandLine(command_line,
                                                     &gpu_preferences_);
 
@@ -321,8 +303,9 @@ void GLManager::InitializeWithWorkaroundsImpl(
       base::MakeUnique<gles2::ShaderTranslatorCache>(gpu_preferences_);
 
   if (!context_group) {
+    GpuDriverBugWorkarounds gpu_driver_bug_workaround(&command_line);
     scoped_refptr<gles2::FeatureInfo> feature_info =
-        new gles2::FeatureInfo(workarounds);
+        new gles2::FeatureInfo(command_line, gpu_driver_bug_workaround);
     context_group = new gles2::ContextGroup(
         gpu_preferences_, mailbox_manager_, nullptr /* memory_tracker */,
         translator_cache_.get(), &completeness_cache_, feature_info,
@@ -363,7 +346,6 @@ void GLManager::InitializeWithWorkaroundsImpl(
       context_ = gl::init::CreateGLContext(
           share_group_.get(), surface_.get(),
           GenerateGLContextAttribs(attribs, context_group->gpu_preferences()));
-      g_gpu_feature_info.ApplyToGLContext(context_.get());
     }
   }
   ASSERT_TRUE(context_.get() != NULL) << "could not create GL context";
@@ -396,12 +378,6 @@ void GLManager::InitializeWithWorkaroundsImpl(
   MakeCurrent();
 }
 
-size_t GLManager::GetSharedMemoryBytesAllocated() const {
-  return decoder_->GetContextGroup()
-      ->transfer_buffer_manager()
-      ->shared_memory_bytes_allocated();
-}
-
 void GLManager::SetupBaseContext() {
   if (use_count_) {
     #if defined(OS_ANDROID)
@@ -413,7 +389,6 @@ void GLManager::SetupBaseContext() {
     base_context_ = new scoped_refptr<gl::GLContext>(gl::init::CreateGLContext(
         base_share_group_->get(), base_surface_->get(),
         gl::GLContextAttribs()));
-    g_gpu_feature_info.ApplyToGLContext(base_context_->get());
     #endif
   }
   ++use_count_;
@@ -532,7 +507,11 @@ CommandBufferId GLManager::GetCommandBufferID() const {
   return command_buffer_->GetCommandBufferID();
 }
 
-void GLManager::FlushPendingWork() {
+int32_t GLManager::GetStreamId() const {
+  return 0;
+}
+
+void GLManager::FlushOrderingBarrierOnStream(int32_t stream_id) {
   // This is only relevant for out-of-process command buffers.
 }
 

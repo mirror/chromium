@@ -16,10 +16,7 @@
 #include <mach/mach.h>
 #elif defined(OS_FUCHSIA)
 #include <magenta/syscalls.h>
-#include <mxio/limits.h>
 #endif
-
-#include "base/logging.h"
 
 namespace mojo {
 namespace edk {
@@ -37,7 +34,6 @@ struct MOJO_SYSTEM_IMPL_EXPORT PlatformHandle {
   }
   static PlatformHandle ForFd(int fd) {
     PlatformHandle platform_handle;
-    DCHECK_LT(fd, MAX_MXIO_FD);
     platform_handle.fd = fd;
     return platform_handle;
   }

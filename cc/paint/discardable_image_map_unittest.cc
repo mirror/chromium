@@ -29,6 +29,20 @@
 namespace cc {
 namespace {
 
+PaintImage CreateDiscardablePaintImageWithColorSpace(
+    const gfx::Size& size,
+    const gfx::ColorSpace& color_space) {
+  sk_sp<SkImage> sk_image = CreateDiscardableImage(size);
+  if (color_space.IsValid()) {
+    sk_image = sk_image->makeColorSpace(color_space.ToSkColorSpace(),
+                                        SkTransferFunctionBehavior::kIgnore);
+  }
+  return PaintImageBuilder()
+      .set_id(PaintImage::GetNextId())
+      .set_image(std::move(sk_image))
+      .TakePaintImage();
+}
+
 struct PositionScaleDrawImage {
   PositionScaleDrawImage(const PaintImage& image,
                          const gfx::Rect& image_rect,
@@ -564,7 +578,7 @@ TEST_F(DiscardableImageMapTest, GetDiscardableImagesInShader) {
   // |---|---|---|---|
   // | x |   | x |   |
   // |---|---|---|---|
-  PaintImage discardable_image[4][4];
+  sk_sp<SkImage> discardable_image[4][4];
 
   // Skia doesn't allow shader instantiation with non-invertible local
   // transforms, so we can't let the scale drop all the way to 0.
@@ -573,18 +587,16 @@ TEST_F(DiscardableImageMapTest, GetDiscardableImagesInShader) {
   for (int y = 0; y < 4; ++y) {
     for (int x = 0; x < 4; ++x) {
       if ((x + y) & 1) {
-        discardable_image[y][x] =
-            PaintImageBuilder()
-                .set_id(y * 4 + x)
-                .set_paint_image_generator(
-                    CreatePaintImageGenerator(gfx::Size(500, 500)))
-                .TakePaintImage();
+        discardable_image[y][x] = CreateDiscardableImage(gfx::Size(500, 500));
         SkMatrix scale = SkMatrix::MakeScale(std::max(x * 0.5f, kMinScale),
                                              std::max(y * 0.5f, kMinScale));
         PaintFlags flags;
         flags.setShader(PaintShader::MakeImage(
-            discardable_image[y][x], SkShader::kClamp_TileMode,
-            SkShader::kClamp_TileMode, &scale));
+            PaintImageBuilder()
+                .set_id(y * 4 + x)
+                .set_image(discardable_image[y][x])
+                .TakePaintImage(),
+            SkShader::kClamp_TileMode, SkShader::kClamp_TileMode, &scale));
         content_layer_client.add_draw_rect(
             gfx::Rect(x * 512 + 6, y * 512 + 6, 500, 500), flags);
       }
@@ -604,7 +616,7 @@ TEST_F(DiscardableImageMapTest, GetDiscardableImagesInShader) {
           gfx::Rect(x * 512, y * 512, 500, 500), &draw_images);
       if ((x + y) & 1) {
         EXPECT_EQ(1u, draw_images.size()) << x << " " << y;
-        EXPECT_TRUE(draw_images[0]->paint_image() == discardable_image[y][x])
+        EXPECT_TRUE(draw_images[0]->image() == discardable_image[y][x])
             << x << " " << y;
         EXPECT_EQ(std::max(x * 0.5f, kMinScale),
                   draw_images[0]->scale().fWidth);
@@ -621,10 +633,10 @@ TEST_F(DiscardableImageMapTest, GetDiscardableImagesInShader) {
   image_map.GetDiscardableImagesInRect(gfx::Rect(512, 512, 2048, 2048),
                                        &draw_images);
   EXPECT_EQ(4u, draw_images.size());
-  EXPECT_TRUE(draw_images[0]->paint_image() == discardable_image[1][2]);
-  EXPECT_TRUE(draw_images[1]->paint_image() == discardable_image[2][1]);
-  EXPECT_TRUE(draw_images[2]->paint_image() == discardable_image[2][3]);
-  EXPECT_TRUE(draw_images[3]->paint_image() == discardable_image[3][2]);
+  EXPECT_TRUE(draw_images[0]->image() == discardable_image[1][2]);
+  EXPECT_TRUE(draw_images[1]->image() == discardable_image[2][1]);
+  EXPECT_TRUE(draw_images[2]->image() == discardable_image[2][3]);
+  EXPECT_TRUE(draw_images[3]->image() == discardable_image[3][2]);
 }
 
 TEST_F(DiscardableImageMapTest, ClipsImageRects) {
@@ -700,8 +712,8 @@ class DiscardableImageMapColorSpaceTest
 TEST_P(DiscardableImageMapColorSpaceTest, ColorSpace) {
   const gfx::ColorSpace image_color_space = GetParam();
   gfx::Rect visible_rect(500, 500);
-  PaintImage discardable_image = CreateDiscardablePaintImage(
-      gfx::Size(500, 500), image_color_space.ToSkColorSpace());
+  PaintImage discardable_image = CreateDiscardablePaintImageWithColorSpace(
+      gfx::Size(500, 500), image_color_space);
 
   FakeContentLayerClient content_layer_client;
   content_layer_client.set_bounds(visible_rect.size());

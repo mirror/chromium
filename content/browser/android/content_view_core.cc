@@ -101,6 +101,12 @@ int GetRenderProcessIdFromRenderViewHost(RenderViewHost* host) {
   return 0;
 }
 
+ScopedJavaLocalRef<jobject> CreateJavaRect(JNIEnv* env, const gfx::Rect& rect) {
+  return ScopedJavaLocalRef<jobject>(Java_ContentViewCore_createRect(
+      env, static_cast<int>(rect.x()), static_cast<int>(rect.y()),
+      static_cast<int>(rect.right()), static_cast<int>(rect.bottom())));
+}
+
 int ToGestureEventType(WebInputEvent::Type type) {
   switch (type) {
     case WebInputEvent::kGestureScrollBegin:
@@ -234,16 +240,21 @@ void ContentViewCore::UpdateWindowAndroid(
     JNIEnv* env,
     const base::android::JavaParamRef<jobject>& obj,
     jlong window_android) {
-  auto* window = reinterpret_cast<ui::WindowAndroid*>(window_android);
-  auto* old_window = GetWindowAndroid();
-  if (window == old_window)
+  ui::ViewAndroid* view = GetViewAndroid();
+  ui::WindowAndroid* window =
+      reinterpret_cast<ui::WindowAndroid*>(window_android);
+  if (window == GetWindowAndroid())
     return;
-
-  auto* view = GetViewAndroid();
-  if (old_window)
+  if (GetWindowAndroid()) {
+    for (auto& observer : observer_list_)
+      observer.OnDetachedFromWindow();
     view->RemoveFromParent();
-  if (window)
+  }
+  if (window) {
     window->AddChild(view);
+    for (auto& observer : observer_list_)
+      observer.OnAttachedToWindow();
+  }
 }
 
 base::android::ScopedJavaLocalRef<jobject>
@@ -532,6 +543,24 @@ void ContentViewCore::RequestDisallowInterceptTouchEvent() {
   ScopedJavaLocalRef<jobject> obj = java_ref_.get(env);
   if (!obj.is_null())
     Java_ContentViewCore_requestDisallowInterceptTouchEvent(env, obj);
+}
+
+void ContentViewCore::ShowDisambiguationPopup(const gfx::Rect& rect_pixels,
+                                              const SkBitmap& zoomed_bitmap) {
+  JNIEnv* env = AttachCurrentThread();
+
+  ScopedJavaLocalRef<jobject> obj = java_ref_.get(env);
+  if (obj.is_null())
+    return;
+
+  ScopedJavaLocalRef<jobject> rect_object(CreateJavaRect(env, rect_pixels));
+
+  ScopedJavaLocalRef<jobject> java_bitmap =
+      gfx::ConvertToJavaBitmap(&zoomed_bitmap);
+  DCHECK(!java_bitmap.is_null());
+
+  Java_ContentViewCore_showDisambiguationPopup(env, obj, rect_object,
+                                               java_bitmap);
 }
 
 void ContentViewCore::DidStopFlinging() {

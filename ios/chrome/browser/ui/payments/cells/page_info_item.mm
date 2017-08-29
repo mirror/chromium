@@ -5,7 +5,6 @@
 #import "ios/chrome/browser/ui/payments/cells/page_info_item.h"
 
 #import "ios/chrome/browser/ui/colors/MDCPalette+CrAdditions.h"
-#import "ios/chrome/browser/ui/payments/cells/accessibility_util.h"
 #import "ios/chrome/browser/ui/uikit_ui_util.h"
 #include "ios/chrome/grit/ios_theme_resources.h"
 #import "ios/third_party/material_components_ios/src/components/Palettes/src/MaterialPalettes.h"
@@ -238,10 +237,8 @@ const CGFloat kLockIndicatorVerticalPadding = 4;
 #pragma mark - Accessibility
 
 - (NSString*)accessibilityLabel {
-  AccessibilityLabelBuilder* builder = [[AccessibilityLabelBuilder alloc] init];
-  [builder appendItem:self.pageTitleLabel.text];
-  [builder appendItem:self.pageHostLabel.text];
-  return [builder buildAccessibilityLabel];
+  return [NSString stringWithFormat:@"%@, %@", self.pageTitleLabel.text,
+                                    self.pageHostLabel.text];
 }
 
 @end

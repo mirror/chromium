@@ -206,7 +206,9 @@ public class InstallerDelegate {
      * @param packageName Name of the package to check.
      */
     public @InstallState int determineInstallState(String packageName) {
-        if (mIsRunning) {
+        if (mIsRunning || TextUtils.isEmpty(packageName)) {
+            // The package name being empty means we are installing a WebAPK, where we don't know
+            // what the package name is until installation is complete.
             return INSTALL_STATE_INSTALLING;
         }
 

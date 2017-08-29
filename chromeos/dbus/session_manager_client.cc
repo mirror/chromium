@@ -443,7 +443,6 @@ class SessionManagerClientImpl : public SessionManagerClient {
                         const cryptohome::Identification& cryptohome_id,
                         bool skip_boot_completed_broadcast,
                         bool scan_vendor_priv_app,
-                        bool native_bridge_experiment,
                         const StartArcInstanceCallback& callback) override {
     dbus::MethodCall method_call(
         login_manager::kSessionManagerInterface,
@@ -451,7 +450,8 @@ class SessionManagerClientImpl : public SessionManagerClient {
     dbus::MessageWriter writer(&method_call);
 
     login_manager::StartArcInstanceRequest request;
-    request.set_native_bridge_experiment(native_bridge_experiment);
+    // TODO(yusukes): Make this default-enabled and remove the code.
+    request.set_create_server_socket(true);
     switch (startup_mode) {
       case ArcStartupMode::FULL:
         request.set_account_id(cryptohome_id.id());
@@ -1113,7 +1113,6 @@ class SessionManagerClientStubImpl : public SessionManagerClient {
                         const cryptohome::Identification& cryptohome_id,
                         bool disable_boot_completed_broadcast,
                         bool enable_vendor_privileged,
-                        bool native_bridge_experiment,
                         const StartArcInstanceCallback& callback) override {
     callback.Run(StartArcInstanceResult::UNKNOWN_ERROR, std::string(),
                  base::ScopedFD());

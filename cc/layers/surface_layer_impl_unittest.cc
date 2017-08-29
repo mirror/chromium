@@ -180,8 +180,7 @@ TEST(SurfaceLayerImplTest, SurfaceStretchedToLayerBounds) {
 
   const QuadList& quads = render_pass->quad_list;
   ASSERT_EQ(2u, quads.size());
-  const viz::SharedQuadState* shared_quad_state =
-      quads.front()->shared_quad_state;
+  const SharedQuadState* shared_quad_state = quads.front()->shared_quad_state;
 
   // We expect that the transform for the quad stretches the quad to cover the
   // entire bounds of the layer.

@@ -46,22 +46,12 @@ const bool kSupportClientSideArrays = true;
 }
 
 namespace egl {
-// static
-gpu::GpuFeatureInfo Context::platform_gpu_feature_info_;
-
-// static
-void Context::SetPlatformGpuFeatureInfo(
-    const gpu::GpuFeatureInfo& gpu_feature_info) {
-  platform_gpu_feature_info_ = gpu_feature_info;
-}
-
 Context::Context(Display* display, const Config* config)
     : display_(display),
       config_(config),
       is_current_in_some_thread_(false),
       is_destroyed_(false),
-      gpu_driver_bug_workarounds_(
-          platform_gpu_feature_info_.enabled_gpu_driver_bug_workarounds),
+      gpu_driver_bug_workarounds_(base::CommandLine::ForCurrentProcess()),
       translator_cache_(gpu::GpuPreferences()) {}
 
 Context::~Context() {
@@ -203,7 +193,11 @@ gpu::CommandBufferId Context::GetCommandBufferID() const {
   return gpu::CommandBufferId();
 }
 
-void Context::FlushPendingWork() {
+int32_t Context::GetStreamId() const {
+  return 0;
+}
+
+void Context::FlushOrderingBarrierOnStream(int32_t stream_id) {
   // This is only relevant for out-of-process command buffers.
 }
 
@@ -286,7 +280,6 @@ bool Context::CreateService(gl::GLSurface* gl_surface) {
       gl::init::CreateGLContext(nullptr, gl_surface, context_attribs));
   if (!gl_context)
     return false;
-  platform_gpu_feature_info_.ApplyToGLContext(gl_context.get());
 
   gl_context->MakeCurrent(gl_surface);
 

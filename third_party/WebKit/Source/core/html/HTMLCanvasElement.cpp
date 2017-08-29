@@ -189,22 +189,10 @@ Node::InsertionNotificationRequest HTMLCanvasElement::InsertedInto(
 }
 
 void HTMLCanvasElement::setHeight(int value, ExceptionState& exception_state) {
-  if (IsPlaceholderRegistered()) {
-    exception_state.ThrowDOMException(
-        kInvalidStateError,
-        "Cannot resize canvas after call to transferControlToOffscreen().");
-    return;
-  }
   SetIntegralAttribute(heightAttr, value);
 }
 
 void HTMLCanvasElement::setWidth(int value, ExceptionState& exception_state) {
-  if (IsPlaceholderRegistered()) {
-    exception_state.ThrowDOMException(
-        kInvalidStateError,
-        "Cannot resize canvas after call to transferControlToOffscreen().");
-    return;
-  }
   SetIntegralAttribute(widthAttr, value);
 }
 
@@ -1085,9 +1073,9 @@ void HTMLCanvasElement::UpdateExternallyAllocatedMemory() const {
   if (copied_image_)
     buffer_count++;
 
-  // Multiplying number of buffers by bytes per pixel
+  // Four bytes per pixel per buffer.
   CheckedNumeric<intptr_t> checked_externally_allocated_memory =
-      buffer_count * GetCanvasColorParams().BytesPerPixel();
+      4 * buffer_count;
   if (Is3d()) {
     checked_externally_allocated_memory +=
         context_->ExternallyAllocatedBytesPerPixel();
@@ -1346,11 +1334,21 @@ ScriptPromise HTMLCanvasElement::CreateImageBitmap(
     ScriptState* script_state,
     EventTarget& event_target,
     Optional<IntRect> crop_rect,
-    const ImageBitmapOptions& options) {
+    const ImageBitmapOptions& options,
+    ExceptionState& exception_state) {
   DCHECK(event_target.ToLocalDOMWindow());
-
+  if ((crop_rect &&
+       !ImageBitmap::IsSourceSizeValid(crop_rect->Width(), crop_rect->Height(),
+                                       exception_state)) ||
+      !ImageBitmap::IsSourceSizeValid(BitmapSourceSize().Width(),
+                                      BitmapSourceSize().Height(),
+                                      exception_state))
+    return ScriptPromise();
+  if (!ImageBitmap::IsResizeOptionValid(options, exception_state))
+    return ScriptPromise();
   return ImageBitmapSource::FulfillImageBitmap(
-      script_state, ImageBitmap::Create(this, crop_rect, options));
+      script_state,
+      IsPaintable() ? ImageBitmap::Create(this, crop_rect, options) : nullptr);
 }
 
 void HTMLCanvasElement::SetPlaceholderFrame(
@@ -1361,8 +1359,6 @@ void HTMLCanvasElement::SetPlaceholderFrame(
   OffscreenCanvasPlaceholder::SetPlaceholderFrame(
       std::move(image), std::move(dispatcher), std::move(task_runner),
       resource_id);
-  IntSize new_size(PlaceholderFrame()->width(), PlaceholderFrame()->height());
-  SetSize(new_size);
   NotifyListenersCanvasChanged();
 }
 

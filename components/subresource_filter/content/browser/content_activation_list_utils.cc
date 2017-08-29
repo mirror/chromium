@@ -22,18 +22,7 @@ ActivationList GetListForThreatTypeAndMetadata(
     }
     return ActivationList::PHISHING_INTERSTITIAL;
   } else if (subresource_filter) {
-    switch (threat_type_metadata.threat_pattern_type) {
-      case safe_browsing::ThreatPatternType::SUBRESOURCE_FILTER_BETTER_ADS:
-        return ActivationList::BETTER_ADS;
-      case safe_browsing::ThreatPatternType::SUBRESOURCE_FILTER_ABUSIVE_ADS:
-        return ActivationList::ABUSIVE_ADS;
-      case safe_browsing::ThreatPatternType::SUBRESOURCE_FILTER_ALL_ADS:
-        return ActivationList::ALL_ADS;
-      case safe_browsing::ThreatPatternType::NONE:
-        return ActivationList::SUBRESOURCE_FILTER;
-      default:
-        break;
-    }
+    return ActivationList::SUBRESOURCE_FILTER;
   }
 
   return ActivationList::NONE;

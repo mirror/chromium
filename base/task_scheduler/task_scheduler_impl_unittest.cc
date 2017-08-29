@@ -15,8 +15,6 @@
 #include "base/callback.h"
 #include "base/macros.h"
 #include "base/memory/ptr_util.h"
-#include "base/metrics/field_trial.h"
-#include "base/metrics/field_trial_params.h"
 #include "base/synchronization/lock.h"
 #include "base/synchronization/waitable_event.h"
 #include "base/task_scheduler/scheduler_worker_pool_params.h"
@@ -191,18 +189,7 @@ std::vector<TraitsExecutionModePair> GetTraitsExecutionModePairs() {
 class TaskSchedulerImplTest
     : public testing::TestWithParam<TraitsExecutionModePair> {
  protected:
-  TaskSchedulerImplTest() : scheduler_("Test"), field_trial_list_(nullptr) {}
-
-  void EnableAllTasksUserBlocking() {
-    constexpr char kFieldTrialName[] = "BrowserScheduler";
-    constexpr char kFieldTrialTestGroup[] = "DummyGroup";
-    std::map<std::string, std::string> variation_params;
-    variation_params["AllTasksUserBlocking"] = "true";
-    base::AssociateFieldTrialParams(kFieldTrialName, kFieldTrialTestGroup,
-                                    variation_params);
-    base::FieldTrialList::CreateFieldTrial(kFieldTrialName,
-                                           kFieldTrialTestGroup);
-  }
+  TaskSchedulerImplTest() : scheduler_("Test") {}
 
   void StartTaskScheduler() {
     constexpr TimeDelta kSuggestedReclaimTime = TimeDelta::FromSeconds(30);
@@ -226,8 +213,6 @@ class TaskSchedulerImplTest
   TaskSchedulerImpl scheduler_;
 
  private:
-  base::FieldTrialList field_trial_list_;
-
   DISALLOW_COPY_AND_ASSIGN(TaskSchedulerImplTest);
 };
 
@@ -354,45 +339,6 @@ TEST_P(TaskSchedulerImplTest, PostTaskViaTaskRunnerBeforeStart) {
   task_running.Wait();
 }
 
-// Verify that all tasks posted to a TaskRunner after Start() run in a
-// USER_BLOCKING environment when the AllTasksUserBlocking variation param of
-// the BrowserScheduler experiment is true.
-TEST_P(TaskSchedulerImplTest, AllTasksAreUserBlockingTaskRunner) {
-  EnableAllTasksUserBlocking();
-  StartTaskScheduler();
-
-  WaitableEvent task_running(WaitableEvent::ResetPolicy::MANUAL,
-                             WaitableEvent::InitialState::NOT_SIGNALED);
-  CreateTaskRunnerWithTraitsAndExecutionMode(&scheduler_, GetParam().traits,
-                                             GetParam().execution_mode)
-      ->PostTask(FROM_HERE,
-                 BindOnce(&VerifyTaskEnvironmentAndSignalEvent,
-                          TaskTraits::Override(GetParam().traits,
-                                               {TaskPriority::USER_BLOCKING}),
-                          Unretained(&task_running)));
-  task_running.Wait();
-}
-
-// Verify that all tasks posted via PostDelayedTaskWithTraits() after Start()
-// run in a USER_BLOCKING environment when the AllTasksUserBlocking variation
-// param of the BrowserScheduler experiment is true.
-TEST_P(TaskSchedulerImplTest, AllTasksAreUserBlocking) {
-  EnableAllTasksUserBlocking();
-  StartTaskScheduler();
-
-  WaitableEvent task_running(WaitableEvent::ResetPolicy::MANUAL,
-                             WaitableEvent::InitialState::NOT_SIGNALED);
-  // Ignore |params.execution_mode| in this test.
-  scheduler_.PostDelayedTaskWithTraits(
-      FROM_HERE, GetParam().traits,
-      BindOnce(&VerifyTaskEnvironmentAndSignalEvent,
-               TaskTraits::Override(GetParam().traits,
-                                    {TaskPriority::USER_BLOCKING}),
-               Unretained(&task_running)),
-      TimeDelta());
-  task_running.Wait();
-}
-
 INSTANTIATE_TEST_CASE_P(OneTraitsExecutionModePair,
                         TaskSchedulerImplTest,
                         ::testing::ValuesIn(GetTraitsExecutionModePairs()));
@@ -417,20 +363,19 @@ TEST_F(TaskSchedulerImplTest, MultipleTraitsExecutionModePairs) {
   }
 }
 
-TEST_F(TaskSchedulerImplTest,
-       GetMaxConcurrentNonBlockedTasksWithTraitsDeprecated) {
+TEST_F(TaskSchedulerImplTest, GetMaxConcurrentTasksWithTraitsDeprecated) {
   StartTaskScheduler();
-  EXPECT_EQ(1, scheduler_.GetMaxConcurrentNonBlockedTasksWithTraitsDeprecated(
+  EXPECT_EQ(1, scheduler_.GetMaxConcurrentTasksWithTraitsDeprecated(
                    {TaskPriority::BACKGROUND}));
-  EXPECT_EQ(3, scheduler_.GetMaxConcurrentNonBlockedTasksWithTraitsDeprecated(
+  EXPECT_EQ(3, scheduler_.GetMaxConcurrentTasksWithTraitsDeprecated(
                    {MayBlock(), TaskPriority::BACKGROUND}));
-  EXPECT_EQ(4, scheduler_.GetMaxConcurrentNonBlockedTasksWithTraitsDeprecated(
+  EXPECT_EQ(4, scheduler_.GetMaxConcurrentTasksWithTraitsDeprecated(
                    {TaskPriority::USER_VISIBLE}));
-  EXPECT_EQ(12, scheduler_.GetMaxConcurrentNonBlockedTasksWithTraitsDeprecated(
+  EXPECT_EQ(12, scheduler_.GetMaxConcurrentTasksWithTraitsDeprecated(
                     {MayBlock(), TaskPriority::USER_VISIBLE}));
-  EXPECT_EQ(4, scheduler_.GetMaxConcurrentNonBlockedTasksWithTraitsDeprecated(
+  EXPECT_EQ(4, scheduler_.GetMaxConcurrentTasksWithTraitsDeprecated(
                    {TaskPriority::USER_BLOCKING}));
-  EXPECT_EQ(12, scheduler_.GetMaxConcurrentNonBlockedTasksWithTraitsDeprecated(
+  EXPECT_EQ(12, scheduler_.GetMaxConcurrentTasksWithTraitsDeprecated(
                     {MayBlock(), TaskPriority::USER_BLOCKING}));
 }
 

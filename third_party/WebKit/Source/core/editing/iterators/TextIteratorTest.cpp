@@ -667,7 +667,7 @@ TEST_F(TextIteratorTest, EndingConditionWithDisplayNoneInShadowTree) {
   SetShadowContent(shadow_content, "host");
 
   ShadowRoot* shadow_root =
-      GetDocument().getElementById("host")->OpenShadowRoot();
+      GetDocument().getElementById("host")->openShadowRoot();
   Node* b_in_shadow_tree = shadow_root->getElementById("end");
 
   Position start(&GetDocument(), 0);

@@ -646,7 +646,7 @@ class LayerTreeHostImplTest : public testing::Test,
 
   void InitializeImageWorker(const LayerTreeSettings& settings) {
     if (settings.enable_checker_imaging) {
-      image_worker_ = std::make_unique<base::Thread>("ImageWorker");
+      image_worker_ = base::MakeUnique<base::Thread>("ImageWorker");
       ASSERT_TRUE(image_worker_->Start());
     } else {
       image_worker_.reset();
@@ -1527,119 +1527,87 @@ TEST_F(LayerTreeHostImplTest, ScrollBoundaryBehaviorPreventsPropagation) {
   EXPECT_VECTOR_EQ(gfx::Vector2dF(30, 30), scroll_layer->CurrentScrollOffset());
   EXPECT_VECTOR_EQ(gfx::Vector2dF(), overflow->CurrentScrollOffset());
 
-  gfx::Vector2dF x_delta(-10, 0);
-  gfx::Vector2dF y_delta(0, -10);
-  gfx::Vector2dF diagonal_delta(-10, -10);
-  host_impl_->ScrollBy(UpdateState(scroll_position, x_delta).get());
+  gfx::Vector2dF x_dominant_delta(-10, -5);
+  gfx::Vector2dF y_dominant_delta(-5, -10);
+  host_impl_->ScrollBy(UpdateState(scroll_position, x_dominant_delta).get());
   host_impl_->ScrollEnd(EndState().get());
-  EXPECT_VECTOR_EQ(gfx::Vector2dF(20, 30), scroll_layer->CurrentScrollOffset());
+  EXPECT_VECTOR_EQ(gfx::Vector2dF(20, 25), scroll_layer->CurrentScrollOffset());
   EXPECT_VECTOR_EQ(gfx::Vector2dF(0, 0), overflow->CurrentScrollOffset());
 
   overflow->test_properties()->scroll_boundary_behavior =
       ScrollBoundaryBehavior(
-          ScrollBoundaryBehavior::kScrollBoundaryBehaviorTypeContain,
+          ScrollBoundaryBehavior::kScrollBoundaryBehaviorTypeNone,
           ScrollBoundaryBehavior::kScrollBoundaryBehaviorTypeAuto);
   host_impl_->active_tree()->BuildPropertyTreesForTesting();
 
   DrawFrame();
 
-  // ScrollBoundaryBehaviorContain on x should prevent propagations of scroll
-  // on x.
+  // ScrollBoundaryBehaviorNone on x should prevent x-dominant-scroll
+  // propagation.
   EXPECT_EQ(
       InputHandler::SCROLL_ON_IMPL_THREAD,
       host_impl_
           ->ScrollBegin(BeginState(scroll_position).get(), InputHandler::WHEEL)
           .thread);
-  EXPECT_VECTOR_EQ(gfx::Vector2dF(20, 30), scroll_layer->CurrentScrollOffset());
+  EXPECT_VECTOR_EQ(gfx::Vector2dF(20, 25), scroll_layer->CurrentScrollOffset());
   EXPECT_VECTOR_EQ(gfx::Vector2dF(0, 0), overflow->CurrentScrollOffset());
 
-  host_impl_->ScrollBy(UpdateState(scroll_position, x_delta).get());
+  host_impl_->ScrollBy(UpdateState(scroll_position, x_dominant_delta).get());
   host_impl_->ScrollEnd(EndState().get());
-  EXPECT_VECTOR_EQ(gfx::Vector2dF(20, 30), scroll_layer->CurrentScrollOffset());
+  EXPECT_VECTOR_EQ(gfx::Vector2dF(20, 25), scroll_layer->CurrentScrollOffset());
   EXPECT_VECTOR_EQ(gfx::Vector2dF(0, 0), overflow->CurrentScrollOffset());
 
-  // ScrollBoundaryBehaviorContain on x shouldn't prevent propagations of
-  // scroll on y.
+  // ScrollBoundaryBehaviorNone on x shouldn't prevent y-dominant-scroll
+  // propagation.
   EXPECT_EQ(
       InputHandler::SCROLL_ON_IMPL_THREAD,
       host_impl_
           ->ScrollBegin(BeginState(scroll_position).get(), InputHandler::WHEEL)
           .thread);
-  EXPECT_VECTOR_EQ(gfx::Vector2dF(20, 30), scroll_layer->CurrentScrollOffset());
+  EXPECT_VECTOR_EQ(gfx::Vector2dF(20, 25), scroll_layer->CurrentScrollOffset());
   EXPECT_VECTOR_EQ(gfx::Vector2dF(0, 0), overflow->CurrentScrollOffset());
 
-  host_impl_->ScrollBy(UpdateState(scroll_position, y_delta).get());
+  host_impl_->ScrollBy(UpdateState(scroll_position, y_dominant_delta).get());
   host_impl_->ScrollEnd(EndState().get());
-  EXPECT_VECTOR_EQ(gfx::Vector2dF(20, 20), scroll_layer->CurrentScrollOffset());
+  EXPECT_VECTOR_EQ(gfx::Vector2dF(15, 15), scroll_layer->CurrentScrollOffset());
   EXPECT_VECTOR_EQ(gfx::Vector2dF(0, 0), overflow->CurrentScrollOffset());
 
-  // A scroll update with both x & y delta will adhere to the most restrictive
-  // case.
-  EXPECT_EQ(
-      InputHandler::SCROLL_ON_IMPL_THREAD,
-      host_impl_
-          ->ScrollBegin(BeginState(scroll_position).get(), InputHandler::WHEEL)
-          .thread);
-  EXPECT_VECTOR_EQ(gfx::Vector2dF(20, 20), scroll_layer->CurrentScrollOffset());
-  EXPECT_VECTOR_EQ(gfx::Vector2dF(0, 0), overflow->CurrentScrollOffset());
-
-  host_impl_->ScrollBy(UpdateState(scroll_position, diagonal_delta).get());
-  host_impl_->ScrollEnd(EndState().get());
-  EXPECT_VECTOR_EQ(gfx::Vector2dF(20, 20), scroll_layer->CurrentScrollOffset());
-  EXPECT_VECTOR_EQ(gfx::Vector2dF(0, 0), overflow->CurrentScrollOffset());
-
-  // Changing scroll-boundary-behavior to y axis.
   overflow->test_properties()->scroll_boundary_behavior =
       ScrollBoundaryBehavior(
           ScrollBoundaryBehavior::kScrollBoundaryBehaviorTypeAuto,
-          ScrollBoundaryBehavior::kScrollBoundaryBehaviorTypeContain);
+          ScrollBoundaryBehavior::kScrollBoundaryBehaviorTypeNone);
   host_impl_->active_tree()->BuildPropertyTreesForTesting();
 
   DrawFrame();
 
-  // ScrollBoundaryBehaviorContain on y shouldn't prevent propagations of
-  // scroll on x.
+  // ScrollBoundaryBehaviorNone on y shouldn't prevent x-dominant-scroll
+  // propagation.
   EXPECT_EQ(
       InputHandler::SCROLL_ON_IMPL_THREAD,
       host_impl_
           ->ScrollBegin(BeginState(scroll_position).get(), InputHandler::WHEEL)
           .thread);
-  EXPECT_VECTOR_EQ(gfx::Vector2dF(20, 20), scroll_layer->CurrentScrollOffset());
+  EXPECT_VECTOR_EQ(gfx::Vector2dF(15, 15), scroll_layer->CurrentScrollOffset());
   EXPECT_VECTOR_EQ(gfx::Vector2dF(0, 0), overflow->CurrentScrollOffset());
 
-  host_impl_->ScrollBy(UpdateState(scroll_position, x_delta).get());
+  host_impl_->ScrollBy(UpdateState(scroll_position, x_dominant_delta).get());
   host_impl_->ScrollEnd(EndState().get());
-  EXPECT_VECTOR_EQ(gfx::Vector2dF(10, 20), scroll_layer->CurrentScrollOffset());
+  EXPECT_VECTOR_EQ(gfx::Vector2dF(5, 10), scroll_layer->CurrentScrollOffset());
   EXPECT_VECTOR_EQ(gfx::Vector2dF(0, 0), overflow->CurrentScrollOffset());
 
-  // ScrollBoundaryBehaviorContain on y should prevent propagations of scroll
-  // on y.
+  // ScrollBoundaryBehaviorNone on y should prevent y-dominant-scroll
+  // propagation.
   EXPECT_EQ(
       InputHandler::SCROLL_ON_IMPL_THREAD,
       host_impl_
           ->ScrollBegin(BeginState(scroll_position).get(), InputHandler::WHEEL)
           .thread);
-  EXPECT_VECTOR_EQ(gfx::Vector2dF(10, 20), scroll_layer->CurrentScrollOffset());
+  EXPECT_VECTOR_EQ(gfx::Vector2dF(5, 10), scroll_layer->CurrentScrollOffset());
   EXPECT_VECTOR_EQ(gfx::Vector2dF(0, 0), overflow->CurrentScrollOffset());
 
-  host_impl_->ScrollBy(UpdateState(scroll_position, y_delta).get());
+  host_impl_->ScrollBy(UpdateState(scroll_position, y_dominant_delta).get());
   host_impl_->ScrollEnd(EndState().get());
-  EXPECT_VECTOR_EQ(gfx::Vector2dF(10, 20), scroll_layer->CurrentScrollOffset());
-  EXPECT_VECTOR_EQ(gfx::Vector2dF(0, 0), overflow->CurrentScrollOffset());
-
-  // A scroll update with both x & y delta will adhere to the most restrictive
-  // case.
-  EXPECT_EQ(
-      InputHandler::SCROLL_ON_IMPL_THREAD,
-      host_impl_
-          ->ScrollBegin(BeginState(scroll_position).get(), InputHandler::WHEEL)
-          .thread);
-  EXPECT_VECTOR_EQ(gfx::Vector2dF(10, 20), scroll_layer->CurrentScrollOffset());
-  EXPECT_VECTOR_EQ(gfx::Vector2dF(0, 0), overflow->CurrentScrollOffset());
-
-  host_impl_->ScrollBy(UpdateState(scroll_position, diagonal_delta).get());
-  host_impl_->ScrollEnd(EndState().get());
-  EXPECT_VECTOR_EQ(gfx::Vector2dF(10, 20), scroll_layer->CurrentScrollOffset());
+  EXPECT_VECTOR_EQ(gfx::Vector2dF(5, 10), scroll_layer->CurrentScrollOffset());
   EXPECT_VECTOR_EQ(gfx::Vector2dF(0, 0), overflow->CurrentScrollOffset());
 }
 
@@ -3161,14 +3129,8 @@ class LayerTreeHostImplTestScrollbarAnimation : public LayerTreeHostImplTest {
     EXPECT_FALSE(did_request_next_frame_);
     EXPECT_TRUE(did_request_redraw_);
     did_request_redraw_ = false;
-    if (expecting_animations) {
-      EXPECT_EQ(base::TimeDelta::FromMilliseconds(20),
-                requested_animation_delay_);
-      EXPECT_FALSE(animation_task_.Equals(base::Closure()));
-    } else {
-      EXPECT_EQ(base::TimeDelta(), requested_animation_delay_);
-      EXPECT_TRUE(animation_task_.Equals(base::Closure()));
-    }
+    EXPECT_EQ(base::TimeDelta(), requested_animation_delay_);
+    EXPECT_TRUE(animation_task_.Equals(base::Closure()));
 
     host_impl_->ScrollEnd(EndState().get());
     EXPECT_FALSE(did_request_next_frame_);
@@ -3357,158 +3319,6 @@ TEST_F(LayerTreeHostImplTestScrollbarOpacity, AuraOverlay) {
 
 TEST_F(LayerTreeHostImplTestScrollbarOpacity, NoAnimator) {
   RunTest(LayerTreeSettings::NO_ANIMATOR);
-}
-
-class LayerTreeHostImplTestMultiScrollable : public LayerTreeHostImplTest {
- public:
-  void SetUpLayers(LayerTreeSettings settings) {
-    is_aura_scrollbar_ =
-        settings.scrollbar_animator == LayerTreeSettings::AURA_OVERLAY;
-    gfx::Size viewport_size(300, 200);
-    gfx::Size content_size(1000, 1000);
-    gfx::Size child_layer_size(250, 150);
-    gfx::Size scrollbar_size_1(gfx::Size(15, viewport_size.height()));
-    gfx::Size scrollbar_size_2(gfx::Size(15, child_layer_size.height()));
-
-    const int scrollbar_1_id = 10;
-    const int scrollbar_2_id = 11;
-    const int child_scroll_id = 13;
-
-    CreateHostImpl(settings, CreateLayerTreeFrameSink());
-    host_impl_->active_tree()->SetDeviceScaleFactor(1);
-    host_impl_->SetViewportSize(viewport_size);
-    CreateScrollAndContentsLayers(host_impl_->active_tree(), content_size);
-    host_impl_->active_tree()->InnerViewportContainerLayer()->SetBounds(
-        viewport_size);
-    LayerImpl* root_scroll =
-        host_impl_->active_tree()->OuterViewportScrollLayer();
-
-    // scrollbar_1 on root scroll.
-    std::unique_ptr<SolidColorScrollbarLayerImpl> scrollbar_1 =
-        SolidColorScrollbarLayerImpl::Create(host_impl_->active_tree(),
-                                             scrollbar_1_id, VERTICAL, 15, 0,
-                                             true, true);
-    scrollbar_1_ = scrollbar_1.get();
-    scrollbar_1->SetScrollElementId(root_scroll->element_id());
-    scrollbar_1->SetDrawsContent(true);
-    scrollbar_1->SetBounds(scrollbar_size_1);
-    TouchActionRegion touch_action_region;
-    touch_action_region.Union(kTouchActionNone, gfx::Rect(scrollbar_size_1));
-    scrollbar_1->SetTouchActionRegion(touch_action_region);
-    scrollbar_1->SetCurrentPos(0);
-    scrollbar_1->SetPosition(gfx::PointF(0, 0));
-    host_impl_->active_tree()
-        ->InnerViewportContainerLayer()
-        ->test_properties()
-        ->AddChild(std::move(scrollbar_1));
-
-    // scrollbar_2 on child.
-    std::unique_ptr<SolidColorScrollbarLayerImpl> scrollbar_2 =
-        SolidColorScrollbarLayerImpl::Create(host_impl_->active_tree(),
-                                             scrollbar_2_id, VERTICAL, 15, 0,
-                                             true, true);
-    scrollbar_2_ = scrollbar_2.get();
-    std::unique_ptr<LayerImpl> child =
-        LayerImpl::Create(host_impl_->active_tree(), child_scroll_id);
-    child->SetPosition(gfx::PointF(50, 50));
-    child->SetBounds(child_layer_size);
-    child->SetDrawsContent(true);
-    child->SetScrollable(gfx::Size(100, 100));
-    child->SetElementId(LayerIdToElementIdForTesting(child->id()));
-    ElementId child_element_id = child->element_id();
-
-    scrollbar_2->SetScrollElementId(child_element_id);
-    scrollbar_2->SetDrawsContent(true);
-    scrollbar_2->SetBounds(scrollbar_size_2);
-    scrollbar_2->SetCurrentPos(0);
-    scrollbar_2->SetPosition(gfx::PointF(0, 0));
-
-    child->test_properties()->AddChild(std::move(scrollbar_2));
-    root_scroll->test_properties()->AddChild(std::move(child));
-
-    host_impl_->active_tree()->BuildPropertyTreesForTesting();
-    host_impl_->active_tree()->UpdateScrollbarGeometries();
-    host_impl_->active_tree()->DidBecomeActive();
-
-    ResetScrollbars();
-  }
-
-  void ResetScrollbars() {
-    scrollbar_1_->test_properties()->opacity = 0.f;
-    scrollbar_2_->test_properties()->opacity = 0.f;
-
-    host_impl_->active_tree()->BuildPropertyTreesForTesting();
-
-    if (is_aura_scrollbar_)
-      animation_task_ = base::Closure();
-  }
-
-  bool is_aura_scrollbar_;
-  SolidColorScrollbarLayerImpl* scrollbar_1_;
-  SolidColorScrollbarLayerImpl* scrollbar_2_;
-};
-
-TEST_F(LayerTreeHostImplTestMultiScrollable,
-       ScrollbarFlashAfterAnyScrollUpdate) {
-  LayerTreeSettings settings = DefaultSettings();
-  settings.scrollbar_fade_delay = base::TimeDelta::FromMilliseconds(500);
-  settings.scrollbar_fade_duration = base::TimeDelta::FromMilliseconds(300);
-  settings.scrollbar_animator = LayerTreeSettings::AURA_OVERLAY;
-  settings.scrollbar_flash_after_any_scroll_update = true;
-
-  SetUpLayers(settings);
-
-  EXPECT_EQ(scrollbar_1_->Opacity(), 0.f);
-  EXPECT_EQ(scrollbar_2_->Opacity(), 0.f);
-
-  // Scroll on root should flash all scrollbars.
-  host_impl_->RootScrollBegin(BeginState(gfx::Point(10, 10)).get(),
-                              InputHandler::WHEEL);
-  host_impl_->ScrollBy(UpdateState(gfx::Point(), gfx::Vector2d(0, 10)).get());
-  host_impl_->ScrollEnd(EndState().get());
-
-  EXPECT_TRUE(scrollbar_1_->Opacity());
-  EXPECT_TRUE(scrollbar_2_->Opacity());
-
-  EXPECT_FALSE(animation_task_.Equals(base::Closure()));
-  ResetScrollbars();
-
-  // Scroll on child should flash all scrollbars.
-  host_impl_->ScrollBegin(BeginState(gfx::Point(51, 51)).get(),
-                          InputHandler::WHEEL);
-  host_impl_->ScrollAnimated(gfx::Point(51, 51), gfx::Vector2d(0, 100));
-  host_impl_->ScrollEnd(EndState().get());
-
-  EXPECT_TRUE(scrollbar_1_->Opacity());
-  EXPECT_TRUE(scrollbar_2_->Opacity());
-
-  EXPECT_FALSE(animation_task_.Equals(base::Closure()));
-}
-
-TEST_F(LayerTreeHostImplTestMultiScrollable, ScrollbarFlashWhenMouseEnter) {
-  LayerTreeSettings settings = DefaultSettings();
-  settings.scrollbar_fade_delay = base::TimeDelta::FromMilliseconds(500);
-  settings.scrollbar_fade_duration = base::TimeDelta::FromMilliseconds(300);
-  settings.scrollbar_animator = LayerTreeSettings::AURA_OVERLAY;
-  settings.scrollbar_flash_when_mouse_enter = true;
-
-  SetUpLayers(settings);
-
-  EXPECT_EQ(scrollbar_1_->Opacity(), 0.f);
-  EXPECT_EQ(scrollbar_2_->Opacity(), 0.f);
-
-  // Scroll should flash when mouse enter.
-  host_impl_->MouseMoveAt(gfx::Point(1, 1));
-
-  EXPECT_TRUE(scrollbar_1_->Opacity());
-  EXPECT_FALSE(scrollbar_2_->Opacity());
-  EXPECT_FALSE(animation_task_.Equals(base::Closure()));
-
-  host_impl_->MouseMoveAt(gfx::Point(51, 51));
-
-  EXPECT_TRUE(scrollbar_1_->Opacity());
-  EXPECT_TRUE(scrollbar_2_->Opacity());
-  EXPECT_FALSE(animation_task_.Equals(base::Closure()));
 }
 
 TEST_F(LayerTreeHostImplTest, ScrollbarVisibilityChangeCausesRedrawAndCommit) {
@@ -7758,18 +7568,17 @@ class BlendStateCheckLayer : public LayerImpl {
     else
       opaque_rect = opaque_content_rect_;
     gfx::Rect visible_quad_rect = quad_visible_rect_;
-    bool needs_blending = !opaque_rect.Contains(visible_quad_rect);
 
-    viz::SharedQuadState* shared_quad_state =
+    SharedQuadState* shared_quad_state =
         render_pass->CreateAndAppendSharedQuadState();
     PopulateSharedQuadState(shared_quad_state);
 
     TileDrawQuad* test_blending_draw_quad =
         render_pass->CreateAndAppendDrawQuad<TileDrawQuad>();
-    test_blending_draw_quad->SetNew(
-        shared_quad_state, quad_rect_, visible_quad_rect, needs_blending,
-        resource_id_, gfx::RectF(0.f, 0.f, 1.f, 1.f), gfx::Size(1, 1), false,
-        false);
+    test_blending_draw_quad->SetNew(shared_quad_state, quad_rect_, opaque_rect,
+                                    visible_quad_rect, resource_id_,
+                                    gfx::RectF(0.f, 0.f, 1.f, 1.f),
+                                    gfx::Size(1, 1), false, false);
 
     EXPECT_EQ(blend_, test_blending_draw_quad->ShouldDrawWithBlending());
     EXPECT_EQ(has_render_surface_,
@@ -8555,7 +8364,7 @@ class FakeLayerWithQuads : public LayerImpl {
 
   void AppendQuads(RenderPass* render_pass,
                    AppendQuadsData* append_quads_data) override {
-    viz::SharedQuadState* shared_quad_state =
+    SharedQuadState* shared_quad_state =
         render_pass->CreateAndAppendSharedQuadState();
     PopulateSharedQuadState(shared_quad_state);
 
@@ -9192,7 +9001,7 @@ TEST_F(LayerTreeHostImplTest, ShutdownReleasesContext) {
   constexpr bool synchronous_composite = true;
   constexpr bool disable_display_vsync = false;
   constexpr double refresh_rate = 60.0;
-  auto layer_tree_frame_sink = std::make_unique<viz::TestLayerTreeFrameSink>(
+  auto layer_tree_frame_sink = base::MakeUnique<viz::TestLayerTreeFrameSink>(
       context_provider, TestContextProvider::CreateWorker(), nullptr, nullptr,
       viz::RendererSettings(), base::ThreadTaskRunnerHandle::Get().get(),
       synchronous_composite, disable_display_vsync, refresh_rate);
@@ -13139,46 +12948,6 @@ TEST_F(LayerTreeHostImplTest, RasterTilePrioritizationForNonDrawingLayers) {
   queue = host_impl_->BuildRasterQueue(TreePriority::SMOOTHNESS_TAKES_PRIORITY,
                                        RasterTilePriorityQueue::Type::ALL);
   EXPECT_EQ(queue->Top().tile()->layer_id(), 3);
-}
-
-TEST_F(LayerTreeHostImplTest, DrawAfterDroppingTileResources) {
-  LayerTreeSettings settings = DefaultSettings();
-  settings.using_synchronous_renderer_compositor = true;
-  CreateHostImpl(settings, CreateLayerTreeFrameSink());
-  host_impl_->CreatePendingTree();
-
-  gfx::Size bounds(100, 100);
-  scoped_refptr<FakeRasterSource> raster_source(
-      FakeRasterSource::CreateFilled(bounds));
-  {
-    std::unique_ptr<FakePictureLayerImpl> scoped_layer =
-        FakePictureLayerImpl::CreateWithRasterSource(host_impl_->pending_tree(),
-                                                     1, raster_source);
-    scoped_layer->SetBounds(bounds);
-    scoped_layer->SetDrawsContent(true);
-    host_impl_->pending_tree()->SetRootLayerForTesting(std::move(scoped_layer));
-  }
-  host_impl_->pending_tree()->BuildPropertyTreesForTesting();
-  host_impl_->ActivateSyncTree();
-
-  FakePictureLayerImpl* layer = static_cast<FakePictureLayerImpl*>(
-      host_impl_->active_tree()->FindActiveTreeLayerById(1));
-
-  DrawFrame();
-  EXPECT_FALSE(host_impl_->active_tree()->needs_update_draw_properties());
-  EXPECT_LT(0.f, layer->raster_page_scale());
-  EXPECT_GT(layer->tilings()->num_tilings(), 0u);
-
-  const ManagedMemoryPolicy policy = host_impl_->ActualManagedMemoryPolicy();
-  const ManagedMemoryPolicy zero_policy(0u);
-  host_impl_->SetMemoryPolicy(zero_policy);
-  EXPECT_EQ(0.f, layer->raster_page_scale());
-  EXPECT_EQ(layer->tilings()->num_tilings(), 0u);
-
-  host_impl_->SetMemoryPolicy(policy);
-  DrawFrame();
-  EXPECT_LT(0.f, layer->raster_page_scale());
-  EXPECT_GT(layer->tilings()->num_tilings(), 0u);
 }
 
 }  // namespace

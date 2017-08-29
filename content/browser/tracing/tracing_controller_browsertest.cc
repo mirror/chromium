@@ -78,8 +78,8 @@ class TracingControllerTestEndpoint : public TraceDataEndpoint {
 
     BrowserThread::PostTask(
         BrowserThread::UI, FROM_HERE,
-        base::BindOnce(done_callback_, base::Passed(std::move(metadata)),
-                       base::RetainedRef(chunk_ptr)));
+        base::Bind(done_callback_, base::Passed(std::move(metadata)),
+                   base::RetainedRef(chunk_ptr)));
   }
 
  protected:

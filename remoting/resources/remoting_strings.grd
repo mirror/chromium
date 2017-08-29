@@ -635,6 +635,15 @@
         <message desc="Text shown in tooltip when user touches an offline host on the device." name="IDS_HOST_OFFLINE_TOOLTIP" formatter_data="android_java">
           Host is offline.
         </message>
+        <message desc="Error that is shown in tooltip if the app loses its connection to the Cast device." name="IDS_CONNECTION_TO_CAST_FAILED" formatter_data="android_java">
+          Failed to connect to Cast device.
+        </message>
+         <message desc="Text shown in tooltip when the application has closed its connection to the Cast device." name="IDS_CONNECTION_TO_CAST_CLOSED" formatter_data="android_java">
+          Closed connection to Cast device.
+        </message>
+        <message desc="Title for Cast button in Android application menu." name="IDS_CAST_BUTTON_TITLE" formatter_data="android_java">
+          Cast
+        </message>
         <message name="IDS_MOBILE_NETWORK_WARNING" desc="Message shown in an alert dialog that warns the user that they are trying to connect to a device over mobile network.">
           Data charges may apply when connecting to a device over mobile network. Do you want to continue?
         </message>
@@ -668,7 +677,10 @@ Remote computers with non US-English keyboards may receive incorrect text input.
 For information about privacy, please see the Google Privacy Policy (http://goo.gl/SyrVzj) and the Chrome Privacy Policy (http://goo.gl/0uXE5d).
         </message>
         <message name="IDS_PLAY_STORE_CHANGES" desc="List of what's changed in this release of Chrome Remote Desktop for Android. [CHAR-LIMIT=500] [NAME=play_store_changes]">
-• Added support for Android 8.0 Oreo.
+• Added Multi-Window support for Android Nougat.
+• Improved desktop image quality, responsiveness, and battery consumption.
+• Improved responsiveness of click-drag operations.
+• Improved several UI animation effects.
         </message>
 
         <!-- iOS App Store metadata text. Won't be bundled into the app. -->
@@ -781,16 +793,18 @@ For information about privacy, please see the Google Privacy Policy (http://goo.
         Remember my PIN on this device.
       </message>
 
-      <message desc="Title for the instructions for setting up a remote host. Shown when the user has no host available." name="IDS_HOST_SETUP_TITLE">
-        Welcome to Chrome Remote Desktop
+      <message desc="Title for the instructions for setting up a remote host. Shown when the user has no host available. One sentence per line." name="IDS_HOST_SETUP_TITLE">
+You don't have a remote desktop
+To get started,
       </message>
       <message desc="Instructions for setting up a computer to be remotely accessible. Please make sure the translated string has exactly the same number of lines." name="IDS_HOST_SETUP_INSTRUCTIONS">
-On the computer you want to access remotely, open Chrome and visit <ph name="INSTALLATION_LINK">$1<ex>google.com/remotedesktop</ex></ph>
-Install Chrome Remote Desktop software and follow the instructions to complete setup
-After setup is complete, you'll be able to access the computer from this page by entering the PIN or access code
+Go to the computer that you want to remotely access
+Visit <ph name="INSTALLATION_LINK">$1<ex>google.com/remotedesktop</ex></ph> from your Chrome browser
+Install the Chrome Remote Desktop software and follow the instructions to complete the setup
+After your remote device is setup, you can access it directly from this page
       </message>
       <message desc="Label for a button for sending the user an email with link and instructions for setting up a computer for remote access." name="IDS_EMAIL_LINKS_AND_INSTRUCTIONS">
-        Email these instructions
+        Email link and instructions
       </message>
 
       <message desc="Label for the access code entry box. This is where the client user enters the code that permits access to the host." name="IDS_ACCESS_CODE">
@@ -899,7 +913,7 @@ After setup is complete, you'll be able to access the computer from this page by
       <message desc="Menu option for toggle full-screen mode." name="IDS_FULL_SCREEN" formatter_data="android_java">
         Full screen
       </message>
-      <message desc="Icon to leave full-screen mode." name="IDS_EXIT_FULL_SCREEN">
+      <message desc="Icon to leave full-screen mode." name="IDS_EXIT_FULL_SCREEN" formatter_data="android_java">
         Exit full screen
       </message>
       <message desc="Tool-tip for the window's close icon." name="IDS_CLOSE_WINDOW">
@@ -1042,6 +1056,10 @@ After setup is complete, you'll be able to access the computer from this page by
         <message desc="This string represents a host status line, which is shown below the host name for offline hosts.  The status line consists of 1) a host offline status (i.e. a specific 'Host failed to read the policy.' or 'Invalid host owner.' or a generic 'Host if offline.') and 2) statement when the host was last seen online (i.e. 'Last seen online 20 minutes ago.')."
                  name="IDS_HOST_STATUS_LINE" formatter_data="android_java">
           <ph name="OPTIONAL_OFFLINE_REASON">%2$s<ex>Host failed to read the policy.</ex></ph>  Last seen online <ph name="RELATIVE_TIMESTAMP">%1$s<ex>yesterday</ex></ph>.
+        </message>
+        <message desc="Content description (used for accessibility) of a host icon representing an online host."
+                 name="IDS_HOST_ICON_ONLINE_DESCRIPTION" formatter_data="android_java">
+          Online.
         </message>
         <message desc="Content description (used for accessibility) of a host icon representing an offline host."
                  name="IDS_HOST_ICON_OFFLINE_DESCRIPTION" formatter_data="android_java">

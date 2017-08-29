@@ -102,9 +102,8 @@ class TestableCache : public ImageDecodeCache {
                              scoped_refptr<TileTask>* task) override {
     // Return false for large images to mimic "won't fit in memory"
     // behavior.
-    if (image.paint_image() &&
-        image.paint_image().width() * image.paint_image().height() >=
-            1000 * 1000) {
+    if (image.image() &&
+        image.image()->width() * image.image()->height() >= 1000 * 1000) {
       return false;
     }
 
@@ -238,7 +237,10 @@ class BlockingTask : public TileTask {
 int kDefaultTimeoutSeconds = 10;
 
 DrawImage CreateDiscardableDrawImage(gfx::Size size) {
-  return DrawImage(CreateDiscardablePaintImage(size),
+  return DrawImage(PaintImageBuilder()
+                       .set_id(PaintImage::GetNextId())
+                       .set_image(CreateDiscardableImage(size))
+                       .TakePaintImage(),
                    SkIRect::MakeWH(size.width(), size.height()),
                    kNone_SkFilterQuality, SkMatrix::I(), gfx::ColorSpace());
 }
@@ -311,7 +313,7 @@ TEST_F(ImageControllerTest, NullControllerUnrefsImages) {
 TEST_F(ImageControllerTest, QueueImageDecode) {
   base::RunLoop run_loop;
   DecodeClient decode_client;
-  EXPECT_EQ(image().paint_image().width(), 1);
+  EXPECT_EQ(image().image()->bounds().width(), 1);
   ImageController::ImageDecodeRequestId expected_id =
       controller()->QueueImageDecode(
           image(),

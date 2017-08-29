@@ -7,8 +7,6 @@ package org.chromium.chrome.browser.download.ui;
 import android.content.Context;
 import android.content.res.ColorStateList;
 import android.graphics.Bitmap;
-import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
-import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.text.TextUtils;
 import android.text.format.Formatter;
 import android.util.AttributeSet;
@@ -19,9 +17,9 @@ import android.widget.TextView;
 import org.chromium.base.ApiCompatibilityUtils;
 import org.chromium.chrome.R;
 import org.chromium.chrome.browser.download.DownloadUtils;
-import org.chromium.chrome.browser.util.FeatureUtilities;
 import org.chromium.chrome.browser.widget.MaterialProgressBar;
 import org.chromium.chrome.browser.widget.TintedImageButton;
+import org.chromium.chrome.browser.widget.TintedImageView;
 import org.chromium.chrome.browser.widget.selection.SelectableItemView;
 import org.chromium.components.offline_items_collection.OfflineItem.Progress;
 import org.chromium.ui.UiUtils;
@@ -37,17 +35,15 @@ public class DownloadItemView extends SelectableItemView<DownloadHistoryItemWrap
     private final int mIconBackgroundColor;
     private final int mIconBackgroundColorSelected;
     private final ColorStateList mIconForegroundColorList;
-    private final ColorStateList mCheckedIconForegroundColorList;
-    private final int mIconBackgroundResId;
 
     private DownloadHistoryItemWrapper mItem;
     private int mIconResId;
     private int mIconSize;
-    private int mIconCornerRadius;
     private Bitmap mThumbnailBitmap;
 
     // Controls common to completed and in-progress downloads.
     private LinearLayout mLayoutContainer;
+    private TintedImageView mIconView;
 
     // Controls for completed downloads.
     private View mLayoutCompleted;
@@ -72,24 +68,14 @@ public class DownloadItemView extends SelectableItemView<DownloadHistoryItemWrap
         mIconBackgroundColor = DownloadUtils.getIconBackgroundColor(context);
         mIconBackgroundColorSelected =
                 ApiCompatibilityUtils.getColor(context.getResources(), R.color.google_grey_600);
-        mIconSize = getResources().getDimensionPixelSize(R.dimen.list_item_start_icon_width);
-        mIconCornerRadius =
-                getResources().getDimensionPixelSize(R.dimen.list_item_start_icon_corner_radius);
-        mCheckedIconForegroundColorList = DownloadUtils.getIconForegroundColorList(context);
-
-        mIconBackgroundResId = R.drawable.selectable_item_icon_modern_bg;
-
-        if (FeatureUtilities.isChromeHomeModernEnabled()) {
-            mIconForegroundColorList = ApiCompatibilityUtils.getColorStateList(
-                    context.getResources(), R.color.dark_mode_tint);
-        } else {
-            mIconForegroundColorList = DownloadUtils.getIconForegroundColorList(context);
-        }
+        mIconForegroundColorList = DownloadUtils.getIconForegroundColorList(context);
+        mIconSize = getResources().getDimensionPixelSize(R.dimen.downloads_item_icon_size);
     }
 
     @Override
     protected void onFinishInflate() {
         super.onFinishInflate();
+        mIconView = (TintedImageView) findViewById(R.id.icon_view);
         mProgressView = (MaterialProgressBar) findViewById(R.id.download_progress_view);
 
         mLayoutContainer = (LinearLayout) findViewById(R.id.layout_container);
@@ -248,38 +234,23 @@ public class DownloadItemView extends SelectableItemView<DownloadHistoryItemWrap
     }
 
     @Override
-    protected void updateIconView() {
+    public void setChecked(boolean checked) {
+        super.setChecked(checked);
+        updateIconView();
+    }
+
+    private void updateIconView() {
         if (isChecked()) {
-            if (FeatureUtilities.isChromeHomeModernEnabled()) {
-                mIconView.setBackgroundResource(mIconBackgroundResId);
-                mIconView.getBackground().setLevel(
-                        getResources().getInteger(R.integer.selectable_item_level_selected));
-            } else {
-                mIconView.setBackgroundColor(mIconBackgroundColorSelected);
-            }
+            mIconView.setBackgroundColor(mIconBackgroundColorSelected);
             mIconView.setImageResource(R.drawable.ic_check_googblue_24dp);
-            mIconView.setTint(mCheckedIconForegroundColorList);
+            mIconView.setTint(mIconForegroundColorList);
         } else if (mThumbnailBitmap != null) {
             assert !mThumbnailBitmap.isRecycled();
             mIconView.setBackground(null);
-            if (FeatureUtilities.isChromeHomeModernEnabled()) {
-                RoundedBitmapDrawable roundedIcon = RoundedBitmapDrawableFactory.create(
-                        getResources(),
-                        Bitmap.createScaledBitmap(mThumbnailBitmap, mIconSize, mIconSize, false));
-                roundedIcon.setCornerRadius(mIconCornerRadius);
-                mIconView.setImageDrawable(roundedIcon);
-            } else {
-                mIconView.setImageBitmap(mThumbnailBitmap);
-            }
+            mIconView.setImageBitmap(mThumbnailBitmap);
             mIconView.setTint(null);
         } else {
-            if (FeatureUtilities.isChromeHomeModernEnabled()) {
-                mIconView.setBackgroundResource(mIconBackgroundResId);
-                mIconView.getBackground().setLevel(
-                        getResources().getInteger(R.integer.selectable_item_level_default));
-            } else {
-                mIconView.setBackgroundColor(mIconBackgroundColor);
-            }
+            mIconView.setBackgroundColor(mIconBackgroundColor);
             mIconView.setImageResource(mIconResId);
             mIconView.setTint(mIconForegroundColorList);
         }

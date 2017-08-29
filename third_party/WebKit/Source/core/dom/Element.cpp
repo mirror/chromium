@@ -2437,7 +2437,7 @@ ShadowRoot* Element::GetShadowRoot() const {
   return &element_shadow->YoungestShadowRoot();
 }
 
-ShadowRoot* Element::OpenShadowRoot() const {
+ShadowRoot* Element::openShadowRoot() const {
   ShadowRoot* root = GetShadowRoot();
   if (!root)
     return nullptr;
@@ -3426,7 +3426,8 @@ void Element::UpdatePseudoElement(PseudoId pseudo_id,
       MutableComputedStyle()->RemoveCachedPseudoStyle(pseudo_id);
 
     // PseudoElement styles hang off their parent element's style so if we
-    // needed a style recalc we should Force one on the pseudo.
+    // needed a style recalc we should Force one on the pseudo.  FIXME: We
+    // should figure out the right text sibling to pass.
     element->RecalcStyle(change == kUpdatePseudoElements ? kForce : change);
 
     // Wait until our parent is not displayed or
@@ -3811,9 +3812,8 @@ inline void Element::UpdateName(const AtomicString& old_name,
   if (old_name == new_name)
     return;
 
-  NamedItemType type = GetNamedItemType();
-  if (type != NamedItemType::kNone)
-    UpdateNamedItemRegistration(type, old_name, new_name);
+  if (ShouldRegisterAsNamedItem())
+    UpdateNamedItemRegistration(old_name, new_name);
 }
 
 inline void Element::UpdateId(const AtomicString& old_id,
@@ -3838,10 +3838,8 @@ inline void Element::UpdateId(TreeScope& scope,
   if (!new_id.IsEmpty())
     scope.AddElementById(new_id, this);
 
-  NamedItemType type = GetNamedItemType();
-  if (type == NamedItemType::kNameOrId ||
-      type == NamedItemType::kNameOrIdWithName)
-    UpdateIdNamedItemRegistration(type, old_id, new_id);
+  if (ShouldRegisterAsExtraNamedItem())
+    UpdateExtraNamedItemRegistration(old_id, new_id);
 }
 
 void Element::WillModifyAttribute(const QualifiedName& name,
@@ -3955,44 +3953,28 @@ void Element::DidMoveToNewDocument(Document& old_document) {
     ReResolveURLsInInlineStyle(GetDocument(), EnsureMutableInlineStyle());
 }
 
-void Element::UpdateNamedItemRegistration(NamedItemType type,
-                                          const AtomicString& old_name,
+void Element::UpdateNamedItemRegistration(const AtomicString& old_name,
                                           const AtomicString& new_name) {
   if (!GetDocument().IsHTMLDocument())
     return;
-  HTMLDocument& doc = ToHTMLDocument(GetDocument());
 
   if (!old_name.IsEmpty())
-    doc.RemoveNamedItem(old_name);
+    ToHTMLDocument(GetDocument()).RemoveNamedItem(old_name);
 
   if (!new_name.IsEmpty())
-    doc.AddNamedItem(new_name);
-
-  if (type == NamedItemType::kNameOrIdWithName) {
-    const AtomicString id = GetIdAttribute();
-    if (!id.IsEmpty()) {
-      if (!old_name.IsEmpty() && new_name.IsEmpty())
-        doc.RemoveNamedItem(id);
-      else if (old_name.IsEmpty() && !new_name.IsEmpty())
-        doc.AddNamedItem(id);
-    }
-  }
+    ToHTMLDocument(GetDocument()).AddNamedItem(new_name);
 }
 
-void Element::UpdateIdNamedItemRegistration(NamedItemType type,
-                                            const AtomicString& old_id,
-                                            const AtomicString& new_id) {
+void Element::UpdateExtraNamedItemRegistration(const AtomicString& old_id,
+                                               const AtomicString& new_id) {
   if (!GetDocument().IsHTMLDocument())
     return;
 
-  if (type == NamedItemType::kNameOrIdWithName && GetNameAttribute().IsEmpty())
-    return;
-
   if (!old_id.IsEmpty())
-    ToHTMLDocument(GetDocument()).RemoveNamedItem(old_id);
+    ToHTMLDocument(GetDocument()).RemoveExtraNamedItem(old_id);
 
   if (!new_id.IsEmpty())
-    ToHTMLDocument(GetDocument()).AddNamedItem(new_id);
+    ToHTMLDocument(GetDocument()).AddExtraNamedItem(new_id);
 }
 
 ScrollOffset Element::SavedLayerScrollOffset() const {

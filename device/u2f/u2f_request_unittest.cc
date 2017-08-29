@@ -85,23 +85,14 @@ TEST_F(U2fRequestTest, TestAddRemoveDevice) {
   TestResponseCallback cb;
   FakeU2fRequest request(cb.callback());
   request.Enumerate();
-
-  c_info.usage = HidUsageAndPage(1, static_cast<HidUsageAndPage::Page>(0xf1d0));
-  scoped_refptr<HidDeviceInfo> u2f_device_0 = make_scoped_refptr(
-      new HidDeviceInfo(kTestDeviceId0, 0, 0, "Test Fido Device", "123FIDO",
-                        kHIDBusTypeUSB, c_info, 64, 64, 0));
-  hid_service->AddDevice(u2f_device_0);
-
-  // Make sure the enumeration is finshed, so HidService is ready to send
-  // the OnDeviceAdded or OnDeviceRemoved to its observers.
-  cb.WaitForCallback();
   EXPECT_EQ(static_cast<size_t>(0), request.devices_.size());
 
   // Add one U2F device
-  scoped_refptr<HidDeviceInfo> u2f_device_1 = make_scoped_refptr(
-      new HidDeviceInfo(kTestDeviceId1, 0, 0, "Test Fido Device", "123FIDO",
+  c_info.usage = HidUsageAndPage(1, static_cast<HidUsageAndPage::Page>(0xf1d0));
+  scoped_refptr<HidDeviceInfo> u2f_device = make_scoped_refptr(
+      new HidDeviceInfo(kTestDeviceId0, 0, 0, "Test Fido Device", "123FIDO",
                         kHIDBusTypeUSB, c_info, 64, 64, 0));
-  hid_service->AddDevice(u2f_device_1);
+  hid_service->AddDevice(u2f_device);
   EXPECT_EQ(static_cast<size_t>(1), request.devices_.size());
 
   // Add one non-U2F device. Verify that it is not added to our device list.
@@ -116,7 +107,7 @@ TEST_F(U2fRequestTest, TestAddRemoveDevice) {
   EXPECT_EQ(static_cast<size_t>(1), request.devices_.size());
 
   // Remove the U2F device and verify that device list is empty.
-  hid_service->RemoveDevice(kTestDeviceId1);
+  hid_service->RemoveDevice(kTestDeviceId0);
   EXPECT_EQ(static_cast<size_t>(0), request.devices_.size());
 }
 

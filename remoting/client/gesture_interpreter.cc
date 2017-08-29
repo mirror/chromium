@@ -13,7 +13,7 @@
 
 namespace {
 
-const float kOneFingerFlingTimeConstant = 180.f;
+const float kOneFingerFlingTimeConstant = 325.f;
 const float kScrollFlingTimeConstant = 250.f;
 
 }  // namespace
@@ -151,7 +151,6 @@ void GestureInterpreter::ProcessAnimations() {
 
 void GestureInterpreter::OnSurfaceSizeChanged(int width, int height) {
   viewport_.SetSurfaceSize(width, height);
-  input_strategy_->FocusViewportOnCursor(&viewport_);
 }
 
 void GestureInterpreter::OnDesktopSizeChanged(int width, int height) {

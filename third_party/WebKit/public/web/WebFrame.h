@@ -49,6 +49,7 @@ class OpenedFrameTracker;
 class Visitor;
 class WebElement;
 class WebLocalFrame;
+class WebPerformance;
 class WebRemoteFrame;
 class WebSecurityOrigin;
 class WebString;
@@ -173,6 +174,10 @@ class BLINK_EXPORT WebFrame {
   // Returns the next frame in "frame traversal order".
   WebFrame* TraverseNext() const;
 
+  // Content ------------------------------------------------------------
+
+  virtual WebPerformance Performance() const = 0;
+
   // Scripting ----------------------------------------------------------
 
   // Returns the global proxy object.
@@ -188,6 +193,11 @@ class BLINK_EXPORT WebFrame {
 
   // Stops any pending loads on the frame and its children.
   virtual void StopLoading() = 0;
+
+  // View-source rendering mode.  Set this before loading an URL to cause
+  // it to be rendered in view-source mode.
+  virtual void EnableViewSourceMode(bool) = 0;
+  virtual bool IsViewSourceModeEnabled() const = 0;
 
   // Will return true if between didStartLoading and didStopLoading
   // notifications.

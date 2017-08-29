@@ -21,10 +21,12 @@ const char kChromeAppGroupCommandPreference[] =
     "GroupApp.ChromeAppGroupCommand";
 
 const char kChromeAppGroupCommandTimePreference[] = "CommandTime";
+
 const char kChromeAppGroupCommandAppPreference[] = "SourceApp";
+
 const char kChromeAppGroupCommandCommandPreference[] = "Command";
-const char kChromeAppGroupCommandURLPreference[] = "URL";
-const char kChromeAppGroupCommandIndexPreference[] = "Index";
+
+const char kChromeAppGroupCommandParameterPreference[] = "Parameter";
 
 const char kChromeAppGroupOpenURLCommand[] = "openurl";
 const char kChromeAppGroupVoiceSearchCommand[] = "voicesearch";
@@ -45,11 +47,7 @@ NSString* const kShareItemDate = @"Date";
 NSString* const kShareItemCancel = @"Cancel";
 NSString* const kShareItemType = @"Type";
 
-NSString* const kShareItemSourceShareExtension = @"ChromeShareExtension";
-
-NSString* const kOpenCommandSourceTodayExtension = @"ChromeTodayExtension";
-NSString* const kOpenCommandSourceContentExtension = @"ChromeContentExtension";
-NSString* const kOpenCommandSourceSearchExtension = @"ChromeSearchExtension";
+NSString* const kShareItemShareExtensionSource = @"ChromeShareExtension";
 
 NSString* const kSuggestedItems = @"SuggestedItems";
 

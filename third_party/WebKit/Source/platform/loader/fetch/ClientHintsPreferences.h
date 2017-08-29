@@ -23,7 +23,7 @@ class PLATFORM_EXPORT ClientHintsPreferences {
  public:
   class Context {
    public:
-    virtual void CountClientHints(mojom::WebClientHintsType) = 0;
+    virtual void CountClientHints(WebClientHintsType) = 0;
     virtual void CountPersistentClientHintHeaders() = 0;
 
    protected:
@@ -38,10 +38,10 @@ class PLATFORM_EXPORT ClientHintsPreferences {
   // preferences. |context| may be null.
   void UpdateFromAcceptClientHintsHeader(const String& header_value, Context*);
 
-  bool ShouldSend(mojom::WebClientHintsType type) const {
+  bool ShouldSend(WebClientHintsType type) const {
     return enabled_hints_.IsEnabled(type);
   }
-  void SetShouldSendForTesting(mojom::WebClientHintsType type) {
+  void SetShouldSendForTesting(WebClientHintsType type) {
     enabled_hints_.SetIsEnabled(type, true);
   }
 

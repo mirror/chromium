@@ -44,7 +44,6 @@ namespace arc {
 //   added with AddDocument().
 // - GetRecentDocuments() returns recent documents in the same order as they
 //   were added with AddRecentDocument().
-// - Callbacks are never invoked synchronously.
 // - All member functions must be called on the same thread.
 class FakeFileSystemInstance : public mojom::FileSystemInstance {
  public:

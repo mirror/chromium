@@ -67,7 +67,6 @@
 #include "ash/shutdown_controller.h"
 #include "ash/sticky_keys/sticky_keys_controller.h"
 #include "ash/system/bluetooth/bluetooth_notification_controller.h"
-#include "ash/system/bluetooth/bluetooth_power_controller.h"
 #include "ash/system/bluetooth/tray_bluetooth_helper.h"
 #include "ash/system/brightness/brightness_controller_chromeos.h"
 #include "ash/system/brightness_control_delegate.h"
@@ -334,7 +333,6 @@ bool Shell::ShouldUseIMEService() {
 void Shell::RegisterLocalStatePrefs(PrefRegistrySimple* registry) {
   PaletteTray::RegisterLocalStatePrefs(registry);
   WallpaperController::RegisterLocalStatePrefs(registry);
-  BluetoothPowerController::RegisterLocalStatePrefs(registry);
 }
 
 // static
@@ -342,10 +340,10 @@ void Shell::RegisterProfilePrefs(PrefRegistrySimple* registry) {
   LogoutButtonTray::RegisterProfilePrefs(registry);
   NightLightController::RegisterProfilePrefs(registry);
   ShelfController::RegisterProfilePrefs(registry);
+
   // Request access to prefs used by ash but owned by chrome.
   // See //services/preferences/README.md
   TrayCapsLock::RegisterForeignPrefs(registry);
-  BluetoothPowerController::RegisterProfilePrefs(registry);
 }
 
 views::NonClientFrameView* Shell::CreateDefaultNonClientFrameView(
@@ -620,16 +618,6 @@ void Shell::NotifyVoiceInteractionStatusChanged(VoiceInteractionState state) {
     observer.OnVoiceInteractionStatusChanged(state);
 }
 
-void Shell::NotifyVoiceInteractionEnabled(bool enabled) {
-  for (auto& observer : shell_observers_)
-    observer.OnVoiceInteractionEnabled(enabled);
-}
-
-void Shell::NotifyVoiceInteractionContextEnabled(bool enabled) {
-  for (auto& observer : shell_observers_)
-    observer.OnVoiceInteractionContextEnabled(enabled);
-}
-
 ////////////////////////////////////////////////////////////////////////////////
 // Shell, private:
 
@@ -697,6 +685,8 @@ Shell::~Shell() {
   aura::client::GetFocusClient(GetPrimaryRootWindow())->FocusWindow(nullptr);
 
   // Please keep in reverse order as in Init() because it's easy to miss one.
+  split_view_controller_.reset();
+
   if (window_modality_controller_)
     window_modality_controller_.reset();
 
@@ -764,10 +754,6 @@ Shell::~Shell() {
   // Has to happen before ~MruWindowTracker.
   window_cycle_controller_.reset();
   window_selector_controller_.reset();
-
-  // |split_view_controller_| needs to be deleted after
-  // |window_selector_controller_|.
-  split_view_controller_.reset();
 
   CloseAllRootWindowChildWindows();
 
@@ -866,9 +852,6 @@ Shell::~Shell() {
   shell_port_.reset();
   session_controller_->RemoveObserver(this);
   wallpaper_delegate_.reset();
-  // BluetoothPowerController depends on the PrefService and must be destructed
-  // before it.
-  bluetooth_power_controller_ = nullptr;
   // NightLightController depeneds on the PrefService and must be destructed
   // before it. crbug.com/724231.
   night_light_controller_ = nullptr;
@@ -886,10 +869,10 @@ Shell::~Shell() {
 void Shell::Init(const ShellInitParams& init_params) {
   const Config config = shell_port_->GetAshConfig();
 
+  shelf_controller_ = base::MakeUnique<ShelfController>();
+
   if (NightLightController::IsFeatureEnabled())
     night_light_controller_ = base::MakeUnique<NightLightController>();
-
-  bluetooth_power_controller_ = base::MakeUnique<BluetoothPowerController>();
 
   wallpaper_delegate_ = shell_delegate_->CreateWallpaperDelegate();
 
@@ -919,7 +902,8 @@ void Shell::Init(const ShellInitParams& init_params) {
 
   wallpaper_controller_ = base::MakeUnique<WallpaperController>();
 
-  app_list_delegate_impl_ = base::MakeUnique<AppListDelegateImpl>();
+  if (config == Config::MASH)
+    app_list_delegate_impl_ = base::MakeUnique<AppListDelegateImpl>();
 
   // TODO(sky): move creation to ShellPort.
   if (config != Config::MASH)
@@ -1025,7 +1009,6 @@ void Shell::Init(const ShellInitParams& init_params) {
 
   accelerator_controller_ = shell_port_->CreateAcceleratorController();
   tablet_mode_controller_ = base::MakeUnique<TabletModeController>();
-  shelf_controller_ = base::MakeUnique<ShelfController>();
 
   magnifier_key_scroll_handler_ = MagnifierKeyScroller::CreateHandler();
   AddPreTargetHandler(magnifier_key_scroll_handler_.get());

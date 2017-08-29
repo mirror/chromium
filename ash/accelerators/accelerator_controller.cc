@@ -35,8 +35,6 @@
 #include "ash/system/palette/palette_utils.h"
 #include "ash/system/status_area_widget.h"
 #include "ash/system/system_notifier.h"
-#include "ash/system/toast/toast_data.h"
-#include "ash/system/toast/toast_manager.h"
 #include "ash/system/tray/system_tray.h"
 #include "ash/system/tray/system_tray_notifier.h"
 #include "ash/system/web_notification/web_notification_tray.h"
@@ -78,16 +76,10 @@ namespace {
 using base::UserMetricsAction;
 using chromeos::input_method::InputMethodManager;
 using message_center::Notification;
-using message_center::SystemNotificationWarningLevel;
 
 // Identifier for the high contrast toggle accelerator notification.
 const char kHighContrastToggleAccelNotificationId[] =
     "chrome://settings/accessibility/highcontrast";
-
-// Toast id and duration for voice interaction shortcuts
-const char kSecondaryUserToastId[] = "voice_interaction_secondary_user";
-const char kUnsupportedLocaleToastId[] = "voice_interaction_locale_unsupported";
-const int kToastDurationMs = 2500;
 
 // The notification delegate that will be used to open the keyboard shortcut
 // help page when the notification is clicked.
@@ -371,7 +363,7 @@ void HandleShowKeyboardOverlay() {
   Shell::Get()->new_window_controller()->ShowKeyboardOverlay();
 }
 
-bool CanHandleToggleMessageCenterBubble() {
+bool CanHandleShowMessageCenterBubble() {
   aura::Window* target_root = Shell::GetRootWindowForNewWindows();
   StatusAreaWidget* status_area_widget =
       Shelf::ForWindow(target_root)->shelf_widget()->status_area_widget();
@@ -379,21 +371,17 @@ bool CanHandleToggleMessageCenterBubble() {
          status_area_widget->web_notification_tray()->visible();
 }
 
-void HandleToggleMessageCenterBubble() {
-  base::RecordAction(UserMetricsAction("Accel_Toggle_Message_Center_Bubble"));
+void HandleShowMessageCenterBubble() {
+  base::RecordAction(UserMetricsAction("Accel_Show_Message_Center_Bubble"));
   aura::Window* target_root = Shell::GetRootWindowForNewWindows();
   StatusAreaWidget* status_area_widget =
       Shelf::ForWindow(target_root)->shelf_widget()->status_area_widget();
-  if (!status_area_widget)
-    return;
-  WebNotificationTray* notification_tray =
-      status_area_widget->web_notification_tray();
-  if (!notification_tray->visible())
-    return;
-  if (notification_tray->IsMessageCenterBubbleVisible())
-    notification_tray->CloseBubble();
-  else
-    notification_tray->ShowBubble();
+  if (status_area_widget) {
+    WebNotificationTray* notification_tray =
+        status_area_widget->web_notification_tray();
+    if (notification_tray->visible())
+      notification_tray->ShowBubble();
+  }
 }
 
 void HandleToggleSystemTrayBubble() {
@@ -594,10 +582,10 @@ bool CanHandleShowStylusTools() {
 }
 
 bool CanHandleStartVoiceInteraction() {
-  return chromeos::switches::IsVoiceInteractionFlagsEnabled();
+  return chromeos::switches::IsVoiceInteractionEnabled();
 }
 
-void HandleToggleVoiceInteraction(const ui::Accelerator& accelerator) {
+void HandleStartVoiceInteraction(const ui::Accelerator& accelerator) {
   if (accelerator.IsCmdDown() && accelerator.key_code() == ui::VKEY_SPACE) {
     base::RecordAction(
         base::UserMetricsAction("VoiceInteraction.Started.Search_Space"));
@@ -608,31 +596,7 @@ void HandleToggleVoiceInteraction(const ui::Accelerator& accelerator) {
     base::RecordAction(
         base::UserMetricsAction("VoiceInteraction.Started.Assistant"));
   }
-
-  // Show a toast if the active user is not primary.
-  if (Shell::Get()->session_controller()->GetPrimaryUserSession() !=
-      Shell::Get()->session_controller()->GetUserSession(0)) {
-    ash::ToastData toast(
-        kSecondaryUserToastId,
-        l10n_util::GetStringUTF16(
-            IDS_ASH_VOICE_INTERACTION_SECONDARY_USER_TOAST_MESSAGE),
-        kToastDurationMs, base::Optional<base::string16>());
-    ash::Shell::Get()->toast_manager()->Show(toast);
-    return;
-  }
-
-  // Show a toast if voice interaction is disabled due to unsupported locales.
-  if (!chromeos::switches::IsVoiceInteractionLocalesSupported()) {
-    ash::ToastData toast(
-        kUnsupportedLocaleToastId,
-        l10n_util::GetStringUTF16(
-            IDS_ASH_VOICE_INTERACTION_LOCALE_UNSUPPORTED_TOAST_MESSAGE),
-        kToastDurationMs, base::Optional<base::string16>());
-    ash::Shell::Get()->toast_manager()->Show(toast);
-    return;
-  }
-
-  Shell::Get()->app_list()->ToggleVoiceInteractionSession();
+  Shell::Get()->app_list()->StartVoiceInteractionSession();
 }
 
 void HandleSuspend() {
@@ -718,21 +682,15 @@ void HandleToggleHighContrast() {
   // Show a notification so the user knows that this accelerator toggled
   // high contrast mode, and that they can press it again to toggle back.
   // The message center automatically only shows this once per session.
-  std::unique_ptr<Notification> notification =
-      system_notifier::CreateSystemNotification(
-          message_center::NOTIFICATION_TYPE_SIMPLE,
-          kHighContrastToggleAccelNotificationId,
-          l10n_util::GetStringUTF16(IDS_HIGH_CONTRAST_ACCEL_TITLE),
-          l10n_util::GetStringUTF16(IDS_HIGH_CONTRAST_ACCEL_MSG),
-          gfx::Image(
-              CreateVectorIcon(kSystemMenuAccessibilityIcon, SK_ColorBLACK)),
-          base::string16() /* display source */, GURL(),
-          message_center::NotifierId(
-              message_center::NotifierId::SYSTEM_COMPONENT,
-              system_notifier::kNotifierAccessibility),
-          message_center::RichNotificationData(), nullptr,
-          kNotificationAccessibilityIcon,
-          SystemNotificationWarningLevel::NORMAL);
+  std::unique_ptr<Notification> notification(new Notification(
+      message_center::NOTIFICATION_TYPE_SIMPLE,
+      kHighContrastToggleAccelNotificationId, base::string16() /* title */,
+      l10n_util::GetStringUTF16(IDS_HIGH_CONTRAST_ACCEL_MSG),
+      gfx::Image(CreateVectorIcon(kSystemMenuAccessibilityIcon, SK_ColorBLACK)),
+      base::string16() /* display source */, GURL(),
+      message_center::NotifierId(message_center::NotifierId::SYSTEM_COMPONENT,
+                                 system_notifier::kNotifierAccessibility),
+      message_center::RichNotificationData(), nullptr));
   message_center::MessageCenter::Get()->AddNotification(
       std::move(notification));
 
@@ -1021,7 +979,7 @@ bool AcceleratorController::CanPerformAction(
     case DEBUG_TOGGLE_DEVICE_SCALE_FACTOR:
     case DEBUG_TOGGLE_TOUCH_PAD:
     case DEBUG_TOGGLE_TOUCH_SCREEN:
-    case DEBUG_TOGGLE_TABLET_MODE:
+    case DEBUG_TOGGLE_TOUCH_VIEW:
     case DEBUG_TOGGLE_WALLPAPER_MODE:
     case DEBUG_TRIGGER_CRASH:
       return debug::DebugAcceleratorsEnabled();
@@ -1043,6 +1001,8 @@ bool AcceleratorController::CanPerformAction(
     case SCALE_UI_RESET:
     case SCALE_UI_UP:
       return accelerators::IsInternalDisplayZoomEnabled();
+    case SHOW_MESSAGE_CENTER_BUBBLE:
+      return CanHandleShowMessageCenterBubble();
     case SHOW_STYLUS_TOOLS:
       return CanHandleShowStylusTools();
     case START_VOICE_INTERACTION:
@@ -1058,8 +1018,6 @@ bool AcceleratorController::CanPerformAction(
       return CanHandleToggleAppList(accelerator, previous_accelerator);
     case TOGGLE_CAPS_LOCK:
       return CanHandleToggleCapsLock(accelerator, previous_accelerator);
-    case TOGGLE_MESSAGE_CENTER_BUBBLE:
-      return CanHandleToggleMessageCenterBubble();
     case TOGGLE_MIRROR_MODE:
       return true;
     case WINDOW_CYCLE_SNAP_LEFT:
@@ -1162,7 +1120,7 @@ void AcceleratorController::PerformAction(AcceleratorAction action,
     case DEBUG_TOGGLE_DEVICE_SCALE_FACTOR:
     case DEBUG_TOGGLE_TOUCH_PAD:
     case DEBUG_TOGGLE_TOUCH_SCREEN:
-    case DEBUG_TOGGLE_TABLET_MODE:
+    case DEBUG_TOGGLE_TOUCH_VIEW:
     case DEBUG_TOGGLE_WALLPAPER_MODE:
     case DEBUG_TRIGGER_CRASH:
       debug::PerformDebugActionIfEnabled(action);
@@ -1293,6 +1251,9 @@ void AcceleratorController::PerformAction(AcceleratorAction action,
     case SHOW_KEYBOARD_OVERLAY:
       HandleShowKeyboardOverlay();
       break;
+    case SHOW_MESSAGE_CENTER_BUBBLE:
+      HandleShowMessageCenterBubble();
+      break;
     case SHOW_STYLUS_TOOLS:
       HandleShowStylusTools();
       break;
@@ -1300,7 +1261,7 @@ void AcceleratorController::PerformAction(AcceleratorAction action,
       HandleShowTaskManager();
       break;
     case START_VOICE_INTERACTION:
-      HandleToggleVoiceInteraction(accelerator);
+      HandleStartVoiceInteraction(accelerator);
       break;
     case SUSPEND:
       HandleSuspend();
@@ -1331,9 +1292,6 @@ void AcceleratorController::PerformAction(AcceleratorAction action,
       break;
     case TOGGLE_MAXIMIZED:
       accelerators::ToggleMaximized();
-      break;
-    case TOGGLE_MESSAGE_CENTER_BUBBLE:
-      HandleToggleMessageCenterBubble();
       break;
     case TOGGLE_MIRROR_MODE:
       HandleToggleMirrorMode();

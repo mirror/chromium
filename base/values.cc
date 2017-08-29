@@ -67,7 +67,7 @@ std::unique_ptr<Value> CopyWithoutEmptyChildren(const Value& node) {
           static_cast<const DictionaryValue&>(node));
 
     default:
-      return std::make_unique<Value>(node.Clone());
+      return std::make_unique<Value>(node);
   }
 }
 
@@ -77,6 +77,10 @@ std::unique_ptr<Value> CopyWithoutEmptyChildren(const Value& node) {
 std::unique_ptr<Value> Value::CreateWithCopiedBuffer(const char* buffer,
                                                      size_t size) {
   return std::make_unique<Value>(BlobStorage(buffer, buffer + size));
+}
+
+Value::Value(const Value& that) {
+  InternalCopyConstructFrom(that);
 }
 
 Value::Value(Value&& that) noexcept {
@@ -160,28 +164,28 @@ Value::Value(BlobStorage&& in_blob) noexcept : type_(Type::BINARY) {
   binary_value_.Init(std::move(in_blob));
 }
 
-Value::Value(const DictStorage& in_dict) : type_(Type::DICTIONARY) {
-  dict_.Init();
-  dict_->reserve(in_dict.size());
-  for (const auto& it : in_dict) {
-    dict_->emplace_hint(dict_->end(), it.first,
-                        MakeUnique<Value>(it.second->Clone()));
-  }
-}
-
 Value::Value(DictStorage&& in_dict) noexcept : type_(Type::DICTIONARY) {
   dict_.Init(std::move(in_dict));
 }
 
 Value::Value(const ListStorage& in_list) : type_(Type::LIST) {
-  list_.Init();
-  list_->reserve(in_list.size());
-  for (const auto& val : in_list)
-    list_->emplace_back(val.Clone());
+  list_.Init(in_list);
 }
 
 Value::Value(ListStorage&& in_list) noexcept : type_(Type::LIST) {
   list_.Init(std::move(in_list));
+}
+
+Value& Value::operator=(const Value& that) {
+  if (type_ == that.type_) {
+    InternalCopyAssignFromSameType(that);
+  } else {
+    // This is not a self assignment because the type_ doesn't match.
+    InternalCleanup();
+    InternalCopyConstructFrom(that);
+  }
+
+  return *this;
 }
 
 Value& Value::operator=(Value&& that) noexcept {
@@ -189,30 +193,6 @@ Value& Value::operator=(Value&& that) noexcept {
   InternalMoveConstructFrom(std::move(that));
 
   return *this;
-}
-
-Value Value::Clone() const {
-  switch (type_) {
-    case Type::NONE:
-      return Value();
-    case Type::BOOLEAN:
-      return Value(bool_value_);
-    case Type::INTEGER:
-      return Value(int_value_);
-    case Type::DOUBLE:
-      return Value(double_value_);
-    case Type::STRING:
-      return Value(*string_value_);
-    case Type::BINARY:
-      return Value(*binary_value_);
-    case Type::DICTIONARY:
-      return Value(*dict_);
-    case Type::LIST:
-      return Value(*list_);
-  }
-
-  NOTREACHED();
-  return Value();
 }
 
 Value::~Value() {
@@ -305,44 +285,26 @@ Value* Value::SetKey(const char* key, Value value) {
   return SetKey(StringPiece(key), std::move(value));
 }
 
-Value* Value::FindPath(std::initializer_list<StringPiece> path) {
+Value* Value::FindPath(std::initializer_list<const char*> path) {
   return const_cast<Value*>(const_cast<const Value*>(this)->FindPath(path));
 }
 
-Value* Value::FindPath(span<const StringPiece> path) {
-  return const_cast<Value*>(const_cast<const Value*>(this)->FindPath(path));
-}
-
-const Value* Value::FindPath(std::initializer_list<StringPiece> path) const {
-  return FindPath(make_span(path.begin(), path.size()));
-}
-
-const Value* Value::FindPath(span<const StringPiece> path) const {
+const Value* Value::FindPath(std::initializer_list<const char*> path) const {
   const Value* cur = this;
-  for (const StringPiece component : path) {
+  for (const char* component : path) {
     if (!cur->is_dict() || (cur = cur->FindKey(component)) == nullptr)
       return nullptr;
   }
   return cur;
 }
 
-Value* Value::FindPathOfType(std::initializer_list<StringPiece> path,
+Value* Value::FindPathOfType(std::initializer_list<const char*> path,
                              Type type) {
   return const_cast<Value*>(
       const_cast<const Value*>(this)->FindPathOfType(path, type));
 }
 
-Value* Value::FindPathOfType(span<const StringPiece> path, Type type) {
-  return const_cast<Value*>(
-      const_cast<const Value*>(this)->FindPathOfType(path, type));
-}
-
-const Value* Value::FindPathOfType(std::initializer_list<StringPiece> path,
-                                   Type type) const {
-  return FindPathOfType(make_span(path.begin(), path.size()), type);
-}
-
-const Value* Value::FindPathOfType(span<const StringPiece> path,
+const Value* Value::FindPathOfType(std::initializer_list<const char*> path,
                                    Type type) const {
   const Value* result = FindPath(path);
   if (!result || !result->IsType(type))
@@ -350,29 +312,24 @@ const Value* Value::FindPathOfType(span<const StringPiece> path,
   return result;
 }
 
-Value* Value::SetPath(std::initializer_list<StringPiece> path, Value value) {
-  return SetPath(make_span(path.begin(), path.size()), std::move(value));
-}
-
-Value* Value::SetPath(span<const StringPiece> path, Value value) {
+Value* Value::SetPath(std::initializer_list<const char*> path, Value value) {
   DCHECK_NE(path.begin(), path.end());  // Can't be empty path.
 
   // Walk/construct intermediate dictionaries. The last element requires
   // special handling so skip it in this loop.
   Value* cur = this;
-  const StringPiece* cur_path = path.begin();
+  const char* const* cur_path = path.begin();
   for (; (cur_path + 1) < path.end(); ++cur_path) {
     if (!cur->is_dict())
       return nullptr;
 
     // Use lower_bound to avoid doing the search twice for missing keys.
-    const StringPiece path_component = *cur_path;
+    const char* path_component = *cur_path;
     auto found = cur->dict_->lower_bound(path_component);
     if (found == cur->dict_->end() || found->first != path_component) {
       // No key found, insert one.
-      auto inserted =
-          cur->dict_->emplace_hint(found, path_component.as_string(),
-                                   std::make_unique<Value>(Type::DICTIONARY));
+      auto inserted = cur->dict_->emplace_hint(
+          found, path_component, std::make_unique<Value>(Type::DICTIONARY));
       cur = inserted->second.get();
     } else {
       cur = found->second.get();
@@ -488,11 +445,11 @@ bool Value::GetAsDictionary(const DictionaryValue** out_value) const {
 }
 
 Value* Value::DeepCopy() const {
-  return new Value(Clone());
+  return new Value(*this);
 }
 
 std::unique_ptr<Value> Value::CreateDeepCopy() const {
-  return std::make_unique<Value>(Clone());
+  return std::make_unique<Value>(*this);
 }
 
 bool operator==(const Value& lhs, const Value& rhs) {
@@ -588,12 +545,12 @@ bool Value::Equals(const Value* other) const {
   return *this == *other;
 }
 
-void Value::InternalMoveConstructFrom(Value&& that) {
-  type_ = that.type_;
-
+void Value::InternalCopyFundamentalValue(const Value& that) {
   switch (type_) {
     case Type::NONE:
+      // Nothing to do.
       return;
+
     case Type::BOOLEAN:
       bool_value_ = that.bool_value_;
       return;
@@ -603,6 +560,57 @@ void Value::InternalMoveConstructFrom(Value&& that) {
     case Type::DOUBLE:
       double_value_ = that.double_value_;
       return;
+
+    default:
+      NOTREACHED();
+  }
+}
+
+void Value::InternalCopyConstructFrom(const Value& that) {
+  type_ = that.type_;
+
+  switch (type_) {
+    case Type::NONE:
+    case Type::BOOLEAN:
+    case Type::INTEGER:
+    case Type::DOUBLE:
+      InternalCopyFundamentalValue(that);
+      return;
+
+    case Type::STRING:
+      string_value_.Init(*that.string_value_);
+      return;
+    case Type::BINARY:
+      binary_value_.Init(*that.binary_value_);
+      return;
+    // DictStorage is a move-only type due to the presence of unique_ptrs. This
+    // is why the explicit copy of every element is necessary here.
+    // TODO(crbug.com/646113): Clean this up when DictStorage can be copied
+    // directly.
+    case Type::DICTIONARY:
+      dict_.Init();
+      for (const auto& it : *that.dict_) {
+        dict_->emplace_hint(dict_->end(), it.first,
+                            std::make_unique<Value>(*it.second));
+      }
+      return;
+    case Type::LIST:
+      list_.Init(*that.list_);
+      return;
+  }
+}
+
+void Value::InternalMoveConstructFrom(Value&& that) {
+  type_ = that.type_;
+
+  switch (type_) {
+    case Type::NONE:
+    case Type::BOOLEAN:
+    case Type::INTEGER:
+    case Type::DOUBLE:
+      InternalCopyFundamentalValue(that);
+      return;
+
     case Type::STRING:
       string_value_.InitFromMove(std::move(that.string_value_));
       return;
@@ -614,6 +622,40 @@ void Value::InternalMoveConstructFrom(Value&& that) {
       return;
     case Type::LIST:
       list_.InitFromMove(std::move(that.list_));
+      return;
+  }
+}
+
+void Value::InternalCopyAssignFromSameType(const Value& that) {
+  // TODO(crbug.com/646113): make this a DCHECK once base::Value does not have
+  // subclasses.
+  CHECK_EQ(type_, that.type_);
+
+  switch (type_) {
+    case Type::NONE:
+    case Type::BOOLEAN:
+    case Type::INTEGER:
+    case Type::DOUBLE:
+      InternalCopyFundamentalValue(that);
+      return;
+
+    case Type::STRING:
+      *string_value_ = *that.string_value_;
+      return;
+    case Type::BINARY:
+      *binary_value_ = *that.binary_value_;
+      return;
+    // DictStorage is a move-only type due to the presence of unique_ptrs. This
+    // is why the explicit call to the copy constructor is necessary here.
+    // TODO(crbug.com/646113): Clean this up when DictStorage can be copied
+    // directly.
+    case Type::DICTIONARY: {
+      Value copy = that;
+      *dict_ = std::move(*copy.dict_);
+      return;
+    }
+    case Type::LIST:
+      *list_ = *that.list_;
       return;
   }
 }
@@ -656,9 +698,6 @@ std::unique_ptr<DictionaryValue> DictionaryValue::From(
 }
 
 DictionaryValue::DictionaryValue() : Value(Type::DICTIONARY) {}
-DictionaryValue::DictionaryValue(const DictStorage& in_dict) : Value(in_dict) {}
-DictionaryValue::DictionaryValue(DictStorage&& in_dict) noexcept
-    : Value(std::move(in_dict)) {}
 
 bool DictionaryValue::HasKey(StringPiece key) const {
   DCHECK(IsStringUTF8(key));
@@ -1072,7 +1111,7 @@ void DictionaryValue::MergeDictionary(const DictionaryValue* dictionary) {
       }
     }
     // All other cases: Make a copy and hook it up.
-    SetKey(it.key(), merge_value->Clone());
+    SetWithoutPathExpansion(it.key(), std::make_unique<Value>(*merge_value));
   }
 }
 
@@ -1089,11 +1128,11 @@ DictionaryValue::Iterator::Iterator(const Iterator& other) = default;
 DictionaryValue::Iterator::~Iterator() {}
 
 DictionaryValue* DictionaryValue::DeepCopy() const {
-  return new DictionaryValue(*dict_);
+  return new DictionaryValue(*this);
 }
 
 std::unique_ptr<DictionaryValue> DictionaryValue::CreateDeepCopy() const {
-  return std::make_unique<DictionaryValue>(*dict_);
+  return std::make_unique<DictionaryValue>(*this);
 }
 
 ///////////////////// ListValue ////////////////////
@@ -1109,7 +1148,9 @@ std::unique_ptr<ListValue> ListValue::From(std::unique_ptr<Value> value) {
 }
 
 ListValue::ListValue() : Value(Type::LIST) {}
+
 ListValue::ListValue(const ListStorage& in_list) : Value(in_list) {}
+
 ListValue::ListValue(ListStorage&& in_list) noexcept
     : Value(std::move(in_list)) {}
 
@@ -1338,11 +1379,11 @@ void ListValue::Swap(ListValue* other) {
 }
 
 ListValue* ListValue::DeepCopy() const {
-  return new ListValue(*list_);
+  return new ListValue(*this);
 }
 
 std::unique_ptr<ListValue> ListValue::CreateDeepCopy() const {
-  return std::make_unique<ListValue>(*list_);
+  return std::make_unique<ListValue>(*this);
 }
 
 ValueSerializer::~ValueSerializer() {

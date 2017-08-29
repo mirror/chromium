@@ -8,18 +8,12 @@ InspectorTest.preloadPanel("resources");
 InspectorTest.dumpCacheTree = async function()
 {
     UI.panels.resources._sidebar.cacheStorageListTreeElement.expand();
+    InspectorTest.addResult("Dumping CacheStorage tree:");
     var cachesTreeElement = UI.panels.resources._sidebar.cacheStorageListTreeElement;
     var promise = InspectorTest.addSnifferPromise(SDK.ServiceWorkerCacheModel.prototype, "_updateCacheNames");
     UI.panels.resources._sidebar.cacheStorageListTreeElement._refreshCaches();
-    await promise;
-    await InspectorTest.dumpCacheTreeNoRefresh();
-}
 
-InspectorTest.dumpCacheTreeNoRefresh = async function()
-{
-    UI.panels.resources._sidebar.cacheStorageListTreeElement.expand();
-    InspectorTest.addResult("Dumping CacheStorage tree:");
-    var cachesTreeElement = UI.panels.resources._sidebar.cacheStorageListTreeElement;
+    await promise;
 
     if (!cachesTreeElement.childCount()) {
         InspectorTest.addResult("    (empty)");

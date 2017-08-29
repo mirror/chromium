@@ -28,13 +28,13 @@ SyntheticGestureController::~SyntheticGestureController() {}
 
 void SyntheticGestureController::QueueSyntheticGesture(
     std::unique_ptr<SyntheticGesture> synthetic_gesture,
-    OnGestureCompleteCallback completion_callback) {
+    const OnGestureCompleteCallback& completion_callback) {
   DCHECK(synthetic_gesture);
 
   bool was_empty = pending_gesture_queue_.IsEmpty();
 
   pending_gesture_queue_.Push(std::move(synthetic_gesture),
-                              std::move(completion_callback));
+                              completion_callback);
 
   if (was_empty)
     StartGesture(*pending_gesture_queue_.FrontGesture());
@@ -95,14 +95,14 @@ void SyntheticGestureController::StartGesture(const SyntheticGesture& gesture) {
 
 void SyntheticGestureController::StopGesture(
     const SyntheticGesture& gesture,
-    OnGestureCompleteCallback completion_callback,
+    const OnGestureCompleteCallback& completion_callback,
     SyntheticGesture::Result result) {
   DCHECK_NE(result, SyntheticGesture::GESTURE_RUNNING);
   TRACE_EVENT_ASYNC_END0("input,benchmark",
                          "SyntheticGestureController::running",
                          &gesture);
 
-  std::move(completion_callback).Run(result);
+  completion_callback.Run(result);
 }
 
 SyntheticGestureController::GestureAndCallbackQueue::GestureAndCallbackQueue() {

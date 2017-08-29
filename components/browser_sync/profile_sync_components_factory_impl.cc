@@ -7,6 +7,7 @@
 #include <utility>
 
 #include "base/feature_list.h"
+#include "base/memory/ptr_util.h"
 #include "base/memory/ref_counted.h"
 #include "base/single_thread_task_runner.h"
 #include "build/build_config.h"
@@ -145,11 +146,11 @@ void ProfileSyncComponentsFactoryImpl::RegisterCommonDataTypes(
     // Use an error callback that always uploads a stacktrace if it can to help
     // get USS as stable as possible.
     sync_service->RegisterDataTypeController(
-        std::make_unique<ModelTypeController>(syncer::DEVICE_INFO, sync_client_,
+        base::MakeUnique<ModelTypeController>(syncer::DEVICE_INFO, sync_client_,
                                               ui_thread_));
   } else {
     sync_service->RegisterDataTypeController(
-        std::make_unique<DeviceInfoDataTypeController>(
+        base::MakeUnique<DeviceInfoDataTypeController>(
             error_callback, sync_client_,
             sync_service->GetLocalDeviceInfoProvider()));
   }
@@ -161,13 +162,13 @@ void ProfileSyncComponentsFactoryImpl::RegisterCommonDataTypes(
     if (!disabled_types.Has(syncer::AUTOFILL)) {
       if (FeatureList::IsEnabled(switches::kSyncUSSAutocomplete)) {
         sync_service->RegisterDataTypeController(
-            std::make_unique<autofill::WebDataModelTypeController>(
+            base::MakeUnique<autofill::WebDataModelTypeController>(
                 syncer::AUTOFILL, sync_client_, db_thread_, web_data_service_,
                 base::Bind(
                     &autofill::AutocompleteSyncBridge::FromWebDataService)));
       } else {
         sync_service->RegisterDataTypeController(
-            std::make_unique<AutofillDataTypeController>(
+            base::MakeUnique<AutofillDataTypeController>(
                 db_thread_, error_callback, sync_client_, web_data_service_));
       }
     }
@@ -176,7 +177,7 @@ void ProfileSyncComponentsFactoryImpl::RegisterCommonDataTypes(
     // disabled.
     if (!disabled_types.Has(syncer::AUTOFILL_PROFILE)) {
       sync_service->RegisterDataTypeController(
-          std::make_unique<AutofillProfileDataTypeController>(
+          base::MakeUnique<AutofillProfileDataTypeController>(
               db_thread_, error_callback, sync_client_, web_data_service_));
     }
 
@@ -185,7 +186,7 @@ void ProfileSyncComponentsFactoryImpl::RegisterCommonDataTypes(
     bool wallet_disabled = disabled_types.Has(syncer::AUTOFILL_WALLET_DATA);
     if (!wallet_disabled) {
       sync_service->RegisterDataTypeController(
-          std::make_unique<AutofillWalletDataTypeController>(
+          base::MakeUnique<AutofillWalletDataTypeController>(
               syncer::AUTOFILL_WALLET_DATA, db_thread_, error_callback,
               sync_client_, web_data_service_));
     }
@@ -195,7 +196,7 @@ void ProfileSyncComponentsFactoryImpl::RegisterCommonDataTypes(
     if (!wallet_disabled &&
         !disabled_types.Has(syncer::AUTOFILL_WALLET_METADATA)) {
       sync_service->RegisterDataTypeController(
-          std::make_unique<AutofillWalletDataTypeController>(
+          base::MakeUnique<AutofillWalletDataTypeController>(
               syncer::AUTOFILL_WALLET_METADATA, db_thread_, error_callback,
               sync_client_, web_data_service_));
     }
@@ -206,11 +207,10 @@ void ProfileSyncComponentsFactoryImpl::RegisterCommonDataTypes(
   if (!disabled_types.Has(syncer::BOOKMARKS)) {
     if (FeatureList::IsEnabled(switches::kSyncUSSBookmarks)) {
       sync_service->RegisterDataTypeController(
-          std::make_unique<sync_bookmarks::BookmarkModelTypeController>(
-              sync_client_));
+          base::MakeUnique<sync_bookmarks::BookmarkModelTypeController>());
     } else {
       sync_service->RegisterDataTypeController(
-          std::make_unique<BookmarkDataTypeController>(error_callback,
+          base::MakeUnique<BookmarkDataTypeController>(error_callback,
                                                        sync_client_));
     }
   }
@@ -225,7 +225,7 @@ void ProfileSyncComponentsFactoryImpl::RegisterCommonDataTypes(
         // implemented.
       } else {
         sync_service->RegisterDataTypeController(
-            std::make_unique<TypedUrlDataTypeController>(
+            base::MakeUnique<TypedUrlDataTypeController>(
                 error_callback, sync_client_, history_disabled_pref_));
       }
     }
@@ -233,7 +233,7 @@ void ProfileSyncComponentsFactoryImpl::RegisterCommonDataTypes(
     // Delete directive sync is enabled by default.
     if (!disabled_types.Has(syncer::HISTORY_DELETE_DIRECTIVES)) {
       sync_service->RegisterDataTypeController(
-          std::make_unique<HistoryDeleteDirectivesDataTypeController>(
+          base::MakeUnique<HistoryDeleteDirectivesDataTypeController>(
               error_callback, sync_client_));
     }
 
@@ -242,9 +242,9 @@ void ProfileSyncComponentsFactoryImpl::RegisterCommonDataTypes(
     // server.
     if (!disabled_types.Has(syncer::PROXY_TABS)) {
       sync_service->RegisterDataTypeController(
-          std::make_unique<ProxyDataTypeController>(syncer::PROXY_TABS));
+          base::MakeUnique<ProxyDataTypeController>(syncer::PROXY_TABS));
       sync_service->RegisterDataTypeController(
-          std::make_unique<SessionDataTypeController>(
+          base::MakeUnique<SessionDataTypeController>(
               error_callback, sync_client_,
               sync_service->GetLocalDeviceInfoProvider(),
               history_disabled_pref_));
@@ -255,11 +255,11 @@ void ProfileSyncComponentsFactoryImpl::RegisterCommonDataTypes(
         !disabled_types.Has(syncer::FAVICON_TRACKING)) {
       // crbug/384552. We disable error uploading for this data types for now.
       sync_service->RegisterDataTypeController(
-          std::make_unique<AsyncDirectoryTypeController>(
+          base::MakeUnique<AsyncDirectoryTypeController>(
               syncer::FAVICON_IMAGES, base::Closure(), sync_client_,
               syncer::GROUP_UI, ui_thread_));
       sync_service->RegisterDataTypeController(
-          std::make_unique<AsyncDirectoryTypeController>(
+          base::MakeUnique<AsyncDirectoryTypeController>(
               syncer::FAVICON_TRACKING, base::Closure(), sync_client_,
               syncer::GROUP_UI, ui_thread_));
     }
@@ -269,7 +269,7 @@ void ProfileSyncComponentsFactoryImpl::RegisterCommonDataTypes(
   // disabled.
   if (!disabled_types.Has(syncer::PASSWORDS)) {
     sync_service->RegisterDataTypeController(
-        std::make_unique<PasswordDataTypeController>(
+        base::MakeUnique<PasswordDataTypeController>(
             error_callback, sync_client_,
             sync_client_->GetPasswordStateChangedCallback(), password_store_));
   }
@@ -277,19 +277,19 @@ void ProfileSyncComponentsFactoryImpl::RegisterCommonDataTypes(
   if (!disabled_types.Has(syncer::PREFERENCES)) {
     if (!override_prefs_controller_to_uss_for_test_) {
       sync_service->RegisterDataTypeController(
-          std::make_unique<AsyncDirectoryTypeController>(
+          base::MakeUnique<AsyncDirectoryTypeController>(
               syncer::PREFERENCES, error_callback, sync_client_,
               syncer::GROUP_UI, ui_thread_));
     } else {
       sync_service->RegisterDataTypeController(
-          std::make_unique<ModelTypeController>(syncer::PREFERENCES,
+          base::MakeUnique<ModelTypeController>(syncer::PREFERENCES,
                                                 sync_client_, ui_thread_));
     }
   }
 
   if (!disabled_types.Has(syncer::PRIORITY_PREFERENCES)) {
     sync_service->RegisterDataTypeController(
-        std::make_unique<AsyncDirectoryTypeController>(
+        base::MakeUnique<AsyncDirectoryTypeController>(
             syncer::PRIORITY_PREFERENCES, error_callback, sync_client_,
             syncer::GROUP_UI, ui_thread_));
   }
@@ -297,7 +297,7 @@ void ProfileSyncComponentsFactoryImpl::RegisterCommonDataTypes(
   // Article sync is disabled by default.  Register only if explicitly enabled.
   if (dom_distiller::IsEnableSyncArticlesSet()) {
     sync_service->RegisterDataTypeController(
-        std::make_unique<AsyncDirectoryTypeController>(
+        base::MakeUnique<AsyncDirectoryTypeController>(
             syncer::ARTICLES, error_callback, sync_client_, syncer::GROUP_UI,
             ui_thread_));
   }
@@ -305,7 +305,7 @@ void ProfileSyncComponentsFactoryImpl::RegisterCommonDataTypes(
 #if defined(OS_CHROMEOS)
   if (!disabled_types.Has(syncer::PRINTERS)) {
     sync_service->RegisterDataTypeController(
-        std::make_unique<ModelTypeController>(syncer::PRINTERS, sync_client_,
+        base::MakeUnique<ModelTypeController>(syncer::PRINTERS, sync_client_,
                                               ui_thread_));
   }
 #endif
@@ -315,14 +315,14 @@ void ProfileSyncComponentsFactoryImpl::RegisterCommonDataTypes(
   if (!disabled_types.Has(syncer::READING_LIST) &&
       reading_list::switches::IsReadingListEnabled()) {
     sync_service->RegisterDataTypeController(
-        std::make_unique<ModelTypeController>(syncer::READING_LIST,
+        base::MakeUnique<ModelTypeController>(syncer::READING_LIST,
                                               sync_client_, ui_thread_));
   }
 
   if (!disabled_types.Has(syncer::USER_EVENTS) &&
       FeatureList::IsEnabled(switches::kSyncUserEvents)) {
     sync_service->RegisterDataTypeController(
-        std::make_unique<ModelTypeController>(syncer::USER_EVENTS, sync_client_,
+        base::MakeUnique<ModelTypeController>(syncer::USER_EVENTS, sync_client_,
                                               ui_thread_));
   }
 }
@@ -351,7 +351,7 @@ syncer::SyncEngine* ProfileSyncComponentsFactoryImpl::CreateSyncEngine(
 
 std::unique_ptr<syncer::LocalDeviceInfoProvider>
 ProfileSyncComponentsFactoryImpl::CreateLocalDeviceInfoProvider() {
-  return std::make_unique<syncer::LocalDeviceInfoProviderImpl>(
+  return base::MakeUnique<syncer::LocalDeviceInfoProviderImpl>(
       channel_, version_, is_tablet_);
 }
 

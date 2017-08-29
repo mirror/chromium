@@ -2260,7 +2260,6 @@ TEST_F(PasswordAutofillAgentTest, PasswordGenerationSupersedesAutofill) {
   SetFocused(password_element_);
   SimulateElementClick("new_password");
   EXPECT_FALSE(GetCalledShowPasswordSuggestions());
-  EXPECT_FALSE(GetCalledShowManualFallbackSuggestion());
   EXPECT_TRUE(GetCalledShowPasswordGenerationPopup());
 }
 
@@ -3180,35 +3179,6 @@ TEST_F(PasswordAutofillAgentTest, NotShowShowAllSavedPasswordsTest) {
   password_element_.SetValue("123");
   password_element_.SetAutofilled(false);
   ASSERT_FALSE(GetCalledShowManualFallbackSuggestion());
-}
-
-TEST_F(PasswordAutofillAgentTest,
-       UpdateSuggestionsIfNewerCredentialsAreSupplied) {
-  // Supply old fill data
-  password_autofill_agent_->FillPasswordForm(0, fill_data_);
-  // The username and password should have been autocompleted.
-  CheckTextFieldsState(kAliceUsername, true, kAlicePassword, true);
-
-  // Change fill data
-  fill_data_.password_field.value = ASCIIToUTF16("a-changed-password");
-  // Supply changed fill data
-  password_autofill_agent_->FillPasswordForm(1 /* New key means new data */,
-                                             fill_data_);
-  CheckTextFieldsState(kAliceUsername, true, "a-changed-password", true);
-}
-
-TEST_F(PasswordAutofillAgentTest, SuggestLatestCredentials) {
-  password_autofill_agent_->FillPasswordForm(0, fill_data_);
-  SimulateElementClick(kPasswordName);
-  EXPECT_TRUE(GetCalledShowPasswordSuggestions());
-  EXPECT_EQ(0, fake_driver_.show_pw_suggestions_key());
-
-  fake_driver_.reset_show_pw_suggestions();
-
-  password_autofill_agent_->FillPasswordForm(1, fill_data_);
-  SimulateElementClick(kPasswordName);
-  EXPECT_TRUE(GetCalledShowPasswordSuggestions());
-  EXPECT_EQ(1, fake_driver_.show_pw_suggestions_key());
 }
 
 }  // namespace autofill

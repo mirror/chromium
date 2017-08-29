@@ -87,10 +87,17 @@ AutoscrollController* ScrollManager::GetAutoscrollController() const {
 
 static bool CanPropagate(const ScrollState& scroll_state,
                          const Element& element) {
-  return (scroll_state.deltaXHint() == 0 ||
-          element.GetComputedStyle()->ScrollBoundaryBehaviorX() ==
-              EScrollBoundaryBehavior::kAuto) &&
-         (scroll_state.deltaYHint() == 0 ||
+  // ScrollBoundaryBehavior may have different values on x-axis and y-axis.
+  // We need to find out the dominant axis of user's intended scroll to decide
+  // which node's ScrollBoundaryBehavior should be applied, i.e. which the
+  // scroll should be propagated from this node given its relevant*
+  // ScrollBoundaryBehavior value. * relevant here depends on the dominant
+  // axis of scroll gesture.
+  bool x_dominant =
+      std::abs(scroll_state.deltaXHint()) > std::abs(scroll_state.deltaYHint());
+  return (x_dominant && element.GetComputedStyle()->ScrollBoundaryBehaviorX() ==
+                            EScrollBoundaryBehavior::kAuto) ||
+         (!x_dominant &&
           element.GetComputedStyle()->ScrollBoundaryBehaviorY() ==
               EScrollBoundaryBehavior::kAuto);
 }

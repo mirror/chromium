@@ -51,14 +51,6 @@ Polymer({
       }
     },
 
-    /** @private */
-    enableSoundContentSetting_: {
-      type: Boolean,
-      value: function() {
-        return loadTimeData.getBoolean('enableSoundContentSetting');
-      }
-    },
-
     /** @type {!Map<string, string>} */
     focusConfig: {
       type: Object,
@@ -85,8 +77,8 @@ Polymer({
      [R.SITE_SETTINGS_MICROPHONE, 'microphone'],
      [R.SITE_SETTINGS_NOTIFICATIONS, 'notifications'],
      [R.SITE_SETTINGS_JAVASCRIPT, 'javascript'],
-     [R.SITE_SETTINGS_SOUND, 'sound'], [R.SITE_SETTINGS_FLASH, 'flash'],
-     [R.SITE_SETTINGS_IMAGES, 'images'], [R.SITE_SETTINGS_POPUPS, 'popups'],
+     [R.SITE_SETTINGS_FLASH, 'flash'], [R.SITE_SETTINGS_IMAGES, 'images'],
+     [R.SITE_SETTINGS_POPUPS, 'popups'],
      [R.SITE_SETTINGS_BACKGROUND_SYNC, 'background-sync'],
      [R.SITE_SETTINGS_AUTOMATIC_DOWNLOADS, 'automatic-downloads'],
      [R.SITE_SETTINGS_UNSANDBOXED_PLUGINS, 'unsandboxed-plugins'],

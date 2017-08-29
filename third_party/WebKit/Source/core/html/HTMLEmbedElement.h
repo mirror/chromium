@@ -57,9 +57,7 @@ class CORE_EXPORT HTMLEmbedElement final : public HTMLPlugInElement {
   void ParametersForPlugin(Vector<String>& param_names,
                            Vector<String>& param_values);
 
-  NamedItemType GetNamedItemType() const override {
-    return NamedItemType::kName;
-  }
+  bool ShouldRegisterAsNamedItem() const override { return true; }
   bool IsInteractiveContent() const override;
 };
 

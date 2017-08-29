@@ -812,7 +812,7 @@ WebInputEventResult WebViewImpl::HandleGestureEvent(
             // Stash the position of the node that would've been used absent
             // disambiguation, for UMA purposes.
             last_tap_disambiguation_best_candidate_position_ =
-                targeted_event.GetHitTestResult().RoundedPointInMainFrame() -
+                targeted_event.GetHitTestResult().RoundedPointInContent() -
                 RoundedIntSize(targeted_event.GetHitTestResult().LocalPoint());
 
             EnableTapHighlights(highlight_nodes);
@@ -938,7 +938,7 @@ void WebViewImpl::ResolveTapDisambiguation(double timestamp_seconds,
         page_->DeprecatedLocalMainFrame()->GetEventHandler().TargetGestureEvent(
             scaled_event);
     WebPoint node_position =
-        targeted_event.GetHitTestResult().RoundedPointInMainFrame() -
+        targeted_event.GetHitTestResult().RoundedPointInContent() -
         RoundedIntSize(targeted_event.GetHitTestResult().LocalPoint());
     TapDisambiguationResult result =
         (node_position == last_tap_disambiguation_best_candidate_position_)
@@ -2063,8 +2063,19 @@ void WebViewImpl::Paint(WebCanvas* canvas, const WebRect& rect) {
   // This should only be used when compositing is not being used for this
   // WebView, and it is painting into the recording of its parent.
   DCHECK(!IsAcceleratedCompositingActive());
+
+  double paint_start = CurrentTime();
   PageWidgetDelegate::Paint(*page_, canvas, rect,
                             *page_->DeprecatedLocalMainFrame());
+  double paint_end = CurrentTime();
+  double pixels_per_sec =
+      (rect.width * rect.height) / (paint_end - paint_start);
+  DEFINE_STATIC_LOCAL(CustomCountHistogram, software_paint_duration_histogram,
+                      ("Renderer4.SoftwarePaintDurationMS", 0, 120, 30));
+  software_paint_duration_histogram.Count((paint_end - paint_start) * 1000);
+  DEFINE_STATIC_LOCAL(CustomCountHistogram, software_paint_rate_histogram,
+                      ("Renderer4.SoftwarePaintMegapixPerSecond", 10, 210, 30));
+  software_paint_rate_histogram.Count(pixels_per_sec / 1000000);
 }
 
 #if defined(OS_ANDROID)

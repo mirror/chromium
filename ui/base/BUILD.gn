@@ -835,7 +835,6 @@ test("ui_base_unittests") {
       "cocoa/controls/hyperlink_text_view_unittest.mm",
       "cocoa/focus_tracker_unittest.mm",
       "cocoa/fullscreen_window_manager_unittest.mm",
-      "cocoa/hover_button_unittest.mm",
       "cocoa/hover_image_button_unittest.mm",
       "cocoa/menu_controller_unittest.mm",
       "cocoa/nsgraphics_context_additions_unittest.mm",
@@ -870,7 +869,7 @@ test("ui_base_unittests") {
     if (use_x11) {
       sources += [ "ime/composition_text_util_pango_unittest.cc" ]
     }
-    if (is_chromeos) {
+    if (!use_x11 && is_chromeos) {
       # These were already removed in the non-chromeos case.
       sources -= [ "ime/input_method_chromeos_unittest.cc" ]
     }
@@ -974,7 +973,7 @@ test("ui_base_unittests") {
     ]
   }
 
-  if (use_x11) {
+  if (use_x11 && !is_chromeos) {
     sources += [
       "dragdrop/os_exchange_data_provider_aurax11_unittest.cc",
       "x/selection_requestor_unittest.cc",

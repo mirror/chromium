@@ -9,6 +9,7 @@
 #include <utility>
 
 #include "base/bind.h"
+#include "base/memory/ptr_util.h"
 #include "base/message_loop/message_loop.h"
 #include "base/run_loop.h"
 #include "base/strings/stringprintf.h"
@@ -76,7 +77,7 @@ DeviceInfoSpecifics CreateSpecifics(int suffix, Time last_updated_timestamp) {
 }
 
 std::unique_ptr<DeviceInfo> CreateModel(int suffix) {
-  return std::make_unique<DeviceInfo>(
+  return base::MakeUnique<DeviceInfo>(
       base::StringPrintf(kGuidFormat, suffix),
       base::StringPrintf(kClientNameFormat, suffix),
       base::StringPrintf(kChromeVersionFormat, suffix),
@@ -183,7 +184,7 @@ class DeviceInfoSyncBridgeTest : public testing::Test,
   // only be called once per run, as it passes |store_|.
   void InitializeBridge() {
     ASSERT_TRUE(store_);
-    bridge_ = std::make_unique<DeviceInfoSyncBridge>(
+    bridge_ = base::MakeUnique<DeviceInfoSyncBridge>(
         provider_.get(),
         base::Bind(&ModelTypeStoreTestUtil::MoveStoreToCallback,
                    base::Passed(&store_)),
@@ -307,7 +308,7 @@ TEST_F(DeviceInfoSyncBridgeTest, EmptyDataReconciliationSlowLoad) {
 }
 
 TEST_F(DeviceInfoSyncBridgeTest, LocalProviderSubscription) {
-  set_provider(std::make_unique<LocalDeviceInfoProviderMock>());
+  set_provider(base::MakeUnique<LocalDeviceInfoProviderMock>());
   InitializeAndPump();
 
   EXPECT_EQ(0u, bridge()->GetAllDeviceInfo().size());
@@ -321,7 +322,7 @@ TEST_F(DeviceInfoSyncBridgeTest, LocalProviderSubscription) {
 
 // Metadata shouldn't be loaded before the provider is initialized.
 TEST_F(DeviceInfoSyncBridgeTest, LocalProviderInitRace) {
-  set_provider(std::make_unique<LocalDeviceInfoProviderMock>());
+  set_provider(base::MakeUnique<LocalDeviceInfoProviderMock>());
   InitializeAndPump();
   EXPECT_FALSE(processor().metadata());
 
@@ -695,7 +696,7 @@ TEST_F(DeviceInfoSyncBridgeTest, CountActiveDevices) {
 }
 
 TEST_F(DeviceInfoSyncBridgeTest, MultipleOnProviderInitialized) {
-  set_provider(std::make_unique<LocalDeviceInfoProviderMock>());
+  set_provider(base::MakeUnique<LocalDeviceInfoProviderMock>());
   InitializeAndPump();
   EXPECT_EQ(nullptr, processor().metadata());
 

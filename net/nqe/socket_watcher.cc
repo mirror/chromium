@@ -89,9 +89,6 @@ bool SocketWatcher::ShouldNotifyUpdatedRTT() const {
 void SocketWatcher::OnUpdatedRTTAvailable(const base::TimeDelta& rtt) {
   DCHECK(thread_checker_.CalledOnValidThread());
 
-  if (rtt <= base::TimeDelta())
-    return;
-
   last_rtt_notification_ = tick_clock_->NowTicks();
   task_runner_->PostTask(
       FROM_HERE,

@@ -107,15 +107,11 @@ class ServiceWorkerInstalledScriptsSender::Sender {
                           int result) {
     DCHECK(owner_);
     DCHECK(http_info);
-    if (!http_info->http_info) {
-      DCHECK_LT(result, 0);
-      ServiceWorkerMetrics::CountReadResponseResult(
-          ServiceWorkerMetrics::READ_HEADERS_ERROR);
+    if (result < 0 || !http_info->http_info) {
       CompleteSendIfNeeded(FinishedReason::kNoHttpInfoError);
       return;
     }
 
-    DCHECK_GE(result, 0);
     mojo::ScopedDataPipeConsumerHandle meta_data_consumer;
     mojo::ScopedDataPipeConsumerHandle body_consumer;
     DCHECK_GE(http_info->response_data_size, 0);
@@ -204,8 +200,6 @@ class ServiceWorkerInstalledScriptsSender::Sender {
 
   void OnResponseDataRead(int read_bytes) {
     if (read_bytes < 0) {
-      ServiceWorkerMetrics::CountReadResponseResult(
-          ServiceWorkerMetrics::READ_DATA_ERROR);
       watcher_.Cancel();
       body_handle_.reset();
       CompleteSendIfNeeded(FinishedReason::kResponseReaderError);
@@ -214,8 +208,6 @@ class ServiceWorkerInstalledScriptsSender::Sender {
     body_handle_ = pending_write_->Complete(read_bytes);
     DCHECK(body_handle_.is_valid());
     pending_write_ = nullptr;
-    ServiceWorkerMetrics::CountReadResponseResult(
-        ServiceWorkerMetrics::READ_OK);
     if (read_bytes == 0) {
       // All data has been read.
       watcher_.Cancel();
@@ -315,13 +307,13 @@ void ServiceWorkerInstalledScriptsSender::Start() {
   DCHECK_EQ(State::kNotStarted, state_);
   // Return if no script has been installed.
   if (main_script_id_ == kInvalidServiceWorkerResourceId) {
-    Finish(FinishedReason::kSuccess);
+    state_ = State::kFinished;
     return;
   }
   TRACE_EVENT_NESTABLE_ASYNC_BEGIN1("ServiceWorker",
                                     "ServiceWorkerInstalledScriptsSender", this,
                                     "main_script_url", main_script_url_.spec());
-  UpdateState(State::kSendingMainScript);
+  state_ = State::kSendingMainScript;
   StartSendingScript(main_script_id_);
 }
 
@@ -379,7 +371,7 @@ void ServiceWorkerInstalledScriptsSender::OnFinishSendingScript() {
   if (state_ == State::kSendingMainScript) {
     // Imported scripts are served after the main script.
     imported_script_iter_ = imported_scripts_.begin();
-    UpdateState(State::kSendingImportedScript);
+    state_ = State::kSendingImportedScript;
   } else {
     ++imported_script_iter_;
   }
@@ -388,7 +380,8 @@ void ServiceWorkerInstalledScriptsSender::OnFinishSendingScript() {
     // ServiceWorkerInstalledScriptsSender's work is done now.
     DCHECK_EQ(State::kSendingImportedScript, state_);
     DCHECK(!IsFinished());
-    Finish(FinishedReason::kSuccess);
+    state_ = State::kFinished;
+    finished_reason_ = FinishedReason::kSuccess;
     TRACE_EVENT_NESTABLE_ASYNC_END0(
         "ServiceWorker", "ServiceWorkerInstalledScriptsSender", this);
     return;
@@ -398,18 +391,19 @@ void ServiceWorkerInstalledScriptsSender::OnFinishSendingScript() {
 }
 
 void ServiceWorkerInstalledScriptsSender::OnAbortSendingScript(
-    FinishedReason reason) {
+    FinishedReason status) {
   DCHECK(running_sender_);
   DCHECK(state_ == State::kSendingMainScript ||
          state_ == State::kSendingImportedScript);
-  DCHECK_NE(FinishedReason::kSuccess, reason);
+  DCHECK_NE(FinishedReason::kSuccess, status);
   DCHECK(!IsFinished());
   TRACE_EVENT_NESTABLE_ASYNC_END1("ServiceWorker",
                                   "ServiceWorkerInstalledScriptsSender", this,
-                                  "FinishedReason", static_cast<int>(reason));
-  Finish(reason);
+                                  "FinishedReason", static_cast<int>(status));
+  state_ = State::kFinished;
+  finished_reason_ = status;
 
-  switch (reason) {
+  switch (status) {
     case FinishedReason::kNotFinished:
     case FinishedReason::kSuccess:
       NOTREACHED();
@@ -441,32 +435,6 @@ const GURL& ServiceWorkerInstalledScriptsSender::CurrentSendingURL() {
   if (state_ == State::kSendingMainScript)
     return main_script_url_;
   return imported_script_iter_->second;
-}
-
-void ServiceWorkerInstalledScriptsSender::UpdateState(State state) {
-  DCHECK_NE(State::kFinished, state) << "Use Finish() for state kFinished.";
-
-  switch (state_) {
-    case State::kNotStarted:
-      DCHECK_EQ(State::kSendingMainScript, state);
-      state_ = state;
-      return;
-    case State::kSendingMainScript:
-      DCHECK_EQ(State::kSendingImportedScript, state);
-      state_ = state;
-      return;
-    case State::kSendingImportedScript:
-    case State::kFinished:
-      NOTREACHED();
-      return;
-  }
-}
-
-void ServiceWorkerInstalledScriptsSender::Finish(FinishedReason reason) {
-  DCHECK_NE(State::kFinished, state_);
-  DCHECK_NE(FinishedReason::kNotFinished, reason);
-  state_ = State::kFinished;
-  finished_reason_ = reason;
 }
 
 }  // namespace content

@@ -97,13 +97,13 @@ void WorkerGlobalScope::EvaluateClassicScript(
   CachedMetadataHandler* handler = CreateWorkerScriptCachedMetadataHandler(
       script_url, cached_meta_data.get());
   DCHECK(!source_code.IsNull());
-  ReportingProxy().WillEvaluateWorkerScript(
+  GetThread()->GetWorkerReportingProxy().WillEvaluateWorkerScript(
       source_code.length(),
       cached_meta_data.get() ? cached_meta_data->size() : 0);
   bool success = ScriptController()->Evaluate(
       ScriptSourceCode(source_code, script_url), nullptr /* error_event */,
       handler, v8_cache_options);
-  ReportingProxy().DidEvaluateWorkerScript(success);
+  GetThread()->GetWorkerReportingProxy().DidEvaluateWorkerScript(success);
 }
 
 void WorkerGlobalScope::Dispose() {
@@ -126,6 +126,18 @@ void WorkerGlobalScope::Dispose() {
 
   event_queue_->Close();
   WorkerOrWorkletGlobalScope::Dispose();
+}
+
+void WorkerGlobalScope::ReportFeature(WebFeature feature) {
+  DCHECK(IsContextThread());
+  DCHECK(thread_);
+  thread_->GetWorkerReportingProxy().CountFeature(feature);
+}
+
+void WorkerGlobalScope::ReportDeprecation(WebFeature feature) {
+  DCHECK(IsContextThread());
+  DCHECK(thread_);
+  thread_->GetWorkerReportingProxy().CountDeprecation(feature);
 }
 
 void WorkerGlobalScope::ExceptionUnhandled(int exception_id) {
@@ -225,7 +237,7 @@ void WorkerGlobalScope::importScripts(const Vector<String>& urls,
     ErrorEvent* error_event = nullptr;
     CachedMetadataHandler* handler(CreateWorkerScriptCachedMetadataHandler(
         complete_url, cached_meta_data.get()));
-    ReportingProxy().WillEvaluateImportedScript(
+    GetThread()->GetWorkerReportingProxy().WillEvaluateImportedScript(
         source_code.length(), cached_meta_data ? cached_meta_data->size() : 0);
     ScriptController()->Evaluate(ScriptSourceCode(source_code, response_url),
                                  &error_event, handler, v8_cache_options_);
@@ -325,7 +337,7 @@ bool WorkerGlobalScope::IsContextThread() const {
 
 void WorkerGlobalScope::AddConsoleMessage(ConsoleMessage* console_message) {
   DCHECK(IsContextThread());
-  ReportingProxy().ReportConsoleMessage(
+  GetThread()->GetWorkerReportingProxy().ReportConsoleMessage(
       console_message->Source(), console_message->Level(),
       console_message->Message(), console_message->Location());
   GetThread()->GetConsoleMessageStorage()->AddConsoleMessage(this,
@@ -370,9 +382,7 @@ WorkerGlobalScope::WorkerGlobalScope(
     std::unique_ptr<SecurityOrigin::PrivilegeData>
         starter_origin_privilage_data,
     WorkerClients* worker_clients)
-    : WorkerOrWorkletGlobalScope(thread->GetIsolate(),
-                                 worker_clients,
-                                 thread->GetWorkerReportingProxy()),
+    : WorkerOrWorkletGlobalScope(thread->GetIsolate(), worker_clients),
       url_(url),
       user_agent_(user_agent),
       v8_cache_options_(kV8CacheOptionsDefault),
@@ -423,8 +433,8 @@ void WorkerGlobalScope::SetWorkerSettings(
 void WorkerGlobalScope::ExceptionThrown(ErrorEvent* event) {
   int next_id = ++last_pending_error_event_id_;
   pending_error_events_.Set(next_id, event);
-  ReportingProxy().ReportException(event->MessageForConsole(),
-                                   event->Location()->Clone(), next_id);
+  GetThread()->GetWorkerReportingProxy().ReportException(
+      event->MessageForConsole(), event->Location()->Clone(), next_id);
 }
 
 void WorkerGlobalScope::RemoveURLFromMemoryCache(const KURL& url) {

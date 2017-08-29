@@ -5,8 +5,6 @@
 #ifndef CHROME_INSTALLER_ZUCCHINI_DISASSEMBLER_H_
 #define CHROME_INSTALLER_ZUCCHINI_DISASSEMBLER_H_
 
-#include <stddef.h>
-
 #include <memory>
 #include <string>
 #include <vector>

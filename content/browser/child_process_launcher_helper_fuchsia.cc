@@ -4,18 +4,14 @@
 
 #include "content/browser/child_process_launcher_helper.h"
 
-#include "base/command_line.h"
-#include "base/process/launch.h"
-#include "content/browser/child_process_launcher.h"
-#include "mojo/edk/embedder/platform_channel_pair.h"
-
 namespace content {
 namespace internal {
 
 void ChildProcessLauncherHelper::SetProcessPriorityOnLauncherThread(
     base::Process process,
-    const ChildProcessLauncherPriority& priority) {
-  DCHECK_CURRENTLY_ON(BrowserThread::PROCESS_LAUNCHER);
+    bool background,
+    bool boost_for_pending_views,
+    ChildProcessImportance importance) {
   // TODO(fuchsia): Implement this. (crbug.com/707031)
   NOTIMPLEMENTED();
 }
@@ -24,13 +20,17 @@ base::TerminationStatus ChildProcessLauncherHelper::GetTerminationStatus(
     const ChildProcessLauncherHelper::Process& process,
     bool known_dead,
     int* exit_code) {
-  return base::GetTerminationStatus(process.process.Handle(), exit_code);
+  // TODO(fuchsia): Implement this. (crbug.com/707031)
+  NOTIMPLEMENTED();
+  return base::GetTerminationStatus(0, 0);
 }
 
 // static
 bool ChildProcessLauncherHelper::TerminateProcess(const base::Process& process,
                                                   int exit_code,
                                                   bool wait) {
+  // TODO(fuchsia): Implement this. (crbug.com/707031)
+  NOTIMPLEMENTED();
   return process.Terminate(exit_code, wait);
 }
 
@@ -49,31 +49,29 @@ void ChildProcessLauncherHelper::ResetRegisteredFilesForTesting() {
 }
 
 void ChildProcessLauncherHelper::BeforeLaunchOnClientThread() {
-  DCHECK_CURRENTLY_ON(client_thread_id_);
+  // TODO(fuchsia): Implement this. (crbug.com/707031)
+  NOTIMPLEMENTED();
 }
 
 mojo::edk::ScopedPlatformHandle
 ChildProcessLauncherHelper::PrepareMojoPipeHandlesOnClientThread() {
-  DCHECK_CURRENTLY_ON(client_thread_id_);
-
-  // By doing nothing here, StartLaunchOnClientThread() will construct a channel
-  // pair instead.
+  // TODO(fuchsia): Implement this. (crbug.com/707031)
+  NOTIMPLEMENTED();
   return mojo::edk::ScopedPlatformHandle();
 }
 
 std::unique_ptr<FileMappedForLaunch>
 ChildProcessLauncherHelper::GetFilesToMap() {
-  DCHECK_CURRENTLY_ON(BrowserThread::PROCESS_LAUNCHER);
-  return std::unique_ptr<FileMappedForLaunch>();
+  // TODO(fuchsia): Implement this. (crbug.com/707031)
+  NOTIMPLEMENTED();
+  return nullptr;
 }
 
 void ChildProcessLauncherHelper::BeforeLaunchOnLauncherThread(
     const PosixFileDescriptorInfo& files_to_register,
     base::LaunchOptions* options) {
-  DCHECK_CURRENTLY_ON(BrowserThread::PROCESS_LAUNCHER);
-
-  mojo::edk::PlatformChannelPair::PrepareToPassHandleToChildProcess(
-      mojo_client_handle(), command_line(), &options->handles_to_transfer);
+  // TODO(fuchsia): Implement this. (crbug.com/707031)
+  NOTIMPLEMENTED();
 }
 
 ChildProcessLauncherHelper::Process
@@ -82,33 +80,23 @@ ChildProcessLauncherHelper::LaunchProcessOnLauncherThread(
     std::unique_ptr<FileMappedForLaunch> files_to_register,
     bool* is_synchronous_launch,
     int* launch_result) {
-  DCHECK_CURRENTLY_ON(BrowserThread::PROCESS_LAUNCHER);
-  DCHECK(mojo_client_handle().is_valid());
-
-  // TODO(750938): Implement sandboxed/isolated subprocess launching.
-  Process child_process;
-  child_process.process = base::LaunchProcess(*command_line(), options);
-  return child_process;
+  // TODO(fuchsia): Implement this. (crbug.com/707031)
+  NOTIMPLEMENTED();
+  return Process();
 }
 
 void ChildProcessLauncherHelper::AfterLaunchOnLauncherThread(
     const ChildProcessLauncherHelper::Process& process,
     const base::LaunchOptions& options) {
-  DCHECK_CURRENTLY_ON(BrowserThread::PROCESS_LAUNCHER);
-
-  if (process.process.IsValid()) {
-    // |mojo_client_handle_| has already been transferred to the child process
-    // by this point. Remove it from the scoped container so that we don't
-    // erroneously delete it.
-    ignore_result(mojo_client_handle_.release());
-  }
+  // TODO(fuchsia): Implement this. (crbug.com/707031)
+  NOTIMPLEMENTED();
 }
 
 // static
 void ChildProcessLauncherHelper::ForceNormalProcessTerminationSync(
     ChildProcessLauncherHelper::Process process) {
-  DCHECK_CURRENTLY_ON(BrowserThread::PROCESS_LAUNCHER);
-  process.process.Terminate(RESULT_CODE_NORMAL_EXIT, true);
+  // TODO(fuchsia): Implement this. (crbug.com/707031)
+  NOTIMPLEMENTED();
 }
 
 }  // namespace internal

@@ -265,9 +265,6 @@ CHAR-LIMIT guidelines:
       <message name="IDS_NOTIFICATION_CATEGORY_SCREEN_CAPTURE" desc="Label for notifications shown when screen is sharing or recording, within a list of notification categories. [CHAR-LIMIT=32]">
         Screen Capture
       </message>
-      <message name="IDS_NOTIFICATION_CATEGORY_CONTENT_SUGGESTIONS" desc="Label for Content Suggestions, within a list of notification categories. [CHAR-LIMIT=32]">
-        Content Suggestions
-      </message>
       <message name="IDS_NOTIFICATION_CATEGORY_SITES" desc="Label for notifications from websites, within a list of notification categories. [CHAR-LIMIT=32]">
         Sites
       </message>
@@ -316,9 +313,6 @@ CHAR-LIMIT guidelines:
       </message>
 
       <!-- Autofill and Payments preferences -->
-      <message name="IDS_AUTOFILL_KEYBOARD_ACCESSORY_CONTENT_DESCRIPTION" desc="The text announced by the screen reader when the autofill suggestions are shown.">
-        Suggestions available
-      </message>
       <message name="IDS_PREFS_AUTOFILL_AND_PAYMENTS" desc="Title of Autofill and payments settings prefrences. [CHAR-LIMIT=32]">
         Autofill and payments
       </message>
@@ -463,9 +457,6 @@ CHAR-LIMIT guidelines:
       </message>
       <message name="IDS_PASSWORD_ENTRY_EDITOR_SET_LOCK_SCREEN" desc='Text prompting user to set device lock in order to view/copy passwords'>
         To view or copy your password here, set screen lock on this device.
-      </message>
-      <message name="IDS_PASSWORD_GENERATION_POPUP_CONTENT_DESCRIPTION" desc="The text announced by the screen reader when the password generation popup is shown.">
-        Showing password generation popup
       </message>
 
       <!-- Lock Screen Fragment -->
@@ -654,9 +645,6 @@ Your Google account may have other forms of browsing history like searches and a
       </message>
       <message name="IDS_CLEAR_FORM_DATA_TITLE" desc="Title for Clear Form Data in Clear Browsing Data preference">
         Autofill form data
-      </message>
-      <message name="IDS_CLEAR_MEDIA_LICENSES_TITLE" desc="Title for Clear Media Licenses in Clear Browsing Data preference">
-        Media Licenses
       </message>
       <message name="IDS_CLEAR_BROWSING_DATA_PROGRESS_TITLE" desc='Title for the progress dialog used when waiting for "clear browsing data" to complete.'>
         Clearing browsing data
@@ -1079,12 +1067,6 @@ To obtain new licenses, connect to the internet and play your downloaded content
       </message>
       <message name="IDS_DATA_REDUCTION_USAGE_RESET_STATISTICS_BUTTON" desc="Text to be displayed on the button to reset the Data Reduction statistics.">
         Reset statistics
-      </message>
-      <message name="IDS_DATA_REDUCTION_USAGE_RESET_STATISTICS_CONFIRMATION_DIALOG" desc="Text to be displayed on the confirmation dialog to reset the Data Reduction statistics.">
-        Reset Data Saver? Resetting erases Data Saver history, including the list of visited sites.
-      </message>
-      <message name="IDS_DATA_REDUCTION_USAGE_RESET_STATISTICS_CONFIRMATION_BUTTON" desc="Text to be displayed on the confirmation button to proceed with resetting the Data Reduction statistics.">
-        Reset
       </message>
       <message name="IDS_SAFE_BROWSING_DESCRIPTION" desc="Description text for safe browsing">
         Chrome’s Safe Browsing system will also be used to detect malicious pages and protect you from phishing, malware, and harmful downloads.
@@ -1819,6 +1801,9 @@ To obtain new licenses, connect to the internet and play your downloaded content
       <message name="IDS_APP_BANNER_OPEN" desc="Text that indicates that clicking on the button will launch an application. [CHAR-LIMIT=25]">
         Open
       </message>
+      <message name="IDS_APP_BANNER_INSTALLING_WEBAPK" desc="Button text indicating that a WebAPK is being installed. [CHAR-LIMIT=25]">
+        Adding…
+      </message>
 
       <!-- App banner accessibility strings, used for touch exploration -->
       <message name="IDS_APP_BANNER_VIEW_NATIVE_APP_ACCESSIBILITY" desc="Accessibility text: Describes a prompt promoting the installation of an app related to the current page, including the app's name and its rating.">
@@ -1898,12 +1883,6 @@ To obtain new licenses, connect to the internet and play your downloaded content
       </message>
       <message name="IDS_WEBAPK_INSTALL_IN_PROGRESS" desc="Indicates that an installation for the WebAPK for the specific website is already in progress.">
         Still adding previous site
-      </message>
-      <message name="IDS_NOTIFICATION_WEBAPK_INSTALL_IN_PROGRESS" desc="Indicates that the adding of a WebAPK is in progress.">
-        Adding <ph name="WEBAPK_NAME">%1$s<ex>Progressive Web Apps</ex></ph>...
-      </message>
-      <message name="IDS_NOTIFICATION_WEBAPK_INSTALLED" desc="Indicates that a WebAPK has been successfully added to home screen.">
-        Added to home screen.
       </message>
 
       <!-- PageInfoPopup (PageInfo dialog) -->
@@ -2095,9 +2074,6 @@ To obtain new licenses, connect to the internet and play your downloaded content
       </message>
       <message name="IDS_OPEN_DOWNLOADED_LABEL" desc="A text label on the snackbar widget to open the downloaded file.">
         Open
-      </message>
-      <message name="IDS_DOWNLOAD_MANAGER_UI_SPACE_FREE_AND_OTHER" desc="Formatted string indicating how much storage is available to use on this device and how much storage space on this device has been used by other apps.">
-        <ph name="SPACE_FREE">%1$s<ex>4.8 GB available</ex></ph> (<ph name="SPACE_OTHER">%2$s<ex>5.22 GB other apps</ex></ph>)
       </message>
       <message name="IDS_DOWNLOAD_MANAGER_UI_SPACE_FREE_KB" desc="String indicating how much storage is available to use on the device, in kilobytes.">
         <ph name="kilobytes">%1$3.2f<ex>12.5</ex></ph> KB available
@@ -2983,11 +2959,8 @@ You must have Bluetooth and Location turned on in order to use the Physical Web.
       <message name="IDS_WEBAPK_RUNNING_IN_CHROME_DISCLOSURE" desc="Message on the notification that indicates a WebApk may use Chrome data.">
         This app is running in Chrome.
       </message>
-      <message name="IDS_WEBAPP_RUNS_IN_CHROME_DISCLOSURE" desc="Message on the notification that indicates a Web App is run by Chrome.">
-        <ph name="WEB_APP_NAME">%1$s<ex>Twitter</ex></ph> runs in Chrome
-      </message>
       <message name="IDS_WEBAPK_OFFLINE_DIALOG" desc="The message on the dialog shown when launching a WebAPK needs network connection.">
-        To use <ph name="APP_NAME">%1$s<ex>PWA List</ex></ph> for the first time, please connect to the internet.
+        To use <ph name="APP_NAME">%1$s<ex>PWA List</ex></ph> for the first time, please connect to the internet
       </message>
       <message name="IDS_WEBAPK_OFFLINE_DIALOG_QUIT_BUTTON" desc="The text on the quit button on the dialog shown when launching a WebAPK needs network connection.">
         OK
@@ -3116,12 +3089,7 @@ You must have Bluetooth and Location turned on in order to use the Physical Web.
       <message name="IDS_IPH_DATA_SAVER_DETAIL_ACCESSIBILITY_TEXT" desc="The in-product-help accessibility text to open data saver.">
         See how much data you've saved from the More Options button
       </message>
-      <message name="IDS_IPH_MEDIA_DOWNLOAD_TEXT" desc="The in-product-help message to download a video.">
-        Download videos to watch later
-      </message>
-      <message name="IDS_IPH_MEDIA_DOWNLOAD_ACCESSIBILITY_TEXT" desc="The in-product-help accessibility text to download a video.">
-        Download videos to watch later using the Download button
-      </message>
+
       <!-- Search Widget strings -->
       <message name="IDS_SEARCH_WIDGET_DEFAULT" desc="Default text for the search widget">
         Search
@@ -3174,22 +3142,6 @@ You must have Bluetooth and Location turned on in order to use the Physical Web.
       </message>
       <message name="IDS_BOTTOM_SHEET_HOME_TAB" desc="Accessibility string read when the home tab is selected.">
         Home tab selected
-      </message>
-
-      <!-- Photo picker -->
-      <message name="IDS_PHOTO_PICKER_SELECT_IMAGES" desc="The label in the title bar of the Photo Picker dialog, suggesting which action the user should take.">
-        Select images
-      </message>
-      <message name="IDS_PHOTO_PICKER_CAMERA" desc="The label for the Camera action in the Photo Picker (opening the camera system intent).">
-        Camera
-      </message>
-      <message name="IDS_PHOTO_PICKER_BROWSE" desc="The label for the Browse action in the Photo Picker (browsing for photos).">
-        Browse
-      </message>
-
-      <!-- Migration strings -->
-      <message name="IDS_UPDATING_CHROME" desc="String that indicates that Chrome is updating">
-        Updating Chrome...
       </message>
     </messages>
   </release>

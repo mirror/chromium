@@ -27,7 +27,6 @@
 <translation id="1746730358044914197">Способы ввода настраиваются администратором</translation>
 <translation id="1747827819627189109">Экранная клавиатура включена</translation>
 <translation id="1823873187264960516">Ethernet: <ph name="ADDRESS" /></translation>
-<translation id="1836215606488044471">Ассистент (загрузка…)</translation>
 <translation id="1850504506766569011">Wi-Fi отключен</translation>
 <translation id="1856813161013948396">Для разблокировки экрана коснитесь сканера отпечатков пальцев. Нажмите, чтобы настроить.</translation>
 <translation id="1864454756846565995">Устройство USB-C (порт сзади)</translation>
@@ -55,7 +54,6 @@
 <translation id="2338501278241028356">Включите Bluetooth, чтобы найти устройства</translation>
 <translation id="2352467521400612932">Настройки стилуса</translation>
 <translation id="2354174487190027830">Активация <ph name="NAME" /></translation>
-<translation id="2365393535144473978">Вместе с мобильным Интернетом включится Bluetooth.</translation>
 <translation id="2391579633712104609">180°</translation>
 <translation id="2429753432712299108">Устройству <ph name="DEVICE_NAME" /> требуется разрешение на подключение через Bluetooth. Проверьте, отображается ли на нем код: <ph name="PASSKEY" />.</translation>
 <translation id="2475982808118771221">Произошел сбой.</translation>
@@ -125,7 +123,6 @@
 <translation id="4279490309300973883">Отражение</translation>
 <translation id="4321179778687042513">ctrl</translation>
 <translation id="4338109981321384717">Лупа</translation>
-<translation id="4351433414020964307">Загрузка Ассистента…</translation>
 <translation id="4378551569595875038">Подключение…</translation>
 <translation id="4421231901400348175">Доступ к экрану для <ph name="HELPER_NAME" /> с помощью удаленного помощника</translation>
 <translation id="4430019312045809116">Объем</translation>
@@ -172,7 +169,6 @@
 <translation id="5927132638760172455">Трансляция на неизвестное устройство</translation>
 <translation id="5947494881799873997">Отменить</translation>
 <translation id="595202126637698455">Включено отслеживание эффективности</translation>
-<translation id="5957083217255311415">Мобильный Интернет отключен.</translation>
 <translation id="5958529069007801266">Контролируемый профиль</translation>
 <translation id="5977415296283489383">Наушники</translation>
 <translation id="5978382165065462689">Доступ к экрану с помощью удаленного помощника</translation>
@@ -206,7 +202,6 @@
 <translation id="6691659475504239918">ПОИСК + SHIFT + H</translation>
 <translation id="6700713906295497288">Кнопка меню редактора методов ввода</translation>
 <translation id="6713285437468012787">Устройство <ph name="DEVICE_NAME" /> подключено через Bluetooth и доступно всем пользователям. Вы можете отключить его на странице настроек.</translation>
-<translation id="6715542151869432661">Мобильные устройства не найдены.</translation>
 <translation id="6785414152754474415">Батарея заряжена на <ph name="PERCENTAGE" />% и подключена к источнику питания.</translation>
 <translation id="6803622936009808957">Не удалось дублировать изображение экрана, т. к. указанное разрешение не поддерживается. Включен режим расширенного рабочего стола.</translation>
 <translation id="683971173229319003">Клавиша поиска + L</translation>
@@ -272,7 +267,6 @@
 <translation id="8828714802988429505">90°</translation>
 <translation id="8850991929411075241">Клавиша поиска + Esc</translation>
 <translation id="8878886163241303700">Раскрытый экран</translation>
-<translation id="8921624153894383499">Google Ассистент не говорит на этом языке</translation>
 <translation id="8938800817013097409">Устройство USB-C (порт справа на задней панели)</translation>
 <translation id="8940956008527784070">Низкий заряд батареи (<ph name="PERCENTAGE" />%)</translation>
 <translation id="9074739597929991885">Bluetooth</translation>

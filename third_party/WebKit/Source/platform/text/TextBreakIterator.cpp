@@ -382,7 +382,6 @@ int LazyLineBreakIterator::NextBreakablePosition(
 unsigned LazyLineBreakIterator::NextBreakOpportunity(unsigned offset) const {
   int next_break = -1;
   IsBreakable(offset, next_break);
-  DCHECK_GE(next_break, 0);
   return next_break;
 }
 

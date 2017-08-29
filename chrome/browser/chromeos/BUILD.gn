@@ -41,7 +41,6 @@ source_set("chromeos") {
   deps = [
     # TODO(tbarzic): Cleanup this list.
     ":attestation_proto",
-    ":device_policy_remover_generated",
     "//apps",
     "//ash",
     "//ash:ash_with_content",
@@ -323,8 +322,6 @@ source_set("chromeos") {
     "arc/auth/arc_manual_auth_code_fetcher.h",
     "arc/auth/arc_robot_auth_code_fetcher.cc",
     "arc/auth/arc_robot_auth_code_fetcher.h",
-    "arc/bluetooth/arc_bluetooth_bridge.cc",
-    "arc/bluetooth/arc_bluetooth_bridge.h",
     "arc/boot_phase_monitor/arc_boot_phase_monitor_bridge.cc",
     "arc/boot_phase_monitor/arc_boot_phase_monitor_bridge.h",
     "arc/boot_phase_monitor/arc_instance_throttle.cc",
@@ -371,8 +368,6 @@ source_set("chromeos") {
     "arc/fileapi/arc_file_system_operation_runner_util.h",
     "arc/fileapi/arc_media_view_util.cc",
     "arc/fileapi/arc_media_view_util.h",
-    "arc/fileapi/chrome_content_provider_url_util.cc",
-    "arc/fileapi/chrome_content_provider_url_util.h",
     "arc/fileapi/file_stream_forwarder.cc",
     "arc/fileapi/file_stream_forwarder.h",
     "arc/intent_helper/arc_external_protocol_dialog.cc",
@@ -387,8 +382,6 @@ source_set("chromeos") {
     "arc/notification/arc_boot_error_notification.h",
     "arc/notification/arc_provision_notification_service.cc",
     "arc/notification/arc_provision_notification_service.h",
-    "arc/oemcrypto/arc_oemcrypto_bridge.cc",
-    "arc/oemcrypto/arc_oemcrypto_bridge.h",
     "arc/optin/arc_optin_preference_handler.cc",
     "arc/optin/arc_optin_preference_handler.h",
     "arc/optin/arc_optin_preference_handler_observer.h",
@@ -583,6 +576,8 @@ source_set("chromeos") {
     "external_metrics.h",
     "external_protocol_dialog.cc",
     "external_protocol_dialog.h",
+    "feedback_util.cc",
+    "feedback_util.h",
     "file_manager/app_id.h",
     "file_manager/arc_file_tasks.cc",
     "file_manager/arc_file_tasks.h",
@@ -721,12 +716,12 @@ source_set("chromeos") {
     "fileapi/mtp_watcher_manager.h",
     "fileapi/recent_arc_media_source.cc",
     "fileapi/recent_arc_media_source.h",
+    "fileapi/recent_context.cc",
+    "fileapi/recent_context.h",
     "fileapi/recent_download_source.cc",
     "fileapi/recent_download_source.h",
     "fileapi/recent_drive_source.cc",
     "fileapi/recent_drive_source.h",
-    "fileapi/recent_file.cc",
-    "fileapi/recent_file.h",
     "fileapi/recent_model.cc",
     "fileapi/recent_model.h",
     "fileapi/recent_model_factory.cc",
@@ -1247,11 +1242,8 @@ source_set("chromeos") {
     "policy/device_local_account_policy_store.h",
     "policy/device_network_configuration_updater.cc",
     "policy/device_network_configuration_updater.h",
-    "policy/device_off_hours_controller.cc",
-    "policy/device_off_hours_controller.h",
     "policy/device_policy_decoder_chromeos.cc",
     "policy/device_policy_decoder_chromeos.h",
-    "policy/device_policy_remover.h",
     "policy/device_status_collector.cc",
     "policy/device_status_collector.h",
     "policy/display_rotation_default_handler.cc",
@@ -1338,8 +1330,8 @@ source_set("chromeos") {
     "power/idle_action_warning_dialog_view.h",
     "power/idle_action_warning_observer.cc",
     "power/idle_action_warning_observer.h",
-    "power/peripheral_battery_notifier.cc",
-    "power/peripheral_battery_notifier.h",
+    "power/peripheral_battery_observer.cc",
+    "power/peripheral_battery_observer.h",
     "power/power_data_collector.cc",
     "power/power_data_collector.h",
     "power/power_prefs.cc",
@@ -1688,8 +1680,6 @@ source_set("unit_tests") {
     "arc/arc_session_manager_unittest.cc",
     "arc/arc_support_host_unittest.cc",
     "arc/arc_util_unittest.cc",
-    "arc/bluetooth/arc_bluetooth_bridge_unittest.cc",
-    "arc/boot_phase_monitor/arc_boot_phase_monitor_bridge_unittest.cc",
     "arc/downloads_watcher/arc_downloads_watcher_service_unittest.cc",
     "arc/extensions/arc_support_message_host_unittest.cc",
     "arc/fileapi/arc_content_file_system_async_file_util_unittest.cc",
@@ -1698,7 +1688,6 @@ source_set("unit_tests") {
     "arc/fileapi/arc_documents_provider_root_unittest.cc",
     "arc/fileapi/arc_documents_provider_util_unittest.cc",
     "arc/fileapi/arc_file_system_operation_runner_unittest.cc",
-    "arc/fileapi/chrome_content_provider_url_util_unittest.cc",
     "arc/fileapi/file_stream_forwarder_unittest.cc",
     "arc/intent_helper/arc_external_protocol_dialog_unittest.cc",
     "arc/intent_helper/arc_navigation_throttle_unittest.cc",
@@ -1874,7 +1863,7 @@ source_set("unit_tests") {
     "policy/user_cloud_policy_store_chromeos_unittest.cc",
     "power/cpu_data_collector_unittest.cc",
     "power/extension_event_observer_unittest.cc",
-    "power/peripheral_battery_notifier_unittest.cc",
+    "power/peripheral_battery_observer_unittest.cc",
     "power/power_data_collector_unittest.cc",
     "power/power_prefs_unittest.cc",
     "power/renderer_freezer_unittest.cc",
@@ -1882,7 +1871,6 @@ source_set("unit_tests") {
     "printing/combining_printer_detector_unittest.cc",
     "printing/cups_printers_manager_unittest.cc",
     "printing/printer_event_tracker_unittest.cc",
-    "printing/printers_sync_bridge_unittest.cc",
     "printing/specifics_translation_unittest.cc",
     "printing/synced_printers_manager_unittest.cc",
     "profiles/profile_list_chromeos_unittest.cc",
@@ -1989,7 +1977,6 @@ source_set("unit_tests") {
     "//content/test:test_support",
     "//crypto:platform",
     "//dbus",
-    "//device/bluetooth",
     "//google_apis:test_support",
     "//mojo/public/cpp/system:system",
     "//skia",
@@ -2022,43 +2009,4 @@ proto_library("attestation_proto") {
 service_manifest("ash_pref_connector_manifest") {
   name = "ash_pref_connector"
   source = "prefs/ash_pref_connector_manifest.json"
-}
-
-device_policy_remover_path = "$target_gen_dir/device_policy_remover.cc"
-
-action("device_policy_remover_generate") {
-  script = "policy/tools/generate_device_policy_remover.py"
-  descriptor_pool_path = "//third_party/protobuf/python"
-  symbol_database_path = "$root_build_dir/pyproto"
-  chrome_device_policy_pb2_path =
-      "$root_build_dir/pyproto/chrome/browser/chromeos/policy/proto"
-
-  outputs = [
-    device_policy_remover_path,
-  ]
-
-  args = [
-    # generated file name
-    rebase_path(device_policy_remover_path),
-
-    # directories for PATH variable to compile generated file
-    rebase_path(descriptor_pool_path),
-    rebase_path(symbol_database_path),
-    rebase_path(chrome_device_policy_pb2_path),
-  ]
-
-  public_deps = [
-    ":device_policy_proto",
-    "//third_party/protobuf:py_proto",
-  ]
-}
-
-static_library("device_policy_remover_generated") {
-  sources = [
-    device_policy_remover_path,
-  ]
-
-  public_deps = [
-    ":device_policy_remover_generate",
-  ]
 }

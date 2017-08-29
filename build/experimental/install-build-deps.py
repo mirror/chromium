@@ -99,6 +99,8 @@ _packages_dev = (
   'subversion',
   'ttf-dejavu-core',
   'ttf-indic-fonts',
+  'ttf-kochi-gothic',
+  'ttf-kochi-mincho',
   'wdiff',
   'zip',
 )

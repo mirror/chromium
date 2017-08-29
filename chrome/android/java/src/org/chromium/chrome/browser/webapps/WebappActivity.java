@@ -46,6 +46,7 @@ import org.chromium.chrome.browser.tab.TabObserver;
 import org.chromium.chrome.browser.tabmodel.document.TabDelegate;
 import org.chromium.chrome.browser.toolbar.ToolbarControlContainer;
 import org.chromium.chrome.browser.util.ColorUtils;
+import org.chromium.chrome.browser.util.UrlUtilities;
 import org.chromium.content.browser.ContentViewCore;
 import org.chromium.content.browser.ScreenOrientationProvider;
 import org.chromium.content_public.browser.LoadUrlParams;
@@ -66,7 +67,6 @@ public class WebappActivity extends SingleTabActivity {
     public static final String WEBAPP_SCHEME = "webapp";
 
     private static final String TAG = "WebappActivity";
-    private static final String HISTOGRAM_NAVIGATION_STATUS = "Webapp.NavigationStatus";
     private static final long MS_BEFORE_NAVIGATING_BACK_FROM_INTERSTITIAL = 1000;
 
     private static final int ENTER_IMMERSIVE_MODE_DELAY_MILLIS = 300;
@@ -79,7 +79,6 @@ public class WebappActivity extends SingleTabActivity {
             | View.SYSTEM_UI_FLAG_LOW_PROFILE
             | View.SYSTEM_UI_FLAG_IMMERSIVE;
 
-    private final WebappActionsNotificationManager mNotificationManager;
     private final WebappDirectoryManager mDirectoryManager;
 
     private WebContents mWebContents;
@@ -113,7 +112,6 @@ public class WebappActivity extends SingleTabActivity {
         mWebappInfo = createWebappInfo(null);
         mDirectoryManager = new WebappDirectoryManager();
         mSplashController = createWebappSplashScreenController();
-        mNotificationManager = new WebappActionsNotificationManager(this);
     }
 
     protected WebappSplashScreenController createWebappSplashScreenController() {
@@ -123,9 +121,6 @@ public class WebappActivity extends SingleTabActivity {
     @Override
     protected void onNewIntent(Intent intent) {
         if (intent == null) return;
-
-        if (mNotificationManager.handleNotificationAction(intent)) return;
-
         super.onNewIntent(intent);
 
         WebappInfo newWebappInfo = popWebappInfo(WebappInfo.idFromIntent(intent));
@@ -167,8 +162,7 @@ public class WebappActivity extends SingleTabActivity {
     @Override
     public void preInflationStartup() {
         Intent intent = getIntent();
-        String id = WebappInfo.idFromIntent(intent);
-        WebappInfo info = popWebappInfo(id);
+        WebappInfo info = popWebappInfo(WebappInfo.idFromIntent(intent));
         // When WebappActivity is killed by the Android OS, and an entry stays in "Android Recents"
         // (The user does not swipe it away), when WebappActivity is relaunched it is relaunched
         // with the intent stored in WebappActivity#getIntent() at the time that the WebappActivity
@@ -188,12 +182,6 @@ public class WebappActivity extends SingleTabActivity {
             resetSavedInstanceState();
         }
 
-        if (info == null) {
-            // If {@link info} is null, there isn't much we can do, abort.
-            ApiCompatibilityUtils.finishAndRemoveTask(this);
-            return;
-        }
-
         mWebappInfo = info;
 
         // Initialize the WebappRegistry and warm up the shared preferences for this web app. No-ops
@@ -202,7 +190,7 @@ public class WebappActivity extends SingleTabActivity {
         StrictMode.ThreadPolicy oldPolicy = StrictMode.allowThreadDiskReads();
         try {
             WebappRegistry.getInstance();
-            WebappRegistry.warmUpSharedPrefsForId(id);
+            WebappRegistry.warmUpSharedPrefsForId(info.id());
         } finally {
             StrictMode.setThreadPolicy(oldPolicy);
         }
@@ -351,18 +339,6 @@ public class WebappActivity extends SingleTabActivity {
     }
 
     @Override
-    public void onResumeWithNative() {
-        super.onResumeWithNative();
-        mNotificationManager.maybeShowNotification();
-    }
-
-    @Override
-    public void onPauseWithNative() {
-        mNotificationManager.cancelNotification();
-        super.onPauseWithNative();
-    }
-
-    @Override
     protected void initDeferredStartupForActivity() {
         super.initDeferredStartupForActivity();
 
@@ -482,6 +458,11 @@ public class WebappActivity extends SingleTabActivity {
     protected void onUpdatedLastUsedTime(
             WebappDataStorage storage, boolean previouslyLaunched, long previousUsageTimestamp) {}
 
+    private boolean isWebappDomain() {
+        return UrlUtilities.sameDomainOrHost(
+                getActivityTab().getUrl(), getWebappInfo().uri().toString(), true);
+    }
+
     @Override
     protected ChromeFullscreenManager createFullscreenManager() {
         // Disable HTML5 fullscreen in PWA fullscreen mode.
@@ -511,31 +492,21 @@ public class WebappActivity extends SingleTabActivity {
         return new EmptyTabObserver() {
 
             @Override
-            public void onDidFinishNavigation(Tab tab, String url, boolean isInMainFrame,
-                    boolean isErrorPage, boolean hasCommitted, boolean isSameDocument,
-                    boolean isFragmentNavigation, Integer pageTransition, int errorCode,
-                    int httpStatusCode) {
-                if (hasCommitted && isInMainFrame) {
-                    // Updates the URL.
-                    mNotificationManager.maybeShowNotification();
-                    RecordHistogram.recordBooleanHistogram(
-                            HISTOGRAM_NAVIGATION_STATUS, !isErrorPage);
-                }
-            }
-
-            @Override
             public void onDidChangeThemeColor(Tab tab, int color) {
+                if (!isWebappDomain()) return;
                 mBrandColor = color;
                 updateTaskDescription();
             }
 
             @Override
             public void onTitleUpdated(Tab tab) {
+                if (!isWebappDomain()) return;
                 updateTaskDescription();
             }
 
             @Override
             public void onFaviconUpdated(Tab tab, Bitmap icon) {
+                if (!isWebappDomain()) return;
                 // No need to cache the favicon if there is an icon declared in app manifest.
                 if (mWebappInfo.icon() != null) return;
                 if (icon == null) return;
@@ -664,11 +635,7 @@ public class WebappActivity extends SingleTabActivity {
     public boolean onMenuOrKeyboardAction(int id, boolean fromMenu) {
         if (id == R.id.open_in_browser_id) {
             openCurrentUrlInChrome();
-            if (fromMenu) {
-                RecordUserAction.record("WebappMenuOpenInChrome");
-            } else {
-                RecordUserAction.record("Webapp.NotificationOpenInChrome");
-            }
+            RecordUserAction.record("WebappMenuOpenInChrome");
             return true;
         }
         return super.onMenuOrKeyboardAction(id, fromMenu);

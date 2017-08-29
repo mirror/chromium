@@ -25,10 +25,6 @@
 
 class BrowserContextKeyedServiceFactory;
 
-namespace chromeos {
-class RecentArcMediaSourceTest;
-}  // namespace chromeos
-
 namespace content {
 class BrowserContext;
 }  // namespace content
@@ -149,12 +145,8 @@ class ArcFileSystemOperationRunner
   void OnInstanceReady() override;
   void OnInstanceClosed() override;
 
-  // Returns true if operations will be deferred.
-  bool WillDefer() const { return should_defer_; }
-
  private:
   friend class ArcFileSystemOperationRunnerTest;
-  friend class chromeos::RecentArcMediaSourceTest;
 
   ArcFileSystemOperationRunner(content::BrowserContext* context,
                                ArcBridgeService* bridge_service,

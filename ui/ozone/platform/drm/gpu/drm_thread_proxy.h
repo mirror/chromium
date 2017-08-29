@@ -46,7 +46,6 @@ class DrmThreadProxy {
                          std::vector<gfx::BufferFormat>* scanout_formats);
 
   void AddBinding(ozone::mojom::DeviceCursorRequest request);
-  void AddBindingGpu(ozone::mojom::GpuAdapterRequest request);
 
  private:
   DrmThread drm_thread_;

@@ -360,20 +360,6 @@ class QuicStreamFactory::Job {
   // Returns the estimate of dynamically allocated memory in bytes.
   size_t EstimateMemoryUsage() const;
 
-  void AddRequest(QuicStreamRequest* request) {
-    stream_requests_.insert(request);
-  }
-
-  void RemoveRequest(QuicStreamRequest* request) {
-    auto request_iter = stream_requests_.find(request);
-    DCHECK(request_iter != stream_requests_.end());
-    stream_requests_.erase(request_iter);
-  }
-
-  const std::set<QuicStreamRequest*>& stream_requests() {
-    return stream_requests_;
-  }
-
  private:
   enum IoState {
     STATE_NONE,
@@ -398,9 +384,7 @@ class QuicStreamFactory::Job {
   AddressList address_list_;
   base::TimeTicks dns_resolution_start_time_;
   base::TimeTicks dns_resolution_end_time_;
-  std::set<QuicStreamRequest*> stream_requests_;
   base::WeakPtrFactory<Job> weak_factory_;
-
   DISALLOW_COPY_AND_ASSIGN(Job);
 };
 
@@ -746,7 +730,7 @@ QuicStreamFactory::QuicStreamFactory(
       force_hol_blocking_(force_hol_blocking),
       race_cert_verification_(race_cert_verification),
       estimate_initial_rtt(estimate_initial_rtt),
-      need_to_check_persisted_supports_quic_(true),
+      check_persisted_supports_quic_(true),
       num_push_streams_created_(0),
       task_runner_(nullptr),
       ssl_config_service_(ssl_config_service),
@@ -818,13 +802,8 @@ void QuicStreamFactory::set_require_confirmation(bool require_confirmation) {
 
 base::TimeDelta QuicStreamFactory::GetTimeDelayForWaitingJob(
     const QuicServerId& server_id) {
-  if (require_confirmation_) {
-    IPAddress last_address;
-    if (!need_to_check_persisted_supports_quic_ ||
-        !http_server_properties_->GetSupportsQuic(&last_address)) {
-      return base::TimeDelta();
-    }
-  }
+  if (require_confirmation_)
+    return base::TimeDelta();
 
   int64_t srtt =
       1.5 * GetServerNetworkStatsSmoothedRttInMicroseconds(server_id);
@@ -851,6 +830,7 @@ void QuicStreamFactory::DumpMemoryStats(
       base::trace_event::EstimateMemoryUsage(session_peer_ip_) +
       base::trace_event::EstimateMemoryUsage(gone_away_aliases_) +
       base::trace_event::EstimateMemoryUsage(active_jobs_) +
+      base::trace_event::EstimateMemoryUsage(job_requests_map_) +
       base::trace_event::EstimateMemoryUsage(active_cert_verifier_jobs_);
   factory_dump->AddScalar(base::trace_event::MemoryAllocatorDump::kNameSize,
                           base::trace_event::MemoryAllocatorDump::kUnitsBytes,
@@ -943,7 +923,7 @@ int QuicStreamFactory::Create(const QuicServerId& server_id,
     net_log.AddEvent(
         NetLogEventType::HTTP_STREAM_JOB_BOUND_TO_QUIC_STREAM_FACTORY_JOB,
         job_net_log.source().ToEventParametersCallback());
-    it->second->AddRequest(request);
+    job_requests_map_[server_id].insert(request);
     return ERR_IO_PENDING;
   }
 
@@ -973,7 +953,7 @@ int QuicStreamFactory::Create(const QuicServerId& server_id,
   int rv = job->Run(base::Bind(&QuicStreamFactory::OnJobComplete,
                                base::Unretained(this), job.get()));
   if (rv == ERR_IO_PENDING) {
-    job->AddRequest(request);
+    job_requests_map_[server_id].insert(request);
     active_jobs_[server_id] = std::move(job);
     return rv;
   }
@@ -1039,24 +1019,29 @@ void QuicStreamFactory::OnJobComplete(Job* job, int rv) {
   // returns.
   const QuicServerId server_id(job->key().server_id());
 
-  auto iter = active_jobs_.find(server_id);
+  ServerIDRequestsMap::iterator requests_iter =
+      job_requests_map_.find(server_id);
   // TODO(xunjieli): Change following CHECKs back to DCHECKs after
   // crbug.com/750271 is fixed.
-  CHECK(iter != active_jobs_.end());
+  CHECK(requests_iter != job_requests_map_.end());
   if (rv == OK) {
     set_require_confirmation(false);
 
-    SessionMap::iterator session_it = active_sessions_.find(server_id);
-    CHECK(session_it != active_sessions_.end());
-    QuicChromiumClientSession* session = session_it->second;
-    for (auto* request : iter->second->stream_requests()) {
-      CHECK(request->server_id() == server_id);
-      // Do not notify |request| yet.
-      request->SetSession(session->CreateHandle());
+    if (!requests_iter->second.empty()) {
+      SessionMap::iterator session_it = active_sessions_.find(server_id);
+      CHECK(session_it != active_sessions_.end());
+      QuicChromiumClientSession* session = session_it->second;
+      for (QuicStreamRequest* request : requests_iter->second) {
+        CHECK(request->server_id() == server_id);
+        // Do not notify |request| yet.
+        request->SetSession(session->CreateHandle());
+      }
     }
   }
 
-  for (auto* request : iter->second->stream_requests()) {
+  // It's okay not to erase |request| from |requests_iter->second| because the
+  // entire RequestSet will be erased from |job_requests_map_|.
+  for (auto* request : requests_iter->second) {
     // Even though we're invoking callbacks here, we don't need to worry
     // about |this| being deleted, because the factory is owned by the
     // profile which can not be deleted via callbacks.
@@ -1065,7 +1050,9 @@ void QuicStreamFactory::OnJobComplete(Job* job, int rv) {
     }
     request->OnRequestComplete(rv);
   }
-  active_jobs_.erase(iter);
+
+  active_jobs_.erase(server_id);
+  job_requests_map_.erase(requests_iter);
 }
 
 void QuicStreamFactory::OnCertVerifyJobComplete(CertVerifierJob* job, int rv) {
@@ -1134,8 +1121,10 @@ void QuicStreamFactory::OnBlackholeAfterHandshakeConfirmed(
 }
 
 void QuicStreamFactory::CancelRequest(QuicStreamRequest* request) {
-  auto job_iter = active_jobs_.find(request->server_id());
-  job_iter->second->RemoveRequest(request);
+  ServerIDRequestsMap::iterator requests_it =
+      job_requests_map_.find(request->server_id());
+  DCHECK(requests_it != job_requests_map_.end());
+  requests_it->second.erase(request);
 }
 
 void QuicStreamFactory::CloseAllSessions(int error, QuicErrorCode quic_error) {
@@ -1481,16 +1470,12 @@ int QuicStreamFactory::ConfigureSocket(DatagramClientSocket* socket,
   }
 
   socket->GetLocalAddress(&local_address_);
-  if (need_to_check_persisted_supports_quic_) {
-    need_to_check_persisted_supports_quic_ = false;
+  if (check_persisted_supports_quic_) {
+    check_persisted_supports_quic_ = false;
     IPAddress last_address;
     if (http_server_properties_->GetSupportsQuic(&last_address) &&
         last_address == local_address_.address()) {
       require_confirmation_ = false;
-      // Clear the persisted IP address, in case the network no longer supports
-      // QUIC so the next restart will require confirmation. It will be
-      // re-persisted when the first job completes successfully.
-      http_server_properties_->SetSupportsQuic(false, last_address);
     }
   }
 

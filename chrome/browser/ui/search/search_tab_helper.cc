@@ -5,6 +5,7 @@
 #include "chrome/browser/ui/search/search_tab_helper.h"
 
 #include <memory>
+#include <set>
 
 #include "base/memory/ptr_util.h"
 #include "base/metrics/histogram_macros.h"
@@ -44,6 +45,7 @@
 #include "content/public/browser/web_contents.h"
 #include "content/public/common/browser_side_navigation_policy.h"
 #include "google_apis/gaia/gaia_auth_util.h"
+#include "net/base/net_errors.h"
 #include "ui/base/l10n/l10n_util.h"
 #include "url/gurl.h"
 

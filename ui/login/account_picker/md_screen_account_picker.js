@@ -32,7 +32,7 @@ login.createScreen('AccountPickerScreen', 'account-picker', function() {
       'removeUserPodFingerprintIcon',
       'setPinEnabledForUser',
       'setAuthType',
-      'setTabletModeState',
+      'setTouchViewState',
       'setPublicSessionDisplayName',
       'setPublicSessionLocales',
       'setPublicSessionKeyboardLayouts',
@@ -146,7 +146,7 @@ login.createScreen('AccountPickerScreen', 'account-picker', function() {
         // again already. If that happens, ignore the onShow() call.
         return;
       }
-      chrome.send('getTabletModeState');
+      chrome.send('getTouchViewState');
       if (!this.firstShown_) return;
       this.firstShown_ = false;
 
@@ -348,11 +348,11 @@ login.createScreen('AccountPickerScreen', 'account-picker', function() {
     },
 
     /**
-     * Sets the state of tablet mode.
-     * @param {boolean} isTabletModeEnabled true if the mode is on.
+     * Sets the state of touch view mode.
+     * @param {boolean} isTouchViewEnabled true if the mode is on.
      */
-    setTabletModeState: function(isTabletModeEnabled) {
-      $('pod-row').setTabletModeState(isTabletModeEnabled);
+    setTouchViewState: function(isTouchViewEnabled) {
+      $('pod-row').setTouchViewState(isTouchViewEnabled);
     },
 
     /**

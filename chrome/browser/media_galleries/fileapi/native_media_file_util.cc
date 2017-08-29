@@ -48,18 +48,20 @@ base::File::Error IsMediaHeader(const char* buf, size_t length) {
   return base::File::FILE_ERROR_SECURITY;
 }
 
-void HoldFileRef(scoped_refptr<storage::ShareableFileReference> file_ref) {}
+void HoldFileRef(
+    const scoped_refptr<storage::ShareableFileReference>& file_ref) {
+}
 
 void DidOpenSnapshot(
     const storage::AsyncFileUtil::CreateOrOpenCallback& callback,
-    scoped_refptr<storage::ShareableFileReference> file_ref,
+    const scoped_refptr<storage::ShareableFileReference>& file_ref,
     base::File file) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::IO);
   if (!file.IsValid()) {
     callback.Run(std::move(file), base::Closure());
     return;
   }
-  callback.Run(std::move(file), base::Bind(&HoldFileRef, std::move(file_ref)));
+  callback.Run(std::move(file), base::Bind(&HoldFileRef, file_ref));
 }
 
 }  // namespace
@@ -103,17 +105,18 @@ void NativeMediaFileUtil::CreatedSnapshotFileForCreateOrOpen(
     base::File::Error result,
     const base::File::Info& file_info,
     const base::FilePath& platform_path,
-    scoped_refptr<storage::ShareableFileReference> file_ref) {
+    const scoped_refptr<storage::ShareableFileReference>& file_ref) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::IO);
   if (result != base::File::FILE_OK) {
     callback.Run(base::File(), base::Closure());
     return;
   }
   base::PostTaskAndReplyWithResult(
-      media_task_runner, FROM_HERE,
-      base::Bind(&storage::NativeFileUtil::CreateOrOpen, platform_path,
-                 file_flags),
-      base::Bind(&DidOpenSnapshot, callback, std::move(file_ref)));
+      media_task_runner,
+      FROM_HERE,
+      base::Bind(
+          &storage::NativeFileUtil::CreateOrOpen, platform_path, file_flags),
+      base::Bind(&DidOpenSnapshot, callback, file_ref));
 }
 
 void NativeMediaFileUtil::CreateOrOpen(

@@ -23,6 +23,7 @@
 #include "extensions/browser/uninstall_ping_sender.h"
 #include "extensions/browser/updater/update_service.h"
 #include "extensions/common/extension_builder.h"
+#include "extensions/common/test_util.h"
 #include "extensions/common/value_builder.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
@@ -151,7 +152,7 @@ class FakeExtensionSystem : public MockExtensionSystem {
 class UpdateServiceTest : public ExtensionsTest {
  public:
   UpdateServiceTest()
-      : ExtensionsTest(std::make_unique<content::TestBrowserThreadBundle>()) {}
+      : ExtensionsTest(base::MakeUnique<content::TestBrowserThreadBundle>()) {}
   ~UpdateServiceTest() override {}
 
   void SetUp() override {
@@ -287,15 +288,18 @@ TEST_F(UpdateServiceTest, UninstallPings) {
 
   // Build 3 extensions.
   scoped_refptr<Extension> extension1 =
-      ExtensionBuilder("1")
+      test_util::BuildExtension(ExtensionBuilder())
+          .SetID(crx_file::id_util::GenerateId("1"))
           .MergeManifest(DictionaryBuilder().Set("version", "1.2").Build())
           .Build();
   scoped_refptr<Extension> extension2 =
-      ExtensionBuilder("2")
+      test_util::BuildExtension(ExtensionBuilder())
+          .SetID(crx_file::id_util::GenerateId("2"))
           .MergeManifest(DictionaryBuilder().Set("version", "2.3").Build())
           .Build();
   scoped_refptr<Extension> extension3 =
-      ExtensionBuilder("3")
+      test_util::BuildExtension(ExtensionBuilder())
+          .SetID(crx_file::id_util::GenerateId("3"))
           .MergeManifest(DictionaryBuilder().Set("version", "3.4").Build())
           .Build();
   EXPECT_TRUE(extension1->id() != extension2->id() &&

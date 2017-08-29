@@ -29,7 +29,7 @@ class Abort : public Operation {
   Abort(extensions::EventRouter* event_router,
         const ProvidedFileSystemInfo& file_system_info,
         int operation_request_id,
-        storage::AsyncFileUtil::StatusCallback callback);
+        const storage::AsyncFileUtil::StatusCallback& callback);
   ~Abort() override;
 
   // Operation overrides.
@@ -43,7 +43,7 @@ class Abort : public Operation {
 
  private:
   int operation_request_id_;
-  storage::AsyncFileUtil::StatusCallback callback_;
+  const storage::AsyncFileUtil::StatusCallback callback_;
 
   DISALLOW_COPY_AND_ASSIGN(Abort);
 };

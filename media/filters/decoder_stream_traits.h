@@ -56,7 +56,6 @@ class MEDIA_EXPORT DecoderStreamTraits<DemuxerStream::AUDIO> {
   void OnDecode(const scoped_refptr<DecoderBuffer>& buffer);
   void OnDecodeDone(const scoped_refptr<OutputType>& buffer);
   void OnStreamReset(DemuxerStream* stream);
-  void OnConfigChanged(const DecoderConfigType& config);
 
  private:
   // Validates encoded timestamps match decoded output duration. MEDIA_LOG warns
@@ -94,7 +93,6 @@ class MEDIA_EXPORT DecoderStreamTraits<DemuxerStream::VIDEO> {
   void OnDecode(const scoped_refptr<DecoderBuffer>& buffer);
   void OnDecodeDone(const scoped_refptr<OutputType>& buffer) {}
   void OnStreamReset(DemuxerStream* stream);
-  void OnConfigChanged(const DecoderConfigType& config) {}
 
  private:
   base::TimeDelta last_keyframe_timestamp_;

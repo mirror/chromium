@@ -148,7 +148,7 @@ bool GLContextCGL::Initialize(GLSurface* compatible_surface,
 }
 
 void GLContextCGL::Destroy() {
-  if (!yuv_to_rgb_converters_.empty()) {
+  if (yuv_to_rgb_converter_) {
     // If this context is not current, bind this context's API so that the YUV
     // converter can safely destruct
     GLContext* current_context = GetRealCurrent();
@@ -157,7 +157,7 @@ void GLContextCGL::Destroy() {
     }
 
     ScopedCGLSetCurrentContext(static_cast<CGLContextObj>(context_));
-    yuv_to_rgb_converters_.clear();
+    yuv_to_rgb_converter_.reset();
 
     // Rebind the current context's API if needed.
     if (current_context && current_context != this) {
@@ -223,14 +223,10 @@ bool GLContextCGL::ForceGpuSwitchIfNeeded() {
   return true;
 }
 
-YUVToRGBConverter* GLContextCGL::GetYUVToRGBConverter(
-    const gfx::ColorSpace& color_space) {
-  std::unique_ptr<YUVToRGBConverter>& yuv_to_rgb_converter =
-      yuv_to_rgb_converters_[color_space];
-  if (!yuv_to_rgb_converter)
-    yuv_to_rgb_converter.reset(
-        new YUVToRGBConverter(*GetVersionInfo(), color_space));
-  return yuv_to_rgb_converter.get();
+YUVToRGBConverter* GLContextCGL::GetYUVToRGBConverter() {
+  if (!yuv_to_rgb_converter_)
+    yuv_to_rgb_converter_.reset(new YUVToRGBConverter(*GetVersionInfo()));
+  return yuv_to_rgb_converter_.get();
 }
 
 bool GLContextCGL::MakeCurrent(GLSurface* surface) {

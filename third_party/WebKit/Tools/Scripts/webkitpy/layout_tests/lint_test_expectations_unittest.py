@@ -55,6 +55,9 @@ class FakePort(object):
     def bot_expectations(self):
         return {}
 
+    def skipped_layout_tests(self, _):
+        return set([])
+
     def all_test_configurations(self):
         return []
 
@@ -66,9 +69,6 @@ class FakePort(object):
 
     def path_to_generic_test_expectations_file(self):
         return ''
-
-    def extra_expectations_files(self):
-        return ['/fake-port-base-directory/LayoutTests/ExtraExpectations']
 
     def layout_tests_dir(self):
         return '/fake-port-base-directory/LayoutTests'

@@ -28,15 +28,12 @@
 #include "components/flags_ui/flags_storage.h"
 #include "components/flags_ui/flags_ui_switches.h"
 #include "components/ntp_tiles/switches.h"
-#include "components/omnibox/browser/omnibox_field_trial.h"
 #include "components/payments/core/features.h"
 #include "components/search_provider_logos/features.h"
 #include "components/security_state/core/switches.h"
 #include "components/signin/core/common/signin_switches.h"
 #include "components/strings/grit/components_strings.h"
-#include "ios/chrome/browser/bookmarks/bookmark_new_generation_features.h"
 #include "ios/chrome/browser/chrome_switches.h"
-#include "ios/chrome/browser/drag_and_drop/drag_and_drop_flag.h"
 #include "ios/chrome/browser/ios_chrome_flag_descriptions.h"
 #include "ios/chrome/browser/ssl/captive_portal_features.h"
 #include "ios/chrome/grit/ios_strings.h"
@@ -158,33 +155,7 @@ const flags_ui::FeatureEntry kFeatureEntries[] = {
      FEATURE_WITH_PARAMS_VALUE_TYPE(
          search_provider_logos::features::kUseDdljsonApi,
          kUseDdljsonApiVariations,
-         "NTPUseDdljsonApi")},
-    {"omnibox-ui-elide-suggestion-url-after-host",
-     flag_descriptions::kOmniboxUIElideSuggestionUrlAfterHostName,
-     flag_descriptions::kOmniboxUIElideSuggestionUrlAfterHostDescription,
-     flags_ui::kOsIos,
-     FEATURE_VALUE_TYPE(omnibox::kUIExperimentElideSuggestionUrlAfterHost)},
-    {"omnibox-ui-hide-suggestion-url-scheme",
-     flag_descriptions::kOmniboxUIHideSuggestionUrlSchemeName,
-     flag_descriptions::kOmniboxUIHideSuggestionUrlSchemeDescription,
-     flags_ui::kOsIos,
-     FEATURE_VALUE_TYPE(omnibox::kUIExperimentHideSuggestionUrlScheme)},
-    {"omnibox-ui-hide-suggestion-url-trivial-subdomains",
-     flag_descriptions::kOmniboxUIHideSuggestionUrlTrivialSubdomainsName,
-     flag_descriptions::kOmniboxUIHideSuggestionUrlTrivialSubdomainsDescription,
-     flags_ui::kOsIos,
-     FEATURE_VALUE_TYPE(
-         omnibox::kUIExperimentHideSuggestionUrlTrivialSubdomains)},
-    {"bookmark-new-generation", flag_descriptions::kBookmarkNewGenerationName,
-     flag_descriptions::kBookmarkNewGenerationDescription, flags_ui::kOsIos,
-     FEATURE_VALUE_TYPE(
-         bookmark_new_generation::features::kBookmarkNewGeneration)},
-#if defined(__IPHONE_11_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0)
-    {"drag_and_drop", flag_descriptions::kDragAndDropName,
-     flag_descriptions::kDragAndDropDescription, flags_ui::kOsIos,
-     FEATURE_VALUE_TYPE(kDragAndDrop)}
-#endif
-};
+         "NTPUseDdljsonApi")}};
 
 // Add all switches from experimental flags to |command_line|.
 void AppendSwitchesFromExperimentalSettings(base::CommandLine* command_line) {
@@ -211,6 +182,28 @@ void AppendSwitchesFromExperimentalSettings(base::CommandLine* command_line) {
     command_line->AppendSwitchASCII(
         switches::kIOSHostResolverRules,
         "MAP * " + base::SysNSStringToUTF8(webPageReplayProxy));
+  }
+
+  // Populate command line flags from ReaderModeEnabled.
+  if ([defaults boolForKey:@"ReaderModeEnabled"]) {
+    command_line->AppendSwitch(switches::kEnableReaderModeToolbarIcon);
+
+    // Populate command line from ReaderMode Heuristics detection.
+    NSString* readerModeDetectionHeuristics =
+        [defaults stringForKey:@"ReaderModeDetectionHeuristics"];
+    if (!readerModeDetectionHeuristics) {
+      command_line->AppendSwitchASCII(
+          switches::kReaderModeHeuristics,
+          switches::reader_mode_heuristics::kOGArticle);
+    } else if ([readerModeDetectionHeuristics isEqualToString:@"AdaBoost"]) {
+      command_line->AppendSwitchASCII(
+          switches::kReaderModeHeuristics,
+          switches::reader_mode_heuristics::kAdaBoost);
+    } else {
+      DCHECK([readerModeDetectionHeuristics isEqualToString:@"Off"]);
+      command_line->AppendSwitchASCII(switches::kReaderModeHeuristics,
+                                      switches::reader_mode_heuristics::kNone);
+    }
   }
 
   // Set the UA flag if UseMobileSafariUA is enabled.
@@ -285,6 +278,15 @@ void AppendSwitchesFromExperimentalSettings(base::CommandLine* command_line) {
     command_line->AppendSwitch(switches::kEnableSigninPromo);
   } else if ([enableSigninPromo isEqualToString:@"Disabled"]) {
     command_line->AppendSwitch(switches::kDisableSigninPromo);
+  }
+
+  // Populate command line flag for Bookmark reordering.
+  NSString* enableBookmarkReordering =
+      [defaults stringForKey:@"EnableBookmarkReordering"];
+  if ([enableBookmarkReordering isEqualToString:@"Enabled"]) {
+    command_line->AppendSwitch(switches::kEnableBookmarkReordering);
+  } else if ([enableBookmarkReordering isEqualToString:@"Disabled"]) {
+    command_line->AppendSwitch(switches::kDisableBookmarkReordering);
   }
 
   // Populate command line flag for 3rd party keyboard omnibox workaround.

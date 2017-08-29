@@ -8,7 +8,6 @@
 
 #include "base/logging.h"
 #include "base/strings/sys_string_conversions.h"
-#include "chrome/app/vector_icons/vector_icons.h"
 #include "chrome/browser/ui/autofill/autofill_popup_controller.h"
 #include "chrome/browser/ui/autofill/autofill_popup_view.h"
 #include "chrome/browser/ui/autofill/popup_constants.h"
@@ -19,13 +18,10 @@
 #include "skia/ext/skia_utils_mac.h"
 #import "ui/base/cocoa/controls/hyperlink_text_view.h"
 #include "ui/base/resource/resource_bundle.h"
-#include "ui/gfx/color_palette.h"
 #include "ui/gfx/font_list.h"
 #include "ui/gfx/geometry/point.h"
 #include "ui/gfx/geometry/rect.h"
 #include "ui/gfx/image/image.h"
-#include "ui/gfx/image/image_skia_util_mac.h"
-#include "ui/gfx/paint_vector_icon.h"
 #include "ui/gfx/range/range.h"
 #include "ui/gfx/text_constants.h"
 
@@ -93,9 +89,9 @@ NSColor* HelpLinkColor() {
     [passwordSection_ addSubview:passwordTitleField_];
 
     keyIcon_.reset([[NSImageView alloc] initWithFrame:NSZeroRect]);
-    NSImage* keyImage = NSImageFromImageSkia(
-        gfx::CreateVectorIcon(kKeyIcon, 16, gfx::kChromeIconGrey));
-
+    NSImage* keyImage = ResourceBundle::GetSharedInstance()
+        .GetImageNamed(IDR_GENERATE_PASSWORD_KEY)
+        .ToNSImage();
     [keyIcon_ setImage:keyImage];
     [passwordSection_ addSubview:keyIcon_];
 

@@ -430,6 +430,8 @@ WebContents* OpenAppShortcutWindow(Profile* profile,
   if (!tab)
     return NULL;
 
+  extensions::TabHelper::FromWebContents(tab)->UpdateShortcutOnLoadComplete();
+
   return tab;
 }
 

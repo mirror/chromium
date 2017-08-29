@@ -6,17 +6,40 @@
 
 #include <map>
 
+#include "base/command_line.h"
+#include "base/cpu.h"
 #include "base/format_macros.h"
-#include "base/json/json_writer.h"
 #include "base/json/string_escape.h"
 #include "base/strings/string_number_conversions.h"
 #include "base/strings/stringprintf.h"
+#include "base/sys_info.h"
 #include "base/trace_event/trace_event_argument.h"
 #include "services/resource_coordinator/public/cpp/memory_instrumentation/tracing_observer.h"
 
 namespace profiling {
 
 namespace {
+
+// This is the set of metadata fields that is too annoying to plumb into the
+// profiling process for now. The memory dump is useful without all this data
+// anyways. It's mostly here to make the tracing UI work well.
+const char kFakeOtherMetadata[] =
+    R"END(
+    "field-trials":[],
+    "gpu-devid":5052,
+    "gpu-driver":"367.57",
+    "gpu-gl-renderer":"Quadro K1200/PCIe/SSE2",
+    "gpu-gl-vendor":"NVIDIA Corporation",
+    "gpu-psver":"4.50",
+    "gpu-venid":4318,
+    "gpu-vsver":"4.50",
+    "network-type":"Ethernet",
+    "product-version":"Chrome/59.0.3071.115",
+    "revision":
+      "3cf8514bb1239453fd15ff1f7efee389ac9df8ba-refs/branch-heads/3071@{#820}",
+    "trace-config":"{}",
+    "user-agent":"Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Safari/537.36",
+    "v8-version":"5.9.211.38")END";
 
 // Maps strings to integers for the JSON string table.
 using StringTable = std::map<std::string, size_t>;
@@ -26,19 +49,11 @@ struct BacktraceNode {
 
   static constexpr size_t kNoParent = static_cast<size_t>(-1);
 
-  bool operator<(const BacktraceNode& other) const {
-    if (string_id == other.string_id)
-      return parent < other.parent;
-    return string_id < other.string_id;
-  }
-
   size_t string_id;
   size_t parent;  // kNoParent indicates no parent.
 };
 
-using BacktraceTable = std::map<BacktraceNode, size_t>;
-
-// Used as a map key to uniquify an allocation with a given size and stack.
+// Used as a map kep to uniquify an allocation with a given size and stack.
 // Since backtraces are uniquified, this does pointer comparisons on the
 // backtrace to give a stable ordering, even if that ordering has no
 // intrinsic meaning.
@@ -74,11 +89,11 @@ void WriteDumpsHeader(int pid, std::ostream& out) {
   out << "\"ph\":\"v\",";
   out << "\"name\":\"periodic_interval\",";
   out << "\"args\":{";
-  out << "\"dumps\":";
+  out << "\"dumps\":{\n";
 }
 
 void WriteDumpsFooter(std::ostream& out) {
-  out << "}}";  // args, event
+  out << "}}}";  // dumps, args, event
 }
 
 // Writes the dictionary keys to preceed a "heaps_v2" trace argument inside a
@@ -109,19 +124,11 @@ size_t AddOrGetString(std::string str, StringTable* string_table) {
   return result.first->second;
 }
 
-size_t AddOrGetBacktraceNode(BacktraceNode node,
-                             BacktraceTable* backtrace_table) {
-  auto result =
-      backtrace_table->emplace(std::move(node), backtrace_table->size());
-  // "result.first" is an iterator into the map.
-  return result.first->second;
-}
-
 // Returns the index into nodes of the node to reference for this stack. That
 // node will reference its parent node, etc. to allow the full stack to
 // be represented.
 size_t AppendBacktraceStrings(const Backtrace& backtrace,
-                              BacktraceTable* backtrace_table,
+                              std::vector<BacktraceNode>* nodes,
                               StringTable* string_table) {
   int parent = -1;
   for (const Address& addr : backtrace.addrs()) {
@@ -136,9 +143,10 @@ size_t AppendBacktraceStrings(const Backtrace& backtrace,
     char buf[kBufSize];
     snprintf(buf, kBufSize, "%s%" PRIx64, kPcPrefix, addr.value);
     size_t sid = AddOrGetString(buf, string_table);
-    parent = AddOrGetBacktraceNode(BacktraceNode(sid, parent), backtrace_table);
+    nodes->emplace_back(sid, parent);
+    parent = nodes->size() - 1;
   }
-  return parent;  // Last item is the end of this stack.
+  return nodes->size() - 1;  // Last item is the end of this stack.
 }
 
 // Writes the string table which looks like:
@@ -163,32 +171,29 @@ void WriteStrings(const StringTable& string_table, std::ostream& out) {
 }
 
 // Writes the nodes array in the maps section. These are all the backtrace
-// entries and are indexed by the allocator nodes array.
+// entries and are indexed by the allocator nodes arra.
 //   "nodes":[
 //     {"id":1, "name_sid":123, "parent":17},
 //     ...
 //   ]
-void WriteMapNodes(const BacktraceTable& nodes, std::ostream& out) {
+void WriteMapNodes(const std::vector<BacktraceNode>& nodes, std::ostream& out) {
   out << "\"nodes\":[";
 
-  bool first_time = true;
-  for (const auto& node : nodes) {
-    if (!first_time)
+  for (size_t i = 0; i < nodes.size(); i++) {
+    if (i != 0)
       out << ",\n";
-    else
-      first_time = false;
 
-    out << "{\"id\":" << node.second;
-    out << ",\"name_sid\":" << node.first.string_id;
-    if (node.first.parent != BacktraceNode::kNoParent)
-      out << ",\"parent\":" << node.first.parent;
+    out << "{\"id\":" << i;
+    out << ",\"name_sid\":" << nodes[i].string_id;
+    if (nodes[i].parent != BacktraceNode::kNoParent)
+      out << ",\"parent\":" << nodes[i].parent;
     out << "}";
   }
   out << "]";
 }
 
 // Writes the number of matching allocations array which looks like:
-//   "counts":[1, 1, 2]
+//   "counts":[1, 1, 2 ]
 void WriteCounts(const UniqueAllocCount& alloc_counts, std::ostream& out) {
   out << "\"counts\":[";
   bool first_time = true;
@@ -218,7 +223,7 @@ void WriteSizes(const UniqueAllocCount& alloc_counts, std::ostream& out) {
 }
 
 // Writes the types array of integers which looks like:
-//   "types":[0, 0, 0]
+//   "types":[ 0, 0, 0, ]
 void WriteTypes(const UniqueAllocCount& alloc_counts, std::ostream& out) {
   out << "\"types\":[";
   for (size_t i = 0; i < alloc_counts.size(); i++) {
@@ -248,73 +253,118 @@ void WriteAllocatorNodes(const UniqueAllocCount& alloc_counts,
   out << "]";
 }
 
+// Copy-pastaed from content/browser/tracing/tracing_controller_impl.cc.
+std::string GetClockString() {
+  switch (base::TimeTicks::GetClock()) {
+    case base::TimeTicks::Clock::FUCHSIA_MX_CLOCK_MONOTONIC:
+      return "FUCHSIA_MX_CLOCK_MONOTONIC";
+    case base::TimeTicks::Clock::LINUX_CLOCK_MONOTONIC:
+      return "LINUX_CLOCK_MONOTONIC";
+    case base::TimeTicks::Clock::IOS_CF_ABSOLUTE_TIME_MINUS_KERN_BOOTTIME:
+      return "IOS_CF_ABSOLUTE_TIME_MINUS_KERN_BOOTTIME";
+    case base::TimeTicks::Clock::MAC_MACH_ABSOLUTE_TIME:
+      return "MAC_MACH_ABSOLUTE_TIME";
+    case base::TimeTicks::Clock::WIN_QPC:
+      return "WIN_QPC";
+    case base::TimeTicks::Clock::WIN_ROLLOVER_PROTECTED_TIME_GET_TIME:
+      return "WIN_ROLLOVER_PROTECTED_TIME_GET_TIME";
+  }
+
+  NOTREACHED();
+  return std::string();
+}
+
+void WriteMetadata(std::ostream& out) {
+  // This is copy-pastaed from
+  // TracingControllerImpl::GenerateTracingMetadataDict().
+  //
+  // The memory dump doesn't really need most of this info. This is here to make
+  // the trace viewer and some supporting scripts happy. The main things that
+  // are useful are command_line and os-name which help the scripts know how to
+  // symbolize the dump.
+  out << "\"metadata\": {\n";
+
+// Output the OS info.
+#if defined(OS_CHROMEOS)
+  out << "\"os-name\": \"CrOS\",\n";
+  int32_t major_version;
+  int32_t minor_version;
+  int32_t bugfix_version;
+  // OperatingSystemVersion only has a POSIX implementation which returns the
+  // wrong versions for CrOS.
+  base::SysInfo::OperatingSystemVersionNumbers(&major_version, &minor_version,
+                                               &bugfix_version);
+  out << "\"os-version\": \""
+      << base::StringPrintf("%d.%d.%d", major_version, minor_version,
+                            bugfix_version)
+      << "\",\n";
+#else
+  out << "\"os-name\": \"" << base::SysInfo::OperatingSystemName() << "\",\n";
+  out << "\"os-version\": \"" << base::SysInfo::OperatingSystemVersion()
+      << "\",\n";
+#endif
+  out << "\"os-arch\": \"" << base::SysInfo::OperatingSystemArchitecture()
+      << "\",\n";
+
+  // Output CPU info.
+  base::CPU cpu;
+  out << "\"cpu-family\": " << cpu.family() << ",\n"
+      << "\"cpu-model\": " << cpu.model() << ",\n"
+      << "\"cpu-stepping\": " << cpu.stepping() << ",\n"
+      << "\"num-cpus\": " << base::SysInfo::NumberOfProcessors() << ",\n"
+      << "\"physical-memory\": " << base::SysInfo::AmountOfPhysicalMemoryMB()
+      << ",\n";
+
+  std::string cpu_brand = cpu.cpu_brand();
+  // Workaround for crbug.com/249713.
+  // TODO(oysteine): Remove workaround when bug is fixed.
+  size_t null_pos = cpu_brand.find('\0');
+  if (null_pos != std::string::npos)
+    cpu_brand.erase(null_pos);
+  out << "\"cpu-brand\": \"" << cpu_brand << "\",\n";
+
+  // Output clock stuff.
+  out << "\"clock-domain\": \"" << GetClockString() << "\",\n"
+      << "\"highres-ticks\": "
+      << (base::TimeTicks::IsHighResolution() ? "true" : "false") << ",\n";
+
+  // Output timestamp.
+  base::Time::Exploded ctime;
+  base::Time::Now().UTCExplode(&ctime);
+  std::string time_string = base::StringPrintf(
+      "%u-%u-%u %d:%d:%d", ctime.year, ctime.month, ctime.day_of_month,
+      ctime.hour, ctime.minute, ctime.second);
+  out << "\"trace-capture-datetime\": \"" << time_string << "\",\n";
+
+  // TODO(ajwong): This is the commandline for the profiling process and not the
+  // target. This is completely the wrong thing, but for now it gets us going.
+  // https://crbug.com/755382
+  std::string command_line;
+  base::EscapeJSONString(
+      base::CommandLine::ForCurrentProcess()->GetCommandLineString(), false,
+      &command_line);
+
+  out << "\"command_line\": \"" << command_line << "\",\n";
+
+  out << kFakeOtherMetadata;
+
+  out << "}\n";
+}
+
 }  // namespace
 
 void ExportAllocationEventSetToJSON(
     int pid,
     const AllocationEventSet& event_set,
     const std::vector<memory_instrumentation::mojom::VmRegionPtr>& maps,
-    std::ostream& out,
-    std::unique_ptr<base::DictionaryValue> metadata_dict,
-    size_t min_size_threshold,
-    size_t min_count_threshold) {
+    std::ostream& out) {
   out << "{ \"traceEvents\": [";
   WriteProcessName(pid, out);
   out << ",\n";
   WriteDumpsHeader(pid, out);
-  ExportMemoryMapsAndV2StackTraceToJSON(
-      event_set, maps, out, min_size_threshold, min_count_threshold);
-  WriteDumpsFooter(out);
-  out << "]";
-
-  // Append metadata.
-  if (metadata_dict) {
-    std::string metadata;
-    base::JSONWriter::Write(*metadata_dict, &metadata);
-    out << ",\"metadata\": " << metadata;
-  }
-
-  out << "}\n";
-}
-
-void ExportMemoryMapsAndV2StackTraceToJSON(
-    const AllocationEventSet& event_set,
-    const std::vector<memory_instrumentation::mojom::VmRegionPtr>& maps,
-    std::ostream& out,
-    size_t min_size_threshold,
-    size_t min_count_threshold) {
-  // Start dictionary.
-  out << "{\n";
 
   WriteMemoryMaps(maps, out);
   out << ",\n";
-
-  // Write level of detail.
-  out << R"("level_of_detail": "detailed")"
-      << ",\n";
-
-  // Write the top-level allocators section. This section is used by the tracing
-  // UI to show a small summary for each allocator. It's necessary as a
-  // placeholder to allow the stack-viewing UI to be shown.
-  // TODO: Fill in placeholders for "value". https://crbug.com/758434.
-  out << R"(
-  "allocators": {
-    "malloc": {
-      "attrs": {
-        "virtual_size": {
-          "type": "scalar",
-          "units": "bytes",
-          "value": "1234"
-        },
-        "size": {
-          "type": "scalar",
-          "units": "bytes",
-          "value": "1234"
-        }
-      }
-    }
-  },
-  )";
 
   WriteHeapsV2Header(out);
 
@@ -326,39 +376,22 @@ void ExportMemoryMapsAndV2StackTraceToJSON(
   // We hardcode one type, "[unknown]".
   size_t type_string_id = AddOrGetString("[unknown]", &string_table);
 
-  // Aggregate allocations. Allocations of the same size and stack get grouped.
-  UniqueAllocCount alloc_counts;
-  for (const auto& alloc : event_set) {
-    UniqueAlloc unique_alloc(alloc.backtrace(), alloc.size());
-    alloc_counts[unique_alloc]++;
-  }
-
-  // Filter irrelevant allocations.
-  for (auto alloc = alloc_counts.begin(); alloc != alloc_counts.end();) {
-    size_t alloc_count = alloc->second;
-    size_t alloc_size = alloc->first.size;
-    size_t alloc_total_size = alloc_size * alloc_count;
-    if (alloc_total_size < min_size_threshold &&
-        alloc_count < min_count_threshold) {
-      alloc = alloc_counts.erase(alloc);
-    } else {
-      ++alloc;
-    }
-  }
-
-  // Find all backtraces referenced by the set and not filtered. The backtrace
-  // storage will contain more stacks than we want to write out (it will refer
-  // to all processes, while we're only writing one). So do those only on
-  // demand.
+  // Find all backtraces referenced by the set. The backtrace storage will
+  // contain more stacks than we want to write out (it will refer to all
+  // processes, while we're only writing one). So do those only on demand.
   //
   // The map maps backtrace keys to node IDs (computed below).
   std::map<const Backtrace*, size_t> backtraces;
-  for (const auto& alloc : alloc_counts)
-    backtraces.emplace(alloc.first.backtrace, 0);
+  for (const auto& event : event_set)
+    backtraces.emplace(event.backtrace(), 0);
 
   // Write each backtrace, converting the string for the stack entry to string
   // IDs. The backtrace -> node ID will be filled in at this time.
-  BacktraceTable nodes;
+  //
+  // As a future optimization, compute when a stack is a superset of another
+  // one and share the common nodes.
+  std::vector<BacktraceNode> nodes;
+  nodes.reserve(backtraces.size() * 10);  // Guesstimate for end size.
   VLOG(1) << "Number of backtraces " << backtraces.size();
   for (auto& bt : backtraces)
     bt.second = AppendBacktraceStrings(*bt.first, &nodes, &string_table);
@@ -373,6 +406,13 @@ void ExportMemoryMapsAndV2StackTraceToJSON(
       << "}]";
   out << "},\n";  // End of maps section.
 
+  // Aggregate allocations. Allocations of the same size and stack get grouped.
+  UniqueAllocCount alloc_counts;
+  for (const auto& alloc : event_set) {
+    UniqueAlloc unique_alloc(alloc.backtrace(), alloc.size());
+    alloc_counts[unique_alloc]++;
+  }
+
   // Allocators section.
   out << "\"allocators\":{\"malloc\":{\n";
   WriteCounts(alloc_counts, out);
@@ -385,8 +425,9 @@ void ExportMemoryMapsAndV2StackTraceToJSON(
   out << "}}\n";  // End of allocators section.
 
   WriteHeapsV2Footer(out);
-
-  // End dictionary.
+  WriteDumpsFooter(out);
+  out << "],";
+  WriteMetadata(out);
   out << "}\n";
 }
 

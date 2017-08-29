@@ -19,7 +19,6 @@
 #include "ui/views/view.h"
 
 namespace views {
-class BoxLayout;
 class ImageView;
 class Textfield;
 }  // namespace views
@@ -121,16 +120,10 @@ class APP_LIST_EXPORT SearchBoxView : public views::View,
   // Overridden from views::ButtonListener:
   void ButtonPressed(views::Button* sender, const ui::Event& event) override;
 
-  // Updates the search box's background corner radius and color based on the
-  // state of AppListModel.
+  // Updates the search box's background corner radius and color.
   void UpdateBackground(double progress,
                         AppListModel::State current_state,
                         AppListModel::State target_state);
-
-  // Updates the search box's layout based on the state of AppListModel.
-  void UpdateLayout(double progress,
-                    AppListModel::State current_state,
-                    AppListModel::State target_state);
 
   // Called when tablet mode starts and ends.
   void OnTabletModeChanged(bool started);
@@ -142,7 +135,7 @@ class APP_LIST_EXPORT SearchBoxView : public views::View,
   SkColor GetBackgroundColorForState(AppListModel::State state) const;
 
   // Updates the opacity of the searchbox.
-  void UpdateOpacity();
+  void UpdateOpacity(int app_list_y_position_in_screen);
 
   // Used only in the tests to get the current search icon.
   views::ImageView* get_search_icon_for_test() { return search_icon_; }
@@ -156,9 +149,6 @@ class APP_LIST_EXPORT SearchBoxView : public views::View,
   // Whether the key event is an arrow up/down/left/right.
   // TODO(weidongg): move this function to utility class.
   static bool IsArrowKey(const ui::KeyEvent& event);
-
-  // Returns selected view in contents view.
-  views::View* GetSelectedViewInContentsView() const;
 
  private:
   // Updates model text and selection model with current Textfield info.
@@ -187,9 +177,6 @@ class APP_LIST_EXPORT SearchBoxView : public views::View,
 
   // Gets the search box background.
   SearchBoxBackground* GetSearchBoxBackground() const;
-
-  // Whether the trimmed query in the search box is empty.
-  bool IsSearchBoxTrimmedQueryEmpty() const;
 
   // Overridden from views::TextfieldController:
   void ContentsChanged(views::Textfield* sender,
@@ -231,12 +218,8 @@ class APP_LIST_EXPORT SearchBoxView : public views::View,
   SearchBoxImageButton* speech_button_ = nullptr;
   SearchBoxImageButton* close_button_ = nullptr;
   views::Textfield* search_box_;
-  views::View* search_box_right_space_ = nullptr;
   views::View* contents_view_ = nullptr;
   app_list::AppListView* app_list_view_;
-
-  // Owned by |content_container_|. It is deleted when the view is deleted.
-  views::BoxLayout* box_layout_ = nullptr;
 
   // Whether the fullscreen app list feature is enabled.
   const bool is_fullscreen_app_list_enabled_;

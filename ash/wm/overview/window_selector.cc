@@ -12,6 +12,7 @@
 
 #include "ash/accessibility_delegate.h"
 #include "ash/accessibility_types.h"
+#include "ash/metrics/user_metrics_action.h"
 #include "ash/metrics/user_metrics_recorder.h"
 #include "ash/public/cpp/shell_window_ids.h"
 #include "ash/screen_util.h"
@@ -29,8 +30,6 @@
 #include "base/auto_reset.h"
 #include "base/command_line.h"
 #include "base/metrics/histogram_macros.h"
-#include "base/metrics/user_metrics.h"
-#include "base/threading/thread_task_runner_handle.h"
 #include "components/vector_icons/vector_icons.h"
 #include "third_party/skia/include/core/SkPath.h"
 #include "ui/base/resource/resource_bundle.h"
@@ -253,14 +252,7 @@ WindowSelector::WindowSelector(WindowSelectorDelegate* delegate)
 }
 
 WindowSelector::~WindowSelector() {
-  DCHECK(observed_windows_.empty());
-  // Don't delete |window_drag_controller_| yet since the stack might be still
-  // using it.
-  if (window_drag_controller_) {
-    window_drag_controller_->ResetWindowSelector();
-    base::ThreadTaskRunnerHandle::Get()->DeleteSoon(
-        FROM_HERE, window_drag_controller_.release());
-  }
+  RemoveAllObservers();
 }
 
 // NOTE: The work done in Init() is not done in the constructor because it may
@@ -339,7 +331,7 @@ void WindowSelector::Init(const WindowList& windows,
   Shell::Get()->split_view_controller()->AddObserver(this);
 
   display::Screen::GetScreen()->AddObserver(this);
-  base::RecordAction(base::UserMetricsAction("WindowSelector_Overview"));
+  Shell::Get()->metrics()->RecordUserMetricsAction(UMA_WINDOW_OVERVIEW);
   // Send an a11y alert.
   Shell::Get()->accessibility_delegate()->TriggerAccessibilityAlert(
       A11Y_ALERT_WINDOW_OVERVIEW_MODE_ENTERED);
@@ -408,7 +400,6 @@ void WindowSelector::Shutdown() {
 void WindowSelector::RemoveAllObservers() {
   for (auto* window : observed_windows_)
     window->RemoveObserver(this);
-  observed_windows_.clear();
 
   Shell::Get()->activation_client()->RemoveObserver(this);
   display::Screen::GetScreen()->RemoveObserver(this);
@@ -459,14 +450,12 @@ void WindowSelector::SelectWindow(WindowSelectorItem* item) {
   aura::Window::Windows window_list =
       Shell::Get()->mru_window_tracker()->BuildMruWindowList();
   if (!window_list.empty()) {
-    // Record WindowSelector_ActiveWindowChanged if the user is selecting a
-    // window other than the window that was active prior to entering overview
+    // Record UMA_WINDOW_OVERVIEW_ACTIVE_WINDOW_CHANGED if the user is selecting
+    // a window other than the window that was active prior to entering overview
     // mode (i.e., the window at the front of the MRU list).
     if (window_list[0] != window) {
-      base::RecordAction(
-          base::UserMetricsAction("WindowSelector_ActiveWindowChanged"));
-      Shell::Get()->metrics()->task_switch_metrics_recorder().OnTaskSwitch(
-          TaskSwitchSource::OVERVIEW_MODE);
+      Shell::Get()->metrics()->RecordUserMetricsAction(
+          UMA_WINDOW_OVERVIEW_ACTIVE_WINDOW_CHANGED);
     }
     const auto it = std::find(window_list.begin(), window_list.end(), window);
     if (it != window_list.end()) {
@@ -507,8 +496,6 @@ void WindowSelector::RemoveWindowSelectorItem(WindowSelectorItem* item) {
   for (std::unique_ptr<WindowGrid>& grid : grid_list_) {
     if (grid->Contains(item->GetWindow())) {
       grid->RemoveItem(item);
-      if (grid->empty())
-        OnGridEmpty(grid.get());
       break;
     }
   }
@@ -573,8 +560,8 @@ bool WindowSelector::HandleKeyEvent(views::Textfield* sender,
         // Allow the textfield to handle 'W' key when not used with Ctrl.
         return false;
       }
-      base::RecordAction(
-          base::UserMetricsAction("WindowSelector_OverviewCloseKey"));
+      Shell::Get()->metrics()->RecordUserMetricsAction(
+          UMA_WINDOW_OVERVIEW_CLOSE_KEY);
       grid_list_[selected_grid_index_]->SelectedWindow()->CloseWindow();
       break;
     case ui::VKEY_RETURN:
@@ -586,8 +573,8 @@ bool WindowSelector::HandleKeyEvent(views::Textfield* sender,
       UMA_HISTOGRAM_CUSTOM_COUNTS("Ash.WindowSelector.KeyPressesOverItemsRatio",
                                   (num_key_presses_ * 100) / num_items_, 1, 300,
                                   30);
-      base::RecordAction(
-          base::UserMetricsAction("WindowSelector_OverviewEnterKey"));
+      Shell::Get()->metrics()->RecordUserMetricsAction(
+          UMA_WINDOW_OVERVIEW_ENTER_KEY);
       SelectWindow(grid_list_[selected_grid_index_]->SelectedWindow());
       break;
     default:

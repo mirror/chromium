@@ -45,8 +45,6 @@ const char kArcTermsAccepted[] = "arc.terms.accepted";
 const char kArcLocationServiceEnabled[] = "arc.location_service.enabled";
 // A preference to keep list of Android packages and their infomation.
 const char kArcPackages[] = "arc.packages";
-// A preference that indicates that Play Auto Install flow was already started.
-const char kArcPaiStarted[] = "arc.pai.started";
 // A preference to keep deferred requests of setting notifications enabled flag.
 const char kArcSetNotificationsEnabledDeferred[] =
     "arc.set_notifications_enabled_deferred";
@@ -61,9 +59,8 @@ const char kArcVoiceInteractionValuePropAccepted[] =
     "arc.voice_interaction_value_prop.accepted";
 // A preference that indicates the user has enabled voice interaction services.
 const char kVoiceInteractionEnabled[] = "settings.voice_interaction.enabled";
-// A preference that indicates the user has allowed voice interaction services
-// to access the "context" (text and graphic content that is currently on
-// screen).
+// A preference that indicates the user has enabled providing context to
+// voice interaction services.
 const char kVoiceInteractionContextEnabled[] =
     "settings.voice_interaction.context.enabled";
 // A preference indicating whether voice interaction settings have been read
@@ -538,10 +535,6 @@ const char kNaturalScroll[] = "settings.touchpad.natural_scroll";
 
 // A boolean pref set to true if primary mouse button is the left button.
 const char kPrimaryMouseButtonRight[] = "settings.mouse.primary_right";
-
-// A boolean pref set to true if turning the mouse wheel toward the user should
-// result in scrolling up instead of the more common scrolling down.
-const char kMouseReverseScroll[] = "settings.mouse.reverse_scroll";
 
 // A integer pref for the touchpad sensitivity.
 const char kMouseSensitivity[] = "settings.mouse.sensitivity2";
@@ -1282,12 +1275,6 @@ const char kLocalDiscoveryNotificationsEnabled[] =
 #if defined(OS_ANDROID)
 // Enable vibration for web notifications.
 const char kNotificationsVibrateEnabled[] = "notifications.vibrate_enabled";
-
-// Boolean pref indicating whether notification permissions were migrated to
-// notification channels (on Android O+ we use channels to store notification
-// permission, so any existing permissions must be migrated).
-const char kMigratedToSiteNotificationChannels[] =
-    "notifications.migrated_to_channels";
 
 // Cached information about GPU driver.
 const char kGLExtensionsString[] = "gl_extensions_string";

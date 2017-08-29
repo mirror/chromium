@@ -17,11 +17,11 @@ Truncate::Truncate(extensions::EventRouter* event_router,
                    const ProvidedFileSystemInfo& file_system_info,
                    const base::FilePath& file_path,
                    int64_t length,
-                   storage::AsyncFileUtil::StatusCallback callback)
+                   const storage::AsyncFileUtil::StatusCallback& callback)
     : Operation(event_router, file_system_info),
       file_path_(file_path),
       length_(length),
-      callback_(std::move(callback)) {}
+      callback_(callback) {}
 
 Truncate::~Truncate() {
 }
@@ -49,15 +49,13 @@ bool Truncate::Execute(int request_id) {
 void Truncate::OnSuccess(int /* request_id */,
                          std::unique_ptr<RequestValue> /* result */,
                          bool has_more) {
-  DCHECK(callback_);
-  std::move(callback_).Run(base::File::FILE_OK);
+  callback_.Run(base::File::FILE_OK);
 }
 
 void Truncate::OnError(int /* request_id */,
                        std::unique_ptr<RequestValue> /* result */,
                        base::File::Error error) {
-  DCHECK(callback_);
-  std::move(callback_).Run(error);
+  callback_.Run(error);
 }
 
 }  // namespace operations

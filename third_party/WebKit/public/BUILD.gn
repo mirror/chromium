@@ -76,7 +76,6 @@ if (is_android) {
       "./platform/WebDisplayMode.h",
       "./platform/WebFocusType.h",
       "./platform/WebInputEvent.h",
-      "./platform/WebReferrerPolicy.h",
       "./platform/WebTextInputMode.h",
       "./platform/WebTextInputType.h",
       "./platform/modules/remoteplayback/WebRemotePlaybackAvailability.h",
@@ -617,7 +616,6 @@ source_set("blink_headers") {
     "web/WebUserGestureToken.h",
     "web/WebUserMediaClient.h",
     "web/WebUserMediaRequest.h",
-    "web/WebV8ContextSnapshot.h",
     "web/WebView.h",
     "web/WebViewClient.h",
     "web/WebWidget.h",
@@ -761,19 +759,13 @@ repack("scaled_resources_200_percent") {
 }
 
 mojom("mojo_bindings") {
-  visibility = [
-    "//content/*",
-    "//chrome/common:mojo_bindings",
-  ]
+  visibility = [ "//content/*" ]
   visibility_blink = [
     "//content/common:mojo_bindings_blink",
-    "//chrome/common:mojo_bindings_blink",
     "//third_party/WebKit/Source/platform",
-    "//third_party/WebKit/Source/platform/loader",
   ]
   sources = [
     "platform/display_mode.mojom",
-    "platform/media_download_in_product_help.mojom",
     "platform/media_engagement.mojom",
     "platform/mime_registry.mojom",
     "platform/modules/app_banner/app_banner.mojom",
@@ -795,7 +787,6 @@ mojom("mojo_bindings") {
     "platform/modules/permissions/permission.mojom",
     "platform/modules/permissions/permission_status.mojom",
     "platform/modules/presentation/presentation.mojom",
-    "platform/modules/serviceworker/service_worker_error_type.mojom",
     "platform/modules/serviceworker/service_worker_event_status.mojom",
     "platform/modules/serviceworker/service_worker_stream_handle.mojom",
     "platform/modules/webauth/authenticator.mojom",
@@ -809,7 +800,6 @@ mojom("mojo_bindings") {
   ]
   public_deps = [
     ":android_mojo_bindings",
-    ":web_client_hints_types_mojo_bindings",
     ":web_feature_mojo_bindings",
     "//device/bluetooth/public/interfaces",
     "//device/screen_orientation/public/interfaces",
@@ -820,12 +810,6 @@ mojom("mojo_bindings") {
     "//url/mojo:url_mojom_gurl",
     "//url/mojo:url_mojom_origin",
   ]
-
-  # //storage/public/interfaces is configured to be exported
-  # as STORAGE_COMMON, so override the dependencies to make it
-  # depend via //storage/common.
-  overridden_deps = [ "//storage/public/interfaces" ]
-  component_deps = [ "//storage/common" ]
 
   component_output_prefix = "blink_mojo_bindings"
 
@@ -891,7 +875,7 @@ mojom("offscreen_canvas_mojo_bindings") {
   ]
   deps = [
     "//cc/ipc:interfaces",
-    "//services/viz/public/interfaces",
+    "//services/viz/public/interfaces/compositing",
   ]
 
   component_output_prefix = "blink_offscreen_canvas_mojo_bindings"
@@ -926,15 +910,6 @@ group("generate_mojo_bindings") {
 mojom("web_feature_mojo_bindings") {
   sources = [
     "platform/web_feature.mojom",
-  ]
-}
-
-# The web_feature_mojo_bindings is separated from the rest of the mojom files
-# because the chromium typemap for blink mojo_bindings has private content
-# dependencies.
-mojom("web_client_hints_types_mojo_bindings") {
-  sources = [
-    "platform/web_client_hints_types.mojom",
   ]
 }
 

@@ -20,7 +20,8 @@ ChromeLanguageDetectionClient::ChromeLanguageDetectionClient(
     : content::WebContentsObserver(web_contents),
       language_histogram_(
           UrlLanguageHistogramFactory::GetInstance()->GetForBrowserContext(
-              web_contents->GetBrowserContext())) {}
+              web_contents->GetBrowserContext())),
+      binding_(this) {}
 
 ChromeLanguageDetectionClient::~ChromeLanguageDetectionClient() = default;
 
@@ -46,7 +47,7 @@ void ChromeLanguageDetectionClient::BindContentTranslateDriver(
   if (!instance)
     return;
 
-  instance->bindings_.AddBinding(instance, std::move(request));
+  instance->binding_.Bind(std::move(request));
 }
 
 // translate::mojom::ContentTranslateDriver implementation.

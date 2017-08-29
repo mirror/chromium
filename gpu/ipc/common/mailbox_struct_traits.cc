@@ -4,15 +4,13 @@
 
 #include "gpu/ipc/common/mailbox_struct_traits.h"
 
-#include "base/containers/span.h"
-
 namespace mojo {
 
 // static
 bool StructTraits<gpu::mojom::MailboxDataView, gpu::Mailbox>::Read(
     gpu::mojom::MailboxDataView data,
     gpu::Mailbox* out) {
-  base::span<int8_t> mailbox_name(out->name);
+  CArray<int8_t> mailbox_name(out->name);
   return data.ReadName(&mailbox_name);
 }
 

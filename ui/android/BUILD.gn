@@ -42,7 +42,6 @@ component("android") {
     "ui_android_export.h",
     "view_android.cc",
     "view_android.h",
-    "view_android_observer.h",
     "view_client.cc",
     "view_client.h",
     "window_android.cc",
@@ -253,21 +252,6 @@ android_library("ui_full_java") {
   srcjar_deps = [
     ":java_enums_srcjar",
     "//third_party/WebKit/public:blink_cursor_type_java_enums_srcjar",
-  ]
-}
-
-android_library("ui_java_test_support") {
-  testonly = true
-  java_files = [
-    "javatests/src/org/chromium/ui/test/util/UiDisableIf.java",
-    "javatests/src/org/chromium/ui/test/util/UiDisableIfSkipCheck.java",
-    "javatests/src/org/chromium/ui/test/util/UiRestriction.java",
-    "javatests/src/org/chromium/ui/test/util/UiRestrictionSkipCheck.java",
-  ]
-  deps = [
-    ":ui_java",
-    "//base:base_java",
-    "//base:base_java_test_support",
   ]
 }
 

@@ -35,7 +35,7 @@
 #import "ios/chrome/browser/ui/collection_view/collection_view_model.h"
 #import "ios/chrome/browser/ui/colors/MDCPalette+CrAdditions.h"
 #import "ios/chrome/browser/ui/commands/UIKit+ChromeExecuteCommand.h"
-#import "ios/chrome/browser/ui/commands/application_commands.h"
+#include "ios/chrome/browser/ui/commands/ios_command_ids.h"
 #import "ios/chrome/browser/ui/commands/open_url_command.h"
 #import "ios/chrome/browser/ui/settings/cells/sync_switch_item.h"
 #import "ios/chrome/browser/ui/settings/cells/text_and_error_item.h"
@@ -499,7 +499,8 @@ typedef NS_ENUM(NSInteger, ItemType) {
           GetApplicationContext()->GetApplicationLocale());
       OpenUrlCommand* command =
           [[OpenUrlCommand alloc] initWithURLFromChrome:learnMoreUrl];
-      [self.dispatcher closeSettingsUIAndOpenURL:command];
+      [command setTag:IDC_CLOSE_SETTINGS_AND_OPEN_URL];
+      [self chromeExecuteCommand:command];
       break;
     }
     default:
@@ -690,7 +691,7 @@ typedef NS_ENUM(NSInteger, ItemType) {
       [self shouldDisableSettingsOnSyncError])
     return;
 
-  SettingsRootCollectionViewController* controllerToPush;
+  UIViewController* controllerToPush;
   // If there was a sync error, prompt the user to enter the passphrase.
   // Otherwise, show the full encryption options.
   if (syncService->IsPassphraseRequired()) {
@@ -700,7 +701,6 @@ typedef NS_ENUM(NSInteger, ItemType) {
     controllerToPush = [[SyncEncryptionCollectionViewController alloc]
         initWithBrowserState:_browserState];
   }
-  controllerToPush.dispatcher = self.dispatcher;
   [self.navigationController pushViewController:controllerToPush animated:YES];
 }
 

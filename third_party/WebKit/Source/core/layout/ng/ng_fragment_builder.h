@@ -5,21 +5,20 @@
 #ifndef NGFragmentBuilder_h
 #define NGFragmentBuilder_h
 
-#include "core/layout/ng/geometry/ng_bfc_offset.h"
-#include "core/layout/ng/geometry/ng_border_edges.h"
+#include "core/layout/ng/geometry/ng_static_position.h"
 #include "core/layout/ng/inline/ng_baseline.h"
+#include "core/layout/ng/inline/ng_physical_text_fragment.h"
 #include "core/layout/ng/ng_base_fragment_builder.h"
 #include "core/layout/ng/ng_break_token.h"
+#include "core/layout/ng/ng_constraint_space.h"
 #include "core/layout/ng/ng_layout_result.h"
 #include "core/layout/ng/ng_out_of_flow_positioned_descendant.h"
 #include "core/layout/ng/ng_physical_fragment.h"
+#include "core/layout/ng/ng_positioned_float.h"
 #include "core/layout/ng/ng_unpositioned_float.h"
-#include "platform/heap/Handle.h"
 #include "platform/wtf/Allocator.h"
 
 namespace blink {
-
-class NGExclusionSpace;
 
 class CORE_EXPORT NGFragmentBuilder final : public NGBaseFragmentBuilder {
   DISALLOW_NEW();
@@ -37,8 +36,6 @@ class CORE_EXPORT NGFragmentBuilder final : public NGBaseFragmentBuilder {
                     NGWritingMode,
                     TextDirection);
 
-  ~NGFragmentBuilder();
-
   using WeakBoxList = PersistentHeapLinkedHashSet<WeakMember<NGBlockNode>>;
 
   NGFragmentBuilder& SetSize(const NGLogicalSize&);
@@ -52,7 +49,7 @@ class CORE_EXPORT NGFragmentBuilder final : public NGBaseFragmentBuilder {
   NGFragmentBuilder& AddChild(RefPtr<NGPhysicalFragment>,
                               const NGLogicalOffset&);
 
-  NGFragmentBuilder& SetBfcOffset(const NGBfcOffset& offset);
+  NGFragmentBuilder& SetBfcOffset(const NGLogicalOffset& offset);
 
   // Builder has non-trivial out-of-flow descendant methods.
   // These methods are building blocks for implementation of
@@ -87,16 +84,12 @@ class CORE_EXPORT NGFragmentBuilder final : public NGBaseFragmentBuilder {
 
   NGFragmentBuilder& AddOutOfFlowDescendant(NGOutOfFlowPositionedDescendant);
 
-  // Set how much of the block size we've used so far for this box.
+  // Sets how much of the block size we've used so far for this box.
+  //
+  // This will result in a fragment which has an unfinished break token, which
+  // contains this information.
   NGFragmentBuilder& SetUsedBlockSize(LayoutUnit used_block_size) {
     used_block_size_ = used_block_size;
-    return *this;
-  }
-
-  // Specify that we broke.
-  //
-  // This will result in a fragment which has an unfinished break token.
-  NGFragmentBuilder& SetDidBreak() {
     did_break_ = true;
     return *this;
   }
@@ -118,16 +111,14 @@ class CORE_EXPORT NGFragmentBuilder final : public NGBaseFragmentBuilder {
   const Vector<NGLogicalOffset>& Offsets() const { return offsets_; }
   Vector<NGLogicalOffset>& MutableOffsets() { return offsets_; }
 
-  NGFragmentBuilder& SwapUnpositionedFloats(
+  void SwapUnpositionedFloats(
       Vector<RefPtr<NGUnpositionedFloat>>* unpositioned_floats) {
     unpositioned_floats_.swap(*unpositioned_floats);
-    return *this;
   }
 
-  NGFragmentBuilder& SetExclusionSpace(
-      std::unique_ptr<const NGExclusionSpace> exclusion_space);
-
-  const WTF::Optional<NGBfcOffset>& BfcOffset() const { return bfc_offset_; }
+  const WTF::Optional<NGLogicalOffset>& BfcOffset() const {
+    return bfc_offset_;
+  }
 
   const Vector<RefPtr<NGPhysicalFragment>>& Children() const {
     return children_;
@@ -189,13 +180,11 @@ class CORE_EXPORT NGFragmentBuilder final : public NGBaseFragmentBuilder {
   Vector<NGOutOfFlowPositionedCandidate> oof_positioned_candidates_;
   Vector<NGOutOfFlowPositionedDescendant> oof_positioned_descendants_;
 
-  std::unique_ptr<const NGExclusionSpace> exclusion_space_;
-
   // Floats that need to be positioned by the next in-flow fragment that can
   // determine its block position in space.
   Vector<RefPtr<NGUnpositionedFloat>> unpositioned_floats_;
 
-  WTF::Optional<NGBfcOffset> bfc_offset_;
+  WTF::Optional<NGLogicalOffset> bfc_offset_;
   NGMarginStrut end_margin_strut_;
 
   Vector<NGBaseline> baselines_;

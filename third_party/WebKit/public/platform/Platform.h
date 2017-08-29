@@ -413,10 +413,6 @@ class BLINK_PLATFORM_EXPORT Platform {
   // Creates an embedder-defined thread.
   virtual std::unique_ptr<WebThread> CreateThread(const char* name);
 
-  // Creates a WebAudio-specific thread with the elevated priority. Do NOT use
-  // for any other purpose.
-  virtual std::unique_ptr<WebThread> CreateWebAudioThread();
-
   // Returns an interface to the current thread. This is owned by the
   // embedder.
   virtual WebThread* CurrentThread() { return nullptr; }
@@ -710,13 +706,6 @@ class BLINK_PLATFORM_EXPORT Platform {
   // Requests purging memory. The platform may or may not purge memory,
   // depending on memory pressure.
   virtual void RequestPurgeMemory() {}
-
-  // V8 Context Snapshot --------------------------------------------------
-
-  // This method returns true only when
-  // tools/v8_context_snapshot/v8_context_snapshot_generator is running (which
-  // runs during Chromium's build step).
-  virtual bool IsTakingV8ContextSnapshot() { return false; }
 
   // Feature Policy -----------------------------------------------------
 

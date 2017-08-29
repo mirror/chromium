@@ -30,11 +30,6 @@ WindowSelectorController::~WindowSelectorController() {
        delayed_animations_) {
     animation_observer->Shutdown();
   }
-
-  if (window_selector_.get()) {
-    window_selector_->Shutdown();
-    window_selector_.reset();
-  }
 }
 
 // static
@@ -144,9 +139,7 @@ WindowSelectorController::GetWindowsListInOverviewGridsForTesting() {
 // windows, so we can remove WindowSelectorDelegate.
 void WindowSelectorController::OnSelectionEnded() {
   window_selector_->Shutdown();
-  // Don't delete |window_selector_| yet since the stack is still using it.
-  base::ThreadTaskRunnerHandle::Get()->DeleteSoon(FROM_HERE,
-                                                  window_selector_.release());
+  window_selector_.reset();
   last_selection_time_ = base::Time::Now();
   Shell::Get()->NotifyOverviewModeEnded();
 }

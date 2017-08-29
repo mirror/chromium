@@ -8,8 +8,6 @@
 #import "ios/chrome/browser/ui/collection_view/cells/collection_view_footer_item.h"
 #import "ios/chrome/browser/ui/collection_view/collection_view_controller.h"
 
-@protocol ApplicationCommands;
-
 // Root class for collection view controllers in settings.
 @interface SettingsRootCollectionViewController
     : CollectionViewController<CollectionViewFooterLinkDelegate>
@@ -37,9 +35,6 @@
 
 // The collection view accessibility identifier to be set on |viewDidLoad|.
 @property(nonatomic, copy) NSString* collectionViewAccessibilityIdentifier;
-
-// The dispatcher used by this ViewController.
-@property(nonatomic, weak) id<ApplicationCommands> dispatcher;
 
 @end
 

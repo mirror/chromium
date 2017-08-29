@@ -345,6 +345,9 @@ std::unique_ptr<QuicChromiumClientStream::Handle>
 QuicChromiumClientSession::Handle::ReleaseStream() {
   DCHECK(stream_request_);
 
+  if (!session_)
+    return nullptr;
+
   auto handle = stream_request_->ReleaseStream();
   stream_request_.reset();
   return handle;
@@ -486,14 +489,16 @@ int QuicChromiumClientSession::StreamRequest::StartRequest(
 std::unique_ptr<QuicChromiumClientStream::Handle>
 QuicChromiumClientSession::StreamRequest::ReleaseStream() {
   DCHECK(stream_);
-  return std::move(stream_);
+  QuicChromiumClientStream* stream = stream_;
+  stream_ = nullptr;
+  return stream->CreateHandle();
 }
 
 void QuicChromiumClientSession::StreamRequest::OnRequestCompleteSuccess(
-    std::unique_ptr<QuicChromiumClientStream::Handle> stream) {
+    QuicChromiumClientStream* stream) {
   DCHECK_EQ(STATE_REQUEST_STREAM_COMPLETE, next_state_);
 
-  stream_ = std::move(stream);
+  stream_ = stream;
   // This method is called even when the request completes synchronously.
   if (callback_)
     DoCallback(OK);
@@ -851,7 +856,7 @@ int QuicChromiumClientSession::TryCreateStream(StreamRequest* request) {
   }
 
   if (GetNumOpenOutgoingStreams() < max_open_outgoing_streams()) {
-    request->stream_ = CreateOutgoingReliableStreamImpl()->CreateHandle();
+    request->stream_ = CreateOutgoingReliableStreamImpl();
     return OK;
   }
 
@@ -1160,8 +1165,7 @@ void QuicChromiumClientSession::OnClosedStream() {
     UMA_HISTOGRAM_TIMES("Net.QuicSession.PendingStreamsWaitTime",
                         base::TimeTicks::Now() - request->pending_start_time_);
     stream_requests_.pop_front();
-    request->OnRequestCompleteSuccess(
-        CreateOutgoingReliableStreamImpl()->CreateHandle());
+    request->OnRequestCompleteSuccess(CreateOutgoingReliableStreamImpl());
   }
 
   if (GetNumOpenOutgoingStreams() == 0 && stream_factory_) {
@@ -1211,9 +1215,6 @@ void QuicChromiumClientSession::OnCryptoHandshakeEvent(
     base::ResetAndReturn(&callback_).Run(OK);
   }
   if (event == HANDSHAKE_CONFIRMED) {
-    if (stream_factory_)
-      stream_factory_->set_require_confirmation(false);
-
     // Update |connect_end| only when handshake is confirmed. This should also
     // take care of any failed 0-RTT request.
     connect_timing_.connect_end = base::TimeTicks::Now();

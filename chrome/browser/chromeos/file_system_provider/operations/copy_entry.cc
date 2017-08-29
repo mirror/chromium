@@ -17,11 +17,12 @@ CopyEntry::CopyEntry(extensions::EventRouter* event_router,
                      const ProvidedFileSystemInfo& file_system_info,
                      const base::FilePath& source_path,
                      const base::FilePath& target_path,
-                     storage::AsyncFileUtil::StatusCallback callback)
+                     const storage::AsyncFileUtil::StatusCallback& callback)
     : Operation(event_router, file_system_info),
       source_path_(source_path),
       target_path_(target_path),
-      callback_(std::move(callback)) {}
+      callback_(callback) {
+}
 
 CopyEntry::~CopyEntry() {
 }
@@ -49,15 +50,13 @@ bool CopyEntry::Execute(int request_id) {
 void CopyEntry::OnSuccess(int /* request_id */,
                           std::unique_ptr<RequestValue> /* result */,
                           bool has_more) {
-  DCHECK(callback_);
-  std::move(callback_).Run(base::File::FILE_OK);
+  callback_.Run(base::File::FILE_OK);
 }
 
 void CopyEntry::OnError(int /* request_id */,
                         std::unique_ptr<RequestValue> /* result */,
                         base::File::Error error) {
-  DCHECK(callback_);
-  std::move(callback_).Run(error);
+  callback_.Run(error);
 }
 
 }  // namespace operations

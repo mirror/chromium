@@ -46,16 +46,10 @@ class BaseSafeBrowsingErrorUI {
     // Indicates if user is in incognito mode.
     bool is_off_the_record;
 
-    // Indicates if user opted in for SB extended reporting. This contains only
-    // the value of the pref that is currently active for the user (either the
-    // legacy SBER pref, or the Scout pref). Use |is_scout_reporting_enabled| to
-    // determine which of the prefs is being used.
+    // Indicates if user opted in for SB extended reporting.
     bool is_extended_reporting_enabled;
 
-    // Indicates if extended reporting is controlled by Scout or the legacy SBER
-    // setting. This does NOT indicate whether the user is opted-in to extended
-    // reporting, just the level of reporting that's available to the user. Use
-    // |is_extended_reporting_enabled| to see if the user is opted-in.
+    // Indicates if user opted in for Scout extended reporting.
     bool is_scout_reporting_enabled;
 
     // Indicates if kSafeBrowsingProceedAnywayDisabled preference is set.

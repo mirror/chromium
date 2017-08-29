@@ -333,7 +333,7 @@ std::unique_ptr<StagingBuffer> StagingBufferPool::AcquireStagingBuffer(
   // Create new staging buffer if necessary.
   if (!staging_buffer) {
     staging_buffer =
-        std::make_unique<StagingBuffer>(resource->size(), resource->format());
+        base::MakeUnique<StagingBuffer>(resource->size(), resource->format());
     AddStagingBuffer(staging_buffer.get(), resource->format());
   }
 

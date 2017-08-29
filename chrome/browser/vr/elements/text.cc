@@ -18,15 +18,10 @@ namespace vr {
 
 class TextTexture : public UiTexture {
  public:
-  TextTexture(int resource_id,
-              float font_height,
-              float text_width,
-              const base::Callback<SkColor(ColorScheme)>& color_callback)
+  TextTexture(int resource_id, float font_height, float text_width)
       : resource_id_(resource_id),
         font_height_(font_height),
-        text_width_(text_width),
-        color_callback_(color_callback) {}
-
+        text_width_(text_width) {}
   ~TextTexture() override {}
 
   void OnSetMode() override { set_dirty(); }
@@ -46,21 +41,17 @@ class TextTexture : public UiTexture {
   float font_height_;
   float text_width_;
 
-  base::Callback<SkColor(ColorScheme)> color_callback_;
-
   DISALLOW_COPY_AND_ASSIGN(TextTexture);
 };
 
 Text::Text(int maximum_width_pixels,
            float font_height_meters,
            float text_width_meters,
-           const base::Callback<SkColor(ColorScheme)>& color_callback,
            int resource_id)
     : TexturedElement(maximum_width_pixels),
       texture_(base::MakeUnique<TextTexture>(resource_id,
                                              font_height_meters,
-                                             text_width_meters,
-                                             color_callback)) {}
+                                             text_width_meters)) {}
 Text::~Text() {}
 
 UiTexture* Text::GetTexture() const {
@@ -82,7 +73,7 @@ void TextTexture::Draw(SkCanvas* sk_canvas, const gfx::Size& texture_size) {
   std::vector<std::unique_ptr<gfx::RenderText>> lines =
       // TODO(vollick): if this subsumes all text, then we should probably move
       // this function into this class.
-      PrepareDrawStringRect(text, fonts, color_callback_.Run(color_scheme()),
+      PrepareDrawStringRect(text, fonts, color_scheme().world_background_text,
                             &text_bounds, kTextAlignmentCenter,
                             kWrappingBehaviorWrap);
   // Draw the text.

@@ -85,7 +85,8 @@ enum RTCIceConnectionState {
     // readonly attribute boolean? canTrickleIceCandidates;
     // RTCConfiguration getConfiguration();
     [CallWith=ScriptState, RaisesException] void setConfiguration(RTCConfiguration configuration);
-    void close();
+    // TODO(guidou): close() should never throw an exception.
+    [RaisesException] void close();
     attribute EventHandler onnegotiationneeded;
     attribute EventHandler onicecandidate;
     attribute EventHandler onsignalingstatechange;

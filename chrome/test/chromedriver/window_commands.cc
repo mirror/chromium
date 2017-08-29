@@ -136,7 +136,7 @@ Status GetVisibleCookies(WebView* web_view,
     cookie_dict->GetString("path", &path);
     double expiry = 0;
     cookie_dict->GetDouble("expires", &expiry);
-    if (expiry > 1e12)
+    if (expiry > 1e14)
       expiry /= 1000;  // Backwards compatibility ms -> sec.
     bool http_only = false;
     cookie_dict->GetBoolean("httpOnly", &http_only);
@@ -1076,21 +1076,7 @@ Status ExecuteDeleteCookie(Session* session,
   Status status = GetUrl(web_view, session->GetCurrentFrameId(), &url);
   if (status.IsError())
     return status;
-
-  std::list<Cookie> cookies;
-  status = GetVisibleCookies(web_view, &cookies);
-  if (status.IsError())
-    return status;
-
-  for (std::list<Cookie>::const_iterator it = cookies.begin();
-       it != cookies.end(); ++it) {
-    if (name == it->name) {
-      status = web_view->DeleteCookie(it->name, url, it->domain, it->path);
-      if (status.IsError())
-        return status;
-    }
-  }
-  return Status(kOk);
+  return web_view->DeleteCookie(name, url);
 }
 
 Status ExecuteDeleteAllCookies(Session* session,
@@ -1112,7 +1098,7 @@ Status ExecuteDeleteAllCookies(Session* session,
       return status;
     for (std::list<Cookie>::const_iterator it = cookies.begin();
          it != cookies.end(); ++it) {
-      status = web_view->DeleteCookie(it->name, url, it->domain, it->path);
+      status = web_view->DeleteCookie(it->name, url);
       if (status.IsError())
         return status;
     }

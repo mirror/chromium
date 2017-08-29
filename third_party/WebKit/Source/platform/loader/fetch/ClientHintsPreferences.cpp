@@ -20,8 +20,7 @@ namespace {
 static constexpr const char* kHeaderMapping[] = {"device-memory", "dpr",
                                                  "width", "viewport-width"};
 
-static_assert(static_cast<int>(mojom::WebClientHintsType::kLast) + 1 ==
-                  arraysize(kHeaderMapping),
+static_assert(kWebClientHintsTypeLast + 1 == arraysize(kHeaderMapping),
               "unhandled client hint type");
 
 void ParseAcceptChHeader(const String& header_value,
@@ -29,16 +28,15 @@ void ParseAcceptChHeader(const String& header_value,
   CommaDelimitedHeaderSet accept_client_hints_header;
   ParseCommaDelimitedHeader(header_value, accept_client_hints_header);
 
-  for (size_t i = 0; i < static_cast<int>(mojom::WebClientHintsType::kLast) + 1;
-       ++i) {
+  for (size_t i = 0; i < kWebClientHintsTypeLast + 1; ++i) {
     enabled_hints.SetIsEnabled(
-        static_cast<mojom::WebClientHintsType>(i),
+        static_cast<WebClientHintsType>(i),
         accept_client_hints_header.Contains(kHeaderMapping[i]));
   }
 
   enabled_hints.SetIsEnabled(
-      mojom::WebClientHintsType::kDeviceMemory,
-      enabled_hints.IsEnabled(mojom::WebClientHintsType::kDeviceMemory) &&
+      kWebClientHintsTypeDeviceMemory,
+      enabled_hints.IsEnabled(kWebClientHintsTypeDeviceMemory) &&
           RuntimeEnabledFeatures::DeviceMemoryHeaderEnabled());
 }
 
@@ -48,9 +46,8 @@ ClientHintsPreferences::ClientHintsPreferences() {}
 
 void ClientHintsPreferences::UpdateFrom(
     const ClientHintsPreferences& preferences) {
-  for (size_t i = 0; i < static_cast<int>(mojom::WebClientHintsType::kLast) + 1;
-       ++i) {
-    mojom::WebClientHintsType type = static_cast<mojom::WebClientHintsType>(i);
+  for (size_t i = 0; i < kWebClientHintsTypeLast + 1; ++i) {
+    WebClientHintsType type = static_cast<WebClientHintsType>(i);
     enabled_hints_.SetIsEnabled(type, preferences.ShouldSend(type));
   }
 }
@@ -65,18 +62,15 @@ void ClientHintsPreferences::UpdateFromAcceptClientHintsHeader(
 
   ParseAcceptChHeader(header_value, new_enabled_types);
 
-  for (size_t i = 0; i < static_cast<int>(mojom::WebClientHintsType::kLast) + 1;
-       ++i) {
-    mojom::WebClientHintsType type = static_cast<mojom::WebClientHintsType>(i);
+  for (size_t i = 0; i < kWebClientHintsTypeLast + 1; ++i) {
+    WebClientHintsType type = static_cast<WebClientHintsType>(i);
     enabled_hints_.SetIsEnabled(type, enabled_hints_.IsEnabled(type) ||
                                           new_enabled_types.IsEnabled(type));
   }
 
   if (context) {
-    for (size_t i = 0;
-         i < static_cast<int>(mojom::WebClientHintsType::kLast) + 1; ++i) {
-      mojom::WebClientHintsType type =
-          static_cast<mojom::WebClientHintsType>(i);
+    for (size_t i = 0; i < kWebClientHintsTypeLast + 1; ++i) {
+      WebClientHintsType type = static_cast<WebClientHintsType>(i);
       if (enabled_hints_.IsEnabled(type))
         context->CountClientHints(type);
     }

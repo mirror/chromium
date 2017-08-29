@@ -58,10 +58,6 @@
     // Name of the group that this field belongs to. Fields in the same group are stored
     // together as a nested class inside ComputedStyle and dynamically allocated on use.
     // Leave this out if the field is stored directly on ComputedStyle.
-    // If you want to auto group this property use: field_group: "*[->subgroup]".
-    // If you use the auto grouping function check if your property is in CSSPropertiesRanking.json5
-    // -  If yes, only provide: field_group: "*"
-    // -  If no, you can specify a subgroup following the asterisk: field_group: "*[->subgroup]"
     field_group: {
       value_type: "str"
     },
@@ -591,7 +587,7 @@
       field_template: "keyword",
       keywords: ["sideways", "mixed", "upright"],
       default_value: "mixed",
-      field_group: "*",
+      field_group: "rare-inherited",
       getter: "GetTextOrientation"
     },
     {
@@ -651,7 +647,7 @@
       converter: "ConvertContentAlignmentData",
       field_template: "external",
       type_name: "StyleContentAlignmentData",
-      field_group: "*",
+      field_group: "rare-non-inherited",
       default_value: "StyleContentAlignmentData(kContentPositionNormal, kContentDistributionDefault, kOverflowAlignmentDefault)",
       include_paths: ["core/style/StyleContentAlignmentData.h"],
     },
@@ -662,12 +658,13 @@
       converter: "ConvertSelfOrDefaultAlignmentData",
       field_template: "external",
       type_name: "StyleSelfAlignmentData",
-      field_group: "*",
+      field_group: "rare-non-inherited",
       default_value: "StyleSelfAlignmentData(RuntimeEnabledFeatures::CSSGridLayoutEnabled() ? kItemPositionNormal : kItemPositionStretch, kOverflowAlignmentDefault)",
       include_paths: ["core/style/StyleSelfAlignmentData.h"],
     },
     {
       name: "alignment-baseline",
+      api_class: "CSSPropertyAPIDefaultMetadata",
       svg: true,
     },
     {
@@ -677,7 +674,7 @@
       converter: "ConvertSelfOrDefaultAlignmentData",
       field_template: "external",
       type_name: "StyleSelfAlignmentData",
-      field_group: "*",
+      field_group: "rare-non-inherited",
       default_value: "StyleSelfAlignmentData(kItemPositionAuto, kOverflowAlignmentDefault)",
       include_paths: ["core/style/StyleSelfAlignmentData.h"],
     },
@@ -690,15 +687,16 @@
       runtime_flag: "CSSBackdropFilter",
       field_template: "storage_only",
       type_name: "StyleFilterData",
-      field_group: "*",
+      field_group: "rare-non-inherited->backdrop-filter-ops",
       default_value: "StyleFilterData::Create()",
       wrapper_pointer_name: "Persistent",
       include_paths: ["core/style/StyleFilterData.h"],
     },
     {
       name: "backface-visibility",
+      api_class: "CSSPropertyAPIDefaultMetadata",
       field_template: "keyword",
-      field_group: "*",
+      field_group: "rare-non-inherited",
       default_value: "visible",
       keywords: ["visible", "hidden"],
     },
@@ -764,10 +762,12 @@
     },
     {
       name: "background-repeat-x",
+      api_class: "CSSPropertyAPIDefaultMetadata",
       custom_all: true,
     },
     {
       name: "background-repeat-y",
+      api_class: "CSSPropertyAPIDefaultMetadata",
       custom_all: true,
     },
     {
@@ -824,6 +824,7 @@
     },
     {
       name: "border-bottom-style",
+      api_class: "CSSPropertyAPIDefaultMetadata",
       type_name: "EBorderStyle",
       field_template: "keyword",
       keywords: ["none", "hidden", "inset", "groove", "outset", "ridge", "dotted", "dashed", "solid", "double"],
@@ -904,6 +905,7 @@
     },
     {
       name: "border-left-style",
+      api_class: "CSSPropertyAPIDefaultMetadata",
       type_name: "EBorderStyle",
       field_template: "keyword",
       keywords: ["none", "hidden", "inset", "groove", "outset", "ridge", "dotted", "dashed", "solid", "double"],
@@ -939,6 +941,7 @@
     },
     {
       name: "border-right-style",
+      api_class: "CSSPropertyAPIDefaultMetadata",
       type_name: "EBorderStyle",
       typedom_types: ["Image"],
       field_template: "keyword",
@@ -998,6 +1001,7 @@
     },
     {
       name: "border-top-style",
+      api_class: "CSSPropertyAPIDefaultMetadata",
       type_name: "EBorderStyle",
       field_template: "keyword",
       default_value: "none",
@@ -1039,13 +1043,14 @@
       interpolable: true,
       field_template: "pointer",
       type_name: "ShadowList",
-      field_group: "*",
+      field_group: "rare-non-inherited",
       default_value: "nullptr",
       wrapper_pointer_name: "RefPtr",
       include_paths: ["core/style/ShadowList.h"],
     },
     {
       name: "box-sizing",
+      api_class: "CSSPropertyAPIDefaultMetadata",
       field_template: "keyword",
       default_value: "content-box",
       keywords: ["content-box", "border-box"],
@@ -1053,6 +1058,7 @@
     },
     {
       name: "break-after",
+      api_class: "CSSPropertyAPIDefaultMetadata",
       // Storage for this property also covers these legacy properties:
       // page-break-after, -webkit-column-break-after
       default_value: "auto",
@@ -1064,6 +1070,7 @@
     },
     {
       name: "break-before",
+      api_class: "CSSPropertyAPIDefaultMetadata",
       // Storage for this property also covers these legacy properties:
       // page-break-before, -webkit-column-break-before
       default_value: "auto",
@@ -1075,6 +1082,7 @@
     },
     {
       name: "break-inside",
+      api_class: "CSSPropertyAPIDefaultMetadata",
       // Storage for this property also covers these legacy properties:
       // page-break-inside, -webkit-column-break-inside
       default_value: "auto",
@@ -1083,6 +1091,7 @@
     },
     {
       name: "buffered-rendering",
+      api_class: "CSSPropertyAPIDefaultMetadata",
       svg: true,
     },
     {
@@ -1105,10 +1114,11 @@
       type_name: "Color",
       include_paths: ["platform/graphics/Color.h"],
       default_value: "Color()",
-      field_group: "*",
+      field_group: "rare-inherited",
     },
     {
       name: "clear",
+      api_class: "CSSPropertyAPIDefaultMetadata",
       default_value: "none",
       field_template: "keyword",
       keywords: ["none", "left", "right", "both"],
@@ -1135,7 +1145,7 @@
       interpolable: true,
       field_template: "pointer",
       type_name: "ClipPathOperation",
-      field_group: "*",
+      field_group: "rare-non-inherited",
       default_value: "nullptr",
       wrapper_pointer_name: "RefPtr",
       include_paths: ["core/style/ClipPathOperation.h"],
@@ -1168,10 +1178,11 @@
     },
     {
       name: "column-fill",
+      api_class: "CSSPropertyAPIDefaultMetadata",
       field_template: "keyword",
       keywords: ["balance", "auto"],
       default_value: "balance",
-      field_group: "*",
+      field_group: "rare-non-inherited->multi-col",
       getter: "GetColumnFill",
     },
     {
@@ -1182,7 +1193,7 @@
       name_for_methods: "Contain",
       type_name: "Containment",
       field_template: "storage_only",
-      field_group: "*",
+      field_group: "rare-non-inherited",
       field_size: 4,
       default_value: "kContainsNone",
       default_generated_functions: ["getter","setter"],
@@ -1196,7 +1207,7 @@
       typedom_types: ["Image"],
       type_name: "ContentData",
       field_template: "storage_only",
-      field_group: "*",
+      field_group: "rare-non-inherited",
       default_value: "nullptr",
       wrapper_pointer_name: "Persistent",
       include_paths: ["core/style/ContentData.h"],
@@ -1255,6 +1266,7 @@
     },
     {
       name: "display",
+      api_class: "CSSPropertyAPIDefaultMetadata",
       default_value: "inline",
       field_template: 'keyword',
       keywords: [
@@ -1312,7 +1324,7 @@
       interpolable: true,
       field_template: "storage_only",
       type_name : "StyleFilterData",
-      field_group: "*",
+      field_group: "rare-non-inherited->filter-ops",
       default_value: "StyleFilterData::Create()",
       wrapper_pointer_name: "Persistent",
       include_paths: ["core/style/StyleFilterData.h"],
@@ -1325,13 +1337,14 @@
       interpolable: true,
       field_template: "<length>",
       default_value: "Length(kAuto)",
-      field_group: "*",
+      field_group: "rare-non-inherited->flexible-box",
     },
     {
       name: "flex-direction",
+      api_class: "CSSPropertyAPIDefaultMetadata",
       field_template: "keyword",
       default_value: "row",
-      field_group: "*",
+      field_group: "rare-non-inherited->flexible-box",
       keywords: ["row", "row-reverse", "column", "column-reverse"],
     },
     {
@@ -1342,7 +1355,7 @@
       type_name: "float",
       field_template: "primitive",
       default_value: "0.0f",
-      field_group: "*",
+      field_group: "rare-non-inherited->flexible-box",
     },
     {
       name: "flex-shrink",
@@ -1352,17 +1365,19 @@
       type_name: "float",
       field_template: "primitive",
       default_value: "1.0f",
-      field_group: "*",
+      field_group: "rare-non-inherited->flexible-box",
     },
     {
       name: "flex-wrap",
+      api_class: "CSSPropertyAPIDefaultMetadata",
       field_template: "keyword",
       default_value: "nowrap",
-      field_group: "*",
+      field_group: "rare-non-inherited->flexible-box",
       keywords: ["nowrap", "wrap", "wrap-reverse"],
     },
     {
       name: "float",
+      api_class: "CSSPropertyAPIDefaultMetadata",
       default_value: "none",
       field_template: "keyword",
       keywords: ["none", "left", "right"],
@@ -1394,7 +1409,7 @@
       type_name: "Vector<GridTrackSize>",
       field_template: "external",
       default_value: "Vector<GridTrackSize>(1, GridTrackSize(Length(kAuto)))",
-      field_group: "*",
+      field_group: "rare-non-inherited->grid",
       include_paths: ["platform/wtf/Vector.h", "core/style/GridTrackSize.h"],
     },
     {
@@ -1407,7 +1422,7 @@
       field_template: "storage_only",
       default_value: "kAutoFlowRow",
       field_size: 4, // TODO(shend): Make this use "kGridAutoFlowBits".
-      field_group: "*",
+      field_group: "rare-non-inherited->grid",
       default_generated_functions: ["setter"],
     },
     {
@@ -1419,7 +1434,7 @@
       type_name: "Vector<GridTrackSize>",
       field_template: "external",
       default_value: "Vector<GridTrackSize>(1, GridTrackSize(Length(kAuto)))",
-      field_group: "*",
+      field_group: "rare-non-inherited->grid",
       include_paths: ["platform/wtf/Vector.h", "core/style/GridTrackSize.h"],
     },
     {
@@ -1431,7 +1446,7 @@
       type_name: "GridPosition",
       field_template: "external",
       default_value: "GridPosition()",
-      field_group: "*",
+      field_group: "rare-non-inherited->grid-item",
       include_paths: ["core/style/GridPosition.h"],
     },
     {
@@ -1442,7 +1457,7 @@
       runtime_flag: "CSSGridLayout",
       field_template: "<length>",
       default_value: "Length(kFixed)",
-      field_group: "*",
+      field_group: "rare-non-inherited->grid",
     },
     {
       name: "grid-column-start",
@@ -1453,7 +1468,7 @@
       type_name: "GridPosition",
       field_template: "external",
       default_value: "GridPosition()",
-      field_group: "*",
+      field_group: "rare-non-inherited->grid-item",
       include_paths: ["core/style/GridPosition.h"],
     },
     {
@@ -1465,7 +1480,7 @@
       type_name: "GridPosition",
       field_template: "external",
       default_value: "GridPosition()",
-      field_group: "*",
+      field_group: "rare-non-inherited->grid-item",
       include_paths: ["core/style/GridPosition.h"],
     },
     {
@@ -1476,7 +1491,7 @@
       runtime_flag: "CSSGridLayout",
       field_template: "<length>",
       default_value: "Length(kFixed)",
-      field_group: "*",
+      field_group: "rare-non-inherited->grid",
     },
     {
       name: "grid-row-start",
@@ -1487,7 +1502,7 @@
       type_name: "GridPosition",
       field_template: "external",
       default_value: "GridPosition()",
-      field_group: "*",
+      field_group: "rare-non-inherited->grid-item",
       include_paths: ["core/style/GridPosition.h"],
     },
     {
@@ -1505,7 +1520,7 @@
       runtime_flag: "CSSGridLayout",
       field_template: "external",
       type_name: "Vector<GridTrackSize>",
-      field_group: "*",
+      field_group: "rare-non-inherited->grid",
       default_value: "Vector<GridTrackSize>()",
       include_paths: ["platform/wtf/Vector.h", "core/style/GridTrackSize.h"],
     },
@@ -1517,7 +1532,7 @@
       runtime_flag: "CSSGridLayout",
       field_template: "external",
       type_name: "Vector<GridTrackSize>",
-      field_group: "*",
+      field_group: "rare-non-inherited->grid",
       default_value: "Vector<GridTrackSize>()",
       include_paths: ["platform/wtf/Vector.h", "core/style/GridTrackSize.h"],
     },
@@ -1543,7 +1558,7 @@
       type_name: "Hyphens",
       keywords: ["none", "manual", "auto"],
       default_value: "manual",
-      field_group: "*",
+      field_group: "rare-inherited",
     },
     {
       name: "image-rendering",
@@ -1552,7 +1567,7 @@
       field_template: "keyword",
       keywords: ["auto", "optimizeSpeed", "optimizeQuality", "-webkit-optimize-contrast", "pixelated"],
       default_value: "auto",
-      field_group: "*",
+      field_group: "rare-inherited",
     },
     {
       name: "image-orientation",
@@ -1565,13 +1580,14 @@
       field_template: "primitive",
       type_name: "bool",
       default_value: "false",
-      field_group: "*",
+      field_group: "rare-inherited",
     },
     {
       name: "isolation",
+      api_class: "CSSPropertyAPIDefaultMetadata",
       field_template: "keyword",
       keywords: ["auto", "isolate"],
-      field_group: "*",
+      field_group: "rare-non-inherited",
       default_value: "auto",
     },
     {
@@ -1581,7 +1597,7 @@
       converter: "ConvertContentAlignmentData",
       field_template: "external",
       type_name: "StyleContentAlignmentData",
-      field_group: "*",
+      field_group: "rare-non-inherited",
       default_value: "StyleContentAlignmentData(kContentPositionNormal, kContentDistributionDefault, kOverflowAlignmentDefault)",
       include_paths: ["core/style/StyleContentAlignmentData.h"],
     },
@@ -1593,7 +1609,7 @@
       runtime_flag: "CSSGridLayout",
       field_template: "external",
       type_name: "StyleSelfAlignmentData",
-      field_group: "*",
+      field_group: "rare-non-inherited",
       default_value: "StyleSelfAlignmentData(kItemPositionAuto, kOverflowAlignmentDefault)",
       include_paths: ["core/style/StyleSelfAlignmentData.h"],
     },
@@ -1605,7 +1621,7 @@
       runtime_flag: "CSSGridLayout",
       field_template: "external",
       type_name: "StyleSelfAlignmentData",
-      field_group: "*",
+      field_group: "rare-non-inherited",
       default_value: "StyleSelfAlignmentData(kItemPositionAuto, kOverflowAlignmentDefault)",
       include_paths: ["core/style/StyleSelfAlignmentData.h"],
     },
@@ -1662,7 +1678,7 @@
       field_template: "primitive",
       type_name: "uint8_t",
       default_value: "0",
-      field_group: "*",
+      field_group: "rare-inherited",
     },
     {
       name: "list-style-image",
@@ -1676,7 +1692,7 @@
       type_name: "StyleImage",
       wrapper_pointer_name: "Persistent",
       default_value: "nullptr",
-      field_group: "*",
+      field_group: "rare-inherited",
       include_paths: ["core/style/StyleImage.h"],
     },
     {
@@ -1782,6 +1798,7 @@
     },
     {
       name: "mask-type",
+      api_class: "CSSPropertyAPIDefaultMetadata",
       svg: true,
     },
     {
@@ -1808,7 +1825,7 @@
     },
     {
       name: "min-height",
-      api_class: "CSSPropertyAPIMinWidthOrHeight",
+      api_class: "CSSPropertyAPIWidthOrHeight",
       api_methods: ["ParseSingleValue"],
       converter: "ConvertLengthSizing",
       is_descriptor: true,
@@ -1819,7 +1836,7 @@
     },
     {
       name: "min-width",
-      api_class: "CSSPropertyAPIMinWidthOrHeight",
+      api_class: "CSSPropertyAPIWidthOrHeight",
       api_methods: ["ParseSingleValue"],
       converter: "ConvertLengthSizing",
       is_descriptor: true,
@@ -1830,21 +1847,23 @@
     },
     {
       name: "mix-blend-mode",
+      api_class: "CSSPropertyAPIDefaultMetadata",
       name_for_methods: "BlendMode",
       type_name: "WebBlendMode",
       field_template: "keyword",
       keywords: ["normal", "multiply", "screen", "overlay", "darken", "lighten",
        "color-dodge", "color-burn", "hard-light", "soft-light", "difference",
        "exclusion", "hue", "saturation", "color", "luminosity"],
-      field_group: "*",
+      field_group: "rare-non-inherited",
       default_value: "normal",
       include_paths: ["public/platform/WebBlendMode.h"],
     },
     {
       name: "object-fit",
+      api_class: "CSSPropertyAPIDefaultMetadata",
       field_template: "keyword",
       keywords: ["fill", "contain", "cover", "none", "scale-down"],
-      field_group: "*",
+      field_group: "rare-non-inherited",
       getter: "GetObjectFit",
       default_value: "fill",
     },
@@ -1857,7 +1876,7 @@
       field_template: "external",
       type_name: "LengthPoint",
       include_paths: ["platform/LengthPoint.h"],
-      field_group: "*",
+      field_group: "rare-non-inherited",
       default_value: "LengthPoint(Length(50.0, kPercent), Length(50.0, kPercent))",
     },
     {
@@ -1870,7 +1889,7 @@
       field_template: "external",
       type_name: "LengthPoint",
       include_paths: ["platform/LengthPoint.h"],
-      field_group: "*",
+      field_group: "rare-non-inherited->transform",
       default_value: "LengthPoint(Length(kAuto), Length(kAuto))",
     },
     {
@@ -1880,7 +1899,7 @@
       converter: "ConvertLength",
       interpolable: true,
       field_template: "<length>",
-      field_group: "*",
+      field_group: "rare-non-inherited->transform",
       default_value: "Length(0, kFixed)",
     },
     {
@@ -1890,7 +1909,7 @@
       converter: "ConvertOffsetPath",
       field_template: "pointer",
       type_name: "BasicShape",
-      field_group: "*",
+      field_group: "rare-non-inherited->transform",
       wrapper_pointer_name: "RefPtr",
       default_value: "nullptr",
       include_paths: ["core/style/BasicShapes.h"],
@@ -1905,7 +1924,7 @@
       field_template: "external",
       type_name: "LengthPoint",
       include_paths: ["platform/LengthPoint.h"],
-      field_group: "*",
+      field_group: "rare-non-inherited->transform",
       default_value: "LengthPoint(Length(kAuto), Length(kAuto))",
     },
     {
@@ -1917,7 +1936,7 @@
       field_template: "external",
       type_name: "StyleOffsetRotation",
       include_paths: ["core/style/StyleOffsetRotation.h"],
-      field_group: "*",
+      field_group: "rare-non-inherited->transform",
       default_value: "StyleOffsetRotation(0, kOffsetRotationAuto)",
     },
     // Whether or not we're transparent.
@@ -1928,7 +1947,7 @@
       interpolable: true,
       field_template: "storage_only",
       type_name: "float",
-      field_group: "*",
+      field_group: "rare-non-inherited",
       default_value: "1.0",
       default_generated_functions: ["getter"],
     },
@@ -1939,7 +1958,7 @@
       interpolable: true,
       field_template: "storage_only",
       type_name: "int",
-      field_group: "*",
+      field_group: "rare-non-inherited",
       default_value: "0",
       default_generated_functions: ["getter"],
     },
@@ -1952,7 +1971,7 @@
       type_name: "short",
       field_template: "primitive",
       default_value: "2",
-      field_group: "*",
+      field_group: "rare-inherited",
     },
     {
       name: "outline-color",
@@ -1962,7 +1981,7 @@
       interpolable: true,
       field_template: "storage_only",
       type_name: "Color",
-      field_group: "*",
+      field_group: "rare-non-inherited",
       default_value: "0",
       include_paths: ["platform/graphics/Color.h"],
     },
@@ -1974,17 +1993,18 @@
       interpolable: true,
       field_template: "storage_only",
       type_name: "int",
-      field_group: "*",
+      field_group: "rare-non-inherited",
       default_value: "0",
       default_generated_functions: ["setter"],
     },
     {
       name: "outline-style",
+      api_class: "CSSPropertyAPIDefaultMetadata",
       custom_all: true,
       field_template: "keyword",
       type_name: "EBorderStyle",
       keywords: ["none", "hidden", "inset", "groove", "outset", "ridge", "dotted", "dashed", "solid", "double"],
-      field_group: "*",
+      field_group: "rare-non-inherited",
       default_value: "none",
     },
     {
@@ -1997,10 +2017,11 @@
       include_paths: ["platform/LayoutUnit.h"],
       type_name: "LayoutUnit",
       default_value: "LayoutUnit(3)",
-      field_group: "*",
+      field_group: "rare-non-inherited",
     },
     {
       name: "overflow-anchor",
+      api_class: "CSSPropertyAPIDefaultMetadata",
       runtime_flag: "ScrollAnchoring",
       inherited: false,
       default_value: "auto",
@@ -2016,10 +2037,11 @@
       field_template: "keyword",
       keywords: ["normal", "break-word"],
       default_value: "normal",
-      field_group: "*",
+      field_group: "rare-inherited",
     },
     {
       name: "overflow-x",
+      api_class: "CSSPropertyAPIDefaultMetadata",
       default_value: "visible",
       field_template: "keyword",
       keywords: [
@@ -2029,6 +2051,7 @@
     },
     {
       name: "overflow-y",
+      api_class: "CSSPropertyAPIDefaultMetadata",
       default_value: "visible",
       field_template: "keyword",
       keywords: [
@@ -2092,7 +2115,7 @@
       interpolable: true,
       field_template: "primitive",
       type_name: "float",
-      field_group: "*",
+      field_group: "rare-non-inherited",
       default_value: "0.0",
     },
     {
@@ -2104,7 +2127,7 @@
       field_template: "external",
       type_name: "LengthPoint",
       include_paths: ["platform/LengthPoint.h"],
-      field_group: "*",
+      field_group: "rare-non-inherited",
       default_value: "LengthPoint(Length(50.0, kPercent), Length(50.0, kPercent))",
     },
     {
@@ -2120,6 +2143,7 @@
     },
     {
       name: "position",
+      api_class: "CSSPropertyAPIDefaultMetadata",
       custom_inherit: true,
       default_value: "static",
       field_template: "keyword",
@@ -2139,14 +2163,15 @@
       include_paths: ["core/style/QuotesData.h"],
       default_value: "nullptr",
       wrapper_pointer_name: "RefPtr",
-      field_group: "*",
+      field_group: "rare-inherited",
     },
     {
       name: "resize",
+      api_class: "CSSPropertyAPIDefaultMetadata",
       custom_value: true,
       field_template: "keyword",
       keywords: ["none", "both", "horizontal", "vertical"],
-      field_group: "*",
+      field_group: "rare-non-inherited",
       default_value: "none",
     },
     {
@@ -2187,16 +2212,18 @@
     },
     {
       name: "scroll-behavior",
+      api_class: "CSSPropertyAPIDefaultMetadata",
       runtime_flag: "CSSOMSmoothScroll",
       type_name: "ScrollBehavior",
       field_template: "storage_only",
-      field_group: "*",
+      field_group: "rare-non-inherited",
       field_size: 2, // FIXME: Convert this to a keyword field
       default_value: "kScrollBehaviorAuto",
       default_generated_functions: ["getter", "setter"],
     },
     {
       name: "scroll-boundary-behavior-x",
+      api_class: "CSSPropertyAPIDefaultMetadata",
       default_value: "auto",
       field_template: "keyword",
       keywords: ["auto", "contain", "none"],
@@ -2205,6 +2232,7 @@
     },
     {
       name: "scroll-boundary-behavior-y",
+      api_class: "CSSPropertyAPIDefaultMetadata",
       default_value: "auto",
       field_template: "keyword",
       keywords: ["auto", "contain", "none"],
@@ -2220,7 +2248,7 @@
       runtime_flag: "CSSScrollSnapPoints",
       field_template: "external",
       type_name: "ScrollSnapType",
-      field_group: "*",
+      field_group: "rare-non-inherited->scroll-snap",
       include_paths: ["core/style/ScrollSnap.h"],
       default_value: "ScrollSnapType()",
     },
@@ -2233,12 +2261,13 @@
       runtime_flag: "CSSScrollSnapPoints",
       field_template: "external",
       type_name: "ScrollSnapAlign",
-      field_group: "*",
+      field_group: "rare-non-inherited->scroll-snap",
       default_value: "ScrollSnapAlign()",
       include_paths: ["core/style/ScrollSnap.h"],
     },
     {
       name: "scroll-snap-stop",
+      api_class: "CSSPropertyAPIDefaultMetadata",
       default_value: "normal",
       field_template: "keyword",
       keywords: ["normal", "always"],
@@ -2252,7 +2281,7 @@
       typedom_types: ["Length", "Percent"],
       runtime_flag: "CSSScrollSnapPoints",
       field_template: "<length>",
-      field_group: "*",
+      field_group: "rare-non-inherited->scroll-snap",
       default_value: "Length()",
     },
     {
@@ -2263,7 +2292,7 @@
       typedom_types: ["Length", "Percent"],
       runtime_flag: "CSSScrollSnapPoints",
       field_template: "<length>",
-      field_group: "*",
+      field_group: "rare-non-inherited->scroll-snap",
       default_value: "Length()",
     },
     {
@@ -2274,7 +2303,7 @@
       typedom_types: ["Length", "Percent"],
       runtime_flag: "CSSScrollSnapPoints",
       field_template: "<length>",
-      field_group: "*",
+      field_group: "rare-non-inherited->scroll-snap",
       default_value: "Length()",
     },
     {
@@ -2285,7 +2314,7 @@
       typedom_types: ["Length", "Percent"],
       runtime_flag: "CSSScrollSnapPoints",
       field_template: "<length>",
-      field_group: "*",
+      field_group: "rare-non-inherited->scroll-snap",
       default_value: "Length()",
     },
     {
@@ -2343,7 +2372,7 @@
       converter: "ConvertLength",
       runtime_flag: "CSSScrollSnapPoints",
       field_template: "<length>",
-      field_group: "*",
+      field_group: "rare-non-inherited->scroll-snap",
       default_value: "Length()",
     },
     {
@@ -2353,7 +2382,7 @@
       converter: "ConvertLength",
       runtime_flag: "CSSScrollSnapPoints",
       field_template: "<length>",
-      field_group: "*",
+      field_group: "rare-non-inherited->scroll-snap",
       default_value: "Length()",
     },
     {
@@ -2363,7 +2392,7 @@
       converter: "ConvertLength",
       runtime_flag: "CSSScrollSnapPoints",
       field_template: "<length>",
-      field_group: "*",
+      field_group: "rare-non-inherited->scroll-snap",
       default_value: "Length()",
     },
     {
@@ -2373,7 +2402,7 @@
       converter: "ConvertLength",
       runtime_flag: "CSSScrollSnapPoints",
       field_template: "<length>",
-      field_group: "*",
+      field_group: "rare-non-inherited->scroll-snap",
       default_value: "Length()",
     },
     {
@@ -2427,7 +2456,7 @@
       interpolable: true,
       field_template: "storage_only",
       type_name: "float",
-      field_group: "*",
+      field_group: "rare-non-inherited",
       default_value: "0.0",
       default_generated_functions: ["getter"],
     },
@@ -2438,7 +2467,7 @@
       converter: "ConvertLength",
       interpolable: true,
       field_template: "<length>",
-      field_group: "*",
+      field_group: "rare-non-inherited",
       default_value: "Length(0, kFixed)",
     },
     {
@@ -2450,7 +2479,7 @@
       typedom_types: ["Image"],
       field_template: "storage_only",
       type_name: "ShapeValue",
-      field_group: "*",
+      field_group: "rare-non-inherited",
       default_value: "nullptr",
       wrapper_pointer_name: "Persistent",
       include_paths: ["core/style/ShapeValue.h"],
@@ -2475,7 +2504,7 @@
       field_template: "keyword",
       keywords: ["none", "normal", "spell-out", "digits", "literal-punctuation", "no-punctuation"],
       default_value: "normal",
-      field_group: "*",
+      field_group: "rare-inherited",
     },
     {
       name: "stop-color",
@@ -2569,6 +2598,7 @@
     },
     {
       name: "table-layout",
+      api_class: "CSSPropertyAPIDefaultMetadata",
       default_value: "auto",
       field_template: "keyword",
       keywords: [
@@ -2586,7 +2616,7 @@
       include_paths: ["platform/text/TabSize.h"],
       field_template: "external",
       default_value: "TabSize(8)",
-      field_group: "*",
+      field_group: "rare-inherited",
     },
     {
       name: "text-align",
@@ -2608,7 +2638,7 @@
       field_template: "keyword",
       keywords: ["auto", "start", "end", "left", "right", "center", "justify"],
       default_value: "auto",
-      field_group: "*",
+      field_group: "rare-inherited",
     },
     {
       name: "text-anchor",
@@ -2624,7 +2654,7 @@
       field_template: "keyword",
       keywords: ["none", "all"],
       default_value: "none",
-      field_group: "*",
+      field_group: "rare-inherited",
     },
     {
       name: "text-decoration-color",
@@ -2636,7 +2666,7 @@
       field_template: "external",
       type_name: "StyleColor",
       include_paths: ["core/css/StyleColor.h"],
-      field_group: "*",
+      field_group: "rare-non-inherited",
       default_value: "StyleColor::CurrentColor()",
     },
     {
@@ -2663,15 +2693,16 @@
       type_name: "TextDecorationSkip",
       default_value: "TextDecorationSkip::kObjects",
       field_size: 3,
-      field_group: "*",
+      field_group: "rare-inherited",
       default_generated_functions: ["getter", "setter"],
     },
     {
       name: "text-decoration-style",
+      api_class: "CSSPropertyAPIDefaultMetadata",
       runtime_flag: "CSS3TextDecorations",
       field_template: "keyword",
       keywords: ["solid", "double", "dotted", "dashed", "wavy"],
-      field_group: "*",
+      field_group: "rare-non-inherited",
       default_value: "solid",
     },
     {
@@ -2683,7 +2714,7 @@
       interpolable: true,
       field_template: "<length>",
       default_value: "Length(kFixed)",
-      field_group: "*",
+      field_group: "rare-inherited",
     },
     {
       name: "text-justify",
@@ -2696,12 +2727,13 @@
       include_paths: ["platform/text/TextJustify.h"],
       default_value: "auto",
       keywords: ["auto", "none", "inter-word", "distribute"],
-      field_group: "*",
+      field_group: "rare-inherited",
     },
     {
       name: "text-overflow",
+      api_class: "CSSPropertyAPIDefaultMetadata",
       field_template: "keyword",
-      field_group: "*",
+      field_group: "rare-non-inherited",
       default_value: "clip",
       keywords: ["clip", "ellipsis"],
     },
@@ -2717,7 +2749,7 @@
       include_paths: ["core/style/ShadowList.h"],
       wrapper_pointer_name: "RefPtr",
       default_value: "nullptr",
-      field_group: "*",
+      field_group: "rare-inherited",
     },
     {
       name: "text-size-adjust",
@@ -2730,7 +2762,7 @@
       type_name: "TextSizeAdjust",
       include_paths: ["core/style/TextSizeAdjust.h"],
       default_value: "TextSizeAdjust::AdjustAuto()",
-      field_group: "*",
+      field_group: "rare-inherited",
     },
     {
       name: "text-transform",
@@ -2752,7 +2784,7 @@
       type_name: "TextUnderlinePosition",
       default_value: "auto",
       keywords: ["auto", "under"],
-      field_group: "*",
+      field_group: "rare-inherited",
     },
     {
       name: "top",
@@ -2773,7 +2805,7 @@
       converter: "ConvertFlags<TouchAction>",
       type_name: "TouchAction",
       field_template: "storage_only",
-      field_group: "*",
+      field_group: "rare-non-inherited",
       field_size: 6, // TODO(shend): Make this use "kTouchActionBits".
       default_value: "TouchAction::kTouchActionAuto",
       include_paths: ["platform/graphics/TouchAction.h"],
@@ -2789,13 +2821,14 @@
       typedom_types: ["Transform"],
       field_template: "storage_only",
       type_name: "TransformOperations",
-      field_group: "*",
+      field_group: "rare-non-inherited->transform",
       default_value: "EmptyTransformOperations()",
       include_paths: ["platform/transforms/TransformOperations.h"],
       default_generated_functions: ["getter", "setter"],
     },
     {
       name: "transform-box",
+      api_class: "CSSPropertyAPIDefaultMetadata",
       field_template: "keyword",
       keywords: ["border-box", "fill-box", "view-box"],
       default_value: "border-box",
@@ -2810,16 +2843,17 @@
       interpolable: true,
       field_template: "external",
       type_name: "TransformOrigin",
-      field_group: "*",
+      field_group: "rare-non-inherited->transform",
       default_value: "TransformOrigin(Length(50.0, kPercent), Length(50.0, kPercent), 0)",
       include_paths: ["core/style/TransformOrigin.h"],
     },
     {
       name: "transform-style",
+      api_class: "CSSPropertyAPIDefaultMetadata",
       name_for_methods: "TransformStyle3D",
       field_template: "keyword",
       keywords: ["flat", "preserve-3d"],
-      field_group: "*",
+      field_group: "rare-non-inherited",
       default_value: "flat",
     },
     {
@@ -2831,7 +2865,7 @@
       runtime_flag: "CSSIndependentTransformProperties",
       field_template: "pointer",
       type_name: "TranslateTransformOperation",
-      field_group: "*",
+      field_group: "rare-non-inherited->transform",
       default_value: "nullptr",
       wrapper_pointer_name: "RefPtr",
       include_paths: ["platform/transforms/TranslateTransformOperation.h"],
@@ -2845,7 +2879,7 @@
       runtime_flag: "CSSIndependentTransformProperties",
       field_template: "pointer",
       type_name: "RotateTransformOperation",
-      field_group: "*",
+      field_group: "rare-non-inherited->transform",
       default_value: "nullptr",
       wrapper_pointer_name: "RefPtr",
       include_paths: ["platform/transforms/RotateTransformOperation.h"],
@@ -2859,13 +2893,14 @@
       runtime_flag: "CSSIndependentTransformProperties",
       field_template: "pointer",
       type_name: "ScaleTransformOperation",
-      field_group: "*",
+      field_group: "rare-non-inherited->transform",
       default_value: "nullptr",
       wrapper_pointer_name: "RefPtr",
       include_paths: ["platform/transforms/ScaleTransformOperation.h"],
     },
     {
       name: "unicode-bidi",
+      api_class: "CSSPropertyAPIDefaultMetadata",
       include_paths: ["platform/text/UnicodeBidi.h"],
       default_value: "normal",
       field_template: "keyword",
@@ -2876,6 +2911,7 @@
     },
     {
       name: "vector-effect",
+      api_class: "CSSPropertyAPIDefaultMetadata",
       svg: true,
     },
     {
@@ -2914,32 +2950,32 @@
     },
     {
       name: "-webkit-appearance",
+      api_class: "CSSPropertyAPIDefaultMetadata",
       type_name: "ControlPart",
       field_template: "storage_only",
-      field_group: "*",
+      field_group: "rare-non-inherited",
       default_value: "kNoControlPart",
       field_size: 6,
       default_generated_functions: ["getter", "setter"],
     },
     {
       name: "-webkit-app-region",
+      api_class: "CSSPropertyAPIDefaultMetadata",
       custom_all: true,
       name_for_methods: "DraggableRegionMode",
       field_template: "keyword",
-      field_group: "*",
+      field_group: "rare-non-inherited",
       default_value: "none",
       keywords: ["none", "drag", "no-drag"],
     },
     {
       name: "-webkit-background-clip",
       api_class: "CSSPropertyAPIWebkitClip",
-      api_methods: ["ParseSingleValue"],
       use_handlers_for: "CSSPropertyBackgroundClip",
     },
     {
       name: "-webkit-background-origin",
       api_class: "CSSPropertyAPIWebkitOrigin",
-      api_methods: ["ParseSingleValue"],
       use_handlers_for: "CSSPropertyBackgroundOrigin",
     },
     {
@@ -2978,14 +3014,16 @@
     // http://www.w3.org/TR/2009/WD-css3-flexbox-20090723/#alignment
     {
       name: "-webkit-box-align",
+      api_class: "CSSPropertyAPIDefaultMetadata",
       type_name: "EBoxAlignment",
       field_template: "keyword",
       keywords: ["stretch", "start", "center", "end", "baseline"],
       default_value: "stretch",
-      field_group: "*",
+      field_group: "rare-non-inherited->deprecated-flexible-box",
     },
     {
       name: "-webkit-box-decoration-break",
+      api_class: "CSSPropertyAPIDefaultMetadata",
       field_template: "keyword",
       field_group: "box",
       keywords: ["slice", "clone"],
@@ -3007,7 +3045,7 @@
       type_name: "float",
       field_template: "primitive",
       default_value: "0.0f",
-      field_group: "*",
+      field_group: "rare-non-inherited->deprecated-flexible-box",
     },
     {
       name: "-webkit-box-flex-group",
@@ -3016,14 +3054,15 @@
       type_name: "unsigned",
       field_template: "primitive",
       default_value: "1",
-      field_group: "*",
+      field_group: "rare-non-inherited->deprecated-flexible-box",
     },
     {
       name: "-webkit-box-lines",
+      api_class: "CSSPropertyAPIDefaultMetadata",
       field_template: "keyword",
       keywords: ["single", "multiple"],
       default_value: "single",
-      field_group: "*",
+      field_group: "rare-non-inherited->deprecated-flexible-box",
     },
     {
       name: "-webkit-box-ordinal-group",
@@ -3032,22 +3071,24 @@
       type_name: "unsigned",
       field_template: "storage_only",
       default_value: "1",
-      field_group: "*",
+      field_group: "rare-non-inherited->deprecated-flexible-box",
       default_generated_functions: ["getter"],
     },
     {
       name: "-webkit-box-orient",
+      api_class: "CSSPropertyAPIDefaultMetadata",
       field_template: "keyword",
       keywords: ["horizontal", "vertical"],
       default_value: "horizontal",
-      field_group: "*",
+      field_group: "rare-non-inherited->deprecated-flexible-box",
     },
     {
       name: "-webkit-box-pack",
+      api_class: "CSSPropertyAPIDefaultMetadata",
       field_template: "keyword",
       keywords: ["start", "center", "end", "justify"],
       default_value: "start",
-      field_group: "*",
+      field_group: "rare-non-inherited->deprecated-flexible-box",
     },
     {
       name: "-webkit-box-reflect",
@@ -3056,7 +3097,7 @@
       converter: "ConvertBoxReflect",
       field_template: "pointer",
       type_name: "StyleReflection",
-      field_group: "*",
+      field_group: "rare-non-inherited",
       default_value: "nullptr",
       wrapper_pointer_name: "RefPtr",
       include_paths: ["core/style/StyleReflection.h"],
@@ -3070,7 +3111,7 @@
       type_name: "unsigned short",
       field_template: "storage_only",
       default_value: "1",
-      field_group: "*",
+      field_group: "rare-non-inherited->multi-col",
       default_generated_functions: ["getter"],
     },
     {
@@ -3083,7 +3124,7 @@
       type_name: "float",
       field_template: "storage_only",
       default_value: "0.0f",
-      field_group: "*",
+      field_group: "rare-non-inherited->multi-col",
       default_generated_functions: ["getter"],
     },
     {
@@ -3096,15 +3137,16 @@
       include_paths: ["platform/graphics/Color.h"],
       type_name: "Color",
       default_value: "0",
-      field_group: "*",
+      field_group: "rare-non-inherited->multi-col",
     },
     {
       name: "column-rule-style",
+      api_class: "CSSPropertyAPIDefaultMetadata",
       type_name: "EBorderStyle",
       field_template: "keyword",
       default_value: "none",
       keywords: ["none", "hidden", "inset", "groove", "outset", "ridge", "dotted", "dashed", "solid", "double"],
-      field_group: "*",
+      field_group: "rare-non-inherited->multi-col",
     },
     {
       name: "column-rule-width",
@@ -3116,7 +3158,7 @@
       include_paths: ["platform/LayoutUnit.h"],
       type_name: "LayoutUnit",
       default_value: "LayoutUnit(3)",
-      field_group: "*",
+      field_group: "rare-non-inherited->multi-col",
     },
     {
       name: "column-span",
@@ -3124,7 +3166,7 @@
       api_methods: ["ParseSingleValue"],
       field_template: "keyword",
       keywords: ["none", "all"],
-      field_group: "*",
+      field_group: "rare-non-inherited->multi-col",
       default_value: "none",
       getter: "GetColumnSpan",
     },
@@ -3138,7 +3180,7 @@
       field_template: "storage_only",
       type_name: "float",
       default_value: "0.0f",
-      field_group: "*",
+      field_group: "rare-non-inherited->multi-col",
       default_generated_functions: ["getter"],
     },
     {
@@ -3151,7 +3193,7 @@
       type_name: "AtomicString",
       include_paths: ["platform/wtf/text/AtomicString.h"],
       default_value: "g_null_atom",
-      field_group: "*",
+      field_group: "rare-inherited",
     },
     {
       name: "-webkit-hyphenate-character",
@@ -3164,7 +3206,7 @@
       type_name: "AtomicString",
       include_paths: ["platform/wtf/text/AtomicString.h"],
       default_value: "AtomicString()",
-      field_group: "*",
+      field_group: "rare-inherited",
     },
     {
       name: "-webkit-line-break",
@@ -3174,7 +3216,7 @@
       type_name: "LineBreak",
       keywords: ["auto", "loose", "normal", "strict", "after-white-space"],
       default_value: "auto",
-      field_group: "*",
+      field_group: "rare-inherited",
     },
     {
       name: "line-break",
@@ -3189,33 +3231,37 @@
       api_methods: ["ParseSingleValue"],
       type_name: "LineClampValue",
       field_template: "storage_only",
-      field_group: "*",
+      field_group: "rare-non-inherited",
       default_value: "LineClampValue()",
       include_paths: ["core/style/LineClampValue.h"],
     },
     {
       name: "-webkit-margin-after-collapse",
+      api_class: "CSSPropertyAPIDefaultMetadata",
       type_name: "EMarginCollapse",
       field_template: "keyword",
       keywords: ["collapse", "separate", "discard"],
-      field_group: "*",
+      field_group: "rare-non-inherited",
       default_value: "collapse",
     },
     {
       name: "-webkit-margin-before-collapse",
+      api_class: "CSSPropertyAPIDefaultMetadata",
       type_name: "EMarginCollapse",
       field_template: "keyword",
       keywords: ["collapse", "separate", "discard"],
-      field_group: "*",
+      field_group: "rare-non-inherited",
       default_value: "collapse",
     },
     {
       name: "-webkit-margin-bottom-collapse",
+      api_class: "CSSPropertyAPIDefaultMetadata",
       name_for_methods: "MarginAfterCollapse",
       type_name: "EMarginCollapse",
     },
     {
       name: "-webkit-margin-top-collapse",
+      api_class: "CSSPropertyAPIDefaultMetadata",
       name_for_methods: "MarginBeforeCollapse",
       type_name: "EMarginCollapse",
     },
@@ -3256,7 +3302,6 @@
     {
       name: "-webkit-mask-clip",
       api_class: "CSSPropertyAPIWebkitClip",
-      api_methods: ["ParseSingleValue"],
       custom_all: true,
     },
     {
@@ -3275,7 +3320,6 @@
     {
       name: "-webkit-mask-origin",
       api_class: "CSSPropertyAPIWebkitOrigin",
-      api_methods: ["ParseSingleValue"],
       custom_all: true,
     },
     {
@@ -3294,10 +3338,12 @@
     },
     {
       name: "-webkit-mask-repeat-x",
+      api_class: "CSSPropertyAPIWebkitMaskRepeat",
       custom_all: true,
     },
     {
       name: "-webkit-mask-repeat-y",
+      api_class: "CSSPropertyAPIWebkitMaskRepeat",
       custom_all: true,
     },
     {
@@ -3350,7 +3396,7 @@
       type_name: "RubyPosition",
       keywords: ["before", "after"],
       default_value: "before",
-      field_group: "*",
+      field_group: "rare-inherited",
     },
     {
       name: "-webkit-tap-highlight-color",
@@ -3362,7 +3408,7 @@
       type_name: "Color",
       include_paths: ["platform/graphics/Color.h"],
       default_value: "LayoutTheme::TapHighlightColor()",
-      field_group: "*",
+      field_group: "rare-inherited",
     },
     {
       name: "-webkit-text-combine",
@@ -3380,7 +3426,7 @@
       type_name: "Color",
       include_paths: ["platform/graphics/Color.h"],
       default_value: "Color()",
-      field_group: "*",
+      field_group: "rare-inherited",
     },
     {
       name: "-webkit-text-emphasis-position",
@@ -3390,7 +3436,7 @@
       type_name: "TextEmphasisPosition",
       default_value: "over",
       keywords: ["over", "under"],
-      field_group: "*",
+      field_group: "rare-inherited",
     },
     {
       name: "-webkit-text-emphasis-style",
@@ -3409,7 +3455,7 @@
       type_name: "Color",
       include_paths: ["platform/graphics/Color.h"],
       default_value: "Color()",
-      field_group: "*",
+      field_group: "rare-inherited",
     },
     {
       name: "-webkit-text-security",
@@ -3418,7 +3464,7 @@
       field_template: "keyword",
       keywords: ["none", "disc", "circle", "square"],
       default_value: "none",
-      field_group: "*",
+      field_group: "rare-inherited",
     },
     {
       name: "-webkit-text-stroke-color",
@@ -3431,7 +3477,7 @@
       type_name: "Color",
       include_paths: ["platform/graphics/Color.h"],
       default_value: "Color()",
-      field_group: "*",
+      field_group: "rare-inherited",
     },
     {
       name: "-webkit-text-stroke-width",
@@ -3442,7 +3488,7 @@
       field_template: "primitive",
       type_name: "float",
       default_value: "0",
-      field_group: "*",
+      field_group: "rare-inherited",
     },
     {
       name: "-webkit-transform-origin-x",
@@ -3467,8 +3513,9 @@
     },
     {
       name: "-webkit-user-drag",
+      api_class: "CSSPropertyAPIDefaultMetadata",
       field_template: "keyword",
-      field_group: "*",
+      field_group: "rare-non-inherited",
       default_value: "auto",
       keywords: ["auto", "none", "element"],
     },
@@ -3479,7 +3526,7 @@
       field_template: "keyword",
       keywords: ["read-only", "read-write", "read-write-plaintext-only"],
       default_value: "read-only",
-      field_group: "*",
+      field_group: "rare-inherited",
     },
     {
       name: "user-select",
@@ -3488,7 +3535,7 @@
       field_template: "keyword",
       keywords: ["auto", "none", "text", "all"],
       default_value: "auto",
-      field_group: "*",
+      field_group: "rare-inherited",
     },
     {
       name: "white-space",
@@ -3508,7 +3555,7 @@
       field_template: "primitive",
       type_name: "short",
       default_value: "2",
-      field_group: "*",
+      field_group: "rare-inherited",
     },
     {
       name: "width",
@@ -3537,7 +3584,7 @@
       // Word Break Values. Matches WinIE and CSS3
       keywords: ["normal", "break-all", "keep-all", "break-word"],
       default_value: "normal",
-      field_group: "*",
+      field_group: "rare-inherited",
     },
     {
       name: "word-spacing",
@@ -3616,6 +3663,7 @@
     },
     {
       name: "-webkit-border-end-style",
+      api_class: "CSSPropertyAPIDefaultMetadata",
       direction_aware: true,
     },
     {
@@ -3632,6 +3680,7 @@
     },
     {
       name: "-webkit-border-start-style",
+      api_class: "CSSPropertyAPIDefaultMetadata",
       direction_aware: true,
     },
     {
@@ -3648,6 +3697,7 @@
     },
     {
       name: "-webkit-border-before-style",
+      api_class: "CSSPropertyAPIDefaultMetadata",
       direction_aware: true,
     },
     {
@@ -3664,6 +3714,7 @@
     },
     {
       name: "-webkit-border-after-style",
+      api_class: "CSSPropertyAPIDefaultMetadata",
       direction_aware: true,
     },
     {
@@ -3758,6 +3809,7 @@
 
     {
       name: "all",
+      api_class: "CSSPropertyAPIDefaultMetadata",
       builder_skip: true,
     },
     {
@@ -3784,44 +3836,37 @@
 
     {
       name: "font-display",
-      api_class: "CSSPropertyAPIDescriptorOnly",
       is_descriptor: true,
       is_property: false,
       runtime_flag: "CSSFontDisplay",
     },
     {
       name: "max-zoom",
-      api_class: "CSSPropertyAPIDescriptorOnly",
       is_descriptor: true,
       is_property: false,
     },
     {
       name: "min-zoom",
-      api_class: "CSSPropertyAPIDescriptorOnly",
       is_descriptor: true,
       is_property: false,
     },
     {
       name: "orientation",
-      api_class: "CSSPropertyAPIDescriptorOnly",
       is_descriptor: true,
       is_property: false,
     },
     {
       name: "src",
-      api_class: "CSSPropertyAPIDescriptorOnly",
       is_descriptor: true,
       is_property: false,
     },
     {
       name: "unicode-range",
-      api_class: "CSSPropertyAPIDescriptorOnly",
       is_descriptor: true,
       is_property: false,
     },
     {
       name: "user-zoom",
-      api_class: "CSSPropertyAPIDescriptorOnly",
       is_descriptor: true,
       is_property: false,
     },
@@ -3837,8 +3882,7 @@
     {
       name: "background",
       longhands: ["background-image", "background-position-x", "background-position-y", "background-size", "background-repeat-x", "background-repeat-y", "background-attachment", "background-origin", "background-clip", "background-color"],
-      api_class: "CSSShorthandPropertyAPIBackground",
-      api_methods: ["ParseShorthand"],
+      api_class: true,
     },
     {
       name: "background-position",
@@ -3850,7 +3894,6 @@
       name: "background-repeat",
       longhands: ["background-repeat-x", "background-repeat-y"],
       api_class: true,
-      api_methods: ["ParseShorthand"],
     },
     {
       name: "border",
@@ -4193,8 +4236,7 @@
     {
       name: "-webkit-mask",
       longhands: ["-webkit-mask-image", "-webkit-mask-position-x", "-webkit-mask-position-y", "-webkit-mask-size", "-webkit-mask-repeat-x", "-webkit-mask-repeat-y", "-webkit-mask-origin", "-webkit-mask-clip"],
-      api_class: "CSSShorthandPropertyAPIBackground",
-      api_methods: ["ParseShorthand"],
+      api_class: true,
     },
     {
       name: "-webkit-mask-box-image",
@@ -4212,7 +4254,6 @@
       name: "-webkit-mask-repeat",
       longhands: ["-webkit-mask-repeat-x", "-webkit-mask-repeat-y"],
       api_class: true,
-      api_methods: ["ParseShorthand"],
     },
     {
       name: "-webkit-text-emphasis",

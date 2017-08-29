@@ -64,7 +64,8 @@ std::unique_ptr<Printer> SpecificsToPrinter(
     const sync_pb::PrinterSpecifics& specifics) {
   DCHECK(!specifics.id().empty());
 
-  auto printer = base::MakeUnique<Printer>(specifics.id());
+  auto printer = base::MakeUnique<Printer>(
+      specifics.id(), base::Time::FromJavaTime(specifics.updated_timestamp()));
   printer->set_display_name(specifics.display_name());
   printer->set_description(specifics.description());
   printer->set_manufacturer(specifics.manufacturer());

@@ -13,7 +13,6 @@
 #include "base/base64.h"
 #include "base/files/file_path.h"
 #include "base/memory/ptr_util.h"
-#include "base/run_loop.h"
 #include "base/test/scoped_command_line.h"
 #include "chrome/browser/chromeos/arc/arc_session_manager.h"
 #include "chrome/browser/chromeos/lock_screen_apps/app_manager.h"
@@ -365,8 +364,7 @@ class LockScreenAppStateNotSupportedTest : public testing::Test {
 
   void SetUp() override {
     command_line_ = base::MakeUnique<base::test::ScopedCommandLine>();
-    command_line_->GetProcessCommandLine()->InitFromArgv(
-        {"", "--disable-lock-screen-apps"});
+    command_line_->GetProcessCommandLine()->InitFromArgv({""});
   }
 
  private:
@@ -383,7 +381,8 @@ class LockScreenAppStateTest : public BrowserWithTestWindowTest {
 
   void SetUp() override {
     command_line_ = base::MakeUnique<base::test::ScopedCommandLine>();
-    command_line_->GetProcessCommandLine()->InitFromArgv({""});
+    command_line_->GetProcessCommandLine()->InitFromArgv(
+        {"", "--enable-lock-screen-apps"});
 
     ASSERT_TRUE(profile_manager_.SetUp());
 
@@ -883,9 +882,7 @@ TEST_F(LockScreenAppStateTest, AppAvailabilityChanges) {
                             "Available on other app set");
 }
 
-// TODO(tbarzic): Remove or rewrite this test after refactoring
-// foreground/background code.
-TEST_F(LockScreenAppStateTest, DISABLED_MoveToBackgroundAndForeground) {
+TEST_F(LockScreenAppStateTest, MoveToBackgroundAndForeground) {
   ASSERT_TRUE(InitializeNoteTakingApp(TrayActionState::kActive,
                                       true /* enable_app_launch */));
 
@@ -1273,17 +1270,17 @@ TEST_F(LockScreenAppStateTest, NoFocusCyclerDelegate) {
   state_controller()->MoveToBackground();
   state_controller()->FlushTrayActionForTesting();
 
-  EXPECT_EQ(TrayActionState::kAvailable,
+  EXPECT_EQ(TrayActionState::kBackground,
             state_controller()->GetLockScreenNoteState());
 
   state_controller()->MoveToForeground();
   state_controller()->FlushTrayActionForTesting();
 
-  EXPECT_EQ(TrayActionState::kAvailable,
+  EXPECT_EQ(TrayActionState::kActive,
             state_controller()->GetLockScreenNoteState());
 
   base::RunLoop().RunUntilIdle();
-  EXPECT_TRUE(app_window()->closed());
+  EXPECT_FALSE(app_window()->closed());
 }
 
 TEST_F(LockScreenAppStateTest, ResetFocusCyclerDelegateWhileActive) {
@@ -1314,9 +1311,11 @@ TEST_F(LockScreenAppStateTest, FocusCyclerDelegateGetsSetOnAppWindowCreation) {
   EXPECT_TRUE(focus_cycler_delegate()->HasHandler());
 
   state_controller()->MoveToBackground();
-  base::RunLoop().RunUntilIdle();
+
+  EXPECT_TRUE(focus_cycler_delegate()->HasHandler());
+
+  app_window->Close();
   EXPECT_FALSE(focus_cycler_delegate()->HasHandler());
-  EXPECT_TRUE(app_window->closed());
 }
 
 TEST_F(LockScreenAppStateTest, TakeFocus) {
@@ -1338,10 +1337,7 @@ TEST_F(LockScreenAppStateTest, TakeFocus) {
   EXPECT_TRUE(focus_cycler_delegate()->lock_screen_app_focused());
 }
 
-// TODO(tbarzic): Remove or rewrite this test after refactoring
-// foreground/background code.
-TEST_F(LockScreenAppStateTest,
-       DISABLED_RequestFocusFromBackgroundMovesAppToForeground) {
+TEST_F(LockScreenAppStateTest, RequestFocusFromBackgroundMovesAppToForeground) {
   ASSERT_TRUE(InitializeNoteTakingApp(TrayActionState::kActive,
                                       true /* enable_app_launch */));
 

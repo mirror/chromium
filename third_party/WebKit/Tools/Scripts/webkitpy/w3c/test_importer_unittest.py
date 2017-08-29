@@ -12,7 +12,6 @@ from webkitpy.common.net.git_cl_mock import MockGitCL
 from webkitpy.common.system.executive_mock import MockCall
 from webkitpy.common.system.executive_mock import MockExecutive
 from webkitpy.common.system.log_testing import LoggingTestCase
-from webkitpy.layout_tests.builder_list import BuilderList
 from webkitpy.w3c.chromium_commit_mock import MockChromiumCommit
 from webkitpy.w3c.local_wpt import LocalWPT
 from webkitpy.w3c.test_importer import TestImporter
@@ -68,8 +67,8 @@ class TestImporterTest(LoggingTestCase):
         importer = TestImporter(host)
         # Only the latest job for each builder is counted.
         importer.git_cl = MockGitCL(host, results={
-            Build('cq-builder-a', 120): TryJobStatus('COMPLETED', 'FAILURE'),
-            Build('cq-builder-a', 123): TryJobStatus('COMPLETED', 'SUCCESS'),
+            Build('builder-a', 120): TryJobStatus('COMPLETED', 'FAILURE'),
+            Build('builder-a', 123): TryJobStatus('COMPLETED', 'SUCCESS'),
         })
         success = importer.run_commit_queue_for_cl()
         self.assertTrue(success)
@@ -90,9 +89,9 @@ class TestImporterTest(LoggingTestCase):
             '/mock-checkout/third_party/WebKit/LayoutTests/W3CImportExpectations', '')
         importer = TestImporter(host)
         importer.git_cl = MockGitCL(host, results={
-            Build('cq-builder-a', 120): TryJobStatus('COMPLETED', 'SUCCESS'),
-            Build('cq-builder-a', 123): TryJobStatus('COMPLETED', 'FAILURE'),
-            Build('cq-builder-b', 200): TryJobStatus('COMPLETED', 'SUCCESS'),
+            Build('builder-a', 120): TryJobStatus('COMPLETED', 'SUCCESS'),
+            Build('builder-a', 123): TryJobStatus('COMPLETED', 'FAILURE'),
+            Build('builder-b', 200): TryJobStatus('COMPLETED', 'SUCCESS'),
         })
         importer.fetch_new_expectations_and_baselines = lambda: None
         success = importer.run_commit_queue_for_cl()
@@ -106,36 +105,6 @@ class TestImporterTest(LoggingTestCase):
             ['git', 'cl', 'set-close'],
         ])
 
-    def test_run_commit_queue_for_cl_only_checks_non_blink_bots(self):
-        host = MockHost()
-        host.filesystem.write_text_file(
-            '/mock-checkout/third_party/WebKit/LayoutTests/W3CImportExpectations', '')
-        host.builders = BuilderList({
-            'fakeos_blink_rel': {
-                'port_name': 'test-fakeos',
-                'specifiers': ['FakeOS', 'Release'],
-                'is_try_builder': True,
-            }
-        })
-        importer = TestImporter(host)
-        importer.git_cl = MockGitCL(host, results={
-            Build('fakeos_blink_rel', 123): TryJobStatus('COMPLETED', 'FAILURE'),
-            Build('cq-builder-b', 200): TryJobStatus('COMPLETED', 'SUCCESS'),
-        })
-        importer.fetch_new_expectations_and_baselines = lambda: None
-        success = importer.run_commit_queue_for_cl()
-        self.assertTrue(success)
-        self.assertLog([
-            'INFO: Triggering CQ try jobs.\n',
-            'INFO: CQ appears to have passed; trying to commit.\n',
-            'INFO: Update completed.\n',
-        ])
-        self.assertEqual(importer.git_cl.calls, [
-            ['git', 'cl', 'try'],
-            ['git', 'cl', 'upload', '-f', '--send-mail'],
-            ['git', 'cl', 'set-commit'],
-        ])
-
     def test_apply_exportable_commits_locally(self):
         host = MockHost()
         importer = TestImporter(host, wpt_github=MockWPTGitHub(pull_requests=[]))
@@ -147,7 +116,7 @@ class TestImporterTest(LoggingTestCase):
                 '+++ b/third_party/WebKit/LayoutTests/external/wpt/css/css-ui-3/outline-004.html\n'
                 '@@ -20,7 +20,7 @@\n'
                 '...'))
-        importer.exportable_but_not_exported_commits = lambda _: [fake_commit]
+        importer.exportable_but_not_exported_commits = lambda _: ([fake_commit], [])
         applied = importer.apply_exportable_commits_locally(LocalWPT(host))
         self.assertEqual(applied, [fake_commit])
         self.assertEqual(host.executive.full_calls, [
@@ -176,7 +145,7 @@ class TestImporterTest(LoggingTestCase):
         wpt_github = MockWPTGitHub(pull_requests=[])
         importer = TestImporter(host, wpt_github=wpt_github)
         commit = MockChromiumCommit(host, subject='My fake commit')
-        importer.exportable_but_not_exported_commits = lambda _: [commit]
+        importer.exportable_but_not_exported_commits = lambda _: ([commit], [])
         local_wpt = LocalWPT(host)
         local_wpt.apply_patch = lambda _: 'Failed'  # Failure to apply patch.
         applied = importer.apply_exportable_commits_locally(local_wpt)

@@ -363,6 +363,8 @@ enum class StackViewDismissalMode { NONE, NORMAL, INCOGNITO };
 - (void)displayCurrentBVC;
 // Shows the Sync settings UI.
 - (void)showSyncSettings;
+// Shows the Save Passwords settings.
+- (void)showSavePasswordsSettings;
 // Invokes the sign in flow with the specified authentication operation and
 // invokes |callback| when finished.
 - (void)showSigninWithOperation:(AuthenticationOperation)operation
@@ -399,11 +401,9 @@ enum class StackViewDismissalMode { NONE, NORMAL, INCOGNITO };
 // out if it is showing, the target BVC will become active, and the new tab will
 // be shown.
 // If the current tab in |targetMode| is a NTP, it can be reused to open URL.
-// |completion| is executed after the tab is opened.
 - (Tab*)openSelectedTabInMode:(ApplicationMode)targetMode
                       withURL:(const GURL&)url
-                   transition:(ui::PageTransition)transition
-                   completion:(ProceduralBlock)completion;
+                   transition:(ui::PageTransition)transition;
 // Checks the target BVC's current tab's URL. If this URL is chrome://newtab,
 // loads |url| in this tab. Otherwise, open |url| in a new tab in the target
 // BVC.
@@ -762,9 +762,8 @@ enum class StackViewDismissalMode { NONE, NORMAL, INCOGNITO };
     [self dismissModalsAndOpenSelectedTabInMode:ApplicationMode::NORMAL
                                         withURL:[_startupParameters externalURL]
                                      transition:ui::PAGE_TRANSITION_LINK
-                                     completion:^{
-                                       [self setStartupParameters:nil];
-                                     }];
+                                     completion:nil];
+    _startupParameters = nil;
   }
 }
 
@@ -1436,19 +1435,6 @@ enum class StackViewDismissalMode { NONE, NORMAL, INCOGNITO };
                  completion:nil];
 }
 
-- (void)showSavePasswordsSettings {
-  // Do not display password settings if settings screen is already displayed.
-  if (_settingsNavigationController)
-    return;
-  _settingsNavigationController =
-      [SettingsNavigationController newSavePasswordsController:_mainBrowserState
-                                                      delegate:self];
-  [[self topPresentedViewController]
-      presentViewController:_settingsNavigationController
-                   animated:YES
-                 completion:nil];
-}
-
 #pragma mark - chromeExecuteCommand
 
 - (IBAction)chromeExecuteCommand:(id)sender {
@@ -1482,6 +1468,9 @@ enum class StackViewDismissalMode { NONE, NORMAL, INCOGNITO };
       break;
     case IDC_SHOW_SYNC_PASSPHRASE_SETTINGS:
       [self showSyncEncryptionPassphrase];
+      break;
+    case IDC_SHOW_SAVE_PASSWORDS_SETTINGS:
+      [self showSavePasswordsSettings];
       break;
     case IDC_SHOW_MAIL_COMPOSER:
       [self.currentBVC chromeExecuteCommand:sender];
@@ -1983,6 +1972,18 @@ enum class StackViewDismissalMode { NONE, NORMAL, INCOGNITO };
                  completion:nil];
 }
 
+- (void)showSavePasswordsSettings {
+  if (_settingsNavigationController)
+    return;
+  _settingsNavigationController =
+      [SettingsNavigationController newSavePasswordsController:_mainBrowserState
+                                                      delegate:self];
+  [[self topPresentedViewController]
+      presentViewController:_settingsNavigationController
+                   animated:YES
+                 completion:nil];
+}
+
 - (void)showReportAnIssue {
   if (_settingsNavigationController)
     return;
@@ -2189,31 +2190,16 @@ enum class StackViewDismissalMode { NONE, NORMAL, INCOGNITO };
 
 - (Tab*)openSelectedTabInMode:(ApplicationMode)targetMode
                       withURL:(const GURL&)url
-                   transition:(ui::PageTransition)transition
-                   completion:(ProceduralBlock)completion {
+                   transition:(ui::PageTransition)transition {
   BrowserViewController* targetBVC =
       targetMode == ApplicationMode::NORMAL ? self.mainBVC : self.otrBVC;
   NSUInteger tabIndex = NSNotFound;
 
-  ProceduralBlock startupCompletion =
+  ProceduralBlock tabOpenedCompletion =
       [self completionBlockForTriggeringAction:[_startupParameters
                                                    postOpeningAction]];
   // Commands are only allowed on NTP.
-  DCHECK(IsURLNtp(url) || !startupCompletion);
-
-  ProceduralBlock tabOpenedCompletion = nil;
-  if (startupCompletion && completion) {
-    tabOpenedCompletion = ^{
-      // Order is important here. |completion| may do cleaning tasks that will
-      // invalidate |startupCompletion|.
-      startupCompletion();
-      completion();
-    };
-  } else if (startupCompletion) {
-    tabOpenedCompletion = startupCompletion;
-  } else {
-    tabOpenedCompletion = completion;
-  }
+  DCHECK(IsURLNtp(url) || !tabOpenedCompletion);
 
   Tab* tab = nil;
   if (_tabSwitcherIsActive) {
@@ -2369,13 +2355,14 @@ enum class StackViewDismissalMode { NONE, NORMAL, INCOGNITO };
 - (void)dismissModalsAndOpenSelectedTabInMode:(ApplicationMode)targetMode
                                       withURL:(const GURL&)url
                                    transition:(ui::PageTransition)transition
-                                   completion:(ProceduralBlock)completion {
+                                   completion:(ProceduralBlock)handler {
   GURL copyOfURL = url;
   [self dismissModalDialogsWithCompletion:^{
     [self openSelectedTabInMode:targetMode
                         withURL:copyOfURL
-                     transition:transition
-                     completion:completion];
+                     transition:transition];
+    if (handler)
+      handler();
   }];
 }
 
@@ -2433,6 +2420,11 @@ enum class StackViewDismissalMode { NONE, NORMAL, INCOGNITO };
 
 - (void)closeSettings {
   [self closeSettingsUI];
+}
+
+// Handle a close settings and open URL command.
+- (void)closeSettingsAndOpenUrl:(OpenUrlCommand*)command {
+  [self closeSettingsUIAndOpenURL:command];
 }
 
 - (void)closeSettingsAndOpenNewIncognitoTab {

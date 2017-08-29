@@ -16,6 +16,7 @@ loadTimeData.data = {
   DRIVE_TEAM_DRIVES_LABEL: 'Team Drives',
   DRIVE_OFFLINE_COLLECTION_LABEL: 'Offline',
   DRIVE_SHARED_WITH_ME_COLLECTION_LABEL: 'Shared with me',
+  DRIVE_RECENT_COLLECTION_LABEL: 'Recent',
   REMOVABLE_DIRECTORY_LABEL: 'External Storage',
   ARCHIVE_DIRECTORY_LABEL: 'Archives'
 };
@@ -58,6 +59,7 @@ function getDirectoryTreeItemLabelsAsAList(directoryTree) {
  * Google Drive
  * - My Drive
  * - Shared with me
+ * - Recent
  * - Offline
  * Downloads
  *
@@ -95,20 +97,19 @@ function testCreateDirectoryTree(callback) {
 
   var driveItem = directoryTree.items[0];
 
-  reportPromise(
-      waitUntil(function() {
-        // Under the drive item, there exist 3 entries.
-        return driveItem.items.length == 3;
-      }).then(function() {
-        // There exist 1 my drive entry and 3 fake entries under the drive item.
-        assertEquals(str('DRIVE_MY_DRIVE_LABEL'), driveItem.items[0].label);
-        assertEquals(
-            str('DRIVE_SHARED_WITH_ME_COLLECTION_LABEL'),
-            driveItem.items[1].label);
-        assertEquals(
-            str('DRIVE_OFFLINE_COLLECTION_LABEL'), driveItem.items[2].label);
-      }),
-      callback);
+  reportPromise(waitUntil(function() {
+    // Under the drive item, there exist 4 entries.
+    return driveItem.items.length == 4;
+  }).then(function() {
+    // There exist 1 my drive entry and 3 fake entries under the drive item.
+    assertEquals(str('DRIVE_MY_DRIVE_LABEL'), driveItem.items[0].label);
+    assertEquals(str('DRIVE_SHARED_WITH_ME_COLLECTION_LABEL'),
+        driveItem.items[1].label);
+    assertEquals(str('DRIVE_RECENT_COLLECTION_LABEL'),
+        driveItem.items[2].label);
+    assertEquals(str('DRIVE_OFFLINE_COLLECTION_LABEL'),
+        driveItem.items[3].label);
+  }), callback);
 }
 
 /**
@@ -119,6 +120,7 @@ function testCreateDirectoryTree(callback) {
  * - My Drive
  * - Team Drives
  * - Shared with me
+ * - Recent
  * - Offline
  * Downloads
  *
@@ -170,21 +172,21 @@ function testCreateDirectoryTreeWithTeamDrive(callback) {
 
   var driveItem = directoryTree.items[0];
 
-  reportPromise(
-      waitUntil(function() {
-        // Under the drive item, there exist 4 entries.
-        return driveItem.items.length == 4;
-      }).then(function() {
-        // There exist 1 my drive entry and 3 fake entries under the drive item.
-        assertEquals(str('DRIVE_MY_DRIVE_LABEL'), driveItem.items[0].label);
-        assertEquals(str('DRIVE_TEAM_DRIVES_LABEL'), driveItem.items[1].label);
-        assertEquals(
-            str('DRIVE_SHARED_WITH_ME_COLLECTION_LABEL'),
-            driveItem.items[2].label);
-        assertEquals(
-            str('DRIVE_OFFLINE_COLLECTION_LABEL'), driveItem.items[3].label);
-      }),
-      callback);
+  reportPromise(waitUntil(function() {
+    // Under the drive item, there exist 5 entries.
+    return driveItem.items.length == 5;
+  }).then(function() {
+    // There exist 1 my drive entry and 3 fake entries under the drive item.
+    assertEquals(str('DRIVE_MY_DRIVE_LABEL'), driveItem.items[0].label);
+    assertEquals(str('DRIVE_TEAM_DRIVES_LABEL'), driveItem.items[1].label);
+    assertEquals(str('DRIVE_SHARED_WITH_ME_COLLECTION_LABEL'),
+        driveItem.items[2].label);
+    assertEquals(str('DRIVE_RECENT_COLLECTION_LABEL'),
+        driveItem.items[3].label);
+    assertEquals(str('DRIVE_OFFLINE_COLLECTION_LABEL'),
+        driveItem.items[4].label);
+  }),
+  callback);
 }
 
 /**
@@ -237,7 +239,7 @@ function testCreateDirectoryTreeWithEmptyTeamDrive(callback) {
       waitUntil(function() {
         // Root entries under Drive volume is generated except Team Drives.
         // See testCreateDirectoryTreeWithTeamDrive for detail.
-        return driveItem.items.length == 3;
+        return driveItem.items.length == 4;
       }).then(function() {
         for (var i = 0; i < driveItem.items.length; i++) {
           assertFalse(

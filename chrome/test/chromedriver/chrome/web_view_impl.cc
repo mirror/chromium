@@ -429,7 +429,7 @@ Status WebViewImpl::GetCookies(std::unique_ptr<base::ListValue>* cookies,
       browser_info_->browser_name != "webview") {
     base::ListValue url_list;
     url_list.AppendString(current_page_url);
-    params.SetKey("urls", url_list.Clone());
+    params.Set("urls", base::MakeUnique<base::Value>(url_list));
     Status status =
         client_->SendCommandAndGetResult("Network.getCookies", params, &result);
     if (status.IsError())
@@ -449,23 +449,11 @@ Status WebViewImpl::GetCookies(std::unique_ptr<base::ListValue>* cookies,
 }
 
 Status WebViewImpl::DeleteCookie(const std::string& name,
-                                 const std::string& url,
-                                 const std::string& domain,
-                                 const std::string& path) {
+                                 const std::string& url) {
   base::DictionaryValue params;
+  params.SetString("cookieName", name);
   params.SetString("url", url);
-  std::string command;
-  if (browser_info_->build_no >= 3189) {
-    params.SetString("name", name);
-    params.SetString("domain", domain);
-    params.SetString("path", path);
-    command = "Network.deleteCookies";
-  } else {
-    params.SetString("cookieName", name);
-    command = "Page.deleteCookie";
-  }
-
-  return client_->SendCommand(command, params);
+  return client_->SendCommand("Page.deleteCookie", params);
 }
 
 Status WebViewImpl::AddCookie(const std::string& name,
@@ -586,7 +574,7 @@ Status WebViewImpl::SetFileInputFiles(
     return Status(kUnknownError, "no node ID for file input");
   base::DictionaryValue params;
   params.SetInteger("nodeId", node_id);
-  params.SetKey("files", file_list.Clone());
+  params.Set("files", base::MakeUnique<base::Value>(file_list));
   return client_->SendCommand("DOM.setFileInputFiles", params);
 }
 

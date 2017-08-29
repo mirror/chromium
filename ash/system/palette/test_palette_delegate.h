@@ -42,9 +42,13 @@ class TestPaletteDelegate : public PaletteDelegate {
     should_show_palette_ = should_show_palette;
   }
 
+  void SetMetalayerSupported(bool is_metalayer_supported);
+
   int show_metalayer_count() const { return show_metalayer_count_; }
 
   int hide_metalayer_count() const { return hide_metalayer_count_; }
+
+  base::Closure metalayer_closed() const { return metalayer_closed_; }
 
   void set_highlighter_test_api(HighlighterControllerTestApi* api) {
     highlighter_test_api_ = api;
@@ -61,7 +65,8 @@ class TestPaletteDelegate : public PaletteDelegate {
   void TakeScreenshot() override;
   void TakePartialScreenshot(const base::Closure& done) override;
   void CancelPartialScreenshot() override;
-  void ShowMetalayer() override;
+  bool IsMetalayerSupported() override;
+  void ShowMetalayer(const base::Closure& closed) override;
   void HideMetalayer() override;
 
   int create_note_count_ = 0;
@@ -75,6 +80,7 @@ class TestPaletteDelegate : public PaletteDelegate {
   bool is_metalayer_supported_ = false;
   int show_metalayer_count_ = 0;
   int hide_metalayer_count_ = 0;
+  base::Closure metalayer_closed_;
 
   HighlighterControllerTestApi* highlighter_test_api_ = nullptr;
 

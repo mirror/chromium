@@ -31,7 +31,7 @@ void MockAgent::StartTracing(const std::string& config,
 void MockAgent::StopAndFlush(mojom::RecorderPtr recorder) {
   call_stat_.push_back("StopAndFlush");
   if (!metadata_.empty())
-    recorder->AddMetadata(metadata_.CreateDeepCopy());
+    recorder->AddMetadata(base::MakeUnique<base::DictionaryValue>(metadata_));
   for (const auto& chunk : data_) {
     recorder->AddChunk(chunk);
   }

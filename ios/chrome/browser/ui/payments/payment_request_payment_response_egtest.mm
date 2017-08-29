@@ -13,6 +13,8 @@
 #import "ios/chrome/browser/payments/payment_request_cache.h"
 #include "ios/chrome/browser/ui/autofill/card_unmask_prompt_view_bridge.h"
 #import "ios/chrome/browser/ui/payments/payment_request_egtest_base.h"
+#import "ios/chrome/browser/ui/payments/payment_request_error_view_controller.h"
+#import "ios/chrome/browser/ui/payments/payment_request_view_controller.h"
 #import "ios/chrome/test/app/chrome_test_util.h"
 #import "ios/chrome/test/earl_grey/chrome_earl_grey.h"
 #import "ios/chrome/test/earl_grey/chrome_matchers.h"
@@ -80,8 +82,7 @@ const char kRequestEmailPage[] =
 
   // Tap the confirm button.
   [[EarlGrey
-      selectElementWithMatcher:ButtonWithAccessibilityLabelId(
-                                   IDS_AUTOFILL_CARD_UNMASK_CONFIRM_BUTTON)]
+      selectElementWithMatcher:ButtonWithAccessibilityLabelId(IDS_ACCNAME_OK)]
       performAction:grey_tap()];
 
   // Test that the card details were sent to the merchant.
@@ -148,8 +149,7 @@ const char kRequestEmailPage[] =
 
   // Tap the confirm button.
   [[EarlGrey
-      selectElementWithMatcher:ButtonWithAccessibilityLabelId(
-                                   IDS_AUTOFILL_CARD_UNMASK_CONFIRM_BUTTON)]
+      selectElementWithMatcher:ButtonWithAccessibilityLabelId(IDS_ACCNAME_OK)]
       performAction:grey_tap()];
 
   // Test that the billing address was sent to the merchant.
@@ -202,8 +202,7 @@ const char kRequestEmailPage[] =
 
   // Tap the confirm button.
   [[EarlGrey
-      selectElementWithMatcher:ButtonWithAccessibilityLabelId(
-                                   IDS_AUTOFILL_CARD_UNMASK_CONFIRM_BUTTON)]
+      selectElementWithMatcher:ButtonWithAccessibilityLabelId(IDS_ACCNAME_OK)]
       performAction:grey_tap()];
 
   // Test that the contact details were sent to the merchant.
@@ -237,8 +236,7 @@ const char kRequestEmailPage[] =
 
   // Tap the confirm button.
   [[EarlGrey
-      selectElementWithMatcher:ButtonWithAccessibilityLabelId(
-                                   IDS_AUTOFILL_CARD_UNMASK_CONFIRM_BUTTON)]
+      selectElementWithMatcher:ButtonWithAccessibilityLabelId(IDS_ACCNAME_OK)]
       performAction:grey_tap()];
 
   // Test that the contact details were sent to the merchant.

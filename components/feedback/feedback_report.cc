@@ -83,8 +83,6 @@ void FeedbackReport::DeleteReportOnDisk() {
       base::Bind(base::IgnoreResult(&base::DeleteFile), file_, false));
 }
 
-FeedbackReport::~FeedbackReport() {
-  DeleteReportOnDisk();
-}
+FeedbackReport::~FeedbackReport() {}
 
 }  // namespace feedback

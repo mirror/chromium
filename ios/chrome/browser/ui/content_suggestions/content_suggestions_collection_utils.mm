@@ -31,11 +31,12 @@ const CGFloat kSearchHintVerticalOffset = 0.5;
 
 const CGFloat kMaxSearchFieldFrameMargin = 200;
 const CGFloat kDoodleTopMarginIPad = 82;
-const CGFloat kSearchFieldTopMarginIPhone = 32;
+const CGFloat kSearchFieldTopMarginIPhone = 16;
 const CGFloat kSearchFieldTopMarginIPad = 82;
 const CGFloat kNTPSearchFieldBottomPadding = 16;
 
-const CGFloat kTopSpacingMaterial = 24;
+const CGFloat kTopSpacingMaterialPortrait = 56;
+const CGFloat kTopSpacingMaterialLandscape = 32;
 
 const CGFloat kVoiceSearchButtonWidth = 48;
 
@@ -121,7 +122,11 @@ CGFloat heightForLogoHeader(BOOL logoIsShowing,
     return kNonGoogleSearchHeaderHeightIPad;
   }
   if (!promoCanShow) {
-    headerHeight += kTopSpacingMaterial;
+    UIInterfaceOrientation orient =
+        [[UIApplication sharedApplication] statusBarOrientation];
+    headerHeight += UIInterfaceOrientationIsPortrait(orient)
+                        ? kTopSpacingMaterialPortrait
+                        : kTopSpacingMaterialLandscape;
   }
 
   return headerHeight;

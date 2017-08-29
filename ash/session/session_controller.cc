@@ -150,17 +150,6 @@ const mojom::UserSession* SessionController::GetUserSession(
   return user_sessions_[index].get();
 }
 
-const mojom::UserSession* SessionController::GetPrimaryUserSession() const {
-  auto it = std::find_if(user_sessions_.begin(), user_sessions_.end(),
-                         [this](const mojom::UserSessionPtr& session) {
-                           return session->session_id == primary_session_id_;
-                         });
-  if (it == user_sessions_.end())
-    return nullptr;
-
-  return (*it).get();
-}
-
 bool SessionController::IsUserSupervised() const {
   if (!IsActiveUserSessionStarted())
     return false;
@@ -176,27 +165,6 @@ bool SessionController::IsUserChild() const {
 
   user_manager::UserType active_user_type = GetUserSession(0)->user_info->type;
   return active_user_type == user_manager::USER_TYPE_CHILD;
-}
-
-base::Optional<user_manager::UserType> SessionController::GetUserType() const {
-  if (!IsActiveUserSessionStarted())
-    return base::nullopt;
-
-  return base::make_optional(GetUserSession(0)->user_info->type);
-}
-
-bool SessionController::IsUserPrimary() const {
-  if (!IsActiveUserSessionStarted())
-    return false;
-
-  return GetUserSession(0)->session_id == primary_session_id_;
-}
-
-bool SessionController::IsUserFirstLogin() const {
-  if (!IsActiveUserSessionStarted())
-    return false;
-
-  return GetUserSession(0)->user_info->is_new_profile;
 }
 
 bool SessionController::IsKioskSession() const {
@@ -382,8 +350,6 @@ void SessionController::SetSessionLengthLimit(base::TimeDelta length_limit,
 void SessionController::ClearUserSessionsForTest() {
   user_sessions_.clear();
   last_active_user_prefs_ = nullptr;
-  active_session_id_ = 0u;
-  primary_session_id_ = 0u;
 }
 
 void SessionController::FlushMojoForTest() {
@@ -424,9 +390,6 @@ void SessionController::SetSessionState(SessionState state) {
 
 void SessionController::AddUserSession(mojom::UserSessionPtr user_session) {
   const AccountId account_id(user_session->user_info->account_id);
-
-  if (primary_session_id_ == 0u)
-    primary_session_id_ = user_session->session_id;
 
   user_sessions_.push_back(std::move(user_session));
 

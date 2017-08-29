@@ -245,25 +245,12 @@ static inline bool Is3dSorted(LayerImpl* layer) {
   return layer->test_properties()->sorting_context_id != 0;
 }
 
-static inline bool HasLatestSequenceNumber(const Layer* layer, int number) {
-  return layer->property_tree_sequence_number() == number;
-}
-
-static inline bool HasLatestSequenceNumber(const LayerImpl*, int) {
-  return true;
-}
-
 template <typename LayerType>
 void AddClipNodeIfNeeded(const DataForRecursion<LayerType>& data_from_ancestor,
                          LayerType* layer,
                          bool created_transform_node,
                          DataForRecursion<LayerType>* data_for_children) {
   const bool inherits_clip = !ClipParent(layer);
-  // Sanity check the clip parent already built clip node before us.
-  DCHECK(inherits_clip ||
-         HasLatestSequenceNumber(
-             ClipParent(layer),
-             data_from_ancestor.property_trees->sequence_number));
   const int parent_id = inherits_clip ? data_from_ancestor.clip_tree_parent
                                       : ClipParent(layer)->clip_tree_index();
 
@@ -288,7 +275,7 @@ void AddClipNodeIfNeeded(const DataForRecursion<LayerType>& data_from_ancestor,
       DCHECK(Filters(layer).HasFilterThatMovesPixels());
       node.clip_type = ClipNode::ClipType::EXPANDS_CLIP;
       node.clip_expander =
-          std::make_unique<ClipExpander>(layer->effect_tree_index());
+          base::MakeUnique<ClipExpander>(layer->effect_tree_index());
     }
     data_for_children->clip_tree_parent =
         data_for_children->property_trees->clip_tree.Insert(node, parent_id);

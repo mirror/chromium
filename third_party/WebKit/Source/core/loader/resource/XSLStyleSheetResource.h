@@ -62,7 +62,7 @@ class XSLStyleSheetResource final : public StyleSheetResource {
                         const ResourceLoaderOptions&,
                         const TextResourceDecoderOptions&);
 
-  void NotifyFinished() override;
+  void CheckNotify() override;
 
   String sheet_;
 };

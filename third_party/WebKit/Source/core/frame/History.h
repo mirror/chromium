@@ -53,12 +53,12 @@ class CORE_EXPORT History final : public GarbageCollectedFinalized<History>,
  public:
   static History* Create(LocalFrame* frame) { return new History(frame); }
 
-  unsigned length(ExceptionState&) const;
-  SerializedScriptValue* state(ExceptionState&);
+  unsigned length() const;
+  SerializedScriptValue* state();
 
-  void back(ScriptState*, ExceptionState&);
-  void forward(ScriptState*, ExceptionState&);
-  void go(ScriptState*, int delta, ExceptionState&);
+  void back(ScriptState*);
+  void forward(ScriptState*);
+  void go(ScriptState*, int delta);
 
   void pushState(RefPtr<SerializedScriptValue>,
                  const String& title,
@@ -73,8 +73,8 @@ class CORE_EXPORT History final : public GarbageCollectedFinalized<History>,
                      kFrameLoadTypeReplaceCurrentItem, exception_state);
   }
 
-  void setScrollRestoration(const String& value, ExceptionState&);
-  String scrollRestoration(ExceptionState&);
+  void setScrollRestoration(const String& value);
+  String scrollRestoration();
 
   bool stateChanged() const;
   bool IsSameAsCurrentState(SerializedScriptValue*) const;

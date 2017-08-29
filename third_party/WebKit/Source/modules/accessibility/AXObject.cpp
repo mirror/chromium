@@ -342,6 +342,7 @@ AXObject::AXObject(AXObjectCacheImpl& ax_object_cache)
       cached_is_descendant_of_leaf_node_(false),
       cached_is_descendant_of_disabled_node_(false),
       cached_has_inherited_presentational_role_(false),
+      cached_is_presentational_child_(false),
       cached_ancestor_exposes_active_descendant_(false),
       cached_is_editable_root_(false),
       cached_live_region_root_(nullptr),
@@ -608,26 +609,20 @@ bool AXObject::IsPasswordFieldAndShouldHideValue() const {
 }
 
 bool AXObject::IsClickable() const {
-  if (IsButton() || IsLink() || IsTextControl())
-    return true;
-
-  // TODO(dmazzoni): Ensure that kColorWellRole and kSpinButtonRole are
-  // correctly handled here via their constituent parts.
   switch (RoleValue()) {
-    // TODO(dmazzoni): Replace kComboBoxRole with two new combo box roles.
-    // Composite widget and text field.
-    case kComboBoxRole:
+    case kButtonRole:
     case kCheckBoxRole:
-    case kDisclosureTriangleRole:
-    case kListBoxRole:
+    case kColorWellRole:
+    case kComboBoxRole:
+    case kLinkRole:
     case kListBoxOptionRole:
-    case kMenuItemCheckBoxRole:
-    case kMenuItemRadioRole:
-    case kMenuItemRole:
-    case kMenuListOptionRole:
+    case kMenuButtonRole:
+    case kPopUpButtonRole:
     case kRadioButtonRole:
-    case kSwitchRole:
+    case kSpinButtonRole:
     case kTabRole:
+    case kTextFieldRole:
+    case kToggleButtonRole:
       return true;
     default:
       return false;
@@ -674,6 +669,8 @@ void AXObject::UpdateCachedAttributeValuesIfNeeded() const {
   cached_is_descendant_of_disabled_node_ = (DisabledAncestor() != 0);
   cached_has_inherited_presentational_role_ =
       (InheritsPresentationalRoleFrom() != 0);
+  cached_is_presentational_child_ =
+      (AncestorForWhichThisIsAPresentationalChild() != 0);
   cached_is_ignored_ = ComputeAccessibilityIsIgnored();
   cached_is_editable_root_ =
       GetNode() ? IsNativeTextControl() || IsRootEditableElement(*GetNode())
@@ -704,6 +701,15 @@ AXObjectInclusion AXObject::DefaultObjectInclusion(
   if (IsInertOrAriaHidden()) {
     if (ignored_reasons)
       ComputeIsInertOrAriaHidden(ignored_reasons);
+    return kIgnoreObject;
+  }
+
+  if (IsPresentationalChild()) {
+    if (ignored_reasons) {
+      AXObject* ancestor = AncestorForWhichThisIsAPresentationalChild();
+      ignored_reasons->push_back(
+          IgnoredReason(kAXAncestorDisallowsChild, ancestor));
+    }
     return kIgnoreObject;
   }
 
@@ -919,6 +925,11 @@ bool AXObject::HasInheritedPresentationalRole() const {
   return cached_has_inherited_presentational_role_;
 }
 
+bool AXObject::IsPresentationalChild() const {
+  UpdateCachedAttributeValuesIfNeeded();
+  return cached_is_presentational_child_;
+}
+
 bool AXObject::CanReceiveAccessibilityFocus() const {
   const Element* elem = GetElement();
   if (!elem)
@@ -1024,26 +1035,6 @@ bool AXObject::IsSubWidget(AccessibilityRole role) {
     default:
       break;
   }
-  return false;
-}
-
-bool AXObject::SupportsSetSizeAndPosInSet() const {
-  switch (RoleValue()) {
-    case kListBoxOptionRole:
-    case kListItemRole:
-    case kMenuItemRole:
-    case kMenuItemRadioRole:
-    case kMenuItemCheckBoxRole:
-    case kMenuListOptionRole:
-    case kRadioButtonRole:
-    case kRowRole:
-    case kTabRole:
-    case kTreeItemRole:
-      return true;
-    default:
-      break;
-  }
-
   return false;
 }
 
@@ -1355,37 +1346,28 @@ AXDefaultActionVerb AXObject::Action() const {
   if (!ActionElement())
     return AXDefaultActionVerb::kNone;
 
-  // TODO(dmazzoni): Ensure that combo box text field is handled here.
-  if (IsTextControl())
-    return AXDefaultActionVerb::kActivate;
-
-  if (IsCheckable()) {
-    return CheckedState() != kCheckedStateTrue ? AXDefaultActionVerb::kCheck
-                                               : AXDefaultActionVerb::kUncheck;
-  }
-
   switch (RoleValue()) {
     case kButtonRole:
-    case kDisclosureTriangleRole:
     case kToggleButtonRole:
       return AXDefaultActionVerb::kPress;
-    case kListBoxOptionRole:
+    case kTextFieldRole:
+      return AXDefaultActionVerb::kActivate;
     case kMenuItemRadioRole:
-    case kMenuItemRole:
-    case kMenuListOptionRole:
+    case kRadioButtonRole:
       return AXDefaultActionVerb::kSelect;
     case kLinkRole:
       return AXDefaultActionVerb::kJump;
-    // TODO(dmazzoni): Change kComboBoxRole to combo box composite widget.
-    case kComboBoxRole:
-    case kListBoxRole:
     case kPopUpButtonRole:
       return AXDefaultActionVerb::kOpen;
     default:
+      if (IsCheckable()) {
+        return CheckedState() != kCheckedStateTrue
+                   ? AXDefaultActionVerb::kCheck
+                   : AXDefaultActionVerb::kUncheck;
+      }
       return AXDefaultActionVerb::kClick;
   }
 }
-
 bool AXObject::AriaPressedIsPresent() const {
   AtomicString result;
   return HasAOMPropertyOrARIAAttribute(AOMStringProperty::kPressed, result);
@@ -1430,6 +1412,27 @@ bool AXObject::SupportsARIAAttributes() const {
 bool AXObject::SupportsRangeValue() const {
   return IsProgressIndicator() || IsMeter() || IsSlider() || IsScrollbar() ||
          IsSpinButton() || IsMoveableSplitter();
+}
+
+bool AXObject::SupportsSetSizeAndPosInSet() const {
+  AXObject* parent = ParentObjectUnignored();
+  if (!parent)
+    return false;
+
+  int role = RoleValue();
+  int parent_role = parent->RoleValue();
+
+  if ((role == kListBoxOptionRole && parent_role == kListBoxRole) ||
+      (role == kListItemRole && parent_role == kListRole) ||
+      (role == kMenuItemRole && parent_role == kMenuRole) ||
+      (role == kRadioButtonRole) ||
+      (role == kTabRole && parent_role == kTabListRole) ||
+      (role == kTreeItemRole && parent_role == kTreeRole) ||
+      (role == kTreeItemRole && parent_role == kTreeItemRole)) {
+    return true;
+  }
+
+  return false;
 }
 
 int AXObject::IndexInParent() const {
@@ -1796,9 +1799,8 @@ bool AXObject::Press() {
                                     UserGestureToken::kNewGesture);
   Element* action_elem = ActionElement();
   Event* event = Event::CreateCancelable(EventTypeNames::accessibleclick);
-  if (DispatchEventToAOMEventListeners(*event, action_elem)) {
+  if (DispatchEventToAOMEventListeners(*event, action_elem))
     return true;
-  }
 
   if (action_elem) {
     action_elem->AccessKeyAction(true);

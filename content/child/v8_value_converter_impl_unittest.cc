@@ -13,7 +13,6 @@
 #include "base/macros.h"
 #include "base/memory/ptr_util.h"
 #include "base/stl_util.h"
-#include "base/test/scoped_task_environment.h"
 #include "base/test/values_test_util.h"
 #include "base/values.h"
 #include "testing/gtest/include/gtest/gtest.h"
@@ -212,8 +211,6 @@ class V8ValueConverterImplTest : public testing::Test {
       EXPECT_EQ(base::Value::Type::NONE, temp->GetType());
     }
   }
-
-  base::test::ScopedTaskEnvironment scoped_task_environment_;
 
   v8::Isolate* isolate_;
 

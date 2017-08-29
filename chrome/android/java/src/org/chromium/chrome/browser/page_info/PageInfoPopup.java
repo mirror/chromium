@@ -415,11 +415,9 @@ public class PageInfoPopup implements OnClickListener {
             OmniboxUrlEmphasizer.EmphasizeComponentsResponse emphasizeResponse =
                     OmniboxUrlEmphasizer.parseForEmphasizeComponents(
                             mTab.getProfile(), urlBuilder.toString());
-            if (emphasizeResponse.schemeLength > 0) {
-                urlBuilder.setSpan(
-                        new TextAppearanceSpan(mUrlTitle.getContext(), R.style.RobotoMediumStyle),
-                        0, emphasizeResponse.schemeLength, Spannable.SPAN_EXCLUSIVE_INCLUSIVE);
-            }
+            urlBuilder.setSpan(
+                    new TextAppearanceSpan(mUrlTitle.getContext(), R.style.RobotoMediumStyle), 0,
+                    emphasizeResponse.schemeLength, Spannable.SPAN_EXCLUSIVE_INCLUSIVE);
         }
         mUrlTitle.setText(urlBuilder);
 

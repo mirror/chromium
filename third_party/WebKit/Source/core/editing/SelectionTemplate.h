@@ -50,11 +50,6 @@ class CORE_EXPORT SelectionTemplate final {
     // Select all children in |node|.
     Builder& SelectAllChildren(const Node& /* node */);
 
-    // Note: Since collapsed selection is a forward selection, we can't use
-    // |SetAsBackwardSelection()| for collapsed range.
-    Builder& SetAsBackwardSelection(const EphemeralRangeTemplate<Strategy>&);
-    Builder& SetAsForwardSelection(const EphemeralRangeTemplate<Strategy>&);
-
     Builder& SetBaseAndExtent(const EphemeralRangeTemplate<Strategy>&);
 
     // |extent| can not be null if |base| isn't null.

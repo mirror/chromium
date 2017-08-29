@@ -17,7 +17,9 @@
 #include "third_party/WebKit/public/web/WebKit.h"
 
 #if defined(OS_ANDROID)
+#include "base/android/jni_android.h"
 #include "media/base/android/media_codec_util.h"
+#include "media/base/android/media_jni_registrar.h"
 #endif
 
 #if !defined(OS_IOS)
@@ -74,6 +76,8 @@ void BlinkMediaTestSuite::Initialize() {
   base::TestSuite::Initialize();
 
 #if defined(OS_ANDROID)
+  media::RegisterJni(base::android::AttachCurrentThread());
+
   if (media::MediaCodecUtil::IsMediaCodecAvailable())
     media::EnablePlatformDecoderSupport();
 #endif

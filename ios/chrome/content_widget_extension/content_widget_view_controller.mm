@@ -4,6 +4,8 @@
 
 #import "ios/chrome/content_widget_extension/content_widget_view_controller.h"
 
+#import <NotificationCenter/NotificationCenter.h>
+
 #include "base/ios/ios_util.h"
 #include "base/mac/foundation_util.h"
 #include "base/strings/sys_string_conversions.h"
@@ -68,20 +70,11 @@ const CGFloat widgetCompactHeightIOS9 = 110;
                 .height
           : widgetCompactHeightIOS9;
 
-  CGFloat width =
-      self.extensionContext && base::ios::IsRunningOnIOS10OrLater()
-          ? [self.extensionContext
-                widgetMaximumSizeForDisplayMode:NCWidgetDisplayModeCompact]
-                .width
-          // On the today view <iOS10, the full screen size is useable.
-          : [UIScreen mainScreen].bounds.size.width;
-
   // A local variable is necessary here as the property is declared weak and the
   // object would be deallocated before being retained by the addSubview call.
   ContentWidgetView* widgetView =
       [[ContentWidgetView alloc] initWithDelegate:self
                                     compactHeight:height
-                                            width:width
                                  initiallyCompact:self.isCompact];
   self.widgetView = widgetView;
   [self.view addSubview:self.widgetView];
@@ -185,15 +178,15 @@ const CGFloat widgetCompactHeightIOS9 = 110;
       base::SysUTF8ToNSString(app_group::kChromeAppGroupCommandAppPreference);
   NSString* commandPrefKey = base::SysUTF8ToNSString(
       app_group::kChromeAppGroupCommandCommandPreference);
-  NSString* URLPrefKey =
-      base::SysUTF8ToNSString(app_group::kChromeAppGroupCommandURLPreference);
+  NSString* paramPrefKey = base::SysUTF8ToNSString(
+      app_group::kChromeAppGroupCommandParameterPreference);
 
   NSDictionary* commandDict = @{
     timePrefKey : [NSDate date],
-    appPrefKey : app_group::kOpenCommandSourceContentExtension,
+    appPrefKey : @"TodayExtension",
     commandPrefKey :
         base::SysUTF8ToNSString(app_group::kChromeAppGroupOpenURLCommand),
-    URLPrefKey : URL.absoluteString,
+    paramPrefKey : URL.absoluteString,
   };
 
   [sharedDefaults setObject:commandDict forKey:defaultsKey];

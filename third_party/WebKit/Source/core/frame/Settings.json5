@@ -300,13 +300,6 @@
       initial: true,
     },
 
-    // Determines whether the barrel on stylus input should be used for selecting
-    // text and dragging.
-    {
-      name: "barrelButtonForDragEnabled",
-      initial: false,
-    },
-
     {
       name: "syncXHRInDocumentsEnabled",
       initial: true,
@@ -962,10 +955,6 @@
       name: "highContrastImagePolicy",
       initial: "HighContrastImagePolicy::kFilterAll",
       type: "HighContrastImagePolicy",
-    },
-    {
-      name: "mediaDownloadInProductHelpEnabled",
-      initial: false,
     }
   ],
 }

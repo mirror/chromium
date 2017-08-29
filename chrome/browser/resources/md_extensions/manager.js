@@ -94,14 +94,6 @@ cr.define('extensions', function() {
         },
       },
 
-      /** @private {extensions.ShowingType} */
-      listType_: Number,
-
-      itemsList_: {
-        type: Array,
-        computed: 'computeList_(listType_)',
-      },
-
       /**
        * Prevents page content from showing before data is first loaded.
        * @private
@@ -140,6 +132,19 @@ cr.define('extensions', function() {
       this.navigationHelper_ = new extensions.NavigationHelper(newPage => {
         this.changePage(newPage, true);
       });
+      this.optionsDialog.addEventListener('close', () => {
+        // We update the page when the options dialog closes, but only if we're
+        // still on the details page. We could be on a different page if the
+        // user hit back while the options dialog was visible; in that case, the
+        // new page is already correct.
+        if (this.currentPage_ && this.currentPage_.page == Page.DETAILS) {
+          // This will update the currentPage_ and the NavigationHelper; since
+          // the active page is already the details page, no main page
+          // transition occurs.
+          this.changePage(
+              {page: Page.DETAILS, extensionId: this.currentPage_.extensionId});
+        }
+      });
     },
 
     get keyboardShortcuts() {
@@ -160,6 +165,14 @@ cr.define('extensions', function() {
 
     get errorPage() {
       return this.$['error-page'];
+    },
+
+    /**
+     * Shows the details view for a given item.
+     * @param {!chrome.developerPrivate.ExtensionInfo} data
+     */
+    showItemDetails: function(data) {
+      this.changePage({page: Page.DETAILS, extensionId: data.id});
     },
 
     /**
@@ -317,7 +330,6 @@ cr.define('extensions', function() {
      */
     changePage: function(newPage, isSilent) {
       if (this.currentPage_ && this.currentPage_.page == newPage.page &&
-          this.currentPage_.type == newPage.type &&
           this.currentPage_.subpage == newPage.subpage &&
           this.currentPage_.extensionId == newPage.extensionId) {
         return;
@@ -333,9 +345,6 @@ cr.define('extensions', function() {
       if (newPage.extensionId)
         data = assert(this.getData_(newPage.extensionId));
 
-      if (newPage.hasOwnProperty('type'))
-        this.listType_ = newPage.type;
-
       if (toPage == Page.DETAILS)
         this.detailViewItem_ = assert(data);
       else if (toPage == Page.ERRORS)
@@ -344,9 +353,6 @@ cr.define('extensions', function() {
       if (fromPage != toPage) {
         /** @type {extensions.ViewManager} */ (this.$.viewManager)
             .switchView(toPage);
-      } else {
-        /** @type {extensions.ViewManager} */ (this.$.viewManager)
-            .animateCurrentView('fade-in');
       }
 
       if (newPage.subpage) {
@@ -367,7 +373,7 @@ cr.define('extensions', function() {
      * @private
      */
     onShouldShowItemDetails_: function(e) {
-      this.changePage({page: Page.DETAILS, extensionId: e.detail.data.id});
+      this.showItemDetails(e.detail.data);
     },
 
     /**
@@ -383,52 +389,19 @@ cr.define('extensions', function() {
     onDetailsViewClose_: function() {
       // Note: we don't reset detailViewItem_ here because doing so just causes
       // extra work for the data-bound details view.
-      this.changePage({page: Page.LIST, type: this.listType_});
+      this.changePage({page: Page.LIST});
     },
 
     /** @private */
     onErrorPageClose_: function() {
       // Note: we don't reset errorPageItem_ here because doing so just causes
       // extra work for the data-bound error page.
-      this.changePage({page: Page.LIST, type: this.listType_});
+      this.changePage({page: Page.LIST});
     },
 
     /** @private */
     onPackTap_: function() {
       this.$['pack-dialog'].show();
-    },
-
-    /** @private */
-    onOptionsDialogClose_: function() {
-      // We update the page when the options dialog closes, but only if we're
-      // still on the details page. We could be on a different page if the
-      // user hit back while the options dialog was visible; in that case, the
-      // new page is already correct.
-      if (this.currentPage_ && this.currentPage_.page == Page.DETAILS) {
-        // This will update the currentPage_ and the NavigationHelper; since
-        // the active page is already the details page, no main page
-        // transition occurs.
-        this.changePage(
-            {page: Page.DETAILS, extensionId: this.currentPage_.extensionId});
-      }
-    },
-
-    /**
-     * @param {!extensions.ShowingType} listType
-     * @private
-     */
-    computeList_: function(listType) {
-      // TODO(scottchen): the .slice is required to trigger the binding
-      // correctly, otherwise the list won't rerender. Should investigate
-      // the performance implication, or find better ways to trigger change.
-      switch (listType) {
-        case extensions.ShowingType.EXTENSIONS:
-          this.linkPaths('itemsList_', 'extensions');
-          return this.extensions;
-        case extensions.ShowingType.APPS:
-          this.linkPaths('itemsList_', 'apps');
-          return this.apps;
-      }
     }
   });
 
@@ -440,9 +413,19 @@ cr.define('extensions', function() {
     }
 
     /** @override */
-    showType(listType) {
+    showType(type) {
       let items;
-      this.manager_.changePage({page: Page.LIST, type: listType});
+      switch (type) {
+        case extensions.ShowingType.EXTENSIONS:
+          items = this.manager_.extensions;
+          break;
+        case extensions.ShowingType.APPS:
+          items = this.manager_.apps;
+          break;
+      }
+
+      this.manager_.$ /* hack */['items-list'].set('items', assert(items));
+      this.manager_.changePage({page: Page.LIST});
     }
 
     /** @override */

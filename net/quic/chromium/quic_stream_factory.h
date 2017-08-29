@@ -396,6 +396,8 @@ class NET_EXPORT_PRIVATE QuicStreamFactory
   typedef std::map<IPEndPoint, SessionSet> IPAliasMap;
   typedef std::map<QuicChromiumClientSession*, IPEndPoint> SessionPeerIPMap;
   typedef std::map<QuicServerId, std::unique_ptr<Job>> JobMap;
+  typedef std::set<QuicStreamRequest*> RequestSet;
+  typedef std::map<QuicServerId, RequestSet> ServerIDRequestsMap;
   typedef std::map<QuicServerId, std::unique_ptr<CertVerifierJob>>
       CertVerifierJobMap;
 
@@ -512,6 +514,8 @@ class NET_EXPORT_PRIVATE QuicStreamFactory
   QuicCryptoClientConfig crypto_config_;
 
   JobMap active_jobs_;
+  // Map from QuicServerId to a set of non-owning QuicStreamRequest pointers.
+  ServerIDRequestsMap job_requests_map_;
 
   // Map of QuicServerId to owning CertVerifierJob.
   CertVerifierJobMap active_cert_verifier_jobs_;
@@ -559,9 +563,7 @@ class NET_EXPORT_PRIVATE QuicStreamFactory
 
   // Local address of socket that was created in CreateSession.
   IPEndPoint local_address_;
-  // True if we need to check HttpServerProperties if QUIC was supported last
-  // time.
-  bool need_to_check_persisted_supports_quic_;
+  bool check_persisted_supports_quic_;
 
   NetworkConnection network_connection_;
 

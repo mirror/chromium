@@ -8,8 +8,6 @@
 #include <magenta/syscalls.h>
 
 #include "base/debug/activity_tracker.h"
-#include "base/fuchsia/default_job.h"
-#include "base/strings/stringprintf.h"
 
 namespace base {
 
@@ -51,7 +49,7 @@ Process Process::Open(ProcessId pid) {
   // mx_job_default() might not contain it, so this call can fail.
   ScopedMxHandle handle;
   mx_status_t status = mx_object_get_child(
-      GetDefaultJob(), pid, MX_RIGHT_SAME_RIGHTS, handle.receive());
+      mx_job_default(), pid, MX_RIGHT_SAME_RIGHTS, handle.receive());
   if (status != MX_OK) {
     DLOG(ERROR) << "mx_object_get_child failed: " << status;
     return Process();
@@ -161,13 +159,6 @@ bool Process::WaitForExitWithTimeout(TimeDelta timeout, int* exit_code) const {
   mx_time_t deadline = timeout == TimeDelta::Max()
                            ? MX_TIME_INFINITE
                            : (TimeTicks::Now() + timeout).ToMXTime();
-  // TODO(scottmg): https://crbug.com/755282
-  const bool kOnBot = getenv("CHROME_HEADLESS") != nullptr;
-  if (kOnBot) {
-    LOG(ERROR) << base::StringPrintf(
-        "going to wait for process %x (deadline=%zu, now=%zu)", process_.get(),
-        deadline, TimeTicks::Now().ToMXTime());
-  }
   mx_signals_t signals_observed = 0;
   mx_status_t status = mx_object_wait_one(process_.get(), MX_TASK_TERMINATED,
                                           deadline, &signals_observed);
@@ -179,11 +170,8 @@ bool Process::WaitForExitWithTimeout(TimeDelta timeout, int* exit_code) const {
     LOG(ERROR) << "mx_object_wait_one failed, status=" << status;
     return false;
   }
-  if (status == MX_ERR_TIMED_OUT) {
-    mx_time_t now = TimeTicks::Now().ToMXTime();
-    LOG(ERROR) << "mx_object_wait_one timed out, signals=" << signals_observed
-               << ", deadline=" << deadline << ", now=" << now
-               << ", delta=" << (now - deadline);
+  if (status == MX_ERR_TIMED_OUT && !signals_observed) {
+    LOG(ERROR) << "mx_object_wait_one timed out, and no signals";
     return false;
   }
 

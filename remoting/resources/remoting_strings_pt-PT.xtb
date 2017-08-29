@@ -23,6 +23,7 @@ Para mais informações acerca da privacidade, consulte a Política de Privacida
 <translation id="1520828917794284345">Redimensionar o ambiente de trabalho para ajustar ao tamanho</translation>
 <translation id="154040539590487450">Falha ao iniciar o serviço de acesso remoto.</translation>
 <translation id="1546934824884762070">Ocorreu um erro inesperado. Comunique este problema aos programadores.</translation>
+<translation id="1619813076098775562">Terminou a ligação ao Dispositivo de transmissão.</translation>
 <translation id="1643640058022401035">Se sair desta página, terminará a sessão do Chromoting.</translation>
 <translation id="1654128982815600832">A ativar as ligações remotas neste computador…</translation>
 <translation id="170207782578677537">Falha ao registar o computador.</translation>
@@ -40,6 +41,10 @@ Para mais informações acerca da privacidade, consulte a Política de Privacida
 <translation id="2013996867038862849">Todos os clientes sincronizados foram eliminados.</translation>
 <translation id="2038229918502634450">O anfitrião está a reiniciar para incorporar uma alteração de política.</translation>
 <translation id="2046651113449445291">Os seguintes clientes foram sincronizados com este computador e podem ligar-se sem fornecer um PIN. É possível revogar esta autorização em qualquer altura, individualmente ou para todos os clientes.</translation>
+<translation id="2053901200959289492">• Suporte Multijanelas adicionado para o Android Nougat.
+• Melhoria da qualidade de imagem no ambiente de trabalho, da capacidade de resposta e do consumo da bateria.
+• Melhor capacidade de resposta das operações de arrastar e largar.
+• Vários efeitos de animação da IU melhorados.</translation>
 <translation id="2078880767960296260">Processo do Anfitrião</translation>
 <translation id="20876857123010370">Modo de trackpad</translation>
 <translation id="2089514346391228378">Foram ativadas as ligações remotas neste computador.</translation>
@@ -75,7 +80,6 @@ Para mais informações acerca da privacidade, consulte a Política de Privacida
 <translation id="2676780859508944670">Em execução...</translation>
 <translation id="2699970397166997657">Chromoting</translation>
 <translation id="2747641796667576127">As atualizações de software normalmente ocorrem automaticamente, embora possam falhar nalguns casos raros. A atualização de software não deve demorar mais do que alguns minutos e pode ser feita através do acesso remoto ao seu computador.</translation>
-<translation id="2758123043070977469">Ocorreu um problema na autenticação. Inicie sessão novamente.</translation>
 <translation id="2803375539583399270">Introduzir PIN</translation>
 <translation id="2841013758207633010">Tempo</translation>
 <translation id="2851754573186462851">Chromium App Streaming</translation>
@@ -171,6 +175,12 @@ Para mais informações acerca da privacidade, consulte a Política de Privacida
 <translation id="5156271271724754543">Introduza o mesmo PIN em ambas as caixas.</translation>
 <translation id="5170982930780719864">ID de anfitrião inválido.</translation>
 <translation id="518094545883702183">Estas informações apenas são utilizadas para diagnosticar o problema que está a comunicar, apenas estão disponíveis para quem está a investigar o relatório e não são mantidas por mais de 30 dias.</translation>
+<translation id="5196958630269420102">Aceda aos seus computadores em segurança a partir do seu dispositivo iOS.
+
+• Em cada um dos computadores, configure o acesso remoto com a aplicação Ambiente de Trabalho Remoto do Chrome a partir da Web Store do Chrome: https://chrome.google.com/remotedesktop
+• No seu dispositivo iOS, abra a aplicação e toque em qualquer um dos computadores online para ligar.
+
+Para obter informações acerca da privacidade, consulte a Política de Privacidade da Google (http://goo.gl/SyrVzj) e a Política de Privacidade do Chrome (http://goo.gl/0uXE5d).</translation>
 <translation id="5204575267916639804">Perguntas frequentes</translation>
 <translation id="5222676887888702881">Terminar sessão</translation>
 <translation id="5254120496627797685">Se sair desta página, terminará a sessão do Ambiente de Trabalho Remoto do Chrome.</translation>
@@ -183,6 +193,7 @@ Para mais informações acerca da privacidade, consulte a Política de Privacida
 <translation id="5419418238395129586">Último acesso online: <ph name="DATE" /></translation>
 <translation id="544077782045763683">O anfitrião foi desligado.</translation>
 <translation id="5510035215749041527">Desligar agora</translation>
+<translation id="5537725057119320332">Transmitir</translation>
 <translation id="5593560073513909978">O serviço está temporariamente indisponível. Tente novamente mais tarde.</translation>
 <translation id="5601503069213153581">PIN</translation>
 <translation id="5619148062500147964">A este computador</translation>
@@ -191,10 +202,10 @@ Para mais informações acerca da privacidade, consulte a Política de Privacida
 <translation id="5708869785009007625">O seu ambiente de trabalho está a ser atualmente partilhado com <ph name="USER" />.</translation>
 <translation id="5773590752998175013">Data da sincronização</translation>
 <translation id="579702532610384533">Restabelecer ligação</translation>
-<translation id="5810269635982033450">O ecrã funciona como um trackpad</translation>
 <translation id="5841343754884244200">Opções de visualização</translation>
 <translation id="5843054235973879827">Porque é que isto é seguro?</translation>
 <translation id="5859141382851488196">Nova janela…</translation>
+<translation id="5885438903806970186">Online.</translation>
 <translation id="6011539954251327702">O Chromoting permite partilhar o computador de forma segura através da Web. Ambos os utilizadores devem ter em execução a aplicação Chromoting, que pode ser encontrada em <ph name="URL" />.</translation>
 <translation id="6033507038939587647">Opções do teclado</translation>
 <translation id="6040143037577758943">Fechar</translation>
@@ -224,6 +235,11 @@ Para mais informações acerca da privacidade, consulte a Política de Privacida
 <translation id="6570205395680337606">Reponha a aplicação. O trabalho não guardado é perdido.</translation>
 <translation id="6572345186230665992">Para Mac (OS X Mavericks 10.9 e superior)</translation>
 <translation id="6583902294974160967">Apoio técnico</translation>
+<translation id="6598484667010442494">Ambiente de Trabalho Remoto do Chrome
+Ambiente de Trabalho Remoto
+PC remoto
+Computador remoto
+Acesso remoto</translation>
 <translation id="6612717000975622067">Enviar Ctrl-Alt-Del</translation>
 <translation id="6668065415969892472">O seu PIN foi atualizado.</translation>
 <translation id="6681800064886881394">Copyright 2013 Google Inc. Todos os Direitos Reservados.</translation>
@@ -243,7 +259,7 @@ Para mais informações acerca da privacidade, consulte a Política de Privacida
 <translation id="7019153418965365059">Erro de anfitrião não reconhecido: <ph name="HOST_OFFLINE_REASON" />.</translation>
 <translation id="701976023053394610">Assistência Remota</translation>
 <translation id="7038683108611689168">Ajude-nos a melhorar o Chromoting, permitindo-nos recolher estatísticas de utilização e relatórios de falhas.</translation>
-<translation id="7067321367069083429">O ecrã funciona como um ecrã tátil</translation>
+<translation id="712467900648340229">Falha na ligação ao Dispositivo de transmissão.</translation>
 <translation id="7144878232160441200">Repetir</translation>
 <translation id="7149517134817561223">Aplicação para emitir comandos para o anfitrião do Ambiente de Trabalho Remoto do Chrome.</translation>
 <translation id="7215059001581613786">Introduza um PIN com seis ou mais dígitos.</translation>

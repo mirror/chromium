@@ -7,10 +7,11 @@
 
 namespace content {
 
-// TODO(jinsukkim): Remove this interface.
 class ContentViewCoreObserver {
  public:
   virtual void OnContentViewCoreDestroyed() = 0;
+  virtual void OnAttachedToWindow() = 0;
+  virtual void OnDetachedFromWindow() = 0;
 
  protected:
   virtual ~ContentViewCoreObserver() {}

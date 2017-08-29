@@ -44,7 +44,7 @@ void ClipboardAPI::OnClipboardDataChanged() {
     std::unique_ptr<Event> event(
         new Event(events::CLIPBOARD_ON_CLIPBOARD_DATA_CHANGED,
                   clipboard::OnClipboardDataChanged::kEventName,
-                  std::make_unique<base::ListValue>()));
+                  base::MakeUnique<base::ListValue>()));
     router->BroadcastEvent(std::move(event));
   }
 }
@@ -58,7 +58,7 @@ ExtensionFunction::ResponseAction ClipboardSetImageDataFunction::Run() {
 
   // Fill in the omitted additional data items with empty data.
   if (!params->additional_items)
-    params->additional_items = std::make_unique<AdditionalDataItemList>();
+    params->additional_items = base::MakeUnique<AdditionalDataItemList>();
 
   if (!IsAdditionalItemsParamValid(*params->additional_items)) {
     return RespondNow(Error("Unsupported additionalItems parameter data."));

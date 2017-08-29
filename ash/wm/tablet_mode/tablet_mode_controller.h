@@ -9,11 +9,10 @@
 
 #include "ash/ash_export.h"
 #include "ash/display/window_tree_host_manager.h"
-#include "ash/public/interfaces/tablet_mode.mojom.h"
+#include "ash/public/interfaces/touch_view.mojom.h"
 #include "ash/session/session_observer.h"
 #include "ash/shell_observer.h"
 #include "base/compiler_specific.h"
-#include "base/feature_list.h"
 #include "base/macros.h"
 #include "base/memory/weak_ptr.h"
 #include "base/observer_list.h"
@@ -45,27 +44,23 @@ class TabletModeObserver;
 class TabletModeWindowManager;
 class TabletModeWindowManagerTest;
 
-// Auto hides title bars in tablet mode.
-ASH_EXPORT extern const base::Feature kAutoHideTitleBarsInTabletMode;
-
 // TabletModeController listens to accelerometer events and automatically
 // enters and exits tablet mode when the lid is opened beyond the triggering
 // angle and rotates the display to match the device when in tablet mode.
 class ASH_EXPORT TabletModeController
     : public chromeos::AccelerometerReader::Observer,
       public chromeos::PowerManagerClient::Observer,
-      public mojom::TabletModeManager,
+      public mojom::TouchViewManager,
       public ShellObserver,
       public WindowTreeHostManager::Observer,
       public SessionObserver {
  public:
   // Used for keeping track if the user wants the machine to behave as a
-  // clamshell/tabletmode regardless of hardware orientation.
-  // TODO(oshima): Move this to common place.
-  enum class UiMode {
+  // clamshell/touchview regardless of hardware orientation.
+  enum class ForceTabletMode {
     NONE = 0,
     CLAMSHELL,
-    TABLETMODE,
+    TOUCHVIEW,
   };
 
   TabletModeController();
@@ -92,15 +87,11 @@ class ASH_EXPORT TabletModeController
   // If the tablet mode is not enabled no action will be performed.
   void AddWindow(aura::Window* window);
 
-  // Binds the mojom::TabletModeManager interface request to this object.
-  void BindRequest(mojom::TabletModeManagerRequest request);
+  // Binds the mojom::TouchViewManager interface request to this object.
+  void BindRequest(mojom::TouchViewManagerRequest request);
 
   void AddObserver(TabletModeObserver* observer);
   void RemoveObserver(TabletModeObserver* observer);
-
-  // Checks if we should auto hide title bars in tablet mode. Returns true if
-  // the feature is enabled and we are in tablet mode.
-  bool ShouldAutoHideTitlebars() const;
 
   // ShellObserver:
   void OnShellInitialized() override;
@@ -130,10 +121,10 @@ class ASH_EXPORT TabletModeController
   friend class VirtualKeyboardControllerTest;
 
   // Used for recording metrics for intervals of time spent in
-  // and out of TabletMode.
-  enum TabletModeIntervalType {
-    TABLET_MODE_INTERVAL_INACTIVE,
-    TABLET_MODE_INTERVAL_ACTIVE
+  // and out of TouchView.
+  enum TouchViewIntervalType {
+    TOUCH_VIEW_INTERVAL_INACTIVE,
+    TOUCH_VIEW_INTERVAL_ACTIVE
   };
 
   // Set the TickClock. This is only to be used by tests that need to
@@ -159,19 +150,19 @@ class ASH_EXPORT TabletModeController
   // is no rotation lock.
   void LeaveTabletMode();
 
-  // Record UMA stats tracking TabletMode usage. If |type| is
-  // TABLET_MODE_INTERVAL_INACTIVE, then record that TabletMode has been
-  // inactive from |tabletmode_usage_interval_start_time_| until now.
-  // Similarly, record that TabletMode has been active if |type| is
-  // TABLET_MODE_INTERVAL_ACTIVE.
-  void RecordTabletModeUsageInterval(TabletModeIntervalType type);
+  // Record UMA stats tracking TouchView usage. If |type| is
+  // TOUCH_VIEW_INTERVAL_INACTIVE, then record that TouchView has been
+  // inactive from |touchview_usage_interval_start_time_| until now.
+  // Similarly, record that TouchView has been active if |type| is
+  // TOUCH_VIEW_INTERVAL_ACTIVE.
+  void RecordTouchViewUsageInterval(TouchViewIntervalType type);
 
-  // Returns TABLET_MODE_INTERVAL_ACTIVE if TabletMode is currently active,
-  // otherwise returns TABLET_MODE_INTERNAL_INACTIVE.
-  TabletModeIntervalType CurrentTabletModeIntervalType();
+  // Returns TOUCH_VIEW_INTERVAL_ACTIVE if TouchView is currently active,
+  // otherwise returns TOUCH_VIEW_INTERNAL_INACTIVE.
+  TouchViewIntervalType CurrentTouchViewIntervalType();
 
-  // mojom::TabletModeManager:
-  void AddObserver(mojom::TabletModeObserverPtr observer) override;
+  // mojom::TouchViewManager:
+  void AddObserver(mojom::TouchViewObserverPtr observer) override;
 
   // Checks whether we want to allow entering and exiting tablet mode. This
   // returns false if the user set a flag for the software to behave in a
@@ -191,10 +182,10 @@ class ASH_EXPORT TabletModeController
   // Whether both accelerometers are available.
   bool can_detect_lid_angle_;
 
-  // Tracks time spent in (and out of) tabletmode mode.
-  base::Time tabletmode_usage_interval_start_time_;
-  base::TimeDelta total_tabletmode_time_;
-  base::TimeDelta total_non_tabletmode_time_;
+  // Tracks time spent in (and out of) touchview mode.
+  base::Time touchview_usage_interval_start_time_;
+  base::TimeDelta total_touchview_time_;
+  base::TimeDelta total_non_touchview_time_;
 
   // Tracks the last time we received a lid open event. This is used to suppress
   // erroneous accelerometer readings as the lid is opened but the accelerometer
@@ -210,23 +201,20 @@ class ASH_EXPORT TabletModeController
   // Tracks when the lid is closed. Used to prevent entering tablet mode.
   bool lid_is_closed_;
 
-  // Whether title bars should be shown be auto hidden in tablet mode.
-  const bool auto_hide_title_bars_ = false;
-
   // Tracks smoothed accelerometer data over time. This is done when the hinge
   // is approaching vertical to remove abrupt acceleration that can lead to
   // incorrect calculations of hinge angles.
   gfx::Vector3dF base_smoothed_;
   gfx::Vector3dF lid_smoothed_;
 
-  // Bindings for the TabletModeManager interface.
-  mojo::BindingSet<mojom::TabletModeManager> bindings_;
+  // Bindings for the TouchViewManager interface.
+  mojo::BindingSet<mojom::TouchViewManager> bindings_;
 
-  // The set of tabletmode observers to be notified about mode changes.
-  mojo::InterfacePtrSet<mojom::TabletModeObserver> observers_;
+  // The set of touchview observers to be notified about mode changes.
+  mojo::InterfacePtrSet<mojom::TouchViewObserver> observers_;
 
-  // Tracks whether a flag is used to force ui mode.
-  UiMode force_ui_mode_ = UiMode::NONE;
+  // Tracks whether a flag is used to force tablet mode.
+  ForceTabletMode force_tablet_mode_ = ForceTabletMode::NONE;
 
   ScopedSessionObserver scoped_session_observer_;
 

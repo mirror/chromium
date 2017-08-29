@@ -109,14 +109,21 @@ typedef NS_ENUM(NSInteger, ItemType) {
 // phase to avoid observing services for a browser state that is being killed.
 - (void)stopBrowserStateServiceObservers;
 
+@property(nonatomic, readonly, weak)
+    id<ApplicationCommands, ApplicationSettingsCommands>
+        dispatcher;
+
 @end
 
 @implementation AccountsCollectionViewController
 
 @synthesize dispatcher = _dispatcher;
 
-- (instancetype)initWithBrowserState:(ios::ChromeBrowserState*)browserState
-           closeSettingsOnAddAccount:(BOOL)closeSettingsOnAddAccount {
+- (instancetype)
+     initWithBrowserState:(ios::ChromeBrowserState*)browserState
+closeSettingsOnAddAccount:(BOOL)closeSettingsOnAddAccount
+               dispatcher:(id<ApplicationCommands, ApplicationSettingsCommands>)
+                              dispatcher {
   DCHECK(browserState);
   DCHECK(!browserState->IsOffTheRecord());
   UICollectionViewLayout* layout = [[MDCCollectionViewFlowLayout alloc] init];
@@ -125,6 +132,7 @@ typedef NS_ENUM(NSInteger, ItemType) {
   if (self) {
     _browserState = browserState;
     _closeSettingsOnAddAccount = closeSettingsOnAddAccount;
+    _dispatcher = dispatcher;
     browser_sync::ProfileSyncService* syncService =
         IOSChromeProfileSyncServiceFactory::GetForBrowserState(_browserState);
     _syncObserver.reset(new SyncObserverBridge(self, syncService));
@@ -434,11 +442,10 @@ typedef NS_ENUM(NSInteger, ItemType) {
     return;
   }
 
-  SyncSettingsCollectionViewController* controllerToPush =
+  UIViewController* controllerToPush =
       [[SyncSettingsCollectionViewController alloc]
             initWithBrowserState:_browserState
           allowSwitchSyncAccount:YES];
-  controllerToPush.dispatcher = self.dispatcher;
   [self.navigationController pushViewController:controllerToPush animated:YES];
 }
 

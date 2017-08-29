@@ -87,7 +87,10 @@ config("subcomponent_config") {
   visibility = media_subcomponent_deps
   if (is_mac) {
     visibility += [ "//media/base/mac" ]
+  } else if (is_win) {
+    visibility += [ "//media/base/win" ]
   }
+
   defines = [ "MEDIA_IMPLEMENTATION" ]
   configs = [ ":media_config" ]
 }
@@ -133,6 +136,7 @@ component("media") {
 source_set("unit_tests") {
   testonly = true
   sources = [
+    "device_monitors/system_message_window_win_unittest.cc",
     "filters/audio_clock_unittest.cc",
     "filters/audio_decoder_selector_unittest.cc",
     "filters/audio_renderer_algorithm_unittest.cc",
@@ -288,6 +292,9 @@ source_set("unit_tests") {
         "filters/ffmpeg_h264_to_annex_b_bitstream_converter_unittest.cc",
       ]
     }
+    if (enable_hevc_demuxing) {
+      sources += [ "filters/h265_parser_unittest.cc" ]
+    }
     if (enable_hls_sample_aes) {
       deps += [ "//third_party/boringssl" ]
     }
@@ -329,7 +336,7 @@ test("media_unittests") {
     "//media/audio:unit_tests",
     "//media/base:unit_tests",
     "//media/cdm:unit_tests",
-    "//media/device_monitors:unit_tests",
+    "//media/ffmpeg:unit_tests",
     "//media/gpu:unit_tests",
     "//media/mojo:unit_tests",
     "//media/renderers:unit_tests",
@@ -337,10 +344,6 @@ test("media_unittests") {
     "//media/test:run_all_unittests",
     "//media/video:unit_tests",
   ]
-
-  if (media_use_ffmpeg) {
-    deps += [ "//media/ffmpeg:unit_tests" ]
-  }
 
   if (is_android) {
     deps += [

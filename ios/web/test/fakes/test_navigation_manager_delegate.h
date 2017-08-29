@@ -7,7 +7,6 @@
 
 #import "ios/web/navigation/navigation_manager_delegate.h"
 
-class GURL;
 @protocol CRWWebViewNavigationProxy;
 
 namespace web {
@@ -17,7 +16,8 @@ class TestNavigationManagerDelegate : public NavigationManagerDelegate {
   void ClearTransientContent() override;
   void RecordPageStateInNavigationItem() override;
   void UpdateHtml5HistoryState() override;
-  void WillLoadCurrentItemWithUrl(const GURL&) override;
+  void WillLoadCurrentItemWithParams(const NavigationManager::WebLoadParams&,
+                                     bool is_initial_navigation) override;
   void WillChangeUserAgentType() override;
   void LoadCurrentItem() override;
   void LoadIfNecessary() override;

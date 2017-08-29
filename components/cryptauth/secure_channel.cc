@@ -69,6 +69,11 @@ SecureChannel::SecureChannel(std::unique_ptr<Connection> connection,
       connection_(std::move(connection)),
       cryptauth_service_(cryptauth_service),
       weak_ptr_factory_(this) {
+  DCHECK(connection_);
+  DCHECK(!connection_->IsConnected());
+  DCHECK(!connection_->remote_device().user_id.empty());
+  DCHECK(cryptauth_service);
+
   connection_->AddObserver(this);
 }
 
@@ -98,11 +103,7 @@ int SecureChannel::SendMessage(const std::string& feature,
 
 void SecureChannel::Disconnect() {
   if (connection_->IsConnected()) {
-    // If |connection_| is active, calling Disconnect() will eventually cause
-    // its status to transition to DISCONNECTED, which will in turn cause this
-    // class to transition to DISCONNECTED.
     connection_->Disconnect();
-    return;
   }
 
   TransitionToStatus(Status::DISCONNECTED);
@@ -156,19 +157,7 @@ void SecureChannel::OnMessageReceived(const Connection& connection,
 void SecureChannel::OnSendCompleted(const cryptauth::Connection& connection,
                                     const cryptauth::WireMessage& wire_message,
                                     bool success) {
-  if (wire_message.feature() == Authenticator::kAuthenticationFeature) {
-    // No need to process authentication messages; these are handled by
-    // |authenticator_|.
-    return;
-  }
-
-  if (!pending_message_) {
-    PA_LOG(ERROR) << "OnSendCompleted(), but a send was not expected to be in "
-                  << "progress. Disconnecting from "
-                  << connection_->GetDeviceAddress();
-    Disconnect();
-    return;
-  }
+  DCHECK(pending_message_->feature == wire_message.feature());
 
   if (success && status_ != Status::DISCONNECTED) {
     pending_message_.reset();

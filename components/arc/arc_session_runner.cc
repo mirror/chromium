@@ -8,7 +8,6 @@
 #include "base/memory/ref_counted.h"
 #include "base/task_runner.h"
 #include "chromeos/dbus/dbus_thread_manager.h"
-#include "components/arc/arc_util.h"
 
 namespace arc {
 
@@ -16,6 +15,10 @@ namespace {
 
 constexpr base::TimeDelta kDefaultRestartDelay =
     base::TimeDelta::FromSeconds(5);
+
+// TODO(yusukes): This is a workaround for crbug.com/756687. Remove the code
+// once the issue is fixed.
+bool g_emit_login_prompt_visible_called_called = false;
 
 chromeos::SessionManagerClient* GetSessionManagerClient() {
   // If the DBusThreadManager or the SessionManagerClient aren't available,
@@ -143,16 +146,16 @@ bool ArcSessionRunner::IsStopped() const {
   return state_ == State::STOPPED;
 }
 
-bool ArcSessionRunner::IsLoginScreenInstanceStarting() const {
-  DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
-  return state_ == State::STARTING_FOR_LOGIN_SCREEN;
-}
-
 void ArcSessionRunner::SetRestartDelayForTesting(
     const base::TimeDelta& restart_delay) {
   DCHECK_EQ(state_, State::STOPPED);
   DCHECK(!restart_timer_.IsRunning());
   restart_delay_ = restart_delay;
+}
+
+// static
+void ArcSessionRunner::ResetEmitLoginPromptVisibleCalledCalledForTesting() {
+  g_emit_login_prompt_visible_called_called = false;
 }
 
 void ArcSessionRunner::StartArcSession() {
@@ -237,11 +240,15 @@ void ArcSessionRunner::OnSessionStopped(ArcStopReason stop_reason) {
 }
 
 void ArcSessionRunner::EmitLoginPromptVisibleCalled() {
-  if (ShouldArcOnlyStartAfterLogin()) {
-    // Skip starting ARC for now. We'll have another chance to start the full
-    // instance after the user logs in.
+  // TODO(yusukes): Remove the code once crbug.com/756687 is fixed.
+  if (g_emit_login_prompt_visible_called_called) {
+    LOG(WARNING) << "EmitLoginPromptVisibleCalled() has already been called "
+                 << "before. Returning now without changing the |state_| which "
+                 << "is currently " << static_cast<int>(state_);
     return;
   }
+  g_emit_login_prompt_visible_called_called = true;
+
   // Since 'login-prompt-visible' Upstart signal starts all Upstart jobs the
   // container may depend on such as cras, EmitLoginPromptVisibleCalled() is the
   // safe place to start the container for login screen.

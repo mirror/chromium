@@ -5,7 +5,7 @@
 package org.chromium.chrome.browser.ntp.cards;
 
 import android.support.annotation.CallSuper;
-import android.text.TextUtils;
+import android.support.annotation.Nullable;
 
 import org.chromium.base.Callback;
 import org.chromium.base.Log;
@@ -18,11 +18,9 @@ import org.chromium.chrome.browser.ntp.snippets.SnippetArticleViewHolder;
 import org.chromium.chrome.browser.ntp.snippets.SnippetsBridge;
 import org.chromium.chrome.browser.ntp.snippets.SuggestionsSource;
 import org.chromium.chrome.browser.offlinepages.OfflinePageBridge;
-import org.chromium.chrome.browser.offlinepages.OfflinePageItem;
 import org.chromium.chrome.browser.suggestions.SuggestionsOfflineModelObserver;
 import org.chromium.chrome.browser.suggestions.SuggestionsRanker;
 import org.chromium.chrome.browser.suggestions.SuggestionsUiDelegate;
-import org.chromium.chrome.browser.util.FeatureUtilities;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -97,26 +95,15 @@ public class SuggestionsSection extends InnerNode {
 
         mHeader = new SectionHeader(info.getTitle());
         mSuggestionsList = new SuggestionsList(mSuggestionsSource, ranker, info);
-        boolean useModern = FeatureUtilities.isChromeHomeModernEnabled();
-        if (useModern) {
-            mStatus = null;
-        } else {
-            mStatus = StatusItem.createNoSuggestionsItem(info);
-        }
+        mStatus = StatusItem.createNoSuggestionsItem(info);
         mMoreButton = new ActionItem(this, ranker);
         mProgressIndicator = new ProgressItem();
-        if (useModern) {
-            addChildren(mHeader, mSuggestionsList, mMoreButton, mProgressIndicator);
-        } else {
-            addChildren(mHeader, mSuggestionsList, mStatus, mMoreButton, mProgressIndicator);
-        }
+        addChildren(mHeader, mSuggestionsList, mStatus, mMoreButton, mProgressIndicator);
 
         mOfflineModelObserver = new OfflineModelObserver(offlinePageBridge);
         uiDelegate.addDestructionObserver(mOfflineModelObserver);
 
-        if (!useModern) {
-            mStatus.setVisible(!hasSuggestions());
-        }
+        mStatus.setVisible(!hasSuggestions());
     }
 
     private static class SuggestionsList extends ChildNode implements Iterable<SnippetArticle> {
@@ -225,15 +212,13 @@ public class SuggestionsSection extends InnerNode {
             itemRemovedCallback.onResult(suggestion.mTitle);
         }
 
-        public void updateSuggestionOfflineId(
-                SnippetArticle article, Long newId, boolean isPrefetched) {
+        public void updateSuggestionOfflineId(SnippetArticle article, Long newId) {
             int index = mSuggestions.indexOf(article);
             // The suggestions could have been removed / replaced in the meantime.
             if (index == -1) return;
 
             Long oldId = article.getOfflinePageOfflineId();
             article.setOfflinePageOfflineId(newId);
-            article.setIsPrefetched(isPrefetched);
 
             if ((oldId == null) == (newId == null)) return;
             notifyItemChanged(
@@ -252,12 +237,10 @@ public class SuggestionsSection extends InnerNode {
         int newSuggestionsCount = getSuggestionsCount();
         if ((newSuggestionsCount == 0) == (oldSuggestionsCount == 0)) return;
 
-        if (!FeatureUtilities.isChromeHomeModernEnabled()) {
-            mStatus.setVisible(newSuggestionsCount == 0);
-        }
+        mStatus.setVisible(newSuggestionsCount == 0);
 
-        // When the ActionItem stops being dismissable, it is possible that it was being
-        // interacted with. We need to reset the view's related property changes.
+        // When the ActionItem stops being dismissable, it is possible that it was being interacted
+        // with. We need to reset the view's related property changes.
         if (mMoreButton.isVisible()) {
             mMoreButton.notifyItemChanged(0, NewTabPageRecyclerView.RESET_FOR_DISMISS_CALLBACK);
         }
@@ -360,20 +343,12 @@ public class SuggestionsSection extends InnerNode {
         }
     }
 
-    public boolean hasSuggestions() {
+    private boolean hasSuggestions() {
         return mSuggestionsList.getItemCount() != 0;
     }
 
     public int getSuggestionsCount() {
         return mSuggestionsList.getItemCount();
-    }
-
-    public int getPrefetchedSuggestionsCount() {
-        int count = 0;
-        for (SnippetArticle suggestion : mSuggestionsList) {
-            if (suggestion.isPrefetched()) ++count;
-        }
-        return count;
     }
 
     public boolean isDataStale() {
@@ -523,7 +498,7 @@ public class SuggestionsSection extends InnerNode {
 
                         mProgressIndicator.setVisible(false);
 
-                        appendSuggestions(additionalSuggestions, /* keepSectionSize = */ false);
+                        appendSuggestions(additionalSuggestions, /*keepSectionSize=*/false);
 
                         mMoreButton.setEnabled(true);
                         mMoreButton.setVisible(true);
@@ -584,9 +559,7 @@ public class SuggestionsSection extends InnerNode {
      * (as opposed to individual items in it).
      */
     private Set<Integer> getSectionDismissalRange() {
-        if (hasSuggestions() || FeatureUtilities.isChromeHomeModernEnabled()) {
-            return Collections.emptySet();
-        }
+        if (hasSuggestions()) return Collections.emptySet();
 
         int statusCardIndex = getStartingOffsetForChild(mStatus);
         if (!mMoreButton.isVisible()) return Collections.singleton(statusCardIndex);
@@ -621,12 +594,8 @@ public class SuggestionsSection extends InnerNode {
         }
 
         @Override
-        public void onSuggestionOfflineIdChanged(SnippetArticle suggestion, OfflinePageItem item) {
-            boolean isPrefetched = item != null
-                    && TextUtils.equals(item.getClientId().getNamespace(),
-                               OfflinePageBridge.SUGGESTED_ARTICLES_NAMESPACE);
-            mSuggestionsList.updateSuggestionOfflineId(
-                    suggestion, item == null ? null : item.getOfflineId(), isPrefetched);
+        public void onSuggestionOfflineIdChanged(SnippetArticle suggestion, @Nullable Long id) {
+            mSuggestionsList.updateSuggestionOfflineId(suggestion, id);
         }
 
         @Override

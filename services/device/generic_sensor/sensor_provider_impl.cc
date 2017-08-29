@@ -6,13 +6,11 @@
 
 #include <utility>
 
-#include "base/feature_list.h"
 #include "base/memory/ptr_util.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "mojo/public/cpp/bindings/strong_binding.h"
 #include "services/device/generic_sensor/platform_sensor_provider.h"
 #include "services/device/generic_sensor/sensor_impl.h"
-#include "services/device/public/cpp/device_features.h"
 #include "services/device/public/cpp/generic_sensor/sensor_traits.h"
 
 namespace device {
@@ -31,21 +29,6 @@ void NotifySensorCreated(mojom::SensorInitParamsPtr init_params,
   base::ThreadTaskRunnerHandle::Get()->PostTask(
       FROM_HERE, base::BindOnce(&RunCallback, std::move(init_params),
                                 std::move(client), std::move(callback)));
-}
-
-bool IsExtraSensorClass(mojom::SensorType type) {
-  switch (type) {
-    case mojom::SensorType::ACCELEROMETER:
-    case mojom::SensorType::LINEAR_ACCELERATION:
-    case mojom::SensorType::GYROSCOPE:
-    case mojom::SensorType::ABSOLUTE_ORIENTATION_EULER_ANGLES:
-    case mojom::SensorType::ABSOLUTE_ORIENTATION_QUATERNION:
-    case mojom::SensorType::RELATIVE_ORIENTATION_EULER_ANGLES:
-    case mojom::SensorType::RELATIVE_ORIENTATION_QUATERNION:
-      return false;
-    default:
-      return true;
-  }
 }
 
 }  // namespace
@@ -72,11 +55,6 @@ SensorProviderImpl::~SensorProviderImpl() {}
 void SensorProviderImpl::GetSensor(mojom::SensorType type,
                                    mojom::SensorRequest sensor_request,
                                    GetSensorCallback callback) {
-  if (!base::FeatureList::IsEnabled(features::kGenericSensorExtraClasses) &&
-      IsExtraSensorClass(type)) {
-    NotifySensorCreated(nullptr, nullptr, std::move(callback));
-    return;
-  }
   auto cloned_handle = provider_->CloneSharedBufferHandle();
   if (!cloned_handle.is_valid()) {
     NotifySensorCreated(nullptr, nullptr, std::move(callback));

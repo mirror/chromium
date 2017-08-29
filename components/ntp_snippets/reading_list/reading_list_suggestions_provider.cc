@@ -162,8 +162,6 @@ void ReadingListSuggestionsProvider::ReadingListModelBeingDeleted(
 void ReadingListSuggestionsProvider::ReadingListDidApplyChanges(
     ReadingListModel* model) {
   DCHECK(model == reading_list_model_);
-  if (model->IsPerformingBatchUpdates())
-    return;
 
   FetchReadingListInternal();
 }

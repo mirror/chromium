@@ -18,7 +18,6 @@
 #include "platform/scheduler/child/web_scheduler.h"
 #include "platform/wtf/PtrUtil.h"
 #include "public/platform/Platform.h"
-#include "public/platform/modules/serviceworker/service_worker_error_type.mojom-blink.h"
 
 namespace blink {
 
@@ -93,7 +92,7 @@ void ServiceWorkerLinkResource::Process() {
         "Cannot register service worker with <link> element. " +
             error_message));
     WTF::MakeUnique<RegistrationCallback>(owner_)->OnError(
-        WebServiceWorkerError(mojom::blink::ServiceWorkerErrorType::kSecurity,
+        WebServiceWorkerError(WebServiceWorkerError::kErrorTypeSecurity,
                               error_message));
     return;
   }

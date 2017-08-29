@@ -16,7 +16,7 @@ group("all_tests") {
   ]
 }
 
-source_set("web") {
+source_set("web_arc") {
   public_deps = [
     ":service_names",
     "//net",
@@ -239,10 +239,6 @@ source_set("web") {
     "web_state/ui/crw_swipe_recognizer_provider.h",
     "web_state/ui/crw_touch_tracking_recognizer.h",
     "web_state/ui/crw_touch_tracking_recognizer.mm",
-    "web_state/ui/crw_web_controller.h",
-    "web_state/ui/crw_web_controller.mm",
-    "web_state/ui/crw_web_controller_container_view.h",
-    "web_state/ui/crw_web_controller_container_view.mm",
     "web_state/ui/crw_web_view_content_view.mm",
     "web_state/ui/crw_web_view_navigation_proxy.h",
     "web_state/ui/crw_web_view_proxy_impl.h",
@@ -311,6 +307,47 @@ mojom("service_names") {
   sources = [
     "public/service_names.mojom",
   ]
+}
+
+source_set("web") {
+  deps = [
+    ":core",
+    ":js_resources",
+    ":reload_type",
+    ":resources",
+    ":user_agent",
+    "//base",
+    "//components/url_formatter",
+    "//ios/net",
+    "//ios/third_party/blink:html_tokenizer",
+    "//mojo/public/cpp/system",
+    "//mojo/public/js",
+    "//net",
+    "//services/service_manager/public/cpp",
+    "//ui/base",
+    "//ui/gfx",
+    "//ui/gfx/geometry",
+    "//ui/resources",
+    "//url",
+  ]
+
+  public_deps = [
+    ":web_arc",
+  ]
+
+  sources = [
+    "web_state/ui/crw_web_controller.h",
+    "web_state/ui/crw_web_controller.mm",
+    "web_state/ui/crw_web_controller_container_view.h",
+    "web_state/ui/crw_web_controller_container_view.mm",
+  ]
+
+  libs = [
+    "CoreGraphics.framework",
+    "WebKit.framework",
+  ]
+
+  allow_circular_includes_from = [ ":web_arc" ]
 }
 
 source_set("core") {
@@ -599,6 +636,7 @@ source_set("ios_web_web_state_unittests") {
   testonly = true
   deps = [
     ":core",
+    ":ios_web_web_state_unittests_arc",
     ":test_support",
     ":user_agent",
     ":web",
@@ -609,7 +647,6 @@ source_set("ios_web_web_state_unittests") {
     "//ios/net",
     "//ios/testing:ios_test_support",
     "//ios/testing:ocmock_support",
-    "//ios/web",
     "//ios/web/public/test",
     "//ios/web/public/test/fakes",
     "//ios/web/test:mojo_bindings",
@@ -630,8 +667,6 @@ source_set("ios_web_web_state_unittests") {
     "web_state/error_translation_util_unittest.mm",
     "web_state/navigation_context_impl_unittest.mm",
     "web_state/page_display_state_unittest.mm",
-    "web_state/session_certificate_policy_cache_impl_unittest.mm",
-    "web_state/session_certificate_policy_cache_storage_builder_unittest.mm",
     "web_state/web_state_delegate_bridge_unittest.mm",
     "web_state/web_state_impl_unittest.mm",
     "web_state/web_state_observer_bridge_unittest.mm",
@@ -639,6 +674,23 @@ source_set("ios_web_web_state_unittests") {
     "web_state/web_view_internal_creation_util_unittest.mm",
     "web_state/wk_web_view_security_util_unittest.mm",
   ]
+}
+
+source_set("ios_web_web_state_unittests_arc") {
+  testonly = true
+  sources = [
+    "web_state/session_certificate_policy_cache_impl_unittest.mm",
+    "web_state/session_certificate_policy_cache_storage_builder_unittest.mm",
+  ]
+  deps = [
+    "//base",
+    "//ios/testing:ios_test_support",
+    "//ios/web",
+    "//ios/web/public/test",
+    "//ios/web/public/test/fakes",
+    "//net:test_support",
+  ]
+  configs += [ "//build/config/compiler:enable_arc" ]
 }
 
 source_set("ios_web_web_state_js_unittests") {

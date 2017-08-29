@@ -14,7 +14,7 @@
       return;
     }
     testRunner.log('FAIL: Unexpected records arrived');
-    testRunner.log(msg);
+    testRunner.logObject(msg);
   });
 
   await dp.Timeline.start();

@@ -113,6 +113,9 @@ class NET_EXPORT_PRIVATE NetworkChangeNotifierDelegateAndroid {
   // Can only be called from the main (Java) thread.
   NetworkChangeNotifier::ConnectionSubtype GetCurrentConnectionSubtype() const;
 
+  // Initializes JNI bindings.
+  static bool Register(JNIEnv* env);
+
  private:
   friend class BaseNetworkChangeNotifierAndroidTest;
 

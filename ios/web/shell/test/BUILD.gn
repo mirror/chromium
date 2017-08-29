@@ -70,7 +70,6 @@ source_set("earl_grey_test_support") {
     "//ios/web/public/test",
     "//ios/web/public/test/http_server",
     "//ios/web/shell",
-    "//testing/gtest:gtest",
     "//url",
   ]
 

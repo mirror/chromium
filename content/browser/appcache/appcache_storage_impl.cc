@@ -1605,10 +1605,11 @@ void AppCacheStorageImpl::FindResponseForMainRequest(
     // the DB thread.
     scoped_refptr<AppCacheGroup> no_group;
     scoped_refptr<AppCache> no_cache;
-    ScheduleSimpleTask(base::BindOnce(
-        &AppCacheStorageImpl::DeliverShortCircuitedFindMainResponse,
-        weak_factory_.GetWeakPtr(), url, AppCacheEntry(), no_group, no_cache,
-        make_scoped_refptr(GetOrCreateDelegateReference(delegate))));
+    ScheduleSimpleTask(
+        base::Bind(&AppCacheStorageImpl::DeliverShortCircuitedFindMainResponse,
+                   weak_factory_.GetWeakPtr(), url, AppCacheEntry(), no_group,
+                   no_cache,
+                   make_scoped_refptr(GetOrCreateDelegateReference(delegate))));
     return;
   }
 
@@ -1630,11 +1631,11 @@ bool AppCacheStorageImpl::FindResponseForMainRequestInGroup(
   if (!entry || entry->IsForeign())
     return false;
 
-  ScheduleSimpleTask(base::BindOnce(
-      &AppCacheStorageImpl::DeliverShortCircuitedFindMainResponse,
-      weak_factory_.GetWeakPtr(), url, *entry, make_scoped_refptr(group),
-      make_scoped_refptr(cache),
-      make_scoped_refptr(GetOrCreateDelegateReference(delegate))));
+  ScheduleSimpleTask(
+      base::Bind(&AppCacheStorageImpl::DeliverShortCircuitedFindMainResponse,
+                 weak_factory_.GetWeakPtr(), url, *entry,
+                 make_scoped_refptr(group), make_scoped_refptr(cache),
+                 make_scoped_refptr(GetOrCreateDelegateReference(delegate))));
   return true;
 }
 
@@ -1884,8 +1885,8 @@ void AppCacheStorageImpl::GetPendingForeignMarkingsForCache(
   }
 }
 
-void AppCacheStorageImpl::ScheduleSimpleTask(base::OnceClosure task) {
-  pending_simple_tasks_.push_back(std::move(task));
+void AppCacheStorageImpl::ScheduleSimpleTask(const base::Closure& task) {
+  pending_simple_tasks_.push_back(task);
   base::SequencedTaskRunnerHandle::Get()->PostTask(
       FROM_HERE, base::BindOnce(&AppCacheStorageImpl::RunOnePendingSimpleTask,
                                 weak_factory_.GetWeakPtr()));
@@ -1893,9 +1894,9 @@ void AppCacheStorageImpl::ScheduleSimpleTask(base::OnceClosure task) {
 
 void AppCacheStorageImpl::RunOnePendingSimpleTask() {
   DCHECK(!pending_simple_tasks_.empty());
-  base::OnceClosure task = std::move(pending_simple_tasks_.front());
+  base::Closure task = pending_simple_tasks_.front();
   pending_simple_tasks_.pop_front();
-  std::move(task).Run();
+  task.Run();
 }
 
 AppCacheDiskCache* AppCacheStorageImpl::disk_cache() {

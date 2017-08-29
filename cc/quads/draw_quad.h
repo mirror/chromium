@@ -9,7 +9,7 @@
 
 #include "base/callback.h"
 #include "cc/cc_export.h"
-#include "components/viz/common/quads/shared_quad_state.h"
+#include "cc/quads/shared_quad_state.h"
 #include "components/viz/common/resources/resource_id.h"
 
 namespace base {
@@ -56,6 +56,10 @@ class CC_EXPORT DrawQuad {
   // this quad should draw to. This rect lives in content space.
   gfx::Rect rect;
 
+  // This specifies the region of the quad that is opaque. This rect lives in
+  // content space.
+  gfx::Rect opaque_rect;
+
   // Allows changing the rect that gets drawn to make it smaller. This value
   // should be clipped to |rect|. This rect lives in content space.
   gfx::Rect visible_rect;
@@ -68,12 +72,14 @@ class CC_EXPORT DrawQuad {
   // Stores state common to a large bundle of quads; kept separate for memory
   // efficiency. There is special treatment to reconstruct these pointers
   // during serialization.
-  const viz::SharedQuadState* shared_quad_state;
+  const SharedQuadState* shared_quad_state;
 
   bool IsDebugQuad() const { return material == DEBUG_BORDER; }
 
   bool ShouldDrawWithBlending() const {
-    return needs_blending || shared_quad_state->opacity < 1.0f;
+    if (needs_blending || shared_quad_state->opacity < 1.0f)
+      return true;
+    return false;
   }
 
   // Is the left edge of this tile aligned with the originating layer's
@@ -129,9 +135,10 @@ class CC_EXPORT DrawQuad {
  protected:
   DrawQuad();
 
-  void SetAll(const viz::SharedQuadState* shared_quad_state,
+  void SetAll(const SharedQuadState* shared_quad_state,
               Material material,
               const gfx::Rect& rect,
+              const gfx::Rect& opaque_rect,
               const gfx::Rect& visible_rect,
               bool needs_blending);
   virtual void ExtendValue(base::trace_event::TracedValue* value) const = 0;

@@ -5,7 +5,6 @@
 #ifndef CHROME_INSTALLER_ZUCCHINI_IMAGE_INDEX_H_
 #define CHROME_INSTALLER_ZUCCHINI_IMAGE_INDEX_H_
 
-#include <stddef.h>
 #include <stdint.h>
 
 #include <vector>

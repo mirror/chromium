@@ -27,7 +27,6 @@
 <translation id="1746730358044914197">מנהל המערכת שלך מגדיר את שיטות הקלט.</translation>
 <translation id="1747827819627189109">המקלדת שמופיעה במסך מופעלת</translation>
 <translation id="1823873187264960516">אתרנט: <ph name="ADDRESS" /></translation>
-<translation id="1836215606488044471">‏Assistant (בטעינה...)</translation>
 <translation id="1850504506766569011">‏Wi-Fi כבוי.</translation>
 <translation id="1856813161013948396">אפשר לדלג על מסך הנעילה באמצעות הקשה על חיישן טביעות האצבע. לחץ כדי להגדיר.</translation>
 <translation id="1864454756846565995">‏מכשיר עם יציאת USB-C (יציאה אחורית)</translation>
@@ -55,7 +54,6 @@
 <translation id="2338501278241028356">‏יש להפעיל את Bluetooth כדי לאתר מכשירים קרובים</translation>
 <translation id="2352467521400612932">הגדרות סטיילוס</translation>
 <translation id="2354174487190027830">מפעיל את <ph name="NAME" /></translation>
-<translation id="2365393535144473978">‏כשמפעילים את חבילת הגלישה, מופעלת גם תקשורת Bluetooth.</translation>
 <translation id="2391579633712104609">180°</translation>
 <translation id="2429753432712299108">‏מכשיר ה-Bluetooth ‏"<ph name="DEVICE_NAME" />" מבקש הרשאה לבצע התאמה. לפני שתאשר, ודא שמפתח הסיסמה הבא מוצג במכשיר הזה: <ph name="PASSKEY" /></translation>
 <translation id="2475982808118771221">אירעה שגיאה</translation>
@@ -125,7 +123,6 @@
 <translation id="4279490309300973883">שיקוף</translation>
 <translation id="4321179778687042513">ctrl</translation>
 <translation id="4338109981321384717">זכוכית מגדלת</translation>
-<translation id="4351433414020964307">‏Assistant בטעינה...</translation>
 <translation id="4378551569595875038">מתחבר...</translation>
 <translation id="4421231901400348175">שיתוף השליטה במסך עם <ph name="HELPER_NAME" /> דרך סיוע מרחוק.</translation>
 <translation id="4430019312045809116">עוצמת קול</translation>
@@ -172,7 +169,6 @@
 <translation id="5927132638760172455">מעביר למקבל לא ידוע</translation>
 <translation id="5947494881799873997">חזרה לגרסה הקודמת</translation>
 <translation id="595202126637698455">מעקב אחר הביצועים מופעל</translation>
-<translation id="5957083217255311415">חבילת הגלישה מושבתת.</translation>
 <translation id="5958529069007801266">משתמש בפיקוח</translation>
 <translation id="5977415296283489383">אוזניות</translation>
 <translation id="5978382165065462689">שיתוף שליטה במסך דרך סיוע מרחוק.</translation>
@@ -206,7 +202,6 @@
 <translation id="6691659475504239918">Search+Shift+H</translation>
 <translation id="6700713906295497288">‏לחצן תפריט IME</translation>
 <translation id="6713285437468012787">‏מכשיר ה-Bluetooth‏ "<ph name="DEVICE_NAME" />" הותאם והוא זמין כעת לכל המשתמשים. אתה יכול להסיר את ההתאמה הזו ב'הגדרות'.</translation>
-<translation id="6715542151869432661">לא נמצאו מכשירים ניידים.</translation>
 <translation id="6785414152754474415">‏הסוללה טעונה ברמה של ‎<ph name="PERCENTAGE" />%‎ ומתבצעת טעינה.</translation>
 <translation id="6803622936009808957">לא ניתן היה לשקף מסכים מכיוון שלא נמצאה רזולוציה נתמכת. במקום זאת התצוגה עברה למצב שולחן עבודה מורחב.</translation>
 <translation id="683971173229319003">Search+L</translation>
@@ -272,7 +267,6 @@
 <translation id="8828714802988429505">90°</translation>
 <translation id="8850991929411075241">Search+Esc</translation>
 <translation id="8878886163241303700">מסך מתרחב</translation>
-<translation id="8921624153894383499">‏Google Assistant לא מדבר בשפה הזאת.</translation>
 <translation id="8938800817013097409">‏מכשיר עם יציאת USB-C (יציאה ימנית מאחור)</translation>
 <translation id="8940956008527784070">‏סוללה חלשה (‎<ph name="PERCENTAGE" />%‎)</translation>
 <translation id="9074739597929991885">Bluetooth</translation>

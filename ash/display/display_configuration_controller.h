@@ -31,15 +31,6 @@ class ScreenRotationAnimator;
 class ASH_EXPORT DisplayConfigurationController
     : public WindowTreeHostManager::Observer {
  public:
-  // Use SYNC if it is important to rotate immediately after the
-  // |SetDisplayRotation()|. As a side effect, the animation is less smooth.
-  // ASYNC is actually slower because it takes longer to rotate the screen after
-  // a screenshot is taken. http://crbug.com/757851.
-  enum RotationAnimation {
-    ANIMATION_SYNC = 0,
-    ANIMATION_ASYNC,
-  };
-
   DisplayConfigurationController(
       display::DisplayManager* display_manager,
       WindowTreeHostManager* window_tree_host_manager);
@@ -57,8 +48,7 @@ class ASH_EXPORT DisplayConfigurationController
   // Sets the display's rotation with animation if available.
   void SetDisplayRotation(int64_t display_id,
                           display::Display::Rotation rotation,
-                          display::Display::RotationSource source,
-                          RotationAnimation mode = ANIMATION_ASYNC);
+                          display::Display::RotationSource source);
 
   // Returns the rotation of the display given by |display_id|. This returns
   // the target rotation when the display is being rotated.

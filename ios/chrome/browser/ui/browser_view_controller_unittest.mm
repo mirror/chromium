@@ -27,7 +27,6 @@
 #include "ios/chrome/browser/sessions/ios_chrome_tab_restore_service_factory.h"
 #import "ios/chrome/browser/tabs/tab.h"
 #import "ios/chrome/browser/tabs/tab_model.h"
-#import "ios/chrome/browser/tabs/tab_private.h"
 #import "ios/chrome/browser/ui/activity_services/share_protocol.h"
 #import "ios/chrome/browser/ui/activity_services/share_to_data.h"
 #import "ios/chrome/browser/ui/alert_coordinator/alert_coordinator.h"
@@ -349,18 +348,8 @@ TEST_F(BrowserViewControllerTest, TestTabDeselected) {
 
 TEST_F(BrowserViewControllerTest, TestNativeContentController) {
   id<CRWNativeContent> controller =
-      [bvc_ controllerForURL:GURL(kChromeUIBookmarksURL)
+      [bvc_ controllerForURL:GURL(kChromeUINewTabURL)
                     webState:webStateImpl_.get()];
-  EXPECT_TRUE(controller != nil);
-  if (IsIPadIdiom()) {
-    EXPECT_TRUE([controller isMemberOfClass:[NewTabPageController class]]);
-  } else {
-    EXPECT_TRUE(
-        [controller isMemberOfClass:[PageNotAvailableController class]]);
-  }
-
-  controller = [bvc_ controllerForURL:GURL(kChromeUINewTabURL)
-                             webState:webStateImpl_.get()];
   EXPECT_TRUE(controller != nil);
   EXPECT_TRUE([controller isMemberOfClass:[NewTabPageController class]]);
 

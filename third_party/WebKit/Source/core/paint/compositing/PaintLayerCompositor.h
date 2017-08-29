@@ -174,6 +174,8 @@ class CORE_EXPORT PaintLayerCompositor final : public GraphicsLayerClient {
   void FrameViewScrollbarsExistenceDidChange();
   void RootFixedBackgroundsChanged();
 
+  bool ScrollingLayerDidChange(PaintLayer*);
+
   std::unique_ptr<JSONObject> LayerTreeAsJSON(LayerTreeFlags) const;
 
   void SetTracksRasterInvalidations(bool);
@@ -201,8 +203,7 @@ class CORE_EXPORT PaintLayerCompositor final : public GraphicsLayerClient {
 #endif
 
   void UpdateIfNeededRecursiveInternal(
-      DocumentLifecycle::LifecycleState target_state,
-      CompositingReasonsStats&);
+      DocumentLifecycle::LifecycleState target_state);
 
   // GraphicsLayerClient implementation
   bool NeedsRepaint(const GraphicsLayer&) const { return true; }
@@ -216,8 +217,7 @@ class CORE_EXPORT PaintLayerCompositor final : public GraphicsLayerClient {
   bool IsTrackingRasterInvalidations() const override;
 
   void UpdateWithoutAcceleratedCompositing(CompositingUpdateType);
-  void UpdateIfNeeded(DocumentLifecycle::LifecycleState target_state,
-                      CompositingReasonsStats&);
+  void UpdateIfNeeded(DocumentLifecycle::LifecycleState target_state);
 
   void EnsureRootLayer();
   void DestroyRootLayer();

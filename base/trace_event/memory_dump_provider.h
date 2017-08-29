@@ -21,8 +21,15 @@ class BASE_EXPORT MemoryDumpProvider {
   // Optional arguments for MemoryDumpManager::RegisterDumpProvider().
   struct Options {
     Options()
-        : dumps_on_single_thread_task_runner(false),
+        : target_pid(kNullProcessId),
+          dumps_on_single_thread_task_runner(false),
           is_fast_polling_supported(false) {}
+
+    // If the dump provider generates dumps on behalf of another process,
+    // |target_pid| contains the pid of that process.
+    // The default value is kNullProcessId, which means that the dump provider
+    // generates dumps for the current process.
+    ProcessId target_pid;
 
     // |dumps_on_single_thread_task_runner| is true if the dump provider runs on
     // a SingleThreadTaskRunner, which is usually the case. It is faster to run

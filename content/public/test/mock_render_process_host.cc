@@ -16,6 +16,7 @@
 #include "base/threading/thread_task_runner_handle.h"
 #include "base/time/time.h"
 #include "components/viz/service/display_embedder/server_shared_bitmap_manager.h"
+#include "content/browser/child_process_importance.h"
 #include "content/browser/child_process_security_policy_impl.h"
 #include "content/browser/renderer_host/render_process_host_impl.h"
 #include "content/browser/renderer_host/render_view_host_impl.h"
@@ -23,7 +24,6 @@
 #include "content/common/child_process_host_impl.h"
 #include "content/common/frame_messages.h"
 #include "content/common/renderer.mojom.h"
-#include "content/public/browser/android/child_process_importance.h"
 #include "content/public/browser/browser_context.h"
 #include "content/public/browser/global_request_id.h"
 #include "content/public/browser/notification_details.h"
@@ -253,11 +253,9 @@ void MockRenderProcessHost::AddWidget(RenderWidgetHost* widget) {
 void MockRenderProcessHost::RemoveWidget(RenderWidgetHost* widget) {
 }
 
-#if defined(OS_ANDROID)
 void MockRenderProcessHost::UpdateWidgetImportance(
     ChildProcessImportance old_value,
     ChildProcessImportance new_value) {}
-#endif
 
 void MockRenderProcessHost::SetSuddenTerminationAllowed(bool allowed) {
 }
@@ -431,12 +429,6 @@ void MockRenderProcessHost::OverrideBinderForTesting(
     const std::string& interface_name,
     const InterfaceBinder& binder) {
   binder_overrides_[interface_name] = binder;
-}
-
-void MockRenderProcessHost::OverrideRendererInterfaceForTesting(
-    std::unique_ptr<mojo::AssociatedInterfacePtr<mojom::Renderer>>
-        renderer_interface) {
-  renderer_interface_ = std::move(renderer_interface);
 }
 
 MockRenderProcessHostFactory::MockRenderProcessHostFactory() {}

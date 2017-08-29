@@ -56,7 +56,6 @@ class InputDeviceControllerClient : public mojom::KeyboardDeviceObserver {
   void SetNaturalScroll(bool enabled);
   void SetMouseSensitivity(int value);
   void SetPrimaryButtonRight(bool right);
-  void SetMouseReverseScroll(bool enabled);
 
   using GetTouchDeviceStatusCallback =
       base::OnceCallback<void(const std::string&)>;

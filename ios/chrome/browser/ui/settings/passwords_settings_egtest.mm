@@ -1224,12 +1224,12 @@ MockReauthenticationModule* SetUpAndReturnMockReauthenticationModule() {
   [GetInteractionForPasswordDetailItem(CopyPasswordButton())
       performAction:grey_tap()];
 
-  NSString* title =
-      l10n_util::GetNSString(IDS_IOS_SETTINGS_SET_UP_SCREENLOCK_TITLE);
-  [[EarlGrey selectElementWithMatcher:grey_accessibilityLabel(title)]
-      assertWithMatcher:grey_sufficientlyVisible()];
-  [[EarlGrey selectElementWithMatcher:chrome_test_util::OKButton()]
+  NSString* snackbarLabel =
+      l10n_util::GetNSString(IDS_IOS_SETTINGS_SET_UP_SCREENLOCK_MESSAGE);
+  // The tap checks the existence of the snackbar and also closes it.
+  [[EarlGrey selectElementWithMatcher:grey_accessibilityLabel(snackbarLabel)]
       performAction:grey_tap()];
+
   [[EarlGrey selectElementWithMatcher:NavigationBarDoneButton()]
       performAction:grey_tap()];
 }
@@ -1256,28 +1256,14 @@ MockReauthenticationModule* SetUpAndReturnMockReauthenticationModule() {
   [GetInteractionForPasswordDetailItem(ShowPasswordButton())
       performAction:grey_tap()];
 
-  NSString* title =
-      l10n_util::GetNSString(IDS_IOS_SETTINGS_SET_UP_SCREENLOCK_TITLE);
-  [[EarlGrey selectElementWithMatcher:grey_accessibilityLabel(title)]
-      assertWithMatcher:grey_sufficientlyVisible()];
-  NSString* learnHow =
-      l10n_util::GetNSString(IDS_IOS_SETTINGS_SET_UP_SCREENLOCK_LEARN_HOW);
-  [[EarlGrey
-      selectElementWithMatcher:chrome_test_util::ButtonWithAccessibilityLabel(
-                                   learnHow)] performAction:grey_tap()];
-  // Check the sub menu is closed due to the help article.
-  NSError* error = nil;
-  [[EarlGrey selectElementWithMatcher:SettingsMenuBackButton()]
-      assertWithMatcher:grey_notNil()
-                  error:&error];
-  GREYAssertTrue(error, @"The settings back button is still displayed");
+  NSString* snackbarLabel =
+      l10n_util::GetNSString(IDS_IOS_SETTINGS_SET_UP_SCREENLOCK_MESSAGE);
+  // The tap checks the existence of the snackbar and also closes it.
+  [[EarlGrey selectElementWithMatcher:grey_accessibilityLabel(snackbarLabel)]
+      performAction:grey_tap()];
 
-  // Check the settings page is closed.
-  error = nil;
   [[EarlGrey selectElementWithMatcher:NavigationBarDoneButton()]
-      assertWithMatcher:grey_notNil()
-                  error:&error];
-  GREYAssertTrue(error, @"The settings page is still displayed");
+      performAction:grey_tap()];
 }
 
 @end

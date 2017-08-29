@@ -58,6 +58,8 @@ class UserCloudPolicyManagerFactory : public BrowserContextKeyedBaseFactory {
   // UserCloudPolicyStore at startup.
   //
   // |background_task_runner| is used for the cloud policy store.
+  // |file_task_runner| is used for file operations. Currently this must be the
+  // FILE BrowserThread.
   // |io_task_runner| is used for network IO. Currently this must be the IO
   // BrowserThread.
   static std::unique_ptr<UserCloudPolicyManager>
@@ -65,6 +67,7 @@ class UserCloudPolicyManagerFactory : public BrowserContextKeyedBaseFactory {
       content::BrowserContext* context,
       bool force_immediate_load,
       const scoped_refptr<base::SequencedTaskRunner>& background_task_runner,
+      const scoped_refptr<base::SequencedTaskRunner>& file_task_runner,
       const scoped_refptr<base::SequencedTaskRunner>& io_task_runner);
 
   static UserCloudPolicyManager* RegisterForOffTheRecordBrowserContext(
@@ -98,6 +101,7 @@ class UserCloudPolicyManagerFactory : public BrowserContextKeyedBaseFactory {
       content::BrowserContext* context,
       bool force_immediate_load,
       const scoped_refptr<base::SequencedTaskRunner>& background_task_runner,
+      const scoped_refptr<base::SequencedTaskRunner>& file_task_runner,
       const scoped_refptr<base::SequencedTaskRunner>& io_task_runner);
 
   UserCloudPolicyManager* RegisterManagerForOffTheRecordBrowserContext(

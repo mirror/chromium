@@ -14,7 +14,6 @@ namespace blink {
 
 class ConsoleMessage;
 class LocalFrame;
-class WorkerReportingProxy;
 
 class CORE_EXPORT MainThreadWorkletGlobalScope
     : public WorkletGlobalScope,
@@ -26,12 +25,13 @@ class CORE_EXPORT MainThreadWorkletGlobalScope
                                const KURL&,
                                const String& user_agent,
                                RefPtr<SecurityOrigin>,
-                               v8::Isolate*,
-                               WorkerReportingProxy&);
+                               v8::Isolate*);
   ~MainThreadWorkletGlobalScope() override;
   bool IsMainThreadWorkletGlobalScope() const final { return true; }
 
   // WorkerOrWorkletGlobalScope
+  void ReportFeature(WebFeature) override;
+  void ReportDeprecation(WebFeature) override;
   WorkerThread* GetThread() const final;
 
   void Terminate();

@@ -27,7 +27,6 @@
 #include "content/public/browser/reload_type.h"
 #include "content/public/browser/web_contents.h"
 #include "content/public/common/referrer.h"
-#include "content/public/test/navigation_simulator.h"
 #include "content/public/test/web_contents_tester.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
@@ -236,8 +235,13 @@ void RecentTabHelperTest::TearDown() {
 }
 
 void RecentTabHelperTest::FailLoad(const GURL& url) {
-  content::NavigationSimulator::NavigateAndFailFromBrowser(
-      web_contents(), url, net::ERR_INTERNET_DISCONNECTED);
+  controller().LoadURL(url, content::Referrer(), ui::PAGE_TRANSITION_TYPED,
+                       std::string());
+  content::RenderFrameHostTester::For(main_rfh())->SimulateNavigationStart(url);
+  content::RenderFrameHostTester::For(main_rfh())->
+      SimulateNavigationError(url, net::ERR_INTERNET_DISCONNECTED);
+  content::RenderFrameHostTester::For(main_rfh())->
+      SimulateNavigationErrorPageCommit();
 }
 
 const std::vector<OfflinePageItem>& RecentTabHelperTest::GetAllPages() {

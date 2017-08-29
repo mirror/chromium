@@ -129,7 +129,8 @@ class CORE_EXPORT OffscreenCanvas final
   ScriptPromise CreateImageBitmap(ScriptState*,
                                   EventTarget&,
                                   Optional<IntRect>,
-                                  const ImageBitmapOptions&) final;
+                                  const ImageBitmapOptions&,
+                                  ExceptionState&) final;
 
   // CanvasImageSource implementation
   RefPtr<Image> GetSourceImageForCanvas(SourceImageStatus*,

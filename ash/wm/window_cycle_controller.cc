@@ -17,7 +17,6 @@
 #include "ash/wm/window_cycle_list.h"
 #include "ash/wm/window_state.h"
 #include "base/metrics/histogram_macros.h"
-#include "base/metrics/user_metrics.h"
 
 namespace ash {
 
@@ -84,7 +83,7 @@ void WindowCycleController::StartCycling() {
   window_cycle_list_.reset(new WindowCycleList(window_list));
   event_filter_ = ShellPort::Get()->CreateWindowCycleEventFilter();
   cycle_start_time_ = base::Time::Now();
-  base::RecordAction(base::UserMetricsAction("WindowCycleController_Cycle"));
+  Shell::Get()->metrics()->RecordUserMetricsAction(UMA_WINDOW_CYCLE);
   UMA_HISTOGRAM_COUNTS_100("Ash.WindowCycleController.Items",
                            window_list.size());
 }

@@ -69,9 +69,13 @@ void ConvertEventLocationToTarget(ui::EventTarget* event_target,
     return;
 
   gfx::Point location = event->AsLocatedEvent()->location();
+  gfx::Point root_location = event->AsLocatedEvent()->root_location();
   Window::ConvertPointToTarget(static_cast<Window*>(event_target),
                                static_cast<Window*>(target), &location);
+  Window::ConvertPointToTarget(static_cast<Window*>(event_target),
+                               static_cast<Window*>(target), &root_location);
   event->AsLocatedEvent()->set_location(location);
+  event->AsLocatedEvent()->set_root_location(root_location);
 }
 
 }  // namespace
@@ -257,9 +261,7 @@ const Window* WindowEventDispatcher::window() const {
 
 void WindowEventDispatcher::TransformEventForDeviceScaleFactor(
     ui::LocatedEvent* event) {
-  event->UpdateForRootTransform(
-      host_->GetInverseRootTransform(),
-      host_->GetInverseRootTransformForLocalEventCoordinates());
+  event->UpdateForRootTransform(host_->GetInverseRootTransform());
 }
 
 void WindowEventDispatcher::DispatchMouseExitToHidingWindow(Window* window) {
@@ -583,9 +585,7 @@ void WindowEventDispatcher::DispatchSyntheticTouchEvent(ui::TouchEvent* event) {
   // the pointer, in dips. OnEventFromSource expects events with co-ordinates
   // in raw pixels, so we convert back to raw pixels here.
   DCHECK(event->type() == ui::ET_TOUCH_CANCELLED);
-  event->UpdateForRootTransform(
-      host_->GetRootTransform(),
-      host_->GetRootTransformForLocalEventCoordinates());
+  event->UpdateForRootTransform(host_->GetRootTransform());
   DispatchDetails details = OnEventFromSource(event);
   if (details.dispatcher_destroyed)
     return;

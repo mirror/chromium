@@ -80,26 +80,19 @@ ActivationScope ParseActivationScope(const base::StringPiece activation_scope) {
 }
 
 ActivationList ParseActivationList(std::string activation_lists_string) {
+  ActivationList activation_list_type = ActivationList::NONE;
   CommaSeparatedStrings activation_lists(std::move(activation_lists_string));
   if (activation_lists.CaseInsensitiveContains(
           kActivationListPhishingInterstitial)) {
     return ActivationList::PHISHING_INTERSTITIAL;
   } else if (activation_lists.CaseInsensitiveContains(
                  kActivationListSocialEngineeringAdsInterstitial)) {
-    return ActivationList::SOCIAL_ENG_ADS_INTERSTITIAL;
+    activation_list_type = ActivationList::SOCIAL_ENG_ADS_INTERSTITIAL;
   } else if (activation_lists.CaseInsensitiveContains(
                  kActivationListSubresourceFilter)) {
-    return ActivationList::SUBRESOURCE_FILTER;
-  } else if (activation_lists.CaseInsensitiveContains(
-                 kActivationListBetterAds)) {
-    return ActivationList::BETTER_ADS;
-  } else if (activation_lists.CaseInsensitiveContains(
-                 kActivationListAbusiveAds)) {
-    return ActivationList::ABUSIVE_ADS;
-  } else if (activation_lists.CaseInsensitiveContains(kActivationListAllAds)) {
-    return ActivationList::ALL_ADS;
+    activation_list_type = ActivationList::SUBRESOURCE_FILTER;
   }
-  return ActivationList::NONE;
+  return activation_list_type;
 }
 
 double ParsePerformanceMeasurementRate(const std::string& rate) {
@@ -266,9 +259,6 @@ const char kActivationListSocialEngineeringAdsInterstitial[] =
     "social_engineering_ads_interstitial";
 const char kActivationListPhishingInterstitial[] = "phishing_interstitial";
 const char kActivationListSubresourceFilter[] = "subresource_filter";
-const char kActivationListBetterAds[] = "better_ads";
-const char kActivationListAbusiveAds[] = "abusive_ads";
-const char kActivationListAllAds[] = "all_ads";
 
 const char kActivationPriorityParameterName[] = "activation_priority";
 

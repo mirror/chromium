@@ -908,13 +908,15 @@ TEST_P(GLES3DecoderTest, ReadPixelsPixelPackBufferIsNotLargeEnough) {
 }
 
 TEST_P(GLES2DecoderManualInitTest, ReadPixels2RowLengthWorkaround) {
-  gpu::GpuDriverBugWorkarounds workarounds;
-  workarounds.pack_parameters_workaround_with_pack_buffer = true;
+  base::CommandLine command_line(0, NULL);
+  command_line.AppendSwitchASCII(
+      switches::kGpuDriverBugWorkarounds,
+      base::IntToString(gpu::PACK_PARAMETERS_WORKAROUND_WITH_PACK_BUFFER));
   InitState init;
   init.gl_version = "OpenGL ES 3.0";
   init.bind_generates_resource = true;
   init.context_type = CONTEXT_TYPE_OPENGLES3;
-  InitDecoderWithWorkarounds(init, workarounds);
+  InitDecoderWithCommandLine(init, &command_line);
 
   const GLsizei kWidth = 5;
   const GLsizei kHeight = 3;
@@ -959,13 +961,15 @@ TEST_P(GLES2DecoderManualInitTest, ReadPixels2RowLengthWorkaround) {
 }
 
 TEST_P(GLES2DecoderManualInitTest, ReadPixels2AlignmentWorkaround) {
-  gpu::GpuDriverBugWorkarounds workarounds;
-  workarounds.pack_parameters_workaround_with_pack_buffer = true;
+  base::CommandLine command_line(0, NULL);
+  command_line.AppendSwitchASCII(
+      switches::kGpuDriverBugWorkarounds,
+      base::IntToString(gpu::PACK_PARAMETERS_WORKAROUND_WITH_PACK_BUFFER));
   InitState init;
   init.gl_version = "OpenGL ES 3.0";
   init.bind_generates_resource = true;
   init.context_type = CONTEXT_TYPE_OPENGLES3;
-  InitDecoderWithWorkarounds(init, workarounds);
+  InitDecoderWithCommandLine(init, &command_line);
 
   const GLsizei kWidth = 5;
   const GLsizei kHeight = 3;
@@ -1012,13 +1016,15 @@ TEST_P(GLES2DecoderManualInitTest, ReadPixels2AlignmentWorkaround) {
 
 TEST_P(GLES2DecoderManualInitTest,
        ReadPixels2RowLengthAndAlignmentWorkarounds) {
-  gpu::GpuDriverBugWorkarounds workarounds;
-  workarounds.pack_parameters_workaround_with_pack_buffer = true;
+  base::CommandLine command_line(0, NULL);
+  command_line.AppendSwitchASCII(
+      switches::kGpuDriverBugWorkarounds,
+      base::IntToString(gpu::PACK_PARAMETERS_WORKAROUND_WITH_PACK_BUFFER));
   InitState init;
   init.gl_version = "OpenGL ES 3.0";
   init.bind_generates_resource = true;
   init.context_type = CONTEXT_TYPE_OPENGLES3;
-  InitDecoderWithWorkarounds(init, workarounds);
+  InitDecoderWithCommandLine(init, &command_line);
 
   const GLsizei kWidth = 5;
   const GLsizei kHeight = 3;

@@ -295,8 +295,8 @@ bool TracingControllerImpl::StopTracing(
   if (start_tracing_timer_.IsRunning()) {
     base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
         FROM_HERE,
-        base::BindOnce(base::IgnoreResult(&TracingControllerImpl::StopTracing),
-                       base::Unretained(this), trace_data_sink),
+        base::Bind(base::IgnoreResult(&TracingControllerImpl::StopTracing),
+                   base::Unretained(this), trace_data_sink),
         base::TimeDelta::FromMilliseconds(kStopTracingRetryTimeMilliseconds));
     return true;
   }
@@ -338,10 +338,10 @@ void TracingControllerImpl::StopTracingAfterClockSync() {
   // interfering with the process.
   base::Closure on_stop_tracing_done_callback = base::Bind(
       &TracingControllerImpl::OnStopTracingDone, base::Unretained(this));
-  BrowserThread::PostTask(
-      BrowserThread::FILE, FROM_HERE,
-      base::BindOnce(&TracingControllerImpl::SetDisabledOnFileThread,
-                     base::Unretained(this), on_stop_tracing_done_callback));
+  BrowserThread::PostTask(BrowserThread::FILE, FROM_HERE,
+      base::Bind(&TracingControllerImpl::SetDisabledOnFileThread,
+                 base::Unretained(this),
+                 on_stop_tracing_done_callback));
 }
 
 void TracingControllerImpl::OnStopTracingDone() {
@@ -390,8 +390,8 @@ bool TracingControllerImpl::GetTraceBufferUsage(
   // child processes.
   BrowserThread::PostTask(
       BrowserThread::UI, FROM_HERE,
-      base::BindOnce(&TracingControllerImpl::OnTraceLogStatusReply,
-                     base::Unretained(this), nullptr, status));
+      base::Bind(&TracingControllerImpl::OnTraceLogStatusReply,
+                 base::Unretained(this), nullptr, status));
 
   // Notify all child processes.
   for (TraceMessageFilterSet::iterator it = trace_message_filters_.begin();
@@ -429,10 +429,10 @@ void TracingControllerImpl::RemoveTraceMessageFilter(
     if (it != pending_stop_tracing_filters_.end()) {
       BrowserThread::PostTask(
           BrowserThread::UI, FROM_HERE,
-          base::BindOnce(&TracingControllerImpl::OnStopTracingAcked,
-                         base::Unretained(this),
-                         base::RetainedRef(trace_message_filter),
-                         std::vector<std::string>()));
+          base::Bind(&TracingControllerImpl::OnStopTracingAcked,
+                     base::Unretained(this),
+                     base::RetainedRef(trace_message_filter),
+                     std::vector<std::string>()));
     }
   }
   if (pending_trace_log_status_ack_count_ > 0) {
@@ -441,10 +441,10 @@ void TracingControllerImpl::RemoveTraceMessageFilter(
     if (it != pending_trace_log_status_filters_.end()) {
       BrowserThread::PostTask(
           BrowserThread::UI, FROM_HERE,
-          base::BindOnce(&TracingControllerImpl::OnTraceLogStatusReply,
-                         base::Unretained(this),
-                         base::RetainedRef(trace_message_filter),
-                         base::trace_event::TraceLogStatus()));
+          base::Bind(&TracingControllerImpl::OnTraceLogStatusReply,
+                     base::Unretained(this),
+                     base::RetainedRef(trace_message_filter),
+                     base::trace_event::TraceLogStatus()));
     }
   }
   trace_message_filters_.erase(trace_message_filter);
@@ -508,7 +508,7 @@ void TracingControllerImpl::OnStopTracingAcked(
   if (!BrowserThread::CurrentlyOn(BrowserThread::UI)) {
     BrowserThread::PostTask(
         BrowserThread::UI, FROM_HERE,
-        base::BindOnce(
+        base::Bind(
             &TracingControllerImpl::OnStopTracingAcked, base::Unretained(this),
             base::RetainedRef(trace_message_filter), known_category_groups));
     return;
@@ -591,10 +591,9 @@ void TracingControllerImpl::OnTraceDataCollected(
   // OnTraceDataCollected may be called from any browser thread, either by the
   // local event trace system or from child processes via TraceMessageFilter.
   if (!BrowserThread::CurrentlyOn(BrowserThread::UI)) {
-    BrowserThread::PostTask(
-        BrowserThread::UI, FROM_HERE,
-        base::BindOnce(&TracingControllerImpl::OnTraceDataCollected,
-                       base::Unretained(this), events_str_ptr));
+    BrowserThread::PostTask(BrowserThread::UI, FROM_HERE,
+        base::Bind(&TracingControllerImpl::OnTraceDataCollected,
+                   base::Unretained(this), events_str_ptr));
     return;
   }
 
@@ -623,9 +622,9 @@ void TracingControllerImpl::OnTraceLogStatusReply(
   if (!BrowserThread::CurrentlyOn(BrowserThread::UI)) {
     BrowserThread::PostTask(
         BrowserThread::UI, FROM_HERE,
-        base::BindOnce(&TracingControllerImpl::OnTraceLogStatusReply,
-                       base::Unretained(this),
-                       base::RetainedRef(trace_message_filter), status));
+        base::Bind(&TracingControllerImpl::OnTraceLogStatusReply,
+                   base::Unretained(this),
+                   base::RetainedRef(trace_message_filter), status));
     return;
   }
 
@@ -680,9 +679,9 @@ void TracingControllerImpl::StartAgentTracing(
       base::Bind(callback, kChromeTracingAgentName, true);
   if (!BrowserThread::PostTask(
           BrowserThread::FILE, FROM_HERE,
-          base::BindOnce(&TracingControllerImpl::SetEnabledOnFileThread,
-                         base::Unretained(this), trace_config,
-                         on_agent_started))) {
+          base::Bind(&TracingControllerImpl::SetEnabledOnFileThread,
+                     base::Unretained(this), trace_config,
+                     on_agent_started))) {
     // BrowserThread::PostTask fails if the threads haven't been created yet,
     // so it should be safe to just use TraceLog::SetEnabled directly.
     TraceLog::GetInstance()->SetEnabled(trace_config, enabled_tracing_modes_);
@@ -794,7 +793,7 @@ void TracingControllerImpl::AddFilteredMetadata(
        it.Advance()) {
     if (filter.Run(it.key()))
       filtered_metadata->Set(it.key(),
-                             base::MakeUnique<base::Value>(it.value().Clone()));
+                             base::MakeUnique<base::Value>(it.value()));
     else
       filtered_metadata->SetString(it.key(), "__stripped__");
   }

@@ -6,13 +6,9 @@
 
 namespace device {
 
-MockHidService::MockHidService() : weak_factory_(this) {}
+MockHidService::MockHidService() = default;
 
 MockHidService::~MockHidService() = default;
-
-base::WeakPtr<HidService> MockHidService::GetWeakPtr() {
-  return weak_factory_.GetWeakPtr();
-}
 
 void MockHidService::AddDevice(scoped_refptr<HidDeviceInfo> info) {
   HidService::AddDevice(info);

@@ -33,7 +33,7 @@ class ReadDirectory : public Operation {
   ReadDirectory(extensions::EventRouter* event_router,
                 const ProvidedFileSystemInfo& file_system_info,
                 const base::FilePath& directory_path,
-                storage::AsyncFileUtil::ReadDirectoryCallback callback);
+                const storage::AsyncFileUtil::ReadDirectoryCallback& callback);
   ~ReadDirectory() override;
 
   // Operation overrides.

@@ -161,6 +161,26 @@ void PasswordProtectionService::OnWarningDone(
   }
 }
 
+void PasswordProtectionService::ShowModalWarning(
+    content::WebContents* web_contents,
+    const LoginReputationClientRequest* request_proto,
+    const LoginReputationClientResponse* response_proto) {
+  // Do nothing if there is already a modal warning showing for this
+  // WebContents.
+  if (web_contents_to_proto_map().find(web_contents) !=
+      web_contents_to_proto_map().end())
+    return;
+
+  web_contents_to_proto_map().insert(std::make_pair(
+      web_contents,
+      std::make_pair(LoginReputationClientRequest(*request_proto),
+                     LoginReputationClientResponse(*response_proto))));
+
+  UpdateSecurityState(SB_THREAT_TYPE_PASSWORD_REUSE, web_contents);
+  // TODO(jialiul): instantiate modal warning dialog.
+  OnWarningShown(web_contents, MODAL_DIALOG);
+}
+
 void PasswordProtectionService::OnWarningShown(
     content::WebContents* web_contents,
     WarningUIType ui_type) {
@@ -364,17 +384,17 @@ void PasswordProtectionService::StartRequest(
     const GURL& main_frame_url,
     const GURL& password_form_action,
     const GURL& password_form_frame_url,
-    bool matches_sync_password,
-    const std::vector<std::string>& matching_domains,
+    const std::string& saved_domain,
     TriggerType trigger_type,
     bool password_field_exists) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
   scoped_refptr<PasswordProtectionRequest> request(
       new PasswordProtectionRequest(
           web_contents, main_frame_url, password_form_action,
-          password_form_frame_url, matches_sync_password, matching_domains,
-          trigger_type, password_field_exists, this, GetRequestTimeoutInMS()));
+          password_form_frame_url, saved_domain, trigger_type,
+          password_field_exists, this, GetRequestTimeoutInMS()));
 
+  DCHECK(request);
   request->Start();
   requests_.insert(std::move(request));
 }
@@ -388,8 +408,7 @@ void PasswordProtectionService::MaybeStartPasswordFieldOnFocusRequest(
   if (CanSendPing(kPasswordFieldOnFocusPinging, main_frame_url, false)) {
     StartRequest(web_contents, main_frame_url, password_form_action,
                  password_form_frame_url,
-                 false, /* matches_sync_password: not used for this type */
-                 {},    /* matching_domains: not used for this type */
+                 std::string(), /* saved_domain: not used for this type */
                  LoginReputationClientRequest::UNFAMILIAR_LOGIN_PAGE, true);
   }
 }
@@ -397,14 +416,13 @@ void PasswordProtectionService::MaybeStartPasswordFieldOnFocusRequest(
 void PasswordProtectionService::MaybeStartProtectedPasswordEntryRequest(
     WebContents* web_contents,
     const GURL& main_frame_url,
-    bool matches_sync_password,
-    const std::vector<std::string>& matching_domains,
+    const std::string& saved_domain,
     bool password_field_exists) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
-  if (CanSendPing(kProtectedPasswordEntryPinging, main_frame_url,
-                  matches_sync_password)) {
-    StartRequest(web_contents, main_frame_url, GURL(), GURL(),
-                 matches_sync_password, matching_domains,
+  if (CanSendPing(
+          kProtectedPasswordEntryPinging, main_frame_url,
+          saved_domain == std::string(password_manager::kSyncPasswordDomain))) {
+    StartRequest(web_contents, main_frame_url, GURL(), GURL(), saved_domain,
                  LoginReputationClientRequest::PASSWORD_REUSE_EVENT,
                  password_field_exists);
   }
@@ -713,8 +731,11 @@ bool PasswordProtectionService::ParseVerdictEntry(
 bool PasswordProtectionService::PathVariantsMatchCacheExpression(
     const std::vector<std::string>& generated_paths,
     const std::string& cache_expression_path) {
-  return std::find(generated_paths.begin(), generated_paths.end(),
-                   cache_expression_path) != generated_paths.end();
+  for (const auto& path : generated_paths) {
+    if (cache_expression_path == path)
+      return true;
+  }
+  return false;
 }
 
 bool PasswordProtectionService::IsCacheExpired(int cache_creation_time,

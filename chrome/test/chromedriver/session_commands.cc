@@ -562,18 +562,6 @@ Status ExecuteSetTimeout(Session* session,
   return Status(kOk);
 }
 
-Status ExecuteGetTimeouts(Session* session,
-                          const base::DictionaryValue& params,
-                          std::unique_ptr<base::Value>* value) {
-  base::DictionaryValue timeouts;
-  timeouts.SetInteger("script", session->script_timeout.InMilliseconds());
-  timeouts.SetInteger("pageLoad", session->page_load_timeout.InMilliseconds());
-  timeouts.SetInteger("implicit", session->implicit_wait.InMilliseconds());
-
-  value->reset(timeouts.DeepCopy());
-  return Status(kOk);
-}
-
 Status ExecuteSetScriptTimeout(Session* session,
                                const base::DictionaryValue& params,
                                std::unique_ptr<base::Value>* value) {
@@ -878,25 +866,6 @@ Status ExecuteMaximizeWindow(Session* session,
     return status;
 
   return extension->MaximizeWindow();
-}
-
-Status ExecuteFullScreenWindow(Session* session,
-                               const base::DictionaryValue& params,
-                               std::unique_ptr<base::Value>* value) {
-  ChromeDesktopImpl* desktop = NULL;
-  Status status = session->chrome->GetAsDesktop(&desktop);
-  if (status.IsError())
-    return status;
-
-  if (desktop->GetBrowserInfo()->build_no >= kBrowserWindowDevtoolsBuildNo)
-    return desktop->FullScreenWindow(session->window);
-
-  AutomationExtension* extension = NULL;
-  status = desktop->GetAutomationExtension(&extension, session->w3c_compliant);
-  if (status.IsError())
-    return status;
-
-  return extension->FullScreenWindow();
 }
 
 Status ExecuteGetAvailableLogTypes(Session* session,

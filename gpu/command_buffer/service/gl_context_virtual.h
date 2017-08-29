@@ -46,8 +46,7 @@ class GPU_EXPORT GLContextVirtual : public gl::GLContext {
   void SetSafeToForceGpuSwitch() override;
   bool WasAllocatedUsingRobustnessExtension() override;
   void SetUnbindFboOnMakeCurrent() override;
-  gl::YUVToRGBConverter* GetYUVToRGBConverter(
-      const gfx::ColorSpace& color_space) override;
+  gl::YUVToRGBConverter* GetYUVToRGBConverter() override;
   void ForceReleaseVirtuallyCurrent() override;
 
  protected:

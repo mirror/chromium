@@ -285,6 +285,11 @@ AudioInputStream* AudioManagerAndroid::MakeLowLatencyInputStream(
 }
 
 // static
+bool AudioManagerAndroid::RegisterAudioManager(JNIEnv* env) {
+  return RegisterNativesImpl(env);
+}
+
+// static
 bool AudioManagerAndroid::SupportsPerformanceModeForOutput() {
   return base::android::BuildInfo::GetInstance()->sdk_int() >=
          base::android::SDK_VERSION_NOUGAT_MR1;

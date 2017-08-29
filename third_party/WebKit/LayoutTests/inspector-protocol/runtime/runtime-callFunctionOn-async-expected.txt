@@ -15,19 +15,19 @@ Running test: testSyntaxErrorInFunction
         exception : {
             className : SyntaxError
             description : SyntaxError: Unexpected token }
-            objectId : <number>
+            objectId : 0
             subtype : error
             type : object
         }
         exceptionId : 0
         lineNumber : 1
-        scriptId : <number>
+        scriptId : 0
         text : Uncaught
     }
     result : {
         className : SyntaxError
         description : SyntaxError: Unexpected token }
-        objectId : <string>
+        objectId : [ObjectId]
         subtype : error
         type : object
     }
@@ -40,19 +40,19 @@ Running test: testExceptionInFunctionExpression
         exception : {
             className : Error
             description : Error     at <anonymous>:1:22     at <anonymous>:1:36
-            objectId : <number>
+            objectId : 0
             subtype : error
             type : object
         }
         exceptionId : 0
         lineNumber : 0
-        scriptId : <number>
+        scriptId : 0
         text : Uncaught
     }
     result : {
         className : Error
         description : Error     at <anonymous>:1:22     at <anonymous>:1:36
-        objectId : <string>
+        objectId : [ObjectId]
         subtype : error
         type : object
     }
@@ -82,7 +82,7 @@ Running test: testFunctionReturnResolvedPromiseWithPreview
     result : {
         className : Object
         description : Object
-        objectId : <string>
+        objectId : [ObjectId]
         preview : {
             description : Object
             overflow : false
@@ -104,7 +104,7 @@ Running test: testFunctionReturnRejectedPromise
     exceptionDetails : {
         columnNumber : 0
         exception : {
-            objectId : <number>
+            objectId : 0
             type : object
             value : {
                 a : 3

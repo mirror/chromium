@@ -26,7 +26,6 @@
 #include "base/strings/stringprintf.h"
 #include "base/trace_event/trace_event.h"
 #include "build/build_config.h"
-#include "cc/paint/paint_op_buffer.h"
 #include "gpu/command_buffer/common/debug_marker_manager.h"
 #include "gpu/command_buffer/common/gles2_cmd_format.h"
 #include "gpu/command_buffer/common/gles2_cmd_utils.h"
@@ -69,14 +68,6 @@
 #include "gpu/command_buffer/service/vertex_array_manager.h"
 #include "gpu/command_buffer/service/vertex_attrib_manager.h"
 #include "third_party/angle/src/image_util/loadimage.h"
-#include "third_party/skia/include/core/SkCanvas.h"
-#include "third_party/skia/include/core/SkSurface.h"
-#include "third_party/skia/include/core/SkSurfaceProps.h"
-#include "third_party/skia/include/core/SkTypeface.h"
-#include "third_party/skia/include/gpu/GrBackendSurface.h"
-#include "third_party/skia/include/gpu/GrContext.h"
-#include "third_party/skia/include/gpu/gl/GrGLAssembleInterface.h"
-#include "third_party/skia/include/gpu/gl/GrGLInterface.h"
 #include "third_party/smhasher/src/City.h"
 #include "ui/gfx/buffer_types.h"
 #include "ui/gfx/color_space.h"
@@ -109,11 +100,6 @@ namespace gpu {
 namespace gles2 {
 
 namespace {
-
-static GrGLFuncPtr get_gl_proc(void* ctx, const char name[]) {
-  DCHECK(!ctx);
-  return static_cast<GrGLFuncPtr>(gl::GetGLProcAddress(name));
-}
 
 const char kOESDerivativeExtension[] = "GL_OES_standard_derivatives";
 const char kEXTFragDepthExtension[] = "GL_EXT_frag_depth";
@@ -494,10 +480,6 @@ bool GLES2Decoder::GetServiceTextureId(uint32_t client_texture_id,
   return false;
 }
 
-TextureBase* GLES2Decoder::GetTextureBase(uint32_t client_id) {
-  return nullptr;
-}
-
 uint32_t GLES2Decoder::GetAndClearBackbufferClearBitsForTest() {
   return 0;
 }
@@ -632,7 +614,6 @@ class GLES2DecoderImpl : public GLES2Decoder, public ErrorStateClient {
 
   bool GetServiceTextureId(uint32_t client_texture_id,
                            uint32_t* service_texture_id) override;
-  TextureBase* GetTextureBase(uint32_t client_id) override;
 
   // Restores the current state to the user's settings.
   void RestoreCurrentFramebufferBindings();
@@ -1056,10 +1037,6 @@ class GLES2DecoderImpl : public GLES2Decoder, public ErrorStateClient {
                                          const volatile GLbyte* key);
   void DoApplyScreenSpaceAntialiasingCHROMIUM();
 
-  void BindImage(uint32_t client_texture_id,
-                 uint32_t texture_target,
-                 gl::GLImage* image,
-                 bool can_bind_to_sampler) override;
   void DoBindTexImage2DCHROMIUM(
       GLenum target,
       GLint image_id);
@@ -1955,14 +1932,6 @@ class GLES2DecoderImpl : public GLES2Decoder, public ErrorStateClient {
                                     GLenum textarget,
                                     GLuint texture_unit);
 
-  void DoBeginRasterCHROMIUM(GLuint texture_id,
-                             GLuint sk_color,
-                             GLuint msaa_sample_count,
-                             GLboolean can_use_lcd_text,
-                             GLboolean use_distance_field_text,
-                             GLint pixel_config);
-  void DoEndRasterCHROMIUM();
-
   // Returns false if textures were replaced.
   bool PrepareTexturesForRender();
   void RestoreStateForTextures();
@@ -2517,10 +2486,6 @@ class GLES2DecoderImpl : public GLES2Decoder, public ErrorStateClient {
 
   std::unique_ptr<CALayerSharedState> ca_layer_shared_state_;
   std::unique_ptr<DCLayerSharedState> dc_layer_shared_state_;
-
-  // Raster helpers.
-  sk_sp<GrContext> gr_context_;
-  sk_sp<SkSurface> sk_surface_;
 
   base::WeakPtrFactory<GLES2DecoderImpl> weak_ptr_factory_;
 
@@ -3715,33 +3680,6 @@ bool GLES2DecoderImpl::Initialize(
     glHint(GL_TEXTURE_FILTERING_HINT_CHROMIUM, GL_NICEST);
   }
 
-  if (attrib_helper.enable_oop_rasterization) {
-    if (!features().chromium_raster_transport)
-      return false;
-    sk_sp<const GrGLInterface> interface(
-        GrGLAssembleInterface(nullptr, get_gl_proc));
-    // TODO(enne): if this or gr_context creation below fails in practice for
-    // different reasons than the ones the renderer would fail on for gpu
-    // raster, expose this in gpu::Capabilities so the renderer can handle it.
-    if (!interface)
-      return false;
-    gr_context_ = sk_sp<GrContext>(
-        GrContext::Create(kOpenGL_GrBackend,
-                          reinterpret_cast<GrBackendContext>(interface.get())));
-    if (!gr_context_)
-      return false;
-
-    // TODO(enne): this cache is for this decoder only and each decoder has
-    // its own cache.  This is pretty unfortunate.  This really needs to be
-    // rethought before shipping.  Most likely a different command buffer
-    // context for raster-in-gpu, with a shared gl context / gr context
-    // that different decoders can use.
-    static const int kMaxGaneshResourceCacheCount = 8196;
-    static const size_t kMaxGaneshResourceCacheBytes = 96 * 1024 * 1024;
-    gr_context_->setResourceCacheLimits(kMaxGaneshResourceCacheCount,
-                                        kMaxGaneshResourceCacheBytes);
-  }
-
   return true;
 }
 
@@ -3940,10 +3878,6 @@ Capabilities GLES2DecoderImpl::GetCapabilities() {
   if (workarounds().disable_non_empty_post_sub_buffers_for_onscreen_surfaces &&
       !surface_->IsOffscreen()) {
     caps.disable_non_empty_post_sub_buffers = true;
-  }
-  if (workarounds().broken_egl_image_ref_counting &&
-      group_->gpu_preferences().enable_threaded_texture_mailboxes) {
-    caps.disable_2d_canvas_copy_on_write = true;
   }
 
   return caps;
@@ -4804,11 +4738,6 @@ bool GLES2DecoderImpl::GetServiceTextureId(uint32_t client_texture_id,
     return true;
   }
   return false;
-}
-
-TextureBase* GLES2DecoderImpl::GetTextureBase(uint32_t client_id) {
-  TextureRef* texture_ref = texture_manager()->GetTexture(client_id);
-  return texture_ref ? texture_ref->texture() : nullptr;
 }
 
 void GLES2DecoderImpl::Destroy(bool have_context) {
@@ -18013,26 +17942,6 @@ void GLES2DecoderImpl::DoPushGroupMarkerEXT(
 void GLES2DecoderImpl::DoPopGroupMarkerEXT(void) {
 }
 
-void GLES2DecoderImpl::BindImage(uint32_t client_texture_id,
-                                 uint32_t texture_target,
-                                 gl::GLImage* image,
-                                 bool can_bind_to_sampler) {
-  TextureRef* ref = texture_manager()->GetTexture(client_texture_id);
-  if (!ref) {
-    return;
-  }
-
-  GLenum bind_target = GLES2Util::GLFaceTargetToTextureTarget(texture_target);
-  if (ref->texture()->target() != bind_target) {
-    return;
-  }
-
-  texture_manager()->SetLevelImage(ref, texture_target, 0, image,
-                                   can_bind_to_sampler
-                                       ? gpu::gles2::Texture::BOUND
-                                       : gpu::gles2::Texture::UNBOUND);
-}
-
 void GLES2DecoderImpl::DoBindTexImage2DCHROMIUM(
     GLenum target, GLint image_id) {
   TRACE_EVENT0("gpu", "GLES2DecoderImpl::DoBindTexImage2DCHROMIUM");
@@ -19961,177 +19870,6 @@ error::Error GLES2DecoderImpl::HandleLockDiscardableTextureCHROMIUM(
                        "Texture ID not initialized");
   }
   return error::kNoError;
-}
-
-void GLES2DecoderImpl::DoBeginRasterCHROMIUM(GLuint texture_id,
-                                             GLuint sk_color,
-                                             GLuint msaa_sample_count,
-                                             GLboolean can_use_lcd_text,
-                                             GLboolean use_distance_field_text,
-                                             GLint pixel_config) {
-  if (!gr_context_) {
-    LOCAL_SET_GL_ERROR(GL_INVALID_OPERATION, "glBeginRasterCHROMIUM",
-                       "chromium_raster_transport not enabled via attribs");
-    return;
-  }
-  if (sk_surface_) {
-    LOCAL_SET_GL_ERROR(GL_INVALID_OPERATION, "glBeginRasterCHROMIUM",
-                       "BeginRasterCHROMIUM without EndRasterCHROMIUM");
-    return;
-  }
-
-  gr_context_->resetContext();
-
-  // This function should look identical to
-  // ResourceProvider::ScopedSkSurfaceProvider.
-  GrGLTextureInfo texture_info;
-  auto* texture_ref = GetTexture(texture_id);
-  if (!texture_ref) {
-    LOCAL_SET_GL_ERROR(GL_INVALID_OPERATION, "glBeginRasterCHROMIUM",
-                       "unknown texture id");
-    return;
-  }
-  auto* texture = texture_ref->texture();
-  int width;
-  int height;
-  int depth;
-  if (!texture->GetLevelSize(texture->target(), 0, &width, &height, &depth)) {
-    LOCAL_SET_GL_ERROR(GL_INVALID_OPERATION, "glBeginRasterCHROMIUM",
-                       "missing texture size info");
-    return;
-  }
-  GLenum type;
-  GLenum internal_format;
-  if (!texture->GetLevelType(texture->target(), 0, &type, &internal_format)) {
-    LOCAL_SET_GL_ERROR(GL_INVALID_OPERATION, "glBeginRasterCHROMIUM",
-                       "missing texture type info");
-    return;
-  }
-  texture_info.fID = texture_ref->service_id();
-  texture_info.fTarget = texture->target();
-
-  if (texture->target() != GL_TEXTURE_2D &&
-      texture->target() != GL_TEXTURE_RECTANGLE_ARB) {
-    LOCAL_SET_GL_ERROR(GL_INVALID_OPERATION, "glBeginRasterCHROMIUM",
-                       "invalid texture target");
-    return;
-  }
-
-  switch (pixel_config) {
-    case kRGBA_4444_GrPixelConfig:
-    case kRGBA_8888_GrPixelConfig:
-    case kSRGBA_8888_GrPixelConfig:
-      if (internal_format != GL_RGBA8_OES && internal_format != GL_RGBA) {
-        LOCAL_SET_GL_ERROR(GL_INVALID_OPERATION, "glBeginRasterCHROMIUM",
-                           "pixel config mismatch");
-        return;
-      }
-      break;
-    case kBGRA_8888_GrPixelConfig:
-    case kSBGRA_8888_GrPixelConfig:
-      if (internal_format != GL_BGRA_EXT && internal_format != GL_BGRA8_EXT) {
-        LOCAL_SET_GL_ERROR(GL_INVALID_OPERATION, "glBeginRasterCHROMIUM",
-                           "pixel config mismatch");
-        return;
-      }
-      break;
-    default:
-      LOCAL_SET_GL_ERROR(GL_INVALID_OPERATION, "glBeginRasterCHROMIUM",
-                         "unsupported pixel config");
-      return;
-  }
-
-  GrBackendTexture gr_texture(
-      width, height, static_cast<GrPixelConfig>(pixel_config), texture_info);
-
-  uint32_t flags =
-      use_distance_field_text ? SkSurfaceProps::kUseDistanceFieldFonts_Flag : 0;
-  // Use unknown pixel geometry to disable LCD text.
-  SkSurfaceProps surface_props(flags, kUnknown_SkPixelGeometry);
-  if (can_use_lcd_text) {
-    // LegacyFontHost will get LCD text and skia figures out what type to use.
-    surface_props =
-        SkSurfaceProps(flags, SkSurfaceProps::kLegacyFontHost_InitType);
-  }
-
-  // Resolve requested msaa samples with GrGpu capabilities.
-  int final_msaa_count = gr_context_->caps()->getSampleCount(
-      msaa_sample_count, gr_texture.config());
-  sk_surface_ = SkSurface::MakeFromBackendTextureAsRenderTarget(
-      gr_context_.get(), gr_texture, kTopLeft_GrSurfaceOrigin, final_msaa_count,
-      nullptr, &surface_props);
-
-  if (!sk_surface_) {
-    LOCAL_SET_GL_ERROR(GL_INVALID_OPERATION, "glBeginRasterCHROMIUM",
-                       "failed to create surface");
-    return;
-  }
-
-  // All or nothing clearing, as no way to validate the client's input on what
-  // is the "used" part of the texture.
-  if (texture->IsLevelCleared(texture->target(), 0))
-    return;
-
-  // TODO(enne): this doesn't handle the case where the background color
-  // changes and so any extra pixels outside the raster area that get
-  // sampled may be incorrect.
-  sk_surface_->getCanvas()->drawColor(sk_color);
-  texture_manager()->SetLevelCleared(texture_ref, texture->target(), 0, true);
-}
-
-error::Error GLES2DecoderImpl::HandleRasterCHROMIUM(
-    uint32_t immediate_data_size,
-    const volatile void* cmd_data) {
-  if (!sk_surface_) {
-    LOG(ERROR) << "RasterCHROMIUM without BeginRasterCHROMIUM";
-    return error::kInvalidArguments;
-  }
-
-  alignas(
-      cc::PaintOpBuffer::PaintOpAlign) char data[sizeof(cc::LargestPaintOp)];
-  auto& c = *static_cast<const volatile gles2::cmds::RasterCHROMIUM*>(cmd_data);
-  size_t size = c.data_size;
-  char* buffer =
-      GetSharedMemoryAs<char*>(c.list_shm_id, c.list_shm_offset, size);
-  if (!buffer)
-    return error::kOutOfBounds;
-
-  SkCanvas* canvas = sk_surface_->getCanvas();
-  SkMatrix original_ctm;
-  cc::PlaybackParams playback_params(nullptr, original_ctm);
-
-  int op_idx = 0;
-  while (size > 4) {
-    size_t skip = 0;
-    cc::PaintOp* deserialized_op = cc::PaintOp::Deserialize(
-        buffer, size, &data[0], sizeof(cc::LargestPaintOp), &skip);
-    if (!deserialized_op) {
-      LOG(ERROR) << "RasterCHROMIUM: bad op: " << op_idx;
-      return error::kInvalidArguments;
-    }
-
-    deserialized_op->Raster(canvas, playback_params);
-    deserialized_op->DestroyThis();
-
-    size -= skip;
-    buffer += skip;
-    op_idx++;
-  }
-
-  return error::kNoError;
-}
-
-void GLES2DecoderImpl::DoEndRasterCHROMIUM() {
-  if (!sk_surface_) {
-    LOCAL_SET_GL_ERROR(GL_INVALID_OPERATION, "glBeginRasterCHROMIUM",
-                       "EndRasterCHROMIUM without BeginRasterCHROMIUM");
-    return;
-  }
-
-  sk_surface_->prepareForExternalIO();
-  sk_surface_.reset();
-
-  RestoreState(nullptr);
 }
 
 // Include the auto-generated part of this file. We split this because it means

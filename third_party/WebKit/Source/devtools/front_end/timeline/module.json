@@ -9,17 +9,6 @@
             "className": "Timeline.TimelinePanel"
         },
         {
-            "type": "view",
-            "location": "drawer-view",
-            "id": "performance.monitor",
-            "title": "Performance monitor",
-            "persistence": "closeable",
-            "order": 100,
-            "className": "Timeline.PerformanceMonitor",
-            "experiment": "performanceMonitor",
-            "tags": "performance, system monitor, monitor, activity, metrics"
-        },
-        {
             "type": "setting",
             "category": "Performance",
             "title": "Hide chrome frame in Layers view",
@@ -195,7 +184,6 @@
         "network_priorities"
     ],
     "scripts": [
-        "PerformanceMonitor.js",
         "CountersGraph.js",
         "ExtensionTracingSession.js",
         "PerformanceModel.js",
@@ -217,7 +205,6 @@
         "TimelinePanel.js"
     ],
     "resources": [
-        "performanceMonitor.css",
         "historyToolbarButton.css",
         "invalidationsTree.css",
         "timelineFlamechartPopover.css",

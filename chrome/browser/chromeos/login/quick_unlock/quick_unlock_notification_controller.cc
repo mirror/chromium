@@ -91,10 +91,8 @@ bool QuickUnlockNotificationController::ShouldShowPinNotification(
 
   // Do not show notification if policy does not allow PIN, or if user is
   // supervised.
-  if (IsPinDisabledByPolicy(profile->GetPrefs()) ||
-      !IsPinEnabled(profile->GetPrefs())) {
+  if (!IsPinEnabled(profile->GetPrefs()))
     return false;
-  }
 
   // Do not show the notification if the pin is already set.
   PinStorage* pin_storage =

@@ -39,6 +39,8 @@ class MidiInputPortAndroid final {
               jint size,
               jlong timestamp);
 
+  static bool Register(JNIEnv* env);
+
  private:
   base::android::ScopedJavaGlobalRef<jobject> raw_port_;
   Delegate* const delegate_;

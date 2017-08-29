@@ -40,10 +40,10 @@
 
   async function dispatchEvent(params) {
     testRunner.log('\nDispatching event:');
-    testRunner.log(params);
+    testRunner.logObject(params);
     var response = await dp.Input.dispatchTouchEvent(params);
     if (response.error)
-      testRunner.log(response);
+      testRunner.logMessage(response);
     testRunner.log(await session.evaluate(`takeLogs()`));
   }
 

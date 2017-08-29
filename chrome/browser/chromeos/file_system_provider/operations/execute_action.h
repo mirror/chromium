@@ -39,7 +39,7 @@ class ExecuteAction : public Operation {
                 const ProvidedFileSystemInfo& file_system_info,
                 const std::vector<base::FilePath>& entry_path,
                 const std::string& action_id,
-                storage::AsyncFileUtil::StatusCallback callback);
+                const storage::AsyncFileUtil::StatusCallback& callback);
   ~ExecuteAction() override;
 
   // Operation overrides.
@@ -54,7 +54,7 @@ class ExecuteAction : public Operation {
  private:
   const std::vector<base::FilePath> entry_paths_;
   const std::string action_id_;
-  storage::AsyncFileUtil::StatusCallback callback_;
+  const storage::AsyncFileUtil::StatusCallback callback_;
 
   DISALLOW_COPY_AND_ASSIGN(ExecuteAction);
 };

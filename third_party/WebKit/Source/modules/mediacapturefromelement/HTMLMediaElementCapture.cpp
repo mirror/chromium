@@ -125,7 +125,8 @@ MediaStream* HTMLMediaElementCapture::captureStream(
   element.addEventListener(EventTypeNames::ended, listener, false);
 
   // If |element| is actually playing a MediaStream, just clone it.
-  if (element.GetLoadType() == WebMediaPlayer::kLoadTypeMediaStream) {
+  if (!element.currentSrc().IsNull() &&
+      HTMLMediaElement::IsMediaStreamURL(element.currentSrc().GetString())) {
     return MediaStream::Create(
         element.GetExecutionContext(),
         MediaStreamRegistry::Registry().LookupMediaStreamDescriptor(

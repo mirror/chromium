@@ -285,8 +285,6 @@ AutomationPredicate.structuralContainer = AutomationPredicate.roles([
 AutomationPredicate.root = function(node) {
   switch (node.role) {
     case Role.WINDOW:
-    case Role.MENU:
-    case Role.MENU_BAR:
       return true;
     case Role.DIALOG:
       // The below logic handles nested dialogs properly in the desktop tree

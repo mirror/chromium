@@ -37,6 +37,11 @@ SpellCheckerSessionBridge::~SpellCheckerSessionBridge() {
   DisconnectSession();
 }
 
+// static
+bool SpellCheckerSessionBridge::RegisterJNI(JNIEnv* env) {
+  return RegisterNativesImpl(env);
+}
+
 void SpellCheckerSessionBridge::RequestTextCheck(int route_id,
                                                  int identifier,
                                                  const base::string16& text) {

@@ -92,7 +92,7 @@ void SystemStorageEjectDeviceFunction::HandleResponse(
   }
 
   Respond(OneArgument(
-      std::make_unique<base::Value>(api::system_storage::ToString(result))));
+      base::MakeUnique<base::Value>(api::system_storage::ToString(result))));
 }
 
 SystemStorageGetAvailableCapacityFunction::

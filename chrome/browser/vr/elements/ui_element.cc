@@ -7,7 +7,6 @@
 #include <limits>
 
 #include "base/logging.h"
-#include "base/stl_util.h"
 #include "base/time/time.h"
 #include "cc/base/math_util.h"
 #include "chrome/browser/vr/elements/ui_element_transform_operations.h"
@@ -16,11 +15,6 @@
 namespace vr {
 
 namespace {
-
-int AllocateId() {
-  static int g_next_id = 1;
-  return g_next_id++;
-}
 
 bool GetRayPlaneDistance(const gfx::Point3F& ray_origin,
                          const gfx::Vector3dF& ray_vector,
@@ -38,7 +32,7 @@ bool GetRayPlaneDistance(const gfx::Point3F& ray_origin,
 
 }  // namespace
 
-UiElement::UiElement() : id_(AllocateId()) {
+UiElement::UiElement() {
   animation_player_.set_target(this);
   layout_offset_.AppendTranslate(0, 0, 0);
   transform_operations_.AppendTranslate(0, 0, 0);
@@ -164,9 +158,6 @@ bool UiElement::HitTest(const gfx::PointF& point) const {
 }
 
 void UiElement::SetMode(ColorScheme::Mode mode) {
-  for (auto& child : children_) {
-    child->SetMode(mode);
-  }
   if (mode_ == mode)
     return;
   mode_ = mode;
@@ -175,20 +166,9 @@ void UiElement::SetMode(ColorScheme::Mode mode) {
 
 void UiElement::OnSetMode() {}
 
-void UiElement::AddChild(std::unique_ptr<UiElement> child) {
+void UiElement::AddChild(UiElement* child) {
   child->parent_ = this;
-  children_.push_back(std::move(child));
-}
-
-void UiElement::RemoveChild(UiElement* to_remove) {
-  DCHECK_EQ(this, to_remove->parent_);
-  to_remove->parent_ = nullptr;
-  size_t old_size = children_.size();
-  base::EraseIf(children_,
-                [to_remove](const std::unique_ptr<UiElement>& child) {
-                  return child.get() == to_remove;
-                });
-  DCHECK_NE(old_size, children_.size());
+  children_.push_back(child);
 }
 
 gfx::Point3F UiElement::GetCenter() const {
@@ -263,7 +243,7 @@ void UiElement::NotifyClientBooleanAnimated(bool visible,
 }
 
 void UiElement::LayOutChildren() {
-  for (auto& child : children_) {
+  for (auto* child : children_) {
     // To anchor a child, use the parent's size to find its edge.
     float x_offset;
     switch (child->x_anchoring()) {
@@ -292,8 +272,6 @@ void UiElement::LayOutChildren() {
     child->SetLayoutOffset(x_offset, y_offset);
   }
 }
-
-void UiElement::AdjustRotationForHeadPose(const gfx::Vector3dF& look_at) {}
 
 gfx::Transform UiElement::LocalTransform() const {
   return layout_offset_.Apply() * transform_operations_.Apply();

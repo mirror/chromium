@@ -14,15 +14,12 @@ class MediaControlsImpl;
 
 class MediaControlTimeDisplayElement : public MediaControlDivElement {
  public:
-  // Exported to be used in unit tests.
-  MODULES_EXPORT void SetCurrentValue(double);
+  void SetCurrentValue(double);
   // Exported to be used by modules/accessibility.
   MODULES_EXPORT double CurrentValue() const;
 
  protected:
   MediaControlTimeDisplayElement(MediaControlsImpl&, MediaControlElementType);
-
-  virtual String FormatTime() const;
 
  private:
   double current_value_ = 0;

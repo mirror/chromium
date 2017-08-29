@@ -4,8 +4,6 @@
 
 #include "content/network/url_loader_impl.h"
 
-#include <string>
-
 #include "base/task_scheduler/post_task.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "base/time/time.h"
@@ -74,7 +72,6 @@ void PopulateResourceResponse(net::URLRequest* request,
 
   response->head.request_start = request->creation_time();
   response->head.response_start = base::TimeTicks::Now();
-  response->head.encoded_data_length = request->GetTotalReceivedBytes();
 }
 
 // A subclass of net::UploadBytesElementReader which owns
@@ -174,11 +171,7 @@ URLLoaderImpl::URLLoaderImpl(
                                mojo::SimpleWatcher::ArmingPolicy::MANUAL),
       peer_closed_handle_watcher_(FROM_HERE,
                                   mojo::SimpleWatcher::ArmingPolicy::MANUAL),
-      report_raw_headers_(false),
       weak_ptr_factory_(this) {
-  // TODO(caseq): Make sure the client renderer actually has premissions to
-  // get raw headers (i.e. has DevTools attached).
-  report_raw_headers_ = request.report_raw_headers;
   context_->RegisterURLLoader(this);
   binding_.set_connection_error_handler(base::BindOnce(
       &URLLoaderImpl::OnConnectionError, base::Unretained(this)));
@@ -207,11 +200,7 @@ URLLoaderImpl::URLLoaderImpl(
 
   int load_flags = BuildLoadFlagsForRequest(request, false);
   url_request_->SetLoadFlags(load_flags);
-  if (report_raw_headers_) {
-    url_request_->SetRequestHeadersCallback(
-        base::Bind(&net::HttpRawRequestHeaders::Assign,
-                   base::Unretained(&raw_request_headers_)));
-  }
+
   url_request_->Start();
 }
 
@@ -252,10 +241,8 @@ void URLLoaderImpl::OnReceivedRedirect(net::URLRequest* url_request,
 
   scoped_refptr<ResourceResponse> response = new ResourceResponse();
   PopulateResourceResponse(url_request_.get(), response.get());
-  if (report_raw_headers_) {
-    response->head.devtools_info =
-        BuildDevToolsInfo(*url_request_, raw_request_headers_);
-  }
+  response->head.encoded_data_length = url_request_->GetTotalReceivedBytes();
+
   url_loader_client_->OnReceiveRedirect(redirect_info, response->head);
 }
 
@@ -271,10 +258,7 @@ void URLLoaderImpl::OnResponseStarted(net::URLRequest* url_request,
 
   response_ = new ResourceResponse();
   PopulateResourceResponse(url_request_.get(), response_.get());
-  if (report_raw_headers_) {
-    response_->head.devtools_info =
-        BuildDevToolsInfo(*url_request_, raw_request_headers_);
-  }
+  response_->head.encoded_data_length = url_request_->raw_header_size();
 
   mojo::DataPipe data_pipe(kDefaultAllocationSize);
   response_body_stream_ = std::move(data_pipe.producer_handle);

@@ -114,7 +114,8 @@ PlatformNotificationServiceImpl::GetInstance() {
   return base::Singleton<PlatformNotificationServiceImpl>::get();
 }
 
-PlatformNotificationServiceImpl::PlatformNotificationServiceImpl() {
+PlatformNotificationServiceImpl::PlatformNotificationServiceImpl()
+    : test_display_service_(nullptr) {
 #if BUILDFLAG(ENABLE_BACKGROUND)
   pending_click_dispatch_events_ = 0;
 #endif
@@ -332,7 +333,7 @@ void PlatformNotificationServiceImpl::DisplayNotification(
       profile, GURL() /* service_worker_scope */, origin, notification_data,
       notification_resources, notification_delegate);
 
-  NotificationDisplayServiceFactory::GetForProfile(profile)->Display(
+  GetNotificationDisplayService(profile)->Display(
       NotificationCommon::NON_PERSISTENT, notification_id, notification);
   if (cancel_callback) {
 #if defined(OS_WIN)
@@ -371,7 +372,7 @@ void PlatformNotificationServiceImpl::DisplayPersistentNotification(
       profile, service_worker_scope, origin, notification_data,
       notification_resources, delegate);
 
-  NotificationDisplayServiceFactory::GetForProfile(profile)->Display(
+  GetNotificationDisplayService(profile)->Display(
       NotificationCommon::PERSISTENT, notification_id, notification);
   base::RecordAction(base::UserMetricsAction("Notifications.Persistent.Shown"));
 }
@@ -386,8 +387,8 @@ void PlatformNotificationServiceImpl::ClosePersistentNotification(
 
   closed_notifications_.insert(notification_id);
 
-  NotificationDisplayServiceFactory::GetForProfile(profile)->Close(
-      NotificationCommon::PERSISTENT, notification_id);
+  GetNotificationDisplayService(profile)->Close(NotificationCommon::PERSISTENT,
+                                                notification_id);
 }
 
 void PlatformNotificationServiceImpl::GetDisplayedNotifications(
@@ -403,8 +404,7 @@ void PlatformNotificationServiceImpl::GetDisplayedNotifications(
                  false /* supports_synchronization */);
     return;
   }
-  NotificationDisplayServiceFactory::GetForProfile(profile)->GetDisplayed(
-      callback);
+  GetNotificationDisplayService(profile)->GetDisplayed(callback);
 }
 
 void PlatformNotificationServiceImpl::OnClickEventDispatchComplete(
@@ -513,6 +513,14 @@ Notification PlatformNotificationServiceImpl::CreateNotificationFromData(
   return notification;
 }
 
+NotificationDisplayService*
+PlatformNotificationServiceImpl::GetNotificationDisplayService(
+    Profile* profile) {
+  return test_display_service_
+             ? test_display_service_
+             : NotificationDisplayServiceFactory::GetForProfile(profile);
+}
+
 base::string16 PlatformNotificationServiceImpl::DisplayNameForContextMessage(
     Profile* profile,
     const GURL& origin) const {
@@ -529,6 +537,11 @@ base::string16 PlatformNotificationServiceImpl::DisplayNameForContextMessage(
 #endif
 
   return base::string16();
+}
+
+void PlatformNotificationServiceImpl::SetNotificationDisplayServiceForTesting(
+    NotificationDisplayService* display_service) {
+  test_display_service_ = display_service;
 }
 
 void PlatformNotificationServiceImpl::RecordSiteEngagement(

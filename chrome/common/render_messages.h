@@ -19,7 +19,6 @@
 #include "components/content_settings/core/common/content_settings.h"
 #include "components/content_settings/core/common/content_settings_pattern.h"
 #include "components/content_settings/core/common/content_settings_types.h"
-#include "components/offline_pages/features/features.h"
 #include "components/omnibox/common/omnibox_focus_state.h"
 #include "content/public/common/browser_controls_state.h"
 #include "content/public/common/webplugininfo.h"
@@ -29,6 +28,7 @@
 #include "media/media_features.h"
 #include "ppapi/features/features.h"
 #include "third_party/WebKit/public/web/WebConsoleMessage.h"
+#include "third_party/WebKit/public/web/window_features.mojom.h"
 #include "ui/base/window_open_disposition.h"
 #include "url/gurl.h"
 #include "url/ipc/url_param_traits.h"
@@ -131,6 +131,10 @@ IPC_MESSAGE_ROUTED3(ChromeViewMsg_UpdateBrowserControlsState,
                     content::BrowserControlsState /* current */,
                     bool /* animate */)
 
+// Updates the window features of the render view.
+IPC_MESSAGE_ROUTED1(ChromeViewMsg_SetWindowFeatures,
+                    blink::mojom::WindowFeatures /* window_features */)
+
 // Requests application info for the frame. The renderer responds back with
 // ChromeFrameHostMsg_DidGetWebApplicationInfo.
 IPC_MESSAGE_ROUTED0(ChromeFrameMsg_GetWebApplicationInfo)
@@ -140,7 +144,7 @@ IPC_MESSAGE_ROUTED0(ChromeFrameMsg_GetWebApplicationInfo)
 // Tells the frame it is displaying an interstitial page.
 IPC_MESSAGE_ROUTED0(ChromeViewMsg_SetAsInterstitial)
 
-#if BUILDFLAG(ENABLE_OFFLINE_PAGES)
+#if defined(OS_ANDROID)
 // Message sent from the renderer to the browser to schedule to download the
 // page at a later time.
 IPC_MESSAGE_ROUTED0(ChromeViewHostMsg_DownloadPageLater)
@@ -149,9 +153,7 @@ IPC_MESSAGE_ROUTED0(ChromeViewHostMsg_DownloadPageLater)
 // is being shown in error page.
 IPC_MESSAGE_ROUTED1(ChromeViewHostMsg_SetIsShowingDownloadButtonInErrorPage,
                     bool /* showing download button */)
-#endif
 
-#if defined(OS_ANDROID)
 // Sent when navigating to chrome://sandbox to install bindings onto the WebUI.
 IPC_MESSAGE_ROUTED0(ChromeViewMsg_AddSandboxStatusExtension)
 #endif  // defined(OS_ANDROID)

@@ -5,6 +5,7 @@
 package org.chromium.chrome.browser.banners;
 
 import android.animation.Animator;
+import android.animation.Animator.AnimatorListener;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.ObjectAnimator;
 import android.content.Context;
@@ -53,6 +54,9 @@ public abstract class SwipableOverlayView extends FrameLayout {
     /** Listens for changes in the layout. */
     private final View.OnLayoutChangeListener mLayoutChangeListener;
 
+    /** Monitors for animation completions and resets the state. */
+    private final AnimatorListener mAnimatorListener;
+
     /** Interpolator used for the animation. */
     private final Interpolator mInterpolator;
 
@@ -87,6 +91,7 @@ public abstract class SwipableOverlayView extends FrameLayout {
         mGestureStateListener = createGestureStateListener();
         mGestureState = GESTURE_NONE;
         mLayoutChangeListener = createLayoutChangeListener();
+        mAnimatorListener = createAnimatorListener();
         mInterpolator = new DecelerateInterpolator(1.0f);
 
         // We make this view 'draw' to provide a placeholder for its animations.
@@ -197,7 +202,7 @@ public abstract class SwipableOverlayView extends FrameLayout {
             @Override
             public void onFlingStartGesture(int scrollOffsetY, int scrollExtentY) {
                 if (!isAllowedToAutoHide() || !cancelCurrentAnimation()) return;
-                resetInternalScrollState(scrollOffsetY, scrollExtentY);
+                resetInitialOffsets(scrollOffsetY, scrollExtentY);
                 mGestureState = GESTURE_FLINGING;
             }
 
@@ -219,13 +224,13 @@ public abstract class SwipableOverlayView extends FrameLayout {
 
                 boolean show = (!isScrollingDownward && isVisibleEnough) || isNearTopOfPage;
 
-                runUpEventAnimation(show);
+                createVerticalSnapAnimation(show);
             }
 
             @Override
             public void onScrollStarted(int scrollOffsetY, int scrollExtentY) {
                 if (!isAllowedToAutoHide() || !cancelCurrentAnimation()) return;
-                resetInternalScrollState(scrollOffsetY, scrollExtentY);
+                resetInitialOffsets(scrollOffsetY, scrollExtentY);
                 mLastScrollOffsetY = scrollOffsetY;
                 mGestureState = GESTURE_SCROLLING;
             }
@@ -237,24 +242,16 @@ public abstract class SwipableOverlayView extends FrameLayout {
 
                 updateTranslation(scrollOffsetY, scrollExtentY);
 
-                runUpEventAnimation(shouldSnapToVisibleState(scrollOffsetY));
+                boolean isNearTopOfPage = scrollOffsetY < (mTotalHeight * FULL_THRESHOLD);
+                boolean isVisibleEnough = getTranslationY() < mTotalHeight * FULL_THRESHOLD;
+                createVerticalSnapAnimation(isNearTopOfPage || isVisibleEnough);
             }
 
             @Override
             public void onScrollOffsetOrExtentChanged(int scrollOffsetY, int scrollExtentY) {
-                mLastScrollOffsetY = scrollOffsetY;
-
-                if (!shouldConsumeScroll(scrollOffsetY, scrollExtentY)) {
-                    resetInternalScrollState(scrollOffsetY, scrollExtentY);
-                    return;
-                }
-
                 // This function is called for both fling and scrolls.
-                if (mGestureState == GESTURE_NONE || !cancelCurrentAnimation()
-                        || isIndependentlyAnimating()) {
-                    return;
-                }
-
+                if (mGestureState == GESTURE_NONE || !cancelCurrentAnimation()) return;
+                mLastScrollOffsetY = scrollOffsetY;
                 updateTranslation(scrollOffsetY, scrollExtentY);
             }
 
@@ -266,46 +263,20 @@ public abstract class SwipableOverlayView extends FrameLayout {
 
                 // If the container has reached the completely shown position, reset the initial
                 // scroll so any movement will start hiding it again.
-                if (translation <= 0f) resetInternalScrollState(scrollOffsetY, scrollExtentY);
+                if (translation <= 0f) resetInitialOffsets(scrollOffsetY, scrollExtentY);
 
                 setTranslationY(translation);
             }
 
             /**
-             * Resets the internal values that a scroll or fling will base its calculations off of.
+             * Records the conditions of the page to handle scrolls appropriately.
              */
-            private void resetInternalScrollState(int scrollOffsetY, int scrollExtentY) {
+            private void resetInitialOffsets(int scrollOffsetY, int scrollExtentY) {
                 mInitialOffsetY = scrollOffsetY;
                 mInitialExtentY = scrollExtentY;
                 mInitialTranslationY = getTranslationY();
             }
         };
-    }
-
-    /**
-     * @param scrollOffsetY The current scroll offset on the Y axis.
-     * @param scrollExtentY The current scroll extent on the Y axis.
-     * @return Whether or not the scroll should be consumed by the view.
-     */
-    protected boolean shouldConsumeScroll(int scrollOffsetY, int scrollExtentY) {
-        return true;
-    }
-
-    /**
-     * @param scrollOffsetY The current scroll offset on the Y axis.
-     * @return Whether the view should snap to a visible state.
-     */
-    protected boolean shouldSnapToVisibleState(int scrollOffsetY) {
-        boolean isNearTopOfPage = scrollOffsetY < (mTotalHeight * FULL_THRESHOLD);
-        boolean isVisibleEnough = getTranslationY() < mTotalHeight * FULL_THRESHOLD;
-        return isNearTopOfPage || isVisibleEnough;
-    }
-
-    /**
-     * @return Whether or not the view is animating independent of the user's scroll position.
-     */
-    protected boolean isIndependentlyAnimating() {
-        return false;
     }
 
     /**
@@ -322,7 +293,8 @@ public abstract class SwipableOverlayView extends FrameLayout {
                 // Animate the View coming in from the bottom of the screen.
                 setTranslationY(mTotalHeight);
                 mIsBeingDisplayedForFirstTime = true;
-                runUpEventAnimation(true);
+                createVerticalSnapAnimation(true);
+                mCurrentAnimation.start();
             }
         };
     }
@@ -332,36 +304,32 @@ public abstract class SwipableOverlayView extends FrameLayout {
      * @param visible If true, snaps the View to the bottom-center of the screen.  If false,
      *                translates the View below the bottom-center of the screen so that it is
      *                effectively invisible.
-     * @return An animator with the snap animation.
      */
-    protected Animator createVerticalSnapAnimation(boolean visible) {
-        float targetTranslationY = visible ? 0.0f : mTotalHeight;
-        float yDifference = Math.abs(targetTranslationY - getTranslationY()) / mTotalHeight;
+    private void createVerticalSnapAnimation(boolean visible) {
+        float translationY = visible ? 0.0f : mTotalHeight;
+        float yDifference = Math.abs(translationY - getTranslationY()) / mTotalHeight;
         long duration = Math.max(0, (long) (ANIMATION_DURATION_MS * yDifference));
 
-        Animator animator = ObjectAnimator.ofFloat(this, View.TRANSLATION_Y, targetTranslationY);
-        animator.setDuration(duration);
-        animator.setInterpolator(mInterpolator);
-
-        return animator;
+        mCurrentAnimation = ObjectAnimator.ofFloat(this, View.TRANSLATION_Y, translationY);
+        mCurrentAnimation.setDuration(duration);
+        mCurrentAnimation.addListener(mAnimatorListener);
+        mCurrentAnimation.setInterpolator(mInterpolator);
+        mCurrentAnimation.start();
     }
 
     /**
-     * Run an animation when a gesture has ended (an 'up' motion event).
-     * @param visible Whether or not the view should be visible.
+     * Creates an AnimatorListenerAdapter that cleans up after an animation is completed.
+     * @return {@link AnimatorListenerAdapter} to use for animations.
      */
-    protected void runUpEventAnimation(boolean visible) {
-        if (mCurrentAnimation != null) mCurrentAnimation.cancel();
-        mCurrentAnimation = createVerticalSnapAnimation(visible);
-        mCurrentAnimation.addListener(new AnimatorListenerAdapter() {
+    private AnimatorListener createAnimatorListener() {
+        return new AnimatorListenerAdapter() {
             @Override
             public void onAnimationEnd(Animator animation) {
                 mGestureState = GESTURE_NONE;
                 mCurrentAnimation = null;
                 mIsBeingDisplayedForFirstTime = false;
             }
-        });
-        mCurrentAnimation.start();
+        };
     }
 
     /**

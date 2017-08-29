@@ -4,7 +4,6 @@
 
 #include "core/html/canvas/ImageElementBase.h"
 
-#include "core/dom/DOMException.h"
 #include "core/frame/LocalDOMWindow.h"
 #include "core/frame/UseCounter.h"
 #include "core/imagebitmap/ImageBitmap.h"
@@ -143,31 +142,18 @@ ScriptPromise ImageElementBase::CreateImageBitmap(
     ScriptState* script_state,
     EventTarget& event_target,
     Optional<IntRect> crop_rect,
-    const ImageBitmapOptions& options) {
+    const ImageBitmapOptions& options,
+    ExceptionState& exception_state) {
   DCHECK(event_target.ToLocalDOMWindow());
-
-  if (!CachedImage()) {
-    return ScriptPromise::RejectWithDOMException(
-        script_state,
-        DOMException::Create(
-            kInvalidStateError,
-            "No image can be retrieved from the provided element."));
-  }
-  if (CachedImage()->GetImage()->IsSVGImage()) {
-    SVGImage* image = ToSVGImage(CachedImage()->GetImage());
-    if (!image->HasIntrinsicDimensions() &&
-        (!crop_rect &&
-         (!options.hasResizeWidth() || !options.hasResizeHeight()))) {
-      return ScriptPromise::RejectWithDOMException(
-          script_state,
-          DOMException::Create(
-              kInvalidStateError,
-              "The image element contains an SVG image without intrinsic "
-              "dimensions, and no resize options or crop region are "
-              "specified."));
-    }
-  }
-
+  if ((crop_rect &&
+       !ImageBitmap::IsSourceSizeValid(crop_rect->Width(), crop_rect->Height(),
+                                       exception_state)) ||
+      !ImageBitmap::IsSourceSizeValid(BitmapSourceSize().Width(),
+                                      BitmapSourceSize().Height(),
+                                      exception_state))
+    return ScriptPromise();
+  if (!ImageBitmap::IsResizeOptionValid(options, exception_state))
+    return ScriptPromise();
   if (IsSVGSource()) {
     return ImageBitmap::CreateAsync(this, crop_rect,
                                     event_target.ToLocalDOMWindow()->document(),

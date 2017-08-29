@@ -636,8 +636,8 @@ Elements.ElementsTreeOutline = class extends UI.TreeOutline {
     if (event.target.nodeName === 'A')
       return false;
 
-    var treeElement = this._validDragSourceOrTarget(this._treeElementFromEvent(event));
-    if (!treeElement)
+    var treeElement = this._treeElementFromEvent(event);
+    if (!this._isValidDragSourceOrTarget(treeElement))
       return false;
 
     if (treeElement.node().nodeName() === 'BODY' || treeElement.node().nodeName() === 'HEAD')
@@ -656,8 +656,8 @@ Elements.ElementsTreeOutline = class extends UI.TreeOutline {
     if (!this._treeElementBeingDragged)
       return false;
 
-    var treeElement = this._validDragSourceOrTarget(this._treeElementFromEvent(event));
-    if (!treeElement)
+    var treeElement = this._treeElementFromEvent(event);
+    if (!this._isValidDragSourceOrTarget(treeElement))
       return false;
 
     var node = treeElement.node();
@@ -682,32 +682,32 @@ Elements.ElementsTreeOutline = class extends UI.TreeOutline {
 
   /**
    * @param {?UI.TreeElement} treeElement
-   * @return {?Elements.ElementsTreeElement}
+   * @return {boolean}
    */
-  _validDragSourceOrTarget(treeElement) {
+  _isValidDragSourceOrTarget(treeElement) {
     if (!treeElement)
-      return null;
+      return false;
 
     if (!(treeElement instanceof Elements.ElementsTreeElement))
-      return null;
+      return false;
     var elementsTreeElement = /** @type {!Elements.ElementsTreeElement} */ (treeElement);
 
     var node = elementsTreeElement.node();
     if (!node.parentNode || node.parentNode.nodeType() !== Node.ELEMENT_NODE)
-      return null;
+      return false;
 
-    return elementsTreeElement;
+    return true;
   }
 
   _ondrop(event) {
     event.preventDefault();
     var treeElement = this._treeElementFromEvent(event);
-    if (treeElement instanceof Elements.ElementsTreeElement)
+    if (treeElement)
       this._doMove(treeElement);
   }
 
   /**
-   * @param {!Elements.ElementsTreeElement} treeElement
+   * @param {!UI.TreeElement} treeElement
    */
   _doMove(treeElement) {
     if (!this._treeElementBeingDragged)

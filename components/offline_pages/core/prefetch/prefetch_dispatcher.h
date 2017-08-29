@@ -5,11 +5,8 @@
 #ifndef COMPONENTS_OFFLINE_PAGES_CORE_PREFETCH_PREFETCH_DISPATCHER_H_
 #define COMPONENTS_OFFLINE_PAGES_CORE_PREFETCH_PREFETCH_DISPATCHER_H_
 
-#include <map>
 #include <memory>
-#include <set>
 #include <string>
-#include <utility>
 #include <vector>
 
 #include "base/memory/weak_ptr.h"
@@ -67,14 +64,6 @@ class PrefetchDispatcher {
   // pipeline again.
   virtual void SchedulePipelineProcessing() = 0;
 
-  // Called by Event Handler tasks to ensure that we will wake up in the
-  // background to process data produced by the event handler.  For example, if
-  // new URLs are added to the system, this is called to process them later in
-  // the background.  If we are in a background task, requests rescheduling at
-  // the end of the task.  Otherwise, updates the task in the OS scheduler.
-  // Does not update any existing task, so will not affect backoff.
-  virtual void EnsureTaskScheduled() = 0;
-
   // Called when a client has candidate URLs for the system to prefetch, along
   // with the client's unique namespace. URLs that are currently in the system
   // for this client are acceptable but ignored.
@@ -107,16 +96,6 @@ class PrefetchDispatcher {
   // operation name.
   virtual void GCMOperationCompletedMessageReceived(
       const std::string& operation_name) = 0;
-
-  // Called when a download service is up and notifies us about the ongoing and
-  // success downloads. The prefetch system should clean up the database to
-  // be consistent with those reported from the download system.
-  // Note that the failed downloads are not reported. The cleanup task can
-  // easily figure this out from both sides and take care of them.
-  virtual void CleanupDownloads(
-      const std::set<std::string>& outstanding_download_ids,
-      const std::map<std::string, std::pair<base::FilePath, int64_t>>&
-          success_downloads) = 0;
 
   // Called when a download is completed successfully or fails.
   virtual void DownloadCompleted(

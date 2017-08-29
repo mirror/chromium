@@ -6,7 +6,6 @@
 
 #include <memory>
 #include <string>
-#include <unordered_map>
 #include <utility>
 #include <vector>
 
@@ -14,11 +13,8 @@
 #include "base/json/json_reader.h"
 #include "base/md5.h"
 #include "base/memory/ptr_util.h"
-#include "base/observer_list_threadsafe.h"
 #include "base/optional.h"
-#include "base/synchronization/lock.h"
 #include "base/values.h"
-#include "chrome/browser/chromeos/printing/printer_configurer.h"
 #include "chrome/browser/chromeos/printing/printers_sync_bridge.h"
 #include "chrome/browser/chromeos/printing/specifics_translation.h"
 #include "chrome/browser/profiles/profile.h"
@@ -32,13 +28,32 @@ namespace chromeos {
 
 namespace {
 
+// Adds |printer| with |id| to prefs.  Returns true if the printer is new,
+// false for an update.
+bool UpdatePrinterPref(PrintersSyncBridge* sync_bridge,
+                       const std::string& id,
+                       const Printer& printer) {
+  base::Optional<sync_pb::PrinterSpecifics> specifics =
+      sync_bridge->GetPrinter(id);
+  if (!specifics.has_value()) {
+    sync_bridge->AddPrinter(PrinterToSpecifics(printer));
+    return true;
+  }
+
+  // Preserve fields in the proto which we don't understand.
+  std::unique_ptr<sync_pb::PrinterSpecifics> updated_printer =
+      base::MakeUnique<sync_pb::PrinterSpecifics>(*specifics);
+  MergePrinterToSpecifics(printer, updated_printer.get());
+  sync_bridge->AddPrinter(std::move(updated_printer));
+
+  return false;
+}
+
 class SyncedPrintersManagerImpl : public SyncedPrintersManager {
  public:
   SyncedPrintersManagerImpl(Profile* profile,
                             std::unique_ptr<PrintersSyncBridge> sync_bridge)
-      : profile_(profile),
-        sync_bridge_(std::move(sync_bridge)),
-        observers_(new base::ObserverListThreadSafe<Observer>()) {
+      : profile_(profile), sync_bridge_(std::move(sync_bridge)) {
     pref_change_registrar_.Init(profile->GetPrefs());
     pref_change_registrar_.Add(
         prefs::kRecommendedNativePrinters,
@@ -49,8 +64,6 @@ class SyncedPrintersManagerImpl : public SyncedPrintersManager {
   ~SyncedPrintersManagerImpl() override = default;
 
   std::vector<Printer> GetConfiguredPrinters() const override {
-    // No need to lock here, since sync_bridge_ is thread safe and we don't
-    // touch anything else.
     std::vector<Printer> printers;
     std::vector<sync_pb::PrinterSpecifics> values =
         sync_bridge_->GetAllPrinters();
@@ -61,64 +74,24 @@ class SyncedPrintersManagerImpl : public SyncedPrintersManager {
   }
 
   std::vector<Printer> GetEnterprisePrinters() const override {
-    base::AutoLock l(lock_);
-    return GetEnterprisePrintersLocked();
+    std::vector<Printer> printers;
+    for (const std::string& key : enterprise_printer_ids_) {
+      auto printer = enterprise_printers_.find(key);
+      if (printer != enterprise_printers_.end()) {
+        printers.push_back(*printer->second);
+      }
+    }
+    return printers;
   }
 
   std::unique_ptr<Printer> GetPrinter(
       const std::string& printer_id) const override {
-    base::AutoLock l(lock_);
-    return GetPrinterLocked(printer_id);
-  }
-
-  void UpdateConfiguredPrinter(const Printer& printer) override {
-    base::AutoLock l(lock_);
-    UpdateConfiguredPrinterLocked(printer);
-  }
-
-  bool RemoveConfiguredPrinter(const std::string& printer_id) override {
-    return sync_bridge_->RemovePrinter(printer_id);
-  }
-
-  void AddObserver(Observer* observer) override {
-    observers_->AddObserver(observer);
-  }
-
-  void RemoveObserver(Observer* observer) override {
-    observers_->RemoveObserver(observer);
-  }
-
-  void PrinterInstalled(const Printer& printer) override {
-    base::AutoLock l(lock_);
-    installed_printer_fingerprints_[printer.id()] =
-        PrinterConfigurer::SetupFingerprint(printer);
-
-    // Register this printer if it's the first time we're using it.
-    if (GetPrinterLocked(printer.id()) == nullptr) {
-      UpdateConfiguredPrinterLocked(printer);
-    }
-  }
-
-  bool IsConfigurationCurrent(const Printer& printer) const override {
-    base::AutoLock l(lock_);
-    auto found = installed_printer_fingerprints_.find(printer.id());
-    if (found == installed_printer_fingerprints_.end())
-      return false;
-
-    return found->second == PrinterConfigurer::SetupFingerprint(printer);
-  }
-
-  PrintersSyncBridge* GetSyncBridge() override { return sync_bridge_.get(); }
-
- private:
-  std::unique_ptr<Printer> GetPrinterLocked(
-      const std::string& printer_id) const {
-    lock_.AssertAcquired();
     // check for a policy printer first
-    auto found = enterprise_printers_.find(printer_id);
-    if (found != enterprise_printers_.end()) {
+    const auto& policy_printers = enterprise_printers_;
+    auto found = policy_printers.find(printer_id);
+    if (found != policy_printers.end()) {
       // Copy a printer.
-      return base::MakeUnique<Printer>(found->second);
+      return base::MakeUnique<Printer>(*(found->second));
     }
 
     base::Optional<sync_pb::PrinterSpecifics> printer =
@@ -126,35 +99,79 @@ class SyncedPrintersManagerImpl : public SyncedPrintersManager {
     return printer.has_value() ? SpecificsToPrinter(*printer) : nullptr;
   }
 
-  void UpdateConfiguredPrinterLocked(const Printer& printer_arg) {
-    lock_.AssertAcquired();
-    DCHECK_EQ(Printer::SRC_USER_PREFS, printer_arg.source());
-
+  void UpdateConfiguredPrinter(const Printer& printer_arg) override {
     // Need a local copy since we may set the id.
     Printer printer = printer_arg;
     if (printer.id().empty()) {
       printer.set_id(base::GenerateGUID());
     }
 
-    sync_bridge_->UpdatePrinter(PrinterToSpecifics(printer));
-    observers_->Notify(
-        FROM_HERE,
-        &SyncedPrintersManager::Observer::OnConfiguredPrintersChanged,
-        GetConfiguredPrinters());
+    DCHECK_EQ(Printer::SRC_USER_PREFS, printer.source());
+    UpdatePrinterPref(sync_bridge_.get(), printer.id(), printer);
+
+    NotifyConfiguredObservers();
   }
 
+  bool RemoveConfiguredPrinter(const std::string& printer_id) override {
+    DCHECK(!printer_id.empty());
+
+    base::Optional<sync_pb::PrinterSpecifics> printer =
+        sync_bridge_->GetPrinter(printer_id);
+    bool success = false;
+    if (printer.has_value()) {
+      std::unique_ptr<Printer> p = SpecificsToPrinter(*printer);
+      success = sync_bridge_->RemovePrinter(p->id());
+      if (success) {
+        NotifyConfiguredObservers();
+      }
+    } else {
+      LOG(WARNING) << "Could not find printer" << printer_id;
+    }
+
+    return success;
+  }
+
+  void AddObserver(Observer* observer) override {
+    observers_.AddObserver(observer);
+  }
+
+  void RemoveObserver(Observer* observer) override {
+    observers_.RemoveObserver(observer);
+  }
+
+  void PrinterInstalled(const Printer& printer) override {
+    DCHECK(!printer.last_updated().is_null());
+    installed_printer_timestamps_[printer.id()] = printer.last_updated();
+
+    // Register this printer if it's the first time we're using it.
+    if (GetPrinter(printer.id()) == nullptr) {
+      UpdateConfiguredPrinter(printer);
+    }
+  }
+
+  bool IsConfigurationCurrent(const Printer& printer) const override {
+    auto found = installed_printer_timestamps_.find(printer.id());
+    if (found == installed_printer_timestamps_.end())
+      return false;
+
+    return found->second == printer.last_updated();
+  }
+
+  PrintersSyncBridge* GetSyncBridge() override { return sync_bridge_.get(); }
+
+ private:
+  // This method is not thread safe and could interact poorly with readers of
+  // |enterprise_printers_|.
   void UpdateRecommendedPrinters() {
     const PrefService* prefs = profile_->GetPrefs();
 
     const base::ListValue* values =
         prefs->GetList(prefs::kRecommendedNativePrinters);
+    const base::Time timestamp = base::Time::Now();
 
-    // Parse the policy JSON into new structures outside the lock.
+    // Parse the policy JSON into new structures.
     std::vector<std::string> new_ids;
-    std::unordered_map<std::string, Printer> new_printers;
-
-    new_ids.reserve(values->GetList().size());
-    new_printers.reserve(values->GetList().size());
+    std::map<std::string, std::unique_ptr<Printer>> new_printers;
     for (const auto& value : *values) {
       std::string printer_json;
       if (!value.GetAsString(&printer_json)) {
@@ -173,8 +190,8 @@ class SyncedPrintersManagerImpl : public SyncedPrintersManager {
       }
 
       // Policy printers don't have id's but the ids only need to be locally
-      // unique so we'll hash the record.  This will not collide with the
-      // UUIDs generated for user entries.
+      // unique so we'll hash the record.  This will not collide with the UUIDs
+      // generated for user entries.
       std::string id = base::MD5String(printer_json);
       printer_dictionary->SetString(kPrinterId, id);
 
@@ -183,51 +200,59 @@ class SyncedPrintersManagerImpl : public SyncedPrintersManager {
         LOG(WARNING) << "Duplicate printer ignored.";
         continue;
       }
+
       new_ids.push_back(id);
-      new_printers.insert(
-          {id, *RecommendedPrinterToPrinter(*printer_dictionary)});
+      // Move existing printers, create othewise.
+      auto old = enterprise_printers_.find(id);
+      if (old != enterprise_printers_.end()) {
+        new_printers[id] = std::move(old->second);
+      } else {
+        auto printer =
+            RecommendedPrinterToPrinter(*printer_dictionary, timestamp);
+        printer->set_source(Printer::SRC_POLICY);
+
+        new_printers[id] = std::move(printer);
+      }
     }
 
-    // Objects not in the most recent update get deallocated after method
-    // exit.
-    base::AutoLock l(lock_);
+    // Objects not in the most recent update get deallocated after method exit.
     enterprise_printer_ids_.swap(new_ids);
     enterprise_printers_.swap(new_printers);
-    observers_->Notify(
-        FROM_HERE,
-        &SyncedPrintersManager::Observer::OnEnterprisePrintersChanged,
-        GetEnterprisePrintersLocked());
+    NotifyEnterpriseObservers();
   }
 
-  std::vector<Printer> GetEnterprisePrintersLocked() const {
-    lock_.AssertAcquired();
-    std::vector<Printer> ret;
-    ret.reserve(enterprise_printers_.size());
-    for (const std::string& id : enterprise_printer_ids_) {
-      ret.push_back(enterprise_printers_.find(id)->second);
+  // Notify observers of a change in the set of Configured printers.
+  void NotifyConfiguredObservers() {
+    std::vector<Printer> printers = GetConfiguredPrinters();
+    for (Observer& obs : observers_) {
+      obs.OnConfiguredPrintersChanged(printers);
     }
-    return ret;
   }
 
-  mutable base::Lock lock_;
+  // Notify observers of a change in the set of Enterprise printers.
+  void NotifyEnterpriseObservers() {
+    std::vector<Printer> printers = GetEnterprisePrinters();
+    for (Observer& obs : observers_) {
+      obs.OnEnterprisePrintersChanged(printers);
+    }
+  }
 
+ private:
   Profile* profile_;
   PrefChangeRegistrar pref_change_registrar_;
 
   // The backend for profile printers.
   std::unique_ptr<PrintersSyncBridge> sync_bridge_;
 
-  // Enterprise printers as of the last time we got a policy update.  The ids
-  // vector is used to preserve the received ordering.
+  // Contains the keys for all enterprise printers in order so we can return
+  // the list of enterprise printers in the order they were received.
   std::vector<std::string> enterprise_printer_ids_;
-  // Map is from id to printer.
-  std::unordered_map<std::string, Printer> enterprise_printers_;
+  std::map<std::string, std::unique_ptr<Printer>> enterprise_printers_;
 
-  // Map of printer ids to PrinterConfigurer setup fingerprints at the time
-  // the printers was last installed with CUPS.
-  std::map<std::string, std::string> installed_printer_fingerprints_;
+  // Map of printer ids to installation timestamps.
+  std::map<std::string, base::Time> installed_printer_timestamps_;
 
-  scoped_refptr<base::ObserverListThreadSafe<Observer>> observers_;
+  base::ObserverList<Observer> observers_;
 };
 
 }  // namespace

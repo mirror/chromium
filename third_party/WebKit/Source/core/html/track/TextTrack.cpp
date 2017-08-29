@@ -176,9 +176,7 @@ void TextTrack::RemoveAllCues() {
   for (size_t i = 0; i < cues_->length(); ++i)
     cues_->AnonymousIndexedGetter(i)->SetTrack(0);
 
-  cues_->RemoveAll();
-  if (active_cues_)
-    active_cues_->RemoveAll();
+  cues_ = nullptr;
 }
 
 void TextTrack::AddListOfCues(
@@ -335,6 +333,7 @@ bool TextTrack::CanBeRendered() const {
 TextTrackCueList* TextTrack::EnsureTextTrackCueList() {
   if (!cues_) {
     cues_ = TextTrackCueList::Create();
+    ScriptWrappableVisitor::WriteBarrier(cues_);
   }
 
   return cues_.Get();

@@ -60,6 +60,8 @@ class WKBasedNavigationManagerImpl : public NavigationManagerImpl {
   // NavigationManagerImpl:
   void SetSessionController(CRWSessionController* session_controller) override;
   void InitializeSession() override;
+  void ReplaceSessionHistory(std::vector<std::unique_ptr<NavigationItem>> items,
+                             int current_index) override;
   void OnNavigationItemsPruned(size_t pruned_item_count) override;
   void OnNavigationItemChanged() override;
   void OnNavigationItemCommitted() override;
@@ -96,8 +98,6 @@ class WKBasedNavigationManagerImpl : public NavigationManagerImpl {
   NavigationItemList GetForwardItems() const override;
   void CopyStateFromAndPrune(const NavigationManager* source) override;
   bool CanPruneAllButLastCommittedItem() const override;
-  void Restore(int last_committed_item_index,
-               std::vector<std::unique_ptr<NavigationItem>> items) override;
 
  private:
   // The SessionStorageBuilder functions require access to private variables of
@@ -145,10 +145,7 @@ class WKBasedNavigationManagerImpl : public NavigationManagerImpl {
 
   // Time smoother for navigation item timestamps. See comment in
   // navigation_controller_impl.h.
-  // NOTE: This is mutable because GetNavigationItemImplAtIndex() needs to call
-  // TimeSmoother::GetSmoothedTime() with a const 'this'. Since NavigationItems
-  // have to be lazily created on read, this is the only workaround.
-  mutable TimeSmoother time_smoother_;
+  TimeSmoother time_smoother_;
 
   DISALLOW_COPY_AND_ASSIGN(WKBasedNavigationManagerImpl);
 };

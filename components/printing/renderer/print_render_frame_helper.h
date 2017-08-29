@@ -353,11 +353,8 @@ class PrintRenderFrameHelper
       const PrintMsg_PrintPages_Params& params,
       int page_count);
 
-  // Helper function to find document type.
-  static SkiaDocumentType GetDocType(const PrintMsg_Print_Params& params);
-
-  // Given the |device| and |canvas| to draw on, prints the appropriate headers
-  // and footers using strings from |header_footer_info| on to the canvas.
+  // Given the |canvas| to draw on, prints the appropriate headers and footers
+  // to |canvas| using information from the remaining parameters.
   static void PrintHeaderAndFooter(blink::WebCanvas* canvas,
                                    int page_number,
                                    int total_pages,
@@ -434,10 +431,9 @@ class PrintRenderFrameHelper
     void OnPrintPreview();
 
     // Create the print preview document. |pages| is empty to print all pages.
-    bool CreatePreviewDocument(
-        std::unique_ptr<PrepareFrameAndViewForPrint> prepared_frame,
-        const std::vector<int>& pages,
-        SkiaDocumentType doc_type);
+    // Takes ownership of |prepared_frame|.
+    bool CreatePreviewDocument(PrepareFrameAndViewForPrint* prepared_frame,
+                               const std::vector<int>& pages);
 
     // Called after a page gets rendered. |page_time| is how long the
     // rendering took.

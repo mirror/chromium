@@ -13,7 +13,7 @@ namespace extensions {
 class ShellOAuth2TokenServiceTest : public ExtensionsTest {
  public:
   ShellOAuth2TokenServiceTest()
-      : ExtensionsTest(std::make_unique<content::TestBrowserThreadBundle>()) {}
+      : ExtensionsTest(base::MakeUnique<content::TestBrowserThreadBundle>()) {}
   ~ShellOAuth2TokenServiceTest() override {}
 };
 

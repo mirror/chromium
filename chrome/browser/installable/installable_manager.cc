@@ -139,8 +139,8 @@ void InstallableManager::GetData(const InstallableParams& params,
 
   // Return immediately if we're already working on a task. The new task will be
   // looked at once the current task is finished.
-  bool was_active = task_queue_.HasCurrent();
-  task_queue_.Add({params, callback});
+  bool was_active = !task_queue_.IsEmpty();
+  task_queue_.Insert({params, callback});
   if (was_active)
     return;
 
@@ -339,7 +339,7 @@ void InstallableManager::SetManifestDependentTasksComplete() {
   SetIconFetched(ParamsForBadgeIcon(params));
 }
 
-void InstallableManager::RunCallback(const InstallableTask& task,
+void InstallableManager::RunCallback(const Task& task,
                                      InstallableStatusCode code) {
   const InstallableParams& params = task.first;
   IconProperty null_icon;
@@ -367,7 +367,7 @@ void InstallableManager::RunCallback(const InstallableTask& task,
 }
 
 void InstallableManager::WorkOnTask() {
-  const InstallableTask& task = task_queue_.Current();
+  const Task& task = task_queue_.Current();
   const InstallableParams& params = task.first;
 
   InstallableStatusCode code = GetErrorCode(params);
@@ -384,7 +384,7 @@ void InstallableManager::WorkOnTask() {
 
     task_queue_.Next();
 
-    if (task_queue_.HasCurrent())
+    if (!task_queue_.IsEmpty())
       WorkOnTask();
 
     return;
@@ -506,7 +506,7 @@ void InstallableManager::OnDidCheckHasServiceWorker(
       worker_->error = NOT_OFFLINE_CAPABLE;
       break;
     case content::ServiceWorkerCapability::NO_SERVICE_WORKER:
-      InstallableTask& task = task_queue_.Current();
+      Task& task = task_queue_.Current();
       InstallableParams& params = task.first;
       if (params.wait_for_worker) {
         // Wait for ServiceWorkerContextObserver::OnRegistrationStored. Set the
@@ -514,7 +514,7 @@ void InstallableManager::OnDidCheckHasServiceWorker(
         params.wait_for_worker = false;
         OnWaitingForServiceWorker();
         task_queue_.PauseCurrent();
-        if (task_queue_.HasCurrent())
+        if (!task_queue_.IsEmpty())
           WorkOnTask();
 
         return;
@@ -576,26 +576,22 @@ void InstallableManager::OnIconFetched(
 }
 
 void InstallableManager::OnRegistrationStored(const GURL& pattern) {
-  // If the scope doesn't match we keep waiting.
-  if (!content::ServiceWorkerContext::ScopeMatches(pattern,
-                                                   manifest().start_url)) {
+  // If we don't have any paused tasks, that means:
+  //   a) we've already failed the check, or
+  //   b) we haven't yet called CheckHasServiceWorker.
+  // Otherwise if the scope doesn't match we keep waiting.
+  if (!task_queue_.HasPaused() || !content::ServiceWorkerContext::ScopeMatches(
+                                      pattern, manifest().start_url)) {
     return;
   }
 
-  bool was_active = task_queue_.HasCurrent();
-
-  // The existence of paused tasks implies that we are waiting for a service
-  // worker. We move any paused tasks back into the main queue so that the
-  // pipeline will call CheckHasServiceWorker again, in order to find out if
-  // the SW has a fetch handler.
-  // NOTE: If there are no paused tasks, that means:
-  //   a) we've already failed the check, or
-  //   b) we haven't yet called CheckHasServiceWorker.
+  bool was_active = !task_queue_.IsEmpty();
   task_queue_.UnpauseAll();
-  if (was_active)
-    return;  // If the pipeline was already running, we don't restart it.
 
-  if (task_queue_.HasCurrent())
+  // Start the pipeline again if it was not running. This will call
+  // CheckHasServiceWorker to check if the SW has a fetch handler. Otherwise,
+  // adding the tasks to the end of the active queue is sufficient.
+  if (!was_active)
     WorkOnTask();
 }
 
@@ -622,4 +618,48 @@ const content::Manifest& InstallableManager::manifest() const {
 
 bool InstallableManager::is_installable() const {
   return valid_manifest_->is_valid && worker_->has_worker;
+}
+
+InstallableManager::TaskQueue::TaskQueue() {}
+InstallableManager::TaskQueue::~TaskQueue() {}
+
+void InstallableManager::TaskQueue::Insert(Task task) {
+  tasks_.push_back(task);
+}
+
+void InstallableManager::TaskQueue::Reset() {
+  tasks_.clear();
+  paused_tasks_.clear();
+}
+
+bool InstallableManager::TaskQueue::HasPaused() const {
+  return !paused_tasks_.empty();
+}
+
+void InstallableManager::TaskQueue::UnpauseAll() {
+  for (const auto& task : paused_tasks_)
+    Insert(task);
+
+  paused_tasks_.clear();
+}
+
+InstallableManager::Task& InstallableManager::TaskQueue::Current() {
+  DCHECK(!tasks_.empty());
+  return tasks_[0];
+}
+
+void InstallableManager::TaskQueue::PauseCurrent() {
+  paused_tasks_.push_back(Current());
+  Next();
+}
+
+void InstallableManager::TaskQueue::Next() {
+  DCHECK(!tasks_.empty());
+  tasks_.erase(tasks_.begin());
+}
+
+bool InstallableManager::TaskQueue::IsEmpty() const {
+  // TODO(mcgreevy): try to remove this method by removing the need to
+  // explicitly call WorkOnTask.
+  return tasks_.empty();
 }

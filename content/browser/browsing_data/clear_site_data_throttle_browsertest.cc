@@ -9,7 +9,6 @@
 #include "base/bind.h"
 #include "base/callback.h"
 #include "base/command_line.h"
-#include "base/run_loop.h"
 #include "base/scoped_observer.h"
 #include "base/strings/stringprintf.h"
 #include "base/strings/utf_string_conversions.h"
@@ -264,9 +263,9 @@ class ClearSiteDataThrottleBrowserTest : public ContentBrowserTest {
     base::RunLoop run_loop;
     BrowserThread::PostTask(
         BrowserThread::IO, FROM_HERE,
-        base::BindOnce(&ServiceWorkerActivationObserver::SignalActivation,
-                       base::Unretained(service_worker_context),
-                       run_loop.QuitClosure()));
+        base::Bind(&ServiceWorkerActivationObserver::SignalActivation,
+                   base::Unretained(service_worker_context),
+                   run_loop.QuitClosure()));
     run_loop.Run();
   }
 

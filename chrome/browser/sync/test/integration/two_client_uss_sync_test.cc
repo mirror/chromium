@@ -3,6 +3,7 @@
 // found in the LICENSE file.
 
 #include "base/macros.h"
+#include "base/memory/ptr_util.h"
 #include "base/optional.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "chrome/browser/sync/chrome_sync_client.h"
@@ -203,9 +204,9 @@ class TwoClientUssSyncTest : public SyncTest {
     // The test infra creates a profile before the two made for sync tests.
     number_of_clients_ignored_ = 1;
 #if defined(OS_CHROMEOS)
-    // ChromeOS will force loading a signin profile and a lock screen apps
-    // profile, so we need to ingore two more clients.
-    number_of_clients_ignored_ += 2;
+    // ChromeOS will force loading a signin profile, so we need to ingore one
+    // more client.
+    ++number_of_clients_ignored_;
 #endif
   }
 
@@ -224,10 +225,10 @@ class TwoClientUssSyncTest : public SyncTest {
   std::unique_ptr<syncer::SyncClient> CreateSyncClient(Profile* profile) {
     if (number_of_clients_ignored_ > 0) {
       --number_of_clients_ignored_;
-      return std::make_unique<ChromeSyncClient>(profile);
+      return base::MakeUnique<ChromeSyncClient>(profile);
     }
-    auto bridge = std::make_unique<TestModelTypeSyncBridge>();
-    auto client = std::make_unique<TestSyncClient>(profile, bridge.get());
+    auto bridge = base::MakeUnique<TestModelTypeSyncBridge>();
+    auto client = base::MakeUnique<TestSyncClient>(profile, bridge.get());
     clients_.push_back(client.get());
     bridges_.push_back(std::move(bridge));
     return std::move(client);

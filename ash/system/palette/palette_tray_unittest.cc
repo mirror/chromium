@@ -9,7 +9,6 @@
 #include "ash/highlighter/highlighter_controller_test_api.h"
 #include "ash/public/cpp/ash_pref_names.h"
 #include "ash/public/cpp/config.h"
-#include "ash/public/cpp/voice_interaction_state.h"
 #include "ash/session/test_session_controller_client.h"
 #include "ash/shell.h"
 #include "ash/shell_test_api.h"
@@ -22,7 +21,6 @@
 #include "ash/test_shell_delegate.h"
 #include "base/command_line.h"
 #include "base/memory/ptr_util.h"
-#include "chromeos/chromeos_switches.h"
 #include "components/prefs/testing_pref_service.h"
 #include "components/session_manager/session_manager_types.h"
 #include "ui/events/devices/device_data_manager.h"
@@ -192,40 +190,14 @@ TEST_F(PaletteTrayTest, ModeToolDeactivatedAutomatically) {
   EXPECT_FALSE(palette_tray_->is_active());
 }
 
-TEST_F(PaletteTrayTest, NoMetalayerToolViewCreated) {
-  EXPECT_FALSE(
-      test_api_->GetPaletteToolManager()->HasTool(PaletteToolId::METALAYER));
-}
-
-// Base class for tests that rely on voice interaction enabled.
-class PaletteTrayTestWithVoiceInteraction : public PaletteTrayTest {
- public:
-  PaletteTrayTestWithVoiceInteraction() {
-    base::CommandLine::ForCurrentProcess()->AppendSwitch(
-        chromeos::switches::kEnableVoiceInteraction);
-  }
-  ~PaletteTrayTestWithVoiceInteraction() override = default;
-
- private:
-  DISALLOW_COPY_AND_ASSIGN(PaletteTrayTestWithVoiceInteraction);
-};
-
-TEST_F(PaletteTrayTestWithVoiceInteraction, MetalayerToolViewCreated) {
-  EXPECT_TRUE(
-      test_api_->GetPaletteToolManager()->HasTool(PaletteToolId::METALAYER));
-}
-
-TEST_F(PaletteTrayTestWithVoiceInteraction, MetalayerToolActivatesHighlighter) {
-  Shell::Get()->NotifyVoiceInteractionStatusChanged(
-      VoiceInteractionState::RUNNING);
-  Shell::Get()->NotifyVoiceInteractionEnabled(true);
-  Shell::Get()->NotifyVoiceInteractionContextEnabled(true);
-
+TEST_F(PaletteTrayTest, MetalayerToolActivatesHighlighter) {
   HighlighterController highlighter_controller;
   HighlighterControllerTestApi highlighter_test_api(&highlighter_controller);
   test_palette_delegate()->set_highlighter_test_api(&highlighter_test_api);
   ui::test::EventGenerator& generator = GetEventGenerator();
   generator.EnterPenPointerMode();
+
+  test_palette_delegate()->SetMetalayerSupported(true);
 
   // Press/drag does not activate the highlighter unless the palette tool is
   // activated.
@@ -273,7 +245,7 @@ TEST_F(PaletteTrayTestWithVoiceInteraction, MetalayerToolActivatesHighlighter) {
   // Disabling metalayer support in the delegate should disable the palette
   // tool.
   test_api_->GetPaletteToolManager()->ActivateTool(PaletteToolId::METALAYER);
-  Shell::Get()->NotifyVoiceInteractionContextEnabled(false);
+  test_palette_delegate()->SetMetalayerSupported(false);
   EXPECT_FALSE(test_api_->GetPaletteToolManager()->IsToolActive(
       PaletteToolId::METALAYER));
 
@@ -289,21 +261,15 @@ TEST_F(PaletteTrayTestWithVoiceInteraction, MetalayerToolActivatesHighlighter) {
   test_palette_delegate()->set_highlighter_test_api(nullptr);
 }
 
-TEST_F(PaletteTrayTestWithVoiceInteraction,
-       StylusBarrelButtonActivatesHighlighter) {
-  Shell::Get()->NotifyVoiceInteractionStatusChanged(
-      VoiceInteractionState::NOT_READY);
-  Shell::Get()->NotifyVoiceInteractionEnabled(false);
-  Shell::Get()->NotifyVoiceInteractionContextEnabled(false);
-
+TEST_F(PaletteTrayTest, StylusBarrelButtonActivatesHighlighter) {
   HighlighterController highlighter_controller;
   HighlighterControllerTestApi highlighter_test_api(&highlighter_controller);
   test_palette_delegate()->set_highlighter_test_api(&highlighter_test_api);
   ui::test::EventGenerator& generator = GetEventGenerator();
   generator.EnterPenPointerMode();
 
-  // Press and drag while holding down the stylus button, no highlighter unless
-  // the metalayer support is fully enabled and the the framework is ready.
+  // Press and drag while holding down the stylus button, no highlighter
+  // unless the metalayer support is enabled.
   generator.set_flags(ui::EF_LEFT_MOUSE_BUTTON);
   generator.PressTouch();
   EXPECT_FALSE(highlighter_test_api.IsShowingHighlighter());
@@ -314,34 +280,8 @@ TEST_F(PaletteTrayTestWithVoiceInteraction,
   EXPECT_FALSE(highlighter_test_api.IsShowingHighlighter());
   generator.ReleaseTouch();
 
-  // Enable one of the two user prefs, should not be sufficient.
-  Shell::Get()->NotifyVoiceInteractionContextEnabled(true);
-  generator.set_flags(ui::EF_LEFT_MOUSE_BUTTON);
-  generator.PressTouch();
-  EXPECT_FALSE(highlighter_test_api.IsShowingHighlighter());
-  generator.MoveTouch(gfx::Point(2, 2));
-  EXPECT_FALSE(highlighter_test_api.IsShowingHighlighter());
-  generator.set_flags(ui::EF_NONE);
-  generator.MoveTouch(gfx::Point(3, 3));
-  EXPECT_FALSE(highlighter_test_api.IsShowingHighlighter());
-  generator.ReleaseTouch();
-
-  // Enable the other user pref, still not sufficient.
-  Shell::Get()->NotifyVoiceInteractionEnabled(true);
-  Shell::Get()->NotifyVoiceInteractionContextEnabled(true);
-  generator.set_flags(ui::EF_LEFT_MOUSE_BUTTON);
-  generator.PressTouch();
-  EXPECT_FALSE(highlighter_test_api.IsShowingHighlighter());
-  generator.MoveTouch(gfx::Point(2, 2));
-  EXPECT_FALSE(highlighter_test_api.IsShowingHighlighter());
-  generator.set_flags(ui::EF_NONE);
-  generator.MoveTouch(gfx::Point(3, 3));
-  EXPECT_FALSE(highlighter_test_api.IsShowingHighlighter());
-  generator.ReleaseTouch();
-
-  // Once the service is ready, the button should start working.
-  Shell::Get()->NotifyVoiceInteractionStatusChanged(
-      VoiceInteractionState::RUNNING);
+  // Now enable the metalayer support.
+  test_palette_delegate()->SetMetalayerSupported(true);
 
   // Press and drag with no button, still no highlighter.
   generator.MoveTouch(gfx::Point(1, 1));
@@ -396,7 +336,7 @@ TEST_F(PaletteTrayTestWithVoiceInteraction,
 
   // Disable the metalayer support.
   // This should deactivate both the palette tool and the highlighter.
-  Shell::Get()->NotifyVoiceInteractionContextEnabled(false);
+  test_palette_delegate()->SetMetalayerSupported(false);
   EXPECT_FALSE(test_api_->GetPaletteToolManager()->IsToolActive(
       PaletteToolId::METALAYER));
   EXPECT_FALSE(highlighter_test_api.IsShowingHighlighter());

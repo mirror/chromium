@@ -42,6 +42,7 @@ function draw() {
 }
 
 function endTest() {
+  domAutomationController.setAutomationId(1);
   domAutomationController.send("FINISHED");
 }
 </script>

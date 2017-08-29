@@ -770,6 +770,10 @@ Resources.ServiceWorkerCacheTreeElement = class extends Resources.StorageCategor
         SDK.ServiceWorkerCacheModel, SDK.ServiceWorkerCacheModel.Events.CacheAdded, this._cacheAdded, this);
     SDK.targetManager.addModelListener(
         SDK.ServiceWorkerCacheModel, SDK.ServiceWorkerCacheModel.Events.CacheRemoved, this._cacheRemoved, this);
+    this._swCacheModel.addEventListener(
+        SDK.ServiceWorkerCacheModel.Events.CacheStorageListUpdated, this._refreshCaches, this);
+    this._swCacheModel.addEventListener(
+        SDK.ServiceWorkerCacheModel.Events.CacheStorageContentUpdated, this._cacheContentUpdated, this);
   }
 
   /**
@@ -789,6 +793,24 @@ Resources.ServiceWorkerCacheTreeElement = class extends Resources.StorageCategor
   _refreshCaches() {
     if (this._swCacheModel)
       this._swCacheModel.refreshCacheNames();
+  }
+
+  /**
+   * @param {!Common.Event} event
+   */
+  _cacheContentUpdated(event) {
+    var origin = /** @type {string} */ (event.data.origin);
+    var cacheName = /** @type {string} */ (event.data.cacheName);
+    if (origin.endsWith('/'))
+      origin = origin.slice(0, -1);
+
+    var cache =
+        this._swCacheModel.caches().find(cache => cache.securityOrigin === origin && cache.cacheName === cacheName);
+    if (!cache)
+      return;
+    var cacheElement = this._cacheTreeElement(this._swCacheModel, cache);
+    if (cacheElement)
+      cacheElement.markNeedsRefresh();
   }
 
   /**
@@ -821,6 +843,7 @@ Resources.ServiceWorkerCacheTreeElement = class extends Resources.StorageCategor
     if (!swCacheTreeElement)
       return;
 
+    swCacheTreeElement.clear();
     this.removeChild(swCacheTreeElement);
     this._swCacheTreeElements.remove(swCacheTreeElement);
     this.setExpandable(this.childCount() > 0);
@@ -845,6 +868,9 @@ Resources.ServiceWorkerCacheTreeElement = class extends Resources.StorageCategor
   }
 };
 
+/**
+ * @unrestricted
+ */
 Resources.SWCacheTreeElement = class extends Resources.BaseStorageTreeElement {
   /**
    * @param {!Resources.ResourcesPanel} storagePanel
@@ -855,8 +881,6 @@ Resources.SWCacheTreeElement = class extends Resources.BaseStorageTreeElement {
     super(storagePanel, cache.cacheName + ' - ' + cache.securityOrigin, false);
     this._model = model;
     this._cache = cache;
-    /** @type {?Resources.ServiceWorkerCacheView} */
-    this._view = null;
     var icon = UI.Icon.create('mediumicon-table', 'resource-tree-item');
     this.setLeadingIcons([icon]);
   }
@@ -872,6 +896,11 @@ Resources.SWCacheTreeElement = class extends Resources.BaseStorageTreeElement {
   onattach() {
     super.onattach();
     this.listItemElement.addEventListener('contextmenu', this._handleContextMenuEvent.bind(this), true);
+  }
+
+  markNeedsRefresh() {
+    if (this._view)
+      this._view.markNeedsRefresh();
   }
 
   _handleContextMenuEvent(event) {
@@ -904,6 +933,11 @@ Resources.SWCacheTreeElement = class extends Resources.BaseStorageTreeElement {
 
     this.showView(this._view);
     return false;
+  }
+
+  clear() {
+    if (this._view)
+      this._view.clear();
   }
 };
 

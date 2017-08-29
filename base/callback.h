@@ -19,74 +19,62 @@
 
 namespace base {
 
-template <typename R, typename... Args>
-class OnceCallback<R(Args...)> : public internal::CallbackBase {
+namespace internal {
+
+template <typename From, typename To>
+struct IsCallbackConvertible : std::false_type {};
+
+template <typename Signature>
+struct IsCallbackConvertible<RepeatingCallback<Signature>,
+                             OnceCallback<Signature>> : std::true_type {};
+
+}  // namespace internal
+
+template <typename R,
+          typename... Args,
+          internal::CopyMode copy_mode,
+          internal::RepeatMode repeat_mode>
+class Callback<R(Args...), copy_mode, repeat_mode>
+    : public internal::CallbackBase<copy_mode> {
  public:
+  static_assert(repeat_mode != internal::RepeatMode::Once ||
+                copy_mode == internal::CopyMode::MoveOnly,
+                "OnceCallback must be MoveOnly.");
+
   using RunType = R(Args...);
   using PolymorphicInvoke = R (*)(internal::BindStateBase*, Args&&...);
 
-  OnceCallback() : internal::CallbackBase(nullptr) {}
+  Callback() : internal::CallbackBase<copy_mode>(nullptr) {}
 
-  explicit OnceCallback(internal::BindStateBase* bind_state)
-      : internal::CallbackBase(bind_state) {}
+  explicit Callback(internal::BindStateBase* bind_state)
+      : internal::CallbackBase<copy_mode>(bind_state) {
+  }
 
-  OnceCallback(const OnceCallback&) = delete;
-  OnceCallback& operator=(const OnceCallback&) = delete;
+  template <
+      typename OtherCallback,
+      typename = std::enable_if_t<
+          internal::IsCallbackConvertible<OtherCallback, Callback>::value>>
+  Callback(OtherCallback other)
+      : internal::CallbackBase<copy_mode>(std::move(other)) {}
 
-  OnceCallback(OnceCallback&&) = default;
-  OnceCallback& operator=(OnceCallback&&) = default;
-
-  OnceCallback(RepeatingCallback<RunType> other)
-      : internal::CallbackBase(std::move(other)) {}
-
-  OnceCallback& operator=(RepeatingCallback<RunType> other) {
-    static_cast<internal::CallbackBase&>(*this) = std::move(other);
+  template <
+      typename OtherCallback,
+      typename = std::enable_if_t<
+          internal::IsCallbackConvertible<OtherCallback, Callback>::value>>
+  Callback& operator=(OtherCallback other) {
+    static_cast<internal::CallbackBase<copy_mode>&>(*this) = std::move(other);
     return *this;
   }
 
-  bool Equals(const OnceCallback& other) const { return EqualsInternal(other); }
+  bool Equals(const Callback& other) const {
+    return this->EqualsInternal(other);
+  }
 
   R Run(Args... args) const & {
-    static_assert(!sizeof(*this),
+    static_assert(repeat_mode == internal::RepeatMode::Repeating,
                   "OnceCallback::Run() may only be invoked on a non-const "
                   "rvalue, i.e. std::move(callback).Run().");
-    NOTREACHED();
-  }
 
-  R Run(Args... args) && {
-    // Move the callback instance into a local variable before the invocation,
-    // that ensures the internal state is cleared after the invocation.
-    // It's not safe to touch |this| after the invocation, since running the
-    // bound function may destroy |this|.
-    OnceCallback cb = std::move(*this);
-    PolymorphicInvoke f =
-        reinterpret_cast<PolymorphicInvoke>(cb.polymorphic_invoke());
-    return f(cb.bind_state_.get(), std::forward<Args>(args)...);
-  }
-};
-
-template <typename R, typename... Args>
-class RepeatingCallback<R(Args...)> : public internal::CallbackBaseCopyable {
- public:
-  using RunType = R(Args...);
-  using PolymorphicInvoke = R (*)(internal::BindStateBase*, Args&&...);
-
-  RepeatingCallback() : internal::CallbackBaseCopyable(nullptr) {}
-
-  explicit RepeatingCallback(internal::BindStateBase* bind_state)
-      : internal::CallbackBaseCopyable(bind_state) {}
-
-  // Copyable and movabl.
-  RepeatingCallback(const RepeatingCallback&) = default;
-  RepeatingCallback& operator=(const RepeatingCallback&) = default;
-  RepeatingCallback(RepeatingCallback&&) = default;
-  RepeatingCallback& operator=(RepeatingCallback&&) = default;
-
-  bool Equals(const RepeatingCallback& other) const {
-    return EqualsInternal(other);
-  }
-
-  R Run(Args... args) const & {
     PolymorphicInvoke f =
         reinterpret_cast<PolymorphicInvoke>(this->polymorphic_invoke());
     return f(this->bind_state_.get(), std::forward<Args>(args)...);
@@ -97,7 +85,7 @@ class RepeatingCallback<R(Args...)> : public internal::CallbackBaseCopyable {
     // that ensures the internal state is cleared after the invocation.
     // It's not safe to touch |this| after the invocation, since running the
     // bound function may destroy |this|.
-    RepeatingCallback cb = std::move(*this);
+    Callback cb = std::move(*this);
     PolymorphicInvoke f =
         reinterpret_cast<PolymorphicInvoke>(cb.polymorphic_invoke());
     return f(cb.bind_state_.get(), std::forward<Args>(args)...);

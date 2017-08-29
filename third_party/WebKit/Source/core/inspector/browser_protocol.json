@@ -49,9 +49,6 @@
                 ]
             },
             {
-                "name": "prepareForLeakDetection"
-            },
-            {
                 "name": "setPressureNotificationsSuppressed",
                 "description": "Enable/disable suppressing memory pressure notifications in all processes.",
                 "parameters": [
@@ -620,15 +617,6 @@
             {
                 "name": "bringToFront",
                 "description": "Brings page to front (activates tab)."
-            },
-            {
-                "name": "setDownloadBehavior",
-                "description": "Set the behavior when downloading a file.",
-                "experimental": true,
-                "parameters": [
-                    { "name": "behavior", "type": "string", "enum": ["deny", "allow", "default"], "description": "Whether to allow all or deny all download requests, or use default Chrome behavior if available (otherwise deny)." },
-                    { "name": "downloadPath", "type": "string", "optional": true, "description": "The default path to save downloaded files to. This is requred if behavior is set to 'allow'" }
-                ]
             }
         ],
         "events": [
@@ -643,14 +631,6 @@
                 "parameters": [
                     { "name": "timestamp", "$ref": "Network.MonotonicTime" }
                 ]
-            },
-            {
-                "name": "lifecycleEvent",
-                "parameters": [
-                    { "name": "name", "type": "string" },
-                    { "name": "timestamp", "$ref": "Network.MonotonicTime" }
-                ],
-                "description": "Fired for top level page lifecycle events such as navigation, load, paint, etc."
             },
             {
                 "name": "frameAttached",
@@ -1117,7 +1097,7 @@
             {
                 "id": "SecurityState",
                 "type": "string",
-                "enum": ["unknown", "neutral", "insecure", "secure", "info"],
+                "enum": ["unknown", "neutral", "insecure", "warning", "secure", "info"],
                 "description": "The security level of a page or resource."
             },
             {
@@ -1692,10 +1672,8 @@
             },
             {
                 "name": "setRequestInterceptionEnabled",
-                "description": "Sets the requests to intercept that match a the provided patterns.",
                 "parameters": [
-                    { "name": "enabled", "type": "boolean", "description": "Whether requests should be intercepted. If patterns is not set, matches all and resets any previously set patterns. Other parameters are ignored if false." },
-                    { "name": "patterns", "type": "array", "optional": true, "items": { "type": "string" }, "description": "URLs matching any of these patterns will be forwarded and wait for the corresponding continueInterceptedRequest call. Wildcards ('*' -> zero or more, '?' -> exactly one) are allowed. Escape character is backslash. If omitted equivalent to ['*'] (intercept all)." }
+                    { "name": "enabled", "type": "boolean", "description": "Whether or not HTTP requests should be intercepted and Network.requestIntercepted events sent." }
                 ],
                 "experimental": true
             },
@@ -2890,20 +2868,6 @@
                 ],
                 "description": "Returns the id of the nearest ancestor that is a relayout boundary.",
                 "experimental": true
-            },
-            {
-                "name": "describeNode",
-                "parameters": [
-                    { "name": "nodeId", "$ref": "NodeId", "optional": true, "description": "Identifier of the node." },
-                    { "name": "backendNodeId", "$ref": "BackendNodeId", "optional": true, "description": "Identifier of the backend node." },
-                    { "name": "objectId", "$ref": "Runtime.RemoteObjectId", "optional": true, "description": "JavaScript object id of the node wrapper." },
-                    { "name": "depth", "type": "integer", "optional": true, "description": "The maximum depth at which children should be retrieved, defaults to 1. Use -1 for the entire subtree or provide an integer larger than 0.", "experimental": true },
-                    { "name": "pierce", "type": "boolean", "optional": true, "description": "Whether or not iframes and shadow roots should be traversed when returning the subtree (default is false).", "experimental": true }
-                ],
-                "returns": [
-                    { "name": "node", "$ref": "Node", "description": "Node description." }
-                ],
-                "description": "Describes node given its id, does not require domain to be enabled. Does not start tracking any objects, can be used for automation."
             }
         ],
         "events": [

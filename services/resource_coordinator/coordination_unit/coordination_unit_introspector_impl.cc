@@ -23,12 +23,10 @@ void CoordinationUnitIntrospectorImpl::GetProcessToURLMap(
       CoordinationUnitImpl::GetCoordinationUnitsOfType(
           CoordinationUnitType::kProcess);
   for (CoordinationUnitImpl* process_cu : process_cus) {
-    int64_t pid;
-    if (!process_cu->GetProperty(mojom::PropertyType::kPID, &pid))
-      continue;
-
     mojom::ProcessInfoPtr process_info(mojom::ProcessInfo::New());
-    process_info->pid = pid;
+
+    // The implicit contract for process CUs is that the |id| is the |pid|.
+    process_info->pid = process_cu->id().id;
     DCHECK_NE(base::kNullProcessId, process_info->pid);
 
     std::set<CoordinationUnitImpl*> web_contents_cus =

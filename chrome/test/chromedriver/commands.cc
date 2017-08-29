@@ -45,9 +45,9 @@ void ExecuteGetStatus(
   os.SetString("arch", base::SysInfo::OperatingSystemArchitecture());
 
   base::DictionaryValue info;
-  info.SetKey("build", build.Clone());
-  info.SetKey("os", os.Clone());
-  callback.Run(Status(kOk), base::MakeUnique<base::Value>(std::move(info)),
+  info.Set("build", base::MakeUnique<base::Value>(build));
+  info.Set("os", base::MakeUnique<base::Value>(os));
+  callback.Run(Status(kOk), std::unique_ptr<base::Value>(info.DeepCopy()),
                std::string(), false);
 }
 
@@ -94,7 +94,7 @@ void OnGetSession(const base::WeakPtr<size_t>& session_remaining_count,
 
   std::unique_ptr<base::DictionaryValue> session(new base::DictionaryValue());
   session->SetString("id", session_id);
-  session->SetKey("capabilities", value->Clone());
+  session->Set("capabilities", base::MakeUnique<base::Value>(*value));
   session_list->Append(std::move(session));
 
   if (!*session_remaining_count) {

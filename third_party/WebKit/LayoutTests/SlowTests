@@ -124,10 +124,12 @@ webkit.org/b/90488 [ Debug ] virtual/mojo-loading/http/tests/inspector/ [ Slow ]
 webkit.org/b/90488 [ Debug ] http/tests/inspector-enabled/ [ Slow ]
 webkit.org/b/90488 [ Debug ] virtual/mojo-loading/http/tests/inspector-enabled/ [ Slow ]
 webkit.org/b/90488 [ Debug ] inspector-protocol/ [ Slow ]
+crbug.com/451577 inspector/console [ Slow ]
 crbug.com/679833 http/tests/inspector/network/network-datareceived.html [ Slow ]
 crbug.com/679833 virtual/mojo-loading/http/tests/inspector/network/network-datareceived.html [ Slow ]
 
 # Debugger and profiler tests are slow in Release as well.
+crbug.com/450493 inspector/sources/ [ Slow ]
 crbug.com/450493 inspector-enabled/sources/ [ Slow ]
 crbug.com/450493 http/tests/inspector/sources/ [ Slow ]
 crbug.com/450493 virtual/mojo-loading/http/tests/inspector/sources/ [ Slow ]
@@ -148,12 +150,10 @@ crbug.com/243492 http/tests/inspector-enabled/injected-script-discard.html [ Slo
 crbug.com/243492 virtual/mojo-loading/http/tests/inspector-enabled/injected-script-discard.html [ Slow ]
 crbug.com/327078 http/tests/inspector/network/long-script-content.html [ Slow ]
 crbug.com/327078 virtual/mojo-loading/http/tests/inspector/network/long-script-content.html [ Slow ]
-crbug.com/420008 [ Release ] http/tests/devtools/editor/text-editor-word-jumps.html [ Slow ]
-crbug.com/667560 [ Release ] virtual/mojo-loading/http/tests/devtools/editor/text-editor-word-jumps.html [ Slow ]
+crbug.com/420008 [ Release ] inspector/editor/text-editor-word-jumps.html [ Slow ]
 crbug.com/420008 [ Release ] http/tests/inspector/console-xhr-logging.html [ Slow ]
 crbug.com/420008 [ Release ] virtual/mojo-loading/http/tests/inspector/console-xhr-logging.html [ Slow ]
-crbug.com/596486 [ Linux ] http/tests/devtools/elements/insert-node.html [ Slow ]
-crbug.com/667560 [ Linux ] virtual/mojo-loading/http/tests/devtools/elements/insert-node.html [ Slow ]
+crbug.com/596486 [ Linux ] inspector/elements/insert-node.html [ Slow ]
 webkit.org/b/84735 [ Win ] http/tests/inspector/change-iframe-src.html [ Slow ]
 webkit.org/b/84735 [ Win ] virtual/mojo-loading/http/tests/inspector/change-iframe-src.html [ Slow ]
 crbug.com/504565 [ Mac ] http/tests/inspector/search/sources-search-scope.html [ Slow ]
@@ -164,8 +164,7 @@ crbug.com/451577 http/tests/inspector/resource-tree/resource-tree-frame-in-craft
 crbug.com/451577 virtual/mojo-loading/http/tests/inspector/resource-tree/resource-tree-frame-in-crafted-frame.html [ Slow ]
 
 crbug.com/510337 cssom/cssvalue-comparison.html [ Slow ]
-crbug.com/510337 http/tests/devtools/elements/styles-1/edit-value-url-with-color.html [ Slow ]
-crbug.com/667560 virtual/mojo-loading/http/tests/devtools/elements/styles-1/edit-value-url-with-color.html [ Slow ]
+crbug.com/510337 inspector/elements/styles-1/edit-value-url-with-color.html [ Slow ]
 
 # This test is intentionally SLOW as we're waiting for a connection timeout.
 crbug.com/73609 http/tests/media/video-play-stall.html [ Slow ]
@@ -260,7 +259,7 @@ crbug.com/522646 http/tests/media/encrypted-media/encrypted-media-encrypted-even
 crbug.com/522646 virtual/mojo-loading/http/tests/media/encrypted-media/encrypted-media-encrypted-event-different-origin.html [ Slow ]
 crbug.com/411164 [ Win ] http/tests/security/powerfulFeatureRestrictions/serviceworker-on-insecure-origin.html [ Slow ]
 crbug.com/411164 [ Win ] virtual/mojo-loading/http/tests/security/powerfulFeatureRestrictions/serviceworker-on-insecure-origin.html [ Slow ]
-crbug.com/510337 http/tests/devtools/console/console-format.html [ Slow ]
+crbug.com/510337 inspector/console/console-format.html [ Slow ]
 crbug.com/357427 http/tests/workers/terminate-during-sync-operation-file.html [ Slow ]
 crbug.com/357427 virtual/mojo-loading/http/tests/workers/terminate-during-sync-operation-file.html [ Slow ]
 crbug.com/357427 http/tests/workers/terminate-during-sync-operation-filesystem.html [ Slow ]
@@ -304,10 +303,8 @@ crbug.com/459009 crypto/subtle/ [ Slow ]
 crbug.com/24182 [ Debug ] animations/interpolation/transform-interpolation.html [ Slow ]
 crbug.com/24182 [ Debug ] animations/interpolation/webkit-transform-interpolation.html [ Slow ]
 
-crbug.com/528419 [ Linux ] http/tests/devtools/elements/shadow/shadow-host-display-modes.html [ Slow ]
-crbug.com/667560 [ Linux ] virtual/mojo-loading/http/tests/devtools/elements/shadow/shadow-host-display-modes.html [ Slow ]
-crbug.com/528419 http/tests/devtools/elements/styles-2/pseudo-elements.html [ Slow ]
-crbug.com/667560 virtual/mojo-loading/http/tests/devtools/elements/styles-2/pseudo-elements.html [ Slow ]
+crbug.com/528419 [ Linux ] inspector/elements/shadow/shadow-host-display-modes.html [ Slow ]
+crbug.com/528419 inspector/elements/styles-2/pseudo-elements.html [ Slow ]
 
 crbug.com/529345 [ Win10 ] paint/masks/fieldset-mask.html [ Slow ]
 crbug.com/552556 [ Win Linux ] virtual/threaded/fast/scroll-behavior/overflow-scroll-root-frame-animates.html [ Slow ]
@@ -470,8 +467,7 @@ crbug.com/676572 [ Debug ] external/wpt/webstorage/storage_local_setitem_quotaex
 crbug.com/741259 editing/selection/select-bidi-run.html [ Slow ]
 
 # These tests were previously marked Slow in ASANExpectations.
-crbug.com/451577 [ Linux ] http/tests/devtools/elements/user-properties.html [ Slow ]
-crbug.com/667560 [ Linux ] virtual/mojo-loading/http/tests/devtools/elements/user-properties.html [ Slow ]
+crbug.com/451577 [ Linux ] inspector/elements/user-properties.html [ Slow ]
 crbug.com/451577 [ Linux ] inspector/layers/layer-canvas-log.html [ Slow ]
 
 # These imported tests exercise tens of thousands of code points and generate large results.
@@ -497,17 +493,3 @@ crbug.com/626703 [ Debug ] external/wpt/html/nemantics/tabular-data/processing-m
 
 # This test continues to fail as timeout on Win7(dbg)
 crbug.com/757292 [ Win Debug ] external/wpt/encoding/legacy-mb-korean/euc-kr/euckr-encode-form-errors-han.html [ Slow ]
-
-# These tests create and destroys too many workers, and on debug build, V8 snapshot serializer takes long time to make an index book for external reference
-crbug.com/v8/6448 [ Debug ] external/wpt/service-workers/service-worker/link-element-register-mime-types.https.html [ Slow ]
-crbug.com/v8/6448 [ Debug ] external/wpt/service-workers/service-worker/registration-updateviacache.https.html [ Slow ]
-crbug.com/v8/6448 [ Debug ] external/wpt/service-workers/service-worker/registration-mime-types.https.html [ Slow ]
-crbug.com/v8/6448 [ Debug ] fast/workers/worker-exception-during-navigation.html [ Slow ]
-crbug.com/v8/6448 [ Debug ] virtual/mojo-blobs/external/wpt/service-workers/service-worker/link-element-register-mime-types.https.html [ Slow ]
-crbug.com/v8/6448 [ Debug ] virtual/mojo-blobs/external/wpt/service-workers/service-worker/registration-updateviacache.https.html [ Slow ]
-crbug.com/v8/6448 [ Debug ] virtual/mojo-blobs/external/wpt/service-workers/service-worker/registration-mime-types.https.html [ Slow ]
-crbug.com/v8/6448 [ Debug ] virtual/service-worker-script-streaming/external/wpt/service-workers/service-worker/foreign-fetch-cors.https.html [ Slow ]
-crbug.com/v8/6448 [ Debug ] virtual/service-worker-script-streaming/external/wpt/service-workers/service-worker/link-element-register-mime-types.https.html [ Slow ]
-crbug.com/v8/6448 [ Debug ] virtual/service-worker-script-streaming/external/wpt/service-workers/service-worker/registration-updateviacache.https.html [ Slow ]
-crbug.com/v8/6448 [ Debug ] virtual/service-worker-script-streaming/external/wpt/service-workers/service-worker/registration-mime-types.https.html [ Slow ]
-crbug.com/v8/6448 [ Debug ] virtual/service-worker-script-streaming/http/tests/serviceworker/chromium/register-different-script-many-times.html [ Slow ]

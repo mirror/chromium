@@ -333,11 +333,7 @@ class LockStateControllerTest : public AshTestBase {
   void Initialize(bool legacy_button, LoginStatus status) {
     power_button_controller_->set_has_legacy_power_button_for_test(
         legacy_button);
-    if (status == LoginStatus::NOT_LOGGED_IN)
-      ClearLogin();
-    else
-      CreateUserSessions(1);
-
+    SetUserLoggedIn(status != LoginStatus::NOT_LOGGED_IN);
     if (status == LoginStatus::GUEST)
       SetCanLockScreen(false);
   }

@@ -203,7 +203,7 @@ void PictureLayerImpl::AppendQuads(RenderPass* render_pass,
       << " bounds " << bounds().ToString() << " pile "
       << raster_source_->GetSize().ToString();
 
-  viz::SharedQuadState* shared_quad_state =
+  SharedQuadState* shared_quad_state =
       render_pass->CreateAndAppendSharedQuadState();
 
   if (raster_source_->IsSolidColor()) {
@@ -240,15 +240,16 @@ void PictureLayerImpl::AppendQuads(RenderPass* render_pass,
         DebugColors::DirectPictureBorderWidth(device_scale_factor));
 
     gfx::Rect geometry_rect = shared_quad_state->visible_quad_layer_rect;
+    gfx::Rect opaque_rect = contents_opaque() ? geometry_rect : gfx::Rect();
     gfx::Rect visible_geometry_rect =
         scaled_occlusion.GetUnoccludedContentRect(geometry_rect);
-    bool needs_blending = !contents_opaque();
 
     // The raster source may not be valid over the entire visible rect,
     // and rastering outside of that may cause incorrect pixels.
     gfx::Rect scaled_recorded_viewport = gfx::ScaleToEnclosingRect(
         raster_source_->RecordedViewport(), max_contents_scale);
     geometry_rect.Intersect(scaled_recorded_viewport);
+    opaque_rect.Intersect(scaled_recorded_viewport);
     visible_geometry_rect.Intersect(scaled_recorded_viewport);
 
     if (visible_geometry_rect.IsEmpty())
@@ -261,10 +262,10 @@ void PictureLayerImpl::AppendQuads(RenderPass* render_pass,
 
     PictureDrawQuad* quad =
         render_pass->CreateAndAppendDrawQuad<PictureDrawQuad>();
-    quad->SetNew(shared_quad_state, geometry_rect, visible_geometry_rect,
-                 needs_blending, texture_rect, texture_size, nearest_neighbor_,
-                 viz::RGBA_8888, quad_content_rect, max_contents_scale,
-                 raster_source_);
+    quad->SetNew(shared_quad_state, geometry_rect, opaque_rect,
+                 visible_geometry_rect, texture_rect, texture_size,
+                 nearest_neighbor_, viz::RGBA_8888, quad_content_rect,
+                 max_contents_scale, raster_source_);
     ValidateQuadResources(quad);
     return;
   }
@@ -340,9 +341,9 @@ void PictureLayerImpl::AppendQuads(RenderPass* render_pass,
            shared_quad_state->visible_quad_layer_rect, ideal_contents_scale_);
        iter; ++iter) {
     gfx::Rect geometry_rect = iter.geometry_rect();
+    gfx::Rect opaque_rect = contents_opaque() ? geometry_rect : gfx::Rect();
     gfx::Rect visible_geometry_rect =
         scaled_occlusion.GetUnoccludedContentRect(geometry_rect);
-    bool needs_blending = !contents_opaque();
     if (visible_geometry_rect.IsEmpty())
       continue;
 
@@ -372,10 +373,10 @@ void PictureLayerImpl::AppendQuads(RenderPass* render_pass,
 
           TileDrawQuad* quad =
               render_pass->CreateAndAppendDrawQuad<TileDrawQuad>();
-          quad->SetNew(shared_quad_state, geometry_rect, visible_geometry_rect,
-                       needs_blending, draw_info.resource_id(), texture_rect,
-                       draw_info.resource_size(), draw_info.contents_swizzled(),
-                       nearest_neighbor_);
+          quad->SetNew(shared_quad_state, geometry_rect, opaque_rect,
+                       visible_geometry_rect, draw_info.resource_id(),
+                       texture_rect, draw_info.resource_size(),
+                       draw_info.contents_swizzled(), nearest_neighbor_);
           ValidateQuadResources(quad);
           has_draw_quad = true;
           break;

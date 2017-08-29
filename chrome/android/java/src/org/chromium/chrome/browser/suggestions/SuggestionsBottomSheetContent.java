@@ -83,8 +83,8 @@ public class SuggestionsBottomSheetContent implements BottomSheet.BottomSheetCon
         SuggestionsNavigationDelegate navigationDelegate =
                 new SuggestionsNavigationDelegateImpl(activity, profile, sheet, tabModelSelector);
         mSheet = sheet;
-        mTileGroupDelegate =
-                new TileGroupDelegateImpl(activity, profile, navigationDelegate, snackbarManager);
+        mTileGroupDelegate = new TileGroupDelegateImpl(
+                activity, profile, tabModelSelector, navigationDelegate, snackbarManager);
         mSuggestionsUiDelegate = new SuggestionsUiDelegateImpl(
                 depsFactory.createSuggestionSource(profile), depsFactory.createEventReporter(),
                 navigationDelegate, profile, sheet, activity.getReferencePool());
@@ -130,17 +130,14 @@ public class SuggestionsBottomSheetContent implements BottomSheet.BottomSheetCon
             @Override
             public void onContentShown(boolean isFirstShown) {
                 if (isFirstShown) {
+                    mRecyclerView.setAdapter(adapter);
+
+                    mRecyclerView.scrollToPosition(0);
                     adapter.refreshSuggestions();
                     mSuggestionsUiDelegate.getEventReporter().onSurfaceOpened();
+                    mRecyclerView.getScrollEventReporter().reset();
 
                     maybeUpdateContextualSuggestions();
-
-                    // Set the adapter on the RecyclerView after updating it, to avoid sending
-                    // notifications that might confuse its internal state.
-                    // See https://crbug.com/756514.
-                    mRecyclerView.setAdapter(adapter);
-                    mRecyclerView.scrollToPosition(0);
-                    mRecyclerView.getScrollEventReporter().reset();
                 }
 
                 SuggestionsMetrics.recordSurfaceVisible();
@@ -336,7 +333,7 @@ public class SuggestionsBottomSheetContent implements BottomSheet.BottomSheetCon
 
     private void updateLogoTransition() {
         boolean showLogo = mSearchProviderHasLogo && mNewTabShown
-                && FeatureUtilities.isChromeHomeDoodleEnabled() && mBottomSheetObserver.isVisible();
+                && FeatureUtilities.isChromeHomeModernEnabled() && mBottomSheetObserver.isVisible();
 
         if (!showLogo) {
             mLogoView.setVisibility(View.GONE);

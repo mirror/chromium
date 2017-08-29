@@ -253,7 +253,7 @@ bool StructTraits<gpu::mojom::GpuInfoDataView, gpu::GPUInfo>::Read(
   out->jpeg_decode_accelerator_supported =
       data.jpeg_decode_accelerator_supported();
 
-#if defined(USE_X11)
+#if defined(USE_X11) && !defined(OS_CHROMEOS)
   out->system_visual = data.system_visual();
   out->rgba_visual = data.rgba_visual();
 #endif

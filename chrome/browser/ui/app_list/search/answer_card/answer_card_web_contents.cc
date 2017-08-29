@@ -17,9 +17,7 @@
 #include "content/public/common/renderer_preferences.h"
 #include "net/http/http_response_headers.h"
 #include "net/http/http_status_code.h"
-#include "ui/app_list/views/app_list_view.h"
-#include "ui/aura/window.h"
-#include "ui/views/controls/native/native_view_host.h"
+#include "third_party/WebKit/public/platform/WebMouseEvent.h"
 #include "ui/views/controls/webview/web_contents_set_background_color.h"
 #include "ui/views/controls/webview/webview.h"
 #include "ui/views/widget/widget.h"
@@ -35,15 +33,13 @@ constexpr char kSearchAnswerTitle[] = "SearchAnswer-Title";
 class SearchAnswerWebView : public views::WebView {
  public:
   explicit SearchAnswerWebView(content::BrowserContext* browser_context)
-      : WebView(browser_context) {
-    holder()->set_can_process_events_within_subtree(false);
-  }
+      : WebView(browser_context) {}
 
-  void OnVisibilityEvent(bool is_removing) {
-    // Need to check for |is_removing| because inside RemovedFromWidget()
-    // callback, GetWidget() still returns a non-null value.
-    if (!is_removing && GetWidget() && GetWidget()->IsActive() &&
-        GetWidget()->IsVisible() && IsDrawn()) {
+  // views::WebView overrides:
+  void VisibilityChanged(View* starting_from, bool is_visible) override {
+    WebView::VisibilityChanged(starting_from, is_visible);
+
+    if (GetWidget() && GetWidget()->IsVisible() && IsDrawn()) {
       if (shown_time_.is_null())
         shown_time_ = base::TimeTicks::Now();
     } else {
@@ -53,33 +49,6 @@ class SearchAnswerWebView : public views::WebView {
         shown_time_ = base::TimeTicks();
       }
     }
-  }
-
-  // views::WebView overrides:
-  void AddedToWidget() override {
-    WebView::AddedToWidget();
-
-    // Find the root element that attached to the app list view.
-    aura::Window* const app_list_window =
-        web_contents()->GetTopLevelNativeWindow();
-    aura::Window* window = web_contents()->GetNativeView();
-    while (window->parent() != app_list_window)
-      window = window->parent();
-    AppListView::ExcludeWindowFromEventHandling(window);
-
-    OnVisibilityEvent(false);
-  }
-
-  void RemovedFromWidget() override {
-    OnVisibilityEvent(true);
-
-    WebView::RemovedFromWidget();
-  }
-
-  void VisibilityChanged(View* starting_from, bool is_visible) override {
-    WebView::VisibilityChanged(starting_from, is_visible);
-
-    OnVisibilityEvent(false);
   }
 
   const char* GetClassName() const override { return "SearchAnswerWebView"; }
@@ -132,6 +101,8 @@ AnswerCardWebContents::AnswerCardWebContents(Profile* profile)
           content::WebContents::Create(content::WebContents::CreateParams(
               profile,
               content::SiteInstance::Create(profile)))),
+      mouse_event_callback_(base::Bind(&AnswerCardWebContents::HandleMouseEvent,
+                                       base::Unretained(this))),
       profile_(profile) {
   content::RendererPreferences* renderer_prefs =
       web_contents_->GetMutableRendererPrefs();
@@ -166,19 +137,18 @@ void AnswerCardWebContents::LoadURL(const GURL& url) {
   load_params.should_clear_history_list = true;
   web_contents_->GetController().LoadURLWithParams(load_params);
 
-  web_contents_->GetRenderViewHost()->EnableAutoResize(
-      gfx::Size(1, 1), gfx::Size(INT_MAX, INT_MAX));
+  web_contents_->GetRenderViewHost()->EnablePreferredSizeMode();
 }
 
 views::View* AnswerCardWebContents::GetView() {
   return web_view_.get();
 }
 
-void AnswerCardWebContents::ResizeDueToAutoResize(
+void AnswerCardWebContents::UpdatePreferredSize(
     content::WebContents* web_contents,
-    const gfx::Size& new_size) {
+    const gfx::Size& pref_size) {
   delegate()->UpdatePreferredSize(this);
-  web_view_->SetPreferredSize(new_size);
+  web_view_->SetPreferredSize(pref_size);
 }
 
 content::WebContents* AnswerCardWebContents::OpenURLFromTab(
@@ -266,14 +236,33 @@ void AnswerCardWebContents::RenderViewHostChanged(
   }
 }
 
+bool AnswerCardWebContents::HandleMouseEvent(
+    const blink::WebMouseEvent& event) {
+  switch (event.GetType()) {
+    case blink::WebInputEvent::kMouseMove:
+    case blink::WebInputEvent::kMouseEnter:
+      SetIsMouseInView(true);
+      break;
+    case blink::WebInputEvent::kMouseLeave:
+      SetIsMouseInView(false);
+      break;
+    default:
+      break;
+  }
+
+  return false;
+}
+
 void AnswerCardWebContents::AttachToHost(content::RenderWidgetHost* host) {
   host_ = host;
+  host->AddMouseEventCallback(mouse_event_callback_);
 }
 
 void AnswerCardWebContents::DetachFromHost() {
   if (!host_)
     return;
 
+  host_->RemoveMouseEventCallback(mouse_event_callback_);
   host_ = nullptr;
 }
 

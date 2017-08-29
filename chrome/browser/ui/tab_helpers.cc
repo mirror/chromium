@@ -13,9 +13,7 @@
 #include "build/build_config.h"
 #include "chrome/browser/bookmarks/bookmark_model_factory.h"
 #include "chrome/browser/browser_process.h"
-#include "chrome/browser/client_hints/client_hints_observer.h"
 #include "chrome/browser/content_settings/mixed_content_settings_tab_helper.h"
-#include "chrome/browser/content_settings/sound_content_setting_observer.h"
 #include "chrome/browser/content_settings/tab_specific_content_settings.h"
 #include "chrome/browser/data_use_measurement/data_use_web_contents_observer.h"
 #include "chrome/browser/engagement/site_engagement_helper.h"
@@ -43,7 +41,6 @@
 #include "chrome/browser/previews/previews_infobar_tab_helper.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/resource_coordinator/resource_coordinator_web_contents_observer.h"
-#include "chrome/browser/safe_browsing/trigger_creator.h"
 #include "chrome/browser/sessions/session_tab_helper.h"
 #include "chrome/browser/ssl/security_state_tab_helper.h"
 #include "chrome/browser/subresource_filter/chrome_subresource_filter_client.h"
@@ -64,7 +61,6 @@
 #include "chrome/browser/ui/tab_contents/core_tab_helper.h"
 #include "chrome/browser/ui/tab_dialogs.h"
 #include "chrome/browser/vr/vr_tab_helper.h"
-#include "chrome/common/chrome_features.h"
 #include "chrome/common/chrome_switches.h"
 #include "chrome/common/features.h"
 #include "components/autofill/content/browser/content_autofill_driver_factory.h"
@@ -128,8 +124,13 @@
 #endif
 
 #if BUILDFLAG(ENABLE_PRINTING)
-#include "chrome/browser/printing/printing_init.h"
-#endif
+#if BUILDFLAG(ENABLE_PRINT_PREVIEW)
+#include "chrome/browser/printing/print_preview_message_handler.h"
+#include "chrome/browser/printing/print_view_manager.h"
+#else
+#include "chrome/browser/printing/print_view_manager_basic.h"
+#endif  // BUILDFLAG(ENABLE_PRINT_PREVIEW)
+#endif  // BUILDFLAG(ENABLE_PRINTING)
 
 using content::WebContents;
 
@@ -170,6 +171,7 @@ void TabHelpers::AttachTabHelpers(WebContents* web_contents) {
 #endif
 
   // --- Common tab helpers ---
+
   autofill::ChromeAutofillClient::CreateForWebContents(web_contents);
   autofill::ContentAutofillDriverFactory::CreateForWebContentsAndDelegate(
       web_contents,
@@ -192,18 +194,16 @@ void TabHelpers::AttachTabHelpers(WebContents* web_contents) {
     ChromeSubresourceFilterClient::CreateForWebContents(web_contents);
   }
   ChromeTranslateClient::CreateForWebContents(web_contents);
-  ClientHintsObserver::CreateForWebContents(web_contents);
   CoreTabHelper::CreateForWebContents(web_contents);
   data_use_measurement::DataUseWebContentsObserver::CreateForWebContents(
       web_contents);
   ExternalProtocolObserver::CreateForWebContents(web_contents);
   favicon::CreateContentFaviconDriverForWebContents(web_contents);
   FindTabHelper::CreateForWebContents(web_contents);
-
-  Profile* profile =
-      Profile::FromBrowserContext(web_contents->GetBrowserContext());
   history::WebContentsTopSitesObserver::CreateForWebContents(
-      web_contents, TopSitesFactory::GetForProfile(profile).get());
+      web_contents, TopSitesFactory::GetForProfile(
+                        Profile::FromBrowserContext(
+                            web_contents->GetBrowserContext())).get());
   HistoryTabHelper::CreateForWebContents(web_contents);
   InfoBarService::CreateForWebContents(web_contents);
   InstallableManager::CreateForWebContents(web_contents);
@@ -225,16 +225,10 @@ void TabHelpers::AttachTabHelpers(WebContents* web_contents) {
   SecurityStateTabHelper::CreateForWebContents(web_contents);
   if (SiteEngagementService::IsEnabled())
     SiteEngagementService::Helper::CreateForWebContents(web_contents);
-#if !defined(OS_ANDROID)
-  // For now, even when the flag is enabled, this will only be enabled on
-  // desktop.
-  if (base::FeatureList::IsEnabled(features::kSoundContentSetting))
-    SoundContentSettingObserver::CreateForWebContents(web_contents);
-#endif
   sync_sessions::SyncSessionsRouterTabHelper::CreateForWebContents(
       web_contents,
       sync_sessions::SyncSessionsWebContentsRouterFactory::GetForProfile(
-          profile));
+          Profile::FromBrowserContext(web_contents->GetBrowserContext())));
   // TODO(vabr): Remove TabSpecificContentSettings from here once their function
   // is taken over by ChromeContentSettingsClient. http://crbug.com/387075
   TabSpecificContentSettings::CreateForWebContents(web_contents);
@@ -270,8 +264,6 @@ void TabHelpers::AttachTabHelpers(WebContents* web_contents) {
   safe_browsing::SafeBrowsingTabObserver::CreateForWebContents(web_contents);
   safe_browsing::SafeBrowsingNavigationObserver::MaybeCreateForWebContents(
       web_contents);
-  safe_browsing::TriggerCreator::MaybeCreateTriggersForWebContents(
-      profile, web_contents);
   TabContentsSyncedTabDelegate::CreateForWebContents(web_contents);
   TabDialogs::CreateForWebContents(web_contents);
   ThumbnailTabHelper::CreateForWebContents(web_contents);
@@ -306,8 +298,13 @@ offline_pages::RecentTabHelper::CreateForWebContents(web_contents);
 #endif
 
 #if BUILDFLAG(ENABLE_PRINTING) && !defined(OS_ANDROID)
-  printing::InitializePrinting(web_contents);
-#endif
+#if BUILDFLAG(ENABLE_PRINT_PREVIEW)
+  printing::PrintViewManager::CreateForWebContents(web_contents);
+  printing::PrintPreviewMessageHandler::CreateForWebContents(web_contents);
+#else
+  printing::PrintViewManagerBasic::CreateForWebContents(web_contents);
+#endif  // BUILDFLAG(ENABLE_PRINT_PREVIEW)
+#endif  // BUILDFLAG(ENABLE_PRINTING) && !defined(OS_ANDROID)
 
   bool enabled_distiller = base::CommandLine::ForCurrentProcess()->HasSwitch(
       switches::kEnableDomDistiller);
@@ -316,7 +313,8 @@ offline_pages::RecentTabHelper::CreateForWebContents(web_contents);
         web_contents);
   }
 
-  if (predictors::LoadingPredictorFactory::GetForProfile(profile)) {
+  if (predictors::LoadingPredictorFactory::GetForProfile(
+          Profile::FromBrowserContext(web_contents->GetBrowserContext()))) {
     predictors::ResourcePrefetchPredictorTabHelper::CreateForWebContents(
         web_contents);
   }

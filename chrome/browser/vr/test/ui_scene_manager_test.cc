@@ -8,7 +8,6 @@
 #include "chrome/browser/vr/elements/rect.h"
 #include "chrome/browser/vr/ui_scene.h"
 #include "chrome/browser/vr/ui_scene_manager.h"
-#include "ui/gfx/geometry/vector3d_f.h"
 
 namespace vr {
 
@@ -33,32 +32,29 @@ void UiSceneManagerTest::MakeAutoPresentedManager() {
       kNotInWebVr, kAutopresented);
 }
 
-bool UiSceneManagerTest::IsVisible(UiElementName name) const {
-  UiElement* element = scene_->GetUiElementByName(name);
+bool UiSceneManagerTest::IsVisible(UiElementDebugId debug_id) const {
+  UiElement* element = scene_->GetUiElementByDebugId(debug_id);
   return element ? element->visible() : false;
 }
 
 void UiSceneManagerTest::VerifyElementsVisible(
     const std::string& debug_name,
-    const std::set<UiElementName>& names) const {
+    const std::set<UiElementDebugId>& debug_ids) const {
   SCOPED_TRACE(debug_name);
-  for (auto name : names) {
-    SCOPED_TRACE(name);
-    auto* element = scene_->GetUiElementByName(name);
-    EXPECT_NE(nullptr, element);
-    EXPECT_TRUE(element->visible());
+  for (const auto& element : scene_->GetUiElements()) {
+    SCOPED_TRACE(element->debug_id());
+    bool should_be_visible =
+        debug_ids.find(element->debug_id()) != debug_ids.end();
+    EXPECT_EQ(should_be_visible, element->visible());
   }
 }
 
-bool UiSceneManagerTest::VerifyVisibility(const std::set<UiElementName>& names,
-                                          bool visible) const {
-  for (auto name : names) {
-    SCOPED_TRACE(name);
-    auto* element = scene_->GetUiElementByName(name);
-    if (!element && visible) {
-      return false;
-    }
-    if (element && element->visible() != visible) {
+bool UiSceneManagerTest::VerifyVisibility(
+    const std::set<UiElementDebugId>& debug_ids,
+    bool visible) const {
+  for (const auto& element : scene_->GetUiElements()) {
+    if (debug_ids.find(element->debug_id()) != debug_ids.end() &&
+        element->visible() != visible) {
       return false;
     }
   }
@@ -69,10 +65,10 @@ void UiSceneManagerTest::AnimateBy(base::TimeDelta delta) {
   base::TimeTicks target_time = current_time_ + delta;
   base::TimeDelta frame_time = base::TimeDelta::FromSecondsD(1.0 / 60.0);
   for (; current_time_ < target_time; current_time_ += frame_time) {
-    scene_->OnBeginFrame(current_time_, gfx::Vector3dF());
+    scene_->OnBeginFrame(current_time_);
   }
   current_time_ = target_time;
-  scene_->OnBeginFrame(current_time_, gfx::Vector3dF());
+  scene_->OnBeginFrame(current_time_);
 }
 
 bool UiSceneManagerTest::IsAnimating(UiElement* element,
@@ -86,7 +82,7 @@ bool UiSceneManagerTest::IsAnimating(UiElement* element,
 
 SkColor UiSceneManagerTest::GetBackgroundColor() const {
   Rect* front =
-      static_cast<Rect*>(scene_->GetUiElementByName(kBackgroundFront));
+      static_cast<Rect*>(scene_->GetUiElementByDebugId(kBackgroundFront));
   EXPECT_NE(nullptr, front);
   if (!front)
     return SK_ColorBLACK;
@@ -95,9 +91,10 @@ SkColor UiSceneManagerTest::GetBackgroundColor() const {
 
   // While returning background color, ensure that all background panel elements
   // share the same color.
-  for (auto name : {kBackgroundFront, kBackgroundLeft, kBackgroundBack,
-                    kBackgroundRight, kBackgroundTop, kBackgroundBottom}) {
-    const Rect* panel = static_cast<Rect*>(scene_->GetUiElementByName(name));
+  for (auto debug_id : {kBackgroundFront, kBackgroundLeft, kBackgroundBack,
+                        kBackgroundRight, kBackgroundTop, kBackgroundBottom}) {
+    const Rect* panel =
+        static_cast<Rect*>(scene_->GetUiElementByDebugId(debug_id));
     EXPECT_NE(nullptr, panel);
     if (!panel)
       return SK_ColorBLACK;

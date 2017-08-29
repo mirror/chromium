@@ -9,28 +9,6 @@
 #include "ui/aura/window.h"
 #include "ui/aura/window_targeter.h"
 
-namespace {
-
-viz::mojom::HitTestRegionPtr CreateHitTestRegion(
-    const aura::WindowPortMus* window_port,
-    uint32_t flags,
-    const gfx::Rect& rect) {
-  const ui::Layer* layer = window_port->window()->layer();
-  DCHECK(layer);
-
-  auto hit_test_region = viz::mojom::HitTestRegion::New();
-  hit_test_region->frame_sink_id = window_port->frame_sink_id();
-  if (layer->GetPrimarySurfaceInfo())
-    hit_test_region->surface_id = layer->GetPrimarySurfaceInfo()->id();
-  hit_test_region->flags = flags;
-  hit_test_region->rect = rect;
-  hit_test_region->transform = layer->transform();
-
-  return hit_test_region;
-}
-
-}  // namespace
-
 namespace aura {
 
 HitTestDataProviderAura::HitTestDataProviderAura(aura::Window* window)
@@ -65,8 +43,13 @@ void HitTestDataProviderAura::GetHitTestDataRecursively(
       gfx::Rect rect_mouse(child->bounds());
       gfx::Rect rect_touch;
       bool touch_and_mouse_are_same = true;
+      const WindowMus* window_mus = WindowMus::Get(child);
       const WindowPortMus* window_port = WindowPortMus::Get(child);
-      uint32_t flags = child->layer()->GetPrimarySurfaceInfo()
+      // TODO(varkha): Use a surface ID for windows that submit their own
+      // compositor frames and a frame sink ID otherwise.
+      viz::SurfaceId surface_id(window_port->frame_sink_id(),
+                                window_mus->GetLocalSurfaceId());
+      uint32_t flags = window_port->client_surface_embedder()
                            ? viz::mojom::kHitTestChildSurface
                            : viz::mojom::kHitTestMine;
       // Use the |targeter| to query for possibly expanded hit-test area.
@@ -88,24 +71,34 @@ void HitTestDataProviderAura::GetHitTestDataRecursively(
           rect.Intersect(rect_mouse);
           if (rect.IsEmpty())
             continue;
-          hit_test_region_list->regions.push_back(CreateHitTestRegion(
-              window_port,
-              flags | viz::mojom::kHitTestMouse | viz::mojom::kHitTestTouch,
-              rect));
+          auto hit_test_region = viz::mojom::HitTestRegion::New();
+          hit_test_region->surface_id = surface_id;
+          hit_test_region->flags =
+              flags | viz::mojom::kHitTestMouse | viz::mojom::kHitTestTouch;
+          hit_test_region->rect = rect;
+          hit_test_region->transform = child->layer()->transform();
+          hit_test_region_list->regions.push_back(std::move(hit_test_region));
         }
       } else {
         // The |child| has possibly same mouse and touch hit-test areas.
         if (!rect_mouse.IsEmpty()) {
-          hit_test_region_list->regions.push_back(CreateHitTestRegion(
-              window_port,
+          auto hit_test_region = viz::mojom::HitTestRegion::New();
+          hit_test_region->surface_id = surface_id;
+          hit_test_region->flags =
               flags | (touch_and_mouse_are_same ? (viz::mojom::kHitTestMouse |
                                                    viz::mojom::kHitTestTouch)
-                                                : viz::mojom::kHitTestMouse),
-              rect_mouse));
+                                                : viz::mojom::kHitTestMouse);
+          hit_test_region->rect = rect_mouse;
+          hit_test_region->transform = child->layer()->transform();
+          hit_test_region_list->regions.push_back(std::move(hit_test_region));
         }
         if (!touch_and_mouse_are_same && !rect_touch.IsEmpty()) {
-          hit_test_region_list->regions.push_back(CreateHitTestRegion(
-              window_port, flags | viz::mojom::kHitTestTouch, rect_touch));
+          auto hit_test_region = viz::mojom::HitTestRegion::New();
+          hit_test_region->surface_id = surface_id;
+          hit_test_region->flags = flags | viz::mojom::kHitTestTouch;
+          hit_test_region->rect = rect_touch;
+          hit_test_region->transform = child->layer()->transform();
+          hit_test_region_list->regions.push_back(std::move(hit_test_region));
         }
       }
     }

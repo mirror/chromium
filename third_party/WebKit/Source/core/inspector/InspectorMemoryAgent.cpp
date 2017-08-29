@@ -30,18 +30,11 @@
 
 #include "core/inspector/InspectorMemoryAgent.h"
 
-#include "core/frame/LocalFrameClient.h"
-#include "core/inspector/InspectedFrames.h"
 #include "platform/InstanceCounters.h"
 
 namespace blink {
 
-using PrepareForLeakDetectionCallback =
-    protocol::Memory::Backend::PrepareForLeakDetectionCallback;
 using protocol::Response;
-
-InspectorMemoryAgent::InspectorMemoryAgent(InspectedFrames* inspected_frames)
-    : detector_(nullptr), callback_(nullptr), frames_(inspected_frames) {}
 
 InspectorMemoryAgent::~InspectorMemoryAgent() {}
 
@@ -56,24 +49,6 @@ Response InspectorMemoryAgent::getDOMCounters(int* documents,
   return Response::OK();
 }
 
-void InspectorMemoryAgent::prepareForLeakDetection(
-    std::unique_ptr<PrepareForLeakDetectionCallback> callback) {
-  callback_ = std::move(callback);
-  detector_.reset(new BlinkLeakDetector(this));
-  detector_->PrepareForLeakDetection(frames_->Root()->Client()->GetWebFrame());
-  detector_->CollectGarbage();
-}
-
-void InspectorMemoryAgent::OnLeakDetectionComplete() {
-  DCHECK(callback_);
-  callback_->sendSuccess();
-  callback_.reset();
-  detector_.reset();
-}
-
-DEFINE_TRACE(InspectorMemoryAgent) {
-  visitor->Trace(frames_);
-  InspectorBaseAgent::Trace(visitor);
-}
+InspectorMemoryAgent::InspectorMemoryAgent() = default;
 
 }  // namespace blink

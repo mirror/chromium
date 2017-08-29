@@ -74,12 +74,7 @@ void DeleteProfileCallback(std::unique_ptr<ScopedKeepAlive> keep_alive,
 void OpenNewWindowForProfile(Profile* profile) {
   if (profiles::IsProfileLocked(profile->GetPath())) {
     if (signin_util::IsForceSigninEnabled()) {
-      // Show sign in dialog iff there is one locked profile.
-      if (g_browser_process->profile_manager()->GetNumberOfProfiles() == 1) {
-        ShowUserManager(base::Bind(&ShowSigninDialog, profile->GetPath()));
-      } else {
-        ShowUserManager(ProfileManager::CreateCallback());
-      }
+      ShowUserManager(base::Bind(&ShowSigninDialog, profile->GetPath()));
     } else {
       ShowUserManager(
           base::Bind(&ShowReauthDialog, GetProfileUserName(profile)));

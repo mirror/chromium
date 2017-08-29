@@ -71,12 +71,9 @@ class CONTENT_EXPORT ServiceWorkerInstalledScriptsSender {
       uint64_t meta_data_size);
   void OnHttpInfoRead(scoped_refptr<HttpResponseInfoIOBuffer> http_info);
   void OnFinishSendingScript();
-  void OnAbortSendingScript(FinishedReason reason);
+  void OnAbortSendingScript(FinishedReason status);
 
   const GURL& CurrentSendingURL();
-
-  void UpdateState(State state);
-  void Finish(FinishedReason reason);
 
   ServiceWorkerVersion* owner_;
   const GURL main_script_url_;

@@ -2,20 +2,15 @@
 # Use of this source code is governed by a BSD-style license that can be
 # found in the LICENSE file.
 
-"""Exports Chromium changes to web-platform-tests."""
-
-import argparse
 import logging
 
-from webkitpy.common.system.log_utils import configure_logging
 from webkitpy.w3c.local_wpt import LocalWPT
-from webkitpy.w3c.chromium_exportable_commits import exportable_commits_over_last_n_commits
 from webkitpy.w3c.common import (
+    exportable_commits_over_last_n_commits,
     WPT_GH_URL,
     WPT_REVISION_FOOTER,
     EXPORT_PR_LABEL,
-    PROVISIONAL_PR_LABEL,
-    read_credentials
+    PROVISIONAL_PR_LABEL
 )
 from webkitpy.w3c.gerrit import GerritAPI, GerritCL
 from webkitpy.w3c.wpt_github import WPTGitHub, MergeError
@@ -25,143 +20,83 @@ _log = logging.getLogger(__name__)
 
 class TestExporter(object):
 
-    def __init__(self, host):
+    def __init__(self, host, gh_user, gh_token, gerrit_user, gerrit_token, dry_run=False):
         self.host = host
-        self.wpt_github = None
-        self.gerrit = None
-        self.dry_run = False
-        self.local_wpt = None
+        self.wpt_github = WPTGitHub(host, gh_user, gh_token)
 
-    def main(self, argv=None):
+        self.gerrit = GerritAPI(self.host, gerrit_user, gerrit_token)
+
+        self.dry_run = dry_run
+        self.local_wpt = LocalWPT(self.host, gh_token)
+        self.local_wpt.fetch()
+
+    def run(self):
         """Creates PRs for in-flight CLs and merges changes that land on master.
 
         Returns:
             A boolean: True if success, False if there were any patch failures.
         """
-        args = self.parse_args(argv)
-        self.dry_run = args.dry_run
-
-        configure_logging(logging_level=logging.INFO, include_time=True)
-
-        credentials = read_credentials(self.host, args.credentials_json)
-        if not (credentials['GH_USER'] and credentials['GH_TOKEN']):
-            _log.error('Must provide both user and token for GitHub.')
-            return False
-
-        self.wpt_github = self.wpt_github or WPTGitHub(self.host, credentials['GH_USER'], credentials['GH_TOKEN'])
-        self.gerrit = self.gerrit or GerritAPI(self.host, credentials['GERRIT_USER'], credentials['GERRIT_TOKEN'])
-        self.local_wpt = self.local_wpt or LocalWPT(self.host, credentials['GH_TOKEN'])
-        self.local_wpt.fetch()
-
         open_gerrit_cls = self.gerrit.query_exportable_open_cls()
         self.process_gerrit_cls(open_gerrit_cls)
 
         exportable_commits, errors = self.get_exportable_commits()
         for error in errors:
             _log.warn(error)
-        self.process_chromium_commits(exportable_commits)
+        for exportable_commit in exportable_commits:
+            pull_request = self.wpt_github.pr_for_chromium_commit(exportable_commit)
+
+            if pull_request:
+                if pull_request.state == 'open':
+                    self.merge_pull_request(pull_request)
+                else:
+                    _log.info('Pull request is not open: #%d %s', pull_request.number, pull_request.title)
+            else:
+                self.create_pull_request(exportable_commit)
 
         return not bool(errors)
 
-    def parse_args(self, argv):
-        parser = argparse.ArgumentParser(description=__doc__)
-        parser.add_argument(
-            '--dry-run', action='store_true',
-            help='See what would be done without actually creating or merging '
-                 'any pull requests.')
-        parser.add_argument(
-            '--credentials-json', required=True,
-            help='A JSON file with an object containing zero or more of the '
-                 'following keys: GH_USER, GH_TOKEN, GERRIT_USER, GERRIT_TOKEN')
-        return parser.parse_args(argv)
-
     def process_gerrit_cls(self, gerrit_cls):
+        """Creates or updates PRs for Gerrit CLs."""
         for cl in gerrit_cls:
-            self.process_gerrit_cl(cl)
+            _log.info('Found Gerrit in-flight CL: "%s" %s', cl.subject, cl.url)
 
-    def process_gerrit_cl(self, cl):
-        _log.info('Found Gerrit in-flight CL: "%s" %s', cl.subject, cl.url)
+            if not cl.has_review_started:
+                _log.info('CL review has not started, skipping.')
+                continue
 
-        if not cl.has_review_started:
-            _log.info('CL review has not started, skipping.')
-            return
+            # Check if CL already has a corresponding PR
+            pull_request = self.wpt_github.pr_with_change_id(cl.change_id)
 
-        pull_request = self.wpt_github.pr_with_change_id(cl.change_id)
-        if pull_request:
-            # If CL already has a corresponding PR, see if we need to update it.
-            pr_url = '{}pull/{}'.format(WPT_GH_URL, pull_request.number)
-            _log.info('In-flight PR found: %s', pr_url)
+            if pull_request:
+                pr_url = '{}pull/{}'.format(WPT_GH_URL, pull_request.number)
+                _log.info('In-flight PR found: %s', pr_url)
 
-            pr_cl_revision = self.wpt_github.extract_metadata(WPT_REVISION_FOOTER + ' ', pull_request.body)
-            if cl.current_revision_sha == pr_cl_revision:
-                _log.info('PR revision matches CL revision. Nothing to do here.')
-                return
+                pr_cl_revision = self.wpt_github.extract_metadata(WPT_REVISION_FOOTER + ' ', pull_request.body)
+                if cl.current_revision_sha == pr_cl_revision:
+                    _log.info('PR revision matches CL revision. Nothing to do here.')
+                    continue
 
-            _log.info('New revision found, updating PR...')
-            self.create_or_update_pull_request_from_cl(cl, pull_request)
-        else:
-            # Create a new PR for the CL if it does not have one.
-            _log.info('No in-flight PR found for CL. Creating...')
-            self.create_or_update_pull_request_from_cl(cl)
-
-    def process_chromium_commits(self, exportable_commits):
-        for commit in exportable_commits:
-            self.process_chromium_commit(commit)
-
-    def process_chromium_commit(self, commit):
-        _log.info('Found exportable Chromium commit: %s %s', commit.subject(), commit.sha)
-
-        pull_request = self.wpt_github.pr_for_chromium_commit(commit)
-        if pull_request:
-            pr_url = '{}pull/{}'.format(WPT_GH_URL, pull_request.number)
-            _log.info('In-flight PR found: %s', pr_url)
-
-            if pull_request.state != 'open':
-                _log.info('Pull request is %s. Skipping.', pull_request.state)
-                return
-
-            if PROVISIONAL_PR_LABEL in pull_request.labels:
-                # If the PR was created from a Gerrit in-flight CL, update the
-                # PR with the final checked-in commit in Chromium history.
-                # TODO(robertma): Only update the PR when it is not up-to-date
-                # to avoid unnecessary Travis runs.
-                _log.info('Updating PR with the final checked-in change...')
-                self.create_or_update_pull_request_from_commit(commit, pull_request)
-                self.remove_provisional_pr_label(pull_request)
-                # Updating the patch triggers Travis, which will block merge.
-                # Return early and merge next time.
-                return
-
-            self.merge_pull_request(pull_request)
-        else:
-            _log.info('No PR found for Chromium commit. Creating...')
-            self.create_or_update_pull_request_from_commit(commit)
+                _log.info('New revision found, updating PR...')
+                self.create_or_update_pull_request_from_cl(cl, pull_request)
+            else:
+                _log.info('No in-flight PR found for CL. Creating...')
+                self.create_or_update_pull_request_from_cl(cl)
 
     def get_exportable_commits(self):
-        """Gets exportable commits that can apply cleanly and independently.
-
-        Returns:
-            A list of ChromiumCommit for clean exportable commits, and a list
-            of error messages for other exportable commits that fail to apply.
-        """
-        # Exportable commits that cannot apply cleanly are logged, and will be
-        # retried next time. A common case is that a commit depends on an
-        # earlier commit, and can only be exported after the earlier one.
         return exportable_commits_over_last_n_commits(
-            self.host, self.local_wpt, self.wpt_github, require_clean=True)
-
-    def remove_provisional_pr_label(self, pull_request):
-        if self.dry_run:
-            _log.info('[dry_run] Would have attempted to remove the provisional PR label')
-            return
-
-        _log.info('Removing provisional label "%s"...', PROVISIONAL_PR_LABEL)
-        self.wpt_github.remove_label(pull_request.number, PROVISIONAL_PR_LABEL)
+            self.host, self.local_wpt, self.wpt_github)
 
     def merge_pull_request(self, pull_request):
+        _log.info('In-flight PR found: %s', pull_request.title)
+        _log.info('%spull/%d', WPT_GH_URL, pull_request.number)
+
         if self.dry_run:
             _log.info('[dry_run] Would have attempted to merge PR')
             return
+
+        if PROVISIONAL_PR_LABEL in pull_request.labels:
+            _log.info('Removing provisional label "%s"...', PROVISIONAL_PR_LABEL)
+            self.wpt_github.remove_label(pull_request.number, PROVISIONAL_PR_LABEL)
 
         _log.info('Attempting to merge...')
 
@@ -189,67 +124,44 @@ class TestExporter(object):
         except MergeError:
             _log.info('Could not merge PR.')
 
-    def create_or_update_pull_request_from_commit(self, outbound_commit, pull_request=None):
-        """Creates or updates a PR from a Chromium commit.
-
-        Args:
-            outbound_commit: A ChromiumCommit object.
-            pull_request: Optional, a PullRequest namedtuple.
-                If specified, updates the PR instead of creating one.
-        """
+    def create_pull_request(self, outbound_commit):
         patch = outbound_commit.format_patch()
         message = outbound_commit.message()
-        subject = outbound_commit.subject()
-        body = outbound_commit.body()
         author = outbound_commit.author()
-        updating = bool(pull_request)
-        action_str = 'updating' if updating else 'creating'
 
         if self.dry_run:
-            _log.info('[dry_run] Stopping before %s PR from Chromium commit', action_str)
+            _log.info('[dry_run] Stopping before creating PR')
             _log.info('\n\n[dry_run] message:')
             _log.info(message)
-            _log.debug('\n\n[dry_run] patch[0:500]:')
-            _log.debug(patch[0:500])
+            _log.info('\n\n[dry_run] patch:')
+            _log.info(patch)
             return
 
-        if updating:
-            branch_name = self.wpt_github.get_pr_branch(pull_request.number)
-        else:
-            branch_name = 'chromium-export-{sha}'.format(sha=outbound_commit.short_sha)
-        self.local_wpt.create_branch_with_patch(branch_name, message, patch, author, force_push=updating)
+        branch_name = 'chromium-export-{sha}'.format(sha=outbound_commit.short_sha)
+        self.local_wpt.create_branch_with_patch(branch_name, message, patch, author)
 
-        if updating:
-            response_data = self.wpt_github.update_pr(pull_request.number, subject, body)
-            _log.info('Update PR response: %s', response_data)
-        else:
-            response_data = self.wpt_github.create_pr(branch_name, subject, body)
-            _log.info('Create PR response: %s', response_data)
+        response_data = self.wpt_github.create_pr(
+            remote_branch_name=branch_name,
+            desc_title=outbound_commit.subject(),
+            body=outbound_commit.body())
 
-            if response_data:
-                data, status_code = self.wpt_github.add_label(response_data['number'], EXPORT_PR_LABEL)
-                _log.info('Add label response (status %s): %s', status_code, data)
+        _log.info('Create PR response: %s', response_data)
+
+        if response_data:
+            data, status_code = self.wpt_github.add_label(response_data['number'], EXPORT_PR_LABEL)
+            _log.info('Add label response (status %s): %s', status_code, data)
 
         return response_data
 
     def create_or_update_pull_request_from_cl(self, cl, pull_request=None):
-        """Creates or updates a PR from a Gerrit CL.
-
-        Args:
-            cl: A GerritCL object.
-            pull_request: Optional, a PullRequest namedtuple.
-                If specified, updates the PR instead of creating one.
-        """
         patch = cl.get_patch()
-        message = cl.latest_commit_message_with_footers()
-        author = cl.owner_email
         updating = bool(pull_request)
         action_str = 'updating' if updating else 'creating'
 
-        success, error = self.local_wpt.test_patch(patch)
+        success, message = self.local_wpt.test_patch(patch)
         if not success:
             _log.error('Gerrit CL patch did not apply cleanly:')
-            _log.error(error)
+            _log.error(message)
             _log.error('First 500 characters of patch: << END_OF_PATCH_EXCERPT')
             _log.error(patch[0:500])
             _log.error('END_OF_PATCH_EXCERPT')
@@ -263,12 +175,14 @@ class TestExporter(object):
             _log.debug(patch[0:500])
             return
 
+        message = cl.latest_commit_message_with_footers()
+
         # Annotate revision footer for Exporter's later use.
         message = '\n'.join([line for line in message.split('\n') if WPT_REVISION_FOOTER not in line])
         message += '\n{} {}'.format(WPT_REVISION_FOOTER, cl.current_revision_sha)
 
         branch_name = 'chromium-export-cl-{id}'.format(id=cl.change_id)
-        self.local_wpt.create_branch_with_patch(branch_name, message, patch, author, force_push=updating)
+        self.local_wpt.create_branch_with_patch(branch_name, message, patch, cl.owner_email, force_push=True)
 
         if updating:
             response_data = self.wpt_github.update_pr(pull_request.number, cl.subject, message)

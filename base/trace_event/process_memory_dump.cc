@@ -184,7 +184,6 @@ base::Optional<size_t> ProcessMemoryDump::CountResidentBytesInSharedMemory(
 
 #endif  // defined(COUNT_RESIDENT_BYTES_SUPPORTED)
 
-ProcessMemoryDump::ProcessMemoryDump() {}
 ProcessMemoryDump::ProcessMemoryDump(
     scoped_refptr<HeapProfilerSerializationState>
         heap_profiler_serialization_state,
@@ -192,10 +191,8 @@ ProcessMemoryDump::ProcessMemoryDump(
     : heap_profiler_serialization_state_(
           std::move(heap_profiler_serialization_state)),
       dump_args_(dump_args) {}
+
 ProcessMemoryDump::~ProcessMemoryDump() {}
-ProcessMemoryDump::ProcessMemoryDump(ProcessMemoryDump&& other) = default;
-ProcessMemoryDump& ProcessMemoryDump::operator=(ProcessMemoryDump&& other) =
-    default;
 
 MemoryAllocatorDump* ProcessMemoryDump::CreateAllocatorDump(
     const std::string& absolute_name) {

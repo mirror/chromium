@@ -2,6 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+#include "mojo/android/system/core_impl.h"
+
 #include <stddef.h>
 #include <stdint.h>
 
@@ -319,6 +321,10 @@ static jint GetNativeBufferOffset(JNIEnv* env,
   if (offset == 0)
     return 0;
   return alignment - offset;
+}
+
+bool RegisterCoreImpl(JNIEnv* env) {
+  return RegisterNativesImpl(env);
 }
 
 }  // namespace android

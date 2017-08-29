@@ -5,8 +5,12 @@
 package org.chromium.chrome.browser.vr_shell;
 
 import android.annotation.SuppressLint;
+import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Point;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
+import android.os.AsyncTask;
 import android.os.StrictMode;
 import android.util.DisplayMetrics;
 import android.view.MotionEvent;
@@ -20,10 +24,12 @@ import android.widget.FrameLayout;
 import com.google.vr.ndk.base.AndroidCompat;
 import com.google.vr.ndk.base.GvrLayout;
 
+import org.chromium.base.ApiCompatibilityUtils;
 import org.chromium.base.ThreadUtils;
 import org.chromium.base.VisibleForTesting;
 import org.chromium.base.annotations.CalledByNative;
 import org.chromium.base.annotations.JNINamespace;
+import org.chromium.chrome.R;
 import org.chromium.chrome.browser.ChromeActivity;
 import org.chromium.chrome.browser.ChromeTabbedActivity;
 import org.chromium.chrome.browser.NativePage;
@@ -129,19 +135,21 @@ public class VrShellImpl extends GvrLayout implements VrShell, SurfaceHolder.Cal
 
         setPresentationView(mPresentationView);
 
-        getUiLayout().setCloseButtonListener(mDelegate.getVrCloseButtonListener());
+        getUiLayout().setCloseButtonListener(new Runnable() {
+            @Override
+            public void run() {
+                mDelegate.shutdownVr(true /* disableVrMode */, true /* stayingInChrome */);
+            }
+        });
 
         DisplayAndroid primaryDisplay = DisplayAndroid.getNonMultiDisplay(activity);
         mContentVirtualDisplay = VirtualDisplayAndroid.createVirtualDisplay();
         mContentVirtualDisplay.setTo(primaryDisplay);
         // Set the initial content size and DPR to be applied to reparented tabs. Otherwise, Chrome
         // will crash due to a GL buffer initialized with zero bytes.
-        ContentViewCore activeContentViewCore =
-                mActivity.getActivityTab().getActiveContentViewCore();
-        assert activeContentViewCore != null;
-        mLastContentDpr = activeContentViewCore.getDeviceScaleFactor();
-        mLastContentWidth = activeContentViewCore.getViewportWidthPix() / mLastContentDpr;
-        mLastContentHeight = activeContentViewCore.getViewportHeightPix() / mLastContentDpr;
+        mLastContentWidth = mContentVirtualDisplay.getDisplayWidth();
+        mLastContentHeight = mContentVirtualDisplay.getDisplayHeight();
+        mLastContentDpr = mContentVirtualDisplay.getDipScale();
 
         mInterceptNavigationDelegate = new InterceptNavigationDelegateImpl(
                 new VrExternalNavigationDelegate(mActivity.getActivityTab()),
@@ -305,6 +313,28 @@ public class VrShellImpl extends GvrLayout implements VrShell, SurfaceHolder.Cal
         addView(mRenderToSurfaceLayoutParent);
     }
 
+    private void setSplashScreenIcon() {
+        new AsyncTask<Void, Void, Bitmap>() {
+            @Override
+            protected Bitmap doInBackground(Void... params) {
+                Drawable drawable = ApiCompatibilityUtils.getDrawable(
+                        mActivity.getResources(), R.mipmap.app_icon);
+                if (drawable instanceof BitmapDrawable) {
+                    BitmapDrawable bd = (BitmapDrawable) drawable;
+                    return bd.getBitmap();
+                }
+                assert false : "The drawable was not a bitmap drawable as expected";
+                return null;
+            }
+            @Override
+            protected void onPostExecute(Bitmap bitmap) {
+                if (mNativeVrShell == 0) return;
+                nativeSetSplashScreenIcon(mNativeVrShell, bitmap);
+            }
+        }
+                .executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+    }
+
     @Override
     public void initializeNative(Tab currentTab, boolean forWebVr,
             boolean webVrAutopresentationExpected, boolean inCct) {
@@ -320,6 +350,10 @@ public class VrShellImpl extends GvrLayout implements VrShell, SurfaceHolder.Cal
                 webVrAutopresentationExpected, inCct, getGvrApi().getNativeGvrContext(),
                 mReprojectedRendering, displayWidthMeters, displayHeightMeters, dm.widthPixels,
                 dm.heightPixels);
+
+        // We need to set the icon bitmap from here because we can't read the app icon from native
+        // code.
+        setSplashScreenIcon();
 
         reparentAllTabs(mContentVrWindowAndroid);
         swapToForegroundTab();
@@ -507,7 +541,6 @@ public class VrShellImpl extends GvrLayout implements VrShell, SurfaceHolder.Cal
     @Override
     public void onBeforeWindowDetached() {
         mRenderToSurfaceLayout.getViewTreeObserver().removeOnPreDrawListener(mPredrawListener);
-        if (mNativeVrShell != 0) nativeRestoreLayer(mNativeVrShell);
     }
 
     @Override
@@ -650,8 +683,6 @@ public class VrShellImpl extends GvrLayout implements VrShell, SurfaceHolder.Cal
                 UrlConstants.NTP_URL, TabLaunchType.FROM_CHROME_UI);
     }
 
-    @VisibleForTesting
-    @Override
     @CalledByNative
     public void navigateForward() {
         if (!mCanGoForward) return;
@@ -659,8 +690,6 @@ public class VrShellImpl extends GvrLayout implements VrShell, SurfaceHolder.Cal
         updateHistoryButtonsVisibility();
     }
 
-    @VisibleForTesting
-    @Override
     @CalledByNative
     public void navigateBack() {
         if (!mCanGoBack) return;
@@ -724,12 +753,6 @@ public class VrShellImpl extends GvrLayout implements VrShell, SurfaceHolder.Cal
     }
 
     @VisibleForTesting
-    @Override
-    public Boolean isForwardButtonEnabled() {
-        return mCanGoForward;
-    }
-
-    @VisibleForTesting
     public float getContentWidthForTesting() {
         return mLastContentWidth;
     }
@@ -744,9 +767,9 @@ public class VrShellImpl extends GvrLayout implements VrShell, SurfaceHolder.Cal
             boolean reprojectedRendering, float displayWidthMeters, float displayHeightMeters,
             int displayWidthPixels, int displayHeightPixels);
     private native void nativeSetSurface(long nativeVrShell, Surface surface);
+    private native void nativeSetSplashScreenIcon(long nativeVrShell, Bitmap bitmap);
     private native void nativeSwapContents(
             long nativeVrShell, Tab tab, AndroidUiGestureTarget androidUiGestureTarget);
-    private native void nativeRestoreLayer(long nativeVrShell);
     private native void nativeDestroy(long nativeVrShell);
     private native void nativeOnTriggerEvent(long nativeVrShell, boolean touched);
     private native void nativeOnPause(long nativeVrShell);

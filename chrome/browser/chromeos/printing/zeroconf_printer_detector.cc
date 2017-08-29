@@ -102,7 +102,7 @@ std::string ZeroconfPrinterId(const ServiceDescription& service,
                               const ParsedMetadata& metadata) {
   base::MD5Context ctx;
   base::MD5Init(&ctx);
-  base::MD5Update(&ctx, service.instance_name());
+  base::MD5Update(&ctx, service.service_name);
   base::MD5Update(&ctx, metadata.product);
   base::MD5Update(&ctx, metadata.UUID);
   base::MD5Update(&ctx, metadata.usb_MFG);
@@ -121,11 +121,11 @@ std::string ZeroconfPrinterId(const ServiceDescription& service,
 bool ConvertToPrinter(const ServiceDescription& service_description,
                       const ParsedMetadata& metadata,
                       PrinterDetector::DetectedPrinter* detected_printer) {
-  // If we don't have the minimum information needed to attempt a setup, fail.
-  // Also fail on a port of 0, as this is used to indicate that the service
-  // doesn't *actually* exist, the device just wants to guard the name.
-  if (service_description.service_name.empty() || metadata.ty.empty() ||
-      service_description.ip_address.empty() ||
+  // We can at least try to set up a printer if all we have is a service name
+  // and a protocol, but if we don't have a service name, just fail.  Also fail
+  // on a port of 0, as this is used to indicate that the service doesn't
+  // *actually* exist, the device just wants to guard the name.
+  if (service_description.service_name.empty() ||
       (service_description.address.port() == 0)) {
     return false;
   }
@@ -133,34 +133,26 @@ bool ConvertToPrinter(const ServiceDescription& service_description,
   Printer& printer = detected_printer->printer;
   printer.set_id(ZeroconfPrinterId(service_description, metadata));
   printer.set_uuid(metadata.UUID);
-  printer.set_display_name(metadata.ty);
+  printer.set_display_name(service_description.service_name);
   printer.set_description(metadata.note);
   printer.set_make_and_model(metadata.product);
-  const char* uri_protocol;
   if (service_description.service_type() ==
       base::StringPiece(kIppServiceName)) {
-    uri_protocol = "ipp";
+    printer.set_uri(base::StringPrintf("ipp://%s/%s",
+                                       service_description.service_name.c_str(),
+                                       metadata.rp.c_str()));
   } else if (service_description.service_type() ==
              base::StringPiece(kIppsServiceName)) {
-    uri_protocol = "ipps";
+    printer.set_uri(base::StringPrintf("ipps://%s/%s",
+                                       service_description.service_name.c_str(),
+                                       metadata.rp.c_str()));
   } else {
     // Since we only register for these services, we should never get back
     // a service other than the ones above.
-    NOTREACHED() << "Zeroconf printer with unknown service type"
-                 << service_description.service_type();
+    LOG(ERROR) << "Zeroconf printer with unknown service type"
+               << service_description.service_type();
     return false;
   }
-  printer.set_uri(base::StringPrintf(
-      "%s://%s/%s", uri_protocol,
-      service_description.address.ToString().c_str(), metadata.rp.c_str()));
-
-  // Use an effective URI with a pre-resolved ip address and port, since CUPS
-  // can't resolve these addresses in ChromeOS (crbug/626377).
-  printer.set_effective_uri(base::StringPrintf(
-      "%s://%s:%d/%s", uri_protocol,
-      service_description.ip_address.ToString().c_str(),
-      service_description.address.port(), metadata.rp.c_str()));
-
   // gather ppd identification candidates.
   if (!metadata.ty.empty()) {
     detected_printer->ppd_search_data.make_and_model.push_back(metadata.ty);
@@ -243,10 +235,10 @@ class ZeroconfPrinterDetectorImpl
     }
     base::AutoLock auto_lock(printers_lock_);
 
-    auto existing = printers_.find(service_description.instance_name());
+    auto existing = printers_.find(service_description.service_name);
     if (existing == printers_.end() ||
         ShouldReplaceRecord(existing->second, printer)) {
-      printers_[service_description.instance_name()] = printer;
+      printers_[service_description.service_name] = printer;
       observer_list_->Notify(FROM_HERE,
                              &PrinterDetector::Observer::OnPrintersFound,
                              GetPrintersLocked());
@@ -254,11 +246,8 @@ class ZeroconfPrinterDetectorImpl
   }
 
   void OnDeviceRemoved(const std::string& service_name) override {
-    // Leverage ServiceDescription parsing to pull out the instance name.
-    ServiceDescription service_description;
-    service_description.service_name = service_name;
     base::AutoLock auto_lock(printers_lock_);
-    auto it = printers_.find(service_description.instance_name());
+    auto it = printers_.find(service_name);
     if (it != printers_.end()) {
       printers_.erase(it);
       observer_list_->Notify(FROM_HERE,

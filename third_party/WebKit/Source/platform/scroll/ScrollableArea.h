@@ -38,6 +38,7 @@
 #include "platform/wtf/MathExtras.h"
 #include "platform/wtf/Noncopyable.h"
 #include "platform/wtf/Vector.h"
+#include "public/platform/WebLayerScrollClient.h"
 
 namespace blink {
 
@@ -60,7 +61,8 @@ enum IncludeScrollbarsInRect {
   kIncludeScrollbars,
 };
 
-class PLATFORM_EXPORT ScrollableArea : public GarbageCollectedMixin {
+class PLATFORM_EXPORT ScrollableArea : public GarbageCollectedMixin,
+                                       public WebLayerScrollClient {
   WTF_MAKE_NONCOPYABLE(ScrollableArea);
 
  public:
@@ -184,22 +186,22 @@ class PLATFORM_EXPORT ScrollableArea : public GarbageCollectedMixin {
   virtual void GetTickmarks(Vector<IntRect>&) const {}
 
   // Convert points and rects between the scrollbar and its containing
-  // EmbeddedContentView. The client needs to implement these in order to be
-  // aware of layout effects like CSS transforms.
-  virtual IntRect ConvertFromScrollbarToContainingEmbeddedContentView(
+  // ParentView. The client needs to implement these in order to be aware of
+  // layout effects like CSS transforms.
+  virtual IntRect ConvertFromScrollbarToParentView(
       const Scrollbar& scrollbar,
       const IntRect& scrollbar_rect) const {
     IntRect local_rect = scrollbar_rect;
     local_rect.MoveBy(scrollbar.Location());
     return local_rect;
   }
-  virtual IntPoint ConvertFromContainingEmbeddedContentViewToScrollbar(
+  virtual IntPoint ConvertFromParentViewToScrollbar(
       const Scrollbar& scrollbar,
       const IntPoint& parent_point) const {
     NOTREACHED();
     return parent_point;
   }
-  virtual IntPoint ConvertFromScrollbarToContainingEmbeddedContentView(
+  virtual IntPoint ConvertFromScrollbarToParentView(
       const Scrollbar& scrollbar,
       const IntPoint& scrollbar_point) const {
     NOTREACHED();
@@ -377,7 +379,7 @@ class PLATFORM_EXPORT ScrollableArea : public GarbageCollectedMixin {
   virtual RefPtr<WebTaskRunner> GetTimerTaskRunner() const = 0;
 
   // Callback for compositor-side scrolling.
-  virtual void DidScroll(const gfx::ScrollOffset&);
+  void DidScroll(const gfx::ScrollOffset&) override;
 
   virtual void ScrollbarFrameRectChanged() {}
 

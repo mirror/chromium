@@ -38,7 +38,10 @@ class CORE_EXPORT WebRemoteFrameImpl final
   void SetName(const WebString&) override;
   WebRect VisibleContentRect() const override;
   WebView* View() const override;
+  WebPerformance Performance() const override;
   void StopLoading() override;
+  void EnableViewSourceMode(bool enable) override;
+  bool IsViewSourceModeEnabled() const override;
 
   // WebRemoteFrame methods:
   WebLocalFrame* CreateLocalChild(WebTreeScopeType,

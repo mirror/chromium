@@ -13,9 +13,9 @@ namespace operations {
 
 Configure::Configure(extensions::EventRouter* event_router,
                      const ProvidedFileSystemInfo& file_system_info,
-                     storage::AsyncFileUtil::StatusCallback callback)
-    : Operation(event_router, file_system_info),
-      callback_(std::move(callback)) {}
+                     const storage::AsyncFileUtil::StatusCallback& callback)
+    : Operation(event_router, file_system_info), callback_(callback) {
+}
 
 Configure::~Configure() {
 }
@@ -38,15 +38,13 @@ bool Configure::Execute(int request_id) {
 void Configure::OnSuccess(int /* request_id */,
                           std::unique_ptr<RequestValue> /* result */,
                           bool /* has_more */) {
-  DCHECK(callback_);
-  std::move(callback_).Run(base::File::FILE_OK);
+  callback_.Run(base::File::FILE_OK);
 }
 
 void Configure::OnError(int /* request_id */,
                         std::unique_ptr<RequestValue> /* result */,
                         base::File::Error error) {
-  DCHECK(callback_);
-  std::move(callback_).Run(error);
+  callback_.Run(error);
 }
 
 }  // namespace operations

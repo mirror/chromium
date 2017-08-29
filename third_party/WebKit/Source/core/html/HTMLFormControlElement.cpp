@@ -25,7 +25,6 @@
 #include "core/html/HTMLFormControlElement.h"
 
 #include "core/dom/ElementTraversal.h"
-#include "core/dom/TaskRunnerHelper.h"
 #include "core/events/Event.h"
 #include "core/frame/UseCounter.h"
 #include "core/html/HTMLDataListElement.h"
@@ -591,13 +590,9 @@ void HTMLFormControlElement::SetNeedsValidityCheck() {
 
   // Updates only if this control already has a validation message.
   if (IsValidationMessageVisible()) {
-    // Calls UpdateVisibleValidationMessage() even if is_valid_ is not
+    // Calls updateVisibleValidationMessage() even if m_isValid is not
     // changed because a validation message can be changed.
-    TaskRunnerHelper::Get(TaskType::kDOMManipulation, &GetDocument())
-        ->PostTask(
-            BLINK_FROM_HERE,
-            WTF::Bind(&HTMLFormControlElement::UpdateVisibleValidationMessage,
-                      WrapPersistent(this)));
+    UpdateVisibleValidationMessage();
   }
 }
 

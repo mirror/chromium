@@ -10,7 +10,6 @@
 #include "components/offline_pages/core/prefetch/store/prefetch_store_test_util.h"
 #include "components/offline_pages/core/prefetch/store/prefetch_store_utils.h"
 #include "components/offline_pages/core/prefetch/task_test_base.h"
-#include "components/offline_pages/core/prefetch/test_prefetch_dispatcher.h"
 #include "components/offline_pages/core/prefetch/test_prefetch_gcm_handler.h"
 #include "components/offline_pages/core/task.h"
 #include "testing/gmock/include/gmock/gmock.h"
@@ -49,17 +48,11 @@ class MarkOperationDoneTaskTest : public TaskTestBase {
     EXPECT_EQ(MarkOperationDoneTask::StoreResult::UPDATED,
               task->store_result());
     EXPECT_EQ(change_count, task->change_count());
-    EXPECT_EQ(change_count > 0 ? 1 : 0, dispatcher()->task_schedule_count);
   }
-
-  TestPrefetchDispatcher* dispatcher() { return &dispatcher_; }
-
- private:
-  TestPrefetchDispatcher dispatcher_;
 };
 
 TEST_F(MarkOperationDoneTaskTest, NoOpTask) {
-  MarkOperationDoneTask task(dispatcher(), store(), kOperationName);
+  MarkOperationDoneTask task(store(), kOperationName);
   ExpectTaskCompletes(&task);
 
   task.Run();
@@ -69,7 +62,7 @@ TEST_F(MarkOperationDoneTaskTest, NoOpTask) {
 
 TEST_F(MarkOperationDoneTaskTest, SingleMatchingURL) {
   int64_t id = InsertAwaitingGCMOperation(kOperationName);
-  MarkOperationDoneTask task(dispatcher(), store(), kOperationName);
+  MarkOperationDoneTask task(store(), kOperationName);
 
   ExpectTaskCompletes(&task);
   task.Run();
@@ -87,7 +80,7 @@ TEST_F(MarkOperationDoneTaskTest, NoSuchURLs) {
   int64_t id1 = InsertAwaitingGCMOperation(kOperationName);
 
   // Start a task for an unrelated operation name.
-  MarkOperationDoneTask task(dispatcher(), store(), kOtherOperationName);
+  MarkOperationDoneTask task(store(), kOtherOperationName);
 
   ExpectTaskCompletes(&task);
   task.Run();
@@ -112,7 +105,7 @@ TEST_F(MarkOperationDoneTaskTest, ManyURLs) {
   ASSERT_EQ(6, store_util()->CountPrefetchItems());
 
   // Start a task for the first operation name.
-  MarkOperationDoneTask task(dispatcher(), store(), kOperationName);
+  MarkOperationDoneTask task(store(), kOperationName);
 
   ExpectTaskCompletes(&task);
   task.Run();
@@ -146,7 +139,7 @@ TEST_F(MarkOperationDoneTaskTest, URLsInWrongState) {
       kOperationName, PrefetchItemState::ZOMBIE));
 
   // Start a task for the first operation name.
-  MarkOperationDoneTask task(dispatcher(), store(), kOperationName);
+  MarkOperationDoneTask task(store(), kOperationName);
 
   ExpectTaskCompletes(&task);
   task.Run();

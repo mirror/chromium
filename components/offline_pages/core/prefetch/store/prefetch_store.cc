@@ -35,16 +35,16 @@ using InitializeCallback =
     base::Callback<void(InitializationStatus,
                         std::unique_ptr<sql::Connection>)>;
 
-// IMPORTANT #1: when making changes to these columns please also reflect them
+// IMPORTANT: when making changes to these columns please also reflect them
 // into:
 // - PrefetchItem: update existing fields and all method implementations
 //   (operator=, operator<<, ToString, etc).
 // - PrefetchItemTest, PrefetchStoreTestUtil: update test related code to cover
 //   the changed set of columns and PrefetchItem members.
 // - MockPrefetchItemGenerator: so that its generated items consider all fields.
-// IMPORTANT #2: the ordering of column types is important in SQLite 3 tables to
-// simplify data retrieval. Columns with fixed length types must come first and
-// variable length types must come later.
+// IMPORTANT #2: the order of columns types is also important in SQLite tables
+// for optimizing space utilization. Fixed length types must come first and
+// variable length types later.
 static const char kTableCreationSql[] =
     "CREATE TABLE prefetch_items"
     // Fixed length columns come first.
@@ -57,7 +57,7 @@ static const char kTableCreationSql[] =
     " creation_time INTEGER NOT NULL,"
     " freshness_time INTEGER NOT NULL,"
     " error_code INTEGER NOT NULL DEFAULT 0,"
-    " file_size INTEGER NOT NULL DEFAULT -1,"
+    " file_size INTEGER NOT NULL DEFAULT 0,"
     // Variable length columns come later.
     " guid VARCHAR NOT NULL DEFAULT '',"
     " client_namespace VARCHAR NOT NULL DEFAULT '',"

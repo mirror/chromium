@@ -32,41 +32,25 @@
 #define InspectorMemoryAgent_h
 
 #include "core/CoreExport.h"
-#include "core/inspector/InspectedFrames.h"
 #include "core/inspector/InspectorBaseAgent.h"
 #include "core/inspector/protocol/Memory.h"
-#include "core/leak_detector/BlinkLeakDetector.h"
-#include "core/leak_detector/BlinkLeakDetectorClient.h"
 
 namespace blink {
 
 class CORE_EXPORT InspectorMemoryAgent final
-    : public InspectorBaseAgent<protocol::Memory::Metainfo>,
-      public BlinkLeakDetectorClient {
+    : public InspectorBaseAgent<protocol::Memory::Metainfo> {
   WTF_MAKE_NONCOPYABLE(InspectorMemoryAgent);
 
  public:
-  static InspectorMemoryAgent* Create(InspectedFrames* frames) {
-    return new InspectorMemoryAgent(frames);
-  }
+  static InspectorMemoryAgent* Create() { return new InspectorMemoryAgent(); }
   ~InspectorMemoryAgent() override;
-
-  DECLARE_VIRTUAL_TRACE();
 
   protocol::Response getDOMCounters(int* documents,
                                     int* nodes,
                                     int* js_event_listeners) override;
-  void prepareForLeakDetection(
-      std::unique_ptr<PrepareForLeakDetectionCallback>) override;
-
-  // BlinkLeakDetectorClient:
-  void OnLeakDetectionComplete() override;
 
  private:
-  explicit InspectorMemoryAgent(InspectedFrames*);
-  std::unique_ptr<BlinkLeakDetector> detector_;
-  std::unique_ptr<PrepareForLeakDetectionCallback> callback_;
-  Member<InspectedFrames> frames_;
+  InspectorMemoryAgent();
 };
 
 }  // namespace blink

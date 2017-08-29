@@ -24,7 +24,6 @@
 #include "media/base/media.h"
 #include "media/base/media_switches.h"
 #include "media/base/media_tracks.h"
-#include "media/base/mock_media_log.h"
 #include "media/base/test_data_util.h"
 #include "media/base/timestamp_constants.h"
 #include "media/cdm/aes_decryptor.h"
@@ -77,12 +76,11 @@
 #define MAYBE_TEXT(test) test
 #endif
 
-using ::testing::_;
-using ::testing::AnyNumber;
-using ::testing::AtLeast;
-using ::testing::AtMost;
-using ::testing::HasSubstr;
-using ::testing::SaveArg;
+using testing::_;
+using testing::AnyNumber;
+using testing::AtLeast;
+using testing::AtMost;
+using testing::SaveArg;
 
 namespace media {
 
@@ -1037,29 +1035,6 @@ TEST_F(PipelineIntegrationTest, BasicPlayback_MediaSource) {
   Stop();
 }
 
-TEST_F(PipelineIntegrationTest, MediaSource_Eos_Before_Demuxer_Opened) {
-  // After appending only a partial initialization segment, marking end of
-  // stream should let the test complete with error indicating failure to open
-  // demuxer. Here we append only the first 10 bytes of a test WebM, definitely
-  // less than the ~4400 bytes needed to parse its full initialization segment.
-  MockMediaSource source("bear-320x240.webm", kWebM, 10);
-  source.set_do_eos_after_next_append(true);
-  EXPECT_EQ(
-      DEMUXER_ERROR_COULD_NOT_OPEN,
-      StartPipelineWithMediaSource(&source, kExpectDemuxerFailure, nullptr));
-}
-
-TEST_F(PipelineIntegrationTest, MediaSource_Corrupted_First_Media_Segment) {
-  // After successful initialization segment append completing demuxer opening,
-  // immediately append a corrupted media segment to trigger parse error while
-  // pipeline is still completing renderer setup.
-  MockMediaSource source("bear-320x240_corrupted_after_init_segment.webm",
-                         kWebM, 4380);
-  source.set_expect_append_success(false);
-  EXPECT_EQ(CHUNK_DEMUXER_ERROR_APPEND_FAILED,
-            StartPipelineWithMediaSource(&source));
-}
-
 TEST_F(PipelineIntegrationTest, BasicPlayback_MediaSource_Live) {
   MockMediaSource source("bear-320x240-live.webm", kWebM, 219221);
   EXPECT_EQ(PIPELINE_OK, StartPipelineWithMediaSource(&source));
@@ -1188,41 +1163,6 @@ TEST_F(PipelineIntegrationTest, MediaSource_ConfigChange_WebM) {
   EXPECT_CALL(*this, OnVideoNaturalSizeChange(kNewSize)).Times(1);
   scoped_refptr<DecoderBuffer> second_file =
       ReadTestDataFile("bear-640x360.webm");
-  source.AppendAtTime(base::TimeDelta::FromSeconds(kAppendTimeSec),
-                      second_file->data(), second_file->data_size());
-  source.EndOfStream();
-
-  Play();
-  EXPECT_TRUE(WaitUntilOnEnded());
-
-  EXPECT_EQ(1u, pipeline_->GetBufferedTimeRanges().size());
-  EXPECT_EQ(0, pipeline_->GetBufferedTimeRanges().start(0).InMilliseconds());
-  EXPECT_EQ(kAppendTimeMs + k640WebMFileDurationMs,
-            pipeline_->GetBufferedTimeRanges().end(0).InMilliseconds());
-
-  source.Shutdown();
-  Stop();
-}
-
-TEST_F(PipelineIntegrationTest, MediaSource_AudioConfigChange_WebM) {
-  MockMediaSource source("bear-320x240-audio-only.webm", kAudioOnlyWebM,
-                         kAppendWholeFile);
-  EXPECT_EQ(PIPELINE_OK, StartPipelineWithMediaSource(&source));
-
-  const int kNewSampleRate = 48000;
-  EXPECT_CALL(*this,
-              OnAudioConfigChange(::testing::Property(
-                  &AudioDecoderConfig::samples_per_second, kNewSampleRate)))
-      .Times(1);
-
-  // A higher sample rate will cause the audio buffer durations to change. This
-  // should not manifest as a timestamp gap in AudioTimestampValidator.
-  // Timestamp expectations should be reset across config changes.
-  EXPECT_MEDIA_LOG(Not(HasSubstr("Large timestamp gap detected")))
-      .Times(AnyNumber());
-
-  scoped_refptr<DecoderBuffer> second_file =
-      ReadTestDataFile("bear-320x240-audio-only-48khz.webm");
   ASSERT_TRUE(source.AppendAtTime(base::TimeDelta::FromSeconds(kAppendTimeSec),
                                   second_file->data(),
                                   second_file->data_size()));
@@ -1233,7 +1173,8 @@ TEST_F(PipelineIntegrationTest, MediaSource_AudioConfigChange_WebM) {
 
   EXPECT_EQ(1u, pipeline_->GetBufferedTimeRanges().size());
   EXPECT_EQ(0, pipeline_->GetBufferedTimeRanges().start(0).InMilliseconds());
-  EXPECT_EQ(3773, pipeline_->GetBufferedTimeRanges().end(0).InMilliseconds());
+  EXPECT_EQ(kAppendTimeMs + k640WebMFileDurationMs,
+            pipeline_->GetBufferedTimeRanges().end(0).InMilliseconds());
 
   source.Shutdown();
   Stop();
@@ -1285,7 +1226,8 @@ TEST_F(PipelineIntegrationTest, MediaSource_FillUp_Buffer) {
     // Ask MediaSource to evict buffered data if buffering limit has been
     // reached (the data will be evicted from the front of the buffered range).
     source.EvictCodedFrames(media_time, file->data_size());
-    source.AppendAtTime(media_time, file->data(), file->data_size());
+    ASSERT_TRUE(
+        source.AppendAtTime(media_time, file->data(), file->data_size()));
     scoped_task_environment_.RunUntilIdle();
 
     buffered_ranges = pipeline_->GetBufferedTimeRanges();
@@ -1343,8 +1285,9 @@ TEST_F(PipelineIntegrationTest,
   scoped_refptr<DecoderBuffer> second_file =
       ReadTestDataFile("bear-640x360-av_enc-av.webm");
 
-  source.AppendAtTime(base::TimeDelta::FromSeconds(kAppendTimeSec),
-                      second_file->data(), second_file->data_size());
+  ASSERT_TRUE(source.AppendAtTime(base::TimeDelta::FromSeconds(kAppendTimeSec),
+                                  second_file->data(),
+                                  second_file->data_size()));
   source.EndOfStream();
 
   Play();
@@ -1375,8 +1318,9 @@ TEST_F(PipelineIntegrationTest,
   scoped_refptr<DecoderBuffer> second_file =
       ReadTestDataFile("bear-640x360-av_enc-av.webm");
 
-  source.AppendAtTime(base::TimeDelta::FromSeconds(kAppendTimeSec),
-                      second_file->data(), second_file->data_size());
+  EXPECT_TRUE(source.AppendAtTime(base::TimeDelta::FromSeconds(kAppendTimeSec),
+                                  second_file->data(),
+                                  second_file->data_size()));
   source.EndOfStream();
 
   Play();
@@ -1409,8 +1353,9 @@ TEST_F(PipelineIntegrationTest,
   scoped_refptr<DecoderBuffer> second_file =
       ReadTestDataFile("bear-640x360.webm");
 
-  source.AppendAtTime(base::TimeDelta::FromSeconds(kAppendTimeSec),
-                      second_file->data(), second_file->data_size());
+  ASSERT_TRUE(source.AppendAtTime(base::TimeDelta::FromSeconds(kAppendTimeSec),
+                                  second_file->data(),
+                                  second_file->data_size()));
   source.EndOfStream();
 
   Play();
@@ -1685,8 +1630,9 @@ TEST_F(PipelineIntegrationTest, MediaSource_ConfigChange_MP4) {
   EXPECT_CALL(*this, OnVideoNaturalSizeChange(kNewSize)).Times(1);
   scoped_refptr<DecoderBuffer> second_file =
       ReadTestDataFile("bear-1280x720-av_frag.mp4");
-  source.AppendAtTime(base::TimeDelta::FromSeconds(kAppendTimeSec),
-                      second_file->data(), second_file->data_size());
+  ASSERT_TRUE(source.AppendAtTime(base::TimeDelta::FromSeconds(kAppendTimeSec),
+                                  second_file->data(),
+                                  second_file->data_size()));
   source.EndOfStream();
 
   Play();
@@ -1716,8 +1662,9 @@ TEST_F(PipelineIntegrationTest,
   EXPECT_CALL(*this, OnVideoNaturalSizeChange(kNewSize)).Times(1);
   scoped_refptr<DecoderBuffer> second_file =
       ReadTestDataFile("bear-1280x720-v_frag-cenc.mp4");
-  source.AppendAtTime(base::TimeDelta::FromSeconds(kAppendTimeSec),
-                      second_file->data(), second_file->data_size());
+  ASSERT_TRUE(source.AppendAtTime(base::TimeDelta::FromSeconds(kAppendTimeSec),
+                                  second_file->data(),
+                                  second_file->data_size()));
   source.EndOfStream();
 
   Play();
@@ -1744,8 +1691,9 @@ TEST_F(PipelineIntegrationTest,
   EXPECT_CALL(*this, OnVideoNaturalSizeChange(gfx::Size(1280, 720))).Times(1);
   scoped_refptr<DecoderBuffer> second_file =
       ReadTestDataFile("bear-1280x720-v_frag-cenc-key_rotation.mp4");
-  source.AppendAtTime(base::TimeDelta::FromSeconds(kAppendTimeSec),
-                      second_file->data(), second_file->data_size());
+  ASSERT_TRUE(source.AppendAtTime(base::TimeDelta::FromSeconds(kAppendTimeSec),
+                                  second_file->data(),
+                                  second_file->data_size()));
   source.EndOfStream();
 
   Play();
@@ -1773,9 +1721,9 @@ TEST_F(PipelineIntegrationTest,
   EXPECT_CALL(*this, OnVideoNaturalSizeChange(gfx::Size(1280, 720))).Times(1);
   scoped_refptr<DecoderBuffer> second_file =
       ReadTestDataFile("bear-1280x720-v_frag-cenc.mp4");
-  source.set_expect_append_success(false);
-  source.AppendAtTime(base::TimeDelta::FromSeconds(kAppendTimeSec),
-                      second_file->data(), second_file->data_size());
+  ASSERT_FALSE(source.AppendAtTime(base::TimeDelta::FromSeconds(kAppendTimeSec),
+                                   second_file->data(),
+                                   second_file->data_size()));
 
   source.EndOfStream();
 
@@ -1806,9 +1754,9 @@ TEST_F(PipelineIntegrationTest,
   scoped_refptr<DecoderBuffer> second_file =
       ReadTestDataFile("bear-1280x720-av_frag.mp4");
 
-  source.set_expect_append_success(false);
-  source.AppendAtTime(base::TimeDelta::FromSeconds(kAppendTimeSec),
-                      second_file->data(), second_file->data_size());
+  ASSERT_FALSE(source.AppendAtTime(base::TimeDelta::FromSeconds(kAppendTimeSec),
+                                   second_file->data(),
+                                   second_file->data_size()));
 
   source.EndOfStream();
 

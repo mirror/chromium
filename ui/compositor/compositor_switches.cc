@@ -45,8 +45,10 @@ bool IsUIZeroCopyEnabled() {
 }
 
 bool IsPixelCanvasRecordingEnabled() {
-  return base::CommandLine::ForCurrentProcess()->HasSwitch(
-      switches::kEnablePixelCanvasRecording);
+  static const bool is_pixel_canvas_recording_enabled =
+      base::CommandLine::ForCurrentProcess()->HasSwitch(
+          switches::kEnablePixelCanvasRecording);
+  return is_pixel_canvas_recording_enabled;
 }
 
 }  // namespace ui

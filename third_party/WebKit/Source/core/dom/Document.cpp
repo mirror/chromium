@@ -276,15 +276,21 @@ using namespace HTMLNames;
 
 class DocumentOutliveTimeReporter : public BlinkGCObserver {
  public:
-  explicit DocumentOutliveTimeReporter(Document* document)
-      : BlinkGCObserver(ThreadState::Current()), document_(document) {}
+  DocumentOutliveTimeReporter()
+      : BlinkGCObserver(ThreadState::Current()),
+        gc_age_when_document_detached_(ThreadState::Current()->GcAge()) {}
 
   ~DocumentOutliveTimeReporter() override {
     // As not all documents are destroyed before the process dies, this might
     // miss some long-lived documents or leaked documents.
+    // TODO(hajimehoshi): There are some cases that a document can live after
+    // shutting down because the document can still be reffed (e.g. a document
+    // opened via window.open can be reffed by the opener even after shutting
+    // down). Detect those cases and record them independently.
     UMA_HISTOGRAM_EXACT_LINEAR(
         "Document.OutliveTimeAfterShutdown.DestroyedBeforeProcessDies",
-        GetOutliveTimeCount() + 1, 101);
+        ThreadState::Current()->GcAge() - gc_age_when_document_detached_ + 1,
+        101);
   }
 
   void OnCompleteSweepDone() override {
@@ -294,40 +300,26 @@ class DocumentOutliveTimeReporter : public BlinkGCObserver {
       kGCCountMax,
     };
 
-    // There are some cases that a document can live after shutting down because
-    // the document can still be referenced (e.g. a document opened via
-    // window.open can be referenced by the opener even after shutting down). To
-    // avoid such cases as much as possible, outlive time count is started after
-    // all DomWrapper of the document have disappeared.
-    if (!gc_age_when_document_detached_) {
-      if (document_->domWindow() &&
-          DOMWrapperWorld::HasWrapperInAnyWorldInMainThread(
-              document_->domWindow())) {
-        return;
+    int diff = ThreadState::Current()->GcAge() - gc_age_when_document_detached_;
+    if (diff == 5 || diff == 10) {
+      GCCount count = kGCCount5;
+      switch (diff) {
+        case 5:
+          count = kGCCount5;
+          break;
+        case 10:
+          count = kGCCount10;
+          break;
+        default:
+          NOTREACHED();
+          break;
       }
-      gc_age_when_document_detached_ = ThreadState::Current()->GcAge();
-    }
-
-    int outlive_time_count = GetOutliveTimeCount();
-    if (outlive_time_count == 5 || outlive_time_count == 10) {
-      const char* kUMAString = "Document.OutliveTimeAfterShutdown.GCCount";
-      if (outlive_time_count == 5)
-        UMA_HISTOGRAM_ENUMERATION(kUMAString, kGCCount5, kGCCountMax);
-      else if (outlive_time_count == 10)
-        UMA_HISTOGRAM_ENUMERATION(kUMAString, kGCCount10, kGCCountMax);
-      else
-        NOTREACHED();
+      UMA_HISTOGRAM_ENUMERATION("Document.OutliveTimeAfterShutdown.GCCount",
+                                count, kGCCountMax);
     }
   }
 
  private:
-  int GetOutliveTimeCount() const {
-    if (!gc_age_when_document_detached_)
-      return 0;
-    return ThreadState::Current()->GcAge() - gc_age_when_document_detached_;
-  }
-
-  WeakPersistent<Document> document_;
   int gc_age_when_document_detached_ = 0;
 };
 
@@ -1436,7 +1428,7 @@ void Document::SetReadyState(DocumentReadyState ready_state) {
   DispatchEvent(Event::Create(EventTypeNames::readystatechange));
 }
 
-bool Document::IsLoadCompleted() const {
+bool Document::IsLoadCompleted() {
   return ready_state_ == kComplete;
 }
 
@@ -1995,7 +1987,6 @@ void Document::PropagateStyleToViewport(StyleRecalcChange change) {
   }
 
   ScrollSnapType snap_type = overflow_style->GetScrollSnapType();
-  ScrollBehavior scroll_behavior = document_element_style->GetScrollBehavior();
 
   RefPtr<ComputedStyle> viewport_style;
   if (change == kForce || !GetLayoutViewItem().Style()) {
@@ -2013,8 +2004,7 @@ void Document::PropagateStyleToViewport(StyleRecalcChange change) {
         old_style.OverflowY() == overflow_y &&
         old_style.HasNormalColumnGap() == column_gap_normal &&
         old_style.ColumnGap() == column_gap &&
-        old_style.GetScrollSnapType() == snap_type &&
-        old_style.GetScrollBehavior() == scroll_behavior) {
+        old_style.GetScrollSnapType() == snap_type) {
       return;
     }
     viewport_style = ComputedStyle::Clone(old_style);
@@ -2032,7 +2022,6 @@ void Document::PropagateStyleToViewport(StyleRecalcChange change) {
   else
     viewport_style->SetColumnGap(column_gap);
   viewport_style->SetScrollSnapType(snap_type);
-  viewport_style->SetScrollBehavior(scroll_behavior);
   GetLayoutViewItem().SetStyle(viewport_style);
   SetupFontBuilder(*viewport_style);
 }
@@ -2740,7 +2729,7 @@ void Document::Shutdown() {
   frame_ = nullptr;
 
   document_outlive_time_reporter_ =
-      WTF::WrapUnique(new DocumentOutliveTimeReporter(this));
+      WTF::WrapUnique(new DocumentOutliveTimeReporter());
 }
 
 void Document::RemoveAllEventListeners() {
@@ -2926,14 +2915,12 @@ void Document::CancelParsing() {
   SuppressLoadEvent();
 }
 
-DocumentParser* Document::OpenForNavigation(
-    ParserSynchronizationPolicy parser_sync_policy,
-    const AtomicString& mime_type,
-    const AtomicString& encoding) {
-  DocumentParser* parser = ImplicitOpen(parser_sync_policy);
-  if (parser->NeedsDecoder())
-    parser->SetDecoder(BuildTextResourceDecoderFor(this, mime_type, encoding));
-  return parser;
+void Document::OpenForNavigation(ParserSynchronizationPolicy parser_sync_policy,
+                                 const AtomicString& mime_type,
+                                 const AtomicString& encoding) {
+  ImplicitOpen(parser_sync_policy);
+  if (parser_->NeedsDecoder())
+    parser_->SetDecoder(BuildTextResourceDecoderFor(this, mime_type, encoding));
 }
 
 DocumentParser* Document::ImplicitOpen(
@@ -6256,13 +6243,9 @@ void Document::RemoveFromTopLayer(Element* element) {
 }
 
 HTMLDialogElement* Document::ActiveModalDialog() const {
-  for (auto it = top_layer_elements_.rbegin(); it != top_layer_elements_.rend();
-       ++it) {
-    if (isHTMLDialogElement(*it))
-      return toHTMLDialogElement((*it).Get());
-  }
-
-  return nullptr;
+  if (top_layer_elements_.IsEmpty())
+    return 0;
+  return toHTMLDialogElement(top_layer_elements_.back().Get());
 }
 
 void Document::exitPointerLock() {
@@ -6466,7 +6449,7 @@ Node* EventTargetNodeForDocument(Document* doc) {
 
 void Document::AdjustFloatQuadsForScrollAndAbsoluteZoom(
     Vector<FloatQuad>& quads,
-    const LayoutObject& layout_object) const {
+    LayoutObject& layout_object) {
   if (!View())
     return;
 
@@ -6480,7 +6463,7 @@ void Document::AdjustFloatQuadsForScrollAndAbsoluteZoom(
 
 void Document::AdjustFloatRectForScrollAndAbsoluteZoom(
     FloatRect& rect,
-    const LayoutObject& layout_object) const {
+    LayoutObject& layout_object) {
   if (!View())
     return;
 

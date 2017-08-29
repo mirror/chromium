@@ -16,7 +16,6 @@
 #import "chrome/browser/ui/cocoa/browser_window_cocoa.h"
 #import "chrome/browser/ui/cocoa/extensions/extension_view_mac.h"
 #import "chrome/browser/ui/cocoa/info_bubble_window.h"
-#import "chrome/browser/ui/cocoa/l10n_util.h"
 #include "chrome/common/url_constants.h"
 #include "components/web_modal/web_contents_modal_dialog_manager.h"
 #include "content/public/browser/browser_context.h"
@@ -351,11 +350,7 @@ class ExtensionPopupNotificationBridge :
                                   info_bubble::kBubbleArrowWidth / 2.0,
                               info_bubble::kBubbleArrowHeight / 2.0);
   offsets = [extensionView_ convertSize:offsets toView:nil];
-  if (cocoa_l10n_util::ShouldDoExperimentalRTLLayout()) {
-    windowOrigin.x -= offsets.width;
-  } else {
-    windowOrigin.x -= NSWidth(frame) - offsets.width;
-  }
+  windowOrigin.x -= NSWidth(frame) - offsets.width;
   windowOrigin.y -= NSHeight(frame) - offsets.height;
   frame.origin = windowOrigin;
 

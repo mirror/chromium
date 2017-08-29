@@ -50,8 +50,7 @@ GL_INIT_EXPORT bool InitializeGLOneOffImplementation(
     GLImplementation impl,
     bool fallback_to_software_gl,
     bool gpu_service_logging,
-    bool disable_gl_drawing,
-    bool init_extensions);
+    bool disable_gl_drawing);
 
 // Clears GL bindings and resets GL implementation.
 GL_INIT_EXPORT void ShutdownGL();

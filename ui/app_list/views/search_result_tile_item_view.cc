@@ -24,9 +24,7 @@ namespace {
 
 constexpr int kSearchTileWidth = 80;
 constexpr int kSearchTileTopPadding = 4;
-constexpr int kSearchTitleSpacing = 5;
-constexpr int kSearchPriceSize = 37;
-constexpr int kSearchRatingSize = 26;
+constexpr int kSearchTitleSpacing = 6;
 constexpr int kSearchRatingStarSize = 12;
 constexpr int kSearchRatingStarHorizontalSpacing = 1;
 constexpr int kSearchRatingStarVerticalSpacing = 2;
@@ -64,7 +62,7 @@ SearchResultTileItemView::SearchResultTileItemView(
     rating_ = new views::Label;
     rating_->SetEnabledColor(kSearchAppRatingColor);
     rating_->SetFontList(base_font);
-    rating_->SetHorizontalAlignment(gfx::ALIGN_RIGHT);
+    rating_->SetHorizontalAlignment(gfx::ALIGN_LEFT);
     rating_->SetVisible(false);
     AddChildView(rating_);
 
@@ -79,7 +77,7 @@ SearchResultTileItemView::SearchResultTileItemView(
     price_ = new views::Label;
     price_->SetEnabledColor(kSearchAppPriceColor);
     price_->SetFontList(base_font);
-    price_->SetHorizontalAlignment(gfx::ALIGN_LEFT);
+    price_->SetHorizontalAlignment(gfx::ALIGN_RIGHT);
     price_->SetVisible(false);
     AddChildView(price_);
   }
@@ -139,11 +137,6 @@ void SearchResultTileItemView::SetSearchResult(SearchResult* item) {
       title()->SetFontList(base_font.DeriveWithSizeDelta(1));
       title()->SetEnabledColor(kSearchTitleColor);
     }
-
-    title()->SetMaxLines(2);
-    title()->SetMultiLine(item_->display_type() == SearchResult::DISPLAY_TILE &&
-                          item_->result_type() ==
-                              SearchResult::RESULT_INSTALLED_APP);
   }
 
   // Only refresh the icon if it's different from the old one. This prevents
@@ -312,24 +305,23 @@ void SearchResultTileItemView::Layout() {
       gfx::Rect rating_rect(rect);
       rating_rect.Inset(0, title()->GetPreferredSize().height(), 0, 0);
       rating_rect.set_size(rating_->GetPreferredSize());
-      rating_rect.set_width(kSearchRatingSize);
       rating_->SetBoundsRect(rating_rect);
     }
 
     if (rating_star_) {
       gfx::Rect rating_star_rect(rect);
-      rating_star_rect.Inset(
-          kSearchRatingSize + kSearchRatingStarHorizontalSpacing,
-          title()->GetPreferredSize().height() +
-              kSearchRatingStarVerticalSpacing,
-          0, 0);
+      rating_star_rect.Inset(rating_->GetPreferredSize().width() +
+                                 kSearchRatingStarHorizontalSpacing,
+                             title()->GetPreferredSize().height() +
+                                 kSearchRatingStarVerticalSpacing,
+                             0, 0);
       rating_star_rect.set_size(rating_star_->GetPreferredSize());
       rating_star_->SetBoundsRect(rating_star_rect);
     }
 
     if (price_) {
       gfx::Rect price_rect(rect);
-      price_rect.Inset(rect.width() - kSearchPriceSize,
+      price_rect.Inset(rect.width() - price_->GetPreferredSize().width(),
                        title()->GetPreferredSize().height(), 0, 0);
       price_rect.set_size(price_->GetPreferredSize());
       price_->SetBoundsRect(price_rect);

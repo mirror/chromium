@@ -414,8 +414,9 @@ class MergeToAugmented : public MergeToEffective {
         new base::DictionaryValue);
 
     if (values.active_setting) {
-      augmented_value->SetKey(::onc::kAugmentationActiveSetting,
-                              values.active_setting->Clone());
+      augmented_value->SetWithoutPathExpansion(
+          ::onc::kAugmentationActiveSetting,
+          base::MakeUnique<base::Value>(*values.active_setting));
     }
 
     if (!which_effective.empty()) {
@@ -429,21 +430,25 @@ class MergeToAugmented : public MergeToEffective {
     bool is_credential = onc::FieldIsCredential(*signature_, key);
     if (!is_credential) {
       if (values.user_policy) {
-        augmented_value->SetKey(::onc::kAugmentationUserPolicy,
-                                values.user_policy->Clone());
+        augmented_value->SetWithoutPathExpansion(
+            ::onc::kAugmentationUserPolicy,
+            base::MakeUnique<base::Value>(*values.user_policy));
       }
       if (values.device_policy) {
-        augmented_value->SetKey(::onc::kAugmentationDevicePolicy,
-                                values.device_policy->Clone());
+        augmented_value->SetWithoutPathExpansion(
+            ::onc::kAugmentationDevicePolicy,
+            base::MakeUnique<base::Value>(*values.device_policy));
       }
     }
     if (values.user_setting) {
-      augmented_value->SetKey(::onc::kAugmentationUserSetting,
-                              values.user_setting->Clone());
+      augmented_value->SetWithoutPathExpansion(
+          ::onc::kAugmentationUserSetting,
+          base::MakeUnique<base::Value>(*values.user_setting));
     }
     if (values.shared_setting) {
-      augmented_value->SetKey(::onc::kAugmentationSharedSetting,
-                              values.shared_setting->Clone());
+      augmented_value->SetWithoutPathExpansion(
+          ::onc::kAugmentationSharedSetting,
+          base::MakeUnique<base::Value>(*values.shared_setting));
     }
     if (HasUserPolicy() && values.user_editable) {
       augmented_value->SetKey(::onc::kAugmentationUserEditable,

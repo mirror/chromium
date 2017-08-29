@@ -92,7 +92,7 @@ void PaintedScrollbarLayerImpl::AppendQuads(
   gfx::PointF uv_top_left(0.f, 0.f);
   gfx::PointF uv_bottom_right(1.f, 1.f);
 
-  viz::SharedQuadState* shared_quad_state =
+  SharedQuadState* shared_quad_state =
       render_pass->CreateAndAppendSharedQuadState();
   PopulateScaledSharedQuadState(shared_quad_state, internal_contents_scale_,
                                 internal_contents_scale_);
@@ -115,16 +115,16 @@ void PaintedScrollbarLayerImpl::AppendQuads(
       layer_tree_impl()->ResourceIdForUIResource(track_ui_resource_id_);
 
   if (thumb_resource_id && !visible_thumb_quad_rect.IsEmpty()) {
-    bool needs_blending = true;
+    gfx::Rect opaque_rect;
     const float opacity[] = {thumb_opacity_, thumb_opacity_, thumb_opacity_,
                              thumb_opacity_};
     TextureDrawQuad* quad =
         render_pass->CreateAndAppendDrawQuad<TextureDrawQuad>();
-    quad->SetNew(shared_quad_state, scaled_thumb_quad_rect,
-                 scaled_visible_thumb_quad_rect, needs_blending,
-                 thumb_resource_id, premultipled_alpha, uv_top_left,
-                 uv_bottom_right, SK_ColorTRANSPARENT, opacity, flipped,
-                 nearest_neighbor, false);
+    quad->SetNew(shared_quad_state, scaled_thumb_quad_rect, opaque_rect,
+                 scaled_visible_thumb_quad_rect, thumb_resource_id,
+                 premultipled_alpha, uv_top_left, uv_bottom_right,
+                 SK_ColorTRANSPARENT, opacity, flipped, nearest_neighbor,
+                 false);
     ValidateQuadResources(quad);
   }
 
@@ -136,15 +136,16 @@ void PaintedScrollbarLayerImpl::AppendQuads(
   gfx::Rect scaled_visible_track_quad_rect = gfx::ScaleToEnclosingRect(
       visible_track_quad_rect, internal_contents_scale_);
   if (track_resource_id && !visible_track_quad_rect.IsEmpty()) {
-    bool needs_blending = !contents_opaque();
+    gfx::Rect opaque_rect(contents_opaque() ? scaled_track_quad_rect
+                                            : gfx::Rect());
     const float opacity[] = {1.0f, 1.0f, 1.0f, 1.0f};
     TextureDrawQuad* quad =
         render_pass->CreateAndAppendDrawQuad<TextureDrawQuad>();
-    quad->SetNew(shared_quad_state, scaled_track_quad_rect,
-                 scaled_visible_track_quad_rect, needs_blending,
-                 track_resource_id, premultipled_alpha, uv_top_left,
-                 uv_bottom_right, SK_ColorTRANSPARENT, opacity, flipped,
-                 nearest_neighbor, false);
+    quad->SetNew(shared_quad_state, scaled_track_quad_rect, opaque_rect,
+                 scaled_visible_track_quad_rect, track_resource_id,
+                 premultipled_alpha, uv_top_left, uv_bottom_right,
+                 SK_ColorTRANSPARENT, opacity, flipped, nearest_neighbor,
+                 false);
     ValidateQuadResources(quad);
   }
 }

@@ -393,6 +393,10 @@ void ParamTraits<cc::RenderPass>::Write(base::Pickle* m, const param_type& p) {
     DCHECK(quad->rect.Contains(quad->visible_rect))
         << quad->material << " rect: " << quad->rect.ToString()
         << " visible_rect: " << quad->visible_rect.ToString();
+    DCHECK(quad->opaque_rect.IsEmpty() ||
+           quad->rect.Contains(quad->opaque_rect))
+        << quad->material << " rect: " << quad->rect.ToString()
+        << " opaque_rect: " << quad->opaque_rect.ToString();
 
     switch (quad->material) {
       case cc::DrawQuad::DEBUG_BORDER:
@@ -456,7 +460,7 @@ static size_t ReserveSizeForRenderPassWrite(const cc::RenderPass& p) {
 
   // Shared quad state is only written when a quad contains a shared quad state
   // that has not been written.
-  to_reserve += p.shared_quad_state_list.size() * sizeof(viz::SharedQuadState);
+  to_reserve += p.shared_quad_state_list.size() * sizeof(cc::SharedQuadState);
 
   // The largest quad type, verified by a unit test.
   to_reserve += p.quad_list.size() * cc::LargestDrawQuadSize();
@@ -562,6 +566,13 @@ bool ParamTraits<cc::RenderPass>::Read(const base::Pickle* m,
                  << " visible_rect: " << draw_quad->visible_rect.ToString();
       return false;
     }
+    if (!draw_quad->opaque_rect.IsEmpty() &&
+        !draw_quad->rect.Contains(draw_quad->opaque_rect)) {
+      LOG(ERROR) << "Quad with invalid opaque rect " << draw_quad->material
+                 << " rect: " << draw_quad->rect.ToString()
+                 << " opaque_rect: " << draw_quad->opaque_rect.ToString();
+      return false;
+    }
 
     bool has_new_shared_quad_state;
     if (!ReadParam(m, iter, &has_new_shared_quad_state))
@@ -569,7 +580,7 @@ bool ParamTraits<cc::RenderPass>::Read(const base::Pickle* m,
 
     // If the quad has a new shared quad state, read it in.
     if (has_new_shared_quad_state) {
-      viz::SharedQuadState* state = p->CreateAndAppendSharedQuadState();
+      cc::SharedQuadState* state = p->CreateAndAppendSharedQuadState();
       if (!ReadParam(m, iter, state))
         return false;
     }

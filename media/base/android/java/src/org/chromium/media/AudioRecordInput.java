@@ -29,13 +29,13 @@ class AudioRecordInput {
     // We are unable to obtain a precise measurement of the hardware delay on
     // Android. This is a conservative lower-bound based on measurments. It
     // could surely be tightened with further testing.
-    // TODO(dalecurtis): This should use AudioRecord.getTimestamp() in API 24+.
     private static final int HARDWARE_DELAY_MS = 100;
 
     private final long mNativeAudioRecordInputStream;
     private final int mSampleRate;
     private final int mChannels;
     private final int mBitsPerSample;
+    private final int mHardwareDelayBytes;
     private final boolean mUsePlatformAEC;
     private ByteBuffer mBuffer;
     private AudioRecord mAudioRecord;
@@ -62,7 +62,8 @@ class AudioRecordInput {
             while (mKeepAlive) {
                 int bytesRead = mAudioRecord.read(mBuffer, mBuffer.capacity());
                 if (bytesRead > 0) {
-                    nativeOnData(mNativeAudioRecordInputStream, bytesRead, HARDWARE_DELAY_MS);
+                    nativeOnData(mNativeAudioRecordInputStream, bytesRead,
+                                 mHardwareDelayBytes);
                 } else {
                     Log.e(TAG, "read failed: %d", bytesRead);
                     if (bytesRead == AudioRecord.ERROR_INVALID_OPERATION) {
@@ -106,6 +107,7 @@ class AudioRecordInput {
         mSampleRate = sampleRate;
         mChannels = channels;
         mBitsPerSample = bitsPerSample;
+        mHardwareDelayBytes = HARDWARE_DELAY_MS * sampleRate / 1000 * bitsPerSample / 8;
         mUsePlatformAEC = usePlatformAEC;
 
         // We use a direct buffer so that the native class can have access to
@@ -241,6 +243,6 @@ class AudioRecordInput {
 
     private native void nativeCacheDirectBufferAddress(long nativeAudioRecordInputStream,
                                                        ByteBuffer buffer);
-    private native void nativeOnData(
-            long nativeAudioRecordInputStream, int size, int hardwareDelayMs);
+    private native void nativeOnData(long nativeAudioRecordInputStream, int size,
+                                     int hardwareDelayBytes);
 }

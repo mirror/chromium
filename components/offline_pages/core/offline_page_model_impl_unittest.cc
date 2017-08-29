@@ -335,10 +335,8 @@ OfflinePageModelImplTest::BuildStore() {
 
 std::unique_ptr<OfflinePageModelImpl> OfflinePageModelImplTest::BuildModel(
     std::unique_ptr<OfflinePageMetadataStore> store) {
-  std::unique_ptr<ArchiveManager> archive_manager(new ArchiveManager(
-      temp_dir_.GetPath(), base::ThreadTaskRunnerHandle::Get()));
   return std::unique_ptr<OfflinePageModelImpl>(
-      new OfflinePageModelImpl(std::move(store), std::move(archive_manager),
+      new OfflinePageModelImpl(std::move(store), temp_dir_.GetPath(),
                                base::ThreadTaskRunnerHandle::Get()));
 }
 

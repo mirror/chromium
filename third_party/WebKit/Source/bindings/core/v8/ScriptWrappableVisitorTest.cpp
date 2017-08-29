@@ -41,7 +41,7 @@ TEST(ScriptWrappableVisitorTest, ScriptWrappableVisitorTracesWrappers) {
       V8PerIsolateData::From(scope.GetIsolate())->GetScriptWrappableVisitor();
   DeathAwareScriptWrappable* target = DeathAwareScriptWrappable::Create();
   DeathAwareScriptWrappable* dependency = DeathAwareScriptWrappable::Create();
-  target->SetWrappedDependency(dependency);
+  target->SetRawDependency(dependency);
 
   // The graph needs to be set up before starting tracing as otherwise the
   // conservative write barrier would trigger.
@@ -192,18 +192,20 @@ TEST(ScriptWrappableVisitorTest,
   DeathAwareScriptWrappable* target = DeathAwareScriptWrappable::Create();
   DeathAwareScriptWrappable* dependencies[] = {
       DeathAwareScriptWrappable::Create(), DeathAwareScriptWrappable::Create(),
-      DeathAwareScriptWrappable::Create(), DeathAwareScriptWrappable::Create()};
+      DeathAwareScriptWrappable::Create(), DeathAwareScriptWrappable::Create(),
+      DeathAwareScriptWrappable::Create()};
 
   HeapObjectHeader::FromPayload(target)->MarkWrapperHeader();
-  for (int i = 0; i < 4; i++) {
+  for (int i = 0; i < 5; i++) {
     HeapObjectHeader::FromPayload(dependencies[i])->MarkWrapperHeader();
   }
 
   EXPECT_TRUE(visitor->MarkingDeque()->IsEmpty());
 
-  target->SetWrappedDependency(dependencies[0]);
-  target->AddWrappedVectorDependency(dependencies[1]);
-  target->AddWrappedHashMapDependency(dependencies[2], dependencies[3]);
+  target->SetRawDependency(dependencies[0]);
+  target->SetWrappedDependency(dependencies[1]);
+  target->AddWrappedVectorDependency(dependencies[2]);
+  target->AddWrappedHashMapDependency(dependencies[3], dependencies[4]);
 
   EXPECT_TRUE(visitor->MarkingDeque()->IsEmpty());
   visitor->AbortTracing();
@@ -220,17 +222,19 @@ TEST(ScriptWrappableVisitorTest,
   DeathAwareScriptWrappable* target = DeathAwareScriptWrappable::Create();
   DeathAwareScriptWrappable* dependencies[] = {
       DeathAwareScriptWrappable::Create(), DeathAwareScriptWrappable::Create(),
-      DeathAwareScriptWrappable::Create(), DeathAwareScriptWrappable::Create()};
+      DeathAwareScriptWrappable::Create(), DeathAwareScriptWrappable::Create(),
+      DeathAwareScriptWrappable::Create()};
 
   HeapObjectHeader::FromPayload(target)->MarkWrapperHeader();
 
   EXPECT_TRUE(visitor->MarkingDeque()->IsEmpty());
 
-  target->SetWrappedDependency(dependencies[0]);
-  target->AddWrappedVectorDependency(dependencies[1]);
-  target->AddWrappedHashMapDependency(dependencies[2], dependencies[3]);
+  target->SetRawDependency(dependencies[0]);
+  target->SetWrappedDependency(dependencies[1]);
+  target->AddWrappedVectorDependency(dependencies[2]);
+  target->AddWrappedHashMapDependency(dependencies[3], dependencies[4]);
 
-  for (int i = 0; i < 4; i++) {
+  for (int i = 0; i < 5; i++) {
     EXPECT_TRUE(DequeContains(*visitor->MarkingDeque(), dependencies[i]));
   }
 

@@ -1,12 +1,6 @@
 # These tests currently fail when they run with --site-per-process.
 # See https://crbug.com/477150.
 
-# https://crbug.com/758075: Uninvestigated timeout.
-# (apparently https://crbug.com/599670 doesn't affect the Site Isolation bot,
-# so there is no need to carry-over the [ Failure ] expectation from baseline
-# expectations in LayoutTests/TestExpectations).
-crbug.com/758075 http/tests/inspector/resource-parameters-ipv6.html [ Timeout ]
-
 # https://crbug.com/393285: Text-autosizing doesn't support OOPIFs.
 # https://crbug.com/667551: Pixel dumps don't support OOPIFs.
 # Both of the bugs above need to be fixed, before enabling the tests below.
@@ -212,8 +206,7 @@ Bug(none) external/wpt/html/syntax/parsing/html5lib_tests9.html [ Failure ]
 Bug(none) external/wpt/html/syntax/parsing/html5lib_tricky01.html [ Failure ]
 Bug(none) external/wpt/html/syntax/parsing/html5lib_webkit01.html [ Failure ]
 Bug(none) external/wpt/html/syntax/parsing/html5lib_webkit02.html [ Failure ]
-Bug(none) http/tests/devtools/sources/debugger-frameworks/frameworks-dom-xhr-event-breakpoints.html [ Timeout ]
-Bug(none) virtual/mojo-loading/http/tests/devtools/sources/debugger-frameworks/frameworks-dom-xhr-event-breakpoints.html [ Timeout ]
+Bug(none) inspector/sources/debugger-frameworks/frameworks-dom-xhr-event-breakpoints.html [ Timeout ]
 Bug(none) jquery/manipulation.html [ Timeout ]
 Bug(none) storage/indexeddb/blob-valid-after-deletion.html [ Failure ]
 Bug(none) storage/indexeddb/blob-valid-before-commit.html [ Failure ]

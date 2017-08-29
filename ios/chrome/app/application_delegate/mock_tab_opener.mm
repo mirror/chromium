@@ -23,10 +23,10 @@
 - (void)dismissModalsAndOpenSelectedTabInMode:(ApplicationMode)targetMode
                                       withURL:(const GURL&)url
                                    transition:(ui::PageTransition)transition
-                                   completion:(ProceduralBlock)completion {
+                                   completion:(ProceduralBlock)handler {
   _url = url;
   _applicationMode = targetMode;
-  _completionBlock = [completion copy];
+  _completionBlock = [handler copy];
 }
 
 - (void)resetURL {

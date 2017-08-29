@@ -29,12 +29,14 @@
 
 namespace blink {
 
-struct AttributeTriggers;
 class DocumentFragment;
 class ExceptionState;
 class FormAssociated;
 class HTMLFormElement;
 class KeyboardEvent;
+namespace mojom {
+enum class WebFeature : int32_t;
+}  // namespace mojom
 
 enum TranslateAttributeMode {
   kTranslateAttributeYes,
@@ -103,6 +105,8 @@ class CORE_EXPORT HTMLElement : public Element {
   static const AtomicString& EventNameForAttributeName(
       const QualifiedName& attr_name);
 
+  mojom::WebFeature WebFeatureForAttributeName(const QualifiedName& attr_name);
+
   bool MatchesReadOnlyPseudoClass() const override;
   bool MatchesReadWritePseudoClass() const override;
 
@@ -166,6 +170,7 @@ class CORE_EXPORT HTMLElement : public Element {
   DocumentFragment* TextToFragment(const String&, ExceptionState&);
 
   bool SelfOrAncestorHasDirAutoAttribute() const;
+  void DirAttributeChanged(const AtomicString&);
   void AdjustDirectionalityIfNeededAfterChildAttributeChanged(Element* child);
   void AdjustDirectionalityIfNeededAfterChildrenChanged(const ChildrenChange&);
   TextDirection Directionality(
@@ -174,16 +179,6 @@ class CORE_EXPORT HTMLElement : public Element {
   TranslateAttributeMode GetTranslateAttributeMode() const;
 
   void HandleKeypressEvent(KeyboardEvent*);
-
-  static AttributeTriggers* TriggersForAttributeName(
-      const QualifiedName& attr_name);
-
-  void OnDirAttrChanged(const AttributeModificationParams&);
-  void OnInertAttrChanged(const AttributeModificationParams&);
-  void OnLangAttrChanged(const AttributeModificationParams&);
-  void OnNonceAttrChanged(const AttributeModificationParams&);
-  void OnTabIndexAttrChanged(const AttributeModificationParams&);
-  void OnXMLLangAttrChanged(const AttributeModificationParams&);
 };
 
 DEFINE_ELEMENT_TYPE_CASTS(HTMLElement, IsHTMLElement());

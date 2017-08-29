@@ -110,14 +110,13 @@ void DisplayConfigurationController::SetMirrorMode(bool mirror) {
 void DisplayConfigurationController::SetDisplayRotation(
     int64_t display_id,
     display::Display::Rotation rotation,
-    display::Display::RotationSource source,
-    DisplayConfigurationController::RotationAnimation mode) {
+    display::Display::RotationSource source) {
   if (display_manager_->IsDisplayIdValid(display_id)) {
     if (GetTargetRotation(display_id) == rotation)
       return;
     ScreenRotationAnimator* screen_rotation_animator =
         GetScreenRotationAnimatorForDisplay(display_id);
-    screen_rotation_animator->Rotate(rotation, source, mode);
+    screen_rotation_animator->Rotate(rotation, source);
   } else {
     display_manager_->SetDisplayRotation(display_id, rotation, source);
   }

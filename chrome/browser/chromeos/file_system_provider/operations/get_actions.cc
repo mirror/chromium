@@ -37,13 +37,14 @@ Actions ConvertRequestValueToActions(std::unique_ptr<RequestValue> value) {
 
 }  // namespace
 
-GetActions::GetActions(extensions::EventRouter* event_router,
-                       const ProvidedFileSystemInfo& file_system_info,
-                       const std::vector<base::FilePath>& entry_paths,
-                       ProvidedFileSystemInterface::GetActionsCallback callback)
+GetActions::GetActions(
+    extensions::EventRouter* event_router,
+    const ProvidedFileSystemInfo& file_system_info,
+    const std::vector<base::FilePath>& entry_paths,
+    const ProvidedFileSystemInterface::GetActionsCallback& callback)
     : Operation(event_router, file_system_info),
       entry_paths_(entry_paths),
-      callback_(std::move(callback)) {}
+      callback_(callback) {}
 
 GetActions::~GetActions() {
 }
@@ -68,16 +69,14 @@ bool GetActions::Execute(int request_id) {
 void GetActions::OnSuccess(int /* request_id */,
                            std::unique_ptr<RequestValue> result,
                            bool has_more) {
-  DCHECK(callback_);
-  std::move(callback_).Run(ConvertRequestValueToActions(std::move(result)),
-                           base::File::FILE_OK);
+  callback_.Run(ConvertRequestValueToActions(std::move(result)),
+                base::File::FILE_OK);
 }
 
 void GetActions::OnError(int /* request_id */,
                          std::unique_ptr<RequestValue> /* result */,
                          base::File::Error error) {
-  DCHECK(callback_);
-  std::move(callback_).Run(Actions(), error);
+  callback_.Run(Actions(), error);
 }
 
 }  // namespace operations

@@ -79,7 +79,7 @@ void NotificationPromo::InitFromVariations() {
       json_or_payload.SetString(iter->first, iter->second);
     }
   }
-  json.SetKey("payload", payload.Clone());
+  json.Set("payload", base::MakeUnique<base::Value>(payload));
 
   InitFromJson(json);
 }

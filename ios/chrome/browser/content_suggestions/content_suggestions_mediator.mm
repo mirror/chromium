@@ -112,7 +112,6 @@ const NSInteger kMaxNumMostVisitedTiles = 8;
 @synthesize headerProvider = _headerProvider;
 @synthesize faviconMediator = _faviconMediator;
 @synthesize learnMoreItem = _learnMoreItem;
-@synthesize readingListNeedsReload = _readingListNeedsReload;
 
 #pragma mark - Public
 
@@ -337,15 +336,8 @@ initWithContentService:(ntp_snippets::ContentSuggestionsService*)contentService
   if (!self.sectionInformationByCategory[wrapper]) {
     [self addSectionInformationForCategory:category];
   }
-  BOOL forceReload = NO;
-  if (category.IsKnownCategory(ntp_snippets::KnownCategories::READING_LIST)) {
-    forceReload = self.readingListNeedsReload;
-    self.readingListNeedsReload = NO;
-  }
-
   [self.dataSink
-      dataAvailableForSection:self.sectionInformationByCategory[wrapper]
-                  forceReload:forceReload];
+      dataAvailableForSection:self.sectionInformationByCategory[wrapper]];
 }
 
 - (void)contentSuggestionsService:
@@ -365,14 +357,8 @@ initWithContentService:(ntp_snippets::ContentSuggestionsService*)contentService
     if (!self.sectionInformationByCategory[wrapper]) {
       [self addSectionInformationForCategory:category];
     }
-    ContentSuggestionsSectionInformation* sectionInfo =
-        self.sectionInformationByCategory[wrapper];
-    [self.dataSink dataAvailableForSection:sectionInfo forceReload:NO];
-    if (status == ntp_snippets::CategoryStatus::AVAILABLE_LOADING) {
-      [self.dataSink section:sectionInfo isLoading:YES];
-    } else {
-      [self.dataSink section:sectionInfo isLoading:NO];
-    }
+    [self.dataSink
+        dataAvailableForSection:self.sectionInformationByCategory[wrapper]];
   }
 }
 

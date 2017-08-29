@@ -29,6 +29,7 @@
 #include "content/public/test/test_web_ui.h"
 #include "extensions/browser/extension_registry.h"
 #include "extensions/common/extension_builder.h"
+#include "extensions/common/test_util.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 #if defined(OS_CHROMEOS)
@@ -271,7 +272,7 @@ class SiteSettingsHandlerTest : public testing::Test {
     incognito_profile_ = nullptr;
   }
 
-  // Content setting group name for |CONTENT_SETTINGS_TYPE_NOTIFICATIONS|.
+  // Content setting group name for |CONTENT_SETTING_TYPE_NOTIFICATIONS|.
   const std::string kNotifications;
 
  private:
@@ -483,11 +484,10 @@ TEST_F(SiteSettingsHandlerTest, GetAndSetForInvalidURLs) {
     get_args.Append(std::move(category_list));
   }
   handler()->HandleGetOriginPermissions(&get_args);
-  // Verify that it'll return CONTENT_SETTING_BLOCK as |origin| is not a secure
-  // context, a requirement for notifications. Note that the display string
-  // will be blank since it's an invalid URL.
-  ValidateOrigin(origin, origin, "", CONTENT_SETTING_BLOCK,
-                 site_settings::SiteSettingSource::kInsecureOrigin, 1U);
+  // Verify that it'll just return defaults. Note the display string will be
+  // blank since it's an invalid url.
+  ValidateOrigin(origin, origin, "", CONTENT_SETTING_ASK,
+                 site_settings::SiteSettingSource::kDefault, 1U);
 
   // Make sure setting a permission on an invalid origin doesn't crash.
   base::ListValue set_args;
@@ -498,13 +498,13 @@ TEST_F(SiteSettingsHandlerTest, GetAndSetForInvalidURLs) {
     set_args.Append(std::move(category_list));
   }
   set_args.AppendString(
-      content_settings::ContentSettingToString(CONTENT_SETTING_ALLOW));
+      content_settings::ContentSettingToString(CONTENT_SETTING_BLOCK));
   handler()->HandleSetOriginPermissions(&set_args);
 
   // Also make sure the content setting for |origin| wasn't actually changed.
   handler()->HandleGetOriginPermissions(&get_args);
-  ValidateOrigin(origin, origin, "", CONTENT_SETTING_BLOCK,
-                 site_settings::SiteSettingSource::kInsecureOrigin, 2U);
+  ValidateOrigin(origin, origin, "", CONTENT_SETTING_ASK,
+                 site_settings::SiteSettingSource::kDefault, 2U);
 }
 
 TEST_F(SiteSettingsHandlerTest, ExceptionHelpers) {
@@ -725,7 +725,7 @@ TEST_F(SiteSettingsHandlerInfobarTest, SettingPermissionsTriggersInfobar) {
   // Make sure |extension|'s extension ID exists before navigating to it. This
   // fixes a test timeout that occurs with --enable-browser-side-navigation on.
   ASSERT_TRUE(extensions::ExtensionRegistry::Get(profile())->AddEnabled(
-      extensions::ExtensionBuilder("Test").SetID("fooextension").Build()));
+      extensions::test_util::CreateEmptyExtension("fooextension")));
 
   //               __________  ______________  ___________________  _______
   //   Window 2:  / insecure '/ origin_query \' example_subdomain \' about \

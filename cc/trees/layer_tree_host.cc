@@ -97,7 +97,7 @@ LayerTreeHost::LayerTreeHost(InitParams* params, CompositorMode mode)
     : micro_benchmark_controller_(this),
       image_worker_task_runner_(params->image_worker_task_runner),
       compositor_mode_(mode),
-      ui_resource_manager_(std::make_unique<UIResourceManager>()),
+      ui_resource_manager_(base::MakeUnique<UIResourceManager>()),
       client_(params->client),
       rendering_stats_instrumentation_(RenderingStatsInstrumentation::Create()),
       settings_(*params->settings),
@@ -122,7 +122,7 @@ void LayerTreeHost::InitializeThreaded(
   task_runner_provider_ =
       TaskRunnerProvider::Create(main_task_runner, impl_task_runner);
   std::unique_ptr<ProxyMain> proxy_main =
-      std::make_unique<ProxyMain>(this, task_runner_provider_.get());
+      base::MakeUnique<ProxyMain>(this, task_runner_provider_.get());
   InitializeProxy(std::move(proxy_main));
 }
 
@@ -807,7 +807,13 @@ void LayerTreeHost::RecordWheelAndTouchScrollingCount(ScrollAndScaleSet* info) {
 }
 
 void LayerTreeHost::ApplyScrollAndScale(ScrollAndScaleSet* info) {
+  // TODO(pdr): This is a speculative CHECK to investigate crbug.com/747719 and
+  //            should be removed once that bug is resolved.
+  CHECK(info);
   for (auto& swap_promise : info->swap_promises) {
+    // TODO(pdr): This is a speculative CHECK to investigate crbug.com/747719
+    //            and should be removed once that bug is resolved.
+    CHECK(swap_promise);
     TRACE_EVENT_WITH_FLOW1("input,benchmark", "LatencyInfo.Flow",
                            TRACE_ID_DONT_MANGLE(swap_promise->TraceId()),
                            TRACE_EVENT_FLAG_FLOW_IN | TRACE_EVENT_FLAG_FLOW_OUT,
@@ -820,6 +826,9 @@ void LayerTreeHost::ApplyScrollAndScale(ScrollAndScaleSet* info) {
       Layer* layer = LayerByElementId(info->scrolls[i].element_id);
       if (!layer)
         continue;
+      // TODO(pdr): This is a speculative CHECK to investigate crbug.com/747719
+      //            and should be removed once that bug is resolved.
+      CHECK(info);
       layer->SetScrollOffsetFromImplSide(gfx::ScrollOffsetWithDelta(
           layer->scroll_offset(), info->scrolls[i].scroll_delta));
       SetNeedsUpdateLayers();
@@ -828,6 +837,9 @@ void LayerTreeHost::ApplyScrollAndScale(ScrollAndScaleSet* info) {
       Layer* layer = LayerByElementId(info->scrollbars[i].element_id);
       if (!layer)
         continue;
+      // TODO(pdr): This is a speculative CHECK to investigate crbug.com/747719
+      //            and should be removed once that bug is resolved.
+      CHECK(info);
       layer->SetScrollbarsHiddenFromImplSide(info->scrollbars[i].hidden);
     }
   }
@@ -1089,7 +1101,7 @@ void LayerTreeHost::RegisterLayer(Layer* layer) {
   DCHECK(!LayerById(layer->id()));
   DCHECK(!in_paint_layer_contents_);
   layer_id_map_[layer->id()] = layer;
-  if (!IsUsingLayerLists() && layer->element_id()) {
+  if (!settings_.use_layer_lists && layer->element_id()) {
     mutator_host_->RegisterElement(layer->element_id(),
                                    ElementListType::ACTIVE);
   }
@@ -1098,7 +1110,7 @@ void LayerTreeHost::RegisterLayer(Layer* layer) {
 void LayerTreeHost::UnregisterLayer(Layer* layer) {
   DCHECK(LayerById(layer->id()));
   DCHECK(!in_paint_layer_contents_);
-  if (!IsUsingLayerLists() && layer->element_id()) {
+  if (!settings_.use_layer_lists && layer->element_id()) {
     mutator_host_->UnregisterElement(layer->element_id(),
                                      ElementListType::ACTIVE);
   }

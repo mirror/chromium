@@ -19,6 +19,9 @@
     "target_os=\"ios\"",
     "use_platform_icu_alternatives=true"
   ],
+  "env": {
+    "MAC_TOOLCHAIN_REVISION": "9M202q-1"
+  },
   "configuration": "Debug",
   "sdk": "iphonesimulator11.0",
   "tests": [
@@ -26,7 +29,7 @@
       "app": "cronet_test",
       "device type": "iPhone 5s",
       "os": "9.3",
-      "xcode version": "9.0"
+      "xcode version": "8.0"
     },
     {
       "app": "cronet_test",
@@ -42,7 +45,7 @@
     },
     {
       "app": "cronet_test",
-      "device type": "iPad Air 2",
+      "device type": "iPad Retina",
       "os": "11.0",
       "xcode version": "9.0"
     }

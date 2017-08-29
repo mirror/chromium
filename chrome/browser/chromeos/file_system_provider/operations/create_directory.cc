@@ -18,11 +18,12 @@ CreateDirectory::CreateDirectory(
     const ProvidedFileSystemInfo& file_system_info,
     const base::FilePath& directory_path,
     bool recursive,
-    storage::AsyncFileUtil::StatusCallback callback)
+    const storage::AsyncFileUtil::StatusCallback& callback)
     : Operation(event_router, file_system_info),
       directory_path_(directory_path),
       recursive_(recursive),
-      callback_(std::move(callback)) {}
+      callback_(callback) {
+}
 
 CreateDirectory::~CreateDirectory() {
 }
@@ -51,15 +52,13 @@ bool CreateDirectory::Execute(int request_id) {
 void CreateDirectory::OnSuccess(int /* request_id */,
                                 std::unique_ptr<RequestValue> /* result */,
                                 bool has_more) {
-  DCHECK(callback_);
-  std::move(callback_).Run(base::File::FILE_OK);
+  callback_.Run(base::File::FILE_OK);
 }
 
 void CreateDirectory::OnError(int /* request_id */,
                               std::unique_ptr<RequestValue> /* result */,
                               base::File::Error error) {
-  DCHECK(callback_);
-  std::move(callback_).Run(error);
+  callback_.Run(error);
 }
 
 }  // namespace operations

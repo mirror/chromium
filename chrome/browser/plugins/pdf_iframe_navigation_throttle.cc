@@ -4,21 +4,17 @@
 
 #include "chrome/browser/plugins/pdf_iframe_navigation_throttle.h"
 
+#include "chrome/browser/plugins/chrome_plugin_service_filter.h"
 #include "chrome/common/chrome_content_client.h"
 #include "chrome/common/pdf_uma.h"
 #include "content/public/browser/browser_context.h"
 #include "content/public/browser/navigation_handle.h"
+#include "content/public/browser/plugin_service.h"
 #include "content/public/browser/render_frame_host.h"
 #include "content/public/browser/render_process_host.h"
 #include "content/public/browser/web_contents.h"
 #include "net/base/escape.h"
 #include "net/http/http_response_headers.h"
-#include "ppapi/features/features.h"
-
-#if BUILDFLAG(ENABLE_PLUGINS)
-#include "chrome/browser/plugins/chrome_plugin_service_filter.h"
-#include "content/public/browser/plugin_service.h"
-#endif
 
 PDFIFrameNavigationThrottle::PDFIFrameNavigationThrottle(
     content::NavigationHandle* navigation_handle)
@@ -37,7 +33,6 @@ PDFIFrameNavigationThrottle::MaybeCreateThrottleFor(
   if (handle->IsInMainFrame())
     return nullptr;
 
-#if BUILDFLAG(ENABLE_PLUGINS)
   content::WebPluginInfo pdf_plugin_info;
   base::FilePath pdf_plugin_path =
       base::FilePath::FromUTF8Unsafe(ChromeContentClient::kPDFPluginPath);
@@ -46,7 +41,10 @@ PDFIFrameNavigationThrottle::MaybeCreateThrottleFor(
 
   ChromePluginServiceFilter* filter = ChromePluginServiceFilter::GetInstance();
   int process_id = handle->GetWebContents()->GetRenderProcessHost()->GetID();
-  int routing_id = handle->GetWebContents()->GetMainFrame()->GetRoutingID();
+  int routing_id =
+      handle->GetWebContents()
+          ->FindFrameByFrameTreeNodeId(handle->GetFrameTreeNodeId(), process_id)
+          ->GetRoutingID();
   content::ResourceContext* resource_context =
       handle->GetWebContents()->GetBrowserContext()->GetResourceContext();
   if (filter->IsPluginAvailable(process_id, routing_id, resource_context,
@@ -54,10 +52,7 @@ PDFIFrameNavigationThrottle::MaybeCreateThrottleFor(
                                 &pdf_plugin_info)) {
     return nullptr;
   }
-#endif
 
-  // If ENABLE_PLUGINS is false, the PDF plugin is not available, so we should
-  // always intercept PDF iframe navigations.
   return base::MakeUnique<PDFIFrameNavigationThrottle>(handle);
 }
 

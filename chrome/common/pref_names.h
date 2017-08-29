@@ -30,7 +30,6 @@ extern const char kArcPolicyComplianceReported[];
 extern const char kArcTermsAccepted[];
 extern const char kArcLocationServiceEnabled[];
 extern const char kArcPackages[];
-extern const char kArcPaiStarted[];
 extern const char kArcSetNotificationsEnabledDeferred[];
 extern const char kArcSignedIn[];
 extern const char kArcCompatibleFilesystemChosen[];
@@ -206,7 +205,6 @@ extern const char kTapDraggingEnabled[];
 extern const char kEnableTouchpadThreeFingerClick[];
 extern const char kNaturalScroll[];
 extern const char kPrimaryMouseButtonRight[];
-extern const char kMouseReverseScroll[];
 extern const char kMouseSensitivity[];
 extern const char kTouchpadSensitivity[];
 extern const char kUse24HourClock[];
@@ -440,7 +438,6 @@ extern const char kLocalDiscoveryNotificationsEnabled[];
 
 #if defined(OS_ANDROID)
 extern const char kNotificationsVibrateEnabled[];
-extern const char kMigratedToSiteNotificationChannels[];
 #endif
 
 extern const char kPushMessagingAppIdentifierMap[];

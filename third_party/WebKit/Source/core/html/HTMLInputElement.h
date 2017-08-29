@@ -28,8 +28,8 @@
 #include "base/gtest_prod_util.h"
 #include "core/CoreExport.h"
 #include "core/html/TextControlElement.h"
-#include "core/html/forms/FileChooser.h"
 #include "core/html/forms/StepRange.h"
+#include "platform/FileChooser.h"
 #include "platform/bindings/ActiveScriptWrappable.h"
 
 namespace blink {
@@ -194,8 +194,8 @@ class CORE_EXPORT HTMLInputElement
 
   const AtomicString& DefaultValue() const;
 
-  Vector<String> AcceptMIMETypes() const;
-  Vector<String> AcceptFileExtensions() const;
+  Vector<String> AcceptMIMETypes();
+  Vector<String> AcceptFileExtensions();
   const AtomicString& Alt() const;
 
   void setSize(unsigned);
@@ -247,6 +247,9 @@ class CORE_EXPORT HTMLInputElement
   void EndColorChooser();
 
   String DefaultToolTip() const override;
+
+  CaptureFacingMode capture() const;
+  void setCapture(const AtomicString& value);
 
   unsigned height() const;
   unsigned width() const;

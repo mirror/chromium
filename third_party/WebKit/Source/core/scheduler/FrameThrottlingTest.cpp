@@ -54,8 +54,8 @@ class MockWebDisplayItemList : public WebDisplayItemList {
 void PaintRecursively(GraphicsLayer* layer, WebDisplayItemList* display_items) {
   if (layer->DrawsContent()) {
     layer->SetNeedsDisplay();
-    layer->WebContentLayerClientForTesting().PaintContents(
-        display_items, WebContentLayerClient::kPaintDefaultBehaviorForTest);
+    layer->ContentLayerDelegateForTesting()->PaintContents(
+        display_items, ContentLayerDelegate::kPaintDefaultBehaviorForTest);
   }
   for (const auto& child : layer->Children())
     PaintRecursively(child, display_items);
@@ -887,7 +887,7 @@ TEST_P(FrameThrottlingTest, DumpThrottledFrame) {
   EXPECT_EQ(std::string::npos, result.Utf8().find("throttled"));
 }
 
-TEST_P(FrameThrottlingTest, PaintingViaGraphicsLayerIsThrottled) {
+TEST_P(FrameThrottlingTest, PaintingViaContentLayerDelegateIsThrottled) {
   WebView().GetSettings()->SetAcceleratedCompositingEnabled(true);
   WebView().GetSettings()->SetPreferCompositingToLCDTextEnabled(true);
 

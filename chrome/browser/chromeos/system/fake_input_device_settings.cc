@@ -76,12 +76,6 @@ void FakeInputDeviceSettings::SetPrimaryButtonRight(bool right) {
   UpdateMouseSettings(settings);
 }
 
-void FakeInputDeviceSettings::SetMouseReverseScroll(bool enabled) {
-  MouseSettings settings;
-  settings.SetReverseScroll(enabled);
-  UpdateMouseSettings(settings);
-}
-
 void FakeInputDeviceSettings::ReapplyTouchpadSettings() {
 }
 

@@ -138,7 +138,7 @@ TEST_F(AutofillProfileValidatorTest, ValidateAddress_RulesLoaded) {
 }
 
 // When country code is invalid, the profile is invalid.
-TEST_F(AutofillProfileValidatorTest, ValidateProfile_CountryCodeNotExists) {
+TEST_F(AutofillProfileValidatorTest, ValidateAddress_CountryCodeNotExists) {
   const std::string country_code = "PP";
   AutofillProfile profile(autofill::test::GetFullValidProfile());
   profile.SetRawInfo(ADDRESS_HOME_COUNTRY, base::UTF8ToUTF16(country_code));
@@ -159,84 +159,6 @@ TEST_F(AutofillProfileValidatorTest, ValidateAddress_RuleNotExists) {
 
   EXPECT_EQ(false, AreRulesLoadedForRegion(country_code));
 
-  validator_->ValidateProfile(&profile, std::move(onvalidated_cb_));
-}
-
-// Validate a profile with an invalid phone, valid email and valid address.
-TEST_F(AutofillProfileValidatorTest, ValidateProfile_InvalidPhone) {
-  AutofillProfile profile(autofill::test::GetFullValidProfile());
-  profile.SetRawInfo(PHONE_HOME_WHOLE_NUMBER, base::string16());
-
-  set_expected_status(AutofillProfile::INVALID);
-
-  validator_->ValidateProfile(&profile, std::move(onvalidated_cb_));
-}
-
-// Validate a profile with a valid phone, valid email and invalid address.
-TEST_F(AutofillProfileValidatorTest, ValidateProfile_InvalidAddress) {
-  AutofillProfile profile(autofill::test::GetFullValidProfile());
-  // QQ is an invalid admin area, thus an invalid address.
-  profile.SetRawInfo(ADDRESS_HOME_STATE, base::UTF8ToUTF16("QQ"));
-
-  set_expected_status(AutofillProfile::INVALID);
-
-  validator_->ValidateProfile(&profile, std::move(onvalidated_cb_));
-}
-
-// Validate a profile with an invalid phone, invalid email and invalid address.
-TEST_F(AutofillProfileValidatorTest,
-       ValidateProfile_InvalidPhone_InvalidAddress) {
-  AutofillProfile profile(autofill::test::GetFullValidProfile());
-  profile.SetRawInfo(PHONE_HOME_WHOLE_NUMBER, base::string16());
-  // QQ is an invalid admin area, thus an invalid address.
-  profile.SetRawInfo(ADDRESS_HOME_STATE, base::UTF8ToUTF16("QQ"));
-
-  set_expected_status(AutofillProfile::INVALID);
-  validator_->ValidateProfile(&profile, std::move(onvalidated_cb_));
-}
-
-// Validate a profile with a valid phone, invalid email and invalid address.
-TEST_F(AutofillProfileValidatorTest,
-       ValidateProfile_InvalidEmail_InvalidAddress) {
-  AutofillProfile profile(autofill::test::GetFullValidProfile());
-  profile.SetRawInfo(EMAIL_ADDRESS, base::ASCIIToUTF16("Invalid Email."));
-  // QQ is an invalid admin area, thus an invalid address.
-  profile.SetRawInfo(ADDRESS_HOME_STATE, base::UTF8ToUTF16("QQ"));
-
-  set_expected_status(AutofillProfile::INVALID);
-  validator_->ValidateProfile(&profile, std::move(onvalidated_cb_));
-}
-
-// Validate a profile with a valid phone, invalid email and invalid address.
-TEST_F(AutofillProfileValidatorTest,
-       ValidateProfile_InvalidEmail_InvalidPhone) {
-  AutofillProfile profile(autofill::test::GetFullValidProfile());
-  profile.SetRawInfo(EMAIL_ADDRESS, base::ASCIIToUTF16("Invalid Email."));
-  profile.SetRawInfo(PHONE_HOME_WHOLE_NUMBER, base::string16());
-
-  set_expected_status(AutofillProfile::INVALID);
-  validator_->ValidateProfile(&profile, std::move(onvalidated_cb_));
-}
-
-// Validate a profile with a valid phone, invalid email and valid address.
-TEST_F(AutofillProfileValidatorTest, ValidateProfile_InvalidEmail) {
-  AutofillProfile profile(autofill::test::GetFullValidProfile());
-  profile.SetRawInfo(EMAIL_ADDRESS, base::ASCIIToUTF16("Invalid Email."));
-
-  set_expected_status(AutofillProfile::VALID);
-  validator_->ValidateProfile(&profile, std::move(onvalidated_cb_));
-}
-
-// Validate a profile with a invalid phone, invalid email and invalid address.
-TEST_F(AutofillProfileValidatorTest,
-       ValidateProfile_InvalidEmail_InvalidPhone_InvalidAddress) {
-  AutofillProfile profile(autofill::test::GetFullValidProfile());
-  profile.SetRawInfo(EMAIL_ADDRESS, base::ASCIIToUTF16("Invalid Email."));
-  profile.SetRawInfo(PHONE_HOME_WHOLE_NUMBER, base::string16());
-  // QQ is an invalid admin area, thus an invalid address.
-  profile.SetRawInfo(ADDRESS_HOME_STATE, base::UTF8ToUTF16("QQ"));
-
-  set_expected_status(AutofillProfile::INVALID);
   validator_->ValidateProfile(&profile, std::move(onvalidated_cb_));
 }
 

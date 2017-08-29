@@ -7,7 +7,6 @@
 #include <tuple>
 
 #include "base/macros.h"
-#include "base/run_loop.h"
 #include "base/strings/utf_string_conversions.h"
 #include "content/browser/web_contents/web_contents_impl.h"
 #include "content/common/clipboard_messages.h"
@@ -106,15 +105,15 @@ class ClipboardMessageWatcher : public IPC::MessageFilter {
       if (ClipboardHostMsg_WriteText::Read(&message, &params)) {
         BrowserThread::PostTask(
             BrowserThread::UI, FROM_HERE,
-            base::BindOnce(&ClipboardMessageWatcher::OnWriteText, this,
-                           base::UTF16ToUTF8(std::get<1>(params))));
+            base::Bind(&ClipboardMessageWatcher::OnWriteText, this,
+                       base::UTF16ToUTF8(std::get<1>(params))));
       }
       return true;
     }
     if (message.type() == ClipboardHostMsg_CommitWrite::ID) {
       BrowserThread::PostTask(
           BrowserThread::UI, FROM_HERE,
-          base::BindOnce(&ClipboardMessageWatcher::OnCommitWrite, this));
+          base::Bind(&ClipboardMessageWatcher::OnCommitWrite, this));
       return true;
     }
     return false;

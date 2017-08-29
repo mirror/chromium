@@ -44,6 +44,8 @@ enum EffectiveConnectionType {
     unsigned long getResourcePriority (DOMString url, Document document);
     DOMString getResourceHeader (DOMString url, DOMString header, Document document);
 
+    boolean isSharingStyle(Element element1, Element element2);
+
     CSSStyleDeclaration computedStyleIncludingVisitedInfo(Node node);
 
     ShadowRoot createUserAgentShadowRoot(Element host);
@@ -97,7 +99,7 @@ enum EffectiveConnectionType {
     [RaisesException] Node previousInFlatTree(Node node);
 
     DOMString visiblePlaceholder(Element element);
-    boolean isValidationMessageVisible(Element element);
+
     void selectColorInColorChooser(Element element, DOMString colorValue);
     void endColorChooser(Element element);
 

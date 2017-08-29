@@ -7,6 +7,7 @@
 #include <utility>
 
 #include "base/bind.h"
+#include "base/memory/ptr_util.h"
 #include "components/sync/model/fake_model_type_change_processor.h"
 #include "components/sync/model/metadata_batch.h"
 #include "components/sync/model/stub_model_type_sync_bridge.h"
@@ -63,7 +64,7 @@ class MockModelTypeSyncBridge : public StubModelTypeSyncBridge {
   std::unique_ptr<ModelTypeChangeProcessor> CreateProcessor(
       ModelType type,
       ModelTypeSyncBridge* bridge) {
-    return std::make_unique<MockModelTypeChangeProcessor>(
+    return base::MakeUnique<MockModelTypeChangeProcessor>(
         base::Bind(&MockModelTypeSyncBridge::OnProcessorDisableSync,
                    base::Unretained(this)));
   }

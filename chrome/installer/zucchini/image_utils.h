@@ -5,7 +5,6 @@
 #ifndef CHROME_INSTALLER_ZUCCHINI_IMAGE_UTILS_H_
 #define CHROME_INSTALLER_ZUCCHINI_IMAGE_UTILS_H_
 
-#include <stddef.h>
 #include <stdint.h>
 
 #include "base/numerics/safe_conversions.h"
@@ -18,9 +17,6 @@ namespace zucchini {
 // offset_t is used to describe an offset in an image.
 // Files bigger than 4GB are not supported.
 using offset_t = uint32_t;
-// Divide by 2 since label marking uses the most significant bit.
-constexpr offset_t kOffsetBound = static_cast<offset_t>(-1) / 2;
-constexpr offset_t kInvalidOffset = static_cast<offset_t>(-1);
 
 // Used to uniquely identify a reference type.
 // Strongly typed objects are used to avoid ambiguitees with PoolTag.
@@ -41,10 +37,10 @@ constexpr PoolTag kNoPoolTag(0xFF);
 // Specification of references in an image file.
 struct ReferenceTypeTraits {
   constexpr ReferenceTypeTraits() = default;
-  constexpr ReferenceTypeTraits(offset_t width_in,
-                                TypeTag type_tag_in,
-                                PoolTag pool_tag_in)
-      : width(width_in), type_tag(type_tag_in), pool_tag(pool_tag_in) {}
+  constexpr ReferenceTypeTraits(offset_t width,
+                                TypeTag type_tag,
+                                PoolTag pool_tag)
+      : width(width), type_tag(type_tag), pool_tag(pool_tag) {}
 
   // |width| specifies number of bytes covered by the reference's binary
   // encoding.
@@ -153,10 +149,8 @@ enum ExecutableType : uint32_t {
 // of raw data.
 struct Element {
   Element() = default;
-  constexpr Element(ExecutableType exe_type_in,
-                    offset_t offset_in,
-                    offset_t length_in)
-      : exe_type(exe_type_in), offset(offset_in), length(length_in) {}
+  constexpr Element(ExecutableType exe_type, offset_t offset, offset_t length)
+      : exe_type(exe_type), offset(offset), length(length) {}
   constexpr Element(ExecutableType exe_type, const BufferRegion& region)
       : exe_type(exe_type),
         offset(base::checked_cast<offset_t>(region.offset)),

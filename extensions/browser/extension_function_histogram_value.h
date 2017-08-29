@@ -1250,8 +1250,6 @@ enum HistogramValue {
   WEBVIEWINTERNAL_ISAUDIOMUTED,
   WEBVIEWINTERNAL_GETAUDIOSTATE,
   FILEMANAGERPRIVATE_GETRECENTFILES,
-  FILEMANAGERPRIVATE_RENAMEVOLUME,
-  AUTOTESTPRIVATE_SETMOUSEREVERSESCROLL,
   // Last entry: Add new entries above, then run:
   // python tools/metrics/histograms/update_extension_histograms.py
   ENUM_BOUNDARY

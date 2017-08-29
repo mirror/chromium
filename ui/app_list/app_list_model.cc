@@ -22,11 +22,9 @@ AppListModel::AppListModel()
       results_(new SearchResults),
       status_(STATUS_NORMAL),
       state_(INVALID_STATE),
-      state_fullscreen_(AppListView::CLOSED),
       folders_enabled_(false),
       custom_launcher_page_enabled_(true),
-      search_engine_is_google_(false),
-      is_tablet_mode_(false) {
+      search_engine_is_google_(false) {
   top_level_item_list_->AddObserver(this);
 }
 
@@ -61,14 +59,6 @@ void AppListModel::SetState(State state) {
 
   for (auto& observer : observers_)
     observer.OnAppListModelStateChanged(old_state, state_);
-}
-
-void AppListModel::SetStateFullscreen(AppListView::AppListState state) {
-  state_fullscreen_ = state;
-}
-
-void AppListModel::SetTabletMode(bool started) {
-  is_tablet_mode_ = started;
 }
 
 AppListItem* AppListModel::FindItem(const std::string& id) {

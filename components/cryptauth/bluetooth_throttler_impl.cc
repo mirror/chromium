@@ -52,7 +52,6 @@ base::TimeDelta BluetoothThrottlerImpl::GetDelay() const {
 }
 
 void BluetoothThrottlerImpl::OnConnection(Connection* connection) {
-  DCHECK(connection->status() != Connection::Status::DISCONNECTED);
   DCHECK(!base::ContainsKey(connections_, connection));
   connections_.insert(connection);
   connection->AddObserver(this);

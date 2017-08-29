@@ -95,6 +95,7 @@ import org.chromium.chrome.browser.toolbar.CustomTabToolbar;
 import org.chromium.chrome.browser.util.ColorUtils;
 import org.chromium.chrome.test.ChromeActivityTestRule;
 import org.chromium.chrome.test.ChromeJUnit4ClassRunner;
+import org.chromium.chrome.test.util.ChromeRestriction;
 import org.chromium.chrome.test.util.ChromeTabUtils;
 import org.chromium.chrome.test.util.browser.LocationSettingsTestUtil;
 import org.chromium.chrome.test.util.browser.contextmenu.ContextMenuUtils;
@@ -107,7 +108,6 @@ import org.chromium.content_public.browser.WebContentsObserver;
 import org.chromium.net.test.EmbeddedTestServer;
 import org.chromium.net.test.util.TestWebServer;
 import org.chromium.ui.mojom.WindowOpenDisposition;
-import org.chromium.ui.test.util.UiRestriction;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -710,12 +710,9 @@ public class CustomTabActivityTest {
 
     /**
      * Test whether a custom tab can be reparented to a new activity while showing an infobar.
-     *
-     * TODO(timloh): Use a different InfoBar type once we only use modals for permission prompts.
      */
     @Test
     @SmallTest
-    @CommandLineFlags.Add("disable-features=" + ChromeFeatureList.MODAL_PERMISSION_PROMPTS)
     @RetryOnFailure
     public void testTabReparentingInfoBar() throws InterruptedException {
         LocationSettingsTestUtil.setSystemLocationSettingEnabled(true);
@@ -1039,58 +1036,6 @@ public class CustomTabActivityTest {
         final String referrer =
                 IntentHandler.constructValidReferrerForAuthority(packageName).getUrl();
         Assert.assertEquals(referrer, connection.getReferrerForSession(session).getUrl());
-
-        final Tab tab = getActivity().getActivityTab();
-        final CallbackHelper pageLoadFinishedHelper = new CallbackHelper();
-        tab.addObserver(new EmptyTabObserver() {
-            @Override
-            public void onLoadUrl(Tab tab, LoadUrlParams params, int loadType) {
-                Assert.assertEquals(referrer, params.getReferrer().getUrl());
-            }
-
-            @Override
-            public void onPageLoadFinished(Tab tab) {
-                pageLoadFinishedHelper.notifyCalled();
-            }
-        });
-        Assert.assertTrue("CustomTabContentHandler can't handle intent with same session",
-                ThreadUtils.runOnUiThreadBlockingNoException(new Callable<Boolean>() {
-                    @Override
-                    public Boolean call() throws Exception {
-                        return CustomTabActivity.handleInActiveContentIfNeeded(intent);
-                    }
-                }));
-        try {
-            pageLoadFinishedHelper.waitForCallback(0);
-        } catch (TimeoutException e) {
-            Assert.fail();
-        }
-    }
-
-    @Test
-    @SmallTest
-    @RetryOnFailure
-    public void testVerifiedReferrer() throws InterruptedException {
-        final Context context = InstrumentationRegistry.getInstrumentation()
-                                        .getTargetContext()
-                                        .getApplicationContext();
-        final Intent intent = CustomTabsTestUtils.createMinimalCustomTabIntent(context, mTestPage2);
-        String referrer = "https://example.com";
-        intent.putExtra(Intent.EXTRA_REFERRER_NAME, referrer);
-        CustomTabsSessionToken token = CustomTabsSessionToken.getSessionTokenFromIntent(intent);
-        CustomTabsConnection connection = CustomTabsConnection.getInstance();
-        connection.newSession(token);
-        connection.overridePackageNameForSessionForTesting(token, "app1");
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                OriginVerifier.addVerifiedOriginForPackage(
-                        "app1", Uri.parse(referrer), CustomTabsService.RELATION_USE_AS_ORIGIN);
-            }
-        });
-
-        final CustomTabsSessionToken session = warmUpAndLaunchUrlWithSession(intent);
-        Assert.assertEquals(getActivity().getIntentDataProvider().getSession(), session);
 
         final Tab tab = getActivity().getActivityTab();
         final CallbackHelper pageLoadFinishedHelper = new CallbackHelper();
@@ -1877,7 +1822,7 @@ public class CustomTabActivityTest {
      */
     @Test
     @DisabledTest
-    @Restriction(UiRestriction.RESTRICTION_TYPE_PHONE)
+    @Restriction(ChromeRestriction.RESTRICTION_TYPE_PHONE)
     @CommandLineFlags.Add(ChromeSwitches.DISABLE_FIRST_RUN_EXPERIENCE)
     public void testWarmupAndLaunchRegularChrome() {
         CustomTabsTestUtils.warmUpAndWait();
@@ -1905,7 +1850,7 @@ public class CustomTabActivityTest {
      */
     @Test
     @SmallTest
-    @Restriction(UiRestriction.RESTRICTION_TYPE_PHONE)
+    @Restriction(ChromeRestriction.RESTRICTION_TYPE_PHONE)
     @CommandLineFlags.Add(ChromeSwitches.DISABLE_FIRST_RUN_EXPERIENCE)
     public void testWarmupAndLaunchRightToolbarLayout() {
         CustomTabsTestUtils.warmUpAndWait();
@@ -2543,9 +2488,7 @@ public class CustomTabActivityTest {
      */
     @Test
     @SmallTest
-    @CommandLineFlags.Add({"enable-spdy-proxy-auth",
-            "disable-features=DataReductionProxyDecidesTransform",
-            "data-reduction-proxy-lo-fi=always-on"})
+    @CommandLineFlags.Add({"enable-spdy-proxy-auth", "data-reduction-proxy-lo-fi=always-on"})
     @RetryOnFailure
     public void testLaunchWebLiteURLNoPreviews() throws Exception {
         final String testUrl = WEBLITE_PREFIX + mTestPage;
@@ -2562,8 +2505,7 @@ public class CustomTabActivityTest {
      */
     @Test
     @SmallTest
-    @CommandLineFlags.Add({"enable-spdy-proxy-auth",
-            "disable-features=DataReductionProxyDecidesTransform"})
+    @CommandLineFlags.Add({"enable-spdy-proxy-auth", "enable-data-reduction-proxy-lite-page"})
     @RetryOnFailure
     public void testLaunchWebLiteURLNoLoFi() throws Exception {
         final String testUrl = WEBLITE_PREFIX + mTestPage;

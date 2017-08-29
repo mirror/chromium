@@ -11,7 +11,6 @@
 #include "base/callback.h"
 #include "base/macros.h"
 #include "components/feedback/feedback_common.h"
-#include "components/feedback/feedback_uploader.h"
 #include "url/gurl.h"
 
 namespace base {
@@ -25,7 +24,7 @@ namespace feedback {
 
 class FeedbackData : public FeedbackCommon {
  public:
-  FeedbackData(feedback::FeedbackUploader* uploader);
+  FeedbackData();
 
   // Called once we've updated all the data from the feedback page.
   void OnFeedbackPageDataComplete();
@@ -67,6 +66,10 @@ class FeedbackData : public FeedbackCommon {
     screenshot_uuid_ = uuid;
   }
   void set_trace_id(int trace_id) { trace_id_ = trace_id; }
+  void set_send_report_callback(
+      const base::Callback<void(scoped_refptr<FeedbackData>)>& send_report) {
+    send_report_ = send_report;
+  }
 
  private:
   ~FeedbackData() override;
@@ -77,7 +80,7 @@ class FeedbackData : public FeedbackCommon {
   void OnGetTraceData(int trace_id,
                       scoped_refptr<base::RefCountedString> trace_data);
 
-  feedback::FeedbackUploader* uploader_;  // Not owned.
+  base::Callback<void(scoped_refptr<FeedbackData>)> send_report_;
 
   content::BrowserContext* context_;
 

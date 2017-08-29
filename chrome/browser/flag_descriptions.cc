@@ -328,16 +328,7 @@ const char kEnableEnumeratingAudioDevicesDescription[] =
 
 const char kEnableGenericSensorName[] = "Generic Sensor";
 const char kEnableGenericSensorDescription[] =
-    "Enables motion sensor classes based on Generic Sensor API, i.e. "
-    "Accelerometer, LinearAccelerationSensor, Gyroscope, "
-    "AbsoluteOrientationSensor and RelativeOrientationSensor interfaces.";
-
-const char kEnableGenericSensorExtraClassesName[] =
-    "Generic Sensor Extra Classes";
-const char kEnableGenericSensorExtraClassesDescription[] =
-    "Enables an extra set of sensor classes based on Generic Sensor API, which "
-    "expose previously unavailable platform features, i.e. AmbientLightSensor "
-    "and Magnetometer interfaces.";
+    "Enable sensor APIs based on Generic Sensor API.";
 
 const char kEnableHDRName[] = "HDR mode";
 const char kEnableHDRDescription[] =
@@ -608,6 +599,18 @@ const char kFillOnAccountSelectDescription[] =
     "Filling of passwords when an account is explicitly selected by the user "
     "rather than autofilling credentials on page load.";
 
+const char kForceTabletModeName[] = "Force Tablet Mode";
+const char kForceTabletModeDescription[] =
+    R"*(This flag can be used to force a certain mode on to a chromebook, )*"
+    R"*(despite its current orientation. "TouchView" means that the )*"
+    R"*(chromebook will act as if it were in touch view mode. "Clamshell" )*"
+    R"*(means that the chromebook will act as if it were in clamshell )*"
+    R"*(mode . "Auto" means that the chromebook will alternate between )*"
+    R"*(the two, based on its orientation.)*";
+const char kForceTabletModeTouchview[] = "TouchView";
+const char kForceTabletModeClamshell[] = "Clamshell";
+const char kForceTabletModeAuto[] = "Auto (default)";
+
 const char kForceTextDirectionName[] = "Force text direction";
 const char kForceTextDirectionDescription[] =
     "Explicitly force the per-character directionality of UI text to "
@@ -730,11 +733,6 @@ const char kManualPasswordGenerationName[] = "Manual password generation.";
 const char kManualPasswordGenerationDescription[] =
     "Show a 'Generate Password' option on the context menu for all password "
     "fields.";
-
-const char kManualPasswordSavingName[] = "Manual password saving.";
-const char kManualPasswordSavingDescription[] =
-    "Show the password manager icon when typing into a password filed. "
-    "Clicking it allows to save the password without submitting the form.";
 
 const char kMarkHttpAsName[] = "Mark non-secure origins as non-secure";
 const char kMarkHttpAsDescription[] = "Change the UI treatment for HTTP pages";
@@ -873,17 +871,17 @@ const char kOmniboxDisplayTitleForCurrentUrlDescription[] =
     "the current page is provided as the first suggestion without a title. "
     "Enabling this flag causes the title to be displayed.";
 
-const char kOmniboxSpareRendererName[] =
-    "Start spare renderer on omnibox focus";
-const char kOmniboxSpareRendererDescription[] =
-    "When the omnibox is focused, start an empty spare renderer. This can "
-    "speed up the load of the navigation from the omnibox.";
-
 const char kOmniboxUIElideSuggestionUrlAfterHostName[] =
     "Omnibox UI Elide Suggestion URL After Host";
 const char kOmniboxUIElideSuggestionUrlAfterHostDescription[] =
     "Elides the path, query, and ref of suggested URLs in the Omnibox "
     "dropdown.";
+
+const char kOmniboxSpareRendererName[] =
+    "Start spare renderer on omnibox focus";
+const char kOmniboxSpareRendererDescription[] =
+    "When the omnibox is focused, start an empty spare renderer. This can "
+    "speed up the load of the navigation from the omnibox.";
 
 const char kOmniboxUIHideSuggestionUrlSchemeName[] =
     "Omnibox UI Hide Suggestion URL Scheme";
@@ -895,12 +893,6 @@ const char kOmniboxUIHideSuggestionUrlTrivialSubdomainsName[] =
 const char kOmniboxUIHideSuggestionUrlTrivialSubdomainsDescription[] =
     "Elides trivially informative subdomains from suggested URLs in the "
     "Omnibox dropdown (e.g. www. and m.).";
-
-const char kOmniboxUIShowSuggestionFaviconsName[] =
-    "Omnibox UI Show Suggestion Favicons";
-const char kOmniboxUIShowSuggestionFaviconsDescription[] =
-    "Shows favicons instead of generic vector icons for URL suggestions in the "
-    "Omnibox dropdown.";
 
 const char kOmniboxUIMaxAutocompleteMatchesName[] =
     "Omnibox UI Max Autocomplete Matches";
@@ -929,18 +921,6 @@ const char kOverlayScrollbarsName[] = "Overlay Scrollbars";
 const char kOverlayScrollbarsDescription[] =
     "Enable the experimental overlay scrollbars implementation. You must also "
     "enable threaded compositing to have the scrollbars animate.";
-
-const char kOverlayScrollbarsFlashAfterAnyScrollUpdateName[] =
-    "Flash Overlay Scrollbars After Any Scroll Update";
-const char kOverlayScrollbarsFlashAfterAnyScrollUpdateDescription[] =
-    "Flash Overlay Scrollbars After any scroll update happends in page. You"
-    " must also enable Overlay Scrollbars.";
-
-const char kOverlayScrollbarsFlashWhenMouseEnterName[] =
-    "Flash Overlay Scrollbars When Mouse Enter";
-const char kOverlayScrollbarsFlashWhenMouseEnterDescription[] =
-    "Flash Overlay Scrollbars When Mouse Enter a scrollable area. You must also"
-    " enable Overlay Scrollbars.";
 
 const char kOverscrollHistoryNavigationName[] = "Overscroll history navigation";
 const char kOverscrollHistoryNavigationDescription[] =
@@ -1190,10 +1170,6 @@ const char kSoftwareRasterizerName[] = "3D software rasterizer";
 const char kSoftwareRasterizerDescription[] =
     "Fall back to a 3D software rasterizer when the GPU cannot be used.";
 
-const char kSoundContentSettingName[] = "Sound content setting";
-const char kSoundContentSettingDescription[] =
-    "Enable site-wide muting in content settings and tab strip context menu.";
-
 const char kSpeculativePrefetchName[] = "Speculative Prefetch";
 const char kSpeculativePrefetchDescription[] =
     R"*("Speculative Prefetch" fetches likely resources early to improve )*"
@@ -1328,10 +1304,6 @@ const char kTrySupportedChannelLayoutsDescription[] =
 const char kUiPartialSwapName[] = "Partial swap";
 const char kUiPartialSwapDescription[] = "Sets partial swap behavior.";
 
-const char kUseDdljsonApiName[] = "Use new ddljson API for Doodles";
-const char kUseDdljsonApiDescription[] =
-    "Enables the new ddljson API to fetch Doodles for the NTP.";
-
 const char kUserConsentForExtensionScriptsName[] =
     "User consent for extension scripts";
 const char kUserConsentForExtensionScriptsDescription[] =
@@ -1428,12 +1400,6 @@ const char kWebrtcSrtpAesGcmName[] =
 const char kWebrtcSrtpAesGcmDescription[] =
     "When enabled, WebRTC will try to negotiate GCM cipher suites for SRTP.";
 
-const char kWebrtcSrtpEncryptedHeadersName[] =
-    "Negotiation with encrypted header extensions for SRTP in WebRTC";
-const char kWebrtcSrtpEncryptedHeadersDescription[] =
-    "When enabled, WebRTC will try to negotiate encrypted header extensions "
-    "for SRTP.";
-
 const char kWebrtcStunOriginName[] = "WebRTC Stun origin header";
 const char kWebrtcStunOriginDescription[] =
     "When enabled, Stun messages generated by WebRTC will contain the Origin "
@@ -1450,12 +1416,6 @@ const char kWifiCredentialSyncDescription[] =
     "the WiFi credential datatype is registered with Chrome Sync, and WiFi "
     "credentials are synchronized subject to user preferences. (See also, "
     "chrome://settings/syncSetup.)";
-
-const char kWindowNavNativeFlagName[] =
-    "Enable native window navigation buttons.";
-const char kWindowNavNativeFlagDescription[] =
-    "Whether the window frame buttons should be drawn using the system theme. "
-    "Has no effect unless using the GTK3 theme.";
 
 const char kZeroCopyName[] = "Zero-copy rasterizer";
 const char kZeroCopyDescription[] =
@@ -1502,10 +1462,6 @@ const char kBackgroundLoaderForDownloadsName[] =
 const char kBackgroundLoaderForDownloadsDescription[] =
     "Enables downloading pages in the background in case page is not yet "
     "loaded in current tab.";
-
-const char kChromeHomeDoodleName[] = "Chrome Home Doodle.";
-const char kChromeHomeDoodleDescription[] =
-    "Enables showing the Doodle on the NTP for Chrome Home.";
 
 const char kChromeHomeExpandButtonName[] = "Chrome Home Expand Button";
 const char kChromeHomeExpandButtonDescription[] =
@@ -1765,6 +1721,11 @@ const char kLsdPermissionPromptDescription[] =
     "Whether to use the Google Play Services Location Settings Dialog "
     "permission dialog.";
 
+const char kMediaDocumentDownloadButtonName[] =
+    "Download button when opening a page with media url.";
+const char kMediaDocumentDownloadButtonDescription[] =
+    "Allow a download button to show up when opening a page with media url.";
+
 const char kMediaScreenCaptureName[] = "Experimental ScreenCapture.";
 const char kMediaScreenCaptureDescription[] =
     "Enable this option for experimental ScreenCapture feature on Android.";
@@ -1811,6 +1772,15 @@ const char kNtpOfflinePagesDescription[] =
 const char kNtpPopularSitesName[] = "Show popular sites on the New Tab page";
 const char kNtpPopularSitesDescription[] =
     "Pre-populate the New Tab page with popular sites.";
+
+const char kNtpSwitchToExistingTabName[] =
+    "Switch to an existing tab for New Tab Page suggestions.";
+const char kNtpSwitchToExistingTabDescription[] =
+    "When opening a suggested webpage from the New Tab Page, if a tab is "
+    "already open for the suggestion, switch to that one instead of loading "
+    "the suggestion in the new tab.";
+const char kNtpSwitchToExistingTabMatchUrl[] = "Match by URL";
+const char kNtpSwitchToExistingTabMatchHost[] = "Match by Hostname";
 
 const char kOfflineBookmarksName[] = "Enable offline bookmarks";
 const char kOfflineBookmarksDescription[] =
@@ -1870,6 +1840,15 @@ extern const char kPayWithGoogleV1Description[] =
     "Enable Pay with Google integration into Web Payments with API version "
     "'1'.";
 
+const char kProgressBarAnimationName[] =
+    "Android phone page loading progress bar animation";
+const char kProgressBarAnimationDescription[] =
+    "Configures Android phone page loading progress bar animation.";
+const char kProgressBarAnimationLinear[] = "Linear";
+const char kProgressBarAnimationSmooth[] = "Smooth";
+const char kProgressBarAnimationSmoothIndeterminate[] = "Smooth indeterminate";
+const char kProgressBarAnimationFastStart[] = "Fast start";
+
 const char kProgressBarCompletionName[] =
     "Android phone page load progress bar completion time.";
 const char kProgressBarCompletionDescription[] =
@@ -1890,11 +1869,6 @@ const char kPullToRefreshEffectName[] = "The pull-to-refresh effect";
 const char kPullToRefreshEffectDescription[] =
     "Page reloads triggered by vertically overscrolling content.";
 
-const char kPwaImprovedSplashScreenName[] =
-    "Improved Splash Screen for standalone PWAs";
-const char kPwaImprovedSplashScreenDescription[] =
-    "Enables the Improved Splash Screen UX for standalone PWAs based on new "
-    "Web App Manifest attributes";
 const char kPwaPersistentNotificationName[] =
     "Persistent notification in standalone PWA";
 const char kPwaPersistentNotificationDescription[] =
@@ -1955,11 +1929,9 @@ const char kUseAndroidMidiApiDescription[] =
     "Use Android Midi API for WebMIDI (effective only with Android M+ "
     "devices).";
 
-const char kThirdPartyDoodlesName[] =
-    "Enable Doodles for third-party search engines";
-const char kThirdPartyDoodlesDescription[] =
-    "Enables fetching and displaying Doodles on the NTP for third-party search "
-    "engines.";
+const char kUseDdljsonApiName[] = "Use new ddljson API for Doodles";
+const char kUseDdljsonApiDescription[] =
+    "Enables the new ddljson API to fetch Doodles for the NTP.";
 
 const char kXGEOVisibleNetworksName[] = "Enable XGEO Visible Networks";
 const char kXGEOVisibleNetworksDescription[] =
@@ -1977,11 +1949,6 @@ const char kAccountConsistencyDescription[] =
     "When enabled, the browser manages signing in and out of Google accounts.";
 const char kAccountConsistencyChoiceMirror[] = "Mirror";
 const char kAccountConsistencyChoiceDice[] = "Dice";
-
-const char kDoodlesOnLocalNtpName[] = "Enable doodles on the local NTP";
-const char kDoodlesOnLocalNtpDescription[] =
-    "Show doodles on the local New Tab page if Google is the default search "
-    "engine.";
 
 const char kEnableAudioFocusName[] = "Manage audio focus across tabs";
 const char kEnableAudioFocusDescription[] =
@@ -2047,10 +2014,6 @@ const char kCloudPrintXpsDescription[] =
     "XPS enables advanced options for classic printers connected to the Cloud "
     "Print with Chrome. Printers must be re-connected after changing this "
     "flag.";
-
-const char kDirectManipulationStylusName[] = "Direct Manipulation Stylus";
-const char kDirectManipulationStylusDescription[] =
-    "If enabled, Chrome will scroll web pages on stylus drag.";
 
 const char kDisablePostscriptPrinting[] = "Disable PostScript Printing";
 const char kDisablePostscriptPrintingDescription[] =
@@ -2240,12 +2203,6 @@ const char kCrosRegionsModeDefault[] = "Default";
 const char kCrosRegionsModeOverride[] = "Override VPD values.";
 const char kCrosRegionsModeHide[] = "Hide VPD values.";
 
-const char kDisableLockScreenAppsName[] = "Disable lock screen note taking";
-const char kDisableLockScreenAppsDescription[] =
-    "Disable new-note action handler apps on the lock screen. The user will "
-    "not be able to launch the preferred note-taking action from the lock "
-    "screen, provided that the app supports lock screen note taking.";
-
 const char kDisableNewVirtualKeyboardBehaviorName[] =
     "New window behavior for the accessibility keyboard";
 const char kDisableNewVirtualKeyboardBehaviorDescription[] =
@@ -2295,6 +2252,12 @@ const char kEnableEncryptionMigrationDescription[] =
 const char kEnableImeMenuName[] = "Enable opt-in IME menu";
 const char kEnableImeMenuDescription[] =
     "Enable access to the new IME menu in the Language Settings page.";
+
+const char kEnableLockScreenAppsName[] = "Enable lock screen note taking";
+const char kEnableLockScreenAppsDescription[] =
+    "Enable new-note action handler apps on the lock screen. The user will be "
+    "able to launch the preferred note-taking action from the lock screen, "
+    "provided that the app supports lock screen note taking.";
 
 const char kEnableZipArchiverOnFileManagerName[] = "ZIP archiver for Drive";
 const char kEnableZipArchiverOnFileManagerDescription[] =
@@ -2463,19 +2426,6 @@ const char kTouchscreenCalibrationName[] =
 const char kTouchscreenCalibrationDescription[] =
     "If enabled, the user can calibrate the touch screen displays in "
     "chrome://settings/display.";
-
-// Force UI Mode
-const char kUiModeName[] = "Force Ui Mode";
-const char kUiModeDescription[] =
-    R"*(This flag can be used to force a certain mode on to a chromebook, )*"
-    R"*(despite its current orientation. "Tablet" means that the )*"
-    R"*(chromebook will act as if it were in tablet mode. "Clamshell" )*"
-    R"*(means that the chromebook will act as if it were in clamshell )*"
-    R"*(mode . "Auto" means that the chromebook will alternate between )*"
-    R"*(the two, based on its orientation.)*";
-const char kUiModeTablet[] = "TouchView";
-const char kUiModeClamshell[] = "Clamshell";
-const char kUiModeAuto[] = "Auto (default)";
 
 const char kUiDevToolsName[] = "Enable native UI inspection";
 const char kUiDevToolsDescription[] =

@@ -23,8 +23,8 @@ class Command(object):
   GET_ALERT = (_Method.GET, '/session/:sessionId/alert')
   DISMISS_ALERT = (_Method.POST, '/session/:sessionId/alert/dismiss')
   ACCEPT_ALERT = (_Method.POST, '/session/:sessionId/alert/accept')
-  GET_ALERT_TEXT = (_Method.GET, '/session/:sessionId/alert/text')
-  SET_ALERT_VALUE = (_Method.POST, '/session/:sessionId/alert/text')
+  GET_ALERT_TEXT = (_Method.GET, '/session/:sessionId/alert_text')
+  SET_ALERT_VALUE = (_Method.POST, '/session/:sessionId/alert_text')
   GO_FORWARD = (_Method.POST, '/session/:sessionId/forward')
   GO_BACK = (_Method.POST, '/session/:sessionId/back')
   REFRESH = (_Method.POST, '/session/:sessionId/refresh')
@@ -39,7 +39,7 @@ class Command(object):
   IS_BROWSER_VISIBLE = (_Method.GET, '/session/:sessionId/visible')
   FIND_ELEMENT = (_Method.POST, '/session/:sessionId/element')
   FIND_ELEMENTS = (_Method.POST, '/session/:sessionId/elements')
-  GET_ACTIVE_ELEMENT = (_Method.GET, '/session/:sessionId/element/active')
+  GET_ACTIVE_ELEMENT = (_Method.POST, '/session/:sessionId/element/active')
   FIND_CHILD_ELEMENT = (_Method.POST, '/session/:sessionId/element/:id/element')
   FIND_CHILD_ELEMENTS = (
       _Method.POST, '/session/:sessionId/element/:id/elements')
@@ -84,8 +84,6 @@ class Command(object):
       _Method.POST, '/session/:sessionId/window/:windowHandle/position')
   MAXIMIZE_WINDOW = (
       _Method.POST, '/session/:sessionId/window/:windowHandle/maximize')
-  FULLSCREEN_WINDOW = (
-      _Method.POST, '/session/:sessionId/window/fullscreen')
   CLOSE = (_Method.DELETE, '/session/:sessionId/window')
   DRAG_ELEMENT = (_Method.POST, '/session/:sessionId/element/:id/drag')
   GET_ELEMENT_VALUE_OF_CSS_PROPERTY = (
@@ -95,7 +93,6 @@ class Command(object):
   SET_SCRIPT_TIMEOUT = (
       _Method.POST, '/session/:sessionId/timeouts/async_script')
   SET_TIMEOUT = (_Method.POST, '/session/:sessionId/timeouts')
-  GET_TIMEOUTS = (_Method.GET, '/session/:sessionId/timeouts')
   EXECUTE_SQL = (_Method.POST, '/session/:sessionId/execute_sql')
   GET_LOCATION = (_Method.GET, '/session/:sessionId/location')
   SET_LOCATION = (_Method.POST, '/session/:sessionId/location')

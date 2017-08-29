@@ -13,16 +13,15 @@ message FileTransferRequest {
 // Next Id: 4
 message FileTransferResponse {
   enum TransferState {
-    IN_PROGRESS = 1;
-    DONE = 2;
+    READY = 1;
+    IN_PROGRESS = 2;
+    DONE = 3;
   }
   optional TransferState state = 1;
 
   enum ErrorCode {
     OUT_OF_DISK_SPACE = 1;
     PERMISSIONS_ERROR = 2;
-    FILE_IO_ERROR = 3;
-    UNEXPECTED_ERROR = 4;
   }
   optional ErrorCode error = 2;
 

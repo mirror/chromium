@@ -600,6 +600,8 @@ bool RenderWidgetHostImpl::OnMessageReceived(const IPC::Message &msg) {
   IPC_BEGIN_MESSAGE_MAP(RenderWidgetHostImpl, msg)
     IPC_MESSAGE_HANDLER(FrameHostMsg_RenderProcessGone, OnRenderProcessGone)
     IPC_MESSAGE_HANDLER(FrameHostMsg_HittestData, OnHittestData)
+    IPC_MESSAGE_HANDLER(InputHostMsg_QueueSyntheticGesture,
+                        OnQueueSyntheticGesture)
     IPC_MESSAGE_HANDLER(InputHostMsg_ImeCancelComposition,
                         OnImeCancelComposition)
     IPC_MESSAGE_HANDLER(ViewHostMsg_Close, OnClose)
@@ -720,7 +722,6 @@ void RenderWidgetHostImpl::WasShown(const ui::LatencyInfo& latency_info) {
   WasResized();
 }
 
-#if defined(OS_ANDROID)
 void RenderWidgetHostImpl::SetImportance(ChildProcessImportance importance) {
   if (importance_ == importance)
     return;
@@ -728,7 +729,6 @@ void RenderWidgetHostImpl::SetImportance(ChildProcessImportance importance) {
   importance_ = importance;
   process_->UpdateWidgetImportance(old, importance_);
 }
-#endif
 
 bool RenderWidgetHostImpl::GetResizeParams(ResizeParams* resize_params) {
   *resize_params = ResizeParams();
@@ -1367,7 +1367,7 @@ void RenderWidgetHostImpl::ForwardKeyboardEventWithCommands(
 
 void RenderWidgetHostImpl::QueueSyntheticGesture(
     std::unique_ptr<SyntheticGesture> synthetic_gesture,
-    base::OnceCallback<void(SyntheticGesture::Result)> on_complete) {
+    const base::Callback<void(SyntheticGesture::Result)>& on_complete) {
   if (!synthetic_gesture_controller_ && view_) {
     synthetic_gesture_controller_ =
         base::MakeUnique<SyntheticGestureController>(
@@ -1375,7 +1375,7 @@ void RenderWidgetHostImpl::QueueSyntheticGesture(
   }
   if (synthetic_gesture_controller_) {
     synthetic_gesture_controller_->QueueSyntheticGesture(
-        std::move(synthetic_gesture), std::move(on_complete));
+        std::move(synthetic_gesture), on_complete);
   }
 }
 
@@ -2037,8 +2037,8 @@ void RenderWidgetHostImpl::OnUpdateRect(
     new_auto_size_ = params.view_size;
     if (post_callback) {
       base::ThreadTaskRunnerHandle::Get()->PostTask(
-          FROM_HERE, base::BindOnce(&RenderWidgetHostImpl::DelayedAutoResized,
-                                    weak_factory_.GetWeakPtr()));
+          FROM_HERE, base::Bind(&RenderWidgetHostImpl::DelayedAutoResized,
+                                weak_factory_.GetWeakPtr()));
     }
   }
 
@@ -2070,6 +2070,22 @@ void RenderWidgetHostImpl::DidUpdateBackingStore(
       ViewHostMsg_UpdateRect_Flags::is_resize_ack(params.flags);
   if (is_resize_ack)
     WasResized();
+}
+
+void RenderWidgetHostImpl::OnQueueSyntheticGesture(
+    const SyntheticGesturePacket& gesture_packet) {
+  // Only allow untrustworthy gestures if explicitly enabled.
+  if (!base::CommandLine::ForCurrentProcess()->HasSwitch(
+          cc::switches::kEnableGpuBenchmarking)) {
+    bad_message::ReceivedBadMessage(GetProcess(),
+                                    bad_message::RWH_SYNTHETIC_GESTURE);
+    return;
+  }
+
+  QueueSyntheticGesture(
+        SyntheticGesture::Create(*gesture_packet.gesture_params()),
+        base::Bind(&RenderWidgetHostImpl::OnSyntheticGestureCompleted,
+                   weak_factory_.GetWeakPtr()));
 }
 
 void RenderWidgetHostImpl::OnSetCursor(const WebCursor& cursor) {
@@ -2387,6 +2403,13 @@ void RenderWidgetHostImpl::OnUnexpectedEventAck(UnexpectedEventAckType type) {
   } else if (type == UNEXPECTED_EVENT_TYPE) {
     suppress_events_until_keydown_ = false;
   }
+}
+
+void RenderWidgetHostImpl::OnSyntheticGestureCompleted(
+    SyntheticGesture::Result result) {
+  // TODO(dtapuska): Define mojo interface for InputHostMsg's and this will be a
+  // callback for completing InputHostMsg_QueueSyntheticGesture.
+  process_->Send(new InputMsg_SyntheticGestureCompleted(GetRoutingID()));
 }
 
 bool RenderWidgetHostImpl::ShouldDropInputEvents() const {
@@ -2786,10 +2809,6 @@ void RenderWidgetHostImpl::SetupInputRouter() {
         base::MakeUnique<LegacyIPCWidgetInputHandler>(
             static_cast<LegacyInputRouterImpl*>(input_router_.get()));
   }
-}
-
-void RenderWidgetHostImpl::SetForceEnableZoom(bool enabled) {
-  input_router_->SetForceEnableZoom(enabled);
 }
 
 void RenderWidgetHostImpl::SetWidgetInputHandler(

@@ -122,7 +122,7 @@ void TestHarness::InstallBooleanPolicy(const std::string& policy_name,
 void TestHarness::InstallStringListPolicy(const std::string& policy_name,
                                           const base::ListValue* policy_value) {
   base::DictionaryValue dict;
-  dict.Set(policy_name, base::MakeUnique<base::Value>(policy_value->Clone()));
+  dict.Set(policy_name, base::MakeUnique<base::Value>(*policy_value));
   WriteConfigFile(dict, NextConfigFileName());
 }
 
@@ -130,13 +130,13 @@ void TestHarness::InstallDictionaryPolicy(
     const std::string& policy_name,
     const base::DictionaryValue* policy_value) {
   base::DictionaryValue dict;
-  dict.Set(policy_name, base::MakeUnique<base::Value>(policy_value->Clone()));
+  dict.Set(policy_name, base::MakeUnique<base::Value>(*policy_value));
   WriteConfigFile(dict, NextConfigFileName());
 }
 
 void TestHarness::Install3rdPartyPolicy(const base::DictionaryValue* policies) {
   base::DictionaryValue dict;
-  dict.SetKey("3rdparty", policies->Clone());
+  dict.Set("3rdparty", base::MakeUnique<base::Value>(*policies));
   WriteConfigFile(dict, NextConfigFileName());
 }
 
@@ -190,9 +190,8 @@ class ConfigDirPolicyLoaderTest : public PolicyTestBase {
 // The preferences dictionary is expected to be empty when there are no files to
 // load.
 TEST_F(ConfigDirPolicyLoaderTest, ReadPrefsEmpty) {
-  ConfigDirPolicyLoader loader(
-      scoped_task_environment_.GetMainThreadTaskRunner(), harness_.test_dir(),
-      POLICY_SCOPE_MACHINE);
+  ConfigDirPolicyLoader loader(loop_.task_runner(), harness_.test_dir(),
+                               POLICY_SCOPE_MACHINE);
   std::unique_ptr<PolicyBundle> bundle(loader.Load());
   ASSERT_TRUE(bundle.get());
   const PolicyBundle kEmptyBundle;
@@ -204,9 +203,8 @@ TEST_F(ConfigDirPolicyLoaderTest, ReadPrefsEmpty) {
 TEST_F(ConfigDirPolicyLoaderTest, ReadPrefsNonExistentDirectory) {
   base::FilePath non_existent_dir(
       harness_.test_dir().Append(FILE_PATH_LITERAL("not_there")));
-  ConfigDirPolicyLoader loader(
-      scoped_task_environment_.GetMainThreadTaskRunner(), non_existent_dir,
-      POLICY_SCOPE_MACHINE);
+  ConfigDirPolicyLoader loader(loop_.task_runner(), non_existent_dir,
+                               POLICY_SCOPE_MACHINE);
   std::unique_ptr<PolicyBundle> bundle(loader.Load());
   ASSERT_TRUE(bundle.get());
   const PolicyBundle kEmptyBundle;
@@ -229,9 +227,8 @@ TEST_F(ConfigDirPolicyLoaderTest, ReadPrefsMergePrefs) {
   for (unsigned int i = 5; i <= 8; ++i)
     harness_.WriteConfigFile(test_dict_bar, base::UintToString(i));
 
-  ConfigDirPolicyLoader loader(
-      scoped_task_environment_.GetMainThreadTaskRunner(), harness_.test_dir(),
-      POLICY_SCOPE_USER);
+  ConfigDirPolicyLoader loader(loop_.task_runner(), harness_.test_dir(),
+                               POLICY_SCOPE_USER);
   std::unique_ptr<PolicyBundle> bundle(loader.Load());
   ASSERT_TRUE(bundle.get());
   PolicyBundle expected_bundle;

@@ -95,10 +95,8 @@ const AtomicString& PointerEventNameForTouchPointState(
 }
 
 float GetPointerEventPressure(float force, int buttons) {
-  if (!buttons)
-    return 0;
   if (std::isnan(force))
-    return 0.5;
+    return buttons ? 0.5 : 0;
   return force;
 }
 

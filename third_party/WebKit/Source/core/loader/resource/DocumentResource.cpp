@@ -57,14 +57,14 @@ DEFINE_TRACE(DocumentResource) {
   Resource::Trace(visitor);
 }
 
-void DocumentResource::NotifyFinished() {
+void DocumentResource::CheckNotify() {
   if (Data() && MimeTypeAllowed()) {
     // We don't need to create a new frame because the new document belongs to
     // the parent UseElement.
     document_ = CreateDocument(GetResponse().Url());
     document_->SetContent(DecodedText());
   }
-  Resource::NotifyFinished();
+  Resource::CheckNotify();
 }
 
 bool DocumentResource::MimeTypeAllowed() const {

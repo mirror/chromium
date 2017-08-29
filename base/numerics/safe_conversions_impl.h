@@ -115,9 +115,7 @@ constexpr bool MustTreatAsConstexpr(const T v) {
 struct CheckOnFailure {
   template <typename T>
   static T HandleFailure() {
-#if defined(_MSC_VER)
-    __debugbreak();
-#elif defined(__GNUC__) || defined(__clang__)
+#if defined(__GNUC__) || defined(__clang__)
     __builtin_trap();
 #else
     ((void)(*(volatile char*)0 = 0));

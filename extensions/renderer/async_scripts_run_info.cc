@@ -6,7 +6,6 @@
 
 #include "base/metrics/histogram_macros.h"
 #include "content/public/renderer/render_frame.h"
-#include "extensions/renderer/scripts_run_info.h"
 
 namespace extensions {
 
@@ -35,12 +34,8 @@ void AsyncScriptsRunInfo::WillExecute(const base::TimeTicks& timestamp) {
   }
 }
 
-void AsyncScriptsRunInfo::OnCompleted(const base::TimeTicks& timestamp,
-                                      base::Optional<base::TimeDelta> elapsed) {
+void AsyncScriptsRunInfo::OnCompleted(const base::TimeTicks& timestamp) {
   last_completed_time_ = timestamp;
-  if (elapsed) {
-    ScriptsRunInfo::LogLongInjectionTaskTime(run_location_, *elapsed);
-  }
 }
 
 }  // namespace extensions

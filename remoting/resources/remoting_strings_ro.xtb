@@ -23,6 +23,7 @@ Pentru informații privind confidențialitatea, accesați Politica de confidenț
 <translation id="1520828917794284345">Redimensionați desktopul pentru a încăpea</translation>
 <translation id="154040539590487450">Pornirea serviciului de acces la distanță nu a reușit.</translation>
 <translation id="1546934824884762070">A apărut o eroare neașteptată. Raportați această problemă dezvoltatorilor.</translation>
+<translation id="1619813076098775562">Conexiunea la dispozitivul de proiecție a fost închisă.</translation>
 <translation id="1643640058022401035">Părăsind această pagină, veți încheia sesiunea Chromoting.</translation>
 <translation id="1654128982815600832">Se activează conexiunile la distanță pentru acest computer…</translation>
 <translation id="170207782578677537">Înregistrarea acestui computer nu a reușit.</translation>
@@ -40,6 +41,10 @@ Pentru informații privind confidențialitatea, accesați Politica de confidenț
 <translation id="2013996867038862849">Toți clienții împerecheați au fost șterși.</translation>
 <translation id="2038229918502634450">Gazda este în curs de repornire datorită unei schimbări de politică.</translation>
 <translation id="2046651113449445291">Următorii clienți au fost împerecheați cu acest computer și se pot conecta fără să indice un PIN. Puteți revoca oricând această permisiune, pentru fiecare client în parte sau pentru toți clienții.</translation>
+<translation id="2053901200959289492">• S-a adăugat compatibilitatea cu ferestre multiple pentru Android Nougat.
+• S-au îmbunătățit calitatea imaginii pe desktop, viteza de răspuns și consumul bateriei.
+• S-a îmbunătățit viteza de răspuns a operațiilor de tipul „dă clic-trage”.
+• S-au îmbunătățit mai multe efecte de animație pentru interfața de utilizare.</translation>
 <translation id="2078880767960296260">Proces gazdă</translation>
 <translation id="20876857123010370">Modul trackpad</translation>
 <translation id="2089514346391228378">Conexiunile la distanță pentru acest computer au fost activate.</translation>
@@ -75,7 +80,6 @@ Pentru informații privind confidențialitatea, accesați Politica de confidenț
 <translation id="2676780859508944670">Se procesează...</translation>
 <translation id="2699970397166997657">Chromoting</translation>
 <translation id="2747641796667576127">Actualizările de software au loc de obicei în mod automat, dar în anumite cazuri pot să nu reușească. Actualizarea software-ului nu trebuie să dureze mai mult de câteva minute și poate fi realizată cât timp sunteți conectat(ă) la computer de la distanță.</translation>
-<translation id="2758123043070977469">A apărut o problemă la autentificare, conectează-te din nou.</translation>
 <translation id="2803375539583399270">Introdu codul PIN</translation>
 <translation id="2841013758207633010">Oră</translation>
 <translation id="2851754573186462851">Chromium App Streaming</translation>
@@ -171,6 +175,12 @@ Pentru informații privind confidențialitatea, accesați Politica de confidenț
 <translation id="5156271271724754543">Introduceți același cod PIN în ambele casete.</translation>
 <translation id="5170982930780719864">ID de gazdă nevalid.</translation>
 <translation id="518094545883702183">Această informație este folosită numai pentru diagnosticarea problemei pe care o raportezi, este disponibilă numai pentru persoana care îți examinează raportul și nu este păstrată pentru mai mult de 30 de zile.</translation>
+<translation id="5196958630269420102">Accesează în siguranță computerele tale de pe dispozitivul iOS.
+
+• Pe fiecare dintre computerele tale, configurează accesul la distanță folosind aplicația Desktop la distanță Chrome din Magazinul web Chrome: https://chrome.google.com/remotedesktop
+• Pe dispozitivul iOS, deschide aplicația și atinge oricare dintre computerele tale online pentru a te conecta.
+
+Pentru informații privind confidențialitatea, accesează Politica de confidențialitate Google (http://goo.gl/SyrVzj) și Politica de confidențialitate Chrome (http://goo.gl/0uXE5d).</translation>
 <translation id="5204575267916639804">Întrebări frecvente</translation>
 <translation id="5222676887888702881">Deconectează-te</translation>
 <translation id="5254120496627797685">Părăsind această pagină, veți încheia sesiunea Desktop la distanță Chrome.</translation>
@@ -183,6 +193,7 @@ Pentru informații privind confidențialitatea, accesați Politica de confidenț
 <translation id="5419418238395129586">Ultima dată online: <ph name="DATE" /></translation>
 <translation id="544077782045763683">Gazda a fost închisă.</translation>
 <translation id="5510035215749041527">Deconectează acum</translation>
+<translation id="5537725057119320332">Proiectează</translation>
 <translation id="5593560073513909978">Serviciul este temporar indisponibil. Încercați din nou mai târziu.</translation>
 <translation id="5601503069213153581">Cod PIN</translation>
 <translation id="5619148062500147964">La acest computer</translation>
@@ -191,10 +202,10 @@ Pentru informații privind confidențialitatea, accesați Politica de confidenț
 <translation id="5708869785009007625">În prezent, accesul la desktopul dvs. este permis pentru <ph name="USER" />.</translation>
 <translation id="5773590752998175013">Data împerecherii</translation>
 <translation id="579702532610384533">Reconectează-te</translation>
-<translation id="5810269635982033450">Ecranul funcționează ca un trackpad</translation>
 <translation id="5841343754884244200">Opțiuni de afișare</translation>
 <translation id="5843054235973879827">De ce este această operație sigură?</translation>
 <translation id="5859141382851488196">Fereastră nouă...</translation>
+<translation id="5885438903806970186">Online.</translation>
 <translation id="6011539954251327702">Utilizând Chromoting, puteți permite accesul în siguranță la computerul dvs. pe web. Ambii utilizatori trebuie să ruleze aplicația Chromoting, care poate fi găsită la <ph name="URL" />.</translation>
 <translation id="6033507038939587647">Opțiuni pentru tastatură</translation>
 <translation id="6040143037577758943">Închide</translation>
@@ -224,6 +235,11 @@ Pentru informații privind confidențialitatea, accesați Politica de confidenț
 <translation id="6570205395680337606">Resetează aplicația. Orice conținut nesalvat se va pierde.</translation>
 <translation id="6572345186230665992">Pentru Mac (OS X Mavericks 10.9 și versiuni ulterioare)</translation>
 <translation id="6583902294974160967">Asistență</translation>
+<translation id="6598484667010442494">Desktop la distanță Chrome
+Desktop la distanță
+PC la distanță
+Computer la distanță
+Acces la distanță</translation>
 <translation id="6612717000975622067">Trimite Ctrl-Alt-Del</translation>
 <translation id="6668065415969892472">Codul PIN a fost actualizat.</translation>
 <translation id="6681800064886881394">Copyright 2013 Google Inc. Toate drepturile rezervate.</translation>
@@ -243,7 +259,7 @@ Pentru informații privind confidențialitatea, accesați Politica de confidenț
 <translation id="7019153418965365059">Eroare nerecunoscută a gazdei: <ph name="HOST_OFFLINE_REASON" />.</translation>
 <translation id="701976023053394610">Asistență la distanță</translation>
 <translation id="7038683108611689168">Ajutați-ne să îmbunătățim Chromoting, permițându-ne să colectăm statistici de utilizare și rapoarte de blocare.</translation>
-<translation id="7067321367069083429">Ecranul funcționează ca un ecran tactil</translation>
+<translation id="712467900648340229">Nu s-a putut stabili conexiunea la dispozitivul de proiecție.</translation>
 <translation id="7144878232160441200">Reîncearcă</translation>
 <translation id="7149517134817561223">Aplicație pentru emiterea de comenzi către gazda Desktop la distanță Chrome.</translation>
 <translation id="7215059001581613786">Introduceți un cod PIN format din cel puțin șase cifre.</translation>

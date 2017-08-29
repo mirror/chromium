@@ -22,9 +22,6 @@ SDK.ServiceWorkerCacheModel = class extends SDK.SDKModel {
 
     this._securityOriginManager = target.model(SDK.SecurityOriginManager);
 
-    this._originsUpdated = new Set();
-    this._throttler = new Common.Throttler(2000);
-
     /** @type {boolean} */
     this._enabled = false;
   }
@@ -231,8 +228,8 @@ SDK.ServiceWorkerCacheModel = class extends SDK.SDKModel {
       return;
     }
     var entries = response.cacheDataEntries.map(
-        dataEntry =>
-            new SDK.ServiceWorkerCacheModel.Entry(dataEntry.request, dataEntry.response, dataEntry.responseTime));
+        dataEntry => new SDK.ServiceWorkerCacheModel.Entry(
+            dataEntry.request, dataEntry.response, new Date(dataEntry.responseTime * 1000).toLocaleString()));
     callback(entries, response.hasMore);
   }
 
@@ -241,13 +238,7 @@ SDK.ServiceWorkerCacheModel = class extends SDK.SDKModel {
    * @override
    */
   cacheStorageListUpdated(origin) {
-    this._originsUpdated.add(origin);
-
-    this._throttler.schedule(() => {
-      var promises = Array.from(this._originsUpdated, origin => this._loadCacheNames(origin));
-      this._originsUpdated.clear();
-      return Promise.all(promises);
-    });
+    this.dispatchEventToListeners(SDK.ServiceWorkerCacheModel.Events.CacheStorageListUpdated, {origin: origin});
   }
 
   /**
@@ -267,6 +258,7 @@ SDK.SDKModel.register(SDK.ServiceWorkerCacheModel, SDK.Target.Capability.Browser
 SDK.ServiceWorkerCacheModel.Events = {
   CacheAdded: Symbol('CacheAdded'),
   CacheRemoved: Symbol('CacheRemoved'),
+  CacheStorageListUpdated: Symbol('CacheStorageListUpdated'),
   CacheStorageContentUpdated: Symbol('CacheStorageContentUpdated')
 };
 
@@ -277,12 +269,12 @@ SDK.ServiceWorkerCacheModel.Entry = class {
   /**
    * @param {string} request
    * @param {string} response
-   * @param {number} timestamp
+   * @param {string} responseTime
    */
-  constructor(request, response, timestamp) {
+  constructor(request, response, responseTime) {
     this.request = request;
     this.response = response;
-    this.timestamp = timestamp;
+    this.responseTime = responseTime;
   }
 };
 

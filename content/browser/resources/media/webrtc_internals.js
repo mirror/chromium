@@ -327,7 +327,7 @@ function removeGetUserMediaForRenderer(data) {
  * cancelled, i.e. recordings have not been enabled.
  */
 function audioDebugRecordingsFileSelectionCancelled() {
-  dumpCreator.clearAudioDebugRecordingsCheckbox();
+  dumpCreator.disableAudioDebugRecordings();
 }
 
 
@@ -336,23 +336,12 @@ function audioDebugRecordingsFileSelectionCancelled() {
  * cancelled, i.e. recordings have not been enabled.
  */
 function eventLogRecordingsFileSelectionCancelled() {
-  dumpCreator.clearEventLogRecordingsCheckbox();
+  dumpCreator.disableEventLogRecordings();
 }
 
-
 /**
- * Notification that audio debug recordings are enabled. Used e.g. on page load
- * to update the UI to reflect the recording state.
+ * Set
  */
-function setAudioDebugRecordingsEnabled() {
-  dumpCreator.setAudioDebugRecordingsCheckbox();
-}
-
-
-/**
- * Notification that event log recordings are enabled. Used e.g. on page load
- * to update the UI to reflect the recording state.
- */
-function setEventLogRecordingsEnabled() {
-  dumpCreator.setEventLogRecordingsCheckbox();
+function enableAudioDebugRecordings() {
+  dumpCreator.enableAudioDebugRecordings();
 }

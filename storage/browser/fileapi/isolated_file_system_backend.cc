@@ -64,13 +64,17 @@ bool IsolatedFileSystemBackend::CanHandleType(FileSystemType type) const {
 void IsolatedFileSystemBackend::Initialize(FileSystemContext* context) {
 }
 
-void IsolatedFileSystemBackend::ResolveURL(const FileSystemURL& url,
-                                           OpenFileSystemMode mode,
-                                           OpenFileSystemCallback callback) {
+void IsolatedFileSystemBackend::ResolveURL(
+    const FileSystemURL& url,
+    OpenFileSystemMode mode,
+    const OpenFileSystemCallback& callback) {
   // We never allow opening a new isolated FileSystem via usual ResolveURL.
   base::ThreadTaskRunnerHandle::Get()->PostTask(
-      FROM_HERE, base::BindOnce(std::move(callback), GURL(), std::string(),
-                                base::File::FILE_ERROR_SECURITY));
+      FROM_HERE,
+      base::Bind(callback,
+                 GURL(),
+                 std::string(),
+                 base::File::FILE_ERROR_SECURITY));
 }
 
 AsyncFileUtil* IsolatedFileSystemBackend::GetAsyncFileUtil(

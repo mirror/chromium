@@ -30,12 +30,6 @@ function FileTapHandler() {
    * @type {boolean}
    * @private
    */
-  this.isTwoFingerTap_ = false;
-
-  /**
-   * @type {boolean}
-   * @private
-   */
   this.hasLongPressProcessed_ = false;
 
   /**
@@ -65,14 +59,7 @@ function FileTapHandler() {
    * @type {number|undefined}
    * @private
    */
-  this.activeTouchId_ = undefined;
-
-  /**
-   * The index of the item which is being touched by the active touch. This is
-   * valid only when |activeTouchId_| is defined.
-   * @type {number}
-   */
-  this.activeItemIndex_ = -1;
+  this.activeTouch_ = undefined;
 }
 
 /**
@@ -100,8 +87,7 @@ FileTapHandler.MAX_TRACKING_FOR_TAP_ = 8;
 FileTapHandler.TapEvent = {
   TAP: 'tap',
   LONG_PRESS: 'longpress',
-  LONG_TAP: 'longtap',
-  TWO_FINGER_TAP: 'twofingertap'
+  LONG_TAP: 'longtap'
 };
 
 /**
@@ -114,37 +100,33 @@ FileTapHandler.TapEvent = {
  * @param {function(!Event, number, !FileTapHandler.TapEvent)} callback called
  *     when a tap event is detected. Should return ture if it has taken any
  *     action, and false if it ignroes the event.
- * @return {boolean} true if a tap or longtap event was detected and the
- *     callback processed it. False otherwise.
  */
 FileTapHandler.prototype.handleTouchEvents = function(event, index, callback) {
   switch (event.type) {
     case 'touchstart':
-      // Only track the position of the single touch. However, we detect a
-      // two-finger tap for opening a context menu of the target.
-      if (event.touches.length == 2) {
-        this.isTwoFingerTap_ = true;
-        return false;
-      } else if (event.touches.length > 2) {
-        this.tapStarted_ = false;
-        return false;
-      }
+      // Only process single touches.  If there is already a touch happening, or
+      // two simultaneous touches then just ignore them.
+      if (event.touches.length > 1)
+        // Note that we could cancel an active touch here.  That would make
+        // simultaneous touch behave similar to near-simultaneous. However, if
+        // the user is dragging something, an accidental second touch could be
+        // quite disruptive if it cancelled their drag.  Better to just ignore
+        // it.
+        return;
 
       // It's still possible there could be an active "touch" if the user is
       // simultaneously using a mouse and a touch input.
       // TODO(yamaguchi): add this after adding handler for touchcancel that
-      // can reset this.activeTouchId_ to undefined.
-      // if (this.activeTouchId_ !== undefined)
+      // can reset this.activeTouch_ to undefined.
+      // if (this.activeTouch_ !== undefined)
       //   return;
       var touch = event.targetTouches[0];
-      this.activeTouchId_ = touch.identifier;
+      this.activeTouch_ = touch.identifier;
       this.startTouchX_ = this.lastTouchX_ = touch.clientX;
       this.startTouchY_ = this.lastTouchY_ = touch.clientY;
 
       this.tapStarted_ = true;
-      this.activeItemIndex_ = index;
       this.isLongTap_ = false;
-      this.isTwoFingerTap_ = false;
       this.hasLongPressProcessed_ = false;
       this.longTapDetectorTimerId_ = setTimeout(function() {
         this.longTapDetectorTimerId_ = -1;
@@ -158,8 +140,8 @@ FileTapHandler.prototype.handleTouchEvents = function(event, index, callback) {
       break;
 
     case 'touchmove':
-      if (this.activeTouchId_ === undefined)
-        break;
+      assert(this.findActiveTouch_(event.touches), 'Missing touchEnd');
+
       var touch = this.findActiveTouch_(event.changedTouches);
       if (!touch)
         break;
@@ -186,8 +168,6 @@ FileTapHandler.prototype.handleTouchEvents = function(event, index, callback) {
       break;
 
     case 'touchend':
-      // Mark as no longer being touched
-      this.activeTouchId_ = undefined;
       if (this.longTapDetectorTimerId_ != -1) {
         clearTimeout(this.longTapDetectorTimerId_);
         this.longTapDetectorTimerId_ = -1;
@@ -195,31 +175,19 @@ FileTapHandler.prototype.handleTouchEvents = function(event, index, callback) {
       if (!this.tapStarted_)
         break;
       if (this.isLongTap_) {
-        // The item at the touch start position is treated as the target item,
-        // rather than the one at the touch end position. Note that |index| is
-        // the latter.
         if (this.hasLongPressProcessed_ ||
-            callback(
-                event, this.activeItemIndex_,
-                FileTapHandler.TapEvent.LONG_TAP)) {
+            callback(event, index, FileTapHandler.TapEvent.LONG_TAP)) {
           event.preventDefault();
-          return true;
         }
       } else {
-        // The item at the touch start position of the active touch is treated
-        // as the target item. In case of the two-finger tap, the first touch
-        // point points to the target.
-        if (callback(
-                event, this.activeItemIndex_,
-                this.isTwoFingerTap_ ? FileTapHandler.TapEvent.TWO_FINGER_TAP :
-                                       FileTapHandler.TapEvent.TAP)) {
+        if (callback(event, index, FileTapHandler.TapEvent.TAP)) {
           event.preventDefault();
-          return true;
         }
       }
+      // Mark as no longer being touched
+      this.activeTouch_ = undefined;
       break;
   }
-  return false;
 };
 
 /**
@@ -231,11 +199,11 @@ FileTapHandler.prototype.handleTouchEvents = function(event, index, callback) {
  * @private
  */
 FileTapHandler.prototype.findActiveTouch_ = function(touches) {
-  assert(this.activeTouchId_ !== undefined, 'Expecting an active touch');
+  assert(this.activeTouch_ !== undefined, 'Expecting an active touch');
   // A TouchList isn't actually an array, so we shouldn't use
   // Array.prototype.filter/some, etc.
   for (var i = 0; i < touches.length; i++) {
-    if (touches[i].identifier == this.activeTouchId_)
+    if (touches[i].identifier == this.activeTouch_)
       return touches[i];
   }
   return undefined;

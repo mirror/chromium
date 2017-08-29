@@ -760,12 +760,6 @@ void Layer::SetFallbackSurface(const viz::SurfaceInfo& surface_info) {
     mirror->dest()->SetFallbackSurface(surface_info);
 }
 
-const viz::SurfaceInfo* Layer::GetPrimarySurfaceInfo() const {
-  if (surface_layer_)
-    return &surface_layer_->primary_surface_info();
-  return nullptr;
-}
-
 const viz::SurfaceInfo* Layer::GetFallbackSurfaceInfo() const {
   if (surface_layer_)
     return &surface_layer_->fallback_surface_info();
@@ -921,8 +915,7 @@ void Layer::OnDelegatedFrameDamage(const gfx::Rect& damage_rect_in_dip) {
 }
 
 void Layer::SetDidScrollCallback(
-    base::Callback<void(const gfx::ScrollOffset&, const cc::ElementId&)>
-        callback) {
+    base::Callback<void(const gfx::ScrollOffset&)> callback) {
   cc_layer_->set_did_scroll_callback(std::move(callback));
 }
 

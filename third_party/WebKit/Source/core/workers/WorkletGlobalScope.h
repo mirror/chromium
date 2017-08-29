@@ -25,7 +25,6 @@ class EventQueue;
 class Modulator;
 class WorkletModuleResponsesMap;
 class WorkletPendingTasks;
-class WorkerReportingProxy;
 
 class CORE_EXPORT WorkletGlobalScope
     : public GarbageCollectedFinalized<WorkletGlobalScope>,
@@ -109,8 +108,7 @@ class CORE_EXPORT WorkletGlobalScope
                      const String& user_agent,
                      RefPtr<SecurityOrigin>,
                      v8::Isolate*,
-                     WorkerClients*,
-                     WorkerReportingProxy&);
+                     WorkerClients*);
 
  private:
   const KURL& VirtualURL() const final { return url_; }

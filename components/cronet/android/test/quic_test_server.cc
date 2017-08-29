@@ -2,6 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+#include "quic_test_server.h"
+
 #include "base/android/jni_android.h"
 #include "base/android/jni_string.h"
 #include "base/android/path_utils.h"
@@ -108,6 +110,10 @@ void ShutdownQuicTestServer(JNIEnv* env,
 
 int GetServerPort(JNIEnv* env, const JavaParamRef<jclass>& /*jcaller*/) {
   return kServerPort;
+}
+
+bool RegisterQuicTestServer(JNIEnv* env) {
+  return RegisterNativesImpl(env);
 }
 
 }  // namespace cronet

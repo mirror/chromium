@@ -194,7 +194,7 @@
 <translation id="187819629719252111">Permet que <ph name="PRODUCT_NAME" /> mostri diàlegs de selecció de fitxers per permetre l'accés als fitxers locals de l'equip. Si activeu aquest paràmetre, els usuaris podran obrir els diàlegs de selecció de fitxers de la manera habitual. Si el desactiveu, cada vegada que un usuari dugui a terme una acció que provoqui l'obertura d'un diàleg de selecció de fitxers (com ara la importació d'adreces d'interès, la càrrega de fitxers, el desament d'enllaços, etc.), li apareixerà un missatge que serà com si l'usuari fes clic a Cancel·la al diàleg de selecció de fitxers. Si no definiu aquest paràmetre, els usuaris podran obrir diàlegs de selecció de fitxers de la manera habitual.</translation>
 <translation id="1879485426724769439">Especifica la zona horària del dispositiu. Els usuaris poden canviar-la a la sessió en curs, però es torna a restablir en tancar la sessió. Si es proporciona un valor que no és vàlid, la política s'activa de tota manera amb la zona horària GMT. Si es proporciona una cadena buida, la política s'ignora.
 
-      Si no es fa servir aquesta política, es continua utilitzant la zona horària activa en aquell moment, tot i que els usuaris poden canviar-la permanentment. Per tant, els canvis que fan els usuaris afecten la pantalla d'inici de sessió i la resta d'usuaris.
+      Si no es fa servir aquesta política, es continua utilitzant la zona horària activa en aquell moment, tot i que els usuaris poden canviar-la de manera permanent. Per tant, els canvis que fan els usuaris afecten la pantalla d'inici de sessió i la resta d'usuaris.
 
       La zona horària predeterminada als dispositius nous és US/Pacific.
 
@@ -561,6 +561,7 @@ Cada entrada de la llista especifica un identificador, que s'utilitza internamen
       Si la política no s'estableix o s'estableix en "false", els sistemes de xifratge DHE de TLS no s'activaran. En cas contrari, es pot establir en "true" per activar els sistemes de xifratge DHE i conservar la compatibilitat amb un servidor obsolet. Es tracta d'una mesura temporal i el servidor s'ha de tornar a configurar.
 
       Es recomana migrar els servidors a sistemes de xifratge ECDHE. Si no estan disponibles, assegura't que s'activi un sistema de xifratge que utilitzi un intercanvi de clau RSA.</translation>
+<translation id="3153348162326497318">Us permet especificar quines extensions NO poden instal·lar els usuaris. Les extensions ja instal·lades s'eliminaran si apareixen a la llista negra. Un valor de llista negra de "*" significa que totes les extensions apareixen a la llista negra llevat que apareguin explícitament a la llista blanca. Si no s'ha definit aquesta política, l'usuari podrà instal·lar qualsevol extensió a <ph name="PRODUCT_NAME" />.</translation>
 <translation id="316778957754360075">Aquesta versió no està disponible des de la versió 29 de <ph name="PRODUCT_NAME" />. La manera recomanada de definir col·leccions d'aplicacions/extensions allotjades per una organització és incloure el lloc que allotja els paquets CRX a ExtensionInstallSources i col·locar enllaços de baixada directa als paquets en una pàgina web. Es pot crear un menú d'aplicacions per a la pàgina web mitjançant la política ExtensionInstallForcelist.</translation>
 <translation id="3185009703220253572">des de la versió <ph name="SINCE_VERSION" /></translation>
 <translation id="3187220842205194486">Les aplicacions per a Android no poden obtenir accés a les claus corporatives. Aquesta política no hi té cap efecte.</translation>
@@ -897,7 +898,7 @@ Si es desactiva aquest paràmetre, els usuaris no podran activar el servidor int
 
       Aquesta política permet que els administradors tornin a activar funcions obsoletes de la plataforma web durant un temps limitat. Les funcions s'identifiquen amb una etiqueta de cadena i les funcions que corresponen a les etiquetes incloses a la llista especificada per aquesta política es tornen a activar.
 
-      Si aquesta política no s'estableix o si la llista és buida o no coincideix amb cap de les etiquetes de cadena admeses, totes les funcions obsoletes de la plataforma web continuaran desactivades.
+      Si aquesta política no s'estableix o si la llista està buida o no coincideix amb cap de les etiquetes de cadena admeses, totes les funcions obsoletes de la plataforma web continuaran desactivades.
 
       Tot i que la política s'admet en les plataformes anteriors, pot ser que la funció que activi no estigui disponible en totes les plataformes. No totes les funcions obsoletes de la plataforma web es poden tornar a activar; només les que s'indiquin explícitament a continuació durant un període de temps limitat, que varia segons la funció. El format general de l'etiqueta de cadena és el següent: [FuncióObsoleta]_EffectiveUntil[aaaammdd]. Com a referència, podeu consultar la finalitat dels canvis de la funció de la plataforma web a la pàgina https://bit.ly/blinkintents.
       </translation>
@@ -1288,7 +1289,7 @@ Si aquesta política no es defineix o no s'activa, les ordres d'impressió faran
 <translation id="6074963268421707432">No permetis que cap lloc mostri notificacions d'escriptori</translation>
 <translation id="6076099373507468537">Defineix la llista de dispositius USB que està permès separar del controlador de kernel per tal d'utilitzar-los mitjançant l'API de chrome.usb directament dins d'una aplicació web. Les entrades són parells formats per l'identificador del producte i l'identificador del proveïdor dels USB, que permeten identificar un maquinari concret.
 
-      Si aquesta política no està configurada, la llista de dispositius USB que es poden separar és buida.</translation>
+      Si aquesta política no està configurada, la llista de dispositius USB que es poden separar està buida.</translation>
 <translation id="6093156968240188330">Permet que els usuaris remots interaccionin amb les finestres amb privilegis restringits en sessions d'assistència remota</translation>
 <translation id="6095999036251797924">Especifica la quantitat de temps que ha de passar sense cap interacció de l'usuari abans que la pantalla no es bloquegi quan s'utilitza amb connexió a la corrent CA o amb una bateria.
 
@@ -1426,7 +1427,7 @@ Si aquesta política no es defineix o no s'activa, les ordres d'impressió faran
 
       Els URL amb esquemes d'aquesta llista no es carregaran i no s'hi podrà navegar.
 
-      Si no s'estableix aquesta política o la llista és buida, es podrà accedir a tots els esquemes a <ph name="PRODUCT_NAME" />.</translation>
+      Si no s'estableix aquesta política o la llista està buida, es podrà accedir a tots els esquemes a <ph name="PRODUCT_NAME" />.</translation>
 <translation id="6652197835259177259">Configuració dels usuaris gestionats localment</translation>
 <translation id="6654559957643809067">Activa la predicció de xarxa a <ph name="PRODUCT_NAME" /> i impedeix que els usuaris canviïn aquesta opció de configuració.
 
@@ -1768,7 +1769,7 @@ Si aquesta política no es defineix o no s'activa, les ordres d'impressió faran
 <translation id="7953256619080733119">Amfitrions d'excepcions manuals d'usuari gestionat</translation>
 <translation id="7971839631300653352">SSL 3.0</translation>
 <translation id="7974114691960514888">Aquesta política ja no és compatible. Activa l'ús de servidors STUN i de relé quan us connecteu a un client remot. Si s'activa aquest paràmetre, aquest equip pot descobrir i connectar-se a equips amfitrions remots, fins i tot si estan separats per un tallafoc. Si es desactiva aquest paràmetre i el tallafoc filtra les connexions UDP de sortida, aquest equip només es podrà connectar als equips amfitrions de la xarxa local.</translation>
-<translation id="7976157349247117979">Nom de la destinació per a <ph name="PRODUCT_NAME" /></translation>
+<translation id="7976157349247117979">Nom de la destinació de: <ph name="PRODUCT_NAME" /></translation>
 <translation id="7980227303582973781">Sense restriccions especials</translation>
 <translation id="7985242821674907985"><ph name="PRODUCT_NAME" /></translation>
 <translation id="802147957407376460">Gira la pantalla 0 graus</translation>

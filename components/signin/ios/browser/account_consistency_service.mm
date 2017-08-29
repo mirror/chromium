@@ -56,8 +56,7 @@ class AccountConsistencyHandler : public web::WebStatePolicyDecider {
 
  private:
   // web::WebStatePolicyDecider override
-  bool ShouldAllowResponse(NSURLResponse* response,
-                           bool for_main_frame) override;
+  bool ShouldAllowResponse(NSURLResponse* response) override;
   void WebStateDestroyed() override;
 
   AccountConsistencyService* account_consistency_service_;  // Weak.
@@ -76,8 +75,7 @@ AccountConsistencyHandler::AccountConsistencyHandler(
       account_reconcilor_(account_reconcilor),
       delegate_(delegate) {}
 
-bool AccountConsistencyHandler::ShouldAllowResponse(NSURLResponse* response,
-                                                    bool for_main_frame) {
+bool AccountConsistencyHandler::ShouldAllowResponse(NSURLResponse* response) {
   NSHTTPURLResponse* http_response =
       base::mac::ObjCCast<NSHTTPURLResponse>(response);
   if (!http_response)

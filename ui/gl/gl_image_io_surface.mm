@@ -14,7 +14,6 @@
 #include "base/trace_event/memory_dump_manager.h"
 #include "base/trace_event/process_memory_dump.h"
 #include "base/trace_event/trace_event.h"
-#include "ui/gfx/color_space.h"
 #include "ui/gl/gl_bindings.h"
 #include "ui/gl/gl_context.h"
 #include "ui/gl/scoped_binders.h"
@@ -299,8 +298,7 @@ bool GLImageIOSurface::CopyTexImage(unsigned target) {
   GLContext* gl_context = GLContext::GetCurrent();
   DCHECK(gl_context);
 
-  YUVToRGBConverter* yuv_to_rgb_converter =
-      gl_context->GetYUVToRGBConverter(color_space_for_yuv_to_rgb_);
+  YUVToRGBConverter* yuv_to_rgb_converter = gl_context->GetYUVToRGBConverter();
   DCHECK(yuv_to_rgb_converter);
 
   // Note that state restoration is done explicitly instead of scoped binders to
@@ -405,13 +403,6 @@ bool GLImageIOSurface::EmulatingRGB() const {
 
 bool GLImageIOSurface::CanCheckIOSurfaceIsInUse() const {
   return !cv_pixel_buffer_;
-}
-
-void GLImageIOSurface::SetColorSpaceForYUVToRGBConversion(
-    const gfx::ColorSpace& color_space) {
-  DCHECK(color_space.IsValid());
-  DCHECK_NE(color_space, color_space.GetAsFullRangeRGB());
-  color_space_for_yuv_to_rgb_ = color_space;
 }
 
 base::ScopedCFTypeRef<IOSurfaceRef> GLImageIOSurface::io_surface() {

@@ -147,6 +147,7 @@
 #include "content/common/service_manager/service_manager_connection_impl.h"
 #include "content/common/site_isolation_policy.h"
 #include "content/common/view_messages.h"
+#include "content/common/worker_url_loader_factory_provider.mojom.h"
 #include "content/public/browser/browser_context.h"
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/content_browser_client.h"
@@ -699,6 +700,52 @@ void ForwardShapeDetectionRequest(R request) {
                            std::move(request));
 }
 
+class WorkerURLLoaderFactoryProviderImpl
+    : public mojom::WorkerURLLoaderFactoryProvider {
+ public:
+  static void Create(
+      int render_process_id,
+      scoped_refptr<ResourceMessageFilter> resource_message_filter,
+      scoped_refptr<ServiceWorkerContextWrapper> service_worker_context,
+      mojom::WorkerURLLoaderFactoryProviderRequest request) {
+    DCHECK(base::FeatureList::IsEnabled(features::kOffMainThreadFetch));
+    mojo::MakeStrongBinding(
+        base::MakeUnique<WorkerURLLoaderFactoryProviderImpl>(
+            render_process_id, resource_message_filter->GetWeakPtr(),
+            std::move(service_worker_context)),
+        std::move(request));
+  }
+  WorkerURLLoaderFactoryProviderImpl(
+      int render_process_id,
+      base::WeakPtr<ResourceMessageFilter> resource_message_filter,
+      scoped_refptr<ServiceWorkerContextWrapper> service_worker_context)
+      : render_process_id_(render_process_id),
+        url_loader_factory_binding_(resource_message_filter.get()),
+        service_worker_context_(std::move(service_worker_context)) {}
+  ~WorkerURLLoaderFactoryProviderImpl() override {}
+
+  void GetURLLoaderFactoryAndRegisterClient(
+      mojom::URLLoaderFactoryAssociatedRequest loader_request,
+      mojom::ServiceWorkerWorkerClientAssociatedPtrInfo client_ptr_info,
+      int service_worker_provider_id) override {
+    url_loader_factory_binding_.Bind(std::move(loader_request));
+    service_worker_context_->BindWorkerFetchContext(render_process_id_,
+                                                    service_worker_provider_id,
+                                                    std::move(client_ptr_info));
+  }
+
+  void GetURLLoaderFactory(
+      mojom::URLLoaderFactoryAssociatedRequest loader_request) override {
+    url_loader_factory_binding_.Bind(std::move(loader_request));
+  }
+
+ private:
+  const int render_process_id_;
+  mojo::AssociatedBinding<mojom::URLLoaderFactory> url_loader_factory_binding_;
+
+  scoped_refptr<ServiceWorkerContextWrapper> service_worker_context_;
+};
+
 class RenderProcessHostIsReadyObserver : public RenderProcessHostObserver {
  public:
   RenderProcessHostIsReadyObserver(RenderProcessHost* render_process_host,
@@ -725,8 +772,8 @@ class RenderProcessHostIsReadyObserver : public RenderProcessHostObserver {
   void PostTask() {
     BrowserThread::PostTask(
         BrowserThread::UI, FROM_HERE,
-        base::BindOnce(&RenderProcessHostIsReadyObserver::CallTask,
-                       weak_factory_.GetWeakPtr()));
+        base::Bind(&RenderProcessHostIsReadyObserver::CallTask,
+                   weak_factory_.GetWeakPtr()));
   }
 
   void CallTask() {
@@ -1023,9 +1070,7 @@ void CopyFeatureSwitch(const base::CommandLine& src,
 
 }  // namespace
 
-RendererMainThreadFactoryFunction g_renderer_main_thread_factory = nullptr;
-RenderProcessHostImpl::CreateStoragePartitionServiceFunction
-    g_create_storage_partition = nullptr;
+RendererMainThreadFactoryFunction g_renderer_main_thread_factory = NULL;
 
 base::MessageLoop* g_in_process_thread;
 
@@ -1251,13 +1296,9 @@ RenderProcessHostImpl::RenderProcessHostImpl(
       is_keep_alive_ref_count_disabled_(false),
       route_provider_binding_(this),
       visible_widgets_(0),
-      priority_({
-            kLaunchingProcessIsBackgrounded,
-            kLaunchingProcessIsBoostedForPendingView,
-#if defined(OS_ANDROID)
-            ChildProcessImportance::NORMAL,
-#endif
-      }),
+      is_process_backgrounded_(kLaunchingProcessIsBackgrounded),
+      boost_priority_for_pending_views_(
+          kLaunchingProcessIsBoostedForPendingView),
       id_(ChildProcessHostImpl::GenerateChildProcessUniqueId()),
       browser_context_(browser_context),
       storage_partition_impl_(storage_partition_impl),
@@ -1304,8 +1345,8 @@ RenderProcessHostImpl::RenderProcessHostImpl(
       !base::CommandLine::ForCurrentProcess()->HasSwitch(
           switches::kDisableGpuShaderDiskCache)) {
     BrowserThread::PostTask(BrowserThread::IO, FROM_HERE,
-                            base::BindOnce(&CacheShaderInfo, GetID(),
-                                           storage_partition_impl_->GetPath()));
+                            base::Bind(&CacheShaderInfo, GetID(),
+                                       storage_partition_impl_->GetPath()));
   }
 
   push_messaging_manager_.reset(new PushMessagingManager(
@@ -1349,11 +1390,6 @@ void RenderProcessHostImpl::RegisterRendererMainThreadFactory(
   g_renderer_main_thread_factory = create;
 }
 
-void RenderProcessHostImpl::SetCreateStoragePartitionServiceFunction(
-    CreateStoragePartitionServiceFunction function) {
-  g_create_storage_partition = function;
-}
-
 RenderProcessHostImpl::~RenderProcessHostImpl() {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
 #ifndef NDEBUG
@@ -1379,7 +1415,7 @@ RenderProcessHostImpl::~RenderProcessHostImpl() {
   if (!base::CommandLine::ForCurrentProcess()->HasSwitch(
           switches::kDisableGpuShaderDiskCache)) {
     BrowserThread::PostTask(BrowserThread::IO, FROM_HERE,
-                            base::BindOnce(&RemoveShaderInfo, GetID()));
+                            base::Bind(&RemoveShaderInfo, GetID()));
   }
 }
 
@@ -1898,6 +1934,15 @@ void RenderProcessHostImpl::RegisterMojoInterfaces() {
   registry->AddInterface(
       base::Bind(&metrics::CreateSingleSampleMetricsProvider));
 
+  if (base::FeatureList::IsEnabled(features::kOffMainThreadFetch)) {
+    scoped_refptr<ServiceWorkerContextWrapper> service_worker_context(
+        static_cast<ServiceWorkerContextWrapper*>(
+            storage_partition_impl_->GetServiceWorkerContext()));
+    registry->AddInterface(
+        base::Bind(&WorkerURLLoaderFactoryProviderImpl::Create, GetID(),
+                   resource_message_filter_, service_worker_context));
+  }
+
   registry->AddInterface(
       base::Bind(&CreateReportingServiceProxy, storage_partition_impl_));
 
@@ -2011,12 +2056,7 @@ void RenderProcessHostImpl::CreateStoragePartitionService(
     mojom::StoragePartitionServiceRequest request) {
   if (!base::CommandLine::ForCurrentProcess()->HasSwitch(
           switches::kDisableMojoLocalStorage)) {
-    if (g_create_storage_partition) {
-      g_create_storage_partition(this, std::move(request));
-      return;
-    }
-
-    storage_partition_impl_->Bind(id_, std::move(request));
+    storage_partition_impl_->Bind(std::move(request));
   }
 }
 
@@ -2066,7 +2106,7 @@ const base::TimeTicks& RenderProcessHostImpl::GetInitTimeForNavigationMetrics()
 }
 
 bool RenderProcessHostImpl::IsProcessBackgrounded() const {
-  return priority_.background;
+  return is_process_backgrounded_;
 }
 
 void RenderProcessHostImpl::IncrementKeepAliveRefCount() {
@@ -2120,13 +2160,15 @@ RenderProcessHostImpl::GetProcessResourceCoordinator() {
   if (!resource_coordinator::IsResourceCoordinatorEnabled()) {
     process_resource_coordinator_ =
         base::MakeUnique<resource_coordinator::ResourceCoordinatorInterface>(
-            nullptr, resource_coordinator::CoordinationUnitType::kProcess);
+            nullptr, resource_coordinator::CoordinationUnitType::kProcess,
+            base::GetProcId(GetHandle()));
   } else {
     auto* connection = ServiceManagerConnection::GetForProcess();
     process_resource_coordinator_ =
         base::MakeUnique<resource_coordinator::ResourceCoordinatorInterface>(
             connection ? connection->GetConnector() : nullptr,
-            resource_coordinator::CoordinationUnitType::kProcess);
+            resource_coordinator::CoordinationUnitType::kProcess,
+            base::GetProcId(GetHandle()));
   }
   return process_resource_coordinator_.get();
 }
@@ -2222,7 +2264,6 @@ int RenderProcessHostImpl::VisibleWidgetCount() const {
   return visible_widgets_;
 }
 
-#if defined(OS_ANDROID)
 void RenderProcessHostImpl::UpdateWidgetImportance(
     ChildProcessImportance old_value,
     ChildProcessImportance new_value) {
@@ -2248,7 +2289,6 @@ ChildProcessImportance RenderProcessHostImpl::ComputeEffectiveImportance() {
   }
   return importance;
 }
-#endif
 
 RendererAudioOutputStreamFactoryContext*
 RenderProcessHostImpl::GetRendererAudioOutputStreamFactoryContext() {
@@ -2547,7 +2587,6 @@ void RenderProcessHostImpl::PropagateBrowserCommandLineToRenderer(
     switches::kEnableLCDText,
     switches::kEnableLogging,
     switches::kEnableNetworkInformationDownlinkMax,
-    switches::kEnableOOPRasterization,
     switches::kEnablePinch,
     switches::kEnablePluginPlaceholderTesting,
     switches::kEnablePreciseMemoryInfo,
@@ -2647,7 +2686,6 @@ void RenderProcessHostImpl::PropagateBrowserCommandLineToRenderer(
     switches::kDisableWebRtcHWDecoding,
     switches::kDisableWebRtcHWEncoding,
     switches::kEnableWebRtcSrtpAesGcm,
-    switches::kEnableWebRtcSrtpEncryptedHeaders,
     switches::kEnableWebRtcStunOrigin,
     switches::kEnforceWebRtcIPPermissionCheck,
     switches::kForceWebRtcIPHandlingPolicy,
@@ -2911,10 +2949,9 @@ void RenderProcessHostImpl::OnChannelConnected(int32_t peer_pid) {
   // Inform AudioInputRendererHost about the new render process PID.
   // AudioInputRendererHost is reference counted, so its lifetime is
   // guaranteed during the lifetime of the closure.
-  BrowserThread::PostTask(
-      BrowserThread::IO, FROM_HERE,
-      base::BindOnce(&AudioInputRendererHost::set_renderer_pid,
-                     audio_input_renderer_host_, peer_pid));
+  BrowserThread::PostTask(BrowserThread::IO, FROM_HERE,
+                          base::Bind(&AudioInputRendererHost::set_renderer_pid,
+                                     audio_input_renderer_host_, peer_pid));
 }
 
 void RenderProcessHostImpl::OnChannelError() {
@@ -3000,7 +3037,7 @@ void RenderProcessHostImpl::Cleanup() {
 #endif
 
   if (!keep_alive_start_time_.is_null()) {
-    UMA_HISTOGRAM_LONG_TIMES("BrowserRenderProcessHost.KeepAliveDuration",
+    UMA_HISTOGRAM_LONG_TIMES("SharedWorker.RendererSurviveForWorkerTime",
                              base::TimeTicks::Now() - keep_alive_start_time_);
   }
 
@@ -3078,10 +3115,8 @@ void RenderProcessHostImpl::AddWidget(RenderWidgetHost* widget) {
   RenderWidgetHostImpl* widget_impl =
       static_cast<RenderWidgetHostImpl*>(widget);
   widgets_.insert(widget_impl);
-#if defined(OS_ANDROID)
   widget_importance_counts_[static_cast<size_t>(widget_impl->importance())]++;
   UpdateProcessPriority();
-#endif
 }
 
 void RenderProcessHostImpl::RemoveWidget(RenderWidgetHost* widget) {
@@ -3089,12 +3124,10 @@ void RenderProcessHostImpl::RemoveWidget(RenderWidgetHost* widget) {
       static_cast<RenderWidgetHostImpl*>(widget);
   widgets_.erase(widget_impl);
 
-#if defined(OS_ANDROID)
   ChildProcessImportance importance = widget_impl->importance();
   DCHECK(widget_importance_counts_[static_cast<size_t>(importance)]);
   widget_importance_counts_[static_cast<size_t>(importance)]--;
   UpdateProcessPriority();
-#endif
 }
 
 void RenderProcessHostImpl::SetSuddenTerminationAllowed(bool enabled) {
@@ -3131,8 +3164,8 @@ void RenderProcessHostImpl::EnableAudioDebugRecordings(
     // Not null if RenderProcessHostImpl::Init has already been called.
     BrowserThread::PostTask(
         BrowserThread::IO, FROM_HERE,
-        base::BindOnce(&AudioInputRendererHost::EnableDebugRecording,
-                       audio_input_renderer_host_, file));
+        base::Bind(&AudioInputRendererHost::EnableDebugRecording,
+                   audio_input_renderer_host_, file));
   }
 }
 
@@ -3143,9 +3176,9 @@ void RenderProcessHostImpl::DisableAudioDebugRecordings() {
   // for avoiding races between enable and disable. Nothing is done on the
   // sequence.
   GetAecDumpFileTaskRunner().PostTaskAndReply(
-      FROM_HERE, base::BindOnce(&base::DoNothing),
-      base::BindOnce(&RenderProcessHostImpl::SendDisableAecDumpToRenderer,
-                     weak_factory_.GetWeakPtr()));
+      FROM_HERE, base::Bind(&base::DoNothing),
+      base::Bind(&RenderProcessHostImpl::SendDisableAecDumpToRenderer,
+                 weak_factory_.GetWeakPtr()));
 
   // AudioInputRendererHost is reference counted, so it's lifetime is
   // guaranteed during the lifetime of the closure.
@@ -3153,8 +3186,8 @@ void RenderProcessHostImpl::DisableAudioDebugRecordings() {
     // Not null if RenderProcessHostImpl::Init has already been called.
     BrowserThread::PostTask(
         BrowserThread::IO, FROM_HERE,
-        base::BindOnce(&AudioInputRendererHost::DisableDebugRecording,
-                       audio_input_renderer_host_));
+        base::Bind(&AudioInputRendererHost::DisableDebugRecording,
+                   audio_input_renderer_host_));
   }
 }
 
@@ -3208,9 +3241,9 @@ RenderProcessHostImpl::StartRtpDump(
     return WebRtcStopRtpDumpCallback();
 
   BrowserThread::PostTask(BrowserThread::IO, FROM_HERE,
-                          base::BindOnce(&P2PSocketDispatcherHost::StartRtpDump,
-                                         p2p_socket_dispatcher_host_, incoming,
-                                         outgoing, packet_callback));
+                          base::Bind(&P2PSocketDispatcherHost::StartRtpDump,
+                                     p2p_socket_dispatcher_host_, incoming,
+                                     outgoing, packet_callback));
 
   if (stop_rtp_dump_callback_.is_null()) {
     stop_rtp_dump_callback_ =
@@ -3752,8 +3785,8 @@ void RenderProcessHostImpl::SuddenTerminationChanged(bool enabled) {
 
 void RenderProcessHostImpl::UpdateProcessPriority() {
   if (!child_process_launcher_.get() || child_process_launcher_->IsStarting()) {
-    priority_.background = kLaunchingProcessIsBackgrounded;
-    priority_.boost_for_pending_views =
+    is_process_backgrounded_ = kLaunchingProcessIsBackgrounded;
+    boost_priority_for_pending_views_ =
         kLaunchingProcessIsBoostedForPendingView;
     return;
   }
@@ -3763,29 +3796,30 @@ void RenderProcessHostImpl::UpdateProcessPriority() {
     return;
   }
 
-  const ChildProcessLauncherPriority priority = {
-    // We background a process as soon as it hosts no active audio/video streams
-    // and no visible widgets -- the callers must call this function whenever we
-    // transition in/out of those states.
-    visible_widgets_ == 0 && media_stream_count_ == 0 &&
-        !base::CommandLine::ForCurrentProcess()->HasSwitch(
-            switches::kDisableRendererBackgrounding),
-    // boost_for_pending_views
-    !!pending_views_,
-#if defined(OS_ANDROID)
-    ComputeEffectiveImportance(),
-#endif
-  };
-
+  // We background a process as soon as it hosts no active audio/video streams
+  // and no visible widgets -- the callers must call this function whenever we
+  // transition in/out of those states.
+  const bool should_background =
+      visible_widgets_ == 0 && media_stream_count_ == 0 &&
+      !base::CommandLine::ForCurrentProcess()->HasSwitch(
+          switches::kDisableRendererBackgrounding);
   const bool should_background_changed =
-      priority_.background != priority.background;
-  if (priority_ == priority)
+      is_process_backgrounded_ != should_background;
+  const bool has_pending_views = !!pending_views_;
+  const ChildProcessImportance importance = ComputeEffectiveImportance();
+
+  if (!should_background_changed &&
+      boost_priority_for_pending_views_ == has_pending_views &&
+      effective_importance_ == importance) {
     return;
+  }
 
   TRACE_EVENT2("renderer_host", "RenderProcessHostImpl::UpdateProcessPriority",
-               "should_background", priority.background, "has_pending_views",
-               priority.boost_for_pending_views);
-  priority_ = priority;
+               "should_background", should_background, "has_pending_views",
+               has_pending_views);
+  is_process_backgrounded_ = should_background;
+  boost_priority_for_pending_views_ = has_pending_views;
+  effective_importance_ = importance;
 
 #if defined(OS_WIN)
   // The cbstext.dll loads as a global GetMessage hook in the browser process
@@ -3803,13 +3837,14 @@ void RenderProcessHostImpl::UpdateProcessPriority() {
   // tasks executing at lowered priority ahead of it or simply by not being
   // swiftly scheduled by the OS per the low process priority
   // (http://crbug.com/398103).
-  child_process_launcher_->SetProcessPriority(priority_);
+  child_process_launcher_->SetProcessPriority(should_background,
+                                              has_pending_views, importance);
 
   // Notify the child process of background state. Note
-  // |priority_.boost_for_pending_views| state is not sent to renderer simply
+  // |boost_priority_for_pending_views_| state is not sent to renderer simply
   // due to lack of need.
   if (should_background_changed)
-    Send(new ChildProcessMsg_SetProcessBackgrounded(priority.background));
+    Send(new ChildProcessMsg_SetProcessBackgrounded(should_background));
 }
 
 void RenderProcessHostImpl::OnProcessLaunched() {
@@ -3822,7 +3857,7 @@ void RenderProcessHostImpl::OnProcessLaunched() {
 
   if (child_process_launcher_) {
     DCHECK(child_process_launcher_->GetProcess().IsValid());
-    DCHECK_EQ(kLaunchingProcessIsBackgrounded, priority_.background);
+    DCHECK_EQ(kLaunchingProcessIsBackgrounded, is_process_backgrounded_);
 
     // Unpause the channel now that the process is launched. We don't flush it
     // yet to ensure that any initialization messages sent here (e.g., things
@@ -3836,18 +3871,18 @@ void RenderProcessHostImpl::OnProcessLaunched() {
     }
 
     // Not all platforms launch processes in the same backgrounded state. Make
-    // sure |priority_.background| reflects this platform's initial process
+    // sure |is_process_backgrounded_| reflects this platform's initial process
     // state.
 #if defined(OS_MACOSX)
-    priority_.background =
+    is_process_backgrounded_ =
         child_process_launcher_->GetProcess().IsProcessBackgrounded(
             MachBroker::GetInstance());
 #elif defined(OS_ANDROID)
     // Android child process priority works differently and cannot be queried
     // directly from base::Process.
-    DCHECK_EQ(kLaunchingProcessIsBackgrounded, priority_.background);
+    DCHECK_EQ(kLaunchingProcessIsBackgrounded, is_process_backgrounded_);
 #else
-    priority_.background =
+    is_process_backgrounded_ =
         child_process_launcher_->GetProcess().IsProcessBackgrounded();
 #endif  // defined(OS_MACOSX)
 
@@ -3856,7 +3891,7 @@ void RenderProcessHostImpl::OnProcessLaunched() {
     // their first commit is made. A better long term solution would be to be
     // aware of the tab's visibility at this point. https://crbug.com/560446.
     // This is still needed on Android which uses
-    // |priority_.boost_for_pending_views| and requires RenderProcessHostImpl to
+    // |boost_priority_for_pending_views_| and requires RenderProcessHostImpl to
     // propagate priority changes immediately to ChildProcessLauncher.
 #if defined(OS_ANDROID)
     UpdateProcessPriority();
@@ -3887,10 +3922,6 @@ void RenderProcessHostImpl::OnProcessLaunched() {
     for (auto& observer : observers_)
       observer.RenderProcessReady(this);
   }
-
-  GetProcessResourceCoordinator()->SetProperty(
-      resource_coordinator::mojom::PropertyType::kPID,
-      base::GetProcId(GetHandle()));
 
 #if BUILDFLAG(ENABLE_WEBRTC)
   if (WebRTCInternals::GetInstance()->IsAudioDebugRecordingsEnabled()) {
@@ -4013,16 +4044,15 @@ void RenderProcessHostImpl::CreateMediaStreamDispatcherHost(
 void RenderProcessHostImpl::OnRegisterAecDumpConsumer(int id) {
   BrowserThread::PostTask(
       BrowserThread::UI, FROM_HERE,
-      base::BindOnce(&RenderProcessHostImpl::RegisterAecDumpConsumerOnUIThread,
-                     weak_factory_.GetWeakPtr(), id));
+      base::Bind(&RenderProcessHostImpl::RegisterAecDumpConsumerOnUIThread,
+                 weak_factory_.GetWeakPtr(), id));
 }
 
 void RenderProcessHostImpl::OnUnregisterAecDumpConsumer(int id) {
   BrowserThread::PostTask(
       BrowserThread::UI, FROM_HERE,
-      base::BindOnce(
-          &RenderProcessHostImpl::UnregisterAecDumpConsumerOnUIThread,
-          weak_factory_.GetWeakPtr(), id));
+      base::Bind(&RenderProcessHostImpl::UnregisterAecDumpConsumerOnUIThread,
+                 weak_factory_.GetWeakPtr(), id));
 }
 
 void RenderProcessHostImpl::RegisterAecDumpConsumerOnUIThread(int id) {

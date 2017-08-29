@@ -13,7 +13,6 @@
 #import "ios/chrome/browser/passwords/ios_chrome_password_manager_driver.h"
 #import "ios/web/public/web_state/web_state_observer_bridge.h"
 
-@protocol ApplicationCommands;
 @protocol FormInputAccessoryViewProvider;
 @protocol PasswordsUiDelegate;
 @class PasswordGenerationAgent;
@@ -30,37 +29,32 @@ class PasswordManagerDriver;
                                          PasswordManagerDriverDelegate>
 
 // An object that can provide suggestions from this PasswordController.
-@property(nonatomic, readonly) id<FormSuggestionProvider> suggestionProvider;
+@property(readonly) id<FormSuggestionProvider> suggestionProvider;
 
 // An object that can provide an input accessory view from this
 // PasswordController.
-@property(nonatomic, readonly) id<FormInputAccessoryViewProvider>
-    accessoryViewProvider;
+@property(readonly) id<FormInputAccessoryViewProvider> accessoryViewProvider;
 
 // The PasswordGenerationManager owned by this PasswordController.
-@property(nonatomic, readonly)
+@property(readonly)
     password_manager::PasswordGenerationManager* passwordGenerationManager;
 
 // The PasswordManagerClient owned by this PasswordController.
-@property(nonatomic, readonly)
+@property(readonly)
     password_manager::PasswordManagerClient* passwordManagerClient;
 
 // The PasswordManagerDriver owned by this PasswordController.
-@property(nonatomic, readonly)
+@property(readonly)
     password_manager::PasswordManagerDriver* passwordManagerDriver;
-
-// The dispatcher used for the PasswordController. This property can return nil
-// even after being set to a non-nil object.
-@property(nonatomic, weak) id<ApplicationCommands> dispatcher;
 
 // |webState| should not be nil.
 - (instancetype)initWithWebState:(web::WebState*)webState
-             passwordsUiDelegate:(id<PasswordsUiDelegate>)delegate;
+             passwordsUiDelegate:(id<PasswordsUiDelegate>)UIDelegate;
 
 // This is just for testing.
 - (instancetype)
    initWithWebState:(web::WebState*)webState
-passwordsUiDelegate:(id<PasswordsUiDelegate>)delegate
+passwordsUiDelegate:(id<PasswordsUiDelegate>)UIDelegate
              client:(std::unique_ptr<password_manager::PasswordManagerClient>)
                         passwordManagerClient NS_DESIGNATED_INITIALIZER;
 

@@ -210,7 +210,6 @@ public class PrefetchBackgroundTaskTest {
     @Test
     @SmallTest
     public void testSchedule() throws Exception {
-        PrefetchBackgroundTask.skipConditionCheckingForTesting();
         PrefetchBackgroundTask.scheduleTask(0, true);
         mScheduler.waitForTaskStarted();
         TestPrefetchBackgroundTask task = validateAndGetScheduledTask(0);
@@ -223,7 +222,6 @@ public class PrefetchBackgroundTaskTest {
     @SmallTest
     public void testScheduleWithAdditionalDelay() throws Exception {
         final int additionalDelaySeconds = 15;
-        PrefetchBackgroundTask.skipConditionCheckingForTesting();
         PrefetchBackgroundTask.scheduleTask(additionalDelaySeconds, true);
         mScheduler.waitForTaskStarted();
         TestPrefetchBackgroundTask task = validateAndGetScheduledTask(additionalDelaySeconds);
@@ -235,7 +233,6 @@ public class PrefetchBackgroundTaskTest {
     @Test
     @SmallTest
     public void testReschedule() throws Exception {
-        PrefetchBackgroundTask.skipConditionCheckingForTesting();
         PrefetchBackgroundTask.scheduleTask(0, true);
         mScheduler.waitForTaskStarted();
         TestPrefetchBackgroundTask task = validateAndGetScheduledTask(0);

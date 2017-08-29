@@ -5,13 +5,14 @@
 #import "ios/chrome/browser/ui/chrome_web_view_factory.h"
 
 #include "base/memory/ptr_util.h"
+#include "base/message_loop/message_loop.h"
 #include "base/run_loop.h"
 #include "ios/chrome/browser/browser_state/test_chrome_browser_state_isolated_context.h"
 #import "ios/chrome/browser/web/chrome_web_client.h"
 #include "ios/web/net/request_group_util.h"
 #include "ios/web/net/request_tracker_impl.h"
 #include "ios/web/public/test/scoped_testing_web_client.h"
-#include "ios/web/public/test/test_web_thread_bundle.h"
+#include "ios/web/public/test/test_web_thread.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "testing/gtest_mac.h"
 #include "testing/platform_test.h"
@@ -29,10 +30,14 @@ namespace {
 class ChromeWebViewFactoryTest : public PlatformTest {
  public:
   ChromeWebViewFactoryTest()
-      : web_client_(base::MakeUnique<ChromeWebClient>()) {}
+      : ui_thread_(web::WebThread::UI, &message_loop_),
+        io_thread_(web::WebThread::IO, &message_loop_),
+        web_client_(base::MakeUnique<ChromeWebClient>()) {}
 
  protected:
-  web::TestWebThreadBundle thread_bundle_;
+  base::MessageLoop message_loop_;
+  web::TestWebThread ui_thread_;
+  web::TestWebThread io_thread_;
   web::ScopedTestingWebClient web_client_;
   TestChromeBrowserStateWithIsolatedContext chrome_browser_state_;
 

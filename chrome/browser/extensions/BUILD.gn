@@ -22,6 +22,8 @@ static_library("extensions") {
     "../ui/toolbar/toolbar_actions_model.h",
     "../ui/toolbar/toolbar_actions_model_factory.cc",
     "../ui/toolbar/toolbar_actions_model_factory.h",
+    "../web_applications/update_shortcut_worker_win.cc",
+    "../web_applications/update_shortcut_worker_win.h",
     "../web_applications/web_app.cc",
     "../web_applications/web_app.h",
     "../web_applications/web_app_chromeos.cc",
@@ -654,10 +656,16 @@ static_library("extensions") {
     "favicon_downloader.h",
     "global_shortcut_listener.cc",
     "global_shortcut_listener.h",
+    "global_shortcut_listener_chromeos.cc",
+    "global_shortcut_listener_chromeos.h",
     "global_shortcut_listener_mac.h",
     "global_shortcut_listener_mac.mm",
+    "global_shortcut_listener_ozone.cc",
+    "global_shortcut_listener_ozone.h",
     "global_shortcut_listener_win.cc",
     "global_shortcut_listener_win.h",
+    "global_shortcut_listener_x11.cc",
+    "global_shortcut_listener_x11.h",
     "install_gate.h",
     "install_observer.cc",
     "install_observer.h",
@@ -1002,16 +1010,19 @@ static_library("extensions") {
     ]
   }
 
-  if (use_x11) {
-    sources += [
+  # chromeos uses its own global_shortcut_listener, _x11 is not necessary.
+  if (is_chromeos || !use_x11) {
+    sources -= [
       "global_shortcut_listener_x11.cc",
       "global_shortcut_listener_x11.h",
     ]
-  } else if (use_ozone) {
-    sources += [
-      "global_shortcut_listener_ozone.cc",
-      "global_shortcut_listener_ozone.h",
-    ]
+  }
+
+  if (is_chromeos && use_ozone) {
+    sources -= [ "global_shortcut_listener_chromeos.cc" ]
+  }
+  if (!use_ozone) {
+    sources -= [ "global_shortcut_listener_ozone.cc" ]
   }
 
   if (is_linux) {

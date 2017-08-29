@@ -93,11 +93,11 @@ bool RequestSender::StartRequest(Source* source,
     source_url = webframe->GetDocument().Url();
 
   InsertRequest(request_id,
-                std::make_unique<PendingRequest>(
+                base::MakeUnique<PendingRequest>(
                     name, source,
                     blink::WebUserGestureIndicator::CurrentUserGestureToken()));
 
-  auto params = std::make_unique<ExtensionHostMsg_Request_Params>();
+  auto params = base::MakeUnique<ExtensionHostMsg_Request_Params>();
   params->name = name;
   params->arguments.Swap(value_args);
   params->extension_id = context->GetExtensionID();

@@ -12,6 +12,7 @@
 #include "base/compiler_specific.h"
 #include "base/logging.h"
 #include "base/macros.h"
+#include "base/memory/ptr_util.h"
 #include "base/memory/ref_counted.h"
 #include "base/message_loop/message_loop.h"
 #include "base/rand_util.h"
@@ -83,7 +84,7 @@ class MyTestURLRequestContext : public net::TestURLRequestContext {
     context_storage_.set_host_resolver(
         net::HostResolver::CreateDefaultResolver(nullptr));
     context_storage_.set_transport_security_state(
-        std::make_unique<net::TransportSecurityState>());
+        base::MakeUnique<net::TransportSecurityState>());
     Init();
   }
 
@@ -100,7 +101,7 @@ class MyTestURLRequestContextGetter : public net::TestURLRequestContextGetter {
     // Construct |context_| lazily so it gets constructed on the right
     // thread (the IO thread).
     if (!context_)
-      context_ = std::make_unique<MyTestURLRequestContext>();
+      context_ = base::MakeUnique<MyTestURLRequestContext>();
     return context_.get();
   }
 

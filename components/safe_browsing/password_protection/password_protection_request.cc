@@ -23,21 +23,12 @@ using content::WebContents;
 
 namespace safe_browsing {
 
-namespace {
-
-// Cap on how many reused domains can be included in a report, to limit
-// the size of the report. UMA suggests 99.9% will have < 200 domains.
-const int kMaxReusedDomains = 200;
-
-}  // namespace
-
 PasswordProtectionRequest::PasswordProtectionRequest(
     WebContents* web_contents,
     const GURL& main_frame_url,
     const GURL& password_form_action,
     const GURL& password_form_frame_url,
-    bool matches_sync_password,
-    const std::vector<std::string>& matching_domains,
+    const std::string& saved_domain,
     LoginReputationClientRequest::TriggerType type,
     bool password_field_exists,
     PasswordProtectionService* pps,
@@ -46,8 +37,7 @@ PasswordProtectionRequest::PasswordProtectionRequest(
       main_frame_url_(main_frame_url),
       password_form_action_(password_form_action),
       password_form_frame_url_(password_form_frame_url),
-      matches_sync_password_(matches_sync_password),
-      matching_domains_(matching_domains),
+      saved_domain_(saved_domain),
       trigger_type_(type),
       password_field_exists_(password_field_exists),
       password_protection_service_(pps),
@@ -55,15 +45,8 @@ PasswordProtectionRequest::PasswordProtectionRequest(
       request_proto_(base::MakeUnique<LoginReputationClientRequest>()),
       weakptr_factory_(this) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
-  // TODO(nparker): Add support for setting matching_domains &&
-  // matches_sync_password at the same time, then remove the following check.
-  // Need to change how the UMA metrics are logged first.
-  DCHECK(!matches_sync_password_ || matching_domains_.size() == 0);
-
   DCHECK(trigger_type_ == LoginReputationClientRequest::UNFAMILIAR_LOGIN_PAGE ||
          trigger_type_ == LoginReputationClientRequest::PASSWORD_REUSE_EVENT);
-  DCHECK(trigger_type_ != LoginReputationClientRequest::PASSWORD_REUSE_EVENT ||
-         matches_sync_password_ || matching_domains_.size() > 0);
 }
 
 PasswordProtectionRequest::~PasswordProtectionRequest() {
@@ -163,8 +146,9 @@ void PasswordProtectionRequest::FillRequestProto() {
       main_frame->set_has_password_field(password_field_exists_);
       LoginReputationClientRequest::PasswordReuseEvent* reuse_event =
           request_proto_->mutable_password_reuse_event();
-      reuse_event->set_is_chrome_signin_password(matches_sync_password_);
-      if (matches_sync_password_) {
+      reuse_event->set_is_chrome_signin_password(
+          saved_domain_ == std::string(password_manager::kSyncPasswordDomain));
+      if (reuse_event->is_chrome_signin_password()) {
         reuse_event->set_sync_account_type(
             password_protection_service_->GetSyncAccountType());
         UMA_HISTOGRAM_ENUMERATION(
@@ -173,14 +157,11 @@ void PasswordProtectionRequest::FillRequestProto() {
             LoginReputationClientRequest::PasswordReuseEvent::
                     SyncAccountType_MAX +
                 1);
-      }
-      if (password_protection_service_->IsExtendedReporting() &&
-          !password_protection_service_->IsIncognito()) {
-        for (const auto& domain : matching_domains_) {
-          reuse_event->add_domains_matching_password(domain);
-          if (reuse_event->domains_matching_password_size() >=
-              kMaxReusedDomains)
-            break;
+      } else {
+        // TODO(nparker): Add all matching domains rather than just the first.
+        // TODO(nparker): Add domains even for is_chrome_signin_password.
+        if (password_protection_service_->IsExtendedReporting()) {
+          reuse_event->add_password_reused_original_origins(saved_domain_);
         }
       }
       break;
@@ -291,15 +272,20 @@ void PasswordProtectionRequest::OnURLFetchComplete(
     Finish(PasswordProtectionService::RESPONSE_MALFORMED, nullptr);
 }
 
+bool PasswordProtectionRequest::IsSyncPasswordReuse() const {
+  return saved_domain_ == std::string(password_manager::kSyncPasswordDomain);
+}
+
 void PasswordProtectionRequest::Finish(
     PasswordProtectionService::RequestOutcome outcome,
     std::unique_ptr<LoginReputationClientResponse> response) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
   tracker_.TryCancelAll();
+  bool is_sync_password = IsSyncPasswordReuse();
   if (trigger_type_ == LoginReputationClientRequest::UNFAMILIAR_LOGIN_PAGE) {
     UMA_HISTOGRAM_ENUMERATION(kPasswordOnFocusRequestOutcomeHistogramName,
                               outcome, PasswordProtectionService::MAX_OUTCOME);
-  } else if (matches_sync_password_) {
+  } else if (is_sync_password) {
     UMA_HISTOGRAM_ENUMERATION(kSyncPasswordEntryRequestOutcomeHistogramName,
                               outcome, PasswordProtectionService::MAX_OUTCOME);
     password_protection_service_->MaybeLogPasswordReuseLookupEvent(
@@ -318,7 +304,7 @@ void PasswordProtectionRequest::Finish(
             LoginReputationClientResponse_VerdictType_VerdictType_MAX + 1);
         break;
       case LoginReputationClientRequest::PASSWORD_REUSE_EVENT:
-        if (matches_sync_password_) {
+        if (is_sync_password) {
           UMA_HISTOGRAM_ENUMERATION(
               "PasswordProtection.Verdict.SyncProtectedPasswordEntry",
               response->verdict_type(),

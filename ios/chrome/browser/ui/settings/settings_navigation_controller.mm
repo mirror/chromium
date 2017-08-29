@@ -90,7 +90,10 @@
 // Creates an autoreleased "CANCEL" button that closes the settings when tapped.
 - (UIBarButtonItem*)cancelButton;
 
-// Intercepts some commands and forwards all others up the responder chain.
+// Intercepts the chrome command |sender|. If |sender| is an
+// |IDC_CLOSE_SETTINGS_AND_OPEN_URL| and |delegate_| is not nil, then it
+// calls [delegate closeSettingsAndOpenUrl:sender], otherwise it forwards the
+// command up the responder chain.
 - (void)chromeExecuteCommand:(id)sender;
 
 @end
@@ -128,10 +131,10 @@ newSettingsMainControllerWithBrowserState:(ios::ChromeBrowserState*)browserState
 + (SettingsNavigationController*)
 newAccountsController:(ios::ChromeBrowserState*)browserState
              delegate:(id<SettingsNavigationControllerDelegate>)delegate {
-  AccountsCollectionViewController* controller = [
-      [AccountsCollectionViewController alloc] initWithBrowserState:browserState
-                                          closeSettingsOnAddAccount:YES];
-  controller.dispatcher = [delegate dispatcherForSettings];
+  UIViewController* controller = [[AccountsCollectionViewController alloc]
+           initWithBrowserState:browserState
+      closeSettingsOnAddAccount:YES
+                     dispatcher:[delegate dispatcherForSettings]];
   SettingsNavigationController* nc = [[SettingsNavigationController alloc]
       initWithRootViewController:controller
                     browserState:browserState
@@ -144,11 +147,9 @@ newAccountsController:(ios::ChromeBrowserState*)browserState
      newSyncController:(ios::ChromeBrowserState*)browserState
 allowSwitchSyncAccount:(BOOL)allowSwitchSyncAccount
               delegate:(id<SettingsNavigationControllerDelegate>)delegate {
-  SyncSettingsCollectionViewController* controller =
-      [[SyncSettingsCollectionViewController alloc]
-            initWithBrowserState:browserState
-          allowSwitchSyncAccount:allowSwitchSyncAccount];
-  controller.dispatcher = [delegate dispatcherForSettings];
+  UIViewController* controller = [[SyncSettingsCollectionViewController alloc]
+        initWithBrowserState:browserState
+      allowSwitchSyncAccount:allowSwitchSyncAccount];
   SettingsNavigationController* nc = [[SettingsNavigationController alloc]
       initWithRootViewController:controller
                     browserState:browserState
@@ -181,10 +182,9 @@ newUserFeedbackController:(ios::ChromeBrowserState*)browserState
 newClearBrowsingDataController:(ios::ChromeBrowserState*)browserState
                       delegate:
                           (id<SettingsNavigationControllerDelegate>)delegate {
-  ClearBrowsingDataCollectionViewController* controller =
+  UIViewController* controller =
       [[ClearBrowsingDataCollectionViewController alloc]
           initWithBrowserState:browserState];
-  controller.dispatcher = [delegate dispatcherForSettings];
   SettingsNavigationController* nc = [[SettingsNavigationController alloc]
       initWithRootViewController:controller
                     browserState:browserState
@@ -197,10 +197,9 @@ newClearBrowsingDataController:(ios::ChromeBrowserState*)browserState
 newSyncEncryptionPassphraseController:(ios::ChromeBrowserState*)browserState
                              delegate:(id<SettingsNavigationControllerDelegate>)
                                           delegate {
-  SyncEncryptionPassphraseCollectionViewController* controller =
+  UIViewController* controller =
       [[SyncEncryptionPassphraseCollectionViewController alloc]
           initWithBrowserState:browserState];
-  controller.dispatcher = [delegate dispatcherForSettings];
   SettingsNavigationController* nc = [[SettingsNavigationController alloc]
       initWithRootViewController:controller
                     browserState:browserState
@@ -212,10 +211,8 @@ newSyncEncryptionPassphraseController:(ios::ChromeBrowserState*)browserState
 + (SettingsNavigationController*)
 newSavePasswordsController:(ios::ChromeBrowserState*)browserState
                   delegate:(id<SettingsNavigationControllerDelegate>)delegate {
-  SavePasswordsCollectionViewController* controller =
-      [[SavePasswordsCollectionViewController alloc]
-          initWithBrowserState:browserState];
-  controller.dispatcher = [delegate dispatcherForSettings];
+  UIViewController* controller = [[SavePasswordsCollectionViewController alloc]
+      initWithBrowserState:browserState];
 
   SettingsNavigationController* nc = [[SettingsNavigationController alloc]
       initWithRootViewController:controller
@@ -256,15 +253,14 @@ newImportDataController:(ios::ChromeBrowserState*)browserState
 + (SettingsNavigationController*)
 newAutofillController:(ios::ChromeBrowserState*)browserState
              delegate:(id<SettingsNavigationControllerDelegate>)delegate {
-  AutofillCollectionViewController* controller =
-      [[AutofillCollectionViewController alloc]
-          initWithBrowserState:browserState];
-  controller.dispatcher = [delegate dispatcherForSettings];
+  UIViewController* controller = [[AutofillCollectionViewController alloc]
+      initWithBrowserState:browserState];
 
   SettingsNavigationController* nc = [[SettingsNavigationController alloc]
       initWithRootViewController:controller
                     browserState:browserState
                         delegate:delegate];
+  [controller navigationItem].rightBarButtonItem = [nc doneButton];
 
   // Make sure the close button is always present, as the Autofill screen
   // isn't just shown from Settings.
@@ -464,9 +460,17 @@ initWithRootViewController:(UIViewController*)rootViewController
 
 - (void)chromeExecuteCommand:(id)sender {
   switch ([sender tag]) {
+    case IDC_CLOSE_SETTINGS: {
+      [delegate_ closeSettings];
+      return;
+    }
     case IDC_OPEN_URL:
       NOTREACHED() << "You should probably use the command "
                    << "IDC_CLOSE_SETTINGS_AND_OPEN_URL instead of IDC_OPEN_URL";
+    case IDC_CLOSE_SETTINGS_AND_OPEN_URL: {
+      [delegate_ closeSettingsAndOpenUrl:sender];
+      return;
+    }
     case IDC_SHOW_SIGNIN_IOS:
       // Sign-in actions can only happen on the main browser state (not on
       // incognito browser state), which is unique. The command can just be
@@ -485,19 +489,17 @@ initWithRootViewController:(UIViewController*)rootViewController
       break;
     }
     case IDC_SHOW_SYNC_SETTINGS: {
-      SyncSettingsCollectionViewController* controller =
+      UIViewController* controller =
           [[SyncSettingsCollectionViewController alloc]
                 initWithBrowserState:mainBrowserState_
               allowSwitchSyncAccount:YES];
-      controller.dispatcher = [delegate_ dispatcherForSettings];
       [self pushViewController:controller animated:YES];
       return;
     }
     case IDC_SHOW_SYNC_PASSPHRASE_SETTINGS: {
-      SyncEncryptionPassphraseCollectionViewController* controller =
+      UIViewController* controller =
           [[SyncEncryptionPassphraseCollectionViewController alloc]
               initWithBrowserState:mainBrowserState_];
-      controller.dispatcher = [delegate_ dispatcherForSettings];
       [self pushViewController:controller animated:YES];
       return;
     }
@@ -529,11 +531,10 @@ initWithRootViewController:(UIViewController*)rootViewController
 #pragma mark - ApplicationSettingsCommands
 
 - (void)showAccountsSettings {
-  AccountsCollectionViewController* controller =
-      [[AccountsCollectionViewController alloc]
-               initWithBrowserState:mainBrowserState_
-          closeSettingsOnAddAccount:NO];
-  controller.dispatcher = [delegate_ dispatcherForSettings];
+  UIViewController* controller = [[AccountsCollectionViewController alloc]
+           initWithBrowserState:mainBrowserState_
+      closeSettingsOnAddAccount:NO
+                     dispatcher:[delegate_ dispatcherForSettings]];
   [self pushViewController:controller animated:YES];
 }
 

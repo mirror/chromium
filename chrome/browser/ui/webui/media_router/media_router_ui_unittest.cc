@@ -29,6 +29,7 @@
 #include "extensions/browser/extension_registry.h"
 #include "extensions/common/extension.h"
 #include "extensions/common/extension_builder.h"
+#include "extensions/common/test_util.h"
 #include "extensions/common/value_builder.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
@@ -527,8 +528,10 @@ TEST_F(MediaRouterUITest, GetExtensionNameExtensionPresent) {
   std::unique_ptr<extensions::ExtensionRegistry> registry =
       base::MakeUnique<extensions::ExtensionRegistry>(nullptr);
   scoped_refptr<extensions::Extension> app =
-      extensions::ExtensionBuilder(
-          "test app name", extensions::ExtensionBuilder::Type::PLATFORM_APP)
+      extensions::test_util::BuildApp(extensions::ExtensionBuilder())
+          .MergeManifest(extensions::DictionaryBuilder()
+                             .Set("name", "test app name")
+                             .Build())
           .SetID(id)
           .Build();
 

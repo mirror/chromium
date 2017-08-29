@@ -22,6 +22,8 @@ namespace media {
 // be more than a single instance of this class per process.
 class MediaServerCrashListener {
  public:
+  static bool RegisterMediaServerCrashListener(JNIEnv* env);
+
   using OnMediaServerCrashCB = base::Callback<void(bool)>;
 
   // Basic constructor. |on_server_crash_cb| will be posted to

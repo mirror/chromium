@@ -83,8 +83,7 @@ AutocompleteProviderClientImpl::GetTemplateURLService() const {
 }
 
 ContextualSuggestionsService*
-AutocompleteProviderClientImpl::GetContextualSuggestionsService(
-    bool create_if_necessary) const {
+AutocompleteProviderClientImpl::GetContextualSuggestionsService() const {
   return nullptr;
 }
 

@@ -107,12 +107,7 @@ FileListSelectionController.prototype.handlePointerDownUp = function(e, index) {
 FileListSelectionController.prototype.handleTouchEvents = function(e, index) {
   if (!this.enableTouchMode_)
     return;
-  if (this.tapHandler_.handleTouchEvents(
-          e, index, filelist.handleTap.bind(this)))
-    // If a tap event is processed, FileTapHandler cancels the event to prevent
-    // triggering click events. Then it results not moving the focus to the
-    // list. So we do that here explicitly.
-    filelist.focusParentList(e);
+  this.tapHandler_.handleTouchEvents(e, index, filelist.handleTap.bind(this));
 };
 
 /** @override */
@@ -235,38 +230,13 @@ filelist.updateListItemExternalProps = function(li, externalProps) {
  * @this {cr.ui.ListSelectionController}
  */
 filelist.handleTap = function(e, index, eventType) {
-  var isTap = eventType == FileTapHandler.TapEvent.TAP ||
-      eventType == FileTapHandler.TapEvent.LONG_TAP ||
-      eventType == FileTapHandler.TapEvent.TWO_FINGER_TAP;
-  if (isTap && index == -1) {
+  if (index == -1) {
     return false;
   }
-
   var sm = /** @type {!FileListSelectionModel|!FileListSingleSelectionModel} */
       (this.selectionModel);
-  if (eventType == FileTapHandler.TapEvent.TWO_FINGER_TAP) {
-    // Prepare to open the context menu in the same manner as the right click.
-    // If the target is any of the selected files, open a one for those files.
-    // If the target is a non-selected file, cancel current selection and open
-    // context menu for the single file.
-    // Otherwise (when the target is the background), for the current folder.
-    var indexSelected = sm.getIndexSelected(index);
-    if (!indexSelected) {
-      // Prepare to open context menu of the new item by selecting only it.
-      if (sm.getCheckSelectMode()) {
-        // Unselect all items once to ensure that the check-select mode is
-        // terminated.
-        sm.unselectAll();
-      }
-      sm.beginChange();
-      sm.selectedIndex = index;
-      sm.endChange();
-    }
-
-    // Context menu will be opened for the selected files by the following
-    // 'contextmenu' event.
-    return false;
-  }
+  var isTap = eventType == FileTapHandler.TapEvent.TAP ||
+      eventType == FileTapHandler.TapEvent.LONG_TAP;
   if (eventType == FileTapHandler.TapEvent.TAP &&
       e.target.classList.contains('detail-checkmark')) {
     // Single tap on the checkbox in the list view mode should toggle select,
@@ -524,19 +494,5 @@ filelist.handleKeyDown = function(e) {
 
     if (prevent)
       e.preventDefault();
-  }
-};
-
-/**
- * Focus on the file list that contains the event target.
- * @param {!Event} event the touch event.
- */
-filelist.focusParentList = function(event) {
-  var element = event.target;
-  while (element && !(element instanceof cr.ui.List)) {
-    element = element.parentElement;
-  }
-  if (element) {
-    element.focus();
   }
 };

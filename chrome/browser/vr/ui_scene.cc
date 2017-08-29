@@ -10,48 +10,30 @@
 #include "base/memory/ptr_util.h"
 #include "base/time/time.h"
 #include "base/values.h"
-#include "chrome/browser/vr/elements/draw_phase.h"
 #include "chrome/browser/vr/elements/ui_element.h"
-#include "ui/gfx/transform.h"
 
 namespace vr {
 
-template <typename F>
-void ForAllElements(UiElement* e, F f) {
-  f(e);
-  for (auto& child : e->children()) {
-    ForAllElements(child.get(), f);
-  }
-}
-
-template <typename P>
-UiElement* FindElement(UiElement* e, P predicate) {
-  if (predicate(e)) {
-    return e;
-  }
-  for (const auto& child : e->children()) {
-    if (UiElement* match = FindElement(child.get(), predicate)) {
-      return match;
-    }
-  }
-  return nullptr;
-}
-
-void UiScene::AddUiElement(UiElementName parent,
-                           std::unique_ptr<UiElement> element) {
+void UiScene::AddUiElement(std::unique_ptr<UiElement> element) {
   CHECK_GE(element->id(), 0);
   CHECK_EQ(GetUiElementById(element->id()), nullptr);
   CHECK_GE(element->draw_phase(), 0);
+  if (!element->parent()) {
+    CHECK_EQ(element->x_anchoring(), XAnchoring::XNONE);
+    CHECK_EQ(element->y_anchoring(), YAnchoring::YNONE);
+  }
   if (gl_initialized_)
     element->Initialize();
-  GetUiElementByName(parent)->AddChild(std::move(element));
+  ui_elements_.push_back(std::move(element));
 }
 
 void UiScene::RemoveUiElement(int element_id) {
-  UiElement* to_remove = GetUiElementById(element_id);
-  CHECK_NE(nullptr, to_remove);
-  CHECK_NE(nullptr, to_remove->parent());
-  to_remove->parent()->RemoveChild(to_remove);
+  for (auto it = ui_elements_.begin(); it != ui_elements_.end(); ++it) {
+    if ((*it)->id() == element_id) {
+      ui_elements_.erase(it);
+      return;
+    }
+  }
 }
 
 void UiScene::AddAnimation(int element_id,
@@ -65,85 +47,85 @@ void UiScene::RemoveAnimation(int element_id, int animation_id) {
   element->animation_player().RemoveAnimation(animation_id);
 }
 
-void UiScene::OnBeginFrame(const base::TimeTicks& current_time,
-                           const gfx::Vector3dF& look_at) {
-  ForAllElements(root_element_.get(), [current_time](UiElement* element) {
+void UiScene::OnBeginFrame(const base::TimeTicks& current_time) {
+  for (const auto& element : ui_elements_) {
     // Process all animations before calculating object transforms.
     element->Animate(current_time);
     element->set_dirty(true);
-  });
-
-  ForAllElements(root_element_.get(), [look_at](UiElement* element) {
+  }
+  for (auto& element : ui_elements_) {
     element->LayOutChildren();
-    element->AdjustRotationForHeadPose(look_at);
-  });
-
-  ForAllElements(root_element_.get(), [this](UiElement* element) {
-    this->ApplyRecursiveTransforms(element);
-  });
+  }
+  for (auto& element : ui_elements_) {
+    ApplyRecursiveTransforms(element.get());
+  }
 }
 
 void UiScene::PrepareToDraw() {
-  ForAllElements(root_element_.get(),
-                 [](UiElement* element) { element->PrepareToDraw(); });
-}
-
-UiElement& UiScene::root_element() {
-  return *root_element_;
+  for (const auto& element : ui_elements_) {
+    element->PrepareToDraw();
+  }
 }
 
 UiElement* UiScene::GetUiElementById(int element_id) const {
-  return FindElement(root_element_.get(), [element_id](UiElement* element) {
-    return element->id() == element_id;
-  });
+  for (const auto& element : ui_elements_) {
+    if (element->id() == element_id) {
+      return element.get();
+    }
+  }
+  return nullptr;
 }
 
-UiElement* UiScene::GetUiElementByName(UiElementName name) const {
-  DCHECK(name != UiElementName::kNone);
-  return FindElement(root_element_.get(), [name](UiElement* element) {
-    return element->name() == name;
-  });
+UiElement* UiScene::GetUiElementByDebugId(UiElementDebugId debug_id) const {
+  DCHECK(debug_id != UiElementDebugId::kNone);
+  for (const auto& element : ui_elements_) {
+    if (element->debug_id() == debug_id) {
+      return element.get();
+    }
+  }
+  return nullptr;
 }
 
 std::vector<const UiElement*> UiScene::GetWorldElements() const {
   std::vector<const UiElement*> elements;
-  ForAllElements(root_element_.get(), [&elements](UiElement* element) {
-    if (element->IsVisible() && !element->viewport_aware() &&
+  for (const auto& element : ui_elements_) {
+    if (element->IsVisible() && !element->lock_to_fov() &&
         !element->is_overlay()) {
-      elements.push_back(element);
+      elements.push_back(element.get());
     }
-  });
+  }
   return elements;
 }
 
 std::vector<const UiElement*> UiScene::GetOverlayElements() const {
   std::vector<const UiElement*> elements;
-  ForAllElements(root_element_.get(), [&elements](UiElement* element) {
+  for (const auto& element : ui_elements_) {
     if (element->IsVisible() && element->is_overlay()) {
-      elements.push_back(element);
+      elements.push_back(element.get());
     }
-  });
+  }
   return elements;
 }
 
-std::vector<const UiElement*> UiScene::GetViewportAwareElements() const {
+std::vector<const UiElement*> UiScene::GetHeadLockedElements() const {
   std::vector<const UiElement*> elements;
-  ForAllElements(root_element_.get(), [&elements](UiElement* element) {
-    if (element->IsVisible() && element->viewport_aware() &&
-        element->parent()) {
-      elements.push_back(element);
+  for (const auto& element : ui_elements_) {
+    if (element->IsVisible() && element->lock_to_fov()) {
+      elements.push_back(element.get());
     }
-  });
+  }
   return elements;
 }
 
-UiScene::UiScene() {
-  root_element_ = base::MakeUnique<UiElement>();
-  root_element_->set_name(kRoot);
-  root_element_->set_draw_phase(kPhaseNone);
-  root_element_->SetVisible(false);
-  root_element_->set_hit_testable(false);
+bool UiScene::HasVisibleHeadLockedElements() const {
+  return !GetHeadLockedElements().empty();
 }
+
+const std::vector<std::unique_ptr<UiElement>>& UiScene::GetUiElements() const {
+  return ui_elements_;
+}
+
+UiScene::UiScene() = default;
 
 UiScene::~UiScene() = default;
 
@@ -156,7 +138,7 @@ void UiScene::ApplyRecursiveTransforms(UiElement* element) {
   gfx::Transform transform;
   transform.Scale(element->size().width(), element->size().height());
   element->set_computed_opacity(element->opacity());
-  element->set_computed_viewport_aware(element->viewport_aware());
+  element->set_computed_lock_to_fov(element->lock_to_fov());
 
   // Compute an inheritable transformation that can be applied to this element,
   // and it's children, if applicable.
@@ -168,7 +150,7 @@ void UiScene::ApplyRecursiveTransforms(UiElement* element) {
 
     element->set_computed_opacity(element->computed_opacity() *
                                   parent->opacity());
-    element->set_computed_viewport_aware(parent->viewport_aware());
+    element->set_computed_lock_to_fov(parent->lock_to_fov());
   }
 
   transform.ConcatTransform(inheritable);
@@ -177,12 +159,12 @@ void UiScene::ApplyRecursiveTransforms(UiElement* element) {
   element->set_dirty(false);
 }
 
-// TODO(vollick): we should bind to gl-initialized state. Elements will
-// initialize when the binding fires, automatically.
+// TODO(mthiesse): Move this to UiSceneManager.
 void UiScene::OnGlInitialized() {
   gl_initialized_ = true;
-  ForAllElements(root_element_.get(),
-                 [](UiElement* element) { element->Initialize(); });
+  for (auto& element : ui_elements_) {
+    element->Initialize();
+  }
 }
 
 }  // namespace vr

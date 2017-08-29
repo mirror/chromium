@@ -18,6 +18,7 @@ window.onload = function() {
         document.getElementById('star').src =
             window.URL.createObjectURL(this.response);
       }
+      domAutomationController.setAutomationId(0);
       domAutomationController.send(xhr.status);
     }
   }

@@ -16,7 +16,7 @@
 #include "cc/scheduler/scheduler_settings.h"
 #include "cc/tiles/tile_manager_settings.h"
 #include "components/viz/common/display/renderer_settings.h"
-#include "components/viz/common/resources/resource_format.h"
+#include "components/viz/common/quads/resource_format.h"
 #include "components/viz/common/resources/resource_settings.h"
 #include "third_party/skia/include/core/SkColor.h"
 #include "ui/gfx/geometry/size.h"
@@ -55,8 +55,6 @@ class CC_EXPORT LayerTreeSettings {
   base::TimeDelta scrollbar_fade_delay;
   base::TimeDelta scrollbar_fade_duration;
   base::TimeDelta scrollbar_thinning_duration;
-  bool scrollbar_flash_after_any_scroll_update = false;
-  bool scrollbar_flash_when_mouse_enter = false;
   SkColor solid_color_scrollbar_color = SK_ColorWHITE;
   bool timeout_and_draw_when_animation_checkerboards = true;
   bool layer_transforms_should_scale_layer_contents = false;
@@ -143,10 +141,6 @@ class CC_EXPORT LayerTreeSettings {
   // which LayerTreeHost synchronizes. If |true| LayerTreeHostImpl
   // produces the active tree as its 'sync tree'.
   bool commit_to_active_tree = true;
-
-  // Whether to use out of process raster.  If true, whenever gpu raster
-  // would have been used, out of process gpu raster will be used instead.
-  bool enable_oop_rasterization = false;
 };
 
 }  // namespace cc

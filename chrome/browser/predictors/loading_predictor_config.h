@@ -41,7 +41,6 @@ struct LoadingPredictorConfig {
   bool IsLearningEnabled() const;
   bool IsPrefetchingEnabledForSomeOrigin(Profile* profile) const;
   bool IsPrefetchingEnabledForOrigin(Profile* profile, HintOrigin origin) const;
-  bool IsPreconnectEnabledForSomeOrigin(Profile* profile) const;
   bool IsPreconnectEnabledForOrigin(Profile* profile, HintOrigin origin) const;
 
   bool IsLowConfidenceForTest() const;

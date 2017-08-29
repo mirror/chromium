@@ -49,6 +49,15 @@ void LegacyNavigationManagerImpl::InitializeSession() {
       [[CRWSessionController alloc] initWithBrowserState:browser_state_]);
 }
 
+void LegacyNavigationManagerImpl::ReplaceSessionHistory(
+    std::vector<std::unique_ptr<web::NavigationItem>> items,
+    int lastCommittedItemIndex) {
+  SetSessionController([[CRWSessionController alloc]
+        initWithBrowserState:browser_state_
+             navigationItems:std::move(items)
+      lastCommittedItemIndex:lastCommittedItemIndex]);
+}
+
 void LegacyNavigationManagerImpl::OnNavigationItemsPruned(
     size_t pruned_item_count) {
   delegate_->OnNavigationItemsPruned(pruned_item_count);
@@ -212,18 +221,6 @@ NavigationItemList LegacyNavigationManagerImpl::GetForwardItems() const {
   return [session_controller_ forwardItems];
 }
 
-void LegacyNavigationManagerImpl::Restore(
-    int last_committed_item_index,
-    std::vector<std::unique_ptr<NavigationItem>> items) {
-  DCHECK(GetItemCount() == 0 && !GetPendingItem());
-  DCHECK_GE(last_committed_item_index, 0);
-  DCHECK_LT(static_cast<size_t>(last_committed_item_index), items.size());
-  SetSessionController([[CRWSessionController alloc]
-        initWithBrowserState:browser_state_
-             navigationItems:std::move(items)
-      lastCommittedItemIndex:last_committed_item_index]);
-}
-
 void LegacyNavigationManagerImpl::CopyStateFromAndPrune(
     const NavigationManager* manager) {
   DCHECK(manager);
@@ -326,6 +323,21 @@ bool LegacyNavigationManagerImpl::IsRedirectItemAtIndex(int index) const {
   DCHECK_LT(index, GetItemCount());
   ui::PageTransition transition = GetItemAtIndex(index)->GetTransitionType();
   return transition & ui::PAGE_TRANSITION_IS_REDIRECT_MASK;
+}
+
+NavigationItem*
+LegacyNavigationManagerImpl::GetLastCommittedNonAppSpecificItem() const {
+  int index = GetLastCommittedItemIndex();
+  if (index == -1)
+    return nullptr;
+  WebClient* client = GetWebClient();
+  const ScopedNavigationItemImplList& items = [session_controller_ items];
+  while (index >= 0) {
+    NavigationItem* item = items[index--].get();
+    if (!client->IsAppSpecificURL(item->GetVirtualURL()))
+      return item;
+  }
+  return nullptr;
 }
 
 int LegacyNavigationManagerImpl::GetPreviousItemIndex() const {

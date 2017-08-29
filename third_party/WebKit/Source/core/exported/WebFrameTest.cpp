@@ -103,7 +103,6 @@
 #include "platform/bindings/Microtask.h"
 #include "platform/geometry/FloatRect.h"
 #include "platform/graphics/GraphicsLayer.h"
-#include "platform/graphics/compositing/PaintArtifactCompositor.h"
 #include "platform/loader/fetch/FetchParameters.h"
 #include "platform/loader/fetch/MemoryCache.h"
 #include "platform/loader/fetch/ResourceError.h"
@@ -111,6 +110,9 @@
 #include "platform/loader/fetch/ResourceLoaderOptions.h"
 #include "platform/scroll/Scrollbar.h"
 #include "platform/scroll/ScrollbarTestSuite.h"
+#include "platform/scroll/ScrollbarTheme.h"
+#include "platform/scroll/ScrollbarThemeMock.h"
+#include "platform/scroll/ScrollbarThemeOverlayMock.h"
 #include "platform/testing/HistogramTester.h"
 #include "platform/testing/RuntimeEnabledFeaturesTestHelpers.h"
 #include "platform/testing/URLTestHelpers.h"
@@ -4126,25 +4128,19 @@ TEST_P(ParameterizedWebFrameTest, CharacterIndexAtPointWithPinchZoom) {
 
   FrameTestHelpers::WebViewHelper web_view_helper;
   web_view_helper.InitializeAndLoad(base_url_ + "sometext.html");
-  web_view_helper.LoadAhem();
   web_view_helper.Resize(WebSize(640, 480));
 
-  // Move the visual viewport to the start of the target div containing the
-  // text.
   web_view_helper.WebView()->SetPageScaleFactor(2);
-  web_view_helper.WebView()->SetVisualViewportOffset(WebFloatPoint(100, 50));
+  web_view_helper.WebView()->SetVisualViewportOffset(WebFloatPoint(50, 60));
 
   WebRect base_rect;
   WebRect extent_rect;
 
   WebLocalFrame* main_frame =
       web_view_helper.WebView()->MainFrame()->ToWebLocalFrame();
+  size_t ix = main_frame->CharacterIndexForPoint(WebPoint(320, 388));
 
-  // Since we're zoomed in to 2X, each char of Ahem is 20px wide/tall in
-  // viewport space. We expect to hit the fifth char on the first line.
-  size_t ix = main_frame->CharacterIndexForPoint(WebPoint(100, 15));
-
-  EXPECT_EQ(5ul, ix);
+  EXPECT_EQ(2ul, ix);
 }
 
 TEST_P(ParameterizedWebFrameTest, FirstRectForCharacterRangeWithPinchZoom) {
@@ -4204,6 +4200,49 @@ TEST_P(ParameterizedWebFrameTest, ReloadDoesntSetRedirect) {
   // start another reload before request is delivered.
   FrameTestHelpers::ReloadFrameBypassingCache(
       web_view_helper.WebView()->MainFrameImpl());
+}
+
+TEST_P(ParameterizedWebFrameTest, scrollbarIsNotHandlingTouchpadScroll) {
+  FrameTestHelpers::WebViewHelper web_view_helper;
+  web_view_helper.Initialize();
+  web_view_helper.Resize(WebSize(200, 200));
+  WebViewImpl* web_view = web_view_helper.WebView();
+
+  InitializeWithHTML(
+      *web_view->MainFrameImpl()->GetFrame(),
+      "<style>"
+      " #scrollable { height: 100px; width: 100px; overflow: scroll; }"
+      " #content { height: 200px; width: 200px;}"
+      "</style>"
+      "<div id='scrollable'>"
+      " <div id='content'></div>"
+      "</div>");
+
+  web_view->UpdateAllLifecyclePhases();
+
+  Document* document = web_view->MainFrameImpl()->GetFrame()->GetDocument();
+  Element* scrollable = document->getElementById("scrollable");
+
+  ScrollableArea* scrollable_area =
+      ToLayoutBox(scrollable->GetLayoutObject())->GetScrollableArea();
+  DCHECK(scrollable_area->VerticalScrollbar());
+  WebGestureEvent scroll_begin(WebInputEvent::kGestureScrollBegin,
+                               WebInputEvent::kNoModifiers,
+                               TimeTicks::Now().InSeconds());
+  scroll_begin.x = scroll_begin.global_x =
+      scrollable->OffsetLeft() + scrollable->OffsetWidth() - 2;
+  scroll_begin.y = scroll_begin.global_y = scrollable->OffsetTop();
+  scroll_begin.source_device = kWebGestureDeviceTouchpad;
+  scroll_begin.data.scroll_begin.delta_x_hint = 0;
+  scroll_begin.data.scroll_begin.delta_y_hint = 10;
+  scroll_begin.SetFrameScale(1);
+  document->GetFrame()->GetEventHandler().HandleGestureScrollEvent(
+      scroll_begin);
+  DCHECK(
+      !document->GetFrame()->GetEventHandler().IsScrollbarHandlingGestures());
+  bool should_update_capture = false;
+  DCHECK(!scrollable_area->VerticalScrollbar()->GestureEvent(
+      scroll_begin, &should_update_capture));
 }
 
 class ClearScrollStateOnCommitWebFrameClient
@@ -6986,7 +7025,7 @@ TEST_P(ParameterizedWebFrameTest, DidAccessInitialDocumentBody) {
   new_view->MainFrameImpl()->ExecuteScript(
       WebScriptSource("window.opener.document.body.innerHTML += 'Modified';"));
   RunPendingTasks();
-  EXPECT_EQ(1, web_frame_client.did_access_initial_document_);
+  EXPECT_EQ(2, web_frame_client.did_access_initial_document_);
 
   web_view_helper.Reset();
 }
@@ -7033,7 +7072,7 @@ TEST_P(ParameterizedWebFrameTest, DidAccessInitialDocumentNavigator) {
   new_view->MainFrameImpl()->ExecuteScript(
       WebScriptSource("console.log(window.opener.navigator);"));
   RunPendingTasks();
-  EXPECT_EQ(1, web_frame_client.did_access_initial_document_);
+  EXPECT_EQ(3, web_frame_client.did_access_initial_document_);
 
   web_view_helper.Reset();
 }
@@ -7072,17 +7111,17 @@ TEST_P(ParameterizedWebFrameTest,
   // Access the initial document by modifying the body.
   new_view->MainFrameImpl()->ExecuteScript(
       WebScriptSource("window.opener.document.body.innerHTML += 'Modified';"));
-  EXPECT_EQ(1, web_frame_client.did_access_initial_document_);
+  EXPECT_EQ(2, web_frame_client.did_access_initial_document_);
 
   // Run a modal dialog, which used to run a nested run loop and require
   // a special case for notifying about the access.
   new_view->MainFrameImpl()->ExecuteScript(
       WebScriptSource("window.opener.confirm('Modal');"));
-  EXPECT_EQ(2, web_frame_client.did_access_initial_document_);
+  EXPECT_EQ(3, web_frame_client.did_access_initial_document_);
 
   // Ensure that we don't notify again later.
   RunPendingTasks();
-  EXPECT_EQ(2, web_frame_client.did_access_initial_document_);
+  EXPECT_EQ(3, web_frame_client.did_access_initial_document_);
 
   web_view_helper.Reset();
 }
@@ -8070,8 +8109,7 @@ TEST_P(ParameterizedWebFrameTest, MaximumScrollPositionCanBeNegative) {
   web_view_helper.WebView()->UpdateAllLifecyclePhases();
 
   LocalFrameView* frame_view = web_view_helper.LocalMainFrame()->GetFrameView();
-  ScrollableArea* layout_viewport = frame_view->LayoutViewportScrollableArea();
-  EXPECT_LT(layout_viewport->MaximumScrollOffset().Width(), 0);
+  EXPECT_LT(frame_view->MaximumScrollOffset().Width(), 0);
 }
 
 TEST_P(ParameterizedWebFrameTest, FullscreenLayerSize) {
@@ -11029,6 +11067,72 @@ TEST_P(ParameterizedWebFrameTest, ScrollBeforeLayoutDoesntCrash) {
       WebCoalescedInputEvent(end_event));
 }
 
+TEST_P(ParameterizedWebFrameTest,
+       HidingScrollbarsOnScrollableAreaDisablesScrollbars) {
+  FrameTestHelpers::WebViewHelper web_view_helper;
+  web_view_helper.Initialize();
+  web_view_helper.Resize(WebSize(800, 600));
+  WebViewImpl* web_view = web_view_helper.WebView();
+
+  InitializeWithHTML(
+      *web_view->MainFrameImpl()->GetFrame(),
+      "<!DOCTYPE html>"
+      "<style>"
+      "  #scroller { overflow: scroll; width: 1000px; height: 1000px }"
+      "  #spacer { width: 2000px; height: 2000px }"
+      "</style>"
+      "<div id='scroller'>"
+      "  <div id='spacer'></div>"
+      "</div>");
+
+  Document* document = web_view->MainFrameImpl()->GetFrame()->GetDocument();
+  LocalFrameView* frame_view = web_view->MainFrameImpl()->GetFrameView();
+  Element* scroller = document->getElementById("scroller");
+  ScrollableArea* scroller_area =
+      ToLayoutBox(scroller->GetLayoutObject())->GetScrollableArea();
+  ScrollableArea* frame_scroller_area =
+      frame_view->LayoutViewportScrollableArea();
+
+  ASSERT_TRUE(scroller_area->HorizontalScrollbar());
+  ASSERT_TRUE(scroller_area->VerticalScrollbar());
+  ASSERT_TRUE(frame_scroller_area->HorizontalScrollbar());
+  ASSERT_TRUE(frame_scroller_area->VerticalScrollbar());
+
+  EXPECT_FALSE(frame_scroller_area->ScrollbarsHidden());
+  EXPECT_TRUE(frame_scroller_area->HorizontalScrollbar()
+                  ->ShouldParticipateInHitTesting());
+  EXPECT_TRUE(frame_scroller_area->VerticalScrollbar()
+                  ->ShouldParticipateInHitTesting());
+
+  EXPECT_FALSE(scroller_area->ScrollbarsHidden());
+  EXPECT_TRUE(
+      scroller_area->HorizontalScrollbar()->ShouldParticipateInHitTesting());
+  EXPECT_TRUE(
+      scroller_area->VerticalScrollbar()->ShouldParticipateInHitTesting());
+
+  frame_scroller_area->SetScrollbarsHidden(true);
+  EXPECT_FALSE(frame_scroller_area->HorizontalScrollbar()
+                   ->ShouldParticipateInHitTesting());
+  EXPECT_FALSE(frame_scroller_area->VerticalScrollbar()
+                   ->ShouldParticipateInHitTesting());
+  frame_scroller_area->SetScrollbarsHidden(false);
+  EXPECT_TRUE(frame_scroller_area->HorizontalScrollbar()
+                  ->ShouldParticipateInHitTesting());
+  EXPECT_TRUE(frame_scroller_area->VerticalScrollbar()
+                  ->ShouldParticipateInHitTesting());
+
+  scroller_area->SetScrollbarsHidden(true);
+  EXPECT_FALSE(
+      scroller_area->HorizontalScrollbar()->ShouldParticipateInHitTesting());
+  EXPECT_FALSE(
+      scroller_area->VerticalScrollbar()->ShouldParticipateInHitTesting());
+  scroller_area->SetScrollbarsHidden(false);
+  EXPECT_TRUE(
+      scroller_area->HorizontalScrollbar()->ShouldParticipateInHitTesting());
+  EXPECT_TRUE(
+      scroller_area->VerticalScrollbar()->ShouldParticipateInHitTesting());
+}
+
 TEST_P(ParameterizedWebFrameTest, MouseOverDifferntNodeClearsTooltip) {
   FrameTestHelpers::WebViewHelper web_view_helper;
   web_view_helper.Initialize(nullptr, nullptr, nullptr,
@@ -11104,6 +11208,821 @@ TEST_P(ParameterizedWebFrameTest, MouseOverDifferntNodeClearsTooltip) {
   EXPECT_EQ(
       div2_tag,
       document->GetFrame()->GetChromeClient().LastSetTooltipNodeForTesting());
+}
+
+// Ensure mouse curosr should be pointer when hover scrollbar.
+TEST_P(ParameterizedWebFrameTest, MouseOverScrollbarInCustomCursorElement) {
+  RegisterMockedHttpURLLoad("scrollbar-in-custom-cursor-element.html");
+  FrameTestHelpers::WebViewHelper web_view_helper;
+  WebViewImpl* web_view = web_view_helper.InitializeAndLoad(
+      base_url_ + "scrollbar-in-custom-cursor-element.html");
+
+  web_view_helper.Resize(WebSize(250, 250));
+  ScrollbarThemeOverlayMock& mock_overlay_theme =
+      (ScrollbarThemeOverlayMock&)ScrollbarTheme::GetTheme();
+  mock_overlay_theme.SetHitTestEnabledForTesting(true);
+
+  web_view->UpdateAllLifecyclePhases();
+
+  Document* document =
+      ToLocalFrame(web_view->GetPage()->MainFrame())->GetDocument();
+
+  Element* div = document->getElementById("d1");
+
+  // Ensure hittest has DIV and scrollbar.
+  HitTestResult hit_test_result =
+      web_view->CoreHitTestResultAt(WebPoint(195, 5));
+
+  EXPECT_EQ(hit_test_result.InnerElement(), div);
+  EXPECT_TRUE(hit_test_result.GetScrollbar());
+
+  WebMouseEvent mouse_over_scrollbar(
+      WebInputEvent::kMouseMove, WebFloatPoint(195, 5), WebFloatPoint(195, 5),
+      WebPointerProperties::Button::kNoButton, 0, WebInputEvent::kNoModifiers,
+      TimeTicks::Now().InSeconds());
+  mouse_over_scrollbar.SetFrameScale(1);
+  document->GetFrame()->GetEventHandler().HandleMouseMoveEvent(
+      mouse_over_scrollbar, Vector<WebMouseEvent>());
+
+  EXPECT_EQ(Cursor::Type::kPointer, document->GetFrame()
+                                        ->GetChromeClient()
+                                        .LastSetCursorForTesting()
+                                        .GetType());
+}
+
+// Makes sure that mouse hover over an overlay scrollbar thumb doesn't activate
+// elements below(except the Element that owns the scrollbar) unless the
+// scrollbar is faded out.
+TEST_P(ParameterizedWebFrameTest, MouseOverLinkAndOverlayScrollbar) {
+  FrameTestHelpers::WebViewHelper web_view_helper;
+  web_view_helper.Initialize(nullptr, nullptr, nullptr,
+                             [](WebSettings* settings) {});
+  web_view_helper.Resize(WebSize(20, 20));
+  WebViewImpl* web_view = web_view_helper.WebView();
+
+  InitializeWithHTML(*web_view->MainFrameImpl()->GetFrame(),
+                     "<!DOCTYPE html>"
+                     "<style>"
+                     "#a {"
+                     "  width: 20px;"
+                     "  height: 20px;"
+                     "  position: absolute;"
+                     "  top: 5px;"
+                     "}"
+                     "body {"
+                     "  margin: 0;"
+                     "  height: 40px;"
+                     "}"
+                     "</style>"
+                     "<a id= 'a' href='https://www.google.com'>"
+                     "</a>");
+
+  ScrollbarThemeOverlayMock& mock_overlay_theme =
+      (ScrollbarThemeOverlayMock&)ScrollbarTheme::GetTheme();
+  mock_overlay_theme.SetHitTestEnabledForTesting(true);
+  web_view->UpdateAllLifecyclePhases();
+
+  Document* document = web_view->MainFrameImpl()->GetFrame()->GetDocument();
+
+  Element* a = document->getElementById("a");
+  ASSERT_TRUE(a);
+
+  // Mouse only over thumb. ensure hittest only has scrollbar.
+  HitTestResult hit_test_result =
+      web_view->CoreHitTestResultAt(WebPoint(18, 4));
+
+  EXPECT_TRUE(hit_test_result.GetScrollbar());
+  EXPECT_TRUE(hit_test_result.GetScrollbar()->IsOverlayScrollbar());
+  EXPECT_EQ(hit_test_result.InnerElement(), document->documentElement());
+
+  WebMouseEvent mouse_move_over_thumb_event(
+      WebInputEvent::kMouseMove, WebFloatPoint(18, 4), WebFloatPoint(18, 4),
+      WebPointerProperties::Button::kNoButton, 0, WebInputEvent::kNoModifiers,
+      TimeTicks::Now().InSeconds());
+  mouse_move_over_thumb_event.SetFrameScale(1);
+  document->GetFrame()->GetEventHandler().HandleMouseMoveEvent(
+      mouse_move_over_thumb_event, Vector<WebMouseEvent>());
+
+  EXPECT_EQ(Cursor::Type::kPointer, document->GetFrame()
+                                        ->GetChromeClient()
+                                        .LastSetCursorForTesting()
+                                        .GetType());
+
+  // Mouse only over link and overlay scrollbar track. Mouse cursor should be
+  // hand.
+  hit_test_result = web_view->CoreHitTestResultAt(WebPoint(18, 18));
+
+  EXPECT_FALSE(hit_test_result.GetScrollbar());
+  EXPECT_EQ(hit_test_result.InnerElement(), a);
+
+  WebMouseEvent mouse_move_over_link_event(
+      WebInputEvent::kMouseMove, WebFloatPoint(18, 18), WebFloatPoint(18, 18),
+      WebPointerProperties::Button::kNoButton, 0, WebInputEvent::kNoModifiers,
+      TimeTicks::Now().InSeconds());
+  mouse_move_over_link_event.SetFrameScale(1);
+  document->GetFrame()->GetEventHandler().HandleMouseMoveEvent(
+      mouse_move_over_link_event, Vector<WebMouseEvent>());
+
+  EXPECT_EQ(Cursor::Type::kHand, document->GetFrame()
+                                     ->GetChromeClient()
+                                     .LastSetCursorForTesting()
+                                     .GetType());
+  WebMouseEvent mouse_press_link_event(
+      WebInputEvent::kMouseDown, WebFloatPoint(18, 18), WebFloatPoint(18, 18),
+      WebPointerProperties::Button::kLeft, 0,
+      WebInputEvent::Modifiers::kLeftButtonDown, TimeTicks::Now().InSeconds());
+  mouse_press_link_event.SetFrameScale(1);
+  document->GetFrame()->GetEventHandler().HandleMousePressEvent(
+      mouse_press_link_event);
+
+  EXPECT_EQ(document->GetActiveElement(), a);
+  EXPECT_EQ(document->HoverElement(), a);
+
+  WebMouseEvent mouse_release_link_event(
+      WebInputEvent::kMouseUp, WebFloatPoint(18, 18), WebFloatPoint(18, 18),
+      WebPointerProperties::Button::kLeft, 0,
+      WebInputEvent::Modifiers::kLeftButtonDown, TimeTicks::Now().InSeconds());
+  mouse_release_link_event.SetFrameScale(1);
+  document->GetFrame()->GetEventHandler().HandleMouseReleaseEvent(
+      mouse_release_link_event);
+
+  // Mouse over enabled overlay scrollbar and link. Mouse cursor should be
+  // pointer and active hover element should be document element.
+  WebMouseEvent mouse_move_event(
+      WebInputEvent::kMouseMove, WebFloatPoint(18, 6), WebFloatPoint(18, 6),
+      WebPointerProperties::Button::kNoButton, 0, WebInputEvent::kNoModifiers,
+      TimeTicks::Now().InSeconds());
+  mouse_move_event.SetFrameScale(1);
+  document->GetFrame()->GetEventHandler().HandleMouseMoveEvent(
+      mouse_move_event, Vector<WebMouseEvent>());
+
+  EXPECT_EQ(Cursor::Type::kPointer, document->GetFrame()
+                                        ->GetChromeClient()
+                                        .LastSetCursorForTesting()
+                                        .GetType());
+
+  WebMouseEvent mouse_press_event(
+      WebInputEvent::kMouseDown, WebFloatPoint(18, 6), WebFloatPoint(18, 6),
+      WebPointerProperties::Button::kLeft, 0,
+      WebInputEvent::Modifiers::kLeftButtonDown, TimeTicks::Now().InSeconds());
+  mouse_press_event.SetFrameScale(1);
+  document->GetFrame()->GetEventHandler().HandleMousePressEvent(
+      mouse_press_event);
+
+  EXPECT_EQ(document->GetActiveElement(), document->documentElement());
+  EXPECT_EQ(document->HoverElement(), document->documentElement());
+
+  WebMouseEvent mouse_release_event(
+      WebInputEvent::kMouseUp, WebFloatPoint(18, 6), WebFloatPoint(18, 6),
+      WebPointerProperties::Button::kLeft, 0,
+      WebInputEvent::Modifiers::kLeftButtonDown, TimeTicks::Now().InSeconds());
+  mouse_release_event.SetFrameScale(1);
+  document->GetFrame()->GetEventHandler().HandleMouseReleaseEvent(
+      mouse_release_event);
+
+  // Mouse over disabled overlay scrollbar. Mouse cursor should be hand and has
+  // active hover element.
+  web_view->MainFrameImpl()
+      ->GetFrameView()
+      ->LayoutViewportScrollableArea()
+      ->SetScrollbarsHidden(true);
+
+  // Ensure hittest only has link
+  hit_test_result = web_view->CoreHitTestResultAt(WebPoint(18, 6));
+
+  EXPECT_TRUE(hit_test_result.URLElement());
+  EXPECT_TRUE(hit_test_result.InnerElement());
+  EXPECT_FALSE(hit_test_result.GetScrollbar());
+
+  document->GetFrame()->GetEventHandler().HandleMouseMoveEvent(
+      mouse_move_event, Vector<WebMouseEvent>());
+
+  EXPECT_EQ(Cursor::Type::kHand, document->GetFrame()
+                                     ->GetChromeClient()
+                                     .LastSetCursorForTesting()
+                                     .GetType());
+
+  document->GetFrame()->GetEventHandler().HandleMousePressEvent(
+      mouse_press_event);
+
+  EXPECT_TRUE(document->GetActiveElement());
+  EXPECT_TRUE(document->HoverElement());
+
+  document->GetFrame()->GetEventHandler().HandleMouseReleaseEvent(
+      mouse_release_event);
+}
+
+// Ensure Overlay Scrollbar for div, only scrollbar thumb part can be hit test.
+TEST_P(ParameterizedWebFrameTest, MouseOverDivOverlayScrollbar) {
+  FrameTestHelpers::WebViewHelper web_view_helper;
+  web_view_helper.Initialize(nullptr, nullptr, nullptr,
+                             [](WebSettings* settings) {});
+  WebViewImpl* web_view = web_view_helper.WebView();
+
+  InitializeWithHTML(*web_view->MainFrameImpl()->GetFrame(),
+                     "<!DOCTYPE html>"
+                     "<style>"
+                     "body {"
+                     "  margin: 0;"
+                     "}"
+                     "#d1 {"
+                     "  width: 200px;"
+                     "  height: 100px;"
+                     "  position: absolute;"
+                     "  top: 50px;"
+                     "  overflow: auto;"
+                     "}"
+                     "#d2 {"
+                     "  height: 200px;"
+                     "}"
+                     "</style>"
+                     "<div id='d1'>"
+                     "  <div id='d2'></div>"
+                     "</div>");
+  ScrollbarThemeOverlayMock& mock_overlay_theme =
+      (ScrollbarThemeOverlayMock&)ScrollbarTheme::GetTheme();
+  mock_overlay_theme.SetHitTestEnabledForTesting(true);
+  web_view_helper.Resize(WebSize(200, 200));
+  web_view->UpdateAllLifecyclePhases();
+
+  Document* document =
+      ToLocalFrame(web_view->GetPage()->MainFrame())->GetDocument();
+
+  Element* parent_div = document->getElementById("d1");
+  Element* child_div = document->getElementById("d2");
+  DCHECK(parent_div);
+  DCHECK(child_div);
+
+  // Mouse over scrollbar thumb.
+  HitTestResult hit_test_result =
+      web_view->CoreHitTestResultAt(WebPoint(195, 60));
+
+  EXPECT_TRUE(hit_test_result.InnerElement());
+  EXPECT_TRUE(hit_test_result.GetScrollbar());
+  DCHECK(hit_test_result.GetScrollbar()->IsOverlayScrollbar());
+  DCHECK(hit_test_result.GetScrollbar()->Enabled());
+
+  WebMouseEvent mouse_move_over_thumb(
+      WebInputEvent::kMouseMove, WebFloatPoint(195, 60), WebFloatPoint(195, 60),
+      WebPointerProperties::Button::kNoButton, 0, WebInputEvent::kNoModifiers,
+      TimeTicks::Now().InSeconds());
+  mouse_move_over_thumb.SetFrameScale(1);
+  document->GetFrame()->GetEventHandler().HandleMouseMoveEvent(
+      mouse_move_over_thumb, Vector<WebMouseEvent>());
+
+  // parent_div :hover.
+  EXPECT_EQ(document->HoverElement(), parent_div);
+
+  // Mouse over scrollbar track.
+  hit_test_result = web_view->CoreHitTestResultAt(WebPoint(195, 145));
+
+  EXPECT_TRUE(hit_test_result.InnerElement());
+  EXPECT_FALSE(hit_test_result.GetScrollbar());
+
+  WebMouseEvent mouse_move_over_track(
+      WebInputEvent::kMouseMove, WebFloatPoint(195, 145),
+      WebFloatPoint(195, 145), WebPointerProperties::Button::kNoButton, 0,
+      WebInputEvent::kNoModifiers, TimeTicks::Now().InSeconds());
+  mouse_move_over_track.SetFrameScale(1);
+  document->GetFrame()->GetEventHandler().HandleMouseMoveEvent(
+      mouse_move_over_track, Vector<WebMouseEvent>());
+
+  // parent_div :hover.
+  EXPECT_EQ(document->HoverElement(), child_div);
+}
+
+// Ensure Overlay Scrollbar for iframe, only scrollbar thumb part can be hit
+// test.
+TEST_P(ParameterizedWebFrameTest, MouseOverIFrameOverlayScrollbar) {
+  FrameTestHelpers::WebViewHelper web_view_helper;
+  web_view_helper.Initialize(nullptr, nullptr, nullptr,
+                             [](WebSettings* settings) {});
+  WebViewImpl* web_view = web_view_helper.WebView();
+
+  WebLocalFrame* main_frame = web_view_helper.LocalMainFrame();
+  const char main_source[] =
+      "<!DOCTYPE html>"
+      "<style>"
+      "body {"
+      "  margin: 0;"
+      "}"
+      "#iframe {"
+      "  width: 200px;"
+      "  height: 100px;"
+      "  position: absolute;"
+      "  top: 50px;"
+      "}"
+      "</style>"
+      "<iframe id='iframe'>"
+      "</iframe>";
+  KURL test_url = ToKURL("about:blank");
+
+  FrameTestHelpers::LoadHTMLString(main_frame, main_source, test_url);
+  ScrollbarThemeOverlayMock& mock_overlay_theme =
+      (ScrollbarThemeOverlayMock&)ScrollbarTheme::GetTheme();
+  mock_overlay_theme.SetHitTestEnabledForTesting(true);
+  web_view_helper.Resize(WebSize(200, 200));
+  web_view->UpdateAllLifecyclePhases();
+
+  WebLocalFrame* sub_frame = main_frame->FirstChild()->ToWebLocalFrame();
+  DCHECK(sub_frame);
+  FrameTestHelpers::LoadHTMLString(
+      sub_frame, "<style> body {height: 200px;} </style>", test_url);
+  web_view->UpdateAllLifecyclePhases();
+
+  Document* document = main_frame->GetDocument();
+
+  Element* iframe = document->getElementById("iframe");
+  DCHECK(iframe);
+
+  // Mouse over scrollbar thumb.
+  HitTestResult hit_test_result =
+      web_view->CoreHitTestResultAt(WebPoint(195, 60));
+
+  EXPECT_TRUE(hit_test_result.InnerElement());
+  EXPECT_TRUE(hit_test_result.GetScrollbar());
+  DCHECK(hit_test_result.GetScrollbar()->IsOverlayScrollbar());
+  DCHECK(hit_test_result.GetScrollbar()->Enabled());
+
+  WebMouseEvent mouse_move_over_thumb(
+      WebInputEvent::kMouseMove, WebFloatPoint(195, 60), WebFloatPoint(195, 60),
+      WebPointerProperties::Button::kNoButton, 0, WebInputEvent::kNoModifiers,
+      TimeTicks::Now().InSeconds());
+  mouse_move_over_thumb.SetFrameScale(1);
+  document->GetFrame()->GetEventHandler().HandleMouseMoveEvent(
+      mouse_move_over_thumb, Vector<WebMouseEvent>());
+
+  // iframe-doc :hover.
+  EXPECT_EQ(document->HoverElement(), iframe);
+
+  // Mouse over scrollbar track.
+  hit_test_result = web_view->CoreHitTestResultAt(WebPoint(195, 145));
+
+  EXPECT_TRUE(hit_test_result.InnerElement());
+  EXPECT_FALSE(hit_test_result.GetScrollbar());
+
+  WebMouseEvent mouse_move_over_track(
+      WebInputEvent::kMouseMove, WebFloatPoint(195, 145),
+      WebFloatPoint(195, 145), WebPointerProperties::Button::kNoButton, 0,
+      WebInputEvent::kNoModifiers, TimeTicks::Now().InSeconds());
+  mouse_move_over_track.SetFrameScale(1);
+  document->GetFrame()->GetEventHandler().HandleMouseMoveEvent(
+      mouse_move_over_track, Vector<WebMouseEvent>());
+
+  // iframe :hover.
+  EXPECT_EQ(document->HoverElement(), iframe);
+}
+
+// Makes sure that mouse hover over an custom scrollbar doesn't change the
+// activate elements.
+TEST_P(ParameterizedWebFrameTest, MouseOverCustomScrollbar) {
+  RegisterMockedHttpURLLoad("custom-scrollbar-hover.html");
+  FrameTestHelpers::WebViewHelper web_view_helper;
+  WebViewImpl* web_view = web_view_helper.InitializeAndLoad(
+      base_url_ + "custom-scrollbar-hover.html");
+
+  web_view_helper.Resize(WebSize(200, 200));
+
+  web_view->UpdateAllLifecyclePhases();
+
+  Document* document =
+      ToLocalFrame(web_view->GetPage()->MainFrame())->GetDocument();
+
+  Element* scrollbar_div = document->getElementById("scrollbar");
+  EXPECT_TRUE(scrollbar_div);
+
+  // Ensure hittest only has DIV
+  HitTestResult hit_test_result = web_view->CoreHitTestResultAt(WebPoint(1, 1));
+
+  EXPECT_TRUE(hit_test_result.InnerElement());
+  EXPECT_FALSE(hit_test_result.GetScrollbar());
+
+  // Mouse over DIV
+  WebMouseEvent mouse_move_over_div(
+      WebInputEvent::kMouseMove, WebFloatPoint(1, 1), WebFloatPoint(1, 1),
+      WebPointerProperties::Button::kNoButton, 0, WebInputEvent::kNoModifiers,
+      TimeTicks::Now().InSeconds());
+  mouse_move_over_div.SetFrameScale(1);
+  document->GetFrame()->GetEventHandler().HandleMouseMoveEvent(
+      mouse_move_over_div, Vector<WebMouseEvent>());
+
+  // DIV :hover
+  EXPECT_EQ(document->HoverElement(), scrollbar_div);
+
+  // Ensure hittest has DIV and scrollbar
+  hit_test_result = web_view->CoreHitTestResultAt(WebPoint(175, 1));
+
+  EXPECT_TRUE(hit_test_result.InnerElement());
+  EXPECT_TRUE(hit_test_result.GetScrollbar());
+  EXPECT_TRUE(hit_test_result.GetScrollbar()->IsCustomScrollbar());
+
+  // Mouse over scrollbar
+  WebMouseEvent mouse_move_over_div_and_scrollbar(
+      WebInputEvent::kMouseMove, WebFloatPoint(175, 1), WebFloatPoint(175, 1),
+      WebPointerProperties::Button::kNoButton, 0, WebInputEvent::kNoModifiers,
+      TimeTicks::Now().InSeconds());
+  mouse_move_over_div_and_scrollbar.SetFrameScale(1);
+  document->GetFrame()->GetEventHandler().HandleMouseMoveEvent(
+      mouse_move_over_div_and_scrollbar, Vector<WebMouseEvent>());
+
+  // Custom not change the DIV :hover
+  EXPECT_EQ(document->HoverElement(), scrollbar_div);
+  EXPECT_EQ(hit_test_result.GetScrollbar()->HoveredPart(),
+            ScrollbarPart::kThumbPart);
+}
+
+// Makes sure that mouse hover over an overlay scrollbar doesn't hover iframe
+// below.
+TEST_P(ParameterizedWebFrameTest, MouseOverScrollbarAndIFrame) {
+  RegisterMockedHttpURLLoad("scrollbar-and-iframe-hover.html");
+  FrameTestHelpers::WebViewHelper web_view_helper;
+  WebViewImpl* web_view = web_view_helper.InitializeAndLoad(
+      base_url_ + "scrollbar-and-iframe-hover.html");
+
+  web_view_helper.Resize(WebSize(200, 200));
+  ScrollbarThemeOverlayMock& mock_overlay_theme =
+      (ScrollbarThemeOverlayMock&)ScrollbarTheme::GetTheme();
+  mock_overlay_theme.SetHitTestEnabledForTesting(true);
+
+  web_view->UpdateAllLifecyclePhases();
+
+  Document* document =
+      ToLocalFrame(web_view->GetPage()->MainFrame())->GetDocument();
+  Element* iframe = document->getElementById("iframe");
+  DCHECK(iframe);
+
+  // Ensure hittest only has IFRAME.
+  HitTestResult hit_test_result = web_view->CoreHitTestResultAt(WebPoint(5, 5));
+
+  EXPECT_TRUE(hit_test_result.InnerElement());
+  EXPECT_FALSE(hit_test_result.GetScrollbar());
+
+  // Mouse over IFRAME.
+  WebMouseEvent mouse_move_over_i_frame(
+      WebInputEvent::kMouseMove, WebFloatPoint(5, 5), WebFloatPoint(5, 5),
+      WebPointerProperties::Button::kNoButton, 0, WebInputEvent::kNoModifiers,
+      TimeTicks::Now().InSeconds());
+  mouse_move_over_i_frame.SetFrameScale(1);
+  document->GetFrame()->GetEventHandler().HandleMouseMoveEvent(
+      mouse_move_over_i_frame, Vector<WebMouseEvent>());
+
+  // IFRAME hover.
+  EXPECT_EQ(document->HoverElement(), iframe);
+
+  // Ensure hittest has scrollbar.
+  hit_test_result = web_view->CoreHitTestResultAt(WebPoint(195, 6));
+  EXPECT_TRUE(hit_test_result.InnerElement());
+  EXPECT_TRUE(hit_test_result.GetScrollbar());
+  EXPECT_TRUE(hit_test_result.GetScrollbar()->Enabled());
+
+  // Mouse over scrollbar.
+  WebMouseEvent mouse_move_over_i_frame_and_scrollbar(
+      WebInputEvent::kMouseMove, WebFloatPoint(195, 6), WebFloatPoint(195, 6),
+      WebPointerProperties::Button::kNoButton, 0, WebInputEvent::kNoModifiers,
+      TimeTicks::Now().InSeconds());
+  mouse_move_over_i_frame_and_scrollbar.SetFrameScale(1);
+  document->GetFrame()->GetEventHandler().HandleMouseMoveEvent(
+      mouse_move_over_i_frame_and_scrollbar, Vector<WebMouseEvent>());
+
+  // IFRAME not hover.
+  EXPECT_NE(document->HoverElement(), iframe);
+
+  // Mouse hover scrollbar track, hit test result should only include iframe.
+  hit_test_result = web_view->CoreHitTestResultAt(WebPoint(195, 196));
+  EXPECT_FALSE(hit_test_result.GetScrollbar());
+
+  // Mouse over scrollbar.
+  WebMouseEvent mouse_move_over_scrollbar_track(
+      WebInputEvent::kMouseMove, WebFloatPoint(195, 196),
+      WebFloatPoint(195, 196), WebPointerProperties::Button::kNoButton, 0,
+      WebInputEvent::kNoModifiers, TimeTicks::Now().InSeconds());
+  mouse_move_over_scrollbar_track.SetFrameScale(1);
+  document->GetFrame()->GetEventHandler().HandleMouseMoveEvent(
+      mouse_move_over_scrollbar_track, Vector<WebMouseEvent>());
+
+  // IFRAME hover.
+  EXPECT_EQ(document->HoverElement(), iframe);
+
+  // Disable the Scrollbar.
+  web_view->MainFrameImpl()
+      ->GetFrameView()
+      ->LayoutViewportScrollableArea()
+      ->SetScrollbarsHidden(true);
+
+  // Ensure hittest has IFRAME and no scrollbar.
+  hit_test_result = web_view->CoreHitTestResultAt(WebPoint(196, 6));
+
+  EXPECT_TRUE(hit_test_result.InnerElement());
+  EXPECT_FALSE(hit_test_result.GetScrollbar());
+
+  // Mouse over disabled scrollbar.
+  WebMouseEvent mouse_move_over_i_frame_and_disabled_scrollbar(
+      WebInputEvent::kMouseMove, WebFloatPoint(196, 5), WebFloatPoint(196, 6),
+      WebPointerProperties::Button::kNoButton, 0, WebInputEvent::kNoModifiers,
+      TimeTicks::Now().InSeconds());
+  mouse_move_over_i_frame_and_disabled_scrollbar.SetFrameScale(1);
+  document->GetFrame()->GetEventHandler().HandleMouseMoveEvent(
+      mouse_move_over_i_frame_and_disabled_scrollbar, Vector<WebMouseEvent>());
+
+  // IFRAME hover.
+  EXPECT_EQ(document->HoverElement(), iframe);
+}
+
+// Makes sure that mouse hover over a scrollbar also hover the element owns the
+// scrollbar.
+TEST_P(ParameterizedWebFrameTest, MouseOverScrollbarAndParentElement) {
+  RegisterMockedHttpURLLoad("scrollbar-and-element-hover.html");
+  FrameTestHelpers::WebViewHelper web_view_helper;
+  RuntimeEnabledFeatures::SetOverlayScrollbarsEnabled(false);
+  WebViewImpl* web_view = web_view_helper.InitializeAndLoad(
+      base_url_ + "scrollbar-and-element-hover.html");
+
+  web_view_helper.Resize(WebSize(200, 200));
+
+  web_view->UpdateAllLifecyclePhases();
+
+  Document* document =
+      ToLocalFrame(web_view->GetPage()->MainFrame())->GetDocument();
+
+  Element* parent_div = document->getElementById("parent");
+  Element* child_div = document->getElementById("child");
+  EXPECT_TRUE(parent_div);
+  EXPECT_TRUE(child_div);
+
+  ScrollableArea* scrollable_area =
+      ToLayoutBox(parent_div->GetLayoutObject())->GetScrollableArea();
+
+  EXPECT_TRUE(scrollable_area->VerticalScrollbar());
+  EXPECT_FALSE(scrollable_area->VerticalScrollbar()->IsOverlayScrollbar());
+  EXPECT_TRUE(scrollable_area->VerticalScrollbar()->GetTheme().IsMockTheme());
+
+  // Ensure hittest only has DIV.
+  HitTestResult hit_test_result = web_view->CoreHitTestResultAt(WebPoint(1, 1));
+
+  EXPECT_TRUE(hit_test_result.InnerElement());
+  EXPECT_FALSE(hit_test_result.GetScrollbar());
+
+  // Mouse over DIV.
+  WebMouseEvent mouse_move_over_div(
+      WebInputEvent::kMouseMove, WebFloatPoint(1, 1), WebFloatPoint(1, 1),
+      WebPointerProperties::Button::kNoButton, 0, WebInputEvent::kNoModifiers,
+      TimeTicks::Now().InSeconds());
+  mouse_move_over_div.SetFrameScale(1);
+  document->GetFrame()->GetEventHandler().HandleMouseMoveEvent(
+      mouse_move_over_div, Vector<WebMouseEvent>());
+
+  // DIV :hover.
+  EXPECT_EQ(document->HoverElement(), parent_div);
+
+  // Ensure hittest has DIV and scrollbar.
+  hit_test_result = web_view->CoreHitTestResultAt(WebPoint(175, 5));
+
+  EXPECT_TRUE(hit_test_result.InnerElement());
+  EXPECT_TRUE(hit_test_result.GetScrollbar());
+  EXPECT_FALSE(hit_test_result.GetScrollbar()->IsCustomScrollbar());
+  EXPECT_TRUE(hit_test_result.GetScrollbar()->Enabled());
+
+  // Mouse over scrollbar.
+  WebMouseEvent mouse_move_over_div_and_scrollbar(
+      WebInputEvent::kMouseMove, WebFloatPoint(175, 5), WebFloatPoint(175, 5),
+      WebPointerProperties::Button::kNoButton, 0, WebInputEvent::kNoModifiers,
+      TimeTicks::Now().InSeconds());
+  mouse_move_over_div_and_scrollbar.SetFrameScale(1);
+  document->GetFrame()->GetEventHandler().HandleMouseMoveEvent(
+      mouse_move_over_div_and_scrollbar, Vector<WebMouseEvent>());
+
+  // Not change the DIV :hover.
+  EXPECT_EQ(document->HoverElement(), parent_div);
+
+  // Disable the Scrollbar by remove the childDiv.
+  child_div->remove();
+  web_view->UpdateAllLifecyclePhases();
+
+  // Ensure hittest has DIV and no scrollbar.
+  hit_test_result = web_view->CoreHitTestResultAt(WebPoint(175, 5));
+
+  EXPECT_TRUE(hit_test_result.InnerElement());
+  EXPECT_TRUE(hit_test_result.GetScrollbar());
+  EXPECT_FALSE(hit_test_result.GetScrollbar()->Enabled());
+  EXPECT_LT(hit_test_result.InnerElement()->clientWidth(), 180);
+
+  // Mouse over disabled scrollbar.
+  document->GetFrame()->GetEventHandler().HandleMouseMoveEvent(
+      mouse_move_over_div_and_scrollbar, Vector<WebMouseEvent>());
+
+  // Not change the DIV :hover.
+  EXPECT_EQ(document->HoverElement(), parent_div);
+}
+
+// Makes sure that mouse over a root scrollbar also hover the html element.
+TEST_P(ParameterizedWebFrameTest, MouseOverRootScrollbar) {
+  RegisterMockedHttpURLLoad("hover-root-scrollbar.html");
+  FrameTestHelpers::WebViewHelper web_view_helper;
+  RuntimeEnabledFeatures::SetOverlayScrollbarsEnabled(false);
+  WebViewImpl* web_view = web_view_helper.InitializeAndLoad(
+      base_url_ + "hover-root-scrollbar.html");
+
+  web_view_helper.Resize(WebSize(200, 200));
+
+  web_view->UpdateAllLifecyclePhases();
+
+  Document* document =
+      ToLocalFrame(web_view->GetPage()->MainFrame())->GetDocument();
+
+  // Ensure hittest has <html> element and scrollbar.
+  HitTestResult hit_test_result =
+      web_view->CoreHitTestResultAt(WebPoint(195, 5));
+
+  EXPECT_TRUE(hit_test_result.InnerElement());
+  EXPECT_EQ(hit_test_result.InnerElement(), document->documentElement());
+  EXPECT_TRUE(hit_test_result.GetScrollbar());
+
+  // Mouse over scrollbar.
+  WebMouseEvent mouse_move_over_div_and_scrollbar(
+      WebInputEvent::kMouseMove, WebFloatPoint(195, 5), WebFloatPoint(195, 5),
+      WebPointerProperties::Button::kNoButton, 0, WebInputEvent::kNoModifiers,
+      TimeTicks::Now().InSeconds());
+  mouse_move_over_div_and_scrollbar.SetFrameScale(1);
+  document->GetFrame()->GetEventHandler().HandleMouseMoveEvent(
+      mouse_move_over_div_and_scrollbar, Vector<WebMouseEvent>());
+
+  // Hover <html element.
+  EXPECT_EQ(document->HoverElement(), document->documentElement());
+}
+
+TEST_P(ParameterizedWebFrameTest, MouseReleaseUpdatesScrollbarHoveredPart) {
+  RegisterMockedHttpURLLoad("custom-scrollbar-hover.html");
+  FrameTestHelpers::WebViewHelper web_view_helper;
+  WebViewImpl* web_view = web_view_helper.InitializeAndLoad(
+      base_url_ + "custom-scrollbar-hover.html");
+
+  web_view_helper.Resize(WebSize(200, 200));
+
+  web_view->UpdateAllLifecyclePhases();
+
+  Document* document =
+      ToLocalFrame(web_view->GetPage()->MainFrame())->GetDocument();
+
+  Element* scrollbar_div = document->getElementById("scrollbar");
+  EXPECT_TRUE(scrollbar_div);
+
+  ScrollableArea* scrollable_area =
+      ToLayoutBox(scrollbar_div->GetLayoutObject())->GetScrollableArea();
+
+  EXPECT_TRUE(scrollable_area->VerticalScrollbar());
+  Scrollbar* scrollbar = scrollable_area->VerticalScrollbar();
+  EXPECT_EQ(scrollbar->PressedPart(), ScrollbarPart::kNoPart);
+  EXPECT_EQ(scrollbar->HoveredPart(), ScrollbarPart::kNoPart);
+
+  // Mouse moved over the scrollbar.
+  WebMouseEvent mouse_move_over_scrollbar(
+      WebInputEvent::kMouseMove, WebFloatPoint(175, 1), WebFloatPoint(175, 1),
+      WebPointerProperties::Button::kNoButton, 0, WebInputEvent::kNoModifiers,
+      TimeTicks::Now().InSeconds());
+  mouse_move_over_scrollbar.SetFrameScale(1);
+  document->GetFrame()->GetEventHandler().HandleMouseMoveEvent(
+      mouse_move_over_scrollbar, Vector<WebMouseEvent>());
+  EXPECT_EQ(scrollbar->PressedPart(), ScrollbarPart::kNoPart);
+  EXPECT_EQ(scrollbar->HoveredPart(), ScrollbarPart::kThumbPart);
+
+  // Mouse pressed.
+  WebMouseEvent mouse_press_event(
+      WebInputEvent::kMouseDown, WebFloatPoint(175, 1), WebFloatPoint(175, 1),
+      WebPointerProperties::Button::kLeft, 0,
+      WebInputEvent::Modifiers::kLeftButtonDown, TimeTicks::Now().InSeconds());
+  mouse_press_event.SetFrameScale(1);
+  document->GetFrame()->GetEventHandler().HandleMousePressEvent(
+      mouse_press_event);
+  EXPECT_EQ(scrollbar->PressedPart(), ScrollbarPart::kThumbPart);
+  EXPECT_EQ(scrollbar->HoveredPart(), ScrollbarPart::kThumbPart);
+
+  // Mouse moved off the scrollbar while still pressed.
+  WebMouseEvent mouse_move_off_scrollbar(
+      WebInputEvent::kMouseMove, WebFloatPoint(1, 1), WebFloatPoint(1, 1),
+      WebPointerProperties::Button::kLeft, 0,
+      WebInputEvent::Modifiers::kLeftButtonDown, TimeTicks::Now().InSeconds());
+  mouse_move_off_scrollbar.SetFrameScale(1);
+  document->GetFrame()->GetEventHandler().HandleMouseLeaveEvent(
+      mouse_move_off_scrollbar);
+  EXPECT_EQ(scrollbar->PressedPart(), ScrollbarPart::kThumbPart);
+  EXPECT_EQ(scrollbar->HoveredPart(), ScrollbarPart::kThumbPart);
+
+  // Mouse released.
+  WebMouseEvent mouse_release_event(
+      WebInputEvent::kMouseUp, WebFloatPoint(1, 1), WebFloatPoint(1, 1),
+      WebPointerProperties::Button::kLeft, 0,
+      WebInputEvent::Modifiers::kLeftButtonDown, TimeTicks::Now().InSeconds());
+  mouse_release_event.SetFrameScale(1);
+  document->GetFrame()->GetEventHandler().HandleMouseReleaseEvent(
+      mouse_release_event);
+  EXPECT_EQ(scrollbar->PressedPart(), ScrollbarPart::kNoPart);
+  EXPECT_EQ(scrollbar->HoveredPart(), ScrollbarPart::kNoPart);
+}
+
+TEST_P(ParameterizedWebFrameTest,
+       CustomScrollbarInOverlayScrollbarThemeWillNotCauseDCHECKFails) {
+  RegisterMockedHttpURLLoad(
+      "custom-scrollbar-dcheck-failed-when-paint-scroll-corner.html");
+  FrameTestHelpers::WebViewHelper web_view_helper;
+  WebViewImpl* web_view = web_view_helper.InitializeAndLoad(
+      base_url_ +
+      "custom-scrollbar-dcheck-failed-when-paint-scroll-corner.html");
+
+  web_view_helper.Resize(WebSize(200, 200));
+
+  // No DCHECK Fails. Issue 676678.
+  web_view->UpdateAllLifecyclePhases();
+}
+
+static void DisableCompositing(WebSettings* settings) {
+  settings->SetAcceleratedCompositingEnabled(false);
+  settings->SetPreferCompositingToLCDTextEnabled(false);
+}
+
+// Make sure overlay scrollbars on non-composited scrollers fade out and set
+// the hidden bit as needed.
+TEST_P(ParameterizedWebFrameTest,
+       DISABLE_ON_TSAN(TestNonCompositedOverlayScrollbarsFade)) {
+  FrameTestHelpers::WebViewHelper web_view_helper;
+  WebViewImpl* web_view_impl = web_view_helper.Initialize(
+      nullptr, nullptr, nullptr, &DisableCompositing);
+
+  constexpr double kMockOverlayFadeOutDelayMs = 5.0;
+  constexpr TimeDelta kMockOverlayFadeOutDelay =
+      TimeDelta::FromMillisecondsD(kMockOverlayFadeOutDelayMs);
+
+  ScrollbarThemeOverlayMock& mock_overlay_theme =
+      (ScrollbarThemeOverlayMock&)ScrollbarTheme::GetTheme();
+  mock_overlay_theme.SetOverlayScrollbarFadeOutDelay(
+      kMockOverlayFadeOutDelayMs / 1000.0);
+
+  web_view_impl->ResizeWithBrowserControls(WebSize(640, 480), 0, 0, false);
+
+  WebURL base_url = URLTestHelpers::ToKURL("http://example.com/");
+  FrameTestHelpers::LoadHTMLString(web_view_impl->MainFrameImpl(),
+                                   "<!DOCTYPE html>"
+                                   "<style>"
+                                   "  #space {"
+                                   "    width: 1000px;"
+                                   "    height: 1000px;"
+                                   "  }"
+                                   "  #container {"
+                                   "    width: 200px;"
+                                   "    height: 200px;"
+                                   "    overflow: scroll;"
+                                   "  }"
+                                   "  div { height:1000px; width: 200px; }"
+                                   "</style>"
+                                   "<div id='container'>"
+                                   "  <div id='space'></div>"
+                                   "</div>",
+                                   base_url);
+  web_view_impl->UpdateAllLifecyclePhases();
+
+  WebLocalFrameImpl* frame = web_view_helper.LocalMainFrame();
+  Document* document =
+      ToLocalFrame(web_view_impl->GetPage()->MainFrame())->GetDocument();
+  Element* container = document->getElementById("container");
+  ScrollableArea* scrollable_area =
+      ToLayoutBox(container->GetLayoutObject())->GetScrollableArea();
+
+  EXPECT_FALSE(scrollable_area->ScrollbarsHidden());
+  testing::RunDelayedTasks(kMockOverlayFadeOutDelay);
+  EXPECT_TRUE(scrollable_area->ScrollbarsHidden());
+
+  scrollable_area->SetScrollOffset(ScrollOffset(10, 10), kProgrammaticScroll,
+                                   kScrollBehaviorInstant);
+
+  EXPECT_FALSE(scrollable_area->ScrollbarsHidden());
+  testing::RunDelayedTasks(kMockOverlayFadeOutDelay);
+  EXPECT_TRUE(scrollable_area->ScrollbarsHidden());
+
+  frame->ExecuteScript(WebScriptSource(
+      "document.getElementById('space').style.height = '500px';"));
+  frame->View()->UpdateAllLifecyclePhases();
+  EXPECT_TRUE(scrollable_area->ScrollbarsHidden());
+
+  frame->ExecuteScript(WebScriptSource(
+      "document.getElementById('container').style.height = '300px';"));
+  frame->View()->UpdateAllLifecyclePhases();
+
+  EXPECT_FALSE(scrollable_area->ScrollbarsHidden());
+  testing::RunDelayedTasks(kMockOverlayFadeOutDelay);
+  EXPECT_TRUE(scrollable_area->ScrollbarsHidden());
+
+  // Non-composited scrollbars don't fade out while mouse is over.
+  EXPECT_TRUE(scrollable_area->VerticalScrollbar());
+  scrollable_area->SetScrollOffset(ScrollOffset(20, 20), kProgrammaticScroll,
+                                   kScrollBehaviorInstant);
+  EXPECT_FALSE(scrollable_area->ScrollbarsHidden());
+  scrollable_area->MouseEnteredScrollbar(*scrollable_area->VerticalScrollbar());
+  testing::RunDelayedTasks(kMockOverlayFadeOutDelay);
+  EXPECT_FALSE(scrollable_area->ScrollbarsHidden());
+  scrollable_area->MouseExitedScrollbar(*scrollable_area->VerticalScrollbar());
+  testing::RunDelayedTasks(kMockOverlayFadeOutDelay);
+  EXPECT_TRUE(scrollable_area->ScrollbarsHidden());
+
+  mock_overlay_theme.SetOverlayScrollbarFadeOutDelay(0.0);
 }
 
 class WebFrameSimTest : public ::testing::WithParamInterface<bool>,
@@ -11488,38 +12407,6 @@ TEST_P(ParameterizedWebFrameTest, ContextMenuDataPasswordSelectedText) {
   EXPECT_FALSE(frame.GetMenuData().selected_text.IsEmpty());
 }
 
-TEST_P(ParameterizedWebFrameTest, ContextMenuDataNonLocatedMenu) {
-  ContextMenuWebFrameClient frame;
-  FrameTestHelpers::WebViewHelper web_view_helper;
-  WebViewImpl* web_view = web_view_helper.Initialize(&frame);
-  const std::string& html =
-      "<div style='font-size: 1000%; line-height: 0.7em'>Select me<br/>"
-      "Next line</div>";
-  FrameTestHelpers::LoadHTMLString(web_view->MainFrameImpl(), html,
-                                   ToKURL("about:blank"));
-  web_view->Resize(WebSize(500, 300));
-  web_view->UpdateAllLifecyclePhases();
-  RunPendingTasks();
-  web_view->SetInitialFocus(false);
-  RunPendingTasks();
-
-  WebMouseEvent mouse_event(WebInputEvent::kMouseDown,
-                            WebInputEvent::kNoModifiers,
-                            WebInputEvent::kTimeStampForTesting);
-
-  mouse_event.button = WebMouseEvent::Button::kLeft;
-  mouse_event.SetPositionInWidget(0, 0);
-  mouse_event.click_count = 2;
-  web_view->HandleInputEvent(WebCoalescedInputEvent(mouse_event));
-
-  web_view->ShowContextMenu(kMenuSourceTouch);
-
-  RunPendingTasks();
-  web_view_helper.Reset();
-  EXPECT_EQ(frame.GetMenuData().source_type, kMenuSourceTouch);
-  EXPECT_FALSE(frame.GetMenuData().selected_text.IsEmpty());
-}
-
 TEST_P(ParameterizedWebFrameTest, LocalFrameWithRemoteParentIsTransparent) {
   FrameTestHelpers::WebViewHelper helper;
   helper.InitializeRemote();
@@ -11677,186 +12564,6 @@ TEST_F(WebFrameTest, RecordSameDocumentNavigationToHistogram) {
   // UpdateForSameDocumentNavigation().
 
   tester.ExpectTotalCount(histogramName, 3);
-}
-
-TEST_P(ParameterizedWebFrameTest, DidScrollCallbackAfterScrollableAreaChanges) {
-  FrameTestHelpers::WebViewHelper web_view_helper;
-  web_view_helper.Initialize();
-  web_view_helper.Resize(WebSize(200, 200));
-  WebViewImpl* web_view = web_view_helper.WebView();
-
-  InitializeWithHTML(*web_view->MainFrameImpl()->GetFrame(),
-                     "<style>"
-                     "  #scrollable {"
-                     "    height: 100px;"
-                     "    width: 100px;"
-                     "    overflow: scroll;"
-                     "    will-change: transform;"
-                     "  }"
-                     "  #forceScroll { height: 120px; width: 50px; }"
-                     "</style>"
-                     "<div id='scrollable'>"
-                     "  <div id='forceScroll'></div>"
-                     "</div>");
-
-  web_view->UpdateAllLifecyclePhases();
-
-  Document* document = web_view->MainFrameImpl()->GetFrame()->GetDocument();
-  Element* scrollable = document->getElementById("scrollable");
-
-  auto* scrollable_area =
-      ToLayoutBox(scrollable->GetLayoutObject())->GetScrollableArea();
-  EXPECT_NE(nullptr, scrollable_area);
-
-  // We should have a composited layer for scrolling due to will-change.
-  WebLayer* web_scroll_layer =
-      scrollable_area->LayerForScrolling()->PlatformLayer();
-  EXPECT_NE(nullptr, web_scroll_layer);
-
-  // Ensure a synthetic impl-side scroll offset propagates to the scrollable
-  // area using the DidScroll callback.
-  EXPECT_EQ(ScrollOffset(), scrollable_area->GetScrollOffset());
-  web_scroll_layer->SetScrollOffsetFromImplSideForTesting(
-      gfx::ScrollOffset(0, 1));
-  web_view->UpdateAllLifecyclePhases();
-  EXPECT_EQ(ScrollOffset(0, 1), scrollable_area->GetScrollOffset());
-
-  // Make the scrollable area non-scrollable.
-  scrollable->setAttribute(HTMLNames::styleAttr, "overflow: visible");
-
-  // Update layout without updating compositing state.
-  WebLocalFrame* frame = web_view_helper.LocalMainFrame();
-  frame->ExecuteScript(
-      WebScriptSource("var forceLayoutFromScript = scrollable.offsetTop;"));
-  EXPECT_EQ(document->Lifecycle().GetState(), DocumentLifecycle::kLayoutClean);
-
-  EXPECT_EQ(nullptr,
-            ToLayoutBox(scrollable->GetLayoutObject())->GetScrollableArea());
-
-  // The web scroll layer has not been deleted yet and we should be able to
-  // apply impl-side offsets without crashing.
-  web_scroll_layer->SetScrollOffsetFromImplSideForTesting(
-      gfx::ScrollOffset(0, 3));
-}
-
-class SlimmingPaintWebFrameTest
-    : public ::testing::WithParamInterface<TestParamRootLayerScrolling>,
-      private ScopedRootLayerScrollingForTest,
-      private ScopedSlimmingPaintV2ForTest,
-      public WebFrameTest {
- public:
-  SlimmingPaintWebFrameTest()
-      : ScopedRootLayerScrollingForTest(GetParam()),
-        ScopedSlimmingPaintV2ForTest(true) {}
-
-  void SetUp() override {
-    web_view_helper_ = WTF::MakeUnique<FrameTestHelpers::WebViewHelper>();
-    web_view_helper_->Initialize(nullptr, &web_view_client_, nullptr,
-                                 &ConfigureCompositingWebView);
-    web_view_helper_->Resize(WebSize(200, 200));
-
-    // The paint artifact compositor should have been created as part of the
-    // web view helper setup.
-    DCHECK(paint_artifact_compositor());
-    paint_artifact_compositor()->EnableExtraDataForTesting();
-  }
-
-  WebLocalFrame* LocalMainFrame() { return web_view_helper_->LocalMainFrame(); }
-
-  WebViewImpl* WebView() { return web_view_helper_->WebView(); }
-
-  size_t ContentLayerCount() {
-    return paint_artifact_compositor()
-        ->GetExtraDataForTesting()
-        ->content_layers.size();
-  }
-
-  size_t ScrollHitTestLayerCount() {
-    return paint_artifact_compositor()
-        ->GetExtraDataForTesting()
-        ->scroll_hit_test_layers.size();
-  }
-
-  std::unique_ptr<WebLayer> ContentLayerAt(unsigned index) {
-    return paint_artifact_compositor()
-        ->GetExtraDataForTesting()
-        ->ContentWebLayerAt(index);
-  }
-
-  std::unique_ptr<WebLayer> ScrollHitTestLayerAt(unsigned index) {
-    return paint_artifact_compositor()
-        ->GetExtraDataForTesting()
-        ->ScrollHitTestWebLayerAt(index);
-  }
-
- private:
-  PaintArtifactCompositor* paint_artifact_compositor() {
-    auto* frame_view = web_view_helper_->LocalMainFrame()->GetFrameView();
-    return frame_view->GetPaintArtifactCompositorForTesting();
-  }
-  FrameTestHelpers::TestWebViewClient web_view_client_;
-  std::unique_ptr<FrameTestHelpers::WebViewHelper> web_view_helper_;
-};
-
-INSTANTIATE_TEST_CASE_P(All, SlimmingPaintWebFrameTest, ::testing::Bool());
-
-TEST_P(SlimmingPaintWebFrameTest, DidScrollCallbackAfterScrollableAreaChanges) {
-  DCHECK(RuntimeEnabledFeatures::SlimmingPaintV2Enabled());
-
-  InitializeWithHTML(*WebView()->MainFrameImpl()->GetFrame(),
-                     "<style>"
-                     "  #scrollable {"
-                     "    height: 100px;"
-                     "    width: 100px;"
-                     "    overflow: scroll;"
-                     "    will-change: transform;"
-                     "  }"
-                     "  #forceScroll { height: 120px; width: 50px; }"
-                     "</style>"
-                     "<div id='scrollable'>"
-                     "  <div id='forceScroll'></div>"
-                     "</div>");
-
-  WebView()->UpdateAllLifecyclePhases();
-
-  Document* document = WebView()->MainFrameImpl()->GetFrame()->GetDocument();
-  Element* scrollable = document->getElementById("scrollable");
-
-  auto* scrollable_area =
-      ToLayoutBox(scrollable->GetLayoutObject())->GetScrollableArea();
-  EXPECT_NE(nullptr, scrollable_area);
-
-  EXPECT_EQ(ContentLayerCount(), 2u);
-  EXPECT_EQ(ScrollHitTestLayerCount(), 1u);
-
-  // Ensure a synthetic impl-side scroll offset propagates to the scrollable
-  // area using the DidScroll callback.
-  EXPECT_EQ(ScrollOffset(), scrollable_area->GetScrollOffset());
-  ScrollHitTestLayerAt(0)->SetScrollOffsetFromImplSideForTesting(
-      gfx::ScrollOffset(0, 1));
-  WebView()->UpdateAllLifecyclePhases();
-  EXPECT_EQ(ScrollOffset(0, 1), scrollable_area->GetScrollOffset());
-
-  // Make the scrollable area non-scrollable.
-  scrollable->setAttribute(HTMLNames::styleAttr, "overflow: visible");
-
-  // Update layout without updating compositing state.
-  LocalMainFrame()->ExecuteScript(
-      WebScriptSource("var forceLayoutFromScript = scrollable.offsetTop;"));
-  EXPECT_EQ(document->Lifecycle().GetState(), DocumentLifecycle::kLayoutClean);
-
-  EXPECT_EQ(nullptr,
-            ToLayoutBox(scrollable->GetLayoutObject())->GetScrollableArea());
-
-  // The web scroll layer has not been deleted yet and we should be able to
-  // apply impl-side offsets without crashing.
-  EXPECT_EQ(ScrollHitTestLayerCount(), 1u);
-  ScrollHitTestLayerAt(0)->SetScrollOffsetFromImplSideForTesting(
-      gfx::ScrollOffset(0, 3));
-
-  WebView()->UpdateAllLifecyclePhases();
-  EXPECT_EQ(ContentLayerCount(), 1u);
-  EXPECT_EQ(ScrollHitTestLayerCount(), 0u);
 }
 
 }  // namespace blink

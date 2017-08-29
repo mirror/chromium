@@ -114,6 +114,7 @@ class CORE_TEMPLATE_CLASS_EXPORT VisibleSelectionTemplate {
 
   Element* RootEditableElement() const;
   bool IsContentEditable() const;
+  bool IsContentRichlyEditable() const;
 
   bool IsValidFor(const Document&) const;
 
@@ -135,7 +136,9 @@ class CORE_TEMPLATE_CLASS_EXPORT VisibleSelectionTemplate {
  private:
   friend class SelectionAdjuster;
 
-  explicit VisibleSelectionTemplate(const SelectionTemplate<Strategy>&);
+  VisibleSelectionTemplate(const SelectionTemplate<Strategy>&, TextGranularity);
+
+  void Validate(const SelectionTemplate<Strategy>&, TextGranularity);
 
   // We need to store these as Positions because VisibleSelection is
   // used to store values in editing commands for use when

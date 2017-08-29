@@ -75,6 +75,7 @@ public class FirstRunActivity extends AsyncInitializationActivity implements Fir
     public static final String EXTRA_USE_FRE_FLOW_SEQUENCER = "Extra.UseFreFlowSequencer";
     public static final String EXTRA_START_LIGHTWEIGHT_FRE = "Extra.StartLightweightFRE";
     public static final String EXTRA_CHROME_LAUNCH_INTENT = "Extra.FreChromeLaunchIntent";
+    public static final String EXTRA_FINISH_ON_TOUCH_OUTSIDE = "Extra.FreFinishOnTouchOutside";
 
     static final String SHOW_WELCOME_PAGE = "ShowWelcome";
     static final String SHOW_DATA_REDUCTION_PAGE = "ShowDataReduction";
@@ -84,6 +85,7 @@ public class FirstRunActivity extends AsyncInitializationActivity implements Fir
     static final String POST_NATIVE_SETUP_NEEDED = "PostNativeSetupNeeded";
 
     // Outgoing results:
+    public static final String RESULT_CLOSE_APP = "Close App";
     public static final String RESULT_SIGNIN_ACCOUNT_NAME = "ResultSignInTo";
     public static final String RESULT_SHOW_SIGNIN_SETTINGS = "ResultShowSignInSettings";
     public static final String EXTRA_FIRST_RUN_ACTIVITY_RESULT = "Extra.FreActivityResult";
@@ -226,7 +228,8 @@ public class FirstRunActivity extends AsyncInitializationActivity implements Fir
             mFreProperties = new Bundle();
         }
 
-        setFinishOnTouchOutside(true);
+        setFinishOnTouchOutside(
+                mFreProperties.getBoolean(FirstRunActivity.EXTRA_FINISH_ON_TOUCH_OUTSIDE));
 
         // Skip creating content view if it is to start a lightweight First Run Experience.
         if (mFreProperties.getBoolean(FirstRunActivity.EXTRA_START_LIGHTWEIGHT_FRE)) {
@@ -372,6 +375,13 @@ public class FirstRunActivity extends AsyncInitializationActivity implements Fir
         // active).
         UmaUtils.recordForegroundStartTime();
         stopProgressionIfNotAcceptedTermsOfService();
+        if (!mFreProperties.getBoolean(EXTRA_USE_FRE_FLOW_SEQUENCER)) {
+            if (FirstRunStatus.getFirstRunFlowComplete()) {
+                // This is a parallel flow that needs to be refreshed/re-fired.
+                // Signal the FRE flow completion and re-launch the original intent.
+                completeFirstRunExperience();
+            }
+        }
     }
 
     @Override
@@ -410,6 +420,7 @@ public class FirstRunActivity extends AsyncInitializationActivity implements Fir
     public void abortFirstRunExperience() {
         Intent intent = new Intent();
         if (mFreProperties != null) intent.putExtras(mFreProperties);
+        intent.putExtra(RESULT_CLOSE_APP, true);
         finishAllTheActivities(getLocalClassName(), Activity.RESULT_CANCELED, intent);
 
         sendPendingIntentIfNecessary(false);

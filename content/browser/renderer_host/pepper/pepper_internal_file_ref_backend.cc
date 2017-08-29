@@ -209,9 +209,10 @@ int32_t PepperInternalFileRefBackend::ReadDirectoryEntries(
       new storage::FileSystemOperation::FileEntryList;
   GetFileSystemContext()->operation_runner()->ReadDirectory(
       GetFileSystemURL(),
-      base::BindRepeating(&PepperInternalFileRefBackend::ReadDirectoryComplete,
-                          weak_factory_.GetWeakPtr(), reply_context,
-                          base::Owned(accumulated_file_list)));
+      base::Bind(&PepperInternalFileRefBackend::ReadDirectoryComplete,
+                 weak_factory_.GetWeakPtr(),
+                 reply_context,
+                 base::Owned(accumulated_file_list)));
   return PP_OK_COMPLETIONPENDING;
 }
 
@@ -219,7 +220,7 @@ void PepperInternalFileRefBackend::ReadDirectoryComplete(
     ppapi::host::ReplyMessageContext context,
     storage::FileSystemOperation::FileEntryList* accumulated_file_list,
     base::File::Error error,
-    storage::FileSystemOperation::FileEntryList file_list,
+    const storage::FileSystemOperation::FileEntryList& file_list,
     bool has_more) {
   accumulated_file_list->insert(
       accumulated_file_list->end(), file_list.begin(), file_list.end());

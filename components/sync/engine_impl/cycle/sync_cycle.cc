@@ -8,13 +8,14 @@
 #include <iterator>
 
 #include "base/logging.h"
+#include "base/memory/ptr_util.h"
 #include "components/sync/syncable/directory.h"
 
 namespace syncer {
 
 SyncCycle::SyncCycle(SyncCycleContext* context, Delegate* delegate)
     : context_(context), delegate_(delegate) {
-  status_controller_ = std::make_unique<StatusController>();
+  status_controller_ = base::MakeUnique<StatusController>();
 }
 
 SyncCycle::~SyncCycle() {}

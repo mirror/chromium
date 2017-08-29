@@ -132,7 +132,6 @@ static const char* const kSwitchNames[] = {
     switches::kEnableGpuRasterization,
     switches::kEnableHeapProfiling,
     switches::kEnableLogging,
-    switches::kEnableOOPRasterization,
 #if defined(OS_CHROMEOS)
     switches::kDisableVaapiAcceleratedVideoEncode,
 #endif
@@ -418,7 +417,7 @@ void GpuProcessHost::GetHasGpuProcess(
   if (!BrowserThread::CurrentlyOn(BrowserThread::IO)) {
     BrowserThread::PostTask(
         BrowserThread::IO, FROM_HERE,
-        base::BindOnce(&GpuProcessHost::GetHasGpuProcess, callback));
+        base::Bind(&GpuProcessHost::GetHasGpuProcess, callback));
     return;
   }
   bool has_gpu = false;
@@ -430,7 +429,7 @@ void GpuProcessHost::GetHasGpuProcess(
     }
   }
   BrowserThread::PostTask(BrowserThread::UI, FROM_HERE,
-                          base::BindOnce(callback, has_gpu));
+                          base::Bind(callback, has_gpu));
 }
 
 // static
@@ -443,7 +442,7 @@ void GpuProcessHost::CallOnIO(
 #endif
   BrowserThread::PostTask(
       BrowserThread::IO, FROM_HERE,
-      base::BindOnce(&RunCallbackOnIO, kind, force_create, callback));
+      base::Bind(&RunCallbackOnIO, kind, force_create, callback));
 }
 
 void GpuProcessHost::BindInterface(
@@ -583,7 +582,7 @@ GpuProcessHost::~GpuProcessHost() {
 
   BrowserThread::PostTask(
       BrowserThread::UI, FROM_HERE,
-      base::BindOnce(&OnGpuProcessHostDestroyedOnUI, host_id_, message));
+      base::Bind(&OnGpuProcessHostDestroyedOnUI, host_id_, message));
 }
 
 bool GpuProcessHost::Init() {
@@ -668,7 +667,7 @@ bool GpuProcessHost::OnMessageReceived(const IPC::Message& message) {
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
 #if defined(USE_OZONE)
   BrowserThread::PostTask(BrowserThread::UI, FROM_HERE,
-                          base::BindOnce(&RouteMessageToOzoneOnUI, message));
+                          base::Bind(&RouteMessageToOzoneOnUI, message));
 #endif
   return true;
 }
@@ -707,8 +706,8 @@ void GpuProcessHost::EstablishGpuChannel(
   channel_requests_.push(callback);
   gpu_service_ptr_->EstablishGpuChannel(
       client_id, client_tracing_id, is_gpu_host,
-      base::BindOnce(&GpuProcessHost::OnChannelEstablished,
-                     weak_ptr_factory_.GetWeakPtr(), client_id, callback));
+      base::Bind(&GpuProcessHost::OnChannelEstablished,
+                 weak_ptr_factory_.GetWeakPtr(), client_id, callback));
 
   if (!base::CommandLine::ForCurrentProcess()->HasSwitch(
       switches::kDisableGpuShaderDiskCache)) {
@@ -730,8 +729,8 @@ void GpuProcessHost::CreateGpuMemoryBuffer(
   create_gpu_memory_buffer_requests_.push(callback);
   gpu_service_ptr_->CreateGpuMemoryBuffer(
       id, size, format, usage, client_id, surface_handle,
-      base::BindOnce(&GpuProcessHost::OnGpuMemoryBufferCreated,
-                     weak_ptr_factory_.GetWeakPtr()));
+      base::Bind(&GpuProcessHost::OnGpuMemoryBufferCreated,
+                 weak_ptr_factory_.GetWeakPtr()));
 }
 
 void GpuProcessHost::DestroyGpuMemoryBuffer(gfx::GpuMemoryBufferId id,

@@ -323,24 +323,20 @@ MediaCodecStatus CodecWrapperImpl::SetSurface(
 }
 
 bool CodecWrapperImpl::ReleaseCodecOutputBuffer(int64_t id, bool render) {
+  DVLOG(2) << __func__ << " render: " << render << ", id: " << id;
   base::AutoLock l(lock_);
   if (!codec_ || state_ == State::kError)
     return false;
 
   auto buffer_it = buffer_ids_.find(id);
-  bool valid = buffer_it != buffer_ids_.end();
-  DVLOG(2) << __func__ << " id=" << id << " render=" << render
-           << " valid=" << valid;
-  if (!valid)
+  if (buffer_it == buffer_ids_.end())
     return false;
 
   // Discard the buffers preceding the one we're releasing.
   for (auto it = buffer_ids_.begin(); it < buffer_it; ++it) {
     int index = it->second;
     codec_->ReleaseOutputBuffer(index, false);
-    DVLOG(2) << __func__ << " discarded " << index;
   }
-
   int index = buffer_it->second;
   codec_->ReleaseOutputBuffer(index, render);
   buffer_ids_.erase(buffer_ids_.begin(), buffer_it + 1);

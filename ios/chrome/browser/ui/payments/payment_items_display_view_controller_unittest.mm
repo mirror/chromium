@@ -26,10 +26,6 @@
 
 #pragma mark - PaymentItemsDisplayViewControllerDataSource
 
-- (BOOL)canPay {
-  return YES;
-}
-
 - (CollectionViewItem*)totalItem {
   return [[PriceItem alloc] init];
 }
@@ -53,8 +49,8 @@ class PaymentRequestPaymentItemsDisplayViewControllerTest
 
   CollectionViewController* InstantiateController() override {
     mediator_ = [[TestPaymentItemsDisplayMediator alloc] init];
-    PaymentItemsDisplayViewController* viewController =
-        [[PaymentItemsDisplayViewController alloc] init];
+    PaymentItemsDisplayViewController* viewController = [
+        [PaymentItemsDisplayViewController alloc] initWithPayButtonEnabled:YES];
     [viewController setDataSource:mediator_];
     return viewController;
   }

@@ -5,10 +5,10 @@
 #ifndef SERVICES_VIZ_PUBLIC_CPP_COMPOSITING_QUADS_STRUCT_TRAITS_H_
 #define SERVICES_VIZ_PUBLIC_CPP_COMPOSITING_QUADS_STRUCT_TRAITS_H_
 
-#include "base/containers/span.h"
 #include "base/logging.h"
 #include "cc/ipc/filter_operation_struct_traits.h"
 #include "cc/ipc/filter_operations_struct_traits.h"
+#include "cc/ipc/surface_id_struct_traits.h"
 #include "cc/quads/debug_border_draw_quad.h"
 #include "cc/quads/picture_draw_quad.h"
 #include "cc/quads/render_pass_draw_quad.h"
@@ -19,7 +19,6 @@
 #include "cc/quads/tile_draw_quad.h"
 #include "cc/quads/yuv_video_draw_quad.h"
 #include "services/viz/public/cpp/compositing/shared_quad_state_struct_traits.h"
-#include "services/viz/public/cpp/compositing/surface_id_struct_traits.h"
 #include "services/viz/public/interfaces/compositing/quads.mojom-shared.h"
 #include "ui/gfx/geometry/mojo/geometry_struct_traits.h"
 #include "ui/gfx/ipc/color/gfx_param_traits.h"
@@ -282,7 +281,7 @@ struct StructTraits<viz::mojom::TextureQuadStateDataView, cc::DrawQuad> {
     return quad->background_color;
   }
 
-  static base::span<const float> vertex_opacity(const cc::DrawQuad& input) {
+  static ConstCArray<float> vertex_opacity(const cc::DrawQuad& input) {
     const cc::TextureDrawQuad* quad = cc::TextureDrawQuad::MaterialCast(&input);
     return quad->vertex_opacity;
   }
@@ -435,13 +434,18 @@ struct StructTraits<viz::mojom::YUVVideoQuadStateDataView, cc::DrawQuad> {
 
 struct DrawQuadWithSharedQuadState {
   const cc::DrawQuad* quad;
-  const viz::SharedQuadState* shared_quad_state;
+  const cc::SharedQuadState* shared_quad_state;
 };
 
 template <>
 struct StructTraits<viz::mojom::DrawQuadDataView, DrawQuadWithSharedQuadState> {
   static const gfx::Rect& rect(const DrawQuadWithSharedQuadState& input) {
     return input.quad->rect;
+  }
+
+  static const gfx::Rect& opaque_rect(
+      const DrawQuadWithSharedQuadState& input) {
+    return input.quad->opaque_rect;
   }
 
   static const gfx::Rect& visible_rect(
@@ -477,7 +481,7 @@ struct ArrayTraits<cc::QuadList> {
         : it(it), last_shared_quad_state(nullptr) {}
 
     cc::QuadList::ConstIterator it;
-    const viz::SharedQuadState* last_shared_quad_state;
+    const cc::SharedQuadState* last_shared_quad_state;
   };
 
   static ConstIterator GetBegin(const cc::QuadList& input) {
@@ -493,7 +497,7 @@ struct ArrayTraits<cc::QuadList> {
     DrawQuadWithSharedQuadState dq = {*iterator.it, nullptr};
     // Only serialize the SharedQuadState if we haven't seen it before and
     // therefore have not already serialized it.
-    const viz::SharedQuadState* current_sqs = (*iterator.it)->shared_quad_state;
+    const cc::SharedQuadState* current_sqs = (*iterator.it)->shared_quad_state;
     if (current_sqs != iterator.last_shared_quad_state)
       dq.shared_quad_state = current_sqs;
     return dq;

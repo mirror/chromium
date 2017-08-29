@@ -4,6 +4,7 @@
 <script>
   elem = document.getElementById("video");
   elem.addEventListener("loadedmetadata", function() {
+    domAutomationController.setAutomationId(0);
     domAutomationController.send("FINISHED");
   });
   elem.load();

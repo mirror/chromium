@@ -45,7 +45,7 @@ std::unique_ptr<FakeLayerTreeHostImpl> TestLayerTreeHostBase::CreateHostImpl(
     const LayerTreeSettings& settings,
     TaskRunnerProvider* task_runner_provider,
     TaskGraphRunner* task_graph_runner) {
-  return std::make_unique<FakeLayerTreeHostImpl>(settings, task_runner_provider,
+  return base::MakeUnique<FakeLayerTreeHostImpl>(settings, task_runner_provider,
                                                  task_graph_runner);
 }
 

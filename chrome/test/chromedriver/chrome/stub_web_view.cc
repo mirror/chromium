@@ -116,9 +116,7 @@ Status StubWebView::GetCookies(std::unique_ptr<base::ListValue>* cookies,
 }
 
 Status StubWebView::DeleteCookie(const std::string& name,
-                                 const std::string& url,
-                                 const std::string& domain,
-                                 const std::string& path) {
+                                 const std::string& url) {
   return Status(kOk);
 }
 

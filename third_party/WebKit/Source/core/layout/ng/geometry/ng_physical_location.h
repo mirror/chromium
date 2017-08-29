@@ -24,7 +24,10 @@ struct CORE_EXPORT NGPhysicalLocation {
   String ToString() const;
 };
 
-CORE_EXPORT std::ostream& operator<<(std::ostream&, const NGPhysicalLocation&);
+CORE_EXPORT inline std::ostream& operator<<(std::ostream& os,
+                                            const NGPhysicalLocation& value) {
+  return os << value.ToString();
+}
 
 }  // namespace blink
 

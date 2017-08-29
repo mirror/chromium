@@ -36,7 +36,7 @@
 
   function onExpanded() {
     var result = ConsoleTestRunner.dumpConsoleMessagesIntoArray().join('\n');
-    result = result.replace(/integration_test_runner\.js:\d+/g, '<omitted>');
+    result = result.replace(/(\(program\)):\d+/g, '$1');
     TestRunner.addResult(result);
     SourcesTestRunner.completeDebuggerTest();
   }

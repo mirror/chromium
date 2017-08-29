@@ -331,7 +331,7 @@ std::vector<NinePatchGenerator::Patch> NinePatchGenerator::GeneratePatches()
 void NinePatchGenerator::AppendQuads(LayerImpl* layer_impl,
                                      UIResourceId ui_resource_id,
                                      RenderPass* render_pass,
-                                     viz::SharedQuadState* shared_quad_state,
+                                     SharedQuadState* shared_quad_state,
                                      const std::vector<Patch>& patches) {
   if (!ui_resource_id)
     return;
@@ -353,12 +353,12 @@ void NinePatchGenerator::AppendQuads(LayerImpl* layer_impl,
     gfx::Rect visible_rect =
         layer_impl->draw_properties()
             .occlusion_in_content_space.GetUnoccludedContentRect(output_rect);
-    bool needs_blending = !opaque;
+    gfx::Rect opaque_rect = opaque ? visible_rect : gfx::Rect();
     if (!visible_rect.IsEmpty()) {
       gfx::RectF image_rect = patch.normalized_image_rect;
       TextureDrawQuad* quad =
           render_pass->CreateAndAppendDrawQuad<TextureDrawQuad>();
-      quad->SetNew(shared_quad_state, output_rect, visible_rect, needs_blending,
+      quad->SetNew(shared_quad_state, output_rect, opaque_rect, visible_rect,
                    resource, premultiplied_alpha, image_rect.origin(),
                    image_rect.bottom_right(), SK_ColorTRANSPARENT,
                    vertex_opacity, flipped, nearest_neighbor_, false);
@@ -368,14 +368,14 @@ void NinePatchGenerator::AppendQuads(LayerImpl* layer_impl,
 }
 
 void NinePatchGenerator::AsJson(base::DictionaryValue* dictionary) const {
-  auto list = std::make_unique<base::ListValue>();
+  auto list = base::MakeUnique<base::ListValue>();
   list->AppendInteger(image_aperture_.origin().x());
   list->AppendInteger(image_aperture_.origin().y());
   list->AppendInteger(image_aperture_.size().width());
   list->AppendInteger(image_aperture_.size().height());
   dictionary->Set("ImageAperture", std::move(list));
 
-  list = std::make_unique<base::ListValue>();
+  list = base::MakeUnique<base::ListValue>();
   list->AppendInteger(image_bounds_.width());
   list->AppendInteger(image_bounds_.height());
   dictionary->Set("ImageBounds", std::move(list));
@@ -384,7 +384,7 @@ void NinePatchGenerator::AsJson(base::DictionaryValue* dictionary) const {
 
   dictionary->SetBoolean("FillCenter", fill_center_);
 
-  list = std::make_unique<base::ListValue>();
+  list = base::MakeUnique<base::ListValue>();
   list->AppendInteger(output_occlusion_.x());
   list->AppendInteger(output_occlusion_.y());
   list->AppendInteger(output_occlusion_.width());

@@ -17,7 +17,6 @@
 
 namespace base {
 class DictionaryValue;
-class Value;
 }
 
 class BrowserStateInfoCacheObserver;
@@ -66,7 +65,9 @@ class BrowserStateInfoCache {
   const base::DictionaryValue* GetInfoForBrowserStateAtIndex(
       size_t index) const;
   // Saves the browser state info to a cache.
-  void SetInfoForBrowserStateAtIndex(size_t index, base::Value info);
+  void SetInfoForBrowserStateAtIndex(
+      size_t index,
+      std::unique_ptr<base::DictionaryValue> info);
 
   std::string CacheKeyFromBrowserStatePath(
       const base::FilePath& browser_state_path) const;

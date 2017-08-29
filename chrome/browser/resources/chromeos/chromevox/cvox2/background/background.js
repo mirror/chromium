@@ -439,8 +439,6 @@ Background.prototype = {
 
     var o = new Output();
     var selectedRange;
-    var msg;
-
     if (this.pageSel_ && this.pageSel_.isValid() && range.isValid()) {
       // Compute the direction of the endpoints of each range.
 
@@ -466,6 +464,7 @@ Background.prototype = {
         this.pageSel_ = null;
       } else {
         // Expand or shrink requires different feedback.
+        var msg;
         if (endDir == Dir.FORWARD &&
             (this.pageSel_.end.node != range.end.node ||
              this.pageSel_.end.index <= range.end.index)) {
@@ -635,48 +634,38 @@ Background.prototype = {
   brailleRoutingCommand_: function(text, position) {
     var actionNodeSpan = null;
     var selectionSpan = null;
-    var selSpans = text.getSpansInstanceOf(Output.SelectionSpan);
-    var nodeSpans = text.getSpansInstanceOf(Output.NodeSpan);
-    for (var i = 0, selSpan; selSpan = selSpans[i]; i++) {
-      if (text.getSpanStart(selSpan) <= position &&
-          position < text.getSpanEnd(selSpan)) {
-        selectionSpan = selSpan;
-        break;
-      }
-    }
 
-    var interval;
-    for (var j = 0, nodeSpan; nodeSpan = nodeSpans[j]; j++) {
-      var intervals = text.getSpanIntervals(nodeSpan);
-      var tempInterval = intervals.find(function(innerInterval) {
-        return innerInterval.start <= position &&
-            position <= innerInterval.end;
-      });
-      if (tempInterval) {
-        actionNodeSpan = nodeSpan;
-        interval = tempInterval;
+    // For a routing key press one cell beyond the last displayed character, use
+    // the node span for the last character. This enables routing selection to
+    // the length of the text, which is valid.
+    var nodePosition = position;
+    if (position == text.length && position > 0)
+      nodePosition--;
+    text.getSpans(nodePosition).forEach(function(span) {
+      if (span instanceof Output.SelectionSpan) {
+        selectionSpan = span;
+      } else if (span instanceof Output.NodeSpan) {
+        if (!actionNodeSpan ||
+            text.getSpanLength(span) <= text.getSpanLength(actionNodeSpan)) {
+          actionNodeSpan = span;
+        }
       }
-    }
-
+    });
     if (!actionNodeSpan)
       return;
-
     var actionNode = actionNodeSpan.node;
     var offset = actionNodeSpan.offset;
     if (actionNode.role === RoleType.INLINE_TEXT_BOX)
       actionNode = actionNode.parent;
     actionNode.doDefault();
 
-    if (actionNode.role != RoleType.STATIC_TEXT &&
-        actionNode.role != RoleType.TEXT_FIELD)
-      return;
-
     if (!selectionSpan)
       selectionSpan = actionNodeSpan;
 
+    var start = text.getSpanStart(selectionSpan);
+    var targetPosition = position - start + offset;
+
     if (actionNode.state.richlyEditable) {
-      var start = interval ? interval.start : text.getSpanStart(selectionSpan);
-      var targetPosition = position - start + offset;
       chrome.automation.setDocumentSelection({
         anchorObject: actionNode,
         anchorOffset: targetPosition,
@@ -684,8 +673,6 @@ Background.prototype = {
         focusOffset: targetPosition
       });
     } else {
-      var start = text.getSpanStart(selectionSpan);
-      var targetPosition = position - start + offset;
       actionNode.setSelection(targetPosition, targetPosition);
     }
   },

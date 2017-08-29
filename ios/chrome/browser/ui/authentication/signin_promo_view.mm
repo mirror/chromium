@@ -32,12 +32,6 @@ const CGFloat kProfileImageFixedSize = 48;
 const CGFloat kButtonHeight = 36;
 }
 
-NSString* const kSigninPromoViewId = @"kSigninPromoViewId";
-NSString* const kSigninPromoPrimaryButtonId = @"kSigninPromoPrimaryButtonId";
-NSString* const kSigninPromoSecondaryButtonId =
-    @"kSigninPromoSecondaryButtonId";
-NSString* const kSigninPromoCloseButtonId = @"kSigninPromoCloseButtonId";
-
 @implementation SigninPromoView {
   NSArray<NSLayoutConstraint*>* _coldStateConstraints;
   NSArray<NSLayoutConstraint*>* _warmStateConstraints;
@@ -56,7 +50,6 @@ NSString* const kSigninPromoCloseButtonId = @"kSigninPromoCloseButtonId";
   self = [super initWithFrame:frame];
   if (self) {
     self.isAccessibilityElement = YES;
-    self.accessibilityIdentifier = kSigninPromoViewId;
 
     // Adding subviews.
     self.clipsToBounds = YES;
@@ -70,7 +63,7 @@ NSString* const kSigninPromoCloseButtonId = @"kSigninPromoCloseButtonId";
 
     _primaryButton = [[MDCFlatButton alloc] init];
     _primaryButton.translatesAutoresizingMaskIntoConstraints = NO;
-    _primaryButton.accessibilityIdentifier = kSigninPromoPrimaryButtonId;
+    _primaryButton.accessibilityIdentifier = @"signin_promo_primary_button";
     _primaryButton.titleLabel.lineBreakMode = NSLineBreakByTruncatingTail;
     [_primaryButton addTarget:self
                        action:@selector(onPrimaryButtonAction:)
@@ -79,7 +72,7 @@ NSString* const kSigninPromoCloseButtonId = @"kSigninPromoCloseButtonId";
 
     _secondaryButton = [[MDCFlatButton alloc] init];
     _secondaryButton.translatesAutoresizingMaskIntoConstraints = NO;
-    _secondaryButton.accessibilityIdentifier = kSigninPromoSecondaryButtonId;
+    _secondaryButton.accessibilityIdentifier = @"signin_promo_secondary_button";
     [_secondaryButton addTarget:self
                          action:@selector(onSecondaryButtonAction:)
                forControlEvents:UIControlEventTouchUpInside];
@@ -87,7 +80,7 @@ NSString* const kSigninPromoCloseButtonId = @"kSigninPromoCloseButtonId";
 
     _closeButton = [[UIButton alloc] init];
     _closeButton.translatesAutoresizingMaskIntoConstraints = NO;
-    _closeButton.accessibilityIdentifier = kSigninPromoCloseButtonId;
+    _closeButton.accessibilityIdentifier = @"signin_promo_close_button";
     [self addSubview:_closeButton];
 
     // Adding style.
@@ -116,12 +109,14 @@ NSString* const kSigninPromoCloseButtonId = @"kSigninPromoCloseButtonId";
 
     // Adding constraints.
     NSDictionary* metrics = @{
-      @"bh" : @(kButtonHeight),
-      @"bvpx2" : @(kButtonVerticalPadding * 2),
-      @"hp" : @(kHorizontalPadding),
-      @"vp" : @(kVerticalPadding),
-      @"vpx2" : @(kVerticalPadding * 2),
-      @"vp_bvp" : @(kVerticalPadding + kButtonVerticalPadding),
+      @"kButtonHeight" : @(kButtonHeight),
+      @"kButtonVerticalPadding" : @(kButtonVerticalPadding),
+      @"kButtonVerticalPaddingx2" : @(kButtonVerticalPadding * 2),
+      @"kHorizontalPadding" : @(kHorizontalPadding),
+      @"kVerticalPadding" : @(kVerticalPadding),
+      @"kVerticalPaddingx2" : @(kVerticalPadding * 2),
+      @"kVerticalPaddingkButtonVerticalPadding" :
+          @(kVerticalPadding + kButtonVerticalPadding),
     };
     NSDictionary* views = @{
       @"imageView" : _imageView,
@@ -131,29 +126,35 @@ NSString* const kSigninPromoCloseButtonId = @"kSigninPromoCloseButtonId";
     };
 
     // Constraints shared between modes.
+    NSString* sharedVerticalConstraints =
+        @"V:|-kVerticalPaddingx2-[imageView]-kVerticalPadding-[textLabel]-"
+        @"kVerticalPaddingkButtonVerticalPadding-[primaryButton(kButtonHeight)"
+        @"]";
     NSArray* visualConstraints = @[
-      @"V:|-vpx2-[imageView]-vp-[textLabel]-vp_bvp-[primaryButton(bh)]",
-      @"H:|-hp-[primaryButton]-hp-|",
-      @"H:|-hp-[textLabel]-hp-|",
+      sharedVerticalConstraints,
+      @"H:|-kHorizontalPadding-[primaryButton]-kHorizontalPadding-|"
     ];
     ApplyVisualConstraintsWithMetricsAndOptions(
         visualConstraints, views, metrics, NSLayoutFormatAlignAllCenterX);
-    NSArray* closeButtonConstraints =
+    NSArray* buttonVisualConstraints =
         @[ @"H:[closeButton]-|", @"V:|-[closeButton]" ];
-    ApplyVisualConstraints(closeButtonConstraints,
-                           @{@"closeButton" : _closeButton});
+    ApplyVisualConstraints(buttonVisualConstraints,
+                           @{ @"closeButton" : _closeButton });
 
     // Constraints for cold state mode.
     NSArray* coldStateVisualConstraints = @[
-      @"V:[primaryButton]-vp_bvp-|",
+      @"V:[primaryButton]-kVerticalPaddingkButtonVerticalPadding-|",
     ];
     _coldStateConstraints = VisualConstraintsWithMetrics(
         coldStateVisualConstraints, views, metrics);
 
     // Constraints for warm state mode.
+    NSString* warmStateVerticalConstraints =
+        @"V:[primaryButton]-kButtonVerticalPaddingx2-[secondaryButton("
+        @"kButtonHeight)]-kVerticalPaddingkButtonVerticalPadding-|";
     NSArray* warmStateVisualConstraints = @[
-      @"V:[primaryButton]-bvpx2-[secondaryButton(bh)]-vp_bvp-|",
-      @"H:|-hp-[secondaryButton]-hp-|",
+      warmStateVerticalConstraints,
+      @"H:|-kHorizontalPadding-[secondaryButton]-kHorizontalPadding-|",
     ];
     _warmStateConstraints = VisualConstraintsWithMetrics(
         warmStateVisualConstraints, views, metrics);

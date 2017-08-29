@@ -321,20 +321,8 @@ public class FeatureUtilities {
      */
     public static boolean isChromeHomeModernEnabled() {
         if (!isChromeHomeEnabled()) return false;
-
-        // Modern is enabled by default for Chrome Home, so return true if the feature list isn't
-        // yet initialized.
-        if (!ChromeFeatureList.isInitialized()) return true;
-
+        if (!ChromeFeatureList.isInitialized()) return false;
         return ChromeFeatureList.isEnabled(ChromeFeatureList.CHROME_HOME_MODERN_LAYOUT);
-    }
-
-    /**
-     * @return Whether or not showing the Doodle in the Chrome Home NTP is enabled.
-     */
-    public static boolean isChromeHomeDoodleEnabled() {
-        return isChromeHomeEnabled()
-                && ChromeFeatureList.isEnabled(ChromeFeatureList.CHROME_HOME_DOODLE);
     }
 
     private static native void nativeSetCustomTabVisible(boolean visible);

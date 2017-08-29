@@ -16,10 +16,11 @@ namespace operations {
 CloseFile::CloseFile(extensions::EventRouter* event_router,
                      const ProvidedFileSystemInfo& file_system_info,
                      int open_request_id,
-                     storage::AsyncFileUtil::StatusCallback callback)
+                     const storage::AsyncFileUtil::StatusCallback& callback)
     : Operation(event_router, file_system_info),
       open_request_id_(open_request_id),
-      callback_(std::move(callback)) {}
+      callback_(callback) {
+}
 
 CloseFile::~CloseFile() {
 }
@@ -43,13 +44,13 @@ bool CloseFile::Execute(int request_id) {
 void CloseFile::OnSuccess(int /* request_id */,
                           std::unique_ptr<RequestValue> result,
                           bool has_more) {
-  std::move(callback_).Run(base::File::FILE_OK);
+  callback_.Run(base::File::FILE_OK);
 }
 
 void CloseFile::OnError(int /* request_id */,
                         std::unique_ptr<RequestValue> /* result */,
                         base::File::Error error) {
-  std::move(callback_).Run(error);
+  callback_.Run(error);
 }
 
 }  // namespace operations

@@ -96,7 +96,7 @@ class SearchResultAnswerCardViewTest : public views::ViewsTestBase {
   }
 
   void GetAccessibleNodeData(ui::AXNodeData* node_data) {
-    result_container_view_->child_at(0)->GetAccessibleNodeData(node_data);
+    result_container_view_->GetAccessibleNodeData(node_data);
   }
 
   views::View* result_view() const { return result_view_.get(); }
@@ -135,6 +135,12 @@ TEST_F(SearchResultAnswerCardViewTest, ButtonBackground) {
   EXPECT_EQ(kSelectedColor, button->background()->get_color());
 
   ClearSelectedIndex();
+  EXPECT_EQ(nullptr, button->background());
+
+  GetResults()->GetItemAt(0)->SetIsMouseInView(true);
+  EXPECT_EQ(kHighlightedColor, button->background()->get_color());
+
+  GetResults()->GetItemAt(0)->SetIsMouseInView(false);
   EXPECT_EQ(nullptr, button->background());
 }
 

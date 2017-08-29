@@ -61,8 +61,7 @@ PrintMsg_Print_Params::PrintMsg_Print_Params()
       display_header_footer(false),
       title(),
       url(),
-      should_print_backgrounds(false),
-      printed_doc_type(printing::SkiaDocumentType::PDF) {}
+      should_print_backgrounds(false) {}
 
 PrintMsg_Print_Params::PrintMsg_Print_Params(
     const PrintMsg_Print_Params& other) = default;
@@ -90,7 +89,6 @@ void PrintMsg_Print_Params::Reset() {
   title = base::string16();
   url = base::string16();
   should_print_backgrounds = false;
-  printed_doc_type = printing::SkiaDocumentType::PDF;
 }
 
 PrintMsg_PrintPages_Params::PrintMsg_PrintPages_Params()

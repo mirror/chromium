@@ -183,8 +183,7 @@ TEST_F(ServiceWorkerDispatcherTest, OnSetControllerServiceWorker) {
   // provider context.
   auto provider_context = base::MakeRefCounted<ServiceWorkerProviderContext>(
       kProviderId, SERVICE_WORKER_PROVIDER_FOR_WINDOW,
-      nullptr /* provider_request */, nullptr /* host_ptr_info */, dispatcher(),
-      nullptr /* loader_factory_getter */);
+      mojom::ServiceWorkerProviderAssociatedRequest(), dispatcher());
   ipc_sink()->ClearMessages();
   OnSetControllerServiceWorker(kDocumentMainThreadId, kProviderId, attrs.active,
                                should_notify_controllerchange,
@@ -229,8 +228,7 @@ TEST_F(ServiceWorkerDispatcherTest, OnSetControllerServiceWorker) {
   // implementation.
   provider_context = base::MakeRefCounted<ServiceWorkerProviderContext>(
       kProviderId, SERVICE_WORKER_PROVIDER_FOR_WINDOW,
-      nullptr /* provider_request */, nullptr /* host_ptr_info */, dispatcher(),
-      nullptr /* loader_factory_getter */);
+      mojom::ServiceWorkerProviderAssociatedRequest(), dispatcher());
   provider_client.reset(
       new MockWebServiceWorkerProviderClientImpl(kProviderId, dispatcher()));
   ASSERT_FALSE(provider_client->is_set_controlled_called());
@@ -260,8 +258,7 @@ TEST_F(ServiceWorkerDispatcherTest, OnSetControllerServiceWorker_Null) {
       new MockWebServiceWorkerProviderClientImpl(kProviderId, dispatcher()));
   auto provider_context = base::MakeRefCounted<ServiceWorkerProviderContext>(
       kProviderId, SERVICE_WORKER_PROVIDER_FOR_WINDOW,
-      nullptr /* provider_request */, nullptr /* host_ptr_info */, dispatcher(),
-      nullptr /* loader_factory_getter */);
+      mojom::ServiceWorkerProviderAssociatedRequest(), dispatcher());
 
   // Set the controller to kInvalidServiceWorkerHandle.
   OnSetControllerServiceWorker(

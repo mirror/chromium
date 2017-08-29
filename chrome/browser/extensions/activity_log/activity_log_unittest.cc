@@ -32,6 +32,7 @@
 #include "extensions/browser/uninstall_reason.h"
 #include "extensions/common/dom_action_types.h"
 #include "extensions/common/extension_builder.h"
+#include "extensions/common/test_util.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 namespace {
@@ -424,14 +425,14 @@ TEST_F(ActivityLogTestWithoutSwitch, TestShouldLog) {
       ExtensionSystem::Get(profile()))->SetReady();
   ActivityLog* activity_log = ActivityLog::GetInstance(profile());
   scoped_refptr<const Extension> empty_extension =
-      ExtensionBuilder("Test").Build();
+      test_util::CreateEmptyExtension();
   extension_service_->AddExtension(empty_extension.get());
   // Since the command line switch for logging isn't enabled and there's no
   // watchdog app active, the activity log shouldn't log anything.
   EXPECT_FALSE(activity_log->ShouldLog(empty_extension->id()));
   const char kWhitelistedExtensionId[] = "eplckmlabaanikjjcgnigddmagoglhmp";
   scoped_refptr<const Extension> activity_log_extension =
-      ExtensionBuilder("Test").SetID(kWhitelistedExtensionId).Build();
+      test_util::CreateEmptyExtension(kWhitelistedExtensionId);
   extension_service_->AddExtension(activity_log_extension.get());
   // Loading a watchdog app means the activity log should log other extension
   // activities...

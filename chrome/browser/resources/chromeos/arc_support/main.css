@@ -58,7 +58,6 @@ p.title {
 #terms-view {
   display: block;
   margin: auto;
-  width: 638px;
 }
 
 .bubble-button > div {
@@ -177,7 +176,7 @@ p.title {
 
 .section-active-directory-auth {
   align-content: left;
-  padding: 64px 0 0 64px;
+  padding: 36px 0 0 64px;
   text-align: left;
 }
 
@@ -185,7 +184,7 @@ p.title {
   border: 1px solid #e6e6e6;
   color: rgba(0, 0, 0, 0.54);
   flex: auto;
-  height: 305px;
+  height: 333px;
   margin: 40px 64px 0 auto;
   overflow: hidden;
 }
@@ -217,7 +216,7 @@ p.title {
   border: 1px solid #d9d9d9;
   box-sizing: border-box;
   flex: auto;
-  margin: 40px 0 14px 0;
+  margin: 40px 0 0 0;
   padding: 0;
 }
 

@@ -396,7 +396,7 @@ class CORE_EXPORT LayoutObject : public ImageResourceObserver,
   // Sets the parent of this object but doesn't add it as a child of the parent.
   void SetDangerousOneWayParent(LayoutObject*);
 
-  UniqueObjectId UniqueId() const {
+  LayoutObjectId UniqueId() const {
     DCHECK(rare_paint_data_);
     return rare_paint_data_ ? rare_paint_data_->UniqueId() : 0;
   }
@@ -1517,6 +1517,8 @@ class CORE_EXPORT LayoutObject : public ImageResourceObserver,
   void ImageChanged(WrappedImagePtr, const IntRect* = nullptr) override {}
   bool WillRenderImage() final;
   bool GetImageAnimationPolicy(ImageAnimationPolicy&) final;
+
+  std::pair<int, int> SelectionStartEnd() const;
 
   void Remove() {
     if (Parent())
@@ -2729,14 +2731,14 @@ inline LayoutUnit AdjustLayoutUnitForAbsoluteZoom(LayoutUnit value,
 }
 
 inline void AdjustFloatQuadForAbsoluteZoom(FloatQuad& quad,
-                                           const LayoutObject& layout_object) {
+                                           LayoutObject& layout_object) {
   float zoom = layout_object.StyleRef().EffectiveZoom();
   if (zoom != 1)
     quad.Scale(1 / zoom, 1 / zoom);
 }
 
 inline void AdjustFloatRectForAbsoluteZoom(FloatRect& rect,
-                                           const LayoutObject& layout_object) {
+                                           LayoutObject& layout_object) {
   float zoom = layout_object.StyleRef().EffectiveZoom();
   if (zoom != 1)
     rect.Scale(1 / zoom, 1 / zoom);

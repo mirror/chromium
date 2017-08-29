@@ -4,8 +4,6 @@
 
 #include "core/layout/MinMaxSize.h"
 
-#include <algorithm>
-
 namespace blink {
 
 LayoutUnit MinMaxSize::ShrinkToFit(LayoutUnit available_size) const {

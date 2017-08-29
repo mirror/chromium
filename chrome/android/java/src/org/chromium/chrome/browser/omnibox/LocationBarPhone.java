@@ -25,7 +25,6 @@ import org.chromium.chrome.browser.locale.LocaleManager;
 import org.chromium.chrome.browser.ntp.NewTabPage;
 import org.chromium.chrome.browser.search_engines.TemplateUrlService;
 import org.chromium.chrome.browser.toolbar.ToolbarDataProvider;
-import org.chromium.chrome.browser.util.FeatureUtilities;
 import org.chromium.chrome.browser.util.MathUtils;
 import org.chromium.chrome.browser.widget.bottomsheet.BottomSheet;
 import org.chromium.chrome.browser.widget.bottomsheet.BottomSheetContentController;
@@ -298,10 +297,9 @@ public class LocationBarPhone extends LocationBarLayout {
     public void updateVisualsForState() {
         super.updateVisualsForState();
 
-        boolean showIncognitoBadge = getToolbarDataProvider() != null
-                && getToolbarDataProvider().isIncognito()
-                && !FeatureUtilities.isChromeHomeModernEnabled();
-        mIncognitoBadge.setVisibility(showIncognitoBadge ? VISIBLE : GONE);
+        boolean isIncognito =
+                getToolbarDataProvider() != null && getToolbarDataProvider().isIncognito();
+        mIncognitoBadge.setVisibility(isIncognito ? VISIBLE : GONE);
         updateIncognitoBadgePadding();
     }
 
@@ -314,13 +312,6 @@ public class LocationBarPhone extends LocationBarLayout {
     public void setLayoutDirection(int layoutDirection) {
         super.setLayoutDirection(layoutDirection);
         updateIncognitoBadgePadding();
-    }
-
-    /**
-     * @return Whether the incognito badge is currently visible.
-     */
-    public boolean isIncognitoBadgeVisible() {
-        return mIncognitoBadge.getVisibility() == View.VISIBLE;
     }
 
     /**

@@ -180,7 +180,7 @@ void ZeroSuggestProvider::Start(const AutocompleteInput& input,
 
   // Create a request for suggestions with |this| as the fetcher delegate.
   client()
-      ->GetContextualSuggestionsService(/*create_if_necessary=*/true)
+      ->GetContextualSuggestionsService()
       ->CreateContextualSuggestionsRequest(
           can_attach_current_url ? current_query_ : std::string(),
           client()->GetTemplateURLService(),
@@ -196,12 +196,6 @@ void ZeroSuggestProvider::Stop(bool clear_cached_results,
     LogOmniboxZeroSuggestRequest(ZERO_SUGGEST_REQUEST_INVALIDATED);
   fetcher_.reset();
   waiting_for_most_visited_urls_request_ = false;
-  auto* contextual_suggestions_service =
-      client()->GetContextualSuggestionsService(/*create_if_necessary=*/false);
-  // contextual_suggestions_service can be null if in incognito mode.
-  if (contextual_suggestions_service != nullptr) {
-    contextual_suggestions_service->StopCreatingContextualSuggestionsRequest();
-  }
   done_ = true;
 
   if (clear_cached_results) {
@@ -375,8 +369,7 @@ AutocompleteMatch ZeroSuggestProvider::NavigationToMatch(
                                             nullptr, nullptr);
   match.fill_into_edit +=
       AutocompleteInput::FormattedStringWithEquivalentMeaning(
-          navigation.url(), url_formatter::FormatUrl(navigation.url()),
-          client()->GetSchemeClassifier());
+          navigation.url(), match.contents, client()->GetSchemeClassifier());
 
   AutocompleteMatch::ClassifyLocationInString(base::string16::npos, 0,
       match.contents.length(), ACMatchClassification::URL,

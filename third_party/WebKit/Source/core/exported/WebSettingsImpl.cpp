@@ -430,10 +430,6 @@ void WebSettingsImpl::SetTouchDragDropEnabled(bool enabled) {
   settings_->SetTouchDragDropEnabled(enabled);
 }
 
-void WebSettingsImpl::SetBarrelButtonForDragEnabled(bool enabled) {
-  settings_->SetBarrelButtonForDragEnabled(enabled);
-}
-
 void WebSettingsImpl::SetOfflineWebApplicationCacheEnabled(bool enabled) {
   settings_->SetOfflineWebApplicationCacheEnabled(enabled);
 }
@@ -703,10 +699,6 @@ void WebSettingsImpl::SetMediaControlsEnabled(bool enabled) {
 void WebSettingsImpl::SetDoNotUpdateSelectionOnMutatingSelectionRange(
     bool enabled) {
   settings_->SetDoNotUpdateSelectionOnMutatingSelectionRange(enabled);
-}
-
-void WebSettingsImpl::SetMediaDownloadInProductHelpEnabled(bool enabled) {
-  settings_->SetMediaDownloadInProductHelpEnabled(enabled);
 }
 
 }  // namespace blink

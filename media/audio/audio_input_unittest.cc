@@ -27,10 +27,13 @@ namespace media {
 // expected and if any error has been reported.
 class TestInputCallback : public AudioInputStream::AudioInputCallback {
  public:
-  TestInputCallback() : callback_count_(0), had_error_(0) {}
+  explicit TestInputCallback()
+      : callback_count_(0),
+        had_error_(0) {
+  }
   void OnData(AudioInputStream* stream,
               const AudioBus* source,
-              base::TimeTicks capture_time,
+              uint32_t hardware_delay_bytes,
               double volume) override {
     ++callback_count_;
   }

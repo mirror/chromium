@@ -35,7 +35,6 @@ class DebuggerFunction : public ChromeAsyncExtensionFunction {
 
   bool InitAgentHost();
   bool InitClientHost();
-  ExtensionDevToolsClientHost* FindClientHost();
 
   Debuggee debuggee_;
   scoped_refptr<content::DevToolsAgentHost> agent_host_;

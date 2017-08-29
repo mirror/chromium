@@ -11,8 +11,6 @@ const char Store::kNameKey[] = "name";
 // static
 const char Store::kDisplayNameKey[] = "display_name";
 // static
-const char Store::kSandboxTypeKey[] = "sandbox_type";
-// static
 const char Store::kInterfaceProviderSpecsKey[] = "interface_provider_specs";
 // static
 const char Store::kInterfaceProviderSpecs_ProvidesKey[] = "provides";

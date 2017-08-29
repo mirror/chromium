@@ -24,6 +24,7 @@
 #include "content/browser/service_worker/service_worker_registration_status.h"
 #include "content/browser/service_worker/service_worker_storage.h"
 #include "content/common/content_export.h"
+#include "content/common/worker_url_loader_factory_provider.mojom.h"
 #include "content/public/browser/service_worker_context.h"
 
 class GURL;
@@ -298,6 +299,14 @@ class CONTENT_EXPORT ServiceWorkerContextCore
   // version. The count resets to zero when the worker successfully starts.
   int GetVersionFailureCount(int64_t version_id);
 
+  // Binds the ServiceWorkerWorkerClient of a dedicated (or shared) worker to
+  // the parent frame's ServiceWorkerProviderHost. (This is used only when
+  // off-main-thread-fetch is enabled.)
+  void BindWorkerFetchContext(
+      int render_process_id,
+      int service_worker_provider_id,
+      mojom::ServiceWorkerWorkerClientAssociatedPtrInfo client_ptr_info);
+
   base::WeakPtr<storage::BlobStorageContext> blob_storage_context() {
     return blob_storage_context_;
   }
@@ -322,7 +331,9 @@ class CONTENT_EXPORT ServiceWorkerContextCore
     ServiceWorkerStatusCode last_failure;
   };
 
-  ProviderMap* GetProviderMapForProcess(int process_id);
+  ProviderMap* GetProviderMapForProcess(int process_id) {
+    return providers_->Lookup(process_id);
+  }
 
   void RegistrationComplete(const GURL& pattern,
                             const RegistrationCallback& callback,

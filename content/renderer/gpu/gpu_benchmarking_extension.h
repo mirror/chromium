@@ -6,8 +6,11 @@
 #define CONTENT_RENDERER_GPU_GPU_BENCHMARKING_EXTENSION_H_
 
 #include "base/macros.h"
-#include "content/common/input/input_injector.mojom.h"
 #include "gin/wrappable.h"
+
+namespace blink {
+class WebLocalFrame;
+}
 
 namespace gin {
 class Arguments;
@@ -20,16 +23,14 @@ class Object;
 
 namespace content {
 
-class RenderFrameImpl;
-
 // gin class for gpu benchmarking
 class GpuBenchmarking : public gin::Wrappable<GpuBenchmarking> {
  public:
   static gin::WrapperInfo kWrapperInfo;
-  static void Install(RenderFrameImpl* frame);
+  static void Install(blink::WebLocalFrame* frame);
 
  private:
-  explicit GpuBenchmarking(RenderFrameImpl* frame);
+  GpuBenchmarking();
   ~GpuBenchmarking() override;
 
   // gin::Wrappable.
@@ -64,7 +65,6 @@ class GpuBenchmarking : public gin::Wrappable<GpuBenchmarking> {
   bool HasGpuProcess();
   void GetGpuDriverBugWorkarounds(gin::Arguments* args);
 
-  mojom::InputInjectorPtr input_injector_;
   DISALLOW_COPY_AND_ASSIGN(GpuBenchmarking);
 };
 

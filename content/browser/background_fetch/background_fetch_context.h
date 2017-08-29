@@ -48,9 +48,8 @@ class CONTENT_EXPORT BackgroundFetchContext
  public:
   // The BackgroundFetchContext will watch the ServiceWorkerContextWrapper so
   // that it can respond to service worker events such as unregister.
-  BackgroundFetchContext(
-      BrowserContext* browser_context,
-      const scoped_refptr<ServiceWorkerContextWrapper>& service_worker_context);
+  BackgroundFetchContext(BrowserContext* browser_context,
+                         scoped_refptr<ServiceWorkerContextWrapper> context);
 
   // Finishes initializing the Background Fetch context on the IO thread by
   // setting the |request_context_getter|.

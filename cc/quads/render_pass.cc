@@ -19,6 +19,7 @@
 #include "cc/quads/largest_draw_quad.h"
 #include "cc/quads/picture_draw_quad.h"
 #include "cc/quads/render_pass_draw_quad.h"
+#include "cc/quads/shared_quad_state.h"
 #include "cc/quads/solid_color_draw_quad.h"
 #include "cc/quads/stream_video_draw_quad.h"
 #include "cc/quads/surface_draw_quad.h"
@@ -26,7 +27,6 @@
 #include "cc/quads/tile_draw_quad.h"
 #include "cc/quads/yuv_video_draw_quad.h"
 #include "components/viz/common/quads/copy_output_request.h"
-#include "components/viz/common/quads/shared_quad_state.h"
 #include "components/viz/common/traced_value.h"
 
 namespace {
@@ -48,16 +48,18 @@ QuadList::QuadList(size_t default_size_to_reserve)
 
 void QuadList::ReplaceExistingQuadWithOpaqueTransparentSolidColor(Iterator at) {
   // In order to fill the backbuffer with transparent black, the replacement
-  // solid color quad needs to set |needs_blending| to false, and
+  // solid color quad needs to set |needs_blending| to false, and set both
+  // |visible_rect| and |opaque_rect| to its quad rect so it is drawn and
   // ShouldDrawWithBlending() returns false so it is drawn without blending.
   const gfx::Rect rect = at->rect;
   bool needs_blending = false;
-  const viz::SharedQuadState* shared_quad_state = at->shared_quad_state;
+  const SharedQuadState* shared_quad_state = at->shared_quad_state;
 
   SolidColorDrawQuad* replacement =
       QuadList::ReplaceExistingElement<SolidColorDrawQuad>(at);
-  replacement->SetAll(shared_quad_state, rect, rect /* visible_rect */,
-                      needs_blending, SK_ColorTRANSPARENT, true);
+  replacement->SetAll(shared_quad_state, rect, rect /* opaque_rect */,
+                      rect /* visible_rect */, needs_blending,
+                      SK_ColorTRANSPARENT, true);
 }
 
 std::unique_ptr<RenderPass> RenderPass::Create() {
@@ -77,8 +79,8 @@ std::unique_ptr<RenderPass> RenderPass::Create(
 
 RenderPass::RenderPass()
     : quad_list(kDefaultNumQuadsToReserve),
-      shared_quad_state_list(alignof(viz::SharedQuadState),
-                             sizeof(viz::SharedQuadState),
+      shared_quad_state_list(alignof(SharedQuadState),
+                             sizeof(SharedQuadState),
                              kDefaultNumSharedQuadStatesToReserve) {}
 
 // Each layer usually produces one shared quad state, so the number of layers
@@ -88,8 +90,8 @@ RenderPass::RenderPass(size_t num_layers)
       cache_render_pass(false),
       has_damage_from_contributing_content(false),
       quad_list(kDefaultNumQuadsToReserve),
-      shared_quad_state_list(alignof(viz::SharedQuadState),
-                             sizeof(viz::SharedQuadState),
+      shared_quad_state_list(alignof(SharedQuadState),
+                             sizeof(SharedQuadState),
                              num_layers) {}
 
 RenderPass::RenderPass(size_t shared_quad_state_list_size,
@@ -98,8 +100,8 @@ RenderPass::RenderPass(size_t shared_quad_state_list_size,
       cache_render_pass(false),
       has_damage_from_contributing_content(false),
       quad_list(quad_list_size),
-      shared_quad_state_list(alignof(viz::SharedQuadState),
-                             sizeof(viz::SharedQuadState),
+      shared_quad_state_list(alignof(SharedQuadState),
+                             sizeof(SharedQuadState),
                              shared_quad_state_list_size) {}
 
 RenderPass::~RenderPass() {
@@ -136,7 +138,7 @@ std::unique_ptr<RenderPass> RenderPass::DeepCopy() const {
   }
 
   SharedQuadStateList::ConstIterator sqs_iter = shared_quad_state_list.begin();
-  viz::SharedQuadState* copy_shared_quad_state =
+  SharedQuadState* copy_shared_quad_state =
       copy_pass->CreateAndAppendSharedQuadState();
   *copy_shared_quad_state = **sqs_iter;
   for (auto* quad : quad_list) {
@@ -253,8 +255,8 @@ void RenderPass::AsValueInto(base::trace_event::TracedValue* value) const {
       reinterpret_cast<void*>(id));
 }
 
-viz::SharedQuadState* RenderPass::CreateAndAppendSharedQuadState() {
-  return shared_quad_state_list.AllocateAndConstruct<viz::SharedQuadState>();
+SharedQuadState* RenderPass::CreateAndAppendSharedQuadState() {
+  return shared_quad_state_list.AllocateAndConstruct<SharedQuadState>();
 }
 
 RenderPassDrawQuad* RenderPass::CopyFromAndAppendRenderPassDrawQuad(

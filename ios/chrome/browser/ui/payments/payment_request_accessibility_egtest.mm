@@ -8,6 +8,7 @@
 #include "components/strings/grit/components_strings.h"
 #include "ios/chrome/browser/payments/payment_request_util.h"
 #import "ios/chrome/browser/ui/payments/payment_request_egtest_base.h"
+#import "ios/chrome/browser/ui/payments/payment_request_view_controller.h"
 #import "ios/chrome/test/app/chrome_test_util.h"
 #import "ios/chrome/test/app/web_view_interaction_test_util.h"
 #import "ios/chrome/test/earl_grey/accessibility_util.h"
@@ -36,26 +37,38 @@ const char kPaymentRequestDemoPage[] =
 
 // Finds the shipping address cell on the Payment Summary page.
 id<GREYMatcher> ShippingAddressCellMatcher(autofill::AutofillProfile* profile) {
+  NSString* email_label = nil;
+  NSString* notification_label = nil;
+
   return chrome_test_util::ButtonWithAccessibilityLabel([NSString
-      stringWithFormat:@"%@, %@, %@", GetNameLabelFromAutofillProfile(*profile),
+      stringWithFormat:@"%@, %@, %@, %@, %@",
+                       GetNameLabelFromAutofillProfile(*profile),
                        GetShippingAddressLabelFromAutofillProfile(*profile),
-                       GetPhoneNumberLabelFromAutofillProfile(*profile)]);
+                       GetPhoneNumberLabelFromAutofillProfile(*profile),
+                       email_label, notification_label]);
 }
 
 // Finds the payment method cell on the Payment Summary page.
 id<GREYMatcher> PaymentMethodCellMatcher(autofill::CreditCard* credit_card) {
+  NSString* billing_address_label = nil;
+  NSString* notification_label = nil;
+
   return chrome_test_util::ButtonWithAccessibilityLabel([NSString
-      stringWithFormat:@"%@, %@",
+      stringWithFormat:@"%@, %@, %@, %@",
                        base::SysUTF16ToNSString(
                            credit_card->NetworkAndLastFourDigits()),
                        base::SysUTF16ToNSString(credit_card->GetRawInfo(
-                           autofill::CREDIT_CARD_NAME_FULL))]);
+                           autofill::CREDIT_CARD_NAME_FULL)),
+                       billing_address_label, notification_label]);
 }
 
 // Finds the order summary cell on the Payment Summary page.
 id<GREYMatcher> PriceCellMatcher(NSString* main_label, NSString* price_label) {
+  NSString* notification_label = nil;
+
   return chrome_test_util::ButtonWithAccessibilityLabel(
-      [NSString stringWithFormat:@"%@, %@", main_label, price_label]);
+      [NSString stringWithFormat:@"%@, %@, %@", main_label, notification_label,
+                                 price_label]);
 }
 
 // Finds the shipping option cell on the Payment Summary page.
@@ -67,10 +80,15 @@ id<GREYMatcher> ShippingOptionCellMatcher(NSString* main_label,
 
 // Finds the contact info cell on the Payment Summary page.
 id<GREYMatcher> ContactInfoCellMatcher(autofill::AutofillProfile* profile) {
+  NSString* address_label = nil;
+  NSString* notification_label = nil;
+
   return chrome_test_util::ButtonWithAccessibilityLabel([NSString
-      stringWithFormat:@"%@, %@, %@", GetNameLabelFromAutofillProfile(*profile),
+      stringWithFormat:@"%@, %@, %@, %@, %@",
+                       GetNameLabelFromAutofillProfile(*profile), address_label,
                        GetPhoneNumberLabelFromAutofillProfile(*profile),
-                       GetEmailLabelFromAutofillProfile(*profile)]);
+                       GetEmailLabelFromAutofillProfile(*profile),
+                       notification_label]);
 }
 
 // Finds a required field that has a Button accessibility trait, and has a label
@@ -166,7 +184,8 @@ id<GREYMatcher> RequiredSelectorEditorFieldMatcher(int string_id) {
   [[[EarlGrey selectElementWithMatcher:PaymentMethodCellMatcher(&_creditCard1)]
          usingSearchAction:grey_scrollInDirection(kGREYDirectionDown,
                                                   kScrollDisplacement)
-      onElementWithMatcher:chrome_test_util::PaymentRequestView()]
+      onElementWithMatcher:grey_accessibilityID(
+                               kPaymentRequestCollectionViewID)]
       performAction:grey_tap()];
   chrome_test_util::VerifyAccessibilityForCurrentScreen();
 
@@ -190,7 +209,8 @@ id<GREYMatcher> RequiredSelectorEditorFieldMatcher(int string_id) {
   [[[EarlGrey selectElementWithMatcher:ContactInfoCellMatcher(&_profile)]
          usingSearchAction:grey_scrollInDirection(kGREYDirectionDown,
                                                   kScrollDisplacement)
-      onElementWithMatcher:chrome_test_util::PaymentRequestView()]
+      onElementWithMatcher:grey_accessibilityID(
+                               kPaymentRequestCollectionViewID)]
       performAction:grey_tap()];
   chrome_test_util::VerifyAccessibilityForCurrentScreen();
 

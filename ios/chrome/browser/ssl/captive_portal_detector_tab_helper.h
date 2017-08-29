@@ -21,10 +21,8 @@ class CaptivePortalDetectorTabHelper
  public:
   ~CaptivePortalDetectorTabHelper() override;
 
-  // Creates TabHelper.
   explicit CaptivePortalDetectorTabHelper(web::WebState* web_state);
 
-  // Returns the associated captive portal detector.
   captive_portal::CaptivePortalDetector* detector();
 
  private:

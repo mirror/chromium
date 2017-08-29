@@ -628,6 +628,13 @@ void TapKeyboardReturnKeyInOmniboxWithText(std::string text) {
 // Tests that a UIAlertController is presented instead of the
 // QRScannerViewController if the camera is unavailable.
 - (void)testCameraUnavailableDialog {
+// TODO(crbug.com/663026): Reenable the test for devices.
+#if !TARGET_IPHONE_SIMULATOR
+  EARL_GREY_TEST_DISABLED(@"Disabled for devices because existing system "
+                          @"alerts would prevent app alerts to present "
+                          @"correctly.");
+#endif
+
   UIViewController* bvc = [self currentBVC];
   [self assertModalOfClass:[QRScannerViewController class]
           isNotPresentedBy:bvc];
@@ -649,6 +656,13 @@ void TapKeyboardReturnKeyInOmniboxWithText(std::string text) {
 // Tests that a UIAlertController is presented by the QRScannerViewController if
 // the camera state changes after the QRScannerViewController is presented.
 - (void)testDialogIsDisplayedIfCameraStateChanges {
+// TODO(crbug.com/663026): Reenable the test for devices.
+#if !TARGET_IPHONE_SIMULATOR
+  EARL_GREY_TEST_DISABLED(@"Disabled for devices because existing system "
+                          @"alerts would prevent app alerts to present "
+                          @"correctly.");
+#endif
+
   id cameraControllerMock =
       [self getCameraControllerMockWithAuthorizationStatus:
                 AVAuthorizationStatusAuthorized];
@@ -677,6 +691,13 @@ void TapKeyboardReturnKeyInOmniboxWithText(std::string text) {
 
 // Tests that a new dialog replaces an old dialog if the camera state changes.
 - (void)testDialogIsReplacedIfCameraStateChanges {
+// TODO(crbug.com/663026): Reenable the test for devices.
+#if !TARGET_IPHONE_SIMULATOR
+  EARL_GREY_TEST_DISABLED(@"Disabled for devices because existing system "
+                          @"alerts would prevent app alerts to present "
+                          @"correctly.");
+#endif
+
   id cameraControllerMock =
       [self getCameraControllerMockWithAuthorizationStatus:
                 AVAuthorizationStatusAuthorized];

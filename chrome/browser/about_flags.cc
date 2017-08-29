@@ -101,7 +101,6 @@
 #include "ppapi/features/features.h"
 #include "printing/features/features.h"
 #include "services/device/public/cpp/device_features.h"
-#include "ui/app_list/app_list_features.h"
 #include "ui/base/ui_base_switches.h"
 #include "ui/compositor/compositor_switches.h"
 #include "ui/display/display_switches.h"
@@ -596,6 +595,16 @@ const FeatureEntry::Choice kV8CacheStrategiesForCacheStorageChoices[] = {
 };
 
 #if defined(OS_ANDROID)
+const FeatureEntry::Choice kProgressBarAnimationChoices[] = {
+    {flags_ui::kGenericExperimentChoiceDefault, "", ""},
+    {flags_ui::kGenericExperimentChoiceDisabled,
+     switches::kProgressBarAnimation, "disabled"},
+    {flag_descriptions::kProgressBarAnimationLinear,
+     switches::kProgressBarAnimation, "smooth"},
+    {flag_descriptions::kProgressBarAnimationSmoothIndeterminate,
+     switches::kProgressBarAnimation, "smooth-indeterminate"},
+};
+
 const FeatureEntry::Choice kProgressBarCompletionChoices[] = {
     {flags_ui::kGenericExperimentChoiceDefault, "", ""},
     {flag_descriptions::kProgressBarCompletionLoadEvent,
@@ -639,15 +648,30 @@ const FeatureEntry::Choice kForceTextDirectionChoices[] = {
      switches::kForceDirectionRTL},
 };
 
-#if defined(OS_CHROMEOS)
-const FeatureEntry::Choice kAshUiModeChoices[] = {
+#if defined(OS_ANDROID)
+const FeatureEntry::Choice kNtpSwitchToExistingTabChoices[] = {
     {flags_ui::kGenericExperimentChoiceDefault, "", ""},
-    {flag_descriptions::kUiModeTablet, ash::switches::kAshUiMode,
-     ash::switches::kAshUiModeTablet},
-    {flag_descriptions::kUiModeClamshell, ash::switches::kAshUiMode,
-     ash::switches::kAshUiModeClamshell},
-    {flag_descriptions::kUiModeAuto, ash::switches::kAshUiMode,
-     ash::switches::kAshUiModeAuto},
+    {flags_ui::kGenericExperimentChoiceDisabled,
+     switches::kNtpSwitchToExistingTab, "disabled"},
+    {flag_descriptions::kNtpSwitchToExistingTabMatchUrl,
+     switches::kNtpSwitchToExistingTab, "url"},
+    {flag_descriptions::kNtpSwitchToExistingTabMatchHost,
+     switches::kNtpSwitchToExistingTab, "host"},
+};
+#endif  // OS_ANDROID
+
+#if defined(OS_CHROMEOS)
+const FeatureEntry::Choice kAshForceTabletModeChoices[] = {
+    {flags_ui::kGenericExperimentChoiceDefault, "", ""},
+    {flag_descriptions::kForceTabletModeTouchview,
+     ash::switches::kAshForceTabletMode,
+     ash::switches::kAshForceTabletModeTouchView},
+    {flag_descriptions::kForceTabletModeClamshell,
+     ash::switches::kAshForceTabletMode,
+     ash::switches::kAshForceTabletModeClamshell},
+    {flag_descriptions::kForceTabletModeAuto,
+     ash::switches::kAshForceTabletMode,
+     ash::switches::kAshForceTabletModeAuto},
 };
 #endif  // OS_CHROMEOS
 
@@ -699,15 +723,9 @@ const FeatureEntry::FeatureVariation
 #endif  // OS_ANDROID
 
 #if defined(OS_ANDROID)
-const FeatureEntry::FeatureParam kForceFetchedSuggestionsNotifications[] = {
-    {"force_fetched_suggestions_notifications", "true"},
-    {"enable_fetched_suggestions_notifications", "true"}};
-
 const FeatureEntry::FeatureVariation
     kContentSuggestionsNotificationsFeatureVariations[] = {
-        {"(notify always, server side)", nullptr, 0, "3313312"},
-        {"(notify always, client side)", kForceFetchedSuggestionsNotifications,
-         arraysize(kForceFetchedSuggestionsNotifications), nullptr}};
+        {"(notify always)", nullptr, 0, "3313312"}};
 #endif  // OS_ANDROID
 
 #if defined(OS_ANDROID)
@@ -1131,46 +1149,19 @@ const FeatureEntry::FeatureParam kUseDdljsonApiTest3[] = {
 const FeatureEntry::FeatureParam kUseDdljsonApiTest4[] = {
     {search_provider_logos::features::kDdljsonOverrideUrlParam,
      "https://www.gstatic.com/chrome/ntp/doodle_test/ddljson_android4.json"}};
-#else
-const FeatureEntry::FeatureParam kUseDdljsonApiTest0[] = {
-    {search_provider_logos::features::kDdljsonOverrideUrlParam,
-     "https://www.gstatic.com/chrome/ntp/doodle_test/ddljson_desktop0.json"}};
-const FeatureEntry::FeatureParam kUseDdljsonApiTest1[] = {
-    {search_provider_logos::features::kDdljsonOverrideUrlParam,
-     "https://www.gstatic.com/chrome/ntp/doodle_test/ddljson_desktop1.json"}};
-#endif  // defined(OS_ANDROID)
 
 const FeatureEntry::FeatureVariation kUseDdljsonApiVariations[] = {
     {"(force test doodle 0)", kUseDdljsonApiTest0,
      arraysize(kUseDdljsonApiTest0), nullptr},
     {"(force test doodle 1)", kUseDdljsonApiTest1,
      arraysize(kUseDdljsonApiTest1), nullptr},
-#if defined(OS_ANDROID)
-    // Interactive doodles: Android-only for now.
     {"(force test doodle 2)", kUseDdljsonApiTest2,
      arraysize(kUseDdljsonApiTest2), nullptr},
     {"(force test doodle 3)", kUseDdljsonApiTest3,
      arraysize(kUseDdljsonApiTest3), nullptr},
     {"(force test doodle 4)", kUseDdljsonApiTest4,
-     arraysize(kUseDdljsonApiTest4), nullptr},
-#endif  // defined(OS_ANDROID)
-};
-
-#if defined(OS_ANDROID)
-const FeatureEntry::FeatureParam kThirdPartyDoodlesTestSimple[] = {
-    {search_provider_logos::features::kThirdPartyDoodlesOverrideUrlParam,
-     "https://www.gstatic.com/chrome/ntp/doodle_test/third_party_simple.json"}};
-const FeatureEntry::FeatureParam kThirdPartyDoodlesTestAnimated[] = {
-    {search_provider_logos::features::kThirdPartyDoodlesOverrideUrlParam,
-     "https://www.gstatic.com/chrome/ntp/doodle_test/"
-     "third_party_animated.json"}};
-
-const FeatureEntry::FeatureVariation kThirdPartyDoodlesVariations[] = {
-    {"(force simple test doodle)", kThirdPartyDoodlesTestSimple,
-     arraysize(kThirdPartyDoodlesTestSimple), nullptr},
-    {"(force animated test doodle)", kThirdPartyDoodlesTestAnimated,
-     arraysize(kThirdPartyDoodlesTestAnimated), nullptr}};
-#endif  // defined(OS_ANDROID)
+     arraysize(kUseDdljsonApiTest4), nullptr}};
+#endif  // OS_ANDROID
 
 // RECORDING USER METRICS FOR FLAGS:
 // -----------------------------------------------------------------------------
@@ -1244,10 +1235,6 @@ const FeatureEntry kFeatureEntries[] = {
     {"enable-webrtc-srtp-aes-gcm", flag_descriptions::kWebrtcSrtpAesGcmName,
      flag_descriptions::kWebrtcSrtpAesGcmDescription, kOsAll,
      SINGLE_VALUE_TYPE(switches::kEnableWebRtcSrtpAesGcm)},
-    {"enable-webrtc-srtp-encrypted-headers",
-     flag_descriptions::kWebrtcSrtpEncryptedHeadersName,
-     flag_descriptions::kWebrtcSrtpEncryptedHeadersDescription, kOsAll,
-     SINGLE_VALUE_TYPE(switches::kEnableWebRtcSrtpEncryptedHeaders)},
     {"enable-webrtc-stun-origin", flag_descriptions::kWebrtcStunOriginName,
      flag_descriptions::kWebrtcStunOriginDescription, kOsAll,
      SINGLE_VALUE_TYPE(switches::kEnableWebRtcStunOrigin)},
@@ -1331,16 +1318,6 @@ const FeatureEntry kFeatureEntries[] = {
      // Uses the system preference on Mac (a different implementation).
      // On Android, this is always enabled.
      kOsAura, FEATURE_VALUE_TYPE(features::kOverlayScrollbar)},
-    {"overlay-scrollbars-flash-after-scroll-update",
-     flag_descriptions::kOverlayScrollbarsFlashAfterAnyScrollUpdateName,
-     flag_descriptions::kOverlayScrollbarsFlashAfterAnyScrollUpdateDescription,
-     kOsAura,
-     FEATURE_VALUE_TYPE(features::kOverlayScrollbarFlashAfterAnyScrollUpdate)},
-    {"overlay-scrollbars-flash-when-mouse-enter",
-     flag_descriptions::kOverlayScrollbarsFlashWhenMouseEnterName,
-     flag_descriptions::kOverlayScrollbarsFlashWhenMouseEnterDescription,
-     kOsAura,
-     FEATURE_VALUE_TYPE(features::kOverlayScrollbarFlashWhenMouseEnter)},
 #endif  // USE_AURA
     {   // See http://crbug.com/120416 for how to remove this flag.
      "save-page-as-mhtml", flag_descriptions::kSavePageAsMhtmlName,
@@ -1449,6 +1426,12 @@ const FeatureEntry kFeatureEntries[] = {
      flag_descriptions::kNetworkSettingsConfigDescription, kOsCrOS,
      SINGLE_VALUE_TYPE(chromeos::switches::kNetworkSettingsConfig)},
 #endif  // OS_CHROMEOS
+#if defined(OS_ANDROID)
+    {"enable-media-document-download-button",
+     flag_descriptions::kMediaDocumentDownloadButtonName,
+     flag_descriptions::kMediaDocumentDownloadButtonDescription, kOsAndroid,
+     FEATURE_VALUE_TYPE(features::kMediaDocumentDownloadButton)},
+#endif  // OS_ANDROID
 #if BUILDFLAG(ENABLE_PLUGINS)
     {"allow-nacl-socket-api", flag_descriptions::kAllowNaclSocketApiName,
      flag_descriptions::kAllowNaclSocketApiDescription, kOsDesktop,
@@ -1533,12 +1516,12 @@ const FeatureEntry kFeatureEntries[] = {
         "enable-fullscreen-app-list",
         flag_descriptions::kEnableFullscreenAppListName,
         flag_descriptions::kEnableFullscreenAppListDescription, kOsCrOS,
-        FEATURE_VALUE_TYPE(app_list::features::kEnableFullscreenAppList),
+        SINGLE_VALUE_TYPE(app_list::switches::kEnableFullscreenAppList),
     },
     {
         "enable-background-blur", flag_descriptions::kEnableBackgroundBlurName,
         flag_descriptions::kEnableBackgroundBlurDescription, kOsCrOS,
-        FEATURE_VALUE_TYPE(app_list::features::kEnableBackgroundBlur),
+        SINGLE_VALUE_TYPE(app_list::switches::kEnableBackgroundBlur),
     },
     {"instant-tethering", flag_descriptions::kTetherName,
      flag_descriptions::kTetherDescription, kOsCrOS,
@@ -1882,12 +1865,6 @@ const FeatureEntry kFeatureEntries[] = {
      flag_descriptions::kNotificationsNativeFlagDescription, kOsMac | kOsLinux,
      FEATURE_VALUE_TYPE(features::kNativeNotifications)},
 #endif  // ENABLE_NATIVE_NOTIFICATIONS
-#if BUILDFLAG(ENABLE_NATIVE_WINDOW_NAV_BUTTONS)
-    {"enable-native-window-nav-buttons",
-     flag_descriptions::kWindowNavNativeFlagName,
-     flag_descriptions::kWindowNavNativeFlagDescription, kOsLinux,
-     FEATURE_VALUE_TYPE(features::kNativeWindowNavButtons)},
-#endif  // ENABLE_NATIVE_WINDOW_NAV_BUTTONS
 #if defined(OS_ANDROID)
     {"reader-mode-heuristics", flag_descriptions::kReaderModeHeuristicsName,
      flag_descriptions::kReaderModeHeuristicsDescription, kOsAndroid,
@@ -1897,9 +1874,6 @@ const FeatureEntry kFeatureEntries[] = {
     {"enable-chrome-home", flag_descriptions::kChromeHomeName,
      flag_descriptions::kChromeHomeDescription, kOsAndroid,
      FEATURE_VALUE_TYPE(chrome::android::kChromeHomeFeature)},
-    {"enable-chrome-home-doodle", flag_descriptions::kChromeHomeDoodleName,
-     flag_descriptions::kChromeHomeDoodleDescription, kOsAndroid,
-     FEATURE_VALUE_TYPE(chrome::android::kChromeHomeDoodle)},
     {"enable-chrome-home-expand-button",
      flag_descriptions::kChromeHomeExpandButtonName,
      flag_descriptions::kChromeHomeExpandButtonDescription, kOsAndroid,
@@ -2239,6 +2213,9 @@ const FeatureEntry kFeatureEntries[] = {
      flag_descriptions::kExperimentalKeyboardLockUiDescription, kOsDesktop,
      FEATURE_VALUE_TYPE(features::kExperimentalKeyboardLockUI)},
 #if defined(OS_ANDROID)
+    {"progress-bar-animation", flag_descriptions::kProgressBarAnimationName,
+     flag_descriptions::kProgressBarAnimationDescription, kOsAndroid,
+     MULTI_VALUE_TYPE(kProgressBarAnimationChoices)},
     {"progress-bar-completion", flag_descriptions::kProgressBarCompletionName,
      flag_descriptions::kProgressBarCompletionDescription, kOsAndroid,
      MULTI_VALUE_TYPE(kProgressBarCompletionChoices)},
@@ -2292,6 +2269,10 @@ const FeatureEntry kFeatureEntries[] = {
      flag_descriptions::kNtpPopularSitesDescription, kOsAndroid,
      ENABLE_DISABLE_VALUE_TYPE(ntp_tiles::switches::kEnableNTPPopularSites,
                                ntp_tiles::switches::kDisableNTPPopularSites)},
+    {"ntp-switch-to-existing-tab",
+     flag_descriptions::kNtpSwitchToExistingTabName,
+     flag_descriptions::kNtpSwitchToExistingTabDescription, kOsAndroid,
+     MULTI_VALUE_TYPE(kNtpSwitchToExistingTabChoices)},
     {"use-android-midi-api", flag_descriptions::kUseAndroidMidiApiName,
      flag_descriptions::kUseAndroidMidiApiDescription, kOsAndroid,
      FEATURE_VALUE_TYPE(midi::features::kMidiManagerAndroid)},
@@ -2779,10 +2760,6 @@ const FeatureEntry kFeatureEntries[] = {
     {"enable-generic-sensor", flag_descriptions::kEnableGenericSensorName,
      flag_descriptions::kEnableGenericSensorDescription, kOsAll,
      FEATURE_VALUE_TYPE(features::kGenericSensor)},
-    {"enable-generic-sensor-extra-classes",
-     flag_descriptions::kEnableGenericSensorExtraClassesName,
-     flag_descriptions::kEnableGenericSensorExtraClassesDescription, kOsAll,
-     FEATURE_VALUE_TYPE(features::kGenericSensorExtraClasses)},
     {"expensive-background-timer-throttling",
      flag_descriptions::kExpensiveBackgroundTimerThrottlingName,
      flag_descriptions::kExpensiveBackgroundTimerThrottlingDescription, kOsAll,
@@ -3039,9 +3016,9 @@ const FeatureEntry kFeatureEntries[] = {
      FEATURE_VALUE_TYPE(features::kFetchKeepaliveTimeoutSetting)},
 
 #if defined(OS_CHROMEOS)
-    {"force-tablet-mode", flag_descriptions::kUiModeName,
-     flag_descriptions::kUiModeDescription, kOsCrOS,
-     MULTI_VALUE_TYPE(kAshUiModeChoices)},
+    {"force-tablet-mode", flag_descriptions::kForceTabletModeName,
+     flag_descriptions::kForceTabletModeDescription, kOsCrOS,
+     MULTI_VALUE_TYPE(kAshForceTabletModeChoices)},
 #endif  // OS_CHROMEOS
 
     {"memory-ablation", flag_descriptions::kMemoryAblationName,
@@ -3160,11 +3137,6 @@ const FeatureEntry kFeatureEntries[] = {
      FEATURE_VALUE_TYPE(
          omnibox::kUIExperimentHideSuggestionUrlTrivialSubdomains)},
 
-    {"omnibox-ui-show-suggestion-favicons",
-     flag_descriptions::kOmniboxUIShowSuggestionFaviconsName,
-     flag_descriptions::kOmniboxUIShowSuggestionFaviconsDescription, kOsDesktop,
-     FEATURE_VALUE_TYPE(omnibox::kUIExperimentShowSuggestionFavicons)},
-
     {"omnibox-ui-max-autocomplete-matches",
      flag_descriptions::kOmniboxUIMaxAutocompleteMatchesName,
      flag_descriptions::kOmniboxUIMaxAutocompleteMatchesDescription, kOsDesktop,
@@ -3276,12 +3248,14 @@ const FeatureEntry kFeatureEntries[] = {
      flag_descriptions::kEnableOutOfBlinkCORSDescription, kOsAll,
      FEATURE_VALUE_TYPE(features::kOutOfBlinkCORS)},
 
+#if defined(OS_ANDROID)
     {"use-ddljson-api", flag_descriptions::kUseDdljsonApiName,
-     flag_descriptions::kUseDdljsonApiDescription, kOsAll,
+     flag_descriptions::kUseDdljsonApiDescription, kOsAndroid,
      FEATURE_WITH_PARAMS_VALUE_TYPE(
          search_provider_logos::features::kUseDdljsonApi,
          kUseDdljsonApiVariations,
          "NTPUseDdljsonApi")},
+#endif  // defined(OS_ANDROID)
 
 #if defined(OS_ANDROID)
     {"spannable-inline-autocomplete",
@@ -3318,9 +3292,9 @@ const FeatureEntry kFeatureEntries[] = {
 #endif  // defined(OS_CHROMEOS)
 
 #if defined(OS_CHROMEOS)
-    {"disable-lock-screen-apps", flag_descriptions::kDisableLockScreenAppsName,
-     flag_descriptions::kDisableLockScreenAppsDescription, kOsCrOS,
-     SINGLE_VALUE_TYPE(chromeos::switches::kDisableLockScreenApps)},
+    {"enable-lock-screen-apps", flag_descriptions::kEnableLockScreenAppsName,
+     flag_descriptions::kEnableLockScreenAppsDescription, kOsCrOS,
+     SINGLE_VALUE_TYPE(chromeos::switches::kEnableLockScreenApps)},
 #endif  // defined(OS_CHROMEOS)
 
 #if defined(OS_ANDROID)
@@ -3340,13 +3314,6 @@ const FeatureEntry kFeatureEntries[] = {
      flag_descriptions::kAndroidSigninPromosName,
      flag_descriptions::kAndroidSigninPromosDescription, kOsAndroid,
      FEATURE_VALUE_TYPE(chrome::android::kAndroidSigninPromos)},
-#endif  // OS_ANDROID
-
-#if defined(OS_ANDROID)
-    {"pwa-improved-splash-screen",
-     flag_descriptions::kPwaImprovedSplashScreenName,
-     flag_descriptions::kPwaImprovedSplashScreenDescription, kOsAndroid,
-     FEATURE_VALUE_TYPE(chrome::android::kPwaImprovedSplashScreen)},
 #endif  // OS_ANDROID
 
 #if defined(OS_ANDROID)
@@ -3381,39 +3348,6 @@ const FeatureEntry kFeatureEntries[] = {
     {"click-to-open-pdf", flag_descriptions::kClickToOpenPDFName,
      flag_descriptions::kClickToOpenPDFDescription, kOsAll,
      FEATURE_VALUE_TYPE(features::kClickToOpenPDFPlaceholder)},
-
-#if defined(OS_WIN)
-    {"direct-manipulation-stylus",
-     flag_descriptions::kDirectManipulationStylusName,
-     flag_descriptions::kDirectManipulationStylusDescription, kOsWin,
-     FEATURE_VALUE_TYPE(features::kDirectManipulationStylus)},
-#endif  // defined(OS_WIN)
-
-    {"enable-manual-password-saving",
-     flag_descriptions::kManualPasswordSavingName,
-     flag_descriptions::kManualPasswordSavingDescription, kOsDesktop,
-     FEATURE_VALUE_TYPE(password_manager::features::kEnableManualSaving)},
-
-#if defined(OS_ANDROID)
-    {"third-party-doodles", flag_descriptions::kThirdPartyDoodlesName,
-     flag_descriptions::kThirdPartyDoodlesDescription, kOsAndroid,
-     FEATURE_WITH_PARAMS_VALUE_TYPE(
-         search_provider_logos::features::kThirdPartyDoodles,
-         kThirdPartyDoodlesVariations,
-         "NTPThirdPartyDoodles")},
-#endif  // defined(OS_ANDROID)
-
-#if !defined(OS_ANDROID)
-    {"doodles-on-local-ntp", flag_descriptions::kDoodlesOnLocalNtpName,
-     flag_descriptions::kDoodlesOnLocalNtpDescription, kOsDesktop,
-     FEATURE_VALUE_TYPE(features::kDoodlesOnLocalNtp)},
-#endif  // !defined(OS_ANDROID)
-
-#if !defined(OS_ANDROID)
-    {"sound-content-setting", flag_descriptions::kSoundContentSettingName,
-     flag_descriptions::kSoundContentSettingDescription, kOsDesktop,
-     FEATURE_VALUE_TYPE(features::kSoundContentSetting)},
-#endif  // !defined(OS_ANDROID)
 
     // NOTE: Adding new command-line switches requires adding corresponding
     // entries to enum "LoginCustomFlags" in histograms/enums.xml. See note in

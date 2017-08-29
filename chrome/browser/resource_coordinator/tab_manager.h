@@ -232,8 +232,6 @@ class TabManager : public TabStripModelObserver,
   bool IsLoadingBackgroundTabs() const;
 
  private:
-  friend class TabManagerStatsCollectorTest;
-
   FRIEND_TEST_ALL_PREFIXES(TabManagerTest, PurgeBackgroundRenderer);
   FRIEND_TEST_ALL_PREFIXES(TabManagerTest, ActivateTabResetPurgeState);
   FRIEND_TEST_ALL_PREFIXES(TabManagerTest, ShouldPurgeAtDefaultTime);
@@ -267,6 +265,13 @@ class TabManager : public TabStripModelObserver,
   FRIEND_TEST_ALL_PREFIXES(TabManagerTest, IsLoadingBackgroundTabs);
   FRIEND_TEST_ALL_PREFIXES(TabManagerWithExperimentDisabledTest,
                            IsLoadingBackgroundTabs);
+  FRIEND_TEST_ALL_PREFIXES(TabManagerStatsCollectorTest,
+                           HistogramsSessionRestoreSwitchToTab);
+  FRIEND_TEST_ALL_PREFIXES(TabManagerStatsCollectorTest,
+                           HistogramSessionRestoreExpectedTaskQueueingDuration);
+  FRIEND_TEST_ALL_PREFIXES(
+      TabManagerStatsCollectorTest,
+      HistogramBackgroundTabOpeningExpectedTaskQueueingDuration);
   FRIEND_TEST_ALL_PREFIXES(TabManagerTest,
                            ProactiveFastShutdownSingleTabProcess);
   FRIEND_TEST_ALL_PREFIXES(TabManagerTest, UrgentFastShutdownSingleTabProcess);
@@ -291,6 +296,10 @@ class TabManager : public TabStripModelObserver,
   // The min/max time to purge ratio. The max time to purge is set to be
   // min time to purge times this value.
   const int kDefaultMinMaxTimeToPurgeRatio = 2;
+
+  // This is needed so WebContentsData can call OnDiscardedStateChange, and
+  // can use PurgeState.
+  friend class WebContentsData;
 
   // Finds TabStripModel which has a WebContents whose id is the given
   // web_contents_id, and returns the WebContents index and the TabStripModel.
@@ -387,6 +396,9 @@ class TabManager : public TabStripModelObserver,
                      content::WebContents* contents,
                      int index,
                      bool foreground) override;
+  void TabClosingAt(TabStripModel* tab_strip_model,
+                    content::WebContents* contents,
+                    int index) override;
 
   // BrowserListObserver overrides.
   void OnBrowserSetLastActive(Browser* browser) override;
@@ -476,8 +488,6 @@ class TabManager : public TabStripModelObserver,
     memory_pressure_listener_.reset();
   }
 
-  TabManagerStatsCollector* stats_collector() { return stats_collector_.get(); }
-
   // Timer to periodically update the stats of the renderers.
   base::RepeatingTimer update_timer_;
 
@@ -565,9 +575,12 @@ class TabManager : public TabStripModelObserver,
   // in parallel.
   size_t loading_slots_;
 
+  // GRC tab signal observer, receives tab scoped signal from GRC.
+  std::unique_ptr<GRCTabSignalObserver> grc_tab_signal_observer_;
+
   // Records UMAs for tab and system-related events and properties during
   // session restore.
-  std::unique_ptr<TabManagerStatsCollector> stats_collector_;
+  std::unique_ptr<TabManagerStatsCollector> tab_manager_stats_collector_;
 
   // Weak pointer factory used for posting delayed tasks.
   base::WeakPtrFactory<TabManager> weak_ptr_factory_;

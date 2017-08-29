@@ -75,9 +75,6 @@ const SkColor kActionButtonTextColor = SkColorSetRGB(0x33, 0x67, 0xD6);
 // Background color of the large image.
 const SkColor kLargeImageBackgroundColor = SkColorSetRGB(0xf5, 0xf5, 0xf5);
 
-const SkColor kRegularTextColorMD = SkColorSetRGB(0x21, 0x21, 0x21);
-const SkColor kDimTextColorMD = SkColorSetRGB(0x75, 0x75, 0x75);
-
 // Max number of lines for message_view_.
 constexpr int kMaxLinesForMessageView = 1;
 constexpr int kMaxLinesForExpandedMessageView = 4;
@@ -90,17 +87,10 @@ constexpr int kMessageViewWidth =
     message_center::kNotificationWidth - kIconViewSize.width() -
     kContentRowPadding.left() - kContentRowPadding.right();
 
-// "Roboto-Regular, 13sp" is specified in the mock.
-constexpr int kTextFontSize = 13;
-
-// FontList for the texts except for the header.
-gfx::FontList GetTextFontList() {
-  gfx::Font default_font;
-  int font_size_delta = kTextFontSize - default_font.GetFontSize();
-  gfx::Font font = default_font.Derive(font_size_delta, gfx::Font::NORMAL,
-                                       gfx::Font::Weight::NORMAL);
-  DCHECK_EQ(kTextFontSize, font.GetFontSize());
-  return gfx::FontList(font);
+// Default FontList that all labels' FontList will be derived from.
+const gfx::FontList& GetDefaultFontList() {
+  return views::style::GetFont(views::style::CONTEXT_LABEL,
+                               views::style::STYLE_PRIMARY);
 }
 
 // ItemView ////////////////////////////////////////////////////////////////////
@@ -122,13 +112,14 @@ ItemView::ItemView(const message_center::NotificationItem& item) {
   SetLayoutManager(
       new views::BoxLayout(views::BoxLayout::kHorizontal, gfx::Insets(), 0));
 
-  const gfx::FontList font_list = GetTextFontList();
+  const gfx::FontList& font_list = GetDefaultFontList().Derive(
+      1, gfx::Font::NORMAL, gfx::Font::Weight::NORMAL);
 
   views::Label* title = new views::Label(item.title);
   title->SetFontList(font_list);
   title->set_collapse_when_hidden(true);
   title->SetHorizontalAlignment(gfx::ALIGN_LEFT);
-  title->SetEnabledColor(message_center::kRegularTextColorMD);
+  title->SetEnabledColor(message_center::kRegularTextColor);
   title->SetBackgroundColor(message_center::kDimTextBackgroundColor);
   AddChildView(title);
 
@@ -137,7 +128,7 @@ ItemView::ItemView(const message_center::NotificationItem& item) {
   message->SetFontList(font_list);
   message->set_collapse_when_hidden(true);
   message->SetHorizontalAlignment(gfx::ALIGN_LEFT);
-  message->SetEnabledColor(kDimTextColorMD);
+  message->SetEnabledColor(message_center::kDimTextColor);
   message->SetBackgroundColor(message_center::kDimTextBackgroundColor);
   AddChildView(message);
 }
@@ -183,18 +174,19 @@ const char* CompactTitleMessageView::GetClassName() const {
 CompactTitleMessageView::CompactTitleMessageView() {
   SetLayoutManager(new views::FillLayout());
 
-  const gfx::FontList& font_list = GetTextFontList();
+  const gfx::FontList& font_list = GetDefaultFontList().Derive(
+      1, gfx::Font::NORMAL, gfx::Font::Weight::NORMAL);
 
   title_view_ = new views::Label();
   title_view_->SetFontList(font_list);
   title_view_->SetHorizontalAlignment(gfx::ALIGN_LEFT);
-  title_view_->SetEnabledColor(kRegularTextColorMD);
+  title_view_->SetEnabledColor(message_center::kRegularTextColor);
   AddChildView(title_view_);
 
   message_view_ = new views::Label();
   message_view_->SetFontList(font_list);
   message_view_->SetHorizontalAlignment(gfx::ALIGN_RIGHT);
-  message_view_->SetEnabledColor(kDimTextColorMD);
+  message_view_->SetEnabledColor(message_center::kDimTextColor);
   AddChildView(message_view_);
 }
 
@@ -202,7 +194,8 @@ void CompactTitleMessageView::OnPaint(gfx::Canvas* canvas) {
   base::string16 title = title_;
   base::string16 message = message_;
 
-  const gfx::FontList& font_list = GetTextFontList();
+  const gfx::FontList& font_list = GetDefaultFontList().Derive(
+      1, gfx::Font::NORMAL, gfx::Font::Weight::NORMAL);
 
   // Elides title and message. The behavior is based on Android's one.
   // * If the title is too long, only the title is shown.
@@ -453,9 +446,8 @@ NotificationViewMD::NotificationViewMD(MessageCenterController* controller,
 
   // |left_content_| contains most contents like title, message, etc...
   left_content_ = new views::View();
-  left_content_->SetLayoutManager(
-      new views::BoxLayout(views::BoxLayout::kVertical, gfx::Insets(), 0));
-  left_content_->SetBorder(views::CreateEmptyBorder(kLeftContentPadding));
+  left_content_->SetLayoutManager(new views::BoxLayout(
+      views::BoxLayout::kVertical, kLeftContentPadding, 0));
   content_row_->AddChildView(left_content_);
   content_row_layout->SetFlexForView(left_content_, 1);
 
@@ -618,12 +610,13 @@ void NotificationViewMD::CreateOrUpdateTitleView(
   base::string16 title = gfx::TruncateString(
       notification.title(), title_character_limit, gfx::WORD_BREAK);
   if (!title_view_) {
-    const gfx::FontList& font_list = GetTextFontList();
+    const gfx::FontList& font_list = GetDefaultFontList().Derive(
+        1, gfx::Font::NORMAL, gfx::Font::Weight::NORMAL);
 
     title_view_ = new views::Label(title);
     title_view_->SetFontList(font_list);
     title_view_->SetHorizontalAlignment(gfx::ALIGN_LEFT);
-    title_view_->SetEnabledColor(kRegularTextColorMD);
+    title_view_->SetEnabledColor(message_center::kRegularTextColor);
     left_content_->AddChildView(title_view_);
   } else {
     title_view_->SetText(title);
@@ -643,12 +636,14 @@ void NotificationViewMD::CreateOrUpdateMessageView(
   base::string16 text = gfx::TruncateString(
       notification.message(), kMessageCharacterLimit, gfx::WORD_BREAK);
 
-  const gfx::FontList& font_list = GetTextFontList();
+  const gfx::FontList& font_list = GetDefaultFontList().Derive(
+      1, gfx::Font::NORMAL, gfx::Font::Weight::NORMAL);
 
   if (!message_view_) {
     message_view_ = new BoundedLabel(text, font_list);
     message_view_->SetLineLimit(kMaxLinesForMessageView);
-    message_view_->SetColors(kDimTextColorMD, kContextTextBackgroundColor);
+    message_view_->SetColors(message_center::kDimTextColor,
+                             kContextTextBackgroundColor);
 
     // TODO(tetsui): Workaround https://crbug.com/682266 by explicitly setting
     // the width.
@@ -724,11 +719,12 @@ void NotificationViewMD::CreateOrUpdateProgressStatusView(
   }
 
   if (!status_view_) {
-    const gfx::FontList& font_list = GetTextFontList();
+    const gfx::FontList& font_list = GetDefaultFontList().Derive(
+        1, gfx::Font::NORMAL, gfx::Font::Weight::NORMAL);
     status_view_ = new views::Label();
     status_view_->SetFontList(font_list);
     status_view_->SetHorizontalAlignment(gfx::ALIGN_LEFT);
-    status_view_->SetEnabledColor(kDimTextColorMD);
+    status_view_->SetEnabledColor(message_center::kDimTextColor);
     status_view_->SetBorder(views::CreateEmptyBorder(kStatusTextPadding));
     left_content_->AddChildView(status_view_);
   }

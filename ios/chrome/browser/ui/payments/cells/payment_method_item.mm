@@ -5,7 +5,6 @@
 #import "ios/chrome/browser/ui/payments/cells/payment_method_item.h"
 
 #import "ios/chrome/browser/ui/colors/MDCPalette+CrAdditions.h"
-#import "ios/chrome/browser/ui/payments/cells/accessibility_util.h"
 #import "ios/third_party/material_components_ios/src/components/Typography/src/MaterialTypography.h"
 
 #if !defined(__has_feature) || !__has_feature(objc_arc)
@@ -200,12 +199,10 @@ const CGFloat kHorizontalPadding = 16;
 #pragma mark - Accessibility
 
 - (NSString*)accessibilityLabel {
-  AccessibilityLabelBuilder* builder = [[AccessibilityLabelBuilder alloc] init];
-  [builder appendItem:self.methodIDLabel.text];
-  [builder appendItem:self.methodDetailLabel.text];
-  [builder appendItem:self.methodAddressLabel.text];
-  [builder appendItem:self.notificationLabel.text];
-  return [builder buildAccessibilityLabel];
+  return [NSString stringWithFormat:@"%@, %@, %@, %@", self.methodIDLabel.text,
+                                    self.methodDetailLabel.text,
+                                    self.methodAddressLabel.text,
+                                    self.notificationLabel.text];
 }
 
 @end

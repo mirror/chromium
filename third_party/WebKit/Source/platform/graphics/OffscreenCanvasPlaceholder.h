@@ -37,11 +37,10 @@ class PLATFORM_EXPORT OffscreenCanvasPlaceholder {
     return placeholder_frame_;
   }
 
+ private:
   bool IsPlaceholderRegistered() const {
     return placeholder_id_ != kNoPlaceholderId;
   }
-
- private:
   bool PostSetSuspendAnimationToOffscreenCanvasThread(bool suspend);
 
   RefPtr<StaticBitmapImage> placeholder_frame_;

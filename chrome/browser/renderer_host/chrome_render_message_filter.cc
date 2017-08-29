@@ -18,9 +18,6 @@
 #include "chrome/browser/content_settings/tab_specific_content_settings.h"
 #include "chrome/browser/metrics/chrome_metrics_service_accessor.h"
 #include "chrome/browser/net/predictor.h"
-#include "chrome/browser/predictors/loading_predictor.h"
-#include "chrome/browser/predictors/loading_predictor_factory.h"
-#include "chrome/browser/predictors/preconnect_manager.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/profiles/profile_manager.h"
 #include "chrome/common/render_messages.h"
@@ -56,14 +53,7 @@ ChromeRenderMessageFilter::ChromeRenderMessageFilter(int render_process_id,
       render_process_id_(render_process_id),
       profile_(profile),
       predictor_(profile_->GetNetworkPredictor()),
-      preconnect_manager_(nullptr),
-      cookie_settings_(CookieSettingsFactory::GetForProfile(profile)) {
-  auto* loading_predictor =
-      predictors::LoadingPredictorFactory::GetForProfile(profile);
-  if (loading_predictor) {
-    preconnect_manager_ = loading_predictor->preconnect_manager();
-  }
-}
+      cookie_settings_(CookieSettingsFactory::GetForProfile(profile)) {}
 
 ChromeRenderMessageFilter::~ChromeRenderMessageFilter() {
 }
@@ -106,9 +96,7 @@ void ChromeRenderMessageFilter::OverrideThreadForMessage(
 
 void ChromeRenderMessageFilter::OnDnsPrefetch(
     const network_hints::LookupRequest& request) {
-  if (preconnect_manager_)
-    preconnect_manager_->StartPreresolveHosts(request.hostname_list);
-  else if (predictor_)
+  if (predictor_)
     predictor_->DnsPrefetchList(request.hostname_list);
 }
 
@@ -120,15 +108,8 @@ void ChromeRenderMessageFilter::OnPreconnect(const GURL& url,
                  << count;
     return;
   }
-
-  if (!url.is_valid() || !url.has_host() || !url.has_scheme() ||
-      !url.SchemeIsHTTPOrHTTPS()) {
-    return;
-  }
-
-  if (preconnect_manager_) {
-    preconnect_manager_->StartPreconnectUrl(url, allow_credentials);
-  } else if (predictor_) {
+  if (predictor_ && url.is_valid() && url.has_host() && url.has_scheme() &&
+      url.SchemeIsHTTPOrHTTPS()) {
     predictor_->PreconnectUrl(url, GURL(),
                               chrome_browser_net::UrlInfo::EARLY_LOAD_MOTIVATED,
                               allow_credentials, count);
@@ -190,6 +171,26 @@ void ChromeRenderMessageFilter::OnRequestFileSystemAccessSyncResponse(
                                                                   allowed);
   Send(reply_msg);
 }
+
+#if BUILDFLAG(ENABLE_EXTENSIONS)
+void ChromeRenderMessageFilter::FileSystemAccessedSyncOnUIThread(
+    int render_process_id,
+    int render_frame_id,
+    const GURL& url,
+    bool blocked_by_policy,
+    IPC::Message* reply_msg) {
+  DCHECK_CURRENTLY_ON(BrowserThread::UI);
+  extensions::WebViewPermissionHelper* web_view_permission_helper =
+      extensions::WebViewPermissionHelper::FromFrameID(
+          render_process_id, render_frame_id);
+  // Between the time the permission request is made and the time it is handled
+  // by the UI thread, the extensions::WebViewPermissionHelper might be gone.
+  if (!web_view_permission_helper)
+    return;
+  web_view_permission_helper->FileSystemAccessedSync(
+      render_process_id, render_frame_id, url, blocked_by_policy, reply_msg);
+}
+#endif
 
 void ChromeRenderMessageFilter::OnRequestFileSystemAccessAsync(
     int render_frame_id,

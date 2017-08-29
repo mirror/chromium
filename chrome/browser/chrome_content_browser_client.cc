@@ -14,7 +14,6 @@
 #include "base/bind_helpers.h"
 #include "base/command_line.h"
 #include "base/files/scoped_file.h"
-#include "base/i18n/base_i18n_switches.h"
 #include "base/i18n/character_encoding.h"
 #include "base/json/json_reader.h"
 #include "base/lazy_instance.h"
@@ -64,7 +63,6 @@
 #include "chrome/browser/password_manager/chrome_password_manager_client.h"
 #include "chrome/browser/permissions/permission_context_base.h"
 #include "chrome/browser/platform_util.h"
-#include "chrome/browser/plugins/pdf_iframe_navigation_throttle.h"
 #include "chrome/browser/prerender/prerender_final_status.h"
 #include "chrome/browser/prerender/prerender_manager.h"
 #include "chrome/browser/prerender/prerender_manager_factory.h"
@@ -144,8 +142,6 @@
 #include "components/dom_distiller/core/dom_distiller_switches.h"
 #include "components/dom_distiller/core/url_constants.h"
 #include "components/error_page/common/error_page_switches.h"
-#include "components/feature_engagement/public/feature_constants.h"
-#include "components/feature_engagement/public/feature_list.h"
 #include "components/google/core/browser/google_util.h"
 #include "components/metrics/call_stack_profile_collector.h"
 #include "components/metrics/client_info.h"
@@ -365,6 +361,7 @@
 #if BUILDFLAG(ENABLE_PLUGINS)
 #include "chrome/browser/plugins/chrome_content_browser_client_plugins_part.h"
 #include "chrome/browser/plugins/flash_download_interception.h"
+#include "chrome/browser/plugins/pdf_iframe_navigation_throttle.h"
 #endif
 
 #if BUILDFLAG(ENABLE_SPELLCHECK)
@@ -766,19 +763,17 @@ WebContents* GetWebContents(int render_process_id, int render_frame_id) {
 }
 
 #if BUILDFLAG(ENABLE_EXTENSIONS)
-// Returns true if there is is an extension matching |url| in
-// |opener_render_process_id| with APIPermission::kBackground.
-//
-// Note that GetExtensionOrAppByURL requires a full URL in order to match with a
-// hosted app, even though normal extensions just use the host.
-bool URLHasExtensionBackgroundPermission(
+// Returns true if there is is an extension with the same origin as
+// |source_origin| in |opener_render_process_id| with
+// APIPermission::kBackground.
+bool SecurityOriginHasExtensionBackgroundPermission(
     extensions::ProcessMap* process_map,
     extensions::ExtensionRegistry* registry,
-    const GURL& url,
+    const GURL& source_origin,
     int opener_render_process_id) {
   // Note: includes web URLs that are part of an extension's web extent.
   const Extension* extension =
-      registry->enabled_extensions().GetExtensionOrAppByURL(url);
+      registry->enabled_extensions().GetExtensionOrAppByURL(source_origin);
   return extension &&
          extension->permissions_data()->HasAPIPermission(
              APIPermission::kBackground) &&
@@ -1739,7 +1734,6 @@ void ChromeContentBrowserClient::AppendExtraCommandLineSwitches(
 #if !defined(DISABLE_NACL)
       switches::kForcePNaClSubzero,
 #endif
-      switches::kForceUIDirection,
       switches::kJavaScriptHarmony,
       switches::kOriginTrialDisabledFeatures,
       switches::kOriginTrialDisabledTokens,
@@ -2264,8 +2258,9 @@ bool ChromeContentBrowserClient::CanCreateWindow(
 #if BUILDFLAG(ENABLE_EXTENSIONS)
     auto* process_map = extensions::ProcessMap::Get(profile);
     auto* registry = extensions::ExtensionRegistry::Get(profile);
-    if (!URLHasExtensionBackgroundPermission(process_map, registry, opener_url,
-                                             opener->GetProcess()->GetID())) {
+    if (!SecurityOriginHasExtensionBackgroundPermission(
+            process_map, registry, source_origin,
+            opener->GetProcess()->GetID())) {
       return false;
     }
 
@@ -2517,10 +2512,6 @@ void ChromeContentBrowserClient::OverrideWebkitPrefs(
 
   web_prefs->video_fullscreen_detection_enabled =
       chrome::android::AppHooks::ShouldDetectVideoFullscreen();
-
-  web_prefs->enable_media_download_in_product_help =
-      base::FeatureList::IsEnabled(
-          feature_engagement::kIPHMediaDownloadFeature);
 #endif  // defined(OS_ANDROID)
 
   for (size_t i = 0; i < extra_parts_.size(); ++i)
@@ -2884,14 +2875,14 @@ void ChromeContentBrowserClient::ExposeInterfacesToRenderer(
 
 #if defined(OS_WIN)
   if (base::FeatureList::IsEnabled(features::kModuleDatabase)) {
-    // Add the ModuleEventSink interface. This is the interface used by renderer
-    // processes to notify the browser of modules in their address space. The
-    // process handle is not yet available at this point so pass in a callback
-    // to allow it to be retrieved at the time the interface is actually
-    // created. It is safe to pass a raw pointer to |render_process_host|: the
-    // callback will be invoked in the context of ModuleDatabase::GetInstance,
-    // which is invoked by Mojo initialization, which occurs while the
-    // |render_process_host| is alive.
+    // Add the ModuleDatabase interface. This is the interface used by renderer
+    // processes to notify the browser of modules in their address space. It
+    // ultimately drives the chrome://conflicts UI. The process handle is not
+    // yet available at this point so pass in a callback to allow it to be
+    // retrieved at the time the interface is actually created. It is safe to
+    // pass a raw pointer to |render_process_host|: the callback will be invoked
+    // in the context of ModuleDatabase::GetInstance, which is invoked by Mojo
+    // initialization, which occurs while the |render_process_host| is alive.
     auto get_process = base::Bind(&content::RenderProcessHost::GetHandle,
                                   base::Unretained(render_process_host));
     // The ModuleDatabase is a global singleton so passing an unretained pointer
@@ -3224,12 +3215,14 @@ ChromeContentBrowserClient::CreateThrottlesForNavigation(
     throttles.push_back(std::move(background_tab_navigation_throttle));
 #endif
 
+#if BUILDFLAG(ENABLE_PLUGINS)
   if (base::FeatureList::IsEnabled(features::kClickToOpenPDFPlaceholder)) {
     std::unique_ptr<content::NavigationThrottle> pdf_iframe_throttle =
         PDFIFrameNavigationThrottle::MaybeCreateThrottleFor(handle);
     if (pdf_iframe_throttle)
       throttles.push_back(std::move(pdf_iframe_throttle));
   }
+#endif
 
   return throttles;
 }

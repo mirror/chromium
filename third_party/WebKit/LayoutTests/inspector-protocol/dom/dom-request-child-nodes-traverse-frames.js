@@ -15,6 +15,6 @@
   dp.DOM.requestChildNodes({nodeId: bodyId, depth: -1, pierce: true});
   var message = await dp.DOM.onceSetChildNodes();
 
-  testRunner.log(message);
+  testRunner.logMessage(message);
   testRunner.completeTest();
 });

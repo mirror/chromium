@@ -7,7 +7,6 @@
 #include "base/barrier_closure.h"
 #include "base/files/scoped_temp_dir.h"
 #include "base/memory/ptr_util.h"
-#include "base/run_loop.h"
 #include "base/strings/utf_string_conversions.h"
 #include "base/test/sequenced_worker_pool_owner.h"
 #include "components/prefs/in_memory_pref_store.h"
@@ -504,7 +503,7 @@ TEST_F(PrefServiceFactoryTest, MultipleClients_SubPrefUpdates_Basic) {
   };
   int current_value = kInitialValue + 1;
   for (auto& mutation : updates) {
-    base::Value expected_value;
+    base::DictionaryValue expected_value;
     {
       ScopedDictionaryPrefUpdate update(pref_service.get(), kDictionaryKey);
       EXPECT_EQ(update->AsConstDictionary()->empty(), update->empty());
@@ -512,7 +511,7 @@ TEST_F(PrefServiceFactoryTest, MultipleClients_SubPrefUpdates_Basic) {
       mutation(&update);
       EXPECT_EQ(update->AsConstDictionary()->empty(), update->empty());
       EXPECT_EQ(update->AsConstDictionary()->size(), update->size());
-      expected_value = update->AsConstDictionary()->Clone();
+      expected_value = *update->AsConstDictionary();
     }
 
     EXPECT_EQ(expected_value, *pref_service->GetDictionary(kDictionaryKey));

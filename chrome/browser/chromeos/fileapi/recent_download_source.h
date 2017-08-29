@@ -17,7 +17,7 @@
 #include "base/memory/weak_ptr.h"
 #include "base/optional.h"
 #include "base/time/time.h"
-#include "chrome/browser/chromeos/fileapi/recent_file.h"
+#include "chrome/browser/chromeos/fileapi/recent_context.h"
 #include "chrome/browser/chromeos/fileapi/recent_model.h"
 #include "chrome/browser/chromeos/fileapi/recent_source.h"
 #include "storage/browser/fileapi/file_system_operation.h"
@@ -32,21 +32,26 @@ namespace chromeos {
 class RecentDownloadSource : public RecentSource {
  public:
   explicit RecentDownloadSource(Profile* profile);
+  RecentDownloadSource(Profile* profile, size_t max_num_files);
   ~RecentDownloadSource() override;
 
   // RecentSource overrides:
-  void GetRecentFiles(Params params) override;
+  void GetRecentFiles(RecentContext context,
+                      GetRecentFilesCallback callback) override;
 
  private:
   FRIEND_TEST_ALL_PREFIXES(RecentDownloadSourceTest, GetRecentFiles_UmaStats);
 
+  struct FileSystemURLWithLastModified;
+
   static const char kLoadHistogramName[];
 
   void ScanDirectory(const base::FilePath& path);
-  void OnReadDirectory(const base::FilePath& path,
-                       base::File::Error result,
-                       storage::FileSystemOperation::FileEntryList entries,
-                       bool has_more);
+  void OnReadDirectory(
+      const base::FilePath& path,
+      base::File::Error result,
+      const storage::FileSystemOperation::FileEntryList& entries,
+      bool has_more);
   void OnGetMetadata(const storage::FileSystemURL& url,
                      base::File::Error result,
                      const base::File::Info& info);
@@ -55,9 +60,11 @@ class RecentDownloadSource : public RecentSource {
   storage::FileSystemURL BuildDownloadsURL(const base::FilePath& path) const;
 
   const std::string mount_point_name_;
+  const size_t max_num_files_;
 
   // Parameters given to GetRecentFiles().
-  base::Optional<Params> params_;
+  RecentContext context_;
+  GetRecentFilesCallback callback_;
 
   // Time when the build started.
   base::TimeTicks build_start_time_;
@@ -65,9 +72,8 @@ class RecentDownloadSource : public RecentSource {
   int inflight_readdirs_ = 0;
   // Number of GetMetadata() calls in flight.
   int inflight_stats_ = 0;
-  // Most recently modified files.
-  std::priority_queue<RecentFile, std::vector<RecentFile>, RecentFileComparator>
-      recent_files_;
+  // Most recently modified entries.
+  std::priority_queue<FileSystemURLWithLastModified> top_entries_;
 
   base::WeakPtrFactory<RecentDownloadSource> weak_ptr_factory_;
 
