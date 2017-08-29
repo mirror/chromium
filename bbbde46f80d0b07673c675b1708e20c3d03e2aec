@@ -52,6 +52,24 @@
       "revId": "bbbde46f80d0b07673c675b1708e20c3d03e2aec",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02ce9300_ef50e70e",
+        "filename": "chrome/gpu/chrome_arc_video_decode_accelerator.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 1002450
+      },
+      "writtenOn": "2017-08-29T06:15:16Z",
+      "side": 1,
+      "message": "mmm.... I think I didn\u0027t misunderstand your question. But maybe my reply was not clear enough.\n\nThere is nothing need to be changed in VerifyDmabuf to support NV12 (I have tested). \n\nHowever, the goal of this patch is not just switch from YV12 to NV12 but actually, is to make it work for BOTH YV12/NV12. That\u0027s why we need to turn off VerifyDmabuf. It is complicated to make VerifyDmabuf support BOTH, and I don\u0027t think it is necessary.\n\nWhy we need to support BOTH formats? To make the format transition smooth.\n\nWe are not sure when chrome PFQ will uprev. \n\nSo we cannot submit the follow CL to switch the format in minigbm:\n\nhttps://chromium-review.googlesource.com/c/chromiumos/platform/minigbm/+/544489\n\nInstead we should \n1. Merge this CL in Chrome. (So that both format is supported)\n2. After Chrome with this CL is picked in ChromeOS, we merge the minigbm CL.\n3. Enable the verification again in Chrome.",
+      "parentUuid": "24e0af5a_27dc8218",
+      "revId": "bbbde46f80d0b07673c675b1708e20c3d03e2aec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
