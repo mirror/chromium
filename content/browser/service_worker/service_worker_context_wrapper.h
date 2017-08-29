@@ -116,7 +116,8 @@ class CONTENT_EXPORT ServiceWorkerContextWrapper
   void CountExternalRequestsForTest(
       const GURL& url,
       const CountExternalRequestsCallback& callback) override;
-  void StopAllServiceWorkersForOrigin(const GURL& origin) override;
+  void StopAllServiceWorkersForOrigin(const GURL& origin,
+                                      ResultOnceCallback callback) override;
   void ClearAllServiceWorkersForTest(const base::Closure& callback) override;
   bool StartingExternalRequest(int64_t service_worker_version_id,
                                const std::string& request_uuid) override;
