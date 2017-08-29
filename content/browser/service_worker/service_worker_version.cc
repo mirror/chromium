@@ -347,14 +347,33 @@ void ServiceWorkerVersion::SetStatus(Status status) {
 
   status_ = status;
   if (skip_waiting_) {
-    if (status == INSTALLED) {
-      RestartTick(&skip_waiting_time_);
-    } else if (status == ACTIVATED) {
-      ClearTick(&skip_waiting_time_);
-      for (int request_id : pending_skip_waiting_requests_)
-        DidSkipWaiting(request_id);
-      pending_skip_waiting_requests_.clear();
+    switch (status_) {
+      case NEW:
+        // |skip_waiting_| should not be set before the version is NEW.
+        NOTREACHED();
+        return;
+      case INSTALLING:
+        // Do nothing until INSTALLED time.
+        break;
+      case INSTALLED:
+        // Start recording the time when the version is trying to skip waiting.
+        RestartTick(&skip_waiting_time_);
+        break;
+      case ACTIVATING:
+        for (int request_id : pending_skip_waiting_requests_)
+          embedded_worker_->SendMessage(
+              ServiceWorkerMsg_DidSkipWaiting(request_id));
+        pending_skip_waiting_requests_.clear();
+        ClearTick(&skip_waiting_time_);
+      case ACTIVATED:
+        // Do nothing. The worker is already activated and any skip waiting
+        // requests should have been handled by now.
+        break;
+      case REDUNDANT:
+        // Clear any pending skip waiting requests since this version is dead.
+        pending_skip_waiting_requests_.clear();
     }
+    DCHECK(pending_skip_waiting_requests_.empty());
   }
 
   // OnVersionStateChanged() invokes updates of the status using state
@@ -1327,11 +1346,19 @@ void ServiceWorkerVersion::OnNavigateClientFinished(
 
 void ServiceWorkerVersion::OnSkipWaiting(int request_id) {
   skip_waiting_ = true;
-  if (status_ != INSTALLED)
-    return DidSkipWaiting(request_id);
+
+  // Per spec, resolve the skip waiting promise immediately if activation won't
+  // be triggered now. We know it'll only be triggered if we're in INSTALLED
+  // state: otherwise, it either will happen later or we're already being
+  // activating or are activated.
+  if (status_ != INSTALLED) {
+    embedded_worker_->SendMessage(ServiceWorkerMsg_DidSkipWaiting(request_id));
+    return;
+  }
 
   if (!context_)
     return;
+
   ServiceWorkerRegistration* registration =
       context_->GetLiveRegistration(registration_id_);
   if (!registration)
@@ -1341,12 +1368,13 @@ void ServiceWorkerVersion::OnSkipWaiting(int request_id) {
   pending_skip_waiting_requests_.push_back(request_id);
   if (pending_skip_waiting_requests_.size() == 1)
     registration->ActivateWaitingVersionWhenReady();
-}
 
-void ServiceWorkerVersion::DidSkipWaiting(int request_id) {
-  if (running_status() == EmbeddedWorkerStatus::STARTING ||
-      running_status() == EmbeddedWorkerStatus::RUNNING) {
-    embedded_worker_->SendMessage(ServiceWorkerMsg_DidSkipWaiting(request_id));
+  // We tried but could not trigger activation yet (the active version must
+  // be busy). The spec says to resolve the promises after trying to activate,
+  // even though we are still waiting to activate.
+  if (status_ == INSTALLED) {
+    embedded_worker_->SendMessage(
+        ServiceWorkerMsg_NavigateClientError(request_id, GURL()));
   }
 }
 
