@@ -1107,6 +1107,9 @@ void ServiceWorkerContextClient::DidHandleFetchEvent(
   std::move(callback).Run(EventResultToStatus(result),
                           base::Time::FromDoubleT(event_dispatch_time));
   context_->fetch_event_callbacks.erase(fetch_event_id);
+  TRACE_EVENT1("ServiceWorker",
+               "ServiceWorkerContextClient::DidHandleFetchEvent",
+               "fetch_event_id", fetch_event_id);
 }
 
 void ServiceWorkerContextClient::DidHandleNotificationClickEvent(
@@ -1565,8 +1568,9 @@ void ServiceWorkerContextClient::DispatchFetchEvent(
                 fetch_event_id, request.url, std::move(preload_handle))
           : nullptr;
   const bool navigation_preload_sent = !!preload_request;
-  TRACE_EVENT0("ServiceWorker",
-               "ServiceWorkerContextClient::DispatchFetchEvent");
+  TRACE_EVENT1("ServiceWorker",
+               "ServiceWorkerContextClient::DispatchFetchEvent",
+               "fetch_event_id", fetch_event_id);
   context_->fetch_response_callbacks.insert(
       std::make_pair(fetch_event_id, std::move(response_callback)));
   context_->fetch_event_callbacks.insert(

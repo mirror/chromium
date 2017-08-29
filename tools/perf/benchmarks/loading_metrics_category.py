@@ -22,5 +22,8 @@ def AugmentOptionsForLoadingMetrics(tbm_options):
   # necessary to compute time-to-interactive.
   cat_filter.AddIncludedCategory('toplevel')
 
+  # "ServiceWorker" is needed to capture service worker fetch events.
+  cat_filter.AddIncludedCategory('ServiceWorker')
+
   tbm_options.AddTimelineBasedMetric('loadingMetric')
   return tbm_options
