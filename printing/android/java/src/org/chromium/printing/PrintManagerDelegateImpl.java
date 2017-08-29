@@ -32,6 +32,10 @@ public class PrintManagerDelegateImpl implements PrintManagerDelegate {
         mPrintManager = (PrintManager) activity.getSystemService(Context.PRINT_SERVICE);
     }
 
+    public PrintManagerDelegateImpl(PrintManager printManager) {
+        mPrintManager = printManager;
+    }
+
     @Override
     public void print(String printJobName, PrintDocumentAdapter documentAdapter,
             PrintAttributes attributes) {

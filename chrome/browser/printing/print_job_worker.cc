@@ -225,18 +225,20 @@ void PrintJobWorker::GetSettingsWithUI(
   content::WebContents* web_contents =
       printing_context_delegate->GetWebContents();
 
-#if defined(OS_ANDROID)
-  if (is_scripted) {
-    TabAndroid* tab =
-        web_contents ? TabAndroid::FromWebContents(web_contents) : nullptr;
+  // #if defined(OS_ANDROID)
+  //   if (is_scripted) {
+  //     TabAndroid* tab =
+  //         web_contents ? TabAndroid::FromWebContents(web_contents) : nullptr;
 
-    // Regardless of whether the following call fails or not, the javascript
-    // call will return since startPendingPrint will make it return immediately
-    // in case of error.
-    if (tab)
-      tab->SetPendingPrint(render_process_id_, render_frame_id_);
-  }
-#endif
+  //     // Regardless of whether the following call fails or not, the
+  //     javascript
+  //     // call will return since startPendingPrint will make it return
+  //     immediately
+  //     // in case of error.
+  //     if (tab)
+  //       tab->SetPendingPrint(render_process_id_, render_frame_id_);
+  //   }
+  // #endif
 
   // Running a dialog causes an exit to webpage-initiated fullscreen.
   // http://crbug.com/728276

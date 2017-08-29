@@ -51,7 +51,7 @@ public interface PrintingController {
      *                  a Tab.
      * @param printManager The print manager that manages the print job.
      */
-    void startPrint(final Printable printable, PrintManagerDelegate printManager);
+    // void startPrint(final Printable printable, PrintManagerDelegate printManager);
 
     /**
      * This method is called by the native side to signal PDF writing process is completed.
@@ -97,6 +97,6 @@ public interface PrintingController {
      *     reply when javascript can resume. When printing is done (or could not start),
      *     {@link PrintingContextInterface#showSystemDialogDone()} will be called on this object.
      */
-    void startPendingPrint(PrintingContextInterface jsOriginatedPrintingContext);
-
+    void startPendingPrint(
+            PrintingContextInterface jsOriginatedPrintingContext, boolean isScripted);
 }

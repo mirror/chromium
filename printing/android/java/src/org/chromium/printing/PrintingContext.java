@@ -4,7 +4,10 @@
 
 package org.chromium.printing;
 
+import android.app.Activity;
+import android.content.Context;
 import android.print.PrintDocumentAdapter;
+import android.print.PrintManager;
 import android.util.SparseArray;
 
 import org.chromium.base.Log;
@@ -17,9 +20,14 @@ import org.chromium.base.annotations.JNINamespace;
  * the generation of PDF.  On the Java side, it works with a {@link PrintingController}
  * to talk to the framework.
  */
+/**
+ * This class is responsible for dispatching printing commands from different resources (UI and
+ * window.print()), gathering resources for PrintingController and native side counterpart to do
+ * printing job.
+ */
 @JNINamespace("printing")
 public class PrintingContext implements PrintingContextInterface {
-    private static final String TAG = "cr.printing";
+    private static final String TAG = "printing";
     /**
      * Mapping from a file descriptor (as originally provided from
      * {@link PrintDocumentAdapter#onWrite}) to a PrintingContext.
@@ -36,9 +44,14 @@ public class PrintingContext implements PrintingContextInterface {
     /** The pointer to the native PrintingContextAndroid object. */
     private final long mNativeObject;
 
+    /** PrintManager */
+    private static PrintManager sPrintManager;
+    private boolean mStarted;
+
     private PrintingContext(long ptr) {
         mController = PrintingControllerImpl.getInstance();
         mNativeObject = ptr;
+        mStarted = false;
     }
 
     /**
@@ -65,6 +78,22 @@ public class PrintingContext implements PrintingContextInterface {
     @Override
     public void askUserForSettingsReply(boolean success) {
         nativeAskUserForSettingsReply(mNativeObject, success);
+    }
+
+    public static void setActivity(Activity activity) {
+        if (sPrintManager == null) {
+            sPrintManager = (PrintManager) activity.getSystemService(Context.PRINT_SERVICE);
+        }
+    }
+
+    public void setPendingPrint(int renderProcessId, int renderFrameId) {
+        if (sPrintManager == null) return;
+
+        PrintingController printingController = PrintingControllerImpl.getInstance();
+        if (printingController == null) return;
+
+        printingController.setPendingPrint(
+                null, new PrintManagerDelegateImpl(sPrintManager), renderProcessId, renderFrameId);
     }
 
     @CalledByNative
@@ -98,10 +127,15 @@ public class PrintingContext implements PrintingContextInterface {
     }
 
     @CalledByNative
-    public void showPrintDialog() {
+    public void showPrintDialog(boolean isScripted) {
+        if (mStarted) return;
+        Log.w("chromium", "showPrintDialog");
         ThreadUtils.assertOnUiThread();
         if (mController != null) {  // The native side doesn't check if printing is enabled
-            mController.startPendingPrint(this);
+            mController.setPendingPrint(null, new PrintManagerDelegateImpl(sPrintManager), -1, -1);
+            mController.setPrintingContext(this);
+            mController.startPendingPrint(this, isScripted);
+            mStarted = true;
         } else {
             Log.d(TAG, "Unable to start printing, feature not available.");
             // Printing disabled. Notify the native side to stop waiting.
@@ -129,21 +163,21 @@ public class PrintingContext implements PrintingContextInterface {
         return mController.getPageNumbers();
     }
 
-    @CalledByNative
-    public void askUserForSettings(final int maxPages) {
-        ThreadUtils.assertOnUiThread();
-        // If the printing dialog has already finished, tell Chromium that operation is cancelled.
-        if (mController.hasPrintingFinished()) {
-            // NOTE: We don't call nativeAskUserForSettingsReply (hence Chromium callback in
-            // AskUserForSettings callback) twice.  See {@link PrintingControllerImpl#onFinish}
-            // for more explanation.
-            askUserForSettingsReply(false);
-        } else {
-            mController.setPrintingContext(this);
-            updatePrintingContextMap(mController.getFileDescriptor(), /* delete = */ false);
-            askUserForSettingsReply(true);
-        }
-    }
+    // @CalledByNative
+    // public void askUserForSettings(final int maxPages) {
+    //     ThreadUtils.assertOnUiThread();
+    //     // If the printing dialog has already finished, tell Chromium that operation is
+    //     cancelled. if (mController.hasPrintingFinished()) {
+    //         // NOTE: We don't call nativeAskUserForSettingsReply (hence Chromium callback in
+    //         // AskUserForSettings callback) twice.  See {@link PrintingControllerImpl#onFinish}
+    //         // for more explanation.
+    //         askUserForSettingsReply(false);
+    //     } else {
+    //         mController.setPrintingContext(this);
+    //         updatePrintingContextMap(mController.getFileDescriptor(), /* delete = */ false);
+    //         askUserForSettingsReply(true);
+    //     }
+    // }
 
     @Override
     public void showSystemDialogDone() {
@@ -151,8 +185,7 @@ public class PrintingContext implements PrintingContextInterface {
     }
 
     private native void nativeAskUserForSettingsReply(
-            long nativePrintingContextAndroid,
-            boolean success);
+            long nativePrintingContextAndroid, boolean success);
 
     private native void nativeShowSystemDialogDone(long nativePrintingContextAndroid);
 }

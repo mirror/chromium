@@ -187,14 +187,14 @@ public class PrintingControllerImpl implements PrintingController, PdfGenerator 
     }
 
     @Override
-    public void startPendingPrint(PrintingContextInterface printingContext) {
+    public void startPendingPrint(PrintingContextInterface printingContext, boolean isScripted) {
         boolean canStartPrint = false;
         if (mIsBusy) {
             Log.d(TAG, "Pending print can't be started. PrintingController is busy.");
         } else if (mPrintManager == null) {
             Log.d(TAG, "Pending print can't be started. No PrintManager provided.");
-        } else if (!mPrintable.canPrint()) {
-            Log.d(TAG, "Pending print can't be started. Printable can't perform printing.");
+            // } else if (mPrintable == null || !mPrintable.canPrint()) {
+            //     Log.d(TAG, "Pending print can't be started. Printable can't perform printing.");
         } else {
             canStartPrint = true;
         }
@@ -204,18 +204,18 @@ public class PrintingControllerImpl implements PrintingController, PdfGenerator 
             return;
         }
 
-        mContextFromScriptInitiation = printingContext;
+        if (isScripted) mContextFromScriptInitiation = printingContext;
         mIsBusy = true;
-        mPrintDocumentAdapterWrapper.print(mPrintManager, mPrintable.getTitle());
+        mPrintDocumentAdapterWrapper.print(mPrintManager, /* hardcode */ "title");
         mPrintManager = null;
     }
 
-    @Override
-    public void startPrint(final Printable printable, PrintManagerDelegate printManager) {
-        if (mIsBusy) return;
-        setPendingPrint(printable, printManager, mRenderProcessId, mRenderFrameId);
-        startPendingPrint(null);
-    }
+    // @Override
+    // public void startPrint(final Printable printable, PrintManagerDelegate printManager) {
+    //     if (mIsBusy) return;
+    //     setPendingPrint(printable, printManager, mRenderProcessId, mRenderFrameId);
+    //     startPendingPrint(null);
+    // }
 
     @Override
     public void pdfWritingDone(int pageCount) {
@@ -257,7 +257,7 @@ public class PrintingControllerImpl implements PrintingController, PdfGenerator 
             resetCallbacks();
         } else {
             PrintDocumentInfo info =
-                    new PrintDocumentInfo.Builder(mPrintable.getTitle())
+                    new PrintDocumentInfo.Builder(/* mPrintable.getTitle() */ "title")
                             .setContentType(PrintDocumentInfo.CONTENT_TYPE_DOCUMENT)
                             // Set page count to unknown since Android framework will get it from
                             // PDF file generated in onWrite.
@@ -278,6 +278,7 @@ public class PrintingControllerImpl implements PrintingController, PdfGenerator 
             final PrintDocumentAdapterWrapper.WriteResultCallbackWrapper callback) {
         // TODO(cimamoglu): Make use of CancellationSignal.
         if (ranges == null || ranges.length == 0) {
+            mPrintingContext.askUserForSettingsReply(false);
             callback.onWriteFailed(null);
             return;
         }
@@ -287,13 +288,16 @@ public class PrintingControllerImpl implements PrintingController, PdfGenerator 
         assert mPrintingState == PRINTING_STATE_READY;
 
         mFileDescriptor = destination.getFd();
+        Log.w("chromium", "mFileDescriptor = " + mFileDescriptor);
         mPages = convertPageRangesToIntegerArray(ranges);
+        mPrintingContext.askUserForSettingsReply(true);
 
         // mRenderProcessId and mRenderFrameId could be invalid values, in this case we are going to
         // print the main frame.
-        if (mPrintable.print(mRenderProcessId, mRenderFrameId)) {
+        if (mPrintable != null && mPrintable.print(mRenderProcessId, mRenderFrameId)) {
             mPrintingState = PRINTING_STATE_STARTED_FROM_ONWRITE;
         } else {
+            closeFileDescriptor(mFileDescriptor);
             mOnWriteCallback.onWriteFailed(mErrorMessage);
             resetCallbacks();
         }

@@ -37,7 +37,7 @@ public class TabPrinter implements Printable {
         if (!canPrint()) return false;
         Tab tab = mTab.get();
         assert tab != null && tab.isInitialized();
-        return tab.print(renderProcessId, renderFrameId);
+        return tab.print();
     }
 
     @Override

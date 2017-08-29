@@ -85,6 +85,7 @@ void PrintingContextAndroid::AskUserForSettings(
     bool has_selection,
     bool is_scripted,
     const PrintSettingsCallback& callback) {
+  LOG(WARNING) << "AskUserForSettings";
   // This method is always run in the UI thread.
   callback_ = callback;
 
@@ -95,12 +96,15 @@ void PrintingContextAndroid::AskUserForSettings(
         reinterpret_cast<intptr_t>(this)));
   }
 
-  if (is_scripted) {
-    Java_PrintingContext_showPrintDialog(env, j_printing_context_);
-  } else {
-    Java_PrintingContext_askUserForSettings(env, j_printing_context_,
-                                            max_pages);
-  }
+  LOG(WARNING) << "is_scripted = " << is_scripted;
+
+  Java_PrintingContext_showPrintDialog(env, j_printing_context_, is_scripted);
+  // if (is_scripted) {
+  //   Java_PrintingContext_showPrintDialog(env, j_printing_context_);
+  // } else {
+  //   Java_PrintingContext_askUserForSettings(env, j_printing_context_,
+  //                                           max_pages);
+  // }
 }
 
 void PrintingContextAndroid::AskUserForSettingsReply(
