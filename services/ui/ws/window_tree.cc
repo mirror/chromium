@@ -2387,11 +2387,11 @@ void WindowTree::SetDisplayRoot(const display::Display& display,
       display, TransportMetricsToDisplayMetrics(*viewport_metrics),
       is_primary_display, ClientWindowId(window_id));
   if (!display_root) {
-    callback.Run(base::nullopt);
+    callback.Run(false);
     return;
   }
   display_root->parent()->SetVisible(true);
-  callback.Run(display_root->current_local_surface_id());
+  callback.Run(true);
 }
 
 void WindowTree::SetDisplayConfiguration(
