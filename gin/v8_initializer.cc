@@ -228,6 +228,7 @@ void GetMappedFileData(base::MemoryMappedFile* mapped_file,
 
 // static
 void V8Initializer::LoadV8Snapshot() {
+#if !defined(OS_MACOSX)
   if (g_mapped_snapshot)
     return;
 
@@ -237,6 +238,7 @@ void V8Initializer::LoadV8Snapshot() {
   // start up (slower) without the snapshot.
   UMA_HISTOGRAM_ENUMERATION("V8.Initializer.LoadV8Snapshot.Result", result,
                             V8_LOAD_MAX_VALUE);
+#endif
 }
 
 void V8Initializer::LoadV8Natives() {
@@ -255,6 +257,7 @@ void V8Initializer::LoadV8Natives() {
 void V8Initializer::LoadV8SnapshotFromFD(base::PlatformFile snapshot_pf,
                                          int64_t snapshot_offset,
                                          int64_t snapshot_size) {
+#if !defined(OS_MACOSX)
   if (g_mapped_snapshot)
     return;
 
@@ -277,6 +280,7 @@ void V8Initializer::LoadV8SnapshotFromFD(base::PlatformFile snapshot_pf,
   }
   UMA_HISTOGRAM_ENUMERATION("V8.Initializer.LoadV8Snapshot.Result", result,
                             V8_LOAD_MAX_VALUE);
+#endif
 }
 
 // static
@@ -370,10 +374,13 @@ void V8Initializer::GetV8ExternalSnapshotData(const char** natives_data_out,
 void V8Initializer::LoadV8ContextSnapshot() {
   if (g_mapped_v8_context_snapshot)
     return;
+#if defined(OS_MACOSX)
+  DCHECK(!g_mapped_snapshot);
+#endif
 
   MapOpenedFile(GetOpenedFile(kV8ContextSnapshotFileName),
                 &g_mapped_v8_context_snapshot);
-
+  g_mapped_snapshot = g_mapped_v8_context_snapshot;
   // TODO(peria): Check if the snapshot file is loaded successfully.
 }
 
@@ -384,6 +391,9 @@ void V8Initializer::LoadV8ContextSnapshotFromFD(base::PlatformFile snapshot_pf,
   if (g_mapped_v8_context_snapshot)
     return;
   CHECK_NE(base::kInvalidPlatformFile, snapshot_pf);
+#if defined(OS_MACOSX)
+  DCHECK(!g_mapped_snapshot);
+#endif
 
   base::MemoryMappedFile::Region snapshot_region =
       base::MemoryMappedFile::Region::kWholeFile;
@@ -396,6 +406,7 @@ void V8Initializer::LoadV8ContextSnapshotFromFD(base::PlatformFile snapshot_pf,
     g_opened_files.Get()[kV8ContextSnapshotFileName] =
         std::make_pair(snapshot_pf, snapshot_region);
   }
+  g_mapped_snapshot = g_mapped_v8_context_snapshot;
 }
 
 // static
