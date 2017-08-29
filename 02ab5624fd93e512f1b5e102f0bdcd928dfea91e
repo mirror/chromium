@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d713595a_c700f535",
+        "filename": "ios/clean/chrome/browser/ui/history_popup/history_popup_coordinator.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1165759
+      },
+      "writtenOn": "2017-08-29T21:23:34Z",
+      "side": 1,
+      "message": "You\u0027re right. Will remove this",
+      "parentUuid": "c141a431_2642834e",
+      "revId": "02ab5624fd93e512f1b5e102f0bdcd928dfea91e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b28d96e9_42e1ee08",
         "filename": "ios/clean/chrome/browser/ui/history_popup/history_popup_coordinator_private.h",
         "patchSetId": 4
@@ -33,6 +51,24 @@
       "revId": "02ab5624fd93e512f1b5e102f0bdcd928dfea91e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a02b84b_7e3e5bca",
+        "filename": "ios/clean/chrome/browser/ui/history_popup/history_popup_coordinator_private.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1165759
+      },
+      "writtenOn": "2017-08-29T21:23:34Z",
+      "side": 1,
+      "message": "I think I prefer to delete the file and create the category on top of the unit_test file.",
+      "parentUuid": "b28d96e9_42e1ee08",
+      "revId": "02ab5624fd93e512f1b5e102f0bdcd928dfea91e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "41867a01_b24ee287",
+        "filename": "ios/clean/chrome/browser/ui/toolbar/toolbar_button.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1165759
+      },
+      "writtenOn": "2017-08-29T21:23:34Z",
+      "side": 1,
+      "message": "Oops, I actually don\u0027t need these anymore",
+      "parentUuid": "0ae1e75d_36926129",
+      "revId": "02ab5624fd93e512f1b5e102f0bdcd928dfea91e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5ba02b87_6de38c29",
         "filename": "ios/clean/chrome/browser/ui/toolbar/toolbar_coordinator.mm",
         "patchSetId": 4
@@ -67,6 +121,24 @@
       "revId": "02ab5624fd93e512f1b5e102f0bdcd928dfea91e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09dfc81a_86483153",
+        "filename": "ios/clean/chrome/browser/ui/toolbar/toolbar_coordinator.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1165759
+      },
+      "writtenOn": "2017-08-29T21:23:34Z",
+      "side": 1,
+      "message": "I was thinking something similar but decided to leave it as is until we refactor the box. Specifically I want the navigation object owned by TabContainer to handle a \"new\" unique navigateToItem callback for the whole App, but that would mean we need to refactor the downstream protocol.\n\nThe NTP will actually use this same Toolbar with a different style, so we shouldn\u0027t have issues there. On the other hand we are trying to avoid the parent coordinator (Tab) to become the next BVC, so I believe that this is a good place to handle the showTabHistory* calls, I don\u0027t think the parent Coordinator should know about components/features inside the toolbar",
+      "parentUuid": "5ba02b87_6de38c29",
+      "revId": "02ab5624fd93e512f1b5e102f0bdcd928dfea91e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
