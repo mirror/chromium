@@ -16,6 +16,24 @@
       "revId": "b62b14d5fa13742f96148a2ba2308d0c5833d148",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "241d9ccf_bc7044e5",
+        "filename": "chrome/app/vector_icons/notification_captive_portal.icon",
+        "patchSetId": 4
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1195459
+      },
+      "writtenOn": "2017-08-29T02:04:00Z",
+      "side": 1,
+      "message": "Sorry for not linking the assets, they are the assets sgabriel provided: https://drive.google.com/drive/folders/0B6x6iYCtKinEQTEwc1l4QkxiRXM?usp\u003dsharing\n\nAll the icons have 1x, and in general there\u0027s no difference between 1x and 2x. But I\u0027m not sure if there is any exception, or tweaked ones.\n\nI had 1x in this CL but removed as (almost) all the numbers are same. To be precise, some commands are different, but I couldn\u0027t find any difference between them in preview.\nhttps://chromium-review.googlesource.com/c/chromium/src/+/603387/2/chrome/app/vector_icons/notification_captive_portal.1x.icon",
+      "parentUuid": "7bba43f7_b9ac6deb",
+      "revId": "b62b14d5fa13742f96148a2ba2308d0c5833d148",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
