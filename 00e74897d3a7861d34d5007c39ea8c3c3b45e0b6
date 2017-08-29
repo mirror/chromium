@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e4609b44_ace14350",
+        "filename": "content/browser/permissions/permission_service_context.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-08-29T16:24:57Z",
+      "side": 1,
+      "message": "I was initially confused because I thought you mean `render_process_host_` could be null\u0027d during teardown but it\u0027s actually web_contents(). You might want to clarify this.",
+      "revId": "00e74897d3a7861d34d5007c39ea8c3c3b45e0b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6dfac53_2c50ef4e",
+        "filename": "content/browser/permissions/permission_service_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-08-29T16:24:57Z",
+      "side": 1,
+      "message": "Here and below, maybe it\u0027s not needed to add a comment on every single call. Instead, you could add a comment in the header (permission_service_context.h).",
+      "revId": "00e74897d3a7861d34d5007c39ea8c3c3b45e0b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
