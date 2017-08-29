@@ -14,6 +14,7 @@
 #include "base/compiler_specific.h"
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
+#include "chromeos/audio/audio_device.h"
 #include "media/audio/audio_manager_base.h"
 
 namespace media {
@@ -80,8 +81,24 @@ class MEDIA_EXPORT AudioManagerCras : public AudioManagerBase {
 
   void AddBeamformingDevices(AudioDeviceNames* device_names);
 
+  std::string MicPositions();
+  void GetAudioDevices(chromeos::AudioDeviceList* devices);
+  void GetAudioDevicesOnMainThread(chromeos::AudioDeviceList* devices,
+                                   base::WaitableEvent* event);
+  void GetPrimaryActiveOutputNodeOnMainThread(uint64_t* active_output_node_id,
+                                              base::WaitableEvent* event);
+
+  static bool HasKeyboardMic(const chromeos::AudioDeviceList& devices);
+  static std::string GetInternalSpeakerId(
+      const chromeos::AudioDeviceList& devices);
+  static const chromeos::AudioDevice* GetDeviceFromId(
+      const chromeos::AudioDeviceList& devices,
+      uint64_t id);
+
   // Stores the mic positions field from the device.
   std::vector<Point> mic_positions_;
+
+  scoped_refptr<base::SingleThreadTaskRunner> main_task_runner_;
 
   const char* beamforming_on_device_id_;
   const char* beamforming_off_device_id_;
