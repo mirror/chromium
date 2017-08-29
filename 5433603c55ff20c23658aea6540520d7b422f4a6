@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "19106a40_bd2256bb",
+        "filename": "ios/web/navigation/crw_placeholder_navigation_info.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-08-29T16:58:31Z",
+      "side": 1,
+      "message": "NS_DESIGNATED_INITIALIZER?",
+      "revId": "5433603c55ff20c23658aea6540520d7b422f4a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3529c03e_d1f4f204",
+        "filename": "ios/web/navigation/crw_placeholder_navigation_info.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-08-29T16:58:31Z",
+      "side": 1,
+      "message": "|navigation| is nullable; does objc_getAssociatedObject() handle nil arguments properly?  I\u0027d assume so, but it\u0027s probably worth verifying.",
+      "revId": "5433603c55ff20c23658aea6540520d7b422f4a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a962b681_5c9a99ee",
+        "filename": "ios/web/navigation/placeholder_navigation_util.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-08-29T16:58:31Z",
+      "side": 1,
+      "message": "spec() will DCHECK if |original_url| is invalid.  If this is an expectation of the function, can you document it in the interface comments?  Otherwise, can you early return at the start of this function and add a tests for that case?",
+      "revId": "5433603c55ff20c23658aea6540520d7b422f4a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a8eb6f1_eddd294a",
+        "filename": "ios/web/navigation/placeholder_navigation_util_unittest.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-08-29T16:58:31Z",
+      "side": 1,
+      "message": "Same comment as before about iterating test values in a single test.  If these are exercising different edge cases, please separate into different tests.",
+      "revId": "5433603c55ff20c23658aea6540520d7b422f4a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
