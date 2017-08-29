@@ -50,11 +50,11 @@ FrameTree::NodeIterator::NodeIterator(const NodeIterator& other) = default;
 FrameTree::NodeIterator::~NodeIterator() {}
 
 FrameTree::NodeIterator& FrameTree::NodeIterator::operator++() {
-  for (size_t i = 0; i < current_node_->child_count(); ++i) {
-    FrameTreeNode* child = current_node_->child_at(i);
-    if (child == node_to_skip_)
-      continue;
-    queue_.push(child);
+  if (current_node_ != node_to_skip_) {
+    for (size_t i = 0; i < current_node_->child_count(); ++i) {
+      FrameTreeNode* child = current_node_->child_at(i);
+      queue_.push(child);
+    }
   }
 
   if (!queue_.empty()) {
@@ -73,8 +73,7 @@ bool FrameTree::NodeIterator::operator==(const NodeIterator& rhs) const {
 
 FrameTree::NodeIterator::NodeIterator(FrameTreeNode* starting_node,
                                       FrameTreeNode* node_to_skip)
-    : current_node_(starting_node != node_to_skip ? starting_node : nullptr),
-      node_to_skip_(node_to_skip) {}
+    : current_node_(starting_node), node_to_skip_(node_to_skip) {}
 
 FrameTree::NodeIterator FrameTree::NodeRange::begin() {
   return NodeIterator(root_, node_to_skip_);
@@ -247,7 +246,15 @@ void FrameTree::CreateProxiesForSiteInstance(
 
   // Proxies are created in the FrameTree in response to a node navigating to a
   // new SiteInstance. Since |source|'s navigation will replace the currently
-  // loaded document, the entire subtree under |source| will be removed.
+  // loaded document, the entire subtree under |source| will be removed, and
+  // thus proxy creation is skipped for all nodes in that subtree.
+  //
+  // However, a proxy *is* created for the |source| node itself.  This is done
+  // so that cross-process navigations always start with a proxy and follow a
+  // remote-to-local transition, which avoids race conditions in cases where
+  // other navigations need to reference this frame before it commits.  See
+  // https://crbug.com/756790 for more background.  The actual logic for this
+  // lives in NodeIterator::operator++.
   for (FrameTreeNode* node : NodesExcept(source)) {
     // If a new frame is created in the current SiteInstance, other frames in
     // that SiteInstance don't need a proxy for the new frame.
