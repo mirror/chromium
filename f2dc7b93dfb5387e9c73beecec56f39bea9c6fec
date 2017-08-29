@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "0412d738_b4e5bd2c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsCarousel.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1195464
+      },
+      "writtenOn": "2017-08-29T17:11:49Z",
+      "side": 1,
+      "message": "Because I want the ImpressionTracker to record only once when the carousel is shown inside the bottom sheet. So I use the wasTriggered() method to filter through all other shows of the caousel (like if the user scrolls up and down furiously). BUT the SuggestionCarousel is an object that is retained when the bottom sheet is closed. So, the impression tracker is also retained and its private field - mTriggered - always stays true after the first \u0027show\u0027. Thus, no suggestions are ever recorded again ;( .\n\nWhat I can do, is move all this code inside the ViewHolder itself? Then the ImpressionTracker will be final and will live until we close the bottom sheet. \n\nAny other suggestions?",
+      "parentUuid": "b7abecae_0adffac6",
+      "range": {
+        "startLine": 51,
+        "startChar": 8,
+        "endLine": 51,
+        "endChar": 26
+      },
+      "revId": "f2dc7b93dfb5387e9c73beecec56f39bea9c6fec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a20c37c8_4fe5f359",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsCarousel.java",
         "patchSetId": 4
