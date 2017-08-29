@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c2e7f914_2bfa11a8",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/compositor/CompositorView.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 281,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2017-08-29T23:52:27Z",
+      "side": 1,
+      "message": "Changed to setSize.",
+      "parentUuid": "a0882d1e_5ec875f5",
+      "range": {
+        "startLine": 281,
+        "startChar": 9,
+        "endLine": 281,
+        "endChar": 22
+      },
+      "revId": "8dd06660b61ece63231bdbfe9afb14f5d7e7345b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ff386894_5ec3d582",
         "filename": "ui/android/view_android.cc",
         "patchSetId": 4
@@ -42,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "6304ef32_d85bcc64",
+        "filename": "ui/android/view_android.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2017-08-29T23:52:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ff386894_5ec3d582",
+      "revId": "8dd06660b61ece63231bdbfe9afb14f5d7e7345b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "43aed5cc_356b868a",
         "filename": "ui/android/view_android.cc",
         "patchSetId": 4
@@ -53,6 +95,24 @@
       "writtenOn": "2017-08-29T18:12:02Z",
       "side": 1,
       "message": "So now match_parent is initialized to true, and there is no way to change that anymore? Then this call will always be ignored?",
+      "revId": "8dd06660b61ece63231bdbfe9afb14f5d7e7345b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "876ce8a5_cd60638a",
+        "filename": "ui/android/view_android.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 360,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2017-08-29T23:52:27Z",
+      "side": 1,
+      "message": "Nice you could spot this - missed this in the midst of updating code/adding tests in the past round. All the views need to be match-parent in order to handle drag events for now - that makes it tricky to meet this requirement at this point of change. Let me remove the check against match-parent property (and one corresponding test) to be able to accept this size event change, and leave TODO\u0027s for a reminder.\n\nIn their final form, VA for WebContentsAndroid will be of non-match-parent and can accept size event, while VA for RWHVA will be of match-parent and will just follow its parent\u0027s view size.",
+      "parentUuid": "43aed5cc_356b868a",
       "revId": "8dd06660b61ece63231bdbfe9afb14f5d7e7345b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -76,6 +136,24 @@
     },
     {
       "key": {
+        "uuid": "b715d8da_db887247",
+        "filename": "ui/android/view_android.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 398,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2017-08-29T23:52:27Z",
+      "side": 1,
+      "message": "Ok still have the java physical size API call both physical/view size but it will be implemented at native level by calling both separately, instead of ViewAndroid::OnPhysicalBackingSize handle them here together. This applies to VrShell and Chrome overlay panel that were issuing 2 different Java size events.\n\n\nAnd guarded OnSizeChangedInternal to filter out the successive events if their size is the same as the previous ones.",
+      "parentUuid": "7ad594bd_aa798d87",
+      "revId": "8dd06660b61ece63231bdbfe9afb14f5d7e7345b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2211cee3_f150da5d",
         "filename": "ui/android/view_android.h",
         "patchSetId": 4
@@ -87,6 +165,24 @@
       "writtenOn": "2017-08-29T18:12:02Z",
       "side": 1,
       "message": "does it need to be public?",
+      "revId": "8dd06660b61ece63231bdbfe9afb14f5d7e7345b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78806218_ac0766de",
+        "filename": "ui/android/view_android.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2017-08-29T23:52:27Z",
+      "side": 1,
+      "message": "Yes it is called by RWHVA, CVC, etc.",
+      "parentUuid": "2211cee3_f150da5d",
       "revId": "8dd06660b61ece63231bdbfe9afb14f5d7e7345b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -110,6 +206,24 @@
     },
     {
       "key": {
+        "uuid": "1893b81a_50c49a2d",
+        "filename": "ui/android/view_android_unittests.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2017-08-29T23:52:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2f7562ad_1ddea437",
+      "revId": "8dd06660b61ece63231bdbfe9afb14f5d7e7345b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8325a688_3bedb347",
         "filename": "ui/android/view_android_unittests.cc",
         "patchSetId": 4
@@ -121,6 +235,24 @@
       "writtenOn": "2017-08-29T18:12:02Z",
       "side": 1,
       "message": "nit: you can inline initialize these, c++11 is great :)",
+      "revId": "8dd06660b61ece63231bdbfe9afb14f5d7e7345b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ff3b058_771ddada",
+        "filename": "ui/android/view_android_unittests.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2017-08-29T23:52:27Z",
+      "side": 1,
+      "message": "Done!",
+      "parentUuid": "8325a688_3bedb347",
       "revId": "8dd06660b61ece63231bdbfe9afb14f5d7e7345b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -141,6 +273,24 @@
       "revId": "8dd06660b61ece63231bdbfe9afb14f5d7e7345b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f403b02_97fe6b3e",
+        "filename": "ui/android/view_android_unittests.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2017-08-29T23:52:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3ea03974_90e446fd",
+      "revId": "8dd06660b61ece63231bdbfe9afb14f5d7e7345b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
