@@ -28081,6 +28081,24 @@ from previous Chrome versions.
   </int>
 </enum>
 
+<enum name="OfflinePrefetchPageImportResult">
+  <summary>
+    All possible outcomes of an attempt to import a prefetched page archive into
+    the offline page model.
+  </summary>
+  <int value="0" label="Success">Succeeded adding offline item</int>
+  <int value="1" label="Unknown error">An unknown error happened</int>
+  <int value="2" label="File move error">
+    Error moving prefetched archive file into Offline Pages directory
+  </int>
+  <int value="3" label="Offline store failure">
+    Offline Store failure (got a AddPageResult::STORE_FAILURE)
+  </int>
+  <int value="4" label="Offline item already exists">
+    Item already exists in Offline Store (got a AddPageResult::ALREADY_EXISTS)
+  </int>
+</enum>
+
 <enum name="OfflineStatus">
   <obsolete>
     Deprecated 4/2015.

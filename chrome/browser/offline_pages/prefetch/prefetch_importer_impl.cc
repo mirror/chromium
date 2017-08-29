@@ -8,6 +8,7 @@
 #include "base/files/file_util.h"
 #include "base/guid.h"
 #include "base/logging.h"
+#include "base/metrics/histogram_macros.h"
 #include "base/task_runner.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "base/time/time.h"
@@ -30,6 +31,31 @@ void MoveFile(const base::FilePath& src_path,
               const base::Callback<void(bool)>& callback) {
   bool success = base::Move(src_path, dest_path);
   task_runner->PostTask(FROM_HERE, base::Bind(callback, success));
+}
+
+// Mirror of the OfflinePrefetchPageImportResult histogram enum.
+enum class PageImportResult {
+  SUCCESS = 0,
+  UNKNOWN = 1,
+  FILE_MOVE_ERROR = 2,
+  OFFLINE_STORE_FAILURE = 3,
+  OFFLINE_ITEM_ALREADY_EXISTS = 4,
+  // Always leave this item last. Update if the actual last item changes.
+  MAX = ITEM_ALREADY_EXISTS
+}
+
+PageImportResult
+FromAddPageResult(AddPageResult result) {
+  switch (result) {
+    case AddPageResult::SUCCESS:
+      return PageImportResult::SUCCESS;
+    case AddPageResult::STORE_FAILURE:
+      return PageImportResult::OFFLINE_STORE_FAILURE;
+    case AddPageResult::ALREADY_EXISTS:
+      return PageImportResult::OFFLINE_ITEM_ALREADY_EXISTS;
+  }
+  NOTREACHED();
+  return PageImportResult::UNKNOWN;
 }
 
 }  // namespace
@@ -89,6 +115,9 @@ void PrefetchImporterImpl::ImportArchive(const PrefetchArchiveInfo& archive) {
 void PrefetchImporterImpl::OnMoveFileDone(const OfflinePageItem& offline_page,
                                           bool success) {
   if (!success) {
+    UMA_HISTOGRAM_ENUMERATION(
+        "OfflinePages.Prefetching.OfflinePageImportResult",
+        PageImportResult::FILE_MOVE_ERROR, PageImportResult::MAX);
     NotifyImportCompleted(OfflinePageModel::kInvalidOfflineId, false);
     return;
   }
@@ -104,6 +133,8 @@ void PrefetchImporterImpl::OnMoveFileDone(const OfflinePageItem& offline_page,
 
 void PrefetchImporterImpl::OnPageAdded(AddPageResult result,
                                        int64_t offline_id) {
+  UMA_HISTOGRAM_ENUMERATION("OfflinePages.Prefetching.OfflinePageImportResult",
+                            FromAddPageResult(result), PageImportResult::MAX);
   NotifyImportCompleted(offline_id, result == AddPageResult::SUCCESS);
 }
 
