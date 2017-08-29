@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f92e7635_54fa1a4e",
+        "filename": "base/mojom/values_struct_traits.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-29T09:20:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4c7e8da2_44e74d09",
+      "range": {
+        "startLine": 24,
+        "startChar": 17,
+        "endLine": 24,
+        "endChar": 33
+      },
+      "revId": "09cf538b5854a6274ebee59bf304a01e3b83c837",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a4c84898_2b133fed",
         "filename": "base/mojom/values_struct_traits.cc",
         "patchSetId": 15
@@ -36,6 +60,30 @@
       "writtenOn": "2017-08-29T08:35:16Z",
       "side": 1,
       "message": "nit: This could be base::Value::ListStorage, but I\u0027m not quite sure what\u0027s more consistent with the DictStorage usage in line 20.\n\nAlso you could use reserve + emplace_back here as well, but I don\u0027t think this makes much of a difference. Default initialization of a base::Value should be cheap.",
+      "range": {
+        "startLine": 39,
+        "startChar": 2,
+        "endLine": 39,
+        "endChar": 26
+      },
+      "revId": "09cf538b5854a6274ebee59bf304a01e3b83c837",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51d6bfe7_fcecc239",
+        "filename": "base/mojom/values_struct_traits.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-29T09:20:24Z",
+      "side": 1,
+      "message": "I changed it to ListStorage to be consistent.\n\nAs for reserve + emplace, it\u0027d require deserializing into a stack base::Value, then emplacing the moved value into the vector. I opted to just do the simpler thing.",
+      "parentUuid": "a4c84898_2b133fed",
       "range": {
         "startLine": 39,
         "startChar": 2,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "97b07c04_91780705",
+        "filename": "base/mojom/values_struct_traits.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-29T09:20:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a741aca8_fc9c8095",
+      "range": {
+        "startLine": 80,
+        "startChar": 6,
+        "endLine": 80,
+        "endChar": 23
+      },
+      "revId": "09cf538b5854a6274ebee59bf304a01e3b83c837",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cda3772b_3c7b79bf",
         "filename": "base/mojom/values_struct_traits.h",
         "patchSetId": 15
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "4c1918bb_8fb41695",
+        "filename": "base/mojom/values_struct_traits.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-29T09:20:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cda3772b_3c7b79bf",
+      "range": {
+        "startLine": 68,
+        "startChar": 8,
+        "endLine": 68,
+        "endChar": 14
+      },
+      "revId": "09cf538b5854a6274ebee59bf304a01e3b83c837",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "86fdcc40_cdade2f6",
         "filename": "base/mojom/values_struct_traits_unittest.cc",
         "patchSetId": 15
@@ -114,6 +210,30 @@
       "revId": "09cf538b5854a6274ebee59bf304a01e3b83c837",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8bd73545_fb067d8d",
+        "filename": "base/mojom/values_struct_traits_unittest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-29T09:20:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "86fdcc40_cdade2f6",
+      "range": {
+        "startLine": 112,
+        "startChar": 2,
+        "endLine": 119,
+        "endChar": 72
+      },
+      "revId": "09cf538b5854a6274ebee59bf304a01e3b83c837",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
