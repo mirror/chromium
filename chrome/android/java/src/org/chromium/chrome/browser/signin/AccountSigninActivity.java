@@ -15,6 +15,7 @@ import android.view.LayoutInflater;
 import org.chromium.base.Log;
 import org.chromium.base.annotations.SuppressFBWarnings;
 import org.chromium.base.library_loader.ProcessInitException;
+import org.chromium.base.metrics.RecordHistogram;
 import org.chromium.base.metrics.RecordUserAction;
 import org.chromium.chrome.R;
 import org.chromium.chrome.browser.init.ChromeBrowserInitializer;
@@ -39,6 +40,8 @@ public class AccountSigninActivity extends AppCompatActivity
     private static final String INTENT_ACCOUNT_NAME = "AccountSigninActivity.AccountName";
     private static final String INTENT_IS_DEFAULT_ACCOUNT =
             "AccountSigninActivity.IsDefaultAccount";
+    private static final String INTENT_RECORD_ACCOUNT_METRICS =
+            "AccountSigninActivity.RecordAccountMetrics";
 
     @IntDef({SIGNIN_FLOW_DEFAULT, SIGNIN_FLOW_CONFIRMATION_ONLY, SIGNIN_FLOW_ADD_NEW_ACCOUNT})
     @Retention(RetentionPolicy.SOURCE)
@@ -61,11 +64,15 @@ public class AccountSigninActivity extends AppCompatActivity
      * A convenience method to create a AccountSigninActivity passing the access point as an
      * intent.
      * @param accessPoint {@link AccessPoint} for starting signin flow. Used in metrics.
+     * @param recordAccountMetrics Specifies whether metrics related to account information should
+     *         be recorded, introduced by the usage of personalized signin promos.
      */
-    public static void startAccountSigninActivity(Context context, @AccessPoint int accessPoint) {
+    public static void startAccountSigninActivity(
+            Context context, @AccessPoint int accessPoint, boolean recordAccountMetrics) {
         Intent intent = new Intent(context, AccountSigninActivity.class);
         intent.putExtra(INTENT_SIGNIN_ACCESS_POINT, accessPoint);
         intent.putExtra(INTENT_SIGNIN_FLOW_TYPE, SIGNIN_FLOW_DEFAULT);
+        intent.putExtra(INTENT_RECORD_ACCOUNT_METRICS, recordAccountMetrics);
         context.startActivity(intent);
     }
 
@@ -83,7 +90,7 @@ public class AccountSigninActivity extends AppCompatActivity
             return false;
         }
 
-        startAccountSigninActivity(context, accessPoint);
+        startAccountSigninActivity(context, accessPoint, false);
         return true;
     }
 
@@ -93,25 +100,32 @@ public class AccountSigninActivity extends AppCompatActivity
      * @param selectAccount Account for which signin confirmation page should be shown.
      * @param isDefaultAccount Whether {@param selectedAccount} is the default account on
      *         the device. Used in metrics.
+     * @param recordAccountMetrics Specifies whether metrics related to account information should
+     *         be recorded, introduced by the usage of personalized signin promos.
      */
     public static void startFromConfirmationPage(Context context, @AccessPoint int accessPoint,
-            String selectAccount, boolean isDefaultAccount) {
+            String selectAccount, boolean isDefaultAccount, boolean recordAccountMetrics) {
         Intent intent = new Intent(context, AccountSigninActivity.class);
         intent.putExtra(INTENT_SIGNIN_ACCESS_POINT, accessPoint);
         intent.putExtra(INTENT_SIGNIN_FLOW_TYPE, SIGNIN_FLOW_CONFIRMATION_ONLY);
         intent.putExtra(INTENT_ACCOUNT_NAME, selectAccount);
         intent.putExtra(INTENT_IS_DEFAULT_ACCOUNT, isDefaultAccount);
+        intent.putExtra(INTENT_RECORD_ACCOUNT_METRICS, recordAccountMetrics);
         context.startActivity(intent);
     }
 
     /**
      * Starts AccountSigninActivity from "Add account" page.
      * @param accessPoint {@link AccessPoint} for starting signin flow. Used in metrics.
+     * @param recordAccountMetrics Specifies whether metrics related to account information should
+     *         be recorded, introduced by the usage of personalized signin promos.
      */
-    public static void startFromAddAccountPage(Context context, @AccessPoint int accessPoint) {
+    public static void startFromAddAccountPage(
+            Context context, @AccessPoint int accessPoint, boolean recordAccountMetrics) {
         Intent intent = new Intent(context, AccountSigninActivity.class);
         intent.putExtra(INTENT_SIGNIN_ACCESS_POINT, accessPoint);
         intent.putExtra(INTENT_SIGNIN_FLOW_TYPE, SIGNIN_FLOW_ADD_NEW_ACCOUNT);
+        intent.putExtra(INTENT_ACCOUNT_NAME, recordAccountMetrics);
         context.startActivity(intent);
     }
 
@@ -148,6 +162,7 @@ public class AccountSigninActivity extends AppCompatActivity
         ProfileDataCache profileDataCache =
                 new ProfileDataCache(this, Profile.getLastUsedProfile(), imageSize);
 
+        @SigninFlowType
         int flowType = getIntent().getIntExtra(INTENT_SIGNIN_FLOW_TYPE, -1);
         switch (flowType) {
             case SIGNIN_FLOW_DEFAULT:
@@ -179,6 +194,7 @@ public class AccountSigninActivity extends AppCompatActivity
         setContentView(mView);
 
         SigninManager.logSigninStartAccessPoint(getAccessPoint());
+        recordSigninStartedHistogramAccountInfo();
         recordSigninStartedUserAction();
     }
 
@@ -209,6 +225,7 @@ public class AccountSigninActivity extends AppCompatActivity
                     startActivity(intent);
                 }
 
+                recordSigninCompletedHistogramAccountInfo();
                 finish();
             }
 
@@ -219,6 +236,54 @@ public class AccountSigninActivity extends AppCompatActivity
 
     @Override
     public void onFailedToSetForcedAccount(String forcedAccountName) {}
+
+    private void recordSigninCompletedHistogramAccountInfo() {
+        if (!getIntent().getBooleanExtra(INTENT_RECORD_ACCOUNT_METRICS, false)) {
+            return;
+        }
+
+        final String histogram;
+        switch (getIntent().getIntExtra(INTENT_SIGNIN_FLOW_TYPE, -1)) {
+            case SIGNIN_FLOW_ADD_NEW_ACCOUNT:
+                histogram = "Signin.SigninCompletedAccessPoint.NewAccount";
+                break;
+            case SIGNIN_FLOW_CONFIRMATION_ONLY:
+                histogram = "Signin.SigninCompletedAccessPoint.WithDefault";
+                break;
+            case SIGNIN_FLOW_DEFAULT:
+                histogram = "Signin.SigninCompletedAccessPoint.NotDefault";
+                break;
+            default:
+                assert false : "Unexpected signin flow type!";
+                return;
+        }
+
+        RecordHistogram.recordEnumeratedHistogram(histogram, mAccessPoint, SigninAccessPoint.MAX);
+    }
+
+    private void recordSigninStartedHistogramAccountInfo() {
+        if (!getIntent().getBooleanExtra(INTENT_RECORD_ACCOUNT_METRICS, false)) {
+            return;
+        }
+
+        final String histogram;
+        switch (getIntent().getIntExtra(INTENT_SIGNIN_FLOW_TYPE, -1)) {
+            case SIGNIN_FLOW_ADD_NEW_ACCOUNT:
+                histogram = "Signin.SigninStartedAccessPoint.NewAccount";
+                break;
+            case SIGNIN_FLOW_CONFIRMATION_ONLY:
+                histogram = "Signin.SigninStartedAccessPoint.WithDefault";
+                break;
+            case SIGNIN_FLOW_DEFAULT:
+                histogram = "Signin.SigninStartedAccessPoint.NotDefault";
+                break;
+            default:
+                assert false : "Unexpected signin flow type!";
+                return;
+        }
+
+        RecordHistogram.recordEnumeratedHistogram(histogram, mAccessPoint, SigninAccessPoint.MAX);
+    }
 
     private void recordSigninStartedUserAction() {
         switch (getAccessPoint()) {

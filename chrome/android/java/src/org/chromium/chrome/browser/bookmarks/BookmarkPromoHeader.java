@@ -133,6 +133,10 @@ class BookmarkPromoHeader implements AndroidSyncSettingsObserver, SignInStateObs
         }
 
         mSignInManager.removeSignInStateObserver(this);
+
+        if (mSigninPromoController != null) {
+            mSigninPromoController.recordImpressionsTilDismissHistogramIfNotUsed();
+        }
     }
 
     /**
