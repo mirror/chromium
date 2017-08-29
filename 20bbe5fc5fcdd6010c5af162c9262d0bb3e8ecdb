@@ -142,6 +142,24 @@
     },
     {
       "key": {
+        "uuid": "44adaa5c_a5a197f3",
+        "filename": "chrome/browser/extensions/extension_service_sync_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 2734,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-29T20:59:24Z",
+      "side": 1,
+      "message": "Yeah, please remove this.  Testing \"this should never happen, but\" scenarios isn\u0027t really practical (e.g., we never test passing a nullptr to functions that say \"Never pass a nullptr to this!\").  \"Coercing\" systems into a weird state can result in undefined behavior, and that\u0027s okay.\n\nThat said, the idea of testing a sync change saying the extension is enabled while it\u0027s blacklisted is probably worthwhile.",
+      "parentUuid": "532ae79c_77269652",
+      "revId": "20bbe5fc5fcdd6010c5af162c9262d0bb3e8ecdb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "98964bce_1350eed0",
         "filename": "chrome/browser/extensions/extension_sync_service.cc",
         "patchSetId": 4
@@ -171,6 +189,24 @@
       "side": 1,
       "message": "Won\u0027t this get hit if someone with DCHECKs enabled manually re-enables a greylisted extension?\n\nFrom what I understand, manually re-enabling a greylisted extension changes the disable reason from DISABLED_GREYLIST to DISABLE_NONE. I don\u0027t think it touches the blacklist_state; the extension will stay in BLACKLISTED_FOO until it\u0027s removed from the server-side greylist.",
       "parentUuid": "98964bce_1350eed0",
+      "revId": "20bbe5fc5fcdd6010c5af162c9262d0bb3e8ecdb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b7077a8_90605696",
+        "filename": "chrome/browser/extensions/extension_sync_service.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-29T20:59:24Z",
+      "side": 1,
+      "message": "Ah, good point!  Nevermind.",
+      "parentUuid": "60f9a617_cb4c7c0d",
       "revId": "20bbe5fc5fcdd6010c5af162c9262d0bb3e8ecdb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
