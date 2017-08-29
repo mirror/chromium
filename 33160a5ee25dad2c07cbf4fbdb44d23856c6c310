@@ -619,6 +619,24 @@
       "revId": "33160a5ee25dad2c07cbf4fbdb44d23856c6c310",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d5337aa9_03fb819d",
+        "filename": "storage/browser/fileapi/dragged_file_util_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 380,
+      "author": {
+        "id": 1211094
+      },
+      "writtenOn": "2017-08-29T13:24:47Z",
+      "side": 1,
+      "message": "map::emplace() seems not working well on Windows.\nLet me use the assignment here.",
+      "parentUuid": "06a22af7_45ddfcc9",
+      "revId": "33160a5ee25dad2c07cbf4fbdb44d23856c6c310",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
