@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "9c167fe7_4c136b23",
+        "filename": "chrome/app/chrome_main_delegate.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1229240
+      },
+      "writtenOn": "2017-08-29T11:10:36Z",
+      "side": 1,
+      "message": "Unfortunately, I can\u0027t, because MSVC fails on that line: https://chromium-review.googlesource.com/c/chromium/src/+/617281/19",
+      "parentUuid": "2f9b47b2_1678cfa4",
+      "revId": "608efed3abc5baa2352dd4f2188cb58dd2729481",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "955795e0_f5378a1f",
         "filename": "chrome/app/chrome_main_delegate.h",
         "patchSetId": 25
@@ -39,6 +57,30 @@
       "revId": "608efed3abc5baa2352dd4f2188cb58dd2729481",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b614d6df_94e46a89",
+        "filename": "chrome/app/chrome_main_delegate.h",
+        "patchSetId": 25
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1229240
+      },
+      "writtenOn": "2017-08-29T11:10:36Z",
+      "side": 1,
+      "message": "Done. Cannot use constexpr here, because the Windows build fails (see patch set 28 and http://build.chromium.org/p/tryserver.chromium.win/builders/win_chromium_rel_ng/builds/521915)",
+      "parentUuid": "955795e0_f5378a1f",
+      "range": {
+        "startLine": 35,
+        "startChar": 15,
+        "endLine": 35,
+        "endChar": 41
+      },
+      "revId": "608efed3abc5baa2352dd4f2188cb58dd2729481",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -77,6 +119,24 @@
     },
     {
       "key": {
+        "uuid": "e35edd19_87083e81",
+        "filename": "ios/chrome/browser/ios_chrome_main_parts.mm",
+        "patchSetId": 25
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1229240
+      },
+      "writtenOn": "2017-08-29T11:10:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b0acf61f_96436273",
+      "revId": "608efed3abc5baa2352dd4f2188cb58dd2729481",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e78e13f7_ba7b3f8f",
         "filename": "ios/chrome/test/ios_chrome_unit_test_suite.mm",
         "patchSetId": 25
@@ -91,6 +151,24 @@
       "revId": "608efed3abc5baa2352dd4f2188cb58dd2729481",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15a60e53_05693f79",
+        "filename": "ios/chrome/test/ios_chrome_unit_test_suite.mm",
+        "patchSetId": 25
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1229240
+      },
+      "writtenOn": "2017-08-29T11:10:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e78e13f7_ba7b3f8f",
+      "revId": "608efed3abc5baa2352dd4f2188cb58dd2729481",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
