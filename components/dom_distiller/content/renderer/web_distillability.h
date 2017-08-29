@@ -2,10 +2,10 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef WebDistillability_h
-#define WebDistillability_h
+#ifndef COMPONENTS_DOM_DISTILLER_CONTENT_RENDERER_WEB_DISTILLABILITY_H_
+#define COMPONENTS_DOM_DISTILLER_CONTENT_RENDERER_WEB_DISTILLABILITY_H_
 
-namespace blink {
+namespace dom_distiller {
 
 struct WebDistillabilityFeatures {
   bool is_mobile_friendly;
@@ -26,6 +26,6 @@ struct WebDistillabilityFeatures {
   double moz_score_all_linear;
 };
 
-}  // namespace blink
+}  // namespace dom_distiller
 
-#endif  // WebDistillability_h
+#endif  // COMPONENTS_DOM_DISTILLER_CONTENT_RENDERER_WEB_DISTILLABILITY_H_
