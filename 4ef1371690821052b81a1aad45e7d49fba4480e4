@@ -93,6 +93,30 @@
       "revId": "4ef1371690821052b81a1aad45e7d49fba4480e4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "286cc8a5_631bc4e8",
+        "filename": "third_party/WebKit/Source/modules/vr/NavigatorVR.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-08-29T21:26:30Z",
+      "side": 1,
+      "message": "Switched to check if the frame is cross origin iframe. It now matches the behavior of \"self\" feature policy setting.",
+      "parentUuid": "00bcb31a_4bedd4b5",
+      "range": {
+        "startLine": 86,
+        "startChar": 15,
+        "endLine": 86,
+        "endChar": 36
+      },
+      "revId": "4ef1371690821052b81a1aad45e7d49fba4480e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
