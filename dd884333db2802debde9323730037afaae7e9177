@@ -22,6 +22,30 @@
       "revId": "dd884333db2802debde9323730037afaae7e9177",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac8fa179_eafd52e7",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/infobar/IPHInfoBarSupport.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1145120
+      },
+      "writtenOn": "2017-08-29T21:42:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5414a006_107a6cec",
+      "range": {
+        "startLine": 71,
+        "startChar": 22,
+        "endLine": 71,
+        "endChar": 37
+      },
+      "revId": "dd884333db2802debde9323730037afaae7e9177",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
