@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "ea261fdc_96a0e7c8",
+        "filename": "components/viz/client/client_layer_tree_frame_sink.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1002647
+      },
+      "writtenOn": "2017-08-29T15:35:03Z",
+      "side": 1,
+      "message": "is std::move() necessary here?",
+      "range": {
+        "startLine": 137,
+        "startChar": 43,
+        "endLine": 137,
+        "endChar": 52
+      },
+      "revId": "a728d62895e533b21a31740078ff17dbfe1c6ab8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5683aaf3_3469ebea",
         "filename": "ui/aura/mus/window_port_mus.cc",
         "patchSetId": 3
@@ -31,6 +54,29 @@
       "side": 1,
       "message": "We discussed offline about this, and there were worries that without the flag, we get crashes, because aura is generating incorrect data. So this CL is blocked on aura generating the correct hit-test data.\n\nWhen I tried this locally, I found that https://chromium-review.googlesource.com/c/chromium/src/+/635613 actually fixes the crash. So maybe land that one first, and then this one without the flag? That should be enough to unblock this CL.\n\n(btw: the crash I was getting was for invalid LocalSurfaceId, not invalid FrameSinkId. Not sure if that\u0027s the same, if you were getting some other crashes)",
       "parentUuid": "5683aaf3_3469ebea",
+      "revId": "a728d62895e533b21a31740078ff17dbfe1c6ab8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b731df5_e8d0c6ad",
+        "filename": "ui/aura/mus/window_port_mus.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1002647
+      },
+      "writtenOn": "2017-08-29T15:35:03Z",
+      "side": 1,
+      "message": "Is std::move() needed?",
+      "range": {
+        "startLine": 131,
+        "startChar": 33,
+        "endLine": 131,
+        "endChar": 42
+      },
       "revId": "a728d62895e533b21a31740078ff17dbfe1c6ab8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
