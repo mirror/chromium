@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f07c131b_e7b508c0",
+        "filename": "content/browser/loader/resource_scheduler.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 718,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-08-29T20:45:52Z",
+      "side": 1,
+      "message": "#include base bind",
+      "range": {
+        "startLine": 718,
+        "startChar": 18,
+        "endLine": 718,
+        "endChar": 26
+      },
+      "revId": "112e5dc3a16fce34624e81738c6aa3087adcc269",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ae6d429_f82ea9fd",
+        "filename": "content/browser/loader/resource_scheduler.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-08-29T20:45:52Z",
+      "side": 1,
+      "message": "std::move(sequenced_task_runner) and #include \u003cutility\u003e",
+      "range": {
+        "startLine": 166,
+        "startChar": 19,
+        "endLine": 166,
+        "endChar": 40
+      },
+      "revId": "112e5dc3a16fce34624e81738c6aa3087adcc269",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74636759_2b3a6518",
+        "filename": "content/browser/loader/resource_scheduler_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 565,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-08-29T20:45:52Z",
+      "side": 1,
+      "message": "If you use a TestMockTimeTaskRunner you can fast forward the exact amount. This means you don\u0027t have to snoop at the pending task delay.",
+      "range": {
+        "startLine": 565,
+        "startChar": 16,
+        "endLine": 565,
+        "endChar": 42
+      },
+      "revId": "112e5dc3a16fce34624e81738c6aa3087adcc269",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72fb0309_19c2bef0",
+        "filename": "content/browser/loader/resource_scheduler_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 628,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-08-29T20:45:52Z",
+      "side": 1,
+      "message": "This comment is confusing given that no yielding happens in this test.",
+      "range": {
+        "startLine": 628,
+        "startChar": 0,
+        "endLine": 628,
+        "endChar": 50
+      },
+      "revId": "112e5dc3a16fce34624e81738c6aa3087adcc269",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e8ff102_6be378d0",
+        "filename": "content/browser/loader/resource_scheduler_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 648,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-08-29T20:45:52Z",
+      "side": 1,
+      "message": "it feels weird to use this implementation detail in the test. Can we use a more reasonable scenario?",
+      "range": {
+        "startLine": 648,
+        "startChar": 2,
+        "endLine": 648,
+        "endChar": 52
+      },
+      "revId": "112e5dc3a16fce34624e81738c6aa3087adcc269",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
