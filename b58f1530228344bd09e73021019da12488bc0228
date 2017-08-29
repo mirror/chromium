@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "9239f730_9d46243c",
+        "filename": "third_party/WebKit/Source/devtools/front_end/bindings/CompilerScriptMapping.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1125920
+      },
+      "writtenOn": "2017-08-29T23:37:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "44006740_4bdd6985",
+      "revId": "b58f1530228344bd09e73021019da12488bc0228",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6a6edc5a_493d6943",
         "filename": "third_party/WebKit/Source/devtools/front_end/sdk/SourceMapManager.js",
         "patchSetId": 6
@@ -33,6 +51,24 @@
       "revId": "b58f1530228344bd09e73021019da12488bc0228",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1bf6e2ff_9483ff8d",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sdk/SourceMapManager.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1125920
+      },
+      "writtenOn": "2017-08-29T23:37:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6a6edc5a_493d6943",
+      "revId": "b58f1530228344bd09e73021019da12488bc0228",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
