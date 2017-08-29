@@ -12,7 +12,9 @@
 #include "base/time/time.h"
 #include "build/build_config.h"
 #include "chrome/common/chrome_content_client.h"
+#include "chrome/common/url_constants.h"
 #include "content/public/app/content_main_delegate.h"
+#include "extensions/common/constants.h"
 
 namespace base {
 class CommandLine;
@@ -21,6 +23,11 @@ class CommandLine;
 // Chrome implementation of ContentMainDelegate.
 class ChromeMainDelegate : public content::ContentMainDelegate {
  public:
+  static constexpr const char* kNonWildcardDomainNonPortSchemes[] = {
+      extensions::kExtensionScheme, chrome::kChromeSearchScheme};
+  static constexpr size_t kNonWildcardDomainNonPortSchemesSize =
+      arraysize(kNonWildcardDomainNonPortSchemes);
+
   ChromeMainDelegate();
 
   // |exe_entry_point_ticks| is the time at which the main function of the
