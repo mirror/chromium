@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "bb7a206c_870602a9",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-08-29T06:28:34Z",
+      "side": 1,
+      "message": "nit: s/do not/does not/",
+      "revId": "db8e933415e47589028bd1ccbf235bb537904b13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "231a1fda_d6086721",
         "filename": "third_party/WebKit/Source/core/editing/commands/TypingCommand.cpp",
         "patchSetId": 1
@@ -13,6 +30,30 @@
       "writtenOn": "2017-08-28T18:27:07Z",
       "side": 1,
       "message": "I guess SetStartingSelection(VisibleSelection) is also retiring... And the logic is also a little convoluted.\n\nHow about adding SelectionForUndoStep::From(VisibleSelection), so that we can use\n\ntyping_command-\u003eSetStartingSelection(SelectionForUndoStep::From(current_selection));\ntyping_command-\u003eSetEndingSelection(SelectionForUndoStep::From(current_selection));",
+      "range": {
+        "startLine": 260,
+        "startChar": 1,
+        "endLine": 261,
+        "endChar": 74
+      },
+      "revId": "db8e933415e47589028bd1ccbf235bb537904b13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "487bbf13_bde18fe3",
+        "filename": "third_party/WebKit/Source/core/editing/commands/TypingCommand.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-08-29T06:28:34Z",
+      "side": 1,
+      "message": "I\u0027m not a fan of adding SelectionForUndoStep::From(VS), since it is\nintermediate and we\u0027ve already have Set{Starting,Ending}Selection(VS).\n\nI guess we don\u0027t need to use VS canonicalized selection for TypingCommand.\nIf so, we can change from L255:\n\nconst SelectionInDOMTree current_selection \u003d frame-\u003eSelection().GetSelectionInDOMTree();\nif (current_selection \u003d\u003d typing_command-\u003eEndingSelection().AsSelection())\n  return;\ntyping_command-\u003eSetStartingSelection(SelectionForUndoStep::From(current_selection));\ntyping_command-\u003eSetEndingSelection(SelectionForUndoStep::From(current_selection));",
+      "parentUuid": "231a1fda_d6086721",
       "range": {
         "startLine": 260,
         "startChar": 1,
