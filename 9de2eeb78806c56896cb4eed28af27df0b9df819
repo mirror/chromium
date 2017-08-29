@@ -51,6 +51,24 @@
       "revId": "9de2eeb78806c56896cb4eed28af27df0b9df819",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54fa97d9_a04e0e66",
+        "filename": "chrome/browser/ui/webui/interstitials/interstitial_ui.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 439,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-08-29T01:29:04Z",
+      "side": 1,
+      "message": "Or the hash parameter, yep.\n\nRight now, chrome://interstitials/ssllooww and chrome://interstitials/ssl-superfish show the normal SSL error page. I\u0027ve filed a bug at https://crbug.com/759915",
+      "parentUuid": "0b668991_41330609",
+      "revId": "9de2eeb78806c56896cb4eed28af27df0b9df819",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
