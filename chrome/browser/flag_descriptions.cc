@@ -2792,6 +2792,11 @@ const char kMultideviceName[] = "Enable multidevice features";
 const char kMultideviceDescription[] =
     "Enables UI for controlling multidevice features.";
 
+const char kMultiDeviceServiceName[] = "Enables MultiDevice Service";
+const char kMultiDeviceServiceDescription[] =
+    "Enable Mojo-based service which provides synced device metadata and the "
+    "ability to connect to other devices associated with a Google account.";
+
 #endif  // defined(OS_CHROMEOS)
 
 }  // namespace flag_descriptions
