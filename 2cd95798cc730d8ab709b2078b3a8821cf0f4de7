@@ -107,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "b6bf40ba_d3fabaa4",
+        "filename": "components/exo/surface.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 739,
+      "author": {
+        "id": 1000050
+      },
+      "writtenOn": "2017-08-29T15:30:33Z",
+      "side": 1,
+      "message": "I think this rect will be transformed with buffer_to_target_matrix. So we don\u0027t need scale it. Otherwise, we should remove postScale from buffer_to_target_matrix",
+      "parentUuid": "8adc32cd_eaea4509",
+      "range": {
+        "startLine": 739,
+        "startChar": 6,
+        "endLine": 739,
+        "endChar": 30
+      },
+      "revId": "2cd95798cc730d8ab709b2078b3a8821cf0f4de7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "237097bf_96e9b28b",
         "filename": "components/exo/surface.cc",
         "patchSetId": 3
@@ -118,6 +142,30 @@
       "writtenOn": "2017-08-29T12:34:36Z",
       "side": 1,
       "message": "and what about this?",
+      "range": {
+        "startLine": 740,
+        "startChar": 6,
+        "endLine": 740,
+        "endChar": 17
+      },
+      "revId": "2cd95798cc730d8ab709b2078b3a8821cf0f4de7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1397097e_4cabe88d",
+        "filename": "components/exo/surface.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 740,
+      "author": {
+        "id": 1000050
+      },
+      "writtenOn": "2017-08-29T15:30:33Z",
+      "side": 1,
+      "message": "Same with quad_layer_rect.",
+      "parentUuid": "237097bf_96e9b28b",
       "range": {
         "startLine": 740,
         "startChar": 6,
