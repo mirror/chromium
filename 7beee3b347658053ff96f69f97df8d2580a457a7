@@ -2,6 +2,144 @@
   "comments": [
     {
       "key": {
+        "uuid": "c0b6066e_aa7c382d",
+        "filename": "content/browser/blob_storage/DEPS",
+        "patchSetId": 10
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1153414
+      },
+      "writtenOn": "2017-08-29T20:58:58Z",
+      "side": 1,
+      "message": "Why is this needed? I don\u0027t see any code in content/browser/blob_storage using origin trials.",
+      "range": {
+        "startLine": 3,
+        "startChar": 13,
+        "endLine": 3,
+        "endChar": 26
+      },
+      "revId": "7beee3b347658053ff96f69f97df8d2580a457a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a389bb9_2136ec0e",
+        "filename": "content/browser/service_worker/link_header_support.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1153414
+      },
+      "writtenOn": "2017-08-29T20:58:58Z",
+      "side": 1,
+      "message": "With the policy being injected into the validator as a dependency, every client now has to know how to properly construct the validator. Maybe that\u0027s fine, but would it make sense to encapsulate in a factory method somewhere?",
+      "range": {
+        "startLine": 147,
+        "startChar": 12,
+        "endLine": 147,
+        "endChar": 22
+      },
+      "revId": "7beee3b347658053ff96f69f97df8d2580a457a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8acd205_ac4cb4fe",
+        "filename": "content/renderer/renderer_blink_platform_impl.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1153414
+      },
+      "writtenOn": "2017-08-29T20:58:58Z",
+      "side": 1,
+      "message": "Can/should this be changed now to a forward declaration, like TrialPolicy?",
+      "range": {
+        "startLine": 25,
+        "startChar": 41,
+        "endLine": 25,
+        "endChar": 71
+      },
+      "revId": "7beee3b347658053ff96f69f97df8d2580a457a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73ee4488_312a2cf8",
+        "filename": "third_party/WebKit/Source/core/origin_trials/OriginTrialContext.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1153414
+      },
+      "writtenOn": "2017-08-29T20:58:58Z",
+      "side": 1,
+      "message": "Old enum name, but not needed anyways?",
+      "range": {
+        "startLine": 21,
+        "startChar": 11,
+        "endLine": 21,
+        "endChar": 36
+      },
+      "revId": "7beee3b347658053ff96f69f97df8d2580a457a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "925b925e_4e61f68f",
+        "filename": "third_party/WebKit/Source/core/origin_trials/OriginTrialContext.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1153414
+      },
+      "writtenOn": "2017-08-29T20:58:58Z",
+      "side": 1,
+      "message": "This forward declaration is no longer needed, given the include above.",
+      "range": {
+        "startLine": 22,
+        "startChar": 6,
+        "endLine": 22,
+        "endChar": 28
+      },
+      "revId": "7beee3b347658053ff96f69f97df8d2580a457a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a62e19b2_772ba0de",
+        "filename": "third_party/WebKit/Source/platform/exported/Platform.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 1153414
+      },
+      "writtenOn": "2017-08-29T20:58:58Z",
+      "side": 1,
+      "message": "Convention in this file seems to be return nullptr. Is there a reason for the difference here?",
+      "range": {
+        "startLine": 282,
+        "startChar": 25,
+        "endLine": 282,
+        "endChar": 36
+      },
+      "revId": "7beee3b347658053ff96f69f97df8d2580a457a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d946d7f8_78256c89",
         "filename": "third_party/WebKit/common/origin_trials/trial_token_validator.cc",
         "patchSetId": 10
@@ -13,6 +151,75 @@
       "writtenOn": "2017-08-29T16:23:20Z",
       "side": 1,
       "message": "Is !policy_ possible/expected anymore? I\u0027m wondering if we should DCHECK instead",
+      "revId": "7beee3b347658053ff96f69f97df8d2580a457a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf64871c_b643c533",
+        "filename": "third_party/WebKit/public/platform/Platform.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 699,
+      "author": {
+        "id": 1153414
+      },
+      "writtenOn": "2017-08-29T20:58:58Z",
+      "side": 1,
+      "message": "Nit: As you\u0027re changing what is exposed, it would be nice to correct the comment to \"Origin Trials\". Obviously missed this in the great rename from \"Experimental Framework\".",
+      "range": {
+        "startLine": 699,
+        "startChar": 18,
+        "endLine": 699,
+        "endChar": 27
+      },
+      "revId": "7beee3b347658053ff96f69f97df8d2580a457a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b46ea4d5_0688a256",
+        "filename": "third_party/WebKit/public/platform/Platform.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 701,
+      "author": {
+        "id": 1153414
+      },
+      "writtenOn": "2017-08-29T20:58:58Z",
+      "side": 1,
+      "message": "Nit: Maybe add a TODO that this is to be removed? I was initially wondering why these both needed to be exposed, until you reminded me (offline) about the pending cleanup.",
+      "range": {
+        "startLine": 701,
+        "startChar": 15,
+        "endLine": 701,
+        "endChar": 25
+      },
+      "revId": "7beee3b347658053ff96f69f97df8d2580a457a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4f17eb5_3a6c5cca",
+        "filename": "third_party/WebKit/public/platform/Platform.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 702,
+      "author": {
+        "id": 1153414
+      },
+      "writtenOn": "2017-08-29T20:58:58Z",
+      "side": 1,
+      "message": "This should probably be called CreateOriginTrialPolicy(), as it creates a new instance each time. Which begs the question - does it need to create a new instance each time?",
+      "range": {
+        "startLine": 702,
+        "startChar": 25,
+        "endLine": 702,
+        "endChar": 26
+      },
       "revId": "7beee3b347658053ff96f69f97df8d2580a457a7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
