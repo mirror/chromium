@@ -93,6 +93,30 @@
       "revId": "83011591baa20dbe79e9dfabc247d28cffcf4624",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "afbdf45e_2992aafe",
+        "filename": "chrome/browser/chromeos/arc/voice_interaction/arc_voice_interaction_framework_service.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 399,
+      "author": {
+        "id": 1232844
+      },
+      "writtenOn": "2017-08-29T21:59:33Z",
+      "side": 1,
+      "message": "sry.. I was confused about the comment... The logic is tweaked in new patchset.",
+      "parentUuid": "827a20a5_02941dba",
+      "range": {
+        "startLine": 398,
+        "startChar": 0,
+        "endLine": 399,
+        "endChar": 13
+      },
+      "revId": "83011591baa20dbe79e9dfabc247d28cffcf4624",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
