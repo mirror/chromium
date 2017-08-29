@@ -687,11 +687,6 @@ FrameLoadType FrameLoader::DetermineFrameLoadType(
       !request.OriginDocument()->CanCreateHistoryEntry())
     return kFrameLoadTypeReplaceCurrentItem;
 
-  if (request.GetResourceRequest().Url().IsEmpty() &&
-      request.GetSubstituteData().FailingURL().IsEmpty()) {
-    return kFrameLoadTypeReplaceCurrentItem;
-  }
-
   return kFrameLoadTypeStandard;
 }
 
