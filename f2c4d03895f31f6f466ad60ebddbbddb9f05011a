@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e365531e_5a1ed08a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2017-08-29T12:29:33Z",
+      "side": 1,
+      "message": "Might be good to mention (like the bug does) why this is done just for BidiStream, and not HTTP.",
+      "revId": "f2c4d03895f31f6f466ad60ebddbbddb9f05011a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e7e9f79_b33c6d9e",
+        "filename": "components/cronet/android/java/src/org/chromium/net/impl/BidirectionalStreamNetworkException.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2017-08-29T12:29:33Z",
+      "side": 1,
+      "message": "@VisibleForTesting",
+      "revId": "f2c4d03895f31f6f466ad60ebddbbddb9f05011a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65e54ddc_74aaf0e9",
+        "filename": "components/cronet/android/java/src/org/chromium/net/impl/BidirectionalStreamNetworkException.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2017-08-29T12:29:33Z",
+      "side": 1,
+      "message": "assert mErrorCode \u003d\u003d ERROR_OTHER;",
+      "revId": "f2c4d03895f31f6f466ad60ebddbbddb9f05011a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5208147a_6f2fb98b",
+        "filename": "components/cronet/android/test/javatests/src/org/chromium/net/BidirectionalStreamTest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1578,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2017-08-29T12:29:33Z",
+      "side": 1,
+      "message": "assertEquals(netError, exception.getCronetInternalErrorCode());\nassertEquals(errorCode, exception.getErrorCode());",
+      "revId": "f2c4d03895f31f6f466ad60ebddbbddb9f05011a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
