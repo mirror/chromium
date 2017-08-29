@@ -18,6 +18,10 @@ class TemplateURLService;
 struct AutocompleteMatch;
 struct OmniboxLog;
 
+namespace base {
+class CancelableTaskTracker;
+}
+
 namespace bookmarks {
 class BookmarkModel;
 }
@@ -116,6 +120,14 @@ class OmniboxClient {
                                bool default_match_changed,
                                const BitmapFetchedCallback& on_bitmap_fetched) {
   }
+
+  // Fetchs the favicon for |page_url|. If the embedder supports fetching
+  // favicons (not all embedders do), |callback| will be be called once the
+  // favicon has been fetched.
+  virtual void GetFaviconForPageUrl(
+      base::CancelableTaskTracker* tracker,
+      const GURL& page_url,
+      const base::Callback<void(const gfx::Image& favicon)>& callback) {}
 
   // Called when the current autocomplete match has changed.
   virtual void OnCurrentMatchChanged(const AutocompleteMatch& match) {}
