@@ -1,0 +1,157 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1b8350a8_907f168c",
+        "filename": "media/blink/video_frame_compositor.cc",
+        "patchSetId": 37
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-08-29T23:46:45Z",
+      "side": 1,
+      "message": "Use a ternary here.",
+      "revId": "2afa3a917e9667d5256049b51af731d977fcf558",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84aca85c_d5dee785",
+        "filename": "media/blink/video_frame_compositor.cc",
+        "patchSetId": 37
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-08-29T23:46:45Z",
+      "side": 1,
+      "message": "Move inside rendering_ check to avoid duplication of rendering_ check?",
+      "revId": "2afa3a917e9667d5256049b51af731d977fcf558",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29c194f7_0f0a6738",
+        "filename": "media/blink/video_frame_compositor.cc",
+        "patchSetId": 37
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-08-29T23:46:45Z",
+      "side": 1,
+      "message": "Move this inside the processnewFrame conditional to avoid duplication?",
+      "revId": "2afa3a917e9667d5256049b51af731d977fcf558",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba728c54_28a0bc03",
+        "filename": "media/blink/video_frame_compositor.cc",
+        "patchSetId": 37
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-08-29T23:46:45Z",
+      "side": 1,
+      "message": "Multiline if requires {}",
+      "revId": "2afa3a917e9667d5256049b51af731d977fcf558",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c271736a_09a092c6",
+        "filename": "media/blink/video_frame_compositor.cc",
+        "patchSetId": 37
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-08-29T23:46:45Z",
+      "side": 1,
+      "message": "Ditto.",
+      "revId": "2afa3a917e9667d5256049b51af731d977fcf558",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81620b4f_8d34ccc8",
+        "filename": "media/blink/video_frame_compositor.cc",
+        "patchSetId": 37
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-08-29T23:46:45Z",
+      "side": 1,
+      "message": "Move this inside the new_frame \u0026\u0026 ClientSinkAvailable check?",
+      "revId": "2afa3a917e9667d5256049b51af731d977fcf558",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "52e2b3df_f7bfdae6",
+        "filename": "media/blink/video_frame_compositor.h",
+        "patchSetId": 37
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-08-29T23:46:45Z",
+      "side": 1,
+      "message": "Can we rename this to something like EnableSubmission() and DisableSubmission() since we already have Start/Stop methods on this class?",
+      "revId": "2afa3a917e9667d5256049b51af731d977fcf558",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42973c6a_dd2f35e5",
+        "filename": "media/blink/video_frame_compositor.h",
+        "patchSetId": 37
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-08-29T23:46:45Z",
+      "side": 1,
+      "message": "Is this thread safe?",
+      "revId": "2afa3a917e9667d5256049b51af731d977fcf558",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7bbca80_7847f038",
+        "filename": "media/blink/video_frame_compositor_unittest.cc",
+        "patchSetId": 37
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-08-29T23:46:45Z",
+      "side": 1,
+      "message": "s/is/Is/",
+      "revId": "2afa3a917e9667d5256049b51af731d977fcf558",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
