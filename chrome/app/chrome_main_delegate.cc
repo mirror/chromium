@@ -41,7 +41,6 @@
 #include "chrome/common/profiling.h"
 #include "chrome/common/switch_utils.h"
 #include "chrome/common/trace_event_args_whitelist.h"
-#include "chrome/common/url_constants.h"
 #include "chrome/gpu/chrome_content_gpu_client.h"
 #include "chrome/renderer/chrome_content_renderer_client.h"
 #include "chrome/utility/chrome_content_utility_client.h"
@@ -53,7 +52,6 @@
 #include "content/public/common/content_paths.h"
 #include "content/public/common/content_switches.h"
 #include "content/public/common/service_names.mojom.h"
-#include "extensions/common/constants.h"
 #include "pdf/features.h"
 #include "ppapi/features/features.h"
 #include "printing/features/features.h"
@@ -191,6 +189,9 @@ base::LazyInstance<ChromeCrashReporterClient>::Leaky g_chrome_crash_client =
 
 extern int NaClMain(const content::MainFunctionParams&);
 extern int CloudPrintServiceProcessMain(const content::MainFunctionParams&);
+
+constexpr const char* ChromeMainDelegate::kNonWildcardDomainNonPortSchemes[];
+constexpr size_t ChromeMainDelegate::kNonWildcardDomainNonPortSchemesSize;
 
 namespace {
 
@@ -598,8 +599,8 @@ bool ChromeMainDelegate::BasicStartupComplete(int* exit_code) {
   nacl::RegisterPathProvider();
 #endif
 
-  ContentSettingsPattern::SetNonWildcardDomainNonPortScheme(
-      extensions::kExtensionScheme);
+  ContentSettingsPattern::SetNonWildcardDomainNonPortSchemes(
+      kNonWildcardDomainNonPortSchemes, kNonWildcardDomainNonPortSchemesSize);
 
 // No support for ANDROID yet as DiagnosticsController needs wchar support.
 // TODO(gspencer): That's not true anymore, or at least there are no w-string
