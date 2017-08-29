@@ -316,6 +316,10 @@ void DrmThread::SetColorCorrection(
                                        correction_matrix);
 }
 
+void DrmThread::StartDrmDevice(StartDrmDeviceCallback callback) {
+  std::move(callback).Run(true);
+}
+
 // DrmThread requires a BindingSet instead of a simple Binding because it will
 // be used from multiple threads in multiple processes.
 void DrmThread::AddBindingCursorDevice(

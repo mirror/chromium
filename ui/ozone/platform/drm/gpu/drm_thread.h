@@ -129,6 +129,8 @@ class DrmThread : public base::Thread,
       const std::vector<display::GammaRampRGBEntry>& gamma_lut,
       const std::vector<float>& correction_matrix) override;
 
+  void StartDrmDevice(StartDrmDeviceCallback callback) override;
+
   // base::Thread:
   void Init() override;
 
