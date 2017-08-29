@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "566ae8d2_7c954b8e",
+        "filename": "components/ui_devtools/views/ui_devtools_dom_agent.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1229390
+      },
+      "writtenOn": "2017-08-29T15:37:56Z",
+      "side": 1,
+      "message": "Thanks. I combined this if condition to the if conditions from lines 112-\u003e119. Here we need to check (!hovered_rect.IsEmpty()) so that we can draw the width() x height() text of the rectangle. I also rename the function to DrawSizeOfRectangle() for clarification.",
+      "parentUuid": "b89ce4db_9b68a62c",
+      "revId": "d4bec59eca1b79034c9f1621fb10624456ccbce9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1720013e_07235ae6",
         "filename": "components/ui_devtools/views/ui_devtools_dom_agent.cc",
         "patchSetId": 17
@@ -33,6 +51,24 @@
       "revId": "d4bec59eca1b79034c9f1621fb10624456ccbce9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69b4e584_f5976d72",
+        "filename": "components/ui_devtools/views/ui_devtools_dom_agent.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1229390
+      },
+      "writtenOn": "2017-08-29T15:37:56Z",
+      "side": 1,
+      "message": "Same explanation as above. We still need this.",
+      "parentUuid": "1720013e_07235ae6",
+      "revId": "d4bec59eca1b79034c9f1621fb10624456ccbce9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "5de72a31_25151d10",
+        "filename": "components/ui_devtools/views/ui_devtools_dom_agent.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 402,
+      "author": {
+        "id": 1229390
+      },
+      "writtenOn": "2017-08-29T15:37:56Z",
+      "side": 1,
+      "message": "Done, thanks! I changed to bottom() for x()+width() as well where necessary.",
+      "parentUuid": "afe3ef66_31f645f4",
+      "revId": "d4bec59eca1b79034c9f1621fb10624456ccbce9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6b6abf94_8c745d9e",
         "filename": "components/ui_devtools/views/ui_devtools_dom_agent.cc",
         "patchSetId": 17
@@ -67,6 +121,24 @@
       "revId": "d4bec59eca1b79034c9f1621fb10624456ccbce9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f74a23f_37214628",
+        "filename": "components/ui_devtools/views/ui_devtools_dom_agent.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 420,
+      "author": {
+        "id": 1229390
+      },
+      "writtenOn": "2017-08-29T15:37:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6b6abf94_8c745d9e",
+      "revId": "d4bec59eca1b79034c9f1621fb10624456ccbce9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "67a0470c_d967bca5",
+        "filename": "components/ui_devtools/views/ui_devtools_dom_agent.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 430,
+      "author": {
+        "id": 1229390
+      },
+      "writtenOn": "2017-08-29T15:37:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b65a4e0f_1b3d52d0",
+      "revId": "d4bec59eca1b79034c9f1621fb10624456ccbce9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6791cdc5_f0a7b609",
         "filename": "components/ui_devtools/views/ui_devtools_dom_agent.cc",
         "patchSetId": 17
@@ -101,6 +191,24 @@
       "revId": "d4bec59eca1b79034c9f1621fb10624456ccbce9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b81806ed_c187fe39",
+        "filename": "components/ui_devtools/views/ui_devtools_dom_agent.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 461,
+      "author": {
+        "id": 1229390
+      },
+      "writtenOn": "2017-08-29T15:37:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6791cdc5_f0a7b609",
+      "revId": "d4bec59eca1b79034c9f1621fb10624456ccbce9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "0272d0e9_2f4f4e7a",
+        "filename": "components/ui_devtools/views/ui_devtools_dom_agent.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1229390
+      },
+      "writtenOn": "2017-08-29T15:37:56Z",
+      "side": 1,
+      "message": "Thanks Sadrul. I updated the function comment and names.",
+      "parentUuid": "f6bb8581_2b9e19df",
+      "revId": "d4bec59eca1b79034c9f1621fb10624456ccbce9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cc88c930_e69e6326",
         "filename": "components/ui_devtools/views/ui_devtools_dom_agent.h",
         "patchSetId": 17
@@ -135,6 +261,24 @@
       "revId": "d4bec59eca1b79034c9f1621fb10624456ccbce9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c178228_04258143",
+        "filename": "components/ui_devtools/views/ui_devtools_dom_agent.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1229390
+      },
+      "writtenOn": "2017-08-29T15:37:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cc88c930_e69e6326",
+      "revId": "d4bec59eca1b79034c9f1621fb10624456ccbce9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -155,6 +299,24 @@
     },
     {
       "key": {
+        "uuid": "1b82577e_070dc8a4",
+        "filename": "components/ui_devtools/views/ui_devtools_overlay_agent.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1229390
+      },
+      "writtenOn": "2017-08-29T15:37:56Z",
+      "side": 1,
+      "message": "Done. I add comments and move the condition pinned_id_ \u003d\u003d element_id out and just above this line to make this clearer and reduce unnecessary re-highlight.",
+      "parentUuid": "b2c0ea54_18f9549b",
+      "revId": "d4bec59eca1b79034c9f1621fb10624456ccbce9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c7101ee9_7f5e08d5",
         "filename": "components/ui_devtools/views/ui_devtools_overlay_agent.cc",
         "patchSetId": 17
@@ -169,6 +331,24 @@
       "revId": "d4bec59eca1b79034c9f1621fb10624456ccbce9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b686916_190eb8ed",
+        "filename": "components/ui_devtools/views/ui_devtools_overlay_agent.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1229390
+      },
+      "writtenOn": "2017-08-29T15:37:56Z",
+      "side": 1,
+      "message": "Done, thanks! I added the comments.",
+      "parentUuid": "c7101ee9_7f5e08d5",
+      "revId": "d4bec59eca1b79034c9f1621fb10624456ccbce9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
