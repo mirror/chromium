@@ -2321,7 +2321,8 @@ LayoutSize LayoutObject::OffsetFromAncestorContainer(
     DCHECK(next_container);
     if (!next_container)
       break;
-    DCHECK(!curr_container->HasTransformRelatedProperty());
+    DCHECK(!curr_container->HasTransformRelatedProperty() ||
+           !curr_container->Style()->CanContainAbsolutePositionObjects());
     LayoutSize current_offset =
         curr_container->OffsetFromContainer(next_container);
     offset += current_offset;

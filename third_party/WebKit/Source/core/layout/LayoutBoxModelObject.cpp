@@ -1274,10 +1274,14 @@ const LayoutObject* LayoutBoxModelObject::PushMappingToContainer(
 
   LayoutSize adjustment_for_skipped_ancestor;
   if (skip_info.AncestorSkipped()) {
-    // There can't be a transform between paintInvalidationContainer and
-    // ancestorToStopAt, because transforms create containers, so it should be
-    // safe to just subtract the delta between the ancestor and
-    // ancestorToStopAt.
+    // In most cases there can't be a transform between
+    // paintInvalidationContainer and ancestorToStopAt, because transforms
+    // create containers, so it should be safe to just subtract the delta
+    // between the ancestor and ancestorToStopAt. This goes wrong when
+    // there is an absolute positioned child of a table cell or header and
+    // the parent has a transform. The table contents cannot be containers for
+    // the positioned object, despite the transform. Allow this to proceed
+    // because rotating table headers is done on the web.
     adjustment_for_skipped_ancestor =
         -ancestor_to_stop_at->OffsetFromAncestorContainer(container);
   }
