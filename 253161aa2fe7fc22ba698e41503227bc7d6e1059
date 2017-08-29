@@ -70,6 +70,24 @@
       "revId": "253161aa2fe7fc22ba698e41503227bc7d6e1059",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26465ab8_14138cd9",
+        "filename": "content/browser/webauth/cbor/cbor_writer.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-08-29T18:16:01Z",
+      "side": 1,
+      "message": "Agree that the mismatch is unfortunate. However, I\u0027d strongly prefer an API that is stateless and takes structured input. Do you have any ideas how we could satisfy both?",
+      "parentUuid": "a7ff2f20_8061cf2d",
+      "revId": "253161aa2fe7fc22ba698e41503227bc7d6e1059",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
