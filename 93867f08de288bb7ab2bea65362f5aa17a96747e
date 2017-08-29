@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "6b6d7dee_88f3c1ff",
+        "filename": "chrome/browser/resource_coordinator/tab_manager_stats_collector.cc",
+        "patchSetId": 32
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-08-29T19:35:06Z",
+      "side": 1,
+      "message": "\u003e Actually, the semantics are not changed. Both of them always mean no overlap.\n\u003e \n\u003e Currently, background tab opening is disabled (behind flag). So only TabManager.SessionRestore.SwitchToTab is recorded, which for sure excludes overlap. I will land the finch config cl/164193200 on or after m62 branch point, so when those 2 metrics start to be reported at the same time, the no-overlap assumption still holds with this CL.\n\u003e \n\u003e I updated the histogram descriptions to reflect this.\n\nOkay, I think I followed all that. :-)  It sounds like everything is okay.  Thanks for the clarified descriptions on these existing histograms.",
+      "parentUuid": "af4a2742_60dbc34d",
+      "range": {
+        "startLine": 89,
+        "startChar": 30,
+        "endLine": 89,
+        "endChar": 0
+      },
+      "revId": "93867f08de288bb7ab2bea65362f5aa17a96747e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b219558e_9a4f280c",
         "filename": "chrome/browser/resource_coordinator/tab_manager_stats_collector.cc",
         "patchSetId": 32
