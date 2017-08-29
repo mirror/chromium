@@ -250,8 +250,15 @@ NSString* const kOmniboxFadeAnimationKey = @"OmniboxFadeAnimation";
   _preEditStaticLabel.textColor = _displayedTextColor;
   _preEditStaticLabel.lineBreakMode = NSLineBreakByTruncatingHead;
 
-  NSDictionary* attributes =
-      @{NSBackgroundColorAttributeName : [self selectedTextBackgroundColor]};
+  NSMutableParagraphStyle* style = [[NSMutableParagraphStyle alloc] init];
+  // URLs have their text direction set to to LTR (avoids RTL characters
+  // making the URL render from right to left, as per RFC 3987 Section 4.1).
+  [style setBaseWritingDirection:NSWritingDirectionLeftToRight];
+  NSDictionary* attributes = @{
+    NSBackgroundColorAttributeName : [self selectedTextBackgroundColor],
+    NSParagraphStyleAttributeName : style
+  };
+
   NSAttributedString* preEditString =
       [[NSAttributedString alloc] initWithString:self.text
                                       attributes:attributes];
