@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b2aea69b_aa45eb8e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/photo_picker/PhotoPickerDialog.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-08-29T14:55:52Z",
+      "side": 1,
+      "message": "This listener is for the activity displaying the dialog correct? When the dialog is showing is the activity paused?",
+      "range": {
+        "startLine": 104,
+        "startChar": 21,
+        "endLine": 109,
+        "endChar": 63
+      },
+      "revId": "8d93f0bddd457ee2daceb98a48a0314352522088",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
