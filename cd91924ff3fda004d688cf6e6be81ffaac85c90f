@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "31c64fd0_8f599669",
+        "filename": "chrome/browser/resources/policy_base.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1111029
+      },
+      "writtenOn": "2017-08-29T20:45:08Z",
+      "side": 1,
+      "message": "Can we give that link an id and just querySelector it once?",
+      "revId": "cd91924ff3fda004d688cf6e6be81ffaac85c90f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6dc8ad4f_c8bdb405",
+        "filename": "chrome/browser/resources/policy_base.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1111029
+      },
+      "writtenOn": "2017-08-29T20:45:08Z",
+      "side": 1,
+      "message": "Previously \u0027Learn more\u0027 was translated, and now these strings are not...\n\nPlease confirm that we don\u0027t need to translate these.",
+      "revId": "cd91924ff3fda004d688cf6e6be81ffaac85c90f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
