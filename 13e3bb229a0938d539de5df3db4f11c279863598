@@ -1,0 +1,234 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f7a49876_cff87382",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-08-29T19:19:23Z",
+      "side": 1,
+      "message": "Nit: I\u0027m not a native speaker, but this continuous tense here looks a bit weird for me. I\u0027d use simple \"are recorded\".",
+      "range": {
+        "startLine": 10,
+        "startChar": 46,
+        "endLine": 10,
+        "endChar": 51
+      },
+      "revId": "13e3bb229a0938d539de5df3db4f11c279863598",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ec0b29c_d3df9a43",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-08-29T19:19:23Z",
+      "side": 1,
+      "message": "Ditto.",
+      "range": {
+        "startLine": 13,
+        "startChar": 57,
+        "endLine": 13,
+        "endChar": 62
+      },
+      "revId": "13e3bb229a0938d539de5df3db4f11c279863598",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc15d2fc_137ff3d8",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/MainPreferences.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-08-29T19:19:23Z",
+      "side": 1,
+      "message": "Can we store this flag insinde SignInPreference, please? Managing this flag inside MainPreferences isn\u0027t very good from encapsulation point of view.",
+      "range": {
+        "startLine": 54,
+        "startChar": 0,
+        "endLine": 54,
+        "endChar": 48
+      },
+      "revId": "13e3bb229a0938d539de5df3db4f11c279863598",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e232310d_d96881c2",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/MainPreferences.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 287,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-08-29T19:19:23Z",
+      "side": 1,
+      "message": "Can you use https://developer.android.com/reference/android/preference/PreferenceManager.OnActivityDestroyListener.html instead of manually overriding onDestroy() here? If it is not possible for some reason - please rename recordImpressionsTilDismissHistogramIfNotUsed to something like onActivityDestroy. I think that MainPreferences should not know about details of metrics used inside signInPreference.",
+      "range": {
+        "startLine": 287,
+        "startChar": 0,
+        "endLine": 287,
+        "endChar": 77
+      },
+      "revId": "13e3bb229a0938d539de5df3db4f11c279863598",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd05d65f_610d4ffe",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/SignInPreference.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-08-29T19:19:23Z",
+      "side": 1,
+      "message": "I think this shouldn\u0027t be here.",
+      "range": {
+        "startLine": 103,
+        "startChar": 0,
+        "endLine": 103,
+        "endChar": 36
+      },
+      "revId": "13e3bb229a0938d539de5df3db4f11c279863598",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "858c173a_cd70b04b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/signin/AccountSigninActivity.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-08-29T19:19:23Z",
+      "side": 1,
+      "message": "This flag won\u0027t be used for anything except new signin promos, right? recordAccountMetrics creates impression that this flag controls recording of some generic account metrics. However. from description of these histograms it looks like they can used for new signin promos only. I think that renaming this flag to something like isFromPersonalizedPromo can improve clarity.",
+      "range": {
+        "startLine": 71,
+        "startChar": 59,
+        "endLine": 71,
+        "endChar": 87
+      },
+      "revId": "13e3bb229a0938d539de5df3db4f11c279863598",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a4f988f_b8e08ffb",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/signin/AccountSigninActivity.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-08-29T19:19:23Z",
+      "side": 1,
+      "message": "This doesn\u0027t look right. s/INTENT_ACCOUNT_NAME/INTENT_RECORD_ACCOUNT_METRICS/",
+      "range": {
+        "startLine": 128,
+        "startChar": 24,
+        "endLine": 128,
+        "endChar": 43
+      },
+      "revId": "13e3bb229a0938d539de5df3db4f11c279863598",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43a2ef8e_7a96c391",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/signin/SigninPromoController.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-08-29T19:19:23Z",
+      "side": 1,
+      "message": "Thank you for detailed description! If I understand it correctly, it looks like the main reason for adding this shared preference is MainPreferences recreating all preferences in onResume(). I think we should try to change this behavior of MainPreferences first. I have a strong opinion that it is better option than adding shared preference to work around this issue.",
+      "range": {
+        "startLine": 46,
+        "startChar": 0,
+        "endLine": 62,
+        "endChar": 80
+      },
+      "revId": "13e3bb229a0938d539de5df3db4f11c279863598",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78d35d31_eaec9ec0",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/signin/SigninPromoController.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-08-29T19:19:23Z",
+      "side": 1,
+      "message": "IIUC, this assert works because of mImpressionCountName check before and the fact that mImpressionCountName is set for BOOKMARK_MANAGER an SETTINGS only. This makes this function a bit hard to understand. Can we please use the same pattern we use for mImpressionCountName, mImpressionUserActionName, mImpressionWithAccountUserActionName, etc.?",
+      "range": {
+        "startLine": 237,
+        "startChar": 0,
+        "endLine": 238,
+        "endChar": 62
+      },
+      "revId": "13e3bb229a0938d539de5df3db4f11c279863598",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff375d23_f786ef61",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/signin/SigninPromoController.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 323,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-08-29T19:19:23Z",
+      "side": 1,
+      "message": "Ditto.",
+      "range": {
+        "startLine": 321,
+        "startChar": 0,
+        "endLine": 323,
+        "endChar": 62
+      },
+      "revId": "13e3bb229a0938d539de5df3db4f11c279863598",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
