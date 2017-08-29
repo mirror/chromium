@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d16c0c69_a5b49f9a",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_block_layout_algorithm.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 306,
+      "author": {
+        "id": 1148182
+      },
+      "writtenOn": "2017-08-29T22:38:54Z",
+      "side": 1,
+      "message": "So this won\u0027t actually cover all the cases, it\u0027s possible for a child after the first child to be finished. E.g.\n\n\u003cdiv id\u003dmulticol\u003e\n  \u003cdiv\u003etext text text text\u003c/div\u003e\n  \u003cdiv id\u003dfloat-smaller-than-above\u003e\u003c/div\u003e\n\u003c/div\u003e\n\nI think it should be more correct if you iterate over all the BreakToken().ChildBreakTokens() adding the ones which have finished?\n\nHmm... except then the ChildBreakTokens will be out of order. (Which the NGBlockChildIterator relies on currently).\n\nAnother option would be to modify the NGBlockChildIterator to return \"finished\" nodes, and immediately add them to the fragment builder if the token is finished? (I think this would work better?)",
+      "range": {
+        "startLine": 305,
+        "startChar": 7,
+        "endLine": 306,
+        "endChar": 38
+      },
+      "revId": "3513e0a64b68c205b0e2668eff497cc46e4c4cf4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
