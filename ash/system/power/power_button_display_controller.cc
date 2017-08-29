@@ -145,16 +145,14 @@ void PowerButtonDisplayController::GetInitialBacklightsForcedOff() {
 void PowerButtonDisplayController::OnGotInitialBacklightsForcedOff(
     bool is_forced_off) {
   backlights_forced_off_ = is_forced_off;
-  UpdateTouchscreenStatus();
 }
 
 void PowerButtonDisplayController::UpdateTouchscreenStatus() {
   const bool enable_touchscreen =
       !backlights_forced_off_ && (screen_state_ != ScreenState::OFF_AUTO);
   ShellDelegate* delegate = Shell::Get()->shell_delegate();
-  delegate->SetTouchscreenEnabledInPrefs(enable_touchscreen,
-                                         true /* use_local_state */);
-  delegate->UpdateTouchscreenStatusFromPrefs();
+  delegate->SetTouchscreenStatus(enable_touchscreen, false /* use_user_pref */);
+  delegate->UpdateTouchscreenStatus();
 }
 
 }  // namespace ash

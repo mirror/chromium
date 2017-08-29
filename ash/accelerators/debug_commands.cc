@@ -142,10 +142,10 @@ void HandleToggleTouchpad() {
 void HandleToggleTouchscreen() {
   base::RecordAction(base::UserMetricsAction("Accel_Toggle_Touchscreen"));
   ShellDelegate* delegate = Shell::Get()->shell_delegate();
-  delegate->SetTouchscreenEnabledInPrefs(
-      !delegate->IsTouchscreenEnabledInPrefs(false /* use_local_state */),
-      false /* use_local_state */);
-  delegate->UpdateTouchscreenStatusFromPrefs();
+  delegate->SetTouchscreenStatus(
+      !delegate->GetTouchscreenStatus(true /* use_user_pref */),
+      true /* use_user_pref */);
+  delegate->UpdateTouchscreenStatus();
 }
 
 void HandleToggleTabletMode() {

@@ -113,18 +113,16 @@ class ASH_EXPORT ShellDelegate {
 
   virtual gfx::Image GetDeprecatedAcceleratorImage() const = 0;
 
-  // If |use_local_state| is true, returns the touchscreen status from local
-  // state, otherwise from user prefs.
-  virtual bool IsTouchscreenEnabledInPrefs(bool use_local_state) const = 0;
+  // If |use_user_pref|, returns the touchscreen status from user pref,
+  // otherwise from the member in chromeos::system::InputDeviceSettings.
+  virtual bool GetTouchscreenStatus(bool use_user_pref) const = 0;
 
-  // Sets the status of touchscreen to |enabled| in prefs. If |use_local_state|,
-  // pref is set in local state, otherwise in user prefs.
-  virtual void SetTouchscreenEnabledInPrefs(bool enabled,
-                                            bool use_local_state) = 0;
+  // If |use_user_pref|, sets the status of touchscreen to user pref, otherwise
+  // to the member in chromeos::system::InputDeviceSettings.
+  virtual void SetTouchscreenStatus(bool enabled, bool use_user_pref) = 0;
 
-  // Updates the enabled/disabled status of the touchscreen from prefs. Enabled
-  // if both local state and user prefs are enabled, otherwise disabled.
-  virtual void UpdateTouchscreenStatusFromPrefs() = 0;
+  // Updates the enabled/disabled status of touchscreen.
+  virtual void UpdateTouchscreenStatus() = 0;
 
   // Toggles the status of touchpad between enabled and disabled.
   virtual void ToggleTouchpad() {}
