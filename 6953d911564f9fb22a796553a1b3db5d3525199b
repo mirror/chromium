@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c0ef4334_2ba77761",
+        "filename": "components/navigation_interception/intercept_navigation_delegate.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1000825
+      },
+      "writtenOn": "2017-08-29T17:53:10Z",
+      "side": 1,
+      "message": "Should you add this logic to ResourceRequestInfo? otherwise, will all places that use HasUserGesture() need add this logic?",
+      "range": {
+        "startLine": 106,
+        "startChar": 30,
+        "endLine": 106,
+        "endChar": 31
+      },
+      "revId": "6953d911564f9fb22a796553a1b3db5d3525199b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
