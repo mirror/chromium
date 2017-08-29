@@ -37,7 +37,7 @@ BackwardsCharacterIteratorAlgorithm<Strategy>::
     : offset_(0),
       run_offset_(0),
       at_break_(true),
-      text_iterator_(start, end, behavior) {
+      text_iterator_(EphemeralRangeTemplate<Strategy>(start, end), behavior) {
   while (!AtEnd() && !text_iterator_.length())
     text_iterator_.Advance();
 }
