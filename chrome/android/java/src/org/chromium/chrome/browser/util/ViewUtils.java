@@ -4,9 +4,12 @@
 
 package org.chromium.chrome.browser.util;
 
+import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Region;
 import android.support.annotation.DrawableRes;
+import android.util.DisplayMetrics;
+import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -123,5 +126,19 @@ public class ViewUtils {
         int bottom = view.getPaddingBottom();
         view.setBackgroundResource(resource);
         view.setPadding(left, top, right, bottom);
+    }
+
+    /**
+     *  Converts a dp value to a px value.
+     */
+    public static int dpToPx(Context context, float dp) {
+        return dpToPx(context.getResources().getDisplayMetrics(), dp);
+    }
+
+    /**
+     *  Converts a dp value to a px value.
+     */
+    public static int dpToPx(DisplayMetrics metrics, float dp) {
+        return Math.round(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, metrics));
     }
 }
