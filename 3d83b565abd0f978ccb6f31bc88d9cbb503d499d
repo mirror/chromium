@@ -2,6 +2,52 @@
   "comments": [
     {
       "key": {
+        "uuid": "360f21ea_25b7f54d",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/input/SpellCheckPopupWindow.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1116193
+      },
+      "writtenOn": "2017-08-29T16:12:32Z",
+      "side": 1,
+      "message": "This should be moved to SuggestionsPopupWindow.",
+      "range": {
+        "startLine": 25,
+        "startChar": 31,
+        "endLine": 25,
+        "endChar": 45
+      },
+      "revId": "3d83b565abd0f978ccb6f31bc88d9cbb503d499d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d3c9a52_fd30bf38",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/input/SpellCheckPopupWindow.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1116193
+      },
+      "writtenOn": "2017-08-29T16:12:32Z",
+      "side": 1,
+      "message": "This should be moved to SuggestionsPopupWindow.",
+      "range": {
+        "startLine": 41,
+        "startChar": 31,
+        "endLine": 41,
+        "endChar": 40
+      },
+      "revId": "3d83b565abd0f978ccb6f31bc88d9cbb503d499d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b35f5437_61d04493",
         "filename": "content/public/android/java/src/org/chromium/content/browser/input/SpellCheckPopupWindow.java",
         "patchSetId": 8
@@ -18,6 +64,29 @@
         "startChar": 4,
         "endLine": 77,
         "endChar": 12
+      },
+      "revId": "3d83b565abd0f978ccb6f31bc88d9cbb503d499d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7854cf0e_228bfea0",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/input/SuggestionsPopupWindow.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1116193
+      },
+      "writtenOn": "2017-08-29T16:12:32Z",
+      "side": 1,
+      "message": "I realized that the only protected variable that you really need to keep is mTextSuggestionHost. The rest can be changed to private with the following change:\n\n1) Call abstract methods from common SuggestionsAdapter, such as:\nObject getSuggestionItem(int position)\nString getSuggestionText()\n\n2) Instead of setting mNumberOfSuggestionsToUse, how about keeping\nint getSuggestionCount()\n\n3) Have OnItemClick() call abstract method OnSuggestionClick(int position)\n\n4) Subclasses call enableAddToDictionary(boolean).\n\nWDYT?",
+      "range": {
+        "startLine": 42,
+        "startChar": 4,
+        "endLine": 42,
+        "endChar": 13
       },
       "revId": "3d83b565abd0f978ccb6f31bc88d9cbb503d499d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
