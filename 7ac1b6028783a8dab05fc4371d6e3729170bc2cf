@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c9ccd96e_3ceaf3cb",
+        "filename": "cc/resources/resource_provider.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 639,
+      "author": {
+        "id": 1115926
+      },
+      "writtenOn": "2017-08-29T00:04:07Z",
+      "side": 1,
+      "message": "This comment isn\u0027t quite correct anymore..",
+      "range": {
+        "startLine": 639,
+        "startChar": 52,
+        "endLine": 639,
+        "endChar": 59
+      },
+      "revId": "7ac1b6028783a8dab05fc4371d6e3729170bc2cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
