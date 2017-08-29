@@ -2,6 +2,92 @@
   "comments": [
     {
       "key": {
+        "uuid": "e17b8f4b_7e0f5817",
+        "filename": "components/exo/surface.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 683,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-08-29T12:34:36Z",
+      "side": 1,
+      "message": "Please rebase this function of ToT. Hard to see if it\u0027s correct otherwise.",
+      "revId": "2cd95798cc730d8ab709b2078b3a8821cf0f4de7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de572bd9_576a37ba",
+        "filename": "components/exo/surface.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 699,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-08-29T12:34:36Z",
+      "side": 1,
+      "message": "nit: s/Wayland uses DIP/Surface uses DIPs/ as we should not refer to wayland unless we\u0027re in wayland specific exo code. ie. the exo/wayland directory",
+      "range": {
+        "startLine": 699,
+        "startChar": 5,
+        "endLine": 699,
+        "endChar": 21
+      },
+      "revId": "2cd95798cc730d8ab709b2078b3a8821cf0f4de7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8adc32cd_eaea4509",
+        "filename": "components/exo/surface.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 739,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-08-29T12:34:36Z",
+      "side": 1,
+      "message": "is this still correct?",
+      "range": {
+        "startLine": 739,
+        "startChar": 6,
+        "endLine": 739,
+        "endChar": 30
+      },
+      "revId": "2cd95798cc730d8ab709b2078b3a8821cf0f4de7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "237097bf_96e9b28b",
+        "filename": "components/exo/surface.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 740,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-08-29T12:34:36Z",
+      "side": 1,
+      "message": "and what about this?",
+      "range": {
+        "startLine": 740,
+        "startChar": 6,
+        "endLine": 740,
+        "endChar": 17
+      },
+      "revId": "2cd95798cc730d8ab709b2078b3a8821cf0f4de7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cb68f7fd_aab213c3",
         "filename": "components/exo/surface_tree_host.cc",
         "patchSetId": 3
@@ -31,6 +117,47 @@
       "side": 1,
       "message": "When the window is not added to a tree, the window-\u003eGetHost()-\u003ecompositor() is null, and the  window-\u003elayer()-\u003edevice_scale_factor() is the default value (1.0). Using the default value will cause problems. That is why I am using the device_scale_factor from the nearest display (seems GetDisplayNearestWindow(window) always returns the primary display).\n\nMay I ask what\u0027s the benefit of using window-\u003elayer()-\u003edevice_scale_factor()?",
       "parentUuid": "cb68f7fd_aab213c3",
+      "revId": "2cd95798cc730d8ab709b2078b3a8821cf0f4de7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4e2c34d_d87588da",
+        "filename": "components/exo/surface_tree_host.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-08-29T12:34:36Z",
+      "side": 1,
+      "message": "I prefer window-\u003elayer()-\u003edevice_scale_factor as then we don\u0027t have to assert that display nearest window is the best way to determine the ideal scale factor.\n\nWhy do we need an accurate value for this when we\u0027re not in the tree? Seems like a separate issue if that\u0027s the case.",
+      "parentUuid": "b793ca81_f8963848",
+      "revId": "2cd95798cc730d8ab709b2078b3a8821cf0f4de7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fdb81623_530b03c0",
+        "filename": "components/exo/surface_tree_host.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 303,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-08-29T12:34:36Z",
+      "side": 1,
+      "message": "s/Wayland uses DIP/Surface uses DIPs/",
+      "range": {
+        "startLine": 303,
+        "startChar": 5,
+        "endLine": 303,
+        "endChar": 12
+      },
       "revId": "2cd95798cc730d8ab709b2078b3a8821cf0f4de7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
