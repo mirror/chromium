@@ -16,6 +16,29 @@
       "revId": "630debfdc4d9208459d9703063d3ef78d1f783d8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19a6d2cd_187e621d",
+        "filename": "content/common/sandbox_linux/sandbox_linux.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 435,
+      "author": {
+        "id": 1166470
+      },
+      "writtenOn": "2017-08-29T18:57:53Z",
+      "side": 1,
+      "message": "I see this limit needing to increase every several years, but the crash reports associated with this issue are rather nondescript.\n\nIs there any way to get Chrome to crash in a special location if it couldn\u0027t allocate memory because of the rlimit being too low (with a comment pointing back to this code)?",
+      "range": {
+        "startLine": 435,
+        "startChar": 53,
+        "endLine": 435,
+        "endChar": 56
+      },
+      "revId": "630debfdc4d9208459d9703063d3ef78d1f783d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
