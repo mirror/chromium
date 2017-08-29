@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c8ddb342_7f71d2e0",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/util/ViewUtils.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-08-29T16:27:27Z",
+      "side": 1,
+      "message": "You could be so nice as to explain \"dp\" and \"px\" here for a reader who doesn\u0027t know the terms.",
+      "range": {
+        "startLine": 132,
+        "startChar": 19,
+        "endLine": 132,
+        "endChar": 35
+      },
+      "revId": "7dd8a0abef33d17f2b4c37e9d04e8e6a0dcabb1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
