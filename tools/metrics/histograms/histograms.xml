@@ -83333,6 +83333,15 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="Translate.LanguageSettingsIsShown">
+  <owner>renjieliu@chromium.org</owner>
+  <summary>
+    Log everytime the language settings page is shown. This can be either user
+    visits chrome://settings/languages or user visits chrome://settings,
+    advanced then find the languages part.
+  </summary>
+</histogram>
+
 <histogram name="Translate.LanguageVerification"
     enum="TranslateLanguageVerification">
   <owner>yyushkina@chromium.org</owner>

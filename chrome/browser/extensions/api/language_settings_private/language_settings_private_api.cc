@@ -14,6 +14,7 @@
 
 #include "base/i18n/rtl.h"
 #include "base/memory/ptr_util.h"
+#include "base/metrics/histogram_macros.h"
 #include "base/stl_util.h"
 #include "base/strings/string16.h"
 #include "base/strings/string_split.h"
@@ -45,6 +46,10 @@
 #endif
 
 namespace extensions {
+
+// Name for uma histograms.
+const char kUMATranslateLanguageSettingsIsShown[] =
+    "Translate.LanguageSettingsIsShown";
 
 namespace language_settings_private = api::language_settings_private;
 
@@ -165,6 +170,8 @@ LanguageSettingsPrivateGetLanguageListFunction::
 
 ExtensionFunction::ResponseAction
 LanguageSettingsPrivateGetLanguageListFunction::Run() {
+  // UMA logging for language setting list is shown.
+  UMA_HISTOGRAM_BOOLEAN(kUMATranslateLanguageSettingsIsShown, true);
   // Collect the language codes from the supported accept-languages.
   const std::string app_locale = g_browser_process->GetApplicationLocale();
   std::vector<std::string> language_codes;
