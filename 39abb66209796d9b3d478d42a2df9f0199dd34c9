@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "78e5ef05_c28e9adc",
+        "filename": "content/common/service_worker/service_worker_container.mojom",
+        "patchSetId": 14
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-29T08:03:33Z",
+      "side": 1,
+      "message": "Suggest a blank // line here",
+      "revId": "39abb66209796d9b3d478d42a2df9f0199dd34c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
