@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fa7ad5f9_ec053b8f",
+        "filename": "mojo/public/cpp/bindings/README.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-29T17:15:22Z",
+      "side": 1,
+      "message": "I think this fits better right below 82/83 new. That is, right after showing how to include the file. Also, I\u0027m not sure what you mean by \u0027top-level BUILD.gn.\u0027 The important thing it whatever target is using the interface should depend upon the target.",
+      "range": {
+        "startLine": 50,
+        "startChar": 0,
+        "endLine": 50,
+        "endChar": 42
+      },
+      "revId": "1e2780c7bde5f2ef07cedec6d0f9bd46e02da1ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
