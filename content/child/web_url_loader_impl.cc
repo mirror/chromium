@@ -7,7 +7,6 @@
 #include <stdint.h>
 
 #include <algorithm>
-#include <memory>
 #include <string>
 #include <utility>
 #include <vector>
@@ -25,6 +24,7 @@
 #include "base/threading/thread_task_runner_handle.h"
 #include "base/time/time.h"
 #include "build/build_config.h"
+#include "content/child/child_process.h"
 #include "content/child/child_thread_impl.h"
 #include "content/child/ftp_directory_listing_response_delegate.h"
 #include "content/child/request_extra_data.h"
@@ -92,6 +92,20 @@ namespace content {
 namespace {
 
 using HeadersVector = ResourceDevToolsInfo::HeadersVector;
+
+class KeepAliveHandleWithRendererImpl {
+ public:
+  explicit KeepAliveHandleWithRendererImpl(mojom::KeepAliveHandlePtr ptr)
+      : keep_alive_handle_(std::move(ptr)) {
+    ChildProcess::current()->AddRefProcess();
+  }
+  ~KeepAliveHandleWithRendererImpl() {
+    ChildProcess::current()->ReleaseProcess();
+  }
+
+ private:
+  mojom::KeepAliveHandlePtr keep_alive_handle_;
+};
 
 // TODO(estark): Figure out a way for the embedder to provide the
 // security style for a resource. Ideally, the logic for assigning
@@ -370,7 +384,8 @@ class WebURLLoaderImpl::Context : public base::RefCounted<Context> {
   Context(WebURLLoaderImpl* loader,
           ResourceDispatcher* resource_dispatcher,
           scoped_refptr<base::SingleThreadTaskRunner> task_runner,
-          mojom::URLLoaderFactory* factory);
+          mojom::URLLoaderFactory* factory,
+          mojom::KeepAliveHandlePtr keep_alive_handle);
 
   WebURLLoaderClient* client() const { return client_; }
   void set_client(WebURLLoaderClient* client) { client_ = client; }
@@ -425,6 +440,7 @@ class WebURLLoaderImpl::Context : public base::RefCounted<Context> {
   std::unique_ptr<FtpDirectoryListingResponseDelegate> ftp_listing_delegate_;
   std::unique_ptr<StreamOverrideParameters> stream_override_;
   std::unique_ptr<SharedMemoryDataConsumerHandle::Writer> body_stream_writer_;
+  std::unique_ptr<KeepAliveHandleWithRendererImpl> keep_alive_handle_;
   enum DeferState {NOT_DEFERRING, SHOULD_DEFER, DEFERRED_DATA};
   DeferState defers_loading_;
   int request_id_;
@@ -467,13 +483,19 @@ WebURLLoaderImpl::Context::Context(
     WebURLLoaderImpl* loader,
     ResourceDispatcher* resource_dispatcher,
     scoped_refptr<base::SingleThreadTaskRunner> task_runner,
-    mojom::URLLoaderFactory* url_loader_factory)
+    mojom::URLLoaderFactory* url_loader_factory,
+    mojom::KeepAliveHandlePtr keep_alive_handle_ptr)
     : loader_(loader),
       use_stream_on_response_(false),
       report_raw_headers_(false),
       client_(NULL),
       resource_dispatcher_(resource_dispatcher),
       task_runner_(std::move(task_runner)),
+      keep_alive_handle_(
+          keep_alive_handle_ptr
+              ? base::MakeUnique<KeepAliveHandleWithRendererImpl>(
+                    std::move(keep_alive_handle_ptr))
+              : nullptr),
       defers_loading_(NOT_DEFERRING),
       request_id_(-1),
       url_loader_factory_(url_loader_factory) {
@@ -1065,10 +1087,21 @@ WebURLLoaderImpl::WebURLLoaderImpl(
     ResourceDispatcher* resource_dispatcher,
     scoped_refptr<base::SingleThreadTaskRunner> task_runner,
     mojom::URLLoaderFactory* url_loader_factory)
+    : WebURLLoaderImpl(resource_dispatcher,
+                       std::move(task_runner),
+                       url_loader_factory,
+                       nullptr) {}
+
+WebURLLoaderImpl::WebURLLoaderImpl(
+    ResourceDispatcher* resource_dispatcher,
+    scoped_refptr<base::SingleThreadTaskRunner> task_runner,
+    mojom::URLLoaderFactory* url_loader_factory,
+    mojom::KeepAliveHandlePtr keep_alive_handle)
     : context_(new Context(this,
                            resource_dispatcher,
                            std::move(task_runner),
-                           url_loader_factory)) {}
+                           url_loader_factory,
+                           std::move(keep_alive_handle))) {}
 
 WebURLLoaderImpl::~WebURLLoaderImpl() {
   Cancel();
