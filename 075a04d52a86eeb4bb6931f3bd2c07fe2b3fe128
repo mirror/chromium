@@ -19,6 +19,29 @@
     },
     {
       "key": {
+        "uuid": "0013e372_68b3b2cd",
+        "filename": "content/browser/dom_storage/dom_storage_area.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 347,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-08-29T23:05:39Z",
+      "side": 1,
+      "message": "can we also clear original_permanent_namespace_ids_?",
+      "range": {
+        "startLine": 347,
+        "startChar": 20,
+        "endLine": 347,
+        "endChar": 28
+      },
+      "revId": "075a04d52a86eeb4bb6931f3bd2c07fe2b3fe128",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c0dd421b_d5842e8b",
         "filename": "content/browser/dom_storage/dom_storage_area.cc",
         "patchSetId": 13
@@ -59,6 +82,74 @@
     },
     {
       "key": {
+        "uuid": "664aab10_3616b5ea",
+        "filename": "content/browser/dom_storage/dom_storage_area_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 302,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-08-29T23:05:39Z",
+      "side": 1,
+      "message": "i think this test can run on any OS even though we only use this mode on android",
+      "revId": "075a04d52a86eeb4bb6931f3bd2c07fe2b3fe128",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "704e8130_f4f418e9",
+        "filename": "content/browser/dom_storage/dom_storage_area_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 325,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-08-29T23:05:39Z",
+      "side": 1,
+      "message": "It would be good to also run this test on all os\u0027s too, so problems are noticed earlier and fixes can be verified faster locally. I think we can #ifdef the initial expectations for newly created areas and force things into keysonly mode on other os\u0027s.",
+      "revId": "075a04d52a86eeb4bb6931f3bd2c07fe2b3fe128",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29313ad0_793d805f",
+        "filename": "content/browser/dom_storage/dom_storage_namespace.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-08-29T23:05:39Z",
+      "side": 1,
+      "message": "not sure, maybe ifdef android this callsite?",
+      "revId": "075a04d52a86eeb4bb6931f3bd2c07fe2b3fe128",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98ab1663_fe097495",
+        "filename": "content/browser/dom_storage/dom_storage_namespace.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-08-29T23:05:39Z",
+      "side": 1,
+      "message": "I think you could probably use PostTaskAndReply here, you can get the COMMIT_SEQUENCE task runner with task_runner_-\u003eGetSequencedTaskRunner(COMMIT_SEQUENCE).",
+      "revId": "075a04d52a86eeb4bb6931f3bd2c07fe2b3fe128",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "be90f085_469809f0",
         "filename": "content/browser/dom_storage/session_storage_database.cc",
         "patchSetId": 13
@@ -87,6 +178,40 @@
       "writtenOn": "2017-08-29T21:50:18Z",
       "side": 1,
       "message": "order of the ids matters, does this iterate from the more recent ancestor to the oldest? just checking",
+      "revId": "075a04d52a86eeb4bb6931f3bd2c07fe2b3fe128",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4dcb49e0_a4849ddd",
+        "filename": "content/renderer/dom_storage/dom_storage_cached_area.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-08-29T23:05:39Z",
+      "side": 1,
+      "message": "values can be up to 10M in size, is it worth it to avoid making the copy to start with?",
+      "revId": "075a04d52a86eeb4bb6931f3bd2c07fe2b3fe128",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "380032b8_d7430eba",
+        "filename": "content/renderer/dom_storage/dom_storage_cached_area.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-08-29T23:05:39Z",
+      "side": 1,
+      "message": "ditto",
       "revId": "075a04d52a86eeb4bb6931f3bd2c07fe2b3fe128",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
