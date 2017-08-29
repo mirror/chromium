@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "735c9bd6_37ae7764",
+        "filename": "remoting/client/audio/audio_player_buffer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1163631
+      },
+      "writtenOn": "2017-08-29T17:54:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dc3ed45f_3d8b63d2",
+      "range": {
+        "startLine": 14,
+        "startChar": 10,
+        "endLine": 14,
+        "endChar": 28
+      },
+      "revId": "549a06251d3ac6bb2d281ec9cdce276bd31563fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fc854f55_759f25cf",
         "filename": "remoting/client/audio/audio_player_buffer.cc",
         "patchSetId": 3
@@ -71,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "a9eacf44_9c1ce6c2",
+        "filename": "remoting/client/audio/audio_player_buffer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1163631
+      },
+      "writtenOn": "2017-08-29T17:54:58Z",
+      "side": 1,
+      "message": "The host does not support anything except 48k. It is just the codec supports 44.1k. ¯\\_(ツ)_/¯\n\nI will go and make it dynamic like the other fields.",
+      "parentUuid": "44bcc7fa_e9afd1bf",
+      "range": {
+        "startLine": 49,
+        "startChar": 0,
+        "endLine": 49,
+        "endChar": 64
+      },
+      "revId": "549a06251d3ac6bb2d281ec9cdce276bd31563fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ab9a1765_9ca1fa44",
         "filename": "remoting/client/audio/audio_player_buffer.cc",
         "patchSetId": 3
@@ -91,6 +139,30 @@
       "revId": "549a06251d3ac6bb2d281ec9cdce276bd31563fa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c99bee5_d9a3e66e",
+        "filename": "remoting/client/audio/audio_player_buffer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1163631
+      },
+      "writtenOn": "2017-08-29T17:54:58Z",
+      "side": 1,
+      "message": "Ah this is the old integration point for the audio player for pepper. Sorry. I removed this now.",
+      "parentUuid": "ab9a1765_9ca1fa44",
+      "range": {
+        "startLine": 97,
+        "startChar": 0,
+        "endLine": 97,
+        "endChar": 58
+      },
+      "revId": "549a06251d3ac6bb2d281ec9cdce276bd31563fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +189,30 @@
     },
     {
       "key": {
+        "uuid": "908c6cdd_d990489b",
+        "filename": "remoting/client/audio/audio_player_buffer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1163631
+      },
+      "writtenOn": "2017-08-29T17:54:58Z",
+      "side": 1,
+      "message": "Hm ok I will try it out, it might help the cleaning up after calling .clear as well.\n\nUpdate: Ok that worked out fine. Thanks!",
+      "parentUuid": "2c436274_4f7b12e5",
+      "range": {
+        "startLine": 195,
+        "startChar": 0,
+        "endLine": 195,
+        "endChar": 38
+      },
+      "revId": "549a06251d3ac6bb2d281ec9cdce276bd31563fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0b7b07d7_bf4601ce",
         "filename": "remoting/client/audio/audio_player_buffer.h",
         "patchSetId": 3
@@ -137,6 +233,30 @@
       "revId": "549a06251d3ac6bb2d281ec9cdce276bd31563fa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "561cc69f_5b8d7595",
+        "filename": "remoting/client/audio/audio_player_buffer.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1163631
+      },
+      "writtenOn": "2017-08-29T17:54:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0b7b07d7_bf4601ce",
+      "range": {
+        "startLine": 23,
+        "startChar": 0,
+        "endLine": 23,
+        "endChar": 26
+      },
+      "revId": "549a06251d3ac6bb2d281ec9cdce276bd31563fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -163,6 +283,30 @@
     },
     {
       "key": {
+        "uuid": "eec6fe87_2f031a34",
+        "filename": "remoting/client/audio/audio_player_buffer.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1163631
+      },
+      "writtenOn": "2017-08-29T17:54:58Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "14fb1738_8c3a2325",
+      "range": {
+        "startLine": 30,
+        "startChar": 11,
+        "endLine": 30,
+        "endChar": 28
+      },
+      "revId": "549a06251d3ac6bb2d281ec9cdce276bd31563fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "22383a1a_800c78dd",
         "filename": "remoting/client/audio/audio_player_buffer.h",
         "patchSetId": 3
@@ -186,6 +330,30 @@
     },
     {
       "key": {
+        "uuid": "469c5d5c_0db2886e",
+        "filename": "remoting/client/audio/audio_player_buffer.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1163631
+      },
+      "writtenOn": "2017-08-29T17:54:58Z",
+      "side": 1,
+      "message": "It is called ResetQueue, fixed.",
+      "parentUuid": "22383a1a_800c78dd",
+      "range": {
+        "startLine": 52,
+        "startChar": 0,
+        "endLine": 52,
+        "endChar": 15
+      },
+      "revId": "549a06251d3ac6bb2d281ec9cdce276bd31563fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b3822388_94cf70c8",
         "filename": "remoting/client/audio/audio_player_buffer.h",
         "patchSetId": 3
@@ -197,6 +365,30 @@
       "writtenOn": "2017-08-23T21:39:08Z",
       "side": 1,
       "message": "Why using list instead of deque? Looks like it has a generally lower performance for queue operations...\n\nhttps://baptiste-wicht.com/posts/2012/12/cpp-benchmark-vector-list-deque.html\n\nAlso why using raw pointer instead of std::unique_ptr? Note that .front() should still work because it returns a reference of the unique_ptr.",
+      "range": {
+        "startLine": 83,
+        "startChar": 15,
+        "endLine": 83,
+        "endChar": 19
+      },
+      "revId": "549a06251d3ac6bb2d281ec9cdce276bd31563fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6eb1c281_b97aedd2",
+        "filename": "remoting/client/audio/audio_player_buffer.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1163631
+      },
+      "writtenOn": "2017-08-29T17:54:58Z",
+      "side": 1,
+      "message": "There is no benefit for deqeue vs list for the number of packets that will be queued. The link you show starts at 100k, and we are talking about maybe 100 packets. Lists are used else where in the codebase so I would rather keep it a list.\n\nI think a pointer to a struct seems like an ok choice. Is there really benefit for using a unique_ptr here? Seems like it might add complexity where it is not needed.",
+      "parentUuid": "b3822388_94cf70c8",
       "range": {
         "startLine": 83,
         "startChar": 15,
@@ -232,6 +424,30 @@
     },
     {
       "key": {
+        "uuid": "7bc3344a_056da724",
+        "filename": "remoting/client/audio/audio_player_buffer_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1163631
+      },
+      "writtenOn": "2017-08-29T17:54:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ef608972_a4f85195",
+      "range": {
+        "startLine": 32,
+        "startChar": 0,
+        "endLine": 32,
+        "endChar": 79
+      },
+      "revId": "549a06251d3ac6bb2d281ec9cdce276bd31563fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c53dbee8_375b5404",
         "filename": "remoting/client/audio/audio_player_buffer_unittest.cc",
         "patchSetId": 3
@@ -252,6 +468,30 @@
       "revId": "549a06251d3ac6bb2d281ec9cdce276bd31563fa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d99ab2e8_f12c6a55",
+        "filename": "remoting/client/audio/audio_player_buffer_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1163631
+      },
+      "writtenOn": "2017-08-29T17:54:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c53dbee8_375b5404",
+      "range": {
+        "startLine": 112,
+        "startChar": 0,
+        "endLine": 112,
+        "endChar": 63
+      },
+      "revId": "549a06251d3ac6bb2d281ec9cdce276bd31563fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -278,6 +518,30 @@
     },
     {
       "key": {
+        "uuid": "59c3982a_99827ef2",
+        "filename": "remoting/client/audio/audio_player_buffer_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1163631
+      },
+      "writtenOn": "2017-08-29T17:54:58Z",
+      "side": 1,
+      "message": "No. The host does not support 44.1k",
+      "parentUuid": "20fe200a_723dffde",
+      "range": {
+        "startLine": 129,
+        "startChar": 29,
+        "endLine": 129,
+        "endChar": 46
+      },
+      "revId": "549a06251d3ac6bb2d281ec9cdce276bd31563fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d204f2a1_4ff5da2c",
         "filename": "remoting/client/audio/audio_stream_consumer.cc",
         "patchSetId": 3
@@ -298,6 +562,30 @@
       "revId": "549a06251d3ac6bb2d281ec9cdce276bd31563fa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf46f2cb_ddb76960",
+        "filename": "remoting/client/audio/audio_stream_consumer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1163631
+      },
+      "writtenOn": "2017-08-29T17:54:58Z",
+      "side": 1,
+      "message": "I am not sure what is intended for the callback from ProcessAudioPacket. \n\nIt was left un-documented: https://cs.chromium.org/chromium/src/remoting/protocol/audio_stub.h?q\u003dProcessAudioPacket\u0026sq\u003dpackage:chromium\u0026dr\u003dCSs\u0026l\u003d23",
+      "parentUuid": "d204f2a1_4ff5da2c",
+      "range": {
+        "startLine": 13,
+        "startChar": 0,
+        "endLine": 13,
+        "endChar": 13
+      },
+      "revId": "549a06251d3ac6bb2d281ec9cdce276bd31563fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
