@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c141a431_2642834e",
+        "filename": "ios/clean/chrome/browser/ui/history_popup/history_popup_coordinator.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-08-29T16:45:33Z",
+      "side": 1,
+      "message": "I don\u0027t think this is really necessary.  We have several ExposedForTesting categories that redeclare existing API without reimplementing it in a separate category implementation.  This is essentially overriding the getter created by the @synthesize above.",
+      "revId": "02ab5624fd93e512f1b5e102f0bdcd928dfea91e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b28d96e9_42e1ee08",
+        "filename": "ios/clean/chrome/browser/ui/history_popup/history_popup_coordinator_private.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-08-29T16:45:33Z",
+      "side": 1,
+      "message": "I don\u0027t think this separate category is strictly necessary, as we have many tests for ObjC classes that simply declare an ExposedForTesting category at the top of the file to expose private API.  In history_popup_coordinator_unittest.mm just add:\n\n@interface HistoryPopupCoordinator (ExposedForTesting)\n@property(nonatomic, strong) TabHistoryPopupController* tabHistoryPopupController;\n@end\n\nThere is *some* merit to keeping this category around though.  If you do, you should move it to the unit_tests target and rename it to history_popup_coordinator+testing.h (or ExposedForTesting, if you choose to change the category name).",
+      "revId": "02ab5624fd93e512f1b5e102f0bdcd928dfea91e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ae1e75d_36926129",
+        "filename": "ios/clean/chrome/browser/ui/toolbar/toolbar_button.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-08-29T16:45:33Z",
+      "side": 1,
+      "message": "Add comments for these properties.\n\nhttp://go/objc-style#Declaration_Comments",
+      "revId": "02ab5624fd93e512f1b5e102f0bdcd928dfea91e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ba02b87_6de38c29",
+        "filename": "ios/clean/chrome/browser/ui/toolbar/toolbar_coordinator.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-08-29T16:45:33Z",
+      "side": 1,
+      "message": "I\u0027m wondering if this is the best coordinator to handle TabHistoryPopupCommands.  What\u0027s our plan for the NTP\u0027s toolbar?  Would the boxed NTP  coordinator need to also handle TabHistoryPopupCommands?  Maybe we should let the parent coordinator handle these commands.",
+      "revId": "02ab5624fd93e512f1b5e102f0bdcd928dfea91e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
