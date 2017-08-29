@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "eb6b7542_42da267f",
+        "filename": "build/config/compiler/BUILD.gn",
+        "patchSetId": 5
+      },
+      "lineNbr": 1846,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-08-29T21:29:12Z",
+      "side": 1,
+      "message": "nit: +\u003d",
+      "revId": "082d794b694ee0ed887ddd0948f0555357dbd3db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88e4da19_fd705b34",
+        "filename": "tools/mb/mb_config.pyl",
+        "patchSetId": 5
+      },
+      "lineNbr": 1746,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-08-29T21:29:12Z",
+      "side": 1,
+      "message": "We should only be using strip_debug_info on android bots.",
+      "revId": "082d794b694ee0ed887ddd0948f0555357dbd3db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
