@@ -22,6 +22,7 @@
 #include "chrome/browser/bookmarks/bookmark_stats.h"
 #include "chrome/browser/command_updater.h"
 #include "chrome/browser/extensions/api/omnibox/omnibox_api.h"
+#include "chrome/browser/favicon/favicon_service_factory.h"
 #include "chrome/browser/net/predictor.h"
 #include "chrome/browser/predictors/autocomplete_action_predictor.h"
 #include "chrome/browser/predictors/autocomplete_action_predictor_factory.h"
@@ -40,6 +41,8 @@
 #include "chrome/common/search/instant_types.h"
 #include "chrome/common/url_constants.h"
 #include "components/favicon/content/content_favicon_driver.h"
+#include "components/favicon/core/favicon_service.h"
+#include "components/favicon_base/favicon_types.h"
 #include "components/omnibox/browser/autocomplete_match.h"
 #include "components/omnibox/browser/autocomplete_result.h"
 #include "components/omnibox/browser/search_provider.h"
@@ -119,6 +122,12 @@ void AnswerImageObserver::OnImageChanged(
   callback_.Run(image);
 }
 
+void OnFaviconFetched(
+    const base::Callback<void(const gfx::Image& favicon)>& callback,
+    const favicon_base::FaviconImageResult& result) {
+  callback.Run(result.image);
+}
+
 }  // namespace
 
 ChromeOmniboxClient::ChromeOmniboxClient(OmniboxEditController* controller,
@@ -126,13 +135,13 @@ ChromeOmniboxClient::ChromeOmniboxClient(OmniboxEditController* controller,
     : controller_(static_cast<ChromeOmniboxEditController*>(controller)),
       profile_(profile),
       scheme_classifier_(profile),
-      request_id_(BitmapFetcherService::REQUEST_ID_INVALID) {}
+      answer_image_request_id_(BitmapFetcherService::REQUEST_ID_INVALID) {}
 
 ChromeOmniboxClient::~ChromeOmniboxClient() {
   BitmapFetcherService* image_service =
       BitmapFetcherServiceFactory::GetForBrowserContext(profile_);
   if (image_service)
-    image_service->CancelRequest(request_id_);
+    image_service->CancelRequest(answer_image_request_id_);
 }
 
 std::unique_ptr<AutocompleteProviderClient>
@@ -275,7 +284,7 @@ void ChromeOmniboxClient::OnFocusChanged(
 void ChromeOmniboxClient::OnResultChanged(
     const AutocompleteResult& result,
     bool default_match_changed,
-    const base::Callback<void(const SkBitmap& bitmap)>& on_bitmap_fetched) {
+    const BitmapFetchedCallback& on_bitmap_fetched) {
   if (search::IsInstantExtendedAPIEnabled() &&
       (default_match_changed && result.default_match() != result.end())) {
     InstantSuggestion prefetch_suggestion;
@@ -298,7 +307,7 @@ void ChromeOmniboxClient::OnResultChanged(
     BitmapFetcherService* image_service =
         BitmapFetcherServiceFactory::GetForBrowserContext(profile_);
     if (image_service) {
-      image_service->CancelRequest(request_id_);
+      image_service->CancelRequest(answer_image_request_id_);
 
       // TODO(jdonnelly, rhalavati): Create a helper function with Callback to
       // create annotation and pass it to image_service, merging this annotation
@@ -340,7 +349,7 @@ void ChromeOmniboxClient::OnResultChanged(
               }
             })");
 
-      request_id_ = image_service->RequestImage(
+      answer_image_request_id_ = image_service->RequestImage(
           match->answer->second_line().image_url(),
           new AnswerImageObserver(
               base::Bind(&ChromeOmniboxClient::OnBitmapFetched,
@@ -348,6 +357,20 @@ void ChromeOmniboxClient::OnResultChanged(
           traffic_annotation);
     }
   }
+}
+
+void ChromeOmniboxClient::GetFaviconForPageUrl(
+    base::CancelableTaskTracker* tracker,
+    const GURL& page_url,
+    const base::Callback<void(const gfx::Image& favicon)>& callback) {
+  favicon::FaviconService* favicon_service =
+      FaviconServiceFactory::GetForProfile(profile_,
+                                           ServiceAccessType::EXPLICIT_ACCESS);
+  if (!favicon_service)
+    return;
+
+  favicon_service->GetFaviconImageForPageURL(
+      page_url, base::Bind(&OnFaviconFetched, callback), tracker);
 }
 
 void ChromeOmniboxClient::OnCurrentMatchChanged(
@@ -523,6 +546,6 @@ void ChromeOmniboxClient::SetSuggestionToPrefetch(
 
 void ChromeOmniboxClient::OnBitmapFetched(const BitmapFetchedCallback& callback,
                                           const SkBitmap& bitmap) {
-  request_id_ = BitmapFetcherService::REQUEST_ID_INVALID;
+  answer_image_request_id_ = BitmapFetcherService::REQUEST_ID_INVALID;
   callback.Run(bitmap);
 }

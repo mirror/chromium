@@ -55,8 +55,11 @@ class ChromeOmniboxClient : public OmniboxClient {
                       OmniboxFocusChangeReason reason) override;
   void OnResultChanged(const AutocompleteResult& result,
                        bool default_match_changed,
-                       const base::Callback<void(const SkBitmap& bitmap)>&
-                           on_bitmap_fetched) override;
+                       const BitmapFetchedCallback& on_bitmap_fetched) override;
+  void GetFaviconForPageUrl(
+      base::CancelableTaskTracker* tracker,
+      const GURL& page_url,
+      const base::Callback<void(const gfx::Image& favicon)>& callback) override;
   void OnCurrentMatchChanged(const AutocompleteMatch& match) override;
   void OnTextChanged(const AutocompleteMatch& current_match,
                      bool user_input_in_progress,
@@ -86,7 +89,7 @@ class ChromeOmniboxClient : public OmniboxClient {
   ChromeOmniboxEditController* controller_;
   Profile* profile_;
   ChromeAutocompleteSchemeClassifier scheme_classifier_;
-  BitmapFetcherService::RequestId request_id_;
+  BitmapFetcherService::RequestId answer_image_request_id_;
 
   DISALLOW_COPY_AND_ASSIGN(ChromeOmniboxClient);
 };
