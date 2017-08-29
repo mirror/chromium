@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "9269ff4b_8a3dd3c5",
+        "filename": "third_party/s2cellid/src/s2/s2cellid.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1176036
+      },
+      "writtenOn": "2017-08-29T00:58:22Z",
+      "side": 1,
+      "message": "sorry I don\u0027t have enough knowledge about the internal implementations, since the code is copied from https://cs.corp.google.com/piper///depot/google3/util/geometry/s2cellid.cc?q\u003ds2cellid\u0026sq\u003dpackage:piper+file://depot/google3+-file:google3/experimental\u0026dr\u003dCSs\u0026l\u003d101",
+      "parentUuid": "b85d624d_6c1ccd21",
+      "revId": "417e9eb156b38ed8f4f7446074cfbe541eaff226",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3510ca37_2eded216",
         "filename": "third_party/s2cellid/src/s2/s2cellid.cc",
         "patchSetId": 5
@@ -33,6 +51,24 @@
       "revId": "417e9eb156b38ed8f4f7446074cfbe541eaff226",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ff12d30_d9623cc0",
+        "filename": "third_party/s2cellid/src/s2/s2cellid.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 310,
+      "author": {
+        "id": 1176036
+      },
+      "writtenOn": "2017-08-29T00:58:22Z",
+      "side": 1,
+      "message": "same here https://cs.corp.google.com/piper///depot/google3/util/geometry/s2cellid.cc?q\u003ds2cellid\u0026sq\u003dpackage:piper+file://depot/google3+-file:google3/experimental\u0026dr\u003dCSs\u0026l\u003d310",
+      "parentUuid": "3510ca37_2eded216",
+      "revId": "417e9eb156b38ed8f4f7446074cfbe541eaff226",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
