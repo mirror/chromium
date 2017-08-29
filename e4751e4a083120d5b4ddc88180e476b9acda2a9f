@@ -129,6 +129,30 @@
       "revId": "e4751e4a083120d5b4ddc88180e476b9acda2a9f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a68ea1af_775705db",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheet.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1618,
+      "author": {
+        "id": 1145120
+      },
+      "writtenOn": "2017-08-29T19:24:13Z",
+      "side": 1,
+      "message": "ok, sounds good. We can fix this in M63. We also don\u0027t have the finch config checked into google3 for CHROME_HOME_EXPAND_FEATURE yet. I think we should delay that to accommodate changes for this new feature together.",
+      "parentUuid": "0a185cd0_873dd778",
+      "range": {
+        "startLine": 1618,
+        "startChar": 0,
+        "endLine": 1618,
+        "endChar": 98
+      },
+      "revId": "e4751e4a083120d5b4ddc88180e476b9acda2a9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
