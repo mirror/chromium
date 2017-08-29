@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ac64fbe1_aee0186f",
+        "filename": "chrome/browser/resources/settings/people_page/people_page.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-08-29T21:16:40Z",
+      "side": 1,
+      "message": "This was wrapping correctly by chance. This doesn\u0027t change how the text wraps, but it more formally says there should be some space (so translations should/may wrap better).",
+      "revId": "4bf89bc1e0547cc0a4d0148b779b79dd1086764f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c788781f_2a0408f6",
+        "filename": "chrome/browser/resources/settings/people_page/people_page.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-08-29T21:16:40Z",
+      "side": 1,
+      "message": "This also changes the value to 60px, which will actually, \"line up with the checkbox text\".",
+      "revId": "4bf89bc1e0547cc0a4d0148b779b79dd1086764f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
