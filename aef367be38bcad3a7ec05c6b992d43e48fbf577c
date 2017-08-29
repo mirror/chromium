@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c1f3eb64_c0de24bd",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1177549
+      },
+      "writtenOn": "2017-08-29T17:15:14Z",
+      "side": 1,
+      "message": "nit: buikd-\u003ebuild",
+      "range": {
+        "startLine": 9,
+        "startChar": 59,
+        "endLine": 9,
+        "endChar": 65
+      },
+      "revId": "aef367be38bcad3a7ec05c6b992d43e48fbf577c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c57a742_c3cc7ef7",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 23574,
+      "author": {
+        "id": 1177549
+      },
+      "writtenOn": "2017-08-29T17:15:14Z",
+      "side": 1,
+      "message": "stupid Q: where does this value come from?",
+      "range": {
+        "startLine": 23574,
+        "startChar": 15,
+        "endLine": 23574,
+        "endChar": 22
+      },
+      "revId": "aef367be38bcad3a7ec05c6b992d43e48fbf577c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
