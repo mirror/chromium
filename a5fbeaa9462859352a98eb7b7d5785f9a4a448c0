@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "14f5f3ac_3a19a1cb",
+        "filename": "components/drive/drive.proto",
+        "patchSetId": 1
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1118346
+      },
+      "writtenOn": "2017-08-29T10:43:47Z",
+      "side": 1,
+      "message": "I\u0027ll add DEPRECATED_ prefix. Note that we should avoid removing fields so that ID conflicts are detected on build time.",
+      "parentUuid": "0f9c0b59_ebf57dbe",
+      "revId": "a5fbeaa9462859352a98eb7b7d5785f9a4a448c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "51198aa1_b3a8e720",
         "filename": "components/drive/resource_metadata_storage.cc",
         "patchSetId": 1
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "15158e7a_3d688ede",
+        "filename": "components/drive/resource_metadata_storage.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1118346
+      },
+      "writtenOn": "2017-08-29T10:43:47Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "51198aa1_b3a8e720",
+      "range": {
+        "startLine": 194,
+        "startChar": 30,
+        "endLine": 194,
+        "endChar": 34
+      },
+      "revId": "a5fbeaa9462859352a98eb7b7d5785f9a4a448c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "01c8f5d9_60198e90",
         "filename": "components/drive/resource_metadata_storage.cc",
         "patchSetId": 1
@@ -56,6 +98,24 @@
       "revId": "a5fbeaa9462859352a98eb7b7d5785f9a4a448c0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f614144_33260048",
+        "filename": "components/drive/resource_metadata_storage.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1118346
+      },
+      "writtenOn": "2017-08-29T10:43:47Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "01c8f5d9_60198e90",
+      "revId": "a5fbeaa9462859352a98eb7b7d5785f9a4a448c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -82,6 +142,30 @@
     },
     {
       "key": {
+        "uuid": "4a84879c_69a53244",
+        "filename": "components/drive/resource_metadata_storage.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1118346
+      },
+      "writtenOn": "2017-08-29T10:43:47Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "0c32203c_8a111b0b",
+      "range": {
+        "startLine": 198,
+        "startChar": 5,
+        "endLine": 198,
+        "endChar": 29
+      },
+      "revId": "a5fbeaa9462859352a98eb7b7d5785f9a4a448c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "77404cb8_5e84449f",
         "filename": "components/drive/resource_metadata_storage.cc",
         "patchSetId": 1
@@ -99,6 +183,24 @@
     },
     {
       "key": {
+        "uuid": "ceaa6b6d_453751ce",
+        "filename": "components/drive/resource_metadata_storage.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 394,
+      "author": {
+        "id": 1118346
+      },
+      "writtenOn": "2017-08-29T10:43:47Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "77404cb8_5e84449f",
+      "revId": "a5fbeaa9462859352a98eb7b7d5785f9a4a448c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c3c487f0_6636e463",
         "filename": "components/drive/resource_metadata_storage.cc",
         "patchSetId": 1
@@ -113,6 +215,24 @@
       "revId": "a5fbeaa9462859352a98eb7b7d5785f9a4a448c0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f630b52_6b31eef0",
+        "filename": "components/drive/resource_metadata_storage.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 398,
+      "author": {
+        "id": 1118346
+      },
+      "writtenOn": "2017-08-29T10:43:47Z",
+      "side": 1,
+      "message": "Chatted offline and agreed to minimize the diff.",
+      "parentUuid": "c3c487f0_6636e463",
+      "revId": "a5fbeaa9462859352a98eb7b7d5785f9a4a448c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -139,6 +259,30 @@
     },
     {
       "key": {
+        "uuid": "31749796_0f611304",
+        "filename": "components/drive/resource_metadata_storage.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 404,
+      "author": {
+        "id": 1118346
+      },
+      "writtenOn": "2017-08-29T10:43:47Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "8d9fc8ce_ec03239b",
+      "range": {
+        "startLine": 404,
+        "startChar": 15,
+        "endLine": 404,
+        "endChar": 38
+      },
+      "revId": "a5fbeaa9462859352a98eb7b7d5785f9a4a448c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d0349ae8_2449189c",
         "filename": "components/drive/resource_metadata_storage_unittest.cc",
         "patchSetId": 1
@@ -153,6 +297,24 @@
       "revId": "a5fbeaa9462859352a98eb7b7d5785f9a4a448c0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "077e702d_5e3e7d51",
+        "filename": "components/drive/resource_metadata_storage_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 306,
+      "author": {
+        "id": 1118346
+      },
+      "writtenOn": "2017-08-29T10:43:47Z",
+      "side": 1,
+      "message": "I don\u0027t think naming test cases with milestone is a good idea because which milestone a change lands can differ after it lands on ToT, and also two DB schema changes can happen in one milestone. IIUC there is no reason to avoid rename existing tests.",
+      "parentUuid": "d0349ae8_2449189c",
+      "revId": "a5fbeaa9462859352a98eb7b7d5785f9a4a448c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
