@@ -1,0 +1,146 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a0882d1e_5ec875f5",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/compositor/CompositorView.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 281,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-08-29T18:12:02Z",
+      "side": 1,
+      "message": "\u003e Added a comment to clarify the fact that it is not an override. See if that helps.\n\nCan you just change it to a different name instead. setSize? resize? wasResized?",
+      "range": {
+        "startLine": 281,
+        "startChar": 9,
+        "endLine": 281,
+        "endChar": 22
+      },
+      "revId": "8dd06660b61ece63231bdbfe9afb14f5d7e7345b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff386894_5ec3d582",
+        "filename": "ui/android/view_android.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-08-29T18:12:02Z",
+      "side": 1,
+      "message": "\u003e For the same reason for backing size above. Zero size is never set by actual flow, it means the size is not initialized. This will keep a child added to a view tree from getting spurious zero-size event that were not being sent before the patch.\n\u003e \n\u003e Now that I see it again, width !\u003d 0 \"\u0026\u0026\" height !\u003d 0 is correct.\n\nAdd a comment too then",
+      "revId": "8dd06660b61ece63231bdbfe9afb14f5d7e7345b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43aed5cc_356b868a",
+        "filename": "ui/android/view_android.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 360,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-08-29T18:12:02Z",
+      "side": 1,
+      "message": "So now match_parent is initialized to true, and there is no way to change that anymore? Then this call will always be ignored?",
+      "revId": "8dd06660b61ece63231bdbfe9afb14f5d7e7345b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ad594bd_aa798d87",
+        "filename": "ui/android/view_android.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 398,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-08-29T18:12:02Z",
+      "side": 1,
+      "message": "\u003e From what I see, physical backing size is set to the initial view size. View size itself can vary over time (due to soft keyboard, browser control) but physical backing size remains the same. I\u0027m keeping the behavior by having physical size affecting view size only. Is it fine to do the other way around too?\n\nI still think that should be an upper layer concern.\n\nIf something needs to change both, then it should just call both setters.",
+      "revId": "8dd06660b61ece63231bdbfe9afb14f5d7e7345b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2211cee3_f150da5d",
+        "filename": "ui/android/view_android.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-08-29T18:12:02Z",
+      "side": 1,
+      "message": "does it need to be public?",
+      "revId": "8dd06660b61ece63231bdbfe9afb14f5d7e7345b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f7562ad_1ddea437",
+        "filename": "ui/android/view_android_unittests.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-08-29T18:12:02Z",
+      "side": 1,
+      "message": "explicit",
+      "revId": "8dd06660b61ece63231bdbfe9afb14f5d7e7345b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8325a688_3bedb347",
+        "filename": "ui/android/view_android_unittests.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-08-29T18:12:02Z",
+      "side": 1,
+      "message": "nit: you can inline initialize these, c++11 is great :)",
+      "revId": "8dd06660b61ece63231bdbfe9afb14f5d7e7345b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ea03974_90e446fd",
+        "filename": "ui/android/view_android_unittests.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-08-29T18:12:02Z",
+      "side": 1,
+      "message": "group override methods separately from non-override methods",
+      "revId": "8dd06660b61ece63231bdbfe9afb14f5d7e7345b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
