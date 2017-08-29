@@ -16,14 +16,20 @@
     {
       "name": "LayoutBlockFlow DIV",
       "position": [8, 8],
-      "transformOrigin": [392, 0],
-      "contentsOpaque": true
+      "contentsOpaque": true,
+      "transformContext": 1
     },
     {
       "name": "LayoutBlockFlow (relative positioned) DIV",
       "position": [8, 8],
       "contentsOpaque": true,
       "drawsContent": true
+    }
+  ],
+  "transforms": [
+    {
+      "id": 1,
+      "transformOrigin": [392, 0]
     }
   ],
   "objectPaintInvalidations": [

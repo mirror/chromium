@@ -15,7 +15,6 @@
     {
       "name": "LayoutBlockFlow DIV class='accelerated'",
       "position": [-12, -12],
-      "transformOrigin": [112, 112],
       "bounds": [212, 257],
       "drawsContent": true,
       "paintInvalidations": [
@@ -24,7 +23,14 @@
           "rect": [-1, -1, 258, 258],
           "reason": "geometry"
         }
-      ]
+      ],
+      "transformContext": 1
+    }
+  ],
+  "transforms": [
+    {
+      "id": 1,
+      "transformOrigin": [112, 112]
     }
   ],
   "objectPaintInvalidations": [
