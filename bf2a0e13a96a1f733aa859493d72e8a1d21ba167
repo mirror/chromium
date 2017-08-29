@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "68562e01_6bde5a58",
+        "filename": "build/android/apk_operations.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 383,
+      "author": {
+        "id": 1002869
+      },
+      "writtenOn": "2017-08-29T20:31:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f50c5bff_b9d29a1a",
+      "revId": "bf2a0e13a96a1f733aa859493d72e8a1d21ba167",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9b99495b_b0a1056f",
         "filename": "build/android/apk_operations.py",
         "patchSetId": 4
@@ -33,6 +51,24 @@
       "revId": "bf2a0e13a96a1f733aa859493d72e8a1d21ba167",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61a7b755_4d39c474",
+        "filename": "build/android/apk_operations.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 395,
+      "author": {
+        "id": 1002869
+      },
+      "writtenOn": "2017-08-29T20:31:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9b99495b_b0a1056f",
+      "revId": "bf2a0e13a96a1f733aa859493d72e8a1d21ba167",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
