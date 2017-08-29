@@ -68,6 +68,11 @@ class CompositorView : public content::CompositorClient,
                       jint width,
                       jint height,
                       const base::android::JavaParamRef<jobject>& surface);
+  void SetSize(JNIEnv* env,
+               const base::android::JavaParamRef<jobject>& obj,
+               const base::android::JavaParamRef<jobject>& jweb_contents,
+               jint width,
+               jint height);
   void OnPhysicalBackingSizeChanged(
       JNIEnv* env,
       const base::android::JavaParamRef<jobject>& obj,
