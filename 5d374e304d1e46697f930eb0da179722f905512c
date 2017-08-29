@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a75f098_392da768",
+        "filename": "cc/trees/property_tree_builder.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 321,
+      "author": {
+        "id": 1002110
+      },
+      "writtenOn": "2017-08-29T23:37:38Z",
+      "side": 1,
+      "message": "Should this really be const, given that it\u0027s modifying the clip tree? Why doesn\u0027t the compiler complain about this? :)\n\nSame comment about the other Add*NodeIfNeeded methods.",
+      "range": {
+        "startLine": 321,
+        "startChar": 52,
+        "endLine": 321,
+        "endChar": 57
+      },
+      "revId": "5d374e304d1e46697f930eb0da179722f905512c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
