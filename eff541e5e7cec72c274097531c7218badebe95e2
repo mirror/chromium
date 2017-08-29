@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3ad4e048_c700439b",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/customtabs/CustomTabActivityTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 1275,
+      "author": {
+        "id": 1132034
+      },
+      "writtenOn": "2017-08-29T11:24:00Z",
+      "side": 1,
+      "message": "tiny nit: assertEquals?",
+      "revId": "eff541e5e7cec72c274097531c7218badebe95e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
