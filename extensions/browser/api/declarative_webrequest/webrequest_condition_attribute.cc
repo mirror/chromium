@@ -24,6 +24,7 @@
 #include "extensions/browser/api/declarative_webrequest/webrequest_constants.h"
 #include "extensions/browser/api/web_request/web_request_api_helpers.h"
 #include "extensions/browser/api/web_request/web_request_resource_type.h"
+#include "extensions/browser/response_headers_util.h"
 #include "extensions/common/error_utils.h"
 #include "net/base/net_errors.h"
 #include "net/base/registry_controlled_domains/registry_controlled_domain.h"
@@ -691,6 +692,8 @@ bool WebRequestConditionAttributeResponseHeaders::IsFulfilled(
   std::string value;
   size_t iter = 0;
   while (!passed && headers->EnumerateHeaderLines(&iter, &name, &value)) {
+    if (ShouldHiderResponseHeader(request_data.request->url(), name))
+      continue;
     passed |= header_matcher_->TestNameValue(name, value);
   }
 
