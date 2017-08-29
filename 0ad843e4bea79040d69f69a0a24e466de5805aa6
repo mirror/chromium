@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "2260ac2a_f1ff48de",
+        "filename": "build/config/coverage/BUILD.gn",
+        "patchSetId": 4
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1160021
+      },
+      "writtenOn": "2017-08-29T02:38:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3af610a0_153832ab",
+      "range": {
+        "startLine": 1,
+        "startChar": 12,
+        "endLine": 1,
+        "endChar": 15
+      },
+      "revId": "0ad843e4bea79040d69f69a0a24e466de5805aa6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2357e60e_6a8f7601",
         "filename": "build/config/coverage/BUILD.gn",
         "patchSetId": 4
@@ -45,6 +69,30 @@
       "revId": "0ad843e4bea79040d69f69a0a24e466de5805aa6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d87906f_f4c42c41",
+        "filename": "build/config/coverage/BUILD.gn",
+        "patchSetId": 4
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1160021
+      },
+      "writtenOn": "2017-08-29T02:38:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2357e60e_6a8f7601",
+      "range": {
+        "startLine": 9,
+        "startChar": 6,
+        "endLine": 9,
+        "endChar": 14
+      },
+      "revId": "0ad843e4bea79040d69f69a0a24e466de5805aa6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
