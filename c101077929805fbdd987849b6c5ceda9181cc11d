@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "093f0701_29e3d08f",
+        "filename": "ash/shell.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 671,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-08-29T20:53:39Z",
+      "side": 1,
+      "message": "what is the advantage of MakeUnique in this situation? I can\u0027t find anything in the style guide but new is a lot more concise in this case.",
+      "parentUuid": "b1cad923_243f796e",
+      "revId": "c101077929805fbdd987849b6c5ceda9181cc11d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "71df6a5a_89429111",
         "filename": "ash/system/web_notification/login_state_notification_blocker_unittest.cc",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "c101077929805fbdd987849b6c5ceda9181cc11d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e08f41ca_bed5d50f",
+        "filename": "ash/system/web_notification/login_state_notification_blocker_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-08-29T20:53:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "71df6a5a_89429111",
+      "revId": "c101077929805fbdd987849b6c5ceda9181cc11d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "6c02eb7c_42d01947",
+        "filename": "ash/system/web_notification/login_state_notification_blocker_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-08-29T20:53:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "79b8b9f4_67cd5ca6",
+      "revId": "c101077929805fbdd987849b6c5ceda9181cc11d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f4e8bb04_0b8086ce",
         "filename": "chrome/browser/notifications/message_center_notification_manager.cc",
         "patchSetId": 3
@@ -64,6 +118,24 @@
       "writtenOn": "2017-08-29T16:12:32Z",
       "side": 1,
       "message": "optional: Maybe comment where chromeos handles this?",
+      "revId": "c101077929805fbdd987849b6c5ceda9181cc11d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3383a97_1a842d61",
+        "filename": "chrome/browser/notifications/message_center_notification_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-08-29T20:53:39Z",
+      "side": 1,
+      "message": "will do",
+      "parentUuid": "f4e8bb04_0b8086ce",
       "revId": "c101077929805fbdd987849b6c5ceda9181cc11d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
