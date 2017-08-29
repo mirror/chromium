@@ -9,9 +9,9 @@
     {
       "name": "LayoutTableRow TR",
       "position": [8, 18],
-      "transformOrigin": [117, 0],
       "drawsContent": true,
-      "backgroundColor": "#0000FF"
+      "backgroundColor": "#0000FF",
+      "transform": 1
     },
     {
       "name": "LayoutTableRow TR",
@@ -33,6 +33,12 @@
           "reason": "style change"
         }
       ]
+    }
+  ],
+  "transforms": [
+    {
+      "id": 1,
+      "transformOrigin": [117, 0]
     }
   ],
   "objectPaintInvalidations": [

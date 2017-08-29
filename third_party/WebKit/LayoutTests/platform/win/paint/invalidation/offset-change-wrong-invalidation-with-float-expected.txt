@@ -31,14 +31,15 @@
     {
       "name": "LayoutListItem (floating) LI id='watches'",
       "position": [30, 44],
-      "transformOrigin": [18, 10],
       "bounds": [25, 19],
-      "drawsContent": true
+      "drawsContent": true,
+      "transform": 1
     },
     {
       "name": "LayoutInline (relative positioned) SPAN id='placeholder'",
-      "position": [18, 0],
-      "backfaceVisibility": "hidden"
+      "position": [48, 44],
+      "backfaceVisibility": "hidden",
+      "transform": 1
     },
     {
       "name": "LayoutListItem (relative positioned) (floating) LI id='menu'",
@@ -52,6 +53,12 @@
           "reason": "geometry"
         }
       ]
+    }
+  ],
+  "transforms": [
+    {
+      "id": 1,
+      "transformOrigin": [18, 10]
     }
   ],
   "objectPaintInvalidations": [
