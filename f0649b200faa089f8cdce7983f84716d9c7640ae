@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ea489681_743a92d6",
+        "filename": "ios/clean/chrome/browser/ui/tab/tab_container_view_controller+internal.h",
+        "patchSetId": 27
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-08-29T20:25:02Z",
+      "side": 1,
+      "message": "Does line 17 suffice? The toolbar is contained inside the container. Why is the z ordering important?",
+      "parentUuid": "97aa02d0_71391d06",
+      "revId": "f0649b200faa089f8cdce7983f84716d9c7640ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "798d5195_1e80cba6",
         "filename": "ios/clean/chrome/browser/ui/tab/tab_container_view_controller+internal.h",
         "patchSetId": 27
@@ -39,6 +57,30 @@
       "revId": "f0649b200faa089f8cdce7983f84716d9c7640ae",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00d125d1_878c254e",
+        "filename": "ios/clean/chrome/browser/ui/tab/tab_container_view_controller+internal.h",
+        "patchSetId": 27
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-08-29T20:25:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "798d5195_1e80cba6",
+      "range": {
+        "startLine": 36,
+        "startChar": 2,
+        "endLine": 36,
+        "endChar": 3
+      },
+      "revId": "f0649b200faa089f8cdce7983f84716d9c7640ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -93,6 +135,24 @@
     },
     {
       "key": {
+        "uuid": "990a1726_870cfd34",
+        "filename": "ios/clean/chrome/browser/ui/toolbar/toolbar_view_controller.h",
+        "patchSetId": 27
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-08-29T20:25:02Z",
+      "side": 1,
+      "message": "The fact that there are two different tab switcher buttons is an implementation detail that need not be described in the public interface. This public interface configuration describes how the behavior of this view controller changes when the bit is flipped. It\u0027s important that the user of this interface understand that a call to show tab grid is still called even when enabling the tab strip.",
+      "parentUuid": "b8b2e081_de1ca1e8",
+      "revId": "f0649b200faa089f8cdce7983f84716d9c7640ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "dbada746_14a57bbd",
         "filename": "ios/clean/chrome/browser/ui/toolbar/toolbar_view_controller.h",
         "patchSetId": 27
@@ -104,6 +164,24 @@
       "writtenOn": "2017-08-29T18:47:07Z",
       "side": 1,
       "message": "This property name is a little confusing because the toolbar doesn\u0027t \"use\" the tab strip; that\u0027s a detail of the parent coordinator.  One way of specifying this a little more clearly would be to use an enum type here:\n\n// At top of header:\nenum class TabSwitcherOpeningMode {\n  TAB_GRID,\n  TAB_STRIP,\n};\n\n// In @interface:\n@property(nonatomic, assign) TabSwitcherOpeningMode tabSwitcherMode;\n\nThis would clarify exactly how this property is used, and will also self-document what the default mode would be (rather than relying on this comment to describe default behavior).  WDYT?",
+      "revId": "f0649b200faa089f8cdce7983f84716d9c7640ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17b0995d_82fd98b7",
+        "filename": "ios/clean/chrome/browser/ui/toolbar/toolbar_view_controller.h",
+        "patchSetId": 27
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-08-29T20:25:02Z",
+      "side": 1,
+      "message": "The tab grid is always openable whether or not the tab strip is enabled. So it\u0027s ambiguous to say that the opening mode is TAB_GRID.",
+      "parentUuid": "dbada746_14a57bbd",
       "revId": "f0649b200faa089f8cdce7983f84716d9c7640ae",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
