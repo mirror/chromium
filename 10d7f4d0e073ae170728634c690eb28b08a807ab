@@ -1,0 +1,163 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e115ee92_d9b5ce55",
+        "filename": "chrome/browser/extensions/api/web_request/web_request_api_unittest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 1508,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-29T16:39:54Z",
+      "side": 1,
+      "message": "Maybe expand these comments, e.g.:\n// The X-Chrome-ID-Consistency-Response is a protected header, but only for\n// Gaia URLs. It should be modifiable when sent from anywhere else.",
+      "revId": "10d7f4d0e073ae170728634c690eb28b08a807ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5ad8f71_74ce160a",
+        "filename": "chrome/browser/extensions/api/web_request/web_request_apitest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 895,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-29T16:39:54Z",
+      "side": 1,
+      "message": "private:",
+      "revId": "10d7f4d0e073ae170728634c690eb28b08a807ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f88e63e4_23737f88",
+        "filename": "chrome/test/data/extensions/api_test/webrequest_dice_header/background.js",
+        "patchSetId": 14
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-29T16:39:54Z",
+      "side": 1,
+      "message": "use \u0027let\u0027 or \u0027var\u0027 here (preferably \u0027let\u0027)",
+      "revId": "10d7f4d0e073ae170728634c690eb28b08a807ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "edba9758_d97fb6d3",
+        "filename": "chrome/test/data/extensions/api_test/webrequest_dice_header/background.js",
+        "patchSetId": 14
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-29T16:39:54Z",
+      "side": 1,
+      "message": "and here (though these could also be const)",
+      "revId": "10d7f4d0e073ae170728634c690eb28b08a807ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "783a124e_041e054b",
+        "filename": "chrome/test/data/extensions/api_test/webrequest_dice_header/background.js",
+        "patchSetId": 14
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-29T16:39:54Z",
+      "side": 1,
+      "message": "nit: spaces between arguments, and also please rename these to be more clear (rather than v, i, a)",
+      "revId": "10d7f4d0e073ae170728634c690eb28b08a807ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "102b45ed_307af99f",
+        "filename": "chrome/test/data/extensions/api_test/webrequest_dice_header/background.js",
+        "patchSetId": 14
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-29T16:39:54Z",
+      "side": 1,
+      "message": "add a space after the \u0027:\u0027",
+      "range": {
+        "startLine": 29,
+        "startChar": 25,
+        "endLine": 29,
+        "endChar": 27
+      },
+      "revId": "10d7f4d0e073ae170728634c690eb28b08a807ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e43810e4_f73920ba",
+        "filename": "extensions/browser/api/declarative_webrequest/webrequest_condition_attribute.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 695,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-29T16:39:54Z",
+      "side": 1,
+      "message": "s/ShouldHider/ShouldHide?",
+      "revId": "10d7f4d0e073ae170728634c690eb28b08a807ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "faf4d2bc_7242c77e",
+        "filename": "extensions/browser/response_headers_util.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-29T16:39:54Z",
+      "side": 1,
+      "message": "I don\u0027t think that //extensions should depend on gaia if we can help it.  Instead, can we abstract this out into a method on WebRequestEventRouterDelegate or ExtensionsApiClient?",
+      "revId": "10d7f4d0e073ae170728634c690eb28b08a807ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79c92899_acedb766",
+        "filename": "extensions/browser/response_headers_util.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-29T16:39:54Z",
+      "side": 1,
+      "message": "host() will make a copy of a std::string, which will add up quickly given how frequently this method is called.  Let\u0027s use host_piece() here.",
+      "revId": "10d7f4d0e073ae170728634c690eb28b08a807ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
