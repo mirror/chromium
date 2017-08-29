@@ -52,6 +52,24 @@
       "revId": "3e00bcc5b9096bf62551b50e2bd921a2defe78e3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97f450b5_e80736e0",
+        "filename": "media/blink/webmediaplayer_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 339,
+      "author": {
+        "id": 1181219
+      },
+      "writtenOn": "2017-08-29T17:59:44Z",
+      "side": 1,
+      "message": "Done. Moved trace event from Load to DoLoad. It will be easy to add another event in Load if anyone is interested in tracking background defer time.",
+      "parentUuid": "2b058ede_7aadb7c0",
+      "revId": "3e00bcc5b9096bf62551b50e2bd921a2defe78e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
