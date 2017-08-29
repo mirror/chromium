@@ -69,6 +69,24 @@
       "revId": "a9948566c0f37bfe26b770a6aa083d3d75a21f94",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bee2034e_a1386fc9",
+        "filename": "pdf/pdfium/pdfium_engine.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 3436,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-08-29T20:42:56Z",
+      "side": 1,
+      "message": "|new_rect| is already subtracted from all the existing rects. I have a check for when |new_rect| is empty after all the subtractions, which is better than a Contains() check because it doesn\u0027t require a single existing rect to cover |new_rect|.\n\nThis check is not foolproof though. e.g. If there are 4 existing rects, each of which covers 1 quadrant of |new_rect|, then none of them can reduce |new_rect| via subtraction. Even though the 4 combined completely covers |new_rect|.",
+      "parentUuid": "1f465287_c38436bf",
+      "revId": "a9948566c0f37bfe26b770a6aa083d3d75a21f94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
