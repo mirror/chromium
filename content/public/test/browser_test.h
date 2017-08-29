@@ -91,6 +91,12 @@
 #define IN_PROC_BROWSER_TEST_P(test_case_name, test_name) \
   IN_PROC_BROWSER_TEST_P_(test_case_name, test_name)
 
+#else
 #endif  // defined(HAS_OUT_OF_PROC_TEST_RUNNER)
+
+#define IN_PROC_BROWSER_TEST_F(test_fixture, test_name) \
+  static_assert(false, "HAS_OUT_OF_PROC_TEST_RUNNER not defined");
+#define IN_PROC_BROWSER_TEST_P(test_case_name, test_name) \
+  static_assert(false, "HAS_OUT_OF_PROC_TEST_RUNNER not defined");
 
 #endif  // CONTENT_PUBLIC_TEST_BROWSER_TEST_H_
