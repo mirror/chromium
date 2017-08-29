@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "0889f691_9eb3ffe9",
+        "filename": "chrome/common/extensions/docs/examples/tutorials/getstarted/popup.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-08-29T18:50:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3456e4d2_73ecff0b",
+      "revId": "6fafeef61bc63cecf1f84c8340142ff3a2057680",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f3c1ba3a_ccde1f4b",
         "filename": "chrome/common/extensions/docs/examples/tutorials/getstarted/popup.js",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "6fafeef61bc63cecf1f84c8340142ff3a2057680",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91aff75c_cdffaed0",
+        "filename": "chrome/common/extensions/docs/examples/tutorials/getstarted/popup.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-08-29T18:50:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f3c1ba3a_ccde1f4b",
+      "revId": "6fafeef61bc63cecf1f84c8340142ff3a2057680",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "9de33fe4_db5b7561",
+        "filename": "chrome/common/extensions/docs/examples/tutorials/getstarted/popup.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-08-29T18:50:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2ca6ff63_0f002495",
+      "revId": "6fafeef61bc63cecf1f84c8340142ff3a2057680",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6a7ad943_5b89d4b9",
         "filename": "chrome/common/extensions/docs/examples/tutorials/getstarted/popup.js",
         "patchSetId": 2
@@ -67,6 +121,24 @@
       "revId": "6fafeef61bc63cecf1f84c8340142ff3a2057680",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f73dfe68_351d0af8",
+        "filename": "chrome/common/extensions/docs/examples/tutorials/getstarted/popup.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-08-29T18:50:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6a7ad943_5b89d4b9",
+      "revId": "6fafeef61bc63cecf1f84c8340142ff3a2057680",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "7bc6f8a1_9f1e19fd",
+        "filename": "chrome/common/extensions/docs/examples/tutorials/getstarted/popup.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-08-29T18:50:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f4677109_ec4c8d3e",
+      "revId": "6fafeef61bc63cecf1f84c8340142ff3a2057680",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a42b4608_b64e093d",
         "filename": "chrome/common/extensions/docs/examples/tutorials/getstarted/popup.js",
         "patchSetId": 2
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "2c21025d_a5bb6b99",
+        "filename": "chrome/common/extensions/docs/examples/tutorials/getstarted/popup.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-08-29T18:50:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a42b4608_b64e093d",
+      "revId": "6fafeef61bc63cecf1f84c8340142ff3a2057680",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6e054030_8c917a18",
         "filename": "chrome/common/extensions/docs/templates/articles/getstarted.html",
         "patchSetId": 2
@@ -118,6 +226,24 @@
       "revId": "6fafeef61bc63cecf1f84c8340142ff3a2057680",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4410e1f6_815c1d68",
+        "filename": "chrome/common/extensions/docs/templates/articles/getstarted.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-08-29T18:50:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6e054030_8c917a18",
+      "revId": "6fafeef61bc63cecf1f84c8340142ff3a2057680",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

@@ -16,6 +16,24 @@
       "revId": "0dcf1c69a70a2f13e7a5672b56d98fa47e8e3ba9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b43295d_bf2dd275",
+        "filename": "chrome/common/extensions/docs/examples/tutorials/getstarted/popup.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-08-29T18:50:46Z",
+      "side": 0,
+      "message": "Done.",
+      "parentUuid": "dad8a281_0cdcb13f",
+      "revId": "0dcf1c69a70a2f13e7a5672b56d98fa47e8e3ba9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
