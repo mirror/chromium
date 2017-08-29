@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "15112101_1cda69a1",
+        "filename": "third_party/WebKit/Source/platform/graphics/DeferredImageDecoder.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-08-29T18:13:12Z",
+      "side": 1,
+      "message": "It was appending while the vector was already initialized.",
+      "range": {
+        "startLine": 123,
+        "startChar": 4,
+        "endLine": 123,
+        "endChar": 20
+      },
+      "revId": "a5208a8d81acd376afe30c7e030d7748494e7ef6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c3c4553_2d138dcd",
+        "filename": "third_party/WebKit/Source/platform/graphics/DeferredImageDecoder.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-08-29T18:13:12Z",
+      "side": 1,
+      "message": "Its actually in milliseconds. ImageSource is doing the conversion to seconds before passing to BitmapImage.",
+      "range": {
+        "startLine": 124,
+        "startChar": 28,
+        "endLine": 124,
+        "endChar": 75
+      },
+      "revId": "a5208a8d81acd376afe30c7e030d7748494e7ef6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d3810c2_508546d0",
+        "filename": "third_party/WebKit/Source/platform/graphics/DeferredImageDecoder.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-08-29T18:13:12Z",
+      "side": 1,
+      "message": "This was accidentally flipped.",
+      "range": {
+        "startLine": 129,
+        "startChar": 6,
+        "endLine": 129,
+        "endChar": 54
+      },
+      "revId": "a5208a8d81acd376afe30c7e030d7748494e7ef6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
