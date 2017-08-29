@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1274a483_09752458",
+        "filename": "pdf/out_of_process_instance.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-08-29T08:04:25Z",
+      "side": 0,
+      "message": "This started out as a struct PP_FloatPoint to pp:FloatPoint conversion.",
+      "range": {
+        "startLine": 228,
+        "startChar": 42,
+        "endLine": 228,
+        "endChar": 56
+      },
+      "revId": "3f9b4948509b777424a0983f4d682b23710db3bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
