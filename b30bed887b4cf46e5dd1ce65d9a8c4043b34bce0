@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e6a86f0d_f5b7c41f",
+        "filename": "tools/battor_agent/battor_connection_impl_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1210374
+      },
+      "writtenOn": "2017-08-29T11:55:55Z",
+      "side": 1,
+      "message": "if I understand this code correctly i think you probably want to assert false that the connection is open before you advance the timeout",
+      "revId": "b30bed887b4cf46e5dd1ce65d9a8c4043b34bce0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c7cab3c_f103173f",
+        "filename": "tools/battor_agent/battor_connection_impl_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1210374
+      },
+      "writtenOn": "2017-08-29T11:55:55Z",
+      "side": 1,
+      "message": "is this considered the first open connection call? if so, why do you need to advance 50ms after it because it should not perform a flush.",
+      "revId": "b30bed887b4cf46e5dd1ce65d9a8c4043b34bce0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44ab1b12_b6bb9db7",
+        "filename": "tools/battor_agent/battor_connection_impl_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1210374
+      },
+      "writtenOn": "2017-08-29T11:55:55Z",
+      "side": 1,
+      "message": "can you add a comment here explaining why the read complete should be false?",
+      "revId": "b30bed887b4cf46e5dd1ce65d9a8c4043b34bce0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76c65440_27c8f990",
+        "filename": "tools/battor_agent/battor_connection_impl_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1210374
+      },
+      "writtenOn": "2017-08-29T11:55:55Z",
+      "side": 1,
+      "message": "again not sure why you need to advance 50ms here if it is the first open connection call",
+      "revId": "b30bed887b4cf46e5dd1ce65d9a8c4043b34bce0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7e28683_8509d125",
+        "filename": "tools/battor_agent/battor_connection_impl_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1210374
+      },
+      "writtenOn": "2017-08-29T11:55:55Z",
+      "side": 1,
+      "message": "perhaps you want another test that will send some bytes to the battor right after the open connection call, then advance the timer less than 50ms and those bytes should be immediately flushed.\n\nsomething like:\nopen\nsend control message\nadvance timer 5ms\nsend control\nadvance timer 5ms\n...\ncheck that open is complete\nread control message\n\ncheck that read is incomplete",
+      "revId": "b30bed887b4cf46e5dd1ce65d9a8c4043b34bce0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "975325eb_fb142e08",
+        "filename": "tools/battor_agent/battor_connection_impl_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 1210374
+      },
+      "writtenOn": "2017-08-29T11:55:55Z",
+      "side": 1,
+      "message": "same as above for all of these 50ms timer advance calls. if they are all the first open connection calls, shouldn\u0027t there be no flush?",
+      "revId": "b30bed887b4cf46e5dd1ce65d9a8c4043b34bce0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
