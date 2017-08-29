@@ -149,10 +149,6 @@ class PLATFORM_EXPORT TaskQueueManager
   // Removes all canceled delayed tasks.
   void SweepCanceledDelayedTasks();
 
-  // There is a small overhead to recording task delay histograms. If you don't
-  // need them, you can turn them off.
-  void SetRecordTaskDelayHistograms(bool record_task_delay_histograms);
-
  protected:
   friend class LazyNow;
   friend class internal::TaskQueueImpl;
@@ -285,10 +281,6 @@ class PLATFORM_EXPORT TaskQueueManager
   base::Optional<NextTaskDelay> ComputeDelayTillNextTaskLocked(
       LazyNow* lazy_now);
 
-  void MaybeRecordTaskDelayHistograms(
-      const internal::TaskQueueImpl::Task& pending_task,
-      const internal::TaskQueueImpl* queue);
-
   std::unique_ptr<base::trace_event::ConvertableToTraceFormat>
   AsValueWithSelectorResult(bool should_run,
                             internal::WorkQueue* selected_work_queue) const;
@@ -364,8 +356,6 @@ class PLATFORM_EXPORT TaskQueueManager
   }
 
   NextDelayedDoWork next_delayed_do_work_;
-
-  bool record_task_delay_histograms_;
 
   int work_batch_size_;
   size_t task_count_;
