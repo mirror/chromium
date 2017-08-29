@@ -16994,6 +16994,15 @@ should be able to be added at any place in this file.
   </description>
 </action>
 
+<action name="Suggestions.ContextMenu.LearnMore">
+  <owner>mvanouwerkerk@chromium.org</owner>
+  <owner>galinap@google.com</owner>
+  <description>
+    Android: User used the context menu to follow the learn more link to product
+    help.
+  </description>
+</action>
+
 <action name="Suggestions.ContextMenu.OpenItemInIncognitoTab">
   <owner>mvanouwerkerk@chromium.org</owner>
   <owner>galinap@google.com</owner>
