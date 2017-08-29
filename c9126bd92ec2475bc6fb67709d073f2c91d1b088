@@ -228,6 +228,24 @@
       "revId": "c9126bd92ec2475bc6fb67709d073f2c91d1b088",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3e922f0_cebfbb9a",
+        "filename": "third_party/WebKit/public/platform/WebCORSPreflightResultCache.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-08-29T05:13:00Z",
+      "side": 1,
+      "message": "\u003e Also: if we don\u0027t do that could we add documentation about when SharedOnMainThread() should be called and when the ctor is used?  Having both without documentation is a bit confusing.\n\nAgreed with this point.\n\nI also slightly prefer renaming this to have the VerbSomething style e.g. GetSharedInstanceForMainThread() using this opportunity, but up to you.",
+      "parentUuid": "4b39dcd0_e08ee4e6",
+      "revId": "c9126bd92ec2475bc6fb67709d073f2c91d1b088",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
