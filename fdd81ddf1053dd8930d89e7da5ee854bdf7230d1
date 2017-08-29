@@ -94,6 +94,30 @@
       "revId": "fdd81ddf1053dd8930d89e7da5ee854bdf7230d1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc63778a_e8e67709",
+        "filename": "mojo/edk/test/test_utils_fuchsia.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-08-29T23:04:59Z",
+      "side": 1,
+      "message": "FYI I landed https://chromium-review.googlesource.com/636403 which makes HANDLE_EINTR no-op on Fuchsia. I\u0027d prefer to keep it just for consistency with non-fuchsia code.",
+      "parentUuid": "6254f842_502830e3",
+      "range": {
+        "startLine": 85,
+        "startChar": 11,
+        "endLine": 85,
+        "endChar": 23
+      },
+      "revId": "fdd81ddf1053dd8930d89e7da5ee854bdf7230d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
