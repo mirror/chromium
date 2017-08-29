@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d0b9ee74_39004ff1",
+        "filename": "ios/chrome/browser/experimental_flags.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-08-29T13:16:24Z",
+      "side": 1,
+      "message": "For the record, the feature behind this flag is 95% finished. What\u0027s missing is basically one small UI change and tests. It\u0027s just that we had no resources after the author (intern) left, and it got deprioritized.\n\nI would still very much like to launch this though, my hopes are for Q3/Q4. Can you please reflect that in your comment, so that someone at least talks to me before attempting removal?",
+      "range": {
+        "startLine": 108,
+        "startChar": 27,
+        "endLine": 108,
+        "endChar": 52
+      },
+      "revId": "cac5900a9adf6fb0c136bf0d78ac9f62f1a68732",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
