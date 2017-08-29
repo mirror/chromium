@@ -53,6 +53,7 @@ class CORE_EXPORT CSSStyleSheet final : public StyleSheet {
   static CSSStyleSheet* Create(StyleSheetContents*,
                                CSSImportRule* owner_rule = nullptr);
   static CSSStyleSheet* Create(StyleSheetContents*, Node& owner_node);
+  static CSSStyleSheet* CreateInjected(StyleSheetContents*, Node& owner_node);
   static CSSStyleSheet* CreateInline(
       Node&,
       const KURL&,
@@ -137,6 +138,7 @@ class CORE_EXPORT CSSStyleSheet final : public StyleSheet {
 
   StyleSheetContents* Contents() const { return contents_.Get(); }
 
+  bool IsInjected() const { return is_injected_stylesheet_; }
   bool IsInline() const { return is_inline_stylesheet_; }
   TextPosition StartPositionInSource() const { return start_position_; }
 
@@ -151,6 +153,7 @@ class CORE_EXPORT CSSStyleSheet final : public StyleSheet {
   CSSStyleSheet(StyleSheetContents*, CSSImportRule* owner_rule);
   CSSStyleSheet(StyleSheetContents*,
                 Node& owner_node,
+                bool is_injected_stylesheet,
                 bool is_inline_stylesheet,
                 const TextPosition& start_position);
 
@@ -164,6 +167,7 @@ class CORE_EXPORT CSSStyleSheet final : public StyleSheet {
   void SetLoadCompleted(bool);
 
   Member<StyleSheetContents> contents_;
+  bool is_injected_stylesheet_ = false;
   bool is_inline_stylesheet_ = false;
   bool is_disabled_ = false;
   bool load_completed_ = false;
