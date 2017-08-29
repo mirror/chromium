@@ -272,6 +272,30 @@
     },
     {
       "key": {
+        "uuid": "2022dce7_070129f4",
+        "filename": "components/exo/surface_tree_host.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 298,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-08-29T21:49:06Z",
+      "side": 1,
+      "message": "what\u0027s the reason we do 2 that way? can we create the host window in advance instead?",
+      "parentUuid": "f6505060_cb51e98e",
+      "range": {
+        "startLine": 298,
+        "startChar": 2,
+        "endLine": 298,
+        "endChar": 73
+      },
+      "revId": "2cd95798cc730d8ab709b2078b3a8821cf0f4de7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fdb81623_530b03c0",
         "filename": "components/exo/surface_tree_host.cc",
         "patchSetId": 3

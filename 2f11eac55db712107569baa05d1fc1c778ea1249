@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2e6e426e_96f24038",
+        "filename": "components/exo/surface.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-08-29T21:49:06Z",
+      "side": 1,
+      "message": "what is this for?",
+      "revId": "2f11eac55db712107569baa05d1fc1c778ea1249",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b40b269_d87ce960",
+        "filename": "components/exo/surface.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 738,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-08-29T21:49:06Z",
+      "side": 1,
+      "message": "is this blank line intentional?",
+      "revId": "2f11eac55db712107569baa05d1fc1c778ea1249",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7cf33a98_2dc17ab6",
+        "filename": "components/exo/surface_tree_host.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 310,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-08-29T21:49:06Z",
+      "side": 1,
+      "message": "is this just metadata or does it make a real difference?",
+      "range": {
+        "startLine": 310,
+        "startChar": 17,
+        "endLine": 310,
+        "endChar": 36
+      },
+      "revId": "2f11eac55db712107569baa05d1fc1c778ea1249",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
