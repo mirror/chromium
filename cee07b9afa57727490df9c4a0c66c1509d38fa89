@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "88b93680_6353823d",
+        "filename": "components/policy/core/common/cloud/cloud_policy_refresh_scheduler_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 371,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-08-29T13:56:27Z",
+      "side": 1,
+      "message": "Hmm, now this old test isn\u0027t instantiating CloudPolicyRefreshScheduler at all - does it test anything then?\nI believe, either you need to call CreateRefreshScheduler() and do other initialization as required, or just change it back to use CloudPolicyRefreshSchedulerSteadyStateTest.",
+      "range": {
+        "startLine": 367,
+        "startChar": 0,
+        "endLine": 371,
+        "endChar": 1
+      },
+      "revId": "cee07b9afa57727490df9c4a0c66c1509d38fa89",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2ebbbaa_f4a47827",
+        "filename": "components/policy/core/common/cloud/cloud_policy_refresh_scheduler_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 379,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-08-29T13:56:27Z",
+      "side": 1,
+      "message": "nit: Or maybe something like this?\n\n  // Simulate a sleep of the device by decreasing the wall clock based refresh timestamp, so that the next refresh time point, calculated from it, turns out to be earlier than the next refresh time point, calculated from the ticks count clock.",
+      "range": {
+        "startLine": 378,
+        "startChar": 5,
+        "endLine": 379,
+        "endChar": 20
+      },
+      "revId": "cee07b9afa57727490df9c4a0c66c1509d38fa89",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
