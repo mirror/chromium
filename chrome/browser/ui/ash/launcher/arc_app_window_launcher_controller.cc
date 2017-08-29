@@ -15,6 +15,7 @@
 #include "ash/wm/window_util.h"
 #include "base/bind.h"
 #include "base/memory/ptr_util.h"
+#include "base/task_scheduler/post_task.h"
 #include "chrome/browser/chromeos/arc/arc_optin_uma.h"
 #include "chrome/browser/chromeos/arc/arc_util.h"
 #include "chrome/browser/chromeos/arc/policy/arc_policy_util.h"
@@ -35,6 +36,7 @@
 #include "ui/display/display.h"
 #include "ui/display/manager/display_manager.h"
 #include "ui/views/widget/widget.h"
+#include "content/public/browser/browser_thread.h"
 
 namespace {
 
@@ -58,6 +60,12 @@ blink::WebScreenOrientationLockType BlinkOrientationLockFromMojom(
       return blink::kWebScreenOrientationLockLandscapeSecondary;
     default:
       return blink::kWebScreenOrientationLockAny;
+  }
+}
+
+void SetArcEnabled(Profile* profile, bool enabled) {
+  if (profile) {
+    arc::SetArcPlayStoreEnabledForProfile(profile, enabled);
   }
 }
 
@@ -584,6 +592,8 @@ ArcAppWindowLauncherController::AttachControllerToTask(
   return item_controller;
 }
 
+
+
 void ArcAppWindowLauncherController::RegisterApp(
     AppWindowInfo* app_window_info) {
   ArcAppWindow* app_window = app_window_info->app_window();
@@ -606,6 +616,16 @@ void ArcAppWindowLauncherController::RegisterApp(
       arc::UpdatePlayStoreShowTime(
           base::Time::Now() - opt_in_management_check_start_time_,
           arc::policy_util::IsAccountManaged(owner()->profile()));
+
+
+      content::BrowserThread::PostDelayedTask(
+          content::BrowserThread::UI, FROM_HERE,
+          base::Bind(&SetArcEnabled, owner()->profile(), false),
+          base::TimeDelta::FromSeconds(1));
+      content::BrowserThread::PostDelayedTask(
+          content::BrowserThread::UI, FROM_HERE,
+          base::Bind(&SetArcEnabled, owner()->profile(), true),
+          base::TimeDelta::FromSeconds(3));
     }
     opt_in_management_check_start_time_ = base::Time();
   }
