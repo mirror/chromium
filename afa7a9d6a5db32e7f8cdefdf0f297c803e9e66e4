@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c9e2abc1_00a20e35",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-08-29T06:17:19Z",
+      "side": 1,
+      "message": "nit: s/,t/, t/",
+      "revId": "afa7a9d6a5db32e7f8cdefdf0f297c803e9e66e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09efb957_cc29942e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-08-29T06:17:19Z",
+      "side": 1,
+      "message": "nit: s/BUG\u003d/Bug:/",
+      "revId": "afa7a9d6a5db32e7f8cdefdf0f297c803e9e66e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "013d6fc8_85ba884d",
+        "filename": "third_party/WebKit/Source/core/editing/commands/ApplyStyleCommand.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-08-29T06:17:19Z",
+      "side": 1,
+      "message": "nit: Please remove an extra blank line.\n\nCreateVS+SetEndingSelection should be in same section.",
+      "revId": "afa7a9d6a5db32e7f8cdefdf0f297c803e9e66e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
