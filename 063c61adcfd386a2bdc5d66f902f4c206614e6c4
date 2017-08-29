@@ -272,6 +272,24 @@
     },
     {
       "key": {
+        "uuid": "49a2cfa0_cbe725aa",
+        "filename": "content/browser/loader/navigation_url_loader_unittest.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-08-29T19:03:04Z",
+      "side": 1,
+      "message": "I was imagining that we could just check EXPECT_TRUE(ssl_info.cert.Equals(test_server.GetCertificate())) ?",
+      "parentUuid": "66216169_90276df6",
+      "revId": "063c61adcfd386a2bdc5d66f902f4c206614e6c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "dbc849ca_046cf8cf",
         "filename": "content/browser/loader/navigation_url_loader_unittest.cc",
         "patchSetId": 25

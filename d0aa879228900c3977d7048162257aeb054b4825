@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0e5c04fb_42aebb38",
+        "filename": "content/browser/loader/navigation_url_loader_unittest.cc",
+        "patchSetId": 27
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-08-29T19:03:04Z",
+      "side": 1,
+      "message": "Please delete if not needed. Though I thought this was needed in order for the error code to be ERR_INSECURE_RESPONSE? (otherwise don\u0027t we get ERR_ABORTED? does that matter?)",
+      "range": {
+        "startLine": 122,
+        "startChar": 4,
+        "endLine": 125,
+        "endChar": 0
+      },
+      "revId": "d0aa879228900c3977d7048162257aeb054b4825",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b75c22a3_74f9fdb9",
+        "filename": "content/browser/loader/navigation_url_loader_unittest.cc",
+        "patchSetId": 27
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-08-29T19:03:04Z",
+      "side": 1,
+      "message": "unused?",
+      "range": {
+        "startLine": 157,
+        "startChar": 2,
+        "endLine": 157,
+        "endChar": 49
+      },
+      "revId": "d0aa879228900c3977d7048162257aeb054b4825",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
