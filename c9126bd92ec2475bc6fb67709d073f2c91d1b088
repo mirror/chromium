@@ -192,6 +192,24 @@
       "revId": "c9126bd92ec2475bc6fb67709d073f2c91d1b088",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b39dcd0_e08ee4e6",
+        "filename": "third_party/WebKit/public/platform/WebCORSPreflightResultCache.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-08-29T05:08:59Z",
+      "side": 1,
+      "message": "It makes sense at least for now. I also feel that it\u0027s clear and easy to understand if everything\u0027s explicitly associated with something representing a certain context, e.g. WorkerFetchContext holding it as the current patch set is doing.\n\nI don\u0027t have strong opinion. Feel free to choose either.",
+      "parentUuid": "56fc3ee6_3a1c7e9c",
+      "revId": "c9126bd92ec2475bc6fb67709d073f2c91d1b088",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
