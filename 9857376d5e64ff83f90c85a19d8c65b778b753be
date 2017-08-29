@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "53c407df_34ca2699",
+        "filename": "content/child/loader/cors_url_loader.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1217370
+      },
+      "writtenOn": "2017-08-29T22:28:10Z",
+      "side": 0,
+      "message": "Is there a reason to remove this pointer (e.g. instance live cycle), apart from than that it is currently not used? \n\nI am using the pointer in https://chromium-review.googlesource.com/c/chromium/src/+/558226/57/content/child/loader/cors_url_loader.cc#316 to make the preflight request and to dispatch the actual request later. \n\nDisclaimer: I hardly understand mojo loading, so this might be a silly question.",
+      "revId": "9857376d5e64ff83f90c85a19d8c65b778b753be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
