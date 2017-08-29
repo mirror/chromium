@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7dcb3d09_d17ec71f",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/webapps/WebappActivityTestRule.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-08-29T04:13:43Z",
+      "side": 1,
+      "message": "This isn\u0027t quite sufficient, because the webappIds will still be in the WebappRegistry\u0027s shared preferences even though the underlying storages have been deleted. The id set in WebappRegistry is meant to reflect what WebappDataStorage objects are still around.\n\nIt might be better to add the following method to WebappRegistry and call it here:\n\n@VisibleForTesting\nvoid clearForTesting() {\n    Iterator\u003cHashMap.Entry\u003cString, WebappDataStorage\u003e\u003e it \u003d mStorages.entrySet().iterator();\n    while (it.hasNext()) {\n        storage.delete();\n        it.remove();\n    }\n    mPreferences.edit()\n                .putStringSet(KEY_WEBAPP_SET, mStorages.keySet())\n                .apply();\n}",
+      "range": {
+        "startLine": 102,
+        "startChar": 20,
+        "endLine": 102,
+        "endChar": 34
+      },
+      "revId": "f708a24dca52bcbe9b43d4b3a0737bef96c34fe9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
