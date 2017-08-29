@@ -163,7 +163,7 @@ TEST_F(HitTestDataProviderAuraTest, Stacking) {
                                  viz::mojom::kHitTestTouch);
     EXPECT_EQ(region->frame_sink_id,
               WindowPortMus::Get(expected_order_2[i])->GetFrameSinkId());
-    EXPECT_EQ(region->surface_id.local_surface_id(),
+    EXPECT_EQ(region->local_surface_id,
               WindowMus::Get(expected_order_2[i])->GetLocalSurfaceId());
     EXPECT_EQ(region->rect.ToString(),
               expected_order_2[i]->bounds().ToString());
