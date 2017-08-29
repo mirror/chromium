@@ -132,11 +132,6 @@ class CORE_EXPORT DocumentThreadableLoader final : public ThreadableLoader,
   void HandleSuccessfulFinish(unsigned long identifier, double finish_time);
 
   void DidTimeout(TimerBase*);
-  // Calls the appropriate loading method according to policy and data about
-  // origin. Only for handling the initial load (including fallback after
-  // consulting ServiceWorker).
-  void DispatchInitialRequest(ResourceRequest&);
-  void MakeCrossOriginAccessRequest(const ResourceRequest&);
 
   // TODO(hintzed): CORS handled out of Blink. Code in methods below named
   // *OutOfBlinkCORS is to be moved back into the corresponding methods
@@ -150,8 +145,6 @@ class CORE_EXPORT DocumentThreadableLoader final : public ThreadableLoader,
                                       const ResourceRequest&,
                                       const ResourceResponse&);
   void HandleResponseOutOfBlinkCORS(unsigned long identifier,
-                                    WebURLRequest::FetchRequestMode,
-                                    WebURLRequest::FetchCredentialsMode,
                                     const ResourceResponse&,
                                     std::unique_ptr<WebDataConsumerHandle>);
   // TODO(hintzed): CORS handled in Blink. Methods below named *BlinkCORS are to
@@ -163,6 +156,9 @@ class CORE_EXPORT DocumentThreadableLoader final : public ThreadableLoader,
   bool RedirectReceivedBlinkCORS(Resource*,
                                  const ResourceRequest&,
                                  const ResourceResponse&);
+  // Calls the appropriate loading method according to policy and data about
+  // origin. Only for handling the initial load (including fallback after
+  // consulting ServiceWorker).
   void HandleResponseBlinkCORS(unsigned long identifier,
                                WebURLRequest::FetchRequestMode,
                                WebURLRequest::FetchCredentialsMode,

@@ -36,6 +36,7 @@ const char HttpRequestHeaders::kIfNoneMatch[] = "If-None-Match";
 const char HttpRequestHeaders::kIfRange[] = "If-Range";
 const char HttpRequestHeaders::kIfUnmodifiedSince[] = "If-Unmodified-Since";
 const char HttpRequestHeaders::kOrigin[] = "Origin";
+const char HttpRequestHeaders::kSuborigin[] = "Suborigin";
 const char HttpRequestHeaders::kPragma[] = "Pragma";
 const char HttpRequestHeaders::kProxyAuthorization[] = "Proxy-Authorization";
 const char HttpRequestHeaders::kProxyConnection[] = "Proxy-Connection";
