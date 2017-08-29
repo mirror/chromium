@@ -70,6 +70,30 @@
       "revId": "0789733b912fd82a41b67436156afa0c38f38956",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "404f2067_b8a9a099",
+        "filename": "chrome/browser/ui/browser.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 558,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-08-29T23:47:27Z",
+      "side": 1,
+      "message": "I don\u0027t believe it\u0027s possible for that to happen.  The offscreen profile is entirely separate.  Is there a check somewhere I could add to make sure that is the case?",
+      "parentUuid": "da85bd0f_88097c10",
+      "range": {
+        "startLine": 558,
+        "startChar": 7,
+        "endLine": 558,
+        "endChar": 67
+      },
+      "revId": "0789733b912fd82a41b67436156afa0c38f38956",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
