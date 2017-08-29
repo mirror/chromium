@@ -271,6 +271,17 @@ void VerifyHttpRequestHeaders(bool via_chrome_proxy,
   }
 }
 
+// If the response is the entire resource, then the renderer won't show a
+// placeholder. This should match the behavior in blink::ImageResource.
+bool IsEntireResource(const net::HttpResponseHeaders* response_headers) {
+  if (!response_headers || response_headers->response_code() != 206)
+    return true;
+
+  int64_t first, last, length;
+  return response_headers->GetContentRangeFor206(&first, &last, &length) &&
+         first == 0 && last + 1 == length;
+}
+
 }  // namespace
 
 DataReductionProxyNetworkDelegate::DataReductionProxyNetworkDelegate(
@@ -499,7 +510,12 @@ void DataReductionProxyNetworkDelegate::OnCompletedInternal(
       data_reduction_proxy_io_data_ &&
       data_reduction_proxy_io_data_->lofi_decider() &&
       data_reduction_proxy_io_data_->lofi_decider()->IsClientLoFiImageRequest(
-          *request);
+          *request) &&
+      // If the response contains the entire resource, then the renderer won't
+      // show a placeholder for this image, so don't bother triggering an
+      // infobar.
+      !IsEntireResource(request->response_headers());
+
   if ((server_lofi || client_lofi) && data_reduction_proxy_io_data_ &&
       data_reduction_proxy_io_data_->lofi_ui_service()) {
     data_reduction_proxy_io_data_->lofi_ui_service()->OnLoFiReponseReceived(
