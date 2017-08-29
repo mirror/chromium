@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "fc4aee58_c0f4aa77",
+        "filename": "chrome/browser/ui/views/omnibox/omnibox_result_view.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 523,
+      "author": {
+        "id": 1111029
+      },
+      "writtenOn": "2017-08-29T22:29:03Z",
+      "side": 1,
+      "message": "Per offline discussion: it\u0027s a good idea, but deferring due to obstacles. Added TODO.",
+      "parentUuid": "1788053f_08407fe5",
+      "revId": "e7f994d37b0bc28ff8d378c741188ab7bb205b32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "971ceaf1_b9331b9e",
         "filename": "chrome/browser/ui/views/omnibox/omnibox_result_view.cc",
         "patchSetId": 20
@@ -33,6 +51,24 @@
       "revId": "e7f994d37b0bc28ff8d378c741188ab7bb205b32",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c413685_05c5d129",
+        "filename": "chrome/browser/ui/views/omnibox/omnibox_result_view.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 530,
+      "author": {
+        "id": 1111029
+      },
+      "writtenOn": "2017-08-29T22:29:03Z",
+      "side": 1,
+      "message": "Ditto with above comment. Good idea, deferring due to obstacles.",
+      "parentUuid": "971ceaf1_b9331b9e",
+      "revId": "e7f994d37b0bc28ff8d378c741188ab7bb205b32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "59de24e8_1706cf3a",
+        "filename": "components/omnibox/browser/omnibox_client.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1111029
+      },
+      "writtenOn": "2017-08-29T22:29:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2abd6cf4_7c0a90f2",
+      "range": {
+        "startLine": 125,
+        "startChar": 39,
+        "endLine": 125,
+        "endChar": 47
+      },
+      "revId": "e7f994d37b0bc28ff8d378c741188ab7bb205b32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0e4e7919_5972b50f",
         "filename": "components/omnibox/browser/omnibox_client.h",
         "patchSetId": 20
@@ -73,6 +133,24 @@
       "revId": "e7f994d37b0bc28ff8d378c741188ab7bb205b32",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "799721b2_c154a857",
+        "filename": "components/omnibox/browser/omnibox_client.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1111029
+      },
+      "writtenOn": "2017-08-29T22:29:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0e4e7919_5972b50f",
+      "revId": "e7f994d37b0bc28ff8d378c741188ab7bb205b32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -93,6 +171,24 @@
     },
     {
       "key": {
+        "uuid": "dd2995bc_d767dd1e",
+        "filename": "components/omnibox/browser/omnibox_popup_model.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 1111029
+      },
+      "writtenOn": "2017-08-29T22:29:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4dc41701_48bf5e07",
+      "revId": "e7f994d37b0bc28ff8d378c741188ab7bb205b32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1a193a20_f5eda576",
         "filename": "components/omnibox/browser/omnibox_popup_model.cc",
         "patchSetId": 20
@@ -107,6 +203,24 @@
       "revId": "e7f994d37b0bc28ff8d378c741188ab7bb205b32",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9eb00a8_d70a74a3",
+        "filename": "components/omnibox/browser/omnibox_popup_model.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 274,
+      "author": {
+        "id": 1111029
+      },
+      "writtenOn": "2017-08-29T22:29:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1a193a20_f5eda576",
+      "revId": "e7f994d37b0bc28ff8d378c741188ab7bb205b32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -127,6 +241,24 @@
     },
     {
       "key": {
+        "uuid": "0b2b34a8_9c7f4d57",
+        "filename": "components/omnibox/browser/omnibox_popup_model.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 277,
+      "author": {
+        "id": 1111029
+      },
+      "writtenOn": "2017-08-29T22:29:03Z",
+      "side": 1,
+      "message": "Done. Added a TODO to ChromeOmniboxClient.",
+      "parentUuid": "c71ea0cc_407ebdda",
+      "revId": "e7f994d37b0bc28ff8d378c741188ab7bb205b32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d7ba7ed0_5bf7e217",
         "filename": "components/omnibox/browser/omnibox_popup_model.cc",
         "patchSetId": 20
@@ -141,6 +273,24 @@
       "revId": "e7f994d37b0bc28ff8d378c741188ab7bb205b32",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d40cce63_6b3e6d7a",
+        "filename": "components/omnibox/browser/omnibox_popup_model.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 311,
+      "author": {
+        "id": 1111029
+      },
+      "writtenOn": "2017-08-29T22:29:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d7ba7ed0_5bf7e217",
+      "revId": "e7f994d37b0bc28ff8d378c741188ab7bb205b32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
