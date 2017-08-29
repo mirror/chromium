@@ -116,11 +116,11 @@ class TrayBackground : public views::Background {
     cc::PaintFlags background_flags;
     background_flags.setAntiAlias(true);
     background_flags.setColor(color_);
-    gfx::Insets insets = GetMirroredBackgroundInsets(
-        tray_background_view_->shelf()->IsHorizontalAlignment());
-    gfx::Rect bounds = view->GetLocalBounds();
-    bounds.Inset(insets);
-    canvas->DrawRoundRect(bounds, kTrayRoundedBorderRadius, background_flags);
+
+    gfx::Rect bounds = tray_background_view_->GetBackgroundBounds();
+    const float dsf = canvas->UndoDeviceScaleFactor();
+    canvas->DrawRoundRect(gfx::ScaleToRoundedRect(bounds, dsf),
+                          kTrayRoundedBorderRadius * dsf, background_flags);
   }
 
   // Reference to the TrayBackgroundView for which this is a background.
@@ -169,9 +169,8 @@ TrayBackgroundView::TrayBackgroundView(Shelf* shelf)
   set_ink_drop_visible_opacity(kShelfInkDropVisibleOpacity);
 
   SetLayoutManager(new views::FillLayout);
+  SetBackground(std::unique_ptr<views::Background>(background_));
 
-  tray_container_->SetBackground(
-      std::unique_ptr<views::Background>(background_));
   AddChildView(tray_container_);
 
   tray_event_filter_.reset(new TrayEventFilter);
@@ -338,6 +337,10 @@ void TrayBackgroundView::PaintButtonContents(gfx::Canvas* canvas) {
 void TrayBackgroundView::ProcessGestureEventForBubble(ui::GestureEvent* event) {
   if (drag_controller())
     drag_controller_->ProcessGestureEvent(event, this);
+}
+
+views::PaintInfo::ScaleType TrayBackgroundView::GetPaintScaleType() const {
+  return views::PaintInfo::ScaleType::kUniformScaling;
 }
 
 TrayBubbleView* TrayBackgroundView::GetBubbleView() {
