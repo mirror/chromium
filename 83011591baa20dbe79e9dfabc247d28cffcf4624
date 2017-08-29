@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "760e1e51_8a9b9a44",
+        "filename": "chrome/browser/chromeos/arc/voice_interaction/arc_voice_interaction_framework_service.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 306,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-08-29T19:53:32Z",
+      "side": 1,
+      "message": "Re: my previous comment. Please only prefix actionable stuff with TODO. A better structure for this is lay out the state of affairs in a large comment _and then_\n\n // TODO(muyuanli): Remove the old flag?",
+      "range": {
+        "startLine": 306,
+        "startChar": 7,
+        "endLine": 306,
+        "endChar": 23
+      },
+      "revId": "83011591baa20dbe79e9dfabc247d28cffcf4624",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf43f138_f82f519a",
+        "filename": "chrome/browser/chromeos/arc/voice_interaction/arc_voice_interaction_framework_service.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 399,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-08-29T19:53:32Z",
+      "side": 1,
+      "message": "What happened with Xiaohui\u0027s suggestions? Is there a problem with not resetting |should_start_runtime_flow_| when |framework_instance| is nullptr?",
+      "range": {
+        "startLine": 398,
+        "startChar": 0,
+        "endLine": 399,
+        "endChar": 13
+      },
+      "revId": "83011591baa20dbe79e9dfabc247d28cffcf4624",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
