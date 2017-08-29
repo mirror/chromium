@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "12c47a21_f21a1ef8",
+        "filename": "chrome/browser/extensions/extension_service_sync_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 2711,
+      "author": {
+        "id": 1223356
+      },
+      "writtenOn": "2017-08-29T18:27:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1ac3c229_90055361",
+      "revId": "20bbe5fc5fcdd6010c5af162c9262d0bb3e8ecdb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5035ce3f_6af4d4cc",
         "filename": "chrome/browser/extensions/extension_service_sync_unittest.cc",
         "patchSetId": 4
@@ -33,6 +51,24 @@
       "revId": "20bbe5fc5fcdd6010c5af162c9262d0bb3e8ecdb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58814999_b314d338",
+        "filename": "chrome/browser/extensions/extension_service_sync_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 2712,
+      "author": {
+        "id": 1223356
+      },
+      "writtenOn": "2017-08-29T18:27:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5035ce3f_6af4d4cc",
+      "revId": "20bbe5fc5fcdd6010c5af162c9262d0bb3e8ecdb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "7f637dff_fe075649",
+        "filename": "chrome/browser/extensions/extension_service_sync_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 2716,
+      "author": {
+        "id": 1223356
+      },
+      "writtenOn": "2017-08-29T18:27:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5a916ca1_1816b4f1",
+      "revId": "20bbe5fc5fcdd6010c5af162c9262d0bb3e8ecdb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2b56a810_8175bbb4",
         "filename": "chrome/browser/extensions/extension_service_sync_unittest.cc",
         "patchSetId": 4
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "532ae79c_77269652",
+        "filename": "chrome/browser/extensions/extension_service_sync_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 2734,
+      "author": {
+        "id": 1223356
+      },
+      "writtenOn": "2017-08-29T18:27:56Z",
+      "side": 1,
+      "message": "This code is trying to test the \"last line of defense\" blacklist-related code in ExtensionSyncService::CreateSyncData.\n\nThe rest of the system knows that a blacklisted extension shouldn\u0027t get synced, so we need to work around it to test the CreateSyncData logic.\n\nI can remove the test if you think it will do more harm than good.",
+      "parentUuid": "2b56a810_8175bbb4",
+      "revId": "20bbe5fc5fcdd6010c5af162c9262d0bb3e8ecdb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "98964bce_1350eed0",
         "filename": "chrome/browser/extensions/extension_sync_service.cc",
         "patchSetId": 4
@@ -81,6 +153,24 @@
       "writtenOn": "2017-08-29T16:04:23Z",
       "side": 1,
       "message": "Let\u0027s also confirm that greylisted extensions are disabled:\nBlacklistState blacklist_state \u003d\n    extension_prefs-\u003eGetExtensionBlacklistState(extension.id());\nif (blacklist_state \u003d\u003d extensions::BLACKLISTED_MALWARE) {\n  enabled \u003d false;\n  NOTREACHED() \u003c\u003c ...;\n}\nDCHECK(!enabled || blacklist_state \u003d\u003d extensions::BLACKLISTED_NONE) \u003c\u003c\n    \"Extensions that are greylisted should not be enabled.\";",
+      "revId": "20bbe5fc5fcdd6010c5af162c9262d0bb3e8ecdb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60f9a617_cb4c7c0d",
+        "filename": "chrome/browser/extensions/extension_sync_service.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 1223356
+      },
+      "writtenOn": "2017-08-29T18:27:56Z",
+      "side": 1,
+      "message": "Won\u0027t this get hit if someone with DCHECKs enabled manually re-enables a greylisted extension?\n\nFrom what I understand, manually re-enabling a greylisted extension changes the disable reason from DISABLED_GREYLIST to DISABLE_NONE. I don\u0027t think it touches the blacklist_state; the extension will stay in BLACKLISTED_FOO until it\u0027s removed from the server-side greylist.",
+      "parentUuid": "98964bce_1350eed0",
       "revId": "20bbe5fc5fcdd6010c5af162c9262d0bb3e8ecdb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
