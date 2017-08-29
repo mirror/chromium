@@ -47,7 +47,6 @@
 #include "chrome/browser/content_settings/tab_specific_content_settings.h"
 #include "chrome/browser/defaults.h"
 #include "chrome/browser/download/download_prefs.h"
-#include "chrome/browser/font_family_cache.h"
 #include "chrome/browser/language/chrome_language_detection_client.h"
 #include "chrome/browser/media/router/media_router_feature.h"
 #include "chrome/browser/media/router/presentation_service_delegate_impl.h"
@@ -2381,28 +2380,6 @@ void ChromeContentBrowserClient::OverrideWebkitPrefs(
 // Fill font preferences. These are not registered on Android
 // - http://crbug.com/308033, http://crbug.com/696364.
 #if !defined(OS_ANDROID)
-  FontFamilyCache::FillFontFamilyMap(profile,
-                                     prefs::kWebKitStandardFontFamilyMap,
-                                     &web_prefs->standard_font_family_map);
-  FontFamilyCache::FillFontFamilyMap(profile,
-                                     prefs::kWebKitFixedFontFamilyMap,
-                                     &web_prefs->fixed_font_family_map);
-  FontFamilyCache::FillFontFamilyMap(profile,
-                                     prefs::kWebKitSerifFontFamilyMap,
-                                     &web_prefs->serif_font_family_map);
-  FontFamilyCache::FillFontFamilyMap(profile,
-                                     prefs::kWebKitSansSerifFontFamilyMap,
-                                     &web_prefs->sans_serif_font_family_map);
-  FontFamilyCache::FillFontFamilyMap(profile,
-                                     prefs::kWebKitCursiveFontFamilyMap,
-                                     &web_prefs->cursive_font_family_map);
-  FontFamilyCache::FillFontFamilyMap(profile,
-                                     prefs::kWebKitFantasyFontFamilyMap,
-                                     &web_prefs->fantasy_font_family_map);
-  FontFamilyCache::FillFontFamilyMap(profile,
-                                     prefs::kWebKitPictographFontFamilyMap,
-                                     &web_prefs->pictograph_font_family_map);
-
   web_prefs->default_font_size =
       prefs->GetInteger(prefs::kWebKitDefaultFontSize);
   web_prefs->default_fixed_font_size =
