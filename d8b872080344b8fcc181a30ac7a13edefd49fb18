@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "07242621_2120e5e9",
+        "filename": "content/browser/service_worker/service_worker_version.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 825,
+      "author": {
+        "id": 1003324
+      },
+      "writtenOn": "2017-08-29T14:55:12Z",
+      "side": 1,
+      "message": "Hold on to a validator instead. The validator owns the policy.",
+      "parentUuid": "598f6e4b_56486e5c",
+      "revId": "d8b872080344b8fcc181a30ac7a13edefd49fb18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9aabd6f6_2bd6d4e1",
         "filename": "content/common/origin_trials/trial_policy_impl.h",
         "patchSetId": 5
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "62c4b566_51f60b1b",
+        "filename": "content/common/origin_trials/trial_policy_impl.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1003324
+      },
+      "writtenOn": "2017-08-29T14:55:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9aabd6f6_2bd6d4e1",
+      "range": {
+        "startLine": 17,
+        "startChar": 13,
+        "endLine": 17,
+        "endChar": 30
+      },
+      "revId": "d8b872080344b8fcc181a30ac7a13edefd49fb18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "15790d13_d59936a5",
         "filename": "third_party/WebKit/common/origin_trials/trial_policy.h",
         "patchSetId": 5
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "0e60e9a9_8acc8c4a",
+        "filename": "third_party/WebKit/common/origin_trials/trial_policy.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1003324
+      },
+      "writtenOn": "2017-08-29T14:55:12Z",
+      "side": 1,
+      "message": "IsOriginSecure accepts a GURL (https://cs.chromium.org/chromium/src/content/public/common/origin_util.h?type\u003dcs\u0026q\u003disoriginsecure\u0026l\u003d20), fixing that would be large-ish for now (filed https://bugs.chromium.org/p/chromium/issues/detail?id\u003d756994 to track).",
+      "parentUuid": "15790d13_d59936a5",
+      "revId": "d8b872080344b8fcc181a30ac7a13edefd49fb18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3988c8f7_f15b14e8",
         "filename": "third_party/WebKit/common/origin_trials/trial_token.h",
         "patchSetId": 5
@@ -73,6 +133,24 @@
       "revId": "d8b872080344b8fcc181a30ac7a13edefd49fb18",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5e45126_3cb3388c",
+        "filename": "third_party/WebKit/common/origin_trials/trial_token.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1003324
+      },
+      "writtenOn": "2017-08-29T14:55:12Z",
+      "side": 1,
+      "message": "I\u0027ll export, I think it\u0027s prettier if i can blinkTrialTokenStatus but then I wouldn\u0027t be able to forward declare the enum.",
+      "parentUuid": "3988c8f7_f15b14e8",
+      "revId": "d8b872080344b8fcc181a30ac7a13edefd49fb18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -96,6 +174,30 @@
       "revId": "d8b872080344b8fcc181a30ac7a13edefd49fb18",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "798efa54_68a11da1",
+        "filename": "third_party/WebKit/common/origin_trials/trial_token_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 1003324
+      },
+      "writtenOn": "2017-08-29T14:55:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bf885d7c_92e844d4",
+      "range": {
+        "startLine": 234,
+        "startChar": 2,
+        "endLine": 234,
+        "endChar": 7
+      },
+      "revId": "d8b872080344b8fcc181a30ac7a13edefd49fb18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -139,6 +241,30 @@
     },
     {
       "key": {
+        "uuid": "934de725_c7f7f46a",
+        "filename": "third_party/WebKit/common/origin_trials/trial_token_validator.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1003324
+      },
+      "writtenOn": "2017-08-29T14:55:12Z",
+      "side": 1,
+      "message": "I don\u0027t think so anymore. Previously tests wanted to mock out this class.",
+      "parentUuid": "aade223b_585339ab",
+      "range": {
+        "startLine": 38,
+        "startChar": 2,
+        "endLine": 38,
+        "endChar": 9
+      },
+      "revId": "d8b872080344b8fcc181a30ac7a13edefd49fb18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6bac3017_f8cdd02d",
         "filename": "third_party/WebKit/common/origin_trials/trial_token_validator.h",
         "patchSetId": 5
@@ -153,6 +279,24 @@
       "revId": "d8b872080344b8fcc181a30ac7a13edefd49fb18",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9a61c78_5df1d33f",
+        "filename": "third_party/WebKit/common/origin_trials/trial_token_validator.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1003324
+      },
+      "writtenOn": "2017-08-29T14:55:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6bac3017_f8cdd02d",
+      "revId": "d8b872080344b8fcc181a30ac7a13edefd49fb18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {

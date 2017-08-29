@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "2fd8ab20_66ebf2ff",
+        "filename": "content/browser/service_worker/service_worker_version.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1003324
+      },
+      "writtenOn": "2017-08-29T14:55:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "85916d9f_a4f4e47e",
+      "revId": "390b97b3312ed55a89d6ff7faa8ae5e5fc19d0ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "66572f98_eafc8742",
         "filename": "content/browser/service_worker/service_worker_version.h",
         "patchSetId": 8
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-23T15:28:41Z",
       "side": 1,
       "message": "nit: forward decl seems fine",
+      "revId": "390b97b3312ed55a89d6ff7faa8ae5e5fc19d0ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e669c86_b68d11b1",
+        "filename": "content/browser/service_worker/service_worker_version.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1003324
+      },
+      "writtenOn": "2017-08-29T14:55:12Z",
+      "side": 1,
+      "message": "There is the inner type::FeaturesToTokensMap.",
+      "parentUuid": "66572f98_eafc8742",
       "revId": "390b97b3312ed55a89d6ff7faa8ae5e5fc19d0ea",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "e12e22fa_a847872a",
+        "filename": "content/common/origin_trials/trial_policy_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1003324
+      },
+      "writtenOn": "2017-08-29T14:55:12Z",
+      "side": 1,
+      "message": "For 1: the header would move, but the glue necessarily stays inside content.\n\n2: I had a change I wanted to see there. It is part of the content public interface so maybe it can\u0027t be moved without breaking other embedders... I don\u0027t know how important that is.\n\n3: [Science dog] I have no idea what I\u0027m doing.",
+      "parentUuid": "e9e9fa4a_10dee7aa",
+      "revId": "390b97b3312ed55a89d6ff7faa8ae5e5fc19d0ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0e8c872e_2ca22a96",
         "filename": "content/renderer/origin_trials/web_trial_token_validator_impl.h",
         "patchSetId": 8
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "69d305b5_c24565f7",
+        "filename": "content/renderer/origin_trials/web_trial_token_validator_impl.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1003324
+      },
+      "writtenOn": "2017-08-29T14:55:12Z",
+      "side": 1,
+      "message": "My plan is to remove the WebTrialToken validator and just call this directly. However there are 2 points to make.\n - I want to split removal this out in a separate CL to keep this change smaller if possible.\n - The types expected and allowed in WebKit/common are the chromium types, call sites would need to translate to the types to call this. This is currently done in the WebTrialTokenValidatorImpl which can import both the WebSecurityOrigin on the blink side and url::Origin on the content side.\n - There is an unresolved issue with translating between the two origin types.",
+      "parentUuid": "0e8c872e_2ca22a96",
+      "revId": "390b97b3312ed55a89d6ff7faa8ae5e5fc19d0ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5bba2dc5_92f33b0f",
         "filename": "third_party/WebKit/Source/core/DEPS",
         "patchSetId": 8
@@ -81,6 +153,24 @@
       "writtenOn": "2017-08-23T15:28:41Z",
       "side": 1,
       "message": "nit: for now can you always use full-path, i.e. \"+third_party/WebKit/common\"",
+      "revId": "390b97b3312ed55a89d6ff7faa8ae5e5fc19d0ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d25d729d_0c94d7ee",
+        "filename": "third_party/WebKit/Source/core/DEPS",
+        "patchSetId": 8
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1003324
+      },
+      "writtenOn": "2017-08-29T14:55:12Z",
+      "side": 1,
+      "message": "Eventually needed to do this to upload a later change.",
+      "parentUuid": "5bba2dc5_92f33b0f",
       "revId": "390b97b3312ed55a89d6ff7faa8ae5e5fc19d0ea",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -140,6 +230,24 @@
     },
     {
       "key": {
+        "uuid": "c5ca7fb4_7b487806",
+        "filename": "third_party/WebKit/Source/core/origin_trials/OriginTrialContext.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1003324
+      },
+      "writtenOn": "2017-08-29T14:55:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b0934299_7cc1c4f6",
+      "revId": "390b97b3312ed55a89d6ff7faa8ae5e5fc19d0ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "74ec30d5_c0501db7",
         "filename": "third_party/WebKit/Source/platform/exported/DEPS",
         "patchSetId": 8
@@ -157,6 +265,24 @@
     },
     {
       "key": {
+        "uuid": "3cc482ff_9f61a6b6",
+        "filename": "third_party/WebKit/Source/platform/exported/DEPS",
+        "patchSetId": 8
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1003324
+      },
+      "writtenOn": "2017-08-29T14:55:12Z",
+      "side": 1,
+      "message": "File no longer necessary, covered by parent DEPS already.",
+      "parentUuid": "74ec30d5_c0501db7",
+      "revId": "390b97b3312ed55a89d6ff7faa8ae5e5fc19d0ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1e683bad_9a304291",
         "filename": "third_party/WebKit/Source/platform/exported/Platform.cpp",
         "patchSetId": 8
@@ -171,6 +297,24 @@
       "revId": "390b97b3312ed55a89d6ff7faa8ae5e5fc19d0ea",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d80058bd_a6168451",
+        "filename": "third_party/WebKit/Source/platform/exported/Platform.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1003324
+      },
+      "writtenOn": "2017-08-29T14:55:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1e683bad_9a304291",
+      "revId": "390b97b3312ed55a89d6ff7faa8ae5e5fc19d0ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
