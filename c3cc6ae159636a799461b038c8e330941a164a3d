@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "065773ac_a57f3078",
+        "filename": "chrome/browser/offline_pages/prefetch/prefetch_importer_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-08-29T17:17:49Z",
+      "side": 1,
+      "message": "Is this paradigm very common? I think the above switch won\u0027t compile if all the cases aren\u0027t handled.",
+      "revId": "c3cc6ae159636a799461b038c8e330941a164a3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d07a3ac_bff1971e",
+        "filename": "chrome/browser/offline_pages/prefetch/prefetch_importer_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-08-29T17:17:49Z",
+      "side": 1,
+      "message": "Can the UMA be integrated into NotifyImportCompleted?",
+      "revId": "c3cc6ae159636a799461b038c8e330941a164a3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb10997b_80be994b",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 28095,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-08-29T17:17:49Z",
+      "side": 1,
+      "message": "nit: s/a/an/\n\nAlso not sure if referring to internal enums is useful here, given the potential audience.  We should leave it to code that this is what it represents.",
+      "revId": "c3cc6ae159636a799461b038c8e330941a164a3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42cd547b_c9f359fa",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 28098,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-08-29T17:17:49Z",
+      "side": 1,
+      "message": "same",
+      "revId": "c3cc6ae159636a799461b038c8e330941a164a3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
