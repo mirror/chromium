@@ -71,6 +71,8 @@ void TestingSpellCheckProvider::RequestDictionary() {}
 void TestingSpellCheckProvider::NotifyChecked(const base::string16& word,
                                               bool misspelled) {}
 
+void TestingSpellCheckProvider::ToggleSpellCheck(bool, bool) {}
+
 void TestingSpellCheckProvider::CallSpellingService(
     const base::string16& text,
     CallSpellingServiceCallback callback) {
@@ -80,6 +82,12 @@ void TestingSpellCheckProvider::CallSpellingService(
 #else
   NOTREACHED();
 #endif
+}
+
+void TestingSpellCheckProvider::RequestTextCheck(
+    const base::string16& text,
+    RequestTextCheckCallback callback) {
+  NOTREACHED();
 }
 
 void TestingSpellCheckProvider::OnCallSpellingService(
