@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b7abecae_0adffac6",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsCarousel.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-08-29T16:31:53Z",
+      "side": 1,
+      "message": "why not create it in the constructor and make it final? Doing so here also makes it possible to override an existing tracker if the recycler view decides to create more than one view holder.\n\nAlso preferably don\u0027t make this an instance method. The view holder is static, so just create it with `new SuggestionsCarousel.ViewHolder(parent)`",
+      "range": {
+        "startLine": 51,
+        "startChar": 8,
+        "endLine": 51,
+        "endChar": 26
+      },
+      "revId": "f2dc7b93dfb5387e9c73beecec56f39bea9c6fec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a20c37c8_4fe5f359",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsCarousel.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-08-29T16:31:53Z",
+      "side": 1,
+      "message": "probably could be lambda if you initialise the tracker in the constructor.",
+      "range": {
+        "startLine": 56,
+        "startChar": 16,
+        "endLine": 56,
+        "endChar": 28
+      },
+      "revId": "f2dc7b93dfb5387e9c73beecec56f39bea9c6fec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9fce9926_b4aebdcd",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsCarousel.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-08-29T16:31:53Z",
+      "side": 1,
+      "message": "asserting this is not considered best practice anymore, see https://chromium-review.googlesource.com/c/chromium/src/+/633444 and linked conversation",
+      "range": {
+        "startLine": 90,
+        "startChar": 15,
+        "endLine": 90,
+        "endChar": 21
+      },
+      "revId": "f2dc7b93dfb5387e9c73beecec56f39bea9c6fec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f91fa9d4_c0b9b05c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsCarousel.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-08-29T16:31:53Z",
+      "side": 1,
+      "message": "defensively check that the state is SCROLL_STATE_DRAGGING ? Implementation detail could or something else could trigger event changes but the above state explicitly mentions user intervention.",
+      "range": {
+        "startLine": 119,
+        "startChar": 80,
+        "endLine": 119,
+        "endChar": 88
+      },
+      "revId": "f2dc7b93dfb5387e9c73beecec56f39bea9c6fec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
