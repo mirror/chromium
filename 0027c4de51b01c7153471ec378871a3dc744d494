@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1acf9fbd_f2703c81",
+        "filename": "ui/app_list/views/contents_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-08-29T20:39:33Z",
+      "side": 1,
+      "message": "Just because we now display in this order: \"answer card, app tile view, searches list view\". So I make this change. It doesn\u0027t hurt or break anything actually.",
+      "parentUuid": "60813732_46b6974a",
+      "revId": "0027c4de51b01c7153471ec378871a3dc744d494",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d5cddaef_b957858c",
         "filename": "ui/app_list/views/search_result_list_view_unittest.cc",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-29T20:00:19Z",
       "side": 1,
       "message": "Why do we need this \"if\" ?",
+      "revId": "0027c4de51b01c7153471ec378871a3dc744d494",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff00ec3e_a2dd96e5",
+        "filename": "ui/app_list/views/search_result_list_view_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-08-29T20:39:33Z",
+      "side": 1,
+      "message": "Because I have test_with_fullscreen_ \u003d true initialized. I think new added tests for fullscreen launcher can do TEST_F only. Though in this test, we don\u0027t have new tests that are not applied to old launcher yet.\n\nIf you prefer if all tests are TEST_P then remove this \"if\", I can remove this \"if\".",
+      "parentUuid": "d5cddaef_b957858c",
       "revId": "0027c4de51b01c7153471ec378871a3dc744d494",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -64,6 +100,24 @@
       "writtenOn": "2017-08-29T20:00:19Z",
       "side": 1,
       "message": "nit: #include \u003cmemory\u003e for unique_ptr",
+      "revId": "0027c4de51b01c7153471ec378871a3dc744d494",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "14a50d11_b19af2c8",
+        "filename": "ui/app_list/views/search_result_list_view_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-08-29T20:39:33Z",
+      "side": 1,
+      "message": "done, also added on other test files who are missing this.",
+      "parentUuid": "81cbbf1d_b72265a5",
       "revId": "0027c4de51b01c7153471ec378871a3dc744d494",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
