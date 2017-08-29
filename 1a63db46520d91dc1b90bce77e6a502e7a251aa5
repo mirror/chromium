@@ -1,0 +1,112 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "24dd64c0_477d0925",
+        "filename": "chrome/browser/ssl/ssl_error_assistant.proto",
+        "patchSetId": 14
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1002611
+      },
+      "writtenOn": "2017-08-29T19:25:13Z",
+      "side": 1,
+      "message": "Chrome doesn\u0027t use common_name field anymore. Instead it checks subjectAlternativeName field.\n\nCan you mention it briefly here so that whoever reads this isn\u0027t alarmed?\n\nE.g. \"Chrome doesn\u0027t use common name field for certificate validation anymore, but it\u0027s still useful for identifying MITM software.\"",
+      "revId": "1a63db46520d91dc1b90bce77e6a502e7a251aa5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51626e7f_a79de8fa",
+        "filename": "chrome/browser/ssl/ssl_error_handler.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 517,
+      "author": {
+        "id": 1002611
+      },
+      "writtenOn": "2017-08-29T19:25:13Z",
+      "side": 1,
+      "message": "Remove",
+      "range": {
+        "startLine": 517,
+        "startChar": 43,
+        "endLine": 517,
+        "endChar": 44
+      },
+      "revId": "1a63db46520d91dc1b90bce77e6a502e7a251aa5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0aabf9b_2b7e68fa",
+        "filename": "chrome/browser/ssl/ssl_error_handler.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 520,
+      "author": {
+        "id": 1002611
+      },
+      "writtenOn": "2017-08-29T19:25:13Z",
+      "side": 1,
+      "message": "nit: You can make these two separate lines, so it\u0027s a tiny bit easier to debug and see which one was empty if we hit the dcheck.",
+      "revId": "1a63db46520d91dc1b90bce77e6a502e7a251aa5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66ef2f12_b6a2e631",
+        "filename": "chrome/browser/ssl/ssl_error_handler.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 540,
+      "author": {
+        "id": 1002611
+      },
+      "writtenOn": "2017-08-29T19:25:13Z",
+      "side": 1,
+      "message": "nit: Use !mitm_software.issuer_organization_regex.empty() here",
+      "revId": "1a63db46520d91dc1b90bce77e6a502e7a251aa5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2fc98a32_4ad7b314",
+        "filename": "chrome/browser/ssl/ssl_error_handler.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 547,
+      "author": {
+        "id": 1002611
+      },
+      "writtenOn": "2017-08-29T19:25:13Z",
+      "side": 1,
+      "message": "Same as above, use !mitm_software.issuer_common_name_regex.empty()",
+      "revId": "1a63db46520d91dc1b90bce77e6a502e7a251aa5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dfc2df3e_358f5ad8",
+        "filename": "chrome/browser/ssl/ssl_error_handler_unittest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 1304,
+      "author": {
+        "id": 1002611
+      },
+      "writtenOn": "2017-08-29T19:25:13Z",
+      "side": 1,
+      "message": "Looks like there is some repeated code here: These tests build a proto, pass it to SSLErrorHandler, then run the actual test.\n\nCan we instead refactor and use TestMITMSoftwareInterstitial()? You\u0027ll want to move InitMITMSoftwareList() out of TestMITMSoftwareInterstitial. You can perhaps just create the proto and pass it to  TestMITMSoftwareInterstitial.\n\nSomething like:\n\nvoid TestMITMSoftwareInterstitial(std::unique_ptr\u003cSSLErrorAssistantConfig\u003e config_proto) {\n  ...\n}\n\nTEST_F(SSLErrorAssistantTest, MITMSoftware_CertificateMatchesCommonName) {\n  ...\n  auto config_proto \u003d ...;\n  TestMITMSoftwareInterstitial(config_proto);\n}",
+      "revId": "1a63db46520d91dc1b90bce77e6a502e7a251aa5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
