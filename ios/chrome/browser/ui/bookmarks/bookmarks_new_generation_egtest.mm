@@ -143,6 +143,7 @@ id<GREYMatcher> BookmarksBackButton() {
 // Tests that the promo view is only seen at root level and not in any of the
 // child nodes.
 - (void)testPromoViewIsSeenOnlyInRootNode {
+  EARL_GREY_TEST_DISABLED(@"Test disabled, issue with back button.");
   if (IsIPadIdiom()) {
     EARL_GREY_TEST_DISABLED(@"Test disabled on iPad.");
   }
