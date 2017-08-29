@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1c2a390a_93046274",
+        "filename": "ash/shelf/shelf_layout_manager.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1213,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2017-08-29T01:20:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "83f43051_fc7edeff",
+      "revId": "edd95a157ffaa76904022d2bbbe211742108efcc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e696a0b2_b5dc16b0",
         "filename": "ash/shelf/shelf_layout_manager.cc",
         "patchSetId": 6
@@ -33,6 +51,24 @@
       "revId": "edd95a157ffaa76904022d2bbbe211742108efcc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92137584_e56dbc4f",
+        "filename": "ash/shelf/shelf_layout_manager.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1216,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2017-08-29T01:20:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e696a0b2_b5dc16b0",
+      "revId": "edd95a157ffaa76904022d2bbbe211742108efcc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "41ef6ff6_f82e0dbe",
+        "filename": "ash/shelf/shelf_layout_manager_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 340,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2017-08-29T01:20:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1953439e_a47e303f",
+      "revId": "edd95a157ffaa76904022d2bbbe211742108efcc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "23e05d02_d189e604",
         "filename": "ash/shelf/shelf_layout_manager_unittest.cc",
         "patchSetId": 6
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "9f253c74_629dd623",
+        "filename": "ash/shelf/shelf_layout_manager_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1467,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2017-08-29T01:20:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "23e05d02_d189e604",
+      "revId": "edd95a157ffaa76904022d2bbbe211742108efcc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ae280e7d_f6d2cd18",
         "filename": "ash/shell.h",
         "patchSetId": 6
@@ -81,6 +153,24 @@
       "writtenOn": "2017-08-28T23:59:22Z",
       "side": 1,
       "message": "Can you either move the other AppList methods out of Shell in this CL, or if that\u0027s too big a change, file a bug for it and do it in a follow up?",
+      "revId": "edd95a157ffaa76904022d2bbbe211742108efcc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c004f652_27b82be4",
+        "filename": "ash/shell.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 539,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2017-08-29T01:20:54Z",
+      "side": 1,
+      "message": "Filed a ticket for this.",
+      "parentUuid": "ae280e7d_f6d2cd18",
       "revId": "edd95a157ffaa76904022d2bbbe211742108efcc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "f8711b56_09299b67",
+        "filename": "ui/app_list/presenter/app_list.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2017-08-29T01:20:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "feb64d7f_b74f6616",
+      "revId": "edd95a157ffaa76904022d2bbbe211742108efcc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c29bce01_90222834",
         "filename": "ui/app_list/presenter/app_list.h",
         "patchSetId": 6
@@ -118,6 +226,24 @@
       "revId": "edd95a157ffaa76904022d2bbbe211742108efcc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5fb97619_59b7aa66",
+        "filename": "ui/app_list/presenter/app_list.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2017-08-29T01:20:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c29bce01_90222834",
+      "revId": "edd95a157ffaa76904022d2bbbe211742108efcc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -138,6 +264,24 @@
     },
     {
       "key": {
+        "uuid": "61db6468_47a1f682",
+        "filename": "ui/app_list/presenter/app_list_presenter_impl.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2017-08-29T01:20:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ae06119b_b4634049",
+      "revId": "edd95a157ffaa76904022d2bbbe211742108efcc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "de41a6f7_439f2794",
         "filename": "ui/app_list/presenter/test/test_app_list_presenter.h",
         "patchSetId": 6
@@ -152,6 +296,24 @@
       "revId": "edd95a157ffaa76904022d2bbbe211742108efcc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62fc1e6d_f1f459f8",
+        "filename": "ui/app_list/presenter/test/test_app_list_presenter.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2017-08-29T01:20:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "de41a6f7_439f2794",
+      "revId": "edd95a157ffaa76904022d2bbbe211742108efcc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
