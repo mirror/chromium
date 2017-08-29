@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "509fb6f8_bee4e816",
+        "filename": "content/browser/service_worker/service_worker_registration_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 284,
+      "author": {
+        "id": 1223459
+      },
+      "writtenOn": "2017-08-29T08:12:38Z",
+      "side": 1,
+      "message": "That\u0027s because ServiceWorkerVersion::DidSkipWaiting had a running_status() check before, we deleted this check.",
+      "parentUuid": "006d9be8_5ce5bbd3",
+      "revId": "b6b8eb0b044d8b32a48d9d20b8b2a77d14978931",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "088497c3_a46f034e",
         "filename": "content/browser/service_worker/service_worker_version.cc",
         "patchSetId": 6
@@ -33,6 +51,24 @@
       "revId": "b6b8eb0b044d8b32a48d9d20b8b2a77d14978931",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ae0659e_deab65b2",
+        "filename": "content/browser/service_worker/service_worker_version.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 349,
+      "author": {
+        "id": 1223459
+      },
+      "writtenOn": "2017-08-29T08:12:38Z",
+      "side": 1,
+      "message": "That\u0027s great, thanks. Done",
+      "parentUuid": "088497c3_a46f034e",
+      "revId": "b6b8eb0b044d8b32a48d9d20b8b2a77d14978931",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "9b5e0bb0_be54ef31",
+        "filename": "content/browser/service_worker/service_worker_version.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 358,
+      "author": {
+        "id": 1223459
+      },
+      "writtenOn": "2017-08-29T08:12:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9bd3deb0_e00b9535",
+      "revId": "b6b8eb0b044d8b32a48d9d20b8b2a77d14978931",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2fc23fff_e3e23ba5",
         "filename": "content/browser/service_worker/service_worker_version.cc",
         "patchSetId": 6
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "cb57b45e_db9605a8",
+        "filename": "content/browser/service_worker/service_worker_version.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1332,
+      "author": {
+        "id": 1223459
+      },
+      "writtenOn": "2017-08-29T08:12:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2fc23fff_e3e23ba5",
+      "revId": "b6b8eb0b044d8b32a48d9d20b8b2a77d14978931",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e8d89f89_2479b7bf",
         "filename": "content/browser/service_worker/service_worker_version.cc",
         "patchSetId": 6
@@ -81,6 +153,24 @@
       "writtenOn": "2017-08-28T05:08:02Z",
       "side": 1,
       "message": "According to the spec, we\u0027re supposed to resolve the promise if we\u0027re in INSTALLED but activation could not immediately occur.I think you could handle that at the end of this function:\n\n// We tried but could not trigger activation yet (the active version must be busy). The spec says to resolve the promises after trying to activate, even though we are still waiting to activate.\nif (status \u003d\u003d INSTALLED) {\n  // resolve the promises\n}",
+      "revId": "b6b8eb0b044d8b32a48d9d20b8b2a77d14978931",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51f47b73_2ede9d61",
+        "filename": "content/browser/service_worker/service_worker_version.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1349,
+      "author": {
+        "id": 1223459
+      },
+      "writtenOn": "2017-08-29T08:12:38Z",
+      "side": 1,
+      "message": "Great, thanks!",
+      "parentUuid": "e8d89f89_2479b7bf",
       "revId": "b6b8eb0b044d8b32a48d9d20b8b2a77d14978931",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
