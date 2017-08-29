@@ -9,7 +9,17 @@
   <link rel="stylesheet" href="chrome-search://local-ntp/voice.css"></link>
   <script src="test_utils.js"></script>
   <!-- Keep templates in sync with local_ntp.html. -->
-  <!-- TODO(oskopek): Add templates along with tests. -->
+  <template id="voice-microphone-template">
+    <div id="voice-button-container" class="button-container">
+      <!-- The audio level animation. -->
+      <span id="voice-level" class="level"></span>
+      <!-- The microphone button. -->
+      <span id="voice-button" class="button">
+        <!-- The microphone icon (in CSS). -->
+        <div class="microphone"></div>
+      </span>
+    </div>
+  </template>
 </head>
 <body>
 </body>
