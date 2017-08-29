@@ -290,6 +290,18 @@ Polymer({
 
     this.defaultNetwork = firstConnectedNetwork;
 
+    // Create a Cellular entry in networkStates if there is a Cellular device.
+    if (newDeviceStates.Cellular && newNetworkStateLists.Cellular.length == 0) {
+      newNetworkStateLists.Cellular.push({
+        Cellular: {
+          SIMPresent: newDeviceStates.Cellular.SIMPresent,
+          SIMLockStatus: newDeviceStates.Cellular.SIMLockStatus,
+        },
+        GUID: '',
+        Type: CrOnc.Type.CELLULAR,
+      });
+    }
+
     // Create a VPN entry in deviceStates if there are any VPN networks.
     if (newNetworkStateLists.VPN && newNetworkStateLists.VPN.length > 0) {
       newDeviceStates.VPN = {
