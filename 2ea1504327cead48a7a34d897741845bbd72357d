@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5754b027_a18d1f29",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_win.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2017-08-29T09:54:05Z",
+      "side": 1,
+      "message": "Does this need to be guarded with a Windows version check, or is the check in notification_display_service_factory.cc sufficient?",
+      "range": {
+        "startLine": 250,
+        "startChar": 2,
+        "endLine": 250,
+        "endChar": 29
+      },
+      "revId": "2ea1504327cead48a7a34d897741845bbd72357d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
