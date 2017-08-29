@@ -25,6 +25,7 @@
 #include "base/strings/utf_string_conversions.h"
 #include "base/task_scheduler/post_task.h"
 #include "base/time/time.h"
+#include "base/win/win_util.h"
 #include "chrome/browser/browser_process.h"
 #include "chrome/grit/chromium_strings.h"
 #include "components/password_manager/core/browser/password_manager.h"
@@ -221,94 +222,103 @@ void DelayReportOsPassword() {
 
 bool AuthenticateUser(gfx::NativeWindow window) {
   bool retval = false;
-  CREDUI_INFO cui = {};
-  WCHAR username[CREDUI_MAX_USERNAME_LENGTH+1] = {};
-  WCHAR displayname[CREDUI_MAX_USERNAME_LENGTH+1] = {};
-  WCHAR password[CREDUI_MAX_PASSWORD_LENGTH+1] = {};
-  DWORD username_length = CREDUI_MAX_USERNAME_LENGTH;
+  WCHAR username[CREDUI_MAX_USERNAME_LENGTH + 1] = {};
+  WCHAR domain[CREDUI_MAX_USERNAME_LENGTH + 1] = {};
+  DWORD username_length = arraysize(username);
+
+  // On a domain, we obtain the User Principal Name for domain authentication.
+  // This may not be a domained joined machine, so if this cannot be retrieved
+  // then make sure |principal| is empty.
+  if (!GetUserNameEx(NameSamCompatible, username, &username_length)) {
+    DLOG(ERROR) << "Unable to obtain username " << GetLastError();
+    return false;
+  }
+  
+  if (!base::win::IsEnrolledToDomain()) {
+    // As we are on a workstation, it's possible the user has no password,
+    // so check here.
+    if (CheckBlankPassword(username))
+      return true;
+  }
+
   base::string16 product_name = l10n_util::GetStringUTF16(IDS_PRODUCT_NAME);
   base::string16 password_prompt =
       l10n_util::GetStringUTF16(IDS_PASSWORDS_PAGE_AUTHENTICATION_PROMPT);
-  HANDLE handle = INVALID_HANDLE_VALUE;
-  size_t tries = 0;
-  bool use_displayname = false;
-  bool use_principalname = false;
-  DWORD logon_result = 0;
-
-  // On a domain, we obtain the User Principal Name
-  // for domain authentication.
-  if (GetUserNameEx(NameUserPrincipal, username, &username_length)) {
-    use_principalname = true;
-  } else {
-    username_length = CREDUI_MAX_USERNAME_LENGTH;
-    // Otherwise, we're a workstation, use the plain local username.
-    if (!GetUserName(username, &username_length)) {
-      DLOG(ERROR) << "Unable to obtain username " << GetLastError();
-      return false;
-    } else {
-      // As we are on a workstation, it's possible the user
-      // has no password, so check here.
-      if (CheckBlankPassword(username))
-        return true;
-    }
-  }
-
-  // Try and obtain a friendly display name.
-  username_length = CREDUI_MAX_USERNAME_LENGTH;
-  if (GetUserNameEx(NameDisplay, displayname, &username_length))
-    use_displayname = true;
-
-  cui.cbSize = sizeof(CREDUI_INFO);
-  cui.hwndParent = NULL;
+  CREDUI_INFO cui;
+  cui.cbSize = sizeof(cui);
   cui.hwndParent = window->GetHost()->GetAcceleratedWidget();
-
   cui.pszMessageText = password_prompt.c_str();
   cui.pszCaptionText = product_name.c_str();
+  cui.hbmBanner = nullptr;
 
-  cui.hbmBanner = NULL;
-  BOOL save_password = FALSE;
-  DWORD credErr = NO_ERROR;
-
+  size_t tries = 0;
   do {
     tries++;
 
     // TODO(wfh) Make sure we support smart cards here.
-    credErr = CredUIPromptForCredentials(
-        &cui,
-        product_name.c_str(),
-        NULL,
-        0,
-        use_displayname ? displayname : username,
-        CREDUI_MAX_USERNAME_LENGTH+1,
-        password,
-        CREDUI_MAX_PASSWORD_LENGTH+1,
-        &save_password,
-        kCredUiDefaultFlags |
-        (tries > 1 ? CREDUI_FLAGS_INCORRECT_PASSWORD : 0));
+    ULONG auth_package = 0;
+    LPVOID cred_buffer = nullptr;
+    ULONG cred_buffer_size = 0;
+    DWORD err = CredUIPromptForWindowsCredentials(
+        &cui, 0, &auth_package,
+        nullptr, 0,
+        &cred_buffer, &cred_buffer_size,
+        nullptr,
+        CREDUIWIN_ENUMERATE_CURRENT_USER);
+    if (err != ERROR_SUCCESS)
+      break;
 
-    if (credErr == NO_ERROR) {
-      logon_result = LogonUser(username,
-                               use_principalname ? NULL : L".",
-                               password,
-                               LOGON32_LOGON_INTERACTIVE,
-                               LOGON32_PROVIDER_DEFAULT,
-                               &handle);
-      if (logon_result) {
-        retval = true;
-        CloseHandle(handle);
-      } else {
-        if (GetLastError() == ERROR_ACCOUNT_RESTRICTION &&
-            wcslen(password) == 0) {
-          // Password is blank, so permit.
-          retval = true;
-        } else {
-          DLOG(WARNING) << "Unable to authenticate " << GetLastError();
-        }
-      }
-      SecureZeroMemory(password, sizeof(password));
+    // Try to unpack the authentication buffer.  If this fails, try again.
+    WCHAR cred_username[CREDUI_MAX_USERNAME_LENGTH + 1] = {};
+    DWORD cred_username_length = arraysize(cred_username);
+    WCHAR cred_domain[CREDUI_MAX_USERNAME_LENGTH + 1] = {};
+    DWORD cred_domain_length = arraysize(cred_domain);
+    WCHAR cred_password[CREDUI_MAX_PASSWORD_LENGTH + 1] = {};
+    DWORD cred_password_length = arraysize(cred_password);
+    if(!CredUnPackAuthenticationBuffer(0,
+                                       cred_buffer, cred_buffer_size,
+                                       cred_username, &cred_username_length,
+                                       cred_domain, &cred_domain_length,
+                                       cred_password, &cred_password_length)) {
+      continue;
     }
-  } while (credErr == NO_ERROR &&
-           (retval == false && tries < kMaxPasswordRetries));
+
+    // if the UI prompt was not for the logged on user, try again.
+    if (wcsicmp(cred_username, username) != 0)
+      continue;
+
+    if (cred_domain[0] == 0 && wcschr(cred_username, L'\\') != nullptr) {
+      WCHAR* context;
+      wcscpy_s(domain, 128, wcstok_s(cred_username, L"\\", &context));
+      wcscpy_s(username, 128, wcstok_s(nullptr, L"\\", &context));
+    } else {
+      continue;
+    }
+
+    // Value the returned credentials by trying to logon the user.
+    HANDLE handle = INVALID_HANDLE_VALUE;
+    DWORD logon_result = LogonUser(username, domain, cred_password,
+                                    LOGON32_LOGON_INTERACTIVE,
+                                    LOGON32_PROVIDER_DEFAULT,
+                                    &handle);
+    if (logon_result) {
+      LOG(ERROR) << "rogerta logon good";
+      retval = true;
+      CloseHandle(handle);
+    } else {
+      LOG(ERROR) << "rogerta logon bad";
+      if (GetLastError() == ERROR_ACCOUNT_RESTRICTION &&
+          wcslen(cred_password) == 0) {
+        LOG(ERROR) << "rogerta empty password";
+        // Password is blank, so permit.
+        retval = true;
+      } else {
+        LOG(ERROR) << "Unable to authenticate " << GetLastError();
+      }
+    }
+    SecureZeroMemory(cred_password, sizeof(cred_password));
+  } while (!retval && tries < kMaxPasswordRetries);
+
   return retval;
 }
 
