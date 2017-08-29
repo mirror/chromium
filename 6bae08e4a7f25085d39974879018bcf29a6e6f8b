@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "bc1bc14f_d2eca222",
+        "filename": "chrome/browser/ssl/ssl_error_handler.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 487,
+      "author": {
+        "id": 1229947
+      },
+      "writtenOn": "2017-08-29T19:05:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bb8793e6_db80c734",
+      "revId": "6bae08e4a7f25085d39974879018bcf29a6e6f8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "012393f7_f937b4ea",
         "filename": "chrome/browser/ssl/ssl_error_handler.cc",
         "patchSetId": 10
@@ -33,6 +51,24 @@
       "revId": "6bae08e4a7f25085d39974879018bcf29a6e6f8b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a54e933_c4173d71",
+        "filename": "chrome/browser/ssl/ssl_error_handler.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 514,
+      "author": {
+        "id": 1229947
+      },
+      "writtenOn": "2017-08-29T19:05:02Z",
+      "side": 1,
+      "message": "Oops, you\u0027re absolutely right. This should be a continue, and this case should also never be executed.\n\nI changed this and added a DCHECK.",
+      "parentUuid": "012393f7_f937b4ea",
+      "revId": "6bae08e4a7f25085d39974879018bcf29a6e6f8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "44ecf770_4b5da83a",
+        "filename": "chrome/browser/ssl/ssl_error_handler.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 546,
+      "author": {
+        "id": 1229947
+      },
+      "writtenOn": "2017-08-29T19:05:02Z",
+      "side": 1,
+      "message": "After restructuring this logic, this fallback case is actually used. I removed this comment.",
+      "parentUuid": "f1362e55_eea1cde1",
+      "revId": "6bae08e4a7f25085d39974879018bcf29a6e6f8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "19149ea5_8717c2e6",
         "filename": "chrome/browser/ssl/ssl_error_handler_unittest.cc",
         "patchSetId": 10
@@ -67,6 +121,24 @@
       "revId": "6bae08e4a7f25085d39974879018bcf29a6e6f8b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87f12eb2_363c5e91",
+        "filename": "chrome/browser/ssl/ssl_error_handler_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 1257,
+      "author": {
+        "id": 1229947
+      },
+      "writtenOn": "2017-08-29T19:05:02Z",
+      "side": 1,
+      "message": "It tests both! This patch includes tests for:\n\n- Certificate that matches a MITMSoftware entry with a common name and organization name (this one)\n- Certificate that matches a MITMSoftware entry\u0027s common name but does not match the entry\u0027s organization name\n- Certificate that matches a MITMSoftware entry\u0027s organization name but does not match the entry\u0027s common name \n- Certificate that matches neither\n- Certificate that doesn\u0027t have a common name or organization name\n\nI also just added:\n\n- Certificate that matches a MITMSoftware entry with just a common name\n- Certificate that matches a MITMSoftware entry with just an organization name\n\nI rewrote some comments so this should be more clear.",
+      "parentUuid": "19149ea5_8717c2e6",
+      "revId": "6bae08e4a7f25085d39974879018bcf29a6e6f8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
