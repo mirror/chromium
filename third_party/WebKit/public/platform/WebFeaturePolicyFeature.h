@@ -45,7 +45,9 @@ enum class WebFeaturePolicyFeature {
   kSyncXHR,
   // Controls access to the WebUSB API.
   kUsb,
-  LAST_FEATURE = kUsb
+  // Controls use of WebVR API.
+  kWebVr,
+  LAST_FEATURE = kWebVr
 };
 
 }  // namespace blink
