@@ -125,6 +125,24 @@
     },
     {
       "key": {
+        "uuid": "defdeb7e_bf7ba7f9",
+        "filename": "chrome/browser/ui/omnibox/chrome_omnibox_client.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 374,
+      "author": {
+        "id": 1111029
+      },
+      "writtenOn": "2017-08-29T15:02:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4afe27d7_88d5b25c",
+      "revId": "74242c5ba65098af853aea5b953956155e5435ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4f119eca_1a33ad25",
         "filename": "components/omnibox/browser/autocomplete_match.cc",
         "patchSetId": 8
