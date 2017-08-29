@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5251ef5e_2a25d57f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-08-29T06:41:54Z",
+      "side": 1,
+      "message": "This sentence is not clear. We need to have verb.\n\nLet\u0027s say \"Make ... not to use ...\".",
+      "revId": "827ae9544acc61eb8f6f170bc2a5ffc4efd03d56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5baac5a_05b37cf5",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-08-29T06:41:54Z",
+      "side": 1,
+      "message": "Let\u0027s use present tense and start sentence with subject, e.g.\n\nThis patch changes ...",
+      "revId": "827ae9544acc61eb8f6f170bc2a5ffc4efd03d56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d381324_40aa4a98",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-08-29T06:41:54Z",
+      "side": 1,
+      "message": "Please explain benefit of this patch.",
+      "revId": "827ae9544acc61eb8f6f170bc2a5ffc4efd03d56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
