@@ -16,6 +16,24 @@
       "revId": "0b402220e6f5c09bafdd9b18e53e37e47631383d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c91c0001_28d10a52",
+        "filename": "third_party/WebKit/Source/core/frame/LocalFrame.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-08-29T16:29:43Z",
+      "side": 1,
+      "message": "\u003e How would you feel about adding an enum policy to FrameTree::SetName() that controls whether or not we forward, similar to how we do it for focus?\n\nI don\u0027t like the enum policy (kSingleRenderer and kReplicate) idea:\n\n1. Real reason: kReplicate can only be used when calling FrameTree associated with a *local* frame - this leads to fragility IMO: A) dynamic casts necessary in FrameTree::SetName [e.g. to get a *Local*FrameClient] and B) need to be careful to have a *local* frame when calling FrameTree::SetName with kReplicate.\n\n2. Meh-kind-of reason: It feels weird if the current callsites in WebLocal/RemoteFrameImpl::InitializeCoreFrame would have to specify whether to replicate.\n\n\n\u003e I feel like it\u0027s confusing to have so many set names, since we have one on LocalFrame, LocalDOMWindow, and FrameTree now.\n\nFirst - maybe renaming LocalFrame::SetName would address the concern here?  OTOH, I am not sure if LocalFrame::SetNameAndReplicate is a good name.\n\nLet me try to list why the 3 methods are separate:\n\n- WebLocalFrameImpl::SetName cannot reuse LocalDOMWindow::setName, because not all local frames have an associated LocalDOMWindow (right?  I am thinking about non-html mime types like plugins or maybe svg images, but maybe I am wrong here?).  Because of this we have separate LocalFrame::SetName (introduced in this CL) and LocalDOMWindow::setName.\n\n- FrameTree::SetName is called by both local and remote frames.  The replicating LocalFrame::SetName can only be used via a local frame.\n\n\nWDYT?",
+      "parentUuid": "bc3885ca_0f61fb45",
+      "revId": "0b402220e6f5c09bafdd9b18e53e37e47631383d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

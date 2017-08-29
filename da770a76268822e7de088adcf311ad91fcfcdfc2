@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "fb78dae3_c2ae441e",
+        "filename": "third_party/WebKit/Source/core/frame/LocalDOMWindow.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1094,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-08-29T16:29:43Z",
+      "side": 0,
+      "message": "Is it okay to remove the TODO? (see also my comment above)",
+      "parentUuid": "75cf1bec_8cdcea7f",
+      "range": {
+        "startLine": 1092,
+        "startChar": 0,
+        "endLine": 1094,
+        "endChar": 74
+      },
+      "revId": "da770a76268822e7de088adcf311ad91fcfcdfc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "169e2df2_ca3896e1",
         "filename": "third_party/WebKit/Source/core/frame/LocalDOMWindow.cpp",
         "patchSetId": 2
