@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "478b96db_a732c595",
+        "filename": "components/autofill/content/renderer/DEPS",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-08-29T15:17:10Z",
+      "side": 1,
+      "message": "We should refer to a bug number.",
+      "range": {
+        "startLine": 17,
+        "startChar": 9,
+        "endLine": 17,
+        "endChar": 18
+      },
+      "revId": "aa0049de79f8bbea421f7a8349a21350192c9a26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5715087c_f549ae71",
+        "filename": "components/autofill/content/renderer/password_form_conversion_utils.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-08-29T15:17:10Z",
+      "side": 1,
+      "message": "base::Erase?\nI wonder if you still need this function.",
+      "range": {
+        "startLine": 165,
+        "startChar": 2,
+        "endLine": 165,
+        "endChar": 26
+      },
+      "revId": "aa0049de79f8bbea421f7a8349a21350192c9a26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6b3154f_2a37399a",
+        "filename": "components/autofill/content/renderer/password_form_conversion_utils.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 538,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-08-29T15:17:10Z",
+      "side": 1,
+      "message": "p isn\u0027t descriptive enough",
+      "range": {
+        "startLine": 538,
+        "startChar": 12,
+        "endLine": 538,
+        "endChar": 13
+      },
+      "revId": "aa0049de79f8bbea421f7a8349a21350192c9a26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2584fb34_9125b6e9",
+        "filename": "components/autofill/content/renderer/password_form_conversion_utils.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 554,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-08-29T15:17:10Z",
+      "side": 1,
+      "message": "I don\u0027t see any logic to dedup the entries. Is it a conscious decision?",
+      "range": {
+        "startLine": 554,
+        "startChar": 6,
+        "endLine": 554,
+        "endChar": 43
+      },
+      "revId": "aa0049de79f8bbea421f7a8349a21350192c9a26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4280cf5_fca20bfc",
+        "filename": "components/autofill/content/renderer/password_form_conversion_utils.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 557,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-08-29T15:17:10Z",
+      "side": 1,
+      "message": "The early return here is wrong. You skip all the logic about other fields of PasswordForm.\nYou need to write a test for your change.",
+      "range": {
+        "startLine": 557,
+        "startChar": 6,
+        "endLine": 557,
+        "endChar": 12
+      },
+      "revId": "aa0049de79f8bbea421f7a8349a21350192c9a26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
