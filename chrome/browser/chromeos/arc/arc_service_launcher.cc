@@ -38,7 +38,6 @@
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/ui/ash/multi_user/multi_user_util.h"
 #include "components/arc/arc_service_manager.h"
-#include "components/arc/arc_session.h"
 #include "components/arc/arc_session_runner.h"
 #include "components/arc/audio/arc_audio_bridge.h"
 #include "components/arc/bluetooth/arc_bluetooth_bridge.h"
@@ -67,9 +66,7 @@ ArcServiceLauncher* g_arc_service_launcher = nullptr;
 ArcServiceLauncher::ArcServiceLauncher()
     : arc_service_manager_(base::MakeUnique<ArcServiceManager>()),
       arc_session_manager_(base::MakeUnique<ArcSessionManager>(
-          base::MakeUnique<ArcSessionRunner>(
-              base::Bind(ArcSession::Create,
-                         arc_service_manager_->arc_bridge_service())))) {
+          base::MakeUnique<ArcSessionRunner>(arc_service_manager_->arc_bridge_service()))) {
   DCHECK(g_arc_service_launcher == nullptr);
   g_arc_service_launcher = this;
 }
@@ -185,8 +182,7 @@ void ArcServiceLauncher::ResetForTesting() {
   // may be referred from existing KeyedService, so destoying it would cause
   // unexpected behavior, specifically on test teardown.
   arc_session_manager_ = base::MakeUnique<ArcSessionManager>(
-      base::MakeUnique<ArcSessionRunner>(base::Bind(
-          ArcSession::Create, arc_service_manager_->arc_bridge_service())));
+      base::MakeUnique<ArcSessionRunner>(arc_service_manager_->arc_bridge_service()));
 }
 
 }  // namespace arc

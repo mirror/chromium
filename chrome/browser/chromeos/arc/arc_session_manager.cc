@@ -381,7 +381,7 @@ void ArcSessionManager::OnProvisioningFinished(ProvisioningResult result) {
       result == ProvisioningResult::CHROME_SERVER_COMMUNICATION_ERROR) {
     if (profile_->GetPrefs()->HasPrefPath(prefs::kArcSignedIn))
       profile_->GetPrefs()->SetBoolean(prefs::kArcSignedIn, false);
-    ShutdownSession();
+    ShutdownSession(false);
     ShowArcSupportHostError(error, true);
     return;
   }
@@ -452,7 +452,7 @@ void ArcSessionManager::Initialize() {
 
 void ArcSessionManager::Shutdown() {
   enable_requested_ = false;
-  ShutdownSession();
+  ShutdownSession(true);
   if (support_host_) {
     support_host_->SetErrorDelegate(nullptr);
     support_host_->Close();
@@ -468,7 +468,7 @@ void ArcSessionManager::Shutdown() {
   }
 }
 
-void ArcSessionManager::ShutdownSession() {
+void ArcSessionManager::ShutdownSession(bool system_shutdown) {
   arc_sign_in_timer_.Stop();
   playstore_launcher_.reset();
   terms_of_service_negotiator_.reset();
@@ -500,7 +500,10 @@ void ArcSessionManager::ShutdownSession() {
       // case when |OnSessionStopped| can be called inline and as result
       // |state_| might be changed.
       state_ = State::STOPPING;
-      arc_session_runner_->RequestStop(false);
+      if (system_shutdown)
+        arc_session_runner_->OnShutdown();
+      else
+        arc_session_runner_->RequestStop(false);
       break;
     case State::STOPPING:
       // Now ARC is stopping. Do nothing here.
@@ -960,7 +963,7 @@ void ArcSessionManager::StopArc() {
     profile_->GetPrefs()->SetBoolean(prefs::kArcPaiStarted, false);
     profile_->GetPrefs()->SetBoolean(prefs::kArcTermsAccepted, false);
   }
-  ShutdownSession();
+  ShutdownSession(false);
   if (support_host_)
     support_host_->Close();
 }
@@ -1066,7 +1069,7 @@ void ArcSessionManager::OnRetryClicked() {
     // Here, on retry, stop it, then restart.
     DCHECK_EQ(state_, State::ACTIVE);
     support_host_->ShowArcLoading();
-    ShutdownSession();
+    ShutdownSession(false);
     reenable_arc_ = true;
   } else {
     // Otherwise, we restart ARC. Note: this is the first boot case.
