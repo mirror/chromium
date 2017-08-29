@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0dc1e70f_36bffcee",
+        "filename": "chrome/browser/ui/framebust_block_infobar_delegate.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-08-29T00:33:27Z",
+      "side": 1,
+      "message": "Can we use vector icons?  We\u0027re trying to avoid any more bitmap resources to our UI.",
+      "revId": "8b544ddf6cc8cc9050a42e4fb5478c423f3eed3c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ffd9bca3_a5a66799",
+        "filename": "chrome/browser/ui/framebust_block_infobar_delegate.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-08-29T00:33:27Z",
+      "side": 1,
+      "message": "Nit: I\u0027d prefer to extend InfoBarService::OpenURL() with an optional bool arg (default true) to open links in a new tab by default.  You could then pass false for this.",
+      "revId": "8b544ddf6cc8cc9050a42e4fb5478c423f3eed3c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3021a7e0_14bcb2d3",
+        "filename": "chrome/browser/ui/framebust_block_infobar_delegate.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-08-29T00:33:27Z",
+      "side": 1,
+      "message": "Nit: The first six words of this description can be removed.  The rest doesn\u0027t talk about framebusting at all, and presumably should.",
+      "revId": "8b544ddf6cc8cc9050a42e4fb5478c423f3eed3c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6310c5a_d6ffc85e",
+        "filename": "chrome/browser/ui/framebust_block_infobar_delegate.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-08-29T00:33:27Z",
+      "side": 1,
+      "message": "Nit: Just \"// base class name:\"\n\nYou don\u0027t directly subclass InfoBarDelegate, so just have one override section, with \"// infobars::NotifyInfoBarDelegate:\"",
+      "revId": "8b544ddf6cc8cc9050a42e4fb5478c423f3eed3c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a8da837_e1a07492",
+        "filename": "chrome/browser/ui/framebust_block_infobar_delegate.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-08-29T00:33:27Z",
+      "side": 1,
+      "message": "Nit: This is listed after the next function in the base class, and the order here (and in the .cc file) should match",
+      "revId": "8b544ddf6cc8cc9050a42e4fb5478c423f3eed3c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
