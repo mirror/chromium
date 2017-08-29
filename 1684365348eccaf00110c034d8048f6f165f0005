@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c349de16_5875c288",
+        "filename": "android_webview/browser/aw_print_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1002169
+      },
+      "writtenOn": "2017-08-29T18:02:30Z",
+      "side": 1,
+      "message": "This Send is only called when there\u0027s a message deserialization error, so I don\u0027t think it really matters except to the extent that it\u0027s browser process attack surface.\n\nHowever, to be pendantically correct, I think what we need here is to dispatch to a helper object that Send\u0027s to |render_frame_host|.\n\nAs far as I can tell, the whole reason that DELAY_REPLY is used here is so that we can send the reply_msg via the right object -- we don\u0027t actually need to do an async reply.\n\nSo my recommendation here is to create a frame-scoped temporary helper class like this:\n\nstruct FrameDispatchHelper {\n  AwPrintManager manager;  // We are its friend.\n  RenderFrameHost* render_frame_host;\n\n  bool Send(IPC::Message* msg) { render_frame_host-\u003eSend(msg); }\n  \n  void OnScriptedPrint(...);\n  void OnGetDefaultPrintSettings(...);\n}\n\nThen, back in your OnMessageReceived function, have something like:\n\nbool AwPrintManager::OnMessageReceived(\n    const IPC::Message\u0026 message,\n    content::RenderFrameHost* render_frame_host) {\n  bool handled \u003d true;\n  FrameDispatchHelper helper \u003d {this, render_frame_host};\n  IPC_BEGIN_MESSAGE_MAP(AwPrintManager, message) /* no WITH_PARAM */\n    IPC_MESSAGE_FORWARD_DELAY_REPLY(PrintHostMsg_GetDefaultPrintSettings, \n        \u0026helper, FrameDispatchHelper::OnGetDefaultPrintSettings)\n...\n\n\nYou might be able to drop the DELAY_REPLY too, since it seems like the reply is actually always sent immediately.\n\nHere\u0027s an example of this pattern used elsewhere: https://cs.chromium.org/chromium/src/media/gpu/ipc/service/media_gpu_channel.cc?type\u003dcs\u0026q\u003dDispatchHelper\u0026sq\u003dpackage:chromium\u0026l\u003d98",
+      "revId": "1684365348eccaf00110c034d8048f6f165f0005",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
