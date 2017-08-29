@@ -46,6 +46,23 @@
       "revId": "c0485cd537921807a7412615ab25df41a1bfd469",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6feffa7_29617827",
+        "filename": "third_party/WebKit/Source/core/editing/markers/SuggestionMarkerListImplTest.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-08-29T06:14:00Z",
+      "side": 1,
+      "message": "Could you keep to use |marker_list_| instead of |markers_| to make the patch smaller?",
+      "revId": "c0485cd537921807a7412615ab25df41a1bfd469",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
