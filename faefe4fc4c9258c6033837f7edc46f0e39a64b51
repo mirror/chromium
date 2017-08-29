@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "70a4721d_4cb50b90",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1139801
+      },
+      "writtenOn": "2017-08-29T00:38:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f7fbc9e9_8aa1e53d",
+      "revId": "faefe4fc4c9258c6033837f7edc46f0e39a64b51",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "261434f6_7acb4880",
         "filename": "cc/resources/layer_tree_resource_provider.cc",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-28T17:24:47Z",
       "side": 1,
       "message": "Should this always be true?",
+      "revId": "faefe4fc4c9258c6033837f7edc46f0e39a64b51",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "086b4e16_6300b393",
+        "filename": "cc/resources/layer_tree_resource_provider.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1139801
+      },
+      "writtenOn": "2017-08-29T00:38:57Z",
+      "side": 1,
+      "message": "Yes, for LayerTree\u0027s Resource, the child_id should always be 0. I will remove this if, and not apply any DCHECK here.",
+      "parentUuid": "261434f6_7acb4880",
       "revId": "faefe4fc4c9258c6033837f7edc46f0e39a64b51",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
