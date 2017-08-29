@@ -51,6 +51,24 @@
       "revId": "4e7607eabe0b744ef90cd2605f8b4d382478aee6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e499484a_a087d396",
+        "filename": "ios/chrome/browser/ui/ntp/recent_tabs/recent_tabs_handset_view_controller.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-08-29T07:46:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bf934e58_057d41f8",
+      "revId": "4e7607eabe0b744ef90cd2605f8b4d382478aee6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
