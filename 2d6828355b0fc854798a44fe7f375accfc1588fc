@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dfc6a5fe_65e453ed",
+        "filename": "chrome/browser/offline_pages/prefetch/prefetch_importer_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-08-29T18:41:07Z",
+      "side": 1,
+      "message": "needs a break; for non-debug implementations",
+      "revId": "2d6828355b0fc854798a44fe7f375accfc1588fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
