@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "87bb3fff_a8b43e0e",
+        "filename": "content/browser/renderer_host/render_widget_host_view_aura.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 717,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-08-29T16:04:13Z",
+      "side": 1,
+      "message": "The reason I don\u0027t call Show() because I thought WasUnOccluded is different from Show, e.g. does not need to hide aura::Window. I might be too cautious.\n\nChanged to Show() as suggested.",
+      "parentUuid": "3e4ad96d_948ffa0c",
+      "revId": "78a46f7e30a2bfa1bc7bb7cd5a23edbfe2c59f4c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c6f4f0ae_0620c378",
         "filename": "content/browser/renderer_host/render_widget_host_view_aura.cc",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "78a46f7e30a2bfa1bc7bb7cd5a23edbfe2c59f4c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6df22fe9_89c38b69",
+        "filename": "content/browser/renderer_host/render_widget_host_view_aura.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 726,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-08-29T16:04:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c6f4f0ae_0620c378",
+      "revId": "78a46f7e30a2bfa1bc7bb7cd5a23edbfe2c59f4c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
