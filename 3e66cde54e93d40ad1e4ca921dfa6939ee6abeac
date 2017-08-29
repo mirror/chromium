@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "32e4587d_412c95f2",
+        "filename": "base/mojom/values.mojom",
+        "patchSetId": 16
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-08-29T18:29:53Z",
+      "side": 1,
+      "message": "Can you expand on this comment a bit here? i.e. how do they make it easier to reason about behavior over IPC?",
+      "revId": "3e66cde54e93d40ad1e4ca921dfa6939ee6abeac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
