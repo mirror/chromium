@@ -38,11 +38,14 @@ class MOJO_CPP_BINDINGS_EXPORT SyncHandleRegistry
 
   // Registers a |base::WaitableEvent| which can be used to wake up
   // Wait() before any handle signals. |event| is not owned, and if it signals
-  // during Wait(), |callback| is invoked. Returns |true| if registered
-  // successfully or |false| if |event| was already registered.
-  bool RegisterEvent(base::WaitableEvent* event, const base::Closure& callback);
+  // during Wait(), |callback| is invoked.  Note that |event| may be registered
+  // multiple times with different callbacks. Returns |false| iff the same
+  // |event|+|callback| pair has already been registered, and |true| otherwise.
+  void RegisterEvent(base::WaitableEvent* event, const base::Closure& callback);
 
-  void UnregisterEvent(base::WaitableEvent* event);
+  // Unregisters a specific |event|+|callback| pair.
+  void UnregisterEvent(base::WaitableEvent* event,
+                       const base::Closure& callback);
 
   // Waits on all the registered handles and events and runs callbacks
   // synchronously for any that become ready.
@@ -59,7 +62,7 @@ class MOJO_CPP_BINDINGS_EXPORT SyncHandleRegistry
 
   WaitSet wait_set_;
   std::map<Handle, HandleCallback> handles_;
-  std::map<base::WaitableEvent*, base::Closure> events_;
+  std::map<base::WaitableEvent*, std::vector<base::Closure>> events_;
 
   SEQUENCE_CHECKER(sequence_checker_);
 
