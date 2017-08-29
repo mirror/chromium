@@ -5,6 +5,7 @@
       "bounds": [874, 600],
       "contentsOpaque": true,
       "drawsContent": true,
+      "backgroundColor": "#3F3F3F",
       "paintInvalidations": [
         {
           "object": "LayoutView #document",

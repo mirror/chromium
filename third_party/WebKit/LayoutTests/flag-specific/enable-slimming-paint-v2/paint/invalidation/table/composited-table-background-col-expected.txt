@@ -17,7 +17,6 @@
       "name": "LayoutTableCell TD",
       "position": [96, 118],
       "bounds": [10, 19],
-      "contentsOpaque": false,
       "drawsContent": true
     }
   ],
