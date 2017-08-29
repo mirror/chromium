@@ -71,6 +71,23 @@
     },
     {
       "key": {
+        "uuid": "b8760255_683bc370",
+        "filename": "components/safe_browsing/web_ui/safe_browsing_ui.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-08-29T00:33:42Z",
+      "side": 1,
+      "message": "It seems the ERASE_THREAT_DETAILS only used in the destructor. and there is not much shared code with the previous two cases, how about make the deletion inline in the destructor?",
+      "revId": "9d7770be49842a4ad117afb7eb8377a4e76832f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "547c57d9_2d12b9c3",
         "filename": "components/safe_browsing/web_ui/safe_browsing_ui.cc",
         "patchSetId": 11
@@ -88,6 +105,23 @@
         "endLine": 317,
         "endChar": 69
       },
+      "revId": "9d7770be49842a4ad117afb7eb8377a4e76832f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6b4d8c3_33c10d9d",
+        "filename": "components/safe_browsing/web_ui/safe_browsing_ui.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 379,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-08-29T00:33:42Z",
+      "side": 1,
+      "message": "nit: \nProcessThreatDetails(ClientSafeBrowsingReportRequest(), OLD_THREAT_DETAILS);\n\nA better way is to use a default param, e.g. ProcessThreatDetails(ThreatDetailsMode mode, const ClientSafeBrowsingReportRequest\u0026 threat_detail\u003dClientSafeBrowsingReportRequest());\nThen you just need to call ProcessThreatDetails(OLD_THREAT_DETAILS);",
       "revId": "9d7770be49842a4ad117afb7eb8377a4e76832f1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
