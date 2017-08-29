@@ -2149,7 +2149,8 @@ void Textfield::StopBlinkingCursor() {
 void Textfield::OnCursorBlinkTimerFired() {
   DCHECK(ShouldBlinkCursor());
   UpdateCursorViewPosition();
-  cursor_view_.SetVisible(!cursor_view_.visible());
+  ui::Layer* l = cursor_view_.layer();
+  l->SetOpacity(l->opacity() == 0 ? 1 : 0);
 }
 
 }  // namespace views

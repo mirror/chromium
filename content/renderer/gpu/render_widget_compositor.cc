@@ -425,6 +425,7 @@ cc::LayerTreeSettings RenderWidgetCompositor::GenerateLayerTreeSettings(
       compositor_deps->IsElasticOverscrollEnabled();
   settings.resource_settings.use_gpu_memory_buffer_resources =
       compositor_deps->IsGpuMemoryBufferCompositorResourcesEnabled();
+  DLOG(INFO) << settings.resource_settings.use_gpu_memory_buffer_resources << " **";
   settings.enable_color_correct_rasterization =
       base::FeatureList::IsEnabled(features::kColorCorrectRendering);
   settings.resource_settings.buffer_to_texture_target_map =
