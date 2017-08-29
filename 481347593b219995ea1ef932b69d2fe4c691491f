@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c9159f65_36ba8697",
+        "filename": "testing/scripts/sizes.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2017-08-29T00:37:49Z",
+      "side": 1,
+      "message": "Nit: why isn\u0027t line 28 in create_argparser()?",
+      "revId": "481347593b219995ea1ef932b69d2fe4c691491f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
