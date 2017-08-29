@@ -464,17 +464,17 @@ void MTPDeviceDelegateImplMac::NotifyReadDir() {
 
       base::FilePath relative_path;
       read_path.AppendRelativePath(file_paths_[i], &relative_path);
-      base::File::Info info = file_info_[file_paths_[i].value()];
-      storage::DirectoryEntry entry;
-      entry.name = relative_path.value();
-      entry.is_directory = info.is_directory;
-      entry_list.push_back(entry);
+      const base::File::Info& info = file_info_[file_paths_[i].value()];
+      storage::DirectoryEntry::DirectoryEntryType type =
+          info.is_directory ? storage::DirectoryEntry::DIRECTORY
+                            : storage::DirectoryEntry::FILE;
+      entry_list.emplace_back(relative_path.value(), type);
     }
 
     if (found_path) {
-      content::BrowserThread::PostTask(content::BrowserThread::IO,
-          FROM_HERE,
-          base::Bind(iter->success_callback, entry_list, false));
+      content::BrowserThread::PostTask(
+          content::BrowserThread::IO, FROM_HERE,
+          base::BindOnce(iter->success_callback, std::move(entry_list), false));
     } else {
       content::BrowserThread::PostTask(content::BrowserThread::IO,
           FROM_HERE,

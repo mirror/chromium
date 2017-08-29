@@ -374,10 +374,13 @@ TEST_F(DraggedFileUtilTest, ReadDirectoryTest) {
     base::FilePath current;
     while (!(current = file_enum.Next()).empty()) {
       base::FileEnumerator::FileInfo file_info = file_enum.GetInfo();
-      storage::DirectoryEntry entry;
-      entry.is_directory = file_info.IsDirectory();
-      entry.name = current.BaseName().value();
-      expected_entry_map[entry.name] = entry;
+      storage::DirectoryEntry::DirectoryEntryType type =
+          file_info.IsDirectory() ? storage::DirectoryEntry::DIRECTORY
+                                  : storage::DirectoryEntry::FILE;
+      expected_entry_map.emplace(
+          std::piecewise_construct,
+          std::forward_as_tuple(current.BaseName().value()),
+          std::forward_as_tuple(current.BaseName().value(), type));
 
 #if defined(OS_POSIX)
       // Creates a symlink for each file/directory.

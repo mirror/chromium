@@ -202,10 +202,11 @@ base::File::Error ReadDirectoryOnBlockingPoolThread(
     return error;
 
   while (!(current = file_enum->Next()).empty()) {
-    storage::DirectoryEntry entry;
-    entry.is_directory = file_enum->IsDirectory();
-    entry.name = storage::VirtualPath::BaseName(current).value();
-    entries->push_back(entry);
+    storage::DirectoryEntry::DirectoryEntryType type =
+        file_enum->IsDirectory() ? storage::DirectoryEntry::DIRECTORY
+                                 : storage::DirectoryEntry::FILE;
+    entries->emplace_back(storage::VirtualPath::BaseName(current).value(),
+                          type);
   }
   return error;
 }

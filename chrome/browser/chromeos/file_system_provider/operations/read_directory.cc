@@ -38,11 +38,10 @@ bool ConvertRequestValueToEntryList(std::unique_ptr<RequestValue> value,
       return false;
     }
 
-    storage::DirectoryEntry output_entry;
-    output_entry.is_directory = *entry_metadata.is_directory;
-    output_entry.name = *entry_metadata.name;
-
-    output->push_back(output_entry);
+    storage::DirectoryEntry::DirectoryEntryType type =
+        *entry_metadata.is_directory ? storage::DirectoryEntry::DIRECTORY
+                                     : storage::DirectoryEntry::FILE;
+    output->emplace_back(*entry_metadata.name, type);
   }
 
   return true;
@@ -99,7 +98,7 @@ void ReadDirectory::OnSuccess(int /* request_id */,
     return;
   }
 
-  callback_.Run(base::File::FILE_OK, entry_list, has_more);
+  callback_.Run(base::File::FILE_OK, std::move(entry_list), has_more);
 }
 
 void ReadDirectory::OnError(int /* request_id */,

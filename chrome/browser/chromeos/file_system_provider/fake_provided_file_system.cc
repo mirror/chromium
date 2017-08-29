@@ -154,15 +154,16 @@ AbortCallback FakeProvidedFileSystem::ReadDirectory(
     const base::FilePath file_path = it->first;
     if (file_path == directory_path || directory_path.IsParent(file_path)) {
       const EntryMetadata* const metadata = it->second->metadata.get();
-      entry_list.push_back(storage::DirectoryEntry(
-          *metadata->name, *metadata->is_directory
-                               ? storage::DirectoryEntry::DIRECTORY
-                               : storage::DirectoryEntry::FILE));
+      entry_list.emplace_back(*metadata->name,
+                              *metadata->is_directory
+                                  ? storage::DirectoryEntry::DIRECTORY
+                                  : storage::DirectoryEntry::FILE);
     }
   }
 
-  return PostAbortableTask(base::Bind(
-      callback, base::File::FILE_OK, entry_list, false /* has_more */));
+  return PostAbortableTask(base::BindOnce(callback, base::File::FILE_OK,
+                                          std::move(entry_list),
+                                          false /* has_more */));
 }
 
 AbortCallback FakeProvidedFileSystem::OpenFile(
@@ -422,9 +423,10 @@ FakeProvidedFileSystem::GetWeakPtr() {
 }
 
 AbortCallback FakeProvidedFileSystem::PostAbortableTask(
-    const base::Closure& callback) {
-  const int task_id = tracker_.PostTask(
-      base::ThreadTaskRunnerHandle::Get().get(), FROM_HERE, callback);
+    base::OnceClosure callback) {
+  const int task_id =
+      tracker_.PostTask(base::ThreadTaskRunnerHandle::Get().get(), FROM_HERE,
+                        std::move(callback));
   return base::Bind(
       &FakeProvidedFileSystem::Abort, weak_ptr_factory_.GetWeakPtr(), task_id);
 }

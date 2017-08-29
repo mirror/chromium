@@ -33,19 +33,19 @@ namespace {
 // The |on_error_callback| will be called (on error case) on IO thread.
 void PostFileSystemCallback(
     const fileapi_internal::FileSystemGetter& file_system_getter,
-    const base::Callback<void(FileSystemInterface*)>& function,
-    const base::Closure& on_error_callback) {
+    base::OnceCallback<void(FileSystemInterface*)> function,
+    base::OnceClosure on_error_callback) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
 
   BrowserThread::PostTask(
       BrowserThread::UI, FROM_HERE,
       base::BindOnce(&fileapi_internal::RunFileSystemCallback,
-                     file_system_getter, function,
+                     file_system_getter, std::move(function),
                      on_error_callback.is_null()
-                         ? base::Closure()
-                         : base::Bind(&google_apis::RunTaskWithTaskRunner,
-                                      base::ThreadTaskRunnerHandle::Get(),
-                                      on_error_callback)));
+                         ? base::OnceClosure()
+                         : base::BindOnce(&google_apis::RunTaskWithTaskRunner,
+                                          base::ThreadTaskRunnerHandle::Get(),
+                                          std::move(on_error_callback))));
 }
 
 // Runs CreateOrOpenFile callback based on the given |error| and |file|.
@@ -219,10 +219,10 @@ void AsyncFileUtil::ReadDirectory(
 
   PostFileSystemCallback(
       base::Bind(&fileapi_internal::GetFileSystemFromUrl, url),
-      base::Bind(&fileapi_internal::ReadDirectory,
-                 file_path, google_apis::CreateRelayCallback(callback)),
-      base::Bind(callback, base::File::FILE_ERROR_FAILED,
-                 EntryList(), false));
+      base::BindOnce(&fileapi_internal::ReadDirectory, file_path,
+                     google_apis::CreateRelayCallback(callback)),
+      base::BindOnce(callback, base::File::FILE_ERROR_FAILED, EntryList(),
+                     false));
 }
 
 void AsyncFileUtil::Touch(
