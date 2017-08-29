@@ -79,6 +79,10 @@ group("gn_all") {
     "//url:url_unittests",
   ]
 
+  if (is_desktop_linux && !is_component_build) {
+    deps += [ "//chrome/installer/linux:check_package_dependencies" ]
+  }
+
   if (!is_android && !is_chromecast) {
     deps += [
       "//crypto:crypto_unittests",
