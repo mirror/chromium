@@ -1,0 +1,136 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7cf1aaaa_f0b1ecf2",
+        "filename": "third_party/WebKit/Source/core/dom/Node.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 635,
+      "author": {
+        "id": 1116039
+      },
+      "writtenOn": "2017-08-29T18:33:21Z",
+      "side": 1,
+      "message": "Can this be Optional\u003c\u003e instead of RefPtr\u003c\u003e, to avoid a heap allocation?",
+      "range": {
+        "startLine": 635,
+        "startChar": 11,
+        "endLine": 635,
+        "endChar": 43
+      },
+      "revId": "263337ea685ad3880304a5422517b91f5cb772c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e32fc9b_1ffa0e34",
+        "filename": "third_party/WebKit/Source/core/dom/Text.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 355,
+      "author": {
+        "id": 1116039
+      },
+      "writtenOn": "2017-08-29T18:33:21Z",
+      "side": 1,
+      "message": "Can we check text_element_timing_ancestor_tracker-\u003eStackSize() !\u003d 0 before creating the TextElementTiming object?  This logic can live inside TrackAllElementsIfNeeded.",
+      "range": {
+        "startLine": 355,
+        "startChar": 57,
+        "endLine": 355,
+        "endChar": 61
+      },
+      "revId": "263337ea685ad3880304a5422517b91f5cb772c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "891ec605_fe0f296a",
+        "filename": "third_party/WebKit/Source/core/exported/WebViewImpl.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 2017,
+      "author": {
+        "id": 1116039
+      },
+      "writtenOn": "2017-08-29T18:33:21Z",
+      "side": 1,
+      "message": "nit: you can inline the declaration like this:\n\n  if (Document* document \u003d MainFrameImpl()-\u003eGetFrame()-\u003eGetDocument())\n    ...",
+      "range": {
+        "startLine": 2017,
+        "startChar": 6,
+        "endLine": 2017,
+        "endChar": 14
+      },
+      "revId": "263337ea685ad3880304a5422517b91f5cb772c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b53b9b15_31c68b47",
+        "filename": "third_party/WebKit/Source/core/timing/PerformanceElementTiming.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1116039
+      },
+      "writtenOn": "2017-08-29T18:33:21Z",
+      "side": 1,
+      "message": "Add a comment explaining what the class is.",
+      "range": {
+        "startLine": 16,
+        "startChar": 18,
+        "endLine": 16,
+        "endChar": 42
+      },
+      "revId": "263337ea685ad3880304a5422517b91f5cb772c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91e085ea_5cd3c283",
+        "filename": "third_party/WebKit/Source/core/timing/TextElementTimingAncestorTracker.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1116039
+      },
+      "writtenOn": "2017-08-29T18:33:21Z",
+      "side": 1,
+      "message": "Add comment:\n\n  false /* is_tracked */\n\nOr use enum instead of bool.",
+      "revId": "263337ea685ad3880304a5422517b91f5cb772c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75ee656c_bc46daeb",
+        "filename": "third_party/WebKit/Source/core/timing/TextElementTimingAncestorTracker.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1116039
+      },
+      "writtenOn": "2017-08-29T18:33:21Z",
+      "side": 1,
+      "message": "AttachLayout -\u003e AttachLayoutTree (throughout)",
+      "range": {
+        "startLine": 19,
+        "startChar": 19,
+        "endLine": 19,
+        "endChar": 20
+      },
+      "revId": "263337ea685ad3880304a5422517b91f5cb772c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
