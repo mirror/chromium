@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "dc629f74_59313d0d",
+        "filename": "content/renderer/media/cdm/render_cdm_factory.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-08-29T20:38:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e2630ce0_dbe481ca",
+      "revId": "e9d45bcc63012bf6ee986fc9b156e4e0718c7bc7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ab3914c3_f846abcb",
         "filename": "content/renderer/media/cdm/render_cdm_factory.h",
         "patchSetId": 4
@@ -33,6 +51,24 @@
       "revId": "e9d45bcc63012bf6ee986fc9b156e4e0718c7bc7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b10bd21c_15121328",
+        "filename": "content/renderer/media/cdm/render_cdm_factory.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-08-29T20:38:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ab3914c3_f846abcb",
+      "revId": "e9d45bcc63012bf6ee986fc9b156e4e0718c7bc7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -70,6 +106,24 @@
     },
     {
       "key": {
+        "uuid": "e903e547_a809f17d",
+        "filename": "media/base/android/media_drm_bridge.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 398,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-08-29T20:38:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "99a5aeb5_60f9a2fb",
+      "revId": "e9d45bcc63012bf6ee986fc9b156e4e0718c7bc7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "23088339_cba027ed",
         "filename": "media/cdm/cdm_adapter_factory.cc",
         "patchSetId": 4
@@ -81,6 +135,24 @@
       "writtenOn": "2017-08-29T18:09:39Z",
       "side": 1,
       "message": "Here and on line 35, \"Invalid\" is not accurate. How about s/Invalid/Unique?\n\nDitto elsewhere.",
+      "revId": "e9d45bcc63012bf6ee986fc9b156e4e0718c7bc7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "afff2157_41caf773",
+        "filename": "media/cdm/cdm_adapter_factory.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-08-29T20:38:32Z",
+      "side": 1,
+      "message": "Unique origins appear to be used for referring to sandboxed iframes. So I\u0027m not sure \"unique\" would make sense if returned to a user.\n\nHowever, the origin is properly validated in WebContentDecryptionModuleImpl::Create(). So any failures here mean that something messed up along the way.",
+      "parentUuid": "23088339_cba027ed",
       "revId": "e9d45bcc63012bf6ee986fc9b156e4e0718c7bc7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -104,6 +176,24 @@
     },
     {
       "key": {
+        "uuid": "59edda73_b11f301a",
+        "filename": "media/cdm/ppapi/external_clear_key/clear_key_cdm.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 273,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-08-29T20:38:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "45fc0741_6aa43107",
+      "revId": "e9d45bcc63012bf6ee986fc9b156e4e0718c7bc7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3f1a1347_7a55c227",
         "filename": "media/mojo/clients/mojo_cdm.cc",
         "patchSetId": 4
@@ -118,6 +208,24 @@
       "revId": "e9d45bcc63012bf6ee986fc9b156e4e0718c7bc7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "097ad252_68de183a",
+        "filename": "media/mojo/clients/mojo_cdm.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-08-29T20:38:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3f1a1347_7a55c227",
+      "revId": "e9d45bcc63012bf6ee986fc9b156e4e0718c7bc7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
