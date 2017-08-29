@@ -66,6 +66,30 @@
     },
     {
       "key": {
+        "uuid": "677a1350_d3388fc0",
+        "filename": "third_party/WebKit/Source/core/editing/commands/TypingCommand.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 1210620
+      },
+      "writtenOn": "2017-08-29T16:48:05Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "487bbf13_bde18fe3",
+      "range": {
+        "startLine": 260,
+        "startChar": 1,
+        "endLine": 261,
+        "endChar": 74
+      },
+      "revId": "db8e933415e47589028bd1ccbf235bb537904b13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7aa85729_f39ee1da",
         "filename": "third_party/WebKit/Source/core/editing/commands/TypingCommand.cpp",
         "patchSetId": 1
@@ -86,6 +110,30 @@
       "revId": "db8e933415e47589028bd1ccbf235bb537904b13",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "733f1701_7aeb225c",
+        "filename": "third_party/WebKit/Source/core/editing/commands/TypingCommand.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 363,
+      "author": {
+        "id": 1210620
+      },
+      "writtenOn": "2017-08-29T16:48:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7aa85729_f39ee1da",
+      "range": {
+        "startLine": 361,
+        "startChar": 0,
+        "endLine": 363,
+        "endChar": 52
+      },
+      "revId": "db8e933415e47589028bd1ccbf235bb537904b13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -112,6 +160,30 @@
     },
     {
       "key": {
+        "uuid": "702852b1_61cfa17c",
+        "filename": "third_party/WebKit/Source/core/editing/commands/TypingCommand.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 387,
+      "author": {
+        "id": 1210620
+      },
+      "writtenOn": "2017-08-29T16:48:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ac5e2d70_ce2ceda5",
+      "range": {
+        "startLine": 386,
+        "startChar": 0,
+        "endLine": 387,
+        "endChar": 62
+      },
+      "revId": "db8e933415e47589028bd1ccbf235bb537904b13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cb769b08_6ba021c7",
         "filename": "third_party/WebKit/Source/core/editing/commands/TypingCommand.cpp",
         "patchSetId": 1
@@ -129,6 +201,24 @@
     },
     {
       "key": {
+        "uuid": "3f85264b_837cbdba",
+        "filename": "third_party/WebKit/Source/core/editing/commands/TypingCommand.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 634,
+      "author": {
+        "id": 1210620
+      },
+      "writtenOn": "2017-08-29T16:48:05Z",
+      "side": 1,
+      "message": "CanAppendNewLineFeedToSelection calculates the RootEditableElement so this DCHECK is added.",
+      "parentUuid": "cb769b08_6ba021c7",
+      "revId": "db8e933415e47589028bd1ccbf235bb537904b13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "235a0c60_83e1e1e0",
         "filename": "third_party/WebKit/Source/core/editing/commands/TypingCommand.cpp",
         "patchSetId": 1
@@ -140,6 +230,24 @@
       "writtenOn": "2017-08-28T18:27:07Z",
       "side": 1,
       "message": "Do we need clean layout here?",
+      "revId": "db8e933415e47589028bd1ccbf235bb537904b13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18246da3_2d53d622",
+        "filename": "third_party/WebKit/Source/core/editing/commands/TypingCommand.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 646,
+      "author": {
+        "id": 1210620
+      },
+      "writtenOn": "2017-08-29T16:48:05Z",
+      "side": 1,
+      "message": "CanAppendNewLineFeedToSelection calculates the RootEditableElement so this DCHECK is added.",
+      "parentUuid": "235a0c60_83e1e1e0",
       "revId": "db8e933415e47589028bd1ccbf235bb537904b13",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
