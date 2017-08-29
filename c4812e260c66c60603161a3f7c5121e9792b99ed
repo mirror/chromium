@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4ed89d8a_52e37611",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsBottomSheetContent.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 305,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-08-29T13:12:38Z",
+      "side": 1,
+      "message": "nit: hum why is this a String.format()? Just pass the plain string?",
+      "range": {
+        "startLine": 305,
+        "startChar": 22,
+        "endLine": 305,
+        "endChar": 46
+      },
+      "revId": "c4812e260c66c60603161a3f7c5121e9792b99ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb02f10d_a5592d18",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsBottomSheetContent.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 308,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-08-29T13:12:38Z",
+      "side": 1,
+      "message": "nit: lambda? :D",
+      "range": {
+        "startLine": 308,
+        "startChar": 39,
+        "endLine": 308,
+        "endChar": 53
+      },
+      "revId": "c4812e260c66c60603161a3f7c5121e9792b99ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
