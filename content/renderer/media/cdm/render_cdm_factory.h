@@ -17,11 +17,13 @@
 #include "content/renderer/media/cdm/pepper_cdm_wrapper.h"
 #endif
 
-class GURL;
-
 namespace media {
 struct CdmConfig;
 }  // namespace media
+
+namespace url {
+class Origin;
+}
 
 namespace content {
 
@@ -40,7 +42,7 @@ class RenderCdmFactory : public media::CdmFactory {
   // CdmFactory implementation.
   void Create(
       const std::string& key_system,
-      const GURL& security_origin,
+      const url::Origin& security_origin,
       const media::CdmConfig& cdm_config,
       const media::SessionMessageCB& session_message_cb,
       const media::SessionClosedCB& session_closed_cb,
