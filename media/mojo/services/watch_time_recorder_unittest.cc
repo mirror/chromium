@@ -114,10 +114,9 @@ class WatchTimeRecorderTest : public testing::Test {
     ASSERT_TRUE(source);
 
     for (auto key : keys) {
-      test_recorder_->ExpectMetric(
-          *source, WatchTimeRecorder::kWatchTimeUkmEvent,
-          key.substr(strlen(WatchTimeRecorder::kWatchTimeUkmEvent) + 1).data(),
-          value.InMilliseconds());
+      test_recorder_->ExpectMetric(*source,
+                                   WatchTimeRecorder::kWatchTimeUkmEvent,
+                                   key.data(), value.InMilliseconds());
     }
   }
 
@@ -153,6 +152,7 @@ TEST_F(WatchTimeRecorderTest, TestBasicReporting) {
       WatchTimeKeyToString(WatchTimeKey::kWatchTimeKeyMax);
   for (int i = 0; i < static_cast<int>(WatchTimeKey::kWatchTimeKeyMax); ++i) {
     const WatchTimeKey key = static_cast<WatchTimeKey>(i);
+    SCOPED_TRACE(WatchTimeKeyToString(key));
 
     Initialize(true, false, true, true);
     wtr_->RecordWatchTime(WatchTimeKey::kWatchTimeKeyMax, kWatchTime1);
@@ -170,11 +170,16 @@ TEST_F(WatchTimeRecorderTest, TestBasicReporting) {
     const base::StringPiece key_str = WatchTimeKeyToString(key);
     ExpectWatchTime({key_str}, kWatchTime2);
 
+    if (key == WatchTimeKey::kAudioAll || key == WatchTimeKey::kAudioVideoAll ||
+        key == WatchTimeKey::kAudioVideoBackgroundAll) {
+      ExpectUkmWatchTime({WatchTimeRecorder::kUkmKeyWatchTime}, kWatchTime2);
+    } else {
+      ExpectUkmWatchTime({}, base::TimeDelta());
+    }
+
     // These keys are only reported for a full finalize.
     ExpectMtbrTime({}, base::TimeDelta());
     ExpectZeroRebuffers({});
-    if (!key_str.ends_with("EmbeddedExperience"))
-      ExpectUkmWatchTime({key_str}, kWatchTime2);
 
     // Verify our sentinel key is recorded properly at player destruction.
     ResetMetricRecorders();
@@ -229,5 +234,160 @@ TEST_F(WatchTimeRecorderTest, TestRebufferingMetrics) {
   ExpectMtbrTime({}, base::TimeDelta());
   ExpectZeroRebuffers(smooth_keys_);
 }
+
+#define EXPECT_UKM(name, value)                                                \
+  test_recorder_->ExpectMetric(*source, WatchTimeRecorder::kWatchTimeUkmEvent, \
+                               name, value)
+#define EXPECT_NO_UKM(name)               \
+  EXPECT_FALSE(test_recorder_->HasMetric( \
+      *source, WatchTimeRecorder::kWatchTimeUkmEvent, name))
+
+TEST_F(WatchTimeRecorderTest, BasicUkmAudioVideo) {
+  mojom::PlaybackPropertiesPtr properties = mojom::PlaybackProperties::New(
+      kCodecAAC, kCodecH264, true, true, false, false, false,
+      gfx::Size(800, 600), url::Origin(GURL(kTestOrigin)));
+  provider_->AcquireWatchTimeRecorder(properties.Clone(),
+                                      mojo::MakeRequest(&wtr_));
+
+  constexpr base::TimeDelta kWatchTime = base::TimeDelta::FromSeconds(54);
+  wtr_->RecordWatchTime(WatchTimeKey::kAudioVideoAll, kWatchTime);
+  wtr_.reset();
+  base::RunLoop().RunUntilIdle();
+
+  ASSERT_EQ(1u, test_recorder_->sources_count());
+  auto* source = test_recorder_->GetSourceForUrl(kTestOrigin);
+  ASSERT_TRUE(source);
+
+  EXPECT_UKM(WatchTimeRecorder::kUkmKeyWatchTime, kWatchTime.InMilliseconds());
+  EXPECT_UKM(WatchTimeRecorder::kUkmKeyIsBackground, false);
+  EXPECT_UKM(WatchTimeRecorder::kUkmKeyAudioCodec, properties->audio_codec);
+  EXPECT_UKM(WatchTimeRecorder::kUkmKeyVideoCodec, properties->video_codec);
+  EXPECT_UKM(WatchTimeRecorder::kUkmKeyHasAudio, properties->has_audio);
+  EXPECT_UKM(WatchTimeRecorder::kUkmKeyHasVideo, properties->has_video);
+  EXPECT_UKM(WatchTimeRecorder::kUkmKeyIsEME, properties->is_eme);
+  EXPECT_UKM(WatchTimeRecorder::kUkmKeyIsMSE, properties->is_mse);
+  EXPECT_UKM(WatchTimeRecorder::kUkmKeyLastPipelineStatus, PIPELINE_OK);
+  EXPECT_UKM(WatchTimeRecorder::kUkmKeyRebuffersCount, 0);
+  EXPECT_UKM(WatchTimeRecorder::kUkmKeyVideoNaturalWidth,
+             properties->natural_size.width());
+  EXPECT_UKM(WatchTimeRecorder::kUkmKeyVideoNaturalHeight,
+             properties->natural_size.height());
+
+  EXPECT_NO_UKM(WatchTimeRecorder::kUkmKeyMeanTimeBetweenRebuffers);
+  EXPECT_NO_UKM(WatchTimeRecorder::kUkmKeyWatchTimeAc);
+  EXPECT_NO_UKM(WatchTimeRecorder::kUkmKeyWatchTimeBattery);
+  EXPECT_NO_UKM(WatchTimeRecorder::kUkmKeyWatchTimeNativeControlsOn);
+  EXPECT_NO_UKM(WatchTimeRecorder::kUkmKeyWatchTimeNativeControlsOff);
+  EXPECT_NO_UKM(WatchTimeRecorder::kUkmKeyWatchTimeDisplayFullscreen);
+  EXPECT_NO_UKM(WatchTimeRecorder::kUkmKeyWatchTimeDisplayInline);
+  EXPECT_NO_UKM(WatchTimeRecorder::kUkmKeyWatchTimeDisplayPictureInPicture);
+}
+
+TEST_F(WatchTimeRecorderTest, BasicUkmAudioVideoWithExtras) {
+  mojom::PlaybackPropertiesPtr properties = mojom::PlaybackProperties::New(
+      kCodecOpus, kCodecVP9, true, true, true, true, false, gfx::Size(800, 600),
+      url::Origin(GURL(kTestOrigin)));
+  provider_->AcquireWatchTimeRecorder(properties.Clone(),
+                                      mojo::MakeRequest(&wtr_));
+
+  constexpr base::TimeDelta kWatchTime = base::TimeDelta::FromSeconds(54);
+  const base::TimeDelta kWatchTime2 = kWatchTime * 2;
+  const base::TimeDelta kWatchTime3 = kWatchTime / 3;
+  wtr_->RecordWatchTime(WatchTimeKey::kAudioVideoAll, kWatchTime2);
+  wtr_->RecordWatchTime(WatchTimeKey::kAudioVideoAc, kWatchTime);
+  wtr_->RecordWatchTime(WatchTimeKey::kAudioVideoBattery, kWatchTime);
+  wtr_->RecordWatchTime(WatchTimeKey::kAudioVideoNativeControlsOn, kWatchTime);
+  wtr_->RecordWatchTime(WatchTimeKey::kAudioVideoNativeControlsOff, kWatchTime);
+  wtr_->RecordWatchTime(WatchTimeKey::kAudioVideoDisplayFullscreen,
+                        kWatchTime3);
+  wtr_->RecordWatchTime(WatchTimeKey::kAudioVideoDisplayInline, kWatchTime3);
+  wtr_->RecordWatchTime(WatchTimeKey::kAudioVideoDisplayPictureInPicture,
+                        kWatchTime3);
+  wtr_->UpdateUnderflowCount(3);
+  wtr_->OnError(PIPELINE_ERROR_DECODE);
+
+  wtr_.reset();
+  base::RunLoop().RunUntilIdle();
+
+  ASSERT_EQ(1u, test_recorder_->sources_count());
+  auto* source = test_recorder_->GetSourceForUrl(kTestOrigin);
+  ASSERT_TRUE(source);
+
+  EXPECT_UKM(WatchTimeRecorder::kUkmKeyWatchTime, kWatchTime2.InMilliseconds());
+  EXPECT_UKM(WatchTimeRecorder::kUkmKeyWatchTimeAc,
+             kWatchTime.InMilliseconds());
+  EXPECT_UKM(WatchTimeRecorder::kUkmKeyWatchTimeBattery,
+             kWatchTime.InMilliseconds());
+  EXPECT_UKM(WatchTimeRecorder::kUkmKeyWatchTimeNativeControlsOn,
+             kWatchTime.InMilliseconds());
+  EXPECT_UKM(WatchTimeRecorder::kUkmKeyWatchTimeNativeControlsOff,
+             kWatchTime.InMilliseconds());
+  EXPECT_UKM(WatchTimeRecorder::kUkmKeyWatchTimeDisplayFullscreen,
+             kWatchTime3.InMilliseconds());
+  EXPECT_UKM(WatchTimeRecorder::kUkmKeyWatchTimeDisplayInline,
+             kWatchTime3.InMilliseconds());
+  EXPECT_UKM(WatchTimeRecorder::kUkmKeyWatchTimeDisplayPictureInPicture,
+             kWatchTime3.InMilliseconds());
+  EXPECT_UKM(WatchTimeRecorder::kUkmKeyMeanTimeBetweenRebuffers,
+             kWatchTime2.InMilliseconds() / 3);
+
+  EXPECT_UKM(WatchTimeRecorder::kUkmKeyIsBackground, false);
+  EXPECT_UKM(WatchTimeRecorder::kUkmKeyAudioCodec, properties->audio_codec);
+  EXPECT_UKM(WatchTimeRecorder::kUkmKeyVideoCodec, properties->video_codec);
+  EXPECT_UKM(WatchTimeRecorder::kUkmKeyHasAudio, properties->has_audio);
+  EXPECT_UKM(WatchTimeRecorder::kUkmKeyHasVideo, properties->has_video);
+  EXPECT_UKM(WatchTimeRecorder::kUkmKeyIsEME, properties->is_eme);
+  EXPECT_UKM(WatchTimeRecorder::kUkmKeyIsMSE, properties->is_mse);
+  EXPECT_UKM(WatchTimeRecorder::kUkmKeyLastPipelineStatus,
+             PIPELINE_ERROR_DECODE);
+  EXPECT_UKM(WatchTimeRecorder::kUkmKeyRebuffersCount, 3);
+  EXPECT_UKM(WatchTimeRecorder::kUkmKeyVideoNaturalWidth,
+             properties->natural_size.width());
+  EXPECT_UKM(WatchTimeRecorder::kUkmKeyVideoNaturalHeight,
+             properties->natural_size.height());
+}
+
+TEST_F(WatchTimeRecorderTest, BasicUkmAudioVideoBackground) {
+  mojom::PlaybackPropertiesPtr properties = mojom::PlaybackProperties::New(
+      kCodecAAC, kCodecH264, true, true, false, false, false,
+      gfx::Size(800, 600), url::Origin(GURL(kTestOrigin)));
+  provider_->AcquireWatchTimeRecorder(properties.Clone(),
+                                      mojo::MakeRequest(&wtr_));
+
+  constexpr base::TimeDelta kWatchTime = base::TimeDelta::FromSeconds(54);
+  wtr_->RecordWatchTime(WatchTimeKey::kAudioVideoBackgroundAll, kWatchTime);
+  wtr_.reset();
+  base::RunLoop().RunUntilIdle();
+
+  ASSERT_EQ(1u, test_recorder_->sources_count());
+  auto* source = test_recorder_->GetSourceForUrl(kTestOrigin);
+  ASSERT_TRUE(source);
+
+  EXPECT_UKM(WatchTimeRecorder::kUkmKeyWatchTime, kWatchTime.InMilliseconds());
+  EXPECT_UKM(WatchTimeRecorder::kUkmKeyIsBackground, true);
+  EXPECT_UKM(WatchTimeRecorder::kUkmKeyAudioCodec, properties->audio_codec);
+  EXPECT_UKM(WatchTimeRecorder::kUkmKeyVideoCodec, properties->video_codec);
+  EXPECT_UKM(WatchTimeRecorder::kUkmKeyHasAudio, properties->has_audio);
+  EXPECT_UKM(WatchTimeRecorder::kUkmKeyHasVideo, properties->has_video);
+  EXPECT_UKM(WatchTimeRecorder::kUkmKeyIsEME, properties->is_eme);
+  EXPECT_UKM(WatchTimeRecorder::kUkmKeyIsMSE, properties->is_mse);
+  EXPECT_UKM(WatchTimeRecorder::kUkmKeyLastPipelineStatus, PIPELINE_OK);
+  EXPECT_UKM(WatchTimeRecorder::kUkmKeyRebuffersCount, 0);
+  EXPECT_UKM(WatchTimeRecorder::kUkmKeyVideoNaturalWidth,
+             properties->natural_size.width());
+  EXPECT_UKM(WatchTimeRecorder::kUkmKeyVideoNaturalHeight,
+             properties->natural_size.height());
+
+  EXPECT_NO_UKM(WatchTimeRecorder::kUkmKeyMeanTimeBetweenRebuffers);
+  EXPECT_NO_UKM(WatchTimeRecorder::kUkmKeyWatchTimeAc);
+  EXPECT_NO_UKM(WatchTimeRecorder::kUkmKeyWatchTimeBattery);
+  EXPECT_NO_UKM(WatchTimeRecorder::kUkmKeyWatchTimeNativeControlsOn);
+  EXPECT_NO_UKM(WatchTimeRecorder::kUkmKeyWatchTimeNativeControlsOff);
+  EXPECT_NO_UKM(WatchTimeRecorder::kUkmKeyWatchTimeDisplayFullscreen);
+  EXPECT_NO_UKM(WatchTimeRecorder::kUkmKeyWatchTimeDisplayInline);
+  EXPECT_NO_UKM(WatchTimeRecorder::kUkmKeyWatchTimeDisplayPictureInPicture);
+}
+#undef EXPECT_UKM
+#undef EXPECT_NO_UKM
 
 }  // namespace media
