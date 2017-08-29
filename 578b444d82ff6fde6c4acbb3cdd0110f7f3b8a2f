@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1ef1c137_86b9cced",
+        "filename": "chrome/browser/resources/print_preview/data/ticket_items/scaling.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-08-29T23:49:38Z",
+      "side": 1,
+      "message": "Other values can return NaN. WDYT of calling parseInt and then treating NaN as zero? e.g.\n\nlet value \u003d parseInt(this.getValue(), 10);\nreturn isNaN(value) ? 0 : value;",
+      "revId": "578b444d82ff6fde6c4acbb3cdd0110f7f3b8a2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4ad1455_5fa72e8f",
+        "filename": "chrome/browser/resources/print_preview/settings/scaling_settings.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-08-29T23:49:38Z",
+      "side": 1,
+      "message": "How about {?HTMLElement}\n\n(Maybe on line 59 too, up to you on that since it\u0027s not part of this change).\n\nSee:\nhttps://github.com/google/closure-compiler/wiki/Annotating-JavaScript-for-the-Closure-Compiler#nullable-type",
+      "revId": "578b444d82ff6fde6c4acbb3cdd0110f7f3b8a2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
