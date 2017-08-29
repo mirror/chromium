@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c8c41b71_fbe48872",
+        "filename": "third_party/WebKit/LayoutTests/editing/execCommand/insert-paragraph-into-table.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1238128
+      },
+      "writtenOn": "2017-08-29T01:03:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "76824ff5_c76599fb",
+      "range": {
+        "startLine": 6,
+        "startChar": 26,
+        "endLine": 6,
+        "endChar": 86
+      },
+      "revId": "6bb35f978a3da78ac62540a5b7a4ed17848868ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d15acfe9_0bd8a312",
         "filename": "third_party/WebKit/LayoutTests/editing/execCommand/insert-paragraph-into-table.html",
         "patchSetId": 5
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "742cb9bf_2ef42235",
+        "filename": "third_party/WebKit/LayoutTests/editing/execCommand/insert-paragraph-into-table.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1238128
+      },
+      "writtenOn": "2017-08-29T01:03:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d15acfe9_0bd8a312",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 17,
+        "endChar": 10
+      },
+      "revId": "6bb35f978a3da78ac62540a5b7a4ed17848868ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a953f754_2ea9921f",
         "filename": "third_party/WebKit/LayoutTests/editing/execCommand/insert-paragraph-into-table.html",
         "patchSetId": 5
@@ -68,6 +116,30 @@
       "revId": "6bb35f978a3da78ac62540a5b7a4ed17848868ee",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3497c899_891e1bc6",
+        "filename": "third_party/WebKit/LayoutTests/editing/execCommand/insert-paragraph-into-table.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1238128
+      },
+      "writtenOn": "2017-08-29T01:03:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a953f754_2ea9921f",
+      "range": {
+        "startLine": 20,
+        "startChar": 0,
+        "endLine": 29,
+        "endChar": 10
+      },
+      "revId": "6bb35f978a3da78ac62540a5b7a4ed17848868ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
