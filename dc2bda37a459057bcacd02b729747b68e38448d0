@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "44d6a0fd_21ddefc0",
+        "filename": "net/quic/core/quic_versions.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-08-29T22:09:59Z",
+      "side": 1,
+      "message": "This is shared code. Should this start in the internal repository?",
+      "range": {
+        "startLine": 95,
+        "startChar": 75,
+        "endLine": 95,
+        "endChar": 0
+      },
+      "revId": "dc2bda37a459057bcacd02b729747b68e38448d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c640ba4b_f73219ec",
+        "filename": "net/spdy/platform/impl/spdy_string_utils_impl.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-08-29T22:09:59Z",
+      "side": 1,
+      "message": "Say, it looks like base/stringprintf.h exists internally as well. I think that would simplify the internal impl of this method?",
+      "range": {
+        "startLine": 66,
+        "startChar": 40,
+        "endLine": 66,
+        "endChar": 0
+      },
+      "revId": "dc2bda37a459057bcacd02b729747b68e38448d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
