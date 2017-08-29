@@ -174,6 +174,10 @@ void DefaultState::OnWMEvent(WindowState* window_state, const WMEvent* event) {
     case WM_EVENT_DISPLAY_BOUNDS_CHANGED:
       NOTREACHED() << "Workspace event should not reach here:" << event;
       return;
+    case WM_EVENT_SNAP_TOP:
+    case WM_EVENT_SNAP_BOTTOM:
+      NOTREACHED() << "Top/bottom snap event should not reach here:" << event;
+      return;
   }
 
   if (next_state_type == current_state_type && window_state->IsSnapped()) {
@@ -344,6 +348,10 @@ bool DefaultState::ProcessCompoundEvents(WindowState* window_state,
     case WM_EVENT_DISPLAY_BOUNDS_CHANGED:
       NOTREACHED() << "Workspace event should not reach here:" << event;
       break;
+    case WM_EVENT_SNAP_TOP:
+    case WM_EVENT_SNAP_BOTTOM:
+      NOTREACHED() << "Top/bottom snap event should not reach here:" << event;
+      break;
   }
   return false;
 }
@@ -452,6 +460,10 @@ bool DefaultState::ProcessWorkspaceEvents(WindowState* window_state,
     case WM_EVENT_SNAP_RIGHT:
     case WM_EVENT_SET_BOUNDS:
     case WM_EVENT_SHOW_INACTIVE:
+      break;
+    case WM_EVENT_SNAP_TOP:
+    case WM_EVENT_SNAP_BOTTOM:
+      NOTREACHED() << "Top/bottom snap event should not reach here:" << event;
       break;
   }
   return false;
@@ -644,6 +656,10 @@ void DefaultState::UpdateBoundsFromState(WindowState* window_state,
     case WINDOW_STATE_TYPE_INACTIVE:
     case WINDOW_STATE_TYPE_END:
     case WINDOW_STATE_TYPE_AUTO_POSITIONED:
+      return;
+    case WINDOW_STATE_TYPE_TOP_SNAPPED:
+    case WINDOW_STATE_TYPE_BOTTOM_SNAPPED:
+      NOTREACHED();
       return;
   }
 

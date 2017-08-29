@@ -98,6 +98,14 @@ gfx::Rect GetBoundsInMaximizedMode(wm::WindowState* state_object) {
                                          SplitViewController::RIGHT);
   }
 
+  if (state_object->GetStateType() == wm::WINDOW_STATE_TYPE_TOP_SNAPPED) {
+    // TODO(xdai): Implementation.
+  }
+
+  if (state_object->GetStateType() == wm::WINDOW_STATE_TYPE_BOTTOM_SNAPPED) {
+    // TODO(xdai): Implementation.
+  }
+
   gfx::Rect bounds_in_parent;
   // Make the window as big as possible.
   if (state_object->CanMaximize() || state_object->CanResize()) {
@@ -214,6 +222,18 @@ void TabletModeWindowState::OnWMEvent(wm::WindowState* window_state,
                        window_state, wm::WINDOW_STATE_TYPE_RIGHT_SNAPPED),
                    false /* animated */);
       return;
+    case wm::WM_EVENT_SNAP_TOP:
+      UpdateWindow(window_state,
+                   GetSnappedWindowStateType(window_state,
+                                             wm::WINDOW_STATE_TYPE_TOP_SNAPPED),
+                   false /* animated */);
+      return;
+    case wm::WM_EVENT_SNAP_BOTTOM:
+      UpdateWindow(window_state,
+                   GetSnappedWindowStateType(
+                       window_state, wm::WINDOW_STATE_TYPE_BOTTOM_SNAPPED),
+                   false /* animated */);
+      return;
     case wm::WM_EVENT_MINIMIZE:
       UpdateWindow(window_state, wm::WINDOW_STATE_TYPE_MINIMIZED,
                    true /* animated */);
@@ -234,7 +254,9 @@ void TabletModeWindowState::OnWMEvent(wm::WindowState* window_state,
                  current_state_type_ != wm::WINDOW_STATE_TYPE_PINNED &&
                  current_state_type_ != wm::WINDOW_STATE_TYPE_TRUSTED_PINNED &&
                  current_state_type_ != wm::WINDOW_STATE_TYPE_LEFT_SNAPPED &&
-                 current_state_type_ != wm::WINDOW_STATE_TYPE_RIGHT_SNAPPED) {
+                 current_state_type_ != wm::WINDOW_STATE_TYPE_RIGHT_SNAPPED &&
+                 current_state_type_ != wm::WINDOW_STATE_TYPE_TOP_SNAPPED &&
+                 current_state_type_ != wm::WINDOW_STATE_TYPE_BOTTOM_SNAPPED) {
         // In all other cases (except for minimized windows) we respect the
         // requested bounds and center it to a fully visible area on the screen.
         gfx::Rect bounds_in_parent =
@@ -317,7 +339,9 @@ void TabletModeWindowState::UpdateWindow(wm::WindowState* window_state,
           !window_state->CanMaximize()) ||
          target_state == wm::WINDOW_STATE_TYPE_FULLSCREEN ||
          target_state == wm::WINDOW_STATE_TYPE_LEFT_SNAPPED ||
-         target_state == wm::WINDOW_STATE_TYPE_RIGHT_SNAPPED);
+         target_state == wm::WINDOW_STATE_TYPE_RIGHT_SNAPPED ||
+         target_state == wm::WINDOW_STATE_TYPE_TOP_SNAPPED ||
+         target_state == wm::WINDOW_STATE_TYPE_BOTTOM_SNAPPED);
 
   if (current_state_type_ == target_state) {
     if (target_state == wm::WINDOW_STATE_TYPE_MINIMIZED)
@@ -346,6 +370,10 @@ void TabletModeWindowState::UpdateWindow(wm::WindowState* window_state,
     window_state->SetBoundsDirect(
         Shell::Get()->split_view_controller()->GetSnappedWindowBoundsInParent(
             window_state->window(), SplitViewController::RIGHT));
+  } else if (target_state == wm::WINDOW_STATE_TYPE_TOP_SNAPPED) {
+    // TODO(xdai): Implementation.
+  } else if (target_state == wm::WINDOW_STATE_TYPE_BOTTOM_SNAPPED) {
+    // TODO(xdai): Implementation.
   } else {
     UpdateBounds(window_state, animated);
   }
@@ -379,7 +407,9 @@ wm::WindowStateType TabletModeWindowState::GetSnappedWindowStateType(
     wm::WindowState* window_state,
     wm::WindowStateType target_state) {
   DCHECK(target_state == wm::WINDOW_STATE_TYPE_LEFT_SNAPPED ||
-         target_state == wm::WINDOW_STATE_TYPE_RIGHT_SNAPPED);
+         target_state == wm::WINDOW_STATE_TYPE_RIGHT_SNAPPED ||
+         target_state == wm::WINDOW_STATE_TYPE_TOP_SNAPPED ||
+         target_state == wm::WINDOW_STATE_TYPE_BOTTOM_SNAPPED);
   return CanSnap(window_state) ? target_state
                                : GetMaximizedOrCenteredWindowType(window_state);
 }

@@ -52,6 +52,8 @@ void LockWindowState::OnWMEvent(wm::WindowState* window_state,
     case wm::WM_EVENT_CENTER:
     case wm::WM_EVENT_SNAP_LEFT:
     case wm::WM_EVENT_SNAP_RIGHT:
+    case wm::WM_EVENT_SNAP_TOP:
+    case wm::WM_EVENT_SNAP_BOTTOM:
     case wm::WM_EVENT_NORMAL:
     case wm::WM_EVENT_MAXIMIZE:
       UpdateWindow(window_state,
