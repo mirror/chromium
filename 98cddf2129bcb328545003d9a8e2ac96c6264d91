@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "af083f5b_d805cc1f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/appmenu/AppMenu.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 568,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-08-29T18:26:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7647770b_03670798",
+      "range": {
+        "startLine": 568,
+        "startChar": 16,
+        "endLine": 568,
+        "endChar": 50
+      },
+      "revId": "98cddf2129bcb328545003d9a8e2ac96c6264d91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "185850fc_77211f3f",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/appmenu/AppMenu.java",
         "patchSetId": 3
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "14086285_4faca8aa",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/appmenu/AppMenu.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 573,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-08-29T18:26:58Z",
+      "side": 1,
+      "message": "If there is no OnClickListener set on the header view (e.g. lines 565 through 576 are commented out), then a touch on the space occupied by the header goes to the first item in the menu. Setting an OnClickListener (even one that does nothing) ensures that the touch event doesn\u0027t go to the first menu item. I updated the comment to be more clear.",
+      "parentUuid": "185850fc_77211f3f",
+      "range": {
+        "startLine": 573,
+        "startChar": 42,
+        "endLine": 573,
+        "endChar": 59
+      },
+      "revId": "98cddf2129bcb328545003d9a8e2ac96c6264d91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5da98849_151aa03e",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/appmenu/AppMenuPropertiesDelegate.java",
         "patchSetId": 3
@@ -59,6 +107,30 @@
       "writtenOn": "2017-08-29T15:48:56Z",
       "side": 1,
       "message": "nit: Since this is a single condition, do we need to be this explicit?",
+      "range": {
+        "startLine": 76,
+        "startChar": 20,
+        "endLine": 76,
+        "endChar": 27
+      },
+      "revId": "98cddf2129bcb328545003d9a8e2ac96c6264d91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb968fd7_29da2f6a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/appmenu/AppMenuPropertiesDelegate.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-08-29T18:26:58Z",
+      "side": 1,
+      "message": "You\u0027re suggesting mActivity.getCurrent()... should be inlined below, correct? If so, yes, it could be inlined but I like the consistency with the check in #prepareMenu() below. It makes it more immediately obvious that we\u0027re checking the same thing in both places.",
+      "parentUuid": "5da98849_151aa03e",
       "range": {
         "startLine": 76,
         "startChar": 20,

@@ -105,6 +105,30 @@
       "revId": "e4751e4a083120d5b4ddc88180e476b9acda2a9f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a185cd0_873dd778",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheet.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1618,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-08-29T18:26:58Z",
+      "side": 1,
+      "message": "I chatted with Dave this morning and did some prototyping this morning, and we need changes to the backend to allow the IPH bubble to show more than once per session (specifically, the once_condition_validator throws DCHECKs).\n\nThis should be easily attainable in 63 but we\u0027re not going to rush it in before the 62 branch. So for 62, in some instances there may be two bubbles visible.. Not ideal, but getting the menu header in is important for our experiment.",
+      "parentUuid": "5b6794c7_6837728b",
+      "range": {
+        "startLine": 1618,
+        "startChar": 0,
+        "endLine": 1618,
+        "endChar": 98
+      },
+      "revId": "e4751e4a083120d5b4ddc88180e476b9acda2a9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
