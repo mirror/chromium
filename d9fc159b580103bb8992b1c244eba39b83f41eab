@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a86b45b0_61194eb0",
+        "filename": "chrome/browser/resources/settings/privacy_page/privacy_page.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 268,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-08-29T02:01:08Z",
+      "side": 1,
+      "message": "Nit: When the label is right next to the control, it\u0027s preferable to use area-lebelledby w/ an ID",
+      "range": {
+        "startLine": 268,
+        "startChar": 17,
+        "endLine": 268,
+        "endChar": 60
+      },
+      "revId": "d9fc159b580103bb8992b1c244eba39b83f41eab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a0ab161_fe69380f",
+        "filename": "chrome/browser/resources/settings/route.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 274,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-08-29T02:01:08Z",
+      "side": 1,
+      "message": "nit: remove extra blank line",
+      "revId": "d9fc159b580103bb8992b1c244eba39b83f41eab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
