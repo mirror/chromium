@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "91835c03_b905acb5",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-08-29T17:18:30Z",
+      "side": 1,
+      "message": "Have you check with UX? Left/Right move select app in contents view was a requested feature.",
+      "revId": "71dbd327c2652871ecf7fef659f6231d0846f7a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8bbd8c0e_8fe2a46d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-08-29T17:18:30Z",
+      "side": 1,
+      "message": "Why we don\u0027t allow UP arrow key to focus back to search box?",
+      "revId": "71dbd327c2652871ecf7fef659f6231d0846f7a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6a1d2b3_6c9dd4bc",
+        "filename": "ui/app_list/views/search_box_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 356,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-08-29T17:18:30Z",
+      "side": 1,
+      "message": "From the code here, the intention is not clear. Suggest to add\n  DCHECK_EQ(FOCUS_CONTENTS_VIEW, focused_view_); \n\nto make it easier to follow.\n\nAnd would this change behavior of old app list?",
+      "revId": "71dbd327c2652871ecf7fef659f6231d0846f7a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
