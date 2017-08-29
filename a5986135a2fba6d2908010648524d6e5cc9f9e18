@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0aa02a07_38cc2fef",
+        "filename": "components/printing/DEPS",
+        "patchSetId": 1
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1002198
+      },
+      "writtenOn": "2017-08-29T00:05:24Z",
+      "side": 1,
+      "message": "Is this needed? Should this be explicitly defined by users?",
+      "range": {
+        "startLine": 3,
+        "startChar": 2,
+        "endLine": 3,
+        "endChar": 31
+      },
+      "revId": "a5986135a2fba6d2908010648524d6e5cc9f9e18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
