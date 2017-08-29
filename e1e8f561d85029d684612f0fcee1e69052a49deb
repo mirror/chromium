@@ -163,6 +163,30 @@
       "revId": "e1e8f561d85029d684612f0fcee1e69052a49deb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bcce7fca_fecca36d",
+        "filename": "base/mojo/values_struct_traits.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-29T22:48:45Z",
+      "side": 1,
+      "message": "OK, thanks for the explanation",
+      "parentUuid": "3d28af19_6cc8e627",
+      "range": {
+        "startLine": 61,
+        "startChar": 0,
+        "endLine": 63,
+        "endChar": 14
+      },
+      "revId": "e1e8f561d85029d684612f0fcee1e69052a49deb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

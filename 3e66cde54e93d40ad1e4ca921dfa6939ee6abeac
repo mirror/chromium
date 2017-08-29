@@ -16,6 +16,24 @@
       "revId": "3e66cde54e93d40ad1e4ca921dfa6939ee6abeac",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82cdffac_5f625a73",
+        "filename": "base/mojom/values.mojom",
+        "patchSetId": 16
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-29T22:48:45Z",
+      "side": 1,
+      "message": "I had a bit of trouble figuring out how to word this comment. Let me know if the updated comment makes sense.\n\n(I also added a few tests to try to validate this, but I\u0027m not sure about a good way to validate the deserialization. StructTraits DCHECKs on bad input, so I guess I\u0027d have to manually serialize a bad mojo struct? But it\u0027s typemapped, which makes that somewhat harder... is there a way to still use the raw mojo structs if something is typemapped?)",
+      "parentUuid": "32e4587d_412c95f2",
+      "revId": "3e66cde54e93d40ad1e4ca921dfa6939ee6abeac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
