@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8d0647c2_8763545b",
+        "filename": "build/android/apk_operations.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 509,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-08-29T14:14:00Z",
+      "side": 1,
+      "message": "nit: Can you say:\n# Adding this argument to the subparser would override the set_defaults()\n# value set by on the parent parser (even if None).",
+      "revId": "f81731a093e6c15ff938ca51cba4e9c408970357",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06ec7d5c_c5f48908",
+        "filename": "build/android/apk_operations.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 513,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-08-29T14:14:00Z",
+      "side": 1,
+      "message": "nit: change this to required\u003dself.needs_apk_path",
+      "revId": "f81731a093e6c15ff938ca51cba4e9c408970357",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4a0166c_648ab0ad",
+        "filename": "build/android/apk_operations.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 514,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-08-29T14:14:00Z",
+      "side": 1,
+      "message": "And remove the suppress here.",
+      "revId": "f81731a093e6c15ff938ca51cba4e9c408970357",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
