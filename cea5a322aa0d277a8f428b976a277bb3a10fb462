@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "82a19973_230839dd",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/FullscreenActivity.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1149979
+      },
+      "writtenOn": "2017-08-29T09:30:00Z",
+      "side": 1,
+      "message": "Sorry for my delayed response! Yes, I\u0027d prefer to reuse the code in detach instead of making sever.\n\nYou can see the effect in the first video here: https://bugs.chromium.org/p/chromium/issues/detail?id\u003d757878#c4 . You get a glimpse of the background Tab (youtube) when the current Tab is entering fullscreen.\n\nI believe what is happening is:\n- We detach the Tab from CTA.\n- Since the Tab is detached we see the background Tab (I assume TabModel#removeTab triggers this).\n- Android creates the FA and the Tab is attached to that.\n\nBut you\u0027re saying that we should only see the background Tab if we call hide on the detached Tab? Couldn\u0027t hide be called by TabModel#removeTab?",
+      "parentUuid": "b3ae7c9e_c1b7e7d9",
+      "range": {
+        "startLine": 49,
+        "startChar": 12,
+        "endLine": 49,
+        "endChar": 17
+      },
+      "revId": "cea5a322aa0d277a8f428b976a277bb3a10fb462",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "839739b2_ae908f99",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/FullscreenActivity.java",
         "patchSetId": 1
