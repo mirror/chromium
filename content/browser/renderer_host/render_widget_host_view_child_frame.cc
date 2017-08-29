@@ -79,6 +79,7 @@ RenderWidgetHostViewChildFrame::RenderWidgetHostViewChildFrame(
       current_surface_scale_factor_(1.f),
       frame_connector_(nullptr),
       background_color_(SK_ColorWHITE),
+      destroy_was_called_(false),
       weak_factory_(this) {
   if (!IsUsingMus()) {
     GetHostFrameSinkManager()->RegisterFrameSinkId(frame_sink_id_, this);
@@ -87,6 +88,7 @@ RenderWidgetHostViewChildFrame::RenderWidgetHostViewChildFrame(
 }
 
 RenderWidgetHostViewChildFrame::~RenderWidgetHostViewChildFrame() {
+  CHECK(destroy_was_called_);
   if (!IsUsingMus()) {
     ResetCompositorFrameSinkSupport();
     if (GetHostFrameSinkManager())
@@ -359,6 +361,7 @@ void RenderWidgetHostViewChildFrame::RenderProcessGone(
 }
 
 void RenderWidgetHostViewChildFrame::Destroy() {
+  destroy_was_called_ = true;
   // FrameSinkIds registered with RenderWidgetHostInputEventRouter
   // have already been cleared when RenderWidgetHostViewBase notified its
   // observers of our impending destruction.
