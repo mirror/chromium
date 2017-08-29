@@ -34,6 +34,10 @@ PaintImage PaintImageBuilder::TakePaintImage() const {
     DCHECK(!paint_image_.sk_image_);
     DCHECK(!paint_image_.paint_record_);
   }
+
+  DCHECK(paint_image_.animation_type_ != PaintImage::AnimationType::ANIMATED ||
+         paint_image_.paint_image_generator_)
+      << "Animated images must provide a generator backing";
 #endif
 
   return std::move(paint_image_);
