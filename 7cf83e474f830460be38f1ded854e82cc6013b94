@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6a54cae7_dd4099a9",
+        "filename": "content/renderer/render_frame_proxy.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 362,
+      "author": {
+        "id": 1001433
+      },
+      "writtenOn": "2017-08-29T16:21:34Z",
+      "side": 1,
+      "message": "This could use a comment explaining why it is only set on the first received SurfaceInfo (as is described in the CL description).",
+      "revId": "7cf83e474f830460be38f1ded854e82cc6013b94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "52474758_e47959b5",
+        "filename": "content/renderer/render_frame_proxy.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 543,
+      "author": {
+        "id": 1001433
+      },
+      "writtenOn": "2017-08-29T16:21:34Z",
+      "side": 1,
+      "message": "Is there a reason you need to add the new accessor rather than using RenderWidget::GetOriginalDeviceScaleFactor? The values appear to only be different when devtools is using screen emulation.",
+      "revId": "7cf83e474f830460be38f1ded854e82cc6013b94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
