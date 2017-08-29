@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f6e6ff8a_c8456182",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-08-29T20:04:57Z",
+      "side": 1,
+      "message": "While it is standard to use TBR when merging a CL that was previously reviewed, landed, and verified, on trunk, this CL went through none of those steps, and so should not have been landed without code-review, not TBR\u0027d, and certainly not TBR\u0027d to yourself.\n\nI\u0027d appreciate it if you could add appropriate OWNER(s) to this CL to do a quick retrospective check that we\u0027re not disabling any tests that we shouldn\u0027t be, thanks.",
+      "revId": "8b52fe231d3404a7abd185711d9a666f7519b3ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
