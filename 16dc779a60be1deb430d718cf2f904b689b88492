@@ -34,6 +34,24 @@
       "revId": "16dc779a60be1deb430d718cf2f904b689b88492",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "81a8060b_8d6ce02d",
+        "filename": "third_party/WebKit/LayoutTests/fast/css/parsing-text-emphasis.html",
+        "patchSetId": 9
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1115751
+      },
+      "writtenOn": "2017-08-29T07:36:53Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "c28a3d36_25c0cb56",
+      "revId": "16dc779a60be1deb430d718cf2f904b689b88492",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
