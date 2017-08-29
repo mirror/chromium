@@ -1,0 +1,191 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d374bbdc_7b1b54ed",
+        "filename": "ash/shelf/app_list_button.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 462,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-08-29T17:41:42Z",
+      "side": 1,
+      "message": "nit: invert this, early return for a single statement is a bit excessive. (ditto below)",
+      "revId": "1a5e2b911c1e7bc2ebe2d709f5ff144057872935",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b9cbf115_b03ad611",
+        "filename": "ash/shelf/app_list_button.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 465,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-08-29T17:41:42Z",
+      "side": 1,
+      "message": "This will look very weird, I highly suggest finding a better fix soon. It seems like the ink drop code needs to offer a repositioning function, called on each animation step, or the ink drop should be painted to a layer that handles this automatically or something... i dunno.",
+      "revId": "1a5e2b911c1e7bc2ebe2d709f5ff144057872935",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da4c52ef_6f7e44d8",
+        "filename": "ash/shelf/app_list_button.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-08-29T17:41:42Z",
+      "side": 1,
+      "message": "nit: |shelf_view_| or ShelfView, and \"the app list button\". Comments should cite actual identifiers or use non-proper nouns, like \"the shelf view\".",
+      "revId": "1a5e2b911c1e7bc2ebe2d709f5ff144057872935",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bff843b7_770fa75f",
+        "filename": "ash/shelf/app_list_button.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-08-29T17:41:42Z",
+      "side": 1,
+      "message": "nit: \"finished the tablet mode animation\" or \"finished a bounds animation\"\nAlso, the explanation of the impl and the TODO belong in the actual function impl(s)",
+      "revId": "1a5e2b911c1e7bc2ebe2d709f5ff144057872935",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1697177a_87fe2908",
+        "filename": "ash/shelf/app_list_button.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-08-29T17:41:42Z",
+      "side": 1,
+      "message": "Cite a bug with this TODO (and keep 758402 open after landing, or file a new bug)",
+      "revId": "1a5e2b911c1e7bc2ebe2d709f5ff144057872935",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b0bb72a_1ae701fb",
+        "filename": "ash/shelf/app_list_button.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-08-29T17:41:42Z",
+      "side": 1,
+      "message": "Rename these \"OnBoundsAnimation[Started|Ended]\" or \"OnTabletModeAnimation[Started|Ended]\". Otherwise, it\u0027s ambiguous which animation this is referring to; it could mean the ink drop animation, etc.",
+      "revId": "1a5e2b911c1e7bc2ebe2d709f5ff144057872935",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96cb10f4_6336cf7e",
+        "filename": "ash/shelf/shelf_view_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2571,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-08-29T17:41:42Z",
+      "side": 1,
+      "message": "nit: consider \"Ensure the app list button ink drop is disabled during bounds animations.\"",
+      "revId": "1a5e2b911c1e7bc2ebe2d709f5ff144057872935",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e498f55c_7003c267",
+        "filename": "ash/shelf/shelf_view_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2572,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-08-29T17:41:42Z",
+      "side": 1,
+      "message": "Cite the bug here; this isn\u0027t intentional long-term behavior.",
+      "revId": "1a5e2b911c1e7bc2ebe2d709f5ff144057872935",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9fd9b108_f7f37da9",
+        "filename": "ash/shelf/shelf_view_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2579,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-08-29T17:41:42Z",
+      "side": 1,
+      "message": "q: Is the target state always the last entry in GetAndResetRequestedStates (so long as the target hasn\u0027t already been requested and reset)? If so, can we eliminate some of the redundancy in checking the target and requested states at each step? That would make tests more legible and maintainable. If this is sensible, it would be good for you to make a cleanup pass through other tests in a separate CL. That would avoid copy-pasting of the redundant expectation pattern.",
+      "revId": "1a5e2b911c1e7bc2ebe2d709f5ff144057872935",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc5e7142_8eab3c88",
+        "filename": "ash/shelf/shelf_view_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2584,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-08-29T17:41:42Z",
+      "side": 1,
+      "message": "nit: try to write more concise comments; brevity fosters understanding.\nConsider \"// The ink drop should be hidden during the animation to enter tablet mode.\"",
+      "revId": "1a5e2b911c1e7bc2ebe2d709f5ff144057872935",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1d11166_e4eae48d",
+        "filename": "ash/shelf/shelf_view_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2595,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-08-29T17:41:42Z",
+      "side": 1,
+      "message": "ditto nit: consider \"// The ink drop should be hidden during the animation to exit tablet mode.\"",
+      "revId": "1a5e2b911c1e7bc2ebe2d709f5ff144057872935",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
