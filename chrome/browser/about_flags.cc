@@ -3403,6 +3403,12 @@ const FeatureEntry kFeatureEntries[] = {
      FEATURE_VALUE_TYPE(features::kDoodlesOnLocalNtp)},
 #endif  // !defined(OS_ANDROID)
 
+#if defined(OS_CHROMEOS)
+    {"sys-internals", flag_descriptions::kSysInternalsName,
+     flag_descriptions::kSysInternalsDescription, kOsCrOS,
+     FEATURE_VALUE_TYPE(features::kSysInternals)}
+#endif
+
     // NOTE: Adding new command-line switches requires adding corresponding
     // entries to enum "LoginCustomFlags" in histograms/enums.xml. See note in
     // enums.xml and don't forget to run AboutFlagsHistogramTest unit test.

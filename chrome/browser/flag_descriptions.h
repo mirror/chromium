@@ -749,6 +749,9 @@ extern const char kSyncAppListDescription[];
 extern const char kSyncSandboxName[];
 extern const char kSyncSandboxDescription[];
 
+extern const char kSysInternalsName[];
+extern const char kSysInternalsDescription[];
+
 extern const char kTabAudioMutingName[];
 extern const char kTabAudioMutingDescription[];
 
