@@ -162,8 +162,6 @@ void SessionDataDeleter::DeleteSessionOnlyOriginCookies(
 
 void DeleteSessionOnlyData(Profile* profile) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
-  if (browser_shutdown::IsTryingToQuit())
-    return;
 
   // TODO: Remove Athena special casing once the AthenaSessionRestore is in
   // place.
