@@ -859,6 +859,7 @@ hooks = [
   {
     'name': 'node_linux64',
     'pattern': '.',
+    'condition': '"unix" in gclient_host_os',
     'action': [ 'python',
                 'src/third_party/depot_tools/download_from_google_storage.py',
                 '--no_resume',
