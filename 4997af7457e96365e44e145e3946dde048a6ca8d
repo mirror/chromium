@@ -16,6 +16,24 @@
       "revId": "4997af7457e96365e44e145e3946dde048a6ca8d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "261c3814_3430b1f9",
+        "filename": "third_party/WebKit/Source/platform/wtf/typed_arrays/ArrayBufferContents.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1144619
+      },
+      "writtenOn": "2017-08-29T00:01:16Z",
+      "side": 1,
+      "message": "This is ultimately called at https://cs.chromium.org/chromium/src/v8/src/wasm/wasm-module.cc?type\u003dcs\u0026l\u003d293 which expects that allocation may fail. In that case, V8 throws a RangeError exception instead. You can already get this behavior just by allocating a bunch of ArrayBuffers or Wasm Memories.\n\nBut yes, this code is only used when the trap handling thing is enabled, which only happens on 64-bit. \n\nWhat do you mean by future maintainers getting overzealous?",
+      "parentUuid": "ba377b4a_d5808cc4",
+      "revId": "4997af7457e96365e44e145e3946dde048a6ca8d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
