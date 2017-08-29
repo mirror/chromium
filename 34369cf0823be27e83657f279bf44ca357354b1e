@@ -16,6 +16,24 @@
       "revId": "34369cf0823be27e83657f279bf44ca357354b1e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "075c1fed_2dbb5fd7",
+        "filename": "third_party/WebKit/Source/controller/BlinkInitializer.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1001213
+      },
+      "writtenOn": "2017-08-29T19:57:20Z",
+      "side": 1,
+      "message": "This is lifted from base::GetRandomPageBase:\n\nhttps://cs.chromium.org/chromium/src/base/allocator/partition_allocator/address_space_randomization.cc?rcl\u003d472ae5bd891b7b6b73555ac8f9af8c61814cb3b9\u0026l\u003d121\n\nMaybe it would be clearer like this:\n\n#if defined(OS_WIN) \u0026\u0026 defined(ARCH_CPU_32_BITS)",
+      "parentUuid": "9330a748_063ec2ec",
+      "revId": "34369cf0823be27e83657f279bf44ca357354b1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
