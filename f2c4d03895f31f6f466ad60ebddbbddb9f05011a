@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "79462a0c_932f7880",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-08-29T14:41:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e365531e_5a1ed08a",
+      "revId": "f2c4d03895f31f6f466ad60ebddbbddb9f05011a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4e7e9f79_b33c6d9e",
         "filename": "components/cronet/android/java/src/org/chromium/net/impl/BidirectionalStreamNetworkException.java",
         "patchSetId": 6
@@ -33,6 +51,24 @@
       "revId": "f2c4d03895f31f6f466ad60ebddbbddb9f05011a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a06b410_425917dd",
+        "filename": "components/cronet/android/java/src/org/chromium/net/impl/BidirectionalStreamNetworkException.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-08-29T14:41:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4e7e9f79_b33c6d9e",
+      "revId": "f2c4d03895f31f6f466ad60ebddbbddb9f05011a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "a9b3fdb1_430c1128",
+        "filename": "components/cronet/android/java/src/org/chromium/net/impl/BidirectionalStreamNetworkException.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-08-29T14:41:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "65e54ddc_74aaf0e9",
+      "revId": "f2c4d03895f31f6f466ad60ebddbbddb9f05011a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5208147a_6f2fb98b",
         "filename": "components/cronet/android/test/javatests/src/org/chromium/net/BidirectionalStreamTest.java",
         "patchSetId": 6
@@ -67,6 +121,24 @@
       "revId": "f2c4d03895f31f6f466ad60ebddbbddb9f05011a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21c5a4ac_bfc19024",
+        "filename": "components/cronet/android/test/javatests/src/org/chromium/net/BidirectionalStreamTest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1578,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-08-29T14:41:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5208147a_6f2fb98b",
+      "revId": "f2c4d03895f31f6f466ad60ebddbbddb9f05011a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
