@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e31015ae_edd9c3f7",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-08-29T00:24:37Z",
+      "side": 1,
+      "message": "I wonder if it\u0027s so that things can still build, even though they won\u0027t run, on platforms where some or all of the data dependencies are missing?\n\nOr is it really a long-hand form of \"not-NaCl\"..?",
+      "revId": "545332abb622162dc321929a14b5e8b57739ea7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
