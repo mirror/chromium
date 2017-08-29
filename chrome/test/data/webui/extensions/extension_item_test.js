@@ -132,19 +132,6 @@ cr.define('extension_item_tests', function() {
           item.$$('#inspect-views a[is="action-link"]'), 'inspectItemView',
           [item.data.id, item.data.views[0]]);
 
-      var listener1 = new extension_test_util.ListenerMock();
-      listener1.addListener(
-          item, 'extension-item-show-details', {data: item.data});
-      MockInteractions.tap(item.$$('#details-button'));
-      listener1.verify();
-
-      var listener2 = new extension_test_util.ListenerMock();
-      listener2.addListener(
-          item, 'extension-item-show-details', {data: item.data});
-      MockInteractions.tap(
-          item.$$('#inspect-views a[is="action-link"]:nth-of-type(2)'));
-      listener2.verify();
-
       item.set('data.disableReasons.corruptInstall', true);
       Polymer.dom.flush();
       mockDelegate.testClickingCalls(
