@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "0c82af68_b0f6dbb0",
+        "filename": "chrome/browser/android/locale/locale_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1116074
+      },
+      "writtenOn": "2017-08-29T22:15:28Z",
+      "side": 1,
+      "message": "Ack. I think this makes sense. I think the plan is to follow up with a cleanup here with the right signal to rely on (ID, keyword, new enum etc) and we can just merge all these based on your suggestion after we decide on which property to rely on.",
+      "parentUuid": "cbcd6b50_41f0552b",
+      "revId": "f971f36242a10aea01a3c5b29ca2efad5bf6f8c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "272168d5_695e5a15",
         "filename": "components/search_engines/prepopulated_engines.json",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-29T01:34:02Z",
       "side": 1,
       "message": "I wondered about this way of naming this param before, and I\u0027m still wondering.\n\nI kinda think we should name this {google:referralID}, since we\u0027re the entity who\u0027s created this concept.  The actual value is computed using the prepopulate ID of the engine.  This would prevent someone from making a random non-preopulated search engine and sending other engine\u0027s referral IDs to it, which seems like a desirable thing; but that\u0027s really a side effect.  I mainly just think it\u0027s semantically saner to do it this way.\n\nNote: If the ID is empty, the URL just ends with \"\u0026\", which is undesirable.  If you instead did something like {referralid}q\u003d{searchTerms}, I think you get what you want?  Same for Yandex.",
+      "revId": "f971f36242a10aea01a3c5b29ca2efad5bf6f8c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3504a49a_072af765",
+        "filename": "components/search_engines/prepopulated_engines.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1116074
+      },
+      "writtenOn": "2017-08-29T22:15:28Z",
+      "side": 1,
+      "message": "Yes. I think that is one other thing we talked with tedchoc@ also that should be a part of our cleanup here.",
+      "parentUuid": "272168d5_695e5a15",
       "revId": "f971f36242a10aea01a3c5b29ca2efad5bf6f8c7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
