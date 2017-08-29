@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "fc5b0d73_2a71699f",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/access-control-basic-denied-preflight-cache.htm",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1225177
+      },
+      "writtenOn": "2017-08-29T04:07:08Z",
+      "side": 1,
+      "message": "Thanks for looking up the specs on this and telling me about it (not documented here)! So leave the parentheses on, right? I\u0027ll keep that in mind for future tests!",
+      "parentUuid": "431ff167_64128b1c",
+      "revId": "e2d0870021529562b12cdaff7f5f2da8887dcb82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "84a8288a_5c6ee0e6",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/access-control-basic-denied-preflight-cache.htm",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "e2d0870021529562b12cdaff7f5f2da8887dcb82",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f5d4773_12e5f9f0",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/access-control-basic-denied-preflight-cache.htm",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1225177
+      },
+      "writtenOn": "2017-08-29T04:07:08Z",
+      "side": 1,
+      "message": "Sounds like a good idea to me. Thank you for the input! It\u0027s changed now, for both.",
+      "parentUuid": "84a8288a_5c6ee0e6",
+      "revId": "e2d0870021529562b12cdaff7f5f2da8887dcb82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "91a1e12f_944f0287",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/access-control-basic-denied-preflight-cache.htm",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1225177
+      },
+      "writtenOn": "2017-08-29T04:07:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3674781a_7fca8747",
+      "revId": "e2d0870021529562b12cdaff7f5f2da8887dcb82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "50ea0e85_e0485cfe",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/resources/access-control-basic-denied.py",
         "patchSetId": 2
@@ -67,6 +121,24 @@
       "revId": "e2d0870021529562b12cdaff7f5f2da8887dcb82",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e382f201_9725811d",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/resources/access-control-basic-denied.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1225177
+      },
+      "writtenOn": "2017-08-29T04:07:08Z",
+      "side": 1,
+      "message": "Makes sense! The test name is changed now, to avoid confusion here. Thank you!",
+      "parentUuid": "50ea0e85_e0485cfe",
+      "revId": "e2d0870021529562b12cdaff7f5f2da8887dcb82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
