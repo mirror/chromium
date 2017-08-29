@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5f02cc20_3e03c312",
+        "filename": "components/sync/driver/resources/about.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-08-29T22:27:00Z",
+      "side": 1,
+      "message": "This is the only one that weirds me out.\nWhere is it used?\nWhy isn\u0027t it i18n\u0027d?",
+      "range": {
+        "startLine": 4,
+        "startChar": 0,
+        "endLine": 5,
+        "endChar": 23
+      },
+      "revId": "4685c8cc34a29cb091e3b1d3078d659418cb2f4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
