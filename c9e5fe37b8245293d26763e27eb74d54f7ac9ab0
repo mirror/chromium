@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ea4ab406_c2335365",
+        "filename": "third_party/WebKit/Source/devtools/front_end/timeline/PerformanceMonitor.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1115861
+      },
+      "writtenOn": "2017-08-29T17:50:31Z",
+      "side": 1,
+      "message": "I don\u0027t want to disrupt the chart flow upon navigation.",
+      "parentUuid": "2f3e06a7_8e0fd780",
+      "revId": "c9e5fe37b8245293d26763e27eb74d54f7ac9ab0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "63b97faa_4a1eddf7",
         "filename": "third_party/WebKit/Source/devtools/front_end/timeline/PerformanceMonitor.js",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "c9e5fe37b8245293d26763e27eb74d54f7ac9ab0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fcfc5665_8767e023",
+        "filename": "third_party/WebKit/Source/devtools/front_end/timeline/PerformanceMonitor.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 402,
+      "author": {
+        "id": 1115861
+      },
+      "writtenOn": "2017-08-29T17:50:31Z",
+      "side": 1,
+      "message": "Fixed",
+      "parentUuid": "63b97faa_4a1eddf7",
+      "revId": "c9e5fe37b8245293d26763e27eb74d54f7ac9ab0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
