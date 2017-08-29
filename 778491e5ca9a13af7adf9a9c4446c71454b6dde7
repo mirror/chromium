@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "16e322fc_e247f660",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/SuggestionView.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-08-29T22:11:00Z",
+      "side": 1,
+      "message": "Multiple Chrome-based activities may be running at once, so we shouldn\u0027t use a static to track this.whether there\u0027s a bottom sheet.\n\nIt looks like the SuggestionView is created by OmniboxResultsAdapter which is created by LocationBarLayout which has a reference to the BottomSheet. Since our UI fork is temporary, I think it\u0027s okay to add a new method to OmniboxResultsAdapter called #setUseModernDesign() (similar to #setUseDarkColors()) that can be called from LocationBarLayout with (mBottomSheet !\u003d null \u0026\u0026 FeatureUtilities#isChromeHomeModernEnabled()). SuggestionView#init() seems like the right place to send this boolean through to the SuggestionView.",
+      "range": {
+        "startLine": 198,
+        "startChar": 81,
+        "endLine": 198,
+        "endChar": 99
+      },
+      "revId": "778491e5ca9a13af7adf9a9c4446c71454b6dde7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
