@@ -16,6 +16,24 @@
       "revId": "7858e43d0eeab446b4a5751436b72d3a5bf622a6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d494025d_2b1dc673",
+        "filename": "media/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1115461
+      },
+      "writtenOn": "2017-08-29T11:57:49Z",
+      "side": 1,
+      "message": "It is needed for format unit tests and filter unit tests both. So Separate target is required.",
+      "parentUuid": "0a4e9269_a1ccdc4e",
+      "revId": "7858e43d0eeab446b4a5751436b72d3a5bf622a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
