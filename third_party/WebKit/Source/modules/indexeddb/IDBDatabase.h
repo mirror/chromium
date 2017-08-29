@@ -43,6 +43,7 @@
 #include "modules/indexeddb/IndexedDB.h"
 #include "platform/bindings/ActiveScriptWrappable.h"
 #include "platform/bindings/ScriptState.h"
+#include "platform/bindings/TraceWrapperMember.h"
 #include "platform/heap/Handle.h"
 #include "platform/wtf/RefPtr.h"
 #include "public/platform/modules/indexeddb/WebIDBDatabase.h"
@@ -69,6 +70,7 @@ class MODULES_EXPORT IDBDatabase final
                              v8::Isolate*);
   ~IDBDatabase() override;
   DECLARE_VIRTUAL_TRACE();
+  DECLARE_VIRTUAL_TRACE_WRAPPERS();
 
   // Overwrites the database metadata, including object store and index
   // metadata. Used to pass metadata to the database when it is opened.
@@ -189,17 +191,17 @@ class MODULES_EXPORT IDBDatabase final
 
   IDBDatabaseMetadata metadata_;
   std::unique_ptr<WebIDBDatabase> backend_;
-  Member<IDBTransaction> version_change_transaction_;
-  HeapHashMap<int64_t, Member<IDBTransaction>> transactions_;
-  HeapHashMap<int32_t, Member<IDBObserver>> observers_;
+  TraceWrapperMember<IDBTransaction> version_change_transaction_;
+  HeapHashMap<int64_t, TraceWrapperMember<IDBTransaction>> transactions_;
+  HeapHashMap<int32_t, TraceWrapperMember<IDBObserver>> observers_;
 
   bool close_pending_ = false;
 
   // Keep track of the versionchange events waiting to be fired on this
   // database so that we can cancel them if the database closes.
-  HeapVector<Member<Event>> enqueued_events_;
+  HeapVector<TraceWrapperMember<Event>> enqueued_events_;
 
-  Member<IDBDatabaseCallbacks> database_callbacks_;
+  TraceWrapperMember<IDBDatabaseCallbacks> database_callbacks_;
   // Maintain the isolate so that all externally allocated memory can be
   // registered against it.
   v8::Isolate* isolate_;

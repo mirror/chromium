@@ -126,6 +126,12 @@ DEFINE_TRACE(IDBDatabase) {
   ContextLifecycleObserver::Trace(visitor);
 }
 
+DEFINE_TRACE_WRAPPERS(IDBDatabase) {
+  visitor->TraceWrappers(version_change_transaction_);
+  visitor->TraceWrappers(database_callbacks_);
+  EventTargetWithInlineData::TraceWrappers(visitor);
+}
+
 int64_t IDBDatabase::NextTransactionId() {
   // Only keep a 32-bit counter to allow ports to use the other 32
   // bits of the id.
