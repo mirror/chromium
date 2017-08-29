@@ -28,6 +28,7 @@
 #include "core/frame/LocalFrame.h"
 #include "core/frame/NavigatorID.h"
 #include "core/frame/Settings.h"
+#include "core/inspector/DevToolsEmulator.h"
 #include "core/loader/CookieJar.h"
 #include "core/loader/FrameLoader.h"
 #include "core/page/ChromeClient.h"
@@ -57,6 +58,14 @@ float Navigator::deviceMemory() const {
 
 String Navigator::vendorSub() const {
   return "";
+}
+
+String Navigator::platform() const {
+  if (GetFrame() &&
+      !GetFrame()->GetSettings()->GetNavigatorPlatformOverride().IsEmpty()) {
+    return GetFrame()->GetSettings()->GetNavigatorPlatformOverride();
+  }
+  return NavigatorID::platform();
 }
 
 String Navigator::userAgent() const {

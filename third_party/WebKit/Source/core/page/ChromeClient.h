@@ -58,6 +58,7 @@ class ColorChooserClient;
 class CompositorAnimationTimeline;
 class DateTimeChooser;
 class DateTimeChooserClient;
+class DevToolsEmulator;
 class Element;
 class FileChooser;
 class FloatPoint;
@@ -356,6 +357,8 @@ class CORE_EXPORT ChromeClient : public PlatformChromeClient {
                              WTF::Function<void(bool)> callback) {
     callback(false);
   }
+
+  virtual DevToolsEmulator* GetDevToolsEmulator() { return nullptr; }
 
   DECLARE_TRACE();
 

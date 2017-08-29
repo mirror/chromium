@@ -10,6 +10,7 @@
 #include "platform/heap/Handle.h"
 #include "platform/wtf/Forward.h"
 #include "platform/wtf/Optional.h"
+#include "platform/wtf/text/WTFString.h"
 #include "public/platform/PointerProperties.h"
 #include "public/platform/WebFloatPoint.h"
 #include "public/platform/WebViewportStyle.h"
@@ -55,6 +56,7 @@ class CORE_EXPORT DevToolsEmulator final
   void SetTouchEventEmulationEnabled(bool, int max_touch_points);
   bool HandleInputEvent(const WebInputEvent&);
   void SetScriptExecutionDisabled(bool);
+  void SetNavigatorPlatform(const String&);
 
   // Notify the DevToolsEmulator about a scroll or scale change of the main
   // frame. Updates the transform for a viewport override.

@@ -451,6 +451,11 @@ WTF::Optional<IntRect> DevToolsEmulator::VisibleContentRectForPainting() const {
                 viewport_size.Width(), viewport_size.Height()));
 }
 
+void DevToolsEmulator::SetNavigatorPlatform(const String& navigator_platform) {
+  web_view_->GetPage()->GetSettings().SetNavigatorPlatformOverride(
+      navigator_platform);
+}
+
 void DevToolsEmulator::SetTouchEventEmulationEnabled(bool enabled,
                                                      int max_touch_points) {
   if (!touch_event_emulation_enabled_) {
