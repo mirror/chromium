@@ -22,6 +22,30 @@
       "revId": "93876a16a77a308952c8b8ae1e5385f51f0b0849",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28e6ca9a_3bcbe875",
+        "filename": "services/resource_coordinator/coordination_unit/coordination_unit_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1112474
+      },
+      "writtenOn": "2017-08-29T14:47:06Z",
+      "side": 1,
+      "message": "Oops, sorry. It\u0027s remained by mistake from an earlier version when I was investigating a bug in the service manager that was revealed by this CL (this one: https://chromium-review.googlesource.com/c/chromium/src/+/633488).",
+      "parentUuid": "4480c024_08a6faef",
+      "range": {
+        "startLine": 26,
+        "startChar": 2,
+        "endLine": 26,
+        "endChar": 62
+      },
+      "revId": "93876a16a77a308952c8b8ae1e5385f51f0b0849",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
