@@ -80,7 +80,7 @@ class PLATFORM_EXPORT DeferredImageDecoder final {
   bool HotSpot(IntPoint&) const;
 
  private:
-  explicit DeferredImageDecoder(std::unique_ptr<ImageDecoder> actual_decoder);
+  explicit DeferredImageDecoder(std::unique_ptr<ImageDecoder> metadata_decoder);
 
   friend class DeferredImageDecoderTest;
   ImageFrameGenerator* FrameGenerator() { return frame_generator_.Get(); }
@@ -95,7 +95,7 @@ class PLATFORM_EXPORT DeferredImageDecoder final {
   // Copy of the data that is passed in, used by deferred decoding.
   // Allows creating readonly snapshots that may be read in another thread.
   std::unique_ptr<SkRWBuffer> rw_buffer_;
-  std::unique_ptr<ImageDecoder> actual_decoder_;
+  std::unique_ptr<ImageDecoder> metadata_decoder_;
 
   String filename_extension_;
   IntSize size_;
