@@ -21,7 +21,7 @@ TEST(MovingAverageTest, AverageAndDeviation) {
   EXPECT_EQ(base::TimeDelta(), moving_average.Deviation());
 
   base::TimeDelta expect_deviation[] = {
-      base::TimeDelta::FromMicroseconds(200000),
+      base::TimeDelta::FromMicroseconds(199999),
       base::TimeDelta::FromMicroseconds(244948),
       base::TimeDelta::FromMicroseconds(244948),
       base::TimeDelta::FromMicroseconds(200000),

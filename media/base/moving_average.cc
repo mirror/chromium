@@ -17,8 +17,8 @@ void MovingAverage::AddSample(base::TimeDelta sample) {
   // exceeds |depth_|.
   base::TimeDelta& oldest = samples_[count_++ % depth_];
   total_ += sample - oldest;
-  square_sum_us_ += sample.InMicroseconds() * sample.InMicroseconds() -
-                    oldest.InMicroseconds() * oldest.InMicroseconds();
+  square_sum_secs_ += sample.InSecondsF() * sample.InSecondsF() -
+                      oldest.InSecondsF() * oldest.InSecondsF();
   oldest = sample;
   if (sample > max_)
     max_ = sample;
@@ -37,19 +37,20 @@ base::TimeDelta MovingAverage::Deviation() const {
   DCHECK_GT(count_, 0u);
 
   const double size = std::min(static_cast<uint64_t>(depth_), count_);
-  const double average_us = total_.InMicroseconds() / size;
-  double sqr_deviation_us = square_sum_us_ / size - average_us * average_us;
-  if (sqr_deviation_us < 0)
-    sqr_deviation_us = 0;
+  const double average_secs = total_.InSecondsF() / size;
+  double sqr_deviation_secs =
+      square_sum_secs_ / size - average_secs * average_secs;
+  if (sqr_deviation_secs < 0)
+    sqr_deviation_secs = 0;
 
-  return base::TimeDelta::FromMicroseconds(sqrt(sqr_deviation_us));
+  return base::TimeDelta::FromSecondsD(sqrt(sqr_deviation_secs));
 }
 
 void MovingAverage::Reset() {
   count_ = 0;
   total_ = base::TimeDelta();
   max_ = kNoTimestamp;
-  square_sum_us_ = 0;
+  square_sum_secs_ = 0;
   std::fill(samples_.begin(), samples_.end(), base::TimeDelta());
 }
 

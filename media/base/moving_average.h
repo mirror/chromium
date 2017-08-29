@@ -50,7 +50,7 @@ class MEDIA_EXPORT MovingAverage {
   uint64_t count_ = 0;
 
   base::TimeDelta total_;
-  uint64_t square_sum_us_ = 0;
+  double square_sum_secs_ = 0;
 
   // Maximum value ever seen.
   base::TimeDelta max_ = kNoTimestamp;
