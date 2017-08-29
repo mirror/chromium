@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "2770a63a_ddae0fc0",
+        "filename": "content/browser/service_worker/service_worker_context_core.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 319,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-29T06:16:53Z",
+      "side": 1,
+      "message": "Added a browser test.",
+      "parentUuid": "2869c090_5dddc02b",
+      "range": {
+        "startLine": 318,
+        "startChar": 19,
+        "endLine": 319,
+        "endChar": 70
+      },
+      "revId": "92a4b95547c8c09a83609b965f1eafdc55943bb3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8573c493_942c71af",
         "filename": "content/browser/service_worker/service_worker_version_unittest.cc",
         "patchSetId": 6
@@ -36,6 +60,24 @@
       "writtenOn": "2017-08-29T03:50:35Z",
       "side": 1,
       "message": "How about discarding the Mojo pipe instead of calling Detach directly?\n\nI think you can do it like `helper_-\u003emock_instance_clients()-\u003ereset();`",
+      "revId": "92a4b95547c8c09a83609b965f1eafdc55943bb3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b894d25_2c8a5c5f",
+        "filename": "content/browser/service_worker/service_worker_version_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1112,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-29T06:16:53Z",
+      "side": 1,
+      "message": "Sounds good. Done.",
+      "parentUuid": "8573c493_942c71af",
       "revId": "92a4b95547c8c09a83609b965f1eafdc55943bb3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
