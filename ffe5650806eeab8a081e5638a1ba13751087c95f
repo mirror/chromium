@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6b74f89f_a4a6a3b1",
+        "filename": "chrome/browser/ui/browser_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 491,
+      "author": {
+        "id": 1001213
+      },
+      "writtenOn": "2017-08-29T17:14:08Z",
+      "side": 0,
+      "message": "This should be re-enabled in any case. I\u0027m doing it with this patch to make sure there are no allocation issues on Windows with a large memory reservation for WASM. The win_chromium_rel_ng trybot runs indicate this is no longer a problem.",
+      "revId": "ffe5650806eeab8a081e5638a1ba13751087c95f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
