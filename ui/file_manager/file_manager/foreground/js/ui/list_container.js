@@ -267,6 +267,7 @@ ListContainer.prototype.disableContextMenuByLongTap_ = function() {
     if (!this.allowContextMenuByTouch_ && e.sourceCapabilities &&
         e.sourceCapabilities.firesTouchEvents) {
       e.stopPropagation();
+      this.table.list.focus()
     }
   }.bind(this), true);
 };
