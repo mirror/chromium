@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e2630ce0_dbe481ca",
+        "filename": "content/renderer/media/cdm/render_cdm_factory.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-08-29T18:09:39Z",
+      "side": 1,
+      "message": "This is forward declared in cdm_factory.h and ISTM we don\u0027t need it here.",
+      "revId": "e9d45bcc63012bf6ee986fc9b156e4e0718c7bc7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab3914c3_f846abcb",
+        "filename": "content/renderer/media/cdm/render_cdm_factory.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-08-29T18:09:39Z",
+      "side": 1,
+      "message": "Here and elsewhere, this is forward declared in cdm_factory.h and we don\u0027t really need it?",
+      "revId": "e9d45bcc63012bf6ee986fc9b156e4e0718c7bc7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99a5aeb5_60f9a2fb",
+        "filename": "media/base/android/media_drm_bridge.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 398,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-08-29T18:09:39Z",
+      "side": 1,
+      "message": "Should this be !unique()?",
+      "revId": "e9d45bcc63012bf6ee986fc9b156e4e0718c7bc7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70b7b880_ca2248d0",
+        "filename": "media/base/android/media_drm_bridge.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 398,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-08-29T18:09:39Z",
+      "side": 1,
+      "message": "Should this be !unique()?",
+      "revId": "e9d45bcc63012bf6ee986fc9b156e4e0718c7bc7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23088339_cba027ed",
+        "filename": "media/cdm/cdm_adapter_factory.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-08-29T18:09:39Z",
+      "side": 1,
+      "message": "Here and on line 35, \"Invalid\" is not accurate. How about s/Invalid/Unique?\n\nDitto elsewhere.",
+      "revId": "e9d45bcc63012bf6ee986fc9b156e4e0718c7bc7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45fc0741_6aa43107",
+        "filename": "media/cdm/ppapi/external_clear_key/clear_key_cdm.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 273,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-08-29T18:09:39Z",
+      "side": 1,
+      "message": "We have no plan to pass in the origin to the CDM instance in CreateCdmInstance() call. Maybe drop this TODO and just add a comment?",
+      "revId": "e9d45bcc63012bf6ee986fc9b156e4e0718c7bc7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f1a1347_7a55c227",
+        "filename": "media/mojo/clients/mojo_cdm.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-08-29T18:09:39Z",
+      "side": 1,
+      "message": "We should update content_decryption_module.mojom and use mojo Origin struct in the Initialize() call. See origin.mojom.\n\nFeel free to add a todo and do it in the next CL.",
+      "revId": "e9d45bcc63012bf6ee986fc9b156e4e0718c7bc7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
