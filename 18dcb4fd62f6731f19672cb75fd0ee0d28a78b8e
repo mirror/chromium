@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b2c711c8_8c2dcdc6",
+        "filename": "chrome/browser/subresource_filter/chrome_subresource_filter_client.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-08-29T18:10:30Z",
+      "side": 1,
+      "message": "The above two dchecks seem to be checking the same condition. Is it possible to get rid of activated_via_devtools_ and compute it where needed based on the configuration?",
+      "revId": "18dcb4fd62f6731f19672cb75fd0ee0d28a78b8e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74125400_cac2ed16",
+        "filename": "chrome/browser/subresource_filter/subresource_filter_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-08-29T18:10:30Z",
+      "side": 1,
+      "message": "// should_disable_ruleset_rules is not inherited by the forced activation configuration.",
+      "revId": "18dcb4fd62f6731f19672cb75fd0ee0d28a78b8e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
