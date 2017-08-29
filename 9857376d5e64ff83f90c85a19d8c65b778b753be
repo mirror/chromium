@@ -88,6 +88,24 @@
       "revId": "9857376d5e64ff83f90c85a19d8c65b778b753be",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79bb512a_037fc981",
+        "filename": "content/child/loader/cors_url_loader.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-29T23:40:58Z",
+      "side": 0,
+      "message": "SGTM, thanks for doing this so quickly!",
+      "parentUuid": "27fa6d28_8eff725d",
+      "revId": "9857376d5e64ff83f90c85a19d8c65b778b753be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

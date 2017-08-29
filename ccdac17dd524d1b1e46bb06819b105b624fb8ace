@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ae847761_d86e76f6",
+        "filename": "content/renderer/renderer_blink_platform_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 371,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-29T23:40:58Z",
+      "side": 1,
+      "message": "Oh ok, so we always create this on the IO thread.",
+      "revId": "ccdac17dd524d1b1e46bb06819b105b624fb8ace",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
