@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "3be6b256_8b3c5b3f",
+        "filename": "content/common/sandbox_linux/sandbox_linux.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 414,
+      "author": {
+        "id": 1000985
+      },
+      "writtenOn": "2017-08-29T19:09:03Z",
+      "side": 1,
+      "message": "Doesn\u0027t appear to have triggered on the bots. The only failures are on ASan (which I\u0027ll fix).\n\nAlternatively I can keep the #if defined() guards.",
+      "parentUuid": "2a01adee_0ece1dbd",
+      "revId": "630debfdc4d9208459d9703063d3ef78d1f783d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "19a6d2cd_187e621d",
         "filename": "content/common/sandbox_linux/sandbox_linux.cc",
         "patchSetId": 1
@@ -30,6 +48,30 @@
       "writtenOn": "2017-08-29T18:57:53Z",
       "side": 1,
       "message": "I see this limit needing to increase every several years, but the crash reports associated with this issue are rather nondescript.\n\nIs there any way to get Chrome to crash in a special location if it couldn\u0027t allocate memory because of the rlimit being too low (with a comment pointing back to this code)?",
+      "range": {
+        "startLine": 435,
+        "startChar": 53,
+        "endLine": 435,
+        "endChar": 56
+      },
+      "revId": "630debfdc4d9208459d9703063d3ef78d1f783d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c13e9a0_25ef8ed7",
+        "filename": "content/common/sandbox_linux/sandbox_linux.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 435,
+      "author": {
+        "id": 1000985
+      },
+      "writtenOn": "2017-08-29T19:09:03Z",
+      "side": 1,
+      "message": "That is a good point, and I don\u0027t know the answer to that question. Julien, any ideas?",
+      "parentUuid": "19a6d2cd_187e621d",
       "range": {
         "startLine": 435,
         "startChar": 53,
