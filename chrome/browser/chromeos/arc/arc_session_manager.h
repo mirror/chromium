@@ -292,7 +292,7 @@ class ArcSessionManager : public ArcSessionRunner::Observer,
   //   ToS related code from ArcSessionManager into a dedicated class.
   bool IsArcTermsOfServiceNegotiationNeeded() const;
 
-  void ShutdownSession();
+  void ShutdownSession(bool system_shutdown = false);
   void OnArcSignInTimeout();
 
   // Starts Android management check. This is for first boot case (= Opt-in
