@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a6e73849_e4788fc8",
+        "filename": "third_party/WebKit/Source/platform/graphics/Canvas2DLayerBridge.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 1040,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2017-08-29T17:52:58Z",
+      "side": 1,
+      "message": "move this into PrepareMailboxFromImage",
+      "range": {
+        "startLine": 1040,
+        "startChar": 54,
+        "endLine": 1040,
+        "endChar": 74
+      },
+      "revId": "40e648b09ede54640f97b44640c9714e74d35a49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a53bb17_985ecd56",
+        "filename": "third_party/WebKit/Source/platform/graphics/Canvas2DLayerBridge.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 1043,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2017-08-29T17:52:58Z",
+      "side": 1,
+      "message": "no need for a shared_bitmap arg.pass back the shared_bitmap as a member of info instead.",
+      "range": {
+        "startLine": 1043,
+        "startChar": 31,
+        "endLine": 1043,
+        "endChar": 44
+      },
+      "revId": "40e648b09ede54640f97b44640c9714e74d35a49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad419d94_146679ce",
+        "filename": "third_party/WebKit/Source/platform/graphics/Canvas2DLayerBridge.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 1047,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2017-08-29T17:52:58Z",
+      "side": 1,
+      "message": "this is redundant",
+      "range": {
+        "startLine": 1047,
+        "startChar": 23,
+        "endLine": 1047,
+        "endChar": 36
+      },
+      "revId": "40e648b09ede54640f97b44640c9714e74d35a49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1904daf7_4368c1a0",
+        "filename": "third_party/WebKit/Source/platform/graphics/Canvas2DLayerBridge.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 1048,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2017-08-29T17:52:58Z",
+      "side": 1,
+      "message": "This is not right. Should not always be \u0027true\u0027. Please find out why Canvas2DLayerBridge::SetFilterQuality is not working.",
+      "range": {
+        "startLine": 1048,
+        "startChar": 12,
+        "endLine": 1048,
+        "endChar": 30
+      },
+      "revId": "40e648b09ede54640f97b44640c9714e74d35a49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89704dd3_256166ed",
+        "filename": "third_party/WebKit/Source/platform/graphics/Canvas2DLayerBridge.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 1050,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2017-08-29T17:52:58Z",
+      "side": 1,
+      "message": "Please move this out of prepareMailbox and call SetFlipped when layer_ is initialized and when we switch in/out of accelerated mode",
+      "range": {
+        "startLine": 1050,
+        "startChar": 10,
+        "endLine": 1050,
+        "endChar": 20
+      },
+      "revId": "40e648b09ede54640f97b44640c9714e74d35a49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06431412_cbff5a61",
+        "filename": "third_party/WebKit/Source/platform/graphics/Canvas2DLayerBridge.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 1058,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2017-08-29T17:52:58Z",
+      "side": 1,
+      "message": "would be cleaner to pass shared_bimap as a member of info IMHO.",
+      "range": {
+        "startLine": 1058,
+        "startChar": 62,
+        "endLine": 1058,
+        "endChar": 75
+      },
+      "revId": "40e648b09ede54640f97b44640c9714e74d35a49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
