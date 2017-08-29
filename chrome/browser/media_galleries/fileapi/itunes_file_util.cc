@@ -377,9 +377,9 @@ void ITunesFileUtil::ReadDirectoryWithFreshDataProvider(
   if (!valid_parse) {
     if (!callback.is_null()) {
       content::BrowserThread::PostTask(
-          content::BrowserThread::IO,
-          FROM_HERE,
-          base::Bind(callback, base::File::FILE_ERROR_IO, EntryList(), false));
+          content::BrowserThread::IO, FROM_HERE,
+          base::BindOnce(callback, base::File::FILE_ERROR_IO, EntryList{},
+                         false));
     }
     return;
   }
