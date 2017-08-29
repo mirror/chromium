@@ -546,6 +546,7 @@ class Generator(generator.Generator):
     if mojom.IsStringKind(kind):
       if self.for_blink:
         return "WTF::String"
+      return "CharString"
       type_name = "std::string"
       return (_AddOptional(type_name) if mojom.IsNullableKind(kind)
                                       else type_name)
@@ -587,7 +588,7 @@ class Generator(generator.Generator):
 
   def _ShouldPassParamByValue(self, kind):
     return ((not mojom.IsReferenceKind(kind)) or self._IsMoveOnlyKind(kind) or
-        self._IsCopyablePassByValue(kind))
+        self._IsCopyablePassByValue(kind) or mojom.IsStringKind(kind))
 
   def _GetCppWrapperParamType(self, kind):
     cpp_wrapper_type = self._GetCppWrapperType(kind)

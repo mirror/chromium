@@ -1,4 +1,4 @@
-// Copyright 2013 The Chromium Authors. All rights reserved.
+// ZZZ Copyright 2013 The Chromium Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
@@ -38,6 +38,55 @@ namespace {{variant}} {
 #include <limits>
 #include <type_traits>
 #include <utility>
+
+///////////////////////////// MEF TEST
+{%- import "interface_macros.tmpl" as interface_macros %}
+
+typedef const char* CharString;
+
+// Interfaces
+{%  for interface in interfaces %}
+typedef struct {{interface.name}} {{interface.name}};
+typedef struct {{interface.name}}* {{interface.name}}Ptr;
+{%- endfor %}
+
+// Structs
+{%- for struct in structs %}
+typedef struct {{struct.name}} {{struct.name}};
+typedef struct {{struct.name}}* {{struct.name}}Ptr;
+{%- endfor %}
+
+
+{#--- Interface Stubs -#}
+{%  for interface in interfaces %}
+
+// {{interface.name}} methods.
+{%- for method in interface.methods %}
+{%-  if method.response_parameters and method.sync %}
+{%-   for param in method.response_parameters %}
+{{param.kind|cpp_wrapper_param_type}}
+{%-   endfor -%}
+{%-  else %}
+void
+{%- endif %}
+ {{interface.name}}_{{method.name}}({{interface.name}}Ptr self
+{%-   if method.parameters %}, {{interface_macros.declare_request_params("", method, use_once_callback)}}
+{%-   endif %});
+{%- endfor %}
+{%- endfor %}
+
+{%- for struct in structs %}
+
+// {{struct.name}} accessors.
+{%- for packed_field in struct.packed.packed_fields_in_ordinal_order %}
+{%-   set kind = packed_field.field.kind %}
+void {{struct.name}}_set_{{packed_field.field.name}}({{struct.name}}Ptr self, {{packed_field.field.kind|cpp_wrapper_param_type}} {{packed_field.field.name}});
+{%- endfor %}
+{%- endfor %}
+
+
+///////////////////////////// END OF MEF TEST
+
 
 #include "base/callback.h"
 #include "base/macros.h"
