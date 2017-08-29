@@ -70,6 +70,70 @@
       "revId": "bbbde46f80d0b07673c675b1708e20c3d03e2aec",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f2d7f30_8cf9f106",
+        "filename": "chrome/gpu/chrome_arc_video_decode_accelerator.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 1119929
+      },
+      "writtenOn": "2017-08-29T08:05:05Z",
+      "side": 1,
+      "message": "I tend to agree with Daniele here, but I don\u0027t really understand what\u0027s the problem with VerifyDmabuf(). We should be getting the format from Android side (since it only knows it by querying gralloc, which is free to choose arbitrary format, as long as hardware is expected to support it) and then VerifyDmabuf() should check the DMA-buf validity based on that format.",
+      "parentUuid": "02ce9300_ef50e70e",
+      "revId": "bbbde46f80d0b07673c675b1708e20c3d03e2aec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79dd0d34_a042b1d4",
+        "filename": "media/gpu/vaapi_video_decode_accelerator.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1119929
+      },
+      "writtenOn": "2017-08-29T08:05:05Z",
+      "side": 1,
+      "message": "Why do we hardcode the format here? The format is determined at runtime by gralloc, so it is an implementation detail, which can change.",
+      "range": {
+        "startLine": 47,
+        "startChar": 0,
+        "endLine": 47,
+        "endChar": 40
+      },
+      "revId": "bbbde46f80d0b07673c675b1708e20c3d03e2aec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1a654d5_7708eb63",
+        "filename": "media/gpu/vaapi_video_decode_accelerator.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 898,
+      "author": {
+        "id": 1119929
+      },
+      "writtenOn": "2017-08-29T08:05:05Z",
+      "side": 1,
+      "message": "We should be getting output format from Android side.",
+      "range": {
+        "startLine": 894,
+        "startChar": 0,
+        "endLine": 898,
+        "endChar": 39
+      },
+      "revId": "bbbde46f80d0b07673c675b1708e20c3d03e2aec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
