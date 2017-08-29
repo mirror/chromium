@@ -172,6 +172,7 @@ class RenderViewContextMenu : public RenderViewContextMenuBase {
 
   // Command execution functions.
   void ExecOpenLinkNewTab();
+  void ExecOpenBookmarkApp();
   void ExecProtocolHandler(int event_flags, int handler_index);
   void ExecOpenLinkInProfile(int profile_index);
   void ExecInspectElement();
@@ -208,6 +209,8 @@ class RenderViewContextMenu : public RenderViewContextMenuBase {
   // Returns a list of registered ProtocolHandlers that can handle the clicked
   // on URL.
   ProtocolHandlerRegistry::ProtocolHandlerList GetHandlersForLinkUrl();
+
+  const extensions::Extension* in_scope_app_;
 
   // The destination URL to use if the user tries to search for or navigate to
   // a text selection.
