@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6ef0f1f5_89f5c0b5",
+        "filename": "third_party/crc32c/BUILD.gn",
+        "patchSetId": 8
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-08-29T03:43:00Z",
+      "side": 1,
+      "message": "FWIW, I think this would work w/ current_cpu rather than target_cpu.",
+      "revId": "9ea888887a33f03d7ee2b4fbba18d32d564e0237",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
