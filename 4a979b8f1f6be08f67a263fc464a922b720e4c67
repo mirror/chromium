@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "5deecaae_c943e3f1",
+        "filename": "ios/chrome/browser/passwords/credential_manager_unittest.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1229234
+      },
+      "writtenOn": "2017-08-29T18:29:18Z",
+      "side": 1,
+      "message": "Done\nI wanted to make sure that check for cryptographic scheme is also performed (and the test is not just failing because of invalid certificate). Then again, it was not a real life scenario, deleted this line.",
+      "parentUuid": "9cb9ac40_e751f176",
+      "range": {
+        "startLine": 91,
+        "startChar": 2,
+        "endLine": 91,
+        "endChar": 17
+      },
+      "revId": "4a979b8f1f6be08f67a263fc464a922b720e4c67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "24b32cd5_55e2dc3c",
         "filename": "ios/chrome/browser/passwords/credential_manager_unittest.mm",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "4a979b8f1f6be08f67a263fc464a922b720e4c67",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cfb203c9_70713c3a",
+        "filename": "ios/chrome/browser/passwords/credential_manager_unittest.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1229234
+      },
+      "writtenOn": "2017-08-29T18:29:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "24b32cd5_55e2dc3c",
+      "range": {
+        "startLine": 114,
+        "startChar": 48,
+        "endLine": 114,
+        "endChar": 49
+      },
+      "revId": "4a979b8f1f6be08f67a263fc464a922b720e4c67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "68337c20_09a16d04",
+        "filename": "ios/chrome/browser/passwords/credential_manager_unittest.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1229234
+      },
+      "writtenOn": "2017-08-29T18:29:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "33e170b5_1bdcb838",
+      "range": {
+        "startLine": 117,
+        "startChar": 2,
+        "endLine": 117,
+        "endChar": 17
+      },
+      "revId": "4a979b8f1f6be08f67a263fc464a922b720e4c67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6ffa591b_e229ae39",
         "filename": "ios/chrome/browser/passwords/credential_manager_util.mm",
         "patchSetId": 1
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "730e7685_9e93f7dc",
+        "filename": "ios/chrome/browser/passwords/credential_manager_util.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1229234
+      },
+      "writtenOn": "2017-08-29T18:29:18Z",
+      "side": 1,
+      "message": "Done\nA question though: On my previous CL you wrote that client can be null:\n\n\u003e Can it be null? I\u0027m pretty sure that \u0027yes\u0027 while IOSSecurityStateTabHelper is attached in WebStateList::InsertWebState. web::WebState can be create without that list.\nI\u0027d handle the NULL pointer.\n\nIs it the correct way to handle the null pointer (the change from last patch set)?\nShould I make sure somewhere else that IOSSecurityStateTabHelper is created, e.g. in CredentialManager\u0027s constructor?",
+      "parentUuid": "6ffa591b_e229ae39",
+      "range": {
+        "startLine": 32,
+        "startChar": 29,
+        "endLine": 32,
+        "endChar": 46
+      },
+      "revId": "4a979b8f1f6be08f67a263fc464a922b720e4c67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ee65d7bd_c3aca2a0",
         "filename": "ios/chrome/browser/passwords/credential_manager_util.mm",
         "patchSetId": 1
@@ -114,6 +210,30 @@
       "revId": "4a979b8f1f6be08f67a263fc464a922b720e4c67",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d413e2e0_a797d2ba",
+        "filename": "ios/chrome/browser/passwords/credential_manager_util.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1229234
+      },
+      "writtenOn": "2017-08-29T18:29:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ee65d7bd_c3aca2a0",
+      "range": {
+        "startLine": 181,
+        "startChar": 38,
+        "endLine": 181,
+        "endChar": 46
+      },
+      "revId": "4a979b8f1f6be08f67a263fc464a922b720e4c67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
