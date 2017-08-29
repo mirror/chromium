@@ -48,4 +48,9 @@ public class ShadowDeviceConditions {
     public static boolean isActiveNetworkMetered(Context context) {
         return sMetered;
     }
+
+    @Implementation
+    public static boolean isPowerSaveOn(Context context) {
+        return sDeviceConditions.isPowerSaveOn();
+    }
 }
