@@ -153,8 +153,7 @@ message ResourceMetadataHeader {
   optional int32 version = 1;
   optional int64 largest_changestamp = 2;
 
-  // True if resources already have been updated after 'starred' property added.
-  // Otherwise, we have to load them from server.
+  // Deprecated and no longer used.
   optional bool starred_property_initialized = 3;
 }
 

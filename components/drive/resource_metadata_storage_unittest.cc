@@ -303,7 +303,7 @@ TEST_F(ResourceMetadataStorageTest, OpenExistingDB) {
   EXPECT_EQ(child_id1, child_id);
 }
 
-TEST_F(ResourceMetadataStorageTest, IncompatibleDB_M29) {
+TEST_F(ResourceMetadataStorageTest, IncompatibleDB_V6) {
   const int64_t kLargestChangestamp = 1234567890;
   const std::string title = "title";
 
@@ -350,7 +350,7 @@ TEST_F(ResourceMetadataStorageTest, IncompatibleDB_M29) {
   EXPECT_TRUE(entry.file_specific_info().has_cache_state());
 }
 
-TEST_F(ResourceMetadataStorageTest, IncompatibleDB_M32) {
+TEST_F(ResourceMetadataStorageTest, IncompatibleDB_V11) {
   const int64_t kLargestChangestamp = 1234567890;
   const std::string title = "title";
   const std::string resource_id = "abcd";
@@ -400,7 +400,7 @@ TEST_F(ResourceMetadataStorageTest, IncompatibleDB_M32) {
   EXPECT_TRUE(entry.file_specific_info().has_cache_state());
 }
 
-TEST_F(ResourceMetadataStorageTest, IncompatibleDB_M33) {
+TEST_F(ResourceMetadataStorageTest, IncompatibleDB_V12) {
   const int64_t kLargestChangestamp = 1234567890;
   const std::string title = "title";
   const std::string resource_id = "abcd";
@@ -448,12 +448,13 @@ TEST_F(ResourceMetadataStorageTest, IncompatibleDB_M33) {
       temp_dir_.GetPath(), base::ThreadTaskRunnerHandle::Get().get()));
   ASSERT_TRUE(storage_->Initialize());
 
-  // No data is lost.
+  // largest_changestamp is cleared.
   int64_t largest_changestamp = 0;
   EXPECT_EQ(FILE_ERROR_OK,
             storage_->GetLargestChangestamp(&largest_changestamp));
-  EXPECT_EQ(kLargestChangestamp, largest_changestamp);
+  EXPECT_EQ(0, largest_changestamp);
 
+  // No data is lost.
   std::string id;
   EXPECT_EQ(FILE_ERROR_OK, storage_->GetIdByResourceId(resource_id, &id));
   EXPECT_EQ(local_id, id);
@@ -494,7 +495,14 @@ TEST_F(ResourceMetadataStorageTest, IncompatibleDB_Unknown) {
   EXPECT_EQ(FILE_ERROR_NOT_FOUND, storage_->GetEntry(key1, &entry));
 }
 
-TEST_F(ResourceMetadataStorageTest, DeleteUnusedIDEntries) {
+TEST_F(ResourceMetadataStorageTest, IncompatibleDB_V13) {
+  const int64_t kLargestChangestamp = 1234567890;
+
+  // Construct v13 DB.
+  SetDBVersion(13);
+  EXPECT_EQ(FILE_ERROR_OK,
+            storage_->SetLargestChangestamp(kLargestChangestamp));
+
   leveldb::WriteBatch batch;
 
   // Put an ID entry with a corresponding ResourceEntry.
@@ -525,6 +533,12 @@ TEST_F(ResourceMetadataStorageTest, DeleteUnusedIDEntries) {
   EXPECT_EQ("id1", id);
   EXPECT_EQ(FILE_ERROR_NOT_FOUND,
             storage_->GetIdByResourceId("resource_id2", &id));
+
+  // largest_changestamp is cleared.
+  int64_t largest_changestamp = 0;
+  EXPECT_EQ(FILE_ERROR_OK,
+            storage_->GetLargestChangestamp(&largest_changestamp));
+  EXPECT_EQ(0, largest_changestamp);
 }
 
 TEST_F(ResourceMetadataStorageTest, WrongPath) {
@@ -647,29 +661,6 @@ TEST_F(ResourceMetadataStorageTest, CheckValidity) {
   // Remove key1.
   EXPECT_EQ(FILE_ERROR_OK, storage_->RemoveEntry(key1));
   EXPECT_TRUE(CheckValidity());
-}
-
-TEST_F(ResourceMetadataStorageTest, ChangeStarredPropertyInitialized) {
-  // Suppose 'Starred' property has not loaded.
-  bool starred_property_initialized = false;
-  SetStarredPropertyInitialized(starred_property_initialized);
-
-  const int64_t kLargestChangestamp = 1234567890;
-  EXPECT_EQ(FILE_ERROR_OK,
-            storage_->SetLargestChangestamp(kLargestChangestamp));
-
-  // Close DB and reopen.
-  storage_.reset(new ResourceMetadataStorage(
-      temp_dir_.GetPath(), base::ThreadTaskRunnerHandle::Get().get()));
-  ASSERT_TRUE(storage_->Initialize());
-
-  starred_property_initialized = GetStarredPropertyInitialized();
-  EXPECT_TRUE(starred_property_initialized);
-
-  int64_t largest_changestamp = 0;
-  EXPECT_EQ(FILE_ERROR_OK,
-            storage_->GetLargestChangestamp(&largest_changestamp));
-  EXPECT_EQ(0, largest_changestamp);
 }
 
 }  // namespace internal
