@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "17610012_f642d87c",
+        "filename": "chrome/browser/ssl/ssl_error_assistant.proto",
+        "patchSetId": 14
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1229947
+      },
+      "writtenOn": "2017-08-29T20:45:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "24dd64c0_477d0925",
+      "revId": "1a63db46520d91dc1b90bce77e6a502e7a251aa5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "51626e7f_a79de8fa",
         "filename": "chrome/browser/ssl/ssl_error_handler.cc",
         "patchSetId": 14
@@ -59,6 +77,24 @@
     },
     {
       "key": {
+        "uuid": "310e3289_8c0201e6",
+        "filename": "chrome/browser/ssl/ssl_error_handler.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 520,
+      "author": {
+        "id": 1229947
+      },
+      "writtenOn": "2017-08-29T20:45:15Z",
+      "side": 1,
+      "message": "It\u0027s actually perfectly okay if one of them is empty. That case will happen pretty frequently. What this dcheck is intended to do is ensure that at least one of them is populated.",
+      "parentUuid": "b0aabf9b_2b7e68fa",
+      "revId": "1a63db46520d91dc1b90bce77e6a502e7a251aa5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "66ef2f12_b6a2e631",
         "filename": "chrome/browser/ssl/ssl_error_handler.cc",
         "patchSetId": 14
@@ -73,6 +109,24 @@
       "revId": "1a63db46520d91dc1b90bce77e6a502e7a251aa5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89e7a417_3521f5b8",
+        "filename": "chrome/browser/ssl/ssl_error_handler.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 540,
+      "author": {
+        "id": 1229947
+      },
+      "writtenOn": "2017-08-29T20:45:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "66ef2f12_b6a2e631",
+      "revId": "1a63db46520d91dc1b90bce77e6a502e7a251aa5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -93,6 +147,24 @@
     },
     {
       "key": {
+        "uuid": "7d680699_dd2d8020",
+        "filename": "chrome/browser/ssl/ssl_error_handler.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 547,
+      "author": {
+        "id": 1229947
+      },
+      "writtenOn": "2017-08-29T20:45:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2fc98a32_4ad7b314",
+      "revId": "1a63db46520d91dc1b90bce77e6a502e7a251aa5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dfc2df3e_358f5ad8",
         "filename": "chrome/browser/ssl/ssl_error_handler_unittest.cc",
         "patchSetId": 14
@@ -107,6 +179,24 @@
       "revId": "1a63db46520d91dc1b90bce77e6a502e7a251aa5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "afc11bbb_1a7f34c4",
+        "filename": "chrome/browser/ssl/ssl_error_handler_unittest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 1304,
+      "author": {
+        "id": 1229947
+      },
+      "writtenOn": "2017-08-29T20:45:15Z",
+      "side": 1,
+      "message": "I struggled a little bit with getting passing this in to work, but I did get this refactor to work without passing parameters.",
+      "parentUuid": "dfc2df3e_358f5ad8",
+      "revId": "1a63db46520d91dc1b90bce77e6a502e7a251aa5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
