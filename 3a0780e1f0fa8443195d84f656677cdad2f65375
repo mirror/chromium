@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "57bc31e7_3e77e415",
+        "filename": "content/renderer/fetchers/resource_fetcher_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-08-29T20:09:19Z",
+      "side": 1,
+      "message": "\"Eventually, we will refactor ThrottlingURLLoader to be mojom::URLLoaderFactory inheritance that composite another factory, then ChildURLLoaderFactoryGetter would return it.\"\n\nWould you please point me to any discussion thread/bug about this, if any? I would like to learn more about it.\n\nI feel that it may not be correct to make ThrottlingURLLoader a mojom::URLLoaderFactory. For example, ThrottlingURLLoader cannot start multiple URL requests. Instead, it is more close to a mojom::URLLoader.",
+      "parentUuid": "98dda4e5_bf13867e",
+      "range": {
+        "startLine": 88,
+        "startChar": 4,
+        "endLine": 88,
+        "endChar": 19
+      },
+      "revId": "3a0780e1f0fa8443195d84f656677cdad2f65375",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7c72198f_770f9fdd",
         "filename": "content/renderer/fetchers/resource_fetcher_impl.cc",
         "patchSetId": 3
