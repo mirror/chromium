@@ -27,13 +27,15 @@
 namespace ash {
 
 PowerButtonController::PowerButtonController(LockStateController* controller)
-    : lock_state_controller_(controller) {
+    : lock_state_controller_(controller), weak_ptr_factory_(this) {
   ProcessCommandLine();
   chromeos::DBusThreadManager::Get()->GetPowerManagerClient()->AddObserver(
       this);
   chromeos::AccelerometerReader::GetInstance()->AddObserver(this);
   Shell::Get()->display_configurator()->AddObserver(this);
   Shell::Get()->PrependPreTargetHandler(this);
+
+  GetInitialBacklightsForcedOff();
 }
 
 PowerButtonController::~PowerButtonController() {
@@ -196,9 +198,21 @@ void PowerButtonController::OnAccelerometerUpdated(
       new TabletPowerButtonController(lock_state_controller_));
 }
 
-void PowerButtonController::ResetTabletPowerButtonControllerForTest() {
-  tablet_controller_.reset();
-  ProcessCommandLine();
+void PowerButtonController::GetInitialBacklightsForcedOff() {
+  chromeos::DBusThreadManager::Get()
+      ->GetPowerManagerClient()
+      ->GetBacklightsForcedOff(
+          base::Bind(&PowerButtonController::OnGotInitialBacklightsForcedOff,
+                     weak_ptr_factory_.GetWeakPtr()));
+}
+
+void PowerButtonController::OnGotInitialBacklightsForcedOff(
+    bool is_forced_off) {
+  ShellDelegate* delegate = Shell::Get()->shell_delegate();
+  delegate->SetTouchscreenStatus(
+      force_clamshell_power_button_ || !is_forced_off,
+      false /* use_user_pref */);
+  delegate->UpdateTouchscreenStatus();
 }
 
 void PowerButtonController::ProcessCommandLine() {
@@ -206,14 +220,6 @@ void PowerButtonController::ProcessCommandLine() {
   has_legacy_power_button_ = cl->HasSwitch(switches::kAuraLegacyPowerButton);
   force_clamshell_power_button_ =
       cl->HasSwitch(switches::kForceClamshellPowerButton);
-  if (force_clamshell_power_button_) {
-    // We may update power button behavior from tablet behavior to clamshell
-    // behavior with touchscreen local state disabled. Enabling touchscreen
-    // local state to ensure touchscreen is initially enabled for clamshell.
-    ShellDelegate* delegate = Shell::Get()->shell_delegate();
-    delegate->SetTouchscreenEnabledInPrefs(true, true /* use_local_state */);
-    delegate->UpdateTouchscreenStatusFromPrefs();
-  }
 }
 
 }  // namespace ash

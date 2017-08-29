@@ -790,7 +790,7 @@ void Preferences::ApplyPreferences(ApplyReason reason,
     }
   }
 
-  system::InputDeviceSettings::Get()->UpdateTouchDevicesStatusFromPrefs();
+  system::InputDeviceSettings::Get()->UpdateTouchscreenStatus();
 }
 
 void Preferences::OnIsSyncingChanged() {
