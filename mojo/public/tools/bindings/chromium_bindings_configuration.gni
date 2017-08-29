@@ -4,6 +4,7 @@
 
 _typemap_imports = [
   "//ash/public/interfaces/typemaps.gni",
+  "//base/mojom/typemaps.gni",
   "//cc/ipc/typemaps.gni",
   "//chrome/common/extensions/typemaps.gni",
   "//chrome/common/importer/typemaps.gni",

@@ -314,6 +314,8 @@ static_library("run_all_base_unittests") {
   ]
   deps = [
     ":test_support",
+    "//mojo/edk/system",
+    "//mojo/edk/test:test_support",
   ]
 }
 
