@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7647770b_03670798",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/appmenu/AppMenu.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 568,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-08-29T15:48:56Z",
+      "side": 1,
+      "message": "nit: short-circuit?",
+      "range": {
+        "startLine": 568,
+        "startChar": 16,
+        "endLine": 568,
+        "endChar": 50
+      },
+      "revId": "98cddf2129bcb328545003d9a8e2ac96c6264d91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "185850fc_77211f3f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/appmenu/AppMenu.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 573,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-08-29T15:48:56Z",
+      "side": 1,
+      "message": "Not sure I understand this comment. I don\u0027t think the OnClickListener has a concept of \u0027consumed\u0027.",
+      "range": {
+        "startLine": 573,
+        "startChar": 42,
+        "endLine": 573,
+        "endChar": 59
+      },
+      "revId": "98cddf2129bcb328545003d9a8e2ac96c6264d91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5da98849_151aa03e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/appmenu/AppMenuPropertiesDelegate.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-08-29T15:48:56Z",
+      "side": 1,
+      "message": "nit: Since this is a single condition, do we need to be this explicit?",
+      "range": {
+        "startLine": 76,
+        "startChar": 20,
+        "endLine": 76,
+        "endChar": 27
+      },
+      "revId": "98cddf2129bcb328545003d9a8e2ac96c6264d91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
