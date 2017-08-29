@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "e9a4a5eb_d9833600",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/signin/ProfileDataCache.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-08-29T12:40:31Z",
+      "side": 1,
+      "message": "Unfortunately, it\u0027s not possible at the moment, because ProfileDownloader resides in org.chromium.chrome.browser.profiles and AccountManagerFacade is in org.chromium.components.signin. I would like to move ProfileDownloader to components level in the future, but it will take some time.",
+      "parentUuid": "f4dee5b7_5d59590f",
+      "range": {
+        "startLine": 147,
+        "startChar": 16,
+        "endLine": 147,
+        "endChar": 33
+      },
+      "revId": "6034d77e32525149b64742fc6e1b416a9f04fc70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "40554dc8_bab2ddb3",
         "filename": "components/signin/core/browser/android/java/src/org/chromium/components/signin/ProfileDataSource.java",
         "patchSetId": 3
@@ -36,6 +60,30 @@
       "writtenOn": "2017-08-29T09:34:32Z",
       "side": 1,
       "message": "I find this API strange. I think this call should work all the time (whether or not an observer it was registered). Why is this restriction needed?",
+      "range": {
+        "startLine": 69,
+        "startChar": 38,
+        "endLine": 69,
+        "endChar": 49
+      },
+      "revId": "6034d77e32525149b64742fc6e1b416a9f04fc70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "419f10a4_af450606",
+        "filename": "components/signin/core/browser/android/java/src/org/chromium/components/signin/ProfileDataSource.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-08-29T12:40:31Z",
+      "side": 1,
+      "message": "Because ProfileDataSource needs to observe it\u0027s backend (e.g., ProfileDownloader) and keep it\u0027s own cache of profile data. This cache is populated and observers are registered when first observer is added by addObserver. When last observer goes away because of removeObserver call, ProfileDataSource unregisters backend observer. The same pattern is used in ProfileDataCache and LiveData from Android Architecture Components (see https://developer.android.com/reference/android/arch/lifecycle/LiveData.html#onActive()).\nI agree that for someone not familiar with this pattern this restriction may look strange, so ideas on improving this JavaDoc are welcome.",
+      "parentUuid": "40554dc8_bab2ddb3",
       "range": {
         "startLine": 69,
         "startChar": 38,
@@ -68,6 +116,30 @@
       "revId": "6034d77e32525149b64742fc6e1b416a9f04fc70",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79b112c6_00fbdc4b",
+        "filename": "components/signin/core/browser/android/java/src/org/chromium/components/signin/ProfileDataSource.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-08-29T12:40:31Z",
+      "side": 1,
+      "message": "Please see my previous comment.",
+      "parentUuid": "7ba227b9_22ee038c",
+      "range": {
+        "startLine": 76,
+        "startChar": 38,
+        "endLine": 76,
+        "endChar": 49
+      },
+      "revId": "6034d77e32525149b64742fc6e1b416a9f04fc70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
