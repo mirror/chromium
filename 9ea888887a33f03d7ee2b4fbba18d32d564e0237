@@ -16,6 +16,24 @@
       "revId": "9ea888887a33f03d7ee2b4fbba18d32d564e0237",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f5316a44_d7c01760",
+        "filename": "third_party/crc32c/BUILD.gn",
+        "patchSetId": 8
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-08-29T08:52:31Z",
+      "side": 1,
+      "message": "You\u0027re right. Thank you very much!!",
+      "parentUuid": "6ef0f1f5_89f5c0b5",
+      "revId": "9ea888887a33f03d7ee2b4fbba18d32d564e0237",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
