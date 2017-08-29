@@ -29,9 +29,12 @@
 #include "content/public/test/test_browser_context.h"
 #include "content/public/test/test_browser_thread_bundle.h"
 #include "content/test/test_navigation_url_loader_delegate.h"
+#include "content/test/test_web_contents.h"
 #include "net/base/load_flags.h"
 #include "net/base/net_errors.h"
+#include "net/cert/cert_status_flags.h"
 #include "net/http/http_response_headers.h"
+#include "net/test/embedded_test_server/embedded_test_server.h"
 #include "net/traffic_annotation/network_traffic_annotation_test_helper.h"
 #include "net/url_request/redirect_info.h"
 #include "net/url_request/url_request.h"
@@ -115,6 +118,11 @@ class NavigationURLLoaderTest : public testing::Test {
         url::Origin(url));
     CommonNavigationParams common_params;
     common_params.url = url;
+
+    // web_contents_.reset(
+    //     TestWebContents::Create(browser_context_.get(), nullptr));
+    // int id = web_contents_->GetMainFrame()->GetFrameTreeNodeId();
+
     std::unique_ptr<NavigationRequestInfo> request_info(
         new NavigationRequestInfo(common_params, begin_params, url, true, false,
                                   false, -1, false, false,
@@ -146,6 +154,7 @@ class NavigationURLLoaderTest : public testing::Test {
   std::unique_ptr<TestBrowserContext> browser_context_;
   LoaderDelegateImpl loader_delegate_;
   ResourceDispatcherHostImpl host_;
+  std::unique_ptr<TestWebContents> web_contents_;
 };
 
 // Tests that a basic request works.
@@ -172,7 +181,7 @@ TEST_F(NavigationURLLoaderTest, Basic) {
 }
 
 // Tests that request failures are propagated correctly.
-TEST_F(NavigationURLLoaderTest, RequestFailed) {
+TEST_F(NavigationURLLoaderTest, RequestFailedNoCertError) {
   TestNavigationURLLoaderDelegate delegate;
   std::unique_ptr<NavigationURLLoader> loader =
       MakeTestLoader(GURL("bogus:bogus"), &delegate);
@@ -180,6 +189,56 @@ TEST_F(NavigationURLLoaderTest, RequestFailed) {
   // Wait for the request to fail as expected.
   delegate.WaitForRequestFailed();
   EXPECT_EQ(net::ERR_UNKNOWN_URL_SCHEME, delegate.net_error());
+  EXPECT_FALSE(delegate.ssl_info().has_value());
+  EXPECT_EQ(1, delegate.on_request_handled_counter());
+}
+
+// Tests that request failures are propagated correctly.
+TEST_F(NavigationURLLoaderTest, RequestFailedCertError) {
+  net::EmbeddedTestServer https_server(net::EmbeddedTestServer::TYPE_HTTPS);
+  https_server.SetSSLConfig(net::EmbeddedTestServer::CERT_MISMATCHED_NAME);
+  ASSERT_TRUE(https_server.Start());
+
+  TestNavigationURLLoaderDelegate delegate;
+  std::unique_ptr<NavigationURLLoader> loader =
+      MakeTestLoader(https_server.GetURL("/"), &delegate);
+
+  // Wait for the request to fail as expected.
+  delegate.WaitForRequestFailed();
+  ASSERT_EQ(net::ERR_ABORTED, delegate.net_error());
+  EXPECT_EQ(
+      net::ERR_CERT_COMMON_NAME_INVALID,
+      net::MapCertStatusToNetError(delegate.ssl_info().value().cert_status));
+  EXPECT_FALSE(delegate.should_ssl_errors_be_fatal());
+  EXPECT_EQ(1, delegate.on_request_handled_counter());
+}
+
+// Tests that request failures are propagated correctly.
+TEST_F(NavigationURLLoaderTest, RequestFailedCertErrorFatal) {
+  net::EmbeddedTestServer https_server(net::EmbeddedTestServer::TYPE_HTTPS);
+  https_server.SetSSLConfig(net::EmbeddedTestServer::CERT_MISMATCHED_NAME);
+  ASSERT_TRUE(https_server.Start());
+  GURL url = https_server.GetURL("/");
+
+  // Set HSTS for the test domain in order to make SSL errors fatal.
+  net::TransportSecurityState* transport_security_state =
+      browser_context_->GetResourceContext()
+          ->GetRequestContext()
+          ->transport_security_state();
+  base::Time expiry = base::Time::Now() + base::TimeDelta::FromDays(1000);
+  bool include_subdomains = false;
+  transport_security_state->AddHSTS(url.host(), expiry, include_subdomains);
+
+  TestNavigationURLLoaderDelegate delegate;
+  std::unique_ptr<NavigationURLLoader> loader = MakeTestLoader(url, &delegate);
+
+  // Wait for the request to fail as expected.
+  delegate.WaitForRequestFailed();
+  ASSERT_EQ(net::ERR_ABORTED, delegate.net_error());
+  EXPECT_EQ(
+      net::ERR_CERT_COMMON_NAME_INVALID,
+      net::MapCertStatusToNetError(delegate.ssl_info().value().cert_status));
+  EXPECT_TRUE(delegate.should_ssl_errors_be_fatal());
   EXPECT_EQ(1, delegate.on_request_handled_counter());
 }
 
