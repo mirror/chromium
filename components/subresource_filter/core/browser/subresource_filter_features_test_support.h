@@ -8,6 +8,7 @@
 #include <iosfwd>
 #include <memory>
 #include <string>
+#include <vector>
 
 #include "base/feature_list.h"
 #include "base/macros.h"
@@ -56,12 +57,14 @@ class ScopedSubresourceFilterFeatureToggle {
   ScopedSubresourceFilterFeatureToggle();
   explicit ScopedSubresourceFilterFeatureToggle(
       base::FeatureList::OverrideState feature_state,
-      const std::string& additional_features_to_enable = std::string());
+      const std::string& additional_features_to_enable = std::string(),
+      const std::string& additional_features_to_disable = std::string());
   ~ScopedSubresourceFilterFeatureToggle();
 
   void ResetSubresourceFilterState(
       base::FeatureList::OverrideState feature_state,
-      const std::string& additional_features_to_enable = std::string());
+      const std::string& additional_features_to_enable = std::string(),
+      const std::string& additional_features_to_disable = std::string());
 
  private:
   ScopedSubresourceFilterConfigurator scoped_configuration_;
