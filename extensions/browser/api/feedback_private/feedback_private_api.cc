@@ -135,8 +135,8 @@ void FeedbackPrivateAPI::RequestFeedbackForFlow(
         browser_context_);
 
     EventRouter::Get(browser_context_)
-        ->DispatchEventToExtension(extension_misc::kFeedbackExtensionId,
-                                   std::move(event));
+        ->DispatchEventWithLazyListener(extension_misc::kFeedbackExtensionId,
+                                        std::move(event));
   }
 }
 
