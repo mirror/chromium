@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "317b3972_3f457352",
+        "filename": "chrome/browser/android/vr_shell/vr_shell_gl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 846,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-08-29T16:08:10Z",
+      "side": 1,
+      "message": "This comment is basically duplicated elsewhere, so rather than explaining twice, what about just \"// WebVR handles controller input in OnVsync.\" ?",
+      "revId": "cd151c2fbadd469a02c94b5dde8cbb38ce754dde",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a9cda8b_232f359c",
+        "filename": "chrome/browser/android/vr_shell/vr_shell_gl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1117,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-08-29T16:08:10Z",
+      "side": 1,
+      "message": "Maybe invert the if/else?  \"if not thing, else thing\" looks a bit weird now that the else has a body.",
+      "revId": "cd151c2fbadd469a02c94b5dde8cbb38ce754dde",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b7497290_9028d2e4",
         "filename": "chrome/test/data/android/webvr_instrumentation/html/webvr_page_submits_once.html",
         "patchSetId": 3
