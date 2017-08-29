@@ -521,9 +521,6 @@ const char kVoiceInteractionLocales[] = "voice-interaction-supported-locales";
 const char kEnterpriseEnableLicenseTypeSelection[] =
     "enterprise-enable-license-type-selection";
 
-// Disables per-user timezone.
-const char kDisablePerUserTimezone[] = "disable-per-user-timezone";
-
 // Enables a rename action for external drive such as USB and SD.
 const char kEnableExternalDriveRename[] = "enable-external-drive-rename";
 

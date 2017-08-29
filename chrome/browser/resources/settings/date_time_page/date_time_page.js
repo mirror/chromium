@@ -90,9 +90,7 @@ Polymer({
   },
 
   observers: [
-    'maybeGetTimeZoneListPerUser_(' +
-        'prefs.settings.timezone.value, timeZoneAutoDetect_)',
-    'maybeGetTimeZoneListPerSystem_(' +
+    'maybeGetTimeZoneList_(' +
         'prefs.cros.system.timezone.value, timeZoneAutoDetect_)',
   ],
 
@@ -176,51 +174,21 @@ Polymer({
 
   /**
    * Fetches the list of time zones if necessary.
-   * @param {boolean=} perUserTimeZoneMode Expected value of per-user time zone.
    * @private
    */
-  maybeGetTimeZoneList_: function(perUserTimeZoneMode) {
-    if (typeof(perUserTimeZoneMode) !== 'undefined') {
-      /* This method is called as observer. Skip if if current mode does not
-       * match expected.
-       */
-      if (perUserTimeZoneMode !=
-          this.getPref('cros.flags.per_user_timezone_enabled').value) {
-        return;
-      }
-    }
+  maybeGetTimeZoneList_: function() {
     // Only fetch the list once.
     if (this.timeZoneList_.length > 1 || !CrSettingsPrefs.isInitialized)
       return;
 
     // If auto-detect is enabled, we only need the current time zone.
-    if (this.timeZoneAutoDetect_) {
-      var isPerUserTimezone =
-          this.getPref('cros.flags.per_user_timezone_enabled').value;
-      if (this.timeZoneList_[0].value ==
-          (isPerUserTimezone ? this.getPref('settings.timezone').value :
-                               this.getPref('cros.system.timezone').value)) {
-        return;
-      }
+    if (this.timeZoneAutoDetect_ &&
+        this.getPref('cros.system.timezone').value ==
+            this.timeZoneList_[0].value) {
+      return;
     }
 
     cr.sendWithPromise('getTimeZones').then(this.setTimeZoneList_.bind(this));
-  },
-
-  /**
-   * Prefs observer for Per-user time zone enabled mode.
-   * @private
-   */
-  maybeGetTimeZoneListPerUser_: function() {
-    this.maybeGetTimeZoneList_(true);
-  },
-
-  /**
-   * Prefs observer for Per-user time zone disabled mode.
-   * @private
-   */
-  maybeGetTimeZoneListPerSystem_: function() {
-    this.maybeGetTimeZoneList_(false);
   },
 
   /**
@@ -235,18 +203,5 @@ Polymer({
         value: timeZonePair[0],
       };
     });
-  },
-
-  /**
-   * Computes visibility of user timezone preference.
-   * @param {?chrome.settingsPrivate.PrefObject} prefUserTimezone
-   *     pref.settings.timezone
-   * @param {boolean} prefResolveValue
-   *     prefs.settings.resolve_timezone_by_geolocation.value
-   * @private
-   */
-  isUserTimeZoneSelectorHidden_: function(prefUserTimezone, prefResolveValue) {
-    return (prefUserTimezone && prefUserTimezone.controlledBy != null) ||
-        prefResolveValue;
   },
 });

@@ -2243,15 +2243,19 @@ const char kDisableNewVirtualKeyboardBehaviorDescription[] =
     "Disable new window behavior for the accessibility keyboard in non-sticky "
     "mode (do not change work area in non-sticky mode).";
 
-const char kEnablePerUserTimezoneName[] = "Per-user time zone preferences.";
-const char kEnablePerUserTimezoneDescription[] =
-    "Chrome OS system timezone preference is stored and handled for each user "
-    "individually.";
-
 const char kDisableSystemTimezoneAutomaticDetectionName[] =
     "SystemTimezoneAutomaticDetection policy support";
 const char kDisableSystemTimezoneAutomaticDetectionDescription[] =
     "Disable system timezone automatic detection device policy.";
+#endif  // defined(OS_CHROMEOS)
+
+#if defined(OS_CHROMEOS)
+
+const char kFirstRunUiTransitionsName[] =
+    "Animated transitions in the first-run tutorial";
+
+const char kFirstRunUiTransitionsDescription[] =
+    "Transitions during first-run tutorial are animated.";
 
 const char kEnableFullscreenAppListName[] = "Enable The Peeking Launcher";
 const char kEnableFullscreenAppListDescription[] =
@@ -2308,11 +2312,6 @@ const char kExperimentalInputViewFeaturesDescription[] =
 const char kFileManagerTouchModeName[] = "Files App. touch mode";
 const char kFileManagerTouchModeDescription[] =
     "Touchscreen-specific interactions of the Files app.";
-
-const char kFirstRunUiTransitionsName[] =
-    "Animated transitions in the first-run tutorial";
-const char kFirstRunUiTransitionsDescription[] =
-    "Transitions during first-run tutorial are animated.";
 
 const char kFloatingVirtualKeyboardName[] = "Floating virtual keyboard.";
 const char kFloatingVirtualKeyboardDescription[] =
