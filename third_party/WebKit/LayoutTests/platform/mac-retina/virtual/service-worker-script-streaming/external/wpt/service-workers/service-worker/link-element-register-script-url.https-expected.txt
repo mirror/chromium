@@ -3,7 +3,7 @@ FAIL Script URL including URL-encoded slash Test bug: need to pass exception to 
 FAIL Script URL including uppercase URL-encoded slash Test bug: need to pass exception to assert_throws()
 FAIL Script URL including URL-encoded backslash Test bug: need to pass exception to assert_throws()
 FAIL Script URL including uppercase URL-encoded backslash Test bug: need to pass exception to assert_throws()
-PASS Script URL including self-reference
-PASS Script URL including parent-reference
+PASS Script URL including self-reference 
+PASS Script URL including parent-reference 
 Harness: the test ran to completion.
 
