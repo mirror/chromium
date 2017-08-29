@@ -27,6 +27,7 @@
 #include "ui/app_list/pagination_model.h"
 #include "ui/app_list/test/app_list_test_model.h"
 #include "ui/app_list/test/app_list_test_view_delegate.h"
+#include "ui/app_list/test/app_list_view_test_base.h"
 #include "ui/app_list/test/test_search_result.h"
 #include "ui/app_list/views/app_list_item_view.h"
 #include "ui/app_list/views/app_list_main_view.h"
@@ -40,7 +41,6 @@
 #include "ui/aura/window.h"
 #include "ui/events/event_utils.h"
 #include "ui/views/controls/label.h"
-#include "ui/views/test/views_test_base.h"
 
 namespace app_list {
 namespace test {
@@ -103,7 +103,7 @@ class TestSuggestedSearchResult : public TestSearchResult {
 
 }  // namespace
 
-class AppsGridViewTest : public views::ViewsTestBase,
+class AppsGridViewTest : public AppListViewTestBase,
                          public testing::WithParamInterface<bool> {
  public:
   AppsGridViewTest() = default;
@@ -111,32 +111,16 @@ class AppsGridViewTest : public views::ViewsTestBase,
 
   // testing::Test overrides:
   void SetUp() override {
-    views::ViewsTestBase::SetUp();
-
     // If the current test is parameterized.
-    if (testing::UnitTest::GetInstance()->current_test_info()->value_param()) {
+    if (testing::UnitTest::GetInstance()->current_test_info()->value_param())
       test_with_fullscreen_ = GetParam();
-      if (test_with_fullscreen_)
-        EnableFullscreenAppList();
-    }
+    if (test_with_fullscreen_)
+      EnableFullscreenAppList();
 
-    gfx::NativeView parent = GetContext();
-    delegate_.reset(new AppListTestViewDelegate);
-    app_list_view_ = new AppListView(delegate_.get());
-    app_list_view_->set_app_list_animation_duration_ms_for_testing(0);
+    AppListViewTestBase::SetUp();
 
-    app_list_view_->Initialize(parent, 0, false, false);
-    contents_view_ = app_list_view_->app_list_main_view()->contents_view();
-    apps_grid_view_ = contents_view_->apps_container_view()->apps_grid_view();
-    // Initialize around a point that ensures the window is wholly shown. It
-    // bails out early with |test_with_fullscreen_|.
-    // TODO(warx): remove MaybeSetAnchorPoint setup here when bubble launcher is
-    // removed from code base.
-    app_list_view_->MaybeSetAnchorPoint(
-        parent->GetBoundsInRootWindow().CenterPoint());
-    app_list_view_->GetWidget()->Show();
-
-    model_ = delegate_->GetTestModel();
+    model_ = delegate()->GetTestModel();
+    apps_grid_view_ = contents_view()->apps_container_view()->apps_grid_view();
     suggestions_container_ = apps_grid_view_->suggestions_container_for_test();
     expand_arrow_view_ = apps_grid_view_->expand_arrow_view_for_test();
     for (size_t i = 0; i < kNumOfSuggestedApps; ++i)
@@ -145,19 +129,15 @@ class AppsGridViewTest : public views::ViewsTestBase,
     apps_grid_view_->ResetForShowApps();
 
     if (test_with_fullscreen_) {
-      app_list_view_->SetState(AppListView::FULLSCREEN_ALL_APPS);
-      app_list_view_->Layout();
+      app_list_view()->SetState(AppListView::FULLSCREEN_ALL_APPS);
+      app_list_view()->Layout();
     } else {
       // Set app list view to show all apps page to test AppsGridView.
-      contents_view_->SetActiveState(AppListModel::STATE_APPS);
-      contents_view_->Layout();
+      contents_view()->SetActiveState(AppListModel::STATE_APPS);
+      contents_view()->Layout();
     }
 
     test_api_.reset(new AppsGridViewTestApi(apps_grid_view_));
-  }
-  void TearDown() override {
-    app_list_view_->GetWidget()->Close();
-    views::ViewsTestBase::TearDown();
   }
 
  protected:
@@ -197,7 +177,7 @@ class AppsGridViewTest : public views::ViewsTestBase,
     AppListItemView* view = GetItemViewForPoint(from);
     DCHECK(view);
 
-    gfx::NativeWindow window = app_list_view_->GetWidget()->GetNativeWindow();
+    gfx::NativeWindow window = app_list_view()->GetWidget()->GetNativeWindow();
     gfx::Point root_from(from);
     views::View::ConvertPointToWidget(apps_grid_view_, &root_from);
     aura::Window::ConvertPointToTarget(window, window->GetRootWindow(),
@@ -247,14 +227,11 @@ class AppsGridViewTest : public views::ViewsTestBase,
     EXPECT_TRUE(apps_grid_view_->IsSelectedView(GetItemViewAt(index)));
   }
 
-  AppListView* app_list_view_ = nullptr;    // Owned by native widget.
-  AppsGridView* apps_grid_view_ = nullptr;  // Owned by |app_list_view_|.
-  ContentsView* contents_view_ = nullptr;   // Owned by |app_list_view_|.
+  AppsGridView* apps_grid_view_ = nullptr;  // Owned by |app_list_view()|.
   SuggestionsContainerView* suggestions_container_ =
       nullptr;  // Owned by |apps_grid_view_|.
   ExpandArrowView* expand_arrow_view_ = nullptr;  // Owned by |apps_grid_view_|.
-  std::unique_ptr<AppListTestViewDelegate> delegate_;
-  AppListTestModel* model_ = nullptr;  // Owned by |delegate_|.
+  AppListTestModel* model_ = nullptr;             // Owned by |delegate()|.
   std::unique_ptr<AppsGridViewTestApi> test_api_;
   bool test_with_fullscreen_ = false;
   base::test::ScopedFeatureList scoped_feature_list_;
@@ -924,7 +901,7 @@ TEST_P(AppsGridViewTest, SelectionInStateApps) {
     return;
 
   // Simulates that the app list is at state apps.
-  contents_view_->SetActiveState(AppListModel::STATE_APPS);
+  contents_view()->SetActiveState(AppListModel::STATE_APPS);
   const int kPages = 2;
   const int kAllAppsItems = GetTilesPerPage(0) + 1;
   model_->PopulateApps(kAllAppsItems);
@@ -971,7 +948,7 @@ TEST_P(AppsGridViewTest, InitialSelectionInStateStart) {
     return;
 
   // Simulates that the app list is at state start.
-  contents_view_->SetActiveState(AppListModel::STATE_START);
+  contents_view()->SetActiveState(AppListModel::STATE_START);
   model_->PopulateApps(GetTilesPerPage(0));
   CheckNoSelection();
 
@@ -994,7 +971,7 @@ TEST_P(AppsGridViewTest, ClearSelectionInStateStart) {
     return;
 
   // Simulates that the app list is at state start.
-  contents_view_->SetActiveState(AppListModel::STATE_START);
+  contents_view()->SetActiveState(AppListModel::STATE_START);
   model_->PopulateApps(GetTilesPerPage(0));
 
   // Moves selection to the first app in the suggestions container.
@@ -1015,7 +992,7 @@ TEST_P(AppsGridViewTest, ExpandArrowSelectionInStateStart) {
     return;
 
   // Simulates that the app list is at state start.
-  contents_view_->SetActiveState(AppListModel::STATE_START);
+  contents_view()->SetActiveState(AppListModel::STATE_START);
   model_->PopulateApps(GetTilesPerPage(0));
 
   // Moves selection to the expand arrow.
@@ -1051,7 +1028,7 @@ TEST_P(AppsGridViewTest, SuggestionsContainerSelectionInStateStart) {
     return;
 
   // Simulates that the app list is at state start.
-  contents_view_->SetActiveState(AppListModel::STATE_START);
+  contents_view()->SetActiveState(AppListModel::STATE_START);
   model_->PopulateApps(GetTilesPerPage(0));
   SimulateKeyPress(ui::VKEY_DOWN);
 
@@ -1130,7 +1107,7 @@ TEST_P(AppsGridViewTest, ScrollSequenceHandledByAppListView) {
   // and not move the AppsGridView.
   apps_grid_view_->OnGestureEvent(&scroll_begin);
   apps_grid_view_->OnGestureEvent(&scroll_update);
-  ASSERT_TRUE(app_list_view_->is_in_drag());
+  ASSERT_TRUE(app_list_view()->is_in_drag());
   ASSERT_EQ(0, GetPaginationModel()->transition().progress);
 }
 
@@ -1157,7 +1134,7 @@ TEST_P(AppsGridViewTest,
   // but not the AppListView.
   apps_grid_view_->OnGestureEvent(&scroll_begin);
   apps_grid_view_->OnGestureEvent(&scroll_update);
-  ASSERT_FALSE(app_list_view_->is_in_drag());
+  ASSERT_FALSE(app_list_view()->is_in_drag());
   ASSERT_NE(0, GetPaginationModel()->transition().progress);
 }
 

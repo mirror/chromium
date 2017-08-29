@@ -188,11 +188,14 @@ component("app_list") {
 }
 
 static_library("test_support") {
+  testonly = true
   sources = [
     "test/app_list_test_model.cc",
     "test/app_list_test_model.h",
     "test/app_list_test_view_delegate.cc",
     "test/app_list_test_view_delegate.h",
+    "test/app_list_view_test_base.cc",
+    "test/app_list_view_test_base.h",
     "test/test_search_result.cc",
     "test/test_search_result.h",
     "views/test/app_list_view_test_api.cc",
@@ -204,6 +207,7 @@ static_library("test_support") {
     "//base",
     "//ui/gfx",
     "//ui/gfx/geometry",
+    "//ui/views:test_support",
   ]
 }
 

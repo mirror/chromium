@@ -56,6 +56,7 @@ component("presenter") {
 }
 
 static_library("test_support") {
+  testonly = true
   sources = [
     "test/app_list_presenter_impl_test_api.cc",
     "test/app_list_presenter_impl_test_api.h",
