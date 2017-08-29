@@ -17,6 +17,7 @@ Timeline.PerformanceMonitor = class extends UI.HBox {
     this._pixelsPerMs = 20 / 1000;
     /** @const */
     this._pollIntervalMs = 500;
+    this._gridColor = 'hsla(0, 0%, 0%, 0.08)';
     this._controlPane = new Timeline.PerformanceMonitor.ControlPane(this.contentElement);
     this._canvas = /** @type {!HTMLCanvasElement} */ (this.contentElement.createChild('canvas'));
   }
@@ -26,6 +27,7 @@ Timeline.PerformanceMonitor = class extends UI.HBox {
    */
   wasShown() {
     this._model.enable();
+    this._startTimestamp = 0;
     this._pollTimer = setInterval(() => this._poll(), this._pollIntervalMs);
     this.onResize();
     animate.call(this);
@@ -84,6 +86,8 @@ Timeline.PerformanceMonitor = class extends UI.HBox {
       }
       metricsMap.set(metric.name, value);
     }
+    if (!this._metricsBuffer.length)
+      this._startTimestamp = timestamp;
     this._metricsBuffer.push({timestamp, metrics: metricsMap});
     var millisPerWidth = this._width / this._pixelsPerMs;
     // Multiply by 2 as the pollInterval has some jitter and to have some extra samples if window is resized.
@@ -99,9 +103,28 @@ Timeline.PerformanceMonitor = class extends UI.HBox {
     ctx.scale(window.devicePixelRatio, window.devicePixelRatio);
     ctx.clearRect(0, 0, this._width, this._height);
     this._drawGrid(ctx);
+    var timeMetrics = [];
+    var countMetrics = [];
     for (var metricName of this._controlPane.metrics()) {
-      if (this._controlPane.isActive(metricName))
-        this._drawMetric(ctx, metricName);
+      if (!this._controlPane.isActive(metricName))
+        continue;
+      if (this._controlPane.metricInfo(metricName).mode === Timeline.PerformanceMonitor.Mode.CumulativeTime)
+        timeMetrics.push(metricName);
+      else
+        countMetrics.push(metricName);
+    }
+
+    var timeGraphHeight = 90;
+    ctx.translate(0, 16);  // Scale bar
+    if (timeMetrics.length) {
+      this._drawChart(ctx, timeMetrics, timeGraphHeight, true);
+      ctx.translate(0, timeGraphHeight);
+    }
+    var counterChartHeight = 90;
+    var graphsPerChart = 1;
+    for (var i = 0; i < countMetrics.length; i += graphsPerChart) {
+      this._drawChart(ctx, countMetrics.slice(i, i + graphsPerChart), counterChartHeight, false);
+      ctx.translate(0, counterChartHeight);
     }
     ctx.restore();
   }
@@ -110,38 +133,63 @@ Timeline.PerformanceMonitor = class extends UI.HBox {
    * @param {!CanvasRenderingContext2D} ctx
    */
   _drawGrid(ctx) {
-    var darkGray = 'hsla(0, 0%, 0%, 0.08)';
+    if (!this._startTimestamp)
+      return;
     var lightGray = 'hsla(0, 0%, 0%, 0.02)';
     ctx.font = '10px ' + Host.fontFamily();
     ctx.fillStyle = 'rgba(0, 0, 0, 0.3)';
-    for (var sec = 0;; ++sec) {
-      var x = this._width - sec * this._pixelsPerMs * 1000;
-      if (x < 0)
+    var duration = Date.now() - this._startTimestamp;
+    for (var sec = Math.floor(duration / 1000); sec >= 0; --sec) {
+      var x = this._width - (duration - sec * 1000 - this._pollIntervalMs) * this._pixelsPerMs;
+      if (x < -40)
         break;
       ctx.beginPath();
       ctx.moveTo(Math.round(x) + 0.5, 0);
       ctx.lineTo(Math.round(x) + 0.5, this._height);
       if (sec % 5 === 0)
         ctx.fillText(Common.UIString('%d sec', sec), Math.round(x) + 4, 12);
-      ctx.strokeStyle = sec % 5 ? lightGray : darkGray;
+      ctx.strokeStyle = sec % 5 ? lightGray : this._gridColor;
       ctx.stroke();
     }
+  }
+
+  /**
+   * @param {!CanvasRenderingContext2D} ctx
+   * @param {!Array<string>} metrics
+   * @param {number} height
+   * @param {boolean} smooth
+   */
+  _drawChart(ctx, metrics, height, smooth) {
+    var bottomPadding = 5;
+    var showGrid = true;
+    for (var metricName of metrics) {
+      if (!this._controlPane.isActive(metricName))
+        continue;
+      this._drawMetric(ctx, metricName, height - bottomPadding, smooth, showGrid);
+      showGrid = false;
+    }
     ctx.beginPath();
-    ctx.moveTo(0, this._height - 4.5);
-    ctx.lineTo(this._width, this._height - 4.5);
-    ctx.strokeStyle = darkGray;
+    ctx.moveTo(0, height - bottomPadding + 0.5);
+    ctx.lineTo(this._width, height - bottomPadding + 0.5);
+    ctx.strokeStyle = 'hsla(0, 0%, 0%, 0.3)';
     ctx.stroke();
   }
 
   /**
    * @param {!CanvasRenderingContext2D} ctx
    * @param {string} metricName
+   * @param {number} height
+   * @param {boolean} smooth
+   * @param {boolean} showGrid
    */
-  _drawMetric(ctx, metricName) {
+  _drawMetric(ctx, metricName, height, smooth, showGrid) {
+    var topPadding = 5;
+    var visibleHeight = height - topPadding;
+    if (visibleHeight < 1)
+      return;
     ctx.save();
     var width = this._width;
-    var height = this._height;
-    var startTime = Date.now() - this._pollIntervalMs * 2 - width / this._pixelsPerMs;
+    var startTime = Date.now() - this._pollIntervalMs - width / this._pixelsPerMs;
     var info = this._controlPane.metricInfo(metricName);
     var max = -Infinity;
     var pixelsPerMs = this._pixelsPerMs;
@@ -159,7 +207,34 @@ Timeline.PerformanceMonitor = class extends UI.HBox {
     }
     if (typeof info.max === 'number')
       max = info.max;
-    var span = 1.2 * max || 1;
+    var span = max || 1;
+
+    // Draw vertical grid.
+    if (showGrid) {
+      var scaleLabel = 100;
+      if (!smooth) {
+        var base10 = Math.pow(10, Math.floor(Math.log10(max)));
+        scaleLabel = Math.floor(max / base10 / 2) * base10 * 2;
+        if (!scaleLabel)
+          scaleLabel = Math.floor(max / base10) * base10;
+      }
+      for (var i = 0; i < 2; ++i) {
+        var y = Math.round(calcY(scaleLabel)) + 0.5;
+        var labelText = Timeline.PerformanceMonitor.MetricIndicator._formatNumber(scaleLabel, info);
+        ctx.beginPath();
+        ctx.moveTo(0, y);
+        ctx.lineTo(4, y);
+        ctx.moveTo(ctx.measureText(labelText).width + 12, y);
+        ctx.lineTo(this._width, y);
+        ctx.strokeStyle = this._gridColor;
+        ctx.fillStyle = 'rgba(0, 0, 0, 0.3)';
+        ctx.stroke();
+        ctx.fillText(labelText, 8, calcY(scaleLabel) + 4);
+        scaleLabel /= 2;
+      }
+    }
+
+    // Draw chart.
     ctx.beginPath();
     ctx.moveTo(width + 5, calcY(0));
     var x = 0;
@@ -174,8 +249,13 @@ Timeline.PerformanceMonitor = class extends UI.HBox {
       var metrics = this._metricsBuffer[i];
       var y = calcY(metrics.metrics.get(metricName));
       x = (metrics.timestamp - startTime) * pixelsPerMs;
-      var midX = (lastX + x) / 2;
-      ctx.bezierCurveTo(midX, lastY, midX, y, x, y);
+      if (smooth) {
+        var midX = (lastX + x) / 2;
+        ctx.bezierCurveTo(midX, lastY, midX, y, x, y);
+      } else {
+        ctx.lineTo(x, lastY);
+        ctx.lineTo(x, y);
+      }
       lastX = x;
       lastY = y;
       if (metrics.timestamp < startTime)
@@ -185,8 +265,8 @@ Timeline.PerformanceMonitor = class extends UI.HBox {
     ctx.lineWidth = 0.5;
     ctx.stroke();
     ctx.lineTo(x, calcY(0));
-    ctx.globalAlpha = 0.02;
     ctx.fillStyle = info.color;
+    ctx.globalAlpha = 0.02;
     ctx.fill();
     ctx.restore();
 
@@ -195,7 +275,7 @@ Timeline.PerformanceMonitor = class extends UI.HBox {
      * @return {number}
      */
     function calcY(value) {
-      return Math.round(height - 5 - height * value / span) + 0.5;
+      return (height - visibleHeight * value / span) + 0.5;
     }
   }
 
@@ -276,9 +356,9 @@ Timeline.PerformanceMonitor.ControlPane = class {
         }
       ],
       ['NodeCount', {title: Common.UIString('DOM Nodes'), color: 'green'}],
+      ['JSEventListenerCount', {title: Common.UIString('JS event listeners'), color: 'yellowgreen'}],
       ['DocumentCount', {title: Common.UIString('Documents'), color: 'blue'}],
       ['FrameCount', {title: Common.UIString('Frames'), color: 'darkcyan'}],
-      ['JSEventListenerCount', {title: Common.UIString('JS event listeners'), color: 'yellowgreen'}],
       [
         'LayoutCount', {
           title: Common.UIString('Layouts / sec'),
@@ -374,21 +454,25 @@ Timeline.PerformanceMonitor.MetricIndicator = class {
 
   /**
    * @param {number} value
+   * @param {!Timeline.PerformanceMonitor.Info} info
+   * @return {string}
+   */
+  static _formatNumber(value, info) {
+    switch (info.mode) {
+      case Timeline.PerformanceMonitor.Mode.CumulativeTime:
+        return value.toFixed() + '%';
+      case Timeline.PerformanceMonitor.Mode.CumulativeCount:
+        return Timeline.PerformanceMonitor.MetricIndicator._formatFP1.format(value);
+      default:
+        return Timeline.PerformanceMonitor.MetricIndicator._formatInt.format(value);
+    }
+  }
+
+  /**
+   * @param {number} value
    */
   setValue(value) {
-    var textValue;
-    switch (this._info.mode) {
-      case Timeline.PerformanceMonitor.Mode.CumulativeTime:
-        textValue = value.toFixed() + '%';
-        break;
-      case Timeline.PerformanceMonitor.Mode.CumulativeCount:
-        textValue = Timeline.PerformanceMonitor.MetricIndicator._formatFP1.format(value);
-        break;
-      default:
-        textValue = Timeline.PerformanceMonitor.MetricIndicator._formatInt.format(value);
-        break;
-    }
-    this._valueElement.textContent = textValue;
+    this._valueElement.textContent = Timeline.PerformanceMonitor.MetricIndicator._formatNumber(value, this._info);
   }
 
   _toggleIndicator() {
