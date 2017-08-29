@@ -36,6 +36,7 @@
 #include "core/dom/DOMHighResTimeStamp.h"
 #include "core/events/EventTarget.h"
 #include "core/loader/FrameLoaderTypes.h"
+#include "core/timing/PerformanceElementTiming.h"
 #include "core/timing/PerformanceEntry.h"
 #include "core/timing/PerformanceNavigationTiming.h"
 #include "core/timing/PerformancePaintTiming.h"
@@ -122,6 +123,8 @@ class CORE_EXPORT PerformanceBase : public EventTargetWithInlineData {
 
   void AddFirstContentfulPaintTiming(double start_time);
 
+  void AddTextElementTiming(const String& name, double start_time);
+
   void mark(const String& mark_name, ExceptionState&);
   void clearMarks(const String& mark_name);
 
@@ -152,6 +155,10 @@ class CORE_EXPORT PerformanceBase : public EventTargetWithInlineData {
 
   void AddPaintTiming(PerformancePaintTiming::PaintType, double start_time);
 
+  void AddElementTiming(PerformanceElementTiming::ElementTypeEnum,
+                        const String& name,
+                        double start_time);
+
  protected:
   explicit PerformanceBase(double time_origin, RefPtr<WebTaskRunner>);
 
@@ -174,6 +181,8 @@ class CORE_EXPORT PerformanceBase : public EventTargetWithInlineData {
   unsigned frame_timing_buffer_size_;
   PerformanceEntryVector resource_timing_buffer_;
   unsigned resource_timing_buffer_size_;
+  PerformanceEntryVector element_timing_buffer_;
+  unsigned element_timing_buffer_size_;
   Member<PerformanceEntry> navigation_timing_;
   Member<UserTiming> user_timing_;
   Member<PerformanceEntry> first_paint_timing_;
