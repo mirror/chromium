@@ -426,6 +426,30 @@ gfx::Transform FloodFillInkDropRipple::CalculateTransform(
       circle_layer_delegate_.GetCenteringOffset();
   transform.Translate(-drawn_center_offset.x(), -drawn_center_offset.y());
 
+  // The above transform adds an additional offset relative to the parent layer.
+  // This offset does not take into consideration the subpixel positioning. A
+  // subpixel correction needs to be applied to make sure the layers are pixel
+  // aligned after the transform is applied.
+  gfx::Point3F origin;
+  transform.TransformPoint(&origin);
+
+  const gfx::Vector2dF offset_in_dip = origin.AsPointF().OffsetFromOrigin();
+
+  // Scale the origin to screen space.
+  origin.Scale(painted_layer_.device_scale_factor());
+
+  // Compute the rounded offset in screen space and finally unscale it back to
+  // DIP space.
+  gfx::Vector2dF aligned_offset_in_dip = origin.AsPointF().OffsetFromOrigin();
+  aligned_offset_in_dip.set_x(gfx::ToRoundedInt(aligned_offset_in_dip.x()));
+  aligned_offset_in_dip.set_y(gfx::ToRoundedInt(aligned_offset_in_dip.y()));
+  aligned_offset_in_dip.Scale(1.f / painted_layer_.device_scale_factor());
+
+  // Compute the subpixel offset correction and apply it to the transform.
+  gfx::Transform subpixel_correction;
+  subpixel_correction.Translate(aligned_offset_in_dip - offset_in_dip);
+  transform.PreconcatTransform(subpixel_correction);
+
   return transform;
 }
 
