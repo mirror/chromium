@@ -235,6 +235,30 @@
       "revId": "505b03b8badf6cadf5eed26d1759e193ed057eb8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ffc72f61_61ee5661",
+        "filename": "components/offline_pages/core/prefetch/stale_entry_finalizer_task_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-08-29T23:49:03Z",
+      "side": 1,
+      "message": "What you did was what I meant. :)",
+      "parentUuid": "fcbbe977_6fa3876f",
+      "range": {
+        "startLine": 263,
+        "startChar": 51,
+        "endLine": 263,
+        "endChar": 62
+      },
+      "revId": "505b03b8badf6cadf5eed26d1759e193ed057eb8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
