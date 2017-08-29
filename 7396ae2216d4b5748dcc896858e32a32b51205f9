@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "442fda56_9fe001ad",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-08-29T23:06:05Z",
+      "side": 1,
+      "message": "We should add it is expected that the worker capacity should be incremented if this returns true, especially as this isn\u0027t a const call.\n\nThe alternative is a notification, but I\u0027m not too thrilled about that as it requires another lock acquisition or we do some heavyweight transactional stuff here too, but that\u0027s too heavyweight.",
+      "range": {
+        "startLine": 94,
+        "startChar": 2,
+        "endLine": 96,
+        "endChar": 20
+      },
+      "revId": "7396ae2216d4b5748dcc896858e32a32b51205f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "583df4d2_458a00c5",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-08-29T23:06:05Z",
+      "side": 1,
+      "message": "Since these are private, I\u0027d be fine living without these comments. This just restates the name below.",
+      "range": {
+        "startLine": 190,
+        "startChar": 2,
+        "endLine": 190,
+        "endChar": 36
+      },
+      "revId": "7396ae2216d4b5748dcc896858e32a32b51205f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85e2e02b_d2df00ca",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 900,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-08-29T23:06:05Z",
+      "side": 1,
+      "message": "Should this be using the param from GetParam() (passed in through BindOnce)?",
+      "range": {
+        "startLine": 900,
+        "startChar": 54,
+        "endLine": 900,
+        "endChar": 78
+      },
+      "revId": "7396ae2216d4b5748dcc896858e32a32b51205f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9442c492_0c5b967e",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1046,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-08-29T23:06:05Z",
+      "side": 1,
+      "message": "Is this necessary since it doesn\u0027t seem to override any methods?\n\nIf not, remove. If so, wrap in an anonymous namespace.",
+      "range": {
+        "startLine": 1038,
+        "startChar": 0,
+        "endLine": 1046,
+        "endChar": 2
+      },
+      "revId": "7396ae2216d4b5748dcc896858e32a32b51205f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
