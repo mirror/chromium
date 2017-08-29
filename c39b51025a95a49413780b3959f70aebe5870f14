@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "91a08aed_6c634069",
+        "filename": "chrome/browser/password_manager/password_manager_util_win.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1000389
+      },
+      "writtenOn": "2017-08-29T21:56:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "63ab4018_773bf2b5",
+      "revId": "c39b51025a95a49413780b3959f70aebe5870f14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1fbf0d5f_cce0905f",
         "filename": "chrome/browser/password_manager/password_manager_util_win.cc",
         "patchSetId": 3
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "9e26c4f8_af0d8fd8",
+        "filename": "chrome/browser/password_manager/password_manager_util_win.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 328,
+      "author": {
+        "id": 1000389
+      },
+      "writtenOn": "2017-08-29T21:56:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1fbf0d5f_cce0905f",
+      "range": {
+        "startLine": 328,
+        "startChar": 8,
+        "endLine": 328,
+        "endChar": 14
+      },
+      "revId": "c39b51025a95a49413780b3959f70aebe5870f14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dcad70b7_6d2a8785",
         "filename": "chrome/browser/password_manager/password_manager_util_win.cc",
         "patchSetId": 3
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "0ae6bc0d_c444cd74",
+        "filename": "chrome/browser/password_manager/password_manager_util_win.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 352,
+      "author": {
+        "id": 1000389
+      },
+      "writtenOn": "2017-08-29T21:56:42Z",
+      "side": 1,
+      "message": "Yeah I was not sure, since I have not actually tested with a smartcard.  It *should* work...",
+      "parentUuid": "dcad70b7_6d2a8785",
+      "revId": "c39b51025a95a49413780b3959f70aebe5870f14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7f009956_1001d7ae",
         "filename": "chrome/browser/password_manager/password_manager_util_win.cc",
         "patchSetId": 3
@@ -70,6 +130,30 @@
       "writtenOn": "2017-08-29T20:14:41Z",
       "side": 1,
       "message": "nice!",
+      "range": {
+        "startLine": 364,
+        "startChar": 26,
+        "endLine": 364,
+        "endChar": 43
+      },
+      "revId": "c39b51025a95a49413780b3959f70aebe5870f14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "301e5add_49e1e402",
+        "filename": "chrome/browser/password_manager/password_manager_util_win.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 364,
+      "author": {
+        "id": 1000389
+      },
+      "writtenOn": "2017-08-29T21:56:42Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "7f009956_1001d7ae",
       "range": {
         "startLine": 364,
         "startChar": 26,
@@ -105,6 +189,30 @@
     },
     {
       "key": {
+        "uuid": "fa664805_87cfcdbd",
+        "filename": "chrome/browser/password_manager/password_manager_util_win.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 395,
+      "author": {
+        "id": 1000389
+      },
+      "writtenOn": "2017-08-29T21:56:42Z",
+      "side": 1,
+      "message": "Could add an UMA at line 410 below.  I would expect this not to happen.  Maybe later as you say.",
+      "parentUuid": "a8bcf389_8b8b2775",
+      "range": {
+        "startLine": 395,
+        "startChar": 7,
+        "endLine": 395,
+        "endChar": 42
+      },
+      "revId": "c39b51025a95a49413780b3959f70aebe5870f14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "865f442d_b900a0b7",
         "filename": "chrome/browser/password_manager/password_manager_util_win.cc",
         "patchSetId": 3
@@ -128,6 +236,30 @@
     },
     {
       "key": {
+        "uuid": "048a7424_c487edc1",
+        "filename": "chrome/browser/password_manager/password_manager_util_win.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 405,
+      "author": {
+        "id": 1000389
+      },
+      "writtenOn": "2017-08-29T21:56:42Z",
+      "side": 1,
+      "message": "This is a check for \"empty string\" as described in the comment at line 392.  Changed to wcslen(cred_domain) \u003d\u003d 0.",
+      "parentUuid": "865f442d_b900a0b7",
+      "range": {
+        "startLine": 405,
+        "startChar": 8,
+        "endLine": 405,
+        "endChar": 27
+      },
+      "revId": "c39b51025a95a49413780b3959f70aebe5870f14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "dbf35000_df1cb493",
         "filename": "chrome/browser/password_manager/password_manager_util_win.cc",
         "patchSetId": 3
@@ -139,6 +271,24 @@
       "writtenOn": "2017-08-29T20:31:27Z",
       "side": 1,
       "message": "This is not guaranteed to be executed in case of the continue/break statements above.",
+      "revId": "c39b51025a95a49413780b3959f70aebe5870f14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "754221cb_5fb27bd9",
+        "filename": "chrome/browser/password_manager/password_manager_util_win.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 433,
+      "author": {
+        "id": 1000389
+      },
+      "writtenOn": "2017-08-29T21:56:42Z",
+      "side": 1,
+      "message": "Good catch!  Wrote a small helper class to make sure all cases are covered.",
+      "parentUuid": "dbf35000_df1cb493",
       "revId": "c39b51025a95a49413780b3959f70aebe5870f14",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

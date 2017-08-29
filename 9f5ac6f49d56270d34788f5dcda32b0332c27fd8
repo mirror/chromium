@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9d721bdd_8bf0d5bb",
+        "filename": "chrome/browser/password_manager/password_manager_util_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1000389
+      },
+      "writtenOn": "2017-08-29T21:56:42Z",
+      "side": 1,
+      "message": "Added a TODO.",
+      "parentUuid": "4c248326_612ef263",
+      "range": {
+        "startLine": 221,
+        "startChar": 35,
+        "endLine": 221,
+        "endChar": 46
+      },
+      "revId": "9f5ac6f49d56270d34788f5dcda32b0332c27fd8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "390d7868_a7df6d31",
         "filename": "chrome/browser/password_manager/password_manager_util_win.cc",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2017-08-29T20:18:03Z",
       "side": 1,
       "message": "hmm is a blank password valid on a domain joined machine, I think it is. I can certainly test this case.",
+      "range": {
+        "startLine": 332,
+        "startChar": 13,
+        "endLine": 332,
+        "endChar": 17
+      },
+      "revId": "9f5ac6f49d56270d34788f5dcda32b0332c27fd8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77a953c5_f35addc8",
+        "filename": "chrome/browser/password_manager/password_manager_util_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 332,
+      "author": {
+        "id": 1000389
+      },
+      "writtenOn": "2017-08-29T21:56:42Z",
+      "side": 1,
+      "message": "See line 251 above in the old implementation.  It handles empty passwords only for standalone workstation, so I duplicated that functionality here.  Do you want to relax this check now or maybe do that as a follow on change?",
+      "parentUuid": "390d7868_a7df6d31",
       "range": {
         "startLine": 332,
         "startChar": 13,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "2e6b7d58_13d513a5",
+        "filename": "chrome/browser/password_manager/password_manager_util_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 383,
+      "author": {
+        "id": 1000389
+      },
+      "writtenOn": "2017-08-29T21:56:42Z",
+      "side": 1,
+      "message": "I\u0027ll leave it as is because the SecureZeroMemFree() means I still have to keep my code mostly like it is now.",
+      "parentUuid": "33a49db1_b639b89f",
+      "range": {
+        "startLine": 383,
+        "startChar": 4,
+        "endLine": 383,
+        "endChar": 17
+      },
+      "revId": "9f5ac6f49d56270d34788f5dcda32b0332c27fd8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "834f6a81_521bbd4d",
         "filename": "chrome/browser/password_manager/password_manager_util_win.cc",
         "patchSetId": 1
@@ -82,6 +154,30 @@
       "writtenOn": "2017-08-29T20:18:03Z",
       "side": 1,
       "message": "This was just in case, I think at the time we were implementing we were getting some false negatives in the blank password detection, and still wanted to allow users to get past the (incorrectly displayed) re-authentication dialog with their blank password, so this caught those cases.\n\nIt would be good to measure how much this code path is hit and remove it if nobody is hitting, perhaps we can add an UMA histogram here to check for how often this happens in practice.",
+      "range": {
+        "startLine": 429,
+        "startChar": 9,
+        "endLine": 429,
+        "endChar": 23
+      },
+      "revId": "9f5ac6f49d56270d34788f5dcda32b0332c27fd8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72aed326_e38082c0",
+        "filename": "chrome/browser/password_manager/password_manager_util_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 429,
+      "author": {
+        "id": 1000389
+      },
+      "writtenOn": "2017-08-29T21:56:42Z",
+      "side": 1,
+      "message": "Makes sense.  OK with you if I add this UMA and the other one Julian suggested in a separate CL?",
+      "parentUuid": "834f6a81_521bbd4d",
       "range": {
         "startLine": 429,
         "startChar": 9,
