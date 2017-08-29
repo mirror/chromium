@@ -119,6 +119,24 @@
     },
     {
       "key": {
+        "uuid": "17d012df_0926b6ef",
+        "filename": "third_party/WebKit/common/origin_trials/trial_policy.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2017-08-29T16:23:20Z",
+      "side": 1,
+      "message": "sgtm, thanks",
+      "parentUuid": "0e60e9a9_8acc8c4a",
+      "revId": "d8b872080344b8fcc181a30ac7a13edefd49fb18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3988c8f7_f15b14e8",
         "filename": "third_party/WebKit/common/origin_trials/trial_token.h",
         "patchSetId": 5
