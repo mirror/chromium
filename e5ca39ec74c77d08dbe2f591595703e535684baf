@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1be01ee8_368aa458",
+        "filename": "content/browser/frame_host/render_frame_proxy_host.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 359,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-08-29T01:11:28Z",
+      "side": 1,
+      "message": "Just to make sure I understand this.  If we\u0027re hitting TAB to move focus from embedder into a \u003cwebview\u003e, previously as part of target_rfh-\u003eAdvanceFocus(), the webview would\u0027ve sent FrameHostMsg_FrameFocused, which called SetFocusedFrame, which gave focus to the webview.  Now, that won\u0027t work since the source SiteInstance will be the webview SiteInstance and not the embedder\u0027s SiteInstance, so it won\u0027t pass your new check in SetFocusedFrame.  Hence, you focus the webview explicitly here.  Is that right?  Might be good to document some of this in a comment.",
+      "revId": "e5ca39ec74c77d08dbe2f591595703e535684baf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6dadd323_52d96ad7",
+        "filename": "content/browser/web_contents/web_contents_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 5266,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-08-29T01:11:28Z",
+      "side": 1,
+      "message": "Does window.focus() on a webview use this branch or the next one?  Might be worth mentioning in the corresponding comment, so it\u0027s easier to understand this code in the future.",
+      "revId": "e5ca39ec74c77d08dbe2f591595703e535684baf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a3a1a4e_13ba56e4",
+        "filename": "content/browser/web_contents/web_contents_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 5273,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-08-29T01:11:28Z",
+      "side": 1,
+      "message": "It likely doesn\u0027t matter, but is |node| necessarily the main FrameTreeNode for the inner contents?  (it\u0027s not verified in the if statement)",
+      "revId": "e5ca39ec74c77d08dbe2f591595703e535684baf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "afb3792a_1bc86245",
+        "filename": "content/browser/web_contents/web_contents_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 5277,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-08-29T01:11:28Z",
+      "side": 1,
+      "message": "If an embedder has two webviews, webview1 is focused, and embedder executes document.querySelector(\u0027webview2\u0027).focus(), what should happen? :)\n\nShould the embedder be able to steal focus from the first webview and give it to the second webview?  If so, do we need this check?",
+      "revId": "e5ca39ec74c77d08dbe2f591595703e535684baf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0641ba14_89810d9d",
+        "filename": "content/browser/web_contents/web_contents_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 5319,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-08-29T01:11:28Z",
+      "side": 1,
+      "message": "I was wondering whether we need any additional test coverage for this, but looks like existing tests already cover it, like Focus_AdvanceFocus and Focus_FocusTakeFocus?",
+      "revId": "e5ca39ec74c77d08dbe2f591595703e535684baf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
