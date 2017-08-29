@@ -29,8 +29,4 @@ ScopedJavaLocalRef<jstring> GetScheme(JNIEnv* env,
   return base::android::ConvertUTF8ToJavaString(env, host.scheme());
 }
 
-bool RegisterGURLUtils(JNIEnv* env) {
-  return RegisterNativesImpl(env);
-}
-
 }  // namespace net
