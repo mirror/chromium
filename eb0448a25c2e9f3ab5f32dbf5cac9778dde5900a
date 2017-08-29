@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7af95289_28d2e149",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2017-08-29T08:11:59Z",
+      "side": 1,
+      "message": "Please start with a capitalized letter.",
+      "revId": "eb0448a25c2e9f3ab5f32dbf5cac9778dde5900a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c056657e_2e843f63",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2017-08-29T08:11:59Z",
+      "side": 1,
+      "message": "Add a brief description why, how, what changes in this CL.\nAlso add BUG\u003d line to link to the filed bug.",
+      "revId": "eb0448a25c2e9f3ab5f32dbf5cac9778dde5900a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "211a6d2c_4d4cf687",
+        "filename": "third_party/WebKit/Source/core/dom/TreeScope.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2017-08-29T08:11:59Z",
+      "side": 1,
+      "message": "Why did you move the code?\nUnless you have any reason, please do not move the code arbitrarily which\nmakes review harder to see the difference.",
+      "revId": "eb0448a25c2e9f3ab5f32dbf5cac9778dde5900a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b20f4a2_cd93ec81",
+        "filename": "third_party/WebKit/Source/core/dom/TreeScope.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2017-08-29T08:11:59Z",
+      "side": 1,
+      "message": "I think this change breaks Document.activeElement (TreeScope::AdjustedFocusedElement).\n(hoping some layout test catches the regression)",
+      "revId": "eb0448a25c2e9f3ab5f32dbf5cac9778dde5900a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e726d857_27952109",
+        "filename": "third_party/WebKit/Source/core/dom/TreeScope.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2017-08-29T08:11:59Z",
+      "side": 1,
+      "message": "Please do not remove DCHECK() on line 250 in the original code without\ngood reason. Do you cover the case if the node is a shadow root?",
+      "revId": "eb0448a25c2e9f3ab5f32dbf5cac9778dde5900a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
