@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c235cd7a_2fe35ecc",
+        "filename": "components/wallpaper/wallpaper_manager_base.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 568,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-08-29T00:35:28Z",
+      "side": 1,
+      "message": "I think this error information can be removed.",
+      "revId": "476f475569406b482e1336f9f7e499ec867b964c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
