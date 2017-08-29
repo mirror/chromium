@@ -22,6 +22,30 @@
       "revId": "6fdb25f4fb720def1cb6bea413afdab4fd7adc40",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9d27f88_ab0a2972",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1238128
+      },
+      "writtenOn": "2017-08-29T00:55:27Z",
+      "side": 1,
+      "message": "No. I\u0027ll Remove this one.",
+      "parentUuid": "cab34312_0789b3ff",
+      "range": {
+        "startLine": 13,
+        "startChar": 0,
+        "endLine": 13,
+        "endChar": 4
+      },
+      "revId": "6fdb25f4fb720def1cb6bea413afdab4fd7adc40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
