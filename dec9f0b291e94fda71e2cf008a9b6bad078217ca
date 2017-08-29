@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a822b45e_476f18ef",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 10
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-29T08:07:24Z",
+      "side": 1,
+      "message": "Nit: or?",
+      "range": {
+        "startLine": 14,
+        "startChar": 45,
+        "endLine": 14,
+        "endChar": 47
+      },
+      "revId": "dec9f0b291e94fda71e2cf008a9b6bad078217ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "71bca668_9e76bfa7",
+        "filename": "base/containers/circular_deque_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 792,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-29T08:07:24Z",
+      "side": 1,
+      "message": "Unrelated, but consider using something like EXPECT_DCHECK_DEATH here; then we can just leave this test uncommented.",
+      "revId": "dec9f0b291e94fda71e2cf008a9b6bad078217ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
