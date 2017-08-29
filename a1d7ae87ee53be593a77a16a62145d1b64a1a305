@@ -22,6 +22,30 @@
       "revId": "a1d7ae87ee53be593a77a16a62145d1b64a1a305",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e20d234f_5cb48f3d",
+        "filename": "components/search_provider_logos/google_logo_api.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-29T09:20:44Z",
+      "side": 1,
+      "message": "That was exactly my response to this suggestion :D  However, palmer@ still wanted me to add this. See go/ntp-doodles if you\u0027re interested.\nI don\u0027t think DCHECK will work either way, since apparently we do still use http for .cn.",
+      "parentUuid": "312cf156_1c22119d",
+      "range": {
+        "startLine": 28,
+        "startChar": 36,
+        "endLine": 28,
+        "endChar": 51
+      },
+      "revId": "a1d7ae87ee53be593a77a16a62145d1b64a1a305",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
