@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "0462b786_f64df77b",
+        "filename": "components/autofill/core/browser/autofill_profile.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 726,
+      "author": {
+        "id": 1153419
+      },
+      "writtenOn": "2017-08-29T15:38:51Z",
+      "side": 1,
+      "message": "Added a more explicit comment to the suported_types_for_validation_ vector.",
+      "parentUuid": "e24b41d7_4c8a130e",
+      "range": {
+        "startLine": 726,
+        "startChar": 40,
+        "endLine": 726,
+        "endChar": 70
+      },
+      "revId": "36ee576f304f2103d7cdb5083b7f4e83c7ce70df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "31c27359_3fc89c13",
         "filename": "components/autofill/core/browser/autofill_profile.h",
         "patchSetId": 1
@@ -42,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "50320982_6de784b2",
+        "filename": "components/autofill/core/browser/autofill_profile.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1153419
+      },
+      "writtenOn": "2017-08-29T15:38:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "31c27359_3fc89c13",
+      "revId": "36ee576f304f2103d7cdb5083b7f4e83c7ce70df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a03a68b7_ea747bd8",
         "filename": "components/autofill/core/browser/autofill_profile.h",
         "patchSetId": 1
@@ -56,6 +98,24 @@
       "revId": "36ee576f304f2103d7cdb5083b7f4e83c7ce70df",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd5fc4b0_ed66b80a",
+        "filename": "components/autofill/core/browser/autofill_profile.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 1153419
+      },
+      "writtenOn": "2017-08-29T15:38:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a03a68b7_ea747bd8",
+      "revId": "36ee576f304f2103d7cdb5083b7f4e83c7ce70df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
