@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "8300cefa_010fb14f",
+        "filename": "ui/app_list/views/search_result_list_view_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-08-29T21:50:07Z",
+      "side": 1,
+      "message": "I don\u0027t think we need to this line. Future tests could probably just drop WithParamInterface and test full screen only.",
+      "parentUuid": "ff00ec3e_a2dd96e5",
+      "revId": "0027c4de51b01c7153471ec378871a3dc744d494",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bca6c9e4_cf1756a5",
         "filename": "ui/app_list/views/search_result_list_view_unittest.cc",
         "patchSetId": 3
