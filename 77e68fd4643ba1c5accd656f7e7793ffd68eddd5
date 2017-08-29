@@ -16,6 +16,24 @@
       "revId": "77e68fd4643ba1c5accd656f7e7793ffd68eddd5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "220282b0_cfb64f63",
+        "filename": "content/browser/renderer_host/render_view_host_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 577,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-08-29T01:52:16Z",
+      "side": 1,
+      "message": "There seems to be only one implementation of HostZoomMap. This cast is already being done elsewhere without comment: https://cs.chromium.org/search/?q\u003dstatic_cast%3CHostZoomMapImpl\u0026sq\u003dpackage:chromium\u0026type\u003dcs.",
+      "parentUuid": "75e2e7d0_890de766",
+      "revId": "77e68fd4643ba1c5accd656f7e7793ffd68eddd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
