@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1ac3c229_90055361",
+        "filename": "chrome/browser/extensions/extension_service_sync_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 2711,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-29T16:04:23Z",
+      "side": 1,
+      "message": "private:\n\n(and then expose any necessary members like processor through an accessor)",
+      "revId": "20bbe5fc5fcdd6010c5af162c9262d0bb3e8ecdb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5035ce3f_6af4d4cc",
+        "filename": "chrome/browser/extensions/extension_service_sync_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 2712,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-29T16:04:23Z",
+      "side": 1,
+      "message": "end these in _",
+      "revId": "20bbe5fc5fcdd6010c5af162c9262d0bb3e8ecdb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a916ca1_1816b4f1",
+        "filename": "chrome/browser/extensions/extension_service_sync_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 2716,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-29T16:04:23Z",
+      "side": 1,
+      "message": "DISALLOW_COPY_AND_ASSIGN(BlacklistedExtensionSyncServiceTest)",
+      "revId": "20bbe5fc5fcdd6010c5af162c9262d0bb3e8ecdb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b56a810_8175bbb4",
+        "filename": "chrome/browser/extensions/extension_service_sync_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 2734,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-29T16:04:23Z",
+      "side": 1,
+      "message": "This code still strikes me as odd - I\u0027m not sure I like the concept of \"force the system to do something it shouldn\u0027t\".\n\nInstead, could we simulate a sync change coming in that says the extension is enabled and verify that the extension remains disabled?  Or is there something else we\u0027re trying to test here?",
+      "revId": "20bbe5fc5fcdd6010c5af162c9262d0bb3e8ecdb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98964bce_1350eed0",
+        "filename": "chrome/browser/extensions/extension_sync_service.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-29T16:04:23Z",
+      "side": 1,
+      "message": "Let\u0027s also confirm that greylisted extensions are disabled:\nBlacklistState blacklist_state \u003d\n    extension_prefs-\u003eGetExtensionBlacklistState(extension.id());\nif (blacklist_state \u003d\u003d extensions::BLACKLISTED_MALWARE) {\n  enabled \u003d false;\n  NOTREACHED() \u003c\u003c ...;\n}\nDCHECK(!enabled || blacklist_state \u003d\u003d extensions::BLACKLISTED_NONE) \u003c\u003c\n    \"Extensions that are greylisted should not be enabled.\";",
+      "revId": "20bbe5fc5fcdd6010c5af162c9262d0bb3e8ecdb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
