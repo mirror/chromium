@@ -113,7 +113,8 @@ speech.messages = {
  * @private
  */
 speech.State_ = {
-  // Initial state of the controller. Is never re-entered.
+  // Initial state of the controller. It is never re-entered. The single
+  // exception to this are tests (see |speech.uninit_()|).
   // The only state from which the |speech.init()| method can be called.
   // The UI overlay is hidden, recognition is inactive.
   UNINITIALIZED: -1,
@@ -558,7 +559,6 @@ speech.handleRecognitionOnNoMatch_ = function() {
  */
 speech.handleRecognitionEnd_ = function() {
   window.clearTimeout(speech.idleTimer_);
-  window.clearTimeout(speech.permissionTimer_);
 
   let error;
   switch (speech.currentState_) {
