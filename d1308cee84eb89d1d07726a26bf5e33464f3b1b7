@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "73841ea7_a4da5dff",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1228980
+      },
+      "writtenOn": "2017-08-29T21:07:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d98662c6_913c4335",
+      "revId": "d1308cee84eb89d1d07726a26bf5e33464f3b1b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ccea3fef_990cfdf7",
         "filename": "chrome/browser/chromeos/arc/arc_session_manager.cc",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "d1308cee84eb89d1d07726a26bf5e33464f3b1b7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "220f4a62_d71d4176",
+        "filename": "chrome/browser/chromeos/arc/arc_session_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 503,
+      "author": {
+        "id": 1228980
+      },
+      "writtenOn": "2017-08-29T21:07:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ccea3fef_990cfdf7",
+      "revId": "d1308cee84eb89d1d07726a26bf5e33464f3b1b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "1ce80d41_f21b0ec2",
+        "filename": "chrome/browser/chromeos/arc/arc_session_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 505,
+      "author": {
+        "id": 1228980
+      },
+      "writtenOn": "2017-08-29T21:07:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "466c7341_acd9d934",
+      "revId": "d1308cee84eb89d1d07726a26bf5e33464f3b1b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "94e9b10b_c6414487",
         "filename": "chrome/browser/chromeos/arc/arc_session_manager.h",
         "patchSetId": 2
@@ -67,6 +121,24 @@
       "revId": "d1308cee84eb89d1d07726a26bf5e33464f3b1b7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67ba9736_835e2116",
+        "filename": "chrome/browser/chromeos/arc/arc_session_manager.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 295,
+      "author": {
+        "id": 1228980
+      },
+      "writtenOn": "2017-08-29T21:07:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "94e9b10b_c6414487",
+      "revId": "d1308cee84eb89d1d07726a26bf5e33464f3b1b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
