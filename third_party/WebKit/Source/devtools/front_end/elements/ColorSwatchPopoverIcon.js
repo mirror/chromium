@@ -47,6 +47,7 @@ Elements.BezierPopoverIcon = class {
 
     this._originalPropertyText = this._treeElement.property.propertyText;
     this._treeElement.parentPane().setEditingStyle(true);
+
     var uiLocation = Bindings.cssWorkspaceBinding.propertyUILocation(this._treeElement.property, false /* forName */);
     if (uiLocation)
       Common.Revealer.reveal(uiLocation, true /* omitFocus */);
@@ -106,6 +107,9 @@ Elements.ColorSwatchPopoverIcon = class {
 
     this._boundSpectrumChanged = this._spectrumChanged.bind(this);
     this._boundOnScroll = this._onScroll.bind(this);
+
+    /** @type {?function()} */
+    this._requestBackgroundColorsCallback = null;
   }
 
   /**
@@ -114,6 +118,13 @@ Elements.ColorSwatchPopoverIcon = class {
    */
   static forTreeElement(treeElement) {
     return treeElement[Elements.ColorSwatchPopoverIcon._treeElementSymbol] || null;
+  }
+
+  /**
+   * @param {?function()} requestBackgroundColorsCallback
+   */
+  setRequestBackgroundColorsCallback(requestBackgroundColorsCallback) {
+    this._requestBackgroundColorsCallback = requestBackgroundColorsCallback;
   }
 
   /**
@@ -157,6 +168,12 @@ Elements.ColorSwatchPopoverIcon = class {
 
     this._originalPropertyText = this._treeElement.property.propertyText;
     this._treeElement.parentPane().setEditingStyle(true);
+
+    // Request background colors at the time the color picker is opened,
+    // since the setting may change.
+    if (Common.moduleSetting('showContrastLine').get() && this._requestBackgroundColorsCallback)
+      this._requestBackgroundColorsCallback();
+
     var uiLocation = Bindings.cssWorkspaceBinding.propertyUILocation(this._treeElement.property, false /* forName */);
     if (uiLocation)
       Common.Revealer.reveal(uiLocation, true /* omitFocus */);

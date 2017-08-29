@@ -766,7 +766,8 @@ Elements.StylePropertiesSection = class {
     this.element._section = this;
     this._innerElement = this.element.createChild('div');
 
-    this._titleElement = this._innerElement.createChild('div', 'styles-section-title ' + (rule ? 'styles-selector' : ''));
+    this._titleElement =
+        this._innerElement.createChild('div', 'styles-section-title ' + (rule ? 'styles-selector' : ''));
 
     this.propertiesTreeOutline = new UI.TreeOutlineInShadow();
     this.propertiesTreeOutline.setFocusable(false);
@@ -2110,20 +2111,24 @@ Elements.StylePropertyTreeElement = class extends UI.TreeElement {
     swatch.setFormat(Common.Color.detectColorFormat(swatch.color()));
     var swatchIcon = new Elements.ColorSwatchPopoverIcon(this, swatchPopoverHelper, swatch);
 
-    /**
-     * @param {?SDK.CSSModel.ContrastInfo} contrastInfo
-     */
-    function computedCallback(contrastInfo) {
-      swatchIcon.setContrastInfo(contrastInfo);
-    }
+    // If the contrast line may be desired at some point, allow the popver to request background colors.
+    if (this.property.name === 'color' && this._parentPane.cssModel() && this.node()) {
+      /**
+       * @param {?SDK.CSSModel.ContrastInfo} contrastInfo
+       */
+      function computedCallback(contrastInfo) {
+        // This will cause the contrast line to show up if it's not already visible.
+        swatchIcon.setContrastInfo(contrastInfo);
+      }
 
-    if (Runtime.experiments.isEnabled('colorContrastRatio') && this.property.name === 'color' &&
-        this._parentPane.cssModel() && this.node()) {
-      var cssModel = this._parentPane.cssModel();
-      cssModel.backgroundColorsPromise(this.node().id).then(computedCallback);
+      swatchIcon.setRequestBackgroundColorsCallback(this._requestBackgroundColors.bind(this, computedCallback));
     }
-
     return swatch;
+  }
+
+  _requestBackgroundColors(callback) {
+    var cssModel = this._parentPane.cssModel();
+    cssModel.backgroundColorsPromise(this.node().id).then(callback);
   }
 
   /**
@@ -2745,8 +2750,9 @@ Elements.StylePropertyTreeElement = class extends UI.TreeElement {
     // Determine where to move to before making changes
     var createNewProperty, moveToSelector;
     var isDataPasted = 'originalName' in context;
-    var isDirtyViaPaste = isDataPasted && (this.nameElement.textContent !== context.originalName ||
-                                           this.valueElement.textContent !== context.originalValue);
+    var isDirtyViaPaste = isDataPasted &&
+        (this.nameElement.textContent !== context.originalName ||
+         this.valueElement.textContent !== context.originalValue);
     var isPropertySplitPaste = isDataPasted && isEditingName && this.valueElement.textContent !== context.originalValue;
     var moveTo = this;
     var moveToOther = (isEditingName ^ (moveDirection === 'forward'));
@@ -3209,8 +3215,9 @@ Elements.StylesSidebarPropertyRenderer = class {
     if (!this._propertyValue)
       return valueElement;
 
-    if (this._shadowHandler && (this._propertyName === 'box-shadow' || this._propertyName === 'text-shadow' ||
-                                this._propertyName === '-webkit-box-shadow') &&
+    if (this._shadowHandler &&
+        (this._propertyName === 'box-shadow' || this._propertyName === 'text-shadow' ||
+         this._propertyName === '-webkit-box-shadow') &&
         !SDK.CSSMetadata.VariableRegex.test(this._propertyValue)) {
       valueElement.appendChild(this._shadowHandler(this._propertyValue, this._propertyName));
       valueElement.normalize();
