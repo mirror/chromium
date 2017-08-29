@@ -64,7 +64,6 @@ source_set("unit_tests") {
   sources = [
     "content_autofill_driver_unittest.cc",
     "key_press_handler_manager_unittest.cc",
-    "payments/payments_client_unittest.cc",
   ]
 
   deps = [
@@ -77,10 +76,7 @@ source_set("unit_tests") {
     "//content/public/browser",
     "//content/public/common",
     "//content/test:test_support",
-    "//google_apis",
-    "//google_apis:test_support",
     "//mojo/common:common_base",
-    "//net",
     "//net:test_support",
     "//services/service_manager/public/cpp",
     "//testing/gmock",
