@@ -46,6 +46,30 @@
       "revId": "635337c5613c4e198d1365fce88978bc84162e3d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9aaa3cae_0ff87a2e",
+        "filename": "chrome/test/base/tracing_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1112474
+      },
+      "writtenOn": "2017-08-29T15:07:27Z",
+      "side": 1,
+      "message": "I missed the fact that there are only 2 tests; but, still, I think making it local prevents possible future confusions when someone adds a new test. Thanks.",
+      "parentUuid": "c68cd164_29ae0684",
+      "range": {
+        "startLine": 33,
+        "startChar": 5,
+        "endLine": 33,
+        "endChar": 38
+      },
+      "revId": "635337c5613c4e198d1365fce88978bc84162e3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
