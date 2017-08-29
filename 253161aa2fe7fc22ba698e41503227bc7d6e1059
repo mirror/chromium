@@ -16,6 +16,24 @@
       "revId": "253161aa2fe7fc22ba698e41503227bc7d6e1059",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8994839_745cd14b",
+        "filename": "content/browser/webauth/cbor/cbor_writer.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-08-29T16:53:58Z",
+      "side": 1,
+      "message": "Doing a conversion from a string or stringpiece isn\u0027t a problem, but I don\u0027t see a way to tell whether a conversion is needed or if it is simply a string.\nThought about passing a type to EncodeCBOR, but that won\u0027t work when it comes to uint64s in ListValues and Dictionaries.\nThe only solution I can come up with is to have my own values class.",
+      "parentUuid": "b66e51d2_a0f0b3bf",
+      "revId": "253161aa2fe7fc22ba698e41503227bc7d6e1059",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
