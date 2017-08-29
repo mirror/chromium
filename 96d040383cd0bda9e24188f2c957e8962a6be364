@@ -25,6 +25,69 @@
     },
     {
       "key": {
+        "uuid": "d3e7877a_77a5fa4d",
+        "filename": "chrome/browser/chrome_content_browser_client.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1020,
+      "author": {
+        "id": 1116054
+      },
+      "writtenOn": "2017-08-29T14:02:41Z",
+      "side": 1,
+      "message": "add crbug?",
+      "range": {
+        "startLine": 1020,
+        "startChar": 59,
+        "endLine": 1020,
+        "endChar": 0
+      },
+      "revId": "96d040383cd0bda9e24188f2c957e8962a6be364",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a1bbe3e_a3a061d1",
+        "filename": "chrome/browser/chrome_site_per_process_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 651,
+      "author": {
+        "id": 1116054
+      },
+      "writtenOn": "2017-08-29T14:02:41Z",
+      "side": 1,
+      "message": "do you need two #ifs here? why not just USE_SPELLCHECK_IPC?",
+      "range": {
+        "startLine": 651,
+        "startChar": 0,
+        "endLine": 651,
+        "endChar": 34
+      },
+      "revId": "96d040383cd0bda9e24188f2c957e8962a6be364",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55633079_3d1c7805",
+        "filename": "chrome/browser/spellchecker/spell_check_host_chrome_impl.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1116054
+      },
+      "writtenOn": "2017-08-29T14:02:41Z",
+      "side": 1,
+      "message": "do we still need the chrome/browser/spellchecker/spell_check_host_impl.* files?\nalso, should there be a corresponding .cc file for this?",
+      "revId": "96d040383cd0bda9e24188f2c957e8962a6be364",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e18d8e7f_7c086829",
         "filename": "components/spellcheck/browser/spell_check_host_impl.cc",
         "patchSetId": 6
@@ -94,6 +157,23 @@
     },
     {
       "key": {
+        "uuid": "36bce2f0_f42c053d",
+        "filename": "components/spellcheck/browser/spellchecker_session_bridge_android.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1116054
+      },
+      "writtenOn": "2017-08-29T14:02:41Z",
+      "side": 1,
+      "message": "are you sure about this (DISALLOW_COPY_AND_ASSIGN)?",
+      "revId": "96d040383cd0bda9e24188f2c957e8962a6be364",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8948668f_29f23d78",
         "filename": "components/spellcheck/common/spellcheck.mojom",
         "patchSetId": 6
@@ -134,6 +214,63 @@
         "endLine": 61,
         "endChar": 47
       },
+      "revId": "96d040383cd0bda9e24188f2c957e8962a6be364",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9685a61f_4fbc4c07",
+        "filename": "components/spellcheck/renderer/spellcheck_provider.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1116054
+      },
+      "writtenOn": "2017-08-29T14:02:41Z",
+      "side": 1,
+      "message": "the comment is somewhat unclear, is this for layout tests?, is the spell_check_host_ null there?",
+      "range": {
+        "startLine": 90,
+        "startChar": 70,
+        "endLine": 90,
+        "endChar": 0
+      },
+      "revId": "96d040383cd0bda9e24188f2c957e8962a6be364",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45c29a89_abbc99bb",
+        "filename": "components/spellcheck/renderer/spellcheck_provider.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1116054
+      },
+      "writtenOn": "2017-08-29T14:02:41Z",
+      "side": 1,
+      "message": "add reference to the corresponding crbug?",
+      "revId": "96d040383cd0bda9e24188f2c957e8962a6be364",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4583e9e_ee993524",
+        "filename": "components/spellcheck/renderer/spellcheck_provider_test.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1116054
+      },
+      "writtenOn": "2017-08-29T14:02:41Z",
+      "side": 1,
+      "message": "also NOTREACHED()?",
       "revId": "96d040383cd0bda9e24188f2c957e8962a6be364",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
