@@ -69,6 +69,30 @@
       "revId": "5aa6dac17c28785c63a3f3080075e8587061c28e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fdf53e87_cc32fbb1",
+        "filename": "ash/shell_delegate.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-08-29T22:06:45Z",
+      "side": 1,
+      "message": "if it\u0027s possible to get rid of Update, then i\u0027d just recommend GetTouchscreenStatus and SetTouchscreenStatus. hopefully the behavior can be made clear via comments. does something like the following make sense?\n\n  // Returns the current touchscreen status as specified by |source|.\n  // Note that the actual state of the touchscreen device is automatically\n  // determined based on the requests of multiple sources.\n  virtual bool GetTouchscreenStatus(...)\n\n  // Sets |source|\u0027s requested touchscreen status to |enabled|.\n  // Note that the actual state of the touchscreen device is automatically\n  // determined based on the requests of multiple sources.\n  virtual void SetTouchscreenStatus(...)",
+      "parentUuid": "a6c005ee_033f984e",
+      "range": {
+        "startLine": 122,
+        "startChar": 15,
+        "endLine": 122,
+        "endChar": 35
+      },
+      "revId": "5aa6dac17c28785c63a3f3080075e8587061c28e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
