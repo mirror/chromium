@@ -296,6 +296,39 @@ var FederatedCredentialRequestOptions;
 var CredentialCreationOptions;
 
 /**
+ * Error indicating that operation cannot be performed in current state.
+ * @param {string} message Message describing the reason for this error.
+ * @extends {Error}
+ * @constructor
+ */
+function InvalidStateError(message) {
+  Error.call(this, message);
+  this.name = 'InvalidStateError';
+  this.message = message;
+}
+InvalidStateError.prototype = {
+  __proto__: Error.prototype
+};
+InvalidStateError.prototype.constructor = InvalidStateError;
+
+/**
+ * Unknown error that has occured while talking to the credential manager.
+ * @param {string} message Message describing the reason for this error.
+ * @extends {Error}
+ * @constructor
+ */
+function NotReadableError(message) {
+  Error.call(this, message);
+  this.name = 'NotReadableError';
+  this.message = message;
+}
+NotReadableError.prototype = {
+  __proto__: Error.prototype
+};
+NotReadableError.prototype.constructor = NotReadableError;
+
+
+/**
  * Implements the public Credential Management API. For more information, see
  * https://w3c.github.io/webappsec-credential-management/#credentialscontainer
  * @constructor
