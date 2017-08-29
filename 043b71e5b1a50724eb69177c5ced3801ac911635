@@ -22,6 +22,30 @@
       "revId": "043b71e5b1a50724eb69177c5ced3801ac911635",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9566452e_bd6c9f96",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/SpannableAutocompleteEditTextModel.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 485,
+      "author": {
+        "id": 1116193
+      },
+      "writtenOn": "2017-08-29T23:13:29Z",
+      "side": 1,
+      "message": "It\u0027s called from SpannableAutocompleteEditTextModel#dispatchKeyEvent(), so let me keep it as public. I\u0027ve added comments as suggested.",
+      "parentUuid": "460d4575_84d9e547",
+      "range": {
+        "startLine": 485,
+        "startChar": 8,
+        "endLine": 485,
+        "endChar": 14
+      },
+      "revId": "043b71e5b1a50724eb69177c5ced3801ac911635",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
