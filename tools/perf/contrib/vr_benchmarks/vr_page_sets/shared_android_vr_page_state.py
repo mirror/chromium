@@ -26,6 +26,7 @@ class SharedAndroidVrPageState(
   Also ensures that the screen is on before the test starts by inheriting from
   AndroidScreenRestorationSharedState.
   """
+
   def __init__(self, test, finder_options, story_set):
     # TODO(bsheedy): See about making this a cross-platform SharedVrPageState -
     # Seems like we should be able to use SharedPageState's default platform
@@ -63,8 +64,7 @@ class SharedAndroidVrPageState(
     for setting in settings:
       shared_pref = self._platform.GetSharedPrefs(setting['package'],
                                                   setting['filename'])
-      shared_preference_utils.ApplySharedPreferenceSetting(
-          shared_pref, setting)
+      shared_preference_utils.ApplySharedPreferenceSetting(shared_pref, setting)
 
   def _InstallNfcApk(self):
     """Installs the APK that allows VR tests to simulate a headset NFC scan."""
