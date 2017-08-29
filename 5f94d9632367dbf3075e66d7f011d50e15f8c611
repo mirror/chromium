@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "09518971_5ea02644",
+        "filename": "components/autofill/content/renderer/devtools_page_passwords_analyser.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 254,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2017-08-29T09:39:38Z",
+      "side": 1,
+      "message": "const auto\u0026 (in order to avoid copying of elements)",
+      "range": {
+        "startLine": 254,
+        "startChar": 13,
+        "endLine": 254,
+        "endChar": 17
+      },
+      "revId": "5f94d9632367dbf3075e66d7f011d50e15f8c611",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4bf607c8_89de6d62",
+        "filename": "components/autofill/content/renderer/devtools_page_passwords_analyser.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2017-08-29T09:39:38Z",
+      "side": 1,
+      "message": "const std::string\u0026",
+      "range": {
+        "startLine": 255,
+        "startChar": 10,
+        "endLine": 255,
+        "endChar": 22
+      },
+      "revId": "5f94d9632367dbf3075e66d7f011d50e15f8c611",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "800f1991_8fc6a63b",
+        "filename": "components/autofill/content/renderer/devtools_page_passwords_analyser.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2017-08-29T09:39:38Z",
+      "side": 1,
+      "message": "Can we make |nodes_for_id| of type std::map\u003cstd::string, std::vector\u003cblink::WebElement\u003e\u003e? (then no need of creating vector here and anyway vector are more leightweight than set).",
+      "range": {
+        "startLine": 256,
+        "startChar": 31,
+        "endLine": 256,
+        "endChar": 78
+      },
+      "revId": "5f94d9632367dbf3075e66d7f011d50e15f8c611",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
