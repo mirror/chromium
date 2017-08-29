@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1699a39c_a469ee49",
+        "filename": "components/viz/client/DEPS",
+        "patchSetId": 4
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1000246
+      },
+      "writtenOn": "2017-08-29T15:41:01Z",
+      "side": 1,
+      "message": "seems redundant",
+      "revId": "5012933dc3d34b847efc2c063b8082d998c42bbc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "020a469a_d6e92f9b",
+        "filename": "ui/aura/mus/window_port_mus.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1000246
+      },
+      "writtenOn": "2017-08-29T15:41:01Z",
+      "side": 1,
+      "message": "remove?",
+      "revId": "5012933dc3d34b847efc2c063b8082d998c42bbc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
