@@ -27,26 +27,39 @@ namespace l10n_util {
 // Takes normalized locale as |locale|. Returns language part (before '-').
 UI_BASE_EXPORT std::string GetLanguage(const std::string& locale);
 
-// This method translates a generic locale name to one of the locally defined
-// ones. This method returns true if it succeeds.
+// This method returns the best match locale for string resource bundles
+// (string_locale) and the best match locale for formatting, sorting and
+// other I18N tasks done by ICU (format_locale). For instance, 'en-AU' does
+// not have its own string translation, but it's supported by ICU.
+// string_locale will be en-GB (the best match for en-AU), but format_locale
+// will be en-AU. This method returns true if it succeeds.
 UI_BASE_EXPORT bool CheckAndResolveLocale(const std::string& locale,
-                                          std::string* resolved_locale);
+                                          std::string* string_locale,
+                                          std::string* format_locale);
 
 // This method is responsible for determining the locale as defined below. In
 // nearly all cases you shouldn't call this, rather use GetApplicationLocale
 // defined on browser_process.
 //
-// Returns the locale used by the Application.  First we use the value from the
-// command line (--lang), second we try the value in the prefs file (passed in
-// as |pref_locale|), finally, we fall back on the system locale. We only return
-// a value if there's a corresponding resource DLL for the locale.  Otherwise,
-// we fall back to en-us. |set_icu_locale| determines whether the resulting
-// locale is set as the default ICU locale before returning it.
+// Returns the resource bundle locale used by the Application.  First we use the
+// value from the command line (--lang), second we try the value in the prefs
+// file (passed in as |pref_locale|), finally, we fall back on the ordered list
+// of preferred locales on the system. We only return a value if there's a
+// corresponding resource DLL for the locale.  Otherwise, we fall back to en-us.
+// When |set_icu_locale| is true, the ICU default locale is set to the most
+// specific locale compatible with the resource bundle locale. For instance, for
+// |pref_locale| = en-AU, the ICU default locale will be set to en-AU, but the
+// resource bundle locale is en-GB because we don't have en-GB. Likewise, if the
+// user's preferred locales are {fr-CH, fr-CA, fr}, this will return fr, but the
+// ICU default locale will be set to fr-CH. The ICU default locale will
+// determine the way date, time and messages are formatted and strings are
+// sorted among other things.
 UI_BASE_EXPORT std::string GetApplicationLocale(const std::string& pref_locale,
                                                 bool set_icu_locale);
 
-// Convenience version of GetApplicationLocale() that sets the resulting locale
-// as the default ICU locale before returning it.
+// Convenience version of GetApplicationLocale() that sets the ICU default
+// locale before returning. See the above as to how the ICU default locale is
+// determined.
 UI_BASE_EXPORT std::string GetApplicationLocale(const std::string& pref_locale);
 
 // Returns true if a display name for |locale| is available in the locale
