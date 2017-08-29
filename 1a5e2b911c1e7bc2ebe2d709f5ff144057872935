@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "3547cf95_dc1c8b71",
+        "filename": "ash/shelf/app_list_button.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 462,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-08-29T18:58:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d374bbdc_7b1b54ed",
+      "revId": "1a5e2b911c1e7bc2ebe2d709f5ff144057872935",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b9cbf115_b03ad611",
         "filename": "ash/shelf/app_list_button.cc",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-29T17:41:42Z",
       "side": 1,
       "message": "This will look very weird, I highly suggest finding a better fix soon. It seems like the ink drop code needs to offer a repositioning function, called on each animation step, or the ink drop should be painted to a layer that handles this automatically or something... i dunno.",
+      "revId": "1a5e2b911c1e7bc2ebe2d709f5ff144057872935",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b0340f2_be973aef",
+        "filename": "ash/shelf/app_list_button.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 465,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-08-29T18:58:55Z",
+      "side": 1,
+      "message": "Yeah, i looked into moving the ink drop, ill leave the bug open and get back when i have more time.",
+      "parentUuid": "b9cbf115_b03ad611",
       "revId": "1a5e2b911c1e7bc2ebe2d709f5ff144057872935",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "e4d1df95_68bb2f45",
+        "filename": "ash/shelf/app_list_button.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-08-29T18:58:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "da4c52ef_6f7e44d8",
+      "revId": "1a5e2b911c1e7bc2ebe2d709f5ff144057872935",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bff843b7_770fa75f",
         "filename": "ash/shelf/app_list_button.h",
         "patchSetId": 1
@@ -67,6 +121,24 @@
       "revId": "1a5e2b911c1e7bc2ebe2d709f5ff144057872935",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1726df5a_71ec3431",
+        "filename": "ash/shelf/app_list_button.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-08-29T18:58:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bff843b7_770fa75f",
+      "revId": "1a5e2b911c1e7bc2ebe2d709f5ff144057872935",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "35d15c95_e98db81c",
+        "filename": "ash/shelf/app_list_button.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-08-29T18:58:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1697177a_87fe2908",
+      "revId": "1a5e2b911c1e7bc2ebe2d709f5ff144057872935",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3b0bb72a_1ae701fb",
         "filename": "ash/shelf/app_list_button.h",
         "patchSetId": 1
@@ -101,6 +191,24 @@
       "revId": "1a5e2b911c1e7bc2ebe2d709f5ff144057872935",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87e75912_109d58aa",
+        "filename": "ash/shelf/app_list_button.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-08-29T18:58:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3b0bb72a_1ae701fb",
+      "revId": "1a5e2b911c1e7bc2ebe2d709f5ff144057872935",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "4de32497_18010d3c",
+        "filename": "ash/shelf/shelf_view_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2571,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-08-29T18:58:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "96cb10f4_6336cf7e",
+      "revId": "1a5e2b911c1e7bc2ebe2d709f5ff144057872935",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e498f55c_7003c267",
         "filename": "ash/shelf/shelf_view_unittest.cc",
         "patchSetId": 1
@@ -138,6 +264,24 @@
     },
     {
       "key": {
+        "uuid": "f9616c47_b5b03e66",
+        "filename": "ash/shelf/shelf_view_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2572,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-08-29T18:58:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e498f55c_7003c267",
+      "revId": "1a5e2b911c1e7bc2ebe2d709f5ff144057872935",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9fd9b108_f7f37da9",
         "filename": "ash/shelf/shelf_view_unittest.cc",
         "patchSetId": 1
@@ -149,6 +293,24 @@
       "writtenOn": "2017-08-29T17:41:42Z",
       "side": 1,
       "message": "q: Is the target state always the last entry in GetAndResetRequestedStates (so long as the target hasn\u0027t already been requested and reset)? If so, can we eliminate some of the redundancy in checking the target and requested states at each step? That would make tests more legible and maintainable. If this is sensible, it would be good for you to make a cleanup pass through other tests in a separate CL. That would avoid copy-pasting of the redundant expectation pattern.",
+      "revId": "1a5e2b911c1e7bc2ebe2d709f5ff144057872935",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a72be3c_8c895403",
+        "filename": "ash/shelf/shelf_view_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2579,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-08-29T18:58:55Z",
+      "side": 1,
+      "message": "I\u0027m not to familiar, but at line 2564 there\u0027s an example of target state not matching the last entry.",
+      "parentUuid": "9fd9b108_f7f37da9",
       "revId": "1a5e2b911c1e7bc2ebe2d709f5ff144057872935",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -172,6 +334,24 @@
     },
     {
       "key": {
+        "uuid": "110bc64f_b3b1d5f3",
+        "filename": "ash/shelf/shelf_view_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2584,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-08-29T18:58:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dc5e7142_8eab3c88",
+      "revId": "1a5e2b911c1e7bc2ebe2d709f5ff144057872935",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d1d11166_e4eae48d",
         "filename": "ash/shelf/shelf_view_unittest.cc",
         "patchSetId": 1
@@ -186,6 +366,24 @@
       "revId": "1a5e2b911c1e7bc2ebe2d709f5ff144057872935",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "229f0157_9a1b2f4f",
+        "filename": "ash/shelf/shelf_view_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2595,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-08-29T18:58:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d1d11166_e4eae48d",
+      "revId": "1a5e2b911c1e7bc2ebe2d709f5ff144057872935",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
