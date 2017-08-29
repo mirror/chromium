@@ -130,9 +130,6 @@ class CHROMEOS_EXPORT InputDeviceSettings {
   // where other input devices like mouse are absent.
   static bool ForceKeyboardDrivenUINavigation();
 
-  // Registers local state pref names for touchscreen status.
-  static void RegisterPrefs(PrefRegistrySimple* registry);
-
   // Registers profile pref names for touchpad and touchscreen statuses.
   static void RegisterProfilePrefs(PrefRegistrySimple* registry);
 
@@ -140,17 +137,17 @@ class CHROMEOS_EXPORT InputDeviceSettings {
   // preferences.
   void UpdateTouchDevicesStatusFromPrefs();
 
-  // If |use_local_state| is true, returns the touchscreen status from local
-  // state, otherwise from user prefs.
-  bool IsTouchscreenEnabledInPrefs(bool use_local_state) const;
+  // If |use_user_pref|, returns the touchscreen status from user pref,
+  // otherwise from |touchscreen_enabled_|.
+  bool GetTouchscreenStatus(bool use_user_pref) const;
 
-  // Sets the status of touchscreen to |enabled| in prefs. If |use_local_state|,
-  // pref is set in local state, otherwise in user pref.
-  void SetTouchscreenEnabledInPrefs(bool enabled, bool use_local_state);
+  // If |use_user_pref|, sets the status of touchscreen to user pref, otherwise
+  // to |touchscreen_enabled_|.
+  void SetTouchscreenStatus(bool enabled, bool use_user_pref);
 
-  // Updates the enabled/disabled status of the touchscreen from prefs. Enabled
-  // if both local state and user prefs are enabled, otherwise disabled.
-  void UpdateTouchscreenStatusFromPrefs();
+  // Updates the enabled/disabled status of the touchscreen. Enabled if both
+  // |touchscreen_enabled_| and user prefs are enabled, otherwise disabled.
+  void UpdateTouchscreenStatus();
 
   // Toggles the status of touchpad between enabled and disabled.
   void ToggleTouchpad();
@@ -211,6 +208,11 @@ class CHROMEOS_EXPORT InputDeviceSettings {
  private:
   virtual void SetInternalTouchpadEnabled(bool enabled) {}
   virtual void SetTouchscreensEnabled(bool enabled) {}
+
+  // The touchscreen state which is associated with the display backlights
+  // state. When the display backlights are off, |touchscreen_enabled_| should
+  // be false; otherwise true.
+  bool touchscreen_enabled_ = false;
 };
 
 }  // namespace system

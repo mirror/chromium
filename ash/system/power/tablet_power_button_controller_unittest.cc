@@ -11,6 +11,7 @@
 #include "ash/session/session_controller.h"
 #include "ash/session/test_session_controller_client.h"
 #include "ash/shell.h"
+#include "ash/shell_test_api.h"
 #include "ash/test/ash_test_base.h"
 #include "ash/test_shell_delegate.h"
 #include "ash/wm/lock_state_controller.h"
@@ -99,13 +100,12 @@ class TabletPowerButtonControllerTest : public AshTestBase {
   }
 
  protected:
-  // Resets the TabletPowerButtonController and associated members.
-  void ResetTabletPowerButtonController() {
+  // Resets the PowerButtonController and associated members.
+  void ResetPowerButtonController() {
     test_api_ = nullptr;
     tablet_controller_ = nullptr;
-    Shell::Get()
-        ->power_button_controller()
-        ->ResetTabletPowerButtonControllerForTest();
+    ShellTestApi shell_test_api;
+    shell_test_api.ResetPowerButtonControllerForTest();
   }
 
   // Sends an update with screen and keyboard accelerometer readings to
@@ -410,19 +410,20 @@ TEST_F(TabletPowerButtonControllerTest, IgnorePowerOnKeyEvent) {
 
 // Tests that under (1) tablet power button pressed/released, (2) keyboard/mouse
 // events on laptop mode when screen is off, requesting/stopping backlights
-// forced off should also set corresponding touchscreen state in local pref.
+// forced off should update the corresponding touchscreen state in
+// non-user-pref.
 TEST_F(TabletPowerButtonControllerTest, DisableTouchscreenWhileForcedOff) {
   // Tests tablet power button.
-  ASSERT_TRUE(shell_delegate_->IsTouchscreenEnabledInPrefs(true));
+  ASSERT_TRUE(shell_delegate_->GetTouchscreenStatus(false));
   PressPowerButton();
   ReleasePowerButton();
   power_manager_client_->SendBrightnessChanged(0, false);
-  EXPECT_FALSE(shell_delegate_->IsTouchscreenEnabledInPrefs(true));
+  EXPECT_FALSE(shell_delegate_->GetTouchscreenStatus(false));
 
   PressPowerButton();
   power_manager_client_->SendBrightnessChanged(kNonZeroBrightness, false);
   ReleasePowerButton();
-  EXPECT_TRUE(shell_delegate_->IsTouchscreenEnabledInPrefs(true));
+  EXPECT_TRUE(shell_delegate_->GetTouchscreenStatus(false));
 
   EnableTabletMode(false);
   // KeyEvent on laptop mode when screen is off.
@@ -430,37 +431,37 @@ TEST_F(TabletPowerButtonControllerTest, DisableTouchscreenWhileForcedOff) {
   ReleasePowerButton();
   power_manager_client_->SendBrightnessChanged(0, false);
   ASSERT_TRUE(GetBacklightsForcedOff());
-  ASSERT_FALSE(shell_delegate_->IsTouchscreenEnabledInPrefs(true));
+  ASSERT_FALSE(shell_delegate_->GetTouchscreenStatus(false));
   generator_->PressKey(ui::VKEY_L, ui::EF_NONE);
   power_manager_client_->SendBrightnessChanged(kNonZeroBrightness, false);
-  EXPECT_TRUE(shell_delegate_->IsTouchscreenEnabledInPrefs(true));
+  EXPECT_TRUE(shell_delegate_->GetTouchscreenStatus(false));
 
   // MouseEvent on laptop mode when screen is off.
   PressPowerButton();
   ReleasePowerButton();
   power_manager_client_->SendBrightnessChanged(0, false);
   ASSERT_TRUE(GetBacklightsForcedOff());
-  ASSERT_FALSE(shell_delegate_->IsTouchscreenEnabledInPrefs(true));
+  ASSERT_FALSE(shell_delegate_->GetTouchscreenStatus(false));
   generator_->MoveMouseBy(1, 1);
   power_manager_client_->SendBrightnessChanged(kNonZeroBrightness, false);
-  EXPECT_TRUE(shell_delegate_->IsTouchscreenEnabledInPrefs(true));
+  EXPECT_TRUE(shell_delegate_->GetTouchscreenStatus(false));
 }
 
 // When the screen is turned off automatically, the touchscreen should also be
 // disabled.
 TEST_F(TabletPowerButtonControllerTest, DisableTouchscreenForInactivity) {
-  ASSERT_TRUE(shell_delegate_->IsTouchscreenEnabledInPrefs(true));
+  ASSERT_TRUE(shell_delegate_->GetTouchscreenStatus(false));
 
   // Turn screen off for automated change (e.g. user is inactive).
   power_manager_client_->SendBrightnessChanged(0, false);
-  EXPECT_FALSE(shell_delegate_->IsTouchscreenEnabledInPrefs(true));
+  EXPECT_FALSE(shell_delegate_->GetTouchscreenStatus(false));
   power_manager_client_->SendBrightnessChanged(kNonZeroBrightness, true);
-  EXPECT_TRUE(shell_delegate_->IsTouchscreenEnabledInPrefs(true));
+  EXPECT_TRUE(shell_delegate_->GetTouchscreenStatus(false));
 
   // After decreasing the brightness to zero for a user request, the touchscreen
   // should remain enabled.
   power_manager_client_->SendBrightnessChanged(0, true);
-  EXPECT_TRUE(shell_delegate_->IsTouchscreenEnabledInPrefs(true));
+  EXPECT_TRUE(shell_delegate_->GetTouchscreenStatus(false));
 }
 
 // When user switches convertible device between laptop mode and tablet mode,
@@ -570,30 +571,29 @@ TEST_F(TabletPowerButtonControllerTest, LidEventsStopForcingOff) {
   EXPECT_FALSE(GetBacklightsForcedOff());
 }
 
-// Tests that with system reboot, the local state of touchscreen enabled state
+// Tests that with system reboot, the non-user-pref touchscreen enabled state
 // should be synced with new backlights forced off state from powerd.
 TEST_F(TabletPowerButtonControllerTest, SyncTouchscreenStatus) {
-  shell_delegate_->SetTouchscreenEnabledInPrefs(false,
-                                                true /* use_local_state */);
-  ASSERT_FALSE(shell_delegate_->IsTouchscreenEnabledInPrefs(true));
+  shell_delegate_->SetTouchscreenStatus(false, false /* use_user_pref */);
+  ASSERT_FALSE(shell_delegate_->GetTouchscreenStatus(false));
 
   // Simulate system reboot by resetting backlights forced off state in powerd
-  // and TabletPowerButtonController.
+  // and PowerButtonController.
   power_manager_client_->SetBacklightsForcedOff(false);
-  ResetTabletPowerButtonController();
+  ResetPowerButtonController();
   SendAccelerometerUpdate(kSidewaysVector, kSidewaysVector);
 
-  // Check that the local state of touchscreen enabled state is in line with
+  // Check that the non-user-pref of touchscreen enabled state is in line with
   // backlights forced off state.
   EXPECT_FALSE(GetBacklightsForcedOff());
-  EXPECT_TRUE(shell_delegate_->IsTouchscreenEnabledInPrefs(true));
+  EXPECT_TRUE(shell_delegate_->GetTouchscreenStatus(false));
 }
 
 // Tests that tablet power button behavior is enabled on having seen
 // accelerometer update, otherwise it is disabled.
 TEST_F(TabletPowerButtonControllerTest, EnableOnAccelerometerUpdate) {
   ASSERT_TRUE(tablet_controller_);
-  ResetTabletPowerButtonController();
+  ResetPowerButtonController();
   EXPECT_FALSE(Shell::Get()
                    ->power_button_controller()
                    ->tablet_power_button_controller_for_test());
@@ -608,7 +608,7 @@ TEST_F(TabletPowerButtonControllerTest, EnableOnAccelerometerUpdate) {
   // accelerometer events.
   base::CommandLine::ForCurrentProcess()->AppendSwitch(
       switches::kForceClamshellPowerButton);
-  ResetTabletPowerButtonController();
+  ResetPowerButtonController();
   SendAccelerometerUpdate(kSidewaysVector, kSidewaysVector);
   EXPECT_FALSE(Shell::Get()
                    ->power_button_controller()
@@ -743,17 +743,18 @@ TEST_F(TabletPowerButtonControllerTest, NonLockScreenContainersHideAnimation) {
 }
 
 // Tests that updating power button behavior from tablet behavior to clamshell
-// behavior will initially enable the local state of touchscreen.
+// behavior will initially enable the non-user-pref of touchscreen (b/64972736).
 TEST_F(TabletPowerButtonControllerTest, TouchscreenStatusClamshell) {
-  shell_delegate_->SetTouchscreenEnabledInPrefs(false,
-                                                true /* use_local_state */);
-  ASSERT_FALSE(shell_delegate_->IsTouchscreenEnabledInPrefs(true));
+  shell_delegate_->SetTouchscreenStatus(false, false /* use_user_pref */);
+  ASSERT_FALSE(shell_delegate_->GetTouchscreenStatus(false));
 
   base::CommandLine::ForCurrentProcess()->AppendSwitch(
       switches::kForceClamshellPowerButton);
-  ResetTabletPowerButtonController();
+  ResetPowerButtonController();
+  // Spins a run loop for async GetBacklightsForcedOff call.
+  base::RunLoop().RunUntilIdle();
   SendAccelerometerUpdate(kSidewaysVector, kSidewaysVector);
-  EXPECT_TRUE(shell_delegate_->IsTouchscreenEnabledInPrefs(true));
+  EXPECT_TRUE(shell_delegate_->GetTouchscreenStatus(false));
 }
 
 }  // namespace ash

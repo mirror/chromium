@@ -120,17 +120,16 @@ gfx::Image ShellDelegateMus::GetDeprecatedAcceleratorImage() const {
   return gfx::Image();
 }
 
-bool ShellDelegateMus::IsTouchscreenEnabledInPrefs(bool use_local_state) const {
+bool ShellDelegateMus::GetTouchscreenStatus(bool use_user_pref) const {
   NOTIMPLEMENTED();
   return true;
 }
 
-void ShellDelegateMus::SetTouchscreenEnabledInPrefs(bool enabled,
-                                                    bool use_local_state) {
+void ShellDelegateMus::SetTouchscreenStatus(bool enabled, bool use_user_pref) {
   NOTIMPLEMENTED();
 }
 
-void ShellDelegateMus::UpdateTouchscreenStatusFromPrefs() {
+void ShellDelegateMus::UpdateTouchscreenStatus() {
   NOTIMPLEMENTED();
 }
 
