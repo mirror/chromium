@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "26fe3a33_5fb5b575",
+        "filename": "third_party/WebKit/Source/core/frame/LocalDOMWindow.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1094,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-29T18:08:23Z",
+      "side": 0,
+      "message": "I think the TODO is still relevant until we move the code into the browser process. This comment is about the fact that the browser should ensure it does the correct thing.",
+      "parentUuid": "fb78dae3_c2ae441e",
+      "range": {
+        "startLine": 1092,
+        "startChar": 0,
+        "endLine": 1094,
+        "endChar": 74
+      },
+      "revId": "da770a76268822e7de088adcf311ad91fcfcdfc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "169e2df2_ca3896e1",
         "filename": "third_party/WebKit/Source/core/frame/LocalDOMWindow.cpp",
         "patchSetId": 2

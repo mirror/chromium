@@ -34,6 +34,24 @@
       "revId": "0b402220e6f5c09bafdd9b18e53e37e47631383d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "71206755_f9e6ecd7",
+        "filename": "third_party/WebKit/Source/core/frame/LocalFrame.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-29T18:08:23Z",
+      "side": 1,
+      "message": "I would be explicit about calling this kDoNotReplicate and kReplicate.\n\n1. That\u0027s only true in a world where changing the iframe name attribute doesn\u0027t affect the browsing context name. We do want to fix this eventually: https://html.spec.whatwg.org/multipage/iframe-embed-object.html#dom-iframe-name\n\n2. The default should be to not replicate. So only things that need to replicate would explicitly say so. If you\u0027d prefer to do this with a new function on FrameTree, that\u0027d be fine.\n\n3. As mentioned, we might want remote frames to replicate eventually, so having this logic belong on FrameTree doesn\u0027t seem out of place. (Incidentally, all local frames have a local window and local document)",
+      "parentUuid": "c91c0001_28d10a52",
+      "revId": "0b402220e6f5c09bafdd9b18e53e37e47631383d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
