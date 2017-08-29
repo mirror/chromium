@@ -37,7 +37,7 @@ const base::Feature kBrotliEncoding{"brotli-encoding",
 
 // Enables browser side navigation (aka PlzNavigate). http://crbug.com/368813
 const base::Feature kBrowserSideNavigation{"browser-side-navigation",
-                                           base::FEATURE_DISABLED_BY_DEFAULT};
+                                           base::FEATURE_ENABLED_BY_DEFAULT};
 
 // Toggles whether the buggy RSA parser is used.
 //
@@ -382,6 +382,9 @@ const base::Feature kWebUsb{"WebUSB", base::FEATURE_ENABLED_BY_DEFAULT};
 // Enables/disables the Image Capture API.
 const base::Feature kImageCaptureAPI{"ImageCaptureAPI",
                                      base::FEATURE_ENABLED_BY_DEFAULT};
+
+const base::Feature kKeepAliveRendererForKeepaliveRequests{
+    "KeepAliveRendererForKeepaliveRequests", base::FEATURE_DISABLED_BY_DEFAULT};
 
 // Enables WebVR experimental rendering optimizations.
 const base::Feature kWebVRExperimentalRendering{

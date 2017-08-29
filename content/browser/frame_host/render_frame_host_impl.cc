@@ -39,6 +39,7 @@
 #include "content/browser/frame_host/navigator_impl.h"
 #include "content/browser/frame_host/render_frame_host_delegate.h"
 #include "content/browser/frame_host/render_frame_proxy_host.h"
+#include "content/browser/frame_host/requests_tracker_impl_holder.h"
 #include "content/browser/generic_sensor/sensor_provider_proxy_impl.h"
 #include "content/browser/geolocation/geolocation_service_impl.h"
 #include "content/browser/image_capture/image_capture_impl.h"
@@ -2859,6 +2860,15 @@ void RenderFrameHostImpl::CreateNewWindow(
   RunCreateWindowCompleteCallback(
       std::move(callback), std::move(reply), render_view_route_id,
       main_frame_route_id, main_frame_widget_route_id, cloned_namespace->id());
+}
+
+void RenderFrameHostImpl::IssueRequestsTracker(
+    mojom::RequestsTrackerRequest request) {
+  if (!requests_tracker_impl_holder_) {
+    requests_tracker_impl_holder_ =
+        base::MakeUnique<RequestsTrackerImplHolder>(GetProcess());
+  }
+  requests_tracker_impl_holder_->AddBinding(std::move(request));
 }
 
 void RenderFrameHostImpl::RunCreateWindowCompleteCallback(

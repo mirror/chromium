@@ -5,6 +5,8 @@
 #ifndef CONTENT_CHILD_WEB_URL_LOADER_IMPL_H_
 #define CONTENT_CHILD_WEB_URL_LOADER_IMPL_H_
 
+#include <memory>
+
 #include "base/callback_forward.h"
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
@@ -18,6 +20,10 @@
 
 namespace base {
 class SingleThreadTaskRunner;
+}
+
+namespace blink {
+class WebURLRequestsTracker;
 }
 
 namespace content {
@@ -54,6 +60,10 @@ class CONTENT_EXPORT WebURLLoaderImpl : public blink::WebURLLoader {
   WebURLLoaderImpl(ResourceDispatcher* resource_dispatcher,
                    scoped_refptr<base::SingleThreadTaskRunner> task_runner,
                    mojom::URLLoaderFactory* url_loader_factory);
+  WebURLLoaderImpl(ResourceDispatcher* resource_dispatcher,
+                   scoped_refptr<base::SingleThreadTaskRunner> task_runner,
+                   mojom::URLLoaderFactory* url_loader_factory,
+                   std::unique_ptr<blink::WebURLRequestsTracker> tracker);
   ~WebURLLoaderImpl() override;
 
   static void PopulateURLResponse(const blink::WebURL& url,
