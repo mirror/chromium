@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3cfce2b6_aae571e2",
+        "filename": "chrome/browser/chromeos/arc/accessibility/arc_accessibility_helper_bridge.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 330,
+      "author": {
+        "id": 1121230
+      },
+      "writtenOn": "2017-08-29T11:16:27Z",
+      "side": 1,
+      "message": "nit: put this in \"if (!tree_source)\". We won\u0027t need to check fallback tree if we already found a tree.",
+      "range": {
+        "startLine": 327,
+        "startChar": 2,
+        "endLine": 330,
+        "endChar": 39
+      },
+      "revId": "40e1fd0423b65758f2df008467304daf2829a2ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cdd3d895_1f8bc8b8",
+        "filename": "chrome/browser/chromeos/arc/accessibility/arc_accessibility_helper_bridge.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 335,
+      "author": {
+        "id": 1121230
+      },
+      "writtenOn": "2017-08-29T11:16:27Z",
+      "side": 1,
+      "message": "Totally optional and open to discussion: I think there is a chance where fallback_tree_ changes to the tree of different app between OnAction and OnActionResult. In that case, we may end up sending action result to the wrong tree. Currently AxTreeSourceArc::NotifyActionResult is not using any of its context. This should be fine with the current code. But might it be better to change AxTreeSourceArc::NotifyActionResult to static method not to use its context accidentally in the future?",
+      "range": {
+        "startLine": 335,
+        "startChar": 2,
+        "endLine": 335,
+        "endChar": 33
+      },
+      "revId": "40e1fd0423b65758f2df008467304daf2829a2ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
