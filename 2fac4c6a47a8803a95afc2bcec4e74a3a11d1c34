@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "deaccba6_8954338a",
+        "filename": "content/browser/download/download_item_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1393,
+      "author": {
+        "id": 1116010
+      },
+      "writtenOn": "2017-08-29T00:09:08Z",
+      "side": 1,
+      "message": "nit: !job-\u003eIsParallizable() should be enough, no need to check IsParallelDownloadEnabled()",
+      "revId": "2fac4c6a47a8803a95afc2bcec4e74a3a11d1c34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
