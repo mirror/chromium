@@ -96,7 +96,12 @@ void ScopedStyleResolver::AppendActiveStyleSheets(
     if (!active_iterator->second)
       continue;
     const RuleSet& rule_set = *active_iterator->second;
-    author_style_sheets_.push_back(sheet);
+    if (sheet->IsInjected()) {
+      // Treat injected style sheets as user style sheets.
+      user_style_sheets_.push_back(sheet);
+    } else {
+      author_style_sheets_.push_back(sheet);
+    }
     AddKeyframeRules(rule_set);
     AddFontFaceRules(rule_set);
     AddTreeBoundaryCrossingRules(rule_set, sheet, index);
@@ -131,7 +136,8 @@ void ScopedStyleResolver::CollectFeaturesTo(
   }
 }
 
-void ScopedStyleResolver::ResetAuthorStyle() {
+void ScopedStyleResolver::ResetStyle() {
+  user_style_sheets_.clear();
   author_style_sheets_.clear();
   viewport_dependent_media_query_results_.clear();
   device_dependent_media_query_results_.clear();
@@ -213,6 +219,18 @@ void ScopedStyleResolver::KeyframesRulesAdded(const TreeScope& tree_scope) {
   tree_scope.GetDocument().Timeline().InvalidateKeyframeEffects(tree_scope);
 }
 
+void ScopedStyleResolver::CollectMatchingUserRules(
+    ElementRuleCollector& collector,
+    CascadeOrder cascade_order) {
+  for (size_t i = 0; i < user_style_sheets_.size(); ++i) {
+    DCHECK(user_style_sheets_[i]->ownerNode());
+    MatchRequest match_request(
+        &user_style_sheets_[i]->Contents()->GetRuleSet(), &scope_->RootNode(),
+        user_style_sheets_[i], i);
+    collector.CollectMatchingRules(match_request, cascade_order);
+  }
+}
+
 void ScopedStyleResolver::CollectMatchingAuthorRules(
     ElementRuleCollector& collector,
     CascadeOrder cascade_order) {
@@ -274,6 +292,7 @@ void ScopedStyleResolver::MatchPageRules(PageRuleCollector& collector) {
 
 DEFINE_TRACE(ScopedStyleResolver) {
   visitor->Trace(scope_);
+  visitor->Trace(user_style_sheets_);
   visitor->Trace(author_style_sheets_);
   visitor->Trace(keyframes_rule_map_);
   visitor->Trace(tree_boundary_crossing_rule_set_);
@@ -371,6 +390,7 @@ bool ScopedStyleResolver::HaveSameStyles(const ScopedStyleResolver* first,
         second->author_style_sheets_[first_count]->Contents())
       return false;
   }
+
   return true;
 }
 

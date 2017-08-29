@@ -138,20 +138,19 @@ StyleEngine::StyleSheetsForStyleSheetList(TreeScope& tree_scope) {
   return collection.StyleSheetsForStyleSheetList();
 }
 
-WebStyleSheetId StyleEngine::InjectAuthorSheet(
-    StyleSheetContents* author_sheet) {
-  injected_author_style_sheets_.push_back(
-      std::make_pair(++injected_author_sheets_id_count_,
-                     CSSStyleSheet::Create(author_sheet, *document_)));
+WebStyleSheetId StyleEngine::InjectSheet(StyleSheetContents* sheet) {
+  injected_style_sheets_.push_back(
+      std::make_pair(++injected_sheets_id_count_,
+                     CSSStyleSheet::CreateInjected(sheet, *document_)));
 
   MarkDocumentDirty();
-  return injected_author_sheets_id_count_;
+  return injected_sheets_id_count_;
 }
 
-void StyleEngine::RemoveInjectedAuthorSheet(WebStyleSheetId author_sheet_id) {
-  for (size_t i = 0; i < injected_author_style_sheets_.size(); ++i) {
-    if (injected_author_style_sheets_[i].first == author_sheet_id) {
-      injected_author_style_sheets_.erase(i);
+void StyleEngine::RemoveInjectedSheet(WebStyleSheetId sheet_id) {
+  for (size_t i = 0; i < injected_style_sheets_.size(); ++i) {
+    if (injected_style_sheets_[i].first == sheet_id) {
+      injected_style_sheets_.erase(i);
       MarkDocumentDirty();
     }
   }
@@ -396,16 +395,16 @@ const ActiveStyleSheetVector StyleEngine::ActiveStyleSheetsForInspector() {
     UpdateActiveStyle();
 
   if (active_tree_scopes_.IsEmpty())
-    return GetDocumentStyleSheetCollection().ActiveAuthorStyleSheets();
+    return GetDocumentStyleSheetCollection().ActiveStyleSheets();
 
   ActiveStyleSheetVector active_style_sheets;
 
   active_style_sheets.AppendVector(
-      GetDocumentStyleSheetCollection().ActiveAuthorStyleSheets());
+      GetDocumentStyleSheetCollection().ActiveStyleSheets());
   for (TreeScope* tree_scope : active_tree_scopes_) {
     if (TreeScopeStyleSheetCollection* collection =
             style_sheet_collection_map_.at(tree_scope))
-      active_style_sheets.AppendVector(collection->ActiveAuthorStyleSheets());
+      active_style_sheets.AppendVector(collection->ActiveStyleSheets());
   }
 
   // FIXME: Inspector needs a vector which has all active stylesheets.
@@ -419,14 +418,14 @@ void StyleEngine::ShadowRootRemovedFromDocument(ShadowRoot* shadow_root) {
   active_tree_scopes_.erase(shadow_root);
   dirty_tree_scopes_.erase(shadow_root);
   tree_scopes_removed_ = true;
-  ResetAuthorStyle(*shadow_root);
+  ResetStyle(*shadow_root);
 }
 
 void StyleEngine::AddTreeBoundaryCrossingScope(const TreeScope& tree_scope) {
   tree_boundary_crossing_scopes_.Add(&tree_scope.RootNode());
 }
 
-void StyleEngine::ResetAuthorStyle(TreeScope& tree_scope) {
+void StyleEngine::ResetStyle(TreeScope& tree_scope) {
   tree_boundary_crossing_scopes_.Remove(&tree_scope.RootNode());
 
   ScopedStyleResolver* scoped_resolver = tree_scope.GetScopedStyleResolver();
@@ -435,7 +434,7 @@ void StyleEngine::ResetAuthorStyle(TreeScope& tree_scope) {
 
   global_rule_set_->MarkDirty();
   if (tree_scope.RootNode().IsDocumentNode()) {
-    scoped_resolver->ResetAuthorStyle();
+    scoped_resolver->ResetStyle();
     return;
   }
 
@@ -1125,11 +1124,11 @@ void StyleEngine::ApplyRuleSetChanges(
   //   TreeScope.
   if (tree_scope.GetScopedStyleResolver()) {
     if (new_style_sheets.IsEmpty())
-      ResetAuthorStyle(tree_scope);
+      ResetStyle(tree_scope);
     else if (change == kActiveSheetsAppended && !append_all_sheets)
       append_start_index = old_style_sheets.size();
     else
-      tree_scope.GetScopedStyleResolver()->ResetAuthorStyle();
+      tree_scope.GetScopedStyleResolver()->ResetStyle();
   }
 
   if (!new_style_sheets.IsEmpty()) {
@@ -1224,7 +1223,7 @@ bool StyleEngine::UpdateRemUnits(const ComputedStyle* old_root_style,
 
 DEFINE_TRACE(StyleEngine) {
   visitor->Trace(document_);
-  visitor->Trace(injected_author_style_sheets_);
+  visitor->Trace(injected_style_sheets_);
   visitor->Trace(inspector_style_sheet_);
   visitor->Trace(document_style_sheet_collection_);
   visitor->Trace(style_sheet_collection_map_);
@@ -1244,7 +1243,7 @@ DEFINE_TRACE(StyleEngine) {
 }
 
 DEFINE_TRACE_WRAPPERS(StyleEngine) {
-  for (const auto& sheet : injected_author_style_sheets_) {
+  for (const auto& sheet : injected_style_sheets_) {
     visitor->TraceWrappers(sheet.second);
   }
   visitor->TraceWrappers(document_style_sheet_collection_);

@@ -92,7 +92,7 @@ void DocumentStyleSheetCollection::CollectStyleSheets(
     StyleEngine& master_engine,
     DocumentStyleSheetCollector& collector) {
   for (auto& sheet :
-       GetDocument().GetStyleEngine().InjectedAuthorStyleSheets()) {
+       GetDocument().GetStyleEngine().InjectedStyleSheets()) {
     collector.AppendActiveStyleSheet(std::make_pair(
         sheet.second,
         GetDocument().GetStyleEngine().RuleSetForSheet(*sheet.second)));
