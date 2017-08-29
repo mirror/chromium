@@ -1698,8 +1698,7 @@ RTCPeerConnectionHandler::GetSenders() {
       std::unique_ptr<WebRtcMediaStreamTrackAdapterMap::AdapterRef>
           track_adapter;
       if (webrtc_track) {
-        track_adapter =
-            track_adapter_map_->GetLocalTrackAdapter(webrtc_track->id());
+        track_adapter = track_adapter_map_->GetLocalTrackAdapter(webrtc_track);
         DCHECK(track_adapter);
       }
       it = rtp_senders_
@@ -2150,7 +2149,7 @@ RTCPeerConnectionHandler::GetReceiverForTrack(
       webrtc_receiver->track();
   DCHECK(webrtc_track);
   std::unique_ptr<WebRtcMediaStreamTrackAdapterMap::AdapterRef> track_adapter =
-      track_adapter_map_->GetRemoteTrackAdapter(webrtc_track->id());
+      track_adapter_map_->GetRemoteTrackAdapter(webrtc_track);
   DCHECK(track_adapter);
   // Create a reference to the receiver. Multiple |RTCRtpReceiver|s can
   // reference the same webrtc track, see |id|.

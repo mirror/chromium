@@ -49,6 +49,10 @@ WebString WebMediaStream::Id() const {
   return private_->Id();
 }
 
+WebString WebMediaStream::DescriptorId() const {
+  return private_->UniqueId();
+}
+
 void WebMediaStream::AudioTracks(
     WebVector<WebMediaStreamTrack>& web_tracks) const {
   size_t number_of_tracks = private_->NumberOfAudioComponents();

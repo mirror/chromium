@@ -65,6 +65,7 @@ MediaStreamComponent::MediaStreamComponent(
     WebMediaStreamTrack::ContentHintType content_hint)
     : source_(source),
       id_(id),
+      unique_id_(CreateCanonicalUUIDString()),
       enabled_(enabled),
       muted_(muted),
       content_hint_(content_hint) {
