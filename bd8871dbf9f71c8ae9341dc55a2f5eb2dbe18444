@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3d7e8e88_d5c796e7",
+        "filename": "chrome/browser/chromeos/resource_reporter/resource_reporter.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-08-29T04:27:36Z",
+      "side": 1,
+      "message": "afakhry: FYI; looks like this code mis-interprets the output as a percentage in the range 0-100% - we should either update it to scale down by NumberOfProcessors(), or fix the metric to cope with higher values.",
+      "revId": "bd8871dbf9f71c8ae9341dc55a2f5eb2dbe18444",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
