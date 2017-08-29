@@ -106,6 +106,9 @@ class EncryptionMigrationScreenHandler : public EncryptionMigrationScreenView,
   // True if |mode_| suggests that migration should start immediately.
   bool IsStartImmediately();
 
+  // Stop forcing migration if it was forced by policy.
+  void MaybeStopForcingMigration();
+
   device::mojom::WakeLock* GetWakeLock();
 
   Delegate* delegate_ = nullptr;

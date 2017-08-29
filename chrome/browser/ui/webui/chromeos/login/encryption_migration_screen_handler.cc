@@ -372,8 +372,12 @@ void EncryptionMigrationScreenHandler::PowerChanged(
     if (!current_battery_percent_) {
       // If initial battery level is below the minimum, migration should start
       // automatically once the device is charged enough.
-      if (proto.battery_percent() < arc::kMigrationMinimumBatteryPercent)
+      if (proto.battery_percent() < arc::kMigrationMinimumBatteryPercent) {
         should_migrate_on_enough_battery_ = true;
+        // If migration was forced by policy, stop forcing it (we don't want the
+        // user to have to wait until the battery is charged).
+        MaybeStopForcingMigration();
+      }
     }
     current_battery_percent_ = proto.battery_percent();
   } else {
@@ -494,10 +498,15 @@ void EncryptionMigrationScreenHandler::OnGetAvailableStorage(int64_t size) {
 }
 
 void EncryptionMigrationScreenHandler::WaitBatteryAndMigrate() {
-  if (current_battery_percent_ &&
-      *current_battery_percent_ >= arc::kMigrationMinimumBatteryPercent) {
-    StartMigration();
-    return;
+  if (current_battery_percent_) {
+    if (*current_battery_percent_ >= arc::kMigrationMinimumBatteryPercent) {
+      StartMigration();
+      return;
+    } else {
+      // If migration was forced by policy, stop forcing it (we don't want the
+      // user to have to wait until the battery is charged).
+      MaybeStopForcingMigration();
+    }
   }
   UpdateUIState(UIState::READY);
 
@@ -692,6 +701,11 @@ bool EncryptionMigrationScreenHandler::IsResumingIncompleteMigration() {
 bool EncryptionMigrationScreenHandler::IsStartImmediately() {
   return mode_ == EncryptionMigrationMode::START_MIGRATION ||
          mode_ == EncryptionMigrationMode::RESUME_MIGRATION;
+}
+
+void EncryptionMigrationScreenHandler::MaybeStopForcingMigration() {
+  if (mode_ == EncryptionMigrationMode::START_MIGRATION)
+    CallJS("setIsResuming", false);
 }
 
 }  // namespace chromeos
