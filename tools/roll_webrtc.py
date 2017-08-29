@@ -321,15 +321,13 @@ class AutoRoller(object):
       self._RunCommand(['git', 'add', '--update', '.'])
       self._RunCommand(['git', 'commit', '-m', description])
       logging.debug('Uploading changes...')
-      self._RunCommand(['git', 'cl', 'upload'],
-                       extra_env={'EDITOR': 'true'})
-      cl_info = self._GetCLInfo()
-      logging.debug('Issue: %d URL: %s', cl_info.issue, cl_info.url)
-
+      upload_cmd = ['git', 'cl', 'upload']
       if not dry_run and not no_commit:
         logging.debug('Sending the CL to the CQ...')
-        self._RunCommand(['git', 'cl', 'set_commit'])
-        logging.debug('Sent the CL to the CQ. Monitor here: %s', cl_info.url)
+        uplaod_cmd.extend(['--use-commit-queue', '--send-mail'])
+      self._RunCommand(upload_cmd, extra_env={'EDITOR': 'true'})
+      cl_info = self._GetCLInfo()
+      logging.debug('Issue: %d URL: %s', cl_info.issue, cl_info.url)
 
     # TODO(kjellander): Checkout masters/previous branches again.
     return 0
