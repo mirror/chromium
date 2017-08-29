@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "0ec74d6e_3590152a",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-08-29T16:43:22Z",
+      "side": 1,
+      "message": "But what\u0027s the motivation for adding the underscore here and for |milliseconds|?\n\n  Data members of structs, both static and non-static, are named like ordinary nonmember variables. They do not have the trailing underscores that data members in classes have.\n\nhttps://google.github.io/styleguide/cppguide.html#Variable_Names",
+      "parentUuid": "35d20ffc_118560c6",
+      "range": {
+        "startLine": 33,
+        "startChar": 6,
+        "endLine": 33,
+        "endChar": 17
+      },
+      "revId": "9f901b409488fd2f09261503f0e562340845506f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f90767f1_6f9a84a3",
         "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.cc",
         "patchSetId": 4
