@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c3ba9c43_efb20bcf",
+        "filename": "media/mojo/interfaces/video_frame_struct_traits.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-29T00:18:24Z",
+      "side": 1,
+      "message": "It\u0027s kind of unfortunate that we have to copy here.\n\n(I guess there\u0027s no real workaround atm; this class doesn\u0027t seem to hold it internally as a unique_ptr, and I haven\u0027t landed my CL to treat base::Value as a value type yet)",
+      "revId": "1559178cb274b743111ef354abc0a3e1a1d8a53f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
