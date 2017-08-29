@@ -26,6 +26,68 @@ static String ExtractString(const Element& element) {
   return String(buffer.Data(), buffer.Size());
 }
 
+TEST_F(SimplifiedBackwardsTextIteratorTest, Basic) {
+  SetBodyContent("<p> [(3)]678</p>");
+  const Element* const sample = GetDocument().QuerySelector("p");
+  SimplifiedBackwardsTextIterator iterator(Position(sample->firstChild(), 0),
+                                           Position(sample->firstChild(), 9));
+  EXPECT_EQ(9, iterator.length());
+  EXPECT_EQ(Position(sample->firstChild(), 0), iterator.StartPosition());
+  EXPECT_EQ(Position(sample->firstChild(), 9), iterator.EndPosition());
+  EXPECT_EQ(sample->firstChild(), iterator.StartContainer());
+  EXPECT_EQ(9, iterator.EndOffset());
+  EXPECT_EQ(sample->firstChild(), iterator.GetNode());
+  EXPECT_EQ('8', iterator.CharacterAt(0));
+  EXPECT_EQ('7', iterator.CharacterAt(1));
+  EXPECT_EQ('6', iterator.CharacterAt(2));
+  EXPECT_EQ(']', iterator.CharacterAt(3));
+  EXPECT_EQ(')', iterator.CharacterAt(4));
+  EXPECT_EQ('3', iterator.CharacterAt(5));
+  EXPECT_EQ('(', iterator.CharacterAt(6));
+  EXPECT_EQ('[', iterator.CharacterAt(7));
+  EXPECT_EQ(' ', iterator.CharacterAt(8));
+
+  EXPECT_FALSE(iterator.AtEnd());
+  iterator.Advance();
+  EXPECT_TRUE(iterator.AtEnd());
+}
+
+TEST_F(SimplifiedBackwardsTextIteratorTest, FirstLetter) {
+  SetBodyContent(
+      "<style>p::first-letter {font-size: 200%}</style>"
+      "<p> [(3)]678</p>");
+  const Element* const sample = GetDocument().QuerySelector("p");
+  SimplifiedBackwardsTextIterator iterator(Position(sample->firstChild(), 0),
+                                           Position(sample->firstChild(), 9));
+  EXPECT_EQ(3, iterator.length());
+  EXPECT_EQ(Position(sample->firstChild(), 6), iterator.StartPosition());
+  EXPECT_EQ(Position(sample->firstChild(), 9), iterator.EndPosition());
+  EXPECT_EQ(sample->firstChild(), iterator.StartContainer());
+  EXPECT_EQ(9, iterator.EndOffset());
+  EXPECT_EQ(sample->firstChild(), iterator.GetNode());
+  EXPECT_EQ('8', iterator.CharacterAt(0));
+  EXPECT_EQ('7', iterator.CharacterAt(1));
+  EXPECT_EQ('6', iterator.CharacterAt(2));
+
+  iterator.Advance();
+  EXPECT_EQ(6, iterator.length());
+  EXPECT_EQ(Position(sample->firstChild(), 0), iterator.StartPosition());
+  EXPECT_EQ(Position(sample->firstChild(), 6), iterator.EndPosition());
+  EXPECT_EQ(sample->firstChild(), iterator.StartContainer());
+  EXPECT_EQ(6, iterator.EndOffset());
+  EXPECT_EQ(sample->firstChild(), iterator.GetNode());
+  EXPECT_EQ(']', iterator.CharacterAt(0));
+  EXPECT_EQ(')', iterator.CharacterAt(1));
+  EXPECT_EQ('3', iterator.CharacterAt(2));
+  EXPECT_EQ('(', iterator.CharacterAt(3));
+  EXPECT_EQ('[', iterator.CharacterAt(4));
+  EXPECT_EQ(' ', iterator.CharacterAt(5));
+
+  EXPECT_FALSE(iterator.AtEnd());
+  iterator.Advance();
+  EXPECT_TRUE(iterator.AtEnd());
+}
+
 TEST_F(SimplifiedBackwardsTextIteratorTest, SubrangeWithReplacedElements) {
   static const char* body_content =
       "<a id=host><b id=one>one</b> not appeared <b id=two>two</b></a>";
