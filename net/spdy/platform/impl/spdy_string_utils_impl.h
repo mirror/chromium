@@ -49,6 +49,23 @@ inline SpdyString SpdyHexDecodeImpl(SpdyStringPiece data) {
   return HexDecode(data);
 }
 
+inline bool SpdyHexDecodeToUInt32Impl(SpdyStringPiece data, uint32_t* out) {
+  if (data.empty() || data.size() > 8u)
+    return false;
+  // Pad with leading zeros.
+  std::string data_padded(8u, '0');
+  memcpy(&data_padded[8u - data.size()], data.data(), data.size());
+  return base::HexStringToUInt(data_padded, out);
+}
+
+inline SpdyString SpdyHexEncodeImpl(const char* bytes, size_t size) {
+  return base::ToLowerASCII(base::HexEncode(bytes, size));
+}
+
+inline SpdyString SpdyHexEncodeUInt32AndTrimImpl(uint32_t data) {
+  return base::StringPrintf("%x", data);
+}
+
 inline SpdyString SpdyHexDumpImpl(SpdyStringPiece data) {
   return HexDump(data);
 }

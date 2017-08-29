@@ -203,6 +203,33 @@ TEST_F(QuicVersionsTest, LookUpVersionByIndex) {
   }
 }
 
+TEST_F(QuicVersionsTest, FilterSupportedAltSvcVersions) {
+  QuicVersionVector supported_versions = {QUIC_VERSION_37, QUIC_VERSION_38,
+                                          QUIC_VERSION_39, QUIC_VERSION_40};
+
+  std::vector<uint32_t> alt_svc_versions_google = {
+      QUIC_VERSION_38, QUIC_VERSION_40, QUIC_VERSION_41};
+  std::vector<uint32_t> alt_svc_versions_ietf = {
+      QuicEndian::HostToNet32(QuicVersionToQuicTag(QUIC_VERSION_38)),
+      QuicEndian::HostToNet32(QuicVersionToQuicTag(QUIC_VERSION_40)),
+      QuicEndian::HostToNet32(QuicVersionToQuicTag(QUIC_VERSION_41))};
+
+  QuicVersionVector supported_alt_svc_versions = {QUIC_VERSION_38,
+                                                  QUIC_VERSION_40};
+
+  EXPECT_EQ(supported_alt_svc_versions,
+            FilterSupportedAltSvcVersions("quic", alt_svc_versions_google,
+                                          supported_versions));
+
+  EXPECT_EQ(supported_alt_svc_versions,
+            FilterSupportedAltSvcVersions("hq", alt_svc_versions_ietf,
+                                          supported_versions));
+
+  EXPECT_EQ(QuicVersionVector(),
+            FilterSupportedAltSvcVersions(
+                "invalid_protocol", alt_svc_versions_ietf, supported_versions));
+}
+
 }  // namespace
 }  // namespace test
 }  // namespace net

@@ -7,6 +7,7 @@
 #include "net/quic/core/quic_error_codes.h"
 #include "net/quic/core/quic_tag.h"
 #include "net/quic/core/quic_types.h"
+#include "net/quic/platform/api/quic_endian.h"
 #include "net/quic/platform/api/quic_flags.h"
 #include "net/quic/platform/api/quic_logging.h"
 
@@ -137,6 +138,32 @@ string QuicVersionVectorToString(const QuicVersionVector& versions) {
     result.append(QuicVersionToString(versions[i]));
   }
   return result;
+}
+
+QuicVersionVector FilterSupportedAltSvcVersions(
+    const std::string& quic_protocol_id,
+    const std::vector<uint32_t>& alt_svc_versions,
+    const QuicVersionVector& supported_versions) {
+  QuicVersionVector supported_alt_svc_versions;
+  if (quic_protocol_id.compare("hq") == 0) {
+    // Using IETF format for advertising QUIC. In this case,
+    // |alternative_service_entry.version| will store QUIC version tags.
+    for (uint32_t quic_version : alt_svc_versions) {
+      for (QuicVersion supported : supported_versions) {
+        QuicTag quic_tag = QuicEndian::NetToHost32(quic_version);
+        if (QuicVersionToQuicTag(supported) == quic_tag)
+          supported_alt_svc_versions.push_back(supported);
+      }
+    }
+  } else if (quic_protocol_id.compare("quic") == 0) {
+    for (uint32_t quic_version : alt_svc_versions) {
+      for (QuicVersion supported : supported_versions) {
+        if (supported == quic_version)
+          supported_alt_svc_versions.push_back(supported);
+      }
+    }
+  }
+  return supported_alt_svc_versions;
 }
 
 }  // namespace net
