@@ -72,7 +72,7 @@
 #include "ui/resources/grit/ui_resources.h"
 
 #if BUILDFLAG(ENABLE_SPELLCHECK)
-#include "components/spellcheck/browser/spellcheck_message_filter_platform.h"
+#include "components/spellcheck/browser/spell_check_host_impl.h"
 #include "components/spellcheck/common/spellcheck_switches.h"
 #endif
 
@@ -234,10 +234,6 @@ void AwContentBrowserClient::RenderProcessWillLaunch(
   host->AddFilter(new AwContentsMessageFilter(host->GetID()));
   host->AddFilter(new cdm::CdmMessageFilterAndroid());
   host->AddFilter(new AwPrintingMessageFilter(host->GetID()));
-
-#if BUILDFLAG(ENABLE_SPELLCHECK)
-  host->AddFilter(new SpellCheckMessageFilterPlatform(host->GetID()));
-#endif
 }
 
 bool AwContentBrowserClient::IsHandledURL(const GURL& url) {
@@ -570,6 +566,11 @@ void AwContentBrowserClient::ExposeInterfacesToRenderer(
                 base::Unretained(this))),
         BrowserThread::GetTaskRunnerForThread(BrowserThread::IO));
   }
+#if BUILDFLAG(ENABLE_SPELLCHECK)
+  registry->AddInterface(
+      base::Bind(&SpellCheckHostImpl::Create, render_process_host->GetID()),
+      BrowserThread::GetTaskRunnerForThread(BrowserThread::UI));
+#endif
 }
 
 std::vector<std::unique_ptr<content::URLLoaderThrottle>>

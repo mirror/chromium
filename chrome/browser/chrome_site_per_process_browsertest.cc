@@ -10,6 +10,7 @@
 #include "base/path_service.h"
 #include "base/strings/stringprintf.h"
 #include "base/strings/utf_string_conversions.h"
+#include "build/build_config.h"
 #include "chrome/browser/chrome_content_browser_client.h"
 #include "chrome/browser/chrome_notification_types.h"
 #include "chrome/browser/external_protocol/external_protocol_handler.h"
@@ -590,7 +591,7 @@ class TestSpellCheckMessageFilter : public content::BrowserMessageFilter,
   }
 
   bool OnMessageReceived(const IPC::Message& message) override {
-#if BUILDFLAG(USE_BROWSER_SPELLCHECKER)
+#if defined(OS_MACOSX)
     IPC_BEGIN_MESSAGE_MAP(TestSpellCheckMessageFilter, message)
       // TODO(crbug.com/714480): convert the RequestTextCheck IPC to mojo.
       IPC_MESSAGE_HANDLER(SpellCheckHostMsg_RequestTextCheck, HandleMessage)
@@ -599,7 +600,7 @@ class TestSpellCheckMessageFilter : public content::BrowserMessageFilter,
     return false;
   }
 
-#if !BUILDFLAG(USE_BROWSER_SPELLCHECKER)
+#if !defined(OS_MACOSX)
   void ShellCheckHostRequest(spellcheck::mojom::SpellCheckHostRequest request) {
     EXPECT_FALSE(binding_.is_bound());
     binding_.Bind(std::move(request));
@@ -609,7 +610,7 @@ class TestSpellCheckMessageFilter : public content::BrowserMessageFilter,
  private:
   ~TestSpellCheckMessageFilter() override {}
 
-#if BUILDFLAG(USE_BROWSER_SPELLCHECKER)
+#if defined(OS_MACOSX)
   void HandleMessage(int, int, const base::string16& text) {
     content::BrowserThread::PostTask(
         content::BrowserThread::UI, FROM_HERE,
@@ -633,11 +634,23 @@ class TestSpellCheckMessageFilter : public content::BrowserMessageFilter,
 
   void NotifyChecked(const base::string16& word, bool misspelled) override {}
 
+  void ToggleSpellCheck(bool, bool) override {}
+
   void CallSpellingService(const base::string16& text,
                            CallSpellingServiceCallback callback) override {
 #if !BUILDFLAG(USE_BROWSER_SPELLCHECKER)
     DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
     std::move(callback).Run(true, std::vector<SpellCheckResult>());
+    binding_.Close();
+    HandleMessageOnUIThread(text);
+#endif
+  }
+
+  void RequestTextCheck(const base::string16& text,
+                        RequestTextCheckCallback callback) override {
+#if defined(OS_ANDROID)
+    DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
+    std::move(callback).Run(std::vector<SpellCheckResult>());
     binding_.Close();
     HandleMessageOnUIThread(text);
 #endif
@@ -664,7 +677,7 @@ class TestBrowserClientForSpellCheck : public ChromeContentBrowserClient {
     ChromeContentBrowserClient::RenderProcessWillLaunch(process_host);
   }
 
-#if !BUILDFLAG(USE_BROWSER_SPELLCHECKER)
+#if !defined(OS_MACOSX)
   void ExposeInterfacesToRenderer(
       service_manager::BinderRegistry* registry,
       content::AssociatedInterfaceRegistry* associated_registry,
@@ -684,7 +697,7 @@ class TestBrowserClientForSpellCheck : public ChromeContentBrowserClient {
         base::Bind(&TestSpellCheckMessageFilter::ShellCheckHostRequest, filter),
         ui_task_runner);
   }
-#endif  // !BUILDFLAG(USE_BROWSER_SPELLCHECKER)
+#endif  // !defined(OS_MACOSX)
 
   // Retrieves the registered filter for the given RenderProcessHost. It will
   // return nullptr if the RenderProcessHost was initialized while a different
