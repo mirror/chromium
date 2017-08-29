@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bc3885ca_0f61fb45",
+        "filename": "third_party/WebKit/Source/core/frame/LocalFrame.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-29T02:31:01Z",
+      "side": 1,
+      "message": "I feel like it\u0027s confusing to have so many set names, since we have one on LocalFrame, LocalDOMWindow, and FrameTree now.\n\nHow would you feel about adding an enum policy to FrameTree::SetName() that controls whether or not we forward, similar to how we do it for focus?",
+      "revId": "0b402220e6f5c09bafdd9b18e53e37e47631383d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
