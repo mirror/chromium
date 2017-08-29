@@ -20,6 +20,30 @@
 
 namespace IPC {
 
+template <typename Tuple, size_t... Ns>
+auto TupleForwardImpl(Tuple&& tuple, std::index_sequence<Ns...>) -> decltype(
+    std::forward_as_tuple(std::get<Ns>(std::forward<Tuple>(tuple))...)) {
+  return std::forward_as_tuple(std::get<Ns>(std::forward<Tuple>(tuple))...);
+}
+
+// Transforms std::tuple contents to the forwarding form.
+// Example:
+//   std::tuple<int, int&, const int&, int&&>&&
+//     -> std::tuple<int&&, int&, const int&, int&&>.
+//   const std::tuple<int, const int&, int&&>&
+//     -> std::tuple<const int&, int&, const int&, int&>.
+//
+// TupleForward(std::make_tuple(a, b, c)) is equivalent to
+// std::forward_as_tuple(a, b, c).
+template <typename Tuple>
+auto TupleForward(Tuple&& tuple) -> decltype(TupleForwardImpl(
+    std::forward<Tuple>(tuple),
+    std::make_index_sequence<std::tuple_size<std::decay_t<Tuple>>::value>())) {
+  return TupleForwardImpl(
+      std::forward<Tuple>(tuple),
+      std::make_index_sequence<std::tuple_size<std::decay_t<Tuple>>::value>());
+}
+
 // This function is for all the async IPCs that don't pass an extra parameter
 // using IPC_BEGIN_MESSAGE_MAP_WITH_PARAM.
 template <typename ObjT, typename Method, typename P, typename Tuple>
@@ -216,7 +240,8 @@ class MessageT<Meta, std::tuple<Ins...>, std::tuple<Outs...>>
       std::tuple<Message&> t = std::tie(*reply);
       ConnectMessageAndReply(msg, reply);
       std::tuple<P*> parameter_tuple(parameter);
-      auto concat_params = std::tuple_cat(parameter_tuple, send_params);
+      auto concat_params =
+          std::tuple_cat(parameter_tuple, TupleForward(send_params));
       base::DispatchToMethod(obj, func, concat_params, &t);
     } else {
       NOTREACHED() << "Error deserializing message " << msg->type();
