@@ -5,21 +5,16 @@
 #ifndef CHROME_BROWSER_SPELLCHECKER_SPELL_CHECK_HOST_CHROME_IMPL_H_
 #define CHROME_BROWSER_SPELLCHECKER_SPELL_CHECK_HOST_CHROME_IMPL_H_
 
-#include "base/macros.h"
+#include "components/spellcheck/browser/spell_check_host_impl.h"
 #include "components/spellcheck/browser/spelling_service_client.h"
-#include "components/spellcheck/common/spellcheck.mojom.h"
-#include "components/spellcheck/spellcheck_build_features.h"
-
-#if !BUILDFLAG(ENABLE_SPELLCHECK)
-#error "Spellcheck should be enabled."
-#endif
 
 class SpellcheckCustomDictionary;
 class SpellcheckService;
 
 struct SpellCheckResult;
 
-class SpellCheckHostChromeImpl : public spellcheck::mojom::SpellCheckHost {
+// Implementation of SpellCheckHost involving Chrome-only features.
+class SpellCheckHostChromeImpl : public SpellCheckHostImpl {
  public:
   explicit SpellCheckHostChromeImpl(int render_process_id);
   ~SpellCheckHostChromeImpl() override;
@@ -30,7 +25,7 @@ class SpellCheckHostChromeImpl : public spellcheck::mojom::SpellCheckHost {
  private:
   friend class TestSpellCheckHostImpl;
 
-  // spellcheck::mojom::SpellCheckHost:
+  // SpellCheckHostImpl:
   void RequestDictionary() override;
   void NotifyChecked(const base::string16& word, bool misspelled) override;
   void CallSpellingService(const base::string16& text,
