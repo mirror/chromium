@@ -41732,6 +41732,9 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 
 <histogram name="Net.RequestTime2">
   <owner>rdsmith@chromium.org</owner>
+  <obsolete>
+    Unused, so removed from Chromium.
+  </obsolete>
   <summary>
     The amount of time between request initiation and request completion for
     success and various different errors.
@@ -41740,6 +41743,9 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 
 <histogram name="Net.RequestTime2.ErrAborted.HttpScheme" units="ms">
   <owner>csharrison@chromium.org</owner>
+  <obsolete>
+    Unused, so removed from Chromium.
+  </obsolete>
   <summary>
     The amount of time between request initiation and request completion for
     ERR_ABORTED when the request's scheme is http/s.
@@ -41748,6 +41754,9 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 
 <histogram name="Net.RequestTime2.ErrAborted.NetworkContent" units="ms">
   <owner>csharrison@chromium.org</owner>
+  <obsolete>
+    Unused, so removed from Chromium.
+  </obsolete>
   <summary>
     The amount of time between request initiation and request completion for
     ERR_ABORTED when the requests TotalReceivedBytes() &gt; 0.
@@ -41756,6 +41765,9 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 
 <histogram name="Net.RequestTime2.ErrAborted.NoBytesRead" units="ms">
   <owner>csharrison@chromium.org</owner>
+  <obsolete>
+    Unused, so removed from Chromium.
+  </obsolete>
   <summary>
     The amount of time between request initiation and request completion for
     ERR_ABORTED when the requests TotalReceivedBytes() = 0 and
@@ -41766,6 +41778,9 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 <histogram name="Net.RequestTime2.ErrAborted.NoNetworkContent.CachedContent"
     units="ms">
   <owner>csharrison@chromium.org</owner>
+  <obsolete>
+    Unused, so removed from Chromium.
+  </obsolete>
   <summary>
     The amount of time between request initiation and request completion for
     ERR_ABORTED when the requests TotalReceivedBytes() = 0 and
@@ -41775,6 +41790,9 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 
 <histogram name="Net.RequestTime2.ErrAborted.NonHttpScheme" units="ms">
   <owner>csharrison@chromium.org</owner>
+  <obsolete>
+    Unused, so removed from Chromium.
+  </obsolete>
   <summary>
     The amount of time between request initiation and request completion for
     ERR_ABORTED when the request's scheme is not http/s.

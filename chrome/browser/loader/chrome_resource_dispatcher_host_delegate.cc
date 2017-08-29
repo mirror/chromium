@@ -301,7 +301,6 @@ void AppendComponentUpdaterThrottles(
 // about main frame resources.
 void LogMainFrameMetricsOnUIThread(const GURL& url,
                                    int net_error,
-                                   base::TimeDelta request_loading_time,
                                    content::WebContents* web_contents) {
   DCHECK(web_contents);
   Profile* profile =
@@ -325,33 +324,6 @@ void LogMainFrameMetricsOnUIThread(const GURL& url,
         template_url_service->GetDefaultSearchProvider();
     if (!default_provider)
       return;
-    if (default_provider->GetEngineType(
-            template_url_service->search_terms_data()) ==
-        SearchEngineType::SEARCH_ENGINE_GOOGLE) {
-      if (net_error == net::OK) {
-        UMA_HISTOGRAM_LONG_TIMES("Net.NTP.Google.RequestTime2.Success",
-                                 request_loading_time);
-      } else if (net_error == net::ERR_ABORTED) {
-        UMA_HISTOGRAM_LONG_TIMES("Net.NTP.Google.RequestTime2.ErrAborted",
-                                 request_loading_time);
-      }
-    } else {
-      if (net_error == net::OK) {
-        UMA_HISTOGRAM_LONG_TIMES("Net.NTP.ThirdParty.RequestTime2.Success",
-                                 request_loading_time);
-      } else if (net_error == net::ERR_ABORTED) {
-        UMA_HISTOGRAM_LONG_TIMES("Net.NTP.ThirdParty.RequestTime2.ErrAborted",
-                                 request_loading_time);
-      }
-    }
-  } else {
-    if (net_error == net::OK) {
-      UMA_HISTOGRAM_LONG_TIMES("Net.NTP.Local.RequestTime2.Success",
-                               request_loading_time);
-    } else if (net_error == net::ERR_ABORTED) {
-      UMA_HISTOGRAM_LONG_TIMES("Net.NTP.Local.RequestTime2.ErrAborted",
-                               request_loading_time);
-    }
   }
 }
 
@@ -415,16 +387,14 @@ void NotifyUIThreadOfRequestComplete(
     int64_t total_received_bytes,
     int64_t raw_body_bytes,
     int64_t original_content_length,
-    base::TimeTicks request_creation_time,
-    base::TimeDelta request_loading_time) {
+    base::TimeTicks request_creation_time) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
   content::WebContents* web_contents = web_contents_getter.Run();
   if (!web_contents)
     return;
 
   if (resource_type == content::RESOURCE_TYPE_MAIN_FRAME) {
-    LogMainFrameMetricsOnUIThread(url, net_error, request_loading_time,
-                                  web_contents);
+    LogMainFrameMetricsOnUIThread(url, net_error, web_contents);
   }
 
   if (!was_cached) {
@@ -947,8 +917,7 @@ void ChromeResourceDispatcherHostDelegate::RequestComplete(
           url_request->was_cached(), base::Passed(&data_reduction_proxy_data),
           net_error, url_request->GetTotalReceivedBytes(),
           url_request->GetRawBodyBytes(), original_content_length,
-          url_request->creation_time(),
-          base::TimeTicks::Now() - url_request->creation_time()));
+          url_request->creation_time()));
 }
 
 content::PreviewsState ChromeResourceDispatcherHostDelegate::GetPreviewsState(
