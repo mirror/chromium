@@ -71,6 +71,7 @@ class PLATFORM_EXPORT DecodingImageGenerator final
   bool GetYUV8Planes(const SkYUVSizeInfo&,
                      void* planes[3],
                      uint32_t lazy_pixel_ref) override;
+  SkISize GetSupportedDecodeSize(const SkISize& requested_size) const override;
 
  private:
   RefPtr<ImageFrameGenerator> frame_generator_;
