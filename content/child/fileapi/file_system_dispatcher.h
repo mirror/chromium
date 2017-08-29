@@ -44,8 +44,8 @@ class FileSystemDispatcher : public IPC::Listener {
       const base::File::Info& file_info,
       const base::FilePath& platform_path,
       int request_id)> CreateSnapshotFileCallback;
-  typedef base::Callback<
-      void(const std::vector<storage::DirectoryEntry>& entries, bool has_more)>
+  typedef base::Callback<void(std::vector<storage::DirectoryEntry> entries,
+                              bool has_more)>
       ReadDirectoryCallback;
   typedef base::Callback<void(
       const std::string& name,
@@ -139,7 +139,7 @@ class FileSystemDispatcher : public IPC::Listener {
                                const base::File::Info& file_info,
                                const base::FilePath& platform_path);
   void OnDidReadDirectory(int request_id,
-                          const std::vector<storage::DirectoryEntry>& entries,
+                          std::vector<storage::DirectoryEntry> entries,
                           bool has_more);
   void OnDidFail(int request_id, base::File::Error error_code);
   void OnDidWrite(int request_id, int64_t bytes, bool complete);

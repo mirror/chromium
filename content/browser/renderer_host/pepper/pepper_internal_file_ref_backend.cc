@@ -221,8 +221,9 @@ void PepperInternalFileRefBackend::ReadDirectoryComplete(
     base::File::Error error,
     storage::FileSystemOperation::FileEntryList file_list,
     bool has_more) {
-  accumulated_file_list->insert(
-      accumulated_file_list->end(), file_list.begin(), file_list.end());
+  accumulated_file_list->insert(accumulated_file_list->end(),
+                                std::make_move_iterator(file_list.begin()),
+                                std::make_move_iterator(file_list.end()));
   if (has_more)
     return;
 
