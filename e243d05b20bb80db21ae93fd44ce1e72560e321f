@@ -125,6 +125,24 @@
     },
     {
       "key": {
+        "uuid": "54a176b3_6d9ba464",
+        "filename": "components/offline_pages/core/prefetch/stale_entry_finalizer_task.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-08-29T20:28:13Z",
+      "side": 1,
+      "message": "I think the simpler, fixed value would make this code easier to reason about. Also by using that method there\u0027s a mix of two concerns that seem separate to me: regular pipeline expiration versus dealing with extraordinary clock changes.",
+      "parentUuid": "91c8e2fc_87bf19a2",
+      "revId": "e243d05b20bb80db21ae93fd44ce1e72560e321f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f75b80c3_0b68ffb8",
         "filename": "components/offline_pages/core/prefetch/stale_entry_finalizer_task.cc",
         "patchSetId": 2

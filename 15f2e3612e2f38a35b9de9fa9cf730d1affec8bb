@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "898aa660_cb4edf87",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 6
+      },
+      "lineNbr": 5941,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-08-29T20:28:13Z",
+      "side": 1,
+      "message": "suggestion: by uploading pure rebase patch sets separately from your actual changes you can make code reviewing much easier, especially for frequently changed files like this one.",
+      "revId": "15f2e3612e2f38a35b9de9fa9cf730d1affec8bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

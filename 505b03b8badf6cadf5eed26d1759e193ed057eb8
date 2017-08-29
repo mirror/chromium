@@ -187,6 +187,30 @@
       "revId": "505b03b8badf6cadf5eed26d1759e193ed057eb8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3f5e9a86_33caf892",
+        "filename": "components/offline_pages/core/prefetch/stale_entry_finalizer_task_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-08-29T20:28:13Z",
+      "side": 1,
+      "message": "nit: I\u0027d prefer if you a) used a more extreme future date value and b) covered all non-expirable states. You could copy/paste/adapt HandlesStalesInAllStatesCorrectly.",
+      "parentUuid": "d8c58eb1_44029ed9",
+      "range": {
+        "startLine": 263,
+        "startChar": 51,
+        "endLine": 263,
+        "endChar": 62
+      },
+      "revId": "505b03b8badf6cadf5eed26d1759e193ed057eb8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
