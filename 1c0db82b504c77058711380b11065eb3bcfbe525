@@ -1,0 +1,146 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3d44c117_65564363",
+        "filename": "chrome/browser/predictors/loading_stats_collector.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1132034
+      },
+      "writtenOn": "2017-08-29T09:23:39Z",
+      "side": 1,
+      "message": "nit: const GURL\u0026 here as well?",
+      "revId": "1c0db82b504c77058711380b11065eb3bcfbe525",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd1d9a5c_76ea58aa",
+        "filename": "chrome/browser/predictors/loading_stats_collector_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1132034
+      },
+      "writtenOn": "2017-08-29T09:23:39Z",
+      "side": 1,
+      "message": "nit: s/be//",
+      "range": {
+        "startLine": 211,
+        "startChar": 21,
+        "endLine": 211,
+        "endChar": 23
+      },
+      "revId": "1c0db82b504c77058711380b11065eb3bcfbe525",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0bdef090_c3d4db33",
+        "filename": "chrome/browser/predictors/preconnect_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1132034
+      },
+      "writtenOn": "2017-08-29T09:23:39Z",
+      "side": 1,
+      "message": "nit: don\u0027t need the \"in_\" prefix.",
+      "revId": "1c0db82b504c77058711380b11065eb3bcfbe525",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ce6c49a_5d3d31a9",
+        "filename": "chrome/browser/predictors/preconnect_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1132034
+      },
+      "writtenOn": "2017-08-29T09:23:39Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "1c0db82b504c77058711380b11065eb3bcfbe525",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7dd76aff_70515da9",
+        "filename": "chrome/browser/predictors/preconnect_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1132034
+      },
+      "writtenOn": "2017-08-29T09:23:39Z",
+      "side": 1,
+      "message": "up to you: we can use make_unique now \\o/\nDifference it makes: none.",
+      "revId": "1c0db82b504c77058711380b11065eb3bcfbe525",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8a51393_1024557c",
+        "filename": "chrome/browser/predictors/preconnect_manager.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1132034
+      },
+      "writtenOn": "2017-08-29T09:23:39Z",
+      "side": 1,
+      "message": "nit: update the doc.\n|url| is not there anymore.",
+      "revId": "1c0db82b504c77058711380b11065eb3bcfbe525",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b6cc003_fa881470",
+        "filename": "chrome/browser/predictors/preconnect_manager_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1132034
+      },
+      "writtenOn": "2017-08-29T09:23:39Z",
+      "side": 1,
+      "message": "Add a comment about the reason for that (no move parameters in gmock, right?)",
+      "revId": "1c0db82b504c77058711380b11065eb3bcfbe525",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c946290e_77d7898b",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 60119,
+      "author": {
+        "id": 1132034
+      },
+      "writtenOn": "2017-08-29T09:23:39Z",
+      "side": 1,
+      "message": "Can you say when it is recorded in terms of page load timing, not internal implementation details?",
+      "revId": "1c0db82b504c77058711380b11065eb3bcfbe525",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
