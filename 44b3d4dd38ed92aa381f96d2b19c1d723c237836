@@ -16,6 +16,24 @@
       "revId": "44b3d4dd38ed92aa381f96d2b19c1d723c237836",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50f40d19_94622e2a",
+        "filename": "third_party/WebKit/Source/core/editing/commands/ReplaceSelectionCommand.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1210620
+      },
+      "writtenOn": "2017-08-29T07:20:50Z",
+      "side": 1,
+      "message": "I haven\u0027t done this change in the final patch set. \nInitially I thought that we will remove EndingVisibleSelection(), but as\ndiscussed with Xiaochengh we will make EndingVisbleSelection as protected member of editor commands. This was the reason i went ahead by not doing change in ReplacementFragment, as it may not solve any overhead of calculating canonicalized values. \nShall i make this layout update change included in the final patch ?",
+      "parentUuid": "fd71eb42_89f2de04",
+      "revId": "44b3d4dd38ed92aa381f96d2b19c1d723c237836",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
