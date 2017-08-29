@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "36f6d4bd_0a10e67b",
+        "filename": "services/ui/ws/event_dispatcher.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-29T19:35:14Z",
+      "side": 1,
+      "message": "non-mouse, I think \u0027git cl format\u0027 did something weird at some point.",
+      "parentUuid": "fb5832d0_061a1b77",
+      "range": {
+        "startLine": 40,
+        "startChar": 56,
+        "endLine": 40,
+        "endChar": 73
+      },
+      "revId": "4b346d21a4078d963d56b632d33164b8e56049e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "88835109_e1f765fc",
         "filename": "services/ui/ws/event_dispatcher.cc",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2017-08-29T18:23:56Z",
       "side": 1,
       "message": "How do we use ET_POINTER_EXITED? Is it relevant here?",
+      "range": {
+        "startLine": 44,
+        "startChar": 30,
+        "endLine": 44,
+        "endChar": 50
+      },
+      "revId": "4b346d21a4078d963d56b632d33164b8e56049e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f40e6adf_6d5b7094",
+        "filename": "services/ui/ws/event_dispatcher.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-29T19:35:14Z",
+      "side": 1,
+      "message": "This code matches lines 474-476 (old). An EXITED doesn\u0027t count as the pointer going on. EXITED just means the pointer exited the source, the pointer is still down.",
+      "parentUuid": "88835109_e1f765fc",
       "range": {
         "startLine": 44,
         "startChar": 30,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "ff6593f8_b9effeae",
+        "filename": "services/ui/ws/event_dispatcher.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-29T19:35:14Z",
+      "side": 1,
+      "message": "You are indeed right. Removed.",
+      "parentUuid": "4fa5ea4a_d57a42dc",
+      "range": {
+        "startLine": 201,
+        "startChar": 18,
+        "endLine": 201,
+        "endChar": 45
+      },
+      "revId": "4b346d21a4078d963d56b632d33164b8e56049e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "73871819_bf99692c",
         "filename": "services/ui/ws/event_targeter.cc",
         "patchSetId": 2
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "4cb70c0d_65d52f61",
+        "filename": "services/ui/ws/event_targeter.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-29T19:35:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "73871819_bf99692c",
+      "range": {
+        "startLine": 90,
+        "startChar": 12,
+        "endLine": 90,
+        "endChar": 39
+      },
+      "revId": "4b346d21a4078d963d56b632d33164b8e56049e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f8b4aa4b_250373d5",
         "filename": "services/ui/ws/event_targeter.h",
         "patchSetId": 2
@@ -114,6 +210,30 @@
       "revId": "4b346d21a4078d963d56b632d33164b8e56049e8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27083316_fe2b693f",
+        "filename": "services/ui/ws/event_targeter.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-29T19:35:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f8b4aa4b_250373d5",
+      "range": {
+        "startLine": 37,
+        "startChar": 48,
+        "endLine": 37,
+        "endChar": 68
+      },
+      "revId": "4b346d21a4078d963d56b632d33164b8e56049e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
