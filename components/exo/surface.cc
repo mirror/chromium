@@ -37,6 +37,7 @@
 #include "ui/compositor/layer.h"
 #include "ui/events/event.h"
 #include "ui/gfx/buffer_format_util.h"
+#include "ui/gfx/geometry/dip_util.h"
 #include "ui/gfx/geometry/safe_integer_conversions.h"
 #include "ui/gfx/geometry/size_conversions.h"
 #include "ui/gfx/gpu_memory_buffer.h"
@@ -425,6 +426,7 @@ void Surface::Commit() {
 
 void Surface::CommitSurfaceHierarchy(
     const gfx::Point& origin,
+    float device_scale_factor,
     FrameType frame_type,
     LayerTreeFrameSinkHolder* frame_sink_holder,
     cc::CompositorFrame* frame,
@@ -501,11 +503,12 @@ void Surface::CommitSurfaceHierarchy(
     // Synchronsouly commit all pending state of the sub-surface and its
     // decendents.
     sub_surface->CommitSurfaceHierarchy(
-        origin + sub_surface_entry.second.OffsetFromOrigin(), frame_type,
-        frame_sink_holder, frame, frame_callbacks, presentation_callbacks);
+        origin + sub_surface_entry.second.OffsetFromOrigin(),
+        device_scale_factor, frame_type, frame_sink_holder, frame,
+        frame_callbacks, presentation_callbacks);
   }
 
-  AppendContentsToFrame(origin, frame, needs_full_damage);
+  AppendContentsToFrame(origin, device_scale_factor, needs_full_damage, frame);
 
   // Reset damage.
   if (needs_commit)
@@ -676,8 +679,9 @@ void Surface::UpdateResource(LayerTreeFrameSinkHolder* frame_sink_holder,
 }
 
 void Surface::AppendContentsToFrame(const gfx::Point& origin,
-                                    cc::CompositorFrame* frame,
-                                    bool needs_full_damage) {
+                                    float device_scale_factor,
+                                    bool needs_full_damage,
+                                    cc::CompositorFrame* frame) {
   const std::unique_ptr<cc::RenderPass>& render_pass =
       frame->render_pass_list.back();
   gfx::Rect output_rect(origin, content_size_);
@@ -692,11 +696,16 @@ void Surface::AppendContentsToFrame(const gfx::Point& origin,
     damage_rect.set_origin(origin);
     damage_rect.Intersect(output_rect);
   }
-  render_pass->damage_rect.Union(damage_rect);
+
+  // Surface uses DIP, but the |render_pass->damage_rect| uses pixels, so we
+  // need scale it beased on the |device_scale_factor|.
+  render_pass->damage_rect.Union(
+      gfx::ConvertRectToPixel(device_scale_factor, damage_rect));
 
   // Create a transformation matrix that maps buffer coordinates to target by
   // inverting the transform and scale of buffer.
   SkMatrix buffer_to_target_matrix;
+  buffer_to_target_matrix.setTranslate(origin.x(), origin.y());
   switch (state_.buffer_transform) {
     case Transform::NORMAL:
       buffer_to_target_matrix.setIdentity();
@@ -723,9 +732,11 @@ void Surface::AppendContentsToFrame(const gfx::Point& origin,
         output_rect.height() / transformed_buffer_size.height());
   }
   buffer_to_target_matrix.postTranslate(origin.x(), origin.y());
+  buffer_to_target_matrix.postScale(device_scale_factor, device_scale_factor);
 
   viz::SharedQuadState* quad_state =
       render_pass->CreateAndAppendSharedQuadState();
+
   quad_state->SetAll(
       gfx::Transform(buffer_to_target_matrix),
       gfx::Rect(content_size_) /* quad_layer_rect */,
