@@ -232,6 +232,8 @@ class MockRenderProcessHostFactory : public RenderProcessHostFactory {
   DISALLOW_COPY_AND_ASSIGN(MockRenderProcessHostFactory);
 };
 
+std::string GetInputMessageTypes(MockRenderProcessHost*);
+
 }  // namespace content
 
 #endif  // CONTENT_PUBLIC_TEST_MOCK_RENDER_PROCESS_HOST_H_
