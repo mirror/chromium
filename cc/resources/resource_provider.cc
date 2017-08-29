@@ -329,11 +329,12 @@ ResourceProvider::Settings::Settings(
     bool delegated_sync_points_required,
     bool enable_color_correct_rasterization,
     const viz::ResourceSettings& resource_settings)
-    : default_resource_type(resource_settings.use_gpu_memory_buffer_resources
+    : default_resource_type(true || resource_settings.use_gpu_memory_buffer_resources
                                 ? RESOURCE_TYPE_GPU_MEMORY_BUFFER
                                 : RESOURCE_TYPE_GL_TEXTURE),
       enable_color_correct_rasterization(enable_color_correct_rasterization),
       delegated_sync_points_required(delegated_sync_points_required) {
+  //DLOG(FATAL) << (resource_settings.use_gpu_memory_buffer_resources);
   if (!compositor_context_provider) {
     default_resource_type = RESOURCE_TYPE_BITMAP;
     // Pick an arbitrary limit here similar to what hardware might.
@@ -1127,8 +1128,10 @@ void ResourceProvider::ScopedWriteLockGL::LazyAllocate(
     return;
   allocated_ = true;
   if (type_ == RESOURCE_TYPE_GPU_MEMORY_BUFFER) {
+    DLOG(INFO) << "AllocateGpuMemoryBuffer";
     AllocateGpuMemoryBuffer(gl, texture_id);
   } else {
+    DLOG(INFO) << "AllocateTexture";
     AllocateTexture(gl, texture_id);
   }
 }
@@ -1204,7 +1207,7 @@ ResourceProvider::ScopedSkSurface::ScopedSkSurface(GrContext* gr_context,
   // Use unknown pixel geometry to disable LCD text.
   SkSurfaceProps surface_props(flags, kUnknown_SkPixelGeometry);
   if (can_use_lcd_text) {
-    // LegacyFontHost will get LCD text and skia figures out what type to use.
+    // LegacyFontHost will get LCD text and skia fres out what type to use.
     surface_props =
         SkSurfaceProps(flags, SkSurfaceProps::kLegacyFontHost_InitType);
   }

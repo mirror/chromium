@@ -150,7 +150,7 @@ Compositor::Compositor(const viz::FrameSinkId& frame_sink_id,
       command_line->HasSwitch(cc::switches::kEnableGpuBenchmarking));
   settings.enable_surface_synchronization = enable_surface_synchronization;
 
-  settings.use_zero_copy = IsUIZeroCopyEnabled();
+  settings.use_zero_copy = true ; //IsUIZeroCopyEnabled();
 
   settings.use_layer_lists =
       command_line->HasSwitch(cc::switches::kUIEnableLayerLists);
@@ -161,6 +161,10 @@ Compositor::Compositor(const viz::FrameSinkId& frame_sink_id,
   // UI compositor always uses partial raster if not using zero-copy. Zero copy
   // doesn't currently support partial raster.
   settings.use_partial_raster = !settings.use_zero_copy;
+
+  // Use gpu memory buffer resources. They're better.
+  DCHECK(!settings.resource_settings.use_gpu_memory_buffer_resources);
+  settings.resource_settings.use_gpu_memory_buffer_resources = true;
 
   if (command_line->HasSwitch(switches::kUIEnableRGBA4444Textures))
     settings.preferred_tile_format = viz::RGBA_4444;

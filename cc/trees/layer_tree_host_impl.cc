@@ -246,6 +246,9 @@ LayerTreeHostImpl::LayerTreeHostImpl(
       has_scrolled_by_touch_(false),
       touchpad_and_wheel_scroll_latching_enabled_(false),
       impl_thread_phase_(ImplThreadPhase::IDLE) {
+
+  DCHECK(settings.resource_settings.use_gpu_memory_buffer_resources);
+
   DCHECK(mutator_host_);
   mutator_host_->SetMutatorHostClient(this);
 
