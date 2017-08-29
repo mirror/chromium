@@ -232,6 +232,12 @@ bool SearchResultPageView::OnKeyPressed(const ui::KeyEvent& event) {
       dir = 1;
       directional_movement = true;
       break;
+    case ui::VKEY_LEFT:
+    case ui::VKEY_RIGHT:
+      if (is_fullscreen_app_list_enabled_) {
+        // left and right key should not move the focus back to search box.
+        return true;
+      }
     default:
       return false;
   }
@@ -248,6 +254,13 @@ bool SearchResultPageView::OnKeyPressed(const ui::KeyEvent& event) {
     return true;
   }
 
+  if (!is_fullscreen_app_list_enabled_)
+    return false;
+
+  if (event.key_code() == ui::VKEY_TAB && event.IsShiftDown()) {
+    // Only shift+tab key could move focus back to search box.
+    ClearSelectedIndex();
+  }
   return false;
 }
 
@@ -357,7 +370,8 @@ void SearchResultPageView::OnSearchResultContainerResultsChanged() {
     // Clear the current selection so that the selection always comes in from
     // the top.
     ClearSelectedIndex();
-    SetSelectedIndex(new_selection_index, false);
+    if (!is_fullscreen_app_list_enabled_)
+      SetSelectedIndex(new_selection_index, false);
   }
 }
 

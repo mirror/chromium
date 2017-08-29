@@ -352,11 +352,11 @@ bool SearchBoxView::MoveArrowFocus(const ui::KeyEvent& event) {
   DCHECK(IsArrowKey(event));
   DCHECK(is_fullscreen_app_list_enabled_);
 
-  // Left and right arrow should work in the same way as shift+tab and tab.
-  if (event.key_code() == ui::VKEY_LEFT)
-    return MoveTabFocus(true);
-  if (event.key_code() == ui::VKEY_RIGHT)
-    return MoveTabFocus(false);
+  if (event.key_code() == ui::VKEY_LEFT || event.key_code() == ui::VKEY_RIGHT) {
+    // Left and right arrow key should not move focus when focus is not on
+    // contents view.
+    return false;
+  }
   if (back_button_)
     back_button_->SetSelected(false);
   if (close_button_)
@@ -365,7 +365,10 @@ bool SearchBoxView::MoveArrowFocus(const ui::KeyEvent& event) {
 
   switch (focused_view_) {
     case FOCUS_NONE:
-      focused_view_ = move_up ? FOCUS_NONE : FOCUS_SEARCH_BOX;
+      focused_view_ =
+          move_up ? FOCUS_NONE
+                  : (IsSearchBoxTrimmedQueryEmpty() ? FOCUS_SEARCH_BOX
+                                                    : FOCUS_CONTENTS_VIEW);
       break;
     case FOCUS_BACK_BUTTON:
     case FOCUS_SEARCH_BOX:
@@ -373,14 +376,14 @@ bool SearchBoxView::MoveArrowFocus(const ui::KeyEvent& event) {
       focused_view_ = move_up ? FOCUS_NONE : FOCUS_CONTENTS_VIEW;
       break;
     case FOCUS_CONTENTS_VIEW:
-      focused_view_ = move_up ? FOCUS_SEARCH_BOX : FOCUS_CONTENTS_VIEW;
+      // Only shift+tab could move the focus back to search box.
+      focused_view_ = FOCUS_CONTENTS_VIEW;
       break;
     default:
       NOTREACHED();
   }
 
-  SetSelected(IsSearchBoxTrimmedQueryEmpty() &&
-              focused_view_ == FOCUS_SEARCH_BOX);
+  SetSelected(focused_view_ == FOCUS_SEARCH_BOX);
   return (focused_view_ < FOCUS_CONTENTS_VIEW);
 }
 
@@ -399,11 +402,16 @@ bool SearchBoxView::MoveTabFocus(bool move_backwards) {
   if (is_fullscreen_app_list_enabled_) {
     switch (focused_view_) {
       case FOCUS_NONE:
-        focused_view_ =
-            move_backwards
-                ? FOCUS_NONE
-                : (back_button_ && back_button_->visible() ? FOCUS_BACK_BUTTON
-                                                           : FOCUS_SEARCH_BOX);
+        if (move_backwards)
+          break;
+        if (back_button_ && back_button_->visible()) {
+          focused_view_ = FOCUS_BACK_BUTTON;
+        } else if (IsSearchBoxTrimmedQueryEmpty()) {
+          // Search box is focusable only when query is empty.
+          focused_view_ = FOCUS_SEARCH_BOX;
+        } else {
+          focused_view_ = FOCUS_CLOSE_BUTTON;
+        }
         break;
       // TODO(weidongg): Remove handling of back button when fullscreen app list
       // folder is supported.
@@ -422,7 +430,14 @@ bool SearchBoxView::MoveTabFocus(bool move_backwards) {
         }
         break;
       case FOCUS_CLOSE_BUTTON:
-        focused_view_ = move_backwards ? FOCUS_SEARCH_BOX : FOCUS_CONTENTS_VIEW;
+        if (!move_backwards) {
+          focused_view_ = FOCUS_CONTENTS_VIEW;
+        } else if (IsSearchBoxTrimmedQueryEmpty()) {
+          // Search box is focusable only when query is empty.
+          focused_view_ = FOCUS_SEARCH_BOX;
+        } else {
+          focused_view_ = FOCUS_NONE;
+        }
         break;
       case FOCUS_CONTENTS_VIEW:
         focused_view_ = move_backwards
@@ -491,7 +506,7 @@ bool SearchBoxView::MoveTabFocus(bool move_backwards) {
 
   SetSelected(search_box_selected);
 
-  if (focused_view_ < FOCUS_CONTENTS_VIEW)
+  if (!is_fullscreen_app_list_enabled_ && focused_view_ < FOCUS_CONTENTS_VIEW)
     delegate_->SetSearchResultSelection(focused_view_ == FOCUS_SEARCH_BOX);
 
   return (focused_view_ < FOCUS_CONTENTS_VIEW);
@@ -776,6 +791,15 @@ bool SearchBoxView::HandleKeyEvent(views::Textfield* sender,
         focused_view_ != FOCUS_CONTENTS_VIEW &&
         MoveTabFocus(key_event.IsShiftDown()))
       return true;
+
+    if (is_fullscreen_app_list_enabled_ &&
+        (key_event.key_code() == ui::VKEY_LEFT ||
+         key_event.key_code() == ui::VKEY_RIGHT) &&
+        focused_view_ != FOCUS_CONTENTS_VIEW) {
+      // Left and right arrow key should move cursor in search box when contents
+      // view is not focused.
+      return false;
+    }
 
     if (is_fullscreen_app_list_enabled_ && IsArrowKey(key_event) &&
         focused_view_ != FOCUS_CONTENTS_VIEW && MoveArrowFocus(key_event))
