@@ -34,15 +34,16 @@
 
 #include "base/threading/thread_task_runner_handle.h"
 #include "base/trace_event/memory_dump_manager.h"
+#include "platform/CrossThreadFunctional.h"
 #include "platform/FontFamilyNames.h"
 #include "platform/Histogram.h"
 #include "platform/InstanceCountersMemoryDumpProvider.h"
 #include "platform/Language.h"
 #include "platform/MemoryCoordinator.h"
 #include "platform/PartitionAllocMemoryDumpProvider.h"
+#include "platform/WebTaskRunner.h"
 #include "platform/fonts/FontCacheMemoryDumpProvider.h"
 #include "platform/heap/BlinkGCMemoryDumpProvider.h"
-#include "platform/heap/GCTaskRunner.h"
 #include "platform/instrumentation/resource_coordinator/BlinkResourceCoordinatorBase.h"
 #include "platform/instrumentation/resource_coordinator/RendererResourceCoordinator.h"
 #include "platform/instrumentation/tracing/MemoryCacheDumpProvider.h"
@@ -85,8 +86,6 @@ class DefaultConnector {
 }  // namespace
 
 static Platform* g_platform = nullptr;
-
-static GCTaskRunner* g_gc_task_runner = nullptr;
 
 static void MaxObservedSizeFunction(size_t size_in_mb) {
   const size_t kSupportedMaxSizeInMB = 4 * 1024;
@@ -138,8 +137,6 @@ void Platform::Initialize(Platform* platform) {
 
   // TODO(ssid): remove this check after fixing crbug.com/486782.
   if (g_platform->main_thread_) {
-    DCHECK(!g_gc_task_runner);
-    g_gc_task_runner = new GCTaskRunner(g_platform->main_thread_);
     base::trace_event::MemoryDumpManager::GetInstance()->RegisterDumpProvider(
         PartitionAllocMemoryDumpProvider::Instance(), "PartitionAlloc",
         base::ThreadTaskRunnerHandle::Get());
