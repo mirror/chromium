@@ -7,6 +7,7 @@ package org.chromium.chrome.browser.notifications.channels;
 import android.annotation.TargetApi;
 import android.app.NotificationChannel;
 import android.app.NotificationChannelGroup;
+import android.app.NotificationManager;
 import android.content.res.Resources;
 import android.os.Build;
 
@@ -32,7 +33,7 @@ public class ChannelsInitializer {
      */
     void initializeStartupChannels() {
         for (String channelId : ChannelDefinitions.getStartupChannelIds()) {
-            ensureInitialized(channelId);
+            ensureInitialized(channelId, /*enabled=*/true);
         }
     }
 
@@ -54,8 +55,10 @@ public class ChannelsInitializer {
      * Calling this is a (potentially lengthy) no-op if the channel has already been created.
      *
      * @param channelId The ID of the channel to be initialized.
+     * @param enabled   If false, sets the importance of the channel to IMPORTANCE_NONE before
+     *                  creation. If true, uses the importance from PredefinedChannels.
      */
-    public void ensureInitialized(String channelId) {
+    public void ensureInitialized(String channelId, boolean enabled) {
         if (channelId.startsWith(ChannelDefinitions.CHANNEL_ID_PREFIX_SITES)) {
             // If we have a valid site channel ID at this point, it is safe to assume a channel
             // has already been created, since the only way to obtain a site channel ID is by
@@ -74,6 +77,9 @@ public class ChannelsInitializer {
                         .toNotificationChannelGroup(mResources);
         mNotificationManager.createNotificationChannelGroup(channelGroup);
         NotificationChannel channel = predefinedChannel.toNotificationChannel(mResources);
+        if (!enabled) {
+            channel.setImportance(NotificationManager.IMPORTANCE_NONE);
+        }
         mNotificationManager.createNotificationChannel(channel);
     }
 }
