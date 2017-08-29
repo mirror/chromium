@@ -789,6 +789,7 @@ _COMMANDS = [
     _InstallCommand,
     _UninstallCommand,
     _LaunchCommand,
+    _RunCommand,
     _StopCommand,
     _ClearDataCommand,
     _ArgvCommand,
