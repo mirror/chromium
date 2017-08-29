@@ -177,6 +177,10 @@ void PrefetchDownloaderImpl::OnStartDownload(
   prefetch_service_->GetLogger()->RecordActivity(
       "Downloader: Download started, download_id=" + download_id +
       ", result=" + std::to_string(static_cast<int>(result)));
+  // Note: some implementation choices assume that cases of non-accepted
+  // download requests will be minimal. There's already an UMA histogram to
+  // track that, Download.Service.Request.StartResult.OfflinePage, so there's no
+  // need to add another one here.
   if (result != download::DownloadParams::StartResult::ACCEPTED)
     OnDownloadFailed(download_id);
 }

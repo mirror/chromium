@@ -4,6 +4,7 @@
 
 #include "components/offline_pages/core/prefetch/download_cleanup_task.h"
 
+#include "base/test/histogram_tester.h"
 #include "components/offline_pages/core/prefetch/prefetch_item.h"
 #include "components/offline_pages/core/prefetch/prefetch_types.h"
 #include "components/offline_pages/core/prefetch/store/prefetch_store.h"
@@ -41,10 +42,14 @@ class DownloadCleanupTaskTest : public TaskTestBase {
 
     DownloadCleanupTask task(&dispatcher_, store(), outstanding_download_ids,
                              success_downloads);
+    histogram_tester_.reset(new base::HistogramTester());
     ExpectTaskCompletes(&task);
     task.Run();
     RunUntilIdle();
   }
+
+ protected:
+  std::unique_ptr<base::HistogramTester> histogram_tester_;
 
  private:
   TestPrefetchDispatcher dispatcher_;
@@ -66,6 +71,9 @@ TEST_F(DownloadCleanupTaskTest, Retry) {
   EXPECT_EQ(item.download_initiation_attempts,
             store_item->download_initiation_attempts);
   EXPECT_EQ(PrefetchItemErrorCode::SUCCESS, store_item->error_code);
+
+  histogram_tester_->ExpectTotalCount(
+      "OfflinePages.Prefetching.DownloadedFileSize", 0);
 }
 
 TEST_F(DownloadCleanupTaskTest, NoRetryForOngoingDownload) {
@@ -81,6 +89,9 @@ TEST_F(DownloadCleanupTaskTest, NoRetryForOngoingDownload) {
       store_util()->GetPrefetchItem(item.offline_id);
   ASSERT_TRUE(store_item);
   EXPECT_EQ(item, *store_item);
+
+  histogram_tester_->ExpectTotalCount(
+      "OfflinePages.Prefetching.DownloadedFileSize", 0);
 }
 
 TEST_F(DownloadCleanupTaskTest, ErrorOnMaxAttempts) {
@@ -99,6 +110,9 @@ TEST_F(DownloadCleanupTaskTest, ErrorOnMaxAttempts) {
             store_item->error_code);
   EXPECT_EQ(item.download_initiation_attempts,
             store_item->download_initiation_attempts);
+
+  histogram_tester_->ExpectTotalCount(
+      "OfflinePages.Prefetching.DownloadedFileSize", 0);
 }
 
 TEST_F(DownloadCleanupTaskTest, SkipForOngoingDownloadWithMaxAttempts) {
@@ -113,6 +127,9 @@ TEST_F(DownloadCleanupTaskTest, SkipForOngoingDownloadWithMaxAttempts) {
       store_util()->GetPrefetchItem(item.offline_id);
   ASSERT_TRUE(store_item);
   EXPECT_EQ(item, *store_item);
+
+  histogram_tester_->ExpectTotalCount(
+      "OfflinePages.Prefetching.DownloadedFileSize", 0);
 }
 
 TEST_F(DownloadCleanupTaskTest, NoUpdateForOtherStates) {
@@ -132,6 +149,9 @@ TEST_F(DownloadCleanupTaskTest, NoUpdateForOtherStates) {
   std::set<PrefetchItem> store_items;
   store_util()->GetAllItems(&store_items);
   EXPECT_EQ(items, store_items);
+
+  histogram_tester_->ExpectTotalCount(
+      "OfflinePages.Prefetching.DownloadedFileSize", 0);
 }
 
 TEST_F(DownloadCleanupTaskTest, MarkDownloadCompleted) {
@@ -149,6 +169,9 @@ TEST_F(DownloadCleanupTaskTest, MarkDownloadCompleted) {
   EXPECT_EQ(PrefetchItemState::DOWNLOADED, store_item->state);
   EXPECT_EQ(kTestFilePath, store_item->file_path);
   EXPECT_EQ(kTestFileSize, store_item->file_size);
+
+  histogram_tester_->ExpectUniqueSample(
+      "OfflinePages.Prefetching.DownloadedFileSize", kTestFileSize / 1024, 1);
 }
 
 }  // namespace offline_pages
