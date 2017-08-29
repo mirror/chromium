@@ -51,6 +51,7 @@ class CORE_EXPORT NGFragmentBuilder final : public NGBaseFragmentBuilder {
   NGFragmentBuilder& AddChild(RefPtr<NGLayoutResult>, const NGLogicalOffset&);
   NGFragmentBuilder& AddChild(RefPtr<NGPhysicalFragment>,
                               const NGLogicalOffset&);
+  NGFragmentBuilder& AddFinishedChild(NGBreakToken*);
 
   NGFragmentBuilder& SetBfcOffset(const NGBfcOffset& offset);
 
