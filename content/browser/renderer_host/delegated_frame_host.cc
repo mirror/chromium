@@ -51,7 +51,8 @@ DelegatedFrameHost::DelegatedFrameHost(const viz::FrameSinkId& frame_sink_id,
       skipped_frames_(false),
       background_color_(SK_ColorRED),
       current_scale_factor_(1.f),
-      frame_evictor_(new viz::FrameEvictor(this)) {
+      frame_evictor_(new viz::FrameEvictor(this)),
+      weak_ptr_factory_(this) {
   ImageTransportFactory* factory = ImageTransportFactory::GetInstance();
   factory->GetContextFactory()->AddObserver(this);
   viz::HostFrameSinkManager* host_frame_sink_manager =
@@ -852,6 +853,8 @@ void DelegatedFrameHost::CreateCompositorFrameSinkSupport() {
                  ->GetHostFrameSinkManager()
                  ->CreateCompositorFrameSinkSupport(this, frame_sink_id_,
                                                     is_root, needs_sync_points);
+  support_->SetWillDrawSurfaceCallback(base::BindRepeating(
+      &DelegatedFrameHost::WillDrawSurface, weak_ptr_factory_.GetWeakPtr()));
   if (compositor_)
     compositor_->AddFrameSink(frame_sink_id_);
   if (needs_begin_frame_)

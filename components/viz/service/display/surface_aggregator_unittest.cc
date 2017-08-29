@@ -20,7 +20,6 @@
 #include "cc/quads/surface_draw_quad.h"
 #include "cc/quads/texture_draw_quad.h"
 #include "cc/resources/display_resource_provider.h"
-#include "cc/test/fake_compositor_frame_sink_support_client.h"
 #include "cc/test/fake_resource_provider.h"
 #include "cc/test/render_pass_test_utils.h"
 #include "cc/test/test_shared_bitmap_manager.h"
@@ -31,6 +30,7 @@
 #include "components/viz/service/surfaces/surface.h"
 #include "components/viz/service/surfaces/surface_manager.h"
 #include "components/viz/test/compositor_frame_helpers.h"
+#include "components/viz/test/fake_compositor_frame_sink_client.h"
 #include "components/viz/test/fake_surface_observer.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
@@ -270,7 +270,7 @@ class SurfaceAggregatorTest : public testing::Test {
  protected:
   FrameSinkManagerImpl manager_;
   FakeSurfaceObserver observer_;
-  cc::FakeCompositorFrameSinkSupportClient fake_client_;
+  FakeCompositorFrameSinkClient fake_client_;
   std::unique_ptr<CompositorFrameSinkSupport> support_;
   SurfaceAggregator aggregator_;
 };
@@ -368,6 +368,9 @@ TEST_F(SurfaceAggregatorValidSurfaceTest, SimpleFrame) {
                   Quad::SolidColorQuad(SK_ColorBLUE)};
   Pass passes[] = {Pass(quads, arraysize(quads))};
 
+  support_->SetWillDrawSurfaceCallback(
+      base::BindRepeating(&FakeCompositorFrameSinkClient::WillDrawSurface,
+                          base::Unretained(&fake_client_)));
   SubmitCompositorFrame(support_.get(), passes, arraysize(passes),
                         root_local_surface_id_);
 
@@ -2191,7 +2194,7 @@ void SubmitCompositorFrameWithResources(ResourceId* resource_ids,
 }
 
 TEST_F(SurfaceAggregatorWithResourcesTest, TakeResourcesOneSurface) {
-  cc::FakeCompositorFrameSinkSupportClient client;
+  FakeCompositorFrameSinkClient client;
   auto support = CompositorFrameSinkSupport::Create(
       &client, &manager_, kArbitraryRootFrameSinkId, kRootIsRoot,
       kNeedsSyncPoints);
@@ -2227,7 +2230,7 @@ TEST_F(SurfaceAggregatorWithResourcesTest, TakeResourcesOneSurface) {
 // ID, and a new display frame is generated, then the resources of the old
 // surface are returned to the appropriate client.
 TEST_F(SurfaceAggregatorWithResourcesTest, ReturnResourcesAsSurfacesChange) {
-  cc::FakeCompositorFrameSinkSupportClient client;
+  FakeCompositorFrameSinkClient client;
   auto support = CompositorFrameSinkSupport::Create(
       &client, &manager_, kArbitraryRootFrameSinkId, kRootIsRoot,
       kNeedsSyncPoints);
@@ -2264,7 +2267,7 @@ TEST_F(SurfaceAggregatorWithResourcesTest, ReturnResourcesAsSurfacesChange) {
 }
 
 TEST_F(SurfaceAggregatorWithResourcesTest, TakeInvalidResources) {
-  cc::FakeCompositorFrameSinkSupportClient client;
+  FakeCompositorFrameSinkClient client;
   auto support = CompositorFrameSinkSupport::Create(
       &client, &manager_, kArbitraryRootFrameSinkId, kRootIsRoot,
       kNeedsSyncPoints);
@@ -2294,7 +2297,7 @@ TEST_F(SurfaceAggregatorWithResourcesTest, TakeInvalidResources) {
 }
 
 TEST_F(SurfaceAggregatorWithResourcesTest, TwoSurfaces) {
-  cc::FakeCompositorFrameSinkSupportClient client;
+  FakeCompositorFrameSinkClient client;
   auto support1 = CompositorFrameSinkSupport::Create(
       &client, &manager_, FrameSinkId(1, 1), kChildIsRoot, kNeedsSyncPoints);
   auto support2 = CompositorFrameSinkSupport::Create(
