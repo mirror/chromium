@@ -46,6 +46,30 @@
       "revId": "0ac6b06a8c12e439ab8aa96c32a5b050c39c61d2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aafec904_6e3160bf",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/paint-timing/first-paint-only.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1162220
+      },
+      "writtenOn": "2017-08-29T16:29:25Z",
+      "side": 1,
+      "message": "What needs to be called to trigger the paint entries in performance? Just waiting for a long time doesn\u0027t seem to work.",
+      "parentUuid": "4eb7357a_1b81dd74",
+      "range": {
+        "startLine": 19,
+        "startChar": 15,
+        "endLine": 19,
+        "endChar": 37
+      },
+      "revId": "0ac6b06a8c12e439ab8aa96c32a5b050c39c61d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
