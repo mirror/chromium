@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "992de205_352727f8",
+        "filename": "third_party/WebKit/LayoutTests/VirtualTestSuites",
+        "patchSetId": 5
+      },
+      "lineNbr": 513,
+      "author": {
+        "id": 1215729
+      },
+      "writtenOn": "2017-08-29T17:43:22Z",
+      "side": 1,
+      "message": "I am not quite sure about whether we should put our test in this directory - \"http/tests\", since it will enable mojo-loading on this directory:\n\n  {\n    \"prefix\": \"mojo-loading\",\n    \"base\": \"http/tests\",\n    \"args\": [\"--enable-blink-features\u003dLoadingWithMojo\"]\n  }, \n\nIf we don\u0027t need mojo-loading for this test. I will pick another directory.",
+      "revId": "73e2c86f896d1382c6b26b029f03eae569120b41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
