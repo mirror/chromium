@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "009490da_7fcc8764",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/PaymentInstrument.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-08-29T13:27:49Z",
+      "side": 1,
+      "message": "By the way, does the parameter need to be marked \"final\" because you\u0027re using it inside of Runnable below? I\u0027ve seen that not compile before, but maybe Java 8 has lifted that restriction.",
+      "range": {
+        "startLine": 162,
+        "startChar": 38,
+        "endLine": 162,
+        "endChar": 51
+      },
+      "revId": "c86985ced10bf164283028a624b0350d122c4d17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "827e6494_ed96ccae",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/PaymentRequestImpl.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1437,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-08-29T13:27:49Z",
+      "side": 1,
+      "message": "/** Called by the payment app in response to an abort request. */",
+      "revId": "c86985ced10bf164283028a624b0350d122c4d17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
