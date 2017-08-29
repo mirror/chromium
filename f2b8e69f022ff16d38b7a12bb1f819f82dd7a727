@@ -16,6 +16,24 @@
       "revId": "f2b8e69f022ff16d38b7a12bb1f819f82dd7a727",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf024ae7_1c9c1942",
+        "filename": "components/offline_pages/core/renovations/page_renovation.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-08-29T23:47:39Z",
+      "side": 1,
+      "message": "Done, but I\u0027m not sure if preventing .cc files for .h files is a good goal. Before addressing your comment, the cc file provided an out-of-line key method, which on itanium meant the vtable wouldn\u0027t have to be emitted into every translation unit including this header.",
+      "parentUuid": "3501df2b_8d7507d8",
+      "revId": "f2b8e69f022ff16d38b7a12bb1f819f82dd7a727",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
