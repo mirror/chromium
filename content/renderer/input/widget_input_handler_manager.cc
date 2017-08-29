@@ -59,31 +59,25 @@ void CallCallback(mojom::WidgetInputHandler::DispatchEventCallback callback,
 
 scoped_refptr<WidgetInputHandlerManager> WidgetInputHandlerManager::Create(
     base::WeakPtr<RenderWidget> render_widget,
-    IPC::Sender* legacy_host_channel,
     scoped_refptr<base::SingleThreadTaskRunner> compositor_task_runner,
     blink::scheduler::RendererScheduler* renderer_scheduler) {
   scoped_refptr<WidgetInputHandlerManager> manager =
-      new WidgetInputHandlerManager(
-          std::move(render_widget), legacy_host_channel,
-          std::move(compositor_task_runner), renderer_scheduler);
+      new WidgetInputHandlerManager(std::move(render_widget),
+                                    std::move(compositor_task_runner),
+                                    renderer_scheduler);
   manager->Init();
   return manager;
 }
 
 WidgetInputHandlerManager::WidgetInputHandlerManager(
     base::WeakPtr<RenderWidget> render_widget,
-    IPC::Sender* legacy_host_channel,
     scoped_refptr<base::SingleThreadTaskRunner> compositor_task_runner,
     blink::scheduler::RendererScheduler* renderer_scheduler)
     : render_widget_(render_widget),
       renderer_scheduler_(renderer_scheduler),
       input_event_queue_(render_widget->GetInputEventQueue()),
       main_thread_task_runner_(base::ThreadTaskRunnerHandle::Get()),
-      legacy_host_message_sender_(legacy_host_channel),
       compositor_task_runner_(compositor_task_runner) {
-  // TODO(dtapuska): Define a mojo channel for back to the host. Currently
-  // we use legacy IPC.
-  legacy_host_message_routing_id_ = render_widget->routing_id();
 }
 
 void WidgetInputHandlerManager::Init() {
@@ -110,6 +104,17 @@ void WidgetInputHandlerManager::AddAssociatedInterface(
   } else {
     // Mojo channel bound on main thread.
     BindAssociatedChannel(std::move(request));
+  }
+}
+
+void WidgetInputHandlerManager::SetWidgetInputHandlerHost(
+    mojom::WidgetInputHandlerHostPtr host) {
+  if (compositor_task_runner_) {
+    host_ = mojo::ThreadSafeInterfacePtr<mojom::WidgetInputHandlerHost>::Create(
+        host.PassInterface(), compositor_task_runner_);
+  } else {
+    host_ = mojo::ThreadSafeInterfacePtr<mojom::WidgetInputHandlerHost>::Create(
+        std::move(host));
   }
 }
 
@@ -164,17 +169,13 @@ void WidgetInputHandlerManager::DidOverscroll(
   params.latest_overscroll_delta = latest_overscroll_delta;
   params.current_fling_velocity = current_fling_velocity;
   params.causal_event_viewport_point = causal_event_viewport_point;
-  if (legacy_host_message_sender_) {
-    legacy_host_message_sender_->Send(new InputHostMsg_DidOverscroll(
-        legacy_host_message_routing_id_, params));
-  }
+  if (host_)
+    (*host_)->DidOverscroll(params);
 }
 
 void WidgetInputHandlerManager::DidStopFlinging() {
-  if (legacy_host_message_sender_) {
-    legacy_host_message_sender_->Send(
-        new InputHostMsg_DidStopFlinging(legacy_host_message_routing_id_));
-  }
+  if (host_)
+    (*host_)->DidStopFlinging();
 }
 
 void WidgetInputHandlerManager::DidAnimateForInput() {
@@ -204,9 +205,21 @@ void WidgetInputHandlerManager::SetWhiteListedTouchAction(
     uint32_t unique_touch_event_id,
     ui::InputHandlerProxy::EventDisposition event_disposition) {
   InputEventAckState ack_state = InputEventDispositionToAck(event_disposition);
-  legacy_host_message_sender_->Send(new InputHostMsg_SetWhiteListedTouchAction(
-      legacy_host_message_routing_id_, touch_action, unique_touch_event_id,
-      ack_state));
+  if (host_) {
+    (*host_)->SetWhiteListedTouchAction(touch_action, unique_touch_event_id,
+                                        ack_state);
+  }
+}
+
+void WidgetInputHandlerManager::ProcessTouchAction(
+    cc::TouchAction touch_action) {
+  if (host_ && touch_action == cc::TouchAction::kTouchActionNone)
+    (*host_)->CancelTouchTimeout();
+}
+
+WidgetInputHandlerManager::WidgetInputHandlerHost
+WidgetInputHandlerManager::GetWidgetInputHandlerHost() {
+  return host_;
 }
 
 void WidgetInputHandlerManager::ObserveGestureEventOnMainThread(
