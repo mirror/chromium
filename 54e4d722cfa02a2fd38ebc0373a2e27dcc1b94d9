@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b72d4760_a5ca3de5",
+        "filename": "chrome/browser/ui/browser_content_setting_bubble_model_delegate.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1161819
+      },
+      "writtenOn": "2017-08-29T18:59:01Z",
+      "side": 0,
+      "message": "This moved to ContentSettingMixedScriptBubbleModel::OnLearnMoreClicked().",
+      "range": {
+        "startLine": 46,
+        "startChar": 1,
+        "endLine": 47,
+        "endChar": 66
+      },
+      "revId": "54e4d722cfa02a2fd38ebc0373a2e27dcc1b94d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "00a276ae_cc1acd48",
+        "filename": "chrome/browser/ui/content_settings/content_setting_bubble_model.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 258,
+      "author": {
+        "id": 1161819
+      },
+      "writtenOn": "2017-08-29T18:59:01Z",
+      "side": 0,
+      "message": "These methods were only called from the constructor(s). Having them virtual (much less pure-virtual) doesn\u0027t make sense here. In all the classes where one or both are overridden, they\u0027re explicitly called from the constructor anyway.",
+      "range": {
+        "startLine": 257,
+        "startChar": 0,
+        "endLine": 258,
+        "endChar": 35
+      },
+      "revId": "54e4d722cfa02a2fd38ebc0373a2e27dcc1b94d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
