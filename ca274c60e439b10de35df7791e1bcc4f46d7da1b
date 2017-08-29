@@ -16,6 +16,24 @@
       "revId": "ca274c60e439b10de35df7791e1bcc4f46d7da1b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2217ace4_da57d4ec",
+        "filename": "build/secondary/third_party/android_tools/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-08-29T17:58:36Z",
+      "side": 1,
+      "message": "sgtm. Done.",
+      "parentUuid": "81cb660b_b3304f3a",
+      "revId": "ca274c60e439b10de35df7791e1bcc4f46d7da1b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
