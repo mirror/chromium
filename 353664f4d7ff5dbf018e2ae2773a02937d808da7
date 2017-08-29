@@ -22,6 +22,30 @@
       "revId": "353664f4d7ff5dbf018e2ae2773a02937d808da7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb621f88_f657d751",
+        "filename": "third_party/WebKit/Source/core/workers/WorkerBackingThread.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-08-29T03:45:10Z",
+      "side": 1,
+      "message": "done for /**/.\n\nOMHO, it is strange to pass an external reference table for an isolate which does not use the snapshot feature.  So I think we don\u0027t have to comment about such a strange situation.\nWDYT?",
+      "parentUuid": "83955d05_5d9f4a0d",
+      "range": {
+        "startLine": 80,
+        "startChar": 60,
+        "endLine": 80,
+        "endChar": 67
+      },
+      "revId": "353664f4d7ff5dbf018e2ae2773a02937d808da7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
