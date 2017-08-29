@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a94ca717_463d2c62",
+        "filename": "third_party/WebKit/Source/core/layout/line/InlineFlowBox.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 840,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-08-29T16:19:23Z",
+      "side": 1,
+      "message": "Can you combine the common code here and at line 1064-1074 into a function like\n\nbool HasEmphasisMarkBefore()\n\nand (nit) would the function body be clearer if like:\n{\n  if (IsHorizontal()) {\n    return emphasis_mark_position \u003d\u003d TextEmphasisPosition::kOverRight ||\n           emphasis_mark_position \u003d\u003d TextEmphasisPosition::kOverLeft;\n  }\n  if (isFlippedLinesWritingMode) {\n    return emphasis_mark_position \u003d\u003d TextEmphasisPosition::kOverLeft ||\n         emphasis_mark_position \u003d\u003d TextEmphasisPosition::kUnderLeft;\n  }\n  if (isFlippedBlocksWritingMode) {\n    ...\n  }\n  return false;\n}\n?",
+      "revId": "2d6f4007ffae843fa55c35887c601467588603ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d54dc46d_ad113da7",
+        "filename": "third_party/WebKit/Source/core/layout/line/InlineFlowBox.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 1581,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-08-29T16:19:23Z",
+      "side": 1,
+      "message": "Ditto about combining code here and at line 1649-1656.",
+      "revId": "2d6f4007ffae843fa55c35887c601467588603ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
