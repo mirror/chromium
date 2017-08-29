@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "9cb9ac40_e751f176",
+        "filename": "ios/chrome/browser/passwords/credential_manager_unittest.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-08-29T15:46:57Z",
+      "side": 1,
+      "message": "It\u0027s strange that a HTTP page has some certificate. Do you need it?",
+      "range": {
+        "startLine": 91,
+        "startChar": 2,
+        "endLine": 91,
+        "endChar": 17
+      },
+      "revId": "4a979b8f1f6be08f67a263fc464a922b720e4c67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "24b32cd5_55e2dc3c",
         "filename": "ios/chrome/browser/passwords/credential_manager_unittest.mm",
         "patchSetId": 1
@@ -18,6 +41,75 @@
         "startChar": 48,
         "endLine": 114,
         "endChar": 49
+      },
+      "revId": "4a979b8f1f6be08f67a263fc464a922b720e4c67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33e170b5_1bdcb838",
+        "filename": "ios/chrome/browser/passwords/credential_manager_unittest.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-08-29T15:46:57Z",
+      "side": 1,
+      "message": "I don\u0027t think a data URL can have a certificate",
+      "range": {
+        "startLine": 117,
+        "startChar": 2,
+        "endLine": 117,
+        "endChar": 17
+      },
+      "revId": "4a979b8f1f6be08f67a263fc464a922b720e4c67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ffa591b_e229ae39",
+        "filename": "ios/chrome/browser/passwords/credential_manager_util.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-08-29T15:46:57Z",
+      "side": 1,
+      "message": "Why do you create something on the web state here if you were just asked to retrieve some state?\nGetSecurityLevelForWebState sounds like a const operation and it should be. Also take const web::WebState* as a parameter.",
+      "range": {
+        "startLine": 32,
+        "startChar": 29,
+        "endLine": 32,
+        "endChar": 46
+      },
+      "revId": "4a979b8f1f6be08f67a263fc464a922b720e4c67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee65d7bd_c3aca2a0",
+        "filename": "ios/chrome/browser/passwords/credential_manager_util.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-08-29T15:46:57Z",
+      "side": 1,
+      "message": "make it const",
+      "range": {
+        "startLine": 181,
+        "startChar": 38,
+        "endLine": 181,
+        "endChar": 46
       },
       "revId": "4a979b8f1f6be08f67a263fc464a922b720e4c67",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
