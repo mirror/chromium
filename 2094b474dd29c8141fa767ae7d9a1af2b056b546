@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c58c7fc4_c991d891",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/toolbar/BottomToolbarPhone.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 623,
+      "author": {
+        "id": 1230128
+      },
+      "writtenOn": "2017-08-29T22:51:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f238cbb4_0f99848f",
+      "revId": "2094b474dd29c8141fa767ae7d9a1af2b056b546",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9f8c0720_4dbb8846",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheetContentController.java",
         "patchSetId": 3
@@ -39,6 +57,30 @@
       "revId": "2094b474dd29c8141fa767ae7d9a1af2b056b546",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d19f3a5_67cc4bf5",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheetContentController.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 1230128
+      },
+      "writtenOn": "2017-08-29T22:51:00Z",
+      "side": 1,
+      "message": "As discussed in person, this needs to be done at this level to get both the bottom sheet\u0027s dimensions at the correct time and then pass that onto the BottomNavigationMenuView.",
+      "parentUuid": "9f8c0720_4dbb8846",
+      "range": {
+        "startLine": 240,
+        "startChar": 16,
+        "endLine": 240,
+        "endChar": 39
+      },
+      "revId": "2094b474dd29c8141fa767ae7d9a1af2b056b546",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "8a822ffc_e2234d6d",
+        "filename": "chrome/android/third_party/widget_bottomsheet_base/java/src/org/chromium/chrome/browser/widget/bottomsheet/base/BottomNavigationItemView.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1230128
+      },
+      "writtenOn": "2017-08-29T22:51:00Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "faefa8ad_0b0b8160",
+      "range": {
+        "startLine": 203,
+        "startChar": 16,
+        "endLine": 203,
+        "endChar": 25
+      },
+      "revId": "2094b474dd29c8141fa767ae7d9a1af2b056b546",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b17a702f_ee3a64f1",
         "filename": "chrome/android/third_party/widget_bottomsheet_base/java/src/org/chromium/chrome/browser/widget/bottomsheet/base/BottomNavigationMenuView.java",
         "patchSetId": 3
@@ -76,6 +142,30 @@
       "writtenOn": "2017-08-29T20:50:26Z",
       "side": 1,
       "message": "nit: statically?",
+      "range": {
+        "startLine": 239,
+        "startChar": 17,
+        "endLine": 239,
+        "endChar": 24
+      },
+      "revId": "2094b474dd29c8141fa767ae7d9a1af2b056b546",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97365bff_4c9b5aa4",
+        "filename": "chrome/android/third_party/widget_bottomsheet_base/java/src/org/chromium/chrome/browser/widget/bottomsheet/base/BottomNavigationMenuView.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1230128
+      },
+      "writtenOn": "2017-08-29T22:51:00Z",
+      "side": 1,
+      "message": "I guess essentially statically since we always have 4 buttons, and it tries to match the same spacing in both landscape and portrait, but it is just trying to create equal padding between all elements.",
+      "parentUuid": "b17a702f_ee3a64f1",
       "range": {
         "startLine": 239,
         "startChar": 17,
@@ -108,6 +198,30 @@
       "revId": "2094b474dd29c8141fa767ae7d9a1af2b056b546",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "915407c4_618b33f1",
+        "filename": "chrome/android/third_party/widget_bottomsheet_base/java/src/org/chromium/chrome/browser/widget/bottomsheet/base/BottomNavigationView.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1230128
+      },
+      "writtenOn": "2017-08-29T22:51:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f4d535e7_8a13b381",
+      "range": {
+        "startLine": 33,
+        "startChar": 0,
+        "endLine": 33,
+        "endChar": 24
+      },
+      "revId": "2094b474dd29c8141fa767ae7d9a1af2b056b546",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
