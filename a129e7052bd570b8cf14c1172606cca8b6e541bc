@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "86478587_8b59c540",
+        "filename": "services/viz/public/interfaces/hit_test/hit_test_region_list.mojom",
+        "patchSetId": 7
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1231224
+      },
+      "writtenOn": "2017-08-29T16:03:24Z",
+      "side": 1,
+      "message": "No!  I think it was somehow resurrected in that last rebase.  Will remove.\n\nDone",
+      "parentUuid": "4b0914f3_05216a19",
+      "range": {
+        "startLine": 32,
+        "startChar": 6,
+        "endLine": 32,
+        "endChar": 21
+      },
+      "revId": "a129e7052bd570b8cf14c1172606cca8b6e541bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fe677c70_deb4ccac",
         "filename": "services/viz/public/interfaces/hit_test/hit_test_region_list.mojom",
         "patchSetId": 7
@@ -36,6 +60,24 @@
       "writtenOn": "2017-08-29T15:36:51Z",
       "side": 1,
       "message": "seems conceivably unnecessary when there is a surface id?",
+      "revId": "a129e7052bd570b8cf14c1172606cca8b6e541bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a564d1f8_59b84994",
+        "filename": "services/viz/public/interfaces/hit_test/hit_test_region_list.mojom",
+        "patchSetId": 7
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1231224
+      },
+      "writtenOn": "2017-08-29T16:03:24Z",
+      "side": 1,
+      "message": "With this change the surface id has been removed and instead there is a required frame_sink_id and an optional local_surface_id ( and together they make a full surface_id ).",
+      "parentUuid": "fe677c70_deb4ccac",
       "revId": "a129e7052bd570b8cf14c1172606cca8b6e541bc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
