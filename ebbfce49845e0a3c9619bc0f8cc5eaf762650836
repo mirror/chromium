@@ -16,6 +16,24 @@
       "revId": "ebbfce49845e0a3c9619bc0f8cc5eaf762650836",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "afa5d3e0_bac9ae19",
+        "filename": "content/browser/service_worker/service_worker_browsertest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 2417,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-29T07:34:56Z",
+      "side": 1,
+      "message": "I gave this a try but I don\u0027t see a way to wait for the dispatcher host to destruct.",
+      "parentUuid": "2315bd0e_675dc470",
+      "revId": "ebbfce49845e0a3c9619bc0f8cc5eaf762650836",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
