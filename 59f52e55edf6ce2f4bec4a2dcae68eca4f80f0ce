@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c45354ab_36ea5e76",
+        "filename": "ui/webui/resources/cr_elements/cr_link_row/cr_link_row.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-08-29T21:15:52Z",
+      "side": 1,
+      "message": "a UI element",
+      "revId": "59f52e55edf6ce2f4bec4a2dcae68eca4f80f0ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
