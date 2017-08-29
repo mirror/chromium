@@ -75,6 +75,24 @@
       "revId": "2d6828355b0fc854798a44fe7f375accfc1588fc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd0347b1_3bd17fac",
+        "filename": "chrome/browser/offline_pages/prefetch/prefetch_importer_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-08-29T21:17:52Z",
+      "side": 1,
+      "message": "In an ideal world, that\u0027s true.  Unfortunately, the (non-clang) Windows compiler isn\u0027t smart enough to understand that lines 50 and 51 are not reachable, and complains if they\u0027re not there.  If we ever get to a point where we can drop support for that compiler, we can drop such unreachable code \u003d)",
+      "parentUuid": "5f2aff2b_d7454e1e",
+      "revId": "2d6828355b0fc854798a44fe7f375accfc1588fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
