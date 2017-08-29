@@ -52,6 +52,24 @@
       "revId": "894b7f953d8c42a338f58c3be477ac9642150fac",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b108d99d_7767e2b5",
+        "filename": "ui/webui/resources/cr_elements/cr_dialog/cr_dialog.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-08-29T20:56:13Z",
+      "side": 1,
+      "message": "Very reasonable. I\u0027ll look into alternatives.",
+      "parentUuid": "e58c8682_2ca0b4a9",
+      "revId": "894b7f953d8c42a338f58c3be477ac9642150fac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
