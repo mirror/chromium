@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "682920c8_f2bb1cee",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/PaymentInstrument.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2017-08-29T14:45:35Z",
+      "side": 1,
+      "message": "Yes, it\u0027s OK in java 8 for this case, it is called \u0027effectively final\u0027.",
+      "parentUuid": "009490da_7fcc8764",
+      "range": {
+        "startLine": 162,
+        "startChar": 38,
+        "endLine": 162,
+        "endChar": 51
+      },
+      "revId": "c86985ced10bf164283028a624b0350d122c4d17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "827e6494_ed96ccae",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/PaymentRequestImpl.java",
         "patchSetId": 6
@@ -39,6 +63,24 @@
       "revId": "c86985ced10bf164283028a624b0350d122c4d17",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cfcd61dd_c728657e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/PaymentRequestImpl.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1437,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2017-08-29T14:45:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "827e6494_ed96ccae",
+      "revId": "c86985ced10bf164283028a624b0350d122c4d17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
