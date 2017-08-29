@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "312cf156_1c22119d",
+        "filename": "components/search_provider_logos/google_logo_api.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-08-29T09:11:44Z",
+      "side": 1,
+      "message": "Where does the Google Base URL come from? GoogleURLTracker? I would be tempted to make this a postcondition of SearchTermsData / GoogleURLTracker and then only DCHECK here… It feels like something would have to go grievously wrong in order for the Google URL to suddenly end up plain HTTP, so just silently rewriting it to HTTPS for the Doodle (and nothing else) seems like it would more paper over the issue than anything else.",
+      "range": {
+        "startLine": 28,
+        "startChar": 36,
+        "endLine": 28,
+        "endChar": 51
+      },
+      "revId": "a1d7ae87ee53be593a77a16a62145d1b64a1a305",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
