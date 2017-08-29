@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a2dcadc9_278ea2a8",
+        "filename": "chrome/browser/resources/chromeos/chromevox/cvox2/background/desktop_automation_handler.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-08-29T19:04:14Z",
+      "side": 1,
+      "message": "Maybe update the comment, since it sounds like it\nreally does change the range now?",
+      "revId": "7289ddcb575e40c8a660a3a8cdda8e3ffceb7d3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
