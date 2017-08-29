@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "02e9be4e_ef29acec",
+        "filename": "content/browser/frame_host/navigation_request.h",
+        "patchSetId": 25
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-08-29T18:51:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "96e31584_174a4507",
+      "range": {
+        "startLine": 214,
+        "startChar": 29,
+        "endLine": 214,
+        "endChar": 37
+      },
+      "revId": "063c61adcfd386a2bdc5d66f902f4c206614e6c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "004260cc_3c99d445",
         "filename": "content/browser/loader/navigation_resource_handler.cc",
         "patchSetId": 25
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "63bcd9ec_ccf40af6",
+        "filename": "content/browser/loader/navigation_resource_handler.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-08-29T18:51:32Z",
+      "side": 1,
+      "message": "Yeah, this was meant to reflect my state of testing. Gone again.",
+      "parentUuid": "004260cc_3c99d445",
+      "range": {
+        "startLine": 163,
+        "startChar": 2,
+        "endLine": 164,
+        "endChar": 31
+      },
+      "revId": "063c61adcfd386a2bdc5d66f902f4c206614e6c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "24f43172_fbd38893",
         "filename": "content/browser/loader/navigation_resource_handler.cc",
         "patchSetId": 25
@@ -59,6 +107,30 @@
       "writtenOn": "2017-08-26T03:24:26Z",
       "side": 1,
       "message": "One option would be to replace this with IsCertStatusError(ssl_info.cert_status). Alternatively, could add CERTIFICATE_REQUEST_RESULT_TYPE_CANCEL_WITH_CERT_ERROR (or something) that passes handler()-\u003ecert_error() to SSLErrorHandler::Delegate::CancelSSLRequest(), so that |net_error| actually reflects the certificate error here instead of ERR_INSECURE_RESPONSE.",
+      "range": {
+        "startLine": 171,
+        "startChar": 16,
+        "endLine": 171,
+        "endChar": 34
+      },
+      "revId": "063c61adcfd386a2bdc5d66f902f4c206614e6c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "881eb6ba_b77fec36",
+        "filename": "content/browser/loader/navigation_resource_handler.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-08-29T18:51:32Z",
+      "side": 1,
+      "message": "I tried using CERTIFICATE_REQUEST_RESULT_TYPE_CANCEL_WITH_CERT_ERROR, but modifying the callback structure became unwieldy.\n\nI\u0027ve gone with IsCertStatusError(ssl_info.cert_status) for now.",
+      "parentUuid": "24f43172_fbd38893",
       "range": {
         "startLine": 171,
         "startChar": 16,
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "422ddc55_140e917d",
+        "filename": "content/browser/loader/navigation_url_loader_delegate.h",
+        "patchSetId": 25
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-08-29T18:51:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dbd040a3_91b6bfab",
+      "range": {
+        "startLine": 69,
+        "startChar": 37,
+        "endLine": 69,
+        "endChar": 45
+      },
+      "revId": "063c61adcfd386a2bdc5d66f902f4c206614e6c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "15853f76_dcc8d401",
         "filename": "content/browser/loader/navigation_url_loader_unittest.cc",
         "patchSetId": 25
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "2e6a04b1_4fb6270f",
+        "filename": "content/browser/loader/navigation_url_loader_unittest.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-08-29T18:51:32Z",
+      "side": 1,
+      "message": "For some reason(!), resetting the web_contents doesn\u0027t appear to be needed anymore. I\u0027ve removed it completely.",
+      "parentUuid": "15853f76_dcc8d401",
+      "range": {
+        "startLine": 151,
+        "startChar": 7,
+        "endLine": 151,
+        "endChar": 23
+      },
+      "revId": "063c61adcfd386a2bdc5d66f902f4c206614e6c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a6c75534_fae0dc06",
         "filename": "content/browser/loader/navigation_url_loader_unittest.cc",
         "patchSetId": 25
@@ -128,6 +248,24 @@
       "writtenOn": "2017-08-28T04:06:15Z",
       "side": 1,
       "message": "Can we test that the ssl_info is populated as expected? Could just sanity-check some fields like is_valid(), cert or unverified_cert, and cert_status.",
+      "revId": "063c61adcfd386a2bdc5d66f902f4c206614e6c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66216169_90276df6",
+        "filename": "content/browser/loader/navigation_url_loader_unittest.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-08-29T18:51:32Z",
+      "side": 1,
+      "message": "I\u0027ve checked is_valid and cert_status.\n\nIt seems that is_valid() already checks for the cert, so checking for the cert presence is redundant.\nWe *could* modify the error to EXPIRED and check the cert against the test server host. Do you think that\u0027s worth it?",
+      "parentUuid": "a6c75534_fae0dc06",
       "revId": "063c61adcfd386a2bdc5d66f902f4c206614e6c4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -157,6 +295,30 @@
     },
     {
       "key": {
+        "uuid": "6dca576a_ae76c442",
+        "filename": "content/browser/loader/navigation_url_loader_unittest.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-08-29T18:51:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dbc849ca_046cf8cf",
+      "range": {
+        "startLine": 216,
+        "startChar": 3,
+        "endLine": 216,
+        "endChar": 56
+      },
+      "revId": "063c61adcfd386a2bdc5d66f902f4c206614e6c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "48bd4897_7438b86d",
         "filename": "content/browser/loader/navigation_url_loader_unittest.cc",
         "patchSetId": 25
@@ -177,6 +339,30 @@
       "revId": "063c61adcfd386a2bdc5d66f902f4c206614e6c4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c92a822_359d8537",
+        "filename": "content/browser/loader/navigation_url_loader_unittest.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-08-29T18:51:32Z",
+      "side": 1,
+      "message": "I\u0027m not sure, but that sounds safe. Done.",
+      "parentUuid": "48bd4897_7438b86d",
+      "range": {
+        "startLine": 233,
+        "startChar": 28,
+        "endLine": 233,
+        "endChar": 35
+      },
+      "revId": "063c61adcfd386a2bdc5d66f902f4c206614e6c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
