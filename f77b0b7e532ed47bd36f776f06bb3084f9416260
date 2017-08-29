@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "55f138ee_f03caf94",
+        "filename": "ash/rotator/screen_rotation_animator.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-08-29T23:52:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d55763e5_93e5db08",
+      "revId": "f77b0b7e532ed47bd36f776f06bb3084f9416260",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cf1226de_5dd8948b",
         "filename": "ash/rotator/screen_rotation_animator.cc",
         "patchSetId": 6
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-29T00:58:41Z",
       "side": 1,
       "message": "Does that case happen? Mostly wondering if this should be a DCHECK instead.",
+      "revId": "f77b0b7e532ed47bd36f776f06bb3084f9416260",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da4048cd_3caefad5",
+        "filename": "ash/rotator/screen_rotation_animator.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 287,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-08-29T23:52:24Z",
+      "side": 1,
+      "message": "I would, but I still need to remove the existing \"legacy behavior\" where GLRenderer or SoftwareRenderer are allowed to provide SkBitmap instead of texture results in CopyOutputResult when they cannot provide a RGBA_TEXTURE result. I need to move tab capture into VIZ before I can get rid of that behavior and achieve the 100% pure end-goal of my API change here. ;-)\n\nAdded TODO comment for tracking; so I\u0027ll come back to this in a future CL.",
+      "parentUuid": "cf1226de_5dd8948b",
       "revId": "f77b0b7e532ed47bd36f776f06bb3084f9416260",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "57615a71_971ec13b",
+        "filename": "cc/ipc/copy_output_result_struct_traits.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-08-29T23:52:24Z",
+      "side": 1,
+      "message": "Hmm...Not sure I understand your question...\n\nBasically, the way I look at this is that returning false means there is a malformed mojo (de)serialization case. What I\u0027m checking here is that if !rect.IsEmpty() then the image data (via SkBitmap or TextureMailbox) is mandatory and should be present. However, if rect.IsEmpty(), then it\u0027s okay to be missing the image data because nobody\u0027s going to look at it.\n\nIf by \"pulling up to the top\" you meant that I might check for rect.IsEmpty() before the switch statement: I\u0027m not seeing how that would help. It seems like it would add extra code that amounts to the same thing.\n\nI\u0027m probably misunderstanding your point. Maybe you could show me a code snippet to help explain? :)",
+      "parentUuid": "59846151_918fe35a",
+      "revId": "f77b0b7e532ed47bd36f776f06bb3084f9416260",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c40da30c_59160cf4",
         "filename": "cc/output/software_renderer.cc",
         "patchSetId": 6
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "d17be765_4dfb94b2",
+        "filename": "cc/output/software_renderer.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 585,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-08-29T23:52:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c40da30c_59160cf4",
+      "revId": "f77b0b7e532ed47bd36f776f06bb3084f9416260",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bf4fe6a0_a2048a4a",
         "filename": "components/viz/common/quads/copy_output_request.cc",
         "patchSetId": 6
@@ -81,6 +153,24 @@
       "writtenOn": "2017-08-29T00:58:41Z",
       "side": 1,
       "message": "gfx::Rect() seems a little special.  I like the CreateEmptyResult clarity from before this patch.",
+      "revId": "f77b0b7e532ed47bd36f776f06bb3084f9416260",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3084012b_4e1c49e9",
+        "filename": "components/viz/common/quads/copy_output_request.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-08-29T23:52:24Z",
+      "side": 1,
+      "message": "With this CL, there\u0027s now only this one code point (here) that can possibly create empty results. :) FWIW, earlier in the process, I was thinking about adding an \"EmptyCopyOutputResult\" convenience, but now there\u0027s no longer a need for it.",
+      "parentUuid": "bf4fe6a0_a2048a4a",
       "revId": "f77b0b7e532ed47bd36f776f06bb3084f9416260",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "3d1e8770_d2fb04a2",
+        "filename": "components/viz/common/quads/copy_output_request.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-08-29T23:52:24Z",
+      "side": 1,
+      "message": "Removed this method in this CL...Will address this in later CL.",
+      "parentUuid": "cf843fdf_4852d444",
+      "revId": "f77b0b7e532ed47bd36f776f06bb3084f9416260",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a147b7e8_3eb0f3a0",
         "filename": "components/viz/common/quads/copy_output_result.cc",
         "patchSetId": 6
@@ -115,6 +223,24 @@
       "writtenOn": "2017-08-29T00:58:41Z",
       "side": 1,
       "message": "I feel like there\u0027s some inconsistency between the accessor functions.  GetYPlane (and friends) DCHECK.  GetTextureMailbox fails silently on mismatch.  AsSkBitmap returns a black bitmap (on some mismatches).  Is it possible for them all to DCHECK/NOTREACHED on mismatch and to move the AsSkBitmap code into CopyOutputSkBitmapResult, or am I missing something?",
+      "revId": "f77b0b7e532ed47bd36f776f06bb3084f9416260",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec5433db_5bd4d6a5",
+        "filename": "components/viz/common/quads/copy_output_result.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-08-29T23:52:24Z",
+      "side": 1,
+      "message": "Good point. I see how this looks inconsistent. I think it would be best to both: 1) never DCHECK; and 2) just \"return null\" from ANY of the accessor whenever the result format doesn\u0027t jive with the accessor being called.\n\nEarlier in this process, I wrestled with the idea of moving AsSkBitmap() into just CopyOutputSkBitmapResult, and GetTextureMailbox() into just CopyOutputTextureResult; but then I was going to need to add \"downcast\" methods to CopyOutputResult. Yuk. Seemed like I was burdening clients with some extra steps when really they should simply be unconditionally calling that one accessor that was relevant to the format they originally requested.",
+      "parentUuid": "a147b7e8_3eb0f3a0",
       "revId": "f77b0b7e532ed47bd36f776f06bb3084f9416260",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -138,6 +264,24 @@
     },
     {
       "key": {
+        "uuid": "c9cc51b9_6096a6ee",
+        "filename": "components/viz/common/quads/copy_output_result.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-08-29T23:52:24Z",
+      "side": 1,
+      "message": "It would be called anytime client code calls AsSkBitmap() on a non-CopyOutputSkBitmapResult instance.\n\nPer prior comment (about DCHECKs), I\u0027m deleting this behavior; and making it a no-op.",
+      "parentUuid": "48d43975_c76c75ed",
+      "revId": "f77b0b7e532ed47bd36f776f06bb3084f9416260",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7072bae4_04699687",
         "filename": "components/viz/service/display/gl_renderer.cc",
         "patchSetId": 6
@@ -149,6 +293,24 @@
       "writtenOn": "2017-08-29T00:58:41Z",
       "side": 1,
       "message": "If this doesn\u0027t do anything yet, maybe hold off on adding the enum?",
+      "revId": "f77b0b7e532ed47bd36f776f06bb3084f9416260",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1564cd54_c9377f3e",
+        "filename": "components/viz/service/display/gl_renderer.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 2918,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-08-29T23:52:24Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "7072bae4_04699687",
       "revId": "f77b0b7e532ed47bd36f776f06bb3084f9416260",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
