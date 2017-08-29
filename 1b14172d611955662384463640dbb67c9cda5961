@@ -34,6 +34,24 @@
       "revId": "1b14172d611955662384463640dbb67c9cda5961",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9225da2b_6be77fe9",
+        "filename": "ui/webui/resources/cr_elements/cr_toolbar/cr_toolbar.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1130680
+      },
+      "writtenOn": "2017-08-29T08:56:57Z",
+      "side": 1,
+      "message": "I\u0027m pretty sure that the overflow/text-overflow/white-space lines are dead code: there shouldn\u0027t be any instances where we ellipsise the h1 (as of this patch: https://codereview.chromium.org/2562393003#msg7).\n\nFeel free to remove them.",
+      "parentUuid": "c147bd70_6905cc45",
+      "revId": "1b14172d611955662384463640dbb67c9cda5961",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
