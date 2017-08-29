@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "61eb0333_a3d36746",
+        "filename": "remoting/webapp/base/js/chromoting_event.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 272,
+      "author": {
+        "id": 1000528
+      },
+      "writtenOn": "2017-08-29T18:12:23Z",
+      "side": 1,
+      "message": "It\u0027s easy to see how this mistake was made, given that the type and ctor parameter are both named \"event\". Why do we have this change in nomenclature between the type and the field? It seems like a recipe for future mistakes?",
+      "range": {
+        "startLine": 272,
+        "startChar": 26,
+        "endLine": 272,
+        "endChar": 0
+      },
+      "revId": "1ec2c26fa7a301ffa20c2c717fb7d8f9a2a5b7d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
