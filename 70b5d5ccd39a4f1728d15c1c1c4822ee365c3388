@@ -69,6 +69,30 @@
       "revId": "70b5d5ccd39a4f1728d15c1c1c4822ee365c3388",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "072948d3_73bdff90",
+        "filename": "chrome/browser/ui/views/touch_events_interactive_uitest_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1231085
+      },
+      "writtenOn": "2017-08-29T09:11:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4084feef_f17dbe48",
+      "range": {
+        "startLine": 101,
+        "startChar": 30,
+        "endLine": 101,
+        "endChar": 33
+      },
+      "revId": "70b5d5ccd39a4f1728d15c1c1c4822ee365c3388",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
