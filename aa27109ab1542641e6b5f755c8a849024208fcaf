@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f5753ae2_b72994ec",
+        "filename": "chrome/browser/safe_browsing/safe_browsing_blocking_page_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-08-29T12:43:37Z",
+      "side": 1,
+      "message": "Note: this should be named DidNavigateCrossSite, as it is simulating a cross-site navigation commit. In same-site navigations, GetPendingMainFrame returns nullptr.",
+      "revId": "aa27109ab1542641e6b5f755c8a849024208fcaf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "271b62cb_73673c23",
+        "filename": "chrome/browser/safe_browsing/safe_browsing_blocking_page_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 679,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-08-29T12:43:37Z",
+      "side": 1,
+      "message": "We should make NavigationSimulator support back/forward navigations, like I\u0027m trying to do with reloads (https://chromium-review.googlesource.com/c/chromium/src/+/624028). You can try implementing this in this patch set, or add a TODO.",
+      "revId": "aa27109ab1542641e6b5f755c8a849024208fcaf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
