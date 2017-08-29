@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c1286135_b05ba01a",
+        "filename": "content/browser/permissions/permission_service_context.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-08-29T16:51:40Z",
+      "side": 1,
+      "message": "Clarified, and also mentioned the interstitial case.",
+      "parentUuid": "e4609b44_ace14350",
+      "revId": "00e74897d3a7861d34d5007c39ea8c3c3b45e0b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c6dfac53_2c50ef4e",
         "filename": "content/browser/permissions/permission_service_impl.cc",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "00e74897d3a7861d34d5007c39ea8c3c3b45e0b6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa76bf81_d1b2ccf6",
+        "filename": "content/browser/permissions/permission_service_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-08-29T16:51:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c6dfac53_2c50ef4e",
+      "revId": "00e74897d3a7861d34d5007c39ea8c3c3b45e0b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
