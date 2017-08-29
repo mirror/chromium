@@ -48,16 +48,28 @@ void UIDevToolsOverlayAgent::OnMouseEvent(ui::MouseEvent* event) {
   int element_id = dom_agent_->FindElementIdTargetedByPoint(
       event->root_location(), target->GetRootWindow());
 
-  if (event->type() == ui::ET_MOUSE_PRESSED && (pinned_id_ != element_id)) {
+  // If current |pinned_id| is similar to hovering |element_id|, simply return.
+  if (pinned_id_ == element_id) {
+    event->SetHandled();
+    return;
+  }
+
+  // If mouse is pressed, re-pinned the |element_id|.
+  if (event->type() == ui::ET_MOUSE_PRESSED) {
     event->SetHandled();
     if (element_id) {
       pinned_id_ = element_id;
       frontend()->nodeHighlightRequested(element_id);
-      dom_agent_->HighlightNode(element_id, true);
+      dom_agent_->HighlightNode(element_id, true /* show_size */);
     }
   } else if (element_id && !pinned_id_) {
+    // If no element is pinned, display guidelines only.
     frontend()->nodeHighlightRequested(element_id);
-    dom_agent_->HighlightNode(element_id, false);
+    dom_agent_->HighlightNode(element_id, false /* show_size */);
+  } else if (element_id && pinned_id_) {
+    // Show distances between 2 elements when |pinned_id_| is not empty.
+    dom_agent_->HighlightNode(element_id, false /* show_size */);
+    dom_agent_->ShowDistancesInHighlightOverlay(pinned_id_, element_id);
   }
 }
 
@@ -65,13 +77,14 @@ void UIDevToolsOverlayAgent::OnKeyEvent(ui::KeyEvent* event) {
   if (!dom_agent_->window_element_root())
     return;
 
-  // Exit inspection mode by pressing ESC key.
+  // Exit inspect mode by pressing ESC key.
   if (event->key_code() == ui::KeyboardCode::VKEY_ESCAPE) {
     aura::Env::GetInstance()->RemovePreTargetHandler(this);
     if (pinned_id_) {
       frontend()->inspectNodeRequested(pinned_id_);
-      dom_agent_->HighlightNode(pinned_id_, true);
+      dom_agent_->HighlightNode(pinned_id_, true /* show_size */);
     }
+    // Unpinned element.
     pinned_id_ = 0;
   }
 }
