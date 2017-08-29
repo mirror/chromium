@@ -10,7 +10,6 @@
 #include <stdint.h>
 #include <unordered_set>
 #include <vector>
-
 #include "base/bind.h"
 #include "base/lazy_instance.h"
 #include "base/metrics/histogram_macros.h"
@@ -20,6 +19,7 @@
 #include "components/safe_browsing/browser/threat_details_cache.h"
 #include "components/safe_browsing/browser/threat_details_history.h"
 #include "components/safe_browsing/common/safebrowsing_messages.h"
+#include "components/safe_browsing/web_ui/safe_browsing_ui.h"
 #include "components/safe_browsing_db/hit_report.h"
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/navigation_controller.h"
@@ -742,6 +742,18 @@ void ThreatDetails::OnCacheCollectionReady() {
     DLOG(ERROR) << "Unable to serialize the threat report.";
     return;
   }
+  // Register the data for the WebUI
+  ClientSafeBrowsingReportRequest client_report_request;
+  client_report_request.set_type(report_->type());
+  client_report_request.set_page_url(report_->page_url());
+  client_report_request.set_client_country(report_->client_country());
+  client_report_request.set_repeat_visit(report_->repeat_visit());
+  client_report_request.set_did_proceed(report_->did_proceed());
+
+  BrowserThread::PostTask(
+      content::BrowserThread::UI, FROM_HERE,
+      base::BindOnce(&SafeBrowsingUIHandler::AddNewThreatDetails,
+                     client_report_request));
   ui_manager_->SendSerializedThreatDetails(serialized);
 }
 
