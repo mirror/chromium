@@ -64,6 +64,12 @@ WindowPortMus* WindowPortMus::Get(Window* window) {
   return static_cast<WindowPortMus*>(WindowPort::Get(window));
 }
 
+viz::FrameSinkId WindowPortMus::GetFrameSinkId() const {
+  if (frame_sink_id_.is_valid())
+    return frame_sink_id_;
+  return viz::FrameSinkId(0, server_id());
+}
+
 void WindowPortMus::SetTextInputState(mojo::TextInputStatePtr state) {
   window_tree_client_->SetWindowTextInputState(this, std::move(state));
 }
