@@ -1,0 +1,180 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0a126204_10c27982",
+        "filename": "chrome/test/data/local_ntp/voice_text_browsertest.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-29T14:34:36Z",
+      "side": 1,
+      "message": "Should these be inside test.text? Otherwise multiple test files might interfere with one another I think?",
+      "revId": "12b3bb06e51529a4f20fb4d3e9c8047c9e7c4a22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43dedd6f_cdc40548",
+        "filename": "chrome/test/data/local_ntp/voice_text_browsertest.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-29T14:34:36Z",
+      "side": 1,
+      "message": "nit: I think this would be easier to read by pulling the replace() out of the magic quotes",
+      "revId": "12b3bb06e51529a4f20fb4d3e9c8047c9e7c4a22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64e49453_d3868edc",
+        "filename": "chrome/test/data/local_ntp/voice_text_browsertest.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-29T14:34:36Z",
+      "side": 1,
+      "message": "Where\u0027s the callback?",
+      "revId": "12b3bb06e51529a4f20fb4d3e9c8047c9e7c4a22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4344b45b_5a6a8508",
+        "filename": "chrome/test/data/local_ntp/voice_text_browsertest.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-29T14:34:36Z",
+      "side": 1,
+      "message": "Is this correct? What does the \"empty\" \u003ca\u003e tag do when clicked?",
+      "revId": "12b3bb06e51529a4f20fb4d3e9c8047c9e7c4a22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07ad8c2c_529153a9",
+        "filename": "chrome/test/data/local_ntp/voice_text_browsertest.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-29T14:34:36Z",
+      "side": 1,
+      "message": "Semi-related: Do you know why the \"waiting\" message shows up only after a timeout?",
+      "revId": "12b3bb06e51529a4f20fb4d3e9c8047c9e7c4a22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e931f0a_e1c26973",
+        "filename": "chrome/test/data/local_ntp/voice_text_browsertest.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-29T14:34:36Z",
+      "side": 1,
+      "message": "nit: The other tests use literal strings rather than referencing speech.messages. Would be nice to be consistent.",
+      "revId": "12b3bb06e51529a4f20fb4d3e9c8047c9e7c4a22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23f64cd0_0e7bc169",
+        "filename": "chrome/test/data/local_ntp/voice_text_browsertest.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-29T14:34:36Z",
+      "side": 1,
+      "message": "Forward the clock and make sure the message actually gets set?",
+      "revId": "12b3bb06e51529a4f20fb4d3e9c8047c9e7c4a22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44eee478_a64f14bc",
+        "filename": "chrome/test/data/local_ntp/voice_text_browsertest.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-29T14:34:36Z",
+      "side": 1,
+      "message": "This doesn\u0027t seem to test anything related to the animation?",
+      "revId": "12b3bb06e51529a4f20fb4d3e9c8047c9e7c4a22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ad8135c_313558c3",
+        "filename": "chrome/test/data/local_ntp/voice_text_browsertest.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-29T14:34:36Z",
+      "side": 1,
+      "message": "Wow, the code actually compares the strings. So if somebody said \"Speak now\", things would get confused.\nNothing to fix in this CL, but worth a TODO maybe?",
+      "range": {
+        "startLine": 200,
+        "startChar": 42,
+        "endLine": 200,
+        "endChar": 0
+      },
+      "revId": "12b3bb06e51529a4f20fb4d3e9c8047c9e7c4a22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73950522_fff80054",
+        "filename": "chrome/test/data/local_ntp/voice_text_browsertest.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-29T14:34:36Z",
+      "side": 1,
+      "message": "This seems useless, it checks the thing that was just set in the previous line.\nMaybe this test is just not necessary anymore, given that the animation is now an actual CSS animation rather than weird JS hackery?",
+      "revId": "12b3bb06e51529a4f20fb4d3e9c8047c9e7c4a22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
