@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3501df2b_8d7507d8",
+        "filename": "components/offline_pages/core/renovations/page_renovation.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2017-08-29T23:38:57Z",
+      "side": 1,
+      "message": "Will it work to use default to avoid additional cc file?",
+      "revId": "f2b8e69f022ff16d38b7a12bb1f819f82dd7a727",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
