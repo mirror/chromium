@@ -443,6 +443,7 @@ void ShellSurface::Maximize() {
   // maximized.
   ScopedConfigure scoped_configure(this, true);
   widget_->Maximize();
+  UpdateBackdrop();
 }
 
 void ShellSurface::Minimize() {
@@ -467,6 +468,7 @@ void ShellSurface::Restore() {
   // maximized or minimized.
   ScopedConfigure scoped_configure(this, true);
   widget_->Restore();
+  UpdateBackdrop();
 }
 
 void ShellSurface::SetFullscreen(bool fullscreen) {
@@ -479,6 +481,7 @@ void ShellSurface::SetFullscreen(bool fullscreen) {
   // state doesn't change.
   ScopedConfigure scoped_configure(this, true);
   widget_->SetFullscreen(fullscreen);
+  UpdateBackdrop();
 }
 
 void ShellSurface::SetPinned(ash::mojom::WindowPinType type) {
@@ -1709,17 +1712,9 @@ void ShellSurface::UpdateShadow() {
 
   shadow_content_bounds_changed_ = false;
 
-  aura::Window* window = widget_->GetNativeWindow();
+  UpdateBackdrop();
 
-  // Enable the black backdrop layer behind the window if the window
-  // is in immersive fullscreen, maximized, yet the window can control
-  // the bounds of the window in fullscreen/tablet mode (thus the
-  // background can be visible).
-  bool enable_backdrop =
-      (widget_->IsFullscreen() || widget_->IsMaximized()) &&
-      ash::wm::GetWindowState(window)->allow_set_bounds_direct();
-  if (window->GetProperty(aura::client::kHasBackdrop) != enable_backdrop)
-    window->SetProperty(aura::client::kHasBackdrop, enable_backdrop);
+  aura::Window* window = widget_->GetNativeWindow();
 
   if (!shadow_enabled_) {
     wm::SetShadowElevation(window, wm::ShadowElevation::NONE);
@@ -1815,6 +1810,19 @@ void ShellSurface::UpdateShadow() {
     if (!frame_enabled_)
       shadow->SetRoundedCornerRadius(0);
   }
+}
+
+void ShellSurface::UpdateBackdrop() {
+  aura::Window* window = widget_->GetNativeWindow();
+  // Enable the black backdrop layer behind the window if the window
+  // is in immersive fullscreen, maximized, yet the window can control
+  // the bounds of the window in fullscreen/tablet mode (thus the
+  // background can be visible).
+  bool enable_backdrop =
+      (widget_->IsFullscreen() || widget_->IsMaximized()) &&
+      ash::wm::GetWindowState(window)->allow_set_bounds_direct();
+  if (window->GetProperty(aura::client::kHasBackdrop) != enable_backdrop)
+    window->SetProperty(aura::client::kHasBackdrop, enable_backdrop);
 }
 
 gfx::Point ShellSurface::GetMouseLocation() const {

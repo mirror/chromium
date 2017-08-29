@@ -354,6 +354,8 @@ class ShellSurface : public SurfaceTreeHost,
   // Applies |system_modal_| to |widget_|.
   void UpdateSystemModal();
 
+  void UpdateBackdrop();
+
   // In the coordinate system of the parent root window.
   gfx::Point GetMouseLocation() const;
 
