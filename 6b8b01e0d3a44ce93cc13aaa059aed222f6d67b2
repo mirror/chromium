@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "877872ef_bdec9483",
+        "filename": "ios/chrome/browser/passwords/credential_manager_util.mm",
+        "patchSetId": 17
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-08-29T14:51:35Z",
+      "side": 1,
+      "message": "Do we have the ability to pass an error message or state back to the caller? It seems strange that we just fail parsing without telling the user why.",
+      "revId": "6b8b01e0d3a44ce93cc13aaa059aed222f6d67b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
