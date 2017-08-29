@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "63ab4018_773bf2b5",
+        "filename": "chrome/browser/password_manager/password_manager_util_win.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-08-29T20:31:27Z",
+      "side": 1,
+      "message": "// TODO(crbug.com/574581) Remove this feature once this is confirmed to work as expected.",
+      "revId": "c39b51025a95a49413780b3959f70aebe5870f14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1fbf0d5f_cce0905f",
         "filename": "chrome/browser/password_manager/password_manager_util_win.cc",
         "patchSetId": 3
@@ -19,6 +36,23 @@
         "endLine": 328,
         "endChar": 14
       },
+      "revId": "c39b51025a95a49413780b3959f70aebe5870f14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dcad70b7_6d2a8785",
+        "filename": "chrome/browser/password_manager/password_manager_util_win.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 352,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-08-29T20:31:27Z",
+      "side": 1,
+      "message": "drop that TODO?",
       "revId": "c39b51025a95a49413780b3959f70aebe5870f14",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -65,6 +99,46 @@
         "endLine": 395,
         "endChar": 42
       },
+      "revId": "c39b51025a95a49413780b3959f70aebe5870f14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "865f442d_b900a0b7",
+        "filename": "chrome/browser/password_manager/password_manager_util_win.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 405,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-08-29T20:31:27Z",
+      "side": 1,
+      "message": "I don\u0027t fully understand this condition.",
+      "range": {
+        "startLine": 405,
+        "startChar": 8,
+        "endLine": 405,
+        "endChar": 27
+      },
+      "revId": "c39b51025a95a49413780b3959f70aebe5870f14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dbf35000_df1cb493",
+        "filename": "chrome/browser/password_manager/password_manager_util_win.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 433,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-08-29T20:31:27Z",
+      "side": 1,
+      "message": "This is not guaranteed to be executed in case of the continue/break statements above.",
       "revId": "c39b51025a95a49413780b3959f70aebe5870f14",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
