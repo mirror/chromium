@@ -240,6 +240,30 @@
     },
     {
       "key": {
+        "uuid": "efd22e29_0e7806c5",
+        "filename": "ui/views/bubble/tray_bubble_view.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-29T16:35:24Z",
+      "side": 1,
+      "message": "My understanding is you want to process the following:\n\n1. reserved key combos in ash.\n2. tray accelerators\n3. global ash accelerators (not reserved)\n\nDo I have that right? I believe you patch is only doing 2 and possibly 1. Are you sure you don\u0027t want 3? How about adding test coverage of 1 and 3 so we know they are happening?",
+      "parentUuid": "2f932661_6aad94d1",
+      "range": {
+        "startLine": 154,
+        "startChar": 2,
+        "endLine": 154,
+        "endChar": 29
+      },
+      "revId": "2a3d8ff4fb2ce797e45c723c169a97857ddf7853",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6c12869b_600421cd",
         "filename": "ui/views/bubble/tray_bubble_view.cc",
         "patchSetId": 21
