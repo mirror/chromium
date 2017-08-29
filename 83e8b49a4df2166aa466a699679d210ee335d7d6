@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "67b95132_0b83e8c2",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2017-08-29T18:44:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "64dc839c_ff7de32d",
+      "revId": "83e8b49a4df2166aa466a699679d210ee335d7d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f1d817bd_5652272c",
         "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl.cc",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-28T22:53:11Z",
       "side": 1,
       "message": "It might be helpful to set a fuzz percentage; if there are a large number of senders trying to connect when a receiver comes online, this will spread out the attempts IIUC.",
+      "revId": "83e8b49a4df2166aa466a699679d210ee335d7d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a79e46e_1fa2abbf",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2017-08-29T18:44:07Z",
+      "side": 1,
+      "message": "Not sure if it will help with large number of sendering connect to a single receiver since the first open channel wont have any delay.",
+      "parentUuid": "f1d817bd_5652272c",
       "revId": "83e8b49a4df2166aa466a699679d210ee335d7d6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "a218e661_f3ff8278",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2017-08-29T18:44:07Z",
+      "side": 1,
+      "message": "No, it is not (just put there because it is a required parameter for BackoffEntry::Policy). net::BackoffEntry class does not set # of max attempts, it relies on this value (Maximum delay) to stop retry attempts.\n\nI have added a max_retry_attempts to simplify coding and testing. max_retry_attempts could be removed when we decide to use max delay instead of max # of retries.",
+      "parentUuid": "e0ee5a9c_066c8181",
+      "revId": "83e8b49a4df2166aa466a699679d210ee335d7d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a80aedd8_304f522d",
         "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl.cc",
         "patchSetId": 2
@@ -67,6 +121,24 @@
       "revId": "83e8b49a4df2166aa466a699679d210ee335d7d6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9df98b36_bb47f57d",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 336,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2017-08-29T18:44:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a80aedd8_304f522d",
+      "revId": "83e8b49a4df2166aa466a699679d210ee335d7d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "b6d2c3d8_d711ae21",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 339,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2017-08-29T18:44:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "87b845b5_b0affb3d",
+      "revId": "83e8b49a4df2166aa466a699679d210ee335d7d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f02a0ef0_a0223e34",
         "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl.h",
         "patchSetId": 2
@@ -101,6 +191,24 @@
       "revId": "83e8b49a4df2166aa466a699679d210ee335d7d6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "778b30a0_1441c56c",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2017-08-29T18:44:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f02a0ef0_a0223e34",
+      "revId": "83e8b49a4df2166aa466a699679d210ee335d7d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -138,6 +246,24 @@
     },
     {
       "key": {
+        "uuid": "952533eb_0c17d5b9",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2017-08-29T18:44:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "89ff94bd_bf7e4ea4",
+      "revId": "83e8b49a4df2166aa466a699679d210ee335d7d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e8cc0e6d_7dea1f14",
         "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl_unittest.cc",
         "patchSetId": 2
@@ -155,6 +281,24 @@
     },
     {
       "key": {
+        "uuid": "49156c9b_47f0ca38",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2017-08-29T18:44:07Z",
+      "side": 1,
+      "message": "No. For OpenChannel() backoff entry is passed in as an parameter, and it will not use |backoff_policy_|.",
+      "parentUuid": "e8cc0e6d_7dea1f14",
+      "revId": "83e8b49a4df2166aa466a699679d210ee335d7d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c3b2dde2_cb463b36",
         "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl_unittest.cc",
         "patchSetId": 2
@@ -166,6 +310,24 @@
       "writtenOn": "2017-08-28T22:53:11Z",
       "side": 1,
       "message": "Rather than resetting data structures within a test, I would rather this be written as three test cases:\n\nTestOnChannelErrorMayRetryForCastSink\nTestOnChannelErrorMayRetryForDialSink\nTestOnChannelErrorMayRetryForMissingSink",
+      "revId": "83e8b49a4df2166aa466a699679d210ee335d7d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34762603_ad8f149b",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 374,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2017-08-29T18:44:07Z",
+      "side": 1,
+      "message": "It will be simplified by the combining map patch. Just leave two cases there:\n\nTestOnChannelErrorMayRetryForCastSink\nTestOnChannelErrorMayRetryForMissingSink",
+      "parentUuid": "c3b2dde2_cb463b36",
       "revId": "83e8b49a4df2166aa466a699679d210ee335d7d6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
