@@ -40,21 +40,23 @@ Console.ConsoleView = class extends UI.VBox {
     this._searchableView = new UI.SearchableView(this);
     this._searchableView.setPlaceholder(Common.UIString('Find string in logs'));
     this._searchableView.setMinimalSearchQuerySize(0);
+
+    this._vbox = new UI.VBox();
     this._sidebar = new Console.ConsoleSidebar();
 
     var toolbar = new UI.Toolbar('', this.element);
     if (Runtime.experiments.isEnabled('logManagement')) {
       this._splitWidget =
           new UI.SplitWidget(true /* isVertical */, false /* secondIsSidebar */, 'console.sidebar.width', 100);
-      this._splitWidget.setMainWidget(this._searchableView);
+      this._splitWidget.setMainWidget(this._vbox);
       this._splitWidget.setSidebarWidget(this._sidebar);
       this._splitWidget.hideSidebar();
       this._splitWidget.show(this.element);
       toolbar.appendToolbarItem(this._splitWidget.createShowHideSidebarButton('console sidebar'));
     } else {
-      this._searchableView.show(this.element);
+      this._vbox.show(this.element);
     }
-    this._contentsElement = this._searchableView.element;
+    this._contentsElement = this._vbox.element;
     this.element.classList.add('console-view');
 
     /** @type {!Array.<!Console.ConsoleViewMessage>} */
@@ -70,8 +72,23 @@ Console.ConsoleView = class extends UI.VBox {
 
     this._consoleContextSelector = new Console.ConsoleContextSelector();
 
-    this._filterStatusText = new UI.ToolbarText();
-    this._filterStatusText.element.classList.add('dimmed');
+    this._showFilteredItems = false;
+    var filterStatusElement = createElement('div', 'dimmed');
+    this._filterStatusItem = new UI.ToolbarItem(filterStatusElement);
+    this._filterStatusText = filterStatusElement.createTextChild();
+    filterStatusElement.createTextChild('\u00a0|\u00a0');
+    var showFilteredItemsLink = filterStatusElement.createChild('span', 'link');
+    showFilteredItemsLink.textContent = Common.UIString('Show all');
+    showFilteredItemsLink.addEventListener('click', () => {
+      showFilteredItemsLink.textContent = Common.UIString(this._showFilteredItems ? 'Show all' : 'Hide');
+      this._showFilteredItems = !this._showFilteredItems;
+      this._updateMessageList();
+    }, false);
+    filterStatusElement.createTextChild('\u00a0|\u00a0');
+    var resetFilterLink = filterStatusElement.createChild('span', 'link');
+    resetFilterLink.textContent = Common.UIString('Reset');
+    resetFilterLink.addEventListener('click', () => this._filter.reset(), false);
+
     this._showSettingsPaneSetting = Common.settings.createSetting('consoleShowSettingsToolbar', false);
     this._showSettingsPaneButton = new UI.ToolbarSettingToggle(
         this._showSettingsPaneSetting, 'largeicon-settings-gear', Common.UIString('Console settings'));
@@ -87,7 +104,7 @@ Console.ConsoleView = class extends UI.VBox {
     toolbar.appendToolbarItem(this._filter._levelMenuButtonArrow);
     toolbar.appendToolbarItem(this._progressToolbarItem);
     toolbar.appendSpacer();
-    toolbar.appendToolbarItem(this._filterStatusText);
+    toolbar.appendToolbarItem(this._filterStatusItem);
     toolbar.appendSeparator();
     toolbar.appendToolbarItem(this._showSettingsPaneButton);
 
@@ -217,10 +234,10 @@ Console.ConsoleView = class extends UI.VBox {
   }
 
   /**
-   * @return {!UI.SearchableView}
+   * @return {?UI.SearchableView}
    */
   searchableView() {
-    return this._searchableView;
+    return null;
   }
 
   _clearHistory() {
@@ -404,10 +421,16 @@ Console.ConsoleView = class extends UI.VBox {
   }
 
   _updateFilterStatus() {
-    this._filterStatusText.setText(Common.UIString(
-        this._hiddenByFilterCount === 1 ? '1 item hidden by filters' :
-                                          this._hiddenByFilterCount + ' items hidden by filters'));
-    this._filterStatusText.setVisible(!!this._hiddenByFilterCount);
+    if (!this._showFilteredItems) {
+      this._filterStatusText.textContent = Common.UIString(
+          this._hiddenByFilterCount === 1 ? '1 item hidden by filters' :
+                                            this._hiddenByFilterCount + ' items hidden by filters');
+    } else {
+      this._filterStatusText.textContent = Common.UIString(
+          this._hiddenByFilterCount === 1 ? '1 item should be hidden by filters' :
+                                            this._hiddenByFilterCount + ' items should be hidden by filters');
+    }
+    this._filterStatusItem.setVisible(!!this._hiddenByFilterCount);
   }
 
   /**
@@ -483,9 +506,10 @@ Console.ConsoleView = class extends UI.VBox {
    * @param {!Console.ConsoleViewMessage} viewMessage
    */
   _appendMessageToEnd(viewMessage) {
-    if (!this._filter.shouldBeVisible(viewMessage)) {
+    if (!this._filter.applyFilter(viewMessage)) {
       this._hiddenByFilterCount++;
-      return;
+      if (!this._showFilteredItems)
+        return;
     }
 
     if (this._tryToCollapseMessages(viewMessage, this._visibleViewMessages.peekLast()))
@@ -793,6 +817,7 @@ Console.ConsoleView = class extends UI.VBox {
    * @override
    */
   searchCanceled() {
+    return;
     this._cleanupAfterSearch();
     for (var i = 0; i < this._visibleViewMessages.length; ++i) {
       var message = this._visibleViewMessages[i];
@@ -880,6 +905,7 @@ Console.ConsoleView = class extends UI.VBox {
    * @param {number} index
    */
   _searchMessage(index) {
+    return;
     var message = this._visibleViewMessages[index];
     message.setSearchRegex(this._searchRegex);
     for (var i = 0; i < message.searchCount(); ++i)
@@ -1163,7 +1189,7 @@ Console.ConsoleViewFilter = class {
    * @param {!Console.ConsoleViewMessage} viewMessage
    * @return {boolean}
    */
-  shouldBeVisible(viewMessage) {
+  applyFilter(viewMessage) {
     var message = viewMessage.consoleMessage();
     var executionContext = UI.context.flavor(SDK.ExecutionContext);
 
@@ -1199,12 +1225,24 @@ Console.ConsoleViewFilter = class {
     if (this._context !== Console.ConsoleSidebar.AllContextsFilter && message.context !== this._context)
       return false;
 
+    var hadTextFilter = false;
     for (var filter of this._filters) {
       if (!filter.key) {
-        if (filter.regex && viewMessage.matchesFilterRegex(filter.regex) === filter.negative)
+        hadTextFilter = true;
+        if (filter.regex && viewMessage.matchesFilterRegex(filter.regex) === filter.negative) {
+          viewMessage.setSearchRegex(null);
           return false;
-        if (filter.text && viewMessage.matchesFilterText(filter.text) === filter.negative)
+        }
+        if (filter.text && viewMessage.matchesFilterText(filter.text) === filter.negative) {
+          viewMessage.setSearchRegex(null);
           return false;
+        }
+        if (filter.regex)
+          viewMessage.setSearchRegex(new RegExp(filter.regex.source, filter.regex.flags + 'g'));
+        else if (filter.text)
+          viewMessage.setSearchRegex(createPlainTextSearchRegex(filter.text, 'gi'));
+        else
+          viewMessage.setSearchRegex(null);
       } else {
         switch (filter.key) {
           case Console.ConsoleViewFilter._filterType.Url:
@@ -1216,6 +1254,8 @@ Console.ConsoleViewFilter = class {
         }
       }
     }
+    if (!hadTextFilter)
+      viewMessage.setSearchRegex(null);
 
     return true;
   }
