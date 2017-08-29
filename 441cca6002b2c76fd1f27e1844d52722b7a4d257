@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "9144ba34_6cfeb144",
+        "filename": "third_party/WebKit/Source/platform/feature_policy/FeaturePolicy.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2017-08-29T15:06:54Z",
+      "side": 1,
+      "message": "https://www.chromestatus.com/metrics/feature/timeline/popularity/2028 shows very low, but nonzero usage of the attribute. We don\u0027t distinguish between a single feature (allow\u003d\"usb\", for instance, which would be accepted under the new syntax) and a space-separated list (allow\u003d\"usb vr\", which would not)\n\nWe\u0027ve had requests to support the old syntax for at least a couple of releases, both for any existing uses, and so that there\u0027s a window of time for existing example code online to be updated.",
+      "parentUuid": "201053b1_411ad3af",
+      "revId": "441cca6002b2c76fd1f27e1844d52722b7a4d257",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7a1e2a33_57037a3c",
         "filename": "third_party/WebKit/Source/platform/feature_policy/FeaturePolicyFuzzer.cpp",
         "patchSetId": 14
