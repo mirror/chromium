@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "626799cc_aa339513",
+        "filename": "chrome/common/extensions/docs/templates/intros/webRequest.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-08-29T02:45:04Z",
+      "side": 1,
+      "message": "Think this is fine for consistency. We also specify cancelling first for onBeforeSendHeaders/onHeadersReceived.",
+      "parentUuid": "ba9950d5_0035b862",
+      "range": {
+        "startLine": 211,
+        "startChar": 37,
+        "endLine": 211,
+        "endChar": 47
+      },
+      "revId": "59d6486e4aa5bb5944ced27f1838f99068686327",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bfbf5aca_d7c58562",
         "filename": "extensions/common/api/web_request.json",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2017-08-29T00:39:14Z",
       "side": 1,
       "message": "nit: should we wrap these with \u003ccode\u003eonBeforeRequest\u003c/code\u003e...?",
+      "range": {
+        "startLine": 109,
+        "startChar": 144,
+        "endLine": 109,
+        "endChar": 159
+      },
+      "revId": "59d6486e4aa5bb5944ced27f1838f99068686327",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c4b640a3_a1e5a979",
+        "filename": "extensions/common/api/web_request.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-08-29T02:45:04Z",
+      "side": 1,
+      "message": "Again think this is fine for consistency with surrounding documentation. Other fields in BlockingResponse also don\u0027t surround the stage names with \u003ccode\u003e blocks.",
+      "parentUuid": "bfbf5aca_d7c58562",
       "range": {
         "startLine": 109,
         "startChar": 144,
