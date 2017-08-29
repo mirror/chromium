@@ -5,23 +5,30 @@
 #ifndef CONTENT_RENDERER_SHARED_WORKER_SHARED_WORKER_REPOSITORY_H_
 #define CONTENT_RENDERER_SHARED_WORKER_SHARED_WORKER_REPOSITORY_H_
 
+#include <list>
+#include <map>
 #include <memory>
-#include <set>
 
 #include "base/macros.h"
+#include "content/common/shared_worker/shared_worker_connector.mojom.h"
+#include "content/renderer/shared_worker/shared_worker_client_impl.h"
+#include "mojo/public/cpp/bindings/strong_binding.h"
 #include "third_party/WebKit/public/platform/WebAddressSpace.h"
 #include "third_party/WebKit/public/platform/WebContentSecurityPolicy.h"
 #include "third_party/WebKit/public/web/WebSharedWorkerCreationContextType.h"
 #include "third_party/WebKit/public/web/WebSharedWorkerRepositoryClient.h"
 
-namespace content {
+namespace service_manager {
+class InterfaceProvider;
+}
 
-class RenderFrameImpl;
+namespace content {
 
 class SharedWorkerRepository final
     : public blink::WebSharedWorkerRepositoryClient {
  public:
-  explicit SharedWorkerRepository(RenderFrameImpl* render_frame);
+  explicit SharedWorkerRepository(
+      service_manager::InterfaceProvider* interface_provider);
   ~SharedWorkerRepository();
 
   // WebSharedWorkerRepositoryClient overrides.
@@ -39,8 +46,17 @@ class SharedWorkerRepository final
   void DocumentDetached(DocumentID document_id) override;
 
  private:
-  RenderFrameImpl* render_frame_;
-  std::set<DocumentID> documents_with_workers_;
+  void AddWorker(DocumentID document_id,
+                 mojo::StrongBindingPtr<mojom::SharedWorkerClient> client);
+
+  service_manager::InterfaceProvider* interface_provider_;
+
+  mojom::SharedWorkerConnectorPtr connector_;
+
+  using WorkerList =
+      std::list<mojo::StrongBindingPtr<mojom::SharedWorkerClient>>;
+  using WorkerMap = std::map<DocumentID, WorkerList>;
+  WorkerMap worker_map_;
 
   DISALLOW_COPY_AND_ASSIGN(SharedWorkerRepository);
 };
