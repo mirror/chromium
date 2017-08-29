@@ -5,7 +5,6 @@
 #include <utility>
 
 #include "base/message_loop/message_loop.h"
-#include "cc/ipc/copy_output_request_struct_traits.h"
 #include "cc/ipc/copy_output_result_struct_traits.h"
 #include "cc/ipc/filter_operation_struct_traits.h"
 #include "cc/ipc/filter_operations_struct_traits.h"
@@ -33,6 +32,7 @@
 #include "services/viz/public/cpp/compositing/begin_frame_args_struct_traits.h"
 #include "services/viz/public/cpp/compositing/compositor_frame_metadata_struct_traits.h"
 #include "services/viz/public/cpp/compositing/compositor_frame_struct_traits.h"
+#include "services/viz/public/cpp/compositing/copy_output_request_struct_traits.h"
 #include "services/viz/public/cpp/compositing/render_pass_struct_traits.h"
 #include "services/viz/public/cpp/compositing/resource_settings_struct_traits.h"
 #include "services/viz/public/cpp/compositing/returned_resource_struct_traits.h"
@@ -80,6 +80,26 @@ void SerializeAndDeserialize(Type&& input, Type* output) {
 
 }  // namespace
 
+void CopyOutputRequestCallbackRunsOnceCallback(
+    int* n_called,
+    std::unique_ptr<CopyOutputResult> result) {
+  ++*n_called;
+}
+
+void CopyOutputRequestCallback(base::Closure quit_closure,
+                               gfx::Size expected_size,
+                               std::unique_ptr<CopyOutputResult> result) {
+  EXPECT_EQ(expected_size, result->size());
+  quit_closure.Run();
+}
+
+void CopyOutputRequestMessagePipeBrokenCallback(
+    base::Closure closure,
+    std::unique_ptr<CopyOutputResult> result) {
+  EXPECT_TRUE(result->IsEmpty());
+  closure.Run();
+}
+
 TEST_F(StructTraitsTest, BeginFrameArgs) {
   const base::TimeTicks frame_time = base::TimeTicks::Now();
   const base::TimeTicks deadline = base::TimeTicks::Now();
@@ -125,6 +145,87 @@ TEST_F(StructTraitsTest, BeginFrameAck) {
   EXPECT_EQ(sequence_number, output.sequence_number);
   // |has_damage| is not transmitted.
   EXPECT_FALSE(output.has_damage);
+}
+
+TEST_F(StructTraitsTest, CopyOutputRequest_BitmapRequest) {
+  const gfx::Rect area(5, 7, 44, 55);
+  const auto source =
+      base::UnguessableToken::Deserialize(0xdeadbeef, 0xdeadf00d);
+  gfx::Size size(9, 8);
+  auto bitmap = base::MakeUnique<SkBitmap>();
+  bitmap->allocN32Pixels(size.width(), size.height());
+  base::RunLoop run_loop;
+  std::unique_ptr<CopyOutputRequest> input =
+      CopyOutputRequest::CreateBitmapRequest(base::BindOnce(
+          CopyOutputRequestCallback, run_loop.QuitClosure(), size));
+  input->set_area(area);
+  input->set_source(source);
+  std::unique_ptr<CopyOutputRequest> output;
+  SerializeAndDeserialize<mojom::CopyOutputRequest>(input, &output);
+  EXPECT_TRUE(output->force_bitmap_result());
+  EXPECT_FALSE(output->has_texture_mailbox());
+  EXPECT_TRUE(output->has_area());
+  EXPECT_EQ(area, output->area());
+  EXPECT_EQ(source, output->source());
+  output->SendBitmapResult(std::move(bitmap));
+  // If CopyOutputRequestCallback is called, this ends. Otherwise, the test
+  // will time out and fail.
+  run_loop.Run();
+}
+
+
+TEST_F(StructTraitsTest, CopyOutputRequest_MessagePipeBroken) {
+  base::RunLoop run_loop;
+  auto request = CopyOutputRequest::CreateRequest(base::BindOnce(
+      CopyOutputRequestMessagePipeBrokenCallback, run_loop.QuitClosure()));
+  auto result_sender = mojo::StructTraits<
+      mojom::CopyOutputRequestDataView,
+      std::unique_ptr<CopyOutputRequest>>::result_sender(request);
+  result_sender.reset();
+  // The callback must be called with an empty CopyOutputResult. If it's
+  // never called, this will never end and the test times out.
+  run_loop.Run();
+}
+
+
+TEST_F(StructTraitsTest, CopyOutputRequest_TextureRequest) {
+  const int8_t mailbox_name[GL_MAILBOX_SIZE_CHROMIUM] = {
+      0, 9, 8, 7, 6, 5, 4, 3, 2, 1, 9, 7, 5, 3, 1, 3};
+  const uint32_t target = 3;
+  gpu::Mailbox mailbox;
+  mailbox.SetName(mailbox_name);
+  TextureMailbox texture_mailbox(mailbox, gpu::SyncToken(), target);
+  base::RunLoop run_loop;
+  std::unique_ptr<CopyOutputRequest> input =
+      CopyOutputRequest::CreateRequest(base::BindOnce(
+          CopyOutputRequestCallback, run_loop.QuitClosure(), gfx::Size()));
+  input->SetTextureMailbox(texture_mailbox);
+  std::unique_ptr<CopyOutputRequest> output;
+  SerializeAndDeserialize<mojom::CopyOutputRequest>(input, &output);
+
+  EXPECT_TRUE(output->has_texture_mailbox());
+  EXPECT_FALSE(output->has_area());
+  EXPECT_EQ(mailbox, output->texture_mailbox().mailbox());
+  EXPECT_EQ(target, output->texture_mailbox().target());
+  EXPECT_FALSE(output->has_source());
+  output->SendEmptyResult();
+  // If CopyOutputRequestCallback is called, this ends. Otherwise, the test
+  // will time out and fail.
+  run_loop.Run();
+}
+
+TEST_F(StructTraitsTest, CopyOutputRequest_CallbackRunsOnce) {
+  int n_called = 0;
+  auto request = CopyOutputRequest::CreateRequest(
+      base::BindOnce(CopyOutputRequestCallbackRunsOnceCallback, &n_called));
+  auto result_sender = mojo::StructTraits<
+      mojom::CopyOutputRequestDataView,
+      std::unique_ptr<CopyOutputRequest>>::result_sender(request);
+  for (int i = 0; i < 10; i++)
+    result_sender->SendResult(CopyOutputResult::CreateEmptyResult());
+  EXPECT_EQ(0, n_called);
+  result_sender.FlushForTesting();
+  EXPECT_EQ(1, n_called);
 }
 
 TEST_F(StructTraitsTest, ResourceSettings) {

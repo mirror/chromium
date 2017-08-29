@@ -7,7 +7,6 @@
 #include "base/message_loop/message_loop.h"
 #include "base/run_loop.h"
 #include "cc/input/selection.h"
-#include "cc/ipc/copy_output_request_struct_traits.h"
 #include "cc/ipc/traits_test_service.mojom.h"
 #include "cc/quads/debug_border_draw_quad.h"
 #include "cc/quads/render_pass.h"
@@ -41,11 +40,6 @@ class StructTraitsTest : public testing::Test, public mojom::TraitsTestService {
 
  private:
   // TraitsTestService:
-  void EchoCopyOutputRequest(std::unique_ptr<viz::CopyOutputRequest> c,
-                             EchoCopyOutputRequestCallback callback) override {
-    std::move(callback).Run(std::move(c));
-  }
-
   void EchoCopyOutputResult(std::unique_ptr<viz::CopyOutputResult> c,
                             EchoCopyOutputResultCallback callback) override {
     std::move(callback).Run(std::move(c));
@@ -74,26 +68,6 @@ class StructTraitsTest : public testing::Test, public mojom::TraitsTestService {
   mojo::BindingSet<TraitsTestService> traits_test_bindings_;
   DISALLOW_COPY_AND_ASSIGN(StructTraitsTest);
 };
-
-void CopyOutputRequestCallback(base::Closure quit_closure,
-                               gfx::Size expected_size,
-                               std::unique_ptr<viz::CopyOutputResult> result) {
-  EXPECT_EQ(expected_size, result->size());
-  quit_closure.Run();
-}
-
-void CopyOutputRequestCallbackRunsOnceCallback(
-    int* n_called,
-    std::unique_ptr<viz::CopyOutputResult> result) {
-  ++*n_called;
-}
-
-void CopyOutputRequestMessagePipeBrokenCallback(
-    base::Closure closure,
-    std::unique_ptr<viz::CopyOutputResult> result) {
-  EXPECT_TRUE(result->IsEmpty());
-  closure.Run();
-}
 
 void CopyOutputResultCallback(base::Closure quit_closure,
                               const gpu::SyncToken& expected_sync_token,
