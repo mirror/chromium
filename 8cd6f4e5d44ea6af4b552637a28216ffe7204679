@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d17d7c4d_a4872edf",
+        "filename": "third_party/WebKit/Source/platform/mediastream/MediaStreamDescriptor.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-08-29T17:18:19Z",
+      "side": 1,
+      "message": "Note: Since I only needed to update the track adapter map, I could wait with adding a UniqueId to the descriptor until I fix the stream adapter map.",
+      "revId": "8cd6f4e5d44ea6af4b552637a28216ffe7204679",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
