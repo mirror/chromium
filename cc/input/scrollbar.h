@@ -16,7 +16,7 @@ enum ScrollbarOrientation { HORIZONTAL, VERTICAL };
 enum ScrollDirection { SCROLL_BACKWARD, SCROLL_FORWARD };
 // For now, TRACK includes everything but the thumb including background and
 // buttons.
-enum ScrollbarPart { THUMB, TRACK };
+enum ScrollbarPart { THUMB, TRACK, TICKMARKS };
 
 class Scrollbar {
  public:

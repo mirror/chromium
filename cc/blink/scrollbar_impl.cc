@@ -93,6 +93,11 @@ void ScrollbarImpl::PaintPart(cc::PaintCanvas* canvas,
     return;
   }
 
+  if (part == cc::TICKMARKS) {
+    painter_.PaintTickmarks(canvas, content_rect);
+    return;
+  }
+
   // The following is a simplification of ScrollbarThemeComposite::paint.
   painter_.PaintScrollbarBackground(canvas, content_rect);
 
