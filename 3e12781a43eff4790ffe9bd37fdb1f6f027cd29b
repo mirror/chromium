@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d1262f06_72620cec",
+        "filename": "chrome/browser/chromeos/BUILD.gn",
+        "patchSetId": 11
+      },
+      "lineNbr": 1658,
+      "author": {
+        "id": 1228045
+      },
+      "writtenOn": "2017-08-29T10:43:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bf65e4ec_4946263f",
+      "range": {
+        "startLine": 1658,
+        "startChar": 4,
+        "endLine": 1658,
+        "endChar": 23
+      },
+      "revId": "3e12781a43eff4790ffe9bd37fdb1f6f027cd29b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ac1b170b_09d1367c",
         "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.cc",
         "patchSetId": 11
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "ddfe0f26_2cec7365",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1228045
+      },
+      "writtenOn": "2017-08-29T10:43:12Z",
+      "side": 1,
+      "message": "Because we have segments where begin and end times include.\n(i.e. [17:00, 18:00], \"OffHours\" mode will turn off at 18:01.",
+      "parentUuid": "ac1b170b_09d1367c",
+      "range": {
+        "startLine": 228,
+        "startChar": 35,
+        "endLine": 228,
+        "endChar": 59
+      },
+      "revId": "3e12781a43eff4790ffe9bd37fdb1f6f027cd29b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fd59a2de_b9928728",
         "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.cc",
         "patchSetId": 11
@@ -59,6 +107,30 @@
       "writtenOn": "2017-08-28T17:05:43Z",
       "side": 1,
       "message": "|device_policies_|\nAlso, there is a different |device_policies| that is a parameter of IsCurrentUserAllowed. Are they the same?",
+      "range": {
+        "startLine": 283,
+        "startChar": 31,
+        "endLine": 283,
+        "endChar": 46
+      },
+      "revId": "3e12781a43eff4790ffe9bd37fdb1f6f027cd29b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09e74b9f_debf1b80",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 1228045
+      },
+      "writtenOn": "2017-08-29T10:43:12Z",
+      "side": 1,
+      "message": "Now they are the same.\nBut I think that IsCurrentUserAllowed function is general and makes decision depends on input ChromeDeviceSettingsProto.",
+      "parentUuid": "fd59a2de_b9928728",
       "range": {
         "startLine": 283,
         "startChar": 31,
@@ -117,6 +189,30 @@
     },
     {
       "key": {
+        "uuid": "1286aab7_94677a71",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 451,
+      "author": {
+        "id": 1228045
+      },
+      "writtenOn": "2017-08-29T10:43:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "50ba4122_1d8d8959",
+      "range": {
+        "startLine": 449,
+        "startChar": 0,
+        "endLine": 451,
+        "endChar": 3
+      },
+      "revId": "3e12781a43eff4790ffe9bd37fdb1f6f027cd29b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0a7cf47c_d84fd39e",
         "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.h",
         "patchSetId": 11
@@ -137,6 +233,30 @@
       "revId": "3e12781a43eff4790ffe9bd37fdb1f6f027cd29b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84d552ac_1a0d4a79",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1228045
+      },
+      "writtenOn": "2017-08-29T10:43:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0a7cf47c_d84fd39e",
+      "range": {
+        "startLine": 48,
+        "startChar": 0,
+        "endLine": 48,
+        "endChar": 46
+      },
+      "revId": "3e12781a43eff4790ffe9bd37fdb1f6f027cd29b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -186,6 +306,30 @@
     },
     {
       "key": {
+        "uuid": "4a2f20fa_e71a412f",
+        "filename": "chrome/browser/chromeos/settings/cros_settings.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1228045
+      },
+      "writtenOn": "2017-08-29T10:43:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "284161f8_8dfd2821",
+      "range": {
+        "startLine": 108,
+        "startChar": 0,
+        "endLine": 110,
+        "endChar": 51
+      },
+      "revId": "3e12781a43eff4790ffe9bd37fdb1f6f027cd29b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7af902a2_eede4423",
         "filename": "chrome/browser/chromeos/settings/device_settings_service.cc",
         "patchSetId": 11
@@ -206,6 +350,30 @@
       "revId": "3e12781a43eff4790ffe9bd37fdb1f6f027cd29b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48c3a5bf_2d076b90",
+        "filename": "chrome/browser/chromeos/settings/device_settings_service.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1228045
+      },
+      "writtenOn": "2017-08-29T10:43:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7af902a2_eede4423",
+      "range": {
+        "startLine": 69,
+        "startChar": 0,
+        "endLine": 72,
+        "endChar": 61
+      },
+      "revId": "3e12781a43eff4790ffe9bd37fdb1f6f027cd29b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -232,6 +400,30 @@
     },
     {
       "key": {
+        "uuid": "c0e3376c_192f54de",
+        "filename": "chrome/browser/chromeos/settings/device_settings_service.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1228045
+      },
+      "writtenOn": "2017-08-29T10:43:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b23bfa3b_cac12d84",
+      "range": {
+        "startLine": 243,
+        "startChar": 1,
+        "endLine": 243,
+        "endChar": 6
+      },
+      "revId": "3e12781a43eff4790ffe9bd37fdb1f6f027cd29b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dbefb007_43eb65f4",
         "filename": "chrome/browser/chromeos/settings/device_settings_service.cc",
         "patchSetId": 11
@@ -252,6 +444,30 @@
       "revId": "3e12781a43eff4790ffe9bd37fdb1f6f027cd29b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a20f710_f0d370f5",
+        "filename": "chrome/browser/chromeos/settings/device_settings_service.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 311,
+      "author": {
+        "id": 1228045
+      },
+      "writtenOn": "2017-08-29T10:43:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dbefb007_43eb65f4",
+      "range": {
+        "startLine": 306,
+        "startChar": 0,
+        "endLine": 311,
+        "endChar": 5
+      },
+      "revId": "3e12781a43eff4790ffe9bd37fdb1f6f027cd29b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
