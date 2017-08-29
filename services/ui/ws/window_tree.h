@@ -298,6 +298,11 @@ class WindowTree : public mojom::WindowTree,
                             ServerWindow* target_window,
                             int64_t display_id);
 
+  // Before the ClientWindowId gets sent back to the client, making sure we
+  // reset the high 16 bits back to 0 if it's being sent back to the client
+  // that created the window.
+  Id ClientWindowIdToTransportId(const ClientWindowId& client_window_id) const;
+
  private:
   friend class test::WindowTreeTestApi;
 
@@ -327,7 +332,7 @@ class WindowTree : public mojom::WindowTree,
 
   bool ShouldRouteToWindowManager(const ServerWindow* window) const;
 
-  ClientWindowId ClientWindowIdForWindow(const ServerWindow* window) const;
+  Id ClientWindowIdForWindow(const ServerWindow* window) const;
 
   // Returns true if |id| is a valid WindowId for a new window.
   bool IsValidIdForNewWindow(const ClientWindowId& id) const;
@@ -425,11 +430,6 @@ class WindowTree : public mojom::WindowTree,
   // straight mapping, there may not be a window with the returned id.
   ClientWindowId MakeClientWindowId(Id transport_window_id) const;
   ClientWindowId MakeClientWindowId(const WindowId& id) const;
-
-  // Before the ClientWindowId gets sent back to the client, making sure we
-  // reset the high 16 bits back to 0 if it's being sent back to the client
-  // that created the window.
-  Id ClientWindowIdToTransportId(const ClientWindowId& client_window_id) const;
 
   // WindowTree:
   void NewWindow(uint32_t change_id,

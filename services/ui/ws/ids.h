@@ -13,6 +13,7 @@
 #include "base/containers/hash_tables.h"
 #include "base/hash.h"
 #include "base/strings/stringprintf.h"
+#include "components/viz/common/surfaces/frame_sink_id.h"
 #include "services/ui/common/types.h"
 #include "services/ui/common/util.h"
 
@@ -62,22 +63,7 @@ struct WindowId {
 };
 
 // Used for ids assigned by the client.
-struct ClientWindowId {
-  explicit ClientWindowId(Id id) : id(id) {}
-  ClientWindowId(ClientSpecificId client_id, ClientSpecificId window_id)
-      : ClientWindowId((client_id << 16) | window_id) {}
-  ClientWindowId() : id(0u) {}
-
-  bool operator==(const ClientWindowId& other) const { return other.id == id; }
-
-  bool operator!=(const ClientWindowId& other) const {
-    return !(*this == other);
-  }
-
-  bool operator<(const ClientWindowId& other) const { return id < other.id; }
-
-  Id id;
-};
+using ClientWindowId = viz::FrameSinkId;
 
 inline WindowId WindowIdFromTransportId(Id id) {
   return WindowId(HiWord(id), LoWord(id));
@@ -94,9 +80,7 @@ inline WindowId RootWindowId(uint16_t index) {
   return WindowId(kInvalidClientId, 2 + index);
 }
 
-struct ClientWindowIdHash {
-  size_t operator()(const ClientWindowId& id) const { return id.id; }
-};
+using ClientWindowIdHash = viz::FrameSinkIdHash;
 
 struct WindowIdHash {
   size_t operator()(const WindowId& id) const {

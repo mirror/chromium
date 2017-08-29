@@ -47,12 +47,8 @@ namespace {
 
 const UserId kTestUserId1 = "2";
 
-std::string WindowIdToString(const WindowId& id) {
-  return base::StringPrintf("%d,%d", id.client_id, id.window_id);
-}
-
 std::string ClientWindowIdToString(const ClientWindowId& id) {
-  return WindowIdToString(WindowIdFromTransportId(id.id));
+  return base::StringPrintf("%d,%d", id.client_id(), id.sink_id());
 }
 
 ClientWindowId BuildClientWindowId(WindowTree* tree,
@@ -677,11 +673,13 @@ TEST_F(WindowTreeTest, Embed) {
   ASSERT_EQ(1u, wm_client()->tracker()->changes()->size())
       << SingleChangeToDescription(*wm_client()->tracker()->changes());
   // The window manager should be told about the FrameSinkId of the embedded
-  // window.
+  // window. Clients that created this window is receiving the event, so
+  // client_id part would be reset to 0 before sending back to clients.
   EXPECT_EQ(
       base::StringPrintf(
           "OnFrameSinkIdAllocated window=%s %s",
-          WindowIdToString(WindowIdFromTransportId(embed_window_id.id)).c_str(),
+          ClientWindowIdToString(ClientWindowId(0, embed_window_id.sink_id()))
+              .c_str(),
           embed_window->frame_sink_id().ToString().c_str()),
       SingleChangeToDescription(*wm_client()->tracker()->changes()));
 }
@@ -765,10 +763,12 @@ TEST_F(WindowTreeTest, NewTopLevelWindow) {
   std::unordered_map<std::string, std::vector<uint8_t>> properties;
   const uint32_t initial_change_id = 17;
   // Explicitly use an id that does not contain the client id.
-  const ClientWindowId embed_window_id2_in_child(45 << 16 | 27);
+  const ClientWindowId embed_window_id2_in_child(45, 27);
   static_cast<mojom::WindowTree*>(child_tree)
-      ->NewTopLevelWindow(initial_change_id, embed_window_id2_in_child.id,
-                          properties);
+      ->NewTopLevelWindow(
+          initial_change_id,
+          child_tree->ClientWindowIdToTransportId(embed_window_id2_in_child),
+          properties);
 
   // The binding should be paused until the wm acks the change.
   uint32_t wm_change_id = 0u;
@@ -785,31 +785,33 @@ TEST_F(WindowTreeTest, NewTopLevelWindow) {
   // Ack the change, which should resume the binding.
   child_binding->client()->tracker()->changes()->clear();
   static_cast<mojom::WindowManagerClient*>(wm_tree())
-      ->OnWmCreatedTopLevelWindow(wm_change_id, embed_window_id2.id);
+      ->OnWmCreatedTopLevelWindow(
+          wm_change_id,
+          wm_tree()->ClientWindowIdToTransportId(embed_window_id2));
 
   ServerWindow* embed_window = wm_tree()->GetWindowByClientId(embed_window_id2);
   ASSERT_TRUE(embed_window);
   ASSERT_EQ(1u, wm_client()->tracker()->changes()->size())
       << SingleChangeToDescription(*wm_client()->tracker()->changes());
   // The window manager should be told about the FrameSinkId of the embedded
-  // window.
-  EXPECT_EQ(base::StringPrintf(
-                "OnFrameSinkIdAllocated window=%s %s",
-                WindowIdToString(WindowIdFromTransportId(embed_window_id2.id))
-                    .c_str(),
-                embed_window->frame_sink_id().ToString().c_str()),
-            SingleChangeToDescription(*wm_client()->tracker()->changes()));
+  // window. Clients that created this window is receiving the event, so
+  // client_id part would be reset to 0 before sending back to clients.
+  EXPECT_EQ(
+      base::StringPrintf(
+          "OnFrameSinkIdAllocated window=%s %s",
+          ClientWindowIdToString(ClientWindowId(0, embed_window_id2.sink_id()))
+              .c_str(),
+          embed_window->frame_sink_id().ToString().c_str()),
+      SingleChangeToDescription(*wm_client()->tracker()->changes()));
   EXPECT_FALSE(child_binding->is_paused());
   // TODO(fsamuel): Currently the FrameSinkId maps directly to the server's
   // window ID. This is likely bad from a security perspective and should be
   // fixed.
-  EXPECT_EQ(
-      base::StringPrintf("TopLevelCreated id=17 window_id=%s drawn=true",
-                         WindowIdToString(WindowIdFromTransportId(
-                                              embed_window_id2_in_child.id))
-                             .c_str()),
-      SingleChangeToDescription(
-          *child_binding->client()->tracker()->changes()));
+  EXPECT_EQ(base::StringPrintf(
+                "TopLevelCreated id=17 window_id=%s drawn=true",
+                ClientWindowIdToString(embed_window_id2_in_child).c_str()),
+            SingleChangeToDescription(
+                *child_binding->client()->tracker()->changes()));
   child_binding->client()->tracker()->changes()->clear();
 
   // Change the visibility of the window from the owner and make sure the
@@ -819,8 +821,7 @@ TEST_F(WindowTreeTest, NewTopLevelWindow) {
       ClientWindowIdForWindow(wm_tree(), embed_window), false));
   EXPECT_FALSE(embed_window->visible());
   EXPECT_EQ("VisibilityChanged window=" +
-                WindowIdToString(
-                    WindowIdFromTransportId(embed_window_id2_in_child.id)) +
+                ClientWindowIdToString(embed_window_id2_in_child) +
                 " visible=false",
             SingleChangeToDescription(
                 *child_binding->client()->tracker()->changes()));
@@ -846,19 +847,21 @@ TEST_F(WindowTreeTest, ExplicitSetCapture) {
   uint32_t change_id = 42;
   WindowId window_id = window->id();
   mojom_window_tree->SetCapture(
-      change_id, ClientWindowId(window_id.client_id, window_id.window_id).id);
+      change_id, tree->ClientWindowIdToTransportId(
+                     ClientWindowId(window_id.client_id, window_id.window_id)));
   Display* display = tree->GetDisplay(window);
   EXPECT_EQ(window, GetCaptureWindow(display));
 
   // Only the capture window should be able to release capture
   WindowId root_window_id = root_window->id();
   mojom_window_tree->ReleaseCapture(
-      ++change_id,
-      ClientWindowId(root_window_id.client_id, root_window_id.window_id).id);
+      ++change_id, tree->ClientWindowIdToTransportId(ClientWindowId(
+                       root_window_id.client_id, root_window_id.window_id)));
   EXPECT_EQ(window, GetCaptureWindow(display));
 
   mojom_window_tree->ReleaseCapture(
-      ++change_id, ClientWindowId(window_id.client_id, window_id.window_id).id);
+      ++change_id, tree->ClientWindowIdToTransportId(ClientWindowId(
+                       window_id.client_id, window_id.window_id)));
   EXPECT_EQ(nullptr, GetCaptureWindow(display));
 }
 
@@ -1234,10 +1237,12 @@ TEST_F(WindowTreeTest, ValidMoveLoopWithWM) {
   std::unordered_map<std::string, std::vector<uint8_t>> properties;
   const uint32_t initial_change_id = 17;
   // Explicitly use an id that does not contain the client id.
-  const ClientWindowId embed_window_id2_in_child(45 << 16 | 27);
+  const ClientWindowId embed_window_id2_in_child(45, 27);
   static_cast<mojom::WindowTree*>(child_tree)
-      ->NewTopLevelWindow(initial_change_id, embed_window_id2_in_child.id,
-                          properties);
+      ->NewTopLevelWindow(
+          initial_change_id,
+          child_tree->ClientWindowIdToTransportId(embed_window_id2_in_child),
+          properties);
 
   // The binding should be paused until the wm acks the change.
   uint32_t wm_change_id = 0u;
@@ -1254,14 +1259,18 @@ TEST_F(WindowTreeTest, ValidMoveLoopWithWM) {
   // Ack the change, which should resume the binding.
   child_binding->client()->tracker()->changes()->clear();
   static_cast<mojom::WindowManagerClient*>(wm_tree())
-      ->OnWmCreatedTopLevelWindow(wm_change_id, embed_window_id2.id);
+      ->OnWmCreatedTopLevelWindow(
+          wm_change_id,
+          wm_tree()->ClientWindowIdToTransportId(embed_window_id2));
   EXPECT_FALSE(child_binding->is_paused());
 
   // The child_tree is the one that has to make this call; the
   const uint32_t change_id = 7;
   static_cast<mojom::WindowTree*>(child_tree)
-      ->PerformWindowMove(change_id, embed_window_id2_in_child.id,
-                          mojom::MoveLoopSource::MOUSE, gfx::Point(0, 0));
+      ->PerformWindowMove(
+          change_id,
+          child_tree->ClientWindowIdToTransportId(embed_window_id2_in_child),
+          mojom::MoveLoopSource::MOUSE, gfx::Point(0, 0));
 
   EXPECT_TRUE(wm_internal.on_perform_move_loop_called());
 }
@@ -1279,10 +1288,12 @@ TEST_F(WindowTreeTest, MoveLoopAckOKByWM) {
   std::unordered_map<std::string, std::vector<uint8_t>> properties;
   const uint32_t initial_change_id = 17;
   // Explicitly use an id that does not contain the client id.
-  const ClientWindowId embed_window_id2_in_child(45 << 16 | 27);
+  const ClientWindowId embed_window_id2_in_child(45, 27);
   static_cast<mojom::WindowTree*>(child_tree)
-      ->NewTopLevelWindow(initial_change_id, embed_window_id2_in_child.id,
-                          properties);
+      ->NewTopLevelWindow(
+          initial_change_id,
+          child_tree->ClientWindowIdToTransportId(embed_window_id2_in_child),
+          properties);
 
   // The binding should be paused until the wm acks the change.
   uint32_t wm_change_id = 0u;
@@ -1299,15 +1310,19 @@ TEST_F(WindowTreeTest, MoveLoopAckOKByWM) {
   // Ack the change, which should resume the binding.
   child_binding->client()->tracker()->changes()->clear();
   static_cast<mojom::WindowManagerClient*>(wm_tree())
-      ->OnWmCreatedTopLevelWindow(wm_change_id, embed_window_id2.id);
+      ->OnWmCreatedTopLevelWindow(
+          wm_change_id,
+          wm_tree()->ClientWindowIdToTransportId(embed_window_id2));
   EXPECT_FALSE(child_binding->is_paused());
 
   // The child_tree is the one that has to make this call; the
   const uint32_t change_id = 7;
   child_binding->client()->tracker()->changes()->clear();
   static_cast<mojom::WindowTree*>(child_tree)
-      ->PerformWindowMove(change_id, embed_window_id2_in_child.id,
-                          mojom::MoveLoopSource::MOUSE, gfx::Point(0, 0));
+      ->PerformWindowMove(
+          change_id,
+          child_tree->ClientWindowIdToTransportId(embed_window_id2_in_child),
+          mojom::MoveLoopSource::MOUSE, gfx::Point(0, 0));
 
   // There should be three changes, the first two relating to capture changing,
   // the last for the completion.
@@ -1334,10 +1349,12 @@ TEST_F(WindowTreeTest, WindowManagerCantMoveLoop) {
   std::unordered_map<std::string, std::vector<uint8_t>> properties;
   const uint32_t initial_change_id = 17;
   // Explicitly use an id that does not contain the client id.
-  const ClientWindowId embed_window_id2_in_child(45 << 16 | 27);
+  const ClientWindowId embed_window_id2_in_child(45, 27);
   static_cast<mojom::WindowTree*>(child_tree)
-      ->NewTopLevelWindow(initial_change_id, embed_window_id2_in_child.id,
-                          properties);
+      ->NewTopLevelWindow(
+          initial_change_id,
+          child_tree->ClientWindowIdToTransportId(embed_window_id2_in_child),
+          properties);
 
   // The binding should be paused until the wm acks the change.
   uint32_t wm_change_id = 0u;
@@ -1354,14 +1371,16 @@ TEST_F(WindowTreeTest, WindowManagerCantMoveLoop) {
   // Ack the change, which should resume the binding.
   child_binding->client()->tracker()->changes()->clear();
   static_cast<mojom::WindowManagerClient*>(wm_tree())
-      ->OnWmCreatedTopLevelWindow(wm_change_id, embed_window_id2.id);
+      ->OnWmCreatedTopLevelWindow(
+          wm_change_id,
+          wm_tree()->ClientWindowIdToTransportId(embed_window_id2));
   EXPECT_FALSE(child_binding->is_paused());
 
   // Making this call from the wm_tree() must be invalid.
   const uint32_t change_id = 7;
   static_cast<mojom::WindowTree*>(wm_tree())->PerformWindowMove(
-      change_id, embed_window_id2.id, mojom::MoveLoopSource::MOUSE,
-      gfx::Point(0, 0));
+      change_id, wm_tree()->ClientWindowIdToTransportId(embed_window_id2),
+      mojom::MoveLoopSource::MOUSE, gfx::Point(0, 0));
 
   EXPECT_FALSE(wm_internal.on_perform_move_loop_called());
 }
@@ -1379,10 +1398,12 @@ TEST_F(WindowTreeTest, RevertWindowBoundsOnMoveLoopFailure) {
   std::unordered_map<std::string, std::vector<uint8_t>> properties;
   const uint32_t initial_change_id = 17;
   // Explicitly use an id that does not contain the client id.
-  const ClientWindowId embed_window_id2_in_child(45 << 16 | 27);
+  const ClientWindowId embed_window_id2_in_child(45, 27);
   static_cast<mojom::WindowTree*>(child_tree)
-      ->NewTopLevelWindow(initial_change_id, embed_window_id2_in_child.id,
-                          properties);
+      ->NewTopLevelWindow(
+          initial_change_id,
+          child_tree->ClientWindowIdToTransportId(embed_window_id2_in_child),
+          properties);
 
   // The binding should be paused until the wm acks the change.
   uint32_t wm_change_id = 0u;
@@ -1399,14 +1420,18 @@ TEST_F(WindowTreeTest, RevertWindowBoundsOnMoveLoopFailure) {
   // Ack the change, which should resume the binding.
   child_binding->client()->tracker()->changes()->clear();
   static_cast<mojom::WindowManagerClient*>(wm_tree())
-      ->OnWmCreatedTopLevelWindow(wm_change_id, embed_window_id2.id);
+      ->OnWmCreatedTopLevelWindow(
+          wm_change_id,
+          wm_tree()->ClientWindowIdToTransportId(embed_window_id2));
   EXPECT_FALSE(child_binding->is_paused());
 
   // The child_tree is the one that has to make this call; the
   const uint32_t change_id = 7;
   static_cast<mojom::WindowTree*>(child_tree)
-      ->PerformWindowMove(change_id, embed_window_id2_in_child.id,
-                          mojom::MoveLoopSource::MOUSE, gfx::Point(0, 0));
+      ->PerformWindowMove(
+          change_id,
+          child_tree->ClientWindowIdToTransportId(embed_window_id2_in_child),
+          mojom::MoveLoopSource::MOUSE, gfx::Point(0, 0));
 
   ServerWindow* server_window =
       wm_tree()->GetWindowByClientId(embed_window_id2);
@@ -1451,7 +1476,7 @@ TEST_F(WindowTreeTest, SetCanAcceptEvents) {
   EXPECT_EQ(mojom::EventTargetingPolicy::TARGET_AND_DESCENDANTS,
             window->event_targeting_policy());
   WindowTreeTestApi(tree).SetEventTargetingPolicy(
-      ClientWindowIdForWindow(tree, window).id,
+      tree->ClientWindowIdToTransportId(ClientWindowIdForWindow(tree, window)),
       mojom::EventTargetingPolicy::NONE);
   EXPECT_EQ(mojom::EventTargetingPolicy::NONE,
             window->event_targeting_policy());
@@ -1486,7 +1511,9 @@ TEST_F(WindowTreeTest, CaptureNotifiesWm) {
   wm_client()->tracker()->changes()->clear();
   EXPECT_TRUE(embed_tree->SetCapture(FirstRootId(embed_tree)));
   ASSERT_TRUE(!wm_client()->tracker()->changes()->empty());
-  EXPECT_EQ("OnCaptureChanged new_window=1,1 old_window=2,1",
+  // clients that created this window is receiving the event, so client_id part
+  // would be reset to 0 before sending back to clients.
+  EXPECT_EQ("OnCaptureChanged new_window=0,1 old_window=2,1",
             ChangesToDescription1(*wm_client()->tracker()->changes())[0]);
   EXPECT_TRUE(embed_client->tracker()->changes()->empty());
   wm_client()->tracker()->changes()->clear();
@@ -1511,10 +1538,12 @@ TEST_F(WindowTreeTest, SetModalTypeForwardedToWindowManager) {
   std::unordered_map<std::string, std::vector<uint8_t>> properties;
   const uint32_t initial_change_id = 17;
   // Explicitly use an id that does not contain the client id.
-  const ClientWindowId embed_window_id2_in_child(45 << 16 | 27);
+  const ClientWindowId embed_window_id2_in_child(45, 27);
   static_cast<mojom::WindowTree*>(child_tree)
-      ->NewTopLevelWindow(initial_change_id, embed_window_id2_in_child.id,
-                          properties);
+      ->NewTopLevelWindow(
+          initial_change_id,
+          child_tree->ClientWindowIdToTransportId(embed_window_id2_in_child),
+          properties);
 
   // Create the window for |embed_window_id2_in_child|.
   const ClientWindowId embed_window_id2 = BuildClientWindowId(wm_tree(), 2);
@@ -1525,7 +1554,8 @@ TEST_F(WindowTreeTest, SetModalTypeForwardedToWindowManager) {
 
   // Ack the change, which should resume the binding.
   static_cast<mojom::WindowManagerClient*>(wm_tree())
-      ->OnWmCreatedTopLevelWindow(0u, embed_window_id2.id);
+      ->OnWmCreatedTopLevelWindow(
+          0u, wm_tree()->ClientWindowIdToTransportId(embed_window_id2));
 
   // Change modal type to MODAL_TYPE_SYSTEM and check that it is forwarded to
   // the window manager.
