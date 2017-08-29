@@ -22,6 +22,30 @@
       "revId": "8d93f0bddd457ee2daceb98a48a0314352522088",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5c70a3e_dc3bd040",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/photo_picker/PhotoPickerDialog.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2017-08-29T15:44:21Z",
+      "side": 1,
+      "message": "Yes, this listener is for the activity displaying the dialog. When the user wants to launch, e.g. the Camera intent, this activity changes to PAUSED state and eventually to either STOPPED state (if the Camera shows) or RESUMED state (if the user pressed back to abort the Camera intent).\n\nThe activity showing the dialog should be in STARTED/RESUMED state, I would think. Does it matter?",
+      "parentUuid": "b2aea69b_aa45eb8e",
+      "range": {
+        "startLine": 104,
+        "startChar": 21,
+        "endLine": 109,
+        "endChar": 63
+      },
+      "revId": "8d93f0bddd457ee2daceb98a48a0314352522088",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
