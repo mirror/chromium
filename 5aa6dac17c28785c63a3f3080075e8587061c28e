@@ -45,6 +45,30 @@
       "revId": "5aa6dac17c28785c63a3f3080075e8587061c28e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6c005ee_033f984e",
+        "filename": "ash/shell_delegate.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-08-29T21:49:23Z",
+      "side": 1,
+      "message": "We can remove UpdateTouchscreenStatus entirely. The only reason I think is here: https://cs.chromium.org/chromium/src/chrome/browser/chromeos/system/input_device_settings.cc?q\u003dupdatetouchdevices\u0026sq\u003dpackage:chromium\u0026l\u003d282, we will need to replace it with SetTouchscreenStatus call.\n\nSo before I made the change, the proposed API would be:\nbool LoadTouchscreenStatus(TouchscreenStatusSource source) const; // load instead of get because of source?\nvoid SetTouchscreenStatus(bool enabled, TouchscreenStatusSource source);",
+      "parentUuid": "ae2da890_997fda08",
+      "range": {
+        "startLine": 122,
+        "startChar": 15,
+        "endLine": 122,
+        "endChar": 35
+      },
+      "revId": "5aa6dac17c28785c63a3f3080075e8587061c28e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
