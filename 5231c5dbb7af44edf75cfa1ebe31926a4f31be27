@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6eff2fc9_e71ee2ac",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/test_importer.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1231539
+      },
+      "writtenOn": "2017-08-29T23:11:18Z",
+      "side": 1,
+      "message": "Is it possible to get empty try_results after the filtering? If yes, the error won\u0027t be caught in the same way (the CL will be closed with the \"CQ appears to have failed\" message instead of \"No CQ try job results\", which may or may not be desirable); if deemed impossible, it\u0027s probably a good idea to extract the first condition of the if statement below into an assert:\n\nassert try_results, \"...\"\nif self.git_cl.all_success(try_results):\n    ...",
+      "revId": "5231c5dbb7af44edf75cfa1ebe31926a4f31be27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
