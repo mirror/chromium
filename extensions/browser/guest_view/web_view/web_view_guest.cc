@@ -1056,14 +1056,14 @@ void WebViewGuest::NavigateGuest(const std::string& src,
   // if the navigation is embedder-initiated. For browser-initiated navigations,
   // content scripts will be ready.
   if (force_navigation) {
-    SignalWhenReady(
-        base::Bind(&WebViewGuest::LoadURLWithParams,
-                   weak_ptr_factory_.GetWeakPtr(), url, content::Referrer(),
-                   ui::PAGE_TRANSITION_AUTO_TOPLEVEL, force_navigation));
+    SignalWhenReady(base::Bind(
+        &WebViewGuest::LoadURLWithParams, weak_ptr_factory_.GetWeakPtr(), url,
+        content::Referrer(), ui::PAGE_TRANSITION_AUTO_TOPLEVEL,
+        WindowOpenDisposition::CURRENT_TAB, force_navigation));
     return;
   }
   LoadURLWithParams(url, content::Referrer(), ui::PAGE_TRANSITION_AUTO_TOPLEVEL,
-                    force_navigation);
+                    WindowOpenDisposition::CURRENT_TAB, force_navigation);
 }
 
 bool WebViewGuest::HandleKeyboardShortcuts(
@@ -1331,7 +1331,7 @@ WebContents* WebViewGuest::OpenURLFromTab(
   // about:blank.
   if (params.disposition == WindowOpenDisposition::CURRENT_TAB) {
     LoadURLWithParams(params.url, params.referrer, params.transition,
-                      true /* force_navigation */);
+                      params.disposition, true /* force_navigation */);
     return web_contents();
   }
 
@@ -1395,11 +1395,11 @@ void WebViewGuest::RequestToLockMouse(WebContents* web_contents,
           base::Unretained(web_contents)));
 }
 
-void WebViewGuest::LoadURLWithParams(
-    const GURL& url,
-    const content::Referrer& referrer,
-    ui::PageTransition transition_type,
-    bool force_navigation) {
+void WebViewGuest::LoadURLWithParams(const GURL& url,
+                                     const content::Referrer& referrer,
+                                     ui::PageTransition transition_type,
+                                     WindowOpenDisposition disposition,
+                                     bool force_navigation) {
   if (!url.is_valid()) {
     LoadAbort(true /* is_top_level */, url, net::ERR_INVALID_URL);
     NavigateGuest(url::kAboutBlankURL, false /* force_navigation */);
@@ -1433,6 +1433,7 @@ void WebViewGuest::LoadURLWithParams(
   content::NavigationController::LoadURLParams load_url_params(validated_url);
   load_url_params.referrer = referrer;
   load_url_params.transition_type = transition_type;
+  load_url_params.disposition = disposition;
   load_url_params.extra_headers = std::string();
   load_url_params.transferred_global_request_id = GlobalRequestID();
   if (is_overriding_user_agent_) {

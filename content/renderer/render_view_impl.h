@@ -140,6 +140,9 @@ class CONTENT_EXPORT RenderViewImpl : public RenderWidget,
   // Returns the RenderViewImpl for the given routing ID.
   static RenderViewImpl* FromRoutingID(int routing_id);
 
+  static WindowOpenDisposition NavigationPolicyToDisposition(
+      blink::WebNavigationPolicy policy);
+
   // May return NULL when the view is closing.
   blink::WebView* webview() const;
 
@@ -490,9 +493,6 @@ class CONTENT_EXPORT RenderViewImpl : public RenderWidget,
   static Referrer GetReferrerFromRequest(
       blink::WebFrame* frame,
       const blink::WebURLRequest& request);
-
-  static WindowOpenDisposition NavigationPolicyToDisposition(
-      blink::WebNavigationPolicy policy);
 
   void ApplyWebPreferencesInternal(const WebPreferences& prefs,
                                    blink::WebView* web_view,

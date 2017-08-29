@@ -530,6 +530,7 @@ CommonNavigationParams MakeCommonNavigationParams(
   DCHECK(extra_data);
   return CommonNavigationParams(
       info.url_request.Url(), referrer, extra_data->transition_type(),
+      RenderViewImpl::NavigationPolicyToDisposition(info.default_policy),
       navigation_type, true, info.replaces_current_history_item, ui_timestamp,
       report_type, GURL(), GURL(),
       static_cast<PreviewsState>(info.url_request.GetPreviewsState()),

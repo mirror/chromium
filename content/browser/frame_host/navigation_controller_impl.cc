@@ -201,6 +201,7 @@ std::unique_ptr<NavigationEntry> NavigationController::CreateNavigationEntry(
     const GURL& url,
     const Referrer& referrer,
     ui::PageTransition transition,
+    WindowOpenDisposition disposition,
     bool is_renderer_initiated,
     const std::string& extra_headers,
     BrowserContext* browser_context) {
@@ -222,10 +223,7 @@ std::unique_ptr<NavigationEntry> NavigationController::CreateNavigationEntry(
   NavigationEntryImpl* entry = new NavigationEntryImpl(
       NULL,  // The site instance for tabs is sent on navigation
              // (WebContents::GetSiteInstance).
-      loaded_url,
-      referrer,
-      base::string16(),
-      transition,
+      loaded_url, referrer, base::string16(), transition, disposition,
       is_renderer_initiated);
   entry->SetVirtualURL(dest_url);
   entry->set_user_typed_url(dest_url);
@@ -405,9 +403,11 @@ void NavigationControllerImpl::Reload(ReloadType reload_type,
       // Create a navigation entry that resembles the current one, but do not
       // copy page id, site instance, content state, or timestamp.
       NavigationEntryImpl* nav_entry = NavigationEntryImpl::FromNavigationEntry(
-          CreateNavigationEntry(
-              entry->GetURL(), entry->GetReferrer(), entry->GetTransitionType(),
-              false, entry->extra_headers(), browser_context_).release());
+          CreateNavigationEntry(entry->GetURL(), entry->GetReferrer(),
+                                entry->GetTransitionType(),
+                                entry->GetDisposition(), false,
+                                entry->extra_headers(), browser_context_)
+              .release());
 
       // Mark the reload type as NO_RELOAD, so navigation will not be considered
       // a reload in the renderer.
@@ -681,6 +681,7 @@ void NavigationControllerImpl::LoadURL(
     const std::string& extra_headers) {
   LoadURLParams params(url);
   params.referrer = referrer;
+  params.disposition = WindowOpenDisposition::CURRENT_TAB;
   params.transition_type = transition;
   params.extra_headers = extra_headers;
   LoadURLWithParams(params);
@@ -762,7 +763,7 @@ void NavigationControllerImpl::LoadURLWithParams(const LoadURLParams& params) {
   // Otherwise, create a pending entry for the main frame.
   if (!entry) {
     entry = NavigationEntryImpl::FromNavigationEntry(CreateNavigationEntry(
-        params.url, params.referrer, params.transition_type,
+        params.url, params.referrer, params.transition_type, params.disposition,
         params.is_renderer_initiated, params.extra_headers, browser_context_));
     entry->set_source_site_instance(
         static_cast<SiteInstanceImpl*>(params.source_site_instance.get()));

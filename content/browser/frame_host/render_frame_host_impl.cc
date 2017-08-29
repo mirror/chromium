@@ -3099,6 +3099,7 @@ void RenderFrameHostImpl::NavigateToInterstitialURL(const GURL& data_url) {
   DCHECK(data_url.SchemeIs(url::kDataScheme));
   CommonNavigationParams common_params(
       data_url, Referrer(), ui::PAGE_TRANSITION_LINK,
+      WindowOpenDisposition::CURRENT_TAB,
       FrameMsg_Navigate_Type::DIFFERENT_DOCUMENT, false, false,
       base::TimeTicks::Now(), FrameMsg_UILoadMetricsReportType::NO_REPORT,
       GURL(), GURL(), PREVIEWS_OFF, base::TimeTicks::Now(), "GET", nullptr,
@@ -4086,7 +4087,9 @@ RenderFrameHostImpl::TakeNavigationHandleForCommit(
     }
 
     return NavigationHandleImpl::Create(
-        params.url, params.redirects, frame_tree_node_, is_renderer_initiated,
+        params.url, params.redirects, frame_tree_node_,
+        // TODO: Set disposition.
+        WindowOpenDisposition::UNKNOWN, is_renderer_initiated,
         params.was_within_same_document, base::TimeTicks::Now(),
         pending_nav_entry_id,
         false,                  // started_from_context_menu
@@ -4141,7 +4144,8 @@ RenderFrameHostImpl::TakeNavigationHandleForCommit(
   // pending_nav_entry_id. If the previous handle was a prematurely aborted
   // navigation loaded via LoadDataWithBaseURL, propagate the entry id.
   return NavigationHandleImpl::Create(
-      params.url, params.redirects, frame_tree_node_, is_renderer_initiated,
+      params.url, params.redirects, frame_tree_node_,
+      WindowOpenDisposition::UNKNOWN, is_renderer_initiated,
       params.was_within_same_document, base::TimeTicks::Now(),
       entry_id_for_data_nav,
       false,                  // started_from_context_menu

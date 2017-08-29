@@ -6,6 +6,7 @@
 
 #include "base/memory/ref_counted_memory.h"
 #include "build/build_config.h"
+#include "ui/base/window_open_disposition.h"
 
 namespace content {
 
@@ -13,6 +14,7 @@ NavigationController::LoadURLParams::LoadURLParams(const GURL& url)
     : url(url),
       load_type(LOAD_TYPE_DEFAULT),
       transition_type(ui::PAGE_TRANSITION_LINK),
+      disposition(WindowOpenDisposition::UNKNOWN),
       frame_tree_node_id(-1),
       is_renderer_initiated(false),
       override_user_agent(UA_OVERRIDE_INHERIT),
@@ -35,6 +37,7 @@ NavigationController::LoadURLParams::LoadURLParams(
     : url(other.url),
       load_type(other.load_type),
       transition_type(other.transition_type),
+      disposition(other.disposition),
       frame_tree_node_id(other.frame_tree_node_id),
       referrer(other.referrer),
       extra_headers(other.extra_headers),
@@ -59,6 +62,7 @@ NavigationController::LoadURLParams::operator=(
   url = other.url;
   load_type = other.load_type;
   transition_type = other.transition_type;
+  disposition = other.disposition;
   frame_tree_node_id = other.frame_tree_node_id;
   referrer = other.referrer;
   redirect_chain = other.redirect_chain;

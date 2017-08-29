@@ -232,9 +232,13 @@ std::unique_ptr<NavigationEntryImpl> NavigationEntryImpl::FromNavigationEntry(
 }
 
 NavigationEntryImpl::NavigationEntryImpl()
-    : NavigationEntryImpl(nullptr, GURL(), Referrer(), base::string16(),
-                          ui::PAGE_TRANSITION_LINK, false) {
-}
+    : NavigationEntryImpl(nullptr,
+                          GURL(),
+                          Referrer(),
+                          base::string16(),
+                          ui::PAGE_TRANSITION_LINK,
+                          WindowOpenDisposition::UNKNOWN,
+                          false) {}
 
 NavigationEntryImpl::NavigationEntryImpl(
     scoped_refptr<SiteInstanceImpl> instance,
@@ -242,6 +246,7 @@ NavigationEntryImpl::NavigationEntryImpl(
     const Referrer& referrer,
     const base::string16& title,
     ui::PageTransition transition_type,
+    WindowOpenDisposition disposition,
     bool is_renderer_initiated)
     : frame_tree_(new TreeNode(nullptr,
                                new FrameNavigationEntry("",
@@ -259,6 +264,7 @@ NavigationEntryImpl::NavigationEntryImpl(
       update_virtual_url_with_url_(false),
       title_(title),
       transition_type_(transition_type),
+      disposition_(disposition),
       restore_type_(RestoreType::NONE),
       is_overriding_user_agent_(false),
       http_status_code_(0),
@@ -463,6 +469,14 @@ void NavigationEntryImpl::SetTransitionType(
 
 ui::PageTransition NavigationEntryImpl::GetTransitionType() const {
   return transition_type_;
+}
+
+void NavigationEntryImpl::SetDisposition(WindowOpenDisposition disposition) {
+  disposition_ = disposition;
+}
+
+WindowOpenDisposition NavigationEntryImpl::GetDisposition() const {
+  return disposition_;
 }
 
 const GURL& NavigationEntryImpl::GetUserTypedURL() const {
@@ -679,11 +693,11 @@ CommonNavigationParams NavigationEntryImpl::ConstructCommonNavigationParams(
     method = (post_body.get() || GetHasPostData()) ? "POST" : "GET";
 
   return CommonNavigationParams(
-      dest_url, dest_referrer, GetTransitionType(), navigation_type,
-      !IsViewSourceMode(), should_replace_entry(), ui_timestamp, report_type,
-      GetBaseURLForDataURL(), GetHistoryURLForDataURL(), previews_state,
-      navigation_start, method, post_body ? post_body : post_data_,
-      base::Optional<SourceLocation>(),
+      dest_url, dest_referrer, GetTransitionType(), GetDisposition(),
+      navigation_type, !IsViewSourceMode(), should_replace_entry(),
+      ui_timestamp, report_type, GetBaseURLForDataURL(),
+      GetHistoryURLForDataURL(), previews_state, navigation_start, method,
+      post_body ? post_body : post_data_, base::Optional<SourceLocation>(),
       CSPDisposition::CHECK /* should_check_main_world_csp */);
 }
 

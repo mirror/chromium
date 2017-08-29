@@ -90,6 +90,7 @@ class CONTENT_EXPORT NavigationEntryImpl : public NavigationEntry {
                       const Referrer& referrer,
                       const base::string16& title,
                       ui::PageTransition transition_type,
+                      WindowOpenDisposition disposition,
                       bool is_renderer_initiated);
   ~NavigationEntryImpl() override;
 
@@ -118,6 +119,8 @@ class CONTENT_EXPORT NavigationEntryImpl : public NavigationEntry {
   bool IsViewSourceMode() const override;
   void SetTransitionType(ui::PageTransition transition_type) override;
   ui::PageTransition GetTransitionType() const override;
+  void SetDisposition(WindowOpenDisposition disposition) override;
+  WindowOpenDisposition GetDisposition() const override;
   const GURL& GetUserTypedURL() const override;
   void SetHasPostData(bool has_post_data) override;
   bool GetHasPostData() const override;
@@ -444,6 +447,7 @@ class CONTENT_EXPORT NavigationEntryImpl : public NavigationEntry {
   FaviconStatus favicon_;
   SSLStatus ssl_;
   ui::PageTransition transition_type_;
+  WindowOpenDisposition disposition_;
   GURL user_typed_url_;
   RestoreType restore_type_;
   GURL original_request_url_;

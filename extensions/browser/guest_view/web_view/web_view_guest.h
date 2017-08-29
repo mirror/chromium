@@ -281,11 +281,11 @@ class WebViewGuest : public guest_view::GuestView<WebViewGuest>,
 
   // Loads the |url| provided. |force_navigation| indicates whether to reload
   // the content if the provided |url| matches the current page of the guest.
-  void LoadURLWithParams(
-      const GURL& url,
-      const content::Referrer& referrer,
-      ui::PageTransition transition_type,
-      bool force_navigation);
+  void LoadURLWithParams(const GURL& url,
+                         const content::Referrer& referrer,
+                         ui::PageTransition transition_type,
+                         WindowOpenDisposition disposition,
+                         bool force_navigation);
 
   void RequestNewWindowPermission(
       WindowOpenDisposition disposition,

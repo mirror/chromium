@@ -26,6 +26,8 @@
 #include "ui/base/page_transition_types.h"
 #include "url/gurl.h"
 
+enum class WindowOpenDisposition;
+
 namespace base {
 
 class RefCountedString;
@@ -95,6 +97,7 @@ class NavigationController {
       const GURL& url,
       const Referrer& referrer,
       ui::PageTransition transition,
+      WindowOpenDisposition disposition,
       bool is_renderer_initiated,
       const std::string& extra_headers,
       BrowserContext* browser_context);
@@ -114,6 +117,8 @@ class NavigationController {
     // PageTransition for this load. See PageTransition for details.
     // Note the default value in constructor below.
     ui::PageTransition transition_type;
+
+    WindowOpenDisposition disposition;
 
     // The FrameTreeNode ID for the frame to navigate, or -1 for the main frame.
     int frame_tree_node_id;
