@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b77921a6_28750042",
+        "filename": "third_party/WebKit/public/web/WebAXObject.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 1002537
+      },
+      "writtenOn": "2017-08-29T01:28:22Z",
+      "side": 0,
+      "message": "I don\u0027t follow why these have been removed but we keep CanSetFocusAttribute() etc.\n\nOh - were they simply never used?",
+      "range": {
+        "startLine": 267,
+        "startChar": 20,
+        "endLine": 267,
+        "endChar": 32
+      },
+      "revId": "2d025dad7376106819c056e565b37f49c972c171",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
