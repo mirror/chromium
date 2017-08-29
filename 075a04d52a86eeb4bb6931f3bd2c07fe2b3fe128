@@ -1,0 +1,95 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9f07b409_c3ffd819",
+        "filename": "content/browser/dom_storage/dom_storage_area.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-08-29T21:50:18Z",
+      "side": 1,
+      "message": "naming nit: for consistency, i\u0027d suggest calling using the term \"persistent\" instead of permanent",
+      "revId": "075a04d52a86eeb4bb6931f3bd2c07fe2b3fe128",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0dd421b_d5842e8b",
+        "filename": "content/browser/dom_storage/dom_storage_area.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 690,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-08-29T21:50:18Z",
+      "side": 1,
+      "message": "would we ever expect cloned batches by the time this happens? i think the task to clone the namespace and the reply to ack that would have to have happened prior to this ack of a commit on this area?",
+      "revId": "075a04d52a86eeb4bb6931f3bd2c07fe2b3fe128",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70eaeff9_31a5642d",
+        "filename": "content/browser/dom_storage/dom_storage_area.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-08-29T21:50:18Z",
+      "side": 1,
+      "message": "is it possible to have a commit batch inflight and cloned batches in the list at the same time, is this test valid when there are cloned batches?",
+      "range": {
+        "startLine": 227,
+        "startChar": 11,
+        "endLine": 227,
+        "endChar": 26
+      },
+      "revId": "075a04d52a86eeb4bb6931f3bd2c07fe2b3fe128",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be90f085_469809f0",
+        "filename": "content/browser/dom_storage/session_storage_database.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-08-29T21:50:18Z",
+      "side": 1,
+      "message": "i\u0027d suggest using the term \"area\" in place of \"database\" here",
+      "revId": "075a04d52a86eeb4bb6931f3bd2c07fe2b3fe128",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd5453df_188ee728",
+        "filename": "content/browser/dom_storage/session_storage_database.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-08-29T21:50:18Z",
+      "side": 1,
+      "message": "order of the ids matters, does this iterate from the more recent ancestor to the oldest? just checking",
+      "revId": "075a04d52a86eeb4bb6931f3bd2c07fe2b3fe128",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
