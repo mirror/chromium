@@ -454,6 +454,43 @@ struct PendingPaymentResponse {
   return YES;
 }
 
+// Records the number of suggestions shown for contact, shipping and payment
+// instrument in the JourneyLogger.
+- (void)recordNumberOfSuggestionsShownForPaymentRequest:
+    (payments::PaymentRequest*)paymentRequest {
+  if (paymentRequest->request_payer_name() ||
+      paymentRequest->request_payer_phone() ||
+      paymentRequest->request_payer_email()) {
+    const bool has_complete_contact =
+        paymentRequest->contact_profiles().empty()
+            ? false
+            : paymentRequest->profile_comparator()->IsContactInfoComplete(
+                  paymentRequest->contact_profiles()[0]);
+    paymentRequest->journey_logger().SetNumberOfSuggestionsShown(
+        payments::JourneyLogger::Section::SECTION_CONTACT_INFO,
+        paymentRequest->contact_profiles().size(), has_complete_contact);
+  }
+
+  if (paymentRequest->request_shipping()) {
+    const bool has_complete_shipping =
+        paymentRequest->shipping_profiles().empty()
+            ? false
+            : paymentRequest->profile_comparator()->IsShippingComplete(
+                  paymentRequest->shipping_profiles()[0]);
+    paymentRequest->journey_logger().SetNumberOfSuggestionsShown(
+        payments::JourneyLogger::Section::SECTION_SHIPPING_ADDRESS,
+        paymentRequest->shipping_profiles().size(), has_complete_shipping);
+  }
+
+  const bool has_complete_instrument =
+      paymentRequest->payment_methods().empty()
+          ? false
+          : paymentRequest->payment_methods()[0]->IsCompleteForPayment();
+  paymentRequest->journey_logger().SetNumberOfSuggestionsShown(
+      payments::JourneyLogger::Section::SECTION_PAYMENT_METHOD,
+      paymentRequest->payment_methods().size(), has_complete_instrument);
+}
+
 - (BOOL)handleRequestShow:(const base::DictionaryValue&)message {
   payments::PaymentRequest* paymentRequest =
       [self paymentRequestFromMessage:message];
@@ -507,6 +544,8 @@ struct PendingPaymentResponse {
 
   _pendingPaymentRequest = paymentRequest;
   paymentRequest->set_state(payments::PaymentRequest::State::INTERACTIVE);
+
+  [self recordNumberOfSuggestionsShownForPaymentRequest:paymentRequest];
 
   paymentRequest->journey_logger().SetEventOccurred(
       payments::JourneyLogger::EVENT_SHOWN);
