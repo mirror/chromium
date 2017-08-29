@@ -16,6 +16,24 @@
       "revId": "635c35c0a886ee6e73516cf12d587fadd693f3f4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e4ec3e2_bff23a8c",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 768,
+      "author": {
+        "id": 1180350
+      },
+      "writtenOn": "2017-08-29T09:48:01Z",
+      "side": 1,
+      "message": "correct -- i read deeper through the code and it would only call the same method later and return the same status. Moved.",
+      "parentUuid": "47a7232f_81ff291e",
+      "revId": "635c35c0a886ee6e73516cf12d587fadd693f3f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

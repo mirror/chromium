@@ -16,6 +16,24 @@
       "revId": "8cdee11d699afb9f8807aeb7faab2c619540b031",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18402481_c67eb845",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 931,
+      "author": {
+        "id": 1180350
+      },
+      "writtenOn": "2017-08-29T09:48:01Z",
+      "side": 0,
+      "message": "Correct. Fetch-more does not modify stored suggestions anymore.",
+      "parentUuid": "ff4bfff3_25460b3b",
+      "revId": "8cdee11d699afb9f8807aeb7faab2c619540b031",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
