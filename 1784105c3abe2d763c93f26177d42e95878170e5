@@ -46,6 +46,30 @@
       "revId": "1784105c3abe2d763c93f26177d42e95878170e5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63d17c48_fc8f97b0",
+        "filename": "components/content_settings/core/browser/website_settings_registry.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-08-29T09:16:51Z",
+      "side": 0,
+      "message": "You are correct, we don\u0027t care about Finch + tests not passing, but that really means that in tests we don\u0027t care about Finch (because unit tests !\u003d Chrome), not the other way around. Specifically, what I\u0027d be concerned about is that we would still register the content setting in production even though it would be unused. Maybe that\u0027s fine though, and getting rid of the //media dependency is good too. (Really, I think we should push registration of content settings to clients of this component.)",
+      "parentUuid": "55a2fd82_07fa7f35",
+      "range": {
+        "startLine": 182,
+        "startChar": 2,
+        "endLine": 182,
+        "endChar": 72
+      },
+      "revId": "1784105c3abe2d763c93f26177d42e95878170e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
