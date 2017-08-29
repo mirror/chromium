@@ -87,6 +87,24 @@
       "revId": "a9948566c0f37bfe26b770a6aa083d3d75a21f94",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ff52e93_e2ab42ad",
+        "filename": "pdf/pdfium/pdfium_engine.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 3436,
+      "author": {
+        "id": 1002142
+      },
+      "writtenOn": "2017-08-29T20:50:58Z",
+      "side": 1,
+      "message": "Sure, but we also wouldn\u0027t catch that below on 3447. It just seems weird that we\u0027d skip drawing the rect once, but not every subsequent time? If it\u0027s fully overlapped by any single rect, we may as well get rid of it.",
+      "parentUuid": "bee2034e_a1386fc9",
+      "revId": "a9948566c0f37bfe26b770a6aa083d3d75a21f94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
