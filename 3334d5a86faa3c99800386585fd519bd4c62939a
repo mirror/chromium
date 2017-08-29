@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "68c40c95_ac52fa5a",
+        "filename": "chrome/browser/chromeos/arc/policy/arc_policy_util.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1144419
+      },
+      "writtenOn": "2017-08-29T17:27:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "03bb3552_e6ec5e38",
+      "range": {
+        "startLine": 17,
+        "startChar": 26,
+        "endLine": 17,
+        "endChar": 58
+      },
+      "revId": "3334d5a86faa3c99800386585fd519bd4c62939a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "94b997b2_3d8108a2",
         "filename": "chrome/browser/chromeos/login/existing_user_controller.cc",
         "patchSetId": 19
@@ -39,6 +63,24 @@
       "revId": "3334d5a86faa3c99800386585fd519bd4c62939a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0c7f977_e921b3cd",
+        "filename": "chrome/browser/chromeos/login/existing_user_controller.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1144419
+      },
+      "writtenOn": "2017-08-29T17:27:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "94b997b2_3d8108a2",
+      "revId": "3334d5a86faa3c99800386585fd519bd4c62939a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -62,6 +104,30 @@
       "revId": "3334d5a86faa3c99800386585fd519bd4c62939a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08d49d40_734e2331",
+        "filename": "chrome/common/pref_names.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 1020,
+      "author": {
+        "id": 1144419
+      },
+      "writtenOn": "2017-08-29T17:27:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "66e0a352_c702ac00",
+      "range": {
+        "startLine": 1020,
+        "startChar": 12,
+        "endLine": 1020,
+        "endChar": 43
+      },
+      "revId": "3334d5a86faa3c99800386585fd519bd4c62939a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

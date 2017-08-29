@@ -22,6 +22,30 @@
       "revId": "fe7b36e5645ccff70d35953b213b0e965a3d16db",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08d61c14_0f14c6e6",
+        "filename": "chrome/browser/chromeos/policy/device_policy_decoder_chromeos.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 412,
+      "author": {
+        "id": 1144419
+      },
+      "writtenOn": "2017-08-29T17:27:07Z",
+      "side": 0,
+      "message": "This is done in a separate CL.",
+      "parentUuid": "2aecff41_258cfa68",
+      "range": {
+        "startLine": 412,
+        "startChar": 2,
+        "endLine": 412,
+        "endChar": 56
+      },
+      "revId": "fe7b36e5645ccff70d35953b213b0e965a3d16db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
