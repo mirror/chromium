@@ -16,10 +16,9 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.BaseAdapter;
 import android.widget.LinearLayout;
+import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.PopupWindow.OnDismissListener;
@@ -27,7 +26,6 @@ import android.widget.TextView;
 
 import org.chromium.base.ApiCompatibilityUtils;
 import org.chromium.base.VisibleForTesting;
-import org.chromium.base.annotations.SuppressFBWarnings;
 import org.chromium.content.R;
 import org.chromium.content.browser.WindowAndroidProvider;
 import org.chromium.ui.UiUtils;
@@ -35,34 +33,33 @@ import org.chromium.ui.UiUtils;
 /**
  * Popup window that displays a menu for viewing and applying text replacement suggestions.
  */
-public class SuggestionsPopupWindow
+public abstract class SuggestionsPopupWindow
         implements OnItemClickListener, OnDismissListener, View.OnClickListener {
     private static final String ACTION_USER_DICTIONARY_INSERT =
             "com.android.settings.USER_DICTIONARY_INSERT";
     private static final String USER_DICTIONARY_EXTRA_WORD = "word";
 
-    private final Context mContext;
-    private final TextSuggestionHost mTextSuggestionHost;
+    protected final Context mContext;
+    protected final TextSuggestionHost mTextSuggestionHost;
     private final View mParentView;
     private final WindowAndroidProvider mWindowAndroidProvider;
 
     private Activity mActivity;
     private DisplayMetrics mDisplayMetrics;
-    private PopupWindow mPopupWindow;
+    protected PopupWindow mPopupWindow;
     private LinearLayout mContentView;
 
-    private SuggestionAdapter mSuggestionsAdapter;
+    private ListAdapter mSuggestionsAdapter;
     private String mHighlightedText;
-    private String[] mSpellCheckSuggestions = new String[0];
-    private int mNumberOfSuggestionsToUse;
-    private TextView mAddToDictionaryButton;
+    protected int mNumberOfSuggestionsToUse;
+    protected TextView mAddToDictionaryButton;
     private TextView mDeleteButton;
     private ListView mSuggestionListView;
     private LinearLayout mListFooter;
     private View mDivider;
     private int mPopupVerticalMargin;
 
-    private boolean mDismissedByItemTap;
+    protected boolean mDismissedByItemTap;
 
     /**
      * @param context Android context to use.
@@ -110,6 +107,8 @@ public class SuggestionsPopupWindow
         mPopupWindow.setOnDismissListener(this);
     }
 
+    protected abstract ListAdapter getSuggestionsAdapter();
+
     private void initContentView() {
         final LayoutInflater inflater =
                 (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -137,7 +136,7 @@ public class SuggestionsPopupWindow
                 (LinearLayout) inflater.inflate(R.layout.text_edit_suggestion_list_footer, null);
         mSuggestionListView.addFooterView(mListFooter, null, false);
 
-        mSuggestionsAdapter = new SuggestionAdapter();
+        mSuggestionsAdapter = getSuggestionsAdapter();
         mSuggestionListView.setAdapter(mSuggestionsAdapter);
         mSuggestionListView.setOnItemClickListener(this);
 
@@ -172,39 +171,6 @@ public class SuggestionsPopupWindow
         mContext.startActivity(intent);
     }
 
-    private class SuggestionAdapter extends BaseAdapter {
-        private LayoutInflater mInflater =
-                (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-
-        @Override
-        public int getCount() {
-            return mNumberOfSuggestionsToUse;
-        }
-
-        @Override
-        public Object getItem(int position) {
-            return mSpellCheckSuggestions[position];
-        }
-
-        @Override
-        public long getItemId(int position) {
-            return position;
-        }
-
-        @Override
-        @SuppressFBWarnings("BC_UNCONFIRMED_CAST")
-        public View getView(int position, View convertView, ViewGroup parent) {
-            TextView textView = (TextView) convertView;
-            if (textView == null) {
-                textView = (TextView) mInflater.inflate(
-                        R.layout.text_edit_suggestion_item, parent, false);
-            }
-            final String suggestion = mSpellCheckSuggestions[position];
-            textView.setText(suggestion);
-            return textView;
-        }
-    }
-
     private void measureContent() {
         // Make the menu wide enough to fit its widest item.
         int width = UiUtils.computeMaxWidthOfListAdapterItems(mSuggestionListView.getAdapter());
@@ -227,28 +193,8 @@ public class SuggestionsPopupWindow
         }
     }
 
-    /**
-     * Called by TextSuggestionHost to tell this class what text is currently highlighted (so it can
-     * be added to the dictionary if requested).
-     */
-    public void setHighlightedText(String text) {
-        mHighlightedText = text;
-    }
-
-    /**
-     * Called by TextSuggestionHost to set the list of spell check suggestions to show in the
-     * suggestion menu.
-     */
-    public void setSpellCheckSuggestions(String[] suggestions) {
-        mSpellCheckSuggestions = suggestions.clone();
-        mNumberOfSuggestionsToUse = mSpellCheckSuggestions.length;
-    }
-
-    /**
-     * Shows the text suggestion menu at the specified coordinates (relative to the viewport).
-     */
-    public void show(double caretX, double caretY) {
-        mSuggestionsAdapter.notifyDataSetChanged();
+    protected void show(double caretX, double caretY, String highlightedText) {
+        mHighlightedText = highlightedText;
 
         mActivity = mWindowAndroidProvider.getWindowAndroid().getActivity().get();
         // Note: the Activity can be null here if we're in a WebView that was created without
@@ -357,20 +303,6 @@ public class SuggestionsPopupWindow
             mDismissedByItemTap = true;
             mPopupWindow.dismiss();
         }
-    }
-
-    @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        // Ignore taps somewhere in the list footer (divider, "Add to dictionary", "Delete") that
-        // don't get handled by a button.
-        if (position >= mNumberOfSuggestionsToUse) {
-            return;
-        }
-
-        String suggestion = mSpellCheckSuggestions[position];
-        mTextSuggestionHost.applySpellCheckSuggestion(suggestion);
-        mDismissedByItemTap = true;
-        mPopupWindow.dismiss();
     }
 
     @Override
