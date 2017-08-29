@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4c248326_612ef263",
+        "filename": "chrome/browser/password_manager/password_manager_util_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1160859
+      },
+      "writtenOn": "2017-08-29T20:18:03Z",
+      "side": 1,
+      "message": "add some kind of TODO or link a bug so we know when to remove this (or else it will languish...)",
+      "range": {
+        "startLine": 221,
+        "startChar": 35,
+        "endLine": 221,
+        "endChar": 46
+      },
+      "revId": "9f5ac6f49d56270d34788f5dcda32b0332c27fd8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "390d7868_a7df6d31",
+        "filename": "chrome/browser/password_manager/password_manager_util_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 332,
+      "author": {
+        "id": 1160859
+      },
+      "writtenOn": "2017-08-29T20:18:03Z",
+      "side": 1,
+      "message": "hmm is a blank password valid on a domain joined machine, I think it is. I can certainly test this case.",
+      "range": {
+        "startLine": 332,
+        "startChar": 13,
+        "endLine": 332,
+        "endChar": 17
+      },
+      "revId": "9f5ac6f49d56270d34788f5dcda32b0332c27fd8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "834f6a81_521bbd4d",
+        "filename": "chrome/browser/password_manager/password_manager_util_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 429,
+      "author": {
+        "id": 1160859
+      },
+      "writtenOn": "2017-08-29T20:18:03Z",
+      "side": 1,
+      "message": "This was just in case, I think at the time we were implementing we were getting some false negatives in the blank password detection, and still wanted to allow users to get past the (incorrectly displayed) re-authentication dialog with their blank password, so this caught those cases.\n\nIt would be good to measure how much this code path is hit and remove it if nobody is hitting, perhaps we can add an UMA histogram here to check for how often this happens in practice.",
+      "range": {
+        "startLine": 429,
+        "startChar": 9,
+        "endLine": 429,
+        "endChar": 23
+      },
+      "revId": "9f5ac6f49d56270d34788f5dcda32b0332c27fd8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
