@@ -22,6 +22,30 @@
       "revId": "4d0062dfe5496640e236b7126acb8a02a3a17fa5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "89c0dd95_238a44c7",
+        "filename": "tools/mb/mb_config.pyl",
+        "patchSetId": 1
+      },
+      "lineNbr": 705,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2017-08-29T19:40:02Z",
+      "side": 1,
+      "message": "I don\u0027t think we need \"-64\" in the name, since we only do one build per platform. We probably also don\u0027t need \"chrome-\".\n\nApart from that, these entries are usually sorted by key, so please move this up in the file.",
+      "parentUuid": "1cfe18a3_ab7095a0",
+      "range": {
+        "startLine": 705,
+        "startChar": 5,
+        "endLine": 705,
+        "endChar": 34
+      },
+      "revId": "4d0062dfe5496640e236b7126acb8a02a3a17fa5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
