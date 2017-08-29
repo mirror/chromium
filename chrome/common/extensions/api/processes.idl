@@ -53,7 +53,8 @@ namespace processes {
     long naclDebugPort;
     // Array of TaskInfos representing the tasks running on this process.
     TaskInfo[] tasks;
-    // The most recent measurement of the process CPU usage, between 0 and 100.
+    // The most recent measurement of the process CPU usage, between 0 and 100,
+    // expressing the percentage of total CPU resources used by the process.
     // Only available when receiving the object as part of a callback from
     // onUpdated or onUpdatedWithMemory.
     double? cpu;
