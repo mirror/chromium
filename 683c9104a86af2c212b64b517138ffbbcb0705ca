@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "0887332e_39e71634",
+        "filename": "chrome/app/vector_icons/notification_installed.icon",
+        "patchSetId": 1
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1195459
+      },
+      "writtenOn": "2017-08-29T02:20:27Z",
+      "side": 1,
+      "message": "This icon is different from check_circle.icon. I agree that having multiple similar icons in the repository is not preferable, and I would clean up unused code and icons in https://crbug.com/757703 once the MD notification becomes default.\n\nRegarding 1x, asked the question to sgabriel@ in https://crbug.com/726241#c16 .",
+      "parentUuid": "cad570e2_e979444c",
+      "range": {
+        "startLine": 5,
+        "startChar": 0,
+        "endLine": 5,
+        "endChar": 22
+      },
+      "revId": "683c9104a86af2c212b64b517138ffbbcb0705ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "21fe6c6c_8138e383",
         "filename": "chrome/browser/ui/extensions/extension_installed_notification.cc",
         "patchSetId": 1
