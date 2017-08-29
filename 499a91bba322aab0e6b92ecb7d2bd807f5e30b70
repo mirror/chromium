@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b2a3fdd3_30d85c37",
+        "filename": "chrome/renderer/resources/renderer_resources.grd",
+        "patchSetId": 5
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-29T18:12:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7e77cce0_c680e3c0",
+      "range": {
+        "startLine": 40,
+        "startChar": 23,
+        "endLine": 40,
+        "endChar": 60
+      },
+      "revId": "499a91bba322aab0e6b92ecb7d2bd807f5e30b70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6cb9d4fc_47a6e139",
         "filename": "extensions/renderer/easy_unlock_proximity_required_stub.h",
         "patchSetId": 5
@@ -45,6 +69,30 @@
       "revId": "499a91bba322aab0e6b92ecb7d2bd807f5e30b70",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d298d121_371a96c3",
+        "filename": "extensions/renderer/easy_unlock_proximity_required_stub.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-29T18:12:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6cb9d4fc_47a6e139",
+      "range": {
+        "startLine": 58,
+        "startChar": 19,
+        "endLine": 58,
+        "endChar": 33
+      },
+      "revId": "499a91bba322aab0e6b92ecb7d2bd807f5e30b70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
