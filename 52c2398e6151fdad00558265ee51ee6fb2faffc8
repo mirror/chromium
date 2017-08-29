@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2cb6a4de_96fd2a62",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-08-29T10:47:09Z",
+      "side": 1,
+      "message": "nit: Proposal:\nThis ensures that only one of {onCompleted,onErrorOccured} is called.\nIn contrast, onErrorOccurred can still be called after onResponseStarted,\nwhich could lead to race conditions in ArcSupportHost::OnMessage, when\nauth_delegate_ would already be nullptr.\nSee also \"Life cycle of requests\"[1].\n\n[1] https://developer.chrome.com/extensions/webRequest",
+      "range": {
+        "startLine": 9,
+        "startChar": 5,
+        "endLine": 9,
+        "endChar": 13
+      },
+      "revId": "52c2398e6151fdad00558265ee51ee6fb2faffc8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
