@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "164e1c4d_6f4fa2ee",
+        "filename": "ui/aura/mus/hit_test_data_provider_aura_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1211635
+      },
+      "writtenOn": "2017-08-29T22:26:23Z",
+      "side": 1,
+      "message": "Do we have to eliminate all ui/aura/mus uses (although looks like some classes in ui/aura do include files in ui/aura/mus) before we can move this to ui/aura (see the TODO in https://chromium-review.googlesource.com/c/chromium/src/+/641938/2/ui/aura/mus/hit_test_data_provider_aura_unittest.cc)?",
+      "range": {
+        "startLine": 8,
+        "startChar": 0,
+        "endLine": 8,
+        "endChar": 40
+      },
+      "revId": "0a6943911943146cfbe0083edda3ee74ea45316a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
