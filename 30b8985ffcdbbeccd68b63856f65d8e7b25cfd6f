@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6bdbff1a_ba45a685",
+        "filename": "chrome/browser/ui/views/tabs/tab.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 669,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-08-29T00:52:38Z",
+      "side": 1,
+      "message": "Nit: Trivial, but I would have found it a little clearer to structure like:\n\n  if (title animation) {\n    ...\n    return;\n  }\n\n  if (pulse animation)\n    return;  // Optionally, reverse the conditional and SchedulePaint()\n\n  SchedulePaint();\n\nI say this because the pulse animation conditional is really skipping the \"schedule paint\", but now that\u0027s not the only thing that happens in this function.  If we get the title animation stuff out of the way up front, then it (subsequently) is.",
+      "revId": "30b8985ffcdbbeccd68b63856f65d8e7b25cfd6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a3d97ee_bb67e1c1",
+        "filename": "chrome/browser/ui/views/tabs/tab.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 848,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-08-29T00:52:38Z",
+      "side": 1,
+      "message": "AFAICT, the effect here is that if we\u0027re toggling the favicon, and both old and new title are non-empty, we animate the full bounds rect (both start and end pos).  It seems like instead we should just animate the start pos of the bounds, and use the width of the desired bounds rect as the bounds width immediately.  That would simply require a minor tweak to how start_title_bounds_ is computed below, I think?",
+      "revId": "30b8985ffcdbbeccd68b63856f65d8e7b25cfd6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
