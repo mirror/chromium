@@ -22,6 +22,30 @@
       "revId": "f708a24dca52bcbe9b43d4b3a0737bef96c34fe9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ea43b11_f6a9a5b6",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/webapps/WebappActivityTestRule.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1191013
+      },
+      "writtenOn": "2017-08-29T04:35:11Z",
+      "side": 1,
+      "message": "Thanks for this suggestion! Done.",
+      "parentUuid": "7dcb3d09_d17ec71f",
+      "range": {
+        "startLine": 102,
+        "startChar": 20,
+        "endLine": 102,
+        "endChar": 34
+      },
+      "revId": "f708a24dca52bcbe9b43d4b3a0737bef96c34fe9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
