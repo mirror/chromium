@@ -325,6 +325,10 @@ class NET_EXPORT UDPSocketWin : public base::win::ObjectWatcher::Delegate {
 
   THREAD_CHECKER(thread_checker_);
 
+  // Used to prevent null dereferences in OnObjectSignaled, when passing an
+  // error to both read and write callbacks. Cleared in Close().
+  base::WeakPtrFactory<UDPSocketWin> error_pending_;
+
   DISALLOW_COPY_AND_ASSIGN(UDPSocketWin);
 };
 
@@ -373,6 +377,8 @@ class NET_EXPORT QwaveAPI {
                LPOVERLAPPED overlapped);
 
  private:
+  FRIEND_TEST_ALL_PREFIXES(UDPSocketTest, SetDSCPFake);
+
   bool qwave_supported_;
   CreateHandleFn create_handle_func_;
   CloseHandleFn close_handle_func_;
@@ -380,7 +386,6 @@ class NET_EXPORT QwaveAPI {
   RemoveSocketFromFlowFn remove_socket_from_flow_func_;
   SetFlowFn set_flow_func_;
 
-  FRIEND_TEST_ALL_PREFIXES(UDPSocketTest, SetDSCPFake);
   DISALLOW_COPY_AND_ASSIGN(QwaveAPI);
 };
 
