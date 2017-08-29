@@ -51,6 +51,24 @@
       "revId": "92ace93587f0b9f24ef6ffefe1171a64fc838119",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e0480b3_f3ff86d3",
+        "filename": "chrome/browser/chromeos/policy/configuration_policy_handler_chromeos.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 357,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-29T16:22:09Z",
+      "side": 1,
+      "message": "So there has always been a \"full screen\" magnifier, which zooms the area around the cursor to fill the entire display. In 2013 a different type of magnifier was partially implemented, the \"lens magnifier\" or \"partial magnifier\". This zoomed the area around the cursor to fill a circle, kind of like a magnifying glass.\n\nI believe that a policy exists to force-enable or force-disable the magnifier feature as a whole (which means the full screen one, since lens magnifier was never finished). I think there\u0027s somewhat-hacky code here such that setting policy::key::kScreenMagnifierType to 0 disables magnification entirely and setting it to any other value turns on the full screen one.\n\nI don\u0027t propose to remove the policy. We still need it to enforce the magnifier feature as a whole being enabled or disabled.\n\nIn prefs-land, ash::prefs::kAccessibilityScreenMagnifierEnabled is still used (set and read). After this CL lands ash::prefs::kAccessibilityScreenMagnifierType will be set here, but never read. (Well, it\u0027s read in one place, just to copy the value from one profile to another, but never read after that.)\n\nSo what I\u0027m asking is whether it\u0027s safe to remove the latter pref. I\u0027m not sure if policy manipulates prefs directly by the name string (so removing it would be unsafe) or if policy manipulates prefs indirectly via key::kScreenMagnifierType (in which case I think it\u0027s safe to remove this line and the dependent code).",
+      "parentUuid": "3210e710_c4fce741",
+      "revId": "92ace93587f0b9f24ef6ffefe1171a64fc838119",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
