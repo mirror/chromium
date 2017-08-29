@@ -81,6 +81,30 @@
       "revId": "e4751e4a083120d5b4ddc88180e476b9acda2a9f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b6794c7_6837728b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheet.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1618,
+      "author": {
+        "id": 1145120
+      },
+      "writtenOn": "2017-08-29T01:01:00Z",
+      "side": 1,
+      "message": "Yea, that\u0027s how it is probably configured the IPH demo mode i.e. to show only once, since all the IPH\u0027s used so far are using one time show-up only.\nThis is the first time we want something to show the IPH bubble always. \nI think we can set the finch config to show always, but I would confirm with +nyquist@, +dtrainor@ tomorrow.\n\nI also think since we want to show the bubble when Chrome Home is enabled (one time only), we would have to break this into two features e.g. CHROME_HOME_EXPAND_FEATURE and CHROME_HOME_DISCOVERY_FEATURE_FROM_MENU, the latter will always return true from #shouldTriggerHelpUi() as per finch config.",
+      "parentUuid": "e02c62ad_6fb6b576",
+      "range": {
+        "startLine": 1618,
+        "startChar": 0,
+        "endLine": 1618,
+        "endChar": 98
+      },
+      "revId": "e4751e4a083120d5b4ddc88180e476b9acda2a9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
