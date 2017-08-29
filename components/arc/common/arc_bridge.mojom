@@ -6,6 +6,7 @@ module arc.mojom;
 
 import "accessibility_helper.mojom";
 import "app.mojom";
+import "arc_cert_store.mojom";
 import "audio.mojom";
 import "auth.mojom";
 import "bluetooth.mojom";
@@ -36,9 +37,9 @@ import "voice_interaction_framework.mojom";
 import "volume_mounter.mojom";
 import "wallpaper.mojom";
 
-// Next MinVersion: 29
+// Next MinVersion: 30
 // Deprecated method IDs: 101, 105
-// Next method ID: 134
+// Next method ID: 135
 interface ArcBridgeHost {
   // Keep the entries alphabetical. In order to do so without breaking
   // compatibility with the ARC instance, explicitly assign each interface a
@@ -50,6 +51,10 @@ interface ArcBridgeHost {
 
   // Notifies Chrome that the AppInstance interface is ready.
   OnAppInstanceReady@100(AppInstance instance_ptr);
+
+  // Notifies Chrome that the ArcCertStoreInstance interface is ready.
+  [MinVersion=29] OnArcCertStoreInstanceReady@134(
+      ArcCertStoreInstance instance_ptr);
 
   // Notifies Chrome that the AudioInstance interface is ready.
   [MinVersion=8] OnAudioInstanceReady@115(AudioInstance instance_ptr);

@@ -135,6 +135,7 @@ mojom("arc_bindings") {
     "common/accessibility_helper.mojom",
     "common/app.mojom",
     "common/arc_bridge.mojom",
+    "common/arc_cert_store.mojom",
     "common/audio.mojom",
     "common/auth.mojom",
     "common/bitmap.mojom",
