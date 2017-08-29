@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "48d0c56e_00a91584",
+        "filename": "device/hid/hid_device_filter.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-08-29T08:04:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a17118b3_f220d308",
+      "range": {
+        "startLine": 26,
+        "startChar": 49,
+        "endLine": 26,
+        "endChar": 52
+      },
+      "revId": "4d7359719a8061cfcaa00f2a46f574230d51102e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9266b4bc_7599d18b",
         "filename": "device/hid/hid_device_info.h",
         "patchSetId": 13
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "0d1034a0_6c0c8255",
+        "filename": "device/hid/hid_device_info.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-08-29T08:04:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9266b4bc_7599d18b",
+      "range": {
+        "startLine": 49,
+        "startChar": 16,
+        "endLine": 49,
+        "endChar": 44
+      },
+      "revId": "4d7359719a8061cfcaa00f2a46f574230d51102e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "153d97b7_524ba2e0",
         "filename": "device/hid/hid_device_info.h",
         "patchSetId": 13
@@ -59,6 +107,30 @@
       "writtenOn": "2017-08-28T18:46:08Z",
       "side": 1,
       "message": "Like platform_device_id_ this field doesn\u0027t need to be exposed through the Mojo interface.",
+      "range": {
+        "startLine": 83,
+        "startChar": 0,
+        "endLine": 83,
+        "endChar": 73
+      },
+      "revId": "4d7359719a8061cfcaa00f2a46f574230d51102e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "39ef27ff_d9ea280a",
+        "filename": "device/hid/hid_device_info.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-08-29T08:04:49Z",
+      "side": 1,
+      "message": "In ChromeOS, client uses this field: https://cs.chromium.org/chromium/src/extensions/browser/api/device_permissions_prompt.cc?rcl\u003d973ea14af6e9914b69da2d0ff318120354cc270e\u0026l\u003d243",
+      "parentUuid": "153d97b7_524ba2e0",
       "range": {
         "startLine": 83,
         "startChar": 0,
@@ -141,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "428e8a46_fded593b",
+        "filename": "extensions/browser/api/device_permissions_manager.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-08-29T08:04:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "19e28bae_46e940e5",
+      "range": {
+        "startLine": 177,
+        "startChar": 34,
+        "endLine": 177,
+        "endChar": 46
+      },
+      "revId": "4d7359719a8061cfcaa00f2a46f574230d51102e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5409d749_f10486c5",
         "filename": "extensions/browser/api/device_permissions_prompt.cc",
         "patchSetId": 13
@@ -161,6 +257,30 @@
       "revId": "4d7359719a8061cfcaa00f2a46f574230d51102e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62348195_aab0ced9",
+        "filename": "extensions/browser/api/device_permissions_prompt.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 275,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-08-29T08:04:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5409d749_f10486c5",
+      "range": {
+        "startLine": 275,
+        "startChar": 33,
+        "endLine": 275,
+        "endChar": 68
+      },
+      "revId": "4d7359719a8061cfcaa00f2a46f574230d51102e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -187,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "26db569a_ec3f38ea",
+        "filename": "extensions/browser/api/device_permissions_prompt.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-08-29T08:04:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "df874fd6_4676ec6c",
+      "range": {
+        "startLine": 42,
+        "startChar": 26,
+        "endLine": 42,
+        "endChar": 78
+      },
+      "revId": "4d7359719a8061cfcaa00f2a46f574230d51102e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0ae20f6f_6bce70fc",
         "filename": "extensions/browser/api/hid/hid_device_manager.cc",
         "patchSetId": 13
@@ -207,6 +351,30 @@
       "revId": "4d7359719a8061cfcaa00f2a46f574230d51102e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "defbbf20_da8a2992",
+        "filename": "extensions/browser/api/hid/hid_device_manager.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-08-29T08:04:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0ae20f6f_6bce70fc",
+      "range": {
+        "startLine": 159,
+        "startChar": 11,
+        "endLine": 159,
+        "endChar": 51
+      },
+      "revId": "4d7359719a8061cfcaa00f2a46f574230d51102e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

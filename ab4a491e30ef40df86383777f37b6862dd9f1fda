@@ -213,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "2a2a3ba6_e85f8fed",
+        "filename": "device/hid/hid_service.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-08-29T08:04:49Z",
+      "side": 1,
+      "message": "All the clients(including //device/u2f before it is moved into device service) will be eventually converted to use mojo interface of HID. That\u0027s why I directly let OnDeviceAdded() take \"device::mojom::HidDeviceInfoPtr\" which is same as mojo version of OnDeviceAdded().\n\nIf we let //device/u2f to receive OnDeviceAdded(const device::mojom::HidDeviceInfo\u0026) in this CL, we have to change it back in next CL to let //device/u2f to receive mojo version of OnDeviceAdded which still takes device::mojom::HidDeviceInfoPtr as parameter.\n\nEven with passing device::mojom::HidDeviceInfoPtr, //device/u2f still have the option to clone or not clone: device::mojom::HidDeviceInfoPtr is a StructPtr which wraps a unique_ptr. If user wants to clone, just do std::move(). Else, leave alone the device::mojom::HidDeviceInfoPtr, it will release itself when exit the OnDeviceAdded().\n\nSo I think we can keep it as device::mojom::HidDeviceInfoPtr. WDYT? Thanks:)",
+      "parentUuid": "44541d3d_dd669c60",
+      "range": {
+        "startLine": 42,
+        "startChar": 31,
+        "endLine": 42,
+        "endChar": 62
+      },
+      "revId": "ab4a491e30ef40df86383777f37b6862dd9f1fda",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d7280a75_4b10aef9",
         "filename": "device/hid/hid_service.h",
         "patchSetId": 11
