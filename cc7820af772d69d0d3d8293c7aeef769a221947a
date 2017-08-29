@@ -16,6 +16,24 @@
       "revId": "cc7820af772d69d0d3d8293c7aeef769a221947a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f05a8133_e3b3781a",
+        "filename": "ui/aura/window_event_dispatcher.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 470,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-29T17:08:46Z",
+      "side": 0,
+      "message": "Do you mean GetInitialEventTarget or GetRootTarget? I think the code I have here should stay the same once we have HitTestQuery. Maybe I\u0027m missing something?",
+      "parentUuid": "a5832e02_21408c18",
+      "revId": "cc7820af772d69d0d3d8293c7aeef769a221947a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

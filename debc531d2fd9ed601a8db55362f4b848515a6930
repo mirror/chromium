@@ -16,6 +16,24 @@
       "revId": "debc531d2fd9ed601a8db55362f4b848515a6930",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "893e4ac0_5e7c61be",
+        "filename": "ui/aura/window_event_dispatcher.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 446,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-29T17:08:46Z",
+      "side": 1,
+      "message": "We get here if GetForcedTargetInRootWindow() returns non-null. That basically means there is a mouse_pressed_handler, mouse capture or a touch-lock target. In that case it shouldn\u0027t matter what mus says, we need to use local state. Am I wrong there?",
+      "parentUuid": "02459919_fb320bd0",
+      "revId": "debc531d2fd9ed601a8db55362f4b848515a6930",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
