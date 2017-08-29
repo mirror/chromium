@@ -364,6 +364,25 @@ TEST_F(CloudPolicyRefreshSchedulerTest, InvalidationsDisconnected) {
   CheckTiming(kPolicyRefreshRate);
 }
 
+TEST_F(CloudPolicyRefreshSchedulerTest, OnIPAddressChanged) {
+  client_.SetStatus(DM_STATUS_REQUEST_FAILED);
+  NotifyIPAddressChanged();
+  EXPECT_EQ(GetLastDelay(), base::TimeDelta());
+}
+
+TEST_F(CloudPolicyRefreshSchedulerTest, OnIPAddressChangedUnregistered) {
+  client_.SetDMToken(std::string());
+  std::unique_ptr<CloudPolicyRefreshScheduler> scheduler(
+      CreateRefreshScheduler());
+
+  // Set the last refresh back in time with a reasonable amount, simulating a
+  // sleep of device.
+  scheduler->set_last_refresh_for_testing(base::Time(
+      base::Time::NowFromSystemTime() - base::TimeDelta::FromSeconds(10)));
+  scheduler->OnIPAddressChanged();
+  EXPECT_FALSE(task_runner_->HasPendingTask());
+}
+
 class CloudPolicyRefreshSchedulerSteadyStateTest
     : public CloudPolicyRefreshSchedulerTest {
  protected:
@@ -420,12 +439,6 @@ TEST_F(CloudPolicyRefreshSchedulerSteadyStateTest, RefreshDelayChange) {
   const int delay_long_ms = 20 * 24 * 60 * 60 * 1000;
   refresh_scheduler_->SetDesiredRefreshDelay(delay_long_ms);
   CheckTiming(CloudPolicyRefreshScheduler::kRefreshDelayMaxMs);
-}
-
-TEST_F(CloudPolicyRefreshSchedulerSteadyStateTest, OnIPAddressChanged) {
-  client_.SetStatus(DM_STATUS_REQUEST_FAILED);
-  NotifyIPAddressChanged();
-  EXPECT_EQ(GetLastDelay(), base::TimeDelta());
 }
 
 struct ClientErrorTestParam {
