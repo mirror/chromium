@@ -188,6 +188,7 @@
 #include "third_party/WebKit/public/platform/WebString.h"
 #include "third_party/WebKit/public/platform/WebURL.h"
 #include "third_party/WebKit/public/platform/WebURLError.h"
+#include "third_party/WebKit/public/platform/WebURLRequestsTracker.h"
 #include "third_party/WebKit/public/platform/WebURLResponse.h"
 #include "third_party/WebKit/public/platform/WebVector.h"
 #include "third_party/WebKit/public/platform/modules/permissions/permission.mojom.h"
@@ -325,6 +326,20 @@ int64_t ExtractPostId(const WebHistoryItem& item) {
 
   return item.HttpBody().Identifier();
 }
+
+class WebURLRequestsTrackerImpl : public blink::WebURLRequestsTracker {
+ public:
+  explicit WebURLRequestsTrackerImpl(mojom::RequestsTrackerPtr tracker)
+      : tracker_(std::move(tracker)) {
+    RenderProcess::current()->AddRefProcess();
+  }
+  ~WebURLRequestsTrackerImpl() override {
+    RenderProcess::current()->ReleaseProcess();
+  }
+
+ private:
+  mojom::RequestsTrackerPtr tracker_;
+};
 
 WebURLResponseExtraDataImpl* GetExtraDataFromResponse(
     const WebURLResponse& response) {
@@ -6816,8 +6831,15 @@ std::unique_ptr<blink::WebURLLoader> RenderFrameImpl::CreateURLLoader(
     DCHECK(factory);
   }
 
+  std::unique_ptr<blink::WebURLRequestsTracker> tracker;
+  if (request.GetKeepalive()) {
+    mojom::RequestsTrackerPtr ptr;
+    GetFrameHost()->IssueRequestsTracker(mojo::MakeRequest(&ptr));
+    tracker = base::MakeUnique<WebURLRequestsTrackerImpl>(std::move(ptr));
+  }
   return base::MakeUnique<WebURLLoaderImpl>(child_thread->resource_dispatcher(),
-                                            task_runner, factory);
+                                            task_runner, factory,
+                                            std::move(tracker));
 }
 
 void RenderFrameImpl::DraggableRegionsChanged() {

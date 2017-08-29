@@ -7,7 +7,6 @@
 #include <stdint.h>
 
 #include <algorithm>
-#include <memory>
 #include <string>
 #include <utility>
 #include <vector>
@@ -64,6 +63,7 @@
 #include "third_party/WebKit/public/platform/WebURLLoadTiming.h"
 #include "third_party/WebKit/public/platform/WebURLLoaderClient.h"
 #include "third_party/WebKit/public/platform/WebURLRequest.h"
+#include "third_party/WebKit/public/platform/WebURLRequestsTracker.h"
 #include "third_party/WebKit/public/platform/WebURLResponse.h"
 #include "third_party/WebKit/public/web/WebSecurityPolicy.h"
 #include "third_party/boringssl/src/include/openssl/ssl.h"
@@ -370,7 +370,8 @@ class WebURLLoaderImpl::Context : public base::RefCounted<Context> {
   Context(WebURLLoaderImpl* loader,
           ResourceDispatcher* resource_dispatcher,
           scoped_refptr<base::SingleThreadTaskRunner> task_runner,
-          mojom::URLLoaderFactory* factory);
+          mojom::URLLoaderFactory* factory,
+          std::unique_ptr<blink::WebURLRequestsTracker> tracker);
 
   WebURLLoaderClient* client() const { return client_; }
   void set_client(WebURLLoaderClient* client) { client_ = client; }
@@ -425,6 +426,7 @@ class WebURLLoaderImpl::Context : public base::RefCounted<Context> {
   std::unique_ptr<FtpDirectoryListingResponseDelegate> ftp_listing_delegate_;
   std::unique_ptr<StreamOverrideParameters> stream_override_;
   std::unique_ptr<SharedMemoryDataConsumerHandle::Writer> body_stream_writer_;
+  std::unique_ptr<blink::WebURLRequestsTracker> requests_tracker_;
   enum DeferState {NOT_DEFERRING, SHOULD_DEFER, DEFERRED_DATA};
   DeferState defers_loading_;
   int request_id_;
@@ -467,13 +469,15 @@ WebURLLoaderImpl::Context::Context(
     WebURLLoaderImpl* loader,
     ResourceDispatcher* resource_dispatcher,
     scoped_refptr<base::SingleThreadTaskRunner> task_runner,
-    mojom::URLLoaderFactory* url_loader_factory)
+    mojom::URLLoaderFactory* url_loader_factory,
+    std::unique_ptr<blink::WebURLRequestsTracker> tracker)
     : loader_(loader),
       use_stream_on_response_(false),
       report_raw_headers_(false),
       client_(NULL),
       resource_dispatcher_(resource_dispatcher),
       task_runner_(std::move(task_runner)),
+      requests_tracker_(std::move(tracker)),
       defers_loading_(NOT_DEFERRING),
       request_id_(-1),
       url_loader_factory_(url_loader_factory) {
@@ -1065,10 +1069,21 @@ WebURLLoaderImpl::WebURLLoaderImpl(
     ResourceDispatcher* resource_dispatcher,
     scoped_refptr<base::SingleThreadTaskRunner> task_runner,
     mojom::URLLoaderFactory* url_loader_factory)
+    : WebURLLoaderImpl(resource_dispatcher,
+                       std::move(task_runner),
+                       url_loader_factory,
+                       nullptr) {}
+
+WebURLLoaderImpl::WebURLLoaderImpl(
+    ResourceDispatcher* resource_dispatcher,
+    scoped_refptr<base::SingleThreadTaskRunner> task_runner,
+    mojom::URLLoaderFactory* url_loader_factory,
+    std::unique_ptr<blink::WebURLRequestsTracker> tracker)
     : context_(new Context(this,
                            resource_dispatcher,
                            std::move(task_runner),
-                           url_loader_factory)) {}
+                           url_loader_factory,
+                           std::move(tracker))) {}
 
 WebURLLoaderImpl::~WebURLLoaderImpl() {
   Cancel();
