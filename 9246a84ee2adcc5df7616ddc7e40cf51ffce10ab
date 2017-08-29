@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "103edd02_bf329aa9",
+        "filename": "chrome/android/junit/src/org/chromium/chrome/browser/omnibox/AutocompleteEditTextTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1116193
+      },
+      "writtenOn": "2017-08-29T23:52:01Z",
+      "side": 1,
+      "message": "I think robolectric team may need a more extensive version of the fix as I suspect that the same pattern may be prevailing for other Shadow*Managers as well.\n\nBut I\u0027ve filed github issue to notify robolectric team: https://github.com/robolectric/robolectric/issues/3364",
+      "parentUuid": "0d19b619_517d894a",
+      "range": {
+        "startLine": 55,
+        "startChar": 33,
+        "endLine": 55,
+        "endChar": 51
+      },
+      "revId": "9246a84ee2adcc5df7616ddc7e40cf51ffce10ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0fe63633_6ab8b281",
         "filename": "chrome/android/junit/src/org/chromium/chrome/browser/omnibox/AutocompleteEditTextTest.java",
         "patchSetId": 2
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "c1587977_bbce89b0",
+        "filename": "chrome/android/junit/src/org/chromium/chrome/browser/omnibox/AutocompleteEditTextTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1116193
+      },
+      "writtenOn": "2017-08-29T23:52:01Z",
+      "side": 1,
+      "message": "I just wanted to count calls to all the verifier methods because mInOrder.verifyNoMoreInteractions() does not catch all the missing verify() statements. But it cannot be counted inside verify() because getCallCount() will require additional verify() statements. Then because of TEST_ACCESSIBILITY I had to separate out accessibility call counts.\n\nLet me just rename this to mVerifierCallCount and mAccessibilityVerifierCallCount.",
+      "parentUuid": "0fe63633_6ab8b281",
+      "range": {
+        "startLine": 90,
+        "startChar": 30,
+        "endLine": 90,
+        "endChar": 40
+      },
+      "revId": "9246a84ee2adcc5df7616ddc7e40cf51ffce10ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "916d081a_670c24ef",
         "filename": "chrome/android/junit/src/org/chromium/chrome/browser/omnibox/AutocompleteEditTextTest.java",
         "patchSetId": 2
@@ -59,6 +107,30 @@
       "writtenOn": "2017-08-29T22:53:45Z",
       "side": 1,
       "message": "Same comment as the above naming, I think this is a bit generic for what Call refers to.  Even if it is assertTextInteractionCallCounts or something.  I don\u0027t know if we should actually split this in two just for readability:\n\nassertTextBlahCallCount\nassertAccessibilityCallCount",
+      "range": {
+        "startLine": 203,
+        "startChar": 17,
+        "endLine": 203,
+        "endChar": 33
+      },
+      "revId": "9246a84ee2adcc5df7616ddc7e40cf51ffce10ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1dc0df6_a3539201",
+        "filename": "chrome/android/junit/src/org/chromium/chrome/browser/omnibox/AutocompleteEditTextTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1116193
+      },
+      "writtenOn": "2017-08-29T23:52:01Z",
+      "side": 1,
+      "message": "Changed to assertVerifierCallCounts(int nonAccessibilityCallCount, int accessibilityCallCount).\nI just wanted to keep them in one line as I believe separating two parameters should be temporary.",
+      "parentUuid": "916d081a_670c24ef",
       "range": {
         "startLine": 203,
         "startChar": 17,
