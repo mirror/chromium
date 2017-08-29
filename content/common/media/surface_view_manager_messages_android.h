@@ -3,7 +3,6 @@
 // found in the LICENSE file.
 
 // IPC messages for surface view manager.
-// Multiply-included message file, hence no include guard.
 
 #include "content/common/content_export.h"
 #include "ipc/ipc_message_macros.h"

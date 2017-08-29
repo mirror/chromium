@@ -2,6 +2,9 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+#ifndef CONTENT_COMMON_CACHE_STORAGE_CACHE_STORAGE_MESSAGES_H_
+#define CONTENT_COMMON_CACHE_STORAGE_CACHE_STORAGE_MESSAGES_H_
+
 // Message definition file, included multiple times, hence no include guard.
 
 #include <string>
@@ -191,3 +194,5 @@ IPC_MESSAGE_CONTROL3(CacheStorageMsg_CacheBatchError,
                      int /* thread_id */,
                      int /* request_id */,
                      blink::WebServiceWorkerCacheError)
+
+#endif  // CONTENT_COMMON_CACHE_STORAGE_CACHE_STORAGE_MESSAGES_H_
