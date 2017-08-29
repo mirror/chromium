@@ -9,7 +9,46 @@
   <link rel="stylesheet" href="chrome-search://local-ntp/voice.css"></link>
   <script src="test_utils.js"></script>
   <!-- Keep templates in sync with local_ntp.html. -->
-  <!-- TODO(oskopek): Add templates along with tests. -->
+  <template id="voice-speech-template">
+    <div id="ntp-contents">
+      <div id="logo" title="Google"></div>
+      <div id="fakebox">
+        <div id="fakebox-text"></div>
+        <input id="fakebox-input" autocomplete="off" tabIndex="-1" type="url"
+            aria-hidden="true">
+        <div id="fakebox-cursor"></div>
+        <div id="fakebox-speech" tabIndex="0" hidden></div>
+      </div>
+    </div>
+    <div id="voice-overlay" class="overlay-hidden" hidden>
+      <div id="voice-outer" class="outer">
+        <div class="inner-container">
+          <div id="voice-button-container" class="button-container">
+            <!-- The audio level animation. -->
+            <span id="voice-level" class="level"></span>
+            <!-- The microphone button. -->
+            <span id="voice-button" class="button">
+              <!-- The microphone icon (in CSS). -->
+              <div class="microphone">
+                <span class="receiver"></span>
+                <div class="wrapper">
+                  <span class="stem"></span>
+                  <span class="shell"></span>
+                </div>
+              </div>
+            </span>
+          </div>
+          <div class="text-container">
+            <!-- Low confidence text underneath high confidence text. -->
+            <span id="voice-text-i" class="voice-text"></span>
+            <!-- High confidence text on top of low confidence text. -->
+            <span id="voice-text-f" class="voice-text"></span>
+          </div>
+        </div>
+      </div>
+      <div id="voice-close-button" class="close-button">&times;</div>
+    </div>
+  </template>
 </head>
 <body>
 </body>
