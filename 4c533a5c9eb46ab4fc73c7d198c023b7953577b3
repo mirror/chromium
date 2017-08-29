@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "72d2c364_702101a4",
+        "filename": "third_party/WebKit/Source/core/workers/ThreadedWorkletObjectProxy.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-08-29T02:27:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "71ef06fd_5d4c437e",
+      "revId": "4c533a5c9eb46ab4fc73c7d198c023b7953577b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "21622577_7a391cf7",
         "filename": "third_party/WebKit/Source/core/workers/WorkerReportingProxy.h",
         "patchSetId": 9
@@ -50,6 +68,24 @@
       "revId": "4c533a5c9eb46ab4fc73c7d198c023b7953577b3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db79dce4_b125aa20",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletObjectProxy.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-08-29T02:27:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "775e0b3b_065f47ae",
+      "revId": "4c533a5c9eb46ab4fc73c7d198c023b7953577b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
