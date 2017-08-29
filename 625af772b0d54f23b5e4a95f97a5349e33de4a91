@@ -125,6 +125,24 @@
     },
     {
       "key": {
+        "uuid": "4e43426c_e43be50e",
+        "filename": "ash/shelf/app_list_button.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 604,
+      "author": {
+        "id": 1211724
+      },
+      "writtenOn": "2017-08-29T17:43:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0ba78620_365f16e7",
+      "revId": "625af772b0d54f23b5e4a95f97a5349e33de4a91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8df424a5_981b4d0f",
         "filename": "ash/shelf/app_list_button.h",
         "patchSetId": 2
