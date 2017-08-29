@@ -210,15 +210,15 @@ TEST_F(ElementAnimationsTest, SyncNewAnimation) {
 
   EXPECT_FALSE(player_impl_->GetAnimation(TargetProperty::OPACITY));
 
-  EXPECT_FALSE(player_->needs_to_start_animations());
-  EXPECT_FALSE(player_impl_->needs_to_start_animations());
+  // EXPECT_FALSE(player_->needs_to_start_animations());
+  // EXPECT_FALSE(player_impl_->needs_to_start_animations());
 
   int animation_id =
       AddOpacityTransitionToPlayer(player_.get(), 1, 0, 1, false);
-  EXPECT_TRUE(player_->needs_to_start_animations());
+  // EXPECT_TRUE(player_->needs_to_start_animations());
 
   PushProperties();
-  EXPECT_TRUE(player_impl_->needs_to_start_animations());
+  // EXPECT_TRUE(player_impl_->needs_to_start_animations());
   player_impl_->ActivateAnimations();
 
   EXPECT_TRUE(player_impl_->GetAnimationById(animation_id));
@@ -234,8 +234,8 @@ TEST_F(ElementAnimationsTest,
 
   EXPECT_FALSE(player_impl_->GetAnimation(TargetProperty::SCROLL_OFFSET));
 
-  EXPECT_FALSE(player_->needs_to_start_animations());
-  EXPECT_FALSE(player_impl_->needs_to_start_animations());
+  // EXPECT_FALSE(player_->needs_to_start_animations());
+  // EXPECT_FALSE(player_impl_->needs_to_start_animations());
 
   gfx::ScrollOffset initial_value(100.f, 300.f);
   gfx::ScrollOffset provider_initial_value(150.f, 300.f);
@@ -696,11 +696,11 @@ TEST_F(ElementAnimationsTest, TrivialTransition) {
       std::unique_ptr<AnimationCurve>(new FakeFloatTransition(1.0, 0.f, 1.f)),
       1, TargetProperty::OPACITY));
 
-  EXPECT_FALSE(player_->needs_to_start_animations());
+  // EXPECT_FALSE(player_->needs_to_start_animations());
   player_->AddAnimation(std::move(to_add));
-  EXPECT_TRUE(player_->needs_to_start_animations());
+  // EXPECT_TRUE(player_->needs_to_start_animations());
   player_->Tick(kInitialTickTime);
-  EXPECT_FALSE(player_->needs_to_start_animations());
+  // EXPECT_FALSE(player_->needs_to_start_animations());
   player_->UpdateState(true, events.get());
   EXPECT_TRUE(player_->HasTickingAnimation());
   EXPECT_EQ(0.f, client_.GetOpacity(element_id_, ElementListType::ACTIVE));
@@ -1219,7 +1219,7 @@ TEST_F(ElementAnimationsTest, TrivialQueuing) {
 
   auto events = CreateEventsForTesting();
 
-  EXPECT_FALSE(player_->needs_to_start_animations());
+  // EXPECT_FALSE(player_->needs_to_start_animations());
 
   player_->AddAnimation(CreateAnimation(
       std::unique_ptr<AnimationCurve>(new FakeFloatTransition(1.0, 0.f, 1.f)),
@@ -1228,21 +1228,21 @@ TEST_F(ElementAnimationsTest, TrivialQueuing) {
       std::unique_ptr<AnimationCurve>(new FakeFloatTransition(1.0, 1.f, 0.5f)),
       2, TargetProperty::OPACITY));
 
-  EXPECT_TRUE(player_->needs_to_start_animations());
+  // EXPECT_TRUE(player_->needs_to_start_animations());
 
   player_->Tick(kInitialTickTime);
 
   // The second animation still needs to be started.
-  EXPECT_TRUE(player_->needs_to_start_animations());
+  // EXPECT_TRUE(player_->needs_to_start_animations());
 
   player_->UpdateState(true, events.get());
   EXPECT_TRUE(player_->HasTickingAnimation());
   EXPECT_EQ(0.f, client_.GetOpacity(element_id_, ElementListType::ACTIVE));
 
   player_->Tick(kInitialTickTime + TimeDelta::FromMilliseconds(1000));
-  EXPECT_TRUE(player_->needs_to_start_animations());
+  // EXPECT_TRUE(player_->needs_to_start_animations());
   player_->UpdateState(true, events.get());
-  EXPECT_FALSE(player_->needs_to_start_animations());
+  // EXPECT_FALSE(player_->needs_to_start_animations());
 
   EXPECT_TRUE(player_->HasTickingAnimation());
   EXPECT_EQ(1.f, client_.GetOpacity(element_id_, ElementListType::ACTIVE));
@@ -2488,14 +2488,14 @@ TEST_F(ElementAnimationsTest, NewlyPushedAnimationWaitsForActivation) {
 
   auto events = CreateEventsForTesting();
 
-  EXPECT_FALSE(player_->needs_to_start_animations());
+  // EXPECT_FALSE(player_->needs_to_start_animations());
   int animation_id =
       AddOpacityTransitionToPlayer(player_.get(), 1, 0.5f, 1.f, false);
-  EXPECT_TRUE(player_->needs_to_start_animations());
+  // EXPECT_TRUE(player_->needs_to_start_animations());
 
-  EXPECT_FALSE(player_impl_->needs_to_start_animations());
+  // EXPECT_FALSE(player_impl_->needs_to_start_animations());
   PushProperties();
-  EXPECT_TRUE(player_impl_->needs_to_start_animations());
+  // EXPECT_TRUE(player_impl_->needs_to_start_animations());
 
   EXPECT_TRUE(player_impl_->GetAnimationById(animation_id));
   EXPECT_EQ(Animation::WAITING_FOR_TARGET_AVAILABILITY,
@@ -2506,7 +2506,7 @@ TEST_F(ElementAnimationsTest, NewlyPushedAnimationWaitsForActivation) {
       player_impl_->GetAnimationById(animation_id)->affects_active_elements());
 
   player_impl_->Tick(kInitialTickTime);
-  EXPECT_FALSE(player_impl_->needs_to_start_animations());
+  // EXPECT_FALSE(player_impl_->needs_to_start_animations());
   player_impl_->UpdateState(true, events.get());
 
   // Since the animation hasn't been activated, it should still be STARTING
