@@ -148,6 +148,24 @@
       "revId": "b90fcc73c1134f66131f813f92f5daf7400f3b9a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d74397a_b5068689",
+        "filename": "components/subresource_filter/content/renderer/subresource_filter_agent.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-29T00:19:52Z",
+      "side": 1,
+      "message": "I don\u0027t feel like this is quite right: for example, with a data: URL, it\u0027s probably trivial to hit cases where this will never find a non-null local ancestor frame. Even if it does find one, there\u0027s no guarantee that the frame you found is the initiator. Is it really OK to inherit essentially a random activation state?",
+      "parentUuid": "408cd631_0a984c4c",
+      "revId": "b90fcc73c1134f66131f813f92f5daf7400f3b9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
