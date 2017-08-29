@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a26dc388_82c49d52",
+        "filename": "third_party/WebKit/Source/build/scripts/make_computed_style_base.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 543,
+      "author": {
+        "id": 1140584
+      },
+      "writtenOn": "2017-08-29T01:59:41Z",
+      "side": 1,
+      "message": "can we add the word percent too?",
+      "revId": "6d37198842ad802ee4d9d15086d6fb7a5ce3ddf4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa6601f8_1661ddd9",
+        "filename": "third_party/WebKit/Source/build/scripts/make_computed_style_base.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 578,
+      "author": {
+        "id": 1140584
+      },
+      "writtenOn": "2017-08-29T01:59:41Z",
+      "side": 1,
+      "message": "can we add the word percent too?",
+      "revId": "6d37198842ad802ee4d9d15086d6fb7a5ce3ddf4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
