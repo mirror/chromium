@@ -68,7 +68,7 @@ bool ShouldDeleteNextCharacter(const Node& marker_text_node,
 EphemeralRangeInFlatTree ComputeRangeSurroundingCaret(
     const PositionInFlatTree& caret_position) {
   const Node* const position_node = caret_position.ComputeContainerNode();
-  const bool is_text_node = position_node->IsTextNode();
+  const bool is_text_node = position_node && position_node->IsTextNode();
   const int position_offset_in_node =
       caret_position.ComputeOffsetInContainerNode();
 
