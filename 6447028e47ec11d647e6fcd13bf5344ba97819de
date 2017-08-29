@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ada69235_d926f023",
+        "filename": "ios/chrome/browser/ui/ntp/recent_tabs/recent_tabs_table_coordinator.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-08-29T09:08:27Z",
+      "side": 1,
+      "message": "nit: use std::make_unique here\n\n  _syncedSessionsObserver \u003d std::make_unique\u003csynced_sessions::SyncedSessionsObserverBridge\u003e(\n    self, _browserState);",
+      "revId": "6447028e47ec11d647e6fcd13bf5344ba97819de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79e99384_4a5696af",
+        "filename": "ios/chrome/browser/ui/ntp/recent_tabs/recent_tabs_table_coordinator.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-08-29T09:08:27Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "6447028e47ec11d647e6fcd13bf5344ba97819de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
