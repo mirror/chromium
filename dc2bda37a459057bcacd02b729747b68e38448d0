@@ -45,6 +45,30 @@
       "revId": "dc2bda37a459057bcacd02b729747b68e38448d0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d7e6fca_918b5ab4",
+        "filename": "net/spdy/platform/impl/spdy_string_utils_impl.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1228995
+      },
+      "writtenOn": "2017-08-29T22:30:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c640ba4b_f73219ec",
+      "range": {
+        "startLine": 66,
+        "startChar": 40,
+        "endLine": 66,
+        "endChar": 0
+      },
+      "revId": "dc2bda37a459057bcacd02b729747b68e38448d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
