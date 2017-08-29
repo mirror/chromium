@@ -600,7 +600,9 @@ void WaitForLoadStopWithoutSuccessCheck(WebContents* web_contents) {
 }
 
 bool WaitForLoadStop(WebContents* web_contents) {
+  WebContentsDestroyedObserver observer(web_contents);
   WaitForLoadStopWithoutSuccessCheck(web_contents);
+  DCHECK(!observer.IsDestroyed());
   return IsLastCommittedEntryOfPageType(web_contents, PAGE_TYPE_NORMAL);
 }
 
@@ -1720,6 +1722,18 @@ bool WebContentsAddedObserver::RenderViewCreatedCalled() {
            child_observer_->main_frame_created_called_;
   }
   return false;
+}
+
+WebContentsDestroyedObserver::WebContentsDestroyedObserver(
+    WebContents* web_contents)
+    : WebContentsObserver(web_contents) {
+  DCHECK(web_contents);
+}
+
+WebContentsDestroyedObserver::~WebContentsDestroyedObserver() {}
+
+void WebContentsDestroyedObserver::WebContentsDestroyed() {
+  destroyed_ = true;
 }
 
 bool RequestFrame(WebContents* web_contents) {
