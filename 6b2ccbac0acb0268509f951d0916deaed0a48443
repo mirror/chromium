@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "54805681_f19d525b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1002120
+      },
+      "writtenOn": "2017-08-29T22:36:31Z",
+      "side": 1,
+      "message": "I think it\u0027s reasonable to bump dev to 10%. You may want to use a different CL to facilitate a revert, if necessary.",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 25
+      },
+      "revId": "6b2ccbac0acb0268509f951d0916deaed0a48443",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07c25d99_b79961e0",
+        "filename": "chrome/common/stack_sampling_configuration.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1002120
+      },
+      "writtenOn": "2017-08-29T22:36:31Z",
+      "side": 1,
+      "message": "The CONTROL population should be the same size as BROWSER_AND_GPU_PROCESS for finch analysis purposes, so these three should be 50, 50, 0.",
+      "range": {
+        "startLine": 218,
+        "startChar": 0,
+        "endLine": 218,
+        "endChar": 72
+      },
+      "revId": "6b2ccbac0acb0268509f951d0916deaed0a48443",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
