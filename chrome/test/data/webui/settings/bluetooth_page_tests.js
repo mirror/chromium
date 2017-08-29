@@ -118,20 +118,6 @@ suite('Bluetooth', function() {
       assertTrue(!!subpage);
     });
 
-    test('toggle', function() {
-      assertTrue(bluetoothPage.prefs.ash.user.bluetooth.adapter_enabled.value);
-
-      var enableButton = subpage.$.enableBluetooth;
-      assertTrue(!!enableButton);
-      assertTrue(enableButton.checked);
-
-      bluetoothPage.setPrefValue('ash.user.bluetooth.adapter_enabled', false);
-
-      assertFalse(enableButton.checked);
-      assertFalse(bluetoothApi_.getAdapterStateForTest().powered);
-      assertFalse(bluetoothPage.prefs.ash.user.bluetooth.adapter_enabled.value);
-    });
-
     test('paired device list', function() {
       assertTrue(subpage.adapterState.powered);
 
@@ -211,6 +197,20 @@ suite('Bluetooth', function() {
       subpage.connectDevice_(subpage.unpairedDeviceList_[0]);
       Polymer.dom.flush();
       assertTrue(dialog.$.dialog.open);
+    });
+
+    test('toggle', function() {
+      assertTrue(bluetoothPage.prefs.ash.user.bluetooth.adapter_enabled.value);
+
+      var enableButton = subpage.$.enableBluetooth;
+      assertTrue(!!enableButton);
+      assertTrue(enableButton.checked);
+
+      bluetoothPage.setPrefValue('ash.user.bluetooth.adapter_enabled', false);
+
+      assertFalse(enableButton.checked);
+      assertFalse(bluetoothApi_.getAdapterStateForTest().powered);
+      assertFalse(bluetoothPage.prefs.ash.user.bluetooth.adapter_enabled.value);
     });
   });
 });
