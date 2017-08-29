@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "eebdbb19_2c552f31",
+        "filename": "chrome/browser/first_run/first_run.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 595,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-08-29T01:08:18Z",
+      "side": 1,
+      "message": "This comment looks like it maybe should be removed.",
+      "revId": "c3592b654edb60c3a302bab2648fa62ddc81a719",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58eb0f1e_846b1379",
+        "filename": "chrome/browser/profiles/profile_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1012,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-08-29T01:08:18Z",
+      "side": 1,
+      "message": "Nit: Does this need (minor) rewrapping?",
+      "revId": "c3592b654edb60c3a302bab2648fa62ddc81a719",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b55494ea_8e2b6a0a",
+        "filename": "chrome/browser/ui/browser_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1461,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-08-29T01:08:18Z",
+      "side": 1,
+      "message": "Nit: Seems like this could probably become something like:\n\n  BrowserList* browsers \u003d BrowserList::GetInstance();\n  auto new_browser \u003d\n      std::find_if(browsers-\u003ebegin(), browsers-\u003eend(),\n                   [this](Browser* b) { return b !\u003d browser(); });\n  ASSERT_NE(browsers-\u003eend(), new_browser);\n\n...and the result would be shorter and more idiomatic.",
+      "revId": "c3592b654edb60c3a302bab2648fa62ddc81a719",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
