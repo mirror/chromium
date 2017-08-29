@@ -10,19 +10,25 @@ async function test() {
 
   await new Promise(resolve => InspectorTest.waitForCacheRefresh(resolve));
   await InspectorTest.clearAllCaches();
-  await InspectorTest.dumpCacheTree();
-  await InspectorTest.createCache('testCache1');
-  await InspectorTest.dumpCacheTree();
-  var promise = InspectorTest.addSnifferPromise(Resources.ServiceWorkerCacheView.prototype, '_updatedForTest');
+  await InspectorTest.dumpCacheTreeNoRefresh();
+
+  var promise = InspectorTest.addSnifferPromise(SDK.ServiceWorkerCacheModel.prototype, '_cacheAdded');
+  InspectorTest.createCache('testCache1');
+  await promise;
+  await InspectorTest.dumpCacheTreeNoRefresh();
+
+  promise = InspectorTest.addSnifferPromise(Resources.ServiceWorkerCacheView.prototype, '_updatedForTest');
   await InspectorTest.addCacheEntry('testCache1', 'http://fake.request.com/1', 'OK');
   await promise;
   InspectorTest.addResult('Added entry')
   await InspectorTest.dumpCacheTreeNoRefresh();
+
   promise = InspectorTest.addSnifferPromise(Resources.ServiceWorkerCacheView.prototype, '_updatedForTest');
   await InspectorTest.deleteCacheEntry('testCache1', 'http://fake.request.com/1');
   await promise;
   InspectorTest.addResult('Deleted entry');
   await InspectorTest.dumpCacheTreeNoRefresh();
+
   await InspectorTest.clearAllCaches();
   InspectorTest.completeTest();
 }
