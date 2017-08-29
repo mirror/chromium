@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9571adcc_d0b491bf",
+        "filename": "media/base/moving_average.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1120879
+      },
+      "writtenOn": "2017-08-29T23:58:17Z",
+      "side": 1,
+      "message": "I worry about a growing error term here in exactly the same cases that would trigger overflow before.\n\nOverflow in the old code requires that the average sample duration is at least 9 minutes (the largest MovingAverage instance holds 32 samples). Maybe we should just clamp the samples to sqrt(int64_t::max / depth_)?\n\nWe could also recompute the sum-of-squares when large samples are discarded, but I think the cutoff for \u0027large\u0027 is relatively small (about 10 million base units, which is easy to hit with microseconds).",
+      "range": {
+        "startLine": 20,
+        "startChar": 22,
+        "endLine": 21,
+        "endChar": 63
+      },
+      "revId": "3b6e3968b96e5655a6c3f9247e3bcd9c3a8ae848",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
