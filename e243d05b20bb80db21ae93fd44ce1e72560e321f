@@ -161,6 +161,24 @@
     },
     {
       "key": {
+        "uuid": "c49e52f3_c57d0357",
+        "filename": "components/offline_pages/core/prefetch/stale_entry_finalizer_task.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-08-29T20:45:17Z",
+      "side": 1,
+      "message": "Setting it to 3 days would mean that entries are allowed to live for 3 days + normal expiration period \u003d 4 to 5 days (depending on bucket). That seems like a lot to me, especially as we\u0027re not doing this only for entries in the DOWNLOADING state.\n\nI\u0027d still vouch for a shorter time, like 1 day (which gives a max entry lifetime of 2 to 3 days).",
+      "parentUuid": "899c2204_820fa6d6",
+      "revId": "e243d05b20bb80db21ae93fd44ce1e72560e321f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f75b80c3_0b68ffb8",
         "filename": "components/offline_pages/core/prefetch/stale_entry_finalizer_task.cc",
         "patchSetId": 2
