@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b35f5437_61d04493",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/input/SpellCheckPopupWindow.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1116193
+      },
+      "writtenOn": "2017-08-29T01:12:37Z",
+      "side": 1,
+      "message": "nit: @Override",
+      "range": {
+        "startLine": 77,
+        "startChar": 4,
+        "endLine": 77,
+        "endChar": 12
+      },
+      "revId": "3d83b565abd0f978ccb6f31bc88d9cbb503d499d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c95229f2_3fa9227e",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/input/SuggestionsPopupWindow.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1116193
+      },
+      "writtenOn": "2017-08-29T01:12:37Z",
+      "side": 1,
+      "message": "nit: createSuggestionAdapter()?",
+      "range": {
+        "startLine": 110,
+        "startChar": 35,
+        "endLine": 110,
+        "endChar": 56
+      },
+      "revId": "3d83b565abd0f978ccb6f31bc88d9cbb503d499d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24dca09a_404b15f2",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/input/TextSuggestionHost.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1116193
+      },
+      "writtenOn": "2017-08-29T01:12:37Z",
+      "side": 1,
+      "message": "How about calling hidePopups() before this line? We need to ensure that any previous popup should be dismissed first. For example, showing text suggestions menu shown --\u003e showing spellcheck menu should call suggestionMenuClosed().",
+      "range": {
+        "startLine": 41,
+        "startChar": 33,
+        "endLine": 41,
+        "endChar": 36
+      },
+      "revId": "3d83b565abd0f978ccb6f31bc88d9cbb503d499d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "032891c7_49b9d541",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/input/TextSuggestionHost.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1116193
+      },
+      "writtenOn": "2017-08-29T01:12:37Z",
+      "side": 1,
+      "message": "How about calling hidePopups() one line above?",
+      "range": {
+        "startLine": 60,
+        "startChar": 38,
+        "endLine": 60,
+        "endChar": 41
+      },
+      "revId": "3d83b565abd0f978ccb6f31bc88d9cbb503d499d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "258054e9_02e7c27b",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/input/TextSuggestionHost.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1116193
+      },
+      "writtenOn": "2017-08-29T01:12:37Z",
+      "side": 1,
+      "message": "You\u0027ll need to call mSpellCheckPopupWindow \u003d null; too.",
+      "range": {
+        "startLine": 122,
+        "startChar": 8,
+        "endLine": 122,
+        "endChar": 35
+      },
+      "revId": "3d83b565abd0f978ccb6f31bc88d9cbb503d499d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d40d7ee_6d0145c1",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/input/TextSuggestionsPopupWindow.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1116193
+      },
+      "writtenOn": "2017-08-29T01:12:37Z",
+      "side": 1,
+      "message": "nit: @Override",
+      "range": {
+        "startLine": 80,
+        "startChar": 4,
+        "endLine": 80,
+        "endChar": 13
+      },
+      "revId": "3d83b565abd0f978ccb6f31bc88d9cbb503d499d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
