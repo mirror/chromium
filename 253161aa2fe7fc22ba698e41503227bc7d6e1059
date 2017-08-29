@@ -124,6 +124,24 @@
       "revId": "253161aa2fe7fc22ba698e41503227bc7d6e1059",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4172e3ea_2c08817a",
+        "filename": "content/browser/webauth/cbor/cbor_writer.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-08-29T20:07:43Z",
+      "side": 1,
+      "message": "What I really want to avoid here is putting the onus on the caller to do the arithmetic. Consider the following code:\n\n// CBOR-encodes an array of 10 \u0027foo\u0027, followed by \u0027bar\u0027, like so:\n//  [\u0027foo\u0027, ... \u0027foo\u0027], \u0027bar\u0027 \n\nCBORWriter w;\n\nw.WriteArray(10);\nw.WriteString(\"foo\");\nw.WriteString(\"foo\");\nw.WriteString(\"foo\");\nw.WriteString(\"foo\");\nw.WriteString(\"foo\");\nw.WriteString(\"foo\");\nw.WriteString(\"foo\");\nw.WriteString(\"foo\");\nw.WriteString(\"foo\");\n\nw.WriteString(\"bar\");\n\nNow we either need super extensive unit tests for each call site, or code reviewers who are infallible at counting, and would notice that while this will run perfectly fine, it will output [\u0027foo\u0027, ..., \u0027foo\u0027, \u0027bar\u0027].\n\nI would like requiring human code reviewers to verify that the number of WriteX() statements match the specified container sizes; as well as debugging why the end-to-end tests don\u0027t work if we screw it up.\n\nTL;DR: I am fine with any solution (including stateful ones) as long as the caller does not need to do the counting of elements in arrays and dictionaries. I apologize if I totally misunderstood either the CBOR format, or how we intend to use this.",
+      "parentUuid": "227f424e_cf7dc0bb",
+      "revId": "253161aa2fe7fc22ba698e41503227bc7d6e1059",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
