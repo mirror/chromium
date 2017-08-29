@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "3ac77f94_3c94fba5",
+        "filename": "third_party/WebKit/Source/platform/feature_policy/FeaturePolicy.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1221384
+      },
+      "writtenOn": "2017-08-29T15:27:34Z",
+      "side": 1,
+      "message": "I will add another CL that tracks the usage of the old syntax and using Deprecation to output a deprecation warning.",
+      "parentUuid": "9144ba34_6cfeb144",
+      "revId": "441cca6002b2c76fd1f27e1844d52722b7a4d257",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7a1e2a33_57037a3c",
         "filename": "third_party/WebKit/Source/platform/feature_policy/FeaturePolicyFuzzer.cpp",
         "patchSetId": 14
