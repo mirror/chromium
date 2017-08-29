@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "b8cdf559_8d38eed2",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/offlinepages/OfflinePageOrigin.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-08-29T21:21:37Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "be498eb6_c1c69c57",
+      "range": {
+        "startLine": 38,
+        "startChar": 22,
+        "endLine": 38,
+        "endChar": 23
+      },
+      "revId": "4b05d3eb91c755585fe37ca1290662d538e21694",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "98d8a3c5_7b944dcd",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/offlinepages/OfflinePageOrigin.java",
         "patchSetId": 1
@@ -78,6 +102,24 @@
       "side": 1,
       "message": "i think it\u0027s totally reasonable to pass in \"\" as the appName for \"appName not found\" or something. Similar to the other constructor (line 33), if the tab isn\u0027t associated with any app, then it will return \"\"",
       "parentUuid": "98d8a3c5_7b944dcd",
+      "revId": "4b05d3eb91c755585fe37ca1290662d538e21694",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4134443a_e7f80913",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/offlinepages/OfflinePageOrigin.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-08-29T21:21:37Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "d6aac318_a8fab13e",
       "revId": "4b05d3eb91c755585fe37ca1290662d538e21694",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
