@@ -36,7 +36,6 @@ ModulatorImpl::ModulatorImpl(RefPtr<ScriptState> script_state,
           ExecutionContext::From(script_state_.Get()))) {
   DCHECK(script_state_);
   DCHECK(task_runner_);
-  DCHECK(fetcher_);
 }
 
 ModulatorImpl::~ModulatorImpl() {}
