@@ -55,7 +55,8 @@ scoped_refptr<BlobRegistryWrapper> BlobRegistryWrapper::Create(
 }
 
 BlobRegistryWrapper::BlobRegistryWrapper() {
-  DCHECK(base::FeatureList::IsEnabled(features::kMojoBlobs));
+  DCHECK(base::FeatureList::IsEnabled(features::kMojoBlobs) ||
+         base::FeatureList::IsEnabled(features::kNetworkService));
 }
 
 void BlobRegistryWrapper::Bind(

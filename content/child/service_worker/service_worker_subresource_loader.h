@@ -13,6 +13,7 @@
 #include "content/public/common/url_loader_factory.mojom.h"
 #include "mojo/public/cpp/bindings/binding.h"
 #include "net/traffic_annotation/network_traffic_annotation.h"
+#include "storage/public/interfaces/blobs.mojom.h"
 #include "third_party/WebKit/public/platform/modules/serviceworker/service_worker_stream_handle.mojom.h"
 
 namespace content {
@@ -43,7 +44,8 @@ class CONTENT_EXPORT ServiceWorkerSubresourceLoader
       const net::MutableNetworkTrafficAnnotationTag& traffic_annotation,
       scoped_refptr<ServiceWorkerEventDispatcherHolder> event_dispatcher,
       scoped_refptr<ChildURLLoaderFactoryGetter> default_loader_factory_getter,
-      const GURL& controller_origin);
+      const GURL& controller_origin,
+      storage::mojom::BlobRegistry* blob_registry);
 
   ~ServiceWorkerSubresourceLoader() override;
 
@@ -129,13 +131,16 @@ class CONTENT_EXPORT ServiceWorkerSubresourceLoader
   net::MutableNetworkTrafficAnnotationTag traffic_annotation_;
 
   // To load a blob.
-  GURL blob_url_;
+  storage::mojom::BlobURLHandlePtr blob_url_handle_;
   GURL controller_origin_;
   mojom::URLLoaderPtr blob_loader_;
   mojo::Binding<mojom::URLLoaderClient> blob_client_binding_;
 
   // For Blob loading and network fallback loading.
   scoped_refptr<ChildURLLoaderFactoryGetter> default_loader_factory_getter_;
+
+  // TODO(kinuko): Needs to secure the lifetime.
+  storage::mojom::BlobRegistry* blob_registry_;
 
   enum class Status {
     kNotStarted,
@@ -190,6 +195,8 @@ class CONTENT_EXPORT ServiceWorkerSubresourceLoaderFactory
   scoped_refptr<ChildURLLoaderFactoryGetter> default_loader_factory_getter_;
 
   GURL controller_origin_;
+
+  storage::mojom::BlobRegistryPtr blob_registry_;
 
   DISALLOW_COPY_AND_ASSIGN(ServiceWorkerSubresourceLoaderFactory);
 };
