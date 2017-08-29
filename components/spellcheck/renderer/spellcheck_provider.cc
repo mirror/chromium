@@ -82,12 +82,20 @@ void SpellCheckProvider::RequestTextChecking(
   last_identifier_ = text_check_completions_.Add(completion);
 
 #if BUILDFLAG(USE_BROWSER_SPELLCHECKER)
-  // TODO(crbug.com/714480): convert the RequestTextCheck IPC to mojo.
-  // Text check (unified request for grammar and spell check) is only
-  // available for browser process, so we ask the system spellchecker
-  // over IPC or return an empty result if the checker is not available.
+// Text check (unified request for grammar and spell check) is only
+// available for browser process, so we ask the system spellchecker
+// over IPC/mojo or return an empty result if the checker is not available.
+#if !BUILDFLAG(USE_SPELLCHECK_IPC)
+  if (!spell_check_host_ && !content::RenderThread::Get())
+    return;  // NULL in tests that do not provide a spell_check_host_.
+  GetSpellCheckHost().RequestTextCheck(
+      text, base::Bind(&SpellCheckProvider::OnRespondTextCheck,
+                       base::Unretained(this), last_identifier_, text));
+#else
+  // TODO(xiaochengh): convert the RequestTextCheck IPC to mojo on Mac.
   Send(new SpellCheckHostMsg_RequestTextCheck(routing_id(), last_identifier_,
                                               text));
+#endif  // !BUILDFLAG(USE_SPELLCHECK_IPC)
 #else
   if (!spell_check_host_ && !content::RenderThread::Get())
     return;  // NULL in tests that do not provide a spell_check_host_.
@@ -120,8 +128,9 @@ void SpellCheckProvider::FocusedNodeChanged(const blink::WebNode& unused) {
   bool enabled = !element.IsNull() && element.IsEditable();
   bool checked = enabled && frame->IsSpellCheckingEnabled();
 
-  // TODO(crbug.com/714480): convert the ToggleSpellCheck IPC to mojo.
-  Send(new SpellCheckHostMsg_ToggleSpellCheck(routing_id(), enabled, checked));
+  if (!spell_check_host_ && !content::RenderThread::Get())
+    return;  // NULL in tests that do not provide a spell_check_host_.
+  GetSpellCheckHost().ToggleSpellCheck(enabled, checked);
 #endif  // USE_BROWSER_SPELLCHECKER
 }
 

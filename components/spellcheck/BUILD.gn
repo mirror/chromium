@@ -14,5 +14,6 @@ buildflag_header("build_features") {
     "ENABLE_SPELLCHECK=$enable_spellcheck",
     "USE_BROWSER_SPELLCHECKER=$use_browser_spellchecker",
     "HAS_SPELLCHECK_PANEL=$has_spellcheck_panel",
+    "USE_SPELLCHECK_IPC=$use_spellcheck_ipc",
   ]
 }

@@ -54,8 +54,4 @@ IPC_MESSAGE_CONTROL3(SpellCheckHostMsg_RequestTextCheck,
                      int /* route_id for response */,
                      int /* request identifier given by WebKit */,
                      base::string16 /* sentence */)
-
-IPC_MESSAGE_ROUTED2(SpellCheckHostMsg_ToggleSpellCheck,
-                    bool /* enabled */,
-                    bool /* checked */)
 #endif  // USE_BROWSER_SPELLCHECKER
