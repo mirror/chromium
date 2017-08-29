@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "1f9c1f68_f6884190",
+        "filename": "chrome/common/media_router/media_route.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-08-29T18:07:09Z",
+      "side": 1,
+      "message": "When I was about to replace this with the mojom equivalent, I just remembered I can\u0027t do it yet because the mojom file is not included in Android build. We are in the process of mojo-ifying MediaRouterAndroid; after that\u0027s completed we should be able to use the mojom enum directly. I changed to kStyleNaming, and a TODO to use mojo enum directly.",
+      "parentUuid": "15f82d76_2b8539c8",
+      "range": {
+        "startLine": 17,
+        "startChar": 33,
+        "endLine": 17,
+        "endChar": 37
+      },
+      "revId": "d07f81fe3c743971efd7bd612870c8acef043b10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "450dce94_15b010b2",
         "filename": "chrome/common/media_router/mojo/media_controller.mojom",
         "patchSetId": 16
@@ -120,6 +144,24 @@
       "side": 1,
       "message": "I meant adding CreateHangoutsMediaRouteController(), etc.\n\nI think it probably scales just as well as augmenting the MediaController itself with supplemental interfaces like this?",
       "parentUuid": "8a965a2b_8e56f921",
+      "revId": "d07f81fe3c743971efd7bd612870c8acef043b10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4dae2428_aeb71969",
+        "filename": "chrome/common/media_router/mojo/media_controller.mojom",
+        "patchSetId": 16
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-08-29T18:07:09Z",
+      "side": 1,
+      "message": "I see. I still think my approach is a bit simpler. The reason is that adding CreateHangoutsMediaRouteController() as a parallel to CreateMediaRouteController() requires adding the same boilerplate / plumbing code in media_router_bindings.js / extension code. Once the MediaController implementation in the extension is bound to the request, all MediaController calls will be routed to the implementation directly. So putting CreateHangoutsMediaRouteController avoids the need to add boilerplate code and is more efficient.",
+      "parentUuid": "552d3f10_d17f4145",
       "revId": "d07f81fe3c743971efd7bd612870c8acef043b10",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -176,6 +218,24 @@
       "revId": "d07f81fe3c743971efd7bd612870c8acef043b10",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f4a2b4d_ceaeffae",
+        "filename": "chrome/common/media_router/mojo/media_router.mojom",
+        "patchSetId": 16
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-08-29T18:07:09Z",
+      "side": 1,
+      "message": "Done. Changed to kStyleNaming.",
+      "parentUuid": "b498d31f_1ca59d14",
+      "revId": "d07f81fe3c743971efd7bd612870c8acef043b10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
