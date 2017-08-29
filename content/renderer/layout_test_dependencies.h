@@ -9,6 +9,7 @@
 #include <memory>
 
 #include "base/memory/ref_counted.h"
+#include "components/viz/common/quads/copy_output_request.h"
 
 namespace cc {
 class CopyOutputRequest;
@@ -32,6 +33,8 @@ class CompositorDependencies;
 // RenderThreadImpl.
 class LayoutTestDependencies {
  public:
+  virtual ~LayoutTestDependencies();
+
   virtual std::unique_ptr<cc::LayerTreeFrameSink> CreateLayerTreeFrameSink(
       int32_t routing_id,
       scoped_refptr<gpu::GpuChannelHost> gpu_channel,
