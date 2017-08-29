@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "adf0afad_8066c2b3",
+        "filename": "chrome/browser/feature_engagement/feature_tracker.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-08-29T22:42:24Z",
+      "side": 1,
+      "message": "Since we\u0027re requiring a pointer, we should made this a pointer too. This follows with the existing style here:\nhttps://cs.chromium.org/chromium/src/components/feature_engagement/public/feature_list.cc?rcl\u003d86069cb27b8cd46700f1d7a3e78f4e82df1b8c2b\u0026l\u003d16\n\nFor the record, there is benefit to keeping this as a reference (no nullptrs for example), but we might as well be consistent.",
+      "range": {
+        "startLine": 18,
+        "startChar": 31,
+        "endLine": 18,
+        "endChar": 59
+      },
+      "revId": "d1ab63d0fcf94a27dfc822ba8b8f72fbe5eae4c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8007af4f_586797d0",
+        "filename": "chrome/browser/feature_engagement/feature_tracker_unittest.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-08-29T22:42:24Z",
+      "side": 1,
+      "message": "Unfortunately, these will still need to be regular ints otherwise they\u0027re generate static initializers.",
+      "range": {
+        "startLine": 33,
+        "startChar": 0,
+        "endLine": 37,
+        "endChar": 37
+      },
+      "revId": "d1ab63d0fcf94a27dfc822ba8b8f72fbe5eae4c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
