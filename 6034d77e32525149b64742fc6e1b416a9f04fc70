@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f4dee5b7_5d59590f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/signin/ProfileDataCache.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-08-29T09:34:32Z",
+      "side": 1,
+      "message": "Could we have a default implementation of a ProfileDataSource that uses the ProfileDownloader? That would simplify the implementation of this class.",
+      "range": {
+        "startLine": 147,
+        "startChar": 16,
+        "endLine": 147,
+        "endChar": 33
+      },
+      "revId": "6034d77e32525149b64742fc6e1b416a9f04fc70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40554dc8_bab2ddb3",
+        "filename": "components/signin/core/browser/android/java/src/org/chromium/components/signin/ProfileDataSource.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-08-29T09:34:32Z",
+      "side": 1,
+      "message": "I find this API strange. I think this call should work all the time (whether or not an observer it was registered). Why is this restriction needed?",
+      "range": {
+        "startLine": 69,
+        "startChar": 38,
+        "endLine": 69,
+        "endChar": 49
+      },
+      "revId": "6034d77e32525149b64742fc6e1b416a9f04fc70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ba227b9_22ee038c",
+        "filename": "components/signin/core/browser/android/java/src/org/chromium/components/signin/ProfileDataSource.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-08-29T09:34:32Z",
+      "side": 1,
+      "message": "Ditto about this API restriction.",
+      "range": {
+        "startLine": 76,
+        "startChar": 38,
+        "endLine": 76,
+        "endChar": 49
+      },
+      "revId": "6034d77e32525149b64742fc6e1b416a9f04fc70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
