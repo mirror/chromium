@@ -7,9 +7,11 @@
 #include "base/bind.h"
 #include "chromeos/components/tether/active_host.h"
 #include "chromeos/components/tether/active_host_network_state_updater.h"
+#include "chromeos/components/tether/async_shutdown_task_impl.h"
 #include "chromeos/components/tether/ble_connection_manager.h"
 #include "chromeos/components/tether/crash_recovery_manager.h"
 #include "chromeos/components/tether/device_id_tether_network_guid_map.h"
+#include "chromeos/components/tether/disconnect_tethering_request_sender.h"
 #include "chromeos/components/tether/host_connection_metrics_logger.h"
 #include "chromeos/components/tether/host_scan_device_prioritizer_impl.h"
 #include "chromeos/components/tether/host_scan_scheduler.h"
@@ -44,6 +46,23 @@ namespace chromeos {
 
 namespace tether {
 
+namespace {
+
+// TODO(lesliewatkins): Remove this and use the actual
+// DisconnectTetheringRequestSender.
+class DummyDisconnectTetheringRequestSender
+    : public DisconnectTetheringRequestSender {
+ public:
+  DummyDisconnectTetheringRequestSender() {}
+  ~DummyDisconnectTetheringRequestSender() override {}
+
+  // DisconnectTetheringRequestSender:
+  void SendDisconnectRequestToDevice(const std::string& device_id) override {}
+  bool HasPendingRequests() override { return false; }
+};
+
+}  // namespace
+
 // static
 Initializer* Initializer::instance_ = nullptr;
 
@@ -72,12 +91,27 @@ void Initializer::Init(
 }
 
 // static
-void Initializer::Shutdown() {
-  if (instance_) {
-    PA_LOG(INFO) << "Shutting down Tether feature.";
-    delete instance_;
-    instance_ = nullptr;
+std::unique_ptr<AsyncShutdownTask> Initializer::Shutdown() {
+  if (!instance_)
+    return nullptr;
+
+  PA_LOG(INFO) << "Shutting down Tether feature.";
+
+  std::unique_ptr<AsyncShutdownTaskImpl> async_shutdown_task;
+  if (instance_->disconnect_tethering_request_sender_ &&
+      instance_->disconnect_tethering_request_sender_->HasPendingRequests()) {
+    async_shutdown_task = base::MakeUnique<AsyncShutdownTaskImpl>(
+        std::move(instance_->tether_host_fetcher_),
+        std::move(instance_->local_device_data_provider_),
+        std::move(instance_->remote_beacon_seed_fetcher_),
+        std::move(instance_->ble_connection_manager_),
+        std::move(instance_->disconnect_tethering_request_sender_));
   }
+
+  delete instance_;
+  instance_ = nullptr;
+
+  return async_shutdown_task;
 }
 
 // static
@@ -155,6 +189,9 @@ void Initializer::CreateComponent() {
       cryptauth_service_, adapter_, local_device_data_provider_.get(),
       remote_beacon_seed_fetcher_.get(),
       cryptauth::BluetoothThrottlerImpl::GetInstance());
+  // TODO(lesliewatkins): Use actual DisconnectTetheringRequestSender.
+  disconnect_tethering_request_sender_ =
+      base::MakeUnique<DummyDisconnectTetheringRequestSender>();
   tether_host_response_recorder_ =
       base::MakeUnique<TetherHostResponseRecorder>(pref_service_);
   device_id_tether_network_guid_map_ =

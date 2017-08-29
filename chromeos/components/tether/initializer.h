@@ -36,10 +36,12 @@ namespace tether {
 
 class ActiveHost;
 class ActiveHostNetworkStateUpdater;
+class AsyncShutdownTask;
 class BleConnectionManager;
 class CrashRecoveryManager;
 class NetworkConnectionHandlerTetherDelegate;
 class DeviceIdTetherNetworkGuidMap;
+class DisconnectTetheringRequestSender;
 class HostScanner;
 class HostScanScheduler;
 class HostScanDevicePrioritizerImpl;
@@ -75,8 +77,11 @@ class Initializer : public OAuth2TokenService::Observer {
       scoped_refptr<device::BluetoothAdapter> adapter);
 
   // Shuts down the tether feature, destroying all internal classes. This should
-  // be called before the dependencies passed to Init() are destroyed.
-  static void Shutdown();
+  // be called before the dependencies passed to Init() are destroyed. This
+  // function shuts down the component synchronously, but some parts of the
+  // shutdown flow are asynchronous. If any asynchronous shutdown tasks are
+  // left, this function returns them; otherwise, this function returns null.
+  static std::unique_ptr<AsyncShutdownTask> Shutdown();
 
   static void RegisterProfilePrefs(PrefRegistrySimple* registry);
 
@@ -122,6 +127,8 @@ class Initializer : public OAuth2TokenService::Observer {
   std::unique_ptr<cryptauth::RemoteBeaconSeedFetcher>
       remote_beacon_seed_fetcher_;
   std::unique_ptr<BleConnectionManager> ble_connection_manager_;
+  std::unique_ptr<DisconnectTetheringRequestSender>
+      disconnect_tethering_request_sender_;
   std::unique_ptr<TetherHostResponseRecorder> tether_host_response_recorder_;
   std::unique_ptr<HostScanDevicePrioritizerImpl> host_scan_device_prioritizer_;
   std::unique_ptr<WifiHotspotConnector> wifi_hotspot_connector_;
