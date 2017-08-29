@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1ff0abb3_5c72d3be",
+        "filename": "tools/binary_size/libsupersize/console.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-08-29T17:34:48Z",
+      "side": 1,
+      "message": "nit: use \"format\" rather than \"fmt\". Although I doubt we\u0027ll ever add another format type, so would also be fine to add csv\u003dTrue, or create Csv() as a separate function",
+      "revId": "f54dab0b465ea914aa716d513583c51a2651bd60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b46e6744_65c5e58e",
+        "filename": "tools/binary_size/libsupersize/describe.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-08-29T17:34:48Z",
+      "side": 1,
+      "message": "nit: prefix these classes with _ since they aren\u0027t used outside the module.\nAlso: Add (object) since this is still python 2",
+      "revId": "f54dab0b465ea914aa716d513583c51a2651bd60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9aa67e44_c326f176",
+        "filename": "tools/binary_size/libsupersize/describe.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-08-29T17:34:48Z",
+      "side": 1,
+      "message": "nit: isinstance(line, basestring)",
+      "revId": "f54dab0b465ea914aa716d513583c51a2651bd60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88e37952_a2496164",
+        "filename": "tools/binary_size/libsupersize/describe.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-08-29T17:34:48Z",
+      "side": 1,
+      "message": "nit: prefix with _ to show it\u0027s private",
+      "revId": "f54dab0b465ea914aa716d513583c51a2651bd60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f353d013_5ede398e",
+        "filename": "tools/binary_size/libsupersize/describe.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-08-29T17:34:48Z",
+      "side": 1,
+      "message": "Hmm, it\u0027s not clear to me how you\u0027re going to handle merging in the columns from _DescribeSymbol() here.\n\nI think it might actually be better to create CSV logic as independent from the text output. While it would lead to some duplication, the text logic is already complex \u0026 hard to understand, and adding this ontop makes it even harder. I\u0027d also guess that you wouldn\u0027t need to add index \u0026 running total in the CSV output, since spreadsheets already have row numbers, and can pretty easily add a running total column.",
+      "revId": "f54dab0b465ea914aa716d513583c51a2651bd60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8236bcc_8bcaa747",
+        "filename": "tools/binary_size/libsupersize/describe.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 498,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-08-29T17:34:48Z",
+      "side": 1,
+      "message": "nit: since there\u0027s a name collision here:\n\nGenerateLines() -\u003e Describer.GenerateLines()",
+      "revId": "f54dab0b465ea914aa716d513583c51a2651bd60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
