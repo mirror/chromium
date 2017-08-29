@@ -16,6 +16,24 @@
       "revId": "d4729116c8adb30fa23a5008f29fe7e149084e61",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8fa0cd13_68e1f170",
+        "filename": "third_party/WebKit/Source/core/svg/SVGUseElement.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-08-29T18:30:00Z",
+      "side": 1,
+      "message": "I don\u0027t think lifetime will be a problem here (in the near/medium future.) Will fix.",
+      "parentUuid": "afc8f3a9_b578075e",
+      "revId": "d4729116c8adb30fa23a5008f29fe7e149084e61",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
