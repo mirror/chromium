@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5414a006_107a6cec",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/infobar/IPHInfoBarSupport.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-08-29T20:32:36Z",
+      "side": 1,
+      "message": "Can this be made to accept an Activity so we don\u0027t have to cast below?",
+      "range": {
+        "startLine": 71,
+        "startChar": 22,
+        "endLine": 71,
+        "endChar": 37
+      },
+      "revId": "dd884333db2802debde9323730037afaae7e9177",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
