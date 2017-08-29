@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "5fa2736b_06400c92",
+        "filename": "ash/shell.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 671,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-29T20:59:34Z",
+      "side": 1,
+      "message": "I think the idea is to get to a state where \"new\" doesn\u0027t appear in the code except in unusual situations.\n\nEither way, all the other members use MakeUnique, so I think consistency here is worth it.",
+      "parentUuid": "093f0701_29e3d08f",
+      "revId": "c101077929805fbdd987849b6c5ceda9181cc11d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "71df6a5a_89429111",
         "filename": "ash/system/web_notification/login_state_notification_blocker_unittest.cc",
         "patchSetId": 3
