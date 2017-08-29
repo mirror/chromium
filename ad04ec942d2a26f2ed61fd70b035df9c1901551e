@@ -16,6 +16,40 @@
       "revId": "ad04ec942d2a26f2ed61fd70b035df9c1901551e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b2130b5_5931e808",
+        "filename": "mojo/public/cpp/bindings/lib/sync_handle_registry.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-08-29T18:26:50Z",
+      "side": 1,
+      "message": "Is it guaranteed that the callback list/iterator stays valid during this for-loop?\nImagine the first callback tries to unregister the second callback, or add new ones, etc.",
+      "revId": "ad04ec942d2a26f2ed61fd70b035df9c1901551e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "423d858c_ddaa14cf",
+        "filename": "mojo/public/cpp/bindings/sync_handle_registry.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-08-29T18:26:50Z",
+      "side": 1,
+      "message": "Usually this std::vector only contains one element, maybe we could consider optimization for that?",
+      "revId": "ad04ec942d2a26f2ed61fd70b035df9c1901551e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
