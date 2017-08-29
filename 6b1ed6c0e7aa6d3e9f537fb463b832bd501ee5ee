@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6a90b9d0_7b1c39f8",
+        "filename": "ash/app_list/app_list_presenter_delegate_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-29T20:31:56Z",
+      "side": 1,
+      "message": "Generally the format is \u0027TODO(owner): comment, http://crbug.com/BUG\u0027 This is the first I\u0027ve seen of the TODO(bug).",
+      "range": {
+        "startLine": 186,
+        "startChar": 5,
+        "endLine": 186,
+        "endChar": 17
+      },
+      "revId": "6b1ed6c0e7aa6d3e9f537fb463b832bd501ee5ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc73a255_e9ae430b",
+        "filename": "chrome/browser/ui/ash/launcher/arc_app_launcher_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 360,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-29T20:31:56Z",
+      "side": 1,
+      "message": "It\u0027s very unusual to have the break outside the {}. Maybe git cl format did this?",
+      "range": {
+        "startLine": 360,
+        "startChar": 4,
+        "endLine": 360,
+        "endChar": 12
+      },
+      "revId": "6b1ed6c0e7aa6d3e9f537fb463b832bd501ee5ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
