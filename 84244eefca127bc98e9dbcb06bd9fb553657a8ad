@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "580bc2d2_2bf0cf7a",
+        "filename": "gpu/command_buffer/service/gles2_cmd_decoder_unittest_attribs.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-08-29T00:58:08Z",
+      "side": 1,
+      "message": "What\u0027s |index|?",
+      "revId": "84244eefca127bc98e9dbcb06bd9fb553657a8ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
