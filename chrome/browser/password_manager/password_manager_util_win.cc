@@ -5,6 +5,7 @@
 // windows.h must be first otherwise Win8 SDK breaks.
 #include <windows.h>
 #include <LM.h>
+#include <objbase.h>  // For CoTaskMemFree()
 #include <stddef.h>
 #include <stdint.h>
 #include <wincred.h>
@@ -21,10 +22,12 @@
 
 #include "base/bind.h"
 #include "base/bind_helpers.h"
+#include "base/feature_list.h"
 #include "base/metrics/histogram_macros.h"
 #include "base/strings/utf_string_conversions.h"
 #include "base/task_scheduler/post_task.h"
 #include "base/time/time.h"
+#include "base/win/win_util.h"
 #include "chrome/browser/browser_process.h"
 #include "chrome/grit/chromium_strings.h"
 #include "components/password_manager/core/browser/password_manager.h"
@@ -69,6 +72,10 @@ struct PasswordCheckPrefs {
 
   int64_t pref_last_changed_;
   bool blank_password_;
+};
+
+const base::Feature kCredUIPromptForWindowsCredentialsFeature{
+  "CredUIPromptForWindowsCredentials", base::FEATURE_ENABLED_BY_DEFAULT
 };
 
 void PasswordCheckPrefs::Read(PrefService* local_state) {
@@ -211,15 +218,8 @@ void GetOsPasswordStatus() {
                  base::Passed(&status)));
 }
 
-}  // namespace
-
-void DelayReportOsPassword() {
-  content::BrowserThread::PostDelayedTask(content::BrowserThread::UI, FROM_HERE,
-                                          base::Bind(&GetOsPasswordStatus),
-                                          base::TimeDelta::FromSeconds(40));
-}
-
-bool AuthenticateUser(gfx::NativeWindow window) {
+// Authenticate the user using the old Windows credential prompt.
+bool AuthenticateUserOld(gfx::NativeWindow window) {
   bool retval = false;
   CREDUI_INFO cui = {};
   WCHAR username[CREDUI_MAX_USERNAME_LENGTH+1] = {};
@@ -310,6 +310,152 @@ bool AuthenticateUser(gfx::NativeWindow window) {
   } while (credErr == NO_ERROR &&
            (retval == false && tries < kMaxPasswordRetries));
   return retval;
+}
+
+// Authenticate the user using the new Windows credential prompt.
+bool AuthenticateUserNew(gfx::NativeWindow window) {
+  bool retval = false;
+  WCHAR cur_username[CREDUI_MAX_USERNAME_LENGTH + 1] = {};
+  DWORD cur_username_length = arraysize(cur_username);
+
+  // The SAM compatible username works on both standalone workstations and
+  // domain joined machines.  The form is "DOMAIN\username", where DOMAIN is the
+  // the name of the machine for standalone workstations.
+  if (!GetUserNameEx(NameSamCompatible, cur_username, &cur_username_length)) {
+    DLOG(ERROR) << "Unable to obtain username " << GetLastError();
+    return false;
+  }
+
+  // If this a standlone workstation, it's possible the current user has no
+  // password, so check here and allow it.
+  if (!base::win::IsEnrolledToDomain() && CheckBlankPassword(cur_username))
+      return true;
+
+  // Build the strings to display in the credential UI.  If these strings are
+  // left empty on domain joined machines, CredUIPromptForWindowsCredentials()
+  // fails to run.
+  base::string16 product_name = l10n_util::GetStringUTF16(IDS_PRODUCT_NAME);
+  base::string16 password_prompt =
+      l10n_util::GetStringUTF16(IDS_PASSWORDS_PAGE_AUTHENTICATION_PROMPT);
+  CREDUI_INFO cui;
+  cui.cbSize = sizeof(cui);
+  cui.hwndParent = window->GetHost()->GetAcceleratedWidget();
+  cui.pszMessageText = password_prompt.c_str();
+  cui.pszCaptionText = product_name.c_str();
+  cui.hbmBanner = nullptr;
+
+  DWORD err = 0;
+  size_t tries = 0;
+  do {
+    tries++;
+
+    // Show credential prompt, displaying error from previous try if needed.
+    // TODO(wfh): Make sure we support smart cards here.
+    ULONG auth_package = 0;
+    LPVOID cred_buffer = nullptr;
+    ULONG cred_buffer_size = 0;
+    err = CredUIPromptForWindowsCredentials(
+        &cui, err, &auth_package,
+        nullptr, 0,
+        &cred_buffer, &cred_buffer_size,
+        nullptr,
+        CREDUIWIN_ENUMERATE_CURRENT_USER);
+    if (err != ERROR_SUCCESS)
+      break;
+
+    // Try to unpack the authentication buffer.  If this fails, try again.
+    // By not using the flag CRED_PACK_PROTECTED_CREDENTIALS, the password
+    // in |cred_password| remains encrypted.  That's OK though, the call to
+    // LogonUser() below handles that correctly.
+    WCHAR cred_username[CREDUI_MAX_USERNAME_LENGTH + 1] = {};
+    DWORD cred_username_length = arraysize(cred_username);
+    WCHAR cred_domain[CREDUI_MAX_USERNAME_LENGTH + 1] = {};
+    DWORD cred_domain_length = arraysize(cred_domain);
+    WCHAR cred_password[CREDUI_MAX_PASSWORD_LENGTH + 1] = {};
+    DWORD cred_password_length = arraysize(cred_password);
+    BOOL ret = CredUnPackAuthenticationBuffer(
+        0,
+        cred_buffer, cred_buffer_size,
+        cred_username, &cred_username_length,
+        cred_domain, &cred_domain_length,
+        cred_password, &cred_password_length);
+    SecureZeroMemory(cred_buffer, cred_buffer_size);
+    CoTaskMemFree(cred_buffer);
+    if(!ret) {
+      err = GetLastError();
+      continue;
+    }
+
+    // While CredUIPromptForWindowsCredentials() shows the currently logged
+    // on user by default, it can be changed at runtime.  This is important,
+    // as it allows users to change to a different type of authentication
+    // mechanism, such as PIN or smartcard.  However, this also allows the user
+    // to change to a completely different account on the machine.  Make sure
+    // the user authenticated with the credentials of the currently logged on
+    // user.
+    //
+    // When the buffer returned by CredUIPromptForWindowsCredentials() is
+    // unpacked, |cred_username| is of the form "DOMAIN\username" and
+    // |cred_domain| is empty.  I have tested this on both standalone
+    // workstations and domain joined machines.  This seems to be different
+    // behaviour than CredUIPromptForCredentials().  This makes |cred_username|
+    // comparable to |username| above.
+    if (wcsicmp(cred_username, cur_username) != 0) {
+      err = ERROR_LOGON_FAILURE;
+      continue;
+    }
+
+    // As explained above, extract the domain from |cred_username|.
+    WCHAR username[CREDUI_MAX_USERNAME_LENGTH + 1] = {};
+    WCHAR domain[CREDUI_MAX_USERNAME_LENGTH + 1] = {};
+    LPWSTR backslash = wcschr(cred_username, L'\\');
+    if (cred_domain[0] == 0 && backslash != nullptr) {
+      *backslash = 0;
+      wcscpy_s(domain, CREDUI_MAX_USERNAME_LENGTH, cred_username);
+      wcscpy_s(username, CREDUI_MAX_USERNAME_LENGTH, backslash + 1);
+    } else {
+      LOG(ERROR) << "Unexpected domain and/or username";
+      break;
+    }
+
+    // Validate the returned credentials by trying to logon.
+    HANDLE handle = INVALID_HANDLE_VALUE;
+    if (LogonUser(username, domain, cred_password,
+                  LOGON32_LOGON_INTERACTIVE, LOGON32_PROVIDER_DEFAULT,
+                  &handle)) {
+      retval = true;
+      CloseHandle(handle);
+    } else {
+      // TODO(rogerta): why do we need this else block?  Blank passwords are
+      // only supported for standalone workstations, and that has already been
+      // checked above.
+
+      err = GetLastError();
+      if (err == ERROR_ACCOUNT_RESTRICTION && wcslen(cred_password) == 0) {
+        // Password is blank, so permit.
+        retval = true;
+      } else {
+        LOG(ERROR) << "Unable to authenticate " << GetLastError();
+      }
+    }
+    SecureZeroMemory(cred_password, sizeof(cred_password));
+  } while (!retval && tries < kMaxPasswordRetries);
+
+  return retval;
+}
+
+}  // namespace
+
+void DelayReportOsPassword() {
+  content::BrowserThread::PostDelayedTask(content::BrowserThread::UI, FROM_HERE,
+                                          base::Bind(&GetOsPasswordStatus),
+                                          base::TimeDelta::FromSeconds(40));
+}
+
+bool AuthenticateUser(gfx::NativeWindow window) {
+  return
+    base::FeatureList::IsEnabled(kCredUIPromptForWindowsCredentialsFeature) ?
+        AuthenticateUserNew(window) : AuthenticateUserOld(window);
 }
 
 }  // namespace password_manager_util_win
