@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "67cd9dfc_0fef80be",
+        "filename": "services/ui/ws/server_window.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-08-29T04:41:56Z",
+      "side": 1,
+      "message": "Let\u0027s just delete this ctor (and give default value for |properties| in the only remaining ctor).",
+      "revId": "33e1bb2da52d9e268f226303dd6129852f63b134",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0274a32_9100b35b",
+        "filename": "services/ui/ws/server_window.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-08-29T04:41:56Z",
+      "side": 1,
+      "message": "It\u0027s not immediately obvious why |frame_sink_id| needs to be an input here, instead of being computed from |id| during construction. So please add a comment explaining why |frame_sink_id| needs to be provided as an input here.",
+      "revId": "33e1bb2da52d9e268f226303dd6129852f63b134",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed8c6069_bdf10088",
+        "filename": "services/ui/ws/window_manager_state.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 858,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-08-29T04:41:56Z",
+      "side": 1,
+      "message": "Remove the TODO?",
+      "revId": "33e1bb2da52d9e268f226303dd6129852f63b134",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59642aec_c9f8c862",
+        "filename": "services/ui/ws/window_tree.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 472,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-08-29T04:41:56Z",
+      "side": 1,
+      "message": "Hm ... can you add a DCHECK(!GetWindow(WindowIdFromClientWindowId(client_window_id)) here?\n\nOr, instead of a DCHECK(), maybe fail gracefully (because the client is probably making a mistake, and we shouldn\u0027t crash here)?",
+      "revId": "33e1bb2da52d9e268f226303dd6129852f63b134",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
