@@ -19,6 +19,22 @@ base::LazyInstance<std::string>::DestructorAtExit g_overridden_locale =
 base::LazyInstance<base::scoped_nsobject<NSLocale>>::DestructorAtExit
     mac_locale = LAZY_INSTANCE_INITIALIZER;
 
+class OverrideLocaleHolder {
+ public:
+  OverrideLocaleHolder() {}
+  const std::vector<std::string>& value() const { return value_; }
+  void swap_value(std::vector<std::string>* override_value) {
+    value_.swap(*override_value);
+  }
+
+ private:
+  std::vector<std::string> value_;
+  DISALLOW_COPY_AND_ASSIGN(OverrideLocaleHolder);
+};
+
+base::LazyInstance<OverrideLocaleHolder>::DestructorAtExit
+    override_locale_holder = LAZY_INSTANCE_INITIALIZER;
+
 }  // namespace
 
 namespace l10n_util {
@@ -59,6 +75,10 @@ base::string16 GetDisplayNameForLocale(const std::string& locale,
                        [script_component uppercaseString]]);
 }
 
+const std::vector<std::string>& GetLocaleOverrideList() {
+  return override_locale_holder.Get().value();
+}
+
 const std::string& GetLocaleOverride() {
   return g_overridden_locale.Get();
 }
@@ -74,12 +94,12 @@ void OverrideLocaleWithCocoaLocale() {
   // "Today" are in the same language as raw dates like "March 20, 1999" (Chrome
   // strings resources vs ICU generated strings).  This also makes the Mac acts
   // like other Chrome platforms.
+
   NSArray* languageList = [base::mac::OuterBundle() preferredLocalizations];
   NSString* firstLocale = [languageList objectAtIndex:0];
   // Mac OS X uses "_" instead of "-", so swap to get a real locale value.
-  std::string locale_value =
-      [[firstLocale stringByReplacingOccurrencesOfString:@"_"
-                                              withString:@"-"] UTF8String];
+  std::string locale_value = base::SysNSStringToUTF8(
+      [firstLocale stringByReplacingOccurrencesOfString:@"_" withString:@"-"]);
 
   // On disk the "en-US" resources are just "en" (http://crbug.com/25578), so
   // the reverse mapping is done here to continue to feed Chrome the same values
@@ -89,6 +109,18 @@ void OverrideLocaleWithCocoaLocale() {
     locale_value = "en-US";
 
   g_overridden_locale.Get() = locale_value;
+
+  NSArray* languageList = [NSLocale preferredLanguages];
+  std::vector<std::string> ascii_languages;
+  ascii_languages.reserve([languageList count]);
+  for (NSUInteger i = 0; i < [languageList count]; ++i) {
+    std::string locale = base::SysNSStringToUTF8([[languageList objectAtIndex:i]
+        stringByReplacingOccurrencesOfString:@"_"
+                                  withString:@"-"]);
+    ascii_languages.push_back(locale);
+  }
+
+  override_locale_holder.Get().swap_value(&ascii_languages);
 }
 
 // Remove the Windows-style accelerator marker and change "..." into an

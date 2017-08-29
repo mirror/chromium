@@ -97,6 +97,7 @@ UI_BASE_EXPORT NSString* GetPluralNSStringF(int message_id, int number);
 
 // Support the override of the locale with the value from Cocoa.
 UI_BASE_EXPORT void OverrideLocaleWithCocoaLocale();
+UI_BASE_EXPORT const std::vector<std::string>& GetLocaleOverrideList();
 UI_BASE_EXPORT const std::string& GetLocaleOverride();
 
 }  // namespace l10n_util
