@@ -18,6 +18,7 @@
 #include "base/nix/xdg_util.h"
 #include "base/stl_util.h"
 #include "base/strings/string_number_conversions.h"
+#include "base/synchronization/waitable_event.h"
 #include "base/sys_info.h"
 #include "chromeos/audio/audio_device.h"
 #include "chromeos/audio/cras_audio_handler.h"
@@ -69,22 +70,6 @@ void RecordBeamformingDeviceState(CrosBeamformingDeviceState state) {
 bool IsBeamformingDefaultEnabled() {
   return base::FieldTrialList::FindFullName("ChromebookBeamforming") ==
          "Enabled";
-}
-
-// Returns a mic positions string if the machine has a beamforming capable
-// internal mic and otherwise an empty string.
-std::string MicPositions() {
-  // Get the list of devices from CRAS. An internal mic with a non-empty
-  // positions field indicates the machine has a beamforming capable mic array.
-  chromeos::AudioDeviceList devices;
-  chromeos::CrasAudioHandler::Get()->GetAudioDevices(&devices);
-  for (const auto& device : devices) {
-    if (device.type == chromeos::AUDIO_TYPE_INTERNAL_MIC) {
-      // There should be only one internal mic device.
-      return device.mic_positions;
-    }
-  }
-  return "";
 }
 
 // Process |device_list| that two shares the same dev_index by creating a
@@ -147,7 +132,7 @@ bool AudioManagerCras::HasAudioOutputDevices() {
 
 bool AudioManagerCras::HasAudioInputDevices() {
   chromeos::AudioDeviceList devices;
-  chromeos::CrasAudioHandler::Get()->GetAudioDevices(&devices);
+  GetAudioDevices(&devices);
   for (size_t i = 0; i < devices.size(); ++i) {
     if (devices[i].is_input && devices[i].is_for_simple_usage())
       return true;
@@ -158,6 +143,7 @@ bool AudioManagerCras::HasAudioInputDevices() {
 AudioManagerCras::AudioManagerCras(std::unique_ptr<AudioThread> audio_thread,
                                    AudioLogFactory* audio_log_factory)
     : AudioManagerBase(std::move(audio_thread), audio_log_factory),
+      main_task_runner_(base::ThreadTaskRunnerHandle::Get()),
       beamforming_on_device_id_(nullptr),
       beamforming_off_device_id_(nullptr) {
   SetMaxOutputStreamsAllowed(kMaxOutputStreams);
@@ -178,7 +164,7 @@ void AudioManagerCras::GetAudioDeviceNamesImpl(bool is_input,
 
   if (base::FeatureList::IsEnabled(features::kEnumerateAudioDevices)) {
     chromeos::AudioDeviceList devices;
-    chromeos::CrasAudioHandler::Get()->GetAudioDevices(&devices);
+    GetAudioDevices(&devices);
 
     // |dev_idx_map| is a map of dev_index and their audio devices.
     std::map<int, chromeos::AudioDeviceList> dev_idx_map;
@@ -227,7 +213,9 @@ AudioParameters AudioManagerCras::GetInputStreamParameters(
   AudioParameters params(AudioParameters::AUDIO_PCM_LOW_LATENCY,
                          CHANNEL_LAYOUT_STEREO, kDefaultSampleRate, 16,
                          buffer_size);
-  if (chromeos::CrasAudioHandler::Get()->HasKeyboardMic())
+  chromeos::AudioDeviceList devices;
+  GetAudioDevices(&devices);
+  if (HasKeyboardMic(devices))
     params.set_effects(AudioParameters::KEYBOARD_MIC);
 
   if (mic_positions_.size() > 1) {
@@ -264,8 +252,7 @@ std::string AudioManagerCras::GetAssociatedOutputDeviceID(
     return "";
 
   chromeos::AudioDeviceList devices;
-  chromeos::CrasAudioHandler* audio_handler = chromeos::CrasAudioHandler::Get();
-  audio_handler->GetAudioDevices(&devices);
+  GetAudioDevices(&devices);
 
   if ((beamforming_on_device_id_ &&
        input_device_id == beamforming_on_device_id_) ||
@@ -273,9 +260,7 @@ std::string AudioManagerCras::GetAssociatedOutputDeviceID(
        input_device_id == beamforming_off_device_id_)) {
     // These are special devices derived from the internal mic array, so they
     // should be associated to the internal speaker.
-    const chromeos::AudioDevice* internal_speaker =
-        audio_handler->GetDeviceByType(chromeos::AUDIO_TYPE_INTERNAL_SPEAKER);
-    return internal_speaker ? base::Uint64ToString(internal_speaker->id) : "";
+    return GetInternalSpeakerId(devices);
   }
 
   // At this point, we know we have an ordinary input device, so we look up its
@@ -284,7 +269,7 @@ std::string AudioManagerCras::GetAssociatedOutputDeviceID(
   if (!base::StringToUint64(input_device_id, &device_id))
     return "";
   const chromeos::AudioDevice* input_device =
-      audio_handler->GetDeviceFromId(device_id);
+      GetDeviceFromId(devices, device_id);
   if (!input_device)
     return "";
 
@@ -302,8 +287,18 @@ std::string AudioManagerCras::GetAssociatedOutputDeviceID(
 }
 
 std::string AudioManagerCras::GetDefaultOutputDeviceID() {
-  return base::Uint64ToString(
-      chromeos::CrasAudioHandler::Get()->GetPrimaryActiveOutputNode());
+  DCHECK(GetTaskRunner()->BelongsToCurrentThread());
+  base::WaitableEvent event(base::WaitableEvent::ResetPolicy::MANUAL,
+                            base::WaitableEvent::InitialState::NOT_SIGNALED);
+  uint64_t active_output_node_id;
+  main_task_runner_->PostTask(
+      FROM_HERE,
+      base::Bind(&AudioManagerCras::GetPrimaryActiveOutputNodeOnMainThread,
+                 base::Unretained(this),
+                 base::Unretained(&active_output_node_id),
+                 base::Unretained(&event)));
+  event.Wait();
+  return base::Uint64ToString(active_output_node_id);
 }
 
 const char* AudioManagerCras::GetName() {
@@ -411,6 +406,78 @@ bool AudioManagerCras::IsDefault(const std::string& device_id, bool is_input) {
   DCHECK(!device_names.empty());
   const AudioDeviceName& device_name = device_names.front();
   return device_name.unique_id == device_id;
+}
+
+// Returns a mic positions string if the machine has a beamforming capable
+// internal mic and otherwise an empty string.
+std::string AudioManagerCras::MicPositions() {
+  // Get the list of devices from CRAS. An internal mic with a non-empty
+  // positions field indicates the machine has a beamforming capable mic array.
+  chromeos::AudioDeviceList devices;
+  GetAudioDevices(&devices);
+  for (const auto& device : devices) {
+    if (device.type == chromeos::AUDIO_TYPE_INTERNAL_MIC) {
+      // There should be only one internal mic device.
+      return device.mic_positions;
+    }
+  }
+  return "";
+}
+
+void AudioManagerCras::GetAudioDevices(chromeos::AudioDeviceList* devices) {
+  DCHECK(GetTaskRunner()->BelongsToCurrentThread());
+  base::WaitableEvent event(base::WaitableEvent::ResetPolicy::MANUAL,
+                            base::WaitableEvent::InitialState::NOT_SIGNALED);
+  main_task_runner_->PostTask(
+      FROM_HERE, base::Bind(&AudioManagerCras::GetAudioDevicesOnMainThread,
+                            base::Unretained(this), base::Unretained(devices),
+                            base::Unretained(&event)));
+  event.Wait();
+}
+
+void AudioManagerCras::GetAudioDevicesOnMainThread(
+    chromeos::AudioDeviceList* devices,
+    base::WaitableEvent* event) {
+  DCHECK(main_task_runner_->BelongsToCurrentThread());
+  chromeos::CrasAudioHandler::Get()->GetAudioDevices(devices);
+  event->Signal();
+}
+
+void AudioManagerCras::GetPrimaryActiveOutputNodeOnMainThread(
+    uint64_t* active_output_node_id,
+    base::WaitableEvent* event) {
+  DCHECK(main_task_runner_->BelongsToCurrentThread());
+  *active_output_node_id =
+      chromeos::CrasAudioHandler::Get()->GetPrimaryActiveOutputNode();
+  event->Signal();
+}
+
+bool AudioManagerCras::HasKeyboardMic(
+    const chromeos::AudioDeviceList& devices) {
+  for (const auto& device : devices) {
+    if (device.is_input && device.type == chromeos::AUDIO_TYPE_KEYBOARD_MIC)
+      return true;
+  }
+  return false;
+}
+
+std::string AudioManagerCras::GetInternalSpeakerId(
+    const chromeos::AudioDeviceList& devices) {
+  for (const auto& device : devices) {
+    if (device.type == chromeos::AUDIO_TYPE_INTERNAL_SPEAKER)
+      return base::Uint64ToString(device.id);
+  }
+  return "";
+}
+
+const chromeos::AudioDevice* AudioManagerCras::GetDeviceFromId(
+    const chromeos::AudioDeviceList& devices,
+    uint64_t id) {
+  for (const auto& device : devices) {
+    if (device.id == id)
+      return &device;
+  }
+  return nullptr;
 }
 
 }  // namespace media
