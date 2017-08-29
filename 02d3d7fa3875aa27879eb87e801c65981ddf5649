@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8ddf9196_5097c3ce",
+        "filename": "tools/accessibility/rebase_dump_accessibility_tree_test.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-08-29T22:44:51Z",
+      "side": 1,
+      "message": "Not critical, but programs that use unix terminal colors typically check an\nenvironment variable to see if the terminal is rich or\ninteractive, could you add something like that?\n\nThe main goal would be that you can redirect to a file\nand it skips the colors, but if you run it interactively it\nshows the colors.",
+      "revId": "02d3d7fa3875aa27879eb87e801c65981ddf5649",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
