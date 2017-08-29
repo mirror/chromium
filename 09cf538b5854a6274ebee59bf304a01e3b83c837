@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4c7e8da2_44e74d09",
+        "filename": "base/mojom/values_struct_traits.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-08-29T08:35:16Z",
+      "side": 1,
+      "message": "nit: std::make_unique",
+      "range": {
+        "startLine": 24,
+        "startChar": 17,
+        "endLine": 24,
+        "endChar": 33
+      },
+      "revId": "09cf538b5854a6274ebee59bf304a01e3b83c837",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4c84898_2b133fed",
+        "filename": "base/mojom/values_struct_traits.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-08-29T08:35:16Z",
+      "side": 1,
+      "message": "nit: This could be base::Value::ListStorage, but I\u0027m not quite sure what\u0027s more consistent with the DictStorage usage in line 20.\n\nAlso you could use reserve + emplace_back here as well, but I don\u0027t think this makes much of a difference. Default initialization of a base::Value should be cheap.",
+      "range": {
+        "startLine": 39,
+        "startChar": 2,
+        "endLine": 39,
+        "endChar": 26
+      },
+      "revId": "09cf538b5854a6274ebee59bf304a01e3b83c837",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a741aca8_fc9c8095",
+        "filename": "base/mojom/values_struct_traits.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-08-29T08:35:16Z",
+      "side": 1,
+      "message": "nit: this could be base::Value::BlobStorage, same argument as in line 39 applies here, though.",
+      "range": {
+        "startLine": 80,
+        "startChar": 6,
+        "endLine": 80,
+        "endChar": 23
+      },
+      "revId": "09cf538b5854a6274ebee59bf304a01e3b83c837",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cda3772b_3c7b79bf",
+        "filename": "base/mojom/values_struct_traits.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-08-29T08:35:16Z",
+      "side": 1,
+      "message": "nit: never reached",
+      "range": {
+        "startLine": 68,
+        "startChar": 8,
+        "endLine": 68,
+        "endChar": 14
+      },
+      "revId": "09cf538b5854a6274ebee59bf304a01e3b83c837",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86fdcc40_cdade2f6",
+        "filename": "base/mojom/values_struct_traits_unittest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-08-29T08:35:16Z",
+      "side": 1,
+      "message": "nit: std::make_unique",
+      "range": {
+        "startLine": 112,
+        "startChar": 2,
+        "endLine": 119,
+        "endChar": 72
+      },
+      "revId": "09cf538b5854a6274ebee59bf304a01e3b83c837",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
