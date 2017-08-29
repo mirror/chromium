@@ -65,6 +65,29 @@
     },
     {
       "key": {
+        "uuid": "8809338a_d4c4276c",
+        "filename": "ash/ime/ime_controller.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-29T18:21:07Z",
+      "side": 1,
+      "message": "Is there a typo here? I\u0027m having a hard time parsing this.",
+      "range": {
+        "startLine": 111,
+        "startChar": 55,
+        "endLine": 112,
+        "endChar": 21
+      },
+      "revId": "f5c6b65ff977fe02f7948470ca43f1c4b0e92cd7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7834e5b1_78430405",
         "filename": "ash/public/interfaces/ime_controller.mojom",
         "patchSetId": 8
@@ -76,6 +99,29 @@
       "writtenOn": "2017-08-29T17:46:09Z",
       "side": 1,
       "message": "nit: stray whitespace",
+      "range": {
+        "startLine": 30,
+        "startChar": 78,
+        "endLine": 30,
+        "endChar": 79
+      },
+      "revId": "f5c6b65ff977fe02f7948470ca43f1c4b0e92cd7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc7b6d4f_86f49558",
+        "filename": "ash/public/interfaces/ime_controller.mojom",
+        "patchSetId": 8
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-29T18:21:07Z",
+      "side": 1,
+      "message": "Nit: trailing whitespace",
       "range": {
         "startLine": 30,
         "startChar": 78,
@@ -105,6 +151,23 @@
         "endLine": 57,
         "endChar": 70
       },
+      "revId": "f5c6b65ff977fe02f7948470ca43f1c4b0e92cd7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08179caa_7415c28d",
+        "filename": "ash/system/tray_caps_lock.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-29T18:21:07Z",
+      "side": 1,
+      "message": "Why not just register it in tests? I feel like we have an increasing amount of \"only happens in tests\" code in non-test code, which makes it harder to understand what\u0027s happening.",
       "revId": "f5c6b65ff977fe02f7948470ca43f1c4b0e92cd7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
