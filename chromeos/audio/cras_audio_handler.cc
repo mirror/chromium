@@ -137,7 +137,9 @@ CrasAudioHandler* CrasAudioHandler::Get() {
   return g_cras_audio_handler;
 }
 
-void CrasAudioHandler::OnVideoCaptureStarted(media::VideoFacingMode facing) {
+void CrasAudioHandler::OnVideoCaptureStartedOnMainThread(
+    media::VideoFacingMode facing) {
+  DCHECK(main_task_runner_->BelongsToCurrentThread());
   // Do nothing if the device doesn't have both front and rear microphones.
   if (!HasDualInternalMic())
     return;
@@ -175,7 +177,9 @@ void CrasAudioHandler::OnVideoCaptureStarted(media::VideoFacingMode facing) {
   ActivateMicForCamera(facing);
 }
 
-void CrasAudioHandler::OnVideoCaptureStopped(media::VideoFacingMode facing) {
+void CrasAudioHandler::OnVideoCaptureStoppedOnMainThread(
+    media::VideoFacingMode facing) {
+  DCHECK(main_task_runner_->BelongsToCurrentThread());
   // Do nothing if the device doesn't have both front and rear microphones.
   if (!HasDualInternalMic())
     return;
@@ -648,6 +652,7 @@ CrasAudioHandler::CrasAudioHandler(
       hdmi_rediscover_grace_period_duration_in_ms_(
           kHDMIRediscoverGracePeriodDurationInMs),
       hdmi_rediscovering_(false),
+      main_task_runner_(base::ThreadTaskRunnerHandle::Get()),
       weak_ptr_factory_(this) {
   if (!audio_pref_handler.get())
     return;
@@ -1573,6 +1578,24 @@ bool CrasAudioHandler::HasExternalDevice(bool is_input) const {
       return true;
   }
   return false;
+}
+
+void CrasAudioHandler::OnVideoCaptureStarted(media::VideoFacingMode facing) {
+  // Unretained is safe because IO thread is stopped before
+  // ChromeBrowserMainPartsChromeos shuts down CrasAudioHandler.
+  main_task_runner_->PostTask(
+      FROM_HERE,
+      base::Bind(&CrasAudioHandler::OnVideoCaptureStartedOnMainThread,
+                 base::Unretained(this), facing));
+}
+
+void CrasAudioHandler::OnVideoCaptureStopped(media::VideoFacingMode facing) {
+  // Unretained is safe because IO thread is stopped before
+  // ChromeBrowserMainPartsChromeos shuts down CrasAudioHandler.
+  main_task_runner_->PostTask(
+      FROM_HERE,
+      base::Bind(&CrasAudioHandler::OnVideoCaptureStoppedOnMainThread,
+                 base::Unretained(this), facing));
 }
 
 }  // namespace chromeos
