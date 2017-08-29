@@ -757,12 +757,17 @@ by a child template that "extends" this file.
         </receiver>
 
         <!-- Download foreground service -->
-        <service android:name="org.chromium.chrome.browser.download.DownloadForegroundService"
+        <!--service android:name="org.chromium.chrome.browser.download.DownloadForegroundService"
             android:exported="false">
-        </service>
+        </service-->
 
         <!-- Download broadcast manager service -->
-        <service android:name="org.chromium.chrome.browser.download.DownloadBroadcastManager"
+        <!--service android:name="org.chromium.chrome.browser.download.DownloadBroadcastManager"
+            android:exported="false">
+        </service-->
+
+        <!-- Download service -->
+        <service android:name="org.chromium.chrome.browser.download.DownloadNotificationService"
             android:exported="false">
         </service>
 

@@ -4,8 +4,6 @@
 
 package org.chromium.chrome.browser.download;
 
-import static org.chromium.chrome.browser.download.DownloadNotificationFactory.buildActionIntent;
-
 import android.app.DownloadManager;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
@@ -1368,7 +1366,7 @@ public class DownloadManagerService
      */
     @Override
     public void broadcastDownloadAction(DownloadItem downloadItem, String action) {
-        Intent intent = buildActionIntent(mContext, action,
+        Intent intent = DownloadNotificationService.buildActionIntent(mContext, action,
                 LegacyHelpers.buildLegacyContentId(false, downloadItem.getId()),
                 downloadItem.getDownloadInfo().isOffTheRecord());
         mContext.sendBroadcast(intent);
