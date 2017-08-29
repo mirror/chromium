@@ -102,4 +102,8 @@ DEFINE_TRACE(IDBObserver) {
   visitor->Trace(observer_ids_);
 }
 
+DEFINE_TRACE_WRAPPERS(IDBObserver) {
+  visitor->TraceWrappers(callback_);
+}
+
 }  // namespace blink
