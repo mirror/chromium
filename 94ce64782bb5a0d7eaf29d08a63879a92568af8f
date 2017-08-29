@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e682aeec_b72e00fe",
+        "filename": "third_party/WebKit/PerformanceTests/OWPStorage/resources/blob-shared.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-08-29T21:17:13Z",
+      "side": 1,
+      "message": "Nit: use \u0027let\u0027 instead of \u0027var\u0027",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 1,
+        "endChar": 3
+      },
+      "revId": "94ce64782bb5a0d7eaf29d08a63879a92568af8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89824324_ca0f225d",
+        "filename": "third_party/WebKit/PerformanceTests/OWPStorage/resources/blob-shared.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-08-29T21:17:13Z",
+      "side": 1,
+      "message": "Since this argument isn\u0027t used, replace with ()",
+      "range": {
+        "startLine": 79,
+        "startChar": 18,
+        "endLine": 79,
+        "endChar": 19
+      },
+      "revId": "94ce64782bb5a0d7eaf29d08a63879a92568af8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c75c02d6_2e434da3",
+        "filename": "third_party/WebKit/PerformanceTests/OWPStorage/resources/blob-shared.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-08-29T21:17:13Z",
+      "side": 1,
+      "message": "This would be simpler as:\n\nif (++numRead \u003d\u003d blobs.length) { ... }",
+      "range": {
+        "startLine": 87,
+        "startChar": 12,
+        "endLine": 87,
+        "endChar": 41
+      },
+      "revId": "94ce64782bb5a0d7eaf29d08a63879a92568af8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
