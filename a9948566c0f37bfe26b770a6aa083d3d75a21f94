@@ -33,6 +33,24 @@
       "revId": "a9948566c0f37bfe26b770a6aa083d3d75a21f94",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a771d4c6_d61f4571",
+        "filename": "pdf/pdfium/pdfium_engine.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 3436,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-08-29T20:31:35Z",
+      "side": 1,
+      "message": "I\u0027m worried this is harder to actually do than expected. For one, if the top-right corner of a rect intersects the bottom-left corner of a rect already in |highlighted_rects|, then the non-overlapping part to add is actually 2 rects, since a rect can\u0027t represent a rectangle with its corner missing. There\u0027s no existing pp::Rect method to do that, BTW.\n\nA more complicated case would be when a large character appears in the middle of a paragraph of smaller characters. Now the new rect for that large character has to be shaved down into multiple smaller rects.",
+      "parentUuid": "2a0744b5_908d3d68",
+      "revId": "a9948566c0f37bfe26b770a6aa083d3d75a21f94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
