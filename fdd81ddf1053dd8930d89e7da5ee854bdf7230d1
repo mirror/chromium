@@ -22,6 +22,30 @@
       "revId": "fdd81ddf1053dd8930d89e7da5ee854bdf7230d1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c48187b_bbb281d1",
+        "filename": "mojo/edk/test/test_utils_fuchsia.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-08-29T21:59:20Z",
+      "side": 1,
+      "message": "Oh, Gerrit\u0027s \"hide a random amount of messages\" elided Wez\u0027s comment about this.\n\nI don\u0027t think we should put pointless HANDLE_EINTR\u0027s in Fuchsia-only code though.",
+      "parentUuid": "f9b3c10b_0d82b512",
+      "range": {
+        "startLine": 85,
+        "startChar": 11,
+        "endLine": 85,
+        "endChar": 23
+      },
+      "revId": "fdd81ddf1053dd8930d89e7da5ee854bdf7230d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
