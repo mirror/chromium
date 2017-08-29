@@ -728,7 +728,10 @@ TEST_F(WindowManagerStateTestAsync, CursorResetOverNoTargetAsync) {
   window_tree()->AddWindow(FirstRootId(window_tree()), child_window_id);
   // Setup steps already do hit-test for mouse cursor update so this should go
   // to the queue in EventDispatcher.
-  EXPECT_TRUE(window_manager_state()->event_dispatcher()->IsProcessingEvent());
+  EventTargeterTestApi event_targeter_test_api(
+      EventDispatcherTestApi(window_manager_state()->event_dispatcher())
+          .event_targeter());
+  EXPECT_TRUE(event_targeter_test_api.HasPendingQueries());
   child_window->SetVisible(true);
   child_window->SetBounds(gfx::Rect(0, 0, 20, 20));
   child_window->parent()->SetCursor(ui::CursorData(ui::CursorType::kCopy));
@@ -741,12 +744,9 @@ TEST_F(WindowManagerStateTestAsync, CursorResetOverNoTargetAsync) {
   WindowManagerStateTestApi test_api(window_manager_state());
   EXPECT_TRUE(test_api.is_event_queue_empty());
   window_manager_state()->ProcessEvent(move, 0);
-  // There's no event dispatching in flight but there's hit-test in flight in
-  // EventDispatcher so we still put event processing request into the queue
-  // in WindowManagerState.
   EXPECT_FALSE(test_api.tree_awaiting_input_ack());
   EXPECT_TRUE(window_manager_state()->event_dispatcher()->IsProcessingEvent());
-  EXPECT_FALSE(test_api.is_event_queue_empty());
+  EXPECT_TRUE(test_api.is_event_queue_empty());
   task_runner_->RunUntilIdle();
   EXPECT_TRUE(test_api.is_event_queue_empty());
   // The event isn't over a valid target, which should trigger resetting the
