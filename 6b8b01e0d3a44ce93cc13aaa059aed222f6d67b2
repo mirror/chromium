@@ -16,6 +16,24 @@
       "revId": "6b8b01e0d3a44ce93cc13aaa059aed222f6d67b2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e17fc493_a3356a84",
+        "filename": "ios/chrome/browser/passwords/credential_manager_util.mm",
+        "patchSetId": 17
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1229234
+      },
+      "writtenOn": "2017-08-29T15:11:56Z",
+      "side": 1,
+      "message": "Here we don\u0027t. As for other functions it\u0027s rather clear what was the cause for failed parsing, in ParseCredentialDictionary it would be good to at least message which field was invalid.\n\nLike you wrote, I\u0027m going to land this change and I added a TODO to handle errors from ParseCredentialDictionary.",
+      "parentUuid": "877872ef_bdec9483",
+      "revId": "6b8b01e0d3a44ce93cc13aaa059aed222f6d67b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
