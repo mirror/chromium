@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b8d150b7_b08a19fd",
+        "filename": "content/browser/webauth/cbor/cbor_writer.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-08-29T00:56:39Z",
+      "side": 1,
+      "message": "Yes! I had just noticed this while adding support for arrays in a follow-up. This check is going away with the new JSONWriter-style of doing things, though.",
+      "parentUuid": "719593a9_199dae04",
+      "revId": "1fa442e8256f535940647168fd75d7ecaccdcf4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3ce1a9ea_0bb097a2",
         "filename": "content/browser/webauth/cbor/cbor_writer.cc",
         "patchSetId": 8
@@ -33,6 +51,24 @@
       "revId": "1fa442e8256f535940647168fd75d7ecaccdcf4a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c9d35b9_7500f8cf",
+        "filename": "content/browser/webauth/cbor/cbor_writer.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-08-29T00:56:39Z",
+      "side": 1,
+      "message": "gah. I\u0027m embarrassed that you even had to point that out.",
+      "parentUuid": "3ce1a9ea_0bb097a2",
+      "revId": "1fa442e8256f535940647168fd75d7ecaccdcf4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "0291e149_9a1a0d2a",
+        "filename": "content/browser/webauth/cbor/cbor_writer.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-08-29T00:56:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "41972ae8_9be291fc",
+      "revId": "1fa442e8256f535940647168fd75d7ecaccdcf4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f11ad0de_ab5e006c",
         "filename": "content/browser/webauth/cbor/cbor_writer.h",
         "patchSetId": 8
@@ -67,6 +121,24 @@
       "revId": "1fa442e8256f535940647168fd75d7ecaccdcf4a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b536b7f_c3f08b6c",
+        "filename": "content/browser/webauth/cbor/cbor_writer.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-08-29T00:56:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f11ad0de_ab5e006c",
+      "revId": "1fa442e8256f535940647168fd75d7ecaccdcf4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "f7963091_bfe9bc24",
+        "filename": "content/browser/webauth/cbor/cbor_writer.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-08-29T00:56:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d1dfe9dc_d29ebfc2",
+      "revId": "1fa442e8256f535940647168fd75d7ecaccdcf4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a1b8c524_47bc9e7e",
         "filename": "content/browser/webauth/cbor/cbor_writer.h",
         "patchSetId": 8
@@ -101,6 +191,24 @@
       "revId": "1fa442e8256f535940647168fd75d7ecaccdcf4a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f92ea0d_f218b582",
+        "filename": "content/browser/webauth/cbor/cbor_writer.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-08-29T00:56:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a1b8c524_47bc9e7e",
+      "revId": "1fa442e8256f535940647168fd75d7ecaccdcf4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -127,6 +235,30 @@
     },
     {
       "key": {
+        "uuid": "e728f1dd_7743e639",
+        "filename": "content/browser/webauth/cbor/cbor_writer.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-08-29T00:56:39Z",
+      "side": 1,
+      "message": "Not really. removed.",
+      "parentUuid": "b61e9fcd_45e4f137",
+      "range": {
+        "startLine": 54,
+        "startChar": 32,
+        "endLine": 54,
+        "endChar": 47
+      },
+      "revId": "1fa442e8256f535940647168fd75d7ecaccdcf4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "39bc2941_90c41220",
         "filename": "content/browser/webauth/cbor/cbor_writer.h",
         "patchSetId": 8
@@ -141,6 +273,24 @@
       "revId": "1fa442e8256f535940647168fd75d7ecaccdcf4a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "890ac74a_a0fa9297",
+        "filename": "content/browser/webauth/cbor/cbor_writer.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-08-29T00:56:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "39bc2941_90c41220",
+      "revId": "1fa442e8256f535940647168fd75d7ecaccdcf4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -161,6 +311,24 @@
     },
     {
       "key": {
+        "uuid": "ba301eb7_318eff33",
+        "filename": "content/browser/webauth/cbor/cbor_writer.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-08-29T00:56:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a875f3a2_7021ad18",
+      "revId": "1fa442e8256f535940647168fd75d7ecaccdcf4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "428b0b4f_0973642c",
         "filename": "content/browser/webauth/cbor/cbor_writer.h",
         "patchSetId": 8
@@ -172,6 +340,24 @@
       "writtenOn": "2017-08-25T16:47:30Z",
       "side": 1,
       "message": "Couple of questions:\n-- Can the key be of any type?\n-- Can there be nested maps?\n-- I would at least add a FinishMap() that the client needs to call when it believes to be done with the map, for sanity checking.\n-- Even better, have you considered following the pattern used by JSONWriter, i.e.: make the API take a base::Value and make it stateless?",
+      "revId": "1fa442e8256f535940647168fd75d7ecaccdcf4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f679aee_f6fc7bbb",
+        "filename": "content/browser/webauth/cbor/cbor_writer.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-08-29T00:56:39Z",
+      "side": 1,
+      "message": "Excellent questions. \na) the key can be multiple types, although the spec recommends trying to narrow this depending on what you need the implementation to do (https://tools.ietf.org/html/rfc7049#section-3.7). For our use case, probably should limit to strings until someone else needs more from it.\nb) There can be nested maps, as well as arrays within maps and vice versa.\nc/d) I reworked this to follow the JSONWriter pattern. base::Value is technically just for JSON, so DOUBLE has to be used for uints. Take a look and see if that\u0027s what you had in mind.",
+      "parentUuid": "428b0b4f_0973642c",
       "revId": "1fa442e8256f535940647168fd75d7ecaccdcf4a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -192,6 +378,24 @@
       "revId": "1fa442e8256f535940647168fd75d7ecaccdcf4a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6fe1686_a7f40b98",
+        "filename": "content/browser/webauth/cbor/cbor_writer.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-08-29T00:56:39Z",
+      "side": 1,
+      "message": "N/A after reworking to follow the JSONWriter pattern.",
+      "parentUuid": "1fe696b9_0a4d3d14",
+      "revId": "1fa442e8256f535940647168fd75d7ecaccdcf4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
