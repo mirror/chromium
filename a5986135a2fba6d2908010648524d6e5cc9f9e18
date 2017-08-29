@@ -46,6 +46,30 @@
       "revId": "a5986135a2fba6d2908010648524d6e5cc9f9e18",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b093acb_022bd74a",
+        "filename": "components/printing/DEPS",
+        "patchSetId": 1
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1002198
+      },
+      "writtenOn": "2017-08-29T00:32:58Z",
+      "side": 1,
+      "message": "yes, I meant dependents. Using as a convenience sgtm",
+      "parentUuid": "a2d8577f_dad0c7fa",
+      "range": {
+        "startLine": 3,
+        "startChar": 2,
+        "endLine": 3,
+        "endChar": 31
+      },
+      "revId": "a5986135a2fba6d2908010648524d6e5cc9f9e18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
