@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ee6cb65f_b04bac8f",
+        "filename": "ui/views/controls/button/checkbox.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-08-29T22:39:52Z",
+      "side": 1,
+      "message": "This is probably subtle enough for a comment. E.g.\n\n  // Usually ink drop ripples match the text color. Checkboxes use the color of\n  // the unchecked icon.",
+      "revId": "093553708fc11a2808c8cef8697648761aa8ddbc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72e9c3e7_58da373b",
+        "filename": "ui/views/controls/button/checkbox.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-08-29T22:39:52Z",
+      "side": 1,
+      "message": "Wait a tic.. I don\u0027t think this satisfies \"color matches the button text color\" to do that we\u0027d need to use the 3-arg LabelButton constructor? i.e. LabelButton(nullptr, label, style::CONTEXT_BUTTON_MD). But that\u0027s not what we want.\n\nI think the code below is right, but this comment doesn\u0027t match the spec at http://crbug.com/757679 -- it explicitly has #757575 for the icon color and #212121 for the text color when not checked.\n\n\nBut! This also brings into question whether it\u0027s right to use \"typography\" colors for something that isn\u0027t text.. i.e. Is it coincidence that this matches the color of text we use for MD buttons. I\u0027m leaning towards \"yes\". E.g. if we decide text on MD text buttons is too grey and make it darker, should the checkbox border color change too - maybe not.\n\n\nThis suggests to me that we actually need ui::GetAuraColor to handle a new constant for the checkbox/radio stroke...",
+      "revId": "093553708fc11a2808c8cef8697648761aa8ddbc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81d48c79_ebc6d884",
+        "filename": "ui/views/controls/button/checkbox.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-08-29T22:39:52Z",
+      "side": 1,
+      "message": "remove views:: here and below (and in ::GetInkDropBaseColor())",
+      "revId": "093553708fc11a2808c8cef8697648761aa8ddbc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
