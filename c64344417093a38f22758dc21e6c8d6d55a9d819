@@ -175,6 +175,24 @@
       "revId": "c64344417093a38f22758dc21e6c8d6d55a9d819",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "265bd4ef_747fb9de",
+        "filename": "third_party/WebKit/Source/modules/webaudio/CrossThreadAudioWorkletProcessorInfo.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-08-29T15:44:01Z",
+      "side": 1,
+      "message": "Yes, that was my guess, but I get a bunch of compile errors from CrossThreadAudioWorkletProcessorInfo class when I tried it.\n\n---\nconst Vector\u003cCrossThreadAudioParamInfo\u003e\u0026 ParamInfoList() const { \n      return param_info_list_; }\n---\n\n--- compile time error messages:\ncopy assignment operator of \u0027CrossThreadAudioParamInfo\u0027 is implicitly deleted because field \u0027name_\u0027 has no copy assignment operator\n---",
+      "parentUuid": "c19ffb05_b2e8b9ef",
+      "revId": "c64344417093a38f22758dc21e6c8d6d55a9d819",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
