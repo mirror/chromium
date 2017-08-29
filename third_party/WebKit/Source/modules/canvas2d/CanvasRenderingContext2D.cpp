@@ -169,7 +169,9 @@ bool CanvasRenderingContext2D::IsAccelerated() const {
 }
 
 bool CanvasRenderingContext2D::IsComposited() const {
-  return IsAccelerated();
+  if (!HasImageBuffer())
+    return false;
+  return !GetImageBuffer()->IsRecording();
 }
 
 void CanvasRenderingContext2D::Stop() {
