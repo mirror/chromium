@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5ef3c9b0_5168a82a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-08-29T13:55:54Z",
+      "side": 1,
+      "message": "Update the message to refer to optional LocalSurfaceId field etc.",
+      "revId": "40cc9ddd407e5c79ee0384fb3c7a0d8fa8f5d6c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad9b006b_dd3bd30a",
+        "filename": "ui/aura/mus/hit_test_data_provider_aura_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-08-29T13:55:54Z",
+      "side": 1,
+      "message": "Looks like we may be missing test coverage for Child cases. Something to look into (separately, not in this CL, of course).",
+      "revId": "40cc9ddd407e5c79ee0384fb3c7a0d8fa8f5d6c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
