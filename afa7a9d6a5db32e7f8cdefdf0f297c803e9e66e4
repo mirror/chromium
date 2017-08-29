@@ -50,6 +50,24 @@
       "revId": "afa7a9d6a5db32e7f8cdefdf0f297c803e9e66e4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a87693a2_4167de2e",
+        "filename": "third_party/WebKit/Source/core/editing/commands/ApplyStyleCommand.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1210620
+      },
+      "writtenOn": "2017-08-29T06:32:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "013d6fc8_85ba884d",
+      "revId": "afa7a9d6a5db32e7f8cdefdf0f297c803e9e66e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
