@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a2319a89_bf7297b2",
+        "filename": "tools/battor_agent/battor_connection_impl_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1128909
+      },
+      "writtenOn": "2017-08-29T16:35:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e6a86f0d_f5b7c41f",
+      "revId": "b30bed887b4cf46e5dd1ce65d9a8c4043b34bce0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2c7cab3c_f103173f",
         "filename": "tools/battor_agent/battor_connection_impl_unittest.cc",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-29T11:55:55Z",
       "side": 1,
       "message": "is this considered the first open connection call? if so, why do you need to advance 50ms after it because it should not perform a flush.",
+      "revId": "b30bed887b4cf46e5dd1ce65d9a8c4043b34bce0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f45ea05_cee4deaf",
+        "filename": "tools/battor_agent/battor_connection_impl_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1128909
+      },
+      "writtenOn": "2017-08-29T16:35:48Z",
+      "side": 1,
+      "message": "I intentionally waited for the connection to go quiet, even if it\u0027s the first call. Realistically, this seems like the safe thing to do, and shouldn\u0027t impact the performance of the agent too much (adding ~50ms to starting the agent for the first time).",
+      "parentUuid": "2c7cab3c_f103173f",
       "revId": "b30bed887b4cf46e5dd1ce65d9a8c4043b34bce0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "d98657d3_90d5c453",
+        "filename": "tools/battor_agent/battor_connection_impl_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1128909
+      },
+      "writtenOn": "2017-08-29T16:35:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "44ab1b12_b6bb9db7",
+      "revId": "b30bed887b4cf46e5dd1ce65d9a8c4043b34bce0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "76c65440_27c8f990",
         "filename": "tools/battor_agent/battor_connection_impl_unittest.cc",
         "patchSetId": 3
@@ -64,6 +118,24 @@
       "writtenOn": "2017-08-29T11:55:55Z",
       "side": 1,
       "message": "again not sure why you need to advance 50ms here if it is the first open connection call",
+      "revId": "b30bed887b4cf46e5dd1ce65d9a8c4043b34bce0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0663de1_e8e93449",
+        "filename": "tools/battor_agent/battor_connection_impl_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1128909
+      },
+      "writtenOn": "2017-08-29T16:35:48Z",
+      "side": 1,
+      "message": "(see above)",
+      "parentUuid": "76c65440_27c8f990",
       "revId": "b30bed887b4cf46e5dd1ce65d9a8c4043b34bce0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "73836589_c59e597b",
+        "filename": "tools/battor_agent/battor_connection_impl_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1128909
+      },
+      "writtenOn": "2017-08-29T16:35:48Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "f7e28683_8509d125",
+      "revId": "b30bed887b4cf46e5dd1ce65d9a8c4043b34bce0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "975325eb_fb142e08",
         "filename": "tools/battor_agent/battor_connection_impl_unittest.cc",
         "patchSetId": 3
@@ -98,6 +188,24 @@
       "writtenOn": "2017-08-29T11:55:55Z",
       "side": 1,
       "message": "same as above for all of these 50ms timer advance calls. if they are all the first open connection calls, shouldn\u0027t there be no flush?",
+      "revId": "b30bed887b4cf46e5dd1ce65d9a8c4043b34bce0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "861702c8_ad7a85d7",
+        "filename": "tools/battor_agent/battor_connection_impl_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 1128909
+      },
+      "writtenOn": "2017-08-29T16:35:48Z",
+      "side": 1,
+      "message": "(see above)",
+      "parentUuid": "975325eb_fb142e08",
       "revId": "b30bed887b4cf46e5dd1ce65d9a8c4043b34bce0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
