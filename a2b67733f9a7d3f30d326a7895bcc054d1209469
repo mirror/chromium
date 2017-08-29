@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fd75e027_2ec1ed08",
+        "filename": "ipc/ipc_message_templates.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2017-08-29T17:03:27Z",
+      "side": 1,
+      "message": "nit: local not needed, also moving inside the next expression makes it obvious that any temporaries that might be created are still alive past the the end of this expression.",
+      "range": {
+        "startLine": 243,
+        "startChar": 11,
+        "endLine": 243,
+        "endChar": 26
+      },
+      "revId": "a2b67733f9a7d3f30d326a7895bcc054d1209469",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
