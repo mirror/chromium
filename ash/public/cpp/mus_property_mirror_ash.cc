@@ -49,6 +49,10 @@ void MusPropertyMirrorAsh::MirrorPropertyFromWidgetWindowToRootWindow(
     root_window->SetProperty(aura::client::kDrawAttentionKey, value);
   } else if (key == aura::client::kMinimumSize) {
     MirrorOwnedProperty(window, root_window, aura::client::kMinimumSize);
+  } else if (key == aura::client::kShowStateKey) {
+    ui::WindowShowState value = window->GetProperty(aura::client::kShowStateKey);
+    // if (root_window->GetProperty(aura::client::kShowStateKey) != value)
+      root_window->SetProperty(aura::client::kShowStateKey, value);
   } else if (key == aura::client::kTitleKey) {
     MirrorOwnedProperty(window, root_window, aura::client::kTitleKey);
   } else if (key == aura::client::kWindowIconKey) {

@@ -14,7 +14,7 @@
 #include "ui/wm/core/focus_rules.h"
 #include "ui/wm/core/window_util.h"
 #include "ui/wm/public/activation_change_observer.h"
-
+#include "base/debug/stack_trace.h" 
 namespace wm {
 namespace {
 
@@ -61,10 +61,12 @@ void FocusController::RemoveObserver(ActivationChangeObserver* observer) {
 }
 
 void FocusController::ActivateWindow(aura::Window* window) {
+  LOG(ERROR) << "MSW FocusController::ActivateWindow " << window;
   FocusWindow(window);
 }
 
 void FocusController::DeactivateWindow(aura::Window* window) {
+  LOG(ERROR) << "MSW FocusController::DeactivateWindow " << window;
   if (window)
     FocusWindow(rules_->GetNextActivatableWindow(window));
 }
@@ -184,10 +186,12 @@ void FocusController::OnWindowHierarchyChanged(
 void FocusController::FocusAndActivateWindow(
     ActivationChangeObserver::ActivationReason reason,
     aura::Window* window) {
+  LOG(ERROR) << "MSW FocusController::FocusAndActivateWindow A";
   if (window &&
       (window->Contains(focused_window_) || window->Contains(active_window_))) {
+    LOG(ERROR) << "MSW FocusController::FocusAndActivateWindow B";
     StackActiveWindow();
-    return;
+    // return;
   }
 
   // Focusing a window also activates its containing activatable window. Note
@@ -199,14 +203,17 @@ void FocusController::FocusAndActivateWindow(
   // We need valid focusable/activatable windows in the event we're not clearing
   // focus. "Clearing focus" is inferred by whether or not |window| passed to
   // this function is non-NULL.
+  LOG(ERROR) << "MSW FocusController::FocusAndActivateWindow C " << window << " focusable:" << focusable << " activatable:" << activatable;
   if (window && (!focusable || !activatable))
     return;
+  LOG(ERROR) << "MSW FocusController::FocusAndActivateWindow D";
   DCHECK((focusable && activatable) || !window);
 
   // Activation change observers may change the focused window. If this happens
   // we must not adjust the focus below since this will clobber that change.
   aura::Window* last_focused_window = focused_window_;
   if (!updating_activation_) {
+  LOG(ERROR) << "MSW FocusController::FocusAndActivateWindow E";
     aura::WindowTracker focusable_window_tracker;
     if (focusable) {
       focusable_window_tracker.Add(focusable);
@@ -220,11 +227,13 @@ void FocusController::FocusAndActivateWindow(
   // If the window's ActivationChangeObserver shifted focus to a valid window,
   // we don't want to focus the window we thought would be focused by default.
   if (!updating_focus_) {
+    LOG(ERROR) << "MSW FocusController::FocusAndActivateWindow F";
     const bool activation_changed_focus =
         last_focused_window != focused_window_;
     if (!activation_changed_focus || !focused_window_) {
       if (active_window_ && focusable)
         DCHECK(active_window_->Contains(focusable));
+      LOG(ERROR) << "MSW FocusController::FocusAndActivateWindow G";
       SetFocusedWindow(focusable);
     }
     if (active_window_ && focused_window_)
@@ -305,6 +314,8 @@ void FocusController::SetActiveWindow(
       focused_window_ != active_window_) {
     observer_manager_.Remove(active_window_);
   }
+  LOG(ERROR) << "MSW FocusController::SetActiveWindow " << active_window_ << " -> " << window;
+  //base::debug::StackTrace().Print(); 
   active_window_ = window;
   if (active_window_ && !observer_manager_.IsObserving(active_window_))
     observer_manager_.Add(active_window_);
