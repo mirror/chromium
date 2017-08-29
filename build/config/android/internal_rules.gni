@@ -1172,7 +1172,7 @@ if (enable_java_templates) {
     _output_jar_path = invoker.output_jar_path
 
     _enable_assert =
-        defined(invoker.supports_android) && invoker.supports_android &&
+        defined(invoker.enable_build_hooks) && invoker.enable_build_hooks &&
         (is_java_debug || dcheck_always_on)
 
     _desugar = defined(invoker.supports_android) && invoker.supports_android
@@ -2352,6 +2352,8 @@ if (enable_java_templates) {
                              [
                                "alternative_android_sdk_ijar",
                                "alternative_android_sdk_ijar_dep",
+                               "enable_build_hooks",
+                               "enable_build_hooks_android",
                                "jar_excluded_patterns",
                              ])
       supports_android = _supports_android
@@ -2463,7 +2465,9 @@ if (enable_java_templates) {
       _accumulated_deps += [ "//build/android/buildhooks:build_hooks_java" ]
     }
 
-    _enable_build_hooks_android = _enable_build_hooks && _requires_android
+    _enable_build_hooks_android =
+        _enable_build_hooks && _requires_android &&
+        (!defined(invoker.testonly) || !invoker.testonly)
     if (_enable_build_hooks_android) {
       _accumulated_deps +=
           [ "//build/android/buildhooks:build_hooks_android_java" ]
@@ -2626,6 +2630,7 @@ if (enable_java_templates) {
       supports_android = _supports_android
       requires_android = _requires_android
       emma_instrument = _emma_instrument
+      enable_build_hooks = _enable_build_hooks
       deps = _accumulated_deps
     }
     _accumulated_deps += [ ":$_compile_java_target" ]
