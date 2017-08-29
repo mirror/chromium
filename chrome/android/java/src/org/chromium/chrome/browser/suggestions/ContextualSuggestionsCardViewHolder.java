@@ -43,9 +43,10 @@ public class ContextualSuggestionsCardViewHolder extends NewTabPageViewHolder {
         itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // TODO(fhorschig): Add metrics to be recorded for the contextual suggestions.
                 int windowDisposition = WindowOpenDisposition.CURRENT_TAB;
                 mUiDelegate.getNavigationDelegate().openSnippet(windowDisposition, mSuggestion);
+
+                SuggestionsMetrics.recordContextualSuggestionOpened();
             }
         });
 
