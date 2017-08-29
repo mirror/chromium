@@ -10,11 +10,13 @@
 
 #include "base/macros.h"
 #include "chrome/common/features.h"
+#include "chrome/common/plugin.mojom.h"
 #include "chrome/common/prerender_types.h"
 #include "chrome/renderer/plugins/power_saver_info.h"
 #include "components/plugins/renderer/loadable_plugin_placeholder.h"
 #include "content/public/renderer/context_menu_client.h"
 #include "content/public/renderer/render_thread_observer.h"
+#include "mojo/public/cpp/bindings/associated_binding_set.h"
 
 enum class ChromeViewHostMsg_GetPluginInfo_Status;
 
@@ -22,6 +24,7 @@ class ChromePluginPlaceholder final
     : public plugins::LoadablePluginPlaceholder,
       public content::RenderThreadObserver,
       public content::ContextMenuClient,
+      public chrome::mojom::PluginRenderer,
       public gin::Wrappable<ChromePluginPlaceholder> {
  public:
   static gin::WrapperInfo kWrapperInfo;
@@ -42,6 +45,12 @@ class ChromePluginPlaceholder final
       const blink::WebPluginParams& params);
 
   void SetStatus(ChromeViewHostMsg_GetPluginInfo_Status status);
+
+  // Allows handling incoming Mojo requests.
+  void RegisterMojoInterfaces(
+      content::AssociatedInterfaceRegistry* associated_interfaces) override;
+  void UnregisterMojoInterfaces(
+      content::AssociatedInterfaceRegistry* associated_interfaces) override;
 
   int32_t CreateRoutingId();
 
@@ -78,11 +87,16 @@ class ChromePluginPlaceholder final
   // Show the Plugins permission bubble.
   void ShowPermissionBubbleCallback();
 
+  // chrome::mojom::PluginRenderer methods.
+  void FinishedDownloading() override;
+  void UpdateDownloading() override;
+  void UpdateSuccess() override;
+  void UpdateFailure() override;
+
+  void OnPluginRendererRequest(
+      chrome::mojom::PluginRendererAssociatedRequest request);
+
   // IPC message handlers:
-  void OnFinishedDownloadingPlugin();
-  void OnPluginComponentUpdateDownloading();
-  void OnPluginComponentUpdateSuccess();
-  void OnPluginComponentUpdateFailure();
   void OnSetPrerenderMode(prerender::PrerenderMode mode);
 
   ChromeViewHostMsg_GetPluginInfo_Status status_;
@@ -95,6 +109,9 @@ class ChromePluginPlaceholder final
 
   int context_menu_request_id_;  // Nonzero when request pending.
   base::string16 plugin_name_;
+
+  mojo::AssociatedBindingSet<chrome::mojom::PluginRenderer>
+      plugin_renderer_bindings_;
 
   DISALLOW_COPY_AND_ASSIGN(ChromePluginPlaceholder);
 };

@@ -7,17 +7,20 @@
 
 #include "base/macros.h"
 #include "chrome/common/features.h"
+#include "chrome/common/plugin.mojom.h"
 #include "components/content_settings/core/common/content_settings.h"
 #include "extensions/browser/guest_view/web_view/web_view_permission_helper.h"
 #include "extensions/browser/guest_view/web_view/web_view_permission_helper_delegate.h"
+#include "mojo/public/cpp/bindings/associated_binding_set.h"
 #include "ppapi/features/features.h"
 #include "third_party/WebKit/public/platform/modules/permissions/permission_status.mojom.h"
 
 namespace extensions {
 class WebViewGuest;
 
-class ChromeWebViewPermissionHelperDelegate :
-  public WebViewPermissionHelperDelegate {
+class ChromeWebViewPermissionHelperDelegate
+    : public WebViewPermissionHelperDelegate,
+      public chrome::mojom::PluginHost {
  public:
   explicit ChromeWebViewPermissionHelperDelegate(
       WebViewPermissionHelper* web_view_permission_helper);
@@ -55,12 +58,21 @@ class ChromeWebViewPermissionHelperDelegate :
 
  private:
 #if BUILDFLAG(ENABLE_PLUGINS)
+  // chrome::mojom::PluginHost methods.
+  void BlockedUnauthorizedPlugin(const base::string16& name,
+                                 const std::string& identifier) override;
+  void CouldNotLoadPlugin(const base::FilePath& plugin_path) override {}
+  void BlockedOutdatedPlugin(int64_t placeholder_id,
+                             const std::string& identifier) override {}
+  void ShowFlashPermissionBubble() override {}
+  void BlockedComponentUpdatedPlugin(int64_t id,
+                                     const std::string& group_id) override {}
+
+  void OnPluginHostRequest(chrome::mojom::PluginHostAssociatedRequest request);
+
+  mojo::AssociatedBindingSet<chrome::mojom::PluginHost> plugin_host_bindings_;
+
   // Message handlers:
-  void OnBlockedUnauthorizedPlugin(const base::string16& name,
-                                   const std::string& identifier);
-  void OnCouldNotLoadPlugin(const base::FilePath& plugin_path);
-  void OnBlockedOutdatedPlugin(int placeholder_id,
-                               const std::string& identifier);
   void OnRemovePluginPlaceholderHost(int placeholder_id);
   void OnPermissionResponse(const std::string& identifier,
                             bool allow,
