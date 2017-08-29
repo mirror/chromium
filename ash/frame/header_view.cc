@@ -49,7 +49,9 @@ void HeaderView::ResetWindowControls() {
 int HeaderView::GetPreferredOnScreenHeight() {
   const bool should_hide_titlebar_in_tablet_mode =
       Shell::Get()->tablet_mode_controller() &&
-      Shell::Get()->tablet_mode_controller()->ShouldAutoHideTitlebars() &&
+      Shell::Get()
+          ->tablet_mode_controller()
+          ->IsTabletModeWindowManagerEnabled() &&
       target_widget_->IsMaximized();
 
   if (is_immersive_delegate_ &&
@@ -152,14 +154,11 @@ void HeaderView::OnOverviewModeEnded() {
 void HeaderView::OnTabletModeStarted() {
   caption_button_container_->UpdateSizeButtonVisibility();
   parent()->Layout();
-  if (Shell::Get()->tablet_mode_controller()->ShouldAutoHideTitlebars())
-    target_widget_->non_client_view()->Layout();
+  target_widget_->non_client_view()->Layout();
 }
 
 void HeaderView::OnTabletModeEnded() {
-  caption_button_container_->UpdateSizeButtonVisibility();
-  parent()->Layout();
-  target_widget_->non_client_view()->Layout();
+  OnTabletModeStarted();
 }
 
 views::View* HeaderView::avatar_icon() const {

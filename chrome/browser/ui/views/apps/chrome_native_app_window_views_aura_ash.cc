@@ -434,6 +434,6 @@ bool ChromeNativeAppWindowViewsAuraAsh::CanAutohideTitlebarsInTabletMode()
     const {
   return ash::Shell::Get()
              ->tablet_mode_controller()
-             ->ShouldAutoHideTitlebars() &&
+             ->IsTabletModeWindowManagerEnabled() &&
          CanMaximize();
 }

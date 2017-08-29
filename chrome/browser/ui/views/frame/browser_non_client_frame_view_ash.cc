@@ -339,8 +339,7 @@ void BrowserNonClientFrameViewAsh::OnTabletModeStarted() {
   // minimized are still put in immersive mode, since they may still be visible
   // but not activated due to something transparent and/or not fullscreen (ie.
   // fullscreen launcher).
-  if (ash::Shell::Get()->tablet_mode_controller()->ShouldAutoHideTitlebars() &&
-      !frame()->IsFullscreen() && !browser_view()->IsBrowserTypeNormal() &&
+  if (!frame()->IsFullscreen() && !browser_view()->IsBrowserTypeNormal() &&
       !frame()->IsMinimized()) {
     browser_view()->immersive_mode_controller()->SetEnabled(true);
     return;

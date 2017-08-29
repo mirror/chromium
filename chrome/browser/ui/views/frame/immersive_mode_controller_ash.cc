@@ -167,7 +167,9 @@ void ImmersiveModeControllerAsh::OnFindBarVisibleBoundsChanged(
 
 bool ImmersiveModeControllerAsh::ShouldStayImmersiveAfterExitingFullscreen() {
   return !browser_view_->IsBrowserTypeNormal() &&
-         ash::Shell::Get()->tablet_mode_controller()->ShouldAutoHideTitlebars();
+         ash::Shell::Get()
+             ->tablet_mode_controller()
+             ->IsTabletModeWindowManagerEnabled();
 }
 
 views::Widget* ImmersiveModeControllerAsh::GetRevealWidget() {
@@ -180,8 +182,11 @@ void ImmersiveModeControllerAsh::OnWidgetActivationChanged(
   if (browser_view_->IsBrowserTypeNormal())
     return;
 
-  if (!ash::Shell::Get()->tablet_mode_controller()->ShouldAutoHideTitlebars())
+  if (!ash::Shell::Get()
+           ->tablet_mode_controller()
+           ->IsTabletModeWindowManagerEnabled()) {
     return;
+  }
 
   // Enable immersive mode if the widget is activated. Do not disable immersive
   // mode if the widget deactivates, but is not minimized.
