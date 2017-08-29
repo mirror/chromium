@@ -299,7 +299,18 @@ RefPtr<NGLayoutResult> NGBlockLayoutAlgorithm::Layout() {
       input_bfc_block_offset, content_size_, input_margin_strut,
       /* empty_block_affected_by_clearance */ false};
 
-  NGBlockChildIterator child_iterator(Node().FirstChild(), BreakToken());
+  auto first_child = Node().FirstChild();
+  auto first_child_to_layout =
+      NGBlockChildIterator(first_child, BreakToken()).NextChild().node;
+  for (auto sibling = first_child; sibling != first_child_to_layout;
+       sibling = sibling.NextSibling()) {
+    // Each child we're finished with also needs a break token, so that
+    // they're all in the list if we have to resume layout on this node later.
+    auto token = NGBlockBreakToken::Create(sibling, LayoutUnit());
+    container_builder_.AddFinishedChild(token.Get());
+  }
+
+  NGBlockChildIterator child_iterator(first_child, BreakToken());
   for (auto entry = child_iterator.NextChild();
        NGLayoutInputNode child = entry.node;
        entry = child_iterator.NextChild()) {
