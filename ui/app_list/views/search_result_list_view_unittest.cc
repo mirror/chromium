@@ -7,6 +7,7 @@
 #include <stddef.h>
 
 #include <map>
+#include <memory>
 
 #include "base/macros.h"
 #include "base/memory/ptr_util.h"

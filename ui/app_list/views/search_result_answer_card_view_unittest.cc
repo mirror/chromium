@@ -4,6 +4,8 @@
 
 #include "ui/app_list/views/search_result_answer_card_view.h"
 
+#include <memory>
+
 #include "base/macros.h"
 #include "base/memory/ptr_util.h"
 #include "base/strings/utf_string_conversions.h"

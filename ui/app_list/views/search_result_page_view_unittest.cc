@@ -4,6 +4,7 @@
 
 #include "ui/app_list/views/search_result_page_view.h"
 
+#include <memory>
 #include <utility>
 #include <vector>
 
