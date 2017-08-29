@@ -7,6 +7,7 @@ package org.chromium.chrome.browser.preferences;
 import android.accounts.Account;
 import android.content.Context;
 import android.preference.Preference;
+import android.support.annotation.IntDef;
 import android.support.v7.content.res.AppCompatResources;
 import android.util.AttributeSet;
 import android.view.View;
@@ -31,6 +32,8 @@ import org.chromium.components.signin.AccountsChangeObserver;
 import org.chromium.components.signin.ChromeSigninController;
 import org.chromium.components.sync.AndroidSyncSettings;
 
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
 import java.util.Collections;
 
 /**
@@ -42,17 +45,27 @@ public class SignInPreference
         extends Preference implements SignInAllowedObserver, ProfileDataCache.Observer,
                                       AndroidSyncSettings.AndroidSyncSettingsObserver,
                                       SyncStateChangedListener, AccountsChangeObserver {
-    private boolean mShowingPromo;
+    /**
+     * Specifies which are the states in which the promo can be.
+     */
+    @Retention(RetentionPolicy.SOURCE)
+    @IntDef({PromoState.NONE, PromoState.PERSONALIZED_PROMO, PromoState.GENERIC_PROMO})
+    private @interface PromoState {
+        int NONE = 0;
+        int PERSONALIZED_PROMO = 1;
+        int GENERIC_PROMO = 2;
+    }
+
     private boolean mViewEnabled;
     private SigninPromoController mSigninPromoController;
     private final ProfileDataCache mProfileDataCache;
+    private @PromoState int mPromoState;
 
     /**
      * Constructor for inflating from XML.
      */
     public SignInPreference(Context context, AttributeSet attrs) {
         super(context, attrs);
-
         int imageSize = context.getResources().getDimensionPixelSize(R.dimen.user_picture_size);
         mProfileDataCache = new ProfileDataCache(context, Profile.getLastUsedProfile(), imageSize);
     }
@@ -87,6 +100,7 @@ public class SignInPreference
         if (syncService != null) {
             syncService.removeSyncStateChangedListener(this);
         }
+        super.onPrepareForRemoval();
     }
 
     /**
@@ -97,9 +111,8 @@ public class SignInPreference
         if (SigninManager.get(getContext()).isSigninDisabledByPolicy()) {
             setupSigninDisabled();
         } else if (accountName == null) {
-            // Don't change the promo type if the promo is already being shown.
-            final boolean forceNew = mSigninPromoController != null;
-            if (forceNew || SigninPromoController.shouldShowPromo(SigninAccessPoint.SETTINGS)) {
+            if (mPromoState == PromoState.PERSONALIZED_PROMO
+                    || SigninPromoController.shouldShowPromo(SigninAccessPoint.SETTINGS)) {
                 setupNewPromo();
             } else {
                 setupOldPromo();
@@ -125,8 +138,7 @@ public class SignInPreference
         setIcon(ManagedPreferencesUtils.getManagedByEnterpriseIconId());
         setWidgetLayoutResource(0);
         setViewEnabled(false);
-        mSigninPromoController = null;
-        mShowingPromo = false;
+        mPromoState = PromoState.NONE;
     }
 
     private void setupNewPromo() {
@@ -148,14 +160,10 @@ public class SignInPreference
         if (mSigninPromoController == null) {
             mSigninPromoController =
                     new SigninPromoController(mProfileDataCache, SigninAccessPoint.SETTINGS);
-            mSigninPromoController.setAccountName(defaultAccountName);
-            mSigninPromoController.recordSigninPromoImpression();
-        } else {
-            mSigninPromoController.setAccountName(defaultAccountName);
         }
+        mSigninPromoController.setAccountName(defaultAccountName);
 
-        mShowingPromo = true;
-
+        mPromoState = PromoState.PERSONALIZED_PROMO;
         notifyChanged();
     }
 
@@ -167,13 +175,7 @@ public class SignInPreference
         setIcon(AppCompatResources.getDrawable(getContext(), R.drawable.logo_avatar_anonymous));
         setWidgetLayoutResource(0);
         setViewEnabled(true);
-        mSigninPromoController = null;
-
-        if (!mShowingPromo) {
-            RecordUserAction.record("Signin_Impression_FromSettings");
-        }
-
-        mShowingPromo = true;
+        mPromoState = PromoState.GENERIC_PROMO;
     }
 
     private void setupSignedIn(String accountName) {
@@ -190,8 +192,7 @@ public class SignInPreference
         setWidgetLayoutResource(
                 SyncPreference.showSyncErrorIcon(getContext()) ? R.layout.sync_error_widget : 0);
         setViewEnabled(true);
-        mSigninPromoController = null;
-        mShowingPromo = false;
+        mPromoState = PromoState.NONE;
     }
 
     // This just changes visual representation. Actual enabled flag in preference stays
@@ -208,10 +209,39 @@ public class SignInPreference
     protected void onBindView(final View view) {
         super.onBindView(view);
         ViewUtils.setEnabledRecursive(view, mViewEnabled);
-        if (mSigninPromoController != null) {
+        if (mPromoState == PromoState.PERSONALIZED_PROMO) {
             SigninPromoView signinPromoView = view.findViewById(R.id.signin_promo_view_container);
             mSigninPromoController.setupSigninPromoView(getContext(), signinPromoView, null);
         }
+    }
+
+    /**
+     * Records impressions for the personalized signin promo and user actions.
+     */
+    void recordUserActionsAndImpressions() {
+        switch (mPromoState) {
+            case PromoState.NONE:
+                return;
+            case PromoState.PERSONALIZED_PROMO:
+                mSigninPromoController.recordSigninPromoImpression();
+                return;
+            case PromoState.GENERIC_PROMO:
+                RecordUserAction.record("Signin_Impression_FromSettings");
+                return;
+            default:
+                assert false : "Unexpected promo state: " + mPromoState;
+        }
+    }
+
+    /**
+     * Records whether the used has not interacted with the signin promos whatsoever on the Xth
+     * impression.
+     */
+    void recordImpressionsTilDismissHistogramIfNotUsed() {
+        if (mSigninPromoController == null) {
+            return;
+        }
+        mSigninPromoController.recordImpressionsTilDismissHistogramIfNotUsed();
     }
 
     // ProfileSyncServiceListener implementation:
