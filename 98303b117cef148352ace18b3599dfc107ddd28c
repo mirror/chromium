@@ -160,6 +160,24 @@
       "revId": "98303b117cef148352ace18b3599dfc107ddd28c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cada3d6e_8758a942",
+        "filename": "chrome/browser/page_load_metrics/observers/android_page_load_metrics_observer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1154589
+      },
+      "writtenOn": "2017-08-29T15:27:19Z",
+      "side": 1,
+      "message": "Okay, I think I noticed that in testing. Thanks for the confirmation.",
+      "parentUuid": "2b4b2a7d_9ce3fc2c",
+      "revId": "98303b117cef148352ace18b3599dfc107ddd28c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
