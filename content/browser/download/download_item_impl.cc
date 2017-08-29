@@ -1699,6 +1699,17 @@ void DownloadItemImpl::Completed() {
   if (job_ && job_->IsParallelizable()) {
     RecordParallelizableDownloadCount(COMPLETED_COUNT,
                                       IsParallelDownloadEnabled());
+    int64_t content_length = -1;
+    if (response_headers_->response_code() != net::HTTP_PARTIAL_CONTENT) {
+      int64_t content_length = response_headers_->GetContentLength();
+    } else {
+      int64_t first_byte = -1;
+      int64_t last_byte = -1;
+      response_headers_->GetContentRangeFor206(&first_byte, &last_byte,
+                                               &content_length);
+    }
+    if (content_length > 0)
+      RecordParallelizableContentLength(content_length);
   }
 
   if (auto_opened_) {
