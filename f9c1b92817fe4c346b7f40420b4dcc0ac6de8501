@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c0b1ac19_365edd4f",
+        "filename": "content/browser/renderer_host/render_widget_host_view_aura_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-08-29T19:59:29Z",
+      "side": 1,
+      "message": "Can we share this with the legacy input router tests?",
+      "range": {
+        "startLine": 136,
+        "startChar": 12,
+        "endLine": 136,
+        "endChar": 32
+      },
+      "revId": "f9c1b92817fe4c346b7f40420b4dcc0ac6de8501",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
