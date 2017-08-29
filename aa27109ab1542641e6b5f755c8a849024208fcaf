@@ -69,6 +69,24 @@
       "revId": "aa27109ab1542641e6b5f755c8a849024208fcaf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cba8c978_23b8204f",
+        "filename": "chrome/browser/safe_browsing/safe_browsing_blocking_page_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 679,
+      "author": {
+        "id": 1214679
+      },
+      "writtenOn": "2017-08-29T14:59:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "20a05571_a67e4462",
+      "revId": "aa27109ab1542641e6b5f755c8a849024208fcaf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
