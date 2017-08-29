@@ -136,4 +136,41 @@ TEST_F(SelectionControllerTest, setCaretAtHitTestResultWithNullPosition) {
   EXPECT_TRUE(Selection().GetSelectionInDOMTree().IsNone());
 }
 
+// For http://crbug.com/759971
+TEST_F(SelectionControllerTest, setCaretAtHitTestResultWithDetachedPosition) {
+  GetDocument().GetSettings()->SetScriptEnabled(true);
+  Element* script = GetDocument().createElement("script");
+  script->setInnerHTML(
+      "document.designMode = 'on';"
+      "var selection = window.getSelection();"
+      "var html = document.getElementsByTagName('html')[0];"
+      "selection.collapse(html);"
+      "var range = selection.getRangeAt(0);"
+
+      "function selectstart() {"
+      "let body = document.getElementsByTagName('body')[0];"
+      "range.surroundContents(body);"
+      "range.deleteContents();"
+      "}"
+      "document.addEventListener('selectstart', selectstart);");
+  GetDocument().body()->AppendChild(script);
+  GetDocument().View()->UpdateAllLifecyclePhases();
+
+  // Simulate a tap somewhere in the document
+  blink::WebMouseEvent mouse_event(
+      blink::WebInputEvent::kMouseDown,
+      blink::WebInputEvent::kIsCompatibilityEventForTouch,
+      blink::WebInputEvent::kTimeStampForTesting);
+  // Frame scale defaults to 0, which would cause a divide-by-zero problem.
+  mouse_event.SetFrameScale(1);
+  GetFrame().GetEventHandler().GetSelectionController().HandleMousePressEvent(
+      MouseEventWithHitTestResults(
+          mouse_event,
+          GetFrame().GetEventHandler().HitTestResultAtPoint(IntPoint(0, 0))));
+
+  // The test passes if this runs without crashing. The original bug was that
+  // this would cause
+  // TextSuggestionController::HandlePotentialMisspelledWordTap() to crash.
+}
+
 }  // namespace blink

@@ -387,7 +387,8 @@ bool SelectionController::HandleSingleClick(
       is_handle_visible ? HandleVisibility::kVisible
                         : HandleVisibility::kNotVisible);
 
-  if (has_editable_style && event.Event().FromTouch()) {
+  if (has_editable_style && event.Event().FromTouch() &&
+      visible_pos.DeepEquivalent().IsConnected()) {
     frame_->GetTextSuggestionController().HandlePotentialMisspelledWordTap(
         visible_pos.DeepEquivalent());
   }
