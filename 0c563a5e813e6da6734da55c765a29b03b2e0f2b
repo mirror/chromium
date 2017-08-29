@@ -33,6 +33,24 @@
       "revId": "0c563a5e813e6da6734da55c765a29b03b2e0f2b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37558960_d54094ae",
+        "filename": "services/preferences/pref_store_manager_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-08-29T05:28:02Z",
+      "side": 1,
+      "message": "I don\u0027t know. Apart from the uniqueness and non-empty DCHECKs in OverlayUserPrefStore::RegisterOverlayPref(), I don\u0027t think there\u0027s any validation of these names.",
+      "parentUuid": "5a56f8ae_5ee4a793",
+      "revId": "0c563a5e813e6da6734da55c765a29b03b2e0f2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
