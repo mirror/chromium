@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "97aa02d0_71391d06",
+        "filename": "ios/clean/chrome/browser/ui/tab/tab_container_view_controller+internal.h",
+        "patchSetId": 27
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-08-29T20:20:25Z",
+      "side": 1,
+      "message": "Somewhere, we should have a detailed description of the TabContainerViewController superclass\u0027s layout, explaining exactly what the \"container\" is in terms of its z-index ordering in the view hierarchy and its relation to the toolbar.",
+      "revId": "f0649b200faa089f8cdce7983f84716d9c7640ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "798d5195_1e80cba6",
         "filename": "ios/clean/chrome/browser/ui/tab/tab_container_view_controller+internal.h",
         "patchSetId": 27
