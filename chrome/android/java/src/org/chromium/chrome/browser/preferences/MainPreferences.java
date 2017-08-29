@@ -44,6 +44,15 @@ public class MainPreferences extends PreferenceFragment
     public static final String EXTRA_SHOW_SEARCH_ENGINE_PICKER = "show_search_engine_picker";
 
     private SignInPreference mSignInPreference;
+
+    /**
+     * Flag used to mark whether the the signin promo has been shown to the user. It is set to true
+     * immediately as {@link SignInPreference} is created for the first time. It is used to
+     * correctly count the number of impressions for the personalized signin promos and to not
+     * over-count user actions for either the generic or the personalized signin promos.
+     */
+    private boolean mWasSigninPreferenceCreated;
+
     private ManagedPreferenceDelegate mManagedPreferenceDelegate;
 
     public MainPreferences() {
@@ -191,6 +200,11 @@ public class MainPreferences extends PreferenceFragment
     private void setupSignInPref() {
         mSignInPreference = (SignInPreference) findPreference(PREF_SIGN_IN);
         mSignInPreference.registerForUpdates();
+
+        if (!mWasSigninPreferenceCreated) {
+            mWasSigninPreferenceCreated = true;
+            mSignInPreference.recordUserActionsAndImpressions();
+        }
     }
 
     private void clearSignInPref() {
@@ -264,5 +278,14 @@ public class MainPreferences extends PreferenceFragment
                 return super.isPreferenceClickDisabledByPolicy(preference);
             }
         };
+    }
+
+    @Override
+    public void onDestroy() {
+        SignInPreference signInPreference = (SignInPreference) findPreference(PREF_SIGN_IN);
+        if (signInPreference != null) {
+            signInPreference.recordImpressionsTilDismissHistogramIfNotUsed();
+        }
+        super.onDestroy();
     }
 }
