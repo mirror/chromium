@@ -34,6 +34,24 @@
       "revId": "4997af7457e96365e44e145e3946dde048a6ca8d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e65de0e8_5601f18d",
+        "filename": "third_party/WebKit/Source/platform/wtf/typed_arrays/ArrayBufferContents.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2017-08-29T00:32:29Z",
+      "side": 1,
+      "message": "OK, that sounds good.\n\nOverzealous: If the behavior were dangerous, \"overzealous\" would be future maintainers introducing the risky behavior (e.g. for consistency) without understanding the NULL + arbitrary-offset problem.",
+      "parentUuid": "261c3814_3430b1f9",
+      "revId": "4997af7457e96365e44e145e3946dde048a6ca8d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
