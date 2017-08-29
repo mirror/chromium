@@ -186,7 +186,8 @@ IN_PROC_BROWSER_TEST_F(ChromeServiceWorkerTest,
   NavigateToPageAndWaitForReadyTitle("/test.html");
 
   GetServiceWorkerContext()->StopAllServiceWorkersForOrigin(
-      embedded_test_server()->base_url());
+      embedded_test_server()->base_url(),
+      base::Bind(&ServiceWorkerUtils::NoOpBoolCallback));
   HostContentSettingsMapFactory::GetForProfile(browser()->profile())
       ->SetDefaultContentSetting(CONTENT_SETTINGS_TYPE_JAVASCRIPT,
                                  CONTENT_SETTING_BLOCK);
@@ -645,7 +646,8 @@ IN_PROC_BROWSER_TEST_F(ChromeServiceWorkerNavigationHintTest, Started) {
   InitializeServer();
   NavigateToPageAndWaitForReadyTitle("/test.html");
   GetServiceWorkerContext()->StopAllServiceWorkersForOrigin(
-      embedded_test_server()->base_url());
+      embedded_test_server()->base_url(),
+      base::Bind(&ServiceWorkerUtils::NoOpBoolCallback));
   RunNavigationHintTest(
       "/scope/", content::StartServiceWorkerForNavigationHintResult::STARTED,
       true);
@@ -697,7 +699,8 @@ IN_PROC_BROWSER_TEST_F(ChromeServiceWorkerNavigationHintTest, NoFetchHandler) {
   InitializeServer();
   NavigateToPageAndWaitForReadyTitle("/test.html");
   GetServiceWorkerContext()->StopAllServiceWorkersForOrigin(
-      embedded_test_server()->base_url());
+      embedded_test_server()->base_url(),
+      base::Bind(&ServiceWorkerUtils::NoOpBoolCallback));
   RunNavigationHintTest(
       "/scope/",
       content::StartServiceWorkerForNavigationHintResult::NO_FETCH_HANDLER,
