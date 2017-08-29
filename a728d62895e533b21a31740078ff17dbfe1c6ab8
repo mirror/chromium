@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "385c055b_0fb6df35",
+        "filename": "components/viz/client/client_layer_tree_frame_sink.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1231224
+      },
+      "writtenOn": "2017-08-29T15:45:14Z",
+      "side": 1,
+      "message": "The compiler agrees :) - without std::move it reports the following:\n\n../../components/viz/client/client_layer_tree_frame_sink.cc:137:44: error: call to deleted constructor of \u0027::viz::mojom::HitTestRegionListPtr\u0027 (aka \u0027StructPtr\u003cviz::mojom::HitTestRegionList\u003e\u0027)\n      local_surface_id_, std::move(frame), hit_test_region_list,\n                                           ^~~~~~~~~~~~~~~~~~~~\n../../mojo/public/cpp/bindings/struct_ptr.h:110:28: note: \u0027StructPtr\u0027 has been explicitly marked deleted here\n  DISALLOW_COPY_AND_ASSIGN(StructPtr);",
+      "parentUuid": "ef8cd558_2ac6fc51",
+      "range": {
+        "startLine": 137,
+        "startChar": 43,
+        "endLine": 137,
+        "endChar": 52
+      },
+      "revId": "a728d62895e533b21a31740078ff17dbfe1c6ab8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5683aaf3_3469ebea",
         "filename": "ui/aura/mus/window_port_mus.cc",
         "patchSetId": 3
@@ -84,6 +108,24 @@
     },
     {
       "key": {
+        "uuid": "353e24f1_8e07f6fc",
+        "filename": "ui/aura/mus/window_port_mus.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1231224
+      },
+      "writtenOn": "2017-08-29T15:45:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5291267d_96f20f9e",
+      "revId": "a728d62895e533b21a31740078ff17dbfe1c6ab8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5b731df5_e8d0c6ad",
         "filename": "ui/aura/mus/window_port_mus.cc",
         "patchSetId": 3
@@ -95,6 +137,30 @@
       "writtenOn": "2017-08-29T15:35:03Z",
       "side": 1,
       "message": "Is std::move() needed?",
+      "range": {
+        "startLine": 131,
+        "startChar": 33,
+        "endLine": 131,
+        "endChar": 42
+      },
+      "revId": "a728d62895e533b21a31740078ff17dbfe1c6ab8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6293bf9c_89647b7c",
+        "filename": "ui/aura/mus/window_port_mus.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1231224
+      },
+      "writtenOn": "2017-08-29T15:45:14Z",
+      "side": 1,
+      "message": "I think so - but this has now been removed anyways.",
+      "parentUuid": "5b731df5_e8d0c6ad",
       "range": {
         "startLine": 131,
         "startChar": 33,
