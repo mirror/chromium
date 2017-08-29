@@ -34,6 +34,24 @@
       "revId": "8dc49875a6e747e61eb55aab0eb6c0aec715e181",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d88ce3e_7c325680",
+        "filename": "chrome/browser/resources/settings/site_settings/category_default_setting.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-08-29T23:02:04Z",
+      "side": 1,
+      "message": "I\u0027m concerned that onChangePermissionControl_ may be called when controlParams_.enforcement is not set. \n\nIIUC, Polymer will call the observer when all the dependencies have a value. The entries in parenthesis are both dependencies and arguments for the callback. Right now there is no dependency on controlParams_.enforcement. Once (category, controlParams_.value, subControlParams_.value) are set the observer will be called, even if controlParams_.enforcement is not yet set.\n\nSpecifying controlParams_.enforcement would make the code more robust to further changes down the road, it\u0027s not necessarily fixing a bug right now (i.e. if someone does set controlParams_.value without setting controlParams_.enforcement at the same time).\n\nSee:\nhttps://www.polymer-project.org/1.0/docs/devguide/observers#dependencies\n\n(Please let me know if I\u0027m wrong :), I\u0027d like to know).\n\nNit: please specify that controlParams_.enforcement is a dependency of onChangePermissionControl_.",
+      "parentUuid": "f38c8788_f8699854",
+      "revId": "8dc49875a6e747e61eb55aab0eb6c0aec715e181",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
