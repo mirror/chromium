@@ -7,7 +7,6 @@ package org.chromium.webapk.shell_apk;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.graphics.Color;
 import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -38,14 +37,13 @@ public class InstallHostBrowserDialog {
             final String hostBrowserPackageName, String hostBrowserApplicationName,
             int hostBrowserIconId) {
         View view = LayoutInflater.from(context).inflate(R.layout.host_browser_list_item, null);
-        TextView name = (TextView) view.findViewById(R.id.browser_name);
-        WebApkUtils.setPadding(name, context, WebApkUtils.PADDING_DP, 0, 0, 0);
         ImageView icon = (ImageView) view.findViewById(R.id.browser_icon);
-        WebApkUtils.setPadding(icon, context, WebApkUtils.PADDING_DP, 0, 0, 0);
-
-        name.setText(hostBrowserApplicationName);
-        name.setTextColor(Color.BLACK);
+        WebApkUtils.setPadding(icon, context, WebApkUtils.DIALOG_SIDE_MARGIN, 0, 0, 0);
         icon.setImageResource(hostBrowserIconId);
+
+        TextView name = (TextView) view.findViewById(R.id.browser_name);
+        WebApkUtils.setPadding(name, context, WebApkUtils.LIST_ITEM_PADDING, 0, 0, 0);
+        name.setText(hostBrowserApplicationName);
 
         // The context theme wrapper is needed for pre-L.
         AlertDialog.Builder builder = new AlertDialog.Builder(

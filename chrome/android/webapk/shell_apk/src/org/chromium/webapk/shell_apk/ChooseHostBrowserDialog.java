@@ -18,6 +18,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -88,28 +89,39 @@ public class ChooseHostBrowserDialog {
         final List<BrowserItem> browserItems =
                 getBrowserInfosForHostBrowserSelection(context.getPackageManager(), infos);
 
+        int dialogMargin = WebApkUtils.dpToPx(context, WebApkUtils.DIALOG_SIDE_MARGIN);
+        int dialogMarginHalf = WebApkUtils.dpToPx(context, WebApkUtils.DIALOG_SIDE_MARGIN / 2);
+
         // The dialog contains:
-        // 1) a description of the dialog.
-        // 2) a list of browsers for user to choose from.
+        // 1) a title
+        // 2) a description of the dialog.
+        // 3) a list of browsers for user to choose from.
+        TextView title = new TextView(context);
+        title.setText(context.getString(R.string.choose_host_browser_dialog_title, appName));
+        title.setTextColor(Color.parseColor(WebApkUtils.COLOR_BLACK_ALPHA_87));
+        title.setTextSize(20);
+        title.setPadding(dialogMargin, dialogMargin, dialogMargin, 0);
+
         View view = LayoutInflater.from(context).inflate(R.layout.choose_host_browser_dialog, null);
         TextView desc = (TextView) view.findViewById(R.id.desc);
-        ListView browserList = (ListView) view.findViewById(R.id.browser_list);
+        setMargin(desc, dialogMargin, dialogMarginHalf, dialogMargin, dialogMarginHalf);
         desc.setText(R.string.choose_host_browser);
-        WebApkUtils.setPadding(desc, context, WebApkUtils.PADDING_DP, 0, WebApkUtils.PADDING_DP, 0);
+
+        ListView browserList = (ListView) view.findViewById(R.id.browser_list);
+        setMargin(browserList, dialogMargin, WebApkUtils.dpToPx(context, 4), dialogMargin,
+                dialogMargin);
         browserList.setAdapter(new BrowserArrayAdapter(context, browserItems));
 
         // The context theme wrapper is needed for pre-L.
         AlertDialog.Builder builder = new AlertDialog.Builder(
                 new ContextThemeWrapper(context, android.R.style.Theme_DeviceDefault_Light_Dialog));
-        builder.setTitle(context.getString(R.string.choose_host_browser_dialog_title, appName))
-                .setView(view)
-                .setNegativeButton(R.string.choose_host_browser_dialog_quit,
-                        new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                listener.onQuit();
-                            }
-                        });
+        builder.setCustomTitle(title).setView(view).setNegativeButton(
+                R.string.choose_host_browser_dialog_quit, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        listener.onQuit();
+                    }
+                });
 
         final AlertDialog dialog = builder.create();
         browserList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -159,6 +171,14 @@ public class ChooseHostBrowserDialog {
         return browsers;
     }
 
+    /** Sets the margin of the given view in pixels. */
+    private static void setMargin(View view, int left, int top, int right, int bottom) {
+        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+        layoutParams.setMargins(left, top, right, bottom);
+        view.setLayoutParams(layoutParams);
+    }
+
     /** Item adaptor for the list of browsers. */
     private static class BrowserArrayAdapter extends ArrayAdapter<BrowserItem> {
         private List<BrowserItem> mBrowsers;
@@ -174,24 +194,26 @@ public class ChooseHostBrowserDialog {
         public View getView(int position, View convertView, ViewGroup parent) {
             if (convertView == null) {
                 convertView = LayoutInflater.from(mContext).inflate(
-                        R.layout.host_browser_list_item, null);
+                        R.layout.host_browser_list_item, parent, false);
             }
 
-            TextView name = (TextView) convertView.findViewById(R.id.browser_name);
-            WebApkUtils.setPadding(name, mContext, WebApkUtils.PADDING_DP, 0, 0, 0);
+            int listItemPaddingHalf = WebApkUtils.LIST_ITEM_PADDING / 2;
             ImageView icon = (ImageView) convertView.findViewById(R.id.browser_icon);
-            WebApkUtils.setPadding(icon, mContext, WebApkUtils.PADDING_DP, 0, 0, 0);
-            BrowserItem item = mBrowsers.get(position);
+            WebApkUtils.setPadding(icon, mContext, 0, listItemPaddingHalf,
+                    WebApkUtils.LIST_ITEM_PADDING, listItemPaddingHalf);
 
+            TextView name = (TextView) convertView.findViewById(R.id.browser_name);
+            WebApkUtils.setPadding(name, mContext, 0, listItemPaddingHalf, 0, listItemPaddingHalf);
+            BrowserItem item = mBrowsers.get(position);
             name.setEnabled(item.supportsWebApks());
             if (item.supportsWebApks()) {
                 name.setText(item.getApplicationName());
-                name.setTextColor(Color.BLACK);
+                name.setTextColor(Color.parseColor(WebApkUtils.COLOR_BLACK_ALPHA_87));
             } else {
                 name.setText(mContext.getString(R.string.host_browser_item_not_supporting_webapks,
                         item.getApplicationName()));
                 name.setSingleLine(false);
-                name.setTextColor(Color.LTGRAY);
+                name.setTextColor(Color.parseColor(WebApkUtils.COLOR_BLACK_ALPHA_38));
             }
             icon.setImageDrawable(item.getApplicationIcon());
             icon.setEnabled(item.supportsWebApks());
