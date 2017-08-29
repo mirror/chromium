@@ -40,6 +40,7 @@ class ProtectedMediaIdentifierPermissionContext
 #if defined(OS_CHROMEOS)
   void DecidePermission(content::WebContents* web_contents,
                         const PermissionRequestID& id,
+                        const GURL& requesting_frame_url,
                         const GURL& requesting_origin,
                         const GURL& embedding_origin,
                         bool user_gesture,
@@ -57,7 +58,7 @@ class ProtectedMediaIdentifierPermissionContext
   static bool IsOriginWhitelisted(const GURL& origin);
 
   void UpdateTabContext(const PermissionRequestID& id,
-                        const GURL& requesting_frame,
+                        const GURL& requesting_origin,
                         bool allowed) override;
   bool IsRestrictedToSecureOrigins() const override;
 
