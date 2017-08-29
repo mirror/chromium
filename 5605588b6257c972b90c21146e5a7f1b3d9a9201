@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "90ad50f8_e5e54f03",
+        "filename": "ios/chrome/browser/web/external_app_launcher.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1125535
+      },
+      "writtenOn": "2017-08-29T22:36:51Z",
+      "side": 1,
+      "message": "It\u0027s not possible for count \u003c 2 because [rewriter defaultHandlerID] (line 224) wouldn\u0027t have returned nil. I\u0027ve added a DCHECK before line 128 to catch future errors.",
+      "parentUuid": "39665817_f86bf8ff",
+      "revId": "5605588b6257c972b90c21146e5a7f1b3d9a9201",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "aeb61bb8_bcd0bb82",
         "filename": "ios/chrome/browser/web/external_app_launcher.mm",
         "patchSetId": 5
@@ -30,6 +48,30 @@
       "writtenOn": "2017-08-29T12:05:20Z",
       "side": 1,
       "message": "Is the alert dismissed if you launch Chrome with, for instance, a new tab?",
+      "range": {
+        "startLine": 142,
+        "startChar": 6,
+        "endLine": 142,
+        "endChar": 43
+      },
+      "revId": "5605588b6257c972b90c21146e5a7f1b3d9a9201",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5be74ff_ba458d10",
+        "filename": "ios/chrome/browser/web/external_app_launcher.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1125535
+      },
+      "writtenOn": "2017-08-29T22:36:51Z",
+      "side": 1,
+      "message": "Yes, the action sheet is dismissed automatically (tested on iOS 11 and 10.3.1) when Chrome is brought to foreground by another app (e.g. chromium://www.cnn.com in Safari).",
+      "parentUuid": "aeb61bb8_bcd0bb82",
       "range": {
         "startLine": 142,
         "startChar": 6,
