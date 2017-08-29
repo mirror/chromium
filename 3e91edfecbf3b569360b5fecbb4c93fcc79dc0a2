@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a5e787af_f37a140b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsBottomSheetContent.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1115980
+      },
+      "writtenOn": "2017-08-29T15:23:13Z",
+      "side": 1,
+      "message": "The bug I had with this approach was that the doodle could not be clicked. There would be a transparent portion of the control container on top of it. Is this fixed by setAncestorsShouldClipChildren? If not, what is setAncestorsShouldClipChildren used for?\n\nAlso, I thought we didn\u0027t need to cast the return value of findViewById anymore.",
+      "range": {
+        "startLine": 197,
+        "startChar": 62,
+        "endLine": 197,
+        "endChar": 69
+      },
+      "revId": "3e91edfecbf3b569360b5fecbb4c93fcc79dc0a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d33089a8_e7338f33",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheet.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1017,
+      "author": {
+        "id": 1115980
+      },
+      "writtenOn": "2017-08-29T15:23:13Z",
+      "side": 1,
+      "message": "Should the color be removed again when it is open?",
+      "range": {
+        "startLine": 1017,
+        "startChar": 13,
+        "endLine": 1017,
+        "endChar": 25
+      },
+      "revId": "3e91edfecbf3b569360b5fecbb4c93fcc79dc0a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
