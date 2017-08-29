@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "2cd4d309_00d71ebc",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/html/semantics/document-metadata/the-style-element/style_media_change.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1170229
+      },
+      "writtenOn": "2017-08-29T10:16:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "de988346_b4d85b87",
+      "revId": "b463577a32a80ac36de0f25776dfeed157f70b81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8b9fd1b3_f9992e25",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/html/semantics/document-metadata/the-style-element/style_media_change.html",
         "patchSetId": 4
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "79687375_df277221",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/html/semantics/document-metadata/the-style-element/style_media_change.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1170229
+      },
+      "writtenOn": "2017-08-29T10:16:12Z",
+      "side": 1,
+      "message": "Agreed and Done",
+      "parentUuid": "8b9fd1b3_f9992e25",
+      "revId": "b463577a32a80ac36de0f25776dfeed157f70b81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "67c955f7_efc9df73",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/html/semantics/document-metadata/the-style-element/style_media_remove.html",
         "patchSetId": 4
@@ -47,6 +83,24 @@
       "writtenOn": "2017-08-29T09:50:12Z",
       "side": 1,
       "message": "I think this test would be more robust if you check that the computed style is not green before you remove the media attribute.",
+      "revId": "b463577a32a80ac36de0f25776dfeed157f70b81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad3b7995_4f1c2f3e",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/html/semantics/document-metadata/the-style-element/style_media_remove.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1170229
+      },
+      "writtenOn": "2017-08-29T10:16:12Z",
+      "side": 1,
+      "message": "Acknowledged and moved to style_media_change.html",
+      "parentUuid": "67c955f7_efc9df73",
       "revId": "b463577a32a80ac36de0f25776dfeed157f70b81",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
