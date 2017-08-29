@@ -22,6 +22,23 @@
       "revId": "a129e7052bd570b8cf14c1172606cca8b6e541bc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe677c70_deb4ccac",
+        "filename": "services/viz/public/interfaces/hit_test/hit_test_region_list.mojom",
+        "patchSetId": 7
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1000246
+      },
+      "writtenOn": "2017-08-29T15:36:51Z",
+      "side": 1,
+      "message": "seems conceivably unnecessary when there is a surface id?",
+      "revId": "a129e7052bd570b8cf14c1172606cca8b6e541bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
