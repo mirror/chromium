@@ -63,14 +63,24 @@ Timeline.PerformanceMonitor = class extends UI.HBox {
     for (var metric of metrics) {
       var info = this._controlPane.metricInfo(metric.name);
       var value;
-      if (info.mode === Timeline.PerformanceMonitor.Mode.CumulativeTime) {
-        value = info.lastTimestamp ?
-            100 * Math.min(1, (metric.value - info.lastValue) * 1000 / (timestamp - info.lastTimestamp)) :
-            0;
-        info.lastValue = metric.value;
-        info.lastTimestamp = timestamp;
-      } else {
-        value = metric.value;
+      switch (info.mode) {
+        case Timeline.PerformanceMonitor.Mode.CumulativeTime:
+          value = info.lastTimestamp ?
+              100 * Number.constrain((metric.value - info.lastValue) * 1000 / (timestamp - info.lastTimestamp), 0, 1) :
+              0;
+          info.lastValue = metric.value;
+          info.lastTimestamp = timestamp;
+          break;
+        case Timeline.PerformanceMonitor.Mode.CumulativeCount:
+          value = info.lastTimestamp ?
+              Math.max(0, (metric.value - info.lastValue) * 1000 / (timestamp - info.lastTimestamp)) :
+              0;
+          info.lastValue = metric.value;
+          info.lastTimestamp = timestamp;
+          break;
+        default:
+          value = metric.value;
+          break;
       }
       metricsMap.set(metric.name, value);
     }
@@ -204,7 +214,8 @@ Timeline.PerformanceMonitor = class extends UI.HBox {
 
 /** @enum {symbol} */
 Timeline.PerformanceMonitor.Mode = {
-  CumulativeTime: Symbol('CumulativeTime')
+  CumulativeTime: Symbol('CumulativeTime'),
+  CumulativeCount: Symbol('CumulativeCount'),
 };
 
 /**
@@ -268,8 +279,20 @@ Timeline.PerformanceMonitor.ControlPane = class {
       ['DocumentCount', {title: Common.UIString('Documents'), color: 'blue'}],
       ['FrameCount', {title: Common.UIString('Frames'), color: 'darkcyan'}],
       ['JSEventListenerCount', {title: Common.UIString('JS event listeners'), color: 'yellowgreen'}],
-      ['LayoutCount', {title: Common.UIString('Layout count'), color: 'hotpink'}],
-      ['RecalcStyleCount', {title: Common.UIString('Style recalculations'), color: 'deeppink'}],
+      [
+        'LayoutCount', {
+          title: Common.UIString('Layouts / sec'),
+          color: 'hotpink',
+          mode: Timeline.PerformanceMonitor.Mode.CumulativeCount
+        }
+      ],
+      [
+        'RecalcStyleCount', {
+          title: Common.UIString('Style recalcs / sec'),
+          color: 'deeppink',
+          mode: Timeline.PerformanceMonitor.Mode.CumulativeCount
+        }
+      ],
     ]);
 
     this._indicators = new Map();
@@ -358,8 +381,11 @@ Timeline.PerformanceMonitor.MetricIndicator = class {
       case Timeline.PerformanceMonitor.Mode.CumulativeTime:
         textValue = value.toFixed() + '%';
         break;
+      case Timeline.PerformanceMonitor.Mode.CumulativeCount:
+        textValue = Timeline.PerformanceMonitor.MetricIndicator._formatFP1.format(value);
+        break;
       default:
-        textValue = new Intl.NumberFormat('en-US').format(value);
+        textValue = Timeline.PerformanceMonitor.MetricIndicator._formatInt.format(value);
         break;
     }
     this._valueElement.textContent = textValue;
@@ -371,3 +397,6 @@ Timeline.PerformanceMonitor.MetricIndicator = class {
     this._onToggle(this._active);
   }
 };
+
+Timeline.PerformanceMonitor.MetricIndicator._formatFP1 = new Intl.NumberFormat('en-US', {maximumFractionDigits: 1});
+Timeline.PerformanceMonitor.MetricIndicator._formatInt = new Intl.NumberFormat('en-US', {maximumFractionDigits: 1});
