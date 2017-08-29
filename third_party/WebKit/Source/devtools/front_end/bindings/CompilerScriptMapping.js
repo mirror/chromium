@@ -203,7 +203,6 @@ Bindings.CompilerScriptMapping = class {
     if (Bindings.blackboxManager.isBlackboxedURL(script.sourceURL, script.isContentScript()))
       return;
     Bindings.blackboxManager.sourceMapLoaded(script, sourceMap);
-
     this._populateSourceMapSources(script, sourceMap);
     this._sourceMapAttachedForTest(sourceMap);
   }
@@ -219,11 +218,12 @@ Bindings.CompilerScriptMapping = class {
     var hasOtherScripts = scripts.some(someScript => someScript.isContentScript() === script.isContentScript());
     var project = script.isContentScript() ? this._contentScriptsProject : this._regularProject;
     for (var sourceURL of sourceMap.sourceURLs()) {
-      var uiSourceCode = /** @type {!Workspace.UISourceCode} */ (project.uiSourceCodeForURL(sourceURL));
-      if (hasOtherScripts)
+      if (hasOtherScripts) {
+        var uiSourceCode = /** @type {!Workspace.UISourceCode} */ (project.uiSourceCodeForURL(sourceURL));
         Bindings.NetworkProject.removeFrameAttribution(uiSourceCode, frameId);
-      else
+      } else {
         project.removeFile(sourceURL);
+      }
     }
     this._debuggerWorkspaceBinding.updateLocations(script);
   }
