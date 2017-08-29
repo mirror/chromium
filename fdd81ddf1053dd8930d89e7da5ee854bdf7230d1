@@ -46,6 +46,30 @@
       "revId": "fdd81ddf1053dd8930d89e7da5ee854bdf7230d1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1e9727b_5002b564",
+        "filename": "mojo/edk/test/test_utils_fuchsia.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-08-29T22:40:25Z",
+      "side": 1,
+      "message": "Happy to remove it if you and wez agree. wez?",
+      "parentUuid": "7c48187b_bbb281d1",
+      "range": {
+        "startLine": 85,
+        "startChar": 11,
+        "endLine": 85,
+        "endChar": 23
+      },
+      "revId": "fdd81ddf1053dd8930d89e7da5ee854bdf7230d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
