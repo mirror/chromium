@@ -28,7 +28,9 @@ struct Task;
 class BASE_EXPORT TaskTrackerPosix : public TaskTracker {
  public:
   TaskTrackerPosix();
-  ~TaskTrackerPosix();
+
+  // Must be virtual since we delete through TaskTrackerPosix but subclass it.
+  virtual ~TaskTrackerPosix();
 
   // Sets the MessageLoopForIO with which to setup FileDescriptorWatcher in the
   // scope in which tasks run. Must be called before starting to run tasks.
