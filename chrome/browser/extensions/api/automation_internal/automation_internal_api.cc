@@ -444,6 +444,7 @@ AutomationInternalPerformActionFunction::Run() {
     ui::AXActionData data;
     ConvertToAXActionData(params.get(), &data);
     delegate->PerformAction(data);
+    return RespondNow(NoArguments());
 #else
     NOTREACHED();
     return RespondNow(Error("Unexpected action on desktop automation tree;"
