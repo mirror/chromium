@@ -16,6 +16,24 @@
       "revId": "ecb82b6834c10481f67eee345f2ae9f3399e6716",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa19e4a0_4370858f",
+        "filename": "media/audio/audio_output_device.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 325,
+      "author": {
+        "id": 1201454
+      },
+      "writtenOn": "2017-08-29T11:27:04Z",
+      "side": 1,
+      "message": "Oh, I just saw \"counts\" recommended instead of linear for large numbers of buckets and assumed counts was also linear :D. I\u0027ll just use the exponentially sized buckets then. 100 buckets and 15 s max should give us enough granularity for large times.",
+      "parentUuid": "03231c03_1ede19bc",
+      "revId": "ecb82b6834c10481f67eee345f2ae9f3399e6716",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
