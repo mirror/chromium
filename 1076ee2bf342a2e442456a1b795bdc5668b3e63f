@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "62afd74a_6d091336",
+        "filename": "ipc/ipc_message_templates.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1211094
+      },
+      "writtenOn": "2017-08-29T05:26:59Z",
+      "side": 0,
+      "message": "This makes an extra copy of SendParam. Let me remove it on another CL.",
+      "range": {
+        "startLine": 219,
+        "startChar": 11,
+        "endLine": 219,
+        "endChar": 24
+      },
+      "revId": "1076ee2bf342a2e442456a1b795bdc5668b3e63f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
