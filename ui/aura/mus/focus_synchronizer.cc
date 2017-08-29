@@ -33,6 +33,8 @@ void FocusSynchronizer::RemoveObserver(FocusSynchronizerObserver* observer) {
 }
 
 void FocusSynchronizer::SetFocusFromServer(WindowMus* window) {
+  LOG(ERROR) << "MSW FocusSynchronizer::SetFocusFromServer " << focused_window_
+             << " -> " << window;
   if (focused_window_ == window)
     return;
 
@@ -55,6 +57,7 @@ void FocusSynchronizer::SetFocusFromServer(WindowMus* window) {
 }
 
 void FocusSynchronizer::OnFocusedWindowDestroyed() {
+  LOG(ERROR) << "MSW FocusSynchronizer::OnFocusedWindowDestroyed ";
   focused_window_ = nullptr;
 }
 
@@ -67,6 +70,7 @@ void FocusSynchronizer::SetSingletonFocusClient(
 
 void FocusSynchronizer::SetActiveFocusClient(client::FocusClient* focus_client,
                                              Window* focus_client_root) {
+  LOG(ERROR) << "MSW FocusSynchronizer::SetActiveFocusClient A";
   if (focus_client == active_focus_client_ &&
       focus_client_root == active_focus_client_root_) {
     return;
@@ -80,8 +84,10 @@ void FocusSynchronizer::SetActiveFocusClient(client::FocusClient* focus_client,
   if (active_focus_client_root_)
     active_focus_client_root_->AddObserver(this);
 
+  LOG(ERROR) << "MSW FocusSynchronizer::SetActiveFocusClient B";
   if (focus_client == active_focus_client_)
     return;
+  LOG(ERROR) << "MSW FocusSynchronizer::SetActiveFocusClient C";
 
   OnActiveFocusClientChanged(focus_client, focus_client_root);
   for (FocusSynchronizerObserver& observer : observers_)
@@ -90,8 +96,10 @@ void FocusSynchronizer::SetActiveFocusClient(client::FocusClient* focus_client,
 
 void FocusSynchronizer::SetActiveFocusClientInternal(
     client::FocusClient* focus_client) {
+  LOG(ERROR) << "MSW FocusSynchronizer::SetActiveFocusClientInteral A";
   if (focus_client == active_focus_client_)
     return;
+  LOG(ERROR) << "MSW FocusSynchronizer::SetActiveFocusClientInteral B";
 
   if (active_focus_client_)
     active_focus_client_->RemoveObserver(this);
@@ -101,6 +109,8 @@ void FocusSynchronizer::SetActiveFocusClientInternal(
 }
 
 void FocusSynchronizer::SetFocusedWindow(WindowMus* window) {
+  LOG(ERROR) << "MSW FocusSynchronizer::SetFocusedWindow A " << focused_window_
+             << " -> " << window;
   const uint32_t change_id = delegate_->CreateChangeIdForFocus(focused_window_);
   focused_window_ = window;
   window_tree_->SetFocus(change_id,
@@ -110,6 +120,7 @@ void FocusSynchronizer::SetFocusedWindow(WindowMus* window) {
 void FocusSynchronizer::OnActiveFocusClientChanged(
     client::FocusClient* focus_client,
     Window* focus_client_root) {
+  LOG(ERROR) << "MSW FocusSynchronizer::OnActiveFocusClientChanged ";
   SetActiveFocusClientInternal(focus_client);
   if (setting_focus_)
     return;
@@ -125,6 +136,8 @@ void FocusSynchronizer::OnActiveFocusClientChanged(
 
 void FocusSynchronizer::OnWindowFocused(Window* gained_focus,
                                         Window* lost_focus) {
+  LOG(ERROR) << "MSW FocusSynchronizer::OnWindowFocused " << lost_focus
+             << " -> " << gained_focus;
   WindowMus* gained_focus_mus = WindowMus::Get(gained_focus);
   if (setting_focus_ && gained_focus_mus == window_setting_focus_to_) {
     focused_window_ = gained_focus_mus;
@@ -134,6 +147,7 @@ void FocusSynchronizer::OnWindowFocused(Window* gained_focus,
 }
 
 void FocusSynchronizer::OnWindowDestroying(Window* window) {
+  LOG(ERROR) << "MSW FocusSynchronizer::OnWindowDestroying ";
   DCHECK(!is_singleton_focus_client_);
   SetActiveFocusClient(nullptr, nullptr);
 }
