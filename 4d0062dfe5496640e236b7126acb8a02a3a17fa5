@@ -46,6 +46,30 @@
       "revId": "4d0062dfe5496640e236b7126acb8a02a3a17fa5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "89d5c07e_4c69b88f",
+        "filename": "tools/mb/mb_config.pyl",
+        "patchSetId": 1
+      },
+      "lineNbr": 705,
+      "author": {
+        "id": 1002539
+      },
+      "writtenOn": "2017-08-29T19:49:12Z",
+      "side": 1,
+      "message": "Dropped \u0027chrome-\u0027 and \u0027-64\u0027 (will need to update cr-buildbucket.cfg to do this too). Moved to be after \u0027internal.client.kitchensync\u0027 before \u0027tryserver.blink\u0027.",
+      "parentUuid": "89c0dd95_238a44c7",
+      "range": {
+        "startLine": 705,
+        "startChar": 5,
+        "endLine": 705,
+        "endChar": 34
+      },
+      "revId": "4d0062dfe5496640e236b7126acb8a02a3a17fa5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
