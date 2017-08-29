@@ -16,6 +16,24 @@
       "revId": "1559178cb274b743111ef354abc0a3e1a1d8a53f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ca6d91a_492cd24f",
+        "filename": "media/mojo/interfaces/video_frame_struct_traits.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-08-29T01:14:17Z",
+      "side": 1,
+      "message": "Feel free to ping me to follow up on this once your CL lands.",
+      "parentUuid": "c3ba9c43_efb20bcf",
+      "revId": "1559178cb274b743111ef354abc0a3e1a1d8a53f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
