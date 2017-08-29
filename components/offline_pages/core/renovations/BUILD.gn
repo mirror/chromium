@@ -8,6 +8,7 @@ if (is_android) {
 
 static_library("renovations") {
   sources = [
+    "page_renovation.cc",
     "page_renovation.h",
     "page_renovation_loader.cc",
     "page_renovation_loader.h",
