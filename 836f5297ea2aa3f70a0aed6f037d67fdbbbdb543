@@ -22,6 +22,30 @@
       "revId": "836f5297ea2aa3f70a0aed6f037d67fdbbbdb543",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7038797e_b406fc4b",
+        "filename": "extensions/browser/event_router.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 476,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-08-29T20:16:00Z",
+      "side": 1,
+      "message": "This change was motivated by investigation by miu@ and zhaobin@ in Bug 664351 (see especially comments 4, 7, and 12).\n\nI followed your suggestion and modified ChromeExtensionsBrowserClient instead with a comment explaining the background and linked bugs.",
+      "parentUuid": "5e9b0b11_a4245d70",
+      "range": {
+        "startLine": 476,
+        "startChar": 49,
+        "endLine": 476,
+        "endChar": 65
+      },
+      "revId": "836f5297ea2aa3f70a0aed6f037d67fdbbbdb543",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
