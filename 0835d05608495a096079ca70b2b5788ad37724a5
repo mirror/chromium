@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "abcb01fd_eed0701e",
+        "filename": "extensions/browser/api/declarative_webrequest/webrequest_condition_attribute.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 702,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-08-29T12:37:21Z",
+      "side": 1,
+      "message": "Nit: I think I would do the test for HideResponseHeader here and avoid putting it in the HeaderMatcher. That would avoid being careful to use an empty GURL for requests.",
+      "range": {
+        "startLine": 702,
+        "startChar": 31,
+        "endLine": 702,
+        "endChar": 44
+      },
+      "revId": "0835d05608495a096079ca70b2b5788ad37724a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea161b72_c778bec3",
+        "filename": "extensions/browser/response_headers_util.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-08-29T12:37:21Z",
+      "side": 1,
+      "message": "s/shall/should",
+      "range": {
+        "startLine": 14,
+        "startChar": 30,
+        "endLine": 14,
+        "endChar": 35
+      },
+      "revId": "0835d05608495a096079ca70b2b5788ad37724a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d33323c8_6095c322",
+        "filename": "extensions/browser/response_headers_util.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-08-29T12:37:21Z",
+      "side": 1,
+      "message": "Optional: I think naming this method ShouldHideResponseHeader will make it more clear that this is just a test and does not really hide the response header.",
+      "range": {
+        "startLine": 15,
+        "startChar": 5,
+        "endLine": 15,
+        "endChar": 23
+      },
+      "revId": "0835d05608495a096079ca70b2b5788ad37724a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
