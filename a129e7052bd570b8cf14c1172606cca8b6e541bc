@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4b0914f3_05216a19",
+        "filename": "services/viz/public/interfaces/hit_test/hit_test_region_list.mojom",
+        "patchSetId": 7
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1002647
+      },
+      "writtenOn": "2017-08-29T15:29:48Z",
+      "side": 1,
+      "message": "Is this used?",
+      "range": {
+        "startLine": 32,
+        "startChar": 6,
+        "endLine": 32,
+        "endChar": 21
+      },
+      "revId": "a129e7052bd570b8cf14c1172606cca8b6e541bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
