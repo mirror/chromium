@@ -2110,20 +2110,24 @@ Elements.StylePropertyTreeElement = class extends UI.TreeElement {
     swatch.setFormat(Common.Color.detectColorFormat(swatch.color()));
     var swatchIcon = new Elements.ColorSwatchPopoverIcon(this, swatchPopoverHelper, swatch);
 
-    /**
-     * @param {?SDK.CSSModel.ContrastInfo} contrastInfo
-     */
-    function computedCallback(contrastInfo) {
-      swatchIcon.setContrastInfo(contrastInfo);
-    }
+    // If the contrast line may be desired at some point, allow the popver to request background colors.
+    if (this.property.name === 'color' && this._parentPane.cssModel() && this.node()) {
+      /**
+       * @param {?SDK.CSSModel.ContrastInfo} contrastInfo
+       */
+      function computedCallback(contrastInfo) {
+        // This will cause the contrast line to show up if it's not already visible.
+        swatchIcon.setContrastInfo(contrastInfo);
+      }
 
-    if (Runtime.experiments.isEnabled('colorContrastRatio') && this.property.name === 'color' &&
-        this._parentPane.cssModel() && this.node()) {
-      var cssModel = this._parentPane.cssModel();
-      cssModel.backgroundColorsPromise(this.node().id).then(computedCallback);
+      swatchIcon.setRequestBackgroundColorsCallback(this._requestBackgroundColors.bind(this, computedCallback));
     }
-
     return swatch;
+  }
+
+  _requestBackgroundColors(callback) {
+    var cssModel = this._parentPane.cssModel();
+    cssModel.backgroundColorsPromise(this.node().id).then(callback);
   }
 
   /**
