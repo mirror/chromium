@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d94290df_5ffbcb0e",
+        "filename": "components/exo/surface.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 683,
+      "author": {
+        "id": 1000050
+      },
+      "writtenOn": "2017-08-29T15:15:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e17b8f4b_7e0f5817",
+      "revId": "2cd95798cc730d8ab709b2078b3a8821cf0f4de7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "de572bd9_576a37ba",
         "filename": "components/exo/surface.cc",
         "patchSetId": 3
@@ -39,6 +57,30 @@
       "revId": "2cd95798cc730d8ab709b2078b3a8821cf0f4de7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1c2da25_f0a0f4d8",
+        "filename": "components/exo/surface.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 699,
+      "author": {
+        "id": 1000050
+      },
+      "writtenOn": "2017-08-29T15:15:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "de572bd9_576a37ba",
+      "range": {
+        "startLine": 699,
+        "startChar": 5,
+        "endLine": 699,
+        "endChar": 21
+      },
+      "revId": "2cd95798cc730d8ab709b2078b3a8821cf0f4de7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -141,6 +183,47 @@
     },
     {
       "key": {
+        "uuid": "c77a5be3_b1a704b5",
+        "filename": "components/exo/surface_tree_host.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1000050
+      },
+      "writtenOn": "2017-08-29T15:15:20Z",
+      "side": 1,
+      "message": "I tried use it. viz service crashes. See my comment below.",
+      "parentUuid": "b4e2c34d_d87588da",
+      "revId": "2cd95798cc730d8ab709b2078b3a8821cf0f4de7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f6505060_cb51e98e",
+        "filename": "components/exo/surface_tree_host.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 298,
+      "author": {
+        "id": 1000050
+      },
+      "writtenOn": "2017-08-29T15:15:20Z",
+      "side": 1,
+      "message": "The problem is:\n1. CommitSurfaceHierarchy() depends on the correct device_scale_factor.\n2. CommitSurfaceHierarchy() will calculate the surface size, and then if the surface size is no empty, we will create a toplevel window, and add the host_window_ to it.\n3. So we can not get the correct device_scale_factor for host_window()-\u003elayer()-\u003edevice_scale_factor() before calling CommitSurfaceHiearchy().",
+      "range": {
+        "startLine": 298,
+        "startChar": 2,
+        "endLine": 298,
+        "endChar": 73
+      },
+      "revId": "2cd95798cc730d8ab709b2078b3a8821cf0f4de7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fdb81623_530b03c0",
         "filename": "components/exo/surface_tree_host.cc",
         "patchSetId": 3
@@ -161,6 +244,30 @@
       "revId": "2cd95798cc730d8ab709b2078b3a8821cf0f4de7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc28a7f6_121b8810",
+        "filename": "components/exo/surface_tree_host.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 303,
+      "author": {
+        "id": 1000050
+      },
+      "writtenOn": "2017-08-29T15:15:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fdb81623_530b03c0",
+      "range": {
+        "startLine": 303,
+        "startChar": 5,
+        "endLine": 303,
+        "endChar": 12
+      },
+      "revId": "2cd95798cc730d8ab709b2078b3a8821cf0f4de7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
