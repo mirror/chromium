@@ -125,6 +125,20 @@ GLES2DecoderPassthroughImpl::BoundTexture::operator=(const BoundTexture&) =
 GLES2DecoderPassthroughImpl::BoundTexture&
 GLES2DecoderPassthroughImpl::BoundTexture::operator=(BoundTexture&&) = default;
 
+GLES2DecoderPassthroughImpl::EmulatedBackBuffer::EmulatedBackBuffer() = default;
+GLES2DecoderPassthroughImpl::EmulatedBackBuffer::~EmulatedBackBuffer() =
+    default;
+GLES2DecoderPassthroughImpl::EmulatedBackBuffer::EmulatedBackBuffer(
+    const EmulatedBackBuffer&) = default;
+GLES2DecoderPassthroughImpl::EmulatedBackBuffer::EmulatedBackBuffer(
+    EmulatedBackBuffer&&) = default;
+GLES2DecoderPassthroughImpl::EmulatedBackBuffer&
+GLES2DecoderPassthroughImpl::EmulatedBackBuffer::operator=(
+    const EmulatedBackBuffer&) = default;
+GLES2DecoderPassthroughImpl::EmulatedBackBuffer&
+GLES2DecoderPassthroughImpl::EmulatedBackBuffer::operator=(
+    EmulatedBackBuffer&&) = default;
+
 GLES2DecoderPassthroughImpl::GLES2DecoderPassthroughImpl(
     GLES2DecoderClient* client,
     CommandBufferServiceBase* command_buffer_service,
@@ -137,6 +151,9 @@ GLES2DecoderPassthroughImpl::GLES2DecoderPassthroughImpl(
       surface_(),
       context_(),
       offscreen_(false),
+      emulated_default_framebuffer_(nullptr),
+      bound_draw_framebuffer_(0),
+      bound_read_framebuffer_(0),
       group_(group),
       feature_info_(new FeatureInfo(group->feature_info()->workarounds())),
       gpu_decoder_category_(TRACE_EVENT_API_GET_CATEGORY_GROUP_ENABLED(
@@ -368,6 +385,121 @@ bool GLES2DecoderPassthroughImpl::Initialize(
   has_robustness_extension_ = feature_info_->feature_flags().khr_robustness ||
                               feature_info_->feature_flags().ext_robustness;
 
+  glGetIntegerv(GL_MAX_TEXTURE_SIZE, &max_2d_texture_size_);
+
+  if (offscreen_) {
+    emulated_default_framebuffer_.reset(new EmulatedBackBuffer());
+    glGenFramebuffersEXT(
+        1, &emulated_default_framebuffer_->framebuffer_service_id);
+    glBindFramebufferEXT(GL_FRAMEBUFFER,
+                         emulated_default_framebuffer_->framebuffer_service_id);
+    framebuffer_id_map_.SetIDMapping(
+        0, emulated_default_framebuffer_->framebuffer_service_id);
+
+    const bool multisampled_framebuffers_supported =
+        feature_info_->gl_version_info().IsAtLeastGLES(3, 0) ||
+        feature_info_->feature_flags().angle_framebuffer_multisample;
+    if (attrib_helper.samples > 0 && attrib_helper.sample_buffers > 0 &&
+        multisampled_framebuffers_supported) {
+      GLint max_sample_count = 0;
+      glGetIntegerv(GL_MAX_SAMPLES_EXT, &max_sample_count);
+      emulated_default_framebuffer_->samples =
+          std::min(attrib_helper.samples, max_sample_count);
+    }
+
+    const bool rgb8_supported = feature_info_->feature_flags().oes_rgb8_rgba8;
+    const bool alpha_channel_requested = attrib_helper.alpha_size > 0;
+    // The only available default render buffer formats in GLES2 have very
+    // little precision.  Don't enable multisampling unless 8-bit render
+    // buffer formats are available--instead fall back to 8-bit textures.
+    if (rgb8_supported && emulated_default_framebuffer_->samples > 0) {
+      emulated_default_framebuffer_->color_internal_format =
+          alpha_channel_requested ? GL_RGBA8 : GL_RGB8;
+      glGenRenderbuffersEXT(
+          1, &emulated_default_framebuffer_->color_buffer_service_id);
+      glBindRenderbufferEXT(
+          GL_RENDERBUFFER,
+          emulated_default_framebuffer_->color_buffer_service_id);
+      glFramebufferRenderbufferEXT(
+          GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_RENDERBUFFER,
+          emulated_default_framebuffer_->color_buffer_service_id);
+    } else {
+      emulated_default_framebuffer_->samples = 0;
+      emulated_default_framebuffer_->color_internal_format =
+          alpha_channel_requested ? GL_RGBA : GL_RGB;
+      emulated_default_framebuffer_->color_format =
+          emulated_default_framebuffer_->color_internal_format;
+      emulated_default_framebuffer_->color_type = GL_UNSIGNED_BYTE;
+      GLuint color_buffer_texture = 0;
+      glGenTextures(1, &color_buffer_texture);
+      glBindTexture(GL_TEXTURE_2D, color_buffer_texture);
+      glFramebufferTexture2DEXT(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0,
+                                GL_TEXTURE_2D, color_buffer_texture, 0);
+      emulated_default_framebuffer_->color_texture =
+          new TexturePassthrough(color_buffer_texture, GL_TEXTURE_2D);
+    }
+
+    const bool depth24_stencil8_supported =
+        feature_info_->feature_flags().packed_depth24_stencil8;
+    if ((attrib_helper.depth_size > 0 || attrib_helper.stencil_size > 0) &&
+        depth24_stencil8_supported) {
+      emulated_default_framebuffer_->depth_stencil_internal_format =
+          GL_DEPTH24_STENCIL8;
+      glGenRenderbuffersEXT(
+          1, &emulated_default_framebuffer_->depth_stencil_buffer_service_id);
+      glBindRenderbufferEXT(
+          GL_RENDERBUFFER,
+          emulated_default_framebuffer_->depth_stencil_buffer_service_id);
+      glFramebufferRenderbufferEXT(
+          GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER,
+          emulated_default_framebuffer_->depth_stencil_buffer_service_id);
+      glFramebufferRenderbufferEXT(
+          GL_FRAMEBUFFER, GL_STENCIL_ATTACHMENT, GL_RENDERBUFFER,
+          emulated_default_framebuffer_->depth_stencil_buffer_service_id);
+    } else {
+      // It may be the case that this depth/stencil combination is not
+      // supported, but this will be checked later by CheckFramebufferStatus.
+      if (attrib_helper.depth_size > 0) {
+        emulated_default_framebuffer_->depth_internal_format =
+            GL_DEPTH_COMPONENT16;
+        glGenRenderbuffersEXT(
+            1, &emulated_default_framebuffer_->depth_buffer_service_id);
+        glBindRenderbufferEXT(
+            GL_RENDERBUFFER,
+            emulated_default_framebuffer_->depth_buffer_service_id);
+        glFramebufferRenderbufferEXT(
+            GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER,
+            emulated_default_framebuffer_->depth_buffer_service_id);
+      }
+
+      if (attrib_helper.stencil_size > 0) {
+        emulated_default_framebuffer_->stencil_internal_format =
+            GL_STENCIL_INDEX8;
+        glGenRenderbuffersEXT(
+            1, &emulated_default_framebuffer_->stencil_buffer_service_id);
+        glBindRenderbufferEXT(
+            GL_RENDERBUFFER,
+            emulated_default_framebuffer_->stencil_buffer_service_id);
+        glFramebufferRenderbufferEXT(
+            GL_FRAMEBUFFER, GL_STENCIL_ATTACHMENT, GL_RENDERBUFFER,
+            emulated_default_framebuffer_->stencil_buffer_service_id);
+      }
+    }
+
+    // Reset the texture and renderbuffer bindings
+    glBindTexture(GL_TEXTURE_2D, 0);
+    glBindRenderbufferEXT(GL_RENDERBUFFER, 0);
+
+    if (!ResizeOffscreenFramebuffer(attrib_helper.offscreen_framebuffer_size)) {
+      Destroy(true);
+      return false;
+    }
+
+    // Initialize the viewport
+    glViewport(0, 0, attrib_helper.offscreen_framebuffer_size.width(),
+               attrib_helper.offscreen_framebuffer_size.height());
+  }
+
   set_initialized();
   return true;
 }
@@ -401,6 +533,27 @@ void GLES2DecoderPassthroughImpl::Destroy(bool have_context) {
                        [](GLuint client_id, GLuint vertex_array) {
                          glDeleteVertexArraysOES(1, &vertex_array);
                        });
+
+  // Destroy the emulated backbuffer
+  if (emulated_default_framebuffer_) {
+    if (have_context) {
+      glDeleteFramebuffersEXT(
+          1, &emulated_default_framebuffer_->framebuffer_service_id);
+      glDeleteRenderbuffersEXT(
+          1, &emulated_default_framebuffer_->color_buffer_service_id);
+      glDeleteRenderbuffersEXT(
+          1, &emulated_default_framebuffer_->depth_stencil_buffer_service_id);
+      glDeleteRenderbuffersEXT(
+          1, &emulated_default_framebuffer_->depth_buffer_service_id);
+      glDeleteRenderbuffersEXT(
+          1, &emulated_default_framebuffer_->stencil_buffer_service_id);
+    } else {
+      if (emulated_default_framebuffer_->color_texture) {
+        emulated_default_framebuffer_->color_texture->MarkContextLost();
+      }
+    }
+    emulated_default_framebuffer_.reset();
+  }
 
   // Destroy the GPU Tracer which may own some in process GPU Timings.
   if (gpu_tracer_) {
@@ -455,6 +608,64 @@ void GLES2DecoderPassthroughImpl::ReturnFrontBuffer(const Mailbox& mailbox,
 
 bool GLES2DecoderPassthroughImpl::ResizeOffscreenFramebuffer(
     const gfx::Size& size) {
+  DCHECK(offscreen_);
+  if (!emulated_default_framebuffer_) {
+    LOG(ERROR)
+        << "GLES2DecoderPassthroughImpl::ResizeOffscreenFramebuffer called "
+        << " with an onscreen framebuffer.";
+    return false;
+  }
+
+  if (emulated_default_framebuffer_->size == size) {
+    return true;
+  }
+
+  if (size.width() < 0 || size.height() < 0 ||
+      size.width() > max_2d_texture_size_ ||
+      size.height() > max_2d_texture_size_) {
+    LOG(ERROR) << "GLES2DecoderPassthroughImpl::ResizeOffscreenFramebuffer "
+                  "failed to allocate storage due to excessive dimensions.";
+    return false;
+  }
+
+  // Clear errors so that any OOM errors can be caught
+  FlushErrors();
+
+  if (emulated_default_framebuffer_->color_buffer_service_id != 0) {
+    ResizeRenderbuffer(emulated_default_framebuffer_->color_buffer_service_id,
+                       size, emulated_default_framebuffer_->samples,
+                       emulated_default_framebuffer_->color_internal_format);
+  }
+  if (emulated_default_framebuffer_->color_texture) {
+    Resize2DTexture(emulated_default_framebuffer_->color_texture.get(), size,
+                    emulated_default_framebuffer_->color_internal_format,
+                    emulated_default_framebuffer_->color_format,
+                    emulated_default_framebuffer_->color_type);
+  }
+  if (emulated_default_framebuffer_->depth_stencil_buffer_service_id != 0) {
+    ResizeRenderbuffer(
+        emulated_default_framebuffer_->depth_stencil_buffer_service_id, size,
+        emulated_default_framebuffer_->samples,
+        emulated_default_framebuffer_->depth_stencil_internal_format);
+  }
+  if (emulated_default_framebuffer_->depth_buffer_service_id != 0) {
+    ResizeRenderbuffer(emulated_default_framebuffer_->depth_buffer_service_id,
+                       size, emulated_default_framebuffer_->samples,
+                       emulated_default_framebuffer_->depth_internal_format);
+  }
+  if (emulated_default_framebuffer_->stencil_buffer_service_id != 0) {
+    ResizeRenderbuffer(emulated_default_framebuffer_->stencil_buffer_service_id,
+                       size, emulated_default_framebuffer_->samples,
+                       emulated_default_framebuffer_->stencil_internal_format);
+  }
+
+  if (FlushErrors()) {
+    LOG(ERROR)
+        << "GLES2DecoderPassthroughImpl::ResizeOffscreenFramebuffer failed "
+        << "because errors were generated during framebuffer resizing.";
+    return false;
+  }
+
   return true;
 }
 
@@ -1015,6 +1226,14 @@ GLES2DecoderPassthroughImpl::PatchGetFramebufferAttachmentParameter(
       }
     } break;
 
+    // If the framebuffer is an emulated default framebuffer, all attachment
+    // object types are GL_FRAMEBUFFER_DEFAULT
+    case GL_FRAMEBUFFER_ATTACHMENT_OBJECT_TYPE:
+      if (IsEmulatedFramebufferBound(target)) {
+        *params = GL_FRAMEBUFFER_DEFAULT;
+      }
+      break;
+
     default:
       break;
   }
@@ -1268,6 +1487,72 @@ error::Error GLES2DecoderPassthroughImpl::HandleRasterCHROMIUM(
   // passthrough command buffer.
   NOTIMPLEMENTED();
   return error::kNoError;
+}
+
+void GLES2DecoderPassthroughImpl::ResizeRenderbuffer(GLuint renderbuffer,
+                                                     const gfx::Size& size,
+                                                     GLsizei samples,
+                                                     GLenum internal_format) {
+  GLint current_renderbuffer_service_id = 0;
+  glGetIntegerv(GL_RENDERBUFFER_BINDING, &current_renderbuffer_service_id);
+
+  glBindRenderbufferEXT(GL_RENDERBUFFER, renderbuffer);
+  if (samples > 0) {
+    if (feature_info_->feature_flags().angle_framebuffer_multisample) {
+      glRenderbufferStorageMultisampleANGLE(GL_RENDERBUFFER, samples,
+                                            internal_format, size.width(),
+                                            size.height());
+    } else {
+      DCHECK(feature_info_->gl_version_info().is_es3);
+      glRenderbufferStorageMultisample(GL_RENDERBUFFER, samples,
+                                       internal_format, size.width(),
+                                       size.height());
+    }
+  } else {
+    glRenderbufferStorageEXT(GL_RENDERBUFFER, internal_format, size.width(),
+                             size.height());
+  }
+
+  glBindRenderbufferEXT(GL_RENDERBUFFER_EXT, current_renderbuffer_service_id);
+}
+
+void GLES2DecoderPassthroughImpl::Resize2DTexture(TexturePassthrough* texture,
+                                                  const gfx::Size& size,
+                                                  GLenum internal_format,
+                                                  GLenum format,
+                                                  GLenum type) {
+  DCHECK(texture);
+  DCHECK(texture->target() == GL_TEXTURE_2D);
+
+  const auto& current_texture_binding =
+      bound_textures_[texture->target()][active_texture_unit_];
+  GLuint current_texture_service_id =
+      current_texture_binding.texture
+          ? current_texture_binding.texture->service_id()
+          : 0;
+
+  glBindTexture(texture->target(), texture->service_id());
+  glTexImage2D(texture->target(), 0, internal_format, size.width(),
+               size.height(), 0, format, type, nullptr);
+  glBindTexture(texture->target(), current_texture_service_id);
+}
+
+bool GLES2DecoderPassthroughImpl::IsEmulatedFramebufferBound(
+    GLenum target) const {
+  if (!emulated_default_framebuffer_) {
+    return false;
+  }
+
+  if ((target == GL_FRAMEBUFFER_EXT || target == GL_DRAW_FRAMEBUFFER) &&
+      bound_draw_framebuffer_ == 0) {
+    return true;
+  }
+
+  if (target == GL_READ_FRAMEBUFFER && bound_read_framebuffer_ == 0) {
+    return true;
+  }
+
+  return false;
 }
 
 #define GLES2_CMD_OP(name)                                               \
