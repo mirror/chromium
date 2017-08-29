@@ -374,6 +374,10 @@ class LocalNTPVoiceJavascriptTest : public LocalNTPTest {
   net::EmbeddedTestServer https_test_server_;
 };
 
+IN_PROC_BROWSER_TEST_F(LocalNTPVoiceJavascriptTest, SpeechTests) {
+  RunJavascriptTests("voice_speech_browsertest.js");
+}
+
 IN_PROC_BROWSER_TEST_F(LocalNTPVoiceJavascriptTest, ViewTests) {
   RunJavascriptTests("voice_view_browsertest.js");
 }
