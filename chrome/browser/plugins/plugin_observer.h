@@ -12,15 +12,18 @@
 #include "base/macros.h"
 #include "base/memory/weak_ptr.h"
 #include "chrome/common/features.h"
+#include "chrome/common/plugin.mojom.h"
 #include "components/component_updater/component_updater_service.h"
 #include "content/public/browser/web_contents_observer.h"
 #include "content/public/browser/web_contents_user_data.h"
+#include "mojo/public/cpp/bindings/associated_binding_set.h"
 
 namespace content {
 class WebContents;
 }
 
 class PluginObserver : public content::WebContentsObserver,
+                       public chrome::mojom::PluginHost,
                        public content::WebContentsUserData<PluginObserver> {
  public:
   ~PluginObserver() override;
@@ -30,6 +33,9 @@ class PluginObserver : public content::WebContentsObserver,
                      base::ProcessId plugin_pid) override;
   bool OnMessageReceived(const IPC::Message& message,
                          content::RenderFrameHost* render_frame_host) override;
+  chrome::mojom::PluginRendererPtr& plugin_renderer_interface() {
+    return plugin_renderer_interface_;
+  }
 
  private:
   class ComponentObserver;
@@ -38,23 +44,26 @@ class PluginObserver : public content::WebContentsObserver,
 
   explicit PluginObserver(content::WebContents* web_contents);
 
+  // chrome::mojom::PluginHost methods.
+  void ShowFlashPermissionBubble() override;
+  void BlockedOutdatedPlugin(int64_t placeholder_id,
+                             const std::string& identifier) override;
+  void BlockedComponentUpdatedPlugin(int64_t placeholder_id,
+                                     const std::string& identifier) override;
+  void CouldNotLoadPlugin(const base::FilePath& plugin_path) override;
+
   // Message handlers:
-  void OnBlockedUnauthorizedPlugin(const base::string16& name,
-                                   const std::string& identifier);
-  void OnBlockedOutdatedPlugin(int placeholder_id,
-                               const std::string& identifier);
-  void OnBlockedComponentUpdatedPlugin(int placeholder_id,
-                                       const std::string& identifier);
   void OnRemovePluginPlaceholderHost(int placeholder_id);
   void RemoveComponentObserver(int placeholder_id);
-  void OnShowFlashPermissionBubble();
-  void OnCouldNotLoadPlugin(const base::FilePath& plugin_path);
 
   // Stores all PluginPlaceholderHosts, keyed by their routing ID.
   std::map<int, std::unique_ptr<PluginPlaceholderHost>> plugin_placeholders_;
 
   // Stores all ComponentObservers, keyed by their routing ID.
   std::map<int, std::unique_ptr<ComponentObserver>> component_observers_;
+
+  chrome::mojom::PluginRendererPtr plugin_renderer_interface_;
+  mojo::AssociatedBindingSet<chrome::mojom::PluginHost> plugin_host_bindings_;
 
   base::WeakPtrFactory<PluginObserver> weak_ptr_factory_;
 
