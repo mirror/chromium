@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Dynamically changing HTMLStyleElement.prototyoe.media should change the rendering accordingly</title>
+    <script src="/resources/testharness.js"></script>
+    <script src="/resources/testharnessreport.js"></script>
+    <link rel="help" href="https://html.spec.whatwg.org/multipage/#the-style-element">
+    <style>
+      .text1, .text2, .text3, .text4, .text5, .text6 {
+       color: red;
+      }
+    </style>
+    <style id="immediate-change" media="none">
+      .text1 {
+       color: green;
+      }
+    </style>
+    <style id="short-10-milliseconds-timer-change" media="none">
+      .text2 {
+       color: green;
+      }
+    </style>
+    <style id="long-500-milliseconds-timer-change" media="none">
+      .text3 {
+       color: green;
+      }
+    </style>
+    <style id="on-dom-content-loaded-change" media="none">
+      .text4 {
+       color: green;
+      }
+    </style>
+    <style id="on-load-change" media="none">
+      .text5 {
+       color: green;
+      }
+    </style>
+    <style id="on-load-plus-1-millisecond-timer-change" media="none">
+      .text6 {
+       color: green;
+      }
+    </style>
+  </head>
+  <body>
+    A bit after the "load" event, the text below must be green and nothing must be red.<br/>
+    <span class="text1">text1</span>
+    <span class="text2">text2</span>
+    <span class="text3">text3</span>
+    <span class="text4">text4</span>
+    <span class="text5">text5</span>
+    <span class="text6">text6</span>
+    <script>
+      var onloadChangeTest = async_test("on-load-change");
+      var onDOMContentLoadedChangeTest = async_test("on-dom-content-loaded-change");
+      var shortTimerChangeTest = async_test("short-10-milliseconds-timer-change");
+      var longTimerChangeTest = async_test("long-500-milliseconds-timer-change");
+      var onloadChangePlusTimerTest = async_test("on-load-plus-1-millisecond-timer-change");
+
+      function mediaChange(t, className, styleID) {
+        t.step(function() {
+          var element = document.getElementsByClassName(className)[0];
+          assert_equals(getComputedStyle(element).color, "rgb(255, 0, 0)");
+          document.getElementById(styleID).media = 'all';
+          assert_equals(getComputedStyle(element).color, "rgb(0, 128, 0)");
+        });
+        t.done();
+      }
+
+      test(function() {
+        var element = document.getElementsByClassName("text1")[0];
+        assert_equals(getComputedStyle(element).color, "rgb(255, 0, 0)");
+        document.getElementById("immediate-change").media = 'all';
+        assert_equals(getComputedStyle(element).color, "rgb(0, 128, 0)");
+      }, "change media value immediately");
+
+      window.addEventListener("load", mediaChange(onloadChangeTest, "text5", "on-load-change"));
+      window.addEventListener("DOMContentLoaded", mediaChange(onDOMContentLoadedChangeTest, "text4", "on-dom-content-loaded-change"));
+      setTimeout(mediaChange(shortTimerChangeTest, "text2", "short-10-milliseconds-timer-change"), 10);
+      setTimeout(mediaChange(longTimerChangeTest, "text3", "long-500-milliseconds-timer-change"), 500);
+      window.addEventListener("load", function () {
+        setTimeout(mediaChange(onloadChangePlusTimerTest, "text6", "on-load-plus-1-millisecond-timer-change"), 1);
+      });
+    </script>
+  </body>
+</html>
