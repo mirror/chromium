@@ -48,6 +48,23 @@
     },
     {
       "key": {
+        "uuid": "2d1d876d_c70fa0f4",
+        "filename": "chrome/browser/extensions/api/declarative_net_request/rule_indexing_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-29T19:14:40Z",
+      "side": 1,
+      "message": "std::make_unique is allowed now; prefer that.",
+      "revId": "b5de490fff41a70506c41c98619239b333d44f7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3b890ddb_f6d1d339",
         "filename": "chrome/browser/extensions/api/declarative_net_request/rule_indexing_unittest.cc",
         "patchSetId": 8
@@ -141,6 +158,30 @@
     },
     {
       "key": {
+        "uuid": "22b66294_a2f00ff9",
+        "filename": "chrome/browser/extensions/api/declarative_net_request/rule_indexing_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-29T19:14:40Z",
+      "side": 1,
+      "message": "Mostly because the ChromeTestExtensionLoader is designed as a single-use object, and using it in a test suite would be much more likely to try and use it multiple times, in addition to the lifetime concerns.\n\nIt\u0027s not strictly required, though.",
+      "parentUuid": "4acded6a_3ee31c6f",
+      "range": {
+        "startLine": 168,
+        "startChar": 18,
+        "endLine": 168,
+        "endChar": 43
+      },
+      "revId": "b5de490fff41a70506c41c98619239b333d44f7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "38a46742_c9607fa1",
         "filename": "chrome/browser/extensions/api/declarative_net_request/rule_indexing_unittest.cc",
         "patchSetId": 8
@@ -205,6 +246,47 @@
         "endLine": 321,
         "endChar": 27
       },
+      "revId": "b5de490fff41a70506c41c98619239b333d44f7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "677a8d52_d7f0e5eb",
+        "filename": "chrome/browser/extensions/unpacked_installer.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 321,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-29T19:14:40Z",
+      "side": 1,
+      "message": "It\u0027s actually quite discouraged, and ideally we\u0027d fix it.  But the commandline case makes that tricky.",
+      "parentUuid": "3d65d15c_ca8e54a2",
+      "range": {
+        "startLine": 321,
+        "startChar": 2,
+        "endLine": 321,
+        "endChar": 27
+      },
+      "revId": "b5de490fff41a70506c41c98619239b333d44f7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7cfb207_5b644adf",
+        "filename": "chrome/browser/extensions/unpacked_installer.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-29T19:14:40Z",
+      "side": 1,
+      "message": "nit: missing .",
       "revId": "b5de490fff41a70506c41c98619239b333d44f7c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
