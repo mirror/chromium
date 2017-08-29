@@ -16,6 +16,24 @@
       "revId": "9857376d5e64ff83f90c85a19d8c65b778b753be",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "05d9d40d_d875abf4",
+        "filename": "content/child/loader/cors_url_loader.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-08-29T22:33:35Z",
+      "side": 0,
+      "message": "It\u0027s not safe. This pointer is owned by the CORSURLLoaderFactory which could be destroyed before this object.",
+      "parentUuid": "53c407df_34ca2699",
+      "revId": "9857376d5e64ff83f90c85a19d8c65b778b753be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
