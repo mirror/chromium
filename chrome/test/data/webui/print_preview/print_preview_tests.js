@@ -576,17 +576,18 @@ cr.define('print_preview_test', function() {
         return nativeLayer.whenCalled('getPrinterCapabilities');
       }).then(function() {
         var otherOptions = $('other-options-settings');
+        var scalingSettings = $('scaling-settings');
         // If rasterization is an option, other options should be visible.
         // If not, there should be no available other options.
         checkSectionVisible(otherOptions, isPrintAsImageEnabled());
         if (isPrintAsImageEnabled()) {
           checkElementDisplayed(
-              otherOptions.querySelector('#fit-to-page-container'), false);
-          checkElementDisplayed(
               otherOptions.querySelector('#rasterize-container'), true);
         }
         checkSectionVisible($('media-size-settings'), false);
-        checkSectionVisible($('scaling-settings'), false);
+        checkSectionVisible(scalingSettings, false);
+        checkElementDisplayed(
+            scalingSettings.querySelector('#fit-to-page-container'), false);
       });
     });
 
@@ -595,12 +596,12 @@ cr.define('print_preview_test', function() {
     test('SourceIsHTMLCapabilities', function() {
       return setupSettingsAndDestinationsWithCapabilities().then(function() {
         var otherOptions = $('other-options-settings');
-        var fitToPage = otherOptions.querySelector('#fit-to-page-container');
         var rasterize;
         if (isPrintAsImageEnabled())
           rasterize = otherOptions.querySelector('#rasterize-container');
         var mediaSize = $('media-size-settings');
         var scalingSettings = $('scaling-settings');
+        var fitToPage = scalingSettings.querySelector('#fit-to-page-container');
 
         // Check that options are collapsed (section is visible, because
         // duplex is available).
@@ -631,7 +632,7 @@ cr.define('print_preview_test', function() {
         var otherOptions = $('other-options-settings');
         var scalingSettings = $('scaling-settings');
         var fitToPageContainer =
-            otherOptions.querySelector('#fit-to-page-container');
+            scalingSettings.querySelector('#fit-to-page-container');
         var rasterizeContainer;
         if (isPrintAsImageEnabled()) {
           rasterizeContainer =
@@ -662,12 +663,10 @@ cr.define('print_preview_test', function() {
     test('ScalingUnchecksFitToPage', function() {
       initialSettings.isDocumentModifiable_ = false;
       return setupSettingsAndDestinationsWithCapabilities().then(function() {
-        var otherOptions = $('other-options-settings');
         var scalingSettings = $('scaling-settings');
-
-        checkSectionVisible(otherOptions, true);
+        checkSectionVisible(scalingSettings, true);
         var fitToPageContainer =
-            otherOptions.querySelector('#fit-to-page-container');
+            scalingSettings.querySelector('#fit-to-page-container');
         checkElementDisplayed(fitToPageContainer, true);
         expectTrue(
             fitToPageContainer.querySelector('.checkbox').checked);
