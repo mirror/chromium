@@ -108,6 +108,24 @@
     },
     {
       "key": {
+        "uuid": "f4c14138_4de4e47c",
+        "filename": "components/security_interstitials_strings.grdp",
+        "patchSetId": 2
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1229947
+      },
+      "writtenOn": "2017-08-29T22:30:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5c335eb8_403c1312",
+      "revId": "84b9649522186cb81eabb587e7e1e489c1fa4440",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fd393f3d_7b821c53",
         "filename": "components/security_interstitials_strings.grdp",
         "patchSetId": 2
@@ -176,6 +194,24 @@
       "revId": "84b9649522186cb81eabb587e7e1e489c1fa4440",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48c90bd0_affab313",
+        "filename": "components/security_interstitials_strings.grdp",
+        "patchSetId": 2
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1229947
+      },
+      "writtenOn": "2017-08-29T22:30:07Z",
+      "side": 1,
+      "message": "Okay! Done.",
+      "parentUuid": "1a98f503_6cb08f95",
+      "revId": "84b9649522186cb81eabb587e7e1e489c1fa4440",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
