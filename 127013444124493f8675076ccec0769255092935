@@ -22,6 +22,30 @@
       "revId": "127013444124493f8675076ccec0769255092935",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20867174_4a8bdf14",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/NavigationRecorder.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-08-29T13:16:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f95bc7ce_01b0dd2f",
+      "range": {
+        "startLine": 50,
+        "startChar": 21,
+        "endLine": 50,
+        "endChar": 22
+      },
+      "revId": "127013444124493f8675076ccec0769255092935",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
