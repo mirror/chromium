@@ -18,7 +18,10 @@
 #include "ui/gfx/mac/scoped_cocoa_disable_screen_updates.h"
 
 const CGFloat kHorizTearDistance = 10.0;  // Using the same value as Views.
-const CGFloat kVertTearDistance = 36.0;
+// The max the tab can be dragged horizontally from its original position before
+// locking into horizontal tab dragging mode (i.e. it will not tear off).
+const CGFloat kMaxHorzTearDistance = 100.0;
+const CGFloat kVertTearDistance = 50.0;
 const NSTimeInterval kTearDuration = 0.333;
 
 // Returns whether |screenPoint| is inside the bounds of |view|.
@@ -192,6 +195,7 @@ static BOOL PointIsInsideView(NSPoint screenPoint, NSView* view) {
     // Check if the tab has been pulled out of the tab strip.
     stillVisible = [sourceController_ isTabFullyVisible:[draggedTab_ tabView]];
     if ([sourceController_ tabTearingAllowed] &&
+        !(fabs(horizOffset) >= kMaxHorzTearDistance) &&
         (fabs(vertOffset) > kVertTearDistance || !stillVisible)) {
       draggingWithinTabStrip_ = NO;
       // When you finally leave the strip, we treat that as the origin.
