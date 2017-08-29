@@ -27,9 +27,13 @@ PaintImage PaintImageBuilder::TakePaintImage() const {
     DCHECK(!paint_image_.paint_record_);
     DCHECK(!paint_image_.paint_image_generator_);
     DCHECK(!paint_image_.sk_image_->isLazyGenerated());
+    DCHECK_NE(paint_image_.animation_type_, PaintImage::AnimationType::ANIMATED)
+        << "Animated images must provide a generator backing";
   } else if (paint_image_.paint_record_) {
     DCHECK(!paint_image_.sk_image_);
     DCHECK(!paint_image_.paint_image_generator_);
+    DCHECK_NE(paint_image_.animation_type_, PaintImage::AnimationType::ANIMATED)
+        << "Animated images must provide a generator backing";
   } else if (paint_image_.paint_image_generator_) {
     DCHECK(!paint_image_.sk_image_);
     DCHECK(!paint_image_.paint_record_);
