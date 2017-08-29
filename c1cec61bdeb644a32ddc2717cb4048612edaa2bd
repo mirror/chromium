@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "06115002_f4c3ab1a",
+        "filename": "third_party/WebKit/Source/core/editing/commands/TypingCommand.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 341,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-08-29T18:15:29Z",
+      "side": 1,
+      "message": "I think we have a bug here. The event handler may remove the frame, which is not handled.\n\nBesides, what should we do if |current_selection| is invalidated by event handler?",
+      "range": {
+        "startLine": 332,
+        "startChar": 0,
+        "endLine": 341,
+        "endChar": 0
+      },
+      "revId": "c1cec61bdeb644a32ddc2717cb4048612edaa2bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83726341_eaf9207e",
+        "filename": "third_party/WebKit/Source/core/editing/commands/TypingCommand.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 387,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-08-29T18:15:29Z",
+      "side": 1,
+      "message": "|current_selection| may become invalid due to the previous event handlers.",
+      "range": {
+        "startLine": 387,
+        "startChar": 60,
+        "endLine": 387,
+        "endChar": 77
+      },
+      "revId": "c1cec61bdeb644a32ddc2717cb4048612edaa2bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f016f3a_00561887",
+        "filename": "third_party/WebKit/Source/core/editing/commands/TypingCommand.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 400,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-08-29T18:15:29Z",
+      "side": 1,
+      "message": "|current_selection| may have become invalid due to:\n- the previous event handlers\n- the application of |command|\n- handlers of events triggered by |command|",
+      "range": {
+        "startLine": 400,
+        "startChar": 59,
+        "endLine": 400,
+        "endChar": 76
+      },
+      "revId": "c1cec61bdeb644a32ddc2717cb4048612edaa2bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
