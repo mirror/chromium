@@ -16,6 +16,24 @@
       "revId": "709d4977cf5e618bc4b0bab290920ccf88557d97",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7172ccab_05ffd5a4",
+        "filename": "chrome/browser/android/ntp/content_suggestions_notifier_service.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-29T11:42:26Z",
+      "side": 1,
+      "message": "Hm, not quite sure I follow. Seems to me the \"correct\" solution would be to have a fake version of ApplicationStatusListener so you can inject the state you want, but that won\u0027t work since most of that class is static. We could introduce our own, fake-able wrapper around it, but that\u0027s probably not worth it.\n\nCould we just add a @CalledByNative to ApplicationState.onStateChangeForTesting? (Does the JNI stuff even work in unit tests?)",
+      "parentUuid": "5ec90b92_a1cce5b5",
+      "revId": "709d4977cf5e618bc4b0bab290920ccf88557d97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
