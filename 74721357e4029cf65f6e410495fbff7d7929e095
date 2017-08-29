@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "83fae6b7_6b2a8f8a",
+        "filename": "ui/aura/mus/hit_test_data_provider_aura_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1002647
+      },
+      "writtenOn": "2017-08-29T17:17:55Z",
+      "side": 1,
+      "message": "Why do you need this change? Was this test failing? I thought it needs to refer to |expected_order_2|.",
+      "range": {
+        "startLine": 168,
+        "startChar": 33,
+        "endLine": 168,
+        "endChar": 49
+      },
+      "revId": "74721357e4029cf65f6e410495fbff7d7929e095",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
