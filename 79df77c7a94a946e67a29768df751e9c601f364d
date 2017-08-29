@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da37f9cf_e2650172",
+        "filename": "chrome/test/data/webui/settings/bluetooth_page_tests.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-08-29T15:40:14Z",
+      "side": 1,
+      "message": "If the test is causing flake, moving it is just setting up a timebomb. We should disable the test for now with a TODO comment referencing the bug for fixing it.\n\nAdding Polymer.dom.flush() before the assertions may fix this. Otherwise we need to add the flush and modify this to return a Promise instead, see test(\u0027WiFi\u0027...) in internet_page_tests.js for an example.",
+      "revId": "79df77c7a94a946e67a29768df751e9c601f364d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
