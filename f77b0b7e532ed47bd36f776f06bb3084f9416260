@@ -1,0 +1,157 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d55763e5_93e5db08",
+        "filename": "ash/rotator/screen_rotation_animator.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-08-29T00:58:41Z",
+      "side": 1,
+      "message": "Fix typo while you\u0027re here, maybe?",
+      "revId": "f77b0b7e532ed47bd36f776f06bb3084f9416260",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf1226de_5dd8948b",
+        "filename": "ash/rotator/screen_rotation_animator.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 287,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-08-29T00:58:41Z",
+      "side": 1,
+      "message": "Does that case happen? Mostly wondering if this should be a DCHECK instead.",
+      "revId": "f77b0b7e532ed47bd36f776f06bb3084f9416260",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59846151_918fe35a",
+        "filename": "cc/ipc/copy_output_result_struct_traits.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-08-29T00:58:41Z",
+      "side": 1,
+      "message": "Should rect.IsEmpty() be pulled up to the top here since every case returns false?",
+      "revId": "f77b0b7e532ed47bd36f776f06bb3084f9416260",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c40da30c_59160cf4",
+        "filename": "cc/output/software_renderer.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 585,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-08-29T00:58:41Z",
+      "side": 1,
+      "message": "If scaling doesn\u0027t do anything, I\u0027d rather just remove all of the API around scaling (is_scaled, SetScaleRatio) until it\u0027s functional than have an API that doesn\u0027t do anything yet.",
+      "revId": "f77b0b7e532ed47bd36f776f06bb3084f9416260",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf4fe6a0_a2048a4a",
+        "filename": "components/viz/common/quads/copy_output_request.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-08-29T00:58:41Z",
+      "side": 1,
+      "message": "gfx::Rect() seems a little special.  I like the CreateEmptyResult clarity from before this patch.",
+      "revId": "f77b0b7e532ed47bd36f776f06bb3084f9416260",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf843fdf_4852d444",
+        "filename": "components/viz/common/quads/copy_output_request.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-08-29T00:58:41Z",
+      "side": 1,
+      "message": "This function could use a test.",
+      "revId": "f77b0b7e532ed47bd36f776f06bb3084f9416260",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a147b7e8_3eb0f3a0",
+        "filename": "components/viz/common/quads/copy_output_result.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-08-29T00:58:41Z",
+      "side": 1,
+      "message": "I feel like there\u0027s some inconsistency between the accessor functions.  GetYPlane (and friends) DCHECK.  GetTextureMailbox fails silently on mismatch.  AsSkBitmap returns a black bitmap (on some mismatches).  Is it possible for them all to DCHECK/NOTREACHED on mismatch and to move the AsSkBitmap code into CopyOutputSkBitmapResult, or am I missing something?",
+      "revId": "f77b0b7e532ed47bd36f776f06bb3084f9416260",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48d43975_c76c75ed",
+        "filename": "components/viz/common/quads/copy_output_result.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-08-29T00:58:41Z",
+      "side": 1,
+      "message": "Does this function get called? I was wondering if we could just assert/noop if there was ever a mismatch in accessor and format_.",
+      "revId": "f77b0b7e532ed47bd36f776f06bb3084f9416260",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7072bae4_04699687",
+        "filename": "components/viz/service/display/gl_renderer.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 2918,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-08-29T00:58:41Z",
+      "side": 1,
+      "message": "If this doesn\u0027t do anything yet, maybe hold off on adding the enum?",
+      "revId": "f77b0b7e532ed47bd36f776f06bb3084f9416260",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
