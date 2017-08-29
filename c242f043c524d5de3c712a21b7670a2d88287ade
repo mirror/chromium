@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "350200f4_778e1e75",
+        "filename": "chrome/browser/android/ntp/content_suggestions_notifier.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2017-08-29T13:07:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "22d49ac8_829b2af3",
+      "revId": "c242f043c524d5de3c712a21b7670a2d88287ade",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9685b117_481b69e0",
         "filename": "chrome/browser/android/ntp/content_suggestions_notifier.h",
         "patchSetId": 3
@@ -70,6 +88,24 @@
     },
     {
       "key": {
+        "uuid": "9173c630_6f6683ae",
+        "filename": "chrome/browser/android/ntp/content_suggestions_notifier_service.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2017-08-29T13:07:20Z",
+      "side": 1,
+      "message": "Derp. Yes, that\u0027s what I meant to write.",
+      "parentUuid": "c3a2fa3a_dc54e4cc",
+      "revId": "c242f043c524d5de3c712a21b7670a2d88287ade",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e21cddb5_6d0ed9be",
         "filename": "chrome/browser/android/ntp/content_suggestions_notifier_service_unittest.cc",
         "patchSetId": 3
@@ -87,6 +123,24 @@
     },
     {
       "key": {
+        "uuid": "e8e986d3_1d352a3f",
+        "filename": "chrome/browser/android/ntp/content_suggestions_notifier_service_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2017-08-29T13:07:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e21cddb5_6d0ed9be",
+      "revId": "c242f043c524d5de3c712a21b7670a2d88287ade",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "703e6631_ea262ddc",
         "filename": "chrome/browser/android/ntp/content_suggestions_notifier_service_unittest.cc",
         "patchSetId": 3
@@ -101,6 +155,24 @@
       "revId": "c242f043c524d5de3c712a21b7670a2d88287ade",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f1f2e79_ba29661f",
+        "filename": "chrome/browser/android/ntp/content_suggestions_notifier_service_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2017-08-29T13:07:20Z",
+      "side": 1,
+      "message": "Sure, done.",
+      "parentUuid": "703e6631_ea262ddc",
+      "revId": "c242f043c524d5de3c712a21b7670a2d88287ade",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -138,6 +210,24 @@
     },
     {
       "key": {
+        "uuid": "94331cfd_db6ce876",
+        "filename": "chrome/browser/android/ntp/content_suggestions_notifier_service_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2017-08-29T13:07:20Z",
+      "side": 1,
+      "message": "Not possible without upcasting because of that thing with the private methods.",
+      "parentUuid": "a509436e_547666b1",
+      "revId": "c242f043c524d5de3c712a21b7670a2d88287ade",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "04703916_68162bef",
         "filename": "chrome/browser/android/ntp/content_suggestions_notifier_service_unittest.cc",
         "patchSetId": 3
@@ -152,6 +242,24 @@
       "revId": "c242f043c524d5de3c712a21b7670a2d88287ade",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f67aa82_50433f11",
+        "filename": "chrome/browser/android/ntp/content_suggestions_notifier_service_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2017-08-29T13:07:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "04703916_68162bef",
+      "revId": "c242f043c524d5de3c712a21b7670a2d88287ade",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -172,6 +280,24 @@
     },
     {
       "key": {
+        "uuid": "abf008db_a084b158",
+        "filename": "chrome/browser/android/ntp/content_suggestions_notifier_service_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2017-08-29T13:07:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f58e6fb3_b3b1c26d",
+      "revId": "c242f043c524d5de3c712a21b7670a2d88287ade",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6eac4b4e_897793f5",
         "filename": "chrome/browser/android/ntp/content_suggestions_notifier_service_unittest.cc",
         "patchSetId": 3
@@ -186,6 +312,24 @@
       "revId": "c242f043c524d5de3c712a21b7670a2d88287ade",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4fcfcb6e_08883eb1",
+        "filename": "chrome/browser/android/ntp/content_suggestions_notifier_service_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2017-08-29T13:07:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6eac4b4e_897793f5",
+      "revId": "c242f043c524d5de3c712a21b7670a2d88287ade",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -206,6 +350,24 @@
     },
     {
       "key": {
+        "uuid": "f77e6377_0026b75d",
+        "filename": "chrome/browser/android/ntp/content_suggestions_notifier_service_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2017-08-29T13:07:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1e5e2985_a633f969",
+      "revId": "c242f043c524d5de3c712a21b7670a2d88287ade",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2f5ba519_651ccb3c",
         "filename": "chrome/browser/android/ntp/content_suggestions_notifier_unittest.cc",
         "patchSetId": 3
@@ -220,6 +382,24 @@
       "revId": "c242f043c524d5de3c712a21b7670a2d88287ade",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5305091d_6ee695c1",
+        "filename": "chrome/browser/android/ntp/content_suggestions_notifier_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2017-08-29T13:07:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2f5ba519_651ccb3c",
+      "revId": "c242f043c524d5de3c712a21b7670a2d88287ade",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

@@ -34,6 +34,24 @@
       "revId": "709d4977cf5e618bc4b0bab290920ccf88557d97",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "459cb7a1_5f9d0084",
+        "filename": "chrome/browser/android/ntp/content_suggestions_notifier_service.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2017-08-29T13:07:20Z",
+      "side": 1,
+      "message": "\u003e Could we just add a @CalledByNative to ApplicationState.onStateChangeForTesting? (Does the JNI stuff even work in unit tests?)\n\nIt must work, because GetState() is working somehow :)\n\nI think exposing that function to JNI is the best thing. Of course, that will require getting its owners to agree, and approvals. Do you think this CL should wait on that?",
+      "parentUuid": "7172ccab_05ffd5a4",
+      "revId": "709d4977cf5e618bc4b0bab290920ccf88557d97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
