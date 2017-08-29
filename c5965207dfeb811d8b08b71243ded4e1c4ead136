@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5ed9ac3a_d88394f9",
+        "filename": "third_party/WebKit/Source/modules/compositorworker/AnimationWorkletProxyClientImpl.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1000279
+      },
+      "writtenOn": "2017-08-29T21:00:52Z",
+      "side": 1,
+      "message": "Perhaps less comment about code, more about future removal of Event.",
+      "revId": "c5965207dfeb811d8b08b71243ded4e1c4ead136",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3ef87313_2a559b9c",
+        "filename": "third_party/WebKit/Source/modules/compositorworker/AnimationWorkletProxyClientImpl.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1000279
+      },
+      "writtenOn": "2017-08-29T21:00:52Z",
+      "side": 1,
+      "message": "Unnecessary",
+      "revId": "c5965207dfeb811d8b08b71243ded4e1c4ead136",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0d0a3192_a5742040",
+        "filename": "third_party/WebKit/Source/modules/compositorworker/AnimationWorkletThread.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1000279
+      },
+      "writtenOn": "2017-08-29T21:00:52Z",
+      "side": 1,
+      "message": "I\u0027m not quite sure why this is Current().  Perhaps I don\u0027t understand the context of the name \"OnXThread\"  in Blink",
+      "revId": "c5965207dfeb811d8b08b71243ded4e1c4ead136",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4aa96c19_1db40ce5",
+        "filename": "third_party/WebKit/Source/modules/compositorworker/AnimationWorkletThreadTest.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1000279
+      },
+      "writtenOn": "2017-08-29T21:00:52Z",
+      "side": 1,
+      "message": "This looks wrong - shouldn\u0027t this be directing to the shared backing thread?",
+      "revId": "c5965207dfeb811d8b08b71243ded4e1c4ead136",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
