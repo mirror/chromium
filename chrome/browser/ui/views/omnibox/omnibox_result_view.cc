@@ -505,6 +505,11 @@ int OmniboxResultView::GetMatchContentsWidth() const {
   return contents_rendertext_->GetContentWidth();
 }
 
+void OmniboxResultView::SetCustomIcon(const gfx::ImageSkia& icon) {
+  custom_icon_ = icon;
+  SchedulePaint();
+}
+
 void OmniboxResultView::SetAnswerImage(const gfx::ImageSkia& image) {
   answer_image_ = image;
   SchedulePaint();
@@ -518,6 +523,9 @@ gfx::ImageSkia OmniboxResultView::GetIcon() const {
   const gfx::Image image = model_->GetIconIfExtensionMatch(model_index_);
   if (!image.IsEmpty())
     return image.AsImageSkia();
+
+  if (!custom_icon_.isNull())
+    return custom_icon_;
 
   return GetVectorIcon(model_->IsStarredMatch(match_)
                            ? omnibox::kStarIcon
