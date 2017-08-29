@@ -28,19 +28,16 @@
 #define WebCORSPreflightResultCache_h
 
 #include <memory>
+#include <unordered_set>
 #include "platform/loader/fetch/ResourceLoaderOptions.h"
-#include "platform/wtf/HashMap.h"
-#include "platform/wtf/HashSet.h"
 #include "platform/wtf/ThreadSpecific.h"
-#include "platform/wtf/text/WTFString.h"
+#include "public/platform/WebHTTPHeaderMap.h"
 #include "public/platform/WebString.h"
 #include "public/platform/WebURL.h"
 #include "public/platform/WebURLRequest.h"
 #include "public/platform/WebURLResponse.h"
 
 namespace blink {
-
-class HTTPHeaderMap;
 
 // Represents an entry of the CORS-preflight cache.
 // See https://fetch.spec.whatwg.org/#concept-cache.
@@ -51,23 +48,29 @@ class BLINK_PLATFORM_EXPORT WebCORSPreflightResultCacheItem {
  public:
   static std::unique_ptr<WebCORSPreflightResultCacheItem> Create(
       const WebURLRequest::FetchCredentialsMode,
-      const HTTPHeaderMap&,
+      const WebHTTPHeaderMap&,
       WebString& error_description);
 
   bool AllowsCrossOriginMethod(const WebString&,
                                WebString& error_description) const;
-  bool AllowsCrossOriginHeaders(const HTTPHeaderMap&,
+  bool AllowsCrossOriginHeaders(const WebHTTPHeaderMap&,
                                 WebString& error_description) const;
   bool AllowsRequest(WebURLRequest::FetchCredentialsMode,
                      const WebString& method,
-                     const HTTPHeaderMap& request_headers) const;
+                     const WebHTTPHeaderMap& request_headers) const;
 
  private:
-  typedef HashSet<String, CaseFoldingHash> HeadersSet;
+  using StringSet = std::
+      unordered_set<WebString, WebString::ASCIIHash, std::equal_to<WebString>>;
+
+  using IgnoreCaseStringSet =
+      std::unordered_set<WebString,
+                         WebString::IgnoreCaseASCIIHash,
+                         WebString::IgnoreCaseASCIIEqual>;
 
   explicit WebCORSPreflightResultCacheItem(WebURLRequest::FetchCredentialsMode);
 
-  bool Parse(const HTTPHeaderMap& response_header,
+  bool Parse(const WebHTTPHeaderMap& response_header,
              WebString& error_description);
 
   // FIXME: A better solution to holding onto the absolute expiration time might
@@ -77,8 +80,8 @@ class BLINK_PLATFORM_EXPORT WebCORSPreflightResultCacheItem {
 
   // Corresponds to the fields of the CORS-preflight cache with the same name.
   bool credentials_;
-  HashSet<String> methods_;
-  HeadersSet headers_;
+  StringSet methods_;
+  IgnoreCaseStringSet headers_;
 };
 
 class BLINK_PLATFORM_EXPORT WebCORSPreflightResultCache {
@@ -96,7 +99,7 @@ class BLINK_PLATFORM_EXPORT WebCORSPreflightResultCache {
                         const WebURL&,
                         WebURLRequest::FetchCredentialsMode,
                         const WebString& method,
-                        const HTTPHeaderMap& request_headers);
+                        const WebHTTPHeaderMap& request_headers);
 
  protected:
   friend class WTF::ThreadSpecific<WebCORSPreflightResultCache>;
@@ -104,10 +107,9 @@ class BLINK_PLATFORM_EXPORT WebCORSPreflightResultCache {
   // Protected for tests:
   WebCORSPreflightResultCache() {}
 
-  typedef std::map<
+  using WebCORSPreflightResultHashMap = std::map<
       std::string,
-      std::map<std::string, std::unique_ptr<WebCORSPreflightResultCacheItem>>>
-      WebCORSPreflightResultHashMap;
+      std::map<std::string, std::unique_ptr<WebCORSPreflightResultCacheItem>>>;
 
   WebCORSPreflightResultHashMap preflight_hash_map_;
 };

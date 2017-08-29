@@ -35,6 +35,8 @@ include_rules = [
     "+base/trace_event",
     "+base/values.h",
     "+net/http/http_util.h",
+    "+net/http/http_request_headers.h",
+    "+net/http/http_response_headers.h",
     "+device",
     "+gpu/GLES2",
     "+mojo/public",

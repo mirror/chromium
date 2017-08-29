@@ -27,10 +27,9 @@
 #ifndef WebCORS_h
 #define WebCORS_h
 
+#include <unordered_set>
 #include "platform/loader/fetch/ResourceLoaderOptions.h"
-#include "platform/network/HTTPHeaderMap.h"
-#include "platform/wtf/HashSet.h"
-#include "platform/wtf/text/StringHash.h"
+#include "public/platform/WebHTTPHeaderMap.h"
 #include "public/platform/WebString.h"
 #include "public/platform/WebURL.h"
 #include "public/platform/WebURLRequest.h"
@@ -42,7 +41,9 @@ class WebSecurityOrigin;
 
 namespace WebCORS {
 
-typedef HashSet<String, CaseFoldingHash> HTTPHeaderSet;
+using HTTPHeaderSet = std::unordered_set<WebString,
+                                         WebString::IgnoreCaseASCIIHash,
+                                         WebString::IgnoreCaseASCIIEqual>;
 
 // Enumerating the error conditions that the CORS
 // access control check can report, including success.
@@ -94,7 +95,7 @@ enum RedirectStatus {
 BLINK_PLATFORM_EXPORT AccessStatus
 CheckAccess(const WebURL,
             const int response_status_code,
-            const HTTPHeaderMap&,
+            const WebHTTPHeaderMap&,
             WebURLRequest::FetchCredentialsMode,
             const WebSecurityOrigin&);
 
@@ -119,7 +120,7 @@ CheckPreflight(const int preflight_response_status_code);
 // "Access-Control-Allow-External:" header. Shares error conditions with
 // standard preflight checking.
 BLINK_PLATFORM_EXPORT PreflightStatus
-CheckExternalPreflight(const HTTPHeaderMap&);
+CheckExternalPreflight(const WebHTTPHeaderMap&);
 
 BLINK_PLATFORM_EXPORT WebURLRequest
 CreateAccessControlPreflightRequest(const WebURLRequest&);
@@ -132,7 +133,7 @@ BLINK_PLATFORM_EXPORT bool HandleRedirect(
     WebURLRequest&,
     const WebURL,
     const int redirect_response_status_code,
-    const HTTPHeaderMap&,
+    const WebHTTPHeaderMap&,
     WebURLRequest::FetchCredentialsMode,
     ResourceLoaderOptions&,
     WebString&);
@@ -141,13 +142,13 @@ BLINK_PLATFORM_EXPORT bool HandleRedirect(
 BLINK_PLATFORM_EXPORT WebString
 AccessControlErrorString(const AccessStatus,
                          const int response_status_code,
-                         const HTTPHeaderMap&,
+                         const WebHTTPHeaderMap&,
                          const WebSecurityOrigin&,
                          const WebURLRequest::RequestContext);
 
 BLINK_PLATFORM_EXPORT WebString
 PreflightErrorString(const PreflightStatus,
-                     const HTTPHeaderMap&,
+                     const WebHTTPHeaderMap&,
                      const int preflight_response_status_code);
 
 BLINK_PLATFORM_EXPORT WebString RedirectErrorString(const RedirectStatus,
@@ -184,7 +185,7 @@ BLINK_PLATFORM_EXPORT WebString ListOfCORSEnabledURLSchemes();
 BLINK_PLATFORM_EXPORT bool IsCORSSafelistedMethod(const WebString&);
 
 BLINK_PLATFORM_EXPORT bool ContainsOnlyCORSSafelistedOrForbiddenHeaders(
-    const HTTPHeaderMap&);
+    const WebHTTPHeaderMap&);
 
 }  // namespace WebCORS
 

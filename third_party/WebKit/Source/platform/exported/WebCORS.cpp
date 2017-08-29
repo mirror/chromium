@@ -32,7 +32,6 @@
 #include "platform/HTTPNames.h"
 #include "platform/loader/fetch/FetchUtils.h"
 #include "platform/loader/fetch/ResourceRequest.h"
-#include "platform/network/HTTPHeaderMap.h"
 #include "platform/weborigin/KURL.h"
 #include "platform/weborigin/SchemeRegistry.h"
 #include "platform/wtf/text/StringBuilder.h"
@@ -55,9 +54,10 @@ bool IsInterestingStatusCode(int status_code) {
 }
 
 // Fetch API Spec: https://fetch.spec.whatwg.org/#cors-preflight-fetch-0
-String CreateAccessControlRequestHeadersHeader(const HTTPHeaderMap& headers) {
+String CreateAccessControlRequestHeadersHeader(
+    const WebHTTPHeaderMap& headers) {
   Vector<String> filtered_headers;
-  for (const auto& header : headers) {
+  for (const auto& header : headers.GetHTTPHeaderMap()) {
     if (FetchUtils::IsCORSSafelistedHeader(header.key, header.value)) {
       // Exclude CORS-safelisted headers.
       continue;
@@ -101,7 +101,7 @@ class HTTPHeaderNameListParser {
   //
   // |output| must be empty.
   void Parse(HTTPHeaderSet& output) {
-    DCHECK(output.IsEmpty());
+    DCHECK(output.empty());
 
     while (true) {
       ConsumeSpaces();
@@ -174,7 +174,7 @@ static bool IsOriginSeparator(UChar ch) {
 AccessStatus CheckAccess(
     const WebURL response_url,
     const int response_status_code,
-    const HTTPHeaderMap& response_header,
+    const WebHTTPHeaderMap& response_header,
     const WebURLRequest::FetchCredentialsMode credentials_mode,
     const WebSecurityOrigin& security_origin) {
   if (!response_status_code)
@@ -233,7 +233,7 @@ bool HandleRedirect(WebSecurityOrigin& current_security_origin,
                     WebURLRequest& new_request,
                     const WebURL redirect_response_url,
                     const int redirect_response_status_code,
-                    const HTTPHeaderMap& redirect_response_header,
+                    const WebHTTPHeaderMap& redirect_response_header,
                     WebURLRequest::FetchCredentialsMode credentials_mode,
                     ResourceLoaderOptions& options,
                     WebString& error_message) {
@@ -330,7 +330,8 @@ PreflightStatus CheckPreflight(const int preflight_response_status_code) {
   return PreflightStatus::kPreflightSuccess;
 }
 
-PreflightStatus CheckExternalPreflight(const HTTPHeaderMap& response_header) {
+PreflightStatus CheckExternalPreflight(
+    const WebHTTPHeaderMap& response_header) {
   WebString result =
       response_header.Get(HTTPNames::Access_Control_Allow_External);
   if (result.IsNull())
@@ -378,7 +379,7 @@ WebURLRequest CreateAccessControlPreflightRequest(
 WebString AccessControlErrorString(
     const AccessStatus status,
     const int response_status_code,
-    const HTTPHeaderMap& response_header,
+    const WebHTTPHeaderMap& response_header,
     const WebSecurityOrigin& origin,
     const WebURLRequest::RequestContext context) {
   String origin_denied =
@@ -482,7 +483,7 @@ WebString AccessControlErrorString(
 }
 
 WebString PreflightErrorString(const PreflightStatus status,
-                               const HTTPHeaderMap& response_header,
+                               const WebHTTPHeaderMap& response_header,
                                const int preflight_response_status_code) {
   switch (status) {
     case PreflightStatus::kPreflightInvalidStatus: {
@@ -543,7 +544,7 @@ void ExtractCorsExposedHeaderNamesList(const WebURLResponse& response,
   // header.
   if (response.WasFetchedViaServiceWorker()) {
     for (const auto& header : response.CorsExposedHeaderNames())
-      header_set.insert(String(header));
+      header_set.insert(header);
     return;
   }
   ParseAccessControlExposeHeadersAllowList(
@@ -565,7 +566,8 @@ bool IsOnAccessControlResponseHeaderWhitelist(const WebString& name) {
           "cache-control", "content-language", "content-type", "expires",
           "last-modified", "pragma",
       }));
-  return allowed_cross_origin_response_headers.Contains(name);
+  return allowed_cross_origin_response_headers.find(name) !=
+         allowed_cross_origin_response_headers.end();
 }
 
 WebString ListOfCORSEnabledURLSchemes() {
@@ -577,8 +579,9 @@ bool IsCORSSafelistedMethod(const WebString& method) {
   return FetchUtils::IsCORSSafelistedMethod(method);
 }
 
-bool ContainsOnlyCORSSafelistedOrForbiddenHeaders(const HTTPHeaderMap& map) {
-  return FetchUtils::ContainsOnlyCORSSafelistedOrForbiddenHeaders(map);
+bool ContainsOnlyCORSSafelistedOrForbiddenHeaders(const WebHTTPHeaderMap& map) {
+  return FetchUtils::ContainsOnlyCORSSafelistedOrForbiddenHeaders(
+      map.GetHTTPHeaderMap());
 }
 
 bool IsCORSEnabledRequestMode(WebURLRequest::FetchRequestMode mode) {

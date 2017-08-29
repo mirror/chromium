@@ -123,7 +123,8 @@ FetchResponseData* FetchResponseData::CreateCORSFilteredResponse(
   response->SetURLList(url_list_);
   for (const auto& header : header_list_->List()) {
     const String& name = header.first;
-    const bool explicitly_exposed = exposed_headers.Contains(name);
+    const bool explicitly_exposed =
+        exposed_headers.find(name) != exposed_headers.end();
     if (WebCORS::IsOnAccessControlResponseHeaderWhitelist(name) ||
         (explicitly_exposed &&
          !FetchUtils::IsForbiddenResponseHeaderName(name))) {

@@ -54,11 +54,12 @@ bool ParseAccessControlMaxAge(const String& string, unsigned& expiry_delta) {
   return ok;
 }
 
-template <class HashType>
-void AddToAccessControlAllowList(const String& string,
-                                 unsigned start,
-                                 unsigned end,
-                                 HashSet<String, HashType>& set) {
+template <class HashType, class EqualsType>
+void AddToAccessControlAllowList(
+    const String& string,
+    unsigned start,
+    unsigned end,
+    std::unordered_set<WebString, HashType, EqualsType>& set) {
   StringImpl* string_impl = string.Impl();
   if (!string_impl)
     return;
@@ -78,9 +79,10 @@ void AddToAccessControlAllowList(const String& string,
   set.insert(string.Substring(start, end - start + 1));
 }
 
-template <class HashType>
-bool ParseAccessControlAllowList(const String& string,
-                                 HashSet<String, HashType>& set) {
+template <class HashType, class EqualsType>
+bool ParseAccessControlAllowList(
+    const String& string,
+    std::unordered_set<WebString, HashType, EqualsType>& set) {
   unsigned start = 0;
   size_t end;
   while ((end = string.find(',', start)) != kNotFound) {
@@ -106,7 +108,7 @@ WebCORSPreflightResultCacheItem::WebCORSPreflightResultCacheItem(
 std::unique_ptr<WebCORSPreflightResultCacheItem>
 WebCORSPreflightResultCacheItem::Create(
     const WebURLRequest::FetchCredentialsMode credentials_mode,
-    const HTTPHeaderMap& response_header,
+    const WebHTTPHeaderMap& response_header,
     WebString& error_description) {
   std::unique_ptr<WebCORSPreflightResultCacheItem> item =
       base::WrapUnique(new WebCORSPreflightResultCacheItem(credentials_mode));
@@ -118,11 +120,14 @@ WebCORSPreflightResultCacheItem::Create(
 }
 
 bool WebCORSPreflightResultCacheItem::Parse(
-    const HTTPHeaderMap& response_header,
+    const WebHTTPHeaderMap& response_header,
     WebString& error_description) {
   methods_.clear();
+
+  const HTTPHeaderMap& response_header_map = response_header.GetHTTPHeaderMap();
+
   if (!ParseAccessControlAllowList(
-          response_header.Get(HTTPNames::Access_Control_Allow_Methods),
+          response_header_map.Get(HTTPNames::Access_Control_Allow_Methods),
           methods_)) {
     error_description =
         "Cannot parse Access-Control-Allow-Methods response header field in "
@@ -132,7 +137,7 @@ bool WebCORSPreflightResultCacheItem::Parse(
 
   headers_.clear();
   if (!ParseAccessControlAllowList(
-          response_header.Get(HTTPNames::Access_Control_Allow_Headers),
+          response_header_map.Get(HTTPNames::Access_Control_Allow_Headers),
           headers_)) {
     error_description =
         "Cannot parse Access-Control-Allow-Headers response header field in "
@@ -142,7 +147,7 @@ bool WebCORSPreflightResultCacheItem::Parse(
 
   unsigned expiry_delta;
   if (ParseAccessControlMaxAge(
-          response_header.Get(HTTPNames::Access_Control_Max_Age),
+          response_header_map.Get(HTTPNames::Access_Control_Max_Age),
           expiry_delta)) {
     if (expiry_delta > kMaxPreflightCacheTimeoutSeconds)
       expiry_delta = kMaxPreflightCacheTimeoutSeconds;
@@ -158,7 +163,8 @@ bool WebCORSPreflightResultCacheItem::Parse(
 bool WebCORSPreflightResultCacheItem::AllowsCrossOriginMethod(
     const WebString& method,
     WebString& error_description) const {
-  if (methods_.Contains(method) || WebCORS::IsCORSSafelistedMethod(method))
+  if (methods_.find(method) != methods_.end() ||
+      FetchUtils::IsCORSSafelistedMethod(method))
     return true;
 
   error_description.Assign(WebString::FromASCII("Method " + method.Ascii() +
@@ -170,10 +176,10 @@ bool WebCORSPreflightResultCacheItem::AllowsCrossOriginMethod(
 }
 
 bool WebCORSPreflightResultCacheItem::AllowsCrossOriginHeaders(
-    const HTTPHeaderMap& request_headers,
+    const WebHTTPHeaderMap& request_headers,
     WebString& error_description) const {
-  for (const auto& header : request_headers) {
-    if (!headers_.Contains(header.key) &&
+  for (const auto& header : request_headers.GetHTTPHeaderMap()) {
+    if (headers_.find(header.key) == headers_.end() &&
         !FetchUtils::IsCORSSafelistedHeader(header.key, header.value) &&
         !FetchUtils::IsForbiddenHeaderName(header.key)) {
       error_description.Assign(
@@ -189,7 +195,7 @@ bool WebCORSPreflightResultCacheItem::AllowsCrossOriginHeaders(
 bool WebCORSPreflightResultCacheItem::AllowsRequest(
     WebURLRequest::FetchCredentialsMode credentials_mode,
     const WebString& method,
-    const HTTPHeaderMap& request_headers) const {
+    const WebHTTPHeaderMap& request_headers) const {
   WebString ignored_explanation;
 
   if (absolute_expiry_time_ < CurrentTime())
@@ -223,7 +229,7 @@ bool WebCORSPreflightResultCache::CanSkipPreflight(
     const WebURL& web_url,
     WebURLRequest::FetchCredentialsMode credentials_mode,
     const WebString& method,
-    const HTTPHeaderMap& request_headers) {
+    const WebHTTPHeaderMap& request_headers) {
   std::string origin(web_origin.Ascii());
   std::string url(web_url.GetString().Ascii());
 
