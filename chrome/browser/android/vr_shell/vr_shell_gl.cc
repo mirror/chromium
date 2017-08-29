@@ -484,7 +484,9 @@ void VrShellGl::InitializeRenderer() {
 }
 
 void VrShellGl::UpdateController(const gfx::Vector3dF& head_direction) {
-  controller_->UpdateState(head_direction);
+  gvr::Mat4f head_pose;
+  TransformToGvrMat(render_info_primary_.head_pose, &head_pose);
+  controller_->UpdateState(head_pose);
   controller_info_.laser_origin = controller_->GetPointerStart();
 
   device::GvrGamepadData controller_data = controller_->GetGamepadData();
@@ -809,7 +811,7 @@ void VrShellGl::DrawFrame(int16_t frame_index) {
   TRACE_EVENT_BEGIN0("gpu", "VrShellGl::AcquireFrame");
   gvr::Frame frame = swap_chain_->AcquireFrame();
   TRACE_EVENT_END0("gpu", "VrShellGl::AcquireFrame");
-  if (!frame.is_valid()) {
+  if (!frame) {
     return;
   }
   frame.BindBuffer(kFramePrimaryBuffer);
