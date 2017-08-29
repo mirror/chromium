@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fa589cb5_f1eeda1d",
+        "filename": "tools/binary_size/diagnose_bloat.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 819,
+      "author": {
+        "id": 1178079
+      },
+      "writtenOn": "2017-08-29T22:17:16Z",
+      "side": 1,
+      "message": "reference_rev \u003d args.reference_rev or args.rev + \u0027^\u0027\nif args.single:\n  reference_rev \u003d args.rev\nrev, reference_rev \u003d _ValidateRevs(args.rev, reference_rev, subrepo)\nrevs \u003d _GenerateRevList(rev, reference_rev, args.all, subrepo)\n\nMight be a little simpler but either way is fine with me.",
+      "range": {
+        "startLine": 819,
+        "startChar": 7,
+        "endLine": 819,
+        "endChar": 8
+      },
+      "revId": "accfdfaf0a4aea43cc1ab0b5342bed733150b304",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d65e8080_c2d64c3e",
+        "filename": "tools/binary_size/diagnose_bloat.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 824,
+      "author": {
+        "id": 1178079
+      },
+      "writtenOn": "2017-08-29T22:17:16Z",
+      "side": 1,
+      "message": "If you choose not to follow the comment above, can you change this so that you can still pass things like HEAD or e2ed561420a173d3bd990042dba6d2ac91ceb111^ as args.rev?",
+      "range": {
+        "startLine": 824,
+        "startChar": 12,
+        "endLine": 824,
+        "endChar": 15
+      },
+      "revId": "accfdfaf0a4aea43cc1ab0b5342bed733150b304",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
