@@ -67,25 +67,43 @@ class GitCL(object):
         return self.run(['issue']).split()[2]
 
     def wait_for_try_jobs(self, poll_delay_seconds=10 * 60, timeout_seconds=120 * 60):
-        """Waits until all try jobs are finished.
-
-        Args:
-            poll_delay_seconds: Time to wait between fetching results.
-            timeout_seconds: Time to wait before aborting.
+        """Waits until all try jobs are finished and returns results, or None.
 
         Returns:
             A dict mapping Build objects to TryJobStatus objects, or
             None if a timeout occurred.
         """
-        start = self._host.time()
-        self._host.print_('Waiting for try jobs (timeout: %d seconds).' % timeout_seconds)
-        while self._host.time() - start < timeout_seconds:
-            self._host.sleep(poll_delay_seconds)
-            try_results = self.try_job_results()
-            _log.debug('Fetched try results: %s', try_results)
-            if try_results and self.all_finished(try_results):
+
+        def finished_try_job_results_or_none():
+            results = self.try_job_results()
+            _log.debug('Fetched try results: %s', results)
+            if results and self.all_finished(results):
                 self._host.print_('All jobs finished.')
-                return try_results
+                return results
+            return None
+
+        return self._wait_for(
+            finished_try_job_results_or_none, poll_delay_seconds, timeout_seconds)
+
+    def _wait_for(self, poll_function, poll_delay_seconds, timeout_seconds):
+        """Waits for the given poll_function returns something other than None.
+
+        Args:
+            poll_function: A function with no args that returns something
+                when ready, or None when not ready.
+            poll_delay_seconds: Time to wait between fetching results.
+            timeout_seconds: Time to wait before aborting.
+
+        Returns:
+            The value returned by poll_function, or None on timeout.
+        """
+        start = self._host.time()
+        self._host.print_('Waiting (timeout: %d seconds).' % timeout_seconds)
+        while (self._host.time() - start) < timeout_seconds:
+            self._host.sleep(poll_delay_seconds)
+            value = poll_function()
+            if value is not None:
+                return value
             self._host.print_('Waiting. %d seconds passed.' % (self._host.time() - start))
             self._host.sleep(poll_delay_seconds)
         self._host.print_('Timed out waiting for try results.')

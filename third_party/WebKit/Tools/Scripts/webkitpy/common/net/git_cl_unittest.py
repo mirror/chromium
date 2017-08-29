@@ -63,7 +63,7 @@ class GitCLTest(unittest.TestCase):
         git_cl.wait_for_try_jobs()
         self.assertEqual(
             host.stdout.getvalue(),
-            'Waiting for try jobs (timeout: 7200 seconds).\n'
+            'Waiting (timeout: 7200 seconds).\n'
             'Waiting. 600 seconds passed.\n'
             'Waiting. 1800 seconds passed.\n'
             'Waiting. 3000 seconds passed.\n'
@@ -79,7 +79,7 @@ class GitCLTest(unittest.TestCase):
         git_cl.wait_for_try_jobs()
         self.assertEqual(
             host.stdout.getvalue(),
-            'Waiting for try jobs (timeout: 7200 seconds).\n'
+            'Waiting (timeout: 7200 seconds).\n'
             'Waiting. 600 seconds passed.\n'
             'Waiting. 1800 seconds passed.\n'
             'Waiting. 3000 seconds passed.\n'
@@ -102,7 +102,7 @@ class GitCLTest(unittest.TestCase):
         git_cl.wait_for_try_jobs()
         self.assertEqual(
             host.stdout.getvalue(),
-            'Waiting for try jobs (timeout: 7200 seconds).\n'
+            'Waiting (timeout: 7200 seconds).\n'
             'All jobs finished.\n')
 
     def test_has_failing_try_results_empty(self):
