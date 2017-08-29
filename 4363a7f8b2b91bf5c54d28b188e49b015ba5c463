@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "40c136a4_c8bddf21",
+        "filename": "components/viz/service/frame_sinks/root_compositor_frame_sink_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1002647
+      },
+      "writtenOn": "2017-08-29T15:05:26Z",
+      "side": 1,
+      "message": "nit: add \u0027:\u0027 after TODO(name).",
+      "range": {
+        "startLine": 86,
+        "startChar": 5,
+        "endLine": 86,
+        "endChar": 20
+      },
+      "revId": "4363a7f8b2b91bf5c54d28b188e49b015ba5c463",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85473163_a5542ddc",
+        "filename": "services/ui/ws/frame_generator.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1002647
+      },
+      "writtenOn": "2017-08-29T15:05:26Z",
+      "side": 1,
+      "message": "I think you can avoid the temporary variable and just call GenerateHitTestRegionList() below and I was hoping we won\u0027t need an std::move() for it.",
+      "range": {
+        "startLine": 111,
+        "startChar": 30,
+        "endLine": 111,
+        "endChar": 55
+      },
+      "revId": "4363a7f8b2b91bf5c54d28b188e49b015ba5c463",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a39656f_b8cbc588",
+        "filename": "services/ui/ws/frame_generator.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1002647
+      },
+      "writtenOn": "2017-08-29T15:05:26Z",
+      "side": 1,
+      "message": "optional nit: I would use bounds \u003d gfx::Rect(pixel_size_) here as well if only for consistency with line 169.",
+      "range": {
+        "startLine": 164,
+        "startChar": 31,
+        "endLine": 164,
+        "endChar": 39
+      },
+      "revId": "4363a7f8b2b91bf5c54d28b188e49b015ba5c463",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8fafd5a9_0f06454a",
+        "filename": "services/ui/ws/frame_generator.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1002647
+      },
+      "writtenOn": "2017-08-29T15:05:26Z",
+      "side": 1,
+      "message": "optional nit: While here, do we need this comment? Maybe spell something here about when this is called or provide more detail. But in its current form the comment is just repeating what the method name and return value already provide.",
+      "range": {
+        "startLine": 56,
+        "startChar": 19,
+        "endLine": 56,
+        "endChar": 34
+      },
+      "revId": "4363a7f8b2b91bf5c54d28b188e49b015ba5c463",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
