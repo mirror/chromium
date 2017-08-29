@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "054db1cc_d67d6028",
+        "filename": "components/payments/core/payment_currency_amount.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-08-29T14:49:15Z",
+      "side": 1,
+      "message": "Nothing changed with a --similarity value of 80%. I don\u0027t think the review tool is smart enough to detect when a single file is broken into multiple files. You just have to trust me on that these are copies and nothing\u0027s been modified :)",
+      "parentUuid": "5ccbe68d_d537a04f",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 3,
+        "endChar": 29
+      },
+      "revId": "43c3dbfa8393a833e40882bd49e1fe7bc7698951",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3a236708_cb99aad3",
         "filename": "ios/web/public/payments/payment_request.h",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "43c3dbfa8393a833e40882bd49e1fe7bc7698951",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ea44257_044e4ac9",
+        "filename": "ios/web/public/payments/payment_request.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-08-29T14:49:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3a236708_cb99aad3",
+      "range": {
+        "startLine": 20,
+        "startChar": 8,
+        "endLine": 20,
+        "endChar": 18
+      },
+      "revId": "43c3dbfa8393a833e40882bd49e1fe7bc7698951",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
