@@ -1,0 +1,170 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cb0cddc0_73bc7a1c",
+        "filename": "ios/clean/chrome/browser/ui/ntp/ntp_coordinator.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-08-29T21:34:56Z",
+      "side": 1,
+      "message": "The browser_coordinator.h documentation recommends this:\nif (self.started) return;",
+      "revId": "b6e781e42f775371c77cfda6b6a0f3a955d45994",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "801bde2b_335712d1",
+        "filename": "ios/clean/chrome/browser/ui/ntp/ntp_coordinator.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-08-29T21:34:56Z",
+      "side": 1,
+      "message": "Use the method for protocols instead of individual selectors.\n- (void)startDispatchingToTarget:(id)target forProtocol:(Protocol*)protocol",
+      "revId": "b6e781e42f775371c77cfda6b6a0f3a955d45994",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3ac244b_061410fd",
+        "filename": "ios/clean/chrome/browser/ui/ntp/ntp_coordinator.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-08-29T21:34:56Z",
+      "side": 1,
+      "message": "Is it possible to move the setting of |selectedNTPPanel| to inside of NTPViewController? It would be better to move more logic out of the coordinator. Also, it is better to contain setting of |selectedNTPPanel| to a single class.",
+      "range": {
+        "startLine": 66,
+        "startChar": 4,
+        "endLine": 66,
+        "endChar": 64
+      },
+      "revId": "b6e781e42f775371c77cfda6b6a0f3a955d45994",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8cf5bcc_eae6fa23",
+        "filename": "ios/clean/chrome/browser/ui/ntp/ntp_coordinator.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-08-29T21:34:56Z",
+      "side": 1,
+      "message": "Is it possible to move this logic to NTPViewController and expose a method such as -showBookmarksViewController:(UIViewController*)viewController;? It would be better to move logic out of the coordinator layer. Also, presentation seems like it belongs in the view layer.",
+      "range": {
+        "startLine": 69,
+        "startChar": 4,
+        "endLine": 75,
+        "endChar": 5
+      },
+      "revId": "b6e781e42f775371c77cfda6b6a0f3a955d45994",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72caaeeb_9f0660f4",
+        "filename": "ios/clean/chrome/browser/ui/ntp/ntp_home_header_coordinator.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-08-29T21:34:56Z",
+      "side": 1,
+      "message": "if (self.started) return;",
+      "revId": "b6e781e42f775371c77cfda6b6a0f3a955d45994",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e22999d_f5234a72",
+        "filename": "ios/clean/chrome/browser/ui/ntp/ntp_home_header_mediator.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-08-29T21:34:56Z",
+      "side": 1,
+      "message": "nit: if you happen to make another update, please fix this misspelling.",
+      "range": {
+        "startLine": 20,
+        "startChar": 3,
+        "endLine": 20,
+        "endChar": 12
+      },
+      "revId": "b6e781e42f775371c77cfda6b6a0f3a955d45994",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce5dc188_ba4af30a",
+        "filename": "ios/clean/chrome/browser/ui/ntp/ntp_home_header_mediator.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-08-29T21:34:56Z",
+      "side": 1,
+      "message": "Can you further elaborate on this comment?",
+      "range": {
+        "startLine": 23,
+        "startChar": 0,
+        "endLine": 24,
+        "endChar": 11
+      },
+      "revId": "b6e781e42f775371c77cfda6b6a0f3a955d45994",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12762f38_170217e9",
+        "filename": "ios/clean/chrome/browser/ui/ntp/ntp_view_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-08-29T21:34:56Z",
+      "side": 1,
+      "message": "I think the logic would be more readable if you just set\nself.selectedNTPPanel \u003d item.identifier before going through \nthe conditionals.",
+      "range": {
+        "startLine": 156,
+        "startChar": 2,
+        "endLine": 168,
+        "endChar": 3
+      },
+      "revId": "b6e781e42f775371c77cfda6b6a0f3a955d45994",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
