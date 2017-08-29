@@ -5,9 +5,6 @@
     "service_manager:connector": {
       "provides": {
         // Interfaces needed by a generic client of content browser.
-        "app": [
-          "memory_instrumentation::mojom::Coordinator"
-        ],
         "gpu": [
           "content::mojom::FieldTrialRecorder",
           "media::mojom::AndroidOverlayProvider"
