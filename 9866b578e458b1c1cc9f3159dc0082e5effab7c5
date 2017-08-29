@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1c256cc6_810e82ce",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/permissions/QuotaTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-08-29T01:25:21Z",
+      "side": 1,
+      "message": "What\u0027s the plan for tests like this after we get rid of infobars?",
+      "revId": "9866b578e458b1c1cc9f3159dc0082e5effab7c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
