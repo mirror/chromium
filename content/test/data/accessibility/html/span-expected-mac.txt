@@ -1,5 +1,11 @@
 AXWebArea
 ++AXGroup
-++++AXStaticText AXValue='This paragraph has one '
-++++AXStaticText AXValue='word'
-++++AXStaticText AXValue=' in a span.'
+++++AXStaticText AXValue='This'
+++++AXStaticText AXValue=' '
+++++AXStaticText AXValue='paragraph has '
+++++AXStaticText AXValue='text'
+++++AXStaticText AXValue=' '
+++++AXStaticText AXValue='in'
+++++AXStaticText AXValue=' '
+++++AXStaticText AXValue='spans'
+++++AXStaticText AXValue='.'
