@@ -1,0 +1,136 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d3ccc3f2_862111cc",
+        "filename": "base/trace_event/memory_allocator_dump.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-08-29T11:08:50Z",
+      "side": 1,
+      "message": "entries_.emplace_back(name, units, value); ?\n(same below)",
+      "range": {
+        "startLine": 68,
+        "startChar": 2,
+        "endLine": 68,
+        "endChar": 48
+      },
+      "revId": "ee155813e7a6ec60ca642f699684ab145be1f5c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "692e5efd_923f5c98",
+        "filename": "base/trace_event/memory_allocator_dump.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-08-29T11:08:50Z",
+      "side": 1,
+      "message": "nit: kInteger\nTL;DR of https://google.github.io/styleguide/cppguide.html#Enumerator_Names: either kName or NAME. Preferably the former for new code.",
+      "range": {
+        "startLine": 39,
+        "startChar": 6,
+        "endLine": 39,
+        "endChar": 13
+      },
+      "revId": "ee155813e7a6ec60ca642f699684ab145be1f5c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e34128f0_8c562e47",
+        "filename": "base/trace_event/memory_allocator_dump.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-08-29T11:08:50Z",
+      "side": 1,
+      "message": "do you really need a move semantic here? If so, don\u0027t you need also an operator\u003d(Entry\u0026\u0026)?\nI\u0027m usually quite suspicious of classes that are both copiable and moveable. can we pick only one?",
+      "range": {
+        "startLine": 47,
+        "startChar": 4,
+        "endLine": 47,
+        "endChar": 25
+      },
+      "revId": "ee155813e7a6ec60ca642f699684ab145be1f5c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0377bf6a_52a321d7",
+        "filename": "base/trace_event/memory_allocator_dump.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-08-29T11:08:50Z",
+      "side": 1,
+      "message": "As spoken offline, probably this should be DISALLOW_COPY_AND_ASSIGN",
+      "revId": "ee155813e7a6ec60ca642f699684ab145be1f5c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9784d3c1_40cdcd98",
+        "filename": "base/trace_event/memory_allocator_dump.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-08-29T11:08:50Z",
+      "side": 1,
+      "message": "can you return a const vector\u003c..\u003e\u0026 here? or does it need to be editable by the caller?.",
+      "range": {
+        "startLine": 121,
+        "startChar": 2,
+        "endLine": 121,
+        "endChar": 20
+      },
+      "revId": "ee155813e7a6ec60ca642f699684ab145be1f5c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72ea5470_adf1d994",
+        "filename": "base/trace_event/memory_allocator_dump_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-08-29T11:08:50Z",
+      "side": 1,
+      "message": "1UL, or static_cast\u003cuint64_t\u003e(1) if you really want.\nIIRC c-style casts are not allowed by our coding style",
+      "range": {
+        "startLine": 201,
+        "startChar": 63,
+        "endLine": 201,
+        "endChar": 74
+      },
+      "revId": "ee155813e7a6ec60ca642f699684ab145be1f5c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
