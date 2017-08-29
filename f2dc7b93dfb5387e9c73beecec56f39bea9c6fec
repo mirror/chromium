@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "233385da_b3386a22",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsCarousel.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-08-29T17:32:11Z",
+      "side": 1,
+      "message": "okay so we need to reset the internal state of the carousel when the bottom sheet is pulled up. This is something we also do for tiles and suggestions, through methods called from onContentShown. \n\nWe currently update the carousel there too, but trough individual methods. The content class still does everything. I\u0027d suggest moving the logic of maybeUpdateContextualSuggestions into SuggestionsCarousel to something like reset() or refresh(), and reset the impression tracker there?",
+      "parentUuid": "0412d738_b4e5bd2c",
+      "range": {
+        "startLine": 51,
+        "startChar": 8,
+        "endLine": 51,
+        "endChar": 26
+      },
+      "revId": "f2dc7b93dfb5387e9c73beecec56f39bea9c6fec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a20c37c8_4fe5f359",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsCarousel.java",
         "patchSetId": 4
