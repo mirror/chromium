@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "391376e5_1f85fe42",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletGlobalScope.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-08-29T00:16:28Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "64aa2f68_0cc81534",
+      "revId": "c64344417093a38f22758dc21e6c8d6d55a9d819",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "51c5327e_8846d082",
         "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletObjectProxy.cpp",
         "patchSetId": 6
@@ -136,6 +154,24 @@
       "side": 1,
       "message": "This is difficult because of the copy assignment in AudioWorkletMessagingProxy::SynchronizeWorkletProcessorInfoList(). If this is a must, I\u0027ll handle it in a different CL.",
       "parentUuid": "d3ca9936_e43316d6",
+      "revId": "c64344417093a38f22758dc21e6c8d6d55a9d819",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c19ffb05_b2e8b9ef",
+        "filename": "third_party/WebKit/Source/modules/webaudio/CrossThreadAudioWorkletProcessorInfo.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-08-29T00:16:28Z",
+      "side": 1,
+      "message": "This is not a must, but I\u0027m not sure why the copy assignment makes this difficult. Regardless of the returned value type of ParamInfoList(), it causes the copy (am I missing something?)\n\nIIUC, if ParamInfoList() returns Vector\u003cCTAP\u003e, it results in 2 copies on |ParamInfoList()| and |processor_info_map_.insert()|. If ParamInfoList() returns const Vector\u003cCTAP\u003e\u0026, it results in only 1 copy on |processor_info_map_.insert()|.",
+      "parentUuid": "86d90268_a68b6007",
       "revId": "c64344417093a38f22758dc21e6c8d6d55a9d819",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
