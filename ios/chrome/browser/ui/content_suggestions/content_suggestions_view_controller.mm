@@ -311,7 +311,8 @@ BOOL ShouldCellsBeFullWidth(UITraitCollection* collection) {
   CSCollectionViewItem* item =
       [self.collectionViewModel itemAtIndexPath:indexPath];
 
-  if (!item.metricsRecorded) {
+  if ([self.collectionUpdater isContentSuggestionsSection:indexPath.section] &&
+      !item.metricsRecorded) {
     [self.metricsRecorder
             onSuggestionShown:item
                   atIndexPath:indexPath
