@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "7e4c76a9_8c4a4699",
+        "filename": "chrome/browser/browsing_data/chrome_browsing_data_remover_delegate.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 703,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-08-29T22:45:17Z",
+      "side": 1,
+      "message": "These are expected to be short lived.",
+      "parentUuid": "681087a2_922b6c07",
+      "range": {
+        "startLine": 703,
+        "startChar": 48,
+        "endLine": 703,
+        "endChar": 60
+      },
+      "revId": "18beebda47f2a965e24f3f2057fdbc71b9f83865",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f3d104e7_25d58cbd",
         "filename": "chrome/browser/browsing_data/chrome_browsing_data_remover_delegate_unittest.cc",
         "patchSetId": 3
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "1ad6f6f4_47134731",
+        "filename": "chrome/browser/browsing_data/chrome_browsing_data_remover_delegate_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1843,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-08-29T22:45:17Z",
+      "side": 1,
+      "message": "The above test (RemoveSelectedClientHints) does this.",
+      "parentUuid": "f3d104e7_25d58cbd",
+      "range": {
+        "startLine": 1843,
+        "startChar": 2,
+        "endLine": 1843,
+        "endChar": 15
+      },
+      "revId": "18beebda47f2a965e24f3f2057fdbc71b9f83865",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9734323b_b5eb5a58",
         "filename": "chrome/browser/browsing_data/chrome_browsing_data_remover_delegate_unittest.cc",
         "patchSetId": 3
@@ -68,6 +116,30 @@
       "revId": "18beebda47f2a965e24f3f2057fdbc71b9f83865",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "befad727_ba01f787",
+        "filename": "chrome/browser/browsing_data/chrome_browsing_data_remover_delegate_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1846,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-08-29T22:45:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9734323b_b5eb5a58",
+      "range": {
+        "startLine": 1846,
+        "startChar": 2,
+        "endLine": 1846,
+        "endChar": 29
+      },
+      "revId": "18beebda47f2a965e24f3f2057fdbc71b9f83865",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
