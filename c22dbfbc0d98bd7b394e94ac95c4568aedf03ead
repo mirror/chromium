@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "14c62134_1faf6f0e",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmarks_new_generation_egtest.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1139250
+      },
+      "writtenOn": "2017-08-29T11:41:39Z",
+      "side": 1,
+      "message": "Please add\n//TODO(crbug.com/760065) : Re-enable this test.\n\nThanks",
+      "revId": "c22dbfbc0d98bd7b394e94ac95c4568aedf03ead",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
