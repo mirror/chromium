@@ -294,6 +294,8 @@ source_set("browser_sources") {
     "renderer_startup_helper.h",
     "requirements_checker.cc",
     "requirements_checker.h",
+    "response_headers_util.cc",
+    "response_headers_util.h",
     "runtime_data.cc",
     "runtime_data.h",
     "sandboxed_unpacker.cc",
@@ -346,6 +348,7 @@ source_set("browser_sources") {
     "//components/pref_registry",
     "//components/prefs",
     "//components/sessions",
+    "//components/signin/core/browser",
     "//components/sync",
     "//components/update_client",
     "//components/update_client",
@@ -369,6 +372,7 @@ source_set("browser_sources") {
     "//services/preferences/public/cpp",
     "//services/service_manager/public/cpp",
     "//ui/display",
+    "//url",
   ]
 
   public_deps = [
