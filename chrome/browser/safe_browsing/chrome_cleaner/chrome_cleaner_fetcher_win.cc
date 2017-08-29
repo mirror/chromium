@@ -185,7 +185,11 @@ void ChromeCleanerFetcher::OnURLFetchComplete(const net::URLFetcher* source) {
   DCHECK(!source->GetStatus().is_io_pending());
   DCHECK(fetched_callback_);
 
-  if (source->GetResponseCode() == net::HTTP_NOT_FOUND) {
+  const int response_code = source->GetResponseCode();
+  UMA_HISTOGRAM_SPARSE_SLOWLY(
+      "SoftwareReporter.Cleaner.DownloadHttpResponseCode", response_code);
+
+  if (response_code == net::HTTP_NOT_FOUND) {
     RecordCleanerDownloadStatusHistogram(
         CLEANER_DOWNLOAD_STATUS_NOT_FOUND_ON_SERVER);
     PostCallbackAndDeleteSelf(base::FilePath(),
@@ -194,8 +198,7 @@ void ChromeCleanerFetcher::OnURLFetchComplete(const net::URLFetcher* source) {
   }
 
   base::FilePath download_path;
-  if (!source->GetStatus().is_success() ||
-      source->GetResponseCode() != net::HTTP_OK ||
+  if (!source->GetStatus().is_success() || response_code != net::HTTP_OK ||
       !source->GetResponseAsFilePath(/*take_ownership=*/true, &download_path)) {
     RecordCleanerDownloadStatusHistogram(CLEANER_DOWNLOAD_STATUS_OTHER_FAILURE);
     PostCallbackAndDeleteSelf(base::FilePath(),
