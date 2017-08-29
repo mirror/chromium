@@ -46,6 +46,30 @@
       "revId": "0789733b912fd82a41b67436156afa0c38f38956",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da85bd0f_88097c10",
+        "filename": "chrome/browser/ui/browser.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 558,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-29T20:37:32Z",
+      "side": 1,
+      "message": "I was worried about if a profile transitions from not offscreen to offscreen does RemoveBrowsingDataForProfile() get called? Maybe that isn\u0027t possible?",
+      "parentUuid": "3f9ef7b9_c7f78b67",
+      "range": {
+        "startLine": 558,
+        "startChar": 7,
+        "endLine": 558,
+        "endChar": 67
+      },
+      "revId": "0789733b912fd82a41b67436156afa0c38f38956",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
