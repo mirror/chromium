@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ba9dbdd4_c11985cf",
+        "filename": "chrome/browser/ui/cocoa/tabs/tab_strip_drag_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-08-29T22:04:19Z",
+      "side": 1,
+      "message": "As discussed, it surprises me when I move the tab within the tab strip and allow the mouse to drift vertically, then go back near its original position and have it pop out. It might surprise me less if the pop-out distance was small before the tab starts moving, and get larger once you exceed the distance that enables it to move within the tab strip.",
+      "revId": "953bef08d77d7b10ac01a80c60064b855883fc7a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3bd2052f_1849a888",
+        "filename": "chrome/browser/ui/cocoa/tabs/tab_strip_drag_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-08-29T22:04:19Z",
+      "side": 1,
+      "message": "optional: I would write this test as:\n\n   fabs(horizOffset) \u003c kMaxHorzTearDistance",
+      "revId": "953bef08d77d7b10ac01a80c60064b855883fc7a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
