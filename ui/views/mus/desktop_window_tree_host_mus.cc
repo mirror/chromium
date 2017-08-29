@@ -547,29 +547,41 @@ void DesktopWindowTreeHostMus::Activate() {
   if (!IsVisible())
     return;
 
+  aura::Window* content = desktop_native_widget_aura_->content_window();
+  aura::client::FocusClient* client = aura::client::GetFocusClient(window());
+  if (content && client && !client->GetFocusedWindow()) {
+    LOG(ERROR) << "MSW DesktopWindowTreeHostMus::Activate request... ";
+    client->FocusWindow(content);
+  }
+
   // This should result in OnActiveFocusClientChanged() being called, which
   // triggers a call to DesktopNativeWidgetAura::HandleActivationChanged(),
   // which focuses the right window.
   MusClient::Get()
       ->window_tree_client()
       ->focus_synchronizer()
-      ->SetActiveFocusClient(aura::client::GetFocusClient(window()), window());
-  if (is_active_)
+      ->SetActiveFocusClient(client, window());
+
+  if (IsActive())
     window()->SetProperty(aura::client::kDrawAttentionKey, false);
 }
 
 void DesktopWindowTreeHostMus::Deactivate() {
-  if (is_active_)
+  if (IsActive())
     DeactivateWindow();
 }
 
 bool DesktopWindowTreeHostMus::IsActive() const {
-  return is_active_;
+  aura::client::FocusClient* client = MusClient::Get()
+      ->window_tree_client()
+      ->focus_synchronizer()->active_focus_client();
+  return window() && client && window()->Contains(client->GetFocusedWindow());
 }
 
 void DesktopWindowTreeHostMus::Maximize() {
   window()->SetProperty(aura::client::kShowStateKey, ui::SHOW_STATE_MAXIMIZED);
 }
+
 void DesktopWindowTreeHostMus::Minimize() {
   window()->SetProperty(aura::client::kShowStateKey, ui::SHOW_STATE_MINIMIZED);
 }
@@ -751,6 +763,7 @@ void DesktopWindowTreeHostMus::OnWindowManagerFrameValuesChanged() {
 
 void DesktopWindowTreeHostMus::OnWidgetActivationChanged(Widget* widget,
                                                          bool active) {
+  LOG(ERROR) << "MSW DesktopWindowTreeHostMus::OnWidgetActivationChanged window:" << window() << " active: " << is_active_ << " -> " << active << " (" << IsActive() << ")";
   // TODO(erg): Theoretically, this shouldn't be necessary. We should be able
   // to just set |is_active_| in OnNativeWidgetActivationChanged() above,
   // instead of asking the Widget to change the activation and have the widget
@@ -762,8 +775,10 @@ void DesktopWindowTreeHostMus::OnActiveFocusClientChanged(
     aura::client::FocusClient* focus_client,
     aura::Window* focus_client_root) {
   if (focus_client_root == this->window()) {
+    LOG(ERROR) << "MSW DesktopWindowTreeHostMus::OnActiveFocusClientChanged FOCUS " << window();
     desktop_native_widget_aura_->HandleActivationChanged(true);
   } else if (is_active_) {
+    LOG(ERROR) << "MSW DesktopWindowTreeHostMus::OnActiveFocusClientChanged BLUR " << window();
     desktop_native_widget_aura_->HandleActivationChanged(false);
   }
 }
