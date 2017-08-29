@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e04b5bf0_214cd61e",
+        "filename": "chrome/browser/password_manager/chrome_password_manager_client.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-08-29T16:25:07Z",
+      "side": 1,
+      "message": "I\u0027d prefer\nif (vr::VrTabHelper::IsInVr(web_contents()) {\n  // do stuff\n}",
+      "range": {
+        "startLine": 218,
+        "startChar": 2,
+        "endLine": 218,
+        "endChar": 12
+      },
+      "revId": "ef0af4bcd4fa3cd65c50917a28989c0ef7d888a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
