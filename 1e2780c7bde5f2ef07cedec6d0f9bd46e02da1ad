@@ -22,6 +22,30 @@
       "revId": "1e2780c7bde5f2ef07cedec6d0f9bd46e02da1ad",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11f5b502_7cca3978",
+        "filename": "mojo/public/cpp/bindings/README.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-08-29T18:57:59Z",
+      "side": 1,
+      "message": "I don\u0027t think we need to put it in a top-level BUILD.gn\u0027s deps.\n\nAs Scott said, it is just like any other GN targets: Any target that needs this interface should depend upon it.",
+      "parentUuid": "fa7ad5f9_ec053b8f",
+      "range": {
+        "startLine": 50,
+        "startChar": 0,
+        "endLine": 50,
+        "endChar": 42
+      },
+      "revId": "1e2780c7bde5f2ef07cedec6d0f9bd46e02da1ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
