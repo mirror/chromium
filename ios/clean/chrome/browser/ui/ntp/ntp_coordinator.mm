@@ -12,6 +12,7 @@
 #import "ios/clean/chrome/browser/ui/bookmarks/bookmarks_coordinator.h"
 #import "ios/clean/chrome/browser/ui/commands/bookmarks_commands.h"
 #import "ios/clean/chrome/browser/ui/commands/ntp_commands.h"
+#import "ios/clean/chrome/browser/ui/commands/recent_tabs_commands.h"
 #import "ios/clean/chrome/browser/ui/ntp/ntp_home_coordinator.h"
 #import "ios/clean/chrome/browser/ui/ntp/ntp_mediator.h"
 #import "ios/clean/chrome/browser/ui/ntp/ntp_view_controller.h"
@@ -21,16 +22,18 @@
 #error "This file requires ARC support."
 #endif
 
-@interface NTPCoordinator ()<BookmarksCommands, NTPCommands>
+@interface NTPCoordinator ()<BookmarksCommands, NTPCommands, RecentTabsCommands>
 @property(nonatomic, strong) NTPMediator* mediator;
 @property(nonatomic, strong) NTPViewController* viewController;
 @property(nonatomic, strong) BookmarksCoordinator* bookmarksCoordinator;
+@property(nonatomic, strong) RecentTabsCoordinator* recentTabsCoordinator;
 @end
 
 @implementation NTPCoordinator
 @synthesize mediator = _mediator;
 @synthesize viewController = _viewController;
 @synthesize bookmarksCoordinator = _bookmarksCoordinator;
+@synthesize recentTabsCoordinator = _recentTabsCoordinator;
 
 - (void)start {
   self.viewController = [[NTPViewController alloc] init];
@@ -40,6 +43,9 @@
   // BookmarksCommands
   [dispatcher startDispatchingToTarget:self
                            forSelector:@selector(closeBookmarks)];
+  // RecentTabsCommands
+  [dispatcher startDispatchingToTarget:self
+                           forSelector:@selector(closeRecentTabs)];
   // NTPCommands
   [dispatcher startDispatchingToTarget:self
                            forSelector:@selector(showNTPHomePanel)];
@@ -75,6 +81,10 @@
     if (IsIPadIdiom()) {
       self.viewController.recentTabsViewController = coordinator.viewController;
     } else {
+      coordinator.viewController.modalPresentationStyle =
+          UIModalPresentationFormSheet;
+      coordinator.viewController.modalPresentationCapturesStatusBarAppearance =
+          YES;
       [self.viewController presentViewController:coordinator.viewController
                                         animated:YES
                                       completion:nil];
@@ -99,19 +109,18 @@
 }
 
 - (void)showNTPRecentTabsPanel {
-  // TODO(crbug.com/740793): Remove alert once this feature is implemented.
-  UIAlertController* alertController =
-      [UIAlertController alertControllerWithTitle:@"Recent Sites"
-                                          message:nil
-                                   preferredStyle:UIAlertControllerStyleAlert];
-  UIAlertAction* action =
-      [UIAlertAction actionWithTitle:@"Done"
-                               style:UIAlertActionStyleCancel
-                             handler:nil];
-  [alertController addAction:action];
-  [self.viewController presentViewController:alertController
-                                    animated:YES
-                                  completion:nil];
+  if (!self.recentTabsCoordinator) {
+    self.recentTabsCoordinator = [[RecentTabsCoordinator alloc] init];
+    [self addChildCoordinator:self.recentTabsCoordinator];
+  }
+  [self.recentTabsCoordinator start];
+}
+
+#pragma mark - RecentTabsCommands
+
+- (void)closeRecentTabs {
+  [self.viewController dismissViewControllerAnimated:YES completion:nil];
+  [self.recentTabsCoordinator stop];
 }
 
 #pragma mark - BookmarksCommands

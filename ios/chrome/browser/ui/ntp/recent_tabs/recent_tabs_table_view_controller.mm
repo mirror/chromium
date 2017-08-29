@@ -179,7 +179,7 @@ enum CellType {
   self = [super initWithStyle:UITableViewStylePlain];
   if (self) {
     DCHECK(browserState);
-    DCHECK(loader);
+    //    DCHECK(loader);
     _browserState = browserState;
     _loader = loader;
     _sessionState = SessionsSyncUserState::USER_SIGNED_OUT;
