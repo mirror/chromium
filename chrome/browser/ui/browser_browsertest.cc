@@ -487,8 +487,7 @@ IN_PROC_BROWSER_TEST_F(BrowserTest, JavascriptAlertActivatesTab) {
 
 #if defined(OS_WIN)
 // http://crbug.com/114859. Times out frequently on Windows.
-// https://crbug.com/757836. Flakily runs out of memory on Windows.
-#define MAYBE_ThirtyFourTabs DISABLED_ThirtyFourTabs
+#define MAYBE_ThirtyFourTabs ThirtyFourTabs
 #else
 #define MAYBE_ThirtyFourTabs ThirtyFourTabs
 #endif
