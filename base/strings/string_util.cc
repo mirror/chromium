@@ -279,16 +279,37 @@ bool ReplaceChars(const std::string& input,
   return ReplaceCharsT(input, replace_chars.as_string(), replace_with, output);
 }
 
+template <typename STR>
+bool RemoveCharsT(const STR& input, const STR& remove_chars, STR* output) {
+  bool removed = false;
+  STR buffer;
+  buffer.reserve(input.length());
+
+  size_t previous_found = 0;
+  size_t found = input.find_first_of(remove_chars);
+  while (found != STR::npos) {
+    removed = true;
+    buffer += input.substr(previous_found, found - previous_found);
+    previous_found = found + 1;
+    found = input.find_first_of(remove_chars, previous_found);
+  }
+
+  buffer += input.substr(previous_found, input.length() - previous_found);
+  *output = buffer;
+
+  return removed;
+}
+
 bool RemoveChars(const string16& input,
                  const StringPiece16& remove_chars,
                  string16* output) {
-  return ReplaceChars(input, remove_chars.as_string(), string16(), output);
+  return RemoveCharsT(input, remove_chars.as_string(), output);
 }
 
 bool RemoveChars(const std::string& input,
                  const StringPiece& remove_chars,
                  std::string* output) {
-  return ReplaceChars(input, remove_chars.as_string(), std::string(), output);
+  return RemoveCharsT(input, remove_chars.as_string(), output);
 }
 
 template<typename Str>
