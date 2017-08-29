@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>HTML Test: Removing media attribute should change the rendering accordingly</title>
+    <link rel="help" href="https://html.spec.whatwg.org/multipage/#the-style-element">
+    <script src="/resources/testharness.js"></script>
+    <script src="/resources/testharnessreport.js"></script>
+    <style media="aural">
+      body { color: green }
+    </style>
+  </head>
+  <body>
+    <div>Should be green</div>
+  </body>
+  <script>
+    test(function() {
+      var style = document.querySelector("style");
+      style.removeAttribute("media");
+      assert_equals(getComputedStyle(document.querySelector("body")).color, "rgb(0, 128, 0)");
+    });
+  </script>
+</html>
