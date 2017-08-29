@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "0a647080_7fe1b9c9",
+        "filename": "media/formats/mp4/track_run_iterator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 331,
+      "author": {
+        "id": 1209910
+      },
+      "writtenOn": "2017-08-29T22:40:25Z",
+      "side": 1,
+      "message": "That is why we have the piece of code here. We assume the sample description for that \"bad\" index is the same as the first sample description, which is possible. If it is really the case, we will be able to playback the file successfully. If it is not, the content may fail to be decrypted / decoded, but in any case, the code won\u0027t crash.\n\nWe can also just reject this bad content, i.e. replace it with a RCHECK here. I can change the code to do that if you prefer.",
+      "parentUuid": "20f56f50_a3c43836",
+      "range": {
+        "startLine": 331,
+        "startChar": 12,
+        "endLine": 331,
+        "endChar": 20
+      },
+      "revId": "ca48465be6a3a23b299c449f7aff8e22d42fc129",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e17c4f87_5c586403",
         "filename": "media/formats/mp4/track_run_iterator.cc",
         "patchSetId": 1
