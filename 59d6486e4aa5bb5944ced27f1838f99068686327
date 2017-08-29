@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ba9950d5_0035b862",
+        "filename": "chrome/common/extensions/docs/templates/intros/webRequest.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-08-29T00:39:14Z",
+      "side": 1,
+      "message": "Maybe specify cancelling after \"providing authentication credentials\" as that is likely the primary motivation of using onAuthRequired.",
+      "range": {
+        "startLine": 211,
+        "startChar": 37,
+        "endLine": 211,
+        "endChar": 47
+      },
+      "revId": "59d6486e4aa5bb5944ced27f1838f99068686327",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bfbf5aca_d7c58562",
+        "filename": "extensions/common/api/web_request.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-08-29T00:39:14Z",
+      "side": 1,
+      "message": "nit: should we wrap these with \u003ccode\u003eonBeforeRequest\u003c/code\u003e...?",
+      "range": {
+        "startLine": 109,
+        "startChar": 144,
+        "endLine": 109,
+        "endChar": 159
+      },
+      "revId": "59d6486e4aa5bb5944ced27f1838f99068686327",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
