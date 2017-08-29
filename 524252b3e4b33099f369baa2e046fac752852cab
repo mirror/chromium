@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "1734c7fa_404cba9b",
+        "filename": "tools/idl_parser/idl_parser_test.py",
+        "patchSetId": 19
+      },
+      "lineNbr": 321,
+      "author": {
+        "id": 1239026
+      },
+      "writtenOn": "2017-08-29T02:46:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dded7d6d_8cf6a2d4",
+      "range": {
+        "startLine": 321,
+        "startChar": 4,
+        "endLine": 321,
+        "endChar": 13
+      },
+      "revId": "524252b3e4b33099f369baa2e046fac752852cab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8eb0b224_889869d7",
         "filename": "tools/idl_parser/idl_parser_test.py",
         "patchSetId": 19
@@ -45,6 +69,30 @@
       "revId": "524252b3e4b33099f369baa2e046fac752852cab",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "865df499_febb8917",
+        "filename": "tools/idl_parser/idl_parser_test.py",
+        "patchSetId": 19
+      },
+      "lineNbr": 325,
+      "author": {
+        "id": 1239026
+      },
+      "writtenOn": "2017-08-29T02:46:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8eb0b224_889869d7",
+      "range": {
+        "startLine": 325,
+        "startChar": 34,
+        "endLine": 325,
+        "endChar": 60
+      },
+      "revId": "524252b3e4b33099f369baa2e046fac752852cab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "6c4ba001_4be7c22a",
+        "filename": "tools/idl_parser/idl_parser_test.py",
+        "patchSetId": 19
+      },
+      "lineNbr": 327,
+      "author": {
+        "id": 1239026
+      },
+      "writtenOn": "2017-08-29T02:46:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "322c0b80_786882e7",
+      "range": {
+        "startLine": 327,
+        "startChar": 4,
+        "endLine": 327,
+        "endChar": 11
+      },
+      "revId": "524252b3e4b33099f369baa2e046fac752852cab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9c23a33f_1bf6093a",
         "filename": "tools/idl_parser/idl_parser_test.py",
         "patchSetId": 19
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "37de7ac8_127cc894",
+        "filename": "tools/idl_parser/idl_parser_test.py",
+        "patchSetId": 19
+      },
+      "lineNbr": 330,
+      "author": {
+        "id": 1239026
+      },
+      "writtenOn": "2017-08-29T02:46:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9c23a33f_1bf6093a",
+      "range": {
+        "startLine": 330,
+        "startChar": 29,
+        "endLine": 330,
+        "endChar": 53
+      },
+      "revId": "524252b3e4b33099f369baa2e046fac752852cab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "655042c3_96137b30",
         "filename": "tools/idl_parser/idl_parser_test.py",
         "patchSetId": 19
@@ -105,6 +201,30 @@
       "writtenOn": "2017-08-28T10:04:01Z",
       "side": 1,
       "message": "What is GetChildren()[0]?\nDoesn\u0027t it describe the default value?",
+      "range": {
+        "startLine": 331,
+        "startChar": 52,
+        "endLine": 331,
+        "endChar": 66
+      },
+      "revId": "524252b3e4b33099f369baa2e046fac752852cab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42b3704d_4c9f84be",
+        "filename": "tools/idl_parser/idl_parser_test.py",
+        "patchSetId": 19
+      },
+      "lineNbr": 331,
+      "author": {
+        "id": 1239026
+      },
+      "writtenOn": "2017-08-29T02:46:15Z",
+      "side": 1,
+      "message": "You mean \"what is default.GetChildren()[0] ?\" ?\n\nI renamed \u0027default\u0027 to \u0027argument\u0027, so default.GetChildren()[0] became argument.GetChildren()[0].\nThis is a node that has a child node which has detailed properties of argument\u0027s node.(ex. \u0027DOMString\u0027, \u0027float\u0027, \u0027boolean\u0027,,,)\n\nI call this kind of node \u0027type_node\u0027 and made a function \"_CheckTypeNode\" which is responsible for assertions of \u0027type_node\u0027.",
+      "parentUuid": "655042c3_96137b30",
       "range": {
         "startLine": 331,
         "startChar": 52,
@@ -134,6 +254,24 @@
     },
     {
       "key": {
+        "uuid": "ac6cafbf_3d1cfe37",
+        "filename": "tools/idl_parser/idl_parser_test.py",
+        "patchSetId": 19
+      },
+      "lineNbr": 332,
+      "author": {
+        "id": 1239026
+      },
+      "writtenOn": "2017-08-29T02:46:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c206b1ac_fbac6cae",
+      "revId": "524252b3e4b33099f369baa2e046fac752852cab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "25af2660_678867e8",
         "filename": "tools/idl_parser/idl_parser_test.py",
         "patchSetId": 19
@@ -157,6 +295,30 @@
     },
     {
       "key": {
+        "uuid": "caaf835a_faaae852",
+        "filename": "tools/idl_parser/idl_parser_test.py",
+        "patchSetId": 19
+      },
+      "lineNbr": 333,
+      "author": {
+        "id": 1239026
+      },
+      "writtenOn": "2017-08-29T02:46:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "25af2660_678867e8",
+      "range": {
+        "startLine": 333,
+        "startChar": 4,
+        "endLine": 333,
+        "endChar": 8
+      },
+      "revId": "524252b3e4b33099f369baa2e046fac752852cab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ac3adf3c_ca08dbb2",
         "filename": "tools/idl_parser/idl_parser_test.py",
         "patchSetId": 19
@@ -168,6 +330,30 @@
       "writtenOn": "2017-08-28T10:04:01Z",
       "side": 1,
       "message": "default_type.\n\nBut actually it does not show the type of the default value, but the type of the argument, right?",
+      "range": {
+        "startLine": 342,
+        "startChar": 4,
+        "endLine": 342,
+        "endChar": 15
+      },
+      "revId": "524252b3e4b33099f369baa2e046fac752852cab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9729092_e918e07f",
+        "filename": "tools/idl_parser/idl_parser_test.py",
+        "patchSetId": 19
+      },
+      "lineNbr": 342,
+      "author": {
+        "id": 1239026
+      },
+      "writtenOn": "2017-08-29T02:46:15Z",
+      "side": 1,
+      "message": "I think your point is right, and I renamed \u0027default\u0027 to \u0027argument\u0027.",
+      "parentUuid": "ac3adf3c_ca08dbb2",
       "range": {
         "startLine": 342,
         "startChar": 4,
@@ -203,6 +389,30 @@
     },
     {
       "key": {
+        "uuid": "4be48fb5_72c2c387",
+        "filename": "tools/idl_parser/idl_parser_test.py",
+        "patchSetId": 19
+      },
+      "lineNbr": 345,
+      "author": {
+        "id": 1239026
+      },
+      "writtenOn": "2017-08-29T02:46:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "42d8af92_323d984f",
+      "range": {
+        "startLine": 345,
+        "startChar": 4,
+        "endLine": 345,
+        "endChar": 16
+      },
+      "revId": "524252b3e4b33099f369baa2e046fac752852cab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "56c4fb5b_b799d715",
         "filename": "tools/idl_parser/idl_parser_test.py",
         "patchSetId": 19
@@ -223,6 +433,30 @@
       "revId": "524252b3e4b33099f369baa2e046fac752852cab",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "624fcb09_67f3eba9",
+        "filename": "tools/idl_parser/idl_parser_test.py",
+        "patchSetId": 19
+      },
+      "lineNbr": 352,
+      "author": {
+        "id": 1239026
+      },
+      "writtenOn": "2017-08-29T02:46:15Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "56c4fb5b_b799d715",
+      "range": {
+        "startLine": 352,
+        "startChar": 4,
+        "endLine": 352,
+        "endChar": 15
+      },
+      "revId": "524252b3e4b33099f369baa2e046fac752852cab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -249,6 +483,30 @@
     },
     {
       "key": {
+        "uuid": "663e80e7_2f0925a0",
+        "filename": "tools/idl_parser/idl_parser_test.py",
+        "patchSetId": 19
+      },
+      "lineNbr": 355,
+      "author": {
+        "id": 1239026
+      },
+      "writtenOn": "2017-08-29T02:46:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f242290b_bf0e7409",
+      "range": {
+        "startLine": 355,
+        "startChar": 4,
+        "endLine": 355,
+        "endChar": 16
+      },
+      "revId": "524252b3e4b33099f369baa2e046fac752852cab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "698eda28_d41e7be7",
         "filename": "tools/idl_parser/idl_parser_test.py",
         "patchSetId": 19
@@ -269,6 +527,30 @@
       "revId": "524252b3e4b33099f369baa2e046fac752852cab",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ef75f4d_94ee9a37",
+        "filename": "tools/idl_parser/idl_parser_test.py",
+        "patchSetId": 19
+      },
+      "lineNbr": 362,
+      "author": {
+        "id": 1239026
+      },
+      "writtenOn": "2017-08-29T02:46:15Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "698eda28_d41e7be7",
+      "range": {
+        "startLine": 362,
+        "startChar": 4,
+        "endLine": 362,
+        "endChar": 15
+      },
+      "revId": "524252b3e4b33099f369baa2e046fac752852cab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -295,6 +577,30 @@
     },
     {
       "key": {
+        "uuid": "9825cbbc_541c2308",
+        "filename": "tools/idl_parser/idl_parser_test.py",
+        "patchSetId": 19
+      },
+      "lineNbr": 365,
+      "author": {
+        "id": 1239026
+      },
+      "writtenOn": "2017-08-29T02:46:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "efffd330_090406a8",
+      "range": {
+        "startLine": 365,
+        "startChar": 4,
+        "endLine": 365,
+        "endChar": 16
+      },
+      "revId": "524252b3e4b33099f369baa2e046fac752852cab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d57ff098_78ebfa6f",
         "filename": "tools/idl_parser/idl_parser_test.py",
         "patchSetId": 19
@@ -309,6 +615,24 @@
       "revId": "524252b3e4b33099f369baa2e046fac752852cab",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17f8535f_14cb83c9",
+        "filename": "tools/idl_parser/idl_parser_test.py",
+        "patchSetId": 19
+      },
+      "lineNbr": 373,
+      "author": {
+        "id": 1239026
+      },
+      "writtenOn": "2017-08-29T02:46:15Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "d57ff098_78ebfa6f",
+      "revId": "524252b3e4b33099f369baa2e046fac752852cab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -335,6 +659,30 @@
     },
     {
       "key": {
+        "uuid": "aaaac314_0e900daa",
+        "filename": "tools/idl_parser/idl_parser_test.py",
+        "patchSetId": 19
+      },
+      "lineNbr": 376,
+      "author": {
+        "id": 1239026
+      },
+      "writtenOn": "2017-08-29T02:46:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "71da8db4_774509f3",
+      "range": {
+        "startLine": 376,
+        "startChar": 4,
+        "endLine": 376,
+        "endChar": 16
+      },
+      "revId": "524252b3e4b33099f369baa2e046fac752852cab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "797418d6_18727e1d",
         "filename": "tools/idl_parser/idl_parser_test.py",
         "patchSetId": 19
@@ -355,6 +703,30 @@
       "revId": "524252b3e4b33099f369baa2e046fac752852cab",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98716de8_8e67ef2b",
+        "filename": "tools/idl_parser/idl_parser_test.py",
+        "patchSetId": 19
+      },
+      "lineNbr": 382,
+      "author": {
+        "id": 1239026
+      },
+      "writtenOn": "2017-08-29T02:46:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "797418d6_18727e1d",
+      "range": {
+        "startLine": 382,
+        "startChar": 35,
+        "endLine": 382,
+        "endChar": 39
+      },
+      "revId": "524252b3e4b33099f369baa2e046fac752852cab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -381,6 +753,30 @@
     },
     {
       "key": {
+        "uuid": "640db45b_10985bfb",
+        "filename": "tools/idl_parser/idl_parser_test.py",
+        "patchSetId": 19
+      },
+      "lineNbr": 384,
+      "author": {
+        "id": 1239026
+      },
+      "writtenOn": "2017-08-29T02:46:15Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "6bfcf8d6_79d99cfb",
+      "range": {
+        "startLine": 384,
+        "startChar": 4,
+        "endLine": 384,
+        "endChar": 15
+      },
+      "revId": "524252b3e4b33099f369baa2e046fac752852cab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7ea18aea_c510ba0c",
         "filename": "tools/idl_parser/idl_parser_test.py",
         "patchSetId": 19
@@ -401,6 +797,30 @@
       "revId": "524252b3e4b33099f369baa2e046fac752852cab",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1386afef_cb9dc995",
+        "filename": "tools/idl_parser/idl_parser_test.py",
+        "patchSetId": 19
+      },
+      "lineNbr": 387,
+      "author": {
+        "id": 1239026
+      },
+      "writtenOn": "2017-08-29T02:46:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7ea18aea_c510ba0c",
+      "range": {
+        "startLine": 387,
+        "startChar": 4,
+        "endLine": 387,
+        "endChar": 16
+      },
+      "revId": "524252b3e4b33099f369baa2e046fac752852cab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
