@@ -192,6 +192,30 @@
     },
     {
       "key": {
+        "uuid": "7471ca3e_4495dd36",
+        "filename": "ui/views/bubble/tray_bubble_view.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1121230
+      },
+      "writtenOn": "2017-08-29T01:00:38Z",
+      "side": 1,
+      "message": "If RerouteEventHandler captures key event between 1 and 2, I don\u0027t think key events go to the focus manager of the currently focused widget.\n\nAfter a thought, I think we may be talking about the different key events. I think you are talking (also) about the events which TrayBubbleView has no interest at. I was talking about the events which TrayBubbleView has interest at. Yes, to align with the behavior of the menu, let\u0027s capture all key events by RerouteEventHandler. Changed RerouteEventHandler to capture all key events.",
+      "parentUuid": "b236d61b_9fedd29b",
+      "range": {
+        "startLine": 154,
+        "startChar": 2,
+        "endLine": 154,
+        "endChar": 29
+      },
+      "revId": "2a3d8ff4fb2ce797e45c723c169a97857ddf7853",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6c12869b_600421cd",
         "filename": "ui/views/bubble/tray_bubble_view.cc",
         "patchSetId": 21
