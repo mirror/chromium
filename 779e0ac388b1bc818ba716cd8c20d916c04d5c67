@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b04114b0_261bb97d",
+        "filename": "ash/shelf/app_list_button.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 462,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-08-29T19:42:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c7739349_7d9cff73",
+      "revId": "779e0ac388b1bc818ba716cd8c20d916c04d5c67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c4b75ca3_f086e22f",
         "filename": "ash/shelf/app_list_button.h",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "779e0ac388b1bc818ba716cd8c20d916c04d5c67",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1cc3f11e_693c25b2",
+        "filename": "ash/shelf/app_list_button.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-08-29T19:42:40Z",
+      "side": 1,
+      "message": "Oops, Done",
+      "parentUuid": "c4b75ca3_f086e22f",
+      "revId": "779e0ac388b1bc818ba716cd8c20d916c04d5c67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
