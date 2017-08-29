@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "8081abb3_b22ce120",
+        "filename": "ipc/ipc_message_templates.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2017-08-29T17:13:08Z",
+      "side": 1,
+      "message": "nit: while we\u0027re at it, what about inverting the test, moving the else block here, sticking a return false; in the end of it, and removing the \"else\" entirely?  (also above)",
+      "range": {
+        "startLine": 239,
+        "startChar": 4,
+        "endLine": 239,
+        "endChar": 13
+      },
+      "revId": "a2b67733f9a7d3f30d326a7895bcc054d1209469",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fd75e027_2ec1ed08",
         "filename": "ipc/ipc_message_templates.h",
         "patchSetId": 2
