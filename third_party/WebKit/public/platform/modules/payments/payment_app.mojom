@@ -33,7 +33,7 @@ struct PaymentInstrument {
   string stringified_capabilities;
 };
 
-// This interface provides implementation of PaymentInstruments.idl
+// This interface provides implementation of PaymentInstruments.idl and PaymentManager.idl
 // in render side.
 interface PaymentManager {
   Init(string service_worker_script_url, string service_worker_scope);
@@ -49,6 +49,7 @@ interface PaymentManager {
       => (PaymentHandlerStatus status);
   ClearPaymentInstruments()
       => (PaymentHandlerStatus status);
+  SetUserHint(string user_hint);
 };
 
 // This struct is provided to send payment request data to render side
