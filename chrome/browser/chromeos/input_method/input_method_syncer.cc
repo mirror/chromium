@@ -79,8 +79,12 @@ std::string CheckAndResolveLocales(const std::string& languages) {
 
     // If a language code resolves to a supported backup locale, replace it
     // with the resolved locale.
+    // TODO(jshin): CheckAndResolveLocale() is not a good fit here. Replace it
+    // with a simple locale fallback without taking into account whether Chrome
+    // has UI strings for a given locale or not.
     std::string resolved_locale;
-    if (l10n_util::CheckAndResolveLocale(*value_iter, &resolved_locale)) {
+    if (l10n_util::CheckAndResolveLocale(*value_iter, &resolved_locale,
+                                         nullptr)) {
       if (binary_search(accept_language_codes.begin(),
                         accept_language_codes.end(),
                         resolved_locale)) {
