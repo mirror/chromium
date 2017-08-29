@@ -4,14 +4,17 @@
 
 static_library("renderer") {
   sources = [
-    "distillability_agent.cc",
-    "distillability_agent.h",
+    "distillability_webagent.cc",
+    "distillability_webagent.h",
     "distiller_js_render_frame_observer.cc",
     "distiller_js_render_frame_observer.h",
     "distiller_native_javascript.cc",
     "distiller_native_javascript.h",
     "distiller_page_notifier_service_impl.cc",
     "distiller_page_notifier_service_impl.h",
+    "document_statistics_collector.cc",
+    "document_statistics_collector.h",
+    "web_distillability.h",
   ]
 
   public_deps = [
@@ -28,6 +31,21 @@ static_library("renderer") {
     "//services/service_manager/public/cpp",
     "//skia",
     "//third_party/WebKit/public:blink_headers",
+    "//third_party/WebKit/webagents",
     "//v8",
+  ]
+}
+
+source_set("unit_tests") {
+  testonly = true
+  sources = [
+    "document_statistics_collector_unittest.cc",
+  ]
+  deps = [
+    ":renderer",
+    "//base:base",
+    "//testing/gtest",
+    "//third_party/WebKit/webagents",
+    "//third_party/WebKit/webagents:testing",
   ]
 }
