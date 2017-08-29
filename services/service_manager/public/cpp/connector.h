@@ -128,6 +128,8 @@ class SERVICE_MANAGER_PUBLIC_CPP_EXPORT Connector {
 
   base::WeakPtr<Connector> GetWeakPtr();
 
+  mojom::ConnectorPtr* GetMojomConnectorForTesting() { return &connector_; }
+
  private:
   using BinderOverrideMap = std::map<std::string, TestApi::Binder>;
 
