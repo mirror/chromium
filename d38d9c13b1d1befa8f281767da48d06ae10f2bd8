@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "3d80f49c_8b187f01",
+        "filename": "components/autofill/content/renderer/password_autofill_agent.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1128432
+      },
+      "writtenOn": "2017-08-29T12:17:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8feaf5a9_8b49e9d2",
+      "range": {
+        "startLine": 65,
+        "startChar": 1,
+        "endLine": 66,
+        "endChar": 0
+      },
+      "revId": "d38d9c13b1d1befa8f281767da48d06ae10f2bd8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "15303ee1_9ee866ab",
         "filename": "components/autofill/content/renderer/password_autofill_agent.h",
         "patchSetId": 6
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "1b4daf03_01172e26",
+        "filename": "components/autofill/content/renderer/password_autofill_agent.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 328,
+      "author": {
+        "id": 1128432
+      },
+      "writtenOn": "2017-08-29T12:17:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "15303ee1_9ee866ab",
+      "range": {
+        "startLine": 327,
+        "startChar": 2,
+        "endLine": 328,
+        "endChar": 0
+      },
+      "revId": "d38d9c13b1d1befa8f281767da48d06ae10f2bd8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "76c63473_e3168be9",
         "filename": "components/password_manager/core/browser/password_form_manager.cc",
         "patchSetId": 6
@@ -59,6 +107,30 @@
       "writtenOn": "2017-08-28T14:57:25Z",
       "side": 1,
       "message": "Why don\u0027t to use |blacklisted_matches|? Isn\u0027t it enough just to check that | blacklisted_matches_| is not empty?",
+      "range": {
+        "startLine": 612,
+        "startChar": 26,
+        "endLine": 612,
+        "endChar": 39
+      },
+      "revId": "d38d9c13b1d1befa8f281767da48d06ae10f2bd8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc0ffabb_3f8aaa23",
+        "filename": "components/password_manager/core/browser/password_form_manager.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 612,
+      "author": {
+        "id": 1128432
+      },
+      "writtenOn": "2017-08-29T12:17:16Z",
+      "side": 1,
+      "message": "blacklisted match also checks that schemes are the same and then it checks that submit_elements, username_element and password_element are equal. I want to have weaker condition, namely if blacklisted form for this origin exists -\u003e don\u0027t show popup.",
+      "parentUuid": "76c63473_e3168be9",
       "range": {
         "startLine": 612,
         "startChar": 26,
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "6b024641_7b76ab44",
+        "filename": "components/password_manager/core/browser/password_form_manager.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 614,
+      "author": {
+        "id": 1128432
+      },
+      "writtenOn": "2017-08-29T12:17:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2e0a7b1d_31e7d2e0",
+      "range": {
+        "startLine": 614,
+        "startChar": 33,
+        "endLine": 614,
+        "endChar": 36
+      },
+      "revId": "d38d9c13b1d1befa8f281767da48d06ae10f2bd8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b4441b69_88517acc",
         "filename": "components/password_manager/core/browser/password_form_manager.h",
         "patchSetId": 6
@@ -114,6 +210,30 @@
       "revId": "d38d9c13b1d1befa8f281767da48d06ae10f2bd8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9bc23dc_f16e83e5",
+        "filename": "components/password_manager/core/browser/password_form_manager.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 590,
+      "author": {
+        "id": 1128432
+      },
+      "writtenOn": "2017-08-29T12:17:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b4441b69_88517acc",
+      "range": {
+        "startLine": 590,
+        "startChar": 12,
+        "endLine": 590,
+        "endChar": 19
+      },
+      "revId": "d38d9c13b1d1befa8f281767da48d06ae10f2bd8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
