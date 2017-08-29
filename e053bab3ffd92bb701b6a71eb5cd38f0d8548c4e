@@ -1,0 +1,188 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1eb51509_c22fc101",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_fetcher_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1115445
+      },
+      "writtenOn": "2017-08-29T18:20:59Z",
+      "side": 1,
+      "message": "chrome_cleaner",
+      "range": {
+        "startLine": 71,
+        "startChar": 18,
+        "endLine": 71,
+        "endChar": 19
+      },
+      "revId": "e053bab3ffd92bb701b6a71eb5cd38f0d8548c4e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c55d00bb_80652bbe",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_fetcher_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1115445
+      },
+      "writtenOn": "2017-08-29T18:20:59Z",
+      "side": 1,
+      "message": "Chrome Cleaner removes unwanted software that violates Google\u0027s unwanted software policy.",
+      "range": {
+        "startLine": 72,
+        "startChar": 22,
+        "endLine": 72,
+        "endChar": 23
+      },
+      "revId": "e053bab3ffd92bb701b6a71eb5cd38f0d8548c4e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f24314ab_586defcb",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_fetcher_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1115445
+      },
+      "writtenOn": "2017-08-29T18:20:59Z",
+      "side": 1,
+      "message": "Chrome reporter detected unwanted software that the Cleaner can remove.",
+      "range": {
+        "startLine": 73,
+        "startChar": 19,
+        "endLine": 73,
+        "endChar": 20
+      },
+      "revId": "e053bab3ffd92bb701b6a71eb5cd38f0d8548c4e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c629d1d_09823438",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_fetcher_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1115445
+      },
+      "writtenOn": "2017-08-29T18:20:59Z",
+      "side": 1,
+      "message": "No data is sent up, this is just a download.",
+      "range": {
+        "startLine": 74,
+        "startChar": 15,
+        "endLine": 74,
+        "endChar": 16
+      },
+      "revId": "e053bab3ffd92bb701b6a71eb5cd38f0d8548c4e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2db010b_0da8eab4",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_fetcher_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1115445
+      },
+      "writtenOn": "2017-08-29T18:20:59Z",
+      "side": 1,
+      "message": "Not quite sure what the right value here is. This request downloads an exe from google servers.",
+      "range": {
+        "startLine": 75,
+        "startChar": 0,
+        "endLine": 75,
+        "endChar": 61
+      },
+      "revId": "e053bab3ffd92bb701b6a71eb5cd38f0d8548c4e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b9fa6209_4974be28",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_fetcher_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1115445
+      },
+      "writtenOn": "2017-08-29T18:20:59Z",
+      "side": 1,
+      "message": "false",
+      "range": {
+        "startLine": 78,
+        "startChar": 31,
+        "endLine": 78,
+        "endChar": 35
+      },
+      "revId": "e053bab3ffd92bb701b6a71eb5cd38f0d8548c4e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fead11f3_1ea1a603",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_fetcher_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1115445
+      },
+      "writtenOn": "2017-08-29T18:20:59Z",
+      "side": 1,
+      "message": "No cookies stored",
+      "range": {
+        "startLine": 79,
+        "startChar": 25,
+        "endLine": 79,
+        "endChar": 26
+      },
+      "revId": "e053bab3ffd92bb701b6a71eb5cd38f0d8548c4e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45176acd_98b2f57c",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_fetcher_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1115445
+      },
+      "writtenOn": "2017-08-29T18:20:59Z",
+      "side": 1,
+      "message": "NA (This feature currently can\u0027t be disabled by users)",
+      "range": {
+        "startLine": 80,
+        "startChar": 19,
+        "endLine": 80,
+        "endChar": 20
+      },
+      "revId": "e053bab3ffd92bb701b6a71eb5cd38f0d8548c4e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
