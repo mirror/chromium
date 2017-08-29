@@ -16,6 +16,24 @@
       "revId": "2b9fbcfea0ae8c0a4e3d68f547936aaeaa226619",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5734a78e_2af25a67",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceFetcher.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 1116492
+      },
+      "writtenOn": "2017-08-29T22:09:13Z",
+      "side": 1,
+      "message": "It looks like validated_urls_ and cached_resources_map_ will have the same URLs in them, so I\u0027ve removed validated_urls_ and changed ResourceFetcher to use cached_resources_map_ instead.",
+      "parentUuid": "3eee7de3_98931b84",
+      "revId": "2b9fbcfea0ae8c0a4e3d68f547936aaeaa226619",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
