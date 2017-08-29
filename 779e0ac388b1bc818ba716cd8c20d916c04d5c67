@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c7739349_7d9cff73",
+        "filename": "ash/shelf/app_list_button.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 462,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-08-29T19:08:29Z",
+      "side": 1,
+      "message": "nit: here and elsewhere consider the one-liner \"  // TODO(crbug.com/758402): Update ink drop bounds with app list button bounds.\"",
+      "revId": "779e0ac388b1bc818ba716cd8c20d916c04d5c67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c4b75ca3_f086e22f",
+        "filename": "ash/shelf/app_list_button.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-08-29T19:08:29Z",
+      "side": 1,
+      "message": "repeated nit: This sentence explaining the impl\u0027s behavior belongs in the impl itself.",
+      "revId": "779e0ac388b1bc818ba716cd8c20d916c04d5c67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
