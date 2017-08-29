@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "43a81673_798294b3",
+        "filename": "net/http/http_network_transaction_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 10183,
+      "author": {
+        "id": 1001604
+      },
+      "writtenOn": "2017-08-29T21:59:04Z",
+      "side": 1,
+      "message": "I\u0027m a little confused by this test. I assume you\u0027d want to assert this after the request is done?",
+      "revId": "9b4a08b6b816f0411da40ffb65eee54924f3c458",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a697fab_f31bd9e3",
+        "filename": "net/http/http_network_transaction_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 10220,
+      "author": {
+        "id": 1001604
+      },
+      "writtenOn": "2017-08-29T21:59:04Z",
+      "side": 1,
+      "message": "Filling in ssl.cert everywhere below isn\u0027t needed anymore, is it?",
+      "revId": "9b4a08b6b816f0411da40ffb65eee54924f3c458",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99b39e35_e76a16ae",
+        "filename": "net/quic/chromium/quic_network_transaction_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1001604
+      },
+      "writtenOn": "2017-08-29T21:59:04Z",
+      "side": 1,
+      "message": "I\u0027m guessing this is because you used to check IsSelfSigned? Probably isn\u0027t needed anymore.",
+      "revId": "9b4a08b6b816f0411da40ffb65eee54924f3c458",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
