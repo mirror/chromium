@@ -24,7 +24,33 @@ namespace {
 
 const char* kSessionTypeName[] = {"SessionRestore", "BackgroundTabOpening"};
 
+// The enumeration values for TabManager.SessionOverlap histogram.
+enum SessionOverlapUma {
+  // Counts the number of session restore sessions that do not overlap with
+  // background tab opening.
+  TAB_MANAGER_SESSION_OVERLAP_UMA_NON_OVERLAPPING_SESSION_RESTORE = 0,
+  // Counts the number of session restore sessions that overlap with
+  // background
+  // tab opening.
+  TAB_MANAGER_SESSION_OVERLAP_UMA_OVERLAPPING_SESSION_RESTORE = 1,
+  // Counts the number of background tab opening sessions that do not overlap
+  // with session restore.
+  TAB_MANAGER_SESSION_OVERLAP_UMA_NON_OVERLAPPING_BACKGROUND_TAB_OPENING = 2,
+  // Counts the number of background tab opening sessions that overlap with
+  // session restore.
+  TAB_MANAGER_SESSION_OVERLAP_UMA_OVERLAPPING_BACKGROUND_TAB_OPENING = 3,
+  // The size of this enum. Must be the last entry.
+  TAB_MANAGER_SESSION_OVERLAP_UMA_MAX,
+};
+
 }  // namespace
+
+void TabManagerStatsCollector::BackgroundTabCountStats::Reset() {
+  tab_count = 0u;
+  tab_paused_count = 0u;
+  tab_load_auto_started_count = 0u;
+  tab_load_user_initiated_count = 0u;
+}
 
 class TabManagerStatsCollector::SwapMetricsDelegate
     : public content::SwapMetricsDriver::Delegate {
@@ -70,7 +96,9 @@ class TabManagerStatsCollector::SwapMetricsDelegate
 
 TabManagerStatsCollector::TabManagerStatsCollector()
     : is_session_restore_loading_tabs_(false),
-      is_in_background_tab_opening_session_(false) {
+      is_in_background_tab_opening_session_(false),
+      is_overlapping_session_restore_(false),
+      is_overlapping_background_tab_opening_(false) {
   SessionRestore::AddObserver(this);
 }
 
@@ -135,6 +163,23 @@ void TabManagerStatsCollector::RecordExpectedTaskQueueingDuration(
   }
 }
 
+void TabManagerStatsCollector::RecordBackgroundTabCount() {
+  DCHECK(is_in_background_tab_opening_session_);
+
+  if (!is_overlapping_background_tab_opening_) {
+    UMA_HISTOGRAM_COUNTS_100(kHistogramBackgroundTabOpeningTabCount,
+                             background_tab_count_stats_.tab_count);
+    UMA_HISTOGRAM_COUNTS_100(kHistogramBackgroundTabOpeningTabPausedCount,
+                             background_tab_count_stats_.tab_paused_count);
+    UMA_HISTOGRAM_COUNTS_100(
+        kHistogramBackgroundTabOpeningTabLoadAutoStartedCount,
+        background_tab_count_stats_.tab_load_auto_started_count);
+    UMA_HISTOGRAM_COUNTS_100(
+        kHistogramBackgroundTabOpeningTabLoadUserInitiatedCount,
+        background_tab_count_stats_.tab_load_user_initiated_count);
+  }
+}
+
 void TabManagerStatsCollector::OnSessionRestoreStartedLoadingTabs() {
   DCHECK(!is_session_restore_loading_tabs_);
 
@@ -146,14 +191,23 @@ void TabManagerStatsCollector::OnSessionRestoreStartedLoadingTabs() {
 
 void TabManagerStatsCollector::OnSessionRestoreFinishedLoadingTabs() {
   DCHECK(is_session_restore_loading_tabs_);
+
+  UMA_HISTOGRAM_ENUMERATION(
+      kHistogramSessionOverlap,
+      is_overlapping_session_restore_
+          ? TAB_MANAGER_SESSION_OVERLAP_UMA_OVERLAPPING_SESSION_RESTORE
+          : TAB_MANAGER_SESSION_OVERLAP_UMA_NON_OVERLAPPING_SESSION_RESTORE,
+      TAB_MANAGER_SESSION_OVERLAP_UMA_MAX);
   if (swap_metrics_driver_)
     swap_metrics_driver_->UpdateMetrics();
+
   is_session_restore_loading_tabs_ = false;
+  is_overlapping_session_restore_ = false;
 }
 
 void TabManagerStatsCollector::OnBackgroundTabOpeningSessionStarted() {
   DCHECK(!is_in_background_tab_opening_session_);
-
+  background_tab_count_stats_.Reset();
   CreateAndInitSwapMetricsDriverIfNeeded(SessionType::kBackgroundTabOpening);
 
   is_in_background_tab_opening_session_ = true;
@@ -162,9 +216,19 @@ void TabManagerStatsCollector::OnBackgroundTabOpeningSessionStarted() {
 
 void TabManagerStatsCollector::OnBackgroundTabOpeningSessionEnded() {
   DCHECK(is_in_background_tab_opening_session_);
+
+  UMA_HISTOGRAM_ENUMERATION(
+      kHistogramSessionOverlap,
+      is_overlapping_background_tab_opening_
+          ? TAB_MANAGER_SESSION_OVERLAP_UMA_OVERLAPPING_BACKGROUND_TAB_OPENING
+          : TAB_MANAGER_SESSION_OVERLAP_UMA_NON_OVERLAPPING_BACKGROUND_TAB_OPENING,
+      TAB_MANAGER_SESSION_OVERLAP_UMA_MAX);
+  RecordBackgroundTabCount();
   if (swap_metrics_driver_)
     swap_metrics_driver_->UpdateMetrics();
+
   is_in_background_tab_opening_session_ = false;
+  is_overlapping_background_tab_opening_ = false;
 }
 
 void TabManagerStatsCollector::CreateAndInitSwapMetricsDriverIfNeeded(
@@ -244,6 +308,10 @@ void TabManagerStatsCollector::ClearStatsWhenInOverlappedSession() {
 
   swap_metrics_driver_ = nullptr;
   foreground_contents_switched_to_times_.clear();
+  background_tab_count_stats_.Reset();
+
+  is_overlapping_session_restore_ = true;
+  is_overlapping_background_tab_opening_ = true;
 }
 
 // static
@@ -257,23 +325,46 @@ const char TabManagerStatsCollector::
         "TabManager.BackgroundTabOpening.ForegroundTab."
         "ExpectedTaskQueueingDuration";
 
-// Static
+// static
 const char TabManagerStatsCollector::kHistogramSessionRestoreSwitchToTab[] =
     "TabManager.SessionRestore.SwitchToTab";
 
-// Static
+// static
 const char
     TabManagerStatsCollector::kHistogramBackgroundTabOpeningSwitchToTab[] =
         "TabManager.BackgroundTabOpening.SwitchToTab";
 
-// Static
+// static
 const char
     TabManagerStatsCollector::kHistogramSessionRestoreTabSwitchLoadTime[] =
         "TabManager.Experimental.SessionRestore.TabSwitchLoadTime";
 
-// Static
+// static
 const char TabManagerStatsCollector::
     kHistogramBackgroundTabOpeningTabSwitchLoadTime[] =
         "TabManager.Experimental.BackgroundTabOpening.TabSwitchLoadTime";
+
+// static
+const char TabManagerStatsCollector::kHistogramBackgroundTabOpeningTabCount[] =
+    "TabManager.BackgroundTabOpening.TabCount";
+
+// static
+const char
+    TabManagerStatsCollector::kHistogramBackgroundTabOpeningTabPausedCount[] =
+        "TabManager.BackgroundTabOpening.TabPausedCount";
+
+// static
+const char TabManagerStatsCollector::
+    kHistogramBackgroundTabOpeningTabLoadAutoStartedCount[] =
+        "TabManager.BackgroundTabOpening.TabLoadAutoStartedCount";
+
+// static
+const char TabManagerStatsCollector::
+    kHistogramBackgroundTabOpeningTabLoadUserInitiatedCount[] =
+        "TabManager.BackgroundTabOpening.TabLoadUserInitiatedCount";
+
+// static
+const char TabManagerStatsCollector::kHistogramSessionOverlap[] =
+    "TabManager.SessionOverlap";
 
 }  // namespace resource_coordinator
