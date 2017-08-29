@@ -62,10 +62,6 @@ class CONTENT_EXPORT CORSURLLoader : public mojom::URLLoader,
       const ResourceRequestCompletionStatus& completion_status) override;
 
  private:
-  // Used to initiate the actual request (or any preflight requests)
-  // with the default network loader factory.
-  mojom::URLLoaderFactory* network_loader_factory_;
-
   // For the actual request.
   mojom::URLLoaderPtr network_loader_;
   mojo::Binding<mojom::URLLoaderClient> network_client_binding_;

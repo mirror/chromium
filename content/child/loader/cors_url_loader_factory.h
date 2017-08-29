@@ -7,22 +7,24 @@
 
 #include "content/common/content_export.h"
 #include "content/common/possibly_associated_interface_ptr.h"
+#include "content/common/possibly_associated_interface_ptr_info.h"
 #include "content/public/common/url_loader_factory.mojom.h"
+#include "mojo/public/cpp/bindings/binding_set.h"
 
 namespace content {
 
 class CONTENT_EXPORT CORSURLLoaderFactory : public mojom::URLLoaderFactory {
  public:
-  static void CreateAndBind(PossiblyAssociatedInterfacePtr<
+  static void CreateAndBind(PossiblyAssociatedInterfacePtrInfo<
                                 mojom::URLLoaderFactory> network_loader_factory,
                             mojom::URLLoaderFactoryRequest request);
 
   explicit CORSURLLoaderFactory(
-      PossiblyAssociatedInterfacePtr<mojom::URLLoaderFactory>
+      PossiblyAssociatedInterfacePtrInfo<mojom::URLLoaderFactory>
           network_loader_factory);
-
   ~CORSURLLoaderFactory() override;
 
+  // mojom::URLLoaderFactory
   void CreateLoaderAndStart(mojom::URLLoaderRequest request,
                             int32_t routing_id,
                             int32_t request_id,
@@ -33,9 +35,12 @@ class CONTENT_EXPORT CORSURLLoaderFactory : public mojom::URLLoaderFactory {
                                 traffic_annotation) override;
   void Clone(mojom::URLLoaderFactoryRequest request) override;
 
+  void OnConnectionError();
+
  private:
   PossiblyAssociatedInterfacePtr<mojom::URLLoaderFactory>
       network_loader_factory_;
+  mojo::BindingSet<mojom::URLLoaderFactory> bindings_;
 };
 
 }  // namespace content

@@ -13,20 +13,27 @@
 namespace content {
 
 void CORSURLLoaderFactory::CreateAndBind(
-    PossiblyAssociatedInterfacePtr<mojom::URLLoaderFactory>
+    PossiblyAssociatedInterfacePtrInfo<mojom::URLLoaderFactory>
         network_loader_factory,
     mojom::URLLoaderFactoryRequest request) {
   DCHECK(network_loader_factory);
 
-  mojo::MakeStrongBinding(
-      base::MakeUnique<CORSURLLoaderFactory>(std::move(network_loader_factory)),
-      std::move(request));
+  // This object will be destroyed when all pipes bound to it are closed.
+  // See OnConnectionError().
+  auto* impl = new CORSURLLoaderFactory(std::move(network_loader_factory));
+  impl->Clone(std::move(request));
 }
 
 CORSURLLoaderFactory::CORSURLLoaderFactory(
-    PossiblyAssociatedInterfacePtr<mojom::URLLoaderFactory>
-        network_loader_factory)
-    : network_loader_factory_(std::move(network_loader_factory)) {}
+    PossiblyAssociatedInterfacePtrInfo<mojom::URLLoaderFactory>
+        network_loader_factory) {
+  // Binding |this| as an unretained pointer is safe because |bindings_| shares
+  // this object's lifetime.
+  bindings_.set_connection_error_handler(base::Bind(
+      &CORSURLLoaderFactory::OnConnectionError, base::Unretained(this)));
+
+  network_loader_factory_.Bind(std::move(network_loader_factory));
+}
 
 CORSURLLoaderFactory::~CORSURLLoaderFactory() {}
 
@@ -46,11 +53,12 @@ void CORSURLLoaderFactory::CreateLoaderAndStart(
 }
 
 void CORSURLLoaderFactory::Clone(mojom::URLLoaderFactoryRequest request) {
-  mojom::URLLoaderFactoryPtr network_loader_factory_copy;
-  network_loader_factory_->Clone(
-      mojo::MakeRequest(&network_loader_factory_copy));
-  CORSURLLoaderFactory::CreateAndBind(std::move(network_loader_factory_copy),
-                                      std::move(request));
+  bindings_.AddBinding(this, std::move(request));
+}
+
+void CORSURLLoaderFactory::OnConnectionError() {
+  if (bindings_.empty())
+    delete this;
 }
 
 }  // namespace content

@@ -17,14 +17,12 @@ CORSURLLoader::CORSURLLoader(
     mojom::URLLoaderClientPtr client,
     const net::MutableNetworkTrafficAnnotationTag& traffic_annotation,
     mojom::URLLoaderFactory* network_loader_factory)
-    : network_loader_factory_(network_loader_factory),
-      network_client_binding_(this),
-      forwarding_client_(std::move(client)) {
-  DCHECK(network_loader_factory_);
+    : network_client_binding_(this), forwarding_client_(std::move(client)) {
+  DCHECK(network_loader_factory);
 
   mojom::URLLoaderClientPtr network_client;
   network_client_binding_.Bind(mojo::MakeRequest(&network_client));
-  network_loader_factory_->CreateLoaderAndStart(
+  network_loader_factory->CreateLoaderAndStart(
       mojo::MakeRequest(&network_loader_), routing_id, request_id, options,
       resource_request, std::move(network_client), traffic_annotation);
 }
