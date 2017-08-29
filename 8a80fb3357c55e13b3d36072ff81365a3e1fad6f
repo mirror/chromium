@@ -1,0 +1,129 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e9016f16_d0da64f2",
+        "filename": "media/audio/audio_output_device.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 323,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-08-29T08:41:29Z",
+      "side": 1,
+      "message": "Having equally distributed buckets will make it hard to compare browser-side stat with this one thought",
+      "revId": "8a80fb3357c55e13b3d36072ff81365a3e1fad6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e97acc11_c1c38af3",
+        "filename": "media/audio/audio_output_device.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 324,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-08-29T08:41:29Z",
+      "side": 1,
+      "message": "\"Media.Audio.Render.OutputDeviceAuthorizationTime\"? (see l.332)",
+      "revId": "8a80fb3357c55e13b3d36072ff81365a3e1fad6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9bc2b471_ad0d6932",
+        "filename": "media/audio/audio_output_device.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 325,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-08-29T08:41:29Z",
+      "side": 1,
+      "message": "It requires an explanation why 30000 is used as max. And \"Equally-sized 100ms buckets in the range 1 ms - 30 s\" worth mentioning as well.",
+      "revId": "8a80fb3357c55e13b3d36072ff81365a3e1fad6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ff46cb6_de7be96f",
+        "filename": "media/audio/audio_output_device.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 326,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-08-29T08:41:29Z",
+      "side": 1,
+      "message": "I suspect it should be 301 - not sure though, I always get confused about it.",
+      "revId": "8a80fb3357c55e13b3d36072ff81365a3e1fad6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98a4bbea_3bbd9e91",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 30055,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-08-29T08:41:29Z",
+      "side": 1,
+      "message": "it is measured on renderer side",
+      "range": {
+        "startLine": 30055,
+        "startChar": 57,
+        "endLine": 30055,
+        "endChar": 60
+      },
+      "revId": "8a80fb3357c55e13b3d36072ff81365a3e1fad6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ae62c44_683ae180",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 30056,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-08-29T08:41:29Z",
+      "side": 1,
+      "message": "on IO thread",
+      "revId": "8a80fb3357c55e13b3d36072ff81365a3e1fad6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "667c7d4c_1544135a",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 30058,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-08-29T08:41:29Z",
+      "side": 1,
+      "message": "Add also the info about buckets and range you put into the CL description? Also add a note on how authorization timeout change will affect the histogram?",
+      "revId": "8a80fb3357c55e13b3d36072ff81365a3e1fad6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
