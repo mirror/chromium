@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "8c597ef1_15948ab8",
+        "filename": "content/renderer/render_frame_proxy.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 362,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-08-29T16:42:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6a54cae7_dd4099a9",
+      "revId": "7cf83e474f830460be38f1ded854e82cc6013b94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "52474758_e47959b5",
         "filename": "content/renderer/render_frame_proxy.cc",
         "patchSetId": 8
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-29T16:21:34Z",
       "side": 1,
       "message": "Is there a reason you need to add the new accessor rather than using RenderWidget::GetOriginalDeviceScaleFactor? The values appear to only be different when devtools is using screen emulation.",
+      "revId": "7cf83e474f830460be38f1ded854e82cc6013b94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ddd88a61_d1e5fc9f",
+        "filename": "content/renderer/render_frame_proxy.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 543,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-08-29T16:42:50Z",
+      "side": 1,
+      "message": "Good point, I think the ScreenMetricEmulator scale factor is the right one to use in that case.",
+      "parentUuid": "52474758_e47959b5",
       "revId": "7cf83e474f830460be38f1ded854e82cc6013b94",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
