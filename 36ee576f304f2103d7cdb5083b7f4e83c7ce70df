@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e24b41d7_4c8a130e",
+        "filename": "components/autofill/core/browser/autofill_profile.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 726,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-08-29T14:35:37Z",
+      "side": 1,
+      "message": "this heavily relies on |supported_types_for_validation_| not adding values in the middle of the vector and so forth. I would make that clear with comments.",
+      "range": {
+        "startLine": 726,
+        "startChar": 40,
+        "endLine": 726,
+        "endChar": 70
+      },
+      "revId": "36ee576f304f2103d7cdb5083b7f4e83c7ce70df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31c27359_3fc89c13",
+        "filename": "components/autofill/core/browser/autofill_profile.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-08-29T14:35:37Z",
+      "side": 1,
+      "message": "nit: remove empty lines, they seem unnecessary",
+      "revId": "36ee576f304f2103d7cdb5083b7f4e83c7ce70df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a03a68b7_ea747bd8",
+        "filename": "components/autofill/core/browser/autofill_profile.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-08-29T14:35:37Z",
+      "side": 1,
+      "message": "nit: supported_types_for_validation_\n\nI don\u0027t see this pattern a whole lot. Can you initialize in .cc? and perhaps make static?",
+      "revId": "36ee576f304f2103d7cdb5083b7f4e83c7ce70df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
