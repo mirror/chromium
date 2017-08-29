@@ -16,6 +16,7 @@
 #include "net/http/http_network_session.h"
 #include "net/http/http_response_headers.h"
 #include "net/quic/core/quic_packets.h"
+#include "net/quic/platform/api/quic_endian.h"
 #include "net/spdy/core/spdy_alt_svc_wire_format.h"
 #include "url/gurl.h"
 
@@ -55,11 +56,27 @@ void HttpStreamFactory::ProcessAlternativeServices(
     QuicVersionVector advertised_versions;
     if (protocol == kProtoQUIC && !alternative_service_entry.version.empty()) {
       bool match_found = false;
-      for (QuicVersion supported : session->params().quic_supported_versions) {
-        for (uint16_t advertised : alternative_service_entry.version) {
-          if (supported == advertised) {
-            match_found = true;
-            advertised_versions.push_back(supported);
+      if (alternative_service_entry.protocol_id.compare("hq") == 0) {
+        // Using IETF format for advertising QUIC. In this case,
+        // |alternative_service_entry.version| will store QUIC version tags.
+        for (QuicVersion supported :
+             session->params().quic_supported_versions) {
+          for (uint32_t quic_version : alternative_service_entry.version) {
+            QuicTag quic_tag = QuicEndian::NetToHost32(quic_version);
+            if (QuicVersionToQuicTag(supported) == quic_tag) {
+              match_found = true;
+              advertised_versions.push_back(supported);
+            }
+          }
+        }
+      } else {
+        for (QuicVersion supported :
+             session->params().quic_supported_versions) {
+          for (uint32_t advertised : alternative_service_entry.version) {
+            if (supported == advertised) {
+              match_found = true;
+              advertised_versions.push_back(supported);
+            }
           }
         }
       }
