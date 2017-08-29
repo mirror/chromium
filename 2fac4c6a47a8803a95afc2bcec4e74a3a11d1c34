@@ -16,6 +16,24 @@
       "revId": "2fac4c6a47a8803a95afc2bcec4e74a3a11d1c34",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad2e81c8_73c54c65",
+        "filename": "content/browser/download/download_item_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1393,
+      "author": {
+        "id": 1197289
+      },
+      "writtenOn": "2017-08-29T00:24:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "deaccba6_8954338a",
+      "revId": "2fac4c6a47a8803a95afc2bcec4e74a3a11d1c34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
