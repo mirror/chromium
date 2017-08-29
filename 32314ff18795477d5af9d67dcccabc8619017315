@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "90b063e0_8b433c04",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletThread.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-08-29T23:57:46Z",
+      "side": 1,
+      "message": "It seems like you\u0027ve already discussed this but what\u0027s a 3-line summary of why you cannot use std::unique_ptr\u003cWebThread\u003e?",
+      "revId": "32314ff18795477d5af9d67dcccabc8619017315",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
