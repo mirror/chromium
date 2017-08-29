@@ -47,9 +47,14 @@ GLGetProcAddressProc g_get_proc_address;
 
 void CleanupNativeLibraries(void* unused) {
   if (g_libraries) {
+#if defined(OS_WIN)
+    for (auto* library : *g_libraries)
+      base::UnloadNativeLibrary(library);
+#else
     // We do not call base::UnloadNativeLibrary() for these libraries as
     // unloading libGL without closing X display is not allowed. See
     // crbug.com/250813 for details.
+#endif  // defined(OS_WIN)
     delete g_libraries;
     g_libraries = NULL;
   }
