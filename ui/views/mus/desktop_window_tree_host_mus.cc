@@ -212,7 +212,6 @@ DesktopWindowTreeHostMus::DesktopWindowTreeHostMus(
   MusClient::Get()->AddObserver(this);
   MusClient::Get()->window_tree_client()->focus_synchronizer()->AddObserver(
       this);
-  native_widget_delegate_->AsWidget()->AddObserver(this);
   desktop_native_widget_aura_->content_window()->AddObserver(this);
   // DesktopNativeWidgetAura registers the association between |content_window_|
   // and Widget, but code may also want to go from the root (window()) to the
@@ -229,7 +228,6 @@ DesktopWindowTreeHostMus::~DesktopWindowTreeHostMus() {
   // |cursor_manager_| is destroyed.
   aura::client::SetCursorClient(window(), nullptr);
   desktop_native_widget_aura_->content_window()->RemoveObserver(this);
-  native_widget_delegate_->AsWidget()->RemoveObserver(this);
   MusClient::Get()->RemoveObserver(this);
   MusClient::Get()->window_tree_client()->focus_synchronizer()->RemoveObserver(
       this);
@@ -547,29 +545,48 @@ void DesktopWindowTreeHostMus::Activate() {
   if (!IsVisible())
     return;
 
+  aura::Window* content = desktop_native_widget_aura_->content_window();
+  aura::client::FocusClient* client = aura::client::GetFocusClient(window());
+  if (content && client && !client->GetFocusedWindow()) {
+    LOG(ERROR) << "MSW DesktopWindowTreeHostMus::Activate request... ";
+    client->FocusWindow(content);
+  }
+
   // This should result in OnActiveFocusClientChanged() being called, which
   // triggers a call to DesktopNativeWidgetAura::HandleActivationChanged(),
   // which focuses the right window.
   MusClient::Get()
       ->window_tree_client()
       ->focus_synchronizer()
-      ->SetActiveFocusClient(aura::client::GetFocusClient(window()), window());
-  if (is_active_)
+      ->SetActiveFocusClient(client, window());
+
+  if (IsActive())
     window()->SetProperty(aura::client::kDrawAttentionKey, false);
 }
 
 void DesktopWindowTreeHostMus::Deactivate() {
-  if (is_active_)
+  if (IsActive())
     DeactivateWindow();
 }
 
 bool DesktopWindowTreeHostMus::IsActive() const {
-  return is_active_;
+  // TODO(msw): This activation tracking breaks focus, eg.
+  // (1) focus Chrome Window A's content (like the google.com search box)
+  // (2) activate Window B (click another chrome window's titlebar)
+  // (3) activate Window A (click the first chrome window's titlebar)
+  // Expected: focus is on Window A's content (eg. google.com search box)
+  // Actual: Window A has activation, but no focused view (?)
+  aura::client::FocusClient* client = MusClient::Get()
+                                          ->window_tree_client()
+                                          ->focus_synchronizer()
+                                          ->active_focus_client();
+  return window() && client && window()->Contains(client->GetFocusedWindow());
 }
 
 void DesktopWindowTreeHostMus::Maximize() {
   window()->SetProperty(aura::client::kShowStateKey, ui::SHOW_STATE_MAXIMIZED);
 }
+
 void DesktopWindowTreeHostMus::Minimize() {
   window()->SetProperty(aura::client::kShowStateKey, ui::SHOW_STATE_MINIMIZED);
 }
@@ -749,23 +766,24 @@ void DesktopWindowTreeHostMus::OnWindowManagerFrameValuesChanged() {
   SendHitTestMaskToServer();
 }
 
-void DesktopWindowTreeHostMus::OnWidgetActivationChanged(Widget* widget,
-                                                         bool active) {
-  // TODO(erg): Theoretically, this shouldn't be necessary. We should be able
-  // to just set |is_active_| in OnNativeWidgetActivationChanged() above,
-  // instead of asking the Widget to change the activation and have the widget
-  // then tell us the activation has changed. But if we do that, focus breaks.
-  is_active_ = active;
-}
+// void DesktopWindowTreeHostMus::OnWidgetActivationChanged(Widget* widget,
+//                                                         bool active) {
+//  // TODO(erg): Theoretically, this shouldn't be necessary. We should be able
+//  // to just set |is_active_| in OnNativeWidgetActivationChanged() above,
+//  // instead of asking the Widget to change the activation and have the widget
+//  // then tell us the activation has changed. But if we do that, focus breaks.
+//  is_active_ = active;
+//}
 
 void DesktopWindowTreeHostMus::OnActiveFocusClientChanged(
     aura::client::FocusClient* focus_client,
     aura::Window* focus_client_root) {
-  if (focus_client_root == this->window()) {
-    desktop_native_widget_aura_->HandleActivationChanged(true);
-  } else if (is_active_) {
-    desktop_native_widget_aura_->HandleActivationChanged(false);
-  }
+  // const bool active = window()->Contains(focus_client_root);
+  // LOG(ERROR) << "MSW DesktopWindowTreeHostMus::OnActiveFocusClientChanged "
+  //            << (focus_client_root == window()) << " vs. " << active
+  //           << " vs. " << IsActive() << "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!";
+  desktop_native_widget_aura_->HandleActivationChanged(focus_client_root ==
+                                                       window());
 }
 
 void DesktopWindowTreeHostMus::OnWindowPropertyChanged(aura::Window* window,
