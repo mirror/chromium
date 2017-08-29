@@ -115,6 +115,7 @@ WindowPortMus::RequestLayerTreeFrameSink(
   viz::mojom::CompositorFrameSinkClientRequest client_request =
       mojo::MakeRequest(&client);
   constexpr bool enable_surface_synchronization = true;
+
   auto layer_tree_frame_sink = base::MakeUnique<viz::ClientLayerTreeFrameSink>(
       std::move(context_provider), nullptr /* worker_context_provider */,
       gpu_memory_buffer_manager, nullptr /* shared_bitmap_manager */,
