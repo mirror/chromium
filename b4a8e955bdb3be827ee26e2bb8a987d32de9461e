@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3d830211_7854a30d",
+        "filename": "components/autofill/core/browser/autofill_experiments.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-08-29T14:09:06Z",
+      "side": 1,
+      "message": "double negation makes this a little hard to parse. Can you add a descriptive comment, and a unit test?",
+      "range": {
+        "startLine": 243,
+        "startChar": 7,
+        "endLine": 243,
+        "endChar": 8
+      },
+      "revId": "b4a8e955bdb3be827ee26e2bb8a987d32de9461e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
