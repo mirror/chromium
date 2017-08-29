@@ -1,0 +1,158 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0f9c0b59_ebf57dbe",
+        "filename": "components/drive/drive.proto",
+        "patchSetId": 1
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-08-29T09:28:09Z",
+      "side": 1,
+      "message": "Could you comment out this line to prevent accidental use?",
+      "revId": "a5fbeaa9462859352a98eb7b7d5785f9a4a448c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51198aa1_b3a8e720",
+        "filename": "components/drive/resource_metadata_storage.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-08-29T09:28:09Z",
+      "side": 1,
+      "message": "Could you use plain English to make this more readable?",
+      "range": {
+        "startLine": 194,
+        "startChar": 30,
+        "endLine": 194,
+        "endChar": 34
+      },
+      "revId": "a5fbeaa9462859352a98eb7b7d5785f9a4a448c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01c8f5d9_60198e90",
+        "filename": "components/drive/resource_metadata_storage.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-08-29T09:28:09Z",
+      "side": 1,
+      "message": "I don\u0027t think this note is needed when this function is clearly supposed to migrate old DBs to V13.\nEspecially when what \"the usual migration convention\" means is unclear.",
+      "revId": "a5fbeaa9462859352a98eb7b7d5785f9a4a448c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c32203c_8a111b0b",
+        "filename": "components/drive/resource_metadata_storage.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-08-29T09:28:09Z",
+      "side": 1,
+      "message": "I understand why you are tempted to use the word \"legacy\" here, but I don\u0027t expect future readers except me and you to understand what \"legacy\" here means.\nYou can just say UpgradeDBToV13 or something to make it cleaner.",
+      "range": {
+        "startLine": 198,
+        "startChar": 5,
+        "endLine": 198,
+        "endChar": 29
+      },
+      "revId": "a5fbeaa9462859352a98eb7b7d5785f9a4a448c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77404cb8_5e84449f",
+        "filename": "components/drive/resource_metadata_storage.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 394,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-08-29T09:28:09Z",
+      "side": 1,
+      "message": "Instead of having NOTREACHED here, you can convert the last \"else if\" to \"else\", probably while having a DCHECK_LE(version, 13) at the top of this function.",
+      "revId": "a5fbeaa9462859352a98eb7b7d5785f9a4a448c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3c487f0_6636e463",
+        "filename": "components/drive/resource_metadata_storage.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 398,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-08-29T09:28:09Z",
+      "side": 1,
+      "message": "I don\u0027t understand why you are splitting only this part into a separate function, to make the migration 2-pass for old versions.\nCould you keep the current structure at least for v14?\n\nThe proposed code structure can be beneficial if we are going to do a major DB restructuring in future, but I\u0027m not sure if just clearing the changestamp does count as such a change.",
+      "revId": "a5fbeaa9462859352a98eb7b7d5785f9a4a448c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d9fc8ce_ec03239b",
+        "filename": "components/drive/resource_metadata_storage.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 404,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-08-29T09:28:09Z",
+      "side": 1,
+      "message": "I don\u0027t think || is needed here.",
+      "range": {
+        "startLine": 404,
+        "startChar": 15,
+        "endLine": 404,
+        "endChar": 38
+      },
+      "revId": "a5fbeaa9462859352a98eb7b7d5785f9a4a448c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0349ae8_2449189c",
+        "filename": "components/drive/resource_metadata_storage_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 306,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-08-29T09:28:09Z",
+      "side": 1,
+      "message": "Why are you changing this?",
+      "revId": "a5fbeaa9462859352a98eb7b7d5785f9a4a448c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
