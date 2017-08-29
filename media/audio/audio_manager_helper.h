@@ -2,22 +2,25 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef MEDIA_AUDIO_AUDIO_SYSTEM_IMPL_H_
-#define MEDIA_AUDIO_AUDIO_SYSTEM_IMPL_H_
+#ifndef MEDIA_AUDIO_AUDIO_MANAGER_HELPER_H_
+#define MEDIA_AUDIO_AUDIO_MANAGER_HELPER_H_
 
-#include "media/audio/audio_manager_helper.h"
 #include "media/audio/audio_system.h"
+#include "media/base/media_export.h"
+
+namespace base {
+class SingleThreadTaskRunner;
+}
 
 namespace media {
 class AudioManager;
 
-class MEDIA_EXPORT AudioSystemImpl : public AudioSystem {
+// Helper class wrapping AudioManager functionality. Methods to be called on
+// audio thread only. Only audio system implementations are allowed to access
+// it.
+class MEDIA_EXPORT AudioManagerHelper : public AudioSystemInterface {
  public:
-  static std::unique_ptr<AudioSystem> Create(AudioManager* audio_manager);
-
-  ~AudioSystemImpl() override;
-
-  // AudioSystem implementation.
+  // AudioSystemInterface implementation.
   void GetInputStreamParameters(const std::string& device_id,
                                 OnAudioParamsCallback on_params_cb) override;
 
@@ -39,20 +42,20 @@ class MEDIA_EXPORT AudioSystemImpl : public AudioSystem {
       const std::string& input_device_id,
       OnInputDeviceInfoCallback on_input_device_info_cb) override;
 
+  base::SingleThreadTaskRunner* GetTaskRunner();
+
  private:
-  AudioSystemImpl(AudioManager* audio_manager);
+  friend class AudioSystemImpl;
 
-  // No-op if called on helper_.GetTaskRunner() thread, otherwise binds
-  // |callback| to the current loop.
-  template <typename... Args>
-  base::OnceCallback<void(Args...)> MaybeBindToCurrentLoop(
-      base::OnceCallback<void(Args...)> callback);
+  AudioManagerHelper(AudioManager* audio_manager);
+  ~AudioManagerHelper() override;
 
-  AudioManagerHelper helper_;
+  AudioParameters ComputeInputParameters(const std::string& device_id);
+  AudioParameters ComputeOutputParameters(const std::string& device_id);
 
-  DISALLOW_COPY_AND_ASSIGN(AudioSystemImpl);
+  AudioManager* const audio_manager_;
 };
 
 }  // namespace media
 
-#endif  // MEDIA_AUDIO_AUDIO_SYSTEM_IMPL_H_
+#endif  // MEDIA_AUDIO_AUDIO_MANAGER_HELPER_H_

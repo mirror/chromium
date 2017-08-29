@@ -90,6 +90,8 @@ source_set("audio") {
     "audio_manager.h",
     "audio_manager_base.cc",
     "audio_manager_base.h",
+    "audio_manager_helper.cc",
+    "audio_manager_helper.h",
     "audio_output_controller.cc",
     "audio_output_controller.h",
     "audio_output_delegate.cc",

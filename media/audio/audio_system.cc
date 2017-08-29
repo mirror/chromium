@@ -8,8 +8,6 @@ namespace media {
 
 static AudioSystem* g_last_created = nullptr;
 
-AudioSystem::~AudioSystem() {}
-
 AudioSystem* AudioSystem::Get() {
   return g_last_created;
 }
