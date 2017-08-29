@@ -1,0 +1,112 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9ff45cb0_27525d09",
+        "filename": "chrome/browser/ui/search/local_ntp_browsertest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-29T13:54:40Z",
+      "side": 1,
+      "message": "nit: I might prefer to have this inlined into the tests that use it, even if that means duplicating it. IMO outsourcing the actual \"meat\" of the test into a helper function makes it hard to read; basically I have to jump here to understand the test. (Rule of thumb: EXPECT outside of the main test body is a bad sign.) Also, if the test does anything else than call this, it might be unexpected that this opens a new tab.\nOTOH, you could argue that for these tests the actual \"meat\" is in the JS rather than here, so... eh. Up to you.",
+      "range": {
+        "startLine": 58,
+        "startChar": 75,
+        "endLine": 58,
+        "endChar": 0
+      },
+      "revId": "815c0a4e1cc467f736351952e3f62a50c5e5857c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d899b532_20e5bbd4",
+        "filename": "chrome/browser/ui/search/local_ntp_browsertest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-29T13:54:40Z",
+      "side": 1,
+      "message": "Is this actually relevant for the voice tests? I guess it is for the integration tests.",
+      "revId": "815c0a4e1cc467f736351952e3f62a50c5e5857c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0897749b_914e050a",
+        "filename": "chrome/test/data/local_ntp/test_utils.js",
+        "patchSetId": 14
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-29T13:54:40Z",
+      "side": 1,
+      "message": "nit: Any function within test[moduleName], right?",
+      "revId": "815c0a4e1cc467f736351952e3f62a50c5e5857c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41970f9f_8d420f58",
+        "filename": "chrome/test/data/local_ntp/test_utils.js",
+        "patchSetId": 14
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-29T13:54:40Z",
+      "side": 1,
+      "message": "Can you return passedTests \u003d\u003d totalTests and get rid of the pass variable?",
+      "revId": "815c0a4e1cc467f736351952e3f62a50c5e5857c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88c4e925_43db0292",
+        "filename": "chrome/test/data/local_ntp/test_utils.js",
+        "patchSetId": 14
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-29T13:54:40Z",
+      "side": 1,
+      "message": "Do we actually need tearDown, or can setUp just always fully re-build the page? IMO slightly less change of interference between tests that way.",
+      "revId": "815c0a4e1cc467f736351952e3f62a50c5e5857c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dcc3f1df_dd519c6c",
+        "filename": "chrome/test/data/local_ntp/voice_browsertest.html",
+        "patchSetId": 14
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-29T13:54:40Z",
+      "side": 1,
+      "message": "So it doesn\u0027t need local-ntp.js anymore? That\u0027d be awesome!",
+      "revId": "815c0a4e1cc467f736351952e3f62a50c5e5857c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
