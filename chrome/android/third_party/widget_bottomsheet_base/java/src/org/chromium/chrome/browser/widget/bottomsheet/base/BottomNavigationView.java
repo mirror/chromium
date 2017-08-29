@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package android.support.design.widget;
+package org.chromium.chrome.browser.widget.bottomsheet.base;
 
 import android.content.Context;
 import android.content.res.ColorStateList;
@@ -23,9 +23,6 @@ import android.support.annotation.DrawableRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.R;
-import android.support.design.internal.BottomNavigationMenu;
-import android.support.design.internal.BottomNavigationMenuView;
-import android.support.design.internal.BottomNavigationPresenter;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewCompat;
 import android.support.v7.content.res.AppCompatResources;
@@ -33,6 +30,7 @@ import android.support.v7.view.SupportMenuInflater;
 import android.support.v7.view.menu.MenuBuilder;
 import android.support.v7.widget.TintTypedArray;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.Menu;
@@ -43,6 +41,8 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
 /**
+ * Forked from android.support.design.internal.BottomNavigationView.
+ *
  * <p>
  * Represents a standard bottom navigation bar for application. It is an implementation of
  * <a href="https://material.google.com/components/bottom-navigation.html">material design bottom
@@ -186,6 +186,15 @@ public class BottomNavigationView extends FrameLayout {
     @NonNull
     public Menu getMenu() {
         return mMenu;
+    }
+
+    /**
+     * Returns the {@link BottomNavigationMenuView} instance associated with this bottom
+     * navigation bar.
+     */
+    @NonNull
+    public BottomNavigationMenuView getMenuView() {
+        return mMenuView;
     }
 
     /**

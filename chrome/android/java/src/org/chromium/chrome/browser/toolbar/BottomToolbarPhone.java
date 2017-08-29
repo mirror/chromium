@@ -620,6 +620,7 @@ public class BottomToolbarPhone extends ToolbarPhone {
         // own. Get the root view and search for the handle.
         mToolbarHandleView = (ImageView) getRootView().findViewById(R.id.toolbar_handle);
         mToolbarHandleView.setImageDrawable(mHandleDark);
+
         mBottomToolbarTopShadow =
                 (ImageView) getRootView().findViewById(R.id.bottom_toolbar_shadow);
 
