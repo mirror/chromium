@@ -36,6 +36,8 @@
 #include "ui/message_center/notification_list.h"
 #include "ui/wm/core/coordinate_conversion.h"
 
+#include "my_out.h"
+
 namespace ash {
 namespace {
 

@@ -15,8 +15,10 @@
 #include "chromeos/system/devicemode.h"
 #include "ui/base/class_property.h"
 #include "ui/base/l10n/l10n_util.h"
-#include "ui/display/display_layout.h"
+
 #include "ui/display/manager/display_manager.h"
+
+#include "my_out.h"
 
 DECLARE_UI_CLASS_PROPERTY_TYPE(ash::ScreenRotationAnimator*);
 
@@ -83,6 +85,19 @@ void DisplayConfigurationController::SetDisplayLayout(
                    weak_ptr_factory_.GetWeakPtr(), base::Passed(&layout)));
   } else {
     SetDisplayLayoutImpl(std::move(layout));
+  }
+}
+
+void DisplayConfigurationController::SetUnifiedModeLayoutMatrix(
+    const display::DisplayLayout::UnifiedModeDisplayMatrix& matrix,
+    display::DisplayLayout::UnifiedModeValidationResult result) {
+  if (display_animator_) {
+    display_animator_->StartFadeOutAnimation(
+        base::Bind(
+            &DisplayConfigurationController::SetUnifiedModeLayoutMatrixImpl,
+            weak_ptr_factory_.GetWeakPtr(), matrix, result));
+  } else {
+    SetUnifiedModeLayoutMatrixImpl(matrix, result);
   }
 }
 
@@ -175,6 +190,9 @@ bool DisplayConfigurationController::IsLimited() {
 
 void DisplayConfigurationController::SetDisplayLayoutImpl(
     std::unique_ptr<display::DisplayLayout> layout) {
+  D_START_NOW();
+  auto marker = MARK_FUNC();
+
   display_manager_->SetLayoutForCurrentDisplays(std::move(layout));
   if (display_animator_)
     display_animator_->StartFadeInAnimation();
@@ -189,6 +207,27 @@ void DisplayConfigurationController::SetMirrorModeImpl(bool mirror) {
 void DisplayConfigurationController::SetPrimaryDisplayIdImpl(
     int64_t display_id) {
   window_tree_host_manager_->SetPrimaryDisplayId(display_id);
+  if (display_animator_)
+    display_animator_->StartFadeInAnimation();
+}
+
+void DisplayConfigurationController::SetUnifiedModeLayoutMatrixImpl(
+    const display::DisplayLayout::UnifiedModeDisplayMatrix& matrix,
+    display::DisplayLayout::UnifiedModeValidationResult result) {
+  D_START_NOW();
+  auto marker = MARK_FUNC();
+
+  D_OUT_VAL(marker, (int) result);
+  D_OUT(marker, "Matrix ...");
+  for (const auto& row : matrix) {
+    for (const auto& id : row) {
+      D_OUT_VAL(marker, id);
+    }
+    D_OUT(marker, "*****");
+  }
+
+  display_manager_->SetUnifiedDisplayMatrix(matrix);
+
   if (display_animator_)
     display_animator_->StartFadeInAnimation();
 }

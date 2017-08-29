@@ -31,6 +31,8 @@
 #include "ui/gfx/canvas.h"
 #include "ui/gfx/native_widget_types.h"
 
+#include "my_out.h"
+
 namespace ash {
 namespace {
 
@@ -133,6 +135,10 @@ MirrorWindowController::~MirrorWindowController() {
 
 void MirrorWindowController::UpdateWindow(
     const std::vector<display::ManagedDisplayInfo>& display_info_list) {
+  auto marker = MARK_FUNC();
+  D_OUT(marker, "What's GOING ON HERE ?!!!");
+  D_OUT_VAL_LINES(marker, marker.GetStackTrace());
+
   static int mirror_host_count = 0;
   display::DisplayManager* display_manager = Shell::Get()->display_manager();
   const display::Display& primary =
@@ -148,8 +154,15 @@ void MirrorWindowController::UpdateWindow(
       transformer.reset(CreateRootWindowTransformerForMirroredDisplay(
           source_display_info, display_info));
     } else if (display_manager->IsInUnifiedMode()) {
+      D_OUT(marker, "****");
+      D_OUT_VAL(marker, primary.id());
+      D_OUT_VAL(marker, primary.bounds().ToString());
+
       display::Display display =
           display_manager->GetMirroringDisplayById(display_info.id());
+
+      D_OUT_VAL(marker, display.id());
+
       transformer.reset(CreateRootWindowTransformerForUnifiedDesktop(
           primary.bounds(), display));
     } else {
