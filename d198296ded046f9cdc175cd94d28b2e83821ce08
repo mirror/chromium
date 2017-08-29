@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c96a979c_f0b3ae4b",
+        "filename": "ios/clean/chrome/browser/experimental_flags.mm",
+        "patchSetId": 24
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1115986
+      },
+      "writtenOn": "2017-08-29T14:10:56Z",
+      "side": 1,
+      "message": "I\u0027m doing my best to remove experimental_flags from chromium, it\u0027s not to see it added back in cschromium: Please don\u0027t use user defaults for feature and experimental flags. Use base::Feature instead. Those can be decentralized, and don\u0027t need to be all in one place.\n\nNote that I created a CL to remove the experimental_flag.plist entries about clean in regular chromium as well, these defaults won\u0027t be accessible from there.",
+      "range": {
+        "startLine": 21,
+        "startChar": 0,
+        "endLine": 21,
+        "endChar": 76
+      },
+      "revId": "d198296ded046f9cdc175cd94d28b2e83821ce08",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
