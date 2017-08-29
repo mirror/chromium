@@ -41,6 +41,17 @@ HitTestDataProviderAura::~HitTestDataProviderAura() {}
 viz::mojom::HitTestRegionListPtr HitTestDataProviderAura::GetHitTestData()
     const {
   auto hit_test_region_list = viz::mojom::HitTestRegionList::New();
+  const ui::mojom::EventTargetingPolicy event_targeting_policy =
+      window_->event_targeting_policy();
+  if (event_targeting_policy == ui::mojom::EventTargetingPolicy::NONE)
+    return hit_test_region_list;
+  hit_test_region_list->flags =
+      event_targeting_policy ==
+              ui::mojom::EventTargetingPolicy::DESCENDANTS_ONLY
+          ? viz::mojom::kHitTestIgnore
+          : viz::mojom::kHitTestMine;
+  hit_test_region_list->bounds = window_->bounds();
+
   GetHitTestDataRecursively(window_, hit_test_region_list.get());
   return hit_test_region_list;
 }
