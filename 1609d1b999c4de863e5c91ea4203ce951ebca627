@@ -22,6 +22,30 @@
       "revId": "1609d1b999c4de863e5c91ea4203ce951ebca627",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8de290ad_7f4d1fb9",
+        "filename": "chrome/browser/metrics/metrics_service_browsertest.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1117450
+      },
+      "writtenOn": "2017-08-29T18:04:47Z",
+      "side": 1,
+      "message": "As offline discussion, the cl only changes RendererCrash logging on Android, and this test can\u0027t run on Android so it shouldn\u0027t be affected.\n\nreverted changes related to metrics_service_browsertest.",
+      "parentUuid": "6de0af2f_ed33b9f8",
+      "range": {
+        "startLine": 66,
+        "startChar": 2,
+        "endLine": 66,
+        "endChar": 11
+      },
+      "revId": "1609d1b999c4de863e5c91ea4203ce951ebca627",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
