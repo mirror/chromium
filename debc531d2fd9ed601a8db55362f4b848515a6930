@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "02459919_fb320bd0",
+        "filename": "ui/aura/window_event_dispatcher.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 446,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-08-29T06:36:07Z",
+      "side": 1,
+      "message": "Unsetting the target here means we would do local hit-testing to find the target, right? But that would break targeting for OOPIF?",
+      "revId": "debc531d2fd9ed601a8db55362f4b848515a6930",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
