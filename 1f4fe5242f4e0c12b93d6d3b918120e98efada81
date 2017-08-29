@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c5a9bf11_35bc7112",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue_impl.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 275,
+      "author": {
+        "id": 1116032
+      },
+      "writtenOn": "2017-08-29T10:27:34Z",
+      "side": 1,
+      "message": "I think the test can just do this directly instead adding a test-only method:\n\n  SetOnTaskStartedHandler(OnTaskStartedHandler()); \n  SetOnTaskCompletedHandler(OnTaskCompletedHandler());",
+      "range": {
+        "startLine": 275,
+        "startChar": 7,
+        "endLine": 275,
+        "endChar": 34
+      },
+      "revId": "1f4fe5242f4e0c12b93d6d3b918120e98efada81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
