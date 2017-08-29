@@ -5,12 +5,16 @@
 #include "modules/compositorworker/AnimationWorkletThread.h"
 
 #include "core/workers/GlobalScopeCreationParams.h"
+#include "core/workers/WorkerThread.h"
+#include "core/workers/WorkletThreadHolder.h"
 #include "modules/compositorworker/AnimationWorkletGlobalScope.h"
 #include "platform/instrumentation/tracing/TraceEvent.h"
 #include "platform/weborigin/SecurityOrigin.h"
 #include "platform/wtf/PtrUtil.h"
 
 namespace blink {
+
+template class WorkletThreadHolder<AnimationWorkletThread>;
 
 std::unique_ptr<AnimationWorkletThread> AnimationWorkletThread::Create(
     ThreadableLoadingContext* loading_context,
@@ -28,6 +32,55 @@ AnimationWorkletThread::AnimationWorkletThread(
     : AbstractAnimationWorkletThread(loading_context, worker_reporting_proxy) {}
 
 AnimationWorkletThread::~AnimationWorkletThread() {}
+
+WorkerBackingThread& AnimationWorkletThread::GetWorkerBackingThread() {
+  return *WorkletThreadHolder<AnimationWorkletThread>::GetInstance()
+              ->GetThread();
+}
+
+void CollectAllGarbageOnAnimationWorkletThread(WaitableEvent* done_event) {
+  blink::ThreadState::Current()->CollectAllGarbage();
+  done_event->Signal();
+}
+
+void AnimationWorkletThread::CollectAllGarbage() {
+  DCHECK(IsMainThread());
+  WaitableEvent done_event;
+  WorkletThreadHolder<AnimationWorkletThread>* worklet_thread_holder =
+      WorkletThreadHolder<AnimationWorkletThread>::GetInstance();
+  if (!worklet_thread_holder)
+    return;
+  worklet_thread_holder->GetThread()->BackingThread().PostTask(
+      BLINK_FROM_HERE,
+      CrossThreadBind(&CollectAllGarbageOnAnimationWorkletThread,
+                      CrossThreadUnretained(&done_event)));
+  done_event.Wait();
+}
+
+void AnimationWorkletThread::EnsureSharedBackingThread() {
+  DCHECK(IsMainThread());
+  WorkletThreadHolder<AnimationWorkletThread>::EnsureInstance(
+      "AnimationWorkletThread");
+}
+
+void AnimationWorkletThread::ClearSharedBackingThread() {
+  DCHECK(IsMainThread());
+  WorkletThreadHolder<AnimationWorkletThread>::ClearInstance();
+}
+
+WebThread* AnimationWorkletThread::GetSharedBackingThread() {
+  DCHECK(IsMainThread());
+  WorkletThreadHolder<AnimationWorkletThread>* instance =
+      WorkletThreadHolder<AnimationWorkletThread>::GetInstance();
+  if (!instance)
+    return nullptr;
+  return &(instance->GetThread()->BackingThread().PlatformThread());
+}
+
+void AnimationWorkletThread::CreateSharedBackingThreadForTest() {
+  WorkletThreadHolder<AnimationWorkletThread>::CreateForTest(
+      "AnimationWorkletThread");
+}
 
 WorkerOrWorkletGlobalScope* AnimationWorkletThread::CreateWorkerGlobalScope(
     std::unique_ptr<GlobalScopeCreationParams> creation_params) {
