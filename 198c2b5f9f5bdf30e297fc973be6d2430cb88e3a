@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "fe874aec_de7c62e8",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-08-29T12:01:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f4b93d93_9a6af5a8",
+      "revId": "198c2b5f9f5bdf30e297fc973be6d2430cb88e3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "060c001c_854ca74f",
         "filename": "components/ntp_snippets/breaking_news/breaking_news_gcm_app_handler.cc",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "198c2b5f9f5bdf30e297fc973be6d2430cb88e3a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "178dae0f_8ebfd7fb",
+        "filename": "components/ntp_snippets/breaking_news/breaking_news_gcm_app_handler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-08-29T12:01:35Z",
+      "side": 1,
+      "message": "Done.\n\nI changed it to minutes.\n\nWhile using minutes granularity feels very unlikely, I do not have any 100% argument against it.",
+      "parentUuid": "060c001c_854ca74f",
+      "revId": "198c2b5f9f5bdf30e297fc973be6d2430cb88e3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
