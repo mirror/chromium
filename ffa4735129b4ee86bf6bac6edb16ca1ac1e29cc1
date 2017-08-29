@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e2c7cb41_b6333745",
+        "filename": "chrome/browser/chromeos/net/tether_notification_presenter.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-08-29T15:47:59Z",
+      "side": 1,
+      "message": "nit: invert and early exit",
+      "revId": "ffa4735129b4ee86bf6bac6edb16ca1ac1e29cc1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
