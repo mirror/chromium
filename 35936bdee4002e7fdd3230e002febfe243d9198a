@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "27c3a13c_11ac5a00",
+        "filename": "components/leveldb/env_mojo.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2017-08-29T23:16:31Z",
+      "side": 1,
+      "message": "Nit: this is fine, but this bug will likely be mark fixed once this lands. Consider creating a new one.",
+      "range": {
+        "startLine": 49,
+        "startChar": 10,
+        "endLine": 49,
+        "endChar": 26
+      },
+      "revId": "35936bdee4002e7fdd3230e002febfe243d9198a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
