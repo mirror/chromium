@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "79d8d6d3_95405dc3",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/PaymentInstrument.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-08-29T13:24:30Z",
+      "side": 1,
+      "message": "Yep, (3) has pretty strong feeling from me. It\u0027s more clear that the callback for invokePaymentApp() is used only for responding to invokPaymentApp(), whereas the callback for abortPayment() is used only for responding to abortPayment().",
+      "parentUuid": "c7b93dcd_76ea5ba5",
+      "range": {
+        "startLine": 54,
+        "startChar": 48,
+        "endLine": 54,
+        "endChar": 54
+      },
+      "revId": "cd0019f8272c4e12053bb33064463aa0f3699131",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d57be8fb_3d9ffa91",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/PaymentInstrument.java",
         "patchSetId": 5
@@ -84,6 +108,30 @@
       "side": 1,
       "message": "I named to be consistent with inokePaymentApp to make it easier to understand, make sense?",
       "parentUuid": "d57be8fb_3d9ffa91",
+      "range": {
+        "startLine": 159,
+        "startChar": 16,
+        "endLine": 159,
+        "endChar": 37
+      },
+      "revId": "cd0019f8272c4e12053bb33064463aa0f3699131",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "add518fd_8c3cd6f1",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/PaymentInstrument.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-08-29T13:24:30Z",
+      "side": 1,
+      "message": "Although I see where you\u0027re coming from, I believe the word \"invoke\" is problematic here, because it means \"call into\" the payment app. Calling the payment app takes a split second. After that second, the payment app is running. Aborting \"invocation\" of payment app means aborting that split-second operation. However, that\u0027s not what this \"abort\" performs. Instead, this \"abort\" tells the running payment app to stop. Therefore, calling this \"abort payment app\" is more correct than calling this \"abort invocation of payment app.\"",
+      "parentUuid": "7768fec9_7954cffa",
       "range": {
         "startLine": 159,
         "startChar": 16,
@@ -140,6 +188,30 @@
       "revId": "cd0019f8272c4e12053bb33064463aa0f3699131",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86771fa7_f36e15c3",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/PaymentRequestImpl.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 1431,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-08-29T13:24:30Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "0d86c585_fb62f58f",
+      "range": {
+        "startLine": 1431,
+        "startChar": 33,
+        "endLine": 1431,
+        "endChar": 73
+      },
+      "revId": "cd0019f8272c4e12053bb33064463aa0f3699131",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
