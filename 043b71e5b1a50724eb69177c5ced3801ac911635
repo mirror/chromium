@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "460d4575_84d9e547",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/SpannableAutocompleteEditTextModel.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 485,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-08-29T22:45:26Z",
+      "side": 1,
+      "message": "protected?  I think we should add some documentation around why this should be used versus batch edit?",
+      "range": {
+        "startLine": 485,
+        "startChar": 8,
+        "endLine": 485,
+        "endChar": 14
+      },
+      "revId": "043b71e5b1a50724eb69177c5ced3801ac911635",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
