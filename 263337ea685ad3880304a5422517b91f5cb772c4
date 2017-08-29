@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c601d5ff_ece9ad88",
+        "filename": "third_party/WebKit/Source/core/dom/Node.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 635,
+      "author": {
+        "id": 1230085
+      },
+      "writtenOn": "2017-08-29T23:05:44Z",
+      "side": 1,
+      "message": "Hmm, that might be nice, but I\u0027m not sure it would work. My concern is twofold:\n\n1) I\u0027m no too familiar with optional - what are the copy semantics? It looks to me like it has value semantics and copies the object? In  ContainerNode::AttachLayoutTree, a copy of the AttachContext is created and passed to all of the children. We want each copy to contain the same TextElementTimingAncestor object. This works with RefPtr, but I don\u0027t think it does with optional.\n\n2) lifetime: the TextElementTimingAncestorTracker::ScopedElementTimingNameTracker gets a RefPtr\u003cTextElementTimingAncestorTracker\u003e passed in the constructor, and uses it until the end of its lifetime. We would need change it to store a reference or pointer to the TextElementTimingAncestorTracker, but would need to guarantee the lifetime outlives the AttachContext. The code is written this way Element.cpp, but there\u0027s no guarantee. The ref counting takes care of the lifetime concerns.\n\nI also considered using unique_ptr but it has the same lifetime problem and also does an allocation.\n\nWDYT?",
+      "parentUuid": "7cf1aaaa_f0b1ecf2",
+      "range": {
+        "startLine": 635,
+        "startChar": 11,
+        "endLine": 635,
+        "endChar": 43
+      },
+      "revId": "263337ea685ad3880304a5422517b91f5cb772c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1e32fc9b_1ffa0e34",
         "filename": "third_party/WebKit/Source/core/dom/Text.cpp",
         "patchSetId": 7
@@ -45,6 +69,30 @@
       "revId": "263337ea685ad3880304a5422517b91f5cb772c4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8514efd_8df9da06",
+        "filename": "third_party/WebKit/Source/core/dom/Text.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 355,
+      "author": {
+        "id": 1230085
+      },
+      "writtenOn": "2017-08-29T23:05:44Z",
+      "side": 1,
+      "message": "Sure, good idea. Changed to pass a reference to the Document and check stack size in TrackAllElementsIfNeeded.",
+      "parentUuid": "1e32fc9b_1ffa0e34",
+      "range": {
+        "startLine": 355,
+        "startChar": 57,
+        "endLine": 355,
+        "endChar": 61
+      },
+      "revId": "263337ea685ad3880304a5422517b91f5cb772c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "58f38236_dee7cd53",
+        "filename": "third_party/WebKit/Source/core/exported/WebViewImpl.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 2017,
+      "author": {
+        "id": 1230085
+      },
+      "writtenOn": "2017-08-29T23:05:44Z",
+      "side": 1,
+      "message": "Thanks, wasn\u0027t sure the style preference here.",
+      "parentUuid": "891ec605_fe0f296a",
+      "range": {
+        "startLine": 2017,
+        "startChar": 6,
+        "endLine": 2017,
+        "endChar": 14
+      },
+      "revId": "263337ea685ad3880304a5422517b91f5cb772c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b53b9b15_31c68b47",
         "filename": "third_party/WebKit/Source/core/timing/PerformanceElementTiming.h",
         "patchSetId": 7
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "e8d753fc_1eccd5c9",
+        "filename": "third_party/WebKit/Source/core/timing/PerformanceElementTiming.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1230085
+      },
+      "writtenOn": "2017-08-29T23:05:44Z",
+      "side": 1,
+      "message": "Added brief comments and linked the proposal.",
+      "parentUuid": "b53b9b15_31c68b47",
+      "range": {
+        "startLine": 16,
+        "startChar": 18,
+        "endLine": 16,
+        "endChar": 42
+      },
+      "revId": "263337ea685ad3880304a5422517b91f5cb772c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "91e085ea_5cd3c283",
         "filename": "third_party/WebKit/Source/core/timing/TextElementTimingAncestorTracker.cpp",
         "patchSetId": 7
@@ -105,6 +201,24 @@
       "writtenOn": "2017-08-29T18:33:21Z",
       "side": 1,
       "message": "Add comment:\n\n  false /* is_tracked */\n\nOr use enum instead of bool.",
+      "revId": "263337ea685ad3880304a5422517b91f5cb772c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d162bb94_cef8f90c",
+        "filename": "third_party/WebKit/Source/core/timing/TextElementTimingAncestorTracker.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1230085
+      },
+      "writtenOn": "2017-08-29T23:05:44Z",
+      "side": 1,
+      "message": "How about struct initializer with designator (see latest patch)?",
+      "parentUuid": "91e085ea_5cd3c283",
       "revId": "263337ea685ad3880304a5422517b91f5cb772c4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -131,6 +245,30 @@
       "revId": "263337ea685ad3880304a5422517b91f5cb772c4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6d3302a_f5051bc5",
+        "filename": "third_party/WebKit/Source/core/timing/TextElementTimingAncestorTracker.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1230085
+      },
+      "writtenOn": "2017-08-29T23:05:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "75ee656c_bc46daeb",
+      "range": {
+        "startLine": 19,
+        "startChar": 19,
+        "endLine": 19,
+        "endChar": 20
+      },
+      "revId": "263337ea685ad3880304a5422517b91f5cb772c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
