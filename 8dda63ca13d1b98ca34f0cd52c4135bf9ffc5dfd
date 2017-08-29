@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a75e2382_a98f0fc8",
+        "filename": "android_webview/tools/system_webview_shell/page_cycler/AndroidManifest.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1116054
+      },
+      "writtenOn": "2017-08-29T14:30:52Z",
+      "side": 0,
+      "message": "Does removing the hardwareAcceleration\u003dfalse parameter have an impact here?",
+      "revId": "8dda63ca13d1b98ca34f0cd52c4135bf9ffc5dfd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
