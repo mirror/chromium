@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "935014c6_b395f0a5",
+        "filename": "ios/chrome/browser/ui/settings/settings_egtest.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1183785
+      },
+      "writtenOn": "2017-08-29T19:37:47Z",
+      "side": 1,
+      "message": "Keep this for another CL which cleans up main_controller.h",
+      "revId": "efaec923ccc515267929ddbe9ecbbf93ac5e363c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
