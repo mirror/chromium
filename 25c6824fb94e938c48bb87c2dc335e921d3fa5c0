@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d16e8a65_0ef174fb",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_table_view.mm",
+        "patchSetId": 9
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1181484
+      },
+      "writtenOn": "2017-08-29T04:36:41Z",
+      "side": 1,
+      "message": "Why did you change this to a private var from a property? Can we keep both views as property?",
+      "range": {
+        "startLine": 56,
+        "startChar": 2,
+        "endLine": 58,
+        "endChar": 62
+      },
+      "revId": "25c6824fb94e938c48bb87c2dc335e921d3fa5c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "510192ba_febc9546",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_table_view.mm",
+        "patchSetId": 9
+      },
+      "lineNbr": 356,
+      "author": {
+        "id": 1181484
+      },
+      "writtenOn": "2017-08-29T04:36:41Z",
+      "side": 1,
+      "message": "Does this check if childnodes count of current root node is 0?",
+      "range": {
+        "startLine": 356,
+        "startChar": 6,
+        "endLine": 356,
+        "endChar": 32
+      },
+      "revId": "25c6824fb94e938c48bb87c2dc335e921d3fa5c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f2598ad_6d3293ba",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_table_view.mm",
+        "patchSetId": 9
+      },
+      "lineNbr": 363,
+      "author": {
+        "id": 1181484
+      },
+      "writtenOn": "2017-08-29T04:36:41Z",
+      "side": 1,
+      "message": "This is confusing, as showLoadingSpinner is actually only lazily creating the spinner. It has nothing to do with show?",
+      "range": {
+        "startLine": 363,
+        "startChar": 8,
+        "endLine": 363,
+        "endChar": 37
+      },
+      "revId": "25c6824fb94e938c48bb87c2dc335e921d3fa5c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b4b6846_38d11a3e",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_table_view.mm",
+        "patchSetId": 9
+      },
+      "lineNbr": 400,
+      "author": {
+        "id": 1181484
+      },
+      "writtenOn": "2017-08-29T04:36:41Z",
+      "side": 1,
+      "message": "This check is not necessary, as any operation on nil is a no-op.",
+      "range": {
+        "startLine": 400,
+        "startChar": 2,
+        "endLine": 400,
+        "endChar": 32
+      },
+      "revId": "25c6824fb94e938c48bb87c2dc335e921d3fa5c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
