@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fd99cf94_0e210439",
+        "filename": "extensions/browser/api/device_permissions_manager.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-08-29T18:40:27Z",
+      "side": 1,
+      "message": "Missed Ptr\u0026 here. Just use \u0026.",
+      "range": {
+        "startLine": 49,
+        "startChar": 58,
+        "endLine": 49,
+        "endChar": 61
+      },
+      "revId": "c0af75a6e02a5559c3cb3929a729d7e967347f62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b12b0c2_1090578a",
+        "filename": "extensions/browser/api/device_permissions_manager.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-08-29T18:40:27Z",
+      "side": 1,
+      "message": "Missed Ptr\u0026 here. Just use \u0026.",
+      "range": {
+        "startLine": 164,
+        "startChar": 56,
+        "endLine": 164,
+        "endChar": 59
+      },
+      "revId": "c0af75a6e02a5559c3cb3929a729d7e967347f62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7831d63_f43809de",
+        "filename": "extensions/browser/api/device_permissions_prompt.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-08-29T18:40:27Z",
+      "side": 1,
+      "message": "This comment isn\u0027t really necessary.",
+      "range": {
+        "startLine": 175,
+        "startChar": 0,
+        "endLine": 176,
+        "endChar": 37
+      },
+      "revId": "c0af75a6e02a5559c3cb3929a729d7e967347f62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b03f71ca_ff1a73ff",
+        "filename": "extensions/browser/api/device_permissions_prompt.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-08-29T18:40:27Z",
+      "side": 1,
+      "message": "auto device_info \u003d base::MakeUnique\u003cHidDeviceInfo\u003e(std::move(device));\n\nAnd I think you can skip the static_cast below. AddCheckedDevice should be able to implicitly cast to std::unique_ptr\u003cDeviceInfo\u003e.",
+      "range": {
+        "startLine": 234,
+        "startChar": 6,
+        "endLine": 235,
+        "endChar": 48
+      },
+      "revId": "c0af75a6e02a5559c3cb3929a729d7e967347f62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63292303_fe40f2e0",
+        "filename": "extensions/browser/api/hid/hid_device_manager.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-08-29T18:40:27Z",
+      "side": 1,
+      "message": "This clone can be avoided by returning a raw device::mojom::HidDeviceInfo* if the comment explicitly says that this object is still owned by HidDeviceManager.",
+      "range": {
+        "startLine": 64,
+        "startChar": 2,
+        "endLine": 64,
+        "endChar": 78
+      },
+      "revId": "c0af75a6e02a5559c3cb3929a729d7e967347f62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

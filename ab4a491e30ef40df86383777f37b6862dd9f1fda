@@ -237,6 +237,30 @@
     },
     {
       "key": {
+        "uuid": "3af11e77_5c257821",
+        "filename": "device/hid/hid_service.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-08-29T18:40:27Z",
+      "side": 1,
+      "message": "Sounds good to me for now. We need to decide if //device/u2f will move into the device service.",
+      "parentUuid": "2a2a3ba6_e85f8fed",
+      "range": {
+        "startLine": 42,
+        "startChar": 31,
+        "endLine": 42,
+        "endChar": 62
+      },
+      "revId": "ab4a491e30ef40df86383777f37b6862dd9f1fda",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d7280a75_4b10aef9",
         "filename": "device/hid/hid_service.h",
         "patchSetId": 11
