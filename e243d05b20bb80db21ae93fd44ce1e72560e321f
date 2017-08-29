@@ -143,6 +143,24 @@
     },
     {
       "key": {
+        "uuid": "899c2204_820fa6d6",
+        "filename": "components/offline_pages/core/prefetch/stale_entry_finalizer_task.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-08-29T20:34:56Z",
+      "side": 1,
+      "message": "I agree, let\u0027s just use a value that would make sense for any state (this is only repair code, doesn\u0027t need to be hyper-optimized).  3d?",
+      "parentUuid": "54a176b3_6d9ba464",
+      "revId": "e243d05b20bb80db21ae93fd44ce1e72560e321f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f75b80c3_0b68ffb8",
         "filename": "components/offline_pages/core/prefetch/stale_entry_finalizer_task.cc",
         "patchSetId": 2
