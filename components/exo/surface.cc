@@ -692,6 +692,7 @@ void Surface::AppendContentsToFrame(const gfx::Point& origin,
     damage_rect.set_origin(origin);
     damage_rect.Intersect(output_rect);
   }
+  render_pass->output_rect.Union(output_rect);
   render_pass->damage_rect.Union(damage_rect);
 
   // Create a transformation matrix that maps buffer coordinates to target by
