@@ -52,6 +52,24 @@
       "revId": "0b402220e6f5c09bafdd9b18e53e37e47631383d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82275e52_1cf5ba85",
+        "filename": "third_party/WebKit/Source/core/frame/LocalFrame.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-08-29T20:44:50Z",
+      "side": 1,
+      "message": "Interesting - I did not know nor expect that iframe.name \u003d \"...\" should affect a window.name (is it supposed to work even in the cross-origin case?  I couldn\u0027t quite understand this aspect from the bugs).\n\nI\u0027ve switched to the policy enum approach in FrameTree::SetName.",
+      "parentUuid": "71206755_f9e6ecd7",
+      "revId": "0b402220e6f5c09bafdd9b18e53e37e47631383d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
