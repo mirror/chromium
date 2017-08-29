@@ -16,7 +16,7 @@ class ChromeBrowserState;
 
 // Asynchronously finishes the browser state initialization by scheduling
 // |performDeferredInitializationForBrowserState:|.
-- (void)scheduleDeferredBrowserStateInitialization:
++ (void)scheduleDeferredBrowserStateInitialization:
     (ios::ChromeBrowserState*)browserState;
 // Starts Omaha and, if first run, sets install time.  For official builds only.
 - (void)initializeOmaha;

@@ -4,6 +4,7 @@
 
 source_set("commands") {
   sources = [
+    "bookmarks_commands.h",
     "context_menu_commands.h",
     "dialog_commands.h",
     "find_in_page_search_commands.h",

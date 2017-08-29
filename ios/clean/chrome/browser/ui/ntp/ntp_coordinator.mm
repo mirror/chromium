@@ -10,6 +10,7 @@
 #import "ios/chrome/browser/ui/coordinators/browser_coordinator+internal.h"
 #include "ios/chrome/browser/ui/ui_util.h"
 #import "ios/clean/chrome/browser/ui/bookmarks/bookmarks_coordinator.h"
+#import "ios/clean/chrome/browser/ui/commands/bookmarks_commands.h"
 #import "ios/clean/chrome/browser/ui/commands/ntp_commands.h"
 #import "ios/clean/chrome/browser/ui/ntp/ntp_home_coordinator.h"
 #import "ios/clean/chrome/browser/ui/ntp/ntp_mediator.h"
@@ -20,20 +21,25 @@
 #error "This file requires ARC support."
 #endif
 
-@interface NTPCoordinator ()<NTPCommands>
+@interface NTPCoordinator ()<BookmarksCommands, NTPCommands>
 @property(nonatomic, strong) NTPMediator* mediator;
 @property(nonatomic, strong) NTPViewController* viewController;
+@property(nonatomic, strong) BookmarksCoordinator* bookmarksCoordinator;
 @end
 
 @implementation NTPCoordinator
 @synthesize mediator = _mediator;
 @synthesize viewController = _viewController;
+@synthesize bookmarksCoordinator = _bookmarksCoordinator;
 
 - (void)start {
   self.viewController = [[NTPViewController alloc] init];
   self.mediator = [[NTPMediator alloc] initWithConsumer:self.viewController];
 
   CommandDispatcher* dispatcher = self.browser->dispatcher();
+  // BookmarksCommands
+  [dispatcher startDispatchingToTarget:self
+                           forSelector:@selector(closeBookmarks)];
   // NTPCommands
   [dispatcher startDispatchingToTarget:self
                            forSelector:@selector(showNTPHomePanel)];
@@ -58,6 +64,8 @@
     if (IsIPadIdiom()) {
       self.viewController.bookmarksViewController = coordinator.viewController;
     } else {
+      coordinator.viewController.modalPresentationStyle =
+          UIModalPresentationFormSheet;
       [self.viewController presentViewController:coordinator.viewController
                                         animated:YES
                                       completion:nil];
@@ -83,19 +91,11 @@
 }
 
 - (void)showNTPBookmarksPanel {
-  // TODO(crbug.com/740793): Remove alert once this feature is implemented.
-  UIAlertController* alertController =
-      [UIAlertController alertControllerWithTitle:@"Bookmarks"
-                                          message:nil
-                                   preferredStyle:UIAlertControllerStyleAlert];
-  UIAlertAction* action =
-      [UIAlertAction actionWithTitle:@"Done"
-                               style:UIAlertActionStyleCancel
-                             handler:nil];
-  [alertController addAction:action];
-  [self.viewController presentViewController:alertController
-                                    animated:YES
-                                  completion:nil];
+  if (!self.bookmarksCoordinator) {
+    self.bookmarksCoordinator = [[BookmarksCoordinator alloc] init];
+    [self addChildCoordinator:self.bookmarksCoordinator];
+  }
+  [self.bookmarksCoordinator start];
 }
 
 - (void)showNTPRecentTabsPanel {
@@ -112,6 +112,13 @@
   [self.viewController presentViewController:alertController
                                     animated:YES
                                   completion:nil];
+}
+
+#pragma mark - BookmarksCommands
+
+- (void)closeBookmarks {
+  [self.viewController dismissViewControllerAnimated:YES completion:nil];
+  [self.bookmarksCoordinator stop];
 }
 
 @end
