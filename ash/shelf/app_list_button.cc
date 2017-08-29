@@ -509,6 +509,11 @@ void AppListButton::OnVoiceInteractionEnabled(bool enabled) {
   SchedulePaint();
 }
 
+void AppListButton::OnVoiceInteractionSetupCompleted() {
+  voice_interaction_setup_completed_ = true;
+  SchedulePaint();
+}
+
 void AppListButton::OnActiveUserSessionChanged(const AccountId& account_id) {
   SchedulePaint();
 
@@ -539,12 +544,13 @@ void AppListButton::OnActiveUserSessionChanged(const AccountId& account_id) {
 
 void AppListButton::StartVoiceInteractionAnimation() {
   // We only show the voice interaction icon and related animation when the
-  // shelf is at the bottom position and voice interaction is not running.
+  // shelf is at the bottom position and voice interaction is not running and
+  // voice interaction setup flow has completed.
   ShelfAlignment alignment = shelf_->alignment();
-  bool show_icon =
-      (alignment == SHELF_ALIGNMENT_BOTTOM ||
-       alignment == SHELF_ALIGNMENT_BOTTOM_LOCKED) &&
-      (voice_interaction_state_ == ash::VoiceInteractionState::STOPPED);
+  bool show_icon = (alignment == SHELF_ALIGNMENT_BOTTOM ||
+                    alignment == SHELF_ALIGNMENT_BOTTOM_LOCKED) &&
+                   voice_interaction_state_ == VoiceInteractionState::STOPPED &&
+                   voice_interaction_setup_completed_;
   voice_interaction_overlay_->StartAnimation(show_icon);
 }
 
@@ -588,7 +594,9 @@ void AppListButton::GenerateAndSendBackEvent(
 bool AppListButton::IsVoiceInteractionActive() {
   if (voice_interaction_overlay_ &&
       chromeos::switches::IsVoiceInteractionEnabled() &&
-      is_primary_user_active_ && voice_interaction_settings_enabled_) {
+      is_primary_user_active_ &&
+      (voice_interaction_settings_enabled_ ||
+       !voice_interaction_setup_completed_)) {
     return true;
   }
   return false;

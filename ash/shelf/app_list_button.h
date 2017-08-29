@@ -75,6 +75,7 @@ class ASH_EXPORT AppListButton : public views::ImageButton,
   void OnVoiceInteractionStatusChanged(
       ash::VoiceInteractionState state) override;
   void OnVoiceInteractionEnabled(bool enabled) override;
+  void OnVoiceInteractionSetupCompleted() override;
 
   // SessionObserver:
   void OnActiveUserSessionChanged(const AccountId& account_id) override;
@@ -122,7 +123,10 @@ class ASH_EXPORT AppListButton : public views::ImageButton,
   bool is_primary_user_active_ = false;
 
   // Whether voice interaction is enabled in system settings.
-  bool voice_interaction_settings_enabled_ = true;
+  bool voice_interaction_settings_enabled_ = false;
+
+  // Whether voice intearction setup flow has completed.
+  bool voice_interaction_setup_completed_ = false;
 
   DISALLOW_COPY_AND_ASSIGN(AppListButton);
 };
