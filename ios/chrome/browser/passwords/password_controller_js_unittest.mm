@@ -331,4 +331,40 @@ TEST_F(PasswordControllerJsTest, FormActionIsNotSet) {
               ExecuteJavaScriptWithFormat(@"__gCrWeb.findPasswordForms()"));
 };
 
+// Check that if a form action is not set then the action is parsed to the
+// current url.
+TEST_F(PasswordControllerJsTest, OriginsHaveDifferentPaths) {
+  LoadHtmlAndInject(
+      @"<html><body>"
+       "<form name='login_form'>"
+       "  Name: <input type='text' name='name' id='name'>"
+       "  Password: <input type='password' name='password' id='password'>"
+       "  <input type='submit' value='Submit'>"
+       "</form>"
+       "</body></html>");
+
+  const std::string base_url_with_path = BaseUrl() + "/some/path";
+  NSString* const username = @"john.doe@gmail.com";
+  NSString* const password = @"super!secret";
+
+  NSString* form_fill_data =
+      [NSString stringWithFormat:
+                    @"{"
+                     "  \"action\":\"%s\","
+                     "  \"origin\":\"%s\","
+                     "  \"fields\":["
+                     "    {\"name\":\"name\", \"value\":\"name\"},"
+                     "    {\"name\":\"password\",\"value\":\"password\"}"
+                     "  ]"
+                     "}",
+                    BaseUrl().c_str(), base_url_with_path.c_str()];
+  EXPECT_NSEQ(@YES, ExecuteJavaScriptWithFormat(
+                        @"__gCrWeb.fillPasswordForm(%@, '%@', '%@', '%s')",
+                        form_fill_data, username, password, BaseUrl().c_str()));
+  // Verifies that the sign-in form has been filled with username/password.
+  ExecuteJavaScriptOnElementsAndCheck(@"document.getElementById('%@').value",
+                                      @[ @"name", @"password" ],
+                                      @[ username, password ]);
+};
+
 }  // namespace

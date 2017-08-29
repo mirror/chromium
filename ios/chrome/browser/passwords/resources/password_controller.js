@@ -275,7 +275,7 @@ if (__gCrWeb && !__gCrWeb['fillPasswordForm']) {
     var origin = formData['origin'];
     var normalizedOrigin = opt_normalizedOrigin ||
         __gCrWeb.common.removeQueryAndReferenceFromURL(win.location.href);
-    if (origin != normalizedOrigin) {
+    if (!__gCrWeb.common.isSameOrigin(origin, normalizedOrigin)) {
       return false;
     }
 
