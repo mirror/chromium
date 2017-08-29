@@ -205,9 +205,13 @@ void SurfaceAggregator::HandleSurfaceQuad(
                         damage_rect_in_quad_space,
                         damage_rect_in_quad_space_valid);
     } else if (!surface) {
+      fprintf(stderr, ">>>Missing %s during aggregation\n",
+              surface_id.ToString().c_str());
       DLOG(ERROR) << surface_id << " is missing during aggregation";
       ++uma_stats_.missing_surface;
     } else {
+      fprintf(stderr, ">>>%s not active during aggregation\n",
+              surface_id.ToString().c_str());
       DLOG(ERROR) << surface_id << " has no active frame during aggregation";
       ++uma_stats_.no_active_frame;
     }

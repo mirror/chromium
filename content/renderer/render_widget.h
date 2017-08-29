@@ -177,6 +177,10 @@ class CONTENT_EXPORT RenderWidget
 
   int32_t routing_id() const { return routing_id_; }
 
+  const viz::FrameSinkId& frame_sink_id() const { return frame_sink_id_; }
+
+  float device_scale_factor() const { return device_scale_factor_; }
+
   CompositorDependencies* compositor_deps() const { return compositor_deps_; }
   virtual blink::WebWidget* GetWebWidget() const;
 
@@ -658,6 +662,9 @@ class CONTENT_EXPORT RenderWidget
   // Routing ID that allows us to communicate to the parent browser process
   // RenderWidgetHost.
   const int32_t routing_id_;
+
+  // FrameSinkId that allows us to communicate with Viz.
+  const viz::FrameSinkId frame_sink_id_;
 
   // Dependencies for initializing a compositor, including flags for optional
   // features.
