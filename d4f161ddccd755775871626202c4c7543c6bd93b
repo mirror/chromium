@@ -122,6 +122,24 @@
       "revId": "d4f161ddccd755775871626202c4c7543c6bd93b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4017b4eb_ba0c98ba",
+        "filename": "chrome/browser/ui/webui/signin/signin_dice_internals_ui.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-08-29T15:25:14Z",
+      "side": 1,
+      "message": "TL;DR: Done (I moved DICE to signin-internals).\n\nLonger version:\nWe plan to start working on the DICE UI in sept (still waiting on mocks though), with a goal to finish it by the end of Q4. I expect the dice internals to only be used until the end of Q4.\n\nI discussed the option to move place this code in sign-in internals extensively with droger@ before creating this page and we both were in favor on having a separate WebUI for the DICE things that were temporary.\n\nHowever your comment made me realize that it would be better to fold this in sign-in settings, so I have done that now.",
+      "parentUuid": "4c264c65_8aa7627f",
+      "revId": "d4f161ddccd755775871626202c4c7543c6bd93b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
