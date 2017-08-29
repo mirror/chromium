@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "d929b72c_2d3c2200",
+        "filename": "media/formats/mp4/track_run_iterator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 331,
+      "author": {
+        "id": 1209910
+      },
+      "writtenOn": "2017-08-29T22:57:01Z",
+      "side": 1,
+      "message": "The problem happens when desc_idx \u003d\u003d stsd.audio_entries.size().\n\nSee line 333: tri.audio_description \u003d \u0026stsd.audio_entries[desc_idx];\n\nstsd.audio_entries[desc_idx] has array index out of bounds, which points to an unknown memory.\n\nBy replacing \"\u003e\" with \"\u003e\u003d\", the desc_idx is set to 0, which points to the first sample description, which will likely work. This allows more robust handling of bad contents.",
+      "parentUuid": "218728db_cd6729fb",
+      "range": {
+        "startLine": 331,
+        "startChar": 12,
+        "endLine": 331,
+        "endChar": 20
+      },
+      "revId": "ca48465be6a3a23b299c449f7aff8e22d42fc129",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e17c4f87_5c586403",
         "filename": "media/formats/mp4/track_run_iterator.cc",
         "patchSetId": 1
