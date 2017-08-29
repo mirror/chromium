@@ -16,6 +16,24 @@
       "revId": "4b31c00cb3233d088bf9da2dc0ab55ec541f54f7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f83e7b6_ef21a0c5",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/access-control-basic-get-fail-non-simple.htm",
+        "patchSetId": 4
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1225177
+      },
+      "writtenOn": "2017-08-29T00:02:48Z",
+      "side": 1,
+      "message": "Good point, thanks! I think I changed it to the right one, but let me know if it\u0027s still wrong",
+      "parentUuid": "9285174c_4e5004f2",
+      "revId": "4b31c00cb3233d088bf9da2dc0ab55ec541f54f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
