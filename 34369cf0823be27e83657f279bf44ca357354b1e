@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9330a748_063ec2ec",
+        "filename": "third_party/WebKit/Source/controller/BlinkInitializer.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2017-08-29T19:41:30Z",
+      "side": 1,
+      "message": "Is it possible for |IsWow64Process| to set |is_wow_64| to |TRUE| when `!defined(ARCH_CPU_X86_64) \u0026\u0026 !defined(ARCH_CPU_ARM64)`? Wondering about redundancy here.",
+      "revId": "34369cf0823be27e83657f279bf44ca357354b1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
