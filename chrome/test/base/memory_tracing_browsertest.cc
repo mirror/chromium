@@ -30,11 +30,14 @@ using base::trace_event::MemoryDumpType;
 using tracing::BeginTracingWithTraceConfig;
 using tracing::EndTracing;
 
+bool g_should_test_memory_dump_success = true;
+
 void RequestGlobalDumpCallback(base::Closure quit_closure,
                                bool success,
                                uint64_t) {
   base::ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE, quit_closure);
-  ASSERT_TRUE(success);
+  if (g_should_test_memory_dump_success)
+    ASSERT_TRUE(success);
 }
 
 void OnStartTracingDoneCallback(
@@ -46,14 +49,16 @@ void OnStartTracingDoneCallback(
           Bind(&RequestGlobalDumpCallback, quit_closure));
 }
 
-class TracingBrowserTest : public InProcessBrowserTest {
+class MemoryTracingBrowserTest : public InProcessBrowserTest {
  protected:
   // Execute some no-op javascript on the current tab - this triggers a trace
   // event in RenderFrameImpl::OnJavaScriptExecuteRequestForTests (from the
   // renderer process).
   void ExecuteJavascriptOnCurrentTab() {
-    content::RenderViewHost* rvh = browser()->tab_strip_model()->
-        GetActiveWebContents()->GetRenderViewHost();
+    content::RenderViewHost* rvh = browser()
+                                       ->tab_strip_model()
+                                       ->GetActiveWebContents()
+                                       ->GetRenderViewHost();
     ASSERT_TRUE(rvh);
     ASSERT_TRUE(content::ExecuteScript(rvh, ";"));
   }
@@ -94,15 +99,20 @@ class TracingBrowserTest : public InProcessBrowserTest {
     std::string json_events;
     ASSERT_TRUE(EndTracing(&json_events));
 
-    // Expect the basic memory dumps to be present in the trace.
-    EXPECT_NE(std::string::npos, json_events.find("process_totals"));
-    EXPECT_NE(std::string::npos, json_events.find("v8"));
-    EXPECT_NE(std::string::npos, json_events.find("blink_gc"));
+    if (g_should_test_memory_dump_success) {
+      // Expect the basic memory dumps to be present in the trace.
+      EXPECT_NE(std::string::npos, json_events.find("process_totals"));
+      EXPECT_NE(std::string::npos, json_events.find("v8"));
+      EXPECT_NE(std::string::npos, json_events.find("blink_gc"));
+    }
   }
 };
 
-// crbug.com/708487
-IN_PROC_BROWSER_TEST_F(TracingBrowserTest, DISABLED_TestMemoryInfra) {
+IN_PROC_BROWSER_TEST_F(MemoryTracingBrowserTest, TestMemoryInfra) {
+  // TODO(ssid): Test for dump success once the on start tracing done callback
+  // is fixed to be called after enable tracing is acked by all processes,
+  // crbug.com/709524. The test still tests if dumping does not crash.
+  g_should_test_memory_dump_success = false;
   PerformDumpMemoryTestActions(
       base::trace_event::TraceConfig(
           base::trace_event::TraceConfigMemoryTestUtil::
@@ -110,8 +120,11 @@ IN_PROC_BROWSER_TEST_F(TracingBrowserTest, DISABLED_TestMemoryInfra) {
       base::trace_event::MemoryDumpLevelOfDetail::DETAILED);
 }
 
-// crbug.com/708487
-IN_PROC_BROWSER_TEST_F(TracingBrowserTest, DISABLED_TestBackgroundMemoryInfra) {
+IN_PROC_BROWSER_TEST_F(MemoryTracingBrowserTest, TestBackgroundMemoryInfra) {
+  // TODO(ssid): Test for dump success once the on start tracing done callback
+  // is fixed to be called after enable tracing is acked by all processes,
+  // crbug.com/709524. The test still tests if dumping does not crash.
+  g_should_test_memory_dump_success = false;
   PerformDumpMemoryTestActions(
       base::trace_event::TraceConfig(
           base::trace_event::TraceConfigMemoryTestUtil::
