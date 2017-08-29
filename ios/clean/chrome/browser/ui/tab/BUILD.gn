@@ -8,11 +8,11 @@ source_set("tab") {
     "tab_coordinator.mm",
     "tab_navigation_controller.h",
     "tab_navigation_controller.mm",
+    "tab_strip_tab_coordinator.h",
+    "tab_strip_tab_coordinator.mm",
   ]
-
-  configs += [ "//build/config/compiler:enable_arc" ]
-
   deps = [
+    ":features",
     ":tab_ui",
     "//base",
     "//ios/chrome/browser",
@@ -20,6 +20,7 @@ source_set("tab") {
     "//ios/chrome/browser/ui/commands",
     "//ios/chrome/browser/ui/coordinators",
     "//ios/chrome/browser/web_state_list",
+    "//ios/clean/chrome/browser",
     "//ios/clean/chrome/browser/ui/actions",
     "//ios/clean/chrome/browser/ui/commands",
     "//ios/clean/chrome/browser/ui/find_in_page",
@@ -31,12 +32,27 @@ source_set("tab") {
     "//ios/shared/chrome/browser/ui/broadcaster",
     "//ios/web",
   ]
+  configs += [ "//build/config/compiler:enable_arc" ]
+}
+
+source_set("features") {
+  sources = [
+    "tab_features.cc",
+    "tab_features.h",
+  ]
+  deps = [
+    "//base",
+  ]
+  configs += [ "//build/config/compiler:enable_arc" ]
 }
 
 source_set("tab_ui") {
   sources = [
+    "tab_container_view_controller+internal.h",
     "tab_container_view_controller.h",
     "tab_container_view_controller.mm",
+    "tab_strip_tab_container_view_controller.h",
+    "tab_strip_tab_container_view_controller.mm",
   ]
   deps = [
     "//base",
@@ -53,23 +69,22 @@ source_set("tab_ui") {
 
 source_set("unit_tests") {
   testonly = true
-
   sources = [
     "tab_coordinator_unittest.mm",
   ]
-
-  configs += [ "//build/config/compiler:enable_arc" ]
-
   deps = [
     ":tab",
     ":tab_ui",
     "//base",
+    "//base/test:test_support",
     "//ios/chrome/browser/ui/browser_list",
     "//ios/chrome/browser/ui/coordinators",
     "//ios/chrome/browser/ui/coordinators:test_support",
     "//ios/chrome/browser/ui/toolbar/test",
+    "//ios/clean/chrome/browser/ui/tab:features",
     "//ios/web/public/test",
     "//ios/web/public/test/fakes",
     "//testing/gtest",
   ]
+  configs += [ "//build/config/compiler:enable_arc" ]
 }
