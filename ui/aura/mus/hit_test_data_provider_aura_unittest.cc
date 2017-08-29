@@ -2,8 +2,6 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "ui/aura/mus/window_tree_client.h"
-
 #include "components/viz/client/hit_test_data_provider.h"
 #include "ui/aura/client/aura_constants.h"
 #include "ui/aura/mus/window_mus.h"
