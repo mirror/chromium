@@ -14,6 +14,7 @@
 #include "base/gtest_prod_util.h"
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
+#include "base/optional.h"
 #include "base/threading/thread_checker.h"
 #include "base/win/object_watcher.h"
 #include "base/win/scoped_handle.h"
@@ -257,6 +258,8 @@ class NET_EXPORT UDPSocketWin : public base::win::ObjectWatcher::Delegate {
   // Binds to a random port on |address|.
   int RandomBind(const IPAddress& address);
 
+  int TrySetDiffServCodePoint(DiffServCodePoint dscp);
+
   SOCKET socket_;
   int addr_family_;
   bool is_connected_;
@@ -322,6 +325,8 @@ class NET_EXPORT UDPSocketWin : public base::win::ObjectWatcher::Delegate {
   // QWAVE data. Used to set DSCP bits on outgoing packets.
   HANDLE qos_handle_;
   QOS_FLOWID qos_flow_id_;
+
+  base::Optional<DiffServCodePoint> deferred_dscp_value_;
 
   THREAD_CHECKER(thread_checker_);
 
