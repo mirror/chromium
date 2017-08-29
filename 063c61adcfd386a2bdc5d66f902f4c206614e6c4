@@ -290,6 +290,24 @@
     },
     {
       "key": {
+        "uuid": "9597da49_752f620d",
+        "filename": "content/browser/loader/navigation_url_loader_unittest.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-08-29T20:27:07Z",
+      "side": 1,
+      "message": "Oh neat, I didn\u0027t realize we could get the cert from the server!\nI\u0027ve added that check to the test.",
+      "parentUuid": "49a2cfa0_cbe725aa",
+      "revId": "063c61adcfd386a2bdc5d66f902f4c206614e6c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "dbc849ca_046cf8cf",
         "filename": "content/browser/loader/navigation_url_loader_unittest.cc",
         "patchSetId": 25
