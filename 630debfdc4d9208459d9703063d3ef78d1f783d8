@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "4f3251ab_b71282e2",
+        "filename": "content/common/sandbox_linux/sandbox_linux.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 414,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2017-08-29T19:30:26Z",
+      "side": 1,
+      "message": "Another way to think of it could be:\n\n  if (sizeof(rlim_t) \u003d\u003d 8) {\n    ...\n  }\n\nI.e. test for the actual thing (actual capacity of rlim_t), rather than something (even very tightly) associated with the thing (ILP64-ness).\n\nI might also write the arithmetic expression with `ULL` for maximum clarity:\n\n  address_space_limit \u003d 1ULL \u003c\u003c 34;\n\n(On my machine `std::is_signed\u003crlim_t\u003e()` returns 0.)\n\nBut, this is just a nit. Whatever works is fine by me. :)",
+      "parentUuid": "3be6b256_8b3c5b3f",
+      "revId": "630debfdc4d9208459d9703063d3ef78d1f783d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "19a6d2cd_187e621d",
         "filename": "content/common/sandbox_linux/sandbox_linux.cc",
         "patchSetId": 1
