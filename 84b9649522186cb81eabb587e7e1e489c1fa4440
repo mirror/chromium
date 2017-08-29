@@ -90,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "5c335eb8_403c1312",
+        "filename": "components/security_interstitials_strings.grdp",
+        "patchSetId": 2
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-08-29T21:38:54Z",
+      "side": 1,
+      "message": "Yeah, there is no great way.\n- Screenshots for translators would help, but that\u0027s not implemented.\n- It would be great if we could semantically cross-reference strings instead of just mentioning the English version.\n\nI would personally leave out the title, since that makes the description longer without being too relevant (there aren\u0027t any important words that appear in both strings), and we rarely hardcode that much context.\nBut we might as well err on side of more detail if you prefer.",
+      "parentUuid": "80a19c37_dcb44ed4",
+      "revId": "84b9649522186cb81eabb587e7e1e489c1fa4440",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fd393f3d_7b821c53",
         "filename": "components/security_interstitials_strings.grdp",
         "patchSetId": 2
@@ -137,6 +155,24 @@
       "side": 1,
       "message": "I get where you\u0027re going with this, but I think that so much of this context needs to be repeated regardless that it wouldn\u0027t actually save space in the file.\n\nFor example, I would need to include this context in the new string description as well: \n\"Extended description for an error page hidden behind an \u0027Advanced\u0027 button. A user visits a website, antivirus or firewall software interferes with their connection, and they are shown this error. Page title reads \u0027An application is stopping Chrome from safely connection to this site\u0027 and there is a shorter description of the error shown above.\"\n\nWDYT?",
       "parentUuid": "b7423fae_efa4b956",
+      "revId": "84b9649522186cb81eabb587e7e1e489c1fa4440",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a98f503_6cb08f95",
+        "filename": "components/security_interstitials_strings.grdp",
+        "patchSetId": 2
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-08-29T21:38:54Z",
+      "side": 1,
+      "message": "I think the description is long enough that it\u0027s definitely worth splitting the common sentence.\n(Not to mention, that will also prevent the second sentence from getting out of sync in both strings that contain it.)",
+      "parentUuid": "b94ff84e_4b9d1ff5",
       "revId": "84b9649522186cb81eabb587e7e1e489c1fa4440",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
