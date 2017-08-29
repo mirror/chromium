@@ -1129,6 +1129,9 @@ void RenderText::UpdateForceLTRs() {
   if (!IsRenderedAsUrl())
     return;
 
+  // We're going to try a different approach.
+  return;
+
   // TODO(mgiuca): If there are no RTL characters in |text_|, early-out as an
   // optimization. This doesn't optimize the below loop, but ensures we don't
   // have a tonne of |force_ltrs_| hanging around on all-LTR URLs. An
