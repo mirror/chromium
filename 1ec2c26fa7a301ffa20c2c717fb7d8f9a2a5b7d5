@@ -22,6 +22,30 @@
       "revId": "1ec2c26fa7a301ffa20c2c717fb7d8f9a2a5b7d5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "719ecea8_b119336b",
+        "filename": "remoting/webapp/base/js/chromoting_event.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 272,
+      "author": {
+        "id": 1115938
+      },
+      "writtenOn": "2017-08-29T20:51:36Z",
+      "side": 1,
+      "message": "Yes, I agree the naming is confusing.  Unfortunately, renaming an enum type is not backward compatible and will be frowned on during log reviews.  Alternatively, I can create a separate Enum type and a separate field for it.  However, given the metric is temporary, I would prefer to leave it as is if you don\u0027t have strong objection.",
+      "parentUuid": "61eb0333_a3d36746",
+      "range": {
+        "startLine": 272,
+        "startChar": 26,
+        "endLine": 272,
+        "endChar": 0
+      },
+      "revId": "1ec2c26fa7a301ffa20c2c717fb7d8f9a2a5b7d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
