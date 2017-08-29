@@ -11,7 +11,6 @@
 #include "cc/animation/animation_host.h"
 #include "cc/animation/animation_id_provider.h"
 #include "cc/animation/keyframed_animation_curve.h"
-#include "cc/base/math_util.h"
 #include "cc/input/main_thread_scrolling_reason.h"
 #include "cc/layers/layer_impl.h"
 #include "cc/layers/solid_color_scrollbar_layer.h"
@@ -333,8 +332,8 @@ TEST_F(LayerTest, LayerPropertyChangedForSubtree) {
       child2->PushPropertiesTo(child2_impl.get());
       grand_child->PushPropertiesTo(grand_child_impl.get()));
 
-  FilterOperations arbitrary_filters;
-  arbitrary_filters.Append(FilterOperation::CreateOpacityFilter(0.5f));
+  gfx::FilterOperations arbitrary_filters;
+  arbitrary_filters.Append(gfx::FilterOperation::CreateOpacityFilter(0.5f));
   EXPECT_CALL(*layer_tree_host_, SetNeedsCommit()).Times(1);
   EXECUTE_AND_VERIFY_SUBTREE_CHANGED(root->SetFilters(arbitrary_filters));
   EXECUTE_AND_VERIFY_SUBTREE_CHANGES_RESET(

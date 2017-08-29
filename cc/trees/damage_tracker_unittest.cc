@@ -6,9 +6,6 @@
 
 #include <stddef.h>
 
-#include "cc/base/filter_operation.h"
-#include "cc/base/filter_operations.h"
-#include "cc/base/math_util.h"
 #include "cc/layers/layer_impl.h"
 #include "cc/test/fake_impl_task_runner_provider.h"
 #include "cc/test/fake_layer_tree_host_impl.h"
@@ -20,8 +17,11 @@
 #include "cc/trees/single_thread_proxy.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "third_party/skia/include/effects/SkBlurImageFilter.h"
+#include "ui/gfx/filter_operation.h"
+#include "ui/gfx/filter_operations.h"
 #include "ui/gfx/geometry/quad_f.h"
 #include "ui/gfx/geometry/rect_conversions.h"
+#include "ui/gfx/math_util.h"
 
 namespace cc {
 namespace {
@@ -664,7 +664,7 @@ TEST_F(DamageTrackerTest, VerifyDamageForPerspectiveClippedLayer) {
   // w < 0, otherwise this test is not actually testing the intended scenario.
   gfx::RectF test_rect(child->position(), gfx::SizeF(child->bounds()));
   bool clipped = false;
-  MathUtil::MapQuad(transform, gfx::QuadF(test_rect), &clipped);
+  gfx::MathUtil::MapQuad(transform, gfx::QuadF(test_rect), &clipped);
   EXPECT_TRUE(clipped);
 
   // Damage the child without moving it.
@@ -696,8 +696,8 @@ TEST_F(DamageTrackerTest, VerifyDamageForBlurredSurface) {
   LayerImpl* surface = root->test_properties()->children[0];
   LayerImpl* child = surface->test_properties()->children[0];
 
-  FilterOperations filters;
-  filters.Append(FilterOperation::CreateBlurFilter(5.f));
+  gfx::FilterOperations filters;
+  filters.Append(gfx::FilterOperation::CreateBlurFilter(5.f));
 
   // Setting the filter should not damage the conrresponding render surface.
   ClearDamageForAllSurfaces(root);
@@ -741,8 +741,8 @@ TEST_F(DamageTrackerTest, VerifyDamageForImageFilter) {
   // Allow us to set damage on child too.
   child->SetDrawsContent(true);
 
-  FilterOperations filters;
-  filters.Append(FilterOperation::CreateReferenceFilter(
+  gfx::FilterOperations filters;
+  filters.Append(gfx::FilterOperation::CreateReferenceFilter(
       SkBlurImageFilter::Make(2, 2, nullptr)));
 
   // Setting the filter will damage the whole surface.
@@ -822,8 +822,8 @@ TEST_F(DamageTrackerTest, VerifyDamageForTransformedImageFilter) {
   // Allow us to set damage on child too.
   child->SetDrawsContent(true);
 
-  FilterOperations filters;
-  filters.Append(FilterOperation::CreateReferenceFilter(
+  gfx::FilterOperations filters;
+  filters.Append(gfx::FilterOperation::CreateReferenceFilter(
       SkBlurImageFilter::Make(2, 2, nullptr)));
 
   // Setting the filter will damage the whole surface.
@@ -880,8 +880,8 @@ TEST_F(DamageTrackerTest, VerifyDamageForHighDPIImageFilter) {
   // Allow us to set damage on child too.
   child->SetDrawsContent(true);
 
-  FilterOperations filters;
-  filters.Append(FilterOperation::CreateBlurFilter(3.f));
+  gfx::FilterOperations filters;
+  filters.Append(gfx::FilterOperation::CreateBlurFilter(3.f));
 
   // Setting the filter will damage the whole surface.
   ClearDamageForAllSurfaces(root);
@@ -931,8 +931,8 @@ TEST_F(DamageTrackerTest, VerifyDamageForBackgroundBlurredChild) {
   // Allow us to set damage on child1 too.
   child1->SetDrawsContent(true);
 
-  FilterOperations filters;
-  filters.Append(FilterOperation::CreateBlurFilter(2.f));
+  gfx::FilterOperations filters;
+  filters.Append(gfx::FilterOperation::CreateBlurFilter(2.f));
 
   // Setting the filter will damage the whole surface.
   ClearDamageForAllSurfaces(root);
@@ -1787,8 +1787,8 @@ TEST_F(DamageTrackerTest, DamageRectTooBigWithFilter) {
   LayerImpl* child1 = root->test_properties()->children[0];
   LayerImpl* child2 = root->test_properties()->children[1];
 
-  FilterOperations filters;
-  filters.Append(FilterOperation::CreateBlurFilter(5.f));
+  gfx::FilterOperations filters;
+  filters.Append(gfx::FilterOperation::CreateBlurFilter(5.f));
   root->SetDrawsContent(true);
   root->test_properties()->background_filters = filters;
 
@@ -1913,8 +1913,8 @@ TEST_F(DamageTrackerTest, DamageRectTooBigInRenderSurfaceWithFilter) {
   LayerImpl* grandchild2 = child1->test_properties()->children[1];
 
   // Set up a moving pixels filter on the child.
-  FilterOperations filters;
-  filters.Append(FilterOperation::CreateBlurFilter(5.f));
+  gfx::FilterOperations filters;
+  filters.Append(gfx::FilterOperation::CreateBlurFilter(5.f));
   child1->SetDrawsContent(true);
   child1->test_properties()->background_filters = filters;
 

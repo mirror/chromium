@@ -5,13 +5,13 @@
 #ifndef CompositorFilterOperations_h
 #define CompositorFilterOperations_h
 
-#include "cc/base/filter_operations.h"
 #include "platform/PlatformExport.h"
 #include "platform/geometry/FloatRect.h"
 #include "platform/geometry/IntPoint.h"
 #include "platform/graphics/Color.h"
 #include "platform/wtf/text/WTFString.h"
 #include "third_party/skia/include/core/SkScalar.h"
+#include "ui/gfx/filter_operations.h"
 
 class SkImageFilter;
 
@@ -20,8 +20,8 @@ namespace blink {
 // An ordered list of filter operations.
 class PLATFORM_EXPORT CompositorFilterOperations {
  public:
-  const cc::FilterOperations& AsCcFilterOperations() const;
-  cc::FilterOperations ReleaseCcFilterOperations();
+  const gfx::FilterOperations& AsCcFilterOperations() const;
+  gfx::FilterOperations ReleaseCcFilterOperations();
 
   void AppendGrayscaleFilter(float amount);
   void AppendSepiaFilter(float amount);
@@ -33,7 +33,7 @@ class PLATFORM_EXPORT CompositorFilterOperations {
   void AppendOpacityFilter(float amount);
   void AppendBlurFilter(float amount);
   void AppendDropShadowFilter(IntPoint offset, float std_deviation, Color);
-  void AppendColorMatrixFilter(const cc::FilterOperation::Matrix&);
+  void AppendColorMatrixFilter(const gfx::FilterOperation::Matrix&);
   void AppendZoomFilter(float amount, int inset);
   void AppendSaturatingBrightnessFilter(float amount);
 
@@ -60,7 +60,7 @@ class PLATFORM_EXPORT CompositorFilterOperations {
   String ToString() const;
 
  private:
-  cc::FilterOperations filter_operations_;
+  gfx::FilterOperations filter_operations_;
 };
 
 }  // namespace blink

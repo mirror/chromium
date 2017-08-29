@@ -8,7 +8,6 @@
 
 #include "base/memory/aligned_memory.h"
 #include "base/message_loop/message_loop.h"
-#include "cc/base/math_util.h"
 #include "cc/paint/paint_flags.h"
 #include "cc/paint/skia_paint_canvas.h"
 #include "cc/quads/draw_quad.h"
@@ -30,6 +29,7 @@
 #include "third_party/skia/include/effects/SkColorMatrixFilter.h"
 #include "ui/gfx/color_transform.h"
 #include "ui/gfx/geometry/rect_conversions.h"
+#include "ui/gfx/math_util.h"
 #include "ui/gfx/test/icc_profiles.h"
 
 using gpu::gles2::GLES2Interface;
@@ -1593,9 +1593,9 @@ TYPED_TEST(RendererPixelTest, FastPassColorFilterAlpha) {
   matrix[13] = matrix[14] = 0;
   matrix[15] = matrix[16] = matrix[17] = matrix[19] = 0;
   matrix[18] = 1;
-  FilterOperations filters;
-  filters.Append(
-      FilterOperation::CreateReferenceFilter(SkColorFilterImageFilter::Make(
+  gfx::FilterOperations filters;
+  filters.Append(gfx::FilterOperation::CreateReferenceFilter(
+      SkColorFilterImageFilter::Make(
           SkColorFilter::MakeMatrixFilterRowMajor255(matrix), nullptr)));
 
   std::unique_ptr<RenderPass> child_pass =
@@ -1661,8 +1661,8 @@ TYPED_TEST(RendererPixelTest, FastPassSaturateFilter) {
   int child_pass_id = 2;
   gfx::Rect pass_rect(this->device_viewport_size_);
   gfx::Transform transform_to_root;
-  FilterOperations filters;
-  filters.Append(FilterOperation::CreateSaturateFilter(0.5f));
+  gfx::FilterOperations filters;
+  filters.Append(gfx::FilterOperation::CreateSaturateFilter(0.5f));
 
   std::unique_ptr<RenderPass> child_pass =
       CreateTestRenderPass(child_pass_id, pass_rect, transform_to_root);
@@ -1726,9 +1726,9 @@ TYPED_TEST(RendererPixelTest, FastPassFilterChain) {
   int child_pass_id = 2;
   gfx::Rect pass_rect(this->device_viewport_size_);
   gfx::Transform transform_to_root;
-  FilterOperations filters;
-  filters.Append(FilterOperation::CreateGrayscaleFilter(1.f));
-  filters.Append(FilterOperation::CreateBrightnessFilter(0.5f));
+  gfx::FilterOperations filters;
+  filters.Append(gfx::FilterOperation::CreateGrayscaleFilter(1.f));
+  filters.Append(gfx::FilterOperation::CreateBrightnessFilter(0.5f));
 
   std::unique_ptr<RenderPass> child_pass =
       CreateTestRenderPass(child_pass_id, pass_rect, transform_to_root);
@@ -1812,9 +1812,9 @@ TYPED_TEST(RendererPixelTest, FastPassColorFilterAlphaTranslation) {
   matrix[14] = 1.5f;
   matrix[15] = matrix[16] = matrix[17] = matrix[19] = 0;
   matrix[18] = 1;
-  FilterOperations filters;
-  filters.Append(
-      FilterOperation::CreateReferenceFilter(SkColorFilterImageFilter::Make(
+  gfx::FilterOperations filters;
+  filters.Append(gfx::FilterOperation::CreateReferenceFilter(
+      SkColorFilterImageFilter::Make(
           SkColorFilter::MakeMatrixFilterRowMajor255(matrix), nullptr)));
 
   std::unique_ptr<RenderPass> child_pass =
@@ -2262,7 +2262,7 @@ class RendererPixelTestWithBackgroundFilter
   }
 
   RenderPassList pass_list_;
-  FilterOperations background_filters_;
+  gfx::FilterOperations background_filters_;
   gfx::Transform filter_pass_to_target_transform_;
   gfx::Rect filter_pass_layer_rect_;
 };
@@ -2278,7 +2278,7 @@ typedef RendererPixelTestWithBackgroundFilter<viz::GLRenderer>
 // TODO(skaslev): The software renderer does not support filters yet.
 TEST_F(GLRendererPixelTestWithBackgroundFilter, InvertFilter) {
   this->background_filters_.Append(
-      FilterOperation::CreateInvertFilter(1.f));
+      gfx::FilterOperation::CreateInvertFilter(1.f));
 
   this->filter_pass_layer_rect_ = gfx::Rect(this->device_viewport_size_);
   this->filter_pass_layer_rect_.Inset(12, 14, 16, 18);
@@ -2613,7 +2613,7 @@ TYPED_TEST(SoftwareRendererPixelTest, PictureDrawQuadIdentityScale) {
   bool needs_blending = true;
   gfx::Transform blue_quad_to_target_transform;
   blue_quad_to_target_transform.Translate(offset.x(), offset.y());
-  gfx::Rect blue_target_clip_rect = MathUtil::MapEnclosingClippedRect(
+  gfx::Rect blue_target_clip_rect = gfx::MathUtil::MapEnclosingClippedRect(
       blue_quad_to_target_transform, blue_clip_rect);
   SharedQuadState* blue_shared_state =
       CreateTestSharedQuadStateClipped(blue_quad_to_target_transform, blue_rect,

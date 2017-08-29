@@ -9,7 +9,6 @@
 
 #include <memory>
 
-#include "cc/base/filter_operations.h"
 #include "cc/cc_export.h"
 #include "cc/quads/draw_quad.h"
 #include "cc/quads/render_pass.h"

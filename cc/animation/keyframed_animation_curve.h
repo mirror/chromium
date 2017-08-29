@@ -100,20 +100,20 @@ class CC_ANIMATION_EXPORT FilterKeyframe : public Keyframe {
  public:
   static std::unique_ptr<FilterKeyframe> Create(
       base::TimeDelta time,
-      const FilterOperations& value,
+      const gfx::FilterOperations& value,
       std::unique_ptr<TimingFunction> timing_function);
   ~FilterKeyframe() override;
 
-  const FilterOperations& Value() const;
+  const gfx::FilterOperations& Value() const;
 
   std::unique_ptr<FilterKeyframe> Clone() const;
 
  private:
   FilterKeyframe(base::TimeDelta time,
-                 const FilterOperations& value,
+                 const gfx::FilterOperations& value,
                  std::unique_ptr<TimingFunction> timing_function);
 
-  FilterOperations value_;
+  gfx::FilterOperations value_;
 };
 
 class CC_ANIMATION_EXPORT SizeKeyframe : public Keyframe {
@@ -301,7 +301,7 @@ class CC_ANIMATION_EXPORT KeyframedFilterAnimationCurve
   std::unique_ptr<AnimationCurve> Clone() const override;
 
   // FilterAnimationCurve implementation
-  FilterOperations GetValue(base::TimeDelta t) const override;
+  gfx::FilterOperations GetValue(base::TimeDelta t) const override;
   bool HasFilterThatMovesPixels() const override;
 
  private:

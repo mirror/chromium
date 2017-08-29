@@ -9,15 +9,15 @@
 #include <algorithm>
 
 #include "base/memory/ptr_util.h"
-#include "cc/base/filter_operations.h"
-#include "cc/base/math_util.h"
 #include "cc/layers/heads_up_display_layer_impl.h"
 #include "cc/layers/layer_impl.h"
 #include "cc/layers/render_surface_impl.h"
 #include "cc/trees/effect_node.h"
 #include "cc/trees/layer_tree_host_common.h"
 #include "cc/trees/layer_tree_impl.h"
+#include "ui/gfx/filter_operations.h"
 #include "ui/gfx/geometry/rect_conversions.h"
+#include "ui/gfx/math_util.h"
 
 namespace cc {
 
@@ -333,7 +333,7 @@ DamageTracker::DamageAccumulator DamageTracker::TrackDamageFromLeftoverRects() {
 
 void DamageTracker::ExpandDamageInsideRectWithFilters(
     const gfx::Rect& pre_filter_rect,
-    const FilterOperations& filters) {
+    const gfx::FilterOperations& filters) {
   gfx::Rect damage_rect;
   bool is_valid_rect = damage_for_this_update_.GetAsRect(&damage_rect);
   // If the damage accumulated so far isn't a valid rect or empty, then there is
@@ -392,8 +392,9 @@ void DamageTracker::AccumulateDamageFromLayer(LayerImpl* layer) {
     damage_rect.Intersect(gfx::Rect(layer->bounds()));
 
     if (!damage_rect.IsEmpty()) {
-      gfx::Rect damage_rect_in_target_space = MathUtil::MapEnclosingClippedRect(
-          layer->DrawTransform(), damage_rect);
+      gfx::Rect damage_rect_in_target_space =
+          gfx::MathUtil::MapEnclosingClippedRect(layer->DrawTransform(),
+                                                 damage_rect);
       damage_for_this_update_.Union(damage_rect_in_target_space);
     }
   }
@@ -447,8 +448,9 @@ void DamageTracker::AccumulateDamageFromRenderSurface(
       // If there was damage, transform it to target space, and possibly
       // contribute its reflection if needed.
       const gfx::Transform& draw_transform = render_surface->draw_transform();
-      gfx::Rect damage_rect_in_target_space = MathUtil::MapEnclosingClippedRect(
-          draw_transform, damage_rect_in_local_space);
+      gfx::Rect damage_rect_in_target_space =
+          gfx::MathUtil::MapEnclosingClippedRect(draw_transform,
+                                                 damage_rect_in_local_space);
       damage_for_this_update_.Union(damage_rect_in_target_space);
     } else if (!is_valid_rect) {
       damage_for_this_update_.Union(surface_rect_in_target_space);
@@ -461,7 +463,7 @@ void DamageTracker::AccumulateDamageFromRenderSurface(
   // those pixels from the surface with only the contents of layers below this
   // one in them. This means we need to redraw any pixels in the surface being
   // used for the blur in this layer this frame.
-  const FilterOperations& background_filters =
+  const gfx::FilterOperations& background_filters =
       render_surface->BackgroundFilters();
   if (background_filters.HasFilterThatMovesPixels()) {
     ExpandDamageInsideRectWithFilters(surface_rect_in_target_space,

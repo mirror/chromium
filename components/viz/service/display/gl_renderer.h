@@ -163,8 +163,8 @@ class VIZ_SERVICE_EXPORT GLRenderer : public cc::DirectRenderer {
   gfx::Rect GetBackdropBoundingBoxForRenderPassQuad(
       const cc::RenderPassDrawQuad* quad,
       const gfx::Transform& contents_device_transform,
-      const cc::FilterOperations* filters,
-      const cc::FilterOperations* background_filters,
+      const gfx::FilterOperations* filters,
+      const gfx::FilterOperations* background_filters,
       const gfx::QuadF* clip_region,
       bool use_aa,
       gfx::Rect* unclipped_rect);
@@ -173,10 +173,10 @@ class VIZ_SERVICE_EXPORT GLRenderer : public cc::DirectRenderer {
 
   static bool ShouldApplyBackgroundFilters(
       const cc::RenderPassDrawQuad* quad,
-      const cc::FilterOperations* background_filters);
+      const gfx::FilterOperations* background_filters);
   sk_sp<SkImage> ApplyBackgroundFilters(
       const cc::RenderPassDrawQuad* quad,
-      const cc::FilterOperations& background_filters,
+      const gfx::FilterOperations& background_filters,
       cc::ScopedResource* background_texture,
       const gfx::RectF& rect,
       const gfx::RectF& unclipped_rect);

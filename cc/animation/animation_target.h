@@ -9,6 +9,7 @@
 #include "third_party/skia/include/core/SkColor.h"
 
 namespace gfx {
+class FilterOperations;
 class ScrollOffset;
 class SizeF;
 }  // namespace gfx
@@ -16,7 +17,6 @@ class SizeF;
 namespace cc {
 
 class Animation;
-class FilterOperations;
 class TransformOperations;
 
 // An AnimationTarget is an entity that can be affected by a ticking
@@ -28,7 +28,7 @@ class CC_ANIMATION_EXPORT AnimationTarget {
   virtual void NotifyClientFloatAnimated(float opacity,
                                          int target_property_id,
                                          Animation* animation) {}
-  virtual void NotifyClientFilterAnimated(const FilterOperations& filter,
+  virtual void NotifyClientFilterAnimated(const gfx::FilterOperations& filter,
                                           int target_property_id,
                                           Animation* animation) {}
   virtual void NotifyClientSizeAnimated(const gfx::SizeF& size,

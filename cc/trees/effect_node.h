@@ -5,9 +5,9 @@
 #ifndef CC_TREES_EFFECT_NODE_H_
 #define CC_TREES_EFFECT_NODE_H_
 
-#include "cc/base/filter_operations.h"
 #include "cc/cc_export.h"
 #include "third_party/skia/include/core/SkBlendMode.h"
+#include "ui/gfx/filter_operations.h"
 #include "ui/gfx/geometry/point_f.h"
 #include "ui/gfx/geometry/size_f.h"
 
@@ -38,8 +38,8 @@ struct CC_EXPORT EffectNode {
   float opacity;
   float screen_space_opacity;
 
-  FilterOperations filters;
-  FilterOperations background_filters;
+  gfx::FilterOperations filters;
+  gfx::FilterOperations background_filters;
   gfx::PointF filters_origin;
 
   SkBlendMode blend_mode;

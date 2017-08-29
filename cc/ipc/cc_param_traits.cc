@@ -11,7 +11,6 @@
 #include "base/time/time.h"
 #include "base/trace_event/trace_event.h"
 #include "base/unguessable_token.h"
-#include "cc/base/filter_operations.h"
 #include "cc/output/compositor_frame.h"
 #include "cc/quads/debug_border_draw_quad.h"
 #include "cc/quads/draw_quad.h"
@@ -27,47 +26,48 @@
 #include "third_party/skia/include/core/SkImageFilter.h"
 #include "third_party/skia/include/core/SkRefCnt.h"
 #include "third_party/skia/include/effects/SkBlurImageFilter.h"
+#include "ui/gfx/filter_operations.h"
 #include "ui/gfx/ipc/geometry/gfx_param_traits.h"
 #include "ui/gfx/ipc/skia/gfx_skia_param_traits.h"
 
 namespace IPC {
 
-void ParamTraits<cc::FilterOperation>::GetSize(base::PickleSizer* s,
-                                               const param_type& p) {
+void ParamTraits<gfx::FilterOperation>::GetSize(base::PickleSizer* s,
+                                                const param_type& p) {
   GetParamSize(s, p.type());
   switch (p.type()) {
-    case cc::FilterOperation::GRAYSCALE:
-    case cc::FilterOperation::SEPIA:
-    case cc::FilterOperation::SATURATE:
-    case cc::FilterOperation::HUE_ROTATE:
-    case cc::FilterOperation::INVERT:
-    case cc::FilterOperation::BRIGHTNESS:
-    case cc::FilterOperation::SATURATING_BRIGHTNESS:
-    case cc::FilterOperation::CONTRAST:
-    case cc::FilterOperation::OPACITY:
+    case gfx::FilterOperation::GRAYSCALE:
+    case gfx::FilterOperation::SEPIA:
+    case gfx::FilterOperation::SATURATE:
+    case gfx::FilterOperation::HUE_ROTATE:
+    case gfx::FilterOperation::INVERT:
+    case gfx::FilterOperation::BRIGHTNESS:
+    case gfx::FilterOperation::SATURATING_BRIGHTNESS:
+    case gfx::FilterOperation::CONTRAST:
+    case gfx::FilterOperation::OPACITY:
       GetParamSize(s, p.amount());
       break;
-    case cc::FilterOperation::BLUR:
+    case gfx::FilterOperation::BLUR:
       GetParamSize(s, p.amount());
       GetParamSize(s, p.blur_tile_mode());
       break;
-    case cc::FilterOperation::DROP_SHADOW:
+    case gfx::FilterOperation::DROP_SHADOW:
       GetParamSize(s, p.drop_shadow_offset());
       GetParamSize(s, p.amount());
       GetParamSize(s, p.drop_shadow_color());
       break;
-    case cc::FilterOperation::COLOR_MATRIX:
+    case gfx::FilterOperation::COLOR_MATRIX:
       for (int i = 0; i < 20; ++i)
         GetParamSize(s, p.matrix()[i]);
       break;
-    case cc::FilterOperation::ZOOM:
+    case gfx::FilterOperation::ZOOM:
       GetParamSize(s, p.amount());
       GetParamSize(s, p.zoom_inset());
       break;
-    case cc::FilterOperation::REFERENCE:
+    case gfx::FilterOperation::REFERENCE:
       GetParamSize(s, p.image_filter());
       break;
-    case cc::FilterOperation::ALPHA_THRESHOLD:
+    case gfx::FilterOperation::ALPHA_THRESHOLD:
       GetParamSize(s, p.amount());
       GetParamSize(s, p.outer_threshold());
       GetParamSize(s, p.shape());
@@ -75,44 +75,44 @@ void ParamTraits<cc::FilterOperation>::GetSize(base::PickleSizer* s,
   }
 }
 
-void ParamTraits<cc::FilterOperation>::Write(base::Pickle* m,
-                                             const param_type& p) {
+void ParamTraits<gfx::FilterOperation>::Write(base::Pickle* m,
+                                              const param_type& p) {
   TRACE_EVENT0(TRACE_DISABLED_BY_DEFAULT("cc.debug.ipc"),
                "ParamTraits::FilterOperation::Write");
   WriteParam(m, p.type());
   switch (p.type()) {
-    case cc::FilterOperation::GRAYSCALE:
-    case cc::FilterOperation::SEPIA:
-    case cc::FilterOperation::SATURATE:
-    case cc::FilterOperation::HUE_ROTATE:
-    case cc::FilterOperation::INVERT:
-    case cc::FilterOperation::BRIGHTNESS:
-    case cc::FilterOperation::SATURATING_BRIGHTNESS:
-    case cc::FilterOperation::CONTRAST:
-    case cc::FilterOperation::OPACITY:
+    case gfx::FilterOperation::GRAYSCALE:
+    case gfx::FilterOperation::SEPIA:
+    case gfx::FilterOperation::SATURATE:
+    case gfx::FilterOperation::HUE_ROTATE:
+    case gfx::FilterOperation::INVERT:
+    case gfx::FilterOperation::BRIGHTNESS:
+    case gfx::FilterOperation::SATURATING_BRIGHTNESS:
+    case gfx::FilterOperation::CONTRAST:
+    case gfx::FilterOperation::OPACITY:
       WriteParam(m, p.amount());
       break;
-    case cc::FilterOperation::BLUR:
+    case gfx::FilterOperation::BLUR:
       WriteParam(m, p.amount());
       WriteParam(m, p.blur_tile_mode());
       break;
-    case cc::FilterOperation::DROP_SHADOW:
+    case gfx::FilterOperation::DROP_SHADOW:
       WriteParam(m, p.drop_shadow_offset());
       WriteParam(m, p.amount());
       WriteParam(m, p.drop_shadow_color());
       break;
-    case cc::FilterOperation::COLOR_MATRIX:
+    case gfx::FilterOperation::COLOR_MATRIX:
       for (int i = 0; i < 20; ++i)
         WriteParam(m, p.matrix()[i]);
       break;
-    case cc::FilterOperation::ZOOM:
+    case gfx::FilterOperation::ZOOM:
       WriteParam(m, p.amount());
       WriteParam(m, p.zoom_inset());
       break;
-    case cc::FilterOperation::REFERENCE:
+    case gfx::FilterOperation::REFERENCE:
       WriteParam(m, p.image_filter());
       break;
-    case cc::FilterOperation::ALPHA_THRESHOLD:
+    case gfx::FilterOperation::ALPHA_THRESHOLD:
       WriteParam(m, p.amount());
       WriteParam(m, p.outer_threshold());
       WriteParam(m, p.shape());
@@ -120,18 +120,18 @@ void ParamTraits<cc::FilterOperation>::Write(base::Pickle* m,
   }
 }
 
-bool ParamTraits<cc::FilterOperation>::Read(const base::Pickle* m,
-                                            base::PickleIterator* iter,
-                                            param_type* r) {
+bool ParamTraits<gfx::FilterOperation>::Read(const base::Pickle* m,
+                                             base::PickleIterator* iter,
+                                             param_type* r) {
   TRACE_EVENT0(TRACE_DISABLED_BY_DEFAULT("cc.debug.ipc"),
                "ParamTraits::FilterOperation::Read");
-  cc::FilterOperation::FilterType type;
+  gfx::FilterOperation::FilterType type;
   float amount;
   float outer_threshold;
   gfx::Point drop_shadow_offset;
   SkColor drop_shadow_color;
   SkScalar matrix[20];
-  cc::FilterOperation::ShapeRects shape;
+  gfx::FilterOperation::ShapeRects shape;
   int zoom_inset;
   SkBlurImageFilter::TileMode tile_mode;
 
@@ -141,28 +141,28 @@ bool ParamTraits<cc::FilterOperation>::Read(const base::Pickle* m,
 
   bool success = false;
   switch (type) {
-    case cc::FilterOperation::GRAYSCALE:
-    case cc::FilterOperation::SEPIA:
-    case cc::FilterOperation::SATURATE:
-    case cc::FilterOperation::HUE_ROTATE:
-    case cc::FilterOperation::INVERT:
-    case cc::FilterOperation::BRIGHTNESS:
-    case cc::FilterOperation::SATURATING_BRIGHTNESS:
-    case cc::FilterOperation::CONTRAST:
-    case cc::FilterOperation::OPACITY:
+    case gfx::FilterOperation::GRAYSCALE:
+    case gfx::FilterOperation::SEPIA:
+    case gfx::FilterOperation::SATURATE:
+    case gfx::FilterOperation::HUE_ROTATE:
+    case gfx::FilterOperation::INVERT:
+    case gfx::FilterOperation::BRIGHTNESS:
+    case gfx::FilterOperation::SATURATING_BRIGHTNESS:
+    case gfx::FilterOperation::CONTRAST:
+    case gfx::FilterOperation::OPACITY:
       if (ReadParam(m, iter, &amount)) {
         r->set_amount(amount);
         success = true;
       }
       break;
-    case cc::FilterOperation::BLUR:
+    case gfx::FilterOperation::BLUR:
       if (ReadParam(m, iter, &amount) && ReadParam(m, iter, &tile_mode)) {
         r->set_amount(amount);
         r->set_blur_tile_mode(tile_mode);
         success = true;
       }
       break;
-    case cc::FilterOperation::DROP_SHADOW:
+    case gfx::FilterOperation::DROP_SHADOW:
       if (ReadParam(m, iter, &drop_shadow_offset) &&
           ReadParam(m, iter, &amount) &&
           ReadParam(m, iter, &drop_shadow_color)) {
@@ -172,7 +172,7 @@ bool ParamTraits<cc::FilterOperation>::Read(const base::Pickle* m,
         success = true;
       }
       break;
-    case cc::FilterOperation::COLOR_MATRIX: {
+    case gfx::FilterOperation::COLOR_MATRIX: {
       int i;
       for (i = 0; i < 20; ++i) {
         if (!ReadParam(m, iter, &matrix[i]))
@@ -184,7 +184,7 @@ bool ParamTraits<cc::FilterOperation>::Read(const base::Pickle* m,
       }
       break;
     }
-    case cc::FilterOperation::ZOOM:
+    case gfx::FilterOperation::ZOOM:
       if (ReadParam(m, iter, &amount) && ReadParam(m, iter, &zoom_inset) &&
           amount >= 0.f && zoom_inset >= 0) {
         r->set_amount(amount);
@@ -192,7 +192,7 @@ bool ParamTraits<cc::FilterOperation>::Read(const base::Pickle* m,
         success = true;
       }
       break;
-    case cc::FilterOperation::REFERENCE: {
+    case gfx::FilterOperation::REFERENCE: {
       sk_sp<SkImageFilter> filter;
       if (!ReadParam(m, iter, &filter)) {
         success = false;
@@ -202,7 +202,7 @@ bool ParamTraits<cc::FilterOperation>::Read(const base::Pickle* m,
       success = true;
       break;
     }
-    case cc::FilterOperation::ALPHA_THRESHOLD:
+    case gfx::FilterOperation::ALPHA_THRESHOLD:
       if (ReadParam(m, iter, &amount) && ReadParam(m, iter, &outer_threshold) &&
           ReadParam(m, iter, &shape) && amount >= 0.f &&
           outer_threshold >= 0.f) {
@@ -216,52 +216,52 @@ bool ParamTraits<cc::FilterOperation>::Read(const base::Pickle* m,
   return success;
 }
 
-void ParamTraits<cc::FilterOperation>::Log(const param_type& p,
-                                           std::string* l) {
+void ParamTraits<gfx::FilterOperation>::Log(const param_type& p,
+                                            std::string* l) {
   l->append("(");
   LogParam(static_cast<unsigned>(p.type()), l);
   l->append(", ");
 
   switch (p.type()) {
-    case cc::FilterOperation::GRAYSCALE:
-    case cc::FilterOperation::SEPIA:
-    case cc::FilterOperation::SATURATE:
-    case cc::FilterOperation::HUE_ROTATE:
-    case cc::FilterOperation::INVERT:
-    case cc::FilterOperation::BRIGHTNESS:
-    case cc::FilterOperation::SATURATING_BRIGHTNESS:
-    case cc::FilterOperation::CONTRAST:
-    case cc::FilterOperation::OPACITY:
+    case gfx::FilterOperation::GRAYSCALE:
+    case gfx::FilterOperation::SEPIA:
+    case gfx::FilterOperation::SATURATE:
+    case gfx::FilterOperation::HUE_ROTATE:
+    case gfx::FilterOperation::INVERT:
+    case gfx::FilterOperation::BRIGHTNESS:
+    case gfx::FilterOperation::SATURATING_BRIGHTNESS:
+    case gfx::FilterOperation::CONTRAST:
+    case gfx::FilterOperation::OPACITY:
       LogParam(p.amount(), l);
       break;
-    case cc::FilterOperation::BLUR:
+    case gfx::FilterOperation::BLUR:
       LogParam(p.amount(), l);
       l->append(", ");
       LogParam(static_cast<int>(p.blur_tile_mode()), l);
       break;
-    case cc::FilterOperation::DROP_SHADOW:
+    case gfx::FilterOperation::DROP_SHADOW:
       LogParam(p.drop_shadow_offset(), l);
       l->append(", ");
       LogParam(p.amount(), l);
       l->append(", ");
       LogParam(p.drop_shadow_color(), l);
       break;
-    case cc::FilterOperation::COLOR_MATRIX:
+    case gfx::FilterOperation::COLOR_MATRIX:
       for (int i = 0; i < 20; ++i) {
         if (i)
           l->append(", ");
         LogParam(p.matrix()[i], l);
       }
       break;
-    case cc::FilterOperation::ZOOM:
+    case gfx::FilterOperation::ZOOM:
       LogParam(p.amount(), l);
       l->append(", ");
       LogParam(p.zoom_inset(), l);
       break;
-    case cc::FilterOperation::REFERENCE:
+    case gfx::FilterOperation::REFERENCE:
       LogParam(p.image_filter(), l);
       break;
-    case cc::FilterOperation::ALPHA_THRESHOLD:
+    case gfx::FilterOperation::ALPHA_THRESHOLD:
       LogParam(p.amount(), l);
       l->append(", ");
       LogParam(p.outer_threshold(), l);
@@ -272,16 +272,16 @@ void ParamTraits<cc::FilterOperation>::Log(const param_type& p,
   l->append(")");
 }
 
-void ParamTraits<cc::FilterOperations>::GetSize(base::PickleSizer* s,
-                                                const param_type& p) {
+void ParamTraits<gfx::FilterOperations>::GetSize(base::PickleSizer* s,
+                                                 const param_type& p) {
   GetParamSize(s, base::checked_cast<uint32_t>(p.size()));
   for (std::size_t i = 0; i < p.size(); ++i) {
     GetParamSize(s, p.at(i));
   }
 }
 
-void ParamTraits<cc::FilterOperations>::Write(base::Pickle* m,
-                                              const param_type& p) {
+void ParamTraits<gfx::FilterOperations>::Write(base::Pickle* m,
+                                               const param_type& p) {
   TRACE_EVENT0(TRACE_DISABLED_BY_DEFAULT("cc.debug.ipc"),
                "ParamTraits::FilterOperations::Write");
   WriteParam(m, base::checked_cast<uint32_t>(p.size()));
@@ -290,9 +290,9 @@ void ParamTraits<cc::FilterOperations>::Write(base::Pickle* m,
   }
 }
 
-bool ParamTraits<cc::FilterOperations>::Read(const base::Pickle* m,
-                                             base::PickleIterator* iter,
-                                             param_type* r) {
+bool ParamTraits<gfx::FilterOperations>::Read(const base::Pickle* m,
+                                              base::PickleIterator* iter,
+                                              param_type* r) {
   TRACE_EVENT0(TRACE_DISABLED_BY_DEFAULT("cc.debug.ipc"),
                "ParamTraits::FilterOperations::Read");
   uint32_t count;
@@ -300,7 +300,7 @@ bool ParamTraits<cc::FilterOperations>::Read(const base::Pickle* m,
     return false;
 
   for (std::size_t i = 0; i < count; ++i) {
-    cc::FilterOperation op = cc::FilterOperation::CreateEmptyFilter();
+    gfx::FilterOperation op = gfx::FilterOperation::CreateEmptyFilter();
     if (!ReadParam(m, iter, &op))
       return false;
     r->Append(op);
@@ -308,8 +308,8 @@ bool ParamTraits<cc::FilterOperations>::Read(const base::Pickle* m,
   return true;
 }
 
-void ParamTraits<cc::FilterOperations>::Log(const param_type& p,
-                                            std::string* l) {
+void ParamTraits<gfx::FilterOperations>::Log(const param_type& p,
+                                             std::string* l) {
   l->append("(");
   for (std::size_t i = 0; i < p.size(); ++i) {
     if (i)
@@ -490,8 +490,8 @@ bool ParamTraits<cc::RenderPass>::Read(const base::Pickle* m,
   gfx::Rect output_rect;
   gfx::Rect damage_rect;
   gfx::Transform transform_to_root_target;
-  cc::FilterOperations filters;
-  cc::FilterOperations background_filters;
+  gfx::FilterOperations filters;
+  gfx::FilterOperations background_filters;
   gfx::ColorSpace color_space;
   bool has_transparent_background;
   bool cache_render_pass;

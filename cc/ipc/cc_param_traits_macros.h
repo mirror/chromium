@@ -5,7 +5,6 @@
 #ifndef CC_IPC_CC_PARAM_TRAITS_MACROS_H_
 #define CC_IPC_CC_PARAM_TRAITS_MACROS_H_
 
-#include "cc/base/filter_operation.h"
 #include "cc/output/compositor_frame.h"
 #include "cc/quads/debug_border_draw_quad.h"
 #include "cc/quads/draw_quad.h"
@@ -23,6 +22,7 @@
 #include "components/viz/common/surfaces/surface_id.h"
 #include "components/viz/common/surfaces/surface_info.h"
 #include "components/viz/common/surfaces/surface_sequence.h"
+#include "ui/gfx/filter_operation.h"
 #include "ui/gfx/ipc/color/gfx_param_traits.h"
 #include "ui/gfx/ipc/gfx_param_traits.h"
 #include "ui/gfx/ipc/skia/gfx_skia_param_traits.h"
@@ -32,8 +32,8 @@
 #define IPC_MESSAGE_EXPORT CC_IPC_EXPORT
 
 IPC_ENUM_TRAITS_MAX_VALUE(cc::DrawQuad::Material, cc::DrawQuad::MATERIAL_LAST)
-IPC_ENUM_TRAITS_MAX_VALUE(cc::FilterOperation::FilterType,
-                          cc::FilterOperation::FILTER_TYPE_LAST)
+IPC_ENUM_TRAITS_MAX_VALUE(gfx::FilterOperation::FilterType,
+                          gfx::FilterOperation::FILTER_TYPE_LAST)
 // TODO(wutao): This trait belongs with skia code.
 IPC_ENUM_TRAITS_MAX_VALUE(SkBlurImageFilter::TileMode,
                           SkBlurImageFilter::kMax_TileMode)

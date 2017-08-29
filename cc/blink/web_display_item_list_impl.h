@@ -26,8 +26,11 @@ struct WebRect;
 }
 
 namespace cc {
-class FilterOperations;
 class PaintOpBuffer;
+}
+
+namespace gfx {
+class FilterOperations;
 }
 
 namespace cc_blink {
@@ -58,7 +61,7 @@ class CC_BLINK_EXPORT WebDisplayItemListImpl
                              SkRect* bounds,
                              SkColorFilter*) override;
   void AppendEndCompositingItem() override;
-  void AppendFilterItem(const cc::FilterOperations& filters,
+  void AppendFilterItem(const gfx::FilterOperations& filters,
                         const blink::WebFloatRect& filter_bounds,
                         const blink::WebFloatPoint& origin) override;
   void AppendEndFilterItem() override;

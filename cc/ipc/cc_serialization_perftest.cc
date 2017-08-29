@@ -291,15 +291,15 @@ class CCSerializationPerfTest : public testing::Test {
     gfx::ColorSpace arbitrary_color_space = gfx::ColorSpace::CreateXYZD50();
     int root_id = 14;
 
-    FilterOperations arbitrary_filters1;
+    gfx::FilterOperations arbitrary_filters1;
     arbitrary_filters1.Append(
-        FilterOperation::CreateGrayscaleFilter(arbitrary_float1));
-    arbitrary_filters1.Append(FilterOperation::CreateReferenceFilter(
+        gfx::FilterOperation::CreateGrayscaleFilter(arbitrary_float1));
+    arbitrary_filters1.Append(gfx::FilterOperation::CreateReferenceFilter(
         SkBlurImageFilter::Make(arbitrary_sigma, arbitrary_sigma, nullptr)));
 
-    FilterOperations arbitrary_filters2;
+    gfx::FilterOperations arbitrary_filters2;
     arbitrary_filters2.Append(
-        FilterOperation::CreateBrightnessFilter(arbitrary_float2));
+        gfx::FilterOperation::CreateBrightnessFilter(arbitrary_float2));
 
     std::unique_ptr<RenderPass> pass_in = RenderPass::Create();
     pass_in->SetAll(root_id, arbitrary_rect1, arbitrary_rect2,

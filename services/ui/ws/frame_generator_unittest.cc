@@ -237,8 +237,8 @@ TEST_F(FrameGeneratorTest, SetHighContrastMode) {
 
   // Verify that the last frame has an invert filter.
   const cc::RenderPassList& render_pass_list = LastRenderPassList();
-  const cc::FilterOperations expected_filters(
-      {cc::FilterOperation::CreateInvertFilter(1.f)});
+  const gfx::FilterOperations expected_filters(
+      {gfx::FilterOperation::CreateInvertFilter(1.f)});
   EXPECT_EQ(expected_filters, render_pass_list.front()->filters);
 }
 

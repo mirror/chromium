@@ -6,7 +6,6 @@
 
 #include "base/strings/stringprintf.h"
 #include "base/values.h"
-#include "cc/base/math_util.h"
 #include "cc/quads/texture_draw_quad.h"
 #include "cc/trees/layer_tree_impl.h"
 #include "cc/trees/occlusion.h"

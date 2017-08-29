@@ -11,19 +11,16 @@
 #include <vector>
 
 #include "base/logging.h"
-#include "cc/base/filter_operation.h"
+#include "ui/gfx/filter_operation.h"
 
 namespace base {
 namespace trace_event {
 class TracedValue;
 }
-}
+}  // namespace base
 
 namespace gfx {
 class Rect;
-}
-
-namespace cc {
 
 // An ordered list of filter operations.
 class CC_BASE_EXPORT FilterOperations {
@@ -94,6 +91,6 @@ class CC_BASE_EXPORT FilterOperations {
   std::vector<FilterOperation> operations_;
 };
 
-}  // namespace cc
+}  // namespace gfx
 
 #endif  // CC_BASE_FILTER_OPERATIONS_H_

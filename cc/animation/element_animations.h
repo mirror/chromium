@@ -21,13 +21,13 @@
 
 namespace gfx {
 class BoxF;
+class FilterOperations;
 }
 
 namespace cc {
 
 class AnimationHost;
 class AnimationPlayer;
-class FilterOperations;
 class TransformOperations;
 enum class ElementListType;
 struct AnimationEvent;
@@ -144,7 +144,7 @@ class CC_ANIMATION_EXPORT ElementAnimations
   void NotifyClientFloatAnimated(float opacity,
                                  int target_property_id,
                                  Animation* animation) override;
-  void NotifyClientFilterAnimated(const FilterOperations& filter,
+  void NotifyClientFilterAnimated(const gfx::FilterOperations& filter,
                                   int target_property_id,
                                   Animation* animation) override;
   void NotifyClientTransformOperationsAnimated(
@@ -164,7 +164,7 @@ class CC_ANIMATION_EXPORT ElementAnimations
   ~ElementAnimations() override;
 
   void OnFilterAnimated(ElementListType list_type,
-                        const FilterOperations& filters);
+                        const gfx::FilterOperations& filters);
   void OnOpacityAnimated(ElementListType list_type, float opacity);
   void OnTransformAnimated(ElementListType list_type,
                            const gfx::Transform& transform);

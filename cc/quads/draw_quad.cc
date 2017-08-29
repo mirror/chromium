@@ -9,9 +9,9 @@
 #include "base/logging.h"
 #include "base/trace_event/trace_event_argument.h"
 #include "base/values.h"
-#include "cc/base/math_util.h"
 #include "components/viz/common/traced_value.h"
 #include "ui/gfx/geometry/quad_f.h"
+#include "ui/gfx/math_util.h"
 
 namespace cc {
 
@@ -47,26 +47,27 @@ void DrawQuad::AsValueInto(base::trace_event::TracedValue* value) const {
   value->SetInteger("material", material);
   viz::TracedValue::SetIDRef(shared_quad_state, value, "shared_state");
 
-  MathUtil::AddToTracedValue("content_space_rect", rect, value);
+  gfx::MathUtil::AddToTracedValue("content_space_rect", rect, value);
 
   bool rect_is_clipped;
   gfx::QuadF rect_as_target_space_quad =
-      MathUtil::MapQuad(shared_quad_state->quad_to_target_transform,
-                        gfx::QuadF(gfx::RectF(rect)), &rect_is_clipped);
-  MathUtil::AddToTracedValue("rect_as_target_space_quad",
-                             rect_as_target_space_quad, value);
+      gfx::MathUtil::MapQuad(shared_quad_state->quad_to_target_transform,
+                             gfx::QuadF(gfx::RectF(rect)), &rect_is_clipped);
+  gfx::MathUtil::AddToTracedValue("rect_as_target_space_quad",
+                                  rect_as_target_space_quad, value);
 
   value->SetBoolean("rect_is_clipped", rect_is_clipped);
 
-  MathUtil::AddToTracedValue("content_space_visible_rect", visible_rect, value);
+  gfx::MathUtil::AddToTracedValue("content_space_visible_rect", visible_rect,
+                                  value);
 
   bool visible_rect_is_clipped;
-  gfx::QuadF visible_rect_as_target_space_quad = MathUtil::MapQuad(
+  gfx::QuadF visible_rect_as_target_space_quad = gfx::MathUtil::MapQuad(
       shared_quad_state->quad_to_target_transform,
       gfx::QuadF(gfx::RectF(visible_rect)), &visible_rect_is_clipped);
 
-  MathUtil::AddToTracedValue("visible_rect_as_target_space_quad",
-                             visible_rect_as_target_space_quad, value);
+  gfx::MathUtil::AddToTracedValue("visible_rect_as_target_space_quad",
+                                  visible_rect_as_target_space_quad, value);
 
   value->SetBoolean("visible_rect_is_clipped", visible_rect_is_clipped);
 

@@ -177,20 +177,20 @@ std::unique_ptr<TransformKeyframe> TransformKeyframe::Clone() const {
 
 std::unique_ptr<FilterKeyframe> FilterKeyframe::Create(
     base::TimeDelta time,
-    const FilterOperations& value,
+    const gfx::FilterOperations& value,
     std::unique_ptr<TimingFunction> timing_function) {
   return base::WrapUnique(
       new FilterKeyframe(time, value, std::move(timing_function)));
 }
 
 FilterKeyframe::FilterKeyframe(base::TimeDelta time,
-                               const FilterOperations& value,
+                               const gfx::FilterOperations& value,
                                std::unique_ptr<TimingFunction> timing_function)
     : Keyframe(time, std::move(timing_function)), value_(value) {}
 
 FilterKeyframe::~FilterKeyframe() {}
 
-const FilterOperations& FilterKeyframe::Value() const {
+const gfx::FilterOperations& FilterKeyframe::Value() const {
   return value_;
 }
 
@@ -517,7 +517,7 @@ std::unique_ptr<AnimationCurve> KeyframedFilterAnimationCurve::Clone() const {
   return std::move(to_return);
 }
 
-FilterOperations KeyframedFilterAnimationCurve::GetValue(
+gfx::FilterOperations KeyframedFilterAnimationCurve::GetValue(
     base::TimeDelta t) const {
   if (t <= (keyframes_.front()->Time() * scaled_duration()))
     return keyframes_.front()->Value();

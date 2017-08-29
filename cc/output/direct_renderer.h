@@ -11,7 +11,6 @@
 #include "base/callback.h"
 #include "base/containers/flat_map.h"
 #include "base/macros.h"
-#include "cc/base/filter_operations.h"
 #include "cc/cc_export.h"
 #include "cc/output/ca_layer_overlay.h"
 #include "cc/output/dc_layer_overlay.h"
@@ -19,6 +18,7 @@
 #include "cc/quads/tile_draw_quad.h"
 #include "cc/resources/display_resource_provider.h"
 #include "gpu/command_buffer/common/texture_in_use_response.h"
+#include "ui/gfx/filter_operations.h"
 #include "ui/gfx/geometry/quad_f.h"
 #include "ui/gfx/geometry/rect.h"
 #include "ui/latency/latency_info.h"
@@ -143,8 +143,9 @@ class CC_EXPORT DirectRenderer {
                      const gfx::Rect& render_pass_scissor,
                      bool use_render_pass_scissor);
 
-  const FilterOperations* FiltersForPass(RenderPassId render_pass_id) const;
-  const FilterOperations* BackgroundFiltersForPass(
+  const gfx::FilterOperations* FiltersForPass(
+      RenderPassId render_pass_id) const;
+  const gfx::FilterOperations* BackgroundFiltersForPass(
       RenderPassId render_pass_id) const;
 
   // Private interface implemented by subclasses for use by DirectRenderer.
@@ -210,8 +211,8 @@ class CC_EXPORT DirectRenderer {
   base::flat_map<RenderPassId, TileDrawQuad> render_pass_bypass_quads_;
 
   // A map from RenderPass id to the filters used when drawing the RenderPass.
-  base::flat_map<RenderPassId, FilterOperations*> render_pass_filters_;
-  base::flat_map<RenderPassId, FilterOperations*>
+  base::flat_map<RenderPassId, gfx::FilterOperations*> render_pass_filters_;
+  base::flat_map<RenderPassId, gfx::FilterOperations*>
       render_pass_background_filters_;
 
   bool visible_ = false;

@@ -632,12 +632,10 @@ cc_static_library("test_support") {
 cc_test("cc_unittests") {
   sources = [
     "base/delayed_unique_notifier_unittest.cc",
-    "base/filter_operations_unittest.cc",
     "base/float_quad_unittest.cc",
     "base/histograms_unittest.cc",
     "base/index_rect_unittest.cc",
     "base/list_container_unittest.cc",
-    "base/math_util_unittest.cc",
     "base/region_unittest.cc",
     "base/rolling_time_delta_history_unittest.cc",
     "base/rtree_unittest.cc",

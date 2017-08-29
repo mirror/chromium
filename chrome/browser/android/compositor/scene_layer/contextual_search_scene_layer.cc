@@ -145,10 +145,10 @@ void ContextualSearchSceneLayer::UpdateContextualSearchLayer(
   // Fade the base page out.
   if (base_page_brightness_ != base_page_brightness) {
     base_page_brightness_ = base_page_brightness;
-    cc::FilterOperations filters;
+    gfx::FilterOperations filters;
     if (base_page_brightness < 1.f) {
       filters.Append(
-          cc::FilterOperation::CreateBrightnessFilter(base_page_brightness));
+          gfx::FilterOperation::CreateBrightnessFilter(base_page_brightness));
     }
     content_container_->SetFilters(filters);
   }
@@ -233,8 +233,8 @@ void ContextualSearchSceneLayer::HideTree(JNIEnv* env,
     contextual_search_layer_->layer()->SetHideLayerAndSubtree(true);
   }
   // Reset base page brightness.
-  cc::FilterOperations filters;
-  filters.Append(cc::FilterOperation::CreateBrightnessFilter(1.0f));
+  gfx::FilterOperations filters;
+  filters.Append(gfx::FilterOperation::CreateBrightnessFilter(1.0f));
   content_container_->SetFilters(filters);
   // Reset base page offset.
   content_container_->SetPosition(gfx::PointF(0.0f, 0.0f));

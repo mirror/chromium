@@ -613,9 +613,9 @@ void TabLayer::SetProperties(int id,
   // than 1.
   if (brightness != brightness_) {
     brightness_ = brightness;
-    cc::FilterOperations filters;
+    gfx::FilterOperations filters;
     if (brightness_ < 1.f)
-      filters.Append(cc::FilterOperation::CreateBrightnessFilter(brightness_));
+      filters.Append(gfx::FilterOperation::CreateBrightnessFilter(brightness_));
     layer_->SetFilters(filters);
   }
 }

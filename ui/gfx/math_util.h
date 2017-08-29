@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CC_BASE_MATH_UTIL_H_
-#define CC_BASE_MATH_UTIL_H_
+#ifndef UI_GFX_MATH_UTIL_H_
+#define UI_GFX_MATH_UTIL_H_
 
 #include <algorithm>
 #include <cmath>
@@ -12,12 +12,12 @@
 
 #include "base/logging.h"
 #include "build/build_config.h"
-#include "cc/base/base_export.h"
 #include "ui/gfx/geometry/box_f.h"
 #include "ui/gfx/geometry/point3_f.h"
 #include "ui/gfx/geometry/point_f.h"
 #include "ui/gfx/geometry/scroll_offset.h"
 #include "ui/gfx/geometry/size.h"
+#include "ui/gfx/gfx_export.h"
 #include "ui/gfx/transform.h"
 
 namespace base {
@@ -36,9 +36,6 @@ class Transform;
 class Vector2dF;
 class Vector2d;
 class Vector3dF;
-}
-
-namespace cc {
 
 struct HomogeneousCoordinate {
   HomogeneousCoordinate(SkMScalar x, SkMScalar y, SkMScalar z, SkMScalar w) {
@@ -50,26 +47,26 @@ struct HomogeneousCoordinate {
 
   bool ShouldBeClipped() const { return w() <= 0.0; }
 
-  gfx::PointF CartesianPoint2d() const {
+  PointF CartesianPoint2d() const {
     if (w() == SK_MScalar1)
-      return gfx::PointF(x(), y());
+      return PointF(x(), y());
 
     // For now, because this code is used privately only by MathUtil, it should
     // never be called when w == 0, and we do not yet need to handle that case.
     DCHECK(w());
     SkMScalar inv_w = SK_MScalar1 / w();
-    return gfx::PointF(x() * inv_w, y() * inv_w);
+    return PointF(x() * inv_w, y() * inv_w);
   }
 
-  gfx::Point3F CartesianPoint3d() const {
+  Point3F CartesianPoint3d() const {
     if (w() == SK_MScalar1)
-      return gfx::Point3F(x(), y(), z());
+      return Point3F(x(), y(), z());
 
     // For now, because this code is used privately only by MathUtil, it should
     // never be called when w == 0, and we do not yet need to handle that case.
     DCHECK(w());
     SkMScalar inv_w = SK_MScalar1 / w();
-    return gfx::Point3F(x() * inv_w, y() * inv_w, z() * inv_w);
+    return Point3F(x() * inv_w, y() * inv_w, z() * inv_w);
   }
 
   SkMScalar x() const { return vec[0]; }
@@ -80,7 +77,7 @@ struct HomogeneousCoordinate {
   SkMScalar vec[4];
 };
 
-class CC_BASE_EXPORT MathUtil {
+class GFX_EXPORT MathUtil {
  public:
   static const double kPiDouble;
   static const float kPiFloat;
@@ -156,7 +153,8 @@ class CC_BASE_EXPORT MathUtil {
     return RoundDownInternal(n, mul);
   }
 
-  template <typename T> static T ClampToRange(T value, T min, T max) {
+  template <typename T>
+  static T ClampToRange(T value, T min, T max) {
     return std::min(std::max(value, min), max);
   }
 
@@ -179,126 +177,124 @@ class CC_BASE_EXPORT MathUtil {
   //
   // These functions return the axis-aligned rect that encloses the correctly
   // clipped, transformed polygon.
-  static gfx::Rect MapEnclosingClippedRect(const gfx::Transform& transform,
-                                           const gfx::Rect& rect);
-  static gfx::RectF MapClippedRect(const gfx::Transform& transform,
-                                   const gfx::RectF& rect);
-  static gfx::Rect ProjectEnclosingClippedRect(const gfx::Transform& transform,
-                                               const gfx::Rect& rect);
-  static gfx::RectF ProjectClippedRect(const gfx::Transform& transform,
-                                       const gfx::RectF& rect);
+  static Rect MapEnclosingClippedRect(const Transform& transform,
+                                      const Rect& rect);
+  static RectF MapClippedRect(const Transform& transform, const RectF& rect);
+  static Rect ProjectEnclosingClippedRect(const Transform& transform,
+                                          const Rect& rect);
+  static RectF ProjectClippedRect(const Transform& transform,
+                                  const RectF& rect);
 
   // This function is only valid when the transform preserves 2d axis
   // alignment and the resulting rect will not be clipped.
-  static gfx::Rect MapEnclosedRectWith2dAxisAlignedTransform(
-      const gfx::Transform& transform,
-      const gfx::Rect& rect);
+  static Rect MapEnclosedRectWith2dAxisAlignedTransform(
+      const Transform& transform,
+      const Rect& rect);
 
   // Returns an array of vertices that represent the clipped polygon. After
   // returning, indexes from 0 to num_vertices_in_clipped_quad are valid in the
   // clipped_quad array. Note that num_vertices_in_clipped_quad may be zero,
   // which means the entire quad was clipped, and none of the vertices in the
   // array are valid.
-  static bool MapClippedQuad3d(const gfx::Transform& transform,
-                               const gfx::QuadF& src_quad,
-                               gfx::Point3F clipped_quad[6],
+  static bool MapClippedQuad3d(const Transform& transform,
+                               const QuadF& src_quad,
+                               Point3F clipped_quad[6],
                                int* num_vertices_in_clipped_quad);
 
-  static gfx::RectF ComputeEnclosingRectOfVertices(const gfx::PointF vertices[],
-                                                   int num_vertices);
-  static gfx::RectF ComputeEnclosingClippedRect(
-      const HomogeneousCoordinate& h1,
-      const HomogeneousCoordinate& h2,
-      const HomogeneousCoordinate& h3,
-      const HomogeneousCoordinate& h4);
+  static RectF ComputeEnclosingRectOfVertices(const PointF vertices[],
+                                              int num_vertices);
+  static RectF ComputeEnclosingClippedRect(const HomogeneousCoordinate& h1,
+                                           const HomogeneousCoordinate& h2,
+                                           const HomogeneousCoordinate& h3,
+                                           const HomogeneousCoordinate& h4);
 
   // NOTE: These functions do not do correct clipping against w = 0 plane, but
   // they correctly detect the clipped condition via the boolean clipped.
-  static gfx::QuadF MapQuad(const gfx::Transform& transform,
-                            const gfx::QuadF& quad,
-                            bool* clipped);
-  static gfx::PointF MapPoint(const gfx::Transform& transform,
-                              const gfx::PointF& point,
-                              bool* clipped);
-  static gfx::PointF ProjectPoint(const gfx::Transform& transform,
-                                  const gfx::PointF& point,
-                                  bool* clipped);
+  static QuadF MapQuad(const Transform& transform,
+                       const QuadF& quad,
+                       bool* clipped);
+  static PointF MapPoint(const Transform& transform,
+                         const PointF& point,
+                         bool* clipped);
+  static PointF ProjectPoint(const Transform& transform,
+                             const PointF& point,
+                             bool* clipped);
   // Identical to the above function, but coerces the homogeneous coordinate to
   // a 3d rather than a 2d point.
-  static gfx::Point3F ProjectPoint3D(const gfx::Transform& transform,
-                                     const gfx::PointF& point,
-                                     bool* clipped);
+  static Point3F ProjectPoint3D(const Transform& transform,
+                                const PointF& point,
+                                bool* clipped);
 
-  static gfx::Vector2dF ComputeTransform2dScaleComponents(const gfx::Transform&,
-                                                          float fallbackValue);
+  static Vector2dF ComputeTransform2dScaleComponents(const Transform&,
+                                                     float fallbackValue);
   // Returns an approximate max scale value of the transform even if it has
   // perspective. Prefer to use ComputeTransform2dScaleComponents if there is no
   // perspective, since it can produce more accurate results.
-  static float ComputeApproximateMaxScale(const gfx::Transform& transform);
+  static float ComputeApproximateMaxScale(const Transform& transform);
 
   // Makes a rect that has the same relationship to input_outer_rect as
   // scale_inner_rect has to scale_outer_rect. scale_inner_rect should be
   // contained within scale_outer_rect, and likewise the rectangle that is
   // returned will be within input_outer_rect at a similar relative, scaled
   // position.
-  static gfx::RectF ScaleRectProportional(const gfx::RectF& input_outer_rect,
-                                          const gfx::RectF& scale_outer_rect,
-                                          const gfx::RectF& scale_inner_rect);
+  static RectF ScaleRectProportional(const RectF& input_outer_rect,
+                                     const RectF& scale_outer_rect,
+                                     const RectF& scale_inner_rect);
 
   // Returns the smallest angle between the given two vectors in degrees.
   // Neither vector is assumed to be normalized.
-  static float SmallestAngleBetweenVectors(const gfx::Vector2dF& v1,
-                                           const gfx::Vector2dF& v2);
+  static float SmallestAngleBetweenVectors(const Vector2dF& v1,
+                                           const Vector2dF& v2);
 
   // Projects the |source| vector onto |destination|. Neither vector is assumed
   // to be normalized.
-  static gfx::Vector2dF ProjectVector(const gfx::Vector2dF& source,
-                                      const gfx::Vector2dF& destination);
+  static Vector2dF ProjectVector(const Vector2dF& source,
+                                 const Vector2dF& destination);
 
   // Conversion to value.
-  static std::unique_ptr<base::Value> AsValue(const gfx::Size& s);
-  static std::unique_ptr<base::Value> AsValue(const gfx::Rect& r);
-  static bool FromValue(const base::Value*, gfx::Rect* out_rect);
-  static std::unique_ptr<base::Value> AsValue(const gfx::PointF& q);
+  static std::unique_ptr<base::Value> AsValue(const Size& s);
+  static std::unique_ptr<base::Value> AsValue(const Rect& r);
+  static bool FromValue(const base::Value*, Rect* out_rect);
+  static std::unique_ptr<base::Value> AsValue(const PointF& q);
 
   static void AddToTracedValue(const char* name,
-                               const gfx::Size& s,
+                               const Size& s,
                                base::trace_event::TracedValue* res);
   static void AddToTracedValue(const char* name,
-                               const gfx::SizeF& s,
+                               const SizeF& s,
                                base::trace_event::TracedValue* res);
   static void AddToTracedValue(const char* name,
-                               const gfx::Rect& r,
+                               const Rect& r,
                                base::trace_event::TracedValue* res);
   static void AddToTracedValue(const char* name,
-                               const gfx::Point& q,
+                               const Point& q,
                                base::trace_event::TracedValue* res);
   static void AddToTracedValue(const char* name,
-                               const gfx::PointF& q,
+                               const PointF& q,
                                base::trace_event::TracedValue* res);
   static void AddToTracedValue(const char* name,
-                               const gfx::Point3F&,
+                               const Point3F&,
                                base::trace_event::TracedValue* res);
   static void AddToTracedValue(const char* name,
-                               const gfx::Vector2d& v,
+                               const Vector2d& v,
                                base::trace_event::TracedValue* res);
   static void AddToTracedValue(const char* name,
-                               const gfx::Vector2dF& v,
+                               const Vector2dF& v,
                                base::trace_event::TracedValue* res);
   static void AddToTracedValue(const char* name,
-                               const gfx::ScrollOffset& v,
+                               const ScrollOffset& v,
                                base::trace_event::TracedValue* res);
   static void AddToTracedValue(const char* name,
-                               const gfx::QuadF& q,
+                               const QuadF& q,
                                base::trace_event::TracedValue* res);
   static void AddToTracedValue(const char* name,
-                               const gfx::RectF& rect,
+                               const RectF& rect,
                                base::trace_event::TracedValue* res);
   static void AddToTracedValue(const char* name,
-                               const gfx::Transform& transform,
+                               const Transform& transform,
                                base::trace_event::TracedValue* res);
   static void AddToTracedValue(const char* name,
-                               const gfx::BoxF& box,
+                               const BoxF& box,
                                base::trace_event::TracedValue* res);
 
   // Returns a base::Value representation of the floating point value.
@@ -307,16 +303,14 @@ class CC_BASE_EXPORT MathUtil {
   static float AsFloatSafely(float value);
 
   // Returns vector that x axis (1,0,0) transforms to under given transform.
-  static gfx::Vector3dF GetXAxis(const gfx::Transform& transform);
+  static Vector3dF GetXAxis(const Transform& transform);
 
   // Returns vector that y axis (0,1,0) transforms to under given transform.
-  static gfx::Vector3dF GetYAxis(const gfx::Transform& transform);
+  static Vector3dF GetYAxis(const Transform& transform);
 
   static bool IsFloatNearlyTheSame(float left, float right);
-  static bool IsNearlyTheSameForTesting(const gfx::PointF& l,
-                                        const gfx::PointF& r);
-  static bool IsNearlyTheSameForTesting(const gfx::Point3F& l,
-                                        const gfx::Point3F& r);
+  static bool IsNearlyTheSameForTesting(const PointF& l, const PointF& r);
+  static bool IsNearlyTheSameForTesting(const Point3F& l, const Point3F& r);
 
  private:
   template <typename T>
@@ -326,12 +320,12 @@ class CC_BASE_EXPORT MathUtil {
 
   template <typename T>
   static T RoundDownInternal(T n, T mul) {
-    return (n > 0) ? (n / mul) * mul : (n == 0) ? 0
-                                                : ((n - mul + 1) / mul) * mul;
+    return (n > 0) ? (n / mul) * mul
+                   : (n == 0) ? 0 : ((n - mul + 1) / mul) * mul;
   }
 };
 
-class CC_BASE_EXPORT ScopedSubnormalFloatDisabler {
+class GFX_EXPORT ScopedSubnormalFloatDisabler {
  public:
   ScopedSubnormalFloatDisabler();
   ~ScopedSubnormalFloatDisabler();
@@ -343,6 +337,6 @@ class CC_BASE_EXPORT ScopedSubnormalFloatDisabler {
   DISALLOW_COPY_AND_ASSIGN(ScopedSubnormalFloatDisabler);
 };
 
-}  // namespace cc
+}  // namespace gfx
 
-#endif  // CC_BASE_MATH_UTIL_H_
+#endif  // UI_GFX_MATH_UTIL_H_

@@ -183,7 +183,8 @@ class CC_EXPORT LayerTreeImpl {
   void SetTransformMutated(ElementId element_id,
                            const gfx::Transform& transform);
   void SetOpacityMutated(ElementId element_id, float opacity);
-  void SetFilterMutated(ElementId element_id, const FilterOperations& filters);
+  void SetFilterMutated(ElementId element_id,
+                        const gfx::FilterOperations& filters);
 
   int source_frame_number() const { return source_frame_number_; }
   void set_source_frame_number(int frame_number) {
@@ -603,7 +604,7 @@ class CC_EXPORT LayerTreeImpl {
       element_id_to_opacity_animations_;
   std::unordered_map<ElementId, gfx::Transform, ElementIdHash>
       element_id_to_transform_animations_;
-  std::unordered_map<ElementId, FilterOperations, ElementIdHash>
+  std::unordered_map<ElementId, gfx::FilterOperations, ElementIdHash>
       element_id_to_filter_animations_;
 
   struct ScrollbarLayerIds {

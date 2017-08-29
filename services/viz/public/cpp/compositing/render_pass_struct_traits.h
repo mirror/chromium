@@ -39,12 +39,12 @@ struct StructTraits<viz::mojom::RenderPassDataView,
     return input->transform_to_root_target;
   }
 
-  static const cc::FilterOperations& filters(
+  static const gfx::FilterOperations& filters(
       const std::unique_ptr<cc::RenderPass>& input) {
     return input->filters;
   }
 
-  static const cc::FilterOperations& background_filters(
+  static const gfx::FilterOperations& background_filters(
       const std::unique_ptr<cc::RenderPass>& input) {
     return input->background_filters;
   }

@@ -10,8 +10,8 @@
 #include "cc/animation/animation_player.h"
 #include "cc/animation/animation_timeline.h"
 #include "cc/animation/element_animations.h"
-#include "cc/base/filter_operation.h"
-#include "cc/base/filter_operations.h"
+#include "ui/gfx/filter_operation.h"
+#include "ui/gfx/filter_operations.h"
 #include "ui/gfx/transform.h"
 
 namespace cc {
@@ -29,7 +29,7 @@ TestLayer::~TestLayer() {}
 void TestLayer::ClearMutatedProperties() {
   transform_ = gfx::Transform();
   opacity_ = 0;
-  filters_ = FilterOperations();
+  filters_ = gfx::FilterOperations();
   scroll_offset_ = gfx::ScrollOffset();
 
   has_potential_animation_.reset();
@@ -49,8 +49,8 @@ int TestLayer::transform_y() const {
 
 float TestLayer::brightness() const {
   for (unsigned i = 0; i < filters_.size(); ++i) {
-    const FilterOperation& filter = filters_.at(i);
-    if (filter.type() == FilterOperation::BRIGHTNESS)
+    const gfx::FilterOperation& filter = filters_.at(i);
+    if (filter.type() == gfx::FilterOperation::BRIGHTNESS)
       return filter.amount();
   }
 
@@ -89,9 +89,10 @@ void TestHostClient::SetMutatorsNeedCommit() {
 
 void TestHostClient::SetMutatorsNeedRebuildPropertyTrees() {}
 
-void TestHostClient::SetElementFilterMutated(ElementId element_id,
-                                             ElementListType list_type,
-                                             const FilterOperations& filters) {
+void TestHostClient::SetElementFilterMutated(
+    ElementId element_id,
+    ElementListType list_type,
+    const gfx::FilterOperations& filters) {
   TestLayer* layer = FindTestLayer(element_id, list_type);
   if (layer)
     layer->set_filters(filters);
@@ -188,8 +189,9 @@ bool TestHostClient::IsPropertyMutated(ElementId element_id,
   return layer->is_property_mutated(property);
 }
 
-FilterOperations TestHostClient::GetFilters(ElementId element_id,
-                                            ElementListType list_type) const {
+gfx::FilterOperations TestHostClient::GetFilters(
+    ElementId element_id,
+    ElementListType list_type) const {
   TestLayer* layer = FindTestLayer(element_id, list_type);
   EXPECT_TRUE(layer);
   return layer->filters();

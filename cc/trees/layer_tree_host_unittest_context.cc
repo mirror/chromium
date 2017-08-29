@@ -6,7 +6,6 @@
 #include <stdint.h>
 
 #include "base/memory/ptr_util.h"
-#include "cc/base/filter_operations.h"
 #include "cc/layers/heads_up_display_layer.h"
 #include "cc/layers/layer_impl.h"
 #include "cc/layers/painted_scrollbar_layer.h"
