@@ -1,0 +1,146 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "af5a9783_fc3b84a4",
+        "filename": "ios/web/navigation/crw_placeholder_navigation_info.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-08-29T01:28:00Z",
+      "side": 1,
+      "message": "This interface is a little weird to me because it mixes class and instance methods, and it\u0027s not immediately obvious that calling this function will change the return value for |+getInfoForNavigation:|.  How about instead, we use class methods for strictly for instantiation, and interact with the created objects using instance methods?  Renaming this to |+createForNavigation:withCompletionHandler:| would make it clear that calling this function creates a CRWPlaceholderNavigationInfo that is associated with |navigation| and will be returned for subsequent calls of |+getInfoForNavigation|.",
+      "revId": "5baa65620c894ea9d1f7b7e5121fad2accc67e56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e06d31b_eaa37a59",
+        "filename": "ios/web/navigation/crw_placeholder_navigation_info.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-08-29T01:28:00Z",
+      "side": 1,
+      "message": "Let\u0027s just call it |+infoForNavigation:|.",
+      "revId": "5baa65620c894ea9d1f7b7e5121fad2accc67e56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1e78c65_7ae5d953",
+        "filename": "ios/web/web_state/ui/crw_web_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-08-29T01:28:00Z",
+      "side": 1,
+      "message": "These functions are pretty much standalone; let\u0027s decompose them into another util file that has a interface that can be tested (it\u0027s still not in ios/web/public, so we don\u0027t need to worry about muddying the public interface).",
+      "revId": "5baa65620c894ea9d1f7b7e5121fad2accc67e56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28522f03_4d09292b",
+        "filename": "ios/web/web_state/ui/crw_web_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 1084,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-08-29T01:28:00Z",
+      "side": 1,
+      "message": "If the code in these KVO callbacks is only used by one of the NavigationManager subclasses, we should probably find a way for the various subclasses to to specify which callbacks are necessary.  This might be rather difficult because there is a lot of tightly-coupled navigation logic split between these KVO callbacks and the NavigationManager subclasses, but I think that creating a better solution here might help to avoid regressions during this refactor.  Having various codepaths enabled/disabled in an ad-hoc way like this, where the logic of what is/isn\u0027t included is only in comments seems pretty error-prone.  Separating these responsibilities to the NavigationManager subclasses will probably make it easier to unwind our legacy implementation once we flip the switch and move to the WKBackForwardList-based implementation.  This is out of scope for this particular CL though, so it\u0027s fine if this work is relegated to a TODO.",
+      "revId": "5baa65620c894ea9d1f7b7e5121fad2accc67e56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b28cf48_f538cfb6",
+        "filename": "ios/web/web_state/ui/crw_web_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 4345,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-08-29T01:28:00Z",
+      "side": 1,
+      "message": "s/property/properly",
+      "range": {
+        "startLine": 4345,
+        "startChar": 56,
+        "endLine": 4345,
+        "endChar": 64
+      },
+      "revId": "5baa65620c894ea9d1f7b7e5121fad2accc67e56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8e2339e_a4b1f9d7",
+        "filename": "ios/web/web_state/ui/crw_web_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 4349,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-08-29T01:28:00Z",
+      "side": 1,
+      "message": "Should we also be checking against web::GetWebClient-\u003eIsAppSpecificUrl()?  The comment below makes it seems that it should be included in this condition.",
+      "revId": "5baa65620c894ea9d1f7b7e5121fad2accc67e56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5d2bfc6_7e14d8fd",
+        "filename": "ios/web/web_state/ui/crw_web_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 4359,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-08-29T01:28:00Z",
+      "side": 1,
+      "message": "Won\u0027t this call erase forward history?",
+      "revId": "5baa65620c894ea9d1f7b7e5121fad2accc67e56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ad3be6f_459e6407",
+        "filename": "ios/web/web_state/ui/crw_web_controller_unittest.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 1076,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-08-29T01:28:00Z",
+      "side": 1,
+      "message": "Note for all tests in this file: generally we\u0027re trying to avoid introducing more tests like this where we\u0027re iterating through structs/lists of test values because they don\u0027t give the clearest failure messages when they fail on bots.  If the only relevant piece of info here is that they aren\u0027t app-specific, then it\u0027d be better to just use one test value.  If the test values are chosen to exercise different edge cases you\u0027ve discovered, then it\u0027d be better to decompose the EXPECT_EQ() lines into a separate function in an anonymous namespace in this file, then create separate tests for each edge case where we verify the result using the decomposed test function.",
+      "revId": "5baa65620c894ea9d1f7b7e5121fad2accc67e56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
