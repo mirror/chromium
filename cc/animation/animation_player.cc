@@ -1196,6 +1196,22 @@ std::string AnimationPlayer::ToString() const {
       element_id_.ToString().c_str(), AnimationsToString().c_str());
 }
 
+bool AnimationPlayer::HasActiveAnimations() const {
+  for (const auto& animation : animations_) {
+    if (animation->affects_active_elements())
+      return true;
+  }
+  return false;
+}
+
+bool AnimationPlayer::HasPendingAnimations() const {
+  for (const auto& animation : animations_) {
+    if (animation->affects_pending_elements())
+      return true;
+  }
+  return false;
+}
+
 std::string AnimationPlayer::AnimationsToString() const {
   std::string str;
   for (size_t i = 0; i < animations_.size(); i++) {
