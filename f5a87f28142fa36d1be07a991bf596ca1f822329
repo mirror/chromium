@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "0cae5887_d936d320",
+        "filename": "chrome/browser/plugins/pdf_iframe_navigation_throttle.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1232077
+      },
+      "writtenOn": "2017-08-29T20:23:57Z",
+      "side": 1,
+      "message": "That\u0027s my bad. The newest patch set should not create the placeholder when there aren\u0027t any response headers.",
+      "parentUuid": "7c3e1779_5c16448e",
+      "revId": "f5a87f28142fa36d1be07a991bf596ca1f822329",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "beaf3a6c_53959f9c",
         "filename": "chrome/browser/plugins/pdf_iframe_navigation_throttle.cc",
         "patchSetId": 5
