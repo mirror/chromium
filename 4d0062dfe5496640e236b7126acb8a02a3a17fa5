@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1cfe18a3_ab7095a0",
+        "filename": "tools/mb/mb_config.pyl",
+        "patchSetId": 1
+      },
+      "lineNbr": 705,
+      "author": {
+        "id": 1002539
+      },
+      "writtenOn": "2017-08-29T00:48:12Z",
+      "side": 1,
+      "message": "https://luci-scheduler.appspot.com/jobs/infra-internal (you may need to login)",
+      "range": {
+        "startLine": 705,
+        "startChar": 5,
+        "endLine": 705,
+        "endChar": 34
+      },
+      "revId": "4d0062dfe5496640e236b7126acb8a02a3a17fa5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
