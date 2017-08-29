@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0271a128_0613be3e",
+        "filename": "content/browser/renderer_host/database_message_filter.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 451,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-08-29T20:44:45Z",
+      "side": 1,
+      "message": "also, maybe defend against the host having been deleted before the ui thread got to this task?",
+      "revId": "f11c55c08611c53452e30643263879bafa69bae8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13bd2a8c_b395a5fc",
+        "filename": "content/child/web_database_impl.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-08-29T20:44:45Z",
+      "side": 1,
+      "message": "drive by: Is the comment about processing them on the IO thread correct? It looks like the binding is established on the main thread, but maybe I\u0027m missing something. I don\u0027t see any problem with processing these messages on the main thread, just pointing out that the comment may not be accurate.",
+      "revId": "f11c55c08611c53452e30643263879bafa69bae8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
