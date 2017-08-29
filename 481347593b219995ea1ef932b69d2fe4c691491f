@@ -16,6 +16,24 @@
       "revId": "481347593b219995ea1ef932b69d2fe4c691491f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f5cbbfb_72690be3",
+        "filename": "testing/scripts/sizes.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-08-29T02:07:17Z",
+      "side": 1,
+      "message": "because it\u0027s not provided when main_compile_targets is called, and create_argparser is shared by the two.",
+      "parentUuid": "c9159f65_36ba8697",
+      "revId": "481347593b219995ea1ef932b69d2fe4c691491f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
