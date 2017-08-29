@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "afc8f3a9_b578075e",
+        "filename": "third_party/WebKit/Source/core/svg/SVGUseElement.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-08-29T18:23:50Z",
+      "side": 1,
+      "message": "\"const String\u0026\" to avoid a copy? Or are you worried about future lifetime safety (a valid concern)?",
+      "revId": "d4729116c8adb30fa23a5008f29fe7e149084e61",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
