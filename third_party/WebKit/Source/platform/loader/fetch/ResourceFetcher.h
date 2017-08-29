@@ -85,7 +85,7 @@ class PLATFORM_EXPORT ResourceFetcher
 
   using DocumentResourceMap = HeapHashMap<String, WeakMember<Resource>>;
   const DocumentResourceMap& AllResources() const {
-    return document_resources_;
+    return cached_resources_map_;
   }
 
   // Binds the given Resource instance to this ResourceFetcher instance to
@@ -260,7 +260,8 @@ class PLATFORM_EXPORT ResourceFetcher
   Member<ResourceLoadScheduler> scheduler_;
 
   HashSet<String> validated_urls_;
-  mutable DocumentResourceMap document_resources_;
+  DocumentResourceMap cached_resources_map_;
+  HeapHashSet<WeakMember<Resource>> document_resources_;
 
   HeapHashMap<PreloadKey, Member<Resource>> preloads_;
   HeapVector<Member<Resource>> matched_preloads_;

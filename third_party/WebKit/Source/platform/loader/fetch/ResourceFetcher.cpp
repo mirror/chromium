@@ -297,7 +297,7 @@ ResourceFetcher::~ResourceFetcher() {}
 
 Resource* ResourceFetcher::CachedResource(const KURL& resource_url) const {
   KURL url = MemoryCache::RemoveFragmentIdentifierIfNeeded(resource_url);
-  const WeakMember<Resource>& resource = document_resources_.at(url);
+  const WeakMember<Resource>& resource = cached_resources_map_.at(url);
   return resource.Get();
 }
 
@@ -756,8 +756,9 @@ Resource* ResourceFetcher::RequestResource(
   // If only the fragment identifiers differ, it is the same resource.
   DCHECK(EqualIgnoringFragmentIdentifier(resource->Url(), params.Url()));
   RequestLoadStarted(identifier, resource, params, policy, is_static_data);
-  document_resources_.Set(
+  cached_resources_map_.Set(
       MemoryCache::RemoveFragmentIdentifierIfNeeded(params.Url()), resource);
+  document_resources_.insert(resource);
 
   // Returns with an existing resource if the resource does not need to start
   // loading immediately. If revalidation policy was determined as |Revalidate|,
@@ -1192,7 +1193,7 @@ bool ResourceFetcher::ShouldDeferImageLoad(const KURL& url) const {
 }
 
 void ResourceFetcher::ReloadImagesIfNotDeferred() {
-  for (Resource* resource : document_resources_.Values()) {
+  for (Resource* resource : document_resources_) {
     if (resource->GetType() == Resource::kImage && resource->StillNeedsLoad() &&
         !ShouldDeferImageLoad(resource->Url()))
       StartLoad(resource);
@@ -1485,8 +1486,7 @@ void ResourceFetcher::UpdateAllImageResourcePriorities() {
   TRACE_EVENT0(
       "blink",
       "ResourceLoadPriorityOptimizer::updateAllImageResourcePriorities");
-  for (const auto& document_resource : document_resources_) {
-    Resource* resource = document_resource.value.Get();
+  for (Resource* resource : document_resources_) {
     if (!resource || resource->GetType() != Resource::kImage ||
         !resource->IsLoading())
       continue;
@@ -1509,8 +1509,7 @@ void ResourceFetcher::UpdateAllImageResourcePriorities() {
 }
 
 void ResourceFetcher::ReloadLoFiImages() {
-  for (const auto& document_resource : document_resources_) {
-    Resource* resource = document_resource.value.Get();
+  for (Resource* resource : document_resources_) {
     if (resource)
       resource->ReloadIfLoFiOrPlaceholderImage(this, Resource::kReloadAlways);
   }
@@ -1710,6 +1709,7 @@ DEFINE_TRACE(ResourceFetcher) {
   visitor->Trace(archive_);
   visitor->Trace(loaders_);
   visitor->Trace(non_blocking_loaders_);
+  visitor->Trace(cached_resources_map_);
   visitor->Trace(document_resources_);
   visitor->Trace(preloads_);
   visitor->Trace(matched_preloads_);
