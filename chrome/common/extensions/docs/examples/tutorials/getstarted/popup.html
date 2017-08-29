@@ -7,18 +7,32 @@
 <html>
   <head>
     <title>Getting Started Extension's Popup</title>
-    <style>
-      body {
-        font-family: "Segoe UI", "Lucida Grande", Tahoma, sans-serif;
-        font-size: 100%;
-      }
-      #status {
-        /* avoid an excessively wide status text */
-        white-space: pre;
-        text-overflow: ellipsis;
-        overflow: hidden;
-        max-width: 400px;
-      }
+    <style type="text/css">
+    body {
+      min-width: 400px;
+      font-size: 15px;
+      margin: 10px;
+    }
+
+    .container {
+      display: table;
+    }
+
+    .row {
+      display: table-row;
+    }
+
+    .middle {
+      min-width: 10px;
+    }
+
+    .left,
+    .right {
+      display: table-cell;
+      width: auto;
+      vertical-align: middle;
+    }
+
     </style>
 
     <!--
@@ -30,8 +44,22 @@
     <script src="popup.js"></script>
   </head>
   <body>
-    <div id="status"></div>
-    <img id="image-result" hidden>
+    <div class="container">
+      <div class="row">
+        <div class="left">
+          Choose one of the colors from the dropdown to change the background color of the current page:
+        </div>
+        <div class="middle"></div>
+        <div class="right">
+          <select id="dropdown">
+            <option selected disabled hidden style='display: none' value=''></option>
+            <option value="white">White</option>
+            <option value="pink">Pink</option>
+            <option value="green">Green</option>
+            <option value="yellow">Yellow</option>
+          </select>
+        </div>
+      </div>
+    </div>
   </body>
 </html>
-
