@@ -4,52 +4,76 @@
 
 #include "ui/app_list/views/search_result_page_view.h"
 
+#include <memory>
 #include <utility>
 #include <vector>
 
-#include "base/command_line.h"
 #include "base/macros.h"
 #include "base/memory/ptr_util.h"
+#include "base/test/scoped_feature_list.h"
+#include "ui/app_list/app_list_features.h"
 #include "ui/app_list/app_list_model.h"
-#include "ui/app_list/app_list_switches.h"
 #include "ui/app_list/test/app_list_test_view_delegate.h"
 #include "ui/app_list/test/test_search_result.h"
+#include "ui/app_list/views/app_list_main_view.h"
+#include "ui/app_list/views/app_list_view.h"
+#include "ui/app_list/views/contents_view.h"
 #include "ui/app_list/views/search_result_list_view.h"
-#include "ui/app_list/views/search_result_list_view_delegate.h"
 #include "ui/app_list/views/search_result_tile_item_list_view.h"
 #include "ui/app_list/views/search_result_view.h"
-#include "ui/views/controls/textfield/textfield.h"
+#include "ui/aura/window.h"
 #include "ui/views/test/views_test_base.h"
 
 namespace app_list {
 namespace test {
 
 class SearchResultPageViewTest : public views::ViewsTestBase,
-                                 public SearchResultListViewDelegate {
+                                 public testing::WithParamInterface<bool> {
  public:
-  SearchResultPageViewTest() {}
-  ~SearchResultPageViewTest() override {}
+  SearchResultPageViewTest() = default;
+  ~SearchResultPageViewTest() override = default;
 
   // Overridden from testing::Test:
   void SetUp() override {
     views::ViewsTestBase::SetUp();
-    view_.reset(new SearchResultPageView());
-    list_view_ = new SearchResultListView(this, &view_delegate_);
-    view_->AddSearchResultContainerView(GetResults(), list_view_);
-    textfield_.reset(new views::Textfield());
+
+    if (GetParam()) {
+      scoped_feature_list_.InitAndEnableFeature(
+          features::kEnableFullscreenAppList);
+    }
+
+    delegate_.reset(new AppListTestViewDelegate);
+    app_list_view_ = new AppListView(delegate_.get());
+    gfx::NativeView parent = GetContext();
+    app_list_view_->Initialize(parent, 0, false, false);
+    // TODO(warx): remove MaybeSetAnchorPoint setup when bubble launcher is
+    // removed from code base.
+    app_list_view_->MaybeSetAnchorPoint(
+        parent->GetBoundsInRootWindow().CenterPoint());
+    app_list_view_->GetWidget()->Show();
+
+    ContentsView* contents_view =
+        app_list_view_->app_list_main_view()->contents_view();
+    view_ = contents_view->search_results_page_view();
     tile_list_view_ =
-        new SearchResultTileItemListView(textfield_.get(), &view_delegate_);
-    view_->AddSearchResultContainerView(GetResults(), tile_list_view_);
+        contents_view->search_result_tile_item_list_view_for_test();
+    list_view_ = contents_view->search_result_list_view_for_test();
+  }
+  void TearDown() override {
+    app_list_view_->GetWidget()->Close();
+    views::ViewsTestBase::TearDown();
   }
 
  protected:
-  SearchResultPageView* view() { return view_.get(); }
+  SearchResultPageView* view() const { return view_; }
 
-  SearchResultListView* list_view() { return list_view_; }
-  SearchResultTileItemListView* tile_list_view() { return tile_list_view_; }
+  SearchResultTileItemListView* tile_list_view() const {
+    return tile_list_view_;
+  }
+  SearchResultListView* list_view() const { return list_view_; }
 
-  AppListModel::SearchResults* GetResults() {
-    return view_delegate_.GetModel()->results();
+  AppListModel::SearchResults* GetResults() const {
+    return delegate_->GetModel()->results();
   }
 
   void SetUpSearchResults(const std::vector<
@@ -74,7 +98,7 @@ class SearchResultPageViewTest : public views::ViewsTestBase,
     RunPendingMessages();
   }
 
-  int GetSelectedIndex() { return view_->selected_index(); }
+  int GetSelectedIndex() const { return view_->selected_index(); }
 
   bool KeyPress(ui::KeyboardCode key_code) { return KeyPress(key_code, false); }
 
@@ -87,19 +111,22 @@ class SearchResultPageViewTest : public views::ViewsTestBase,
   }
 
  private:
-  void OnResultInstalled(SearchResult* result) override {}
-
-  SearchResultListView* list_view_;
-  SearchResultTileItemListView* tile_list_view_;
-
-  AppListTestViewDelegate view_delegate_;
-  std::unique_ptr<SearchResultPageView> view_;
-  std::unique_ptr<views::Textfield> textfield_;
+  AppListView* app_list_view_ = nullptr;  // Owned by native widget.
+  SearchResultPageView* view_ = nullptr;  // Owned by views hierarchy.
+  SearchResultTileItemListView* tile_list_view_ =
+      nullptr;                                 // Owned by views hierarchy.
+  SearchResultListView* list_view_ = nullptr;  // Owned by views hierarchy.
+  std::unique_ptr<AppListTestViewDelegate> delegate_;
+  base::test::ScopedFeatureList scoped_feature_list_;
 
   DISALLOW_COPY_AND_ASSIGN(SearchResultPageViewTest);
 };
 
-TEST_F(SearchResultPageViewTest, DirectionalMovement) {
+// Instantiate the Boolean which is used to toggle the Fullscreen app list in
+// the parameterized tests.
+INSTANTIATE_TEST_CASE_P(, SearchResultPageViewTest, testing::Bool());
+
+TEST_P(SearchResultPageViewTest, DirectionalMovement) {
   std::vector<std::pair<SearchResult::DisplayType, int>> result_types;
   // 3 tile results, followed by 2 list results.
   const int kTileResults = 3;
@@ -153,7 +180,7 @@ TEST_F(SearchResultPageViewTest, DirectionalMovement) {
   EXPECT_EQ(0, tile_list_view()->selected_index());
 }
 
-TEST_F(SearchResultPageViewTest, TabMovement) {
+TEST_P(SearchResultPageViewTest, TabMovement) {
   std::vector<std::pair<SearchResult::DisplayType, int>> result_types;
   // 3 tile results, followed by 2 list results.
   const int kTileResults = 3;
@@ -214,7 +241,7 @@ TEST_F(SearchResultPageViewTest, TabMovement) {
   EXPECT_EQ(0, tile_list_view()->selected_index());
 }
 
-TEST_F(SearchResultPageViewTest, ResultsSorted) {
+TEST_P(SearchResultPageViewTest, ResultsSorted) {
   AppListModel::SearchResults* results = GetResults();
 
   // Add 3 results and expect the tile list view to be the first result
@@ -253,7 +280,7 @@ TEST_F(SearchResultPageViewTest, ResultsSorted) {
   EXPECT_EQ(tile_list_view(), view()->result_container_views()[1]);
 }
 
-TEST_F(SearchResultPageViewTest, UpdateWithSelection) {
+TEST_P(SearchResultPageViewTest, UpdateWithSelection) {
   {
     std::vector<std::pair<SearchResult::DisplayType, int>> result_types;
     result_types.push_back(std::make_pair(SearchResult::DISPLAY_TILE, 3));
