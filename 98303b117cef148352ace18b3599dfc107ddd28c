@@ -142,6 +142,24 @@
       "revId": "98303b117cef148352ace18b3599dfc107ddd28c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2b4b2a7d_9ce3fc2c",
+        "filename": "chrome/browser/page_load_metrics/observers/android_page_load_metrics_observer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2017-08-29T15:22:06Z",
+      "side": 1,
+      "message": "Thanks!\n\nOne thing I realized is that HTTP redirects are treated as being part of the same resource load, so we should really only ever get one main frame resource callback per page load, unless some resource types use the main frame type incorrectly. So I\u0027m glad we have the dcheck in place now, thanks!",
+      "parentUuid": "c1318daf_89b0d612",
+      "revId": "98303b117cef148352ace18b3599dfc107ddd28c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

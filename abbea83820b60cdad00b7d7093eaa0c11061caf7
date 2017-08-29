@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "65265723_f487ec9c",
+        "filename": "chrome/browser/page_load_metrics/observers/android_page_load_metrics_observer.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2017-08-29T15:22:06Z",
+      "side": 1,
+      "message": "thanks! in addition to DCHECKing, could we also return early if we encounter this case? that way we guard defensively against this \u0026 only dispatch once per load. my experience with these resource APIs is that they sometimes do strange things so i think we are better off being defensive here.",
+      "revId": "abbea83820b60cdad00b7d7093eaa0c11061caf7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
