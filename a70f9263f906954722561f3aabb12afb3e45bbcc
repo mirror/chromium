@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "fa0f9dfe_4ef699dc",
+        "filename": "media/cdm/ppapi/external_clear_key/clear_key_cdm.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 273,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-08-29T23:17:53Z",
+      "side": 1,
+      "message": "Restored the original comment. I\u0027ll do a followup CL that removes the security origin from AesDecryptor (which it never uses anyway).",
+      "parentUuid": "9944dc14_e52bf064",
+      "range": {
+        "startLine": 273,
+        "startChar": 5,
+        "endLine": 273,
+        "endChar": 37
+      },
+      "revId": "a70f9263f906954722561f3aabb12afb3e45bbcc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f3749af5_66dc6e6c",
         "filename": "media/mojo/clients/mojo_cdm.cc",
         "patchSetId": 6
@@ -45,6 +69,30 @@
       "revId": "a70f9263f906954722561f3aabb12afb3e45bbcc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10ea3f1d_ee54bf69",
+        "filename": "media/mojo/clients/mojo_cdm.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-08-29T23:17:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f3749af5_66dc6e6c",
+      "range": {
+        "startLine": 119,
+        "startChar": 49,
+        "endLine": 119,
+        "endChar": 61
+      },
+      "revId": "a70f9263f906954722561f3aabb12afb3e45bbcc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
