@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "03f627b3_1effd28e",
+        "filename": "tools/perf/contrib/vr_benchmarks/vr_benchmarks/vr_browsing_mode_vr_performance.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1163549
+      },
+      "writtenOn": "2017-08-29T23:39:46Z",
+      "side": 1,
+      "message": "Nit: \"VrBrowsingModeVrPerformance\" sounds redundant - \"VrBrowsingModePerformance\" better?",
+      "range": {
+        "startLine": 14,
+        "startChar": 6,
+        "endLine": 14,
+        "endChar": 33
+      },
+      "revId": "854bdffc0cb3e6f98f37d5bf361c087b82a563c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7319f560_8596dc56",
+        "filename": "tools/perf/contrib/vr_benchmarks/vr_benchmarks/vr_browsing_mode_vr_performance.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1163549
+      },
+      "writtenOn": "2017-08-29T23:39:46Z",
+      "side": 1,
+      "message": "Are --no-restore-state and --disable-fre not on by default? I didn\u0027t need them for the memory benchmark.",
+      "range": {
+        "startLine": 33,
+        "startChar": 29,
+        "endLine": 33,
+        "endChar": 66
+      },
+      "revId": "854bdffc0cb3e6f98f37d5bf361c087b82a563c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "848a49fc_76cf1ff7",
+        "filename": "tools/perf/contrib/vr_benchmarks/vr_benchmarks/vr_browsing_mode_vr_performance.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1163549
+      },
+      "writtenOn": "2017-08-29T23:39:46Z",
+      "side": 1,
+      "message": "We should decide on a naming scheme to stick with. The general Telemetry format for this seems to be metric.page_set, e.g. memory.top_10_mobile. This is what I did for the memory benchmark, but I think we might want to do something different, as I think the plan is to collect multiple metrics (memory, fps, etc.) in a single benchmark.",
+      "range": {
+        "startLine": 38,
+        "startChar": 11,
+        "endLine": 38,
+        "endChar": 47
+      },
+      "revId": "854bdffc0cb3e6f98f37d5bf361c087b82a563c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d8c7016_9226fade",
+        "filename": "tools/perf/contrib/vr_benchmarks/vr_page_sets/vr_browsing_mode_pages.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1163549
+      },
+      "writtenOn": "2017-08-29T23:39:46Z",
+      "side": 1,
+      "message": "There are two ways I can think of to do this off-hand, although both involve parsing logcat output and so aren\u0027t ideal:\n\n1. Check for the ActivityManager output that gets logged when the NFC activity is started (and closed too, I think)\n2. Check for the \"Successfully initialized GVR version ...\" (or similar) line that gets output when we enter VR. Note that this is also output if we go to a WebVR page in 2D (from magic window).",
+      "range": {
+        "startLine": 20,
+        "startChar": 6,
+        "endLine": 20,
+        "endChar": 73
+      },
+      "revId": "854bdffc0cb3e6f98f37d5bf361c087b82a563c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
