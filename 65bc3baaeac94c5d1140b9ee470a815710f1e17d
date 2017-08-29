@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9db82ded_c5218e0e",
+        "filename": "chrome/browser/chromeos/net/cert_verify_proc_chromeos_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 268,
+      "author": {
+        "id": 1001604
+      },
+      "writtenOn": "2017-08-29T22:30:23Z",
+      "side": 1,
+      "message": "The original version of this only imported root_1_[0], not all of root_1_. It looks like root_1_ only has size one. I\u0027m assuming that\u0027s why the change?",
+      "range": {
+        "startLine": 268,
+        "startChar": 35,
+        "endLine": 268,
+        "endChar": 42
+      },
+      "revId": "65bc3baaeac94c5d1140b9ee470a815710f1e17d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bc8fae07_f99daf9c",
+        "filename": "net/cert/nss_profile_filter_chromeos.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1001604
+      },
+      "writtenOn": "2017-08-29T22:30:23Z",
+      "side": 1,
+      "message": "Hrm, so if I\u0027m following this route correctly, this FindCERT call is needed because  ClientCertStoreChromeOS::CertFilter takes an X509Certificate and needs to sniff at the NSS module or so associated with the CERTCertificate?\n\nThe other option would be if CertFilter took a CERTCertificate. That doesn\u0027t immediately work because it sees a ClientCertIdentity rather than the actual ClientCertIdentityNSS objects that ClientCertStoreNSS fills in. This seems like it should be resolvable, either by erasing the types a hair later or letting ClientCertStoreNSS::GetPlatformCertsOnWorkerThread see the filter.",
+      "revId": "65bc3baaeac94c5d1140b9ee470a815710f1e17d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
