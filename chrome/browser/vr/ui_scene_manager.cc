@@ -89,13 +89,15 @@ static constexpr float kIndicatorGap = 0.05;
 static constexpr float kIndicatorVerticalOffset = 0.1;
 static constexpr float kIndicatorDistanceOffset = 0.1;
 
+static constexpr float kWebVrUrlToastWidthDMM = 0.472;
+static constexpr float kWebVrUrlToastHeightDMM = 0.064;
 static constexpr float kWebVrUrlToastDistance = 1.0;
 static constexpr float kWebVrUrlToastWidth =
-    kUrlBarWidthDMM * kWebVrUrlToastDistance;
+    kWebVrUrlToastWidthDMM * kWebVrUrlToastDistance;
 static constexpr float kWebVrUrlToastHeight =
-    kUrlBarHeightDMM * kWebVrUrlToastDistance;
+    kWebVrUrlToastHeightDMM * kWebVrUrlToastDistance;
 static constexpr float kWebVrUrlToastVerticalOffset =
-    -0.2 * kWebVrUrlToastDistance;
+    0.36 * kWebVrUrlToastDistance;
 static constexpr int kWebVrUrlToastTimeoutSeconds = 6;
 
 static constexpr float kWebVrToastDistance = 1.0;
