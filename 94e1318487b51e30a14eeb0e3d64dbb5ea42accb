@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1943aa9d_a5adad45",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/access-control-preflight-request-header-sorted.htm",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1225177
+      },
+      "writtenOn": "2017-08-29T05:33:14Z",
+      "side": 1,
+      "message": "(Optional) Yoshino-san was saying something to me before about parentheses being preferred for the arrow function, e.g. (test) in this case. Can you confirm that?",
+      "revId": "94e1318487b51e30a14eeb0e3d64dbb5ea42accb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1debae85_306fbf5a",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/access-control-preflight-request-header-sorted.htm",
+        "patchSetId": 2
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1225177
+      },
+      "writtenOn": "2017-08-29T05:33:14Z",
+      "side": 1,
+      "message": "(Optional) Maybe you don\u0027t need this blank line...? I don\u0027t know; let me know if it\u0027s for readability or anything, since I don\u0027t really mind either way, I just wanted to make sure it\u0027s intentional!",
+      "revId": "94e1318487b51e30a14eeb0e3d64dbb5ea42accb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
