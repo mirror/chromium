@@ -22,6 +22,30 @@
       "revId": "334c88c067be47e4a4456adf3eb8d8c26ce3cc5e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c5edbac_58ec8cf8",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/resources/access-control-preflight-request-invalid-status.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1225177
+      },
+      "writtenOn": "2017-08-29T00:09:09Z",
+      "side": 1,
+      "message": "Thanks for pointing that out! It\u0027s changed now.",
+      "parentUuid": "4c63af29_86b95f6f",
+      "range": {
+        "startLine": 10,
+        "startChar": 45,
+        "endLine": 10,
+        "endChar": 50
+      },
+      "revId": "334c88c067be47e4a4456adf3eb8d8c26ce3cc5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
