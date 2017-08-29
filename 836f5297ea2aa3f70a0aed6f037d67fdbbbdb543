@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5e9b0b11_a4245d70",
+        "filename": "extensions/browser/event_router.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 476,
+      "author": {
+        "id": 1002272
+      },
+      "writtenOn": "2017-08-29T07:22:57Z",
+      "side": 1,
+      "message": "There is nothing apparent in the code that would explain why this change needs to be made. Could you add a comment explaining why the order has to be the way it is?\n\nAlternatively and maybe better, instead of just swapping things here, the ChromeExtensionsBrowserClient implementation could be changed to test both ways, with a comment explaining why it is necessary and a TODO to model presentation profiles better somehow.",
+      "range": {
+        "startLine": 476,
+        "startChar": 49,
+        "endLine": 476,
+        "endChar": 65
+      },
+      "revId": "836f5297ea2aa3f70a0aed6f037d67fdbbbdb543",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
