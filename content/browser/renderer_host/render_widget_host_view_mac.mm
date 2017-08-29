@@ -749,7 +749,7 @@ void RenderWidgetHostViewMac::Show() {
 
   ui::LatencyInfo renderer_latency_info;
   renderer_latency_info.AddLatencyNumber(
-      ui::TAB_SHOW_COMPONENT, render_widget_host_->GetLatencyComponentId(), 0);
+      ui::TAB_SHOW_COMPONENT, render_widget_host_->GetLatencyComponentId());
   render_widget_host_->WasShown(renderer_latency_info);
 
   // If there is not a frame being currently drawn, kick one, so that the below
@@ -1964,7 +1964,7 @@ void RenderWidgetHostViewMac::OnDisplayMetricsChanged(
       enterEvent.SetType(WebInputEvent::kMouseMove);
       enterEvent.button = WebMouseEvent::Button::kNoButton;
       ui::LatencyInfo latency_info(ui::SourceEventType::OTHER);
-      latency_info.AddLatencyNumber(ui::INPUT_EVENT_LATENCY_UI_COMPONENT, 0, 0);
+      latency_info.AddLatencyNumber(ui::INPUT_EVENT_LATENCY_UI_COMPONENT, 0);
       if (renderWidgetHostView_->ShouldRouteEvent(enterEvent)) {
         renderWidgetHostView_->render_widget_host_->delegate()
             ->GetInputEventRouter()
@@ -2004,7 +2004,7 @@ void RenderWidgetHostViewMac::OnDisplayMetricsChanged(
   WebMouseEvent event =
       WebMouseEventBuilder::Build(theEvent, self, pointerType_);
   ui::LatencyInfo latency_info(ui::SourceEventType::OTHER);
-  latency_info.AddLatencyNumber(ui::INPUT_EVENT_LATENCY_UI_COMPONENT, 0, 0);
+  latency_info.AddLatencyNumber(ui::INPUT_EVENT_LATENCY_UI_COMPONENT, 0);
   if (renderWidgetHostView_->ShouldRouteEvent(event)) {
     renderWidgetHostView_->render_widget_host_->delegate()
         ->GetInputEventRouter()
@@ -2125,7 +2125,7 @@ void RenderWidgetHostViewMac::OnDisplayMetricsChanged(
     latency_info.set_source_event_type(ui::SourceEventType::KEY_PRESS);
   }
 
-  latency_info.AddLatencyNumber(ui::INPUT_EVENT_LATENCY_UI_COMPONENT, 0, 0);
+  latency_info.AddLatencyNumber(ui::INPUT_EVENT_LATENCY_UI_COMPONENT, 0);
 
   // Force fullscreen windows to close on Escape so they won't keep the keyboard
   // grabbed or be stuck onscreen if the renderer is hanging.
@@ -2366,7 +2366,7 @@ void RenderWidgetHostViewMac::OnDisplayMetricsChanged(
           .AddPhaseIfNeededAndScheduleEndEvent(webEvent, false);
     } else {
       ui::LatencyInfo latency_info(ui::SourceEventType::WHEEL);
-      latency_info.AddLatencyNumber(ui::INPUT_EVENT_LATENCY_UI_COMPONENT, 0, 0);
+      latency_info.AddLatencyNumber(ui::INPUT_EVENT_LATENCY_UI_COMPONENT, 0);
       renderWidgetHostView_->render_widget_host_
           ->ForwardWheelEventWithLatencyInfo(webEvent, latency_info);
     }
@@ -2641,7 +2641,7 @@ void RenderWidgetHostViewMac::OnDisplayMetricsChanged(
     WebMouseWheelEvent webEvent = WebMouseWheelEventBuilder::Build(event, self);
     webEvent.rails_mode = mouseWheelFilter_.UpdateRailsMode(webEvent);
     ui::LatencyInfo latency_info(ui::SourceEventType::WHEEL);
-    latency_info.AddLatencyNumber(ui::INPUT_EVENT_LATENCY_UI_COMPONENT, 0, 0);
+    latency_info.AddLatencyNumber(ui::INPUT_EVENT_LATENCY_UI_COMPONENT, 0);
     if (renderWidgetHostView_->wheel_scroll_latching_enabled()) {
       renderWidgetHostView_->mouse_wheel_phase_handler_
           .AddPhaseIfNeededAndScheduleEndEvent(
