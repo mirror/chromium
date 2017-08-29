@@ -45,7 +45,6 @@ class WebIDBCallbacks {
 
   // Pointers transfer ownership.
   virtual void OnError(const WebIDBDatabaseError&) = 0;
-  virtual void OnSuccess(const WebVector<WebString>&) = 0;
   virtual void OnSuccess(WebIDBCursor*,
                          const WebIDBKey&,
                          const WebIDBKey& primary_key,

@@ -26,7 +26,8 @@ class IndexedDBFakeBackingStore : public IndexedDBBackingStore {
   IndexedDBFakeBackingStore();
   IndexedDBFakeBackingStore(IndexedDBFactory* factory,
                             base::SequencedTaskRunner* task_runner);
-  std::vector<base::string16> GetDatabaseNames(leveldb::Status* s) override;
+  std::vector<IndexedDBDatabaseInfo> GetDatabasesInfo(
+      leveldb::Status* s) override;
   leveldb::Status GetIDBDatabaseMetaData(const base::string16& name,
                                          IndexedDBDatabaseMetadata*,
                                          bool* found) override;

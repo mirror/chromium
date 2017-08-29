@@ -10,6 +10,7 @@
 #include "third_party/WebKit/public/platform/WebBlobInfo.h"
 #include "third_party/WebKit/public/platform/modules/indexeddb/WebIDBCallbacks.h"
 #include "third_party/WebKit/public/platform/modules/indexeddb/WebIDBDatabaseError.h"
+#include "third_party/WebKit/public/platform/modules/indexeddb/WebIDBDatabaseInfo.h"
 #include "third_party/WebKit/public/platform/modules/indexeddb/WebIDBMetadata.h"
 #include "third_party/WebKit/public/platform/modules/indexeddb/WebIDBValue.h"
 #include "third_party/WebKit/public/web/WebHeap.h"
@@ -25,7 +26,8 @@ class MockWebIDBCallbacks : public blink::WebIDBCallbacks {
                void(const blink::WebIDBKey& key,
                     const blink::WebIDBKey& primaryKey,
                     const blink::WebIDBValue& value));
-  MOCK_METHOD1(OnSuccess, void(const blink::WebVector<blink::WebString>&));
+  MOCK_METHOD1(OnSuccess,
+               void(const blink::WebVector<blink::WebIDBDatabaseInfo>&));
   MOCK_METHOD4(OnSuccess,
                void(blink::WebIDBCursor*,
                     const blink::WebIDBKey&,

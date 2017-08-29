@@ -28,15 +28,21 @@
 #ifndef IDBFactory_h
 #define IDBFactory_h
 
+#include "bindings/core/v8/ExceptionState.h"
+#include "bindings/core/v8/ScriptPromise.h"
+#include "modules/indexeddb/IDBDatabaseInfo.h"
 #include "modules/indexeddb/IDBOpenDBRequest.h"
 #include "platform/bindings/ScriptWrappable.h"
 #include "platform/heap/Handle.h"
+#include "platform/wtf/Vector.h"
 #include "platform/wtf/text/WTFString.h"
 
 namespace blink {
 
 class ExceptionState;
 class ScriptState;
+class ScriptPromiseResolver;
+struct WebIDBDatabaseInfo;
 
 class IDBFactory final : public GarbageCollected<IDBFactory>,
                          public ScriptWrappable {
@@ -47,6 +53,7 @@ class IDBFactory final : public GarbageCollected<IDBFactory>,
   DEFINE_INLINE_VIRTUAL_TRACE() {}
 
   // Implement the IDBFactory IDL
+  ScriptPromise getAllDatabases(ScriptState*, ExceptionState&);
   IDBOpenDBRequest* open(ScriptState*, const String& name, ExceptionState&);
   IDBOpenDBRequest* open(ScriptState*,
                          const String& name,
@@ -60,8 +67,7 @@ class IDBFactory final : public GarbageCollected<IDBFactory>,
             const ScriptValue& second,
             ExceptionState&);
 
-  // These are not exposed to the web applications and only used by DevTools.
-  IDBRequest* GetDatabaseNames(ScriptState*, ExceptionState&);
+  // This is not exposed to the web applications and only used by DevTools.
   IDBOpenDBRequest* CloseConnectionsAndDeleteDatabase(ScriptState*,
                                                       const String& name,
                                                       ExceptionState&);
@@ -78,6 +84,9 @@ class IDBFactory final : public GarbageCollected<IDBFactory>,
                                            const String& name,
                                            ExceptionState&,
                                            bool);
+
+  void OnGetAllDatabasesResult(ScriptPromiseResolver*,
+                               const Vector<WebIDBDatabaseInfo>&);
 };
 
 }  // namespace blink

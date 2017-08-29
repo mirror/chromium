@@ -24,8 +24,8 @@ class MockMojoIndexedDBCallbacks : public ::indexed_db::mojom::Callbacks {
 
   MOCK_METHOD2(Error, void(int32_t code, const base::string16& message));
 
-  MOCK_METHOD1(SuccessStringList,
-               void(const std::vector<base::string16>& value));
+  MOCK_METHOD1(SuccessDatabaseInfoList,
+               void(const std::vector<IndexedDBDatabaseInfo>& value));
 
   MOCK_METHOD1(Blocked, void(int64_t existing_version));
 

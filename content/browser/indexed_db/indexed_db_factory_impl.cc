@@ -199,18 +199,18 @@ leveldb::Status IndexedDBFactoryImpl::AbortTransactions(const Origin& origin) {
         "indexedDB.abortTransactions.");
   }
 
-  leveldb::Status get_names_status;
-  std::vector<base::string16> db_names =
-      backing_store->GetDatabaseNames(&get_names_status);
-  if (!get_names_status.ok()) {
+  leveldb::Status get_info_status;
+  std::vector<IndexedDBDatabaseInfo> databases_info =
+      backing_store->GetDatabasesInfo(&get_info_status);
+  if (!get_info_status.ok()) {
     return leveldb::Status::IOError(
-        "Internal error getting origin database names for "
+        "Internal error getting origin database info for "
         "indexedDB.abortTransactions.");
   }
 
-  for (base::string16& name : db_names) {
+  for (IndexedDBDatabaseInfo& database_info : databases_info) {
     const scoped_refptr<IndexedDBDatabase>& db =
-        database_map_[std::make_pair(origin, name)];
+        database_map_[std::make_pair(origin, database_info.name)];
     db->AbortAllTransactionsForConnections();
   }
 
@@ -264,12 +264,12 @@ void IndexedDBFactoryImpl::ReportOutstandingBlobs(const Origin& origin,
   }
 }
 
-void IndexedDBFactoryImpl::GetDatabaseNames(
+void IndexedDBFactoryImpl::GetDatabasesInfo(
     scoped_refptr<IndexedDBCallbacks> callbacks,
     const Origin& origin,
     const base::FilePath& data_directory,
     scoped_refptr<net::URLRequestContextGetter> request_context_getter) {
-  IDB_TRACE("IndexedDBFactoryImpl::GetDatabaseNames");
+  IDB_TRACE("IndexedDBFactoryImpl::GetDatabasesInfo");
   // TODO(dgrogan): Plumb data_loss back to script eventually?
   IndexedDBDataLossInfo data_loss_info;
   bool disk_full;
@@ -282,23 +282,24 @@ void IndexedDBFactoryImpl::GetDatabaseNames(
     callbacks->OnError(
         IndexedDBDatabaseError(blink::kWebIDBDatabaseExceptionUnknownError,
                                "Internal error opening backing store for "
-                               "indexedDB.webkitGetDatabaseNames."));
+                               "indexedDB.getDatabasesInfo."));
     return;
   }
 
-  std::vector<base::string16> names = backing_store->GetDatabaseNames(&s);
+  std::vector<IndexedDBDatabaseInfo> databases_info =
+      backing_store->GetDatabasesInfo(&s);
   if (!s.ok()) {
     DLOG(ERROR) << "Internal error getting database names";
     IndexedDBDatabaseError error(blink::kWebIDBDatabaseExceptionUnknownError,
                                  "Internal error opening backing store for "
-                                 "indexedDB.webkitGetDatabaseNames.");
+                                 "indexedDB.getDatabasesInfo.");
     callbacks->OnError(error);
     backing_store = NULL;
     if (s.IsCorruption())
       HandleBackingStoreCorruption(origin, error);
     return;
   }
-  callbacks->OnSuccess(names);
+  callbacks->OnSuccess(databases_info);
   backing_store = NULL;
   ReleaseBackingStore(origin, false /* immediate */);
 }
@@ -339,7 +340,8 @@ void IndexedDBFactoryImpl::DeleteDatabase(
     return;
   }
 
-  std::vector<base::string16> names = backing_store->GetDatabaseNames(&s);
+  std::vector<IndexedDBDatabaseInfo> databases_info =
+      backing_store->GetDatabasesInfo(&s);
   if (!s.ok()) {
     DLOG(ERROR) << "Internal error getting database names";
     IndexedDBDatabaseError error(blink::kWebIDBDatabaseExceptionUnknownError,
@@ -351,7 +353,10 @@ void IndexedDBFactoryImpl::DeleteDatabase(
       HandleBackingStoreCorruption(origin, error);
     return;
   }
-  if (!base::ContainsValue(names, name)) {
+  if (std::find_if(databases_info.begin(), databases_info.end(),
+                   [&](const IndexedDBDatabaseInfo& database_info) -> bool {
+                     return database_info.name == name;
+                   }) == databases_info.end()) {
     const int64_t version = 0;
     callbacks->OnSuccess(version);
     backing_store = NULL;

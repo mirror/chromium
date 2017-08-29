@@ -249,10 +249,6 @@ class MODULES_EXPORT IDBRequest : public EventTargetWithInlineData,
   void HandleResponse(int64_t);
   void HandleResponse();
 
-  // Only used in webkitGetDatabaseNames(), which is deprecated and hopefully
-  // going away soon.
-  void EnqueueResponse(const Vector<String>&);
-
   // Only IDBOpenDBRequest instances should receive these:
   virtual void EnqueueBlocked(int64_t old_version) { NOTREACHED(); }
   virtual void EnqueueUpgradeNeeded(int64_t old_version,

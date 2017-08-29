@@ -25,7 +25,8 @@
 
 #include "modules/indexeddb/IDBAny.h"
 
-#include "core/dom/DOMStringList.h"
+#include <utility>
+
 #include "modules/indexeddb/IDBCursorWithValue.h"
 #include "modules/indexeddb/IDBDatabase.h"
 #include "modules/indexeddb/IDBIndex.h"
@@ -51,11 +52,6 @@ IDBAny::~IDBAny() {}
 void IDBAny::ContextWillBeDestroyed() {
   if (idb_cursor_)
     idb_cursor_->ContextWillBeDestroyed();
-}
-
-DOMStringList* IDBAny::DomStringList() const {
-  DCHECK_EQ(type_, kDOMStringListType);
-  return dom_string_list_.Get();
 }
 
 IDBCursor* IDBAny::IdbCursor() const {
@@ -106,9 +102,6 @@ int64_t IDBAny::Integer() const {
   return integer_;
 }
 
-IDBAny::IDBAny(DOMStringList* value)
-    : type_(kDOMStringListType), dom_string_list_(value) {}
-
 IDBAny::IDBAny(IDBCursor* value)
     : type_(value->IsCursorWithValue() ? kIDBCursorWithValueType
                                        : kIDBCursorType),
@@ -133,7 +126,6 @@ IDBAny::IDBAny(IDBKey* key) : type_(kKeyType), idb_key_(key) {}
 IDBAny::IDBAny(int64_t value) : type_(kIntegerType), integer_(value) {}
 
 DEFINE_TRACE(IDBAny) {
-  visitor->Trace(dom_string_list_);
   visitor->Trace(idb_cursor_);
   visitor->Trace(idb_database_);
   visitor->Trace(idb_index_);

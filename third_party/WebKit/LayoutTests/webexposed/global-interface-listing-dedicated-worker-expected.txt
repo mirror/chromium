@@ -500,6 +500,7 @@ Starting worker: resources/global-interface-listing-worker.js
 [Worker]     method cmp
 [Worker]     method constructor
 [Worker]     method deleteDatabase
+[Worker]     method getDatabasesInfo
 [Worker]     method open
 [Worker] interface IDBIndex
 [Worker]     attribute @@toStringTag

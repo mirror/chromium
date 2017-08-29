@@ -32,6 +32,7 @@
 
 #include "bindings/core/v8/ExceptionState.h"
 #include "bindings/core/v8/ScriptController.h"
+#include "bindings/core/v8/ScriptPromise.h"
 #include "bindings/core/v8/V8BindingForCore.h"
 #include "core/dom/DOMStringList.h"
 #include "core/dom/Document.h"
@@ -45,6 +46,7 @@
 #include "modules/indexeddb/IDBCursor.h"
 #include "modules/indexeddb/IDBCursorWithValue.h"
 #include "modules/indexeddb/IDBDatabase.h"
+#include "modules/indexeddb/IDBDatabaseInfo.h"
 #include "modules/indexeddb/IDBFactory.h"
 #include "modules/indexeddb/IDBIndex.h"
 #include "modules/indexeddb/IDBKey.h"
@@ -57,9 +59,11 @@
 #include "modules/indexeddb/IDBTransaction.h"
 #include "platform/bindings/ScriptState.h"
 #include "platform/bindings/V8PerIsolateData.h"
+#include "platform/heap/Handle.h"
 #include "platform/weborigin/SecurityOrigin.h"
 #include "platform/wtf/Vector.h"
 #include "public/platform/modules/indexeddb/WebIDBCursor.h"
+#include "public/platform/modules/indexeddb/WebIDBDatabaseInfo.h"
 #include "public/platform/modules/indexeddb/WebIDBTypes.h"
 
 using blink::protocol::Array;
@@ -94,58 +98,6 @@ namespace {
 
 static const char kIndexedDBObjectGroup[] = "indexeddb";
 static const char kNoDocumentError[] = "No document for given frame found";
-
-class GetDatabaseNamesCallback final : public EventListener {
-  WTF_MAKE_NONCOPYABLE(GetDatabaseNamesCallback);
-
- public:
-  static GetDatabaseNamesCallback* Create(
-      std::unique_ptr<RequestDatabaseNamesCallback> request_callback,
-      const String& security_origin) {
-    return new GetDatabaseNamesCallback(std::move(request_callback),
-                                        security_origin);
-  }
-
-  ~GetDatabaseNamesCallback() override {}
-
-  bool operator==(const EventListener& other) const override {
-    return this == &other;
-  }
-
-  void handleEvent(ExecutionContext*, Event* event) override {
-    if (event->type() != EventTypeNames::success) {
-      request_callback_->sendFailure(Response::Error("Unexpected event type."));
-      return;
-    }
-
-    IDBRequest* idb_request = static_cast<IDBRequest*>(event->target());
-    IDBAny* request_result = idb_request->ResultAsAny();
-    if (request_result->GetType() != IDBAny::kDOMStringListType) {
-      request_callback_->sendFailure(
-          Response::Error("Unexpected result type."));
-      return;
-    }
-
-    DOMStringList* database_names_list = request_result->DomStringList();
-    std::unique_ptr<protocol::Array<String>> database_names =
-        protocol::Array<String>::create();
-    for (size_t i = 0; i < database_names_list->length(); ++i)
-      database_names->addItem(database_names_list->item(i));
-    request_callback_->sendSuccess(std::move(database_names));
-  }
-
-  DEFINE_INLINE_VIRTUAL_TRACE() { EventListener::Trace(visitor); }
-
- private:
-  GetDatabaseNamesCallback(
-      std::unique_ptr<RequestDatabaseNamesCallback> request_callback,
-      const String& security_origin)
-      : EventListener(EventListener::kCPPEventListenerType),
-        request_callback_(std::move(request_callback)),
-        security_origin_(security_origin) {}
-  std::unique_ptr<RequestDatabaseNamesCallback> request_callback_;
-  String security_origin_;
-};
 
 class DeleteCallback final : public EventListener {
   WTF_MAKE_NONCOPYABLE(DeleteCallback);
@@ -782,19 +734,23 @@ void InspectorIndexedDBAgent::requestDatabaseNames(
   }
   ScriptState::Scope scope(script_state);
   DummyExceptionStateForTesting exception_state;
-  IDBRequest* idb_request =
-      idb_factory->GetDatabaseNames(script_state, exception_state);
+  ScriptPromise promise =
+      idb_factory->getAllDatabases(script_state, exception_state);
   if (exception_state.HadException()) {
     request_callback->sendFailure(
         Response::Error("Could not obtain database names."));
     return;
   }
+
+  // TODO(pwnall): Wire promise result down the inspector.
+  /*
   idb_request->addEventListener(
       EventTypeNames::success,
-      GetDatabaseNamesCallback::Create(
+      GetDatabasesInfosCallback::Create(
           std::move(request_callback),
           document->GetSecurityOrigin()->ToRawString()),
       false);
+  */
 }
 
 void InspectorIndexedDBAgent::requestDatabase(

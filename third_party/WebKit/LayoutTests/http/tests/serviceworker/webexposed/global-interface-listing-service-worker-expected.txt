@@ -556,6 +556,7 @@ interface IDBFactory
     method cmp
     method constructor
     method deleteDatabase
+    method getDatabasesInfo
     method open
 interface IDBIndex
     attribute @@toStringTag

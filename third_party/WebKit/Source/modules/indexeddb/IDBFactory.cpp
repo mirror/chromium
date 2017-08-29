@@ -30,6 +30,7 @@
 
 #include <memory>
 #include "bindings/core/v8/ExceptionState.h"
+#include "bindings/core/v8/ScriptPromiseResolver.h"
 #include "bindings/modules/v8/V8BindingForModules.h"
 #include "core/dom/DOMException.h"
 #include "core/dom/Document.h"
@@ -45,6 +46,7 @@
 #include "public/platform/Platform.h"
 #include "public/platform/WebSecurityOrigin.h"
 #include "public/platform/modules/indexeddb/WebIDBDatabaseCallbacks.h"
+#include "public/platform/modules/indexeddb/WebIDBDatabaseInfo.h"
 #include "public/platform/modules/indexeddb/WebIDBFactory.h"
 
 namespace blink {
@@ -63,36 +65,34 @@ static bool IsContextValid(ExecutionContext* context) {
   return true;
 }
 
-IDBRequest* IDBFactory::GetDatabaseNames(ScriptState* script_state,
-                                         ExceptionState& exception_state) {
-  IDB_TRACE("IDBFactory::getDatabaseNamesRequestSetup");
-  IDBRequest::AsyncTraceState metrics("IDBFactory::getDatabaseNames");
-  IDBRequest* request = IDBRequest::Create(script_state, IDBAny::CreateNull(),
-                                           nullptr, std::move(metrics));
-  // TODO(jsbell): Used only by inspector; remove unneeded checks/exceptions?
+ScriptPromise IDBFactory::getAllDatabases(ScriptState* script_state,
+                                          ExceptionState& exception_state) {
   if (!IsContextValid(ExecutionContext::From(script_state)))
-    return nullptr;
+    return ScriptPromise();
   if (!ExecutionContext::From(script_state)
            ->GetSecurityOrigin()
            ->CanAccessDatabase()) {
     exception_state.ThrowSecurityError(
         "access to the Indexed Database API is denied in this context.");
-    return nullptr;
+    return ScriptPromise();
   }
 
   if (!IndexedDBClient::From(ExecutionContext::From(script_state))
            ->AllowIndexedDB(ExecutionContext::From(script_state),
                             "Database Listing")) {
-    request->HandleResponse(
-        DOMException::Create(kUnknownError, kPermissionDeniedErrorMessage));
-    return request;
+    exception_state.ThrowDOMException(kUnknownError,
+                                      kPermissionDeniedErrorMessage);
+    return ScriptPromise();
   }
 
-  Platform::Current()->IdbFactory()->GetDatabaseNames(
-      request->CreateWebCallbacks().release(),
+  ScriptPromiseResolver* resolver = ScriptPromiseResolver::Create(script_state);
+
+  Platform::Current()->IdbFactory()->GetAllDatabases(
+      WTF::Bind(&IDBFactory::OnGetAllDatabasesResult, WrapPersistent(this),
+                WrapPersistent(resolver)),
       WebSecurityOrigin(
           ExecutionContext::From(script_state)->GetSecurityOrigin()));
-  return request;
+  return resolver->Promise();
 }
 
 IDBOpenDBRequest* IDBFactory::open(ScriptState* script_state,
@@ -232,6 +232,20 @@ short IDBFactory::cmp(ScriptState* script_state,
   }
 
   return static_cast<short>(first->Compare(second));
+}
+
+void IDBFactory::OnGetAllDatabasesResult(
+    ScriptPromiseResolver* resolver,
+    const Vector<WebIDBDatabaseInfo>& web_info_list) {
+  HeapVector<IDBDatabaseInfo> database_info_list;
+  database_info_list.ReserveInitialCapacity(web_info_list.size());
+  for (const WebIDBDatabaseInfo& web_info : web_info_list) {
+    database_info_list.emplace_back();
+    IDBDatabaseInfo& database_info = database_info_list.back();
+    database_info.setName(web_info.name);
+    database_info.setVersion(web_info.version);
+  }
+  resolver->Resolve(database_info_list);
 }
 
 }  // namespace blink
