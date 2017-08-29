@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "752065d5_dc763b76",
+        "filename": "components/policy/core/common/cloud/cloud_policy_refresh_scheduler.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 363,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-08-29T15:00:35Z",
+      "side": 1,
+      "message": "nit: Please move this method definition upper, right after OnIPAddressChanged() - in order to match the declaration order.",
+      "range": {
+        "startLine": 363,
+        "startChar": 0,
+        "endLine": 363,
+        "endChar": 62
+      },
+      "revId": "a1867b9ccbf4f30945348e16d053741e5367d88a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eed9ef2e_040bd2f9",
+        "filename": "components/policy/core/common/cloud/cloud_policy_refresh_scheduler_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-08-29T15:00:35Z",
+      "side": 1,
+      "message": "nit: const",
+      "range": {
+        "startLine": 74,
+        "startChar": 45,
+        "endLine": 74,
+        "endChar": 46
+      },
+      "revId": "a1867b9ccbf4f30945348e16d053741e5367d88a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38c7071e_aa91a6d1",
+        "filename": "components/policy/core/common/cloud/cloud_policy_refresh_scheduler_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-08-29T15:00:35Z",
+      "side": 1,
+      "message": "nit: Calling base::Time constructor is probably not necessary here?",
+      "range": {
+        "startLine": 79,
+        "startChar": 44,
+        "endLine": 79,
+        "endChar": 55
+      },
+      "revId": "a1867b9ccbf4f30945348e16d053741e5367d88a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74101cbd_3a88c9a2",
+        "filename": "components/policy/core/common/cloud/cloud_policy_refresh_scheduler_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 401,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-08-29T15:00:35Z",
+      "side": 1,
+      "message": "I think, there would always be a pending task, regardless of the \"device sleep\" logic?\nWhat\u0027s more interesting to check here is that the currently scheduled task has a zero delay (assuming that you rewind the time back by more than kWithInvalidationsRefreshDelayMs - you may want to add an EXPECT that your rewind delta is greater than all those constants).",
+      "range": {
+        "startLine": 401,
+        "startChar": 2,
+        "endLine": 401,
+        "endChar": 46
+      },
+      "revId": "a1867b9ccbf4f30945348e16d053741e5367d88a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
