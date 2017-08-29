@@ -410,6 +410,24 @@
     },
     {
       "key": {
+        "uuid": "58275046_1d0f15a9",
+        "filename": "chrome/browser/ui/webui/sys_internals/sys_internals_message_handler.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1230199
+      },
+      "writtenOn": "2017-08-29T06:43:20Z",
+      "side": 1,
+      "message": "It is a typo, I fixed it in patch 12.",
+      "parentUuid": "8ade8cff_e1611e0c",
+      "revId": "5936ee3659b54a9cda4defc9c87cd39ae96d3bb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "61d76d3b_9382a21b",
         "filename": "chrome/browser/ui/webui/sys_internals/sys_internals_message_handler.cc",
         "patchSetId": 11
@@ -456,6 +474,30 @@
       "writtenOn": "2017-08-29T05:46:09Z",
       "side": 1,
       "message": "Same thing here and elsewhere. What units are these? This looks like it\u0027s converting KB into B?",
+      "range": {
+        "startLine": 151,
+        "startChar": 58,
+        "endLine": 151,
+        "endChar": 62
+      },
+      "revId": "5936ee3659b54a9cda4defc9c87cd39ae96d3bb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "215f8114_c89cad87",
+        "filename": "chrome/browser/ui/webui/sys_internals/sys_internals_message_handler.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1230199
+      },
+      "writtenOn": "2017-08-29T06:43:20Z",
+      "side": 1,
+      "message": "Yes, all units is B.",
+      "parentUuid": "d5ff3496_be105bc6",
       "range": {
         "startLine": 151,
         "startChar": 58,
