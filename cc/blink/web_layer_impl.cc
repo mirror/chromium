@@ -212,7 +212,7 @@ WebColor WebLayerImpl::BackgroundColor() const {
   return layer_->background_color();
 }
 
-void WebLayerImpl::SetFilters(const cc::FilterOperations& filters) {
+void WebLayerImpl::SetFilters(const gfx::FilterOperations& filters) {
   layer_->SetFilters(filters);
 }
 
@@ -220,7 +220,7 @@ void WebLayerImpl::SetFiltersOrigin(const blink::WebFloatPoint& origin) {
   layer_->SetFiltersOrigin(origin);
 }
 
-void WebLayerImpl::SetBackgroundFilters(const cc::FilterOperations& filters) {
+void WebLayerImpl::SetBackgroundFilters(const gfx::FilterOperations& filters) {
   layer_->SetBackgroundFilters(filters);
 }
 

@@ -10,13 +10,12 @@
 #include "cc/trees/target_property.h"
 
 namespace gfx {
+class FilterOperations;
 class Transform;
 class ScrollOffset;
 }
 
 namespace cc {
-
-class FilterOperations;
 
 enum class ElementListType { ACTIVE, PENDING };
 
@@ -28,9 +27,10 @@ class MutatorHostClient {
   virtual void SetMutatorsNeedCommit() = 0;
   virtual void SetMutatorsNeedRebuildPropertyTrees() = 0;
 
-  virtual void SetElementFilterMutated(ElementId element_id,
-                                       ElementListType list_type,
-                                       const FilterOperations& filters) = 0;
+  virtual void SetElementFilterMutated(
+      ElementId element_id,
+      ElementListType list_type,
+      const gfx::FilterOperations& filters) = 0;
   virtual void SetElementOpacityMutated(ElementId element_id,
                                         ElementListType list_type,
                                         float opacity) = 0;

@@ -17,7 +17,6 @@
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
 #include "base/observer_list.h"
-#include "cc/base/filter_operations.h"
 #include "cc/base/region.h"
 #include "cc/benchmarks/micro_benchmark.h"
 #include "cc/cc_export.h"
@@ -32,6 +31,7 @@
 #include "cc/trees/property_tree.h"
 #include "cc/trees/target_property.h"
 #include "third_party/skia/include/core/SkColor.h"
+#include "ui/gfx/filter_operations.h"
 #include "ui/gfx/geometry/point3_f.h"
 #include "ui/gfx/geometry/rect.h"
 #include "ui/gfx/geometry/rect_f.h"
@@ -153,14 +153,14 @@ class CC_EXPORT Layer : public base::RefCounted<Layer> {
   void SetShouldHitTest(bool should_hit_test);
   bool should_hit_test() const { return inputs_.should_hit_test; }
 
-  void SetFilters(const FilterOperations& filters);
-  const FilterOperations& filters() const { return inputs_.filters; }
+  void SetFilters(const gfx::FilterOperations& filters);
+  const gfx::FilterOperations& filters() const { return inputs_.filters; }
 
   // Background filters are filters applied to what is behind this layer, when
   // they are viewed through non-opaque regions in this layer. They are used
   // through the WebLayer interface, and are not exposed to HTML.
-  void SetBackgroundFilters(const FilterOperations& filters);
-  const FilterOperations& background_filters() const {
+  void SetBackgroundFilters(const gfx::FilterOperations& filters);
+  const gfx::FilterOperations& background_filters() const {
     return inputs_.background_filters;
   }
 
@@ -490,7 +490,7 @@ class CC_EXPORT Layer : public base::RefCounted<Layer> {
 
   // Interactions with attached animations.
   gfx::ScrollOffset ScrollOffsetForAnimation() const;
-  void OnFilterAnimated(const FilterOperations& filters);
+  void OnFilterAnimated(const gfx::FilterOperations& filters);
   void OnOpacityAnimated(float opacity);
   void OnTransformAnimated(const gfx::Transform& transform);
 
@@ -581,8 +581,8 @@ class CC_EXPORT Layer : public base::RefCounted<Layer> {
 
     SkColor background_color;
 
-    FilterOperations filters;
-    FilterOperations background_filters;
+    gfx::FilterOperations filters;
+    gfx::FilterOperations background_filters;
     gfx::PointF filters_origin;
 
     gfx::ScrollOffset scroll_offset;

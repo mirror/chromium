@@ -16,10 +16,10 @@
 #include "cc/animation/animation_player.h"
 #include "cc/animation/keyframed_animation_curve.h"
 #include "cc/animation/transform_operations.h"
-#include "cc/base/filter_operations.h"
-#include "cc/base/math_util.h"
 #include "cc/trees/mutator_host_client.h"
+#include "ui/gfx/filter_operations.h"
 #include "ui/gfx/geometry/box_f.h"
+#include "ui/gfx/math_util.h"
 
 namespace cc {
 
@@ -287,7 +287,7 @@ void ElementAnimations::NotifyClientFloatAnimated(float opacity,
                                                   int target_property_id,
                                                   Animation* animation) {
   DCHECK(animation->target_property_id() == TargetProperty::OPACITY);
-  opacity = MathUtil::ClampToRange(opacity, 0.0f, 1.0f);
+  opacity = gfx::MathUtil::ClampToRange(opacity, 0.0f, 1.0f);
   if (AnimationAffectsActiveElements(animation))
     OnOpacityAnimated(ElementListType::ACTIVE, opacity);
   if (AnimationAffectsPendingElements(animation))
@@ -295,7 +295,7 @@ void ElementAnimations::NotifyClientFloatAnimated(float opacity,
 }
 
 void ElementAnimations::NotifyClientFilterAnimated(
-    const FilterOperations& filters,
+    const gfx::FilterOperations& filters,
     int target_property_id,
     Animation* animation) {
   if (AnimationAffectsActiveElements(animation))
@@ -419,7 +419,7 @@ bool ElementAnimations::IsCurrentlyAnimatingProperty(
 }
 
 void ElementAnimations::OnFilterAnimated(ElementListType list_type,
-                                         const FilterOperations& filters) {
+                                         const gfx::FilterOperations& filters) {
   DCHECK(element_id());
   DCHECK(animation_host());
   DCHECK(animation_host()->mutator_host_client());

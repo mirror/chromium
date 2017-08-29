@@ -13,7 +13,6 @@
 #include "base/metrics/histogram_macros.h"
 #include "base/numerics/safe_conversions.h"
 #include "base/trace_event/trace_event.h"
-#include "cc/base/math_util.h"
 #include "cc/output/bsp_tree.h"
 #include "cc/output/bsp_walk_action.h"
 #include "cc/output/output_surface.h"
@@ -23,6 +22,7 @@
 #include "components/viz/common/quads/copy_output_request.h"
 #include "ui/gfx/geometry/quad_f.h"
 #include "ui/gfx/geometry/rect_conversions.h"
+#include "ui/gfx/math_util.h"
 #include "ui/gfx/transform.h"
 
 namespace {
@@ -411,7 +411,7 @@ bool DirectRenderer::ShouldSkipQuad(const DrawQuad& quad,
   if (render_pass_scissor.IsEmpty())
     return true;
 
-  gfx::Rect target_rect = MathUtil::MapEnclosingClippedRect(
+  gfx::Rect target_rect = gfx::MathUtil::MapEnclosingClippedRect(
       quad.shared_quad_state->quad_to_target_transform, quad.visible_rect);
   if (quad.shared_quad_state->is_clipped)
     target_rect.Intersect(quad.shared_quad_state->clip_rect);
@@ -464,13 +464,13 @@ void DirectRenderer::DoDrawPolygon(const DrawPolygon& poly,
   }
 }
 
-const FilterOperations* DirectRenderer::FiltersForPass(
+const gfx::FilterOperations* DirectRenderer::FiltersForPass(
     RenderPassId render_pass_id) const {
   auto it = render_pass_filters_.find(render_pass_id);
   return it == render_pass_filters_.end() ? nullptr : it->second;
 }
 
-const FilterOperations* DirectRenderer::BackgroundFiltersForPass(
+const gfx::FilterOperations* DirectRenderer::BackgroundFiltersForPass(
     RenderPassId render_pass_id) const {
   auto it = render_pass_background_filters_.find(render_pass_id);
   return it == render_pass_background_filters_.end() ? nullptr : it->second;

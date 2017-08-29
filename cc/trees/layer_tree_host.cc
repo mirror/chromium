@@ -31,7 +31,6 @@
 #include "base/trace_event/trace_event_argument.h"
 #include "cc/base/devtools_instrumentation.h"
 #include "cc/base/histograms.h"
-#include "cc/base/math_util.h"
 #include "cc/debug/rendering_stats_instrumentation.h"
 #include "cc/input/layer_selection_bound.h"
 #include "cc/input/page_scale_animation.h"
@@ -1350,9 +1349,10 @@ void LayerTreeHost::SetMutatorsNeedRebuildPropertyTrees() {
   property_trees_.needs_rebuild = true;
 }
 
-void LayerTreeHost::SetElementFilterMutated(ElementId element_id,
-                                            ElementListType list_type,
-                                            const FilterOperations& filters) {
+void LayerTreeHost::SetElementFilterMutated(
+    ElementId element_id,
+    ElementListType list_type,
+    const gfx::FilterOperations& filters) {
   if (IsUsingLayerLists()) {
     // In SPv2 we always have property trees and can set the filter
     // directly on the effect node.

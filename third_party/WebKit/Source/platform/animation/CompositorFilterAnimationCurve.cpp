@@ -6,7 +6,6 @@
 
 #include "cc/animation/keyframed_animation_curve.h"
 #include "cc/animation/timing_function.h"
-#include "cc/base/filter_operations.h"
 #include "platform/graphics/CompositorFilterOperations.h"
 
 namespace blink {

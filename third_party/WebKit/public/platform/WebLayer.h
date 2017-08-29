@@ -47,8 +47,11 @@ class SkMatrix44;
 namespace cc {
 class Layer;
 class LayerClient;
-class FilterOperations;
 struct ElementId;
+}
+
+namespace gfx {
+class FilterOperations;
 }
 
 namespace blink {
@@ -141,7 +144,7 @@ class WebLayer {
 
   // Clear the filters in use by passing in a newly instantiated
   // FilterOperations object.
-  virtual void SetFilters(const cc::FilterOperations&) = 0;
+  virtual void SetFilters(const gfx::FilterOperations&) = 0;
 
   // The position of the original primitive inside the total bounds.
   virtual void SetFiltersOrigin(const WebFloatPoint&) = 0;
@@ -149,7 +152,7 @@ class WebLayer {
   // Clear the background filters in use by passing in a newly instantiated
   // FilterOperations object.
   // TODO(loyso): This should use CompositorFilterOperation. crbug.com/584551
-  virtual void SetBackgroundFilters(const cc::FilterOperations&) = 0;
+  virtual void SetBackgroundFilters(const gfx::FilterOperations&) = 0;
 
   // Returns true if this layer has any active animations - useful for tests.
   virtual bool HasTickingAnimationForTesting() = 0;

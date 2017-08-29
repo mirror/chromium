@@ -19,9 +19,9 @@ void ExpectTranslateX(SkMScalar translate_x,
   EXPECT_FLOAT_EQ(translate_x, operations.Apply().matrix().get(0, 3));
 }
 
-void ExpectBrightness(double brightness, const FilterOperations& filter) {
+void ExpectBrightness(double brightness, const gfx::FilterOperations& filter) {
   EXPECT_EQ(1u, filter.size());
-  EXPECT_EQ(FilterOperation::BRIGHTNESS, filter.at(0).type());
+  EXPECT_EQ(gfx::FilterOperation::BRIGHTNESS, filter.at(0).type());
   EXPECT_FLOAT_EQ(brightness, filter.at(0).amount());
 }
 
@@ -308,8 +308,8 @@ TEST(KeyframedAnimationCurveTest, RepeatedTransformKeyTimes) {
 TEST(KeyframedAnimationCurveTest, OneFilterKeyframe) {
   std::unique_ptr<KeyframedFilterAnimationCurve> curve(
       KeyframedFilterAnimationCurve::Create());
-  FilterOperations operations;
-  operations.Append(FilterOperation::CreateBrightnessFilter(2.f));
+  gfx::FilterOperations operations;
+  operations.Append(gfx::FilterOperation::CreateBrightnessFilter(2.f));
   curve->AddKeyframe(
       FilterKeyframe::Create(base::TimeDelta(), operations, nullptr));
 
@@ -324,10 +324,10 @@ TEST(KeyframedAnimationCurveTest, OneFilterKeyframe) {
 TEST(KeyframedAnimationCurveTest, TwoFilterKeyframe) {
   std::unique_ptr<KeyframedFilterAnimationCurve> curve(
       KeyframedFilterAnimationCurve::Create());
-  FilterOperations operations1;
-  operations1.Append(FilterOperation::CreateBrightnessFilter(2.f));
-  FilterOperations operations2;
-  operations2.Append(FilterOperation::CreateBrightnessFilter(4.f));
+  gfx::FilterOperations operations1;
+  operations1.Append(gfx::FilterOperation::CreateBrightnessFilter(2.f));
+  gfx::FilterOperations operations2;
+  operations2.Append(gfx::FilterOperation::CreateBrightnessFilter(4.f));
 
   curve->AddKeyframe(
       FilterKeyframe::Create(base::TimeDelta(), operations1, nullptr));
@@ -344,12 +344,12 @@ TEST(KeyframedAnimationCurveTest, TwoFilterKeyframe) {
 TEST(KeyframedAnimationCurveTest, ThreeFilterKeyframe) {
   std::unique_ptr<KeyframedFilterAnimationCurve> curve(
       KeyframedFilterAnimationCurve::Create());
-  FilterOperations operations1;
-  operations1.Append(FilterOperation::CreateBrightnessFilter(2.f));
-  FilterOperations operations2;
-  operations2.Append(FilterOperation::CreateBrightnessFilter(4.f));
-  FilterOperations operations3;
-  operations3.Append(FilterOperation::CreateBrightnessFilter(8.f));
+  gfx::FilterOperations operations1;
+  operations1.Append(gfx::FilterOperation::CreateBrightnessFilter(2.f));
+  gfx::FilterOperations operations2;
+  operations2.Append(gfx::FilterOperation::CreateBrightnessFilter(4.f));
+  gfx::FilterOperations operations3;
+  operations3.Append(gfx::FilterOperation::CreateBrightnessFilter(8.f));
   curve->AddKeyframe(
       FilterKeyframe::Create(base::TimeDelta(), operations1, nullptr));
   curve->AddKeyframe(FilterKeyframe::Create(base::TimeDelta::FromSecondsD(1.f),
@@ -371,14 +371,14 @@ TEST(KeyframedAnimationCurveTest, RepeatedFilterKeyTimes) {
   std::unique_ptr<KeyframedFilterAnimationCurve> curve(
       KeyframedFilterAnimationCurve::Create());
   // A step function.
-  FilterOperations operations1;
-  operations1.Append(FilterOperation::CreateBrightnessFilter(4.f));
-  FilterOperations operations2;
-  operations2.Append(FilterOperation::CreateBrightnessFilter(4.f));
-  FilterOperations operations3;
-  operations3.Append(FilterOperation::CreateBrightnessFilter(6.f));
-  FilterOperations operations4;
-  operations4.Append(FilterOperation::CreateBrightnessFilter(6.f));
+  gfx::FilterOperations operations1;
+  operations1.Append(gfx::FilterOperation::CreateBrightnessFilter(4.f));
+  gfx::FilterOperations operations2;
+  operations2.Append(gfx::FilterOperation::CreateBrightnessFilter(4.f));
+  gfx::FilterOperations operations3;
+  operations3.Append(gfx::FilterOperation::CreateBrightnessFilter(6.f));
+  gfx::FilterOperations operations4;
+  operations4.Append(gfx::FilterOperation::CreateBrightnessFilter(6.f));
   curve->AddKeyframe(
       FilterKeyframe::Create(base::TimeDelta(), operations1, nullptr));
   curve->AddKeyframe(FilterKeyframe::Create(base::TimeDelta::FromSecondsD(1.f),
@@ -393,9 +393,10 @@ TEST(KeyframedAnimationCurveTest, RepeatedFilterKeyTimes) {
   ExpectBrightness(4.f, curve->GetValue(base::TimeDelta::FromSecondsD(0.5f)));
 
   // There is a discontinuity at 1. Any value between 4 and 6 is valid.
-  FilterOperations value = curve->GetValue(base::TimeDelta::FromSecondsD(1.f));
+  gfx::FilterOperations value =
+      curve->GetValue(base::TimeDelta::FromSecondsD(1.f));
   EXPECT_EQ(1u, value.size());
-  EXPECT_EQ(FilterOperation::BRIGHTNESS, value.at(0).type());
+  EXPECT_EQ(gfx::FilterOperation::BRIGHTNESS, value.at(0).type());
   EXPECT_GE(value.at(0).amount(), 4);
   EXPECT_LE(value.at(0).amount(), 6);
 

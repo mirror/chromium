@@ -28,6 +28,7 @@
 #include "testing/gtest/include/gtest/gtest.h"
 #include "third_party/skia/include/core/SkCanvas.h"
 #include "third_party/skia/include/utils/SkNWayCanvas.h"
+#include "ui/gfx/filter_operations.h"
 #include "ui/gfx/skia_util.h"
 
 namespace cc {
@@ -283,7 +284,7 @@ TEST_F(SoftwareRendererTest, ShouldClearRootRenderPass) {
   int root_clear_pass_id = 1;
   RenderPass* root_clear_pass =
       AddRenderPass(&list, root_clear_pass_id, gfx::Rect(viewport_size),
-                    gfx::Transform(), FilterOperations());
+                    gfx::Transform(), gfx::FilterOperations());
   AddQuad(root_clear_pass, gfx::Rect(viewport_size), SK_ColorGREEN);
 
   renderer()->DecideRenderPassAllocationsForFrame(list);
@@ -306,7 +307,7 @@ TEST_F(SoftwareRendererTest, ShouldClearRootRenderPass) {
   int root_smaller_pass_id = 2;
   RenderPass* root_smaller_pass =
       AddRenderPass(&list, root_smaller_pass_id, gfx::Rect(viewport_size),
-                    gfx::Transform(), FilterOperations());
+                    gfx::Transform(), gfx::FilterOperations());
   AddQuad(root_smaller_pass, smaller_rect, SK_ColorMAGENTA);
 
   renderer()->DecideRenderPassAllocationsForFrame(list);
@@ -339,14 +340,14 @@ TEST_F(SoftwareRendererTest, RenderPassVisibleRect) {
   int smaller_pass_id = 2;
   RenderPass* smaller_pass =
       AddRenderPass(&list, smaller_pass_id, smaller_rect, gfx::Transform(),
-                    FilterOperations());
+                    gfx::FilterOperations());
   AddQuad(smaller_pass, smaller_rect, SK_ColorMAGENTA);
 
   // Root pass is green.
   int root_clear_pass_id = 1;
   RenderPass* root_clear_pass =
       AddRenderPass(&list, root_clear_pass_id, gfx::Rect(viewport_size),
-                    gfx::Transform(), FilterOperations());
+                    gfx::Transform(), gfx::FilterOperations());
   AddRenderPassQuad(root_clear_pass, smaller_pass);
   AddQuad(root_clear_pass, gfx::Rect(viewport_size), SK_ColorGREEN);
 
@@ -436,7 +437,7 @@ TEST_F(SoftwareRendererTest, PartialSwap) {
   int root_pass_id = 1;
   RenderPass* root_pass =
       AddRenderPass(&list, root_pass_id, gfx::Rect(viewport_size),
-                    gfx::Transform(), FilterOperations());
+                    gfx::Transform(), gfx::FilterOperations());
   AddQuad(root_pass, gfx::Rect(viewport_size), SK_ColorGREEN);
 
   // Partial frame, we should pass this rect to the SoftwareOutputDevice.

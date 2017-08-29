@@ -42,7 +42,8 @@ class CC_EXPORT OverlayProcessor {
 
   gfx::Rect GetAndResetOverlayDamage();
 
-  using FilterOperationsMap = base::flat_map<RenderPassId, FilterOperations*>;
+  using FilterOperationsMap =
+      base::flat_map<RenderPassId, gfx::FilterOperations*>;
 
   // Attempt to replace quads from the specified root render pass with overlays
   // or CALayers. This must be called every frame.

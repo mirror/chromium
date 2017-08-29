@@ -9,7 +9,7 @@
 
 #include "base/time/time.h"
 #include "cc/animation/animation_export.h"
-#include "cc/base/filter_operations.h"
+#include "ui/gfx/filter_operations.h"
 #include "ui/gfx/geometry/size_f.h"
 #include "ui/gfx/transform.h"
 
@@ -118,7 +118,7 @@ class CC_ANIMATION_EXPORT FilterAnimationCurve : public AnimationCurve {
  public:
   ~FilterAnimationCurve() override {}
 
-  virtual FilterOperations GetValue(base::TimeDelta t) const = 0;
+  virtual gfx::FilterOperations GetValue(base::TimeDelta t) const = 0;
   virtual bool HasFilterThatMovesPixels() const = 0;
 
   // Partial Animation implementation.

@@ -463,7 +463,7 @@ void Layer::SetMaskLayer(Layer* mask_layer) {
   SetNeedsFullTreeSync();
 }
 
-void Layer::SetFilters(const FilterOperations& filters) {
+void Layer::SetFilters(const gfx::FilterOperations& filters) {
   DCHECK(IsPropertyChangeAllowed());
   if (inputs_.filters == filters)
     return;
@@ -476,7 +476,7 @@ void Layer::SetFilters(const FilterOperations& filters) {
   SetNeedsCommit();
 }
 
-void Layer::SetBackgroundFilters(const FilterOperations& filters) {
+void Layer::SetBackgroundFilters(const gfx::FilterOperations& filters) {
   DCHECK(IsPropertyChangeAllowed());
   if (inputs_.background_filters == filters)
     return;
@@ -1348,7 +1348,7 @@ gfx::ScrollOffset Layer::ScrollOffsetForAnimation() const {
 // Since this animation is also being run on the compositor thread, there
 // is no need to request a commit to push this value over, so the value is
 // set directly rather than by calling Set<Property>.
-void Layer::OnFilterAnimated(const FilterOperations& filters) {
+void Layer::OnFilterAnimated(const gfx::FilterOperations& filters) {
   inputs_.filters = filters;
 }
 

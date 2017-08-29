@@ -18,6 +18,7 @@
 #include "components/viz/common/quads/shared_quad_state.h"
 #include "third_party/skia/include/core/SkColor.h"
 #include "third_party/skia/include/core/SkImageFilter.h"
+#include "ui/gfx/filter_operations.h"
 #include "ui/gfx/geometry/rect.h"
 
 namespace cc {
@@ -26,7 +27,7 @@ RenderPass* AddRenderPass(RenderPassList* pass_list,
                           int render_pass_id,
                           const gfx::Rect& output_rect,
                           const gfx::Transform& root_transform,
-                          const FilterOperations& filters) {
+                          const gfx::FilterOperations& filters) {
   std::unique_ptr<RenderPass> pass(RenderPass::Create());
   pass->SetNew(render_pass_id, output_rect, output_rect, root_transform);
   pass->filters = filters;

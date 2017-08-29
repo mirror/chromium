@@ -8,8 +8,6 @@
 
 #include <algorithm>
 
-#include "cc/base/filter_operation.h"
-#include "cc/base/filter_operations.h"
 #include "third_party/skia/include/core/SkImageFilter.h"
 #include "third_party/skia/include/core/SkRegion.h"
 #include "third_party/skia/include/effects/SkAlphaThresholdFilter.h"
@@ -18,6 +16,8 @@
 #include "third_party/skia/include/effects/SkComposeImageFilter.h"
 #include "third_party/skia/include/effects/SkDropShadowImageFilter.h"
 #include "third_party/skia/include/effects/SkMagnifierImageFilter.h"
+#include "ui/gfx/filter_operation.h"
+#include "ui/gfx/filter_operations.h"
 #include "ui/gfx/geometry/size_f.h"
 #include "ui/gfx/skia_util.h"
 
@@ -154,52 +154,52 @@ sk_sp<SkImageFilter> CreateMatrixImageFilter(const SkScalar matrix[20],
 }  // namespace
 
 sk_sp<SkImageFilter> RenderSurfaceFilters::BuildImageFilter(
-    const FilterOperations& filters,
+    const gfx::FilterOperations& filters,
     const gfx::SizeF& size,
     const gfx::Vector2dF& offset) {
   sk_sp<SkImageFilter> image_filter;
   SkScalar matrix[20];
   for (size_t i = 0; i < filters.size(); ++i) {
-    const FilterOperation& op = filters.at(i);
+    const gfx::FilterOperation& op = filters.at(i);
     switch (op.type()) {
-      case FilterOperation::GRAYSCALE:
+      case gfx::FilterOperation::GRAYSCALE:
         GetGrayscaleMatrix(1.f - op.amount(), matrix);
         image_filter = CreateMatrixImageFilter(matrix, std::move(image_filter));
         break;
-      case FilterOperation::SEPIA:
+      case gfx::FilterOperation::SEPIA:
         GetSepiaMatrix(1.f - op.amount(), matrix);
         image_filter = CreateMatrixImageFilter(matrix, std::move(image_filter));
         break;
-      case FilterOperation::SATURATE:
+      case gfx::FilterOperation::SATURATE:
         GetSaturateMatrix(op.amount(), matrix);
         image_filter = CreateMatrixImageFilter(matrix, std::move(image_filter));
         break;
-      case FilterOperation::HUE_ROTATE:
+      case gfx::FilterOperation::HUE_ROTATE:
         GetHueRotateMatrix(op.amount(), matrix);
         image_filter = CreateMatrixImageFilter(matrix, std::move(image_filter));
         break;
-      case FilterOperation::INVERT:
+      case gfx::FilterOperation::INVERT:
         GetInvertMatrix(op.amount(), matrix);
         image_filter = CreateMatrixImageFilter(matrix, std::move(image_filter));
         break;
-      case FilterOperation::OPACITY:
+      case gfx::FilterOperation::OPACITY:
         GetOpacityMatrix(op.amount(), matrix);
         image_filter = CreateMatrixImageFilter(matrix, std::move(image_filter));
         break;
-      case FilterOperation::BRIGHTNESS:
+      case gfx::FilterOperation::BRIGHTNESS:
         GetBrightnessMatrix(op.amount(), matrix);
         image_filter = CreateMatrixImageFilter(matrix, std::move(image_filter));
         break;
-      case FilterOperation::CONTRAST:
+      case gfx::FilterOperation::CONTRAST:
         GetContrastMatrix(op.amount(), matrix);
         image_filter = CreateMatrixImageFilter(matrix, std::move(image_filter));
         break;
-      case FilterOperation::BLUR:
+      case gfx::FilterOperation::BLUR:
         image_filter = SkBlurImageFilter::Make(op.amount(), op.amount(),
                                                std::move(image_filter), nullptr,
                                                op.blur_tile_mode());
         break;
-      case FilterOperation::DROP_SHADOW:
+      case gfx::FilterOperation::DROP_SHADOW:
         image_filter = SkDropShadowImageFilter::Make(
             SkIntToScalar(op.drop_shadow_offset().x()),
             SkIntToScalar(op.drop_shadow_offset().y()),
@@ -208,11 +208,11 @@ sk_sp<SkImageFilter> RenderSurfaceFilters::BuildImageFilter(
             SkDropShadowImageFilter::kDrawShadowAndForeground_ShadowMode,
             std::move(image_filter));
         break;
-      case FilterOperation::COLOR_MATRIX:
+      case gfx::FilterOperation::COLOR_MATRIX:
         image_filter =
             CreateMatrixImageFilter(op.matrix(), std::move(image_filter));
         break;
-      case FilterOperation::ZOOM: {
+      case gfx::FilterOperation::ZOOM: {
         // The center point, always the midpoint of the unclipped rectangle.
         // When we go to either edge of the screen, the width/height will shrink
         // at the same rate the offset changes. Use abs on the offset since we
@@ -254,11 +254,11 @@ sk_sp<SkImageFilter> RenderSurfaceFilters::BuildImageFilter(
         }
         break;
       }
-      case FilterOperation::SATURATING_BRIGHTNESS:
+      case gfx::FilterOperation::SATURATING_BRIGHTNESS:
         GetSaturatingBrightnessMatrix(op.amount(), matrix);
         image_filter = CreateMatrixImageFilter(matrix, std::move(image_filter));
         break;
-      case FilterOperation::REFERENCE: {
+      case gfx::FilterOperation::REFERENCE: {
         if (!op.image_filter())
           break;
 
@@ -282,7 +282,7 @@ sk_sp<SkImageFilter> RenderSurfaceFilters::BuildImageFilter(
         }
         break;
       }
-      case FilterOperation::ALPHA_THRESHOLD: {
+      case gfx::FilterOperation::ALPHA_THRESHOLD: {
         SkRegion region;
         for (const gfx::Rect& rect : op.shape())
           region.op(gfx::RectToSkIRect(rect), SkRegion::kUnion_Op);

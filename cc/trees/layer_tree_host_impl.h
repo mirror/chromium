@@ -282,7 +282,7 @@ class CC_EXPORT LayerTreeHostImpl
   void SetMutatorsNeedRebuildPropertyTrees() override;
   void SetElementFilterMutated(ElementId element_id,
                                ElementListType list_type,
-                               const FilterOperations& filters) override;
+                               const gfx::FilterOperations& filters) override;
   void SetElementOpacityMutated(ElementId element_id,
                                 ElementListType list_type,
                                 float opacity) override;

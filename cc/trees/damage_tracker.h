@@ -14,12 +14,12 @@
 #include "ui/gfx/geometry/rect.h"
 
 namespace gfx {
+class FilterOperations;
 class Rect;
 }
 
 namespace cc {
 
-class FilterOperations;
 class LayerImpl;
 class LayerTreeImpl;
 class RenderSurfaceImpl;
@@ -99,7 +99,7 @@ class CC_EXPORT DamageTracker {
   void AccumulateDamageFromRenderSurface(RenderSurfaceImpl* render_surface);
   void ComputeSurfaceDamage(RenderSurfaceImpl* render_surface);
   void ExpandDamageInsideRectWithFilters(const gfx::Rect& pre_filter_rect,
-                                         const FilterOperations& filters);
+                                         const gfx::FilterOperations& filters);
 
   struct LayerRectMapData {
     LayerRectMapData() : layer_id_(0), mailboxId_(0) {}

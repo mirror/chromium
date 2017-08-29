@@ -75,7 +75,7 @@ class VIZ_SERVICE_EXPORT SkiaRenderer : public cc::DirectRenderer {
   void DrawUnsupportedQuad(const cc::DrawQuad* quad);
   bool ShouldApplyBackgroundFilters(
       const cc::RenderPassDrawQuad* quad,
-      const cc::FilterOperations* background_filters) const;
+      const gfx::FilterOperations* background_filters) const;
   sk_sp<SkImage> ApplyImageFilter(SkImageFilter* filter,
                                   const cc::RenderPassDrawQuad* quad,
                                   const SkBitmap& to_filter,
@@ -83,7 +83,7 @@ class VIZ_SERVICE_EXPORT SkiaRenderer : public cc::DirectRenderer {
   gfx::Rect GetBackdropBoundingBoxForRenderPassQuad(
       const cc::RenderPassDrawQuad* quad,
       const gfx::Transform& contents_device_transform,
-      const cc::FilterOperations* background_filters) const;
+      const gfx::FilterOperations* background_filters) const;
   SkBitmap GetBackdropBitmap(const gfx::Rect& bounding_rect) const;
   sk_sp<SkShader> GetBackgroundFilterShader(
       const cc::RenderPassDrawQuad* quad,

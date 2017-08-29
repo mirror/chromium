@@ -42,9 +42,9 @@ void TabHandleLayer::SetProperties(int id,
   if (brightness != brightness_ || foreground != foreground_) {
     brightness_ = brightness;
     foreground_ = foreground;
-    cc::FilterOperations filters;
+    gfx::FilterOperations filters;
     if (brightness_ != 1.0f && !foreground_)
-      filters.Append(cc::FilterOperation::CreateBrightnessFilter(brightness_));
+      filters.Append(gfx::FilterOperation::CreateBrightnessFilter(brightness_));
     layer_->SetFilters(filters);
   }
 

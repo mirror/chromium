@@ -6,7 +6,6 @@
 
 #include "base/memory/ptr_util.h"
 #include "base/trace_event/trace_event.h"
-#include "cc/base/math_util.h"
 #include "cc/base/render_surface_filters.h"
 #include "cc/output/output_surface.h"
 #include "cc/output/output_surface_frame.h"
@@ -34,6 +33,7 @@
 #include "third_party/skia/include/gpu/GrContext.h"
 #include "ui/gfx/geometry/axis_transform2d.h"
 #include "ui/gfx/geometry/rect_conversions.h"
+#include "ui/gfx/math_util.h"
 #include "ui/gfx/skia_util.h"
 #include "ui/gfx/transform.h"
 
@@ -478,7 +478,7 @@ void SkiaRenderer::DrawPictureQuad(const cc::PictureDrawQuad* quad) {
 }
 
 void SkiaRenderer::DrawSolidColorQuad(const cc::SolidColorDrawQuad* quad) {
-  gfx::RectF visible_quad_vertex_rect = cc::MathUtil::ScaleRectProportional(
+  gfx::RectF visible_quad_vertex_rect = gfx::MathUtil::ScaleRectProportional(
       QuadVertexRect(), gfx::RectF(quad->rect), gfx::RectF(quad->visible_rect));
   current_paint_.setColor(quad->color);
   current_paint_.setAlpha(quad->shared_quad_state->opacity *
@@ -502,10 +502,10 @@ void SkiaRenderer::DrawTextureQuad(const cc::TextureDrawQuad* quad) {
   gfx::RectF uv_rect = gfx::ScaleRect(
       gfx::BoundingRect(quad->uv_top_left, quad->uv_bottom_right),
       image->width(), image->height());
-  gfx::RectF visible_uv_rect = cc::MathUtil::ScaleRectProportional(
+  gfx::RectF visible_uv_rect = gfx::MathUtil::ScaleRectProportional(
       uv_rect, gfx::RectF(quad->rect), gfx::RectF(quad->visible_rect));
   SkRect sk_uv_rect = gfx::RectFToSkRect(visible_uv_rect);
-  gfx::RectF visible_quad_vertex_rect = cc::MathUtil::ScaleRectProportional(
+  gfx::RectF visible_quad_vertex_rect = gfx::MathUtil::ScaleRectProportional(
       QuadVertexRect(), gfx::RectF(quad->rect), gfx::RectF(quad->visible_rect));
   SkRect quad_rect = gfx::RectFToSkRect(visible_quad_vertex_rect);
 
@@ -540,10 +540,10 @@ void SkiaRenderer::DrawTileQuad(const cc::TileDrawQuad* quad) {
                                                           quad->resource_id());
   if (!lock.sk_image())
     return;
-  gfx::RectF visible_tex_coord_rect = cc::MathUtil::ScaleRectProportional(
+  gfx::RectF visible_tex_coord_rect = gfx::MathUtil::ScaleRectProportional(
       quad->tex_coord_rect, gfx::RectF(quad->rect),
       gfx::RectF(quad->visible_rect));
-  gfx::RectF visible_quad_vertex_rect = cc::MathUtil::ScaleRectProportional(
+  gfx::RectF visible_quad_vertex_rect = gfx::MathUtil::ScaleRectProportional(
       QuadVertexRect(), gfx::RectF(quad->rect), gfx::RectF(quad->visible_rect));
 
   SkRect uv_rect = gfx::RectFToSkRect(visible_tex_coord_rect);
@@ -567,7 +567,7 @@ void SkiaRenderer::DrawRenderPassQuad(const cc::RenderPassDrawQuad* quad) {
 
   SkRect dest_rect = gfx::RectFToSkRect(QuadVertexRect());
   SkRect dest_visible_rect =
-      gfx::RectFToSkRect(cc::MathUtil::ScaleRectProportional(
+      gfx::RectFToSkRect(gfx::MathUtil::ScaleRectProportional(
           QuadVertexRect(), gfx::RectF(quad->rect),
           gfx::RectF(quad->visible_rect)));
   SkRect content_rect = RectFToSkRect(quad->tex_coord_rect);
@@ -577,7 +577,7 @@ void SkiaRenderer::DrawRenderPassQuad(const cc::RenderPassDrawQuad* quad) {
   current_canvas_->drawImageRect(lock.sk_image(), content_rect,
                                  dest_visible_rect, &current_paint_);
 
-  const cc::FilterOperations* filters = FiltersForPass(quad->render_pass_id);
+  const gfx::FilterOperations* filters = FiltersForPass(quad->render_pass_id);
 
   // TODO(weiliangc): Implement filters. (crbug.com/644851)
   if (filters) {
@@ -641,7 +641,7 @@ void SkiaRenderer::FinishDrawingQuadList() {
 
 bool SkiaRenderer::ShouldApplyBackgroundFilters(
     const cc::RenderPassDrawQuad* quad,
-    const cc::FilterOperations* background_filters) const {
+    const gfx::FilterOperations* background_filters) const {
   if (!background_filters)
     return false;
   DCHECK(!background_filters->IsEmpty());
@@ -678,9 +678,9 @@ SkBitmap SkiaRenderer::GetBackdropBitmap(const gfx::Rect& bounding_rect) const {
 gfx::Rect SkiaRenderer::GetBackdropBoundingBoxForRenderPassQuad(
     const cc::RenderPassDrawQuad* quad,
     const gfx::Transform& contents_device_transform,
-    const cc::FilterOperations* background_filters) const {
+    const gfx::FilterOperations* background_filters) const {
   DCHECK(ShouldApplyBackgroundFilters(quad, background_filters));
-  gfx::Rect backdrop_rect = gfx::ToEnclosingRect(cc::MathUtil::MapClippedRect(
+  gfx::Rect backdrop_rect = gfx::ToEnclosingRect(gfx::MathUtil::MapClippedRect(
       contents_device_transform, QuadVertexRect()));
 
   SkMatrix matrix;

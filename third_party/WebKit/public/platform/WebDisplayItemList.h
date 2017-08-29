@@ -22,7 +22,7 @@ class SkPath;
 struct SkRect;
 class SkRRect;
 
-namespace cc {
+namespace gfx {
 class FilterOperations;
 }
 
@@ -58,7 +58,7 @@ class WebDisplayItemList {
   virtual void AppendEndCompositingItem() {}
 
   // TODO(loyso): This should use CompositorFilterOperation. crbug.com/584551
-  virtual void AppendFilterItem(const cc::FilterOperations&,
+  virtual void AppendFilterItem(const gfx::FilterOperations&,
                                 const WebFloatRect& filter_bounds,
                                 const WebFloatPoint& origin) {}
   virtual void AppendEndFilterItem() {}

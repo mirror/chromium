@@ -7,7 +7,6 @@
 #ifndef CC_IPC_CC_PARAM_TRAITS_H_
 #define CC_IPC_CC_PARAM_TRAITS_H_
 
-#include "cc/base/filter_operation.h"
 #include "cc/ipc/cc_ipc_export.h"
 #include "cc/ipc/cc_param_traits_macros.h"
 #include "cc/output/compositor_frame.h"
@@ -16,16 +15,17 @@
 #include "cc/quads/texture_draw_quad.h"
 #include "gpu/ipc/common/gpu_command_buffer_traits.h"
 #include "ipc/ipc_message_macros.h"
+#include "ui/gfx/filter_operation.h"
 
-namespace cc {
+namespace gfx {
 class FilterOperations;
 }
 
 namespace IPC {
 
 template <>
-struct ParamTraits<cc::FilterOperation> {
-  typedef cc::FilterOperation param_type;
+struct ParamTraits<gfx::FilterOperation> {
+  typedef gfx::FilterOperation param_type;
   static void GetSize(base::PickleSizer* s, const param_type& p);
   static void Write(base::Pickle* m, const param_type& p);
   static bool Read(const base::Pickle* m,
@@ -35,8 +35,8 @@ struct ParamTraits<cc::FilterOperation> {
 };
 
 template <>
-struct ParamTraits<cc::FilterOperations> {
-  typedef cc::FilterOperations param_type;
+struct ParamTraits<gfx::FilterOperations> {
+  typedef gfx::FilterOperations param_type;
   static void GetSize(base::PickleSizer* s, const param_type& p);
   static void Write(base::Pickle* m, const param_type& p);
   static bool Read(const base::Pickle* m,

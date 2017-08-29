@@ -562,7 +562,7 @@ bool PropertyTreeManager::BuildEffectNodesRecursively(
     DCHECK(next_effect->GetColorFilter() == kColorFilterLuminanceToAlpha);
     DCHECK(used_blend_mode == SkBlendMode::kDstIn);
     DCHECK(next_effect->Filter().IsEmpty());
-    effect_node.filters.Append(cc::FilterOperation::CreateReferenceFilter(
+    effect_node.filters.Append(gfx::FilterOperation::CreateReferenceFilter(
         SkColorFilterImageFilter::Make(SkLumaColorFilter::Make(), nullptr)));
   } else {
     effect_node.filters = next_effect->Filter().AsCcFilterOperations();

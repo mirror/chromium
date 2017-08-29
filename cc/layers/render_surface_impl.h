@@ -23,11 +23,14 @@
 #include "ui/gfx/geometry/rect_f.h"
 #include "ui/gfx/transform.h"
 
+namespace gfx {
+class FilterOperations;
+}
+
 namespace cc {
 
 class AppendQuadsData;
 class DamageTracker;
-class FilterOperations;
 class Occlusion;
 class LayerImpl;
 class LayerTreeImpl;
@@ -147,8 +150,8 @@ class CC_EXPORT RenderSurfaceImpl {
   LayerImpl* MaskLayer();
   bool HasMask() const;
 
-  const FilterOperations& Filters() const;
-  const FilterOperations& BackgroundFilters() const;
+  const gfx::FilterOperations& Filters() const;
+  const gfx::FilterOperations& BackgroundFilters() const;
   gfx::PointF FiltersOrigin() const;
   gfx::Transform SurfaceScale() const;
 

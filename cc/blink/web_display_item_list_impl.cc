@@ -150,7 +150,7 @@ void WebDisplayItemListImpl::AppendEndCompositingItem() {
 }
 
 void WebDisplayItemListImpl::AppendFilterItem(
-    const cc::FilterOperations& filters,
+    const gfx::FilterOperations& filters,
     const blink::WebFloatRect& filter_bounds,
     const blink::WebFloatPoint& origin) {
   display_item_list_->StartPaint();

@@ -8,14 +8,14 @@
 
 #include "base/trace_event/trace_event_argument.h"
 #include "base/values.h"
-#include "cc/base/filter_operation.h"
-#include "cc/base/math_util.h"
 #include "ui/gfx/animation/tween.h"
+#include "ui/gfx/filter_operation.h"
 #include "ui/gfx/geometry/rect.h"
 #include "ui/gfx/geometry/rect_conversions.h"
+#include "ui/gfx/math_util.h"
 #include "ui/gfx/skia_util.h"
 
-namespace cc {
+namespace gfx {
 
 bool FilterOperation::operator==(const FilterOperation& other) const {
   if (type_ != other.type_)
@@ -397,4 +397,4 @@ gfx::Rect FilterOperation::MapRectReverse(const gfx::Rect& rect,
                          SkImageFilter::kReverse_MapDirection);
 }
 
-}  // namespace cc
+}  // namespace gfx

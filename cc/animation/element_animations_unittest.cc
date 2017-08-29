@@ -720,12 +720,12 @@ TEST_F(ElementAnimationsTest, FilterTransition) {
   std::unique_ptr<KeyframedFilterAnimationCurve> curve(
       KeyframedFilterAnimationCurve::Create());
 
-  FilterOperations start_filters;
-  start_filters.Append(FilterOperation::CreateBrightnessFilter(1.f));
+  gfx::FilterOperations start_filters;
+  start_filters.Append(gfx::FilterOperation::CreateBrightnessFilter(1.f));
   curve->AddKeyframe(
       FilterKeyframe::Create(base::TimeDelta(), start_filters, nullptr));
-  FilterOperations end_filters;
-  end_filters.Append(FilterOperation::CreateBrightnessFilter(2.f));
+  gfx::FilterOperations end_filters;
+  end_filters.Append(gfx::FilterOperation::CreateBrightnessFilter(2.f));
   curve->AddKeyframe(FilterKeyframe::Create(base::TimeDelta::FromSecondsD(1.0),
                                             end_filters, nullptr));
 
@@ -743,7 +743,7 @@ TEST_F(ElementAnimationsTest, FilterTransition) {
   player_->UpdateState(true, events.get());
   EXPECT_EQ(1u,
             client_.GetFilters(element_id_, ElementListType::ACTIVE).size());
-  EXPECT_EQ(FilterOperation::CreateBrightnessFilter(1.5f),
+  EXPECT_EQ(gfx::FilterOperation::CreateBrightnessFilter(1.5f),
             client_.GetFilters(element_id_, ElementListType::ACTIVE).at(0));
 
   player_->Tick(kInitialTickTime + TimeDelta::FromMilliseconds(1000));

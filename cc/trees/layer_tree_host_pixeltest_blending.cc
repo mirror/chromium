@@ -13,6 +13,7 @@
 #include "components/viz/test/test_layer_tree_frame_sink.h"
 #include "third_party/skia/include/core/SkImage.h"
 #include "third_party/skia/include/core/SkSurface.h"
+#include "ui/gfx/filter_operations.h"
 
 #if !defined(OS_ANDROID)
 
@@ -189,8 +190,8 @@ class LayerTreeHostBlendingPixelTest : public LayerTreeHostPixelResourceTest {
   }
 
   void SetupColorMatrix(scoped_refptr<Layer> layer) {
-    FilterOperations filter_operations;
-    filter_operations.Append(FilterOperation::CreateSepiaFilter(.001f));
+    gfx::FilterOperations filter_operations;
+    filter_operations.Append(gfx::FilterOperation::CreateSepiaFilter(.001f));
     layer->SetFilters(filter_operations);
   }
 
@@ -324,8 +325,8 @@ TEST_F(LayerTreeHostBlendingPixelTest, BlendingWithBackgroundFilter) {
         CreateSolidColorLayer(child_rect, kCSSGreen);
     background->AddChild(green_lane);
 
-    FilterOperations filters;
-    filters.Append(FilterOperation::CreateGrayscaleFilter(.75));
+    gfx::FilterOperations filters;
+    filters.Append(gfx::FilterOperation::CreateGrayscaleFilter(.75));
     green_lane->SetBackgroundFilters(filters);
     green_lane->SetBlendMode(kBlendModes[i]);
   }

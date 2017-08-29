@@ -21,9 +21,9 @@ namespace base {
 namespace trace_event {
 class TracedValue;
 }
-}
+}  // namespace base
 
-namespace cc {
+namespace gfx {
 
 class CC_BASE_EXPORT FilterOperation {
  public:
@@ -288,6 +288,6 @@ class CC_BASE_EXPORT FilterOperation {
   SkBlurImageFilter::TileMode blur_tile_mode_;
 };
 
-}  // namespace cc
+}  // namespace gfx
 
 #endif  // CC_BASE_FILTER_OPERATION_H_

@@ -60,6 +60,10 @@ component("gfx") {
     "decorated_text.h",
     "favicon_size.cc",
     "favicon_size.h",
+    "filter_operation.cc",
+    "filter_operation.h",
+    "filter_operations.cc",
+    "filter_operations.h",
     "font.cc",
     "font.h",
     "font_fallback.h",
@@ -122,6 +126,8 @@ component("gfx") {
     "mac/nswindow_frame_controls.h",
     "mac/nswindow_frame_controls.mm",
     "mac/scoped_cocoa_disable_screen_updates.h",
+    "math_util.cc",
+    "math_util.h",
     "nine_image_painter.cc",
     "nine_image_painter.h",
     "path.cc",
@@ -640,6 +646,7 @@ static_library("test_support") {
 
 test("gfx_unittests") {
   sources = [
+    "filter_operations_unittest.cc",
     "font_names_testing.cc",
     "font_names_testing.h",
     "font_render_params_linux_unittest.cc",
@@ -650,6 +657,7 @@ test("gfx_unittests") {
     "image/image_unittest.cc",
     "ios/NSString+CrStringDrawing_unittest.mm",
     "ios/uikit_util_unittest.mm",
+    "math_util_unittest.cc",
     "platform_font_linux_unittest.cc",
     "test/run_all_unittests.cc",
     "text_elider_unittest.cc",

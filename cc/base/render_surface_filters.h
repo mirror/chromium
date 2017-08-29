@@ -15,23 +15,22 @@ class SkBitmap;
 class SkImageFilter;
 
 namespace gfx {
+class FilterOperations;
 class SizeF;
 }
 
 namespace cc {
 
-class FilterOperations;
-
 class CC_BASE_EXPORT RenderSurfaceFilters {
  public:
-  static SkBitmap Apply(const FilterOperations& filters,
+  static SkBitmap Apply(const gfx::FilterOperations& filters,
                         unsigned texture_id,
                         const gfx::SizeF& size,
                         GrContext* gr_context);
-  static FilterOperations Optimize(const FilterOperations& filters);
+  static gfx::FilterOperations Optimize(const gfx::FilterOperations& filters);
 
   static sk_sp<SkImageFilter> BuildImageFilter(
-      const FilterOperations& filters,
+      const gfx::FilterOperations& filters,
       const gfx::SizeF& size,
       const gfx::Vector2dF& offset = gfx::Vector2dF(0, 0));
 

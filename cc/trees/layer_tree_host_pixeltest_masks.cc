@@ -298,8 +298,8 @@ TEST_P(LayerTreeHostMasksForBackgroundFiltersPixelTest,
   background->AddChild(picture);
   background->AddChild(blur);
 
-  FilterOperations filters;
-  filters.Append(FilterOperation::CreateGrayscaleFilter(1.0));
+  gfx::FilterOperations filters;
+  filters.Append(gfx::FilterOperation::CreateGrayscaleFilter(1.0));
   blur->SetBackgroundFilters(filters);
 
   gfx::Size mask_bounds(100, 100);

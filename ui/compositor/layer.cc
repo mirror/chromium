@@ -14,8 +14,6 @@
 #include "base/logging.h"
 #include "base/memory/ptr_util.h"
 #include "base/trace_event/trace_event.h"
-#include "cc/base/filter_operation.h"
-#include "cc/base/filter_operations.h"
 #include "cc/layers/nine_patch_layer.h"
 #include "cc/layers/picture_layer.h"
 #include "cc/layers/solid_color_layer.h"
@@ -31,6 +29,8 @@
 #include "ui/compositor/paint_context.h"
 #include "ui/gfx/animation/animation.h"
 #include "ui/gfx/canvas.h"
+#include "ui/gfx/filter_operation.h"
+#include "ui/gfx/filter_operations.h"
 #include "ui/gfx/geometry/dip_util.h"
 #include "ui/gfx/geometry/point3_f.h"
 #include "ui/gfx/geometry/point_conversions.h"
@@ -486,14 +486,14 @@ void Layer::SetAlphaShape(std::unique_ptr<ShapeRects> shape) {
 }
 
 void Layer::SetLayerFilters() {
-  cc::FilterOperations filters;
+  gfx::FilterOperations filters;
   if (layer_saturation_) {
-    filters.Append(cc::FilterOperation::CreateSaturateFilter(
-        layer_saturation_));
+    filters.Append(
+        gfx::FilterOperation::CreateSaturateFilter(layer_saturation_));
   }
   if (layer_grayscale_) {
-    filters.Append(cc::FilterOperation::CreateGrayscaleFilter(
-        layer_grayscale_));
+    filters.Append(
+        gfx::FilterOperation::CreateGrayscaleFilter(layer_grayscale_));
   }
   if (layer_temperature_) {
     float color_matrix[] = {
@@ -502,36 +502,36 @@ void Layer::SetLayerFilters() {
         0.0f,               0.0f, layer_blue_scale_, 0.0f, 0.0f,
         0.0f,               0.0f,              0.0f, 1.0f, 0.0f
     };
-    filters.Append(cc::FilterOperation::CreateColorMatrixFilter(color_matrix));
+    filters.Append(gfx::FilterOperation::CreateColorMatrixFilter(color_matrix));
   }
   if (layer_inverted_)
-    filters.Append(cc::FilterOperation::CreateInvertFilter(1.0));
+    filters.Append(gfx::FilterOperation::CreateInvertFilter(1.0));
   if (layer_blur_sigma_) {
-    filters.Append(cc::FilterOperation::CreateBlurFilter(
+    filters.Append(gfx::FilterOperation::CreateBlurFilter(
         layer_blur_sigma_, SkBlurImageFilter::kClamp_TileMode));
   }
   // Brightness goes last, because the resulting colors neeed clamping, which
   // cause further color matrix filters to be applied separately. In this order,
   // they all can be combined in a single pass.
   if (layer_brightness_) {
-    filters.Append(cc::FilterOperation::CreateSaturatingBrightnessFilter(
+    filters.Append(gfx::FilterOperation::CreateSaturatingBrightnessFilter(
         layer_brightness_));
   }
   if (alpha_shape_) {
-    filters.Append(cc::FilterOperation::CreateAlphaThresholdFilter(
-            *alpha_shape_, 0.f, 0.f));
+    filters.Append(gfx::FilterOperation::CreateAlphaThresholdFilter(
+        *alpha_shape_, 0.f, 0.f));
   }
 
   cc_layer_->SetFilters(filters);
 }
 
 void Layer::SetLayerBackgroundFilters() {
-  cc::FilterOperations filters;
+  gfx::FilterOperations filters;
   if (zoom_ != 1)
-    filters.Append(cc::FilterOperation::CreateZoomFilter(zoom_, zoom_inset_));
+    filters.Append(gfx::FilterOperation::CreateZoomFilter(zoom_, zoom_inset_));
 
   if (background_blur_sigma_) {
-    filters.Append(cc::FilterOperation::CreateBlurFilter(
+    filters.Append(gfx::FilterOperation::CreateBlurFilter(
         background_blur_sigma_, SkBlurImageFilter::kClamp_TileMode));
   }
 

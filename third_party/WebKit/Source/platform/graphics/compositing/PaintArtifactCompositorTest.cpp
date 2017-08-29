@@ -2009,7 +2009,7 @@ TEST_F(PaintArtifactCompositorTestWithPropertyTrees, CompositedLuminanceMask) {
   EXPECT_TRUE(masking_group->has_render_surface);
   EXPECT_EQ(masked_group->id, masking_group->parent_id);
   ASSERT_EQ(1u, masking_group->filters.size());
-  EXPECT_EQ(cc::FilterOperation::REFERENCE,
+  EXPECT_EQ(gfx::FilterOperation::REFERENCE,
             masking_group->filters.at(0).type());
 }
 

@@ -35,8 +35,8 @@ TEST_F(LayerTreeHostFiltersPixelTest, BackgroundFilterBlur) {
   background->AddChild(green);
   background->AddChild(blur);
 
-  FilterOperations filters;
-  filters.Append(FilterOperation::CreateBlurFilter(
+  gfx::FilterOperations filters;
+  filters.Append(gfx::FilterOperation::CreateBlurFilter(
       2.f, SkBlurImageFilter::kClamp_TileMode));
   blur->SetBackgroundFilters(filters);
 
@@ -77,8 +77,8 @@ TEST_F(LayerTreeHostFiltersPixelTest, BackgroundFilterBlurOutsets) {
   background->AddChild(green_border);
   background->AddChild(blur);
 
-  FilterOperations filters;
-  filters.Append(FilterOperation::CreateBlurFilter(
+  gfx::FilterOperations filters;
+  filters.Append(gfx::FilterOperation::CreateBlurFilter(
       5.f, SkBlurImageFilter::kClamp_TileMode));
   blur->SetBackgroundFilters(filters);
 
@@ -139,8 +139,8 @@ TEST_F(LayerTreeHostFiltersPixelTest, BackgroundFilterBlurOffAxis) {
   blur_transform.Translate(-60.0, -60.0);
   blur->SetTransform(blur_transform);
 
-  FilterOperations filters;
-  filters.Append(FilterOperation::CreateBlurFilter(
+  gfx::FilterOperations filters;
+  filters.Append(gfx::FilterOperation::CreateBlurFilter(
       2.f, SkBlurImageFilter::kClamp_TileMode));
   blur->SetBackgroundFilters(filters);
 
@@ -194,12 +194,12 @@ class LayerTreeHostFiltersScaledPixelTest
 
     // Add an alpha threshold filter to the blue layer which will filter out
     // everything except the lower right corner.
-    FilterOperations filters;
-    FilterOperation::ShapeRects alpha_shape;
+    gfx::FilterOperations filters;
+    gfx::FilterOperation::ShapeRects alpha_shape;
     alpha_shape.emplace_back(half_content, half_content, content_size,
                              content_size);
-    filters.Append(
-        FilterOperation::CreateAlphaThresholdFilter(alpha_shape, 1.f, 0.f));
+    filters.Append(gfx::FilterOperation::CreateAlphaThresholdFilter(alpha_shape,
+                                                                    1.f, 0.f));
     foreground->SetFilters(filters);
 
     device_scale_factor_ = device_scale_factor;
@@ -236,8 +236,8 @@ class LayerTreeHostNullFilterPixelTest : public LayerTreeHostFiltersPixelTest {
     scoped_refptr<SolidColorLayer> foreground =
         CreateSolidColorLayer(gfx::Rect(0, 0, 200, 200), SK_ColorGREEN);
 
-    FilterOperations filters;
-    filters.Append(FilterOperation::CreateReferenceFilter(nullptr));
+    gfx::FilterOperations filters;
+    filters.Append(gfx::FilterOperation::CreateReferenceFilter(nullptr));
     foreground->SetFilters(filters);
 
     RunPixelTest(test_type, foreground,
@@ -264,11 +264,11 @@ class LayerTreeHostCroppedFilterPixelTest
 
     // Check that a filter with a zero-height crop rect crops out its
     // result completely.
-    FilterOperations filters;
+    gfx::FilterOperations filters;
     SkImageFilter::CropRect cropRect(SkRect::MakeXYWH(0, 0, 100, 0));
     sk_sp<SkImageFilter> offset(
         SkOffsetImageFilter::Make(0, 0, nullptr, &cropRect));
-    filters.Append(FilterOperation::CreateReferenceFilter(offset));
+    filters.Append(gfx::FilterOperation::CreateReferenceFilter(offset));
     foreground->SetFilters(filters);
 
     RunPixelTest(test_type, foreground,
@@ -300,9 +300,9 @@ class ImageFilterClippedPixelTest : public LayerTreeHostFiltersPixelTest {
     matrix[2] = matrix[6] = matrix[10] = matrix[18] = SK_Scalar1;
     // We filter only the bottom 200x100 pixels of the foreground.
     SkImageFilter::CropRect crop_rect(SkRect::MakeXYWH(0, 100, 200, 100));
-    FilterOperations filters;
-    filters.Append(
-        FilterOperation::CreateReferenceFilter(SkColorFilterImageFilter::Make(
+    gfx::FilterOperations filters;
+    filters.Append(gfx::FilterOperation::CreateReferenceFilter(
+        SkColorFilterImageFilter::Make(
             SkColorFilter::MakeMatrixFilterRowMajor255(matrix), nullptr,
             &crop_rect)));
 
@@ -349,9 +349,9 @@ class ImageFilterNonZeroOriginPixelTest : public LayerTreeHostFiltersPixelTest {
     matrix[2] = matrix[6] = matrix[10] = matrix[18] = SK_Scalar1;
     // Set up a crop rec to filter the bottom 200x100 pixels of the foreground.
     SkImageFilter::CropRect crop_rect(SkRect::MakeXYWH(0, 100, 200, 100));
-    FilterOperations filters;
-    filters.Append(
-        FilterOperation::CreateReferenceFilter(SkColorFilterImageFilter::Make(
+    gfx::FilterOperations filters;
+    filters.Append(gfx::FilterOperation::CreateReferenceFilter(
+        SkColorFilterImageFilter::Make(
             SkColorFilter::MakeMatrixFilterRowMajor255(matrix), nullptr,
             &crop_rect)));
 
@@ -413,8 +413,8 @@ class ImageScaledBackgroundFilter : public LayerTreeHostFiltersPixelTest {
     background_transform.Scale(scale, scale);
     background->SetTransform(background_transform);
 
-    FilterOperations filters;
-    filters.Append(FilterOperation::CreateGrayscaleFilter(1.0f));
+    gfx::FilterOperations filters;
+    filters.Append(gfx::FilterOperation::CreateGrayscaleFilter(1.0f));
     filter->SetBackgroundFilters(filters);
 
 #if defined(OS_WIN)
@@ -480,8 +480,8 @@ class ImageBackgroundFilter : public LayerTreeHostFiltersPixelTest {
     background->AddChild(filter);
 
     // Add a blur filter to the blue layer.
-    FilterOperations filters;
-    filters.Append(FilterOperation::CreateBlurFilter(
+    gfx::FilterOperations filters;
+    filters.Append(gfx::FilterOperation::CreateBlurFilter(
         5.0f, SkBlurImageFilter::kClamp_TileMode));
     filter->SetBackgroundFilters(filters);
 
@@ -596,27 +596,27 @@ class ZoomFilterTest : public LayerTreeHostFiltersPixelTest {
     // Test a zoom that extends past the edge of the screen.
     scoped_refptr<SolidColorLayer> border_edge_zoom =
         CreateSolidColorLayer(gfx::Rect(-10, -10, 50, 50), SK_ColorTRANSPARENT);
-    FilterOperations border_filters;
+    gfx::FilterOperations border_filters;
     border_filters.Append(
-        FilterOperation::CreateZoomFilter(2.f /* zoom */, 0 /* inset */));
+        gfx::FilterOperation::CreateZoomFilter(2.f /* zoom */, 0 /* inset */));
     border_edge_zoom->SetBackgroundFilters(border_filters);
     root->AddChild(border_edge_zoom);
 
     // Test a zoom that extends past the edge of the screen.
     scoped_refptr<SolidColorLayer> top_edge_zoom =
         CreateSolidColorLayer(gfx::Rect(70, -10, 50, 50), SK_ColorTRANSPARENT);
-    FilterOperations top_filters;
+    gfx::FilterOperations top_filters;
     top_filters.Append(
-        FilterOperation::CreateZoomFilter(2.f /* zoom */, 0 /* inset */));
+        gfx::FilterOperation::CreateZoomFilter(2.f /* zoom */, 0 /* inset */));
     top_edge_zoom->SetBackgroundFilters(top_filters);
     root->AddChild(top_edge_zoom);
 
     // Test a zoom that is fully within the screen.
     scoped_refptr<SolidColorLayer> contained_zoom =
         CreateSolidColorLayer(gfx::Rect(150, 5, 50, 50), SK_ColorTRANSPARENT);
-    FilterOperations mid_filters;
+    gfx::FilterOperations mid_filters;
     mid_filters.Append(
-        FilterOperation::CreateZoomFilter(2.f /* zoom */, 0 /* inset */));
+        gfx::FilterOperation::CreateZoomFilter(2.f /* zoom */, 0 /* inset */));
     contained_zoom->SetBackgroundFilters(mid_filters);
     root->AddChild(contained_zoom);
 
@@ -664,10 +664,10 @@ class RotatedFilterTest : public LayerTreeHostFiltersPixelTest {
     transform.RotateAboutZAxis(1.0);
     transform.Translate(-50.0f, -50.0f);
     child->SetTransform(transform);
-    FilterOperations filters;
+    gfx::FilterOperations filters;
     // We need a clamping brightness filter here to force the Skia filter path.
-    filters.Append(FilterOperation::CreateBrightnessFilter(1.1f));
-    filters.Append(FilterOperation::CreateGrayscaleFilter(1.0f));
+    filters.Append(gfx::FilterOperation::CreateBrightnessFilter(1.1f));
+    filters.Append(gfx::FilterOperation::CreateGrayscaleFilter(1.0f));
     child->SetFilters(filters);
 
     background->AddChild(child);
@@ -722,8 +722,8 @@ class RotatedDropShadowFilterTest : public LayerTreeHostFiltersPixelTest {
     transform.RotateAboutZAxis(1.0);
     transform.Translate(-50.0f, -50.0f);
     child->SetTransform(transform);
-    FilterOperations filters;
-    filters.Append(FilterOperation::CreateDropShadowFilter(
+    gfx::FilterOperations filters;
+    filters.Append(gfx::FilterOperation::CreateDropShadowFilter(
         gfx::Point(10.0f, 10.0f), 0.0f, SK_ColorBLACK));
     child->SetFilters(filters);
 
@@ -782,8 +782,8 @@ class TranslatedFilterTest : public LayerTreeHostFiltersPixelTest {
     scoped_refptr<PictureLayer> child = PictureLayer::Create(&client);
     child->SetBounds(child_rect.size());
     child->SetIsDrawable(true);
-    FilterOperations filters;
-    filters.Append(FilterOperation::CreateOpacityFilter(0.5f));
+    gfx::FilterOperations filters;
+    filters.Append(gfx::FilterOperation::CreateOpacityFilter(0.5f));
     child->SetFilters(filters);
 
     // This layer will be clipped by |clip|, so the RenderPass created for
@@ -838,10 +838,10 @@ class EnlargedTextureWithAlphaThresholdFilter
 
     rect1.Inset(-5, -5);
     rect2.Inset(-5, -5);
-    FilterOperation::ShapeRects alpha_shape = {rect1, rect2};
-    FilterOperations filters;
-    filters.Append(
-        FilterOperation::CreateAlphaThresholdFilter(alpha_shape, 0.f, 0.f));
+    gfx::FilterOperation::ShapeRects alpha_shape = {rect1, rect2};
+    gfx::FilterOperations filters;
+    filters.Append(gfx::FilterOperation::CreateAlphaThresholdFilter(alpha_shape,
+                                                                    0.f, 0.f));
     filter_layer->SetFilters(filters);
 
     background->AddChild(filter_layer);
@@ -890,9 +890,9 @@ class EnlargedTextureWithCropOffsetFilter
     filter_layer->AddChild(child1);
     filter_layer->AddChild(child2);
 
-    FilterOperations filters;
+    gfx::FilterOperations filters;
     SkImageFilter::CropRect cropRect(SkRect::MakeXYWH(10, 10, 80, 80));
-    filters.Append(FilterOperation::CreateReferenceFilter(
+    filters.Append(gfx::FilterOperation::CreateReferenceFilter(
         SkOffsetImageFilter::Make(0, 0, nullptr, &cropRect)));
     filter_layer->SetFilters(filters);
 
@@ -936,8 +936,8 @@ class BlurFilterWithClip : public LayerTreeHostFiltersPixelTest {
     filter_layer->AddChild(child3);
     filter_layer->AddChild(child4);
 
-    FilterOperations filters;
-    filters.Append(FilterOperation::CreateBlurFilter(
+    gfx::FilterOperations filters;
+    filters.Append(gfx::FilterOperation::CreateBlurFilter(
         2.f, SkBlurImageFilter::kClamp_TileMode));
     filter_layer->SetFilters(filters);
 
@@ -991,11 +991,11 @@ class FilterWithGiantCropRectPixelTest : public LayerTreeHostFiltersPixelTest {
         0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 20.0f,
     };
 
-    FilterOperations filters;
+    gfx::FilterOperations filters;
     SkImageFilter::CropRect cropRect(
         SkRect::MakeXYWH(-40000, -40000, 80000, 80000));
-    filters.Append(
-        FilterOperation::CreateReferenceFilter((SkColorFilterImageFilter::Make(
+    filters.Append(gfx::FilterOperation::CreateReferenceFilter(
+        (SkColorFilterImageFilter::Make(
             SkColorFilter::MakeMatrixFilterRowMajor255(matrix), nullptr,
             &cropRect))));
     filter_layer->SetFilters(filters);
@@ -1051,8 +1051,8 @@ class BackgroundFilterWithDeviceScaleFactorTest
 
     scoped_refptr<SolidColorLayer> filtered = CreateSolidColorLayer(
         gfx::Rect(0, 100, 200, 100), SkColorSetA(SK_ColorGREEN, 127));
-    FilterOperations filters;
-    filters.Append(FilterOperation::CreateReferenceFilter(
+    gfx::FilterOperations filters;
+    filters.Append(gfx::FilterOperation::CreateReferenceFilter(
         SkOffsetImageFilter::Make(0, 80, nullptr)));
     filtered->SetBackgroundFilters(filters);
     root->AddChild(filtered);

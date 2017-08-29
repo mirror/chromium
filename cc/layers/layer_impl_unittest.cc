@@ -4,8 +4,6 @@
 
 #include "cc/layers/layer_impl.h"
 
-#include "cc/base/filter_operation.h"
-#include "cc/base/filter_operations.h"
 #include "cc/layers/painted_scrollbar_layer_impl.h"
 #include "cc/layers/solid_color_scrollbar_layer_impl.h"
 #include "cc/test/animation_test_common.h"
@@ -21,6 +19,8 @@
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "third_party/skia/include/effects/SkBlurImageFilter.h"
+#include "ui/gfx/filter_operation.h"
+#include "ui/gfx/filter_operations.h"
 
 namespace cc {
 namespace {
@@ -157,8 +157,8 @@ TEST(LayerImplTest, VerifyPendingLayerChangesAreTrackedProperly) {
   SkColor arbitrary_color = SkColorSetRGB(10, 20, 30);
   gfx::Transform arbitrary_transform;
   arbitrary_transform.Scale3d(0.1f, 0.2f, 0.3f);
-  FilterOperations arbitrary_filters;
-  arbitrary_filters.Append(FilterOperation::CreateOpacityFilter(0.5f));
+  gfx::FilterOperations arbitrary_filters;
+  arbitrary_filters.Append(gfx::FilterOperation::CreateOpacityFilter(0.5f));
 
   // These properties are internal, and should not be considered "change" when
   // they are used.
@@ -174,7 +174,7 @@ TEST(LayerImplTest, VerifyPendingLayerChangesAreTrackedProperly) {
                                                  arbitrary_filters));
   EXECUTE_AND_VERIFY_NO_NEED_TO_PUSH_PROPERTIES_AND_SUBTREE_CHANGED(
       host_impl.pending_tree()->SetFilterMutated(root->element_id(),
-                                                 FilterOperations()));
+                                                 gfx::FilterOperations()));
   EXECUTE_AND_VERIFY_NO_NEED_TO_PUSH_PROPERTIES_AND_SUBTREE_CHANGED(
       host_impl.pending_tree()->SetOpacityMutated(root->element_id(),
                                                   arbitrary_number));
@@ -313,8 +313,8 @@ TEST(LayerImplTest, VerifyNeedsUpdateDrawProperties) {
   SkColor arbitrary_color = SkColorSetRGB(10, 20, 30);
   gfx::Transform arbitrary_transform;
   arbitrary_transform.Scale3d(0.1f, 0.2f, 0.3f);
-  FilterOperations arbitrary_filters;
-  arbitrary_filters.Append(FilterOperation::CreateOpacityFilter(0.5f));
+  gfx::FilterOperations arbitrary_filters;
+  arbitrary_filters.Append(gfx::FilterOperation::CreateOpacityFilter(0.5f));
 
   // Set layer to draw content so that their draw property by property trees is
   // verified.
@@ -333,7 +333,7 @@ TEST(LayerImplTest, VerifyNeedsUpdateDrawProperties) {
       host_impl.active_tree()->SetFilterMutated(root->element_id(),
                                                 arbitrary_filters));
   VERIFY_NEEDS_UPDATE_DRAW_PROPERTIES(host_impl.active_tree()->SetFilterMutated(
-      root->element_id(), FilterOperations()));
+      root->element_id(), gfx::FilterOperations()));
   VERIFY_NEEDS_UPDATE_DRAW_PROPERTIES(host_impl.active_tree()->SetFilterMutated(
       root->element_id(), arbitrary_filters));
 
@@ -486,7 +486,7 @@ class LayerImplScrollTest : public testing::Test {
  public:
   LayerImplScrollTest() : LayerImplScrollTest(LayerTreeSettings()) {}
 
-  LayerImplScrollTest(const LayerTreeSettings& settings)
+  explicit LayerImplScrollTest(const LayerTreeSettings& settings)
       : host_impl_(settings, &task_runner_provider_, &task_graph_runner_),
         root_id_(7) {
     host_impl_.active_tree()->SetRootLayerForTesting(
