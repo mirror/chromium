@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "3f1aa9e9_e6235adc",
+        "filename": "base/bind.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-29T18:02:11Z",
+      "side": 1,
+      "message": "Done for both.\n\nI just moved the Passed() check to be done before the storage binding check, which should be sufficient.",
+      "parentUuid": "26a6ab36_4db031fc",
+      "range": {
+        "startLine": 52,
+        "startChar": 25,
+        "endLine": 52,
+        "endChar": 61
+      },
+      "revId": "d8c5040b26ef26c07a67a0955f71fbede155f857",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "575ad3c0_c15afc8b",
         "filename": "base/bind.h",
         "patchSetId": 8
@@ -45,6 +69,30 @@
       "revId": "d8c5040b26ef26c07a67a0955f71fbede155f857",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57af799a_205402ad",
+        "filename": "base/bind.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-29T18:02:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "575ad3c0_c15afc8b",
+      "range": {
+        "startLine": 55,
+        "startChar": 14,
+        "endLine": 55,
+        "endChar": 71
+      },
+      "revId": "d8c5040b26ef26c07a67a0955f71fbede155f857",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "c95398e7_ebd76848",
+        "filename": "base/bind.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-29T18:02:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3f810b83_bb253da6",
+      "range": {
+        "startLine": 69,
+        "startChar": 30,
+        "endLine": 69,
+        "endChar": 66
+      },
+      "revId": "d8c5040b26ef26c07a67a0955f71fbede155f857",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bd4596dc_c2825fe3",
         "filename": "base/bind.h",
         "patchSetId": 8
@@ -91,6 +163,30 @@
       "revId": "d8c5040b26ef26c07a67a0955f71fbede155f857",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b99a5a15_3f496bf3",
+        "filename": "base/bind.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-29T18:02:11Z",
+      "side": 1,
+      "message": "I thought it would be useful to distinguish, but after thinking about it more, just decaying the  From type is good enough. I did this change for both of them.",
+      "parentUuid": "bd4596dc_c2825fe3",
+      "range": {
+        "startLine": 71,
+        "startChar": 33,
+        "endLine": 74,
+        "endChar": 62
+      },
+      "revId": "d8c5040b26ef26c07a67a0955f71fbede155f857",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
