@@ -16,6 +16,24 @@
       "revId": "72fa00e9a99942408d4ce90785fa0fa187f4d1aa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7177630a_baefdfe4",
+        "filename": "ios/chrome/browser/ui/ntp/new_tab_page_header_view.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-08-29T16:32:19Z",
+      "side": 1,
+      "message": "I did not try it with Franky. So cleanup mainly.",
+      "parentUuid": "aa8908b5_b4e4e7d8",
+      "revId": "72fa00e9a99942408d4ce90785fa0fa187f4d1aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
