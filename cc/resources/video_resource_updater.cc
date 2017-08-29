@@ -470,6 +470,10 @@ VideoFrameExternalResources VideoResourceUpdater::CreateForSoftwarePlanes(
         media::HalfFloatMaker::NewHalfFloatMaker(bits_per_channel);
     external_resources.offset = half_float_maker->Offset();
     external_resources.multiplier = half_float_maker->Multiplier();
+  } else if (resource_provider_->YuvResourceFormat(bits_per_channel) ==
+             viz::R16_EXT) {
+    external_resources.multiplier = 65535.0f / ((1 << bits_per_channel) - 1);
+    external_resources.offset = 0;
   }
 
   for (size_t i = 0; i < plane_resources.size(); ++i) {
@@ -504,6 +508,9 @@ VideoFrameExternalResources VideoResourceUpdater::CreateForSoftwarePlanes(
       // step.
       if (plane_resource.resource_format() == viz::LUMINANCE_F16) {
         needs_conversion = true;
+      } else if (plane_resource.resource_format() == viz::R16_EXT) {
+        // R16_EXT can represent 16-bit int, so we don't need a conversion step.
+        needs_conversion = false;
       } else if (bits_per_channel > 8) {
         // If bits_per_channel > 8 and we can't use viz::LUMINANCE_F16, we need
         // to shift the data down and create an 8-bit texture.
