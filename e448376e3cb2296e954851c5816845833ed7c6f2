@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "65a999ec_aa2fde74",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXLayoutObject.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 738,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2017-08-29T15:20:58Z",
+      "side": 1,
+      "message": "- Added summary, video, audio\n- Changed name to IsFocusableByDefault()\n- Added comment\n  // Note: only includes elements that are focusable without additional\n  // attributes like contenteditable or tabindex.",
+      "parentUuid": "143c62c0_d98abf2a",
+      "revId": "e448376e3cb2296e954851c5816845833ed7c6f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5beefcaa_cdd8233c",
         "filename": "third_party/WebKit/Source/modules/accessibility/AXLayoutObject.cpp",
         "patchSetId": 11
@@ -33,6 +51,24 @@
       "revId": "e448376e3cb2296e954851c5816845833ed7c6f2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b94a5649_1d43f81a",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXLayoutObject.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 762,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2017-08-29T15:20:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5beefcaa_cdd8233c",
+      "revId": "e448376e3cb2296e954851c5816845833ed7c6f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "035121c4_736c2d2c",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXLayoutObject.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 767,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2017-08-29T15:20:58Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "54eb664c_da0db626",
+      "revId": "e448376e3cb2296e954851c5816845833ed7c6f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4c462cd9_af1066db",
         "filename": "third_party/WebKit/Source/modules/accessibility/AXLayoutObject.cpp",
         "patchSetId": 11
@@ -64,6 +118,24 @@
       "writtenOn": "2017-08-28T21:39:55Z",
       "side": 1,
       "message": "Any chance that FlatTreeTraversal::TraversePrevious and TraverseNext\nwould do this for you and you wouldn\u0027t need these helper functions\nat all?",
+      "revId": "e448376e3cb2296e954851c5816845833ed7c6f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72268262_8129a3f1",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXLayoutObject.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 777,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2017-08-29T15:20:58Z",
+      "side": 1,
+      "message": "I need tag1 in the examples below:\n\n\u003ctag1\u003e\u003ctag2\u003ex\u003c/tag2\u003e\u003c/tag1\u003e \" \"\n\u003ctag1\u003e\u003ctag2\u003ex\u003c/tag2\u003e\u003c/tag1\u003e \u003cspan\u003e \u003c/span\u003e\n\nI think we might be able to use FlatTreeTraversal::PreviousSkippingChildren/NextSkippingChildren.",
+      "parentUuid": "4c462cd9_af1066db",
       "revId": "e448376e3cb2296e954851c5816845833ed7c6f2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -84,6 +156,24 @@
       "revId": "e448376e3cb2296e954851c5816845833ed7c6f2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16862633_56c8289d",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXLayoutObject.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 818,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2017-08-29T15:20:58Z",
+      "side": 1,
+      "message": "Good catch, that was an old comment.",
+      "parentUuid": "a43c0a16_92f11804",
+      "revId": "e448376e3cb2296e954851c5816845833ed7c6f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
