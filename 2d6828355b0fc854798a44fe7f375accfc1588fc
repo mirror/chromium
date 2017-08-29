@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "ccf4f8c3_c1c6c8e4",
+        "filename": "chrome/browser/offline_pages/prefetch/prefetch_importer_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-08-29T21:04:59Z",
+      "side": 1,
+      "message": "Please document that this enum is used to back an UMA histogram, and should therefore be treated as append-only.",
+      "range": {
+        "startLine": 28,
+        "startChar": 64,
+        "endLine": 28,
+        "endChar": 0
+      },
+      "revId": "2d6828355b0fc854798a44fe7f375accfc1588fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "dfc6a5fe_65e453ed",
         "filename": "chrome/browser/offline_pages/prefetch/prefetch_importer_impl.cc",
         "patchSetId": 2
@@ -13,6 +36,24 @@
       "writtenOn": "2017-08-29T18:41:07Z",
       "side": 1,
       "message": "needs a break; for non-debug implementations",
+      "revId": "2d6828355b0fc854798a44fe7f375accfc1588fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7b7e424_0b2eb9a3",
+        "filename": "chrome/browser/offline_pages/prefetch/prefetch_importer_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-08-29T21:04:59Z",
+      "side": 1,
+      "message": "FWIW, I kind of disagree.  The style guide says that DCHECK failures should not be handled, and reaching this code path is essentially a DCHECK failure.",
+      "parentUuid": "dfc6a5fe_65e453ed",
       "revId": "2d6828355b0fc854798a44fe7f375accfc1588fc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
