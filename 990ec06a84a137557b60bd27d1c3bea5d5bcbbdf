@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b0f84a4b_8ec4b707",
+        "filename": "chrome/browser/metrics/renderer_uptime_tracker.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-08-29T16:54:46Z",
+      "side": 1,
+      "message": "I wonder if we should do something different when we can\u0027t find the ProcessUptime, rather than just return 0. Anyways...we can use the current method for now and iterate if we don\u0027t like the behavior.",
+      "revId": "990ec06a84a137557b60bd27d1c3bea5d5bcbbdf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
