@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "bff8cd62_c4f3aae5",
+        "filename": "chrome/browser/predictors/loading_stats_collector.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1194993
+      },
+      "writtenOn": "2017-08-29T11:52:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3d44c117_65564363",
+      "revId": "1c0db82b504c77058711380b11065eb3bcfbe525",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bd1d9a5c_76ea58aa",
         "filename": "chrome/browser/predictors/loading_stats_collector_unittest.cc",
         "patchSetId": 4
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "150d71b4_87211fa8",
+        "filename": "chrome/browser/predictors/loading_stats_collector_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1194993
+      },
+      "writtenOn": "2017-08-29T11:52:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bd1d9a5c_76ea58aa",
+      "range": {
+        "startLine": 211,
+        "startChar": 21,
+        "endLine": 211,
+        "endChar": 23
+      },
+      "revId": "1c0db82b504c77058711380b11065eb3bcfbe525",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0bdef090_c3d4db33",
         "filename": "chrome/browser/predictors/preconnect_manager.cc",
         "patchSetId": 4
@@ -56,6 +98,24 @@
       "revId": "1c0db82b504c77058711380b11065eb3bcfbe525",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae836321_633c5d70",
+        "filename": "chrome/browser/predictors/preconnect_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1194993
+      },
+      "writtenOn": "2017-08-29T11:52:09Z",
+      "side": 1,
+      "message": "That\u0027s true only for the constructor\u0027s initializer list. Having an argument and a struct field with the same name would be ambiguous in the body.",
+      "parentUuid": "0bdef090_c3d4db33",
+      "revId": "1c0db82b504c77058711380b11065eb3bcfbe525",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -76,6 +136,24 @@
     },
     {
       "key": {
+        "uuid": "34978424_c7c82b3d",
+        "filename": "chrome/browser/predictors/preconnect_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1194993
+      },
+      "writtenOn": "2017-08-29T11:52:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5ce6c49a_5d3d31a9",
+      "revId": "1c0db82b504c77058711380b11065eb3bcfbe525",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7dd76aff_70515da9",
         "filename": "chrome/browser/predictors/preconnect_manager.cc",
         "patchSetId": 4
@@ -90,6 +168,24 @@
       "revId": "1c0db82b504c77058711380b11065eb3bcfbe525",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "327d032c_03f6de69",
+        "filename": "chrome/browser/predictors/preconnect_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1194993
+      },
+      "writtenOn": "2017-08-29T11:52:09Z",
+      "side": 1,
+      "message": "base::MakeUnique is dead, long live std::make_unique!",
+      "parentUuid": "7dd76aff_70515da9",
+      "revId": "1c0db82b504c77058711380b11065eb3bcfbe525",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -110,6 +206,24 @@
     },
     {
       "key": {
+        "uuid": "c7d1159a_a0018dc3",
+        "filename": "chrome/browser/predictors/preconnect_manager.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1194993
+      },
+      "writtenOn": "2017-08-29T11:52:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b8a51393_1024557c",
+      "revId": "1c0db82b504c77058711380b11065eb3bcfbe525",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0b6cc003_fa881470",
         "filename": "chrome/browser/predictors/preconnect_manager_unittest.cc",
         "patchSetId": 4
@@ -127,6 +241,24 @@
     },
     {
       "key": {
+        "uuid": "7b994195_64586e91",
+        "filename": "chrome/browser/predictors/preconnect_manager_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1194993
+      },
+      "writtenOn": "2017-08-29T11:52:09Z",
+      "side": 1,
+      "message": "This, and also the fact that I only want to check a url instead of whole stats.\nDone",
+      "parentUuid": "0b6cc003_fa881470",
+      "revId": "1c0db82b504c77058711380b11065eb3bcfbe525",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c946290e_77d7898b",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 4
@@ -141,6 +273,24 @@
       "revId": "1c0db82b504c77058711380b11065eb3bcfbe525",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74ce3a1a_87d34cd3",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 60119,
+      "author": {
+        "id": 1194993
+      },
+      "writtenOn": "2017-08-29T11:52:09Z",
+      "side": 1,
+      "message": "Not really. We cancel all preconnect jobs after a navigation commits but the metric won\u0027t be recorded until all already inflight dns requests will be fulfilled. So it can be at some point after a navigation commits but it also can be before that point if all jobs complete fast.\nI clarified the description a little bit though.",
+      "parentUuid": "c946290e_77d7898b",
+      "revId": "1c0db82b504c77058711380b11065eb3bcfbe525",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
