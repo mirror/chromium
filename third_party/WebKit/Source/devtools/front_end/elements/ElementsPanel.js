@@ -336,7 +336,7 @@ Elements.ElementsPanel = class extends UI.Panel {
 
     this._hasNonDefaultSelectedNode = false;
 
-    if (this._omitDefaultSelection)
+    if (this._omitDefaultSelection || !this.isShowing())
       return;
 
     var savedSelectedNodeOnReset = this._selectedNodeOnReset;
