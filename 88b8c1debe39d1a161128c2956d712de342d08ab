@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5d103e67_f5949fb3",
+        "filename": "cc/paint/paint_image_generator.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-08-29T15:17:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "caf10654_2eb1fb28",
+      "revId": "88b8c1debe39d1a161128c2956d712de342d08ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ea79b300_fc5e502d",
         "filename": "cc/paint/paint_image_generator.h",
         "patchSetId": 4
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-26T01:01:40Z",
       "side": 1,
       "message": "I don\u0027t see |supported_sizes|",
+      "revId": "88b8c1debe39d1a161128c2956d712de342d08ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8ad5a13_33d37718",
+        "filename": "cc/paint/paint_image_generator.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-08-29T15:17:08Z",
+      "side": 1,
+      "message": "Oops, this was there from a previous attempt, removed.",
+      "parentUuid": "ea79b300_fc5e502d",
       "revId": "88b8c1debe39d1a161128c2956d712de342d08ab",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "66c3966c_5c8c1da7",
+        "filename": "third_party/WebKit/Source/platform/graphics/ImageFrameGenerator.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 424,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-08-29T15:17:08Z",
+      "side": 1,
+      "message": "It\u0027s sorted by api contract, and is dchecked in the ctor.",
+      "parentUuid": "b9738c17_8f71b2eb",
+      "revId": "88b8c1debe39d1a161128c2956d712de342d08ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "db5519f1_bc737062",
         "filename": "third_party/WebKit/Source/platform/image-decoders/jpeg/JPEGImageDecoder.cpp",
         "patchSetId": 4
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "96ddcff1_b84845be",
+        "filename": "third_party/WebKit/Source/platform/image-decoders/jpeg/JPEGImageDecoder.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 455,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-08-29T15:17:08Z",
+      "side": 1,
+      "message": "I\u0027ve updated this throughout.",
+      "parentUuid": "db5519f1_bc737062",
+      "revId": "88b8c1debe39d1a161128c2956d712de342d08ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "06f035a3_bc19a0c5",
         "filename": "third_party/WebKit/Source/platform/image-decoders/jpeg/JPEGImageDecoder.cpp",
         "patchSetId": 4
@@ -81,6 +153,24 @@
       "writtenOn": "2017-08-26T01:01:40Z",
       "side": 1,
       "message": "It seems weird to set supported decode sizes in a method called Decode().\nIs it a good idea to refactor this method to separate concerns?",
+      "revId": "88b8c1debe39d1a161128c2956d712de342d08ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35e11a5e_fc414b2b",
+        "filename": "third_party/WebKit/Source/platform/image-decoders/jpeg/JPEGImageDecoder.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 459,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-08-29T15:17:08Z",
+      "side": 1,
+      "message": "Decode function here basically does everything depending on the \"mode\" which is size or not size. Were you thinking of something like helper functions here? I think this can certainly be cleaner, but in essence the flow would be the same: the reader will read the header and set something on the decoder. And the decoder would ask the reader to read this stuff.",
+      "parentUuid": "06f035a3_bc19a0c5",
       "revId": "88b8c1debe39d1a161128c2956d712de342d08ab",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
