@@ -17,6 +17,7 @@ namespace blink {
 class CompositorMutatorImpl;
 class Document;
 class WorkletGlobalScope;
+class WaitableEvent;
 
 // Mediates between one Animator and the associated CompositorMutatorImpl. There
 // is one AnimationWorkletProxyClientImpl per Animator but there may be multiple
