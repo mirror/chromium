@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3eca09b7_58ee90f7",
+        "filename": "media/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-08-29T17:05:57Z",
+      "side": 1,
+      "message": "Drop, should be picked up through :test_support rollup",
+      "revId": "7411a1f95f44a72108a9530c35b38abd159a27cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9449d55d_57507332",
+        "filename": "media/formats/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-08-29T17:05:57Z",
+      "side": 1,
+      "message": "needs to be static_library per style guide",
+      "revId": "7411a1f95f44a72108a9530c35b38abd159a27cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ebe4a66a_75d4c9aa",
+        "filename": "media/formats/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-08-29T17:05:57Z",
+      "side": 1,
+      "message": "Drop both of these and just use //media:test_support like we do for the other non-base test_support targets. See //media/audio:test_support for reference.\n\nYou\u0027ll then add this target to the //media:test_support rollup.",
+      "revId": "7411a1f95f44a72108a9530c35b38abd159a27cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44122b94_c634f2a1",
+        "filename": "media/formats/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-08-29T17:05:57Z",
+      "side": 1,
+      "message": "Directly DEP //media/base:test_support.",
+      "revId": "7411a1f95f44a72108a9530c35b38abd159a27cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2683d76_a835e64d",
+        "filename": "media/formats/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-08-29T17:05:57Z",
+      "side": 1,
+      "message": "Drop",
+      "revId": "7411a1f95f44a72108a9530c35b38abd159a27cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
