@@ -193,6 +193,24 @@
       "revId": "c64344417093a38f22758dc21e6c8d6d55a9d819",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b0d0dd5d_8fe9d2ee",
+        "filename": "third_party/WebKit/Source/modules/webaudio/CrossThreadAudioWorkletProcessorInfo.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-08-29T16:35:51Z",
+      "side": 1,
+      "message": "I see... Thank you for sharing the log :)",
+      "parentUuid": "265bd4ef_747fb9de",
+      "revId": "c64344417093a38f22758dc21e6c8d6d55a9d819",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
