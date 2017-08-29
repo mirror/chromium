@@ -22,42 +22,37 @@ namespace {
 // TODO(crbug.com/745648): Use correct BrowserContext.
 ArcFileSystemOperationRunner* GetArcFileSystemOperationRunner() {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
-  return ArcFileSystemOperationRunner::GetForBrowserContext(
-      ArcServiceManager::Get()->browser_context());
-}
 
-template <typename T>
-void PostToIOThread(const base::Callback<void(T)>& callback, T result) {
-  DCHECK_CURRENTLY_ON(BrowserThread::UI);
-  BrowserThread::PostTask(
-      BrowserThread::IO, FROM_HERE,
-      base::BindOnce(callback, base::Passed(std::move(result))));
+  auto* result = ArcFileSystemOperationRunner::GetForBrowserContext(
+      ArcServiceManager::Get()->browser_context());
+  DLOG_IF(ERROR, !result) << "ArcFileSystemOperationRunner unavailable. "
+                          << "File system operations are dropped.";
+  return result;
 }
 
 void GetFileSizeOnUIThread(const GURL& url,
-                           const GetFileSizeCallback& callback) {
+                           base::OnceCallback<void(int64_t)> callback) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
   auto* runner = GetArcFileSystemOperationRunner();
   if (!runner) {
-    DLOG(ERROR) << "ArcFileSystemOperationRunner unavailable. "
-                << "File system operations are dropped.";
-    callback.Run(-1);
+    std::move(callback).Run(-1);
     return;
   }
-  runner->GetFileSize(url, callback);
+  runner->GetFileSize(url,
+                      base::AdaptCallbackForRepeating(std::move(callback)));
 }
 
-void OpenFileToReadOnUIThread(const GURL& url,
-                              const OpenFileToReadCallback& callback) {
+void OpenFileToReadOnUIThread(
+    const GURL& url,
+    base::OnceCallback<void(mojo::ScopedHandle)> callback) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
   auto* runner = GetArcFileSystemOperationRunner();
   if (!runner) {
-    DLOG(ERROR) << "ArcFileSystemOperationRunner unavailable. "
-                << "File system operations are dropped.";
-    callback.Run(mojo::ScopedHandle());
+    std::move(callback).Run(mojo::ScopedHandle());
     return;
   }
-  runner->OpenFileToRead(url, callback);
+  runner->OpenFileToRead(url,
+                         base::AdaptCallbackForRepeating(std::move(callback)));
 }
 
 }  // namespace
@@ -65,20 +60,18 @@ void OpenFileToReadOnUIThread(const GURL& url,
 void GetFileSizeOnIOThread(const GURL& url,
                            const GetFileSizeCallback& callback) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
-  BrowserThread::PostTask(
-      BrowserThread::UI, FROM_HERE,
-      base::BindOnce(&GetFileSizeOnUIThread, url,
-                     base::Bind(&PostToIOThread<int64_t>, callback)));
+  BrowserThread::PostAsyncTaskAndReply(
+      BrowserThread::UI, FROM_HERE, base::BindOnce(&GetFileSizeOnUIThread, url),
+      base::OnceCallback<void(int64_t)>(callback));
 }
 
 void OpenFileToReadOnIOThread(const GURL& url,
                               const OpenFileToReadCallback& callback) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
-  BrowserThread::PostTask(
+  BrowserThread::PostAsyncTaskAndReply(
       BrowserThread::UI, FROM_HERE,
-      base::BindOnce(
-          &OpenFileToReadOnUIThread, url,
-          base::Bind(&PostToIOThread<mojo::ScopedHandle>, callback)));
+      base::BindOnce(&OpenFileToReadOnUIThread, url),
+      base::OnceCallback<void(mojo::ScopedHandle)>(callback));
 }
 
 }  // namespace file_system_operation_runner_util

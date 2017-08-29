@@ -133,6 +133,11 @@ class BASE_EXPORT TaskRunner
                         OnceClosure task,
                         OnceClosure reply);
 
+  // TODO: comment.
+  bool PostAsyncTaskAndReply(const tracked_objects::Location& from_here,
+                             OnceCallback<void(OnceClosure)> task,
+                             OnceClosure reply);
+
  protected:
   friend struct TaskRunnerTraits;
 
