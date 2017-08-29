@@ -166,6 +166,24 @@
       "revId": "b90fcc73c1134f66131f813f92f5daf7400f3b9a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d155a84a_3106d6d3",
+        "filename": "components/subresource_filter/content/renderer/subresource_filter_agent.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-08-29T00:34:29Z",
+      "side": 1,
+      "message": "For PlzNavigate, data URLs successfully go through our normal path, so we don\u0027t have to worry about them here.\n\nI think inheriting *some* parent frame is generally fine for these special frames. Ideally we would either use the parent or the initiator but I don\u0027t think it will break many pages.\n\nI see two potential problems with this approach, but I\u0027m not sure how much they matter:\n1. non-data URLs could get in the state you mention (no nonnull local ancestor frame). about:blank could get here with a self navigation from a cross-process frame, e.g.\n\n2. I think this current solution could yield inconsistencies with the browser side part of this\nwork in https://chromium-review.googlesource.com/c/chromium/src/+/624415.\n\nFor (1), about:blank isn\u0027t much of an issue because if it\u0027s cross process with all parents, then it\u0027s essentially a noop frame (who can inject stuff in it?).",
+      "parentUuid": "6d74397a_b5068689",
+      "revId": "b90fcc73c1134f66131f813f92f5daf7400f3b9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
