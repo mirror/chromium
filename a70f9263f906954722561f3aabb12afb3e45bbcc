@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9944dc14_e52bf064",
+        "filename": "media/cdm/ppapi/external_clear_key/clear_key_cdm.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 273,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-08-29T23:00:34Z",
+      "side": 1,
+      "message": "In the render process which is also sandboxed, we still check and pass down the security origin. So ISTM sandbox is not relevant here. Actually, if you like, you can drop the |security_origin| parameter in ClearKeyCdm\u0027s ctor, then you don\u0027t need this comment.",
+      "range": {
+        "startLine": 273,
+        "startChar": 5,
+        "endLine": 273,
+        "endChar": 37
+      },
+      "revId": "a70f9263f906954722561f3aabb12afb3e45bbcc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3749af5_66dc6e6c",
+        "filename": "media/mojo/clients/mojo_cdm.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-08-29T23:00:34Z",
+      "side": 1,
+      "message": "This should be url.mojom.Origin",
+      "range": {
+        "startLine": 119,
+        "startChar": 49,
+        "endLine": 119,
+        "endChar": 61
+      },
+      "revId": "a70f9263f906954722561f3aabb12afb3e45bbcc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
