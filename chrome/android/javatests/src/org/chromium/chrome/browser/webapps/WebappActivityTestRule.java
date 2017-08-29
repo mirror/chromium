@@ -97,6 +97,10 @@ public class WebappActivityTestRule extends ChromeActivityTestRule<WebappActivit
                 callback.getStorage().updateFromShortcutIntent(createIntent());
 
                 base.evaluate();
+
+                for (String webappId : WebappRegistry.getRegisteredWebappIdsForTesting()) {
+                    WebappRegistry.getInstance().getWebappDataStorage(webappId).delete();
+                }
             }
         };
     }
