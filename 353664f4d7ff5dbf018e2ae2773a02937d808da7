@@ -70,6 +70,30 @@
       "revId": "353664f4d7ff5dbf018e2ae2773a02937d808da7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8441be4_acb63130",
+        "filename": "third_party/WebKit/Source/core/workers/WorkerBackingThread.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-08-29T04:02:45Z",
+      "side": 1,
+      "message": "CORRECTION:\nwe also don\u0027t have to -\u003e we don\u0027t have to\nan external reference -\u003e a reference table",
+      "parentUuid": "424eef3e_055c3589",
+      "range": {
+        "startLine": 80,
+        "startChar": 60,
+        "endLine": 80,
+        "endChar": 67
+      },
+      "revId": "353664f4d7ff5dbf018e2ae2773a02937d808da7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
