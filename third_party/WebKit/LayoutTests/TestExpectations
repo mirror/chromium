@@ -2857,6 +2857,8 @@ crbug.com/737643 external/wpt/payment-request/payment-allowed-by-feature-policy.
 crbug.com/737643 external/wpt/payment-request/payment-disabled-by-feature-policy.https.sub.html [ Failure ]
 crbug.com/737643 external/wpt/webusb/usb-allowed-by-feature-policy.https.sub.html [ Failure ]
 crbug.com/737643 external/wpt/webusb/usb-disabled-by-feature-policy.https.sub.html [ Failure ]
+crbug.com/737643 external/wpt/webvr/webvr-enabled-by-feature-policy.https.sub.html [ Failure ]
+crbug.com/737643 external/wpt/webvr/webvr-disabled-by-feature-policy.https.sub.html [ Failure ]
 crbug.com/737643 http/tests/feature-policy/fullscreen-disabled.php [ Failure ]
 crbug.com/737643 http/tests/feature-policy/fullscreen-enabledforall.php [ Failure ]
 crbug.com/737643 http/tests/feature-policy/payment-disabled.php [ Failure ]
