@@ -290,6 +290,10 @@ class CronetHttpProtocolHandlerDelegate
   gEnablePKPBypassForLocalTrustAnchors = enable;
 }
 
++ (base::Thread*)getFileThreadForTesting {
+  return gChromeNet.Get()->get_file_thread_for_testing();
+}
+
 + (void)startInternal {
   std::string user_agent = base::SysNSStringToUTF8(gUserAgent);
 
