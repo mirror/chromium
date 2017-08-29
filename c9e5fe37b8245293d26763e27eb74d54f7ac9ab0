@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2f3e06a7_8e0fd780",
+        "filename": "third_party/WebKit/Source/devtools/front_end/timeline/PerformanceMonitor.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-08-29T17:08:25Z",
+      "side": 1,
+      "message": "Let\u0027s keep the state in a way that can easily be discarded upon navigation.",
+      "revId": "c9e5fe37b8245293d26763e27eb74d54f7ac9ab0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63b97faa_4a1eddf7",
+        "filename": "third_party/WebKit/Source/devtools/front_end/timeline/PerformanceMonitor.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 402,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-08-29T17:08:25Z",
+      "side": 1,
+      "message": "So what\u0027s the different between the two? Also, lets make them more readable.",
+      "revId": "c9e5fe37b8245293d26763e27eb74d54f7ac9ab0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
