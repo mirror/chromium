@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f13b0274_55a8faaf",
+        "filename": "ios/web/navigation/crw_placeholder_navigation_info.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1190590
+      },
+      "writtenOn": "2017-08-29T15:29:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "af5a9783_fc3b84a4",
+      "revId": "5baa65620c894ea9d1f7b7e5121fad2accc67e56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2e06d31b_eaa37a59",
         "filename": "ios/web/navigation/crw_placeholder_navigation_info.h",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "5baa65620c894ea9d1f7b7e5121fad2accc67e56",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72f21a1f_28a27241",
+        "filename": "ios/web/navigation/crw_placeholder_navigation_info.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1190590
+      },
+      "writtenOn": "2017-08-29T15:29:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2e06d31b_eaa37a59",
+      "revId": "5baa65620c894ea9d1f7b7e5121fad2accc67e56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "08ae3f80_aa5f07b1",
+        "filename": "ios/web/web_state/ui/crw_web_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1190590
+      },
+      "writtenOn": "2017-08-29T15:29:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d1e78c65_7ae5d953",
+      "revId": "5baa65620c894ea9d1f7b7e5121fad2accc67e56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "28522f03_4d09292b",
         "filename": "ios/web/web_state/ui/crw_web_controller.mm",
         "patchSetId": 3
@@ -67,6 +121,24 @@
       "revId": "5baa65620c894ea9d1f7b7e5121fad2accc67e56",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5e56535_223f6372",
+        "filename": "ios/web/web_state/ui/crw_web_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 1084,
+      "author": {
+        "id": 1190590
+      },
+      "writtenOn": "2017-08-29T15:29:58Z",
+      "side": 1,
+      "message": "Agreed. Added TODO. The WKNavigationDelegate methods in this file can also benefit from better encapsulation into the NavigationManager subclasses.",
+      "parentUuid": "28522f03_4d09292b",
+      "revId": "5baa65620c894ea9d1f7b7e5121fad2accc67e56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -93,6 +165,30 @@
     },
     {
       "key": {
+        "uuid": "74253027_6ec39632",
+        "filename": "ios/web/web_state/ui/crw_web_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 4345,
+      "author": {
+        "id": 1190590
+      },
+      "writtenOn": "2017-08-29T15:29:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3b28cf48_f538cfb6",
+      "range": {
+        "startLine": 4345,
+        "startChar": 56,
+        "endLine": 4345,
+        "endChar": 64
+      },
+      "revId": "5baa65620c894ea9d1f7b7e5121fad2accc67e56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b8e2339e_a4b1f9d7",
         "filename": "ios/web/web_state/ui/crw_web_controller.mm",
         "patchSetId": 3
@@ -107,6 +203,24 @@
       "revId": "5baa65620c894ea9d1f7b7e5121fad2accc67e56",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd723a1a_f51c6471",
+        "filename": "ios/web/web_state/ui/crw_web_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 4349,
+      "author": {
+        "id": 1190590
+      },
+      "writtenOn": "2017-08-29T15:29:58Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "b8e2339e_a4b1f9d7",
+      "revId": "5baa65620c894ea9d1f7b7e5121fad2accc67e56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -127,6 +241,24 @@
     },
     {
       "key": {
+        "uuid": "5e3ae226_d04e9cbf",
+        "filename": "ios/web/web_state/ui/crw_web_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 4359,
+      "author": {
+        "id": 1190590
+      },
+      "writtenOn": "2017-08-29T15:29:58Z",
+      "side": 1,
+      "message": "Indeed, and the fix is a bit more involved than I\u0027d like now. I added a TODO here to address that in a subsequent CL.",
+      "parentUuid": "b5d2bfc6_7e14d8fd",
+      "revId": "5baa65620c894ea9d1f7b7e5121fad2accc67e56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5ad3be6f_459e6407",
         "filename": "ios/web/web_state/ui/crw_web_controller_unittest.mm",
         "patchSetId": 3
@@ -141,6 +273,24 @@
       "revId": "5baa65620c894ea9d1f7b7e5121fad2accc67e56",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f11c16c_b0dcb515",
+        "filename": "ios/web/web_state/ui/crw_web_controller_unittest.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 1076,
+      "author": {
+        "id": 1190590
+      },
+      "writtenOn": "2017-08-29T15:29:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5ad3be6f_459e6407",
+      "revId": "5baa65620c894ea9d1f7b7e5121fad2accc67e56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
