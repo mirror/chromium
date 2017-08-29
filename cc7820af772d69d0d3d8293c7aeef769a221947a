@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "549248e4_6d5f5413",
+        "filename": "services/ui/ws/event_targeter.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1211635
+      },
+      "writtenOn": "2017-08-29T18:23:56Z",
+      "side": 0,
+      "message": "It\u0027s being dropped right now but should be used as the transformed location in the future so we don\u0027t have to always find the transformed location again. Could you add a TODO here and I\u0027ll add target.location_in_target back when we need it? Thanks!",
+      "range": {
+        "startLine": 109,
+        "startChar": 8,
+        "endLine": 109,
+        "endChar": 71
+      },
+      "revId": "cc7820af772d69d0d3d8293c7aeef769a221947a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

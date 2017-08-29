@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fb5832d0_061a1b77",
+        "filename": "services/ui/ws/event_dispatcher.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1211635
+      },
+      "writtenOn": "2017-08-29T18:23:56Z",
+      "side": 1,
+      "message": "Should it be without \"non - \"?",
+      "range": {
+        "startLine": 40,
+        "startChar": 56,
+        "endLine": 40,
+        "endChar": 73
+      },
+      "revId": "4b346d21a4078d963d56b632d33164b8e56049e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88835109_e1f765fc",
+        "filename": "services/ui/ws/event_dispatcher.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1211635
+      },
+      "writtenOn": "2017-08-29T18:23:56Z",
+      "side": 1,
+      "message": "How do we use ET_POINTER_EXITED? Is it relevant here?",
+      "range": {
+        "startLine": 44,
+        "startChar": 30,
+        "endLine": 44,
+        "endChar": 50
+      },
+      "revId": "4b346d21a4078d963d56b632d33164b8e56049e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4fa5ea4a_d57a42dc",
+        "filename": "services/ui/ws/event_dispatcher.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1211635
+      },
+      "writtenOn": "2017-08-29T18:23:56Z",
+      "side": 1,
+      "message": "I don\u0027t think this function is being used? Did I miss it?",
+      "range": {
+        "startLine": 201,
+        "startChar": 18,
+        "endLine": 201,
+        "endChar": 45
+      },
+      "revId": "4b346d21a4078d963d56b632d33164b8e56049e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73871819_bf99692c",
+        "filename": "services/ui/ws/event_targeter.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1211635
+      },
+      "writtenOn": "2017-08-29T18:23:56Z",
+      "side": 1,
+      "message": "updated_display_location.display_id?",
+      "range": {
+        "startLine": 90,
+        "startChar": 12,
+        "endLine": 90,
+        "endChar": 39
+      },
+      "revId": "4b346d21a4078d963d56b632d33164b8e56049e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8b4aa4b_250373d5",
+        "filename": "services/ui/ws/event_targeter.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1211635
+      },
+      "writtenOn": "2017-08-29T18:23:56Z",
+      "side": 1,
+      "message": "display_location",
+      "range": {
+        "startLine": 37,
+        "startChar": 48,
+        "endLine": 37,
+        "endChar": 68
+      },
+      "revId": "4b346d21a4078d963d56b632d33164b8e56049e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
