@@ -81,7 +81,7 @@ class PrinterBackendProxyDefault : public PrinterBackendProxy {
         base::Bind(&GetDefaultPrinterAsync), cb);
   }
 
-  void EnumeratePrinters(const EnumeratePrintersCallback& cb) override {
+  void EnumeratePrinters(const GetPrintersCallback& cb) override {
     DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
 
     base::PostTaskWithTraitsAndReplyWithResult(

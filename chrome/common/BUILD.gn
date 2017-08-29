@@ -262,6 +262,7 @@ static_library("common") {
     "//mojo/public/cpp/bindings",
     "//pdf:features",
     "//ppapi/features",
+    "//printing/backend/mojo",
     "//printing/features",
     "//skia",
     "//third_party/icu",
@@ -684,6 +685,7 @@ mojom("mojo_bindings") {
     "network_diagnostics.mojom",
     "open_search_description_document_handler.mojom",
     "prerender.mojom",
+    "print_backend_handler.mojom",
     "renderer_configuration.mojom",
     "resource_usage_reporter.mojom",
     "thumbnail_capturer.mojom",
@@ -714,6 +716,7 @@ mojom("mojo_bindings") {
   public_deps = [
     "//components/content_settings/core/common:mojo_bindings",
     "//mojo/common:common_custom_types",
+    "//printing/backend/mojo",
     "//third_party/WebKit/public:mojo_bindings",
     "//ui/gfx/geometry/mojo",
     "//url/mojo:url_mojom_gurl",
