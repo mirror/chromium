@@ -459,6 +459,11 @@ void Surface::CommitSurfaceHierarchy(
       current_buffer_ = std::move(pending_buffer_);
 
       UpdateResource(frame_sink_holder, true);
+    } else if (current_buffer_.buffer() &&
+               !current_buffer_.buffer()->IsTransferanleResourceAvaliable()) {
+      // If the current TransferableResource has been returned and released from
+      // the compositor, we have to recreate it.
+      UpdateResource(frame_sink_holder, false /* client_usage */);
     }
 
     // Move pending frame callbacks to the end of frame_callbacks.

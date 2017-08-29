@@ -436,12 +436,14 @@ bool Buffer::ProduceTransferableResource(
       context_factory->SharedMainThreadContextProvider();
   if (!context_provider) {
     DLOG(WARNING) << "Failed to acquire a context provider";
+    resource_id_ = 0;
     resource->id = 0;
     resource->size = gfx::Size();
     return false;
   }
 
-  resource->id = layer_tree_frame_sink_holder->AllocateResourceId();
+  resource_id_ = layer_tree_frame_sink_holder->AllocateResourceId();
+  resource->id = resource_id_;
   resource->format = viz::RGBA_8888;
   resource->filter = GL_LINEAR;
   resource->size = gpu_memory_buffer_->GetSize();
@@ -479,7 +481,7 @@ bool Buffer::ProduceTransferableResource(
         base::Bind(&Buffer::Texture::ReleaseTexImage,
                    base::Unretained(contents_texture),
                    base::Bind(&Buffer::ReleaseContentsTexture, AsWeakPtr(),
-                              base::Passed(&contents_texture_),
+                              base::Passed(&contents_texture_), resource_id_,
                               release_contents_callback_.callback())));
     return true;
   }
@@ -496,7 +498,7 @@ bool Buffer::ProduceTransferableResource(
   // be released when copy has completed.
   gpu::SyncToken sync_token = contents_texture->CopyTexImage(
       texture, base::Bind(&Buffer::ReleaseContentsTexture, AsWeakPtr(),
-                          base::Passed(&contents_texture_),
+                          base::Passed(&contents_texture_), 0 /* resource_id */,
                           release_contents_callback_.callback()));
   resource->mailbox_holder =
       gpu::MailboxHolder(texture->mailbox(), sync_token, GL_TEXTURE_2D);
@@ -508,7 +510,7 @@ bool Buffer::ProduceTransferableResource(
       resource->id,
       base::Bind(&Buffer::Texture::Release, base::Unretained(texture),
                  base::Bind(&Buffer::ReleaseTexture, AsWeakPtr(),
-                            base::Passed(&texture_))));
+                            base::Passed(&texture_), resource_id_)));
   return true;
 }
 
@@ -558,13 +560,19 @@ void Buffer::Release() {
     release_callback_.Run();
 }
 
-void Buffer::ReleaseTexture(std::unique_ptr<Texture> texture) {
+void Buffer::ReleaseTexture(std::unique_ptr<Texture> texture,
+                            viz::ResourceId resource_id) {
   texture_ = std::move(texture);
+  if (resource_id_ == resource_id)
+    resource_id_ = 0;
 }
 
 void Buffer::ReleaseContentsTexture(std::unique_ptr<Texture> texture,
+                                    viz::ResourceId resource_id,
                                     const base::Closure& callback) {
   contents_texture_ = std::move(texture);
+  if (resource_id_ == resource_id)
+    resource_id_ = 0;
   callback.Run();
 }
 
