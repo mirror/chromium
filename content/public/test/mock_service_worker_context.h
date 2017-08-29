@@ -36,6 +36,11 @@ class MockServiceWorkerContext : public ServiceWorkerContext {
       const GURL& pattern,
       ServiceWorkerContext::StartActiveWorkerCallback info_callback,
       base::OnceClosure failure_callback) override;
+  // StopAllServiceWorkersForOrigin cannot be mocked because ResultOnceCallback
+  // is not copyable.
+  void StopAllServiceWorkersForOrigin(
+      const GURL&,
+      ServiceWorkerContext::ResultOnceCallback) override;
 
   MOCK_METHOD2(UnregisterServiceWorker,
                void(const ServiceWorkerContext::Scope&,
@@ -53,7 +58,6 @@ class MockServiceWorkerContext : public ServiceWorkerContext {
       CountExternalRequestsForTest,
       void(const GURL&,
            const ServiceWorkerContext::CountExternalRequestsCallback&));
-  MOCK_METHOD1(StopAllServiceWorkersForOrigin, void(const GURL&));
   MOCK_METHOD1(ClearAllServiceWorkersForTest, void(const base::Closure&));
   MOCK_METHOD2(StartServiceWorkerForNavigationHint,
                void(const GURL&,
