@@ -44,6 +44,11 @@ public class MainPreferences extends PreferenceFragment
     public static final String ACCOUNT_PICKER_DIALOG_TAG = "account_picker_dialog_tag";
     public static final String EXTRA_SHOW_SEARCH_ENGINE_PICKER = "show_search_engine_picker";
 
+    /**
+     * TODO(iuliah): add JavaDoc.
+     */
+    private boolean mWasSigninPreferenceCreated;
+
     private ManagedPreferenceDelegate mManagedPreferenceDelegate;
 
     public MainPreferences() {
@@ -161,6 +166,12 @@ public class MainPreferences extends PreferenceFragment
             // enabled (which is what the user can toggle on the Notifications Preferences page).
             getPreferenceScreen().removePreference(findPreference(PREF_NOTIFICATIONS));
         }
+
+        SignInPreference signInPreference = (SignInPreference) findPreference(PREF_SIGN_IN);
+        if (signInPreference != null && !mWasSigninPreferenceCreated) {
+            mWasSigninPreferenceCreated = true;
+            signInPreference.recordUserActionsAndImpressions();
+        }
     }
 
     @Override
@@ -250,5 +261,14 @@ public class MainPreferences extends PreferenceFragment
                 return super.isPreferenceClickDisabledByPolicy(preference);
             }
         };
+    }
+
+    @Override
+    public void onDestroy() {
+        SignInPreference signInPreference = (SignInPreference) findPreference(PREF_SIGN_IN);
+        if (signInPreference != null) {
+            signInPreference.recordImpressionsTilDismissHistogramIfNotUsed();
+        }
+        super.onDestroy();
     }
 }

@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import org.chromium.base.ContextUtils;
+import org.chromium.base.metrics.RecordHistogram;
 import org.chromium.base.metrics.RecordUserAction;
 import org.chromium.chrome.R;
 import org.chromium.chrome.browser.ChromeFeatureList;
@@ -39,6 +40,7 @@ public class SigninPromoController {
             "signin_promo_impressions_count_bookmarks";
     private static final String SIGNIN_PROMO_IMPRESSIONS_COUNT_SETTINGS =
             "signin_promo_impressions_count_settings";
+    private static final String SIGNIN_PROMO_WAS_USED = "signin_promo_was_used";
     private static final int MAX_IMPRESSIONS = 20;
 
     private String mAccountName;
@@ -146,10 +148,14 @@ public class SigninPromoController {
         }
 
         // If mImpressionCountName is not null then we should record impressions.
+        // TODO(iuliah): Explain reset.
         if (mImpressionCountName != null) {
             SharedPreferences preferences = ContextUtils.getAppSharedPreferences();
-            int numImpressions = preferences.getInt(mImpressionCountName, 0);
-            preferences.edit().putInt(mImpressionCountName, numImpressions + 1).apply();
+            int numImpressions = preferences.getInt(mImpressionCountName, 0) + 1;
+            preferences.edit()
+                    .putInt(mImpressionCountName, numImpressions)
+                    .putBoolean(SIGNIN_PROMO_WAS_USED, false)
+                    .apply();
         }
     }
 
@@ -175,6 +181,12 @@ public class SigninPromoController {
             view.getDismissButton().setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    assert mAccessPoint == SigninAccessPoint.BOOKMARK_MANAGER;
+
+                    setWasUsed(true);
+                    int numImpressions = getNumImpressionsForAccessPoint();
+                    RecordHistogram.recordCount100Histogram(
+                            "MobileSignInPromo.BookmarkManager.CountTilXButton", numImpressions);
                     onDismissListener.onDismiss();
                 }
             });
@@ -190,6 +202,30 @@ public class SigninPromoController {
      */
     public void setAccountName(@Nullable String accountName) {
         mAccountName = accountName;
+    }
+
+    /**
+     * TODO(iuliah): Add JavaDoc.
+     */
+    public void recordImpressionsTilDismissHistogramIfNotUsed() {
+        // If one of the buttons of the promo was used, we should not record anything on the
+        // impression til dismiss histogram. If mImpressionCountName is null then impressions are
+        // not recorded for the current access point.
+        if (getWasUsed() || mImpressionCountName == null) {
+            return;
+        }
+
+        assert mAccessPoint == SigninAccessPoint.BOOKMARK_MANAGER
+                || mAccessPoint == SigninAccessPoint.SETTINGS;
+
+        final String histogram;
+        if (mAccessPoint == SigninAccessPoint.BOOKMARK_MANAGER) {
+            histogram = "MobileSignInPromo.BookmarkManager.ImpressionsTilDismiss";
+        } else {
+            histogram = "MobileSignInPromo.SettingsManager.ImpressionsTilDismiss";
+        }
+
+        RecordHistogram.recordCount100Histogram(histogram, getNumImpressionsForAccessPoint());
     }
 
     private void recordSigninImpressionWithAccountUserAction() {
@@ -212,7 +248,8 @@ public class SigninPromoController {
         view.getSigninButton().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                AccountSigninActivity.startFromAddAccountPage(context, mAccessPoint);
+                markButtonClicked();
+                AccountSigninActivity.startFromAddAccountPage(context, mAccessPoint, true);
             }
         });
 
@@ -231,8 +268,9 @@ public class SigninPromoController {
         view.getSigninButton().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                markButtonClicked();
                 AccountSigninActivity.startFromConfirmationPage(
-                        context, mAccessPoint, mAccountName, true);
+                        context, mAccessPoint, mAccountName, true, true);
             }
         });
 
@@ -242,10 +280,50 @@ public class SigninPromoController {
         view.getChooseAccountButton().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                AccountSigninActivity.startAccountSigninActivity(context, mAccessPoint);
+                markButtonClicked();
+                AccountSigninActivity.startAccountSigninActivity(context, mAccessPoint, true);
             }
         });
         view.getChooseAccountButton().setVisibility(View.VISIBLE);
+    }
+
+    /**
+     * TODO(iuliah): Add JavaDoc.
+     */
+    private void markButtonClicked() {
+        setWasUsed(true);
+
+        // If mImpressionCountName is null then impressions aren't being recorded.
+        if (mImpressionCountName == null) {
+            return;
+        }
+
+        assert mAccessPoint == SigninAccessPoint.BOOKMARK_MANAGER
+                || mAccessPoint == SigninAccessPoint.SETTINGS;
+
+        final String histogram;
+        if (mAccessPoint == SigninAccessPoint.BOOKMARK_MANAGER) {
+            histogram = "MobileSignInPromo.BookmarkManager.CountTilSigninButtons";
+        } else {
+            histogram = "MobileSignInPromo.SettingsManager.CountTilSigninButtons";
+        }
+
+        RecordHistogram.recordCount100Histogram(histogram, getNumImpressionsForAccessPoint());
+    }
+
+    private void setWasUsed(boolean wasUsed) {
+        SharedPreferences preferences = ContextUtils.getAppSharedPreferences();
+        preferences.edit().putBoolean(SIGNIN_PROMO_WAS_USED, wasUsed).apply();
+    }
+
+    private boolean getWasUsed() {
+        SharedPreferences preferences = ContextUtils.getAppSharedPreferences();
+        return preferences.getBoolean(SIGNIN_PROMO_WAS_USED, false);
+    }
+
+    private int getNumImpressionsForAccessPoint() {
+        SharedPreferences preferences = ContextUtils.getAppSharedPreferences();
+        return preferences.getInt(mImpressionCountName, 0);
     }
 
     private void setImageSize(Context context, SigninPromoView view, @DimenRes int dimenResId) {

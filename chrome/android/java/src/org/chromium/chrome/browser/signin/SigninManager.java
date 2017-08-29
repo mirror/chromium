@@ -217,6 +217,7 @@ public class SigninManager implements AccountTrackerService.OnSystemAccountsSeed
     private void logSigninCompleteAccessPoint() {
         RecordHistogram.recordEnumeratedHistogram(
                 "Signin.SigninCompletedAccessPoint", sSignInAccessPoint, SigninAccessPoint.MAX);
+
         sSignInAccessPoint = SigninAccessPoint.UNKNOWN;
     }
 
