@@ -13,8 +13,6 @@
 #include "components/spellcheck/common/spellcheck_result.h"
 #include "content/public/browser/browser_message_filter.h"
 
-class SpellCheckerSessionBridge;
-
 // A message filter implementation that receives
 // the platform-specific spell checker requests from SpellCheckProvider.
 class SpellCheckMessageFilterPlatform : public content::BrowserMessageFilter {
@@ -26,14 +24,12 @@ class SpellCheckMessageFilterPlatform : public content::BrowserMessageFilter {
                                 content::BrowserThread::ID* thread) override;
   bool OnMessageReceived(const IPC::Message& message) override;
 
-#if defined(OS_MACOSX)
   // Adjusts remote_results by examining local_results. Any result that's both
   // local and remote stays type SPELLING, all others are flagged GRAMMAR.
   // (This is needed to force gray underline for remote-only results.)
   static void CombineResults(
       std::vector<SpellCheckResult>* remote_results,
       const std::vector<SpellCheckResult>& local_results);
-#endif
 
  private:
   friend class TestingSpellCheckMessageFilter;
@@ -47,19 +43,6 @@ class SpellCheckMessageFilterPlatform : public content::BrowserMessageFilter {
 
   int render_process_id_;
 
-#if defined(OS_ANDROID)
-  friend struct content::BrowserThread::DeleteOnThread<
-      content::BrowserThread::UI>;
-  friend class base::DeleteHelper<SpellCheckMessageFilterPlatform>;
-
-  void OnToggleSpellCheck(bool enabled, bool checked);
-  void OnDestruct() const override;
-
-  // Android-specific object used to query the Android spellchecker.
-  std::unique_ptr<SpellCheckerSessionBridge> impl_;
-#endif
-
-#if defined(OS_MACOSX)
   void OnCheckSpelling(const base::string16& word, int route_id, bool* correct);
   void OnFillSuggestionList(const base::string16& word,
                             std::vector<base::string16>* suggestions);
@@ -70,7 +53,6 @@ class SpellCheckMessageFilterPlatform : public content::BrowserMessageFilter {
 
   // A JSON-RPC client that calls the Spelling service in the background.
   std::unique_ptr<SpellingServiceClient> client_;
-#endif
 
   DISALLOW_COPY_AND_ASSIGN(SpellCheckMessageFilterPlatform);
 };

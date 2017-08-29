@@ -12,3 +12,6 @@ use_browser_spellchecker = is_android || is_mac
 
 # Only Mac has a spellcheck panel.
 has_spellcheck_panel = is_mac
+
+# Only Mac still uses spellcheck IPC.
+use_spellcheck_ipc = is_mac
