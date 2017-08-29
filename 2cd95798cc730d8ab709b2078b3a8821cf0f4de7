@@ -131,6 +131,30 @@
     },
     {
       "key": {
+        "uuid": "4b0e97aa_8f9d7495",
+        "filename": "components/exo/surface.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 739,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-08-29T22:23:26Z",
+      "side": 1,
+      "message": "hm, I suspect that theses rects are not correct in that case but not an issue with this patch.",
+      "parentUuid": "b6bf40ba_d3fabaa4",
+      "range": {
+        "startLine": 739,
+        "startChar": 6,
+        "endLine": 739,
+        "endChar": 30
+      },
+      "revId": "2cd95798cc730d8ab709b2078b3a8821cf0f4de7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "237097bf_96e9b28b",
         "filename": "components/exo/surface.cc",
         "patchSetId": 3

@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "1b209435_95bba574",
+        "filename": "components/exo/surface.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-08-29T22:23:26Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "61e831d3_075841dd",
+      "revId": "2f11eac55db712107569baa05d1fc1c778ea1249",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7b40b269_d87ce960",
         "filename": "components/exo/surface.cc",
         "patchSetId": 5
@@ -107,6 +125,30 @@
       "side": 1,
       "message": "It makes a difference in how the compositor scales the frame relative to its parent.",
       "parentUuid": "7cf33a98_2dc17ab6",
+      "range": {
+        "startLine": 310,
+        "startChar": 17,
+        "endLine": 310,
+        "endChar": 36
+      },
+      "revId": "2f11eac55db712107569baa05d1fc1c778ea1249",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5422588f_d21b196f",
+        "filename": "components/exo/surface_tree_host.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 310,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-08-29T22:23:26Z",
+      "side": 1,
+      "message": "Ok, I guess that explains why this patch is not breaking classic ash then. Maybe add a comment here to explain how this affects scaling of the frame.",
+      "parentUuid": "d4215a06_4ea3594a",
       "range": {
         "startLine": 310,
         "startChar": 17,
