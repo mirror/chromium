@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2aecff41_258cfa68",
+        "filename": "chrome/browser/chromeos/policy/device_policy_decoder_chromeos.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 412,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-08-29T16:00:13Z",
+      "side": 0,
+      "message": "Please also reflect this change in policy_templates.json - the \u0027supported_on\u0027 key should contain now \u002760-NN\u0027, where NN denotes the last version that supported your policy.",
+      "range": {
+        "startLine": 412,
+        "startChar": 2,
+        "endLine": 412,
+        "endChar": 56
+      },
+      "revId": "fe7b36e5645ccff70d35953b213b0e965a3d16db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

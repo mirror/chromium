@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "03bb3552_e6ec5e38",
+        "filename": "chrome/browser/chromeos/arc/policy/arc_policy_util.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-08-29T16:00:13Z",
+      "side": 1,
+      "message": "optional nit: If this match some external definition, then I\u0027d suggest specifying explicit values for each of the enum values.",
+      "range": {
+        "startLine": 17,
+        "startChar": 26,
+        "endLine": 17,
+        "endChar": 58
+      },
+      "revId": "3334d5a86faa3c99800386585fd519bd4c62939a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "94b997b2_3d8108a2",
         "filename": "chrome/browser/chromeos/login/existing_user_controller.cc",
         "patchSetId": 19
@@ -13,6 +36,29 @@
       "writtenOn": "2017-08-28T18:43:05Z",
       "side": 1,
       "message": "You could consider abbreviating this at the top:\nnamespace apu \u003d arc::policy_util;\n\nThis reduces the cognitive load somewhat and also makes your statements shorter.",
+      "revId": "3334d5a86faa3c99800386585fd519bd4c62939a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66e0a352_c702ac00",
+        "filename": "chrome/common/pref_names.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 1020,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-08-29T16:00:13Z",
+      "side": 1,
+      "message": "nit: Could you please document which integer value corresponds to each case?",
+      "range": {
+        "startLine": 1020,
+        "startChar": 12,
+        "endLine": 1020,
+        "endChar": 43
+      },
       "revId": "3334d5a86faa3c99800386585fd519bd4c62939a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
