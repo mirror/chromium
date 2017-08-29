@@ -90,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "3681960b_ced27e59",
+        "filename": "chrome/browser/ui/search/local_ntp_browsertest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 355,
+      "author": {
+        "id": 1229240
+      },
+      "writtenOn": "2017-08-29T12:39:20Z",
+      "side": 1,
+      "message": "Good point.\n\nWe could also try a similar \"namespacing\" thing as we are doing in `voice.js`. We could add all test and setup functions for the speech module into a `test.speech` object, all the view tests into `test.view`, etc. The appropriate setUp method would be `test.module_name_here.setUp` and the tests would be `test.module_name_here.test*`. WDYT? (Checkout the new patch set + the Text module tests for an example).",
+      "parentUuid": "398565f0_ae2fe176",
+      "revId": "317f534741134bff449fc56a0c7b7743744da1d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7aefd696_42092828",
         "filename": "chrome/test/data/local_ntp/voice_browsertest.html",
         "patchSetId": 10
