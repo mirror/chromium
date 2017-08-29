@@ -143,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "dff4f189_d3776954",
+        "filename": "components/password_manager/core/browser/password_form_manager.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 612,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2017-08-29T13:35:07Z",
+      "side": 1,
+      "message": "Ack.\nNit: You can use std::find_if in order to make this code more unified with surrounding code which uses std::copy_if.",
+      "parentUuid": "bc0ffabb_3f8aaa23",
+      "range": {
+        "startLine": 612,
+        "startChar": 26,
+        "endLine": 612,
+        "endChar": 39
+      },
+      "revId": "d38d9c13b1d1befa8f281767da48d06ae10f2bd8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2e0a7b1d_31e7d2e0",
         "filename": "components/password_manager/core/browser/password_form_manager.cc",
         "patchSetId": 6
