@@ -23,7 +23,7 @@ class InterfaceProxy : public IPC::Listener, public IPC::Sender {
   // is transferred to the caller.
   typedef InterfaceProxy* (*Factory)(Dispatcher* dispatcher);
 
-  virtual ~InterfaceProxy();
+  ~InterfaceProxy() override;
 
   Dispatcher* dispatcher() const { return dispatcher_; }
 

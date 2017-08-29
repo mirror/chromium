@@ -295,37 +295,43 @@ bool ContextMenuClient::ShowContextMenu(const ContextMenu* default_menu,
     if (object && object->IsLayoutEmbeddedContent()) {
       PluginView* plugin_view = ToLayoutEmbeddedContent(object)->Plugin();
       if (plugin_view && plugin_view->IsPluginContainer()) {
+        WebPlugin* plugin = ToWebPluginContainerImpl(plugin_view)->Plugin();
         data.media_type = WebContextMenuData::kMediaTypePlugin;
-        WebPluginContainerImpl* plugin = ToWebPluginContainerImpl(plugin_view);
-        WebString text = plugin->Plugin()->SelectionAsText();
+        data.link_url = plugin->LinkAtPosition(data.mouse_position);
+        HTMLPlugInElement* plugin_element = ToHTMLPlugInElement(r.InnerNode());
+        data.src_url =
+            plugin_element->GetDocument().CompleteURL(plugin_element->Url());
+
+        // Figure out the text selection and text edit flags.
+        WebString text = plugin->SelectionAsText();
         if (!text.IsEmpty()) {
           data.selected_text = text;
           data.edit_flags |= WebContextMenuData::kCanCopy;
         }
-        bool plugin_can_edit_text = plugin->Plugin()->CanEditText();
+        bool plugin_can_edit_text = plugin->CanEditText();
         if (plugin_can_edit_text) {
           data.is_editable = true;
           if (!!(data.edit_flags & WebContextMenuData::kCanCopy))
             data.edit_flags |= WebContextMenuData::kCanCut;
           data.edit_flags |= WebContextMenuData::kCanPaste;
-          // TODO(bug 753216): Implement "SelectAll" command and enable when
-          // focus is within an editable text area.
-          data.edit_flags &= ~WebContextMenuData::kCanSelectAll;
-        }
-        data.edit_flags &= ~WebContextMenuData::kCanTranslate;
-        data.link_url = plugin->Plugin()->LinkAtPosition(data.mouse_position);
-        if (plugin->Plugin()->SupportsPaginatedPrint())
-          data.media_flags |= WebContextMenuData::kMediaCanPrint;
 
-        HTMLPlugInElement* plugin_element = ToHTMLPlugInElement(r.InnerNode());
-        data.src_url =
-            plugin_element->GetDocument().CompleteURL(plugin_element->Url());
+          if (plugin->HasEditableText())
+            data.edit_flags |= WebContextMenuData::kCanSelectAll;
+          else
+            data.edit_flags &= ~WebContextMenuData::kCanSelectAll;
+        }
+        // Disable translation for plugins.
+        data.edit_flags &= ~WebContextMenuData::kCanTranslate;
+
+        // Figure out the media flags.
         data.media_flags |= WebContextMenuData::kMediaCanSave;
+        if (plugin->SupportsPaginatedPrint())
+          data.media_flags |= WebContextMenuData::kMediaCanPrint;
 
         // Add context menu commands that are supported by the plugin.
         // Only show rotate view options if focus is not in an editable text
         // area.
-        if (!plugin_can_edit_text && plugin->Plugin()->CanRotateView())
+        if (!plugin_can_edit_text && plugin->CanRotateView())
           data.media_flags |= WebContextMenuData::kMediaCanRotate;
       }
     }

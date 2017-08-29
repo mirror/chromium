@@ -134,6 +134,20 @@ class PepperPluginInstance {
   // MoveRangeSelectionExtent.
   virtual void SetSelectionBounds(const gfx::PointF& base,
                                   const gfx::PointF& extent) = 0;
+
+  // Returns true if the plugin text can be edited.
+  virtual bool CanEditText() = 0;
+
+  // Returns true if the plugin has editable text. i.e. The editable text field
+  // is non-empty. Assumes CanEditText() returns true.
+  virtual bool HasEditableText() = 0;
+
+  // Replaces the plugin's selected text, if any, with |text|. Assumes
+  // CanEditText() returns true.
+  virtual void ReplaceSelection(const std::string& text) = 0;
+
+  // Issue a select all command.
+  virtual void SelectAll() = 0;
 };
 
 }  // namespace content

@@ -261,6 +261,16 @@ PP_Bool CanEditText(PP_Instance instance) {
   return PP_FromBool(obj_instance->CanEditText());
 }
 
+PP_Bool HasEditableText(PP_Instance instance) {
+  void* object = pp::Instance::GetPerInstanceObject(instance, kPPPPdfInterface);
+  if (!object)
+    return PP_FALSE;
+
+  OutOfProcessInstance* obj_instance =
+      static_cast<OutOfProcessInstance*>(object);
+  return PP_FromBool(obj_instance->HasEditableText());
+}
+
 void ReplaceSelection(PP_Instance instance, const char* text) {
   void* object = pp::Instance::GetPerInstanceObject(instance, kPPPPdfInterface);
   if (!object)
@@ -274,7 +284,8 @@ void ReplaceSelection(PP_Instance instance, const char* text) {
 const PPP_Pdf ppp_private = {
     &GetLinkAtPosition,   &Transform,        &GetPrintPresetOptionsFromDocument,
     &EnableAccessibility, &SetCaretPosition, &MoveRangeSelectionExtent,
-    &SetSelectionBounds,  &CanEditText,      &ReplaceSelection,
+    &SetSelectionBounds,  &CanEditText,      &HasEditableText,
+    &ReplaceSelection,
 };
 
 int ExtractPrintPreviewPageIndex(base::StringPiece src_url) {
@@ -948,6 +959,10 @@ pp::Var OutOfProcessInstance::GetLinkAtPosition(const pp::Point& point) {
 
 bool OutOfProcessInstance::CanEditText() {
   return engine_->CanEditText();
+}
+
+bool OutOfProcessInstance::HasEditableText() {
+  return engine_->HasEditableText();
 }
 
 void OutOfProcessInstance::ReplaceSelection(const std::string& text) {
