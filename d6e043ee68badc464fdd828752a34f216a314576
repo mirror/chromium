@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bca0d120_603cb1a8",
+        "filename": "components/viz/client/client_layer_tree_frame_sink.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1002647
+      },
+      "writtenOn": "2017-08-29T16:40:19Z",
+      "side": 1,
+      "message": "Is move necessary?",
+      "range": {
+        "startLine": 137,
+        "startChar": 48,
+        "endLine": 137,
+        "endChar": 52
+      },
+      "revId": "d6e043ee68badc464fdd828752a34f216a314576",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
