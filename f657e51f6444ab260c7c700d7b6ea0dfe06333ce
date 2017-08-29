@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f97de073_1f7f7a41",
+        "filename": "components/signin/core/browser/resources/signin_internals.js",
+        "patchSetId": 12
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1111029
+      },
+      "writtenOn": "2017-08-29T16:25:44Z",
+      "side": 1,
+      "message": "Since enableSync is such a small function probably just inline it.",
+      "revId": "f657e51f6444ab260c7c700d7b6ea0dfe06333ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e6baf8a_98e30939",
+        "filename": "components/signin/core/browser/resources/signin_internals.js",
+        "patchSetId": 12
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1111029
+      },
+      "writtenOn": "2017-08-29T16:25:44Z",
+      "side": 1,
+      "message": "nit: generally we use single quotes....\n\nIn this case, if the property is always there, can we just use signinInfo.dice?",
+      "revId": "f657e51f6444ab260c7c700d7b6ea0dfe06333ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92e03b4f_654045aa",
+        "filename": "components/signin/core/browser/resources/signin_internals.js",
+        "patchSetId": 12
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1111029
+      },
+      "writtenOn": "2017-08-29T16:25:44Z",
+      "side": 1,
+      "message": "Stray concole log?",
+      "revId": "f657e51f6444ab260c7c700d7b6ea0dfe06333ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81946142_1f8c3445",
+        "filename": "components/signin/core/browser/resources/signin_internals.js",
+        "patchSetId": 12
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1111029
+      },
+      "writtenOn": "2017-08-29T16:25:44Z",
+      "side": 1,
+      "message": "stray console log",
+      "revId": "f657e51f6444ab260c7c700d7b6ea0dfe06333ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
