@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a1e22cc5_ceec1f90",
+        "filename": "chrome/browser/ui/search/search_model.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-29T15:08:19Z",
+      "side": 1,
+      "message": "Sure, why not. Done.",
+      "parentUuid": "48c324ef_cefbf5f1",
+      "range": {
+        "startLine": 17,
+        "startChar": 2,
+        "endLine": 17,
+        "endChar": 6
+      },
+      "revId": "11d0deec2cb2d9f206d434710cadd45f3842b47b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e22308c0_82ca9159",
         "filename": "chrome/browser/ui/search/search_model.h",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2017-08-29T14:56:03Z",
       "side": 1,
       "message": "It\u0027s not necessarily true that the user is searching, right?\n\nI\u0027d rather have \"from a page other than the NTP\" than \"some random page\".",
+      "range": {
+        "startLine": 18,
+        "startChar": 7,
+        "endLine": 18,
+        "endChar": 50
+      },
+      "revId": "11d0deec2cb2d9f206d434710cadd45f3842b47b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f7d2023_b285a0d4",
+        "filename": "chrome/browser/ui/search/search_model.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-29T15:08:19Z",
+      "side": 1,
+      "message": "\u003e It\u0027s not necessarily true that the user is searching, right?\n\nRight - the SearchModel always exists, whether or not any searching is involved. That\u0027s what you get for copy-pasting. Done.\n\n\u003e I\u0027d rather have \"from a page other than the NTP\" than \"some random page\".\n\nDone.",
+      "parentUuid": "e22308c0_82ca9159",
       "range": {
         "startLine": 18,
         "startChar": 7,
