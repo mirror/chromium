@@ -4,6 +4,8 @@
 
 #include "media/mojo/services/watch_time_recorder.h"
 
+#include <algorithm>
+
 #include "base/metrics/histogram_functions.h"
 #include "base/strings/string_piece.h"
 #include "media/base/watch_time_keys.h"
@@ -34,9 +36,10 @@ static void RecordRebuffersCount(base::StringPiece key, int underflow_count) {
   base::UmaHistogramCounts100(key.as_string(), underflow_count);
 }
 
-static bool ShouldReportUkmWatchTime(base::StringPiece key) {
-  // EmbeddedExperience is always a file:// URL, so skip reporting.
-  return !key.ends_with("EmbeddedExperience");
+static bool IsAllKey(WatchTimeKey key) {
+  return key == WatchTimeKey::kAudioAll ||
+         key == WatchTimeKey::kAudioVideoAll ||
+         key == WatchTimeKey::kAudioVideoBackgroundAll;
 }
 
 class WatchTimeRecorderProvider : public mojom::WatchTimeRecorderProvider {
@@ -57,7 +60,37 @@ class WatchTimeRecorderProvider : public mojom::WatchTimeRecorderProvider {
   DISALLOW_COPY_AND_ASSIGN(WatchTimeRecorderProvider);
 };
 
-const char WatchTimeRecorder::kWatchTimeUkmEvent[] = "Media.WatchTime";
+const char WatchTimeRecorder::kWatchTimeUkmEvent[] = "Media.BasicPlayback";
+
+const char WatchTimeRecorder::kUkmKeyWatchTime[] = "WatchTime";
+const char WatchTimeRecorder::kUkmKeyWatchTimeAc[] = "WatchTime.AC";
+const char WatchTimeRecorder::kUkmKeyWatchTimeBattery[] = "WatchTime.Battery";
+const char WatchTimeRecorder::kUkmKeyWatchTimeNativeControlsOn[] =
+    "WatchTime.NativeControlsOn";
+const char WatchTimeRecorder::kUkmKeyWatchTimeNativeControlsOff[] =
+    "WatchTime.NativeControlsOff";
+const char WatchTimeRecorder::kUkmKeyWatchTimeDisplayFullscreen[] =
+    "WatchTime.DisplayFullscreen";
+const char WatchTimeRecorder::kUkmKeyWatchTimeDisplayInline[] =
+    "WatchTime.DisplayInline";
+const char WatchTimeRecorder::kUkmKeyWatchTimeDisplayPictureInPicture[] =
+    "WatchTime.DisplayPictureInPicture";
+
+const char WatchTimeRecorder::kUkmKeyAudioCodec[] = "AudioCodec";
+const char WatchTimeRecorder::kUkmKeyVideoCodec[] = "VideoCodec";
+const char WatchTimeRecorder::kUkmKeyHasAudio[] = "HasAudio";
+const char WatchTimeRecorder::kUkmKeyHasVideo[] = "HasVideo";
+const char WatchTimeRecorder::kUkmKeyIsBackground[] = "IsBackground";
+const char WatchTimeRecorder::kUkmKeyIsEME[] = "IsEME";
+const char WatchTimeRecorder::kUkmKeyIsMSE[] = "IsMSE";
+const char WatchTimeRecorder::kUkmKeyLastPipelineStatus[] =
+    "LastPipelineStatus";
+const char WatchTimeRecorder::kUkmKeyMeanTimeBetweenRebuffers[] =
+    "MeanTimeBetweenRebuffers";
+const char WatchTimeRecorder::kUkmKeyRebuffersCount[] = "RebuffersCount";
+const char WatchTimeRecorder::kUkmKeyVideoNaturalWidth[] = "VideoNaturalWidth";
+const char WatchTimeRecorder::kUkmKeyVideoNaturalHeight[] =
+    "VideoNaturalHeight";
 
 WatchTimeRecorder::WatchTimeRecorder(mojom::PlaybackPropertiesPtr properties)
     : properties_(std::move(properties)),
@@ -96,6 +129,10 @@ void WatchTimeRecorder::RecordWatchTime(WatchTimeKey key,
 
 void WatchTimeRecorder::FinalizeWatchTime(
     const std::vector<WatchTimeKey>& keys_to_finalize) {
+  // This must be done before |underflow_count_| is cleared. Will only be
+  // recorded if a Media.WatchTime.*.All entry is finalized.
+  RecordUkmPlaybackData(keys_to_finalize);
+
   // If the filter set is empty, treat that as finalizing all keys; otherwise
   // only the listed keys will be finalized.
   const bool should_finalize_everything = keys_to_finalize.empty();
@@ -120,12 +157,6 @@ void WatchTimeRecorder::FinalizeWatchTime(
     underflow_count_ = 0;
   }
 
-  // UKM may be unavailable in content_shell or other non-chrome/ builds; it
-  // may also be unavailable if browser shutdown has started; so this may be a
-  // nullptr. If it's unavailable, UKM reporting will be skipped.
-  ukm::UkmRecorder* ukm_recorder = ukm::UkmRecorder::Get();
-  std::unique_ptr<ukm::UkmEntryBuilder> builder;
-
   for (auto it = watch_time_info_.begin(); it != watch_time_info_.end();) {
     if (!should_finalize_everything &&
         std::find(keys_to_finalize.begin(), keys_to_finalize.end(),
@@ -136,27 +167,107 @@ void WatchTimeRecorder::FinalizeWatchTime(
 
     const base::StringPiece metric_name = WatchTimeKeyToString(it->first);
     RecordWatchTimeInternal(metric_name, it->second);
-
-    if (ukm_recorder && ShouldReportUkmWatchTime(metric_name)) {
-      if (!builder) {
-        const int32_t source_id = ukm_recorder->GetNewSourceID();
-        ukm_recorder->UpdateSourceURL(source_id, properties_->origin.GetURL());
-        builder = ukm_recorder->GetEntryBuilder(source_id, kWatchTimeUkmEvent);
-      }
-
-      // Strip Media.WatchTime. prefix for UKM since they're already grouped;
-      // arraysize() includes \0, so no +1 necessary for trailing period.
-      builder->AddMetric(
-          metric_name.substr(arraysize(kWatchTimeUkmEvent)).data(),
-          it->second.InMilliseconds());
-    }
-
     it = watch_time_info_.erase(it);
   }
 }
 
+void WatchTimeRecorder::OnError(PipelineStatus status) {
+  pipeline_status_ = status;
+}
+
 void WatchTimeRecorder::UpdateUnderflowCount(int32_t count) {
   underflow_count_ = count;
+}
+
+void WatchTimeRecorder::RecordUkmPlaybackData(
+    const std::vector<WatchTimeKey>& keys_to_finalize) {
+  // UKM may be unavailable in content_shell or other non-chrome/ builds; it
+  // may also be unavailable if browser shutdown has started; so this may be a
+  // nullptr. If it's unavailable, UKM reporting will be skipped.
+  ukm::UkmRecorder* ukm_recorder = ukm::UkmRecorder::Get();
+  if (!ukm_recorder)
+    return;
+
+  // Ensure we have an "All" watch time entry or skip reporting.
+  const bool can_report_ukm =
+      keys_to_finalize.empty()
+          ? std::any_of(watch_time_info_.begin(), watch_time_info_.end(),
+                        [](const std::pair<WatchTimeKey, base::TimeDelta>& kv) {
+                          return IsAllKey(kv.first);
+                        })
+          : std::any_of(keys_to_finalize.begin(), keys_to_finalize.end(),
+                        IsAllKey);
+  if (!can_report_ukm)
+    return;
+
+  const int32_t source_id = ukm_recorder->GetNewSourceID();
+  ukm_recorder->UpdateSourceURL(source_id, properties_->origin.GetURL());
+  std::unique_ptr<ukm::UkmEntryBuilder> builder =
+      ukm_recorder->GetEntryBuilder(source_id, kWatchTimeUkmEvent);
+
+  // Note: Unlike FinalizeWatchTime(), if an "All" key is requested for finalize
+  // we will record values for all keys in |watch_time_info_| matching our UKM
+  // reporting requirements -- this ensures each UKM entry has as much data as
+  // possible. In practice this is a bit moot, since "All" keys are always
+  // finalized along with the rest of the keys we want for UKM.
+  bool recorded_all_metric = false;
+  for (auto& kv : watch_time_info_) {
+    if (kv.first == WatchTimeKey::kAudioAll ||
+        kv.first == WatchTimeKey::kAudioVideoAll ||
+        kv.first == WatchTimeKey::kAudioVideoBackgroundAll) {
+      // Only one of these keys should be present in a given finalize.
+      DCHECK(!recorded_all_metric);
+      recorded_all_metric = true;
+
+      builder->AddMetric(kUkmKeyWatchTime, kv.second.InMilliseconds());
+      if (underflow_count_) {
+        builder->AddMetric(kUkmKeyMeanTimeBetweenRebuffers,
+                           (kv.second / underflow_count_).InMilliseconds());
+      }
+      builder->AddMetric(kUkmKeyIsBackground,
+                         kv.first == WatchTimeKey::kAudioVideoBackgroundAll);
+    } else if (kv.first == WatchTimeKey::kAudioAc ||
+               kv.first == WatchTimeKey::kAudioVideoAc ||
+               kv.first == WatchTimeKey::kAudioVideoBackgroundAc) {
+      builder->AddMetric(kUkmKeyWatchTimeAc, kv.second.InMilliseconds());
+    } else if (kv.first == WatchTimeKey::kAudioBattery ||
+               kv.first == WatchTimeKey::kAudioVideoBattery ||
+               kv.first == WatchTimeKey::kAudioVideoBackgroundBattery) {
+      builder->AddMetric(kUkmKeyWatchTimeBattery, kv.second.InMilliseconds());
+    } else if (kv.first == WatchTimeKey::kAudioNativeControlsOn ||
+               kv.first == WatchTimeKey::kAudioVideoNativeControlsOn) {
+      builder->AddMetric(kUkmKeyWatchTimeNativeControlsOn,
+                         kv.second.InMilliseconds());
+    } else if (kv.first == WatchTimeKey::kAudioNativeControlsOff ||
+               kv.first == WatchTimeKey::kAudioVideoNativeControlsOff) {
+      builder->AddMetric(kUkmKeyWatchTimeNativeControlsOff,
+                         kv.second.InMilliseconds());
+    } else if (kv.first == WatchTimeKey::kAudioVideoDisplayFullscreen) {
+      builder->AddMetric(kUkmKeyWatchTimeDisplayFullscreen,
+                         kv.second.InMilliseconds());
+    } else if (kv.first == WatchTimeKey::kAudioVideoDisplayInline) {
+      builder->AddMetric(kUkmKeyWatchTimeDisplayInline,
+                         kv.second.InMilliseconds());
+    } else if (kv.first == WatchTimeKey::kAudioVideoDisplayPictureInPicture) {
+      builder->AddMetric(kUkmKeyWatchTimeDisplayPictureInPicture,
+                         kv.second.InMilliseconds());
+    }
+  }
+
+  // See note in mojom::PlaybackProperties about why we have both of these.
+  builder->AddMetric(kUkmKeyAudioCodec, properties_->audio_codec);
+  builder->AddMetric(kUkmKeyVideoCodec, properties_->video_codec);
+  builder->AddMetric(kUkmKeyHasAudio, properties_->has_audio);
+  builder->AddMetric(kUkmKeyHasVideo, properties_->has_video);
+
+  builder->AddMetric(kUkmKeyIsEME, properties_->is_eme);
+  builder->AddMetric(kUkmKeyIsMSE, properties_->is_mse);
+  builder->AddMetric(kUkmKeyLastPipelineStatus, pipeline_status_);
+  builder->AddMetric(kUkmKeyRebuffersCount, underflow_count_);
+  builder->AddMetric(kUkmKeyVideoNaturalWidth,
+                     properties_->natural_size.width());
+  builder->AddMetric(kUkmKeyVideoNaturalHeight,
+                     properties_->natural_size.height());
 }
 
 WatchTimeRecorder::RebufferMapping::RebufferMapping(const RebufferMapping& copy)
