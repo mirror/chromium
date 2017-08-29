@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f51b298b_ba4a4df7",
+        "filename": "chrome/browser/offline_pages/prefetch/prefetch_importer_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-08-29T18:38:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b90de790_5e0ba029",
+      "revId": "c3cc6ae159636a799461b038c8e330941a164a3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "065773ac_a57f3078",
         "filename": "chrome/browser/offline_pages/prefetch/prefetch_importer_impl.cc",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "c3cc6ae159636a799461b038c8e330941a164a3d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f00a959_74de8641",
+        "filename": "chrome/browser/offline_pages/prefetch/prefetch_importer_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-08-29T18:38:25Z",
+      "side": 1,
+      "message": "I added the missing case for RESULT_COUNT so now we will get build errors should a new enum entry be added.\nI looked into similar cases and they all deal with the out-of-this-world values this way (many in src/base that I tend to consider good code style sources).",
+      "parentUuid": "065773ac_a57f3078",
+      "revId": "c3cc6ae159636a799461b038c8e330941a164a3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "397833f9_c7a5876d",
+        "filename": "chrome/browser/offline_pages/prefetch/prefetch_importer_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-08-29T18:38:25Z",
+      "side": 1,
+      "message": "I\u0027m keeping the UMA here as moving it there would require exposing the PageImportResult enum to the components layer, letting it know details about this specific implementation.",
+      "parentUuid": "4d07a3ac_bff1971e",
+      "revId": "c3cc6ae159636a799461b038c8e330941a164a3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "83e4bd04_a54ef775",
         "filename": "chrome/browser/offline_pages/prefetch/prefetch_importer_impl.cc",
         "patchSetId": 1
@@ -67,6 +121,24 @@
       "revId": "c3cc6ae159636a799461b038c8e330941a164a3d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58e13c55_1a97071a",
+        "filename": "chrome/browser/offline_pages/prefetch/prefetch_importer_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-08-29T18:38:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "83e4bd04_a54ef775",
+      "revId": "c3cc6ae159636a799461b038c8e330941a164a3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "eb3711e2_8bf1b07d",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 28095,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-08-29T18:38:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fb10997b_80be994b",
+      "revId": "c3cc6ae159636a799461b038c8e330941a164a3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "42cd547b_c9f359fa",
         "filename": "tools/metrics/histograms/enums.xml",
         "patchSetId": 1
@@ -101,6 +191,24 @@
       "revId": "c3cc6ae159636a799461b038c8e330941a164a3d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb34059d_8e6b5cbe",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 28098,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-08-29T18:38:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "42cd547b_c9f359fa",
+      "revId": "c3cc6ae159636a799461b038c8e330941a164a3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
