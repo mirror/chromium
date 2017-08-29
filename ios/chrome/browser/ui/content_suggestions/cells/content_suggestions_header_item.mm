@@ -10,6 +10,10 @@
 #error "This file requires ARC support."
 #endif
 
+namespace {
+NSString* kHeaderID = @"CSHeaderIdentifier";
+}  // namespace
+
 @implementation ContentSuggestionsHeaderItem
 
 @synthesize view;
@@ -25,6 +29,7 @@
 - (void)configureCell:(ContentSuggestionsHeaderCell*)cell {
   [super configureCell:cell];
   [cell setHeaderView:self.view];
+  cell.accessibilityIdentifier = kHeaderID;
 }
 
 @end
