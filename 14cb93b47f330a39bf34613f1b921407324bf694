@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7e10a54d_a9c75c68",
+        "filename": "chrome/test/data/webui/settings/bluetooth_page_tests.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-08-29T22:35:14Z",
+      "side": 0,
+      "message": "This is the line that\u0027s failing. #noPairedDevices binds a function to hidden:\n\n    hidden\u003d\"[[!showDevices_(adapterState.powered, pairedDeviceList_)]]\"\u003e\n\nMy guess is one of these isn\u0027t updating properly, so it\u0027s not updating |hidden|. I do notice this:\n\nhttps://cs.chromium.org/chromium/src/chrome/browser/resources/settings/bluetooth_page/bluetooth_subpage.js?type\u003dcs\u0026sq\u003dpackage:chromium\u0026l\u003d247\n\nthis.deviceList_ \u003d devices; *should* set |deviceList_| to the new array, which triggers deviceListChanged_, which updates |pairedDeviceList_. However, the fake bluetooth API always returns the same array from getDevices(): https://cs.chromium.org/chromium/src/chrome/test/data/webui/settings/fake_bluetooth.js?type\u003dcs\u0026q\u003dfile:fake+file:bluetooth+file:settings+file\u0026sq\u003dpackage:chromium\u0026l\u003d89\n\nSince you\u0027re setting deviceList_ to the same array, Polymer isn\u0027t notified if the array has been changed in the meantime.\n\nDoes updating getDevices() to return a copy of the array help?",
+      "revId": "14cb93b47f330a39bf34613f1b921407324bf694",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
