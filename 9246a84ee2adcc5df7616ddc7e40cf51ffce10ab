@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0d19b619_517d894a",
+        "filename": "chrome/android/junit/src/org/chromium/chrome/browser/omnibox/AutocompleteEditTextTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-08-29T22:53:45Z",
+      "side": 1,
+      "message": "is there a goal to push your changes to ShadowAccessibilityManager to the trunk of robolectric?",
+      "range": {
+        "startLine": 55,
+        "startChar": 33,
+        "endLine": 55,
+        "endChar": 51
+      },
+      "revId": "9246a84ee2adcc5df7616ddc7e40cf51ffce10ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0fe63633_6ab8b281",
+        "filename": "chrome/android/junit/src/org/chromium/chrome/browser/omnibox/AutocompleteEditTextTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-08-29T22:53:45Z",
+      "side": 1,
+      "message": "\"what\" is being called here?  m[TextUpdate]CallCount maybe?  This seems a bit too generic.",
+      "range": {
+        "startLine": 90,
+        "startChar": 30,
+        "endLine": 90,
+        "endChar": 40
+      },
+      "revId": "9246a84ee2adcc5df7616ddc7e40cf51ffce10ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "916d081a_670c24ef",
+        "filename": "chrome/android/junit/src/org/chromium/chrome/browser/omnibox/AutocompleteEditTextTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-08-29T22:53:45Z",
+      "side": 1,
+      "message": "Same comment as the above naming, I think this is a bit generic for what Call refers to.  Even if it is assertTextInteractionCallCounts or something.  I don\u0027t know if we should actually split this in two just for readability:\n\nassertTextBlahCallCount\nassertAccessibilityCallCount",
+      "range": {
+        "startLine": 203,
+        "startChar": 17,
+        "endLine": 203,
+        "endChar": 33
+      },
+      "revId": "9246a84ee2adcc5df7616ddc7e40cf51ffce10ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
