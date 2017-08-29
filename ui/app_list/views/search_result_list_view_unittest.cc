@@ -7,16 +7,22 @@
 #include <stddef.h>
 
 #include <map>
+#include <memory>
 
 #include "base/macros.h"
 #include "base/memory/ptr_util.h"
 #include "base/strings/stringprintf.h"
 #include "base/strings/utf_string_conversions.h"
+#include "base/test/scoped_feature_list.h"
+#include "ui/app_list/app_list_features.h"
 #include "ui/app_list/app_list_model.h"
 #include "ui/app_list/test/app_list_test_view_delegate.h"
 #include "ui/app_list/test/test_search_result.h"
-#include "ui/app_list/views/search_result_list_view_delegate.h"
+#include "ui/app_list/views/app_list_main_view.h"
+#include "ui/app_list/views/app_list_view.h"
+#include "ui/app_list/views/contents_view.h"
 #include "ui/app_list/views/search_result_view.h"
+#include "ui/aura/window.h"
 #include "ui/views/controls/progress_bar.h"
 #include "ui/views/test/views_test_base.h"
 
@@ -28,36 +34,58 @@ int kDefaultSearchItems = 5;
 }  // namespace
 
 class SearchResultListViewTest : public views::ViewsTestBase,
-                                 public SearchResultListViewDelegate {
+                                 public testing::WithParamInterface<bool> {
  public:
-  SearchResultListViewTest() {}
-  ~SearchResultListViewTest() override {}
+  SearchResultListViewTest() = default;
+  ~SearchResultListViewTest() override = default;
 
   // Overridden from testing::Test:
   void SetUp() override {
     views::ViewsTestBase::SetUp();
-    view_.reset(new SearchResultListView(this, &view_delegate_));
-    view_->SetResults(view_delegate_.GetModel()->results());
+    if (testing::UnitTest::GetInstance()->current_test_info()->value_param())
+      test_with_fullscreen_ = GetParam();
+    if (test_with_fullscreen_) {
+      scoped_feature_list_.InitAndEnableFeature(
+          features::kEnableFullscreenAppList);
+    }
+
+    delegate_.reset(new AppListTestViewDelegate);
+    app_list_view_ = new AppListView(delegate_.get());
+    gfx::NativeView parent = GetContext();
+    app_list_view_->Initialize(parent, 0, false, false);
+    // TODO(warx): remove MaybeSetAnchorPoint setup when bubble launcher is
+    // removed from code base.
+    app_list_view_->MaybeSetAnchorPoint(
+        parent->GetBoundsInRootWindow().CenterPoint());
+    app_list_view_->GetWidget()->Show();
+
+    ContentsView* contents_view =
+        app_list_view_->app_list_main_view()->contents_view();
+    view_ = contents_view->search_result_list_view_for_test();
+  }
+  void TearDown() override {
+    app_list_view_->GetWidget()->Close();
+    views::ViewsTestBase::TearDown();
   }
 
  protected:
-  SearchResultListView* view() { return view_.get(); }
+  SearchResultListView* view() const { return view_; }
 
-  SearchResultView* GetResultViewAt(int index) {
+  SearchResultView* GetResultViewAt(int index) const {
     return view_->GetResultViewAt(index);
   }
 
-  AppListModel::SearchResults* GetResults() {
-    return view_delegate_.GetModel()->results();
+  AppListModel::SearchResults* GetResults() const {
+    return delegate_->GetModel()->results();
   }
 
   void SetLongAutoLaunchTimeout() {
     // Sets a long timeout that lasts longer than the test run.
-    view_delegate_.set_auto_launch_timeout(base::TimeDelta::FromDays(1));
+    delegate_->set_auto_launch_timeout(base::TimeDelta::FromDays(1));
   }
 
   base::TimeDelta GetAutoLaunchTimeout() {
-    return view_delegate_.GetAutoLaunchTimeout();
+    return delegate_->GetAutoLaunchTimeout();
   }
 
   void SetUpSearchResults() {
@@ -78,15 +106,15 @@ class SearchResultListViewTest : public views::ViewsTestBase,
   }
 
   int GetOpenResultCountAndReset(int ranking) {
-    EXPECT_GT(view_delegate_.open_search_result_counts().count(ranking), 0u);
-    int result = view_delegate_.open_search_result_counts()[ranking];
-    view_delegate_.open_search_result_counts().clear();
+    EXPECT_GT(delegate_->open_search_result_counts().count(ranking), 0u);
+    int result = delegate_->open_search_result_counts()[ranking];
+    delegate_->open_search_result_counts().clear();
     return result;
   }
 
-  int GetResultCount() { return view_->num_results(); }
+  int GetResultCount() const { return view_->num_results(); }
 
-  int GetSelectedIndex() { return view_->selected_index(); }
+  int GetSelectedIndex() const { return view_->selected_index(); }
 
   void ResetSelectedIndex() {
     view_->SetSelectedIndex(0);
@@ -103,7 +131,7 @@ class SearchResultListViewTest : public views::ViewsTestBase,
     return view_->OnKeyPressed(event);
   }
 
-  bool IsAutoLaunching() { return !!view_->auto_launch_animation_; }
+  bool IsAutoLaunching() const { return !!view_->auto_launch_animation_; }
 
   void ForceAutoLaunch() {
     view_->ForceAutoLaunchForTest();
@@ -119,20 +147,25 @@ class SearchResultListViewTest : public views::ViewsTestBase,
     }
   }
 
-  views::ProgressBar* GetProgressBarAt(size_t index) {
+  views::ProgressBar* GetProgressBarAt(size_t index) const {
     return GetResultViewAt(index)->progress_bar_;
   }
 
  private:
-  void OnResultInstalled(SearchResult* result) override {}
-
-  AppListTestViewDelegate view_delegate_;
-  std::unique_ptr<SearchResultListView> view_;
+  AppListView* app_list_view_;  // Owned by native widget.
+  SearchResultListView* view_;  // Owned by views hierarchy.
+  std::unique_ptr<AppListTestViewDelegate> delegate_;
+  bool test_with_fullscreen_ = true;
+  base::test::ScopedFeatureList scoped_feature_list_;
 
   DISALLOW_COPY_AND_ASSIGN(SearchResultListViewTest);
 };
 
-TEST_F(SearchResultListViewTest, Basic) {
+// Instantiate the Boolean which is used to toggle the Fullscreen app list in
+// the parameterized tests.
+INSTANTIATE_TEST_CASE_P(, SearchResultListViewTest, testing::Bool());
+
+TEST_P(SearchResultListViewTest, Basic) {
   SetUpSearchResults();
 
   const int results = GetResultCount();
@@ -170,7 +203,7 @@ TEST_F(SearchResultListViewTest, Basic) {
   EXPECT_EQ(results - 1, GetSelectedIndex());
 }
 
-TEST_F(SearchResultListViewTest, AutoLaunch) {
+TEST_P(SearchResultListViewTest, AutoLaunch) {
   SetLongAutoLaunchTimeout();
   SetUpSearchResults();
 
@@ -185,7 +218,7 @@ TEST_F(SearchResultListViewTest, AutoLaunch) {
   EXPECT_EQ(base::TimeDelta(), GetAutoLaunchTimeout());
 }
 
-TEST_F(SearchResultListViewTest, CancelAutoLaunch) {
+TEST_P(SearchResultListViewTest, CancelAutoLaunch) {
   SetLongAutoLaunchTimeout();
   SetUpSearchResults();
 
@@ -206,7 +239,7 @@ TEST_F(SearchResultListViewTest, CancelAutoLaunch) {
   EXPECT_TRUE(IsAutoLaunching());
 }
 
-TEST_F(SearchResultListViewTest, SpokenFeedback) {
+TEST_P(SearchResultListViewTest, SpokenFeedback) {
   SetUpSearchResults();
 
   // Result 0 has a detail text. Expect that the detail is appended to the
@@ -219,8 +252,12 @@ TEST_F(SearchResultListViewTest, SpokenFeedback) {
             GetResultViewAt(2)->ComputeAccessibleName());
 }
 
-TEST_F(SearchResultListViewTest, ModelObservers) {
+TEST_P(SearchResultListViewTest, ModelObservers) {
   SetUpSearchResults();
+  ExpectConsistent();
+
+  // Remove from end.
+  DeleteResultAt(kDefaultSearchItems - 1);
   ExpectConsistent();
 
   // Insert at start.
@@ -228,7 +265,7 @@ TEST_F(SearchResultListViewTest, ModelObservers) {
   ExpectConsistent();
 
   // Remove from end.
-  DeleteResultAt(kDefaultSearchItems);
+  DeleteResultAt(kDefaultSearchItems - 1);
   ExpectConsistent();
 
   // Insert at end.
@@ -242,7 +279,7 @@ TEST_F(SearchResultListViewTest, ModelObservers) {
 
 // Regression test for http://crbug.com/402859 to ensure ProgressBar is
 // initialized properly in SearchResultListView::SetResult().
-TEST_F(SearchResultListViewTest, ProgressBar) {
+TEST_P(SearchResultListViewTest, ProgressBar) {
   SetUpSearchResults();
 
   GetResults()->GetItemAt(0)->SetIsInstalling(true);
