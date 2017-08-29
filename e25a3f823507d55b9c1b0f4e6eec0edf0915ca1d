@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f280e999_2aed930f",
+        "filename": "components/sync/BUILD.gn",
+        "patchSetId": 13
+      },
+      "lineNbr": 611,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2017-08-29T21:35:51Z",
+      "side": 1,
+      "message": "leveldb has this dependency (like it does for snappy) so there is no need to explicitly add it here. You should be able to unmodify this file.",
+      "range": {
+        "startLine": 611,
+        "startChar": 7,
+        "endLine": 611,
+        "endChar": 18
+      },
+      "revId": "e25a3f823507d55b9c1b0f4e6eec0edf0915ca1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed5fc0e3_30353da3",
+        "filename": "components/sync/engine_impl/attachments/DEPS",
+        "patchSetId": 13
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2017-08-29T21:35:51Z",
+      "side": 1,
+      "message": "I think you can remove leveldatabase.",
+      "range": {
+        "startLine": 4,
+        "startChar": 16,
+        "endLine": 4,
+        "endChar": 29
+      },
+      "revId": "e25a3f823507d55b9c1b0f4e6eec0edf0915ca1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e758899c_27508fcd",
+        "filename": "third_party/crc32c/BUILD.gn",
+        "patchSetId": 13
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2017-08-29T21:35:51Z",
+      "side": 1,
+      "message": "No \"(c)\"",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 14
+      },
+      "revId": "e25a3f823507d55b9c1b0f4e6eec0edf0915ca1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49bb7197_c7dc782c",
+        "filename": "third_party/crc32c/README.chromium",
+        "patchSetId": 13
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2017-08-29T21:35:51Z",
+      "side": 1,
+      "message": "Error 404",
+      "range": {
+        "startLine": 3,
+        "startChar": 5,
+        "endLine": 3,
+        "endChar": 36
+      },
+      "revId": "e25a3f823507d55b9c1b0f4e6eec0edf0915ca1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24cb0768_5361468a",
+        "filename": "third_party/crc32c/README.chromium",
+        "patchSetId": 13
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2017-08-29T21:35:51Z",
+      "side": 1,
+      "message": "The GitHub project has not yet been tagged with a version. Want to give it one?",
+      "range": {
+        "startLine": 4,
+        "startChar": 9,
+        "endLine": 4,
+        "endChar": 14
+      },
+      "revId": "e25a3f823507d55b9c1b0f4e6eec0edf0915ca1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
