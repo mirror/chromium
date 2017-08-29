@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "68b5191c_518ab275",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/metrics/PageLoadMetrics.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1154589
+      },
+      "writtenOn": "2017-08-29T08:24:14Z",
+      "side": 1,
+      "message": "Yes, currently. I didn\u0027t see any such guarantee in the API, though.",
+      "parentUuid": "102c2e6b_922d988a",
+      "range": {
+        "startLine": 76,
+        "startChar": 11,
+        "endLine": 76,
+        "endChar": 20
+      },
+      "revId": "1bcfd6f160818625c281b0935097434f477dfadd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "89139529_2f62ea9c",
         "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/customtabs/CustomTabActivityTest.java",
         "patchSetId": 5
@@ -39,6 +63,24 @@
       "revId": "1bcfd6f160818625c281b0935097434f477dfadd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a808ce6f_fd92b58d",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/customtabs/CustomTabActivityTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 1222,
+      "author": {
+        "id": 1154589
+      },
+      "writtenOn": "2017-08-29T08:24:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "89139529_2f62ea9c",
+      "revId": "1bcfd6f160818625c281b0935097434f477dfadd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

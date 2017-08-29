@@ -326,6 +326,24 @@
     },
     {
       "key": {
+        "uuid": "bdd9eadb_68cf51ec",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/metrics/PageLoadMetrics.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1154589
+      },
+      "writtenOn": "2017-08-29T08:24:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "efc4acc0_16c74578",
+      "revId": "476b04b95bee515c7c172839245835f10e603523",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "70e3bc22_c90fda96",
         "filename": "chrome/browser/page_load_metrics/observers/android_page_load_metrics_observer.cc",
         "patchSetId": 1
