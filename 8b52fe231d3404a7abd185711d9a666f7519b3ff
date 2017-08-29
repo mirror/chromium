@@ -16,6 +16,24 @@
       "revId": "8b52fe231d3404a7abd185711d9a666f7519b3ff",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41f9cdea_8925547f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1189880
+      },
+      "writtenOn": "2017-08-29T20:10:35Z",
+      "side": 1,
+      "message": "Please see https://chromium-review.googlesource.com/c/chromium/src/+/626859",
+      "parentUuid": "f6e6ff8a_c8456182",
+      "revId": "8b52fe231d3404a7abd185711d9a666f7519b3ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
