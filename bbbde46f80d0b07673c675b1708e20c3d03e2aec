@@ -91,6 +91,24 @@
     },
     {
       "key": {
+        "uuid": "3cd094f0_77c356cb",
+        "filename": "chrome/gpu/chrome_arc_video_decode_accelerator.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 1002450
+      },
+      "writtenOn": "2017-08-29T08:29:53Z",
+      "side": 1,
+      "message": "True. At this moment, the format of imported buffer is actually set in both VDA and minigbm and they must match to each other.\n\nIf we can let minigbm to decide the format and VDA to accept it, there is no issue for VerifyFormat.\n\nBut that also means we need:\n\n1. Resolve format from cros_minigbm.\n2. Extended the mojo interface to pass the format\n3. Change all VDA implementations to take the format.\n\nBut Hiro is doing a major change in (2), so I would prefer to do this after his work.",
+      "parentUuid": "4f2d7f30_8cf9f106",
+      "revId": "bbbde46f80d0b07673c675b1708e20c3d03e2aec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "79dd0d34_a042b1d4",
         "filename": "media/gpu/vaapi_video_decode_accelerator.cc",
         "patchSetId": 3
