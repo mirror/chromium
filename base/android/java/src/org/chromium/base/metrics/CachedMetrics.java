@@ -16,6 +16,8 @@ import java.util.concurrent.TimeUnit;
  * to be loaded, then committed to the MetricsService all at once.
  */
 public class CachedMetrics {
+    private static Object sLock = new Object();
+
     /**
      * Creating an instance of a subclass of this class automatically adds it to a list of objects
      * that are committed when the native library is available.
@@ -24,13 +26,23 @@ public class CachedMetrics {
         private static final List<CachedHistogram> sEvents = new ArrayList<CachedHistogram>();
 
         protected final String mHistogramName;
+        protected boolean mCached;
 
         /**
          * @param histogramName Name of the histogram to record.
          */
         protected CachedHistogram(String histogramName) {
             mHistogramName = histogramName;
+        }
+
+        /**
+         * Adds the histogram to the sEvents cache, if it hasn't been added already.
+         * Must be called while holding the synchronized(sEvents) lock.
+         */
+        protected final void addToCache() {
+            if (mCached) return;
             sEvents.add(this);
+            mCached = true;
         }
 
         /** Commits the histogram. Expects the native library to be loaded. */
@@ -51,7 +63,10 @@ public class CachedMetrics {
             if (LibraryLoader.isInitialized()) {
                 recordWithNative();
             } else {
-                mCount++;
+                synchronized (CachedHistogram.sEvents) {
+                    mCount++;
+                    addToCache();
+                }
             }
         }
 
@@ -80,7 +95,10 @@ public class CachedMetrics {
             if (LibraryLoader.isInitialized()) {
                 recordWithNative(sample);
             } else {
-                mSamples.add(sample);
+                synchronized (CachedHistogram.sEvents) {
+                    mSamples.add(sample);
+                    addToCache();
+                }
             }
         }
 
@@ -111,7 +129,10 @@ public class CachedMetrics {
             if (LibraryLoader.isInitialized()) {
                 recordWithNative(sample);
             } else {
-                mSamples.add(sample);
+                synchronized (CachedHistogram.sEvents) {
+                    mSamples.add(sample);
+                    addToCache();
+                }
             }
         }
 
@@ -142,7 +163,10 @@ public class CachedMetrics {
             if (LibraryLoader.isInitialized()) {
                 recordWithNative(sample);
             } else {
-                mSamples.add(sample);
+                synchronized (CachedHistogram.sEvents) {
+                    mSamples.add(sample);
+                    addToCache();
+                }
             }
         }
 
@@ -171,7 +195,10 @@ public class CachedMetrics {
             if (LibraryLoader.isInitialized()) {
                 recordWithNative(sample);
             } else {
-                mSamples.add(sample);
+                synchronized (CachedHistogram.sEvents) {
+                    mSamples.add(sample);
+                    addToCache();
+                }
             }
         }
 
@@ -193,6 +220,8 @@ public class CachedMetrics {
      * Should be called once the native library has been loaded.
      */
     public static void commitCachedMetrics() {
-        for (CachedHistogram event : CachedHistogram.sEvents) event.commitAndClear();
+        synchronized (CachedHistogram.sEvents) {
+            for (CachedHistogram event : CachedHistogram.sEvents) event.commitAndClear();
+        }
     }
 }
