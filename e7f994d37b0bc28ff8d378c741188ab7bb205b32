@@ -1,0 +1,146 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1788053f_08407fe5",
+        "filename": "chrome/browser/ui/views/omnibox/omnibox_result_view.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 523,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2017-08-29T17:27:01Z",
+      "side": 1,
+      "message": "Can this be changed to use the custom icon approach you\u0027re introducing? I\u0027m not sure if the code path exists but it\u0027d be cool to get rid of this dependency where the result view calls back to get extension icons.",
+      "revId": "e7f994d37b0bc28ff8d378c741188ab7bb205b32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "971ceaf1_b9331b9e",
+        "filename": "chrome/browser/ui/views/omnibox/omnibox_result_view.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 530,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2017-08-29T17:27:01Z",
+      "side": 1,
+      "message": "Maybe this, too? Then your thing wouldn\u0027t be a custom icon, it\u0027d just be the icon and the result view would have two fewer couplings to the popup view (GetIconIfExtensionMatch and IsStarredMatch). Maybe this could be done when the popup view calls SetMatch?",
+      "revId": "e7f994d37b0bc28ff8d378c741188ab7bb205b32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2abd6cf4_7c0a90f2",
+        "filename": "components/omnibox/browser/omnibox_client.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2017-08-29T17:27:01Z",
+      "side": 1,
+      "message": "Call this on_favicon_fetched for consistency with OnResultChanged.",
+      "range": {
+        "startLine": 125,
+        "startChar": 39,
+        "endLine": 125,
+        "endChar": 47
+      },
+      "revId": "e7f994d37b0bc28ff8d378c741188ab7bb205b32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e4e7919_5972b50f",
+        "filename": "components/omnibox/browser/omnibox_client.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2017-08-29T17:27:01Z",
+      "side": 1,
+      "message": "Typedef to FaviconFetchedCallback, again for consistency.",
+      "revId": "e7f994d37b0bc28ff8d378c741188ab7bb205b32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4dc41701_48bf5e07",
+        "filename": "components/omnibox/browser/omnibox_popup_model.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2017-08-29T17:27:01Z",
+      "side": 1,
+      "message": "\u0027!\u003d\u0027 instead of \u0027\u003e\u0027 ?",
+      "revId": "e7f994d37b0bc28ff8d378c741188ab7bb205b32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a193a20_f5eda576",
+        "filename": "components/omnibox/browser/omnibox_popup_model.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 274,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2017-08-29T17:27:01Z",
+      "side": 1,
+      "message": "If possible, I\u0027d prefer that when the matches are being updated in the autocomplete code, we kick off favicon fetches then, as necessary. The old and new matches are known and thus there\u0027d be no need for this semi-duplicate knowledge of what URL\u0027s favicon we\u0027re currently showing.\n\nBut looking briefly at the autocomplete code, this might be complicated. And the approach in this CL is nicely self-contained in this flag-controlled section, so just something to keep in mind down the road.\n\nCan you put a comment here, though? Something like:\nTODO: investigate whether the fetching can be done in the autocomplete controller, which already has knowledge of whether and when the matches are changing.",
+      "revId": "e7f994d37b0bc28ff8d378c741188ab7bb205b32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c71ea0cc_407ebdda",
+        "filename": "components/omnibox/browser/omnibox_popup_model.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 277,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2017-08-29T17:27:01Z",
+      "side": 1,
+      "message": "Not for this CL, but we should think about whether we should be using the version of this method that specifies adesired size.",
+      "revId": "e7f994d37b0bc28ff8d378c741188ab7bb205b32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7ba7ed0_5bf7e217",
+        "filename": "components/omnibox/browser/omnibox_popup_model.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 311,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2017-08-29T17:27:01Z",
+      "side": 1,
+      "message": "Can you also DCHECK_NE(displayed_page_favicons_[match_index], page_url)?",
+      "revId": "e7f994d37b0bc28ff8d378c741188ab7bb205b32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
