@@ -174,6 +174,24 @@
       "revId": "88b8c1debe39d1a161128c2956d712de342d08ab",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4df05cc6_8d341eca",
+        "filename": "third_party/WebKit/Source/platform/image-decoders/jpeg/JPEGImageDecoder.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 459,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-08-29T20:37:34Z",
+      "side": 1,
+      "message": "Yeah I was just thinking of a helper method or renaming this method. \"decode\" sounds\nto me like it actually writes out the decoded pixels, rather than this preamble stuff.\nAlso it seems that some call sites only want the preamble steps.",
+      "parentUuid": "35e11a5e_fc414b2b",
+      "revId": "88b8c1debe39d1a161128c2956d712de342d08ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
