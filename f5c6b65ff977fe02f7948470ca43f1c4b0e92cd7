@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "954ff21f_2baa49d2",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2017-08-29T17:46:09Z",
+      "side": 1,
+      "message": "nit: 80 cols",
+      "revId": "f5c6b65ff977fe02f7948470ca43f1c4b0e92cd7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7834e5b1_78430405",
+        "filename": "ash/public/interfaces/ime_controller.mojom",
+        "patchSetId": 8
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2017-08-29T17:46:09Z",
+      "side": 1,
+      "message": "nit: stray whitespace",
+      "range": {
+        "startLine": 30,
+        "startChar": 78,
+        "endLine": 30,
+        "endChar": 79
+      },
+      "revId": "f5c6b65ff977fe02f7948470ca43f1c4b0e92cd7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8b0912a_72a88f20",
+        "filename": "ash/public/interfaces/ime_controller.mojom",
+        "patchSetId": 8
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2017-08-29T17:46:09Z",
+      "side": 1,
+      "message": "nit: ,",
+      "range": {
+        "startLine": 57,
+        "startChar": 69,
+        "endLine": 57,
+        "endChar": 70
+      },
+      "revId": "f5c6b65ff977fe02f7948470ca43f1c4b0e92cd7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
