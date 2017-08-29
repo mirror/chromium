@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d01dfcbb_448209a1",
+        "filename": "extensions/common/extension_unpacker.mojom",
+        "patchSetId": 8
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-29T19:29:48Z",
+      "side": 1,
+      "message": "It will be, but at some point there\u0027s not much we can do about it.  Since this only happens on installation, it\u0027s not terrible, but it will be something to consider (and another reason we may want to limit the number of possible rules)",
+      "revId": "d205a6e36fbafddd102af514566621b3b6fea670",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
