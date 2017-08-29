@@ -52,7 +52,7 @@ void TreeScopeStyleSheetCollection::AddStyleSheetCandidateNode(Node& node) {
 
 bool TreeScopeStyleSheetCollection::MediaQueryAffectingValueChanged() {
   bool needs_active_style_update = false;
-  for (const auto& active_sheet : active_author_style_sheets_) {
+  for (const auto& active_sheet : active_style_sheets_) {
     if (active_sheet.first->MediaQueries())
       needs_active_style_update = true;
     StyleSheetContents* contents = active_sheet.first->Contents();
@@ -65,8 +65,8 @@ bool TreeScopeStyleSheetCollection::MediaQueryAffectingValueChanged() {
 void TreeScopeStyleSheetCollection::ApplyActiveStyleSheetChanges(
     StyleSheetCollection& new_collection) {
   GetDocument().GetStyleEngine().ApplyRuleSetChanges(
-      GetTreeScope(), ActiveAuthorStyleSheets(),
-      new_collection.ActiveAuthorStyleSheets());
+      GetTreeScope(), ActiveStyleSheets(),
+      new_collection.ActiveStyleSheets());
   new_collection.Swap(*this);
 }
 

@@ -59,6 +59,8 @@ class ScopedStyleResolver final
       const StringImpl* animation_name);
 
   void AppendActiveStyleSheets(unsigned index, const ActiveStyleSheetVector&);
+  void CollectMatchingUserRules(ElementRuleCollector&,
+                                CascadeOrder = kIgnoreCascadeOrder);
   void CollectMatchingAuthorRules(ElementRuleCollector&,
                                   CascadeOrder = kIgnoreCascadeOrder);
   void CollectMatchingShadowHostRules(ElementRuleCollector&,
@@ -72,7 +74,7 @@ class ScopedStyleResolver final
   void CollectFeaturesTo(RuleFeatureSet&,
                          HeapHashSet<Member<const StyleSheetContents>>&
                              visited_shared_style_sheet_contents) const;
-  void ResetAuthorStyle();
+  void ResetStyle();
   bool HasDeepOrShadowSelector() const { return has_deep_or_shadow_selector_; }
   void SetHasUnresolvedKeyframesRule() {
     has_unresolved_keyframes_rule_ = true;
@@ -99,6 +101,7 @@ class ScopedStyleResolver final
 
   Member<TreeScope> scope_;
 
+  HeapVector<Member<CSSStyleSheet>> user_style_sheets_;
   HeapVector<Member<CSSStyleSheet>> author_style_sheets_;
   MediaQueryResultList viewport_dependent_media_query_results_;
   MediaQueryResultList device_dependent_media_query_results_;
