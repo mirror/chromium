@@ -167,7 +167,12 @@ Polymer({
     }
     var queryParams = settings.getQueryParameters();
     this.guid = queryParams.get('guid') || '';
-    if (!this.guid) {
+    var type = /** @type {!chrome.networkingPrivate.NetworkType} */ (
+                   queryParams.get('type')) ||
+        CrOnc.Type.WI_FI;
+    var name = queryParams.get('name') || type;
+
+    if (!this.guid && type != CrOnc.Type.CELLULAR) {
       console.error('No guid specified for page:' + route);
       this.close_();
     }
@@ -177,10 +182,6 @@ Polymer({
     this.shouldShowConfigureWhenNetworkLoaded_ =
         queryParams.get('showConfigure') == 'true';
 
-    var type = /** @type {!chrome.networkingPrivate.NetworkType} */ (
-                   queryParams.get('type')) ||
-        CrOnc.Type.WI_FI;
-    var name = queryParams.get('name') || type;
     this.networkProperties = {
       GUID: this.guid,
       Type: type,
@@ -193,6 +194,7 @@ Polymer({
 
   /** @private */
   close_: function() {
+    this.networkProperties = undefined;
     // Delay navigating to allow other subpages to load first.
     requestAnimationFrame(function() {
       settings.navigateToPreviousRoute();
@@ -278,25 +280,33 @@ Polymer({
    * @private
    */
   getNetworkDetails_: function() {
-    assert(!!this.guid);
-    if (this.isSecondaryUser_) {
+    if (this.networkProperties.Type == CrOnc.Type.CELLULAR && !this.guid) {
+      this.networkingPrivate.getDeviceStates(
+          this.getDeviceStatesCallback_.bind(this));
+      return;
+    } else if (this.isSecondaryUser_) {
+      assert(!!this.guid);
       this.networkingPrivate.getState(
           this.guid, this.getStateCallback_.bind(this));
     } else {
+      assert(!!this.guid);
       this.networkingPrivate.getManagedProperties(
           this.guid, this.getPropertiesCallback_.bind(this));
     }
   },
 
   /**
-   * networkingPrivate.getProperties callback.
-   * @param {!CrOnc.NetworkProperties} properties The network properties.
+   * @param {boolean} hasProperties
+   * @return {boolean}
    * @private
    */
-  getPropertiesCallback_: function(properties) {
+  handleGetCallbackErrors_(hasProperties) {
     if (chrome.runtime.lastError) {
       var message = chrome.runtime.lastError.message;
       if (message == 'Error.InvalidNetworkGuid') {
+        // Cellular guid may become invalid while the SIM is locked.
+        if (this.networkProperties.Type == CrOnc.Type.CELLULAR)
+          return true;
         console.error('Details page: GUID no longer exists: ' + this.guid);
       } else {
         console.error(
@@ -304,29 +314,54 @@ Polymer({
             message + ' For: ' + this.guid);
       }
       this.close_();
-      return;
+      return true;
     }
-    if (!properties) {
+    if (!hasProperties) {
       console.error('No properties for: ' + this.guid);
       this.close_();
-      return;
+      return true;
     }
+    return false;
+  },
+
+  /**
+   * networkingPrivate.getDeviceStates callback. Used to get the device state
+   * for Cellular when no network state is available.
+   * @param {!Array<CrOnc.DeviceStateProperties>} deviceStates
+   * @private
+   */
+  getDeviceStatesCallback_: function(deviceStates) {
+    var cellularDevice = deviceStates.find(function(state) {
+      return state.Type == CrOnc.Type.CELLULAR;
+    });
+    if (!cellularDevice)
+      return;
+    this.set('networkProperties.Cellular', {
+      SIMPresent: cellularDevice.SIMPresent,
+      SIMLockStatus: cellularDevice.SIMLockStatus,
+    });
+  },
+
+  /**
+   * networkingPrivate.getProperties callback.
+   * @param {!CrOnc.NetworkProperties} properties
+   * @private
+   */
+  getPropertiesCallback_: function(properties) {
+    if (this.handleGetCallbackErrors_(!!properties))
+      return;
     this.networkProperties = properties;
     this.networkPropertiesReceived_ = true;
   },
 
   /**
    * networkingPrivate.getState callback.
-   * @param {CrOnc.NetworkStateProperties} state The network state properties.
+   * @param {CrOnc.NetworkStateProperties} state
    * @private
    */
   getStateCallback_: function(state) {
-    if (!state) {
-      // If |state| is null, the network is no longer visible, close this.
-      console.error('Network no longer exists: ' + this.guid);
-      this.networkProperties = undefined;
-      this.close_();
-    }
+    if (this.handleGetCallbackErrors_(!!state))
+      return;
     this.networkProperties = {
       GUID: state.GUID,
       Type: state.Type,
@@ -540,7 +575,7 @@ Polymer({
   enableConnect_: function(networkProperties, defaultNetwork, globalPolicy) {
     if (!this.showConnect_(networkProperties, globalPolicy))
       return false;
-    if (networkProperties.Type == CrOnc.Type.CELLULAR &&
+    if (networkProperties.Type == CrOnc.Type.CELLULAR && !this.guid ||
         CrOnc.isSimLocked(networkProperties)) {
       return false;
     }
@@ -996,7 +1031,7 @@ Polymer({
     }
     if (networkProperties.Type == CrOnc.Type.VPN)
       return false;
-    if (networkProperties.Type == CrOnc.Type.CELLULAR)
+    if (networkProperties.Type == CrOnc.Type.CELLULAR && !!this.GUID)
       return true;
     return this.isRememberedOrConnected_(networkProperties);
   },
@@ -1013,13 +1048,14 @@ Polymer({
 
   /**
    * @param {!CrOnc.NetworkProperties} networkProperties
+   * @param {!chrome.networkingPrivate.ManagedCellularProperties|undefined}
+   *     cellular
    * @return {boolean}
    * @private
    */
-  showCellularSim_: function(networkProperties) {
+  showCellularSim_: function(networkProperties, cellular) {
     return networkProperties.Type == CrOnc.Type.CELLULAR &&
-        this.get('Cellular.Family', this.networkProperties) ==
-        CrOnc.NetworkTechnology.GSM;
+       !!cellular && cellular.SIMPresent !== undefined;
   },
 
   /**

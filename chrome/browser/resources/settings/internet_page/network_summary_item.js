@@ -228,8 +228,9 @@ Polymer({
    */
   showDetailsIsVisible_: function(
       activeNetworkState, deviceState, networkStateList) {
-    return this.deviceIsEnabled_(deviceState) &&
-        (!!activeNetworkState.GUID || networkStateList.length > 0);
+    return this.deviceState.Type == CrOnc.Type.CELLULAR ||
+        (this.deviceIsEnabled_(deviceState) &&
+         (!!activeNetworkState.GUID || networkStateList.length > 0));
   },
 
   /**
@@ -257,7 +258,8 @@ Polymer({
    * @private
    */
   onShowDetailsTap_: function(event) {
-    if (!this.deviceIsEnabled_(this.deviceState)) {
+    if (this.deviceState.Type != CrOnc.Type.CELLULAR &&
+        !this.deviceIsEnabled_(this.deviceState)) {
       if (this.enableToggleIsEnabled_(this.deviceState)) {
         this.fire(
             'device-enabled-toggled',

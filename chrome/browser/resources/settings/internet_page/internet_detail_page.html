@@ -183,7 +183,8 @@
       </settings-toggle-button>
       </template>
       <!-- SIM Info (Cellular only). -->
-      <template is="dom-if" if="[[showCellularSim_(networkProperties)]]">
+      <template is="dom-if" if="[[showCellularSim_(networkProperties,
+          networkProperties.Cellular)]]">
         <div class="settings-box single-column stretch">
           <network-siminfo
               editable on-siminfo-change="onNetworkPropertyChange_"
