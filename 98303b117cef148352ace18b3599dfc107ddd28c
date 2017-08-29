@@ -124,6 +124,24 @@
       "revId": "98303b117cef148352ace18b3599dfc107ddd28c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1318daf_89b0d612",
+        "filename": "chrome/browser/page_load_metrics/observers/android_page_load_metrics_observer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1154589
+      },
+      "writtenOn": "2017-08-29T08:25:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0006dee9_7ca2b900",
+      "revId": "98303b117cef148352ace18b3599dfc107ddd28c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
