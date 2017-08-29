@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "78482d08_1f306136",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1115925
+      },
+      "writtenOn": "2017-08-29T14:01:05Z",
+      "side": 1,
+      "message": "Thanks, done!",
+      "parentUuid": "06f630e3_4095cd25",
+      "range": {
+        "startLine": 7,
+        "startChar": 19,
+        "endLine": 7,
+        "endChar": 16
+      },
+      "revId": "edeb0bfcc9d95a0510041c6dccb31af2f5c917c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "06ffcd98_c1203ab0",
         "filename": "/COMMIT_MSG",
         "patchSetId": 4
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "5ce03a71_1882c30e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1115925
+      },
+      "writtenOn": "2017-08-29T14:01:05Z",
+      "side": 1,
+      "message": "I think I was wrong about more copies but I think there are more allocations.\n\nI think currently when someone calls AddScalar with kNameSize (or another string) we copy kNameSize directly into the TracedValue from where it gets later written directly to the trace after this CL everytime someone calls AddScalar we have to copy the name char* to a std::string every time (since we have no guarantee the char* living for longer than the function call)*.\n\nI agree that sounds like a good optimization. Lets land the initial code then we can speed it up.\n\n*Primiano mentioned that tracing expects const char* strings to stay around indefinitely so the this logic doesn\u0027t hold but I think for mojo we need std::string in anycase as I wrote on another bug.",
+      "parentUuid": "06ffcd98_c1203ab0",
+      "range": {
+        "startLine": 13,
+        "startChar": 2,
+        "endLine": 13,
+        "endChar": 41
+      },
+      "revId": "edeb0bfcc9d95a0510041c6dccb31af2f5c917c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "505d9d5d_0a570196",
         "filename": "base/trace_event/memory_allocator_dump.cc",
         "patchSetId": 4
@@ -59,6 +107,30 @@
       "writtenOn": "2017-08-28T23:09:46Z",
       "side": 1,
       "message": "You\u0027d need strcmp here. But I am expecting this to be used only in tests?",
+      "range": {
+        "startLine": 152,
+        "startChar": 13,
+        "endLine": 152,
+        "endChar": 15
+      },
+      "revId": "edeb0bfcc9d95a0510041c6dccb31af2f5c917c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b36c7fe_69c27767",
+        "filename": "base/trace_event/memory_allocator_dump.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1115925
+      },
+      "writtenOn": "2017-08-29T14:01:05Z",
+      "side": 1,
+      "message": "Yep probably only tests, I think std::string implements \u003d\u003d to do string comparison so we\u0027ll only need strcmp if we change to using char* right?",
+      "parentUuid": "505d9d5d_0a570196",
       "range": {
         "startLine": 152,
         "startChar": 13,
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "5aa9ddf4_66f1a923",
+        "filename": "base/trace_event/memory_allocator_dump.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1115925
+      },
+      "writtenOn": "2017-08-29T14:01:05Z",
+      "side": 1,
+      "message": "I think all the fields are public by default so we shouldn\u0027t need them in this case (the mojo code we will write will look like:\n\nReadEntry(mojo:EntryDataView\u0026 input, Entry* output) {\n  output-\u003ename \u003d input.name();\n  output-\u003eunit \u003d input.unit();\n  ...\n}",
+      "parentUuid": "4f6697dc_0617a327",
+      "range": {
+        "startLine": 37,
+        "startChar": 9,
+        "endLine": 37,
+        "endChar": 14
+      },
+      "revId": "edeb0bfcc9d95a0510041c6dccb31af2f5c917c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1b37bc39_e139954d",
         "filename": "base/trace_event/memory_allocator_dump.h",
         "patchSetId": 4
@@ -114,6 +210,30 @@
       "revId": "edeb0bfcc9d95a0510041c6dccb31af2f5c917c8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3f14734_23994b78",
+        "filename": "base/trace_event/memory_allocator_dump.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1115925
+      },
+      "writtenOn": "2017-08-29T14:01:05Z",
+      "side": 1,
+      "message": "sgtm, doing in another CL!",
+      "parentUuid": "1b37bc39_e139954d",
+      "range": {
+        "startLine": 40,
+        "startChar": 6,
+        "endLine": 40,
+        "endChar": 12
+      },
+      "revId": "edeb0bfcc9d95a0510041c6dccb31af2f5c917c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "356c092b_f6e015ec",
+        "filename": "base/trace_event/memory_allocator_dump.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1115925
+      },
+      "writtenOn": "2017-08-29T14:01:05Z",
+      "side": 1,
+      "message": "I have got rid of this, thanks!",
+      "parentUuid": "589e742b_5aadf26b",
+      "range": {
+        "startLine": 48,
+        "startChar": 4,
+        "endLine": 48,
+        "endChar": 9
+      },
+      "revId": "edeb0bfcc9d95a0510041c6dccb31af2f5c917c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3909a5ba_7250c144",
         "filename": "base/trace_event/memory_allocator_dump.h",
         "patchSetId": 4
@@ -151,6 +295,30 @@
       "writtenOn": "2017-08-28T23:09:46Z",
       "side": 1,
       "message": "const char*",
+      "range": {
+        "startLine": 51,
+        "startChar": 4,
+        "endLine": 51,
+        "endChar": 15
+      },
+      "revId": "edeb0bfcc9d95a0510041c6dccb31af2f5c917c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dcb93333_18e89017",
+        "filename": "base/trace_event/memory_allocator_dump.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1115925
+      },
+      "writtenOn": "2017-08-29T14:01:05Z",
+      "side": 1,
+      "message": "We can\u0027t make it const because of mojo and we can\u0027t send the pointer because of ASLR (and I don\u0027t think mojo will let us anyway) we we\u0027ll always have to convert to std::string at some point I think",
+      "parentUuid": "3909a5ba_7250c144",
       "range": {
         "startLine": 51,
         "startChar": 4,
@@ -183,6 +351,30 @@
       "revId": "edeb0bfcc9d95a0510041c6dccb31af2f5c917c8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b68eeb5_eaa65867",
+        "filename": "base/trace_event/memory_allocator_dump.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1115925
+      },
+      "writtenOn": "2017-08-29T14:01:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ad9c7171_8149f615",
+      "range": {
+        "startLine": 121,
+        "startChar": 21,
+        "endLine": 121,
+        "endChar": 28
+      },
+      "revId": "edeb0bfcc9d95a0510041c6dccb31af2f5c917c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
