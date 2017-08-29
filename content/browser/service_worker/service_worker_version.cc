@@ -1517,13 +1517,17 @@ void ServiceWorkerVersion::StartWorkerInternal() {
     installed_scripts_sender_->Start();
   }
 
+  auto event_dispatcher_request = mojo::MakeRequest(&event_dispatcher_);
+  // TODO(horo): This is for debugging crbug.com/759938.
+  CHECK(event_dispatcher_.is_bound());
+
   embedded_worker_->Start(
       std::move(params),
       // Unretained is used here because the callback will be owned by
       // |embedded_worker_| whose owner is |this|.
       base::BindOnce(&CompleteProviderHostPreparation, base::Unretained(this),
                      base::Passed(&pending_provider_host), context()),
-      mojo::MakeRequest(&event_dispatcher_), std::move(installed_scripts_info),
+      std::move(event_dispatcher_request), std::move(installed_scripts_info),
       base::Bind(&ServiceWorkerVersion::OnStartSentAndScriptEvaluated,
                  weak_factory_.GetWeakPtr()));
   event_dispatcher_.set_connection_error_handler(base::BindOnce(
