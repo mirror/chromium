@@ -1,0 +1,112 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "77125b41_706b193e",
+        "filename": "net/cert/nss_cert_database.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 1001604
+      },
+      "writtenOn": "2017-08-29T22:14:44Z",
+      "side": 1,
+      "message": "I guess this would never actually be called out of URLRequest, but I believe error codes in the certificate error range get treated as funny by a lot of consuming code, like https://crbug.com/91341. Not sure if there\u0027s a better one... we could rename ERR_SSL_SERVER_CERT_BAD_FORMAT to be more general or maybe add a new one? What do you think?\n\nDitto elsewhere.",
+      "range": {
+        "startLine": 250,
+        "startChar": 11,
+        "endLine": 250,
+        "endChar": 27
+      },
+      "revId": "f5ad41c0faff596de3de24513415a0efbc9db73a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb926f2d_667f23aa",
+        "filename": "net/cert/nss_cert_database.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 318,
+      "author": {
+        "id": 1001604
+      },
+      "writtenOn": "2017-08-29T22:14:44Z",
+      "side": 1,
+      "message": "base::Owned?",
+      "revId": "f5ad41c0faff596de3de24513415a0efbc9db73a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f9bf62d_bdb22239",
+        "filename": "net/cert/nss_cert_database_chromeos_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1001604
+      },
+      "writtenOn": "2017-08-29T22:14:44Z",
+      "side": 1,
+      "message": "Nit: auto would be shorter. Or even:\n\nfor (const auto\u0026 other : cert_list) {\n  if (x509_util::IsSameCertificate(other-\u003eget(), cert))\n    return true;\n}\n\nDitto below.",
+      "revId": "f5ad41c0faff596de3de24513415a0efbc9db73a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9b65fe2_bc59f71b",
+        "filename": "net/cert/nss_profile_filter_chromeos.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1001604
+      },
+      "writtenOn": "2017-08-29T22:14:44Z",
+      "side": 1,
+      "message": "Optional: If you feel bored, this and the functor below may as well be lambdas now.",
+      "revId": "f5ad41c0faff596de3de24513415a0efbc9db73a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9cab7a39_127098a9",
+        "filename": "net/cert/x509_util_nss.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 411,
+      "author": {
+        "id": 1001604
+      },
+      "writtenOn": "2017-08-29T22:14:44Z",
+      "side": 1,
+      "message": "DCHECK(cert-\u003ederCert.data);",
+      "revId": "f5ad41c0faff596de3de24513415a0efbc9db73a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3a8a848_7b3c7a01",
+        "filename": "net/cert/x509_util_nss.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1001604
+      },
+      "writtenOn": "2017-08-29T22:14:44Z",
+      "side": 1,
+      "message": "I feel like usually we just write .get() rather than write functions that take a const unique_ptr\u0026.",
+      "revId": "f5ad41c0faff596de3de24513415a0efbc9db73a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
