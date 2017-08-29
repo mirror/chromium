@@ -193,8 +193,9 @@ IN_PROC_BROWSER_TEST_F(CustomizationLocaleTest, CheckAvailableLocales) {
     {
       std::string resolved_locale;
       base::ThreadRestrictions::ScopedAllowIO allow_io;
-      l10n_util::CheckAndResolveLocale(languages_available[i],
-                                       &resolved_locale);
+      // TODO(jshin): Sort out locale variant support. crbug.com/99526
+      l10n_util::CheckAndResolveLocale(languages_available[i], &resolved_locale,
+                                       nullptr);
       EXPECT_EQ(GetExpectedLanguage(languages_available[i]), resolved_locale)
           << "CheckAndResolveLocale() failed for language='"
           << languages_available[i] << "'";
