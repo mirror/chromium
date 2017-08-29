@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "aec0b7d7_a59e5baf",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1123899
+      },
+      "writtenOn": "2017-08-29T19:01:12Z",
+      "side": 1,
+      "message": "b/",
+      "range": {
+        "startLine": 12,
+        "startChar": 4,
+        "endLine": 12,
+        "endChar": 12
+      },
+      "revId": "d501d5ca2b4ea6354ad49278a58ebafd8953cd9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9be14a35_9e8ba426",
+        "filename": "chrome/browser/resources/chromeos/login/oobe_voice_interaction_value_prop.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1123899
+      },
+      "writtenOn": "2017-08-29T19:01:12Z",
+      "side": 1,
+      "message": "How many times does it retry?  Is there any delay between retries?",
+      "range": {
+        "startLine": 204,
+        "startChar": 4,
+        "endLine": 204,
+        "endChar": 38
+      },
+      "revId": "d501d5ca2b4ea6354ad49278a58ebafd8953cd9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
