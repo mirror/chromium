@@ -3,7 +3,9 @@
 # found in the LICENSE file.
 """Methods for converting model objects to human-readable formats."""
 
+import cStringIO
 import collections
+import csv
 import datetime
 import itertools
 import time
@@ -45,6 +47,50 @@ def _FormatPss(pss):
 
 def _Divide(a, b):
   return float(a) / b if b else 0
+
+
+class Annotation:
+  # |field_specs| is a list of (title, index) tuples: |title| is used to render
+  # column title, and |field| is used to select item for each column.
+  def __init__(self, field_specs):
+    self.field_specs = field_specs
+
+  def Titles(self):
+    return [f[0] for f in self.field_specs]
+
+  def Select(self, fields):
+    return [fields[f[1]] for f in self.field_specs]
+
+
+class TextFilter:
+  def Apply(self, lines):
+    for line in lines:
+      if isinstance(line, tuple):
+        yield line[0].format(*line[1])
+      elif isinstance(line, str) or isinstance(line, unicode):
+        yield line
+      # Ignore Annotation.
+
+
+class CsvFilter:
+  def __init__(self):
+    self.stringio = cStringIO.StringIO()
+    self.writer = csv.writer(self.stringio)
+    self.annotation = None
+
+  def Render(self, array):
+    self.stringio.truncate(0)
+    self.writer.writerow(array)
+    return self.stringio.getvalue().rstrip()
+
+  def Apply(self, lines):
+    for line in lines:
+      if isinstance(line, Annotation):
+        self.annotation = line
+        yield self.Render(self.annotation.Titles())
+      elif isinstance(line, tuple):
+        yield self.Render(self.annotation.Select(line[1]))
+      # Ignore str and unicode.
 
 
 class Describer(object):
@@ -185,6 +231,8 @@ class Describer(object):
     indent_prefix = '> ' * indent
     diff_prefix = ''
     total = group.pss
+    # Annotation to extract from data line below.
+    yield Annotation([('Index', 2), ('PSS', 4), ('Running', 5), ('Symbol', 7)])
     for index, s in enumerate(group):
       if group.IsBss() or not s.IsBss():
         running_total += s.pss
@@ -196,9 +244,11 @@ class Describer(object):
         else:
           if is_delta:
             diff_prefix = models.DIFF_PREFIX_BY_STATUS[s.diff_status]
-          yield '{}{}{:<4} {:>8} {:7} {}'.format(
-              indent_prefix, diff_prefix, str(index) + ')',
-              _FormatPss(running_total), '({:.1%})'.format(running_percent), l)
+          # Data line.
+          yield ('{0}{1}{3:<4} {4:>8} {6:7} {7}', (
+              indent_prefix, diff_prefix, index, str(index) + ')',
+              _FormatPss(running_total),
+              running_percent, '({:.1%})'.format(running_percent), l))
 
       if self.recursive and s.IsGroup():
         for l in self._DescribeSymbolGroupChildren(s, indent=indent + 1):
@@ -431,9 +481,28 @@ def DescribeMetadata(metadata):
   return sorted('%s=%s' % t for t in display_dict.iteritems())
 
 
-def GenerateLines(obj, verbose=False, recursive=False):
+def _GetFilter(fmt, verbose, recursive):
+  if fmt == 'text':
+    return TextFilter();
+  elif fmt == 'csv':
+    if verbose:
+      raise Exception('fmt=\'csv\' requires verbose=False')
+    if recursive:
+      raise Exception('fmt=\'csv\' requires recursive=False')
+    return CsvFilter();
+  raise Exception('Unknown fmt \'{}\''.fmt(fmt))
+
+
+def GenerateLines(obj, verbose=False, fmt='text', recursive=False):
   """Returns an iterable of lines (without \n) that describes |obj|."""
-  return Describer(verbose=verbose, recursive=recursive).GenerateLines(obj)
+  # GenerateLines() yields 3 types of lines:
+  # - str or unicode: Printed by TextFilter, ignored by CsvFilter.
+  # - 2-tuple of (str format, tuple of data): Directly rendered by TextFilter,
+  #   rendered by CsvFilter.
+  # - Annotation: Ignored by TextFilter, used by CsvFilter to print title on
+  #   first encounter, and subsequently used to render 2-tuples.
+  return _GetFilter(fmt, verbose, recursive).Apply(
+      Describer(verbose=verbose, recursive=recursive).GenerateLines(obj))
 
 
 def WriteLines(lines, func):

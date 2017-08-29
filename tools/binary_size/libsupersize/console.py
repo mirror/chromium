@@ -103,7 +103,7 @@ class _Session(object):
     return ret
 
   def _PrintFunc(self, obj=None, verbose=False, recursive=False, use_pager=None,
-                 to_file=None):
+                 fmt='text', to_file=None):
     """Prints out the given Symbol / SymbolGroup / SizeInfo.
 
     For convenience, |obj| will be appended to the global "printed" list.
@@ -115,6 +115,7 @@ class _Session(object):
       recursive: Print children of nested SymbolGroups.
       use_pager: Pipe output through `less`. Ignored when |obj| is a Symbol.
           default is to automatically pipe when output is long.
+      fmt: Output format, can be 'text' (default) or 'csv'.
       to_file: Rather than print to stdio, write to the given file.
     """
     if isinstance(obj, int):
@@ -123,7 +124,8 @@ class _Session(object):
       if not isinstance(obj, models.SymbolGroup) or len(obj) > 0:
         self._printed_variables.append(obj)
     obj = obj if obj is not None else self._size_infos[-1]
-    lines = describe.GenerateLines(obj, verbose=verbose, recursive=recursive)
+    lines = describe.GenerateLines(obj, verbose=verbose, recursive=recursive,
+                                   fmt=fmt)
     _WriteToStream(lines, use_pager=use_pager, to_file=to_file)
 
   def _ElfPathAndToolPrefixForSymbol(self, size_info, elf_path):
