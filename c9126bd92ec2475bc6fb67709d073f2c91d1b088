@@ -142,6 +142,24 @@
     },
     {
       "key": {
+        "uuid": "d6134896_f23fe89b",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/fetch/api/cors/cors-preflight-cache.any.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-08-29T05:09:50Z",
+      "side": 1,
+      "message": "Ack\n\nThanks for the pointer.",
+      "parentUuid": "d25f9b08_1cc0930c",
+      "revId": "c9126bd92ec2475bc6fb67709d073f2c91d1b088",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "df66d792_59d2bdd9",
         "filename": "third_party/WebKit/public/platform/WebCORSPreflightResultCache.h",
         "patchSetId": 6
