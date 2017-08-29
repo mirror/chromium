@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "66d1b266_713e1744",
+        "filename": "chrome/browser/vr/elements/url_bar_texture.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 348,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-08-29T16:40:12Z",
+      "side": 1,
+      "message": "My first thought was to add a string measurement variant that lets us specify canvas flags, and add an LTR flag to the set.  Then we\u0027re measuring what we\u0027ll eventually render.\n\nA follow-on thought was to create a completely separate measurement method, which instead returns individual character bounds, and explicitly offers an LTR option.  This would make measuring several substrings of the URL much faster, but it deviates from advice you gave years ago, which was that string measurements should be done on complete strings rather than sums of substrings (due to kerning).  I think we could live with the kerning problem, if we\u0027re usually summing one or two ellipsis\u0027 and a string.  However, RTL probably also messes with this, as extracting a substring might cause the RTL representation to be different.  Thoughts on optimizing many length calls?",
+      "parentUuid": "4a6bf2ee_db20086e",
+      "revId": "ec6857bcb91613071db7dbf66906ae862dd348b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0d3f4953_0252200b",
         "filename": "chrome/browser/vr/elements/url_bar_texture.cc",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-28T23:03:51Z",
       "side": 1,
       "message": "Nit: Remove entirely (also for all commented/ifdefed code below)",
+      "revId": "ec6857bcb91613071db7dbf66906ae862dd348b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b51104b_a3e87506",
+        "filename": "chrome/browser/vr/elements/url_bar_texture.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 359,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-08-29T16:40:12Z",
+      "side": 1,
+      "message": "Sorry, the original mail indicated this was a WIP.  I left this in to show future use.",
+      "parentUuid": "0d3f4953_0252200b",
       "revId": "ec6857bcb91613071db7dbf66906ae862dd348b3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -172,6 +208,24 @@
     },
     {
       "key": {
+        "uuid": "59afde10_a3ffb94f",
+        "filename": "components/url_formatter/elide_url.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 452,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-08-29T16:40:12Z",
+      "side": 1,
+      "message": "This will look different in a follow on patch set, when I add the Parsed support.",
+      "parentUuid": "02cd4fec_3e85d345",
+      "revId": "ec6857bcb91613071db7dbf66906ae862dd348b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0236f516_ca000886",
         "filename": "components/url_formatter/elide_url.cc",
         "patchSetId": 2
@@ -183,6 +237,24 @@
       "writtenOn": "2017-08-28T23:03:51Z",
       "side": 1,
       "message": "Nit: \"shortest\" is a confusing name; maybe \"host_only\".",
+      "revId": "ec6857bcb91613071db7dbf66906ae862dd348b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2854d521_a032bd3f",
+        "filename": "components/url_formatter/elide_url.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 453,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-08-29T16:40:12Z",
+      "side": 1,
+      "message": "I moved away from specific names like \"host_only\" because in several spots, I do the same \"build the shortest possible string and test it\" check.",
+      "parentUuid": "0236f516_ca000886",
       "revId": "ec6857bcb91613071db7dbf66906ae862dd348b3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -463,6 +535,24 @@
       "side": 1,
       "message": "I like the idea of \"iterate to generate an ordered list of the elided strings, make sure it\u0027s a supserset (in the same order) compared to the passed in list\".",
       "parentUuid": "fd54e5d7_9a7feb4c",
+      "revId": "ec6857bcb91613071db7dbf66906ae862dd348b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c873ca0a_bb04283e",
+        "filename": "components/url_formatter/elide_url_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 553,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-08-29T16:40:12Z",
+      "side": 1,
+      "message": "Cool.  I am currently refactoring the latest PS to do this in all cases, but plan to post another intermediate CL to gain feedback on other parts of the change.",
+      "parentUuid": "d24b79ee_93a9426d",
       "revId": "ec6857bcb91613071db7dbf66906ae862dd348b3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
