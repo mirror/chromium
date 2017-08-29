@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fc311aeb_b0ac71ef",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-08-29T16:28:35Z",
+      "side": 1,
+      "message": "The check is done in the browser process before sending it over to the service for validation.",
+      "revId": "31d9ca478d618a72afbb0ed117d71ec02ce5a2c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb2e0cbe_741a405e",
+        "filename": "ui/ozone/platform/drm/host/drm_overlay_manager.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-08-29T16:28:35Z",
+      "side": 1,
+      "message": "We can eventually move this check even earlier in OverlayCandidate. It makes sense to leave it here for now to avoid changing everything.",
+      "revId": "31d9ca478d618a72afbb0ed117d71ec02ce5a2c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
