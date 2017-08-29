@@ -62,7 +62,9 @@ class SharedWorkerConnectListener final
       : worker_(worker) {}
 
   ~SharedWorkerConnectListener() override {
-    DCHECK(!worker_->IsBeingConnected());
+    // XXX this dcheck makes no sense. the document could have been navigated
+    // XXX before the worker connection is complete.
+    // XXX DCHECK(!worker_->IsBeingConnected());
   }
 
   // WebSharedWorkerConnectListener overrides.

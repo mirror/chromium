@@ -269,36 +269,6 @@ IPC_STRUCT_TRAITS_BEGIN(content::TextInputState)
   IPC_STRUCT_TRAITS_MEMBER(reply_to_request)
 IPC_STRUCT_TRAITS_END()
 
-IPC_STRUCT_BEGIN(ViewHostMsg_CreateWorker_Params)
-  // URL for the worker script.
-  IPC_STRUCT_MEMBER(GURL, url)
-
-  // Name for a SharedWorker, otherwise empty string.
-  IPC_STRUCT_MEMBER(base::string16, name)
-
-  // Security policy used in the worker.
-  IPC_STRUCT_MEMBER(base::string16, content_security_policy)
-
-  // Security policy type used in the worker.
-  IPC_STRUCT_MEMBER(blink::WebContentSecurityPolicyType, security_policy_type)
-
-  // The ID of the parent document (unique within parent renderer).
-  IPC_STRUCT_MEMBER(unsigned long long, document_id)
-
-  // RenderFrame routing id used to send messages back to the parent.
-  IPC_STRUCT_MEMBER(int, render_frame_route_id)
-
-  // Address space of the context that created the worker.
-  IPC_STRUCT_MEMBER(blink::WebAddressSpace, creation_address_space)
-
-  // The type (secure or nonsecure) of the context that created the worker.
-  IPC_STRUCT_MEMBER(blink::WebSharedWorkerCreationContextType,
-                    creation_context_type)
-
-  // Whether Data-Saver is enabled or not.
-  IPC_STRUCT_MEMBER(bool, data_saver_enabled)
-IPC_STRUCT_END()
-
 IPC_STRUCT_BEGIN(ViewHostMsg_CreateWorker_Reply)
   // The route id for the created worker.
   IPC_STRUCT_MEMBER(int, route_id)
@@ -675,26 +645,6 @@ IPC_SYNC_MESSAGE_CONTROL1_2(ViewHostMsg_ResolveProxy,
                             GURL /* url */,
                             bool /* result */,
                             std::string /* proxy list */)
-
-// A renderer sends this to the browser process when it wants to create a
-// worker.  The browser will create the worker process if necessary, and
-// will return the route id on in the reply on success.  On error returns
-// MSG_ROUTING_NONE and an error type.
-IPC_SYNC_MESSAGE_CONTROL1_1(ViewHostMsg_CreateWorker,
-                            ViewHostMsg_CreateWorker_Params,
-                            ViewHostMsg_CreateWorker_Reply)
-
-// A renderer sends this to the browser process when a document has been
-// detached. The browser will use this to constrain the lifecycle of worker
-// processes (SharedWorkers are shut down when their last associated document
-// is detached).
-IPC_MESSAGE_CONTROL1(ViewHostMsg_DocumentDetached, uint64_t /* document_id */)
-
-// A renderer sends this to the browser process when it wants to connect to a
-// worker.
-IPC_MESSAGE_CONTROL2(ViewHostMsg_ConnectToWorker,
-                     int32_t /* worker_route_id */,
-                     content::MessagePort /* port */)
 
 // Tells the browser that a specific Appcache manifest in the current page
 // was accessed.
