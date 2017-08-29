@@ -1,0 +1,197 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "96875a4c_47b0ad86",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2017-08-29T15:17:12Z",
+      "side": 1,
+      "message": "is there a related bug/investigation?  are we already seeing a lot of NETWORK_WITH_STALE results?",
+      "revId": "7f5247a4a6ba50273f7a61bfaaf276f26ca1bc58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69b6b05d_29fc61c7",
+        "filename": "components/cronet/stale_host_resolver.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2017-08-29T15:17:12Z",
+      "side": 1,
+      "message": "can we inline this function given that there is only one call-site?",
+      "revId": "7f5247a4a6ba50273f7a61bfaaf276f26ca1bc58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7764c197_b05c7339",
+        "filename": "components/cronet/stale_host_resolver.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2017-08-29T15:17:12Z",
+      "side": 1,
+      "message": "need initializers for added members",
+      "revId": "7f5247a4a6ba50273f7a61bfaaf276f26ca1bc58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e546223a_9b641843",
+        "filename": "net/dns/host_cache.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 349,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2017-08-29T15:17:12Z",
+      "side": 1,
+      "message": "should we move this line down to line 400 so it indicates the actual value?  otherwise loading could fail but the histograms won\u0027t tell us that.",
+      "range": {
+        "startLine": 349,
+        "startChar": 38,
+        "endLine": 349,
+        "endChar": 0
+      },
+      "revId": "7f5247a4a6ba50273f7a61bfaaf276f26ca1bc58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da420ef1_3147db91",
+        "filename": "net/dns/host_cache.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2017-08-29T15:17:12Z",
+      "side": 1,
+      "message": "in-\u003ein the last call to",
+      "revId": "7f5247a4a6ba50273f7a61bfaaf276f26ca1bc58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e53cb45_a413c786",
+        "filename": "net/dns/host_cache.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2017-08-29T15:17:12Z",
+      "side": 1,
+      "message": "restore_size-\u003elast_restore_size",
+      "revId": "7f5247a4a6ba50273f7a61bfaaf276f26ca1bc58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f7bab53_5f52c44a",
+        "filename": "net/dns/host_cache.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2017-08-29T15:17:12Z",
+      "side": 1,
+      "message": "in-\u003ein the last call to",
+      "revId": "7f5247a4a6ba50273f7a61bfaaf276f26ca1bc58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de84265b_f429d80f",
+        "filename": "net/dns/host_resolver_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 2190,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2017-08-29T15:17:12Z",
+      "side": 1,
+      "message": "nit: I\u0027d prefer \"return cache_ ? cache_-\u003erestore_size() : 0;\".  Ditto for next function.",
+      "revId": "7f5247a4a6ba50273f7a61bfaaf276f26ca1bc58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7720fe94_65807e65",
+        "filename": "net/dns/host_resolver_impl.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2017-08-29T15:17:12Z",
+      "side": 1,
+      "message": "Given that this HostCache getter exists and HostCache is a NET_EXPORT API, is there a need for explicit RestoreCacheSize() and CacheSize() getters on HostResolverImpl?  This also eliminates the need to document no cache behavior.",
+      "revId": "7f5247a4a6ba50273f7a61bfaaf276f26ca1bc58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "106ee953_979a6352",
+        "filename": "net/dns/host_resolver_impl.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2017-08-29T15:17:12Z",
+      "side": 1,
+      "message": "can we make this const?  I feel it makes sense for getters to be const.\nShould the function name include \"Last\"?",
+      "revId": "7f5247a4a6ba50273f7a61bfaaf276f26ca1bc58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bbe0fecd_e1f74fd2",
+        "filename": "net/dns/host_resolver_impl.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2017-08-29T15:17:12Z",
+      "side": 1,
+      "message": "const;",
+      "revId": "7f5247a4a6ba50273f7a61bfaaf276f26ca1bc58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
