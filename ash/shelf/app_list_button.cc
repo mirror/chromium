@@ -458,6 +458,20 @@ gfx::Point AppListButton::GetBackButtonCenterPoint() const {
                     kShelfButtonSize / 2.f);
 }
 
+void AppListButton::OnBoundsAnimationStarted() {
+  // TODO(crbug.com/758402): Investigate whether shifting the ink drop with the
+  // app list button is possible.
+  if (is_showing_app_list_)
+    AnimateInkDrop(views::InkDropState::DEACTIVATED, nullptr);
+}
+
+void AppListButton::OnBoundsAnimationFinished() {
+  // TODO(crbug.com/758402): Investigate whether shifting the ink drop with the
+  // app list button is possible.
+  if (is_showing_app_list_)
+    AnimateInkDrop(views::InkDropState::ACTIVATED, nullptr);
+}
+
 void AppListButton::OnAppListVisibilityChanged(bool shown,
                                                aura::Window* root_window) {
   aura::Window* window = GetWidget() ? GetWidget()->GetNativeWindow() : nullptr;
