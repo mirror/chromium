@@ -346,6 +346,10 @@ class LocalNTPVoiceJavascriptTest : public LocalNTPTest {
   net::EmbeddedTestServer https_test_server_;
 };
 
+IN_PROC_BROWSER_TEST_F(LocalNTPVoiceJavascriptTest, TextTests) {
+  RunJavascriptTests(browser(), "text");
+}
+
 namespace {
 
 // Returns the RenderFrameHost corresponding to the most visited iframe in the
