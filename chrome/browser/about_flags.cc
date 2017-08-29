@@ -106,6 +106,7 @@
 #include "ui/display/display_switches.h"
 #include "ui/events/event_switches.h"
 #include "ui/gfx/color_space_switches.h"
+#include "ui/gfx/gfx_features.h"
 #include "ui/gfx/switches.h"
 #include "ui/gl/gl_features.h"
 #include "ui/gl/gl_switches.h"
@@ -2977,6 +2978,9 @@ const FeatureEntry kFeatureEntries[] = {
     {"new-omnibox-answer-types", flag_descriptions::kNewOmniboxAnswerTypesName,
      flag_descriptions::kNewOmniboxAnswerTypesDescription, kOsAll,
      FEATURE_VALUE_TYPE(omnibox::kNewOmniboxAnswerTypes)},
+    {"bidi-urls-left-to-right", flag_descriptions::kBidiUrlsLeftToRightName,
+     flag_descriptions::kBidiUrlsLeftToRightDescription, kOsDesktop,
+     FEATURE_VALUE_TYPE(gfx::features::kBidiUrlsLeftToRight)},
 
 #if defined(OS_LINUX) || defined(OS_MACOSX) || defined(OS_WIN)
     {"omnibox-entity-suggestions",

@@ -1405,7 +1405,8 @@ void RenderTextHarfBuzz::ItemizeTextToRuns(
   DCHECK_LE(text.size(), baselines().max());
   for (const BreakList<bool>& style : styles())
     DCHECK_LE(text.size(), style.max());
-  internal::StyleIterator style(empty_colors, baselines(), weights(), styles());
+  internal::StyleIterator style(empty_colors, baselines(), weights(), styles(),
+                                force_ltrs());
 
   for (size_t run_break = 0; run_break < text.length();) {
     auto run = base::MakeUnique<internal::TextRunHarfBuzz>(
@@ -1417,9 +1418,16 @@ void RenderTextHarfBuzz::ItemizeTextToRuns(
     run->underline = style.style(UNDERLINE);
     run->weight = style.weight();
     int32_t script_item_break = 0;
-    bidi_iterator.GetLogicalRun(run_break, &script_item_break, &run->level);
-    CHECK_GT(static_cast<size_t>(script_item_break), run_break);
-    ApplyForcedDirection(&run->level);
+    if (style.force_ltr()) {
+      // Force this run to be LTR. This requires that both |run->level| is 0,
+      // and |run->is_rtl| is false.
+      script_item_break = text.length();
+      run->level = 0;
+    } else {
+      bidi_iterator.GetLogicalRun(run_break, &script_item_break, &run->level);
+      CHECK_GT(static_cast<size_t>(script_item_break), run_break);
+      ApplyForcedDirection(&run->level);
+    }
     // Odd BiDi embedding levels correspond to RTL runs.
     run->is_rtl = (run->level % 2) == 1;
     // Find the length and script of this script run.

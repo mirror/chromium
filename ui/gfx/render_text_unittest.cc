@@ -21,6 +21,7 @@
 #include "base/strings/string_util.h"
 #include "base/strings/stringprintf.h"
 #include "base/strings/utf_string_conversions.h"
+#include "base/test/scoped_feature_list.h"
 #include "base/test/scoped_task_environment.h"
 #include "build/build_config.h"
 #include "testing/gtest/include/gtest/gtest.h"
@@ -35,6 +36,7 @@
 #include "ui/gfx/font_names_testing.h"
 #include "ui/gfx/geometry/point.h"
 #include "ui/gfx/geometry/point_f.h"
+#include "ui/gfx/gfx_features.h"
 #include "ui/gfx/range/range.h"
 #include "ui/gfx/range/range_f.h"
 #include "ui/gfx/render_text_harfbuzz.h"
@@ -1548,6 +1550,9 @@ TEST_P(RenderTextTest, GetDisplayTextDirection) {
       render_text->SetDirectionalityMode(DIRECTIONALITY_FORCE_RTL);
       EXPECT_EQ(render_text->GetDisplayTextDirection(),
                 base::i18n::RIGHT_TO_LEFT);
+      render_text->SetDirectionalityMode(DIRECTIONALITY_AS_URL);
+      EXPECT_EQ(render_text->GetDisplayTextDirection(),
+                base::i18n::LEFT_TO_RIGHT);
     }
   }
 
@@ -3711,6 +3716,54 @@ TEST_P(RenderTextHarfBuzzTest, HarfBuzz_RunDirection) {
   render_text->SetDirectionalityMode(DIRECTIONALITY_FORCE_RTL);
   test_api()->EnsureLayout();
   EXPECT_EQ("[8->10][7<-6][2->5][1<-0]", GetRunListStructureString());
+}
+
+TEST_P(RenderTextHarfBuzzTest, HarfBuzz_RunDirection_URLs) {
+  RenderTextHarfBuzz* render_text = GetRenderTextHarfBuzz();
+  const base::string16 mixed = WideToUTF16(
+      L"www.\x05D0\x05D1.\x05D2\x05D3/\x05D4\x05D5"
+      L"abc/def?\x05D6\x05D7=\x05D8\x05D9");
+  render_text->SetText(mixed);
+
+  // Normal LTR text should treat URL syntax as weak (as per the normal Bidi
+  // algorithm).
+  render_text->SetDirectionalityMode(DIRECTIONALITY_FORCE_LTR);
+  test_api()->EnsureLayout();
+
+  // This is complex because a new run is created for each punctuation mark, but
+  // it simplifies down to: [0->3][11<-4][12->16][21<-17]
+  const char kExpectedRunListNormalBidi[] =
+      "[0->2][3][11<-10][9][8<-7][6][5<-4][12->14][15][16->18][19][24<-23][22]"
+      "[21<-20]";
+  EXPECT_EQ(kExpectedRunListNormalBidi, GetRunListStructureString());
+
+  // DIRECTIONALITY_AS_URL should be exactly the same as
+  // DIRECTIONALITY_FORCE_LTR by default.
+  render_text->SetDirectionalityMode(DIRECTIONALITY_AS_URL);
+  test_api()->EnsureLayout();
+  EXPECT_EQ(kExpectedRunListNormalBidi, GetRunListStructureString());
+
+  // Test the above again, but with BidiUrlsLeftToRight feature enabled.
+  base::test::ScopedFeatureList scoped_list;
+  scoped_list.InitAndEnableFeature(features::kBidiUrlsLeftToRight);
+
+  // DIRECTIONALITY_FORCE_LTR should be the same as above.
+  render_text->SetDirectionalityMode(DIRECTIONALITY_FORCE_LTR);
+  test_api()->EnsureLayout();
+  EXPECT_EQ(kExpectedRunListNormalBidi, GetRunListStructureString());
+
+  // DIRECTIONALITY_AS_URL should treat URL syntax as strong LTR, to ensure
+  // isolation between RTL characters in different components of the URL.
+  render_text->SetDirectionalityMode(DIRECTIONALITY_AS_URL);
+  test_api()->EnsureLayout();
+  // TODO(mgiuca): Consider whether the rule should instead be "treat URL syntax
+  // as delimiters for FIRST STRONG ISOLATEs", which would result in [12->14]
+  // appearing to the left of [11<-10] (because the first strong character in
+  // the range 10--14 is RTL).
+  const char kExpectedRunListURLLayout[] =
+      "[0->2][3][5<-4][6][8<-7][9][11<-10][12->14][15][16->18][19][21<-20][22]"
+      "[24<-23]";
+  EXPECT_EQ(kExpectedRunListURLLayout, GetRunListStructureString());
 }
 
 TEST_P(RenderTextHarfBuzzTest, HarfBuzz_BreakRunsByUnicodeBlocks) {
