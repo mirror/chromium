@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b4f74518_2a5438ac",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-08-29T17:41:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1b0ddc7f_59c93200",
+      "revId": "0c11a4a9455ef872b1854606559a81c2fcd012c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "aac1988d_4393acd9",
         "filename": "/COMMIT_MSG",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-29T16:57:11Z",
       "side": 1,
       "message": "This didn\u0027t run with the SPV2 trybot. Can you add that and ensure the results are better? I think we\u0027ll need to rebaseline some invalidation spv2 tests too.",
+      "revId": "0c11a4a9455ef872b1854606559a81c2fcd012c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e438a7e_4a64e42e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-08-29T17:41:51Z",
+      "side": 1,
+      "message": "SPv2 doesn\u0027t support the new layer dump yet. I have a WIP SPv2 CL and will check which results are better with it. I will land this CL after I make that clear.",
+      "parentUuid": "aac1988d_4393acd9",
       "revId": "0c11a4a9455ef872b1854606559a81c2fcd012c6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
