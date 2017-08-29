@@ -143,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "2882cc6e_91b124df",
+        "filename": "base/trace_event/memory_allocator_dump.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-08-29T21:10:47Z",
+      "side": 1,
+      "message": "yeah I was assuming we could change to const char*. nvm.",
+      "parentUuid": "5b36c7fe_69c27767",
+      "range": {
+        "startLine": 152,
+        "startChar": 13,
+        "endLine": 152,
+        "endChar": 15
+      },
+      "revId": "edeb0bfcc9d95a0510041c6dccb31af2f5c917c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4f6697dc_0617a327",
         "filename": "base/trace_event/memory_allocator_dump.h",
         "patchSetId": 4
@@ -187,6 +211,30 @@
       "revId": "edeb0bfcc9d95a0510041c6dccb31af2f5c917c8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d08bc24d_036d55c5",
+        "filename": "base/trace_event/memory_allocator_dump.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-08-29T21:10:47Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "5aa9ddf4_66f1a923",
+      "range": {
+        "startLine": 37,
+        "startChar": 9,
+        "endLine": 37,
+        "endChar": 14
+      },
+      "revId": "edeb0bfcc9d95a0510041c6dccb31af2f5c917c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -319,6 +367,30 @@
       "side": 1,
       "message": "We can\u0027t make it const because of mojo and we can\u0027t send the pointer because of ASLR (and I don\u0027t think mojo will let us anyway) we we\u0027ll always have to convert to std::string at some point I think",
       "parentUuid": "3909a5ba_7250c144",
+      "range": {
+        "startLine": 51,
+        "startChar": 4,
+        "endLine": 51,
+        "endChar": 15
+      },
+      "revId": "edeb0bfcc9d95a0510041c6dccb31af2f5c917c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38dbf48f_eaa97397",
+        "filename": "base/trace_event/memory_allocator_dump.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-08-29T21:10:47Z",
+      "side": 1,
+      "message": "Ahh I see. Is it possible to use StringPiece here? I would guess mojo would optimize string copies in case of StringPiece.\nAlso, const char* is not a const field in Entry. But yeah mojo cannot copy it around.",
+      "parentUuid": "dcb93333_18e89017",
       "range": {
         "startLine": 51,
         "startChar": 4,

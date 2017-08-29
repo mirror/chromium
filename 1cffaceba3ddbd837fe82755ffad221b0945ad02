@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "60deaf92_3965b169",
+        "filename": "base/trace_event/memory_allocator_dump.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-08-29T21:10:47Z",
+      "side": 1,
+      "message": "comment not needed.",
+      "range": {
+        "startLine": 84,
+        "startChar": 2,
+        "endLine": 84,
+        "endChar": 43
+      },
+      "revId": "1cffaceba3ddbd837fe82755ffad221b0945ad02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3df7433_e4265a06",
+        "filename": "base/trace_event/memory_allocator_dump.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-08-29T21:10:47Z",
+      "side": 1,
+      "message": "this is not required since the same string is reused in the same function, std::string impl should not re-allocate every time in loop.",
+      "range": {
+        "startLine": 86,
+        "startChar": 2,
+        "endLine": 86,
+        "endChar": 26
+      },
+      "revId": "1cffaceba3ddbd837fe82755ffad221b0945ad02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0eb0afd7_c3991caf",
+        "filename": "base/trace_event/memory_allocator_dump.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-08-29T21:10:47Z",
+      "side": 1,
+      "message": "Can we get rid of this function and use AsValueInto() in tests?\nIf we still need this, name it AttributesAsTracedvalue or similar.\nIf you remove this function then inline DumpAttributes() too.",
+      "range": {
+        "startLine": 120,
+        "startChar": 31,
+        "endLine": 120,
+        "endChar": 53
+      },
+      "revId": "1cffaceba3ddbd837fe82755ffad221b0945ad02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
