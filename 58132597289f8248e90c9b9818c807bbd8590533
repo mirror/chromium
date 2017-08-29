@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3d723932_2985413a",
+        "filename": "tools/metrics/actions/actions.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 16999,
+      "author": {
+        "id": 1115980
+      },
+      "writtenOn": "2017-08-29T14:39:15Z",
+      "side": 1,
+      "message": "I think the second owner would be better as peconn@chromium.org :-)",
+      "range": {
+        "startLine": 16999,
+        "startChar": 9,
+        "endLine": 16999,
+        "endChar": 16
+      },
+      "revId": "58132597289f8248e90c9b9818c807bbd8590533",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
