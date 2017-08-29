@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d8f6cb9e_37f76ea9",
+        "filename": "chromecast/tools/trace.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1230791
+      },
+      "writtenOn": "2017-08-29T21:34:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "74f687a2_afa6d85d",
+      "range": {
+        "startLine": 31,
+        "startChar": 4,
+        "endLine": 31,
+        "endChar": 38
+      },
+      "revId": "26c778d0603a4c521137491de4926570145e7ca7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8b6bdf08_37402c73",
         "filename": "chromecast/tools/tracinglib.py",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "26c778d0603a4c521137491de4926570145e7ca7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eabe48a1_fcbf4e9d",
+        "filename": "chromecast/tools/tracinglib.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1230791
+      },
+      "writtenOn": "2017-08-29T21:34:34Z",
+      "side": 1,
+      "message": "Moved that into the constructor.",
+      "parentUuid": "8b6bdf08_37402c73",
+      "range": {
+        "startLine": 155,
+        "startChar": 20,
+        "endLine": 155,
+        "endChar": 75
+      },
+      "revId": "26c778d0603a4c521137491de4926570145e7ca7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "b356ed78_8d8fec78",
+        "filename": "chromecast/tools/tracinglib.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1230791
+      },
+      "writtenOn": "2017-08-29T21:34:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "68632a0e_0fac13de",
+      "range": {
+        "startLine": 169,
+        "startChar": 19,
+        "endLine": 169,
+        "endChar": 40
+      },
+      "revId": "26c778d0603a4c521137491de4926570145e7ca7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "39a06374_d4f32e55",
         "filename": "chromecast/tools/tracinglib.py",
         "patchSetId": 2
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "ad75daef_356d4cff",
+        "filename": "chromecast/tools/tracinglib.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1230791
+      },
+      "writtenOn": "2017-08-29T21:34:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "39a06374_d4f32e55",
+      "range": {
+        "startLine": 206,
+        "startChar": 4,
+        "endLine": 206,
+        "endChar": 9
+      },
+      "revId": "26c778d0603a4c521137491de4926570145e7ca7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8c519f39_56b5fcd2",
         "filename": "chromecast/tools/tracinglib.py",
         "patchSetId": 2
@@ -114,6 +210,30 @@
       "revId": "26c778d0603a4c521137491de4926570145e7ca7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21a60fc6_21ff4af9",
+        "filename": "chromecast/tools/tracinglib.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1230791
+      },
+      "writtenOn": "2017-08-29T21:34:34Z",
+      "side": 1,
+      "message": "Changed to checking the log for the message confirming the file has been written. This seems to be the most reliable way to do it, although it\u0027s a bit slow.",
+      "parentUuid": "8c519f39_56b5fcd2",
+      "range": {
+        "startLine": 207,
+        "startChar": 4,
+        "endLine": 207,
+        "endChar": 13
+      },
+      "revId": "26c778d0603a4c521137491de4926570145e7ca7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
