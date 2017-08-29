@@ -34,6 +34,10 @@
 #include "ui/base/l10n/l10n_util.h"
 #include "ui/gfx/geometry/rect_f.h"
 
+#if defined(OS_ANDROID)
+#include "base/android/build_info.h"
+#endif
+
 // The name of the username/password element in the form.
 const char kUsernameName[] = "username";
 const char kInvalidUsername[] = "no-username";
@@ -91,6 +95,15 @@ class MockAutofillClient : public autofill::TestAutofillClient {
   MOCK_METHOD1(ExecuteCommand, void(int));
 };
 
+bool IsPreLollipopAndroid() {
+#if defined(OS_ANDROID)
+  return (base::android::BuildInfo::GetInstance()->sdk_int() <
+          base::android::SDK_VERSION_LOLLIPOP);
+#else
+  return false;
+#endif
+}
+
 }  // namespace
 
 class PasswordAutofillManagerTest : public testing::Test {
@@ -143,7 +156,8 @@ class PasswordAutofillManagerTest : public testing::Test {
 
   static bool IsManualFallbackForFillingEnabled() {
     return base::FeatureList::IsEnabled(
-        password_manager::features::kEnableManualFallbacksFilling);
+               password_manager::features::kEnableManualFallbacksFilling) &&
+           !IsPreLollipopAndroid();
   }
 
   std::unique_ptr<PasswordAutofillManager> password_autofill_manager_;
@@ -993,10 +1007,6 @@ TEST_F(PasswordAutofillManagerTest, ShowAllPasswordsOptionOnPasswordField) {
   int dummy_key = 0;
   password_autofill_manager_->OnAddPasswordFormMapping(dummy_key, data);
 
-  // String for the "Show all passwords" fallback.
-  base::string16 show_all_saved_row_text =
-      l10n_util::GetStringUTF16(IDS_AUTOFILL_SHOW_ALL_SAVED_FALLBACK);
-
   // String "Use password for:" shown when displaying suggestions matching a
   // username and specifying that the field is a password field.
   base::string16 title =
@@ -1004,16 +1014,24 @@ TEST_F(PasswordAutofillManagerTest, ShowAllPasswordsOptionOnPasswordField) {
 
   SetManualFallbacksForFilling(true);
 
+  std::vector<base::string16> elements = {title, test_username_};
+  if (!IsPreLollipopAndroid()) {
+    elements = {
+      title,
+      test_username_,
 #if !defined(OS_ANDROID)
-  auto elements = testing::ElementsAre(title, test_username_, base::string16(),
-                                       show_all_saved_row_text);
-#else
-  auto elements =
-      testing::ElementsAre(title, test_username_, show_all_saved_row_text);
+      base::string16(),
 #endif
-  EXPECT_CALL(*autofill_client,
-              ShowAutofillPopup(element_bounds, _,
-                                SuggestionVectorValuesAre(elements), _));
+      l10n_util::GetStringUTF16(IDS_AUTOFILL_SHOW_ALL_SAVED_FALLBACK)
+    };
+  }
+
+  EXPECT_CALL(
+      *autofill_client,
+      ShowAutofillPopup(
+          element_bounds, _,
+          SuggestionVectorValuesAre(testing::ElementsAreArray(elements)), _));
+
   password_autofill_manager_->OnShowPasswordSuggestions(
       dummy_key, base::i18n::RIGHT_TO_LEFT, test_username_,
       autofill::IS_PASSWORD_FIELD, element_bounds);
@@ -1032,27 +1050,39 @@ TEST_F(PasswordAutofillManagerTest, ShowAllPasswordsOptionOnPasswordField) {
   password_autofill_manager_->DidAcceptSuggestion(
       base::string16(), autofill::POPUP_ITEM_ID_ALL_SAVED_PASSWORDS_ENTRY, 0);
 
-  // Expect a sample in both the shown and accepted histogram.
-  histograms.ExpectUniqueSample(
-      kShownContextHistogram,
-      metrics_util::SHOW_ALL_SAVED_PASSWORDS_CONTEXT_PASSWORD, 1);
-  histograms.ExpectUniqueSample(
-      kAcceptedContextHistogram,
-      metrics_util::SHOW_ALL_SAVED_PASSWORDS_CONTEXT_PASSWORD, 1);
-
+  if (IsPreLollipopAndroid()) {
+    EXPECT_THAT(histograms.GetAllSamples(kShownContextHistogram),
+                testing::IsEmpty());
+    EXPECT_THAT(histograms.GetAllSamples(kAcceptedContextHistogram),
+                testing::IsEmpty());
+  } else {
+    // Expect a sample in both the shown and accepted histogram.
+    histograms.ExpectUniqueSample(
+        kShownContextHistogram,
+        metrics_util::SHOW_ALL_SAVED_PASSWORDS_CONTEXT_PASSWORD, 1);
+    histograms.ExpectUniqueSample(
+        kAcceptedContextHistogram,
+        metrics_util::SHOW_ALL_SAVED_PASSWORDS_CONTEXT_PASSWORD, 1);
+  }
   // Trigger UKM reporting, which happens at destruction time.
   manager.reset();
   autofill_client.reset();
   client.reset();
-
   const ukm::UkmSource* source =
       test_ukm_recorder.GetSourceForUrl(kMainFrameUrl);
   ASSERT_TRUE(source);
-  test_ukm_recorder.ExpectMetric(
-      *source, "PageWithPassword", password_manager::kUkmPageLevelUserAction,
-      static_cast<int64_t>(
-          password_manager::PasswordManagerMetricsRecorder::
-              PageLevelUserAction::kShowAllPasswordsWhileSomeAreSuggested));
+
+  if (IsPreLollipopAndroid()) {
+    EXPECT_FALSE(
+        test_ukm_recorder.HasMetric(*source, "PageWithPassword",
+                                    password_manager::kUkmPageLevelUserAction));
+  } else {
+    test_ukm_recorder.ExpectMetric(
+        *source, "PageWithPassword", password_manager::kUkmPageLevelUserAction,
+        static_cast<int64_t>(
+            password_manager::PasswordManagerMetricsRecorder::
+                PageLevelUserAction::kShowAllPasswordsWhileSomeAreSuggested));
+  }
 }
 
 TEST_F(PasswordAutofillManagerTest, ShowStandaloneShowAllPasswords) {
@@ -1084,18 +1114,28 @@ TEST_F(PasswordAutofillManagerTest, ShowStandaloneShowAllPasswords) {
 
   SetManualFallbacksForFilling(true);
 
-  auto elements = testing::ElementsAre(show_all_saved_row_text);
+  std::vector<base::string16> elements;
+  if (!IsPreLollipopAndroid()) {
+    elements = {show_all_saved_row_text};
+  }
 
-  EXPECT_CALL(*autofill_client,
-              ShowAutofillPopup(element_bounds, _,
-                                SuggestionVectorValuesAre(elements), _));
+  EXPECT_CALL(
+      *autofill_client,
+      ShowAutofillPopup(
+          element_bounds, _,
+          SuggestionVectorValuesAre(testing::ElementsAreArray(elements)), _));
   password_autofill_manager_->OnShowManualFallbackSuggestion(
       base::i18n::RIGHT_TO_LEFT, element_bounds);
 
-  // Expect a sample only in the shown histogram.
-  histograms.ExpectUniqueSample(
-      kShownContextHistogram,
-      metrics_util::SHOW_ALL_SAVED_PASSWORDS_CONTEXT_MANUAL_FALLBACK, 1);
+  if (IsPreLollipopAndroid()) {
+    EXPECT_THAT(histograms.GetAllSamples(kShownContextHistogram),
+                testing::IsEmpty());
+  } else {
+    // Expect a sample only in the shown histogram.
+    histograms.ExpectUniqueSample(
+        kShownContextHistogram,
+        metrics_util::SHOW_ALL_SAVED_PASSWORDS_CONTEXT_MANUAL_FALLBACK, 1);
+  }
 
   // Clicking at the "Show all passwords row" should trigger a call to open the
   // Password Manager settings page and hide the popup.
@@ -1106,27 +1146,40 @@ TEST_F(PasswordAutofillManagerTest, ShowStandaloneShowAllPasswords) {
   password_autofill_manager_->DidAcceptSuggestion(
       base::string16(), autofill::POPUP_ITEM_ID_ALL_SAVED_PASSWORDS_ENTRY, 0);
 
-  // Expect a sample in both the shown and accepted histogram.
-  histograms.ExpectUniqueSample(
-      kShownContextHistogram,
-      metrics_util::SHOW_ALL_SAVED_PASSWORDS_CONTEXT_MANUAL_FALLBACK, 1);
-  histograms.ExpectUniqueSample(
-      kAcceptedContextHistogram,
-      metrics_util::SHOW_ALL_SAVED_PASSWORDS_CONTEXT_MANUAL_FALLBACK, 1);
-
+  if (IsPreLollipopAndroid()) {
+    EXPECT_THAT(histograms.GetAllSamples(kShownContextHistogram),
+                testing::IsEmpty());
+    EXPECT_THAT(histograms.GetAllSamples(kAcceptedContextHistogram),
+                testing::IsEmpty());
+  } else {
+    // Expect a sample in both the shown and accepted histogram.
+    histograms.ExpectUniqueSample(
+        kShownContextHistogram,
+        metrics_util::SHOW_ALL_SAVED_PASSWORDS_CONTEXT_MANUAL_FALLBACK, 1);
+    histograms.ExpectUniqueSample(
+        kAcceptedContextHistogram,
+        metrics_util::SHOW_ALL_SAVED_PASSWORDS_CONTEXT_MANUAL_FALLBACK, 1);
+  }
   // Trigger UKM reporting, which happens at destruction time.
   manager.reset();
   autofill_client.reset();
   client.reset();
-
   const ukm::UkmSource* source =
       test_ukm_recorder.GetSourceForUrl(kMainFrameUrl);
   ASSERT_TRUE(source);
-  test_ukm_recorder.ExpectMetric(
-      *source, "PageWithPassword", password_manager::kUkmPageLevelUserAction,
-      static_cast<int64_t>(
-          password_manager::PasswordManagerMetricsRecorder::
-              PageLevelUserAction::kShowAllPasswordsWhileNoneAreSuggested));
+
+  if (IsPreLollipopAndroid()) {
+    EXPECT_FALSE(
+        test_ukm_recorder.HasMetric(*source, "PageWithPassword",
+                                    password_manager::kUkmPageLevelUserAction));
+
+  } else {
+    test_ukm_recorder.ExpectMetric(
+        *source, "PageWithPassword", password_manager::kUkmPageLevelUserAction,
+        static_cast<int64_t>(
+            password_manager::PasswordManagerMetricsRecorder::
+                PageLevelUserAction::kShowAllPasswordsWhileNoneAreSuggested));
+  }
 }
 
 // Tests that the "Show all passwords" fallback doesn't shows up in non-password
