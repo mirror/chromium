@@ -22,6 +22,7 @@ class AnimationDelegate;
 class AnimationEvents;
 class AnimationHost;
 class AnimationTimeline;
+class AnimationTicker;
 struct AnimationEvent;
 struct PropertyAnimationState;
 
@@ -40,7 +41,7 @@ class CC_ANIMATION_EXPORT AnimationPlayer
   scoped_refptr<AnimationPlayer> CreateImplInstance() const;
 
   int id() const { return id_; }
-  ElementId element_id() const { return element_id_; }
+  ElementId element_id() const;
 
   // Parent AnimationHost. AnimationPlayer can be detached from
   // AnimationTimeline.
@@ -55,10 +56,7 @@ class CC_ANIMATION_EXPORT AnimationPlayer
   }
   void SetAnimationTimeline(AnimationTimeline* timeline);
 
-  // ElementAnimations object where this player is listed.
-  scoped_refptr<ElementAnimations> element_animations() const {
-    return element_animations_;
-  }
+  scoped_refptr<ElementAnimations> element_animations() const;
 
   void set_animation_delegate(AnimationDelegate* delegate) {
     animation_delegate_ = delegate;
@@ -95,27 +93,10 @@ class CC_ANIMATION_EXPORT AnimationPlayer
   bool HasTickingAnimation() const;
 
   // Returns true if there are any animations at all to process.
-  bool has_any_animation() const { return !animations_.empty(); }
+  bool has_any_animation() const;
 
   bool needs_push_properties() const { return needs_push_properties_; }
   void SetNeedsPushProperties();
-
-  bool HasNonDeletedAnimation() const;
-
-  bool needs_to_start_animations() const { return needs_to_start_animations_; }
-
-  void StartAnimations(base::TimeTicks monotonic_time);
-  void PromoteStartedAnimations(base::TimeTicks monotonic_time,
-                                AnimationEvents* events);
-  void MarkAnimationsForDeletion(base::TimeTicks monotonic_time,
-                                 AnimationEvents* events);
-
-  static void TickAnimation(base::TimeTicks monotonic_time,
-                            Animation* animation,
-                            AnimationTarget* target);
-  void TickAnimations(base::TimeTicks monotonic_time);
-
-  void MarkFinishedAnimations(base::TimeTicks monotonic_time);
 
   // Make animations affect active elements if and only if they affect
   // pending elements. Any animations that no longer affect any elements
@@ -150,14 +131,13 @@ class CC_ANIMATION_EXPORT AnimationPlayer
   bool IsCurrentlyAnimatingProperty(TargetProperty::Type target_property,
                                     ElementListType list_type) const;
 
-  bool HasElementInActiveList() const;
-  gfx::ScrollOffset ScrollOffsetForAnimation() const;
-
   // Returns the animation animating the given property that is either
   // running, or is next to run, if such an animation exists.
   Animation* GetAnimation(TargetProperty::Type target_property) const;
 
   // Returns animation for the given unique animation id.
+  // TODO(smcgruer): Remove, only tests call this and they should call on the
+  // AnimationTicker instead.
   Animation* GetAnimationById(int animation_id) const;
 
   void GetPropertyAnimationState(PropertyAnimationState* pending_state,
@@ -176,13 +156,19 @@ class CC_ANIMATION_EXPORT AnimationPlayer
 
   std::string ToString() const;
 
+  void SetNeedsCommit();
+
+  // TODO(smcgruer): Probably should be moved to an AnimationTickerClient
+  // interface?
+  void NotifyImplOnlyAnimationStarted(AnimationEvent&);
+  void NotifyImplOnlyAnimationFinished(AnimationEvent&);
+  void NotifyAnimationTakeoverByMain(AnimationEvent&);
+
  private:
   friend class base::RefCounted<AnimationPlayer>;
 
   explicit AnimationPlayer(int id);
   ~AnimationPlayer();
-
-  void SetNeedsCommit();
 
   void RegisterPlayer();
   void UnregisterPlayer();
@@ -192,39 +178,21 @@ class CC_ANIMATION_EXPORT AnimationPlayer
 
   void AnimationAdded();
 
-  void MarkAbortedAnimationsForDeletion(
-      AnimationPlayer* animation_player_impl) const;
-  void PurgeAnimationsMarkedForDeletion(bool impl_only);
-  void PushNewAnimationsToImplThread(
-      AnimationPlayer* animation_player_impl) const;
-  void RemoveAnimationsCompletedOnMainThread(
-      AnimationPlayer* animation_player_impl) const;
   void PushPropertiesToImplThread(AnimationPlayer* animation_player_impl);
-
-  std::string AnimationsToString() const;
-
-  using Animations = std::vector<std::unique_ptr<Animation>>;
-  Animations animations_;
 
   AnimationHost* animation_host_;
   AnimationTimeline* animation_timeline_;
-  // element_animations isn't null if player attached to an element (layer).
-  scoped_refptr<ElementAnimations> element_animations_;
   AnimationDelegate* animation_delegate_;
 
   int id_;
-  ElementId element_id_;
   bool needs_push_properties_;
-  base::TimeTicks last_tick_time_;
-
-  // Only try to start animations when new animations are added or when the
-  // previous attempt at starting animations failed to start all animations.
-  bool needs_to_start_animations_;
 
   // This is used to ensure that we don't spam the animation host.
   bool is_ticking_;
 
   bool scroll_offset_animation_was_interrupted_;
+
+  std::unique_ptr<AnimationTicker> animation_ticker_;
 
   DISALLOW_COPY_AND_ASSIGN(AnimationPlayer);
 };
