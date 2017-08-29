@@ -54,6 +54,19 @@ content::WebContents* OpenNewTab(Browser* browser, const GURL& url) {
   return browser->tab_strip_model()->GetActiveWebContents();
 }
 
+// Sets up and runs Javascript tests for a single Javascript "module".
+void RunJavascriptTests(Browser* browser, const std::string& module_name) {
+  content::WebContents* active_tab =
+      OpenNewTab(browser, GURL(chrome::kChromeUINewTabURL));
+  ASSERT_TRUE(search::IsInstantNTP(active_tab));
+
+  // Run the tests.
+  bool success = false;
+  ASSERT_TRUE(instant_test_utils::GetBoolFromJS(
+      active_tab, "!!runSimpleTests('" + module_name + "')", &success));
+  EXPECT_TRUE(success);
+}
+
 // Switches the browser language to French, and returns true iff successful.
 bool SwitchToFrench() {
   base::ThreadRestrictions::ScopedAllowIO allow_io;
@@ -106,7 +119,7 @@ class LocalNTPTest : public InProcessBrowserTest {
 IN_PROC_BROWSER_TEST_F(LocalNTPTest, EmbeddedSearchAPIOnlyAvailableOnNTP) {
   // Set up a test server, so we have some arbitrary non-NTP URL to navigate to.
   net::EmbeddedTestServer test_server(net::EmbeddedTestServer::TYPE_HTTPS);
-  test_server.ServeFilesFromSourceDirectory("chrome/test/data");
+  test_server.ServeFilesFromSourceDirectory("chrome/test/data/local_ntp");
   ASSERT_TRUE(test_server.Start());
   const GURL other_url = test_server.GetURL("/simple.html");
 
@@ -285,7 +298,8 @@ class LocalNTPJavascriptTest : public LocalNTPTest {
  public:
   LocalNTPJavascriptTest()
       : https_test_server_(net::EmbeddedTestServer::TYPE_HTTPS) {
-    https_test_server_.ServeFilesFromSourceDirectory("chrome/test/data");
+    https_test_server_.ServeFilesFromSourceDirectory(
+        "chrome/test/data/local_ntp");
   }
 
  private:
@@ -308,15 +322,29 @@ IN_PROC_BROWSER_TEST_F(LocalNTPJavascriptTest, SimpleJavascriptTests) {
     return;
   }
 
-  content::WebContents* active_tab =
-      OpenNewTab(browser(), GURL(chrome::kChromeUINewTabURL));
-  ASSERT_TRUE(search::IsInstantNTP(active_tab));
-
-  bool success = false;
-  ASSERT_TRUE(instant_test_utils::GetBoolFromJS(
-      active_tab, "!!runSimpleTests()", &success));
-  EXPECT_TRUE(success);
+  RunJavascriptTests(browser(), "localNtp");
 }
+
+// A test class that sets up voice_browsertest.html as the NTP URL. It's
+// mostly a copy of the real local_ntp.html, but it adds some testing JS.
+class LocalNTPVoiceJavascriptTest : public LocalNTPTest {
+ public:
+  LocalNTPVoiceJavascriptTest()
+      : https_test_server_(net::EmbeddedTestServer::TYPE_HTTPS) {
+    https_test_server_.ServeFilesFromSourceDirectory(
+        "chrome/test/data/local_ntp");
+  }
+
+ private:
+  void SetUpOnMainThread() override {
+    ASSERT_TRUE(https_test_server_.Start());
+    GURL ntp_url = https_test_server_.GetURL("/voice_browsertest.html");
+    SetUserSelectedDefaultSearchProvider(https_test_server_.base_url().spec(),
+                                         ntp_url.spec());
+  }
+
+  net::EmbeddedTestServer https_test_server_;
+};
 
 namespace {
 
