@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b2b05977_0429522d",
+        "filename": "content/browser/service_worker/service_worker_version.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1523,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-08-29T06:12:27Z",
+      "side": 1,
+      "message": "How about adding CHECK(event_dispatcher_request.is_pending()) too, though it might be useless?",
+      "revId": "6e3ef93f1ddc3a6d74cd08cfdc9e008567114ba1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
