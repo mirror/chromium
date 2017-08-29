@@ -2,6 +2,52 @@
   "comments": [
     {
       "key": {
+        "uuid": "dcb27a7f_1fad0eee",
+        "filename": "chrome/browser/resource_coordinator/tab_manager_stats_collector.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-08-29T04:21:39Z",
+      "side": 1,
+      "message": "Please put standard warning here about values being unchangeable.\nhttps://chromium.googlesource.com/chromium/src.git/+/HEAD/tools/metrics/histograms/README.md#Enum-Histograms",
+      "range": {
+        "startLine": 27,
+        "startChar": 66,
+        "endLine": 27,
+        "endChar": 0
+      },
+      "revId": "903f7d54187f155d2ba280f1907f48e97e7f3cc8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a5000a6_213cb768",
+        "filename": "chrome/browser/resource_coordinator/tab_manager_stats_collector.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-08-29T04:21:39Z",
+      "side": 1,
+      "message": "This is an enum state.  It\u0027s not a variable and hence not a \"count\".  How about\n// Session restore did not overlap with background tab opening.\n\nanalogous comments below.",
+      "range": {
+        "startLine": 29,
+        "startChar": 5,
+        "endLine": 29,
+        "endChar": 26
+      },
+      "revId": "903f7d54187f155d2ba280f1907f48e97e7f3cc8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5ad8cf4f_7163ced9",
         "filename": "chrome/browser/resource_coordinator/tab_manager_stats_collector.cc",
         "patchSetId": 14
@@ -18,6 +64,144 @@
         "startChar": 9,
         "endLine": 34,
         "endChar": 16
+      },
+      "revId": "903f7d54187f155d2ba280f1907f48e97e7f3cc8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f31c903_0edaa67b",
+        "filename": "chrome/browser/resource_coordinator/tab_manager_stats_collector.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-08-29T04:21:39Z",
+      "side": 1,
+      "message": "How is this different than entry 0?\nIf session restore did not overlap with background tab opening, then background tab opening did not overlap with session restore...",
+      "range": {
+        "startLine": 38,
+        "startChar": 2,
+        "endLine": 38,
+        "endChar": 72
+      },
+      "revId": "903f7d54187f155d2ba280f1907f48e97e7f3cc8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61db3a20_3e528c16",
+        "filename": "chrome/browser/resource_coordinator/tab_manager_stats_collector.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-08-29T04:21:39Z",
+      "side": 1,
+      "message": "More comments on this below...",
+      "range": {
+        "startLine": 44,
+        "startChar": 2,
+        "endLine": 44,
+        "endChar": 0
+      },
+      "revId": "903f7d54187f155d2ba280f1907f48e97e7f3cc8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ed46be9_062071fc",
+        "filename": "chrome/browser/resource_coordinator/tab_manager_stats_collector.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-08-29T04:21:39Z",
+      "side": 1,
+      "message": "Ah, I see what\u0027s happening here.  You\u0027ve actually got two conceptually different histograms, one emitted during session restore and one emitted during background tab loading.  In each case, you want to record whether there is overlap.  I suggest having two separate histograms, each one is simply a boolean histogram (e.g., TabManager.SessionOverlap.BackgroundOpening where true means overlapped with session restore and false means didn\u0027t.)\n\nThen you don\u0027t need the enum above, and the histogram description for this histogram can be much simplified (split into two, without confusion).  It\u0027ll be much clearer when things are emitted to each histogram.\n\nThe dashboard will also make more sent with this version because then you\u0027d be able to tell at a glance what percent of, say, session restore, overlaps with background tab opening.  With a single histogram, that\u0027ll be less obvious to read.  (You\u0027d have to do math.)",
+      "range": {
+        "startLine": 195,
+        "startChar": 28,
+        "endLine": 195,
+        "endChar": 0
+      },
+      "revId": "903f7d54187f155d2ba280f1907f48e97e7f3cc8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "adb49b25_bd4899a3",
+        "filename": "chrome/browser/resource_coordinator/tab_manager_stats_collector.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-08-29T04:21:39Z",
+      "side": 1,
+      "message": "Where is this called?",
+      "range": {
+        "startLine": 114,
+        "startChar": 7,
+        "endLine": 114,
+        "endChar": 32
+      },
+      "revId": "903f7d54187f155d2ba280f1907f48e97e7f3cc8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e6449d1_26f98b67",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 14
+      },
+      "lineNbr": 81213,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-08-29T04:21:39Z",
+      "side": 1,
+      "message": "Does this simply mean \"user brought the tab to the foreground\"?  If so (or if not), please explain as a new second sentence.",
+      "range": {
+        "startLine": 81213,
+        "startChar": 65,
+        "endLine": 81213,
+        "endChar": 79
+      },
+      "revId": "903f7d54187f155d2ba280f1907f48e97e7f3cc8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd298a67_ac7d0c83",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 14
+      },
+      "lineNbr": 81231,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-08-29T04:21:39Z",
+      "side": 1,
+      "message": "in this context, I think you probably want to say \"paused loading them all\", so make it clear that a single tab pausing doesn\u0027t cause an emit.\n\n(I assume that\u0027s true.)",
+      "range": {
+        "startLine": 81231,
+        "startChar": 35,
+        "endLine": 81231,
+        "endChar": 49
       },
       "revId": "903f7d54187f155d2ba280f1907f48e97e7f3cc8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
