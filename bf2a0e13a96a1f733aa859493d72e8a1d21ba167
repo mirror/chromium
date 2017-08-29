@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f50c5bff_b9d29a1a",
+        "filename": "build/android/apk_operations.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 383,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-08-29T20:11:47Z",
+      "side": 1,
+      "message": "get_my_pids -\u003e get_my_pids()",
+      "revId": "bf2a0e13a96a1f733aa859493d72e8a1d21ba167",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b99495b_b0a1056f",
+        "filename": "build/android/apk_operations.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 395,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-08-29T20:11:47Z",
+      "side": 1,
+      "message": "nit: maybe change this to \u0027apk_wrappers.py nonce\u003d{}\u0027 so that it\u0027s clear who\u0027s creating the log",
+      "revId": "bf2a0e13a96a1f733aa859493d72e8a1d21ba167",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
