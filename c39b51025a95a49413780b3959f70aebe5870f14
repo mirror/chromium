@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1fbf0d5f_cce0905f",
+        "filename": "chrome/browser/password_manager/password_manager_util_win.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 328,
+      "author": {
+        "id": 1000640
+      },
+      "writtenOn": "2017-08-29T20:14:41Z",
+      "side": 1,
+      "message": "nit: this _is_ a.",
+      "range": {
+        "startLine": 328,
+        "startChar": 8,
+        "endLine": 328,
+        "endChar": 14
+      },
+      "revId": "c39b51025a95a49413780b3959f70aebe5870f14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f009956_1001d7ae",
+        "filename": "chrome/browser/password_manager/password_manager_util_win.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 364,
+      "author": {
+        "id": 1000640
+      },
+      "writtenOn": "2017-08-29T20:14:41Z",
+      "side": 1,
+      "message": "nice!",
+      "range": {
+        "startLine": 364,
+        "startChar": 26,
+        "endLine": 364,
+        "endChar": 43
+      },
+      "revId": "c39b51025a95a49413780b3959f70aebe5870f14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a8bcf389_8b8b2775",
+        "filename": "chrome/browser/password_manager/password_manager_util_win.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 395,
+      "author": {
+        "id": 1000640
+      },
+      "writtenOn": "2017-08-29T20:14:41Z",
+      "side": 1,
+      "message": "Maybe we might want to measure this with UMA if you think there is a chance that this is not the case in some cases. This can be added later though.",
+      "range": {
+        "startLine": 395,
+        "startChar": 7,
+        "endLine": 395,
+        "endChar": 42
+      },
+      "revId": "c39b51025a95a49413780b3959f70aebe5870f14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
