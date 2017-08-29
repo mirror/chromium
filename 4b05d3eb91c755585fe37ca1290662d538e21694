@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "be498eb6_c1c69c57",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/offlinepages/OfflinePageOrigin.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1212384
+      },
+      "writtenOn": "2017-08-29T21:13:17Z",
+      "side": 1,
+      "message": "Browser actions will be using this. They get their appName from session token (I assume), and we just need to populate signatures and assert that appName is valid",
+      "parentUuid": "2b3d2c17_eff2e08c",
+      "range": {
+        "startLine": 38,
+        "startChar": 22,
+        "endLine": 38,
+        "endChar": 23
+      },
+      "revId": "4b05d3eb91c755585fe37ca1290662d538e21694",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "98d8a3c5_7b944dcd",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/offlinepages/OfflinePageOrigin.java",
         "patchSetId": 1
@@ -39,6 +63,24 @@
       "revId": "4b05d3eb91c755585fe37ca1290662d538e21694",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6aac318_a8fab13e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/offlinepages/OfflinePageOrigin.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1212384
+      },
+      "writtenOn": "2017-08-29T21:13:17Z",
+      "side": 1,
+      "message": "i think it\u0027s totally reasonable to pass in \"\" as the appName for \"appName not found\" or something. Similar to the other constructor (line 33), if the tab isn\u0027t associated with any app, then it will return \"\"",
+      "parentUuid": "98d8a3c5_7b944dcd",
+      "revId": "4b05d3eb91c755585fe37ca1290662d538e21694",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
