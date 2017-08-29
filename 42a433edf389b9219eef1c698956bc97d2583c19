@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "33aa53a0_31b73019",
+        "filename": "third_party/WebKit/LayoutTests/editing/execCommand/justify-right-crash.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1238128
+      },
+      "writtenOn": "2017-08-29T01:11:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1f1a7358_ddfa9d83",
+      "range": {
+        "startLine": 6,
+        "startChar": 22,
+        "endLine": 6,
+        "endChar": 82
+      },
+      "revId": "42a433edf389b9219eef1c698956bc97d2583c19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b07ebacd_e15d3168",
         "filename": "third_party/WebKit/LayoutTests/editing/execCommand/justify-right-crash.html",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "42a433edf389b9219eef1c698956bc97d2583c19",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24e647c8_c9cc77fc",
+        "filename": "third_party/WebKit/LayoutTests/editing/execCommand/justify-right-crash.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1238128
+      },
+      "writtenOn": "2017-08-29T01:11:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b07ebacd_e15d3168",
+      "range": {
+        "startLine": 26,
+        "startChar": 21,
+        "endLine": 26,
+        "endChar": 23
+      },
+      "revId": "42a433edf389b9219eef1c698956bc97d2583c19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
