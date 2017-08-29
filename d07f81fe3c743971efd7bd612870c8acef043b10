@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "15f82d76_2b8539c8",
+        "filename": "chrome/common/media_router/media_route.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-29T00:08:02Z",
+      "side": 1,
+      "message": "I don\u0027t feel super strongly, but typemapping for enums is often just a bunch of boilerplate--and if we just use the mojo enum directly, then we can avoid the need for said boilerplate altogether.",
+      "parentUuid": "e976a044_067076ad",
+      "range": {
+        "startLine": 17,
+        "startChar": 33,
+        "endLine": 17,
+        "endChar": 37
+      },
+      "revId": "d07f81fe3c743971efd7bd612870c8acef043b10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "450dce94_15b010b2",
         "filename": "chrome/common/media_router/mojo/media_controller.mojom",
         "patchSetId": 16
@@ -84,6 +108,24 @@
     },
     {
       "key": {
+        "uuid": "552d3f10_d17f4145",
+        "filename": "chrome/common/media_router/mojo/media_controller.mojom",
+        "patchSetId": 16
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-29T00:08:02Z",
+      "side": 1,
+      "message": "I meant adding CreateHangoutsMediaRouteController(), etc.\n\nI think it probably scales just as well as augmenting the MediaController itself with supplemental interfaces like this?",
+      "parentUuid": "8a965a2b_8e56f921",
+      "revId": "d07f81fe3c743971efd7bd612870c8acef043b10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2ee847f4_b8f0e7f2",
         "filename": "chrome/common/media_router/mojo/media_router.mojom",
         "patchSetId": 16
@@ -113,6 +155,24 @@
       "side": 1,
       "message": "Hmm... most mojom enums that I see uses upper case naming? Is this a new rule? (I can change it, but just wondering)",
       "parentUuid": "2ee847f4_b8f0e7f2",
+      "revId": "d07f81fe3c743971efd7bd612870c8acef043b10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b498d31f_1ca59d14",
+        "filename": "chrome/common/media_router/mojo/media_router.mojom",
+        "patchSetId": 16
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-29T00:08:02Z",
+      "side": 1,
+      "message": "It used to be that Google style only allowed MACRO_STYLE naming. This changed several years ago when we got scoped enums which allowed kConstantStyle names.\n\nAt some point, it\u0027s likely we\u0027ll just convert all the existing MACRO_STYLE names to kConstantStyle names: https://groups.google.com/a/chromium.org/d/msg/cxx/Hpkfudv5bac/9IGlaeR3CwAJ\n\nSo this saves effort down the road \u003d)",
+      "parentUuid": "73dfe39b_a6ab51dc",
       "revId": "d07f81fe3c743971efd7bd612870c8acef043b10",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
