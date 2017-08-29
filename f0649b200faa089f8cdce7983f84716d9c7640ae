@@ -1,0 +1,95 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "798d5195_1e80cba6",
+        "filename": "ios/clean/chrome/browser/ui/tab/tab_container_view_controller+internal.h",
+        "patchSetId": 27
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-08-29T18:47:07Z",
+      "side": 1,
+      "message": "newline above @end?",
+      "range": {
+        "startLine": 36,
+        "startChar": 2,
+        "endLine": 36,
+        "endChar": 3
+      },
+      "revId": "f0649b200faa089f8cdce7983f84716d9c7640ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61f27e84_da11e131",
+        "filename": "ios/clean/chrome/browser/ui/tab/tab_container_view_controller.mm",
+        "patchSetId": 27
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-08-29T18:47:07Z",
+      "side": 1,
+      "message": "Liking this solution way more than the previous approaches 👍",
+      "revId": "f0649b200faa089f8cdce7983f84716d9c7640ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4846deb2_8239d32f",
+        "filename": "ios/clean/chrome/browser/ui/tab/tab_coordinator_unittest.mm",
+        "patchSetId": 27
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-08-29T18:47:07Z",
+      "side": 1,
+      "message": "Wow, base\u0027s implementation of features is way nicer than our old experimental_flags implementation.  Happy Eric saw this CL before it was landed!",
+      "revId": "f0649b200faa089f8cdce7983f84716d9c7640ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8b2e081_de1ca1e8",
+        "filename": "ios/clean/chrome/browser/ui/toolbar/toolbar_view_controller.h",
+        "patchSetId": 27
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-08-29T18:47:07Z",
+      "side": 1,
+      "message": "This comment doesn\u0027t accurately represent the code in the .mm file; it seems that if this is YES, we will always try to open the tab strip.  If the \"second tap opens tab grid\" is implemented elsewhere, move this comment there.",
+      "revId": "f0649b200faa089f8cdce7983f84716d9c7640ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dbada746_14a57bbd",
+        "filename": "ios/clean/chrome/browser/ui/toolbar/toolbar_view_controller.h",
+        "patchSetId": 27
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-08-29T18:47:07Z",
+      "side": 1,
+      "message": "This property name is a little confusing because the toolbar doesn\u0027t \"use\" the tab strip; that\u0027s a detail of the parent coordinator.  One way of specifying this a little more clearly would be to use an enum type here:\n\n// At top of header:\nenum class TabSwitcherOpeningMode {\n  TAB_GRID,\n  TAB_STRIP,\n};\n\n// In @interface:\n@property(nonatomic, assign) TabSwitcherOpeningMode tabSwitcherMode;\n\nThis would clarify exactly how this property is used, and will also self-document what the default mode would be (rather than relying on this comment to describe default behavior).  WDYT?",
+      "revId": "f0649b200faa089f8cdce7983f84716d9c7640ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
