@@ -13,15 +13,6 @@
             value: 'Westeros/Kings_Landing',
           },
         },
-        flags: {
-          // TODO(alemate): This test should be run for both values of this
-          // option.
-          per_user_timezone_enabled: {
-            key: 'cros.flags.per_user_timezone_enabled',
-            type: chrome.settingsPrivate.PrefType.BOOLEAN,
-            value: true,
-          },
-        },
       },
       settings: {
         clock: {
@@ -36,39 +27,8 @@
           type: chrome.settingsPrivate.PrefType.BOOLEAN,
           value: true,
         },
-        timezone: {
-          key: 'settings.timezone',
-          type: chrome.settingsPrivate.PrefType.STRING,
-          value: 'Westeros/Kings_Landing',
-        },
       },
     };
-  }
-
-  function updatePrefsWithPolicy(prefs, managed, valueFromPolicy) {
-    var prefsCopy = JSON.parse(JSON.stringify(prefs));
-    if (managed) {
-      prefsCopy.settings.resolve_timezone_by_geolocation.controlledBy =
-          chrome.settingsPrivate.ControlledBy.USER_POLICY;
-      prefsCopy.settings.resolve_timezone_by_geolocation.enforcement =
-          chrome.settingsPrivate.Enforcement.ENFORCED;
-      prefsCopy.settings.resolve_timezone_by_geolocation.value =
-          valueFromPolicy;
-      prefsCopy.settings.timezone.controlledBy =
-          chrome.settingsPrivate.ControlledBy.USER_POLICY;
-      prefsCopy.settings.timezone.enforcement =
-          chrome.settingsPrivate.Enforcement.ENFORCED;
-    } else {
-      prefsCopy.settings.resolve_timezone_by_geolocation.controlledBy =
-          undefined;
-      prefsCopy.settings.resolve_timezone_by_geolocation.enforcement =
-          undefined;
-      // Auto-resolve defaults to true.
-      prefsCopy.settings.resolve_timezone_by_geolocation.value = true;
-      prefsCopy.settings.timezone.controlledBy = undefined;
-      prefsCopy.settings.timezone.enforcement = undefined;
-    }
-    return prefsCopy;
   }
 
   /**
@@ -97,13 +57,10 @@
     loadTimeData.data = data;
 
     var dateTime = document.createElement('settings-date-time-page');
-    dateTime.prefs =
-        updatePrefsWithPolicy(prefs, hasPolicy, opt_autoDetectPolicyValue);
+    dateTime.prefs = prefs;
     CrSettingsPrefs.setInitialized();
 
     document.body.appendChild(dateTime);
-    cr.webUIListenerCallback(
-        'time-zone-auto-detect-policy', hasPolicy, opt_autoDetectPolicyValue);
     return dateTime;
   }
 
@@ -153,24 +110,14 @@
       PolymerTest.clearBody();
     });
 
-    function verifyAutoDetectSetting(autoDetect, managed) {
-      Polymer.dom.flush();
-      var selector = dateTime.$$('#userTimeZoneSelector');
-      var selectorHidden = selector ? selector.hidden : true;
-      assertEquals(managed || autoDetect, selectorHidden);
-
-      var checkButton = dateTime.$$('#timeZoneAutoDetect');
-      var checkButtonChecked = checkButton ? checkButton.checked : false;
-      if (!managed)
-        assertEquals(autoDetect, checkButtonChecked);
+    function verifyAutoDetectSetting(autoDetect) {
+      assertEquals(autoDetect, dateTime.$$('settings-dropdown-menu').disabled);
+      assertEquals(autoDetect, dateTime.$.timeZoneAutoDetect.checked);
     }
 
     function verifyPolicy(policy) {
       Polymer.dom.flush();
-      var indicator =
-          dateTime.$$('#timeZoneAutoDetect').$$('cr-policy-pref-indicator');
-      if (indicator && indicator.style.display == 'none')
-        indicator = null;
+      var indicator = dateTime.$$('cr-policy-indicator');
 
       if (policy) {
         assertTrue(!!indicator);
@@ -180,29 +127,15 @@
         assertFalse(!!indicator);
       }
 
-      assertEquals(
-          policy, dateTime.$$('#timeZoneAutoDetect').$$('#control').disabled);
+      assertEquals(policy, dateTime.$.timeZoneAutoDetect.disabled);
     }
 
     function verifyTimeZonesPopulated(populated) {
-      Polymer.dom.flush();
-      var userTimezoneDropdown = dateTime.$$('#userTimeZoneSelector');
-      var systemTimezoneDropdown = dateTime.$$('#systemTimezoneSelector');
-
-      var dropdown =
-          userTimezoneDropdown ? userTimezoneDropdown : systemTimezoneDropdown;
+      var dropdown = dateTime.$$('settings-dropdown-menu');
       if (populated)
         assertEquals(fakeTimeZones.length, dropdown.menuOptions.length);
       else
         assertEquals(1, dropdown.menuOptions.length);
-    }
-
-    function updatePolicy(dateTime, managed, valueFromPolicy) {
-      dateTime.prefs =
-          updatePrefsWithPolicy(dateTime.prefs, managed, valueFromPolicy);
-      cr.webUIListenerCallback(
-          'time-zone-auto-detect-policy', managed, valueFromPolicy);
-      Polymer.dom.flush();
     }
 
     test('auto-detect on', function(done) {
@@ -212,13 +145,13 @@
       assertTrue(dateTimePageReadyCalled);
       assertFalse(getTimeZonesCalled);
 
-      verifyAutoDetectSetting(true, false);
+      verifyAutoDetectSetting(true);
       verifyTimeZonesPopulated(false);
       verifyPolicy(false);
 
       // Disable auto-detect.
-      MockInteractions.tap(dateTime.$$('#timeZoneAutoDetect').$$('#control'));
-      verifyAutoDetectSetting(false, false);
+      MockInteractions.tap(dateTime.$.timeZoneAutoDetect);
+      verifyAutoDetectSetting(false);
       assertTrue(getTimeZonesCalled);
 
       setTimeout(function() {
@@ -228,21 +161,22 @@
     });
 
     test('auto-detect off', function(done) {
-      dateTime = initializeDateTime(getFakePrefs(), false);
-      dateTime.set(
-          'prefs.settings.resolve_timezone_by_geolocation.value', false);
+      var prefs = getFakePrefs();
+      prefs.settings.resolve_timezone_by_geolocation.value = false;
+      dateTime = initializeDateTime(prefs, false);
+      cr.webUIListenerCallback('time-zone-auto-detect-policy', false);
 
       assertTrue(dateTimePageReadyCalled);
       assertTrue(getTimeZonesCalled);
 
-      verifyAutoDetectSetting(false, false);
+      verifyAutoDetectSetting(false);
       verifyPolicy(false);
 
       setTimeout(function() {
         verifyTimeZonesPopulated(true);
 
         // Enable auto-detect.
-        MockInteractions.tap(dateTime.$$('#timeZoneAutoDetect').$$('#control'));
+        MockInteractions.tap(dateTime.$.timeZoneAutoDetect);
         verifyAutoDetectSetting(true);
         done();
       });
@@ -250,25 +184,25 @@
 
     test('auto-detect forced on', function(done) {
       var prefs = getFakePrefs();
+      prefs.settings.resolve_timezone_by_geolocation.value = false;
       dateTime = initializeDateTime(prefs, true, true);
-      dateTime.set(
-          'prefs.settings.resolve_timezone_by_geolocation.value', false);
+      cr.webUIListenerCallback('time-zone-auto-detect-policy', true, true);
 
       assertTrue(dateTimePageReadyCalled);
       assertFalse(getTimeZonesCalled);
 
-      verifyAutoDetectSetting(true, true);
+      verifyAutoDetectSetting(true);
       verifyTimeZonesPopulated(false);
       verifyPolicy(true);
 
       // Cannot disable auto-detect.
-      MockInteractions.tap(dateTime.$$('#timeZoneAutoDetect').$$('#control'));
-      verifyAutoDetectSetting(true, true);
+      MockInteractions.tap(dateTime.$.timeZoneAutoDetect);
+      verifyAutoDetectSetting(true);
       assertFalse(getTimeZonesCalled);
 
       // Update the policy: force auto-detect off.
-      updatePolicy(dateTime, true, false);
-      verifyAutoDetectSetting(false, true);
+      cr.webUIListenerCallback('time-zone-auto-detect-policy', true, false);
+      verifyAutoDetectSetting(false);
       verifyPolicy(true);
 
       assertTrue(getTimeZonesCalled);
@@ -281,30 +215,32 @@
     test('auto-detect forced off', function(done) {
       var prefs = getFakePrefs();
       dateTime = initializeDateTime(prefs, true, false);
+      cr.webUIListenerCallback('time-zone-auto-detect-policy', true, false);
 
       assertTrue(dateTimePageReadyCalled);
       assertTrue(getTimeZonesCalled);
 
-      verifyAutoDetectSetting(false, true);
+      verifyAutoDetectSetting(false);
       verifyPolicy(true);
 
       setTimeout(function() {
         verifyTimeZonesPopulated(true);
 
         // Remove the policy so user's preference takes effect.
-        updatePolicy(dateTime, false);
-        verifyAutoDetectSetting(true, false);
+        cr.webUIListenerCallback('time-zone-auto-detect-policy', false);
+        verifyAutoDetectSetting(true);
         verifyPolicy(false);
 
         // User can disable auto-detect.
-        MockInteractions.tap(dateTime.$$('#timeZoneAutoDetect').$$('#control'));
-        verifyAutoDetectSetting(false, false);
+        MockInteractions.tap(dateTime.$.timeZoneAutoDetect);
+        verifyAutoDetectSetting(false);
         done();
       });
     });
 
     test('set date and time button', function() {
       dateTime = initializeDateTime(getFakePrefs(), false);
+      cr.webUIListenerCallback('time-zone-auto-detect-policy', false);
 
       var showSetDateTimeUICalled = false;
       registerMessageCallback('showSetDateTimeUI', null, function() {
@@ -312,7 +248,7 @@
         showSetDateTimeUICalled = true;
       });
 
-      var setDateTimeButton = dateTime.$$('#setDateTime');
+      var setDateTimeButton = dateTime.$.setDateTime;
       assertEquals(0, setDateTimeButton.offsetHeight);
 
       // Make the date and time editable.

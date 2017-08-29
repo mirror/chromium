@@ -1374,9 +1374,6 @@ extern const char kDisableLockScreenAppsDescription[];
 extern const char kDisableNewVirtualKeyboardBehaviorName[];
 extern const char kDisableNewVirtualKeyboardBehaviorDescription[];
 
-extern const char kEnablePerUserTimezoneName[];
-extern const char kEnablePerUserTimezoneDescription[];
-
 extern const char kDisableSystemTimezoneAutomaticDetectionName[];
 extern const char kDisableSystemTimezoneAutomaticDetectionDescription[];
 
