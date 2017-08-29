@@ -52,6 +52,24 @@
       "revId": "0e7179e22d60b9e49b337ca34c3b3b17e596984c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4db6c8e5_40558b31",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 97554,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-08-29T06:06:29Z",
+      "side": 0,
+      "message": "I recalled that it is possible to mark individual \"affectred-histogram\" as obsolete without creating new prefix group. e.g., see NQE.Accuracy.HttpRTT.EstimatedObservedDiff.Negative.*",
+      "parentUuid": "4ed335cd_56071c7f",
+      "revId": "0e7179e22d60b9e49b337ca34c3b3b17e596984c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
