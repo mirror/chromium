@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "bc1e8d8a_0cee4cc3",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_home_view_controller.mm",
+        "patchSetId": 15
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1161750
+      },
+      "writtenOn": "2017-08-29T13:52:57Z",
+      "side": 1,
+      "message": "Its title is all CAPS. But I can change it to \"Done\".",
+      "parentUuid": "4940bb4d_2fa75e91",
+      "range": {
+        "startLine": 196,
+        "startChar": 43,
+        "endLine": 196,
+        "endChar": 47
+      },
+      "revId": "aa052676965a47f9c35d4024169a4f78f71a1704",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "39d3e6e2_6388835d",
         "filename": "ios/chrome/browser/ui/bookmarks/bookmarks_egtest.mm",
         "patchSetId": 15
@@ -42,6 +66,23 @@
         "endLine": 1171,
         "endChar": 39
       },
+      "revId": "aa052676965a47f9c35d4024169a4f78f71a1704",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b665ae56_4bc5acc3",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmarks_egtest.mm",
+        "patchSetId": 15
+      },
+      "lineNbr": 1171,
+      "author": {
+        "id": 1161750
+      },
+      "writtenOn": "2017-08-29T13:52:57Z",
+      "side": 1,
+      "message": "crbug.com/760103",
       "revId": "aa052676965a47f9c35d4024169a4f78f71a1704",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
