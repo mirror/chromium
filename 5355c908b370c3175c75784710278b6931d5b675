@@ -1,0 +1,84 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7b5cd78f_dfaafd07",
+        "filename": "services/shape_detection/android/java/src/org/chromium/shape_detection/BarcodeDetectionImpl.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-08-29T17:48:26Z",
+      "side": 1,
+      "message": "Instead of performing this check in detect() this could be done in createImpl so that the Mojo connection is immediately closed if Google Play Services is not available. This will cause Blink to throw a DOMException with \"Barcode Detection not implemented.\" This may avoid the need to go forward with this larger patch.",
+      "range": {
+        "startLine": 45,
+        "startChar": 12,
+        "endLine": 46,
+        "endChar": 95
+      },
+      "revId": "5355c908b370c3175c75784710278b6931d5b675",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de2d0e6a_f5ada1a0",
+        "filename": "services/shape_detection/android/java/src/org/chromium/shape_detection/FaceDetectionImplGmsCore.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-08-29T17:48:26Z",
+      "side": 1,
+      "message": "Stray line.",
+      "revId": "5355c908b370c3175c75784710278b6931d5b675",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4e5cf5a_f828e968",
+        "filename": "services/shape_detection/face_detection_impl_mac.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-08-29T17:48:26Z",
+      "side": 1,
+      "message": "With this change we don\u0027t need to use a ScopedCallbackRunner anymore because every return path has to set a particular error code.",
+      "revId": "5355c908b370c3175c75784710278b6931d5b675",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91675280_d2fe70f7",
+        "filename": "services/shape_detection/public/interfaces/barcodedetection.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-08-29T17:48:26Z",
+      "side": 1,
+      "message": "Add a new status.mojom containing an enum DetectionStatus (instead of strings). The reply signature should be:\n\n(DetectionStatus status, array\u003cBarcodeDetectionResult\u003e? results)\n\nIf the status is not SUCCESS then |results| should be null.",
+      "range": {
+        "startLine": 23,
+        "startChar": 7,
+        "endLine": 23,
+        "endChar": 61
+      },
+      "revId": "5355c908b370c3175c75784710278b6931d5b675",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
