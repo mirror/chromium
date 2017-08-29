@@ -480,13 +480,9 @@ void ServiceWorkerVersion::StopWorker(const StatusCallback& callback) {
   switch (running_status()) {
     case EmbeddedWorkerStatus::STARTING:
     case EmbeddedWorkerStatus::RUNNING:
-      // Stop() returns false when it's called before StartWorker message hasn't
-      // been sent to the renderer process even though EmbeddedWorkerInstance is
-      // stopped properly.
-      // TODO(shimazu): Remove this check after Stop() hides the IPC behavior.
-      // See also a TODO on EmbeddedWorkerInstance::Stop.
-      if (!embedded_worker_->Stop()) {
-        RunSoon(base::BindOnce(callback, SERVICE_WORKER_ERROR_IPC_FAILED));
+      embedded_worker_->Stop();
+      if (running_status() == EmbeddedWorkerStatus::STOPPED) {
+        RunSoon(base::BindOnce(callback, SERVICE_WORKER_OK));
         return;
       }
       stop_callbacks_.push_back(callback);
@@ -498,6 +494,7 @@ void ServiceWorkerVersion::StopWorker(const StatusCallback& callback) {
       RunSoon(base::BindOnce(callback, SERVICE_WORKER_OK));
       return;
   }
+  NOTREACHED();
 }
 
 void ServiceWorkerVersion::ScheduleUpdate() {
@@ -1859,7 +1856,8 @@ void ServiceWorkerVersion::OnStoppedInternal(EmbeddedWorkerStatus old_status) {
     should_restart = false;
   } else if (old_status == EmbeddedWorkerStatus::STARTING) {
     // This worker unexpectedly stopped because of start failure (e.g., process
-    // allocation failure) and restart is likely to fail again.
+    // allocation failure). Attempting to restart could cause an endloop loop of
+    // start attempts, so don't try to restart now.
     should_restart = false;
   }
 
