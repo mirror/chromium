@@ -44,6 +44,7 @@
 - (instancetype)initWithFrame:(CGRect)frame {
   self = [super initWithFrame:frame];
   if (self) {
+    self.accessibilityIdentifier = @"SigninPromoCell";
     UIView* contentView = self.contentView;
     _signinPromoView = [[SigninPromoView alloc] initWithFrame:self.bounds];
     _signinPromoView.translatesAutoresizingMaskIntoConstraints = NO;
