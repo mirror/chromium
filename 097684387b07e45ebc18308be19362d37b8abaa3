@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "077a6407_b0ae62b9",
+        "filename": "chrome/browser/ui/cocoa/chrome_style.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-08-29T16:44:52Z",
+      "side": 1,
+      "message": "Move it out of this file. The icon only used for passwords. Thus, it belongs there.",
+      "range": {
+        "startLine": 21,
+        "startChar": 4,
+        "endLine": 21,
+        "endChar": 29
+      },
+      "revId": "097684387b07e45ebc18308be19362d37b8abaa3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ebb469be_641f01ae",
+        "filename": "chrome/browser/ui/cocoa/passwords/passwords_list_view_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-08-29T16:44:52Z",
+      "side": 1,
+      "message": "Why do you need it? Can\u0027t you just get the size of a real image that you load below?",
+      "range": {
+        "startLine": 247,
+        "startChar": 34,
+        "endLine": 247,
+        "endChar": 46
+      },
+      "revId": "097684387b07e45ebc18308be19362d37b8abaa3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b0e028a_f77e4060",
+        "filename": "chrome/browser/ui/cocoa/passwords/passwords_list_view_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 258,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-08-29T16:44:52Z",
+      "side": 1,
+      "message": "Does it set a tooltip?",
+      "range": {
+        "startLine": 258,
+        "startChar": 27,
+        "endLine": 258,
+        "endChar": 66
+      },
+      "revId": "097684387b07e45ebc18308be19362d37b8abaa3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6bc7bf2_b3a1d7ea",
+        "filename": "chrome/browser/ui/cocoa/passwords/passwords_list_view_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 271,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-08-29T16:44:52Z",
+      "side": 1,
+      "message": "passwordViewButton_?",
+      "range": {
+        "startLine": 270,
+        "startChar": 6,
+        "endLine": 271,
+        "endChar": 63
+      },
+      "revId": "097684387b07e45ebc18308be19362d37b8abaa3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb484338_e8f28f56",
+        "filename": "chrome/browser/ui/cocoa/passwords/passwords_list_view_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 291,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-08-29T16:44:52Z",
+      "side": 1,
+      "message": "passwordViewButton_?",
+      "range": {
+        "startLine": 290,
+        "startChar": 6,
+        "endLine": 291,
+        "endChar": 63
+      },
+      "revId": "097684387b07e45ebc18308be19362d37b8abaa3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
