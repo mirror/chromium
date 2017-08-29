@@ -52,6 +52,24 @@
       "revId": "9857376d5e64ff83f90c85a19d8c65b778b753be",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "210ca619_20a5ec90",
+        "filename": "content/child/loader/cors_url_loader.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-08-29T23:04:39Z",
+      "side": 0,
+      "message": "I think what we\u0027ll need to do is tie together the lifetimes of the CORSURLLoader and CORSURLLoaderFactory. There are a couple of ways to do that.\n\n1) This patch already ties the lifetime of CORSURLLoaderFactory to the union of all pipes connected to it. We could also have it own all of the pipes to CORSURLLoaders (in another BindingSet) and check if that is empty as well before deleting itself.\n\n2) Move the URLLoaderFactoryPtr it owns into a separate refcounted object that is shared between the two of them.\n\nI think option 1 is simpler so I can make that change to this patch and see how much it makes sense.",
+      "parentUuid": "9480db63_65d5fb62",
+      "revId": "9857376d5e64ff83f90c85a19d8c65b778b753be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
