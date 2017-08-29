@@ -51,24 +51,17 @@ class CONTENT_EXPORT EmbeddedWorkerRegistry
   // This doesn't actually start or stop the worker.
   std::unique_ptr<EmbeddedWorkerInstance> CreateWorker();
 
-  // Stop all active workers, even if they're handling events.
+  // Stop all running workers, even if they're handling events.
   void Shutdown();
 
-  // Called by EmbeddedWorkerInstance to do some necessary work in the registry.
+  // Called by EmbeddedWorkerInstance when it starts or stops. This registry
+  // keeps track of running workers.
   bool OnWorkerStarted(int process_id, int embedded_worker_id);
   void OnWorkerStopped(int process_id, int embedded_worker_id);
 
   // Called by EmbeddedWorkerInstance when it learns DevTools has attached to
   // it.
   void OnDevToolsAttached(int embedded_worker_id);
-
-  // Removes information about the service workers running on the process and
-  // calls ServiceWorkerVersion::OnDetached() on each. Called when the process
-  // is terminated. Under normal operation, the workers should already have
-  // been stopped before the process is terminated, in which case this function
-  // does nothing. But in some cases the process can be terminated unexpectedly
-  // or the workers can fail to stop cleanly.
-  void RemoveProcess(int process_id);
 
   // Returns an embedded worker instance for given |embedded_worker_id|.
   EmbeddedWorkerInstance* GetWorker(int embedded_worker_id);
@@ -102,7 +95,8 @@ class CONTENT_EXPORT EmbeddedWorkerRegistry
   // |process_id| could be invalid (i.e. ChildProcessHost::kInvalidUniqueID)
   // if it's not running.
   void RemoveWorker(int process_id, int embedded_worker_id);
-  // DetachWorker is called when EmbeddedWorkerInstance releases a process.
+  // DetachWorker is called when EmbeddedWorkerInstance unexpectedly loses
+  // or cannot establish a connection to the renderer.
   // |process_id| could be invalid (i.e. ChildProcessHost::kInvalidUniqueID)
   // if it's not running.
   void DetachWorker(int process_id, int embedded_worker_id);
