@@ -52,6 +52,24 @@
       "revId": "4997af7457e96365e44e145e3946dde048a6ca8d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d61ffe32_c2cf9891",
+        "filename": "third_party/WebKit/Source/platform/wtf/typed_arrays/ArrayBufferContents.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1144619
+      },
+      "writtenOn": "2017-08-29T00:53:02Z",
+      "side": 1,
+      "message": "Sounds good. I went ahead and added a comment warning about the dangers of returning a nullptr and justifying why it\u0027s okay here.",
+      "parentUuid": "e65de0e8_5601f18d",
+      "revId": "4997af7457e96365e44e145e3946dde048a6ca8d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
