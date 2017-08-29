@@ -27,10 +27,15 @@ namespace l10n_util {
 // Takes normalized locale as |locale|. Returns language part (before '-').
 UI_BASE_EXPORT std::string GetLanguage(const std::string& locale);
 
-// This method translates a generic locale name to one of the locally defined
-// ones. This method returns true if it succeeds.
+// This method returns the best match locale for string resource bundles
+// (string_locale) and the best match locale for formatting, sorting and
+// other I18N tasks done by ICU (format_locale). For instance, 'en-AU' does
+// not have its own string translation, but it's supported by ICU.
+// string_locale will be en-GB (the best match for en-AU), but format_locale
+// will be en-AU. This method returns true if it succeeds.
 UI_BASE_EXPORT bool CheckAndResolveLocale(const std::string& locale,
-                                          std::string* resolved_locale);
+                                          std::string* string_locale,
+                                          std::string* format_locale);
 
 // This method is responsible for determining the locale as defined below. In
 // nearly all cases you shouldn't call this, rather use GetApplicationLocale
