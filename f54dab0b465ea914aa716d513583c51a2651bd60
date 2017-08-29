@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "13cb8d99_fb8646ff",
+        "filename": "tools/binary_size/libsupersize/console.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-29T20:00:45Z",
+      "side": 1,
+      "message": "Originally I used |format| that that triggered Presubmit warning for colliding with stuff.\n\nGoing with Csv(), and using |format_name|.",
+      "parentUuid": "1ff0abb3_5c72d3be",
+      "revId": "f54dab0b465ea914aa716d513583c51a2651bd60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b46e6744_65c5e58e",
         "filename": "tools/binary_size/libsupersize/describe.py",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "f54dab0b465ea914aa716d513583c51a2651bd60",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6fb4675c_43e8fdbf",
+        "filename": "tools/binary_size/libsupersize/describe.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-29T20:00:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b46e6744_65c5e58e",
+      "revId": "f54dab0b465ea914aa716d513583c51a2651bd60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "b44119d9_cb47b50a",
+        "filename": "tools/binary_size/libsupersize/describe.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-29T20:00:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9aa67e44_c326f176",
+      "revId": "f54dab0b465ea914aa716d513583c51a2651bd60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "88e37952_a2496164",
         "filename": "tools/binary_size/libsupersize/describe.py",
         "patchSetId": 1
@@ -67,6 +121,24 @@
       "revId": "f54dab0b465ea914aa716d513583c51a2651bd60",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18287603_8b0c9f73",
+        "filename": "tools/binary_size/libsupersize/describe.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-29T20:00:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "88e37952_a2496164",
+      "revId": "f54dab0b465ea914aa716d513583c51a2651bd60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "dd53189d_b1a0411b",
+        "filename": "tools/binary_size/libsupersize/describe.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-29T20:00:45Z",
+      "side": 1,
+      "message": "- Removing \u0027Index\u0027 and \u0027Running\u0027.\n- Oops \u0027PSS\u0027 should really be |s.pss|, so changed that.\n\nI think the challenge here (_DescribeSymbols()) is that we\u0027re mixing the following:\n- Multiple types (Group / Delta / other).\n- Data extraction.\n- Rendering.\n\nI want to refactor this eventually. For the current Patch Set I\u0027m uploading the minimal change to get some CSV-ness to play with. For the next CL I want to do a refactoring that produces identical outputs (at least for \"text\"). Then in CL 3 I\u0027d like to get CSV working for _DescribeSymbol(). But let me know if you want all this combined in this CL.",
+      "parentUuid": "f353d013_5ede398e",
+      "revId": "f54dab0b465ea914aa716d513583c51a2651bd60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a8236bcc_8bcaa747",
         "filename": "tools/binary_size/libsupersize/describe.py",
         "patchSetId": 1
@@ -101,6 +191,24 @@
       "revId": "f54dab0b465ea914aa716d513583c51a2651bd60",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd15305b_c821b9b7",
+        "filename": "tools/binary_size/libsupersize/describe.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 498,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-29T20:00:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a8236bcc_8bcaa747",
+      "revId": "f54dab0b465ea914aa716d513583c51a2651bd60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
