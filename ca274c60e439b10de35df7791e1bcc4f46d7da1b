@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "81cb660b_b3304f3a",
+        "filename": "build/secondary/third_party/android_tools/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-08-29T15:47:55Z",
+      "side": 1,
+      "message": "nit: I think this should be handled in config.gni alongside the other package overrides.",
+      "revId": "ca274c60e439b10de35df7791e1bcc4f46d7da1b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
