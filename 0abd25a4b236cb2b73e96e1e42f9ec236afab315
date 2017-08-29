@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "44fd660d_691ab92c",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_home_view_controller.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1115986
+      },
+      "writtenOn": "2017-08-29T08:55:36Z",
+      "side": 1,
+      "message": "The two sides of this if clause are beginning to grow too big. Can you split this in two methods instead? There is no common code between the old and the new...",
+      "range": {
+        "startLine": 149,
+        "startChar": 0,
+        "endLine": 149,
+        "endChar": 71
+      },
+      "revId": "0abd25a4b236cb2b73e96e1e42f9ec236afab315",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b65fb58_dea91c87",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_table_view.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 338,
+      "author": {
+        "id": 1115986
+      },
+      "writtenOn": "2017-08-29T08:55:36Z",
+      "side": 1,
+      "message": "You are putting curly bracket on one liner ifs here, but you don\u0027t in the next method. Can you be consistent within the file?",
+      "range": {
+        "startLine": 338,
+        "startChar": 3,
+        "endLine": 338,
+        "endChar": 0
+      },
+      "revId": "0abd25a4b236cb2b73e96e1e42f9ec236afab315",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ccf5964_84c84d48",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_table_view.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 351,
+      "author": {
+        "id": 1115986
+      },
+      "writtenOn": "2017-08-29T08:55:36Z",
+      "side": 1,
+      "message": "When the if clause is multilines, please add backets {}",
+      "range": {
+        "startLine": 351,
+        "startChar": 0,
+        "endLine": 351,
+        "endChar": 42
+      },
+      "revId": "0abd25a4b236cb2b73e96e1e42f9ec236afab315",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "281dd140_e5575e06",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_table_view.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 378,
+      "author": {
+        "id": 1115986
+      },
+      "writtenOn": "2017-08-29T08:55:36Z",
+      "side": 1,
+      "message": "The BookmarkHomeWaitingView has its own animation to stop. The spinner must always be stopped at the right place, there is an animation to respect that you don\u0027t follow here. See the API for BookmarkHomeWaitingView fro details.",
+      "range": {
+        "startLine": 378,
+        "startChar": 0,
+        "endLine": 378,
+        "endChar": 51
+      },
+      "revId": "0abd25a4b236cb2b73e96e1e42f9ec236afab315",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "386a4414_4a1e0966",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_table_view.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 402,
+      "author": {
+        "id": 1115986
+      },
+      "writtenOn": "2017-08-29T08:55:36Z",
+      "side": 1,
+      "message": "In general, when you are done with a view, just remove it from the view hierarchy. Views that are still here, even with an alpha of zero, are still costing rendering time.",
+      "range": {
+        "startLine": 402,
+        "startChar": 7,
+        "endLine": 402,
+        "endChar": 31
+      },
+      "revId": "0abd25a4b236cb2b73e96e1e42f9ec236afab315",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
