@@ -715,6 +715,7 @@
 
     'android_clang_asan_errorprone_findbugs_debug_bot_minimal_symbols': [
       'android', 'clang', 'asan', 'errorprone', 'findbugs', 'debug_bot', 'minimal_symbols',
+      'strip_debug_info',
     ],
 
     'android_clang_asan_errorprone_findbugs_debug_trybot': [
@@ -723,6 +724,7 @@
 
     'android_clang_tot_asan': [
       'android_without_codecs', 'clang_tot', 'asan', 'shared', 'debug', 'minimal_symbols',
+      'strip_debug_info',
     ],
 
     'android_clang_tot_dbg': [
@@ -744,6 +746,7 @@
 
     'android_cronet_data_reduction_proxy_release_bot_minimal_symbols_arm_no_neon': [
       'android', 'cronet', 'release_bot', 'minimal_symbols', 'arm_no_neon',
+      'strip_debug_info',
     ],
 
     'android_cronet_debug_static_bot_arm64': [
@@ -760,6 +763,7 @@
 
     'android_cronet_data_reduction_proxy_release_bot_minimal_symbols_arm_no_neon': [
       'android', 'cronet', 'release_bot', 'minimal_symbols', 'arm_no_neon',
+      'strip_debug_info',
     ],
 
     'android_cronet_debug_static_bot_arm64': [
@@ -776,26 +780,32 @@
 
     'android_cronet_release_bot_minimal_symbols_arm64': [
       'android', 'cronet', 'official_optimize', 'release_bot', 'minimal_symbols', 'arm64',
+      'strip_debug_info',
     ],
 
     'android_cronet_release_bot_minimal_symbols_armv6': [
       'android', 'cronet', 'official_optimize', 'release_bot', 'minimal_symbols', 'armv6',
+      'strip_debug_info',
     ],
 
     'android_cronet_release_bot_minimal_symbols_arm_no_neon': [
       'android', 'cronet', 'official_optimize', 'release_bot', 'minimal_symbols', 'arm_no_neon',
+      'strip_debug_info',
     ],
 
     'android_cronet_release_bot_minimal_symbols_arm_no_neon_clang_asan': [
       'android', 'cronet', 'release_bot', 'minimal_symbols', 'arm_no_neon', 'clang', 'asan',
+      'strip_debug_info',
     ],
 
     'android_cronet_release_bot_minimal_symbols_mipsel': [
       'android', 'cronet', 'official_optimize', 'release_bot', 'minimal_symbols', 'mipsel',
+      'strip_debug_info',
     ],
 
     'android_cronet_release_bot_minimal_symbols_x86': [
       'android', 'cronet', 'official_optimize', 'release_bot', 'minimal_symbols', 'x86',
+      'strip_debug_info',
     ],
 
     'android_cronet_release_trybot_arm_no_neon': [
@@ -828,10 +838,12 @@
 
     'android_release_bot_minimal_symbols': [
       'android', 'release_bot', 'minimal_symbols',
+      'strip_debug_info',
     ],
 
     'android_release_bot_minimal_symbols_arm64': [
       'android', 'release_bot', 'minimal_symbols', 'arm64',
+      'strip_debug_info',
     ],
 
     'android_release_thumb_bot': [
@@ -855,7 +867,7 @@
     ],
 
     'android_debug_static_bot_mipsel': [
-      'android', 'debug_static_bot', 'minimal_symbols', 'mipsel',
+      'android', 'debug_static_bot', 'minimal_symbols', 'mipsel', 'strip_debug_info',
     ],
 
     'android_debug_trybot_java_coverage': [
@@ -875,27 +887,27 @@
     ],
 
     'android_ndk_next_release_bot_minimal_symbols': [
-      'android', 'ndk_next', 'release_bot', 'minimal_symbols',
+      'android', 'ndk_next', 'release_bot', 'minimal_symbols', 'strip_debug_info',
     ],
 
     'android_ndk_next_release_bot_minimal_symbols_arm64': [
-      'android', 'ndk_next', 'release_bot', 'minimal_symbols', 'arm64',
+      'android', 'ndk_next', 'release_bot', 'minimal_symbols', 'arm64', 'strip_debug_info',
     ],
 
     'android_ndk_next_release_bot_minimal_symbols_mipsel': [
-      'android', 'ndk_next', 'release_bot', 'minimal_symbols', 'mipsel',
+      'android', 'ndk_next', 'release_bot', 'minimal_symbols', 'mipsel', 'strip_debug_info',
     ],
 
     'android_ndk_next_release_bot_minimal_symbols_x64': [
-      'android', 'ndk_next', 'release_bot', 'minimal_symbols', 'x64',
+      'android', 'ndk_next', 'release_bot', 'minimal_symbols', 'x64', 'strip_debug_info',
     ],
 
     'android_ndk_next_release_bot_minimal_symbols_x86': [
-      'android', 'ndk_next', 'release_bot', 'minimal_symbols', 'x86',
+      'android', 'ndk_next', 'release_bot', 'minimal_symbols', 'x86', 'strip_debug_info',
     ],
 
     'android_release_bot_minimal_symbols': [
-      'android', 'release_bot', 'minimal_symbols',
+      'android', 'release_bot', 'minimal_symbols', 'strip_debug_info',
     ],
 
     'android_shared_release_bot_x64': [
@@ -911,7 +923,7 @@
     ],
 
     'android_without_codecs_release_bot_minimal_symbols': [
-      'android_without_codecs', 'release_bot', 'minimal_symbols',
+      'android_without_codecs', 'release_bot', 'minimal_symbols', 'strip_debug_info',
     ],
 
     'asan_clang_edge_fuzzer_static_v8_heap_x86_full_symbols_release': [
@@ -1055,27 +1067,27 @@
     ],
 
     'clang_debug_bot_minimal_symbols_x86': [
-      'clang', 'debug_bot', 'minimal_symbols', 'x86',
+      'clang', 'debug_bot', 'minimal_symbols', 'x86', 'strip_debug_info',
     ],
 
     'clang_release_bot_minimal_symbols_x86': [
-      'clang', 'release_bot', 'minimal_symbols', 'x86',
+      'clang', 'release_bot', 'minimal_symbols', 'x86', 'strip_debug_info',
     ],
 
     'clang_minimal_symbols_shared_release_bot_x86_dcheck': [
-      'clang', 'minimal_symbols', 'shared_release_bot', 'x86', 'dcheck_always_on',
+      'clang', 'minimal_symbols', 'shared_release_bot', 'x86', 'dcheck_always_on', 'strip_debug_info',
     ],
 
     'clang_official_release_bot_minimal_symbols': [
-      'clang', 'official', 'release_bot', 'minimal_symbols',
+      'clang', 'official', 'release_bot', 'minimal_symbols', 'strip_debug_info',
     ],
 
     'clang_official_release_bot_minimal_symbols_x86': [
-      'clang', 'official', 'release_bot', 'minimal_symbols', 'x86',
+      'clang', 'official', 'release_bot', 'minimal_symbols', 'x86', 'strip_debug_info',
     ],
 
     'clang_official_optimize_release_bot_minimal_symbols_x86': [
-      'clang', 'official_optimize', 'release_bot', 'minimal_symbols', 'x86',
+      'clang', 'official_optimize', 'release_bot', 'minimal_symbols', 'x86', 'strip_debug_info',
     ],
 
     'clang_official_release_trybot': [
@@ -1135,7 +1147,7 @@
     ],
 
     'clang_tot_minimal_symbols_shared_release': [
-      'clang_tot', 'minimal_symbols', 'shared', 'release',
+      'clang_tot', 'minimal_symbols', 'shared', 'release', 'strip_debug_info',
     ],
 
     'clang_tot_shared_release_dcheck': [
@@ -1143,15 +1155,15 @@
     ],
 
     'clang_tot_minimal_symbols_shared_release_x86_dcheck': [
-      'clang_tot', 'minimal_symbols', 'shared', 'release', 'x86', 'dcheck_always_on',
+      'clang_tot', 'minimal_symbols', 'shared', 'release', 'x86', 'dcheck_always_on', 'strip_debug_info',
     ],
 
     'clang_tot_official_minimal_symbols_static_release': [
-      'clang_tot', 'official', 'minimal_symbols', 'static', 'release',
+      'clang_tot', 'official', 'minimal_symbols', 'static', 'release', 'strip_debug_info',
     ],
 
     'clang_tot_official_minimal_symbols_static_release_x86': [
-      'clang_tot', 'official', 'minimal_symbols', 'static', 'release', 'x86',
+      'clang_tot', 'official', 'minimal_symbols', 'static', 'release', 'x86', 'strip_debug_info',
     ],
 
     'clang_tot_lld_release_shared': [
@@ -1174,15 +1186,15 @@
     ],
 
     'codesearch_gen_chromium_android_bot': [
-      'goma', 'clang', 'shared', 'debug', 'minimal_symbols', 'arm', 'android_without_codecs',
+      'goma', 'clang', 'shared', 'debug', 'minimal_symbols', 'arm', 'android_without_codecs', 'strip_debug_info',
     ],
 
     'codesearch_gen_chromium_chromiumos_bot': [
-      'goma', 'clang', 'shared', 'debug', 'minimal_symbols', 'x64', 'chromeos',
+      'goma', 'clang', 'shared', 'debug', 'minimal_symbols', 'x64', 'chromeos', 'strip_debug_info',
     ],
 
     'codesearch_gen_chromium_linux_bot': [
-      'goma', 'clang', 'shared', 'debug', 'minimal_symbols', 'x64',
+      'goma', 'clang', 'shared', 'debug', 'minimal_symbols', 'x64', 'strip_debug_info',
     ],
 
     # The 'cros_chrome_sdk_* configs are placeholders that indicate
@@ -1215,8 +1227,8 @@
     # compiler.gni implicitly sets symbol_level=1 on Windows if goma is enabled,
     # if MSVC is used.  Explicitly set it here so that it's set consistently for
     # both MSVC and clang.
-    'debug_bot_minimal_symbols': [ 'debug_bot', 'minimal_symbols' ],
-    'debug_bot_x86_minimal_symbols': [ 'debug_bot', 'x86', 'minimal_symbols' ],
+    'debug_bot_minimal_symbols': [ 'debug_bot', 'minimal_symbols', 'strip_debug_info', ],
+    'debug_bot_x86_minimal_symbols': [ 'debug_bot', 'x86', 'minimal_symbols', 'strip_debug_info', ],
 
     'debug_libfuzzer_asan': [
       'debug', 'libfuzzer', 'asan', 'chromeos_codecs', 'pdf_xfa', 'disable_nacl',
@@ -1297,7 +1309,7 @@
     ],
 
     'gpu_fyi_tests_win_clang_debug_bot': [
-      'gpu_tests', 'internal_gles2_conform_tests', 'clang', 'debug_bot', 'minimal_symbols',
+      'gpu_tests', 'internal_gles2_conform_tests', 'clang', 'debug_bot', 'minimal_symbols', 'strip_debug_info',
     ],
 
     'gpu_tests_android_release_trybot_arm64': [
@@ -1309,7 +1321,7 @@
     ],
 
     'gpu_tests_debug_trybot_x86_minimal_symbols': [
-      'gpu_tests', 'debug_trybot', 'x86', 'minimal_symbols',
+      'gpu_tests', 'debug_trybot', 'x86', 'minimal_symbols', 'strip_debug_info',
     ],
 
     'gpu_tests_release_trybot': [
@@ -1321,7 +1333,7 @@
     ],
 
     'gpu_tests_release_trybot_x86_minimal_symbols': [
-      'gpu_tests', 'release_trybot', 'x86', 'minimal_symbols',
+      'gpu_tests', 'release_trybot', 'x86', 'minimal_symbols', 'strip_debug_info',
     ],
 
     'gpu_tests_release_bot': [
@@ -1376,7 +1388,7 @@
     ],
 
     'official_goma_minimal_symbols_clang': [
-      'official', 'goma', 'minimal_symbols', 'clang',
+      'official', 'goma', 'minimal_symbols', 'clang', 'strip_debug_info',
     ],
 
     'official_goma': [
@@ -1392,11 +1404,11 @@
     ],
 
     'official_goma_minimal_symbols_android': [
-      'official', 'goma', 'minimal_symbols', 'android',
+      'official', 'goma', 'minimal_symbols', 'android', 'strip_debug_info',
     ],
 
     'official_goma_minimal_symbols_android_arm64': [
-      'official', 'goma', 'minimal_symbols', 'android', 'arm64',
+      'official', 'goma', 'minimal_symbols', 'android', 'arm64', 'strip_debug_info',
     ],
 
     'official_goma_x86': [
@@ -1471,8 +1483,8 @@
     # compiler.gni implicitly sets symbol_level=1 on Windows if goma is enabled,
     # if MSVC is used.  Explicitly set it here so that it's set consistently for
     # both MSVC and clang.
-    'release_bot_minimal_symbols': [ 'release_bot', 'minimal_symbols' ],
-    'release_bot_x86_minimal_symbols': [ 'release_bot', 'x86', 'minimal_symbols' ],
+    'release_bot_minimal_symbols': [ 'release_bot', 'minimal_symbols', 'strip_debug_info' ],
+    'release_bot_x86_minimal_symbols': [ 'release_bot', 'x86', 'minimal_symbols', 'strip_debug_info' ],
 
     'release_libfuzzer_asan': [
       'release', 'libfuzzer', 'asan', 'chromeos_codecs', 'pdf_xfa', 'disable_nacl', 'optimize_for_fuzzing',
@@ -1499,7 +1511,7 @@
     ],
 
     'release_trybot_minimal_symbols': [
-      'release_trybot', 'minimal_symbols',
+      'release_trybot', 'minimal_symbols', 'strip_debug_info',
     ],
 
     'release_trybot_arm': [
@@ -1567,11 +1579,11 @@
     ],
 
     'win_clang_debug_bot': [
-      'clang', 'debug_bot', 'minimal_symbols',
+      'clang', 'debug_bot', 'minimal_symbols', 'strip_debug_info',
     ],
 
     'win_clang_release_bot': [
-      'clang', 'release_bot', 'minimal_symbols',
+      'clang', 'release_bot', 'minimal_symbols', 'strip_debug_info',
     ],
 
     'windows_analyze': [
@@ -1731,11 +1743,11 @@
     },
 
     'debug_static_bot': {
-      'mixins': ['debug', 'static', 'minimal_symbols', 'goma'],
+      'mixins': ['debug', 'static', 'minimal_symbols', 'goma', 'strip_debug_info', ],
     },
 
     'debug_trybot': {
-      'mixins': ['debug_bot', 'minimal_symbols'],
+      'mixins': ['debug_bot', 'minimal_symbols', 'strip_debug_info', ],
     },
 
     'disable_nacl': {
@@ -1920,7 +1932,7 @@
     },
 
     'release_trybot': {
-      'mixins': ['release_bot', 'minimal_symbols', 'dcheck_always_on'],
+      'mixins': ['release_bot', 'minimal_symbols', 'dcheck_always_on', 'strip_debug_info', ],
     },
 
     'shared': {
@@ -1933,6 +1945,10 @@
 
     'static': {
       'gn_args': 'is_component_build=false',
+    },
+
+    'strip_debug_info': {
+      'gn_args': 'strip_debug_info=true',
     },
 
     'system_gbm_libdrm': {
