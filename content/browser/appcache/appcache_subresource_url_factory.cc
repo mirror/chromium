@@ -26,7 +26,8 @@ AppCacheSubresourceURLFactory::AppCacheSubresourceURLFactory(
     URLLoaderFactoryGetter* default_url_loader_factory_getter,
     base::WeakPtr<AppCacheHost> host)
     : default_url_loader_factory_getter_(default_url_loader_factory_getter),
-      appcache_host_(host) {
+      appcache_host_(host),
+      weak_factory_(this) {
   bindings_.set_connection_error_handler(
       base::Bind(&AppCacheSubresourceURLFactory::OnConnectionError,
                  base::Unretained(this)));
@@ -72,7 +73,14 @@ void AppCacheSubresourceURLFactory::CreateLoaderAndStart(
           AppCacheURLLoaderRequest::Create(request), request.resource_type,
           request.should_reset_appcache);
   if (!handler) {
-    NotifyError(std::move(client), net::ERR_FAILED);
+    DeliverNetworkResponse(
+        std::move(url_loader_request),
+        routing_id,
+        request_id,
+        options,
+        request,
+        std::move(client),
+        traffic_annotation);
     return;
   }
 
@@ -85,13 +93,10 @@ void AppCacheSubresourceURLFactory::CreateLoaderAndStart(
   load_info->client = std::move(client);
   load_info->traffic_annotation = traffic_annotation;
 
-  // TODO(ananta/michaeln)
-  // We need to handle redirects correctly, i.e every subresource redirect
-  // could potentially be served out of the cache.
   if (handler->MaybeCreateSubresourceLoader(
-          std::move(load_info), default_url_loader_factory_getter_.get())) {
-    // The handler is owned by the job and will be destoryed when the job is
-    // destroyed.
+          std::move(load_info), default_url_loader_factory_getter_.get(),
+          this)) {
+    // The handler is owned by the job and will be destroyed with the job.
     handler.release();
   }
 }
@@ -99,6 +104,31 @@ void AppCacheSubresourceURLFactory::CreateLoaderAndStart(
 void AppCacheSubresourceURLFactory::Clone(
     mojom::URLLoaderFactoryRequest request) {
   bindings_.AddBinding(this, std::move(request));
+}
+
+base::WeakPtr<AppCacheSubresourceURLFactory>
+AppCacheSubresourceURLFactory::GetWeakPtr() {
+  return weak_factory_.GetWeakPtr();
+}
+
+void AppCacheSubresourceURLFactory::Restart(
+    const net::RedirectInfo& redirect_info,
+    std::unique_ptr<AppCacheRequestHandler> subresource_handler,
+    std::unique_ptr<SubresourceLoadInfo> subresource_load_info) {
+  if (!appcache_host_.get())
+    return;
+
+  subresource_load_info->request.url = redirect_info.new_url;
+  subresource_load_info->request.method = redirect_info.new_method;
+  subresource_load_info->request.referrer = GURL(redirect_info.new_referrer);
+  subresource_load_info->request.site_for_cookies =
+      redirect_info.new_site_for_cookies;
+  if (subresource_handler->MaybeCreateSubresourceLoader(
+          std::move(subresource_load_info),
+          default_url_loader_factory_getter_.get(), this)) {
+    // The handler is owned by the job and will be destroyed with the job.
+    subresource_handler.release();
+  }
 }
 
 void AppCacheSubresourceURLFactory::OnConnectionError() {
@@ -112,6 +142,26 @@ void AppCacheSubresourceURLFactory::NotifyError(
   ResourceRequestCompletionStatus request_result;
   request_result.error_code = error_code;
   client->OnComplete(request_result);
+}
+
+void AppCacheSubresourceURLFactory::DeliverNetworkResponse(
+    mojom::URLLoaderRequest url_loader_request,
+    int32_t routing_id,
+    int32_t request_id,
+    uint32_t options,
+    const ResourceRequest& request,
+    mojom::URLLoaderClientPtr client,
+    const net::MutableNetworkTrafficAnnotationTag& traffic_annotation) {
+  default_url_loader_factory_getter_->GetNetworkFactory()
+      ->get()
+      ->CreateLoaderAndStart(
+          std::move(url_loader_request),
+          routing_id,
+          request_id,
+          options,
+          request,
+          std::move(client),
+          traffic_annotation);
 }
 
 }  // namespace content
