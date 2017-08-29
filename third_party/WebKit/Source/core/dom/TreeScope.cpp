@@ -245,10 +245,13 @@ Element* TreeScope::HitTestPoint(int x,
   Node* node = result.InnerNode();
   if (!node || node->IsDocumentNode())
     return nullptr;
+  Element* element;
   if (node->IsPseudoElement() || node->IsTextNode())
-    node = node->ParentOrShadowHostNode();
-  DCHECK(!node || node->IsElementNode() || node->IsShadowRoot());
-  node = AncestorInThisScope(node);
+    element = node->ParentOrShadowHostElement();
+  else
+    element = ToElement(node);
+
+  node = Retarget(*element);
   if (!node || !node->IsElementNode())
     return nullptr;
   return ToElement(node);
@@ -359,7 +362,7 @@ void TreeScope::AdoptIfNeeded(Node& node) {
 Element* TreeScope::Retarget(const Element& target) const {
   for (const Element* ancestor = &target; ancestor;
        ancestor = ancestor->OwnerShadowHost()) {
-    if (this == ancestor->GetTreeScope())
+    if (ancestor->GetTreeScope().IsInclusiveAncestorOf(*this))
       return const_cast<Element*>(ancestor);
   }
   return nullptr;
