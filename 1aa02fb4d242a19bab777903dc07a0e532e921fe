@@ -16,6 +16,24 @@
       "revId": "1aa02fb4d242a19bab777903dc07a0e532e921fe",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a7831d4_3bcfc5ee",
+        "filename": "base/strings/string_util.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 732,
+      "author": {
+        "id": 1002169
+      },
+      "writtenOn": "2017-08-29T23:11:05Z",
+      "side": 1,
+      "message": "My main rationale for doing it this way, was to keep the references to find() and find_first_of() confined in the function itself, to keep the mystery level relatively low.\n\nI considering adding some kind of searcher functor that replaces |find_this| in the argument list, but it would need to hold both match_length and find_fn back here, which makes it awkward, and I think it\u0027s not any more scrutable than this.\n\nWhat I\u0027ve done in the latest patch set, is to just have the find_fn passed as a parameter, in an attempt to make the call sites more readable. Let me know what you think.",
+      "parentUuid": "b348f3bf_fd25fc45",
+      "revId": "1aa02fb4d242a19bab777903dc07a0e532e921fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
