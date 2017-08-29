@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f9b3c10b_0d82b512",
+        "filename": "mojo/edk/test/test_utils_fuchsia.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-08-29T21:57:13Z",
+      "side": 1,
+      "message": "(This one\u0027s unnecessary, there\u0027s no EINTR on Fuchsia.)",
+      "range": {
+        "startLine": 85,
+        "startChar": 11,
+        "endLine": 85,
+        "endChar": 23
+      },
+      "revId": "fdd81ddf1053dd8930d89e7da5ee854bdf7230d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
