@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "48c324ef_cefbf5f1",
+        "filename": "chrome/browser/ui/search/search_model.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2017-08-29T14:56:03Z",
+      "side": 1,
+      "message": "Change to an enum class? Now seems like a logical time.",
+      "range": {
+        "startLine": 17,
+        "startChar": 2,
+        "endLine": 17,
+        "endChar": 6
+      },
+      "revId": "11d0deec2cb2d9f206d434710cadd45f3842b47b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e22308c0_82ca9159",
+        "filename": "chrome/browser/ui/search/search_model.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2017-08-29T14:56:03Z",
+      "side": 1,
+      "message": "It\u0027s not necessarily true that the user is searching, right?\n\nI\u0027d rather have \"from a page other than the NTP\" than \"some random page\".",
+      "range": {
+        "startLine": 18,
+        "startChar": 7,
+        "endLine": 18,
+        "endChar": 50
+      },
+      "revId": "11d0deec2cb2d9f206d434710cadd45f3842b47b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
