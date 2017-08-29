@@ -22,6 +22,30 @@
       "revId": "4685c8cc34a29cb091e3b1d3078d659418cb2f4a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "224c55f4_20b173e0",
+        "filename": "components/sync/driver/resources/about.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-08-29T22:30:09Z",
+      "side": 1,
+      "message": "https://cs.chromium.org/chromium/src/components/sync/driver/resources/index.html?type\u003dcs\u0026q\u003dabout.html+file:sync\u0026sq\u003dpackage:chromium\u0026l\u003d80\n\nI believe it\u0027s a dev page for internal use. These dev pages are commonly not i18n\u0027d since they are not intended for users to use them.",
+      "parentUuid": "5f02cc20_3e03c312",
+      "range": {
+        "startLine": 4,
+        "startChar": 0,
+        "endLine": 5,
+        "endChar": 23
+      },
+      "revId": "4685c8cc34a29cb091e3b1d3078d659418cb2f4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
