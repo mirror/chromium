@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7f934c70_9b73c21d",
+        "filename": "third_party/WebKit/Source/core/dom/Modulator.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-08-29T06:55:09Z",
+      "side": 1,
+      "message": "I chatted with kouhei@ about this nullptr hack, and we\u0027re inclined to separate ModulatorImpl into DocumentModulatorImpl and WorkletModulatorImpl in order to push execution-context-dependent code into them. I\u0027ll recreate a patch based on the design.",
+      "range": {
+        "startLine": 46,
+        "startChar": 52,
+        "endLine": 46,
+        "endChar": 73
+      },
+      "revId": "0e1053623a4c4110ea8502d68111fb0b849ea888",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
