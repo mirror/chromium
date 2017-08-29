@@ -70,6 +70,30 @@
       "revId": "a5986135a2fba6d2908010648524d6e5cc9f9e18",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29b48479_113f6658",
+        "filename": "components/printing/DEPS",
+        "patchSetId": 1
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-08-29T00:37:22Z",
+      "side": 1,
+      "message": "BTW, chrome/DEPS has the same pattern.",
+      "parentUuid": "5b093acb_022bd74a",
+      "range": {
+        "startLine": 3,
+        "startChar": 2,
+        "endLine": 3,
+        "endChar": 31
+      },
+      "revId": "a5986135a2fba6d2908010648524d6e5cc9f9e18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
