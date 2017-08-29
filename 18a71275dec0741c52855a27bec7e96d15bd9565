@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "52d94a1f_273b96a9",
+        "filename": "third_party/WebKit/Source/core/editing/iterators/SimplifiedBackwardsTextIteratorTest.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-08-29T17:52:06Z",
+      "side": 1,
+      "message": "This seems to be a bug. The leading space is not collapsed.\n\nCould you add a note?",
+      "range": {
+        "startLine": 34,
+        "startChar": 2,
+        "endLine": 34,
+        "endChar": 34
+      },
+      "revId": "18a71275dec0741c52855a27bec7e96d15bd9565",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca7dfa90_f13837fa",
+        "filename": "third_party/WebKit/Source/core/editing/iterators/SimplifiedBackwardsTextIteratorTest.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-08-29T17:52:06Z",
+      "side": 1,
+      "message": "Ditto.",
+      "revId": "18a71275dec0741c52855a27bec7e96d15bd9565",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
