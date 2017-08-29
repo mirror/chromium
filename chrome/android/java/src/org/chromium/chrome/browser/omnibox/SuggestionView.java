@@ -36,6 +36,7 @@ import org.chromium.chrome.R;
 import org.chromium.chrome.browser.omnibox.OmniboxResultsAdapter.OmniboxResultItem;
 import org.chromium.chrome.browser.omnibox.OmniboxResultsAdapter.OmniboxSuggestionDelegate;
 import org.chromium.chrome.browser.omnibox.OmniboxSuggestion.MatchClassification;
+import org.chromium.chrome.browser.util.FeatureUtilities;
 import org.chromium.chrome.browser.util.ViewUtils;
 import org.chromium.chrome.browser.widget.TintedDrawable;
 import org.chromium.ui.base.DeviceFormFactor;
@@ -72,6 +73,8 @@ class SuggestionView extends ViewGroup {
 
     private static final float ANSWER_IMAGE_SCALING_FACTOR = 1.15f;
 
+    private static boolean sBottomSheetIsNull;
+
     private final LocationBar mLocationBar;
     private UrlBar mUrlBar;
     private ImageView mNavigationButton;
@@ -95,6 +98,8 @@ class SuggestionView extends ViewGroup {
     private final int mRefineWidth;
     private final View mRefineView;
     private TintedDrawable mRefineIcon;
+    private final int mRightOffsetPx;
+    private final int mSuggestionViewOffset;
 
     private final int[] mViewPositionHolder = new int[2];
 
@@ -185,6 +190,16 @@ class SuggestionView extends ViewGroup {
         mRefineWidth = getResources()
                 .getDimensionPixelSize(R.dimen.omnibox_suggestion_refine_width);
 
+        mRightOffsetPx = FeatureUtilities.isChromeHomeModernEnabled() && !sBottomSheetIsNull
+                ? getResources().getDimensionPixelSize(
+                          R.dimen.omnibox_suggestion_refine_view_modern_end_padding)
+                : 0;
+
+        mSuggestionViewOffset = FeatureUtilities.isChromeHomeModernEnabled() && !sBottomSheetIsNull
+                ? getResources().getDimensionPixelSize(
+                          R.dimen.omnibox_suggestion_list_modern_offset)
+                : 0;
+
         mUrlBar = (UrlBar) locationBar.getContainerView().findViewById(R.id.url_bar);
 
         mPhoneUrlBarLeftOffsetPx = getResources().getDimensionPixelOffset(
@@ -204,12 +219,11 @@ class SuggestionView extends ViewGroup {
         boolean refineVisible = mRefineView.getVisibility() == VISIBLE;
         boolean isRtl = ApiCompatibilityUtils.isLayoutRtl(this);
         int contentsViewOffsetX = isRtl && refineVisible ? mRefineWidth : 0;
-        mContentsView.layout(
-                contentsViewOffsetX,
-                0,
+        mContentsView.layout(contentsViewOffsetX, 0,
                 contentsViewOffsetX + mContentsView.getMeasuredWidth(),
                 mContentsView.getMeasuredHeight());
-        int refineViewOffsetX = isRtl ? 0 : getMeasuredWidth() - mRefineWidth;
+
+        int refineViewOffsetX = isRtl ? 0 : getMeasuredWidth() - mRefineWidth - mRightOffsetPx;
         mRefineView.layout(
                 refineViewOffsetX,
                 0,
@@ -848,13 +862,17 @@ class SuggestionView extends ViewGroup {
                         R.dimen.omnibox_suggestion_answer_image_horizontal_spacing);
             }
             if (isRTL) {
-                mTextLine1.layout(0, t, mTextRight, b);
-                mAnswerImage.layout(mTextRight - imageWidth , t, mTextRight, b);
-                mTextLine2.layout(0, t, mTextRight - (imageWidth + imageSpacing), b);
+                mTextLine1.layout(0, t, mTextRight - mSuggestionViewOffset, b);
+                mAnswerImage.layout(
+                        mTextRight - imageWidth, t, mTextRight - mSuggestionViewOffset, b);
+                mTextLine2.layout(
+                        0, t, mTextRight - (imageWidth + imageSpacing) - mSuggestionViewOffset, b);
             } else {
-                mTextLine1.layout(mTextLeft, t, r - l, b);
-                mAnswerImage.layout(mTextLeft, t, mTextLeft + imageWidth, b);
-                mTextLine2.layout(mTextLeft + imageWidth + imageSpacing, t, r - l, b);
+                mTextLine1.layout(mTextLeft + mSuggestionViewOffset, t, r - l, b);
+                mAnswerImage.layout(
+                        mTextLeft + mSuggestionViewOffset, t, mTextLeft + imageWidth, b);
+                mTextLine2.layout(
+                        mTextLeft + imageWidth + imageSpacing + mSuggestionViewOffset, t, r - l, b);
             }
 
             int suggestionIconPosition = getSuggestionIconLeftPosition();
@@ -1072,5 +1090,12 @@ class SuggestionView extends ViewGroup {
 
             super.onDetachedFromWindow();
         }
+    }
+
+    /**
+     * Set whether or not the bottom sheet is null.
+     */
+    public static void setIsBottomSheetNull(boolean isBottomSheetNull) {
+        sBottomSheetIsNull = isBottomSheetNull;
     }
 }
