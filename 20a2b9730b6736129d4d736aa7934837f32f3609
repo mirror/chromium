@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3b952a3b_cd5452de",
+        "filename": "third_party/WebKit/Source/devtools/front_end/elements/ElementsPanel.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 340,
+      "author": {
+        "id": 1230559
+      },
+      "writtenOn": "2017-08-29T19:09:02Z",
+      "side": 1,
+      "message": "ElementsPanel.wasShown() manually calls documentUpdated() if needed, so the default node will still be selected on show.",
+      "range": {
+        "startLine": 340,
+        "startChar": 6,
+        "endLine": 340,
+        "endChar": 12
+      },
+      "revId": "20a2b9730b6736129d4d736aa7934837f32f3609",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
