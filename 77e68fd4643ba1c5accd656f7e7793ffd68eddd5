@@ -34,6 +34,24 @@
       "revId": "77e68fd4643ba1c5accd656f7e7793ffd68eddd5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2897cbae_f890bef5",
+        "filename": "content/browser/renderer_host/render_view_host_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 577,
+      "author": {
+        "id": 1212389
+      },
+      "writtenOn": "2017-08-29T14:39:00Z",
+      "side": 1,
+      "message": "Sam\u0027s right ... I think it\u0027s pretty standard to cast to HostZoomMapImpl with content/ implementations. There is no other implementation in our repo.",
+      "parentUuid": "220282b0_cfb64f63",
+      "revId": "77e68fd4643ba1c5accd656f7e7793ffd68eddd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
