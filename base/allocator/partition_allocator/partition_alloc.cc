@@ -9,6 +9,8 @@
 #include "base/allocator/partition_allocator/oom.h"
 #include "base/allocator/partition_allocator/spin_lock.h"
 #include "base/compiler_specific.h"
+#include "base/lazy_instance.h"
+#include "base/synchronization/lock.h"
 
 // Two partition pages are used as guard / metadata page so make sure the super
 // page size is bigger.
@@ -40,7 +42,8 @@ static_assert(base::kMaxSystemPagesPerSlotSpan < (1 << 8),
 
 namespace base {
 
-subtle::SpinLock PartitionRootBase::gInitializedLock;
+base::LazyInstance<base::Lock>::Leaky PartitionRootBase::gInitializedLock =
+    LAZY_INSTANCE_INITIALIZER;
 bool PartitionRootBase::gInitialized = false;
 PartitionPage PartitionRootBase::gSeedPage;
 PartitionBucket PartitionRootBase::gPagedBucket;
@@ -96,7 +99,7 @@ static uint8_t PartitionBucketNumSystemPages(size_t size) {
 static void PartitionAllocBaseInit(PartitionRootBase* root) {
   DCHECK(!root->initialized);
   {
-    subtle::SpinLock::Guard guard(PartitionRootBase::gInitializedLock);
+    base::AutoLock guard(PartitionRootBase::gInitializedLock.Get());
     if (!PartitionRootBase::gInitialized) {
       PartitionRootBase::gInitialized = true;
       // We mark the seed page as free to make sure it is skipped by our
@@ -159,7 +162,7 @@ void PartitionAllocInit(PartitionRoot* root,
 }
 
 void PartitionAllocGenericInit(PartitionRootGeneric* root) {
-  subtle::SpinLock::Guard guard(root->lock);
+  base::AutoLock guard(root->lock);
 
   PartitionAllocBaseInit(root);
 
@@ -1233,7 +1236,7 @@ void PartitionPurgeMemory(PartitionRoot* root, int flags) {
 }
 
 void PartitionPurgeMemoryGeneric(PartitionRootGeneric* root, int flags) {
-  subtle::SpinLock::Guard guard(root->lock);
+  base::AutoLock guard(root->lock);
   if (flags & PartitionPurgeDecommitEmptyPages)
     PartitionDecommitEmptyPages(root);
   if (flags & PartitionPurgeDiscardUnusedSystemPages) {
@@ -1348,7 +1351,7 @@ void PartitionDumpStatsGeneric(PartitionRootGeneric* partition,
   PartitionBucketMemoryStats bucket_stats[kGenericNumBuckets];
   size_t num_direct_mapped_allocations = 0;
   {
-    subtle::SpinLock::Guard guard(partition->lock);
+    base::AutoLock guard(partition->lock);
 
     for (size_t i = 0; i < kGenericNumBuckets; ++i) {
       const PartitionBucket* bucket = &partition->buckets[i];

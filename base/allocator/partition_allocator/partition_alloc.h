@@ -66,7 +66,9 @@
 #include "base/allocator/partition_allocator/spin_lock.h"
 #include "base/bits.h"
 #include "base/compiler_specific.h"
+#include "base/lazy_instance.h"
 #include "base/logging.h"
+#include "base/synchronization/lock.h"
 #include "base/sys_byteorder.h"
 #include "build/build_config.h"
 
@@ -312,7 +314,7 @@ struct BASE_EXPORT PartitionRootBase {
   int16_t global_empty_page_ring_index;
   uintptr_t inverted_self;
 
-  static subtle::SpinLock gInitializedLock;
+  static base::LazyInstance<base::Lock>::Leaky gInitializedLock;
   static bool gInitialized;
   // gSeedPage is used as a sentinel to indicate that there is no page
   // in the active page list. We can use nullptr, but in that case we need
@@ -338,7 +340,7 @@ struct PartitionRoot : public PartitionRootBase {
 // Never instantiate a PartitionRootGeneric directly, instead use
 // PartitionAllocatorGeneric.
 struct PartitionRootGeneric : public PartitionRootBase {
-  subtle::SpinLock lock;
+  base::Lock lock;
   // Some pre-computed constants.
   size_t order_index_shifts[kBitsPerSizeT + 1];
   size_t order_sub_index_masks[kBitsPerSizeT + 1];
@@ -799,7 +801,7 @@ ALWAYS_INLINE void* PartitionAllocGenericFlags(PartitionRootGeneric* root,
   PartitionBucket* bucket = PartitionGenericSizeToBucket(root, size);
   void* ret = nullptr;
   {
-    subtle::SpinLock::Guard guard(root->lock);
+    base::AutoLock guard(root->lock);
     ret = PartitionBucketAlloc(root, flags, size, bucket);
   }
   PartitionAllocHooks::AllocationHookIfEnabled(ret, requested_size, type_name);
@@ -828,7 +830,7 @@ ALWAYS_INLINE void PartitionFreeGeneric(PartitionRootGeneric* root, void* ptr) {
   // TODO(palmer): See if we can afford to make this a CHECK.
   DCHECK(PartitionPagePointerIsValid(page));
   {
-    subtle::SpinLock::Guard guard(root->lock);
+    base::AutoLock guard(root->lock);
     PartitionFreeWithPage(ptr, page);
   }
 #endif
