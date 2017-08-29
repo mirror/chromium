@@ -34,6 +34,24 @@
       "revId": "ffe5650806eeab8a081e5638a1ba13751087c95f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c015177_73ebad47",
+        "filename": "chrome/browser/ui/browser_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 491,
+      "author": {
+        "id": 1001213
+      },
+      "writtenOn": "2017-08-29T17:46:04Z",
+      "side": 0,
+      "message": "Thanks for pointing this out. I shouldn\u0027t re-enable this unconditionally because it used to flakily time out (crbug/114859). Instead, I will disable it for DEBUG Windows builds.",
+      "parentUuid": "1faf8772_ae823060",
+      "revId": "ffe5650806eeab8a081e5638a1ba13751087c95f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
