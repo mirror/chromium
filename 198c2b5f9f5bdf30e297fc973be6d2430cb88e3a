@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f4b93d93_9a6af5a8",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-29T11:48:21Z",
+      "side": 1,
+      "message": "Any tracking bug you could reference?",
+      "revId": "198c2b5f9f5bdf30e297fc973be6d2430cb88e3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "060c001c_854ca74f",
+        "filename": "components/ntp_snippets/breaking_news/breaking_news_gcm_app_handler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-29T11:48:21Z",
+      "side": 1,
+      "message": "I guess there\u0027s no chance we might want finer granularity than hours for some weird reason?\nIf you do think there is a non-zero chance, maybe use minutes instead of hours.",
+      "revId": "198c2b5f9f5bdf30e297fc973be6d2430cb88e3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
