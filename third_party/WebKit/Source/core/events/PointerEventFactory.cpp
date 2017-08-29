@@ -146,16 +146,15 @@ void UpdateMousePointerEventInit(const WebMouseEvent& mouse_event,
   // This function should not update attributes like pointerId, isPrimary,
   // and pointerType which is the same among the coalesced events and the
   // dispatched event.
-
   pointer_event_init->setScreenX(mouse_event.PositionInScreen().x);
   pointer_event_init->setScreenY(mouse_event.PositionInScreen().y);
 
-  IntPoint location_in_frame_zoomed;
+  FloatPoint location_in_frame_zoomed;
   if (view && view->GetFrame() && view->GetFrame()->View()) {
     LocalFrame* frame = view->GetFrame();
     LocalFrameView* frame_view = frame->View();
-    IntPoint location_in_contents = frame_view->RootFrameToContents(
-        FlooredIntPoint(mouse_event.PositionInRootFrame()));
+    FloatPoint location_in_contents =
+        frame_view->RootFrameToContents(mouse_event.PositionInRootFrame());
     location_in_frame_zoomed =
         frame_view->ContentsToFrame(location_in_contents);
     float scale_factor = 1 / frame->PageZoomFactor();

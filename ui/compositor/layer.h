@@ -275,6 +275,10 @@ class COMPOSITOR_EXPORT Layer
   // Converts a point from the coordinates of |source| to the coordinates of
   // |target|. Necessarily, |source| and |target| must inhabit the same Layer
   // tree.
+  static void ConvertPointFToLayer(const Layer* source,
+                                   const Layer* target,
+                                   gfx::PointF* point);
+
   static void ConvertPointToLayer(const Layer* source,
                                   const Layer* target,
                                   gfx::Point* point);
@@ -438,6 +442,11 @@ class COMPOSITOR_EXPORT Layer
   // Stacks |child| above or below |other|.  Helper method for StackAbove() and
   // StackBelow().
   void StackRelativeTo(Layer* child, Layer* other, bool above);
+
+  bool ConvertFloatPointForAncestor(const Layer* ancestor,
+                                    gfx::PointF* point) const;
+  bool ConvertFloatPointFromAncestor(const Layer* ancestor,
+                                     gfx::PointF* point) const;
 
   bool ConvertPointForAncestor(const Layer* ancestor, gfx::Point* point) const;
   bool ConvertPointFromAncestor(const Layer* ancestor, gfx::Point* point) const;
