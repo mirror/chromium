@@ -139,6 +139,24 @@
       "revId": "02ab5624fd93e512f1b5e102f0bdcd928dfea91e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5f0d91ea_7b46956a",
+        "filename": "ios/clean/chrome/browser/ui/toolbar/toolbar_coordinator.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-08-29T22:20:44Z",
+      "side": 1,
+      "message": "Yeah that makes sense.  I\u0027d expect that we should have some kind of NavigationCommands-type protocol that would be handled by WebCoordinator.  For now, this seems like a reasonable place to put it; thanks for the explanation.",
+      "parentUuid": "09dfc81a_86483153",
+      "revId": "02ab5624fd93e512f1b5e102f0bdcd928dfea91e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
