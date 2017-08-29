@@ -107,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "3157e8db_237d4d75",
+        "filename": "content/common/service_worker/service_worker_provider_host_info.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1223459
+      },
+      "writtenOn": "2017-08-29T06:55:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "44c9a4a3_938adc95",
+      "range": {
+        "startLine": 13,
+        "startChar": 3,
+        "endLine": 13,
+        "endChar": 12
+      },
+      "revId": "fdefcc99bbc48081dc58a309f42dab82573f38b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6ae83161_3c74f5f2",
         "filename": "content/common/service_worker/service_worker_provider_interfaces.mojom",
         "patchSetId": 8
