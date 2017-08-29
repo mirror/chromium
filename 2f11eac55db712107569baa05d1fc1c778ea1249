@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "61e831d3_075841dd",
+        "filename": "components/exo/surface.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1000050
+      },
+      "writtenOn": "2017-08-29T22:02:47Z",
+      "side": 1,
+      "message": "gfx::ConvertRectToPixel() comes from it.",
+      "parentUuid": "2e6e426e_96f24038",
+      "revId": "2f11eac55db712107569baa05d1fc1c778ea1249",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7b40b269_d87ce960",
         "filename": "components/exo/surface.cc",
         "patchSetId": 5
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-29T21:49:06Z",
       "side": 1,
       "message": "is this blank line intentional?",
+      "revId": "2f11eac55db712107569baa05d1fc1c778ea1249",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "252ad37a_81bf010f",
+        "filename": "components/exo/surface.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 738,
+      "author": {
+        "id": 1000050
+      },
+      "writtenOn": "2017-08-29T22:02:47Z",
+      "side": 1,
+      "message": "No. I will remove it.",
+      "parentUuid": "7b40b269_d87ce960",
       "revId": "2f11eac55db712107569baa05d1fc1c778ea1249",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

@@ -296,6 +296,30 @@
     },
     {
       "key": {
+        "uuid": "4e72fcaf_d28873a1",
+        "filename": "components/exo/surface_tree_host.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 298,
+      "author": {
+        "id": 1000050
+      },
+      "writtenOn": "2017-08-29T22:02:47Z",
+      "side": 1,
+      "message": "We create the host window in advance, but we don\u0027t create the views::Widget and add host_window_ to it in advance. I think it is because we don\u0027t want to create an ash toplevel window for a surface without contents (no buffer attached).",
+      "parentUuid": "2022dce7_070129f4",
+      "range": {
+        "startLine": 298,
+        "startChar": 2,
+        "endLine": 298,
+        "endChar": 73
+      },
+      "revId": "2cd95798cc730d8ab709b2078b3a8821cf0f4de7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fdb81623_530b03c0",
         "filename": "components/exo/surface_tree_host.cc",
         "patchSetId": 3
