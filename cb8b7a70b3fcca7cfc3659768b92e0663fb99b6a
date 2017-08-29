@@ -70,6 +70,24 @@
       "revId": "cb8b7a70b3fcca7cfc3659768b92e0663fb99b6a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a6bb69c_81f9d85a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1000528
+      },
+      "writtenOn": "2017-08-29T22:01:08Z",
+      "side": 1,
+      "message": "To expand a little on Zijie\u0027s statement, I believe one of the problems in creating a ui::KeyEvent is that doing so affects global state (specifically the repeat timer). So, for example, the following sequence is problematic:\n\n* LowLevelKeyboardProc receives a key (say, A)\n  - Creates a ui::Event, passes it to the KeyEventFilter.\n  - Determines that it isn\u0027t reserved.\n  - Returns false to tell the OS to handle the key normally (ie, don\u0027t bypass the input pipeline).\n* WndProc receives the same key.\n  - Creates another ui::Event, which now has the wrong repeat count.\n\nThis is specific to Windows, but any platform where we need a dedicated low-level proc to handle some subset of keyboard events has the same problem.",
+      "parentUuid": "c22e8848_34954ca5",
+      "revId": "cb8b7a70b3fcca7cfc3659768b92e0663fb99b6a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
