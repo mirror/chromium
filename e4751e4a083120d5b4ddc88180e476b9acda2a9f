@@ -153,6 +153,30 @@
       "revId": "e4751e4a083120d5b4ddc88180e476b9acda2a9f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "beb0bf69_ed2c01dd",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheet.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1618,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-08-29T20:21:14Z",
+      "side": 1,
+      "message": "Without the finch config, CHROME_HOME_EXPAND_FEATURE will never show, correct? If so, I think we still need to do the finch config because we want the existing IPH to show up in M62 when Chrome Home is enabled. 63 is our new stable release target, but we will continue experimenting in 62 and new users may get added into the experiment group.",
+      "parentUuid": "a68ea1af_775705db",
+      "range": {
+        "startLine": 1618,
+        "startChar": 0,
+        "endLine": 1618,
+        "endChar": 98
+      },
+      "revId": "e4751e4a083120d5b4ddc88180e476b9acda2a9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
