@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "201053b1_411ad3af",
+        "filename": "third_party/WebKit/Source/platform/feature_policy/FeaturePolicy.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-08-29T14:45:28Z",
+      "side": 1,
+      "message": "Hrm. Do we need to do this? Are folks using this in the wild today? It would be better if we could simply remove this code, but if we need to keep it around, I\u0027d like to set a date past which we\u0027d remove it rather than pointing vaguely to The Future.\n\nIf we need to keep processing the old syntax, we should clearly deprecate it and count it by adding it to the `web_features.mojom` list, and using `//Source/core/frame/Deprecation.h` to output a deprecation warning and increment the counter.",
+      "revId": "441cca6002b2c76fd1f27e1844d52722b7a4d257",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a1e2a33_57037a3c",
+        "filename": "third_party/WebKit/Source/platform/feature_policy/FeaturePolicyFuzzer.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-08-29T14:45:28Z",
+      "side": 1,
+      "message": "Can you update the fuzzing corpus to include strings that might help find bugs here? (e.g. `//src/testing/libfuzzer/fuzzers/feature_policy_corpus`)",
+      "revId": "441cca6002b2c76fd1f27e1844d52722b7a4d257",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
