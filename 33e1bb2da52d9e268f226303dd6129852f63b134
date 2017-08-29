@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "bee91cd7_327d36b9",
+        "filename": "services/ui/ws/server_window.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1211635
+      },
+      "writtenOn": "2017-08-29T18:53:09Z",
+      "side": 1,
+      "message": "As discussed offline, keeping this ctor to use in tests to avoid passing frame_sink_id from tests.",
+      "parentUuid": "67cd9dfc_0fef80be",
+      "revId": "33e1bb2da52d9e268f226303dd6129852f63b134",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a0274a32_9100b35b",
         "filename": "services/ui/ws/server_window.h",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "33e1bb2da52d9e268f226303dd6129852f63b134",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4346a53_c416bd53",
+        "filename": "services/ui/ws/server_window.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1211635
+      },
+      "writtenOn": "2017-08-29T18:53:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a0274a32_9100b35b",
+      "revId": "33e1bb2da52d9e268f226303dd6129852f63b134",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "c398ba59_cb2830b1",
+        "filename": "services/ui/ws/window_manager_state.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 858,
+      "author": {
+        "id": 1211635
+      },
+      "writtenOn": "2017-08-29T18:53:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ed8c6069_bdf10088",
+      "revId": "33e1bb2da52d9e268f226303dd6129852f63b134",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "59642aec_c9f8c862",
         "filename": "services/ui/ws/window_tree.cc",
         "patchSetId": 2
@@ -64,6 +118,24 @@
       "writtenOn": "2017-08-29T04:41:56Z",
       "side": 1,
       "message": "Hm ... can you add a DCHECK(!GetWindow(WindowIdFromClientWindowId(client_window_id)) here?\n\nOr, instead of a DCHECK(), maybe fail gracefully (because the client is probably making a mistake, and we shouldn\u0027t crash here)?",
+      "revId": "33e1bb2da52d9e268f226303dd6129852f63b134",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d9bf310_ad0c4dcd",
+        "filename": "services/ui/ws/window_tree.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 472,
+      "author": {
+        "id": 1211635
+      },
+      "writtenOn": "2017-08-29T18:53:09Z",
+      "side": 1,
+      "message": "Would it be the same as checking for |window_id| (line 471)? (we also make sure it\u0027s not already in client_id_to_window_id_map_ in IsValidIdForNewWindow (ine 466))",
+      "parentUuid": "59642aec_c9f8c862",
       "revId": "33e1bb2da52d9e268f226303dd6129852f63b134",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
