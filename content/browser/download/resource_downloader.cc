@@ -7,8 +7,40 @@
 #include "content/browser/download/download_utils.h"
 #include "content/browser/url_loader_factory_getter.h"
 #include "content/common/throttling_url_loader.h"
+#include "content/public/browser/render_frame_host.h"
+#include "content/public/browser/web_contents.h"
 
 namespace content {
+
+// This class is only used for providing the WebContents to DownloadItemImpl.
+class RequestHandle : public DownloadRequestHandleInterface {
+ public:
+  RequestHandle(int render_process_id, int render_frame_id)
+      : render_process_id_(render_process_id),
+        render_frame_id_(render_frame_id) {}
+  RequestHandle(RequestHandle&& other)
+      : render_process_id_(other.render_process_id_),
+        render_frame_id_(other.render_frame_id_) {}
+
+  // DownloadRequestHandleInterface
+  WebContents* GetWebContents() const override {
+    RenderFrameHost* host =
+        RenderFrameHost::FromID(render_process_id_, render_frame_id_);
+    if (host)
+      return WebContents::FromRenderFrameHost(host);
+    return nullptr;
+  }
+  DownloadManager* GetDownloadManager() const override { return nullptr; }
+  void PauseRequest() const override {}
+  void ResumeRequest() const override {}
+  void CancelRequest(bool user_cancel) const override {}
+
+ private:
+  int render_process_id_;
+  int render_frame_id_;
+
+  DISALLOW_COPY_AND_ASSIGN(RequestHandle);
+};
 
 // static
 std::unique_ptr<ResourceDownloader> ResourceDownloader::BeginDownload(
@@ -59,15 +91,20 @@ void ResourceDownloader::Start(std::unique_ptr<ResourceRequest> request) {
 
 void ResourceDownloader::OnResponseStarted(
     std::unique_ptr<DownloadCreateInfo> download_create_info,
-    mojo::ScopedDataPipeConsumerHandle body) {
+    mojom::DownloadStreamHandlePtr stream_handle) {
   download_create_info->download_id = download_id_;
+  if (download_url_parameters_->render_process_host_id() >= 0) {
+    download_create_info->request_handle.reset(new RequestHandle(
+        download_url_parameters_->render_process_host_id(),
+        download_url_parameters_->render_frame_host_routing_id()));
+  }
   BrowserThread::PostTask(
       BrowserThread::UI, FROM_HERE,
-      base::BindOnce(
-          &UrlDownloadHandler::Delegate::OnUrlDownloadStarted, delegate_,
-          std::move(download_create_info),
-          base::MakeUnique<UrlDownloadHandler::InputStream>(std::move(body)),
-          download_url_parameters_->callback()));
+      base::BindOnce(&UrlDownloadHandler::Delegate::OnUrlDownloadStarted,
+                     delegate_, std::move(download_create_info),
+                     base::MakeUnique<DownloadManager::InputStream>(
+                         std::move(stream_handle)),
+                     download_url_parameters_->callback()));
 }
 
 }  // namespace content
