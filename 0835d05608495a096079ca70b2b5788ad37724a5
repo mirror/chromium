@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "190373f6_f27b60ac",
+        "filename": "extensions/browser/api/declarative_webrequest/webrequest_condition_attribute.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 702,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2017-08-29T13:00:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "abcb01fd_eed0701e",
+      "range": {
+        "startLine": 702,
+        "startChar": 31,
+        "endLine": 702,
+        "endChar": 44
+      },
+      "revId": "0835d05608495a096079ca70b2b5788ad37724a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ea161b72_c778bec3",
         "filename": "extensions/browser/response_headers_util.h",
         "patchSetId": 10
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "c0d415ba_61666766",
+        "filename": "extensions/browser/response_headers_util.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2017-08-29T13:00:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ea161b72_c778bec3",
+      "range": {
+        "startLine": 14,
+        "startChar": 30,
+        "endLine": 14,
+        "endChar": 35
+      },
+      "revId": "0835d05608495a096079ca70b2b5788ad37724a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d33323c8_6095c322",
         "filename": "extensions/browser/response_headers_util.h",
         "patchSetId": 10
@@ -59,6 +107,30 @@
       "writtenOn": "2017-08-29T12:37:21Z",
       "side": 1,
       "message": "Optional: I think naming this method ShouldHideResponseHeader will make it more clear that this is just a test and does not really hide the response header.",
+      "range": {
+        "startLine": 15,
+        "startChar": 5,
+        "endLine": 15,
+        "endChar": 23
+      },
+      "revId": "0835d05608495a096079ca70b2b5788ad37724a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b5caa56_4072de13",
+        "filename": "extensions/browser/response_headers_util.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2017-08-29T13:00:09Z",
+      "side": 1,
+      "message": "The named like that to be consistent with another function (HideRequest()).\nI agree that its a bad name though.\n\nDone.",
+      "parentUuid": "d33323c8_6095c322",
       "range": {
         "startLine": 15,
         "startChar": 5,
