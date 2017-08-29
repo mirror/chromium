@@ -72,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "880623ae_5d1e253d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/FullscreenActivity.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1149979
+      },
+      "writtenOn": "2017-08-29T15:22:39Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "839739b2_ae908f99",
+      "range": {
+        "startLine": 122,
+        "startChar": 24,
+        "endLine": 122,
+        "endChar": 50
+      },
+      "revId": "cea5a322aa0d277a8f428b976a277bb3a10fb462",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "86fbd48a_8d69d975",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/tab/Tab.java",
         "patchSetId": 1
@@ -95,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "7e2ec130_04a8b21c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/tab/Tab.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1417,
+      "author": {
+        "id": 1149979
+      },
+      "writtenOn": "2017-08-29T15:22:39Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "86fbd48a_8d69d975",
+      "range": {
+        "startLine": 1417,
+        "startChar": 16,
+        "endLine": 1417,
+        "endChar": 21
+      },
+      "revId": "cea5a322aa0d277a8f428b976a277bb3a10fb462",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "afef16ae_63a96d99",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/tab/Tab.java",
         "patchSetId": 1
@@ -115,6 +163,30 @@
       "revId": "cea5a322aa0d277a8f428b976a277bb3a10fb462",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bfbe3606_01db110d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/tab/Tab.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1420,
+      "author": {
+        "id": 1149979
+      },
+      "writtenOn": "2017-08-29T15:22:39Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "afef16ae_63a96d99",
+      "range": {
+        "startLine": 1420,
+        "startChar": 57,
+        "endLine": 1420,
+        "endChar": 61
+      },
+      "revId": "cea5a322aa0d277a8f428b976a277bb3a10fb462",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
