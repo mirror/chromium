@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "15eb0b4e_a5bf0e9f",
+        "filename": "chrome/browser/first_run/first_run.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 595,
+      "author": {
+        "id": 1136734
+      },
+      "writtenOn": "2017-08-29T22:38:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eebdbb19_2c552f31",
+      "revId": "c3592b654edb60c3a302bab2648fa62ddc81a719",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "58eb0f1e_846b1379",
         "filename": "chrome/browser/profiles/profile_manager.cc",
         "patchSetId": 5
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "f4d72f1e_0fcdcbc3",
+        "filename": "chrome/browser/profiles/profile_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1012,
+      "author": {
+        "id": 1136734
+      },
+      "writtenOn": "2017-08-29T22:38:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "58eb0f1e_846b1379",
+      "revId": "c3592b654edb60c3a302bab2648fa62ddc81a719",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b55494ea_8e2b6a0a",
         "filename": "chrome/browser/ui/browser_browsertest.cc",
         "patchSetId": 5
@@ -50,6 +86,24 @@
       "revId": "c3592b654edb60c3a302bab2648fa62ddc81a719",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff594a17_203fc221",
+        "filename": "chrome/browser/ui/browser_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1461,
+      "author": {
+        "id": 1136734
+      },
+      "writtenOn": "2017-08-29T22:38:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b55494ea_8e2b6a0a",
+      "revId": "c3592b654edb60c3a302bab2648fa62ddc81a719",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
