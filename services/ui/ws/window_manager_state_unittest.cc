@@ -243,7 +243,7 @@ TEST_F(WindowManagerStateTest, PostTargetAccelerator) {
 // is done.
 TEST_F(WindowManagerStateTest, PreTargetConsumed) {
   // Set up two trees with focus on a child in the second.
-  const ClientWindowId child_window_id(11);
+  const ClientWindowId child_window_id(0, 11);
   window_tree()->NewWindow(child_window_id, ServerWindow::Properties());
   ServerWindow* child_window =
       window_tree()->GetWindowByClientId(child_window_id);
@@ -299,7 +299,7 @@ TEST_F(WindowManagerStateTest, PreTargetConsumed) {
 
 TEST_F(WindowManagerStateTest, AckWithProperties) {
   // Set up two trees with focus on a child in the second.
-  const ClientWindowId child_window_id(11);
+  const ClientWindowId child_window_id(0, 11);
   window_tree()->NewWindow(child_window_id, ServerWindow::Properties());
   ServerWindow* child_window =
       window_tree()->GetWindowByClientId(child_window_id);
@@ -700,7 +700,7 @@ TEST(WindowManagerStateShutdownTest, DestroyTreeBeforeDisplay) {
 
 TEST_F(WindowManagerStateTest, CursorResetOverNoTarget) {
   ASSERT_EQ(1u, window_server()->display_manager()->displays().size());
-  const ClientWindowId child_window_id(11);
+  const ClientWindowId child_window_id(0, 11);
   window_tree()->NewWindow(child_window_id, ServerWindow::Properties());
   ServerWindow* child_window =
       window_tree()->GetWindowByClientId(child_window_id);
@@ -723,7 +723,7 @@ TEST_F(WindowManagerStateTest, CursorResetOverNoTarget) {
 
 TEST_F(WindowManagerStateTestAsync, CursorResetOverNoTargetAsync) {
   ASSERT_EQ(1u, window_server()->display_manager()->displays().size());
-  const ClientWindowId child_window_id(11);
+  const ClientWindowId child_window_id(0, 11);
   window_tree()->NewWindow(child_window_id, ServerWindow::Properties());
   ServerWindow* child_window =
       window_tree()->GetWindowByClientId(child_window_id);
