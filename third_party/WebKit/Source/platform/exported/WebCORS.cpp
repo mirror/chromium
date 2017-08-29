@@ -54,39 +54,6 @@ bool IsInterestingStatusCode(int status_code) {
   return status_code >= 400;
 }
 
-// Fetch API Spec: https://fetch.spec.whatwg.org/#cors-preflight-fetch-0
-String CreateAccessControlRequestHeadersHeader(const HTTPHeaderMap& headers) {
-  Vector<String> filtered_headers;
-  for (const auto& header : headers) {
-    if (FetchUtils::IsCORSSafelistedHeader(header.key, header.value)) {
-      // Exclude CORS-safelisted headers.
-      continue;
-    }
-    // TODO(hintzed) replace with EqualIgnoringASCIICase()
-    if (DeprecatedEqualIgnoringCase(header.key, "referer")) {
-      // When the request is from a Worker, referrer header was added by
-      // WorkerThreadableLoader. But it should not be added to
-      // Access-Control-Request-Headers header.
-      continue;
-    }
-    filtered_headers.push_back(header.key.DeprecatedLower());
-  }
-  if (!filtered_headers.size())
-    return g_null_atom;
-
-  // Sort header names lexicographically.
-  std::sort(filtered_headers.begin(), filtered_headers.end(),
-            WTF::CodePointCompareLessThan);
-  StringBuilder header_buffer;
-  for (const String& header : filtered_headers) {
-    if (!header_buffer.IsEmpty())
-      header_buffer.Append(",");
-    header_buffer.Append(header);
-  }
-
-  return header_buffer.ToString();
-}
-
 // A parser for the value of the Access-Control-Expose-Headers header.
 class HTTPHeaderNameListParser {
   STACK_ALLOCATED();
@@ -227,6 +194,38 @@ AccessStatus CheckAccess(
     }
   }
   return AccessStatus::kAccessAllowed;
+}
+
+// Fetch API Spec: https://fetch.spec.whatwg.org/#cors-preflight-fetch-0
+WebString CreateAccessControlRequestHeadersHeader(
+    const HTTPHeaderMap& headers) {
+  Vector<String> filtered_headers;
+  for (const auto& header : headers) {
+    // Exclude CORS-safelisted headers.
+    if (FetchUtils::IsCORSSafelistedHeader(header.key, header.value))
+      continue;
+
+    // RenderFrameImpl and others might have added forbidden headers like
+    // Origin, User-Agent or Referrer when the request is from a Worker.
+    if (FetchUtils::IsForbiddenHeaderName(header.key))
+      continue;
+
+    filtered_headers.push_back(header.key.DeprecatedLower());
+  }
+  if (!filtered_headers.size())
+    return g_null_atom;
+
+  // Sort header names lexicographically.
+  std::sort(filtered_headers.begin(), filtered_headers.end(),
+            WTF::CodePointCompareLessThan);
+  StringBuilder header_buffer;
+  for (const String& header : filtered_headers) {
+    if (!header_buffer.IsEmpty())
+      header_buffer.Append(",");
+    header_buffer.Append(header);
+  }
+
+  return header_buffer.ToString();
 }
 
 bool HandleRedirect(WebSecurityOrigin& current_security_origin,
@@ -597,8 +596,10 @@ bool IsNoCORSAllowedContext(
     case WebURLRequest::kRequestContextFavicon:
     case WebURLRequest::kRequestContextFetch:
     case WebURLRequest::kRequestContextImage:
+    case WebURLRequest::kRequestContextInternal:
     case WebURLRequest::kRequestContextObject:
     case WebURLRequest::kRequestContextScript:
+    case WebURLRequest::kRequestContextStyle:
     case WebURLRequest::kRequestContextSharedWorker:
     case WebURLRequest::kRequestContextVideo:
     case WebURLRequest::kRequestContextWorker:
