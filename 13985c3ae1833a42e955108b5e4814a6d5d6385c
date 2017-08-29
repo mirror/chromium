@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8b270562_8a831ed3",
+        "filename": "base/test/scoped_task_environment.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-08-29T06:13:38Z",
+      "side": 1,
+      "message": "?",
+      "range": {
+        "startLine": 35,
+        "startChar": 2,
+        "endLine": 36,
+        "endChar": 42
+      },
+      "revId": "13985c3ae1833a42e955108b5e4814a6d5d6385c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18747f69_d2fe7174",
+        "filename": "base/test/scoped_task_environment.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-08-29T06:13:38Z",
+      "side": 1,
+      "message": "no else, since the if returns?",
+      "range": {
+        "startLine": 142,
+        "startChar": 4,
+        "endLine": 142,
+        "endChar": 10
+      },
+      "revId": "13985c3ae1833a42e955108b5e4814a6d5d6385c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a758ed8f_a5ae3f74",
+        "filename": "base/test/scoped_task_environment.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-08-29T06:13:38Z",
+      "side": 1,
+      "message": "s/tasks remaining tasks/remaining tasks/",
+      "range": {
+        "startLine": 161,
+        "startChar": 17,
+        "endLine": 161,
+        "endChar": 38
+      },
+      "revId": "13985c3ae1833a42e955108b5e4814a6d5d6385c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee9ebe5b_683d4965",
+        "filename": "base/test/scoped_task_environment.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-08-29T06:13:38Z",
+      "side": 1,
+      "message": "It\u0027s sad that MOCK_TIME isn\u0027t compatible with UI and IO. I think ScopedTaskEnvironment should register a custom TaskRunner that holds tasks until they are allowed to run. When they are allowed to run, it should send them to the backing MessageLoop(ForUI|ForIO) which should take care of running them.",
+      "range": {
+        "startLine": 63,
+        "startChar": 4,
+        "endLine": 68,
+        "endChar": 14
+      },
+      "revId": "13985c3ae1833a42e955108b5e4814a6d5d6385c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
