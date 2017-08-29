@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f34664a9_ca316399",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/compositor/CompositorView.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 280,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2017-08-29T03:38:50Z",
+      "side": 1,
+      "message": "Added a comment to clarify the fact that it is not an override. See if that helps.",
+      "parentUuid": "80788c2c_a6b5b6a2",
+      "revId": "c820f4642a3912000674377391e0a1fb11acd794",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "69ab0e77_a178c225",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/tab/Tab.java",
         "patchSetId": 3
@@ -30,6 +48,30 @@
       "writtenOn": "2017-08-28T20:36:35Z",
       "side": 1,
       "message": "view is not rect\n\nalso why is this chunk of code needed?",
+      "range": {
+        "startLine": 2108,
+        "startChar": 12,
+        "endLine": 2108,
+        "endChar": 21
+      },
+      "revId": "c820f4642a3912000674377391e0a1fb11acd794",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d53cde00_03057752",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/tab/Tab.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2108,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2017-08-29T03:38:50Z",
+      "side": 1,
+      "message": "Renamed rect to more meaning one.\n\nThis is in preparation for ContentView not propagating down onSizeChange event - should be done here in embedder explicitly when a new content is created. Though the view size defined in ViewAndroid is not in use yet, they are being updated as expected with this.",
+      "parentUuid": "69ab0e77_a178c225",
       "range": {
         "startLine": 2108,
         "startChar": 12,
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "c48f2a2a_e11e2c6b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/tab/Tab.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2344,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2017-08-29T03:38:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b7a98f92_a9a62d02",
+      "revId": "c820f4642a3912000674377391e0a1fb11acd794",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f707a2e7_e18bd9af",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/tab/Tab.java",
         "patchSetId": 3
@@ -70,6 +130,24 @@
       "writtenOn": "2017-08-28T20:36:35Z",
       "side": 1,
       "message": "fix comment",
+      "revId": "c820f4642a3912000674377391e0a1fb11acd794",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09a8c237_8b69dd49",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/tab/Tab.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2380,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2017-08-29T03:38:50Z",
+      "side": 1,
+      "message": "Put back the command to ContentViewCore. The command is still valid, and We need to call it. The additional call updates the view size in ViewAndroid.",
+      "parentUuid": "f707a2e7_e18bd9af",
       "revId": "c820f4642a3912000674377391e0a1fb11acd794",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -90,6 +168,24 @@
       "revId": "c820f4642a3912000674377391e0a1fb11acd794",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8183808_80cd07da",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/tab/Tab.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2401,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2017-08-29T03:38:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8897ea6a_5c340a67",
+      "revId": "c820f4642a3912000674377391e0a1fb11acd794",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -116,6 +212,30 @@
     },
     {
       "key": {
+        "uuid": "8709137f_ea932d73",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/tab/Tab.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2999,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2017-08-29T03:38:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0a079255_dac6ccf7",
+      "range": {
+        "startLine": 2999,
+        "startChar": 22,
+        "endLine": 2999,
+        "endChar": 26
+      },
+      "revId": "c820f4642a3912000674377391e0a1fb11acd794",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cb9e4824_6e4e224c",
         "filename": "chrome/browser/android/bottombar/overlay_panel_content.cc",
         "patchSetId": 3
@@ -127,6 +247,30 @@
       "writtenOn": "2017-08-28T20:36:35Z",
       "side": 1,
       "message": "this (and everywhere that does this) is just confusing, OnSizeChanged calling OnPhysicalBackingSizeChanged..",
+      "range": {
+        "startLine": 65,
+        "startChar": 33,
+        "endLine": 65,
+        "endChar": 61
+      },
+      "revId": "c820f4642a3912000674377391e0a1fb11acd794",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f1626dc_6cd1e219",
+        "filename": "chrome/browser/android/bottombar/overlay_panel_content.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2017-08-29T03:38:50Z",
+      "side": 1,
+      "message": "Renamed all to OnPhysicalBackingSizeChanged for consistency.",
+      "parentUuid": "cb9e4824_6e4e224c",
       "range": {
         "startLine": 65,
         "startChar": 33,
@@ -156,6 +300,24 @@
     },
     {
       "key": {
+        "uuid": "943b10d9_8c2674c6",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/ContentViewRenderView.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2017-08-29T03:38:50Z",
+      "side": 1,
+      "message": "It is used in |setCurrentContentViewCore| below. Once ContentView stops propagating (and eventually is gone), ContentViewRenderView needs to get the view size for content and pass it to native.",
+      "parentUuid": "1336c449_5a11b311",
+      "revId": "c820f4642a3912000674377391e0a1fb11acd794",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e0c852a2_a83789ba",
         "filename": "ui/android/view_android.cc",
         "patchSetId": 3
@@ -167,6 +329,24 @@
       "writtenOn": "2017-08-28T20:36:35Z",
       "side": 1,
       "message": "so why are these 0 checks required? are they copied from somewhere?",
+      "revId": "c820f4642a3912000674377391e0a1fb11acd794",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b917e36e_4a6103c0",
+        "filename": "ui/android/view_android.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2017-08-29T03:38:50Z",
+      "side": 1,
+      "message": "For the same reason for backing size above. Zero size is never set by actual flow, it means the size is not initialized. This will keep a child added to a view tree from getting spurious zero-size event that were not being sent before the patch.\n\nNow that I see it again, width !\u003d 0 \"\u0026\u0026\" height !\u003d 0 is correct.",
+      "parentUuid": "e0c852a2_a83789ba",
       "revId": "c820f4642a3912000674377391e0a1fb11acd794",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -190,6 +370,24 @@
     },
     {
       "key": {
+        "uuid": "4a26360c_4f9186dc",
+        "filename": "ui/android/view_android.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2017-08-29T03:38:50Z",
+      "side": 1,
+      "message": "It was okay because it used only to set match_parent + empty view size... It will be replaced by OnSizeChanged. Removed the method.",
+      "parentUuid": "06e19d94_960e855a",
+      "revId": "c820f4642a3912000674377391e0a1fb11acd794",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3051d96e_3e6304c6",
         "filename": "ui/android/view_android.cc",
         "patchSetId": 3
@@ -207,6 +405,24 @@
     },
     {
       "key": {
+        "uuid": "8402400a_61638967",
+        "filename": "ui/android/view_android.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 359,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2017-08-29T03:38:50Z",
+      "side": 1,
+      "message": "Got the point. Put if() instead for now, and left a TODO to replace it with an assert. All the VA still need to be match-parent in order to accept touch/drag events, until a proper target view tracking logic is in place.",
+      "parentUuid": "3051d96e_3e6304c6",
+      "revId": "c820f4642a3912000674377391e0a1fb11acd794",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "380fa6ec_847ddcec",
         "filename": "ui/android/view_android.cc",
         "patchSetId": 3
@@ -218,6 +434,24 @@
       "writtenOn": "2017-08-28T20:36:35Z",
       "side": 1,
       "message": "so changing physical backing size changes size, but not the other way around?\n\neither they are the same, and shouldbe merged. or they are independent and should not affect each other",
+      "revId": "c820f4642a3912000674377391e0a1fb11acd794",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d176b7b9_6515fb32",
+        "filename": "ui/android/view_android.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 393,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2017-08-29T03:38:50Z",
+      "side": 1,
+      "message": "From what I see, physical backing size is set to the initial view size. View size itself can vary over time (due to soft keyboard, browser control) but physical backing size remains the same. I\u0027m keeping the behavior by having physical size affecting view size only. Is it fine to do the other way around too?",
+      "parentUuid": "380fa6ec_847ddcec",
       "revId": "c820f4642a3912000674377391e0a1fb11acd794",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
