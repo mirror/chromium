@@ -700,6 +700,13 @@
       'v8_linux_blink_rel': 'release_trybot',
       'v8_linux_chromium_gn_rel': 'release_trybot',
     },
+
+    # Manually triggered internal builders running on LUCI.
+    'luci.infra-internal.triggered': {
+      'chrome-gn-builder-linux-64': 'gn_linux_upload',
+      'chrome-gn-builder-mac-64': 'release_bot',
+      'chrome-gn-builder-win-64': 'release_bot_x86_minimal_symbols',
+    },
   },
 
 
