@@ -691,5 +691,12 @@ AboutSigninInternals::SigninStatus::ToValue(
   }
 
   signin_status->Set("accountInfo", std::move(account_info));
+
+  if (signin::IsAccountConsistencyDiceEnabled()) {
+    auto dice_info = base::MakeUnique<base::DictionaryValue>();
+    dice_info->SetBoolean("isSignedIn", signin_manager->IsAuthenticated());
+    signin_status->Set("dice", std::move(dice_info));
+  }
+
   return signin_status;
 }

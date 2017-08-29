@@ -12,6 +12,8 @@
 #include "chrome/browser/ui/browser.h"
 #include "chrome/browser/ui/browser_finder.h"
 #include "chrome/browser/ui/sync/one_click_signin_sync_starter.h"
+#include "chrome/common/url_constants.h"
+#include "content/public/browser/web_ui_data_source.h"
 
 SigninDiceInternalsHandler::SigninDiceInternalsHandler(Profile* profile)
     : profile_(profile) {
