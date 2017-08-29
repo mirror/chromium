@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "cd46f192_d3906357",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-08-29T00:26:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "285a6306_fb565129",
+      "revId": "d0a380f361ad8ad9c5986ffdf6dcf8c489f96374",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fb12034c_523dd972",
         "filename": "chrome/browser/ui/cocoa/page_info/page_info_bubble_controller.mm",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "d0a380f361ad8ad9c5986ffdf6dcf8c489f96374",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4518cdeb_05aeb99b",
+        "filename": "chrome/browser/ui/cocoa/page_info/page_info_bubble_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 683,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-08-29T00:26:25Z",
+      "side": 1,
+      "message": "ACK.\nI don\u0027t think DCHECK is needed here, since if whitelistPasswordReuseButton_ is null, this call will fail anyway.",
+      "parentUuid": "fb12034c_523dd972",
+      "revId": "d0a380f361ad8ad9c5986ffdf6dcf8c489f96374",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
