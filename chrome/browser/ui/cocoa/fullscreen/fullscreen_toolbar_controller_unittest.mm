@@ -298,3 +298,18 @@ TEST_F(FullscreenToolbarControllerTest, TestHiddenToolbarWithMultipleFactors) {
 }
 
 }  // namespace
+
+@interface NSMenu (PrivateAPI)
+- (void)_lockMenuPosition;
+- (void)_unlockMenuPosition;
+@end
+
+namespace {
+
+TEST_F(FullscreenToolbarControllerTest, PrivateAPIs) {
+  EXPECT_TRUE([NSMenu instancesRespondToSelector:@selector(_lockMenuPosition)]);
+  EXPECT_TRUE(
+      [NSMenu instancesRespondToSelector:@selector(_unlockMenuPosition)]);
+}
+
+}  // namespace

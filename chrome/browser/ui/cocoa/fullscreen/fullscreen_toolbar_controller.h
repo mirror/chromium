@@ -60,6 +60,8 @@ struct FullscreenToolbarLayout {
   // Whether or not we are in fullscreen mode.
   BOOL inFullscreenMode_;
 
+  BOOL menubarLocked;
+
   // Updates the fullscreen toolbar layout for changes in the menubar. This
   // object is only set when the browser is in fullscreen mode.
   base::scoped_nsobject<FullscreenMenubarTracker> menubarTracker_;
