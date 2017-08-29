@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "18b683a8_1fb1d533",
+        "filename": "chrome/common/extensions/api/processes.idl",
+        "patchSetId": 12
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-08-29T22:06:34Z",
+      "side": 1,
+      "message": "Reworded this to reflect that we\u0027re now returning values in a different range.\n\nI don\u0027t see evidence of consumers of this API outside Google, and the internal consumer I\u0027ve encountered would prefer the form that matches platform-independent-CPU\u0027s definition anyway.",
+      "revId": "ca5307113eff258ed3a5e97aa8b952dac49b2749",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
