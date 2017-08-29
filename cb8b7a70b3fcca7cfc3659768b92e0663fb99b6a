@@ -52,6 +52,24 @@
       "revId": "cb8b7a70b3fcca7cfc3659768b92e0663fb99b6a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c22e8848_34954ca5",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1196069
+      },
+      "writtenOn": "2017-08-29T17:38:32Z",
+      "side": 1,
+      "message": "The events are receiving from LowLevelKeyboardProc (https://msdn.microsoft.com/en-us/library/windows/desktop/ms644985(v\u003dvs.85).aspx), which is a parameter of SetWindowHookEx (https://msdn.microsoft.com/en-us/library/windows/desktop/ms644990(v\u003dvs.85).aspx) function in our case. But regular route won\u0027t be able to receive these key events. So adding KeyEventFilter in DesktopWindowTreeHostWin|X11 won\u0027t help us to receive OS reserved keys.\n\nIt looks like I have not explained the LowLevelKeyboardProc clearly. It\u0027s a *different*[1] route for an application to receive keyboard events from the OS. OS will send the keyboard events first to this route, if the callback function discards it (returns false), the regular route will be used. Otherwise the event is considered to be consumed by the callback function. By using this more powerful route, applications can receive events usually reserved by OS.\n\n[1]: On X11, there is no additional route, XNextEvent() is still used to receive events. Windows and Mac OSX provide an additional route. But the same design can apply to both architectures, since both architectures process native keyboard events.\n\nYou may find more information from \"Receive Low Level Key Events\" section in \"System Keyboard Lock in Chrome\" @ https://docs.google.com/document/d/1cRtxr17qdwZqKD5_OgEFmoQJl1fh01ZScPT6NX4dMX4/edit#heading\u003dh.ch70sq2sqae1.",
+      "parentUuid": "a7833a4d_5e734eba",
+      "revId": "cb8b7a70b3fcca7cfc3659768b92e0663fb99b6a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
