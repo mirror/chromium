@@ -771,9 +771,7 @@ crbug.com/692560 external/wpt/html/semantics/document-metadata/styling/LinkStyle
 crbug.com/627706 external/wpt/html/semantics/embedded-content/the-img-element/invalid-src.html [ Skip ]
 
 crbug.com/698135 external/wpt/editing/run/delete.html [ Crash Failure Timeout ]
-crbug.com/698165 external/wpt/editing/run/forwarddelete.html [ Pass Timeout ]
-crbug.com/698165 external/wpt/editing/run/justifycenter.html [ Pass Timeout ]
-crbug.com/698165 [ Win7 Debug ] external/wpt/editing/run/multitest.html [ Pass Timeout ]
+crbug.com/698165 [ Mac10.10 Mac10.9 ] external/wpt/editing/run/forwarddelete.html [ Pass Timeout ]
 
 crbug.com/688613 external/wpt/mediacapture-streams/MediaStreamTrack-MediaElement-disabled-audio-is-silence.https.html [ Skip ]
 
@@ -2839,7 +2837,7 @@ crbug.com/715718 [ Win ] external/wpt/css/css-flexbox-1/flex-minimum-width-flex-
 crbug.com/715718 [ Win ] external/wpt/css/css-flexbox-1/flex-minimum-width-flex-items-003.xht [ Failure Pass ]
 crbug.com/715718 [ Win ] external/wpt/css/css-flexbox-1/flexbox_flex-natural-mixed-basis-auto.html [ Failure Pass ]
 
-crbug.com/739367 virtual/service-worker-script-streaming/external/wpt/service-workers/service-worker/fetch-event-redirect.https.html [ Timeout ]
+crbug.com/739367 [ Win ] virtual/service-worker-script-streaming/external/wpt/service-workers/service-worker/fetch-event-redirect.https.html [ Timeout ]
 
 # Feature Policy changes fullscreen behaviour, tests need updating
 crbug.com/718155 fullscreen/full-screen-iframe-not-allowed.html [ Failure ]
@@ -2881,9 +2879,6 @@ crbug.com/725545 [ Debug ] fast/forms/number/number-stepup-stepdown-from-rendere
 
 # Sheriff failures 2017-05-23
 crbug.com/725470 editing/shadow/doubleclick-on-meter-in-shadow-crash.html [ Crash Failure Pass ]
-
-# Sheriff failures 2017-05-29
-crbug.com/727252 [ Win7 ] external/wpt/media-source/mediasource-endofstream.html [ Pass Timeout ]
 
 # Failures when using libc++.  Rebaseline after landing https://codereview.chromium.org/2933573002/
 crbug.com/734873 [ Linux ] fast/backgrounds/size/contain-and-cover.html [ Pass Failure ]
