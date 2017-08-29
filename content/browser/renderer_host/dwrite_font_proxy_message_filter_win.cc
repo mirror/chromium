@@ -216,6 +216,7 @@ void DWriteFontProxyMessageFilter::SetWindowsFontsPathForTesting(
 void DWriteFontProxyMessageFilter::OnFindFamily(
     const base::string16& family_name,
     UINT32* family_index) {
+  DCHECK(false) << __FUNCTION__;
   InitializeDirectWrite();
   TRACE_EVENT0("dwrite", "FontProxyHost::OnFindFamily");
   DCHECK(collection_);
@@ -233,6 +234,7 @@ void DWriteFontProxyMessageFilter::OnFindFamily(
 }
 
 void DWriteFontProxyMessageFilter::OnGetFamilyCount(UINT32* count) {
+  DCHECK(false) << __FUNCTION__;
   InitializeDirectWrite();
   TRACE_EVENT0("dwrite", "FontProxyHost::OnGetFamilyCount");
   DCHECK(collection_);
@@ -245,6 +247,7 @@ void DWriteFontProxyMessageFilter::OnGetFamilyCount(UINT32* count) {
 void DWriteFontProxyMessageFilter::OnGetFamilyNames(
     UINT32 family_index,
     std::vector<DWriteStringPair>* family_names) {
+  DCHECK(false) << __FUNCTION__;
   InitializeDirectWrite();
   TRACE_EVENT0("dwrite", "FontProxyHost::OnGetFamilyNames");
   DCHECK(collection_);
@@ -306,6 +309,7 @@ void DWriteFontProxyMessageFilter::OnGetFontFiles(
     uint32_t family_index,
     std::vector<base::string16>* file_paths,
     std::vector<IPC::PlatformFileForTransit>* file_handles) {
+  DCHECK(false) << __FUNCTION__;
   InitializeDirectWrite();
   TRACE_EVENT0("dwrite", "FontProxyHost::OnGetFontFiles");
   DCHECK(collection_);
@@ -369,6 +373,7 @@ void DWriteFontProxyMessageFilter::OnMapCharacters(
     uint32_t reading_direction,
     const base::string16& base_family_name,
     MapCharactersResult* result) {
+  DCHECK(false) << __FUNCTION__;
   InitializeDirectWrite();
   result->family_index = UINT32_MAX;
   result->mapped_length = text.length();
