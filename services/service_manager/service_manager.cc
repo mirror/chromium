@@ -262,7 +262,8 @@ class ServiceManager::Instance
                                             base::Unretained(this)));
   }
 
-  bool StartWithFilePath(const base::FilePath& path) {
+  bool StartWithFilePath(const base::FilePath& path,
+                         const std::string& sandbox_type) {
 #if defined(OS_IOS)
     // iOS does not support launching services in their own processes.
     NOTREACHED();
@@ -273,9 +274,8 @@ class ServiceManager::Instance
     runner_ = service_manager_->service_process_launcher_factory_->Create(path);
     if (!runner_)
       return false;
-    bool start_sandboxed = false;
     mojom::ServicePtr service = runner_->Start(
-        identity_, start_sandboxed,
+        identity_, !sandbox_type.empty(),
         base::Bind(&Instance::PIDAvailable, weak_factory_.GetWeakPtr()));
     StartWithService(std::move(service));
     return true;
@@ -893,7 +893,7 @@ void ServiceManager::Connect(std::unique_ptr<ConnectParams> params) {
     } else {
       base::FilePath package_path = entry->path();
       DCHECK(!package_path.empty());
-      if (!instance->StartWithFilePath(package_path)) {
+      if (!instance->StartWithFilePath(package_path, entry->sandbox_type())) {
         OnInstanceError(instance);
         params->set_response_data(mojom::ConnectResult::INVALID_ARGUMENT,
                                   Identity());
