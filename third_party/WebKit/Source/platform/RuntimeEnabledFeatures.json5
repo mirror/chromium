@@ -704,7 +704,7 @@
     },
     {
       name: "NavigatorDeviceMemory",
-      status: "experimental",
+      status: "stable",
     },
     {
       name: "NetInfoDownlink",
