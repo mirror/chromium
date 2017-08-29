@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e6e2f21d_adb2a425",
+        "filename": "ui/aura/mus/hit_test_data_provider_aura_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1211635
+      },
+      "writtenOn": "2017-08-29T21:32:02Z",
+      "side": 0,
+      "message": "local_surface_id are all zeros for kHitTestMine but I added these (instead of deleting surface id check completely in these cases) so that we remember to check local_surface_id when we add some tests for kHitTestChildSurface. Could you add a TODO in the test to have some kHitTestChildSurface tests that check local_surface_id? Thanks!",
+      "range": {
+        "startLine": 148,
+        "startChar": 14,
+        "endLine": 148,
+        "endChar": 72
+      },
+      "revId": "1244f50302e9ba5f1910bf053a133c97304cf3bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

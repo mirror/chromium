@@ -46,6 +46,30 @@
       "revId": "74721357e4029cf65f6e410495fbff7d7929e095",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b971a6ea_2d04c8d1",
+        "filename": "ui/aura/mus/hit_test_data_provider_aura_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1211635
+      },
+      "writtenOn": "2017-08-29T21:32:02Z",
+      "side": 1,
+      "message": "I think it\u0027s because frame_sink_id were all zeros before so these two had the same value.",
+      "parentUuid": "f0b07fa2_70ee209e",
+      "range": {
+        "startLine": 168,
+        "startChar": 33,
+        "endLine": 168,
+        "endChar": 49
+      },
+      "revId": "74721357e4029cf65f6e410495fbff7d7929e095",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
