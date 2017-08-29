@@ -997,7 +997,7 @@ text.updateTextArea = function(interimText, opt_finalText) {
  */
 text.showInitializingMessage = function() {
   const displayMessage = function() {
-    if (text.interim_.innerText == '') {
+    if (text.interim_.textContent == '') {
       text.updateTextArea(speech.messages.waiting);
     }
   };
@@ -1152,7 +1152,7 @@ text.getTextClassName_ = function() {
  */
 text.startListeningMessageAnimation_ = function() {
   const animateListeningText = function() {
-    if (text.interim_.innerText == speech.messages.ready) {
+    if (text.interim_.textContent == speech.messages.ready) {
       text.updateTextArea(speech.messages.listening);
       text.interim_.classList.add(text.LISTENING_ANIMATION_CLASS_);
     }
