@@ -16,6 +16,24 @@
       "revId": "60358094ba966ef30f1bcc446aa2c4afbdc1b4ac",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad64f270_8b4d2c24",
+        "filename": "third_party/WebKit/Source/devtools/front_end/resources/ServiceWorkersView.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1211736
+      },
+      "writtenOn": "2017-08-29T00:04:53Z",
+      "side": 0,
+      "message": "It\u0027s still being used - this page is showing an error count. There\u0027s also some concern that we will want to surface the errors elsewhere (e.g. console may want to listen to the events) if we notice that some errors are slipping through the cracks.",
+      "parentUuid": "97b9e34d_d85b9d49",
+      "revId": "60358094ba966ef30f1bcc446aa2c4afbdc1b4ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
