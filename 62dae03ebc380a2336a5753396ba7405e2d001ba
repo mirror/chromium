@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "42663434_2c8aaa96",
+        "filename": "chrome/test/data/local_ntp/voice_microphone_browsertest.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-29T14:47:18Z",
+      "side": 1,
+      "message": "This nicely demonstrates why I don\u0027t like tearDown: How can I be sure that this is the only thing that needs to be reset? Feels kinda arbitrary...\n(I don\u0027t think there\u0027s much to be done about it here, given that basically all the JS stuff is in global variables. Just trying to explain...)",
+      "revId": "62dae03ebc380a2336a5753396ba7405e2d001ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "587b6d35_c8800950",
+        "filename": "chrome/test/data/local_ntp/voice_microphone_browsertest.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-29T14:47:18Z",
+      "side": 1,
+      "message": "So, if the tearDown above were missing or broken, then this test might or might not pass, depending on the order in which the tests run.",
+      "revId": "62dae03ebc380a2336a5753396ba7405e2d001ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e2cccd9a_c8a3d35e",
+        "filename": "chrome/test/data/local_ntp/voice_microphone_browsertest.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-29T14:47:18Z",
+      "side": 1,
+      "message": "Once again, pre-existing problem, but: What does this actually test? If the animation were starting over again, I\u0027d still expect isLevelAnimating_ to remain true?",
+      "revId": "62dae03ebc380a2336a5753396ba7405e2d001ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
