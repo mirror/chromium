@@ -426,6 +426,29 @@ const Window* Window::GetChildById(int id) const {
 }
 
 // static
+void Window::ConvertFloatPointToTarget(const Window* source,
+                                       const Window* target,
+                                       gfx::PointF* point) {
+  if (!source)
+    return;
+  if (source->GetRootWindow() != target->GetRootWindow()) {
+    client::ScreenPositionClient* source_client =
+        client::GetScreenPositionClient(source->GetRootWindow());
+    // |source_client| can be NULL in tests.
+    if (source_client)
+      source_client->ConvertFloatPointToScreen(source, point);
+
+    client::ScreenPositionClient* target_client =
+        client::GetScreenPositionClient(target->GetRootWindow());
+    // |target_client| can be NULL in tests.
+    if (target_client)
+      target_client->ConvertFloatPointFromScreen(target, point);
+  } else {
+    ui::Layer::ConvertPointFToLayer(source->layer(), target->layer(), point);
+  }
+}
+
+// static
 void Window::ConvertPointToTarget(const Window* source,
                                   const Window* target,
                                   gfx::Point* point) {
