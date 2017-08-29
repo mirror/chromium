@@ -10,6 +10,7 @@
 
 #include "base/memory/ptr_util.h"
 #include "cc/quads/draw_quad.h"
+#include "ui/gfx/math_util.h"
 
 namespace {
 // This threshold controls how "thick" a plane is. If a point's distance is
@@ -69,10 +70,10 @@ DrawPolygon::DrawPolygon(const DrawQuad* original_ref,
   // Doing this mapping here is very important, since we can't just transform
   // the points without clipping and not run into strange geometry issues when
   // crossing w = 0. At this point, in the constructor, we know that we're
-  // working with a quad, so we can reuse the MathUtil::MapClippedQuad3d
+  // working with a quad, so we can reuse the gfx::MathUtil::MapClippedQuad3d
   // function instead of writing a generic polygon version of it.
-  MathUtil::MapClippedQuad3d(
-      transform, send_quad, points, &num_vertices_in_clipped_quad);
+  gfx::MathUtil::MapClippedQuad3d(transform, send_quad, points,
+                                  &num_vertices_in_clipped_quad);
   for (int i = 0; i < num_vertices_in_clipped_quad; i++) {
     points_.push_back(points[i]);
   }

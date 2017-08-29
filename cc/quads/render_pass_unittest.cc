@@ -7,7 +7,6 @@
 #include <stddef.h>
 
 #include "base/memory/ptr_util.h"
-#include "cc/base/math_util.h"
 #include "cc/quads/render_pass_draw_quad.h"
 #include "cc/quads/solid_color_draw_quad.h"
 #include "cc/test/geometry_test_utils.h"
@@ -26,8 +25,8 @@ struct RenderPassSize {
   gfx::Rect output_rect;
   gfx::Rect damage_rect;
   gfx::Transform transform_to_root_target;
-  FilterOperations filters;
-  FilterOperations background_filters;
+  gfx::FilterOperations filters;
+  gfx::FilterOperations background_filters;
   gfx::ColorSpace color_space;
   bool has_transparent_background;
   std::vector<std::unique_ptr<viz::CopyOutputRequest>> copy_callbacks;
@@ -73,10 +72,10 @@ TEST(RenderPassTest, CopyShouldBeIdenticalExceptIdAndQuads) {
   gfx::Transform transform_to_root =
       gfx::Transform(1.0, 0.5, 0.5, -0.5, -1.0, 0.0);
   gfx::Rect damage_rect(56, 123, 19, 43);
-  FilterOperations filters;
-  filters.Append(FilterOperation::CreateOpacityFilter(0.5));
-  FilterOperations background_filters;
-  background_filters.Append(FilterOperation::CreateInvertFilter(1.0));
+  gfx::FilterOperations filters;
+  filters.Append(gfx::FilterOperation::CreateOpacityFilter(0.5));
+  gfx::FilterOperations background_filters;
+  background_filters.Append(gfx::FilterOperation::CreateInvertFilter(1.0));
   gfx::ColorSpace color_space = gfx::ColorSpace::CreateSRGB();
   bool has_transparent_background = true;
   bool cache_render_pass = false;
@@ -126,10 +125,10 @@ TEST(RenderPassTest, CopyAllShouldBeIdentical) {
   gfx::Transform transform_to_root =
       gfx::Transform(1.0, 0.5, 0.5, -0.5, -1.0, 0.0);
   gfx::Rect damage_rect(56, 123, 19, 43);
-  FilterOperations filters;
-  filters.Append(FilterOperation::CreateOpacityFilter(0.5));
-  FilterOperations background_filters;
-  background_filters.Append(FilterOperation::CreateInvertFilter(1.0));
+  gfx::FilterOperations filters;
+  filters.Append(gfx::FilterOperation::CreateOpacityFilter(0.5));
+  gfx::FilterOperations background_filters;
+  background_filters.Append(gfx::FilterOperation::CreateInvertFilter(1.0));
   gfx::ColorSpace color_space = gfx::ColorSpace::CreateXYZD50();
   bool has_transparent_background = true;
   bool cache_render_pass = false;
@@ -180,10 +179,11 @@ TEST(RenderPassTest, CopyAllShouldBeIdentical) {
   gfx::Transform contrib_transform_to_root =
       gfx::Transform(1.0, 0.5, 0.5, -0.5, -1.0, 0.0);
   gfx::Rect contrib_damage_rect(11, 16, 10, 15);
-  FilterOperations contrib_filters;
-  contrib_filters.Append(FilterOperation::CreateSepiaFilter(0.5));
-  FilterOperations contrib_background_filters;
-  contrib_background_filters.Append(FilterOperation::CreateSaturateFilter(1));
+  gfx::FilterOperations contrib_filters;
+  contrib_filters.Append(gfx::FilterOperation::CreateSepiaFilter(0.5));
+  gfx::FilterOperations contrib_background_filters;
+  contrib_background_filters.Append(
+      gfx::FilterOperation::CreateSaturateFilter(1));
   gfx::ColorSpace contrib_color_space = gfx::ColorSpace::CreateSCRGBLinear();
   bool contrib_has_transparent_background = true;
   bool contrib_cache_render_pass = false;
@@ -233,10 +233,10 @@ TEST(RenderPassTest, CopyAllWithCulledQuads) {
   gfx::Transform transform_to_root =
       gfx::Transform(1.0, 0.5, 0.5, -0.5, -1.0, 0.0);
   gfx::Rect damage_rect(56, 123, 19, 43);
-  FilterOperations filters;
-  filters.Append(FilterOperation::CreateOpacityFilter(0.5));
-  FilterOperations background_filters;
-  background_filters.Append(FilterOperation::CreateInvertFilter(1.0));
+  gfx::FilterOperations filters;
+  filters.Append(gfx::FilterOperation::CreateOpacityFilter(0.5));
+  gfx::FilterOperations background_filters;
+  background_filters.Append(gfx::FilterOperation::CreateInvertFilter(1.0));
   gfx::ColorSpace color_space = gfx::ColorSpace::CreateSCRGBLinear();
   bool has_transparent_background = true;
   bool cache_render_pass = false;

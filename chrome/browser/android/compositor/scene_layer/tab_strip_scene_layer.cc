@@ -113,9 +113,9 @@ void TabStripSceneLayer::UpdateTabStripLayer(JNIEnv* env,
 
   if (brightness != brightness_) {
     brightness_ = brightness;
-    cc::FilterOperations filters;
+    gfx::FilterOperations filters;
     if (brightness_ < 1.f)
-      filters.Append(cc::FilterOperation::CreateBrightnessFilter(brightness_));
+      filters.Append(gfx::FilterOperation::CreateBrightnessFilter(brightness_));
     tab_strip_layer_->SetFilters(filters);
   }
 

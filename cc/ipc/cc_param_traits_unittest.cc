@@ -24,8 +24,6 @@
 using cc::CompositorFrame;
 using cc::DebugBorderDrawQuad;
 using cc::DrawQuad;
-using cc::FilterOperation;
-using cc::FilterOperations;
 using cc::PictureDrawQuad;
 using cc::RenderPass;
 using cc::RenderPassDrawQuad;
@@ -36,6 +34,8 @@ using cc::TextureDrawQuad;
 using cc::TileDrawQuad;
 using cc::StreamVideoDrawQuad;
 using cc::YUVVideoDrawQuad;
+using gfx::FilterOperation;
+using gfx::FilterOperations;
 using gfx::Transform;
 using viz::ResourceId;
 using viz::SharedQuadState;
@@ -55,10 +55,10 @@ class CCParamTraitsTest : public testing::Test {
     EXPECT_EQ(a->transform_to_root_target, b->transform_to_root_target);
     EXPECT_EQ(a->filters.size(), b->filters.size());
     for (size_t i = 0; i < a->filters.size(); ++i) {
-      if (a->filters.at(i).type() != cc::FilterOperation::REFERENCE) {
+      if (a->filters.at(i).type() != gfx::FilterOperation::REFERENCE) {
         EXPECT_EQ(a->filters.at(i), b->filters.at(i));
       } else {
-        EXPECT_EQ(b->filters.at(i).type(), cc::FilterOperation::REFERENCE);
+        EXPECT_EQ(b->filters.at(i).type(), gfx::FilterOperation::REFERENCE);
         EXPECT_EQ(a->filters.at(i).image_filter()->countInputs(),
                   b->filters.at(i).image_filter()->countInputs());
       }
@@ -66,11 +66,11 @@ class CCParamTraitsTest : public testing::Test {
     EXPECT_EQ(a->background_filters.size(), b->background_filters.size());
     for (size_t i = 0; i < a->background_filters.size(); ++i) {
       if (a->background_filters.at(i).type() !=
-          cc::FilterOperation::REFERENCE) {
+          gfx::FilterOperation::REFERENCE) {
         EXPECT_EQ(a->background_filters.at(i), b->background_filters.at(i));
       } else {
         EXPECT_EQ(b->background_filters.at(i).type(),
-                  cc::FilterOperation::REFERENCE);
+                  gfx::FilterOperation::REFERENCE);
         EXPECT_EQ(a->background_filters.at(i).image_filter()->countInputs(),
                   b->background_filters.at(i).image_filter()->countInputs());
       }
@@ -292,7 +292,7 @@ TEST_F(CCParamTraitsTest, AllQuads) {
       FilterOperation::CreateGrayscaleFilter(arbitrary_float1));
   arbitrary_filters1.Append(
       FilterOperation::CreateBlurFilter(arbitrary_float2));
-  arbitrary_filters1.Append(cc::FilterOperation::CreateReferenceFilter(
+  arbitrary_filters1.Append(gfx::FilterOperation::CreateReferenceFilter(
       SkBlurImageFilter::Make(arbitrary_sigma, arbitrary_sigma, nullptr)));
 
   FilterOperations arbitrary_filters2;

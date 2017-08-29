@@ -160,7 +160,7 @@ class SurfaceAggregatorTest : public testing::Test {
       Pass pass = passes[i];
       cc::RenderPass* test_pass =
           AddRenderPass(pass_list, pass.id, output_rect, root_transform,
-                        cc::FilterOperations());
+                        gfx::FilterOperations());
       for (size_t j = 0; j < pass.quad_count; ++j) {
         AddQuadInPass(test_pass, pass.quads[j]);
       }
@@ -1998,7 +1998,7 @@ TEST_F(SurfaceAggregatorPartialSwapTest, IgnoreOutside) {
     filter_pass->shared_quad_state_list.front()
         ->quad_to_target_transform.Translate(10, 10);
     auto* root_pass = root_pass_list[2].get();
-    filter_pass->filters.Append(cc::FilterOperation::CreateBlurFilter(2));
+    filter_pass->filters.Append(gfx::FilterOperation::CreateBlurFilter(2));
     root_pass->damage_rect = gfx::Rect(10, 10, 2, 2);
     SubmitPassListAsFrame(support_.get(), root_local_surface_id_,
                           &root_pass_list);
@@ -2047,7 +2047,7 @@ TEST_F(SurfaceAggregatorPartialSwapTest, IgnoreOutside) {
     root_pass->shared_quad_state_list.ElementAt(1)
         ->quad_to_target_transform.Translate(10, 10);
     pass->background_filters.Append(
-        cc::FilterOperation::CreateOpacityFilter(0.5f));
+        gfx::FilterOperation::CreateOpacityFilter(0.5f));
     root_pass->damage_rect = gfx::Rect(10, 10, 2, 2);
     SubmitPassListAsFrame(support_.get(), root_local_surface_id_,
                           &root_pass_list);
@@ -2097,7 +2097,7 @@ TEST_F(SurfaceAggregatorPartialSwapTest, IgnoreOutside) {
     auto* root_pass = root_pass_list[1].get();
     root_pass->shared_quad_state_list.ElementAt(1)
         ->quad_to_target_transform.Translate(10, 10);
-    pass->background_filters.Append(cc::FilterOperation::CreateBlurFilter(2));
+    pass->background_filters.Append(gfx::FilterOperation::CreateBlurFilter(2));
     root_pass->damage_rect = gfx::Rect(10, 10, 2, 2);
     SubmitPassListAsFrame(support_.get(), root_local_surface_id_,
                           &root_pass_list);

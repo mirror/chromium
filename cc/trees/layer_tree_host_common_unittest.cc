@@ -17,7 +17,6 @@
 #include "cc/animation/animation_player.h"
 #include "cc/animation/keyframed_animation_curve.h"
 #include "cc/animation/transform_operations.h"
-#include "cc/base/math_util.h"
 #include "cc/input/main_thread_scrolling_reason.h"
 #include "cc/layers/content_layer_client.h"
 #include "cc/layers/effect_tree_layer_list_iterator.h"
@@ -53,6 +52,7 @@
 #include "third_party/skia/include/effects/SkXfermodeImageFilter.h"
 #include "ui/gfx/geometry/quad_f.h"
 #include "ui/gfx/geometry/vector2d_conversions.h"
+#include "ui/gfx/math_util.h"
 #include "ui/gfx/transform.h"
 
 namespace cc {
@@ -548,10 +548,11 @@ TEST_F(LayerTreeHostCommonTest, TransformsAboutScrollOffset) {
                                  nullptr, nullptr);
   gfx::Transform expected_transform;
   gfx::PointF sub_layer_screen_position = kScrollLayerPosition - kScrollDelta;
-  expected_transform.Translate(MathUtil::Round(sub_layer_screen_position.x() *
-                                               page_scale * kDeviceScale),
-                               MathUtil::Round(sub_layer_screen_position.y() *
-                                               page_scale * kDeviceScale));
+  expected_transform.Translate(
+      gfx::MathUtil::Round(sub_layer_screen_position.x() * page_scale *
+                           kDeviceScale),
+      gfx::MathUtil::Round(sub_layer_screen_position.y() * page_scale *
+                           kDeviceScale));
   expected_transform.Scale(page_scale * kDeviceScale,
                            page_scale * kDeviceScale);
   EXPECT_TRANSFORMATION_MATRIX_EQ(expected_transform,
@@ -570,12 +571,12 @@ TEST_F(LayerTreeHostCommonTest, TransformsAboutScrollOffset) {
                                  nullptr, nullptr);
   expected_transform.MakeIdentity();
   expected_transform.Translate(
-      MathUtil::Round(kTranslateX * page_scale * kDeviceScale +
-                      sub_layer_screen_position.x() * page_scale *
-                          kDeviceScale),
-      MathUtil::Round(kTranslateY * page_scale * kDeviceScale +
-                      sub_layer_screen_position.y() * page_scale *
-                          kDeviceScale));
+      gfx::MathUtil::Round(kTranslateX * page_scale * kDeviceScale +
+                           sub_layer_screen_position.x() * page_scale *
+                               kDeviceScale),
+      gfx::MathUtil::Round(kTranslateY * page_scale * kDeviceScale +
+                           sub_layer_screen_position.y() * page_scale *
+                               kDeviceScale));
   expected_transform.Scale(page_scale * kDeviceScale,
                            page_scale * kDeviceScale);
   EXPECT_TRANSFORMATION_MATRIX_EQ(expected_transform,
@@ -595,12 +596,12 @@ TEST_F(LayerTreeHostCommonTest, TransformsAboutScrollOffset) {
 
   expected_transform.MakeIdentity();
   expected_transform.Translate(
-      MathUtil::Round(kTranslateX * page_scale * kDeviceScale +
-                      sub_layer_screen_position.x() * page_scale *
-                          kDeviceScale),
-      MathUtil::Round(kTranslateY * page_scale * kDeviceScale +
-                      sub_layer_screen_position.y() * page_scale *
-                          kDeviceScale));
+      gfx::MathUtil::Round(kTranslateX * page_scale * kDeviceScale +
+                           sub_layer_screen_position.x() * page_scale *
+                               kDeviceScale),
+      gfx::MathUtil::Round(kTranslateY * page_scale * kDeviceScale +
+                           sub_layer_screen_position.y() * page_scale *
+                               kDeviceScale));
   expected_transform.Scale(page_scale * kDeviceScale,
                            page_scale * kDeviceScale);
   EXPECT_TRANSFORMATION_MATRIX_EQ(expected_transform,
@@ -702,8 +703,8 @@ TEST_F(LayerTreeHostCommonTest, TransformsForSingleRenderSurface) {
       parent_translation_to_anchor * parent_layer_transform *
       Inverse(parent_translation_to_anchor);
   gfx::Vector2dF parent_composite_scale =
-      MathUtil::ComputeTransform2dScaleComponents(parent_composite_transform,
-                                                  1.f);
+      gfx::MathUtil::ComputeTransform2dScaleComponents(
+          parent_composite_transform, 1.f);
   gfx::Transform surface_sublayer_transform;
   surface_sublayer_transform.Scale(parent_composite_scale.x(),
                                    parent_composite_scale.y());
@@ -792,7 +793,7 @@ TEST_F(LayerTreeHostCommonTest, TransformsForRenderSurfaceHierarchy) {
       translation_to_anchor * layer_transform * Inverse(translation_to_anchor);
 
   gfx::Vector2dF surface1_parent_transform_scale =
-      MathUtil::ComputeTransform2dScaleComponents(A, 1.f);
+      gfx::MathUtil::ComputeTransform2dScaleComponents(A, 1.f);
   gfx::Transform surface1_sublayer_transform;
   surface1_sublayer_transform.Scale(surface1_parent_transform_scale.x(),
                                     surface1_parent_transform_scale.y());
@@ -804,7 +805,7 @@ TEST_F(LayerTreeHostCommonTest, TransformsForRenderSurfaceHierarchy) {
   gfx::Transform S1 = Inverse(surface1_sublayer_transform);
 
   gfx::Vector2dF surface2_parent_transform_scale =
-      MathUtil::ComputeTransform2dScaleComponents(SS1 * A, 1.f);
+      gfx::MathUtil::ComputeTransform2dScaleComponents(SS1 * A, 1.f);
   gfx::Transform surface2_sublayer_transform;
   surface2_sublayer_transform.Scale(surface2_parent_transform_scale.x(),
                                     surface2_parent_transform_scale.y());
@@ -1415,8 +1416,8 @@ TEST_F(LayerTreeHostCommonTest,
   render_surface1->test_properties()->force_render_surface = true;
   render_surface1->test_properties()->opacity = 0.f;
   render_surface1->SetDrawsContent(true);
-  FilterOperations filters;
-  filters.Append(FilterOperation::CreateBlurFilter(1.5f));
+  gfx::FilterOperations filters;
+  filters.Append(gfx::FilterOperation::CreateBlurFilter(1.5f));
   render_surface1->test_properties()->background_filters = filters;
   child->SetBounds(gfx::Size(10, 10));
   child->SetDrawsContent(true);
@@ -1470,8 +1471,8 @@ TEST_F(LayerTreeHostCommonTest, RenderSurfaceListForFilter) {
 
   root->SetBounds(gfx::Size(100, 100));
   parent->test_properties()->transform = scale_matrix;
-  FilterOperations filters;
-  filters.Append(FilterOperation::CreateBlurFilter(10.0f));
+  gfx::FilterOperations filters;
+  filters.Append(gfx::FilterOperation::CreateBlurFilter(10.0f));
   parent->test_properties()->filters = filters;
   parent->test_properties()->force_render_surface = true;
   child1->SetBounds(gfx::Size(25, 25));
@@ -1507,8 +1508,8 @@ TEST_F(LayerTreeHostCommonTest, DrawableContentRectForReferenceFilter) {
   child->SetBounds(gfx::Size(25, 25));
   child->SetDrawsContent(true);
   child->test_properties()->force_render_surface = true;
-  FilterOperations filters;
-  filters.Append(FilterOperation::CreateReferenceFilter(
+  gfx::FilterOperations filters;
+  filters.Append(gfx::FilterOperation::CreateReferenceFilter(
       SkOffsetImageFilter::Make(50, 50, nullptr)));
   child->test_properties()->filters = filters;
   ExecuteCalculateDrawProperties(root);
@@ -1532,8 +1533,8 @@ TEST_F(LayerTreeHostCommonTest, DrawableContentRectForReferenceFilterHighDpi) {
   child->SetDrawsContent(true);
   child->test_properties()->force_render_surface = true;
 
-  FilterOperations filters;
-  filters.Append(FilterOperation::CreateReferenceFilter(
+  gfx::FilterOperations filters;
+  filters.Append(gfx::FilterOperation::CreateReferenceFilter(
       SkOffsetImageFilter::Make(50, 50, nullptr)));
   child->test_properties()->filters = filters;
 
@@ -2475,9 +2476,8 @@ TEST_F(LayerTreeHostCommonDrawRectsTest,
   // Sanity check that this transform does indeed cause w < 0 when applying the
   // transform, otherwise this code is not testing the intended scenario.
   bool clipped;
-  MathUtil::MapQuad(layer_to_surface_transform,
-                    gfx::QuadF(gfx::RectF(layer_content_rect)),
-                    &clipped);
+  gfx::MathUtil::MapQuad(layer_to_surface_transform,
+                         gfx::QuadF(gfx::RectF(layer_content_rect)), &clipped);
   ASSERT_TRUE(clipped);
 
   gfx::Rect expected_visible_layer_rect = gfx::Rect(0, 1, 10, 1);
@@ -2494,13 +2494,13 @@ static bool ProjectionClips(const gfx::Transform& map_transform,
   gfx::Transform inverse(Inverse(map_transform));
   bool clipped = false;
   if (!clipped)
-    MathUtil::ProjectPoint(inverse, mapped_rect.top_right(), &clipped);
+    gfx::MathUtil::ProjectPoint(inverse, mapped_rect.top_right(), &clipped);
   if (!clipped)
-    MathUtil::ProjectPoint(inverse, mapped_rect.origin(), &clipped);
+    gfx::MathUtil::ProjectPoint(inverse, mapped_rect.origin(), &clipped);
   if (!clipped)
-    MathUtil::ProjectPoint(inverse, mapped_rect.bottom_right(), &clipped);
+    gfx::MathUtil::ProjectPoint(inverse, mapped_rect.bottom_right(), &clipped);
   if (!clipped)
-    MathUtil::ProjectPoint(inverse, mapped_rect.bottom_left(), &clipped);
+    gfx::MathUtil::ProjectPoint(inverse, mapped_rect.bottom_left(), &clipped);
   return clipped;
 }
 
@@ -2526,7 +2526,7 @@ TEST_F(LayerTreeHostCommonDrawRectsTest, DrawRectsForPerspectiveUnprojection) {
 
   // Sanity check that un-projection does indeed cause w < 0, otherwise this
   // code is not testing the intended scenario.
-  gfx::RectF clipped_rect = MathUtil::MapClippedRect(
+  gfx::RectF clipped_rect = gfx::MathUtil::MapClippedRect(
       layer_to_surface_transform, gfx::RectF(layer_content_rect));
   ASSERT_TRUE(ProjectionClips(layer_to_surface_transform, clipped_rect));
 
@@ -2675,8 +2675,8 @@ TEST_F(LayerTreeHostCommonTest, VisibleRectWithClippingAndFilters) {
   EXPECT_EQ(gfx::Rect(50, 50, 10, 10), filter_child->visible_layer_rect());
   EXPECT_EQ(gfx::Rect(10, 10), GetRenderSurface(filter)->content_rect());
 
-  FilterOperations blur_filter;
-  blur_filter.Append(FilterOperation::CreateBlurFilter(4.0f));
+  gfx::FilterOperations blur_filter;
+  blur_filter.Append(gfx::FilterOperation::CreateBlurFilter(4.0f));
   filter->test_properties()->filters = blur_filter;
   host_impl()->active_tree()->property_trees()->needs_rebuild = true;
 
@@ -2690,9 +2690,9 @@ TEST_F(LayerTreeHostCommonTest, VisibleRectWithClippingAndFilters) {
   vertical_flip.Scale(1, -1);
   sk_sp<SkImageFilter> flip_filter = SkImageFilter::MakeMatrixFilter(
       vertical_flip.matrix(), kLow_SkFilterQuality, nullptr);
-  FilterOperations reflection_filter;
+  gfx::FilterOperations reflection_filter;
   reflection_filter.Append(
-      FilterOperation::CreateReferenceFilter(SkXfermodeImageFilter::Make(
+      gfx::FilterOperation::CreateReferenceFilter(SkXfermodeImageFilter::Make(
           SkBlendMode::kSrcOver, std::move(flip_filter))));
   filter->test_properties()->filters = reflection_filter;
   host_impl()->active_tree()->property_trees()->needs_rebuild = true;
@@ -2728,8 +2728,8 @@ TEST_F(LayerTreeHostCommonTest, VisibleRectWithScalingClippingAndFilters) {
   EXPECT_EQ(gfx::Rect(50, 50, 10, 10), filter_child->visible_layer_rect());
   EXPECT_EQ(gfx::Rect(30, 30), GetRenderSurface(filter)->content_rect());
 
-  FilterOperations blur_filter;
-  blur_filter.Append(FilterOperation::CreateBlurFilter(4.0f));
+  gfx::FilterOperations blur_filter;
+  blur_filter.Append(gfx::FilterOperation::CreateBlurFilter(4.0f));
   filter->test_properties()->filters = blur_filter;
   host_impl()->active_tree()->property_trees()->needs_rebuild = true;
 
@@ -2743,9 +2743,9 @@ TEST_F(LayerTreeHostCommonTest, VisibleRectWithScalingClippingAndFilters) {
   vertical_flip.Scale(1, -1);
   sk_sp<SkImageFilter> flip_filter = SkImageFilter::MakeMatrixFilter(
       vertical_flip.matrix(), kLow_SkFilterQuality, nullptr);
-  FilterOperations reflection_filter;
+  gfx::FilterOperations reflection_filter;
   reflection_filter.Append(
-      FilterOperation::CreateReferenceFilter(SkXfermodeImageFilter::Make(
+      gfx::FilterOperation::CreateReferenceFilter(SkXfermodeImageFilter::Make(
           SkBlendMode::kSrcOver, std::move(flip_filter))));
   filter->test_properties()->filters = reflection_filter;
   host_impl()->active_tree()->property_trees()->needs_rebuild = true;
@@ -2787,8 +2787,8 @@ TEST_F(LayerTreeHostCommonTest, ClipRectWithClipParentAndFilters) {
   EXPECT_EQ(gfx::Rect(100, 100), filter_child_1->clip_rect());
   EXPECT_EQ(gfx::Rect(10, 10), filter_child_2->clip_rect());
 
-  FilterOperations blur_filter;
-  blur_filter.Append(FilterOperation::CreateBlurFilter(4.0f));
+  gfx::FilterOperations blur_filter;
+  blur_filter.Append(gfx::FilterOperation::CreateBlurFilter(4.0f));
   filter->test_properties()->filters = blur_filter;
   host_impl()->active_tree()->property_trees()->needs_rebuild = true;
 
@@ -2819,8 +2819,8 @@ TEST_F(LayerTreeHostCommonTest, ClipRectWithClippedDescendantOfFilter) {
   EXPECT_TRUE(filter_grand_child->is_clipped());
   EXPECT_EQ(gfx::Rect(10, 10), filter_grand_child->clip_rect());
 
-  FilterOperations blur_filter;
-  blur_filter.Append(FilterOperation::CreateBlurFilter(4.0f));
+  gfx::FilterOperations blur_filter;
+  blur_filter.Append(gfx::FilterOperation::CreateBlurFilter(4.0f));
   filter->test_properties()->filters = blur_filter;
   host_impl()->active_tree()->property_trees()->needs_rebuild = true;
 
@@ -3108,9 +3108,9 @@ TEST_F(LayerTreeHostCommonTest, TextureLayerSnapping) {
   fractional_translate.RoundTranslationComponents();
   EXPECT_TRANSFORMATION_MATRIX_EQ(child_ptr->ScreenSpaceTransform(),
                                   fractional_translate);
-  gfx::RectF layer_bounds_in_screen_space =
-      MathUtil::MapClippedRect(child_ptr->ScreenSpaceTransform(),
-                               gfx::RectF(gfx::SizeF(child_ptr->bounds())));
+  gfx::RectF layer_bounds_in_screen_space = gfx::MathUtil::MapClippedRect(
+      child_ptr->ScreenSpaceTransform(),
+      gfx::RectF(gfx::SizeF(child_ptr->bounds())));
   EXPECT_EQ(layer_bounds_in_screen_space, gfx::RectF(11.f, 20.f, 100.f, 100.f));
 }
 
@@ -4045,9 +4045,9 @@ TEST_F(LayerTreeHostCommonScalingTest, LayerTransformsInHighDPI) {
   gfx::RectF root_bounds(gfx::SizeF(root->bounds()));
 
   gfx::RectF root_draw_rect =
-      MathUtil::MapClippedRect(root->DrawTransform(), root_bounds);
+      gfx::MathUtil::MapClippedRect(root->DrawTransform(), root_bounds);
   gfx::RectF root_screen_space_rect =
-      MathUtil::MapClippedRect(root->ScreenSpaceTransform(), root_bounds);
+      gfx::MathUtil::MapClippedRect(root->ScreenSpaceTransform(), root_bounds);
 
   gfx::RectF expected_root_draw_rect(gfx::SizeF(root->bounds()));
   expected_root_draw_rect.Scale(device_scale_factor);
@@ -4073,14 +4073,14 @@ TEST_F(LayerTreeHostCommonScalingTest, LayerTransformsInHighDPI) {
   gfx::RectF child_bounds(gfx::SizeF(child->bounds()));
 
   gfx::RectF child_draw_rect =
-      MathUtil::MapClippedRect(child->DrawTransform(), child_bounds);
-  gfx::RectF child_screen_space_rect =
-      MathUtil::MapClippedRect(child->ScreenSpaceTransform(), child_bounds);
+      gfx::MathUtil::MapClippedRect(child->DrawTransform(), child_bounds);
+  gfx::RectF child_screen_space_rect = gfx::MathUtil::MapClippedRect(
+      child->ScreenSpaceTransform(), child_bounds);
 
   gfx::RectF child2_draw_rect =
-      MathUtil::MapClippedRect(child2->DrawTransform(), child_bounds);
-  gfx::RectF child2_screen_space_rect =
-      MathUtil::MapClippedRect(child2->ScreenSpaceTransform(), child_bounds);
+      gfx::MathUtil::MapClippedRect(child2->DrawTransform(), child_bounds);
+  gfx::RectF child2_screen_space_rect = gfx::MathUtil::MapClippedRect(
+      child2->ScreenSpaceTransform(), child_bounds);
 
   gfx::RectF expected_child_draw_rect(child->position(),
                                       gfx::SizeF(child->bounds()));
@@ -4145,14 +4145,14 @@ TEST_F(LayerTreeHostCommonScalingTest, SurfaceLayerTransformsInHighDPI) {
   transform.Scale(device_scale_factor * page_scale_factor,
                   device_scale_factor * page_scale_factor);
   gfx::Vector2dF scales =
-      MathUtil::ComputeTransform2dScaleComponents(transform, 0.f);
+      gfx::MathUtil::ComputeTransform2dScaleComponents(transform, 0.f);
   float max_2d_scale = std::max(scales.x(), scales.y());
   EXPECT_FLOAT_EQ(max_2d_scale, scale_surface->GetIdealContentsScale());
 
   // The ideal scale will draw 1:1 with its render target space along
   // the larger-scale axis.
   gfx::Vector2dF target_space_transform_scales =
-      MathUtil::ComputeTransform2dScaleComponents(
+      gfx::MathUtil::ComputeTransform2dScaleComponents(
           scale_surface->draw_properties().target_space_transform, 0.f);
   EXPECT_FLOAT_EQ(max_2d_scale,
                   std::max(target_space_transform_scales.x(),
@@ -8378,10 +8378,10 @@ TEST_F(LayerTreeHostCommonTest, DelayedFilterAnimationCreatesRenderSurface) {
 
   std::unique_ptr<KeyframedFilterAnimationCurve> curve(
       KeyframedFilterAnimationCurve::Create());
-  FilterOperations start_filters;
-  start_filters.Append(FilterOperation::CreateBrightnessFilter(0.1f));
-  FilterOperations end_filters;
-  end_filters.Append(FilterOperation::CreateBrightnessFilter(0.3f));
+  gfx::FilterOperations start_filters;
+  start_filters.Append(gfx::FilterOperation::CreateBrightnessFilter(0.1f));
+  gfx::FilterOperations end_filters;
+  end_filters.Append(gfx::FilterOperation::CreateBrightnessFilter(0.3f));
   curve->AddKeyframe(
       FilterKeyframe::Create(base::TimeDelta(), start_filters, nullptr));
   curve->AddKeyframe(FilterKeyframe::Create(

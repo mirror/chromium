@@ -482,13 +482,13 @@ TEST_F(StructTraitsTest, RenderPass) {
   const gfx::Transform transform_to_root =
       gfx::Transform(1.0, 0.5, 0.5, -0.5, -1.0, 0.0);
   const gfx::Rect damage_rect(56, 123, 19, 43);
-  cc::FilterOperations filters;
-  filters.Append(cc::FilterOperation::CreateBlurFilter(0.f));
-  filters.Append(cc::FilterOperation::CreateZoomFilter(2.0f, 1));
-  cc::FilterOperations background_filters;
-  background_filters.Append(cc::FilterOperation::CreateSaturateFilter(4.f));
-  background_filters.Append(cc::FilterOperation::CreateZoomFilter(2.0f, 1));
-  background_filters.Append(cc::FilterOperation::CreateSaturateFilter(2.f));
+  gfx::FilterOperations filters;
+  filters.Append(gfx::FilterOperation::CreateBlurFilter(0.f));
+  filters.Append(gfx::FilterOperation::CreateZoomFilter(2.0f, 1));
+  gfx::FilterOperations background_filters;
+  background_filters.Append(gfx::FilterOperation::CreateSaturateFilter(4.f));
+  background_filters.Append(gfx::FilterOperation::CreateZoomFilter(2.0f, 1));
+  background_filters.Append(gfx::FilterOperation::CreateSaturateFilter(2.f));
   gfx::ColorSpace color_space = gfx::ColorSpace::CreateXYZD50();
   const bool has_transparent_background = true;
   const bool cache_render_pass = false;
@@ -614,7 +614,7 @@ TEST_F(StructTraitsTest, RenderPassWithEmptySharedQuadStateList) {
   const bool has_damage_from_contributing_content = false;
   std::unique_ptr<cc::RenderPass> input = cc::RenderPass::Create();
   input->SetAll(render_pass_id, output_rect, damage_rect, transform_to_root,
-                cc::FilterOperations(), cc::FilterOperations(), color_space,
+                gfx::FilterOperations(), gfx::FilterOperations(), color_space,
                 has_transparent_background, cache_render_pass,
                 has_damage_from_contributing_content);
 

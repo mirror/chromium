@@ -5,13 +5,13 @@
 #include "chrome/browser/android/compositor/layer/content_layer.h"
 
 #include "base/lazy_instance.h"
-#include "cc/base/filter_operations.h"
 #include "cc/layers/layer.h"
 #include "cc/layers/layer_collections.h"
 #include "cc/layers/surface_layer.h"
 #include "chrome/browser/android/compositor/layer/thumbnail_layer.h"
 #include "chrome/browser/android/compositor/tab_content_manager.h"
 #include "content/public/browser/android/compositor.h"
+#include "ui/gfx/filter_operations.h"
 #include "ui/gfx/geometry/size.h"
 
 namespace android {
@@ -98,10 +98,10 @@ void ContentLayer::SetProperties(int id,
       static_layer->ClearClip();
     SetOpacityOnLeaf(static_layer->layer(), static_opacity);
 
-    cc::FilterOperations static_filter_operations;
+    gfx::FilterOperations static_filter_operations;
     if (saturation < 1.0f) {
       static_filter_operations.Append(
-          cc::FilterOperation::CreateSaturateFilter(saturation));
+          gfx::FilterOperation::CreateSaturateFilter(saturation));
     }
     static_layer->layer()->SetFilters(static_filter_operations);
 

@@ -104,15 +104,15 @@ int AddAnimatedFilter(AnimationPlayer* target,
       KeyframedFilterAnimationCurve::Create());
 
   if (duration > 0.0) {
-    FilterOperations start_filters;
+    gfx::FilterOperations start_filters;
     start_filters.Append(
-        FilterOperation::CreateBrightnessFilter(start_brightness));
+        gfx::FilterOperation::CreateBrightnessFilter(start_brightness));
     curve->AddKeyframe(
         FilterKeyframe::Create(base::TimeDelta(), start_filters, nullptr));
   }
 
-  FilterOperations filters;
-  filters.Append(FilterOperation::CreateBrightnessFilter(end_brightness));
+  gfx::FilterOperations filters;
+  filters.Append(gfx::FilterOperation::CreateBrightnessFilter(end_brightness));
   curve->AddKeyframe(FilterKeyframe::Create(
       base::TimeDelta::FromSecondsD(duration), filters, nullptr));
 

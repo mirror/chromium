@@ -10,7 +10,6 @@
 
 #include "base/containers/adapters.h"
 #include "base/trace_event/trace_event.h"
-#include "cc/base/math_util.h"
 #include "cc/layers/heads_up_display_layer_impl.h"
 #include "cc/layers/layer.h"
 #include "cc/layers/layer_impl.h"
@@ -299,7 +298,7 @@ static void AddSurfaceToRenderSurfaceList(
   // overkill.
   // TODO(senorblanco): make this smarter for the SkImageFilter case (check for
   // pixel-moving filters)
-  const FilterOperations& filters = render_surface->Filters();
+  const gfx::FilterOperations& filters = render_surface->Filters();
   bool is_occlusion_immune = render_surface->HasCopyRequest() ||
                              render_surface->ShouldCacheRenderSurface() ||
                              filters.HasReferenceFilter() ||

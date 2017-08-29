@@ -134,7 +134,7 @@ cc::CompositorFrame FrameGenerator::GenerateCompositorFrame() {
                          bounds, false, 1.f, SkBlendMode::kSrcOver, 0);
     auto* quad = invert_pass->CreateAndAppendDrawQuad<cc::RenderPassDrawQuad>();
     frame.render_pass_list.back()->filters.Append(
-        cc::FilterOperation::CreateInvertFilter(1.f));
+        gfx::FilterOperation::CreateInvertFilter(1.f));
     quad->SetNew(
         shared_state, bounds, bounds, render_pass_id, 0 /* mask_resource_id */,
         gfx::RectF() /* mask_uv_rect */, gfx::Size() /* mask_texture_size */,

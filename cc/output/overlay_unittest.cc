@@ -10,7 +10,6 @@
 #include "base/containers/flat_map.h"
 #include "base/memory/ptr_util.h"
 #include "base/test/scoped_feature_list.h"
-#include "cc/base/filter_operation.h"
 #include "cc/base/region.h"
 #include "cc/output/ca_layer_overlay.h"
 #include "cc/output/output_surface.h"
@@ -2816,8 +2815,8 @@ class CALayerOverlayRPDQTest : public CALayerOverlayTest {
   RenderPass* pass_;
   RenderPassDrawQuad* quad_;
   int render_pass_id_;
-  FilterOperations filters_;
-  FilterOperations background_filters_;
+  gfx::FilterOperations filters_;
+  gfx::FilterOperations background_filters_;
   OverlayProcessor::FilterOperationsMap render_pass_filters_;
   OverlayProcessor::FilterOperationsMap render_pass_background_filters_;
   CALayerOverlayList ca_layer_list_;
@@ -2834,17 +2833,17 @@ TEST_F(CALayerOverlayRPDQTest, RenderPassDrawQuadNoFilters) {
 }
 
 TEST_F(CALayerOverlayRPDQTest, RenderPassDrawQuadAllValidFilters) {
-  filters_.Append(FilterOperation::CreateGrayscaleFilter(0.1f));
-  filters_.Append(FilterOperation::CreateSepiaFilter(0.2f));
-  filters_.Append(FilterOperation::CreateSaturateFilter(0.3f));
-  filters_.Append(FilterOperation::CreateHueRotateFilter(0.4f));
-  filters_.Append(FilterOperation::CreateInvertFilter(0.5f));
-  filters_.Append(FilterOperation::CreateBrightnessFilter(0.6f));
-  filters_.Append(FilterOperation::CreateContrastFilter(0.7f));
-  filters_.Append(FilterOperation::CreateOpacityFilter(0.8f));
-  filters_.Append(FilterOperation::CreateBlurFilter(0.9f));
-  filters_.Append(FilterOperation::CreateDropShadowFilter(gfx::Point(10, 20),
-                                                          1.0f, SK_ColorGREEN));
+  filters_.Append(gfx::FilterOperation::CreateGrayscaleFilter(0.1f));
+  filters_.Append(gfx::FilterOperation::CreateSepiaFilter(0.2f));
+  filters_.Append(gfx::FilterOperation::CreateSaturateFilter(0.3f));
+  filters_.Append(gfx::FilterOperation::CreateHueRotateFilter(0.4f));
+  filters_.Append(gfx::FilterOperation::CreateInvertFilter(0.5f));
+  filters_.Append(gfx::FilterOperation::CreateBrightnessFilter(0.6f));
+  filters_.Append(gfx::FilterOperation::CreateContrastFilter(0.7f));
+  filters_.Append(gfx::FilterOperation::CreateOpacityFilter(0.8f));
+  filters_.Append(gfx::FilterOperation::CreateBlurFilter(0.9f));
+  filters_.Append(gfx::FilterOperation::CreateDropShadowFilter(
+      gfx::Point(10, 20), 1.0f, SK_ColorGREEN));
   render_pass_filters_[render_pass_id_] = &filters_;
   quad_->SetNew(pass_->shared_quad_state_list.back(), kOverlayRect,
                 kOverlayRect, render_pass_id_, 0, gfx::RectF(), gfx::Size(),
@@ -2855,7 +2854,7 @@ TEST_F(CALayerOverlayRPDQTest, RenderPassDrawQuadAllValidFilters) {
 }
 
 TEST_F(CALayerOverlayRPDQTest, RenderPassDrawQuadOpacityFilterScale) {
-  filters_.Append(FilterOperation::CreateOpacityFilter(0.8f));
+  filters_.Append(gfx::FilterOperation::CreateOpacityFilter(0.8f));
   render_pass_filters_[render_pass_id_] = &filters_;
   quad_->SetNew(pass_->shared_quad_state_list.back(), kOverlayRect,
                 kOverlayRect, render_pass_id_, 0, gfx::RectF(), gfx::Size(),
@@ -2865,7 +2864,7 @@ TEST_F(CALayerOverlayRPDQTest, RenderPassDrawQuadOpacityFilterScale) {
 }
 
 TEST_F(CALayerOverlayRPDQTest, RenderPassDrawQuadBlurFilterScale) {
-  filters_.Append(FilterOperation::CreateBlurFilter(0.8f));
+  filters_.Append(gfx::FilterOperation::CreateBlurFilter(0.8f));
   render_pass_filters_[render_pass_id_] = &filters_;
   quad_->SetNew(pass_->shared_quad_state_list.back(), kOverlayRect,
                 kOverlayRect, render_pass_id_, 0, gfx::RectF(), gfx::Size(),
@@ -2875,8 +2874,8 @@ TEST_F(CALayerOverlayRPDQTest, RenderPassDrawQuadBlurFilterScale) {
 }
 
 TEST_F(CALayerOverlayRPDQTest, RenderPassDrawQuadDropShadowFilterScale) {
-  filters_.Append(FilterOperation::CreateDropShadowFilter(gfx::Point(10, 20),
-                                                          1.0f, SK_ColorGREEN));
+  filters_.Append(gfx::FilterOperation::CreateDropShadowFilter(
+      gfx::Point(10, 20), 1.0f, SK_ColorGREEN));
   render_pass_filters_[render_pass_id_] = &filters_;
   quad_->SetNew(pass_->shared_quad_state_list.back(), kOverlayRect,
                 kOverlayRect, render_pass_id_, 0, gfx::RectF(), gfx::Size(),
@@ -2886,7 +2885,7 @@ TEST_F(CALayerOverlayRPDQTest, RenderPassDrawQuadDropShadowFilterScale) {
 }
 
 TEST_F(CALayerOverlayRPDQTest, RenderPassDrawQuadBackgroundFilter) {
-  background_filters_.Append(FilterOperation::CreateGrayscaleFilter(0.1f));
+  background_filters_.Append(gfx::FilterOperation::CreateGrayscaleFilter(0.1f));
   render_pass_background_filters_[render_pass_id_] = &background_filters_;
   quad_->SetNew(pass_->shared_quad_state_list.back(), kOverlayRect,
                 kOverlayRect, render_pass_id_, 0, gfx::RectF(), gfx::Size(),
@@ -2904,7 +2903,7 @@ TEST_F(CALayerOverlayRPDQTest, RenderPassDrawQuadMask) {
 }
 
 TEST_F(CALayerOverlayRPDQTest, RenderPassDrawQuadUnsupportedFilter) {
-  filters_.Append(FilterOperation::CreateZoomFilter(0.9f, 1));
+  filters_.Append(gfx::FilterOperation::CreateZoomFilter(0.9f, 1));
   render_pass_filters_[render_pass_id_] = &filters_;
   quad_->SetNew(pass_->shared_quad_state_list.back(), kOverlayRect,
                 kOverlayRect, render_pass_id_, 0, gfx::RectF(), gfx::Size(),
@@ -2914,7 +2913,7 @@ TEST_F(CALayerOverlayRPDQTest, RenderPassDrawQuadUnsupportedFilter) {
 }
 
 TEST_F(CALayerOverlayRPDQTest, TooManyRenderPassDrawQuads) {
-  filters_.Append(FilterOperation::CreateBlurFilter(0.8f));
+  filters_.Append(gfx::FilterOperation::CreateBlurFilter(0.8f));
   int count = 35;
 
   for (int i = 0; i < count; ++i) {

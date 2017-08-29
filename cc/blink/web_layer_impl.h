@@ -87,9 +87,9 @@ class CC_BLINK_EXPORT WebLayerImpl : public blink::WebLayer {
   void SetUseParentBackfaceVisibility(bool visible) override;
   void SetBackgroundColor(blink::WebColor color) override;
   blink::WebColor BackgroundColor() const override;
-  void SetFilters(const cc::FilterOperations& filters) override;
+  void SetFilters(const gfx::FilterOperations& filters) override;
   void SetFiltersOrigin(const blink::WebFloatPoint& origin) override;
-  void SetBackgroundFilters(const cc::FilterOperations& filters) override;
+  void SetBackgroundFilters(const gfx::FilterOperations& filters) override;
   bool HasTickingAnimationForTesting() override;
   void SetScrollable(const blink::WebSize&) override;
   void SetScrollPosition(blink::WebFloatPoint position) override;

@@ -11,8 +11,6 @@
 #include "base/memory/ptr_util.h"
 #include "base/trace_event/trace_event_argument.h"
 #include "base/values.h"
-#include "cc/base/filter_operation.h"
-#include "cc/base/filter_operations.h"
 #include "cc/base/render_surface_filters.h"
 #include "cc/paint/paint_canvas.h"
 #include "cc/paint/paint_flags.h"
@@ -29,9 +27,12 @@
 #include "third_party/skia/include/core/SkSurface.h"
 #include "third_party/skia/include/effects/SkColorMatrixFilter.h"
 #include "third_party/skia/include/effects/SkImageSource.h"
+#include "ui/gfx/filter_operation.h"
+#include "ui/gfx/filter_operations.h"
 #include "ui/gfx/geometry/rect.h"
 #include "ui/gfx/geometry/rect_conversions.h"
 #include "ui/gfx/skia_util.h"
+#include "ui/gfx/transform.h"
 
 namespace cc {
 
@@ -275,7 +276,7 @@ TEST(DisplayItemListTest, TransformPairedRange) {
 
 TEST(DisplayItemListTest, FilterPairedRange) {
   gfx::Rect layer_rect(100, 100);
-  FilterOperations filters;
+  gfx::FilterOperations filters;
   unsigned char pixels[4 * 100 * 100] = {0};
   auto list = make_scoped_refptr(new DisplayItemList);
 
@@ -296,8 +297,8 @@ TEST(DisplayItemListTest, FilterPairedRange) {
   // SkImageSource filter in |filters|. Here, |src| is |filter_bounds|, defined
   // below.
   sk_sp<SkImageFilter> image_filter = SkImageSource::Make(source_image);
-  filters.Append(FilterOperation::CreateReferenceFilter(image_filter));
-  filters.Append(FilterOperation::CreateBrightnessFilter(0.5f));
+  filters.Append(gfx::FilterOperation::CreateReferenceFilter(image_filter));
+  filters.Append(gfx::FilterOperation::CreateBrightnessFilter(0.5f));
   gfx::RectF filter_bounds(10.f, 10.f, 50.f, 50.f);
   {
     list->StartPaint();

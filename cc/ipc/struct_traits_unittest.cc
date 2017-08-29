@@ -51,12 +51,12 @@ class StructTraitsTest : public testing::Test, public mojom::TraitsTestService {
     std::move(callback).Run(std::move(c));
   }
 
-  void EchoFilterOperation(const FilterOperation& f,
+  void EchoFilterOperation(const gfx::FilterOperation& f,
                            EchoFilterOperationCallback callback) override {
     std::move(callback).Run(f);
   }
 
-  void EchoFilterOperations(const FilterOperations& f,
+  void EchoFilterOperations(const gfx::FilterOperations& f,
                             EchoFilterOperationsCallback callback) override {
     std::move(callback).Run(f);
   }
@@ -249,46 +249,46 @@ TEST_F(StructTraitsTest, CopyOutputResult_Texture) {
 }
 
 TEST_F(StructTraitsTest, FilterOperation) {
-  const FilterOperation inputs[] = {
-      FilterOperation::CreateBlurFilter(20),
-      FilterOperation::CreateDropShadowFilter(gfx::Point(4, 4), 4.0f,
-                                              SkColorSetARGB(255, 40, 0, 0)),
-      FilterOperation::CreateReferenceFilter(SkDropShadowImageFilter::Make(
+  const gfx::FilterOperation inputs[] = {
+      gfx::FilterOperation::CreateBlurFilter(20),
+      gfx::FilterOperation::CreateDropShadowFilter(
+          gfx::Point(4, 4), 4.0f, SkColorSetARGB(255, 40, 0, 0)),
+      gfx::FilterOperation::CreateReferenceFilter(SkDropShadowImageFilter::Make(
           SkIntToScalar(3), SkIntToScalar(8), SkIntToScalar(4),
           SkIntToScalar(9), SK_ColorBLACK,
           SkDropShadowImageFilter::kDrawShadowAndForeground_ShadowMode,
           nullptr))};
   mojom::TraitsTestServicePtr proxy = GetTraitsTestProxy();
   for (const auto& input : inputs) {
-    FilterOperation output;
+    gfx::FilterOperation output;
     proxy->EchoFilterOperation(input, &output);
     EXPECT_EQ(input.type(), output.type());
     switch (input.type()) {
-      case FilterOperation::GRAYSCALE:
-      case FilterOperation::SEPIA:
-      case FilterOperation::SATURATE:
-      case FilterOperation::HUE_ROTATE:
-      case FilterOperation::INVERT:
-      case FilterOperation::BRIGHTNESS:
-      case FilterOperation::SATURATING_BRIGHTNESS:
-      case FilterOperation::CONTRAST:
-      case FilterOperation::OPACITY:
-      case FilterOperation::BLUR:
+      case gfx::FilterOperation::GRAYSCALE:
+      case gfx::FilterOperation::SEPIA:
+      case gfx::FilterOperation::SATURATE:
+      case gfx::FilterOperation::HUE_ROTATE:
+      case gfx::FilterOperation::INVERT:
+      case gfx::FilterOperation::BRIGHTNESS:
+      case gfx::FilterOperation::SATURATING_BRIGHTNESS:
+      case gfx::FilterOperation::CONTRAST:
+      case gfx::FilterOperation::OPACITY:
+      case gfx::FilterOperation::BLUR:
         EXPECT_EQ(input.amount(), output.amount());
         break;
-      case FilterOperation::DROP_SHADOW:
+      case gfx::FilterOperation::DROP_SHADOW:
         EXPECT_EQ(input.amount(), output.amount());
         EXPECT_EQ(input.drop_shadow_offset(), output.drop_shadow_offset());
         EXPECT_EQ(input.drop_shadow_color(), output.drop_shadow_color());
         break;
-      case FilterOperation::COLOR_MATRIX:
+      case gfx::FilterOperation::COLOR_MATRIX:
         EXPECT_EQ(0, memcmp(input.matrix(), output.matrix(), 20));
         break;
-      case FilterOperation::ZOOM:
+      case gfx::FilterOperation::ZOOM:
         EXPECT_EQ(input.amount(), output.amount());
         EXPECT_EQ(input.zoom_inset(), output.zoom_inset());
         break;
-      case FilterOperation::REFERENCE: {
+      case gfx::FilterOperation::REFERENCE: {
         SkString input_str;
         input.image_filter()->toString(&input_str);
         SkString output_str;
@@ -296,7 +296,7 @@ TEST_F(StructTraitsTest, FilterOperation) {
         EXPECT_EQ(input_str, output_str);
         break;
       }
-      case FilterOperation::ALPHA_THRESHOLD:
+      case gfx::FilterOperation::ALPHA_THRESHOLD:
         NOTREACHED();
         break;
     }
@@ -304,12 +304,12 @@ TEST_F(StructTraitsTest, FilterOperation) {
 }
 
 TEST_F(StructTraitsTest, FilterOperations) {
-  FilterOperations input;
-  input.Append(FilterOperation::CreateBlurFilter(0.f));
-  input.Append(FilterOperation::CreateSaturateFilter(4.f));
-  input.Append(FilterOperation::CreateZoomFilter(2.0f, 1));
+  gfx::FilterOperations input;
+  input.Append(gfx::FilterOperation::CreateBlurFilter(0.f));
+  input.Append(gfx::FilterOperation::CreateSaturateFilter(4.f));
+  input.Append(gfx::FilterOperation::CreateZoomFilter(2.0f, 1));
   mojom::TraitsTestServicePtr proxy = GetTraitsTestProxy();
-  FilterOperations output;
+  gfx::FilterOperations output;
   proxy->EchoFilterOperations(input, &output);
   EXPECT_EQ(input.size(), output.size());
   for (size_t i = 0; i < input.size(); ++i) {

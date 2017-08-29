@@ -10,7 +10,6 @@
 #include <set>
 
 #include "base/memory/ptr_util.h"
-#include "cc/base/math_util.h"
 #include "cc/layers/layer.h"
 #include "cc/layers/layer_impl.h"
 #include "cc/trees/clip_node.h"
@@ -117,11 +116,11 @@ static LayerImpl* ClipParent(LayerImpl* layer) {
   return layer->test_properties()->clip_parent;
 }
 
-static inline const FilterOperations& Filters(Layer* layer) {
+static inline const gfx::FilterOperations& Filters(Layer* layer) {
   return layer->filters();
 }
 
-static inline const FilterOperations& Filters(LayerImpl* layer) {
+static inline const gfx::FilterOperations& Filters(LayerImpl* layer) {
   return layer->test_properties()->filters;
 }
 
@@ -673,11 +672,11 @@ static inline const gfx::PointF FiltersOrigin(LayerImpl* layer) {
   return layer->test_properties()->filters_origin;
 }
 
-static inline const FilterOperations& BackgroundFilters(Layer* layer) {
+static inline const gfx::FilterOperations& BackgroundFilters(Layer* layer) {
   return layer->background_filters();
 }
 
-static inline const FilterOperations& BackgroundFilters(LayerImpl* layer) {
+static inline const gfx::FilterOperations& BackgroundFilters(LayerImpl* layer) {
   return layer->test_properties()->background_filters;
 }
 

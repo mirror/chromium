@@ -41,8 +41,8 @@ class TestLayer {
     mutated_properties_[TargetProperty::OPACITY] = true;
   }
 
-  FilterOperations filters() const { return filters_; }
-  void set_filters(const FilterOperations& filters) {
+  gfx::FilterOperations filters() const { return filters_; }
+  void set_filters(const gfx::FilterOperations& filters) {
     filters_ = filters;
     mutated_properties_[TargetProperty::FILTER] = true;
   }
@@ -78,7 +78,7 @@ class TestLayer {
 
   gfx::Transform transform_;
   float opacity_;
-  FilterOperations filters_;
+  gfx::FilterOperations filters_;
   gfx::ScrollOffset scroll_offset_;
 
   TargetProperties has_potential_animation_;
@@ -101,7 +101,7 @@ class TestHostClient : public MutatorHostClient {
 
   void SetElementFilterMutated(ElementId element_id,
                                ElementListType list_type,
-                               const FilterOperations& filters) override;
+                               const gfx::FilterOperations& filters) override;
 
   void SetElementOpacityMutated(ElementId element_id,
                                 ElementListType list_type,
@@ -142,8 +142,8 @@ class TestHostClient : public MutatorHostClient {
                          ElementListType list_type,
                          TargetProperty::Type property) const;
 
-  FilterOperations GetFilters(ElementId element_id,
-                              ElementListType list_type) const;
+  gfx::FilterOperations GetFilters(ElementId element_id,
+                                   ElementListType list_type) const;
   float GetOpacity(ElementId element_id, ElementListType list_type) const;
   gfx::Transform GetTransform(ElementId element_id,
                               ElementListType list_type) const;

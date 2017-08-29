@@ -12,12 +12,12 @@
 #include <vector>
 
 #include "base/containers/flat_map.h"
-#include "cc/base/filter_operations.h"
 #include "cc/base/synced_property.h"
 #include "cc/cc_export.h"
 #include "cc/layers/layer_sticky_position_constraint.h"
 #include "cc/trees/element_id.h"
 #include "cc/trees/mutator_host_client.h"
+#include "ui/gfx/filter_operations.h"
 #include "ui/gfx/geometry/rect_f.h"
 #include "ui/gfx/geometry/scroll_offset.h"
 #include "ui/gfx/transform.h"
@@ -318,7 +318,7 @@ class CC_EXPORT EffectTree final : public PropertyTree<EffectNode> {
 
   EffectNode* FindNodeFromElementId(ElementId id);
   bool OnOpacityAnimated(ElementId id, float opacity);
-  bool OnFilterAnimated(ElementId id, const FilterOperations& filters);
+  bool OnFilterAnimated(ElementId id, const gfx::FilterOperations& filters);
 
   void UpdateEffects(int id);
 

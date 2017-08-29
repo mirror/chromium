@@ -1121,7 +1121,7 @@ class LayerTreeHostTestPropertyTreesChangedSync : public LayerTreeHostTest {
 
   void CommitCompleteOnThread(LayerTreeHostImpl* impl) override {
     gfx::Transform transform;
-    FilterOperations filters;
+    gfx::FilterOperations filters;
     LayerImpl* root = impl->active_tree()->root_layer_for_testing();
     switch (static_cast<Animations>(index_)) {
       case OPACITY:
@@ -1157,7 +1157,7 @@ class LayerTreeHostTestPropertyTreesChangedSync : public LayerTreeHostTest {
         EXPECT_FALSE(impl->active_tree()
                          ->LayerById(child_->id())
                          ->LayerPropertyChanged());
-        filters.Append(FilterOperation::CreateOpacityFilter(0.5f));
+        filters.Append(gfx::FilterOperation::CreateOpacityFilter(0.5f));
         impl->active_tree()->SetFilterMutated(root->element_id(), filters);
         PostSetNeedsCommitToMainThread();
         break;
@@ -1342,9 +1342,9 @@ class LayerTreeHostTestAnimationFilterMutatedNotUsingLayerLists
 
  protected:
   void BeginTest() override {
-    FilterOperations filters;
-    EXPECT_EQ(FilterOperations(), root_->filters());
-    filters.Append(FilterOperation::CreateOpacityFilter(0.5f));
+    gfx::FilterOperations filters;
+    EXPECT_EQ(gfx::FilterOperations(), root_->filters());
+    filters.Append(gfx::FilterOperation::CreateOpacityFilter(0.5f));
     layer_tree_host()->SetElementFilterMutated(
         root_->element_id(), ElementListType::ACTIVE, filters);
     // When not using layer lists, filters are just stored directly on the
@@ -1373,20 +1373,20 @@ class LayerTreeHostTestAnimationFilterMutatedUsingLayerLists
         ->property_trees()
         ->element_id_to_effect_node_index[root_->element_id()] = effect_node_id;
 
-    EXPECT_EQ(FilterOperations(), root_->filters());
-    EXPECT_EQ(FilterOperations(),
+    EXPECT_EQ(gfx::FilterOperations(), root_->filters());
+    EXPECT_EQ(gfx::FilterOperations(),
               layer_tree_host()
                   ->property_trees()
                   ->effect_tree.FindNodeFromElementId(root_->element_id())
                   ->filters);
 
-    FilterOperations filters;
-    filters.Append(FilterOperation::CreateOpacityFilter(0.5f));
+    gfx::FilterOperations filters;
+    filters.Append(gfx::FilterOperation::CreateOpacityFilter(0.5f));
     layer_tree_host()->SetElementFilterMutated(
         root_->element_id(), ElementListType::ACTIVE, filters);
 
     // When using layer lists, we don't have to store the filters on the layer.
-    EXPECT_EQ(FilterOperations(), root_->filters());
+    EXPECT_EQ(gfx::FilterOperations(), root_->filters());
     // The filter should have been set directly on the effect node instead.
     EXPECT_EQ(filters,
               layer_tree_host()
@@ -1404,9 +1404,10 @@ class LayerTreeHostTestEffectTreeSync : public LayerTreeHostTest {
   void SetupTree() override {
     root_ = Layer::Create();
     layer_tree_host()->SetRootLayer(root_);
-    blur_filter_.Append(FilterOperation::CreateBlurFilter(0.5f));
-    brightness_filter_.Append(FilterOperation::CreateBrightnessFilter(0.25f));
-    sepia_filter_.Append(FilterOperation::CreateSepiaFilter(0.75f));
+    blur_filter_.Append(gfx::FilterOperation::CreateBlurFilter(0.5f));
+    brightness_filter_.Append(
+        gfx::FilterOperation::CreateBrightnessFilter(0.25f));
+    sepia_filter_.Append(gfx::FilterOperation::CreateSepiaFilter(0.75f));
     LayerTreeHostTest::SetupTree();
   }
 
@@ -1500,9 +1501,9 @@ class LayerTreeHostTestEffectTreeSync : public LayerTreeHostTest {
 
  private:
   scoped_refptr<Layer> root_;
-  FilterOperations blur_filter_;
-  FilterOperations brightness_filter_;
-  FilterOperations sepia_filter_;
+  gfx::FilterOperations blur_filter_;
+  gfx::FilterOperations brightness_filter_;
+  gfx::FilterOperations sepia_filter_;
 };
 
 SINGLE_AND_MULTI_THREAD_TEST_F(LayerTreeHostTestEffectTreeSync);
@@ -7737,14 +7738,14 @@ class LayerTreeHostTestSubmitFrameResources : public LayerTreeHostTest {
 
     RenderPass* child_pass =
         AddRenderPass(&frame->render_passes, 2, gfx::Rect(3, 3, 10, 10),
-                      gfx::Transform(), FilterOperations());
+                      gfx::Transform(), gfx::FilterOperations());
     gpu::SyncToken mailbox_sync_token;
     AddOneOfEveryQuadType(child_pass, host_impl->resource_provider(), 0,
                           &mailbox_sync_token);
 
     RenderPass* pass =
         AddRenderPass(&frame->render_passes, 1, gfx::Rect(3, 3, 10, 10),
-                      gfx::Transform(), FilterOperations());
+                      gfx::Transform(), gfx::FilterOperations());
     AddOneOfEveryQuadType(pass, host_impl->resource_provider(), child_pass->id,
                           &mailbox_sync_token);
     return draw_result;

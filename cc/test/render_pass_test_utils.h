@@ -7,7 +7,6 @@
 
 #include <stdint.h>
 
-#include "cc/base/filter_operations.h"
 #include "cc/quads/render_pass.h"
 #include "cc/resources/resource_provider.h"
 #include "third_party/skia/include/core/SkColor.h"
@@ -15,6 +14,7 @@
 namespace gfx {
 class Rect;
 class Transform;
+class FilterOperations;
 }
 
 namespace cc {
@@ -28,7 +28,7 @@ RenderPass* AddRenderPass(RenderPassList* pass_list,
                           int render_pass_id,
                           const gfx::Rect& output_rect,
                           const gfx::Transform& root_transform,
-                          const FilterOperations& filters);
+                          const gfx::FilterOperations& filters);
 
 // Adds a solid quad to a given render pass.
 SolidColorDrawQuad* AddQuad(RenderPass* pass,

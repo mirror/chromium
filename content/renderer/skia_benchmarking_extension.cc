@@ -10,7 +10,6 @@
 #include "base/base64.h"
 #include "base/time/time.h"
 #include "base/values.h"
-#include "cc/base/math_util.h"
 #include "content/public/child/v8_value_converter.h"
 #include "content/public/renderer/chrome_object_extensions_utils.h"
 #include "content/renderer/render_thread_impl.h"
@@ -32,6 +31,7 @@
 #include "ui/gfx/codec/jpeg_codec.h"
 #include "ui/gfx/codec/png_codec.h"
 #include "ui/gfx/geometry/rect_conversions.h"
+#include "ui/gfx/math_util.h"
 #include "ui/gfx/skia_util.h"
 #include "v8/include/v8.h"
 
@@ -217,7 +217,7 @@ void SkiaBenchmarking::Rasterize(gin::Arguments* args) {
 
       const base::Value* clip_value = NULL;
       if (params_dict->Get("clip", &clip_value))
-        cc::MathUtil::FromValue(clip_value, &clip_rect);
+        gfx::MathUtil::FromValue(clip_value, &clip_rect);
     }
   }
 
