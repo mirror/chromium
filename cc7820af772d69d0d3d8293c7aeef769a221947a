@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a5832e02_21408c18",
+        "filename": "ui/aura/window_event_dispatcher.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 470,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-08-29T06:40:05Z",
+      "side": 0,
+      "message": "Note that once we turn on using the HitTestQuery to find the target in mus-ws, this code would become much simpler: it would just return event-\u003etarget();",
+      "revId": "cc7820af772d69d0d3d8293c7aeef769a221947a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
