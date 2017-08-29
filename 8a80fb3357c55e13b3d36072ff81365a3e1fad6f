@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e059efbb_269e107b",
+        "filename": "media/audio/audio_output_device.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 323,
+      "author": {
+        "id": 1201454
+      },
+      "writtenOn": "2017-08-29T09:42:46Z",
+      "side": 1,
+      "message": "I think it\u0027s more important to get the data we want than to be consistent with the other stat. We should probably remove one of the stats later anyways.",
+      "parentUuid": "e9016f16_d0da64f2",
+      "revId": "8a80fb3357c55e13b3d36072ff81365a3e1fad6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e97acc11_c1c38af3",
         "filename": "media/audio/audio_output_device.cc",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "8a80fb3357c55e13b3d36072ff81365a3e1fad6f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10079645_f2a90c3f",
+        "filename": "media/audio/audio_output_device.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 324,
+      "author": {
+        "id": 1201454
+      },
+      "writtenOn": "2017-08-29T09:42:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e97acc11_c1c38af3",
+      "revId": "8a80fb3357c55e13b3d36072ff81365a3e1fad6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "516d47c1_81d96d34",
+        "filename": "media/audio/audio_output_device.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 325,
+      "author": {
+        "id": 1201454
+      },
+      "writtenOn": "2017-08-29T09:42:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9bc2b471_ad0d6932",
+      "revId": "8a80fb3357c55e13b3d36072ff81365a3e1fad6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9ff46cb6_de7be96f",
         "filename": "media/audio/audio_output_device.cc",
         "patchSetId": 3
@@ -67,6 +121,24 @@
       "revId": "8a80fb3357c55e13b3d36072ff81365a3e1fad6f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cbac8d11_15f68645",
+        "filename": "media/audio/audio_output_device.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 326,
+      "author": {
+        "id": 1201454
+      },
+      "writtenOn": "2017-08-29T09:42:46Z",
+      "side": 1,
+      "message": "There are a total of 30000 ms in the range 1 (inclusive) to 30000 (inclusive). If we want 100ms buckets, we need 30000 ms/100 ms \u003d 300 buckets.",
+      "parentUuid": "9ff46cb6_de7be96f",
+      "revId": "8a80fb3357c55e13b3d36072ff81365a3e1fad6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -93,6 +165,30 @@
     },
     {
       "key": {
+        "uuid": "20939a91_23bcc39b",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 30055,
+      "author": {
+        "id": 1201454
+      },
+      "writtenOn": "2017-08-29T09:42:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "98a4bbea_3bbd9e91",
+      "range": {
+        "startLine": 30055,
+        "startChar": 57,
+        "endLine": 30055,
+        "endChar": 60
+      },
+      "revId": "8a80fb3357c55e13b3d36072ff81365a3e1fad6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1ae62c44_683ae180",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 3
@@ -110,6 +206,24 @@
     },
     {
       "key": {
+        "uuid": "10dc8fb9_109d7431",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 30056,
+      "author": {
+        "id": 1201454
+      },
+      "writtenOn": "2017-08-29T09:42:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1ae62c44_683ae180",
+      "revId": "8a80fb3357c55e13b3d36072ff81365a3e1fad6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "667c7d4c_1544135a",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 3
@@ -124,6 +238,24 @@
       "revId": "8a80fb3357c55e13b3d36072ff81365a3e1fad6f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8cf40100_34a2d2e7",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 30058,
+      "author": {
+        "id": 1201454
+      },
+      "writtenOn": "2017-08-29T09:42:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "667c7d4c_1544135a",
+      "revId": "8a80fb3357c55e13b3d36072ff81365a3e1fad6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
