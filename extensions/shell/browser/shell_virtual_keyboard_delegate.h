@@ -8,7 +8,9 @@
 #include <string>
 
 #include "base/macros.h"
+#include "content/public/browser/content_browser_client.h"
 #include "extensions/browser/api/virtual_keyboard_private/virtual_keyboard_delegate.h"
+#include "extensions/common/api/virtual_keyboard.h"
 
 namespace extensions {
 
@@ -21,11 +23,11 @@ class ShellVirtualKeyboardDelegate : public VirtualKeyboardDelegate {
   // VirtualKeyboardDelegate impl:
   void GetKeyboardConfig(
       OnKeyboardSettingsCallback on_settings_callback) override;
+  void OnKeyboardConfigChanged() override;
   bool HideKeyboard() override;
   bool InsertText(const base::string16& text) override;
   bool OnKeyboardLoaded() override;
   void SetHotrodKeyboard(bool enable) override;
-  void SetKeyboardRestricted(bool restricted) override;
   bool LockKeyboard(bool state) override;
   bool SendKeyEvent(const std::string& type,
                     int char_value,
@@ -36,6 +38,9 @@ class ShellVirtualKeyboardDelegate : public VirtualKeyboardDelegate {
   bool IsLanguageSettingsEnabled() override;
   bool SetVirtualKeyboardMode(int mode_enum) override;
   bool SetRequestedKeyboardState(int state_enum) override;
+
+  void RestrictFeatures(
+      const api::virtual_keyboard::RestrictFeatures::Params& params) override;
 
  private:
   bool is_hotrod_keyboard_ = false;
