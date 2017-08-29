@@ -1,0 +1,197 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7a7c9181_250dcf51",
+        "filename": "chrome/browser/extensions/api/web_request/web_request_apitest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 1011,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-29T18:53:46Z",
+      "side": 1,
+      "message": "let\u0027s restrict the listener to the specific extension",
+      "revId": "3e52410105058cf495bd0b0023ed1799e9127f82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da136a1a_180cdd95",
+        "filename": "chrome/browser/extensions/api/web_request/web_request_apitest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 1024,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-29T18:53:46Z",
+      "side": 1,
+      "message": "nit: brackets around conditionals with multi-line bodies",
+      "revId": "3e52410105058cf495bd0b0023ed1799e9127f82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a441b69b_15e5b7d7",
+        "filename": "chrome/browser/extensions/api/web_request/web_request_apitest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 1027,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-29T18:53:46Z",
+      "side": 1,
+      "message": "instead of resetting, let\u0027s just scope the listener within the for loop",
+      "revId": "3e52410105058cf495bd0b0023ed1799e9127f82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b23fd3f1_0a41f9da",
+        "filename": "chrome/test/data/extensions/api_test/webrequest/framework.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-29T18:53:46Z",
+      "side": 1,
+      "message": "const kInitiators",
+      "revId": "3e52410105058cf495bd0b0023ed1799e9127f82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0eb73d7e_f3f1fd93",
+        "filename": "chrome/test/data/extensions/api_test/webrequest/framework.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-29T18:53:46Z",
+      "side": 1,
+      "message": "nit: what happened to 0 or 1? :P",
+      "revId": "3e52410105058cf495bd0b0023ed1799e9127f82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e9a9cc0_2e2275fb",
+        "filename": "chrome/test/data/extensions/api_test/webrequest/framework.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-29T18:53:46Z",
+      "side": 1,
+      "message": "Couldn\u0027t we just sum this function up as\nif (!Object.hasOwnProperty(initiators, navigationType))\n  throw new Error(\u0027...\u0027)\n?",
+      "revId": "3e52410105058cf495bd0b0023ed1799e9127f82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e52a04cb_3319e8bf",
+        "filename": "chrome/test/data/extensions/api_test/webrequest/framework.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-29T18:53:46Z",
+      "side": 1,
+      "message": ";",
+      "revId": "3e52410105058cf495bd0b0023ed1799e9127f82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4752b3c2_61aaccbd",
+        "filename": "chrome/test/data/extensions/api_test/webrequest/test_blocking.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 854,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-29T18:53:46Z",
+      "side": 1,
+      "message": "nit: why this change?",
+      "revId": "3e52410105058cf495bd0b0023ed1799e9127f82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c83748f_72a6a22e",
+        "filename": "chrome/test/data/extensions/api_test/webrequest_permissions/initiator/background.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-29T18:53:46Z",
+      "side": 1,
+      "message": "nit: no reason to name listener.  Maybe just\naddListener((details) \u003d\u003e {\n...\n}",
+      "revId": "3e52410105058cf495bd0b0023ed1799e9127f82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ba09c20_3bb5de67",
+        "filename": "extensions/browser/api/web_request/web_request_event_details.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-29T18:53:46Z",
+      "side": 1,
+      "message": "s/empty/base::nullopt and remove |empty| above.",
+      "revId": "3e52410105058cf495bd0b0023ed1799e9127f82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13f955f6_acd66e32",
+        "filename": "extensions/browser/api/web_request/web_request_event_details.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-29T18:53:46Z",
+      "side": 1,
+      "message": "Prefer a forward declaration for these",
+      "range": {
+        "startLine": 17,
+        "startChar": 0,
+        "endLine": 18,
+        "endChar": 23
+      },
+      "revId": "3e52410105058cf495bd0b0023ed1799e9127f82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

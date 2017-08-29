@@ -108,6 +108,24 @@
     },
     {
       "key": {
+        "uuid": "27958803_e58b2009",
+        "filename": "chrome/test/data/extensions/api_test/webrequest/framework.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-29T18:53:46Z",
+      "side": 1,
+      "message": "Interesting!  I didn\u0027t know PlzNavigate would affect extension-initiated navigations like this.  I don\u0027t think it\u0027ll be a problem, but +Nasko as FYI.",
+      "parentUuid": "a1782134_581ccb90",
+      "revId": "819f30dcbb97c479c2a2ac76bb26cab2c0ce7ac4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d9d1429e_79f84231",
         "filename": "chrome/test/data/extensions/api_test/webrequest_permissions/initiator/test_initiator.js",
         "patchSetId": 5
