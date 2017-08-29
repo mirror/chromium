@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "3f421394_38d050d4",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheet.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1607,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-08-29T00:38:26Z",
+      "side": 1,
+      "message": "Yes, we still want the existing IPH flow. When Chrome Home is first enabled, the IPH should show exactly one time. In addition, a permanently visible menu item will be will help users (who didn\u0027t internalize the IPH the first time they saw it) find bookmarks, history and downloads.",
+      "parentUuid": "2654c3cb_86d4bb4c",
+      "revId": "e4751e4a083120d5b4ddc88180e476b9acda2a9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6336cf2a_44dc9b4b",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheet.java",
         "patchSetId": 4
@@ -30,6 +48,30 @@
       "writtenOn": "2017-08-28T23:47:17Z",
       "side": 1,
       "message": "We also need this check to avoid overlapping bubbles\nif (!tracker.shouldTriggerHelpUI(FeatureConstants.CHROME_HOME_EXPAND_FEATURE)) {\n   return;\n}\n\nThis can be tested by \n1- enable \"in-product-help\" from chrome://flags, \n2- load a slow page (cnn.com) \n3- trigger this bubble from the menu item before the load is complete.\n\nWithout this check it should probably have overlapping bubbles.",
+      "range": {
+        "startLine": 1618,
+        "startChar": 0,
+        "endLine": 1618,
+        "endChar": 98
+      },
+      "revId": "e4751e4a083120d5b4ddc88180e476b9acda2a9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e02c62ad_6fb6b576",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheet.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1618,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-08-29T00:38:26Z",
+      "side": 1,
+      "message": "tracker.shouldTriggerHelpUI(FeatureConstants.CHROME_HOME_EXPAND_FEATURE) returns false after the help bubble has been shown, so we definitely don\u0027t want to return early on that condition. Is there another way to tell the IPH system that a bubble is showing? Or do I need another \"feature\" that always returns true when #shouldTriggerHelpUi is called?",
+      "parentUuid": "6336cf2a_44dc9b4b",
       "range": {
         "startLine": 1618,
         "startChar": 0,
