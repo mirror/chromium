@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "872a5664_9eb18230",
+        "filename": "chrome/browser/ui/webui/interstitials/interstitial_ui.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1002611
+      },
+      "writtenOn": "2017-08-29T00:18:07Z",
+      "side": 1,
+      "message": "Can we make this a parameter so that we can see both the enterprise and non-enterprise interstitials? You can use net::GetValueForKeyInQuery with web_contents-\u003eGetURL() and \"is_enterprise_managed\" for that purpose.",
+      "revId": "9de2eeb78806c56896cb4eed28af27df0b9df819",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e0349c6d_78259f8a",
         "filename": "chrome/browser/ui/webui/interstitials/interstitial_ui.cc",
         "patchSetId": 2
@@ -13,6 +30,24 @@
       "writtenOn": "2017-08-28T23:27:08Z",
       "side": 1,
       "message": "meacer@: I seems a semantically un-awesome to me that we only check the string prefix instead of the whole path up to the query, but I don\u0027t see a real danger.\n\nIn any case, that\u0027s not a new issues with this CL.",
+      "revId": "9de2eeb78806c56896cb4eed28af27df0b9df819",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b668991_41330609",
+        "filename": "chrome/browser/ui/webui/interstitials/interstitial_ui.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 439,
+      "author": {
+        "id": 1002611
+      },
+      "writtenOn": "2017-08-29T00:18:07Z",
+      "side": 1,
+      "message": "Hmm, that could be because path contains the query string as well? I was probably being lazy when I first added this class.",
+      "parentUuid": "e0349c6d_78259f8a",
       "revId": "9de2eeb78806c56896cb4eed28af27df0b9df819",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
