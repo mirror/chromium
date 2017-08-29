@@ -32,6 +32,15 @@ namespace keyboard {
 
 namespace {
 
+bool operator==(const keyboard::KeyboardConfig& lhs,
+                const keyboard::KeyboardConfig& rhs) {
+  return lhs.auto_complete == rhs.auto_complete &&
+         lhs.auto_correct == rhs.auto_correct &&
+         lhs.handwriting == rhs.handwriting &&
+         lhs.spell_check == rhs.spell_check &&
+         lhs.voice_input == rhs.voice_input;
+}
+
 const char kKeyDown[] ="keydown";
 const char kKeyUp[] = "keyup";
 
@@ -49,11 +58,11 @@ bool g_keyboard_load_time_logged = false;
 base::LazyInstance<base::Time>::DestructorAtExit g_keyboard_load_time_start =
     LAZY_INSTANCE_INITIALIZER;
 
+struct keyboard::KeyboardConfig g_keyboard_config;
+
 bool g_accessibility_keyboard_enabled = false;
 
 bool g_hotrod_keyboard_enabled = false;
-
-bool g_keyboard_restricted = false;
 
 bool g_touch_keyboard_enabled = false;
 
@@ -65,6 +74,20 @@ KeyboardOverscrolOverride g_keyboard_overscroll_override =
 KeyboardShowOverride g_keyboard_show_override = KEYBOARD_SHOW_OVERRIDE_NONE;
 
 }  // namespace
+
+bool UpdateKeyboardConfig(const KeyboardConfig& keyboard_config) {
+  if (g_keyboard_config == keyboard_config)
+    return false;
+  g_keyboard_config = keyboard_config;
+  keyboard::KeyboardController* controller = KeyboardController::GetInstance();
+  if (controller)
+    controller->NotifyKeyboardConfigChanged();
+  return true;
+}
+
+KeyboardConfig GetKeyboardConfig() {
+  return g_keyboard_config;
+}
 
 void SetAccessibilityKeyboardEnabled(bool enabled) {
   g_accessibility_keyboard_enabled = enabled;
@@ -171,14 +194,6 @@ bool IsInputViewEnabled() {
       switches::kDisableInputView);
 }
 
-void SetKeyboardRestricted(bool restricted) {
-  g_keyboard_restricted = restricted;
-}
-
-bool GetKeyboardRestricted() {
-  return g_keyboard_restricted;
-}
-
 bool IsExperimentalInputViewEnabled() {
   return base::CommandLine::ForCurrentProcess()->HasSwitch(
           switches::kEnableExperimentalInputViewFeatures);
@@ -197,12 +212,6 @@ bool IsGestureTypingEnabled() {
 bool IsGestureEditingEnabled() {
   return !base::CommandLine::ForCurrentProcess()->HasSwitch(
       switches::kDisableGestureEditing);
-}
-
-bool IsVoiceInputEnabled() {
-  return !g_keyboard_restricted &&
-         !base::CommandLine::ForCurrentProcess()->HasSwitch(
-             switches::kDisableVoiceInput);
 }
 
 bool InsertText(const base::string16& text) {

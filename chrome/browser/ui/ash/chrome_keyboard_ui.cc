@@ -11,6 +11,7 @@
 #include "ash/shell.h"
 #include "base/macros.h"
 #include "base/memory/ptr_util.h"
+#include "base/values.h"
 #include "chrome/browser/extensions/chrome_extension_web_contents_observer.h"
 #include "chrome/browser/media/webrtc/media_capture_devices_dispatcher.h"
 #include "content/public/browser/host_zoom_map.h"
@@ -18,6 +19,8 @@
 #include "content/public/browser/render_view_host.h"
 #include "content/public/browser/site_instance.h"
 #include "content/public/browser/web_contents.h"
+#include "extensions/browser/api/virtual_keyboard_private/virtual_keyboard_delegate.h"
+#include "extensions/browser/api/virtual_keyboard_private/virtual_keyboard_private_api.h"
 #include "extensions/browser/event_router.h"
 #include "extensions/browser/extension_registry.h"
 #include "extensions/browser/view_type_utils.h"
@@ -31,6 +34,7 @@
 #include "ui/compositor/scoped_layer_animation_settings.h"
 #include "ui/keyboard/keyboard_controller.h"
 #include "ui/keyboard/keyboard_controller_observer.h"
+#include "ui/keyboard/keyboard_util.h"
 
 namespace virtual_keyboard_private = extensions::api::virtual_keyboard_private;
 
@@ -81,6 +85,13 @@ class AshKeyboardControllerObserver
         virtual_keyboard_private::OnKeyboardClosed::kEventName,
         base::MakeUnique<base::ListValue>(), context_);
     router->BroadcastEvent(std::move(event));
+  }
+
+  void OnKeyboardConfigChanged() override {
+    extensions::VirtualKeyboardAPI* api =
+        extensions::BrowserContextKeyedAPIFactory<
+            extensions::VirtualKeyboardAPI>::Get(context_);
+    api->delegate()->OnKeyboardConfigChanged();
   }
 
  private:

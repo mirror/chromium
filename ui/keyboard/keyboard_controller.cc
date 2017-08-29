@@ -700,6 +700,11 @@ void KeyboardController::
   ui_->EnsureCaretInWorkArea();
 }
 
+void KeyboardController::NotifyKeyboardConfigChanged() {
+  for (KeyboardControllerObserver& observer : observer_list_)
+    observer.OnKeyboardConfigChanged();
+}
+
 void KeyboardController::HideAnimationFinished() {
   if (state_ != KeyboardControllerState::HIDING)
     return;

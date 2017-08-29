@@ -17,8 +17,14 @@ void ShellVirtualKeyboardDelegate::GetKeyboardConfig(
     OnKeyboardSettingsCallback on_settings_callback) {
   std::unique_ptr<base::DictionaryValue> settings(new base::DictionaryValue());
   settings->SetBoolean("hotrodmode", is_hotrod_keyboard_);
+  // TODO(oka): Consider removing this parameter. This is set only on app shell
+  // (not in Chrome OS) and looks no once is using.
   settings->SetBoolean("restricted", is_keyboard_restricted_);
   on_settings_callback.Run(std::move(settings));
+}
+
+void ShellVirtualKeyboardDelegate::OnKeyboardConfigChanged() {
+  NOTIMPLEMENTED();
 }
 
 bool ShellVirtualKeyboardDelegate::HideKeyboard() {
@@ -35,10 +41,6 @@ bool ShellVirtualKeyboardDelegate::OnKeyboardLoaded() {
 
 void ShellVirtualKeyboardDelegate::SetHotrodKeyboard(bool enable) {
   is_hotrod_keyboard_ = enable;
-}
-
-void ShellVirtualKeyboardDelegate::SetKeyboardRestricted(bool restricted) {
-  is_keyboard_restricted_ = restricted;
 }
 
 bool ShellVirtualKeyboardDelegate::LockKeyboard(bool state) {
@@ -67,6 +69,22 @@ bool ShellVirtualKeyboardDelegate::SetVirtualKeyboardMode(int mode_enum) {
 
 bool ShellVirtualKeyboardDelegate::SetRequestedKeyboardState(int state_enum) {
   return false;
+}
+
+void ShellVirtualKeyboardDelegate::RestrictFeatures(
+    const api::virtual_keyboard::RestrictFeatures::Params& params) {
+  // Set |is_keyboard_restricted_| false if at least one feature is disabled.
+  is_keyboard_restricted_ = false;
+  if (params.restrictions.spell_check_enabled)
+    is_keyboard_restricted_ |= !*params.restrictions.spell_check_enabled;
+  if (params.restrictions.auto_complete_enabled)
+    is_keyboard_restricted_ |= !*params.restrictions.auto_complete_enabled;
+  if (params.restrictions.auto_correct_enabled)
+    is_keyboard_restricted_ |= !*params.restrictions.auto_correct_enabled;
+  if (params.restrictions.voice_input_enabled)
+    is_keyboard_restricted_ |= !*params.restrictions.voice_input_enabled;
+  if (params.restrictions.handwriting_enabled)
+    is_keyboard_restricted_ |= !*params.restrictions.handwriting_enabled;
 }
 
 }  // namespace extensions
