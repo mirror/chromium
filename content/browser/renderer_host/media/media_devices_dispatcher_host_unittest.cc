@@ -94,6 +94,8 @@ class MediaDevicesDispatcherHostTest : public testing::TestWithParam<GURL> {
     audio_manager_.reset(new media::MockAudioManager(
         base::MakeUnique<media::TestAudioThread>()));
     audio_system_ = media::AudioSystemImpl::Create(audio_manager_.get());
+    media_stream_manager_ = base::MakeUnique<MediaStreamManager>(
+        audio_system_.get(), audio_manager_->GetTaskRunner());
 
     auto video_capture_device_factory =
         base::MakeUnique<media::FakeVideoCaptureDeviceFactory>();
