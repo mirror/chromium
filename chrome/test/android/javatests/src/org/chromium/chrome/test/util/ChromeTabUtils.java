@@ -128,7 +128,7 @@ public class ChromeTabUtils {
         });
 
         try {
-            loadedCallback.waitForCallback(0);
+            loadedCallback.waitForCallback(0, 1, 10, TimeUnit.SECONDS);
         } catch (TimeoutException e) {
             // In the event that:
             //  1) the tab is on the correct page
