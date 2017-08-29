@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8b1b5df6_3ab594cc",
+        "filename": "chrome/browser/vr/ui_scene.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-08-29T17:15:28Z",
+      "side": 0,
+      "message": "OOC, there was some thinking previously on whether we could avoid recomputing transformations if nothing is moving.  I assume that initiative is dead now, and maybe that\u0027s better since each frame will have consistent overhead, but I wanted to check.",
+      "revId": "81f09e083750dae938c73633f8cb944176c8b122",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
