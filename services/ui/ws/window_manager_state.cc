@@ -858,7 +858,8 @@ ServerWindow* WindowManagerState::GetWindowFromFrameSinkId(
   // refactoring is done.
   DCHECK(frame_sink_id.is_valid());
   return window_tree()->GetWindow(
-      WindowIdFromTransportId(frame_sink_id.client_id()));
+      WindowId(base::checked_cast<ClientSpecificId>(frame_sink_id.client_id()),
+               base::checked_cast<ClientSpecificId>(frame_sink_id.sink_id())));
 }
 
 void WindowManagerState::OnWindowEmbeddedAppDisconnected(ServerWindow* window) {
