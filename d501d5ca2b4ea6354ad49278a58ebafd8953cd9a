@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "17a5e56a_31fdcf61",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1211724
+      },
+      "writtenOn": "2017-08-29T19:12:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aec0b7d7_a59e5baf",
+      "range": {
+        "startLine": 12,
+        "startChar": 4,
+        "endLine": 12,
+        "endChar": 12
+      },
+      "revId": "d501d5ca2b4ea6354ad49278a58ebafd8953cd9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9be14a35_9e8ba426",
         "filename": "chrome/browser/resources/chromeos/login/oobe_voice_interaction_value_prop.js",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2017-08-29T19:01:12Z",
       "side": 1,
       "message": "How many times does it retry?  Is there any delay between retries?",
+      "range": {
+        "startLine": 204,
+        "startChar": 4,
+        "endLine": 204,
+        "endChar": 38
+      },
+      "revId": "d501d5ca2b4ea6354ad49278a58ebafd8953cd9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93e4bad7_170f5860",
+        "filename": "chrome/browser/resources/chromeos/login/oobe_voice_interaction_value_prop.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1211724
+      },
+      "writtenOn": "2017-08-29T19:12:17Z",
+      "side": 1,
+      "message": "Retry will not happen automatically here. This will lead the screen into the error state, and the retry will happen when user clicks the \u0027Retry\u0027 button.",
+      "parentUuid": "9be14a35_9e8ba426",
       "range": {
         "startLine": 204,
         "startChar": 4,
