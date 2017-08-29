@@ -16,6 +16,24 @@
       "revId": "ffe5650806eeab8a081e5638a1ba13751087c95f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1faf8772_ae823060",
+        "filename": "chrome/browser/ui/browser_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 491,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-08-29T17:23:48Z",
+      "side": 0,
+      "message": "I\u0027d have expected this to land in a separate CL (so it can be separately reverted if it turns out to be an issue, independently of the wasm allocation that\u0027s the focus of this CL), but I don\u0027t feel strongly.\n\nRegardless, if you are un-disabling it, just replace the uses of MAYBE_ThirtyFourTabs with ThirtyFourTabs rather than having two identical definitions of the macro.",
+      "parentUuid": "6b74f89f_a4a6a3b1",
+      "revId": "ffe5650806eeab8a081e5638a1ba13751087c95f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
