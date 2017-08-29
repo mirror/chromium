@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4e4867b4_1ee9cb5e",
+        "filename": "chrome/browser/chrome_content_browser_client.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2386,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-08-29T21:24:33Z",
+      "side": 0,
+      "message": "The code in question fills in \u0026web_prefs-\u003estandard_font_family_map. The cache exists to prevent a redundant operation that was observed 20,000 times on a fresh start of Chrome.\n\nSee https://codereview.chromium.org/439913002/.\n\nThis cache should be relatively small - have you observed it getting very large?",
+      "revId": "03a4530c5832c5a72ca970e40b39e56a7e3c966a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
