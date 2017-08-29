@@ -88,6 +88,24 @@
       "revId": "253161aa2fe7fc22ba698e41503227bc7d6e1059",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "917a936f_cd883e04",
+        "filename": "content/browser/webauth/cbor/cbor_writer.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1001949
+      },
+      "writtenOn": "2017-08-29T18:21:33Z",
+      "side": 1,
+      "message": "Clearly it\u0027d work for Kim to build a whole parallel cbor::Value type, but the right way to design that type is going to depend on the constraints from other future users of the CBOR library. (For example, web packages will want to avoid copying long bytestrings when parsing CBOR.) I\u0027m inclined to say that making this API stateless is premature abstraction, and that we should wait to do it until there\u0027s at least another user.",
+      "parentUuid": "26465ab8_14138cd9",
+      "revId": "253161aa2fe7fc22ba698e41503227bc7d6e1059",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
