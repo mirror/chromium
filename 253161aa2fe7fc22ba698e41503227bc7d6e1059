@@ -52,6 +52,24 @@
       "revId": "253161aa2fe7fc22ba698e41503227bc7d6e1059",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7ff2f20_8061cf2d",
+        "filename": "content/browser/webauth/cbor/cbor_writer.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1001949
+      },
+      "writtenOn": "2017-08-29T17:02:38Z",
+      "side": 1,
+      "message": "FWIW, I\u0027m very nervous about using a JSON value as the input and output of a CBOR encoder. CBOR has a wider value space, including 64-bit integers, byte (non-Unicode) strings, and tags, and they\u0027re just fundamentally not representable in JSON.\n\nbase::Value does happen to handle byte strings, which is odd given the comment at the top of the file.",
+      "parentUuid": "f8994839_745cd14b",
+      "revId": "253161aa2fe7fc22ba698e41503227bc7d6e1059",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
