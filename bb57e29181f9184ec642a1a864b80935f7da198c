@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c4491f12_967520bd",
+        "filename": "tools/idl_parser/idl_parser_test.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-08-29T06:20:29Z",
+      "side": 1,
+      "message": "nit: You can write this within a single line.",
+      "revId": "bb57e29181f9184ec642a1a864b80935f7da198c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32b34973_8c683540",
+        "filename": "tools/idl_parser/idl_parser_test.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-08-29T06:20:29Z",
+      "side": 1,
+      "message": "nit: Maybe, this, too?",
+      "revId": "bb57e29181f9184ec642a1a864b80935f7da198c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
