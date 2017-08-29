@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "26a6ab36_4db031fc",
+        "filename": "base/bind.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1211094
+      },
+      "writtenOn": "2017-08-29T13:18:11Z",
+      "side": 1,
+      "message": "This is probably redundant, since, if Arg is an rvalue reference,\nstd::add_rvalue_reference_t\u003cstd::remove_reference_t\u003cArg\u003e\u003e equals to Arg itself.\nSo, std::is_constructible\u003cStorage, ...\u003e has same value to arg_is_storable.\nCan we remove this part?\n\nPlus, when a user passed a move only type by copy to BindRepeating, base::Passed() will be better fit as the diagnostic message rather than std::move().\nSo, can we suppress this when the static_assert below hit?",
+      "range": {
+        "startLine": 52,
+        "startChar": 25,
+        "endLine": 52,
+        "endChar": 61
+      },
+      "revId": "d8c5040b26ef26c07a67a0955f71fbede155f857",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "575ad3c0_c15afc8b",
+        "filename": "base/bind.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1211094
+      },
+      "writtenOn": "2017-08-29T13:18:11Z",
+      "side": 1,
+      "message": "Can this be just `std::remove_reference_t\u003cArg\u003e\u0026\u0026`?",
+      "range": {
+        "startLine": 55,
+        "startChar": 14,
+        "endLine": 55,
+        "endChar": 71
+      },
+      "revId": "d8c5040b26ef26c07a67a0955f71fbede155f857",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f810b83_bb253da6",
+        "filename": "base/bind.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1211094
+      },
+      "writtenOn": "2017-08-29T13:18:11Z",
+      "side": 1,
+      "message": "ditto. Can we remove this part of the condition?",
+      "range": {
+        "startLine": 69,
+        "startChar": 30,
+        "endLine": 69,
+        "endChar": 66
+      },
+      "revId": "d8c5040b26ef26c07a67a0955f71fbede155f857",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd4596dc_c2825fe3",
+        "filename": "base/bind.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1211094
+      },
+      "writtenOn": "2017-08-29T13:18:11Z",
+      "side": 1,
+      "message": "This looks equivalent to just `std::decay_t\u003cUnwrapped\u003e\u0026\u0026`?",
+      "range": {
+        "startLine": 71,
+        "startChar": 33,
+        "endLine": 74,
+        "endChar": 62
+      },
+      "revId": "d8c5040b26ef26c07a67a0955f71fbede155f857",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
