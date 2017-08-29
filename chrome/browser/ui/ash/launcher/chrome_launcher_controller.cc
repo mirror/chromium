@@ -526,10 +526,16 @@ ash::ShelfAction ChromeLauncherController::ActivateWindowOrMinimizeIfActive(
       AppListServiceAsh::GetInstance()->GetAppListPresenter();
   if (window->IsActive() && allow_minimize &&
       (!app_list_presenter || !app_list_presenter->IsVisible())) {
+    LOG(ERROR) << "MSW CLC MIN A window: " << window->GetNativeWindow()
+               << " active: " << window->IsActive();
     window->Minimize();
+    LOG(ERROR) << "MSW CLC MIN B window: " << window->GetNativeWindow()
+               << " active: " << window->IsActive();
     return ash::SHELF_ACTION_WINDOW_MINIMIZED;
   }
 
+  LOG(ERROR) << "MSW CLC SHOW window: " << window->GetNativeWindow()
+             << " active: " << window->IsActive();
   window->Show();
   window->Activate();
   return ash::SHELF_ACTION_WINDOW_ACTIVATED;
