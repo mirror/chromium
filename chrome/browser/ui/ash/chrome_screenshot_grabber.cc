@@ -19,6 +19,7 @@
 #include "base/i18n/time_formatting.h"
 #include "base/macros.h"
 #include "base/metrics/user_metrics.h"
+#include "base/strings/string_number_conversions.h"
 #include "base/strings/stringprintf.h"
 #include "base/strings/utf_string_conversions.h"
 #include "base/task_scheduler/post_task.h"
@@ -55,8 +56,6 @@
 #include "ui/strings/grit/ui_strings.h"
 
 namespace {
-
-const char kNotificationId[] = "screenshot";
 
 const char kNotificationOriginUrl[] = "chrome://screenshot";
 
@@ -122,10 +121,12 @@ class ScreenshotGrabberNotificationDelegate : public NotificationDelegate {
  public:
   ScreenshotGrabberNotificationDelegate(bool success,
                                         Profile* profile,
-                                        const base::FilePath& screenshot_path)
+                                        const base::FilePath& screenshot_path,
+                                        const std::string& id)
       : success_(success),
         profile_(profile),
-        screenshot_path_(screenshot_path) {}
+        screenshot_path_(screenshot_path),
+        id_(id) {}
 
   // Overridden from NotificationDelegate:
   void Click() override {
@@ -165,7 +166,7 @@ class ScreenshotGrabberNotificationDelegate : public NotificationDelegate {
     }
   }
   bool HasClickedListener() override { return success_; }
-  std::string id() const override { return std::string(kNotificationId); }
+  std::string id() const override { return id_; }
 
  private:
   ~ScreenshotGrabberNotificationDelegate() override {}
@@ -178,6 +179,7 @@ class ScreenshotGrabberNotificationDelegate : public NotificationDelegate {
   const bool success_;
   Profile* profile_;
   const base::FilePath screenshot_path_;
+  const std::string id_;
 
   DISALLOW_COPY_AND_ASSIGN(ScreenshotGrabberNotificationDelegate);
 };
@@ -304,6 +306,7 @@ std::string ReadFileToString(const base::FilePath& path) {
 
 ChromeScreenshotGrabber::ChromeScreenshotGrabber()
     : screenshot_grabber_(new ui::ScreenshotGrabber(this)),
+      notification_count_(0),
       weak_factory_(this) {
   screenshot_grabber_->AddObserver(this);
 }
@@ -561,12 +564,6 @@ Notification* ChromeScreenshotGrabber::CreateNotification(
     ui::ScreenshotGrabberObserver::Result screenshot_result,
     const base::FilePath& screenshot_path,
     gfx::Image image) {
-  const std::string notification_id(kNotificationId);
-  // We cancel a previous screenshot notification, if any, to ensure we get
-  // a fresh notification pop-up.
-  g_browser_process->notification_ui_manager()->CancelById(
-      notification_id, NotificationUIManager::GetProfileID(GetProfile()));
-
   const bool success =
       (screenshot_result == ui::ScreenshotGrabberObserver::SCREENSHOT_SUCCESS);
 
@@ -597,6 +594,8 @@ Notification* ChromeScreenshotGrabber::CreateNotification(
     optional_field.use_image_as_icon = true;
   }
 
+  std::string notification_id = base::IntToString(notification_count_);
+  ++notification_count_;
   Notification* notification = new Notification(
       image.IsEmpty() ? message_center::NOTIFICATION_TYPE_SIMPLE
                       : message_center::NOTIFICATION_TYPE_IMAGE,
@@ -610,8 +609,8 @@ Notification* ChromeScreenshotGrabber::CreateNotification(
                                  ash::system_notifier::kNotifierScreenshot),
       l10n_util::GetStringUTF16(IDS_MESSAGE_CENTER_NOTIFIER_SCREENSHOT_NAME),
       GURL(kNotificationOriginUrl), notification_id, optional_field,
-      new ScreenshotGrabberNotificationDelegate(success, GetProfile(),
-                                                screenshot_path));
+      new ScreenshotGrabberNotificationDelegate(
+          success, GetProfile(), screenshot_path, notification_id));
   if (message_center::MessageCenter::IsNewStyleNotificationEnabled()) {
     notification->set_accent_color(
         message_center::kSystemNotificationColorNormal);

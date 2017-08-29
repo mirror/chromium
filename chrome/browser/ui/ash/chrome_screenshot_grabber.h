@@ -118,6 +118,8 @@ class ChromeScreenshotGrabber : public ash::ScreenshotDelegate,
 
   std::unique_ptr<ui::ScreenshotGrabber> screenshot_grabber_;
 
+  int notification_count_;
+
   base::WeakPtrFactory<ChromeScreenshotGrabber> weak_factory_;
 
   DISALLOW_COPY_AND_ASSIGN(ChromeScreenshotGrabber);
