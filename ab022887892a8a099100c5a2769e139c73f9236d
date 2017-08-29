@@ -1,0 +1,107 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "85f07db3_22481d0e",
+        "filename": "components/exo/pointer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-08-29T01:01:39Z",
+      "side": 1,
+      "message": "Can we instead change above into:\n\nif (hotspot !\u003d hotspot_) {\n  hotspot_ \u003d hotspot; \n  cursor_changed \u003d true;\n}",
+      "revId": "ab022887892a8a099100c5a2769e139c73f9236d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8cc6c126_c17c2b65",
+        "filename": "components/exo/pointer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-08-29T01:01:39Z",
+      "side": 1,
+      "message": "nit: s/last_set_hotspot_/hotspot_/",
+      "range": {
+        "startLine": 162,
+        "startChar": 18,
+        "endLine": 162,
+        "endChar": 35
+      },
+      "revId": "ab022887892a8a099100c5a2769e139c73f9236d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e866e412_bd82e303",
+        "filename": "components/exo/pointer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 383,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-08-29T01:01:39Z",
+      "side": 1,
+      "message": "and this becomes: cursor_hotspot_ \u003d hotspot;",
+      "range": {
+        "startLine": 383,
+        "startChar": 4,
+        "endLine": 383,
+        "endChar": 12
+      },
+      "revId": "ab022887892a8a099100c5a2769e139c73f9236d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5362f79f_73e82bb8",
+        "filename": "components/exo/pointer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 396,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-08-29T01:01:39Z",
+      "side": 1,
+      "message": "and cursor_hotspot_ here",
+      "range": {
+        "startLine": 396,
+        "startChar": 50,
+        "endLine": 396,
+        "endChar": 58
+      },
+      "revId": "ab022887892a8a099100c5a2769e139c73f9236d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "570efb99_be72166c",
+        "filename": "components/exo/pointer.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-08-29T01:01:39Z",
+      "side": 1,
+      "message": "Please use hotspot_ for what you currently use this for and instead add a cursor_hotspot_ member below cursor_bitmap_ on l.111 with a comment such as \"// Hotspot for latest cursor snapshot.\"\n\nThe idea is that hotspot_ is the current hotspot from SetCursor and cursor_hotspot_ is the hotspot in the latest capture bitmap.",
+      "revId": "ab022887892a8a099100c5a2769e139c73f9236d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
