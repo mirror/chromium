@@ -1548,6 +1548,7 @@ applicationCommandEndpoint:(id<ApplicationCommands>)applicationCommandEndpoint {
   }
 
   BOOL loadingSucceeded = [notify.userInfo[kTabModelPageLoadSuccess] boolValue];
+  _temporaryNativeController = nil;
 
   [self tabLoadComplete:tab withSuccess:loadingSucceeded];
 }
