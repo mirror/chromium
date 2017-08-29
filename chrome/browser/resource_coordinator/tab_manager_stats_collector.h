@@ -26,7 +26,7 @@ namespace resource_coordinator {
 
 // TabManagerStatsCollector records UMAs on behalf of TabManager for tab and
 // system-related events and properties during session restore.
-class TabManagerStatsCollector : public SessionRestoreObserver {
+class TabManagerStatsCollector final : public SessionRestoreObserver {
  public:
   TabManagerStatsCollector();
   ~TabManagerStatsCollector();
