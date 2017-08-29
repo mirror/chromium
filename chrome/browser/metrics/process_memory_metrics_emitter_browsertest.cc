@@ -250,6 +250,7 @@ class ProcessMemoryMetricsEmitterTest : public ExtensionBrowserTest {
     CheckMemoryMetricWithName(source, "BlinkGC", true, metric_count);
     CheckMemoryMetricWithName(source, "PartitionAlloc", true, metric_count);
     CheckMemoryMetricWithName(source, "V8", true, metric_count);
+    CheckMemoryMetricWithName(source, "Uptime", true, metric_count);
     CheckMemoryMetricWithName(source, "NumberOfExtensions", true, metric_count);
   }
 
