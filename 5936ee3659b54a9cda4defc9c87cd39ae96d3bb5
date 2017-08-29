@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "78048de5_a2ceb899",
+        "filename": "chrome/browser/ui/webui/chrome_web_ui_controller_factory.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 477,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-08-29T05:46:09Z",
+      "side": 1,
+      "message": "Can we put this entire feature behind a feature flag? See how MdBookmarksUI does this. (Also look in chrome_features.cc and about_flags.cc)",
+      "revId": "5936ee3659b54a9cda4defc9c87cd39ae96d3bb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "35883099_6fdcfaca",
         "filename": "chrome/browser/ui/webui/sys_internals/sys_internals_message_handler.cc",
         "patchSetId": 11
@@ -46,6 +63,86 @@
       "revId": "5936ee3659b54a9cda4defc9c87cd39ae96d3bb5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "41fdbc57_c279e8e7",
+        "filename": "chrome/browser/ui/webui/sys_internals/sys_internals_message_handler.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-08-29T05:46:09Z",
+      "side": 1,
+      "message": "Why not just return a std::vector\u003cCpuInfo\u003e here rather than pass a reference in? In fact, below, where this is used, I think you can just use\n\nstd::vector\u003cCpuInfo\u003e cpu_info(base::SysInfo::NumberOfProcessors()); and have the same effect.",
+      "range": {
+        "startLine": 36,
+        "startChar": 0,
+        "endLine": 36,
+        "endChar": 4
+      },
+      "revId": "5936ee3659b54a9cda4defc9c87cd39ae96d3bb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1bf0f73d_64c6cfcb",
+        "filename": "chrome/browser/ui/webui/sys_internals/sys_internals_message_handler.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-08-29T05:46:09Z",
+      "side": 1,
+      "message": "nit: when referring to a vector of CpuInfos, it\u0027s more readable to use the var name infos or cpu_infos to denote more than one. That way in a range-based for loop, you\u0027ll end up with for (info : infos) which reads nicely. And do the same elsewhere.",
+      "range": {
+        "startLine": 36,
+        "startChar": 39,
+        "endLine": 36,
+        "endChar": 43
+      },
+      "revId": "5936ee3659b54a9cda4defc9c87cd39ae96d3bb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b12d4555_6f6e322d",
+        "filename": "chrome/browser/ui/webui/sys_internals/sys_internals_message_handler.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-08-29T05:46:09Z",
+      "side": 1,
+      "message": "If |value| is above COUNTER_MAX, doesn\u0027t this have the possibility of wrapping to low values? e.g (w/ 4 bytes) 8000 \u0026 7FFF \u003d 0, when it should probably just display the max value (7FFF), right? Otherwise you may end up saying that the number of write operations went from 7FFF to 0 when it actually went up.\n\nSo,\n\nstd::max(value, COUNTER_MAX)?",
+      "revId": "5936ee3659b54a9cda4defc9c87cd39ae96d3bb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24ef6b6e_ce161fe8",
+        "filename": "chrome/browser/ui/webui/sys_internals/sys_internals_message_handler.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-08-29T05:46:09Z",
+      "side": 1,
+      "message": "nit: Feel free to move this into GetCpuInfo if it\u0027s not used anywhere else.",
+      "revId": "5936ee3659b54a9cda4defc9c87cd39ae96d3bb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     },
     {
       "key": {
@@ -237,6 +334,40 @@
     },
     {
       "key": {
+        "uuid": "f2438259_3ba72005",
+        "filename": "chrome/browser/ui/webui/sys_internals/sys_internals_message_handler.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-08-29T05:46:09Z",
+      "side": 1,
+      "message": "nit: Consider using the ternary operator here \n\ndouble available \u003d static_cast\u003cdouble\u003e(info.available \u003d\u003d 0 ?  info.free + info.reclaimable : info.available)",
+      "revId": "5936ee3659b54a9cda4defc9c87cd39ae96d3bb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ade8cff_e1611e0c",
+        "filename": "chrome/browser/ui/webui/sys_internals/sys_internals_message_handler.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-08-29T05:46:09Z",
+      "side": 1,
+      "message": "Why is this being multiplied? Isn\u0027t the data inside info in KB already?",
+      "revId": "5936ee3659b54a9cda4defc9c87cd39ae96d3bb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "61d76d3b_9382a21b",
         "filename": "chrome/browser/ui/webui/sys_internals/sys_internals_message_handler.cc",
         "patchSetId": 11
@@ -269,6 +400,109 @@
       "revId": "5936ee3659b54a9cda4defc9c87cd39ae96d3bb5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d5ff3496_be105bc6",
+        "filename": "chrome/browser/ui/webui/sys_internals/sys_internals_message_handler.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-08-29T05:46:09Z",
+      "side": 1,
+      "message": "Same thing here and elsewhere. What units are these? This looks like it\u0027s converting KB into B?",
+      "range": {
+        "startLine": 151,
+        "startChar": 58,
+        "endLine": 151,
+        "endChar": 62
+      },
+      "revId": "5936ee3659b54a9cda4defc9c87cd39ae96d3bb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a78e4a2_4d7323b7",
+        "filename": "chrome/browser/ui/webui/sys_internals/sys_internals_message_handler.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-08-29T05:46:09Z",
+      "side": 1,
+      "message": "I think it\u0027s safest to call this from the original thread. Below you should use PostTaskAndReplyWithResult. This means this function won\u0027t need any class variables and can go in the anonymous namespace.",
+      "range": {
+        "startLine": 215,
+        "startChar": 2,
+        "endLine": 215,
+        "endChar": 27
+      },
+      "revId": "5936ee3659b54a9cda4defc9c87cd39ae96d3bb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17c089d7_a4988f36",
+        "filename": "chrome/browser/ui/webui/sys_internals/sys_internals_message_handler.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-08-29T05:46:09Z",
+      "side": 1,
+      "message": "However, down here, you _will_ need a callback to a function that calls ResolveJavascriptCallback with your result. I\u0027m pretty sure you should be using a WeakPtrFactory on the WebUIMessageHandler here. There\u0027s no guarantee that this message handler will still exist when the callback completes. See policy_ui_handler.cc for an example.",
+      "range": {
+        "startLine": 230,
+        "startChar": 22,
+        "endLine": 230,
+        "endChar": 73
+      },
+      "revId": "5936ee3659b54a9cda4defc9c87cd39ae96d3bb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80181579_5a3a72c0",
+        "filename": "chrome/browser/ui/webui/sys_internals/sys_internals_message_handler.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-08-29T05:46:09Z",
+      "side": 1,
+      "message": "nit: Because the |base::Value| etcetc",
+      "revId": "5936ee3659b54a9cda4defc9c87cd39ae96d3bb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f791812c_dae4c98f",
+        "filename": "chrome/browser/ui/webui/sys_internals/sys_internals_message_handler.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-08-29T05:46:09Z",
+      "side": 1,
+      "message": "This struct is actually pretty complex. Ideally we\u0027d have more rigid object types than we do right now. Are you aware of the Mojo project? It allows for rigid object definitions to be specified and sent through to JS. Check site_engagement.mojom for an example.\n\nAlthough we don\u0027t necessarily need to do this now, it\u0027s a much more robust system that should be moved to. If there\u0027s no time during your internship, your host should do it after your departure.",
+      "revId": "5936ee3659b54a9cda4defc9c87cd39ae96d3bb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
