@@ -24,6 +24,7 @@
 #include "components/cryptauth/cryptauth_service.h"
 #include "components/prefs/pref_registry_simple.h"
 #include "components/prefs/pref_service.h"
+#include "components/proximity_auth/logging/logging.h"
 #include "device/bluetooth/bluetooth_adapter_factory.h"
 #include "ui/message_center/message_center.h"
 
@@ -88,8 +89,9 @@ void TetherService::InitializerDelegate::InitializeTether(
       network_connection_handler, adapter);
 }
 
-void TetherService::InitializerDelegate::ShutdownTether() {
-  chromeos::tether::Initializer::Shutdown();
+std::unique_ptr<chromeos::tether::AsyncShutdownTask>
+TetherService::InitializerDelegate::ShutdownTether() {
+  return chromeos::tether::Initializer::Shutdown();
 }
 
 TetherService::TetherService(
@@ -150,7 +152,13 @@ void TetherService::StartTetherIfPossible() {
 }
 
 void TetherService::StopTetherIfNecessary() {
-  initializer_delegate_->ShutdownTether();
+  async_shutdown_task_ = initializer_delegate_->ShutdownTether();
+
+  if (async_shutdown_task_) {
+    PA_LOG(INFO) << "Asynchronous shutdown task received when shutting down "
+                 << "Tether component.";
+    async_shutdown_task_->AddObserver(this);
+  }
 }
 
 void TetherService::Shutdown() {
@@ -267,6 +275,13 @@ void TetherService::DeviceListChanged() {
                                      is_enabled);
   }
   UpdateTetherTechnologyState();
+}
+
+void TetherService::OnAsyncShutdownComplete() {
+  PA_LOG(INFO) << "Asynchronous shutdown task has completed.";
+
+  async_shutdown_task_->RemoveObserver(this);
+  async_shutdown_task_.reset();
 }
 
 void TetherService::OnPrefsChanged() {
