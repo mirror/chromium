@@ -505,6 +505,13 @@ void Surface::CommitSurfaceHierarchy(
         frame_sink_holder, frame, frame_callbacks, presentation_callbacks);
   }
 
+  if (current_buffer_.buffer() &&
+      !current_buffer_.buffer()->IsTransferanleResourceAvaliable()) {
+    // If the current TransferableResource has been returned and released from
+    // the compositor, we have to recreate it.
+    UpdateResource(frame_sink_holder, false /* client_usage */);
+  }
+
   AppendContentsToFrame(origin, frame, needs_full_damage);
 
   // Reset damage.
