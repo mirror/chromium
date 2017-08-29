@@ -2,6 +2,98 @@
   "comments": [
     {
       "key": {
+        "uuid": "a6ef06ab_a2e7cb90",
+        "filename": "chrome/browser/extensions/api/declarative_net_request/rule_indexing_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-08-29T00:22:40Z",
+      "side": 1,
+      "message": "This is better suited as TODO.",
+      "range": {
+        "startLine": 36,
+        "startChar": 3,
+        "endLine": 36,
+        "endChar": 10
+      },
+      "revId": "b5de490fff41a70506c41c98619239b333d44f7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2a14079_d8a2d681",
+        "filename": "chrome/browser/extensions/api/declarative_net_request/rule_indexing_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-08-29T00:22:40Z",
+      "side": 1,
+      "message": "nit: Note why UNKNOWN is necessary.",
+      "range": {
+        "startLine": 52,
+        "startChar": 23,
+        "endLine": 52,
+        "endChar": 31
+      },
+      "revId": "b5de490fff41a70506c41c98619239b333d44f7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b890ddb_f6d1d339",
+        "filename": "chrome/browser/extensions/api/declarative_net_request/rule_indexing_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-08-29T00:22:40Z",
+      "side": 1,
+      "message": "ASSERT_TRUE",
+      "range": {
+        "startLine": 83,
+        "startChar": 4,
+        "endLine": 83,
+        "endChar": 15
+      },
+      "revId": "b5de490fff41a70506c41c98619239b333d44f7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b331548_b9c5e8ba",
+        "filename": "chrome/browser/extensions/api/declarative_net_request/rule_indexing_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-08-29T00:22:40Z",
+      "side": 1,
+      "message": "When can rules_ no non-null?",
+      "range": {
+        "startLine": 130,
+        "startChar": 0,
+        "endLine": 130,
+        "endChar": 18
+      },
+      "revId": "b5de490fff41a70506c41c98619239b333d44f7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5226a3f1_16cd9931",
         "filename": "chrome/browser/extensions/api/declarative_net_request/rule_indexing_unittest.cc",
         "patchSetId": 8
@@ -25,6 +117,53 @@
     },
     {
       "key": {
+        "uuid": "4acded6a_3ee31c6f",
+        "filename": "chrome/browser/extensions/api/declarative_net_request/rule_indexing_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-08-29T00:22:40Z",
+      "side": 1,
+      "message": "Good question, I don\u0027t know. Devlin?\n\nUsing these on stack has advantage of clean lifetime expectations, but not sure if that is \"necessary\".",
+      "parentUuid": "5226a3f1_16cd9931",
+      "range": {
+        "startLine": 168,
+        "startChar": 18,
+        "endLine": 168,
+        "endChar": 43
+      },
+      "revId": "b5de490fff41a70506c41c98619239b333d44f7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38a46742_c9607fa1",
+        "filename": "chrome/browser/extensions/api/declarative_net_request/rule_indexing_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 287,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-08-29T00:22:40Z",
+      "side": 1,
+      "message": "nit: Ensures",
+      "range": {
+        "startLine": 287,
+        "startChar": 3,
+        "endLine": 287,
+        "endChar": 9
+      },
+      "revId": "b5de490fff41a70506c41c98619239b333d44f7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c5017586_d28c382b",
         "filename": "chrome/browser/extensions/unpacked_installer.cc",
         "patchSetId": 8
@@ -41,6 +180,99 @@
         "startChar": 2,
         "endLine": 321,
         "endChar": 27
+      },
+      "revId": "b5de490fff41a70506c41c98619239b333d44f7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d65d15c_ca8e54a2",
+        "filename": "chrome/browser/extensions/unpacked_installer.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 321,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-08-29T00:22:40Z",
+      "side": 1,
+      "message": "Yes, I think so.",
+      "parentUuid": "c5017586_d28c382b",
+      "range": {
+        "startLine": 321,
+        "startChar": 2,
+        "endLine": 321,
+        "endChar": 27
+      },
+      "revId": "b5de490fff41a70506c41c98619239b333d44f7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "806bd308_b242ed8b",
+        "filename": "chrome/browser/extensions/unpacked_installer.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-08-29T00:22:40Z",
+      "side": 1,
+      "message": "Generally these types of functions are named like MaybeFoo, e.g. MaybeIndexAndPersistDNRRules or similar.",
+      "range": {
+        "startLine": 135,
+        "startChar": 7,
+        "endLine": 135,
+        "endChar": 35
+      },
+      "revId": "b5de490fff41a70506c41c98619239b333d44f7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc387728_c618ecfe",
+        "filename": "extensions/common/api/declarative_net_request/test_utils.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-08-29T00:22:40Z",
+      "side": 1,
+      "message": "nit: CreateManifest",
+      "range": {
+        "startLine": 89,
+        "startChar": 0,
+        "endLine": 89,
+        "endChar": 51
+      },
+      "revId": "b5de490fff41a70506c41c98619239b333d44f7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca720961_87a1be8a",
+        "filename": "extensions/common/api/declarative_net_request/test_utils.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-08-29T00:22:40Z",
+      "side": 1,
+      "message": "nit: ToListValue",
+      "range": {
+        "startLine": 104,
+        "startChar": 33,
+        "endLine": 104,
+        "endChar": 45
       },
       "revId": "b5de490fff41a70506c41c98619239b333d44f7c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
