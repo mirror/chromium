@@ -10,6 +10,7 @@ mojom("compositing") {
     "compositor_frame.mojom",
     "compositor_frame_metadata.mojom",
     "compositor_frame_sink.mojom",
+    "copy_output_request.mojom",
     "quads.mojom",
     "render_pass.mojom",
     "resource_settings.mojom",
