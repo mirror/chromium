@@ -140,7 +140,6 @@ void MessageCenterBubble::UpdateBubbleView() {
     return;  // Could get called after view is closed
   message_center_view_->SetNotifications(
       message_center_->GetVisibleNotifications());
-  bubble_view_->GetWidget()->Show();
   bubble_view_->UpdateBubble();
 }
 
