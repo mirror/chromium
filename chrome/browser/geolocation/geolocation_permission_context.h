@@ -27,6 +27,7 @@ class GeolocationPermissionContext  : public PermissionContextBase {
   // It also adds special logic when called through an extension.
   void DecidePermission(content::WebContents* web_contents,
                         const PermissionRequestID& id,
+                        const GURL& requesting_frame_url,
                         const GURL& requesting_origin,
                         const GURL& embedding_origin,
                         bool user_gesture,
@@ -38,7 +39,7 @@ class GeolocationPermissionContext  : public PermissionContextBase {
 
  private:
   void UpdateTabContext(const PermissionRequestID& id,
-                        const GURL& requesting_frame,
+                        const GURL& requesting_origin,
                         bool allowed) override;
   bool IsRestrictedToSecureOrigins() const override;
 

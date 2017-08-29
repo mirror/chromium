@@ -35,6 +35,7 @@ DurableStoragePermissionContext::DurableStoragePermissionContext(
 void DurableStoragePermissionContext::DecidePermission(
     content::WebContents* web_contents,
     const PermissionRequestID& id,
+    const GURL& requesting_frame_url,
     const GURL& requesting_origin,
     const GURL& embedding_origin,
     bool user_gesture,

@@ -201,6 +201,7 @@ void NotificationPermissionContext::CancelPermissionRequest(
 void NotificationPermissionContext::DecidePermission(
     content::WebContents* web_contents,
     const PermissionRequestID& id,
+    const GURL& requesting_frame_url,
     const GURL& requesting_origin,
     const GURL& embedding_origin,
     bool user_gesture,
@@ -239,9 +240,9 @@ void NotificationPermissionContext::DecidePermission(
     return;
   }
 
-  PermissionContextBase::DecidePermission(web_contents, id, requesting_origin,
-                                          embedding_origin, user_gesture,
-                                          callback);
+  PermissionContextBase::DecidePermission(
+      web_contents, id, requesting_frame_url, requesting_origin,
+      embedding_origin, user_gesture, callback);
 }
 
 // Unlike other permission types, granting a notification for a given origin

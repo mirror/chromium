@@ -104,12 +104,12 @@ PermissionContextBase::~PermissionContextBase() {
 void PermissionContextBase::RequestPermission(
     content::WebContents* web_contents,
     const PermissionRequestID& id,
-    const GURL& requesting_frame,
+    const GURL& requesting_frame_url,
     bool user_gesture,
     const BrowserPermissionCallback& callback) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
 
-  GURL requesting_origin = requesting_frame.GetOrigin();
+  GURL requesting_origin = requesting_frame_url.GetOrigin();
   GURL embedding_origin = web_contents->GetLastCommittedURL().GetOrigin();
 
   if (!requesting_origin.is_valid() || !embedding_origin.is_valid()) {
@@ -177,13 +177,14 @@ void PermissionContextBase::RequestPermission(
           web_contents, requesting_origin, content_settings_type_,
           base::Bind(&PermissionContextBase::ContinueRequestPermission,
                      weak_factory_.GetWeakPtr(), web_contents, id,
-                     requesting_origin, embedding_origin, user_gesture,
-                     callback));
+                     requesting_frame_url, requesting_origin, embedding_origin,
+                     user_gesture, callback));
 }
 
 void PermissionContextBase::ContinueRequestPermission(
     content::WebContents* web_contents,
     const PermissionRequestID& id,
+    const GURL& requesting_frame_url,
     const GURL& requesting_origin,
     const GURL& embedding_origin,
     bool user_gesture,
@@ -210,8 +211,8 @@ void PermissionContextBase::ContinueRequestPermission(
   PermissionUmaUtil::RecordEmbargoPromptSuppression(
       PermissionEmbargoStatus::NOT_EMBARGOED);
 
-  DecidePermission(web_contents, id, requesting_origin, embedding_origin,
-                   user_gesture, callback);
+  DecidePermission(web_contents, id, requesting_frame_url, requesting_origin,
+                   embedding_origin, user_gesture, callback);
 }
 
 void PermissionContextBase::UserMadePermissionDecision(
@@ -326,6 +327,7 @@ ContentSetting PermissionContextBase::GetPermissionStatusInternal(
 void PermissionContextBase::DecidePermission(
     content::WebContents* web_contents,
     const PermissionRequestID& id,
+    const GURL& requesting_frame_url,
     const GURL& requesting_origin,
     const GURL& embedding_origin,
     bool user_gesture,

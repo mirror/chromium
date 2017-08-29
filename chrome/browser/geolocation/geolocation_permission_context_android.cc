@@ -144,18 +144,18 @@ void GeolocationPermissionContextAndroid::SetDSEOriginForTesting(
 void GeolocationPermissionContextAndroid::RequestPermission(
     content::WebContents* web_contents,
     const PermissionRequestID& id,
-    const GURL& requesting_frame_origin,
+    const GURL& requesting_frame_url,
     bool user_gesture,
     const BrowserPermissionCallback& callback) {
+  const GURL requesting_frame_origin = requesting_frame_url.GetOrigin();
+  const GURL embedding_origin = web_contents->GetLastCommittedURL().GetOrigin();
   if (!IsLocationAccessPossible(web_contents, requesting_frame_origin,
                                 user_gesture)) {
-    NotifyPermissionSet(id, requesting_frame_origin,
-                        web_contents->GetLastCommittedURL().GetOrigin(),
-                        callback, false /* persist */, CONTENT_SETTING_BLOCK);
+    NotifyPermissionSet(id, requesting_frame_origin, embedding_origin, callback,
+                        false /* persist */, CONTENT_SETTING_BLOCK);
     return;
   }
 
-  GURL embedding_origin = web_contents->GetLastCommittedURL().GetOrigin();
   ContentSetting content_setting =
       GeolocationPermissionContext::GetPermissionStatus(
           nullptr /* render_frame_host */, requesting_frame_origin,
@@ -178,7 +178,7 @@ void GeolocationPermissionContextAndroid::RequestPermission(
   }
 
   GeolocationPermissionContext::RequestPermission(
-      web_contents, id, requesting_frame_origin, user_gesture, callback);
+      web_contents, id, requesting_frame_url, user_gesture, callback);
 }
 
 void GeolocationPermissionContextAndroid::CancelPermissionRequest(

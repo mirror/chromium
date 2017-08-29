@@ -209,7 +209,8 @@ TEST_F(NotificationPermissionContextTest, PushTopLevelOriginOnly) {
 
   ContentSetting result = CONTENT_SETTING_DEFAULT;
   context.DecidePermission(web_contents(), fake_id, requesting_origin,
-                           embedding_origin, true /* user_gesture */,
+                           requesting_origin, embedding_origin,
+                           true /* user_gesture */,
                            base::Bind(&StoreContentSetting, &result));
 
   ASSERT_EQ(result, CONTENT_SETTING_BLOCK);
