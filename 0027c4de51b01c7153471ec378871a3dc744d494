@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "60813732_46b6974a",
+        "filename": "ui/app_list/views/contents_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-08-29T20:00:19Z",
+      "side": 1,
+      "message": "Why adding SearchResultTileItemListView first now?",
+      "revId": "0027c4de51b01c7153471ec378871a3dc744d494",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5cddaef_b957858c",
+        "filename": "ui/app_list/views/search_result_list_view_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-08-29T20:00:19Z",
+      "side": 1,
+      "message": "Why do we need this \"if\" ?",
+      "revId": "0027c4de51b01c7153471ec378871a3dc744d494",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bca6c9e4_cf1756a5",
         "filename": "ui/app_list/views/search_result_list_view_unittest.cc",
         "patchSetId": 3
@@ -13,6 +47,23 @@
       "writtenOn": "2017-08-28T22:46:23Z",
       "side": 1,
       "message": "I know this setup has code duplicates across several tests. Will file another bug to create a AppListViewTestBase.",
+      "revId": "0027c4de51b01c7153471ec378871a3dc744d494",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81cbbf1d_b72265a5",
+        "filename": "ui/app_list/views/search_result_list_view_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-08-29T20:00:19Z",
+      "side": 1,
+      "message": "nit: #include \u003cmemory\u003e for unique_ptr",
       "revId": "0027c4de51b01c7153471ec378871a3dc744d494",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
