@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "31d04a96_61bc18a0",
+        "filename": "ui/native_theme/native_theme_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 427,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-08-29T03:09:00Z",
+      "side": 1,
+      "message": "My instinct is that we should stop overriding this in this file.  NativeThemeWin is supposed to be for \"Windows-specific system colors\", and this is not a Windows-specific color, let alone a system one.\n\nThe default behavior of this function will invert the Aura color when the user is in an inverted color scheme, which this code didn\u0027t previously do.  It\u0027s not clear to me while colors should be inverted and which shouldn\u0027t, since I didn\u0027t write that stuff, but I think the answer is \"don\u0027t invert system colors, which the user can set manually somewhere and make be inverted already, but do invert all Chrome colors\".  This is a Chrome color and not a system one, so I think the default (invert) behavior would be correct.\n\nI would not worry about MD vs. non-MD.  The color difference is too small to care about.\n\nIt seems like in general the other colors in this section should all die too (either they should be system colors or we should get their values from Aura).  I would not worry about that in this CL; the only one I might worry about is the unfocused border color, since you\u0027re already messing with the focused one, and I see the code here sets this to #d9d9d9 while the Aura code uses #000000 0.2 (MD) / 0.4 (non-MD).  I would imagine we want to just use the Aura code here too, although that will be a bigger behavior shift for pre-Harmony.",
+      "parentUuid": "687c1ccb_389f339c",
+      "range": {
+        "startLine": 427,
+        "startChar": 38,
+        "endLine": 427,
+        "endChar": 70
+      },
+      "revId": "1c4c6a7c57b37a4fcb8c78ef57f8d8b320111ed0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "47b1bff9_fb6a4592",
         "filename": "ui/native_theme/native_theme_win.cc",
         "patchSetId": 2
@@ -36,6 +60,23 @@
       "writtenOn": "2017-08-26T02:47:58Z",
       "side": 1,
       "message": ".. or should we use this trick to ensure GetAuraColor is used on MD.\n\nMaybe the color change is subtle enough not to bother..",
+      "revId": "1c4c6a7c57b37a4fcb8c78ef57f8d8b320111ed0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ceb82a0_f35241f2",
+        "filename": "ui/views/controls/button/checkbox.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-08-29T03:09:00Z",
+      "side": 1,
+      "message": "Presumably this should be modified too?  Maybe then the function below should call this?\n\nThere are a number of other uses in our codebase of kColorId_LabelEnabledColor that also look wrong.  Trent, is auditing these already on a list somewhere of \"things to do in the future as we migrate to the typography provider\"?",
       "revId": "1c4c6a7c57b37a4fcb8c78ef57f8d8b320111ed0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -62,6 +103,23 @@
       "revId": "1c4c6a7c57b37a4fcb8c78ef57f8d8b320111ed0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7ff9c883_0ce80148",
+        "filename": "ui/views/controls/button/checkbox.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-08-29T03:09:00Z",
+      "side": 1,
+      "message": "Musing: It\u0027s confusing that a method called merely style::GetColor() is in typography.h and refers specifically to the color of a text label.  I wonder if this method (and the ones near it) should be named GetTextColor() or something.",
+      "revId": "1c4c6a7c57b37a4fcb8c78ef57f8d8b320111ed0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
