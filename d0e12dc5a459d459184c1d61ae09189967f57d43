@@ -2,6 +2,63 @@
   "comments": [
     {
       "key": {
+        "uuid": "dd70bab6_6564c8f5",
+        "filename": "base/trace_event/memory_dump_manager_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 904,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-08-29T18:19:28Z",
+      "side": 1,
+      "message": "base:: is not needed.",
+      "range": {
+        "startLine": 904,
+        "startChar": 14,
+        "endLine": 904,
+        "endChar": 20
+      },
+      "revId": "d0e12dc5a459d459184c1d61ae09189967f57d43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e97bb3c7_2c88911d",
+        "filename": "base/trace_event/memory_dump_manager_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 905,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-08-29T18:19:28Z",
+      "side": 1,
+      "message": "ThreadHeapUsageTracker::DisableHeapTrackingForTesting() here.",
+      "revId": "d0e12dc5a459d459184c1d61ae09189967f57d43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0bc84094_ee28fdae",
+        "filename": "services/resource_coordinator/memory_instrumentation/coordinator_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-08-29T18:19:28Z",
+      "side": 1,
+      "message": "DCHECK_CALLED_ON_VALID_THREAD(thread_checker_); over here?",
+      "revId": "d0e12dc5a459d459184c1d61ae09189967f57d43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2e001962_31307d7b",
         "filename": "services/resource_coordinator/memory_instrumentation/coordinator_impl.cc",
         "patchSetId": 2
