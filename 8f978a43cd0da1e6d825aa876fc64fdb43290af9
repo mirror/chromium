@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "48cb0b11_5ff43d2b",
+        "filename": "content/gpu/in_process_gpu_thread.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1003154
+      },
+      "writtenOn": "2017-08-29T22:49:40Z",
+      "side": 1,
+      "message": "Verified locally on a Nexus 6P that WebView goes down this path, and Chrome with --in-process-gpu goes down the next branch.",
+      "range": {
+        "startLine": 68,
+        "startChar": 4,
+        "endLine": 68,
+        "endChar": 20
+      },
+      "revId": "8f978a43cd0da1e6d825aa876fc64fdb43290af9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e2c86b9_f8078004",
+        "filename": "content/gpu/in_process_gpu_thread.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1003154
+      },
+      "writtenOn": "2017-08-29T22:49:40Z",
+      "side": 1,
+      "message": "In theory we can just call GpuDataManager::GetInstance()-\u003eGetGPUInfo() here, but apparently I am not allowed to include here a header file from content/public/browser.\n\nRegardless, sooner or later we will move info collection here, so this code aligns with future direction, and it\u0027s not regression (before this CL, we also re-collect here).",
+      "revId": "8f978a43cd0da1e6d825aa876fc64fdb43290af9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
