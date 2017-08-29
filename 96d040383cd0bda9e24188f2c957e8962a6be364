@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "87f91d5e_a80dbde6",
+        "filename": "chrome/browser/chrome_content_browser_client.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1020,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-08-29T13:56:03Z",
+      "side": 1,
+      "message": "TODOs should have a crbug link.",
+      "range": {
+        "startLine": 1020,
+        "startChar": 2,
+        "endLine": 1020,
+        "endChar": 59
+      },
+      "revId": "96d040383cd0bda9e24188f2c957e8962a6be364",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e18d8e7f_7c086829",
+        "filename": "components/spellcheck/browser/spell_check_host_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-08-29T13:56:03Z",
+      "side": 1,
+      "message": "Need a crbug link.",
+      "range": {
+        "startLine": 56,
+        "startChar": 3,
+        "endLine": 56,
+        "endChar": 53
+      },
+      "revId": "96d040383cd0bda9e24188f2c957e8962a6be364",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61e45cd0_521d23ef",
+        "filename": "components/spellcheck/browser/spell_check_host_impl.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-08-29T13:56:03Z",
+      "side": 1,
+      "message": "No need for \"explicit\" keyword here. The \"explicit\" keyword is useful to prevent implicit type conversion when the constructor has exactly one parameter.",
+      "range": {
+        "startLine": 25,
+        "startChar": 2,
+        "endLine": 25,
+        "endChar": 10
+      },
+      "revId": "96d040383cd0bda9e24188f2c957e8962a6be364",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3cd01d9d_95d4c3e0",
+        "filename": "components/spellcheck/browser/spellchecker_session_bridge_android.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-08-29T13:56:03Z",
+      "side": 1,
+      "message": "Remove \"explicit.\"",
+      "range": {
+        "startLine": 23,
+        "startChar": 2,
+        "endLine": 23,
+        "endChar": 10
+      },
+      "revId": "96d040383cd0bda9e24188f2c957e8962a6be364",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8948668f_29f23d78",
+        "filename": "components/spellcheck/common/spellcheck.mojom",
+        "patchSetId": 6
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-08-29T13:56:03Z",
+      "side": 1,
+      "message": "Need a crbug link.",
+      "range": {
+        "startLine": 55,
+        "startChar": 5,
+        "endLine": 55,
+        "endChar": 79
+      },
+      "revId": "96d040383cd0bda9e24188f2c957e8962a6be364",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bbc0511b_d136e6cd",
+        "filename": "components/spellcheck/common/spellcheck.mojom",
+        "patchSetId": 6
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-08-29T13:56:03Z",
+      "side": 1,
+      "message": "Exposing Android-only IPC to other platforms unnecessarily increasing the attack surface of those platforms. I encourage you to separate Android-only messages into spellcheck_android.mojom with SpellCheckHostAndroid interface.",
+      "range": {
+        "startLine": 59,
+        "startChar": 0,
+        "endLine": 61,
+        "endChar": 47
+      },
+      "revId": "96d040383cd0bda9e24188f2c957e8962a6be364",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
