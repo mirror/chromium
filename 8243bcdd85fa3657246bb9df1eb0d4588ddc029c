@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0a755802_df983985",
+        "filename": "ios/chrome/browser/ui/find_bar/find_bar_controller_ios.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-08-29T01:50:25Z",
+      "side": 1,
+      "message": "This comment is an implementation detail, and should be moved inside |-editingChanged:|.  The comment here should describe when it\u0027s called/what it does.  Something like:\n\n\"Responds to touches that make editing changes on the text field, triggering find-in-page searches for the field\u0027s current value.\"",
+      "revId": "8243bcdd85fa3657246bb9df1eb0d4588ddc029c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ba59bf6_c5db156e",
+        "filename": "ios/chrome/browser/ui/find_bar/find_bar_controller_ios.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 428,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-08-29T01:50:25Z",
+      "side": 1,
+      "message": "Do we need |sender| still?  Seems like it was previously only used for its IDC tag, so we could just change this to a parameter-free selector.",
+      "revId": "8243bcdd85fa3657246bb9df1eb0d4588ddc029c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "323d751f_6499a3a2",
+        "filename": "ios/chrome/browser/ui/find_bar/find_bar_controller_ios.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 432,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-08-29T01:50:25Z",
+      "side": 1,
+      "message": "This is a little unexpected because both these functions return void.  How about just dispatching |-searchFindInPage| on a separate line from the early return?",
+      "revId": "8243bcdd85fa3657246bb9df1eb0d4588ddc029c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b00131d_758819fb",
+        "filename": "ios/chrome/browser/ui/find_bar/find_bar_view.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-08-29T01:50:25Z",
+      "side": 1,
+      "message": "s/outlets/dispatcher",
+      "revId": "8243bcdd85fa3657246bb9df1eb0d4588ddc029c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
