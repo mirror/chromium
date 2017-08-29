@@ -228,6 +228,24 @@
     },
     {
       "key": {
+        "uuid": "43b86ada_b397d77e",
+        "filename": "chrome/browser/android/ntp/content_suggestions_notifier_service_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-29T14:03:30Z",
+      "side": 1,
+      "message": "Ah, fair enough. Then, nit^2: Move the observer declaration down here?",
+      "parentUuid": "94331cfd_db6ce876",
+      "revId": "c242f043c524d5de3c712a21b7670a2d88287ade",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "04703916_68162bef",
         "filename": "chrome/browser/android/ntp/content_suggestions_notifier_service_unittest.cc",
         "patchSetId": 3

@@ -52,6 +52,24 @@
       "revId": "709d4977cf5e618bc4b0bab290920ccf88557d97",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db917dc2_c6061185",
+        "filename": "chrome/browser/android/ntp/content_suggestions_notifier_service.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-29T14:03:30Z",
+      "side": 1,
+      "message": "Good point about GetState() :)\n\nAre we in a hurry?\nI don\u0027t think adding that @CalledByNative will be hard to sell. So if that\u0027s where we want to go eventually, then I\u0027d go for it now, unless you really need to get this landed today? But ultimately it\u0027s your call.",
+      "parentUuid": "459cb7a1_5f9d0084",
+      "revId": "709d4977cf5e618bc4b0bab290920ccf88557d97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
