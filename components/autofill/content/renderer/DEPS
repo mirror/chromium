@@ -14,4 +14,8 @@ specific_include_rules = {
     "+components/security_state/core",
     "+components/password_manager/core/common",
   ],
+  # TODO(melandory): remove once password selectin feature is lanched.
+  "password_form_conversion_utils\.cc" : [
+    "+components/password_manager/core/common",
+  ],
 }

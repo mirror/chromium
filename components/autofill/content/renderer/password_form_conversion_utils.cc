@@ -24,6 +24,7 @@
 #include "components/autofill/core/common/autofill_util.h"
 #include "components/autofill/core/common/password_form.h"
 #include "components/autofill/core/common/password_form_field_prediction_map.h"
+#include "components/password_manager/core/common/password_manager_features.h"
 #include "google_apis/gaia/gaia_urls.h"
 #include "third_party/WebKit/public/platform/WebString.h"
 #include "third_party/WebKit/public/platform/WebVector.h"
@@ -154,6 +155,17 @@ void ExcludeUsernameFromOtherUsernamesList(
       std::remove(other_possible_usernames->begin(),
                   other_possible_usernames->end(), possible_username_pair),
       other_possible_usernames->end());
+}
+
+// Helper function that removes |password_value| from the vector
+// |other_possible_passwords|, if the value presents in the vector.
+void ExcludePasswordFromOtherPasswordsList(
+    base::string16 password_value,
+    std::vector<base::string16>* other_possible_passwords) {
+  other_possible_passwords->erase(
+      std::remove(other_possible_passwords->begin(),
+                  other_possible_passwords->end(), password_value),
+      other_possible_passwords->end());
 }
 
 // Helper to determine which password is the main (current) one, and which is
@@ -394,6 +406,7 @@ bool GetPasswordForm(
   std::map<blink::WebInputElement, blink::WebInputElement>
       last_text_input_before_password;
   autofill::PossibleUsernamesVector other_possible_usernames;
+  std::vector<base::string16> other_possible_passwords;
 
   std::map<WebInputElement, PasswordFormFieldPredictionType> predicted_elements;
   if (form_predictions) {
@@ -521,13 +534,30 @@ bool GetPasswordForm(
     }
   }
 
+  // Add non-empty possible passwords to the vector.
+  for (auto p : passwords) {
+    if (!p.Value().IsEmpty()) {
+      other_possible_passwords.push_back(p.Value().Utf16());
+    }
+  }
+
   WebInputElement password;
   WebInputElement new_password;
   WebInputElement confirmation_password;
   if (!LocateSpecificPasswords(passwords, &password, &new_password,
-                               &confirmation_password))
+                               &confirmation_password)) {
+    // If there are multiple passwords, let password selection handle the rest.
+    if (base::FeatureList::IsEnabled(
+            password_manager::features::kEnablePasswordSelection) &&
+        other_possible_passwords.size() > 0) {
+      password_form->password_value = other_possible_passwords.at(0);
+      ExcludePasswordFromOtherPasswordsList(password_form->password_value,
+                                            &other_possible_passwords);
+      password_form->other_possible_passwords.swap(other_possible_passwords);
+      return true;
+    }
     return false;
-
+  }
   DCHECK_EQ(passwords.size(), last_text_input_before_password.size());
   if (username_element.IsNull()) {
     if (!password.IsNull())
@@ -701,7 +731,6 @@ std::unique_ptr<PasswordForm> CreatePasswordFormFromWebForm(
   if (!GetPasswordForm(synthetic_form, password_form.get(),
                        field_value_and_properties_map, form_predictions))
     return std::unique_ptr<PasswordForm>();
-
   return password_form;
 }
 
@@ -730,7 +759,6 @@ std::unique_ptr<PasswordForm> CreatePasswordFormFromUnownedInputElements(
 
   // No actual action on the form, so use the the origin as the action.
   password_form->action = password_form->origin;
-
   return password_form;
 }
 
