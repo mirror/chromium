@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ff4bfff3_25460b3b",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 931,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-29T09:17:32Z",
+      "side": 0,
+      "message": "I guess this wasn\u0027t called for FetchMore anymore anyway?",
+      "revId": "8cdee11d699afb9f8807aeb7faab2c619540b031",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
