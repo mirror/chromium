@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b348f3bf_fd25fc45",
+        "filename": "base/strings/string_util.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 732,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-29T22:14:13Z",
+      "side": 1,
+      "message": "Given that this is templated already, we could just add a Traits class / Functor type as an additional template param.\n\nOf course, this means we\u0027ll definitely get multiple copies of this function instantiated, and they likely won\u0027t be deduped...",
+      "revId": "1aa02fb4d242a19bab777903dc07a0e532e921fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
