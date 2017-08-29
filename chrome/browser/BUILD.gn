@@ -3244,8 +3244,6 @@ split_static_library("browser") {
       "first_run/upgrade_util_mac.cc",
       "first_run/upgrade_util_win.cc",
       "first_run/upgrade_util_win.h",
-      "font_family_cache.cc",
-      "font_family_cache.h",
       "gpu/gl_string_manager.cc",
       "gpu/gl_string_manager.h",
       "importer/external_process_importer_client.cc",
