@@ -16,6 +16,24 @@
       "revId": "744bdc4ab460beafd11973b4def64d3c52a8fc50",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a950f66_be805b6b",
+        "filename": "components/webcrypto/fuzzer_support.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-08-29T15:34:09Z",
+      "side": 1,
+      "message": "This sounds right. In general, if blink is sending IPCs then it\u0027s assumed that the EDK has been initialized already (similar to other targets that use mojo).\n\nI assume this fuzzing template generates a test binary for each test, and that\u0027s why it wasn\u0027t part of an existing binary that initialized the mojo EDK?",
+      "parentUuid": "e8bea653_e0ca833e",
+      "revId": "744bdc4ab460beafd11973b4def64d3c52a8fc50",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
