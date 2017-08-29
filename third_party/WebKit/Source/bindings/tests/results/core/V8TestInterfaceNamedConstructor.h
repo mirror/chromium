@@ -54,6 +54,8 @@ class V8TestInterfaceNamedConstructor {
 
   // Callback functions
 
+  CORE_EXPORT static void testNamedConstructorConstructorAttributeConstructorGetterCallback(v8::Local<v8::Name>, const v8::PropertyCallbackInfo<v8::Value>&);
+
   static void InstallRuntimeEnabledFeaturesOnTemplate(
       v8::Isolate*,
       const DOMWrapperWorld&,
