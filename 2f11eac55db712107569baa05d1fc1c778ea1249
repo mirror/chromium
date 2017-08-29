@@ -56,6 +56,30 @@
       "revId": "2f11eac55db712107569baa05d1fc1c778ea1249",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4215a06_4ea3594a",
+        "filename": "components/exo/surface_tree_host.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 310,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-08-29T21:53:21Z",
+      "side": 1,
+      "message": "It makes a difference in how the compositor scales the frame relative to its parent.",
+      "parentUuid": "7cf33a98_2dc17ab6",
+      "range": {
+        "startLine": 310,
+        "startChar": 17,
+        "endLine": 310,
+        "endChar": 36
+      },
+      "revId": "2f11eac55db712107569baa05d1fc1c778ea1249",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
