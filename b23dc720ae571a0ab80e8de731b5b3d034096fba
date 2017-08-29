@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "de9730f9_3e3b9066",
+        "filename": "third_party/WebKit/Source/devtools/front_end/timeline/PerformanceMonitor.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-08-29T17:54:13Z",
+      "side": 1,
+      "message": "Complete sentences in the comments please.",
+      "revId": "b23dc720ae571a0ab80e8de731b5b3d034096fba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d5a1232_1e40ab2e",
+        "filename": "third_party/WebKit/Source/devtools/front_end/timeline/PerformanceMonitor.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-08-29T17:54:13Z",
+      "side": 1,
+      "message": "let\u0027s hardcode this in the function below.",
+      "revId": "b23dc720ae571a0ab80e8de731b5b3d034096fba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54faf45c_010d9268",
+        "filename": "third_party/WebKit/Source/devtools/front_end/timeline/PerformanceMonitor.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-08-29T17:54:13Z",
+      "side": 1,
+      "message": "Please use performance.now() instead through all the UI and instrumentation.",
+      "revId": "b23dc720ae571a0ab80e8de731b5b3d034096fba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
