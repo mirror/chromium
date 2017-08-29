@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "de988346_b4d85b87",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/html/semantics/document-metadata/the-style-element/style_media_change.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1115751
+      },
+      "writtenOn": "2017-08-29T09:50:12Z",
+      "side": 1,
+      "message": "\"prototype\", but I think you can just say \"HTMLStyleElement.media\".",
+      "revId": "b463577a32a80ac36de0f25776dfeed157f70b81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b9fd1b3_f9992e25",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/html/semantics/document-metadata/the-style-element/style_media_change.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1115751
+      },
+      "writtenOn": "2017-08-29T09:50:12Z",
+      "side": 1,
+      "message": "I don\u0027t think using onload and timer triggered tests adds any value here since there are no timing guarantees by any specs here. You are guaranteed that the style elements are processed as they are parsed, but the style update is not guaranteed by onload or any timing specifics.\n\nAlso setTimeout tests tend to cause flakiness in general.\n\nI think the immediate test below should suffice, perhaps even merge it with the media_remove.html file as removal is also change in media type.",
+      "revId": "b463577a32a80ac36de0f25776dfeed157f70b81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67c955f7_efc9df73",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/html/semantics/document-metadata/the-style-element/style_media_remove.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1115751
+      },
+      "writtenOn": "2017-08-29T09:50:12Z",
+      "side": 1,
+      "message": "I think this test would be more robust if you check that the computed style is not green before you remove the media attribute.",
+      "revId": "b463577a32a80ac36de0f25776dfeed157f70b81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
