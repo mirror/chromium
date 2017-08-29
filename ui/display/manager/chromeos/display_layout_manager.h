@@ -35,11 +35,11 @@ class DisplayLayoutManager {
   // create display configuration requests which will then be used to
   // configure the hardware. The requested configuration is stored in
   // |requests| and |framebuffer_size|.
-  virtual bool GetDisplayLayout(const std::vector<DisplaySnapshot*>& displays,
-                                MultipleDisplayState new_display_state,
-                                chromeos::DisplayPowerState new_power_state,
-                                std::vector<DisplayConfigureRequest>* requests,
-                                gfx::Size* framebuffer_size) const = 0;
+  virtual bool GetDisplayLayout(
+      const std::vector<DisplaySnapshot*>& displays,
+      MultipleDisplayState new_display_state,
+      chromeos::DisplayPowerState new_power_state,
+      std::vector<DisplayConfigureRequest>* requests) const = 0;
 
   virtual std::vector<DisplaySnapshot*> GetDisplayStates() const = 0;
 
