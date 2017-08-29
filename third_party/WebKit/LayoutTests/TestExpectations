@@ -1732,7 +1732,6 @@ crbug.com/761952 external/wpt/service-workers/service-worker/link-element-regist
 crbug.com/761952 external/wpt/service-workers/service-worker/link-element-register-security-error.https.html [ Failure Pass ]
 crbug.com/761952 external/wpt/service-workers/service-worker/registration-mime-types.https.html [ Failure Pass ]
 crbug.com/761952 fast/dom/Range/getClientRects.html [ Failure Pass ]
-crbug.com/761952 http/tests/devtools/console/console-format.html [ Failure Pass ]
 crbug.com/761952 virtual/mojo-blobs/external/wpt/service-workers/service-worker/link-element-register-mime-types.https.html [ Failure Pass ]
 crbug.com/761952 virtual/mojo-blobs/external/wpt/service-workers/service-worker/link-element-register-scope.https.html [ Failure Pass ]
 crbug.com/761952 virtual/mojo-blobs/external/wpt/service-workers/service-worker/link-element-register-script.https.html [ Failure Pass ]
