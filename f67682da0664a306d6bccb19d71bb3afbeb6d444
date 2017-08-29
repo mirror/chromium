@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e6699d33_c9f43e2d",
+        "filename": "chrome/browser/android/chrome_feature_list.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-08-29T04:03:14Z",
+      "side": 1,
+      "message": "I had to think, but I\u0027m pretty sure this is okay in Android-only code for now.",
+      "range": {
+        "startLine": 57,
+        "startChar": 27,
+        "endLine": 57,
+        "endChar": 51
+      },
+      "revId": "f67682da0664a306d6bccb19d71bb3afbeb6d444",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
