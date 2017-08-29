@@ -22,6 +22,30 @@
       "revId": "6953d911564f9fb22a796553a1b3db5d3525199b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27baf217_fbab52c0",
+        "filename": "components/navigation_interception/intercept_navigation_delegate.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1230128
+      },
+      "writtenOn": "2017-08-29T20:38:37Z",
+      "side": 1,
+      "message": "Nothing else seems to be affected by the timing issue we\u0027re seeing with navigation, related to interrupting a page load, and getting the user gesture in the ResourceRequestInfo. Adding it to the ResourceRequestInfo might be too broad of a change, especially since there\u0027s almost certainly a reason the user gesture flag is being set incorrectly in the first place, in which case info-\u003eHasUserGesture() should be reliable once that\u0027s fixed.",
+      "parentUuid": "c0ef4334_2ba77761",
+      "range": {
+        "startLine": 106,
+        "startChar": 30,
+        "endLine": 106,
+        "endChar": 31
+      },
+      "revId": "6953d911564f9fb22a796553a1b3db5d3525199b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
