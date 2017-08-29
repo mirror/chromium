@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "336c51cf_9df24f46",
+        "filename": "mojo/public/cpp/bindings/lib/sync_handle_registry.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-08-29T19:27:49Z",
+      "side": 1,
+      "message": "In practice it\u0027s guaranteed, as our event callbacks never touch the registry -- they only poke a bool and return. Rather than incur the cost of compensating for this potential behavior, I\u0027ve added documentation to specify that an event callback must not register or unregister events.",
+      "parentUuid": "8b2130b5_5931e808",
+      "revId": "ad04ec942d2a26f2ed61fd70b035df9c1901551e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "423d858c_ddaa14cf",
         "filename": "mojo/public/cpp/bindings/sync_handle_registry.h",
         "patchSetId": 1
@@ -50,6 +68,24 @@
       "revId": "ad04ec942d2a26f2ed61fd70b035df9c1901551e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "433abecb_552e4c66",
+        "filename": "mojo/public/cpp/bindings/sync_handle_registry.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-08-29T19:27:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "423d858c_ddaa14cf",
+      "revId": "ad04ec942d2a26f2ed61fd70b035df9c1901551e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
