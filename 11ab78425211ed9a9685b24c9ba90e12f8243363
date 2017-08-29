@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c32b58a6_aacb4d50",
+        "filename": "chrome/test/BUILD.gn",
+        "patchSetId": 6
+      },
+      "lineNbr": 4282,
+      "author": {
+        "id": 1163499
+      },
+      "writtenOn": "2017-08-29T08:50:10Z",
+      "side": 1,
+      "message": "Please remove this line for fixing the compile error.",
+      "range": {
+        "startLine": 4282,
+        "startChar": 6,
+        "endLine": 4282,
+        "endChar": 64
+      },
+      "revId": "11ab78425211ed9a9685b24c9ba90e12f8243363",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
