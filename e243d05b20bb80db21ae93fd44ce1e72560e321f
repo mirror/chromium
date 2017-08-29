@@ -179,6 +179,24 @@
     },
     {
       "key": {
+        "uuid": "9b9a0abb_9d190193",
+        "filename": "components/offline_pages/core/prefetch/stale_entry_finalizer_task.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1002546
+      },
+      "writtenOn": "2017-08-29T23:40:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c49e52f3_c57d0357",
+      "revId": "e243d05b20bb80db21ae93fd44ce1e72560e321f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f75b80c3_0b68ffb8",
         "filename": "components/offline_pages/core/prefetch/stale_entry_finalizer_task.cc",
         "patchSetId": 2
