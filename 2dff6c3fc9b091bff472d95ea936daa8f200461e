@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c5c29928_14d3567f",
+        "filename": "tools/idl_parser/idl_parser_test.py",
+        "patchSetId": 20
+      },
+      "lineNbr": 389,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-08-29T02:56:03Z",
+      "side": 1,
+      "message": "s/NULL/Null/",
+      "revId": "2dff6c3fc9b091bff472d95ea936daa8f200461e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5fbe76cb_9542853c",
+        "filename": "tools/idl_parser/idl_parser_test.py",
+        "patchSetId": 20
+      },
+      "lineNbr": 390,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-08-29T02:56:03Z",
+      "side": 1,
+      "message": "Move this comment above, between #389 and #390.",
+      "range": {
+        "startLine": 390,
+        "startChar": 51,
+        "endLine": 390,
+        "endChar": 77
+      },
+      "revId": "2dff6c3fc9b091bff472d95ea936daa8f200461e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
