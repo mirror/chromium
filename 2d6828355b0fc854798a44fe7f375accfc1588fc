@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b9742415_d5b91ec7",
+        "filename": "chrome/browser/offline_pages/prefetch/prefetch_importer_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-08-29T21:39:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ccf4f8c3_c1c6c8e4",
+      "range": {
+        "startLine": 28,
+        "startChar": 64,
+        "endLine": 28,
+        "endChar": 0
+      },
+      "revId": "2d6828355b0fc854798a44fe7f375accfc1588fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dfc6a5fe_65e453ed",
         "filename": "chrome/browser/offline_pages/prefetch/prefetch_importer_impl.cc",
         "patchSetId": 2
@@ -93,6 +117,24 @@
       "revId": "2d6828355b0fc854798a44fe7f375accfc1588fc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7f63e92_df28a9e7",
+        "filename": "chrome/browser/offline_pages/prefetch/prefetch_importer_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-08-29T21:39:13Z",
+      "side": 1,
+      "message": "I\u0027ve found both patterns in code but agree slightly more with this being dead code anyway. Keeping as is.",
+      "parentUuid": "fd0347b1_3bd17fac",
+      "revId": "2d6828355b0fc854798a44fe7f375accfc1588fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
