@@ -17,5 +17,6 @@ include_rules = [
   "+services/ui/public/cpp/property_type_converters.h",
   "+services/ui/public/cpp/raster_thread_helper.h",
   "+services/ui/public/cpp/client_layer_tree_frame_sink.h",
+  "+services/ui/public/interfaces/window_tree_constants.mojom.h",
   "+ui/gl/gl_bindings.h",
 ]

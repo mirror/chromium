@@ -97,6 +97,8 @@ class AURA_EXPORT WindowPort {
   // factor.
   virtual const viz::LocalSurfaceId& GetLocalSurfaceId() = 0;
 
+  virtual viz::FrameSinkId GetFrameSinkId() const = 0;
+
   virtual void OnWindowAddedToRootWindow() = 0;
   virtual void OnWillRemoveWindowFromRootWindow() = 0;
 

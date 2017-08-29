@@ -328,6 +328,8 @@ class AURA_EXPORT Window : public ui::LayerDelegate,
   // Gets the current viz::LocalSurfaceId.
   const viz::LocalSurfaceId& GetLocalSurfaceId() const;
 
+  viz::FrameSinkId GetFrameSinkId() const;
+
  protected:
   // Deletes (or removes if not owned by parent) all child windows. Intended for
   // use from the destructor.
