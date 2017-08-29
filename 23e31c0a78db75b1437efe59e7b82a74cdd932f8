@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ad6deb72_881352d7",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 25358,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-08-29T20:24:10Z",
+      "side": 1,
+      "message": "nit: Please define a BooleanSandboxed enum in enums.xml and use it here.  Alternately, from reading the histogram description, \"BooleanSuccessful\" might be appropriate; in that case, I\u0027d suggest renaming the histogram to something like \"GPU.Sandbox.InitializedSuccessfully\".",
+      "range": {
+        "startLine": 25358,
+        "startChar": 38,
+        "endLine": 25358,
+        "endChar": 52
+      },
+      "revId": "23e31c0a78db75b1437efe59e7b82a74cdd932f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
