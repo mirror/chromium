@@ -72,6 +72,25 @@ class BackgroundFetchDataManagerTest : public BackgroundFetchTestBase {
     run_loop.Run();
   }
 
+  // Synchronous version of
+  // ServiceWorkerContextWrapper::GetRegistrationUserDataByKeyPrefix.
+  std::vector<std::string> GetDataByKeyPrefix(
+      int64_t service_worker_registration_id,
+      const std::string& key_prefix) {
+    std::vector<std::string> data;
+
+    base::RunLoop run_loop;
+    embedded_worker_test_helper()
+        ->context_wrapper()
+        ->GetRegistrationUserDataByKeyPrefix(
+            service_worker_registration_id, key_prefix,
+            base::Bind(&BackgroundFetchDataManagerTest::DidGetDataByKeyPrefix,
+                       base::Unretained(this), run_loop.QuitClosure(), &data));
+    run_loop.Run();
+
+    return data;
+  }
+
   void DidCreateRegistration(base::Closure quit_closure,
                              blink::mojom::BackgroundFetchError* out_error,
                              blink::mojom::BackgroundFetchError error) {
@@ -88,7 +107,19 @@ class BackgroundFetchDataManagerTest : public BackgroundFetchTestBase {
     quit_closure.Run();
   }
 
+ protected:
   std::unique_ptr<BackgroundFetchDataManager> background_fetch_data_manager_;
+
+ private:
+  void DidGetDataByKeyPrefix(base::Closure quit_closure,
+                             std::vector<std::string>* out_data,
+                             const std::vector<std::string>& data,
+                             ServiceWorkerStatusCode status) {
+    DCHECK(out_data);
+    DCHECK_EQ(SERVICE_WORKER_OK, status);
+    *out_data = data;
+    quit_closure.Run();
+  }
 };
 
 TEST_F(BackgroundFetchDataManagerTest, NoDuplicateRegistrations) {
@@ -133,15 +164,19 @@ TEST_F(BackgroundFetchDataManagerTest, CreateAndDeleteRegistrationPersisted) {
 
   BackgroundFetchRegistrationId registration_id;
   ASSERT_TRUE(CreateRegistrationId(kExampleId, &registration_id));
+  int64_t sw_id = registration_id.service_worker_registration_id();
 
-  std::vector<ServiceWorkerFetchRequest> requests;
+  std::vector<ServiceWorkerFetchRequest> requests(2);
   BackgroundFetchOptions options;
 
   blink::mojom::BackgroundFetchError error;
 
+  EXPECT_EQ(0u, GetDataByKeyPrefix(sw_id, "bgfetch_").size());
+
   // Creating the initial registration should succeed.
   CreateRegistration(registration_id, requests, options, &error);
   EXPECT_EQ(error, blink::mojom::BackgroundFetchError::NONE);
+  EXPECT_EQ(1u + requests.size(), GetDataByKeyPrefix(sw_id, "bgfetch_").size());
 
   RestartDataManagerFromPersistentStorage();
 
@@ -152,6 +187,7 @@ TEST_F(BackgroundFetchDataManagerTest, CreateAndDeleteRegistrationPersisted) {
   // Deleting the registration should succeed.
   DeleteRegistration(registration_id, &error);
   EXPECT_EQ(error, blink::mojom::BackgroundFetchError::NONE);
+  EXPECT_EQ(0u, GetDataByKeyPrefix(sw_id, "bgfetch_").size());
 
   RestartDataManagerFromPersistentStorage();
 
@@ -159,6 +195,7 @@ TEST_F(BackgroundFetchDataManagerTest, CreateAndDeleteRegistrationPersisted) {
   // restarting.
   CreateRegistration(registration_id, requests, options, &error);
   EXPECT_EQ(error, blink::mojom::BackgroundFetchError::NONE);
+  EXPECT_EQ(1u + requests.size(), GetDataByKeyPrefix(sw_id, "bgfetch_").size());
 }
 
 TEST_F(BackgroundFetchDataManagerTest, CreateInParallel) {

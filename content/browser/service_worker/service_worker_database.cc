@@ -976,6 +976,51 @@ ServiceWorkerDatabase::Status ServiceWorkerDatabase::DeleteUserData(
 }
 
 ServiceWorkerDatabase::Status
+ServiceWorkerDatabase::DeleteUserDataByKeyPrefixes(
+    int64_t registration_id,
+    const std::vector<std::string>& key_prefixes) {
+  DCHECK(sequence_checker_.CalledOnValidSequence());
+  DCHECK_NE(kInvalidServiceWorkerRegistrationId, registration_id);
+
+  Status status = LazyOpen(false);
+  if (IsNewOrNonexistentDatabase(status))
+    return STATUS_OK;
+  if (status != STATUS_OK)
+    return status;
+
+  leveldb::WriteBatch batch;
+
+  for (const std::string& key_prefix : key_prefixes) {
+    std::string prefix = CreateUserDataKey(registration_id, key_prefix);
+    {
+      std::unique_ptr<leveldb::Iterator> itr(
+          db_->NewIterator(leveldb::ReadOptions()));
+      for (itr->Seek(prefix); itr->Valid(); itr->Next()) {
+        status = LevelDBStatusToStatus(itr->status());
+        if (status != STATUS_OK)
+          return status;
+
+        if (!itr->key().starts_with(prefix))
+          break;
+
+        std::string user_data_name;
+        if (!RemovePrefix(itr->key().ToString(),
+                          CreateUserDataKeyPrefix(registration_id),
+                          &user_data_name)) {
+          NOTREACHED();
+          return STATUS_ERROR_FAILED;
+        }
+
+        batch.Delete(itr->key());
+        batch.Delete(CreateHasUserDataKey(registration_id, user_data_name));
+      }
+    }
+  }
+
+  return WriteBatch(&batch);
+}
+
+ServiceWorkerDatabase::Status
 ServiceWorkerDatabase::ReadUserDataForAllRegistrations(
     const std::string& user_data_name,
     std::vector<std::pair<int64_t, std::string>>* user_data) {
