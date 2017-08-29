@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "54b849ce_6fc62709",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1113149
+      },
+      "writtenOn": "2017-08-29T19:28:34Z",
+      "side": 1,
+      "message": "Do Gerrit emails not display the send for review comments somewhere visible? I usually assume that people will read them. There\u0027s more context in b/29525886#comment93.",
+      "parentUuid": "96875a4c_47b0ad86",
+      "revId": "7f5247a4a6ba50273f7a61bfaaf276f26ca1bc58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "69b6b05d_29fc61c7",
         "filename": "components/cronet/stale_host_resolver.cc",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-29T15:17:12Z",
       "side": 1,
       "message": "can we inline this function given that there is only one call-site?",
+      "revId": "7f5247a4a6ba50273f7a61bfaaf276f26ca1bc58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "101b192f_600d0a31",
+        "filename": "components/cronet/stale_host_resolver.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1113149
+      },
+      "writtenOn": "2017-08-29T19:28:34Z",
+      "side": 1,
+      "message": "We could, but I put it up here to be consistent with the rest of the file.",
+      "parentUuid": "69b6b05d_29fc61c7",
       "revId": "7f5247a4a6ba50273f7a61bfaaf276f26ca1bc58",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -50,6 +86,24 @@
       "revId": "7f5247a4a6ba50273f7a61bfaaf276f26ca1bc58",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e4e8f85_6a3b11c9",
+        "filename": "components/cronet/stale_host_resolver.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1113149
+      },
+      "writtenOn": "2017-08-29T19:28:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7764c197_b05c7339",
+      "revId": "7f5247a4a6ba50273f7a61bfaaf276f26ca1bc58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -76,6 +130,30 @@
     },
     {
       "key": {
+        "uuid": "ab698df9_53e920aa",
+        "filename": "net/dns/host_cache.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 349,
+      "author": {
+        "id": 1113149
+      },
+      "writtenOn": "2017-08-29T19:28:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e546223a_9b641843",
+      "range": {
+        "startLine": 349,
+        "startChar": 38,
+        "endLine": 349,
+        "endChar": 0
+      },
+      "revId": "7f5247a4a6ba50273f7a61bfaaf276f26ca1bc58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "da420ef1_3147db91",
         "filename": "net/dns/host_cache.h",
         "patchSetId": 3
@@ -90,6 +168,24 @@
       "revId": "7f5247a4a6ba50273f7a61bfaaf276f26ca1bc58",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5f9c426_2e8ecd2e",
+        "filename": "net/dns/host_cache.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1113149
+      },
+      "writtenOn": "2017-08-29T19:28:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "da420ef1_3147db91",
+      "revId": "7f5247a4a6ba50273f7a61bfaaf276f26ca1bc58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -110,6 +206,24 @@
     },
     {
       "key": {
+        "uuid": "d8493319_df8dcde4",
+        "filename": "net/dns/host_cache.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1113149
+      },
+      "writtenOn": "2017-08-29T19:28:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1e53cb45_a413c786",
+      "revId": "7f5247a4a6ba50273f7a61bfaaf276f26ca1bc58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9f7bab53_5f52c44a",
         "filename": "net/dns/host_cache.h",
         "patchSetId": 3
@@ -124,6 +238,24 @@
       "revId": "7f5247a4a6ba50273f7a61bfaaf276f26ca1bc58",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5bfe5ce2_5b9cb0cc",
+        "filename": "net/dns/host_cache.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 1113149
+      },
+      "writtenOn": "2017-08-29T19:28:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9f7bab53_5f52c44a",
+      "revId": "7f5247a4a6ba50273f7a61bfaaf276f26ca1bc58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -144,6 +276,24 @@
     },
     {
       "key": {
+        "uuid": "0c427938_79d1e96c",
+        "filename": "net/dns/host_resolver_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 2190,
+      "author": {
+        "id": 1113149
+      },
+      "writtenOn": "2017-08-29T19:28:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "de84265b_f429d80f",
+      "revId": "7f5247a4a6ba50273f7a61bfaaf276f26ca1bc58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7720fe94_65807e65",
         "filename": "net/dns/host_resolver_impl.h",
         "patchSetId": 3
@@ -155,6 +305,24 @@
       "writtenOn": "2017-08-29T15:17:12Z",
       "side": 1,
       "message": "Given that this HostCache getter exists and HostCache is a NET_EXPORT API, is there a need for explicit RestoreCacheSize() and CacheSize() getters on HostResolverImpl?  This also eliminates the need to document no cache behavior.",
+      "revId": "7f5247a4a6ba50273f7a61bfaaf276f26ca1bc58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "05cc7eb1_d31b382e",
+        "filename": "net/dns/host_resolver_impl.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1113149
+      },
+      "writtenOn": "2017-08-29T19:28:34Z",
+      "side": 1,
+      "message": "I plumbed it through the HostResolverImpl because StaleHostResolver currently avoids touching the cache directly, even though it could, and because I actually prefer handling the no cache case somewhere else. I don\u0027t have especially strong feelings about this one though.",
+      "parentUuid": "7720fe94_65807e65",
       "revId": "7f5247a4a6ba50273f7a61bfaaf276f26ca1bc58",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -178,6 +346,24 @@
     },
     {
       "key": {
+        "uuid": "08f39924_f120f43d",
+        "filename": "net/dns/host_resolver_impl.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1113149
+      },
+      "writtenOn": "2017-08-29T19:28:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "106ee953_979a6352",
+      "revId": "7f5247a4a6ba50273f7a61bfaaf276f26ca1bc58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bbe0fecd_e1f74fd2",
         "filename": "net/dns/host_resolver_impl.h",
         "patchSetId": 3
@@ -192,6 +378,24 @@
       "revId": "7f5247a4a6ba50273f7a61bfaaf276f26ca1bc58",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "930908b3_583189e9",
+        "filename": "net/dns/host_resolver_impl.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1113149
+      },
+      "writtenOn": "2017-08-29T19:28:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bbe0fecd_e1f74fd2",
+      "revId": "7f5247a4a6ba50273f7a61bfaaf276f26ca1bc58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
