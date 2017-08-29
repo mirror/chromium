@@ -151,31 +151,32 @@ bool ChromePasswordProtectionService::IsIncognito() {
 bool ChromePasswordProtectionService::IsPingingEnabled(
     const base::Feature& feature,
     RequestOutcome* reason) {
-  if (!IsSafeBrowsingEnabled())
-    return false;
+  return true; /*
+   if (!IsSafeBrowsingEnabled())
+     return false;
 
-  DCHECK(feature.name == kProtectedPasswordEntryPinging.name ||
-         feature.name == kPasswordFieldOnFocusPinging.name);
-  if (!base::FeatureList::IsEnabled(feature)) {
-    *reason = DISABLED_DUE_TO_FEATURE_DISABLED;
-    return false;
-  }
+   DCHECK(feature.name == kProtectedPasswordEntryPinging.name ||
+          feature.name == kPasswordFieldOnFocusPinging.name);
+   if (!base::FeatureList::IsEnabled(feature)) {
+     *reason = DISABLED_DUE_TO_FEATURE_DISABLED;
+     return false;
+   }
 
-  // Protected password entry pinging is enabled for all users.
-  if (feature.name == kProtectedPasswordEntryPinging.name)
-    return true;
+   // Protected password entry pinging is enabled for all users.
+   if (feature.name == kProtectedPasswordEntryPinging.name)
+     return true;
 
-  // Password field on focus pinging is enabled for !incognito &&
-  // extended_reporting.
-  if (IsIncognito()) {
-    *reason = DISABLED_DUE_TO_INCOGNITO;
-    return false;
-  }
-  if (!IsExtendedReporting()) {
-    *reason = DISABLED_DUE_TO_USER_POPULATION;
-    return false;
-  }
-  return true;
+   // Password field on focus pinging is enabled for !incognito &&
+   // extended_reporting.
+   if (IsIncognito()) {
+     *reason = DISABLED_DUE_TO_INCOGNITO;
+     return false;
+   }
+   if (!IsExtendedReporting()) {
+     *reason = DISABLED_DUE_TO_USER_POPULATION;
+     return false;
+   }
+   return true;*/
 }
 
 bool ChromePasswordProtectionService::IsHistorySyncEnabled() {
