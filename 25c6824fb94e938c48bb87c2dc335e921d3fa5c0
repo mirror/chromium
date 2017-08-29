@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "dd2faf00_a51bf4e5",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_table_view.mm",
+        "patchSetId": 9
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1212314
+      },
+      "writtenOn": "2017-08-29T05:42:47Z",
+      "side": 1,
+      "message": "Thanks.  Change them back to property after discussion.",
+      "parentUuid": "d16e8a65_0ef174fb",
+      "range": {
+        "startLine": 56,
+        "startChar": 2,
+        "endLine": 58,
+        "endChar": 62
+      },
+      "revId": "25c6824fb94e938c48bb87c2dc335e921d3fa5c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "510192ba_febc9546",
         "filename": "ios/chrome/browser/ui/bookmarks/bookmark_table_view.mm",
         "patchSetId": 9
@@ -45,6 +69,30 @@
       "revId": "25c6824fb94e938c48bb87c2dc335e921d3fa5c0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae843ba6_764911a5",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_table_view.mm",
+        "patchSetId": 9
+      },
+      "lineNbr": 356,
+      "author": {
+        "id": 1212314
+      },
+      "writtenOn": "2017-08-29T05:42:47Z",
+      "side": 1,
+      "message": "Yes. correct.",
+      "parentUuid": "510192ba_febc9546",
+      "range": {
+        "startLine": 356,
+        "startChar": 6,
+        "endLine": 356,
+        "endChar": 32
+      },
+      "revId": "25c6824fb94e938c48bb87c2dc335e921d3fa5c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "4affa06b_77af286f",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_table_view.mm",
+        "patchSetId": 9
+      },
+      "lineNbr": 363,
+      "author": {
+        "id": 1212314
+      },
+      "writtenOn": "2017-08-29T05:42:47Z",
+      "side": 1,
+      "message": "Thanks.  I added _spinnerView.alpha \u003d 1;\nThis can prevent the bug that the spinner is unable to re-appear after hidden.",
+      "parentUuid": "1f2598ad_6d3293ba",
+      "range": {
+        "startLine": 363,
+        "startChar": 8,
+        "endLine": 363,
+        "endChar": 37
+      },
+      "revId": "25c6824fb94e938c48bb87c2dc335e921d3fa5c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6b4b6846_38d11a3e",
         "filename": "ios/chrome/browser/ui/bookmarks/bookmark_table_view.mm",
         "patchSetId": 9
@@ -91,6 +163,30 @@
       "revId": "25c6824fb94e938c48bb87c2dc335e921d3fa5c0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32b185bc_c85131c4",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_table_view.mm",
+        "patchSetId": 9
+      },
+      "lineNbr": 400,
+      "author": {
+        "id": 1212314
+      },
+      "writtenOn": "2017-08-29T05:42:47Z",
+      "side": 1,
+      "message": "Thanks.  It\u0027s great to learn that.  Done.",
+      "parentUuid": "6b4b6846_38d11a3e",
+      "range": {
+        "startLine": 400,
+        "startChar": 2,
+        "endLine": 400,
+        "endChar": 32
+      },
+      "revId": "25c6824fb94e938c48bb87c2dc335e921d3fa5c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

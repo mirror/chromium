@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "3fa0188b_8dce4801",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_table_view.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1212314
+      },
+      "writtenOn": "2017-08-29T05:42:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1e59ef95_c5551e89",
+      "range": {
+        "startLine": 81,
+        "startChar": 38,
+        "endLine": 81,
+        "endChar": 62
+      },
+      "revId": "4823839574fce288f04da2304481b60ba12891d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "64253ed1_cfbc5e2e",
         "filename": "ios/chrome/browser/ui/bookmarks/bookmark_table_view.mm",
         "patchSetId": 8
