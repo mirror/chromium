@@ -112,6 +112,30 @@
     },
     {
       "key": {
+        "uuid": "ef04cad4_6ae3e058",
+        "filename": "chrome/browser/ui/webui/sys_internals/sys_internals_message_handler.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1001853
+      },
+      "writtenOn": "2017-08-29T06:23:07Z",
+      "side": 1,
+      "message": "Ah, it is me who suggested CL owner not to use \"infos\" as \"info\" is uncountable noun. But if it is a general practice to add \"s\" even for uncountable noun, I\u0027m okay as I\u0027m not a native English speaker.",
+      "parentUuid": "1bf0f73d_64c6cfcb",
+      "range": {
+        "startLine": 36,
+        "startChar": 39,
+        "endLine": 36,
+        "endChar": 43
+      },
+      "revId": "5936ee3659b54a9cda4defc9c87cd39ae96d3bb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b12d4555_6f6e322d",
         "filename": "chrome/browser/ui/webui/sys_internals/sys_internals_message_handler.cc",
         "patchSetId": 11
@@ -123,6 +147,24 @@
       "writtenOn": "2017-08-29T05:46:09Z",
       "side": 1,
       "message": "If |value| is above COUNTER_MAX, doesn\u0027t this have the possibility of wrapping to low values? e.g (w/ 4 bytes) 8000 \u0026 7FFF \u003d 0, when it should probably just display the max value (7FFF), right? Otherwise you may end up saying that the number of write operations went from 7FFF to 0 when it actually went up.\n\nSo,\n\nstd::max(value, COUNTER_MAX)?",
+      "revId": "5936ee3659b54a9cda4defc9c87cd39ae96d3bb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34edfdd6_35f42100",
+        "filename": "chrome/browser/ui/webui/sys_internals/sys_internals_message_handler.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1001853
+      },
+      "writtenOn": "2017-08-29T06:23:07Z",
+      "side": 1,
+      "message": "What Zhong-sheng wants is to reset and count.  Zhong-sheng, please explain it in comment.",
+      "parentUuid": "b12d4555_6f6e322d",
       "revId": "5936ee3659b54a9cda4defc9c87cd39ae96d3bb5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
