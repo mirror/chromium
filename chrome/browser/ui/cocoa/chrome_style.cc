@@ -5,6 +5,7 @@
 #include "chrome/browser/ui/cocoa/chrome_style.h"
 
 #include "chrome/browser/themes/theme_properties.h"
+#include "chrome/grit/theme_resources.h"
 #include "third_party/skia/include/core/SkBitmap.h"
 #include "ui/gfx/image/image.h"
 #include "ui/resources/grit/ui_resources.h"
@@ -14,6 +15,14 @@ namespace chrome_style {
 int GetCloseButtonSize() {
   ui::ResourceBundle& rb = ui::ResourceBundle::GetSharedInstance();
   const SkBitmap* image = rb.GetNativeImageNamed(IDR_CLOSE_DIALOG).ToSkBitmap();
+  DCHECK_EQ(image->width(), image->height());
+  return image->width();
+}
+
+int GetPasswordViewButtonSize() {
+  ui::ResourceBundle& rb = ui::ResourceBundle::GetSharedInstance();
+  const SkBitmap* image =
+      rb.GetNativeImageNamed(IDR_SHOW_PASSWORD).ToSkBitmap();
   DCHECK_EQ(image->width(), image->height());
   return image->width();
 }
