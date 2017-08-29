@@ -1755,7 +1755,7 @@ bool LayerTreeHostImpl::DrawLayers(FrameData* frame) {
     if (!latency.FindLatency(ui::INPUT_EVENT_LATENCY_RENDERER_SWAP_COMPONENT, 0,
                              nullptr)) {
       latency.AddLatencyNumber(ui::INPUT_EVENT_LATENCY_RENDERER_SWAP_COMPONENT,
-                               0, 0);
+                               0);
     }
   }
 

@@ -400,7 +400,7 @@ TEST_F(StructTraitsTest, CompositorFrameMetadata) {
   ui::LatencyInfo latency_info;
   latency_info.set_trace_id(5);
   latency_info.AddLatencyNumber(
-      ui::LATENCY_BEGIN_SCROLL_LISTENER_UPDATE_MAIN_COMPONENT, 1337, 7331);
+      ui::LATENCY_BEGIN_SCROLL_LISTENER_UPDATE_MAIN_COMPONENT, 1337);
   std::vector<ui::LatencyInfo> latency_infos = {latency_info};
   std::vector<SurfaceId> referenced_surfaces;
   SurfaceId id(FrameSinkId(1234, 4321),
