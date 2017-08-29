@@ -762,6 +762,11 @@ bool RenderWidgetHostImpl::GetResizeParams(ResizeParams* resize_params) {
       resize_params->local_surface_id = local_surface_id;
   }
 
+  if (old_resize_params_ && old_resize_params_->new_size != resize_params->new_size &&
+      old_resize_params_->local_surface_id == resize_params->local_surface_id) {
+    base::debug::StackTrace().Print();
+  }
+
   const bool size_changed =
       !old_resize_params_ ||
       old_resize_params_->new_size != resize_params->new_size ||
@@ -2649,6 +2654,10 @@ void RenderWidgetHostImpl::SubmitCompositorFrame(
 
   if (local_surface_id == last_local_surface_id_ &&
       new_surface_properties != last_surface_properties_) {
+      fprintf(stderr, ">>>%s new prop(%s) old_prop(%s)\n",
+          view_->GetFrameSinkId().ToString().c_str(),
+          new_surface_properties.size.ToString().c_str(),
+          last_surface_properties_.size.ToString().c_str());
     bad_message::ReceivedBadMessage(
         GetProcess(), bad_message::RWH_SURFACE_INVARIANTS_VIOLATION);
     return;

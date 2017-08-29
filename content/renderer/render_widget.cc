@@ -346,6 +346,7 @@ RenderWidget::RenderWidget(int32_t widget_routing_id,
                            bool never_visible,
                            mojom::WidgetRequest widget_request)
     : routing_id_(widget_routing_id),
+      frame_sink_id_(RenderThread::Get()->GetClientId(), routing_id_),
       compositor_deps_(compositor_deps),
       webwidget_internal_(nullptr),
       owner_delegate_(nullptr),
@@ -1381,8 +1382,7 @@ blink::WebLayerTreeView* RenderWidget::InitializeLayerTreeView() {
 
   StartCompositor();
   DCHECK_NE(MSG_ROUTING_NONE, routing_id_);
-  compositor_->SetFrameSinkId(
-      viz::FrameSinkId(RenderThread::Get()->GetClientId(), routing_id_));
+  compositor_->SetFrameSinkId(frame_sink_id_);
 
   RenderThreadImpl* render_thread = RenderThreadImpl::current();
   if (render_thread) {

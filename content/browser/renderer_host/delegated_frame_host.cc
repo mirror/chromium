@@ -299,9 +299,9 @@ void DelegatedFrameHost::UpdateGutters() {
 }
 
 gfx::Size DelegatedFrameHost::GetRequestedRendererSize() const {
-  if (resize_lock_)
-    return resize_lock_->expected_size();
-  else
+  //if (resize_lock_)
+  //  return resize_lock_->expected_size();
+  //else
     return client_->DelegatedFrameHostDesiredSizeInDIP();
 }
 
@@ -461,7 +461,6 @@ void DelegatedFrameHost::SubmitCompositorFrame(
                                     frame_size);
       client_->DelegatedFrameHostGetLayer()->SetShowPrimarySurface(
           surface_info, manager->surface_manager()->reference_factory());
-      client_->DelegatedFrameHostGetLayer()->SetFallbackSurface(surface_info);
       current_surface_size_ = frame_size;
       current_scale_factor_ = frame_device_scale_factor;
     }
@@ -520,8 +519,8 @@ void DelegatedFrameHost::OnBeginFramePausedChanged(bool paused) {
 
 void DelegatedFrameHost::OnFirstSurfaceActivation(
     const viz::SurfaceInfo& surface_info) {
-  // TODO(fsamuel): Once surface synchronization is turned on, the fallback
-  // surface should be set here.
+  if (has_frame_)
+    client_->DelegatedFrameHostGetLayer()->SetFallbackSurface(surface_info);
 }
 
 void DelegatedFrameHost::OnBeginFrame(const viz::BeginFrameArgs& args) {
