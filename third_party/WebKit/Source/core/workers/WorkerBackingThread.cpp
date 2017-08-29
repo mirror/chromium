@@ -76,11 +76,11 @@ void WorkerBackingThread::InitializeOnBackingThread(
   backing_thread_->InitializeOnThread();
 
   DCHECK(!isolate_);
-  // TODO(peria): Replace GetReferenceTable with nullptr.
-  // (http://crbug.com/v8/6448)
+  // The worker doesn't use the context snapshot feature, so we don't have to
+  // pass a reference used for the feature.
   isolate_ = V8PerIsolateData::Initialize(
       backing_thread_->PlatformThread().GetWebTaskRunner(),
-      V8ContextSnapshot::GetReferenceTable(),
+      nullptr /* external_refernce_table */,
       V8PerIsolateData::V8ContextSnapshotMode::kDontUseSnapshot);
   AddWorkerIsolate(isolate_);
   V8Initializer::InitializeWorker(isolate_);
