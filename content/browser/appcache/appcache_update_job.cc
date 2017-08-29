@@ -14,9 +14,13 @@
 #include "base/threading/thread_task_runner_handle.h"
 #include "content/browser/appcache/appcache_group.h"
 #include "content/browser/appcache/appcache_histograms.h"
+#include "content/browser/appcache/appcache_host.h"
+#include "content/browser/appcache/appcache_subresource_url_factory.h"
 #include "content/browser/appcache/appcache_update_request_base.h"
 #include "content/browser/appcache/appcache_update_url_fetcher.h"
 #include "content/public/browser/browser_thread.h"
+#include "content/public/common/content_features.h"
+#include "content/public/common/url_loader_factory.mojom.h"
 #include "net/base/io_buffer.h"
 #include "net/base/load_flags.h"
 #include "net/base/net_errors.h"
@@ -73,14 +77,25 @@ void EmptyCompletionCallback(int result) {}
 // so that only one notification is sent for all hosts using the same frontend.
 class HostNotifier {
  public:
+  typedef std::vector<base::WeakPtr<AppCacheHost>> Hosts;
   typedef std::vector<int> HostIds;
-  typedef std::map<AppCacheFrontend*, HostIds> NotifyHostMap;
+
+  // Holds information about a list of AppCacheHosts.
+  // We maintain a list of hosts and their ids.
+  struct HostInfo {
+    HostIds host_ids;
+    Hosts hosts;
+  };
+
+  typedef std::map<AppCacheFrontend*, HostInfo> NotifyHostMap;
 
   // Caller is responsible for ensuring there will be no duplicate hosts.
   void AddHost(AppCacheHost* host) {
-    std::pair<NotifyHostMap::iterator , bool> ret = hosts_to_notify.insert(
-        NotifyHostMap::value_type(host->frontend(), HostIds()));
-    ret.first->second.push_back(host->host_id());
+    std::pair<NotifyHostMap::iterator, bool> ret = hosts_to_notify.insert(
+        NotifyHostMap::value_type(host->frontend(), HostInfo()));
+    HostInfo& host_info = ret.first->second;
+    host_info.hosts.push_back(host->GetWeakPtr());
+    host_info.host_ids.push_back(host->host_id());
   }
 
   void AddHosts(const std::set<AppCacheHost*>& hosts) {
@@ -94,7 +109,28 @@ class HostNotifier {
     for (NotifyHostMap::iterator it = hosts_to_notify.begin();
          it != hosts_to_notify.end(); ++it) {
       AppCacheFrontend* frontend = it->first;
-      frontend->OnEventRaised(it->second, event_id);
+
+      // In the network service world, we need to pass the URLLoaderFactory
+      // instance to the renderer which it can use to request subresources.
+      // This ensures that they can be served out of the AppCache.
+      if (event_id == APPCACHE_CACHED_EVENT &&
+          base::FeatureList::IsEnabled(features::kNetworkService)) {
+        for (auto host : it->second.hosts) {
+          if (!host.get())
+            continue;
+
+          mojom::URLLoaderFactoryPtr factory_ptr = nullptr;
+
+          AppCacheSubresourceURLFactory::CreateURLLoaderFactory(
+              host->service()->url_loader_factory_getter(), host->GetWeakPtr(),
+              &factory_ptr);
+
+          frontend->OnSetSubresourceFactory(
+              host->host_id(),
+              factory_ptr.PassInterface().PassHandle().release());
+        }
+      }
+      frontend->OnEventRaised(it->second.host_ids, event_id);
     }
   }
 
@@ -103,8 +139,8 @@ class HostNotifier {
     for (NotifyHostMap::iterator it = hosts_to_notify.begin();
          it != hosts_to_notify.end(); ++it) {
       AppCacheFrontend* frontend = it->first;
-      frontend->OnProgressEventRaised(it->second, url,
-                                      num_total, num_complete);
+      frontend->OnProgressEventRaised(it->second.host_ids, url, num_total,
+                                      num_complete);
     }
   }
 
@@ -113,7 +149,7 @@ class HostNotifier {
     for (NotifyHostMap::iterator it = hosts_to_notify.begin();
          it != hosts_to_notify.end(); ++it) {
       AppCacheFrontend* frontend = it->first;
-      frontend->OnErrorEventRaised(it->second, details);
+      frontend->OnErrorEventRaised(it->second.host_ids, details);
     }
   }
 
@@ -121,8 +157,8 @@ class HostNotifier {
     for (NotifyHostMap::iterator it = hosts_to_notify.begin();
          it != hosts_to_notify.end(); ++it) {
       AppCacheFrontend* frontend = it->first;
-      for (HostIds::iterator id = it->second.begin();
-           id != it->second.end(); ++id) {
+      for (HostIds::iterator id = it->second.host_ids.begin();
+           id != it->second.host_ids.end(); ++id) {
         frontend->OnLogMessage(*id, APPCACHE_LOG_WARNING, message);
       }
     }
