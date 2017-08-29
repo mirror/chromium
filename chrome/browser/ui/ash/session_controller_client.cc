@@ -241,7 +241,7 @@ void SessionControllerClient::ShowMultiProfileLogin() {
   }
 
   if (UserManager::Get()->GetLoggedInUsers().size() >=
-      session_manager::kMaxmiumNumberOfUserSessions) {
+      session_manager::kMaximumNumberOfUserSessions) {
     return;
   }
 
@@ -357,7 +357,7 @@ ash::AddUserSessionPolicy SessionControllerClient::GetAddUserSessionPolicy() {
   }
 
   if (UserManager::Get()->GetLoggedInUsers().size() >=
-      session_manager::kMaxmiumNumberOfUserSessions)
+      session_manager::kMaximumNumberOfUserSessions)
     return ash::AddUserSessionPolicy::ERROR_MAXIMUM_USERS_REACHED;
 
   return ash::AddUserSessionPolicy::ALLOWED;
