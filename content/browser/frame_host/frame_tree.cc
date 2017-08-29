@@ -50,11 +50,11 @@ FrameTree::NodeIterator::NodeIterator(const NodeIterator& other) = default;
 FrameTree::NodeIterator::~NodeIterator() {}
 
 FrameTree::NodeIterator& FrameTree::NodeIterator::operator++() {
-  for (size_t i = 0; i < current_node_->child_count(); ++i) {
-    FrameTreeNode* child = current_node_->child_at(i);
-    if (child == node_to_skip_)
-      continue;
-    queue_.push(child);
+  if (current_node_ != node_to_skip_) {
+    for (size_t i = 0; i < current_node_->child_count(); ++i) {
+      FrameTreeNode* child = current_node_->child_at(i);
+      queue_.push(child);
+    }
   }
 
   if (!queue_.empty()) {
@@ -73,8 +73,7 @@ bool FrameTree::NodeIterator::operator==(const NodeIterator& rhs) const {
 
 FrameTree::NodeIterator::NodeIterator(FrameTreeNode* starting_node,
                                       FrameTreeNode* node_to_skip)
-    : current_node_(starting_node != node_to_skip ? starting_node : nullptr),
-      node_to_skip_(node_to_skip) {}
+    : current_node_(starting_node), node_to_skip_(node_to_skip) {}
 
 FrameTree::NodeIterator FrameTree::NodeRange::begin() {
   return NodeIterator(root_, node_to_skip_);
@@ -234,12 +233,21 @@ void FrameTree::RemoveFrame(FrameTreeNode* child) {
 void FrameTree::CreateProxiesForSiteInstance(
     FrameTreeNode* source,
     SiteInstance* site_instance) {
+  LOG(INFO) << "FrameTree::CreateProxiesForSiteInstance";
+  LOG(INFO) << "  site_instance=" << site_instance->GetSiteURL();
+  LOG(INFO) << "  source ftn=" << (source ? source->frame_tree_node_id() : -1);
+  LOG(INFO) << "  source ftn is root="
+            << (source ? source->IsMainFrame() : false);
   // Create the RenderFrameProxyHost for the new SiteInstance.
   if (!source || !source->IsMainFrame()) {
     RenderViewHostImpl* render_view_host = GetRenderViewHost(site_instance);
     if (!render_view_host) {
+      LOG(INFO) << "  entered subframe case.  There's no RVH.  Calling "
+                   "root->CreateRenderFrameProxy";
       root()->render_manager()->CreateRenderFrameProxy(site_instance);
     } else {
+      LOG(INFO) << "  entered subframe case.  There's a RVH.  Ensuring it's "
+                   "initialized.";
       root()->render_manager()->EnsureRenderViewInitialized(render_view_host,
                                                             site_instance);
     }
@@ -247,12 +255,39 @@ void FrameTree::CreateProxiesForSiteInstance(
 
   // Proxies are created in the FrameTree in response to a node navigating to a
   // new SiteInstance. Since |source|'s navigation will replace the currently
-  // loaded document, the entire subtree under |source| will be removed.
+  // loaded document, the entire subtree under |source| will be removed, and
+  // thus proxy creation is skipped for all nodes in that subtree.
+  //
+  // However, a proxy *is* created for the |source| node itself.  This is done
+  // so that cross-process navigations always start with a proxy and follow a
+  // remote-to-local transition, which avoids race conditions in cases where
+  // other navigations need to reference this frame before it commits.  See
+  // https://crbug.com/756790 for more background.  The actual logic for this
+  // lives in NodeIterator::operator++.
   for (FrameTreeNode* node : NodesExcept(source)) {
     // If a new frame is created in the current SiteInstance, other frames in
     // that SiteInstance don't need a proxy for the new frame.
     SiteInstance* current_instance =
         node->render_manager()->current_frame_host()->GetSiteInstance();
+    LOG(INFO) << "  node " << node->frame_tree_node_id()
+              << ": current=" << current_instance->GetSiteURL()
+              << ", new=" << site_instance->GetSiteURL();
+    LOG(INFO) << "  Related="
+              << static_cast<SiteInstanceImpl*>(current_instance)
+                     ->IsRelatedSiteInstance(site_instance);
+    LOG(INFO) << "  active_frame_count=" <<
+        static_cast<SiteInstanceImpl*>(current_instance)->active_frame_count();
+    LOG(INFO) << "  proxy_count=" <<
+        node->render_manager()->GetProxyCount();
+    // TODO: Explain why this is only possible in main frames.
+    if (node == source) {
+      SiteInstanceImpl* current_instance_impl =
+          static_cast<SiteInstanceImpl*>(current_instance);
+      bool needs_proxy = node->render_manager()->GetProxyCount() > 0 ||
+          current_instance_impl->active_frame_count() > 1;
+      if (!needs_proxy)
+        continue;
+    }
     if (current_instance != site_instance)
       node->render_manager()->CreateRenderFrameProxy(site_instance);
   }

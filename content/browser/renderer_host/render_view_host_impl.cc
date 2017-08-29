@@ -268,6 +268,7 @@ bool RenderViewHostImpl::CreateRenderView(
     int proxy_route_id,
     const FrameReplicationState& replicated_frame_state,
     bool window_was_created_with_opener) {
+  LOG(INFO) << "RenderViewHostImpl::CreateRenderView";
   TRACE_EVENT0("renderer_host,navigation",
                "RenderViewHostImpl::CreateRenderView");
   DCHECK(!IsRenderViewLive()) << "Creating view twice";
@@ -276,8 +277,10 @@ bool RenderViewHostImpl::CreateRenderView(
   // initialized it) or may not (we have our own process or the old process
   // crashed) have been initialized. Calling Init multiple times will be
   // ignored, so this is safe.
-  if (!GetProcess()->Init())
+  if (!GetProcess()->Init()) {
+    LOG(INFO) << "  Could not init process -> return false";
     return false;
+  }
   DCHECK(GetProcess()->HasConnection());
   DCHECK(GetProcess()->GetBrowserContext());
   CHECK(main_frame_routing_id_ != MSG_ROUTING_NONE ||
@@ -324,6 +327,9 @@ bool RenderViewHostImpl::CreateRenderView(
   params->min_size = GetWidget()->min_size_for_auto_resize();
   params->max_size = GetWidget()->max_size_for_auto_resize();
   params->page_zoom_level = delegate_->GetPendingPageZoomLevel();
+  LOG(INFO) << "  params->swapped_out=" << params->swapped_out;
+  LOG(INFO) << "  proxy_routing_id=" << proxy_route_id;
+  LOG(INFO) << "  main_frame_routing_id=" << main_frame_routing_id_;
 
   bool force_srgb_image_decode_color_space = false;
   // When color correct rendering is enabled, the image_decode_color_space

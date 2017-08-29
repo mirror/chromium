@@ -2589,11 +2589,13 @@ IN_PROC_BROWSER_TEST_F(RenderFrameHostManagerTest,
   NavigateToURL(shell(), main_url);
 
   // Open a popup to navigate.
+  LOG(INFO) << "[TEST] creating popup";
   Shell* new_shell = OpenPopup(shell(), GURL(url::kAboutBlankURL), "foo");
   EXPECT_EQ(shell()->web_contents()->GetSiteInstance(),
             new_shell->web_contents()->GetSiteInstance());
 
   // Navigate the popup to a different site.
+  LOG(INFO) << "[TEST] navigating popup to b.com";
   NavigateToURL(new_shell,
                 embedded_test_server()->GetURL("b.com", "/title2.html"));
 
@@ -2602,8 +2604,10 @@ IN_PROC_BROWSER_TEST_F(RenderFrameHostManagerTest,
   GURL same_site_url(embedded_test_server()->GetURL("a.com", "/title3.html"));
   NavigationStallDelegate stall_delegate(same_site_url);
   ResourceDispatcherHost::Get()->SetDelegate(&stall_delegate);
+  LOG(INFO) << "[TEST] starting stalled popup navigation to a.com";
   new_shell->LoadURL(same_site_url);
 
+  LOG(INFO) << "[TEST] going back to a.com in popup";
   // Going back in history should work and the test should not crash.
   TestNavigationObserver back_nav_load_observer(new_shell->web_contents());
   new_shell->web_contents()->GetController().GoBack();
