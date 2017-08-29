@@ -46,6 +46,30 @@
       "revId": "b3fbf0e220de2473c797e231f3f3e93528c43415",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20b3aa0e_2da1d538",
+        "filename": "chrome/browser/metrics/chromeos_metrics_provider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 274,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-08-29T18:07:39Z",
+      "side": 1,
+      "message": "Added ARC state to previous session too.  I\u0027ll officially add you a reviewer to this changelist as well.",
+      "parentUuid": "536c73ce_09774328",
+      "range": {
+        "startLine": 274,
+        "startChar": 2,
+        "endLine": 274,
+        "endChar": 16
+      },
+      "revId": "b3fbf0e220de2473c797e231f3f3e93528c43415",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
