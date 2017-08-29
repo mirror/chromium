@@ -143,8 +143,9 @@ void OnReadDirectory(CannedSyncableFileSystem::FileEntryList* entries_out,
                      storage::FileSystemOperation::FileEntryList entries,
                      bool has_more) {
   DCHECK(entries_out);
-  entries_out->reserve(entries_out->size() + entries.size());
-  std::copy(entries.begin(), entries.end(), std::back_inserter(*entries_out));
+  entries_out->insert(entries_out->end(),
+                      std::make_move_iterator(entries.begin()),
+                      std::make_move_iterator(entries.end()));
 
   if (!has_more)
     std::move(callback).Run(error);
