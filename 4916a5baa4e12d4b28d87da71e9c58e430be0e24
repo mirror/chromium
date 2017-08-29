@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "8be52d3b_ba1afdbd",
+        "filename": "content/browser/frame_host/navigation_request.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1145,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-08-29T14:47:41Z",
+      "side": 1,
+      "message": "I\u0027d be happy for you to drop it in this CL. We don\u0027t need that runtime feature anymore, this is solidly shipped.",
+      "parentUuid": "8cb18c80_a372ec9f",
+      "revId": "4916a5baa4e12d4b28d87da71e9c58e430be0e24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a102c4b8_64e74a2c",
         "filename": "content/browser/frame_host/navigation_request.h",
         "patchSetId": 3
