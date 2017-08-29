@@ -76,11 +76,8 @@ void WorkerBackingThread::InitializeOnBackingThread(
   backing_thread_->InitializeOnThread();
 
   DCHECK(!isolate_);
-  // TODO(peria): Replace GetReferenceTable with nullptr.
-  // (http://crbug.com/v8/6448)
   isolate_ = V8PerIsolateData::Initialize(
-      backing_thread_->PlatformThread().GetWebTaskRunner(),
-      V8ContextSnapshot::GetReferenceTable(),
+      backing_thread_->PlatformThread().GetWebTaskRunner(), nullptr,
       V8PerIsolateData::V8ContextSnapshotMode::kDontUseSnapshot);
   AddWorkerIsolate(isolate_);
   V8Initializer::InitializeWorker(isolate_);
