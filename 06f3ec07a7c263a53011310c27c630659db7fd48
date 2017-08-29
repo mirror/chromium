@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3b79a51e_ababe645",
+        "filename": "chrome/android/java/strings/android_chrome_strings.grd",
+        "patchSetId": 2
+      },
+      "lineNbr": 3140,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-08-29T22:44:56Z",
+      "side": 1,
+      "message": "We shouldn\u0027t change this string, since this is displayed in the help bubble when accessibility isn\u0027t enabled. Users only need to use two fingers when Talk Back is turned on.",
+      "range": {
+        "startLine": 3140,
+        "startChar": 16,
+        "endLine": 3140,
+        "endChar": 32
+      },
+      "revId": "06f3ec07a7c263a53011310c27c630659db7fd48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "39142c32_e3ece2e4",
+        "filename": "chrome/android/java/strings/android_chrome_strings.grd",
+        "patchSetId": 2
+      },
+      "lineNbr": 3143,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-08-29T22:44:56Z",
+      "side": 1,
+      "message": "I don\u0027t think we need a period here or on the string above",
+      "range": {
+        "startLine": 3143,
+        "startChar": 92,
+        "endLine": 3143,
+        "endChar": 93
+      },
+      "revId": "06f3ec07a7c263a53011310c27c630659db7fd48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
