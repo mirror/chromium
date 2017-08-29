@@ -177,6 +177,8 @@ class CONTENT_EXPORT RenderWidget
 
   int32_t routing_id() const { return routing_id_; }
 
+  float device_scale_factor() const { return device_scale_factor_; }
+
   CompositorDependencies* compositor_deps() const { return compositor_deps_; }
   virtual blink::WebWidget* GetWebWidget() const;
 
