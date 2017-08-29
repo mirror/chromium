@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "87295454_6c2b14c4",
+        "filename": "content/browser/frame_host/render_frame_proxy_host.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 359,
+      "author": {
+        "id": 1211699
+      },
+      "writtenOn": "2017-08-29T18:24:40Z",
+      "side": 1,
+      "message": "Yes, that\u0027s exactly how it works. I\u0027ve added a comment to WebContentsImpl::OnAdvanceFocus documenting this.",
+      "parentUuid": "1be01ee8_368aa458",
+      "revId": "e5ca39ec74c77d08dbe2f591595703e535684baf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6dadd323_52d96ad7",
         "filename": "content/browser/web_contents/web_contents_impl.cc",
         "patchSetId": 6
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-29T01:11:28Z",
       "side": 1,
       "message": "Does window.focus() on a webview use this branch or the next one?  Might be worth mentioning in the corresponding comment, so it\u0027s easier to understand this code in the future.",
+      "revId": "e5ca39ec74c77d08dbe2f591595703e535684baf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b03e3254_4b2a8bba",
+        "filename": "content/browser/web_contents/web_contents_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 5266,
+      "author": {
+        "id": 1211699
+      },
+      "writtenOn": "2017-08-29T18:24:40Z",
+      "side": 1,
+      "message": "Calling focus() on the webview uses the next code path (where node is the main frame of the guest). I don\u0027t think we have any code path that actually uses this path, which is calling SetFocusedFrame(node, source) where node is the node in the embedder\u0027s FrameTree.\n\nThat said, this should be the correct implementation -- we should focus the inner contents in this case. I\u0027ve expanded the comment below to clear this.",
+      "parentUuid": "6dadd323_52d96ad7",
       "revId": "e5ca39ec74c77d08dbe2f591595703e535684baf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "d8ca1d80_d9d9a313",
+        "filename": "content/browser/web_contents/web_contents_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 5273,
+      "author": {
+        "id": 1211699
+      },
+      "writtenOn": "2017-08-29T18:24:40Z",
+      "side": 1,
+      "message": "Yes, it\u0027s always the main FrameTreeNode, but as you mention it wouldn\u0027t really matter.\n\nThe reason it\u0027s always the main frame is that for \u003cwebview\u003es, the embedder process only sees one RenderFrameProxy (we don\u0027t replicate the FrameTree). Since the if statement verifies that the source SiteInstance is in the embedder\u0027s FrameTree, it follows that the node has to be the main frame of the guest.",
+      "parentUuid": "3a3a1a4e_13ba56e4",
+      "revId": "e5ca39ec74c77d08dbe2f591595703e535684baf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "afb3792a_1bc86245",
         "filename": "content/browser/web_contents/web_contents_impl.cc",
         "patchSetId": 6
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "6bfe0c78_74d10c6d",
+        "filename": "content/browser/web_contents/web_contents_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 5277,
+      "author": {
+        "id": 1211699
+      },
+      "writtenOn": "2017-08-29T18:24:40Z",
+      "side": 1,
+      "message": "I\u0027ve checked this, and surprisingly it already works and the embedder is allowed to steal focus from the guest.\n\nThis happens because \u003cwebview\u003e is a custom element, so calling webview.focus() will first focus the frame that contains the webview, then dispatches the \u003cwebview\u003e\u0027s custom focus implementation which calls focus on the remote iframe. So, the browser process gets a FrameFocused IPC from the embedder frame, which is allowed by the outermost contents below, and then another FrameFocused IPC from the proxy, which is also allowed by this branch.",
+      "parentUuid": "afb3792a_1bc86245",
+      "revId": "e5ca39ec74c77d08dbe2f591595703e535684baf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0641ba14_89810d9d",
         "filename": "content/browser/web_contents/web_contents_impl.cc",
         "patchSetId": 6
@@ -81,6 +153,24 @@
       "writtenOn": "2017-08-29T01:11:28Z",
       "side": 1,
       "message": "I was wondering whether we need any additional test coverage for this, but looks like existing tests already cover it, like Focus_AdvanceFocus and Focus_FocusTakeFocus?",
+      "revId": "e5ca39ec74c77d08dbe2f591595703e535684baf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31ec976a_c5d22a41",
+        "filename": "content/browser/web_contents/web_contents_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 5319,
+      "author": {
+        "id": 1211699
+      },
+      "writtenOn": "2017-08-29T18:24:40Z",
+      "side": 1,
+      "message": "Yes, I\u0027ve learned that I had to handle this due to the failing tests :).",
+      "parentUuid": "0641ba14_89810d9d",
       "revId": "e5ca39ec74c77d08dbe2f591595703e535684baf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
