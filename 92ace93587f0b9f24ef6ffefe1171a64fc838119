@@ -33,6 +33,24 @@
       "revId": "92ace93587f0b9f24ef6ffefe1171a64fc838119",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3210e710_c4fce741",
+        "filename": "chrome/browser/chromeos/policy/configuration_policy_handler_chromeos.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 357,
+      "author": {
+        "id": 1000640
+      },
+      "writtenOn": "2017-08-29T05:59:27Z",
+      "side": 1,
+      "message": "Please help me understand that - is the screen magnifier gone completely in which case this policy is now becoming meaningless or is it only changing its implementation? \n\nWe currently set two prefs based on the policy ash::prefs::kAccessibilityScreenMagnifierEnabled and ash::prefs::kAccessibilityScreenMagnifierType. Is the first one still valid? Right now the policy can force both the disabled and the enabled state. How would you recreate this after this pref is removed? \n\nIf the decision is made to deprecate the policy this should done with enough heads-up time and a viable alternative presented. I guess this is Chrome OS only policy and the cloud team should be able to help with data about the amount of usage of this policy (if any).",
+      "parentUuid": "06af5f23_1a7d4752",
+      "revId": "92ace93587f0b9f24ef6ffefe1171a64fc838119",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
