@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ab3fd60c_b998d5a2",
+        "filename": "testing/scripts/run_telemetry_benchmark_as_googletest.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1116849
+      },
+      "writtenOn": "2017-08-29T22:18:24Z",
+      "side": 1,
+      "message": "I think so. Just as the --isolated-script-test-chartjson-output flag may not have been present before (see the diff), it is also possible for neither --isolated-script-test-chartjson-output nor --isolated-script-test-perf-output to be passed.",
+      "parentUuid": "d1f4df4e_b027c44b",
+      "range": {
+        "startLine": 111,
+        "startChar": 6,
+        "endLine": 111,
+        "endChar": 14
+      },
+      "revId": "a9a0085ad9e7e4c3e2523c6b7be63e3133566028",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8b121469_27c8e012",
         "filename": "testing/scripts/run_telemetry_benchmark_as_googletest.py",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "a9a0085ad9e7e4c3e2523c6b7be63e3133566028",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd821505_274e61a3",
+        "filename": "testing/scripts/run_telemetry_benchmark_as_googletest.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1116849
+      },
+      "writtenOn": "2017-08-29T22:18:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8b121469_27c8e012",
+      "range": {
+        "startLine": 114,
+        "startChar": 6,
+        "endLine": 114,
+        "endChar": 27
+      },
+      "revId": "a9a0085ad9e7e4c3e2523c6b7be63e3133566028",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
