@@ -58,6 +58,7 @@ ProtectedMediaIdentifierPermissionContext::
 void ProtectedMediaIdentifierPermissionContext::DecidePermission(
     content::WebContents* web_contents,
     const PermissionRequestID& id,
+    const GURL& requesting_frame_url,
     const GURL& requesting_origin,
     const GURL& embedding_origin,
     bool user_gesture,
@@ -171,7 +172,7 @@ void ProtectedMediaIdentifierPermissionContext::CancelPermissionRequest(
 
 void ProtectedMediaIdentifierPermissionContext::UpdateTabContext(
     const PermissionRequestID& id,
-    const GURL& requesting_frame,
+    const GURL& requesting_origin,
     bool allowed) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
 
@@ -180,8 +181,9 @@ void ProtectedMediaIdentifierPermissionContext::UpdateTabContext(
       TabSpecificContentSettings::GetForFrame(id.render_process_id(),
                                               id.render_frame_id());
   if (content_settings) {
-    content_settings->OnProtectedMediaIdentifierPermissionSet(
-        requesting_frame.GetOrigin(), allowed);
+    DCHECK_EQ(requesting_origin, requesting_origin.GetOrigin());
+    content_settings->OnProtectedMediaIdentifierPermissionSet(requesting_origin,
+                                                              allowed);
   }
 }
 

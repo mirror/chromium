@@ -26,6 +26,7 @@ GeolocationPermissionContext::~GeolocationPermissionContext() {
 void GeolocationPermissionContext::DecidePermission(
     content::WebContents* web_contents,
     const PermissionRequestID& id,
+    const GURL& requesting_frame_url,
     const GURL& requesting_origin,
     const GURL& embedding_origin,
     bool user_gesture,
@@ -50,12 +51,9 @@ void GeolocationPermissionContext::DecidePermission(
     return;
   }
 
-  PermissionContextBase::DecidePermission(web_contents,
-                                          id,
-                                          requesting_origin,
-                                          embedding_origin,
-                                          user_gesture,
-                                          callback);
+  PermissionContextBase::DecidePermission(
+      web_contents, id, requesting_frame_url, requesting_origin,
+      embedding_origin, user_gesture, callback);
 }
 
 void GeolocationPermissionContext::CancelPermissionRequest(
@@ -70,7 +68,7 @@ void GeolocationPermissionContext::CancelPermissionRequest(
 
 void GeolocationPermissionContext::UpdateTabContext(
     const PermissionRequestID& id,
-    const GURL& requesting_frame,
+    const GURL& requesting_origin,
     bool allowed) {
   TabSpecificContentSettings* content_settings =
       TabSpecificContentSettings::GetForFrame(id.render_process_id(),
@@ -78,9 +76,10 @@ void GeolocationPermissionContext::UpdateTabContext(
 
   // WebContents might not exist (extensions) or no longer exist. In which case,
   // TabSpecificContentSettings will be null.
-  if (content_settings)
-    content_settings->OnGeolocationPermissionSet(
-        requesting_frame.GetOrigin(), allowed);
+  if (content_settings) {
+    DCHECK_EQ(requesting_origin, requesting_origin.GetOrigin());
+    content_settings->OnGeolocationPermissionSet(requesting_origin, allowed);
+  }
 
   if (allowed) {
     device::GeolocationProvider::GetInstance()

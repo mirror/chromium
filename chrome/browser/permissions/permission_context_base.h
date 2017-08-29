@@ -78,7 +78,7 @@ class PermissionContextBase : public KeyedService {
   // should be called with the result.
   virtual void RequestPermission(content::WebContents* web_contents,
                                  const PermissionRequestID& id,
-                                 const GURL& requesting_frame,
+                                 const GURL& requesting_frame_url,
                                  bool user_gesture,
                                  const BrowserPermissionCallback& callback);
 
@@ -125,6 +125,7 @@ class PermissionContextBase : public KeyedService {
   // or NotifyPermissionSet if permission decided by presenting an infobar.
   virtual void DecidePermission(content::WebContents* web_contents,
                                 const PermissionRequestID& id,
+                                const GURL& requesting_frame_url,
                                 const GURL& requesting_origin,
                                 const GURL& embedding_origin,
                                 bool user_gesture,
@@ -189,6 +190,7 @@ class PermissionContextBase : public KeyedService {
   // permission request without prompting the user for a decision.
   void ContinueRequestPermission(content::WebContents* web_contents,
                                  const PermissionRequestID& id,
+                                 const GURL& requesting_frame_url,
                                  const GURL& requesting_origin,
                                  const GURL& embedding_origin,
                                  bool user_gesture,
