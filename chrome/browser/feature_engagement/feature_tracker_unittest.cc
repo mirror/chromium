@@ -11,6 +11,7 @@
 #include "base/run_loop.h"
 #include "base/sequenced_task_runner.h"
 #include "base/test/scoped_feature_list.h"
+#include "base/time/time.h"
 #include "chrome/browser/feature_engagement/session_duration_updater.h"
 #include "chrome/browser/feature_engagement/session_duration_updater_factory.h"
 #include "chrome/browser/metrics/desktop_session_duration/desktop_session_duration_tracker.h"
@@ -29,9 +30,11 @@ namespace feature_engagement {
 
 namespace {
 
-const int kTestTimeInMinutes = 100;
-const int kTestTimeSufficentInMinutes = 110;
-const int kTestTimeInsufficientInMinutes = 90;
+const base::TimeDelta kTestTimeDelta = base::TimeDelta::FromMinutes(100);
+const base::TimeDelta kTestTimeSufficentInMinutes =
+    base::TimeDelta::FromMinutes(110);
+const base::TimeDelta kTestTimeInsufficientInMinutes =
+    base::TimeDelta::FromMinutes(90);
 const char kTestProfileName[] = "test-profile";
 
 class TestFeatureTracker : public FeatureTracker {
@@ -40,14 +43,12 @@ class TestFeatureTracker : public FeatureTracker {
       : FeatureTracker(
             profile,
             feature_engagement::SessionDurationUpdaterFactory::GetInstance()
-                ->GetForProfile(profile)),
+                ->GetForProfile(profile),
+            kIPHNewTabFeature,
+            kTestTimeDelta),
         pref_service_(
             base::MakeUnique<sync_preferences::TestingPrefServiceSyncable>()) {
     SessionDurationUpdater::RegisterProfilePrefs(pref_service_->registry());
-  }
-
-  int GetSessionTimeRequiredToShowInMinutes() override {
-    return kTestTimeInMinutes;
   }
 
   void OnSessionTimeMet() override {}
@@ -103,15 +104,13 @@ class FeatureTrackerTest : public testing::Test {
 // OnSessionTimeMet, so it doesn't need to be called after the fact.
 TEST_F(FeatureTrackerTest, TestExpectOnSessionTimeMet) {
   EXPECT_CALL(*mock_feature_tracker_, OnSessionTimeMet());
-  mock_feature_tracker_.get()->OnSessionEnded(
-      base::TimeDelta::FromMinutes(kTestTimeSufficentInMinutes));
+  mock_feature_tracker_.get()->OnSessionEnded(kTestTimeSufficentInMinutes);
 }
 
 // If OnSessionEnded parameter is less than than HasEnoughSessionTimeElapsed
 // then OnSessionTimeMet should not be called.
 TEST_F(FeatureTrackerTest, TestDontExpectOnSessionTimeMet) {
-  mock_feature_tracker_.get()->OnSessionEnded(
-      base::TimeDelta::FromMinutes(kTestTimeInsufficientInMinutes));
+  mock_feature_tracker_.get()->OnSessionEnded(kTestTimeInsufficientInMinutes);
   mock_feature_tracker_.get()->RemoveSessionDurationObserver();
 }
 
