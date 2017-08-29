@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cbb606ee_472eea52",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadBroadcastManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1116010
+      },
+      "writtenOn": "2017-08-29T16:45:23Z",
+      "side": 1,
+      "message": "cancelResumption() feels like a better name here?",
+      "revId": "297adbf742ca6c7f5b0a17e119493523a82c19b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65a65eaa_a3fd3a24",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadNotificationService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 497,
+      "author": {
+        "id": 1116010
+      },
+      "writtenOn": "2017-08-29T16:45:23Z",
+      "side": 1,
+      "message": "should we early return here if numAutoResumptionAttemptLeft reaches 0?",
+      "revId": "297adbf742ca6c7f5b0a17e119493523a82c19b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92cfd5f4_5e7733d5",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadNotificationService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 600,
+      "author": {
+        "id": 1116010
+      },
+      "writtenOn": "2017-08-29T16:45:23Z",
+      "side": 1,
+      "message": "Is this for user swiping away Chrome? Normally when user closes the incognito tabs, download should be automatically cancelled.",
+      "revId": "297adbf742ca6c7f5b0a17e119493523a82c19b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62701920_3851a45d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadNotificationService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 632,
+      "author": {
+        "id": 1116010
+      },
+      "writtenOn": "2017-08-29T16:45:23Z",
+      "side": 1,
+      "message": "Do we actually need to cancel the native download? The incognito profile is going away, there is nothing going to be stored in history.",
+      "revId": "297adbf742ca6c7f5b0a17e119493523a82c19b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
