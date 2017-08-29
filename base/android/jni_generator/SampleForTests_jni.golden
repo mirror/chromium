@@ -131,6 +131,7 @@ static jdouble GetDoubleFunction(JNIEnv* env, const
 JNI_GENERATOR_EXPORT jdouble
     Java_org_chromium_example_jni_1generator_SampleForTests_nativeGetDoubleFunction(JNIEnv*
     env, jobject jcaller) {
+  HistogramValidator validator;
   return GetDoubleFunction(env, base::android::JavaParamRef<jobject>(env,
       jcaller));
 }
@@ -163,6 +164,7 @@ static base::android::ScopedJavaLocalRef<jobject> GetNonPODDatatype(JNIEnv* env,
 JNI_GENERATOR_EXPORT jobject
     Java_org_chromium_example_jni_1generator_SampleForTests_nativeGetNonPODDatatype(JNIEnv*
     env, jobject jcaller) {
+  HistogramValidator validator;
   return GetNonPODDatatype(env, base::android::JavaParamRef<jobject>(env,
       jcaller)).Release();
 }
