@@ -129,18 +129,16 @@ gfx::Image TestShellDelegate::GetDeprecatedAcceleratorImage() const {
   return gfx::Image();
 }
 
-bool TestShellDelegate::IsTouchscreenEnabledInPrefs(
-    bool use_local_state) const {
-  return use_local_state ? touchscreen_enabled_in_local_pref_ : true;
+bool TestShellDelegate::GetTouchscreenStatus(bool use_user_pref) const {
+  return use_user_pref ? true : touchscreen_enabled_;
 }
 
-void TestShellDelegate::SetTouchscreenEnabledInPrefs(bool enabled,
-                                                     bool use_local_state) {
-  if (use_local_state)
-    touchscreen_enabled_in_local_pref_ = enabled;
+void TestShellDelegate::SetTouchscreenStatus(bool enabled, bool use_user_pref) {
+  if (!use_user_pref)
+    touchscreen_enabled_ = enabled;
 }
 
-void TestShellDelegate::UpdateTouchscreenStatusFromPrefs() {}
+void TestShellDelegate::UpdateTouchscreenStatus() {}
 
 void TestShellDelegate::SuspendMediaSessions() {
   media_sessions_suspended_ = true;

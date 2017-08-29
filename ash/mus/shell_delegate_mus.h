@@ -42,10 +42,9 @@ class ShellDelegateMus : public ShellDelegate {
   GPUSupport* CreateGPUSupport() override;
   base::string16 GetProductName() const override;
   gfx::Image GetDeprecatedAcceleratorImage() const override;
-  bool IsTouchscreenEnabledInPrefs(bool use_local_state) const override;
-  void SetTouchscreenEnabledInPrefs(bool enabled,
-                                    bool use_local_state) override;
-  void UpdateTouchscreenStatusFromPrefs() override;
+  bool GetTouchscreenStatus(bool use_user_pref) const override;
+  void SetTouchscreenStatus(bool enabled, bool use_user_pref) override;
+  void UpdateTouchscreenStatus() override;
   ui::InputDeviceControllerClient* GetInputDeviceControllerClient() override;
 
  private:
