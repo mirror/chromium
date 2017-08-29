@@ -2,6 +2,57 @@
   "comments": [
     {
       "key": {
+        "uuid": "d7b43479_e8e24396",
+        "filename": "chrome/browser/chromeos/drive/fileapi/async_file_util.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-08-29T05:35:59Z",
+      "side": 1,
+      "message": "nit: base::OnceClosure() now?",
+      "revId": "33160a5ee25dad2c07cbf4fbdb44d23856c6c310",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92c162cc_5a61a7fb",
+        "filename": "chrome/browser/chromeos/file_system_provider/operations/read_directory.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-08-29T05:35:59Z",
+      "side": 1,
+      "message": "nit: Maybe\n\noutput-\u003eemplace_back(*entry_metadata.is_directory, *entry_metadata.name);\n\n?",
+      "revId": "33160a5ee25dad2c07cbf4fbdb44d23856c6c310",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0f7695c_a46ffdbd",
+        "filename": "chrome/browser/media_galleries/chromeos/mtp_device_delegate_impl_chromeos.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1598,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-08-29T05:35:59Z",
+      "side": 1,
+      "message": "file_list.emplace_back(mtp_entry.name, mtp_entry.file_info.is_directory);",
+      "revId": "33160a5ee25dad2c07cbf4fbdb44d23856c6c310",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0662a95a_872e21cb",
         "filename": "chrome/browser/media_galleries/chromeos/mtp_device_delegate_impl_chromeos.cc",
         "patchSetId": 3
@@ -25,6 +76,23 @@
     },
     {
       "key": {
+        "uuid": "643386af_8351b1e8",
+        "filename": "chrome/browser/media_galleries/fileapi/device_media_async_file_util.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 271,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-08-29T05:35:59Z",
+      "side": 1,
+      "message": "(slightly off-topic): While you\u0027re here,\n\nfor (auto\u0026 entry : file_list) {\n  if (...)\n    results.push_back(std::move(entry));\n}",
+      "revId": "33160a5ee25dad2c07cbf4fbdb44d23856c6c310",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ceee2585_d68294b6",
         "filename": "chrome/browser/media_galleries/fileapi/itunes_file_util.cc",
         "patchSetId": 3
@@ -42,6 +110,23 @@
         "endLine": 381,
         "endChar": 73
       },
+      "revId": "33160a5ee25dad2c07cbf4fbdb44d23856c6c310",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ed3c24b_58653e9d",
+        "filename": "chrome/browser/media_galleries/fileapi/native_media_file_util.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 569,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-08-29T05:35:59Z",
+      "side": 1,
+      "message": "emplace_back?",
       "revId": "33160a5ee25dad2c07cbf4fbdb44d23856c6c310",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -94,6 +179,57 @@
     },
     {
       "key": {
+        "uuid": "5564a28e_800cab2a",
+        "filename": "chrome/browser/media_galleries/mac/mtp_device_delegate_impl_mac.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 467,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-08-29T05:35:59Z",
+      "side": 1,
+      "message": "(slightly off-topic): but while you\u0027re here, const\u0026?",
+      "revId": "33160a5ee25dad2c07cbf4fbdb44d23856c6c310",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e946296_b22d7ddb",
+        "filename": "chrome/browser/media_galleries/mac/mtp_device_delegate_impl_mac.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 471,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-08-29T05:35:59Z",
+      "side": 1,
+      "message": "emplace_back?",
+      "revId": "33160a5ee25dad2c07cbf4fbdb44d23856c6c310",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a59c9a6_dd8ab120",
+        "filename": "chrome/browser/media_galleries/win/mtp_device_delegate_impl_win.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-08-29T05:35:59Z",
+      "side": 1,
+      "message": "emplace_back?",
+      "revId": "33160a5ee25dad2c07cbf4fbdb44d23856c6c310",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3af02479_ee0e699a",
         "filename": "chrome/browser/sync_file_system/local/canned_syncable_file_system.cc",
         "patchSetId": 3
@@ -117,6 +253,23 @@
     },
     {
       "key": {
+        "uuid": "9f602726_1599415c",
+        "filename": "storage/browser/fileapi/async_file_util_adapter.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-08-29T05:35:59Z",
+      "side": 1,
+      "message": "emplace_back?",
+      "revId": "33160a5ee25dad2c07cbf4fbdb44d23856c6c310",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bf7d2d5a_b6ae07a0",
         "filename": "storage/browser/fileapi/async_file_util_adapter.cc",
         "patchSetId": 3
@@ -128,6 +281,23 @@
       "writtenOn": "2017-08-28T14:24:10Z",
       "side": 1,
       "message": "Is |clear()| necessary?",
+      "revId": "33160a5ee25dad2c07cbf4fbdb44d23856c6c310",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3678e4aa_37c0d87a",
+        "filename": "storage/browser/fileapi/dragged_file_util_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 380,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-08-29T05:35:59Z",
+      "side": 1,
+      "message": "Overwriting is expected? If not, maybe emplace(), instead?",
       "revId": "33160a5ee25dad2c07cbf4fbdb44d23856c6c310",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
