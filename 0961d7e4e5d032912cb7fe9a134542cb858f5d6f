@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d0df71c1_705c774d",
+        "filename": ".vpython",
+        "patchSetId": 3
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2017-08-29T01:39:06Z",
+      "side": 1,
+      "message": "Ideally this doc would have some explanation for what it is and how we should modify it, i.e., links to the vpython user guide in the other CL, links for adding packages, etc.\n\nAs far as OWNERS go, I think we can start with dnj, dpranke, iannucci, jbudorick, nednguyen, and phajdan.jr.",
+      "revId": "0961d7e4e5d032912cb7fe9a134542cb858f5d6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
