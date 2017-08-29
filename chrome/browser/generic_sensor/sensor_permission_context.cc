@@ -4,6 +4,8 @@
 
 #include "chrome/browser/generic_sensor/sensor_permission_context.h"
 
+#include "url/gurl.h"
+
 SensorPermissionContext::SensorPermissionContext(Profile* profile)
     : PermissionContextBase(profile,
                             CONTENT_SETTINGS_TYPE_SENSORS,
