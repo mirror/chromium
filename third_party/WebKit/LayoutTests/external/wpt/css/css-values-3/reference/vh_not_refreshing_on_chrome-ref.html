@@ -5,6 +5,8 @@
 
 	<title>CSS Reference File</title>
 	<link rel="author" title="Marc Bourlon" href="mailto:marc@bourlon.com">
+	<script src="/resources/testharness.js"></script>
+	<script src="/resources/testharnessreport.js"></script>
 
 	<style type="text/css">
 
@@ -15,7 +17,19 @@
 	</style>
 
 	<script type="text/javascript">
+		'use strict';
 		var height = 200;
+
+		setup({ explicit_done: true });
+
+		var pending = 2;
+		function receiveMessage() {
+			if (--pending === 0) {
+				requestAnimationFrame(function() { done(); });
+			}
+		}
+
+		window.addEventListener('message', receiveMessage, false);
 
 		function resizeReference() {
 
@@ -25,7 +39,8 @@
 			if (height <= 300) {
 
 				//frameTest.style.width = height++ + "px";
-				frameTest.style.height = height++ + "px";
+				frameTest.style.height = height + "px";
+				height += 10;
 
 				setTimeout(resizeReference, 10);
 
@@ -34,6 +49,7 @@
 				// uncomment the next line to see how a width resize triggers a layout recalculation
 				//frameTest.style.width = (parseInt(window.getComputedStyle(document.getElementById('frameTest'))['width'], 10) + 1) + "px";
 
+				window.postMessage('frameTest', '*');
 			}
 
 		}
