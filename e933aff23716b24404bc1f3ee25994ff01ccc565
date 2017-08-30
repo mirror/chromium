@@ -22,6 +22,30 @@
       "revId": "e933aff23716b24404bc1f3ee25994ff01ccc565",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a56e7dfb_c395b03e",
+        "filename": "ui/gl/gl_implementation.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1240289
+      },
+      "writtenOn": "2017-08-30T07:15:02Z",
+      "side": 1,
+      "message": "Hi! Comment below says that on X11 when libGL is used we cannot unload libraries without closing X display (I don\u0027t have an access to the bug). However I may check whether the GetGLImplementation() on X11 is different than kGLImplementationDesktopGL which is using libGL when custom GL lib is not provided via switch \"test-gl-lib\" or custom lib from switch failed to load.\n\nIt would look something like this:\n#if defined(USE_X11)\n    // We do not call base::UnloadNativeLibrary() for kGLImplementation\n    // which use libGL which unloading without closing X display is not allowed.\n    // See crbug.com/250813 for details.\n    // If kGLImplementation is used with switch \"test-gl-lib\" and ANGLE\n    // implementation then in case of fallback to SwiftShader crash will occur\n    // See crbug.com/760063 for details.\n    if (GetGLImplementation() !\u003d kGLImplementation)\n#endif  // defined(USE_X11)\n    {\n      for (auto* library : *g_libraries)\n        base::UnloadNativeLibrary(library);  \n    }",
+      "parentUuid": "6911de16_d89e3d0c",
+      "range": {
+        "startLine": 50,
+        "startChar": 0,
+        "endLine": 50,
+        "endChar": 19
+      },
+      "revId": "e933aff23716b24404bc1f3ee25994ff01ccc565",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
