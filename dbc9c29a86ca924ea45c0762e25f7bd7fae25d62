@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "97d3e92d_f472c76e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/LogoDelegateImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-30T15:45:00Z",
+      "side": 1,
+      "message": "This actually shouldn\u0027t be necessary because the LogoTracker removes all its observers after it handed out a fresh logo (null or not), but I don\u0027t want to rely on that.",
+      "range": {
+        "startLine": 122,
+        "startChar": 50,
+        "endLine": 122,
+        "endChar": 0
+      },
+      "revId": "dbc9c29a86ca924ea45c0762e25f7bd7fae25d62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
