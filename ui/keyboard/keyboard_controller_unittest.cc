@@ -680,6 +680,7 @@ INSTANTIATE_TEST_CASE_P(NewAndOldBehavior,
 TEST_P(KeyboardControllerAnimationTest, ContainerAnimation) {
   ScopedAccessibilityKeyboardEnabler scoped_keyboard_enabler;
   ui::Layer* layer = keyboard_container()->layer();
+  EXPECT_EQ(gfx::Rect(), notified_bounds());
   ShowKeyboard();
 
   // Keyboard container and window should immediately become visible before
@@ -690,7 +691,9 @@ TEST_P(KeyboardControllerAnimationTest, ContainerAnimation) {
   gfx::Transform transform;
   transform.Translate(0, kAnimationDistance);
   EXPECT_EQ(transform, layer->transform());
-  EXPECT_EQ(gfx::Rect(), notified_bounds());
+  // animation occurs in a cloned layer, so the actual final bounds should
+  // already be applied to the container.
+  EXPECT_EQ(keyboard_container()->bounds(), notified_bounds());
 
   RunAnimationForLayer(layer);
   EXPECT_TRUE(keyboard_container()->IsVisible());
@@ -703,11 +706,12 @@ TEST_P(KeyboardControllerAnimationTest, ContainerAnimation) {
   EXPECT_EQ(keyboard_container()->bounds(), notified_bounds());
 
   // Directly hide keyboard without delay.
-  controller()->HideKeyboard(KeyboardController::HIDE_REASON_AUTOMATIC);
-  EXPECT_TRUE(keyboard_container()->IsVisible());
-  EXPECT_TRUE(keyboard_container()->layer()->visible());
-  EXPECT_TRUE(contents_window()->IsVisible());
   float hide_start_opacity = layer->opacity();
+  controller()->HideKeyboard(KeyboardController::HIDE_REASON_AUTOMATIC);
+  EXPECT_FALSE(keyboard_container()->IsVisible());
+  EXPECT_FALSE(keyboard_container()->layer()->visible());
+  EXPECT_FALSE(contents_window()->IsVisible());
+  layer = keyboard_container()->layer();
   // KeyboardController should notify the bounds of keyboard window to its
   // observers before hide animation starts.
   EXPECT_EQ(gfx::Rect(), notified_bounds());
@@ -718,7 +722,6 @@ TEST_P(KeyboardControllerAnimationTest, ContainerAnimation) {
   EXPECT_FALSE(contents_window()->IsVisible());
   float hide_end_opacity = layer->opacity();
   EXPECT_GT(hide_start_opacity, hide_end_opacity);
-  EXPECT_EQ(transform, layer->transform());
   EXPECT_EQ(gfx::Rect(), notified_bounds());
 }
 
@@ -734,11 +737,11 @@ TEST_P(KeyboardControllerAnimationTest, ContainerShowWhileHide) {
   controller()->HideKeyboard(KeyboardController::HIDE_REASON_AUTOMATIC);
   // Before hide animation finishes, show keyboard again.
   ShowKeyboard();
+  layer = keyboard_container()->layer();
   RunAnimationForLayer(layer);
   EXPECT_TRUE(keyboard_container()->IsVisible());
   EXPECT_TRUE(contents_window()->IsVisible());
   EXPECT_EQ(1.0, layer->opacity());
-  EXPECT_EQ(gfx::Transform(), layer->transform());
 }
 
 // Test for crbug.com/568274.
