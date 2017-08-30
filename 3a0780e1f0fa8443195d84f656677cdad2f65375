@@ -97,6 +97,30 @@
     },
     {
       "key": {
+        "uuid": "a6953f83_94aeb43f",
+        "filename": "content/renderer/fetchers/resource_fetcher_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-08-30T07:30:43Z",
+      "side": 1,
+      "message": "Sorry for my vague explanation. I filed a bug for this with kinuko\u0027s comment and my plan.\ncrbug.com/760454",
+      "parentUuid": "8b7cf44d_a4a86395",
+      "range": {
+        "startLine": 88,
+        "startChar": 4,
+        "endLine": 88,
+        "endChar": 19
+      },
+      "revId": "3a0780e1f0fa8443195d84f656677cdad2f65375",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b505f525_9d9fa1c9",
         "filename": "content/renderer/fetchers/resource_fetcher_impl.cc",
         "patchSetId": 3
@@ -117,6 +141,30 @@
       "revId": "3a0780e1f0fa8443195d84f656677cdad2f65375",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ea2d08f_234efd32",
+        "filename": "content/renderer/fetchers/resource_fetcher_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-08-30T07:30:43Z",
+      "side": 1,
+      "message": "Thanks!",
+      "parentUuid": "b505f525_9d9fa1c9",
+      "range": {
+        "startLine": 98,
+        "startChar": 45,
+        "endLine": 98,
+        "endChar": 57
+      },
+      "revId": "3a0780e1f0fa8443195d84f656677cdad2f65375",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
