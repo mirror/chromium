@@ -371,7 +371,7 @@ class MODULES_EXPORT WebGLRenderingContextBase : public CanvasRenderingContext,
                   GLint internalformat,
                   GLenum format,
                   GLenum type,
-                  HTMLCanvasElement*,
+                  CanvasRenderingContextHost*,
                   ExceptionState&);
   void texImage2D(ExecutionContext*,
                   GLenum target,
@@ -424,7 +424,7 @@ class MODULES_EXPORT WebGLRenderingContextBase : public CanvasRenderingContext,
                      GLint yoffset,
                      GLenum format,
                      GLenum type,
-                     HTMLCanvasElement*,
+                     CanvasRenderingContextHost*,
                      ExceptionState&);
   void texSubImage2D(ExecutionContext*,
                      GLenum target,
@@ -585,7 +585,8 @@ class MODULES_EXPORT WebGLRenderingContextBase : public CanvasRenderingContext,
   };
 
   RefPtr<StaticBitmapImage> GetImage(AccelerationHint,
-                                     SnapshotReason) const override;
+                                     SnapshotReason,
+                                     SourceDrawingBuffer) const override;
   ImageData* ToImageData(SnapshotReason) override;
   void SetFilterQuality(SkFilterQuality) override;
   bool IsWebGL2OrHigher() { return Version() >= 2; }
@@ -1028,7 +1029,8 @@ class MODULES_EXPORT WebGLRenderingContextBase : public CanvasRenderingContext,
 
   template <typename T>
   IntRect GetTextureSourceSize(T* texture_source) {
-    return IntRect(0, 0, texture_source->width(), texture_source->height());
+    return IntRect(0, 0, texture_source->Size().Width(),
+                   texture_source->Size().Height());
   }
 
   template <typename T>
@@ -1042,8 +1044,8 @@ class MODULES_EXPORT WebGLRenderingContextBase : public CanvasRenderingContext,
     DCHECK(function_name);
     DCHECK(selecting_sub_rectangle);
     DCHECK(image);
-    int image_width = static_cast<int>(image->width());
-    int image_height = static_cast<int>(image->height());
+    int image_width = static_cast<int>(image->Size().Width());
+    int image_height = static_cast<int>(image->Size().Height());
     *selecting_sub_rectangle =
         !(sub_rect.X() == 0 && sub_rect.Y() == 0 &&
           sub_rect.Width() == image_width && sub_rect.Height() == image_height);
@@ -1235,6 +1237,7 @@ class MODULES_EXPORT WebGLRenderingContextBase : public CanvasRenderingContext,
     kSourceImageData,
     kSourceHTMLImageElement,
     kSourceHTMLCanvasElement,
+    kSourceOffscreenCanvas,
     kSourceHTMLVideoElement,
     kSourceImageBitmap,
     kSourceUnpackBuffer,
@@ -1428,12 +1431,12 @@ class MODULES_EXPORT WebGLRenderingContextBase : public CanvasRenderingContext,
                                 HTMLImageElement*,
                                 ExceptionState&);
 
-  // Helper function for tex{Sub}Image2D to make sure canvas is ready and
-  // wouldn't taint Origin.
-  bool ValidateHTMLCanvasElement(SecurityOrigin*,
-                                 const char* function_name,
-                                 HTMLCanvasElement*,
-                                 ExceptionState&);
+  // Helper function for tex{Sub}Image2D to make sure <canvas> or
+  // OffscreenCanvas is ready and wouldn't taint Origin.
+  bool ValidateCanvasRenderingContextHost(SecurityOrigin*,
+                                          const char* function_name,
+                                          CanvasRenderingContextHost*,
+                                          ExceptionState&);
 
   // Helper function for tex{Sub}Image2D to make sure video is ready wouldn't
   // taint Origin.
@@ -1591,21 +1594,21 @@ class MODULES_EXPORT WebGLRenderingContextBase : public CanvasRenderingContext,
                                       GLint,
                                       ExceptionState&);
 
-  void TexImageHelperHTMLCanvasElement(SecurityOrigin*,
-                                       TexImageFunctionID,
-                                       GLenum,
-                                       GLint,
-                                       GLint,
-                                       GLenum,
-                                       GLenum,
-                                       GLint,
-                                       GLint,
-                                       GLint,
-                                       HTMLCanvasElement*,
-                                       const IntRect&,
-                                       GLsizei,
-                                       GLint,
-                                       ExceptionState&);
+  void TexImageHelperCanvasRenderingContextHost(SecurityOrigin*,
+                                                TexImageFunctionID,
+                                                GLenum,
+                                                GLint,
+                                                GLint,
+                                                GLenum,
+                                                GLenum,
+                                                GLint,
+                                                GLint,
+                                                GLint,
+                                                CanvasRenderingContextHost*,
+                                                const IntRect&,
+                                                GLsizei,
+                                                GLint,
+                                                ExceptionState&);
 
   void TexImageHelperHTMLVideoElement(SecurityOrigin*,
                                       TexImageFunctionID,
@@ -1663,7 +1666,7 @@ class MODULES_EXPORT WebGLRenderingContextBase : public CanvasRenderingContext,
                                 const CanvasContextCreationAttributes&,
                                 unsigned);
   void TexImageCanvasByGPU(TexImageFunctionID,
-                           HTMLCanvasElement*,
+                           CanvasRenderingContextHost*,
                            GLenum,
                            GLuint,
                            GLint,

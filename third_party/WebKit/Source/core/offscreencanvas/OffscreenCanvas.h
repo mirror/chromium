@@ -10,7 +10,6 @@
 #include "core/dom/DOMNodeIds.h"
 #include "core/events/EventTarget.h"
 #include "core/html/HTMLCanvasElement.h"
-#include "core/html/canvas/CanvasImageSource.h"
 #include "core/html/canvas/CanvasRenderingContextHost.h"
 #include "core/imagebitmap/ImageBitmapSource.h"
 #include "core/offscreencanvas/ImageEncodeOptions.h"
@@ -31,7 +30,6 @@ typedef OffscreenCanvasRenderingContext2DOrWebGLRenderingContextOrWebGL2Renderin
 
 class CORE_EXPORT OffscreenCanvas final
     : public EventTargetWithInlineData,
-      public CanvasImageSource,
       public ImageBitmapSource,
       public CanvasRenderingContextHost,
       public OffscreenCanvasFrameDispatcherClient {
@@ -73,7 +71,7 @@ class CORE_EXPORT OffscreenCanvas final
       ExecutionContext*,
       const String&,
       const CanvasContextCreationAttributes&);
-  CanvasRenderingContext* RenderingContext() { return context_; }
+  CanvasRenderingContext* RenderingContext() const final { return context_; }
 
   static void RegisterRenderingContextFactory(
       std::unique_ptr<CanvasRenderingContextFactory>);

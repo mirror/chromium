@@ -53,7 +53,8 @@ class MODULES_EXPORT ImageBitmapRenderingContext final
   bool isContextLost() const override { return false; }
   void SetCanvasGetContextResult(RenderingContext&) final;
   RefPtr<StaticBitmapImage> GetImage(AccelerationHint,
-                                     SnapshotReason) const final;
+                                     SnapshotReason,
+                                     SourceDrawingBuffer) const final;
   bool IsComposited() const final { return true; }
   bool IsAccelerated() const final;
 
