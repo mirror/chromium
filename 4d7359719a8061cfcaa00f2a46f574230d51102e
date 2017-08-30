@@ -191,6 +191,30 @@
     },
     {
       "key": {
+        "uuid": "bee18107_50967a69",
+        "filename": "device/hid/hid_device_info.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-08-30T17:09:34Z",
+      "side": 1,
+      "message": "We can leave it for now.",
+      "parentUuid": "26b23050_8723f86a",
+      "range": {
+        "startLine": 83,
+        "startChar": 0,
+        "endLine": 83,
+        "endChar": 73
+      },
+      "revId": "4d7359719a8061cfcaa00f2a46f574230d51102e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e9080da1_911d112e",
         "filename": "device/hid/public/interfaces/hid.mojom",
         "patchSetId": 13
