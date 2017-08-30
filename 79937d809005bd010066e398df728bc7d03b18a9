@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "fd653c6c_de59fb60",
+        "filename": "media/mojo/services/watch_time_recorder.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-08-30T23:00:23Z",
+      "side": 1,
+      "message": "Nope, base::TimeDelta zero-initializes.",
+      "parentUuid": "91e47e10_72e881ee",
+      "range": {
+        "startLine": 111,
+        "startChar": 0,
+        "endLine": 111,
+        "endChar": 54
+      },
+      "revId": "79937d809005bd010066e398df728bc7d03b18a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6317ae68_2882e9f3",
         "filename": "media/mojo/services/watch_time_recorder.cc",
         "patchSetId": 10
@@ -36,6 +60,30 @@
       "writtenOn": "2017-08-30T22:53:34Z",
       "side": 1,
       "message": "Am I right that this only occurs in cases like video-playback-too-{short|small}?",
+      "range": {
+        "startLine": 160,
+        "startChar": 35,
+        "endLine": 160,
+        "endChar": 39
+      },
+      "revId": "79937d809005bd010066e398df728bc7d03b18a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6237d35f_56a1ea68",
+        "filename": "media/mojo/services/watch_time_recorder.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-08-30T23:00:23Z",
+      "side": 1,
+      "message": "We always have one of these except in tests, I\u0027ll see if there\u0027s some way to make this test only in a future patch set.",
+      "parentUuid": "6317ae68_2882e9f3",
       "range": {
         "startLine": 160,
         "startChar": 35,
