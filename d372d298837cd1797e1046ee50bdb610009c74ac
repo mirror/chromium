@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1bc62b05_05605f63",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-08-30T12:50:33Z",
+      "side": 1,
+      "message": "s/article/content ... these include non article things like bookmarks for example.",
+      "range": {
+        "startLine": 9,
+        "startChar": 44,
+        "endLine": 9,
+        "endChar": 51
+      },
+      "revId": "d372d298837cd1797e1046ee50bdb610009c74ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "075b3178_c37289ff",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/ContextualSuggestionsCardViewHolder.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-08-30T12:50:33Z",
+      "side": 1,
+      "message": "maybe just use `navigateToUrl(int windowOpenDisposition, String url)` instead? It makes it simpler to guess what it does and differentiates it more from openSnippet? Alternatively, just call openUrl here? It\u0027s a public method and what tiles use.",
+      "range": {
+        "startLine": 48,
+        "startChar": 52,
+        "endLine": 48,
+        "endChar": 75
+      },
+      "revId": "d372d298837cd1797e1046ee50bdb610009c74ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

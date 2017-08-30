@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0655f499_65f39e3d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/ContextualSuggestionsCardViewHolder.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-08-30T12:50:33Z",
+      "side": 1,
+      "message": "openSnippet has a lot of metrics recording code... should it also be removed? Add openContextualSuggestion and just do the minimum necessary?",
+      "range": {
+        "startLine": 48,
+        "startChar": 52,
+        "endLine": 48,
+        "endChar": 63
+      },
+      "revId": "7029a5eaba28345d6675cab43e3c9e4a25382a45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
