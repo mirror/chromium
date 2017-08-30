@@ -12,6 +12,7 @@ namespace blink {
 class CSSPropertyAPIVariable : public CSSPropertyAPI {
  public:
   bool IsInherited() const override { return true; }
+  bool IsProperty() const override { return true; }
 };
 
 }  // namespace blink
