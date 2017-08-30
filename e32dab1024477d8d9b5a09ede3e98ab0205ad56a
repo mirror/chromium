@@ -25,6 +25,29 @@
     },
     {
       "key": {
+        "uuid": "12a11766_872ffc19",
+        "filename": "services/device/generic_sensor/platform_sensor_provider_base.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1149144
+      },
+      "writtenOn": "2017-08-30T17:30:13Z",
+      "side": 1,
+      "message": "nit: maybe add more contexts to this comment, something like the following:\nif (it \u003d\u003d sensor_map_.end()) {\n  // This is possible on PlatformSensorFusion creation failure since the\n  // PlatformSensorFusion object is not added to the |sensor_map_|, but\n  // its base class destructor PlatformSensor::~PlatformSensor() calls this\n  // RemoveSensor() function with the PlatformSensorFusion type.\n  return;\n}",
+      "range": {
+        "startLine": 81,
+        "startChar": 2,
+        "endLine": 82,
+        "endChar": 72
+      },
+      "revId": "e32dab1024477d8d9b5a09ede3e98ab0205ad56a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "93e722fc_0e815968",
         "filename": "services/device/generic_sensor/platform_sensor_provider_base.cc",
         "patchSetId": 1
