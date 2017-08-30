@@ -52,6 +52,24 @@
       "revId": "fde010ff43cbf629f1e83ac23194e8323b2a0ae0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc631bbd_799bfa20",
+        "filename": "media/audio/cras/audio_manager_cras.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 345,
+      "author": {
+        "id": 1001841
+      },
+      "writtenOn": "2017-08-30T12:52:48Z",
+      "side": 1,
+      "message": "I added a |on_shutdown_| WaitableEvent and used WaitMany to make sure audio thread will be unblocked. Not very elegant. But I cannot think of other ways. Max. How do you think of PS8? I left the office already. I\u0027ll test it tomorrow.",
+      "parentUuid": "654e7afa_54e3db9d",
+      "revId": "fde010ff43cbf629f1e83ac23194e8323b2a0ae0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
