@@ -16,6 +16,24 @@
       "revId": "02bf8eb72be3f81d852b257008f9682b03c872c8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31eac94c_36692d61",
+        "filename": "ios/chrome/browser/ssl/ios_ssl_error_handler.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1144530
+      },
+      "writtenOn": "2017-08-30T18:27:16Z",
+      "side": 1,
+      "message": "There is no tab helper if there is no tab, if the webstate is loading the page to process it without displaying it to the user.\nOne of this usage is reading list, which uses a WebState without tab to download the page and save it offline.\n\nIn that case, we cannot show the interstitial anyway (even without a captive portal, and I don\u0027t really know what happens to the interstitial today).\nWe could do a more generic test here, and do a LegacyTabHelper::GetTabForWebState() and return false if there is no tab.",
+      "parentUuid": "6927aa39_97c5364b",
+      "revId": "02bf8eb72be3f81d852b257008f9682b03c872c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
