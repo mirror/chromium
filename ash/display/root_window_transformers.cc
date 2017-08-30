@@ -223,12 +223,19 @@ class PartialBoundsRootWindowTransformer : public RootWindowTransformer {
                                      const display::Display& display) {
     display::Display unified_display =
         display::Screen::GetScreen()->GetPrimaryDisplay();
+    const display::DisplayManager* display_manager =
+        Shell::Get()->display_manager();
     display::ManagedDisplayInfo display_info =
-        Shell::Get()->display_manager()->GetDisplayInfo(display.id());
+        display_manager->GetDisplayInfo(display.id());
     root_bounds_ = gfx::Rect(display_info.bounds_in_native().size());
-    float scale = root_bounds_.height() /
-                  static_cast<float>(screen_bounds.height()) /
-                  unified_display.device_scale_factor();
+
+    const float dsf = unified_display.device_scale_factor();
+    const gfx::Size matrix_dimensions =
+        display_manager->GetUnifiedDesktopMatrixDimensions();
+
+    const float scale = dsf * root_bounds_.size().GetArea() *
+                        matrix_dimensions.GetArea() /
+                        gfx::SizeF(screen_bounds.size()).GetArea();
     transform_.Scale(scale, scale);
     transform_.Translate(-SkIntToMScalar(display.bounds().x()),
                          -SkIntToMScalar(display.bounds().y()));

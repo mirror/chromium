@@ -51,11 +51,21 @@ gfx::Rect ScreenUtil::GetDisplayWorkAreaBoundsInParentForLockScreen(
 // static
 gfx::Rect ScreenUtil::GetDisplayBoundsWithShelf(aura::Window* window) {
   if (Shell::Get()->display_manager()->IsInUnifiedMode()) {
-    // In unified desktop mode, there is only one shelf in the first display.
-    const display::Display& first_display =
-        Shell::Get()->display_manager()->software_mirroring_display_list()[0];
-    gfx::SizeF size(first_display.size());
-    float scale = window->GetRootWindow()->bounds().height() / size.height();
+    // In unified desktop mode, there is only one shelf in the primary mirroing
+    // display.
+    const display::DisplayManager* display_manager =
+        Shell::Get()->display_manager();
+    const display::Display* first_display =
+        display_manager->GetPrimaryMirroringDisplayForUnifiedDesktop();
+    DCHECK(first_display);
+
+    const gfx::Size unified_size = window->GetRootWindow()->bounds().size();
+    const gfx::Size matrix_dimensions =
+        display_manager->GetUnifiedDesktopMatrixDimensions();
+
+    gfx::SizeF size(first_display->size());
+    const float scale =
+        unified_size.GetArea() / (size.GetArea() * matrix_dimensions.GetArea());
     size.Scale(scale, scale);
     return gfx::Rect(gfx::ToCeiledSize(size));
   }

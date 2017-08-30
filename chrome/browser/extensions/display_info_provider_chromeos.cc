@@ -661,8 +661,8 @@ DisplayInfoProviderChromeOS::GetAllDisplaysInfo(bool single_unified) {
   } else {
     displays = display_manager->software_mirroring_display_list();
     CHECK_GT(displays.size(), 0u);
-    // Use first display as primary.
-    primary_id = displays[0].id();
+    primary_id =
+        display_manager->GetPrimaryMirroringDisplayForUnifiedDesktop()->id();
   }
 
   DisplayUnitInfoList all_displays;

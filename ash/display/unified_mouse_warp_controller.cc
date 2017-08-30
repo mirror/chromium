@@ -6,6 +6,9 @@
 
 #include <cmath>
 
+#include <queue>
+#include <set>
+
 #include "ash/display/display_util.h"
 #include "ash/display/mirror_window_controller.h"
 #include "ash/display/window_tree_host_manager.h"
@@ -53,14 +56,15 @@ aura::WindowTreeHost* FindMirroringWindowTreeHostFromScreenPoint(
 
 UnifiedMouseWarpController::UnifiedMouseWarpController()
     : current_cursor_display_id_(display::kInvalidDisplayId),
-      update_location_for_test_(false) {}
+      update_location_for_test_(false),
+      bounds_computed_(false) {}
 
 UnifiedMouseWarpController::~UnifiedMouseWarpController() {}
 
 bool UnifiedMouseWarpController::WarpMouseCursor(ui::MouseEvent* event) {
   // Mirroring windows are created asynchronously, so compute the edge
   // beounds when we received an event instead of in constructor.
-  if (first_edge_bounds_in_native_.IsEmpty())
+  if (!bounds_computed_)
     ComputeBounds();
 
   aura::Window* target = static_cast<aura::Window*>(event->target());
@@ -120,44 +124,62 @@ void UnifiedMouseWarpController::ComputeBounds() {
     LOG(ERROR) << "Mirroring Display lost during re-configuration";
     return;
   }
-  LOG_IF(ERROR, display_list.size() > 2) << "Only two displays are supported";
 
-  const display::Display& first = display_list[0];
-  const display::Display& second = display_list[1];
-  bool success =
-      display::ComputeBoundary(first, second, &first_edge_bounds_in_native_,
-                               &second_edge_bounds_in_native_);
-  DCHECK(success);
+  for (size_t i = 0; i < display_list.size() - 1; ++i) {
+    const display::Display& first = display_list[i];
+    for (size_t j = i + 1; j < display_list.size(); ++j) {
+      const display::Display& second = display_list[j];
+      gfx::Rect first_edge;
+      gfx::Rect second_edge;
+      if (display::ComputeBoundary(first, second, &first_edge, &second_edge)) {
+        first_edge = GetNativeEdgeBounds(
+            GetMirroringAshWindowTreeHostForDisplayId(first.id()), first_edge);
+        second_edge = GetNativeEdgeBounds(
+            GetMirroringAshWindowTreeHostForDisplayId(second.id()),
+            second_edge);
 
-  first_edge_bounds_in_native_ =
-      GetNativeEdgeBounds(GetMirroringAshWindowTreeHostForDisplayId(first.id()),
-                          first_edge_bounds_in_native_);
+        displays_edges_map_[first.id()].emplace_back(first.id(), second.id(),
+                                                     first_edge);
+        displays_edges_map_[second.id()].emplace_back(second.id(), first.id(),
+                                                      second_edge);
+      }
+    }
+  }
 
-  second_edge_bounds_in_native_ = GetNativeEdgeBounds(
-      GetMirroringAshWindowTreeHostForDisplayId(second.id()),
-      second_edge_bounds_in_native_);
+  bounds_computed_ = true;
 }
 
 bool UnifiedMouseWarpController::WarpMouseCursorInNativeCoords(
     const gfx::Point& point_in_native,
     const gfx::Point& point_in_unified_host,
     bool update_mouse_location_now) {
-  bool in_first_edge = first_edge_bounds_in_native_.Contains(point_in_native);
-  bool in_second_edge = second_edge_bounds_in_native_.Contains(point_in_native);
-  if (!in_first_edge && !in_second_edge)
-    return false;
-  display::Displays display_list =
+  display::Displays mirroring_display_list =
       Shell::Get()->display_manager()->software_mirroring_display_list();
-  // Wait updating the cursor until the cursor moves to the new display
-  // to avoid showing the wrong sized cursor at the source display.
-  current_cursor_display_id_ =
-      in_first_edge ? display_list[0].id() : display_list[1].id();
-  AshWindowTreeHost* target_ash_host =
-      GetMirroringAshWindowTreeHostForDisplayId(
-          in_first_edge ? display_list[1].id() : display_list[0].id());
-  MoveCursorTo(target_ash_host, point_in_unified_host,
-               update_mouse_location_now);
-  return true;
+  const auto iter = display::FindDisplayContainingPoint(mirroring_display_list,
+                                                        point_in_unified_host);
+  if (iter == mirroring_display_list.end())
+    return false;
+
+  const auto edges_iter = displays_edges_map_.find(iter->id());
+  if (edges_iter == displays_edges_map_.end())
+    return false;
+
+  const std::vector<DisplayEdge>& potential_edges = edges_iter->second;
+  for (const auto& edge : potential_edges) {
+    if (edge.edge_native_bounds_in_source_display.Contains(point_in_native)) {
+      // Wait updating the cursor until the cursor moves to the new display
+      // to avoid showing the wrong sized cursor at the source display.
+      current_cursor_display_id_ = edge.source_display_id;
+
+      AshWindowTreeHost* target_ash_host =
+          GetMirroringAshWindowTreeHostForDisplayId(edge.target_display_id);
+      MoveCursorTo(target_ash_host, point_in_unified_host,
+                   update_mouse_location_now);
+      return true;
+    }
+  }
+
+  return false;
 }
 
 }  // namespace ash
