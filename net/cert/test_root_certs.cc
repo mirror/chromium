@@ -10,6 +10,7 @@
 #include "base/files/file_util.h"
 #include "base/logging.h"
 #include "base/threading/thread_restrictions.h"
+#include "net/cert/internal/parsed_certificate.h"
 #include "net/cert/x509_certificate.h"
 
 namespace net {

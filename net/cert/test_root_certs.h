@@ -5,15 +5,17 @@
 #ifndef NET_CERT_TEST_ROOT_CERTS_H_
 #define NET_CERT_TEST_ROOT_CERTS_H_
 
+#include <vector>
+
 #include "base/lazy_instance.h"
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
 #include "build/build_config.h"
 #include "net/base/net_export.h"
+#include "net/cert/internal/trust_store_in_memory.h"
 
 #if defined(USE_NSS_CERTS)
 #include <cert.h>
-#include <vector>
 #include "net/cert/scoped_nss_types.h"
 #elif defined(OS_WIN)
 #include <windows.h>
@@ -82,6 +84,8 @@ class NET_EXPORT TestRootCerts {
   // engine is appropriate. The caller is responsible for freeing the
   // returned HCERTCHAINENGINE.
   HCERTCHAINENGINE GetChainEngine() const;
+#elif defined(OS_FUCHSIA)
+  TrustStore* test_trust_store() { return &test_trust_store_; }
 #endif
 
  private:
@@ -126,11 +130,13 @@ class NET_EXPORT TestRootCerts {
 #elif defined(OS_MACOSX)
   base::ScopedCFTypeRef<CFMutableArrayRef> temporary_roots_;
   bool allow_system_trust_;
+#elif defined(OS_FUCHSIA)
+  TrustStoreInMemory test_trust_store_;
 #endif
 
 #if defined(OS_WIN) || defined(OS_ANDROID) || defined(OS_FUCHSIA)
   // True if there are no temporarily trusted root certificates.
-  bool empty_;
+  bool empty_ = true;
 #endif
 
   DISALLOW_COPY_AND_ASSIGN(TestRootCerts);
