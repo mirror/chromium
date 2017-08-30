@@ -59,6 +59,29 @@
     },
     {
       "key": {
+        "uuid": "ac5a4d84_60a8ffbf",
+        "filename": "ios/clean/chrome/browser/ui/dialogs/context_menu/context_menu_overlay_coordinator.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-08-30T17:56:17Z",
+      "side": 1,
+      "message": "Since a DialogCoordinator is a subclass of OverlayCoordinator, is it more accurate to say that this is a dialog coordinator used to present context menus?",
+      "range": {
+        "startLine": 14,
+        "startChar": 6,
+        "endLine": 14,
+        "endChar": 25
+      },
+      "revId": "311896a0d281f21fa20450923ef82e8d95cf6c22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b1396ad1_da1fbc9d",
         "filename": "ios/clean/chrome/browser/ui/dialogs/context_menu/context_menu_overlay_coordinator.h",
         "patchSetId": 2
