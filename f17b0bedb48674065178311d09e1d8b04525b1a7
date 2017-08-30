@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "af7d3e8b_016ba372",
+        "filename": "remoting/host/remoting_me2me_host.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1144161
+      },
+      "writtenOn": "2017-08-30T22:12:14Z",
+      "side": 1,
+      "message": "Should this flag be added to the usage message?",
+      "revId": "f17b0bedb48674065178311d09e1d8b04525b1a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e718c762_fa087e42",
+        "filename": "remoting/host/remoting_me2me_host.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1702,
+      "author": {
+        "id": 1144161
+      },
+      "writtenOn": "2017-08-30T22:12:14Z",
+      "side": 1,
+      "message": "This doesn\u0027t seem particularly clean, but I\u0027m also not sure what would be better.",
+      "revId": "f17b0bedb48674065178311d09e1d8b04525b1a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43f9e829_02efaf37",
+        "filename": "remoting/resources/remoting_strings.grd",
+        "patchSetId": 4
+      },
+      "lineNbr": 1131,
+      "author": {
+        "id": 1144161
+      },
+      "writtenOn": "2017-08-30T22:12:14Z",
+      "side": 1,
+      "message": "Suggestions for better messages appreciated. I *think* just adding these is enough for the Android client to pick them up, and it looks like the iOS client doesn\u0027t report offline reasons at all.",
+      "revId": "f17b0bedb48674065178311d09e1d8b04525b1a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
