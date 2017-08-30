@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "83c26bfc_022f094f",
+        "filename": "cc/paint/frame_metadata.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-08-30T18:49:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "86dbc472_d84b0955",
+      "revId": "4304a8fcce1a2df98bc8e7865268a501c8401230",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1ab4bfee_aac269da",
         "filename": "third_party/WebKit/Source/platform/graphics/DecodingImageGenerator.cpp",
         "patchSetId": 10
@@ -39,6 +57,30 @@
       "revId": "4304a8fcce1a2df98bc8e7865268a501c8401230",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e212bbf_54dfe94b",
+        "filename": "third_party/WebKit/Source/platform/graphics/DecodingImageGenerator.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-08-30T18:49:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1ab4bfee_aac269da",
+      "range": {
+        "startLine": 191,
+        "startChar": 2,
+        "endLine": 191,
+        "endChar": 6
+      },
+      "revId": "4304a8fcce1a2df98bc8e7865268a501c8401230",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
