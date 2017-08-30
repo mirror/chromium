@@ -244,10 +244,7 @@ IN_PROC_BROWSER_TEST_F(LoggedInSpokenFeedbackTest,
 // Spoken feedback tests in both a logged in browser window and guest mode.
 //
 
-enum SpokenFeedbackTestVariant {
-  kTestAsNormalUser,
-  kTestAsGuestUser
-};
+enum SpokenFeedbackTestVariant { kTestAsNormalUser, kTestAsGuestUser };
 
 class SpokenFeedbackTest
     : public LoggedInSpokenFeedbackTest,
@@ -268,11 +265,9 @@ class SpokenFeedbackTest
   }
 };
 
-INSTANTIATE_TEST_CASE_P(
-    TestAsNormalAndGuestUser,
-    SpokenFeedbackTest,
-    ::testing::Values(kTestAsNormalUser,
-                      kTestAsGuestUser));
+INSTANTIATE_TEST_CASE_P(TestAsNormalAndGuestUser,
+                        SpokenFeedbackTest,
+                        ::testing::Values(kTestAsNormalUser, kTestAsGuestUser));
 
 // TODO(tommi): Flakily hitting HasOneRef DCHECK in
 // AudioOutputResampler::Shutdown, see crbug.com/630031.
@@ -325,6 +320,11 @@ IN_PROC_BROWSER_TEST_P(SpokenFeedbackTest, FocusShelf) {
 }
 
 IN_PROC_BROWSER_TEST_P(SpokenFeedbackTest, NavigateAppLauncher) {
+  // TODO(newcomer): this test needs to be reevaluated for the fullscreen app
+  // list (http://crbug.com/759779).
+  if (app_list::features::IsFullscreenAppListEnabled())
+    return;
+
   EnableChromeVox();
 
   EXPECT_TRUE(PerformAcceleratorAction(ash::FOCUS_SHELF));
