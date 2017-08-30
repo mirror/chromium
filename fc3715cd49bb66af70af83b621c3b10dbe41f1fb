@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3135668b_44f2c160",
+        "filename": "third_party/WebKit/Source/core/layout/line/InlineFlowBox.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-08-30T04:41:52Z",
+      "side": 1,
+      "message": "Nit:\nconst auto\u0026 style \u003d text_box-\u003eGetLineLayoutItem().StyleRef(IsFirstLineStyle());\nthen line 101-106 can be embedded into line 112 and line 116.",
+      "revId": "fc3715cd49bb66af70af83b621c3b10dbe41f1fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba74b88e_288a860a",
+        "filename": "third_party/WebKit/Source/core/layout/line/InlineFlowBox.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-08-30T04:41:52Z",
+      "side": 1,
+      "message": "Nit:\nif (style.IsFlippedLinesWritingMode()) {\n  ...",
+      "revId": "fc3715cd49bb66af70af83b621c3b10dbe41f1fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
