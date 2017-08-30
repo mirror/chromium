@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9050df24_5bd382c0",
+        "filename": "third_party/WebKit/Source/platform/exported/WebCORS.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-08-30T15:56:27Z",
+      "side": 1,
+      "message": "const CString\u0026",
+      "revId": "359e146b371f7526f6b537be41667141d69088bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
