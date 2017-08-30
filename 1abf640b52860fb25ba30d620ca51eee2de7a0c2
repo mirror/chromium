@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fba1cf6d_eac2d2a2",
+        "filename": "ios/chrome/browser/ui/tabs/tab_strip_controller.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-08-30T14:40:16Z",
+      "side": 1,
+      "message": "Annoying nit: I think we\u0027ve used \u003cApplicationCommands, BrowserCommands\u003e as the ordering elsewhere, and I\u0027d prefer to be consistent.",
+      "range": {
+        "startLine": 42,
+        "startChar": 40,
+        "endLine": 42,
+        "endChar": 55
+      },
+      "revId": "1abf640b52860fb25ba30d620ca51eee2de7a0c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d2ff750_dd9878a5",
+        "filename": "ios/chrome/browser/upgrade/upgrade_center.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-08-30T14:40:16Z",
+      "side": 1,
+      "message": "I think this should just be \"|client| and |dispatcher| are not retained ...\".",
+      "range": {
+        "startLine": 33,
+        "startChar": 68,
+        "endLine": 33,
+        "endChar": 75
+      },
+      "revId": "1abf640b52860fb25ba30d620ca51eee2de7a0c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
