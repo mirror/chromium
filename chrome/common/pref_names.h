@@ -20,25 +20,6 @@
 namespace prefs {
 
 // Profile prefs. Please add Local State prefs below instead.
-#if defined(OS_CHROMEOS) && BUILDFLAG(ENABLE_APP_LIST)
-extern const char kArcActiveDirectoryPlayUserId[];
-extern const char kArcApps[];
-extern const char kArcBackupRestoreEnabled[];
-extern const char kArcDataRemoveRequested[];
-extern const char kArcEnabled[];
-extern const char kArcPolicyComplianceReported[];
-extern const char kArcTermsAccepted[];
-extern const char kArcLocationServiceEnabled[];
-extern const char kArcPackages[];
-extern const char kArcPaiStarted[];
-extern const char kArcSetNotificationsEnabledDeferred[];
-extern const char kArcSignedIn[];
-extern const char kArcCompatibleFilesystemChosen[];
-extern const char kArcVoiceInteractionValuePropAccepted[];
-extern const char kVoiceInteractionEnabled[];
-extern const char kVoiceInteractionContextEnabled[];
-extern const char kVoiceInteractionPrefSynced[];
-#endif
 extern const char kChildAccountStatusKnown[];
 extern const char kDefaultApps[];
 extern const char kSafeBrowsingForTrustedSourcesEnabled[];

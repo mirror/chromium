@@ -7,6 +7,8 @@ import("//testing/test.gni")
 
 static_library("arc") {
   sources = [
+    "arc_prefs.cc",
+    "arc_prefs.h",
     "audio/arc_audio_bridge.cc",
     "audio/arc_audio_bridge.h",
     "bluetooth/bluetooth_struct_traits.cc",
@@ -59,6 +61,8 @@ static_library("arc") {
     ":arc_base",
   ]
 
+  defines = [ "ARC_IMPLEMENTATION" ]
+
   deps = [
     "//ash:ash",
     "//ash/public/cpp:ash_public_cpp",
@@ -69,6 +73,7 @@ static_library("arc") {
     "//components/exo",
     "//components/google/core/browser",
     "//components/onc",
+    "//components/pref_registry",
     "//components/prefs",
     "//components/signin/core/account_id",
     "//components/user_manager",
@@ -97,6 +102,7 @@ static_library("arc_base") {
     "arc_bridge_service.cc",
     "arc_bridge_service.h",
     "arc_browser_context_keyed_service_factory_base.h",
+    "arc_export.h",
     "arc_features.cc",
     "arc_features.h",
     "arc_service_manager.cc",
@@ -111,6 +117,8 @@ static_library("arc_base") {
     "arc_util.h",
     "instance_holder.h",
   ]
+
+  defines = [ "ARC_IMPLEMENTATION" ]
 
   deps = [
     "//base",
