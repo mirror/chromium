@@ -16,6 +16,24 @@
       "revId": "79cbd9b62fa82b09978751bc43aa22cc1f3c9b34",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "caf76665_dcf90a15",
+        "filename": "ui/ozone/platform/drm/mus_thread_proxy.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000246
+      },
+      "writtenOn": "2017-08-30T15:32:48Z",
+      "side": 0,
+      "message": "I did git-mv here. Sorry.",
+      "parentUuid": "5c6a643b_e7b92021",
+      "revId": "79cbd9b62fa82b09978751bc43aa22cc1f3c9b34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

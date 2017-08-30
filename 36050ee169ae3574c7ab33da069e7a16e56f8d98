@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ac696ee9_97ee5da5",
+        "filename": "ui/ozone/platform/drm/gpu/drm_thread.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 320,
+      "author": {
+        "id": 1000246
+      },
+      "writtenOn": "2017-08-30T15:32:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b1cfa04a_7bed2d31",
+      "revId": "36050ee169ae3574c7ab33da069e7a16e56f8d98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "10661ddc_74fb1592",
         "filename": "ui/ozone/platform/drm/gpu/drm_thread.h",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-30T14:22:02Z",
       "side": 1,
       "message": "Can you group / comment at the top of the overrides for mojom::DrmDevice? It\u0027s not obvious what override are for what interface.",
+      "revId": "36050ee169ae3574c7ab33da069e7a16e56f8d98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b6d13bf_dd87bf62",
+        "filename": "ui/ozone/platform/drm/gpu/drm_thread.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1000246
+      },
+      "writtenOn": "2017-08-30T15:32:48Z",
+      "side": 1,
+      "message": "done. Along with other comment cleanup.",
+      "parentUuid": "10661ddc_74fb1592",
       "revId": "36050ee169ae3574c7ab33da069e7a16e56f8d98",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -50,6 +86,24 @@
       "revId": "36050ee169ae3574c7ab33da069e7a16e56f8d98",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24b6c0ea_b09c7f71",
+        "filename": "ui/ozone/platform/drm/host/host_drm_device.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1000246
+      },
+      "writtenOn": "2017-08-30T15:32:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "093291e5_af33cc04",
+      "revId": "36050ee169ae3574c7ab33da069e7a16e56f8d98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -76,6 +130,30 @@
     },
     {
       "key": {
+        "uuid": "de8c38e9_6aa77270",
+        "filename": "ui/ozone/platform/drm/host/host_drm_device.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1000246
+      },
+      "writtenOn": "2017-08-30T15:32:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2b409a1a_29a43e92",
+      "range": {
+        "startLine": 40,
+        "startChar": 33,
+        "endLine": 40,
+        "endChar": 43
+      },
+      "revId": "36050ee169ae3574c7ab33da069e7a16e56f8d98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "674d788a_b1cd1b65",
         "filename": "ui/ozone/platform/drm/host/host_drm_device.h",
         "patchSetId": 2
@@ -99,6 +177,30 @@
     },
     {
       "key": {
+        "uuid": "f29da3a7_b6d11444",
+        "filename": "ui/ozone/platform/drm/host/host_drm_device.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1000246
+      },
+      "writtenOn": "2017-08-30T15:32:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "674d788a_b1cd1b65",
+      "range": {
+        "startLine": 45,
+        "startChar": 51,
+        "endLine": 45,
+        "endChar": 52
+      },
+      "revId": "36050ee169ae3574c7ab33da069e7a16e56f8d98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1556ec74_3298ad87",
         "filename": "ui/ozone/platform/drm/ozone_platform_gbm.cc",
         "patchSetId": 2
@@ -110,6 +212,30 @@
       "writtenOn": "2017-08-30T00:13:26Z",
       "side": 1,
       "message": "Any reason to use rjk and rjkroege interchangeably?\n\nAlso, nit: \"fold\"",
+      "range": {
+        "startLine": 241,
+        "startChar": 12,
+        "endLine": 241,
+        "endChar": 15
+      },
+      "revId": "36050ee169ae3574c7ab33da069e7a16e56f8d98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b56d844_bca4473d",
+        "filename": "ui/ozone/platform/drm/ozone_platform_gbm.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1000246
+      },
+      "writtenOn": "2017-08-30T15:32:48Z",
+      "side": 1,
+      "message": "Reason: sloppiness on my part. TODO was fixed in this CL and I failed to remove the comment. Fixed.",
+      "parentUuid": "1556ec74_3298ad87",
       "range": {
         "startLine": 241,
         "startChar": 12,
