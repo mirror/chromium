@@ -58,8 +58,7 @@
 #include "ios/chrome/browser/history/top_sites_factory.h"
 #include "ios/chrome/browser/infobars/infobar_manager_impl.h"
 #import "ios/chrome/browser/metrics/tab_usage_recorder.h"
-#import "ios/chrome/browser/passwords/password_controller.h"
-#import "ios/chrome/browser/passwords/passwords_ui_delegate_impl.h"
+#import "ios/chrome/browser/passwords/password_tab_helper.h"
 #include "ios/chrome/browser/pref_names.h"
 #include "ios/chrome/browser/reading_list/reading_list_model_factory.h"
 #include "ios/chrome/browser/search_engines/template_url_service_factory.h"
@@ -419,7 +418,6 @@ void TabInfoBarObserver::OnInfoBarReplaced(infobars::InfoBar* old_infobar,
 @synthesize isPrerenderTab = _isPrerenderTab;
 @synthesize isLinkLoadingPrerenderTab = isLinkLoadingPrerenderTab_;
 @synthesize isVoiceSearchResultsTab = _isVoiceSearchResultsTab;
-@synthesize passwordController = passwordController_;
 @synthesize overscrollActionsController = _overscrollActionsController;
 @synthesize overscrollActionsControllerDelegate =
     overscrollActionsControllerDelegate_;
@@ -464,17 +462,11 @@ void TabInfoBarObserver::OnInfoBarReplaced(infobars::InfoBar* old_infobar,
   if (experimental_flags::IsAutoReloadEnabled())
     _autoReloadBridge = [[AutoReloadBridge alloc] initWithTab:self];
 
-  id<PasswordsUiDelegate> passwordsUIDelegate =
-      [[PasswordsUiDelegateImpl alloc] init];
-  passwordController_ =
-      [[PasswordController alloc] initWithWebState:self.webState
-                               passwordsUiDelegate:passwordsUIDelegate];
-  password_manager::PasswordGenerationManager* passwordGenerationManager =
-      [passwordController_ passwordGenerationManager];
-  _autofillController =
-      [[AutofillController alloc] initWithBrowserState:_browserState
-                             passwordGenerationManager:passwordGenerationManager
-                                              webState:self.webState];
+  _autofillController = [[AutofillController alloc]
+           initWithBrowserState:_browserState
+      passwordGenerationManager:PasswordTabHelper::FromWebState(self.webState)
+                                    ->GetPasswordGenerationManager()
+                       webState:self.webState];
   _suggestionController = [[FormSuggestionController alloc]
       initWithWebState:self.webState
              providers:[self suggestionProviders]];
@@ -494,8 +486,10 @@ void TabInfoBarObserver::OnInfoBarReplaced(infobars::InfoBar* old_infobar,
 
 - (NSArray*)accessoryViewProviders {
   NSMutableArray* providers = [NSMutableArray array];
+
   id<FormInputAccessoryViewProvider> provider =
-      [passwordController_ accessoryViewProvider];
+      PasswordTabHelper::FromWebState(self.webState)
+          ->GetAccessoryViewProvider();
   if (provider)
     [providers addObject:provider];
   [providers addObject:[_suggestionController accessoryViewProvider]];
@@ -504,7 +498,8 @@ void TabInfoBarObserver::OnInfoBarReplaced(infobars::InfoBar* old_infobar,
 
 - (NSArray*)suggestionProviders {
   NSMutableArray* providers = [NSMutableArray array];
-  [providers addObject:[passwordController_ suggestionProvider]];
+  [providers addObject:PasswordTabHelper::FromWebState(self.webState)
+                           ->GetSuggestionProvider()];
   [providers addObject:[_autofillController suggestionProvider]];
   return providers;
 }
@@ -738,7 +733,9 @@ void TabInfoBarObserver::OnInfoBarReplaced(infobars::InfoBar* old_infobar,
   // should be nil, or the new value should be nil.
   DCHECK(!_dispatcher || !dispatcher);
   _dispatcher = dispatcher;
-  self.passwordController.dispatcher = dispatcher;
+  // Forward the new dispatcher to tab helpers.
+  PasswordTabHelper::FromWebState(self.webState)
+      ->SetDispatcher(self.dispatcher);
   // If the new dispatcher is nonnull, add tab helpers.
   if (self.dispatcher)
     [self attachDispatcherDependentTabHelpers];
@@ -890,8 +887,6 @@ void TabInfoBarObserver::OnInfoBarReplaced(infobars::InfoBar* old_infobar,
   self.passKitDialogProvider = nil;
   self.snapshotOverlayProvider = nil;
 
-  [passwordController_ detach];
-  passwordController_ = nil;
   _tabInfoBarObserver.reset();
 
   _faviconDriverObserverBridge.reset();
