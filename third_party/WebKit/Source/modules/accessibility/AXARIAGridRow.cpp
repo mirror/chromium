@@ -59,4 +59,14 @@ void AXARIAGridRow::HeaderObjectsForRow(AXObjectVector& headers) {
   }
 }
 
+AXObject* AXARIAGridRow::ParentTable() const {
+  // A poorly-authored ARIA grid row could be nested within wrapper elements.
+  AXObject* ancestor = static_cast<AXObject*>(const_cast<AXARIAGridRow*>(this));
+  do {
+    ancestor = ancestor->ParentObjectUnignored();
+  } while (ancestor && !ancestor->IsAXTable());
+
+  return ancestor;
+}
+
 }  // namespace blink
