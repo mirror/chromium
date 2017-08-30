@@ -64,7 +64,7 @@
       IDS_PAYMENT_REQUEST_ORDER_SUMMARY_SHEET_TOTAL_FORMAT,
       base::UTF8ToUTF16(currencyFormatter->formatted_currency_code()),
       currencyFormatter->Format(
-          _paymentRequest->payment_details().total->amount.value)));
+          _paymentRequest->payment_details().total->amount->value)));
   return totalItem;
 }
 
@@ -80,7 +80,7 @@
     payments::CurrencyFormatter* currencyFormatter =
         _paymentRequest->GetOrCreateCurrencyFormatter();
     item.price = base::SysUTF16ToNSString(
-        currencyFormatter->Format(paymentItem.amount.value));
+        currencyFormatter->Format(paymentItem.amount->value));
 
     [lineItems addObject:item];
   }
