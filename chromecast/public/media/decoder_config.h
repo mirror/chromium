@@ -280,6 +280,26 @@ inline HDRMetadata::HDRMetadata() {}
 inline HDRMetadata::HDRMetadata(const HDRMetadata& rhs) = default;
 // ---- End copy/paste from media/base/hdr_metadata.h ----
 
+// ---- Begin copy/paste from media/base/channel_layout.h ----
+enum Channels {
+  LEFT = 0,
+  RIGHT,
+  CENTER,
+  LFE,
+  BACK_LEFT,
+  BACK_RIGHT,
+  LEFT_OF_CENTER,
+  RIGHT_OF_CENTER,
+  BACK_CENTER,
+  SIDE_LEFT,
+  SIDE_RIGHT,
+  CHANNELS_MAX =
+      SIDE_RIGHT,  // Must always equal the largest value ever logged.
+};
+// ---- End copy/paste from media/base/channel_layout.h ----
+
+constexpr int kChannelAll = -1;
+
 // TODO(erickung): Remove constructor once CMA backend implementation doesn't
 // create a new object to reset the configuration and use IsValidConfig() to
 // determine if the configuration is still valid or not.
@@ -306,6 +326,8 @@ struct AudioConfig {
   std::vector<uint8_t> extra_data;
   // Encryption scheme (if any) used for the content.
   EncryptionScheme encryption_scheme;
+  // Selected channel for multichannel group.
+  int playout_channel;
 };
 
 inline AudioConfig::AudioConfig()
@@ -314,8 +336,8 @@ inline AudioConfig::AudioConfig()
       sample_format(kUnknownSampleFormat),
       bytes_per_channel(0),
       channel_number(0),
-      samples_per_second(0) {
-}
+      samples_per_second(0),
+      playout_channel(kChannelAll) {}
 inline AudioConfig::AudioConfig(const AudioConfig& other) = default;
 inline AudioConfig::~AudioConfig() {
 }
