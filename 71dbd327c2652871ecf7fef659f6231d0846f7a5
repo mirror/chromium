@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "82d31c52_098e0541",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-08-30T01:23:53Z",
+      "side": 1,
+      "message": "This behavior should remain the same as before, except that hitting tab should move to the second search result instead of moving back to search box.",
+      "range": {
+        "startLine": 10,
+        "startChar": 3,
+        "endLine": 10,
+        "endChar": 26
+      },
+      "revId": "71dbd327c2652871ecf7fef659f6231d0846f7a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "91835c03_b905acb5",
         "filename": "/COMMIT_MSG",
         "patchSetId": 1
@@ -13,6 +36,24 @@
       "writtenOn": "2017-08-29T17:18:30Z",
       "side": 1,
       "message": "Have you check with UX? Left/Right move select app in contents view was a requested feature.",
+      "revId": "71dbd327c2652871ecf7fef659f6231d0846f7a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d22f2992_d0f0bb30",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-08-30T01:23:53Z",
+      "side": 1,
+      "message": "Left and right moving cursor in search box overlaps with moving selected app. I talked with UX, when focus is not on contents view, then left/right moves cursor. Otherwise, moving selected app. And one more thing to do is when search box text field is selected, the query should be selected.",
+      "parentUuid": "91835c03_b905acb5",
       "revId": "71dbd327c2652871ecf7fef659f6231d0846f7a5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -36,6 +77,24 @@
     },
     {
       "key": {
+        "uuid": "bfbbb8c9_d2050c2f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-08-30T01:23:53Z",
+      "side": 1,
+      "message": "This is the original behavior of the old launcher. And this is in accordance with AppsGridView\u0027s behavior. I just talked with UX and we should allow UP/Left to move focus back to search box. This change should also apply to AppsGridView as well.",
+      "parentUuid": "8bbd8c0e_8fe2a46d",
+      "revId": "71dbd327c2652871ecf7fef659f6231d0846f7a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e6a1d2b3_6c9dd4bc",
         "filename": "ui/app_list/views/search_box_view.cc",
         "patchSetId": 1
@@ -47,6 +106,24 @@
       "writtenOn": "2017-08-29T17:18:30Z",
       "side": 1,
       "message": "From the code here, the intention is not clear. Suggest to add\n  DCHECK_EQ(FOCUS_CONTENTS_VIEW, focused_view_); \n\nto make it easier to follow.\n\nAnd would this change behavior of old app list?",
+      "revId": "71dbd327c2652871ecf7fef659f6231d0846f7a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5808c1ae_22737d04",
+        "filename": "ui/app_list/views/search_box_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 356,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-08-30T01:23:53Z",
+      "side": 1,
+      "message": "I changed it back here, the special case is handled in HandleKeyEvent(). This only applies to fullscreen app list.",
+      "parentUuid": "e6a1d2b3_6c9dd4bc",
       "revId": "71dbd327c2652871ecf7fef659f6231d0846f7a5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
