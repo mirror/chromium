@@ -487,36 +487,6 @@ struct PendingPaymentResponse {
                         completionHandler:nil];
   }
 
-  if (_pendingPaymentRequest) {
-    paymentRequest->journey_logger().SetNotShown(
-        payments::JourneyLogger::NOT_SHOWN_REASON_CONCURRENT_REQUESTS);
-    [_paymentRequestJsManager
-        rejectRequestPromiseWithErrorName:kAbortError
-                             errorMessage:
-                                 @"Only one PaymentRequest may be shown at a "
-                                 @"time"
-                        completionHandler:nil];
-    return YES;
-  }
-
-  if (paymentRequest->supported_card_networks().empty() &&
-      (!base::FeatureList::IsEnabled(
-           payments::features::kWebPaymentsNativeApps) ||
-       paymentRequest->url_payment_method_identifiers().empty())) {
-    paymentRequest->journey_logger().SetNotShown(
-        payments::JourneyLogger::NOT_SHOWN_REASON_NO_SUPPORTED_PAYMENT_METHOD);
-    [_paymentRequestJsManager
-        rejectRequestPromiseWithErrorName:kNotSupportedError
-                             errorMessage:@"The payment method is not supported"
-                        completionHandler:nil];
-    return YES;
-  }
-
-  _pendingPaymentRequest = paymentRequest;
-  paymentRequest->set_state(payments::PaymentRequest::State::INTERACTIVE);
-
-  paymentRequest->journey_logger().SetEventOccurred(
-      payments::JourneyLogger::EVENT_SHOWN);
   paymentRequest->journey_logger().SetRequestedInformation(
       paymentRequest->request_shipping(), paymentRequest->request_payer_email(),
       paymentRequest->request_payer_phone(),
@@ -525,6 +495,7 @@ struct PendingPaymentResponse {
   // Log metrics around which payment methods are requested by the merchant.
   const GURL kGooglePayUrl("https://google.com/pay");
   const GURL kAndroidPayUrl("https://android.com/pay");
+
   // Looking for payment methods that are NOT Google-related as well as the
   // Google-related ones.
   bool requestedMethodGoogle = false;
@@ -545,6 +516,41 @@ struct PendingPaymentResponse {
       /*requested_method_google=*/
       requestedMethodGoogle,
       /*requested_method_other=*/requestedMethodOther);
+
+  if (_pendingPaymentRequest) {
+    paymentRequest->journey_logger().SetNotShown(
+        payments::JourneyLogger::NOT_SHOWN_REASON_CONCURRENT_REQUESTS);
+    paymentRequest->journey_logger().SetAborted(
+        payments::JourneyLogger::ABORT_REASON_OTHER);
+    [_paymentRequestJsManager
+        rejectRequestPromiseWithErrorName:kAbortError
+                             errorMessage:
+                                 @"Only one PaymentRequest may be shown at a "
+                                 @"time"
+                        completionHandler:nil];
+    return YES;
+  }
+
+  if (paymentRequest->supported_card_networks().empty() &&
+      (!base::FeatureList::IsEnabled(
+           payments::features::kWebPaymentsNativeApps) ||
+       paymentRequest->url_payment_method_identifiers().empty())) {
+    paymentRequest->journey_logger().SetNotShown(
+        payments::JourneyLogger::NOT_SHOWN_REASON_NO_SUPPORTED_PAYMENT_METHOD);
+    paymentRequest->journey_logger().SetAborted(
+        payments::JourneyLogger::ABORT_REASON_OTHER);
+    [_paymentRequestJsManager
+        rejectRequestPromiseWithErrorName:kNotSupportedError
+                             errorMessage:@"The payment method is not supported"
+                        completionHandler:nil];
+    return YES;
+  }
+
+  _pendingPaymentRequest = paymentRequest;
+  paymentRequest->set_state(payments::PaymentRequest::State::INTERACTIVE);
+
+  paymentRequest->journey_logger().SetEventOccurred(
+      payments::JourneyLogger::EVENT_SHOWN);
 
   UIImage* pageFavicon = nil;
   web::NavigationItem* navigationItem =
