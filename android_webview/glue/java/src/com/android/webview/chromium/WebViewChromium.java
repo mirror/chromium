@@ -586,12 +586,12 @@ class WebViewChromium implements WebViewProvider, WebViewProvider.ScrollDelegate
             mFactory.addTask(new Runnable() {
                 @Override
                 public void run() {
-                    mAwContents.evaluateJavaScript(script, resultCallback);
+                    mAwContents.evaluateJavaScript(script, Converters.toAwType(resultCallback));
                 }
             });
         } else {
             checkThread();
-            mAwContents.evaluateJavaScript(script, resultCallback);
+            mAwContents.evaluateJavaScript(script, Converters.toAwType(resultCallback));
         }
     }
 
@@ -612,7 +612,7 @@ class WebViewChromium implements WebViewProvider, WebViewProvider.ScrollDelegate
             });
             return;
         }
-        mAwContents.saveWebArchive(basename, autoname, callback);
+        mAwContents.saveWebArchive(basename, autoname, Converters.toAwType(callback));
     }
 
     @Override

@@ -20,7 +20,6 @@ import android.os.Message;
 import android.view.KeyEvent;
 import android.view.View;
 import android.webkit.ClientCertRequest;
-import android.webkit.ConsoleMessage;
 import android.webkit.DownloadListener;
 import android.webkit.GeolocationPermissions;
 import android.webkit.JsDialogHelper;
@@ -40,12 +39,15 @@ import android.webkit.WebViewClient;
 
 import com.android.webview.chromium.WebViewDelegateFactory.WebViewDelegate;
 
+import org.chromium.android_webview.AwConsoleMessage;
 import org.chromium.android_webview.AwContents;
 import org.chromium.android_webview.AwContentsClient;
 import org.chromium.android_webview.AwContentsClientBridge;
+import org.chromium.android_webview.AwGeolocationPermissions;
 import org.chromium.android_webview.AwHttpAuthHandler;
 import org.chromium.android_webview.AwRenderProcessGoneDetail;
 import org.chromium.android_webview.AwSafeBrowsingResponse;
+import org.chromium.android_webview.AwValueCallback;
 import org.chromium.android_webview.AwWebResourceResponse;
 import org.chromium.android_webview.JsPromptResultReceiver;
 import org.chromium.android_webview.JsResultReceiver;
@@ -216,12 +218,12 @@ class WebViewContentsClientAdapter extends AwContentsClient {
      * @see AwContentsClient#getVisitedHistory.
      */
     @Override
-    public void getVisitedHistory(ValueCallback<String[]> callback) {
+    public void getVisitedHistory(AwValueCallback<String[]> callback) {
         try {
             TraceEvent.begin("WebViewContentsClientAdapter.getVisitedHistory");
             if (mWebChromeClient != null) {
                 if (TRACE) Log.d(TAG, "getVisitedHistory");
-                mWebChromeClient.getVisitedHistory(callback);
+                mWebChromeClient.getVisitedHistory(Converters.fromAwType(callback));
             }
         } finally {
             TraceEvent.end("WebViewContentsClientAdapter.getVisitedHistory");
@@ -382,13 +384,13 @@ class WebViewContentsClientAdapter extends AwContentsClient {
      * @see AwContentsClient#onConsoleMessage(android.webkit.ConsoleMessage)
      */
     @Override
-    public boolean onConsoleMessage(ConsoleMessage consoleMessage) {
+    public boolean onConsoleMessage(AwConsoleMessage consoleMessage) {
         try {
             TraceEvent.begin("WebViewContentsClientAdapter.onConsoleMessage");
             boolean result;
             if (mWebChromeClient != null) {
                 if (TRACE) Log.d(TAG, "onConsoleMessage: " + consoleMessage.message());
-                result = mWebChromeClient.onConsoleMessage(consoleMessage);
+                result = mWebChromeClient.onConsoleMessage(Converters.fromAwType(consoleMessage));
             } else {
                 result = false;
             }
@@ -635,7 +637,7 @@ class WebViewContentsClientAdapter extends AwContentsClient {
 
     @Override
     public void onSafeBrowsingHit(AwWebResourceRequest request, int threatType,
-            ValueCallback<AwSafeBrowsingResponse> callback) {
+            AwValueCallback<AwSafeBrowsingResponse> callback) {
         // TODO(ntfschr): invoke the WebViewClient method once the next SDK rolls
         callback.onReceiveValue(new AwSafeBrowsingResponse(SafeBrowsingAction.SHOW_INTERSTITIAL,
                 /* reporting */ true));
@@ -702,8 +704,8 @@ class WebViewContentsClientAdapter extends AwContentsClient {
     }
 
     @Override
-    public void onGeolocationPermissionsShowPrompt(String origin,
-            GeolocationPermissions.Callback callback) {
+    public void onGeolocationPermissionsShowPrompt(
+            String origin, AwGeolocationPermissions.Callback callback) {
         try {
             TraceEvent.begin("WebViewContentsClientAdapter.onGeolocationPermissionsShowPrompt");
             if (mWebChromeClient == null) {
@@ -720,7 +722,8 @@ class WebViewContentsClientAdapter extends AwContentsClient {
                 return;
             }
             if (TRACE) Log.d(TAG, "onGeolocationPermissionsShowPrompt");
-            mWebChromeClient.onGeolocationPermissionsShowPrompt(origin, callback);
+            mWebChromeClient.onGeolocationPermissionsShowPrompt(
+                    origin, Converters.fromAwType(callback));
         } finally {
             TraceEvent.end("WebViewContentsClientAdapter.onGeolocationPermissionsShowPrompt");
         }
@@ -936,7 +939,7 @@ class WebViewContentsClientAdapter extends AwContentsClient {
     }
 
     @Override
-    public void onReceivedSslError(final ValueCallback<Boolean> callback, SslError error) {
+    public void onReceivedSslError(final AwValueCallback<Boolean> callback, SslError error) {
         try {
             TraceEvent.begin("WebViewContentsClientAdapter.onReceivedSslError");
             SslErrorHandler handler = new SslErrorHandler() {
@@ -1068,7 +1071,7 @@ class WebViewContentsClientAdapter extends AwContentsClient {
     }
 
     @Override
-    public void showFileChooser(final ValueCallback<String[]> uploadFileCallback,
+    public void showFileChooser(final AwValueCallback<String[]> uploadFileCallback,
             final AwContentsClient.FileChooserParamsImpl fileChooserParams) {
         try {
             TraceEvent.begin("WebViewContentsClientAdapter.showFileChooser");
@@ -1099,7 +1102,8 @@ class WebViewContentsClientAdapter extends AwContentsClient {
 
             // Invoke the new callback introduced in Lollipop. If the app handles
             // it, we're done here.
-            if (mWebChromeClient.onShowFileChooser(mWebView, callbackAdapter, fileChooserParams)) {
+            if (mWebChromeClient.onShowFileChooser(
+                        mWebView, callbackAdapter, Converters.fromAwType(fileChooserParams))) {
                 return;
             }
 
@@ -1152,7 +1156,7 @@ class WebViewContentsClientAdapter extends AwContentsClient {
             TraceEvent.begin("WebViewContentsClientAdapter.onShowCustomView");
             if (mWebChromeClient != null) {
                 if (TRACE) Log.d(TAG, "onShowCustomView");
-                mWebChromeClient.onShowCustomView(view, cb);
+                mWebChromeClient.onShowCustomView(view, Converters.fromAwType(cb));
             }
         } finally {
             TraceEvent.end("WebViewContentsClientAdapter.onShowCustomView");

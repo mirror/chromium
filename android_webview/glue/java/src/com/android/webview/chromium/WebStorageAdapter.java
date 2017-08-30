@@ -51,13 +51,13 @@ final class WebStorageAdapter extends WebStorage {
             mFactory.addTask(new Runnable() {
                 @Override
                 public void run() {
-                    mQuotaManagerBridge.getOrigins(awOriginsCallback);
+                    mQuotaManagerBridge.getOrigins(Converters.toAwType(awOriginsCallback));
                 }
 
             });
             return;
         }
-        mQuotaManagerBridge.getOrigins(awOriginsCallback);
+        mQuotaManagerBridge.getOrigins(Converters.toAwType(awOriginsCallback));
     }
 
     @Override
@@ -66,13 +66,13 @@ final class WebStorageAdapter extends WebStorage {
             mFactory.addTask(new Runnable() {
                 @Override
                 public void run() {
-                    mQuotaManagerBridge.getUsageForOrigin(origin, callback);
+                    mQuotaManagerBridge.getUsageForOrigin(origin, Converters.toAwType(callback));
                 }
 
             });
             return;
         }
-        mQuotaManagerBridge.getUsageForOrigin(origin, callback);
+        mQuotaManagerBridge.getUsageForOrigin(origin, Converters.toAwType(callback));
     }
 
     @Override
@@ -81,13 +81,13 @@ final class WebStorageAdapter extends WebStorage {
             mFactory.addTask(new Runnable() {
                 @Override
                 public void run() {
-                    mQuotaManagerBridge.getQuotaForOrigin(origin, callback);
+                    mQuotaManagerBridge.getQuotaForOrigin(origin, Converters.toAwType(callback));
                 }
 
             });
             return;
         }
-        mQuotaManagerBridge.getQuotaForOrigin(origin, callback);
+        mQuotaManagerBridge.getQuotaForOrigin(origin, Converters.toAwType(callback));
     }
 
     @Override
