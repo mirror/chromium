@@ -34,9 +34,9 @@ LayoutSVGViewportContainer::LayoutSVGViewportContainer(SVGSVGElement* node)
 
 void LayoutSVGViewportContainer::UpdateLayout() {
   DCHECK(NeedsLayout());
-  DCHECK(isSVGSVGElement(GetElement()));
+  DCHECK(IsSVGSVGElement(GetElement()));
 
-  const SVGSVGElement* svg = toSVGSVGElement(GetElement());
+  const SVGSVGElement* svg = ToSVGSVGElement(GetElement());
   is_layout_size_changed_ = SelfNeedsLayout() && svg->HasRelativeLengths();
 
   if (SelfNeedsLayout()) {
@@ -68,8 +68,8 @@ SVGTransformChange LayoutSVGViewportContainer::CalculateLocalTransform() {
   if (!needs_transform_update_)
     return SVGTransformChange::kNone;
 
-  DCHECK(isSVGSVGElement(GetElement()));
-  const SVGSVGElement* svg = toSVGSVGElement(GetElement());
+  DCHECK(IsSVGSVGElement(GetElement()));
+  const SVGSVGElement* svg = ToSVGSVGElement(GetElement());
   SVGTransformChangeDetector change_detector(local_to_parent_transform_);
   local_to_parent_transform_ =
       AffineTransform::Translation(viewport_.X(), viewport_.Y()) *

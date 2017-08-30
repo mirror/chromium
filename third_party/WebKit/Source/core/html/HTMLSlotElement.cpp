@@ -94,9 +94,9 @@ void HTMLSlotElement::AppendAssignedNode(Node& host_child) {
 void HTMLSlotElement::ResolveDistributedNodes() {
   for (auto& node : assigned_nodes_) {
     DCHECK(node->IsSlotable());
-    if (isHTMLSlotElement(*node) &&
-        toHTMLSlotElement(*node).SupportsDistribution())
-      AppendDistributedNodesFrom(toHTMLSlotElement(*node));
+    if (IsHTMLSlotElement(*node) &&
+        ToHTMLSlotElement(*node).SupportsDistribution())
+      AppendDistributedNodesFrom(ToHTMLSlotElement(*node));
     else
       AppendDistributedNode(*node);
 
@@ -278,8 +278,8 @@ void HTMLSlotElement::UpdateDistributedNodesWithFallback() {
   for (auto& child : NodeTraversal::ChildrenOf(*this)) {
     if (!child.IsSlotable())
       continue;
-    if (isHTMLSlotElement(child))
-      AppendDistributedNodesFrom(toHTMLSlotElement(child));
+    if (IsHTMLSlotElement(child))
+      AppendDistributedNodesFrom(ToHTMLSlotElement(child));
     else
       AppendDistributedNode(child);
   }

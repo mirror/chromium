@@ -71,30 +71,30 @@ WebString WebFormControlElement::NameForAutofill() const {
 }
 
 bool WebFormControlElement::AutoComplete() const {
-  if (isHTMLInputElement(*private_))
+  if (IsHTMLInputElement(*private_))
     return ConstUnwrap<HTMLInputElement>()->ShouldAutocomplete();
-  if (isHTMLTextAreaElement(*private_))
+  if (IsHTMLTextAreaElement(*private_))
     return ConstUnwrap<HTMLTextAreaElement>()->ShouldAutocomplete();
-  if (isHTMLSelectElement(*private_))
+  if (IsHTMLSelectElement(*private_))
     return ConstUnwrap<HTMLSelectElement>()->ShouldAutocomplete();
   return false;
 }
 
 void WebFormControlElement::SetValue(const WebString& value, bool send_events) {
-  if (isHTMLInputElement(*private_)) {
+  if (IsHTMLInputElement(*private_)) {
     Unwrap<HTMLInputElement>()->setValue(
         value, send_events ? kDispatchInputAndChangeEvent : kDispatchNoEvent);
-  } else if (isHTMLTextAreaElement(*private_)) {
+  } else if (IsHTMLTextAreaElement(*private_)) {
     Unwrap<HTMLTextAreaElement>()->setValue(
         value, send_events ? kDispatchInputAndChangeEvent : kDispatchNoEvent);
-  } else if (isHTMLSelectElement(*private_)) {
+  } else if (IsHTMLSelectElement(*private_)) {
     Unwrap<HTMLSelectElement>()->setValue(value, send_events);
   }
 }
 
 void WebFormControlElement::SetAutofillValue(const WebString& value) {
   // The input and change events will be sent in setValue.
-  if (isHTMLInputElement(*private_) || isHTMLTextAreaElement(*private_)) {
+  if (IsHTMLInputElement(*private_) || IsHTMLTextAreaElement(*private_)) {
     if (!Focused()) {
       Unwrap<Element>()->DispatchFocusEvent(nullptr, kWebFocusTypeForward,
                                             nullptr);
@@ -108,7 +108,7 @@ void WebFormControlElement::SetAutofillValue(const WebString& value) {
       Unwrap<Element>()->DispatchBlurEvent(nullptr, kWebFocusTypeForward,
                                            nullptr);
     }
-  } else if (isHTMLSelectElement(*private_)) {
+  } else if (IsHTMLSelectElement(*private_)) {
     if (!Focused()) {
       Unwrap<Element>()->DispatchFocusEvent(nullptr, kWebFocusTypeForward,
                                             nullptr);
@@ -122,61 +122,61 @@ void WebFormControlElement::SetAutofillValue(const WebString& value) {
 }
 
 WebString WebFormControlElement::Value() const {
-  if (isHTMLInputElement(*private_))
+  if (IsHTMLInputElement(*private_))
     return ConstUnwrap<HTMLInputElement>()->value();
-  if (isHTMLTextAreaElement(*private_))
+  if (IsHTMLTextAreaElement(*private_))
     return ConstUnwrap<HTMLTextAreaElement>()->value();
-  if (isHTMLSelectElement(*private_))
+  if (IsHTMLSelectElement(*private_))
     return ConstUnwrap<HTMLSelectElement>()->value();
   return WebString();
 }
 
 void WebFormControlElement::SetSuggestedValue(const WebString& value) {
-  if (isHTMLInputElement(*private_))
+  if (IsHTMLInputElement(*private_))
     Unwrap<HTMLInputElement>()->SetSuggestedValue(value);
-  else if (isHTMLTextAreaElement(*private_))
+  else if (IsHTMLTextAreaElement(*private_))
     Unwrap<HTMLTextAreaElement>()->SetSuggestedValue(value);
-  else if (isHTMLSelectElement(*private_))
+  else if (IsHTMLSelectElement(*private_))
     Unwrap<HTMLSelectElement>()->SetSuggestedValue(value);
 }
 
 WebString WebFormControlElement::SuggestedValue() const {
-  if (isHTMLInputElement(*private_))
+  if (IsHTMLInputElement(*private_))
     return ConstUnwrap<HTMLInputElement>()->SuggestedValue();
-  if (isHTMLTextAreaElement(*private_))
+  if (IsHTMLTextAreaElement(*private_))
     return ConstUnwrap<HTMLTextAreaElement>()->SuggestedValue();
-  if (isHTMLSelectElement(*private_))
+  if (IsHTMLSelectElement(*private_))
     return ConstUnwrap<HTMLSelectElement>()->SuggestedValue();
   return WebString();
 }
 
 WebString WebFormControlElement::EditingValue() const {
-  if (isHTMLInputElement(*private_))
+  if (IsHTMLInputElement(*private_))
     return ConstUnwrap<HTMLInputElement>()->InnerEditorValue();
-  if (isHTMLTextAreaElement(*private_))
+  if (IsHTMLTextAreaElement(*private_))
     return ConstUnwrap<HTMLTextAreaElement>()->InnerEditorValue();
   return WebString();
 }
 
 void WebFormControlElement::SetSelectionRange(int start, int end) {
-  if (isHTMLInputElement(*private_))
+  if (IsHTMLInputElement(*private_))
     Unwrap<HTMLInputElement>()->SetSelectionRange(start, end);
-  else if (isHTMLTextAreaElement(*private_))
+  else if (IsHTMLTextAreaElement(*private_))
     Unwrap<HTMLTextAreaElement>()->SetSelectionRange(start, end);
 }
 
 int WebFormControlElement::SelectionStart() const {
-  if (isHTMLInputElement(*private_))
+  if (IsHTMLInputElement(*private_))
     return ConstUnwrap<HTMLInputElement>()->selectionStart();
-  if (isHTMLTextAreaElement(*private_))
+  if (IsHTMLTextAreaElement(*private_))
     return ConstUnwrap<HTMLTextAreaElement>()->selectionStart();
   return 0;
 }
 
 int WebFormControlElement::SelectionEnd() const {
-  if (isHTMLInputElement(*private_))
+  if (IsHTMLInputElement(*private_))
     return ConstUnwrap<HTMLInputElement>()->selectionEnd();
-  if (isHTMLTextAreaElement(*private_))
+  if (IsHTMLTextAreaElement(*private_))
     return ConstUnwrap<HTMLTextAreaElement>()->selectionEnd();
   return 0;
 }

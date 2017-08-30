@@ -1352,8 +1352,8 @@ void LayoutBlock::ComputeIntrinsicLogicalWidths(
 
   max_logical_width = std::max(min_logical_width, max_logical_width);
 
-  if (isHTMLMarqueeElement(GetNode()) &&
-      toHTMLMarqueeElement(GetNode())->IsHorizontal())
+  if (IsHTMLMarqueeElement(GetNode()) &&
+      ToHTMLMarqueeElement(GetNode())->IsHorizontal())
     min_logical_width = LayoutUnit();
 
   if (IsTableCell()) {
@@ -1591,7 +1591,7 @@ bool LayoutBlock::HasLineIfEmpty() const {
     return true;
 
   if (GetNode()->IsShadowRoot() &&
-      isHTMLInputElement(ToShadowRoot(GetNode())->host()))
+      IsHTMLInputElement(ToShadowRoot(GetNode())->host()))
     return true;
 
   return false;

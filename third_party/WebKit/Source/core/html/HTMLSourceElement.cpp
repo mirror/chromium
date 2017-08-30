@@ -92,8 +92,8 @@ Node::InsertionNotificationRequest HTMLSourceElement::InsertedInto(
   Element* parent = parentElement();
   if (IsHTMLMediaElement(parent))
     ToHTMLMediaElement(parent)->SourceWasAdded(this);
-  if (isHTMLPictureElement(parent))
-    toHTMLPictureElement(parent)->SourceOrMediaChanged();
+  if (IsHTMLPictureElement(parent))
+    ToHTMLPictureElement(parent)->SourceOrMediaChanged();
   return kInsertionDone;
 }
 
@@ -103,9 +103,9 @@ void HTMLSourceElement::RemovedFrom(ContainerNode* removal_root) {
     parent = ToElement(removal_root);
   if (IsHTMLMediaElement(parent))
     ToHTMLMediaElement(parent)->SourceWasRemoved(this);
-  if (isHTMLPictureElement(parent)) {
+  if (IsHTMLPictureElement(parent)) {
     RemoveMediaQueryListListener();
-    toHTMLPictureElement(parent)->SourceOrMediaChanged();
+    ToHTMLPictureElement(parent)->SourceOrMediaChanged();
   }
   HTMLElement::RemovedFrom(removal_root);
 }
@@ -174,15 +174,15 @@ void HTMLSourceElement::ParseAttribute(
   if (name == srcsetAttr || name == sizesAttr || name == mediaAttr ||
       name == typeAttr) {
     Element* parent = parentElement();
-    if (isHTMLPictureElement(parent))
-      toHTMLPictureElement(parent)->SourceOrMediaChanged();
+    if (IsHTMLPictureElement(parent))
+      ToHTMLPictureElement(parent)->SourceOrMediaChanged();
   }
 }
 
 void HTMLSourceElement::NotifyMediaQueryChanged() {
   Element* parent = parentElement();
-  if (isHTMLPictureElement(parent))
-    toHTMLPictureElement(parent)->SourceOrMediaChanged();
+  if (IsHTMLPictureElement(parent))
+    ToHTMLPictureElement(parent)->SourceOrMediaChanged();
 }
 
 DEFINE_TRACE(HTMLSourceElement) {

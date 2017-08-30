@@ -111,11 +111,11 @@ bool HTMLFormElement::LayoutObjectIsNeeded(const ComputedStyle& style) {
   // below).
   // FIXME: This check is not correct for Shadow DOM.
   bool parent_is_table_element_part =
-      (parent_layout_object->IsTable() && isHTMLTableElement(*node)) ||
-      (parent_layout_object->IsTableRow() && isHTMLTableRowElement(*node)) ||
+      (parent_layout_object->IsTable() && IsHTMLTableElement(*node)) ||
+      (parent_layout_object->IsTableRow() && IsHTMLTableRowElement(*node)) ||
       (parent_layout_object->IsTableSection() && node->HasTagName(tbodyTag)) ||
       (parent_layout_object->IsLayoutTableCol() && node->HasTagName(colTag)) ||
-      (parent_layout_object->IsTableCell() && isHTMLTableRowElement(*node));
+      (parent_layout_object->IsTableCell() && IsHTMLTableRowElement(*node));
 
   if (!parent_is_table_element_part)
     return true;
@@ -360,8 +360,8 @@ void HTMLFormElement::submitFromJavaScript() {
 
 void HTMLFormElement::SubmitDialog(FormSubmission* form_submission) {
   for (Node* node = this; node; node = node->ParentOrShadowHostNode()) {
-    if (isHTMLDialogElement(*node)) {
-      toHTMLDialogElement(*node).CloseDialog(form_submission->Result());
+    if (IsHTMLDialogElement(*node)) {
+      ToHTMLDialogElement(*node).CloseDialog(form_submission->Result());
       return;
     }
   }
@@ -597,8 +597,8 @@ void HTMLFormElement::CollectListedElements(
     ListedElement* listed_element = 0;
     if (element.IsFormControlElement())
       listed_element = ToHTMLFormControlElement(&element);
-    else if (isHTMLObjectElement(element))
-      listed_element = toHTMLObjectElement(&element);
+    else if (IsHTMLObjectElement(element))
+      listed_element = ToHTMLObjectElement(&element);
     else
       continue;
     if (listed_element->Form() == this)
@@ -729,10 +729,10 @@ Element* HTMLFormElement::ElementFromPastNamesMap(
   if (!element)
     return 0;
   SECURITY_DCHECK(ToHTMLElement(element)->formOwner() == this);
-  if (isHTMLImageElement(*element)) {
+  if (IsHTMLImageElement(*element)) {
     SECURITY_DCHECK(ImageElements().Find(element) != kNotFound);
-  } else if (isHTMLObjectElement(*element)) {
-    SECURITY_DCHECK(ListedElements().Find(toHTMLObjectElement(element)) !=
+  } else if (IsHTMLObjectElement(*element)) {
+    SECURITY_DCHECK(ListedElements().Find(ToHTMLObjectElement(element)) !=
                     kNotFound);
   } else {
     SECURITY_DCHECK(ListedElements().Find(ToHTMLFormControlElement(element)) !=
@@ -815,14 +815,14 @@ void HTMLFormElement::AnonymousNamedGetter(
   DCHECK(!elements.IsEmpty());
 
   bool only_match_img =
-      !elements.IsEmpty() && isHTMLImageElement(*elements.front());
+      !elements.IsEmpty() && IsHTMLImageElement(*elements.front());
   if (only_match_img) {
     UseCounter::Count(GetDocument(),
                       WebFeature::kFormNameAccessForImageElement);
     // The following code has performance impact, but it should be small
     // because <img> access via <form> name getter is rarely used.
     for (auto& element : elements) {
-      if (isHTMLImageElement(*element) && !element->IsDescendantOf(this)) {
+      if (IsHTMLImageElement(*element) && !element->IsDescendantOf(this)) {
         UseCounter::Count(
             GetDocument(),
             WebFeature::kFormNameAccessForNonDescendantImageElement);

@@ -71,14 +71,14 @@ FilterEffect* SVGFEComponentTransferElement::Build(
 
   for (SVGElement* element = Traversal<SVGElement>::FirstChild(*this); element;
        element = Traversal<SVGElement>::NextSibling(*element)) {
-    if (isSVGFEFuncRElement(*element))
-      red = toSVGFEFuncRElement(*element).TransferFunction();
-    else if (isSVGFEFuncGElement(*element))
-      green = toSVGFEFuncGElement(*element).TransferFunction();
-    else if (isSVGFEFuncBElement(*element))
-      blue = toSVGFEFuncBElement(*element).TransferFunction();
-    else if (isSVGFEFuncAElement(*element))
-      alpha = toSVGFEFuncAElement(*element).TransferFunction();
+    if (IsSVGFEFuncRElement(*element))
+      red = ToSVGFEFuncRElement(*element).TransferFunction();
+    else if (IsSVGFEFuncGElement(*element))
+      green = ToSVGFEFuncGElement(*element).TransferFunction();
+    else if (IsSVGFEFuncBElement(*element))
+      blue = ToSVGFEFuncBElement(*element).TransferFunction();
+    else if (IsSVGFEFuncAElement(*element))
+      alpha = ToSVGFEFuncAElement(*element).TransferFunction();
   }
 
   FilterEffect* effect =

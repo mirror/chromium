@@ -15,7 +15,7 @@ PaintInvalidationReason HTMLCanvasPaintInvalidator::InvalidatePaint() {
   PaintInvalidationReason reason =
       BoxPaintInvalidator(html_canvas_, context_).InvalidatePaint();
 
-  HTMLCanvasElement* element = toHTMLCanvasElement(html_canvas_.GetNode());
+  HTMLCanvasElement* element = ToHTMLCanvasElement(html_canvas_.GetNode());
   if (element->IsDirty()) {
     element->DoDeferredPaintInvalidation();
     if (reason < PaintInvalidationReason::kRectangle)

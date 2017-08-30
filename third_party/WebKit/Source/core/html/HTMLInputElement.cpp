@@ -1587,10 +1587,10 @@ HTMLDataListElement* HTMLInputElement::DataList() const {
   Element* element = GetTreeScope().getElementById(FastGetAttribute(listAttr));
   if (!element)
     return nullptr;
-  if (!isHTMLDataListElement(*element))
+  if (!IsHTMLDataListElement(*element))
     return nullptr;
 
-  return toHTMLDataListElement(element);
+  return ToHTMLDataListElement(element);
 }
 
 bool HTMLInputElement::HasValidDataListOptions() const {

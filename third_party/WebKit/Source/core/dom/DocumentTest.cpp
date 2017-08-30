@@ -813,7 +813,7 @@ TEST_F(DocumentTest, ValidationMessageCleanup) {
       "document.querySelector('input').reportValidity(); };");
   GetDocument().body()->AppendChild(script);
   HTMLInputElement* input =
-      toHTMLInputElement(GetDocument().body()->firstChild());
+      ToHTMLInputElement(GetDocument().body()->firstChild());
   DVLOG(0) << GetDocument().body()->outerHTML();
 
   // Sanity check.

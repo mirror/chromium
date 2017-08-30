@@ -282,9 +282,9 @@ void HTMLFrameSetElement::WillRecalcStyle(StyleRecalcChange) {
 LocalDOMWindow* HTMLFrameSetElement::AnonymousNamedGetter(
     const AtomicString& name) {
   Element* frame_element = Children()->namedItem(name);
-  if (!isHTMLFrameElement(frame_element))
+  if (!IsHTMLFrameElement(frame_element))
     return nullptr;
-  Document* document = toHTMLFrameElement(frame_element)->contentDocument();
+  Document* document = ToHTMLFrameElement(frame_element)->contentDocument();
   if (!document || !document->GetFrame())
     return nullptr;
   return document->domWindow();

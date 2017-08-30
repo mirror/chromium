@@ -189,13 +189,13 @@ static bool PlanCounter(LayoutObject& object,
       return true;
     }
     if (Node* e = object.GetNode()) {
-      if (isHTMLOListElement(*e)) {
-        value = toHTMLOListElement(e)->StartConsideringItemCount();
+      if (IsHTMLOListElement(*e)) {
+        value = ToHTMLOListElement(e)->StartConsideringItemCount();
         is_reset = true;
         return true;
       }
-      if (isHTMLUListElement(*e) || isHTMLMenuElement(*e) ||
-          isHTMLDirectoryElement(*e)) {
+      if (IsHTMLUListElement(*e) || IsHTMLMenuElement(*e) ||
+          IsHTMLDirectoryElement(*e)) {
         value = 0;
         is_reset = true;
         return true;

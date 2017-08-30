@@ -54,7 +54,7 @@ static bool IsTableCellEmpty(Node* cell) {
 }
 
 static bool IsTableRowEmpty(Node* row) {
-  if (!isHTMLTableRowElement(row))
+  if (!IsHTMLTableRowElement(row))
     return false;
 
   row->GetDocument().UpdateStyleAndLayoutIgnorePendingStylesheets();
@@ -127,9 +127,9 @@ void DeleteSelectionCommand::InitializeStartEnd(Position& start,
   // For HRs, we'll get a position at (HR,1) when hitting delete from the
   // beginning of the previous line, or (HR,0) when forward deleting, but in
   // these cases, we want to delete it, so manually expand the selection
-  if (isHTMLHRElement(*start.AnchorNode()))
+  if (IsHTMLHRElement(*start.AnchorNode()))
     start = Position::BeforeNode(*start.AnchorNode());
-  else if (isHTMLHRElement(*end.AnchorNode()))
+  else if (IsHTMLHRElement(*end.AnchorNode()))
     end = Position::AfterNode(*end.AnchorNode());
 
   // FIXME: This is only used so that moveParagraphs can avoid the bugs in
@@ -241,9 +241,9 @@ void DeleteSelectionCommand::InitializePositionData(
   end_root_ = RootEditableElementOf(end);
 
   start_table_row_ =
-      toHTMLTableRowElement(EnclosingNodeOfType(start, &isHTMLTableRowElement));
+      ToHTMLTableRowElement(EnclosingNodeOfType(start, &IsHTMLTableRowElement));
   end_table_row_ =
-      toHTMLTableRowElement(EnclosingNodeOfType(end, &isHTMLTableRowElement));
+      ToHTMLTableRowElement(EnclosingNodeOfType(end, &IsHTMLTableRowElement));
 
   // Don't move content out of a table cell.
   // If the cell is non-editable, enclosingNodeOfType won't return it by
@@ -416,8 +416,8 @@ bool DeleteSelectionCommand::HandleSpecialCaseBRDelete(
 
   // Check for special-case where the selection contains only a BR on a line by
   // itself after another BR.
-  bool upstream_start_is_br = isHTMLBRElement(*node_after_upstream_start);
-  bool downstream_start_is_br = isHTMLBRElement(*node_after_downstream_start);
+  bool upstream_start_is_br = IsHTMLBRElement(*node_after_upstream_start);
+  bool downstream_start_is_br = IsHTMLBRElement(*node_after_downstream_start);
   bool is_br_on_line_by_itself =
       upstream_start_is_br && downstream_start_is_br &&
       node_after_downstream_start == node_after_upstream_end;
@@ -569,7 +569,7 @@ void DeleteSelectionCommand::
   Node* node = range->FirstNode();
   while (node && node != range->PastLastNode()) {
     Node* next_node = NodeTraversal::Next(*node);
-    if (isHTMLStyleElement(*node) || isHTMLLinkElement(*node)) {
+    if (IsHTMLStyleElement(*node) || IsHTMLLinkElement(*node)) {
       next_node = NodeTraversal::NextSkippingChildren(*node);
       Element* element = RootEditableElement(*node);
       if (element) {
@@ -602,7 +602,7 @@ void DeleteSelectionCommand::HandleGeneralDelete(EditingState* editing_state) {
   // merge content in.
   if (start_node == start_block_.Get() && !start_offset &&
       CanHaveChildrenForEditing(start_node) &&
-      !isHTMLTableElement(*start_node)) {
+      !IsHTMLTableElement(*start_node)) {
     start_offset = 0;
     start_node = NodeTraversal::Next(*start_node);
     if (!start_node)
@@ -890,7 +890,7 @@ void DeleteSelectionCommand::MergeParagraphs(EditingState* editing_state) {
   if (!starts_at_empty_line_ && IsStartOfParagraph(merge_destination) &&
       AbsoluteCaretBoundsOf(start_of_paragraph_to_move).X() >
           AbsoluteCaretBoundsOf(merge_destination).X()) {
-    if (isHTMLBRElement(
+    if (IsHTMLBRElement(
             *MostForwardCaretPosition(merge_destination.DeepEquivalent())
                  .AnchorNode())) {
       RemoveNodeAndPruneAncestors(

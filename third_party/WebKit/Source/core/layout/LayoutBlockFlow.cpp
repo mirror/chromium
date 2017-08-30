@@ -491,7 +491,7 @@ void LayoutBlockFlow::UpdateBlockLayout(bool relayout_children) {
 
   UpdateAfterLayout();
 
-  if (isHTMLDialogElement(GetNode()) && IsOutOfFlowPositioned())
+  if (IsHTMLDialogElement(GetNode()) && IsOutOfFlowPositioned())
     PositionDialog();
 
   ClearNeedsLayout();
@@ -4456,7 +4456,7 @@ LayoutBlockFlow::LayoutBlockFlowRareData& LayoutBlockFlow::EnsureRareData() {
 }
 
 void LayoutBlockFlow::PositionDialog() {
-  HTMLDialogElement* dialog = toHTMLDialogElement(GetNode());
+  HTMLDialogElement* dialog = ToHTMLDialogElement(GetNode());
   if (dialog->GetCenteringMode() == HTMLDialogElement::kNotCentered)
     return;
 

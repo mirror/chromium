@@ -85,8 +85,8 @@ static bool HasImpliedEndTag(const HTMLStackItem* item) {
 }
 
 static bool ShouldUseLengthLimit(const ContainerNode& node) {
-  return !isHTMLScriptElement(node) && !isHTMLStyleElement(node) &&
-         !isSVGScriptElement(node);
+  return !IsHTMLScriptElement(node) && !IsHTMLStyleElement(node) &&
+         !IsSVGScriptElement(node);
 }
 
 static unsigned TextLengthLimitForContainer(const ContainerNode& node) {
@@ -99,8 +99,8 @@ static inline bool IsAllWhitespace(const String& string) {
 }
 
 static inline void Insert(HTMLConstructionSiteTask& task) {
-  if (isHTMLTemplateElement(*task.parent))
-    task.parent = toHTMLTemplateElement(task.parent.Get())->content();
+  if (IsHTMLTemplateElement(*task.parent))
+    task.parent = ToHTMLTemplateElement(task.parent.Get())->content();
 
   // https://html.spec.whatwg.org/#insert-a-foreign-element
   // 3.1, (3) Push (pop) an element queue
@@ -666,8 +666,8 @@ void HTMLConstructionSite::InsertHTMLBodyElement(AtomicHTMLToken* token) {
 void HTMLConstructionSite::InsertHTMLFormElement(AtomicHTMLToken* token,
                                                  bool is_demoted) {
   Element* element = CreateElement(token, xhtmlNamespaceURI);
-  DCHECK(isHTMLFormElement(element));
-  HTMLFormElement* form_element = toHTMLFormElement(element);
+  DCHECK(IsHTMLFormElement(element));
+  HTMLFormElement* form_element = ToHTMLFormElement(element);
   if (!OpenElements()->HasTemplateInHTMLScope())
     form_ = form_element;
   form_element->SetDemoted(is_demoted);
@@ -753,9 +753,10 @@ void HTMLConstructionSite::InsertTextNode(const StringView& string,
     FindFosterSite(dummy_task);
 
   // FIXME: This probably doesn't need to be done both here and in insert(Task).
-  if (isHTMLTemplateElement(*dummy_task.parent))
+  if (IsHTMLTemplateElement(*dummy_task.parent)) {
     dummy_task.parent =
-        toHTMLTemplateElement(dummy_task.parent.Get())->content();
+        ToHTMLTemplateElement(dummy_task.parent.Get())->content();
+  }
 
   // Unclear when parent != case occurs. Somehow we insert text into two
   // separate nodes while processing the same Token. The nextChild !=
@@ -815,8 +816,8 @@ CreateElementFlags HTMLConstructionSite::GetCreateElementFlags() const {
 }
 
 inline Document& HTMLConstructionSite::OwnerDocumentForCurrentNode() {
-  if (isHTMLTemplateElement(*CurrentNode()))
-    return toHTMLTemplateElement(CurrentElement())->content()->GetDocument();
+  if (IsHTMLTemplateElement(*CurrentNode()))
+    return ToHTMLTemplateElement(CurrentElement())->content()->GetDocument();
   return CurrentNode()->GetDocument();
 }
 

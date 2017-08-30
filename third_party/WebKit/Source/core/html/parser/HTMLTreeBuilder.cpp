@@ -247,7 +247,7 @@ HTMLTreeBuilder::HTMLTreeBuilder(HTMLDocumentParser* parser,
   tree_.OpenElements()->PushRootNode(HTMLStackItem::Create(
       fragment, HTMLStackItem::kItemForDocumentFragmentNode));
 
-  if (isHTMLTemplateElement(*context_element))
+  if (IsHTMLTemplateElement(*context_element))
     template_insertion_modes_.push_back(kTemplateContentsMode);
 
   ResetInsertionModeAppropriately();
@@ -862,7 +862,7 @@ bool HTMLTreeBuilder::ProcessTemplateEndTag(AtomicHTMLToken* token) {
   if (!tree_.OpenElements()->HasTemplateInHTMLScope()) {
     DCHECK(template_insertion_modes_.IsEmpty() ||
            (template_insertion_modes_.size() == 1 &&
-            isHTMLTemplateElement(fragment_context_.ContextElement())));
+            IsHTMLTemplateElement(fragment_context_.ContextElement())));
     ParseError(token);
     return false;
   }
@@ -888,7 +888,7 @@ bool HTMLTreeBuilder::ProcessEndOfFileForInTemplateContents(
 
 bool HTMLTreeBuilder::ProcessColgroupEndTagForInColumnGroup() {
   if (tree_.CurrentIsRootNode() ||
-      isHTMLTemplateElement(*tree_.CurrentNode())) {
+      IsHTMLTemplateElement(*tree_.CurrentNode())) {
     DCHECK(IsParsingFragmentOrTemplateContents());
     // FIXME: parse error
     return false;
@@ -2416,7 +2416,7 @@ void HTMLTreeBuilder::ProcessEndOfFile(AtomicHTMLToken* token) {
         return;  // FIXME: Should we break here instead of returning?
       }
       DCHECK(tree_.CurrentNode()->HasTagName(colgroupTag) ||
-             isHTMLTemplateElement(tree_.CurrentNode()));
+             IsHTMLTemplateElement(tree_.CurrentNode()));
       ProcessColgroupEndTagForInColumnGroup();
     // Fall through
     case kInFramesetMode:
@@ -2447,7 +2447,7 @@ void HTMLTreeBuilder::ProcessEndOfFile(AtomicHTMLToken* token) {
         DVLOG(1) << "Not implemented.";
       }
       Element* el = tree_.OpenElements()->Top();
-      if (isHTMLTextAreaElement(el))
+      if (IsHTMLTextAreaElement(el))
         ToHTMLFormControlElement(el)->SetBlocksFormSubmission(true);
       tree_.OpenElements()->Pop();
       DCHECK_NE(original_insertion_mode_, kTextMode);

@@ -98,9 +98,9 @@ void LayoutImage::ImageChanged(WrappedImagePtr new_image, const IntRect* rect) {
   if (new_image != image_resource_->ImagePtr())
     return;
 
-  if (IsGeneratedContent() && isHTMLImageElement(GetNode()) &&
+  if (IsGeneratedContent() && IsHTMLImageElement(GetNode()) &&
       image_resource_->ErrorOccurred()) {
-    toHTMLImageElement(GetNode())->EnsureFallbackForGeneratedContent();
+    ToHTMLImageElement(GetNode())->EnsureFallbackForGeneratedContent();
     return;
   }
 
@@ -267,9 +267,10 @@ LayoutUnit LayoutImage::MinimumReplacedHeight() const {
 }
 
 HTMLMapElement* LayoutImage::ImageMap() const {
-  HTMLImageElement* i =
-      isHTMLImageElement(GetNode()) ? toHTMLImageElement(GetNode()) : 0;
-  return i ? i->GetTreeScope().GetImageMap(i->FastGetAttribute(usemapAttr)) : 0;
+  if (!IsHTMLImageElement(GetNode()))
+    return nullptr;
+  auto* image = ToHTMLImageElement(GetNode());
+  return image->GetTreeScope().GetImageMap(image->FastGetAttribute(usemapAttr));
 }
 
 bool LayoutImage::NodeAtPoint(HitTestResult& result,

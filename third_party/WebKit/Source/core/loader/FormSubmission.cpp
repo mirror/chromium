@@ -234,8 +234,8 @@ FormSubmission* FormSubmission::Create(HTMLFormElement* form,
     HTMLElement& element = ToHTMLElement(*control);
     if (!element.IsDisabledFormControl())
       control->AppendToFormData(*dom_form_data);
-    if (isHTMLInputElement(element)) {
-      HTMLInputElement& input = toHTMLInputElement(element);
+    if (IsHTMLInputElement(element)) {
+      HTMLInputElement& input = ToHTMLInputElement(element);
       if (input.type() == InputTypeNames::password && !input.value().IsEmpty())
         contains_password_data = true;
     }

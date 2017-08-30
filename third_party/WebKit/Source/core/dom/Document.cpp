@@ -783,7 +783,7 @@ DOMImplementation& Document::implementation() {
 }
 
 bool Document::HasAppCacheManifest() const {
-  return isHTMLHtmlElement(documentElement()) &&
+  return IsHTMLHtmlElement(documentElement()) &&
          documentElement()->hasAttribute(manifestAttr);
 }
 
@@ -1254,10 +1254,10 @@ Node* Document::importNode(Node* imported_node,
         if (!ImportContainerNodeChildren(old_element, new_element,
                                          exception_state))
           return nullptr;
-        if (isHTMLTemplateElement(*old_element) &&
+        if (IsHTMLTemplateElement(*old_element) &&
             !EnsureTemplateDocument().ImportContainerNodeChildren(
-                toHTMLTemplateElement(old_element)->content(),
-                toHTMLTemplateElement(new_element)->content(), exception_state))
+                ToHTMLTemplateElement(old_element)->content(),
+                ToHTMLTemplateElement(new_element)->content(), exception_state))
           return nullptr;
       }
 
@@ -1647,7 +1647,7 @@ void Document::setTitle(const String& title) {
       head_element->AppendChild(title_element_.Get());
     } else if (IsSVGDocument()) {
       Element* element = documentElement();
-      if (!isSVGSVGElement(element))
+      if (!IsSVGSVGElement(element))
         return;
       title_element_ = SVGTitleElement::Create(*this);
       element->InsertBefore(title_element_.Get(), element->firstChild());
@@ -1657,10 +1657,10 @@ void Document::setTitle(const String& title) {
       title_element_ = nullptr;
   }
 
-  if (isHTMLTitleElement(title_element_))
-    toHTMLTitleElement(title_element_)->setText(title);
-  else if (isSVGTitleElement(title_element_))
-    toSVGTitleElement(title_element_)->SetText(title);
+  if (IsHTMLTitleElement(title_element_))
+    ToHTMLTitleElement(title_element_)->setText(title);
+  else if (IsSVGTitleElement(title_element_))
+    ToSVGTitleElement(title_element_)->SetText(title);
   else
     UpdateTitle(title);
 }
@@ -1669,7 +1669,7 @@ void Document::SetTitleElement(Element* title_element) {
   // If the root element is an svg element in the SVG namespace, then let value
   // be the child text content of the first title element in the SVG namespace
   // that is a child of the root element.
-  if (isSVGSVGElement(documentElement())) {
+  if (IsSVGSVGElement(documentElement())) {
     title_element_ = Traversal<SVGTitleElement>::FirstChild(*documentElement());
   } else {
     if (title_element_ && title_element_ != title_element)
@@ -1679,16 +1679,16 @@ void Document::SetTitleElement(Element* title_element) {
 
     // If the root element isn't an svg element in the SVG namespace and the
     // title element is in the SVG namespace, it is ignored.
-    if (isSVGTitleElement(title_element_)) {
+    if (IsSVGTitleElement(title_element_)) {
       title_element_ = nullptr;
       return;
     }
   }
 
-  if (isHTMLTitleElement(title_element_))
-    UpdateTitle(toHTMLTitleElement(title_element_)->text());
-  else if (isSVGTitleElement(title_element_))
-    UpdateTitle(toSVGTitleElement(title_element_)->textContent());
+  if (IsHTMLTitleElement(title_element_))
+    UpdateTitle(ToHTMLTitleElement(title_element_)->text());
+  else if (IsSVGTitleElement(title_element_))
+    UpdateTitle(ToSVGTitleElement(title_element_)->textContent());
 }
 
 void Document::RemoveTitle(Element* title_element) {
@@ -1713,15 +1713,15 @@ void Document::RemoveTitle(Element* title_element) {
 
 const AtomicString& Document::dir() {
   Element* root_element = documentElement();
-  if (isHTMLHtmlElement(root_element))
-    return toHTMLHtmlElement(root_element)->dir();
+  if (IsHTMLHtmlElement(root_element))
+    return ToHTMLHtmlElement(root_element)->dir();
   return g_null_atom;
 }
 
 void Document::setDir(const AtomicString& value) {
   Element* root_element = documentElement();
-  if (isHTMLHtmlElement(root_element))
-    toHTMLHtmlElement(root_element)->setDir(value);
+  if (IsHTMLHtmlElement(root_element))
+    ToHTMLHtmlElement(root_element)->setDir(value);
 }
 
 PageVisibilityState Document::GetPageVisibilityState() const {
@@ -1944,7 +1944,7 @@ void Document::PropagateStyleToViewport(StyleRecalcChange change) {
   // <html> root element with no background steals background from its first
   // <body> child.
   // Also see LayoutBoxModelObject::backgroundStolenForBeingBody()
-  if (isHTMLHtmlElement(documentElement()) && isHTMLBodyElement(body) &&
+  if (IsHTMLHtmlElement(documentElement()) && IsHTMLBodyElement(body) &&
       !background_style->HasBackground())
     background_style = body_style;
 
@@ -2841,9 +2841,7 @@ DocumentParser* Document::CreateParser() {
 }
 
 bool Document::IsFrameSet() const {
-  if (!IsHTMLDocument())
-    return false;
-  return isHTMLFrameSetElement(body());
+  return IsHTMLDocument() && IsHTMLFrameSetElement(body());
 }
 
 ScriptableDocumentParser* Document::GetScriptableDocumentParser() const {
@@ -2987,13 +2985,13 @@ DocumentParser* Document::ImplicitOpen(
 }
 
 HTMLElement* Document::body() const {
-  if (!documentElement() || !isHTMLHtmlElement(documentElement()))
+  if (!documentElement() || !IsHTMLHtmlElement(documentElement()))
     return 0;
 
   for (HTMLElement* child =
            Traversal<HTMLElement>::FirstChild(*documentElement());
        child; child = Traversal<HTMLElement>::NextSibling(*child)) {
-    if (isHTMLFrameSetElement(*child) || isHTMLBodyElement(*child))
+    if (IsHTMLFrameSetElement(*child) || IsHTMLBodyElement(*child))
       return child;
   }
 
@@ -3001,14 +2999,14 @@ HTMLElement* Document::body() const {
 }
 
 HTMLBodyElement* Document::FirstBodyElement() const {
-  if (!documentElement() || !isHTMLHtmlElement(documentElement()))
+  if (!documentElement() || !IsHTMLHtmlElement(documentElement()))
     return 0;
 
   for (HTMLElement* child =
            Traversal<HTMLElement>::FirstChild(*documentElement());
        child; child = Traversal<HTMLElement>::NextSibling(*child)) {
-    if (isHTMLBodyElement(*child))
-      return toHTMLBodyElement(child);
+    if (IsHTMLBodyElement(*child))
+      return ToHTMLBodyElement(child);
   }
 
   return 0;
@@ -3030,7 +3028,7 @@ void Document::setBody(HTMLElement* prp_new_body,
     return;
   }
 
-  if (!isHTMLBodyElement(*new_body) && !isHTMLFrameSetElement(*new_body)) {
+  if (!IsHTMLBodyElement(*new_body) && !IsHTMLFrameSetElement(*new_body)) {
     exception_state.ThrowDOMException(
         kHierarchyRequestError,
         "The new body element is of type '" + new_body->tagName() +
@@ -3086,7 +3084,7 @@ Element* Document::ViewportDefiningElement(
       return nullptr;
   }
   if (body_element && root_style->IsOverflowVisible() &&
-      isHTMLHtmlElement(*root_element))
+      IsHTMLHtmlElement(*root_element))
     return body_element;
   return root_element;
 }
@@ -3325,8 +3323,8 @@ void Document::DispatchUnloadEvents() {
 
   if (load_event_progress_ <= kUnloadEventInProgress) {
     Element* current_focused_element = FocusedElement();
-    if (isHTMLInputElement(current_focused_element))
-      toHTMLInputElement(*current_focused_element).EndEditing();
+    if (IsHTMLInputElement(current_focused_element))
+      ToHTMLInputElement(*current_focused_element).EndEditing();
     if (load_event_progress_ < kPageHideInProgress) {
       load_event_progress_ = kPageHideInProgress;
       if (LocalDOMWindow* window = domWindow())
@@ -3420,7 +3418,7 @@ bool Document::ShouldScheduleLayout() const {
   if (IsRenderingReady() && body())
     return true;
 
-  if (documentElement() && !isHTMLHtmlElement(*documentElement()))
+  if (documentElement() && !IsHTMLHtmlElement(*documentElement()))
     return true;
 
   return false;
@@ -3937,9 +3935,9 @@ MouseEventWithHitTestResults Document::PerformMouseEventHitTest(
   if (!request.ReadOnly())
     UpdateHoverActiveState(request, result.InnerElement());
 
-  if (isHTMLCanvasElement(result.InnerNode())) {
+  if (IsHTMLCanvasElement(result.InnerNode())) {
     HitTestCanvasResult* hit_test_canvas_result =
-        toHTMLCanvasElement(result.InnerNode())
+        ToHTMLCanvasElement(result.InnerNode())
             ->GetControlAndIdIfHitRegionExists(result.PointInInnerNodeFrame());
     if (hit_test_canvas_result->GetControl()) {
       result.SetInnerNode(hit_test_canvas_result->GetControl());
@@ -4891,7 +4889,7 @@ void Document::AddListenerTypeIfNeeded(const AtomicString& event_type,
     AddListenerType(kScrollListener);
   } else if (event_type == EventTypeNames::load) {
     if (Node* node = event_target.ToNode()) {
-      if (isHTMLStyleElement(*node)) {
+      if (IsHTMLStyleElement(*node)) {
         AddListenerType(kLoadListenerAtCapturePhaseOrAtStyleElement);
         return;
       }
@@ -5588,7 +5586,7 @@ SVGDocumentExtensions& Document::AccessSVGExtensions() {
 }
 
 bool Document::HasSVGRootNode() const {
-  return isSVGSVGElement(documentElement());
+  return IsSVGSVGElement(documentElement());
 }
 
 HTMLCollection* Document::images() {
@@ -5732,7 +5730,7 @@ Vector<IconURL> Document::IconURLs(int icon_types_mask) {
   HTMLLinkElement* first_element = nullptr;
   if (head()) {
     first_element = Traversal<HTMLLinkElement>::FirstChild(*head());
-  } else if (IsSVGDocument() && isSVGSVGElement(documentElement())) {
+  } else if (IsSVGDocument() && IsSVGSVGElement(documentElement())) {
     first_element = Traversal<HTMLLinkElement>::FirstWithin(*documentElement());
     find_next_candidate = &Traversal<HTMLLinkElement>::Next;
   }
@@ -6280,8 +6278,8 @@ void Document::RemoveFromTopLayer(Element* element) {
 HTMLDialogElement* Document::ActiveModalDialog() const {
   for (auto it = top_layer_elements_.rbegin(); it != top_layer_elements_.rend();
        ++it) {
-    if (isHTMLDialogElement(*it))
-      return toHTMLDialogElement((*it).Get());
+    if (IsHTMLDialogElement(*it))
+      return ToHTMLDialogElement((*it).Get());
   }
 
   return nullptr;

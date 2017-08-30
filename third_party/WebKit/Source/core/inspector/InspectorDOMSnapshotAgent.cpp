@@ -197,8 +197,8 @@ int InspectorDOMSnapshotAgent::VisitNode(Node* node) {
         value->setFrameId(IdentifiersFactory::FrameId(frame));
     }
 
-    if (isHTMLLinkElement(*element)) {
-      const HTMLLinkElement& link_element = toHTMLLinkElement(*element);
+    if (IsHTMLLinkElement(*element)) {
+      const HTMLLinkElement& link_element = ToHTMLLinkElement(*element);
       if (link_element.IsImport() && link_element.import() &&
           InspectorDOMAgent::InnerParentNode(link_element.import()) ==
               link_element) {
@@ -206,19 +206,19 @@ int InspectorDOMSnapshotAgent::VisitNode(Node* node) {
       }
     }
 
-    if (isHTMLTemplateElement(*element)) {
+    if (IsHTMLTemplateElement(*element)) {
       value->setTemplateContentIndex(
-          VisitNode(toHTMLTemplateElement(*element).content()));
+          VisitNode(ToHTMLTemplateElement(*element).content()));
     }
 
-    if (isHTMLTextAreaElement(*element)) {
+    if (IsHTMLTextAreaElement(*element)) {
       const HTMLTextAreaElement& text_area_element =
-          toHTMLTextAreaElement(*element);
+          ToHTMLTextAreaElement(*element);
       value->setTextValue(text_area_element.value());
     }
 
-    if (isHTMLInputElement(*element)) {
-      const HTMLInputElement& input_element = toHTMLInputElement(*element);
+    if (IsHTMLInputElement(*element)) {
+      const HTMLInputElement& input_element = ToHTMLInputElement(*element);
       value->setInputValue(input_element.value());
       if ((input_element.type() == InputTypeNames::radio) ||
           (input_element.type() == InputTypeNames::checkbox)) {
@@ -226,8 +226,8 @@ int InspectorDOMSnapshotAgent::VisitNode(Node* node) {
       }
     }
 
-    if (isHTMLOptionElement(*element)) {
-      const HTMLOptionElement& option_element = toHTMLOptionElement(*element);
+    if (IsHTMLOptionElement(*element)) {
+      const HTMLOptionElement& option_element = ToHTMLOptionElement(*element);
       value->setOptionSelected(option_element.Selected());
     }
 

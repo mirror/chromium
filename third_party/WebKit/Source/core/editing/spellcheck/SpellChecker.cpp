@@ -71,13 +71,12 @@ namespace {
 
 bool IsPositionInTextField(const Position& selection_start) {
   TextControlElement* text_control = EnclosingTextControl(selection_start);
-  return isHTMLInputElement(text_control) &&
-         toHTMLInputElement(text_control)->IsTextField();
+  return IsHTMLInputElement(text_control) &&
+         ToHTMLInputElement(text_control)->IsTextField();
 }
 
 bool IsPositionInTextArea(const Position& position) {
-  TextControlElement* text_control = EnclosingTextControl(position);
-  return isHTMLTextAreaElement(text_control);
+  return IsHTMLTextAreaElement(EnclosingTextControl(position));
 }
 
 SelectionInDOMTree SelectWord(const VisiblePosition& position) {
@@ -185,8 +184,8 @@ void SpellChecker::DidBeginEditing(Element* element) {
     element = text_control->InnerEditorElement();
     if (!element)
       return;
-    is_text_field = isHTMLInputElement(*text_control) &&
-                    toHTMLInputElement(*text_control).IsTextField();
+    is_text_field = IsHTMLInputElement(*text_control) &&
+                    ToHTMLInputElement(*text_control).IsTextField();
   }
 
   if (is_text_field || !parent->IsAlreadySpellChecked()) {
@@ -1277,8 +1276,8 @@ bool SpellChecker::IsSpellCheckingEnabledAt(const Position& position) {
   if (position.IsNull())
     return false;
   if (TextControlElement* text_control = EnclosingTextControl(position)) {
-    if (isHTMLInputElement(text_control)) {
-      HTMLInputElement& input = toHTMLInputElement(*text_control);
+    if (IsHTMLInputElement(text_control)) {
+      HTMLInputElement& input = ToHTMLInputElement(*text_control);
       // TODO(tkent): The following password type check should be done in
       // HTMLElement::spellcheck(). crbug.com/371567
       if (input.type() == InputTypeNames::password)

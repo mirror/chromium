@@ -118,15 +118,15 @@ bool IsSelectInDefaultState(const HTMLSelectElement& select) {
 // in its default state if the checked state matches the state of the checked
 // attribute.
 bool IsInDefaultState(const HTMLFormControlElement& form_element) {
-  if (isHTMLInputElement(form_element)) {
-    const HTMLInputElement& input_element = toHTMLInputElement(form_element);
+  if (IsHTMLInputElement(form_element)) {
+    const HTMLInputElement& input_element = ToHTMLInputElement(form_element);
     if (input_element.type() == InputTypeNames::checkbox ||
         input_element.type() == InputTypeNames::radio) {
       return input_element.checked() ==
              input_element.FastHasAttribute(checkedAttr);
     }
-  } else if (isHTMLSelectElement(form_element)) {
-    return IsSelectInDefaultState(toHTMLSelectElement(form_element));
+  } else if (IsHTMLSelectElement(form_element)) {
+    return IsSelectInDefaultState(ToHTMLSelectElement(form_element));
   }
   return true;
 }
@@ -148,11 +148,11 @@ HTMLInputElement* FindSuitableSearchInputElement(const HTMLFormElement& form) {
     if (control.IsDisabledFormControl() || control.GetName().IsNull())
       continue;
 
-    if (!IsInDefaultState(control) || isHTMLTextAreaElement(control))
+    if (!IsInDefaultState(control) || IsHTMLTextAreaElement(control))
       return nullptr;
 
-    if (isHTMLInputElement(control) && control.willValidate()) {
-      const HTMLInputElement& input = toHTMLInputElement(control);
+    if (IsHTMLInputElement(control) && control.willValidate()) {
+      const HTMLInputElement& input = ToHTMLInputElement(control);
 
       // Return nothing if a file upload field or a password field are
       // found.
@@ -167,7 +167,7 @@ HTMLInputElement* FindSuitableSearchInputElement(const HTMLFormElement& form) {
           // searchable.
           return nullptr;
         }
-        text_element = toHTMLInputElement(&control);
+        text_element = ToHTMLInputElement(&control);
       }
     }
   }

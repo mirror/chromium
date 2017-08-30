@@ -51,7 +51,7 @@ LayoutSVGResourceClipper* ResolveElementReference(
     return nullptr;
   SVGElement* element =
       reference_clip_path_operation.FindElement(target_node->GetTreeScope());
-  if (!isSVGClipPathElement(element) || !element->GetLayoutObject())
+  if (!IsSVGClipPathElement(element) || !element->GetLayoutObject())
     return nullptr;
   return ToLayoutSVGResourceClipper(
       ToLayoutSVGResourceContainer(element->GetLayoutObject()));
@@ -126,7 +126,7 @@ bool ClipPathClipper::PrepareEffect(const FloatRect& target_bounding_box,
   SVGClipExpansionCycleHelper in_clip_expansion_change(*resource_clipper_);
 
   AffineTransform animated_local_transform =
-      toSVGClipPathElement(resource_clipper_->GetElement())
+      ToSVGClipPathElement(resource_clipper_->GetElement())
           ->CalculateTransform(SVGElement::kIncludeMotionTransform);
   // When drawing a clip for non-SVG elements, the CTM does not include the zoom
   // factor.  In this case, we need to apply the zoom scale explicitly - but

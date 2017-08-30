@@ -233,8 +233,8 @@ static void ConfigureRequest(
 
   if (client_hints_preferences.ShouldSend(
           mojom::WebClientHintsType::kResourceWidth) &&
-      isHTMLImageElement(element))
-    params.SetResourceWidth(toHTMLImageElement(element).GetResourceWidth());
+      IsHTMLImageElement(element))
+    params.SetResourceWidth(ToHTMLImageElement(element).GetResourceWidth());
 }
 
 inline void ImageLoader::DispatchErrorEvent() {
@@ -320,7 +320,7 @@ void ImageLoader::DoUpdateFromElement(BypassMainWorldBehavior bypass_behavior,
           referrer_policy, url, document.OutgoingReferrer()));
     }
 
-    if (isHTMLPictureElement(GetElement()->parentNode()) ||
+    if (IsHTMLPictureElement(GetElement()->parentNode()) ||
         !GetElement()->FastGetAttribute(HTMLNames::srcsetAttr).IsNull())
       resource_request.SetRequestContext(
           WebURLRequest::kRequestContextImageSet);
@@ -478,7 +478,7 @@ bool ImageLoader::ShouldLoadImmediately(const KURL& url) const {
     if (resource && !resource->ErrorOccurred())
       return true;
   }
-  return (isHTMLObjectElement(element_) || isHTMLEmbedElement(element_));
+  return (IsHTMLObjectElement(element_) || IsHTMLEmbedElement(element_));
 }
 
 void ImageLoader::ImageChanged(ImageResourceContent* content, const IntRect*) {

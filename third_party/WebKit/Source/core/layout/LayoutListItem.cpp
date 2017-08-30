@@ -111,7 +111,7 @@ void LayoutListItem::SubtreeDidChange() {
 }
 
 static bool IsList(const Node& node) {
-  return isHTMLUListElement(node) || isHTMLOListElement(node);
+  return IsHTMLUListElement(node) || IsHTMLOListElement(node);
 }
 
 // Returns the enclosing list with respect to the DOM order.
@@ -219,10 +219,10 @@ inline int LayoutListItem::CalcValue() const {
     return explicit_value_;
 
   Node* list = EnclosingList(this);
-  HTMLOListElement* o_list_element =
-      isHTMLOListElement(list) ? toHTMLOListElement(list) : nullptr;
+  HTMLOListElement* olist_element =
+      IsHTMLOListElement(list) ? ToHTMLOListElement(list) : nullptr;
   int value_step = 1;
-  if (o_list_element && o_list_element->IsReversed())
+  if (olist_element && olist_element->IsReversed())
     value_step = -1;
 
   // FIXME: This recurses to a possible depth of the length of the list.
@@ -230,8 +230,8 @@ inline int LayoutListItem::CalcValue() const {
   if (LayoutListItem* previous_item = PreviousListItem(list, this))
     return ClampAdd(previous_item->Value(), value_step);
 
-  if (o_list_element)
-    return o_list_element->StartConsideringItemCount();
+  if (olist_element)
+    return olist_element->StartConsideringItemCount();
 
   return 1;
 }
@@ -275,8 +275,8 @@ static LayoutObject* GetParentOfFirstLineBox(LayoutBlockFlow* curr,
       break;
 
     if (curr->IsListItem() && in_quirks_mode && curr_child->GetNode() &&
-        (isHTMLUListElement(*curr_child->GetNode()) ||
-         isHTMLOListElement(*curr_child->GetNode())))
+        (IsHTMLUListElement(*curr_child->GetNode()) ||
+         IsHTMLOListElement(*curr_child->GetNode())))
       break;
 
     LayoutObject* line_box =
@@ -526,11 +526,10 @@ void LayoutListItem::UpdateListMarkerNumbers() {
   CHECK(list_node);
 
   bool is_list_reversed = false;
-  HTMLOListElement* o_list_element =
-      isHTMLOListElement(list_node) ? toHTMLOListElement(list_node) : 0;
-  if (o_list_element) {
-    o_list_element->ItemCountChanged();
-    is_list_reversed = o_list_element->IsReversed();
+  if (IsHTMLOListElement(list_node)) {
+    HTMLOListElement* olist_element = ToHTMLOListElement(list_node);
+    olist_element->ItemCountChanged();
+    is_list_reversed = olist_element->IsReversed();
   }
 
   // FIXME: The n^2 protection below doesn't help if the elements were inserted

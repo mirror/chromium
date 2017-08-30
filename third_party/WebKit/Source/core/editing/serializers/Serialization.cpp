@@ -128,7 +128,7 @@ static HTMLElement* AncestorToRetainStructureAndAppearanceForBlock(
     return 0;
 
   if (common_ancestor_block->HasTagName(tbodyTag) ||
-      isHTMLTableRowElement(*common_ancestor_block))
+      IsHTMLTableRowElement(*common_ancestor_block))
     return Traversal<HTMLTableElement>::FirstAncestor(*common_ancestor_block);
 
   if (IsNonTableCellHTMLBlockElement(common_ancestor_block))
@@ -220,14 +220,16 @@ static HTMLElement* HighestAncestorToWrapMarkup(
   // tab span. If two or more tabs are selected, commonAncestor will be the tab
   // span. In either case, if there is a specialCommonAncestor already, it will
   // necessarily be above any tab span that needs to be included.
-  if (!special_common_ancestor && IsTabHTMLSpanElementTextNode(common_ancestor))
+  if (!special_common_ancestor &&
+      IsTabHTMLSpanElementTextNode(common_ancestor)) {
     special_common_ancestor =
-        toHTMLSpanElement(Strategy::Parent(*common_ancestor));
+        ToHTMLSpanElement(Strategy::Parent(*common_ancestor));
+  }
   if (!special_common_ancestor && IsTabHTMLSpanElement(common_ancestor))
-    special_common_ancestor = toHTMLSpanElement(common_ancestor);
+    special_common_ancestor = ToHTMLSpanElement(common_ancestor);
 
   if (HTMLAnchorElement* enclosing_anchor =
-          toHTMLAnchorElement(EnclosingElementWithTag(
+          ToHTMLAnchorElement(EnclosingElementWithTag(
               Position::FirstPositionInNode(special_common_ancestor
                                                 ? *special_common_ancestor
                                                 : *common_ancestor),
@@ -488,10 +490,10 @@ static void FillContainerFromString(ContainerNode* paragraph,
 
 bool IsPlainTextMarkup(Node* node) {
   DCHECK(node);
-  if (!isHTMLDivElement(*node))
+  if (!IsHTMLDivElement(*node))
     return false;
 
-  HTMLDivElement& element = toHTMLDivElement(*node);
+  HTMLDivElement& element = ToHTMLDivElement(*node);
   if (!element.hasAttributes())
     return false;
 
@@ -555,7 +557,7 @@ DocumentFragment* CreateFragmentFromText(const EphemeralRange& context,
   Element* block =
       EnclosingBlock(context.StartPosition().NodeAsRangeFirstNode());
   bool use_clones_of_enclosing_block =
-      block && !isHTMLBodyElement(*block) && !isHTMLHtmlElement(*block) &&
+      block && !IsHTMLBodyElement(*block) && !IsHTMLHtmlElement(*block) &&
       block != RootEditableElementOf(context.StartPosition());
 
   Vector<String> list;
@@ -589,7 +591,7 @@ DocumentFragment* CreateFragmentForInnerOuterHTML(
     ExceptionState& exception_state) {
   DCHECK(context_element);
   Document& document =
-      isHTMLTemplateElement(*context_element)
+      IsHTMLTemplateElement(*context_element)
           ? context_element->GetDocument().EnsureTemplateDocument()
           : context_element->GetDocument();
   DocumentFragment* fragment = DocumentFragment::Create(document);
@@ -671,8 +673,8 @@ DocumentFragment* CreateContextualFragment(
   Node* next_node = nullptr;
   for (Node* node = fragment->firstChild(); node; node = next_node) {
     next_node = node->nextSibling();
-    if (isHTMLHtmlElement(*node) || isHTMLHeadElement(*node) ||
-        isHTMLBodyElement(*node)) {
+    if (IsHTMLHtmlElement(*node) || IsHTMLHeadElement(*node) ||
+        IsHTMLBodyElement(*node)) {
       HTMLElement* element = ToHTMLElement(node);
       if (Node* first_child = element->firstChild())
         next_node = first_child;

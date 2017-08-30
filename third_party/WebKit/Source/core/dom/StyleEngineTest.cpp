@@ -535,7 +535,7 @@ TEST_F(StyleEngineTest, ScheduleInvalidationAfterSubtreeRecalc) {
   EXPECT_FALSE(GetDocument().ChildNeedsStyleInvalidation());
 
   GetDocument().View()->UpdateAllLifecyclePhases();
-  HTMLStyleElement* s2 = toHTMLStyleElement(GetDocument().getElementById("s2"));
+  HTMLStyleElement* s2 = ToHTMLStyleElement(GetDocument().getElementById("s2"));
   ASSERT_TRUE(s2);
   s2->setDisabled(true);
   GetStyleEngine().UpdateActiveStyle();
@@ -550,7 +550,7 @@ TEST_F(StyleEngineTest, ScheduleInvalidationAfterSubtreeRecalc) {
   EXPECT_FALSE(GetDocument().NeedsStyleInvalidation());
 
   GetDocument().View()->UpdateAllLifecyclePhases();
-  HTMLStyleElement* s1 = toHTMLStyleElement(GetDocument().getElementById("s1"));
+  HTMLStyleElement* s1 = ToHTMLStyleElement(GetDocument().getElementById("s1"));
   ASSERT_TRUE(s1);
   s1->setDisabled(true);
   GetStyleEngine().UpdateActiveStyle();

@@ -474,8 +474,8 @@ bool Internals::isValidContentSelect(Element* insertion_point,
     return false;
   }
 
-  return isHTMLContentElement(*insertion_point) &&
-         toHTMLContentElement(*insertion_point).IsSelectValid();
+  return IsHTMLContentElement(*insertion_point) &&
+         ToHTMLContentElement(*insertion_point).IsSelectValid();
 }
 
 Node* Internals::treeScopeRootNode(Node* node) {
@@ -558,10 +558,10 @@ void Internals::advanceTimeForImage(Element* image,
   }
 
   ImageResourceContent* resource = nullptr;
-  if (isHTMLImageElement(*image)) {
-    resource = toHTMLImageElement(*image).CachedImage();
-  } else if (isSVGImageElement(*image)) {
-    resource = toSVGImageElement(*image).CachedImage();
+  if (IsHTMLImageElement(*image)) {
+    resource = ToHTMLImageElement(*image).CachedImage();
+  } else if (IsSVGImageElement(*image)) {
+    resource = ToSVGImageElement(*image).CachedImage();
   } else {
     exception_state.ThrowDOMException(
         kInvalidAccessError, "The element provided is not a image element.");
@@ -589,10 +589,10 @@ void Internals::advanceImageAnimation(Element* image,
   DCHECK(image);
 
   ImageResourceContent* resource = nullptr;
-  if (isHTMLImageElement(*image)) {
-    resource = toHTMLImageElement(*image).CachedImage();
-  } else if (isSVGImageElement(*image)) {
-    resource = toSVGImageElement(*image).CachedImage();
+  if (IsHTMLImageElement(*image)) {
+    resource = ToHTMLImageElement(*image).CachedImage();
+  } else if (IsSVGImageElement(*image)) {
+    resource = ToSVGImageElement(*image).CachedImage();
   } else {
     exception_state.ThrowDOMException(
         kInvalidAccessError, "The element provided is not a image element.");
@@ -825,19 +825,17 @@ bool Internals::isValidationMessageVisible(Element* element) {
 void Internals::selectColorInColorChooser(Element* element,
                                           const String& color_value) {
   DCHECK(element);
-  if (!isHTMLInputElement(*element))
+  if (!IsHTMLInputElement(*element))
     return;
   Color color;
-  if (!color.SetFromString(color_value))
-    return;
-  toHTMLInputElement(*element).SelectColorInColorChooser(color);
+  if (color.SetFromString(color_value))
+    ToHTMLInputElement(*element).SelectColorInColorChooser(color);
 }
 
 void Internals::endColorChooser(Element* element) {
   DCHECK(element);
-  if (!isHTMLInputElement(*element))
-    return;
-  toHTMLInputElement(*element).EndColorChooser();
+  if (IsHTMLInputElement(*element))
+    ToHTMLInputElement(*element).EndColorChooser();
 }
 
 bool Internals::hasAutofocusRequest(Document* document) {
@@ -1285,8 +1283,8 @@ String Internals::viewportAsText(Document* document,
 bool Internals::elementShouldAutoComplete(Element* element,
                                           ExceptionState& exception_state) {
   DCHECK(element);
-  if (isHTMLInputElement(*element))
-    return toHTMLInputElement(*element).ShouldAutocomplete();
+  if (IsHTMLInputElement(*element))
+    return ToHTMLInputElement(*element).ShouldAutocomplete();
 
   exception_state.ThrowDOMException(kInvalidNodeTypeError,
                                     "The element provided is not an INPUT.");
@@ -1304,14 +1302,14 @@ String Internals::suggestedValue(Element* element,
   }
 
   String suggested_value;
-  if (isHTMLInputElement(*element))
-    suggested_value = toHTMLInputElement(*element).SuggestedValue();
+  if (IsHTMLInputElement(*element))
+    suggested_value = ToHTMLInputElement(*element).SuggestedValue();
 
-  if (isHTMLTextAreaElement(*element))
-    suggested_value = toHTMLTextAreaElement(*element).SuggestedValue();
+  if (IsHTMLTextAreaElement(*element))
+    suggested_value = ToHTMLTextAreaElement(*element).SuggestedValue();
 
-  if (isHTMLSelectElement(*element))
-    suggested_value = toHTMLSelectElement(*element).SuggestedValue();
+  if (IsHTMLSelectElement(*element))
+    suggested_value = ToHTMLSelectElement(*element).SuggestedValue();
 
   return suggested_value;
 }
@@ -1327,27 +1325,27 @@ void Internals::setSuggestedValue(Element* element,
     return;
   }
 
-  if (isHTMLInputElement(*element))
-    toHTMLInputElement(*element).SetSuggestedValue(value);
+  if (IsHTMLInputElement(*element))
+    ToHTMLInputElement(*element).SetSuggestedValue(value);
 
-  if (isHTMLTextAreaElement(*element))
-    toHTMLTextAreaElement(*element).SetSuggestedValue(value);
+  if (IsHTMLTextAreaElement(*element))
+    ToHTMLTextAreaElement(*element).SetSuggestedValue(value);
 
-  if (isHTMLSelectElement(*element))
-    toHTMLSelectElement(*element).SetSuggestedValue(value);
+  if (IsHTMLSelectElement(*element))
+    ToHTMLSelectElement(*element).SetSuggestedValue(value);
 }
 
 void Internals::setEditingValue(Element* element,
                                 const String& value,
                                 ExceptionState& exception_state) {
   DCHECK(element);
-  if (!isHTMLInputElement(*element)) {
+  if (!IsHTMLInputElement(*element)) {
     exception_state.ThrowDOMException(kInvalidNodeTypeError,
                                       "The element provided is not an INPUT.");
     return;
   }
 
-  toHTMLInputElement(*element).SetEditingValue(value);
+  ToHTMLInputElement(*element).SetEditingValue(value);
 }
 
 void Internals::setAutofilled(Element* element,
@@ -2582,8 +2580,8 @@ void Internals::updateLayoutIgnorePendingStylesheetsAndRunPostLayoutTasks(
     document = document_;
   } else if (node->IsDocumentNode()) {
     document = ToDocument(node);
-  } else if (isHTMLIFrameElement(*node)) {
-    document = toHTMLIFrameElement(*node).contentDocument();
+  } else if (IsHTMLIFrameElement(*node)) {
+    document = ToHTMLIFrameElement(*node).contentDocument();
   }
 
   if (!document) {
@@ -2896,12 +2894,12 @@ String Internals::getImageSourceURL(Element* element) {
 
 void Internals::forceImageReload(Element* element,
                                  ExceptionState& exception_state) {
-  if (!element || !isHTMLImageElement(*element)) {
+  if (!element || !IsHTMLImageElement(*element)) {
     exception_state.ThrowDOMException(
         kInvalidAccessError, "The element should be HTMLImageElement.");
   }
 
-  toHTMLImageElement(*element).ForceReload();
+  ToHTMLImageElement(*element).ForceReload();
 }
 
 String Internals::selectMenuListText(HTMLSelectElement* select) {
@@ -2917,16 +2915,16 @@ String Internals::selectMenuListText(HTMLSelectElement* select) {
 
 bool Internals::isSelectPopupVisible(Node* node) {
   DCHECK(node);
-  if (!isHTMLSelectElement(*node))
+  if (!IsHTMLSelectElement(*node))
     return false;
-  return toHTMLSelectElement(*node).PopupIsVisible();
+  return ToHTMLSelectElement(*node).PopupIsVisible();
 }
 
 bool Internals::selectPopupItemStyleIsRtl(Node* node, int item_index) {
-  if (!node || !isHTMLSelectElement(*node))
+  if (!node || !IsHTMLSelectElement(*node))
     return false;
 
-  HTMLSelectElement& select = toHTMLSelectElement(*node);
+  HTMLSelectElement& select = ToHTMLSelectElement(*node);
   if (item_index < 0 ||
       static_cast<size_t>(item_index) >= select.GetListItems().size())
     return false;
@@ -2936,10 +2934,10 @@ bool Internals::selectPopupItemStyleIsRtl(Node* node, int item_index) {
 }
 
 int Internals::selectPopupItemStyleFontHeight(Node* node, int item_index) {
-  if (!node || !isHTMLSelectElement(*node))
+  if (!node || !IsHTMLSelectElement(*node))
     return false;
 
-  HTMLSelectElement& select = toHTMLSelectElement(*node);
+  HTMLSelectElement& select = ToHTMLSelectElement(*node);
   if (item_index < 0 ||
       static_cast<size_t>(item_index) >= select.GetListItems().size())
     return false;
@@ -2997,13 +2995,13 @@ void Internals::setShouldRevealPassword(Element* element,
                                         bool reveal,
                                         ExceptionState& exception_state) {
   DCHECK(element);
-  if (!isHTMLInputElement(element)) {
+  if (!IsHTMLInputElement(element)) {
     exception_state.ThrowDOMException(kInvalidNodeTypeError,
                                       "The element provided is not an INPUT.");
     return;
   }
 
-  return toHTMLInputElement(*element).SetShouldRevealPassword(reveal);
+  return ToHTMLInputElement(*element).SetShouldRevealPassword(reveal);
 }
 
 namespace {

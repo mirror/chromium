@@ -41,7 +41,7 @@ class HTMLOptionsCollection final : public HTMLCollection {
   static HTMLOptionsCollection* Create(ContainerNode&, CollectionType);
 
   HTMLOptionElement* item(unsigned offset) const {
-    return toHTMLOptionElement(HTMLCollection::item(offset));
+    return ToHTMLOptionElement(HTMLCollection::item(offset));
   }
 
   void add(const HTMLOptionElementOrHTMLOptGroupElement&,
@@ -72,14 +72,14 @@ DEFINE_TYPE_CASTS(HTMLOptionsCollection,
 
 inline bool HTMLOptionsCollection::ElementMatches(
     const HTMLElement& element) const {
-  if (!isHTMLOptionElement(element))
+  if (!IsHTMLOptionElement(element))
     return false;
   Node* parent = element.parentNode();
   if (!parent)
     return false;
   if (parent == &RootNode())
     return true;
-  return isHTMLOptGroupElement(*parent) && parent->parentNode() == &RootNode();
+  return IsHTMLOptGroupElement(*parent) && parent->parentNode() == &RootNode();
 }
 
 }  // namespace blink

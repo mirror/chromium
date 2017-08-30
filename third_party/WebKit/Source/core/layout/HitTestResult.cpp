@@ -181,7 +181,7 @@ void HitTestResult::SetToShadowHostIfInRestrictedShadowRoot() {
   // case so that a toolip title in the shadow tree works.
   while (containing_shadow_root &&
          (containing_shadow_root->GetType() == ShadowRootType::kUserAgent ||
-          isSVGUseElement(containing_shadow_root->host()))) {
+          IsSVGUseElement(containing_shadow_root->host()))) {
     shadow_host = &containing_shadow_root->host();
     containing_shadow_root = shadow_host->ContainingShadowRoot();
     SetInnerNode(node->OwnerShadowHost());
@@ -194,13 +194,13 @@ void HitTestResult::SetToShadowHostIfInRestrictedShadowRoot() {
 HTMLAreaElement* HitTestResult::ImageAreaForImage() const {
   DCHECK(inner_node_);
   HTMLImageElement* image_element = nullptr;
-  if (isHTMLImageElement(inner_node_)) {
-    image_element = toHTMLImageElement(inner_node_);
+  if (IsHTMLImageElement(inner_node_)) {
+    image_element = ToHTMLImageElement(inner_node_);
   } else if (inner_node_->IsInShadowTree()) {
     if (inner_node_->ContainingShadowRoot()->GetType() ==
         ShadowRootType::kUserAgent) {
-      if (isHTMLImageElement(inner_node_->OwnerShadowHost()))
-        image_element = toHTMLImageElement(inner_node_->OwnerShadowHost());
+      if (IsHTMLImageElement(inner_node_->OwnerShadowHost()))
+        image_element = ToHTMLImageElement(inner_node_->OwnerShadowHost());
     }
   }
 
@@ -280,15 +280,15 @@ const AtomicString& HitTestResult::AltDisplayString() const {
   if (!inner_node_or_image_map_image)
     return g_null_atom;
 
-  if (isHTMLImageElement(*inner_node_or_image_map_image)) {
+  if (IsHTMLImageElement(*inner_node_or_image_map_image)) {
     HTMLImageElement& image =
-        toHTMLImageElement(*inner_node_or_image_map_image);
+        ToHTMLImageElement(*inner_node_or_image_map_image);
     return image.getAttribute(altAttr);
   }
 
-  if (isHTMLInputElement(*inner_node_or_image_map_image)) {
+  if (IsHTMLInputElement(*inner_node_or_image_map_image)) {
     HTMLInputElement& input =
-        toHTMLInputElement(*inner_node_or_image_map_image);
+        ToHTMLInputElement(*inner_node_or_image_map_image);
     return input.Alt();
   }
 
@@ -330,16 +330,16 @@ KURL HitTestResult::AbsoluteImageURL() const {
   // even if they don't have a LayoutImage (e.g. because the image didn't load
   // and we are using an alt container). For other elements we don't create alt
   // containers so ensure they contain a loaded image.
-  if (isHTMLImageElement(*inner_node_or_image_map_image) ||
-      (isHTMLInputElement(*inner_node_or_image_map_image) &&
-       toHTMLInputElement(inner_node_or_image_map_image)->type() ==
+  if (IsHTMLImageElement(*inner_node_or_image_map_image) ||
+      (IsHTMLInputElement(*inner_node_or_image_map_image) &&
+       ToHTMLInputElement(inner_node_or_image_map_image)->type() ==
            InputTypeNames::image))
     url_string = ToElement(*inner_node_or_image_map_image).ImageSourceURL();
   else if ((inner_node_or_image_map_image->GetLayoutObject() &&
             inner_node_or_image_map_image->GetLayoutObject()->IsImage()) &&
-           (isHTMLEmbedElement(*inner_node_or_image_map_image) ||
-            isHTMLObjectElement(*inner_node_or_image_map_image) ||
-            isSVGImageElement(*inner_node_or_image_map_image)))
+           (IsHTMLEmbedElement(*inner_node_or_image_map_image) ||
+            IsHTMLObjectElement(*inner_node_or_image_map_image) ||
+            IsSVGImageElement(*inner_node_or_image_map_image)))
     url_string = ToElement(*inner_node_or_image_map_image).ImageSourceURL();
   if (url_string.IsEmpty())
     return KURL();
@@ -396,11 +396,11 @@ bool HitTestResult::IsContentEditable() const {
   if (!inner_node_)
     return false;
 
-  if (isHTMLTextAreaElement(*inner_node_))
-    return !toHTMLTextAreaElement(*inner_node_).IsDisabledOrReadOnly();
+  if (IsHTMLTextAreaElement(*inner_node_))
+    return !ToHTMLTextAreaElement(*inner_node_).IsDisabledOrReadOnly();
 
-  if (isHTMLInputElement(*inner_node_)) {
-    HTMLInputElement& input_element = toHTMLInputElement(*inner_node_);
+  if (IsHTMLInputElement(*inner_node_)) {
+    HTMLInputElement& input_element = ToHTMLInputElement(*inner_node_);
     return !input_element.IsDisabledOrReadOnly() && input_element.IsTextField();
   }
 
@@ -520,10 +520,10 @@ Node* HitTestResult::InnerNodeOrImageMapImage() const {
     return nullptr;
 
   HTMLImageElement* image_map_image_element = nullptr;
-  if (isHTMLAreaElement(inner_node_))
-    image_map_image_element = toHTMLAreaElement(inner_node_)->ImageElement();
-  else if (isHTMLMapElement(inner_node_))
-    image_map_image_element = toHTMLMapElement(inner_node_)->ImageElement();
+  if (IsHTMLAreaElement(inner_node_))
+    image_map_image_element = ToHTMLAreaElement(inner_node_)->ImageElement();
+  else if (IsHTMLMapElement(inner_node_))
+    image_map_image_element = ToHTMLMapElement(inner_node_)->ImageElement();
 
   if (!image_map_image_element)
     return inner_node_.Get();

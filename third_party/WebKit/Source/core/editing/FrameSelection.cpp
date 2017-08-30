@@ -641,9 +641,9 @@ static Node* NonBoundaryShadowTreeRootNode(const Position& position) {
 }
 
 void FrameSelection::SelectAll(SetSelectionBy set_selection_by) {
-  if (isHTMLSelectElement(GetDocument().FocusedElement())) {
+  if (IsHTMLSelectElement(GetDocument().FocusedElement())) {
     HTMLSelectElement* select_element =
-        toHTMLSelectElement(GetDocument().FocusedElement());
+        ToHTMLSelectElement(GetDocument().FocusedElement());
     if (select_element->CanSelectAll()) {
       select_element->SelectAll();
       return;

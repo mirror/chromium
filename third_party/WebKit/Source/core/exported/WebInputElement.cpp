@@ -137,7 +137,7 @@ WebInputElement::WebInputElement(HTMLInputElement* elem)
     : WebFormControlElement(elem) {}
 
 DEFINE_WEB_NODE_TYPE_CASTS(WebInputElement,
-                           isHTMLInputElement(ConstUnwrap<Node>()));
+                           IsHTMLInputElement(ConstUnwrap<Node>()));
 
 WebInputElement& WebInputElement::operator=(HTMLInputElement* elem) {
   private_ = elem;
@@ -145,11 +145,11 @@ WebInputElement& WebInputElement::operator=(HTMLInputElement* elem) {
 }
 
 WebInputElement::operator HTMLInputElement*() const {
-  return toHTMLInputElement(private_.Get());
+  return ToHTMLInputElement(private_.Get());
 }
 
 WebInputElement* ToWebInputElement(WebElement* web_element) {
-  if (!isHTMLInputElement(*web_element->Unwrap<Element>()))
+  if (!IsHTMLInputElement(*web_element->Unwrap<Element>()))
     return 0;
 
   return static_cast<WebInputElement*>(web_element);

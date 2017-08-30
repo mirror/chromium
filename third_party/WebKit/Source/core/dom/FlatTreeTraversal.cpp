@@ -66,8 +66,8 @@ Node* FlatTreeTraversal::ResolveDistributionStartingAt(
        sibling = (direction == kTraversalDirectionForward
                       ? sibling->nextSibling()
                       : sibling->previousSibling())) {
-    if (isHTMLSlotElement(*sibling)) {
-      const HTMLSlotElement& slot = toHTMLSlotElement(*sibling);
+    if (IsHTMLSlotElement(*sibling)) {
+      const HTMLSlotElement& slot = ToHTMLSlotElement(*sibling);
       if (slot.SupportsDistribution()) {
         if (Node* found = (direction == kTraversalDirectionForward
                                ? slot.FirstDistributedNode()
@@ -86,8 +86,8 @@ Node* FlatTreeTraversal::ResolveDistributionStartingAt(
 Node* FlatTreeTraversal::V0ResolveDistributionStartingAt(
     const Node& node,
     TraversalDirection direction) {
-  DCHECK(!isHTMLSlotElement(node) ||
-         !toHTMLSlotElement(node).SupportsDistribution());
+  DCHECK(!IsHTMLSlotElement(node) ||
+         !ToHTMLSlotElement(node).SupportsDistribution());
   for (const Node* sibling = &node; sibling;
        sibling = (direction == kTraversalDirectionForward
                       ? sibling->nextSibling()
@@ -99,8 +99,8 @@ Node* FlatTreeTraversal::V0ResolveDistributionStartingAt(
                            ? insertion_point.FirstDistributedNode()
                            : insertion_point.LastDistributedNode()))
       return found;
-    DCHECK(isHTMLShadowElement(insertion_point) ||
-           (isHTMLContentElement(insertion_point) &&
+    DCHECK(IsHTMLShadowElement(insertion_point) ||
+           (IsHTMLContentElement(insertion_point) &&
             !insertion_point.HasChildren()));
   }
   return nullptr;
@@ -126,8 +126,8 @@ Node* FlatTreeTraversal::TraverseSiblings(const Node& node,
   // Slotted nodes are already handled in traverseSiblingsForV1HostChild()
   // above, here is for fallback contents.
   Element* parent = node.parentElement();
-  if (parent && isHTMLSlotElement(parent)) {
-    HTMLSlotElement& slot = toHTMLSlotElement(*parent);
+  if (parent && IsHTMLSlotElement(parent)) {
+    HTMLSlotElement& slot = ToHTMLSlotElement(*parent);
     if (slot.SupportsDistribution() && slot.AssignedNodes().IsEmpty())
       return TraverseSiblings(slot, direction);
   }
@@ -191,8 +191,8 @@ ContainerNode* FlatTreeTraversal::TraverseParent(
   }
 
   Element* parent = node.parentElement();
-  if (parent && isHTMLSlotElement(parent)) {
-    HTMLSlotElement& slot = toHTMLSlotElement(*parent);
+  if (parent && IsHTMLSlotElement(parent)) {
+    HTMLSlotElement& slot = ToHTMLSlotElement(*parent);
     if (slot.SupportsDistribution()) {
       if (!slot.AssignedNodes().IsEmpty())
         return nullptr;

@@ -48,13 +48,13 @@ const int kDefaultPaddingBottom = 1;
 LayoutListBox::LayoutListBox(Element* element) : LayoutBlockFlow(element) {
   DCHECK(element);
   DCHECK(element->IsHTMLElement());
-  DCHECK(isHTMLSelectElement(element));
+  DCHECK(IsHTMLSelectElement(element));
 }
 
 LayoutListBox::~LayoutListBox() {}
 
 inline HTMLSelectElement* LayoutListBox::SelectElement() const {
-  return toHTMLSelectElement(GetNode());
+  return ToHTMLSelectElement(GetNode());
 }
 
 unsigned LayoutListBox::size() const {
@@ -84,8 +84,8 @@ LayoutUnit LayoutListBox::ItemHeight() const {
 
   LayoutUnit max_height;
   for (Element* element : items) {
-    if (isHTMLOptGroupElement(element))
-      element = &toHTMLOptGroupElement(element)->OptGroupLabelElement();
+    if (IsHTMLOptGroupElement(element))
+      element = &ToHTMLOptGroupElement(element)->OptGroupLabelElement();
     LayoutObject* layout_object = element->GetLayoutObject();
     LayoutUnit item_height;
     if (layout_object && layout_object->IsBox())

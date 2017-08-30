@@ -94,9 +94,9 @@ Node::InsertionNotificationRequest HTMLOptGroupElement::InsertedInto(
 }
 
 void HTMLOptGroupElement::RemovedFrom(ContainerNode* insertion_point) {
-  if (isHTMLSelectElement(*insertion_point)) {
+  if (IsHTMLSelectElement(*insertion_point)) {
     if (!parentNode())
-      toHTMLSelectElement(insertion_point)->OptGroupInsertedOrRemoved(*this);
+      ToHTMLSelectElement(insertion_point)->OptGroupInsertedOrRemoved(*this);
   }
   HTMLElement::RemovedFrom(insertion_point);
 }
@@ -155,7 +155,7 @@ void HTMLOptGroupElement::UpdateGroupLabel() {
 }
 
 HTMLDivElement& HTMLOptGroupElement::OptGroupLabelElement() const {
-  return *toHTMLDivElementOrDie(UserAgentShadowRoot()->getElementById(
+  return *ToHTMLDivElementOrDie(UserAgentShadowRoot()->getElementById(
       ShadowElementNames::OptGroupLabel()));
 }
 

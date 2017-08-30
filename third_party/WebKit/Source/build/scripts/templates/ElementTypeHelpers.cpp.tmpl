@@ -23,7 +23,7 @@ void createHTMLTypeMap() {
   {% endfor %}
 }
 
-HTMLElementType htmlElementTypeForTag(const AtomicString& tagName) {
+HTMLElementType HTMLElementTypeForTag(const AtomicString& tagName) {
   if (!html_type_map) createHTMLTypeMap();
   if (html_type_map->Contains(tagName)) {
     {% for tag in tags|sort %}

@@ -1052,7 +1052,7 @@ bool EditingStyle::ElementIsStyledSpanOrHTMLEquivalent(
     const HTMLElement* element) {
   DCHECK(element);
   bool element_is_span_or_element_equivalent = false;
-  if (isHTMLSpanElement(*element)) {
+  if (IsHTMLSpanElement(*element)) {
     element_is_span_or_element_equivalent = true;
   } else {
     const HeapVector<Member<HTMLElementEquivalent>>& html_element_equivalents =

@@ -164,7 +164,7 @@ void SVGDocumentExtensions::UpdatePan(const FloatPoint& pos) const {
 
 SVGSVGElement* SVGDocumentExtensions::rootElement(const Document& document) {
   Element* elem = document.documentElement();
-  return isSVGSVGElement(elem) ? toSVGSVGElement(elem) : 0;
+  return IsSVGSVGElement(elem) ? ToSVGSVGElement(elem) : nullptr;
 }
 
 SVGSVGElement* SVGDocumentExtensions::rootElement() const {

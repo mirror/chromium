@@ -44,27 +44,27 @@ TEST_F(HTMLSelectElementTest, SaveRestoreSelectSingleFormControlState) {
              "<option value='999'>999</option></select>"));
   GetDocument().View()->UpdateAllLifecyclePhases();
   Element* element = GetDocument().getElementById("sel");
-  HTMLFormControlElementWithState* select = toHTMLSelectElement(element);
+  HTMLFormControlElementWithState* select = ToHTMLSelectElement(element);
   HTMLOptionElement* opt0 =
-      toHTMLOptionElement(GetDocument().getElementById("0"));
+      ToHTMLOptionElement(GetDocument().getElementById("0"));
   HTMLOptionElement* opt2 =
-      toHTMLOptionElement(GetDocument().getElementById("2"));
+      ToHTMLOptionElement(GetDocument().getElementById("2"));
 
   // Save the select element state, and then restore again.
   // Test passes if the restored state is not changed.
-  EXPECT_EQ(2, toHTMLSelectElement(element)->selectedIndex());
+  EXPECT_EQ(2, ToHTMLSelectElement(element)->selectedIndex());
   EXPECT_FALSE(opt0->Selected());
   EXPECT_TRUE(opt2->Selected());
   FormControlState select_state = select->SaveFormControlState();
   EXPECT_EQ(2U, select_state.ValueSize());
 
   // Clear the selected state, to be restored by restoreFormControlState.
-  toHTMLSelectElement(select)->setSelectedIndex(-1);
+  ToHTMLSelectElement(select)->setSelectedIndex(-1);
   ASSERT_FALSE(opt2->Selected());
 
   // Restore
   select->RestoreFormControlState(select_state);
-  EXPECT_EQ(2, toHTMLSelectElement(element)->selectedIndex());
+  EXPECT_EQ(2, ToHTMLSelectElement(element)->selectedIndex());
   EXPECT_FALSE(opt0->Selected());
   EXPECT_TRUE(opt2->Selected());
 }
@@ -78,14 +78,14 @@ TEST_F(HTMLSelectElementTest, SaveRestoreSelectMultipleFormControlState) {
              "<option value='999' selected id='3'>999</option></select>"));
   GetDocument().View()->UpdateAllLifecyclePhases();
   HTMLFormControlElementWithState* select =
-      toHTMLSelectElement(GetDocument().getElementById("sel"));
+      ToHTMLSelectElement(GetDocument().getElementById("sel"));
 
   HTMLOptionElement* opt0 =
-      toHTMLOptionElement(GetDocument().getElementById("0"));
+      ToHTMLOptionElement(GetDocument().getElementById("0"));
   HTMLOptionElement* opt2 =
-      toHTMLOptionElement(GetDocument().getElementById("2"));
+      ToHTMLOptionElement(GetDocument().getElementById("2"));
   HTMLOptionElement* opt3 =
-      toHTMLOptionElement(GetDocument().getElementById("3"));
+      ToHTMLOptionElement(GetDocument().getElementById("3"));
 
   // Save the select element state, and then restore again.
   // Test passes if the selected options are not changed.
@@ -121,11 +121,11 @@ TEST_F(HTMLSelectElementTest, RestoreUnmatchedFormControlState) {
       "</select>");
   GetDocument().View()->UpdateAllLifecyclePhases();
   Element* element = GetDocument().getElementById("sel");
-  HTMLFormControlElementWithState* select = toHTMLSelectElement(element);
+  HTMLFormControlElementWithState* select = ToHTMLSelectElement(element);
   HTMLOptionElement* opt2 =
-      toHTMLOptionElement(GetDocument().getElementById("2"));
+      ToHTMLOptionElement(GetDocument().getElementById("2"));
 
-  toHTMLSelectElement(element)->setSelectedIndex(1);
+  ToHTMLSelectElement(element)->setSelectedIndex(1);
   // Save the current state.
   FormControlState select_state = select->SaveFormControlState();
   EXPECT_EQ(2U, select_state.ValueSize());
@@ -137,8 +137,8 @@ TEST_F(HTMLSelectElementTest, RestoreUnmatchedFormControlState) {
 
   // Restore
   select->RestoreFormControlState(select_state);
-  EXPECT_EQ(-1, toHTMLSelectElement(element)->selectedIndex());
-  EXPECT_EQ(nullptr, toHTMLSelectElement(element)->OptionToBeShown());
+  EXPECT_EQ(-1, ToHTMLSelectElement(element)->selectedIndex());
+  EXPECT_EQ(nullptr, ToHTMLSelectElement(element)->OptionToBeShown());
 }
 
 TEST_F(HTMLSelectElementTest, VisibleBoundsInVisualViewport) {
@@ -147,7 +147,7 @@ TEST_F(HTMLSelectElementTest, VisibleBoundsInVisualViewport) {
       "-webkit-appearance:none;'><option>o1</select>");
   GetDocument().View()->UpdateAllLifecyclePhases();
   HTMLSelectElement* select =
-      toHTMLSelectElement(GetDocument().body()->firstChild());
+      ToHTMLSelectElement(GetDocument().body()->firstChild());
   ASSERT_NE(select, nullptr);
   IntRect bounds = select->VisibleBoundsInVisualViewport();
   EXPECT_EQ(24, bounds.Height());
@@ -158,7 +158,7 @@ TEST_F(HTMLSelectElementTest, PopupIsVisible) {
       "<select><option>o1</option></select>");
   GetDocument().View()->UpdateAllLifecyclePhases();
   HTMLSelectElement* select =
-      toHTMLSelectElement(GetDocument().body()->firstChild());
+      ToHTMLSelectElement(GetDocument().body()->firstChild());
   ASSERT_NE(select, nullptr);
   EXPECT_FALSE(select->PopupIsVisible());
   select->ShowPopup();
@@ -172,7 +172,7 @@ TEST_F(HTMLSelectElementTest, FirstSelectableOption) {
     GetDocument().documentElement()->setInnerHTML("<select></select>");
     GetDocument().View()->UpdateAllLifecyclePhases();
     HTMLSelectElement* select =
-        toHTMLSelectElement(GetDocument().body()->firstChild());
+        ToHTMLSelectElement(GetDocument().body()->firstChild());
     EXPECT_EQ(nullptr, select->FirstSelectableOption());
   }
   {
@@ -180,7 +180,7 @@ TEST_F(HTMLSelectElementTest, FirstSelectableOption) {
         "<select><option id=o1></option><option id=o2></option></select>");
     GetDocument().View()->UpdateAllLifecyclePhases();
     HTMLSelectElement* select =
-        toHTMLSelectElement(GetDocument().body()->firstChild());
+        ToHTMLSelectElement(GetDocument().body()->firstChild());
     EXPECT_EQ("o1", select->FirstSelectableOption()->FastGetAttribute(
                         HTMLNames::idAttr));
   }
@@ -190,7 +190,7 @@ TEST_F(HTMLSelectElementTest, FirstSelectableOption) {
         "id=o2></option></select>");
     GetDocument().View()->UpdateAllLifecyclePhases();
     HTMLSelectElement* select =
-        toHTMLSelectElement(GetDocument().body()->firstChild());
+        ToHTMLSelectElement(GetDocument().body()->firstChild());
     EXPECT_EQ("o2", select->FirstSelectableOption()->FastGetAttribute(
                         HTMLNames::idAttr));
   }
@@ -200,7 +200,7 @@ TEST_F(HTMLSelectElementTest, FirstSelectableOption) {
         "id=o2></option></select>");
     GetDocument().View()->UpdateAllLifecyclePhases();
     HTMLSelectElement* select =
-        toHTMLSelectElement(GetDocument().body()->firstChild());
+        ToHTMLSelectElement(GetDocument().body()->firstChild());
     EXPECT_EQ("o2", select->FirstSelectableOption()->FastGetAttribute(
                         HTMLNames::idAttr));
   }
@@ -210,7 +210,7 @@ TEST_F(HTMLSelectElementTest, FirstSelectableOption) {
         "id=o2></option></optgroup></select>");
     GetDocument().View()->UpdateAllLifecyclePhases();
     HTMLSelectElement* select =
-        toHTMLSelectElement(GetDocument().body()->firstChild());
+        ToHTMLSelectElement(GetDocument().body()->firstChild());
     EXPECT_EQ("o1", select->FirstSelectableOption()->FastGetAttribute(
                         HTMLNames::idAttr));
   }
@@ -221,7 +221,7 @@ TEST_F(HTMLSelectElementTest, LastSelectableOption) {
     GetDocument().documentElement()->setInnerHTML("<select></select>");
     GetDocument().View()->UpdateAllLifecyclePhases();
     HTMLSelectElement* select =
-        toHTMLSelectElement(GetDocument().body()->firstChild());
+        ToHTMLSelectElement(GetDocument().body()->firstChild());
     EXPECT_EQ(nullptr, select->LastSelectableOption());
   }
   {
@@ -229,7 +229,7 @@ TEST_F(HTMLSelectElementTest, LastSelectableOption) {
         "<select><option id=o1></option><option id=o2></option></select>");
     GetDocument().View()->UpdateAllLifecyclePhases();
     HTMLSelectElement* select =
-        toHTMLSelectElement(GetDocument().body()->firstChild());
+        ToHTMLSelectElement(GetDocument().body()->firstChild());
     EXPECT_EQ("o2", select->LastSelectableOption()->FastGetAttribute(
                         HTMLNames::idAttr));
   }
@@ -239,7 +239,7 @@ TEST_F(HTMLSelectElementTest, LastSelectableOption) {
         "disabled></option></select>");
     GetDocument().View()->UpdateAllLifecyclePhases();
     HTMLSelectElement* select =
-        toHTMLSelectElement(GetDocument().body()->firstChild());
+        ToHTMLSelectElement(GetDocument().body()->firstChild());
     EXPECT_EQ("o1", select->LastSelectableOption()->FastGetAttribute(
                         HTMLNames::idAttr));
   }
@@ -249,7 +249,7 @@ TEST_F(HTMLSelectElementTest, LastSelectableOption) {
         "style='display:none'></option></select>");
     GetDocument().View()->UpdateAllLifecyclePhases();
     HTMLSelectElement* select =
-        toHTMLSelectElement(GetDocument().body()->firstChild());
+        ToHTMLSelectElement(GetDocument().body()->firstChild());
     EXPECT_EQ("o1", select->LastSelectableOption()->FastGetAttribute(
                         HTMLNames::idAttr));
   }
@@ -259,7 +259,7 @@ TEST_F(HTMLSelectElementTest, LastSelectableOption) {
         "id=o2></option></optgroup></select>");
     GetDocument().View()->UpdateAllLifecyclePhases();
     HTMLSelectElement* select =
-        toHTMLSelectElement(GetDocument().body()->firstChild());
+        ToHTMLSelectElement(GetDocument().body()->firstChild());
     EXPECT_EQ("o2", select->LastSelectableOption()->FastGetAttribute(
                         HTMLNames::idAttr));
   }
@@ -270,7 +270,7 @@ TEST_F(HTMLSelectElementTest, NextSelectableOption) {
     GetDocument().documentElement()->setInnerHTML("<select></select>");
     GetDocument().View()->UpdateAllLifecyclePhases();
     HTMLSelectElement* select =
-        toHTMLSelectElement(GetDocument().body()->firstChild());
+        ToHTMLSelectElement(GetDocument().body()->firstChild());
     EXPECT_EQ(nullptr, select->NextSelectableOption(nullptr));
   }
   {
@@ -278,7 +278,7 @@ TEST_F(HTMLSelectElementTest, NextSelectableOption) {
         "<select><option id=o1></option><option id=o2></option></select>");
     GetDocument().View()->UpdateAllLifecyclePhases();
     HTMLSelectElement* select =
-        toHTMLSelectElement(GetDocument().body()->firstChild());
+        ToHTMLSelectElement(GetDocument().body()->firstChild());
     EXPECT_EQ("o1", select->NextSelectableOption(nullptr)->FastGetAttribute(
                         HTMLNames::idAttr));
   }
@@ -288,7 +288,7 @@ TEST_F(HTMLSelectElementTest, NextSelectableOption) {
         "id=o2></option></select>");
     GetDocument().View()->UpdateAllLifecyclePhases();
     HTMLSelectElement* select =
-        toHTMLSelectElement(GetDocument().body()->firstChild());
+        ToHTMLSelectElement(GetDocument().body()->firstChild());
     EXPECT_EQ("o2", select->NextSelectableOption(nullptr)->FastGetAttribute(
                         HTMLNames::idAttr));
   }
@@ -298,7 +298,7 @@ TEST_F(HTMLSelectElementTest, NextSelectableOption) {
         "id=o2></option></select>");
     GetDocument().View()->UpdateAllLifecyclePhases();
     HTMLSelectElement* select =
-        toHTMLSelectElement(GetDocument().body()->firstChild());
+        ToHTMLSelectElement(GetDocument().body()->firstChild());
     EXPECT_EQ("o2", select->NextSelectableOption(nullptr)->FastGetAttribute(
                         HTMLNames::idAttr));
   }
@@ -308,7 +308,7 @@ TEST_F(HTMLSelectElementTest, NextSelectableOption) {
         "id=o2></option></optgroup></select>");
     GetDocument().View()->UpdateAllLifecyclePhases();
     HTMLSelectElement* select =
-        toHTMLSelectElement(GetDocument().body()->firstChild());
+        ToHTMLSelectElement(GetDocument().body()->firstChild());
     EXPECT_EQ("o1", select->NextSelectableOption(nullptr)->FastGetAttribute(
                         HTMLNames::idAttr));
   }
@@ -317,13 +317,13 @@ TEST_F(HTMLSelectElementTest, NextSelectableOption) {
         "<select><option id=o1></option><option id=o2></option></select>");
     GetDocument().View()->UpdateAllLifecyclePhases();
     HTMLSelectElement* select =
-        toHTMLSelectElement(GetDocument().body()->firstChild());
+        ToHTMLSelectElement(GetDocument().body()->firstChild());
     HTMLOptionElement* option =
-        toHTMLOptionElement(GetDocument().getElementById("o1"));
+        ToHTMLOptionElement(GetDocument().getElementById("o1"));
     EXPECT_EQ("o2", select->NextSelectableOption(option)->FastGetAttribute(
                         HTMLNames::idAttr));
 
-    EXPECT_EQ(nullptr, select->NextSelectableOption(toHTMLOptionElement(
+    EXPECT_EQ(nullptr, select->NextSelectableOption(ToHTMLOptionElement(
                            GetDocument().getElementById("o2"))));
   }
   {
@@ -332,9 +332,9 @@ TEST_F(HTMLSelectElementTest, NextSelectableOption) {
         "id=o2></option></optgroup></select>");
     GetDocument().View()->UpdateAllLifecyclePhases();
     HTMLSelectElement* select =
-        toHTMLSelectElement(GetDocument().body()->firstChild());
+        ToHTMLSelectElement(GetDocument().body()->firstChild());
     HTMLOptionElement* option =
-        toHTMLOptionElement(GetDocument().getElementById("o1"));
+        ToHTMLOptionElement(GetDocument().getElementById("o1"));
     EXPECT_EQ("o2", select->NextSelectableOption(option)->FastGetAttribute(
                         HTMLNames::idAttr));
   }
@@ -345,7 +345,7 @@ TEST_F(HTMLSelectElementTest, PreviousSelectableOption) {
     GetDocument().documentElement()->setInnerHTML("<select></select>");
     GetDocument().View()->UpdateAllLifecyclePhases();
     HTMLSelectElement* select =
-        toHTMLSelectElement(GetDocument().body()->firstChild());
+        ToHTMLSelectElement(GetDocument().body()->firstChild());
     EXPECT_EQ(nullptr, select->PreviousSelectableOption(nullptr));
   }
   {
@@ -353,7 +353,7 @@ TEST_F(HTMLSelectElementTest, PreviousSelectableOption) {
         "<select><option id=o1></option><option id=o2></option></select>");
     GetDocument().View()->UpdateAllLifecyclePhases();
     HTMLSelectElement* select =
-        toHTMLSelectElement(GetDocument().body()->firstChild());
+        ToHTMLSelectElement(GetDocument().body()->firstChild());
     EXPECT_EQ("o2", select->PreviousSelectableOption(nullptr)->FastGetAttribute(
                         HTMLNames::idAttr));
   }
@@ -363,7 +363,7 @@ TEST_F(HTMLSelectElementTest, PreviousSelectableOption) {
         "disabled></option></select>");
     GetDocument().View()->UpdateAllLifecyclePhases();
     HTMLSelectElement* select =
-        toHTMLSelectElement(GetDocument().body()->firstChild());
+        ToHTMLSelectElement(GetDocument().body()->firstChild());
     EXPECT_EQ("o1", select->PreviousSelectableOption(nullptr)->FastGetAttribute(
                         HTMLNames::idAttr));
   }
@@ -373,7 +373,7 @@ TEST_F(HTMLSelectElementTest, PreviousSelectableOption) {
         "style='display:none'></option></select>");
     GetDocument().View()->UpdateAllLifecyclePhases();
     HTMLSelectElement* select =
-        toHTMLSelectElement(GetDocument().body()->firstChild());
+        ToHTMLSelectElement(GetDocument().body()->firstChild());
     EXPECT_EQ("o1", select->PreviousSelectableOption(nullptr)->FastGetAttribute(
                         HTMLNames::idAttr));
   }
@@ -383,7 +383,7 @@ TEST_F(HTMLSelectElementTest, PreviousSelectableOption) {
         "id=o2></option></optgroup></select>");
     GetDocument().View()->UpdateAllLifecyclePhases();
     HTMLSelectElement* select =
-        toHTMLSelectElement(GetDocument().body()->firstChild());
+        ToHTMLSelectElement(GetDocument().body()->firstChild());
     EXPECT_EQ("o2", select->PreviousSelectableOption(nullptr)->FastGetAttribute(
                         HTMLNames::idAttr));
   }
@@ -392,13 +392,13 @@ TEST_F(HTMLSelectElementTest, PreviousSelectableOption) {
         "<select><option id=o1></option><option id=o2></option></select>");
     GetDocument().View()->UpdateAllLifecyclePhases();
     HTMLSelectElement* select =
-        toHTMLSelectElement(GetDocument().body()->firstChild());
+        ToHTMLSelectElement(GetDocument().body()->firstChild());
     HTMLOptionElement* option =
-        toHTMLOptionElement(GetDocument().getElementById("o2"));
+        ToHTMLOptionElement(GetDocument().getElementById("o2"));
     EXPECT_EQ("o1", select->PreviousSelectableOption(option)->FastGetAttribute(
                         HTMLNames::idAttr));
 
-    EXPECT_EQ(nullptr, select->PreviousSelectableOption(toHTMLOptionElement(
+    EXPECT_EQ(nullptr, select->PreviousSelectableOption(ToHTMLOptionElement(
                            GetDocument().getElementById("o1"))));
   }
   {
@@ -407,9 +407,9 @@ TEST_F(HTMLSelectElementTest, PreviousSelectableOption) {
         "id=o2></option></optgroup></select>");
     GetDocument().View()->UpdateAllLifecyclePhases();
     HTMLSelectElement* select =
-        toHTMLSelectElement(GetDocument().body()->firstChild());
+        ToHTMLSelectElement(GetDocument().body()->firstChild());
     HTMLOptionElement* option =
-        toHTMLOptionElement(GetDocument().getElementById("o2"));
+        ToHTMLOptionElement(GetDocument().getElementById("o2"));
     EXPECT_EQ("o1", select->PreviousSelectableOption(option)->FastGetAttribute(
                         HTMLNames::idAttr));
   }
@@ -420,9 +420,9 @@ TEST_F(HTMLSelectElementTest, ActiveSelectionEndAfterOptionRemoval) {
       "<select><optgroup><option selected>o1</option></optgroup></select>");
   GetDocument().View()->UpdateAllLifecyclePhases();
   HTMLSelectElement* select =
-      toHTMLSelectElement(GetDocument().body()->firstChild());
+      ToHTMLSelectElement(GetDocument().body()->firstChild());
   HTMLOptionElement* option =
-      toHTMLOptionElement(select->firstChild()->firstChild());
+      ToHTMLOptionElement(select->firstChild()->firstChild());
   EXPECT_EQ(1, select->ActiveSelectionEndListIndex());
   select->firstChild()->removeChild(option);
   EXPECT_EQ(-1, select->ActiveSelectionEndListIndex());
@@ -436,7 +436,7 @@ TEST_F(HTMLSelectElementTest, DefaultToolTip) {
       ">Placeholder</option><optgroup><option>o2</option></optgroup></select>");
   GetDocument().View()->UpdateAllLifecyclePhases();
   HTMLSelectElement* select =
-      toHTMLSelectElement(GetDocument().body()->firstChild());
+      ToHTMLSelectElement(GetDocument().body()->firstChild());
   Element* option = ToElement(select->firstChild());
   Element* optgroup = ToElement(option->nextSibling());
 
@@ -481,7 +481,7 @@ TEST_F(HTMLSelectElementTest, SetRecalcListItemsByOptgroupRemoval) {
       "optgroup></select>");
   GetDocument().View()->UpdateAllLifecyclePhases();
   HTMLSelectElement* select =
-      toHTMLSelectElement(GetDocument().body()->firstChild());
+      ToHTMLSelectElement(GetDocument().body()->firstChild());
   select->setInnerHTML("");
   // PASS if setInnerHTML didn't have a check failure.
 }

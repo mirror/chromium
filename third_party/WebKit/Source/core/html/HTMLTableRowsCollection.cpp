@@ -80,8 +80,8 @@ HTMLTableRowElement* HTMLTableRowsCollection::RowAfter(
   else if (IsInSection(*previous, tbodyTag))
     child = Traversal<HTMLElement>::NextSibling(*previous->parentNode());
   for (; child; child = Traversal<HTMLElement>::NextSibling(*child)) {
-    if (isHTMLTableRowElement(child))
-      return toHTMLTableRowElement(child);
+    if (IsHTMLTableRowElement(child))
+      return ToHTMLTableRowElement(child);
     if (child->HasTagName(tbodyTag)) {
       if (HTMLTableRowElement* row =
               Traversal<HTMLTableRowElement>::FirstChild(*child))
@@ -117,8 +117,8 @@ HTMLTableRowElement* HTMLTableRowsCollection::LastRow(HTMLTableElement& table) {
 
   for (HTMLElement* child = Traversal<HTMLElement>::LastChild(table); child;
        child = Traversal<HTMLElement>::PreviousSibling(*child)) {
-    if (isHTMLTableRowElement(child))
-      return toHTMLTableRowElement(child);
+    if (IsHTMLTableRowElement(child))
+      return ToHTMLTableRowElement(child);
     if (child->HasTagName(tbodyTag)) {
       if (HTMLTableRowElement* last_row =
               Traversal<HTMLTableRowElement>::LastChild(*child))
@@ -143,7 +143,7 @@ HTMLTableRowElement* HTMLTableRowsCollection::LastRow(HTMLTableElement& table) {
 // evaluation is undefined and can differ between compilers.
 HTMLTableRowsCollection::HTMLTableRowsCollection(ContainerNode& table)
     : HTMLCollection(table, kTableRows, kOverridesItemAfter) {
-  DCHECK(isHTMLTableElement(table));
+  DCHECK(IsHTMLTableElement(table));
 }
 
 HTMLTableRowsCollection* HTMLTableRowsCollection::Create(ContainerNode& table,
@@ -153,8 +153,8 @@ HTMLTableRowsCollection* HTMLTableRowsCollection::Create(ContainerNode& table,
 }
 
 Element* HTMLTableRowsCollection::VirtualItemAfter(Element* previous) const {
-  return RowAfter(toHTMLTableElement(ownerNode()),
-                  toHTMLTableRowElement(previous));
+  return RowAfter(ToHTMLTableElement(ownerNode()),
+                  ToHTMLTableRowElement(previous));
 }
 
 }  // namespace blink
