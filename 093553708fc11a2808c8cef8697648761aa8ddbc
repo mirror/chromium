@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "32909268_0f78eb79",
+        "filename": "ui/views/controls/button/checkbox.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-08-30T04:24:39Z",
+      "side": 1,
+      "message": "I don\u0027t think this is coincidence.  I think these colors always have to stay in sync and matching the text color is correct.",
+      "parentUuid": "72e9c3e7_58da373b",
+      "revId": "093553708fc11a2808c8cef8697648761aa8ddbc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "81d48c79_ebc6d884",
         "filename": "ui/views/controls/button/checkbox.cc",
         "patchSetId": 3

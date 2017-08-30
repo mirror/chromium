@@ -97,6 +97,30 @@
     },
     {
       "key": {
+        "uuid": "495b0b05_23959f14",
+        "filename": "ui/native_theme/native_theme_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 427,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-08-30T04:24:39Z",
+      "side": 1,
+      "message": "I don\u0027t think following tapted\u0027s suggestion skips the color inversion issue.  It is identical to mine in Harmony (it will use the \"default\" case, which is to use the Aura color and invert if need be), while preserving the existing behavior pre-Harmony (which I don\u0027t care about since the difference is minor).\n\nI don\u0027t think I understand the question about new color IDs.  Are you saying that today checkboxes/radios reuse some other system color inappropriately?  Maybe you can restate the question.",
+      "parentUuid": "cf764b00_6f83173f",
+      "range": {
+        "startLine": 427,
+        "startChar": 38,
+        "endLine": 427,
+        "endChar": 70
+      },
+      "revId": "1c4c6a7c57b37a4fcb8c78ef57f8d8b320111ed0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "47b1bff9_fb6a4592",
         "filename": "ui/native_theme/native_theme_win.cc",
         "patchSetId": 2
