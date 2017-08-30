@@ -85,7 +85,7 @@ void V8HTMLConstructor::HtmlConstructor(
   } else {
     // Customized built-in element
     // 5. If local name is not valid for interface, throw TypeError
-    if (htmlElementTypeForTag(local_name) != element_interface_name) {
+    if (HTMLElementTypeForTag(local_name) != element_interface_name) {
       V8ThrowException::ThrowTypeError(isolate,
                                        "Illegal constructor: localName does "
                                        "not match the HTML element interface");

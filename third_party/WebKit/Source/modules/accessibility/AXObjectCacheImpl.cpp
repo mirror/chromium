@@ -174,14 +174,14 @@ AXObject* AXObjectCacheImpl::FocusedObject() {
     focused_node = document_;
 
   // If it's an image map, get the focused link within the image map.
-  if (isHTMLAreaElement(focused_node))
-    return FocusedImageMapUIElement(toHTMLAreaElement(focused_node));
+  if (IsHTMLAreaElement(focused_node))
+    return FocusedImageMapUIElement(ToHTMLAreaElement(focused_node));
 
   // See if there's a page popup, for example a calendar picker.
   Element* adjusted_focused_element = document_->AdjustedFocusedElement();
-  if (isHTMLInputElement(adjusted_focused_element)) {
+  if (IsHTMLInputElement(adjusted_focused_element)) {
     if (AXObject* ax_popup =
-            toHTMLInputElement(adjusted_focused_element)->PopupRootAXObject()) {
+            ToHTMLInputElement(adjusted_focused_element)->PopupRootAXObject()) {
       if (Element* focused_element_in_popup =
               ax_popup->GetDocument()->FocusedElement())
         focused_node = focused_element_in_popup;
@@ -215,10 +215,10 @@ AXObject* AXObjectCacheImpl::Get(LayoutObject* layout_object) {
 // Returns true if |node| is an <option> element and its parent <select>
 // is a menu list (not a list box).
 static bool IsMenuListOption(const Node* node) {
-  if (!isHTMLOptionElement(node))
+  if (!IsHTMLOptionElement(node))
     return false;
   const HTMLSelectElement* select =
-      toHTMLOptionElement(node)->OwnerSelectElement();
+      ToHTMLOptionElement(node)->OwnerSelectElement();
   if (!select)
     return false;
   const LayoutObject* layout_object = select->GetLayoutObject();
@@ -232,7 +232,7 @@ AXObject* AXObjectCacheImpl::Get(const Node* node) {
   // Menu list option and HTML area elements are indexed by DOM node, never by
   // layout object.
   LayoutObject* layout_object = node->GetLayoutObject();
-  if (IsMenuListOption(node) || isHTMLAreaElement(node))
+  if (IsMenuListOption(node) || IsHTMLAreaElement(node))
     layout_object = nullptr;
 
   AXID layout_id = layout_object ? layout_object_mapping_.at(layout_object) : 0;
@@ -287,8 +287,8 @@ AXObject* AXObjectCacheImpl::CreateFromRenderer(LayoutObject* layout_object) {
   // ul/ol/dl type (it shouldn't be a list if aria says otherwise).
   if (NodeHasRole(node, "list") || NodeHasRole(node, "directory") ||
       (NodeHasRole(node, g_null_atom) &&
-       (isHTMLUListElement(node) || isHTMLOListElement(node) ||
-        isHTMLDListElement(node))))
+       (IsHTMLUListElement(node) || IsHTMLOListElement(node) ||
+        IsHTMLDListElement(node))))
     return AXList::Create(layout_object, *this);
 
   // aria tables
@@ -304,11 +304,11 @@ AXObject* AXObjectCacheImpl::CreateFromRenderer(LayoutObject* layout_object) {
   if (node && node->IsMediaControlElement())
     return AccessibilityMediaControl::Create(layout_object, *this);
 
-  if (isHTMLOptionElement(node))
+  if (IsHTMLOptionElement(node))
     return AXListBoxOption::Create(layout_object, *this);
 
-  if (isHTMLInputElement(node) &&
-      toHTMLInputElement(node)->type() == InputTypeNames::radio)
+  if (IsHTMLInputElement(node) &&
+      ToHTMLInputElement(node)->type() == InputTypeNames::radio)
     return AXRadioInput::Create(layout_object, *this);
 
   if (layout_object->IsSVGRoot())
@@ -343,10 +343,10 @@ AXObject* AXObjectCacheImpl::CreateFromRenderer(LayoutObject* layout_object) {
 
 AXObject* AXObjectCacheImpl::CreateFromNode(Node* node) {
   if (IsMenuListOption(node))
-    return AXMenuListOption::Create(toHTMLOptionElement(node), *this);
+    return AXMenuListOption::Create(ToHTMLOptionElement(node), *this);
 
-  if (isHTMLAreaElement(node))
-    return AXImageMapLink::Create(toHTMLAreaElement(node), *this);
+  if (IsHTMLAreaElement(node))
+    return AXImageMapLink::Create(ToHTMLAreaElement(node), *this);
 
   return AXNodeObject::Create(node, *this);
 }
@@ -369,13 +369,13 @@ AXObject* AXObjectCacheImpl::GetOrCreate(Node* node) {
   // If the node has a layout object, prefer using that as the primary key for
   // the AXObject, with the exception of an HTMLAreaElement, which is
   // created based on its node.
-  if (node->GetLayoutObject() && !isHTMLAreaElement(node))
+  if (node->GetLayoutObject() && !IsHTMLAreaElement(node))
     return GetOrCreate(node->GetLayoutObject());
 
   if (!node->parentElement())
     return 0;
 
-  if (isHTMLHeadElement(node))
+  if (IsHTMLHeadElement(node))
     return 0;
 
   AXObject* new_obj = CreateFromNode(node);
@@ -995,7 +995,7 @@ void AXObjectCacheImpl::HandleAttributeChanged(const QualifiedName& attr_name,
     HandleAriaRoleChanged(element);
   else if (attr_name == altAttr || attr_name == titleAttr)
     TextChanged(element);
-  else if (attr_name == forAttr && isHTMLLabelElement(*element))
+  else if (attr_name == forAttr && IsHTMLLabelElement(*element))
     LabelChanged(element);
   else if (attr_name == idAttr)
     UpdateTreeIfElementIdIsAriaOwned(element);
@@ -1027,7 +1027,7 @@ void AXObjectCacheImpl::HandleAttributeChanged(const QualifiedName& attr_name,
 }
 
 void AXObjectCacheImpl::LabelChanged(Element* element) {
-  TextChanged(toHTMLLabelElement(element)->control());
+  TextChanged(ToHTMLLabelElement(element)->control());
 }
 
 void AXObjectCacheImpl::InlineTextBoxesUpdated(

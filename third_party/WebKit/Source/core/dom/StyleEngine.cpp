@@ -946,8 +946,8 @@ void StyleEngine::ScheduleInvalidationsForRuleSets(
   Element* element = ElementTraversal::FirstChild(*stay_within);
   while (element) {
     ScheduleRuleSetInvalidationsForElement(*element, rule_sets);
-    if (invalidate_slotted && isHTMLSlotElement(element))
-      InvalidateSlottedElements(toHTMLSlotElement(*element));
+    if (invalidate_slotted && IsHTMLSlotElement(element))
+      InvalidateSlottedElements(ToHTMLSlotElement(*element));
 
     if (element->GetStyleChangeType() < kSubtreeStyleChange)
       element = ElementTraversal::Next(*element, stay_within);

@@ -111,12 +111,12 @@ void HTMLHRElement::CollectStyleForPresentationAttribute(
 HTMLSelectElement* HTMLHRElement::OwnerSelectElement() const {
   if (!parentNode())
     return nullptr;
-  if (isHTMLSelectElement(*parentNode()))
-    return toHTMLSelectElement(parentNode());
-  if (!isHTMLOptGroupElement(*parentNode()))
+  if (IsHTMLSelectElement(*parentNode()))
+    return ToHTMLSelectElement(parentNode());
+  if (!IsHTMLOptGroupElement(*parentNode()))
     return nullptr;
   Node* grand_parent = parentNode()->parentNode();
-  return isHTMLSelectElement(grand_parent) ? toHTMLSelectElement(grand_parent)
+  return IsHTMLSelectElement(grand_parent) ? ToHTMLSelectElement(grand_parent)
                                            : nullptr;
 }
 
@@ -124,7 +124,7 @@ Node::InsertionNotificationRequest HTMLHRElement::InsertedInto(
     ContainerNode* insertion_point) {
   HTMLElement::InsertedInto(insertion_point);
   if (HTMLSelectElement* select = OwnerSelectElement()) {
-    if (insertion_point == select || (isHTMLOptGroupElement(*insertion_point) &&
+    if (insertion_point == select || (IsHTMLOptGroupElement(*insertion_point) &&
                                       insertion_point->parentNode() == select))
       select->HrInsertedOrRemoved(*this);
   }
@@ -132,13 +132,13 @@ Node::InsertionNotificationRequest HTMLHRElement::InsertedInto(
 }
 
 void HTMLHRElement::RemovedFrom(ContainerNode* insertion_point) {
-  if (isHTMLSelectElement(*insertion_point)) {
-    if (!parentNode() || isHTMLOptGroupElement(*parentNode()))
-      toHTMLSelectElement(insertion_point)->HrInsertedOrRemoved(*this);
-  } else if (isHTMLOptGroupElement(*insertion_point)) {
+  if (IsHTMLSelectElement(*insertion_point)) {
+    if (!parentNode() || IsHTMLOptGroupElement(*parentNode()))
+      ToHTMLSelectElement(insertion_point)->HrInsertedOrRemoved(*this);
+  } else if (IsHTMLOptGroupElement(*insertion_point)) {
     Node* parent = insertion_point->parentNode();
-    if (isHTMLSelectElement(parent))
-      toHTMLSelectElement(parent)->HrInsertedOrRemoved(*this);
+    if (IsHTMLSelectElement(parent))
+      ToHTMLSelectElement(parent)->HrInsertedOrRemoved(*this);
   }
   HTMLElement::RemovedFrom(insertion_point);
 }

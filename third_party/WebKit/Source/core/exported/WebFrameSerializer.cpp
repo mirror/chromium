@@ -152,8 +152,8 @@ bool MHTMLFrameSerializerDelegate::ShouldIgnoreHiddenElement(
     return true;
 
   // Do not include the hidden form element.
-  return isHTMLInputElement(element) &&
-         toHTMLInputElement(&element)->type() == InputTypeNames::hidden;
+  return IsHTMLInputElement(element) &&
+         ToHTMLInputElement(&element)->type() == InputTypeNames::hidden;
 }
 
 bool MHTMLFrameSerializerDelegate::ShouldIgnoreMetaElement(
@@ -164,7 +164,7 @@ bool MHTMLFrameSerializerDelegate::ShouldIgnoreMetaElement(
   // the saved MHTML page, there is no need to carry the directives. If they
   // are still kept in the MHTML, child frames that are referred to using cid:
   // scheme could be prevented from loading.
-  if (!isHTMLMetaElement(element))
+  if (!IsHTMLMetaElement(element))
     return false;
   if (!element.FastHasAttribute(HTMLNames::contentAttr))
     return false;
@@ -209,7 +209,7 @@ bool MHTMLFrameSerializerDelegate::ShouldIgnoreAttribute(
 
   // Do not save ping attribute since anyway the ping will be blocked from
   // MHTML.
-  if (isHTMLAnchorElement(element) &&
+  if (IsHTMLAnchorElement(element) &&
       attribute.LocalName() == HTMLNames::pingAttr) {
     return true;
   }
@@ -217,7 +217,7 @@ bool MHTMLFrameSerializerDelegate::ShouldIgnoreAttribute(
   // The special attribute in a template element to denote the shadow DOM
   // should only be generated from MHTML serialization. If it is found in the
   // original page, it should be ignored.
-  if (isHTMLTemplateElement(element) &&
+  if (IsHTMLTemplateElement(element) &&
       (attribute.LocalName() == kShadowModeAttributeName ||
        attribute.LocalName() == kShadowDelegatesFocusAttributeName) &&
       !shadow_template_elements_.Contains(&element)) {
@@ -260,7 +260,7 @@ bool MHTMLFrameSerializerDelegate::RewriteLink(const Element& element,
     return true;
   }
 
-  if (isHTMLObjectElement(&element)) {
+  if (IsHTMLObjectElement(&element)) {
     Document* doc = frame_owner_element->contentDocument();
     bool is_handled_by_serializer = doc->IsHTMLDocument() ||
                                     doc->IsXHTMLDocument() ||
@@ -292,8 +292,8 @@ Vector<Attribute> MHTMLFrameSerializerDelegate::GetCustomAttributes(
     const Element& element) {
   Vector<Attribute> attributes;
 
-  if (isHTMLImageElement(element)) {
-    GetCustomAttributesForImageElement(toHTMLImageElement(element),
+  if (IsHTMLImageElement(element)) {
+    GetCustomAttributesForImageElement(ToHTMLImageElement(element),
                                        &attributes);
   } else if (element.IsFormControlElement()) {
     GetCustomAttributesForFormControlElement(element, &attributes);

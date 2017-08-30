@@ -74,14 +74,14 @@ static bool IsFrameFocused(const Element& element) {
 }
 
 static bool MatchesSpatialNavigationFocusPseudoClass(const Element& element) {
-  return isHTMLOptionElement(element) &&
-         toHTMLOptionElement(element).SpatialNavigationFocused() &&
+  return IsHTMLOptionElement(element) &&
+         ToHTMLOptionElement(element).SpatialNavigationFocused() &&
          IsFrameFocused(element);
 }
 
 static bool MatchesListBoxPseudoClass(const Element& element) {
-  return isHTMLSelectElement(element) &&
-         !toHTMLSelectElement(element).UsesMenuList();
+  return IsHTMLSelectElement(element) &&
+         !ToHTMLSelectElement(element).UsesMenuList();
 }
 
 static bool MatchesTagName(const Element& element,
@@ -985,8 +985,8 @@ bool SelectorChecker::CheckPseudoClass(const SelectorCheckingContext& context,
       return element.MatchesValidityPseudoClasses() &&
              !element.IsValidElement();
     case CSSSelector::kPseudoChecked: {
-      if (isHTMLInputElement(element)) {
-        HTMLInputElement& input_element = toHTMLInputElement(element);
+      if (IsHTMLInputElement(element)) {
+        HTMLInputElement& input_element = ToHTMLInputElement(element);
         // Even though WinIE allows checked and indeterminate to
         // co-exist, the CSS selector spec says that you can't be
         // both checked and indeterminate. We will behave like WinIE
@@ -995,8 +995,8 @@ bool SelectorChecker::CheckPseudoClass(const SelectorCheckingContext& context,
         if (input_element.ShouldAppearChecked() &&
             !input_element.ShouldAppearIndeterminate())
           return true;
-      } else if (isHTMLOptionElement(element) &&
-                 toHTMLOptionElement(element).Selected()) {
+      } else if (IsHTMLOptionElement(element) &&
+                 ToHTMLOptionElement(element).Selected()) {
         return true;
       }
       break;
@@ -1034,8 +1034,8 @@ bool SelectorChecker::CheckPseudoClass(const SelectorCheckingContext& context,
       return element.ContainsFullScreenElement();
     case CSSSelector::kPseudoVideoPersistent:
       DCHECK(is_ua_rule_);
-      return isHTMLVideoElement(element) &&
-             toHTMLVideoElement(element).IsPersistent();
+      return IsHTMLVideoElement(element) &&
+             ToHTMLVideoElement(element).IsPersistent();
     case CSSSelector::kPseudoVideoPersistentAncestor:
       DCHECK(is_ua_rule_);
       return element.ContainsPersistentVideo();

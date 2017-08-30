@@ -197,8 +197,8 @@ void FullscreenController::FullscreenElementChanged(Element* old_element,
   if (new_element) {
     DCHECK(Fullscreen::IsFullscreenElement(*new_element));
 
-    if (isHTMLVideoElement(*new_element)) {
-      HTMLVideoElement& video_element = toHTMLVideoElement(*new_element);
+    if (IsHTMLVideoElement(*new_element)) {
+      HTMLVideoElement& video_element = ToHTMLVideoElement(*new_element);
       video_element.DidEnterFullscreen();
 
       // If the video uses overlay fullscreen mode, make the background
@@ -211,8 +211,8 @@ void FullscreenController::FullscreenElementChanged(Element* old_element,
   if (old_element) {
     DCHECK(!Fullscreen::IsFullscreenElement(*old_element));
 
-    if (isHTMLVideoElement(*old_element)) {
-      HTMLVideoElement& video_element = toHTMLVideoElement(*old_element);
+    if (IsHTMLVideoElement(*old_element)) {
+      HTMLVideoElement& video_element = ToHTMLVideoElement(*old_element);
       video_element.DidExitFullscreen();
     }
   }

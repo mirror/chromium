@@ -110,8 +110,8 @@ class ReplacementFragment final {
 static bool IsInterchangeHTMLBRElement(const Node* node) {
   DEFINE_STATIC_LOCAL(String, interchange_newline_class_string,
                       (AppleInterchangeNewline));
-  if (!isHTMLBRElement(node) ||
-      toHTMLBRElement(node)->getAttribute(classAttr) !=
+  if (!IsHTMLBRElement(node) ||
+      ToHTMLBRElement(node)->getAttribute(classAttr) !=
           interchange_newline_class_string)
     return false;
   UseCounter::Count(node->GetDocument(),
@@ -476,7 +476,7 @@ bool ReplaceSelectionCommand::ShouldMergeStart(
   return !selection_start_was_start_of_paragraph &&
          !fragment_has_interchange_newline_at_start &&
          IsStartOfParagraph(start_of_inserted_content) &&
-         !isHTMLBRElement(
+         !IsHTMLBRElement(
              *start_of_inserted_content.DeepEquivalent().AnchorNode()) &&
          ShouldMerge(start_of_inserted_content, prev);
 }
@@ -491,7 +491,7 @@ bool ReplaceSelectionCommand::ShouldMergeEnd(
 
   return !selection_end_was_end_of_paragraph &&
          IsEndOfParagraph(end_of_inserted_content) &&
-         !isHTMLBRElement(
+         !IsHTMLBRElement(
              *end_of_inserted_content.DeepEquivalent().AnchorNode()) &&
          ShouldMerge(end_of_inserted_content, next);
 }
@@ -799,7 +799,7 @@ VisiblePosition ReplaceSelectionCommand::PositionAtEndOfInsertedContent()
   // TODO(yosin): We should set |m_endOfInsertedContent| not in SELECT
   // element, since contents of SELECT elements, e.g. OPTION, OPTGROUP, are
   // not editable, or SELECT element is an atomic on editing.
-  HTMLSelectElement* enclosing_select = toHTMLSelectElement(
+  HTMLSelectElement* enclosing_select = ToHTMLSelectElement(
       EnclosingElementWithTag(end_of_inserted_content_, selectTag));
   if (enclosing_select)
     return CreateVisiblePosition(LastPositionInOrAfterNode(enclosing_select));
@@ -820,8 +820,8 @@ VisiblePosition ReplaceSelectionCommand::PositionAtStartOfInsertedContent()
 static void RemoveHeadContents(ReplacementFragment& fragment) {
   Node* next = nullptr;
   for (Node* node = fragment.FirstChild(); node; node = next) {
-    if (isHTMLBaseElement(*node) || isHTMLLinkElement(*node) ||
-        isHTMLMetaElement(*node) || isHTMLTitleElement(*node)) {
+    if (IsHTMLBaseElement(*node) || IsHTMLLinkElement(*node) ||
+        IsHTMLMetaElement(*node) || IsHTMLTitleElement(*node)) {
       next = NodeTraversal::NextSkippingChildren(*node);
       fragment.RemoveNode(node);
     } else {
@@ -846,7 +846,7 @@ static bool FollowBlockElementStyle(const Node* node) {
 static void HandleStyleSpansBeforeInsertion(ReplacementFragment& fragment,
                                             const Position& insertion_pos) {
   Node* top_node = fragment.FirstChild();
-  if (!isHTMLSpanElement(top_node))
+  if (!IsHTMLSpanElement(top_node))
     return;
 
   // Handling the case where we are doing Paste as Quotation or pasting into
@@ -860,7 +860,7 @@ static void HandleStyleSpansBeforeInsertion(ReplacementFragment& fragment,
   // Remove style spans to follow the styles of parent block element when
   // |fragment| becomes a part of it. See bugs http://crbug.com/226941 and
   // http://crbug.com/335955.
-  HTMLSpanElement* wrapping_style_span = toHTMLSpanElement(top_node);
+  HTMLSpanElement* wrapping_style_span = ToHTMLSpanElement(top_node);
   const Node* node = insertion_pos.AnchorNode();
   // |node| can be an inline element like <br> under <li>
   // e.g.) editing/execCommand/switch-list-type.html
@@ -964,7 +964,7 @@ void ReplaceSelectionCommand::MergeEndIfNeeded(EditingState* editing_state) {
 
 static Node* EnclosingInline(Node* node) {
   while (ContainerNode* parent = node->parentNode()) {
-    if (IsBlockFlowElement(*parent) || isHTMLBodyElement(*parent))
+    if (IsBlockFlowElement(*parent) || IsHTMLBodyElement(*parent))
       return node;
     // Stop if any previous sibling is a block.
     for (Node* sibling = node->previousSibling(); sibling;
@@ -1180,7 +1180,7 @@ void ReplaceSelectionCommand::DoApply(EditingState* editing_state) {
       return;
     // This will leave a br between the split.
     Node* br = EndingVisibleSelection().Start().AnchorNode();
-    DCHECK(isHTMLBRElement(br)) << br;
+    DCHECK(IsHTMLBRElement(br)) << br;
     // Insert content between the two blockquotes, but remove the br (since it
     // was just a placeholder).
     insertion_pos = Position::InParentBeforeNode(*br);
@@ -1205,10 +1205,10 @@ void ReplaceSelectionCommand::DoApply(EditingState* editing_state) {
   // collapsed away, there are positions after the br which map to the same
   // visible position as [br, 0]).
   HTMLBRElement* end_br =
-      isHTMLBRElement(*MostForwardCaretPosition(insertion_pos).AnchorNode())
-          ? toHTMLBRElement(
+      IsHTMLBRElement(*MostForwardCaretPosition(insertion_pos).AnchorNode())
+          ? ToHTMLBRElement(
                 MostForwardCaretPosition(insertion_pos).AnchorNode())
-          : 0;
+          : nullptr;
   VisiblePosition original_vis_pos_before_end_br;
   if (end_br) {
     original_vis_pos_before_end_br =
@@ -1649,8 +1649,8 @@ bool ReplaceSelectionCommand::ShouldPerformSmartReplace() const {
 
   TextControlElement* text_control =
       EnclosingTextControl(PositionAtStartOfInsertedContent().DeepEquivalent());
-  if (isHTMLInputElement(text_control) &&
-      toHTMLInputElement(text_control)->type() == InputTypeNames::password)
+  if (IsHTMLInputElement(text_control) &&
+      ToHTMLInputElement(text_control)->type() == InputTypeNames::password)
     return false;  // Disable smart replace for password fields.
 
   return true;
@@ -2004,9 +2004,9 @@ bool ReplaceSelectionCommand::PerformTrivialReplace(
   GetDocument().UpdateStyleAndLayoutIgnorePendingStylesheets();
 
   if (node_after_insertion_pos && node_after_insertion_pos->parentNode() &&
-      isHTMLBRElement(*node_after_insertion_pos) &&
+      IsHTMLBRElement(*node_after_insertion_pos) &&
       ShouldRemoveEndBR(
-          toHTMLBRElement(node_after_insertion_pos),
+          ToHTMLBRElement(node_after_insertion_pos),
           VisiblePosition::BeforeNode(*node_after_insertion_pos))) {
     RemoveNodeAndPruneAncestors(node_after_insertion_pos, editing_state);
     if (editing_state->IsAborted())

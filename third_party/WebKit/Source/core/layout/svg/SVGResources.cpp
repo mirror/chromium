@@ -110,8 +110,8 @@ static HashSet<AtomicString>& ChainableResourceTags() {
 
 static inline AtomicString TargetReferenceFromResource(SVGElement& element) {
   String target;
-  if (isSVGPatternElement(element))
-    target = toSVGPatternElement(element).href()->CurrentValue()->Value();
+  if (IsSVGPatternElement(element))
+    target = ToSVGPatternElement(element).href()->CurrentValue()->Value();
   else if (IsSVGGradientElement(element))
     target = ToSVGGradientElement(element).href()->CurrentValue()->Value();
   else

@@ -3298,7 +3298,7 @@ void WebViewImpl::PerformMediaPlayerAction(const WebMediaPlayerAction& action,
                                            const WebPoint& location) {
   HitTestResult result = HitTestResultForViewportPos(location);
   Node* node = result.InnerNode();
-  if (!isHTMLVideoElement(*node) && !isHTMLAudioElement(*node))
+  if (!IsHTMLVideoElement(*node) && !IsHTMLAudioElement(*node))
     return;
 
   HTMLMediaElement* media_element = ToHTMLMediaElement(node);
@@ -3329,7 +3329,7 @@ void WebViewImpl::PerformPluginAction(const WebPluginAction& action,
   // FIXME: Location is probably in viewport coordinates
   HitTestResult result = HitTestResultForRootFramePos(location);
   Node* node = result.InnerNode();
-  if (!isHTMLObjectElement(*node) && !isHTMLEmbedElement(*node))
+  if (!IsHTMLObjectElement(*node) && !IsHTMLEmbedElement(*node))
     return;
 
   LayoutObject* object = node->GetLayoutObject();

@@ -891,8 +891,8 @@ void PaintLayerScrollableArea::UpdateAfterLayout() {
   PositionOverflowControls();
 
   Node* node = Box().GetNode();
-  if (isHTMLSelectElement(node))
-    toHTMLSelectElement(node)->ScrollToOptionAfterLayout(*this);
+  if (IsHTMLSelectElement(node))
+    ToHTMLSelectElement(node)->ScrollToOptionAfterLayout(*this);
 }
 
 void PaintLayerScrollableArea::ClampScrollOffsetAfterOverflowChange() {
@@ -1889,10 +1889,10 @@ bool PaintLayerScrollableArea::ShouldScrollOnMainThread() const {
 static bool LayerNodeMayNeedCompositedScrolling(const PaintLayer* layer) {
   // Don't force composite scroll for select or text input elements.
   if (Node* node = layer->GetLayoutObject().GetNode()) {
-    if (isHTMLSelectElement(node))
+    if (IsHTMLSelectElement(node))
       return false;
     if (TextControlElement* text_control = EnclosingTextControl(node)) {
-      if (isHTMLInputElement(text_control)) {
+      if (IsHTMLInputElement(text_control)) {
         return false;
       }
     }

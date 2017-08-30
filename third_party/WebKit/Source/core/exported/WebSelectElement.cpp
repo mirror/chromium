@@ -52,7 +52,7 @@ WebSelectElement::WebSelectElement(HTMLSelectElement* element)
     : WebFormControlElement(element) {}
 
 DEFINE_WEB_NODE_TYPE_CASTS(WebSelectElement,
-                           isHTMLSelectElement(ConstUnwrap<Node>()));
+                           IsHTMLSelectElement(ConstUnwrap<Node>()));
 
 WebSelectElement& WebSelectElement::operator=(HTMLSelectElement* element) {
   private_ = element;
@@ -60,7 +60,7 @@ WebSelectElement& WebSelectElement::operator=(HTMLSelectElement* element) {
 }
 
 WebSelectElement::operator HTMLSelectElement*() const {
-  return toHTMLSelectElement(private_.Get());
+  return ToHTMLSelectElement(private_.Get());
 }
 
 }  // namespace blink

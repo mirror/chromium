@@ -183,7 +183,7 @@ class MediaControlsImplTest : public ::testing::Test {
 
     GetDocument().write("<video>");
     HTMLVideoElement& video =
-        toHTMLVideoElement(*GetDocument().QuerySelector("video"));
+        ToHTMLVideoElement(*GetDocument().QuerySelector("video"));
     media_controls_ = static_cast<MediaControlsImpl*>(video.GetMediaControls());
 
     // If scripts are not enabled, controls will always be shown.

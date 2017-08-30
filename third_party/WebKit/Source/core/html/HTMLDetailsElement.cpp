@@ -114,9 +114,9 @@ Element* HTMLDetailsElement::FindMainSummary() const {
     return summary;
 
   HTMLContentElement* content =
-      toHTMLContentElementOrDie(UserAgentShadowRoot()->firstChild());
+      ToHTMLContentElementOrDie(UserAgentShadowRoot()->firstChild());
   DCHECK(content->firstChild());
-  CHECK(isHTMLSummaryElement(*content->firstChild()));
+  CHECK(IsHTMLSummaryElement(*content->firstChild()));
   return ToElement(content->firstChild());
 }
 
@@ -149,7 +149,7 @@ void HTMLDetailsElement::ParseAttribute(
     Element* summary = FindMainSummary();
     DCHECK(summary);
 
-    Element* control = toHTMLSummaryElement(summary)->MarkerControl();
+    Element* control = ToHTMLSummaryElement(summary)->MarkerControl();
     if (control && control->GetLayoutObject())
       control->GetLayoutObject()->SetShouldDoFullPaintInvalidation();
 

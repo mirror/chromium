@@ -334,11 +334,11 @@ AXObject* AccessibilityMediaTimeline::Create(
 
 String AccessibilityMediaTimeline::ValueDescription() const {
   Node* node = layout_object_->GetNode();
-  if (!isHTMLInputElement(node))
+  if (!IsHTMLInputElement(node))
     return String();
 
   return LocalizedMediaTimeDescription(
-      toHTMLInputElement(node)->value().ToFloat());
+      ToHTMLInputElement(node)->value().ToFloat());
 }
 
 String AccessibilityMediaTimeline::Description(

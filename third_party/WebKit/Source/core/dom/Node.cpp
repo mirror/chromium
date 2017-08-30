@@ -1102,8 +1102,8 @@ bool Node::CanParticipateInFlatTree() const {
 }
 
 bool Node::IsActiveSlotOrActiveV0InsertionPoint() const {
-  return (isHTMLSlotElement(*this) &&
-          toHTMLSlotElement(*this).SupportsDistribution()) ||
+  return (IsHTMLSlotElement(*this) &&
+          ToHTMLSlotElement(*this).SupportsDistribution()) ||
          IsActiveV0InsertionPoint(*this);
 }
 
@@ -1401,7 +1401,7 @@ String Node::textContent(bool convert_brs_to_newlines) const {
 
   StringBuilder content;
   for (const Node& node : NodeTraversal::InclusiveDescendantsOf(*this)) {
-    if (isHTMLBRElement(node) && convert_brs_to_newlines) {
+    if (IsHTMLBRElement(node) && convert_brs_to_newlines) {
       content.Append('\n');
     } else if (node.IsTextNode()) {
       content.Append(ToText(node).data());
@@ -1822,7 +1822,7 @@ String Node::ToMarkedTreeString(const Node* marked_node1,
                                 const char* marked_label2) const {
   const Node* root_node;
   const Node* node = this;
-  while (node->ParentOrShadowHostNode() && !isHTMLBodyElement(*node))
+  while (node->ParentOrShadowHostNode() && !IsHTMLBodyElement(*node))
     node = node->ParentOrShadowHostNode();
   root_node = node;
 
@@ -1839,7 +1839,7 @@ String Node::ToMarkedFlatTreeString(const Node* marked_node1,
                                     const char* marked_label2) const {
   const Node* root_node;
   const Node* node = this;
-  while (node->ParentOrShadowHostNode() && !isHTMLBodyElement(*node))
+  while (node->ParentOrShadowHostNode() && !IsHTMLBodyElement(*node))
     node = node->ParentOrShadowHostNode();
   root_node = node;
 
@@ -1901,7 +1901,7 @@ Element* Node::EnclosingLinkEventParentOrSelf() const {
     // For imagemaps, the enclosing link node is the associated area element not
     // the image itself.  So we don't let images be the enclosingLinkNode, even
     // though isLink sometimes returns true for them.
-    if (node->IsLink() && !isHTMLImageElement(*node)) {
+    if (node->IsLink() && !IsHTMLImageElement(*node)) {
       // Casting to Element is safe because only HTMLAnchorElement,
       // HTMLImageElement and SVGAElement can return true for isLink().
       result = node;
@@ -2602,8 +2602,8 @@ void Node::CheckSlotChange(SlotChangeType slot_change_type) {
   } else if (IsInV1ShadowTree()) {
     // Checking for fallback content if the node is in a v1 shadow tree.
     Element* parent = parentElement();
-    if (parent && isHTMLSlotElement(parent)) {
-      HTMLSlotElement& parent_slot = toHTMLSlotElement(*parent);
+    if (parent && IsHTMLSlotElement(parent)) {
+      HTMLSlotElement& parent_slot = ToHTMLSlotElement(*parent);
       DCHECK(parent_slot.SupportsDistribution());
       // The parent_slot's assigned nodes might not be calculated because they
       // are lazy evaluated later at UpdateDistribution() so we have to check it
@@ -2615,7 +2615,7 @@ void Node::CheckSlotChange(SlotChangeType slot_change_type) {
 }
 
 WebPluginContainerImpl* Node::GetWebPluginContainer() const {
-  if (!isHTMLObjectElement(this) && !isHTMLEmbedElement(this)) {
+  if (!IsHTMLObjectElement(this) && !IsHTMLEmbedElement(this)) {
     return nullptr;
   }
 

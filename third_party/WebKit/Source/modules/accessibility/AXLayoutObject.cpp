@@ -231,10 +231,10 @@ ScrollableArea* AXLayoutObject::GetScrollableAreaIfScrollable() const {
 static bool IsImageOrAltText(LayoutBoxModelObject* box, Node* node) {
   if (box && box->IsImage())
     return true;
-  if (isHTMLImageElement(node))
+  if (IsHTMLImageElement(node))
     return true;
-  if (isHTMLInputElement(node) &&
-      toHTMLInputElement(node)->HasFallbackContent())
+  if (IsHTMLInputElement(node) &&
+      ToHTMLInputElement(node)->HasFallbackContent())
     return true;
   return false;
 }
@@ -243,7 +243,7 @@ AccessibilityRole AXLayoutObject::NativeAccessibilityRoleIgnoringAria() const {
   Node* node = layout_object_->GetNode();
   LayoutBoxModelObject* css_box = GetLayoutBoxModelObject();
 
-  if ((css_box && css_box->IsListItem()) || isHTMLLIElement(node))
+  if ((css_box && css_box->IsListItem()) || IsHTMLLIElement(node))
     return kListItemRole;
   if (layout_object_->IsListMarker())
     return kListMarkerRole;
@@ -254,7 +254,7 @@ AccessibilityRole AXLayoutObject::NativeAccessibilityRoleIgnoringAria() const {
   if (css_box && IsImageOrAltText(css_box, node)) {
     if (node && node->IsLink())
       return kImageMapRole;
-    if (isHTMLInputElement(node))
+    if (IsHTMLInputElement(node))
       return AriaHasPopup() ? kPopUpButtonRole : kButtonRole;
     if (IsSVGImage())
       return kSVGRootRole;
@@ -262,7 +262,7 @@ AccessibilityRole AXLayoutObject::NativeAccessibilityRoleIgnoringAria() const {
   }
   // Note: if JavaScript is disabled, the layoutObject won't be a
   // LayoutHTMLCanvas.
-  if (isHTMLCanvasElement(node) && layout_object_->IsCanvas())
+  if (IsHTMLCanvasElement(node) && layout_object_->IsCanvas())
     return kCanvasRole;
 
   if (css_box && css_box->IsLayoutView())
@@ -376,10 +376,10 @@ bool AXLayoutObject::IsLinked() const {
     return false;
 
   Element* anchor = AnchorElement();
-  if (!isHTMLAnchorElement(anchor))
+  if (!IsHTMLAnchorElement(anchor))
     return false;
 
-  return !toHTMLAnchorElement(*anchor).Href().IsEmpty();
+  return !ToHTMLAnchorElement(*anchor).Href().IsEmpty();
 }
 
 bool AXLayoutObject::IsLoaded() const {
@@ -615,7 +615,7 @@ bool AXLayoutObject::ComputeAccessibilityIsIgnored(
 
   // don't ignore labels, because they serve as TitleUIElements
   Node* node = layout_object_->GetNode();
-  if (isHTMLLabelElement(node))
+  if (IsHTMLLabelElement(node))
     return false;
 
   // Anything that is content editable should not be ignored.
@@ -678,7 +678,7 @@ bool AXLayoutObject::ComputeAccessibilityIsIgnored(
   // the side effect of causing the immediate parent accessible to be ignored.
   // This is especially problematic for platforms which have distinct roles for
   // textual block elements.
-  if (isHTMLSpanElement(node)) {
+  if (IsHTMLSpanElement(node)) {
     if (ignored_reasons)
       ignored_reasons->push_back(IgnoredReason(kAXUninteresting));
     return true;
@@ -849,14 +849,14 @@ String AXLayoutObject::ImageDataUrl(const IntSize& max_size) const {
   ImageBitmapOptions options;
   ImageBitmap* image_bitmap = nullptr;
   Document* document = &node->GetDocument();
-  if (isHTMLImageElement(node)) {
-    image_bitmap = ImageBitmap::Create(toHTMLImageElement(node),
+  if (IsHTMLImageElement(node)) {
+    image_bitmap = ImageBitmap::Create(ToHTMLImageElement(node),
                                        Optional<IntRect>(), document, options);
-  } else if (isHTMLCanvasElement(node)) {
-    image_bitmap = ImageBitmap::Create(toHTMLCanvasElement(node),
+  } else if (IsHTMLCanvasElement(node)) {
+    image_bitmap = ImageBitmap::Create(ToHTMLCanvasElement(node),
                                        Optional<IntRect>(), options);
-  } else if (isHTMLVideoElement(node)) {
-    image_bitmap = ImageBitmap::Create(toHTMLVideoElement(node),
+  } else if (IsHTMLVideoElement(node)) {
+    image_bitmap = ImageBitmap::Create(ToHTMLVideoElement(node),
                                        Optional<IntRect>(), document, options);
   }
   if (!image_bitmap)
@@ -1005,19 +1005,19 @@ TextStyle AXLayoutObject::GetTextStyle() const {
 }
 
 KURL AXLayoutObject::Url() const {
-  if (IsAnchor() && isHTMLAnchorElement(layout_object_->GetNode())) {
-    if (HTMLAnchorElement* anchor = toHTMLAnchorElement(AnchorElement()))
+  if (IsAnchor() && IsHTMLAnchorElement(layout_object_->GetNode())) {
+    if (HTMLAnchorElement* anchor = ToHTMLAnchorElement(AnchorElement()))
       return anchor->Href();
   }
 
   if (IsWebArea())
     return layout_object_->GetDocument().Url();
 
-  if (IsImage() && isHTMLImageElement(layout_object_->GetNode()))
-    return toHTMLImageElement(*layout_object_->GetNode()).Src();
+  if (IsImage() && IsHTMLImageElement(layout_object_->GetNode()))
+    return ToHTMLImageElement(*layout_object_->GetNode()).Src();
 
   if (IsInputImage())
-    return toHTMLInputElement(layout_object_->GetNode())->Src();
+    return ToHTMLInputElement(layout_object_->GetNode())->Src();
 
   return KURL();
 }
@@ -1127,7 +1127,7 @@ String AXLayoutObject::StringValue() const {
     // This has to be overridden in the case where the selected item has an ARIA
     // label.
     HTMLSelectElement* select_element =
-        toHTMLSelectElement(layout_object_->GetNode());
+        ToHTMLSelectElement(layout_object_->GetNode());
     int selected_index = select_element->selectedIndex();
     const HeapVector<Member<HTMLElement>>& list_items =
         select_element->GetListItems();
@@ -1159,8 +1159,8 @@ String AXLayoutObject::StringValue() const {
   // Handle other HTML input elements that aren't text controls, like date and
   // time controls, by returning the string value, with the exception of
   // checkboxes and radio buttons (which would return "on").
-  if (GetNode() && isHTMLInputElement(GetNode())) {
-    HTMLInputElement* input = toHTMLInputElement(GetNode());
+  if (GetNode() && IsHTMLInputElement(GetNode())) {
+    HTMLInputElement* input = ToHTMLInputElement(GetNode());
     if (input->type() != InputTypeNames::checkbox &&
         input->type() != InputTypeNames::radio)
       return input->value();
@@ -1340,11 +1340,11 @@ AXObject* AXLayoutObject::AccessibilityHitTest(const IntPoint& point) const {
   if (!node)
     return nullptr;
 
-  if (isHTMLAreaElement(node))
-    return AccessibilityImageMapHitTest(toHTMLAreaElement(node), point);
+  if (IsHTMLAreaElement(node))
+    return AccessibilityImageMapHitTest(ToHTMLAreaElement(node), point);
 
-  if (isHTMLOptionElement(node)) {
-    node = toHTMLOptionElement(*node).OwnerSelectElement();
+  if (IsHTMLOptionElement(node)) {
+    node = ToHTMLOptionElement(*node).OwnerSelectElement();
     if (!node)
       return nullptr;
   }
@@ -1642,7 +1642,7 @@ Element* AXLayoutObject::AnchorElement() const {
   if (!node)
     return nullptr;
   for (Node& runner : NodeTraversal::InclusiveAncestorsOf(*node)) {
-    if (isHTMLAnchorElement(runner) ||
+    if (IsHTMLAnchorElement(runner) ||
         (runner.GetLayoutObject() &&
          cache.GetOrCreate(runner.GetLayoutObject())->IsAnchor()))
       return ToElement(&runner);
@@ -1979,11 +1979,11 @@ void AXLayoutObject::SetValue(const String& string) {
     return;
 
   LayoutBoxModelObject* layout_object = ToLayoutBoxModelObject(layout_object_);
-  if (layout_object->IsTextField() && isHTMLInputElement(*GetNode()))
-    toHTMLInputElement(*GetNode())
+  if (layout_object->IsTextField() && IsHTMLInputElement(*GetNode()))
+    ToHTMLInputElement(*GetNode())
         .setValue(string, kDispatchInputAndChangeEvent);
-  else if (layout_object->IsTextArea() && isHTMLTextAreaElement(*GetNode()))
-    toHTMLTextAreaElement(*GetNode())
+  else if (layout_object->IsTextArea() && IsHTMLTextAreaElement(*GetNode()))
+    ToHTMLTextAreaElement(*GetNode())
         .setValue(string, kDispatchInputAndChangeEvent);
 }
 
@@ -2362,10 +2362,10 @@ void AXLayoutObject::AddHiddenChildren() {
 
 void AXLayoutObject::AddTextFieldChildren() {
   Node* node = this->GetNode();
-  if (!isHTMLInputElement(node))
+  if (!IsHTMLInputElement(node))
     return;
 
-  HTMLInputElement& input = toHTMLInputElement(*node);
+  HTMLInputElement& input = ToHTMLInputElement(*node);
   Element* spin_button_element = input.UserAgentShadowRoot()->getElementById(
       ShadowElementNames::SpinButton());
   if (!spin_button_element || !spin_button_element->IsSpinButtonElement())
@@ -2405,7 +2405,7 @@ void AXLayoutObject::AddImageMapChildren() {
 }
 
 void AXLayoutObject::AddCanvasChildren() {
-  if (!isHTMLCanvasElement(GetNode()))
+  if (!IsHTMLCanvasElement(GetNode()))
     return;
 
   // If it's a canvas, it won't have laid out children, but it might have
@@ -2417,9 +2417,9 @@ void AXLayoutObject::AddCanvasChildren() {
 }
 
 void AXLayoutObject::AddPopupChildren() {
-  if (!isHTMLInputElement(GetNode()))
+  if (!IsHTMLInputElement(GetNode()))
     return;
-  if (AXObject* ax_popup = toHTMLInputElement(GetNode())->PopupRootAXObject())
+  if (AXObject* ax_popup = ToHTMLInputElement(GetNode())->PopupRootAXObject())
     children_.push_back(ax_popup);
 }
 

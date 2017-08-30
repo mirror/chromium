@@ -114,10 +114,10 @@ void HTMLFormControlElement::UpdateAncestorDisabledState() const {
   ContainerNode* highest_legend_ancestor = nullptr;
   for (HTMLElement* ancestor = Traversal<HTMLElement>::FirstAncestor(*this);
        ancestor; ancestor = Traversal<HTMLElement>::FirstAncestor(*ancestor)) {
-    if (isHTMLLegendElement(*ancestor))
+    if (IsHTMLLegendElement(*ancestor))
       highest_legend_ancestor = ancestor;
-    if (isHTMLFieldSetElement(*ancestor) && ancestor->IsDisabledFormControl())
-      highest_disabled_field_set_ancestor = toHTMLFieldSetElement(ancestor);
+    if (IsHTMLFieldSetElement(*ancestor) && ancestor->IsDisabledFormControl())
+      highest_disabled_field_set_ancestor = ToHTMLFieldSetElement(ancestor);
   }
   ancestor_disabled_state_ =
       (highest_disabled_field_set_ancestor &&

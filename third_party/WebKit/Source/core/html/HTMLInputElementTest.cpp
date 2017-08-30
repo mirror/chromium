@@ -26,7 +26,7 @@ class HTMLInputElementTest : public ::testing::Test {
   HTMLInputElement& TestElement() {
     Element* element = GetDocument().getElementById("test");
     DCHECK(element);
-    return toHTMLInputElement(*element);
+    return ToHTMLInputElement(*element);
   }
 
  private:
@@ -103,7 +103,7 @@ TEST_F(HTMLInputElementTest, NoAssertWhenMovedInNewDocument) {
   html->AppendChild(HTMLBodyElement::Create(*document_without_frame));
 
   // Create an input element with type "range" inside a document without frame.
-  toHTMLBodyElement(html->firstChild())->setInnerHTML("<input type='range' />");
+  ToHTMLBodyElement(html->firstChild())->setInnerHTML("<input type='range' />");
   document_without_frame->AppendChild(html);
 
   std::unique_ptr<DummyPageHolder> page_holder = DummyPageHolder::Create();
@@ -155,8 +155,8 @@ TEST_F(HTMLInputElementTest, RadioKeyDownDCHECKFailure) {
   GetDocument().body()->setInnerHTML(
       "<input type=radio name=g><input type=radio name=g>");
   HTMLInputElement& radio1 =
-      toHTMLInputElement(*GetDocument().body()->firstChild());
-  HTMLInputElement& radio2 = toHTMLInputElement(*radio1.nextSibling());
+      ToHTMLInputElement(*GetDocument().body()->firstChild());
+  HTMLInputElement& radio2 = ToHTMLInputElement(*radio1.nextSibling());
   radio1.focus();
   // Make layout-dirty.
   radio2.setAttribute(HTMLNames::styleAttr, "position:fixed");
@@ -172,7 +172,7 @@ TEST_F(HTMLInputElementTest, DateTimeChooserSizeParamRespectsScale) {
       "<input type='date' style='width:200px;height:50px' />");
   GetDocument().View()->UpdateAllLifecyclePhases();
   HTMLInputElement* input =
-      toHTMLInputElement(GetDocument().body()->firstChild());
+      ToHTMLInputElement(GetDocument().body()->firstChild());
 
   DateTimeChooserParameters params;
   bool success = input->SetupDateTimeChooserParameters(params);

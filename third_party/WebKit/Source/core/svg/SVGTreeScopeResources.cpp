@@ -216,8 +216,8 @@ void SVGTreeScopeResources::NotifyResourceAvailable(const AtomicString& id) {
     // TODO(fs): Ideally we'd always resolve pending resources async instead of
     // inside insertedInto and svgAttributeChanged. For now we only do it for
     // <use> since that would stamp out DOM.
-    if (isSVGUseElement(client_element))
-      toSVGUseElement(client_element)->InvalidateShadowTree();
+    if (IsSVGUseElement(client_element))
+      ToSVGUseElement(client_element)->InvalidateShadowTree();
     else
       client_element->BuildPendingResource();
 

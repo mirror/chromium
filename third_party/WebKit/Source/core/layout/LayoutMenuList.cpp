@@ -47,7 +47,7 @@ LayoutMenuList::LayoutMenuList(Element* element)
       inner_block_height_(LayoutUnit()),
       options_width_(0),
       last_active_index_(-1) {
-  DCHECK(isHTMLSelectElement(element));
+  DCHECK(IsHTMLSelectElement(element));
 }
 
 LayoutMenuList::~LayoutMenuList() {}
@@ -131,7 +131,7 @@ void LayoutMenuList::AdjustInnerStyle() {
 }
 
 HTMLSelectElement* LayoutMenuList::SelectElement() const {
-  return toHTMLSelectElement(GetNode());
+  return ToHTMLSelectElement(GetNode());
 }
 
 void LayoutMenuList::AddChild(LayoutObject* new_child,

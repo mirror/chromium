@@ -319,8 +319,8 @@ void InspectorDOMAgent::Unbind(Node* node, NodeToIdMap* nodes_map) {
     if (element->GetPseudoElement(kPseudoIdAfter))
       Unbind(element->GetPseudoElement(kPseudoIdAfter), nodes_map);
 
-    if (isHTMLLinkElement(*element)) {
-      HTMLLinkElement& link_element = toHTMLLinkElement(*element);
+    if (IsHTMLLinkElement(*element)) {
+      HTMLLinkElement& link_element = ToHTMLLinkElement(*element);
       if (link_element.IsImport() && link_element.import())
         Unbind(link_element.import(), nodes_map);
     }
@@ -1271,14 +1271,14 @@ Response InspectorDOMAgent::setFileInputFiles(
   Response response = AssertNode(node_id, backend_node_id, object_id, node);
   if (!response.isSuccess())
     return response;
-  if (!isHTMLInputElement(*node) ||
-      toHTMLInputElement(*node).type() != InputTypeNames::file)
+  if (!IsHTMLInputElement(*node) ||
+      ToHTMLInputElement(*node).type() != InputTypeNames::file)
     return Response::Error("Node is not a file input element");
 
   Vector<String> paths;
   for (size_t index = 0; index < files->length(); ++index)
     paths.push_back(files->get(index));
-  toHTMLInputElement(node)->SetFilesFromPaths(paths);
+  ToHTMLInputElement(node)->SetFilesFromPaths(paths);
   return Response::OK();
 }
 
@@ -1479,8 +1479,8 @@ std::unique_ptr<protocol::DOM::Node> InspectorDOMAgent::BuildObjectForNode(
       force_push_children = true;
     }
 
-    if (isHTMLLinkElement(*element)) {
-      HTMLLinkElement& link_element = toHTMLLinkElement(*element);
+    if (IsHTMLLinkElement(*element)) {
+      HTMLLinkElement& link_element = ToHTMLLinkElement(*element);
       if (link_element.IsImport() && link_element.import() &&
           InnerParentNode(link_element.import()) == link_element) {
         value->setImportedDocument(BuildObjectForNode(
@@ -1489,9 +1489,9 @@ std::unique_ptr<protocol::DOM::Node> InspectorDOMAgent::BuildObjectForNode(
       force_push_children = true;
     }
 
-    if (isHTMLTemplateElement(*element)) {
+    if (IsHTMLTemplateElement(*element)) {
       value->setTemplateContent(
-          BuildObjectForNode(toHTMLTemplateElement(*element).content(), 0,
+          BuildObjectForNode(ToHTMLTemplateElement(*element).content(), 0,
                              pierce, nodes_map, flatten_result));
       force_push_children = true;
     }
@@ -1517,9 +1517,9 @@ std::unique_ptr<protocol::DOM::Node> InspectorDOMAgent::BuildObjectForNode(
           BuildArrayForDistributedNodes(ToV0InsertionPoint(element)));
       force_push_children = true;
     }
-    if (isHTMLSlotElement(*element)) {
+    if (IsHTMLSlotElement(*element)) {
       value->setDistributedNodes(
-          BuildDistributedNodesForSlot(toHTMLSlotElement(element)));
+          BuildDistributedNodesForSlot(ToHTMLSlotElement(element)));
       force_push_children = true;
     }
   } else if (node->IsDocumentNode()) {
@@ -1778,8 +1778,8 @@ void InspectorDOMAgent::CollectNodes(Node* node,
       }
     }
 
-    if (isHTMLLinkElement(*element)) {
-      HTMLLinkElement& link_element = toHTMLLinkElement(*element);
+    if (IsHTMLLinkElement(*element)) {
+      HTMLLinkElement& link_element = ToHTMLLinkElement(*element);
       if (link_element.IsImport() && link_element.import() &&
           InnerParentNode(link_element.import()) == link_element) {
         CollectNodes(link_element.import(), depth, pierce, filter, result);

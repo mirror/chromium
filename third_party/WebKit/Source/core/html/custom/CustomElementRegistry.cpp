@@ -145,7 +145,7 @@ CustomElementDefinition* CustomElementRegistry::define(
     if (ThrowIfValidName(AtomicString(options.extends()), exception_state))
       return nullptr;
     // 7.2. If element interface is undefined element, throw exception
-    if (htmlElementTypeForTag(extends) ==
+    if (HTMLElementTypeForTag(extends) ==
         HTMLElementType::kHTMLUnknownElement) {
       exception_state.ThrowDOMException(
           kNotSupportedError, "\"" + extends + "\" is an HTMLUnknownElement");

@@ -19,7 +19,7 @@ class HTMLDataListOptionsCollection : public HTMLCollection {
   }
 
   HTMLOptionElement* Item(unsigned offset) const {
-    return toHTMLOptionElement(HTMLCollection::item(offset));
+    return ToHTMLOptionElement(HTMLCollection::item(offset));
   }
 
   bool ElementMatches(const HTMLElement&) const;
@@ -39,7 +39,7 @@ DEFINE_TYPE_CASTS(HTMLDataListOptionsCollection,
 
 inline bool HTMLDataListOptionsCollection::ElementMatches(
     const HTMLElement& element) const {
-  return isHTMLOptionElement(element);
+  return IsHTMLOptionElement(element);
 }
 
 }  // namespace blink

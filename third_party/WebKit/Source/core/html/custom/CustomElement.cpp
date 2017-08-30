@@ -72,7 +72,7 @@ bool CustomElement::ShouldCreateCustomElement(const QualifiedName& tag_name) {
 
 bool CustomElement::ShouldCreateCustomizedBuiltinElement(
     const AtomicString& local_name) {
-  return htmlElementTypeForTag(local_name) !=
+  return HTMLElementTypeForTag(local_name) !=
              HTMLElementType::kHTMLUnknownElement &&
          RuntimeEnabledFeatures::CustomElementsBuiltinEnabled();
 }

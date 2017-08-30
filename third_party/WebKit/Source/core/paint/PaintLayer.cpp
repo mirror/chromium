@@ -2457,7 +2457,7 @@ bool PaintLayer::HitTestClippedOutByClipPath(
       ToReferenceClipPathOperation(*clip_path_operation);
   SVGElement* element =
       reference_clip_path_operation.FindElement(target_node->GetTreeScope());
-  if (!isSVGClipPathElement(element) || !element->GetLayoutObject())
+  if (!IsSVGClipPathElement(element) || !element->GetLayoutObject())
     return false;
   LayoutSVGResourceClipper* clipper = ToLayoutSVGResourceClipper(
       ToLayoutSVGResourceContainer(element->GetLayoutObject()));

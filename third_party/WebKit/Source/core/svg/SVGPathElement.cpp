@@ -112,7 +112,7 @@ void SVGPathElement::CollectStyleForPresentationAttribute(
     // If this is a <use> instance, return the referenced path to maximize
     // geometry sharing.
     if (const SVGElement* element = CorrespondingElement())
-      path = toSVGPathElement(element)->GetPath();
+      path = ToSVGPathElement(element)->GetPath();
     AddPropertyToPresentationAttributeStyle(style, property->CssPropertyId(),
                                             path->CssValue());
     return;
@@ -126,8 +126,8 @@ void SVGPathElement::InvalidateMPathDependencies() {
   // dependencies manually.
   if (SVGElementSet* dependencies = SetOfIncomingReferences()) {
     for (SVGElement* element : *dependencies) {
-      if (isSVGMPathElement(*element))
-        toSVGMPathElement(element)->TargetPathChanged();
+      if (IsSVGMPathElement(*element))
+        ToSVGMPathElement(element)->TargetPathChanged();
     }
   }
 }

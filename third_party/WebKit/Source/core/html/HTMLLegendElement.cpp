@@ -73,10 +73,10 @@ HTMLFormElement* HTMLLegendElement::form() const {
   // its parent, then the form attribute must return the same value as the
   // form attribute on that fieldset element. Otherwise, it must return null.
   ContainerNode* fieldset = parentNode();
-  if (!isHTMLFieldSetElement(fieldset))
+  if (!IsHTMLFieldSetElement(fieldset))
     return nullptr;
 
-  return toHTMLFieldSetElement(fieldset)->formOwner();
+  return ToHTMLFieldSetElement(fieldset)->formOwner();
 }
 
 }  // namespace blink

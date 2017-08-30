@@ -157,12 +157,12 @@ bool SerializerMarkupAccumulator::ShouldIgnoreAttribute(
 
 bool SerializerMarkupAccumulator::ShouldIgnoreElement(
     const Element& element) const {
-  if (isHTMLScriptElement(element))
+  if (IsHTMLScriptElement(element))
     return true;
-  if (isHTMLNoScriptElement(element))
+  if (IsHTMLNoScriptElement(element))
     return true;
-  if (isHTMLMetaElement(element) &&
-      toHTMLMetaElement(element).ComputeEncoding().IsValid()) {
+  if (IsHTMLMetaElement(element) &&
+      ToHTMLMetaElement(element).ComputeEncoding().IsValid()) {
     return true;
   }
   return delegate_.ShouldIgnoreElement(element);
@@ -175,7 +175,7 @@ void SerializerMarkupAccumulator::AppendElement(StringBuilder& result,
 
   // TODO(tiger): Refactor MarkupAccumulator so it is easier to append an
   // element like this, without special cases for XHTML
-  if (isHTMLHeadElement(element)) {
+  if (IsHTMLHeadElement(element)) {
     result.Append("<meta http-equiv=\"Content-Type\" content=\"");
     AppendAttributeValue(result, document_->SuggestedMIMEType());
     result.Append("; charset=");
@@ -328,14 +328,14 @@ void FrameSerializer::SerializeFrame(const LocalFrame& frame) {
                                      document);
     }
 
-    if (isHTMLImageElement(element)) {
-      HTMLImageElement& image_element = toHTMLImageElement(element);
+    if (IsHTMLImageElement(element)) {
+      HTMLImageElement& image_element = ToHTMLImageElement(element);
       KURL url =
           document.CompleteURL(image_element.getAttribute(HTMLNames::srcAttr));
       ImageResourceContent* cached_image = image_element.CachedImage();
       AddImageToResources(cached_image, url);
-    } else if (isHTMLInputElement(element)) {
-      HTMLInputElement& input_element = toHTMLInputElement(element);
+    } else if (IsHTMLInputElement(element)) {
+      HTMLInputElement& input_element = ToHTMLInputElement(element);
       if (input_element.type() == InputTypeNames::image &&
           input_element.ImageLoader()) {
         KURL url = input_element.Src();
@@ -343,15 +343,15 @@ void FrameSerializer::SerializeFrame(const LocalFrame& frame) {
             input_element.ImageLoader()->GetImage();
         AddImageToResources(cached_image, url);
       }
-    } else if (isHTMLLinkElement(element)) {
-      HTMLLinkElement& link_element = toHTMLLinkElement(element);
+    } else if (IsHTMLLinkElement(element)) {
+      HTMLLinkElement& link_element = ToHTMLLinkElement(element);
       if (CSSStyleSheet* sheet = link_element.sheet()) {
         KURL url = document.CompleteURL(
             link_element.getAttribute(HTMLNames::hrefAttr));
         SerializeCSSStyleSheet(*sheet, url);
       }
-    } else if (isHTMLStyleElement(element)) {
-      HTMLStyleElement& style_element = toHTMLStyleElement(element);
+    } else if (IsHTMLStyleElement(element)) {
+      HTMLStyleElement& style_element = ToHTMLStyleElement(element);
       if (CSSStyleSheet* sheet = style_element.sheet())
         SerializeCSSStyleSheet(*sheet, NullURL());
     }

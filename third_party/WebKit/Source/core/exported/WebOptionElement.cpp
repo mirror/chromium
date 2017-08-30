@@ -53,7 +53,7 @@ WebOptionElement::WebOptionElement(HTMLOptionElement* elem)
     : WebElement(elem) {}
 
 DEFINE_WEB_NODE_TYPE_CASTS(WebOptionElement,
-                           isHTMLOptionElement(ConstUnwrap<Node>()));
+                           IsHTMLOptionElement(ConstUnwrap<Node>()));
 
 WebOptionElement& WebOptionElement::operator=(HTMLOptionElement* elem) {
   private_ = elem;
@@ -61,7 +61,7 @@ WebOptionElement& WebOptionElement::operator=(HTMLOptionElement* elem) {
 }
 
 WebOptionElement::operator HTMLOptionElement*() const {
-  return toHTMLOptionElement(private_.Get());
+  return ToHTMLOptionElement(private_.Get());
 }
 
 }  // namespace blink
