@@ -22,6 +22,53 @@
       "revId": "6807c32d313a8b8eeef6b91bb075ccacd27a65cb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "aee10616_eb409ea7",
+        "filename": "ios/chrome/browser/ui/payments/payment_request_coordinator.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-08-30T14:02:40Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "04e2c11d_57139562",
+      "range": {
+        "startLine": 37,
+        "startChar": 54,
+        "endLine": 37,
+        "endChar": 62
+      },
+      "revId": "6807c32d313a8b8eeef6b91bb075ccacd27a65cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "62695b16_4b804260",
+        "filename": "ios/chrome/browser/ui/payments/payment_request_coordinator.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-08-30T14:02:40Z",
+      "side": 1,
+      "message": "I just noticed this is unnecessary. I can use _weakSelf inside the callback. Removing it.",
+      "range": {
+        "startLine": 112,
+        "startChar": 2,
+        "endLine": 112,
+        "endChar": 61
+      },
+      "revId": "6807c32d313a8b8eeef6b91bb075ccacd27a65cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
