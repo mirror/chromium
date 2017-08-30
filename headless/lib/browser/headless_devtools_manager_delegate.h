@@ -51,27 +51,46 @@ class HeadlessDevToolsManagerDelegate
 
  private:
   std::unique_ptr<base::DictionaryValue> CreateTarget(
+      content::DevToolsAgentHost* agent_host,
       int command_id,
       const base::DictionaryValue* params);
   std::unique_ptr<base::DictionaryValue> CloseTarget(
+      content::DevToolsAgentHost* agent_host,
       int command_id,
       const base::DictionaryValue* params);
   std::unique_ptr<base::DictionaryValue> CreateBrowserContext(
+      content::DevToolsAgentHost* agent_host,
       int command_id,
       const base::DictionaryValue* params);
   std::unique_ptr<base::DictionaryValue> DisposeBrowserContext(
+      content::DevToolsAgentHost* agent_host,
       int command_id,
       const base::DictionaryValue* params);
   std::unique_ptr<base::DictionaryValue> GetWindowForTarget(
+      content::DevToolsAgentHost* agent_host,
       int command_id,
       const base::DictionaryValue* params);
   std::unique_ptr<base::DictionaryValue> GetWindowBounds(
+      content::DevToolsAgentHost* agent_host,
       int command_id,
       const base::DictionaryValue* params);
   std::unique_ptr<base::DictionaryValue> SetWindowBounds(
+      content::DevToolsAgentHost* agent_host,
+      int command_id,
+      const base::DictionaryValue* params);
+  std::unique_ptr<base::DictionaryValue> EnableHeadless(
+      content::DevToolsAgentHost* agent_host,
+      int command_id,
+      const base::DictionaryValue* params);
+  std::unique_ptr<base::DictionaryValue> DisableHeadless(
+      content::DevToolsAgentHost* agent_host,
       int command_id,
       const base::DictionaryValue* params);
   void PrintToPDF(content::DevToolsAgentHost* agent_host,
+                  int command_id,
+                  const base::DictionaryValue* params,
+                  const CommandCallback& callback);
+  void BeginFrame(content::DevToolsAgentHost* agent_host,
                   int command_id,
                   const base::DictionaryValue* params,
                   const CommandCallback& callback);
@@ -80,6 +99,7 @@ class HeadlessDevToolsManagerDelegate
 
   using CommandMemberCallback =
       base::Callback<std::unique_ptr<base::DictionaryValue>(
+          content::DevToolsAgentHost* agent_host,
           int command_id,
           const base::DictionaryValue* params)>;
   using AsyncCommandMemberCallback =

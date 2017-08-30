@@ -54,7 +54,7 @@ void DisplayScheduler::SetVisible(bool visible) {
   visible_ = visible;
   // If going invisible, we'll stop observing begin frames once we try
   // to draw and fail.
-  StartObservingBeginFrames();
+  MaybeStartObservingBeginFrames();
   ScheduleBeginFrameDeadline();
 }
 
@@ -112,17 +112,20 @@ void DisplayScheduler::ProcessSurfaceDamage(const SurfaceId& surface_id,
     if (surface_id == root_surface_id_)
       expecting_root_surface_damage_because_of_resize_ = false;
 
-    StartObservingBeginFrames();
+    MaybeStartObservingBeginFrames();
   }
 
   // Update surface state.
   bool valid_ack = ack.sequence_number != BeginFrameArgs::kInvalidFrameNumber;
   if (valid_ack) {
     auto it = surface_states_.find(surface_id);
-    if (it != surface_states_.end())
+    if (it != surface_states_.end() &&
+        (it->second.last_ack.source_id != ack.source_id ||
+         it->second.last_ack.sequence_number < ack.sequence_number)) {
       it->second.last_ack = ack;
-    else
+    } else {
       valid_ack = false;
+    }
   }
 
   bool pending_surfaces_changed = false;
@@ -246,8 +249,19 @@ bool DisplayScheduler::OnBeginFrameDerivedImpl(const BeginFrameArgs& args) {
   return true;
 }
 
+void DisplayScheduler::SetNeedsOneBeginFrame() {
+  // If we are not currently observing BeginFrames because needs_draw_ is false,
+  // we will stop observing again after one BeginFrame in AttemptDrawAndSwap().
+  StartObservingBeginFrames();
+}
+
+void DisplayScheduler::MaybeStartObservingBeginFrames() {
+  if (ShouldDraw())
+    StartObservingBeginFrames();
+}
+
 void DisplayScheduler::StartObservingBeginFrames() {
-  if (!observing_begin_frame_source_ && ShouldDraw()) {
+  if (!observing_begin_frame_source_) {
     begin_frame_source_->AddObserver(this);
     observing_begin_frame_source_ = true;
   }
@@ -265,8 +279,8 @@ void DisplayScheduler::StopObservingBeginFrames() {
 }
 
 bool DisplayScheduler::ShouldDraw() {
-  // Note: When any of these cases becomes true, StartObservingBeginFrames must
-  // be called to ensure the draw will happen.
+  // Note: When any of these cases becomes true, MaybeStartObservingBeginFrames
+  // must be called to ensure the draw will happen.
   return needs_draw_ && !output_surface_lost_ && visible_;
 }
 

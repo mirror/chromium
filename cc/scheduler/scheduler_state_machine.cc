@@ -1055,21 +1055,34 @@ bool SchedulerStateMachine::ShouldBlockDeadlineIndefinitely() const {
     return false;
   }
 
-  // Avoid blocking when invisible / frame sink lost / can't draw, i.e. when
-  // PendingDrawsShouldBeAborted is true.
-  if (PendingDrawsShouldBeAborted())
+  // Avoid blocking for any reason if we don't have a layer tree frame sink or
+  // are invisible.
+  if (layer_tree_frame_sink_state_ == LAYER_TREE_FRAME_SINK_NONE)
     return false;
 
-  // Wait for all pipeline stages.
+  if (!visible_)
+    return false;
+
+  // Wait for main frame to be ready for commits.
+  if (defer_commits_)
+    return true;
+
+  // Wait for main frame if one is in progress or about to be started.
   if (ShouldSendBeginMainFrame())
     return true;
 
   if (begin_main_frame_state_ != BEGIN_MAIN_FRAME_STATE_IDLE)
     return true;
 
+  // Wait for tiles and activation.
   if (has_pending_tree_)
     return true;
 
+  // Avoid blocking for draw when we can't draw.
+  if (!can_draw_)
+    return false;
+
+  // Wait for remaining tiles and draw.
   if (!active_tree_is_ready_to_draw_)
     return true;
 

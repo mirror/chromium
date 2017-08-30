@@ -199,6 +199,13 @@ bool DevToolsAgentHostImpl::DispatchProtocolMessage(
   return DispatchProtocolMessage(session, message);
 }
 
+void DevToolsAgentHostImpl::BroadcastProtocolMessageToClients(
+    const std::string& message) {
+  for (DevToolsSession* session : sessions_) {
+    session->SendMessageToClient(message);
+  }
+}
+
 void DevToolsAgentHostImpl::InnerDetachClient(DevToolsAgentHostClient* client) {
   DevToolsSession* session = SessionByClient(client);
   int session_id = session->session_id();

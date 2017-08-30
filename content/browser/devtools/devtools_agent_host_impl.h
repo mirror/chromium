@@ -31,6 +31,7 @@ class CONTENT_EXPORT DevToolsAgentHostImpl : public DevToolsAgentHost {
   bool DetachClient(DevToolsAgentHostClient* client) override;
   bool DispatchProtocolMessage(DevToolsAgentHostClient* client,
                                const std::string& message) override;
+  void BroadcastProtocolMessageToClients(const std::string& message) override;
   bool IsAttached() override;
   void InspectElement(DevToolsAgentHostClient* client, int x, int y) override;
   std::string GetId() override;
