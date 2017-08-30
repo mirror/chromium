@@ -22,6 +22,30 @@
       "revId": "bbae211d8bc34f737a31518ec422e9425067a763",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1c76a60_89f57aff",
+        "filename": "chrome/browser/task_manager/task_manager_interface.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-08-30T20:10:31Z",
+      "side": 1,
+      "message": "I was specifically told by Chrome Windows owners that this doesn\u0027t need UX review, since Task Manager isn\u0027t a primary surface for most users.\n\nNote that this only changes the behaviour under Windows, and only for users who are actually paying attention to Chrome\u0027s Task Manager.",
+      "parentUuid": "c6f94d20_32bbadce",
+      "range": {
+        "startLine": 78,
+        "startChar": 2,
+        "endLine": 78,
+        "endChar": 48
+      },
+      "revId": "bbae211d8bc34f737a31518ec422e9425067a763",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

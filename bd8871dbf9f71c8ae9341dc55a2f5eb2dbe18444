@@ -34,6 +34,24 @@
       "revId": "bd8871dbf9f71c8ae9341dc55a2f5eb2dbe18444",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0922b229_6b8e85c2",
+        "filename": "chrome/browser/chromeos/resource_reporter/resource_reporter.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-08-30T20:10:31Z",
+      "side": 1,
+      "message": "That\u0027s not what I mean; I\u0027m only changing the meaning of GetCPUUsage-\u003eGetPlatformIndependentCPUUsage under Windows. They have always been the same on the other platforms.\n\nSo this code is currently receiving values up to #cores*100, but treating them as plain percentages - basically if we\u0027re relying on those usage numbers in any ChromeOS stats then they\u0027re out by a factor of 2-4x on a typical device right now.",
+      "parentUuid": "07796ad3_1bccbba4",
+      "revId": "bd8871dbf9f71c8ae9341dc55a2f5eb2dbe18444",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
