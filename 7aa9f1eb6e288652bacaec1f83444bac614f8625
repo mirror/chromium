@@ -16,6 +16,24 @@
       "revId": "7aa9f1eb6e288652bacaec1f83444bac614f8625",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e2eae57_7691ffdd",
+        "filename": "chrome/browser/generic_sensor/sensor_permission_context.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1133169
+      },
+      "writtenOn": "2017-08-30T08:07:20Z",
+      "side": 1,
+      "message": "This is not a patch for a random \"include what you use\" problem. This particular missing include causes compilation error for us at Opera. Although we currently don\u0027t modify this .cc file, we modify other .h files. url/gurl.h include is not needed in these modified .h files but this .cc file needs it. I think this is the correct way to fix the compilation issue for us. It also improves Chromium code by fixing \"include what you use\" problems in this file (though I understand that creating patches like this is not a solution for this kind of problems in general).\n\nI also added the rest of missing includes in this file. Thanks for pointing out.",
+      "parentUuid": "9e8ba76d_67a67cdb",
+      "revId": "7aa9f1eb6e288652bacaec1f83444bac614f8625",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
