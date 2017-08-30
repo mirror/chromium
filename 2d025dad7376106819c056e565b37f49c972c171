@@ -22,6 +22,30 @@
       "revId": "2d025dad7376106819c056e565b37f49c972c171",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f061af7_929d944c",
+        "filename": "third_party/WebKit/public/web/WebAXObject.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-08-30T23:15:56Z",
+      "side": 0,
+      "message": "Yeah, CanDecrement and CanIncrement were only used in a couple\nof tests but never used by Chrome, so I thought it\u0027d be more\nclear to just get rid of them.",
+      "parentUuid": "b77921a6_28750042",
+      "range": {
+        "startLine": 267,
+        "startChar": 20,
+        "endLine": 267,
+        "endChar": 32
+      },
+      "revId": "2d025dad7376106819c056e565b37f49c972c171",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
