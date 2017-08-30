@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4539b3fe_12fa045f",
+        "filename": "components/viz/service/display/gl_renderer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2155,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-08-30T16:45:05Z",
+      "side": 1,
+      "message": "It\u0027s a bit awkward to have a else if for only a DCHECK, can you either do\n\nDCHECK(!base::FeatureList... || src_color_space \u003d\u003d y_plane...); or if you want the output from the dcheck then\n\n#if DCHECK_IS_ON()\nif (base::FeatureList...)\n  DCHECK_EQ(...);\n#endif",
+      "range": {
+        "startLine": 2154,
+        "startChar": 0,
+        "endLine": 2155,
+        "endChar": 59
+      },
+      "revId": "00405263a41479695df158d85635b7c800059c1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
