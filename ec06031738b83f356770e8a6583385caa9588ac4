@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ddd2d989_849a6274",
+        "filename": "chrome/browser/vr/ui_scene_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 670,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-08-30T13:21:08Z",
+      "side": 1,
+      "message": "Biao, now that we have two toasts, would it be possible to remove this complexity?",
+      "revId": "ec06031738b83f356770e8a6583385caa9588ac4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
