@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d336070a_43bc3603",
+        "filename": "components/autofill/core/browser/autofill_profile.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1153419
+      },
+      "writtenOn": "2017-08-30T15:46:11Z",
+      "side": 1,
+      "message": "It is used in multiple places, and it will be used in one more in the next CL :) Put it as a static const array instead.",
+      "parentUuid": "db892e42_44e68fb5",
+      "range": {
+        "startLine": 196,
+        "startChar": 36,
+        "endLine": 196,
+        "endChar": 66
+      },
+      "revId": "3781a710b58c492f7202e39a9138d49156b13dc5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "615aee8b_728c3b9e",
         "filename": "components/autofill/core/browser/autofill_profile.h",
         "patchSetId": 2
@@ -39,6 +63,24 @@
       "revId": "3781a710b58c492f7202e39a9138d49156b13dc5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "549bd6df_886c1ac6",
+        "filename": "components/autofill/core/browser/autofill_profile.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1153419
+      },
+      "writtenOn": "2017-08-30T15:46:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "615aee8b_728c3b9e",
+      "revId": "3781a710b58c492f7202e39a9138d49156b13dc5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
