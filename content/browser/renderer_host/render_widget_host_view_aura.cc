@@ -1629,6 +1629,10 @@ viz::FrameSinkId RenderWidgetHostViewAura::FrameSinkIdAtPoint(
     gfx::Point* transformed_point) {
   DCHECK(device_scale_factor_ != 0.0f);
 
+  // Copy the input point to the transformed point in case
+  // we don't find a surface.
+  *transformed_point = point;
+
   // The surface hittest happens in device pixels, so we need to convert the
   // |point| from DIPs to pixels before hittesting.
   gfx::Point point_in_pixels =
