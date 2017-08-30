@@ -45,6 +45,30 @@
       "revId": "6b2ccbac0acb0268509f951d0916deaed0a48443",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9c5555f_e6f93d53",
+        "filename": "chrome/common/stack_sampling_configuration.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1171114
+      },
+      "writtenOn": "2017-08-30T14:04:50Z",
+      "side": 1,
+      "message": "Is there a reason control \u003d\u003d disabled !\u003d browser_and_gpu for Windows?",
+      "parentUuid": "07c25d99_b79961e0",
+      "range": {
+        "startLine": 218,
+        "startChar": 0,
+        "endLine": 218,
+        "endChar": 72
+      },
+      "revId": "6b2ccbac0acb0268509f951d0916deaed0a48443",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
