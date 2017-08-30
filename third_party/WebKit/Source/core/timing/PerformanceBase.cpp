@@ -140,6 +140,19 @@ PerformanceEntryVector PerformanceBase::getEntriesByType(
   PerformanceEntry::EntryType type =
       PerformanceEntry::ToEntryTypeEnum(entry_type);
 
+  if (type == PerformanceEntry::kLongTask ||
+      PerformanceEntry::kTaskAttribution || PerformanceEntry::kInvalid) {
+    return entries;
+  }
+
+  AddEntriesByType(entries, type);
+  std::sort(entries.begin(), entries.end(),
+            PerformanceEntry::StartTimeCompareLessThan);
+  return entries;
+}
+
+void PerformanceBase::AddEntriesByType(PerformanceEntryVector& entries,
+                                       PerformanceEntryType type) {
   switch (type) {
     case PerformanceEntry::kResource:
       for (const auto& resource : resource_timing_buffer_)
@@ -183,10 +196,6 @@ PerformanceEntryVector PerformanceBase::getEntriesByType(
     case PerformanceEntry::kInvalid:
       break;
   }
-
-  std::sort(entries.begin(), entries.end(),
-            PerformanceEntry::StartTimeCompareLessThan);
-  return entries;
 }
 
 PerformanceEntryVector PerformanceBase::getEntriesByName(
