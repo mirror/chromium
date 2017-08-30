@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9e8ba76d_67a67cdb",
+        "filename": "chrome/browser/generic_sensor/sensor_permission_context.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-08-30T06:59:57Z",
+      "side": 1,
+      "message": "I think technically we should also include \ncontent_settings_types.h \ncontent_settings.h\nWebFeaturePolicy.h ?\n\nIn general I think there are likely to be many \"include what you use\" errors throughout the codebase with no tooling to prevent them. I don\u0027t think it is the best use of time to fix/review these errors without other code changes. This CL is fine, but you may not want to pursue the task of trying to fix all such problems without appropriate tooling.",
+      "revId": "7aa9f1eb6e288652bacaec1f83444bac614f8625",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
