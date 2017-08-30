@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "26785a30_096f5b6a",
+        "filename": "ui/aura/mus/hit_test_data_provider_aura_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-08-30T22:48:29Z",
+      "side": 1,
+      "message": "I think we should just construct a HitTestDataProviderAura here, with |root_|. That would simplify this (and remove the only remaining mus-dependency from here). That way, we shouldn\u0027t need to create |sink_| either I think. (separate CL would be OK for this change)",
+      "revId": "d69e7e269037e52546df60d6b29a347c70e49225",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
