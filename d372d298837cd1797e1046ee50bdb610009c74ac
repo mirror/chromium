@@ -93,6 +93,30 @@
       "revId": "d372d298837cd1797e1046ee50bdb610009c74ac",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c29b7272_9ef36be0",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/ContextualSuggestionsCardViewHolder.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-08-30T14:18:39Z",
+      "side": 1,
+      "message": "All right. Use the method in TileGroupDelegateImpl too then?",
+      "parentUuid": "71eaa183_eebd1a76",
+      "range": {
+        "startLine": 48,
+        "startChar": 52,
+        "endLine": 48,
+        "endChar": 75
+      },
+      "revId": "d372d298837cd1797e1046ee50bdb610009c74ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
