@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "adfa1ab7_b3790f9a",
+        "filename": "chrome/browser/about_flags.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2278,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-08-30T02:40:36Z",
+      "side": 1,
+      "message": "Can we put this next to the other prefetching flag?",
+      "revId": "73be4b247b8f16f66cbe054ef7d3c0bdabeaf2d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95d00fa0_1bf889fa",
+        "filename": "chrome/browser/android/chrome_feature_list.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-08-30T02:40:36Z",
+      "side": 1,
+      "message": "I would not add this until we actually use the feature flag in Java land.  It seems that some ways of adhering to the flag might operate at a low level, and the UI might not need to worry about this per se.",
+      "revId": "73be4b247b8f16f66cbe054ef7d3c0bdabeaf2d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "69b8c841_362f1b01",
         "filename": "components/offline_pages/core/offline_page_feature.cc",
         "patchSetId": 1
@@ -13,6 +47,41 @@
       "writtenOn": "2017-08-30T02:31:19Z",
       "side": 1,
       "message": "Can it be either OfflinePagesPrefetchingUI or PrefetchingOfflinePagesUI everywhere this combo of words is used? It\u0027s better if it is the same order every time.",
+      "revId": "73be4b247b8f16f66cbe054ef7d3c0bdabeaf2d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01315c6f_4329ca5a",
+        "filename": "components/offline_pages/core/offline_page_feature.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-08-30T02:40:36Z",
+      "side": 1,
+      "message": "It seems that it was already inconsistent.  Let\u0027s settle on OfflinePagesPrefetchingUI, even where it\u0027s not exactly the same as the surrounding code, and add a todo to fix the other sites",
+      "parentUuid": "69b8c841_362f1b01",
+      "revId": "73be4b247b8f16f66cbe054ef7d3c0bdabeaf2d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72d7cb6c_f804ec90",
+        "filename": "components/offline_pages/core/offline_page_feature.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-08-30T02:40:36Z",
+      "side": 1,
+      "message": "needs IsOfflinePagesPrefetchingUIEnabled() idefinition here?",
       "revId": "73be4b247b8f16f66cbe054ef7d3c0bdabeaf2d6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
