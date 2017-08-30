@@ -479,6 +479,9 @@ class CONTENT_EXPORT WebContentsObserver : public IPC::Listener,
       mojo::ScopedMessagePipeHandle* interface_pipe) {}
 
   // IPC::Listener implementation.
+  // TODO(nick, creis): https://crbug.com/758026: Replace all uses of this
+  // variant of OnMessageReceived with the version that takes a
+  // RenderFrameHost, and then delete it.
   bool OnMessageReceived(const IPC::Message& message) override;
 
   // IPC::Sender implementation.
