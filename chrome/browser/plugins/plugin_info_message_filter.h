@@ -153,21 +153,17 @@ class PluginInfoMessageFilter : public content::BrowserMessageFilter {
       std::vector<base::string16>* additional_param_values);
 #endif
 
-  // Reports usage metrics to RAPPOR and UKM. This must be a class function,
-  // because UkmService requires a friend declaration by design to call.
+  // Reports usage metrics to RAPPOR and UKM.
   void ReportMetrics(int render_frame_id,
                      const base::StringPiece& mime_type,
                      const GURL& url,
-                     const url::Origin& main_frame_origin,
-                     ukm::SourceId ukm_source_id);
+                     const url::Origin& main_frame_origin);
 
   Context context_;
   std::unique_ptr<KeyedServiceShutdownNotifier::Subscription>
       shutdown_notifier_;
 
   scoped_refptr<base::SingleThreadTaskRunner> main_thread_task_runner_;
-
-  const ukm::SourceId ukm_source_id_;
 
   DISALLOW_COPY_AND_ASSIGN(PluginInfoMessageFilter);
 };

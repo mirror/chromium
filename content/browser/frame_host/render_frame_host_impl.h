@@ -161,6 +161,7 @@ class CONTENT_EXPORT RenderFrameHostImpl
   bool IsCrossProcessSubframe() override;
   const GURL& GetLastCommittedURL() override;
   const url::Origin& GetLastCommittedOrigin() override;
+  int64_t GetDocumentId() override;
   gfx::NativeView GetNativeView() override;
   void AddMessageToConsole(ConsoleMessageLevel level,
                            const std::string& message) override;
@@ -282,6 +283,11 @@ class CONTENT_EXPORT RenderFrameHostImpl
 
   // Update this frame's last committed origin.
   void SetLastCommittedOrigin(const url::Origin& origin);
+
+  // Assigns a new unique ID to track which Document is in the frame, after an
+  // event that changes the Document.  See comment on
+  // RenderFrameHost::GetDocumentId
+  void SetNewDocumentId();
 
   RenderViewHostImpl* render_view_host() { return render_view_host_; }
   RenderFrameHostDelegate* delegate() { return delegate_; }
@@ -1050,6 +1056,9 @@ class CONTENT_EXPORT RenderFrameHostImpl
 
   // Track this frame's last committed origin.
   url::Origin last_committed_origin_;
+
+  // A globally unique ID representing the current Document in the frame.
+  int64_t document_id_;
 
   // Track the site URL of the last site we committed successfully, as obtained
   // from SiteInstance::GetSiteURL.
