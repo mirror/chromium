@@ -29,8 +29,9 @@ class PLATFORM_EXPORT MainThreadTaskQueue : public TaskQueue {
     IDLE = 9,
     TEST = 10,
     FRAME_LOADING_CONTROL = 11,
+    BEST_EFFORT = 12,
 
-    COUNT = 12
+    COUNT = 13
   };
 
   // Returns name of the given queue type. Returned string has application
