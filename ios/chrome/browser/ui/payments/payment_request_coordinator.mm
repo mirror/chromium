@@ -111,8 +111,9 @@ const NSTimeInterval kUpdatePaymentSummaryItemIntervalSeconds = 10.0;
 - (void)stop {
   [_updatePaymentSummaryItemTimer invalidate];
 
+  __weak PaymentRequestCoordinator* weakSelf = self.weakSelf;
   ProceduralBlock callback = ^() {
-    [_weakSelf.delegate paymentRequestCoordinatorDidStop:_weakSelf];
+    [weakSelf.delegate paymentRequestCoordinatorDidStop:weakSelf];
   };
   [[_navigationController presentingViewController]
       dismissViewControllerAnimated:YES
