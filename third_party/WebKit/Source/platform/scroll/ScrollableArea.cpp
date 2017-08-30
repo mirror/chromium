@@ -589,6 +589,11 @@ void ScrollableArea::ShowOverlayScrollbars() {
   SetScrollbarsHidden(false);
   needs_show_scrollbar_layers_ = true;
 
+  // We don't fade out overlay scrollbar for popup since we don't create
+  // compositor for popup.
+  if (GetChromeClient()->IsPopup())
+    return;
+
   const double time_until_disable =
       ScrollbarTheme::GetTheme().OverlayScrollbarFadeOutDelaySeconds() +
       ScrollbarTheme::GetTheme().OverlayScrollbarFadeOutDurationSeconds();
