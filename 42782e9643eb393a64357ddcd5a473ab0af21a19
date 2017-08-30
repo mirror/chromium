@@ -71,6 +71,24 @@
     },
     {
       "key": {
+        "uuid": "bb6deafc_c8bd037e",
+        "filename": "ui/aura/window.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 331,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-08-30T12:00:57Z",
+      "side": 1,
+      "message": "Yea, for now this will only be valid if it has a LayerTreeFrameSink. We can allocate FrameSinkIds for all windows but then we\u0027d need to change how surface reference assignment works in HostFrameSinkManager IIRC. We plan to do that anyway, after the branch cut.",
+      "parentUuid": "1e0b5422_24e6d9a4",
+      "revId": "42782e9643eb393a64357ddcd5a473ab0af21a19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "714b03a1_0e7fb25e",
         "filename": "ui/aura/window_port.h",
         "patchSetId": 2
