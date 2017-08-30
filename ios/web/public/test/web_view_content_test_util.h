@@ -19,6 +19,11 @@ bool IsWebViewContainingText(web::WebState* web_state, const std::string& text);
 bool WaitForWebViewContainingText(web::WebState* web_state,
                                   std::string text) WARN_UNUSED_RESULT;
 
+// Returns true if there is a web view for |web_state| that contains the CSS
+// selector |css_selector|.
+bool IsWebViewContainingCssSelector(web::WebState* web_state,
+                                    const std::string& css_selector);
+
 }  // namespace test
 }  // namespace web
 

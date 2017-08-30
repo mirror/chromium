@@ -6,6 +6,8 @@
 
 #import <Foundation/Foundation.h>
 
+#include "base/strings/stringprintf.h"
+#include "base/values.h"
 #import "ios/testing/wait_util.h"
 #import "ios/web/public/test/web_view_interaction_test_util.h"
 
@@ -36,6 +38,23 @@ bool WaitForWebViewContainingText(web::WebState* web_state, std::string text) {
   return WaitUntilConditionOrTimeout(kWaitForUIElementTimeout, ^{
     return IsWebViewContainingText(web_state, text);
   });
+}
+
+bool IsWebViewContainingCssSelector(web::WebState* web_state,
+                                    const std::string& css_selector) {
+  // Script that tests presence of css selector.
+  char testCssSelectorJavaScriptTemplate[] =
+      "!!document.querySelector(\"%s\");";
+  std::string script = base::StringPrintf(testCssSelectorJavaScriptTemplate,
+                                          css_selector.c_str());
+
+  bool did_succeed = false;
+  std::unique_ptr<base::Value> value =
+      web::test::ExecuteJavaScript(web_state, script);
+  if (value) {
+    value->GetAsBoolean(&did_succeed);
+  }
+  return did_succeed;
 }
 
 }  // namespace test
