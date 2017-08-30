@@ -121,6 +121,30 @@
     },
     {
       "key": {
+        "uuid": "a6e789d8_ee306620",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1228045
+      },
+      "writtenOn": "2017-08-30T08:05:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9d1995f7_dd4db621",
+      "range": {
+        "startLine": 33,
+        "startChar": 6,
+        "endLine": 33,
+        "endChar": 17
+      },
+      "revId": "9f901b409488fd2f09261503f0e562340845506f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f90767f1_6f9a84a3",
         "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.cc",
         "patchSetId": 4
@@ -156,6 +180,30 @@
       "side": 1,
       "message": "Done",
       "parentUuid": "f90767f1_6f9a84a3",
+      "range": {
+        "startLine": 35,
+        "startChar": 6,
+        "endLine": 35,
+        "endChar": 18
+      },
+      "revId": "9f901b409488fd2f09261503f0e562340845506f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c948211d_0aa4da80",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1228045
+      },
+      "writtenOn": "2017-08-30T08:05:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fd56cbe1_21a594bf",
       "range": {
         "startLine": 35,
         "startChar": 6,
