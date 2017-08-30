@@ -69,6 +69,24 @@
       "revId": "92ace93587f0b9f24ef6ffefe1171a64fc838119",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c812620d_5cdea982",
+        "filename": "chrome/browser/chromeos/policy/configuration_policy_handler_chromeos.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 357,
+      "author": {
+        "id": 1000640
+      },
+      "writtenOn": "2017-08-30T06:31:43Z",
+      "side": 1,
+      "message": "Thanks for the explanation. As long as the enabled/disabled policy states are going to do what they promise to do I am ok with removing the reference to this pref completely.",
+      "parentUuid": "1e0480b3_f3ff86d3",
+      "revId": "92ace93587f0b9f24ef6ffefe1171a64fc838119",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
