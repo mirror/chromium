@@ -1,0 +1,255 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "590772b6_3fde4d21",
+        "filename": "ash/public/cpp/touchscreen_status_source.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-08-30T01:19:48Z",
+      "side": 1,
+      "message": "nit: maybe add a class-level comment like: \"// Different sources for requested touchscreen enabled/disabled state.\"",
+      "revId": "ff5ca821b6a24d2237dec88f8c56fcb5e846d874",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d7ce207_db1bb192",
+        "filename": "ash/public/cpp/touchscreen_status_source.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-08-30T01:19:48Z",
+      "side": 1,
+      "message": "nit: \"// User-requested state set via a debug accelerator and stored in a pref.\"?",
+      "revId": "ff5ca821b6a24d2237dec88f8c56fcb5e846d874",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6788bce1_8556000b",
+        "filename": "ash/public/cpp/touchscreen_status_source.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-08-30T01:19:48Z",
+      "side": 1,
+      "message": "USER_PREF?",
+      "range": {
+        "startLine": 12,
+        "startChar": 2,
+        "endLine": 12,
+        "endChar": 10
+      },
+      "revId": "ff5ca821b6a24d2237dec88f8c56fcb5e846d874",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f6dcf803_aa935995",
+        "filename": "ash/public/cpp/touchscreen_status_source.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-08-30T01:19:48Z",
+      "side": 1,
+      "message": "nit: \"// Transient global state used to disable touchscreen via power button.\"?",
+      "revId": "ff5ca821b6a24d2237dec88f8c56fcb5e846d874",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fcca4b1e_2fb017fe",
+        "filename": "ash/shell_delegate.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-08-30T01:19:48Z",
+      "side": 1,
+      "message": "i\u0027m sorry to be contradicting what i suggested earlier, but do you think that GetTouchscreenEnabled and SetTouchscreenEnabled would be better? \"enabled\" feels clearer to me than \"status\", especially when using a bool arg. we also save the return value into variables named \"enabled\" in various places, and it\u0027d be nice if the naming were consistent.\n\ni have less of an opinion about whether the enum should be TouchscreenStatusSource or TouchscreenEnabledSource. i think that \"status\" is probably fine there.",
+      "range": {
+        "startLine": 120,
+        "startChar": 15,
+        "endLine": 120,
+        "endChar": 35
+      },
+      "revId": "ff5ca821b6a24d2237dec88f8c56fcb5e846d874",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02918a7a_2d7079b2",
+        "filename": "ash/shell_test_api.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-08-30T01:19:48Z",
+      "side": 1,
+      "message": "nit: maybe use \"\u003d base::MakeUnique\u003cPowerButtonController\u003e(shell_-\u003e...)\" instead; i think it\u0027s preferred now",
+      "revId": "ff5ca821b6a24d2237dec88f8c56fcb5e846d874",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20f3e956_c2932c32",
+        "filename": "ash/system/power/power_button_display_controller.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-08-30T01:19:48Z",
+      "side": 1,
+      "message": "hmm, do you need to keep the UpdateTouchscreenStatus call here to ensure that the global state is restored correctly if chrome restarts?",
+      "revId": "ff5ca821b6a24d2237dec88f8c56fcb5e846d874",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2165fa3_bc0a31b0",
+        "filename": "ash/system/power/power_button_display_controller.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-08-30T01:19:48Z",
+      "side": 1,
+      "message": "do you need to keep the UpdateTouchscreenStatus call here to ensure that the global state is restored correctly if chrome restarts?",
+      "revId": "ff5ca821b6a24d2237dec88f8c56fcb5e846d874",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9dbda13e_692e7cae",
+        "filename": "ash/system/power/power_button_display_controller.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-08-30T01:19:48Z",
+      "side": 1,
+      "message": "nit: remove \"source\" here?",
+      "range": {
+        "startLine": 70,
+        "startChar": 12,
+        "endLine": 70,
+        "endChar": 18
+      },
+      "revId": "ff5ca821b6a24d2237dec88f8c56fcb5e846d874",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab4768ab_c7ff079d",
+        "filename": "ash/system/power/power_button_display_controller.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-08-30T01:19:48Z",
+      "side": 1,
+      "message": "nit: \"or |screen_state_| is OFF_AUTO.\"",
+      "revId": "ff5ca821b6a24d2237dec88f8c56fcb5e846d874",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5fe36e5f_8c5e426f",
+        "filename": "ash/system/power/tablet_power_button_controller_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 414,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-08-30T01:19:48Z",
+      "side": 1,
+      "message": "nit: remove \"source\"",
+      "range": {
+        "startLine": 414,
+        "startChar": 58,
+        "endLine": 414,
+        "endChar": 64
+      },
+      "revId": "ff5ca821b6a24d2237dec88f8c56fcb5e846d874",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a48c2f77_f35a4d86",
+        "filename": "ash/system/power/tablet_power_button_controller_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 418,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-08-30T01:19:48Z",
+      "side": 1,
+      "message": "this wraps and gets repeated many times. is it worthwhile defining a protected GetGlobalTouchscreenStatus() method on the base test class that returns the value from this call?",
+      "range": {
+        "startLine": 418,
+        "startChar": 6,
+        "endLine": 418,
+        "endChar": 76
+      },
+      "revId": "ff5ca821b6a24d2237dec88f8c56fcb5e846d874",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6543ae48_b97d3100",
+        "filename": "ash/wm/power_button_controller.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-08-30T01:19:48Z",
+      "side": 1,
+      "message": "oh, i see that you\u0027re setting the global state here. would it be possible to set it from PowerButtonDisplayController instead, since that\u0027s already getting the initial state from powerd? it feels a bit dangerous to be controlling this from two places -- i was trying to consolidate all of this code in PBDC.",
+      "revId": "ff5ca821b6a24d2237dec88f8c56fcb5e846d874",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
