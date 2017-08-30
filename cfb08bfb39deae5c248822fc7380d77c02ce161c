@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a02d63f7_5351ff83",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1150179
+      },
+      "writtenOn": "2017-08-30T06:00:39Z",
+      "side": 1,
+      "message": "nit: remove the trailing space.",
+      "range": {
+        "startLine": 10,
+        "startChar": 85,
+        "endLine": 10,
+        "endChar": 86
+      },
+      "revId": "cfb08bfb39deae5c248822fc7380d77c02ce161c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
