@@ -1117,6 +1117,18 @@ After your remote device is setup, you can access it directly from this page
                name="IDS_OFFLINE_REASON_USERNAME_MISMATCH" formatter_data="android_java">
         Invalid host owner.
       </message>
+      <message desc="Error massage indicating that the host is offline because the X server keeps dying."
+               name="IDS_OFFLINE_REASON_X_SERVER_RETRIES_EXCEEDED" formatter_data="android_java">
+        X server exited prematurely; retries exceeded.
+      </message>
+      <message desc="Error massage indicating that the host is offline because the session script keeps dying."
+               name="IDS_OFFLINE_REASON_SESSION_RETRIES_EXCEEDED" formatter_data="android_java">
+        Session exited prematurely; retries exceeded. (Make sure session script runs a long-running process such as a desktop environment or window manager.)
+      </message>
+      <message desc="Error massage indicating that the host is offline because the host keeps dying."
+               name="IDS_OFFLINE_REASON_HOST_RETRIES_EXCEEDED" formatter_data="android_java">
+        Host exited prematurely; retries exceeded.
+      </message>
       <if expr="is_android">
         <message desc="Description of why host is offline, when client gets a host-offline-reason it doesn't recognize."
                  name="IDS_OFFLINE_REASON_UNKNOWN" formatter_data="android_java">
