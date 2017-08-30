@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c9ad6151_2f8304ae",
+        "filename": "chrome/browser/resources/print_preview/data/print_ticket_store.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 418,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-08-30T01:43:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "23586194_07bccfa2",
+      "revId": "578b444d82ff6fde6c4acbb3cdd0110f7f3b8a2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6d1c6901_54200892",
         "filename": "chrome/browser/resources/print_preview/data/ticket_items/scaling.js",
         "patchSetId": 7
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-30T00:45:50Z",
       "side": 1,
       "message": "Does this need to check the range and if |value| can be parsed as an int? Or does that responsibility belong to scaling_settings.js?",
+      "revId": "578b444d82ff6fde6c4acbb3cdd0110f7f3b8a2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "beb43c6a_aeaabb77",
+        "filename": "chrome/browser/resources/print_preview/data/ticket_items/scaling.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-08-30T01:43:28Z",
+      "side": 1,
+      "message": "scaling_settings.js is responsible for determining invalid values and only ever setting this ticket item to \u0027\u0027 or to something valid. This is because scaling_settings.js has access to the native number input and can therefore use the built-in validity checking. We intentionally removed a bunch of error checking in the ticket items in favor of using this built-in checking in https://crrev.com/2713033003. WDYT?",
+      "parentUuid": "6d1c6901_54200892",
       "revId": "578b444d82ff6fde6c4acbb3cdd0110f7f3b8a2f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "a479660a_b5b2c192",
+        "filename": "chrome/browser/resources/print_preview/data/ticket_items/scaling.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-08-30T01:43:28Z",
+      "side": 1,
+      "message": "See comment above - if everything is working as intended, this.getValue() should never be anything other than \u0027\u0027 or something valid. Do you think that covers this case? Or would it be better to check anyway, in case something has gone wrong?",
+      "parentUuid": "1ef1c137_86b9cced",
+      "revId": "578b444d82ff6fde6c4acbb3cdd0110f7f3b8a2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fbbc6823_e77dc258",
         "filename": "chrome/browser/resources/print_preview/settings/other_options_settings.js",
         "patchSetId": 7
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "efa1d9cd_9c0c931a",
+        "filename": "chrome/browser/resources/print_preview/settings/other_options_settings.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-08-30T01:43:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fbbc6823_e77dc258",
+      "revId": "578b444d82ff6fde6c4acbb3cdd0110f7f3b8a2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b4ad1455_5fa72e8f",
         "filename": "chrome/browser/resources/print_preview/settings/scaling_settings.js",
         "patchSetId": 7
@@ -84,6 +156,24 @@
       "revId": "578b444d82ff6fde6c4acbb3cdd0110f7f3b8a2f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d92ce592_7c0272ac",
+        "filename": "chrome/browser/resources/print_preview/settings/scaling_settings.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-08-30T01:43:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b4ad1455_5fa72e8f",
+      "revId": "578b444d82ff6fde6c4acbb3cdd0110f7f3b8a2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
