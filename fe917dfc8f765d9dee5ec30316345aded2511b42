@@ -1,0 +1,101 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0f971522_62d5217c",
+        "filename": "chrome/browser/ui/search/local_ntp_browsertest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-30T10:25:43Z",
+      "side": 1,
+      "message": "I think this isn\u0027t correct here: This test doesn\u0027t actually need any local_ntp files, just the simple.html below (any arbitrary page, really).\nI guess the test still passes if loading that page fails. I should probably add a check for that.",
+      "range": {
+        "startLine": 109,
+        "startChar": 74,
+        "endLine": 109,
+        "endChar": 0
+      },
+      "revId": "fe917dfc8f765d9dee5ec30316345aded2511b42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77fd7a17_e3091843",
+        "filename": "chrome/browser/ui/search/local_ntp_browsertest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 325,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-30T10:25:43Z",
+      "side": 1,
+      "message": "Hm, we could extract a common base class which takes the html filename as a ctor argument. WDYT?",
+      "revId": "fe917dfc8f765d9dee5ec30316345aded2511b42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "22906658_bdda7deb",
+        "filename": "chrome/test/data/local_ntp/test_utils.js",
+        "patchSetId": 15
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-30T10:25:43Z",
+      "side": 1,
+      "message": "optional:\nif (runTest(..)) { passedTests++; }\nand get rid of testPassed?",
+      "range": {
+        "startLine": 109,
+        "startChar": 51,
+        "endLine": 109,
+        "endChar": 0
+      },
+      "revId": "fe917dfc8f765d9dee5ec30316345aded2511b42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ba05c1e_1ba0ddb3",
+        "filename": "chrome/test/data/local_ntp/test_utils.js",
+        "patchSetId": 15
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-30T10:25:43Z",
+      "side": 1,
+      "message": "Non-null? Probably applies to a bunch more @param tags in this file.",
+      "revId": "fe917dfc8f765d9dee5ec30316345aded2511b42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5180852_8c0010dd",
+        "filename": "chrome/test/data/local_ntp/test_utils.js",
+        "patchSetId": 15
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-30T10:25:43Z",
+      "side": 1,
+      "message": "Should this function go into local_ntp_browsertest.js?",
+      "revId": "fe917dfc8f765d9dee5ec30316345aded2511b42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
