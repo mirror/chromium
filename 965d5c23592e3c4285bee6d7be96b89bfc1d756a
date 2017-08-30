@@ -22,6 +22,47 @@
       "revId": "965d5c23592e3c4285bee6d7be96b89bfc1d756a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bbd670b6_65dd7d71",
+        "filename": "ios/chrome/browser/ui/omnibox/omnibox_text_field_ios.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-08-30T09:46:43Z",
+      "side": 1,
+      "message": "Could also change the other instance of this below.",
+      "parentUuid": "09dbe2b4_c8996ad8",
+      "range": {
+        "startLine": 255,
+        "startChar": 47,
+        "endLine": 255,
+        "endChar": 74
+      },
+      "revId": "965d5c23592e3c4285bee6d7be96b89bfc1d756a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a3c1832_268cd300",
+        "filename": "ios/chrome/browser/ui/omnibox/omnibox_text_field_ios.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-08-30T09:46:43Z",
+      "side": 1,
+      "message": "Is this the exact same fix that we use in non-editing mode, or are we doing something different from the preedit label?",
+      "revId": "965d5c23592e3c4285bee6d7be96b89bfc1d756a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
