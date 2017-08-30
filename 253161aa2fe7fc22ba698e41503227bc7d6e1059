@@ -142,6 +142,24 @@
       "revId": "253161aa2fe7fc22ba698e41503227bc7d6e1059",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79b5bff0_107a1742",
+        "filename": "content/browser/webauth/cbor/cbor_writer.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-08-30T07:05:32Z",
+      "side": 1,
+      "message": "Fair enough.",
+      "parentUuid": "4172e3ea_2c08817a",
+      "revId": "253161aa2fe7fc22ba698e41503227bc7d6e1059",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
