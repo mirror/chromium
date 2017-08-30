@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6583bf37_80dee509",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-08-30T08:36:55Z",
+      "side": 1,
+      "message": "let\u0027s clarify that this is about the layout tests\n\ne.g. \"Marking access-control-origin-header-in-isolated-world layout test as Chromium-specific\"",
+      "revId": "fc62fc3ea1d507b1d5495316fcfa59150f0aa097",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
