@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1b0025f2_1a4c3f47",
+        "filename": "ios/chrome/browser/ui/ntp/recent_tabs/closed_tabs_observer_bridge.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-08-30T14:15:55Z",
+      "side": 1,
+      "message": "Please use __weak instead.",
+      "range": {
+        "startLine": 37,
+        "startChar": 8,
+        "endLine": 37,
+        "endChar": 22
+      },
+      "revId": "53b17815ffa41e2885775b03b3d8bc308bf09f83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5f1d98c_9625dca0",
+        "filename": "ios/chrome/browser/ui/ntp/recent_tabs/recent_tabs_table_view_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-08-30T14:15:55Z",
+      "side": 1,
+      "message": "?",
+      "range": {
+        "startLine": 182,
+        "startChar": 5,
+        "endLine": 182,
+        "endChar": 6
+      },
+      "revId": "53b17815ffa41e2885775b03b3d8bc308bf09f83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
