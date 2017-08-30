@@ -218,6 +218,13 @@ class CONTENT_EXPORT ServiceWorkerDatabase {
   Status DeleteUserData(int64_t registration_id,
                         const std::vector<std::string>& user_data_names);
 
+  // Deletes user data for |registration_id| and |key_prefixes| from the
+  // database. Returns OK if all are successfully deleted or none are found in
+  // the database.
+  Status DeleteUserDataByKeyPrefixes(
+      int64_t registration_id,
+      const std::vector<std::string>& key_prefixes);
+
   // Reads user data for all registrations that have data with |user_data_name|
   // from the database. Returns OK if they are successfully read or not found.
   Status ReadUserDataForAllRegistrations(
