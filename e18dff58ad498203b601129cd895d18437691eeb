@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d439ebb3_f9c2dbae",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/chromium_exportable_commits_unittest.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1231539
+      },
+      "writtenOn": "2017-08-30T19:32:18Z",
+      "side": 1,
+      "message": "Note: this is changed to match the actual outputs of diff-tree more closely since there are new assertions verifying these paths.",
+      "revId": "e18dff58ad498203b601129cd895d18437691eeb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}

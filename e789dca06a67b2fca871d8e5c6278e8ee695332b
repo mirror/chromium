@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c6b37b62_32d1eea6",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/gerrit.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1231539
+      },
+      "writtenOn": "2017-08-30T19:32:18Z",
+      "side": 0,
+      "message": "I don\u0027t see why the filename should be lowered before being tested. This behavior is now removed.",
+      "revId": "e789dca06a67b2fca871d8e5c6278e8ee695332b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a448191_72bf9d55",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/gerrit.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1231539
+      },
+      "writtenOn": "2017-08-30T19:32:18Z",
+      "side": 0,
+      "message": "We ought to have tested whether the filename is exportable, which has a lot more conditions than not ending with \u0027-expected.txt\u0027, which is the root cause of https://crbug.com/759181 .",
+      "revId": "e789dca06a67b2fca871d8e5c6278e8ee695332b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
