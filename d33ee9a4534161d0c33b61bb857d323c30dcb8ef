@@ -16,6 +16,24 @@
       "revId": "d33ee9a4534161d0c33b61bb857d323c30dcb8ef",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85ec5c81_5cc24b62",
+        "filename": "third_party/WebKit/Source/core/loader/DocumentLoader.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 294,
+      "author": {
+        "id": 1115930
+      },
+      "writtenOn": "2017-08-30T18:05:58Z",
+      "side": 1,
+      "message": "Just to make sure the UseCounter doesn\u0027t count cases where we would have had kFrameLoadTypeReplaceCurrentItem anyway. The UseCounter should only count cases where HistoryEntryRequiresUserGesture actually changes back/forward list behavior.",
+      "parentUuid": "2ac1d98f_3edad57c",
+      "revId": "d33ee9a4534161d0c33b61bb857d323c30dcb8ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
