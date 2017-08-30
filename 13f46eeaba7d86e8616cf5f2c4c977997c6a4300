@@ -48,6 +48,29 @@
     },
     {
       "key": {
+        "uuid": "0fdae37e_0ab0f166",
+        "filename": "ios/chrome/browser/ui/omnibox/location_bar_controller_impl.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1148126
+      },
+      "writtenOn": "2017-08-30T11:07:20Z",
+      "side": 1,
+      "message": "__strong instead of scoped_nsobject",
+      "range": {
+        "startLine": 88,
+        "startChar": 8,
+        "endLine": 88,
+        "endChar": 23
+      },
+      "revId": "13f46eeaba7d86e8616cf5f2c4c977997c6a4300",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "93c37c1f_9d93ec6c",
         "filename": "ios/chrome/browser/ui/omnibox/location_bar_controller_impl.h",
         "patchSetId": 3
@@ -59,6 +82,30 @@
       "writtenOn": "2017-08-30T09:24:38Z",
       "side": 1,
       "message": "If this class is assumed to require ARC (as implied by the change from __unsafe_unretained to __weak), why use a scoped_nsobject?",
+      "range": {
+        "startLine": 93,
+        "startChar": 8,
+        "endLine": 93,
+        "endChar": 23
+      },
+      "revId": "13f46eeaba7d86e8616cf5f2c4c977997c6a4300",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d6b96f3_6a5ecc5d",
+        "filename": "ios/chrome/browser/ui/omnibox/location_bar_controller_impl.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1148126
+      },
+      "writtenOn": "2017-08-30T11:07:20Z",
+      "side": 1,
+      "message": "Please use __strong instead",
+      "parentUuid": "93c37c1f_9d93ec6c",
       "range": {
         "startLine": 93,
         "startChar": 8,
