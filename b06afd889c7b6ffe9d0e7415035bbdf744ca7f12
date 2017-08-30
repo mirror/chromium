@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7e17b233_bfac53cd",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/V8DOMConfiguration.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 258,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-08-30T01:46:40Z",
+      "side": 1,
+      "message": "This doesn\u0027t look good to me.  A bit too hacky and fragile.\n\nCan we simply hold a V8PrivateProperty::CachedAccessorSymbol in AccessorConfiguration instead of a single bit?  Then, it should be type safe.",
+      "revId": "b06afd889c7b6ffe9d0e7415035bbdf744ca7f12",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "397e1b1b_92ba80d2",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/V8DOMConfiguration.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-08-30T01:46:40Z",
+      "side": 1,
+      "message": "Can we have a V8PrivateProperty::CachedAccessorSymbol directly instead of a single bit?  Assuming that these things will be 8-byte aligned, I expect that the size doesn\u0027t change.",
+      "revId": "b06afd889c7b6ffe9d0e7415035bbdf744ca7f12",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ece065a2_b4b1608d",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/V8DOMConfiguration.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-08-30T01:46:40Z",
+      "side": 1,
+      "message": "If you need, I\u0027m okay to reduce this to 3 bits.  We don\u0027t need 8 bits, and I think it\u0027s unlikely that the size of v8::PropertyAttribute changes.",
+      "revId": "b06afd889c7b6ffe9d0e7415035bbdf744ca7f12",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc0ab939_e8d74439",
+        "filename": "third_party/WebKit/Source/platform/bindings/V8PrivateProperty.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-08-30T01:46:40Z",
+      "side": 1,
+      "message": "Let\u0027s add NOTREACHED() here, too.",
+      "revId": "b06afd889c7b6ffe9d0e7415035bbdf744ca7f12",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
