@@ -47,8 +47,9 @@ WindowTargeter::GetExtraHitTestShapeRects(Window* target) const {
   return nullptr;
 }
 
-Window* WindowTargeter::FindTargetInRootWindow(Window* root_window,
-                                               const ui::LocatedEvent& event) {
+Window* WindowTargeter::GetForcedTargetInRootWindow(
+    Window* root_window,
+    const ui::LocatedEvent& event) {
   DCHECK_EQ(root_window, root_window->GetRootWindow());
 
   // Mouse events should be dispatched to the window that processed the
@@ -71,8 +72,27 @@ Window* WindowTargeter::FindTargetInRootWindow(Window* root_window,
         ui::GestureRecognizer::Get()->GetTouchLockedTarget(touch);
     if (consumer)
       return static_cast<Window*>(consumer);
-    consumer = ui::GestureRecognizer::Get()->GetTargetForLocation(
-        event.location_f(), touch.source_device_id());
+  }
+
+  return nullptr;
+}
+
+Window* WindowTargeter::FindTargetInRootWindow(Window* root_window,
+                                               const ui::LocatedEvent& event) {
+  DCHECK_EQ(root_window, root_window->GetRootWindow());
+
+  Window* forced_target = GetForcedTargetInRootWindow(root_window, event);
+  if (forced_target)
+    return forced_target;
+
+  if (event.IsTouchEvent()) {
+    // Query the gesture-recognizer to find targets for touch events.
+    const ui::TouchEvent& touch = *event.AsTouchEvent();
+    // GetTouchLockedTarget() is handled in GetForcedTargetInRootWindow().
+    DCHECK(!ui::GestureRecognizer::Get()->GetTouchLockedTarget(touch));
+    ui::GestureConsumer* consumer =
+        ui::GestureRecognizer::Get()->GetTargetForLocation(
+            event.location_f(), touch.source_device_id());
     if (consumer)
       return static_cast<Window*>(consumer);
 

@@ -37,12 +37,12 @@ bool TestEventProcessor::CanDispatchToTarget(EventTarget* target) {
   return true;
 }
 
-EventTarget* TestEventProcessor::GetRootForEvent(Event* event) {
-  return root_.get();
+EventTarget* TestEventProcessor::GetInitialEventTarget(Event* event) {
+  return nullptr;
 }
 
-EventTargeter* TestEventProcessor::GetDefaultEventTargeter() {
-  return root_->GetEventTargeter();
+EventTarget* TestEventProcessor::GetRootTarget() {
+  return root_.get();
 }
 
 EventDispatchDetails TestEventProcessor::OnEventFromSource(Event* event) {
