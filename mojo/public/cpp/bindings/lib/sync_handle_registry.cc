@@ -4,6 +4,8 @@
 
 #include "mojo/public/cpp/bindings/sync_handle_registry.h"
 
+#include <algorithm>
+
 #include "base/lazy_instance.h"
 #include "base/logging.h"
 #include "base/stl_util.h"
@@ -62,23 +64,51 @@ void SyncHandleRegistry::UnregisterHandle(const Handle& handle) {
   handles_.erase(handle);
 }
 
-bool SyncHandleRegistry::RegisterEvent(base::WaitableEvent* event,
+void SyncHandleRegistry::RegisterEvent(base::WaitableEvent* event,
                                        const base::Closure& callback) {
-  auto result = events_.insert({event, callback});
-  DCHECK(result.second);
-  MojoResult rv = wait_set_.AddEvent(event);
-  if (rv == MOJO_RESULT_OK)
-    return true;
-  DCHECK_EQ(MOJO_RESULT_ALREADY_EXISTS, rv);
-  return false;
+  auto it = events_.find(event);
+  if (it == events_.end()) {
+    auto result = events_.emplace(event, EventCallbackList{});
+    it = result.first;
+  }
+
+  auto& callbacks = it->second.container();
+  if (callbacks.empty()) {
+    // AddEvent() must succeed since we only attempt it when there are
+    // previously no callbacks registered for this event.
+    MojoResult rv = wait_set_.AddEvent(event);
+    DCHECK_EQ(MOJO_RESULT_OK, rv);
+  }
+
+  callbacks.push_back(callback);
 }
 
-void SyncHandleRegistry::UnregisterEvent(base::WaitableEvent* event) {
+void SyncHandleRegistry::UnregisterEvent(base::WaitableEvent* event,
+                                         const base::Closure& callback) {
   auto it = events_.find(event);
-  DCHECK(it != events_.end());
-  events_.erase(it);
-  MojoResult rv = wait_set_.RemoveEvent(event);
-  DCHECK_EQ(MOJO_RESULT_OK, rv);
+  if (it == events_.end())
+    return;
+
+  auto& callbacks = it->second.container();
+  if (is_dispatching_event_callbacks_) {
+    // Not safe to remove any elements from |callbacks| here since an outer
+    // stack frame is currently iterating over it in Wait().
+    for (auto& cb : callbacks) {
+      if (cb.Equals(callback))
+        cb.Reset();
+    }
+  } else {
+    callbacks.erase(std::remove_if(callbacks.begin(), callbacks.end(),
+                                   [&callback](const base::Closure& cb) {
+                                     return cb.Equals(callback);
+                                   }),
+                    callbacks.end());
+    if (callbacks.empty()) {
+      events_.erase(it);
+      MojoResult rv = wait_set_.RemoveEvent(event);
+      DCHECK_EQ(MOJO_RESULT_OK, rv);
+    }
+  }
 }
 
 bool SyncHandleRegistry::Wait(const bool* should_stop[], size_t count) {
@@ -109,7 +139,13 @@ bool SyncHandleRegistry::Wait(const bool* should_stop[], size_t count) {
     if (ready_event) {
       const auto iter = events_.find(ready_event);
       DCHECK(iter != events_.end());
-      iter->second.Run();
+      is_dispatching_event_callbacks_ = true;
+      for (auto& callback : iter->second.container()) {
+        if (callback)
+          callback.Run();
+      }
+      is_dispatching_event_callbacks_ = false;
+      RemoveInvalidEventCallbacks(iter);
     }
   };
 
@@ -119,5 +155,19 @@ bool SyncHandleRegistry::Wait(const bool* should_stop[], size_t count) {
 SyncHandleRegistry::SyncHandleRegistry() = default;
 
 SyncHandleRegistry::~SyncHandleRegistry() = default;
+
+void SyncHandleRegistry::RemoveInvalidEventCallbacks(
+    typename EventMap::iterator iter) {
+  auto& callbacks = iter->second.container();
+  callbacks.erase(
+      std::remove_if(callbacks.begin(), callbacks.end(),
+                     [](const base::Closure& callback) { return !callback; }),
+      callbacks.end());
+  if (callbacks.empty()) {
+    MojoResult rv = wait_set_.RemoveEvent(iter->first);
+    DCHECK_EQ(MOJO_RESULT_OK, rv);
+    events_.erase(iter);
+  }
+}
 
 }  // namespace mojo
