@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "64a4e5c0_1e62633c",
+        "filename": "components/drive/drive.proto",
+        "patchSetId": 1
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1118346
+      },
+      "writtenOn": "2017-08-30T09:08:50Z",
+      "side": 1,
+      "message": "As an engineer who was in a team where protocol buffers are far more extensively used than Chrome, I *STRONGLY* recommend to avoid removing a field.\n\nSince reusing the same tag number causes severe issues, we rename a field rather than removing/commenting-out it. That\u0027s a known best practice. If you don\u0027t believe, try internal code search with \"file:proto DEPRECATED_\".",
+      "parentUuid": "d44d528f_3c7fd2bc",
+      "revId": "a5fbeaa9462859352a98eb7b7d5785f9a4a448c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "51198aa1_b3a8e720",
         "filename": "components/drive/resource_metadata_storage.cc",
         "patchSetId": 1
@@ -351,6 +369,24 @@
       "revId": "a5fbeaa9462859352a98eb7b7d5785f9a4a448c0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "92f09b2c_55775f71",
+        "filename": "components/drive/resource_metadata_storage_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 306,
+      "author": {
+        "id": 1118346
+      },
+      "writtenOn": "2017-08-30T09:08:50Z",
+      "side": 1,
+      "message": "\u003e\u003e which milestone a change lands can differ after it lands on ToT\n\u003e Sorry, I cannot understand what this sentence means.\n\nFor example:\n\nI\u0027m soon making a change to DB (CL:641735). I\u0027m not sure if I can commit the change before M62 branch cut end of this week, so let\u0027s assume I can not. Then I need to name the corresponding test case IncompatibleDB_M63.\n\nHowever I\u0027m currently talking with PM if we can cherry-pick the change to M62 release branch because the issue is high priority, though we\u0027re not 100% decided yet. If we decide to cherry-pick, then the test name would be wrong.\n\nThat\u0027s a fragile point of naming tests with milestones.\n\n\n\u003e\u003e two DB schema changes can happen in one milestone\n\u003e Our release is based on milestones, not on DB versions. Without cherry-picks, a beta/stable (which we provide QA) device never gets updates from the development branch.\n\nYou know, cherry-picks are not very rare today. And it is likely I\u0027ll do it soon.\n\n\n\u003e This is totally unrelated to what you are doing and I still find it difficult to understand your motivation. Could you just focus on what you need to do?\n\nI\u0027m focusing on what I need to do.\n\nMy motivation is: I wanted to at least rename DeleteUnusedIDEntries test below because it\u0027s essentially different test now -- it used to test the case where the DB version is kDBVersion (current version) while it now tests the upgrade behavior from V13 to V14. Now that the test is testing upgrade, I thought it\u0027s better to name it IncompatibleDB_*. However I\u0027m not sure how to name the test with IncompatibleDB_Mxx notion due to the same reason I described above.\n\n\n\n\nThat said, I\u0027m totally fine with keeping those test names as-is, but please suggest names for following two tests:\n\n1. DeleteUnusedIDEntries test we have today\n2. A new test for v14-\u003ev15 upgrade in CL:641735.",
+      "parentUuid": "2dd1d77a_4465743b",
+      "revId": "a5fbeaa9462859352a98eb7b7d5785f9a4a448c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

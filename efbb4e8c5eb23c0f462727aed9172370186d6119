@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "8621078d_7008a8e8",
+        "filename": "components/drive/resource_metadata_storage.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 482,
+      "author": {
+        "id": 1118346
+      },
+      "writtenOn": "2017-08-30T09:08:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e53c4295_5cea2c2b",
+      "revId": "efbb4e8c5eb23c0f462727aed9172370186d6119",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0a87e5ec_f8c8bc3b",
         "filename": "components/drive/resource_metadata_storage.cc",
         "patchSetId": 3
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "9c68a68e_db50455a",
+        "filename": "components/drive/resource_metadata_storage.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 514,
+      "author": {
+        "id": 1118346
+      },
+      "writtenOn": "2017-08-30T09:08:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0a87e5ec_f8c8bc3b",
+      "revId": "efbb4e8c5eb23c0f462727aed9172370186d6119",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "533f8596_b83bbdc8",
         "filename": "components/drive/resource_metadata_storage.h",
         "patchSetId": 3
@@ -50,6 +86,24 @@
       "revId": "efbb4e8c5eb23c0f462727aed9172370186d6119",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70001445_6ca2dbb7",
+        "filename": "components/drive/resource_metadata_storage.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1118346
+      },
+      "writtenOn": "2017-08-30T09:08:50Z",
+      "side": 1,
+      "message": "I don\u0027t strong opinion here, I\u0027ll revert this change.\n\n\nBelow are FYI:\n\nHmm, I don\u0027t think this is tautological. I thought it\u0027s better to clarify this comment because we may increment the number just to fill new fields, which does not sound like \"incompatibility\".",
+      "parentUuid": "533f8596_b83bbdc8",
+      "revId": "efbb4e8c5eb23c0f462727aed9172370186d6119",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
