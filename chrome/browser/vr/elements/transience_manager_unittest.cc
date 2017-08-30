@@ -35,24 +35,6 @@ TEST(TransienceManager, Visibility) {
   EXPECT_EQ(element.opacity_when_visible(), element.opacity());
   task_runner_->FastForwardUntilNoTasksRemain();
   EXPECT_EQ(0.0f, element.opacity());
-
-  // Kick visibility, and ensure that the element transiently disappears.
-  transience.KickVisibility();
-  EXPECT_EQ(element.opacity_when_visible(), element.opacity());
-  task_runner_->FastForwardUntilNoTasksRemain();
-  EXPECT_EQ(0.0f, element.opacity());
-
-  // Kick visibility, and ensure that ending visibility hides the element.
-  transience.KickVisibility();
-  EXPECT_EQ(element.opacity_when_visible(), element.opacity());
-  transience.EndVisibility();
-  EXPECT_EQ(0.0f, element.opacity());
-
-  // Kick visibility, and ensure that disabling hides the element.
-  transience.KickVisibility();
-  EXPECT_EQ(element.opacity_when_visible(), element.opacity());
-  transience.SetVisible(false);
-  EXPECT_EQ(0.0f, element.opacity());
 }
 
 }  // namespace vr

@@ -27,20 +27,6 @@ void TransienceManager::SetVisible(bool visible) {
   }
 }
 
-void TransienceManager::KickVisibility() {
-  if (visible_) {
-    Show();
-    StartTimer();
-  }
-}
-
-void TransienceManager::EndVisibility() {
-  if (visible_) {
-    Hide();
-    visibility_timer_.Stop();
-  }
-}
-
 void TransienceManager::StartTimer() {
   visibility_timer_.Start(
       FROM_HERE, timeout_,

@@ -19,8 +19,6 @@ class TransienceManager {
   virtual ~TransienceManager() = default;
 
   void SetVisible(bool visible);
-  void KickVisibility();
-  void EndVisibility();
 
  private:
   void StartTimer();

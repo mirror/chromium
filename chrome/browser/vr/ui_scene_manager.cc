@@ -658,6 +658,7 @@ void UiSceneManager::SetWebVrMode(bool web_vr, bool show_toast) {
     return;
   }
 
+  leaving_web_vr_mode_ = web_vr_mode_ && !web_vr;
   web_vr_mode_ = web_vr;
   web_vr_show_toast_ = show_toast;
   if (!web_vr_mode_) {
@@ -665,14 +666,7 @@ void UiSceneManager::SetWebVrMode(bool web_vr, bool show_toast) {
     started_for_autopresentation_ = false;
   }
   ConfigureScene();
-
-  // Because we may be transitioning from and to fullscreen, where the toast is
-  // also shown, explicitly kick or end visibility here.
-  if (web_vr) {
-    exclusive_screen_toast_viewport_aware_->transience()->KickVisibility();
-  } else {
-    exclusive_screen_toast_->transience()->EndVisibility();
-  }
+  leaving_web_vr_mode_ = false;
 }
 
 void UiSceneManager::OnWebVrFrameAvailable() {
@@ -928,7 +922,8 @@ void UiSceneManager::ConfigureIndicators() {
 }
 
 void UiSceneManager::ConfigureExclusiveScreenToast() {
-  exclusive_screen_toast_->SetVisible(fullscreen_ && !web_vr_mode_);
+  exclusive_screen_toast_->SetVisible(fullscreen_ && !web_vr_mode_ &&
+                                      !leaving_web_vr_mode_);
   exclusive_screen_toast_viewport_aware_->SetVisible(web_vr_mode_ &&
                                                      web_vr_show_toast_);
 }
