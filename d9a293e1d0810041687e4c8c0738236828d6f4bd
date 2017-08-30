@@ -67,6 +67,24 @@
       "revId": "d9a293e1d0810041687e4c8c0738236828d6f4bd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54e84ea6_a860f339",
+        "filename": "third_party/WebKit/Source/core/editing/SelectionControllerTest.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1229332
+      },
+      "writtenOn": "2017-08-30T03:02:46Z",
+      "side": 1,
+      "message": "Oops! I was trying to see if adding an EXPECT statement on the head element\u0027s innerHTML might be useful (it\u0027s not)",
+      "parentUuid": "70ff4962_b06ec8d5",
+      "revId": "d9a293e1d0810041687e4c8c0738236828d6f4bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
