@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "eb1a695e_ac9128f0",
+        "filename": "chrome/browser/resources/print_preview/data/ticket_items/scaling.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-08-30T02:03:23Z",
+      "side": 1,
+      "message": "That\u0027s fine, I just wanted to make sure that\u0027s the case.",
+      "parentUuid": "beb43c6a_aeaabb77",
+      "revId": "578b444d82ff6fde6c4acbb3cdd0110f7f3b8a2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1ef1c137_86b9cced",
         "filename": "chrome/browser/resources/print_preview/data/ticket_items/scaling.js",
         "patchSetId": 7
@@ -136,6 +154,24 @@
       "side": 1,
       "message": "Done",
       "parentUuid": "fbbc6823_e77dc258",
+      "revId": "578b444d82ff6fde6c4acbb3cdd0110f7f3b8a2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "16992734_6157c8b9",
+        "filename": "chrome/browser/resources/print_preview/settings/other_options_settings.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-08-30T02:03:23Z",
+      "side": 1,
+      "message": "Doesn\u0027t using the length in the next patch set bump the number back to 4, whereas this patch set manually set it to 3?",
+      "parentUuid": "efa1d9cd_9c0c931a",
       "revId": "578b444d82ff6fde6c4acbb3cdd0110f7f3b8a2f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
