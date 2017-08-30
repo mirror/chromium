@@ -167,6 +167,30 @@
     },
     {
       "key": {
+        "uuid": "26b23050_8723f86a",
+        "filename": "device/hid/hid_device_info.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-08-30T06:54:44Z",
+      "side": 1,
+      "message": "The filters comes from HidGetUserSelectedDevicesFunction, it is not straightforward to move them to HidServiceLinux.\n\nHidDevicePermissionsPrompt(in ChromeOS) is the only client who cares about the filter when receiving OnDeviceAdded(), all other clients don\u0027t care. If we move that filtering logic to HidServiceLinux, HidService has to know which mojo connection is for HidDevicePermssionsPrompt and won\u0027t send OnDeviceAdded() on that mojo connection if not match the filter, the GetDevices() needs to be modified too.\n\nI prefer in this CL we keep the device_node in mojo struct and pass it to clients side, although it is only used by HidDevicePermissionPrompt in ChromeOS. Maybe in future we\u0027ll figure out a better way to resolve it.\n\nWDYT?",
+      "parentUuid": "936fed72_1d756a0a",
+      "range": {
+        "startLine": 83,
+        "startChar": 0,
+        "endLine": 83,
+        "endChar": 73
+      },
+      "revId": "4d7359719a8061cfcaa00f2a46f574230d51102e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e9080da1_911d112e",
         "filename": "device/hid/public/interfaces/hid.mojom",
         "patchSetId": 13
