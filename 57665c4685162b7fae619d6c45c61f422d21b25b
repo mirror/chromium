@@ -1,0 +1,113 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0c4d6d3d_2caa255e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2017-08-30T23:56:09Z",
+      "side": 1,
+      "message": "\"just\"",
+      "range": {
+        "startLine": 9,
+        "startChar": 18,
+        "endLine": 9,
+        "endChar": 21
+      },
+      "revId": "57665c4685162b7fae619d6c45c61f422d21b25b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a218cf8b_6755f21c",
+        "filename": "third_party/leveldatabase/env_chromium.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1264,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2017-08-30T23:56:09Z",
+      "side": 1,
+      "message": "Remove DBTracker:: and move inside the if (before line 1267).",
+      "range": {
+        "startLine": 1264,
+        "startChar": 30,
+        "endLine": 1264,
+        "endChar": 54
+      },
+      "revId": "57665c4685162b7fae619d6c45c61f422d21b25b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c3f82f8_e887dcef",
+        "filename": "third_party/leveldatabase/env_chromium.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1268,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2017-08-30T23:56:09Z",
+      "side": 1,
+      "message": "Extra blank line.",
+      "revId": "57665c4685162b7fae619d6c45c61f422d21b25b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad72ebbf_5ab861bb",
+        "filename": "third_party/leveldatabase/env_chromium.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1298,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2017-08-30T23:56:09Z",
+      "side": 1,
+      "message": "Now that you\u0027ve split this out there is only \"dump\" variable, so you could simplify the names to \"dump_name\", \"dump\", and \"memory_usage\".",
+      "range": {
+        "startLine": 1298,
+        "startChar": 8,
+        "endLine": 1298,
+        "endChar": 15
+      },
+      "revId": "57665c4685162b7fae619d6c45c61f422d21b25b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "569317ff_c3e1b232",
+        "filename": "third_party/leveldatabase/env_chromium.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1304,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2017-08-30T23:56:09Z",
+      "side": 1,
+      "message": "This scope seems unnecessary.",
+      "range": {
+        "startLine": 1304,
+        "startChar": 2,
+        "endLine": 1304,
+        "endChar": 3
+      },
+      "revId": "57665c4685162b7fae619d6c45c61f422d21b25b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
