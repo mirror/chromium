@@ -1,0 +1,412 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7106725d_25a7747f",
+        "filename": "components/safe_browsing/browser/threat_details.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 746,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-08-30T20:59:59Z",
+      "side": 1,
+      "message": "Not needed anymore",
+      "range": {
+        "startLine": 746,
+        "startChar": 34,
+        "endLine": 746,
+        "endChar": 55
+      },
+      "revId": "47d1e75ec9545016489fc27e4bf98ff392847124",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "610aaca2_cef1882e",
+        "filename": "components/safe_browsing/web_ui/safe_browsing_ui.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-08-30T20:59:59Z",
+      "side": 1,
+      "message": "use a default value of nullptr (and then you can ignore the nullptr comment below).",
+      "range": {
+        "startLine": 48,
+        "startChar": 53,
+        "endLine": 48,
+        "endChar": 66
+      },
+      "revId": "47d1e75ec9545016489fc27e4bf98ff392847124",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1f451c7_1bdbc623",
+        "filename": "components/safe_browsing/web_ui/safe_browsing_ui.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-08-30T20:59:59Z",
+      "side": 1,
+      "message": "this might be a good case of switch/case\n\nThe other advantage will be that the compiler will enforce that there\u0027s no unhandled enum.",
+      "revId": "47d1e75ec9545016489fc27e4bf98ff392847124",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0da37625_354addcf",
+        "filename": "components/safe_browsing/web_ui/safe_browsing_ui.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-08-30T20:59:59Z",
+      "side": 1,
+      "message": "DCHECK that threat_detail is nullptr",
+      "range": {
+        "startLine": 52,
+        "startChar": 11,
+        "endLine": 52,
+        "endChar": 30
+      },
+      "revId": "47d1e75ec9545016489fc27e4bf98ff392847124",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a44be2c8_a3e87a43",
+        "filename": "components/safe_browsing/web_ui/safe_browsing_ui.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-08-30T20:59:59Z",
+      "side": 1,
+      "message": "DCHECK that threat_detail is nullptr",
+      "range": {
+        "startLine": 53,
+        "startChar": 21,
+        "endLine": 53,
+        "endChar": 27
+      },
+      "revId": "47d1e75ec9545016489fc27e4bf98ff392847124",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6fa0c75_2b6d4e5a",
+        "filename": "components/safe_browsing/web_ui/safe_browsing_ui.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-08-30T20:59:59Z",
+      "side": 1,
+      "message": "I would return threat_details_sent here and add a NOTREACHED at the end of the function",
+      "range": {
+        "startLine": 55,
+        "startChar": 8,
+        "endLine": 55,
+        "endChar": 27
+      },
+      "revId": "47d1e75ec9545016489fc27e4bf98ff392847124",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ffc3515d_dc337ab5",
+        "filename": "components/safe_browsing/web_ui/safe_browsing_ui.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-08-30T20:59:59Z",
+      "side": 1,
+      "message": "DCHECK that threat_detail is not nullptr",
+      "range": {
+        "startLine": 57,
+        "startChar": 8,
+        "endLine": 57,
+        "endChar": 19
+      },
+      "revId": "47d1e75ec9545016489fc27e4bf98ff392847124",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8b74fe5_b3b65fad",
+        "filename": "components/safe_browsing/web_ui/safe_browsing_ui.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 309,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-08-30T20:59:59Z",
+      "side": 1,
+      "message": ".empty",
+      "range": {
+        "startLine": 309,
+        "startChar": 19,
+        "endLine": 309,
+        "endChar": 23
+      },
+      "revId": "47d1e75ec9545016489fc27e4bf98ff392847124",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47eeb625_c312363e",
+        "filename": "components/safe_browsing/web_ui/safe_browsing_ui.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 310,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-08-30T20:59:59Z",
+      "side": 1,
+      "message": "prefer nullptr",
+      "range": {
+        "startLine": 310,
+        "startChar": 37,
+        "endLine": 310,
+        "endChar": 41
+      },
+      "revId": "47d1e75ec9545016489fc27e4bf98ff392847124",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74632976_c37ea7d3",
+        "filename": "components/safe_browsing/web_ui/safe_browsing_ui.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 372,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-08-30T20:59:59Z",
+      "side": 1,
+      "message": "is threat_detail expected to be nullptr under expected conditions?",
+      "range": {
+        "startLine": 372,
+        "startChar": 8,
+        "endLine": 372,
+        "endChar": 21
+      },
+      "revId": "47d1e75ec9545016489fc27e4bf98ff392847124",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "091967ac_740e1291",
+        "filename": "components/safe_browsing/web_ui/safe_browsing_ui.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-08-30T20:59:59Z",
+      "side": 1,
+      "message": "I think the experiments are enabled per Chrome instance, not per user.",
+      "range": {
+        "startLine": 30,
+        "startChar": 60,
+        "endLine": 30,
+        "endChar": 64
+      },
+      "revId": "47d1e75ec9545016489fc27e4bf98ff392847124",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a4e4f00_18886f0b",
+        "filename": "components/safe_browsing/web_ui/safe_browsing_ui.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-08-30T20:59:59Z",
+      "side": 1,
+      "message": "... for the current user.",
+      "range": {
+        "startLine": 32,
+        "startChar": 35,
+        "endLine": 32,
+        "endChar": 46
+      },
+      "revId": "47d1e75ec9545016489fc27e4bf98ff392847124",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7f29f15_c65c486b",
+        "filename": "components/safe_browsing/web_ui/safe_browsing_ui.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-08-30T20:59:59Z",
+      "side": 1,
+      "message": "database.\n\nAlso, it includes details about the full hash cache which is not a part of the database.\nSo a more accurate comment could be:\nGet the information related to the Safe Browsing database and full hash cache.",
+      "range": {
+        "startLine": 34,
+        "startChar": 50,
+        "endLine": 34,
+        "endChar": 59
+      },
+      "revId": "47d1e75ec9545016489fc27e4bf98ff392847124",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce1f1967_d1923f2c",
+        "filename": "components/safe_browsing/web_ui/safe_browsing_ui.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-08-30T20:59:59Z",
+      "side": 1,
+      "message": "one tab of WebUI means any chrome:// page.\nThis should probably be: since the oldest currently open chrome://safe-browsing tab was opened.",
+      "range": {
+        "startLine": 37,
+        "startChar": 5,
+        "endLine": 37,
+        "endChar": 11
+      },
+      "revId": "47d1e75ec9545016489fc27e4bf98ff392847124",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a9bbc4c_539e3be7",
+        "filename": "components/safe_browsing/web_ui/safe_browsing_ui.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-08-30T20:59:59Z",
+      "side": 1,
+      "message": "It would be useful to specify when this is called or who calls it.\n\nSuggestion: divide these declarations into sections to make it clear what gets called from JS code vs other places. It\u0027s a bit unclear at the moment.",
+      "range": {
+        "startLine": 39,
+        "startChar": 9,
+        "endLine": 39,
+        "endChar": 13
+      },
+      "revId": "47d1e75ec9545016489fc27e4bf98ff392847124",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1ba9c3a_f5fdd341",
+        "filename": "components/safe_browsing/web_ui/safe_browsing_ui.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-08-30T20:59:59Z",
+      "side": 1,
+      "message": "Add a detailed comment about when this is called.\n\nAlso does it \"show new\" threat details?",
+      "range": {
+        "startLine": 46,
+        "startChar": 47,
+        "endLine": 46,
+        "endChar": 53
+      },
+      "revId": "47d1e75ec9545016489fc27e4bf98ff392847124",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a327ed73_34acf59b",
+        "filename": "components/safe_browsing/web_ui/safe_browsing_ui.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-08-30T20:59:59Z",
+      "side": 1,
+      "message": "Add a more detailed comment about what happens for each enum value and optionally when it is called for each of those values.\n\nIn general, public methods should be heavily commented to serve as good documentation for unaware callers.\n\nnit: could you also leave a blank line between the methods. This file is currently super-dense which makes it hard to read.",
+      "range": {
+        "startLine": 49,
+        "startChar": 5,
+        "endLine": 49,
+        "endChar": 12
+      },
+      "revId": "47d1e75ec9545016489fc27e4bf98ff392847124",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2548299c_e4ffddc1",
+        "filename": "components/safe_browsing/web_ui/safe_browsing_ui.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-08-30T20:59:59Z",
+      "side": 1,
+      "message": "It\u0027d also be useful to add a comment about we we had to overload this one function to do ADDs/UPDATEs/GETs instead of having different functions for those operations.",
+      "range": {
+        "startLine": 52,
+        "startChar": 2,
+        "endLine": 52,
+        "endChar": 26
+      },
+      "revId": "47d1e75ec9545016489fc27e4bf98ff392847124",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
