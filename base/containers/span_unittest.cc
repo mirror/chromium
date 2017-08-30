@@ -464,4 +464,10 @@ TEST(SpanTest, MakeSpanFromContainer) {
   EXPECT_EQ(span, make_span(vector));
 }
 
+TEST(SpanTest, MakeSpanFromInitializerList) {
+  span<const int> span{1, 2, 3, 4, 5};
+  for (int i = 0; i < static_cast<int>(span.size()); ++i)
+    EXPECT_EQ(i + 1, span[i]);
+}
+
 }  // namespace base
