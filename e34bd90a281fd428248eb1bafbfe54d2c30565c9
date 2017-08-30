@@ -1,0 +1,174 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4c986f8f_7ad9ac77",
+        "filename": "content/browser/frame_host/keep_alive_handle_factory.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-30T08:03:29Z",
+      "side": 1,
+      "message": "nit: please note that default value is 30 sec",
+      "revId": "e34bd90a281fd428248eb1bafbfe54d2c30565c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "662bcb47_45612cf1",
+        "filename": "content/browser/frame_host/keep_alive_handle_factory.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-30T08:03:29Z",
+      "side": 1,
+      "message": "nit: \u0027...are invalidated, which will result in renderer process shutdown.\u0027 ?",
+      "revId": "e34bd90a281fd428248eb1bafbfe54d2c30565c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cdcca155_64e4d5ad",
+        "filename": "content/browser/frame_host/keep_alive_handle_factory.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-30T08:03:29Z",
+      "side": 1,
+      "message": "explicit",
+      "revId": "e34bd90a281fd428248eb1bafbfe54d2c30565c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "449b067a_4dabacf4",
+        "filename": "content/browser/renderer_host/render_process_host_browsertest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-30T08:03:29Z",
+      "side": 1,
+      "message": "nit: no { } for consistency for single-line (here and below)",
+      "revId": "e34bd90a281fd428248eb1bafbfe54d2c30565c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "015479e7_3afa170c",
+        "filename": "content/browser/renderer_host/render_process_host_browsertest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 648,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-30T08:03:29Z",
+      "side": 1,
+      "message": "Could we have a helper method like WaitUntilProcessExits() next to RenderProcessExited() so that what this is doing becomes clearer?",
+      "revId": "e34bd90a281fd428248eb1bafbfe54d2c30565c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b66846be_db5b5db6",
+        "filename": "content/browser/renderer_host/render_process_host_browsertest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 676,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-30T08:03:29Z",
+      "side": 1,
+      "message": "(ditto)",
+      "revId": "e34bd90a281fd428248eb1bafbfe54d2c30565c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32b76625_0ff92107",
+        "filename": "content/browser/renderer_host/render_process_host_browsertest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 678,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-30T08:03:29Z",
+      "side": 1,
+      "message": "Does this test take 3 sec? Would it be ok...?",
+      "revId": "e34bd90a281fd428248eb1bafbfe54d2c30565c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6146d7e_4039fa8e",
+        "filename": "content/child/web_url_loader_impl.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-30T08:03:29Z",
+      "side": 1,
+      "message": "\u0027RendererImpl\u0027 part is a bit cryptic... KeepAliveHandleWithChildProcessReference?",
+      "revId": "e34bd90a281fd428248eb1bafbfe54d2c30565c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "def9e617_6d91c19d",
+        "filename": "content/child/web_url_loader_impl.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-30T08:03:29Z",
+      "side": 1,
+      "message": "You can hold a ScopedChildProcessReference instance here",
+      "revId": "e34bd90a281fd428248eb1bafbfe54d2c30565c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90541324_e12aa5a8",
+        "filename": "content/common/frame.mojom",
+        "patchSetId": 15
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-30T08:03:29Z",
+      "side": 1,
+      "message": "Let\u0027s document what this does first then who uses it, e.g. \u0027An opaque handle that keeps alive the lifetime of the renderer process that holds this handle even after the frame is detached. Used by resource requests with \"keepalive\" specified.\u0027",
+      "revId": "e34bd90a281fd428248eb1bafbfe54d2c30565c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
