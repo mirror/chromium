@@ -330,7 +330,7 @@ std::unique_ptr<cc::LayerTreeHost> RenderWidgetCompositor::CreateLayerTreeHost(
     // IO thread.
     params.image_worker_task_runner = base::CreateSequencedTaskRunnerWithTraits(
         {base::WithBaseSyncPrimitives(), base::TaskPriority::BACKGROUND,
-         base::TaskShutdownBehavior::CONTINUE_ON_SHUTDOWN});
+         base::TaskShutdownBehavior::SKIP_ON_SHUTDOWN});
   }
   if (!is_threaded) {
     // Single-threaded layout tests.

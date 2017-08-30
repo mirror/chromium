@@ -24,11 +24,10 @@ ImageController::ImageController(
       origin_task_runner_(origin_task_runner),
       weak_ptr_factory_(this) {}
 
-ImageController::~ImageController() {
-  StopWorkerTasks();
-  for (auto& request : orphaned_decode_requests_)
-    request.callback.Run(request.id, ImageDecodeResult::FAILURE);
-}
+// ImageController is only destroyed on compositor shutdown, which means that we
+// don't need to do anything here. Since the worker has SKIP_ON_SHUTDOWN
+// behavior, we're guaranteed that the current task will finish running.
+ImageController::~ImageController() {}
 
 void ImageController::StopWorkerTasks() {
   // We can't have worker threads without a cache_ or a worker_task_runner_, so
