@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1b62f14f_c679d649",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/util/FeatureUtilities.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 268,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2017-08-30T16:30:34Z",
+      "side": 1,
+      "message": "This CL, as-is, doesn\u0027t feel right to me, because isChromeHomeEnabled() and setIsChromeHomeEnabled() aren\u0027t getter/setter for the same thing. Do you have a suggested alternative?",
+      "revId": "f621315f79c918e83064c0458990d88822245c92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
