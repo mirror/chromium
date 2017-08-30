@@ -16,6 +16,24 @@
       "revId": "7f1ac497c5145cbf0cc0be9b828481e9015c2bc5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35a808c6_82f25a21",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1225177
+      },
+      "writtenOn": "2017-08-30T23:47:54Z",
+      "side": 1,
+      "message": "Oops! Thanks for catching that!",
+      "parentUuid": "5e83bddb_c750631a",
+      "revId": "7f1ac497c5145cbf0cc0be9b828481e9015c2bc5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
