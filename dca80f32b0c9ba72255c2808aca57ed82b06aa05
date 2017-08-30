@@ -51,6 +51,24 @@
       "revId": "dca80f32b0c9ba72255c2808aca57ed82b06aa05",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b84826e6_fc1fb446",
+        "filename": "ui/events/platform/key_event_filter.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-08-30T22:44:04Z",
+      "side": 1,
+      "message": "Can you explain why not? For Windows, we talked about the events going through DesktopWindowTreeHostWin, where the regular input events go through. Is that not what you have in mind?\n\nFor mac, I am thinking the entry point will be somewhere in RenderWidgetHostViewMac, which is the entry point for regular input events? But I am less familiar with mac (and I couldn\u0027t find mac-specific code in https://codereview.chromium.org/2879033002/, but I may have missed it).",
+      "parentUuid": "a4acc637_3f37b410",
+      "revId": "dca80f32b0c9ba72255c2808aca57ed82b06aa05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
