@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "a2372d54_083a079f",
+        "filename": "ui/aura/window_event_dispatcher.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 798,
+      "author": {
+        "id": 1115904
+      },
+      "writtenOn": "2017-08-30T20:10:23Z",
+      "side": 1,
+      "message": "I tried writing said test and you are correct that this is broken in non-mus high-dpi.\n\nOther than this, I\u0027m basically out of ideas. Do you have any ideas on what I should do instead otherwise to work around what I describe in https://bugs.chromium.org/p/chromium/issues/detail?id\u003d706200#c12 ?",
+      "parentUuid": "20500622_5020de29",
+      "revId": "3db0e7e1c2c6011c6557970c993e504ed1edb627",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3255216e_b79442da",
         "filename": "ui/aura/window_event_dispatcher_unittest.cc",
         "patchSetId": 8
