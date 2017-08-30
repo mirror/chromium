@@ -4,12 +4,14 @@
 
 #include "chrome/installer/zucchini/zucchini_gen.h"
 
+#include <stdint.h>
+
 #include <vector>
 
 #include "chrome/installer/zucchini/equivalence_map.h"
 #include "chrome/installer/zucchini/image_index.h"
 #include "chrome/installer/zucchini/image_utils.h"
-#include "chrome/installer/zucchini/test_reference_reader.h"
+#include "chrome/installer/zucchini/test_disassembler.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 namespace zucchini {
@@ -29,18 +31,13 @@ constexpr offset_t kReferenceSize = 2;
 ImageIndex MakeImageIndexForTesting(const char* a,
                                     const std::vector<Reference>& refs0,
                                     const std::vector<Reference>& refs1) {
-  std::vector<ReferenceTypeTraits> traits(
-      {ReferenceTypeTraits{kReferenceSize, TypeTag(0), PoolTag(0)},
-       ReferenceTypeTraits{kReferenceSize, TypeTag(1), PoolTag(0)}});
-
+  TestDisassembler disasm({kReferenceSize, TypeTag(0), PoolTag(0)}, refs0,
+                          {kReferenceSize, TypeTag(1), PoolTag(0)}, refs1,
+                          {kReferenceSize, TypeTag(2), PoolTag(1)}, {});
   ImageIndex image_index(
-      ConstBufferView(reinterpret_cast<const uint8_t*>(a), std::strlen(a)),
-      std::move(traits));
+      ConstBufferView(reinterpret_cast<const uint8_t*>(a), std::strlen(a)));
 
-  EXPECT_TRUE(
-      image_index.InsertReferences(TypeTag(0), TestReferenceReader(refs0)));
-  EXPECT_TRUE(
-      image_index.InsertReferences(TypeTag(1), TestReferenceReader(refs1)));
+  EXPECT_TRUE(image_index.Initialize(&disasm));
   return image_index;
 }
 
