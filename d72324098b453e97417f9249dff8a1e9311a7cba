@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "6f0cfab0_563863bd",
+        "filename": "third_party/WebKit/LayoutTests/TestExpectations",
+        "patchSetId": 3
+      },
+      "lineNbr": 3626,
+      "author": {
+        "id": 1238298
+      },
+      "writtenOn": "2017-08-30T09:08:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "733d8472_f3e92c16",
+      "revId": "d72324098b453e97417f9249dff8a1e9311a7cba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e691dcce_b16d39b8",
         "filename": "third_party/WebKit/LayoutTests/shadow-dom/crashes/css-focus-recalc.html",
         "patchSetId": 3
@@ -53,6 +71,24 @@
     },
     {
       "key": {
+        "uuid": "9c223784_0f2954ae",
+        "filename": "third_party/WebKit/LayoutTests/shadow-dom/crashes/css-focus-recalc.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1238298
+      },
+      "writtenOn": "2017-08-30T09:08:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e691dcce_b16d39b8",
+      "revId": "d72324098b453e97417f9249dff8a1e9311a7cba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6f7b37bc_cc31bf5f",
         "filename": "third_party/WebKit/LayoutTests/shadow-dom/crashes/css-focus-recalc.html",
         "patchSetId": 3
@@ -67,6 +103,24 @@
       "revId": "d72324098b453e97417f9249dff8a1e9311a7cba",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "841deaed_1fd633b4",
+        "filename": "third_party/WebKit/LayoutTests/shadow-dom/crashes/css-focus-recalc.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1238298
+      },
+      "writtenOn": "2017-08-30T09:08:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6f7b37bc_cc31bf5f",
+      "revId": "d72324098b453e97417f9249dff8a1e9311a7cba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
