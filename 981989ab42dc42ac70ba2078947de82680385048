@@ -45,6 +45,30 @@
       "revId": "981989ab42dc42ac70ba2078947de82680385048",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3200f17c_94a36d4f",
+        "filename": "components/url_formatter/elide_url_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 638,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-08-30T13:46:50Z",
+      "side": 1,
+      "message": "I agree, but these tests are slow.  I didn\u0027t notice it much with the initial prototype, but the test runtime is at least O(n^2) with URL length, and the longer variant below takes several seconds to run on a Z620.\n\nThe problem is the \"elide once per possible pixel width\".  I\u0027m experimenting with another approach:\n\nloop {\n   elide into current width\n   verify string\n   measure length of elided string\n   set current width to (length - 1) pixel\n}\n\nStill O(n^2), but bounded by URL character length rather than pixel length.  I\u0027ll report if this pans out well.",
+      "parentUuid": "7f05101c_72c2d10f",
+      "range": {
+        "startLine": 638,
+        "startChar": 21,
+        "endLine": 638,
+        "endChar": 49
+      },
+      "revId": "981989ab42dc42ac70ba2078947de82680385048",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
