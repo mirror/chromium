@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d5f3a759_feb31b84",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/gerrit.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-08-30T22:20:20Z",
+      "side": 0,
+      "message": "Good point, I agree.",
+      "parentUuid": "c6b37b62_32d1eea6",
+      "revId": "e789dca06a67b2fca871d8e5c6278e8ee695332b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7a448191_72bf9d55",
         "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/gerrit.py",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-30T19:32:18Z",
       "side": 0,
       "message": "We ought to have tested whether the filename is exportable, which has a lot more conditions than not ending with \u0027-expected.txt\u0027, which is the root cause of https://crbug.com/759181 .",
+      "revId": "e789dca06a67b2fca871d8e5c6278e8ee695332b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f9ecd304_0b93741e",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/gerrit.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-08-30T22:20:20Z",
+      "side": 0,
+      "message": "Ack",
+      "parentUuid": "7a448191_72bf9d55",
       "revId": "e789dca06a67b2fca871d8e5c6278e8ee695332b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false

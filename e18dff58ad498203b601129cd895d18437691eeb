@@ -16,6 +16,41 @@
       "revId": "e18dff58ad498203b601129cd895d18437691eeb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "006d3409_935edf7c",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/chromium_exportable_commits_unittest.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-08-30T22:20:20Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "d439ebb3_f9c2dbae",
+      "revId": "e18dff58ad498203b601129cd895d18437691eeb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0c702f39_a6a25ac3",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/common.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-08-30T22:20:20Z",
+      "side": 1,
+      "message": "Are there other json files that we know of that we want to skip besides MANIFEST.json?",
+      "revId": "e18dff58ad498203b601129cd895d18437691eeb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
