@@ -321,9 +321,10 @@ void TypingCommand::InsertText(
     InputEvent::InputType input_type) {
   LocalFrame* frame = document.GetFrame();
   DCHECK(frame);
+  // TODO(editing-dev): The use of updateStyleAndLayoutIgnorePendingStylesheets
+  // needs to be audited. see http://crbug.com/590369 for more details.
+  document.UpdateStyleAndLayoutIgnorePendingStylesheets();
 
-  VisibleSelection current_selection =
-      frame->Selection().ComputeVisibleSelectionInDOMTreeDeprecated();
   const VisibleSelection& selection_for_insertion =
       CreateVisibleSelection(passed_selection_for_insertion);
 
@@ -340,10 +341,6 @@ void TypingCommand::InsertText(
   // Do nothing if no need to delete and insert.
   if (selection_for_insertion.IsCaret() && new_text.IsEmpty())
     return;
-
-  // TODO(editing-dev): The use of updateStyleAndLayoutIgnorePendingStylesheets
-  // needs to be audited. see http://crbug.com/590369 for more details.
-  document.UpdateStyleAndLayoutIgnorePendingStylesheets();
 
   const PlainTextRange selection_offsets = GetSelectionOffsets(frame);
   if (selection_offsets.IsNull())
@@ -378,6 +375,8 @@ void TypingCommand::InsertText(
     return;
   }
 
+  VisibleSelection current_selection =
+      frame->Selection().ComputeVisibleSelectionInDOMTree();
   TypingCommand* command = TypingCommand::Create(
       document, kInsertText, new_text, options, composition_type);
   bool change_selection = selection_for_insertion != current_selection;
@@ -391,6 +390,9 @@ void TypingCommand::InsertText(
   command->Apply();
 
   if (change_selection) {
+    // Application of command could have invalidate stored |current_selection|
+    current_selection =
+        frame->Selection().ComputeVisibleSelectionInDOMTreeDeprecated();
     command->SetEndingVisibleSelection(current_selection);
     frame->Selection().SetSelection(current_selection.AsSelection());
   }
