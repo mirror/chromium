@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "3739c6c2_574f2e0d",
+        "filename": "components/BUILD.gn",
+        "patchSetId": 43
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-30T16:14:59Z",
+      "side": 1,
+      "message": "Hey Regan - you forgot to remove this line.",
+      "range": {
+        "startLine": 102,
+        "startChar": 0,
+        "endLine": 102,
+        "endChar": 68
+      },
+      "revId": "2ccabb5f1f7e6381f108d929c2ef7fa3b4d5ef06",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "58d0ec02_419fe133",
         "filename": "components/multidevice/BUILD.gn",
         "patchSetId": 43
@@ -13,6 +36,24 @@
       "writtenOn": "2017-08-30T10:16:33Z",
       "side": 1,
       "message": "that target doesn\u0027t seem to serve any purpose? The higher-level BUILD.gn already references the unit test this depends on...",
+      "revId": "2ccabb5f1f7e6381f108d929c2ef7fa3b4d5ef06",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5a8964b_6d1209cb",
+        "filename": "components/multidevice/BUILD.gn",
+        "patchSetId": 43
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-30T16:14:59Z",
+      "side": 1,
+      "message": "Thanks for catching this! The dependency on multidevice_service_unittest was not supposed to appear in //components/BUILD.gn. I\u0027ve asked Regan to remove it. We\u0027d like to place all multidevice tests in this target and reference it from BUILD.gn.",
+      "parentUuid": "58d0ec02_419fe133",
       "revId": "2ccabb5f1f7e6381f108d929c2ef7fa3b4d5ef06",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
