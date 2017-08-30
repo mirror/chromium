@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "641cfeb9_9053cdfb",
+        "filename": "third_party/WebKit/Source/platform/graphics/compositing/ContentLayerClientImpl.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-08-30T16:07:36Z",
+      "side": 1,
+      "message": "Done. Extracted these functions into platform/geometry/GeometryJSON.h|cpp.",
+      "parentUuid": "2e253445_697a57fe",
+      "revId": "f2605625975dcf91cc577f2434fdaf905c351776",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fe6be791_67baacc1",
         "filename": "third_party/WebKit/Source/platform/graphics/compositing/ContentLayerClientImpl.cpp",
         "patchSetId": 4
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "c601c912_9e8f772f",
+        "filename": "third_party/WebKit/Source/platform/graphics/compositing/ContentLayerClientImpl.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-08-30T16:07:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fe6be791_67baacc1",
+      "revId": "f2605625975dcf91cc577f2434fdaf905c351776",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "834331ad_8ecd842b",
         "filename": "third_party/WebKit/Source/platform/graphics/compositing/PaintArtifactCompositor.cpp",
         "patchSetId": 4
@@ -47,6 +83,24 @@
       "writtenOn": "2017-08-30T01:53:28Z",
       "side": 1,
       "message": "Can you reference the SPV1 code that handles this?",
+      "revId": "f2605625975dcf91cc577f2434fdaf905c351776",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3bf4577a_4eb8d718",
+        "filename": "third_party/WebKit/Source/platform/graphics/compositing/PaintArtifactCompositor.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-08-30T16:07:36Z",
+      "side": 1,
+      "message": "For now there is no SPV1 code handling this. The backgroundColor of main frame layer is just missing which will be fixed by https://chromium-review.googlesource.com/c/chromium/src/+/638990.\n\nNow I think I should avoid this tricky code. It seems not a bigger deal to add \"backgroundColor: #FFFFFF\" in layout test results (mostly shared by SPv1 and SPv2) than this tricky code.",
+      "parentUuid": "834331ad_8ecd842b",
       "revId": "f2605625975dcf91cc577f2434fdaf905c351776",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
