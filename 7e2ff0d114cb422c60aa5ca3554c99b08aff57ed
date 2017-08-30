@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "77f46758_122b6f35",
+        "filename": "gpu/config/gpu_driver_bug_list.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 2612,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2017-08-30T17:39:50Z",
+      "side": 1,
+      "message": "This should be 750306.",
+      "range": {
+        "startLine": 2612,
+        "startChar": 7,
+        "endLine": 2612,
+        "endChar": 14
+      },
+      "revId": "7e2ff0d114cb422c60aa5ca3554c99b08aff57ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b21928be_745a11ea",
+        "filename": "gpu/config/gpu_driver_bug_list.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 2615,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2017-08-30T17:39:50Z",
+      "side": 1,
+      "message": "Qualcomm mentioned they\u0027re going to fix this in their driver. Could you please add a time expiration for this workaround like #237 in this file (version \u003c 9.0), and let\u0027s refine that once it\u0027s fixed hopefully after 8.0? Thanks.",
+      "range": {
+        "startLine": 2615,
+        "startChar": 9,
+        "endLine": 2615,
+        "endChar": 13
+      },
+      "revId": "7e2ff0d114cb422c60aa5ca3554c99b08aff57ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
