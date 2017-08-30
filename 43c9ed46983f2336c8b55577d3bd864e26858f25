@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "983fcfe0_171fbcf1",
+        "filename": "base/i18n/bidi_line_iterator.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-08-30T02:33:43Z",
+      "side": 1,
+      "message": "You\u0027ll want a base/i18n reviewer (jshin@), my knowledge here is rather limited.",
+      "revId": "43c9ed46983f2336c8b55577d3bd864e26858f25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e31307af_0c67a2ca",
+        "filename": "ui/gfx/render_text.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1129,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-08-30T02:33:43Z",
+      "side": 1,
+      "message": "I guess this CL depends on your other CL? Care to address comments there (or here? i dunno...)?",
+      "revId": "43c9ed46983f2336c8b55577d3bd864e26858f25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2e54435_5cb1c9a6",
+        "filename": "ui/gfx/render_text.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1132,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-08-30T02:33:43Z",
+      "side": 1,
+      "message": "Is this intentional?",
+      "revId": "43c9ed46983f2336c8b55577d3bd864e26858f25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
