@@ -62,6 +62,38 @@ ExtensionFunction::ResponseAction
 }
 
 ////////////////////////////////////////////////////////////////////////////////
+// PasswordsPrivateUndoRemovePasswordFunction
+
+PasswordsPrivateUndoRemovePasswordFunction::
+    ~PasswordsPrivateUndoRemovePasswordFunction() {}
+
+ExtensionFunction::ResponseAction
+PasswordsPrivateUndoRemovePasswordFunction::Run() {
+  PasswordsPrivateDelegate* delegate =
+      PasswordsPrivateDelegateFactory::GetForBrowserContext(browser_context(),
+                                                            true /* create */);
+  delegate->UndoRemovePassword();
+
+  return RespondNow(NoArguments());
+}
+
+////////////////////////////////////////////////////////////////////////////////
+// PasswordsPrivateRedoRemovePasswordFunction
+
+PasswordsPrivateRedoRemovePasswordFunction::
+    ~PasswordsPrivateRedoRemovePasswordFunction() {}
+
+ExtensionFunction::ResponseAction
+PasswordsPrivateRedoRemovePasswordFunction::Run() {
+  PasswordsPrivateDelegate* delegate =
+      PasswordsPrivateDelegateFactory::GetForBrowserContext(browser_context(),
+                                                            true /* create */);
+  delegate->RedoRemovePassword();
+
+  return RespondNow(NoArguments());
+}
+
+////////////////////////////////////////////////////////////////////////////////
 // PasswordsPrivateRequestPlaintextPasswordFunction
 
 PasswordsPrivateRequestPlaintextPasswordFunction::
