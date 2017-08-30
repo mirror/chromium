@@ -8,5 +8,6 @@ import "content/common/input/input_handler.mojom";
 
 // Interface representing the Widget.
 interface Widget {
+  SetWidgetInputHandlerHost(WidgetInputHandlerHost host);
   GetWidgetInputHandler(WidgetInputHandler& request);
 };

@@ -25,7 +25,9 @@
 #include "content/common/input/input_event_ack_source.h"
 #include "content/common/input/input_event_stream_validator.h"
 #include "content/common/input/input_handler.mojom.h"
+#include "content/common/widget.mojom.h"
 #include "content/public/browser/native_web_keyboard_event.h"
+#include "mojo/public/cpp/bindings/binding.h"
 
 namespace ui {
 class LatencyInfo;
@@ -39,6 +41,10 @@ class InputDispositionHandler;
 class CONTENT_EXPORT InputRouterImplClient : public InputRouterClient {
  public:
   virtual mojom::WidgetInputHandler* GetWidgetInputHandler() = 0;
+  virtual void OnImeCancelComposition() = 0;
+  virtual void OnImeCompositionRangeChanged(
+      const gfx::Range& range,
+      const std::vector<gfx::Rect>& bounds) = 0;
 };
 
 // A default implementation for browser input event routing.
@@ -47,7 +53,8 @@ class CONTENT_EXPORT InputRouterImpl
       public GestureEventQueueClient,
       public MouseWheelEventQueueClient,
       public TouchEventQueueClient,
-      public TouchpadTapSuppressionControllerClient {
+      public TouchpadTapSuppressionControllerClient,
+      public mojom::WidgetInputHandlerHost {
  public:
   InputRouterImpl(InputRouterImplClient* client,
                   InputDispositionHandler* disposition_handler,
@@ -66,15 +73,25 @@ class CONTENT_EXPORT InputRouterImpl
   void NotifySiteIsMobileOptimized(bool is_mobile_optimized) override;
   bool HasPendingEvents() const override;
   void SetDeviceScaleFactor(float device_scale_factor) override;
+  void SetFrameTreeNodeId(int frame_tree_node_id) override;
+  void SetForceEnableZoom(bool enabled) override;
+  cc::TouchAction AllowedTouchAction() override;
+  void BindWidget(mojom::WidgetPtr& widget) override;
+
+  // InputHandlerHost impl
+  void CancelTouchTimeout() override;
+  void SetWhiteListedTouchAction(cc::TouchAction touch_action,
+                                 uint32_t unique_touch_event_id,
+                                 InputEventAckState state) override;
+  void DidOverscroll(const ui::DidOverscrollParams& params) override;
+  void DidStopFlinging() override;
+  void ImeCancelComposition() override;
+  void ImeCompositionRangeChanged(
+      const gfx::Range& range,
+      const std::vector<gfx::Rect>& bounds) override;
 
   // IPC::Listener
   bool OnMessageReceived(const IPC::Message& message) override;
-
-  void SetFrameTreeNodeId(int frame_tree_node_id) override;
-
-  void SetForceEnableZoom(bool enabled) override;
-
-  cc::TouchAction AllowedTouchAction() override;
 
  private:
   friend class InputRouterImplTest;
@@ -154,13 +171,8 @@ class CONTENT_EXPORT InputRouterImpl
       const base::Optional<cc::TouchAction>& touch_action);
 
   // IPC message handlers
-  void OnDidOverscroll(const ui::DidOverscrollParams& params);
   void OnHasTouchEventHandlers(bool has_handlers);
   void OnSetTouchAction(cc::TouchAction touch_action);
-  void OnSetWhiteListedTouchAction(cc::TouchAction white_listed_touch_action,
-                                   uint32_t unique_touch_event_id,
-                                   InputEventAckState ack_result);
-  void OnDidStopFlinging();
 
   // Dispatches the ack'ed event to |ack_handler_|.
   void ProcessKeyboardAck(blink::WebInputEvent::Type type,
@@ -222,6 +234,8 @@ class CONTENT_EXPORT InputRouterImpl
 
   // Last touch position relative to screen. Used to compute movementX/Y.
   base::flat_map<int, gfx::Point> global_touch_position_;
+
+  mojo::Binding<mojom::WidgetInputHandlerHost> host_binding_;
 
   base::WeakPtr<InputRouterImpl> weak_this_;
   base::WeakPtrFactory<InputRouterImpl> weak_ptr_factory_;
