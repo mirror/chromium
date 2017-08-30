@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6caab0de_612f58c9",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 83274,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-08-30T21:53:56Z",
+      "side": 1,
+      "message": "How will this metric be used? What will it be compared to (or how will the values be interpreted)?\n\nTo answer the above, please add a note in the summary, like \"This value will be compared to ____ to tell us ______\".",
+      "revId": "da7b25aa190ca00e4ba22a0f50ee8bdfd9717f6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
