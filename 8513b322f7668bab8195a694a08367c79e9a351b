@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d27e03e2_811428e1",
+        "filename": "components/viz/service/frame_sinks/compositor_frame_sink_support.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-08-30T14:25:50Z",
+      "side": 1,
+      "message": "I think you\u0027ll want the FrameSinkId and frame_index, not the surface ID.",
+      "revId": "8513b322f7668bab8195a694a08367c79e9a351b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
