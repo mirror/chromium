@@ -10,6 +10,7 @@
 #include "base/gtest_prod_util.h"
 #include "base/macros.h"
 #include "base/memory/weak_ptr.h"
+#include "chromeos/components/tether/async_shutdown_task.h"
 #include "chromeos/dbus/power_manager_client.h"
 #include "chromeos/dbus/session_manager_client.h"
 #include "chromeos/network/network_state_handler.h"
@@ -42,7 +43,8 @@ class TetherService : public KeyedService,
                       public chromeos::SessionManagerClient::Observer,
                       public cryptauth::CryptAuthDeviceManager::Observer,
                       public device::BluetoothAdapter::Observer,
-                      public chromeos::NetworkStateHandlerObserver {
+                      public chromeos::NetworkStateHandlerObserver,
+                      public chromeos::tether::AsyncShutdownTask::Observer {
  public:
   TetherService(Profile* profile,
                 chromeos::PowerManagerClient* power_manager_client,
@@ -80,7 +82,9 @@ class TetherService : public KeyedService,
         chromeos::NetworkConnect* network_connect,
         chromeos::NetworkConnectionHandler* network_connection_handler,
         scoped_refptr<device::BluetoothAdapter> adapter);
-    virtual void ShutdownTether();
+
+    virtual std::unique_ptr<chromeos::tether::AsyncShutdownTask>
+    ShutdownTether();
   };
 
  protected:
@@ -109,6 +113,9 @@ class TetherService : public KeyedService,
       const chromeos::NetworkState* network) override;
   void DeviceListChanged() override;
 
+  // chromeos::tether::AsyncShutdownTask::Observer:
+  void OnAsyncShutdownComplete() override;
+
   // Callback when the controlling pref changes.
   void OnPrefsChanged();
 
@@ -130,6 +137,8 @@ class TetherService : public KeyedService,
   friend class TetherServiceTest;
   FRIEND_TEST_ALL_PREFIXES(TetherServiceTest, TestSuspend);
   FRIEND_TEST_ALL_PREFIXES(TetherServiceTest, TestBleAdvertisingNotSupported);
+  FRIEND_TEST_ALL_PREFIXES(TetherServiceTest,
+                           TestShutdownTetherWithAsyncShutdownTask);
   FRIEND_TEST_ALL_PREFIXES(
       TetherServiceTest,
       TestBleAdvertisingNotSupported_BluetoothIsInitiallyNotPowered);
@@ -226,6 +235,7 @@ class TetherService : public KeyedService,
   std::unique_ptr<InitializerDelegate> initializer_delegate_;
   std::unique_ptr<chromeos::tether::NotificationPresenter>
       notification_presenter_;
+  std::unique_ptr<chromeos::tether::AsyncShutdownTask> async_shutdown_task_;
 
   PrefChangeRegistrar registrar_;
   scoped_refptr<device::BluetoothAdapter> adapter_;
