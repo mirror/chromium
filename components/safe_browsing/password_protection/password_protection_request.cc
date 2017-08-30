@@ -55,10 +55,6 @@ PasswordProtectionRequest::PasswordProtectionRequest(
       request_proto_(base::MakeUnique<LoginReputationClientRequest>()),
       weakptr_factory_(this) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
-  // TODO(nparker): Add support for setting matching_domains &&
-  // matches_sync_password at the same time, then remove the following check.
-  // Need to change how the UMA metrics are logged first.
-  DCHECK(!matches_sync_password_ || matching_domains_.size() == 0);
 
   DCHECK(trigger_type_ == LoginReputationClientRequest::UNFAMILIAR_LOGIN_PAGE ||
          trigger_type_ == LoginReputationClientRequest::PASSWORD_REUSE_EVENT);
@@ -299,14 +295,13 @@ void PasswordProtectionRequest::Finish(
   if (trigger_type_ == LoginReputationClientRequest::UNFAMILIAR_LOGIN_PAGE) {
     UMA_HISTOGRAM_ENUMERATION(kPasswordOnFocusRequestOutcomeHistogramName,
                               outcome, PasswordProtectionService::MAX_OUTCOME);
-  } else if (matches_sync_password_) {
-    UMA_HISTOGRAM_ENUMERATION(kSyncPasswordEntryRequestOutcomeHistogramName,
-                              outcome, PasswordProtectionService::MAX_OUTCOME);
-    password_protection_service_->MaybeLogPasswordReuseLookupEvent(
-        web_contents_, outcome, response.get());
   } else {
-    UMA_HISTOGRAM_ENUMERATION(kPasswordEntryRequestOutcomeHistogramName,
-                              outcome, PasswordProtectionService::MAX_OUTCOME);
+    PasswordProtectionService::LogPasswordEntryRequestOutcome(
+        outcome, matches_sync_password_);
+    if (matches_sync_password_) {
+      password_protection_service_->MaybeLogPasswordReuseLookupEvent(
+          web_contents_, outcome, response.get());
+    }
   }
 
   if (outcome == PasswordProtectionService::SUCCEEDED && response) {
@@ -318,9 +313,13 @@ void PasswordProtectionRequest::Finish(
             LoginReputationClientResponse_VerdictType_VerdictType_MAX + 1);
         break;
       case LoginReputationClientRequest::PASSWORD_REUSE_EVENT:
+        UMA_HISTOGRAM_ENUMERATION(
+            "PasswordProtection.Verdict.AnyPasswordEntry",
+            response->verdict_type(),
+            LoginReputationClientResponse_VerdictType_VerdictType_MAX + 1);
         if (matches_sync_password_) {
           UMA_HISTOGRAM_ENUMERATION(
-              "PasswordProtection.Verdict.SyncProtectedPasswordEntry",
+              "PasswordProtection.Verdict.SyncPasswordEntry",
               response->verdict_type(),
               LoginReputationClientResponse_VerdictType_VerdictType_MAX + 1);
         } else {
