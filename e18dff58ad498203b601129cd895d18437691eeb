@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "d293e618_dbdd2195",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/common.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-08-30T23:39:29Z",
+      "side": 1,
+      "message": "Yeah -- I think that there are likely some json files that are assets/resources and should be synced, and I only know of MANIFEST.json as being a generated file that we don\u0027t want to sync -- so we could change this to just put MANIFEST.json in the blacklist.",
+      "parentUuid": "76e0683b_bd3e4cf2",
+      "revId": "e18dff58ad498203b601129cd895d18437691eeb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e12e558e_c4551e1d",
         "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/common.py",
         "patchSetId": 2
@@ -83,6 +101,24 @@
       "writtenOn": "2017-08-30T22:32:24Z",
       "side": 1,
       "message": "@qyearsley, speaking of legacy code that I don\u0027t understand, this is the other one: I don\u0027t think we have this file in external/wpt anymore (and it\u0027s skipped in W3CImportExpectations). Should we keep this rule?",
+      "revId": "e18dff58ad498203b601129cd895d18437691eeb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a0e1e29_9c260092",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/common.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-08-30T23:39:29Z",
+      "side": 1,
+      "message": "That\u0027s right, good point -- previously we had this file duplicated from LayoutTests/resources/, but now it\u0027s just served from that one location. So it looks like maybe we don\u0027t need this function :-)",
+      "parentUuid": "e12e558e_c4551e1d",
       "revId": "e18dff58ad498203b601129cd895d18437691eeb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
