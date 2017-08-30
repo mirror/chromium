@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "69483701_5993045e",
+        "filename": "ios/chrome/browser/passwords/js_credential_manager.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1229234
+      },
+      "writtenOn": "2017-08-30T15:10:19Z",
+      "side": 1,
+      "message": "Will drop the namespace in another CL.",
+      "parentUuid": "6ced565f_9c1c0b67",
+      "range": {
+        "startLine": 15,
+        "startChar": 0,
+        "endLine": 15,
+        "endChar": 30
+      },
+      "revId": "767eb73c329c7c6d6293f64d3dfbff42276b74b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c58e6015_d3e4b0c7",
         "filename": "ios/chrome/browser/passwords/js_credential_manager.h",
         "patchSetId": 6
@@ -36,6 +60,24 @@
       "writtenOn": "2017-08-30T12:22:50Z",
       "side": 1,
       "message": "Why a class and not just free-functions? The object has no state except the \"web_state\" which could be passed to the free-function as an additional first parameter.\n\nMaybe using a class make sense with the code you want to add later (because you are going to expand this class, or because you want to be able to inject fakes in other classes — but in that case I would recommend making the methods \"virtual\").\n\nAlso what is the lifetime of the JsCredentialManager w.r.t. WebState? I don\u0027t see this in the CL, but it is important to not keep pointer to a WebState if your object could outlive it without also listening to WebStateDestroyed method from WebStateObserver (and setting the pointer to null then).",
+      "revId": "767eb73c329c7c6d6293f64d3dfbff42276b74b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "614df069_b1aacbde",
+        "filename": "ios/chrome/browser/passwords/js_credential_manager.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1229234
+      },
+      "writtenOn": "2017-08-30T15:10:19Z",
+      "side": 1,
+      "message": "\u003e Why a class and not just free-functions? The object has no state except the \"web_state\" which could be passed to the free-function as an additional first parameter.\nMaybe using a class make sense with the code you want to add later (because you are going to expand this class, or because you want to be able to inject fakes in other classes — but in that case I would recommend making the methods \"virtual\").\n\nDone\nI don\u0027t think there is a point in extending this class, and I can simply use it in tests, without mocking methods.\n\n\u003e Also what is the lifetime of the JsCredentialManager w.r.t. WebState? I don\u0027t see this in the CL, but it is important to not keep pointer to a WebState if your object could outlive it without also listening to WebStateDestroyed method from WebStateObserver (and setting the pointer to null then).\n\nFreed the functions from the class, but it\u0027s still worth answering for CredentialManager. It will be owned by PasswordController, and I will need to listen to WebStateDestroyed to remove script command callback for prefix \"credentials\".",
+      "parentUuid": "c58e6015_d3e4b0c7",
       "revId": "767eb73c329c7c6d6293f64d3dfbff42276b74b9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "262039ba_30698d85",
+        "filename": "ios/chrome/browser/passwords/js_credential_manager.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1229234
+      },
+      "writtenOn": "2017-08-30T15:10:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aedae06c_faab0289",
+      "range": {
+        "startLine": 18,
+        "startChar": 41,
+        "endLine": 21,
+        "endChar": 35
+      },
+      "revId": "767eb73c329c7c6d6293f64d3dfbff42276b74b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9bc0a70a_bf2a9f41",
         "filename": "ios/chrome/browser/passwords/js_credential_manager.h",
         "patchSetId": 6
@@ -76,6 +142,30 @@
       "writtenOn": "2017-08-30T12:22:50Z",
       "side": 1,
       "message": "This is bound to change, so I would remove this. I would use something like the following instead:\n\n  // Resolves the Promise identifier by |request_id| with either Credential or undefined.\n\nThis applies to the other methods comments too (don\u0027t say to which methods they correspond as this is bound to change and document what |request_id| is).\n\nBTW, since \"request_id\" is the id of a promise, maybe rename it to \"promise_id\" or \"credential_promose_id\".",
+      "range": {
+        "startLine": 26,
+        "startChar": 59,
+        "endLine": 27,
+        "endChar": 74
+      },
+      "revId": "767eb73c329c7c6d6293f64d3dfbff42276b74b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ebc6cf4_d23d633e",
+        "filename": "ios/chrome/browser/passwords/js_credential_manager.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1229234
+      },
+      "writtenOn": "2017-08-30T15:10:19Z",
+      "side": 1,
+      "message": "\u003e This is bound to change, so I would remove this. I would use something like the following instead:\n  // Resolves the Promise identifier by |request_id| with either Credential or undefined.\nThis applies to the other methods comments too (don\u0027t say to which methods they correspond as this is bound to change and document what |request_id| is).\n\nDone\n\n\u003e BTW, since \"request_id\" is the id of a promise, maybe rename it to \"promise_id\" or \"credential_promose_id\".\n\nDone\nI like \u0027promise_id\u0027. Renamed it everywhere to be consistent.",
+      "parentUuid": "9bc0a70a_bf2a9f41",
       "range": {
         "startLine": 26,
         "startChar": 59,
@@ -111,6 +201,30 @@
     },
     {
       "key": {
+        "uuid": "3cd2d16f_b7484bd7",
+        "filename": "ios/chrome/browser/passwords/js_credential_manager.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1229234
+      },
+      "writtenOn": "2017-08-30T15:10:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "14d83bee_a44d7455",
+      "range": {
+        "startLine": 39,
+        "startChar": 50,
+        "endLine": 39,
+        "endChar": 64
+      },
+      "revId": "767eb73c329c7c6d6293f64d3dfbff42276b74b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3d3bde91_ca9b733e",
         "filename": "ios/chrome/browser/passwords/js_credential_manager.h",
         "patchSetId": 6
@@ -131,6 +245,30 @@
       "revId": "767eb73c329c7c6d6293f64d3dfbff42276b74b9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c41ff51_240d82b0",
+        "filename": "ios/chrome/browser/passwords/js_credential_manager.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1229234
+      },
+      "writtenOn": "2017-08-30T15:10:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3d3bde91_ca9b733e",
+      "range": {
+        "startLine": 44,
+        "startChar": 42,
+        "endLine": 44,
+        "endChar": 56
+      },
+      "revId": "767eb73c329c7c6d6293f64d3dfbff42276b74b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -157,6 +295,30 @@
     },
     {
       "key": {
+        "uuid": "8f9bf46e_820ad516",
+        "filename": "ios/chrome/browser/passwords/js_credential_manager.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1229234
+      },
+      "writtenOn": "2017-08-30T15:10:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e82fef65_3425b1b7",
+      "range": {
+        "startLine": 49,
+        "startChar": 42,
+        "endLine": 49,
+        "endChar": 56
+      },
+      "revId": "767eb73c329c7c6d6293f64d3dfbff42276b74b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f0fd111a_1aa77834",
         "filename": "ios/chrome/browser/passwords/js_credential_manager.h",
         "patchSetId": 6
@@ -174,6 +336,24 @@
     },
     {
       "key": {
+        "uuid": "8f48ff8e_d7a9428d",
+        "filename": "ios/chrome/browser/passwords/js_credential_manager.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1229234
+      },
+      "writtenOn": "2017-08-30T15:10:19Z",
+      "side": 1,
+      "message": "Freed the functions from the class.",
+      "parentUuid": "f0fd111a_1aa77834",
+      "revId": "767eb73c329c7c6d6293f64d3dfbff42276b74b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ef638e76_7c0829a4",
         "filename": "ios/chrome/browser/passwords/js_credential_manager.h",
         "patchSetId": 6
@@ -185,6 +365,24 @@
       "writtenOn": "2017-08-30T12:22:50Z",
       "side": 1,
       "message": "DISALLOW_COPY_AND_ASSIGN(JsCredentialManager);",
+      "revId": "767eb73c329c7c6d6293f64d3dfbff42276b74b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88955c12_dcec8401",
+        "filename": "ios/chrome/browser/passwords/js_credential_manager.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1229234
+      },
+      "writtenOn": "2017-08-30T15:10:19Z",
+      "side": 1,
+      "message": "Freed the functions from the class.",
+      "parentUuid": "ef638e76_7c0829a4",
       "revId": "767eb73c329c7c6d6293f64d3dfbff42276b74b9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -214,6 +412,30 @@
     },
     {
       "key": {
+        "uuid": "28df4280_116ad938",
+        "filename": "ios/chrome/browser/passwords/js_credential_manager.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1229234
+      },
+      "writtenOn": "2017-08-30T15:10:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "32c67e72_811475ed",
+      "range": {
+        "startLine": 26,
+        "startChar": 28,
+        "endLine": 26,
+        "endChar": 42
+      },
+      "revId": "767eb73c329c7c6d6293f64d3dfbff42276b74b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f141db00_5e13e892",
         "filename": "ios/chrome/browser/passwords/js_credential_manager.mm",
         "patchSetId": 6
@@ -234,6 +456,30 @@
       "revId": "767eb73c329c7c6d6293f64d3dfbff42276b74b9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4fad44c2_9bbaf41c",
+        "filename": "ios/chrome/browser/passwords/js_credential_manager.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1229234
+      },
+      "writtenOn": "2017-08-30T15:10:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f141db00_5e13e892",
+      "range": {
+        "startLine": 32,
+        "startChar": 28,
+        "endLine": 32,
+        "endChar": 39
+      },
+      "revId": "767eb73c329c7c6d6293f64d3dfbff42276b74b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -260,6 +506,30 @@
     },
     {
       "key": {
+        "uuid": "0043486a_26bdd77a",
+        "filename": "ios/chrome/browser/passwords/js_credential_manager.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1229234
+      },
+      "writtenOn": "2017-08-30T15:10:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a4780ed2_0803804b",
+      "range": {
+        "startLine": 37,
+        "startChar": 57,
+        "endLine": 39,
+        "endChar": 23
+      },
+      "revId": "767eb73c329c7c6d6293f64d3dfbff42276b74b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dfcdfc2e_1f2078f2",
         "filename": "ios/chrome/browser/passwords/js_credential_manager.mm",
         "patchSetId": 6
@@ -271,6 +541,30 @@
       "writtenOn": "2017-08-30T12:22:50Z",
       "side": 1,
       "message": "ditto, \"const password_manager::CredentialInfo\u0026\" to avoid the copy (since you call this with a lvalue thus non-moveable). Or maybe pass the \"base::Optional\u003cpassword_manager::CredentialInfo\u003e\" directly and add the test \"if (info.has_value())\" here.\n\nBTW, I see that password_manager::CredentialType has a value CREDENTIAL_TYPE_EMPTY, so why use a base::Optional\u003cpassword_manager::CredentialInfo\u003e instead of passing a password_manager::CredentialInfo with type \u003d\u003d password_manager::CredentialType::CREDENTIAL_TYPE_EMPTY?",
+      "range": {
+        "startLine": 40,
+        "startChar": 39,
+        "endLine": 40,
+        "endChar": 71
+      },
+      "revId": "767eb73c329c7c6d6293f64d3dfbff42276b74b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e61db1e9_87d72778",
+        "filename": "ios/chrome/browser/passwords/js_credential_manager.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1229234
+      },
+      "writtenOn": "2017-08-30T15:10:19Z",
+      "side": 1,
+      "message": "\u003e ditto, \"const password_manager::CredentialInfo\u0026\" to avoid the copy (since you call this with a lvalue thus non-moveable). Or maybe pass the \"base::Optional\u003cpassword_manager::CredentialInfo\u003e\" directly and add the test \"if (info.has_value())\" here.\n\nDone\n\n\u003e BTW, I see that password_manager::CredentialType has a value CREDENTIAL_TYPE_EMPTY, so why use a base::Optional\u003cpassword_manager::CredentialInfo\u003e instead of passing a password_manager::CredentialInfo with type \u003d\u003d password_manager::CredentialType::CREDENTIAL_TYPE_EMPTY?\n\nCredentialManagerImpl obtains base::Optional\u003cpassword_manager::CredentialInfo\u003e, I think it\u0027s simpler to pass it to the function than create an empty credential.",
+      "parentUuid": "dfcdfc2e_1f2078f2",
       "range": {
         "startLine": 40,
         "startChar": 39,
@@ -300,6 +594,24 @@
     },
     {
       "key": {
+        "uuid": "ca04ee24_dc61b418",
+        "filename": "ios/chrome/browser/passwords/js_credential_manager.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1229234
+      },
+      "writtenOn": "2017-08-30T15:10:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b30d5ac4_c4c84f51",
+      "revId": "767eb73c329c7c6d6293f64d3dfbff42276b74b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b3a59887_3ac6b109",
         "filename": "ios/chrome/browser/passwords/js_credential_manager.mm",
         "patchSetId": 6
@@ -311,6 +623,30 @@
       "writtenOn": "2017-08-30T12:22:50Z",
       "side": 1,
       "message": "It looks like we \"web_state_\" member variable is never changed outside of JsCredentialManager constructor, so it can never become null after that point and I do not think it make sense to create a JsCredentialManager with a null WebState.\n\nSo I recommend add \"DCHECK(web_state_)\" to JsCredentialManager constructor and removing all check that \"web_state_\" is null.",
+      "range": {
+        "startLine": 72,
+        "startChar": 7,
+        "endLine": 72,
+        "endChar": 17
+      },
+      "revId": "767eb73c329c7c6d6293f64d3dfbff42276b74b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4373b81f_e4006c6c",
+        "filename": "ios/chrome/browser/passwords/js_credential_manager.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1229234
+      },
+      "writtenOn": "2017-08-30T15:10:19Z",
+      "side": 1,
+      "message": "Now \"web_state\" is passed as argument to each function, leaving the checks.",
+      "parentUuid": "b3a59887_3ac6b109",
       "range": {
         "startLine": 72,
         "startChar": 7,
@@ -340,6 +676,24 @@
     },
     {
       "key": {
+        "uuid": "5348a701_4b856614",
+        "filename": "ios/chrome/browser/passwords/js_credential_manager.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1229234
+      },
+      "writtenOn": "2017-08-30T15:10:19Z",
+      "side": 1,
+      "message": "Done\nNo more NSStrings in this file",
+      "parentUuid": "93242a9d_e0c682ca",
+      "revId": "767eb73c329c7c6d6293f64d3dfbff42276b74b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e3eae2fb_c8b9041e",
         "filename": "ios/chrome/browser/passwords/js_credential_manager_unittest.mm",
         "patchSetId": 6
@@ -351,6 +705,24 @@
       "writtenOn": "2017-08-30T12:22:50Z",
       "side": 1,
       "message": "ditto, no need for the namespace.",
+      "revId": "767eb73c329c7c6d6293f64d3dfbff42276b74b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0059fe64_30e558ee",
+        "filename": "ios/chrome/browser/passwords/js_credential_manager_unittest.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1229234
+      },
+      "writtenOn": "2017-08-30T15:10:19Z",
+      "side": 1,
+      "message": "Will drop namespace in separate CL everywhere I used it so far: https://cs.chromium.org/search/?q\u003d%22namespace+credential_manager%22\u0026type\u003dcs",
+      "parentUuid": "e3eae2fb_c8b9041e",
       "revId": "767eb73c329c7c6d6293f64d3dfbff42276b74b9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -374,6 +746,24 @@
     },
     {
       "key": {
+        "uuid": "856f901b_ab7c3a6a",
+        "filename": "ios/chrome/browser/passwords/js_credential_manager_unittest.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1229234
+      },
+      "writtenOn": "2017-08-30T15:10:19Z",
+      "side": 1,
+      "message": "Done\nJsCredentialManager is no longer a class",
+      "parentUuid": "42404078_97c166e9",
+      "revId": "767eb73c329c7c6d6293f64d3dfbff42276b74b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9a7a45d8_a75348b8",
         "filename": "ios/chrome/browser/passwords/js_credential_manager_unittest.mm",
         "patchSetId": 6
@@ -388,6 +778,24 @@
       "revId": "767eb73c329c7c6d6293f64d3dfbff42276b74b9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9648f880_e335d56c",
+        "filename": "ios/chrome/browser/passwords/js_credential_manager_unittest.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1229234
+      },
+      "writtenOn": "2017-08-30T15:10:19Z",
+      "side": 1,
+      "message": "Done\nJsCredentialManager is no longer a class",
+      "parentUuid": "9a7a45d8_a75348b8",
+      "revId": "767eb73c329c7c6d6293f64d3dfbff42276b74b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -411,6 +819,30 @@
       "revId": "767eb73c329c7c6d6293f64d3dfbff42276b74b9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "921b6b5a_1ec5bbaa",
+        "filename": "ios/chrome/browser/passwords/js_credential_manager_unittest.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1229234
+      },
+      "writtenOn": "2017-08-30T15:10:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "31e10d4c_2b00f8c0",
+      "range": {
+        "startLine": 46,
+        "startChar": 2,
+        "endLine": 46,
+        "endChar": 0
+      },
+      "revId": "767eb73c329c7c6d6293f64d3dfbff42276b74b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
