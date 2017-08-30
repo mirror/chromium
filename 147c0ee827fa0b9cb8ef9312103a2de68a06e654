@@ -16,6 +16,24 @@
       "revId": "147c0ee827fa0b9cb8ef9312103a2de68a06e654",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8b91cdd_0a775272",
+        "filename": "ui/file_manager/file_manager/foreground/js/ui/list_container.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 1241182
+      },
+      "writtenOn": "2017-08-30T06:23:22Z",
+      "side": 1,
+      "message": "The header doesn\u0027t receive the contextmenu event :/ I can look into how to check if grid mode is active. Are there any other situations in which this might not be desired? (I never thought of grid mode because I personally never use it..^^)",
+      "parentUuid": "15b872d0_f33cb719",
+      "revId": "147c0ee827fa0b9cb8ef9312103a2de68a06e654",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
