@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fb85380a_8e3c4575",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/resources/access-control-basic-whitelist-response-headers.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-08-30T06:50:54Z",
+      "side": 1,
+      "message": "you can choose to place this also as an entry of headers but have this comment and maybe blank line right above it.\n\nI.e.\n\n            # CORS-safelisted\n            \"content-type\": \"text/plain\",\n            ...\n            \"pragma\": \"no-cache\",\n\n            # Non-CORS-safelisted\n            \"x-test\": \"foobar\",\n\n            \"Access-Control-Allow-Origin\": \"*\",",
+      "revId": "dd461a8af511aef7fbe376a0a31d9f457aff2973",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
