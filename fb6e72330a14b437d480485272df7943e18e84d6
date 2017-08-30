@@ -474,6 +474,23 @@
       "revId": "fb6e72330a14b437d480485272df7943e18e84d6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2eb8ecb3_64766643",
+        "filename": "chromecast/public/media/decoder_config.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 331,
+      "author": {
+        "id": 1203029
+      },
+      "writtenOn": "2017-08-30T22:14:24Z",
+      "side": 1,
+      "message": "1.28 has no OEM system update.\nBut it seems to me this is ABI-compatible.\n\nKen, please confirm.",
+      "revId": "fb6e72330a14b437d480485272df7943e18e84d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
