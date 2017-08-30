@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "b0f37e08_29e5e27b",
+        "filename": "content/public/test/mock_render_process_host.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 484,
+      "author": {
+        "id": 1166494
+      },
+      "writtenOn": "2017-08-30T17:39:11Z",
+      "side": 1,
+      "message": "Just want to have one more try before changing the method:\nI added an early return so the result string would be something like\n  \"GestureScrollUpdate GestureScrollEnd *\"\nif a non-supported message was reached.\n\nDoes that sound reasonable or do you still prefer the |AssertionResult| version?\n\nThanks!",
+      "parentUuid": "5f789616_8227aca0",
+      "range": {
+        "startLine": 484,
+        "startChar": 4,
+        "endLine": 484,
+        "endChar": 10
+      },
+      "revId": "a8b63fafa575365f10b4627c66df2ed24eade7cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bd53de38_03aec451",
         "filename": "content/public/test/mock_render_process_host.cc",
         "patchSetId": 13
@@ -60,6 +84,30 @@
       "writtenOn": "2017-08-30T11:23:22Z",
       "side": 1,
       "message": "As written, it\u0027ll only run in Debug mode. Was that intended?",
+      "range": {
+        "startLine": 486,
+        "startChar": 11,
+        "endLine": 486,
+        "endChar": 42
+      },
+      "revId": "a8b63fafa575365f10b4627c66df2ed24eade7cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "746cbc3e_cd43f962",
+        "filename": "content/public/test/mock_render_process_host.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 486,
+      "author": {
+        "id": 1166494
+      },
+      "writtenOn": "2017-08-30T17:39:11Z",
+      "side": 1,
+      "message": "Removed DCHECK.",
+      "parentUuid": "bd53de38_03aec451",
       "range": {
         "startLine": 486,
         "startChar": 11,
@@ -95,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "ea68e413_20fbf804",
+        "filename": "content/public/test/mock_render_process_host.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 489,
+      "author": {
+        "id": 1166494
+      },
+      "writtenOn": "2017-08-30T17:39:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f83460f8_5fc038c0",
+      "range": {
+        "startLine": 489,
+        "startChar": 6,
+        "endLine": 489,
+        "endChar": 19
+      },
+      "revId": "a8b63fafa575365f10b4627c66df2ed24eade7cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4da2d083_81aa349d",
         "filename": "content/public/test/mock_render_process_host.h",
         "patchSetId": 13
@@ -115,6 +187,30 @@
       "revId": "a8b63fafa575365f10b4627c66df2ed24eade7cf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5cb1042f_b7fc93b7",
+        "filename": "content/public/test/mock_render_process_host.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 1166494
+      },
+      "writtenOn": "2017-08-30T17:39:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4da2d083_81aa349d",
+      "range": {
+        "startLine": 235,
+        "startChar": 12,
+        "endLine": 235,
+        "endChar": 32
+      },
+      "revId": "a8b63fafa575365f10b4627c66df2ed24eade7cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
