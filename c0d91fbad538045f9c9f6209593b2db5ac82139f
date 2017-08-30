@@ -22,6 +22,30 @@
       "revId": "c0d91fbad538045f9c9f6209593b2db5ac82139f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "456926d9_7116f53e",
+        "filename": "ios/clean/chrome/browser/ui/ntp/ntp_home_header_mediator.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-08-30T16:01:03Z",
+      "side": 1,
+      "message": "Not now. I will need to refactor the NTPHome to have something more align with the new architecture now that I understand better how it is working.\nAnd I will probably needs to cut some protocols.",
+      "parentUuid": "3e933fd0_2641dc42",
+      "range": {
+        "startLine": 23,
+        "startChar": 66,
+        "endLine": 23,
+        "endChar": 68
+      },
+      "revId": "c0d91fbad538045f9c9f6209593b2db5ac82139f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
