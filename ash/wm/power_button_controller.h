@@ -9,6 +9,7 @@
 
 #include "ash/ash_export.h"
 #include "base/macros.h"
+#include "base/memory/weak_ptr.h"
 #include "base/time/time.h"
 #include "chromeos/accelerometer/accelerometer_reader.h"
 #include "chromeos/dbus/power_manager_client.h"
@@ -58,15 +59,18 @@ class ASH_EXPORT PowerButtonController
   void OnAccelerometerUpdated(
       scoped_refptr<const chromeos::AccelerometerUpdate> update) override;
 
-  // Resets |tablet_controller_| to hold a new object to simulate Chrome
-  // starting. Also calls ProcessCommandLine().
-  void ResetTabletPowerButtonControllerForTest();
-
   TabletPowerButtonController* tablet_power_button_controller_for_test() {
     return tablet_controller_.get();
   }
 
  private:
+  // Sends a request to powerd to get the backlights forced off state to
+  // initialize the touchscreen state.
+  void GetInitialBacklightsForcedOff();
+
+  // Initializes the touchscreen state.
+  void OnGotInitialBacklightsForcedOff(bool is_forced_off);
+
   // Updates |has_legacy_power_button_| and |force_clamshell_power_button_|
   // based on the current command line.
   void ProcessCommandLine();
@@ -102,6 +106,8 @@ class ASH_EXPORT PowerButtonController
 
   // Handles events for convertible/tablet devices.
   std::unique_ptr<TabletPowerButtonController> tablet_controller_;
+
+  base::WeakPtrFactory<PowerButtonController> weak_ptr_factory_;
 
   DISALLOW_COPY_AND_ASSIGN(PowerButtonController);
 };
