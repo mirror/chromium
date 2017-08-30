@@ -194,7 +194,7 @@ class GNRoller(object):
       print('Checking build')
       results = self.CheckBuild()
 
-    ret = 0 if all(r['state'] == 'success' for r in results.values()) else 1
+    ret = 0 if all(r.state == SUCCESS for r in results.values()) else 1
     if ret:
       print('Build failed.')
     else:
