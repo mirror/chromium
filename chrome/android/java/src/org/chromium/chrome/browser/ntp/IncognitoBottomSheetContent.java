@@ -5,14 +5,19 @@
 package org.chromium.chrome.browser.ntp;
 
 import android.app.Activity;
+import android.util.TypedValue;
+import android.view.Gravity;
 import android.view.View;
 import android.view.ViewTreeObserver.OnScrollChangedListener;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.LinearLayout.LayoutParams;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
 import org.chromium.base.ApiCompatibilityUtils;
 import org.chromium.chrome.R;
+import org.chromium.chrome.browser.util.FeatureUtilities;
 import org.chromium.chrome.browser.widget.FadingShadow;
 import org.chromium.chrome.browser.widget.FadingShadowView;
 import org.chromium.chrome.browser.widget.bottomsheet.BottomSheet.BottomSheetContent;
@@ -37,7 +42,7 @@ public class IncognitoBottomSheetContent extends IncognitoNewTabPage implements 
                             mIncognitoNewTabPageView.getResources(), R.color.toolbar_shadow_color),
                 FadingShadow.POSITION_TOP);
 
-        initTextViewColors();
+        initTextViews();
 
         // Hide the incognito image from the Chrome Home NTP pages.
         ImageView incognitoSplash =
@@ -63,7 +68,7 @@ public class IncognitoBottomSheetContent extends IncognitoNewTabPage implements 
         });
     }
 
-    private void initTextViewColors() {
+    private void initTextViews() {
         final int locationBarLightHintTextColor = ApiCompatibilityUtils.getColor(
                 mIncognitoNewTabPageView.getResources(), R.color.locationbar_light_hint_text);
         final int googleBlueColor = ApiCompatibilityUtils.getColor(
@@ -100,6 +105,31 @@ public class IncognitoBottomSheetContent extends IncognitoNewTabPage implements 
 
             incognitoNtpHeaderView.setTextColor(locationBarLightHintTextColor);
             newTabIncognitoMessageView.setTextColor(locationBarLightHintTextColor);
+
+            // Align text to left if Chrome Home is enabled, and remove unnecessary "Learn More"
+            // styling.
+            if (FeatureUtilities.isChromeHomeEnabled()) {
+                // Add the same line spacing as the MD incognito NTP page.
+                newTabIncognitoMessageView.setLineSpacing(spToPx(6), 1.0f);
+
+                final LinearLayout newTabIncognitoContainer =
+                        (LinearLayout) mIncognitoNewTabPageView.findViewById(
+                                R.id.new_tab_incognito_container);
+                newTabIncognitoContainer.setPadding(dpToPx(16),
+                        newTabIncognitoContainer.getPaddingTop(),
+                        newTabIncognitoContainer.getPaddingRight(),
+                        newTabIncognitoContainer.getPaddingBottom());
+                newTabIncognitoContainer.setGravity(Gravity.START);
+
+                // Fix margin at the bottom of the incognito text to give spacing between the
+                // "Learn More" text.
+                LayoutParams layoutParams =
+                        (LayoutParams) newTabIncognitoMessageView.getLayoutParams();
+                layoutParams.bottomMargin = dpToPx(32);
+
+                learnMoreView.setPadding(0, 0, 0, 0);
+                learnMoreView.setAllCaps(false);
+            }
         }
     }
 
@@ -145,5 +175,21 @@ public class IncognitoBottomSheetContent extends IncognitoNewTabPage implements 
     @Override
     public boolean applyDefaultTopPadding() {
         return true;
+    }
+
+    /**
+     * Converts a dp value to a px value.
+     */
+    private int dpToPx(int dp) {
+        return Math.round(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp,
+                getContentView().getResources().getDisplayMetrics()));
+    }
+
+    /*
+     * Converts an sp value to a px value.
+     */
+    private float spToPx(int sp) {
+        return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, sp,
+                getContentView().getResources().getDisplayMetrics());
     }
 }
