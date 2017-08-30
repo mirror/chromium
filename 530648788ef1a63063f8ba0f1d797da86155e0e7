@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "82b8e811_2324f7e5",
+        "filename": "components/safe_browsing/browser/threat_details.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 751,
+      "author": {
+        "id": 1223109
+      },
+      "writtenOn": "2017-08-30T00:37:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "518a9e42_c4b2ebcf",
+      "revId": "530648788ef1a63063f8ba0f1d797da86155e0e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "95e0c801_02042bd9",
         "filename": "components/safe_browsing/browser/threat_details.cc",
         "patchSetId": 5
@@ -33,6 +51,24 @@
       "revId": "530648788ef1a63063f8ba0f1d797da86155e0e7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00c19e07_2e5d94a7",
+        "filename": "components/safe_browsing/browser/threat_details.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 760,
+      "author": {
+        "id": 1223109
+      },
+      "writtenOn": "2017-08-30T00:37:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "95e0c801_02042bd9",
+      "revId": "530648788ef1a63063f8ba0f1d797da86155e0e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -67,6 +103,24 @@
       "revId": "530648788ef1a63063f8ba0f1d797da86155e0e7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a2907d8_e407ad8d",
+        "filename": "components/safe_browsing/web_ui/safe_browsing_ui.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1223109
+      },
+      "writtenOn": "2017-08-30T00:37:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c0b0c9b0_c02c655d",
+      "revId": "530648788ef1a63063f8ba0f1d797da86155e0e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

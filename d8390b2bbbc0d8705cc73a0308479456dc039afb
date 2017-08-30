@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "35b9c487_51146e76",
+        "filename": "components/safe_browsing/browser/threat_details.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1223109
+      },
+      "writtenOn": "2017-08-30T00:37:35Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "0bb1410c_44950bc9",
+      "revId": "d8390b2bbbc0d8705cc73a0308479456dc039afb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f907e7e7_eef5641e",
         "filename": "components/safe_browsing/web_ui/safe_browsing_ui.h",
         "patchSetId": 11
@@ -33,6 +51,24 @@
       "revId": "d8390b2bbbc0d8705cc73a0308479456dc039afb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bca3aeb6_a42629ef",
+        "filename": "components/safe_browsing/web_ui/safe_browsing_ui.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1223109
+      },
+      "writtenOn": "2017-08-30T00:37:35Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "f907e7e7_eef5641e",
+      "revId": "d8390b2bbbc0d8705cc73a0308479456dc039afb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
