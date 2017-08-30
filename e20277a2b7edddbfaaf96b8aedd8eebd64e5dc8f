@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f450f1f0_d7793b20",
+        "filename": "media/mojo/services/watch_time_recorder.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1124674
+      },
+      "writtenOn": "2017-08-30T01:43:41Z",
+      "side": 1,
+      "message": "While you are updating this, it would be good to switch to using the code generated API. (go/ukmapi)\n\nIt should be a fairly straightforward change:\n#include \"services/metrics/public/cpp/ukm_builders.h\"\n\nInstead of \nstd::unique_ptr\u003cukm::UkmEntryBuilder\u003e builder \u003d\n      ukm_recorder-\u003eGetEntryBuilder(source_id, kWatchTimeUkmEvent);\n\nuse\nukm::builders::Media_BasicPlayback builder(source_id);\nand later\nbuilder.record(ukm_recorder);\n\ninstead of \nbuilder-\u003eAddMetric(kUkmKeyIsBackground,\n                         kv.first \u003d\u003d WatchTimeKey::kAudioVideoBackgroundAll);\n\ndo\nbuilder.SetIsBackground(kv.first \u003d\u003d WatchTimeKey::kAudioVideoBackgroundAll);\n\nfor tests you can get the event and metric names from ukm_builders.h\n\nukm::builders::Media_BasicPlayback::kEntryName\nukm::builders::Media_BasicPlayback::kIsBackgroundName\n\nYou may want to use a local alias declaration:\nusing UkmEntry \u003d ukm::builders::Media_BasicPlayback;\nUkmEntry::kIsBackgroundName",
+      "range": {
+        "startLine": 222,
+        "startChar": 6,
+        "endLine": 222,
+        "endChar": 71
+      },
+      "revId": "e20277a2b7edddbfaaf96b8aedd8eebd64e5dc8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
