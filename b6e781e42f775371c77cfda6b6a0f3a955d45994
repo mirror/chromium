@@ -82,6 +82,30 @@
     },
     {
       "key": {
+        "uuid": "bcfd3f90_6187dc05",
+        "filename": "ios/clean/chrome/browser/ui/ntp/ntp_coordinator.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-08-30T02:52:40Z",
+      "side": 1,
+      "message": "Sorry, this comment is inaccurate. The coordinator handles presentation vs. containment. I think this code is fine as-is.",
+      "parentUuid": "d8cf5bcc_eae6fa23",
+      "range": {
+        "startLine": 69,
+        "startChar": 4,
+        "endLine": 75,
+        "endChar": 5
+      },
+      "revId": "b6e781e42f775371c77cfda6b6a0f3a955d45994",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "72caaeeb_9f0660f4",
         "filename": "ios/clean/chrome/browser/ui/ntp/ntp_home_header_coordinator.mm",
         "patchSetId": 3
