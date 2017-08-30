@@ -16,6 +16,24 @@
       "revId": "271846bf940f7dcd36c82afb5935b02c16b7f0ff",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a5cf6a9_7f04b0b7",
+        "filename": "chrome/installer/linux/debian/download-repo-signing-keys.sh",
+        "patchSetId": 6
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1166470
+      },
+      "writtenOn": "2017-08-30T22:40:37Z",
+      "side": 1,
+      "message": "Yes.  The jessie Release.gpg is signed with the wheezy signing key (in addition to the Jessie one) for some reason",
+      "parentUuid": "6d8a3ab9_4f9be0f1",
+      "revId": "271846bf940f7dcd36c82afb5935b02c16b7f0ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
